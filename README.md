@@ -26,7 +26,7 @@ A library of short, self-contained **cards**, each teaching one idea of mathemat
 
 The cards are arranged like a ladder. They start with place value and fractions, climb through algebra, calculus and probability, and end at topology, number theory and the famous unsolved problems. Each card only uses ideas from the cards before it, so you can start at the bottom and keep going, or jump straight to whatever you need.
 
-**1,087 of 1,866 cards are written so far.** The [syllabus](SYLLABUS.md) lists every one of them, wing by wing, with a tick on each card that's written.
+**1,087 of 1,866 cards are ready to read.** The [syllabus](SYLLABUS.md) lists every one of them, wing by wing and shelf by shelf. Click a card's title to read it; a title without a link is not written yet.
 
 ## What's on a card
 
@@ -55,35 +55,37 @@ Every card has the same shape, so you always know where to look:
 
 ## The map
 
-The library has 25 **wings**, each split into shelves of cards. Click a wing to see its shelves and cards in the syllabus.
+The library has 25 **wings**, each split into shelves of cards. Click a wing to open its page in the syllabus: a list of its shelves, then every card on each shelf.
 
-| # | Wing | What it's about | Cards | Written |
-| --- | --- | --- | ---: | --- |
-| 01 | [**Foundations**](SYLLABUS.md#w01) | Numbers, fractions, powers, logic and proof: the toolkit everything else uses. | 59 | `██████████ 100%` |
-| 02 | [**Number theory**](SYLLABUS.md#w02) | Primes, remainders, clock arithmetic, codes and secrets. | 43 | `██████████ 100%` |
-| 03 | [**Algebra**](SYLLABUS.md#w03) | Equations, vectors, matrices, groups and fields. | 51 | `██████████ 100%` |
-| 04 | [**Combinatorics and graphs**](SYLLABUS.md#w04) | Counting cleverly, networks, routes and puzzles. | 82 | `██████████ 100%` |
-| 05 | [**Geometry and trig**](SYLLABUS.md#w05) | Shapes, angles, coordinates and space. | 43 | `██████████ 100%` |
-| 06 | [**Calculus and analysis**](SYLLABUS.md#w06) | Change, limits, areas and the infinitely small. | 70 | `██████████ 100%` |
-| 07 | [**Complex analysis**](SYLLABUS.md#w07) | What the square root of −1 unlocks. | 60 | `██████████ 100%` |
-| 08 | [**Differential equations**](SYLLABUS.md#w08) | How things change over time: growth, orbits, chaos. | 93 | `██████████ 100%` |
-| 09 | [**Probability and statistics**](SYLLABUS.md#w09) | Chance, data and drawing honest conclusions. | 100 | `██████████ 100%` |
-| 10 | [**Measure and integration**](SYLLABUS.md#w10) | The rigorous floor under probability and calculus. | 68 | `██████████ 100%` |
-| 11 | [**Stochastic processes**](SYLLABUS.md#w11) | Randomness in motion: random walks to Brownian motion. | 60 | `██████████ 100%` |
-| 12 | [**Financial mathematics**](SYLLABUS.md#w12) | Interest, pricing, risk and markets, from loans to derivatives. | 332 | `██████████ 100%` |
-| 13 | [**Engineering mathematics**](SYLLABUS.md#w13) | Units, signals, control, circuits, mechanics, heat. | 86 | `███░░░░░░░ 30%` |
-| 14 | [**Applied and computational**](SYLLABUS.md#w14) | Algorithms, information, cryptography, machine learning. | 71 | `░░░░░░░░░░ 0%` |
-| 15 | [**Optimization**](SYLLABUS.md#w15) | Finding the best choice under limits. | 64 | `░░░░░░░░░░ 0%` |
-| 16 | [**Numerical analysis**](SYLLABUS.md#w16) | Computing answers you can trust, and knowing how far off they are. | 68 | `░░░░░░░░░░ 0%` |
-| 17 | [**Topology**](SYLLABUS.md#w17) | Shape without measurement: stretching, holes and knots. | 51 | `░░░░░░░░░░ 0%` |
-| 18 | [**Functional analysis**](SYLLABUS.md#w18) | Infinite-dimensional spaces behind modern analysis. | 56 | `░░░░░░░░░░ 0%` |
-| 19 | [**Partial differential equations**](SYLLABUS.md#w19) | Heat, waves and fluids. | 62 | `░░░░░░░░░░ 0%` |
-| 20 | [**Harmonic analysis**](SYLLABUS.md#w20) | Breaking signals into waves. | 52 | `░░░░░░░░░░ 0%` |
-| 21 | [**Number theory, advanced**](SYLLABUS.md#w21) | Primes in depth: zeta, L-functions and Galois. | 72 | `░░░░░░░░░░ 0%` |
-| 22 | [**Algebraic geometry**](SYLLABUS.md#w22) | Shapes defined by equations. | 54 | `░░░░░░░░░░ 0%` |
-| 23 | [**Differential geometry**](SYLLABUS.md#w23) | Curved space, symmetry and physics. | 69 | `░░░░░░░░░░ 0%` |
-| 24 | [**Computability and complexity**](SYLLABUS.md#w24) | What computers can and can't do, and how fast. | 57 | `░░░░░░░░░░ 0%` |
-| 25 | [**Frontier**](SYLLABUS.md#w25) | How research works, and the great open problems. | 43 | `░░░░░░░░░░ 0%` |
+<!-- map:start -->
+| # | Wing | What it's about | Ready to read |
+| --- | --- | --- | --- |
+| 01 | [**Foundations**](SYLLABUS.md#w01) | Numbers, fractions, powers, logic and proof: the toolkit everything else uses. | 59 of 59 |
+| 02 | [**Number theory**](SYLLABUS.md#w02) | Primes, remainders, clock arithmetic, codes and secrets. | 43 of 43 |
+| 03 | [**Algebra**](SYLLABUS.md#w03) | Equations, vectors, matrices, groups and fields. | 51 of 51 |
+| 04 | [**Combinatorics and graphs**](SYLLABUS.md#w04) | Counting cleverly, networks, routes and puzzles. | 82 of 82 |
+| 05 | [**Geometry and trig**](SYLLABUS.md#w05) | Shapes, angles, coordinates and space. | 43 of 43 |
+| 06 | [**Calculus and analysis**](SYLLABUS.md#w06) | Change, limits, areas and the infinitely small. | 70 of 70 |
+| 07 | [**Complex analysis**](SYLLABUS.md#w07) | What the square root of −1 unlocks. | 60 of 60 |
+| 08 | [**Differential equations and dynamics**](SYLLABUS.md#w08) | How things change over time: growth, orbits, chaos. | 93 of 93 |
+| 09 | [**Probability and statistics**](SYLLABUS.md#w09) | Chance, data and drawing honest conclusions. | 100 of 100 |
+| 10 | [**Measure and integration**](SYLLABUS.md#w10) | The rigorous floor under probability and calculus. | 68 of 68 |
+| 11 | [**Stochastic processes and calculus**](SYLLABUS.md#w11) | Randomness in motion: random walks to Brownian motion. | 60 of 60 |
+| 12 | [**Financial mathematics**](SYLLABUS.md#w12) | Interest, pricing, risk and markets, from loans to derivatives. | 332 of 332 |
+| 13 | [**Engineering mathematics**](SYLLABUS.md#w13) | Units, signals, control, circuits, mechanics, heat. | 26 of 86 |
+| 14 | [**Applied and computational**](SYLLABUS.md#w14) | Algorithms, information, cryptography, machine learning. | 0 of 71 · planned |
+| 15 | [**Optimization**](SYLLABUS.md#w15) | Finding the best choice under limits. | 0 of 64 · planned |
+| 16 | [**Numerical analysis**](SYLLABUS.md#w16) | Computing answers you can trust, and knowing how far off they are. | 0 of 68 · planned |
+| 17 | [**Topology**](SYLLABUS.md#w17) | Shape without measurement: stretching, holes and knots. | 0 of 51 · planned |
+| 18 | [**Functional analysis**](SYLLABUS.md#w18) | Infinite-dimensional spaces behind modern analysis. | 0 of 56 · planned |
+| 19 | [**Partial differential equations**](SYLLABUS.md#w19) | Heat, waves and fluids. | 0 of 62 · planned |
+| 20 | [**Harmonic analysis**](SYLLABUS.md#w20) | Breaking signals into waves. | 0 of 52 · planned |
+| 21 | [**Algebraic and analytic number theory**](SYLLABUS.md#w21) | Primes in depth: zeta, L-functions and Galois. | 0 of 72 · planned |
+| 22 | [**Algebraic geometry**](SYLLABUS.md#w22) | Shapes defined by equations. | 0 of 54 · planned |
+| 23 | [**Differential geometry and Lie groups**](SYLLABUS.md#w23) | Curved space, symmetry and physics. | 0 of 69 · planned |
+| 24 | [**Computability and complexity**](SYLLABUS.md#w24) | What computers can and can't do, and how fast. | 0 of 57 · planned |
+| 25 | [**Frontier**](SYLLABUS.md#w25) | How research works, and the great open problems. | 0 of 43 · planned |
+<!-- map:end -->
 
 ## How it's checked
 
