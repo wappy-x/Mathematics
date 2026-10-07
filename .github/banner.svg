@@ -15,12 +15,12 @@
 <defs>
 <clipPath id="frame"><rect width="1280" height="360" rx="14"/></clipPath>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#070b19"/><stop offset=".6" stop-color="#0a1024"/><stop offset="1" stop-color="#100c25"/></linearGradient>
-<radialGradient id="bloom" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c3d3ff" stop-opacity=".42"/><stop offset=".45" stop-color="#7f76f0" stop-opacity=".11"/><stop offset="1" stop-color="#7f76f0" stop-opacity="0"/></radialGradient>
-<radialGradient id="core" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff" stop-opacity=".34"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+<radialGradient id="bloom" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c3d3ff" stop-opacity=".2"/><stop offset=".45" stop-color="#7f76f0" stop-opacity=".07"/><stop offset="1" stop-color="#7f76f0" stop-opacity="0"/></radialGradient>
+<radialGradient id="core" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff" stop-opacity=".1"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
 <radialGradient id="dimc" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000"/><stop offset=".62" stop-color="#000"/><stop offset=".82" stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
 <radialGradient id="diml" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".9"/><stop offset=".78" stop-color="#000" stop-opacity=".8"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
 <mask id="clear" maskUnits="userSpaceOnUse" x="0" y="0" width="1280" height="360"><rect width="1280" height="360" fill="#fff"/><ellipse cx="640" cy="162" rx="545" ry="112" fill="url(#dimc)"/><ellipse cx="640" cy="233" rx="570" ry="32" fill="url(#diml)"/></mask>
-<linearGradient id="ink" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9cc4f2"/><stop offset=".5" stop-color="#a9b4f4"/><stop offset="1" stop-color="#c0a6f2"/></linearGradient>
+<linearGradient id="ink" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#86a6d9"/><stop offset=".5" stop-color="#9196d8"/><stop offset="1" stop-color="#a68ad6"/></linearGradient>
 <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
 <filter id="soft" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
 <mask id="titleMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1280" height="360"><text class="title" x="646" y="190" fill="#fff">MATHEMATICS</text></mask>
@@ -35,9 +35,9 @@
 </g>
 <g class="rm"><text class="eq" x="70" y="62" text-anchor="start" font-size="20" fill="#a9bcf0" opacity=".45">e<tspan dy="-0.543em" font-size="70%">iπ</tspan><tspan dy="0.380em"> + 1 = 0</tspan></text><text class="eq" x="1210" y="64" text-anchor="end" font-size="20" fill="#a9bcf0" opacity=".45">∑ 1/n² = π²/6</text><text class="eq" x="60" y="196" text-anchor="start" font-size="20" fill="#a9bcf0" opacity=".45">∫ e<tspan dy="-0.543em" font-size="70%">−x²</tspan><tspan dy="0.380em"> dx = √π</tspan></text><text class="eq" x="1222" y="198" text-anchor="end" font-size="20" fill="#a9bcf0" opacity=".45">∇ · E = ρ/ε₀</text><text class="eq" x="96" y="318" text-anchor="start" font-size="20" fill="#a9bcf0" opacity=".45">φ = (1 + √5)/2</text><text class="eq" x="1190" y="316" text-anchor="end" font-size="20" fill="#a9bcf0" opacity=".45">ζ(s) = ∑ n<tspan dy="-0.543em" font-size="70%">−s</tspan></text></g>
 <g class="up">
-<text class="title" x="646" y="190" fill="#6f86e6" filter="url(#soft)" opacity=".5">MATHEMATICS</text>
+<text class="title" x="646" y="190" fill="#6f86e6" filter="url(#soft)" opacity=".26">MATHEMATICS</text>
 <text class="title" x="646" y="190" fill="url(#ink)">MATHEMATICS</text>
-<g mask="url(#titleMask)"><g transform="skewX(-18)"><rect class="sweep" x="0" y="100" width="240" height="140" fill="url(#shine)" opacity=".5"/></g></g>
+<g mask="url(#titleMask)"><g transform="skewX(-18)"><rect class="sweep" x="0" y="100" width="240" height="140" fill="url(#shine)" opacity=".28"/></g></g>
 <text class="lede" x="640" y="240">A comprehensive mathematics library, with every result checked in Rust and Python.</text>
 </g>
 </g>
