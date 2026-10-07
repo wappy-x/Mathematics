@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The fence line x + y = 20 touching the curve of area 100 at the 10 by 10 square, and crossing the curve of area 75 at the 5 by 15 and 15 by 5 pens</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="215" x2="245" y2="215" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="215" x2="40" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<text x="250" y="219" font-size="13" fill="currentColor">x (m)</text>
+<text x="12" y="16" font-size="13" fill="currentColor">y (m)</text>
+<text x="36" y="232" font-size="13" fill="currentColor">0</text>
+<text x="210" y="232" font-size="13" fill="currentColor">20</text>
+<text x="18" y="39" font-size="13" fill="currentColor">20</text>
+<line x1="40" y1="35" x2="220" y2="215" stroke="currentColor" stroke-width="2"/>
+<polyline points="85,35 89.5,51.4 96.2,71 103,86.4 112,102.5 121,115 130,125 139,133.2 152.5,143 166,150.7 184,158.8 202,165 220,170" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="73.8,35 78.2,56.2 85,80 94,102.5 107.5,125 121,140 130,147.5 148,158.8 175,170 197.5,176.4 220,181.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="130" cy="125" r="4" fill="currentColor"/>
+<circle cx="85" cy="80" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="175" cy="170" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="125" x2="157" y2="98" stroke="currentColor" stroke-width="2"/>
+<polyline points="154.2,106.5 157,98 148.5,100.8" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="175" y1="170" x2="186.2" y2="136.2" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="187.5,145.1 186.2,136.2 179.9,142.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="175" y1="170" x2="193" y2="152" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="190.2,160.5 193,152 184.5,154.8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="162" y="94" font-size="13" fill="currentColor">both gradients</text>
+<text x="92" y="30" font-size="13" fill="currentColor">area 100</text>
+<text x="200" y="130" font-size="13" fill="currentColor">grad A</text>
+<text x="200" y="152" font-size="13" fill="currentColor">grad g</text>
+<text x="225" y="192" font-size="13" fill="currentColor">area 75</text>
+<text x="224" y="212" font-size="13" fill="currentColor">fence</text>
+</svg>

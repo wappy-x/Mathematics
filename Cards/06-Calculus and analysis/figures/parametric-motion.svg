@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A ball thrown at 12 m/s across and 16 m/s up, drawn to scale: its parabolic path from the hand to 39.18 m away, 13.06 m high at the top, with velocity arrows at release, at 1 s and at the top, where the arrow is level</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<defs><marker id="head" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M 0 0 L 8 4 L 0 8" fill="none" stroke="currentColor" stroke-width="1.5"/></marker></defs>
+<line x1="16" y1="200" x2="344" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 24 200 Q 180.73 -8.98 337.47 200" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="24" y1="200" x2="72" y2="136" stroke="currentColor" stroke-width="2" marker-end="url(#head)"/>
+<line x1="120" y1="111.2" x2="168" y2="86.4" stroke="currentColor" stroke-width="2" marker-end="url(#head)"/>
+<line x1="180.73" y1="95.51" x2="228.73" y2="95.51" stroke="currentColor" stroke-width="2" marker-end="url(#head)"/>
+<circle cx="24" cy="200" r="3" fill="currentColor"/>
+<circle cx="120" cy="111.2" r="3" fill="currentColor"/>
+<circle cx="180.73" cy="95.51" r="3" fill="currentColor"/>
+<circle cx="337.47" cy="200" r="3" fill="currentColor"/>
+<text x="180" y="76" font-size="13" fill="currentColor" text-anchor="middle">top: 12 m/s, level</text>
+<text x="132" y="142" font-size="13" fill="currentColor">t = 1 s: 13.51 m/s</text>
+<text x="52" y="186" font-size="13" fill="currentColor">release: 20 m/s</text>
+<text x="180" y="224" font-size="13" fill="currentColor" text-anchor="middle">back to hand height 39.18 m away</text>
+</svg>

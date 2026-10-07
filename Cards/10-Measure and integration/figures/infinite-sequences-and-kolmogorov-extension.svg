@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The unit interval drawn three times; each copy shades where one binary digit of the position equals 1, in one, two and four pieces; a dashed line marks the dart at 0.7236 m</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="30" y="30" font-size="13" fill="currentColor">digit 1 is 1</text>
+<rect x="30" y="38" width="300" height="24" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="180" y="38" width="150" height="24" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="88" font-size="13" fill="currentColor">digit 2 is 1</text>
+<rect x="30" y="96" width="300" height="24" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="105" y="96" width="75" height="24" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="255" y="96" width="75" height="24" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="146" font-size="13" fill="currentColor">digit 3 is 1</text>
+<rect x="30" y="154" width="300" height="24" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="67.5" y="154" width="37.5" height="24" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="142.5" y="154" width="37.5" height="24" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="217.5" y="154" width="37.5" height="24" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="292.5" y="154" width="37.5" height="24" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="247.08" y1="30" x2="247.08" y2="186" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="30" y="200" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="180" y="200" font-size="13" text-anchor="middle" fill="currentColor">0.5</text>
+<text x="330" y="200" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="247.08" y="216" font-size="13" text-anchor="middle" fill="currentColor">dart at 0.7236</text>
+<text x="180" y="234" font-size="13" text-anchor="middle" fill="currentColor">position along the bottom edge, metres</text>
+</svg>

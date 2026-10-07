@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>The string modes sin(pi x) and sin(2 pi x) on a 1 m string, and their product, whose two shaded lobes have equal and opposite area</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="120" x2="322" y2="120" stroke="currentColor" stroke-width="1"/>
+<line x1="40" y1="14" x2="40" y2="226" stroke="currentColor" stroke-width="1"/>
+<line x1="36" y1="20" x2="44" y2="20" stroke="currentColor" stroke-width="1"/>
+<line x1="36" y1="220" x2="44" y2="220" stroke="currentColor" stroke-width="1"/>
+<line x1="320" y1="116" x2="320" y2="124" stroke="currentColor" stroke-width="1"/>
+<line x1="180" y1="116" x2="180" y2="124" stroke="currentColor" stroke-width="1"/>
+<polygon points="40.0,120.0 40.0,120.0 47.0,118.8 54.0,115.2 61.0,109.4 68.0,101.8 75.0,92.9 82.0,83.3 89.0,73.4 96.0,64.1 103.0,55.9 110.0,49.3 117.0,44.9 124.0,43.1 131.0,44.0 138.0,47.9 145.0,54.7 152.0,64.1 159.0,75.9 166.0,89.5 173.0,104.4 180.0,120.0" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="180.0,120.0 180.0,120.0 187.0,135.6 194.0,150.5 201.0,164.1 208.0,175.9 215.0,185.3 222.0,192.1 229.0,196.0 236.0,196.9 243.0,195.1 250.0,190.7 257.0,184.1 264.0,175.9 271.0,166.6 278.0,156.7 285.0,147.1 292.0,138.2 299.0,130.6 306.0,124.8 313.0,121.2 320.0,120.0" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polyline points="40.0,120.0 47.0,112.2 54.0,104.4 61.0,96.7 68.0,89.1 75.0,81.7 82.0,74.6 89.0,67.8 96.0,61.2 103.0,55.1 110.0,49.3 117.0,44.0 124.0,39.1 131.0,34.7 138.0,30.9 145.0,27.6 152.0,24.9 159.0,22.8 166.0,21.2 173.0,20.3 180.0,20.0 187.0,20.3 194.0,21.2 201.0,22.8 208.0,24.9 215.0,27.6 222.0,30.9 229.0,34.7 236.0,39.1 243.0,44.0 250.0,49.3 257.0,55.1 264.0,61.2 271.0,67.8 278.0,74.6 285.0,81.7 292.0,89.1 299.0,96.7 306.0,104.4 313.0,112.2 320.0,120.0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<polyline points="40.0,120.0 47.0,104.4 54.0,89.1 61.0,74.6 68.0,61.2 75.0,49.3 82.0,39.1 89.0,30.9 96.0,24.9 103.0,21.2 110.0,20.0 117.0,21.2 124.0,24.9 131.0,30.9 138.0,39.1 145.0,49.3 152.0,61.2 159.0,74.6 166.0,89.1 173.0,104.4 180.0,120.0 187.0,135.6 194.0,150.9 201.0,165.4 208.0,178.8 215.0,190.7 222.0,200.9 229.0,209.1 236.0,215.1 243.0,218.8 250.0,220.0 257.0,218.8 264.0,215.1 271.0,209.1 278.0,200.9 285.0,190.7 292.0,178.8 299.0,165.4 306.0,150.9 313.0,135.6 320.0,120.0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<text x="32" y="25" font-size="13" text-anchor="end" fill="currentColor">1</text>
+<text x="32" y="225" font-size="13" text-anchor="end" fill="currentColor">−1</text>
+<text x="32" y="125" font-size="13" text-anchor="end" fill="currentColor">0</text>
+<text x="48" y="14" font-size="13" fill="currentColor">height, no unit</text>
+<text x="326" y="116" font-size="13" fill="currentColor">1 m</text>
+<text x="92" y="100" font-size="13" fill="currentColor">+0.212</text>
+<text x="206" y="150" font-size="13" fill="currentColor">−0.212</text>
+<text x="180" y="236" font-size="13" text-anchor="middle" fill="currentColor">x, distance along the string, in m</text>
+</svg>

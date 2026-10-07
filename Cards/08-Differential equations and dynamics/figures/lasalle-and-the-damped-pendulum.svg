@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Phase plane of the damped swing, angle across and speed up. A shaded eye bounded by v = plus or minus 2 cos(theta/2) runs between the two upside-down points at minus pi and pi. The swing released at 60 degrees with zero speed spirals in to hanging at rest. A dashed line marks v = 0, where the energy's rate is zero.</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="38.6,120.0 56.3,102.5 74.0,85.3 91.6,70.0 109.3,56.6 127.0,45.3 144.7,36.8 162.3,31.8 180.0,30.0 197.7,31.8 215.3,36.8 233.0,45.3 250.7,56.6 268.4,70.0 286.0,85.3 303.7,102.5 321.4,120.0 303.7,137.6 286.0,154.7 268.4,169.9 250.7,183.4 233.0,194.7 215.3,203.2 197.7,208.2 180.0,210.0 162.3,208.2 144.7,203.2 127.0,194.7 109.3,183.4 91.6,169.9 74.0,154.7 56.3,137.6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="22" x2="180" y2="218" stroke="currentColor" stroke-width="1"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="227.1,120.0 226.0,129.1 222.7,136.9 217.6,143.1 211.3,147.7 203.9,150.6 196.1,151.5 188.3,150.6 181.0,148.1 174.4,144.2 168.9,139.4 164.8,134.0 162.0,128.5 160.5,123.2 160.3,118.3 161.3,114.1 163.2,110.8 165.8,108.3 169.0,106.7 172.4,106.1 175.8,106.4 179.1,107.4 182.1,109.0 184.6,111.1 186.5,113.5 187.8,115.9 188.5,118.3 188.7,120.6 188.3,122.5 187.5,124.0 186.3,125.2 184.9,125.9 183.4,126.2 181.9,126.1 180.4,125.6 179.1,124.9 178.0,124.0 177.1,122.9 176.5,121.8 176.2,120.7 176.2,119.8 176.3,118.9 176.7,118.2 177.2,117.7 177.8,117.4 178.5,117.3 179.2,117.3 179.8,117.5 180.4,117.8" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="211.3,147.7 214.9,140.7 219.0,146.4" fill="currentColor"/>
+<circle cx="227.1" cy="120.0" r="3" fill="currentColor"/>
+<circle cx="180" cy="120" r="2.5" fill="currentColor"/>
+<circle cx="38.6" cy="120" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="321.4" cy="120" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="232" y="112" font-size="13" fill="currentColor">release, 60°</text>
+<text x="40" y="44" font-size="13" fill="currentColor">edge: V = 2</text>
+<text x="8" y="110" font-size="13" fill="currentColor">−π</text>
+<text x="326" y="110" font-size="13" fill="currentColor">π</text>
+<text x="186" y="18" font-size="13" fill="currentColor">speed v</text>
+<text x="312" y="142" font-size="13" fill="currentColor">θ, rad</text>
+<text x="196" y="234" font-size="13" fill="currentColor">dashed: v = 0, where V′ = 0</text>
+</svg>

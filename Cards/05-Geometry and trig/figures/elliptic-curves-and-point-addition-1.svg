@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The curve y squared equals x cubed minus x plus 1 drawn to scale: the line y = 1 through P and Q meets it again at R, and R reflected in the x-axis is P + Q</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="60" y1="120" x2="300" y2="120" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.45"/>
+<line x1="150" y1="10" x2="150" y2="230" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.45"/>
+<polyline points="83.8,120.0 84.1,111.0 85.3,102.2 87.2,93.7 89.9,85.9 93.4,78.8 97.6,72.6 102.6,67.7 108.4,64.0 114.9,61.8 122.2,61.2 130.3,62.3 139.1,65.1 148.7,69.4 159.1,74.6 170.2,79.3 182.2,80.5 194.8,74.6 208.3,60.4 222.5,39.4 237.5,12.7" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="83.8,120.0 84.1,111.0 85.3,102.2 87.2,93.7 89.9,85.9 93.4,78.8 97.6,72.6 102.6,67.7 108.4,64.0 114.9,61.8 122.2,61.2 130.3,62.3 139.1,65.1 148.7,69.4 159.1,74.6 170.2,79.3 182.2,80.5 194.8,74.6 208.3,60.4 222.5,39.4 237.5,12.7" fill="none" stroke="currentColor" stroke-width="2" transform="matrix(1 0 0 -1 0 240)"/>
+<line x1="70" y1="70" x2="245" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<line x1="100" y1="70" x2="100" y2="170" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<circle cx="150" cy="70" r="3.5" fill="currentColor"/>
+<circle cx="200" cy="70" r="3.5" fill="currentColor"/>
+<circle cx="100" cy="70" r="3.5" fill="currentColor"/>
+<circle cx="100" cy="170" r="3.5" fill="currentColor"/>
+<text x="155" y="62" font-size="14" fill="currentColor">P</text>
+<text x="204" y="88" font-size="14" fill="currentColor">Q</text>
+<text x="86" y="62" font-size="14" fill="currentColor">R</text>
+<text x="94" y="186" font-size="14" text-anchor="end" fill="currentColor">P + Q</text>
+<text x="250" y="74" font-size="13" fill="currentColor">y = 1</text>
+<text x="304" y="124" font-size="13" fill="currentColor">x</text>
+<text x="155" y="20" font-size="13" fill="currentColor">y</text>
+</svg>

@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The strip 0 &lt; Im z &lt; pi on the left and the upper half plane on the right, to scale; w = e^z sends the floor to the positive real axis, the ceiling to the negative real axis, the line y = 1 to the ray at angle 1, and 1 + i to e^(1+i)</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="15" y="75.75" width="150" height="94.25" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="185" y="40" width="165" height="130" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="15" y1="170" x2="165" y2="170" stroke="currentColor" stroke-width="2"/>
+<line x1="15" y1="75.75" x2="165" y2="75.75" stroke="currentColor" stroke-width="2"/>
+<line x1="90" y1="225" x2="90" y2="50" stroke="currentColor" stroke-width="1.5"/>
+<line x1="15" y1="140" x2="165" y2="140" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="120" cy="140" r="3.5" fill="currentColor"/>
+<line x1="185" y1="170" x2="350" y2="170" stroke="currentColor" stroke-width="2"/>
+<line x1="250" y1="225" x2="250" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<line x1="250" y1="170" x2="298.63" y2="94.27" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="294.06" cy="101.38" r="3.5" fill="currentColor"/>
+<line x1="150" y1="30" x2="200" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="208,30 199,26 199,34" fill="currentColor"/>
+<text x="150" y="22" font-size="13" fill="currentColor">w = e^z</text>
+<text x="20" y="164" font-size="13" fill="currentColor">0°</text>
+<text x="20" y="92" font-size="13" fill="currentColor">100°</text>
+<text x="126" y="134" font-size="13" fill="currentColor">1 + i</text>
+<text x="310" y="164" font-size="13" fill="currentColor">0°</text>
+<text x="192" y="164" font-size="13" fill="currentColor">100°</text>
+<text x="303" y="108" font-size="13" fill="currentColor">e^(1+i)</text>
+<text x="146" y="188" font-size="13" fill="currentColor">Re</text>
+<text x="96" y="62" font-size="13" fill="currentColor">Im</text>
+<text x="326" y="188" font-size="13" fill="currentColor">Re</text>
+<text x="256" y="52" font-size="13" fill="currentColor">Im</text>
+</svg>

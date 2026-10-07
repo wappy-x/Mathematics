@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Young's inequality at p = 3 for a = 2 and b = 3, drawn to scale: the curve y = x squared, the shaded area A under it from 0 to 2, the dashed area B to its left from height 0 to 3, and the rectangle of area 6 that the two cover, with a sliver of A left over above the rectangle</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M40,210 Q85,210 130,30 L130,210 Z" fill="currentColor" fill-opacity="0.12"/>
+<path d="M40,210 Q78.97,210 117.94,75 L40,75 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="40" y="75" width="90" height="135" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="210" x2="160" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="210" x2="40" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<path d="M40,210 Q85,210 130,30" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="34" y="214" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="34" y="79" font-size="13" fill="currentColor" text-anchor="end">b = 3</text>
+<text x="34" y="34" font-size="13" fill="currentColor" text-anchor="end">4</text>
+<text x="130" y="228" font-size="13" fill="currentColor" text-anchor="middle">a = 2</text>
+<text x="58" y="140" font-size="14" fill="currentColor">B</text>
+<text x="110" y="196" font-size="14" fill="currentColor">A</text>
+<text x="136" y="50" font-size="13" fill="currentColor">sliver</text>
+<text x="180" y="100" font-size="13" fill="currentColor">curve: y = x^2 (p = 3)</text>
+<text x="180" y="118" font-size="13" fill="currentColor">shaded: A = 2.667</text>
+<text x="180" y="136" font-size="13" fill="currentColor">dashed: B = 3.464</text>
+<text x="180" y="154" font-size="13" fill="currentColor">rectangle: ab = 6</text>
+<text x="180" y="172" font-size="13" fill="currentColor">sliver: A + B − ab = 0.131</text>
+</svg>

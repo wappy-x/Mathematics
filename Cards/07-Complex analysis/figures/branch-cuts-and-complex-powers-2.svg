@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The walk 4, 4i, minus 4, minus 4i, back to 4 round the origin, drawn to scale, with the branch cut of the square root dashed along the negative real axis; the followed square root starts at 2 and ends at minus 2</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="180" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="20" y1="120" x2="180" y2="120" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="180" y1="236" x2="180" y2="4" stroke="currentColor" stroke-width="1.5"/>
+<text x="334" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="160" y="16" font-size="13" fill="currentColor">Im</text>
+<polygon points="260,120 180,40 100,120 180,200" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="215.8,75.8 226.3,79.3 219.3,86.3" fill="currentColor"/>
+<polygon points="135.8,84.2 146.3,80.7 139.3,73.7" fill="currentColor"/>
+<polygon points="144.2,164.2 133.7,160.7 140.7,153.7" fill="currentColor"/>
+<polygon points="224.2,155.8 220.7,166.3 213.7,159.3" fill="currentColor"/>
+<circle cx="260" cy="120" r="4" fill="currentColor"/>
+<text x="266" y="112" font-size="13" fill="currentColor">start: 2</text>
+<text x="266" y="138" font-size="13" fill="currentColor">end: −2</text>
+<text x="188" y="36" font-size="13" fill="currentColor">4i</text>
+<text x="188" y="216" font-size="13" fill="currentColor">−4i</text>
+<text x="72" y="112" font-size="13" fill="currentColor">−4</text>
+<text x="26" y="112" font-size="13" fill="currentColor">cut</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Two blocks on a beam drawn to scale: the log's 20.0 with weight 4 and the readings' 21.1 with weight 5 balance at 20.61</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="150" x2="320" y2="150" stroke="currentColor" stroke-width="2"/>
+<rect x="81" y="86" width="30" height="64" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="204.2" y="70" width="30" height="80" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="164.4,150 152.4,172 176.4,172" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="96" y="60" font-size="13" text-anchor="middle" fill="currentColor">log 20.0</text>
+<text x="96" y="76" font-size="13" text-anchor="middle" fill="currentColor">weight 4</text>
+<text x="219.2" y="44" font-size="13" text-anchor="middle" fill="currentColor">readings 21.1</text>
+<text x="219.2" y="60" font-size="13" text-anchor="middle" fill="currentColor">weight 5</text>
+<text x="164.4" y="192" font-size="13" text-anchor="middle" fill="currentColor">balance 20.61</text>
+<line x1="40" y1="206" x2="320" y2="206" stroke="currentColor" stroke-width="1.5"/>
+<line x1="96" y1="202" x2="96" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="208" y1="202" x2="208" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="320" y1="202" x2="320" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<text x="96" y="228" font-size="13" text-anchor="middle" fill="currentColor">20.0</text>
+<text x="208" y="228" font-size="13" text-anchor="middle" fill="currentColor">21.0</text>
+<text x="320" y="228" font-size="13" text-anchor="middle" fill="currentColor">22.0 °C</text>
+</svg>

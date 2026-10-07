@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Bell-shaped density of a share's daily return, spread 1.2 percent, with the area left of minus 2 percent shaded; that area is 0.0478</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="30,200.0 45,199.9 60,199.4 75,197.6 90,192.7 105,181.0 120,158.6 120,200" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polyline points="30,200.0 45,199.9 60,199.4 75,197.6 90,192.7 105,181.0 120,158.6 135,123.9 150,82.5 165,47.6 180,33.8 195,47.6 210,82.5 225,123.9 240,158.6 255,181.0 270,192.7 285,197.6 300,199.4 315,199.9 330,200.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="20" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="200" x2="120" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<text x="60" y="218" font-size="13" fill="currentColor" text-anchor="middle">−4</text>
+<text x="120" y="218" font-size="13" fill="currentColor" text-anchor="middle">−2</text>
+<text x="180" y="218" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="240" y="218" font-size="13" fill="currentColor" text-anchor="middle">2</text>
+<text x="300" y="218" font-size="13" fill="currentColor" text-anchor="middle">4</text>
+<text x="180" y="236" font-size="13" fill="currentColor" text-anchor="middle">tomorrow's return, percent</text>
+<text x="20" y="150" font-size="13" fill="currentColor">shaded area</text>
+<text x="20" y="166" font-size="13" fill="currentColor">0.0478</text>
+<text x="196" y="30" font-size="13" fill="currentColor">height 0.332 per point</text>
+</svg>

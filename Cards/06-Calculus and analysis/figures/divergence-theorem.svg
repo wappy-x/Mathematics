@@ -1,0 +1,29 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Side view of the 2 m by 1 m tank with water velocity arrows at the face midpoints and corners, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="80" y="70" width="200" height="100" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="120" r="2.5" fill="currentColor"/>
+<line x1="280" y1="120" x2="320" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="313,116 320,120 313,124" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="80" y1="120" x2="40" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="47,116 40,120 47,124" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="70" x2="180" y2="50" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="176,57 180,50 184,57" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="170" x2="180" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="176,183 180,190 184,183" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="280" y1="70" x2="320" y2="50" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="311,50 320,50 315,57" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="80" y1="70" x2="40" y2="50" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="49,50 40,50 45,57" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="280" y1="170" x2="320" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="311,190 320,190 315,183" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="80" y1="170" x2="40" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="49,190 40,190 45,183" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="286" y="140" font-size="13" fill="currentColor">10 L/s</text>
+<text x="74" y="140" font-size="13" fill="currentColor" text-anchor="end">10 L/s</text>
+<text x="188" y="62" font-size="13" fill="currentColor">10 L/s</text>
+<text x="188" y="192" font-size="13" fill="currentColor">10 L/s</text>
+<text x="180" y="160" font-size="13" fill="currentColor" text-anchor="middle">2 m</text>
+<text x="88" y="124" font-size="13" fill="currentColor">1 m</text>
+<text x="186" y="116" font-size="13" fill="currentColor">centre</text>
+<text x="180" y="228" font-size="13" fill="currentColor" text-anchor="middle">side view through the centre, pipes not drawn</text>
+</svg>

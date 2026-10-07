@@ -1,0 +1,31 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The eight 8th roots of unity on the circle of radius 1, one every 45 degrees, drawn to scale; point k is omega to the power k</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="236" x2="180" y2="4" stroke="currentColor" stroke-width="1.5"/>
+<text x="322" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="158" y="16" font-size="13" fill="currentColor">Im</text>
+<circle cx="180" cy="120" r="90" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="243.6" y2="56.4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<line x1="180" y1="120" x2="116.4" y2="56.4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<line x1="180" y1="120" x2="116.4" y2="183.6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<line x1="180" y1="120" x2="243.6" y2="183.6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<circle cx="270" cy="120" r="4" fill="currentColor"/>
+<circle cx="243.6" cy="56.4" r="4" fill="currentColor"/>
+<circle cx="180" cy="30" r="4" fill="currentColor"/>
+<circle cx="116.4" cy="56.4" r="4" fill="currentColor"/>
+<circle cx="90" cy="120" r="4" fill="currentColor"/>
+<circle cx="116.4" cy="183.6" r="4" fill="currentColor"/>
+<circle cx="180" cy="210" r="4" fill="currentColor"/>
+<circle cx="243.6" cy="183.6" r="4" fill="currentColor"/>
+<text x="284" y="113" font-size="13" fill="currentColor">0</text>
+<text x="251" y="48" font-size="13" fill="currentColor">1</text>
+<text x="188" y="25" font-size="13" fill="currentColor">2</text>
+<text x="100" y="48" font-size="13" fill="currentColor">3</text>
+<text x="70" y="113" font-size="13" fill="currentColor">4</text>
+<text x="100" y="202" font-size="13" fill="currentColor">5</text>
+<text x="188" y="226" font-size="13" fill="currentColor">6</text>
+<text x="251" y="202" font-size="13" fill="currentColor">7</text>
+<path d="M 210 120 A 30 30 0 0 0 201.2 98.8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="197.7,95.3 203.7,96.3 198.7,101.3" fill="currentColor"/>
+<text x="214" y="110" font-size="13" fill="currentColor">× ω</text>
+</svg>

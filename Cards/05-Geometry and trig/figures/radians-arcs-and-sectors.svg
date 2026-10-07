@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 60 degree slice of a pizza with a 15 cm radius, drawn to scale: two 15 cm cut edges, a curved 15.71 cm crust, the straight 15 cm chord across it, and a dot where one radius of crust ends, at 1 radian</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M 50 212 L 230 212 A 180 180 0 0 0 140 56.1 Z" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="50" y1="212" x2="230" y2="212" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="212" x2="140" y2="56.1" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 230 212 A 180 180 0 0 0 140 56.1" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="230" y1="212" x2="140" y2="56.1" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<path d="M 80 212 A 30 30 0 0 0 65 186" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="140" y1="207" x2="140" y2="217" stroke="currentColor" stroke-width="1.5"/>
+<line x1="90.7" y1="131.5" x2="99.3" y2="136.5" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180.7" y1="136.5" x2="189.3" y2="131.5" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="147.3" cy="60.5" r="3" fill="currentColor" stroke="none"/>
+<text x="44" y="216" font-size="13" fill="currentColor" text-anchor="end">centre</text>
+<text x="140" y="232" font-size="13" fill="currentColor" text-anchor="middle">15 cm</text>
+<text x="84" y="126" font-size="13" fill="currentColor" text-anchor="end">15 cm</text>
+<text x="214" y="126" font-size="13" fill="currentColor">crust 15.71 cm</text>
+<text x="88" y="200" font-size="13" fill="currentColor">60° = 1.047 rad</text>
+<text x="186" y="165" font-size="13" fill="currentColor" text-anchor="end">chord 15 cm</text>
+<text x="156" y="46" font-size="13" fill="currentColor">1 rad</text>
+</svg>

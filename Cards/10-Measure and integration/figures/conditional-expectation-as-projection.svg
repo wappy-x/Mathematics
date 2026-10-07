@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A right triangle drawn to scale, 8 units per mm: the constant 55 to the forecast M is 22.91 mm, M to the rainfall X is 10 mm at a right angle, and 55 to X is 25 mm</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="223.3" y2="200" stroke="currentColor" stroke-width="2"/>
+<line x1="223.3" y1="200" x2="223.3" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="200" x2="223.3" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="213.3,200 213.3,190 223.3,190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="40" cy="200" r="3" fill="currentColor"/>
+<circle cx="223.3" cy="200" r="3" fill="currentColor"/>
+<circle cx="223.3" cy="120" r="3" fill="currentColor"/>
+<text x="12" y="205" font-size="13" fill="currentColor">55</text>
+<text x="230" y="206" font-size="13" fill="currentColor">M</text>
+<text x="230" y="124" font-size="13" fill="currentColor">X</text>
+<text x="60" y="222" font-size="13" fill="currentColor">between: 22.91 mm</text>
+<text x="232" y="165" font-size="13" fill="currentColor">within: 10 mm</text>
+<text x="40" y="135" font-size="13" fill="currentColor">total: 25 mm</text>
+</svg>

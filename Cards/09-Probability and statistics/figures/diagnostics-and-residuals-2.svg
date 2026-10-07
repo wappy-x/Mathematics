@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Residual against fitted price for the nine sales: the eight ordinary houses form a tilted band and the mansion sits close to zero</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="220" x2="40" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<text x="34" y="44" font-size="13" fill="currentColor" text-anchor="end">+40</text>
+<text x="34" y="124" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="34" y="204" font-size="13" fill="currentColor" text-anchor="end">−40</text>
+<text x="65" y="234" font-size="13" fill="currentColor" text-anchor="middle">400</text>
+<text x="165" y="234" font-size="13" fill="currentColor" text-anchor="middle">800</text>
+<text x="265" y="234" font-size="13" fill="currentColor" text-anchor="middle">1200</text>
+<text x="340" y="112" font-size="13" fill="currentColor" text-anchor="end">fitted price, $ thousands</text>
+<text x="48" y="16" font-size="13" fill="currentColor">residual, $ thousands</text>
+<text x="130" y="60" font-size="13" fill="currentColor">eight houses: a tilted band</text>
+<circle cx="62.3" cy="198.0" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="72.1" cy="197.1" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="77.1" cy="116.7" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="82.0" cy="176.2" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="91.9" cy="75.3" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="96.9" cy="94.9" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="106.7" cy="34.0" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="116.6" cy="33.1" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="319.3" cy="154.7" r="4" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<text x="340" y="180" font-size="13" fill="currentColor" text-anchor="end">mansion</text>
+</svg>

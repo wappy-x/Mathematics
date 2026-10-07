@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The s-plane with the half-plane Re s greater than 1 shaded, the boundary line Re s = 1 dashed, a cross at s = 1, and the points s = 2 and s = 2 + i</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="120" y="8" width="230" height="224" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="10" y1="150" x2="350" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="232" x2="60" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="232" x2="120" y2="8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="114" y1="144" x2="126" y2="156" stroke="currentColor" stroke-width="2"/>
+<line x1="114" y1="156" x2="126" y2="144" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="150" r="3.5" fill="currentColor"/>
+<circle cx="180" cy="90" r="3.5" fill="currentColor"/>
+<text x="176" y="170" font-size="13" fill="currentColor">2</text>
+<text x="188" y="86" font-size="13" fill="currentColor">2 + i</text>
+<text x="104" y="170" font-size="13" fill="currentColor">1</text>
+<text x="46" y="170" font-size="13" fill="currentColor">0</text>
+<text x="126" y="24" font-size="13" fill="currentColor">Re s = 1</text>
+<text x="236" y="210" font-size="14" fill="currentColor">Re s &gt; 1</text>
+<text x="326" y="168" font-size="13" fill="currentColor">Re</text>
+<text x="66" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

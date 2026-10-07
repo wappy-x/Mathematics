@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>A 5 km valley floor drawn to scale, 60 pixels to the km: flood edges at 1, 1.5, 1.75 and 1.875 km from the river bank, and a dashed terrace at 2 km that no stage reaches</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="30" y="140" width="300" height="60" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="30" y="110" width="300" height="90" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="30" y="95" width="300" height="105" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="30" y="87.5" width="300" height="112.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="80" x2="330" y2="80" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="30" y1="200" x2="330" y2="200" stroke="currentColor" stroke-width="2"/>
+<text x="30" y="30" font-size="13" fill="currentColor">stages 3 and 4: thin bands to 1.75, 1.875 km</text>
+<text x="30" y="70" font-size="13" fill="currentColor">terrace at 2 km: no stage reaches it</text>
+<text x="40" y="130" font-size="13" fill="currentColor">stage 2: out to 1.5 km, 7.5 sq km</text>
+<text x="40" y="176" font-size="13" fill="currentColor">stage 1: out to 1 km, 5 sq km</text>
+<text x="30" y="222" font-size="13" fill="currentColor">river bank, 5 km long</text>
+</svg>

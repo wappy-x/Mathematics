@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>The 3, 4, 5 m triangle with a line through corner C parallel to AB; the angles 53.13 and 36.87 degrees reappear at C beside the right angle</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M55 200 L305 200 L145 80 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="15" y1="80" x2="345" y2="80" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<path d="M137.8 89.6 L147.4 96.8 L154.6 87.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M85 200 A30 30 0 0 0 73 176" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M275 200 A30 30 0 0 1 281 182" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M121 80 A24 24 0 0 0 130.6 99.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M169 80 A24 24 0 0 1 164.2 94.4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="95" y="190" font-size="13" fill="currentColor">53.13°</text>
+<text x="262" y="192" font-size="13" text-anchor="end" fill="currentColor">36.87°</text>
+<text x="118" y="106" font-size="13" text-anchor="end" fill="currentColor">53.13°</text>
+<text x="185" y="100" font-size="13" fill="currentColor">36.87°</text>
+<text x="146" y="118" font-size="13" text-anchor="middle" fill="currentColor">90°</text>
+<text x="90" y="136" font-size="13" text-anchor="end" fill="currentColor">3 m</text>
+<text x="235" y="134" font-size="13" fill="currentColor">4 m</text>
+<text x="180" y="220" font-size="13" text-anchor="middle" fill="currentColor">5 m</text>
+<text x="46" y="206" font-size="13" text-anchor="end" fill="currentColor">A</text>
+<text x="314" y="206" font-size="13" fill="currentColor">B</text>
+<text x="145" y="70" font-size="13" text-anchor="middle" fill="currentColor">C</text>
+<text x="350" y="72" font-size="13" text-anchor="end" fill="currentColor">parallel to AB</text>
+</svg>

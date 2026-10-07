@@ -1,0 +1,44 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The eight three-day weather logs, grouped into blocks by three stations: the full log makes 8 blocks, the rain-day count 4 blocks, the weekly any-rain report 2 blocks</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="20" y="24" font-size="13" fill="currentColor">Full log: 8 blocks, 256 sets</text>
+<rect x="20" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="60" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="100" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="140" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="180" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="220" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="260" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="300" y="32" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="40" y="55" font-size="13" text-anchor="middle" fill="currentColor">DDD</text>
+<text x="80" y="55" font-size="13" text-anchor="middle" fill="currentColor">DDR</text>
+<text x="120" y="55" font-size="13" text-anchor="middle" fill="currentColor">DRD</text>
+<text x="160" y="55" font-size="13" text-anchor="middle" fill="currentColor">RDD</text>
+<text x="200" y="55" font-size="13" text-anchor="middle" fill="currentColor">DRR</text>
+<text x="240" y="55" font-size="13" text-anchor="middle" fill="currentColor">RDR</text>
+<text x="280" y="55" font-size="13" text-anchor="middle" fill="currentColor">RRD</text>
+<text x="320" y="55" font-size="13" text-anchor="middle" fill="currentColor">RRR</text>
+<text x="20" y="100" font-size="13" fill="currentColor">Rain-day count: 4 blocks, 16 sets</text>
+<rect x="20" y="108" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="60" y="108" width="120" height="36" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="180" y="108" width="120" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="300" y="108" width="40" height="36" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="40" y="131" font-size="13" text-anchor="middle" fill="currentColor">DDD</text>
+<text x="80" y="131" font-size="13" text-anchor="middle" fill="currentColor">DDR</text>
+<text x="120" y="131" font-size="13" text-anchor="middle" fill="currentColor">DRD</text>
+<text x="160" y="131" font-size="13" text-anchor="middle" fill="currentColor">RDD</text>
+<text x="200" y="131" font-size="13" text-anchor="middle" fill="currentColor">DRR</text>
+<text x="240" y="131" font-size="13" text-anchor="middle" fill="currentColor">RDR</text>
+<text x="280" y="131" font-size="13" text-anchor="middle" fill="currentColor">RRD</text>
+<text x="320" y="131" font-size="13" text-anchor="middle" fill="currentColor">RRR</text>
+<text x="20" y="176" font-size="13" fill="currentColor">Any rain this week: 2 blocks, 4 sets</text>
+<rect x="20" y="184" width="40" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="60" y="184" width="280" height="36" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="40" y="207" font-size="13" text-anchor="middle" fill="currentColor">DDD</text>
+<text x="80" y="207" font-size="13" text-anchor="middle" fill="currentColor">DDR</text>
+<text x="120" y="207" font-size="13" text-anchor="middle" fill="currentColor">DRD</text>
+<text x="160" y="207" font-size="13" text-anchor="middle" fill="currentColor">RDD</text>
+<text x="200" y="207" font-size="13" text-anchor="middle" fill="currentColor">DRR</text>
+<text x="240" y="207" font-size="13" text-anchor="middle" fill="currentColor">RDR</text>
+<text x="280" y="207" font-size="13" text-anchor="middle" fill="currentColor">RRD</text>
+<text x="320" y="207" font-size="13" text-anchor="middle" fill="currentColor">RRR</text>
+</svg>

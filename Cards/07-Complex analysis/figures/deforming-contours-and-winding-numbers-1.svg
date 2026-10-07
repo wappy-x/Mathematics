@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The oval roundabout lane, 12 by 8 metres, round an island at 0, a circle of radius 1 round the island, and a bus stop at 15, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="350" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="150" y1="205" x2="150" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<text x="330" y="112" font-size="13" fill="currentColor">Re</text>
+<text x="156" y="18" font-size="13" fill="currentColor">Im</text>
+<ellipse cx="150" cy="120" rx="108" ry="72" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="258,110 252,122 264,122" fill="currentColor"/>
+<circle cx="150" cy="120" r="9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle cx="150" cy="120" r="3" fill="currentColor"/>
+<circle cx="285" cy="120" r="3.5" fill="currentColor"/>
+<text x="162" y="108" font-size="13" fill="currentColor">island 0</text>
+<text x="262" y="140" font-size="13" fill="currentColor">bus stop 15</text>
+<text x="196" y="42" font-size="13" fill="currentColor">lane, 12 by 8</text>
+<text x="20" y="222" font-size="13" fill="currentColor">dashed: circle of radius 1</text>
+</svg>

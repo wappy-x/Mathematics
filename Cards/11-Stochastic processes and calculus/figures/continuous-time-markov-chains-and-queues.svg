@@ -1,0 +1,47 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The M/M/1 queue as a chain on the number of people in the system: states 0 to 4 as circles whose areas are drawn to the scale of their long-run shares, arrows to the right at the arrival rate 4 an hour and to the left at the service rate 5 an hour</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="32" cy="110" r="24.00" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="32" y="115" font-size="14" text-anchor="middle" fill="currentColor">0</text>
+<circle cx="102" cy="110" r="21.47" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="102" y="115" font-size="14" text-anchor="middle" fill="currentColor">1</text>
+<circle cx="172" cy="110" r="19.20" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="172" y="115" font-size="14" text-anchor="middle" fill="currentColor">2</text>
+<circle cx="242" cy="110" r="17.17" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="242" y="115" font-size="14" text-anchor="middle" fill="currentColor">3</text>
+<circle cx="312" cy="110" r="15.36" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="312" y="115" font-size="14" text-anchor="middle" fill="currentColor">4</text>
+<text x="32" y="160" font-size="13" text-anchor="middle" fill="currentColor">20.00</text>
+<text x="102" y="160" font-size="13" text-anchor="middle" fill="currentColor">16.00</text>
+<text x="172" y="160" font-size="13" text-anchor="middle" fill="currentColor">12.80</text>
+<text x="242" y="160" font-size="13" text-anchor="middle" fill="currentColor">10.24</text>
+<text x="312" y="160" font-size="13" text-anchor="middle" fill="currentColor">8.19</text>
+<line x1="54.6" y1="102" x2="82.1" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="76.1,99 82.1,102 76.1,105" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="68.4" y="96" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<line x1="82.1" y1="118" x2="54.6" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="60.6,115 54.6,118 60.6,121" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="68.4" y="134" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<line x1="121.9" y1="102" x2="154.5" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="148.5,99 154.5,102 148.5,105" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="138.2" y="96" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<line x1="154.5" y1="118" x2="121.9" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="127.9,115 121.9,118 127.9,121" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="138.2" y="134" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<line x1="189.5" y1="102" x2="226.8" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="220.8,99 226.8,102 220.8,105" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="208.1" y="96" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<line x1="226.8" y1="118" x2="189.5" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="195.5,115 189.5,118 195.5,121" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="208.1" y="134" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<line x1="257.2" y1="102" x2="298.9" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="292.9,99 298.9,102 292.9,105" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="278.0" y="96" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<line x1="298.9" y1="118" x2="257.2" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="263.2,115 257.2,118 263.2,121" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="278.0" y="134" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<text x="346" y="115" font-size="14" text-anchor="middle" fill="currentColor">…</text>
+<text x="180" y="30" font-size="13" text-anchor="middle" fill="currentColor">step right: an arrival, rate 4 an hour</text>
+<text x="180" y="50" font-size="13" text-anchor="middle" fill="currentColor">step left: a service ends, rate 5 an hour</text>
+<text x="180" y="190" font-size="13" text-anchor="middle" fill="currentColor">below each circle: share of time, per 100</text>
+<text x="180" y="224" font-size="13" text-anchor="middle" fill="currentColor">circle label: people in the system</text>
+</svg>

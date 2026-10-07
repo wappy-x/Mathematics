@@ -1,0 +1,37 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>To scale: the half strip S with corners ±π/2 and z0; the upper half plane H with −1, 1, i; the unit disc</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="12.88" y="20" width="94.24" height="190" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="12.88" y1="210" x2="12.88" y2="20" stroke="currentColor" stroke-width="2"/>
+<line x1="107.12" y1="210" x2="107.12" y2="20" stroke="currentColor" stroke-width="2"/>
+<line x1="4" y1="210" x2="116" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="228" x2="60" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="12.88" cy="210" r="3.5" fill="currentColor"/>
+<circle cx="107.12" cy="210" r="3.5" fill="currentColor"/>
+<circle cx="60" cy="183.56" r="3.5" fill="currentColor"/>
+<text x="4" y="232" font-size="13" fill="currentColor">−π/2</text>
+<text x="100" y="232" font-size="13" fill="currentColor">π/2</text>
+<text x="66" y="180" font-size="13" fill="currentColor">z0</text>
+<text x="102" y="204" font-size="13" fill="currentColor" text-anchor="end">Re</text>
+<text x="66" y="32" font-size="13" fill="currentColor">Im</text>
+<text x="20" y="50" font-size="14" fill="currentColor">S</text>
+<rect x="125" y="20" width="110" height="190" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="125" y1="210" x2="235" y2="210" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="228" x2="180" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="150" cy="210" r="3.5" fill="currentColor"/>
+<circle cx="210" cy="210" r="3.5" fill="currentColor"/>
+<circle cx="180" cy="180" r="3.5" fill="currentColor"/>
+<text x="150" y="232" font-size="13" fill="currentColor" text-anchor="middle">−1</text>
+<text x="210" y="232" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="186" y="176" font-size="13" fill="currentColor">i</text>
+<text x="232" y="204" font-size="13" fill="currentColor" text-anchor="end">Re</text>
+<text x="186" y="32" font-size="13" fill="currentColor">Im</text>
+<text x="132" y="50" font-size="14" fill="currentColor">H</text>
+<circle cx="300" cy="130" r="50" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="245" y1="130" x2="355" y2="130" stroke="currentColor" stroke-width="1.5"/>
+<line x1="300" y1="190" x2="300" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="300" cy="130" r="3.5" fill="currentColor"/>
+<text x="306" y="146" font-size="13" fill="currentColor">0</text>
+<text x="355" y="124" font-size="13" fill="currentColor" text-anchor="end">Re</text>
+<text x="306" y="82" font-size="13" fill="currentColor">Im</text>
+<text x="252" y="92" font-size="14" fill="currentColor">disc</text>
+</svg>

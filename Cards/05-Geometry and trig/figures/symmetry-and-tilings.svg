@@ -1,0 +1,14 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A six-armed snowflake drawn to scale, arms 1 mm long, with its six mirror lines and the 60 degree turn that carries one arm to the next</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M130,120 L130.00,30.00 M130,120 L52.06,75.00 M130,120 L52.06,165.00 M130,120 L130.00,210.00 M130,120 L207.94,165.00 M130,120 L207.94,75.00" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M130.00,70.00 L146.07,50.85 M130.00,70.00 L113.93,50.85 M86.70,95.00 L78.15,71.51 M86.70,95.00 L62.08,99.34 M86.70,145.00 L62.08,140.66 M86.70,145.00 L78.15,168.49 M130.00,170.00 L113.93,189.15 M130.00,170.00 L146.07,189.15 M173.30,145.00 L181.85,168.49 M173.30,145.00 L197.92,140.66 M173.30,95.00 L197.92,99.34 M173.30,95.00 L181.85,71.51" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M130,230 L130,10 M34.74,175.00 L225.26,65.00 M225.26,175.00 L34.74,65.00" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<path d="M20,120 L240,120 M75.00,215.26 L185.00,24.74 M185.00,215.26 L75.00,24.74" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="1.5 4"/>
+<path d="M130,90 A30,30 0 0,1 155.98,105.00" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="246" y="40" font-size="13" fill="currentColor">arm: 1 mm</text>
+<text x="246" y="70" font-size="13" fill="currentColor">dashed: mirror</text>
+<text x="246" y="86" font-size="13" fill="currentColor">along arms</text>
+<text x="246" y="116" font-size="13" fill="currentColor">dotted: mirror</text>
+<text x="246" y="132" font-size="13" fill="currentColor">between arms</text>
+<text x="246" y="162" font-size="13" fill="currentColor">arc: 60° turn</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The city as a strip 10 km by 2.5 km, drawn to scale: North 12 square km with 40,000 residents, Centre 5 square km with 25,000, South 8 square km with 10,000, and the town hall at 5.8 km inside Centre</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="174" y="50" width="60" height="75" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="30" y="50" width="300" height="75" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="174" y1="50" x2="174" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="234" y1="50" x2="234" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<text x="102" y="72" font-size="14" text-anchor="middle" fill="currentColor">North</text>
+<text x="102" y="91" font-size="13" text-anchor="middle" fill="currentColor">40,000</text>
+<text x="102" y="109" font-size="13" text-anchor="middle" fill="currentColor">12 sq km</text>
+<text x="204" y="72" font-size="14" text-anchor="middle" fill="currentColor">Centre</text>
+<text x="204" y="91" font-size="13" text-anchor="middle" fill="currentColor">25,000</text>
+<text x="204" y="109" font-size="13" text-anchor="middle" fill="currentColor">5 sq km</text>
+<text x="282" y="72" font-size="14" text-anchor="middle" fill="currentColor">South</text>
+<text x="282" y="91" font-size="13" text-anchor="middle" fill="currentColor">10,000</text>
+<text x="282" y="109" font-size="13" text-anchor="middle" fill="currentColor">8 sq km</text>
+<circle cx="204" cy="118" r="3.5" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<line x1="204" y1="122" x2="204" y2="136" stroke="currentColor" stroke-width="1.5"/>
+<text x="204" y="150" font-size="13" text-anchor="middle" fill="currentColor">town hall, 5.8 km</text>
+<line x1="30" y1="172" x2="330" y2="172" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="166" x2="30" y2="178" stroke="currentColor" stroke-width="1.5"/>
+<line x1="174" y1="166" x2="174" y2="178" stroke="currentColor" stroke-width="1.5"/>
+<line x1="234" y1="166" x2="234" y2="178" stroke="currentColor" stroke-width="1.5"/>
+<line x1="330" y1="166" x2="330" y2="178" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="196" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="174" y="196" font-size="13" text-anchor="middle" fill="currentColor">4.8</text>
+<text x="234" y="196" font-size="13" text-anchor="middle" fill="currentColor">6.8</text>
+<text x="322" y="196" font-size="13" text-anchor="middle" fill="currentColor">10 km</text>
+</svg>

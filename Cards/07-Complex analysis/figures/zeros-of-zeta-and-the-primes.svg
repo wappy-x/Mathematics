@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The critical strip 0 to 1, the critical line Re s = 1/2 with the first six zeros of zeta at heights 14.13 to 37.59, the box from height 10 to 20 walked anticlockwise, and the pole at 1</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="60" y="5" width="120" height="225" fill="currentColor" fill-opacity="0.12"/>
+<line x1="10" y1="230" x2="350" y2="230" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="235" x2="60" y2="5" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="230" x2="120" y2="5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<rect x="60" y="110" width="120" height="60" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="94,170 86,166 86,174" fill="currentColor"/>
+<circle cx="120" cy="145.2" r="3" fill="currentColor"/>
+<circle cx="120" cy="103.9" r="3" fill="currentColor"/>
+<circle cx="120" cy="79.9" r="3" fill="currentColor"/>
+<circle cx="120" cy="47.5" r="3" fill="currentColor"/>
+<circle cx="120" cy="32.4" r="3" fill="currentColor"/>
+<circle cx="120" cy="4.5" r="3" fill="currentColor"/>
+<line x1="176" y1="226" x2="184" y2="234" stroke="currentColor" stroke-width="2"/>
+<line x1="176" y1="234" x2="184" y2="226" stroke="currentColor" stroke-width="2"/>
+<text x="330" y="222" font-size="13" fill="currentColor">Re</text>
+<text x="36" y="18" font-size="13" fill="currentColor">Im</text>
+<text x="128" y="150" font-size="13" fill="currentColor">14.13</text>
+<text x="128" y="100" font-size="13" fill="currentColor">21.02</text>
+<text x="190" y="144" font-size="13" fill="currentColor">box, one turn</text>
+<text x="190" y="60" font-size="13" fill="currentColor">Re s = 1/2, dashed</text>
+<text x="190" y="222" font-size="13" fill="currentColor">pole at 1</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The 37 coins as bars of height proportional to value, first in the order received, then sorted into heaps by denomination; both shapes have the same area, $23.45</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M20,100 V40 H28 V40 H36 V94 H44 V97 H52 V40 H60 V85 H68 V99.4 H76 V70 H84 V94 H92 V40 H100 V40 H108 V97 H116 V70 H124 V40 H132 V70 H140 V40 H148 V99.4 H156 V40 H164 V70 H172 V99.4 H180 V99.4 H188 V40 H196 V70 H204 V40 H212 V40 H220 V40 H228 V94 H236 V99.4 H244 V40 H252 V40 H260 V40 H268 V40 H276 V40 H284 V85 H292 V40 H300 V40 H308 V40 H316 V100 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M20,205 V145 H180 V175 H220 V190 H236 V199 H260 V202 H276 V204.4 H316 V205 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="145" x2="180" y2="205" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<line x1="220" y1="175" x2="220" y2="205" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<text x="20" y="24" font-size="13" fill="currentColor">37 coins in the order received</text>
+<text x="20" y="134" font-size="13" fill="currentColor">the same coins, sorted into heaps</text>
+<text x="70" y="224" font-size="13" fill="currentColor">20 × $1</text>
+<text x="174" y="224" font-size="13" fill="currentColor">5 × 50c</text>
+<text x="234" y="224" font-size="13" fill="currentColor">12 coins, 95c</text>
+</svg>

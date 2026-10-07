@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A planet's first year: the true 1 AU circle, which leapfrog stays on, and Euler's outward spiral</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="345" y2="120" stroke="currentColor" stroke-width="1"/>
+<line x1="180" y1="8" x2="180" y2="232" stroke="currentColor" stroke-width="1"/>
+<line x1="240" y1="116" x2="240" y2="124" stroke="currentColor" stroke-width="1"/>
+<text x="244" y="135" font-size="13" fill="currentColor">1</text>
+<text x="345" y="112" font-size="13" fill="currentColor" text-anchor="end">x (AU)</text>
+<text x="186" y="20" font-size="13" fill="currentColor">y (AU)</text>
+<circle cx="180" cy="120" r="60" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="120" r="4" fill="currentColor"/>
+<polyline points="240,120 238,101 230,84 217,70 201,60 182,54 164,54 146,59 130,67 116,78 106,92 99,107 95,122 94,138 95,153 99,167 105,180 113,192 123,202 134,211 146,217" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+<polygon points="153,220 143,221 147,213" fill="currentColor"/>
+<text x="250" y="84" font-size="13" fill="currentColor">Euler, year 1</text>
+<text x="248" y="156" font-size="13" fill="currentColor">true orbit;</text>
+<text x="248" y="172" font-size="13" fill="currentColor">leapfrog on it</text>
+</svg>

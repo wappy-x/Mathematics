@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The train's position over one hour, drawn to scale, with the dashed chord from 0 km to 100 km and two short tangent lines, at 12.68 and 47.32 minutes, running parallel to it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="210" x2="335" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="210" x2="40" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 40,210 C 133.3,210.0 226.7,30.0 320.0,30.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="210" x2="320" y2="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="71.2" y1="207.3" x2="127.2" y2="171.3" stroke="currentColor" stroke-width="2"/>
+<line x1="232.8" y1="68.7" x2="288.8" y2="32.7" stroke="currentColor" stroke-width="2"/>
+<circle cx="99.2" cy="189.3" r="3" fill="currentColor"/>
+<circle cx="260.8" cy="50.7" r="3" fill="currentColor"/>
+<text x="110" y="200" font-size="13" fill="currentColor">c1: 12.68 min</text>
+<text x="252" y="92" font-size="13" fill="currentColor">c2: 47.32 min</text>
+<text x="52" y="96" font-size="13" fill="currentColor">chord: 100 km/h</text>
+<text x="36" y="214" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="36" y="34" font-size="13" fill="currentColor" text-anchor="end">100</text>
+<text x="46" y="16" font-size="13" fill="currentColor">km</text>
+<text x="320" y="228" font-size="13" fill="currentColor" text-anchor="middle">60 min</text>
+<text x="180" y="228" font-size="13" fill="currentColor" text-anchor="middle">time</text>
+</svg>

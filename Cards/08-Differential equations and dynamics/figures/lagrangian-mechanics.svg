@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A playground swing drawn to scale: pivot at the top, a 2 m rod from the pivot to the seat released at 30 degrees from the vertical, the seat's resting position straight below, the angle theta marked by an arc, the seat's 0.268 m rise marked by a ruler on the right, and a 1 m scale bar at the bottom</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="130" y1="30" x2="230" y2="30" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="30" x2="180" y2="150" stroke="currentColor" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="180" y1="30" x2="240" y2="133.9" stroke="currentColor" stroke-width="2"/>
+<circle cx="240" cy="133.9" r="5" fill="currentColor"/>
+<circle cx="180" cy="150" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 180,70 A 40 40 0 0 0 200,64.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="245" y1="133.9" x2="276" y2="133.9" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="185" y1="150" x2="276" y2="150" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="270" y1="133.9" x2="270" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="200" x2="100" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="195" x2="40" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="100" y1="195" x2="100" y2="205" stroke="currentColor" stroke-width="1"/>
+<text x="125" y="34" font-size="13" fill="currentColor" text-anchor="end">pivot</text>
+<text x="188" y="96" font-size="14" fill="currentColor" text-anchor="start">θ</text>
+<text x="218" y="78" font-size="13" fill="currentColor" text-anchor="start">l = 2 m</text>
+<text x="248" y="124" font-size="13" fill="currentColor" text-anchor="start">seat, θ = 30°</text>
+<text x="180" y="172" font-size="13" fill="currentColor" text-anchor="middle">seat at rest</text>
+<text x="280" y="147" font-size="13" fill="currentColor" text-anchor="start">0.268 m</text>
+<text x="70" y="220" font-size="13" fill="currentColor" text-anchor="middle">1 m</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The first three modes of a 1 m string pinned at both ends: one, two and three arches, with nodes at the half and at the thirds</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="45" x2="250" y2="45" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="30" y1="110" x2="250" y2="110" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="30" y1="175" x2="250" y2="175" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+<polyline fill="none" stroke="currentColor" stroke-width="1.75" points="30,45.0 35.5,43.0 41,41.1 46.5,39.2 52,37.3 57.5,35.4 63,33.7 68.5,31.9 74,30.3 79.5,28.8 85,27.3 90.5,26.0 96,24.8 101.5,23.7 107,22.7 112.5,21.9 118,21.2 123.5,20.7 129,20.3 134.5,20.1 140,20.0 145.5,20.1 151,20.3 156.5,20.7 162,21.2 167.5,21.9 173,22.7 178.5,23.7 184,24.8 189.5,26.0 195,27.3 200.5,28.8 206,30.3 211.5,31.9 217,33.7 222.5,35.4 228,37.3 233.5,39.2 239,41.1 244.5,43.0 250,45.0"/>
+<polyline fill="none" stroke="currentColor" stroke-width="1.75" points="30,110.0 35.5,106.1 41,102.3 46.5,98.7 52,95.3 57.5,92.3 63,89.8 68.5,87.7 74,86.2 79.5,85.3 85,85.0 90.5,85.3 96,86.2 101.5,87.7 107,89.8 112.5,92.3 118,95.3 123.5,98.7 129,102.3 134.5,106.1 140,110.0 145.5,113.9 151,117.7 156.5,121.3 162,124.7 167.5,127.7 173,130.2 178.5,132.3 184,133.8 189.5,134.7 195,135.0 200.5,134.7 206,133.8 211.5,132.3 217,130.2 222.5,127.7 228,124.7 233.5,121.3 239,117.7 244.5,113.9 250,110.0"/>
+<polyline fill="none" stroke="currentColor" stroke-width="1.75" points="30,175.0 35.5,169.2 41,163.7 46.5,158.8 52,154.8 57.5,151.9 63,150.3 68.5,150.1 74,151.2 79.5,153.7 85,157.3 90.5,161.9 96,167.3 101.5,173.0 107,178.9 112.5,184.6 118,189.7 123.5,194.0 129,197.3 134.5,199.3 140,200.0 145.5,199.3 151,197.3 156.5,194.0 162,189.7 167.5,184.6 173,178.9 178.5,173.0 184,167.3 189.5,161.9 195,157.3 200.5,153.7 206,151.2 211.5,150.1 217,150.3 222.5,151.9 228,154.8 233.5,158.8 239,163.7 244.5,169.2 250,175.0"/>
+<circle cx="30" cy="45" r="3" fill="currentColor"/>
+<circle cx="250" cy="45" r="3" fill="currentColor"/>
+<circle cx="30" cy="110" r="3" fill="currentColor"/>
+<circle cx="250" cy="110" r="3" fill="currentColor"/>
+<circle cx="30" cy="175" r="3" fill="currentColor"/>
+<circle cx="250" cy="175" r="3" fill="currentColor"/>
+<circle cx="140" cy="110" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="103.3" cy="175" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="176.7" cy="175" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="262" y="50" font-size="13" fill="currentColor">n = 1, 110 Hz</text>
+<text x="262" y="115" font-size="13" fill="currentColor">n = 2, 220 Hz</text>
+<text x="262" y="180" font-size="13" fill="currentColor">n = 3, 330 Hz</text>
+<text x="26" y="220" font-size="13" fill="currentColor">0</text>
+<text x="240" y="220" font-size="13" fill="currentColor">1 m</text>
+<text x="52" y="234" font-size="13" fill="currentColor">position along the string, x (m)</text>
+</svg>

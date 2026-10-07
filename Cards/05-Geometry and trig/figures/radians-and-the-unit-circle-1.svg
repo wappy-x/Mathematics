@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Plan view of the crane drawn to scale: a 30 m jib swung 210 degrees anticlockwise from due east, its hook 25.98 m west and 15.00 m south of the mast</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="180" cy="120" r="96" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="70" y1="120" x2="290" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="14" x2="180" y2="226" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="96.86" y2="168" stroke="currentColor" stroke-width="2"/>
+<line x1="96.86" y1="168" x2="96.86" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="96.86" y1="168" x2="180" y2="168" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<path d="M 202 120 A 22 22 0 1 0 160.95 131" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 135 120 A 45 45 0 0 0 141.03 142.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="3" fill="currentColor"/>
+<circle cx="96.86" cy="168" r="3.5" fill="currentColor"/>
+<text x="186" y="24" font-size="14" fill="currentColor">N</text>
+<text x="296" y="125" font-size="14" fill="currentColor">E</text>
+<text x="208" y="104" font-size="13" fill="currentColor">210°</text>
+<text x="110" y="139" font-size="13" fill="currentColor">30°</text>
+<text x="188" y="138" font-size="13" fill="currentColor">mast</text>
+<text x="228" y="113" font-size="13" fill="currentColor">start</text>
+<text x="60" y="188" font-size="13" fill="currentColor">hook</text>
+<text x="4" y="208" font-size="13" fill="currentColor">(−25.98, −15.00)</text>
+</svg>

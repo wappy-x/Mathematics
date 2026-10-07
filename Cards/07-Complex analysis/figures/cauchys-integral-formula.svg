@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The circle of radius 2 round 0, the point 0.5 inside with a small dashed circle round it, and the point 4 outside</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="150" y1="232" x2="150" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="150" cy="120" r="80" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="143,40 153,35 153,45" fill="currentColor"/>
+<circle cx="170" cy="120" r="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<polygon points="166,100 174,96 174,104" fill="currentColor"/>
+<circle cx="170" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="310" cy="120" r="3.5" fill="currentColor"/>
+<text x="176" y="114" font-size="13" fill="currentColor">a</text>
+<text x="214" y="52" font-size="14" fill="currentColor">|z| = 2</text>
+<text x="236" y="136" font-size="13" fill="currentColor">2</text>
+<text x="304" y="108" font-size="13" fill="currentColor">4</text>
+<text x="322" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="156" y="18" font-size="13" fill="currentColor">Im</text>
+</svg>

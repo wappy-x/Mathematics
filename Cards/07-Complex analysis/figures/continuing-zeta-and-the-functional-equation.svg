@@ -1,0 +1,26 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The s-plane: eta settles on the shaded half-plane Re s greater than 0; the pole at 1; removable points at 1 plus and minus 9.06i; the mirror line Re s = 1/2 pairing -1 with 2; trivial zeros at -2 to -10</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="220" y="0" width="140" height="240" fill="currentColor" fill-opacity="0.12"/>
+<line x1="5" y1="120" x2="355" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="220" y1="235" x2="220" y2="5" stroke="currentColor" stroke-width="1.5"/>
+<line x1="226" y1="5" x2="226" y2="235" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="228" y1="116" x2="236" y2="124" stroke="currentColor" stroke-width="2"/>
+<line x1="228" y1="124" x2="236" y2="116" stroke="currentColor" stroke-width="2"/>
+<circle cx="232" cy="11.2" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="232" cy="228.8" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="196" cy="120" r="2.5" fill="currentColor"/>
+<circle cx="172" cy="120" r="2.5" fill="currentColor"/>
+<circle cx="148" cy="120" r="2.5" fill="currentColor"/>
+<circle cx="124" cy="120" r="2.5" fill="currentColor"/>
+<circle cx="100" cy="120" r="2.5" fill="currentColor"/>
+<path d="M208,120 Q226,80 244,120" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="231,100 224,96.5 224,103.5" fill="currentColor"/>
+<text x="338" y="112" font-size="13" fill="currentColor">Re</text>
+<text x="198" y="18" font-size="13" fill="currentColor">Im</text>
+<text x="240" y="18" font-size="13" fill="currentColor">1 + 9.06i</text>
+<text x="240" y="233" font-size="13" fill="currentColor">1 − 9.06i</text>
+<text x="246" y="92" font-size="13" fill="currentColor">s ↔ 1 − s</text>
+<text x="244" y="140" font-size="13" fill="currentColor">pole at 1</text>
+<text x="90" y="142" font-size="13" fill="currentColor">trivial zeros</text>
+<text x="262" y="200" font-size="13" fill="currentColor">η settles</text>
+</svg>

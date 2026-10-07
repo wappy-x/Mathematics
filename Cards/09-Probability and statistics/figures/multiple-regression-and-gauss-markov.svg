@@ -1,0 +1,32 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Twelve house sales, price against floor area, with two lines crossing at the centre of the data: the fit on area alone, slope 1.77, and the fit with age and distance held at their averages, slope 2.29</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="50" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="200" x2="50" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="179.7" x2="340" y2="38.2" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="50" y1="199.8" x2="340" y2="16.8" stroke="currentColor" stroke-width="2"/>
+<circle cx="55.8" cy="180.8" r="3" fill="currentColor"/>
+<circle cx="93.5" cy="168.0" r="3" fill="currentColor"/>
+<circle cx="108.0" cy="142.4" r="3" fill="currentColor"/>
+<circle cx="131.2" cy="120.0" r="3" fill="currentColor"/>
+<circle cx="151.5" cy="136.0" r="3" fill="currentColor"/>
+<circle cx="177.6" cy="143.2" r="3" fill="currentColor"/>
+<circle cx="195.0" cy="72.0" r="3" fill="currentColor"/>
+<circle cx="218.2" cy="112.0" r="3" fill="currentColor"/>
+<circle cx="238.5" cy="99.2" r="3" fill="currentColor"/>
+<circle cx="270.4" cy="80.0" r="3" fill="currentColor"/>
+<circle cx="305.2" cy="39.2" r="3" fill="currentColor"/>
+<circle cx="340.0" cy="41.6" r="3" fill="currentColor"/>
+<circle cx="190.4" cy="111.2" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="50" y="215" font-size="13" fill="currentColor" text-anchor="middle">60</text>
+<text x="195" y="215" font-size="13" fill="currentColor" text-anchor="middle">110</text>
+<text x="340" y="215" font-size="13" fill="currentColor" text-anchor="end">160</text>
+<text x="195" y="234" font-size="13" fill="currentColor" text-anchor="middle">floor area, square metres</text>
+<text x="44" y="204" font-size="13" fill="currentColor" text-anchor="end">100</text>
+<text x="44" y="124" font-size="13" fill="currentColor" text-anchor="end">200</text>
+<text x="44" y="44" font-size="13" fill="currentColor" text-anchor="end">300</text>
+<text x="4" y="14" font-size="13" fill="currentColor">price, $ thousand</text>
+<line x1="60" y1="28" x2="80" y2="28" stroke="currentColor" stroke-width="2"/>
+<text x="86" y="32" font-size="13" fill="currentColor">others held: slope 2.29</text>
+<line x1="60" y1="44" x2="80" y2="44" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="86" y="48" font-size="13" fill="currentColor">area alone: slope 1.77</text>
+</svg>

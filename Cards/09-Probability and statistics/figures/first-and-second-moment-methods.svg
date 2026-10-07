@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Two trios sharing a pair: triangle A, B, C (shaded) and triangle B, C, D share the side B to C; both equilateral with side 120 units, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="60,190 180,190 120,86" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="180,190 240,86 120,86" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="190" x2="120" y2="86" stroke="currentColor" stroke-width="2" stroke-dasharray="6 3"/>
+<circle cx="60" cy="190" r="4" fill="currentColor"/>
+<circle cx="180" cy="190" r="4" fill="currentColor"/>
+<circle cx="120" cy="86" r="4" fill="currentColor"/>
+<circle cx="240" cy="86" r="4" fill="currentColor"/>
+<text x="42" y="208" font-size="14" fill="currentColor">A</text>
+<text x="186" y="208" font-size="14" fill="currentColor">B</text>
+<text x="106" y="78" font-size="14" fill="currentColor">C</text>
+<text x="246" y="78" font-size="14" fill="currentColor">D</text>
+<text x="142" y="114" font-size="13" fill="currentColor">B–C, in both</text>
+<text x="20" y="232" font-size="13" fill="currentColor">T: A, B, C (shaded)</text>
+<text x="200" y="232" font-size="13" fill="currentColor">S: B, C, D</text>
+</svg>

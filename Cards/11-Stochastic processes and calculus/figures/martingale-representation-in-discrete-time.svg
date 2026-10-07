@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The three-day share-price tree drawn to scale, with the call's fair value and the stake in shares at each node</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<g stroke="currentColor" stroke-width="1.5" fill="none">
+<line x1="40" y1="124" x2="135" y2="97"/><line x1="40" y1="124" x2="135" y2="151"/>
+<line x1="135" y1="97" x2="230" y2="70"/><line x1="135" y1="97" x2="230" y2="124"/>
+<line x1="135" y1="151" x2="230" y2="124"/><line x1="135" y1="151" x2="230" y2="178"/>
+<line x1="230" y1="70" x2="325" y2="43"/><line x1="230" y1="70" x2="325" y2="97"/>
+<line x1="230" y1="124" x2="325" y2="97"/><line x1="230" y1="124" x2="325" y2="151"/>
+<line x1="230" y1="178" x2="325" y2="151"/><line x1="230" y1="178" x2="325" y2="205"/>
+</g>
+<g stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.12">
+<circle cx="40" cy="124" r="4"/><circle cx="135" cy="97" r="4"/><circle cx="135" cy="151" r="4"/>
+<circle cx="230" cy="70" r="4"/><circle cx="230" cy="124" r="4"/><circle cx="230" cy="178" r="4"/>
+<circle cx="325" cy="43" r="4"/><circle cx="325" cy="97" r="4"/><circle cx="325" cy="151" r="4"/><circle cx="325" cy="205" r="4"/>
+</g>
+<g fill="currentColor" font-size="13" text-anchor="middle">
+<text x="40" y="114">$7.50</text><text x="40" y="144">0.50 sh</text>
+<text x="135" y="87">$12.50</text><text x="135" y="117">0.75 sh</text>
+<text x="135" y="141">$2.50</text><text x="135" y="171">0.25 sh</text>
+<text x="230" y="60">$20.00</text><text x="230" y="90">1.00 sh</text>
+<text x="230" y="114">$5.00</text><text x="230" y="144">0.50 sh</text>
+<text x="230" y="168">$0.00</text><text x="230" y="198">0.00 sh</text>
+<text x="40" y="234">day 0</text><text x="135" y="234">day 1</text><text x="230" y="234">day 2</text><text x="325" y="234">day 3</text>
+</g>
+<g fill="currentColor" font-size="13" text-anchor="start">
+<text x="333" y="47">$30</text><text x="333" y="101">$10</text><text x="333" y="155">$0</text><text x="333" y="209">$0</text>
+</g>
+</svg>

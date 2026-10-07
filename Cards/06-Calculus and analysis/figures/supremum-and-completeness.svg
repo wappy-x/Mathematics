@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg" width="360" height="170" style="color:#24292f">
+<title>The interval from 0 to 1 with both ends left out, above the same interval with 1 kept in; dashed lines mark the ceilings 1 and 1.2 on a number line below</title><rect x="0" y="0" width="360" height="170" rx="8" fill="#ffffff"/>
+<text x="20" y="40" font-size="13" fill="currentColor">(0, 1): supremum 1, no maximum</text>
+<line x1="45" y1="55" x2="285" y2="55" stroke="currentColor" stroke-width="2"/>
+<circle cx="40" cy="55" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="290" cy="55" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="20" y="90" font-size="13" fill="currentColor">(0, 1]: supremum 1, also the maximum</text>
+<line x1="45" y1="105" x2="290" y2="105" stroke="currentColor" stroke-width="2"/>
+<circle cx="40" cy="105" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="290" cy="105" r="5" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<line x1="290" y1="62" x2="290" y2="97" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="290" y1="112" x2="290" y2="131" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="340" y1="30" x2="340" y2="131" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="25" y1="135" x2="350" y2="135" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="131" x2="40" y2="139" stroke="currentColor" stroke-width="1.5"/>
+<line x1="165" y1="131" x2="165" y2="139" stroke="currentColor" stroke-width="1.5"/>
+<line x1="290" y1="131" x2="290" y2="139" stroke="currentColor" stroke-width="1.5"/>
+<line x1="340" y1="131" x2="340" y2="139" stroke="currentColor" stroke-width="1.5"/>
+<text x="40" y="156" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="165" y="156" font-size="13" fill="currentColor" text-anchor="middle">0.5</text>
+<text x="290" y="156" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="340" y="156" font-size="13" fill="currentColor" text-anchor="middle">1.2</text>
+</svg>

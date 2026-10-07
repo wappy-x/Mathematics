@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The seedling posterior drawn to scale: a long tilted ellipse holding 95 percent of the probability for start height a and weekly growth b, its centre at a = 1.09 and b = 0.97, and four Gibbs sweeps starting from b = 0.6 that move only parallel to the axes</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="222" x2="345" y2="222" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="222" x2="40" y2="22" stroke="currentColor" stroke-width="1.5"/>
+<line x1="80" y1="218" x2="80" y2="226" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="218" x2="180" y2="226" stroke="currentColor" stroke-width="1.5"/>
+<line x1="280" y1="218" x2="280" y2="226" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="190" x2="44" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="110" x2="44" y2="110" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="30" x2="44" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<text x="76" y="236" font-size="13" fill="currentColor">0</text>
+<text x="176" y="236" font-size="13" fill="currentColor">1</text>
+<text x="276" y="236" font-size="13" fill="currentColor">2</text>
+<text x="298" y="236" font-size="13" fill="currentColor">a (cm)</text>
+<text x="6" y="194" font-size="13" fill="currentColor">0.6</text>
+<text x="6" y="114" font-size="13" fill="currentColor">1.0</text>
+<text x="6" y="34" font-size="13" fill="currentColor">1.4</text>
+<text x="48" y="18" font-size="13" fill="currentColor">b (cm per week)</text>
+<polygon points="317.4,186.0 313.0,175.1 300.2,160.1 279.8,142.2 253.2,122.4 222.2,102.2 189.0,83.0 155.8,66.0 124.8,52.4 98.2,43.2 77.8,38.9 65.0,39.8 60.6,46.0 65.0,56.9 77.8,71.9 98.2,89.8 124.8,109.6 155.8,129.8 189.0,149.0 222.2,166.0 253.2,179.6 279.8,188.8 300.2,193.1 313.0,192.2" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="189.0" cy="116.0" r="3" fill="currentColor"/>
+<polyline points="299.8,190.0 299.8,174.7 266.0,174.7 266.0,159.5 251.9,159.5 251.9,161.7 237.5,161.7 237.5,133.4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="299.8" cy="190.0" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="200" y="50" font-size="13" fill="currentColor">95% of the posterior</text>
+<text x="120" y="210" font-size="13" fill="currentColor">Gibbs path: axis moves only</text>
+</svg>

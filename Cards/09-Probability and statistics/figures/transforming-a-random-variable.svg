@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The parabola y = x squared for fill errors from −3 to 3 ml; the band of squared errors from 1 to 2.25 comes from two strips of errors, −1.5 to −1 and 1 to 1.5</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="30" y="155" width="300" height="25" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="112.5" y="155" width="22.5" height="45" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="225" y="155" width="22.5" height="45" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="30" y1="200" x2="330" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="200" x2="180" y2="12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 45 20 Q 180 380 315 20" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="45" y="216" font-size="13" fill="currentColor" text-anchor="middle">−3</text>
+<text x="90" y="216" font-size="13" fill="currentColor" text-anchor="middle">−2</text>
+<text x="135" y="216" font-size="13" fill="currentColor" text-anchor="middle">−1</text>
+<text x="180" y="216" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="225" y="216" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="270" y="216" font-size="13" fill="currentColor" text-anchor="middle">2</text>
+<text x="315" y="216" font-size="13" fill="currentColor" text-anchor="middle">3</text>
+<text x="180" y="234" font-size="13" fill="currentColor" text-anchor="middle">fill error x, ml</text>
+<text x="186" y="178" font-size="13" fill="currentColor">1</text>
+<text x="186" y="153" font-size="13" fill="currentColor">2.25</text>
+<text x="188" y="16" font-size="13" fill="currentColor">y = x^2, ml^2</text>
+<text x="34" y="173" font-size="13" fill="currentColor">band</text>
+<text x="272" y="173" font-size="13" fill="currentColor">0.1638</text>
+</svg>

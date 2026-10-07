@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Cobweb of the logistic rule at r = 2.8 from 0.2: the arch-shaped curve, the dashed diagonal, and a path that climbs to the curve and then spirals in to the dot at 0.642857</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="60" y1="205" x2="240" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="205" x2="60" y2="25" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="205" x2="240" y2="25" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,4"/>
+<polyline points="60.0,205.0 65.0,191.4 70.0,178.6 75.0,166.5 80.0,155.2 85.0,144.7 90.0,135.0 95.0,126.1 100.0,117.9 105.0,110.5 110.0,103.9 115.0,98.1 120.0,93.0 125.0,88.7 130.0,85.2 135.0,82.5 140.0,80.6 145.0,79.4 150.0,79.0 155.0,79.4 160.0,80.6 165.0,82.5 170.0,85.2 175.0,88.7 180.0,93.0 185.0,98.1 190.0,103.9 195.0,110.5 200.0,117.9 205.0,126.1 210.0,135.0 215.0,144.7 220.0,155.2 225.0,166.5 230.0,178.6 235.0,191.4 240.0,205.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="96.0,205.0 96.0,124.4 140.6,124.4 140.6,80.4 184.6,80.4 184.6,97.7 167.3,97.7 167.3,83.7 181.3,83.7 181.3,94.3 170.7,94.3 170.7,85.7 179.3,85.7 179.3,92.4 172.6,92.4 172.6,87.0 178.0,87.0" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="92.0,168.7 100.0,168.7 96.0,160.7" fill="currentColor"/>
+<circle cx="175.7" cy="89.3" r="3.5" fill="currentColor"/>
+<text x="60.0" y="221" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="54" y="209.0" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="150.0" y="221" font-size="13" fill="currentColor" text-anchor="middle">0.5</text>
+<text x="54" y="119.0" font-size="13" fill="currentColor" text-anchor="end">0.5</text>
+<text x="240.0" y="221" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="54" y="29.0" font-size="13" fill="currentColor" text-anchor="end">1</text>
+<text x="150" y="236" font-size="13" fill="currentColor" text-anchor="middle">this year, x_n (share of capacity)</text>
+<text x="8" y="16" font-size="13" fill="currentColor" text-anchor="start">next year, x_(n+1)</text>
+<text x="246" y="30" font-size="13" fill="currentColor" text-anchor="start">diagonal y = x</text>
+<text x="246" y="196" font-size="13" fill="currentColor" text-anchor="start">curve y = g(x)</text>
+<text x="246" y="94" font-size="13" fill="currentColor" text-anchor="start">dot: 0.642857</text>
+</svg>

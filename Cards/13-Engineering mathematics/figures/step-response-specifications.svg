@@ -1,0 +1,31 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Target region for the lift door's poles in the complex plane, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M0 0 L100.7 0 A250 250 0 0 0 100.7 240 L0 240 Z" fill="currentColor" fill-opacity="0.12"/>
+<path d="M100.7 0 A250 250 0 0 0 100.7 240" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="247.7,44.1 234.2,44.3 221.3,46.0 206.7,49.8 190.3,57.2 172.0,71.4 152.1,120.0 172.0,168.6 190.3,182.8 206.7,190.2 221.3,194.0 234.2,195.7 247.7,195.9" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="0" y1="120" x2="360" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="320" y1="0" x2="320" y2="240" stroke="currentColor" stroke-width="1.5"/>
+<line x1="320" y1="120" x2="205.6" y2="0" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="320" y1="120" x2="205.6" y2="240" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="253.3" y1="0" x2="253.3" y2="240" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/>
+<line x1="220" y1="115" x2="220" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="115" x2="120" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="221.2" y1="32.3" x2="231.2" y2="42.3" stroke="currentColor" stroke-width="2"/>
+<line x1="221.2" y1="42.3" x2="231.2" y2="32.3" stroke="currentColor" stroke-width="2"/>
+<line x1="221.2" y1="197.7" x2="231.2" y2="207.7" stroke="currentColor" stroke-width="2"/>
+<line x1="221.2" y1="207.7" x2="231.2" y2="197.7" stroke="currentColor" stroke-width="2"/>
+<circle cx="257.5" cy="11.7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="257.5" cy="228.3" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="342" y="113" font-size="13" fill="currentColor">Re</text>
+<text x="325" y="14" font-size="13" fill="currentColor">Im</text>
+<text x="211" y="139" font-size="13" fill="currentColor">−4</text>
+<text x="111" y="139" font-size="13" fill="currentColor">−8</text>
+<text x="160" y="30" font-size="13" fill="currentColor">door A</text>
+<text x="266" y="24" font-size="13" fill="currentColor">b = 200</text>
+<text x="272" y="62" font-size="13" fill="currentColor">5% ray</text>
+<text x="248" y="160" font-size="13" fill="currentColor" text-anchor="end">settle</text>
+<text x="86" y="112" font-size="13" fill="currentColor">rise edge</text>
+<text x="8" y="56" font-size="14" fill="currentColor">target</text>
+<text x="8" y="72" font-size="14" fill="currentColor">region</text>
+<text x="100" y="214" font-size="13" fill="currentColor">error edge</text>
+</svg>

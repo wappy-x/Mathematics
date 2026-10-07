@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The house-shaped field with posts at (0,0), (6,0), (6,4), (3,6) and (0,4) metres, walked anticlockwise, with the shared line y = 4 dashed and the vortex centre (3,3) marked</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="90,215 270,215 270,95 180,35 90,95" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="90" y1="95" x2="270" y2="95" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M 174 209 L 182 215 L 174 221" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 264 161 L 270 153 L 276 161" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="125" r="3" fill="currentColor"/>
+<text x="188" y="129" font-size="13" fill="currentColor">(3, 3)</text>
+<text x="112" y="188" font-size="14" fill="currentColor">rectangle, 24</text>
+<text x="150" y="80" font-size="14" fill="currentColor">roof, 6</text>
+<text x="52" y="232" font-size="13" fill="currentColor">(0, 0)</text>
+<text x="274" y="232" font-size="13" fill="currentColor">(6, 0)</text>
+<text x="276" y="99" font-size="13" fill="currentColor">(6, 4)</text>
+<text x="190" y="32" font-size="13" fill="currentColor">(3, 6)</text>
+<text x="40" y="99" font-size="13" fill="currentColor">(0, 4)</text>
+</svg>

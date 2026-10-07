@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 150" width="360" height="150" style="color:#24292f">
+<title>Schematic of the heating loop: setpoint and thermometer compared, PID controller, pipe delay, room lag, door disturbance, feedback</title><rect x="0" y="0" width="360" height="150" rx="8" fill="#ffffff"/>
+<text x="2" y="65" font-size="13" fill="currentColor">r</text>
+<line x1="12" y1="60" x2="20" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="15,56 20,60 15,64" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="30" cy="60" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="8" y="90" font-size="14" fill="currentColor">−</text>
+<line x1="40" y1="60" x2="55" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="50,56 55,60 50,64" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="42" y="52" font-size="13" fill="currentColor">e</text>
+<rect x="55" y="42" width="60" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="72" y="65" font-size="13" fill="currentColor">PID</text>
+<line x1="115" y1="60" x2="140" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="135,56 140,60 135,64" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="123" y="52" font-size="13" fill="currentColor">u</text>
+<rect x="140" y="42" width="95" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="152" y="57" font-size="13" fill="currentColor">pipe delay</text>
+<text x="156" y="72" font-size="13" fill="currentColor">θ = 1 min</text>
+<line x1="235" y1="60" x2="255" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="250,56 255,60 250,64" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="255" y="42" width="95" height="36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="272" y="57" font-size="13" fill="currentColor">room lag</text>
+<text x="268" y="72" font-size="13" fill="currentColor">τ = 3 min</text>
+<text x="226" y="16" font-size="13" fill="currentColor">door: d = −0.5 kW</text>
+<line x1="302" y1="22" x2="302" y2="42" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="298,37 302,42 306,37" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="350,60 356,60 356,120 30,120 30,70" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="26,75 30,70 34,75" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="120" y="140" font-size="13" fill="currentColor">y: the thermometer, fed back</text>
+</svg>

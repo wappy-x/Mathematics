@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The isotherm x^2 - y^2 = -3 and the flow line 2xy = 4 crossing at right angles at P = 1 + 2i, with heat flowing up the flow line</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="210" x2="350" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="232" x2="40" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="40.0,140.7 60.0,137.9 80.0,130.0 100.0,118.3 120.0,104.2 140.0,88.3 160.0,71.4" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="60.0,50.0 70.0,103.3 80.0,130.0 100.0,156.7 120.0,170.0 160.0,183.3 200.0,190.0" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 3"/>
+<line x1="80" y1="130" x2="72.4" y2="114.8" stroke="currentColor" stroke-width="2"/>
+<polygon points="69.3,108.5 75.5,113.2 69.3,116.4" fill="currentColor"/>
+<polyline points="87.2,126.4 83.6,119.2 76.4,122.8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="80" cy="130" r="3" fill="currentColor"/>
+<text x="76" y="152" font-size="13" fill="currentColor">P</text>
+<text x="80" y="98" font-size="13" fill="currentColor">heat</text>
+<text x="166" y="74" font-size="13" fill="currentColor">u = −3</text>
+<text x="206" y="194" font-size="13" fill="currentColor">v = 4</text>
+<text x="332" y="204" font-size="13" fill="currentColor">Re</text>
+<text x="46" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

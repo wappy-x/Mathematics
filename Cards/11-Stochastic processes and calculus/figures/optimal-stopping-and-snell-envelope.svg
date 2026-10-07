@@ -1,0 +1,29 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Sell or wait at each month and offer, with the bar an offer must clear</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="60" cy="18" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<text x="72" y="23" font-size="13" fill="currentColor">sell</text>
+<circle cx="120" cy="18" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="132" y="23" font-size="13" fill="currentColor">wait</text>
+<line x1="180" y1="18" x2="210" y2="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="216" y="23" font-size="13" fill="currentColor">bar to sell</text>
+<text x="6" y="189" font-size="13" fill="currentColor">380k</text>
+<text x="6" y="139" font-size="13" fill="currentColor">400k</text>
+<text x="6" y="64" font-size="13" fill="currentColor">430k</text>
+<circle cx="80" cy="185" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="80" cy="135" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="80" cy="60" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="185" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="135" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="60" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="280" cy="185" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="280" cy="135" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="280" cy="60" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="90" y1="129.75" x2="140" y2="129.75" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="92" y="123" font-size="13" fill="currentColor">402.1k</text>
+<line x1="190" y1="142.5" x2="240" y2="142.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="192" y="159" font-size="13" fill="currentColor">397k</text>
+<text x="238" y="208" font-size="13" fill="currentColor">takes any offer</text>
+<text x="80" y="232" font-size="13" fill="currentColor" text-anchor="middle">month 1</text>
+<text x="180" y="232" font-size="13" fill="currentColor" text-anchor="middle">month 2</text>
+<text x="280" y="232" font-size="13" fill="currentColor" text-anchor="middle">month 3</text>
+</svg>

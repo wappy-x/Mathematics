@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A wire along y = x^2/2 from x = 1 to 2 m drawn to scale, with the four-chord chain under it and the density marked at both ends</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="220" x2="300" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="140" y1="215" x2="140" y2="225" stroke="currentColor" stroke-width="1.5"/>
+<line x1="240" y1="215" x2="240" y2="225" stroke="currentColor" stroke-width="1.5"/>
+<text x="140" y="236" font-size="13" fill="currentColor" text-anchor="middle">x = 1 m</text>
+<text x="240" y="236" font-size="13" fill="currentColor" text-anchor="middle">x = 2 m</text>
+<polyline points="140.0,170.0 150.0,159.5 160.0,148.0 170.0,135.5 180.0,122.0 190.0,107.5 200.0,92.0 210.0,75.5 220.0,58.0 230.0,39.5 240.0,20.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="140.0,170.0 165.0,141.9 190.0,107.5 215.0,66.9 240.0,20.0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="140" cy="170" r="3" fill="currentColor"/>
+<circle cx="165" cy="141.9" r="3" fill="currentColor"/>
+<circle cx="190" cy="107.5" r="3" fill="currentColor"/>
+<circle cx="215" cy="66.9" r="3" fill="currentColor"/>
+<circle cx="240" cy="20" r="3" fill="currentColor"/>
+<text x="132" y="175" font-size="13" fill="currentColor" text-anchor="end">3 kg/m</text>
+<text x="250" y="25" font-size="13" fill="currentColor">6 kg/m</text>
+<text x="20" y="40" font-size="13" fill="currentColor">wire, solid: 8.351913 kg</text>
+<text x="20" y="60" font-size="13" fill="currentColor">4 chords: 8.337034 kg</text>
+</svg>

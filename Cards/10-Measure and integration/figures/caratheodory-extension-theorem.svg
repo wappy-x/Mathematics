@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Three 8-hour shifts on a timeline from hour 6 to hour 30, and a zoom on 23:00 to 24:00 showing pager bursts of 15, 7.5, 3.75, 1.875 and 0.9375 minutes</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="30" y="24" font-size="13" fill="currentColor">rota, hours from midnight</text>
+<rect x="30" y="40" width="100" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="130" y="40" width="100" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="230" y="40" width="100" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="80" y="60" font-size="13" text-anchor="middle" fill="currentColor">early 8 h</text>
+<text x="180" y="60" font-size="13" text-anchor="middle" fill="currentColor">late 8 h</text>
+<text x="280" y="60" font-size="13" text-anchor="middle" fill="currentColor">night 8 h</text>
+<text x="30" y="88" font-size="13" text-anchor="middle" fill="currentColor">6</text>
+<text x="130" y="88" font-size="13" text-anchor="middle" fill="currentColor">14</text>
+<text x="230" y="88" font-size="13" text-anchor="middle" fill="currentColor">22</text>
+<text x="330" y="88" font-size="13" text-anchor="middle" fill="currentColor">30</text>
+<line x1="242.5" y1="96" x2="255" y2="96" stroke="currentColor" stroke-width="2"/>
+<line x1="242.5" y1="96" x2="30" y2="152" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="255" y1="96" x2="330" y2="152" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="30" y1="190" x2="330" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<rect x="30" y="160" width="75" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="180" y="160" width="37.5" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="255" y="160" width="18.75" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="292.5" y="160" width="9.375" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="311.25" y="160" width="4.6875" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="208" font-size="13" text-anchor="middle" fill="currentColor">23:00</text>
+<text x="180" y="208" font-size="13" text-anchor="middle" fill="currentColor">23:30</text>
+<text x="330" y="208" font-size="13" text-anchor="middle" fill="currentColor">24:00</text>
+<text x="30" y="232" font-size="13" fill="currentColor">bursts 15, 7.5, 3.75 ... minutes</text>
+</svg>

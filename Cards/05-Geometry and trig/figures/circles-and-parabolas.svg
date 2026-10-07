@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A dish 80 cm across and 10 cm deep, cut through its centre: the parabola, its focus 40 cm up the axis, its directrix 40 cm below the vertex, and a signal bouncing from the rim to the focus</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="180" y1="20" x2="180" y2="222" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,4"/>
+<line x1="40" y1="210" x2="330" y2="210" stroke="currentColor" stroke-width="2"/>
+<path d="M 92 100 Q 180 144 268 100" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="34" r="3" fill="currentColor"/>
+<line x1="268" y1="34" x2="268" y2="100" stroke="currentColor" stroke-width="1.5"/>
+<line x1="268" y1="100" x2="180" y2="34" stroke="currentColor" stroke-width="1.5"/>
+<line x1="268" y1="100" x2="268" y2="210" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="258,210 258,200 268,200" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="172" y="38" font-size="13" text-anchor="end" fill="currentColor">F (0, 40)</text>
+<text x="186" y="138" font-size="13" fill="currentColor">V (0, 0)</text>
+<text x="274" y="104" font-size="13" fill="currentColor">P (40, 10)</text>
+<text x="86" y="104" font-size="13" text-anchor="end" fill="currentColor">Q</text>
+<text x="274" y="226" font-size="13" fill="currentColor">D (40, −40)</text>
+<text x="262" y="50" font-size="13" text-anchor="end" fill="currentColor">signal</text>
+<text x="212" y="92" font-size="13" text-anchor="middle" fill="currentColor">50 cm</text>
+<text x="278" y="160" font-size="13" fill="currentColor">50 cm</text>
+<line x1="227" y1="63" x2="221" y2="71" stroke="currentColor" stroke-width="1.5"/>
+<line x1="263" y1="155" x2="273" y2="155" stroke="currentColor" stroke-width="1.5"/>
+<text x="44" y="204" font-size="13" fill="currentColor">directrix y = −40</text>
+</svg>

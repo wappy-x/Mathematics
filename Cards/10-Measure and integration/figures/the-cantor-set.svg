@@ -1,0 +1,48 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The 1 km road after nights 0 to 4, drawn to scale at 324 units per km: shaded bars are the stretches still waiting, the blanks between them were resurfaced</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="18" y="17" font-size="13" fill="currentColor">night 0: the whole road, 1000 m waiting</text>
+<rect x="18" y="22" width="324" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="59" font-size="13" fill="currentColor">night 1: 2 stretches, 666.67 m</text>
+<rect x="18" y="64" width="108" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="234" y="64" width="108" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="101" font-size="13" fill="currentColor">night 2: 4 stretches, 444.44 m</text>
+<rect x="18" y="106" width="36" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="90" y="106" width="36" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="234" y="106" width="36" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="306" y="106" width="36" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="143" font-size="13" fill="currentColor">night 3: 8 stretches, 296.30 m</text>
+<rect x="18" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="42" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="90" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="114" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="234" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="258" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="306" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="330" y="148" width="12" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="185" font-size="13" fill="currentColor">night 4: 16 stretches, 197.53 m</text>
+<rect x="18" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="26" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="42" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="50" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="90" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="98" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="114" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="122" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="234" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="242" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="258" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="266" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="306" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="314" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="330" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="338" y="190" width="4" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="18" y1="206" x2="18" y2="212" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="228" font-size="13" fill="currentColor" text-anchor="start">0</text>
+<line x1="126" y1="206" x2="126" y2="212" stroke="currentColor" stroke-width="1.5"/>
+<text x="126" y="228" font-size="13" fill="currentColor" text-anchor="middle">333 m</text>
+<line x1="234" y1="206" x2="234" y2="212" stroke="currentColor" stroke-width="1.5"/>
+<text x="234" y="228" font-size="13" fill="currentColor" text-anchor="middle">667 m</text>
+<line x1="342" y1="206" x2="342" y2="212" stroke="currentColor" stroke-width="1.5"/>
+<text x="342" y="228" font-size="13" fill="currentColor" text-anchor="end">1 km</text>
+<line x1="18" y1="209" x2="342" y2="209" stroke="currentColor" stroke-width="1.5"/>
+</svg>

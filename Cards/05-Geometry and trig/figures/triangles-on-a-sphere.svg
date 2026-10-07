@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>London, New York and the North Pole joined by great-circle arcs on the globe, with corner angles of 71.67, 51.21 and 73.88 degrees</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="180" cy="128" r="150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="30.0,131.1 32.9,154.7 40.2,177.6 51.8,198.9 67.3,218.1 86.2,234.6 107.9,247.8 131.9,257.3 157.3,263.0 183.4,264.5 209.4,261.9 234.5,255.2 257.9,244.7 279.0,230.6 297.0,213.4 311.6,193.6 322.1,171.8 328.3,148.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polygon points="180.0,66.0 185.5,71.8 191.0,77.8 196.5,84.0 201.9,90.3 207.3,96.8 212.5,103.3 217.7,109.9 222.8,116.6 227.7,123.3 232.4,130.0 237.0,136.7 241.5,143.4 231.7,146.9 221.7,150.2 211.5,153.4 201.1,156.5 190.6,159.5 180.0,162.2 169.4,164.8 158.9,167.2 148.5,169.4 138.3,171.4 128.3,173.1 118.5,174.6 122.5,165.8 126.7,156.7 131.2,147.5 136.0,138.2 141.0,128.9 146.2,119.5 151.6,110.2 157.1,101.0 162.7,91.9 168.4,83.0 174.2,74.3" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<path d="M 191.02 77.55 A 16 16 0 0 1 170.85 79.07" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 226.39 148.82 A 16 16 0 0 1 232.67 130.05" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 125.00 159.98 A 16 16 0 0 1 134.37 172.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180.0" cy="66.0" r="3" fill="currentColor"/>
+<circle cx="241.5" cy="143.4" r="3" fill="currentColor"/>
+<circle cx="118.5" cy="174.6" r="3" fill="currentColor"/>
+<text x="180" y="56" font-size="14" text-anchor="middle" fill="currentColor">North Pole</text>
+<text x="248" y="148" font-size="14" fill="currentColor">London</text>
+<text x="112" y="180" font-size="14" text-anchor="end" fill="currentColor">New York</text>
+<text x="185" y="118" font-size="13" text-anchor="middle" fill="currentColor">73.88°</text>
+<text x="224" y="138" font-size="13" text-anchor="end" fill="currentColor">71.67°</text>
+<text x="132" y="160" font-size="13" fill="currentColor">51.21°</text>
+<text x="214" y="100" font-size="13" fill="currentColor">4280.18 km</text>
+<text x="142" y="108" font-size="13" text-anchor="end" fill="currentColor">5480.49 km</text>
+<text x="180" y="182" font-size="13" text-anchor="middle" fill="currentColor">5570.22 km</text>
+<text x="74" y="205" font-size="13" fill="currentColor">equator</text>
+</svg>

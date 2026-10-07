@@ -1,0 +1,14 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Partial sums of the exponential series at i pi: a path of right-angle turns spiralling in on minus 1</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="140" x2="340" y2="140" stroke="currentColor" stroke-width="1.5"/>
+<line x1="210" y1="232" x2="210" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="210,140 246.0,140.0 246.0,26.9 68.3,26.9 68.3,212.9 214.5,212.9 214.5,121.1 166.4,121.1 166.4,142.7" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="174" cy="140" r="4" fill="currentColor"/>
+<text x="178" y="158" font-size="13" fill="currentColor">−1</text>
+<text x="252" y="88" font-size="13" fill="currentColor">π</text>
+<text x="132" y="20" font-size="13" fill="currentColor">π^2/2</text>
+<text x="28" y="122" font-size="13" fill="currentColor">π^3/6</text>
+<text x="118" y="230" font-size="13" fill="currentColor">π^4/24</text>
+<text x="322" y="156" font-size="13" fill="currentColor">Re</text>
+<text x="216" y="16" font-size="13" fill="currentColor">Im</text>
+</svg>

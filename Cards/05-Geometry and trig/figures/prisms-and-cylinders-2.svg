@@ -1,0 +1,11 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The tank's surface unrolled: a 6.28 m by 3 m rectangle for the wall, with the lid and floor circles above and below it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="30" y="75" width="188.50" height="90" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="124.25" cy="45" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="124.25" cy="195" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="95" font-size="13" fill="currentColor">once round: 6.28 m</text>
+<text x="70" y="132" font-size="14" fill="currentColor">wall: 18.85 m<tspan dy="-5" font-size="9">2</tspan></text>
+<text x="226" y="124" font-size="14" fill="currentColor">3 m</text>
+<text x="164" y="50" font-size="13" fill="currentColor">lid: 3.14 m<tspan dy="-5" font-size="9">2</tspan></text>
+<text x="164" y="200" font-size="13" fill="currentColor">floor: 3.14 m<tspan dy="-5" font-size="9">2</tspan></text>
+</svg>

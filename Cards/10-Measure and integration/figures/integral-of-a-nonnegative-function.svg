@@ -1,0 +1,13 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>River long section with bed d(x) = 4x(1 - x) and the depth rounded down to quarter metres shown as shaded blocks, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M50.1,40 L50.1,80 L73.9,80 L73.9,120 L105,120 L105,160 L255,160 L255,120 L286.1,120 L286.1,80 L309.9,80 L309.9,40 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M30,40 Q180,360 330,40" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="30" y1="40" x2="330" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<text x="16" y="30" font-size="13" fill="currentColor">0 km</text>
+<text x="140" y="30" font-size="13" fill="currentColor">water surface</text>
+<text x="314" y="30" font-size="13" fill="currentColor">1 km</text>
+<text x="96" y="64" font-size="13" fill="currentColor">depth rounded down</text>
+<text x="90" y="104" font-size="13" fill="currentColor">to 0.25 m: 0.518 km m</text>
+<text x="40" y="220" font-size="13" fill="currentColor">bed: d(x) = 4x(1 − x) m, deepest 1 m</text>
+<text x="40" y="236" font-size="13" fill="currentColor">at x = 0.5 km; true area 2/3 km m</text>
+</svg>

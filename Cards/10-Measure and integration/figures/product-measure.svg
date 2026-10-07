@@ -1,0 +1,14 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 1 m square dartboard with the inscribed disc of radius 0.5 m, and the vertical section of the disc at x = 0.2 m, which has length 0.8 m</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="80" y="20" width="200" height="200" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="100" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="200" x2="120" y2="40" stroke="currentColor" stroke-width="2"/>
+<line x1="120" y1="220" x2="120" y2="200" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<text x="126" y="116" font-size="13" fill="currentColor">section 0.8</text>
+<text x="180" y="170" font-size="13" text-anchor="middle" fill="currentColor">disc, π/4 = 0.7854</text>
+<text x="80" y="236" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="120" y="236" font-size="13" text-anchor="middle" fill="currentColor">x = 0.2</text>
+<text x="280" y="236" font-size="13" text-anchor="middle" fill="currentColor">1 m</text>
+<text x="72" y="225" font-size="13" text-anchor="end" fill="currentColor">0</text>
+<text x="72" y="30" font-size="13" text-anchor="end" fill="currentColor">1 m</text>
+</svg>

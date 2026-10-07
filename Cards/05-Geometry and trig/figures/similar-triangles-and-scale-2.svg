@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A river 18 m wide measured by two similar right triangles that meet at marker Q, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="20" y="42" width="320" height="108" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="20" y1="42" x2="340" y2="42" stroke="currentColor" stroke-width="1.5"/>
+<line x1="20" y1="150" x2="340" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="150" x2="50" y2="42" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="290" y1="150" x2="290" y2="186" stroke="currentColor" stroke-width="2"/>
+<line x1="50" y1="42" x2="290" y2="186" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 50 142 L 58 142 L 58 150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 290 158 L 282 158 L 282 150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="58" y="34" font-size="13" fill="currentColor">tree T</text>
+<text x="46" y="166" font-size="13" fill="currentColor" text-anchor="end">P</text>
+<text x="224" y="166" font-size="13" fill="currentColor" text-anchor="end">Q</text>
+<text x="296" y="146" font-size="13" fill="currentColor">R</text>
+<text x="296" y="198" font-size="13" fill="currentColor">S</text>
+<text x="140" y="166" font-size="13" fill="currentColor" text-anchor="middle">30 m</text>
+<text x="260" y="144" font-size="13" fill="currentColor" text-anchor="middle">10 m</text>
+<text x="296" y="172" font-size="13" fill="currentColor">6 m</text>
+<text x="56" y="100" font-size="13" fill="currentColor">width</text>
+</svg>

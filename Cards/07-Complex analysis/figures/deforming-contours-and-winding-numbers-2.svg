@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A figure-eight lap of a double roundabout with islands at 5 and minus 5, winding +1 round the east island and minus 1 round the west one, with a circle of radius 1 round each island, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="15" y1="120" x2="350" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="205" x2="180" y2="22" stroke="currentColor" stroke-width="1.5"/>
+<text x="330" y="112" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="32" font-size="13" fill="currentColor">Im</text>
+<polygon points="320.0,120.0 319.3,106.3 317.3,93.2 314.0,81.1 309.3,70.5 303.5,61.8 296.4,55.3 288.2,51.3 279.0,50.0 268.8,51.3 257.8,55.3 246.0,61.8 233.6,70.5 220.6,81.1 207.3,93.2 193.7,106.3 180.0,120.0 166.3,133.7 152.7,146.8 139.4,158.9 126.4,169.5 114.0,178.2 102.2,184.7 91.2,188.7 81.0,190.0 71.8,188.7 63.6,184.7 56.5,178.2 50.7,169.5 46.0,158.9 42.7,146.8 40.7,133.7 40.0,120.0 40.7,106.3 42.7,93.2 46.0,81.1 50.7,70.5 56.5,61.8 63.6,55.3 71.8,51.3 81.0,50.0 91.2,51.3 102.2,55.3 114.0,61.8 126.4,70.5 139.4,81.1 152.7,93.2 166.3,106.3 180.0,120.0 193.7,133.7 207.3,146.8 220.6,158.9 233.6,169.5 246.0,178.2 257.8,184.7 268.8,188.7 279.0,190.0 288.2,188.7 296.4,184.7 303.5,178.2 309.3,169.5 314.0,158.9 317.3,146.8 319.3,133.7" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="320,110 314,122 326,122" fill="currentColor"/>
+<polygon points="40,110 34,122 46,122" fill="currentColor"/>
+<circle cx="250" cy="120" r="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle cx="110" cy="120" r="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle cx="250" cy="120" r="3" fill="currentColor"/>
+<circle cx="110" cy="120" r="3" fill="currentColor"/>
+<text x="244" y="152" font-size="13" fill="currentColor">5</text>
+<text x="100" y="152" font-size="13" fill="currentColor">−5</text>
+<text x="290" y="40" font-size="14" fill="currentColor">+1</text>
+<text x="56" y="40" font-size="14" fill="currentColor">−1</text>
+<text x="20" y="232" font-size="13" fill="currentColor">path 10cos t + 5i sin 2t</text>
+</svg>

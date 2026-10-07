@@ -1,0 +1,12 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The fan-shaped valley, radius 3 km and 60 degrees, with two polar patches of equal address size, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M 40 215 L 220 215 A 180 180 0 0 0 130 59.12 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 68.19 204.74 L 96.38 194.48 A 60 60 0 0 0 91.96 185 L 65.98 200 A 30 30 0 0 1 68.19 204.74 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 152.76 173.96 L 180.95 163.7 A 150 150 0 0 0 169.9 140 L 143.92 155 A 120 120 0 0 1 152.76 173.96 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="4" y="233" font-size="13" fill="currentColor">outlet</text>
+<text x="200" y="232" font-size="13" fill="currentColor">3 km east</text>
+<text x="200" y="110" font-size="13" fill="currentColor">ridge, r = 3 km</text>
+<text x="100" y="209" font-size="13" fill="currentColor">near 0.065450</text>
+<text x="100" y="130" font-size="13" fill="currentColor">far 0.196350</text>
+<text x="210" y="40" font-size="13" fill="currentColor">areas in sq km</text>
+</svg>

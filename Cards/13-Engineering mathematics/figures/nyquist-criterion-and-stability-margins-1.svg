@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Nyquist curve of the thermostat loop for positive frequencies, to scale, with the unit circle and the point minus one</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="10" y1="40" x2="350" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<line x1="76" y1="8" x2="76" y2="215" stroke="currentColor" stroke-width="1.5"/>
+<line x1="156" y1="36" x2="156" y2="44" stroke="currentColor" stroke-width="1.5"/>
+<line x1="236" y1="36" x2="236" y2="44" stroke="currentColor" stroke-width="1.5"/>
+<line x1="316" y1="36" x2="316" y2="44" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="76" cy="40" r="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polyline points="332.0,40.0 328.9,70.4 319.9,99.0 306.1,124.4 288.8,145.5 249.1,174.4 209.8,187.7 175.6,190.1 147.6,186.1 107.8,170.1 83.4,152.0 68.3,135.4 55.3,114.7 48.9,98.5 45.4,81.9 44.9,69.6 46.1,60.2 48.7,51.6 51.8,45.4 56.3,39.7 61.0,35.8 65.9,33.6 71.3,33.0 75.5,34.3 78.1,37.1 78.1,39.9 76.7,41.1 75.4,40.3" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 31 35 L 41 45 M 31 45 L 41 35" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="14" y="30" font-size="13" fill="currentColor">−1</text>
+<text x="152" y="57" font-size="13" fill="currentColor">2</text>
+<text x="232" y="57" font-size="13" fill="currentColor">4</text>
+<text x="312" y="57" font-size="13" fill="currentColor">6</text>
+<text x="338" y="32" font-size="13" fill="currentColor">Re</text>
+<text x="82" y="18" font-size="13" fill="currentColor">Im</text>
+<text x="222" y="30" font-size="13" fill="currentColor">ω = 0: L = 6.4</text>
+<text x="86" y="96" font-size="13" fill="currentColor">|L| = 1</text>
+<text x="120" y="222" font-size="13" fill="currentColor">ω rising: clockwise to 0</text>
+</svg>

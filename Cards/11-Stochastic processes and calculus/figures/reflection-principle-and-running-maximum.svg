@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A hand-drawn grain path that first touches 3 micrometres at 4 seconds and ends at 1 micrometre at 10 seconds, with its reflection in the level after the first touch, ending at 5 micrometres</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="185" x2="340" y2="185" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="185" x2="40" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="110" x2="340" y2="110" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline fill="none" stroke="currentColor" stroke-width="2" points="40,185 55,170 70,180 85,157.5 100,145 115,155 130,135 145,125 160,110 175,122.5 190,115 205,132.5 220,147.5 235,137.5 250,155 265,167.5 280,152.5 295,162.5 310,175 325,157.5 340,160"/>
+<polyline fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3" points="160,110 175,97.5 190,105 205,87.5 220,72.5 235,82.5 250,65 265,52.5 280,67.5 295,57.5 310,45 325,62.5 340,60"/>
+<circle cx="160" cy="110" r="3.5" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="189" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="30" y="114" font-size="13" fill="currentColor" text-anchor="end">3</text>
+<text x="30" y="39" font-size="13" fill="currentColor" text-anchor="end">6</text>
+<text x="48" y="104" font-size="13" fill="currentColor">level a = 3</text>
+<text x="180" y="58" font-size="13" fill="currentColor">mirror</text>
+<text x="212" y="178" font-size="13" fill="currentColor">path</text>
+<text x="40" y="202" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="160" y="202" font-size="13" fill="currentColor" text-anchor="middle">4</text>
+<text x="340" y="202" font-size="13" fill="currentColor" text-anchor="middle">10</text>
+<text x="190" y="226" font-size="13" fill="currentColor" text-anchor="middle">time (seconds)</text>
+</svg>

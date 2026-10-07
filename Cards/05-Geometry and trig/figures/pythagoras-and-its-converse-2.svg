@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Four copies of the 3-4-5 triangle placed in the corners of a 7 m square, leaving a tilted shaded square of side 5 m in the middle</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="20" y="10" width="210" height="210" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="110,220 230,130 140,10 20,100" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<text x="65" y="236" font-size="13" text-anchor="middle" fill="currentColor">3</text>
+<text x="170" y="236" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<text x="10" y="165" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<text x="10" y="60" font-size="13" text-anchor="middle" fill="currentColor">3</text>
+<text x="240" y="180" font-size="13" fill="currentColor">3</text>
+<text x="240" y="75" font-size="13" fill="currentColor">4</text>
+<text x="125" y="120" font-size="14" text-anchor="middle" fill="currentColor">c = 5</text>
+<text x="256" y="40" font-size="13" fill="currentColor">outer square</text>
+<text x="256" y="58" font-size="13" fill="currentColor">7 m by 7 m</text>
+<text x="256" y="100" font-size="13" fill="currentColor">each corner</text>
+<text x="256" y="118" font-size="13" fill="currentColor">triangle 6 m^2</text>
+<text x="256" y="160" font-size="13" fill="currentColor">shaded centre</text>
+<text x="256" y="178" font-size="13" fill="currentColor">25 m^2</text>
+</svg>

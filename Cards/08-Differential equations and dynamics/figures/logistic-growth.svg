@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The logistic rate 0.8P(1 - P/1000) plotted against the count P from 0 to 1,250 pupils: a hump peaking at 200 pupils per day over P = 500, zero at 0 and 1,000, negative above 1,000; the horizontal axis doubles as the phase line, with an open dot at 0, a filled dot at 1,000, arrows pointing right between them and left above 1,000</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="20" x2="40" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="110" x2="345" y2="110" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="40.0,110.0 70.0,75.0 100.0,50.0 130.0,35.0 160.0,30.0 190.0,35.0 220.0,50.0 250.0,75.0 280.0,110.0 310.0,155.0 340.0,210.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="160" y1="30" x2="160" y2="110" stroke="currentColor" stroke-width="1" stroke-dasharray="4,4"/>
+<circle cx="40" cy="110" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="280" cy="110" r="5" fill="currentColor"/>
+<polygon points="94,104 94,116 106,110" fill="currentColor"/>
+<polygon points="214,104 214,116 226,110" fill="currentColor"/>
+<polygon points="324,104 324,116 312,110" fill="currentColor"/>
+<text x="46" y="14" font-size="13" fill="currentColor" text-anchor="start">rate P' (pupils/day)</text>
+<text x="34" y="34" font-size="13" fill="currentColor" text-anchor="end">200</text>
+<text x="32" y="114" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="34" y="194" font-size="13" fill="currentColor" text-anchor="end">-200</text>
+<text x="160" y="128" font-size="13" fill="currentColor" text-anchor="middle">500</text>
+<text x="276" y="128" font-size="13" fill="currentColor" text-anchor="end">1000</text>
+<text x="46" y="128" font-size="13" fill="currentColor" text-anchor="start">unstable</text>
+<text x="286" y="100" font-size="13" fill="currentColor" text-anchor="start">stable</text>
+<text x="345" y="40" font-size="13" fill="currentColor" text-anchor="end">top 200/day at 500</text>
+<text x="190" y="148" font-size="13" fill="currentColor" text-anchor="middle">count P (pupils)</text>
+</svg>

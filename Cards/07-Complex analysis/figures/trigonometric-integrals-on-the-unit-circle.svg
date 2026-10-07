@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The unit circle traced anticlockwise by z equals e to the i t, with the pole at minus 2 plus root 3 inside it and the pole at minus 2 minus root 3 outside it; a dashed circle of radius 0.75 also encloses only the inside pole</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="12" y1="120" x2="348" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="230" y1="232" x2="230" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="230" cy="120" r="50" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="230" cy="120" r="37.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<polygon points="222,70 231,65 231,75" fill="currentColor"/>
+<circle cx="216.60" cy="120" r="4" fill="currentColor"/>
+<circle cx="43.40" cy="120" r="4" fill="currentColor"/>
+<line x1="214" y1="124" x2="176" y2="180" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2"/>
+<text x="120" y="196" font-size="13" fill="currentColor">−2 + √3</text>
+<text x="18" y="106" font-size="13" fill="currentColor">−2 − √3</text>
+<text x="270" y="74" font-size="13" fill="currentColor">|z| = 1</text>
+<text x="236" y="214" font-size="13" fill="currentColor">dashed: |z| = 0.75</text>
+<text x="324" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="236" y="22" font-size="13" fill="currentColor">Im</text>
+</svg>

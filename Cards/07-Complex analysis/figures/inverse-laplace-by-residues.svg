@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" width="360" height="250" style="color:#24292f">
+<title>The s-plane: poles of 2/(s(s + 2)) at 0 and minus 2, the line Re s = 1 run upwards, and a half circle of radius 4 closing it to the left</title><rect x="0" y="0" width="360" height="250" rx="8" fill="#ffffff"/>
+<line x1="20" y1="125" x2="340" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="220" y1="244" x2="220" y2="6" stroke="currentColor" stroke-width="1.5"/>
+<line x1="245" y1="25" x2="245" y2="225" stroke="currentColor" stroke-width="2"/>
+<path d="M 245 25 A 100 100 0 0 0 245 225" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="215" y1="120" x2="225" y2="130" stroke="currentColor" stroke-width="2"/>
+<line x1="215" y1="130" x2="225" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="165" y1="120" x2="175" y2="130" stroke="currentColor" stroke-width="2"/>
+<line x1="165" y1="130" x2="175" y2="120" stroke="currentColor" stroke-width="2"/>
+<polygon points="245,69 240,79 250,79" fill="currentColor"/>
+<polygon points="145,131 140,121 150,121" fill="currentColor"/>
+<text x="206" y="145" font-size="13" fill="currentColor">0</text>
+<text x="160" y="145" font-size="13" fill="currentColor">−2</text>
+<text x="251" y="44" font-size="13" fill="currentColor">Re s = 1</text>
+<text x="104" y="48" font-size="13" fill="currentColor">R = 4</text>
+<text x="322" y="141" font-size="13" fill="currentColor">Re</text>
+<text x="226" y="16" font-size="13" fill="currentColor">Im</text>
+</svg>

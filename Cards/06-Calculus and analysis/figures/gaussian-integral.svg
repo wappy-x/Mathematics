@@ -1,0 +1,13 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The square from minus 1 to 1, trapped between the disk of radius 1 inside it and the disk of radius 1.414 around it, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="120" y="60" width="120" height="120" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="120" r="60" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="84.85" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="240" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="240" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<text x="204" y="136" font-size="13" fill="currentColor">1</text>
+<text x="166" y="92" font-size="13" fill="currentColor">1.414</text>
+<text x="4" y="18" font-size="13" fill="currentColor">outer disk, radius 1.414</text>
+<text x="4" y="236" font-size="13" fill="currentColor">inner disk, radius 1</text>
+<text x="262" y="18" font-size="13" fill="currentColor">square, side 2</text>
+</svg>

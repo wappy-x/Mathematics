@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 30 m crane boom at 40 degrees drawn to scale as a right triangle: the reach runs 22.98 m along the level from the pivot A, the height rises 19.28 m up the hook line to the tip B, and the right angle sits at C</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="223.85" y2="45.73" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="200" x2="223.85" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="223.85" y1="45.73" x2="223.85" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 213.85 200 L 213.85 190 L 223.85 190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 70 200 A 30 30 0 0 0 62.98 180.72" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="40" cy="200" r="3" fill="currentColor"/>
+<text x="26" y="205" font-size="14" fill="currentColor">A</text>
+<text x="230" y="44" font-size="14" fill="currentColor">B</text>
+<text x="230" y="214" font-size="14" fill="currentColor">C</text>
+<text x="76" y="193" font-size="13" fill="currentColor">40°</text>
+<text x="128" y="112" font-size="13" fill="currentColor" text-anchor="end">boom c = 30 m</text>
+<text x="132" y="218" font-size="13" fill="currentColor" text-anchor="middle">reach b = 22.98 m</text>
+<text x="232" y="120" font-size="13" fill="currentColor">height a</text>
+<text x="232" y="136" font-size="13" fill="currentColor">= 19.28 m</text>
+</svg>

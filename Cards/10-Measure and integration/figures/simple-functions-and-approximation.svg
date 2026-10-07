@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A day's power draw as a dashed curve from 0 to 24 hours, peaking at 3.1 kW at 19:00, with the stage-1 staircase of half-kilowatt steps capped at 1 kW shaded beneath it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="36" y1="210" x2="348" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="210" x2="36" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<path d="M36,210 H105.33 V185 H116.36 V160 H147.43 V185 H247.25 V160 H324.60 V185 H341.50 V210 Z" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<path d="M36,210 H105.33 V185 H116.36 V160 H147.43 V185 H247.25 V160 H324.60 V185 H341.50 V210 H348" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="36,190 49,192.5 62,195 75,195 88,195 101,192.5 114,170 127,115 140,140 153,175 166,180 179,180 192,165 205,175 218,180 231,180 244,170 257,130 270,75 283,55 296,90 309,125 322,155 335,180 348,190" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,3"/>
+<line x1="32" y1="160" x2="36" y2="160" stroke="currentColor" stroke-width="1.5"/>
+<line x1="32" y1="110" x2="36" y2="110" stroke="currentColor" stroke-width="1.5"/>
+<line x1="32" y1="60" x2="36" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="164" font-size="13" fill="currentColor" text-anchor="end">1 kW</text>
+<text x="30" y="114" font-size="13" fill="currentColor" text-anchor="end">2 kW</text>
+<text x="30" y="64" font-size="13" fill="currentColor" text-anchor="end">3 kW</text>
+<text x="36" y="228" font-size="13" fill="currentColor" text-anchor="middle">0 h</text>
+<text x="192" y="228" font-size="13" fill="currentColor" text-anchor="middle">12 h</text>
+<text x="354" y="228" font-size="13" fill="currentColor" text-anchor="end">24 h</text>
+<text x="46" y="52" font-size="13" fill="currentColor">dashed: power draw p</text>
+<text x="46" y="70" font-size="13" fill="currentColor">shaded: stage-1 staircase</text>
+</svg>

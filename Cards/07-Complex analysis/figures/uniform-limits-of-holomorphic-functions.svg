@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The closed unit disc shaded, the rim points 1 and -1, the point 1/2 with a dashed circle of radius 0.4 round it run anticlockwise, and the point i/2</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="180" cy="120" r="80" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="232" x2="180" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="220" cy="120" r="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<polygon points="224,84 215,88 224,92" fill="currentColor"/>
+<circle cx="220" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="260" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="100" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="180" cy="80" r="3.5" fill="currentColor"/>
+<text x="212" y="140" font-size="13" fill="currentColor">1/2</text>
+<text x="264" y="138" font-size="13" fill="currentColor">1</text>
+<text x="80" y="138" font-size="13" fill="currentColor">−1</text>
+<text x="186" y="74" font-size="13" fill="currentColor">i/2</text>
+<text x="120" y="184" font-size="13" fill="currentColor">|z| ≤ 1</text>
+<text x="322" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

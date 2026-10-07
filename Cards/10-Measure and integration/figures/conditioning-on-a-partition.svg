@@ -1,0 +1,48 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Monthly rainfall at one station as twelve bars from December to November, 1.5 units per mm; over each season's three bars a solid step at the season's average, 30, 60, 90 and 40 mm; a dashed line across all twelve at the yearly average, 55 mm</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="42.5" y="180" width="20" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="67.5" y="165" width="20" height="45" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="92.5" y="150" width="20" height="60" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="117.5" y="142.5" width="20" height="67.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="142.5" y="120" width="20" height="90" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="167.5" y="97.5" width="20" height="112.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="192.5" y="90" width="20" height="120" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="217.5" y="60" width="20" height="150" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="242.5" y="75" width="20" height="135" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="267.5" y="127.5" width="20" height="82.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="292.5" y="150" width="20" height="60" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="317.5" y="172.5" width="20" height="37.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="210" x2="340" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="30" x2="40" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="120" x2="40" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="30" x2="40" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="115" y1="30" x2="115" y2="210" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3" stroke-opacity="0.5"/>
+<line x1="190" y1="30" x2="190" y2="210" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3" stroke-opacity="0.5"/>
+<line x1="265" y1="30" x2="265" y2="210" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3" stroke-opacity="0.5"/>
+<line x1="40" y1="165" x2="115" y2="165" stroke="currentColor" stroke-width="2"/>
+<line x1="115" y1="120" x2="190" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="190" y1="75" x2="265" y2="75" stroke="currentColor" stroke-width="2"/>
+<line x1="265" y1="150" x2="340" y2="150" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="127.5" x2="340" y2="127.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="77.5" y="22" font-size="13" text-anchor="middle" fill="currentColor">winter 30</text>
+<text x="152.5" y="22" font-size="13" text-anchor="middle" fill="currentColor">spring 60</text>
+<text x="227.5" y="22" font-size="13" text-anchor="middle" fill="currentColor">summer 90</text>
+<text x="302.5" y="22" font-size="13" text-anchor="middle" fill="currentColor">autumn 40</text>
+<text x="343" y="132" font-size="13" fill="currentColor">55</text>
+<text x="34" y="214" font-size="13" text-anchor="end" fill="currentColor">0</text>
+<text x="34" y="124" font-size="13" text-anchor="end" fill="currentColor">60</text>
+<text x="34" y="34" font-size="13" text-anchor="end" fill="currentColor">120</text>
+<text x="4" y="80" font-size="13" fill="currentColor">mm</text>
+<text x="52.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">D</text>
+<text x="77.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">J</text>
+<text x="102.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">F</text>
+<text x="127.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">M</text>
+<text x="152.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">A</text>
+<text x="177.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">M</text>
+<text x="202.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">J</text>
+<text x="227.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">J</text>
+<text x="252.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">A</text>
+<text x="277.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">S</text>
+<text x="302.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">O</text>
+<text x="327.5" y="228" font-size="13" text-anchor="middle" fill="currentColor">N</text>
+</svg>

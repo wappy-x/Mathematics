@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The wind week as an arrow of length 14.2478 from the origin, its perpendicular drop of length 5.2915 onto the line of constant weeks at c = 5, and the longer dashed miss of length 5.9161 to c = 4, at 16 units per metre per second</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="345" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="200" x2="251.66" y2="115.34" stroke="currentColor" stroke-width="2"/>
+<line x1="251.66" y1="115.34" x2="251.66" y2="200" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="251.66" y1="115.34" x2="209.33" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<path d="M 241.66 200 L 241.66 190 L 251.66 190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="40" cy="200" r="3" fill="currentColor"/>
+<circle cx="251.66" cy="115.34" r="3" fill="currentColor"/>
+<circle cx="251.66" cy="200" r="3" fill="currentColor"/>
+<circle cx="209.33" cy="200" r="3" fill="currentColor"/>
+<text x="34" y="218" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="100" y="145" font-size="13" text-anchor="middle" fill="currentColor">f: 14.2478</text>
+<text x="258" y="112" font-size="13" fill="currentColor">tip of f</text>
+<text x="258" y="162" font-size="13" fill="currentColor">5.2915</text>
+<text x="214" y="178" font-size="13" text-anchor="end" fill="currentColor">5.9161</text>
+<text x="205" y="218" font-size="13" text-anchor="middle" fill="currentColor">c = 4</text>
+<text x="262" y="218" font-size="13" text-anchor="middle" fill="currentColor">c = 5</text>
+<text x="340" y="234" font-size="13" text-anchor="end" fill="currentColor">line of constant weeks</text>
+</svg>

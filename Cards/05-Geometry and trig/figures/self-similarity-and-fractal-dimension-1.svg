@@ -1,0 +1,9 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The Koch snowflake at stage 2, 48 sides, inside the dashed hexagon around the stage 1 star; the dotted triangle is the starting 27 cm triangle</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="180,10.88 85.5,65.44 85.5,174.56 180,229.12 274.5,174.56 274.5,65.44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<polygon points="180,10.88 85.5,174.56 274.5,174.56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<polygon points="180,10.88 169.5,29.07 148.5,29.07 159,47.25 148.5,65.44 127.5,65.44 117,47.25 106.5,65.44 85.5,65.44 96,83.63 85.5,101.81 106.5,101.81 117,120 106.5,138.19 85.5,138.19 96,156.37 85.5,174.56 106.5,174.56 117,192.75 127.5,174.56 148.5,174.56 159,192.75 148.5,210.93 169.5,210.93 180,229.12 190.5,210.93 211.5,210.93 201,192.75 211.5,174.56 232.5,174.56 243,192.75 253.5,174.56 274.5,174.56 264,156.37 274.5,138.19 253.5,138.19 243,120 253.5,101.81 274.5,101.81 264,83.63 274.5,65.44 253.5,65.44 243,47.25 232.5,65.44 211.5,65.44 201,47.25 211.5,29.07 190.5,29.07" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<text x="4" y="190" font-size="13" fill="currentColor">side 27 cm</text>
+<text x="282" y="60" font-size="13" fill="currentColor">hexagon</text>
+<text x="282" y="200" font-size="13" fill="currentColor">stage 2</text>
+</svg>

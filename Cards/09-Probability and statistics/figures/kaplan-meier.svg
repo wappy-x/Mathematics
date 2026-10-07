@@ -1,0 +1,51 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Follow-up of the 12 trial patients: each line runs from joining to relapse (cross) or dropout (open circle), to scale in months</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="30" y="26" font-size="13" text-anchor="end" fill="currentColor">A</text>
+<line x1="40" y1="22" x2="73.5" y2="22" stroke="currentColor" stroke-width="1.5"/>
+<path d="M73.5 18L81.5 26M73.5 26L81.5 18" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="30" y="40" font-size="13" text-anchor="end" fill="currentColor">B</text>
+<line x1="40" y1="36" x2="86" y2="36" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="90" cy="36" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="30" y="54" font-size="13" text-anchor="end" fill="currentColor">C</text>
+<line x1="40" y1="50" x2="98.5" y2="50" stroke="currentColor" stroke-width="1.5"/>
+<path d="M98.5 46L106.5 54M98.5 54L106.5 46" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="30" y="68" font-size="13" text-anchor="end" fill="currentColor">D</text>
+<line x1="40" y1="64" x2="98.5" y2="64" stroke="currentColor" stroke-width="1.5"/>
+<path d="M98.5 60L106.5 68M98.5 68L106.5 60" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="30" y="82" font-size="13" text-anchor="end" fill="currentColor">E</text>
+<line x1="40" y1="78" x2="136" y2="78" stroke="currentColor" stroke-width="1.5"/>
+<path d="M136 74L144 82M136 82L144 74" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="30" y="96" font-size="13" text-anchor="end" fill="currentColor">F</text>
+<line x1="40" y1="92" x2="136" y2="92" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="140" cy="92" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="30" y="110" font-size="13" text-anchor="end" fill="currentColor">G</text>
+<line x1="40" y1="106" x2="173.5" y2="106" stroke="currentColor" stroke-width="1.5"/>
+<path d="M173.5 102L181.5 110M173.5 110L181.5 102" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="30" y="124" font-size="13" text-anchor="end" fill="currentColor">H</text>
+<line x1="40" y1="120" x2="186" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="190" cy="120" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="30" y="138" font-size="13" text-anchor="end" fill="currentColor">I</text>
+<line x1="40" y1="134" x2="211" y2="134" stroke="currentColor" stroke-width="1.5"/>
+<path d="M211 130L219 138M211 138L219 130" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="30" y="152" font-size="13" text-anchor="end" fill="currentColor">J</text>
+<line x1="40" y1="148" x2="236" y2="148" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="240" cy="148" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="30" y="166" font-size="13" text-anchor="end" fill="currentColor">K</text>
+<line x1="40" y1="162" x2="286" y2="162" stroke="currentColor" stroke-width="1.5"/>
+<path d="M286 158L294 166M286 166L294 158" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="30" y="180" font-size="13" text-anchor="end" fill="currentColor">L</text>
+<line x1="40" y1="176" x2="336" y2="176" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="340" cy="176" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<line x1="40" y1="192" x2="340" y2="192" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="188" x2="40" y2="196" stroke="currentColor" stroke-width="1.5"/>
+<text x="40" y="211" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<line x1="115" y1="188" x2="115" y2="196" stroke="currentColor" stroke-width="1.5"/>
+<text x="115" y="211" font-size="13" text-anchor="middle" fill="currentColor">6</text>
+<line x1="190" y1="188" x2="190" y2="196" stroke="currentColor" stroke-width="1.5"/>
+<text x="190" y="211" font-size="13" text-anchor="middle" fill="currentColor">12</text>
+<line x1="265" y1="188" x2="265" y2="196" stroke="currentColor" stroke-width="1.5"/>
+<text x="265" y="211" font-size="13" text-anchor="middle" fill="currentColor">18</text>
+<line x1="340" y1="188" x2="340" y2="196" stroke="currentColor" stroke-width="1.5"/>
+<text x="340" y="211" font-size="13" text-anchor="middle" fill="currentColor">24</text>
+<text x="190" y="232" font-size="13" text-anchor="middle" fill="currentColor">months since joining the trial</text>
+</svg>

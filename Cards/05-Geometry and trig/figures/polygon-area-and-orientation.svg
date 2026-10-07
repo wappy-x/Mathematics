@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The six-corner survey polygon A to F with a reflex corner at D, drawn to scale from the survey peg</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="222" x2="345" y2="222" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<line x1="30" y1="222" x2="30" y2="8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<circle cx="30" cy="222" r="3" fill="currentColor"/>
+<polygon points="82,196 290,196 316,66 212,118 160,14 82,66" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<path d="M 180 191 L 188 196 L 180 201" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 224.52 111.74 A 14 14 0 1 1 205.74 105.48" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="68" y="212" font-size="13" fill="currentColor">A</text>
+<text x="294" y="212" font-size="13" fill="currentColor">B</text>
+<text x="321" y="64" font-size="13" fill="currentColor">C</text>
+<text x="209" y="100" font-size="13" fill="currentColor">D</text>
+<text x="172" y="22" font-size="13" fill="currentColor">E</text>
+<text x="66" y="62" font-size="13" fill="currentColor">F</text>
+<text x="196" y="150" font-size="13" fill="currentColor">270°</text>
+<text x="100" y="172" font-size="14" fill="currentColor">41.5 ha</text>
+<text x="36" y="236" font-size="13" fill="currentColor">peg</text>
+<text x="310" y="236" font-size="13" fill="currentColor">east</text>
+<text x="36" y="14" font-size="13" fill="currentColor">north</text>
+</svg>

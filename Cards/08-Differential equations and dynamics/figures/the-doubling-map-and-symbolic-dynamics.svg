@@ -1,0 +1,26 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Graph of the doubling map on a 1 m strip: two parallel lines of slope 2, the dashed diagonal where the next place equals the current one, and the cobweb of the three-round cycle from 1/7 m to 2/7 m to 4/7 m and back</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="60" y1="210" x2="240" y2="210" stroke="currentColor" stroke-width="1"/>
+<line x1="60" y1="210" x2="60" y2="30" stroke="currentColor" stroke-width="1"/>
+<line x1="60" y1="210" x2="150" y2="30" stroke="currentColor" stroke-width="2"/>
+<line x1="150" y1="210" x2="240" y2="30" stroke="currentColor" stroke-width="2"/>
+<line x1="60" y1="210" x2="240" y2="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<polyline points="85.71,184.29 85.71,158.57 111.43,158.57 111.43,107.14 162.86,107.14 162.86,184.29 85.71,184.29" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="85.71,166 81.71,173 89.71,173" fill="currentColor"/>
+<polygon points="142,107.14 135,103.14 135,111.14" fill="currentColor"/>
+<polygon points="162.86,152 158.86,145 166.86,145" fill="currentColor"/>
+<polygon points="120,184.29 127,180.29 127,188.29" fill="currentColor"/>
+<circle cx="85.71" cy="184.29" r="3" fill="currentColor"/>
+<circle cx="111.43" cy="158.57" r="3" fill="currentColor"/>
+<circle cx="162.86" cy="107.14" r="3" fill="currentColor"/>
+<text x="60" y="226" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="150" y="226" font-size="13" text-anchor="middle" fill="currentColor">0.5</text>
+<text x="240" y="226" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="52" y="34" font-size="13" text-anchor="end" fill="currentColor">1</text>
+<text x="52" y="124" font-size="13" text-anchor="end" fill="currentColor">0.5</text>
+<text x="248" y="214" font-size="13" fill="currentColor">place now (m)</text>
+<text x="66" y="22" font-size="13" fill="currentColor">place next round (m)</text>
+<text x="92" y="202" font-size="13" fill="currentColor">1/7</text>
+<text x="117" y="174" font-size="13" fill="currentColor">2/7</text>
+<text x="167" y="124" font-size="13" fill="currentColor">4/7</text>
+</svg>

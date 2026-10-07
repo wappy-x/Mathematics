@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The 1 m by 1 m board drawn to scale, with the corner triangle where x + y is below 0.5 shaded, and the lines x + y = 1 and x + y = 1.5</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="60" y="20" width="200" height="200" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="60,220 160,220 60,120" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="20" x2="260" y2="220" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="160" y1="20" x2="260" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/>
+<text x="68" y="200" font-size="13" fill="currentColor">1/8</text>
+<text x="266" y="124" font-size="13" fill="currentColor">x + y = 1.5</text>
+<text x="266" y="214" font-size="13" fill="currentColor">x + y = 1</text>
+<text x="56" y="236" font-size="13" fill="currentColor">0</text>
+<text x="150" y="236" font-size="13" fill="currentColor">0.5</text>
+<text x="256" y="236" font-size="13" fill="currentColor">1</text>
+<text x="290" y="236" font-size="13" fill="currentColor">x, metres</text>
+<text x="30" y="124" font-size="13" fill="currentColor">0.5</text>
+<text x="44" y="26" font-size="13" fill="currentColor">1</text>
+<text x="8" y="70" font-size="13" fill="currentColor">y, m</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A ladder leaning on a wall at 70 degrees to the ground, with a level gutter line through its top, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="72" y="12" width="18" height="203" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="90" y1="12" x2="90" y2="215" stroke="currentColor" stroke-width="1.5"/>
+<line x1="20" y1="215" x2="340" y2="215" stroke="currentColor" stroke-width="1.5"/>
+<line x1="90" y1="27.06" x2="330" y2="27.06" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="158.40" y1="215" x2="90" y2="27.06" stroke="currentColor" stroke-width="2"/>
+<line x1="158.40" y1="215" x2="163.88" y2="230.04" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+<path d="M 90 203 L 102 203 L 102 215" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 255 210 L 261 215 L 255 220 M 255 22.06 L 261 27.06 L 255 32.06" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 134.40 215 A 24 24 0 0 1 150.19 192.45" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 152.24 198.09 A 18 18 0 0 1 176.40 215" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 172.40 215 A 14 14 0 0 1 163.19 228.16" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 118 27.06 A 28 28 0 0 1 99.58 53.37" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 90 75.06 A 48 48 0 0 0 106.42 72.17" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="106" y="200" font-size="13" fill="currentColor">70°</text>
+<text x="178" y="204" font-size="13" fill="currentColor">110°</text>
+<text x="178" y="232" font-size="13" fill="currentColor">70°</text>
+<text x="118" y="54" font-size="13" fill="currentColor">70°</text>
+<text x="93" y="92" font-size="13" fill="currentColor">20°</text>
+<text x="132" y="122" font-size="13" fill="currentColor">ladder, 5 m</text>
+<text x="150" y="18" font-size="13" fill="currentColor">gutter line, level</text>
+<text x="24" y="120" font-size="13" fill="currentColor">wall</text>
+<text x="262" y="232" font-size="13" fill="currentColor">ground</text>
+</svg>

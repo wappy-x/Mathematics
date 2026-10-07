@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 3 metre fence at 100 units per metre with 100 rust spots, the stretch E from 0.5 to 1.2 shaded, a two-piece test set T, and its parts inside and outside E</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="80" y="30" width="70" height="165" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<text x="80" y="22" font-size="13" fill="currentColor">E = [0.5, 1.2]</text>
+<line x1="30" y1="60" x2="330" y2="60" stroke="currentColor" stroke-width="2"/>
+<path d="M33 52v8M36 52v8M39 52v8M42 52v8M45 52v8M48 52v8M51 52v8M54 52v8M57 52v8M60 52v8M63 52v8M66 52v8M69 52v8M72 52v8M75 52v8M78 52v8M81 52v8M84 52v8M87 52v8M90 52v8M93 52v8M96 52v8M99 52v8M102 52v8M105 52v8M108 52v8M111 52v8M114 52v8M117 52v8M120 52v8M123 52v8M126 52v8M129 52v8M132 52v8M135 52v8M138 52v8M141 52v8M144 52v8M147 52v8M150 52v8M153 52v8M156 52v8M159 52v8M162 52v8M165 52v8M168 52v8M171 52v8M174 52v8M177 52v8M180 52v8M183 52v8M186 52v8M189 52v8M192 52v8M195 52v8M198 52v8M201 52v8M204 52v8M207 52v8M210 52v8M213 52v8M216 52v8M219 52v8M222 52v8M225 52v8M228 52v8M231 52v8M234 52v8M237 52v8M240 52v8M243 52v8M246 52v8M249 52v8M252 52v8M255 52v8M258 52v8M261 52v8M264 52v8M267 52v8M270 52v8M273 52v8M276 52v8M279 52v8M282 52v8M285 52v8M288 52v8M291 52v8M294 52v8M297 52v8M300 52v8M303 52v8M306 52v8M309 52v8M312 52v8M315 52v8M318 52v8M321 52v8M324 52v8M327 52v8M330 52v8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="160" y="44" font-size="13" fill="currentColor">fence and rust spots</text>
+<path d="M50 100H110M50 95v10M110 95v10M130 100H230M130 95v10M230 95v10" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="240" y="104" font-size="13" fill="currentColor">T: 1.6</text>
+<path d="M80 140H110M80 135v10M110 135v10M130 140H150M130 135v10M150 135v10" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="240" y="144" font-size="13" fill="currentColor">inside E: 0.5</text>
+<path d="M50 180H80M50 175v10M150 180H230M230 175v10" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="80" cy="180" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="150" cy="180" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="240" y="184" font-size="13" fill="currentColor">outside E: 1.1</text>
+<path d="M30 212H330M30 207v10M130 207v10M230 207v10M330 207v10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="233" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="130" y="233" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="230" y="233" font-size="13" fill="currentColor" text-anchor="middle">2</text>
+<text x="322" y="233" font-size="13" fill="currentColor" text-anchor="middle">3 m</text>
+</svg>

@@ -1,0 +1,31 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Pole-zero map of the cruise control, to scale: closed-loop poles at -0.1 plus and minus 0.1j, zero at -0.125, and the runaway pole at +0.2136 when the gain sign is flipped; right half-plane shaded</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="180" y="0" width="180" height="240" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="5" y1="120" x2="355" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="5" x2="180" y2="235" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="115" x2="60" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="115" x2="120" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="240" y1="115" x2="240" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="300" y1="115" x2="300" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="175" y1="60" x2="185" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<line x1="175" y1="180" x2="185" y2="180" stroke="currentColor" stroke-width="1.5"/>
+<text x="48" y="140" font-size="13" fill="currentColor">−0.2</text>
+<text x="228" y="140" font-size="13" fill="currentColor">0.1</text>
+<text x="288" y="140" font-size="13" fill="currentColor">0.2</text>
+<text x="188" y="64" font-size="13" fill="currentColor">0.1j</text>
+<text x="188" y="184" font-size="13" fill="currentColor">−0.1j</text>
+<line x1="113" y1="53" x2="127" y2="67" stroke="currentColor" stroke-width="2"/>
+<line x1="113" y1="67" x2="127" y2="53" stroke="currentColor" stroke-width="2"/>
+<line x1="113" y1="173" x2="127" y2="187" stroke="currentColor" stroke-width="2"/>
+<line x1="113" y1="187" x2="127" y2="173" stroke="currentColor" stroke-width="2"/>
+<circle cx="105" cy="120" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="301.2" y1="113" x2="315.2" y2="127" stroke="currentColor" stroke-width="2"/>
+<line x1="301.2" y1="127" x2="315.2" y2="113" stroke="currentColor" stroke-width="2"/>
+<text x="20" y="45" font-size="13" fill="currentColor">pole −0.1 + 0.1j</text>
+<text x="20" y="210" font-size="13" fill="currentColor">pole −0.1 − 0.1j</text>
+<text x="60" y="104" font-size="13" fill="currentColor">zero</text>
+<text x="250" y="104" font-size="13" fill="currentColor">gain flipped</text>
+<text x="200" y="22" font-size="13" fill="currentColor">runs away</text>
+<text x="70" y="22" font-size="13" fill="currentColor">decays</text>
+<text x="270" y="232" font-size="13" fill="currentColor">Re s, 1/s</text>
+</svg>

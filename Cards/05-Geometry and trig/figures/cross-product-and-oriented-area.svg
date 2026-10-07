@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Side view of the panel from the east: a 6 m slope rising 3.6 m over 4.8 m, with its normal drawn square to it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="330" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="100" y1="200" x2="292" y2="56" stroke="currentColor" stroke-width="2"/>
+<line x1="292" y1="200" x2="292" y2="56" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="282,200 282,190 292,190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="196" y1="128" x2="148" y2="64" stroke="currentColor" stroke-width="2"/>
+<polyline points="150,75 148,64 158,69" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="204,122 198,114 190,120" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 140 200 A 40 40 0 0 0 132 176" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="146" y="194" font-size="13" fill="currentColor">36.87°</text>
+<text x="176" y="166" font-size="13" fill="currentColor">v: 6 m of panel</text>
+<text x="297" y="132" font-size="13" fill="currentColor">3.6 m</text>
+<text x="170" y="218" font-size="13" fill="currentColor">4.8 m north</text>
+<text x="40" y="218" font-size="13" fill="currentColor">south</text>
+<text x="68" y="62" font-size="14" fill="currentColor">normal n</text>
+</svg>

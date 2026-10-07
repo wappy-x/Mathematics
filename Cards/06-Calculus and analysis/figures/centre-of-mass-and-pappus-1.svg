@@ -1,0 +1,14 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Cross-section of the swim ring: the spin axis, the tube circle of radius 0.1 m centred 0.3 m from the axis, and its mirror image on the far side</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="180" y1="22" x2="180" y2="228" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6,4"/>
+<circle cx="300" cy="120" r="40" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="60" cy="120" r="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,4"/>
+<line x1="180" y1="120" x2="300" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="300" y1="120" x2="300" y2="80" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="300" cy="120" r="3.5" fill="currentColor"/>
+<text x="186" y="18" font-size="13" fill="currentColor">spin axis</text>
+<text x="222" y="112" font-size="13" fill="currentColor" text-anchor="middle">R = 0.3 m</text>
+<text x="300" y="72" font-size="13" fill="currentColor" text-anchor="middle">r = 0.1 m</text>
+<text x="300" y="180" font-size="13" fill="currentColor" text-anchor="middle">centroid</text>
+<text x="60" y="180" font-size="13" fill="currentColor" text-anchor="middle">far side</text>
+</svg>

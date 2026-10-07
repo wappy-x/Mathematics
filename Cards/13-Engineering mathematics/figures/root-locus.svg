@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Root locus of the heated room, to scale: open-loop poles at -0.5, -0.25 and -0.1 per minute; two branches meet at -0.1667 and curve up and down, crossing the imaginary axis at plus and minus 0.4472j when the loop gain is 12.6; the third branch runs left from -0.5; dashed asymptotes from -0.2833 and the dotted damping ray for zeta 0.5; right half-plane shaded</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="300" y="0" width="60" height="240" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="10" y1="120" x2="355" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<line x1="300" y1="5" x2="300" y2="235" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<line x1="100" y1="115" x2="100" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="200" y1="115" x2="200" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="243.3" y1="120" x2="306.8" y2="10" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="243.3" y1="120" x2="306.8" y2="230" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="300" y1="120" x2="236.5" y2="10" stroke="currentColor" stroke-width="1.5" stroke-dasharray="1 3"/>
+<polyline points="250,120 280,120" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="112.8,120 200,120" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="266.7,120 267.2,111.5 269.7,98.7 272.9,88.5 277.6,76.5 284.1,62.0 292.9,44.3 300.0,30.6 308.6,14.4" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="266.7,120 267.2,128.5 269.7,141.3 272.9,151.5 277.6,163.5 284.1,178.0 292.9,195.7 300.0,209.4 308.6,225.6" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="195" y1="115" x2="205" y2="125" stroke="currentColor" stroke-width="2"/>
+<line x1="195" y1="125" x2="205" y2="115" stroke="currentColor" stroke-width="2"/>
+<line x1="245" y1="115" x2="255" y2="125" stroke="currentColor" stroke-width="2"/>
+<line x1="245" y1="125" x2="255" y2="115" stroke="currentColor" stroke-width="2"/>
+<line x1="275" y1="115" x2="285" y2="125" stroke="currentColor" stroke-width="2"/>
+<line x1="275" y1="125" x2="285" y2="115" stroke="currentColor" stroke-width="2"/>
+<circle cx="276.5" cy="79.2" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="300" cy="30.6" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="86" y="140" font-size="13" fill="currentColor">−1.0</text>
+<text x="186" y="140" font-size="13" fill="currentColor">−0.5</text>
+<text x="308" y="50" font-size="13" fill="currentColor">K 12.6</text>
+<text x="150" y="76" font-size="13" fill="currentColor">ζ 0.5: K 1.72</text>
+<text x="12" y="112" font-size="13" fill="currentColor">Re s, 1/min</text>
+</svg>

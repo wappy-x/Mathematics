@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A football's pentagon ringed by its five hexagons and laid flat: at each pentagon corner a 12-degree slit stays open</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="180.00,82.97 147.64,106.49 160.00,144.53 200.00,144.53 212.36,106.49" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="180.00,82.97 212.36,106.49 248.90,90.22 253.08,50.44 220.72,26.92 184.18,43.19" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="180.00,82.97 212.36,106.49 248.90,90.22 253.08,50.44 220.72,26.92 184.18,43.19" transform="rotate(72 180 117)" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="180.00,82.97 212.36,106.49 248.90,90.22 253.08,50.44 220.72,26.92 184.18,43.19" transform="rotate(144 180 117)" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="180.00,82.97 212.36,106.49 248.90,90.22 253.08,50.44 220.72,26.92 184.18,43.19" transform="rotate(216 180 117)" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="180.00,82.97 212.36,106.49 248.90,90.22 253.08,50.44 220.72,26.92 184.18,43.19" transform="rotate(288 180 117)" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M171.91,88.85 A10,10 0 0 0 188.09,88.85" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M167.06,92.38 A16,16 0 0 1 178.33,67.06" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M181.67,67.06 A16,16 0 0 1 192.94,92.38" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M177.28,57.11 A26,26 0 0 1 182.72,57.11" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="180" y="106" font-size="13" text-anchor="middle" fill="currentColor">108°</text>
+<text x="146" y="78" font-size="13" text-anchor="middle" fill="currentColor">120°</text>
+<text x="214" y="78" font-size="13" text-anchor="middle" fill="currentColor">120°</text>
+<text x="180" y="36" font-size="13" text-anchor="middle" fill="currentColor">12°</text>
+</svg>

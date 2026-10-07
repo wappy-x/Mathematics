@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A chain of five discs walking the geometric series from the unit disc, round the pole at 1, to the negative-rate point T just right of it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="110" cy="135" r="100" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="160" cy="85" r="70.7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="210" cy="95" r="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="230" cy="125" r="22.4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="212" cy="135" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="5" y1="135" x2="350" y2="135" stroke="currentColor" stroke-width="1.5"/>
+<line x1="110" y1="238" x2="110" y2="5" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="110,135 160,85 210,95 230,125 212,135" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4,3"/>
+<polygon points="139,106 130.5,108.9 136.2,114.5" fill="currentColor"/>
+<circle cx="160" cy="85" r="2.5" fill="currentColor"/>
+<circle cx="210" cy="95" r="2.5" fill="currentColor"/>
+<circle cx="230" cy="125" r="2.5" fill="currentColor"/>
+<line x1="206" y1="131" x2="214" y2="139" stroke="currentColor" stroke-width="1.5"/>
+<line x1="206" y1="139" x2="214" y2="131" stroke="currentColor" stroke-width="1.5"/>
+<line x1="213" y1="140" x2="236" y2="168" stroke="currentColor" stroke-width="1.5"/>
+<text x="238" y="180" font-size="13" fill="currentColor">pole 1, and T</text>
+<text x="36" y="195" font-size="13" fill="currentColor">|z| &lt; 1</text>
+<text x="96" y="152" font-size="13" fill="currentColor">0</text>
+<text x="328" y="128" font-size="13" fill="currentColor">Re</text>
+<text x="116" y="16" font-size="13" fill="currentColor">Im</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The cube roots of 8 (a triangle) and the fourth roots of minus 16 (a square) on the same circle of radius 2, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="236" x2="180" y2="4" stroke="currentColor" stroke-width="1.5"/>
+<text x="322" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="158" y="16" font-size="13" fill="currentColor">Im</text>
+<circle cx="180" cy="120" r="90" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="270,120 135,42.1 135,197.9" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="243.6,56.4 116.4,56.4 116.4,183.6 243.6,183.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="270" cy="120" r="4" fill="currentColor"/>
+<circle cx="135" cy="42.1" r="4" fill="currentColor"/>
+<circle cx="135" cy="197.9" r="4" fill="currentColor"/>
+<circle cx="243.6" cy="56.4" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="116.4" cy="56.4" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="116.4" cy="183.6" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="243.6" cy="183.6" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="277" y="136" font-size="13" fill="currentColor">2</text>
+<text x="128" y="36" font-size="13" fill="currentColor" text-anchor="end">−1 + 1.732i</text>
+<text x="128" y="216" font-size="13" fill="currentColor" text-anchor="end">−1 − 1.732i</text>
+<text x="251" y="50" font-size="13" fill="currentColor">1.414 + 1.414i</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The plucked-string triangle on 0 to 1 m, peak 1 cm at 0.5 m, drawn solid; above, its odd reflection on -1 to 0 m drawn dashed and upside down; below, its even reflection drawn dashed and upright</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="70" x2="340" y2="70" stroke="currentColor" stroke-width="1"/>
+<line x1="40" y1="190" x2="340" y2="190" stroke="currentColor" stroke-width="1"/>
+<line x1="190" y1="16" x2="190" y2="196" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>
+<polyline points="190,70 265,30 340,70" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="40,70 115,110 190,70" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<polyline points="190,190 265,150 340,190" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="40,190 115,150 190,190" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="44" y="34" font-size="13" fill="currentColor">odd: sines</text>
+<text x="44" y="138" font-size="13" fill="currentColor">even: cosines</text>
+<text x="275" y="22" font-size="13" fill="currentColor">1 cm</text>
+<text x="275" y="146" font-size="13" fill="currentColor">1 cm</text>
+<text x="118" y="126" font-size="13" fill="currentColor">−1 cm</text>
+<text x="40" y="210" font-size="13" fill="currentColor" text-anchor="middle">−1</text>
+<text x="190" y="210" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="340" y="210" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="265" y="230" font-size="13" fill="currentColor" text-anchor="middle">position x (m)</text>
+</svg>

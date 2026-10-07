@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>One day of the harbour tide drawn to scale: gauge height against hours after midnight, a dashed line at 2 m, and two shaded windows when the water is above it, 01:40 to 06:32 and 14:04 to 18:56</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="56.0" y="44" width="58.4" height="156" fill="currentColor" fill-opacity="0.12"/>
+<rect x="204.8" y="44" width="58.4" height="156" fill="currentColor" fill-opacity="0.12"/>
+<line x1="36" y1="200" x2="324" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="200" x2="36" y2="44" stroke="currentColor" stroke-width="1.5"/>
+<path d="M36,200 v4 M108,200 v4 M180,200 v4 M252,200 v4 M324,200 v4 M32,150 h4 M32,100 h4 M32,50 h4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="100" x2="324" y2="100" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="36,161.4 42,143.8 48,125.0 54,106.2 60,88.6 66,73.3 72,61.4 78,53.4 84,50.1 90,51.5 96,57.7 102,68.1 108,82.2 114,99.0 120,117.4 126,136.4 132,154.6 138,170.9 144,184.3 150,193.9 156,199.1 162,199.6 168,195.3 174,186.6 180,173.9 186,158.0 192,140.1 198,121.2 204,102.5 210,85.3 216,70.6 222,59.4 228,52.4 234,50.0 240,52.4 246,59.4 252,70.6 258,85.3 264,102.5 270,121.2 276,140.1 282,158.0 288,173.9 294,186.6 300,195.3 306,199.6 312,199.1 318,193.9 324,184.3" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="56.0" cy="100" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="114.4" cy="100" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="204.8" cy="100" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="263.2" cy="100" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="56.0" y="37" font-size="13" text-anchor="middle" fill="currentColor">01:40</text>
+<text x="114.4" y="37" font-size="13" text-anchor="middle" fill="currentColor">06:32</text>
+<text x="204.8" y="37" font-size="13" text-anchor="middle" fill="currentColor">14:04</text>
+<text x="263.2" y="37" font-size="13" text-anchor="middle" fill="currentColor">18:56</text>
+<text x="28" y="204" font-size="13" text-anchor="end" fill="currentColor">0 m</text>
+<text x="28" y="154" font-size="13" text-anchor="end" fill="currentColor">1 m</text>
+<text x="28" y="104" font-size="13" text-anchor="end" fill="currentColor">2 m</text>
+<text x="28" y="54" font-size="13" text-anchor="end" fill="currentColor">3 m</text>
+<text x="36" y="217" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="108" y="217" font-size="13" text-anchor="middle" fill="currentColor">6</text>
+<text x="180" y="217" font-size="13" text-anchor="middle" fill="currentColor">12</text>
+<text x="252" y="217" font-size="13" text-anchor="middle" fill="currentColor">18</text>
+<text x="324" y="217" font-size="13" text-anchor="middle" fill="currentColor">24</text>
+<text x="180" y="234" font-size="13" text-anchor="middle" fill="currentColor">hours after midnight</text>
+</svg>

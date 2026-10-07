@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>The aisle to scale: the circle through both stage ends that touches the aisle does so at T, 8 m back, and its radius to T meets the aisle square on</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="120" y="24" width="120" height="16" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="180" y="36" font-size="13" text-anchor="middle" fill="currentColor">stage</text>
+<line x1="80" y1="40" x2="120" y2="40" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+<line x1="80" y1="40" x2="80" y2="236" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="120" r="100" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="80" y2="120" stroke="currentColor" stroke-width="2"/>
+<polyline points="80,128 88,128 88,120" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="180" y2="40" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="180" y1="120" x2="240" y2="40" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="80" y1="120" x2="120" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<line x1="80" y1="120" x2="240" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<path d="M88.1 103.9 A18 18 0 0 1 96.1 112" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="2.5" fill="currentColor"/>
+<circle cx="80" cy="120" r="3" fill="currentColor"/>
+<text x="74" y="44" font-size="14" text-anchor="end" fill="currentColor">P</text>
+<text x="125" y="55" font-size="14" fill="currentColor">A</text>
+<text x="246" y="36" font-size="14" fill="currentColor">B</text>
+<text x="186" y="55" font-size="13" fill="currentColor">M</text>
+<text x="188" y="130" font-size="13" fill="currentColor">O</text>
+<text x="74" y="124" font-size="14" text-anchor="end" fill="currentColor">T</text>
+<text x="108" y="78" font-size="13" fill="currentColor">36.87°</text>
+<text x="100" y="34" font-size="13" text-anchor="middle" fill="currentColor">4 m</text>
+<text x="174" y="100" font-size="13" text-anchor="end" fill="currentColor">8 m</text>
+<text x="130" y="114" font-size="13" text-anchor="middle" fill="currentColor">10 m</text>
+<text x="74" y="232" font-size="13" text-anchor="end" fill="currentColor">aisle</text>
+</svg>

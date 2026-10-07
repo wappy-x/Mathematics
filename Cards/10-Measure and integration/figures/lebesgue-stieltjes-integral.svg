@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Two independent claims drawn as a unit square in probability units; the shaded region where the first claim is at most the second has area 0.545, including the dashed block of area 0.09 where both claims are zero dollars; the unshaded region where the first claim is larger has area 0.455</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M 50 200 H 104 V 146 L 230 20 H 50 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="50" y="20" width="180" height="180" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="50" y="146" width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<text x="77" y="178" font-size="13" text-anchor="middle" fill="currentColor">0.09</text>
+<text x="70" y="60" font-size="13" fill="currentColor">s ≤ t</text>
+<text x="70" y="78" font-size="13" fill="currentColor">0.545</text>
+<text x="170" y="160" font-size="13" fill="currentColor">s &gt; t</text>
+<text x="170" y="178" font-size="13" fill="currentColor">0.455</text>
+<text x="50" y="216" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="104" y="216" font-size="13" text-anchor="middle" fill="currentColor">0.3</text>
+<text x="230" y="216" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="140" y="234" font-size="13" text-anchor="middle" fill="currentColor">first claim</text>
+<text x="44" y="150" font-size="13" text-anchor="end" fill="currentColor">0.3</text>
+<text x="44" y="24" font-size="13" text-anchor="end" fill="currentColor">1</text>
+<text x="47" y="92" font-size="13" text-anchor="end" fill="currentColor">second</text>
+<text x="47" y="108" font-size="13" text-anchor="end" fill="currentColor">claim</text>
+<text x="240" y="170" font-size="13" fill="currentColor">dashed: both</text>
+<text x="240" y="188" font-size="13" fill="currentColor">claims zero</text>
+</svg>

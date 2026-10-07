@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The wine glass bowl in cross-section twice, to scale: on the left one thin disc cut across it, on the right one thin shell cut round its centre line</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M 18.45 40 Q 90 360 161.55 40" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 198.45 40 Q 270 360 341.55 40" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="18.45" y1="40" x2="161.55" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<line x1="198.45" y1="40" x2="341.55" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<line x1="90" y1="40" x2="90" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="270" y1="40" x2="270" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="90" y1="200" x2="90" y2="224" stroke="currentColor" stroke-width="2"/>
+<line x1="270" y1="200" x2="270" y2="224" stroke="currentColor" stroke-width="2"/>
+<polygon points="33.43,96 146.57,96 146.57,104 33.43,104" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="230,40 238,40 238,159.5 230,159.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="302,40 310,40 310,159.5 302,159.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="90" y="26" font-size="14" fill="currentColor" text-anchor="middle">a disc</text>
+<text x="270" y="26" font-size="14" fill="currentColor" text-anchor="middle">a shell</text>
+<text x="96" y="222" font-size="13" fill="currentColor">axis</text>
+<text x="276" y="222" font-size="13" fill="currentColor">axis</text>
+</svg>

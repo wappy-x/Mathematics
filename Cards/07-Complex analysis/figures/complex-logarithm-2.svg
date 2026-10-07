@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The plane of exponents: the logarithms of minus 1 at minus i pi, i pi and 3 i pi, one on each floor, with the principal strip shaded</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="60" y="132.88" width="240" height="94.24" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="40" y1="180" x2="330" y2="180" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="236" x2="180" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="227.12" x2="300" y2="227.12" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="60" y1="132.88" x2="300" y2="132.88" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="60" y1="38.63" x2="300" y2="38.63" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<circle cx="180" cy="227.12" r="4" fill="currentColor"/>
+<circle cx="180" cy="132.88" r="4" fill="currentColor"/>
+<circle cx="180" cy="38.63" r="4" fill="currentColor"/>
+<text x="188" y="222" font-size="13" fill="currentColor">−iπ</text>
+<text x="188" y="128" font-size="13" fill="currentColor">iπ</text>
+<text x="188" y="33" font-size="13" fill="currentColor">3iπ</text>
+<text x="236" y="162" font-size="13" fill="currentColor">floor k = 0</text>
+<text x="236" y="90" font-size="13" fill="currentColor">floor k = 1</text>
+<text x="310" y="196" font-size="13" fill="currentColor">Re</text>
+<text x="160" y="18" font-size="13" fill="currentColor">Im</text>
+</svg>

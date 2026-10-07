@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Path of the two room temperatures from (30, 10) toward (0, 0), bending onto the line T2 = T1</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="50" y1="170" x2="340" y2="170" stroke="currentColor" stroke-width="1"/>
+<line x1="50" y1="215" x2="50" y2="44" stroke="currentColor" stroke-width="1"/>
+<line x1="140" y1="170" x2="140" y2="175" stroke="currentColor" stroke-width="1"/>
+<line x1="230" y1="170" x2="230" y2="175" stroke="currentColor" stroke-width="1"/>
+<line x1="320" y1="170" x2="320" y2="175" stroke="currentColor" stroke-width="1"/>
+<line x1="45" y1="80" x2="50" y2="80" stroke="currentColor" stroke-width="1"/>
+<text x="140" y="189" font-size="13" fill="currentColor" text-anchor="middle">10</text>
+<text x="230" y="189" font-size="13" fill="currentColor" text-anchor="middle">20</text>
+<text x="320" y="189" font-size="13" fill="currentColor" text-anchor="middle">30</text>
+<text x="41" y="85" font-size="13" fill="currentColor" text-anchor="end">10</text>
+<line x1="41" y1="179" x2="176" y2="44" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="5" y1="125" x2="95" y2="215" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="320.0,80.0 279.5,73.8 246.8,72.0 219.9,73.2 179.3,80.9 144.5,94.5 120.7,108.3 91.2,130.8 74.6,145.9 59.0,161.0 50,170" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="170.0,84.5 178.9,85.3 175.9,77.9" fill="currentColor"/>
+<circle cx="320" cy="80" r="3" fill="currentColor"/>
+<text x="338" y="66" font-size="13" fill="currentColor" text-anchor="end">start (30, 10)</text>
+<text x="182" y="46" font-size="13" fill="currentColor">slow mode, T2 = T1</text>
+<text x="100" y="212" font-size="13" fill="currentColor">fast mode, T2 = −T1</text>
+<text x="200" y="232" font-size="13" fill="currentColor" text-anchor="middle">T1, lounge, °C above outside</text>
+<text x="56" y="30" font-size="13" fill="currentColor">T2, bedroom, °C</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>At x equals pi over 4, the arrow for n equals 1 points down and right, its partner for n equals minus 1 points up and right, and the two added tip to tail land on the real axis at 0.900316</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="12" y1="120" x2="348" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="232" x2="120" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="120" cy="120" r="101.86" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="120" y1="120" x2="192.03" y2="192.03" stroke="currentColor" stroke-width="2"/>
+<line x1="120" y1="120" x2="192.03" y2="47.97" stroke="currentColor" stroke-width="2"/>
+<line x1="192.03" y1="192.03" x2="264.05" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<circle cx="192.03" cy="192.03" r="3.5" fill="currentColor"/>
+<circle cx="192.03" cy="47.97" r="3.5" fill="currentColor"/>
+<circle cx="264.05" cy="120" r="4" fill="currentColor"/>
+<text x="200" y="210" font-size="13" fill="currentColor">n = 1 arrow</text>
+<text x="200" y="40" font-size="13" fill="currentColor">n = −1 arrow</text>
+<text x="232" y="142" font-size="13" fill="currentColor">sum 0.900316</text>
+<text x="326" y="112" font-size="13" fill="currentColor">Re</text>
+<text x="126" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

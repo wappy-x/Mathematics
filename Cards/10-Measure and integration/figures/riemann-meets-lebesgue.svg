@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>The river depth 4x(1 - x) drawn twice to scale: on the left under 8 Riemann strips at each strip's lowest depth, on the right over 3 Lebesgue value bands of 0.25 m each</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="95" y="30" font-size="13" text-anchor="middle" fill="currentColor">Riemann: 8 strips</text>
+<text x="265" y="30" font-size="13" text-anchor="middle" fill="currentColor">Lebesgue: 4 levels</text>
+<rect x="38.75" y="134.375" width="18.75" height="65.625" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="57.5" y="87.5" width="18.75" height="112.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="76.25" y="59.375" width="18.75" height="140.625" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="95" y="59.375" width="18.75" height="140.625" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="113.75" y="87.5" width="18.75" height="112.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="132.5" y="134.375" width="18.75" height="65.625" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="20,200 29.38,164.84 38.75,134.38 48.12,108.59 57.5,87.5 66.88,71.09 76.25,59.38 85.62,52.34 95,50 104.38,52.34 113.75,59.38 123.12,71.09 132.5,87.5 141.88,108.59 151.25,134.38 160.62,164.84 170,200" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="20" y1="200" x2="170" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<rect x="200.05" y="162.5" width="129.9" height="37.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="211.97" y="125" width="106.06" height="37.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="227.5" y="87.5" width="75" height="37.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="190,200 199.38,164.84 208.75,134.38 218.12,108.59 227.5,87.5 236.88,71.09 246.25,59.38 255.62,52.34 265,50 274.38,52.34 283.75,59.38 293.12,71.09 302.5,87.5 311.88,108.59 321.25,134.38 330.62,164.84 340,200" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="190" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<text x="95" y="222" font-size="13" text-anchor="middle" fill="currentColor">lower sum 0.53125</text>
+<text x="265" y="222" font-size="13" text-anchor="middle" fill="currentColor">staircase 0.5183</text>
+</svg>

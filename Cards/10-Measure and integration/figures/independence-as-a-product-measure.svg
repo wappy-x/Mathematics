@@ -1,0 +1,15 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Two unit squares: on the left the bottom-left quarter is shaded, area 0.25; on the right the corner triangle below x + y = 0.5 is shaded, area 0.125, inside the strip x at most 0.5</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="20" y="40" width="140" height="140" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="20" y="110" width="70" height="70" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="200" y="40" width="140" height="140" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="270" y1="40" x2="270" y2="180" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polygon points="200,180 270,180 200,110" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="90" y="28" font-size="14" text-anchor="middle" fill="currentColor">x and y</text>
+<text x="270" y="28" font-size="14" text-anchor="middle" fill="currentColor">x and x + y</text>
+<text x="55" y="150" font-size="14" text-anchor="middle" fill="currentColor">1/4</text>
+<text x="221" y="166" font-size="13" text-anchor="middle" fill="currentColor">1/8</text>
+<text x="276" y="58" font-size="13" fill="currentColor">x = 0.5</text>
+<text x="90" y="202" font-size="13" text-anchor="middle" fill="currentColor">0.5 × 0.5 = 0.25</text>
+<text x="270" y="202" font-size="13" text-anchor="middle" fill="currentColor">0.125, not 0.0625</text>
+</svg>

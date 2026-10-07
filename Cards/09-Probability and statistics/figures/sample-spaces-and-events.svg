@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 240" width="380" height="240" style="color:#24292f">
+<title>The 36 outcomes of two dice as a 6 by 6 grid of dots, red die across and white die up; a shaded band covers the six dots whose total is 7, and a dashed outline covers the eleven dots where a six shows</title><rect x="0" y="0" width="380" height="240" rx="8" fill="#ffffff"/>
+<rect x="60" y="20" width="180" height="180" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="76.4,19.4 240.6,183.6 223.6,200.6 59.4,36.4" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M60,20 H240 V200 H210 V50 H60 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 4"/>
+<circle cx="75" cy="185" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="75" cy="155" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="75" cy="125" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="75" cy="95" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="75" cy="65" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="75" cy="35" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="105" cy="185" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="105" cy="155" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="105" cy="125" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="105" cy="95" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="105" cy="65" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="105" cy="35" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="135" cy="185" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="135" cy="155" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="135" cy="125" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="135" cy="95" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="135" cy="65" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="135" cy="35" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="165" cy="185" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="165" cy="155" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="165" cy="125" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="165" cy="95" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="165" cy="65" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="165" cy="35" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="195" cy="185" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="195" cy="155" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="195" cy="125" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="195" cy="95" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="195" cy="65" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="195" cy="35" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="225" cy="185" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="225" cy="155" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="225" cy="125" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="225" cy="95" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="225" cy="65" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="225" cy="35" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="75" y="216" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="105" y="216" font-size="13" text-anchor="middle" fill="currentColor">2</text>
+<text x="135" y="216" font-size="13" text-anchor="middle" fill="currentColor">3</text>
+<text x="165" y="216" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<text x="195" y="216" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<text x="225" y="216" font-size="13" text-anchor="middle" fill="currentColor">6</text>
+<text x="50" y="190" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="50" y="160" font-size="13" text-anchor="middle" fill="currentColor">2</text>
+<text x="50" y="130" font-size="13" text-anchor="middle" fill="currentColor">3</text>
+<text x="50" y="100" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<text x="50" y="70" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<text x="50" y="40" font-size="13" text-anchor="middle" fill="currentColor">6</text>
+<text x="150" y="234" font-size="13" text-anchor="middle" fill="currentColor">red die</text>
+<text x="22" y="110" font-size="13" text-anchor="middle" fill="currentColor" transform="rotate(-90 22 110)">white die</text>
+<text x="252" y="80" font-size="13" fill="currentColor">shaded band:</text>
+<text x="252" y="96" font-size="13" fill="currentColor">total 7: 6 dots</text>
+<text x="252" y="130" font-size="13" fill="currentColor">dashed outline:</text>
+<text x="252" y="146" font-size="13" fill="currentColor">a six shows: 11</text>
+<text x="252" y="180" font-size="13" fill="currentColor">in both: 2 dots</text>
+</svg>

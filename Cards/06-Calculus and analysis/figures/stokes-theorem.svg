@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Cross-section of the bowl through its axis, with the curl of the fading wind drawn as arrows at five points, to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M 60 60 A 120 120 0 0 0 300 60" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="60" y1="60" x2="300" y2="60" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="300" y1="60" x2="275" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="282.2,15.4 275,10 275,19" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="60" x2="85" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="77.8,15.4 85,10 85,19" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="264.9" y1="144.9" x2="247.2" y2="130.2" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="253.7,131.7 247.2,130.2 249.9,136.3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="95.1" y1="144.9" x2="112.8" y2="130.2" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="106.3,131.7 112.8,130.2 110.1,136.3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="60" x2="180" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="176,17 180,10 184,17" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="180" r="3" fill="currentColor"/>
+<text x="352" y="100" font-size="13" fill="currentColor" text-anchor="end">wind in</text>
+<text x="4" y="100" font-size="13" fill="currentColor">wind out</text>
+<text x="188" y="78" font-size="13" fill="currentColor">lid</text>
+<text x="180" y="200" font-size="13" fill="currentColor" text-anchor="middle">bottom: no curl</text>
+<text x="180" y="228" font-size="13" fill="currentColor" text-anchor="middle">section through the axis, seen from the south</text>
+</svg>

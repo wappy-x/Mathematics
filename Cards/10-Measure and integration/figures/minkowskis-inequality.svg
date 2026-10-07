@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Days 1 and 2 only: arrow A to (3, 5), arrow B slid to run from (3, 5) to (8, 7), and the sum arrow from the origin to (8, 7), drawn at 20 units per metre per second</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="240" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="200" x2="40" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="200" x2="100" y2="100" stroke="currentColor" stroke-width="2"/>
+<line x1="100" y1="100" x2="200" y2="60" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="40" y1="200" x2="200" y2="60" stroke="currentColor" stroke-width="2"/>
+<circle cx="100" cy="100" r="3" fill="currentColor"/>
+<circle cx="200" cy="60" r="3" fill="currentColor"/>
+<line x1="200" y1="200" x2="200" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<line x1="35" y1="60" x2="40" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<text x="200" y="219" font-size="13" text-anchor="middle" fill="currentColor">8</text>
+<text x="30" y="64" font-size="13" text-anchor="end" fill="currentColor">7</text>
+<text x="140" y="234" font-size="13" text-anchor="middle" fill="currentColor">day 1 speed (m/s)</text>
+<text x="46" y="34" font-size="13" fill="currentColor">day 2 speed (m/s)</text>
+<text x="62" y="150" font-size="13" text-anchor="end" fill="currentColor">A: 5.831</text>
+<text x="100" y="70" font-size="13" fill="currentColor">B: 5.385</text>
+<text x="150" y="150" font-size="13" fill="currentColor">A + B: 10.630</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Delivery grid to scale: route A from the depot D to E, route B from Q to R crossing it at a right angle at J, and the dashed ring road C parallel to route A</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="210" x2="270" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="210" x2="40" y2="22" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="210" x2="240" y2="110" stroke="currentColor" stroke-width="2"/>
+<line x1="100" y1="30" x2="180" y2="190" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="110" x2="200" y2="30" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+<polyline points="167.2,146.4 163.6,139.3 156.4,142.8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="160" cy="150" r="3" fill="currentColor"/>
+<text x="26" y="226" font-size="14" fill="currentColor">D</text>
+<text x="246" y="108" font-size="14" fill="currentColor">E</text>
+<text x="106" y="30" font-size="14" fill="currentColor">Q</text>
+<text x="186" y="200" font-size="14" fill="currentColor">R</text>
+<text x="166" y="126" font-size="14" fill="currentColor">J</text>
+<text x="200" y="150" font-size="13" fill="currentColor">route A</text>
+<text x="182" y="170" font-size="13" fill="currentColor">route B</text>
+<text x="48" y="126" font-size="13" fill="currentColor">ring road C</text>
+<text x="274" y="214" font-size="13" fill="currentColor">east, km</text>
+<text x="48" y="18" font-size="13" fill="currentColor">north, km</text>
+</svg>

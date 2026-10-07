@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The bed and a half-turned copy form a parallelogram; cutting off its left end and moving it 9 m right gives a rectangle</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="40,200 220,200 146.67,80.74" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polygon points="40,200 220,200 326.67,80.74 146.67,80.74" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="220" y1="200" x2="146.67" y2="80.74" stroke="currentColor" stroke-width="1.5"/>
+<line x1="146.67" y1="80.74" x2="146.67" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="220,200 326.67,200 326.67,80.74" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="26" y="214" font-size="14" fill="currentColor">A</text>
+<text x="214" y="218" font-size="14" fill="currentColor">B</text>
+<text x="140" y="72" font-size="14" fill="currentColor">C</text>
+<text x="322" y="72" font-size="14" fill="currentColor">D</text>
+<text x="160" y="185" font-size="13" fill="currentColor">bed</text>
+<text x="240" y="120" font-size="13" fill="currentColor">copy</text>
+<text x="152" y="150" font-size="13" fill="currentColor">h</text>
+<text x="225" y="232" font-size="13" fill="currentColor">cut piece lands here</text>
+</svg>

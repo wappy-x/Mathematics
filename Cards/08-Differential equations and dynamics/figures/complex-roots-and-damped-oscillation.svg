@@ -1,0 +1,13 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The point e^((-1+2i)t) spiralling in toward 0 as t runs from 0 to 3 s</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="170" x2="340" y2="170" stroke="currentColor" stroke-width="1"/>
+<line x1="100" y1="20" x2="100" y2="225" stroke="currentColor" stroke-width="1"/>
+<polyline fill="none" stroke="currentColor" stroke-width="2" points="300,170 271,126 237,95 201,76 166,68 134,68 107,76 85,88 69,103 59,119 54,136 53,151 56,164 61,174 67,182 75,188 82,190 89,191 96,191 101,189 105,186 107,182 109,179 110,176 110,173"/>
+<polygon points="213.7,82.7 224.8,83.0 220.2,91.8" fill="currentColor"/>
+<circle cx="300" cy="170" r="3" fill="currentColor"/>
+<text x="282" y="192" font-size="13" fill="currentColor">t = 0 s</text>
+<text x="214" y="234" font-size="13" fill="currentColor">real part (no unit)</text>
+<text x="106" y="32" font-size="13" fill="currentColor">imaginary part (no unit)</text>
+<text x="206" y="60" font-size="13" fill="currentColor">turns at 2 rad/s</text>
+<text x="120" y="208" font-size="13" fill="currentColor">shrinks at e^(-t)</text>
+</svg>

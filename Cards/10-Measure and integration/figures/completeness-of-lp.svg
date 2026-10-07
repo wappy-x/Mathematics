@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Ramps r_1, r_2 and r_4 on [0, 1], each rising from 0 to 1 across a stretch of width 1/n centred on 1/2, with the step function that jumps from 0 to 1 at 1/2</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M40,200 H320 M40,200 V36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M40,200 L320,40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M110,200 L250,40 H320" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<path d="M145,200 L215,40 H320" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<path d="M180,40 H320 M180,200 V40" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="10 3 2 3"/>
+<path d="M52,56 H76" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M52,96 H76" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<path d="M52,116 H76" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<path d="M52,76 H76" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="10 3 2 3"/>
+<text x="82" y="61" font-size="13" fill="currentColor">r_1</text>
+<text x="82" y="81" font-size="13" fill="currentColor">step</text>
+<text x="82" y="101" font-size="13" fill="currentColor">r_2</text>
+<text x="82" y="121" font-size="13" fill="currentColor">r_4</text>
+<text x="36" y="222" font-size="13" fill="currentColor">0</text>
+<text x="170" y="222" font-size="13" fill="currentColor">1/2</text>
+<text x="316" y="222" font-size="13" fill="currentColor">1</text>
+<text x="24" y="45" font-size="13" fill="currentColor">1</text>
+</svg>

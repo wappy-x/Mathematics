@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Two panels to scale: around S the wind minus S's own wind points outward; around E the wind minus E's own wind runs anticlockwise</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="40" y="70" width="100" height="100" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<rect x="220" y="70" width="100" height="100" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<circle cx="90" cy="120" r="3" fill="currentColor"/>
+<circle cx="270" cy="120" r="3" fill="currentColor"/>
+<circle cx="140" cy="120" r="2" fill="currentColor"/><line x1="140" y1="120" x2="174" y2="120" stroke="currentColor" stroke-width="2"/>
+<circle cx="140" cy="70" r="2" fill="currentColor"/><line x1="140" y1="70" x2="171" y2="46" stroke="currentColor" stroke-width="2"/>
+<circle cx="90" cy="70" r="2" fill="currentColor"/><line x1="90" y1="70" x2="88" y2="51" stroke="currentColor" stroke-width="2"/>
+<circle cx="40" cy="70" r="2" fill="currentColor"/><line x1="40" y1="70" x2="13" y2="56" stroke="currentColor" stroke-width="2"/>
+<circle cx="40" cy="120" r="2" fill="currentColor"/><line x1="40" y1="120" x2="16" y2="120" stroke="currentColor" stroke-width="2"/>
+<circle cx="40" cy="170" r="2" fill="currentColor"/><line x1="40" y1="170" x2="13" y2="184" stroke="currentColor" stroke-width="2"/>
+<circle cx="90" cy="170" r="2" fill="currentColor"/><line x1="90" y1="170" x2="88" y2="189" stroke="currentColor" stroke-width="2"/>
+<circle cx="140" cy="170" r="2" fill="currentColor"/><line x1="140" y1="170" x2="171" y2="194" stroke="currentColor" stroke-width="2"/>
+<circle cx="320" cy="120" r="2" fill="currentColor"/><line x1="320" y1="120" x2="323" y2="96" stroke="currentColor" stroke-width="2"/>
+<circle cx="320" cy="70" r="2" fill="currentColor"/><line x1="320" y1="70" x2="296" y2="41" stroke="currentColor" stroke-width="2"/>
+<circle cx="270" cy="70" r="2" fill="currentColor"/><line x1="270" y1="70" x2="244" y2="70" stroke="currentColor" stroke-width="2"/>
+<circle cx="220" cy="70" r="2" fill="currentColor"/><line x1="220" y1="70" x2="196" y2="99" stroke="currentColor" stroke-width="2"/>
+<circle cx="220" cy="120" r="2" fill="currentColor"/><line x1="220" y1="120" x2="222" y2="144" stroke="currentColor" stroke-width="2"/>
+<circle cx="220" cy="170" r="2" fill="currentColor"/><line x1="220" y1="170" x2="244" y2="189" stroke="currentColor" stroke-width="2"/>
+<circle cx="270" cy="170" r="2" fill="currentColor"/><line x1="270" y1="170" x2="292" y2="170" stroke="currentColor" stroke-width="2"/>
+<circle cx="320" cy="170" r="2" fill="currentColor"/><line x1="320" y1="170" x2="344" y2="151" stroke="currentColor" stroke-width="2"/>
+<text x="90" y="24" font-size="13" fill="currentColor" text-anchor="middle">S: spreads out</text>
+<text x="270" y="24" font-size="13" fill="currentColor" text-anchor="middle">E: turns</text>
+<text x="90" y="226" font-size="13" fill="currentColor" text-anchor="middle">div 0.06, curl 0</text>
+<text x="270" y="226" font-size="13" fill="currentColor" text-anchor="middle">div 0, curl 0.06</text>
+</svg>

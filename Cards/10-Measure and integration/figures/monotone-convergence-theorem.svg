@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>A 1 km river stretch drawn to scale, depth 4x(1 - x) metres below the surface, with the staircase that rounds each depth down to the last quarter-metre mark shaded: steps at 0.25, 0.5 and 0.75 m</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M50.10 40 V80 H73.93 V120 H105 V160 H255 V120 H286.07 V80 H309.90 V40 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="40" x2="330" y2="40" stroke="currentColor" stroke-width="2"/>
+<polyline points="30,40.0 45,70.4 60,97.6 75,121.6 90,142.4 105,160.0 120,174.4 135,185.6 150,193.6 165,198.4 180,200.0 195,198.4 210,193.6 225,185.6 240,174.4 255,160.0 270,142.4 285,121.6 300,97.6 315,70.4 330,40.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="30" y="28" font-size="13" fill="currentColor">0 km</text>
+<text x="136" y="28" font-size="13" fill="currentColor">water surface</text>
+<text x="302" y="28" font-size="13" fill="currentColor">1 km</text>
+<text x="92" y="66" font-size="13" fill="currentColor">staircase, marks every 0.25 m</text>
+<text x="104" y="226" font-size="13" fill="currentColor">bed: depth 4x(1 − x) metres</text>
+</svg>

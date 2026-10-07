@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The tap's flow rate rising in a straight line from 3 to 23 litres a minute over 10 minutes, the area under it shaded, and the strip from minute 4 to minute 5 shaded darker</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="50,200 330,200 330,39 50,179" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polygon points="162,200 190,200 190,109 162,123" fill="currentColor" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="200" x2="342" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="200" x2="50" y2="22" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="179" x2="330" y2="39" stroke="currentColor" stroke-width="2"/>
+<line x1="330" y1="39" x2="330" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="140" y1="96" x2="172" y2="140" stroke="currentColor" stroke-width="1.5"/>
+<text x="56" y="18" font-size="13" fill="currentColor">litres per minute</text>
+<text x="36" y="184" font-size="13" fill="currentColor">3</text>
+<text x="26" y="44" font-size="13" fill="currentColor">23</text>
+<text x="46" y="216" font-size="13" fill="currentColor">0</text>
+<text x="158" y="216" font-size="13" fill="currentColor">4</text>
+<text x="186" y="216" font-size="13" fill="currentColor">5</text>
+<text x="322" y="216" font-size="13" fill="currentColor">10</text>
+<text x="262" y="234" font-size="13" fill="currentColor">minutes</text>
+<text x="56" y="90" font-size="13" fill="currentColor">minute 4 to 5: 12 L</text>
+<text x="222" y="178" font-size="14" fill="currentColor">130 L in all</text>
+</svg>

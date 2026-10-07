@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The unit circle track with the runner at angle pi over 4, the conjugate point below the real axis, and a stride arrow along the track</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="232" x2="180" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="80" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="236.57" cy="63.43" r="3.5" fill="currentColor"/>
+<circle cx="236.57" cy="176.57" r="3.5" fill="currentColor"/>
+<line x1="236.57" y1="63.43" x2="236.57" y2="176.57" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<line x1="236.57" y1="63.43" x2="219.60" y2="46.46" stroke="currentColor" stroke-width="2"/>
+<polygon points="213.94,40.80 222.43,43.63 216.77,49.29" fill="currentColor"/>
+<polygon points="119.19,67.67 130.51,63.43 123.43,56.35" fill="currentColor"/>
+<text x="244" y="60" font-size="14" fill="currentColor">z</text>
+<text x="244" y="190" font-size="14" fill="currentColor">z̄</text>
+<text x="196" y="36" font-size="13" fill="currentColor">dz</text>
+<text x="264" y="136" font-size="13" fill="currentColor">1</text>
+<text x="322" y="136" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

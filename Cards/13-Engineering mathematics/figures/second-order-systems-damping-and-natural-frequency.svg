@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Pole map of the car corner: poles for damping 0.7 and 0.3 on a circle of radius 6.2832 rad/s, to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="350" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="330" y1="10" x2="330" y2="230" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 330 25.8 A 94.2 94.2 0 0 0 330 214.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="330" y1="120" x2="264.0" y2="52.7" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 305 120 A 25 25 0 0 1 312.5 102.1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 259 47.7 L 269 57.7 M 269 47.7 L 259 57.7" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 259 182.3 L 269 192.3 M 269 182.3 L 259 192.3" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 296.7 25.1 L 306.7 35.1 M 306.7 25.1 L 296.7 35.1" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 296.7 204.9 L 306.7 214.9 M 306.7 204.9 L 296.7 214.9" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="235.8" cy="120" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="196" y="50" font-size="13" fill="currentColor">ζ = 0.7</text>
+<text x="248" y="18" font-size="13" fill="currentColor">ζ = 0.3</text>
+<text x="196" y="112" font-size="13" fill="currentColor">ζ = 1</text>
+<text x="290" y="114" font-size="13" fill="currentColor">θ</text>
+<text x="20" y="112" font-size="13" fill="currentColor">Re s (rad/s)</text>
+<text x="326" y="14" font-size="13" fill="currentColor" text-anchor="end">Im s</text>
+<text x="300" y="136" font-size="13" fill="currentColor" text-anchor="middle">−2</text>
+<text x="270" y="136" font-size="13" fill="currentColor" text-anchor="middle">−4</text>
+<text x="240" y="136" font-size="13" fill="currentColor" text-anchor="middle">−6</text>
+<text x="120" y="196" font-size="13" fill="currentColor">−4.3982 − 4.4871j</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Side view to scale: the tilted panel seen edge-on as a slanted line, the drone above it, its flight line down to the touchdown point, and the 2.2 m perpendicular to the panel with a right-angle marker</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="220" x2="340" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="220" x2="252" y2="76" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="20" x2="220" y2="100" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="20" x2="232.8" y2="90.4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="228,84 234.4,79.2 239.2,85.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="20" r="3.5" fill="currentColor"/>
+<circle cx="220" cy="100" r="3" fill="currentColor"/>
+<text x="190" y="24" font-size="13" fill="currentColor">drone p = (2, 3, 5)</text>
+<text x="192" y="72" font-size="13" text-anchor="end" fill="currentColor">flight line</text>
+<text x="222" y="54" font-size="13" fill="currentColor">D = 2.2 m</text>
+<text x="244" y="100" font-size="13" fill="currentColor">foot</text>
+<text x="226" y="122" font-size="13" fill="currentColor">hit (4, 4, 3)</text>
+<text x="258" y="80" font-size="13" fill="currentColor">top edge</text>
+<text x="44" y="236" font-size="13" fill="currentColor">A = (0, 0, 0)</text>
+<text x="150" y="176" font-size="13" fill="currentColor">panel, edge-on</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A strap pinned at x = 0 m and x = 1 m sagging under an even load; the exact parabola passes through all nine grid values and the two pinned ends.</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="180" y="22" font-size="13" text-anchor="middle" fill="currentColor">position x along the shelf (m)</text>
+<text x="22" y="55" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="338" y="55" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<line x1="40" y1="50" x2="320" y2="50" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4"/>
+<polygon points="34,40 46,40 40,50" fill="currentColor"/>
+<polygon points="314,40 326,40 320,50" fill="currentColor"/>
+<path d="M40 50 Q180 330 320 50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="50" x2="180" y2="190" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>
+<circle cx="68" cy="100.4" r="3.5" fill="currentColor"/>
+<circle cx="96" cy="139.6" r="3.5" fill="currentColor"/>
+<circle cx="124" cy="167.6" r="3.5" fill="currentColor"/>
+<circle cx="152" cy="184.4" r="3.5" fill="currentColor"/>
+<circle cx="180" cy="190" r="3.5" fill="currentColor"/>
+<circle cx="208" cy="184.4" r="3.5" fill="currentColor"/>
+<circle cx="236" cy="167.6" r="3.5" fill="currentColor"/>
+<circle cx="264" cy="139.6" r="3.5" fill="currentColor"/>
+<circle cx="292" cy="100.4" r="3.5" fill="currentColor"/>
+<text x="188" y="124" font-size="13" fill="currentColor">0.125</text>
+<text x="180" y="212" font-size="13" text-anchor="middle" fill="currentColor">sag y (m), measured down from the pins</text>
+</svg>

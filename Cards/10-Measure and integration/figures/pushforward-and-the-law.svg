@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The claim rule as a graph from draws u in (0, 1) to dollars, flat at 0 up to 0.3 then rising to 1000; the band of claims from 200 to 500 dollars and its preimage of draws from 0.44 to 0.65 are shaded</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="50" y="115" width="280" height="51" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="173.2" y="30" width="58.8" height="170" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="50" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="200" x2="50" y2="22" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="50,200 134,200 330,30" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="50" y="216" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="134" y="216" font-size="13" text-anchor="middle" fill="currentColor">0.3</text>
+<text x="173.2" y="216" font-size="13" text-anchor="middle" fill="currentColor">0.44</text>
+<text x="232" y="216" font-size="13" text-anchor="middle" fill="currentColor">0.65</text>
+<text x="330" y="216" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="190" y="234" font-size="13" text-anchor="middle" fill="currentColor">draw u</text>
+<text x="44" y="204" font-size="13" text-anchor="end" fill="currentColor">$0</text>
+<text x="44" y="170" font-size="13" text-anchor="end" fill="currentColor">$200</text>
+<text x="44" y="119" font-size="13" text-anchor="end" fill="currentColor">$500</text>
+<text x="44" y="34" font-size="13" text-anchor="end" fill="currentColor">$1,000</text>
+<text x="92" y="190" font-size="13" text-anchor="middle" fill="currentColor">pays $0</text>
+<text x="202.6" y="22" font-size="13" text-anchor="middle" fill="currentColor">preimage, width 0.21</text>
+<text x="300" y="146" font-size="13" text-anchor="middle" fill="currentColor">band</text>
+</svg>

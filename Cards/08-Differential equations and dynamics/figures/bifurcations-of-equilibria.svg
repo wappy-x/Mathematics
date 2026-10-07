@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Bifurcation diagram of the fishery x' = x(1 - x) - h: resting stock against catch; stable upper branch solid, unstable lower branch dashed, meeting at the fold h = 0.25, x = 0.5</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="60" y1="200" x2="330" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="40" x2="60" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 285 120 Q 285 80 60 40" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 60 200 Q 285 160 285 120" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5,4"/>
+<circle cx="285" cy="120" r="4" fill="currentColor"/>
+<circle cx="249" cy="88" r="4" fill="currentColor"/>
+<circle cx="249" cy="152" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="249" y1="40" x2="249" y2="200" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<polygon points="244,56 254,56 249,66" fill="currentColor"/>
+<polygon points="244,126 254,126 249,116" fill="currentColor"/>
+<polygon points="244,174 254,174 249,184" fill="currentColor"/>
+<line x1="294" y1="40" x2="294" y2="200" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<polygon points="289,70 299,70 294,80" fill="currentColor"/>
+<polygon points="289,160 299,160 294,170" fill="currentColor"/>
+<text x="54" y="204" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="54" y="124" font-size="13" fill="currentColor" text-anchor="end">0.5</text>
+<text x="54" y="44" font-size="13" fill="currentColor" text-anchor="end">1</text>
+<text x="60" y="216" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="249" y="216" font-size="13" fill="currentColor" text-anchor="middle">0.21</text>
+<text x="288" y="216" font-size="13" fill="currentColor" text-anchor="start">0.25</text>
+<text x="190" y="234" font-size="13" fill="currentColor" text-anchor="middle">catch h (capacities per year)</text>
+<text x="8" y="26" font-size="13" fill="currentColor" text-anchor="start">resting stock x (share of capacity)</text>
+<text x="150" y="48" font-size="13" fill="currentColor" text-anchor="start">stable</text>
+<text x="86" y="168" font-size="13" fill="currentColor" text-anchor="start">unstable</text>
+<text x="300" y="124" font-size="13" fill="currentColor" text-anchor="start">fold</text>
+</svg>

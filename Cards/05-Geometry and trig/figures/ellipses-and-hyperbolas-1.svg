@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The planet's orbit drawn to scale: an ellipse with the sun at one focus, an empty focus opposite, and a point T whose distances to the two foci are 88 and 112 million km</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<ellipse cx="180" cy="120" rx="100" ry="97.98" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="80" y1="120" x2="280" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="240" y1="41.62" x2="160" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="240" y1="41.62" x2="200" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="200" cy="120" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="160" cy="120" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="240" cy="41.62" r="3.5" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<text x="248" y="36" font-size="14" fill="currentColor">T</text>
+<text x="190" y="80" font-size="13" text-anchor="end" fill="currentColor">112</text>
+<text x="227" y="86" font-size="13" fill="currentColor">88</text>
+<text x="200" y="140" font-size="13" text-anchor="middle" fill="currentColor">sun</text>
+<text x="156" y="140" font-size="13" text-anchor="middle" fill="currentColor">focus</text>
+<text x="250" y="114" font-size="13" text-anchor="middle" fill="currentColor">80</text>
+<text x="120" y="114" font-size="13" text-anchor="middle" fill="currentColor">120</text>
+<text x="286" y="124" font-size="13" fill="currentColor">perihelion</text>
+<text x="74" y="124" font-size="13" text-anchor="end" fill="currentColor">aphelion</text>
+</svg>

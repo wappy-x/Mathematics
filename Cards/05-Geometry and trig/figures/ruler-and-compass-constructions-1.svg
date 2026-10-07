@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>A regular 17-gon inscribed in a circle of radius 1, to scale: the first corner P1 drops a perpendicular onto the radius through P0, and the foot lies 0.9325 from the centre O</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="180" cy="120" r="100" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="280.0,120.0 273.2,83.9 253.9,52.6 224.6,30.5 189.2,20.4 152.6,23.8 119.7,40.2 95.0,67.4 81.7,101.6 81.7,138.4 95.0,172.6 119.7,199.8 152.6,216.2 189.2,219.6 224.6,209.5 253.9,187.4 273.2,156.1" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="280" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="120" x2="273.2" y2="83.9" stroke="currentColor" stroke-width="1.5"/>
+<line x1="273.2" y1="83.9" x2="273.2" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polyline points="267.2,120 267.2,114 273.2,114" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M202 120 A22 22 0 0 0 200.5 112.1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="2.5" fill="currentColor"/>
+<text x="168" y="124" font-size="14" fill="currentColor">O</text>
+<text x="286" y="124" font-size="14" fill="currentColor">P0</text>
+<text x="279" y="80" font-size="14" fill="currentColor">P1</text>
+<text x="226" y="136" font-size="13" text-anchor="middle" fill="currentColor">0.9325</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The paddock A B C D E F drawn to scale, with the drone in the notch above the reflex corner E, the pilot inside, both eastward rays dashed, and the flight line crossing fence D-E at X</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="27,210 297,210 333,102 279,30 153,120 27,30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="153" y1="66" x2="354" y2="66" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="253.8" y1="102" x2="354" y2="102" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="253.8" y1="102" x2="153" y2="66" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="153" cy="66" r="3.5" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="253.8" cy="102" r="3.5" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="228.6" cy="66" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="306" cy="66" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="333" cy="102" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="203.4" cy="84" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="12" y="226" font-size="14" fill="currentColor">A</text>
+<text x="297" y="228" font-size="14" fill="currentColor">B</text>
+<text x="338" y="122" font-size="14" fill="currentColor">C</text>
+<text x="284" y="24" font-size="14" fill="currentColor">D</text>
+<text x="148" y="140" font-size="14" fill="currentColor">E</text>
+<text x="12" y="26" font-size="14" fill="currentColor">F</text>
+<text x="147" y="60" font-size="13" text-anchor="end" fill="currentColor">drone</text>
+<text x="246" y="122" font-size="13" text-anchor="middle" fill="currentColor">pilot</text>
+<text x="200" y="104" font-size="13" fill="currentColor">X</text>
+<text x="224" y="58" font-size="13" fill="currentColor">1</text>
+<text x="302" y="58" font-size="13" fill="currentColor">2</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The drone at 3 + 4i, its mirror 3 − 4i on the same 5 km circle, and the second drone at 6 + 8i, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="165" x2="340" y2="165" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="236" x2="50" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<text x="318" y="182" font-size="13" fill="currentColor">Re</text>
+<text x="57" y="20" font-size="13" fill="currentColor">Im</text>
+<text x="30" y="182" font-size="13" fill="currentColor">0</text>
+<path d="M 95 225 A 75 75 0 0 0 95 105" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/>
+<line x1="50" y1="165" x2="95" y2="105" stroke="currentColor" stroke-width="2"/>
+<line x1="50" y1="165" x2="95" y2="225" stroke="currentColor" stroke-width="2"/>
+<line x1="95" y1="105" x2="140" y2="45" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="95" y1="105" x2="95" y2="225" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="50" cy="165" r="3.5" fill="currentColor"/>
+<circle cx="95" cy="105" r="3.5" fill="currentColor"/>
+<circle cx="95" cy="225" r="3.5" fill="currentColor"/>
+<circle cx="140" cy="45" r="3.5" fill="currentColor"/>
+<text x="104" y="109" font-size="13" fill="currentColor">z = 3 + 4i</text>
+<text x="104" y="229" font-size="13" fill="currentColor">z-bar = 3 − 4i</text>
+<text x="149" y="49" font-size="13" fill="currentColor">w = 6 + 8i</text>
+<text x="56" y="128" font-size="13" fill="currentColor">5</text>
+<text x="124" y="84" font-size="13" fill="currentColor">5</text>
+<text x="100" y="152" font-size="13" fill="currentColor">8</text>
+<text x="131" y="150" font-size="13" fill="currentColor">radius 5 km</text>
+</svg>

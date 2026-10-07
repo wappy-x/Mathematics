@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The circle of radius 1 round the point 1, passing through 0, 2 and 1 + i, with the triangle 0 to 2 to 1 + i drawn dashed inside it, to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="350" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="100" y1="232" x2="100" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="80" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="188,200 178,195 178,205" fill="currentColor"/>
+<polygon points="100,120 260,120 180,40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,4"/>
+<polygon points="135,85 145.6,81.5 138.5,74.4" fill="currentColor"/>
+<circle cx="180" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="260" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="180" cy="40" r="3.5" fill="currentColor"/>
+<circle cx="100" cy="120" r="3.5" fill="currentColor"/>
+<text x="184" y="138" font-size="13" fill="currentColor">a = 1</text>
+<text x="86" y="138" font-size="13" fill="currentColor">0</text>
+<text x="264" y="138" font-size="13" fill="currentColor">2</text>
+<text x="266" y="108" font-size="13" fill="currentColor">|z^3| = 8</text>
+<text x="188" y="34" font-size="13" fill="currentColor">1 + i</text>
+<text x="20" y="222" font-size="13" fill="currentColor">|z − 1| = 1</text>
+<text x="330" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="106" y="18" font-size="13" fill="currentColor">Im</text>
+</svg>

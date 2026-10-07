@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The semicircle contour of radius 2: the real segment from minus 2 to 2, the upper arc back, the pole at i inside and the pole at minus i outside</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="150" x2="340" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="232" x2="180" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<line x1="100" y1="150" x2="260" y2="150" stroke="currentColor" stroke-width="2"/>
+<path d="M 260 150 A 80 80 0 0 0 100 150" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="214,145 224,150 214,155" fill="currentColor"/>
+<polygon points="186,65 176,70 186,75" fill="currentColor"/>
+<circle cx="180" cy="110" r="4" fill="currentColor"/>
+<circle cx="180" cy="190" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="188" y="106" font-size="14" fill="currentColor">i</text>
+<text x="188" y="206" font-size="14" fill="currentColor">−i</text>
+<text x="86" y="168" font-size="13" fill="currentColor">−R</text>
+<text x="256" y="168" font-size="13" fill="currentColor">R</text>
+<text x="244" y="84" font-size="13" fill="currentColor">arc</text>
+<text x="318" y="166" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

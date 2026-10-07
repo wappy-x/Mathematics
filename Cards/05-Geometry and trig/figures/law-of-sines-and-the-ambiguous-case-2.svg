@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The fog case drawn to scale: A's 30 degree sightline and a dashed circle of radius 7.07 km about B cross twice, at the ship 13.66 km from A and at a phantom 3.66 km from A; B's square-on line to the sightline is 5.00 km</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="14" y1="206" x2="204" y2="206" stroke="currentColor" stroke-width="2"/>
+<line x1="14" y1="206" x2="260.82" y2="63.5" stroke="currentColor" stroke-width="2"/>
+<path d="M 338.35 206 A 134.35 134.35 0 0 0 69.65 206" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="204" y1="206" x2="238.77" y2="76.23" stroke="currentColor" stroke-width="1.5"/>
+<line x1="204" y1="206" x2="74.23" y2="171.23" stroke="currentColor" stroke-width="1.5"/>
+<line x1="204" y1="206" x2="156.5" y2="123.73" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,3"/>
+<polyline points="149.57,127.73 153.57,134.66 160.5,130.66" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 44 206 A 30 30 0 0 0 39.98 191" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="14" cy="206" r="3" fill="currentColor"/>
+<circle cx="204" cy="206" r="3" fill="currentColor"/>
+<circle cx="238.77" cy="76.23" r="3.5" fill="currentColor"/>
+<circle cx="74.23" cy="171.23" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="48" y="201" font-size="13" fill="currentColor">30°</text>
+<text x="0" y="211" font-size="14" fill="currentColor">A</text>
+<text x="200" y="224" font-size="14" fill="currentColor">B</text>
+<text x="109" y="224" font-size="13" text-anchor="middle" fill="currentColor">c = 10 km</text>
+<text x="226" y="64" font-size="13" text-anchor="end" fill="currentColor">ship, 13.66 km</text>
+<text x="22" y="148" font-size="13" fill="currentColor">phantom,</text>
+<text x="22" y="163" font-size="13" fill="currentColor">3.66 km</text>
+<text x="168" y="137" font-size="13" fill="currentColor">5.00 km</text>
+<text x="224" y="152" font-size="13" fill="currentColor">7.07 km</text>
+</svg>

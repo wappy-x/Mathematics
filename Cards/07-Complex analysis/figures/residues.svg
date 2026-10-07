@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The plane with poles of 1/(z^2+1) at i and minus i, and an anticlockwise circle of radius one half round i</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="135" x2="340" y2="135" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="238" x2="180" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="65" r="35" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="215,56 209,67 221,67" fill="currentColor"/>
+<line x1="175" y1="60" x2="185" y2="70" stroke="currentColor" stroke-width="2"/>
+<line x1="175" y1="70" x2="185" y2="60" stroke="currentColor" stroke-width="2"/>
+<line x1="175" y1="200" x2="185" y2="210" stroke="currentColor" stroke-width="2"/>
+<line x1="175" y1="210" x2="185" y2="200" stroke="currentColor" stroke-width="2"/>
+<text x="188" y="86" font-size="13" fill="currentColor">i</text>
+<text x="226" y="52" font-size="13" fill="currentColor">|z − i| = 1/2</text>
+<text x="226" y="72" font-size="13" fill="currentColor">Res = −i/2</text>
+<text x="190" y="226" font-size="13" fill="currentColor">−i, Res = i/2</text>
+<text x="322" y="152" font-size="13" fill="currentColor">Re</text>
+<text x="188" y="18" font-size="13" fill="currentColor">Im</text>
+</svg>

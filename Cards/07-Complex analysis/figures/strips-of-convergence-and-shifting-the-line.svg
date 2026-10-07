@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The s-plane with the strip from -0.20 to 0.05 shaded, poles at its edges, the rectangle between Re s = -0.10 and Re s = 0 run anticlockwise, and the line Re s = 0.10 outside the strip</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="80" y="10" width="200" height="220" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="10" y1="120" x2="350" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="240" y1="230" x2="240" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<text x="334" y="112" font-size="13" fill="currentColor">Re</text>
+<text x="246" y="24" font-size="13" fill="currentColor">Im</text>
+<line x1="75" y1="115" x2="85" y2="125" stroke="currentColor" stroke-width="2"/>
+<line x1="75" y1="125" x2="85" y2="115" stroke="currentColor" stroke-width="2"/>
+<line x1="275" y1="115" x2="285" y2="125" stroke="currentColor" stroke-width="2"/>
+<line x1="275" y1="125" x2="285" y2="115" stroke="currentColor" stroke-width="2"/>
+<rect x="160" y="40" width="80" height="160" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="235,85 240,75 245,85" fill="currentColor"/>
+<polygon points="205,35 195,40 205,45" fill="currentColor"/>
+<polygon points="155,155 160,165 165,155" fill="currentColor"/>
+<polygon points="195,195 205,200 195,205" fill="currentColor"/>
+<line x1="320" y1="230" x2="320" y2="10" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polygon points="315,65 320,55 325,65" fill="currentColor"/>
+<text x="46" y="112" font-size="13" fill="currentColor">−0.20</text>
+<text x="284" y="140" font-size="13" fill="currentColor">0.05</text>
+<text x="136" y="226" font-size="13" fill="currentColor">−0.10</text>
+<text x="244" y="226" font-size="13" fill="currentColor">0</text>
+<text x="324" y="226" font-size="13" fill="currentColor">0.10</text>
+<text x="88" y="30" font-size="13" fill="currentColor">strip</text>
+</svg>

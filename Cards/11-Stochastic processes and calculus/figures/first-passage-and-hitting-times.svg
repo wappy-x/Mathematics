@@ -1,0 +1,10 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>One sample match of 16 rounds: the score falls to minus 7 dollars at round 7 and climbs back to level at round 16, the return time</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="50" x2="340" y2="50" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+<text x="30" y="38" font-size="13" fill="currentColor">level: score 0</text>
+<polyline points="30,50 48,70 66,90 84,110 102,130 120,150 138,170 156,190 174,170 192,150 210,130 228,110 246,90 264,70 282,90 300,70 318,50" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="318" cy="50" r="5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="290" y="38" font-size="13" fill="currentColor">T = 16</text>
+<text x="110" y="212" font-size="13" fill="currentColor">-$7 at round 7</text>
+<text x="30" y="232" font-size="13" fill="currentColor">18 units = 1 round, 20 units = $1</text>
+</svg>

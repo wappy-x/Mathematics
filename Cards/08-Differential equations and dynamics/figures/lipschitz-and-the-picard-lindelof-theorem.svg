@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Depth against time for three solutions of h' = -0.2 sqrt(h) that all read 0 cm at 50 minutes: full at 0 min, 9 cm at 0 min, and always empty</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="345" y2="200" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"/>
+<line x1="40" y1="200" x2="40" y2="30" stroke="currentColor" stroke-width="1"/>
+<text x="40" y="216" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="140" y="216" font-size="13" fill="currentColor" text-anchor="middle">20</text>
+<text x="240" y="216" font-size="13" fill="currentColor" text-anchor="middle">40</text>
+<text x="340" y="216" font-size="13" fill="currentColor" text-anchor="middle">60</text>
+<text x="190" y="234" font-size="13" fill="currentColor" text-anchor="middle">time t, min</text>
+<text x="34" y="204" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="34" y="146" font-size="13" fill="currentColor" text-anchor="end">9</text>
+<text x="34" y="44" font-size="13" fill="currentColor" text-anchor="end">25</text>
+<text x="46" y="24" font-size="13" fill="currentColor">depth h, cm</text>
+<path d="M40,40 Q165,200 290,200" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M40,142.4 Q115,200 190,200" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="40" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="2"/>
+<circle cx="290" cy="200" r="3.5" fill="currentColor"/>
+<text x="290" y="178" font-size="13" fill="currentColor" text-anchor="middle">h = 0 at 50 min</text>
+<text x="82" y="76" font-size="13" fill="currentColor">A</text>
+<text x="66" y="150" font-size="13" fill="currentColor">B</text>
+<text x="320" y="194" font-size="13" fill="currentColor">C</text>
+<text x="175" y="60" font-size="13" fill="currentColor">A: 25 cm, empty at 50 min</text>
+<text x="175" y="80" font-size="13" fill="currentColor">B: 9 cm, empty at 30 min</text>
+<text x="175" y="100" font-size="13" fill="currentColor">C: always empty</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Markov's proof at threshold $4: the payout line y = x from $0 to $8 lies on or above the step that is 0 below $4 and 4 from $4 on; drawn to scale, 30 units per dollar across and 20 up</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="40,200 160,200 160,120" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polygon points="160,120 280,120 280,40" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="40" y1="200" x2="300" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="200" x2="40" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="200" x2="280" y2="40" stroke="currentColor" stroke-width="2"/>
+<polyline points="40,200 160,200 160,120 280,120" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 3"/>
+<text x="150" y="218" font-size="13" fill="currentColor">$4</text>
+<text x="270" y="218" font-size="13" fill="currentColor">$8</text>
+<text x="300" y="234" font-size="13" fill="currentColor" text-anchor="end">payout x (dollars)</text>
+<text x="240" y="50" font-size="13" fill="currentColor" text-anchor="end">the payout, y = x</text>
+<text x="176" y="138" font-size="13" fill="currentColor">the step: 4 from $4 on</text>
+<text x="46" y="42" font-size="13" fill="currentColor">dollars</text>
+</svg>

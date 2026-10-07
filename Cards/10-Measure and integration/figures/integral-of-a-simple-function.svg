@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>River depth 4x(1 - x) metres over 1 km with the staircase of depths rounded down to 0, 0.25, 0.5 and 0.75 metres shaded beneath it, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M40,200 L60.1,200 L60.1,160 L83.9,160 L83.9,120 L115,120 L115,80 L265,80 L265,120 L296.1,120 L296.1,160 L319.9,160 L319.9,200 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M40,200 Q190,-120 340,200" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="40" x2="40" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="160" x2="40" y2="160" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="120" x2="40" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="80" x2="40" y2="80" stroke="currentColor" stroke-width="1.5"/>
+<line x1="36" y1="40" x2="40" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<text x="33" y="164" font-size="13" text-anchor="end" fill="currentColor">0.25</text>
+<text x="33" y="124" font-size="13" text-anchor="end" fill="currentColor">0.5</text>
+<text x="33" y="84" font-size="13" text-anchor="end" fill="currentColor">0.75</text>
+<text x="33" y="44" font-size="13" text-anchor="end" fill="currentColor">1 m</text>
+<text x="40" y="216" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="190" y="216" font-size="13" text-anchor="middle" fill="currentColor">0.5</text>
+<text x="336" y="216" font-size="13" text-anchor="middle" fill="currentColor">1 km</text>
+<text x="190" y="234" font-size="13" text-anchor="middle" fill="currentColor">distance along the river</text>
+<text x="352" y="28" font-size="13" text-anchor="end" fill="currentColor">d(x) = 4x(1 − x)</text>
+<text x="190" y="150" font-size="14" text-anchor="middle" fill="currentColor">staircase s</text>
+</svg>

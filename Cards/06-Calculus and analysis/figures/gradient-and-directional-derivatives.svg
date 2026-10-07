@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Three height contours around a summit at the bottom-left corner, the skier on the 466 m contour, the fall-line arrow pointing away from the summit and a dashed level line touching the contour</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="225" x2="345" y2="225" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="225" x2="30" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 219.74 225 A 189.74 134.16 0 0 0 30 90.84" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 277.39 225 A 247.39 174.93 0 0 0 30 50.07" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 330 225 A 300 212.13 0 0 0 30 12.87" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="174" y1="78" x2="246" y2="132" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="210" y1="105" x2="246" y2="57" stroke="currentColor" stroke-width="2"/>
+<polyline points="237.18,61.71 246,57 243.95,66.79" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="210" cy="105" r="3" fill="currentColor"/>
+<text x="196" y="116" font-size="13" fill="currentColor">p</text>
+<text x="252" y="60" font-size="13" fill="currentColor">fall line</text>
+<text x="250" y="144" font-size="13" fill="currentColor">level</text>
+<text x="176" y="220" font-size="13" fill="currentColor">480 m</text>
+<text x="232" y="220" font-size="13" fill="currentColor">466 m</text>
+<text x="286" y="220" font-size="13" fill="currentColor">450 m</text>
+<text x="34" y="236" font-size="13" fill="currentColor">summit, 500 m</text>
+<text x="300" y="236" font-size="13" fill="currentColor">east</text>
+<text x="36" y="36" font-size="13" fill="currentColor">north</text>
+</svg>

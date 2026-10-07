@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The indented contour: the real line from minus 2 to 2 with a small half-circle dent of radius 0.25 over the pole at 0, closed by the upper arc of radius 2; the point i is inside</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="10" y1="170" x2="350" y2="170" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="236" x2="180" y2="12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="170" x2="165" y2="170" stroke="currentColor" stroke-width="2"/>
+<path d="M 165 170 A 15 15 0 0 1 195 170" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="195" y1="170" x2="300" y2="170" stroke="currentColor" stroke-width="2"/>
+<path d="M 300 170 A 120 120 0 0 0 60 170" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="104,165 114,170 104,175" fill="currentColor"/>
+<polygon points="244,165 254,170 244,175" fill="currentColor"/>
+<polygon points="186,45 176,50 186,55" fill="currentColor"/>
+<polygon points="176,151 184,155 176,159" fill="currentColor"/>
+<circle cx="180" cy="170" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="110" r="4" fill="currentColor"/>
+<text x="188" y="106" font-size="14" fill="currentColor">i</text>
+<text x="200" y="152" font-size="13" fill="currentColor">ε</text>
+<text x="184" y="190" font-size="13" fill="currentColor">0</text>
+<text x="46" y="190" font-size="13" fill="currentColor">−R</text>
+<text x="294" y="190" font-size="13" fill="currentColor">R</text>
+<text x="326" y="188" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="24" font-size="13" fill="currentColor">Im</text>
+</svg>

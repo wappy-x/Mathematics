@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Bars to scale, 450 pixels per unit of probability: the loaded die's probability minus the fair die's for each face, -0.067 for faces 1 to 4, +0.033 for face 5, +0.233 for face 6</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="25" y1="140" x2="335" y2="140" stroke="currentColor" stroke-width="1.5"/>
+<rect x="40" y="140" width="30" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="90" y="140" width="30" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="140" y="140" width="30" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="190" y="140" width="30" height="30" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="240" y="125" width="30" height="15" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="290" y="35" width="30" height="105" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="51" y="188" font-size="13" fill="currentColor">1</text>
+<text x="101" y="188" font-size="13" fill="currentColor">2</text>
+<text x="151" y="188" font-size="13" fill="currentColor">3</text>
+<text x="201" y="188" font-size="13" fill="currentColor">4</text>
+<text x="251" y="160" font-size="13" fill="currentColor">5</text>
+<text x="301" y="160" font-size="13" fill="currentColor">6</text>
+<text x="20" y="24" font-size="13" fill="currentColor">positive part {5, 6}: 0.033 + 0.233 = +0.267</text>
+<text x="20" y="226" font-size="13" fill="currentColor">negative part {1, 2, 3, 4}: 4 × 0.067 = −0.267</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" width="360" height="250" style="color:#24292f">
+<title>Six house sales, price against floor area, with the least-squares line and each sale's vertical miss</title><rect x="0" y="0" width="360" height="250" rx="8" fill="#ffffff"/>
+<line x1="40" y1="225" x2="345" y2="225" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="225" x2="40" y2="15" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="225" x2="40" y2="230" stroke="currentColor" stroke-width="1.5"/>
+<line x1="340" y1="225" x2="340" y2="230" stroke="currentColor" stroke-width="1.5"/>
+<line x1="35" y1="220" x2="40" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="35" y1="120" x2="40" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="35" y1="20" x2="40" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<text x="2" y="224" font-size="13" fill="currentColor">150k</text>
+<text x="2" y="124" font-size="13" fill="currentColor">250k</text>
+<text x="2" y="24" font-size="13" fill="currentColor">350k</text>
+<text x="34" y="243" font-size="13" fill="currentColor">50</text>
+<text x="330" y="243" font-size="13" fill="currentColor">150</text>
+<text x="110" y="243" font-size="13" fill="currentColor">floor area, square metres</text>
+<text x="46" y="38" font-size="13" fill="currentColor">price = $45,000 + $2,100 × area</text>
+<line x1="55" y1="209.5" x2="325" y2="20.5" stroke="currentColor" stroke-width="2"/>
+<line x1="70" y1="205" x2="70" y2="199" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+<line x1="100" y1="165" x2="100" y2="178" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+<line x1="160" y1="141" x2="160" y2="136" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+<line x1="220" y1="103" x2="220" y2="94" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+<line x1="280" y1="43" x2="280" y2="52" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+<line x1="310" y1="33" x2="310" y2="31" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+<circle cx="70" cy="205" r="4" fill="currentColor"/>
+<circle cx="100" cy="165" r="4" fill="currentColor"/>
+<circle cx="160" cy="141" r="4" fill="currentColor"/>
+<circle cx="220" cy="103" r="4" fill="currentColor"/>
+<circle cx="280" cy="43" r="4" fill="currentColor"/>
+<circle cx="310" cy="33" r="4" fill="currentColor"/>
+<rect x="185" y="110" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="106" y="108" font-size="13" fill="currentColor">mean point</text>
+</svg>

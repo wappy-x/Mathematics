@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 1 m string plucked 1 cm at the middle: the triangle at t = 0 s, the flat-topped trapezoid 0.5 cm high at t = 0.25 s, and the straight string at t = 0.5 s</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="190" x2="330" y2="190" stroke="currentColor" stroke-width="1"/>
+<line x1="40" y1="190" x2="40" y2="40" stroke="currentColor" stroke-width="1"/>
+<line x1="36" y1="60" x2="40" y2="60" stroke="currentColor" stroke-width="1"/>
+<line x1="36" y1="125" x2="40" y2="125" stroke="currentColor" stroke-width="1"/>
+<text x="28" y="65" font-size="13" fill="currentColor" text-anchor="end">1</text>
+<text x="28" y="130" font-size="13" fill="currentColor" text-anchor="end">0.5</text>
+<text x="46" y="36" font-size="13" fill="currentColor">height, cm</text>
+<polyline points="40,190 180,60 320,190" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="40,190 110,125 250,125 320,190" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<polygon points="209,133 221,133 215,145" fill="currentColor"/>
+<text x="190" y="58" font-size="13" fill="currentColor">t = 0 s</text>
+<text x="120" y="150" font-size="13" fill="currentColor">t = 0.25 s</text>
+<text x="120" y="182" font-size="13" fill="currentColor">t = 0.5 s: straight</text>
+<text x="40" y="206" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="180" y="206" font-size="13" fill="currentColor" text-anchor="middle">0.5</text>
+<text x="320" y="206" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="180" y="230" font-size="13" fill="currentColor" text-anchor="middle">position along the string, m</text>
+</svg>

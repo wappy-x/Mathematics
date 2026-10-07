@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Five simulated hours that each held exactly 4 calls, with the average call times 12, 24, 36 and 48 minutes dashed</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="114" y1="18" x2="114" y2="205" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+<line x1="168" y1="18" x2="168" y2="205" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+<line x1="222" y1="18" x2="222" y2="205" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+<line x1="276" y1="18" x2="276" y2="205" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+<text x="6" y="35" font-size="13" fill="currentColor">hour 1</text>
+<line x1="60" y1="30" x2="330" y2="30" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<line x1="214.4" y1="21" x2="214.4" y2="39" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="236.9" y1="21" x2="236.9" y2="39" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="254.7" y1="21" x2="254.7" y2="39" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="254.9" y1="21" x2="254.9" y2="39" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="6" y="70" font-size="13" fill="currentColor">hour 2</text>
+<line x1="60" y1="65" x2="330" y2="65" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<line x1="74.8" y1="56" x2="74.8" y2="74" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="86.0" y1="56" x2="86.0" y2="74" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="172.5" y1="56" x2="172.5" y2="74" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="269.3" y1="56" x2="269.3" y2="74" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="6" y="105" font-size="13" fill="currentColor">hour 3</text>
+<line x1="60" y1="100" x2="330" y2="100" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<line x1="69.0" y1="91" x2="69.0" y2="109" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="201.1" y1="91" x2="201.1" y2="109" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="269.6" y1="91" x2="269.6" y2="109" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="318.1" y1="91" x2="318.1" y2="109" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="6" y="140" font-size="13" fill="currentColor">hour 4</text>
+<line x1="60" y1="135" x2="330" y2="135" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<line x1="82.4" y1="126" x2="82.4" y2="144" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="147.7" y1="126" x2="147.7" y2="144" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="222.9" y1="126" x2="222.9" y2="144" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="297.3" y1="126" x2="297.3" y2="144" stroke="currentColor" stroke-width="2" fill="none"/>
+<text x="6" y="175" font-size="13" fill="currentColor">hour 5</text>
+<line x1="60" y1="170" x2="330" y2="170" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<line x1="92.1" y1="161" x2="92.1" y2="179" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="176.0" y1="161" x2="176.0" y2="179" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="241.5" y1="161" x2="241.5" y2="179" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="301.3" y1="161" x2="301.3" y2="179" stroke="currentColor" stroke-width="2" fill="none"/>
+<line x1="60" y1="205" x2="330" y2="205" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<line x1="60.0" y1="205" x2="60.0" y2="211" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="60.0" y="224" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<line x1="127.5" y1="205" x2="127.5" y2="211" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="127.5" y="224" font-size="13" text-anchor="middle" fill="currentColor">15</text>
+<line x1="195.0" y1="205" x2="195.0" y2="211" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="195.0" y="224" font-size="13" text-anchor="middle" fill="currentColor">30</text>
+<line x1="262.5" y1="205" x2="262.5" y2="211" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="262.5" y="224" font-size="13" text-anchor="middle" fill="currentColor">45</text>
+<line x1="330.0" y1="205" x2="330.0" y2="211" stroke="currentColor" stroke-width="1.5" fill="none"/>
+<text x="330.0" y="224" font-size="13" text-anchor="middle" fill="currentColor">60</text>
+<text x="195" y="236" font-size="13" text-anchor="middle" fill="currentColor">minutes after the hour began</text>
+</svg>

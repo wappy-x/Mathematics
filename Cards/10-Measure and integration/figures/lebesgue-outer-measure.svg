@@ -1,0 +1,31 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 3 metre fence, drawn at 90 units per metre, covered by five open intervals; four of them form a chain from 0 to past 3 and one is not needed</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="195" x2="310" y2="195" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="189" x2="40" y2="201" stroke="currentColor" stroke-width="2"/>
+<line x1="310" y1="189" x2="310" y2="201" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="216" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="310" y="216" font-size="13" fill="currentColor" text-anchor="middle">3 m</text>
+<text x="175" y="233" font-size="13" fill="currentColor" text-anchor="middle">the fence [0, 3]</text>
+<line x1="22" y1="165" x2="139" y2="165" stroke="currentColor" stroke-width="2"/>
+<circle cx="22" cy="165" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="139" cy="165" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="46" y="156" font-size="13" fill="currentColor">(−0.2, 1.1)</text>
+<line x1="112" y1="132" x2="211" y2="132" stroke="currentColor" stroke-width="2"/>
+<circle cx="112" cy="132" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="211" cy="132" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="112" y="123" font-size="13" fill="currentColor">(0.8, 1.9)</text>
+<line x1="175" y1="99" x2="274" y2="99" stroke="currentColor" stroke-width="2"/>
+<circle cx="175" cy="99" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="274" cy="99" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="175" y="90" font-size="13" fill="currentColor">(1.5, 2.6)</text>
+<line x1="256" y1="66" x2="337" y2="66" stroke="currentColor" stroke-width="2"/>
+<circle cx="256" cy="66" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="337" cy="66" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="304" y="57" font-size="13" fill="currentColor" text-anchor="end">(2.4, 3.3)</text>
+<line x1="130" y1="30" x2="166" y2="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="130" cy="30" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="166" cy="30" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="130" y="21" font-size="13" fill="currentColor">(1, 1.4), not in the chain</text>
+<line x1="40" y1="40" x2="40" y2="189" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/>
+<line x1="310" y1="40" x2="310" y2="189" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/>
+</svg>

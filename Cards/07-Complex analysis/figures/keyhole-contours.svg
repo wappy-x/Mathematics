@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A keyhole contour drawn to scale: a big circle of radius 4 and a small circle of radius 0.5 round 0, joined by two banks either side of the branch cut along the positive real axis, with the pole at minus 1 inside</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="180" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="180" y1="236" x2="180" y2="4" stroke="currentColor" stroke-width="1.5"/>
+<line x1="192.46" y1="119.00" x2="279.68" y2="112.01" stroke="currentColor" stroke-width="2"/>
+<line x1="279.68" y1="127.99" x2="192.46" y2="121.00" stroke="currentColor" stroke-width="2"/>
+<path d="M 279.68 112.01 A 100 100 0 1 0 279.68 127.99" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 192.46 121.00 A 12.5 12.5 0 1 1 192.46 119.00" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="232,112.5 240,115.5 232,118.5" fill="currentColor"/>
+<polygon points="240,121.5 232,124.5 240,127.5" fill="currentColor"/>
+<polygon points="186,15 176,20 186,25" fill="currentColor"/>
+<polygon points="184,129.5 177,132.5 184,135.5" fill="currentColor"/>
+<circle cx="155" cy="120" r="3.5" fill="currentColor"/>
+<text x="138" y="140" font-size="13" fill="currentColor">−1</text>
+<text x="258" y="44" font-size="13" fill="currentColor">R = 4</text>
+<text x="190" y="102" font-size="13" fill="currentColor">r = 0.5</text>
+<text x="292" y="112" font-size="13" fill="currentColor">cut</text>
+<text x="318" y="140" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="12" font-size="13" fill="currentColor">Im</text>
+</svg>

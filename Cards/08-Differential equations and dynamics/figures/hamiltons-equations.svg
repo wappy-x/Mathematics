@@ -1,0 +1,36 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Phase portrait of the swing in angle and momentum: angle from minus pi to pi across, momentum up; a closed loop for the release at minus 60 degrees with H = -196.2 J, the separatrix at H = 392.4 J running between the upside-down positions, and a wavy curve above at H = 588.6 J for a swing going over the top; arrows run right on the upper curves and left on the lower ones</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="198" x2="330" y2="198" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="22" x2="30" y2="198" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="110" x2="330" y2="110" stroke="currentColor" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="38.6" y1="198" x2="38.6" y2="203" stroke="currentColor" stroke-width="1"/>
+<line x1="180" y1="198" x2="180" y2="203" stroke="currentColor" stroke-width="1"/>
+<line x1="321.4" y1="198" x2="321.4" y2="203" stroke="currentColor" stroke-width="1"/>
+<line x1="25" y1="50" x2="30" y2="50" stroke="currentColor" stroke-width="1"/>
+<line x1="25" y1="170" x2="30" y2="170" stroke="currentColor" stroke-width="1"/>
+<polygon points="180.0,74.6 191.7,75.8 202.7,79.3 212.5,84.9 220.3,92.3 225.4,100.8 227.1,110.0 225.4,119.2 220.3,127.7 212.5,135.1 202.7,140.7 191.7,144.2 180.0,145.4 168.3,144.2 157.3,140.7 147.5,135.1 139.7,127.7 134.6,119.2 132.9,110.0 134.6,100.8 139.7,92.3 147.5,84.9 157.3,79.3 168.3,75.8" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="38.6,110.0 56.3,96.2 74.0,82.9 91.6,70.6 109.3,59.9 127.0,51.1 144.7,44.5 162.3,40.5 180.0,39.1 197.7,40.5 215.3,44.5 233.0,51.1 250.7,59.9 268.4,70.6 286.0,82.9 303.7,96.2 321.4,110.0" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="38.6,110.0 56.3,123.8 74.0,137.1 91.6,149.4 109.3,160.1 127.0,168.9 144.7,175.5 162.3,179.5 180.0,180.9 197.7,179.5 215.3,175.5 233.0,168.9 250.7,160.1 268.4,149.4 286.0,137.1 303.7,123.8 321.4,110.0" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="38.6,74.6 56.3,72.0 74.0,65.4 91.6,57.0 109.3,48.6 127.0,41.2 144.7,35.5 162.3,32.0 180.0,30.8 197.7,32.0 215.3,35.5 233.0,41.2 250.7,48.6 268.4,57.0 286.0,65.4 303.7,72.0 321.4,74.6" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="186,74.6 177,70.1 177,79.1" fill="currentColor"/>
+<polygon points="174,145.4 183,140.9 183,149.9" fill="currentColor"/>
+<polygon points="186,39.1 177,34.6 177,43.6" fill="currentColor"/>
+<polygon points="174,180.9 183,176.4 183,185.4" fill="currentColor"/>
+<polygon points="97.6,57 88.6,52.5 88.6,61.5" fill="currentColor"/>
+<circle cx="180" cy="110" r="3.5" fill="currentColor"/>
+<circle cx="132.9" cy="110" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="38.6" cy="110" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="321.4" cy="110" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="180" y="98" font-size="13" fill="currentColor" text-anchor="middle">−196.2 J</text>
+<text x="180" y="64" font-size="13" fill="currentColor" text-anchor="middle">392.4 J</text>
+<text x="305" y="56" font-size="13" fill="currentColor" text-anchor="middle">588.6 J</text>
+<text x="127" y="104" font-size="13" fill="currentColor" text-anchor="end">release</text>
+<text x="26" y="54" font-size="13" fill="currentColor" text-anchor="end">300</text>
+<text x="26" y="114" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="26" y="174" font-size="13" fill="currentColor" text-anchor="end">−300</text>
+<text x="38.6" y="215" font-size="13" fill="currentColor" text-anchor="middle">−π</text>
+<text x="180" y="215" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="321.4" y="215" font-size="13" fill="currentColor" text-anchor="middle">π</text>
+<text x="180" y="233" font-size="13" fill="currentColor" text-anchor="middle">angle θ (rad)</text>
+<text x="36" y="15" font-size="13" fill="currentColor" text-anchor="start">momentum p (kg m^2/s)</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The unit circle as the wire frame, high at plus and minus 1 on the real axis and low at plus and minus i, with the point a = 0.3 + 0.4i and a dashed circle of radius 0.4 round it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="120" x2="330" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="232" x2="180" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="80" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="173,40 183,35 183,45" fill="currentColor"/>
+<circle cx="204" cy="88" r="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<circle cx="204" cy="88" r="3.5" fill="currentColor"/>
+<text x="210" y="84" font-size="13" fill="currentColor">a</text>
+<text x="264" y="112" font-size="13" fill="currentColor">+1</text>
+<text x="80" y="112" font-size="13" fill="currentColor">+1</text>
+<text x="150" y="34" font-size="13" fill="currentColor">−1</text>
+<text x="150" y="216" font-size="13" fill="currentColor">−1</text>
+<text x="246" y="56" font-size="14" fill="currentColor">|z| = 1</text>
+<text x="316" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="18" font-size="13" fill="currentColor">Im</text>
+</svg>

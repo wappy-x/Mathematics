@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" width="360" height="200" style="color:#24292f">
+<title>Upper half of the Poincare disc: triangle O, A, B with curved side AB, its straight chord dashed, and two disc lines through B that never meet the diameter</title><rect x="0" y="0" width="360" height="200" rx="8" fill="#ffffff"/>
+<path d="M20 180 A160 160 0 0 1 340 180" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="20" y1="180" x2="340" y2="180" stroke="currentColor" stroke-width="2"/>
+<path d="M180 180 L260 180 A233.2 233.2 0 0 1 180 100 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="260" y1="180" x2="180" y2="100" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<path d="M84 52 A120 120 0 0 0 276 52" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M124.7 29.9 A144.2 144.2 0 0 0 323.6 109.4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M190 180 L190 170 L180 170" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M238 180 A22 22 0 0 1 241.1 168.7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M180 122 A22 22 0 0 0 191.3 118.9" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="176" y="196" font-size="13" text-anchor="end" fill="currentColor">O 90°</text>
+<text x="256" y="196" font-size="13" fill="currentColor">A 30.96°</text>
+<text x="174" y="120" font-size="13" text-anchor="end" fill="currentColor">B 30.96°</text>
+</svg>

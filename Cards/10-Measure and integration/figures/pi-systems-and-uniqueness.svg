@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Triangle density of the noon temperature from 8 to 32 degrees C, peak at 20, with the band from 15 to 20 and the tail above 30 shaded</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="117.5,200 117.5,106.67 180,40 180,200" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="305,200 305,173.33 330,200" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="30,200 180,40 330,200" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="20" y1="200" x2="345" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="218" font-size="13" text-anchor="middle" fill="currentColor">8</text>
+<text x="117.5" y="218" font-size="13" text-anchor="middle" fill="currentColor">15</text>
+<text x="180" y="218" font-size="13" text-anchor="middle" fill="currentColor">20</text>
+<text x="305" y="218" font-size="13" text-anchor="middle" fill="currentColor">30</text>
+<text x="332" y="218" font-size="13" text-anchor="middle" fill="currentColor">32</text>
+<text x="180" y="236" font-size="13" text-anchor="middle" fill="currentColor">noon temperature, °C</text>
+<text x="150" y="178" font-size="13" text-anchor="middle" fill="currentColor">95/288</text>
+<text x="312" y="158" font-size="13" text-anchor="middle" fill="currentColor">1/72</text>
+<text x="196" y="38" font-size="13" fill="currentColor">peak 1/12 at 20</text>
+<text x="24" y="30" font-size="13" fill="currentColor">density f(t), per °C</text>
+</svg>

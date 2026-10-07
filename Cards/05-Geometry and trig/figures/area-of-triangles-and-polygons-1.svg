@@ -1,0 +1,13 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The 7-8-9 m garden bed with its 9 m side as base and its height dropped square on to it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="45,215 315,215 205,36.11" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="205" y1="36.11" x2="205" y2="215" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="195,215 195,205 205,205" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="30" y="230" font-size="14" fill="currentColor">A</text>
+<text x="320" y="230" font-size="14" fill="currentColor">B</text>
+<text x="200" y="28" font-size="14" fill="currentColor">C</text>
+<text x="120" y="234" font-size="13" fill="currentColor">c = 9 m</text>
+<text x="70" y="120" font-size="13" fill="currentColor">b = 8 m</text>
+<text x="268" y="120" font-size="13" fill="currentColor">a = 7 m</text>
+<text x="132" y="165" font-size="13" fill="currentColor">h = 5.96 m</text>
+</svg>

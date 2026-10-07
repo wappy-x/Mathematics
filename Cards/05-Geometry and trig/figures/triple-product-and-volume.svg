@@ -1,0 +1,26 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The crate as a slanted box on edges a, b and c from one corner, with its lid corners P, Q, R and S and the height h dropped square to the floor</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="97.09,115.75 237.09,115.75 317.56,89.50 177.56,89.50" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="60" y1="205" x2="200" y2="205" stroke="currentColor" stroke-width="2"/>
+<line x1="200" y1="205" x2="280.47" y2="178.75" stroke="currentColor" stroke-width="2"/>
+<line x1="60" y1="205" x2="97.09" y2="115.75" stroke="currentColor" stroke-width="2"/>
+<line x1="200" y1="205" x2="237.09" y2="115.75" stroke="currentColor" stroke-width="2"/>
+<line x1="280.47" y1="178.75" x2="317.56" y2="89.50" stroke="currentColor" stroke-width="2"/>
+<line x1="97.09" y1="115.75" x2="237.09" y2="115.75" stroke="currentColor" stroke-width="2"/>
+<line x1="97.09" y1="115.75" x2="177.56" y2="89.50" stroke="currentColor" stroke-width="2"/>
+<line x1="237.09" y1="115.75" x2="317.56" y2="89.50" stroke="currentColor" stroke-width="2"/>
+<line x1="177.56" y1="89.50" x2="317.56" y2="89.50" stroke="currentColor" stroke-width="2"/>
+<line x1="60" y1="205" x2="140.47" y2="178.75" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="140.47" y1="178.75" x2="280.47" y2="178.75" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="140.47" y1="178.75" x2="177.56" y2="89.50" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="97.09" y1="115.75" x2="97.09" y2="199.75" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,3"/>
+<path d="M97.09,193.75 L103.09,193.75 L103.09,199.75" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="130" y="224" font-size="14" fill="currentColor" text-anchor="middle">a</text>
+<text x="122" y="199" font-size="13" fill="currentColor">b</text>
+<text x="72" y="162" font-size="14" fill="currentColor" text-anchor="end">c</text>
+<text x="106" y="165" font-size="13" fill="currentColor">h = 12 dm</text>
+<text x="92" y="112" font-size="13" fill="currentColor" text-anchor="end">P</text>
+<text x="242" y="134" font-size="13" fill="currentColor">Q</text>
+<text x="172" y="84" font-size="13" fill="currentColor" text-anchor="end">R</text>
+<text x="322" y="86" font-size="13" fill="currentColor">S</text>
+</svg>

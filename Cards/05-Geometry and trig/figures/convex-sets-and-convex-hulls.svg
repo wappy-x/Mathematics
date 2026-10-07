@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Eight trees A to H; the convex hull fence F, A, B, C, D, E is shaded; G and H sit inside; a dashed dented fence runs from A in to G and out to B</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="40,144 64,216 208,192 256,96 184,24 88,48" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polyline points="64,216 136,144 208,192" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<circle cx="64" cy="216" r="4" fill="currentColor"/>
+<circle cx="208" cy="192" r="4" fill="currentColor"/>
+<circle cx="256" cy="96" r="4" fill="currentColor"/>
+<circle cx="184" cy="24" r="4" fill="currentColor"/>
+<circle cx="88" cy="48" r="4" fill="currentColor"/>
+<circle cx="40" cy="144" r="4" fill="currentColor"/>
+<circle cx="136" cy="144" r="4" fill="currentColor"/>
+<circle cx="172" cy="120" r="4" fill="currentColor"/>
+<text x="48" y="234" font-size="14" fill="currentColor">A</text>
+<text x="214" y="208" font-size="14" fill="currentColor">B</text>
+<text x="264" y="100" font-size="14" fill="currentColor">C</text>
+<text x="192" y="20" font-size="14" fill="currentColor">D</text>
+<text x="70" y="44" font-size="14" fill="currentColor">E</text>
+<text x="22" y="149" font-size="14" fill="currentColor">F</text>
+<text x="130" y="134" font-size="14" fill="currentColor">G</text>
+<text x="178" y="116" font-size="14" fill="currentColor">H</text>
+</svg>

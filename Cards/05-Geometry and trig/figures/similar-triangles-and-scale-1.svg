@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 12 m flagpole with a 9.6 m shadow and a 1 m stick with a 0.8 m shadow, drawn to scale; the sun's rays make the same 51.3 degree angle with the ground at both shadow tips</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="220" x2="340" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="220" x2="40" y2="28" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="28" x2="193.6" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 40 210 L 50 210 L 50 220" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 171.6 220 A 22 22 0 0 1 179.86 202.82" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="220" x2="260" y2="204" stroke="currentColor" stroke-width="2"/>
+<line x1="221.6" y1="156" x2="260" y2="204" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="260" y1="204" x2="272.8" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 260 216 L 264 216 L 264 220" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 264.8 220 A 8 8 0 0 1 267.8 213.75" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="8" y="128" font-size="13" fill="currentColor">12 m</text>
+<text x="117" y="236" font-size="13" fill="currentColor" text-anchor="middle">9.6 m</text>
+<text x="168" y="214" font-size="13" fill="currentColor" text-anchor="end">51.3°</text>
+<text x="256" y="215" font-size="13" fill="currentColor" text-anchor="end">1 m</text>
+<text x="268" y="236" font-size="13" fill="currentColor" text-anchor="middle">0.8 m</text>
+<text x="280" y="212" font-size="13" fill="currentColor">51.3°</text>
+<text x="196" y="146" font-size="13" fill="currentColor">parallel sun rays</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Starting states at t = 0 drawn as arrows: e^t at (1, 1) and t e^t at (0, 1) span a parallelogram of area 1; 2e^t at (2, 2) lies on the same line as e^t</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="60,200 140,120 140,40 60,120" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="60" y1="200" x2="300" y2="200" stroke="currentColor" stroke-width="1"/>
+<polygon points="300,200 292,196 292,204" fill="currentColor"/>
+<line x1="60" y1="200" x2="60" y2="16" stroke="currentColor" stroke-width="1"/>
+<polygon points="60,16 56,24 64,24" fill="currentColor"/>
+<line x1="60" y1="200" x2="140" y2="120" stroke="currentColor" stroke-width="2"/>
+<polygon points="140,120 137.1,128.5 131.5,122.9" fill="currentColor"/>
+<line x1="60" y1="200" x2="60" y2="120" stroke="currentColor" stroke-width="2"/>
+<polygon points="60,120 56,129 64,129" fill="currentColor"/>
+<line x1="140" y1="120" x2="220" y2="40" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polygon points="220,40 217.1,48.5 211.5,42.9" fill="currentColor"/>
+<text x="146" y="134" font-size="13" fill="currentColor">e^t: (1, 1)</text>
+<text x="14" y="164" font-size="13" fill="currentColor">t e^t</text>
+<text x="226" y="46" font-size="13" fill="currentColor">2e^t: (2, 2)</text>
+<text x="72" y="140" font-size="13" fill="currentColor">W = 1</text>
+<text x="136" y="216" font-size="13" fill="currentColor">1</text>
+<text x="216" y="216" font-size="13" fill="currentColor">2</text>
+<text x="46" y="124" font-size="13" fill="currentColor">1</text>
+<text x="46" y="44" font-size="13" fill="currentColor">2</text>
+<text x="210" y="234" font-size="13" fill="currentColor">value y, cm</text>
+<text x="68" y="22" font-size="13" fill="currentColor">slope y', cm/s</text>
+</svg>

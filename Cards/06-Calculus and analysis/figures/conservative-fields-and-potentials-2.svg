@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The whirlpool to scale: two squares round the drain, one square beside it, and four velocity arrows circling anticlockwise</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="120" cy="120" r="3" fill="currentColor"/>
+<rect x="100" y="100" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="80" y="80" width="80" height="80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<rect x="180" y="100" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="150" y1="120" x2="150" y2="100" stroke="currentColor" stroke-width="2"/>
+<line x1="120" y1="90" x2="100" y2="90" stroke="currentColor" stroke-width="2"/>
+<line x1="90" y1="120" x2="90" y2="140" stroke="currentColor" stroke-width="2"/>
+<line x1="120" y1="150" x2="140" y2="150" stroke="currentColor" stroke-width="2"/>
+<polyline points="147,105 150,100 153,105" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="105,87 100,90 105,93" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="87,135 90,140 93,135" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="135,147 140,150 135,153" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="120" y="70" font-size="13" fill="currentColor" text-anchor="middle">2π on both</text>
+<text x="200" y="92" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="120" y="182" font-size="13" fill="currentColor" text-anchor="middle">drain at the centre</text>
+</svg>

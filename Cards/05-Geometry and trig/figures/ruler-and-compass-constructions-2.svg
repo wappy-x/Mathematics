@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Building the square root of 17: a half-circle on a base of 1 plus 17, and the perpendicular raised where the two pieces meet has height 4.123</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="2"/>
+<path d="M20 200 A160 160 0 0 1 340 200" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="37.8" y1="200" x2="37.8" y2="126.7" stroke="currentColor" stroke-width="2"/>
+<line x1="20" y1="200" x2="37.8" y2="126.7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="340" y1="200" x2="37.8" y2="126.7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polyline points="43.8,200 43.8,194 37.8,194" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="36.1,133.5 42.9,135.1 44.6,128.4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="37.8" y1="195" x2="37.8" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="200" r="2.5" fill="currentColor"/>
+<text x="28.9" y="218" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="189" y="218" font-size="13" text-anchor="middle" fill="currentColor">17</text>
+<text x="48" y="178" font-size="13" fill="currentColor">√17 = 4.123</text>
+</svg>

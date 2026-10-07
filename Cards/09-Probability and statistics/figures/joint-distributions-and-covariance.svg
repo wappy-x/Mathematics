@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Joint table of rain and umbrella sales over 100 days, one disc per cell, area proportional to days</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<text x="150" y="22" font-size="13" fill="currentColor">umbrellas sold that day</text>
+<text x="146" y="52" font-size="13" fill="currentColor">0</text>
+<text x="196" y="52" font-size="13" fill="currentColor">1</text>
+<text x="246" y="52" font-size="13" fill="currentColor">2</text>
+<text x="296" y="52" font-size="13" fill="currentColor">3</text>
+<text x="12" y="94" font-size="13" fill="currentColor">dry, 60 days</text>
+<text x="12" y="169" font-size="13" fill="currentColor">wet, 40 days</text>
+<circle cx="150" cy="90" r="16.4" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="200" cy="90" r="13.4" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="250" cy="90" r="8.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="300" cy="90" r="4.2" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="150" cy="165" r="6.0" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="200" cy="165" r="8.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="250" cy="165" r="10.4" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="300" cy="165" r="12.0" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="143" y="124" font-size="13" fill="currentColor">30</text>
+<text x="193" y="124" font-size="13" fill="currentColor">20</text>
+<text x="246" y="124" font-size="13" fill="currentColor">8</text>
+<text x="296" y="124" font-size="13" fill="currentColor">2</text>
+<text x="146" y="199" font-size="13" fill="currentColor">4</text>
+<text x="196" y="199" font-size="13" fill="currentColor">8</text>
+<text x="243" y="199" font-size="13" fill="currentColor">12</text>
+<text x="293" y="199" font-size="13" fill="currentColor">16</text>
+<text x="12" y="230" font-size="13" fill="currentColor">disc area = number of days in the cell</text>
+</svg>

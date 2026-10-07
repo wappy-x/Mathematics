@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The water tank, 2 m across and 3 m tall, as three stacked one-metre slices of 3141.59 litres each</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M70,32 L70,197 A55,13.75 0 0 0 180,197 L180,32 A55,13.75 0 0 0 70,32 Z" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<ellipse cx="125" cy="32" rx="55" ry="13.75" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="70" y1="32" x2="70" y2="197" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="32" x2="180" y2="197" stroke="currentColor" stroke-width="2"/>
+<path d="M70,197 A55,13.75 0 0 0 180,197" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M70,197 A55,13.75 0 0 1 180,197" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,4"/>
+<ellipse cx="125" cy="87" rx="55" ry="13.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,4"/>
+<ellipse cx="125" cy="142" rx="55" ry="13.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,4"/>
+<line x1="45" y1="32" x2="45" y2="197" stroke="currentColor" stroke-width="1.5"/>
+<line x1="39" y1="32" x2="51" y2="32" stroke="currentColor" stroke-width="1.5"/>
+<line x1="39" y1="197" x2="51" y2="197" stroke="currentColor" stroke-width="1.5"/>
+<text x="10" y="119" font-size="14" fill="currentColor">3 m</text>
+<text x="125" y="232" font-size="14" fill="currentColor" text-anchor="middle">2 m across</text>
+<text x="195" y="64" font-size="13" fill="currentColor">1 m: 3141.59 litres</text>
+<text x="195" y="119" font-size="13" fill="currentColor">1 m: 3141.59 litres</text>
+<text x="195" y="174" font-size="13" fill="currentColor">1 m: 3141.59 litres</text>
+</svg>

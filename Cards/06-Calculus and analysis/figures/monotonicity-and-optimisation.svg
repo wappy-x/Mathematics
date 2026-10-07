@@ -1,0 +1,9 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Side views of two 330 ml cans drawn to scale: a square profile 7.49 by 7.49 cm and a slim one 6.60 by 9.65 cm</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="20" y="60.2" width="149.8" height="149.8" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="200" y="17.1" width="132" height="192.9" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="94.9" y="140" font-size="13" text-anchor="middle" fill="currentColor">264.3568 sq cm</text>
+<text x="266" y="118" font-size="13" text-anchor="middle" fill="currentColor">268.42 sq cm</text>
+<text x="94.9" y="230" font-size="13" text-anchor="middle" fill="currentColor">7.49 x 7.49 cm</text>
+<text x="266" y="230" font-size="13" text-anchor="middle" fill="currentColor">6.60 x 9.65 cm</text>
+</svg>

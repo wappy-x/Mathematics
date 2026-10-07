@@ -1,0 +1,11 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Share B's unit of noise as an arrow of length 1 at the angle whose cosine is 0.5 to the shared news; it splits into 0.5 along the shared news and 0.866 across it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="60,200 135,200 135,70.10" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="60" y1="200" x2="210" y2="200" stroke="currentColor" stroke-width="2"/>
+<line x1="60" y1="200" x2="135" y2="70.10" stroke="currentColor" stroke-width="2"/>
+<line x1="135" y1="200" x2="135" y2="70.10" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="216" y="205" font-size="13" fill="currentColor">Z1 (shared)</text>
+<text x="142" y="66" font-size="13" fill="currentColor">W2: B's noise, length 1</text>
+<text x="142" y="140" font-size="13" fill="currentColor">own news Z2: 0.866</text>
+<text x="66" y="222" font-size="13" fill="currentColor">shared part: 0.5 = ρ</text>
+</svg>

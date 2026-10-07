@@ -1,0 +1,26 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Time-optimal parking in the position-speed plane: full-throttle arc to the switching curve at 50 m and 14.14 m/s, then down the switching curve to rest at 100 m</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="332" y2="200" stroke="currentColor" stroke-width="1"/>
+<line x1="40" y1="200" x2="40" y2="30" stroke="currentColor" stroke-width="1"/>
+<line x1="180" y1="200" x2="180" y2="204" stroke="currentColor" stroke-width="1"/>
+<line x1="320" y1="200" x2="320" y2="204" stroke="currentColor" stroke-width="1"/>
+<line x1="36" y1="120" x2="40" y2="120" stroke="currentColor" stroke-width="1"/>
+<line x1="36" y1="40" x2="40" y2="40" stroke="currentColor" stroke-width="1"/>
+<text x="40" y="217" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="180" y="217" font-size="13" fill="currentColor" text-anchor="middle">50</text>
+<text x="320" y="217" font-size="13" fill="currentColor" text-anchor="middle">100</text>
+<text x="32" y="124" font-size="13" fill="currentColor" text-anchor="end">10</text>
+<text x="32" y="44" font-size="13" fill="currentColor" text-anchor="end">20</text>
+<text x="330" y="234" font-size="13" fill="currentColor" text-anchor="end">position, m</text>
+<text x="48" y="22" font-size="13" fill="currentColor">speed, m/s</text>
+<path d="M 320 200 Q 320 120 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M 40 200 Q 40 143.43 180 86.86" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M 180 86.86 Q 320 143.43 320 200" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="110,120 105.04,127.44 101.07,120.5" fill="currentColor"/>
+<polygon points="250,120 241.08,119.5 245.04,112.56" fill="currentColor"/>
+<circle cx="180" cy="86.86" r="3" fill="currentColor"/>
+<text x="188" y="80" font-size="13" fill="currentColor">switch: 50 m, 14.14 m/s</text>
+<text x="90" y="44" font-size="13" fill="currentColor">switching curve (dashed)</text>
+<text x="70" y="160" font-size="13" fill="currentColor">full throttle, u = +2</text>
+<text x="295" y="180" font-size="13" fill="currentColor" text-anchor="end">full brake, u = −2</text>
+</svg>

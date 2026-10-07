@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A slice through the Earth along Tokyo's meridian: the radius to Tokyo, its distance r from the spin axis, its height z above the equator's plane, latitude measured up from the equator and colatitude measured down from the pole</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="180" cy="120" r="95.56" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="14" x2="180" y2="226" stroke="currentColor" stroke-width="1.5"/>
+<line x1="84.44" y1="120" x2="275.56" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="180" y1="120" x2="257.63" y2="64.26" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="64.26" x2="257.63" y2="64.26" stroke="currentColor" stroke-width="1.5"/>
+<line x1="257.63" y1="64.26" x2="257.63" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="249.63,120 249.63,112 257.63,112" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 204 120 A 24 24 0 0 0 199.49 106.00" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 180 80 A 40 40 0 0 1 212.49 96.67" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="257.63" cy="64.26" r="3" fill="currentColor"/>
+<text x="186" y="24" font-size="14" fill="currentColor">North Pole</text>
+<text x="257.63" y="50" font-size="14" text-anchor="middle" fill="currentColor">Tokyo</text>
+<text x="214" y="60" font-size="14" fill="currentColor">r</text>
+<text x="262" y="96" font-size="14" fill="currentColor">z</text>
+<text x="228" y="106" font-size="14" fill="currentColor">ρ</text>
+<text x="186" y="76" font-size="13" fill="currentColor">54.32°</text>
+<text x="206" y="117" font-size="13" fill="currentColor">35.68°</text>
+<text x="282" y="124" font-size="13" fill="currentColor">equator</text>
+<text x="166" y="136" font-size="14" fill="currentColor">O</text>
+</svg>

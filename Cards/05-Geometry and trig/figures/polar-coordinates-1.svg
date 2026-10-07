@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The radar at the centre, north up and east right, and the plane 40 km out on bearing 120 degrees, which sits 34.64 km east and 20 km south; drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="60" x2="335" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<line x1="140" y1="18" x2="140" y2="230" stroke="currentColor" stroke-width="1.5"/>
+<text x="140" y="13" font-size="13" text-anchor="middle" fill="currentColor">N</text>
+<text x="344" y="64" font-size="13" text-anchor="middle" fill="currentColor">E</text>
+<text x="132" y="76" font-size="13" text-anchor="end" fill="currentColor">radar</text>
+<line x1="140" y1="60" x2="278.564" y2="140" stroke="currentColor" stroke-width="2"/>
+<line x1="278.564" y1="60" x2="278.564" y2="140" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M270.564,60 V68 H278.564" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="278.564" cy="140" r="4" fill="currentColor"/>
+<path d="M140,38 A22,22 0 0 1 159.053,71" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M185,60 A45,45 0 0 1 178.971,82.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="146" y="32" font-size="13" fill="currentColor">bearing 120°</text>
+<text x="188" y="78" font-size="13" fill="currentColor">θ = −30°</text>
+<text x="230" y="52" font-size="13" text-anchor="middle" fill="currentColor">x = 34.64 km</text>
+<text x="284" y="104" font-size="13" fill="currentColor">y = −20 km</text>
+<text x="200" y="130" font-size="13" text-anchor="end" fill="currentColor">r = 40 km</text>
+<text x="286" y="156" font-size="13" fill="currentColor">plane</text>
+</svg>

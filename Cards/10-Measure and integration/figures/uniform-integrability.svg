@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Lottery tickets 1, 2 and 4 as rectangles over the interval from 0 to 1: heights 1, 2 and 4 dollars, widths 1, 0.5 and 0.25, each of area 1, drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="330" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="200" x2="40" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<rect x="40" y="160" width="280" height="40" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="40" y="120" width="140" height="80" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="40" y="40" width="70" height="160" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<text x="14" y="45" font-size="13" fill="currentColor">4</text>
+<text x="14" y="125" font-size="13" fill="currentColor">2</text>
+<text x="14" y="165" font-size="13" fill="currentColor">1</text>
+<text x="118" y="60" font-size="13" fill="currentColor">n = 4: pays 4 on U &lt; 0.25</text>
+<text x="188" y="145" font-size="13" fill="currentColor">n = 2: pays 2 on U &lt; 0.5</text>
+<text x="190" y="185" font-size="13" fill="currentColor">n = 1: pays 1 always</text>
+<text x="32" y="218" font-size="13" fill="currentColor">U = 0</text>
+<text x="296" y="218" font-size="13" fill="currentColor">U = 1</text>
+<text x="80" y="234" font-size="13" fill="currentColor">dollars up; each area is 1 dollar</text>
+</svg>

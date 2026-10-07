@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The wheel's disc cut into five rings 7 cm wide, and the same rings straightened and stacked into a right-angled triangle 219.91 cm long and 35 cm tall</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M 51,62 A 49,49 0 1 0 149,62 A 49,49 0 1 0 51,62 Z M 60.8,62 A 39.2,39.2 0 1 0 139.2,62 A 39.2,39.2 0 1 0 60.8,62 Z" fill="currentColor" fill-opacity="0.12" fill-rule="evenodd" stroke="none"/>
+<circle cx="100" cy="62" r="49" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="100" cy="62" r="39.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="100" cy="62" r="29.4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="100" cy="62" r="19.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="100" cy="62" r="9.8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="100" y1="62" x2="149" y2="62" stroke="currentColor" stroke-width="1.5"/>
+<text x="156" y="66" font-size="13" fill="currentColor">35 cm</text>
+<text x="156" y="30" font-size="13" fill="currentColor">five rings, 7 cm wide</text>
+<polygon points="44,215 351.88,215 290.30,205.2 44,205.2" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polygon points="44,215 351.88,215 44,166" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="44" y1="205.2" x2="290.30" y2="205.2" stroke="currentColor" stroke-width="1.5"/>
+<line x1="44" y1="195.4" x2="228.73" y2="195.4" stroke="currentColor" stroke-width="1.5"/>
+<line x1="44" y1="185.6" x2="167.15" y2="185.6" stroke="currentColor" stroke-width="1.5"/>
+<line x1="44" y1="175.8" x2="105.58" y2="175.8" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="50,215 50,209 44,209" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="4" y="195" font-size="13" fill="currentColor">35 cm</text>
+<text x="197.94" y="232" font-size="13" fill="currentColor" text-anchor="middle">219.91 cm</text>
+<text x="130" y="150" font-size="13" fill="currentColor">the rings, straightened and stacked</text>
+</svg>

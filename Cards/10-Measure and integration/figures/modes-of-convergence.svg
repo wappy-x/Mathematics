@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The typewriter sequence: passes m = 0 to 3 across [0, 1), each cut into 1, 2, 4, 8 strips, with the strip containing x = 1/3 shaded in each pass</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="40" y="42" width="280" height="16" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="40" y="87" width="140" height="16" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="110" y="132" width="70" height="16" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="110" y="177" width="35" height="16" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<path d="M40,50 H320 M40,95 H320 M40,140 H320 M40,185 H320" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M40,44 V56 M320,44 V56 M40,89 V101 M180,89 V101 M320,89 V101 M40,134 V146 M110,134 V146 M180,134 V146 M250,134 V146 M320,134 V146 M40,179 V191 M75,179 V191 M110,179 V191 M145,179 V191 M180,179 V191 M215,179 V191 M250,179 V191 M285,179 V191 M320,179 V191" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M133.33,30 V205" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="138" y="24" font-size="13" fill="currentColor">x = 1/3</text>
+<text x="4" y="55" font-size="13" fill="currentColor">m=0</text>
+<text x="4" y="100" font-size="13" fill="currentColor">m=1</text>
+<text x="4" y="145" font-size="13" fill="currentColor">m=2</text>
+<text x="4" y="190" font-size="13" fill="currentColor">m=3</text>
+<text x="324" y="55" font-size="13" fill="currentColor">n=1</text>
+<text x="324" y="100" font-size="13" fill="currentColor">n=2</text>
+<text x="324" y="145" font-size="13" fill="currentColor">n=5</text>
+<text x="324" y="190" font-size="13" fill="currentColor">n=10</text>
+<text x="36" y="224" font-size="13" fill="currentColor">0</text>
+<text x="316" y="224" font-size="13" fill="currentColor">1</text>
+</svg>

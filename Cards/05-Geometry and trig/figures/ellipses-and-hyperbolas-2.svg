@@ -1,0 +1,14 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The comet's hyperbola drawn to scale: two arms with vertices 16 million km from the centre, foci at 20, and dashed asymptotes of slope 0.75</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="36" y1="12" x2="324" y2="228" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="36" y1="228" x2="324" y2="12" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="331.79,228.00 309.24,210.00 287.33,192.00 266.53,174.00 247.88,156.00 233.67,138.00 228.00,120.00 233.67,102.00 247.88,84.00 266.53,66.00 287.33,48.00 309.24,30.00 331.79,12.00" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="28.21,228.00 50.76,210.00 72.67,192.00 93.47,174.00 112.12,156.00 126.33,138.00 132.00,120.00 126.33,102.00 112.12,84.00 93.47,66.00 72.67,48.00 50.76,30.00 28.21,12.00" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="240" cy="120" r="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="120" cy="120" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="256" y="125" font-size="13" fill="currentColor">sun</text>
+<text x="104" y="125" font-size="13" text-anchor="end" fill="currentColor">focus</text>
+<text x="274" y="170" font-size="13" fill="currentColor">comet</text>
+<text x="10" y="150" font-size="13" fill="currentColor">other arm</text>
+<text x="302" y="22" font-size="13" text-anchor="end" fill="currentColor">asymptote</text>
+</svg>

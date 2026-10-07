@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The five roots of z^5 + 3z + 1: one inside the unit circle, four between the circles of radius 1 and 2</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="236" x2="180" y2="4" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="50" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="120" r="100" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="211.12,80.40 221.73,83.93 214.65,91.01" fill="currentColor"/>
+<polygon points="246.47,45.05 257.08,48.58 250.00,55.66" fill="currentColor"/>
+<circle cx="138.05" cy="167.19" r="4" fill="currentColor"/>
+<circle cx="138.05" cy="72.81" r="4" fill="currentColor"/>
+<circle cx="163.40" cy="120.00" r="4" fill="currentColor"/>
+<circle cx="230.25" cy="166.86" r="4" fill="currentColor"/>
+<circle cx="230.25" cy="73.14" r="4" fill="currentColor"/>
+<text x="184" y="146" font-size="13" fill="currentColor">|z| = 1</text>
+<text x="250" y="206" font-size="13" fill="currentColor">|z| = 2</text>
+<text x="318" y="136" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="14" font-size="13" fill="currentColor">Im</text>
+</svg>

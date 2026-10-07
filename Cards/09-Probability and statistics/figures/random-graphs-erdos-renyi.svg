@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>One draw of the model: 8 people on a circle, each of the 28 pairs made friends with chance 0.3; 9 friendships came up and person 5 has none</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="180.0" y1="30.0" x2="116.4" y2="183.6" stroke="currentColor" stroke-width="1.5"/>
+<line x1="243.6" y1="56.4" x2="243.6" y2="183.6" stroke="currentColor" stroke-width="1.5"/>
+<line x1="270.0" y1="120.0" x2="243.6" y2="183.6" stroke="currentColor" stroke-width="1.5"/>
+<line x1="270.0" y1="120.0" x2="90.0" y2="120.0" stroke="currentColor" stroke-width="1.5"/>
+<line x1="270.0" y1="120.0" x2="116.4" y2="56.4" stroke="currentColor" stroke-width="1.5"/>
+<line x1="243.6" y1="183.6" x2="116.4" y2="56.4" stroke="currentColor" stroke-width="1.5"/>
+<line x1="116.4" y1="183.6" x2="90.0" y2="120.0" stroke="currentColor" stroke-width="1.5"/>
+<line x1="116.4" y1="183.6" x2="116.4" y2="56.4" stroke="currentColor" stroke-width="1.5"/>
+<line x1="90.0" y1="120.0" x2="116.4" y2="56.4" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180.0" cy="30.0" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="243.6" cy="56.4" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="270.0" cy="120.0" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="243.6" cy="183.6" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180.0" cy="210.0" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="116.4" cy="183.6" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="90.0" cy="120.0" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="116.4" cy="56.4" r="7" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="180.0" y="19.0" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="255.0" y="50.0" font-size="13" text-anchor="middle" fill="currentColor">2</text>
+<text x="286.0" y="125.0" font-size="13" text-anchor="middle" fill="currentColor">3</text>
+<text x="255.0" y="200.0" font-size="13" text-anchor="middle" fill="currentColor">4</text>
+<text x="180.0" y="231.0" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<text x="105.0" y="200.0" font-size="13" text-anchor="middle" fill="currentColor">6</text>
+<text x="74.0" y="125.0" font-size="13" text-anchor="middle" fill="currentColor">7</text>
+<text x="105.0" y="50.0" font-size="13" text-anchor="middle" fill="currentColor">8</text>
+</svg>

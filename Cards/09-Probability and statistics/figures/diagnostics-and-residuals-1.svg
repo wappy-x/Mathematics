@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Nine house sales, price against floor area, with the least squares line through all nine and the line through the eight ordinary houses</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="210" x2="340" y2="210" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="210" x2="40" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<text x="34" y="214" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="34" y="124" font-size="13" fill="currentColor" text-anchor="end">1000</text>
+<text x="34" y="34" font-size="13" fill="currentColor" text-anchor="end">2000</text>
+<text x="130" y="226" font-size="13" fill="currentColor" text-anchor="middle">200</text>
+<text x="220" y="226" font-size="13" fill="currentColor" text-anchor="middle">400</text>
+<text x="310" y="226" font-size="13" fill="currentColor" text-anchor="middle">600</text>
+<text x="340" y="203" font-size="13" fill="currentColor" text-anchor="end">area, sq m</text>
+<text x="48" y="16" font-size="13" fill="currentColor">price, $ thousands</text>
+<text x="48" y="40" font-size="13" fill="currentColor">solid: all nine sales</text>
+<text x="48" y="58" font-size="13" fill="currentColor">dashed: eight ordinary houses</text>
+<line x1="67.0" y1="178.5" x2="319.0" y2="78.9" stroke="currentColor" stroke-width="2"/>
+<line x1="67.0" y1="183.9" x2="319.0" y2="41.4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="76.0" cy="178.5" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="85.0" cy="174.9" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="89.5" cy="169.5" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="94.0" cy="170.4" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="103.0" cy="162.3" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="107.5" cy="161.4" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="116.5" cy="155.1" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="125.5" cy="151.5" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="310.0" cy="84.0" r="4" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+<text x="318" y="112" font-size="13" fill="currentColor" text-anchor="end">mansion</text>
+</svg>

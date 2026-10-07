@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>One RK4 step of 2 s for the skydiver from 0 m/s: the exact speed curve, three dashed trial moves from the start to the points where the second, third and fourth slopes are read, and the straight RK4 step landing at 16.1504 m/s beside the exact 16.1543</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="60" y1="200" x2="330" y2="200" stroke="currentColor" stroke-width="1"/>
+<line x1="60" y1="200" x2="60" y2="25" stroke="currentColor" stroke-width="1"/>
+<line x1="190" y1="200" x2="190" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="320" y1="200" x2="320" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="55" y1="115" x2="60" y2="115" stroke="currentColor" stroke-width="1"/>
+<line x1="55" y1="30" x2="60" y2="30" stroke="currentColor" stroke-width="1"/>
+<text x="60" y="218" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="190" y="218" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="320" y="218" font-size="13" text-anchor="middle" fill="currentColor">2</text>
+<text x="51" y="204" font-size="13" text-anchor="end" fill="currentColor">0</text>
+<text x="51" y="119" font-size="13" text-anchor="end" fill="currentColor">10</text>
+<text x="51" y="34" font-size="13" text-anchor="end" fill="currentColor">20</text>
+<text x="190" y="234" font-size="13" text-anchor="middle" fill="currentColor">time t (s)</text>
+<text x="68" y="22" font-size="13" fill="currentColor">speed v (m/s)</text>
+<polyline points="60.0,200.0 92.5,179.7 125.0,160.4 157.5,142.0 190.0,124.5 222.5,107.9 255.0,92.1 287.5,77.0 320.0,62.7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="200" x2="190" y2="116.7" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="60" y1="200" x2="190" y2="133.4" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="60" y1="200" x2="320" y2="60.1" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="60" y1="200" x2="320" y2="62.7" stroke="currentColor" stroke-width="2"/>
+<circle cx="60" cy="200" r="3" fill="currentColor"/>
+<circle cx="190" cy="116.7" r="3" fill="currentColor"/>
+<circle cx="190" cy="133.4" r="3" fill="currentColor"/>
+<circle cx="320" cy="60.1" r="3" fill="currentColor"/>
+<circle cx="320" cy="62.7" r="3" fill="currentColor"/>
+<text x="55" y="186" font-size="13" text-anchor="end" fill="currentColor">k1</text>
+<text x="176" y="108" font-size="13" text-anchor="end" fill="currentColor">k2</text>
+<text x="198" y="150" font-size="13" fill="currentColor">k3</text>
+<text x="310" y="50" font-size="13" text-anchor="end" fill="currentColor">k4</text>
+<text x="326" y="80" font-size="13" fill="currentColor">end</text>
+<text x="240" y="136" font-size="13" fill="currentColor">RK4 step</text>
+<text x="212" y="94" font-size="13" text-anchor="end" fill="currentColor">exact</text>
+</svg>

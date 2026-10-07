@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Phase portrait of the shock absorber: position across, velocity up; the state starts at (10 cm, 0) and turns clockwise once, spiralling in toward rest</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="26" y1="56" x2="340" y2="56" stroke="currentColor" stroke-width="1"/>
+<line x1="96" y1="14" x2="96" y2="224" stroke="currentColor" stroke-width="1"/>
+<line x1="206" y1="52" x2="206" y2="60" stroke="currentColor" stroke-width="1"/>
+<text x="206" y="74" font-size="13" text-anchor="middle" fill="currentColor">5</text>
+<line x1="92" y1="176" x2="100" y2="176" stroke="currentColor" stroke-width="1"/>
+<text x="88" y="181" font-size="13" text-anchor="end" fill="currentColor">−10</text>
+<polyline fill="none" stroke="currentColor" stroke-width="2" points="316.0,56.0 313.7,92.7 307.4,124.1 297.6,150.3 285.0,171.4 270.1,187.7 253.6,199.2 235.9,206.5 217.6,209.9 199.1,209.8 180.8,206.6 163.1,200.8 146.2,192.8 130.3,183.0 115.7,171.9 102.5,159.8 90.8,147.2 80.7,134.2 72.1,121.3 65.0,108.7 59.4,96.5 55.2,85.0 52.4,74.4 50.8,64.7 50.3,56.0 50.7,48.4 52.1,41.8 54.1,36.4 56.7,32.0 59.8,28.6 63.2,26.2 66.9,24.7 70.7,24.0 74.6,24.0 78.4,24.7 82.1,25.9 85.6,27.6 88.9,29.6 91.9,31.9 94.6,34.4 97.1,37.0 99.2,39.7 101.0,42.4 102.4,45.1 103.6,47.6 104.5,50.0 105.1,52.2 105.4,54.2 105.5,56.0"/>
+<polygon fill="currentColor" stroke="currentColor" stroke-width="1" points="247.4,202.6 260.4,201.2 255.5,192.4"/>
+<circle cx="316" cy="56" r="3" fill="currentColor" stroke="currentColor"/>
+<text x="322" y="74" font-size="13" fill="currentColor">start</text>
+<text x="340" y="46" font-size="13" text-anchor="end" fill="currentColor">position y, cm</text>
+<text x="102" y="18" font-size="13" fill="currentColor">velocity v, cm/s</text>
+<text x="215" y="234" font-size="13" text-anchor="middle" fill="currentColor">clockwise, one turn every 3.14 s</text>
+</svg>

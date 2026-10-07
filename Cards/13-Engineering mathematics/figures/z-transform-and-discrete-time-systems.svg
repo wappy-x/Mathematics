@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>z-plane, to scale at 90 px per unit: the unit circle, the zero at the origin, and the closed-loop pole pairs for gains 12.5, 25 and 30 W per degree</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="120" x2="310" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="170" y1="12" x2="170" y2="230" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="170" cy="120" r="90" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="170" cy="120" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M210.9 70.9 L218.9 78.9 M210.9 78.9 L218.9 70.9 M210.9 161.1 L218.9 169.1 M210.9 169.1 L218.9 161.1" stroke="currentColor" stroke-width="2"/>
+<path d="M211.4 38.5 L218.4 45.5 M211.4 45.5 L218.4 38.5 M211.4 194.5 L218.4 201.5 M211.4 201.5 L218.4 194.5" stroke="currentColor" stroke-width="1.5"/>
+<path d="M211.4 28.7 L218.4 35.7 M211.4 35.7 L218.4 28.7 M211.4 204.3 L218.4 211.3 M211.4 211.3 L218.4 204.3" stroke="currentColor" stroke-width="1.5"/>
+<text x="258" y="80" font-size="13" fill="currentColor">K = 12.5: inside</text>
+<text x="226" y="48" font-size="13" fill="currentColor">K = 25: on circle</text>
+<text x="226" y="28" font-size="13" fill="currentColor">K = 30: outside</text>
+<text x="264" y="136" font-size="13" fill="currentColor">1</text>
+<text x="314" y="124" font-size="13" fill="currentColor">Re z</text>
+<text x="176" y="16" font-size="13" fill="currentColor">Im z</text>
+<text x="40" y="44" font-size="13" fill="currentColor">|z| = 1</text>
+<text x="100" y="140" font-size="13" fill="currentColor">zero at 0</text>
+</svg>

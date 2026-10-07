@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The same sightings opened to 128 degrees: the height from B meets the base line 184.70 m behind C, at D</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="112,200 337,200 19.65,81.80" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="112" y1="200" x2="19.65" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="19.65" y1="81.80" x2="19.65" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="29.65,200 29.65,190 19.65,190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 134 200 A 22 22 0 0 0 98.46 182.66" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="120" y="172" font-size="13" fill="currentColor">128°</text>
+<text x="106" y="218" font-size="14" fill="currentColor">C</text>
+<text x="342" y="205" font-size="14" fill="currentColor">A</text>
+<text x="14" y="74" font-size="14" fill="currentColor">B</text>
+<text x="14" y="218" font-size="14" fill="currentColor">D</text>
+<text x="80" y="150" font-size="13" fill="currentColor">a = 300 m</text>
+<text x="190" y="128" font-size="13" fill="currentColor">c = 677.30 m</text>
+<text x="25" y="140" font-size="13" fill="currentColor">h</text>
+<text x="66" y="218" font-size="13" text-anchor="middle" fill="currentColor">184.70 m</text>
+<text x="224.5" y="218" font-size="13" text-anchor="middle" fill="currentColor">b = 450 m</text>
+</svg>

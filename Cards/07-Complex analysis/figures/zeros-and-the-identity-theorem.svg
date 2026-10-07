@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The zeros of sin z at minus pi, 0 and pi; the disc of radius pi round 0 holds only one of them; the points 1/n crowd onto 0; the point 1 + 2i lies off the real line</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="180" cy="120" r="109.96" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="10" y1="120" x2="350" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="236" x2="180" y2="4" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="70.04" cy="120" r="4.5" fill="currentColor"/>
+<circle cx="180" cy="120" r="4.5" fill="currentColor"/>
+<circle cx="289.96" cy="120" r="4.5" fill="currentColor"/>
+<circle cx="215" cy="120" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="197.5" cy="120" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="191.67" cy="120" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="188.75" cy="120" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="215" cy="50" r="3.5" fill="currentColor"/>
+<text x="222" y="46" font-size="13" fill="currentColor">1 + 2i</text>
+<text x="200" y="108" font-size="13" fill="currentColor">1/n</text>
+<text x="56" y="140" font-size="13" fill="currentColor">−π</text>
+<text x="168" y="140" font-size="13" fill="currentColor">0</text>
+<text x="286" y="140" font-size="13" fill="currentColor">π</text>
+<text x="330" y="112" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="16" font-size="13" fill="currentColor">Im</text>
+<text x="120" y="200" font-size="13" fill="currentColor">radius π</text>
+</svg>

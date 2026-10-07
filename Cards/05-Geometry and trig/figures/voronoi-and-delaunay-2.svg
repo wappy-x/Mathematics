@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>The same county to scale: Delaunay triangles as solid lines, the Voronoi map as dashed lines, and the empty circle through A, D and E centred on the map corner at (4, 4)</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="70" y="10" width="220" height="220" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="208" x2="180" y2="230" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="180" y1="208" x2="158" y2="142" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="180" y1="208" x2="268" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="268" y1="120" x2="290" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="268" y1="120" x2="202" y2="54" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="202" y1="54" x2="202" y2="10" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="202" y1="54" x2="158" y2="142" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="158" y1="142" x2="70" y2="98" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polygon points="92,164 268,164 268,76 136,76" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="92" y1="164" x2="224" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="268" y1="164" x2="224" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="268" y1="76" x2="224" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="136" y1="76" x2="224" y2="120" stroke="currentColor" stroke-width="2"/>
+<circle cx="158" cy="142" r="69.57" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<circle cx="158" cy="142" r="2.5" fill="currentColor"/>
+<circle cx="180" cy="208" r="2.5" fill="currentColor"/>
+<circle cx="268" cy="120" r="2.5" fill="currentColor"/>
+<circle cx="202" cy="54" r="2.5" fill="currentColor"/>
+<circle cx="92" cy="164" r="3.5" fill="currentColor"/>
+<circle cx="268" cy="164" r="3.5" fill="currentColor"/>
+<circle cx="268" cy="76" r="3.5" fill="currentColor"/>
+<circle cx="136" cy="76" r="3.5" fill="currentColor"/>
+<circle cx="224" cy="120" r="3.5" fill="currentColor"/>
+<text x="86" y="160" font-size="14" text-anchor="end" fill="currentColor">A</text>
+<text x="274" y="180" font-size="14" fill="currentColor">B</text>
+<text x="274" y="72" font-size="14" fill="currentColor">C</text>
+<text x="130" y="72" font-size="14" text-anchor="end" fill="currentColor">D</text>
+<text x="218" y="142" font-size="14" fill="currentColor">E</text>
+</svg>

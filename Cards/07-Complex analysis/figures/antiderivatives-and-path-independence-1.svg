@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Two routes from 0 to 1 + i: the straight diagonal, and the broken route along the real axis to 1 then up</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="190" x2="340" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<line x1="110" y1="232" x2="110" y2="12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="110" y1="190" x2="230" y2="70" stroke="currentColor" stroke-width="2"/>
+<polyline points="110,190 230,190 230,70" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6,4"/>
+<polygon points="174.24,125.76 170.71,136.37 163.64,129.29" fill="currentColor"/>
+<polygon points="176,190 166,185 166,195" fill="currentColor"/>
+<polygon points="230,124 225,134 235,134" fill="currentColor"/>
+<circle cx="110" cy="190" r="3.5" fill="currentColor"/>
+<circle cx="230" cy="190" r="3.5" fill="currentColor"/>
+<circle cx="230" cy="70" r="3.5" fill="currentColor"/>
+<text x="94" y="208" font-size="13" fill="currentColor">0</text>
+<text x="236" y="208" font-size="13" fill="currentColor">1</text>
+<text x="238" y="66" font-size="14" fill="currentColor">1 + i</text>
+<text x="118" y="112" font-size="13" fill="currentColor">straight</text>
+<text x="240" y="140" font-size="13" fill="currentColor">broken</text>
+<text x="322" y="206" font-size="13" fill="currentColor">Re</text>
+<text x="116" y="22" font-size="13" fill="currentColor">Im</text>
+</svg>

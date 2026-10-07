@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Side view of the 1 km stretch drawn to scale, depth downward: the water surface, a dashed marker line 0.5 m down, the parabolic bed reaching 1 m in the middle, the channel below the marker shaded in the middle and the two shoals above it shaded at the ends</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M73.93 110 Q180 270 286.07 110 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M30 30 Q51.97 76.86 73.93 110 L30 110 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M286.07 110 Q308.03 76.86 330 30 L330 110 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<path d="M30 30 Q180 350 330 30" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="30" y1="30" x2="330" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="110" x2="330" y2="110" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="130" y="22" font-size="13" fill="currentColor">water surface</text>
+<text x="112" y="104" font-size="13" fill="currentColor">marker, 0.5 m down</text>
+<text x="180" y="140" font-size="13" fill="currentColor" text-anchor="middle">channel below it</text>
+<text x="180" y="157" font-size="13" fill="currentColor" text-anchor="middle">0.2357 km·m</text>
+<text x="60" y="214" font-size="13" fill="currentColor">two end shoals above it: 0.0690 km·m</text>
+<text x="80" y="234" font-size="13" fill="currentColor">1 km along the stretch, to scale</text>
+</svg>

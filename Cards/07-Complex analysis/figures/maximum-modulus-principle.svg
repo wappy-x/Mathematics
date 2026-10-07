@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The closed unit disc, drawn to scale: e^z peaks at 1 and is smallest at −1; z^2 + 1 peaks at 1 and −1 and is zero at i and −i, both on the rim</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="180" cy="120" r="90" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="236" x2="180" y2="6" stroke="currentColor" stroke-width="1.5"/>
+<text x="322" y="114" font-size="13" fill="currentColor">Re</text>
+<text x="166" y="16" font-size="13" fill="currentColor" text-anchor="end">Im</text>
+<circle cx="270" cy="120" r="4" fill="currentColor"/>
+<circle cx="90" cy="120" r="4" fill="currentColor"/>
+<circle cx="180" cy="30" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="210" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="276" y="100" font-size="13" fill="currentColor">|e^z| = e</text>
+<text x="276" y="146" font-size="13" fill="currentColor">|g| = 2</text>
+<text x="84" y="100" font-size="13" fill="currentColor" text-anchor="end">|e^z| = 1/e</text>
+<text x="84" y="146" font-size="13" fill="currentColor" text-anchor="end">|g| = 2</text>
+<text x="190" y="28" font-size="13" fill="currentColor">i: g = 0</text>
+<text x="190" y="226" font-size="13" fill="currentColor">−i: g = 0</text>
+<text x="188" y="136" font-size="13" fill="currentColor">0</text>
+</svg>

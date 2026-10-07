@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>The standard bell curve for the gap measured in standard errors, if the drug does nothing, with both tails beyond 1.44 shaded; together they hold 0.149 of the area</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="237.7,139.3 240.0,143.4 250.0,158.9 260.0,170.6 270.0,178.6 280.0,183.7 290.0,186.7 300.0,188.4 310.0,189.3 320.0,189.7 320.0,190.0 237.7,190.0" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polygon points="122.3,139.3 120.0,143.4 110.0,158.9 100.0,170.6 90.0,178.6 80.0,183.7 70.0,186.7 60.0,188.4 50.0,189.3 40.0,189.7 40.0,190.0 122.3,190.0" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polyline points="40.0,189.7 50.0,189.3 60.0,188.4 70.0,186.7 80.0,183.7 90.0,178.6 100.0,170.6 110.0,158.9 120.0,143.4 130.0,124.2 140.0,102.9 150.0,81.6 160.0,63.3 170.0,50.8 180.0,46.4 190.0,50.8 200.0,63.3 210.0,81.6 220.0,102.9 230.0,124.2 240.0,143.4 250.0,158.9 260.0,170.6 270.0,178.6 280.0,183.7 290.0,186.7 300.0,188.4 310.0,189.3 320.0,189.7" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="237.7" y1="190" x2="237.7" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="122.3" y1="190" x2="122.3" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="30" y1="190" x2="330" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="190" x2="60" y2="195" stroke="currentColor" stroke-width="1.5"/>
+<line x1="100" y1="190" x2="100" y2="195" stroke="currentColor" stroke-width="1.5"/>
+<line x1="140" y1="190" x2="140" y2="195" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="190" x2="180" y2="195" stroke="currentColor" stroke-width="1.5"/>
+<line x1="220" y1="190" x2="220" y2="195" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="190" x2="260" y2="195" stroke="currentColor" stroke-width="1.5"/>
+<line x1="300" y1="190" x2="300" y2="195" stroke="currentColor" stroke-width="1.5"/>
+<text x="60" y="210" font-size="13" text-anchor="middle" fill="currentColor">-3</text>
+<text x="100" y="210" font-size="13" text-anchor="middle" fill="currentColor">-2</text>
+<text x="140" y="210" font-size="13" text-anchor="middle" fill="currentColor">-1</text>
+<text x="180" y="210" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="220" y="210" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="260" y="210" font-size="13" text-anchor="middle" fill="currentColor">2</text>
+<text x="300" y="210" font-size="13" text-anchor="middle" fill="currentColor">3</text>
+<text x="242" y="116" font-size="13" fill="currentColor">observed 1.44</text>
+<text x="118" y="116" font-size="13" text-anchor="end" fill="currentColor">mirror -1.44</text>
+<text x="264" y="164" font-size="13" fill="currentColor">tail 0.0745</text>
+<text x="190" y="38" font-size="13" fill="currentColor">if the drug does nothing</text>
+<text x="180" y="232" font-size="13" text-anchor="middle" fill="currentColor">gap in standard errors, z</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The rate line 3 + 2t from t = 0 to 10 minutes, with five shaded lower rectangles and five outlined upper rectangles</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="40" y="191" width="56" height="24" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="96" y="159" width="56" height="56" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="152" y="127" width="56" height="88" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="208" y="95" width="56" height="120" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="264" y="63" width="56" height="152" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polyline points="40,215 40,159 96,159 96,127 152,127 152,95 208,95 208,63 264,63 264,31 320,31 320,215" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="96" y1="159" x2="96" y2="215" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<line x1="152" y1="127" x2="152" y2="215" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<line x1="208" y1="95" x2="208" y2="215" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<line x1="264" y1="63" x2="264" y2="215" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<line x1="40" y1="191" x2="320" y2="31" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="215" x2="335" y2="215" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="215" x2="40" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<text x="48" y="16" font-size="13" fill="currentColor">rate, litres per minute</text>
+<text x="26" y="196" font-size="13" fill="currentColor">3</text>
+<text x="18" y="36" font-size="13" fill="currentColor">23</text>
+<text x="36" y="231" font-size="13" fill="currentColor">0</text>
+<text x="310" y="231" font-size="13" fill="currentColor">10</text>
+<text x="120" y="233" font-size="13" fill="currentColor">time t, minutes</text>
+</svg>

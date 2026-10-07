@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A suspension cable of span 400 m and sag 40 m drawn to scale: the parabola, a four-chord polygon under it, the straight line between the tower tops, and the sag marked at midspan</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="100" x2="20" y2="200" stroke="currentColor" stroke-width="2"/>
+<line x1="340" y1="100" x2="340" y2="200" stroke="currentColor" stroke-width="2"/>
+<polyline points="20.0,118.0 36.0,124.1 52.0,129.5 68.0,134.3 84.0,138.5 100.0,142.0 116.0,144.9 132.0,147.1 148.0,148.7 164.0,149.7 180.0,150.0 196.0,149.7 212.0,148.7 228.0,147.1 244.0,144.9 260.0,142.0 276.0,138.5 292.0,134.3 308.0,129.5 324.0,124.1 340.0,118.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="20.0,118.0 100.0,142.0 180.0,150.0 260.0,142.0 340.0,118.0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="20" y1="118" x2="340" y2="118" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/>
+<line x1="180" y1="118" x2="180" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="20" cy="118" r="3" fill="currentColor"/>
+<circle cx="100" cy="142" r="3" fill="currentColor"/>
+<circle cx="180" cy="150" r="3" fill="currentColor"/>
+<circle cx="260" cy="142" r="3" fill="currentColor"/>
+<circle cx="340" cy="118" r="3" fill="currentColor"/>
+<text x="180" y="108" font-size="13" fill="currentColor" text-anchor="middle">tower to tower: 400 m</text>
+<text x="188" y="138" font-size="13" fill="currentColor">sag 40 m</text>
+<text x="180" y="176" font-size="13" fill="currentColor" text-anchor="middle">cable 410.424 m (solid)</text>
+<text x="180" y="196" font-size="13" fill="currentColor" text-anchor="middle">four chords 409.80 m (dashed)</text>
+<line x1="12" y1="220" x2="348" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<text x="180" y="234" font-size="13" fill="currentColor" text-anchor="middle">deck, 400 m between towers</text>
+</svg>

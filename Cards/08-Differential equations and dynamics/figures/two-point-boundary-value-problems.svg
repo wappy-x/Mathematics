@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Strut shapes for y'' + y = 0: the family C sin x on 0 to pi m, the single shape sin x / sin 1 on 0 to 1 m, and the unreachable target at pi m, 1 cm</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="190" x2="348" y2="190" stroke="currentColor" stroke-width="1"/>
+<line x1="40" y1="196" x2="40" y2="28" stroke="currentColor" stroke-width="1"/>
+<line x1="135.5" y1="190" x2="135.5" y2="196" stroke="currentColor" stroke-width="1"/>
+<line x1="340" y1="190" x2="340" y2="196" stroke="currentColor" stroke-width="1"/>
+<line x1="34" y1="70" x2="40" y2="70" stroke="currentColor" stroke-width="1"/>
+<text x="36" y="208" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="135.5" y="208" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="340" y="208" font-size="13" fill="currentColor" text-anchor="middle">π</text>
+<text x="31" y="74" font-size="13" fill="currentColor" text-anchor="end">1</text>
+<text x="190" y="230" font-size="13" fill="currentColor" text-anchor="middle">height x up the strut, m</text>
+<text x="46" y="20" font-size="13" fill="currentColor">sideways shift y, cm</text>
+<polyline points="40.0,190.0 65.0,158.9 90.0,130.0 115.0,105.1 140.0,86.1 165.0,74.1 190.0,70.0 215.0,74.1 240.0,86.1 265.0,105.1 290.0,130.0 315.0,158.9 340.0,190.0" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="40.0,190.0 65.0,174.5 90.0,160.0 115.0,147.6 140.0,138.0 165.0,132.0 190.0,130.0 215.0,132.0 240.0,138.0 265.0,147.6 290.0,160.0 315.0,174.5 340.0,190.0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="40.0,190.0 63.9,154.7 87.7,121.6 111.6,92.8 135.5,70.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="340.0" cy="70.0" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="170" y="100" font-size="13" fill="currentColor">C = 1</text>
+<text x="165" y="152" font-size="13" fill="currentColor">C = 0.5</text>
+<text x="48" y="42" font-size="13" fill="currentColor">1 m strut: sin x / sin 1</text>
+<text x="348" y="58" font-size="13" fill="currentColor" text-anchor="end">target (π, 1): unreached</text>
+</svg>

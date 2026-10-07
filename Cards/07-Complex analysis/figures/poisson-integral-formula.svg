@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The unit disc, the point a = 1/2, and dashed lines to the nearest rim point 1 and the farthest rim point -1</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="150" y1="232" x2="150" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="150" cy="120" r="80" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="190" y1="126" x2="230" y2="126" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="70" y1="132" x2="190" y2="132" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+<circle cx="190" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="230" cy="120" r="3.5" fill="currentColor"/>
+<circle cx="70" cy="120" r="3.5" fill="currentColor"/>
+<text x="182" y="110" font-size="13" fill="currentColor">a</text>
+<text x="236" y="112" font-size="13" fill="currentColor">weight 3</text>
+<text x="72" y="112" font-size="13" fill="currentColor">weight 0.33</text>
+<text x="214" y="52" font-size="14" fill="currentColor">|z| = 1</text>
+<text x="322" y="138" font-size="13" fill="currentColor">Re</text>
+<text x="156" y="18" font-size="13" fill="currentColor">Im</text>
+</svg>

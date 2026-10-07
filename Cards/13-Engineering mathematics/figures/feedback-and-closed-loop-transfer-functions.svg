@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" width="360" height="200" style="color:#24292f">
+<title>Schematic: thermostat, radiator and room in the forward path, the sensor in the return path, outside air entering at the room</title><rect x="0" y="0" width="360" height="200" rx="8" fill="#ffffff"/>
+<line x1="12" y1="70" x2="31" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="24,66 31,70 24,74" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="4" y="62" font-size="13" fill="currentColor">r</text>
+<circle cx="40" cy="70" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="49" y1="70" x2="58" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<rect x="58" y="54" width="40" height="32" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="78" y="75" font-size="13" text-anchor="middle" fill="currentColor">Kc</text>
+<line x1="98" y1="70" x2="110" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<text x="100" y="62" font-size="13" fill="currentColor">u</text>
+<rect x="110" y="54" width="64" height="32" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="142" y="75" font-size="13" text-anchor="middle" fill="currentColor">1/(5s+1)</text>
+<line x1="174" y1="70" x2="183" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<text x="175" y="62" font-size="13" fill="currentColor">q</text>
+<circle cx="192" cy="70" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="192" y1="26" x2="192" y2="61" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="188,54 192,61 196,54" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="200" y="22" font-size="13" fill="currentColor">UA·d, outside air</text>
+<line x1="201" y1="70" x2="212" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<rect x="212" y="54" width="86" height="32" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="255" y="75" font-size="13" text-anchor="middle" fill="currentColor">0.01/(20s+1)</text>
+<line x1="298" y1="70" x2="350" y2="70" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="343,66 350,70 343,74" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="334" y="62" font-size="13" fill="currentColor">y</text>
+<text x="78" y="104" font-size="13" text-anchor="middle" fill="currentColor">thermostat</text>
+<text x="142" y="104" font-size="13" text-anchor="middle" fill="currentColor">radiator</text>
+<text x="255" y="104" font-size="13" text-anchor="middle" fill="currentColor">room</text>
+<line x1="320" y1="70" x2="320" y2="155" stroke="currentColor" stroke-width="1.5"/>
+<line x1="320" y1="155" x2="220" y2="155" stroke="currentColor" stroke-width="1.5"/>
+<rect x="160" y="139" width="60" height="32" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="190" y="160" font-size="13" text-anchor="middle" fill="currentColor">1/(s+1)</text>
+<text x="190" y="190" font-size="13" text-anchor="middle" fill="currentColor">sensor</text>
+<line x1="160" y1="155" x2="40" y2="155" stroke="currentColor" stroke-width="1.5"/>
+<text x="100" y="148" font-size="13" fill="currentColor">m</text>
+<line x1="40" y1="155" x2="40" y2="79" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="36,86 40,79 44,86" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="22" y="100" font-size="14" fill="currentColor">−</text>
+</svg>

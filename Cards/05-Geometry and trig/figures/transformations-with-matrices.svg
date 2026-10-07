@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A 4 cm by 2 cm logo drawn dashed with corners A, B, C, D, and the same logo turned 30 degrees anticlockwise about corner A, drawn solid with corners B prime, C prime, D prime</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="220" x2="340" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="220" x2="30" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="138,184 282,184 282,112 138,112" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<polygon points="138,184 262.71,112 226.71,49.65 102,121.65" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<path d="M 178 184 A 40 40 0 0 0 172.64 164" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="138" cy="184" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="138" y="202" font-size="13" text-anchor="middle" fill="currentColor">A (3, 1)</text>
+<text x="184" y="178" font-size="13" fill="currentColor">30°</text>
+<text x="288" y="190" font-size="13" fill="currentColor">B</text>
+<text x="288" y="124" font-size="13" fill="currentColor">C</text>
+<text x="146" y="130" font-size="13" fill="currentColor">D</text>
+<text x="268" y="104" font-size="13" fill="currentColor">B′</text>
+<text x="234" y="48" font-size="13" fill="currentColor">C′</text>
+<text x="96" y="124" font-size="13" text-anchor="end" fill="currentColor">D′</text>
+<text x="36" y="32" font-size="13" fill="currentColor">up, cm</text>
+<text x="340" y="236" font-size="13" text-anchor="end" fill="currentColor">across, cm</text>
+<text x="30" y="236" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+</svg>

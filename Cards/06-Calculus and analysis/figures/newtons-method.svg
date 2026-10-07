@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The curve y = x squared minus 2, with the tangent at x = 1 sliding to x = 1.5 and the tangent at x = 1.5 sliding to x = 1.4167, just right of the root</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="150" x2="345" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="40.0,218.0 60.0,209.5 80.0,200.0 100.0,189.5 120.0,178.0 140.0,165.5 160.0,152.0 180.0,137.5 200.0,122.0 220.0,105.5 240.0,88.0 260.0,69.5 280.0,50.0 300.0,29.5" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="60" y1="210" x2="200" y2="140" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="156" y1="155.5" x2="210" y2="115" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="180" y1="150" x2="180" y2="137.5" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="80" cy="200" r="3" fill="currentColor"/>
+<circle cx="180" cy="137.5" r="3" fill="currentColor"/>
+<line x1="280" y1="146" x2="280" y2="154" stroke="currentColor" stroke-width="1.5"/>
+<text x="92" y="214" font-size="13" fill="currentColor">start (1, −1)</text>
+<text x="186" y="168" font-size="13" fill="currentColor">x1 = 1.5</text>
+<text x="156" y="140" font-size="13" text-anchor="end" fill="currentColor">x2 = 1.4167</text>
+<text x="280" y="168" font-size="13" text-anchor="middle" fill="currentColor">2</text>
+<line x1="80" y1="146" x2="80" y2="154" stroke="currentColor" stroke-width="1.5"/>
+<text x="80" y="168" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="232" y="40" font-size="13" text-anchor="end" fill="currentColor">y = x^2 − 2</text>
+</svg>

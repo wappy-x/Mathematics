@@ -1,0 +1,30 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Phase portrait of gazelles x against cheetahs y: dashed nullclines x = 1 and y = 1, the axes as the other two nullclines, rests at the origin and at (1, 1), an open circle at (0, 1) where two nullclines of the same kind meet without a rest, one arrow in each of the four regions, and the closed loop from (2, 1) turning counterclockwise</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="50" y1="205" x2="235" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="205" x2="50" y2="25" stroke="currentColor" stroke-width="1.5"/>
+<line x1="50" y1="135" x2="225" y2="135" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="120" y1="205" x2="120" y2="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="190.0,135.0 185.4,115.6 171.6,94.6 151.8,76.7 131.0,66.6 113.1,65.7 99.8,72.5 90.6,83.8 84.6,97.2 81.0,110.6 79.1,123.2 78.4,134.4 78.9,144.1 80.3,152.3 82.7,159.1 86.0,164.6 90.3,169.0 95.8,172.3 102.5,174.7 110.7,176.1 120.4,176.6 131.6,176.0 144.1,174.1 157.6,170.5 170.9,164.5 182.3,155.4 189.2,142.2 190.0,135.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="184,130 196,130 190,119" fill="currentColor"/>
+<line x1="190.0" y1="170.0" x2="201.6" y2="164.2" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="208.8,160.6 203.4,167.8 199.9,160.6" fill="currentColor"/>
+<line x1="190.0" y1="65.0" x2="180.9" y2="55.9" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="175.2,50.2 183.7,53.0 178.0,58.7" fill="currentColor"/>
+<line x1="85.0" y1="65.0" x2="79.2" y2="76.6" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="75.6,83.8 75.6,74.9 82.8,78.4" fill="currentColor"/>
+<line x1="85.0" y1="170.0" x2="94.1" y2="179.1" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="99.8,184.8 91.3,182.0 97.0,176.3" fill="currentColor"/>
+<circle cx="120" cy="135" r="4" fill="currentColor"/>
+<circle cx="50" cy="205" r="4" fill="currentColor"/>
+<circle cx="50" cy="135" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="126" y="152" font-size="13" fill="currentColor">rest</text>
+<text x="229" y="139" font-size="13" fill="currentColor">y = 1: x' = 0</text>
+<text x="124" y="198" font-size="13" fill="currentColor">x = 1: y' = 0</text>
+<text x="120" y="219" font-size="13" fill="currentColor" text-anchor="middle">1</text>
+<text x="190" y="219" font-size="13" fill="currentColor" text-anchor="middle">2</text>
+<text x="40" y="219" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="40" y="139" font-size="13" fill="currentColor" text-anchor="end">1</text>
+<text x="40" y="69" font-size="13" fill="currentColor" text-anchor="end">2</text>
+<text x="140" y="234" font-size="13" fill="currentColor" text-anchor="middle">gazelles x (hundreds)</text>
+<text x="56" y="18" font-size="13" fill="currentColor">cheetahs y (tens)</text>
+</svg>

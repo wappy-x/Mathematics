@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The complex plane: open circles at the zeros of sin(pi z), -2, -1, 0, 1, 2 on the real axis; filled dots at 1/2 (Wallis), i (the account) and 1/4 + i/2</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="12" y1="140" x2="348" y2="140" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="232" x2="180" y2="12" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="60" cy="140" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="120" cy="140" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="140" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="240" cy="140" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="300" cy="140" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="210" cy="140" r="3.5" fill="currentColor"/>
+<circle cx="180" cy="80" r="3.5" fill="currentColor"/>
+<circle cx="195" cy="110" r="3.5" fill="currentColor"/>
+<text x="50" y="162" font-size="13" fill="currentColor">−2</text>
+<text x="110" y="162" font-size="13" fill="currentColor">−1</text>
+<text x="166" y="162" font-size="13" fill="currentColor">0</text>
+<text x="236" y="162" font-size="13" fill="currentColor">1</text>
+<text x="296" y="162" font-size="13" fill="currentColor">2</text>
+<text x="200" y="162" font-size="13" fill="currentColor">1/2</text>
+<text x="188" y="76" font-size="13" fill="currentColor">i, the account</text>
+<text x="203" y="108" font-size="13" fill="currentColor">1/4 + i/2</text>
+<text x="326" y="132" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="24" font-size="13" fill="currentColor">Im</text>
+</svg>

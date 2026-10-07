@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>A 12 m stage seen from the audience, to scale: the dashed semicircle holds every spot where the stage spans 90 degrees, the solid arc every spot where it spans 60 degrees, with three camera spots and their sight lines</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="78" y="14" width="204" height="16" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="128" y="26" font-size="13" text-anchor="middle" fill="currentColor">stage, 12 m</text>
+<path d="M78 30 A102 102 0 0 0 282 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M78 30 A117.8 117.8 0 1 0 282 30" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="206.7" x2="78" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="206.7" x2="282" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="282" y1="147.8" x2="78" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="282" y1="147.8" x2="282" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="132" x2="78" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="132" x2="282" y2="30" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="173.6,125.6 180,119.2 186.4,125.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M173 194.5 A14 14 0 0 1 187 194.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M268.1 139.8 A16 16 0 0 1 282 131.8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="206.7" r="3" fill="currentColor"/>
+<circle cx="282" cy="147.8" r="3" fill="currentColor"/>
+<circle cx="180" cy="132" r="3" fill="currentColor"/>
+<circle cx="180" cy="88.9" r="2.5" fill="currentColor"/>
+<circle cx="180" cy="30" r="2.5" fill="currentColor"/>
+<text x="70" y="34" font-size="14" text-anchor="end" fill="currentColor">A</text>
+<text x="290" y="34" font-size="14" fill="currentColor">B</text>
+<text x="180" y="47" font-size="13" text-anchor="middle" fill="currentColor">M</text>
+<text x="188" y="92" font-size="13" fill="currentColor">O</text>
+<text x="180" y="110" font-size="13" text-anchor="middle" fill="currentColor">90°</text>
+<text x="180" y="182" font-size="13" text-anchor="middle" fill="currentColor">60°</text>
+<text x="265" y="122" font-size="13" text-anchor="middle" fill="currentColor">60°</text>
+<text x="190" y="147" font-size="13" fill="currentColor">6 m</text>
+<text x="290" y="152" font-size="13" fill="currentColor">6.93 m</text>
+<text x="190" y="225" font-size="13" fill="currentColor">10.39 m back</text>
+</svg>

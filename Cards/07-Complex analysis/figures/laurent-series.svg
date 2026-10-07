@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The plane round z = 0: the shaded inner ring 0 &lt; |z| &lt; 1, the outer ring beyond the dashed unit circle, holes at 0 and 1, the loops of radius 0.5 and 2 running anticlockwise, and the test points 0.3 + 0.4i and 1.2 + 1.6i</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<circle cx="150" cy="120" r="50" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<circle cx="150" cy="120" r="50" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="150" y1="236" x2="150" y2="6" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="150" cy="120" r="25" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="150" cy="120" r="100" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="135.8,141.2 133.6,132.0 126.6,139.0" fill="currentColor"/>
+<polygon points="84.3,195.7 80.7,185.1 73.7,192.1" fill="currentColor"/>
+<circle cx="150" cy="120" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="200" cy="120" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="165" cy="100" r="3" fill="currentColor"/>
+<circle cx="210" cy="40" r="3" fill="currentColor"/>
+<text x="138" y="114" font-size="13" fill="currentColor">0</text>
+<text x="204" y="136" font-size="13" fill="currentColor">1</text>
+<line x1="167" y1="97" x2="180" y2="80" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2"/>
+<text x="178" y="74" font-size="13" fill="currentColor">0.3+0.4i</text>
+<text x="216" y="36" font-size="13" fill="currentColor">1.2+1.6i</text>
+<text x="252" y="190" font-size="13" fill="currentColor">|z| = 2</text>
+<text x="322" y="114" font-size="13" fill="currentColor">Re</text>
+<text x="128" y="14" font-size="13" fill="currentColor">Im</text>
+</svg>

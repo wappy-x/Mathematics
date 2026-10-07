@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Ten days of iced-coffee sales against midday temperature, to scale, with the fitted line, the shaded 95 percent band for mean sales and the dashed 95 percent band for one new day</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="20" x2="40" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="55" y1="200" x2="55" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<text x="55" y="218" font-size="13" text-anchor="middle" fill="currentColor">16</text>
+<line x1="115" y1="200" x2="115" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<text x="115" y="218" font-size="13" text-anchor="middle" fill="currentColor">20</text>
+<line x1="175" y1="200" x2="175" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<text x="175" y="218" font-size="13" text-anchor="middle" fill="currentColor">24</text>
+<line x1="235" y1="200" x2="235" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<text x="235" y="218" font-size="13" text-anchor="middle" fill="currentColor">28</text>
+<line x1="295" y1="200" x2="295" y2="205" stroke="currentColor" stroke-width="1.5"/>
+<text x="295" y="218" font-size="13" text-anchor="middle" fill="currentColor">32</text>
+<line x1="35" y1="170" x2="40" y2="170" stroke="currentColor" stroke-width="1.5"/>
+<text x="32" y="174" font-size="13" text-anchor="end" fill="currentColor">20</text>
+<line x1="35" y1="110" x2="40" y2="110" stroke="currentColor" stroke-width="1.5"/>
+<text x="32" y="114" font-size="13" text-anchor="end" fill="currentColor">40</text>
+<line x1="35" y1="50" x2="40" y2="50" stroke="currentColor" stroke-width="1.5"/>
+<text x="32" y="54" font-size="13" text-anchor="end" fill="currentColor">60</text>
+<polygon points="55.0,105.0 85.0,104.2 115.0,103.0 145.0,101.0 175.0,97.9 205.0,93.1 235.0,86.6 265.0,79.0 295.0,70.6 325.0,61.8 325.0,115.0 295.0,115.8 265.0,117.0 235.0,119.0 205.0,122.1 175.0,126.9 145.0,133.4 115.0,141.0 85.0,149.4 55.0,158.2" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polyline points="55.0,79.1 85.0,76.2 115.0,72.9 145.0,69.1 175.0,64.8 205.0,60.0 235.0,54.7 265.0,48.9 295.0,42.6 325.0,35.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="55.0,184.1 85.0,177.4 115.0,171.1 145.0,165.3 175.0,160.0 205.0,155.2 235.0,150.9 265.0,147.1 295.0,143.8 325.0,140.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="55.0" y1="131.6" x2="325.0" y2="88.4" stroke="currentColor" stroke-width="2"/>
+<circle cx="55.0" cy="119.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="85.0" cy="131.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="115.0" cy="128.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="145.0" cy="137.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="175.0" cy="125.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="205.0" cy="83.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="235.0" cy="110.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="265.0" cy="71.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="295.0" cy="80.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="325.0" cy="116.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="190" y="236" font-size="13" text-anchor="middle" fill="currentColor">midday temperature, degrees C</text>
+<text x="12" y="110" font-size="13" text-anchor="middle" fill="currentColor" transform="rotate(-90 12 110)">iced coffees sold</text>
+<text x="50" y="18" font-size="13" fill="currentColor">dashed: one new day, 95%</text>
+<text x="50" y="34" font-size="13" fill="currentColor">shaded: mean sales, 95%</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The six faces of a die placed on the unit circle at angles 0.5, 1.0, 1.5, 2.0, 2.5 and 3.0 radians, with their average drawn as a hollow dot inside the circle, to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="78" y1="130" x2="282" y2="130" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="28" x2="180" y2="232" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="130" r="90" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="259.0" cy="86.9" r="3.5" fill="currentColor"/>
+<circle cx="228.6" cy="54.3" r="3.5" fill="currentColor"/>
+<circle cx="186.4" cy="40.2" r="3.5" fill="currentColor"/>
+<circle cx="142.5" cy="48.2" r="3.5" fill="currentColor"/>
+<circle cx="107.9" cy="76.1" r="3.5" fill="currentColor"/>
+<circle cx="90.9" cy="117.3" r="3.5" fill="currentColor"/>
+<line x1="180" y1="130" x2="169.2" y2="70.5" stroke="currentColor" stroke-width="2"/>
+<circle cx="169.2" cy="70.5" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="267" y="84" font-size="13" fill="currentColor">1</text>
+<text x="234" y="47" font-size="13" fill="currentColor">2</text>
+<text x="191" y="33" font-size="13" fill="currentColor">3</text>
+<text x="128" y="42" font-size="13" fill="currentColor">4</text>
+<text x="92" y="70" font-size="13" fill="currentColor">5</text>
+<text x="76" y="114" font-size="13" fill="currentColor">6</text>
+<text x="188" y="98" font-size="13" fill="currentColor">average</text>
+<text x="275" y="148" font-size="13" fill="currentColor">1</text>
+<text x="12" y="22" font-size="14" fill="currentColor">t = 0.5</text>
+</svg>

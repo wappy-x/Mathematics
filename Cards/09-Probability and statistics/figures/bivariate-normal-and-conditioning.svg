@@ -1,0 +1,26 @@
+<svg viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" width="360" height="250" style="color:#24292f">
+<title>The height-weight ellipse holding 86.5 percent of adults, drawn to scale, with the line of average weight at each height (solid) and the line of average height at each weight (dashed)</title><rect x="0" y="0" width="360" height="250" rx="8" fill="#ffffff"/>
+<line x1="40" y1="220" x2="340" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="220" x2="40" y2="28" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="290.0,92.0 288.5,82.9 284.0,75.0 276.6,68.6 266.6,63.9 254.3,61.0 240.0,60.0 224.2,61.0 207.4,63.9 190.0,68.6 172.6,75.0 155.8,82.9 140.0,92.0 125.7,102.1 113.4,112.9 103.4,124.0 96.0,135.1 91.5,145.9 90.0,156.0 91.5,165.1 96.0,173.0 103.4,179.4 113.4,184.1 125.7,187.0 140.0,188.0 155.8,187.0 172.6,184.1 190.0,179.4 207.4,173.0 224.2,165.1 240.0,156.0 254.3,145.9 266.6,135.1 276.6,124.0 284.0,112.9 288.5,102.1" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="172" x2="340" y2="76" stroke="currentColor" stroke-width="2"/>
+<line x1="115" y1="220" x2="265" y2="28" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="290" cy="92" r="4" fill="currentColor"/>
+<line x1="90" y1="220" x2="90" y2="225" stroke="currentColor" stroke-width="1.5"/>
+<line x1="190" y1="220" x2="190" y2="225" stroke="currentColor" stroke-width="1.5"/>
+<line x1="290" y1="220" x2="290" y2="225" stroke="currentColor" stroke-width="1.5"/>
+<line x1="35" y1="188" x2="40" y2="188" stroke="currentColor" stroke-width="1.5"/>
+<line x1="35" y1="124" x2="40" y2="124" stroke="currentColor" stroke-width="1.5"/>
+<line x1="35" y1="60" x2="40" y2="60" stroke="currentColor" stroke-width="1.5"/>
+<text x="90" y="238" font-size="13" text-anchor="middle" fill="currentColor">161</text>
+<text x="190" y="238" font-size="13" text-anchor="middle" fill="currentColor">175</text>
+<text x="290" y="238" font-size="13" text-anchor="middle" fill="currentColor">189</text>
+<text x="31" y="192" font-size="13" text-anchor="end" fill="currentColor">51</text>
+<text x="31" y="128" font-size="13" text-anchor="end" fill="currentColor">75</text>
+<text x="31" y="64" font-size="13" text-anchor="end" fill="currentColor">99</text>
+<text x="340" y="244" font-size="13" text-anchor="end" fill="currentColor">height, cm</text>
+<text x="46" y="22" font-size="13" fill="currentColor">weight, kg</text>
+<text x="298" y="112" font-size="13" fill="currentColor">189, 87</text>
+<text x="272" y="40" font-size="13" fill="currentColor">dashed</text>
+<text x="300" y="70" font-size="13" fill="currentColor">solid</text>
+</svg>

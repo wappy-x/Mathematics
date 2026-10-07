@@ -1,0 +1,31 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Characteristic lines of the river: straight dashed lines for a constant 2 km/h, fanning solid curves for a speed of 2 + x/2 km/h</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="50" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="1"/>
+<line x1="50" y1="200" x2="50" y2="45" stroke="currentColor" stroke-width="1"/>
+<line x1="104" y1="200" x2="104" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="194" y1="200" x2="194" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="284" y1="200" x2="284" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="45" y1="125" x2="50" y2="125" stroke="currentColor" stroke-width="1"/>
+<line x1="45" y1="50" x2="50" y2="50" stroke="currentColor" stroke-width="1"/>
+<text x="104" y="219" font-size="13" fill="currentColor" text-anchor="middle">0</text>
+<text x="194" y="219" font-size="13" fill="currentColor" text-anchor="middle">5</text>
+<text x="284" y="219" font-size="13" fill="currentColor" text-anchor="middle">10</text>
+<text x="200" y="235" font-size="13" fill="currentColor" text-anchor="middle">x, km downstream</text>
+<text x="40" y="204" font-size="13" fill="currentColor" text-anchor="end">0</text>
+<text x="40" y="129" font-size="13" fill="currentColor" text-anchor="end">1</text>
+<text x="40" y="54" font-size="13" fill="currentColor" text-anchor="end">2</text>
+<text x="14" y="125" font-size="13" fill="currentColor" text-anchor="middle" transform="rotate(-90 14 125)">t, hours</text>
+<text x="60" y="20" font-size="13" fill="currentColor">dashed: 2 km/h</text>
+<text x="60" y="37" font-size="13" fill="currentColor">solid: 2 + x/2 km/h</text>
+<line x1="68" y1="200" x2="140" y2="50" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="86" y1="200" x2="158" y2="50" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="104" y1="200" x2="176" y2="50" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="122" y1="200" x2="194" y2="50" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="140" y1="200" x2="212" y2="50" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="68,200 78.2,162.5 91.4,125 108.2,87.5 129.9,50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="86,200 101.3,162.5 121,125 146.3,87.5 178.8,50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="104,200 124.4,162.5 150.7,125 184.4,87.5 227.7,50" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="122,200 147.6,162.5 180.4,125 222.5,87.5 276.6,50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="140,200 170.7,162.5 210.1,125 260.6,87.5 325.6,50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="227.7,50 219.6,53.3 224.2,58.5" fill="currentColor"/>
+</svg>

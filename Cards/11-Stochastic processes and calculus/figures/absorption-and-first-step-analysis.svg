@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A row of eleven squares numbered 0 to 10; a ladder arcs above from square 3 to square 7, a snake arcs below from square 8 back to square 2</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<g fill="none" stroke="currentColor" stroke-width="1.5">
+<rect x="4" y="100" width="352" height="32"/>
+<line x1="36" y1="100" x2="36" y2="132"/><line x1="68" y1="100" x2="68" y2="132"/><line x1="100" y1="100" x2="100" y2="132"/><line x1="132" y1="100" x2="132" y2="132"/><line x1="164" y1="100" x2="164" y2="132"/><line x1="196" y1="100" x2="196" y2="132"/><line x1="228" y1="100" x2="228" y2="132"/><line x1="260" y1="100" x2="260" y2="132"/><line x1="292" y1="100" x2="292" y2="132"/><line x1="324" y1="100" x2="324" y2="132"/>
+<path d="M116 100 C 140 40, 220 40, 244 100" stroke-width="2"/>
+<path d="M236 90 L244 100 L248 88" stroke-width="2"/>
+<path d="M276 132 C 240 200, 120 200, 84 132" stroke-width="2" stroke-dasharray="6 4"/>
+<path d="M80 144 L84 132 L93 140" stroke-width="2"/>
+</g>
+<g fill="currentColor" font-size="13" text-anchor="middle">
+<text x="20" y="121">0</text><text x="52" y="121">1</text><text x="84" y="121">2</text><text x="116" y="121">3</text><text x="148" y="121">4</text><text x="180" y="121">5</text><text x="212" y="121">6</text><text x="244" y="121">7</text><text x="276" y="121">8</text><text x="308" y="121">9</text><text x="340" y="121">10</text>
+<text x="180" y="36" font-size="14">ladder: 3 climbs to 7</text>
+<text x="180" y="214" font-size="14">snake: 8 slides to 2</text>
+<text x="20" y="92">start</text>
+<text x="336" y="92">finish</text>
+</g>
+</svg>

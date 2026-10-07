@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The rectangle with corners -3, 3, 3 + i and -3 + i, run anticlockwise, used to slide the Gaussian's integral from the line Im z = 1 down to the real line</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="10" y1="180" x2="350" y2="180" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="230" x2="180" y2="20" stroke="currentColor" stroke-width="1.5"/>
+<text x="332" y="172" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="32" font-size="13" fill="currentColor">Im</text>
+<rect x="30" y="130" width="300" height="50" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="250,175 260,180 250,185" fill="currentColor"/>
+<polygon points="325,160 330,150 335,160" fill="currentColor"/>
+<polygon points="110,125 100,130 110,135" fill="currentColor"/>
+<polygon points="25,150 30,160 35,150" fill="currentColor"/>
+<text x="20" y="198" font-size="13" fill="currentColor">−3</text>
+<text x="326" y="198" font-size="13" fill="currentColor">3</text>
+<text x="300" y="122" font-size="13" fill="currentColor">3 + i</text>
+<text x="30" y="122" font-size="13" fill="currentColor">−3 + i</text>
+<text x="190" y="122" font-size="13" fill="currentColor">line Im z = 1</text>
+<text x="190" y="198" font-size="13" fill="currentColor">real line</text>
+</svg>

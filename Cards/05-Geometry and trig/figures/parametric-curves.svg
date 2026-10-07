@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>One turn of a bicycle wheel of radius 0.35 m drawn to scale: the valve's low arches from 0.05 m up to 0.65 m and back, the dashed cycloid of a pebble in the tread touching the road at both ends, the hub's straight path 0.35 m up, and the wheel drawn at a quarter turn with its spoke to the valve</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="16" y1="200" x2="344" y2="200" stroke="currentColor" stroke-width="2"/>
+<line x1="24" y1="151" x2="331.88" y2="151" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4"/>
+<circle cx="100.97" cy="151" r="49" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="100.97" y1="151" x2="58.97" y2="151" stroke="currentColor" stroke-width="2"/>
+<circle cx="100.97" cy="151" r="3" fill="currentColor"/>
+<circle cx="58.97" cy="151" r="3.5" fill="currentColor"/>
+<polyline points="24.0,193.0 26.0,191.6 28.7,187.4 32.8,180.7 38.9,172.0 47.6,161.9 59.0,151.0 73.2,140.1 90.3,130.0 109.8,121.3 131.3,114.6 154.2,110.4 177.9,109.0 201.6,110.4 224.6,114.6 246.1,121.3 265.6,130.0 282.6,140.1 296.9,151.0 308.3,161.9 316.9,172.0 323.1,180.7 327.2,187.4 329.9,191.6 331.9,193.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="24.0,200.0 24.1,198.3 25.2,193.4 27.8,185.6 32.9,175.5 40.8,163.7 52.0,151.0 66.5,138.3 84.2,126.5 104.8,116.4 127.8,108.6 152.4,103.7 177.9,102.0 203.4,103.7 228.1,108.6 251.1,116.4 271.7,126.5 289.4,138.3 303.9,151.0 315.1,163.7 323.0,175.5 328.0,185.6 330.7,193.4 331.7,198.3 331.9,200.0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<path d="M 24 200 L 24 208 M 331.88 200 L 331.88 208" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="178" y="92" font-size="13" fill="currentColor" text-anchor="middle">tread pebble (dashed)</text>
+<text x="238" y="141" font-size="13" fill="currentColor" text-anchor="middle">valve</text>
+<text x="230" y="176" font-size="13" fill="currentColor" text-anchor="middle">hub path, 0.35 m up</text>
+<text x="178" y="224" font-size="13" fill="currentColor" text-anchor="middle">one turn: 2.1991 m of road</text>
+</svg>

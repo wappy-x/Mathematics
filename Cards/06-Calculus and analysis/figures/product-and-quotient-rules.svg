@@ -1,0 +1,15 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Revenue as a rectangle, price across and bags up, in week 4 and week 8, with the gained strip, the lost strip and the corner marked</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="20" y="36" width="280" height="184" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="20" y="52" width="320" height="168" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<rect x="300" y="52" width="40" height="168" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="20" y="36" width="280" height="16" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="300" y="36" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<text x="160" y="48" font-size="13" text-anchor="middle" fill="currentColor">lost 14 × 16 = 224</text>
+<text x="340" y="28" font-size="13" text-anchor="end" fill="currentColor">corner 2 × 16 = 32</text>
+<text x="320" y="140" font-size="13" text-anchor="middle" fill="currentColor" transform="rotate(-90 320 140)">gained 2 × 168 = 336</text>
+<text x="160" y="125" font-size="14" text-anchor="middle" fill="currentColor">week 4: 14 × 184 = 2576</text>
+<text x="160" y="148" font-size="14" text-anchor="middle" fill="currentColor">week 8: 16 × 168 = 2688</text>
+<text x="180" y="236" font-size="13" text-anchor="middle" fill="currentColor">price, dollars: 14, then 16</text>
+<text x="13" y="128" font-size="13" text-anchor="middle" fill="currentColor" transform="rotate(-90 13 128)">bags a week: 184, then 168</text>
+</svg>

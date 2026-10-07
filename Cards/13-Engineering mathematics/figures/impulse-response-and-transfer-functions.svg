@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 170" width="360" height="170" style="color:#24292f">
+<title>Schematic: the car as a block that turns a force into a speed, in time above and in transforms below</title><rect x="0" y="0" width="360" height="170" rx="8" fill="#ffffff"/>
+<rect x="115" y="20" width="130" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="180" y="50" font-size="13" text-anchor="middle" fill="currentColor">m v' + b v = u</text>
+<line x1="20" y1="45" x2="115" y2="45" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="107,40 115,45 107,50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="245" y1="45" x2="340" y2="45" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="332,40 340,45 332,50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="20" y="35" font-size="13" fill="currentColor">force u(t), N</text>
+<text x="250" y="35" font-size="13" fill="currentColor">speed v(t), m/s</text>
+<rect x="115" y="100" width="130" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="180" y="130" font-size="13" text-anchor="middle" fill="currentColor">G(s) = 1/(m s + b)</text>
+<line x1="20" y1="125" x2="115" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="107,120 115,125 107,130" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="245" y1="125" x2="340" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="332,120 340,125 332,130" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="20" y="115" font-size="13" fill="currentColor">U(s)</text>
+<text x="250" y="115" font-size="13" fill="currentColor">V(s)</text>
+</svg>

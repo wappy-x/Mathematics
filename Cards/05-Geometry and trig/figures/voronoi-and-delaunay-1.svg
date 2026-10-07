@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>A 10 km square county to scale with five hospitals A to E, the straight edges of their Voronoi cells, E's closed cell shaded, and a house at (4, 5) joined to its nearest hospital D</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="70" y="10" width="220" height="220" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="180,208 268,120 202,54 158,142" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="180" y1="208" x2="180" y2="230" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="208" x2="158" y2="142" stroke="currentColor" stroke-width="2"/>
+<line x1="180" y1="208" x2="268" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="268" y1="120" x2="290" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="268" y1="120" x2="202" y2="54" stroke="currentColor" stroke-width="2"/>
+<line x1="202" y1="54" x2="202" y2="10" stroke="currentColor" stroke-width="2"/>
+<line x1="202" y1="54" x2="158" y2="142" stroke="currentColor" stroke-width="2"/>
+<line x1="158" y1="142" x2="70" y2="98" stroke="currentColor" stroke-width="2"/>
+<line x1="158" y1="120" x2="136" y2="76" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle cx="92" cy="164" r="3.5" fill="currentColor"/>
+<circle cx="268" cy="164" r="3.5" fill="currentColor"/>
+<circle cx="268" cy="76" r="3.5" fill="currentColor"/>
+<circle cx="136" cy="76" r="3.5" fill="currentColor"/>
+<circle cx="224" cy="120" r="3.5" fill="currentColor"/>
+<rect x="154" y="116" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="86" y="160" font-size="14" text-anchor="end" fill="currentColor">A</text>
+<text x="274" y="168" font-size="14" fill="currentColor">B</text>
+<text x="274" y="72" font-size="14" fill="currentColor">C</text>
+<text x="130" y="72" font-size="14" text-anchor="end" fill="currentColor">D</text>
+<text x="230" y="136" font-size="14" fill="currentColor">E</text>
+<text x="145" y="112" font-size="13" text-anchor="end" fill="currentColor">house</text>
+<text x="76" y="26" font-size="13" fill="currentColor">county 10 km</text>
+</svg>

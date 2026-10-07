@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Three shots for the cable y'' = y from height 1 cm at x = 0: starting slope 0 lands low at 1.543 cm, slope 1 lands high at 2.718 cm, slope 0.3888 lands on the 2 cm target at x = 1 m</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="200" x2="300" y2="200" stroke="currentColor" stroke-width="1"/>
+<line x1="40" y1="200" x2="40" y2="10" stroke="currentColor" stroke-width="1"/>
+<line x1="160" y1="200" x2="160" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="280" y1="200" x2="280" y2="205" stroke="currentColor" stroke-width="1"/>
+<line x1="35" y1="190" x2="40" y2="190" stroke="currentColor" stroke-width="1"/>
+<line x1="35" y1="90" x2="40" y2="90" stroke="currentColor" stroke-width="1"/>
+<text x="40" y="218" font-size="13" text-anchor="middle" fill="currentColor">0</text>
+<text x="160" y="218" font-size="13" text-anchor="middle" fill="currentColor">0.5</text>
+<text x="280" y="218" font-size="13" text-anchor="middle" fill="currentColor">1</text>
+<text x="31" y="194" font-size="13" text-anchor="end" fill="currentColor">1</text>
+<text x="31" y="94" font-size="13" text-anchor="end" fill="currentColor">2</text>
+<text x="160" y="234" font-size="13" text-anchor="middle" fill="currentColor">position x (m)</text>
+<text x="46" y="16" font-size="13" fill="currentColor">height y (cm)</text>
+<polyline points="40.0,190.0 70.0,189.2 100.0,186.9 130.0,182.9 160.0,177.2 190.0,169.8 220.0,160.5 250.0,149.2 280.0,135.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polyline points="40.0,190.0 70.0,176.7 100.0,161.6 130.0,144.5 160.0,125.1 190.0,103.2 220.0,78.3 250.0,50.1 280.0,18.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polyline points="40.0,190.0 70.0,184.3 100.0,177.0 130.0,168.0 160.0,157.0 190.0,143.9 220.0,128.6 250.0,110.7 280.0,90.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="40" cy="190" r="3" fill="currentColor"/>
+<circle cx="280" cy="90" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="286" y="22" font-size="13" fill="currentColor">s = 1</text>
+<text x="286" y="94" font-size="13" fill="currentColor">s = 0.3888</text>
+<text x="286" y="140" font-size="13" fill="currentColor">s = 0</text>
+</svg>

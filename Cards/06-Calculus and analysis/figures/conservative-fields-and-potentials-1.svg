@@ -1,0 +1,15 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The hillside to scale: three trails from trailhead A to hut B, and two gravity arrows pointing straight down</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="50" y1="210" x2="290" y2="30" stroke="currentColor" stroke-width="2"/>
+<polyline points="50.0,210.0 80.0,207.2 110.0,198.8 140.0,184.7 170.0,165.0 200.0,139.7 230.0,108.8 260.0,72.2 290.0,30.0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<polyline points="50,210 290,150 50,90 290,30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="110" y1="60" x2="110" y2="79.6" stroke="currentColor" stroke-width="2"/>
+<polyline points="106,74 110,79.6 114,74" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="174" x2="260" y2="193.6" stroke="currentColor" stroke-width="2"/>
+<polyline points="256,188 260,193.6 264,188" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="118" y="74" font-size="13" fill="currentColor">19.6 N</text>
+<text x="268" y="190" font-size="13" fill="currentColor">19.6 N</text>
+<text x="36" y="226" font-size="13" fill="currentColor">A</text>
+<text x="298" y="28" font-size="13" fill="currentColor">B</text>
+<text x="180" y="232" font-size="13" fill="currentColor" text-anchor="middle">every route: −5880 J</text>
+</svg>

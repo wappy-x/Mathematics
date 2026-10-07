@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Left: the northern hemisphere laid flat by stereographic projection, with the equator as the circle of radius 1 about 0 and the north pole at 0; a 45-degree course starting on the equator spirals in towards 0. Right: the same course after minus i times Log z, a straight line at 45 degrees. Drawn to scale.</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="8" y1="120" x2="182" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="95" y1="232" x2="95" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="95" cy="120" r="80" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="175.0,120.0 144.9,99.3 120.8,94.2 104.4,97.2 95.0,103.4 90.7,109.6 89.6,114.6 90.3,118.0 91.5,120.0" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="175" cy="120" r="3.5" fill="currentColor"/>
+<text x="101" y="22" font-size="13" fill="currentColor">Im</text>
+<text x="150" y="137" font-size="13" fill="currentColor">Re</text>
+<text x="100" y="217" font-size="13" fill="currentColor">equator, |z| = 1</text>
+<line x1="170" y1="40" x2="202" y2="40" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="210,40 201,35 201,45" fill="currentColor"/>
+<text x="160" y="30" font-size="13" fill="currentColor">−i Log z</text>
+<line x1="200" y1="200" x2="352" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="215" y1="228" x2="215" y2="55" stroke="currentColor" stroke-width="1.5"/>
+<line x1="215" y1="200" x2="340.7" y2="74.3" stroke="currentColor" stroke-width="2"/>
+<circle cx="215" cy="200" r="3.5" fill="currentColor"/>
+<text x="250" y="218" font-size="13" fill="currentColor">Re: longitude</text>
+<text x="221" y="68" font-size="13" fill="currentColor">Im: height</text>
+<text x="252" y="192" font-size="13" fill="currentColor">45°</text>
+</svg>

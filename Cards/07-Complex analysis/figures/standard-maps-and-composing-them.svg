@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Left, the first quadrant with the point 1 + 2i and a dashed quarter circle of radius root 5; right, its image under squaring, the upper half plane with the point minus 3 + 4i and a dashed half circle of radius 5; drawn to scale</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="40" y="40" width="120" height="160" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<rect x="185" y="40" width="170" height="160" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="30" y1="200" x2="162" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="40" y1="212" x2="40" y2="36" stroke="currentColor" stroke-width="1.5"/>
+<line x1="185" y1="200" x2="355" y2="200" stroke="currentColor" stroke-width="1.5"/>
+<line x1="270" y1="212" x2="270" y2="36" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 107.08 200 A 67.08 67.08 0 0 0 40 132.92" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M 350 200 A 80 80 0 0 0 190 200" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="70" cy="140" r="4" fill="currentColor"/>
+<circle cx="222" cy="136" r="4" fill="currentColor"/>
+<text x="78" y="134" font-size="13" fill="currentColor">1 + 2i</text>
+<text x="186" y="120" font-size="13" fill="currentColor">−3 + 4i</text>
+<text x="92" y="62" font-size="13" fill="currentColor">the lot</text>
+<text x="284" y="62" font-size="13" fill="currentColor">half plane</text>
+<text x="150" y="26" font-size="14" fill="currentColor">w = z^2</text>
+<text x="136" y="220" font-size="13" fill="currentColor">Re</text>
+<text x="46" y="50" font-size="13" fill="currentColor">Im</text>
+<text x="330" y="220" font-size="13" fill="currentColor">Re</text>
+<text x="276" y="50" font-size="13" fill="currentColor">Im</text>
+</svg>

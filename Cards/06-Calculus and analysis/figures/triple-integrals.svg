@@ -1,0 +1,15 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Top view of a 60-degree cheese wedge of radius 20 cm, with one cylindrical cell, a dashed arc halfway out, and the centre of mass just outside the uniform centroid</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<path d="M 40 120 L 213.21 20 A 200 200 0 0 1 213.21 220 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<path d="M 126.60 70 A 100 100 0 0 1 126.60 170" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<path d="M 176.94 90.89 L 196.50 86.73 A 160 160 0 0 0 186.17 54.92 L 167.90 63.06 A 140 140 0 0 1 176.94 90.89 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="171.30" cy="120" r="3" fill="currentColor"/>
+<circle cx="167.32" cy="120" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="34" y="124" font-size="13" fill="currentColor" text-anchor="end">tip</text>
+<text x="246" y="124" font-size="13" fill="currentColor">rind</text>
+<text x="62" y="124" font-size="13" fill="currentColor">60°</text>
+<text x="196" y="62" font-size="13" fill="currentColor">cell</text>
+<text x="146" y="108" font-size="13" fill="currentColor">uniform</text>
+<text x="171" y="146" font-size="13" fill="currentColor" text-anchor="middle">centre of mass</text>
+<text x="140" y="212" font-size="13" fill="currentColor" text-anchor="middle">R = 20 cm</text>
+</svg>

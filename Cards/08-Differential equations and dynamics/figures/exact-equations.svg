@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" style="color:#24292f">
+<title>Contour map of the valley: the level curves x^2 + xy + y^2 = C at heights 25 m, 100 m and 225 m, with the hiker's start and heading</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="352" y2="120" stroke="currentColor" stroke-width="1"/>
+<line x1="170" y1="232" x2="170" y2="22" stroke="currentColor" stroke-width="1"/>
+<text x="352" y="112" font-size="13" text-anchor="end" fill="currentColor">east (km)</text>
+<text x="176" y="18" font-size="13" fill="currentColor">north (km)</text>
+<ellipse cx="170" cy="120" rx="20.41" ry="35.36" transform="rotate(-45 170 120)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<ellipse cx="170" cy="120" rx="40.82" ry="70.71" transform="rotate(-45 170 120)" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="170" cy="120" rx="61.24" ry="106.07" transform="rotate(-45 170 120)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="176" y="141" font-size="13" fill="currentColor">25</text>
+<text x="176" y="166" font-size="13" fill="currentColor">100</text>
+<text x="176" y="191" font-size="13" fill="currentColor">225</text>
+<circle cx="170" cy="70" r="3" fill="currentColor"/>
+<text x="164" y="84" font-size="13" text-anchor="end" fill="currentColor">start</text>
+<polygon points="200.9,92.8 192.3,90.4 197.7,84.5" fill="currentColor"/>
+<circle cx="227.7" cy="148.9" r="3" fill="currentColor"/>
+<line x1="227.7" y1="136" x2="227.7" y2="162" stroke="currentColor" stroke-width="1"/>
+</svg>

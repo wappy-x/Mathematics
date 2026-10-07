@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Railway photo: two rails converge to a vanishing point V at the centre of the horizon; a branch line runs to a second vanishing point V prime on it</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="1" y="1" width="358" height="238" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="0" y1="120" x2="360" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="140" y1="240" x2="180" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="220" y1="240" x2="180" y2="120" stroke="currentColor" stroke-width="2"/>
+<line x1="345" y1="240" x2="305" y2="120" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="120" r="3" fill="currentColor"/>
+<circle cx="305" cy="120" r="3" fill="currentColor"/>
+<circle cx="205" cy="195" r="2.5" fill="currentColor"/>
+<circle cx="192.5" cy="157.5" r="2.5" fill="currentColor"/>
+<text x="180" y="110" font-size="13" text-anchor="middle" fill="currentColor">V (0, 0)</text>
+<text x="305" y="110" font-size="13" text-anchor="middle" fill="currentColor">V′ (12.5, 0)</text>
+<text x="8" y="112" font-size="13" fill="currentColor">horizon, lens height</text>
+<text x="212" y="199" font-size="13" fill="currentColor">10 m</text>
+<text x="199" y="161" font-size="13" fill="currentColor">20 m</text>
+<text x="334" y="228" font-size="13" text-anchor="end" fill="currentColor">branch line</text>
+<text x="130" y="228" font-size="13" text-anchor="end" fill="currentColor">rails, 1 m apart</text>
+</svg>

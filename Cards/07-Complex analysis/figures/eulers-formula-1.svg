@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The unit circle with the A440 arrow at angle 2.764602 radians and its shadow on the real axis at minus 0.929776</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="20" y1="120" x2="340" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="232" x2="180" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="180" cy="120" r="80" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="180" y1="120" x2="105.62" y2="90.55" stroke="currentColor" stroke-width="2"/>
+<circle cx="105.62" cy="90.55" r="3.5" fill="currentColor"/>
+<line x1="105.62" y1="90.55" x2="105.62" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/>
+<circle cx="105.62" cy="120" r="3.5" fill="currentColor"/>
+<path d="M 202 120 A 22 22 0 0 0 159.54 111.9" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="214.8,47.7 224.6,48.8 220.6,55.7" fill="currentColor"/>
+<text x="204" y="102" font-size="13" fill="currentColor">θ</text>
+<text x="36" y="86" font-size="14" fill="currentColor">e^(iθ)</text>
+<text x="40" y="138" font-size="13" fill="currentColor">cos θ</text>
+<text x="264" y="136" font-size="13" fill="currentColor">1</text>
+<text x="186" y="36" font-size="13" fill="currentColor">i</text>
+<text x="322" y="136" font-size="13" fill="currentColor">Re</text>
+<text x="186" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

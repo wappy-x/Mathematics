@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Three farms at A, B and C joined by roads; the dashed circle through all three is centred at O, the solid circle inside touching all three roads is centred at I, and G is the average of the corners</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="80,178 256,178 124,46" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<circle cx="168" cy="134" r="98.39" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<circle cx="144.23" cy="131.70" r="46.30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="153.33" cy="134" r="3" fill="currentColor"/>
+<circle cx="168" cy="134" r="3" fill="currentColor"/>
+<circle cx="144.23" cy="131.70" r="3" fill="currentColor"/>
+<text x="62" y="194" font-size="14" fill="currentColor">A</text>
+<text x="262" y="194" font-size="14" fill="currentColor">B</text>
+<text x="110" y="40" font-size="14" fill="currentColor">C</text>
+<text x="149" y="152" font-size="13" fill="currentColor">G</text>
+<text x="174" y="138" font-size="13" fill="currentColor">O</text>
+<text x="128" y="126" font-size="13" fill="currentColor">I</text>
+<text x="168" y="196" font-size="13" text-anchor="middle" fill="currentColor">c = 8.00 km</text>
+<text x="202" y="100" font-size="13" fill="currentColor">a = 8.49 km</text>
+<text x="96" y="108" font-size="13" text-anchor="end" fill="currentColor">b = 6.32 km</text>
+</svg>

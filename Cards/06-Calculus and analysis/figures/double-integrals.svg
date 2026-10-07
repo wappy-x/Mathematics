@@ -1,0 +1,13 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The triangular catchment with corners (0, 0), (4, 0) and (4, 2) km, one thin north-running strip near x = 2.5 km and one thin east-running strip near y = 0.5 km</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="208" y="112.5" width="14" height="87.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="110" y="158" width="210" height="14" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="40,200 320,200 320,60" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="16" y="218" font-size="13" fill="currentColor">outlet (0, 0)</text>
+<text x="290" y="218" font-size="13" fill="currentColor">(4, 0)</text>
+<text x="290" y="52" font-size="13" fill="currentColor">(4, 2)</text>
+<text x="72" y="130" font-size="13" fill="currentColor">edge y = x/2</text>
+<text x="228" y="150" font-size="13" fill="currentColor">north strip</text>
+<text x="120" y="190" font-size="13" fill="currentColor">east strip</text>
+<text x="140" y="234" font-size="13" fill="currentColor">x, km east of the outlet</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Unit square split into quarter heads or tails across and dime heads or tails down; the both-heads corner is shaded and covers one quarter of the area</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="60" y="20" width="200" height="200" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="60" y="20" width="100" height="100" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<line x1="160" y1="20" x2="160" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="120" x2="260" y2="120" stroke="currentColor" stroke-width="1.5"/>
+<text x="80" y="14" font-size="13" fill="currentColor">quarter H</text>
+<text x="180" y="14" font-size="13" fill="currentColor">quarter T</text>
+<text x="4" y="74" font-size="13" fill="currentColor">dime H</text>
+<text x="4" y="174" font-size="13" fill="currentColor">dime T</text>
+<text x="88" y="74" font-size="14" fill="currentColor">both: 1/4</text>
+<text x="195" y="74" font-size="14" fill="currentColor">1/4</text>
+<text x="95" y="174" font-size="14" fill="currentColor">1/4</text>
+<text x="195" y="174" font-size="14" fill="currentColor">1/4</text>
+</svg>

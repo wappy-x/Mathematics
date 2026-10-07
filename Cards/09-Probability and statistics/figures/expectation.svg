@@ -1,0 +1,12 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The payout distribution as weights on a line: height 0.99 at 0 dollars, 0.01 at 100 dollars, balanced on a pivot at 1 dollar</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="30" y1="190" x2="330" y2="190" stroke="currentColor" stroke-width="2"/>
+<rect x="24" y="41.5" width="12" height="148.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="324" y="188.5" width="12" height="1.5" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="33,190 26,204 40,204" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="44" y="56" font-size="13" fill="currentColor">chance 0.99 at $0</text>
+<text x="330" y="176" font-size="13" fill="currentColor" text-anchor="end">chance 0.01 at $100</text>
+<text x="330" y="210" font-size="13" fill="currentColor" text-anchor="middle">$100</text>
+<text x="4" y="224" font-size="13" fill="currentColor">$0</text>
+<text x="48" y="224" font-size="13" fill="currentColor">pivot at $1: the expectation</text>
+</svg>

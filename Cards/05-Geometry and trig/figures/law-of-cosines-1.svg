@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The survey drawn to scale: sightings of 300 m and 450 m meet at 52 degrees at C, and the dashed height from B meets the base at D</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<polygon points="40,200 310,200 150.82,58.16" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<line x1="150.82" y1="58.16" x2="150.82" y2="200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="160.82,200 160.82,190 150.82,190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 70 200 A 30 30 0 0 0 58.47 176.36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="74" y="192" font-size="13" fill="currentColor">52°</text>
+<text x="22" y="205" font-size="14" fill="currentColor">C</text>
+<text x="316" y="205" font-size="14" fill="currentColor">A</text>
+<text x="145" y="50" font-size="14" fill="currentColor">B</text>
+<text x="146" y="216" font-size="14" fill="currentColor">D</text>
+<text x="88" y="124" font-size="13" text-anchor="end" fill="currentColor">a = 300 m</text>
+<text x="238" y="122" font-size="13" fill="currentColor">c = 355.35 m</text>
+<text x="156" y="120" font-size="13" fill="currentColor">h</text>
+<text x="95.41" y="216" font-size="13" text-anchor="middle" fill="currentColor">184.70 m</text>
+<text x="230.41" y="216" font-size="13" text-anchor="middle" fill="currentColor">265.30 m</text>
+<text x="175" y="234" font-size="13" text-anchor="middle" fill="currentColor">b = 450 m</text>
+</svg>

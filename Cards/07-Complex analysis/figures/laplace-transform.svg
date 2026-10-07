@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The plane of s: the half plane Re s greater than -2 shaded, the pole of 5/(s + 2) at -2 marked with a cross, and the points s = 3 and s = 1 + i where the card evaluates transforms</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="120" y="10" width="230" height="220" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<line x1="10" y1="130" x2="350" y2="130" stroke="currentColor" stroke-width="1.5"/>
+<line x1="200" y1="230" x2="200" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<line x1="120" y1="10" x2="120" y2="230" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="114" y1="124" x2="126" y2="136" stroke="currentColor" stroke-width="2"/>
+<line x1="114" y1="136" x2="126" y2="124" stroke="currentColor" stroke-width="2"/>
+<circle cx="320" cy="130" r="4" fill="currentColor"/>
+<circle cx="240" cy="90" r="4" fill="currentColor"/>
+<text x="334" y="122" font-size="13" fill="currentColor">Re</text>
+<text x="206" y="24" font-size="13" fill="currentColor">Im</text>
+<text x="30" y="152" font-size="13" fill="currentColor">pole at −2</text>
+<text x="304" y="152" font-size="13" fill="currentColor">s = 3</text>
+<text x="248" y="84" font-size="13" fill="currentColor">s = 1 + i</text>
+<text x="210" y="214" font-size="13" fill="currentColor">Re s &gt; −2</text>
+</svg>

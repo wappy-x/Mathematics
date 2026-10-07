@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The regatta triangle 0, 2, 1 + i and the tripled course -2 - i, 4 - i, 1 + 2i, which surrounds the origin</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="12" y1="150" x2="352" y2="150" stroke="currentColor" stroke-width="1.5"/>
+<line x1="140" y1="232" x2="140" y2="8" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="140,150 240,150 190,100" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+<polygon points="40,200 340,200 190,50" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polygon points="196.0,150.0 186.0,154.0 186.0,146.0" fill="currentColor"/>
+<polygon points="210.8,120.8 220.7,125.0 215.0,130.7" fill="currentColor"/>
+<polygon points="160.8,129.2 165.0,119.3 170.7,125.0" fill="currentColor"/>
+<polygon points="196.0,200.0 186.0,204.0 186.0,196.0" fill="currentColor"/>
+<polygon points="260.8,120.8 270.7,125.0 265.0,130.7" fill="currentColor"/>
+<polygon points="110.8,129.2 115.0,119.3 120.7,125.0" fill="currentColor"/>
+<circle cx="140" cy="150" r="3.5" fill="currentColor"/>
+<text x="124" y="166" font-size="13" fill="currentColor">0</text>
+<text x="236" y="166" font-size="13" fill="currentColor">2</text>
+<text x="196" y="98" font-size="13" fill="currentColor">1 + i</text>
+<text x="18" y="220" font-size="13" fill="currentColor">−2 − i</text>
+<text x="314" y="220" font-size="13" fill="currentColor">4 − i</text>
+<text x="198" y="48" font-size="13" fill="currentColor">1 + 2i</text>
+<text x="330" y="143" font-size="13" fill="currentColor">Re</text>
+<text x="146" y="20" font-size="13" fill="currentColor">Im</text>
+</svg>

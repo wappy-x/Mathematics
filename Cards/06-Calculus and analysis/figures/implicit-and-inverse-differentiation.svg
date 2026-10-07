@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>A circle of radius 5 m with a post at (3, 4) m, the radius to it, and the tangent line of slope minus three quarters</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="40" y1="125" x2="270" y2="125" stroke="currentColor" stroke-width="1.5"/>
+<line x1="150" y1="125" x2="150" y2="25" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+<circle cx="150" cy="125" r="100" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="150" y1="125" x2="210" y2="45" stroke="currentColor" stroke-width="1.5"/>
+<line x1="170" y1="15" x2="250" y2="75" stroke="currentColor" stroke-width="2"/>
+<path d="M150 95 A30 30 0 0 1 168 101" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="210" cy="45" r="3.5" fill="currentColor"/>
+<text x="138" y="22" font-size="13" fill="currentColor">N</text>
+<text x="276" y="129" font-size="13" fill="currentColor">E</text>
+<text x="154" y="88" font-size="13" fill="currentColor">θ</text>
+<text x="218" y="42" font-size="13" fill="currentColor">post (3, 4)</text>
+<text x="256" y="92" font-size="13" fill="currentColor">slope −3/4</text>
+<text x="100" y="142" font-size="13" fill="currentColor">centre</text>
+</svg>

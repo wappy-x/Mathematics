@@ -1,0 +1,16 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Cobweb of four presses of cos from 0, closing in on where y = cos x meets y = x</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<line x1="60" y1="220" x2="285" y2="220" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="220" x2="60" y2="10" stroke="currentColor" stroke-width="1.5"/>
+<line x1="60" y1="220" x2="260" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="60,20.0 80,21.0 100,24.0 120,28.9 140,35.8 160,44.5 180,54.9 200,67.0 220,80.7 240,95.7 260,111.9" fill="none" stroke="currentColor" stroke-width="2"/>
+<polyline points="60.0,220.0 60.0,20.0 260.0,20.0 260.0,111.9 168.1,111.9 168.1,48.5 231.5,48.5 231.5,89.1 190.9,89.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
+<circle cx="207.8" cy="72.2" r="4" fill="currentColor"/>
+<text x="266" y="116" font-size="13" fill="currentColor">y = cos x</text>
+<text x="266" y="26" font-size="13" fill="currentColor">y = x</text>
+<text x="213" y="84" font-size="13" fill="currentColor">p</text>
+<text x="56" y="236" font-size="13" fill="currentColor">0</text>
+<text x="256" y="236" font-size="13" fill="currentColor">1</text>
+<text x="44" y="24" font-size="13" fill="currentColor">1</text>
+<text x="290" y="224" font-size="13" fill="currentColor">x</text>
+</svg>
