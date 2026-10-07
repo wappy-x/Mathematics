@@ -1,6 +1,6 @@
 # Discounting: why $100 next year is worth about $95.24 today
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Discounting
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Compound Growth and Discounting](../README.md#s04) → Discounting
 
 ---
 

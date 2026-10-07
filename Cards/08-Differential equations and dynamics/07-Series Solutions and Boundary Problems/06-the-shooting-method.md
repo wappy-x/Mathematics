@@ -1,6 +1,6 @@
 # Shooting: guess the missing starting slope, integrate forward, see how far you miss, and correct
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Shooting
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Series Solutions and Boundary Problems](../README.md#s07) → Shooting
 
 ---
 

@@ -1,6 +1,6 @@
 # Counting by multiplying series: each constraint is a factor, and the answer is one coefficient
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Counting by multiplying series
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Generating Functions](../README.md#s07) → Counting by multiplying series
 
 ---
 

@@ -1,6 +1,6 @@
 # Matrix times vector: mix the columns, or run each row along the list, and get the same answer
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Matrix times vector
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Matrices](../README.md#s04) → Matrix times vector
 
 ---
 

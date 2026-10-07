@@ -1,6 +1,6 @@
 # Solving for implied volatility: Newton steered by vega, bisection as the safety net, and when the answer is fuzzy
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Solving for implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Implied volatility and the vanilla inverses](../README.md#s11) → Solving for implied volatility
 
 ---
 

@@ -1,6 +1,6 @@
 # Bootstrapping a hazard curve: one tenor at a time, each quote fixing one flat piece
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Bootstrapping a hazard curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../README.md#s42) → Bootstrapping a hazard curve
 
 ---
 

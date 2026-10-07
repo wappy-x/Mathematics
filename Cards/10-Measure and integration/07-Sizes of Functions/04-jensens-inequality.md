@@ -1,6 +1,6 @@
 # Jensen's inequality: a convex function of an average never exceeds the average of the function, and moments nest on a probability space
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Jensen's inequality
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sizes of Functions](../README.md#s07) → Jensen's inequality
 
 ---
 

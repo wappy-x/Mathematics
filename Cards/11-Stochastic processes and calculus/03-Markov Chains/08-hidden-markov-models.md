@@ -1,6 +1,6 @@
 # Hidden Markov models: a chain you cannot see, observed through noise
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Hidden Markov models
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Markov Chains](../README.md#s03) → Hidden Markov models
 
 ---
 

@@ -1,6 +1,6 @@
 # Greeks at the wall: delta past one, gamma turning negative, vega flipping sign, and how desks bend the barrier to survive it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Greeks at the wall
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX exotics as desks use them - digitals, touches and barriers](../README.md#s23) → Greeks at the wall
 
 ---
 

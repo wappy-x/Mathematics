@@ -1,6 +1,6 @@
 # Pricing with local volatility: it reprices every vanilla exactly, then predicts a future smile that is too flat
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Pricing with local volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Local volatility and jumps](../README.md#s13) → Pricing with local volatility
 
 ---
 

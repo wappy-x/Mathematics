@@ -1,6 +1,6 @@
 # Prices as geometric Brownian motion: the model behind Black-Scholes
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Prices as geometric Brownian motion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Black-Scholes from the Ground Up](../README.md#s05) → Prices as geometric Brownian motion
 
 ---
 

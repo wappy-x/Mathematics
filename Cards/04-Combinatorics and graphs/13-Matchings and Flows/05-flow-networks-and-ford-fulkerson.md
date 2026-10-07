@@ -1,6 +1,6 @@
 # Flows: pipes with capacities from a source to a sink, and pushing along leftover routes, including undoing an earlier choice
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Flows
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Matchings and Flows](../README.md#s13) → Flows
 
 ---
 

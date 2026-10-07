@@ -1,6 +1,6 @@
 # Pricing Heston exactly: the closed-form fingerprint and the one integral that turns it into a price
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → Pricing Heston exactly
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Stochastic volatility - Heston, SABR and their mix](../README.md#s14) → Pricing Heston exactly
 
 ---
 

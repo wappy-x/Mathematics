@@ -1,6 +1,6 @@
 # Regularisation: shrinking coefficients to trade bias for stability
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Regularisation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Regression](../README.md#s09) → Regularisation
 
 ---
 

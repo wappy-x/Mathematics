@@ -1,6 +1,6 @@
 # Barcode check digits: the last digit of an EAN-13 makes a weighted sum land on a multiple of 10
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → Barcode check digits
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Check Digits, Calendars and Cycles](../README.md#s05) → Barcode check digits
 
 ---
 

@@ -1,6 +1,6 @@
 # If-then: a promise that breaks only one way, with its converse and contrapositive
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → If-then
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → If-then
 
 ---
 

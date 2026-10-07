@@ -1,6 +1,6 @@
 # Stationary distributions: the mix that stays the same under one more step
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Stationary distributions
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Markov Chains](../README.md#s03) → Stationary distributions
 
 ---
 

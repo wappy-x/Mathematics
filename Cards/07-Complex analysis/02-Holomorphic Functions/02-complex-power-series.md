@@ -1,6 +1,6 @@
 # Power series in the plane: a disc of convergence, and the invisible poles that set its radius
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → Power series in the plane
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Holomorphic Functions](../README.md#s02) → Power series in the plane
 
 ---
 

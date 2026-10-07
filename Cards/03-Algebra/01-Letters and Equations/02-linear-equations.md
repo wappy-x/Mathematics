@@ -1,6 +1,6 @@
 # Linear equations: undo the story step by step, doing the same thing to both sides
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Linear equations
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Letters and Equations](../README.md#s01) → Linear equations
 
 ---
 

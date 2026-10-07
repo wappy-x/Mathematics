@@ -1,6 +1,6 @@
 # Linear combinations and span: everything you can reach by mixing a few vectors
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Linear combinations and span
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Vectors](../README.md#s03) → Linear combinations and span
 
 ---
 

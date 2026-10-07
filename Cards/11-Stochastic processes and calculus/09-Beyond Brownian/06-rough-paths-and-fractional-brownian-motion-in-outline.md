@@ -1,6 +1,6 @@
 # Rougher than Brownian: fractional Brownian motion and why rough volatility needs new tools
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Beyond Brownian](../../../SYLLABUS.md#w11-s09) → Rougher than Brownian
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Beyond Brownian](../README.md#s09) → Rougher than Brownian
 
 ---
 

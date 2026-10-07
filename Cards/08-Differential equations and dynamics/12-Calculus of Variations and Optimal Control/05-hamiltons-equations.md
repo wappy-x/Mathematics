@@ -1,6 +1,6 @@
 # Hamilton's equations: trade velocity for momentum and the motion becomes a pair of first-order equations that conserve energy
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Hamilton's equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Calculus of Variations and Optimal Control](../README.md#s12) → Hamilton's equations
 
 ---
 

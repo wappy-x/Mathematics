@@ -1,6 +1,6 @@
 # Negating a quantifier: to disprove 'every', find one; to disprove 'some', check them all
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Negating a quantifier
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Negating a quantifier
 
 ---
 

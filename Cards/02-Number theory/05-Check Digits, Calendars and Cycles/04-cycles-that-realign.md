@@ -1,6 +1,6 @@
 # When cycles meet again: the 60-year calendar, the 52-year calendar round, and why some remainder pairs never happen
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → When cycles meet again
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Check Digits, Calendars and Cycles](../README.md#s05) → When cycles meet again
 
 ---
 

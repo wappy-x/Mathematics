@@ -1,6 +1,6 @@
 # Least squares: the best-fit line is a projection, and the normal equations hand it to you in one step
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → Least squares
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Dot Products and Best Fits](../README.md#s06) → Least squares
 
 ---
 

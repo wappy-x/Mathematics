@@ -1,6 +1,6 @@
 # Mean reversion: the Ornstein-Uhlenbeck and Cox-Ingersoll-Ross processes
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Mean reversion
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Ito Calculus](../README.md#s06) → Mean reversion
 
 ---
 

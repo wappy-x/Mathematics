@@ -1,6 +1,6 @@
 # Eigenvalues and eigenvectors: the directions a matrix only stretches, and the stretch factors, found from a quadratic
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → Eigenvalues and eigenvectors
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Eigenvalues and eigenvectors
 
 ---
 

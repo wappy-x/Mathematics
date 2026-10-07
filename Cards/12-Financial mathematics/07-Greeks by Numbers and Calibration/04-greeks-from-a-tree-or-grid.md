@@ -1,6 +1,6 @@
 # Greeks from a tree or grid: read the slope off the nodes
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Greeks from a tree or grid
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Greeks by Numbers and Calibration](../README.md#s07) → Greeks from a tree or grid
 
 ---
 

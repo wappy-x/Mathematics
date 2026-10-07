@@ -1,6 +1,6 @@
 # The logistic map: turn one dial and a settling population starts alternating, then doubles again and again toward chaos
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The logistic map
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Discrete Dynamics and Chaos](../README.md#s11) → The logistic map
 
 ---
 

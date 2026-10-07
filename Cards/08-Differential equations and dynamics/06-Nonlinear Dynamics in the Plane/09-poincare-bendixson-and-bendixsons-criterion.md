@@ -1,6 +1,6 @@
 # Poincare-Bendixson: in the plane a trapped path that cannot rest must loop, and a divergence test rules loops out
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Poincare-Bendixson
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → Poincare-Bendixson
 
 ---
 

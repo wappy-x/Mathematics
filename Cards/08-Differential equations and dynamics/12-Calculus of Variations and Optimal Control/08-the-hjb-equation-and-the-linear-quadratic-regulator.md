@@ -1,6 +1,6 @@
 # The HJB equation: dynamic programming in continuous time, and for linear motion with squared costs the best control is a feedback gain
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → The HJB equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Calculus of Variations and Optimal Control](../README.md#s12) → The HJB equation
 
 ---
 

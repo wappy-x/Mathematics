@@ -1,6 +1,6 @@
 # Autoregression: tomorrow as a fraction of today plus noise
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Autoregression
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Time Series](../README.md#s12) → Autoregression
 
 ---
 

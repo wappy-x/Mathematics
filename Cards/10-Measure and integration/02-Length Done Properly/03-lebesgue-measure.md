@@ -1,6 +1,6 @@
 # Lebesgue measure: the length of every Borel set and more, squeezed between open sets outside and closed sets inside
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Lebesgue measure
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Length Done Properly](../README.md#s02) → Lebesgue measure
 
 ---
 

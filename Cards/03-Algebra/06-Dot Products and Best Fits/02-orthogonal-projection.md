@@ -1,6 +1,6 @@
 # Projection: the shadow of one vector on another, and the leftover that is always perpendicular
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → Orthogonal projection
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Dot Products and Best Fits](../README.md#s06) → Orthogonal projection
 
 ---
 

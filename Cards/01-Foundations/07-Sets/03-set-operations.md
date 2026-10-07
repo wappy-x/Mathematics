@@ -1,6 +1,6 @@
 # Set operations: union, intersection, difference and complement, four piles from two lists
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Set operations
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Set operations
 
 ---
 

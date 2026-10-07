@@ -1,6 +1,6 @@
 # Negative convexity: why a mortgage bond falls faster than it rises
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Negative convexity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Mortgages, Callables and Prepayment](../README.md#s35) → Negative convexity
 
 ---
 

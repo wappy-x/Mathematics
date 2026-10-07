@@ -1,6 +1,6 @@
 # The discrete Fourier transform: N samples become N frequencies through the N-th roots of unity, and the matrix is unitary
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → The discrete Fourier transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → The discrete Fourier transform
 
 ---
 

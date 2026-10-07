@@ -1,6 +1,6 @@
 # Euler's product: one geometric factor per part size, and the coefficients count partitions
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Euler's product
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Partitions](../README.md#s08) → Euler's product
 
 ---
 

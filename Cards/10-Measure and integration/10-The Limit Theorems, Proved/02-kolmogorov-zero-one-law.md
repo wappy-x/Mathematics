@@ -1,6 +1,6 @@
 # Kolmogorov's zero-one law: an event decided by the far future of an independent sequence has probability 0 or 1
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → Kolmogorov's zero-one law
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Limit Theorems, Proved](../README.md#s10) → Kolmogorov's zero-one law
 
 ---
 

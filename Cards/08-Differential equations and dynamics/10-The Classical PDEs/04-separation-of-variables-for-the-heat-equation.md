@@ -1,6 +1,6 @@
 # Separation of variables: guess a product of a space shape and a time factor, and the PDE splits into two ODEs
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Separation of variables
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → Separation of variables
 
 ---
 

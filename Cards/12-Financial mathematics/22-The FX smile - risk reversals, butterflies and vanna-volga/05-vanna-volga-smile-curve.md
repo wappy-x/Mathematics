@@ -1,6 +1,6 @@
 # The vanna-volga smile: a closed-form vol at any strike from three pillars, and where it breaks in the wings
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → The vanna-volga smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The FX smile - risk reversals, butterflies and vanna-volga](../README.md#s22) → The vanna-volga smile
 
 ---
 

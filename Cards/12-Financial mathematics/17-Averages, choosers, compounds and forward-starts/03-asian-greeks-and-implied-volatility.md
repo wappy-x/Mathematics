@@ -1,6 +1,6 @@
 # Asian Greeks and implied volatility: averaging is a sedative, and the fixings already in are a fixed amount
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Asian Greeks and implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages, choosers, compounds and forward-starts](../README.md#s17) → Asian Greeks and implied volatility
 
 ---
 

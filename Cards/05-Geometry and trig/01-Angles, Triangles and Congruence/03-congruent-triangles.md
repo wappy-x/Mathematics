@@ -1,6 +1,6 @@
 # Congruent triangles: when two triangles are the same shape and size
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Congruent triangles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Angles, Triangles and Congruence](../README.md#s01) → Congruent triangles
 
 ---
 

@@ -1,6 +1,6 @@
 # Rejection sampling and Box-Muller: distributions without an invertible CDF, and normals from uniforms
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Rejection sampling and Box-Muller
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Simulation](../README.md#s11) → Rejection sampling and Box-Muller
 
 ---
 

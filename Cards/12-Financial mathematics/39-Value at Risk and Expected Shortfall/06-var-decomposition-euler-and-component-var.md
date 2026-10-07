@@ -1,6 +1,6 @@
 # Whose risk is it: marginal, incremental and component VaR by Euler's rule
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Whose risk is it
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Value at Risk and Expected Shortfall](../README.md#s39) → Whose risk is it
 
 ---
 

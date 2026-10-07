@@ -1,6 +1,6 @@
 # Beta-binomial: the conjugate update for a proportion
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → Beta-binomial
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Bayesian Inference](../README.md#s10) → Beta-binomial
 
 ---
 

@@ -1,6 +1,6 @@
 # Lagrangian mechanics: nature makes kinetic minus potential energy stationary, and the equations of motion fall out
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Lagrangian mechanics
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Calculus of Variations and Optimal Control](../README.md#s12) → Lagrangian mechanics
 
 ---
 

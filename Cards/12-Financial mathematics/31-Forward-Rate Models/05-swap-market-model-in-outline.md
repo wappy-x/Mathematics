@@ -1,6 +1,6 @@
 # Swap market model: lognormal swap rates instead of forwards, and why you cannot have both
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Swap market model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Forward-Rate Models](../README.md#s31) → Swap market model
 
 ---
 

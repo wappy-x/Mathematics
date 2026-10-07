@@ -1,6 +1,6 @@
 # The heat equation: each point drifts toward the average of its neighbours, so bumps flatten and never grow
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The heat equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → The heat equation
 
 ---
 

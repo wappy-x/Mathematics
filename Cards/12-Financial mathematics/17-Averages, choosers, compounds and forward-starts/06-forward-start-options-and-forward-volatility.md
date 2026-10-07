@@ -1,6 +1,6 @@
 # Forward-start options: a strike fixed later, so the price is shares times a unit option, and it pays on the forward vol
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Forward-start options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages, choosers, compounds and forward-starts](../README.md#s17) → Forward-start options
 
 ---
 

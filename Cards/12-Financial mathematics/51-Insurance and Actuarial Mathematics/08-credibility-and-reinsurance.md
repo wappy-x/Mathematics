@@ -1,6 +1,6 @@
 # Credibility and reinsurance: weighting a policy's own history, and laying off the tail
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Credibility and reinsurance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Insurance and Actuarial Mathematics](../README.md#s51) → Credibility and reinsurance
 
 ---
 

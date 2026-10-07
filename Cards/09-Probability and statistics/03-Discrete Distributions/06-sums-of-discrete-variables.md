@@ -1,6 +1,6 @@
 # Adding counts: convolution, and why binomials and Poissons stay in the family
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Adding counts
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Discrete Distributions](../README.md#s03) → Adding counts
 
 ---
 

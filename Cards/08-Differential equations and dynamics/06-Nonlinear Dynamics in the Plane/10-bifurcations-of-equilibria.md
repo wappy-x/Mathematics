@@ -1,6 +1,6 @@
 # Bifurcations: turn a dial slowly and a resting state can vanish, swap stability or split in two
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Bifurcations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → Bifurcations
 
 ---
 

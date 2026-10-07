@@ -1,6 +1,6 @@
 # Distribution functions and Lebesgue-Stieltjes measures: every increasing right-continuous function names one measure, and every probability law on the line has one
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Distribution functions and Lebesgue-Stieltjes measures
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Length Done Properly](../README.md#s02) → Distribution functions and Lebesgue-Stieltjes measures
 
 ---
 

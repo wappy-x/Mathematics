@@ -1,6 +1,6 @@
 # Default probability, recovery and expected loss: the three numbers behind every credit loss
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → Default probability, recovery and expected loss
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Default, Survival and the Hazard Rate](../README.md#s41) → Default probability, recovery and expected loss
 
 ---
 

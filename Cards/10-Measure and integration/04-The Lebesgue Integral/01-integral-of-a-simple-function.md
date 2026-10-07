@@ -1,6 +1,6 @@
 # The integral of a simple function: value times size of each piece, added up, whichever way you wrote it
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → The integral of a simple function
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Lebesgue Integral](../README.md#s04) → The integral of a simple function
 
 ---
 

@@ -1,6 +1,6 @@
 # Deforming a loop: slide it anywhere without crossing a singularity, and count how many times it winds
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Deforming a loop
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Deforming a loop
 
 ---
 

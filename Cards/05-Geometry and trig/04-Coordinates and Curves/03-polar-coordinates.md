@@ -1,6 +1,6 @@
 # Polar coordinates: a point as range and bearing
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Polar coordinates
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Coordinates and Curves](../README.md#s04) → Polar coordinates
 
 ---
 

@@ -1,6 +1,6 @@
 # Multi-curve: one curve to forecast, another to discount, and the basis between them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Multi-curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Swaps](../README.md#s28) → Multi-curve
 
 ---
 

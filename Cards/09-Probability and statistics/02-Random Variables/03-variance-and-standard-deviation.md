@@ -1,6 +1,6 @@
 # Variance: the average squared distance from the mean, and its square root in the original units
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Variance
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Random Variables](../README.md#s02) → Variance
 
 ---
 

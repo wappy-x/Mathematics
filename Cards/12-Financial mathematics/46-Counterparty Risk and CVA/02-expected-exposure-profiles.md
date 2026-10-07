@@ -1,6 +1,6 @@
 # Expected exposure over time: what you are likely to be owed at each future date, and the tail (PFE) above it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → Expected exposure over time
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Counterparty Risk and CVA](../README.md#s46) → Expected exposure over time
 
 ---
 

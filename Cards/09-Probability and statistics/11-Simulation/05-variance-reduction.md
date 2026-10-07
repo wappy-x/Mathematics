@@ -1,6 +1,6 @@
 # Variance reduction: antithetic, control and stratified draws
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Variance reduction
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Simulation](../README.md#s11) → Variance reduction
 
 ---
 

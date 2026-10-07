@@ -1,6 +1,6 @@
 # The Miller-Rabin test: how RSA finds 300-digit primes, with an error as small as you like
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → The Miller-Rabin test
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Codes and Secrets](../README.md#s06) → The Miller-Rabin test
 
 ---
 

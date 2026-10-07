@@ -1,6 +1,6 @@
 # The quadratic formula: complete the square once and every quadratic is solved, and the discriminant says how many answers
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → The quadratic formula
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Polynomials](../README.md#s02) → The quadratic formula
 
 ---
 

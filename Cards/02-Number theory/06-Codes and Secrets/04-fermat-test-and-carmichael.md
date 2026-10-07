@@ -1,6 +1,6 @@
 # The Fermat test: a quick primality check that can be fooled, and the Carmichael numbers that fool it every time
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → The Fermat test
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Codes and Secrets](../README.md#s06) → The Fermat test
 
 ---
 

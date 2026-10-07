@@ -1,6 +1,6 @@
 # The rules of sum and product: add the options when they cannot overlap, multiply when they come in stages
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → The rules of sum and product
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Counting Principles](../README.md#s01) → The rules of sum and product
 
 ---
 

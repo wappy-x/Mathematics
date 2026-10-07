@@ -1,6 +1,6 @@
 # Lp spaces: measure a function's size by the p-th root of the integral of its p-th power, and treat almost-everywhere-equal functions as one
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Lp spaces
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sizes of Functions](../README.md#s07) → Lp spaces
 
 ---
 

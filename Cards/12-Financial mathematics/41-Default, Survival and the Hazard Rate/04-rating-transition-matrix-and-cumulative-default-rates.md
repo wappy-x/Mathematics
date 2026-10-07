@@ -1,6 +1,6 @@
 # Rating transition matrices: a one-year table of grade moves, and multi-year default chances by multiplying it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → Rating transition matrices
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Default, Survival and the Hazard Rate](../README.md#s41) → Rating transition matrices
 
 ---
 

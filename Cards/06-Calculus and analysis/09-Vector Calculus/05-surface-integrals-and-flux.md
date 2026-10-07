@@ -1,6 +1,6 @@
 # Surface integrals: area of a curved sheet and flow through it
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Surface integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Vector Calculus](../README.md#s09) → Surface integrals
 
 ---
 

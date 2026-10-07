@@ -1,6 +1,6 @@
 # Conditional expectation on a sigma-algebra: the unique measurable forecast whose integrals match X's on every known event, existing by Radon-Nikodym
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Conditional expectation on a sigma-algebra
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Conditional Expectation](../README.md#s09) → Conditional expectation on a sigma-algebra
 
 ---
 

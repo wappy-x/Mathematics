@@ -1,6 +1,6 @@
 # Growth, decay and cooling: when the rate is proportional to the amount, the answer is an exponential
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Growth, decay and cooling
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Rate Equations](../README.md#s01) → Growth, decay and cooling
 
 ---
 

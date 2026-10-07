@@ -1,6 +1,6 @@
 # DVA: the mirror gain from your own default, and the bilateral adjustment that nets the two
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → DVA
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Counterparty Risk and CVA](../README.md#s46) → DVA
 
 ---
 

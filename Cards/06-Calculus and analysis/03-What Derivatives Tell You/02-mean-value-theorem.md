@@ -1,6 +1,6 @@
 # Mean value theorem: somewhere the instantaneous rate equals the average rate
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Mean value theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [What Derivatives Tell You](../README.md#s03) → Mean value theorem
 
 ---
 

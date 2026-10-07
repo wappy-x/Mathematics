@@ -1,6 +1,6 @@
 # SABR for rates: the smile across strikes, expiries and tenors
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → SABR for rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → SABR for rates
 
 ---
 

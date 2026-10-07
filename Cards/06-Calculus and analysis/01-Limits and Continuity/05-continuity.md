@@ -1,6 +1,6 @@
 # Continuity: no jumps, no holes, and the limit is the value
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Continuity
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Continuity
 
 ---
 

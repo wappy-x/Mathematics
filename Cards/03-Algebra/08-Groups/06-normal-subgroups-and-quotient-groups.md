@@ -1,6 +1,6 @@
 # Normal subgroups and quotient groups: collapsing a group by a subgroup, and Z mod n is the model
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Normal subgroups and quotient groups
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Normal subgroups and quotient groups
 
 ---
 

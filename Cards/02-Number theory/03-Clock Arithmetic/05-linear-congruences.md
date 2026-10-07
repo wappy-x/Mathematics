@@ -1,6 +1,6 @@
 # Solving a x ≡ b (mod n): when it has answers, how many, and how to find them all
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → Solving a x ≡ b (mod n)
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Clock Arithmetic](../README.md#s03) → Solving a x ≡ b (mod n)
 
 ---
 

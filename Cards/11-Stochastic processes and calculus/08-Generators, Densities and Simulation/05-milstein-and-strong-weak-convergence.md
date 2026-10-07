@@ -1,6 +1,6 @@
 # Milstein and the two kinds of error: path error and average error
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Milstein and the two kinds of error
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Generators, Densities and Simulation](../README.md#s08) → Milstein and the two kinds of error
 
 ---
 

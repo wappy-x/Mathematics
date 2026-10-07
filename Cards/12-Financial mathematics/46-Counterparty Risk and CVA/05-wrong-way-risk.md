@@ -1,6 +1,6 @@
 # Wrong-way risk: when the exposure grows just as the counterparty weakens, and what it does to CVA
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → Wrong-way risk
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Counterparty Risk and CVA](../README.md#s46) → Wrong-way risk
 
 ---
 

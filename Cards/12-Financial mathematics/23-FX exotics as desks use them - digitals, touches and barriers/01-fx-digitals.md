@@ -1,6 +1,6 @@
 # Currency digitals: a fixed payout in dollars or in euros, priced as a discounted probability and corrected for the smile's slope
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Currency digitals
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX exotics as desks use them - digitals, touches and barriers](../README.md#s23) → Currency digitals
 
 ---
 

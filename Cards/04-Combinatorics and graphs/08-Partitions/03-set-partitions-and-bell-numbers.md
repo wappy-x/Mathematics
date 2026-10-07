@@ -1,6 +1,6 @@
 # Set partitions and Bell numbers: splitting distinct people into unnamed teams of any sizes
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Set partitions and Bell numbers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Partitions](../README.md#s08) → Set partitions and Bell numbers
 
 ---
 

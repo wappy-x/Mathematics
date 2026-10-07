@@ -1,6 +1,6 @@
 # Rebalancing: how often, at what cost, and the no-trade band that answers both
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Rebalancing
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Performance and Multi-Period](../README.md#s38) → Rebalancing
 
 ---
 

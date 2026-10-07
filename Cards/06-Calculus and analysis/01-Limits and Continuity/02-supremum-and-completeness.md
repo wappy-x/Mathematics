@@ -1,6 +1,6 @@
 # No gaps: least upper bounds and why the reals have them
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → No gaps
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → No gaps
 
 ---
 

@@ -1,6 +1,6 @@
 # Mean reversion: fitting an Ornstein-Uhlenbeck spread and trading its z-score
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Mean reversion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Signals, Mean Reversion and Backtesting](../README.md#s50) → Mean reversion
 
 ---
 

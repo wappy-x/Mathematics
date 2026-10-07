@@ -1,6 +1,6 @@
 # Credible intervals and decisions: what the posterior lets you say and do
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → Credible intervals and decisions
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Bayesian Inference](../README.md#s10) → Credible intervals and decisions
 
 ---
 

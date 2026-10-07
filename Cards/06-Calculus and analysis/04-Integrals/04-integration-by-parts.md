@@ -1,6 +1,6 @@
 # Integration by parts: the product rule run backwards
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Integration by parts
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Integrals](../README.md#s04) → Integration by parts
 
 ---
 

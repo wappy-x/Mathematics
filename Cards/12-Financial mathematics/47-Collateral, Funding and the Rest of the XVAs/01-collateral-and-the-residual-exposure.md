@@ -1,6 +1,6 @@
 # Collateral: variation margin tracks the mark-to-market, thresholds and the margin period of risk leave a residual, and the CVA that remains
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → Collateral
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Collateral, Funding and the Rest of the XVAs](../README.md#s47) → Collateral
 
 ---
 

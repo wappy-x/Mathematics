@@ -1,6 +1,6 @@
 # Any payoff from a strip of options: integrate by parts twice, and the log contract is the case that trades variance
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → Any payoff from a strip of options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Variance swaps, the log contract and VIX](../README.md#s19) → Any payoff from a strip of options
 
 ---
 

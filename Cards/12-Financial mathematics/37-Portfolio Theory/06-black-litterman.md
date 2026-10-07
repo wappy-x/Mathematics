@@ -1,6 +1,6 @@
 # Black-Litterman: starting from the market and tilting toward your views
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Black-Litterman
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Theory](../README.md#s37) → Black-Litterman
 
 ---
 

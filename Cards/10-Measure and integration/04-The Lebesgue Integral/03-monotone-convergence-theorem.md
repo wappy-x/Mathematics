@@ -1,6 +1,6 @@
 # The monotone convergence theorem: if functions rise to a limit, their integrals rise to the limit's integral, so sums and integrals swap for free
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → The monotone convergence theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Lebesgue Integral](../README.md#s04) → The monotone convergence theorem
 
 ---
 

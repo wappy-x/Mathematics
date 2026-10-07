@@ -1,6 +1,6 @@
 # Swapping limits: when the integral of the limit is the limit of the integrals
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Swapping limits
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → Swapping limits
 
 ---
 

@@ -1,6 +1,6 @@
 # Caps and floors: strips of caplets, and the parity that ties a cap, a floor and a swap
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Caps and floors
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → Caps and floors
 
 ---
 

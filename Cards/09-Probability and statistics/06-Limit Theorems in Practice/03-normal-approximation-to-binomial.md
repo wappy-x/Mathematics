@@ -1,6 +1,6 @@
 # Normal approximation: a binomial as a bell, with the half-step correction
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Normal approximation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Limit Theorems in Practice](../README.md#s06) → Normal approximation
 
 ---
 

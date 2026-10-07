@@ -1,6 +1,6 @@
 # Complex vectors and matrices: the dot product grows a conjugate, and a rotation's eigenvalues come home
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Complex vectors and matrices
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Complex Numbers and the Plane](../README.md#s01) → Complex vectors and matrices
 
 ---
 

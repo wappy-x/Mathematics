@@ -1,6 +1,6 @@
 # The spectral theorem: a symmetric matrix has real stretch factors along perpendicular axes, A = Q D Q^T
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → The spectral theorem
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → The spectral theorem
 
 ---
 

@@ -1,6 +1,6 @@
 # Pairs trading: two prices tied by cointegration, and the hedge ratio between them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Pairs trading
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Signals, Mean Reversion and Backtesting](../README.md#s50) → Pairs trading
 
 ---
 

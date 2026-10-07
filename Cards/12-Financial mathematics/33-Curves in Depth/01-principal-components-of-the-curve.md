@@ -1,6 +1,6 @@
 # Level, slope and curvature: the three moves that explain almost every curve change
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Level, slope and curvature
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves in Depth](../README.md#s33) → Level, slope and curvature
 
 ---
 

@@ -1,6 +1,6 @@
 # Inverse functions: undoing a function, possible exactly when it is a bijection
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Inverse functions
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → Inverse functions
 
 ---
 

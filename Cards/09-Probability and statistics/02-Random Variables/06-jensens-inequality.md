@@ -1,6 +1,6 @@
 # Jensen's inequality: the average of a curve is not the curve of the average
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Jensen's inequality
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Random Variables](../README.md#s02) → Jensen's inequality
 
 ---
 

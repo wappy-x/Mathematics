@@ -1,6 +1,6 @@
 # How primes thin out: the prime counting function and the n over log n rule
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → How primes thin out
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [For the Curious](../README.md#s07) → How primes thin out
 
 ---
 

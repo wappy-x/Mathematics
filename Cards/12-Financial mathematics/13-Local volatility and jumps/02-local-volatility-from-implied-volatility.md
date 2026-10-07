@@ -1,6 +1,6 @@
 # Local volatility in implied-vol terms: the version you can compute from quotes, and the twice-the-skew rule
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Local volatility in implied-vol terms
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Local volatility and jumps](../README.md#s13) → Local volatility in implied-vol terms
 
 ---
 

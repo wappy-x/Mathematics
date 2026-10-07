@@ -1,6 +1,6 @@
 # The twelvefold way: every 'put n things into k boxes' question in one table
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → The twelvefold way
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Partitions](../README.md#s08) → The twelvefold way
 
 ---
 

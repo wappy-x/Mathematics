@@ -1,6 +1,6 @@
 # Dynamic programming: any tail of a best plan is itself a best plan, so solve from the finish backwards
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Dynamic programming
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Calculus of Variations and Optimal Control](../README.md#s12) → Dynamic programming
 
 ---
 

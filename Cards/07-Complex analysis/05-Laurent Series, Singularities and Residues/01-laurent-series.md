@@ -1,6 +1,6 @@
 # Laurent series: allow negative powers, and a function with a hole expands in a ring
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → Laurent series
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Laurent Series, Singularities and Residues](../README.md#s05) → Laurent series
 
 ---
 

@@ -1,6 +1,6 @@
 # Error propagation: measurement slop in the inputs becomes slop in the answer
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Error propagation
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Units and Modelling](../README.md#s01) → Error propagation
 
 ---
 

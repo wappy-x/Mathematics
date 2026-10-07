@@ -1,6 +1,6 @@
 # Swaptions: the right to enter a swap, priced with Black on the forward swap rate
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Swaptions
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → Swaptions
 
 ---
 

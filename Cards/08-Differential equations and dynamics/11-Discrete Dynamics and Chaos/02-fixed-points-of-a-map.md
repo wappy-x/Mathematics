@@ -1,6 +1,6 @@
 # Fixed points of a map: a slope smaller than one in size pulls nearby points in, larger pushes them away
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → Fixed points of a map
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Discrete Dynamics and Chaos](../README.md#s11) → Fixed points of a map
 
 ---
 

@@ -1,6 +1,6 @@
 # Cox regression in outline: how covariates scale the hazard
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Cox regression in outline
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Survival, Design and Causality](../README.md#s13) → Cox regression in outline
 
 ---
 

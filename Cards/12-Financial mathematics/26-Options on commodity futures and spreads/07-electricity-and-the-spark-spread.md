@@ -1,6 +1,6 @@
 # Power that cannot be stored: why carry fails, hourly shapes and spikes, and the spark spread as an option on a power plant
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Power that cannot be stored
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Options on commodity futures and spreads](../README.md#s26) → Power that cannot be stored
 
 ---
 

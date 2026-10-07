@@ -1,6 +1,6 @@
 # The chromatic polynomial: count the colourings with q colours, by deleting an edge and contracting it
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → The chromatic polynomial
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Planarity and Colouring](../README.md#s12) → The chromatic polynomial
 
 ---
 

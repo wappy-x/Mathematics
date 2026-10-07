@@ -1,6 +1,6 @@
 # Subsets and the power set: everything inside a set, and the 2^n ways to pick some of it
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Subsets and the power set
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Subsets and the power set
 
 ---
 

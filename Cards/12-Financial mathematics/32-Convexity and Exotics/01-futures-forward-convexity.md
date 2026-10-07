@@ -1,6 +1,6 @@
 # Futures against forwards: the convexity that makes a rate future differ from an FRA
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Futures against forwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Convexity and Exotics](../README.md#s32) → Futures against forwards
 
 ---
 

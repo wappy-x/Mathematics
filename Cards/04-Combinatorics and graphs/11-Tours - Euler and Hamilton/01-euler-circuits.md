@@ -1,6 +1,6 @@
 # Euler circuits: a closed route using every edge once exists exactly when the graph is connected and every degree is even
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → Euler circuits
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Tours - Euler and Hamilton](../README.md#s11) → Euler circuits
 
 ---
 

@@ -1,6 +1,6 @@
 # Attribution: splitting a return into allocation, selection and interaction
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Attribution
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Performance and Multi-Period](../README.md#s38) → Attribution
 
 ---
 

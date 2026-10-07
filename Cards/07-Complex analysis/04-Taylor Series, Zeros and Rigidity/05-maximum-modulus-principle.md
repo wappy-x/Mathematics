@@ -1,6 +1,6 @@
 # The maximum modulus principle: |f| has no interior peak, so its largest value sits on the boundary
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → The maximum modulus principle
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → The maximum modulus principle
 
 ---
 

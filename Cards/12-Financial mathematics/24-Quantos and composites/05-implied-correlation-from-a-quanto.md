@@ -1,6 +1,6 @@
 # Correlation from a quanto price: the one input you cannot see, solved backwards, and the range where a solution exists
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Correlation from a quanto price
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Quantos and composites](../README.md#s24) → Correlation from a quanto price
 
 ---
 

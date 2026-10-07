@@ -1,6 +1,6 @@
 # Residue classes: the n remainder buckets, and the small addition and multiplication tables they form
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → Residue classes
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Clock Arithmetic](../README.md#s03) → Residue classes
 
 ---
 

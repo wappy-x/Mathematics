@@ -1,6 +1,6 @@
 # The complex form: one coefficient c_n e^(inx) per frequency, and letting the period grow gives the Fourier transform
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → The complex form
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Fourier Series](../README.md#s09) → The complex form
 
 ---
 

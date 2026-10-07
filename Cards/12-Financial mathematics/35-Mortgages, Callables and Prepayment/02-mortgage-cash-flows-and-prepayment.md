@@ -1,6 +1,6 @@
 # Mortgage pools: scheduled amortisation plus prepayment, and the cash flows they produce
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Mortgage pools
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Mortgages, Callables and Prepayment](../README.md#s35) → Mortgage pools
 
 ---
 

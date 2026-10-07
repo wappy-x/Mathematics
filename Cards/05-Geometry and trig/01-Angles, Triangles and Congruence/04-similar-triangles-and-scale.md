@@ -1,6 +1,6 @@
 # Similar triangles: same shape, different size, and the scale factor between them
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Similar triangles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Angles, Triangles and Congruence](../README.md#s01) → Similar triangles
 
 ---
 

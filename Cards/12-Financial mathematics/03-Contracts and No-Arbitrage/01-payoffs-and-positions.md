@@ -1,6 +1,6 @@
 # Payoffs: long and short, calls and puts, and the diagram that shows what you get at the end
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → Payoffs
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Contracts and No-Arbitrage](../README.md#s03) → Payoffs
 
 ---
 

@@ -1,6 +1,6 @@
 # The binomial series and the number e: Newton's expansion of (1 plus x) to any power, and the series for e
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → The binomial series and the number e
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → The binomial series and the number e
 
 ---
 

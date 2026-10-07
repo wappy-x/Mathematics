@@ -1,6 +1,6 @@
 # Conjugate and modulus: flip across the axis, measure the distance, and division falls out
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Conjugate and modulus
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Complex Numbers and the Plane](../README.md#s01) → Conjugate and modulus
 
 ---
 

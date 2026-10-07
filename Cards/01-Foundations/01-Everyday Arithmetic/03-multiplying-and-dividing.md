@@ -1,6 +1,6 @@
 # Multiplying and dividing: adding in one move, and sharing out what is left
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Multiplying and dividing
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Everyday Arithmetic](../README.md#s01) → Multiplying and dividing
 
 ---
 

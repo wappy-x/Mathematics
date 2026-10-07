@@ -1,6 +1,6 @@
 # Gaussian integers: whole numbers a + bi, where 5 is no longer prime, and which numbers are a sum of two squares
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → Gaussian integers
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [For the Curious](../README.md#s10) → Gaussian integers
 
 ---
 

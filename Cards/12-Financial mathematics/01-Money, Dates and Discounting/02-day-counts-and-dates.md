@@ -1,6 +1,6 @@
 # Day counts: Actual/360, 30/360 and Actual/Actual, and why the same coupon has three sizes
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Day counts
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Money, Dates and Discounting](../README.md#s01) → Day counts
 
 ---
 

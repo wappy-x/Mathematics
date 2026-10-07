@@ -1,6 +1,6 @@
 # Conditioning on a random variable: E[X | Y] is a function of Y, computed from a conditional density when there is one, and Bayes' formula in general form
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Conditioning on a random variable
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Conditional Expectation](../README.md#s09) → Conditioning on a random variable
 
 ---
 

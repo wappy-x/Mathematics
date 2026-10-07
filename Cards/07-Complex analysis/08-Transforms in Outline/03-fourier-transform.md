@@ -1,6 +1,6 @@
 # The Fourier transform: a continuous dial of frequencies, and the Gaussian is its own transform
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → The Fourier transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → The Fourier transform
 
 ---
 

@@ -1,6 +1,6 @@
 # Degrees and the handshaking lemma: the degrees add to twice the edges, so the odd-degree vertices come in pairs
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Degrees and the handshaking lemma
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Graphs - Dots and Lines](../README.md#s09) → Degrees and the handshaking lemma
 
 ---
 

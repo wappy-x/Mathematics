@@ -1,6 +1,6 @@
 # Linear independence: no vector in the list is a mix of the others, so nothing is redundant
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Linear independence
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Vectors](../README.md#s03) → Linear independence
 
 ---
 

@@ -1,6 +1,6 @@
 # Adding a riskless asset: the tangency portfolio and the line every investor sits on
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Adding a riskless asset
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Theory](../README.md#s37) → Adding a riskless asset
 
 ---
 

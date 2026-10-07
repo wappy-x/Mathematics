@@ -1,6 +1,6 @@
 # The Heston model: variance that wanders and is pulled home, and which dial does what to the smile
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → The Heston model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Stochastic volatility - Heston, SABR and their mix](../README.md#s14) → The Heston model
 
 ---
 

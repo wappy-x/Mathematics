@@ -1,6 +1,6 @@
 # The spread: what it costs to trade now, and why informed traders make it wider
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → The spread
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Microstructure and Execution](../README.md#s49) → The spread
 
 ---
 

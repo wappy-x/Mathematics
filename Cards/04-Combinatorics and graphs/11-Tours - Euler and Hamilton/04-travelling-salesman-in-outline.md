@@ -1,6 +1,6 @@
 # The travelling salesman: the cheapest Hamiltonian cycle, brute force for a few cities, and why nobody has a fast method
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → The travelling salesman
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Tours - Euler and Hamilton](../README.md#s11) → The travelling salesman
 
 ---
 

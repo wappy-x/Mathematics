@@ -1,6 +1,6 @@
 # The Euler-Lagrange equation: to find the best curve, nudge it, and the nudge must change the cost by nothing
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → The Euler-Lagrange equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Calculus of Variations and Optimal Control](../README.md#s12) → The Euler-Lagrange equation
 
 ---
 

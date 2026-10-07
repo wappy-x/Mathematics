@@ -1,6 +1,6 @@
 # Fields: a ring where every nonzero thing has a reciprocal, so every linear equation has exactly one answer
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Fields
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Rings and Fields](../README.md#s09) → Fields
 
 ---
 

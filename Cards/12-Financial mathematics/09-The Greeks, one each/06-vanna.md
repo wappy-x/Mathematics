@@ -1,6 +1,6 @@
 # Vanna: how delta shifts when volatility moves, and how vega shifts when spot moves
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Vanna
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Greeks, one each](../README.md#s09) → Vanna
 
 ---
 

@@ -1,6 +1,6 @@
 # Scientific notation: very big and very small numbers as a number times a power of ten
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Scientific notation
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Powers, Roots and Logarithms](../README.md#s03) → Scientific notation
 
 ---
 

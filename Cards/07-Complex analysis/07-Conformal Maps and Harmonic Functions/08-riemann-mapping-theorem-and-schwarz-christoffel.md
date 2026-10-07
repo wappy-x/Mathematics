@@ -1,6 +1,6 @@
 # The Riemann mapping theorem: any region without holes, short of the whole plane, is a disc in disguise, and Schwarz-Christoffel writes the map for polygons
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → The Riemann mapping theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → The Riemann mapping theorem
 
 ---
 

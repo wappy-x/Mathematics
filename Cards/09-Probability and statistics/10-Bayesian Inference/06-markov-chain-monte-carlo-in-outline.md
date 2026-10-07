@@ -1,6 +1,6 @@
 # MCMC in outline: sampling a posterior you cannot write down
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → MCMC in outline
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Bayesian Inference](../README.md#s10) → MCMC in outline
 
 ---
 

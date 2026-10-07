@@ -1,6 +1,6 @@
 # Hamiltonian cycles: visit every vertex once and return, with no quick test, but enough edges guarantee one
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → Hamiltonian cycles
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Tours - Euler and Hamilton](../README.md#s11) → Hamiltonian cycles
 
 ---
 

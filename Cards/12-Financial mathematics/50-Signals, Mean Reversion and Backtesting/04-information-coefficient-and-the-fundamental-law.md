@@ -1,6 +1,6 @@
 # The fundamental law: skill times breadth, and the information coefficient that measures skill
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → The fundamental law
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Signals, Mean Reversion and Backtesting](../README.md#s50) → The fundamental law
 
 ---
 

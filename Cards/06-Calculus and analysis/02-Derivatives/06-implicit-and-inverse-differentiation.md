@@ -1,6 +1,6 @@
 # Implicit and inverse differentiation: rates for curves that are not graphs, and for functions run backwards
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Implicit and inverse differentiation
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Derivatives](../README.md#s02) → Implicit and inverse differentiation
 
 ---
 

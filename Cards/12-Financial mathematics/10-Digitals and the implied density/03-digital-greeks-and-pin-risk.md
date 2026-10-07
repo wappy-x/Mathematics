@@ -1,6 +1,6 @@
 # Digital Greeks and pin risk: a hedge that goes wild in the last days
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → Digital Greeks and pin risk
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Digitals and the implied density](../README.md#s10) → Digital Greeks and pin risk
 
 ---
 

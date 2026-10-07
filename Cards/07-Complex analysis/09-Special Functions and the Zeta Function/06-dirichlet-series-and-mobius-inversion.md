@@ -1,6 +1,6 @@
 # Dirichlet series: multiply two of them and the coefficients convolve over divisors, so 1 over zeta is a series with the Mobius signs
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Dirichlet series
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → Dirichlet series
 
 ---
 

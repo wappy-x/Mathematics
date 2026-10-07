@@ -1,6 +1,6 @@
 # Log laws and log scales: multiplication becomes addition, and how a 1-10-100 axis reads
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Log laws and log scales
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Powers, Roots and Logarithms](../README.md#s03) → Log laws and log scales
 
 ---
 

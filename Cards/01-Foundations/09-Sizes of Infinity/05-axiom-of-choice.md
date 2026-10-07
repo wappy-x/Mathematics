@@ -1,6 +1,6 @@
 # The axiom of choice: one pick from each of infinitely many boxes, and why it is debated
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → The axiom of choice
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sizes of Infinity](../README.md#s09) → The axiom of choice
 
 ---
 

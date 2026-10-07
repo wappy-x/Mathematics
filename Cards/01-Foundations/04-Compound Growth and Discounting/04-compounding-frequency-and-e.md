@@ -1,6 +1,6 @@
 # Compounding more often, and the number e: the ceiling on how fast 5% can grow
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Compounding more often, and the number e
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Compound Growth and Discounting](../README.md#s04) → Compounding more often, and the number e
 
 ---
 

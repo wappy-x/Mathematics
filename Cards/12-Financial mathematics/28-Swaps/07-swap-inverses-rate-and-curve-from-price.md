@@ -1,6 +1,6 @@
 # Solving a swap backwards: the fixed rate from a value, and a curve point from a par quote
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Solving a swap backwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Swaps](../README.md#s28) → Solving a swap backwards
 
 ---
 

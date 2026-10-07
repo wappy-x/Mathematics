@@ -1,6 +1,6 @@
 # Stable matching: pair two sides by preference so no two would both rather swap, and the proposers get their best stable deal
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Stable matching
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Matchings and Flows](../README.md#s13) → Stable matching
 
 ---
 

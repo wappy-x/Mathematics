@@ -1,6 +1,6 @@
 # Trace and determinant: two numbers sort every planar linear system into node, saddle, spiral or centre
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → Trace and determinant
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Systems and the Matrix Exponential](../README.md#s04) → Trace and determinant
 
 ---
 

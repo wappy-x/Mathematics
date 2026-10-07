@@ -1,6 +1,6 @@
 # Nyquist and margins: encirclements decide stability, margins say by how much
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Nyquist and margins
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Feedback Control](../README.md#s03) → Nyquist and margins
 
 ---
 

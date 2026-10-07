@@ -1,6 +1,6 @@
 # Null sets and almost everywhere: sets of size zero, why countably many still weigh nothing, and completing a measure
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Null sets and almost everywhere
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sets You Can Measure](../README.md#s01) → Null sets and almost everywhere
 
 ---
 

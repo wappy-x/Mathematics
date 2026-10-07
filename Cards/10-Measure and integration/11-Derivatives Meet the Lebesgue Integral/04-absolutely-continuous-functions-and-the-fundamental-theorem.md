@@ -1,6 +1,6 @@
 # Absolutely continuous functions and the fundamental theorem: F is the integral of its derivative exactly when F moves little over any collection of short intervals
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → Absolutely continuous functions and the fundamental theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Derivatives Meet the Lebesgue Integral](../README.md#s11) → Absolutely continuous functions and the fundamental theorem
 
 ---
 

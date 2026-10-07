@@ -1,6 +1,6 @@
 # Alternating sums: a row added with alternating signs cancels to zero, which lets you undo a binomial sum
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Alternating sums
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Binomial Coefficients and Identities](../README.md#s03) → Alternating sums
 
 ---
 

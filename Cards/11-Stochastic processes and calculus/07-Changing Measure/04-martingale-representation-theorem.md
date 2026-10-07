@@ -1,6 +1,6 @@
 # Martingale representation: every Brownian martingale is an Ito integral
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Martingale representation
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Changing Measure](../README.md#s07) → Martingale representation
 
 ---
 

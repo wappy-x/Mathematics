@@ -1,6 +1,6 @@
 # The risk-neutral probability: q equals (R minus d) over (u minus d), and why it is not a forecast
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → The risk-neutral probability
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Binomial Trees](../README.md#s04) → The risk-neutral probability
 
 ---
 

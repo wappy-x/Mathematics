@@ -1,6 +1,6 @@
 # Carry and roll-down: what a bond earns if the curve does not move
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Carry and roll-down
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves in Depth](../README.md#s33) → Carry and roll-down
 
 ---
 

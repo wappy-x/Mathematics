@@ -1,6 +1,6 @@
 # The Laplace transform: multiply by e to the minus st and integrate from zero, and derivatives become multiplication by s
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → The Laplace transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → The Laplace transform
 
 ---
 

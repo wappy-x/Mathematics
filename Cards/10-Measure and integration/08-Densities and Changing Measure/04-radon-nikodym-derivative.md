@@ -1,6 +1,6 @@
 # The Radon-Nikodym derivative: an exchange rate between measures, with a chain rule and a rule for changing measure under an integral
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → The Radon-Nikodym derivative
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Densities and Changing Measure](../README.md#s08) → The Radon-Nikodym derivative
 
 ---
 

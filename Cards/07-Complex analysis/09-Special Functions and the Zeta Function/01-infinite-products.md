@@ -1,6 +1,6 @@
 # Infinite products: a product converges exactly when the sum of its small parts does, and sine is a product over its zeros
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Infinite products
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → Infinite products
 
 ---
 

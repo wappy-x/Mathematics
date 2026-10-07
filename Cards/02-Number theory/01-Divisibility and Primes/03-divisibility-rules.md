@@ -1,6 +1,6 @@
 # Divisibility rules: reading the digits to see whether 2, 3, 4, 5, 6, 8, 9 or 10 divides a number
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Divisibility rules
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Divisibility rules
 
 ---
 

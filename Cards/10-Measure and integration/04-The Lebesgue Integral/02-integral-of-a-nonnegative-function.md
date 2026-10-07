@@ -1,6 +1,6 @@
 # The integral of a non-negative function: the best you can do from below with simple functions, infinity allowed
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → The integral of a non-negative function
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Lebesgue Integral](../README.md#s04) → The integral of a non-negative function
 
 ---
 

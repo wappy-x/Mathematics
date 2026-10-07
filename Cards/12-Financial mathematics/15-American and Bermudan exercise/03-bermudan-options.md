@@ -1,6 +1,6 @@
 # Bermudan options: exercise on listed dates only, sitting between European and American
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → Bermudan options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [American and Bermudan exercise](../README.md#s15) → Bermudan options
 
 ---
 

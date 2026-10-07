@@ -1,6 +1,6 @@
 # Limits of holomorphic functions: if the approximations converge evenly, the limit is holomorphic and its derivatives follow
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Limits of holomorphic functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Limits of holomorphic functions
 
 ---
 

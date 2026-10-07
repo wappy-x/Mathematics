@@ -1,6 +1,6 @@
 # Runge-Kutta four: four slopes per step, weighted 1-2-2-1, and the error shrinks sixteen-fold per halving
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Runge-Kutta four
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Numerical Evolution](../README.md#s05) → Runge-Kutta four
 
 
 ---

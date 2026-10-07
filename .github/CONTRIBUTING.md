@@ -27,7 +27,7 @@ Typos, unclear sentences, a better example, a sharper check: send a pull request
 
 ## Build new cards
 
-1,866 cards are planned and 1,087 are written. The [syllabus](../SYLLABUS.md) lists every card still to write, shelf by shelf, marked `·`. Building a shelf is the biggest help there is, and an AI agent can do most of the work if you give it the [agent brief](AGENTS.md). It's the same brief the library is built with.
+1,866 cards are planned and 1,087 are written. The [syllabus](../SYLLABUS.md) leads to each wing's page, which lists every card on every shelf; a title without a link is a card still to write. Building a shelf is the biggest help there is, and an AI agent can do most of the work if you give it the [agent brief](AGENTS.md). It's the same brief the library is built with.
 
 ### 1. Claim a shelf
 

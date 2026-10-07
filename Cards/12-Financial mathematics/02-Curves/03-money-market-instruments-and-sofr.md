@@ -1,6 +1,6 @@
 # Money markets: bills, repos and overnight rates, and the compounded-in-arrears convention
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Money markets
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves](../README.md#s02) → Money markets
 
 ---
 

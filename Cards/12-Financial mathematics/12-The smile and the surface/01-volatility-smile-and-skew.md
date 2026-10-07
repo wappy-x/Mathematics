@@ -1,6 +1,6 @@
 # The volatility smile and skew: one price per strike means one volatility per strike, and why that is not a mistake
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → The volatility smile and skew
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The smile and the surface](../README.md#s12) → The volatility smile and skew
 
 ---
 

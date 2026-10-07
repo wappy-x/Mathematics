@@ -1,6 +1,6 @@
 # Homomorphisms and isomorphisms: maps that respect the operation, and when two groups are the same group in different clothes
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Homomorphisms and isomorphisms
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Homomorphisms and isomorphisms
 
 ---
 

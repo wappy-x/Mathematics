@@ -1,6 +1,6 @@
 # Cox-Ingersoll-Ross: square-root noise that keeps the rate positive
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Cox-Ingersoll-Ross
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → Cox-Ingersoll-Ross
 
 ---
 

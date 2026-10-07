@@ -1,6 +1,6 @@
 # Lyapunov functions: find something that only ever decreases and you have proved the system settles, without solving it
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Lyapunov functions
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → Lyapunov functions
 
 ---
 

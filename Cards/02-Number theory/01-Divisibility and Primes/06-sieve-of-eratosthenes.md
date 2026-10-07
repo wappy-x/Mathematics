@@ -1,6 +1,6 @@
 # The sieve of Eratosthenes: cross out every multiple and the primes are what is left standing
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → The sieve of Eratosthenes
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → The sieve of Eratosthenes
 
 ---
 

@@ -1,6 +1,6 @@
 # Digital inverses: the strike is exact, the volatility can have two answers
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → Digital inverses
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Digitals and the implied density](../README.md#s10) → Digital inverses
 
 ---
 

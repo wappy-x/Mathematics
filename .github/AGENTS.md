@@ -63,12 +63,12 @@ Copy the shape of these finished cards, and read all three before writing:
 
 ### The layout
 
-A card starts straight away with its title; there is no frontmatter block. Under the title comes the path line: links back to the syllabus, the wing and the shelf, then the card's short title (the part of its title before the colon). Then come these headings, in this order, spelled exactly. Sections are separated by `---` and sub-sections use `###`.
+A card starts straight away with its title; there is no frontmatter block. Under the title comes the path line: links back to the syllabus, the wing's page and the shelf on it, then the card's short title (the part of its title before the colon). Then come these headings, in this order, spelled exactly. Sections are separated by `---` and sub-sections use `###`.
 
 ```
 # <the spec's title>
 
-[Syllabus](../../../SYLLABUS.md) → [<Wing>](../../../SYLLABUS.md#w<NN>) → [<Shelf>](../../../SYLLABUS.md#w<NN>-s<MM>) → <short title>
+[Syllabus](../../../SYLLABUS.md) → [<Wing>](../README.md) → [<Shelf>](../README.md#s<MM>) → <short title>
 
 ## General Overview
 ## The formula

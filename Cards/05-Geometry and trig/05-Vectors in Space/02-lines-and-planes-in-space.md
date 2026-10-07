@@ -1,6 +1,6 @@
 # Lines and planes: a point plus a direction, a point plus a normal
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Lines and planes
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Vectors in Space](../README.md#s05) → Lines and planes
 
 ---
 

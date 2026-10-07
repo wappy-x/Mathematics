@@ -1,6 +1,6 @@
 # Proof by contradiction: assume the opposite and watch it break
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Proof by contradiction
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Proof by contradiction
 
 ---
 

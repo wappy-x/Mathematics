@@ -1,6 +1,6 @@
 # Stochastic differential equations: a drift, a noise size, and a solution path
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Stochastic differential equations
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Ito Calculus](../README.md#s06) → Stochastic differential equations
 
 ---
 

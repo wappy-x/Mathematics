@@ -1,6 +1,6 @@
 # The rules: adding probabilities of separate events, and one minus for the complement
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → The rules
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Chance and Events](../README.md#s01) → The rules
 
 ---
 

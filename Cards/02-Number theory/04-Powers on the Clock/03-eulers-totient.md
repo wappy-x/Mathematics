@@ -1,6 +1,6 @@
 # Euler's totient: counting how many numbers up to n share no factor with n, straight from the factorisation
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Euler's totient
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Euler's totient
 
 ---
 

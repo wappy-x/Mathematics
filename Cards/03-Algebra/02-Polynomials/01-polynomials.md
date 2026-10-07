@@ -1,6 +1,6 @@
 # Polynomials: sums of powers of one letter, their degree, and where they cross zero
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Polynomials
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Polynomials](../README.md#s02) → Polynomials
 
 ---
 

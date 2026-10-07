@@ -1,6 +1,6 @@
 # Undetermined coefficients: for simple forcing, guess a solution of the same shape and solve for the constants
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → Undetermined coefficients
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Oscillators - Second-Order Linear Equations](../README.md#s03) → Undetermined coefficients
 
 ---
 

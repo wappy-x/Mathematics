@@ -1,6 +1,6 @@
 # Normal: the bell curve, its two parameters and the 68-95-99.7 rule
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Normal
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Continuous Distributions](../README.md#s04) → Normal
 
 ---
 

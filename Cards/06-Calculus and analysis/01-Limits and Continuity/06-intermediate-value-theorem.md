@@ -1,6 +1,6 @@
 # Intermediate value theorem: a continuous function cannot skip a value
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Intermediate value theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Intermediate value theorem
 
 ---
 

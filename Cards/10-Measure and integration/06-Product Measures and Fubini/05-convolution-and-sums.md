@@ -1,6 +1,6 @@
 # Convolution: the law of a sum of independent quantities, and why densities convolve
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Convolution
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Product Measures and Fubini](../README.md#s06) → Convolution
 
 ---
 

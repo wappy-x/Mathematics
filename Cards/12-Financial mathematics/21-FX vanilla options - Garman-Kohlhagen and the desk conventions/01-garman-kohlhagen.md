@@ -1,6 +1,6 @@
 # Garman-Kohlhagen: pricing a currency option by treating foreign cash as a share that pays the foreign rate
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Garman-Kohlhagen
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../README.md#s21) → Garman-Kohlhagen
 
 ---
 

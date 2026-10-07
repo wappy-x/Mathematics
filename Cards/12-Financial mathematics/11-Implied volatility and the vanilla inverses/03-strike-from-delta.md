@@ -1,6 +1,6 @@
 # Strike from delta: turning a delta quote back into a strike
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Strike from delta
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Implied volatility and the vanilla inverses](../README.md#s11) → Strike from delta
 
 ---
 

@@ -1,6 +1,6 @@
 # The fundamental theorem of algebra: allow one new number whose square is -1 and every degree-n polynomial has exactly n roots
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → The fundamental theorem of algebra
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [For the Curious](../README.md#s10) → The fundamental theorem of algebra
 
 ---
 

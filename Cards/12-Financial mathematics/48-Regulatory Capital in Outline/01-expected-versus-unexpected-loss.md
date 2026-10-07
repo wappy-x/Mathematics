@@ -1,6 +1,6 @@
 # Expected and unexpected loss: provisions cover the average, capital covers the surprise
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Expected and unexpected loss
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Regulatory Capital in Outline](../README.md#s48) → Expected and unexpected loss
 
 ---
 

@@ -1,6 +1,6 @@
 # The Lyapunov exponent: how fast two nearly identical starts drift apart, and positive means chaos
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The Lyapunov exponent
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Discrete Dynamics and Chaos](../README.md#s11) → The Lyapunov exponent
 
 ---
 

@@ -1,6 +1,6 @@
 # Conditional probability: the chance of one thing given another has happened
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Conditional probability
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Chance and Events](../README.md#s01) → Conditional probability
 
 ---
 

@@ -1,6 +1,6 @@
 # Gold forward: spot grown at interest minus the lease rate, exact because gold can be borrowed like a currency
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Gold forward
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Commodity forwards - carry, storage, convenience yield and the curve](../README.md#s25) → Gold forward
 
 ---
 

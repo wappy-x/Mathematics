@@ -1,6 +1,6 @@
 # Divide-and-conquer recurrences: split the job in half, and the master theorem reads off the total work
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Divide-and-conquer recurrences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Recurrences](../README.md#s05) → Divide-and-conquer recurrences
 
 ---
 

@@ -1,6 +1,6 @@
 # Symplectic steps: for frictionless motion, a stepper that keeps energy bounded for a million steps
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Symplectic steps
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Numerical Evolution](../README.md#s05) → Symplectic steps
 
 ---
 

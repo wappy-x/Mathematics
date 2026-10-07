@@ -1,6 +1,6 @@
 # Exponential generating functions: divide each count by n! and the series multiplies labelled objects correctly
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Exponential generating functions
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Generating Functions](../README.md#s07) → Exponential generating functions
 
 ---
 

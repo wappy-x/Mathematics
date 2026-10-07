@@ -1,6 +1,6 @@
 # The Lorenz system: three weather equations that never settle and never repeat, on a butterfly no thicker than a sheet
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The Lorenz system
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Discrete Dynamics and Chaos](../README.md#s11) → The Lorenz system
 
 ---
 

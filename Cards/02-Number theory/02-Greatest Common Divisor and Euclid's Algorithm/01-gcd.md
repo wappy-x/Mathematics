@@ -1,6 +1,6 @@
 # Greatest common divisor: the biggest number that divides both, from factor lists and from prime factorisations
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Greatest common divisor
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Greatest common divisor
 
 ---
 

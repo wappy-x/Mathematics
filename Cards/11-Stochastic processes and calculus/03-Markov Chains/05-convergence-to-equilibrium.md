@@ -1,6 +1,6 @@
 # Convergence to equilibrium: an irreducible aperiodic chain forgets where it started
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Convergence to equilibrium
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Markov Chains](../README.md#s03) → Convergence to equilibrium
 
 ---
 

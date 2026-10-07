@@ -1,6 +1,6 @@
 # Ramsey numbers: the size at which a pattern is forced, known exactly for only a handful of cases
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Ramsey numbers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Ramsey and Extremal, in Outline](../README.md#s14) → Ramsey numbers
 
 ---
 

@@ -1,6 +1,6 @@
 # The Greeks together: a day's profit and loss as a Taylor expansion
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → The Greeks together
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Greeks, one each](../README.md#s09) → The Greeks together
 
 ---
 

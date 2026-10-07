@@ -1,6 +1,6 @@
 # Natural log and doubling time: how long until the money doubles, and the rule of 72
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Natural log and doubling time
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Compound Growth and Discounting](../README.md#s04) → Natural log and doubling time
 
 ---
 

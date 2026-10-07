@@ -1,6 +1,6 @@
 # Recurrences: a rule for the next term from the last few, with Fibonacci as the first example
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Recurrences and Fibonacci
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Recurrences](../README.md#s05) → Recurrences and Fibonacci
 
 ---
 

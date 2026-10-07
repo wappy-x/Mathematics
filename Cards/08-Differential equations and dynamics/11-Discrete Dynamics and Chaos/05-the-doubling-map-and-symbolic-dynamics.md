@@ -1,6 +1,6 @@
 # The doubling map: doubling and dropping the whole part shifts the binary digits, which is why chaos can be proved
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The doubling map
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Discrete Dynamics and Chaos](../README.md#s11) → The doubling map
 
 ---
 

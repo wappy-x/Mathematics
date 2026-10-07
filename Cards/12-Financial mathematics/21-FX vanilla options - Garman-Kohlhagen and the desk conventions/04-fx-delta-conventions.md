@@ -1,6 +1,6 @@
 # Four deltas for one option: spot, forward, and premium-adjusted, and which one a currency desk means
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Four deltas for one option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../README.md#s21) → Four deltas for one option
 
 ---
 

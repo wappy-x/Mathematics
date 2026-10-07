@@ -1,6 +1,6 @@
 # Chain rule: rates multiply when one quantity drives another
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Chain rule
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Derivatives](../README.md#s02) → Chain rule
 
 ---
 

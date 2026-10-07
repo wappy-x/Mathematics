@@ -1,6 +1,6 @@
 # Basket options: one option on a weighted group of shares, where correlation is the input that matters
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → Basket options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Many underlyings - exchange, spread, basket and rainbow](../README.md#s18) → Basket options
 
 ---
 

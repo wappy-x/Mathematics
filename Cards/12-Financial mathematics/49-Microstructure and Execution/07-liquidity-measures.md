@@ -1,6 +1,6 @@
 # Liquidity: effective spread, Amihud illiquidity and the depth-resilience picture
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Liquidity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Microstructure and Execution](../README.md#s49) → Liquidity
 
 ---
 

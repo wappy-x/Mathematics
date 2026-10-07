@@ -1,6 +1,6 @@
 # Russell's paradox: why 'the set of all sets that do not contain themselves' cannot exist
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Russell's paradox
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Russell's paradox
 
 ---
 

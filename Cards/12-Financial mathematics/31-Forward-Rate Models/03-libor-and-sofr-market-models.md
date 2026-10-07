@@ -1,6 +1,6 @@
 # Market models: lognormal forward rates, the drift under one terminal measure, and simulation
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Market models
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Forward-Rate Models](../README.md#s31) → Market models
 
 ---
 

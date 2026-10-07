@@ -1,6 +1,6 @@
 # Panjer's recursion: the aggregate claim distribution computed exactly
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Panjer's recursion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Insurance and Actuarial Mathematics](../README.md#s51) → Panjer's recursion
 
 ---
 

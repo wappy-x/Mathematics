@@ -1,6 +1,6 @@
 # Buckingham Pi: count the variables, subtract the dimensions, get the groups
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Buckingham Pi
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Units and Modelling](../README.md#s01) → Buckingham Pi
 
 ---
 

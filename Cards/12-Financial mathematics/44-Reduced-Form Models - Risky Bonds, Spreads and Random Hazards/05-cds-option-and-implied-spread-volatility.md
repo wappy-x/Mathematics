@@ -1,6 +1,6 @@
 # Options on a CDS: Black's formula on the forward spread with the risky annuity as the unit, and the implied spread volatility
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → Options on a CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../README.md#s44) → Options on a CDS
 
 ---
 

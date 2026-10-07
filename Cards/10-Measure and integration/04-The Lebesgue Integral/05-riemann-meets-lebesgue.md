@@ -1,6 +1,6 @@
 # Riemann meets Lebesgue: every Riemann integral is a Lebesgue integral with the same value, and Lebesgue's criterion says exactly when Riemann works
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → Riemann meets Lebesgue
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Lebesgue Integral](../README.md#s04) → Riemann meets Lebesgue
 
 ---
 

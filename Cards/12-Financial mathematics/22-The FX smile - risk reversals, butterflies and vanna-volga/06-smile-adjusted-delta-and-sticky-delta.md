@@ -1,6 +1,6 @@
 # Hedging with the smile: sticky delta in FX, and the vega term that corrects the delta
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Hedging with the smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The FX smile - risk reversals, butterflies and vanna-volga](../README.md#s22) → Hedging with the smile
 
 ---
 

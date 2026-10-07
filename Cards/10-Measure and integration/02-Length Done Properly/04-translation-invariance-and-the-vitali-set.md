@@ -1,6 +1,6 @@
 # Translation invariance and the Vitali set: sliding never changes length, and that rule alone forces some set to have no length at all
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Translation invariance and the Vitali set
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Length Done Properly](../README.md#s02) → Translation invariance and the Vitali set
 
 ---
 

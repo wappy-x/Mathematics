@@ -1,6 +1,6 @@
 # Vasicek's large-pool loss curve: a whole book's loss distribution from three numbers, and the regulator's capital formula built on it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Vasicek's large-pool loss curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../README.md#s45) → Vasicek's large-pool loss curve
 
 ---
 

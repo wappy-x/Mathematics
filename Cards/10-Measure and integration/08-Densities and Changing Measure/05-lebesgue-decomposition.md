@@ -1,6 +1,6 @@
 # Lebesgue decomposition: any measure splits into a part with a density and a part on a null set, and on the line that means density, jumps and staircase
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → Lebesgue decomposition
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Densities and Changing Measure](../README.md#s08) → Lebesgue decomposition
 
 ---
 

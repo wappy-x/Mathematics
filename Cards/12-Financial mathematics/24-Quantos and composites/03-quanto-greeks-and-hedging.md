@@ -1,6 +1,6 @@
 # Hedging a quanto: shares in euros, a currency hedge that resizes itself, and the Greek nobody else has, sensitivity to correlation
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Hedging a quanto
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Quantos and composites](../README.md#s24) → Hedging a quanto
 
 ---
 

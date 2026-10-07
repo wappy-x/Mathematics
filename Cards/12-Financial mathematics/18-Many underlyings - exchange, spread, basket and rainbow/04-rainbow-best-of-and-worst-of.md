@@ -1,6 +1,6 @@
 # Rainbow options: pay on the best or the worst of several shares, and the correlation sign flips between them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → Rainbow options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Many underlyings - exchange, spread, basket and rainbow](../README.md#s18) → Rainbow options
 
 ---
 

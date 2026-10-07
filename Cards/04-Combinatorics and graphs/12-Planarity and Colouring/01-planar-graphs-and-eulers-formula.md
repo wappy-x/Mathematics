@@ -1,6 +1,6 @@
 # Planar graphs: drawn flat with no crossings, and vertices minus edges plus faces is always 2
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Planar graphs
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Planarity and Colouring](../README.md#s12) → Planar graphs
 
 ---
 

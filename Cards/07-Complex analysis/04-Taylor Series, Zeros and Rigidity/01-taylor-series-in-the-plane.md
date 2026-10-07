@@ -1,6 +1,6 @@
 # Taylor series in the plane: a holomorphic function equals its power series out to the nearest singularity
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Taylor series in the plane
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Taylor series in the plane
 
 ---
 

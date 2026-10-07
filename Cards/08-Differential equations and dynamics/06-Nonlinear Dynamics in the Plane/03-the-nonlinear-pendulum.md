@@ -1,6 +1,6 @@
 # The pendulum: swinging and spinning over live in one picture, separated by the energy of standing on end
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → The pendulum
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → The pendulum
 
 ---
 

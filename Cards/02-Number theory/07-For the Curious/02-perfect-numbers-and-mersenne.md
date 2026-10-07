@@ -1,6 +1,6 @@
 # Perfect numbers and Mersenne primes: 6, 28, 496 and the record-prime hunt
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Perfect numbers and Mersenne primes
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [For the Curious](../README.md#s07) → Perfect numbers and Mersenne primes
 
 ---
 

@@ -1,6 +1,6 @@
 # Rate volatilities: lognormal, normal and shifted, and converting between them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Rate volatilities
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → Rate volatilities
 
 ---
 

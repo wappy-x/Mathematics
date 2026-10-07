@@ -1,6 +1,6 @@
 # Counting chances: favourable over possible, with the counting done in wing 04
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Counting chances
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Chance and Events](../README.md#s01) → Counting chances
 
 ---
 

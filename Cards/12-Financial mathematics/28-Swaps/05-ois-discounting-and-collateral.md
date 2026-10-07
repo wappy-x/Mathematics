@@ -1,6 +1,6 @@
 # Collateral discounting: why a collateralised swap discounts at the overnight rate
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Collateral discounting
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Swaps](../README.md#s28) → Collateral discounting
 
 ---
 

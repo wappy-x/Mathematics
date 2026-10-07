@@ -1,6 +1,6 @@
 # Portfolio Greeks: adding sensitivities across positions and predicting a day's P&L
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Portfolio Greeks
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Hedging, Volatility Forecasts and Stress](../README.md#s40) → Portfolio Greeks
 
 ---
 

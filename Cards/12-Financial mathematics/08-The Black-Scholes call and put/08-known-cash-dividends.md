@@ -1,6 +1,6 @@
 # Known cash dividends: escrow the dividend, then price the share that is left
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Known cash dividends
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → Known cash dividends
 
 ---
 

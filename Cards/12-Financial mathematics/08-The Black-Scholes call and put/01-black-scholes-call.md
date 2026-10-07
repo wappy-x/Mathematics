@@ -1,6 +1,6 @@
 # Black–Scholes call: what a call option is, and what it should cost
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Black-Scholes call
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → Black-Scholes call
 
 ---
 

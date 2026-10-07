@@ -1,6 +1,6 @@
 # Measurable functions: every "is it below a?" set is measurable, so every question about the values has an answer
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → Measurable functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Measurable Functions](../README.md#s03) → Measurable functions
 
 ---
 

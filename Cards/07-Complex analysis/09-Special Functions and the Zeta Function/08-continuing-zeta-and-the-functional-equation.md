@@ -1,6 +1,6 @@
 # Continuing zeta: past s = 1 with an alternating series, a pole at 1, and a mirror that reflects s to 1 - s
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Continuing zeta
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → Continuing zeta
 
 ---
 

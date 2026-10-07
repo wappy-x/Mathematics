@@ -1,6 +1,6 @@
 # Equivalence relations and partitions: a sameness rule cuts a set into blocks, and the blocks give the rule back
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Equivalence relations and partitions
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → Equivalence relations and partitions
 
 ---
 

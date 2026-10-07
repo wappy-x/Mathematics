@@ -1,6 +1,6 @@
 # Spread options: exchanging one price for another with Margrabe's exact formula, and Kirk's shortcut when there is a strike
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Spread options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Options on commodity futures and spreads](../README.md#s26) → Spread options
 
 ---
 

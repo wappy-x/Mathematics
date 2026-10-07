@@ -1,6 +1,6 @@
 # The rules of conditional expectation: linearity, the tower, taking out what is known, dropping what is independent, and the limit theorems conditioned
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → The rules of conditional expectation
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Conditional Expectation](../README.md#s09) → The rules of conditional expectation
 
 ---
 

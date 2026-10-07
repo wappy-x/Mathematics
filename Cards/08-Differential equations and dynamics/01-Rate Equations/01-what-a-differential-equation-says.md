@@ -1,6 +1,6 @@
 # A differential equation: a rule for the rate, and the starting value that picks one curve
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → A differential equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Rate Equations](../README.md#s01) → A differential equation
 
 ---
 

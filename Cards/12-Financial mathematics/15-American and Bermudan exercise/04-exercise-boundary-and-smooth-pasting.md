@@ -1,6 +1,6 @@
 # The exercise boundary and smooth pasting: where to stop waiting, pinned by matching height and slope
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → The exercise boundary and smooth pasting
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [American and Bermudan exercise](../README.md#s15) → The exercise boundary and smooth pasting
 
 ---
 

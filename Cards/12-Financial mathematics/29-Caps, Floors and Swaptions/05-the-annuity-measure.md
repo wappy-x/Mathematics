@@ -1,6 +1,6 @@
 # The annuity measure: why the forward swap rate is a martingale when the annuity is the unit
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → The annuity measure
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → The annuity measure
 
 ---
 

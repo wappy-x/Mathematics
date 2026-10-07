@@ -1,6 +1,6 @@
 # Calibrating a market model: caplet volatilities exactly, swaptions approximately
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Calibrating a market model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Forward-Rate Models](../README.md#s31) → Calibrating a market model
 
 ---
 

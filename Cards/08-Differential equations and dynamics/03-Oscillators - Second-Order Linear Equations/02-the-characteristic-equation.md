@@ -1,6 +1,6 @@
 # The characteristic equation: guess an exponential and the differential equation becomes a quadratic
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → The characteristic equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Oscillators - Second-Order Linear Equations](../README.md#s03) → The characteristic equation
 
 ---
 

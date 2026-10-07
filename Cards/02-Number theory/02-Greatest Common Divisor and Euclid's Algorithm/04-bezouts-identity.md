@@ -1,6 +1,6 @@
 # Bezout's identity: the gcd is always a whole-number mix of the two numbers, and running Euclid backwards finds the mix
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Bezout's identity
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Bezout's identity
 
 ---
 

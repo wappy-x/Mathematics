@@ -1,6 +1,6 @@
 # Gradient: the direction of steepest climb and the rate in any direction
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Gradient
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Gradient
 
 ---
 

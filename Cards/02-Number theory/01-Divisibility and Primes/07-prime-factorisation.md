@@ -1,6 +1,6 @@
 # Prime factorisation: a factor tree breaks any number into prime atoms, and every route reaches the same atoms
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Prime factorisation
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Prime factorisation
 
 ---
 

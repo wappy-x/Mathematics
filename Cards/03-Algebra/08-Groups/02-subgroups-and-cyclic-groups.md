@@ -1,6 +1,6 @@
 # Subgroups and cyclic groups: a group inside a group, and the groups one element generates by repeating itself
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Subgroups and cyclic groups
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Subgroups and cyclic groups
 
 ---
 

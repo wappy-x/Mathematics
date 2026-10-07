@@ -1,6 +1,6 @@
 # Stepping an SDE: Euler, Milstein and Andersen's scheme for Heston
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Stepping an SDE
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Numerical Methods for Pricing](../README.md#s06) → Stepping an SDE
 
 ---
 

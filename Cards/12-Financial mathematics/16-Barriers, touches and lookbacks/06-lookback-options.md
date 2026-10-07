@@ -1,6 +1,6 @@
 # Lookback options: buy at the lowest, sell at the highest, and what never regretting costs
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Lookback options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Barriers, touches and lookbacks](../README.md#s16) → Lookback options
 
 ---
 

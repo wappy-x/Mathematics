@@ -1,6 +1,6 @@
 # Inverse transform: turning uniforms into any distribution with a CDF you can invert
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Inverse transform
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Simulation](../README.md#s11) → Inverse transform
 
 ---
 

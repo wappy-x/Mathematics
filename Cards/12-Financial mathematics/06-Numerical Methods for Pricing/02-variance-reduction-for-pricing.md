@@ -1,6 +1,6 @@
 # Cheaper Monte Carlo: antithetic paths, control variates and stratification
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Cheaper Monte Carlo
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Numerical Methods for Pricing](../README.md#s06) → Cheaper Monte Carlo
 
 ---
 

@@ -1,6 +1,6 @@
 # FVA: funding the uncollateralised exposure at the bank's own spread, and the adjustment that books the cost
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → FVA
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Collateral, Funding and the Rest of the XVAs](../README.md#s47) → FVA
 
 ---
 

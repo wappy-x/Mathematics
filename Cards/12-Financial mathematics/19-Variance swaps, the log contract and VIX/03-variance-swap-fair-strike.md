@@ -1,6 +1,6 @@
 # The variance swap: pay realised variance, receive a fixed strike, and the strike comes from the option strip with no model
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → The variance swap
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Variance swaps, the log contract and VIX](../README.md#s19) → The variance swap
 
 ---
 

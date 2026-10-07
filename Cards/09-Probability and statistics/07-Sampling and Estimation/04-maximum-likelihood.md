@@ -1,6 +1,6 @@
 # Maximum likelihood: pick the parameter that makes the data least surprising
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Maximum likelihood
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Sampling and Estimation](../README.md#s07) → Maximum likelihood
 
 ---
 

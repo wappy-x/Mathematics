@@ -1,6 +1,6 @@
 # Cylindrical and spherical coordinates: two angles and a radius in space
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Cylindrical and spherical coordinates
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Coordinates and Curves](../README.md#s04) → Cylindrical and spherical coordinates
 
 ---
 

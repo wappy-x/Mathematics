@@ -1,6 +1,6 @@
 # Implied vol from an Asian quote: invert the moment-matched price, and why it is not the vanilla's vol
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Implied vol from an Asian quote
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages - commodity swaps and Asian options](../README.md#s27) → Implied vol from an Asian quote
 
 ---
 

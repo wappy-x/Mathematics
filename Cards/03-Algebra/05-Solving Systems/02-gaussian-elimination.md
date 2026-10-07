@@ -1,6 +1,6 @@
 # Gaussian elimination: three legal row moves turn any system into a staircase you can read off from the bottom
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → Gaussian elimination
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → Gaussian elimination
 
 ---
 

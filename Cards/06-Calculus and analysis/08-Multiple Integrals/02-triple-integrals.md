@@ -1,6 +1,6 @@
 # Triple integrals: mass, moments and centres in three dimensions
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Triple integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Multiple Integrals](../README.md#s08) → Triple integrals
 
 ---
 

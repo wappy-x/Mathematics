@@ -1,6 +1,6 @@
 # One option, two currencies: the same contract seen from the other side, and the four ways its premium is quoted
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → One option, two currencies
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../README.md#s21) → One option, two currencies
 
 ---
 

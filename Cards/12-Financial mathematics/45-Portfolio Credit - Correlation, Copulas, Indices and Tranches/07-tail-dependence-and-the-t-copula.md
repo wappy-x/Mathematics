@@ -1,6 +1,6 @@
 # Tail dependence: the Gaussian copula's calm at the extremes, and the Student-t copula that fails together
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Tail dependence
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../README.md#s45) → Tail dependence
 
 ---
 

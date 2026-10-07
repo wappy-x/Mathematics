@@ -1,6 +1,6 @@
 # Solving backwards: bisection, Newton and Brent for any inverse problem
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Solving backwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Greeks by Numbers and Calibration](../README.md#s07) → Solving backwards
 
 ---
 

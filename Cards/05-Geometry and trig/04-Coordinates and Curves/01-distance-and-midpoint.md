@@ -1,6 +1,6 @@
 # Distance and midpoint: Pythagoras on a grid
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Distance and midpoint
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Coordinates and Curves](../README.md#s04) → Distance and midpoint
 
 ---
 

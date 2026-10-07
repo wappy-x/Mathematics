@@ -1,6 +1,6 @@
 # The integrating factor: multiply by the right function and the left side becomes one derivative
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → The integrating factor
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Rate Equations](../README.md#s01) → The integrating factor
 
 ---
 

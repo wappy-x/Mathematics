@@ -1,6 +1,6 @@
 # Counting divisors: read how many divisors a number has straight off its prime factorisation
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Counting divisors
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Counting divisors
 
 ---
 

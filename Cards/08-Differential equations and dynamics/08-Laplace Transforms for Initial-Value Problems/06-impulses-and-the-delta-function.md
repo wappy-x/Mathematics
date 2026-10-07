@@ -1,6 +1,6 @@
 # Impulses: a hammer blow is a narrow tall pulse, its limit is the delta, and its transform is e^(-as)
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → Impulses
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Laplace Transforms for Initial-Value Problems](../README.md#s08) → Impulses
 
 ---
 

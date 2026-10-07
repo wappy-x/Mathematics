@@ -1,6 +1,6 @@
 # The Black-Scholes assumptions: six idealisations, which term each holds up, and what breaks when it fails
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → The Black-Scholes assumptions
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → The Black-Scholes assumptions
 
 ---
 

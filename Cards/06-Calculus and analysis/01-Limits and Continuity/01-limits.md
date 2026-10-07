@@ -1,6 +1,6 @@
 # Limits: the value a function is heading for, and the promise that makes 'heading for' precise
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Limits
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Limits
 
 ---
 

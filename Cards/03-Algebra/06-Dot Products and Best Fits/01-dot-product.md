@@ -1,6 +1,6 @@
 # The dot product: multiply matching entries and add, and one number gives length, perpendicularity and alignment
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → The dot product
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Dot Products and Best Fits](../README.md#s06) → The dot product
 
 ---
 

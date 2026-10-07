@@ -1,6 +1,6 @@
 # Vasicek: a mean-reverting normal rate with closed-form bonds
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Vasicek
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → Vasicek
 
 ---
 

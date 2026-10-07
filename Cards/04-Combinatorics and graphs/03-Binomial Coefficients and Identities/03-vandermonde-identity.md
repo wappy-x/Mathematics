@@ -1,6 +1,6 @@
 # Vandermonde's identity: choosing from two merged groups splits by how many come from each
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Vandermonde's identity
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Binomial Coefficients and Identities](../README.md#s03) → Vandermonde's identity
 
 ---
 

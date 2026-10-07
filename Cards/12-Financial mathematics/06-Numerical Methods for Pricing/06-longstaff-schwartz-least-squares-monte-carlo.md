@@ -1,6 +1,6 @@
 # Longstaff-Schwartz: early exercise by regression on simulated paths
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Longstaff-Schwartz
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Numerical Methods for Pricing](../README.md#s06) → Longstaff-Schwartz
 
 ---
 

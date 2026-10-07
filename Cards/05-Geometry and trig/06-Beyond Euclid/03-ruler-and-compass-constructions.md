@@ -1,6 +1,6 @@
 # Ruler and compass: what can be built, and the three ancient problems that cannot
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Ruler and compass
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Beyond Euclid](../README.md#s06) → Ruler and compass
 
 ---
 

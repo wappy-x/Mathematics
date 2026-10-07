@@ -1,6 +1,6 @@
 # Legendre's equation: for whole-number parameters the series stops, giving a family of polynomials
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Legendre's equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Series Solutions and Boundary Problems](../README.md#s07) → Legendre's equation
 
 ---
 

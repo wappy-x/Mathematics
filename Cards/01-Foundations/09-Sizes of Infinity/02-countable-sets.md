@@ -1,6 +1,6 @@
 # Countable sets: anything you can put in a queue, fractions included
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → Countable sets
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sizes of Infinity](../README.md#s09) → Countable sets
 
 ---
 

@@ -1,6 +1,6 @@
 # Cauchy's theorem: a holomorphic function integrates to zero round any loop with no hole inside
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Cauchy's theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Cauchy's theorem
 
 ---
 

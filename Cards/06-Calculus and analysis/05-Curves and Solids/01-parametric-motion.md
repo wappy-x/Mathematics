@@ -1,6 +1,6 @@
 # Parametric motion: position, velocity and acceleration as vectors
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Curves and Solids](../../../SYLLABUS.md#w06-s05) → Parametric motion
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Curves and Solids](../README.md#s05) → Parametric motion
 
 ---
 

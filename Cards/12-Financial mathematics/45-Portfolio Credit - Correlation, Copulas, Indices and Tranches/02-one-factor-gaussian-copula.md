@@ -1,6 +1,6 @@
 # The one-factor Gaussian copula: one shared economy dial plus private luck, gluing single-name default chances into a joint story
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → The one-factor Gaussian copula
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../README.md#s45) → The one-factor Gaussian copula
 
 ---
 

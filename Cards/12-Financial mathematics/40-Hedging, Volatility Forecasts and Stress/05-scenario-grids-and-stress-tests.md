@@ -1,6 +1,6 @@
 # Stress tests: spot-and-volatility grids, historical replays and hypothetical shocks
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Stress tests
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Hedging, Volatility Forecasts and Stress](../README.md#s40) → Stress tests
 
 ---
 

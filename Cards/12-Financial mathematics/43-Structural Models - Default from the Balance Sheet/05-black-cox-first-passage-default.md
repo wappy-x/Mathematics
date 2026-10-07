@@ -1,6 +1,6 @@
 # Black-Cox: default the first moment assets touch a barrier, and the reflection term Merton misses
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Black-Cox
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Structural Models - Default from the Balance Sheet](../README.md#s43) → Black-Cox
 
 ---
 

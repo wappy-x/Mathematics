@@ -1,6 +1,6 @@
 # Contango and backwardation: reading a futures strip, and the roll that pays or bleeds a long-only holder
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Contango and backwardation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Commodity forwards - carry, storage, convenience yield and the curve](../README.md#s25) → Contango and backwardation
 
 ---
 

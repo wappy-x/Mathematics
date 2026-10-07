@@ -1,6 +1,6 @@
 # Gronwall's inequality: nearby starts stay nearby for a while, and here is the bound
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Existence, Uniqueness and Sensitivity](../../../SYLLABUS.md#w08-s02) → Gronwall's inequality
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Existence, Uniqueness and Sensitivity](../README.md#s02) → Gronwall's inequality
 
 ---
 

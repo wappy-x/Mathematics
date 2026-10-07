@@ -1,6 +1,6 @@
 # Centre of mass: where a shape balances, and the trick that gives volumes from a balance point
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Curves and Solids](../../../SYLLABUS.md#w06-s05) → Centre of mass
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Curves and Solids](../README.md#s05) → Centre of mass
 
 ---
 

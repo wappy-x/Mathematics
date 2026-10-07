@@ -1,6 +1,6 @@
 # The elementary functions: exp, sine and cosine for complex inputs, and the hyperbolic twins are the same functions turned a quarter
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → The elementary functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Holomorphic Functions](../README.md#s02) → The elementary functions
 
 ---
 

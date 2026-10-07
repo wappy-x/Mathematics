@@ -1,6 +1,6 @@
 # Poles and zeros: where a response decays, rings, or runs away
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Poles and zeros
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Linear Systems and Transforms](../README.md#s02) → Poles and zeros
 
 ---
 

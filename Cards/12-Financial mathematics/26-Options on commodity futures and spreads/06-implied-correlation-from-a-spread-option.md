@@ -1,6 +1,6 @@
 # Correlation from a spread option: the market's number for how two prices move together, and when no number fits
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Correlation from a spread option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Options on commodity futures and spreads](../README.md#s26) → Correlation from a spread option
 
 ---
 

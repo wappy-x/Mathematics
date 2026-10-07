@@ -1,6 +1,6 @@
 # Rooted trees: hang a tree from one vertex and you get parents, children, depth and the shape behind every file system
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Rooted trees
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Trees and Cheapest Routes](../README.md#s10) → Rooted trees
 
 ---
 

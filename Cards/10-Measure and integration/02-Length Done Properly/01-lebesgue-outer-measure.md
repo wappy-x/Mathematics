@@ -1,6 +1,6 @@
 # Outer measure: cover a set with intervals, take the cheapest total, and every set gets a provisional size
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Outer measure
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Length Done Properly](../README.md#s02) → Outer measure
 
 ---
 

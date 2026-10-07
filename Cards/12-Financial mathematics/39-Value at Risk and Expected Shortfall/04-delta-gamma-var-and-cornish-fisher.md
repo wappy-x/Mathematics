@@ -1,6 +1,6 @@
 # Options in the book: the delta-gamma approximation and the Cornish-Fisher quantile
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Options in the book
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Value at Risk and Expected Shortfall](../README.md#s39) → Options in the book
 
 ---
 

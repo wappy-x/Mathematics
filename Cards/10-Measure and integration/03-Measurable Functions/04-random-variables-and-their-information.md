@@ -1,6 +1,6 @@
 # Random variables as measurable maps: what a quantity lets you know is the sigma-algebra it generates
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → Random variables as measurable maps
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Measurable Functions](../README.md#s03) → Random variables as measurable maps
 
 ---
 

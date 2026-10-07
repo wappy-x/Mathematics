@@ -1,6 +1,6 @@
 # The middle of the row: C(2n,n) is the biggest entry, and cheap bounds size any choice count without computing it
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → The middle of the row
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Binomial Coefficients and Identities](../README.md#s03) → The middle of the row
 
 ---
 

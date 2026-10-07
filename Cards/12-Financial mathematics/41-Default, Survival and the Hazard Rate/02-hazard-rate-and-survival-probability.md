@@ -1,6 +1,6 @@
 # The hazard rate: the chance of failing in the next instant given survival so far, and the survival curve it builds
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → The hazard rate
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Default, Survival and the Hazard Rate](../README.md#s41) → The hazard rate
 
 ---
 

@@ -1,6 +1,6 @@
 # Barriers on a smile: vanna-volga weighted by the chance of survival, and where it stops being enough
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Barriers on a smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX exotics as desks use them - digitals, touches and barriers](../README.md#s23) → Barriers on a smile
 
 ---
 

@@ -1,6 +1,6 @@
 # Derivatives from the boundary: differentiate under the integral, so holomorphic once means holomorphic forever, with a size limit on every derivative
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Derivatives from the boundary
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Derivatives from the boundary
 
 ---
 

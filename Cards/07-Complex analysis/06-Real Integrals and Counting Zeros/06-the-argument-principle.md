@@ -1,6 +1,6 @@
 # The argument principle: walk the boundary and watch the output spin; the turns count zeros minus poles inside
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → The argument principle
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Real Integrals and Counting Zeros](../README.md#s06) → The argument principle
 
 ---
 

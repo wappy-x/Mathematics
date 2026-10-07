@@ -1,6 +1,6 @@
 # Heavy tails: distributions where the mean or the variance does not exist
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Heavy tails
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Continuous Distributions](../README.md#s04) → Heavy tails
 
 ---
 

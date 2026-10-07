@@ -1,6 +1,6 @@
 # Timing adjustments: rates paid at the start of the period instead of the end
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Timing adjustments
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Convexity and Exotics](../README.md#s32) → Timing adjustments
 
 ---
 

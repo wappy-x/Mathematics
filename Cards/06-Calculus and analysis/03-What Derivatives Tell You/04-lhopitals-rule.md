@@ -1,6 +1,6 @@
 # L'Hopital's rule: limits of 0 over 0 and infinity over infinity, with the conditions that make it legal
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → L'Hopital's rule
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [What Derivatives Tell You](../README.md#s03) → L'Hopital's rule
 
 ---
 

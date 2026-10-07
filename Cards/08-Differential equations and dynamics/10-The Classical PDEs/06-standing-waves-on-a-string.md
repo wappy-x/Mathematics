@@ -1,6 +1,6 @@
 # Standing waves: a fixed string vibrates in harmonics, and the pluck shape decides how loud each one is
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Standing waves
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → Standing waves
 
 ---
 

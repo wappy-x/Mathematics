@@ -1,6 +1,6 @@
 # Smile-adjusted delta: when vol moves with spot, the hedge ratio is not the Black-Scholes delta
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → Smile-adjusted delta
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The smile and the surface](../README.md#s12) → Smile-adjusted delta
 
 ---
 

@@ -1,6 +1,6 @@
 # Waiting for a success: how many tries until the first, and until the r-th
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Waiting for a success
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Discrete Distributions](../README.md#s03) → Waiting for a success
 
 ---
 

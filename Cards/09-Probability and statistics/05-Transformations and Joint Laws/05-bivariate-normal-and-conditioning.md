@@ -1,6 +1,6 @@
 # Bivariate normal: two correlated bells, and the straight-line conditional mean
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Bivariate normal
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Transformations and Joint Laws](../README.md#s05) → Bivariate normal
 
 ---
 

@@ -1,6 +1,6 @@
 # Mean value and maximum principle: a harmonic function at a centre is the average round the circle, so its extremes sit on the boundary and the boundary fixes everything
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Mean value and maximum principle
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Mean value and maximum principle
 
 ---
 

@@ -1,6 +1,6 @@
 # Continuity and subadditivity: bigger sets are bigger, a countable pile weighs at most the sum, and rising or shrinking sets have limiting sizes
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Continuity and subadditivity
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sets You Can Measure](../README.md#s01) → Continuity and subadditivity
 
 ---
 

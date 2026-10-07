@@ -1,6 +1,6 @@
 # Kelly: the bet size that grows wealth fastest, and why half of it is safer
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Kelly
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Returns and Utility](../README.md#s36) → Kelly
 
 ---
 

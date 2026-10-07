@@ -1,6 +1,6 @@
 # The law of a random variable: push the probability forward through it, and the distribution on the line is the whole story
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → The law of a random variable
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Measurable Functions](../README.md#s03) → The law of a random variable
 
 ---
 

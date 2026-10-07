@@ -1,6 +1,6 @@
 # Bermudan swaptions: many exercise dates, priced by regression on simulated curves
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Bermudan swaptions
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Forward-Rate Models](../README.md#s31) → Bermudan swaptions
 
 ---
 

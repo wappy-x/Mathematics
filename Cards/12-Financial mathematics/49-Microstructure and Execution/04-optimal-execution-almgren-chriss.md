@@ -1,6 +1,6 @@
 # Almgren-Chriss: trading a large order over time, balancing impact against risk
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Almgren-Chriss
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Microstructure and Execution](../README.md#s49) → Almgren-Chriss
 
 ---
 

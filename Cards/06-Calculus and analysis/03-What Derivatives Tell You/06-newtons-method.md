@@ -1,6 +1,6 @@
 # Newton's method: solving f(x) equals a target by sliding down tangent lines
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Newton's method
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [What Derivatives Tell You](../README.md#s03) → Newton's method
 
 ---
 

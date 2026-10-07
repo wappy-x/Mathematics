@@ -1,6 +1,6 @@
 # Lattice paths: routes across a grid are choice counts, and Pascal's triangle is the map
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → Lattice paths
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Lattice Paths and Catalan Numbers](../README.md#s06) → Lattice paths
 
 ---
 

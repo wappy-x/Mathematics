@@ -1,6 +1,6 @@
 # Sensitivity functions: one loop has four paths and all four matter
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Sensitivity functions
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Feedback Control](../README.md#s03) → Sensitivity functions
 
 ---
 

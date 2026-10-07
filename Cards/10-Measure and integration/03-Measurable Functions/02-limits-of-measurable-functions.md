@@ -1,6 +1,6 @@
 # Sums, products, sups and limits: everything you do to measurable functions gives back a measurable function
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → Sums, products, sups and limits
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Measurable Functions](../README.md#s03) → Sums, products, sups and limits
 
 ---
 

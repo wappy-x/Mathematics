@@ -1,6 +1,6 @@
 # Recurrences with a driving term: guess a particular solution of the same shape, add the homogeneous part, fit the seeds
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Recurrences with a driving term
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Recurrences](../README.md#s05) → Recurrences with a driving term
 
 ---
 

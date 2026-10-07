@@ -1,6 +1,6 @@
 # Friends and strangers: among any six people, three all know each other or three are all strangers, and five is not enough
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Friends and strangers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Ramsey and Extremal, in Outline](../README.md#s14) → Friends and strangers
 
 ---
 

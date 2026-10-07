@@ -1,6 +1,6 @@
 # Counting coin-flip paths: how many end at a given height, how many return to zero, how many never touch it
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → Counting coin-flip paths
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Lattice Paths and Catalan Numbers](../README.md#s06) → Counting coin-flip paths
 
 ---
 

@@ -1,6 +1,6 @@
 # The wave equation: a shape splits into two half-copies travelling opposite ways at speed c
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The wave equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → The wave equation
 
 ---
 

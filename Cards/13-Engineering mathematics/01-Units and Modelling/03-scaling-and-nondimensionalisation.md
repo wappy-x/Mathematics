@@ -1,6 +1,6 @@
 # Nondimensionalisation: choose natural scales and the small parameter appears
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Nondimensionalisation
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Units and Modelling](../README.md#s01) → Nondimensionalisation
 
 ---
 

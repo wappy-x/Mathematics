@@ -1,6 +1,6 @@
 # Merton's problem: the constant share of wealth to keep in risky assets
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Merton's problem
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Performance and Multi-Period](../README.md#s38) → Merton's problem
 
 ---
 

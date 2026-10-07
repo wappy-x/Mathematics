@@ -1,6 +1,6 @@
 # Central limit theorem: the error of an average is bell-shaped, whatever the ingredients
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Central limit theorem
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Limit Theorems in Practice](../README.md#s06) → Central limit theorem
 
 ---
 

@@ -1,6 +1,6 @@
 # Shoelace formula: area of any polygon from its corners, with a sign that says which way round
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Shoelace formula
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Points, Convexity and Fractals](../README.md#s07) → Shoelace formula
 
 ---
 

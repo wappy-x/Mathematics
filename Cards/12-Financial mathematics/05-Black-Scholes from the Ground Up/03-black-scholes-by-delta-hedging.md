@@ -1,6 +1,6 @@
 # Black-Scholes by hedging: the equation a hedged portfolio must obey
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Black-Scholes by hedging
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Black-Scholes from the Ground Up](../README.md#s05) → Black-Scholes by hedging
 
 ---
 

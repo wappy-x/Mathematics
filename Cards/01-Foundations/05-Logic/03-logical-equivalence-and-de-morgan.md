@@ -1,6 +1,6 @@
 # Logical equivalence and De Morgan: when two sentences say the same thing, and how 'not' moves through and/or
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Logical equivalence and De Morgan
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Logical equivalence and De Morgan
 
 ---
 

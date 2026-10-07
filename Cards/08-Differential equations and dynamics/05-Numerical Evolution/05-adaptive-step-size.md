@@ -1,6 +1,6 @@
 # Adaptive steps: two estimates per step disagree by about the error, so let the solver pick its own step
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Adaptive steps
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Numerical Evolution](../README.md#s05) → Adaptive steps
 
 ---
 

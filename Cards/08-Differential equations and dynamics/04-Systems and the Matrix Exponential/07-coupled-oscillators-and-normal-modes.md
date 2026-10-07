@@ -1,6 +1,6 @@
 # Normal modes: two connected springs vibrate in a few pure patterns, and every motion mixes them
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → Normal modes
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Systems and the Matrix Exponential](../README.md#s04) → Normal modes
 
 ---
 

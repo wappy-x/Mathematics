@@ -1,6 +1,6 @@
 # Perspective: why parallel lines meet in a photograph, and the coordinates that make that legal
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Perspective
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Vectors in Space](../README.md#s05) → Perspective
 
 ---
 

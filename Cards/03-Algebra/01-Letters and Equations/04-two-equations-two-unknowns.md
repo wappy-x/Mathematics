@@ -1,6 +1,6 @@
 # Two equations, two unknowns: substitute or eliminate, and the two ways a crossing fails
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Two equations, two unknowns
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Letters and Equations](../README.md#s01) → Two equations, two unknowns
 
 ---
 

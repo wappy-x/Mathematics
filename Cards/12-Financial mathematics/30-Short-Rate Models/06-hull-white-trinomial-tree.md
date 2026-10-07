@@ -1,6 +1,6 @@
 # The Hull-White tree: a trinomial lattice for the short rate that handles any payoff
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → The Hull-White tree
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → The Hull-White tree
 
 ---
 

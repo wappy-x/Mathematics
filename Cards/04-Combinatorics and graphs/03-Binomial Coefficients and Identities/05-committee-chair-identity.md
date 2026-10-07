@@ -1,6 +1,6 @@
 # Committee and chair: k C(n,k) = n C(n-1,k-1), so the weighted row sum is n 2^(n-1)
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Committee and chair
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Binomial Coefficients and Identities](../README.md#s03) → Committee and chair
 
 ---
 

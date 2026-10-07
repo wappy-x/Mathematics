@@ -1,6 +1,6 @@
 # Counting the complement: when 'at least one' is hard, count 'none' and subtract from everything
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Counting the complement
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Counting Principles](../README.md#s01) → Counting the complement
 
 ---
 

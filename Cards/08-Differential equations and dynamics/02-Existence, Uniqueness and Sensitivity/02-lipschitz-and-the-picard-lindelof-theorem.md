@@ -1,6 +1,6 @@
 # The Picard-Lindelof theorem: a speed limit on the rate guarantees exactly one solution
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Existence, Uniqueness and Sensitivity](../../../SYLLABUS.md#w08-s02) → The Picard-Lindelof theorem
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Existence, Uniqueness and Sensitivity](../README.md#s02) → The Picard-Lindelof theorem
 
 ---
 

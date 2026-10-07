@@ -1,6 +1,6 @@
 # Fisher information: how much a sample can tell you, and the floor on any estimator's error
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Fisher information
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Sampling and Estimation](../README.md#s07) → Fisher information
 
 ---
 

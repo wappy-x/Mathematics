@@ -1,6 +1,6 @@
 # The Radon-Nikodym theorem: absolute continuity is exactly having a density, when both measures are sigma-finite
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → The Radon-Nikodym theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Densities and Changing Measure](../README.md#s08) → The Radon-Nikodym theorem
 
 ---
 

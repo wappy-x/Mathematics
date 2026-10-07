@@ -1,6 +1,6 @@
 # Factorials: the number of ways to line things up, and how fast it explodes
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Factorials
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Counting Principles](../README.md#s01) → Factorials
 
 ---
 

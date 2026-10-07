@@ -1,6 +1,6 @@
 # Absolute value: distance from zero, and the triangle rule
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → Absolute value
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [The Number Line](../README.md#s02) → Absolute value
 
 ---
 

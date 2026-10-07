@@ -1,6 +1,6 @@
 # Continued fractions: Euclid's algorithm read as nested fractions, and why the leap-year rule is 97 in 400
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Continued fractions
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [For the Curious](../README.md#s07) → Continued fractions
 
 ---
 

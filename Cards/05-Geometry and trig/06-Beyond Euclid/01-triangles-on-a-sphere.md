@@ -1,6 +1,6 @@
 # Triangles on a sphere: angles add to more than 180 and the excess is the area
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Triangles on a sphere
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Beyond Euclid](../README.md#s06) → Triangles on a sphere
 
 ---
 

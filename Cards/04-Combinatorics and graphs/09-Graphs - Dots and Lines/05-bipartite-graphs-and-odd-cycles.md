@@ -1,6 +1,6 @@
 # Bipartite graphs: two sides with no edges inside a side, exactly when there is no odd cycle
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Bipartite graphs
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Graphs - Dots and Lines](../README.md#s09) → Bipartite graphs
 
 ---
 

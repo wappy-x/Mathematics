@@ -1,6 +1,6 @@
 # Moving average and ARMA: noise that lingers
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Moving average and ARMA
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Time Series](../README.md#s12) → Moving average and ARMA
 
 ---
 

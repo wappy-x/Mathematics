@@ -1,6 +1,6 @@
 # Stiff equations: when fast and slow parts coexist, step from the destination's slope instead
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Stiff equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Numerical Evolution](../README.md#s05) → Stiff equations
 
 ---
 

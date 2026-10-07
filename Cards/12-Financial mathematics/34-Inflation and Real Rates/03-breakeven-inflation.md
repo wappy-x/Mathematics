@@ -1,6 +1,6 @@
 # Breakeven inflation: the inflation rate at which a linker and a nominal bond tie
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Breakeven inflation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Inflation and Real Rates](../README.md#s34) → Breakeven inflation
 
 ---
 

@@ -1,6 +1,6 @@
 # Colouring: give joined vertices different colours, and the fewest colours needed is the size of the timetable
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Colouring
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Planarity and Colouring](../README.md#s12) → Colouring
 
 ---
 

@@ -1,6 +1,6 @@
 # The exchange option: the right to swap one share for another, priced with no interest rate at all
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → The exchange option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Many underlyings - exchange, spread, basket and rainbow](../README.md#s18) → The exchange option
 
 ---
 

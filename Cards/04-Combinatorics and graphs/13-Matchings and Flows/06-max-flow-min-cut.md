@@ -1,6 +1,6 @@
 # Max-flow min-cut: the most you can push equals the cheapest way to sever the network, and matching is a flow
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Max-flow min-cut
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Matchings and Flows](../README.md#s13) → Max-flow min-cut
 
 ---
 

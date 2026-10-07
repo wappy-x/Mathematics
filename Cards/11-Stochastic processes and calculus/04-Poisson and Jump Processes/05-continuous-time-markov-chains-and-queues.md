@@ -1,6 +1,6 @@
 # Continuous-time chains: rates instead of probabilities, and the M/M/1 queue
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Continuous-time chains
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Poisson and Jump Processes](../README.md#s04) → Continuous-time chains
 
 ---
 

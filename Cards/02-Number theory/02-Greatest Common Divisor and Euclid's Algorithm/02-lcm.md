@@ -1,6 +1,6 @@
 # Least common multiple: the first number both divide into, and why gcd times lcm equals the product
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Least common multiple
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Least common multiple
 
 ---
 

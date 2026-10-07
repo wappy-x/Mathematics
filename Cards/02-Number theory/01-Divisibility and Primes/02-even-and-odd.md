@@ -1,6 +1,6 @@
 # Even and odd: the two-way split, and what adding and multiplying do to it
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Even and odd
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Even and odd
 
 ---
 

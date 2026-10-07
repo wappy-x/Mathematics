@@ -1,6 +1,6 @@
 # Feedback: the closed loop is the open loop over one plus the open loop
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Feedback
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Feedback Control](../README.md#s03) → Feedback
 
 ---
 

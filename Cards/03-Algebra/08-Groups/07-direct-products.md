@@ -1,6 +1,6 @@
 # Direct products: run two groups side by side, and when two clocks make one bigger clock
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Direct products
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Direct products
 
 ---
 

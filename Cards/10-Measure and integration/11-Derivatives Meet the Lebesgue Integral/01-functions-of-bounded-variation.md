@@ -1,6 +1,6 @@
 # Bounded variation: total up-and-down movement is finite, and any such function is the difference of two increasing ones
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → Bounded variation
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Derivatives Meet the Lebesgue Integral](../README.md#s11) → Bounded variation
 
 ---
 

@@ -1,6 +1,6 @@
 # Densities and likelihood ratios: the everyday density is a Radon-Nikodym derivative against length, and a ratio of two tilts one model into another
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → Densities and likelihood ratios
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Densities and Changing Measure](../README.md#s08) → Densities and likelihood ratios
 
 ---
 

@@ -1,6 +1,6 @@
 # The keyhole contour: wrap a branch cut, and the two banks disagree by exactly the factor that solves the integral
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → The keyhole contour
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Real Integrals and Counting Zeros](../README.md#s06) → The keyhole contour
 
 ---
 

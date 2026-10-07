@@ -1,6 +1,6 @@
 # Hypergeometric: drawing without replacement, where every ball taken changes the odds for the next
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Hypergeometric
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Discrete Distributions](../README.md#s03) → Hypergeometric
 
 ---
 

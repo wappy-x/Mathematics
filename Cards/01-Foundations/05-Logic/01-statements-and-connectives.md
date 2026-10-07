@@ -1,6 +1,6 @@
 # Statements and connectives: and, or, not, and the truth table that settles them
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Statements and connectives
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Statements and connectives
 
 ---
 

@@ -1,6 +1,6 @@
 # Walks, paths and cycles: a wander, a route with no repeats, and a closed loop, with distance measured in steps
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Walks, paths and cycles
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Graphs - Dots and Lines](../README.md#s09) → Walks, paths and cycles
 
 ---
 

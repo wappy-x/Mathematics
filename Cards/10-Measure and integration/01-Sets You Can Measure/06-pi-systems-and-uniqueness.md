@@ -1,6 +1,6 @@
 # Pi-systems and Dynkin's theorem: check two measures on the easy sets and they agree everywhere
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Pi-systems and Dynkin's theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sets You Can Measure](../README.md#s01) → Pi-systems and Dynkin's theorem
 
 ---
 

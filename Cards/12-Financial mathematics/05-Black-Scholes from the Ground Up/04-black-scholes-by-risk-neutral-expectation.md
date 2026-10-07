@@ -1,6 +1,6 @@
 # Black-Scholes by expectation: the discounted average payoff under the pricing measure
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Black-Scholes by expectation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Black-Scholes from the Ground Up](../README.md#s05) → Black-Scholes by expectation
 
 ---
 

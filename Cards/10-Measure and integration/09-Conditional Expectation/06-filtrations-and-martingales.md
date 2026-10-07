@@ -1,6 +1,6 @@
 # Filtrations and martingales: information that grows with time, and a process whose best forecast of tomorrow is today's value
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Filtrations and martingales
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Conditional Expectation](../README.md#s09) → Filtrations and martingales
 
 ---
 

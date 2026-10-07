@@ -1,6 +1,6 @@
 # Conditional expectation: the average given what you know, and the tower rule
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Conditional expectation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Random Variables](../README.md#s02) → Conditional expectation
 
 ---
 

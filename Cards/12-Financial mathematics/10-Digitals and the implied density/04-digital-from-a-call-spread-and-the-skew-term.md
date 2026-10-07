@@ -1,6 +1,6 @@
 # A digital from a call spread: the limit that prices it, and the extra term the smile adds
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → A digital from a call spread
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Digitals and the implied density](../README.md#s10) → A digital from a call spread
 
 ---
 

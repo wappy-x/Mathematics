@@ -1,6 +1,6 @@
 # Zeros and the identity theorem: zeros come singly, so a function known on a tiny stretch is known everywhere
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Zeros and the identity theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Zeros and the identity theorem
 
 ---
 

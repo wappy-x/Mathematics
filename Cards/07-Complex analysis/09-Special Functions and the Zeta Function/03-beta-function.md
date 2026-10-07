@@ -1,6 +1,6 @@
 # The beta function: an integral over 0 to 1 built from two gammas, the shape behind every bump between 0 and 1
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → The beta function
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → The beta function
 
 ---
 

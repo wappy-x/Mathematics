@@ -1,6 +1,6 @@
 # Asset-or-nothing digital: the share itself if it finishes above the line, and why the call is two digitals
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → Asset-or-nothing digital
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Digitals and the implied density](../README.md#s10) → Asset-or-nothing digital
 
 ---
 

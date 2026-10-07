@@ -1,6 +1,6 @@
 # Realised variance: add up squared daily returns, annualise, and know what the number is estimating
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → Realised variance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Variance swaps, the log contract and VIX](../README.md#s19) → Realised variance
 
 ---
 

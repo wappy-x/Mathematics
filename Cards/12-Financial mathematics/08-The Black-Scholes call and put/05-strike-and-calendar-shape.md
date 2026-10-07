@@ -1,6 +1,6 @@
 # Shape across strikes and expiries: calls fall and curve the right way in strike, and total variance never falls in time
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Shape across strikes and expiries
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → Shape across strikes and expiries
 
 ---
 

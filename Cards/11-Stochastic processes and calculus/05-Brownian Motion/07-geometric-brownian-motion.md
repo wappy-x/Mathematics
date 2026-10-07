@@ -1,6 +1,6 @@
 # Geometric Brownian motion: a price whose log is Brownian
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Geometric Brownian motion
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Brownian Motion](../README.md#s05) → Geometric Brownian motion
 
 ---
 

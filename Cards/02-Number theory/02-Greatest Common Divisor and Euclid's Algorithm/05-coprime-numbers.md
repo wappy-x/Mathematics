@@ -1,6 +1,6 @@
 # Coprime numbers: sharing no factor but 1, and why that one condition unlocks so much
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Coprime numbers
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Coprime numbers
 
 ---
 

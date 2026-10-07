@@ -1,6 +1,6 @@
 # Power series: polynomials that never stop, and the radius inside which they behave
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Power series
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → Power series
 
 ---
 

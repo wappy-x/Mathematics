@@ -1,6 +1,6 @@
 # Letters for numbers: a letter is a number you have not been told yet, and an expression is a recipe that uses one
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Letters for numbers
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Letters and Equations](../README.md#s01) → Letters for numbers
 
 ---
 

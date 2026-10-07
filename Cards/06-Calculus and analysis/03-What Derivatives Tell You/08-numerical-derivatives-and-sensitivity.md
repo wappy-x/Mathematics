@@ -1,6 +1,6 @@
 # Numerical derivatives: forward and central differences, and why the step cannot be too small
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Numerical derivatives
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [What Derivatives Tell You](../README.md#s03) → Numerical derivatives
 
 ---
 

@@ -1,6 +1,6 @@
 # Orders: rankings where some pairs may be incomparable, drawn as a Hasse diagram
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Partial and total orders
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → Partial and total orders
 
 ---
 

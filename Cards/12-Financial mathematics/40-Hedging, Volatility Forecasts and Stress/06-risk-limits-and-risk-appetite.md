@@ -1,6 +1,6 @@
 # Limits: notional, sensitivity, VaR and drawdown limits, and the appetite statement behind them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Limits
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Hedging, Volatility Forecasts and Stress](../README.md#s40) → Limits
 
 ---
 

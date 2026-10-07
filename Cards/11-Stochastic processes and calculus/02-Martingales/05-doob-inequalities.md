@@ -1,6 +1,6 @@
 # Doob's inequalities: the maximum of a martingale is controlled by its endpoint
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Doob's inequalities
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Martingales](../README.md#s02) → Doob's inequalities
 
 ---
 

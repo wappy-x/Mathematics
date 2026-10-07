@@ -1,6 +1,6 @@
 # Hessian: the matrix of second derivatives and the quadratic model it gives
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Hessian
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Hessian
 
 ---
 

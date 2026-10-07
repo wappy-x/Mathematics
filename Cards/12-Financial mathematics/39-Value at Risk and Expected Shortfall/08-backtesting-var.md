@@ -1,6 +1,6 @@
 # Backtesting VaR: counting exceptions, and the tests that judge them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Backtesting VaR
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Value at Risk and Expected Shortfall](../README.md#s39) → Backtesting VaR
 
 ---
 

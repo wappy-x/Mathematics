@@ -1,6 +1,6 @@
 # Bijections and double counting: match two collections one-to-one, or count one collection two ways, and the numbers must agree
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Bijections and double counting
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Repeats, Groups and Double Counting](../README.md#s02) → Bijections and double counting
 
 ---
 

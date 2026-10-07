@@ -1,6 +1,6 @@
 # Directed graphs: arrows instead of lines, and a graph with no way back can be lined up so every arrow points forward
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Directed graphs
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Graphs - Dots and Lines](../README.md#s09) → Directed graphs
 
 ---
 

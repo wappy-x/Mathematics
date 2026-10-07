@@ -1,6 +1,6 @@
 # The complex logarithm: undo e^z, and find infinitely many answers a floor apart
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → The complex logarithm
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Holomorphic Functions](../README.md#s02) → The complex logarithm
 
 ---
 

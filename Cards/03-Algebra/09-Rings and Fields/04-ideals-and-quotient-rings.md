@@ -1,6 +1,6 @@
 # Ideals and quotient rings: the multiples of n are the model, collapsing by them gives Z mod n, and every ring map has one as its kernel
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Ideals and quotient rings
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Rings and Fields](../README.md#s09) → Ideals and quotient rings
 
 ---
 

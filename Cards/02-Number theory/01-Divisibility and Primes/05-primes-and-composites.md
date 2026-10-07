@@ -1,6 +1,6 @@
 # Primes and composites: the numbers that will not split into equal rows, and the ones that will
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Primes and composites
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Primes and composites
 
 ---
 

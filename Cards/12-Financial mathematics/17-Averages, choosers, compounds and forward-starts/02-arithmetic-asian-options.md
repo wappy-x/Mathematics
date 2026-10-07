@@ -1,6 +1,6 @@
 # Arithmetic Asian options: the average everyone trades has no formula, so simulate and let the geometric twin steer
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Arithmetic Asian options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages, choosers, compounds and forward-starts](../README.md#s17) → Arithmetic Asian options
 
 ---
 

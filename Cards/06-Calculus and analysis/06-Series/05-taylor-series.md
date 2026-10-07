@@ -1,6 +1,6 @@
 # Taylor series: when the polynomial stand-ins converge to the function
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Taylor series
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → Taylor series
 
 ---
 

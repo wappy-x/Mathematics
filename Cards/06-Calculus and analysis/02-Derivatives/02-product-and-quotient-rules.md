@@ -1,6 +1,6 @@
 # Product and quotient rules: derivatives of things multiplied and divided
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Product and quotient rules
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Derivatives](../README.md#s02) → Product and quotient rules
 
 ---
 

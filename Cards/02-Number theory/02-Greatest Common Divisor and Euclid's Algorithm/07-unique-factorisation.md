@@ -1,6 +1,6 @@
 # Why the factorisation is unique: Euclid's lemma turns the factor tree into the fundamental theorem of arithmetic
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → The fundamental theorem of arithmetic
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → The fundamental theorem of arithmetic
 
 ---
 

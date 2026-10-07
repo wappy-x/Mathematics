@@ -1,6 +1,6 @@
 # When an SDE has one solution: Lipschitz and growth conditions
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → When an SDE has one solution
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Ito Calculus](../README.md#s06) → When an SDE has one solution
 
 ---
 

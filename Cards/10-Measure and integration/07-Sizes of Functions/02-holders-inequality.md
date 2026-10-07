@@ -1,6 +1,6 @@
 # Holder's inequality: the integral of a product is at most the product of the sizes in matched exponents, with Cauchy-Schwarz as the p = 2 case
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Holder's inequality
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sizes of Functions](../README.md#s07) → Holder's inequality
 
 ---
 

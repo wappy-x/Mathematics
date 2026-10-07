@@ -1,6 +1,6 @@
 # Greeks of a futures option: delta in contracts not barrels, rho that is minus time times price, and vega per vol point per lot
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Greeks of a futures option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Options on commodity futures and spreads](../README.md#s26) → Greeks of a futures option
 
 ---
 

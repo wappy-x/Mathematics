@@ -1,6 +1,6 @@
 # Expected shortfall: the average loss beyond VaR, and why it adds up when VaR does not
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Expected shortfall
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Value at Risk and Expected Shortfall](../README.md#s39) → Expected shortfall
 
 ---
 

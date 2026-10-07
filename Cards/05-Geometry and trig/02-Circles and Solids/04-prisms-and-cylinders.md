@@ -1,6 +1,6 @@
 # Prisms and cylinders: volume is cross-section times height
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Prisms and cylinders
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Circles and Solids](../README.md#s02) → Prisms and cylinders
 
 ---
 

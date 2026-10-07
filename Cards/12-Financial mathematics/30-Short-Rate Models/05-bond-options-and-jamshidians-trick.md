@@ -1,6 +1,6 @@
 # Bond options: a call on a zero in closed form, and a coupon-bond option as a portfolio of them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Bond options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → Bond options
 
 ---
 

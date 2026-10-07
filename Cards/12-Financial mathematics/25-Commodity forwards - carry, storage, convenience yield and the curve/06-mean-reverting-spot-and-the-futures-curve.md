@@ -1,6 +1,6 @@
 # A spot price that reverts: the Schwartz one-factor model, its futures formula, and why long-dated futures barely move
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → A spot price that reverts
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Commodity forwards - carry, storage, convenience yield and the curve](../README.md#s25) → A spot price that reverts
 
 ---
 

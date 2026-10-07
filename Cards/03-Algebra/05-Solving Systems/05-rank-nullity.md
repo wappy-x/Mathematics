@@ -1,6 +1,6 @@
 # Rank and nullity: what a matrix keeps and what it kills, and why the two counts add up to the number of inputs
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → Rank and nullity
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → Rank and nullity
 
 ---
 

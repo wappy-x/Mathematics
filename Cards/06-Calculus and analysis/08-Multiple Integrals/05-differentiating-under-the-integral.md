@@ -1,6 +1,6 @@
 # Differentiating under the integral: when the derivative can go inside
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Differentiating under the integral
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Multiple Integrals](../README.md#s08) → Differentiating under the integral
 
 ---
 

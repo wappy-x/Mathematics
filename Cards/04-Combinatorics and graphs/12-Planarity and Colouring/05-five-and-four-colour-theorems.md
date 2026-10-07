@@ -1,6 +1,6 @@
 # Colouring maps: five colours always suffice by a short argument, four by a famous long one
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Colouring maps
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Planarity and Colouring](../README.md#s12) → Colouring maps
 
 ---
 

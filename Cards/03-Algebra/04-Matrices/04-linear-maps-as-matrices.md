@@ -1,6 +1,6 @@
 # Linear maps: a rule that keeps lines straight and the origin fixed is secretly a matrix, whose columns say where the axes go
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Linear maps
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Matrices](../README.md#s04) → Linear maps
 
 ---
 

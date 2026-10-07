@@ -1,6 +1,6 @@
 # The par swap rate: the fixed rate that makes a new swap worth zero, and the annuity it divides by
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → The par swap rate
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Swaps](../README.md#s28) → The par swap rate
 
 ---
 

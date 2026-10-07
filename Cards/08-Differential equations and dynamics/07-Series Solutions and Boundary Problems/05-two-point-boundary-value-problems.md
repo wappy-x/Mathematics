@@ -1,6 +1,6 @@
 # Boundary value problems: conditions at both ends instead of one start, so there may be one answer, none or infinitely many
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Boundary value problems
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Series Solutions and Boundary Problems](../README.md#s07) → Boundary value problems
 
 ---
 

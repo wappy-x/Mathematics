@@ -1,6 +1,6 @@
 # Small angles: why sin x is nearly x, and the sandwich that proves it
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Small angles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → Small angles
 
 ---
 

@@ -1,6 +1,6 @@
 # Quanto rates: a foreign rate paid in domestic currency
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Quanto rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Convexity and Exotics](../README.md#s32) → Quanto rates
 
 ---
 

@@ -1,6 +1,6 @@
 # Correlation Greeks and implied correlation: the sensitivity nobody can hedge directly, and the number an index option implies
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → Correlation Greeks and implied correlation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Many underlyings - exchange, spread, basket and rainbow](../README.md#s18) → Correlation Greeks and implied correlation
 
 ---
 

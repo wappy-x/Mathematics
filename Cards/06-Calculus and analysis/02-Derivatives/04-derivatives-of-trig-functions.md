@@ -1,6 +1,6 @@
 # Derivatives of sine and cosine: why the derivative of sine is cosine
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Derivatives of sine and cosine
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Derivatives](../README.md#s02) → Derivatives of sine and cosine
 
 ---
 

@@ -1,6 +1,6 @@
 # From one equation to a system: any higher-order equation is several first-order ones in a vector
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → From one equation to a system
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Systems and the Matrix Exponential](../README.md#s04) → From one equation to a system
 
 ---
 

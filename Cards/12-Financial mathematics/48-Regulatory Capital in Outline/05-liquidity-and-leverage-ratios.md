@@ -1,6 +1,6 @@
 # Liquidity and leverage: LCR, NSFR and the leverage ratio, and what each guards against
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Liquidity and leverage
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Regulatory Capital in Outline](../README.md#s48) → Liquidity and leverage
 
 ---
 

@@ -1,6 +1,6 @@
 # Option price bounds: the floor and ceiling every call and put must respect before any model
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Option price bounds
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → Option price bounds
 
 ---
 

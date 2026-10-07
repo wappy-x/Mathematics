@@ -1,6 +1,6 @@
 # Polynomials behave like integers: division with remainder, Euclid's algorithm and unique factorisation all work again
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Polynomials behave like integers
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Rings and Fields](../README.md#s09) → Polynomials behave like integers
 
 ---
 

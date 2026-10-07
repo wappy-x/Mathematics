@@ -1,6 +1,6 @@
 # Adding and multiplying on the clock: reduce before or after, the answer agrees
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → Adding and multiplying on the clock
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Clock Arithmetic](../README.md#s03) → Adding and multiplying on the clock
 
 ---
 

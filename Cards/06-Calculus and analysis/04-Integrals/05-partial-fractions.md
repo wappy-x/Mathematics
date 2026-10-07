@@ -1,6 +1,6 @@
 # Partial fractions: splitting a rational function into pieces you can integrate
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Partial fractions
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Integrals](../README.md#s04) → Partial fractions
 
 ---
 

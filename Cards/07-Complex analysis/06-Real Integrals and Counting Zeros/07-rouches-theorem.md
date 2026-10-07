@@ -1,6 +1,6 @@
 # Rouche's theorem: a dog on a short lead circles the post as often as its owner, so small changes never change the root count
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Rouche's theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Real Integrals and Counting Zeros](../README.md#s06) → Rouche's theorem
 
 ---
 

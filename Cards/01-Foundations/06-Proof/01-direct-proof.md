@@ -1,6 +1,6 @@
 # Direct proof: what a proof is, and the straight-line kind
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → What a proof is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → What a proof is
 
 ---
 

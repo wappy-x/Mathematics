@@ -1,6 +1,6 @@
 # Second derivatives: acceleration, and whether a curve bends up or down
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Second derivatives
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Derivatives](../README.md#s02) → Second derivatives
 
 ---
 

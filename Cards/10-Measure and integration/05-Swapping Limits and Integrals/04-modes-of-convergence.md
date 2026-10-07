@@ -1,6 +1,6 @@
 # Modes of convergence: almost everywhere, in measure, in mean, and the map of which implies which
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Swapping Limits and Integrals](../../../SYLLABUS.md#w10-s05) → Modes of convergence
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Swapping Limits and Integrals](../README.md#s05) → Modes of convergence
 
 ---
 

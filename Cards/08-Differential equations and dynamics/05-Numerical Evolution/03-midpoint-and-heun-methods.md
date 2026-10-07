@@ -1,6 +1,6 @@
 # Midpoint and Heun: sample the slope twice per step and the error shrinks four times faster
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Midpoint and Heun
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Numerical Evolution](../README.md#s05) → Midpoint and Heun
 
 ---
 

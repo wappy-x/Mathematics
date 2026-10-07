@@ -1,6 +1,6 @@
 # De Bruijn sequences: an Euler circuit that packs every possible code into one shortest string
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → De Bruijn sequences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Tours - Euler and Hamilton](../README.md#s11) → De Bruijn sequences
 
 ---
 

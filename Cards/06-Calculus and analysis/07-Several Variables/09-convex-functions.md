@@ -1,6 +1,6 @@
 # Convex functions: bowls, chords above the graph, and why a local minimum is the global one
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Convex functions
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Convex functions
 
 ---
 

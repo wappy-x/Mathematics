@@ -1,6 +1,6 @@
 # Changing the unit of account: pricing in shares, bonds or annuities
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Changing the unit of account
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Black-Scholes from the Ground Up](../README.md#s05) → Changing the unit of account
 
 ---
 

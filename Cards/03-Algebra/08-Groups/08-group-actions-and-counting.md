@@ -1,6 +1,6 @@
 # Group actions: a group moving the members of a set, with orbit size times stabiliser size equal to the group's size
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Group actions
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Group actions
 
 ---
 

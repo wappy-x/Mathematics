@@ -1,6 +1,6 @@
 # Cross product: a vector perpendicular to two others, with the parallelogram's area as its length
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Cross product
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Vectors in Space](../README.md#s05) → Cross product
 
 ---
 

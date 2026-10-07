@@ -1,6 +1,6 @@
 # Constant-maturity swaps: paying a swap rate on the wrong date, and the replication that prices it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Constant-maturity swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Convexity and Exotics](../README.md#s32) → Constant-maturity swaps
 
 ---
 

@@ -1,6 +1,6 @@
 # Change of basis: the same point with a new address book, and the same map as a new matrix P^-1 A P
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → Change of basis
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Change of basis
 
 ---
 

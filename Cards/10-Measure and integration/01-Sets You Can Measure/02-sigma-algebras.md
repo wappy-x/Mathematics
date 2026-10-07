@@ -1,6 +1,6 @@
 # Sigma-algebras: the family of sets you are allowed to measure, closed under complements and countable unions
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Sigma-algebras
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sets You Can Measure](../README.md#s01) → Sigma-algebras
 
 ---
 

@@ -1,6 +1,6 @@
 # Convolution: smear one signal with another, and under the transform the smear becomes a multiplication
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → Convolution
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → Convolution
 
 ---
 

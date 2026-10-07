@@ -1,6 +1,6 @@
 # Stochastic dominance: when one gamble beats another for every sensible investor
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Stochastic dominance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Returns and Utility](../README.md#s36) → Stochastic dominance
 
 ---
 

@@ -1,6 +1,6 @@
 # Black-Scholes put: the right to sell, priced from the same six numbers
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Black-Scholes put
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → Black-Scholes put
 
 ---
 

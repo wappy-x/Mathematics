@@ -1,6 +1,6 @@
 # Inflation caps and floors in outline: year-on-year options priced with a shifted Black formula
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Inflation caps and floors in outline
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Inflation and Real Rates](../README.md#s34) → Inflation caps and floors in outline
 
 ---
 

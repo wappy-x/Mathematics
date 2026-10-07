@@ -1,6 +1,6 @@
 # The residue theorem: a loop integral is 2 pi i times the sum of the residues inside
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → The residue theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Laurent Series, Singularities and Residues](../README.md#s05) → The residue theorem
 
 ---
 

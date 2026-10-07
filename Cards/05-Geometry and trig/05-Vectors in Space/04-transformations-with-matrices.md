@@ -1,6 +1,6 @@
 # Moving shapes with matrices: rotate, reflect, scale and shift with one multiplication
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Moving shapes with matrices
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Vectors in Space](../README.md#s05) → Moving shapes with matrices
 
 ---
 

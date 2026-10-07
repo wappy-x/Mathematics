@@ -1,6 +1,6 @@
 # Caratheodory's criterion: keep the sets that split every other set cleanly, and outer measure adds up on them
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Caratheodory's criterion
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Length Done Properly](../README.md#s02) → Caratheodory's criterion
 
 ---
 

@@ -1,6 +1,6 @@
 # Ellipses and hyperbolas: fixed sum and fixed difference of distances
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Ellipses and hyperbolas
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Coordinates and Curves](../README.md#s04) → Ellipses and hyperbolas
 
 ---
 

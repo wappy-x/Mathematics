@@ -1,6 +1,6 @@
 # Fixed points: iterating a function until it stops moving, and the contraction rule that guarantees it
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Fixed points
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [What Derivatives Tell You](../README.md#s03) → Fixed points
 
 ---
 

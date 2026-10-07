@@ -1,6 +1,6 @@
 # Solving a recurrence with a generating function: the step rule becomes an equation for the series, and a ratio of polynomials falls out
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Solving a recurrence with a generating function
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Generating Functions](../README.md#s07) → Solving a recurrence with a generating function
 
 ---
 

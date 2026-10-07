@@ -1,6 +1,6 @@
 # SABR and Hagan's formula: a stochastic-vol model whose implied volatility you can write down
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → SABR and Hagan's formula
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Stochastic volatility - Heston, SABR and their mix](../README.md#s14) → SABR and Hagan's formula
 
 ---
 

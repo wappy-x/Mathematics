@@ -1,6 +1,6 @@
 # Nearest-neighbour maps: Voronoi cells and the Delaunay triangulation behind them
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Nearest-neighbour maps
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Points, Convexity and Fractals](../README.md#s07) → Nearest-neighbour maps
 
 ---
 

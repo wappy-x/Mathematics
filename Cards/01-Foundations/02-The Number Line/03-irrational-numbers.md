@@ -1,6 +1,6 @@
 # Irrational numbers: decimals that never repeat, and why root 2 is not a fraction
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → Irrational numbers
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [The Number Line](../README.md#s02) → Irrational numbers
 
 ---
 

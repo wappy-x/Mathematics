@@ -1,6 +1,6 @@
 # The Gaussian integral: the integral of e to the minus x squared is root pi
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → The Gaussian integral
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Multiple Integrals](../README.md#s08) → The Gaussian integral
 
 ---
 

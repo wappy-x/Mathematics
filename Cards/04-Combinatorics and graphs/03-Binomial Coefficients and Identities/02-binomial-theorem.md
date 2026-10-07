@@ -1,6 +1,6 @@
 # The binomial theorem: (a + b)^n expands with choice counts as coefficients, and so does (a + b + c)^n
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → The binomial theorem
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Binomial Coefficients and Identities](../README.md#s03) → The binomial theorem
 
 ---
 

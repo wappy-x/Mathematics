@@ -1,6 +1,6 @@
 # Reflection principle: the maximum of Brownian motion and the chance of touching a level
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Reflection principle
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Brownian Motion](../README.md#s05) → Reflection principle
 
 ---
 

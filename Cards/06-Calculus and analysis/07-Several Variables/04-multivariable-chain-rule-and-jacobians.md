@@ -1,6 +1,6 @@
 # Chain rule in several variables: derivative matrices multiply
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Chain rule in several variables
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Chain rule in several variables
 
 ---
 

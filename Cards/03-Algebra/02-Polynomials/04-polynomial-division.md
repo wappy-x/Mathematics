@@ -1,6 +1,6 @@
 # Polynomial long division: divide with a remainder exactly as with whole numbers, and the remainder is the value at the root
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Polynomial long division
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Polynomials](../README.md#s02) → Polynomial long division
 
 ---
 

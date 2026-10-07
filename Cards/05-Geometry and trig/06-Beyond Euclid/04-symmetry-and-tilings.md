@@ -1,6 +1,6 @@
 # Symmetry: the moves that leave a shape unchanged, and the seventeen ways to tile a wall
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Symmetry
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Beyond Euclid](../README.md#s06) → Symmetry
 
 ---
 

@@ -1,6 +1,6 @@
 # Fractals: shapes made of smaller copies of themselves, and a dimension that is not a whole number
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Fractals
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Points, Convexity and Fractals](../README.md#s07) → Fractals
 
 ---
 

@@ -1,6 +1,6 @@
 # Law of cosines: Pythagoras with a correction term for any angle
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Law of cosines
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → Law of cosines
 
 ---
 

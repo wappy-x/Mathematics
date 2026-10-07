@@ -1,6 +1,6 @@
 # Trig substitution: square roots of quadratics through a triangle
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Trig substitution
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Integrals](../README.md#s04) → Trig substitution
 
 ---
 

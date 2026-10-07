@@ -1,6 +1,6 @@
 # Phase portraits and nullclines: draw where each variable stops changing and the arrows fill themselves in
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Phase portraits and nullclines
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → Phase portraits and nullclines
 
 ---
 

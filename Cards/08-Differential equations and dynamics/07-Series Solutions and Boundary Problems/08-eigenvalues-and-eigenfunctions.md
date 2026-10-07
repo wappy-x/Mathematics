@@ -1,6 +1,6 @@
 # Eigenvalue problems: only special parameter values allow a nonzero solution, and those are the natural modes
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Eigenvalue problems
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Series Solutions and Boundary Problems](../README.md#s07) → Eigenvalue problems
 
 ---
 

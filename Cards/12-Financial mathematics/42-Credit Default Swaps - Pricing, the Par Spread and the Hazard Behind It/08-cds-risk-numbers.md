@@ -1,6 +1,6 @@
 # CDS risk numbers: CS01, jump-to-default, recovery and rate sensitivity, and the carry of a position
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → CDS risk numbers
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../README.md#s42) → CDS risk numbers
 
 ---
 

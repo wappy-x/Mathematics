@@ -1,6 +1,6 @@
 # Inclusion-exclusion for any number of sets: add, subtract the pairs, add the triples, and every element ends up counted once
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Inclusion-exclusion for any number of sets
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Inclusion-Exclusion and Pigeonhole](../README.md#s04) → Inclusion-exclusion for any number of sets
 
 ---
 

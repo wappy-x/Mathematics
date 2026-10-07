@@ -1,6 +1,6 @@
 # Integrals round a full turn: set z = e to the i-theta and the trig integral becomes a residue on the unit circle
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Integrals round a full turn
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Real Integrals and Counting Zeros](../README.md#s06) → Integrals round a full turn
 
 ---
 

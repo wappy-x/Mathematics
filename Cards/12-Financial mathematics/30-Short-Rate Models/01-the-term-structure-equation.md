@@ -1,6 +1,6 @@
 # A short-rate model: one random rate, and the equation every bond must satisfy
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → A short-rate model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → A short-rate model
 
 ---
 

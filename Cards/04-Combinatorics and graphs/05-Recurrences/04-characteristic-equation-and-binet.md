@@ -1,6 +1,6 @@
 # The characteristic equation: try r^n, solve a quadratic, and any two-term step rule becomes a formula
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → The characteristic equation
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Recurrences](../README.md#s05) → The characteristic equation
 
 ---
 

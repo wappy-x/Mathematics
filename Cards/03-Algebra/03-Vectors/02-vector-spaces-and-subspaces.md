@@ -1,6 +1,6 @@
 # Vector spaces and subspaces: any collection you can add and scale by the usual rules, and the flat pieces inside it that close up
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Vector spaces and subspaces
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Vectors](../README.md#s03) → Vector spaces and subspaces
 
 ---
 

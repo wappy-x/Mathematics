@@ -1,6 +1,6 @@
 # Implied hazard from one CDS quote: solving the par-spread equation backwards, and why the answer is unique
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Implied hazard from one CDS quote
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../README.md#s42) → Implied hazard from one CDS quote
 
 ---
 

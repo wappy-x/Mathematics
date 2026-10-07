@@ -1,6 +1,6 @@
 # Bias and variance: the two ways an estimator can be wrong
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Bias and variance
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Sampling and Estimation](../README.md#s07) → Bias and variance
 
 ---
 

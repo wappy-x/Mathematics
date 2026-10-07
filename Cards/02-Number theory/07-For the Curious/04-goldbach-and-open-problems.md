@@ -1,6 +1,6 @@
 # Goldbach, twin primes and friends: the simple questions nobody has answered
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Goldbach, twin primes and friends
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [For the Curious](../README.md#s07) → Goldbach, twin primes and friends
 
 ---
 

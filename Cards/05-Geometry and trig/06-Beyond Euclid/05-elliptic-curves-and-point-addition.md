@@ -1,6 +1,6 @@
 # Elliptic curves: a cubic curve whose points can be added like numbers
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Elliptic curves
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Beyond Euclid](../README.md#s06) → Elliptic curves
 
 ---
 

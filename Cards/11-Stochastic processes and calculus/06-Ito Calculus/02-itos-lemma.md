@@ -1,6 +1,6 @@
 # Ito's lemma: the chain rule with a second-derivative term
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Ito's lemma
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Ito Calculus](../README.md#s06) → Ito's lemma
 
 ---
 

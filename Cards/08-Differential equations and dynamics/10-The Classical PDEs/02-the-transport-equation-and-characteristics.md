@@ -1,6 +1,6 @@
 # The transport equation: a shape carried along unchanged, and the lines along which a PDE is really an ODE
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The transport equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → The transport equation
 
 ---
 

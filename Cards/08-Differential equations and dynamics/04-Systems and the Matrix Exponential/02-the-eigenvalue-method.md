@@ -1,6 +1,6 @@
 # The eigenvalue method: along an eigenvector the system only stretches, so each mode is a plain exponential
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → The eigenvalue method
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Systems and the Matrix Exponential](../README.md#s04) → The eigenvalue method
 
 ---
 

@@ -1,6 +1,6 @@
 # Inverse trig: getting the angle back, and why there is more than one answer
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Inverse trig
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → Inverse trig
 
 ---
 

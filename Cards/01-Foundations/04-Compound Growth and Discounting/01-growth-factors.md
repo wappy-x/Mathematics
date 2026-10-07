@@ -1,6 +1,6 @@
 # Growth factors: a 25% rise is a multiply by 1.25, and percent changes do not add
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Growth factors
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Compound Growth and Discounting](../README.md#s04) → Growth factors
 
 ---
 

@@ -1,6 +1,6 @@
 # The three rearranging laws: swapping, regrouping, and spreading multiplication over addition
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → The three rearranging laws
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Everyday Arithmetic](../README.md#s01) → The three rearranging laws
 
 ---
 

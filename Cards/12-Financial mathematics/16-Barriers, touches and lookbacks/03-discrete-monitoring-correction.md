@@ -1,6 +1,6 @@
 # Daily monitoring: a barrier checked once a day is worth more than the continuous formula says, and the fix is a shifted barrier
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Daily monitoring
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Barriers, touches and lookbacks](../README.md#s16) → Daily monitoring
 
 ---
 

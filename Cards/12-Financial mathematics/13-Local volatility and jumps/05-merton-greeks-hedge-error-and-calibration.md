@@ -1,6 +1,6 @@
 # Greeks under jumps: the delta hedge that cannot be perfect, and fitting the three jump numbers to the smile
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Greeks under jumps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Local volatility and jumps](../README.md#s13) → Greeks under jumps
 
 ---
 

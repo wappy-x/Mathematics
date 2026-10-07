@@ -1,6 +1,6 @@
 # Adjoint differentiation: every sensitivity for the cost of one extra pass
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Adjoint differentiation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Greeks by Numbers and Calibration](../README.md#s07) → Adjoint differentiation
 
 ---
 

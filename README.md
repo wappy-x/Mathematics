@@ -26,7 +26,7 @@ A library of short, self-contained **cards**, each teaching one idea of mathemat
 
 The cards are arranged like a ladder. They start with place value and fractions, climb through algebra, calculus and probability, and end at topology, number theory and the famous unsolved problems. Each card only uses ideas from the cards before it, so you can start at the bottom and keep going, or jump straight to whatever you need.
 
-**1,087 of 1,866 cards are ready to read.** The [syllabus](SYLLABUS.md) lists every one of them, wing by wing and shelf by shelf. Click a card's title to read it; a title without a link is not written yet.
+**1,087 of 1,866 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
 
 ## What's on a card
 
@@ -55,36 +55,36 @@ Every card has the same shape, so you always know where to look:
 
 ## The map
 
-The library has 25 **wings**, each split into shelves of cards. Click a wing to open its page in the syllabus: a list of its shelves, then every card on each shelf.
+The library has 25 **wings**, each split into shelves of cards. Click a wing to open its page: a list of its shelves, then every card on each shelf.
 
 <!-- map:start -->
 | # | Wing | What it's about | Ready to read |
 | --- | --- | --- | --- |
-| 01 | [**Foundations**](SYLLABUS.md#w01) | Numbers, fractions, powers, logic and proof: the toolkit everything else uses. | 59 of 59 |
-| 02 | [**Number theory**](SYLLABUS.md#w02) | Primes, remainders, clock arithmetic, codes and secrets. | 43 of 43 |
-| 03 | [**Algebra**](SYLLABUS.md#w03) | Equations, vectors, matrices, groups and fields. | 51 of 51 |
-| 04 | [**Combinatorics and graphs**](SYLLABUS.md#w04) | Counting cleverly, networks, routes and puzzles. | 82 of 82 |
-| 05 | [**Geometry and trig**](SYLLABUS.md#w05) | Shapes, angles, coordinates and space. | 43 of 43 |
-| 06 | [**Calculus and analysis**](SYLLABUS.md#w06) | Change, limits, areas and the infinitely small. | 70 of 70 |
-| 07 | [**Complex analysis**](SYLLABUS.md#w07) | What the square root of −1 unlocks. | 60 of 60 |
-| 08 | [**Differential equations and dynamics**](SYLLABUS.md#w08) | How things change over time: growth, orbits, chaos. | 93 of 93 |
-| 09 | [**Probability and statistics**](SYLLABUS.md#w09) | Chance, data and drawing honest conclusions. | 100 of 100 |
-| 10 | [**Measure and integration**](SYLLABUS.md#w10) | The rigorous floor under probability and calculus. | 68 of 68 |
-| 11 | [**Stochastic processes and calculus**](SYLLABUS.md#w11) | Randomness in motion: random walks to Brownian motion. | 60 of 60 |
-| 12 | [**Financial mathematics**](SYLLABUS.md#w12) | Interest, pricing, risk and markets, from loans to derivatives. | 332 of 332 |
-| 13 | [**Engineering mathematics**](SYLLABUS.md#w13) | Units, signals, control, circuits, mechanics, heat. | 26 of 86 |
-| 14 | [**Applied and computational**](SYLLABUS.md#w14) | Algorithms, information, cryptography, machine learning. | 0 of 71 · planned |
-| 15 | [**Optimization**](SYLLABUS.md#w15) | Finding the best choice under limits. | 0 of 64 · planned |
-| 16 | [**Numerical analysis**](SYLLABUS.md#w16) | Computing answers you can trust, and knowing how far off they are. | 0 of 68 · planned |
-| 17 | [**Topology**](SYLLABUS.md#w17) | Shape without measurement: stretching, holes and knots. | 0 of 51 · planned |
-| 18 | [**Functional analysis**](SYLLABUS.md#w18) | Infinite-dimensional spaces behind modern analysis. | 0 of 56 · planned |
-| 19 | [**Partial differential equations**](SYLLABUS.md#w19) | Heat, waves and fluids. | 0 of 62 · planned |
-| 20 | [**Harmonic analysis**](SYLLABUS.md#w20) | Breaking signals into waves. | 0 of 52 · planned |
-| 21 | [**Algebraic and analytic number theory**](SYLLABUS.md#w21) | Primes in depth: zeta, L-functions and Galois. | 0 of 72 · planned |
-| 22 | [**Algebraic geometry**](SYLLABUS.md#w22) | Shapes defined by equations. | 0 of 54 · planned |
-| 23 | [**Differential geometry and Lie groups**](SYLLABUS.md#w23) | Curved space, symmetry and physics. | 0 of 69 · planned |
-| 24 | [**Computability and complexity**](SYLLABUS.md#w24) | What computers can and can't do, and how fast. | 0 of 57 · planned |
-| 25 | [**Frontier**](SYLLABUS.md#w25) | How research works, and the great open problems. | 0 of 43 · planned |
+| 01 | [**Foundations**](Cards/01-Foundations/README.md) | Numbers, fractions, powers, logic and proof: the toolkit everything else uses. | 59 of 59 |
+| 02 | [**Number theory**](Cards/02-Number%20theory/README.md) | Primes, remainders, clock arithmetic, codes and secrets. | 43 of 43 |
+| 03 | [**Algebra**](Cards/03-Algebra/README.md) | Equations, vectors, matrices, groups and fields. | 51 of 51 |
+| 04 | [**Combinatorics and graphs**](Cards/04-Combinatorics%20and%20graphs/README.md) | Counting cleverly, networks, routes and puzzles. | 82 of 82 |
+| 05 | [**Geometry and trig**](Cards/05-Geometry%20and%20trig/README.md) | Shapes, angles, coordinates and space. | 43 of 43 |
+| 06 | [**Calculus and analysis**](Cards/06-Calculus%20and%20analysis/README.md) | Change, limits, areas and the infinitely small. | 70 of 70 |
+| 07 | [**Complex analysis**](Cards/07-Complex%20analysis/README.md) | What the square root of −1 unlocks. | 60 of 60 |
+| 08 | [**Differential equations and dynamics**](Cards/08-Differential%20equations%20and%20dynamics/README.md) | How things change over time: growth, orbits, chaos. | 93 of 93 |
+| 09 | [**Probability and statistics**](Cards/09-Probability%20and%20statistics/README.md) | Chance, data and drawing honest conclusions. | 100 of 100 |
+| 10 | [**Measure and integration**](Cards/10-Measure%20and%20integration/README.md) | The rigorous floor under probability and calculus. | 68 of 68 |
+| 11 | [**Stochastic processes and calculus**](Cards/11-Stochastic%20processes%20and%20calculus/README.md) | Randomness in motion: random walks to Brownian motion. | 60 of 60 |
+| 12 | [**Financial mathematics**](Cards/12-Financial%20mathematics/README.md) | Interest, pricing, risk and markets, from loans to derivatives. | 332 of 332 |
+| 13 | [**Engineering mathematics**](Cards/13-Engineering%20mathematics/README.md) | Units, signals, control, circuits, mechanics, heat. | 26 of 86 |
+| 14 | [**Applied and computational**](Cards/14-Applied%20and%20computational/README.md) | Algorithms, information, cryptography, machine learning. | 0 of 71 · planned |
+| 15 | [**Optimization**](Cards/15-Optimization/README.md) | Finding the best choice under limits. | 0 of 64 · planned |
+| 16 | [**Numerical analysis**](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 0 of 68 · planned |
+| 17 | [**Topology**](Cards/17-Topology/README.md) | Shape without measurement: stretching, holes and knots. | 0 of 51 · planned |
+| 18 | [**Functional analysis**](Cards/18-Functional%20analysis/README.md) | Infinite-dimensional spaces behind modern analysis. | 0 of 56 · planned |
+| 19 | [**Partial differential equations**](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 0 of 62 · planned |
+| 20 | [**Harmonic analysis**](Cards/20-Harmonic%20analysis/README.md) | Breaking signals into waves. | 0 of 52 · planned |
+| 21 | [**Algebraic and analytic number theory**](Cards/21-Algebraic%20and%20analytic%20number%20theory/README.md) | Primes in depth: zeta, L-functions and Galois. | 0 of 72 · planned |
+| 22 | [**Algebraic geometry**](Cards/22-Algebraic%20geometry/README.md) | Shapes defined by equations. | 0 of 54 · planned |
+| 23 | [**Differential geometry and Lie groups**](Cards/23-Differential%20geometry%20and%20Lie%20groups/README.md) | Curved space, symmetry and physics. | 0 of 69 · planned |
+| 24 | [**Computability and complexity**](Cards/24-Computability%20and%20complexity/README.md) | What computers can and can't do, and how fast. | 0 of 57 · planned |
+| 25 | [**Frontier**](Cards/25-Frontier/README.md) | How research works, and the great open problems. | 0 of 43 · planned |
 <!-- map:end -->
 
 ## How it's checked
@@ -116,11 +116,12 @@ The cards are plain Markdown and read best right here on GitHub. Formulas, chart
 ## Layout
 
 ```
+Cards/<wing>/README.md           the wing's page: its shelves and every card
 Cards/<wing>/<shelf>/<card>.md    the cards
 Cards/<wing>/figures/             the diagrams drawn on the cards
 checks/<card>_check.py            each card's Python check
 checks/<card>_check.rs            each card's Rust check
-SYLLABUS.md                       the full plan: every wing, shelf and card
+SYLLABUS.md                       the contents: all 25 wings, each linked to its page
 .github/                          the contributing guide, the agent brief and the banner
 ```
 

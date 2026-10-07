@@ -1,6 +1,6 @@
 # Reading a currency quote: which currency is the price, which is the thing, and how to flip and cross it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX spot, forwards and interest parity](../../../SYLLABUS.md#w12-s20) → Reading a currency quote
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX spot, forwards and interest parity](../README.md#s20) → Reading a currency quote
 
 ---
 

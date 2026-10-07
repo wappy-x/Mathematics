@@ -1,6 +1,6 @@
 # Sturm-Liouville: the standard form whose modes are real, perpendicular under a weight, and rich enough to expand functions in
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Sturm-Liouville
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Series Solutions and Boundary Problems](../README.md#s07) → Sturm-Liouville
 
 ---
 

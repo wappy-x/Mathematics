@@ -1,6 +1,6 @@
 # Implied hazard from a bond price, and why the CDS disagrees: the basis
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → Implied hazard from a bond price, and why the CDS disagrees
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../README.md#s44) → Implied hazard from a bond price, and why the CDS disagrees
 
 ---
 

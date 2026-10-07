@@ -1,6 +1,6 @@
 # RSA in outline: lock with e, unlock with d, and Euler's theorem is why the message comes back
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → RSA in outline
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Codes and Secrets](../README.md#s06) → RSA in outline
 
 ---
 

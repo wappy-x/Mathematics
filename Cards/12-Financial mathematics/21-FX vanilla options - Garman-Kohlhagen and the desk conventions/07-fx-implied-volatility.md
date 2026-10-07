@@ -1,6 +1,6 @@
 # Implied vol for a currency option: from a premium in any quote to the one vol, and the bounds that say when none exists
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Implied vol for a currency option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../README.md#s21) → Implied vol for a currency option
 
 ---
 

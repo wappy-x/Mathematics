@@ -1,6 +1,6 @@
 # Caratheodory's extension theorem: size the simple sets consistently and a measure on the generated sigma-algebra follows, unique when sigma-finite
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Caratheodory's extension theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Length Done Properly](../README.md#s02) → Caratheodory's extension theorem
 
 ---
 

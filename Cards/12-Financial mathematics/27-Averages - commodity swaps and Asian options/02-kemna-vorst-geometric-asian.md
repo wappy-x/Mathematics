@@ -1,6 +1,6 @@
 # Kemna-Vorst: the Asian option with an exact price, because a geometric average of lognormals is lognormal
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Kemna-Vorst
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages - commodity swaps and Asian options](../README.md#s27) → Kemna-Vorst
 
 ---
 

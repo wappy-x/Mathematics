@@ -1,6 +1,6 @@
 # Pascal's rule: each entry is the sum of the two above it, so the whole triangle builds itself and each row sums to 2^n
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Pascal's rule
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Binomial Coefficients and Identities](../README.md#s03) → Pascal's rule
 
 ---
 

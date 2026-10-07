@@ -1,6 +1,6 @@
 # Mobius transformations: (az + b)/(cz + d) sends circles and lines to circles and lines, once infinity counts as a point
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Mobius transformations
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Mobius transformations
 
 ---
 

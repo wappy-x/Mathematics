@@ -1,6 +1,6 @@
 # Riesz-Fischer: Lp is complete, so approximating sequences have limits inside the space, and simple functions get arbitrarily close
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Riesz-Fischer
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sizes of Functions](../README.md#s07) → Riesz-Fischer
 
 ---
 

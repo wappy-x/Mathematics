@@ -1,6 +1,6 @@
 # American Greeks and implied volatility: sensitivities off the tree, a delta that hits -1, and a unique implied vol
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → American Greeks and implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [American and Bermudan exercise](../README.md#s15) → American Greeks and implied volatility
 
 ---
 

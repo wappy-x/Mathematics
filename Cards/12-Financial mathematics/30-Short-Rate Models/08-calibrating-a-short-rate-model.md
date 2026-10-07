@@ -1,6 +1,6 @@
 # Calibrating Hull-White: reversion and volatility from swaptions
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Calibrating Hull-White
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → Calibrating Hull-White
 
 ---
 

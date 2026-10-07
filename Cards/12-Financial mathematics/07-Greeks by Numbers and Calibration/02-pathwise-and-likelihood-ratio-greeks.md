@@ -1,6 +1,6 @@
 # Greeks inside the simulation: differentiate the payoff, or differentiate the density
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Greeks inside the simulation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Greeks by Numbers and Calibration](../README.md#s07) → Greeks inside the simulation
 
 ---
 

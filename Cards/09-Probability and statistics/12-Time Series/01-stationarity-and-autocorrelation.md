@@ -1,6 +1,6 @@
 # Stationarity and autocorrelation: does the series keep its character, and does today remember yesterday
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Stationarity and autocorrelation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Time Series](../README.md#s12) → Stationarity and autocorrelation
 
 ---
 

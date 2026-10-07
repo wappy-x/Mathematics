@@ -1,6 +1,6 @@
 # Options on a futures price: Black-76 with the future as underlying, the spot nowhere, and two expiry dates to keep apart
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Options on a futures price
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Options on commodity futures and spreads](../README.md#s26) → Options on a futures price
 
 ---
 

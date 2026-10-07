@@ -1,6 +1,6 @@
 # The strong law of large numbers: the running average converges to the mean on almost every sequence of outcomes
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → The strong law of large numbers
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Limit Theorems, Proved](../README.md#s10) → The strong law of large numbers
 
 ---
 

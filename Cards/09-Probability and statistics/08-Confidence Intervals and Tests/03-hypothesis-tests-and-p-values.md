@@ -1,6 +1,6 @@
 # Hypothesis tests: a null, a statistic, and the p-value that measures surprise
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Hypothesis tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Confidence Intervals and Tests](../README.md#s08) → Hypothesis tests
 
 ---
 

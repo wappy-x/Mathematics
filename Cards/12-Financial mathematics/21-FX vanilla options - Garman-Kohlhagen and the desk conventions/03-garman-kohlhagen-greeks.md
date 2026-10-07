@@ -1,6 +1,6 @@
 # The Greeks of a currency option: delta in euros, gamma and vega in dollars, and one rho for each currency
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → The Greeks of a currency option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../README.md#s21) → The Greeks of a currency option
 
 ---
 

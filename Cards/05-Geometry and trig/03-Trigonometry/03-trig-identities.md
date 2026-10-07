@@ -1,6 +1,6 @@
 # Trig identities: the Pythagorean and addition formulas, and where the double angles come from
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Trig identities
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → Trig identities
 
 ---
 

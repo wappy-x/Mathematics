@@ -1,6 +1,6 @@
 # Option-adjusted spread: the spread over the curve after the embedded option is priced out
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Option-adjusted spread
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Mortgages, Callables and Prepayment](../README.md#s35) → Option-adjusted spread
 
 ---
 

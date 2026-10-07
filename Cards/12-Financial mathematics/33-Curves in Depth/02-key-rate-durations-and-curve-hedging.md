@@ -1,6 +1,6 @@
 # Key-rate durations: sensitivity to each pillar, and hedging a bond book against the whole curve
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Key-rate durations
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves in Depth](../README.md#s33) → Key-rate durations
 
 ---
 

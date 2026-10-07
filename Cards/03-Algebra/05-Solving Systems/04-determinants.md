@@ -1,6 +1,6 @@
 # Determinants: the one number that says how much a matrix stretches area, and zero means it squashed something flat
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → The determinant
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → The determinant
 
 ---
 

@@ -1,6 +1,6 @@
 # Linear approximation: the tangent line as a stand-in, and rates linked through a relation
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Linear approximation
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [What Derivatives Tell You](../README.md#s03) → Linear approximation
 
 ---
 

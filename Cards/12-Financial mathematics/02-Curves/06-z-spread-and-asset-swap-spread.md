@@ -1,6 +1,6 @@
 # Spreads over the curve: the z-spread and asset-swap spread of a risky bond
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Spreads over the curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves](../README.md#s02) → Spreads over the curve
 
 ---
 

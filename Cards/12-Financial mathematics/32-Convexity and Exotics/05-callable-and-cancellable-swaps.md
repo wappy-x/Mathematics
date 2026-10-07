@@ -1,6 +1,6 @@
 # Callable and cancellable swaps: a swap plus a Bermudan swaption
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Callable and cancellable swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Convexity and Exotics](../README.md#s32) → Callable and cancellable swaps
 
 ---
 

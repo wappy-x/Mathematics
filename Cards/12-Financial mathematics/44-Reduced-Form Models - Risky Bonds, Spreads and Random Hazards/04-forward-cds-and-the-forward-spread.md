@@ -1,6 +1,6 @@
 # The forward CDS: protection that starts later, its par spread from two annuities, and the knock-out if default comes early
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → The forward CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../README.md#s44) → The forward CDS
 
 ---
 

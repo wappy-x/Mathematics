@@ -1,6 +1,6 @@
 # Permutation tests: shuffle the labels to get the null distribution
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Permutation tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Survival, Design and Causality](../README.md#s13) → Permutation tests
 
 ---
 

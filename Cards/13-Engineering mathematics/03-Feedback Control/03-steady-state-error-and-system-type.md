@@ -1,6 +1,6 @@
 # Steady-state error: an integrator is what kills a permanent offset
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Steady-state error
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Feedback Control](../README.md#s03) → Steady-state error
 
 ---
 

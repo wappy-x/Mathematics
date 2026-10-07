@@ -1,6 +1,6 @@
 # Greeks of a spread option: a delta for each leg, a cross gamma, two vegas, and the sensitivity to correlation
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Greeks of a spread option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Options on commodity futures and spreads](../README.md#s26) → Greeks of a spread option
 
 ---
 

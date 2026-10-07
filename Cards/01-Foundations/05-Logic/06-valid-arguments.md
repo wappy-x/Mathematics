@@ -1,6 +1,6 @@
 # Valid arguments: modus ponens, modus tollens, and the two look-alikes that fail
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Valid arguments
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Valid arguments
 
 ---
 

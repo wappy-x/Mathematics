@@ -1,6 +1,6 @@
 # Quanto option: Black-Scholes on the foreign share with its drift slowed, discounted at home, times the fixed rate
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Quanto option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Quantos and composites](../README.md#s24) → Quanto option
 
 ---
 

@@ -1,6 +1,6 @@
 # Implied volatility: the one volatility that makes the formula match the quote
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Implied volatility and the vanilla inverses](../README.md#s11) → Implied volatility
 
 ---
 

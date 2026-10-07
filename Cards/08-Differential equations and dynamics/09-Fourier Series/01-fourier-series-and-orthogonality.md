@@ -1,6 +1,6 @@
 # Fourier series: any repeating signal is a sum of sines and cosines, and orthogonality hands you each coefficient
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Fourier series
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Fourier Series](../README.md#s09) → Fourier series
 
 ---
 

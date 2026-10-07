@@ -1,6 +1,6 @@
 # Stirling numbers of the second kind: distinct items into exactly k unnamed non-empty groups
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Stirling numbers of the second kind
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Partitions](../README.md#s08) → Stirling numbers of the second kind
 
 ---
 

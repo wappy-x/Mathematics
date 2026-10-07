@@ -1,6 +1,6 @@
 # Analytic continuation: push a function past the edge of its formula, and the extension is the only one possible
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Analytic continuation
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Analytic continuation
 
 ---
 

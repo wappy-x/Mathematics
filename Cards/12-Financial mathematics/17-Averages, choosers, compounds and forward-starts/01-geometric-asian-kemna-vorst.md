@@ -1,6 +1,6 @@
 # The geometric Asian call: an average that stays lognormal, so Black-Scholes prices it with a smaller vol and a slower drift
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → The geometric Asian call
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages, choosers, compounds and forward-starts](../README.md#s17) → The geometric Asian call
 
 ---
 

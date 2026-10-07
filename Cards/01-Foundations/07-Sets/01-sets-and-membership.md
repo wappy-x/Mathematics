@@ -1,6 +1,6 @@
 # Sets: a collection defined only by what belongs, with the empty set and set-builder shorthand
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Sets and membership
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Sets and membership
 
 ---
 

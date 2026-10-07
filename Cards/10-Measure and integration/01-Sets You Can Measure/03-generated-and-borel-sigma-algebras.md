@@ -1,6 +1,6 @@
 # Generated sigma-algebras and Borel sets: the smallest family containing your chosen sets, and the default family on the real line
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Generated sigma-algebras and Borel sets
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sets You Can Measure](../README.md#s01) → Generated sigma-algebras and Borel sets
 
 ---
 

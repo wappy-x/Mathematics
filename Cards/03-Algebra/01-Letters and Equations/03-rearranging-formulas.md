@@ -1,6 +1,6 @@
 # Rearranging a formula: making a different letter the subject, so one formula answers many questions
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Rearranging a formula
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Letters and Equations](../README.md#s01) → Rearranging a formula
 
 ---
 

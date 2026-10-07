@@ -1,6 +1,6 @@
 # Inverse and implicit function theorems: when an equation can be solved for one variable locally
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Inverse and implicit function theorems
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Inverse and implicit function theorems
 
 ---
 

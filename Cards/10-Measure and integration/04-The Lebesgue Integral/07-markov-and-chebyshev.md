@@ -1,6 +1,6 @@
 # Markov and Chebyshev: an average caps how often a quantity is large, a variance caps how far it strays
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → Markov and Chebyshev
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Lebesgue Integral](../README.md#s04) → Markov and Chebyshev
 
 ---
 

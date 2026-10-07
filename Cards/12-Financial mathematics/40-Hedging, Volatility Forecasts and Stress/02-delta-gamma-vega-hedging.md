@@ -1,6 +1,6 @@
 # Hedging three Greeks at once: solving for the option positions that flatten delta, gamma and vega
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Hedging three Greeks at once
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Hedging, Volatility Forecasts and Stress](../README.md#s40) → Hedging three Greeks at once
 
 ---
 

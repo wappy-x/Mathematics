@@ -1,6 +1,6 @@
 # Lebesgue's theorem on monotone functions: an increasing function has a derivative almost everywhere, and integrating that derivative can fall short
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → Lebesgue's theorem on monotone functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Derivatives Meet the Lebesgue Integral](../README.md#s11) → Lebesgue's theorem on monotone functions
 
 ---
 

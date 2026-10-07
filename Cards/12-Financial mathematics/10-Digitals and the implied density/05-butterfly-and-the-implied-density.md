@@ -1,6 +1,6 @@
 # The butterfly and the implied density: differentiate call prices twice in strike and the market's probabilities fall out
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → The butterfly and the implied density
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Digitals and the implied density](../README.md#s10) → The butterfly and the implied density
 
 ---
 

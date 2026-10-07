@@ -1,6 +1,6 @@
 # Barrier inverses: the barrier level from a premium is unique, the volatility from a knock-out price is not
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Barrier inverses
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Barriers, touches and lookbacks](../README.md#s16) → Barrier inverses
 
 ---
 

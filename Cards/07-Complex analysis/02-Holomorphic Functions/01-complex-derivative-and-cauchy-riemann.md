@@ -1,6 +1,6 @@
 # The complex derivative: one limit from every direction, and the Cauchy-Riemann equations that make it possible
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → The complex derivative
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Holomorphic Functions](../README.md#s02) → The complex derivative
 
 ---
 

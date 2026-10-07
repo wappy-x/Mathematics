@@ -1,6 +1,6 @@
 # Characteristic functions: the average of e^(itX) pins down the law, and convergence of these functions is convergence of the laws
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → Characteristic functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Limit Theorems, Proved](../README.md#s10) → Characteristic functions
 
 ---
 

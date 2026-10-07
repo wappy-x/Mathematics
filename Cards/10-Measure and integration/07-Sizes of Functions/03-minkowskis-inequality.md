@@ -1,6 +1,6 @@
 # Minkowski's inequality: the size of a sum is at most the sum of the sizes, so Lp is a normed space
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Minkowski's inequality
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sizes of Functions](../README.md#s07) → Minkowski's inequality
 
 ---
 

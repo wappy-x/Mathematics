@@ -1,6 +1,6 @@
 # Between the pillars: log-linear, monotone convex and Nelson-Siegel, and what each does to forwards
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Between the pillars
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves](../README.md#s02) → Between the pillars
 
 ---
 

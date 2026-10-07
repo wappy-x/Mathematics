@@ -1,6 +1,6 @@
 # The Chinese postman: when no Euler circuit exists, pair up the odd vertices as cheaply as possible and walk those streets twice
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → The Chinese postman
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Tours - Euler and Hamilton](../README.md#s11) → The Chinese postman
 
 ---
 

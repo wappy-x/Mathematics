@@ -1,6 +1,6 @@
 # Bernoulli and Riccati equations: one substitution turns a nonlinear equation into a linear one
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Bernoulli and Riccati equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Rate Equations](../README.md#s01) → Bernoulli and Riccati equations
 
 ---
 

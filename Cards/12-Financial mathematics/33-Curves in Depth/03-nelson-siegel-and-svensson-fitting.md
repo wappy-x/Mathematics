@@ -1,6 +1,6 @@
 # Fitting a curve with four or six parameters: Nelson-Siegel and Svensson
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Fitting a curve with four or six parameters
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves in Depth](../README.md#s33) → Fitting a curve with four or six parameters
 
 ---
 

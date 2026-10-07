@@ -1,6 +1,6 @@
 # How many cuts break a network: bridges, cut vertices, and Menger's theorem that separate routes equal the blocks needed
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → How many cuts break a network
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Matchings and Flows](../README.md#s13) → How many cuts break a network
 
 ---
 

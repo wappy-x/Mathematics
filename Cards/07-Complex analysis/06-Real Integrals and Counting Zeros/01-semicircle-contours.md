@@ -1,6 +1,6 @@
 # The semicircle contour: close the real line with a big arc, let the arc vanish, and read the integral off the poles above
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → The semicircle contour
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Real Integrals and Counting Zeros](../README.md#s06) → The semicircle contour
 
 ---
 

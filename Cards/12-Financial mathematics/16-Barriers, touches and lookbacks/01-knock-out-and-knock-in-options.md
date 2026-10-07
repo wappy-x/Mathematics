@@ -1,6 +1,6 @@
 # Knock-out and knock-in options: a contract that dies or is born the first time the share touches a line
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Knock-out and knock-in options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Barriers, touches and lookbacks](../README.md#s16) → Knock-out and knock-in options
 
 ---
 

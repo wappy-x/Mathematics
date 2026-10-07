@@ -1,6 +1,6 @@
 # Linearisation: near an equilibrium the system looks like its matrix of slopes, and usually that is enough
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Linearisation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → Linearisation
 
 ---
 

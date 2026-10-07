@@ -1,6 +1,6 @@
 # Vanna-volga pricing: charge for the three vol risks Black-Scholes cannot see, using the three quotes the market gives you
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Vanna-volga pricing
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The FX smile - risk reversals, butterflies and vanna-volga](../README.md#s22) → Vanna-volga pricing
 
 ---
 

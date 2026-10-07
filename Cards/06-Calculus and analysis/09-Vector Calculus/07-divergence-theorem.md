@@ -1,6 +1,6 @@
 # Divergence theorem: flux out of a closed surface equals divergence summed inside
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Divergence theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Vector Calculus](../README.md#s09) → Divergence theorem
 
 ---
 

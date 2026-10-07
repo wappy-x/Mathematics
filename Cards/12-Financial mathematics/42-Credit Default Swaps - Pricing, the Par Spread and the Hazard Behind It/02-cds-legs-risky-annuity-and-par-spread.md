@@ -1,6 +1,6 @@
 # Pricing a CDS: the premium leg, the protection leg, the risky annuity, and the spread that makes them equal
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Pricing a CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../README.md#s42) → Pricing a CDS
 
 ---
 

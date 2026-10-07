@@ -1,6 +1,6 @@
 # Peano's three rules: building the counting numbers, and why 1 + 1 = 2 is a conclusion
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Peano's three rules
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Peano's three rules
 
 ---
 

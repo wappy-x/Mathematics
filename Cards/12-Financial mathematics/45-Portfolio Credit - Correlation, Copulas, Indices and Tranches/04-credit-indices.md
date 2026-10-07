@@ -1,6 +1,6 @@
 # Credit indices (CDX and iTraxx in outline): one contract on 125 names, priced off their survival curves, and the index skew
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Credit indices (CDX and iTraxx in outline)
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../README.md#s45) → Credit indices (CDX and iTraxx in outline)
 
 ---
 

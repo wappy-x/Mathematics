@@ -1,6 +1,6 @@
 # The Laplace transform: multiply by a decaying exponential and integrate, and calculus turns into algebra
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → The Laplace transform
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Laplace Transforms for Initial-Value Problems](../README.md#s08) → The Laplace transform
 
 ---
 

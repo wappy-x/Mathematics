@@ -1,6 +1,6 @@
 # The Ito integral: integrating a strategy against Brownian motion
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → The Ito integral
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Ito Calculus](../README.md#s06) → The Ito integral
 
 ---
 

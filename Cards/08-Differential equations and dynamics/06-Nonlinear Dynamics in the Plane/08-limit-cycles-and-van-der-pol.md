@@ -1,6 +1,6 @@
 # Limit cycles: a self-sustaining rhythm that nearby states spiral onto, unlike the fragile circles of a centre
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Limit cycles
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → Limit cycles
 
 ---
 

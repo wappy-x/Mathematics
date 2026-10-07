@@ -1,6 +1,6 @@
 # Rational functions: a ratio of polynomials is the sum of its principal parts, one per pole
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → Rational functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Laurent Series, Singularities and Residues](../README.md#s05) → Rational functions
 
 ---
 

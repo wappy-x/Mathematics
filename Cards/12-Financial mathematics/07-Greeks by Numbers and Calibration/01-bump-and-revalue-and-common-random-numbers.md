@@ -1,6 +1,6 @@
 # Bump and revalue: shift an input, reprice, divide, and use the same random numbers both times
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Bump and revalue
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Greeks by Numbers and Calibration](../README.md#s07) → Bump and revalue
 
 ---
 

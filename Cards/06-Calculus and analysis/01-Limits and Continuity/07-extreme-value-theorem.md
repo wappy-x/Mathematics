@@ -1,6 +1,6 @@
 # Extreme value theorem: a continuous function on a closed interval hits a highest and a lowest value
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Extreme value theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Extreme value theorem
 
 ---
 

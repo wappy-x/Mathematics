@@ -1,6 +1,6 @@
 # Paths with a budget: a Lagrange multiplier joins the constraint to the cost, and a chain hangs as a cosh
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Paths with a budget
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Calculus of Variations and Optimal Control](../README.md#s12) → Paths with a budget
 
 ---
 

@@ -1,6 +1,6 @@
 # How the balance-sheet claims move: volatility helps shareholders and hurts lenders, leverage and time widen the spread
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → How the balance-sheet claims move
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Structural Models - Default from the Balance Sheet](../README.md#s43) → How the balance-sheet claims move
 
 ---
 

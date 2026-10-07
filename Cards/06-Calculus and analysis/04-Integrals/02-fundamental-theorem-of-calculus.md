@@ -1,6 +1,6 @@
 # Fundamental theorem of calculus: accumulation and rate are inverse operations
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Fundamental theorem of calculus
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Integrals](../README.md#s04) → Fundamental theorem of calculus
 
 ---
 

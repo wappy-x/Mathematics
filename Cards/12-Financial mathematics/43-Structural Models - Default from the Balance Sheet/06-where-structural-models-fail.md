@@ -1,6 +1,6 @@
 # Where structural models break: the vanishing short-term spread, jumps, and the patches that fix it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Where structural models break
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Structural Models - Default from the Balance Sheet](../README.md#s43) → Where structural models break
 
 ---
 

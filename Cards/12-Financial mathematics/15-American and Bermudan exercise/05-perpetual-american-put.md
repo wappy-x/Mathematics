@@ -1,6 +1,6 @@
 # The perpetual American put: the one American option with an exact answer, and the boundary it hands you
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → The perpetual American put
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [American and Bermudan exercise](../README.md#s15) → The perpetual American put
 
 ---
 

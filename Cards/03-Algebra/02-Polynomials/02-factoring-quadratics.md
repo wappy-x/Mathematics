@@ -1,6 +1,6 @@
 # Factoring: un-multiplying a polynomial, because a product is zero only when one factor is
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Factoring
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Polynomials](../README.md#s02) → Factoring
 
 ---
 

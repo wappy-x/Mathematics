@@ -1,6 +1,6 @@
 # Caplets and floorlets: a call or put on one forward rate, priced with Black-76 under the forward measure
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Caplets and floorlets
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → Caplets and floorlets
 
 ---
 

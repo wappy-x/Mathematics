@@ -1,6 +1,6 @@
 # Monte Carlo pricing: simulate the end, average the payoff, discount
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Monte Carlo pricing
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Numerical Methods for Pricing](../README.md#s06) → Monte Carlo pricing
 
 ---
 

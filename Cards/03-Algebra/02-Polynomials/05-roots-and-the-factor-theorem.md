@@ -1,6 +1,6 @@
 # Roots and factors: a root r means a factor x - r, so a degree-n polynomial has at most n roots
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Roots and factors
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Polynomials](../README.md#s02) → Roots and factors
 
 ---
 

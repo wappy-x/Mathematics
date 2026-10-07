@@ -1,6 +1,6 @@
 # Trig graphs: reading amplitude, period, midline and phase off a wave
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Trig graphs
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → Trig graphs
 
 ---
 

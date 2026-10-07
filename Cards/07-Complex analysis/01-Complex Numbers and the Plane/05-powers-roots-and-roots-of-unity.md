@@ -1,6 +1,6 @@
 # Powers and roots: de Moivre multiplies the angle, so the n-th roots sit evenly round a circle
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Powers and roots
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Complex Numbers and the Plane](../README.md#s01) → Powers and roots
 
 ---
 

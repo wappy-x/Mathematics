@@ -1,6 +1,6 @@
 # Solving by mapping: a harmonic function stays harmonic under a conformal map, so solve on the disc or half plane and carry the answer back
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Solving by mapping
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Solving by mapping
 
 ---
 

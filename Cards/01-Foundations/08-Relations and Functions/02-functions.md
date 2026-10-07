@@ -1,6 +1,6 @@
 # Functions: one output for every input, with domain, codomain and range
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → What a function is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → What a function is
 
 ---
 

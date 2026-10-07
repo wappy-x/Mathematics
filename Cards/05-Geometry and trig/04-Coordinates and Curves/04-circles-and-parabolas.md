@@ -1,6 +1,6 @@
 # Circles and parabolas: curves defined by a distance rule
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Circles and parabolas
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Coordinates and Curves](../README.md#s04) → Circles and parabolas
 
 ---
 

@@ -1,6 +1,6 @@
 # Erdos-Szekeres: any long enough list of numbers has a long rising run or a long falling run, by labelling and pigeonhole
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Erdos-Szekeres
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Ramsey and Extremal, in Outline](../README.md#s14) → Erdos-Szekeres
 
 ---
 

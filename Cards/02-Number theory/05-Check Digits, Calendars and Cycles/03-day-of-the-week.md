@@ -1,6 +1,6 @@
 # Day of the week for any date: the calendar is arithmetic mod 7
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → Day of the week for any date
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Check Digits, Calendars and Cycles](../README.md#s05) → Day of the week for any date
 
 ---
 

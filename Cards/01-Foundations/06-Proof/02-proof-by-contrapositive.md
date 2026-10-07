@@ -1,6 +1,6 @@
 # Proof by contrapositive: prove the flipped version
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Proof by contrapositive
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Proof by contrapositive
 
 ---
 

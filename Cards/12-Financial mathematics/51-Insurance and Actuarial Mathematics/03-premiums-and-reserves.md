@@ -1,6 +1,6 @@
 # Premiums and reserves: the equivalence principle and the money set aside as a policy ages
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Premiums and reserves
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Insurance and Actuarial Mathematics](../README.md#s51) → Premiums and reserves
 
 ---
 

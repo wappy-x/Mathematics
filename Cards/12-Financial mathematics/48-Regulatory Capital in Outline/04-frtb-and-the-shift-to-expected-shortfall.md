@@ -1,6 +1,6 @@
 # Market-risk capital: from 99 percent VaR to 97.5 percent expected shortfall, and liquidity horizons
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Market-risk capital
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Regulatory Capital in Outline](../README.md#s48) → Market-risk capital
 
 ---
 

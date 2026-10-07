@@ -1,6 +1,6 @@
 # Gram-Schmidt: straighten a skewed basis into perpendicular unit directions, and coordinates become dot products
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → Gram-Schmidt
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Dot Products and Best Fits](../README.md#s06) → Gram-Schmidt
 
 ---
 

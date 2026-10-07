@@ -1,6 +1,6 @@
 # Why a new integral: sort by value instead of position, and limits stop breaking
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Why a new integral
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sets You Can Measure](../README.md#s01) → Why a new integral
 
 ---
 

@@ -1,6 +1,6 @@
 # The heat kernel: on an endless line a point of heat becomes a bell curve, and any start is a blend of bells
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The heat kernel
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → The heat kernel
 
 ---
 

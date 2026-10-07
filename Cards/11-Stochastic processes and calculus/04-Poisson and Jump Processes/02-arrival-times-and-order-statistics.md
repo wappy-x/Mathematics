@@ -1,6 +1,6 @@
 # Given n arrivals, when did they happen: uniform order statistics
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Given n arrivals, when did they happen
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Poisson and Jump Processes](../README.md#s04) → Given n arrivals, when did they happen
 
 ---
 

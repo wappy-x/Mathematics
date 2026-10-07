@@ -1,6 +1,6 @@
 # Valuing an existing CDS: (par spread minus contract spread) times the risky annuity, and the fixed-coupon-plus-upfront convention
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Valuing an existing CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../README.md#s42) → Valuing an existing CDS
 
 ---
 

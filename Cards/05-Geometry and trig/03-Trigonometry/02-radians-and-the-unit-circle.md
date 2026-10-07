@@ -1,6 +1,6 @@
 # The unit circle: sine and cosine for every angle, including the ones no triangle has
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → The unit circle
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → The unit circle
 
 ---
 

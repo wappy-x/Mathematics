@@ -1,6 +1,6 @@
 # n-step transitions: matrix powers and Chapman-Kolmogorov
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → n-step transitions
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Markov Chains](../README.md#s03) → n-step transitions
 
 ---
 

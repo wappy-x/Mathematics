@@ -1,6 +1,6 @@
 # The Poisson formula: fill a disc from its rim by weighting each boundary value by how close it is
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → The Poisson formula
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → The Poisson formula
 
 ---
 

@@ -1,6 +1,6 @@
 # Stieltjes integrals: integrating against a weight that can jump
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Stieltjes integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Multiple Integrals](../README.md#s08) → Stieltjes integrals
 
 ---
 

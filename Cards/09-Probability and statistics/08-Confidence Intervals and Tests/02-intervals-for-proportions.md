@@ -1,6 +1,6 @@
 # Intervals for a proportion: the Wald interval and the better Wilson one
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Intervals for a proportion
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Confidence Intervals and Tests](../README.md#s08) → Intervals for a proportion
 
 ---
 

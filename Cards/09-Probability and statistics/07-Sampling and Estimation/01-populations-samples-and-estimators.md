@@ -1,6 +1,6 @@
 # Samples and estimators: a rule that turns data into a guess, and what makes a guess good
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Samples and estimators
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Sampling and Estimation](../README.md#s07) → Samples and estimators
 
 ---
 

@@ -1,6 +1,6 @@
 # Dupire local volatility: one volatility per price and date, read straight off call prices
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Dupire local volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Local volatility and jumps](../README.md#s13) → Dupire local volatility
 
 ---
 

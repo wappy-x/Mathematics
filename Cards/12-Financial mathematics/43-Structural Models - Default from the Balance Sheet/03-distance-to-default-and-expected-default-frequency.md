@@ -1,6 +1,6 @@
 # Distance to default: how many standard deviations of bad luck the firm can absorb, and the KMV default frequency built on it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Distance to default
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Structural Models - Default from the Balance Sheet](../README.md#s43) → Distance to default
 
 ---
 

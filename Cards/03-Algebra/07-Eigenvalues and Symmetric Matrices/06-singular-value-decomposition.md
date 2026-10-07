@@ -1,6 +1,6 @@
 # The singular value decomposition: every matrix is rotate, stretch the axes, rotate, and the stretch factors are the singular values
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → The singular value decomposition
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → The singular value decomposition
 
 ---
 

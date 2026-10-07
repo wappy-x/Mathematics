@@ -1,6 +1,6 @@
 # Cross-currency swaps: exchanging notionals and the basis spread the market charges
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Cross-currency swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Swaps](../README.md#s28) → Cross-currency swaps
 
 ---
 

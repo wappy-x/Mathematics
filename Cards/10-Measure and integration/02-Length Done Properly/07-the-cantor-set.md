@@ -1,6 +1,6 @@
 # The Cantor set: an uncountable set of length zero, and the staircase that climbs from 0 to 1 with slope zero almost everywhere
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → The Cantor set
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Length Done Properly](../README.md#s02) → The Cantor set
 
 ---
 

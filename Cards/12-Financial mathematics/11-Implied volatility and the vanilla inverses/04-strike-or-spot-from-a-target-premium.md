@@ -1,6 +1,6 @@
 # Strike or spot from a target premium: which strike makes the option cost what you can pay
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Strike or spot from a target premium
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Implied volatility and the vanilla inverses](../README.md#s11) → Strike or spot from a target premium
 
 ---
 

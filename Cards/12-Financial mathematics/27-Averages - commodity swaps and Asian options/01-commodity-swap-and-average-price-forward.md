@@ -1,6 +1,6 @@
 # Commodity swap: a fixed price against the monthly average, priced as a strip of forwards with no option in it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Commodity swap
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages - commodity swaps and Asian options](../README.md#s27) → Commodity swap
 
 ---
 

@@ -1,6 +1,6 @@
 # Wilson's theorem: multiply everything below a prime and the clock shows -1, and only primes do this
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Wilson's theorem
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Wilson's theorem
 
 ---
 

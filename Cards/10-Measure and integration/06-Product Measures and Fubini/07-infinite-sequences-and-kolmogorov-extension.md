@@ -1,7 +1,7 @@
 # Infinitely many coin tosses: build them from one uniform number, and Kolmogorov's theorem for every other infinite sequence
 
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Infinitely many coin tosses
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Product Measures and Fubini](../README.md#s06) → Infinitely many coin tosses
 
 ---
 

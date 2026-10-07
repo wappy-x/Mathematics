@@ -1,6 +1,6 @@
 # Regression error bars: standard errors, t-tests and prediction intervals for a fitted line
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Regression error bars
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Regression](../README.md#s09) → Regression error bars
 
 ---
 

@@ -1,6 +1,6 @@
 # Euclid's lemma: if a prime divides a product it divides one of the factors, and composites carry no such promise
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Euclid's lemma
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Euclid's lemma
 
 ---
 

@@ -1,6 +1,6 @@
 # Markov and Chebyshev: bounds on tails from a mean and a variance alone
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Markov and Chebyshev
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Random Variables](../README.md#s02) → Markov and Chebyshev
 
 ---
 

@@ -1,6 +1,6 @@
 # One-touch and no-touch: a fixed payout on whether a level ever trades, priced from the chance of a first touch
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → One-touch and no-touch
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX exotics as desks use them - digitals, touches and barriers](../README.md#s23) → One-touch and no-touch
 
 ---
 

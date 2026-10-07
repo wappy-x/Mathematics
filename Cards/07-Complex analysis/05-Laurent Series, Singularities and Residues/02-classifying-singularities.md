@@ -1,6 +1,6 @@
 # Isolated singularities: removable, a pole or essential, and the negative powers tell you which
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → Isolated singularities
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Laurent Series, Singularities and Residues](../README.md#s05) → Isolated singularities
 
 ---
 

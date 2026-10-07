@@ -1,6 +1,6 @@
 # Monte Carlo: an average of random draws, and the square-root-of-n error bar
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Monte Carlo
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Simulation](../README.md#s11) → Monte Carlo
 
 ---
 

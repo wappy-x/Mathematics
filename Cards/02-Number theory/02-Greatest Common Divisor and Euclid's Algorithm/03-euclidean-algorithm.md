@@ -1,6 +1,6 @@
 # Euclid's algorithm: divide, keep the remainder, repeat, and the last non-zero remainder is the gcd
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Running the algorithm
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Running the algorithm
 
 ---
 

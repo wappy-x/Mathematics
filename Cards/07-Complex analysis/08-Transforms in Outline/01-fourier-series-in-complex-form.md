@@ -1,6 +1,6 @@
 # Fourier series: any repeating signal is a sum of spinning arrows e to the inx, and each coefficient is an average
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → Fourier series
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → Fourier series
 
 ---
 

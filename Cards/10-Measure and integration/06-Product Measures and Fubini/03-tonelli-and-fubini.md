@@ -1,6 +1,6 @@
 # Tonelli and Fubini: integrate one variable at a time in either order, free for non-negative functions, and for signed ones once the absolute integral is finite
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Tonelli and Fubini
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Product Measures and Fubini](../README.md#s06) → Tonelli and Fubini
 
 ---
 

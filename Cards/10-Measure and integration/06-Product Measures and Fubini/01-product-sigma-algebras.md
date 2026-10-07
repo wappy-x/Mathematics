@@ -1,6 +1,6 @@
 # Product sigma-algebras: the smallest family on pairs that keeps both coordinates measurable, and every slice of a measurable set is measurable
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Product sigma-algebras
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Product Measures and Fubini](../README.md#s06) → Product sigma-algebras
 
 ---
 

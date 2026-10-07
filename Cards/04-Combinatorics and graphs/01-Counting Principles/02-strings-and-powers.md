@@ -1,6 +1,6 @@
 # Strings with repetition: when every position may reuse the options, the count is a power
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Strings with repetition
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Counting Principles](../README.md#s01) → Strings with repetition
 
 ---
 

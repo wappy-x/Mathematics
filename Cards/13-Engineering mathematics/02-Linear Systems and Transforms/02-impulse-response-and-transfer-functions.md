@@ -1,6 +1,6 @@
 # Transfer functions: the Laplace transform turns a differential equation into a ratio
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Transfer functions
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Linear Systems and Transforms](../README.md#s02) → Transfer functions
 
 ---
 

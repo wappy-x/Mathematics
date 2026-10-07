@@ -1,6 +1,6 @@
 # Hall's theorem: everyone on the left can be matched exactly when no group of them shares too few options
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Hall's theorem
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Matchings and Flows](../README.md#s13) → Hall's theorem
 
 ---
 

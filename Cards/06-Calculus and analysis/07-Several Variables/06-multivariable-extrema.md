@@ -1,6 +1,6 @@
 # Extrema in several variables: peaks, pits and saddles
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Extrema in several variables
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Extrema in several variables
 
 ---
 

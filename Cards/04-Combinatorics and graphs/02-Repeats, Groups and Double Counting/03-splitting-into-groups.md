@@ -1,6 +1,6 @@
 # Splitting into groups: the multinomial coefficient for named piles, and divide by k! when the piles are not named
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Splitting into groups
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Repeats, Groups and Double Counting](../README.md#s02) → Splitting into groups
 
 ---
 

@@ -1,6 +1,6 @@
 # Life annuities and insurance: paying while alive, paying at death, and the relation between them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Life annuities and insurance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Insurance and Actuarial Mathematics](../README.md#s51) → Life annuities and insurance
 
 ---
 

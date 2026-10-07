@@ -1,6 +1,6 @@
 # The adjacency matrix: a grid of ones and zeros, and its powers count walks of each length
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → The adjacency matrix
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Graphs - Dots and Lines](../README.md#s09) → The adjacency matrix
 
 ---
 

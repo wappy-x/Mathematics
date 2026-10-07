@@ -1,6 +1,6 @@
 # Comparing infinities: fits-both-ways means equal, and every set is smaller than its power set
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → Comparing infinities
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sizes of Infinity](../README.md#s09) → Comparing infinities
 
 ---
 

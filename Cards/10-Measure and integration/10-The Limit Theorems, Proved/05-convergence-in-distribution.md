@@ -1,6 +1,6 @@
 # Convergence in distribution: laws converge when their distribution functions converge at every continuity point, which is the same as averages of bounded continuous functions converging
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → Convergence in distribution
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Limit Theorems, Proved](../README.md#s10) → Convergence in distribution
 
 ---
 

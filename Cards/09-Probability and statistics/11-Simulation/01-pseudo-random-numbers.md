@@ -1,6 +1,6 @@
 # Random numbers from a computer: linear congruential and Mersenne generators, seeds and tests
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Random numbers from a computer
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Simulation](../README.md#s11) → Random numbers from a computer
 
 ---
 

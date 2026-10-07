@@ -1,6 +1,6 @@
 # Quantifiers: 'everyone' and 'someone', and why their order matters
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Everyone and someone
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Everyone and someone
 
 ---
 

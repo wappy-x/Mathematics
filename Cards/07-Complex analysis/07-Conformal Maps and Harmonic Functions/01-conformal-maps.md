@@ -1,6 +1,6 @@
 # Conformal maps: where f' is not zero a holomorphic function turns and stretches every tiny shape, so angles survive
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Conformal maps
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Conformal maps
 
 ---
 

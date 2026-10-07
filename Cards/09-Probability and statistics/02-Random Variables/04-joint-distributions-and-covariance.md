@@ -1,6 +1,6 @@
 # Two variables at once: joint tables, marginals, covariance and correlation
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Two variables at once
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Random Variables](../README.md#s02) → Two variables at once
 
 ---
 

@@ -1,6 +1,6 @@
 # Branch cuts and complex powers: z to the a is e to the a log z, it depends on the branch, and software picks one for you
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → Branch cuts and complex powers
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Holomorphic Functions](../README.md#s02) → Branch cuts and complex powers
 
 ---
 

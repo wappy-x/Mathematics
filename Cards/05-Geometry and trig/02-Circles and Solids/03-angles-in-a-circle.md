@@ -1,6 +1,6 @@
 # Angles at a circle: the inscribed-angle rule and the tangent that meets the radius square on
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Angles at a circle
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Circles and Solids](../README.md#s02) → Angles at a circle
 
 ---
 

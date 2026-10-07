@@ -1,6 +1,6 @@
 # Storage and the carry ceiling: for grain and oil the forward can sit below spot plus carry, never above it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Storage and the carry ceiling
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Commodity forwards - carry, storage, convenience yield and the curve](../README.md#s25) → Storage and the carry ceiling
 
 ---
 

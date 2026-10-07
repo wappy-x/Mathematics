@@ -1,6 +1,6 @@
 # No arbitrage: you cannot make something from nothing, so same payoff means same price
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → No arbitrage
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Contracts and No-Arbitrage](../README.md#s03) → No arbitrage
 
 ---
 

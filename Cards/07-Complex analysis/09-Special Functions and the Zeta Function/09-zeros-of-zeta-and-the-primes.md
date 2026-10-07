@@ -1,6 +1,6 @@
 # Zeta's zeros and the primes: the zeros are the frequencies hidden in the prime staircase, and the Riemann hypothesis says where they lie
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Zeta's zeros and the primes
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → Zeta's zeros and the primes
 
 ---
 

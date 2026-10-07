@@ -1,6 +1,6 @@
 # Bootstrap: resampling your own data to see how your estimate wobbles
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Bootstrap
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Sampling and Estimation](../README.md#s07) → Bootstrap
 
 ---
 

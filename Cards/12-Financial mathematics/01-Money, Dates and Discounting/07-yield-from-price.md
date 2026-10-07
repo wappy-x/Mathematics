@@ -1,6 +1,6 @@
 # Yield from price: the first inverse problem, and when it has exactly one answer
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Yield from price
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Money, Dates and Discounting](../README.md#s01) → Yield from price
 
 ---
 

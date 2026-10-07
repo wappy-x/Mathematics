@@ -1,6 +1,6 @@
 # Alternating series: the sign-flipping sums, their error bound, and the danger of reordering
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Alternating series
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → Alternating series
 
 ---
 

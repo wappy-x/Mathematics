@@ -1,6 +1,6 @@
 # Stopping times: rules that use only the past, and the theorem that quitting does not help
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Stopping times
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Martingales](../README.md#s02) → Stopping times
 
 ---
 

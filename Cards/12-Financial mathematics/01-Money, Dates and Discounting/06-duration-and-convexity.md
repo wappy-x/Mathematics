@@ -1,6 +1,6 @@
 # Duration and convexity: how a bond price moves when its yield moves
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Duration and convexity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Money, Dates and Discounting](../README.md#s01) → Duration and convexity
 
 ---
 

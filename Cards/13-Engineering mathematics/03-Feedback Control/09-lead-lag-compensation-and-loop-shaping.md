@@ -1,6 +1,6 @@
 # Loop shaping: buy phase with a lead, buy accuracy with a lag
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Loop shaping
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Feedback Control](../README.md#s03) → Loop shaping
 
 ---
 

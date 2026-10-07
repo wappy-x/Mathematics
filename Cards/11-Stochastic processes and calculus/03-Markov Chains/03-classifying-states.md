@@ -1,6 +1,6 @@
 # Classifying states: which states talk to which, which are trapped, and which repeat with a period
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Classifying states
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Markov Chains](../README.md#s03) → Classifying states
 
 ---
 

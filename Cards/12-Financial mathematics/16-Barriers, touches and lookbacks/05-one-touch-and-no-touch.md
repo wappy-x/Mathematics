@@ -1,6 +1,6 @@
 # One-touch and no-touch: a fixed sum if the line is ever reached, priced from the chance of touching
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → One-touch and no-touch
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Barriers, touches and lookbacks](../README.md#s16) → One-touch and no-touch
 
 ---
 

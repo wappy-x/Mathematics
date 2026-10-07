@@ -1,6 +1,6 @@
 # Radians: measuring an angle by the arc it cuts, and why that makes formulas simple
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Radians
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Circles and Solids](../README.md#s02) → Radians
 
 ---
 

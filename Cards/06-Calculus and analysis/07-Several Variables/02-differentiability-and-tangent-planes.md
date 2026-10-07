@@ -1,6 +1,6 @@
 # Tangent planes: the linear model of a surface, and the honest definition of differentiable
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Tangent planes
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Tangent planes
 
 ---
 

@@ -1,6 +1,6 @@
 # Triangle centres: centroid, circumcentre and incentre, and the different questions they answer
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Triangle centres
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Coordinates and Curves](../README.md#s04) → Triangle centres
 
 ---
 

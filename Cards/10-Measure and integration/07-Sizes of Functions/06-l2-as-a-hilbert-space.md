@@ -1,6 +1,6 @@
 # L2 as a Hilbert space: functions have lengths and angles, the closest point in a closed subspace is a perpendicular drop, and every continuous linear rule is an inner product
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → L2 as a Hilbert space
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sizes of Functions](../README.md#s07) → L2 as a Hilbert space
 
 ---
 

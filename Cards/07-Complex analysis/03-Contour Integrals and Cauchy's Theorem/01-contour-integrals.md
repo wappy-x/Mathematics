@@ -1,6 +1,6 @@
 # Contour integrals: add up f(z) dz along a path, and the loop round the origin that gives 2 pi i
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Contour integrals
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Contour integrals
 
 ---
 

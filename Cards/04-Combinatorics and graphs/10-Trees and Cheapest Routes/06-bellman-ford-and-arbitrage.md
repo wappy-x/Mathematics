@@ -1,6 +1,6 @@
 # Bellman-Ford: relax every edge n - 1 times, negative costs allowed, and a loop that still improves is a money machine
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Bellman-Ford
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Trees and Cheapest Routes](../README.md#s10) → Bellman-Ford
 
 ---
 

@@ -1,6 +1,6 @@
 # A partial differential equation: rates in more than one direction, and three families with three personalities
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → A partial differential equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → A partial differential equation
 
 ---
 

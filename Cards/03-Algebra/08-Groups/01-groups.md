@@ -1,6 +1,6 @@
 # Groups: one operation, four rules, and the same rules behind clocks, shuffles and symmetries
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Groups
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Groups
 
 ---
 

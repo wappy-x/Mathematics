@@ -1,6 +1,6 @@
 # A recurrence is a matrix: stack the last two terms, multiply by a fixed matrix, and matrix powers jump far ahead
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → A recurrence is a matrix
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Recurrences](../README.md#s05) → A recurrence is a matrix
 
 ---
 

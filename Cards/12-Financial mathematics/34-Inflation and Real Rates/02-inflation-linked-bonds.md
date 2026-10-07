@@ -1,6 +1,6 @@
 # Inflation-linked bonds: coupons and principal scaled by an index ratio
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Inflation-linked bonds
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Inflation and Real Rates](../README.md#s34) → Inflation-linked bonds
 
 ---
 

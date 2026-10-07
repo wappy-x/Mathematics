@@ -1,6 +1,6 @@
 # The piecewise-flat hazard curve: a handful of rates that give survival at every date
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → The piecewise-flat hazard curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Default, Survival and the Hazard Rate](../README.md#s41) → The piecewise-flat hazard curve
 
 ---
 

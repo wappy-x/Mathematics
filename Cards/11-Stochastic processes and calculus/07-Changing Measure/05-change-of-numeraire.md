@@ -1,6 +1,6 @@
 # Change of numeraire: measuring value in shares, bonds or annuities
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Change of numeraire
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Changing Measure](../README.md#s07) → Change of numeraire
 
 ---
 

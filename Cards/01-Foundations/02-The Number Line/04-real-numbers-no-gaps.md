@@ -1,6 +1,6 @@
 # The real numbers have no gaps: every point on the tape is a number
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → The real numbers have no gaps
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [The Number Line](../README.md#s02) → The real numbers have no gaps
 
 ---
 

@@ -1,6 +1,6 @@
 # Solving A x = b: one answer, no answer or a line of answers, and how to tell which before you start
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → Solving A x = b
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → Solving A x = b
 
 ---
 

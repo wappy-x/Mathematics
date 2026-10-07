@@ -1,6 +1,6 @@
 # Permutations: shuffles compose, every shuffle can be undone, and the n! shuffles of n cards form the symmetric group
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Permutations
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Permutations
 
 ---
 

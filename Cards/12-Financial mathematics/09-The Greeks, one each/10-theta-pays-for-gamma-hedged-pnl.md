@@ -1,6 +1,6 @@
 # Theta pays for gamma: the delta-hedged profit and loss, and the break-even daily move
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Theta pays for gamma
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Greeks, one each](../README.md#s09) → Theta pays for gamma
 
 ---
 

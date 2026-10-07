@@ -1,6 +1,6 @@
 # Simple functions: finitely many values on measurable pieces, and every non-negative measurable function is a rising limit of them
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → Simple functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Measurable Functions](../README.md#s03) → Simple functions
 
 ---
 

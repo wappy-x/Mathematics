@@ -1,6 +1,6 @@
 # Beyond one factor: G2++, Black-Karasinski and Black-Derman-Toy in outline
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Beyond one factor
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → Beyond one factor
 
 ---
 

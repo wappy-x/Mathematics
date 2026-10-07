@@ -1,6 +1,6 @@
 # Edge colouring: colour the edges so no two at a vertex match, and a league fixture list is exactly this
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Edge colouring
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Planarity and Colouring](../README.md#s12) → Edge colouring
 
 ---
 

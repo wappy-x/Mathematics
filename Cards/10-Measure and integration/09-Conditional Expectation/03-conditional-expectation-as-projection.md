@@ -1,6 +1,6 @@
 # Conditional expectation as a projection: for square-integrable X the forecast is the closest known quantity, and the error is perpendicular to everything known
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Conditional expectation as a projection
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Conditional Expectation](../README.md#s09) → Conditional expectation as a projection
 
 ---
 

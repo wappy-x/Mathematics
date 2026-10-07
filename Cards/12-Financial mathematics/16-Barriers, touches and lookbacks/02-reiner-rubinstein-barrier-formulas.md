@@ -1,6 +1,6 @@
 # The eight barrier formulas: up or down, in or out, call or put, all from the same six building blocks
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → The eight barrier formulas
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Barriers, touches and lookbacks](../README.md#s16) → The eight barrier formulas
 
 ---
 

@@ -1,6 +1,6 @@
 # The Basel credit formula: one-factor Vasicek behind the risk weights
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → The Basel credit formula
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Regulatory Capital in Outline](../README.md#s48) → The Basel credit formula
 
 ---
 

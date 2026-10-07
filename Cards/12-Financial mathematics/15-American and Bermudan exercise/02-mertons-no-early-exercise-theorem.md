@@ -1,6 +1,6 @@
 # Merton's theorem: never exercise a call early on a share that pays nothing, and the two places the rule stops
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → Merton's theorem
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [American and Bermudan exercise](../README.md#s15) → Merton's theorem
 
 ---
 

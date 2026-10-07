@@ -1,6 +1,6 @@
 # Relations: a list of which pairs are linked, and four tests on it
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Relations and their four tests
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → Relations and their four tests
 
 ---
 

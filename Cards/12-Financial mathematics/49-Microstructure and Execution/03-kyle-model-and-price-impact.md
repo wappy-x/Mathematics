@@ -1,6 +1,6 @@
 # Kyle's model: how much a trade moves the price, and the square-root law seen in data
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Kyle's model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Microstructure and Execution](../README.md#s49) → Kyle's model
 
 ---
 

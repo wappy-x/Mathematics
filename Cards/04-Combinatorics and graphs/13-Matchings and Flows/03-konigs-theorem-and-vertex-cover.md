@@ -1,6 +1,6 @@
 # Konig's theorem: in a two-sided graph the largest matching equals the smallest set of vertices touching every edge
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Konig's theorem
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Matchings and Flows](../README.md#s13) → Konig's theorem
 
 ---
 

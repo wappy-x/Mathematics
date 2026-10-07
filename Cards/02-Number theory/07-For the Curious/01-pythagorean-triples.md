@@ -1,6 +1,6 @@
 # Pythagorean triples: every whole-number right triangle comes from two smaller numbers
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Pythagorean triples
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [For the Curious](../README.md#s07) → Pythagorean triples
 
 ---
 

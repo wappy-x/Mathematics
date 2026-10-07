@@ -1,6 +1,6 @@
 # Poles on the path: dent the contour round them and collect half a residue, and the principal value is what is left
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Poles on the path
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Real Integrals and Counting Zeros](../README.md#s06) → Poles on the path
 
 ---
 

@@ -1,6 +1,6 @@
 # Green's theorem: circulation round a loop equals curl summed inside
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Green's theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Vector Calculus](../README.md#s09) → Green's theorem
 
 ---
 

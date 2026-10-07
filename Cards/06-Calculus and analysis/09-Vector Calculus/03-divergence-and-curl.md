@@ -1,6 +1,6 @@
 # Divergence and curl: how much a field spreads out and how much it spins
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Divergence and curl
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Vector Calculus](../README.md#s09) → Divergence and curl
 
 ---
 

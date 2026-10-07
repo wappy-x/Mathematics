@@ -1,6 +1,6 @@
 # Risk premium: what a gamble is worth to you, and the discount you demand for it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Risk premium
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Returns and Utility](../README.md#s36) → Risk premium
 
 ---
 

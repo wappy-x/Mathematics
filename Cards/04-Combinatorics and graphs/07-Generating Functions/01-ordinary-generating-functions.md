@@ -1,6 +1,6 @@
 # Generating functions: hang a sequence on powers of x, and adding or multiplying series does the counting
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Generating functions
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Generating Functions](../README.md#s07) → Generating functions
 
 ---
 

@@ -1,6 +1,6 @@
 # Intrinsic and time value: what you could cash today, and what you pay for the time left
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Intrinsic and time value
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → Intrinsic and time value
 
 ---
 

@@ -1,6 +1,6 @@
 # ISBN-10 and the prime modulus 11: why a check digit on a prime clock also catches two swapped digits
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → ISBN-10 and the prime modulus 11
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Check Digits, Calendars and Cycles](../README.md#s05) → ISBN-10 and the prime modulus 11
 
 ---
 

@@ -1,6 +1,6 @@
 # Backing out the unobservable: asset value and asset volatility from the share price and its volatility, two equations in two unknowns
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Backing out the unobservable
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Structural Models - Default from the Balance Sheet](../README.md#s43) → Backing out the unobservable
 
 ---
 

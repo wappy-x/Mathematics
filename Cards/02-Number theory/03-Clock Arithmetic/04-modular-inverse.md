@@ -1,6 +1,6 @@
 # The modular inverse: dividing on the clock works exactly when the number is coprime to the modulus
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → The modular inverse
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Clock Arithmetic](../README.md#s03) → The modular inverse
 
 ---
 

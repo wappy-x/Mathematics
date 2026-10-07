@@ -1,6 +1,6 @@
 # Averages, mass and work: turning a rate or density into a total
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Averages, mass and work
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Integrals](../README.md#s04) → Averages, mass and work
 
 ---
 

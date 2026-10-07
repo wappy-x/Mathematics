@@ -1,6 +1,6 @@
 # Annuities: a level stream of payments as one closed form, and the loan schedule it implies
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Annuities
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Money, Dates and Discounting](../README.md#s01) → Annuities
 
 ---
 

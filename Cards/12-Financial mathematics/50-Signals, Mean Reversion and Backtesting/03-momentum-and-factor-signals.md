@@ -1,6 +1,6 @@
 # Momentum and factor signals: sorting stocks and reading the spread
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Momentum and factor signals
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Signals, Mean Reversion and Backtesting](../README.md#s50) → Momentum and factor signals
 
 ---
 

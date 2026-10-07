@@ -1,6 +1,6 @@
 # Convergence: the series lands on the function where it is smooth, on the midpoint at a jump, and overshoots by 9% beside it
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Convergence
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Fourier Series](../README.md#s09) → Convergence
 
 ---
 

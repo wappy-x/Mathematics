@@ -1,6 +1,6 @@
 # Euler-Maruyama: stepping an SDE with Gaussian increments
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Euler-Maruyama
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Generators, Densities and Simulation](../README.md#s08) → Euler-Maruyama
 
 ---
 

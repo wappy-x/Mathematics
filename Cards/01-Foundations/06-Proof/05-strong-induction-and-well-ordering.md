@@ -1,6 +1,6 @@
 # Strong induction and the least element: assume every earlier case, or pick the smallest counterexample
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Strong induction and the least element
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Strong induction and the least element
 
 ---
 

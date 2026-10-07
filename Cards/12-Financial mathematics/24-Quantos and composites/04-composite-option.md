@@ -1,6 +1,6 @@
 # Composite option: the foreign share priced in your currency at the market rate, so the vol is the vol of a product
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Composite option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Quantos and composites](../README.md#s24) → Composite option
 
 ---
 

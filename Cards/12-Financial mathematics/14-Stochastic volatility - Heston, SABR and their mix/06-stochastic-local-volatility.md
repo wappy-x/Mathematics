@@ -1,6 +1,6 @@
 # Stochastic-local volatility: a leverage function that makes a stochastic-vol model reprice every vanilla
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → Stochastic-local volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Stochastic volatility - Heston, SABR and their mix](../README.md#s14) → Stochastic-local volatility
 
 ---
 

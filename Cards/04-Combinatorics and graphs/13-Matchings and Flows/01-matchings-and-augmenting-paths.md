@@ -1,6 +1,6 @@
 # Matchings: pair up vertices with no one used twice, and a matching is largest exactly when no alternating route can improve it
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Matchings
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Matchings and Flows](../README.md#s13) → Matchings
 
 ---
 

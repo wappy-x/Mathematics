@@ -1,6 +1,6 @@
 # Combinations, n choose k: unordered picks are ordered picks divided by k!, the workhorse of counting
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Combinations, n choose k
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Counting Principles](../README.md#s01) → Combinations, n choose k
 
 ---
 

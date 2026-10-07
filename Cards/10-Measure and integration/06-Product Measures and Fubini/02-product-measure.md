@@ -1,6 +1,6 @@
 # Product measure: rectangles get width times height, and the extension is unique when both factors are sigma-finite
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Product measure
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Product Measures and Fubini](../README.md#s06) → Product measure
 
 ---
 

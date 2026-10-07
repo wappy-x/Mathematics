@@ -1,6 +1,6 @@
 # Overfitting: a model that memorises, and the held-out test that catches it
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Overfitting
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Regression](../README.md#s09) → Overfitting
 
 ---
 

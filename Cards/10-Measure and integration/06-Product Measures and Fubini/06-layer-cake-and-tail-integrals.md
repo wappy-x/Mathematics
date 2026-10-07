@@ -1,6 +1,6 @@
 # The layer-cake formula: an integral is the area under the tail sizes, so averages become statements about probabilities
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → The layer-cake formula
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Product Measures and Fubini](../README.md#s06) → The layer-cake formula
 
 ---
 

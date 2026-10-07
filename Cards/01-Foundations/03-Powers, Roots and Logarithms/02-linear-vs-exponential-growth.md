@@ -1,6 +1,6 @@
 # Linear versus exponential growth: adding a fixed amount against multiplying by a fixed factor
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Linear versus exponential growth
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Powers, Roots and Logarithms](../README.md#s03) → Linear versus exponential growth
 
 ---
 

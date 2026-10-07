@@ -1,6 +1,6 @@
 # Mixing tanks: rate in minus rate out is a differential equation, and units keep you honest
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Mixing tanks
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Rate Equations](../README.md#s01) → Mixing tanks
 
 ---
 

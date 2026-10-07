@@ -1,6 +1,6 @@
 # The reflection principle: mirror the bad paths onto ones that are easy to count, and the ballot problem falls out
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → The reflection principle
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Lattice Paths and Catalan Numbers](../README.md#s06) → The reflection principle
 
 ---
 

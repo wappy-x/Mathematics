@@ -1,6 +1,6 @@
 # Basis and dimension: the smallest set that reaches everything, and the count that never changes
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Basis and dimension
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Vectors](../README.md#s03) → Basis and dimension
 
 ---
 

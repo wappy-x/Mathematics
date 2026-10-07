@@ -1,6 +1,6 @@
 # Pyramids, cones and spheres: the one-third rule and the sphere's four pi r squared
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Pyramids, cones and spheres
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Circles and Solids](../README.md#s02) → Pyramids, cones and spheres
 
 ---
 

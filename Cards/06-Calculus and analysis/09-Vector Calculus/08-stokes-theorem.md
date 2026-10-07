@@ -1,6 +1,6 @@
 # Stokes' theorem: circulation round the rim equals curl flux through the sheet
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Stokes' theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Vector Calculus](../README.md#s09) → Stokes' theorem
 
 ---
 

@@ -1,6 +1,6 @@
 # Implied forward and dividend from parity: a call-put pair tells you the forward, and the forward tells you the yield
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Implied forward and dividend from parity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Implied volatility and the vanilla inverses](../README.md#s11) → Implied forward and dividend from parity
 
 ---
 

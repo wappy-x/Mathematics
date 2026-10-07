@@ -1,6 +1,6 @@
 # Fermat's little theorem: raise a number the prime dial does not divide to one below the dial size and it reads 1
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Fermat's little theorem
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Fermat's little theorem
 
 ---
 

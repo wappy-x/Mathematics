@@ -1,6 +1,6 @@
 # Counterparty exposure: what you would lose if the other side failed today, why only positive value counts, and how netting shrinks it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → Counterparty exposure
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Counterparty Risk and CVA](../README.md#s46) → Counterparty exposure
 
 ---
 

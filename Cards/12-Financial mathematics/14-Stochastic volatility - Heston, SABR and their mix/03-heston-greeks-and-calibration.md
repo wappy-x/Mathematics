@@ -1,6 +1,6 @@
 # Heston Greeks and calibration: sensitivities from the integral, and five parameters from a surface
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → Heston Greeks and calibration
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Stochastic volatility - Heston, SABR and their mix](../README.md#s14) → Heston Greeks and calibration
 
 ---
 

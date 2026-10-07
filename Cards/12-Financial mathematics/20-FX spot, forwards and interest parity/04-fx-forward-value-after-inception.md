@@ -1,6 +1,6 @@
 # Valuing an old currency forward: the gap to today's forward, discounted, in whichever currency you count
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX spot, forwards and interest parity](../../../SYLLABUS.md#w12-s20) → Valuing an old currency forward
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX spot, forwards and interest parity](../README.md#s20) → Valuing an old currency forward
 
 ---
 

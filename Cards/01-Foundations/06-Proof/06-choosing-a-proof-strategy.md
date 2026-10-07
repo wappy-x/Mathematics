@@ -1,6 +1,6 @@
 # Choosing a proof strategy: which move fits which claim, plus existence, uniqueness and working backwards
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Choosing a proof strategy
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Choosing a proof strategy
 
 ---
 

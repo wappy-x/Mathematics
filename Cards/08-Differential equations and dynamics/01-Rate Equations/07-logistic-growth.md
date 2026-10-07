@@ -1,6 +1,6 @@
 # Logistic growth: a ceiling bends the exponential into an S-curve
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Logistic growth
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Rate Equations](../README.md#s01) → Logistic growth
 
 ---
 

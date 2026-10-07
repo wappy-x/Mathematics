@@ -1,6 +1,6 @@
 # Putting the adjustments together: clean price minus CVA plus DVA minus FVA, MVA and KVA, what overlaps, and who charges whom
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → Putting the adjustments together
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Collateral, Funding and the Rest of the XVAs](../README.md#s47) → Putting the adjustments together
 
 ---
 

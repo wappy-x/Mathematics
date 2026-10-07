@@ -1,6 +1,6 @@
 # Basel capital: risk-weighted assets, the ratios, and the buffers on top
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Basel capital
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Regulatory Capital in Outline](../README.md#s48) → Basel capital
 
 ---
 

@@ -1,6 +1,6 @@
 # Negative rates: what breaks, what is floored, and which models survive
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Negative rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves in Depth](../README.md#s33) → Negative rates
 
 ---
 

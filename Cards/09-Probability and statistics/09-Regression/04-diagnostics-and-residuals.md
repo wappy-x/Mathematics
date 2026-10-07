@@ -1,6 +1,6 @@
 # Diagnostics: residual plots, leverage, and the assumptions a regression quietly makes
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Diagnostics
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Regression](../README.md#s09) → Diagnostics
 
 ---
 

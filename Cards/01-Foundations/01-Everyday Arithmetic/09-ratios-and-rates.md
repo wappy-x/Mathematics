@@ -1,6 +1,6 @@
 # Ratios and rates: comparing two quantities and scaling them together
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Ratios and rates
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Everyday Arithmetic](../README.md#s01) → Ratios and rates
 
 ---
 

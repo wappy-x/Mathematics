@@ -1,6 +1,6 @@
 # Laplace on a rectangle: separate into sines one way and sinh the other, one hot edge at a time
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Laplace on a rectangle
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → Laplace on a rectangle
 
 ---
 

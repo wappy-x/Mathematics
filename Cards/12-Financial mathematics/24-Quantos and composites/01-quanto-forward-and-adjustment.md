@@ -1,6 +1,6 @@
 # The quanto adjustment: a foreign price paid in home money at a fixed rate drifts slower by correlation times two vols
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → The quanto adjustment
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Quantos and composites](../README.md#s24) → The quanto adjustment
 
 ---
 

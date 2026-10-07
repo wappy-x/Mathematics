@@ -1,6 +1,6 @@
 # Half-range series: extend a function on [0, L] as odd or even so the series matches fixed or insulated ends
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Half-range series
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Fourier Series](../README.md#s09) → Half-range series
 
 ---
 

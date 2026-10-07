@@ -1,6 +1,6 @@
 # Catalan numbers: paths that never dip below the start, balanced brackets, and the formula C(2n,n)/(n+1)
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → Catalan numbers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Lattice Paths and Catalan Numbers](../README.md#s06) → Catalan numbers
 
 ---
 

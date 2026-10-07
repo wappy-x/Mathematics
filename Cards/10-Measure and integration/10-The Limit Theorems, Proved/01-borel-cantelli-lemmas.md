@@ -1,6 +1,6 @@
 # The Borel-Cantelli lemmas: summable probabilities mean an event happens finitely often, and for independent events the converse holds
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → The Borel-Cantelli lemmas
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Limit Theorems, Proved](../README.md#s10) → The Borel-Cantelli lemmas
 
 ---
 

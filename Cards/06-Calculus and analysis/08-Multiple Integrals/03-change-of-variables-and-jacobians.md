@@ -1,6 +1,6 @@
 # Change of variables: polar, cylindrical and spherical, and the Jacobian that fixes the area
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Change of variables
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Multiple Integrals](../README.md#s08) → Change of variables
 
 ---
 

@@ -1,6 +1,6 @@
 # The Catalan generating function: the first-return recurrence becomes C = 1 + x C^2, solved by iteration
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → The Catalan generating function
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Generating Functions](../README.md#s07) → The Catalan generating function
 
 ---
 

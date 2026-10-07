@@ -1,6 +1,6 @@
 # Asian Greeks and the average already banked: damped delta and vega, and the strike that shrinks as fixings come in
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Asian Greeks and the average already banked
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages - commodity swaps and Asian options](../README.md#s27) → Asian Greeks and the average already banked
 
 ---
 

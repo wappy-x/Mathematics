@@ -1,6 +1,6 @@
 # Randomised experiments: why random assignment lets you say 'because'
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Randomised experiments
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Survival, Design and Causality](../README.md#s13) → Randomised experiments
 
 ---
 

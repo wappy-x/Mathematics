@@ -1,6 +1,6 @@
 # Signed measures: sizes that may go negative, the split of the space into a positive and a negative part, and total variation as a distance
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → Signed measures
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Densities and Changing Measure](../README.md#s08) → Signed measures
 
 ---
 

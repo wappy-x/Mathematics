@@ -1,6 +1,6 @@
 # Risk reversal and butterfly: quoting a smile as its tilt and its curvature, and turning the quotes back into three vols
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Risk reversal and butterfly
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The FX smile - risk reversals, butterflies and vanna-volga](../README.md#s22) → Risk reversal and butterfly
 
 ---
 

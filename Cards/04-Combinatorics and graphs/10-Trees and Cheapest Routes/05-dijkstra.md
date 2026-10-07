@@ -1,6 +1,6 @@
 # Dijkstra's algorithm: settle the cheapest unsettled point, relax its neighbours, and the cheapest routes appear when no cost is negative
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Dijkstra's algorithm
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Trees and Cheapest Routes](../README.md#s10) → Dijkstra's algorithm
 
 ---
 

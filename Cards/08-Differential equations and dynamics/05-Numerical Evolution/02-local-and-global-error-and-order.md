@@ -1,6 +1,6 @@
 # Order of a method: the error of one step, how the errors pile up, and the number that says how fast they shrink
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Order of a method
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Numerical Evolution](../README.md#s05) → Order of a method
 
 ---
 

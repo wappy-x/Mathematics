@@ -1,6 +1,6 @@
 # Forward measures: a bond as the unit makes its forward rate a martingale
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Forward measures
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Forward-Rate Models](../README.md#s31) → Forward measures
 
 ---
 

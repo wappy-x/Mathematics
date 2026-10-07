@@ -1,6 +1,6 @@
 # Expectation as an integral: the average of X is the integral of X against the probability, and E[g(X)] can be computed on the line instead
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → Expectation as an integral
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Lebesgue Integral](../README.md#s04) → Expectation as an integral
 
 ---
 

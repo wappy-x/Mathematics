@@ -1,6 +1,6 @@
 # Jordan's lemma: with an e to the iax factor the big arc still vanishes, so cosine integrals fall to residues
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Jordan's lemma
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Real Integrals and Counting Zeros](../README.md#s06) → Jordan's lemma
 
 ---
 

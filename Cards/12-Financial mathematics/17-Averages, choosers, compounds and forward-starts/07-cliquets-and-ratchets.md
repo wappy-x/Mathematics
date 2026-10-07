@@ -1,6 +1,6 @@
 # Cliquets: a chain of forward-starts with local caps and a global floor, and why the forward smile prices it
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Cliquets
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages, choosers, compounds and forward-starts](../README.md#s17) → Cliquets
 
 ---
 

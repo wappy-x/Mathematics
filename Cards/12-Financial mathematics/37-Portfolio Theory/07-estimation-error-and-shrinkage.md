@@ -1,6 +1,6 @@
 # Estimation error: why optimised portfolios chase noise, and shrinkage that calms them
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Estimation error
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Theory](../README.md#s37) → Estimation error
 
 ---
 

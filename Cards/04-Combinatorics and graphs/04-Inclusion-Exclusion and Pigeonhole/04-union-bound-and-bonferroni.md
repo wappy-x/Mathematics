@@ -1,6 +1,6 @@
 # Stopping the sieve early: the first term over-counts, two terms under-count, and both are guaranteed bounds
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Stopping the sieve early
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Inclusion-Exclusion and Pigeonhole](../README.md#s04) → Stopping the sieve early
 
 ---
 

@@ -1,6 +1,6 @@
 # Logarithms: the question 'what power got me here?'
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → What a logarithm is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Powers, Roots and Logarithms](../README.md#s03) → What a logarithm is
 
 ---
 

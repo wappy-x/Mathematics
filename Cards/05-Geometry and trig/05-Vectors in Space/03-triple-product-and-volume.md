@@ -1,6 +1,6 @@
 # Triple product: the volume of a slanted box and a test for four points in one plane
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Triple product
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Vectors in Space](../README.md#s05) → Triple product
 
 ---
 

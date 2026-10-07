@@ -1,6 +1,6 @@
 # Integer partitions: a number as a sum of whole parts with order ignored, drawn as rows of dots
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Integer partitions
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Partitions](../README.md#s08) → Integer partitions
 
 ---
 

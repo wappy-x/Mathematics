@@ -1,6 +1,6 @@
 # Feynman-Kac: an expectation of a diffusion solves a PDE
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Feynman-Kac
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Changing Measure](../README.md#s07) → Feynman-Kac
 
 ---
 

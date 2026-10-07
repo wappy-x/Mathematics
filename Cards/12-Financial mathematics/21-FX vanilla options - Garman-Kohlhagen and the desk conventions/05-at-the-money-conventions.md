@@ -1,6 +1,6 @@
 # Three meanings of at-the-money: spot, forward, and the delta-neutral straddle the FX market actually uses
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Three meanings of at-the-money
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../README.md#s21) → Three meanings of at-the-money
 
 ---
 

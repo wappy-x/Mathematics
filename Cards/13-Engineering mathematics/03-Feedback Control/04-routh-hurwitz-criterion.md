@@ -1,6 +1,6 @@
 # Routh-Hurwitz: decide whether every root decays without finding a single root
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Routh-Hurwitz
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Feedback Control](../README.md#s03) → Routh-Hurwitz
 
 ---
 

@@ -1,6 +1,6 @@
 # Law of sines: sides opposite angles in fixed proportion, and the case with two answers
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Law of sines
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → Law of sines
 
 ---
 

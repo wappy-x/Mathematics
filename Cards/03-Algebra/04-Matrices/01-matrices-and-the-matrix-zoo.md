@@ -1,6 +1,6 @@
 # Matrices: a table of numbers with a size, plus the named shapes you will keep meeting
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Matrices
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Matrices](../README.md#s04) → Matrices
 
 ---
 

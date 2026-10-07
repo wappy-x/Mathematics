@@ -1,6 +1,6 @@
 # Measures: a non-negative size that adds over countably many disjoint pieces, from counting to length to probability
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Measures
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Sets You Can Measure](../README.md#s01) → Measures
 
 ---
 

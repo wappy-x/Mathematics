@@ -1,6 +1,6 @@
 # The inverse matrix: the matrix that undoes another, the 2 by 2 formula, and when no inverse exists
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → The inverse matrix
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → The inverse matrix
 
 ---
 

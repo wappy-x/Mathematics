@@ -1,6 +1,6 @@
 # Boolean algebra: true/false, sets and switches obey the same rules, and the power set drawn as a cube is a lattice
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → Boolean algebra
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [For the Curious](../README.md#s10) → Boolean algebra
 
 ---
 

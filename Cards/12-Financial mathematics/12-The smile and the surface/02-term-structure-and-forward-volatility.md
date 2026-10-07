@@ -1,6 +1,6 @@
 # Term structure and forward volatility: total variance adds, so two expiries imply the vol in between
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → Term structure and forward volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The smile and the surface](../README.md#s12) → Term structure and forward volatility
 
 ---
 

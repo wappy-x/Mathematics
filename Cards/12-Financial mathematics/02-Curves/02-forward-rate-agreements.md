@@ -1,6 +1,6 @@
 # Forward rate agreements: locking a rate for a future period
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Forward rate agreements
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves](../README.md#s02) → Forward rate agreements
 
 ---
 

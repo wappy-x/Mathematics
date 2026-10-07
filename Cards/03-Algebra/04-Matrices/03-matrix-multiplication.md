@@ -1,6 +1,6 @@
 # Matrix multiplication: row by column, because it is 'do this, then that', and why the order matters
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Matrix multiplication
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Matrices](../README.md#s04) → Matrix multiplication
 
 ---
 

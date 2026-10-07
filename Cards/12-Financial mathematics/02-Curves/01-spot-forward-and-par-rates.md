@@ -1,6 +1,6 @@
 # Spot, forward and par rates: three ways to read one curve
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Spot, forward and par rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves](../README.md#s02) → Spot, forward and par rates
 
 ---
 

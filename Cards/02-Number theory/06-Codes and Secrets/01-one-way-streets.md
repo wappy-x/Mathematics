@@ -1,6 +1,6 @@
 # One-way streets: multiplying two primes and raising to a power on the clock are easy, and undoing them is slow
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → One-way streets
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Codes and Secrets](../README.md#s06) → One-way streets
 
 ---
 

@@ -1,6 +1,6 @@
 # Barone-Adesi-Whaley: an American price in a microsecond by bolting one lump onto the European price
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → Barone-Adesi-Whaley
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [American and Bermudan exercise](../README.md#s15) → Barone-Adesi-Whaley
 
 ---
 

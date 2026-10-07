@@ -1,6 +1,6 @@
 # Heath-Jarrow-Morton: model the forward curve and let no-arbitrage fix the drift
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Heath-Jarrow-Morton
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Forward-Rate Models](../README.md#s31) → Heath-Jarrow-Morton
 
 ---
 

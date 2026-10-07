@@ -1,6 +1,6 @@
 # The order of a number and primitive roots: how many steps until the powers return to 1, and the numbers that visit everything
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → The order of a number and primitive roots
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → The order of a number and primitive roots
 
 ---
 

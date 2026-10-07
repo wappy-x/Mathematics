@@ -1,6 +1,6 @@
 # The SVI smile: five numbers that fit one expiry, and the constraints that keep it arbitrage-free
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → The SVI smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The smile and the surface](../README.md#s12) → The SVI smile
 
 ---
 

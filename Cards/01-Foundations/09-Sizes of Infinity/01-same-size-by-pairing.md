@@ -1,6 +1,6 @@
 # Same size means pairable: comparing sets without counting
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → Same size means pairable
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sizes of Infinity](../README.md#s09) → Same size means pairable
 
 ---
 

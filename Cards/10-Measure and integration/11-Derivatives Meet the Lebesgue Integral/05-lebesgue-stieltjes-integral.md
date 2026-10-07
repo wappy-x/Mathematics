@@ -1,6 +1,6 @@
 # The Lebesgue-Stieltjes integral: integrate against any increasing or bounded-variation function, so E[g(X)] is the integral of g against F, with integration by parts
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → The Lebesgue-Stieltjes integral
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Derivatives Meet the Lebesgue Integral](../README.md#s11) → The Lebesgue-Stieltjes integral
 
 ---
 

@@ -1,6 +1,6 @@
 # Connected or not: breadth-first search explores ring by ring, finds the pieces, and gives shortest routes when every step costs the same
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Connected or not
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Graphs - Dots and Lines](../README.md#s09) → Connected or not
 
 ---
 

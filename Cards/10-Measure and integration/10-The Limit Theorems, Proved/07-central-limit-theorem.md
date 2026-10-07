@@ -1,6 +1,6 @@
 # The central limit theorem, proved: standardised sums of independent copies with finite variance converge to the normal law, by swapping one summand at a time
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → The central limit theorem, proved
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [The Limit Theorems, Proved](../README.md#s10) → The central limit theorem, proved
 
 ---
 

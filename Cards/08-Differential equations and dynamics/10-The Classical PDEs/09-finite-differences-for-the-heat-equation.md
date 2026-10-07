@@ -1,6 +1,6 @@
 # Stepping the heat equation on a grid: the explicit scheme works only when the time step is small enough
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Stepping the heat equation on a grid
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → Stepping the heat equation on a grid
 
 ---
 

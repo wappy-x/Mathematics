@@ -1,6 +1,6 @@
 # The eight single barriers in one table: up or down, in or out, call or put, with rebates, from six building blocks
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → The eight single barriers in one table
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX exotics as desks use them - digitals, touches and barriers](../README.md#s23) → The eight single barriers in one table
 
 ---
 

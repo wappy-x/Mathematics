@@ -1,6 +1,6 @@
 # Gambler's ruin: the chance of reaching the target before the floor
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Random Walks and Filtrations](../../../SYLLABUS.md#w11-s01) → Gambler's ruin
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Random Walks and Filtrations](../README.md#s01) → Gambler's ruin
 
 ---
 

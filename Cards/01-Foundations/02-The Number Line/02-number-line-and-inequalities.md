@@ -1,6 +1,6 @@
 # The number line and inequalities: left is smaller, and what flips when you multiply by a negative
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → The number line and inequalities
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [The Number Line](../README.md#s02) → The number line and inequalities
 
 ---
 

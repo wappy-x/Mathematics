@@ -1,6 +1,6 @@
 # Lagrange multipliers: the best point on a constraint is where the gradients line up
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Lagrange multipliers
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Lagrange multipliers
 
 ---
 

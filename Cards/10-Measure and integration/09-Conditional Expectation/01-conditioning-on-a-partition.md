@@ -1,6 +1,6 @@
 # Conditioning on a partition: the best forecast given which cell you are in is the cell average, and the cells' sigma-algebra is the information
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Conditioning on a partition
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Conditional Expectation](../README.md#s09) → Conditioning on a partition
 
 ---
 

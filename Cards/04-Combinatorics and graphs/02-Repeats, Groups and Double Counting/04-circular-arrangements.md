@@ -1,6 +1,6 @@
 # Round tables and bracelets: fix one seat to kill the rotations, halve again if flipping counts the same
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Round tables and bracelets
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Repeats, Groups and Double Counting](../README.md#s02) → Round tables and bracelets
 
 ---
 

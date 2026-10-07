@@ -1,6 +1,6 @@
 # Merton jump-diffusion: add sudden gaps, and the price is a weighted sum of Black-Scholes prices
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Merton jump-diffusion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Local volatility and jumps](../README.md#s13) → Merton jump-diffusion
 
 ---
 

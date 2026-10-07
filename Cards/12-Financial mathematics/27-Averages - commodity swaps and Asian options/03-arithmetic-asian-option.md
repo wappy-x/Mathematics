@@ -1,6 +1,6 @@
 # The Asian option desks trade: no exact formula, so match two moments and let the geometric twin steer the simulation
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → The Asian option desks trade
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Averages - commodity swaps and Asian options](../README.md#s27) → The Asian option desks trade
 
 ---
 

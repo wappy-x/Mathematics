@@ -1,6 +1,6 @@
 # Stirling's formula: n! is about sqrt(2 pi n) times (n/e) to the n, from the peak of the gamma integral
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Stirling's formula
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → Stirling's formula
 
 ---
 

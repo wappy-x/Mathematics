@@ -1,6 +1,6 @@
 # Pigeonhole, extended: n items in k boxes force a box with at least n/k rounded up, and choosing the boxes is the whole trick
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Pigeonhole, extended
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Inclusion-Exclusion and Pigeonhole](../README.md#s04) → Pigeonhole, extended
 
 ---
 

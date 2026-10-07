@@ -1,6 +1,6 @@
 # Uniform convergence: one tolerance for every x, and why it keeps continuity
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Uniform convergence
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → Uniform convergence
 
 ---
 

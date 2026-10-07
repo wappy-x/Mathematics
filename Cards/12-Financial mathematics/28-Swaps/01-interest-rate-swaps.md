@@ -1,6 +1,6 @@
 # Interest rate swaps: fixed for floating, valued as two bonds or as a strip of forwards
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Interest rate swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Swaps](../README.md#s28) → Interest rate swaps
 
 ---
 

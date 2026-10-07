@@ -1,6 +1,6 @@
 # First-order recurrences: multiply by a factor and add a constant, the fixed point is the anchor, and a loan is the model
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → First-order recurrences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Recurrences](../README.md#s05) → First-order recurrences
 
 ---
 

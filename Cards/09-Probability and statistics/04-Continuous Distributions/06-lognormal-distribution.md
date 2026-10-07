@@ -1,6 +1,6 @@
 # Lognormal: a quantity whose logarithm is normal, and why prices use it
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Lognormal
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Continuous Distributions](../README.md#s04) → Lognormal
 
 ---
 

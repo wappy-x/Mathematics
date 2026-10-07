@@ -1,6 +1,6 @@
 # Similarity: when a small model in a tunnel really predicts the full size thing
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Similarity
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Units and Modelling](../README.md#s01) → Similarity
 
 ---
 

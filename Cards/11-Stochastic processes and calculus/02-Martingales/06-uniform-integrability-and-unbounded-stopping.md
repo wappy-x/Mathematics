@@ -1,6 +1,6 @@
 # Stopping without a bound: the uniform integrability that makes it safe
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Stopping without a bound
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Martingales](../README.md#s02) → Stopping without a bound
 
 ---
 

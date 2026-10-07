@@ -1,6 +1,6 @@
 # The Lebesgue differentiation theorem: averages over shrinking intervals return the function's value at almost every point
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → The Lebesgue differentiation theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Derivatives Meet the Lebesgue Integral](../README.md#s11) → The Lebesgue differentiation theorem
 
 ---
 

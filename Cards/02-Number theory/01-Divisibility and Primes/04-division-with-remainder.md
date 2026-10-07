@@ -1,6 +1,6 @@
 # Division with a remainder: the quotient and the leftover are unique, and the leftover is smaller than the divisor
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Division with a remainder
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Division with a remainder
 
 ---
 

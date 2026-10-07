@@ -1,6 +1,6 @@
 # A risky bond from the hazard curve: survival-weighted coupons plus recovery on default
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → A risky bond from the hazard curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../README.md#s44) → A risky bond from the hazard curve
 
 ---
 

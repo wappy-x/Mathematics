@@ -1,6 +1,6 @@
 # Swap DV01: the value change for one basis point, and hedging one swap with another
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Swap DV01
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Swaps](../README.md#s28) → Swap DV01
 
 ---
 

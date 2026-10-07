@@ -1,6 +1,6 @@
 # The Mellin transform: a Laplace transform on a log scale, whose first two examples are gamma and zeta
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → The Mellin transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → The Mellin transform
 
 ---
 

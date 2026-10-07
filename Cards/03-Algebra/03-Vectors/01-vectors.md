@@ -1,6 +1,6 @@
 # Vectors: a list of numbers that is also an arrow, and the two things you can do to it
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Vectors
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Vectors](../README.md#s03) → Vectors
 
 ---
 

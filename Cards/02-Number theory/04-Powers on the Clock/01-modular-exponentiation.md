@@ -1,6 +1,6 @@
 # Powers on the clock: repeated squaring finds 7 to the 123 mod 1000 without ever writing a huge number
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Powers on the clock
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Powers on the clock
 
 ---
 

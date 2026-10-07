@@ -1,6 +1,6 @@
 # Random walks on a graph: where a wanderer ends up, and how fast
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Graphs and the Probabilistic Method](../../../SYLLABUS.md#w09-s14) → Random walks on a graph
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Random Graphs and the Probabilistic Method](../README.md#s14) → Random walks on a graph
 
 ---
 

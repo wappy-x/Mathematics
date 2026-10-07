@@ -1,6 +1,6 @@
 # Sine, cosine and tangent: three ratios that turn an angle into lengths
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Sine, cosine and tangent
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Trigonometry](../README.md#s03) → Sine, cosine and tangent
 
 ---
 

@@ -1,6 +1,6 @@
 # Limit laws and the squeeze: combining limits and trapping an oscillating one
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Limit laws and the squeeze
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Limit laws and the squeeze
 
 ---
 

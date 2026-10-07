@@ -1,6 +1,6 @@
 # Vanna and volga: the two second-order vol Greeks, and why the risk reversal trades vanna and the butterfly trades volga
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Vanna and volga
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The FX smile - risk reversals, butterflies and vanna-volga](../README.md#s22) → Vanna and volga
 
 ---
 

@@ -1,6 +1,6 @@
 # Rho and dividend rho: how rates and the yield move the price
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Rho and dividend rho
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Greeks, one each](../README.md#s09) → Rho and dividend rho
 
 ---
 

@@ -1,6 +1,6 @@
 # Betting on a martingale: any predictable strategy leaves a martingale
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Betting on a martingale
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Martingales](../README.md#s02) → Betting on a martingale
 
 ---
 

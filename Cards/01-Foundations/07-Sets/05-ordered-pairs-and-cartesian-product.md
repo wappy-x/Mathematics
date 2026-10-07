@@ -1,6 +1,6 @@
 # Ordered pairs and the Cartesian product: the deck is suits times ranks
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Ordered pairs and the Cartesian product
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Ordered pairs and the Cartesian product
 
 ---
 

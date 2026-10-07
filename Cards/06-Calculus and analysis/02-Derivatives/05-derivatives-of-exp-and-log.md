@@ -1,6 +1,6 @@
 # Derivatives of exp and log: the function that is its own rate, and its inverse
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Derivatives of exp and log
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Derivatives](../README.md#s02) → Derivatives of exp and log
 
 ---
 

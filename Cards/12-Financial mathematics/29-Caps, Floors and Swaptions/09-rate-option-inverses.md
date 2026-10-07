@@ -1,6 +1,6 @@
 # Solving rate options backwards: implied volatility, strike from delta, and rate from price
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Solving rate options backwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → Solving rate options backwards
 
 ---
 

@@ -1,6 +1,6 @@
 # Congruence: two numbers count as the same when they leave the same remainder, written a ≡ b (mod n)
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → What congruence means
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Clock Arithmetic](../README.md#s03) → What congruence means
 
 ---
 

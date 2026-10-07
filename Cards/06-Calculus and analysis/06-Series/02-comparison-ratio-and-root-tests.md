@@ -1,6 +1,6 @@
 # Convergence tests: comparison, integral, ratio and root, and which to reach for
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Convergence tests
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → Convergence tests
 
 ---
 

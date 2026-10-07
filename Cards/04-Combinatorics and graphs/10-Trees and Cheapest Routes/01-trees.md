@@ -1,6 +1,6 @@
 # Trees: connected with no cycles, exactly one fewer edge than vertices, and one route between any two points
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Trees
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Trees and Cheapest Routes](../README.md#s10) → Trees
 
 ---
 

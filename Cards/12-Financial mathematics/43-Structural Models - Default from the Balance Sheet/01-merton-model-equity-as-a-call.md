@@ -1,6 +1,6 @@
 # Merton's model: equity is a call on the firm's assets, so risky debt is a safe bond minus a put
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Merton's model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Structural Models - Default from the Balance Sheet](../README.md#s43) → Merton's model
 
 ---
 

@@ -1,6 +1,6 @@
 # Pythagoras: the rule that fixes a right triangle, and the test that detects one
 
-[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Pythagoras
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Angles, Triangles and Congruence](../README.md#s01) → Pythagoras
 
 ---
 

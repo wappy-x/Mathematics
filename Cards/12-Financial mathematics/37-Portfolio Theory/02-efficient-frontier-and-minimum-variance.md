@@ -1,6 +1,6 @@
 # The efficient frontier: the least risk for each return, and the portfolio with the least risk of all
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → The efficient frontier
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Portfolio Theory](../README.md#s37) → The efficient frontier
 
 ---
 

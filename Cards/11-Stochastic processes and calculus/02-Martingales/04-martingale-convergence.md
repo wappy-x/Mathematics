@@ -1,6 +1,6 @@
 # Martingale convergence: a bounded martingale settles down
 
-[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Martingale convergence
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../README.md) → [Martingales](../README.md#s02) → Martingale convergence
 
 ---
 

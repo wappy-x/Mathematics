@@ -1,6 +1,6 @@
 # Parseval's identity: the energy of a signal equals the energy of its coefficients, so nothing is lost
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Parseval's identity
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Fourier Series](../README.md#s09) → Parseval's identity
 
 ---
 

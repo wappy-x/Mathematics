@@ -1,6 +1,6 @@
 # Uniform continuity: one tolerance for the whole interval, and the Lipschitz shortcut
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Uniform continuity
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Uniform continuity
 
 ---
 

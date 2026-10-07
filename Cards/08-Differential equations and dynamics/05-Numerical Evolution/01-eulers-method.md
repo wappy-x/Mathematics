@@ -1,6 +1,6 @@
 # Euler's method: step forward along the current slope, and the smaller the step the closer you land
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Euler's method
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Numerical Evolution](../README.md#s05) → Euler's method
 
 ---
 

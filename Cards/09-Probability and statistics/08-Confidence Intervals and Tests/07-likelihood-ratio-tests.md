@@ -1,6 +1,6 @@
 # Likelihood ratio tests: comparing two fits, and Wilks' chi-square rule
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Likelihood ratio tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Confidence Intervals and Tests](../README.md#s08) → Likelihood ratio tests
 
 ---
 

@@ -1,6 +1,6 @@
 # Spanning trees: a loop-free skeleton reaching every vertex, and K(n) has n^(n-2) of them
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Spanning trees
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Trees and Cheapest Routes](../README.md#s10) → Spanning trees
 
 ---
 

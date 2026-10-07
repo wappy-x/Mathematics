@@ -1,6 +1,6 @@
 # Quasi-Monte Carlo: Sobol points and the Brownian bridge that makes them work
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Quasi-Monte Carlo
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Numerical Methods for Pricing](../README.md#s06) → Quasi-Monte Carlo
 
 ---
 

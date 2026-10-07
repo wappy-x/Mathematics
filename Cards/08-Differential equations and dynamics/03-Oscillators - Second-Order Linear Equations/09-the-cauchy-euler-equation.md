@@ -1,6 +1,6 @@
 # The Cauchy-Euler equation: coefficients that scale with x are solved by powers of x
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → The Cauchy-Euler equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Oscillators - Second-Order Linear Equations](../README.md#s03) → The Cauchy-Euler equation
 
 ---
 

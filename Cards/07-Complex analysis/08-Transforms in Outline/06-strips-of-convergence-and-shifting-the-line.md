@@ -1,6 +1,6 @@
 # Where a transform lives: a strip or half plane of convergence, and inside it the line of integration slides without changing the answer
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → Where a transform lives
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → Where a transform lives
 
 ---
 

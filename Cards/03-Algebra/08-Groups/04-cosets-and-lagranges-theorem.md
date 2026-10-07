@@ -1,6 +1,6 @@
 # Cosets and Lagrange's theorem: a subgroup slices the group into equal blocks, so its size divides the group's size
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Cosets and Lagrange's theorem
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Cosets and Lagrange's theorem
 
 ---
 

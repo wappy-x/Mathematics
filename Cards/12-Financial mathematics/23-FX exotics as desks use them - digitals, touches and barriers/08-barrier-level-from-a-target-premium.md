@@ -1,6 +1,6 @@
 # Solving for the barrier: the knock-out level that makes the option cost what the client will pay, and the touch level a price implies
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Solving for the barrier
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [FX exotics as desks use them - digitals, touches and barriers](../README.md#s23) → Solving for the barrier
 
 ---
 

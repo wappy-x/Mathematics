@@ -1,6 +1,6 @@
 # Quadratic forms: x^T A x as the risk of a mix, and positive definite means every mix has positive risk
 
-[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → Quadratic forms
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Quadratic forms
 
 ---
 

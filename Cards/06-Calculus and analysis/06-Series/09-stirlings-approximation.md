@@ -1,6 +1,6 @@
 # Stirling's approximation: how big n factorial is, proved with integrals only
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Stirling's approximation
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Series](../README.md#s06) → Stirling's approximation
 
 ---
 

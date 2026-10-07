@@ -1,6 +1,6 @@
 # Cox-Ross-Rubinstein: choosing u and d from volatility, and watching the tree price converge
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → Cox-Ross-Rubinstein
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Binomial Trees](../README.md#s04) → Cox-Ross-Rubinstein
 
 ---
 

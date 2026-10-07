@@ -1,6 +1,6 @@
 # Hull-White: Vasicek with a time-dependent drift that fits today's curve exactly
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Hull-White
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Short-Rate Models](../README.md#s30) → Hull-White
 
 ---
 

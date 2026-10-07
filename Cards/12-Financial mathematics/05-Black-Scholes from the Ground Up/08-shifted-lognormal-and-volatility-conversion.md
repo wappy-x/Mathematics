@@ -1,6 +1,6 @@
 # Shifted lognormal and volatility conversion: a floor moved below zero, and comparing normal with lognormal volatility
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Shifted lognormal and volatility conversion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Black-Scholes from the Ground Up](../README.md#s05) → Shifted lognormal and volatility conversion
 
 ---
 

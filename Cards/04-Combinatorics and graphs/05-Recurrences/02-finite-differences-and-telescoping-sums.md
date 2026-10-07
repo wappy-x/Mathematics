@@ -1,6 +1,6 @@
 # Finite differences: the jump from one term to the next, and sums that collapse because consecutive terms cancel
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Finite differences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Recurrences](../README.md#s05) → Finite differences
 
 ---
 

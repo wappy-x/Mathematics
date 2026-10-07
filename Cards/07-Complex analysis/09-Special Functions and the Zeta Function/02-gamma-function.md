@@ -1,6 +1,6 @@
 # The gamma function: the factorial for every number, defined by an integral and stretched to the whole plane by its own recurrence
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → The gamma function
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → The gamma function
 
 ---
 

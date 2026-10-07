@@ -1,6 +1,6 @@
 # Put-call parity: call minus put is a forward, so three prices fix the fourth
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Put-call parity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [The Black-Scholes call and put](../README.md#s08) → Put-call parity
 
 ---
 

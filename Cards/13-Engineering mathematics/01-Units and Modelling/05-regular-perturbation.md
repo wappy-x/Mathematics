@@ -1,6 +1,6 @@
 # Regular perturbation: solve the easy problem, then correct in powers of a small number
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Regular perturbation
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Units and Modelling](../README.md#s01) → Regular perturbation
 
 ---
 

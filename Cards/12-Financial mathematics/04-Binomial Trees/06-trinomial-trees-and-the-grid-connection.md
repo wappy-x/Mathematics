@@ -1,6 +1,6 @@
 # Trinomial trees: three branches, a free parameter, and the finite-difference grid in disguise
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → Trinomial trees
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Binomial Trees](../README.md#s04) → Trinomial trees
 
 ---
 

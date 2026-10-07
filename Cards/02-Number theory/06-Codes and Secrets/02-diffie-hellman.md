@@ -1,6 +1,6 @@
 # Diffie-Hellman key exchange: two strangers agree a secret over an open line using powers on a clock
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → Diffie-Hellman key exchange
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Codes and Secrets](../README.md#s06) → Diffie-Hellman key exchange
 
 ---
 

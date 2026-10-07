@@ -1,6 +1,6 @@
 # Sequences: limits with a whole number as the clock, and the monotone convergence theorem
 
-[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Sequences
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Sequences
 
 ---
 

@@ -1,6 +1,6 @@
 # LaSalle's principle: when the energy only pauses on a thin set, solutions still end where they can stay on it
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → LaSalle's principle
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → LaSalle's principle
 
 ---
 

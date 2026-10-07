@@ -1,6 +1,6 @@
 # Units and dimensions: seven base quantities every formula has to balance
 
-[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Units and dimensions
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../README.md) → [Units and Modelling](../README.md#s01) → Units and dimensions
 
 ---
 

@@ -1,6 +1,6 @@
 # Harmonic functions: the real and imaginary parts of a holomorphic function both solve Laplace's equation, and their level curves cross at right angles
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Harmonic functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Harmonic functions
 
 ---
 

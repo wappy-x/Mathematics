@@ -1,6 +1,6 @@
 # Independence as a product: two quantities are independent exactly when their joint law is the product of their laws, so E[XY] = E[X]E[Y]
 
-[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Independence as a product
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../README.md) → [Product Measures and Fubini](../README.md#s06) → Independence as a product
 
 ---
 

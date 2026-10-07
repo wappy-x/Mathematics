@@ -1,6 +1,6 @@
 # Laplace's equation: what is left when everything has settled, and each point is the average of its neighbours
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Laplace's equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [The Classical PDEs](../README.md#s10) → Laplace's equation
 
 ---
 

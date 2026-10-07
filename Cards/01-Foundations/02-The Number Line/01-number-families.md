@@ -1,6 +1,6 @@
 # The number families: counting numbers, integers, fractions, reals, and what forced each one
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → The number families
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [The Number Line](../README.md#s02) → The number families
 
 ---
 

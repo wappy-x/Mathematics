@@ -1,6 +1,6 @@
 # Exact equations: when the equation is the derivative of a hidden function, find that function
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Exact equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Rate Equations](../README.md#s01) → Exact equations
 
 ---
 

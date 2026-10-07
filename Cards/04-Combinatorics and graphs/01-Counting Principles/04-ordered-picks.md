@@ -1,6 +1,6 @@
 # Ordered picks: choosing k of n in order is the falling factorial n(n-1)...(n-k+1)
 
-[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Ordered picks
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Counting Principles](../README.md#s01) → Ordered picks
 
 ---
 

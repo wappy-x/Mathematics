@@ -1,6 +1,6 @@
 # Pontryagin's principle: the best control maximises a Hamiltonian at every instant, and often that means full throttle or full brake
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Pontryagin's principle
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Calculus of Variations and Optimal Control](../README.md#s12) → Pontryagin's principle
 
 ---
 

@@ -1,6 +1,6 @@
 # Importance sampling: drawing from where it matters and reweighting
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Importance sampling
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Simulation](../README.md#s11) → Importance sampling
 
 ---
 

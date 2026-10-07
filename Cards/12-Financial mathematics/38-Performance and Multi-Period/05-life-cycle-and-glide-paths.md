@@ -1,6 +1,6 @@
 # Investing over a lifetime: sequence risk, safe withdrawal rates and glide paths
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Investing over a lifetime
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Performance and Multi-Period](../README.md#s38) → Investing over a lifetime
 
 ---
 

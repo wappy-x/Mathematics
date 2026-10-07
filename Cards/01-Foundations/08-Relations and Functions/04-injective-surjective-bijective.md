@@ -1,6 +1,6 @@
 # One-to-one and onto: no two inputs share an output, and every output gets hit
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → One-to-one and onto
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → One-to-one and onto
 
 ---
 

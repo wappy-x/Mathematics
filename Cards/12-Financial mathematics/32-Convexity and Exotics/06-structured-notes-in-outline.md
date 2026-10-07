@@ -1,6 +1,6 @@
 # Structured rate notes: range accruals, inverse floaters and target redemption, in outline
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Structured rate notes
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Convexity and Exotics](../README.md#s32) → Structured rate notes
 
 ---
 

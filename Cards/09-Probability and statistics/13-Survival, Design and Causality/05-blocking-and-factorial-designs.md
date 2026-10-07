@@ -1,6 +1,6 @@
 # Blocking and factorial designs: getting more from fewer trials
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Blocking and factorial designs
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Survival, Design and Causality](../README.md#s13) → Blocking and factorial designs
 
 ---
 

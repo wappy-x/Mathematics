@@ -1,6 +1,6 @@
 # The SIR model: an outbreak grows while each case infects more than one, and burns out before everyone is ill
 
-[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → The SIR model
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../README.md) → [Nonlinear Dynamics in the Plane](../README.md#s06) → The SIR model
 
 ---
 

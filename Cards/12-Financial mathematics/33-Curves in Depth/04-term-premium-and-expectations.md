@@ -1,6 +1,6 @@
 # What a curve says: expectations, term premium, and why an inverted curve worries people
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → What a curve says
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Curves in Depth](../README.md#s33) → What a curve says
 
 ---
 

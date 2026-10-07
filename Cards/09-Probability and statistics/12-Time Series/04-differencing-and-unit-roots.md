@@ -1,6 +1,6 @@
 # Unit roots: series that wander, and the differencing that tames them
 
-[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Unit roots
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../README.md) → [Time Series](../README.md#s12) → Unit roots
 
 ---
 

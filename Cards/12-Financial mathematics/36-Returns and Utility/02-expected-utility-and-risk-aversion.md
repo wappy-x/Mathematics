@@ -1,6 +1,6 @@
 # Expected utility: why a sure 4 percent can beat a risky 8, and the number that says how much you mind risk
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Expected utility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Returns and Utility](../README.md#s36) → Expected utility
 
 ---
 

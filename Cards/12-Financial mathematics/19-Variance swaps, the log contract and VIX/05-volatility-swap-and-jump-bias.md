@@ -1,6 +1,6 @@
 # The volatility swap and the jump bias: why a swap on vol is worth less than the root of the variance strike, and why gaps break the strip
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → The volatility swap and the jump bias
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Variance swaps, the log contract and VIX](../README.md#s19) → The volatility swap and the jump bias
 
 ---
 

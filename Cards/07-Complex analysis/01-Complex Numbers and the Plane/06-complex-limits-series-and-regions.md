@@ -1,6 +1,6 @@
 # Limits and regions in the plane: a complex limit is two real limits, plus the words disc, boundary and domain
 
-[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Limits and regions in the plane
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Complex Numbers and the Plane](../README.md#s01) → Limits and regions in the plane
 
 ---
 

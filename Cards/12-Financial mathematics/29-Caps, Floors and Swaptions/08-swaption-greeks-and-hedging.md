@@ -1,6 +1,6 @@
 # Swaption Greeks: delta in swaps, vega in the cube, and the annuity's own sensitivity
 
-[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Swaption Greeks
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../README.md) → [Caps, Floors and Swaptions](../README.md#s29) → Swaption Greeks
 
 ---
 
