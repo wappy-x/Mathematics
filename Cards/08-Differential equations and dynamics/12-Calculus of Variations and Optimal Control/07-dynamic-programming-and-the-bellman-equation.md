@@ -388,7 +388,7 @@ The two outputs match line for line.
 - [The HJB equation](08-the-hjb-equation-and-the-linear-quadratic-regulator.md): legs shrunk to zero length turn the Bellman equation into a partial differential equation.
 - [Predictive control](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/10-model-predictive-control.md): a finite plan re-solved at every step.
 - [Dynamic programming](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/07-dynamic-programming.md): the method as algorithm design.
-- Backward induction: the recursion with chance and averaged tails.
+- [Backward induction](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/01-finite-horizon-dynamic-programming-and-backward-induction.md): the recursion with chance and averaged tails.
 
 ---
 

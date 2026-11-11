@@ -641,8 +641,8 @@ The two outputs are identical line for line. They reach the inverse and the sear
 
 - [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md): add cash at a fixed rate, and the curve gives way to a straight line touching it at one portfolio.
 - [Estimation error](07-estimation-error-and-shrinkage.md): what happens to these weights when $\mu$ and $\Sigma$ are estimated from a few years of data, and how to calm them.
-- Quadratic programs: the same bowl with inequality constraints, solved numerically.
-- Two goals at once: the frontier as one case of a general idea, the set of choices where one goal cannot improve without the other getting worse.
+- [Quadratic programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md): the same bowl with inequality constraints, solved numerically.
+- [Two goals at once](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/02-multi-objective-trade-offs-and-the-pareto-frontier.md): the frontier as one case of a general idea, the set of choices where one goal cannot improve without the other getting worse.
 
 The frontier offers a menu of portfolios but no way to choose among them; a riskless asset turns the menu into a single best risky portfolio, and that is the question the tangency card answers.
 

@@ -634,7 +634,7 @@ The two outputs agree line for line, including the simulated markets: both progr
 - [Imperfect hedges](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/03-hedge-ratios-basis-risk-and-cross-hedging.md): the minimum-variance hedge ratio is covariance over variance.
 - [Adapting as you go](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/04-gain-scheduling-and-adaptive-control.md): a controller that refits its model by least squares as data arrive.
 - [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md): squared error as one loss among several.
-- Nonlinear least squares: the same score when the model is curved in its parameters.
+- [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the same score when the model is curved in its parameters.
 - Least squares two ways: why software avoids the raw normal equations of road 2 on hard problems.
 - Reproducing kernels: least squares over whole spaces of functions.
 

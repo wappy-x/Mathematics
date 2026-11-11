@@ -668,7 +668,7 @@ The two outputs match line for line, from two different bell curves and two diff
 - [Calibrating Hull-White](../30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md): the same loss over a term structure, instruments instead of strikes.
 - [Calibrating a market model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): knobs that are whole functions, and a roughness penalty joining the loss.
 - [Backing out the unobservable](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md): two unknowns, two equations, this method as the solver.
-- Nonlinear least squares: the algorithm on its own ground: convergence results, trust regions, derivative-free alternatives.
+- [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the algorithm on its own ground: convergence results, trust regions, derivative-free alternatives.
 
 The fit here was performed once, on one screen, and reported one pair of knobs; nothing in the loss says whether that pair survives the next screen, which is the question [Model risk](07-model-risk-and-parameter-stability.md) takes up.
 

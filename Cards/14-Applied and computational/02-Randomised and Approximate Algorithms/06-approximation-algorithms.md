@@ -512,7 +512,7 @@ The two outputs match line for line.
 
 - [Local search](07-local-search-and-metaheuristics.md): the next card. Improve a plan by small changes, with honest reports and, in general, no guaranteed ratio.
 - Approximation, in the complexity wing: why some ratios cannot be beaten unless P = NP.
-- Heuristics with a promise: further methods that carry a proved ratio.
+- [Heuristics with a promise](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/08-heuristics-and-approximation-guarantees.md): further methods that carry a proved ratio.
 - [Integer programs](../05-Operations%20Research/03-integer-programming-and-branch-and-bound.md): the LP relaxation in general, and the integrality gap between a fractional floor and the whole-number best.
 
 The question left open: for vertex cover, is 2 the best ratio any fast method can promise?

@@ -607,8 +607,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Greedy](08-greedy-algorithms-and-matroids.md): the next card. When taking the best next step is provably safe, the table is not needed.
-- Four classic models: longest common subsequence, edit distance, shortest paths and sequence alignment, each set up as a table.
-- Backward induction: the same recursion when chance decides what happens next, and each tail is an average.
+- [Four classic models](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md): longest common subsequence, edit distance, shortest paths and sequence alignment, each set up as a table.
+- [Backward induction](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/01-finite-horizon-dynamic-programming-and-backward-induction.md): the same recursion when chance decides what happens next, and each tail is an average.
 
 The question left open: when the room is too large for a table, how close can a fast method get to the best packing, and can it promise how close?
 

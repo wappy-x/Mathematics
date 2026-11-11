@@ -658,7 +658,7 @@ The two outputs match line for line.
 
 - [Overfitting](08-cross-validation-and-overfitting.md): picking the charge with every car used for both fitting and scoring, in turns.
 - [Compressed sensing](../../13-Engineering%20mathematics/05-Signals/10-compressed-sensing-in-outline.md): the sum-of-sizes charge recovering a sparse signal exactly.
-- Proximal gradient: the soft-threshold as a general step for sums with corners, and how fast it converges.
+- [Proximal gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): the soft-threshold as a general step for sums with corners, and how fast it converges.
 
 One held-back set picked the charge here, and a smaller one picked badly; how to pick it reliably when every car is precious is the question cross-validation answers.
 

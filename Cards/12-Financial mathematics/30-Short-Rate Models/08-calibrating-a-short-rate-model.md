@@ -693,7 +693,7 @@ The two outputs agree line for line. Levenberg-Marquardt settles σ first and κ
 - [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md): what the soft direction costs: how a loosely pinned κ moves prices of products the strip did not contain.
 - [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md): when one factor leaves a pattern in the misses, a second factor gives the curve a second way to move.
 - [Calibrating a market model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): the same job for a model of forward rates, with a volatility and a correlation for every forward instead of two numbers for all.
-- Nonlinear least squares: the solver in general, with its convergence proof.
+- [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the solver in general, with its convergence proof.
 
 Two numbers can match six prices today and still disagree with tomorrow's; how much a loosely pinned reversion speed is worth in dollars is the question model-risk-and-parameter-stability answers.
 

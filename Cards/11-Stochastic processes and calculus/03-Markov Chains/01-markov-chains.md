@@ -589,7 +589,7 @@ The two outputs match line for line, simulated digits included, since both draw 
 - [n-step transitions](02-multi-step-transitions.md): the law on day n as the start law times $P^n$.
 - [Hidden Markov models](08-hidden-markov-models.md): a chain that is never seen directly, only through noisy signals.
 - [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): ratings as states, default as a state never left.
-- Markov decision processes: a chain whose matrix is chosen by a decision each step.
+- [Markov decision processes](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/02-markov-decision-processes.md): a chain whose matrix is chosen by a decision each step.
 
 Two days was one matrix product, $P^2$; a week ahead is the seventh power, and [n-step transitions](02-multi-step-transitions.md) shows why powers give the chances for any number of days.
 

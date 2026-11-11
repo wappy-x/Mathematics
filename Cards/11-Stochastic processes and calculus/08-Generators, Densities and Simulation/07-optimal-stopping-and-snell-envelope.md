@@ -588,7 +588,7 @@ The two outputs are identical. The simulated mean, $404,737.58 with standard err
 
 - [Early exercise](../../12-Financial%20mathematics/04-Binomial%20Trees/05-american-exercise-on-a-tree.md): the same recursion on a share-price tree, priced under the risk-neutral measure.
 - [American options](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): when early exercise pays, and the exercise boundary.
-- Optimal stopping: the recursion as a Bellman equation, with states in place of paths.
+- [Optimal stopping](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/06-optimal-stopping-as-a-dynamic-program.md): the recursion as a Bellman equation, with states in place of paths.
 - An American option: in continuous time the bar becomes a curve found with the solution.
 
 The house has one bar per month because it has three dates and fixed chances; when the reward is a share price that moves at every instant and can be hedged, the bar becomes a boundary in price and time, and the American-option cards find it.

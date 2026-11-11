@@ -674,7 +674,7 @@ The simulation saw 109 double-default days in a million, against 100 expected, a
 - [Extreme value theory](07-extreme-value-theory-and-tails.md): how to estimate the far tail that expected shortfall averages, beyond where the data run out.
 - [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the two bonds grown into a loan book with one common driver of defaults.
 - [Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md): the rule change that made 97.5% expected shortfall the capital number.
-- Modelling tricks: the minimum over trial lines, written as a linear programme a solver can run.
+- [Modelling tricks](../../15-Optimization/04-Linear%20Programming/07-piecewise-linear-and-minimax-objectives-as-lps.md): the minimum over trial lines, written as a linear programme a solver can run.
 
 Coherence makes the arithmetic safe, but the average is only as good as the tail it averages; how to know that tail when history holds only a handful of such days is the question extreme value theory takes up.
 
