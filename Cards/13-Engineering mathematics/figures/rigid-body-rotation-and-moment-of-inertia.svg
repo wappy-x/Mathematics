@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 700" font-family="Helvetica, Arial, sans-serif" font-size="20">
+  <title>Face of the 12 kg flywheel: radius 0.15 m, one thin ring, and the pin 0.12 m from the centre</title>
+  <rect x="0" y="0" width="760" height="700" fill="#ffffff"/>
+  <circle cx="380" cy="330" r="300" fill="#f2f2f2" stroke="#1d1d1d" stroke-width="3"/>
+  <circle cx="380" cy="330" r="180" fill="none" stroke="#9a9a9a" stroke-width="20"/>
+  <circle cx="380" cy="330" r="6" fill="#1d1d1d"/>
+  <circle cx="620" cy="330" r="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="3"/>
+  <line x1="380" y1="330" x2="380" y2="30" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="392" y="70">R = 0.15 m</text>
+  <line x1="380" y1="330" x2="620" y2="330" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="440" y="318">d = 0.12 m</text>
+  <line x1="380" y1="330" x2="252.7" y2="457.3" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="250" y="420">r</text>
+  <text x="140" y="560">thin ring: radius r, width dr</text>
+  <line x1="255" y1="532" x2="268" y2="472" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="285" y="312">spin axis</text>
+  <text x="603" y="372">pin</text>
+  <text x="170" y="675">Scale: 2000 units = 1 m. Thickness 21.6 mm, into the page.</text>
+</svg>

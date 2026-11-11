@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<title>Four 3 m tubes with different end conditions and their buckled shapes</title>
+<rect x="0" y="0" width="420" height="300" fill="#ffffff"/>
+<text x="55" y="16" text-anchor="middle" fill="#1d1d1d">pinned-pinned</text>
+<line x1="55" y1="27.0" x2="55" y2="49.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="51,45.0 59,45.0 55,52.0" fill="#1d1d1d"/>
+<text x="62" y="37.0" fill="#1d1d1d">P</text>
+<line x1="55" y1="235" x2="55" y2="55.0" stroke="#888888" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="55.0,235.0 55.9,232.0 56.9,229.0 57.8,226.0 58.7,223.0 59.7,220.0 60.6,217.0 61.5,214.0 62.3,211.0 63.2,208.0 64.0,205.0 64.8,202.0 65.6,199.0 66.3,196.0 67.0,193.0 67.7,190.0 68.4,187.0 69.0,184.0 69.6,181.0 70.1,178.0 70.6,175.0 71.0,172.0 71.4,169.0 71.8,166.0 72.1,163.0 72.4,160.0 72.6,157.0 72.8,154.0 72.9,151.0 73.0,148.0 73.0,145.0 73.0,142.0 72.9,139.0 72.8,136.0 72.6,133.0 72.4,130.0 72.1,127.0 71.8,124.0 71.4,121.0 71.0,118.0 70.6,115.0 70.1,112.0 69.6,109.0 69.0,106.0 68.4,103.0 67.7,100.0 67.0,97.0 66.3,94.0 65.6,91.0 64.8,88.0 64.0,85.0 63.2,82.0 62.3,79.0 61.5,76.0 60.6,73.0 59.7,70.0 58.7,67.0 57.8,64.0 56.9,61.0 55.9,58.0 55.0,55.0" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+<polygon points="55,235 48,246 62,246" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="55,55.0 48,44.0 62,44.0" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="55.0" cy="235.0" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="55.0" cy="55.0" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="55" y="268" text-anchor="middle" fill="#1d1d1d">K = 1</text>
+<text x="55" y="284" text-anchor="middle" fill="#1d1d1d">31.71 kN</text>
+<text x="158" y="16" text-anchor="middle" fill="#1d1d1d">fixed-free</text>
+<line x1="158" y1="27.0" x2="158" y2="49.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="154,45.0 162,45.0 158,52.0" fill="#1d1d1d"/>
+<text x="165" y="37.0" fill="#1d1d1d">P</text>
+<line x1="158" y1="235" x2="158" y2="55.0" stroke="#888888" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="158.0,235.0 158.0,232.0 158.0,229.0 158.1,226.0 158.1,223.0 158.2,220.0 158.2,217.0 158.3,214.0 158.4,211.0 158.5,208.0 158.6,205.0 158.7,202.0 158.9,199.0 159.0,196.0 159.2,193.0 159.4,190.0 159.6,187.0 159.8,184.0 160.0,181.0 160.2,178.0 160.4,175.0 160.7,172.0 160.9,169.0 161.2,166.0 161.4,163.0 161.7,160.0 162.0,157.0 162.3,154.0 162.6,151.0 162.9,148.0 163.3,145.0 163.6,142.0 164.0,139.0 164.3,136.0 164.7,133.0 165.0,130.0 165.4,127.0 165.8,124.0 166.2,121.0 166.6,118.0 167.0,115.0 167.4,112.0 167.8,109.0 168.3,106.0 168.7,103.0 169.1,100.0 169.5,97.0 170.0,94.0 170.4,91.0 170.9,88.0 171.3,85.0 171.8,82.0 172.3,79.0 172.7,76.0 173.2,73.0 173.7,70.0 174.1,67.0 174.6,64.0 175.1,61.0 175.5,58.0 176.0,55.0" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+<line x1="144" y1="235" x2="172" y2="235" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="146" y1="235" x2="141" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="152" y1="235" x2="147" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="158" y1="235" x2="153" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="164" y1="235" x2="159" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="170" y1="235" x2="165" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="176.0" cy="55.0" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="158" y="268" text-anchor="middle" fill="#1d1d1d">K = 2</text>
+<text x="158" y="284" text-anchor="middle" fill="#1d1d1d">7.93 kN</text>
+<text x="261" y="16" text-anchor="middle" fill="#1d1d1d">fixed-pinned</text>
+<line x1="261" y1="27.0" x2="261" y2="49.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="257,45.0 265,45.0 261,52.0" fill="#1d1d1d"/>
+<text x="268" y="37.0" fill="#1d1d1d">P</text>
+<line x1="261" y1="235" x2="261" y2="55.0" stroke="#888888" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="261.0,235.0 261.0,232.0 261.1,229.0 261.3,226.0 261.6,223.0 261.9,220.0 262.2,217.0 262.7,214.0 263.1,211.0 263.7,208.0 264.2,205.0 264.9,202.0 265.5,199.0 266.2,196.0 266.9,193.0 267.7,190.0 268.4,187.0 269.2,184.0 270.0,181.0 270.7,178.0 271.5,175.0 272.3,172.0 273.0,169.0 273.7,166.0 274.4,163.0 275.1,160.0 275.7,157.0 276.3,154.0 276.8,151.0 277.3,148.0 277.7,145.0 278.1,142.0 278.4,139.0 278.7,136.0 278.8,133.0 279.0,130.0 279.0,127.0 279.0,124.0 278.9,121.0 278.7,118.0 278.4,115.0 278.1,112.0 277.7,109.0 277.3,106.0 276.7,103.0 276.1,100.0 275.4,97.0 274.7,94.0 273.9,91.0 273.0,88.0 272.1,85.0 271.2,82.0 270.2,79.0 269.1,76.0 268.0,73.0 266.9,70.0 265.7,67.0 264.6,64.0 263.4,61.0 262.2,58.0 261.0,55.0" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+<line x1="247" y1="235" x2="275" y2="235" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="249" y1="235" x2="244" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="255" y1="235" x2="250" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="261" y1="235" x2="256" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="267" y1="235" x2="262" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="273" y1="235" x2="268" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<polygon points="261,55.0 254,44.0 268,44.0" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="270.0" cy="180.8" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="261.0" cy="55.0" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="261" y="268" text-anchor="middle" fill="#1d1d1d">K = 0.6992</text>
+<text x="261" y="284" text-anchor="middle" fill="#1d1d1d">64.86 kN</text>
+<text x="364" y="16" text-anchor="middle" fill="#1d1d1d">fixed-fixed</text>
+<line x1="364" y1="27.0" x2="364" y2="49.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="360,45.0 368,45.0 364,52.0" fill="#1d1d1d"/>
+<text x="371" y="37.0" fill="#1d1d1d">P</text>
+<line x1="364" y1="235" x2="364" y2="55.0" stroke="#888888" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="364.0,235.0 364.0,232.0 364.2,229.0 364.4,226.0 364.8,223.0 365.2,220.0 365.7,217.0 366.3,214.0 367.0,211.0 367.7,208.0 368.5,205.0 369.3,202.0 370.2,199.0 371.1,196.0 372.1,193.0 373.0,190.0 373.9,187.0 374.9,184.0 375.8,181.0 376.7,178.0 377.5,175.0 378.3,172.0 379.0,169.0 379.7,166.0 380.3,163.0 380.8,160.0 381.2,157.0 381.6,154.0 381.8,151.0 382.0,148.0 382.0,145.0 382.0,142.0 381.8,139.0 381.6,136.0 381.2,133.0 380.8,130.0 380.3,127.0 379.7,124.0 379.0,121.0 378.3,118.0 377.5,115.0 376.7,112.0 375.8,109.0 374.9,106.0 373.9,103.0 373.0,100.0 372.1,97.0 371.1,94.0 370.2,91.0 369.3,88.0 368.5,85.0 367.7,82.0 367.0,79.0 366.3,76.0 365.7,73.0 365.2,70.0 364.8,67.0 364.4,64.0 364.2,61.0 364.0,58.0 364.0,55.0" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+<line x1="350" y1="235" x2="378" y2="235" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="352" y1="235" x2="347" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="358" y1="235" x2="353" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="364" y1="235" x2="359" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="370" y1="235" x2="365" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="376" y1="235" x2="371" y2="241" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="350" y1="55.0" x2="378" y2="55.0" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="352" y1="55.0" x2="347" y2="49.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="358" y1="55.0" x2="353" y2="49.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="364" y1="55.0" x2="359" y2="49.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="370" y1="55.0" x2="365" y2="49.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="376" y1="55.0" x2="371" y2="49.0" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="373.0" cy="190.0" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="373.0" cy="100.0" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="364" y="268" text-anchor="middle" fill="#1d1d1d">K = 0.5</text>
+<text x="364" y="284" text-anchor="middle" fill="#1d1d1d">126.82 kN</text>
+</svg>

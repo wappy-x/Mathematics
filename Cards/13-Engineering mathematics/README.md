@@ -6,22 +6,22 @@
 
 Turn a physical system into equations, choose the scales that matter, transform it, and decide whether it is stable. Design and tune a controller, process a sampled signal, estimate hidden states, and read the equations of circuits, structures, fluids, heat and quantum mechanics well enough to follow an engineering text.
 
-10 shelves · **26 of 86 cards ready to read**
+10 shelves · **86 of 86 cards ready to read**
 
-Click a shelf to jump to its cards, then click a card's title to read it. A title without a link is planned and not written yet.
+Click a shelf to jump to its cards, then click a card's title to read it.
 
-| Shelf | Cards | Ready to read |
-| --- | ---: | ---: |
-| [01 · Units and Modelling](#s01) | 7 | 7 of 7 |
-| [02 · Linear Systems and Transforms](#s02) | 9 | 9 of 9 |
-| [03 · Feedback Control](#s03) | 10 | 10 of 10 |
-| [04 · State Space and Optimal Control](#s04) | 10 | 0 of 10 · planned |
-| [05 · Signals](#s05) | 10 | 0 of 10 · planned |
-| [06 · Circuits and Electromagnetism](#s06) | 9 | 0 of 9 · planned |
-| [07 · Mechanics and Structures](#s07) | 9 | 0 of 9 · planned |
-| [08 · Fluids and Heat](#s08) | 9 | 0 of 9 · planned |
-| [09 · Quantum Mechanics in Outline](#s09) | 8 | 0 of 8 · planned |
-| [10 · Robustness and Adaptation](#s10) | 5 | 0 of 5 · planned |
+| Shelf | Cards |
+| --- | ---: |
+| [01 · Units and Modelling](#s01) | 7 |
+| [02 · Linear Systems and Transforms](#s02) | 9 |
+| [03 · Feedback Control](#s03) | 10 |
+| [04 · State Space and Optimal Control](#s04) | 10 |
+| [05 · Signals](#s05) | 10 |
+| [06 · Circuits and Electromagnetism](#s06) | 9 |
+| [07 · Mechanics and Structures](#s07) | 9 |
+| [08 · Fluids and Heat](#s08) | 9 |
+| [09 · Quantum Mechanics in Outline](#s09) | 8 |
+| [10 · Robustness and Adaptation](#s10) | 5 |
 
 <a name="s01"></a>
 
@@ -78,124 +78,124 @@ Click a shelf to jump to its cards, then click a card's title to read it. A titl
 
 <a name="s04"></a>
 
-## 04 · State Space and Optimal Control · 10 cards · planned
+## 04 · State Space and Optimal Control · 10 cards
 
 *Many states at once: simulate, test what you can steer and see, place poles, optimise and estimate*
 
-1. State space: a list of internal numbers that steps forward, pushed by the input
-2. Linearisation: near a chosen operating point a curved model becomes a straight one
-3. Can you steer every state, and can you see every state
-4. Pole placement: if you can steer it, you can choose its response speeds
-5. Stability of a state-space model: eigenvalue tests and the energy that certifies them
-6. The LQR: choose feedback by pricing error against control effort
-7. The Kalman filter: predict forward, then correct by the measurement's surprise
-8. Filtering a nonlinear plant: relinearise each step, or push sample points through
-9. LQG: design regulator and estimator apart, then bolt them together
-10. Predictive control: plan a whole future, use the first move, replan next tick
+1. [State space: a list of internal numbers that steps forward, pushed by the input](04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md)
+2. [Linearisation: near a chosen operating point a curved model becomes a straight one](04-State%20Space%20and%20Optimal%20Control/02-linearisation-about-an-equilibrium.md)
+3. [Can you steer every state, and can you see every state](04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md)
+4. [Pole placement: if you can steer it, you can choose its response speeds](04-State%20Space%20and%20Optimal%20Control/04-pole-placement-and-observers.md)
+5. [Stability of a state-space model: eigenvalue tests and the energy that certifies them](04-State%20Space%20and%20Optimal%20Control/05-hurwitz-schur-and-lyapunov-stability.md)
+6. [The LQR: choose feedback by pricing error against control effort](04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md)
+7. [The Kalman filter: predict forward, then correct by the measurement's surprise](04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md)
+8. [Filtering a nonlinear plant: relinearise each step, or push sample points through](04-State%20Space%20and%20Optimal%20Control/08-extended-kalman-filter-and-nonlinear-estimation.md)
+9. [LQG: design regulator and estimator apart, then bolt them together](04-State%20Space%20and%20Optimal%20Control/09-lqg-and-the-separation-principle.md)
+10. [Predictive control: plan a whole future, use the first move, replan next tick](04-State%20Space%20and%20Optimal%20Control/10-model-predictive-control.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Signals · 10 cards · planned
+## 05 · Signals · 10 cards
 
 *Sampled data: spectra, windows, filters, rate changes, spectral estimates and time-frequency pictures*
 
-1. Sampling: measure faster than twice the top frequency or fast becomes slow
-2. The DFT and the FFT: a block of samples becomes a list of frequencies
-3. Windows: a recording has to stop, so energy leaks between frequencies
-4. Digital filters: weight the last few inputs, or feed the output back
-5. Changing rate: filter then drop samples, or pad with zeros then smooth
-6. Spectral estimation: the plain periodogram is noisy, so taper and average
-7. Wiener and LMS: the best linear guess, then learning it sample by sample
-8. Wavelets: a coarse picture plus the detail you left out at every scale
-9. Spectrograms: one spectrum per slice of time, and the blur you cannot avoid
-10. Compressed sensing: few measurements suffice when the signal is mostly zeros
+1. [Sampling: measure faster than twice the top frequency or fast becomes slow](05-Signals/01-sampling-and-the-nyquist-theorem.md)
+2. [The DFT and the FFT: a block of samples becomes a list of frequencies](05-Signals/02-discrete-fourier-transform-and-the-fft.md)
+3. [Windows: a recording has to stop, so energy leaks between frequencies](05-Signals/03-windows-and-spectral-leakage.md)
+4. [Digital filters: weight the last few inputs, or feed the output back](05-Signals/04-digital-filters-fir-and-iir.md)
+5. [Changing rate: filter then drop samples, or pad with zeros then smooth](05-Signals/05-resampling-decimation-and-interpolation.md)
+6. [Spectral estimation: the plain periodogram is noisy, so taper and average](05-Signals/06-spectral-estimation-and-periodograms.md)
+7. [Wiener and LMS: the best linear guess, then learning it sample by sample](05-Signals/07-adaptive-and-optimal-filters.md)
+8. [Wavelets: a coarse picture plus the detail you left out at every scale](05-Signals/08-wavelets-and-multiresolution.md)
+9. [Spectrograms: one spectrum per slice of time, and the blur you cannot avoid](05-Signals/09-short-time-fourier-and-spectrograms.md)
+10. [Compressed sensing: few measurements suffice when the signal is mostly zeros](05-Signals/10-compressed-sensing-in-outline.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Circuits and Electromagnetism · 9 cards · planned
+## 06 · Circuits and Electromagnetism · 9 cards
 
 *Circuits solved as algebra, then the four field equations underneath them*
 
-1. Kirchhoff's laws: charge balances at a node, voltage sums to zero round a loop
-2. Phasors: steady AC becomes complex arithmetic, and impedance replaces resistance
-3. RLC resonance: one frequency the circuit answers loudest, and how sharp the peak is
-4. Electric fields: Coulomb's law, flux through a closed surface, voltage as potential
-5. Magnetic fields: currents make them, moving charges feel them, change induces voltage
-6. Transformers: two coils sharing flux trade voltage against current
-7. Maxwell's equations: four statements holding all of classical electromagnetism
-8. Electromagnetic waves: the two curl equations feed each other and light falls out
-9. AC power: real, reactive and apparent, and why the grid uses three phases
+1. [Kirchhoff's laws: charge balances at a node, voltage sums to zero round a loop](06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md)
+2. [Phasors: steady AC becomes complex arithmetic, and impedance replaces resistance](06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md)
+3. [RLC resonance: one frequency the circuit answers loudest, and how sharp the peak is](06-Circuits%20and%20Electromagnetism/03-rlc-circuits-and-resonance.md)
+4. [Electric fields: Coulomb's law, flux through a closed surface, voltage as potential](06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md)
+5. [Magnetic fields: currents make them, moving charges feel them, change induces voltage](06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md)
+6. [Transformers: two coils sharing flux trade voltage against current](06-Circuits%20and%20Electromagnetism/06-transformers-and-mutual-inductance.md)
+7. [Maxwell's equations: four statements holding all of classical electromagnetism](06-Circuits%20and%20Electromagnetism/07-maxwells-equations.md)
+8. [Electromagnetic waves: the two curl equations feed each other and light falls out](06-Circuits%20and%20Electromagnetism/08-electromagnetic-waves.md)
+9. [AC power: real, reactive and apparent, and why the grid uses three phases](06-Circuits%20and%20Electromagnetism/09-power-and-three-phase.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Mechanics and Structures · 9 cards · planned
+## 07 · Mechanics and Structures · 9 cards
 
 *Forces, rotation, energy methods, ringing modes, and what makes a member bend or buckle*
 
-1. Newton's laws: force sets acceleration, and work becomes energy
-2. Rotation: moment of inertia is the mass that resists being spun
-3. Precession: push a spinning wheel sideways and it turns at right angles
-4. Lagrangian and Hamiltonian mechanics: write the energies, get the equations
-5. Equations of motion of a vehicle: six freedoms and the small-disturbance split
-6. Vibration modes: a structure rings in a few shapes at a few frequencies
-7. Stress, strain and bending: how a beam carries load and how far it sags
-8. Buckling: a slender column bends away long before it is crushed
-9. Orbits: inverse-square gravity gives conic sections and Kepler's three laws
+1. [Newton's laws: force sets acceleration, and work becomes energy](07-Mechanics%20and%20Structures/01-newtons-laws-work-and-energy.md)
+2. [Rotation: moment of inertia is the mass that resists being spun](07-Mechanics%20and%20Structures/02-rigid-body-rotation-and-moment-of-inertia.md)
+3. [Precession: push a spinning wheel sideways and it turns at right angles](07-Mechanics%20and%20Structures/03-gyroscopes-and-precession.md)
+4. [Lagrangian and Hamiltonian mechanics: write the energies, get the equations](07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md)
+5. [Equations of motion of a vehicle: six freedoms and the small-disturbance split](07-Mechanics%20and%20Structures/05-vehicle-equations-of-motion.md)
+6. [Vibration modes: a structure rings in a few shapes at a few frequencies](07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md)
+7. [Stress, strain and bending: how a beam carries load and how far it sags](07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md)
+8. [Buckling: a slender column bends away long before it is crushed](07-Mechanics%20and%20Structures/08-buckling-and-stability.md)
+9. [Orbits: inverse-square gravity gives conic sections and Kepler's three laws](07-Mechanics%20and%20Structures/09-orbital-mechanics-and-the-kepler-problem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Fluids and Heat · 9 cards · planned
+## 08 · Fluids and Heat · 9 cards
 
 *Flow and heat as conservation laws, with the dimensionless numbers that decide the behaviour*
 
-1. Continuity and Bernoulli: what goes in comes out, and pressure trades against speed
-2. Viscosity: friction inside the fluid, and the pressure a pipe costs
-3. Navier-Stokes: Newton's law for a fluid parcel, and the number that says which term wins
-4. Lift and drag: circulation lifts, the thin wall layer drags, and stall ends both
-5. Fourier's law: heat runs down a temperature gradient, and the heat equation follows
-6. Convection and radiation: the other two ways heat leaves a surface
-7. The thermodynamic laws: energy is conserved and entropy only grows
-8. Heat engines: the best efficiency anything between two temperatures can reach
-9. Finite elements: cut the shape into pieces and solve one stiffness matrix
+1. [Continuity and Bernoulli: what goes in comes out, and pressure trades against speed](08-Fluids%20and%20Heat/01-continuity-and-bernoulli.md)
+2. [Viscosity: friction inside the fluid, and the pressure a pipe costs](08-Fluids%20and%20Heat/02-viscosity-and-pipe-flow.md)
+3. [Navier-Stokes: Newton's law for a fluid parcel, and the number that says which term wins](08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md)
+4. [Lift and drag: circulation lifts, the thin wall layer drags, and stall ends both](08-Fluids%20and%20Heat/04-lift-drag-and-boundary-layers.md)
+5. [Fourier's law: heat runs down a temperature gradient, and the heat equation follows](08-Fluids%20and%20Heat/05-heat-conduction-and-fouriers-law.md)
+6. [Convection and radiation: the other two ways heat leaves a surface](08-Fluids%20and%20Heat/06-convection-and-radiation.md)
+7. [The thermodynamic laws: energy is conserved and entropy only grows](08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md)
+8. [Heat engines: the best efficiency anything between two temperatures can reach](08-Fluids%20and%20Heat/08-heat-engines-and-carnot-efficiency.md)
+9. [Finite elements: cut the shape into pieces and solve one stiffness matrix](08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s09"></a>
 
-## 09 · Quantum Mechanics in Outline · 8 cards · planned
+## 09 · Quantum Mechanics in Outline · 8 cards
 
 *Enough quantum mechanics to read the equations: states, levels, uncertainty, spin and symmetry*
 
-1. Waves on strings and drums: standing patterns and the frequencies they pick
-2. States as vectors: operators for observables, eigenvalues for the outcomes
-3. Schrodinger's equation: a wave equation whose standing modes are energy levels
-4. The quantum oscillator: evenly spaced levels and a floor you cannot get below
-5. Uncertainty: sharp position and sharp momentum cannot happen at once
-6. Spin one-half: the smallest quantum system, run by three two-by-two matrices
-7. Hydrogen in outline: separate the angles and shells with quantum numbers appear
-8. Symmetry and conservation: each continuous symmetry hands you a conserved quantity
+1. [Waves on strings and drums: standing patterns and the frequencies they pick](09-Quantum%20Mechanics%20in%20Outline/01-wave-equation-for-strings-and-membranes.md)
+2. [States as vectors: operators for observables, eigenvalues for the outcomes](09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md)
+3. [Schrodinger's equation: a wave equation whose standing modes are energy levels](09-Quantum%20Mechanics%20in%20Outline/03-schrodinger-equation-and-the-particle-in-a-box.md)
+4. [The quantum oscillator: evenly spaced levels and a floor you cannot get below](09-Quantum%20Mechanics%20in%20Outline/04-quantum-harmonic-oscillator.md)
+5. [Uncertainty: sharp position and sharp momentum cannot happen at once](09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md)
+6. [Spin one-half: the smallest quantum system, run by three two-by-two matrices](09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md)
+7. [Hydrogen in outline: separate the angles and shells with quantum numbers appear](09-Quantum%20Mechanics%20in%20Outline/07-the-hydrogen-atom-in-outline.md)
+8. [Symmetry and conservation: each continuous symmetry hands you a conserved quantity](09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s10"></a>
 
-## 10 · Robustness and Adaptation · 5 cards · planned
+## 10 · Robustness and Adaptation · 5 cards
 
 *What to do when the model is wrong: bounded uncertainty, worst-case design, scheduling and learning*
 
-1. Writing down model error: an added lump or a percentage, and the small gain rule
-2. Robust tests: does every plant in the family stay stable, and still perform
-3. H-infinity design: shrink the worst-case gain from disturbance to error
-4. Adapting as you go: schedule the gains, or let the controller learn the plant
-5. Passivity: join two parts that only absorb energy and the loop cannot blow up
+1. [Writing down model error: an added lump or a percentage, and the small gain rule](10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md)
+2. [Robust tests: does every plant in the family stay stable, and still perform](10-Robustness%20and%20Adaptation/02-robust-stability-and-robust-performance.md)
+3. [H-infinity design: shrink the worst-case gain from disturbance to error](10-Robustness%20and%20Adaptation/03-h-infinity-control-in-outline.md)
+4. [Adapting as you go: schedule the gains, or let the controller learn the plant](10-Robustness%20and%20Adaptation/04-gain-scheduling-and-adaptive-control.md)
+5. [Passivity: join two parts that only absorb energy and the loop cannot blow up](10-Robustness%20and%20Adaptation/05-passivity-and-absolute-stability.md)
 
 [↑ Back to the shelves](#top)
 

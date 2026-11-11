@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>Low Earth orbit to geostationary by a Hohmann transfer, drawn to scale at 1 unit = 200 km</title>
+  <rect x="0" y="0" width="500" height="500" fill="#ffffff"/>
+  <!-- geostationary circle, radius 42164.17 km = 210.82 units, centred on Earth at (250, 260) -->
+  <circle cx="250" cy="260" r="210.82" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <!-- Earth, radius 6378.14 km = 31.89 units -->
+  <circle cx="250" cy="260" r="31.89" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1"/>
+  <!-- 300 km orbit, radius 6678.14 km = 33.39 units -->
+  <circle cx="250" cy="260" r="33.39" fill="none" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <!-- transfer ellipse: centre 88.72 units left of Earth, a = 122.11, b = 83.90; coast half solid -->
+  <path d="M 283.39 260 A 122.11 83.90 0 0 0 39.18 260" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+  <path d="M 39.18 260 A 122.11 83.90 0 0 0 283.39 260" fill="none" stroke="#c0392b" stroke-width="1" stroke-dasharray="5 4"/>
+  <!-- burns -->
+  <circle cx="283.39" cy="260" r="4" fill="#1d1d1d"/>
+  <circle cx="39.18" cy="260" r="4" fill="#1d1d1d"/>
+  <text x="290" y="256" fill="#1d1d1d">burn 1: +2.43 km/s</text>
+  <text x="290" y="271" fill="#1d1d1d">300 km up</text>
+  <text x="46" y="284" fill="#1d1d1d">burn 2: +1.47 km/s</text>
+  <text x="46" y="299" fill="#1d1d1d">35,786 km up</text>
+  <text x="250" y="264" text-anchor="middle" fill="#1d1d1d" font-size="11">Earth</text>
+  <text x="161" y="166" text-anchor="middle" fill="#c0392b">transfer ellipse, 5.28 h coast</text>
+  <text x="250" y="42" text-anchor="middle" fill="#1d1d1d">geostationary circle, radius 42,164 km</text>
+  <text x="250" y="490" text-anchor="middle" fill="#1d1d1d" font-size="11">scale: 1 unit = 200 km; the 300 km orbit (dashed) hugs Earth's edge</text>
+</svg>

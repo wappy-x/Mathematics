@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 500" width="520" height="500" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Nyquist plots of the belt loop against the friction band, to scale</title>
+  <rect x="0" y="0" width="520" height="500" fill="#ffffff"/>
+  <!-- scale: 400000 drawing units per m/(N*s); origin at (40, 250); imaginary part up -->
+  <!-- band disk: centre 0.000330, radius 0.000330 -> cx 171.97, r 131.97 -->
+  <circle cx="171.97" cy="250" r="131.97" fill="#e6e6e6" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <!-- axes -->
+  <line x1="20" y1="250" x2="505" y2="250" stroke="#1d1d1d" stroke-width="1"/>
+  <line x1="40" y1="30" x2="40" y2="475" stroke="#1d1d1d" stroke-width="1"/>
+  <!-- Kp 2000: centre 0.000250, radius 0.000250 -> cx 140, r 100 -->
+  <circle cx="140" cy="250" r="100" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+  <!-- Kp 1000: centre 0.000500, radius 0.000500 -> cx 240, r 200 -->
+  <circle cx="240" cy="250" r="200" fill="none" stroke="#9b2c16" stroke-width="2"/>
+  <!-- ticks on the real axis -->
+  <line x1="240" y1="245" x2="240" y2="255" stroke="#1d1d1d"/>
+  <line x1="303.94" y1="245" x2="303.94" y2="255" stroke="#1d1d1d"/>
+  <line x1="440" y1="245" x2="440" y2="255" stroke="#1d1d1d"/>
+  <text x="44" y="268" fill="#1d1d1d">0</text>
+  <text x="214" y="268" fill="#1d1d1d">0.0005</text>
+  <text x="310" y="240" fill="#1d1d1d">1/a = 0.00066</text>
+  <text x="420" y="268" fill="#1d1d1d">0.001</text>
+  <text x="400" y="290" fill="#1d1d1d">Re G</text>
+  <text x="48" y="42" fill="#1d1d1d">Im G</text>
+  <!-- labels -->
+  <text x="92" y="215" fill="#1d1d1d" font-weight="bold">Kp 2000</text>
+  <text x="330" y="110" fill="#9b2c16" font-weight="bold">Kp 1000</text>
+  <text x="185" y="372" fill="#1d1d1d">band disk</text>
+  <text x="20" y="494" fill="#1d1d1d">units m/(N·s); 0.0001 = 40 drawing units</text>
+</svg>

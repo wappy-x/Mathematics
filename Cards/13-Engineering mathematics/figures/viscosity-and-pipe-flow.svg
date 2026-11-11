@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 360" width="420" height="360">
+<title>Laminar speed profile in a 13.6 mm bore at 0.5 litres a minute, drawn to scale</title>
+<rect x="0" y="0" width="420" height="360" fill="#ffffff"/>
+<rect x="40" y="30" width="360" height="14" fill="#b0b0b0" stroke="#1d1d1d" stroke-width="1"/>
+<rect x="40" y="316" width="360" height="14" fill="#b0b0b0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="40" y1="180" x2="400" y2="180" stroke="#1d1d1d" stroke-width="0.8" stroke-dasharray="6 4"/>
+<line x1="80" y1="44" x2="80" y2="316" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="80" y1="300.0" x2="124.8" y2="300.0" stroke="#1d1d1d" stroke-width="1.5"/><polygon points="130.8,300.0 123.8,296.5 123.8,303.5" fill="#1d1d1d"/><line x1="80" y1="260.0" x2="224.1" y2="260.0" stroke="#1d1d1d" stroke-width="1.5"/><polygon points="230.1,260.0 223.1,256.5 223.1,263.5" fill="#1d1d1d"/><line x1="80" y1="220.0" x2="283.6" y2="220.0" stroke="#1d1d1d" stroke-width="1.5"/><polygon points="289.6,220.0 282.6,216.5 282.6,223.5" fill="#1d1d1d"/><line x1="80" y1="180.0" x2="303.5" y2="180.0" stroke="#1d1d1d" stroke-width="1.5"/><polygon points="309.5,180.0 302.5,176.5 302.5,183.5" fill="#1d1d1d"/><line x1="80" y1="140.0" x2="283.6" y2="140.0" stroke="#1d1d1d" stroke-width="1.5"/><polygon points="289.6,140.0 282.6,136.5 282.6,143.5" fill="#1d1d1d"/><line x1="80" y1="100.0" x2="224.1" y2="100.0" stroke="#1d1d1d" stroke-width="1.5"/><polygon points="230.1,100.0 223.1,96.5 223.1,103.5" fill="#1d1d1d"/><line x1="80" y1="60.0" x2="124.8" y2="60.0" stroke="#1d1d1d" stroke-width="1.5"/><polygon points="130.8,60.0 123.8,56.5 123.8,63.5" fill="#1d1d1d"/>
+<path d="M 80 44 Q 538.9 180 80 316" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+<text x="317.5" y="174" font-family="sans-serif" font-size="12" fill="#1d1d1d">centre 0.115 m/s</text>
+<text x="300" y="196" font-family="sans-serif" font-size="12" fill="#1d1d1d">axis</text>
+<text x="44" y="24" font-family="sans-serif" font-size="12" fill="#1d1d1d">copper wall: water speed 0</text>
+<text x="44" y="347" font-family="sans-serif" font-size="12" fill="#1d1d1d">bore 13.6 mm; flow left to right</text>
+</svg>

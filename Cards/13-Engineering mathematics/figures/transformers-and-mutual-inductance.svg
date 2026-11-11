@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 230" width="420" height="230">
+<title>Schematic of the doorbell transformer: 230 V mains into a 1150-turn primary, a 60-turn secondary on the same iron core, 12 V across the chime</title>
+<rect x="0" y="0" width="420" height="230" fill="#ffffff"/>
+<path d="M140,40 H280 V190 H140 Z M170,70 V160 H250 V70 Z" fill="#e6e6e6" fill-rule="evenodd" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="155" y="55" width="110" height="120" rx="6" fill="none" stroke="#2a6f97" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="205,50 212,55 205,60" fill="none" stroke="#2a6f97" stroke-width="1.5"/>
+<polyline points="215,170 208,175 215,180" fill="none" stroke="#2a6f97" stroke-width="1.5"/>
+<text x="198" y="100" font-size="14" fill="#2a6f97" font-family="sans-serif">Φ</text>
+<text x="180" y="118" font-size="10" fill="#2a6f97" font-family="sans-serif">shared flux</text>
+<g fill="none" stroke="#b5482c" stroke-width="2">
+<path d="M135,78 H175"/><path d="M135,86 H175"/><path d="M135,94 H175"/><path d="M135,102 H175"/><path d="M135,110 H175"/>
+<path d="M135,118 H175"/><path d="M135,126 H175"/><path d="M135,134 H175"/><path d="M135,142 H175"/><path d="M135,150 H175"/>
+</g>
+<g fill="none" stroke="#b5482c" stroke-width="2">
+<path d="M245,106 H285"/><path d="M245,114 H285"/><path d="M245,122 H285"/>
+</g>
+<polyline points="135,78 60,78 60,100" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="135,150 60,150 60,128" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="60" cy="114" r="14" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M51,114 Q55.5,106 60,114 T69,114" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="8" y="50" font-size="11" fill="#1d1d1d" font-family="sans-serif">mains 230 V, 50 Hz</text>
+<text x="70" y="72" font-size="11" fill="#1d1d1d" font-family="sans-serif">I1 = 83.4 mA</text>
+<text x="128" y="205" font-size="11" fill="#1d1d1d" font-family="sans-serif">N1 = 1150 turns</text>
+<polyline points="285,106 350,106 350,92" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="285,122 350,122 350,136" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="330" y="92" width="40" height="44" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="335" y="118" font-size="10" fill="#1d1d1d" font-family="sans-serif">chime</text>
+<text x="318" y="155" font-size="11" fill="#1d1d1d" font-family="sans-serif">6 + j8 Ω</text>
+<text x="292" y="85" font-size="11" fill="#1d1d1d" font-family="sans-serif">I2 = 1.20 A</text>
+<text x="300" y="175" font-size="11" fill="#1d1d1d" font-family="sans-serif">V2 = 12.0 V</text>
+<text x="232" y="205" font-size="11" fill="#1d1d1d" font-family="sans-serif">N2 = 60 turns</text>
+</svg>

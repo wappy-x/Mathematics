@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 400" width="460" height="400" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>Pole map of the cart and pendulum: open-loop poles, placed controller poles and observer poles, to scale</title>
+<rect x="0" y="0" width="460" height="400" fill="#ffffff"/>
+<rect x="30" y="25" width="275" height="350" fill="#eef4f1"/>
+<line x1="30" y1="200" x2="440" y2="200" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="305" y1="18" x2="305" y2="382" stroke="#1d1d1d" stroke-width="1.2"/>
+<g stroke="#1d1d1d" stroke-width="1">
+<line x1="55" y1="196" x2="55" y2="204"/><line x1="155" y1="196" x2="155" y2="204"/><line x1="230" y1="196" x2="230" y2="204"/><line x1="405" y1="196" x2="405" y2="204"/>
+<line x1="301" y1="50" x2="309" y2="50"/><line x1="301" y1="125" x2="309" y2="125"/><line x1="301" y1="275" x2="309" y2="275"/><line x1="301" y1="350" x2="309" y2="350"/>
+</g>
+<g fill="#1d1d1d" text-anchor="middle">
+<text x="55" y="218">−10</text><text x="155" y="218">−6</text><text x="232" y="218">−3</text><text x="203" y="218">−4</text><text x="405" y="218">+4</text>
+<text x="436" y="192">real, 1/s</text>
+</g>
+<g fill="#1d1d1d" text-anchor="start">
+<text x="312" y="54">6j</text><text x="312" y="129">3j</text><text x="312" y="279">−3j</text><text x="312" y="354">−6j</text>
+<text x="312" y="16">imaginary, rad/s</text>
+<text x="40" y="44">stable side</text>
+</g>
+<line x1="305" y1="200" x2="130" y2="25" stroke="#264653" stroke-width="1" stroke-dasharray="5 4"/>
+<line x1="305" y1="200" x2="130" y2="375" stroke="#264653" stroke-width="1" stroke-dasharray="5 4"/>
+<g fill="#2a9d8f" stroke="#1d1d1d" stroke-width="1">
+<circle cx="230" cy="125" r="6"/><circle cx="230" cy="275" r="6"/><circle cx="155" cy="50" r="6"/><circle cx="155" cy="350" r="6"/>
+</g>
+<circle cx="55" cy="200" r="7" fill="#ffffff" stroke="#264653" stroke-width="2.2"/>
+<g stroke="#e76f51" stroke-width="2.5">
+<line x1="299" y1="194" x2="311" y2="206"/><line x1="299" y1="206" x2="311" y2="194"/>
+<line x1="399" y1="194" x2="411" y2="206"/><line x1="399" y1="206" x2="411" y2="194"/>
+<line x1="199" y1="194" x2="211" y2="206"/><line x1="199" y1="206" x2="211" y2="194"/>
+</g>
+<g fill="#1d1d1d">
+<text x="318" y="236">open loop: 0 twice, ±4</text>
+<text x="170" y="112">controller</text>
+<text x="40" y="236">observer, 4 times</text>
+<text x="70" y="318" fill="#264653">damping ratio 0.7071</text>
+</g>
+</svg>

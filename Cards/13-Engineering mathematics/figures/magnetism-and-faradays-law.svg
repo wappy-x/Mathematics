@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 240" width="540" height="240" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>Cut through the axis of a coil 25 cm long and 5 cm across, to scale, with an Ampere loop</title>
+<rect x="0" y="0" width="540" height="240" fill="#ffffff"/>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d1d1d"/></marker></defs>
+<line x1="20" y1="110" x2="500" y2="110" stroke="#777777" stroke-dasharray="2,4"/>
+<rect x="60" y="64" width="400" height="12" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<rect x="60" y="144" width="400" height="12" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<circle cx="68" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="68" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="68" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M64.7,146.7 L71.3,153.3 M64.7,153.3 L71.3,146.7" stroke="#1d1d1d"/>
+<circle cx="84" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="84" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="84" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M80.7,146.7 L87.3,153.3 M80.7,153.3 L87.3,146.7" stroke="#1d1d1d"/>
+<circle cx="100" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="100" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="100" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M96.7,146.7 L103.3,153.3 M96.7,153.3 L103.3,146.7" stroke="#1d1d1d"/>
+<circle cx="116" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="116" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="116" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M112.7,146.7 L119.3,153.3 M112.7,153.3 L119.3,146.7" stroke="#1d1d1d"/>
+<circle cx="132" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="132" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="132" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M128.7,146.7 L135.3,153.3 M128.7,153.3 L135.3,146.7" stroke="#1d1d1d"/>
+<circle cx="148" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="148" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="148" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M144.7,146.7 L151.3,153.3 M144.7,153.3 L151.3,146.7" stroke="#1d1d1d"/>
+<circle cx="164" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="164" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="164" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M160.7,146.7 L167.3,153.3 M160.7,153.3 L167.3,146.7" stroke="#1d1d1d"/>
+<circle cx="180" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="180" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="180" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M176.7,146.7 L183.3,153.3 M176.7,153.3 L183.3,146.7" stroke="#1d1d1d"/>
+<circle cx="196" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="196" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="196" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M192.7,146.7 L199.3,153.3 M192.7,153.3 L199.3,146.7" stroke="#1d1d1d"/>
+<circle cx="212" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="212" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="212" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M208.7,146.7 L215.3,153.3 M208.7,153.3 L215.3,146.7" stroke="#1d1d1d"/>
+<circle cx="228" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="228" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="228" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M224.7,146.7 L231.3,153.3 M224.7,153.3 L231.3,146.7" stroke="#1d1d1d"/>
+<circle cx="244" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="244" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="244" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M240.7,146.7 L247.3,153.3 M240.7,153.3 L247.3,146.7" stroke="#1d1d1d"/>
+<circle cx="260" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="260" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="260" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M256.7,146.7 L263.3,153.3 M256.7,153.3 L263.3,146.7" stroke="#1d1d1d"/>
+<circle cx="276" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="276" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="276" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M272.7,146.7 L279.3,153.3 M272.7,153.3 L279.3,146.7" stroke="#1d1d1d"/>
+<circle cx="292" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="292" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="292" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M288.7,146.7 L295.3,153.3 M288.7,153.3 L295.3,146.7" stroke="#1d1d1d"/>
+<circle cx="308" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="308" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="308" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M304.7,146.7 L311.3,153.3 M304.7,153.3 L311.3,146.7" stroke="#1d1d1d"/>
+<circle cx="324" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="324" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="324" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M320.7,146.7 L327.3,153.3 M320.7,153.3 L327.3,146.7" stroke="#1d1d1d"/>
+<circle cx="340" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="340" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="340" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M336.7,146.7 L343.3,153.3 M336.7,153.3 L343.3,146.7" stroke="#1d1d1d"/>
+<circle cx="356" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="356" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="356" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M352.7,146.7 L359.3,153.3 M352.7,153.3 L359.3,146.7" stroke="#1d1d1d"/>
+<circle cx="372" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="372" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="372" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M368.7,146.7 L375.3,153.3 M368.7,153.3 L375.3,146.7" stroke="#1d1d1d"/>
+<circle cx="388" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="388" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="388" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M384.7,146.7 L391.3,153.3 M384.7,153.3 L391.3,146.7" stroke="#1d1d1d"/>
+<circle cx="404" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="404" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="404" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M400.7,146.7 L407.3,153.3 M400.7,153.3 L407.3,146.7" stroke="#1d1d1d"/>
+<circle cx="420" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="420" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="420" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M416.7,146.7 L423.3,153.3 M416.7,153.3 L423.3,146.7" stroke="#1d1d1d"/>
+<circle cx="436" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="436" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="436" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M432.7,146.7 L439.3,153.3 M432.7,153.3 L439.3,146.7" stroke="#1d1d1d"/>
+<circle cx="452" cy="70" r="5" fill="none" stroke="#1d1d1d"/><circle cx="452" cy="70" r="1.3" fill="#1d1d1d"/>
+<circle cx="452" cy="150" r="5" fill="none" stroke="#1d1d1d"/><path d="M448.7,146.7 L455.3,153.3 M448.7,153.3 L455.3,146.7" stroke="#1d1d1d"/>
+<line x1="90" y1="92" x2="140" y2="92" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<line x1="190" y1="92" x2="240" y2="92" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<line x1="290" y1="92" x2="340" y2="92" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<line x1="390" y1="92" x2="440" y2="92" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<line x1="90" y1="128" x2="140" y2="128" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<line x1="190" y1="128" x2="240" y2="128" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<line x1="290" y1="128" x2="340" y2="128" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<line x1="390" y1="128" x2="440" y2="128" stroke="#264653" stroke-width="1.6" marker-end="url(#ah)"/>
+<rect x="200" y="20" width="120" height="90" fill="none" stroke="#e76f51" stroke-width="1.6" stroke-dasharray="6,3"/>
+<text x="326" y="34" fill="#1d1d1d">Ampère loop, 75 mm long:</text>
+<text x="326" y="49" fill="#1d1d1d">300 turns, 900 A pass through</text>
+<text x="64" y="40" fill="#1d1d1d">outside: B close to 0</text>
+<text x="64" y="106" fill="#264653">inside: B = 15.1 mT</text>
+<line x1="60" y1="185" x2="460" y2="185" stroke="#1d1d1d" marker-end="url(#ah)" marker-start="url(#ah)"/>
+<text x="260" y="202" text-anchor="middle" fill="#1d1d1d">250 mm, 1000 turns (one mark per 40 turns)</text>
+<line x1="482" y1="70" x2="482" y2="150" stroke="#1d1d1d" marker-end="url(#ah)" marker-start="url(#ah)"/>
+<text x="490" y="114" fill="#1d1d1d">50 mm</text>
+<text x="260" y="228" text-anchor="middle" fill="#1d1d1d">top row: current out of the page; bottom row: into the page</text>
+</svg>

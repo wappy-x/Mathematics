@@ -26,7 +26,7 @@ A library of short, self-contained **cards**, each teaching one idea of mathemat
 
 The cards are arranged like a ladder. They start with place value and fractions, climb through algebra, calculus and probability, and end at topology, number theory and the famous unsolved problems. Each card only uses ideas from the cards before it, so you can start at the bottom and keep going, or jump straight to whatever you need.
 
-**1,087 of 1,866 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
+**1,147 of 1,866 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
 
 ## What's on a card
 
@@ -72,7 +72,7 @@ The library has 25 **wings**, each split into shelves of cards. Click a wing to 
 | 10 | [**Measure and integration**](Cards/10-Measure%20and%20integration/README.md) | The rigorous floor under probability and calculus. | 68 of 68 |
 | 11 | [**Stochastic processes and calculus**](Cards/11-Stochastic%20processes%20and%20calculus/README.md) | Randomness in motion: random walks to Brownian motion. | 60 of 60 |
 | 12 | [**Financial mathematics**](Cards/12-Financial%20mathematics/README.md) | Interest, pricing, risk and markets, from loans to derivatives. | 332 of 332 |
-| 13 | [**Engineering mathematics**](Cards/13-Engineering%20mathematics/README.md) | Units, signals, control, circuits, mechanics, heat. | 26 of 86 |
+| 13 | [**Engineering mathematics**](Cards/13-Engineering%20mathematics/README.md) | Units, signals, control, circuits, mechanics, heat. | 86 of 86 |
 | 14 | [**Applied and computational**](Cards/14-Applied%20and%20computational/README.md) | Algorithms, information, cryptography, machine learning. | 0 of 71 · planned |
 | 15 | [**Optimization**](Cards/15-Optimization/README.md) | Finding the best choice under limits. | 0 of 64 · planned |
 | 16 | [**Numerical analysis**](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 0 of 68 · planned |
@@ -134,7 +134,7 @@ The cards are written by AI agents working to a strict house standard, then chec
 Help is welcome, from a one-word fix to a whole shelf of new cards.
 
 - **Spotted a mistake?** [Open an issue](https://github.com/wappy-x/Mathematics/issues) with the card and what's wrong, or send a pull request with the fix.
-- **Want to build cards?** 779 cards are still to write, all listed in the [syllabus](SYLLABUS.md). Claim a shelf, give your AI agent the [agent brief](.github/AGENTS.md), and send the cards back as a pull request. The [contributing guide](.github/CONTRIBUTING.md) walks through it, using the next shelf as the example.
+- **Want to build cards?** 719 cards are still to write, all listed in the [syllabus](SYLLABUS.md). Claim a shelf, give your AI agent the [agent brief](.github/AGENTS.md), and send the cards back as a pull request. The [contributing guide](.github/CONTRIBUTING.md) walks through it, using the next shelf as the example.
 
 ## Licence
 

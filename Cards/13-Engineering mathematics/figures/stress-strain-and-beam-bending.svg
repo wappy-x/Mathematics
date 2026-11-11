@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 200" width="570" height="200" style="color:#24292f">
+<title>The 4 m joist pinned at both ends with 2 kN at mid-span and its sag curve, and the 100 mm I-section with its bending stress, compression on top and tension underneath</title>
+<rect x="0" y="0" width="570" height="200" rx="8" fill="#ffffff"/>
+<line x1="30" y1="70" x2="350" y2="70" stroke="currentColor" stroke-width="3"/>
+<polygon points="30,70 22,84 38,84" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="350,70 342,84 358,84" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="190" y1="22" x2="190" y2="64" stroke="currentColor" stroke-width="2"/>
+<polyline points="185,57 190,66 195,57" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="198" y="34" font-size="13" fill="currentColor">P = 2 kN</text>
+<polyline points="30,70 70,85 110,98.1 150,107.3 190,110.8 230,107.3 270,98.1 310,85 350,70" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="150" y="128" font-size="12" fill="currentColor">sag 8.16 mm at mid-span</text>
+<line x1="30" y1="160" x2="350" y2="160" stroke="currentColor" stroke-width="1"/>
+<line x1="30" y1="154" x2="30" y2="166" stroke="currentColor" stroke-width="1"/>
+<line x1="350" y1="154" x2="350" y2="166" stroke="currentColor" stroke-width="1"/>
+<text x="168" y="178" font-size="13" fill="currentColor">L = 4 m</text>
+<rect x="402.5" y="40" width="55" height="5.7" fill="currentColor"/>
+<rect x="402.5" y="134.3" width="55" height="5.7" fill="currentColor"/>
+<rect x="427.95" y="45.7" width="4.1" height="88.6" fill="currentColor"/>
+<line x1="395" y1="90" x2="545" y2="90" stroke="currentColor" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="398" y="165" font-size="12" fill="currentColor">100 mm I</text>
+<line x1="510" y1="40" x2="510" y2="140" stroke="currentColor" stroke-width="1"/>
+<polygon points="510,40 479.4,40 540.6,140 510,140" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="462" y="32" font-size="12" fill="currentColor">−61.23 MPa</text>
+<text x="486" y="156" font-size="12" fill="currentColor">+61.23 MPa</text>
+<text x="514" y="86" font-size="11" fill="currentColor">σ = 0</text>
+</svg>
