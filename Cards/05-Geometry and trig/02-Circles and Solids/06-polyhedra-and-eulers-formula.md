@@ -14,7 +14,7 @@ A count that cannot change forbids things. Every ball of pentagons and hexagons 
 
 **Corners minus edges plus faces is 2 for every solid with polygon faces that could be pumped up into a ball, which forces 12 pentagons onto every ball like this one and allows exactly five regular solids.**
 
-**What kind of fact this is:** a theorem, proved in Why it works for convex solids by reducing it to [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md); the twelve pentagons and the five solids follow from it.
+**What kind of fact this is:** a theorem, proved in Why it works for convex solids (solids with no dents) by reducing it to [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md); the twelve pentagons and the five solids follow from it.
 
 ### The picture: one pentagon and its five hexagons, laid flat
 

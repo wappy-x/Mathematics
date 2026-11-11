@@ -99,7 +99,7 @@ For θ from π to 2π the sine is negative and θ = 2π − arccos((R − y)/b),
 
 Put b = R: a pebble in the tread. Its lowest height is 0, so it touches the road once a turn at a sharp point, a **cusp**. One arch is 8R = 2.80 m long while the bike covers 2.1991 m; Christopher Wren found that length in 1658. The proof needs [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md); the code checks it with 100,000 short straight pieces.
 
-Without slipping, the point touching the road is still for an instant, so over a small turn the wheel pivots about it: a point straight above it, h metres up, moves h/R times as far as the hub. The valve at the top moves 1.8571 times as far, at the bottom 0.1429 times; the pebble at the bottom stops dead. Hence the blurred top of a wheel in photographs.
+Without slipping, the point touching the road is still for an instant. So over a small turn the wheel pivots about that point: a point straight above it, h metres up, moves h/R times as far as the hub. The valve at the top moves 1.8571 times as far, at the bottom 0.1429 times; the pebble at the bottom stops dead. Hence the blurred top of a wheel in photographs.
 
 Another road: seen from the hub the valve is a polar point with fixed distance 0.30 m and changing angle ([Polar coordinates](03-polar-coordinates.md)); adding the hub's slide gives the same formulas.
 
@@ -324,6 +324,80 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the eliminated equations and the spoke's circle for every wheel radius R and every valve distance b above 0.
+
+- On the rising half of the first arch, θ from 0 to π, the valve's x is R arccos((R − y)/b) − √(b^2 − (R − y)^2).
+- On the falling half, θ from π to 2π, x is R(2π − arccos((R − y)/b)) + √(b^2 − (R − y)^2) instead.
+- Seen from the hub, the valve stays on a circle of radius b at every turn: across^2 + up^2 = b^2.
+
+The worked numbers, the 100,000-click turn, the pebble's 8R arch and the pivot rule are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 48 lines</summary>
+
+```lean
+-- Parametric curves: removing the turn θ from the rolling-wheel formulas x = Rθ − b sin θ, y = R − b cos θ gives x from y alone on the rising half of each arch, a second formula on the falling half, and a circle for the valve seen from the hub.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+
+open Real
+
+/-- The valve of a wheel of radius `R`, sitting `b` from the hub, is at
+`x = Rθ − b sin θ`, `y = R − b cos θ` after a turn of `θ` radians. On the rising half of
+each arch, `0 ≤ θ ≤ π`, the turn can be removed: `x = R arccos((R − y)/b) − √(b² − (R − y)²)`. -/
+theorem valve_x_from_y_rising_half (R b θ : ℝ) (hb : 0 < b) (h0 : 0 ≤ θ) (hπ : θ ≤ π) :
+    R * θ - b * sin θ =
+      R * arccos ((R - (R - b * cos θ)) / b) - √(b ^ 2 - (R - (R - b * cos θ)) ^ 2) := by
+  have h1 : (R - (R - b * cos θ)) / b = cos θ := by
+    field_simp; ring
+  have h2 : b ^ 2 - (R - (R - b * cos θ)) ^ 2 = (b * sin θ) ^ 2 := by
+    have := sin_sq_add_cos_sq θ
+    linear_combination (-b ^ 2) * this
+  have hs : 0 ≤ sin θ := sin_nonneg_of_nonneg_of_le_pi h0 hπ
+  rw [h1, h2, arccos_cos h0 hπ, Real.sqrt_sq (mul_nonneg hb.le hs)]
+
+/-- On the falling half of the first arch, `π ≤ θ ≤ 2π`, the same height needs a different
+formula: `x = R(2π − arccos((R − y)/b)) + √(b² − (R − y)²)`. So no single "y gives x" rule
+covers a whole turn. -/
+theorem valve_x_from_y_falling_half (R b θ : ℝ) (hb : 0 < b) (hπ : π ≤ θ) (h2π : θ ≤ 2 * π) :
+    R * θ - b * sin θ =
+      R * (2 * π - arccos ((R - (R - b * cos θ)) / b)) + √(b ^ 2 - (R - (R - b * cos θ)) ^ 2) := by
+  have h1 : (R - (R - b * cos θ)) / b = cos (2 * π - θ) := by
+    rw [cos_two_pi_sub]
+    field_simp; ring
+  have h2 : b ^ 2 - (R - (R - b * cos θ)) ^ 2 = (b * sin (2 * π - θ)) ^ 2 := by
+    have := sin_sq_add_cos_sq θ
+    rw [sin_two_pi_sub]
+    linear_combination (-b ^ 2) * this
+  have ha : 0 ≤ 2 * π - θ := by linarith
+  have hb' : 2 * π - θ ≤ π := by linarith
+  have hs : 0 ≤ sin (2 * π - θ) := sin_nonneg_of_nonneg_of_le_pi ha hb'
+  rw [h1, h2, arccos_cos ha hb', Real.sqrt_sq (mul_nonneg hb.le hs), sin_two_pi_sub]
+  ring
+
+/-- Seen from the hub, the valve is at `(−b sin θ, −b cos θ)`: across² + up² = b², a circle of
+radius `b`, whatever the turn. -/
+theorem valve_from_hub_on_circle (b θ : ℝ) :
+    (-b * sin θ) ^ 2 + (-b * cos θ) ^ 2 = b ^ 2 := by
+  have := sin_sq_add_cos_sq θ
+  linear_combination b ^ 2 * this
+
+#print axioms valve_x_from_y_rising_half
+#print axioms valve_x_from_y_falling_half
+#print axioms valve_from_hub_on_circle
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'valve_x_from_y_rising_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'valve_x_from_y_falling_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'valve_from_hub_on_circle' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

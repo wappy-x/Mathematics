@@ -20,7 +20,7 @@ Up to a right angle the three distances always come in that order, smallest firs
 
 <p align="center"><img src="../figures/small-angles-and-the-sine-bound.svg" alt="The proof&#x27;s three nested shapes drawn to scale at 40 degrees: pivot O, lowest point A, bob B, and T where the string&#x27;s line meets the level line through A; triangle OAB lies inside the sector OAB, which lies inside triangle OAT" width="420"></p>
 
-Drawn at 40°, not 5°, so the shapes separate; radius 1 = 200 units. Pivot O (110, 16), lowest point A (110, 216), bob B (238.56, 169.21), and T (277.82, 216), where OB carried on meets the level line. Darkest: triangle OAB. Middle: the sector's sliver beyond the chord AB, the straight cut from A to B. Palest: triangle OAT beyond the arc. Dashed: CB, B's sideways offset, square to OA at C.
+Drawn at 40°, not 5°, so the shapes separate; radius 1 = 200 units. Pivot O (110, 16), lowest point A (110, 216), bob B (238.56, 169.21), and T (277.82, 216), where OB carried on meets the level line. Darkest: triangle OAB. Middle: the sliver of the sector OAB, the slice of circle between OA and OB, beyond the chord AB, the straight cut from A to B. Palest: triangle OAT beyond the arc. Dashed: CB, B's sideways offset, square to OA at C.
 
 ---
 
@@ -358,6 +358,97 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three inequalities for every angle x in radians strictly between 0 and a right angle.
+
+- The sandwich: $\sin x < x < \tan x$.
+- The chain: $1 - x^2/2 < \cos x < \sin x / x < 1 < \tan x / x < 1/\cos x$.
+- The cosine's ceiling: the cosine overshoots its rule $1 - x^2/2$ by less than $x^4/8$.
+
+The 5° and 40° decimals, the pendulum's lengths, both roads and Archimedes' 96 sides are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 65 lines</summary>
+
+```lean
+-- Small angles: for every angle x in radians strictly between 0 and a right angle, sin x < x < tan x, which gives the chain 1 - x^2/2 < cos x < sin x / x < 1 < tan x / x < 1 / cos x and the cosine's ceiling cos x < 1 - x^2/2 + x^4/8.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Real
+
+/-- The sandwich. Up to a right angle, in radians, the sine is less than the angle, and the
+angle is less than the tangent: for 0 < x < π/2, sin x < x < tan x. -/
+theorem sin_lt_self_lt_tan (x : ℝ) (h0 : 0 < x) (h1 : x < π / 2) :
+    sin x < x ∧ x < tan x := by
+  exact ⟨Real.sin_lt h0, Real.lt_tan h0 h1⟩
+
+/-- The chain. Dividing the sandwich by x and putting a floor under the cosine: for
+0 < x < π/2, 1 - x²/2 < cos x < sin x / x < 1 < tan x / x < 1 / cos x. Every link sits near 1
+when x is small, which is why sin x ≈ x, tan x ≈ x and cos x ≈ 1 - x²/2. -/
+theorem small_angle_chain (x : ℝ) (h0 : 0 < x) (h1 : x < π / 2) :
+    1 - x ^ 2 / 2 < cos x ∧ cos x < sin x / x ∧ sin x / x < 1 ∧
+      1 < tan x / x ∧ tan x / x < 1 / cos x := by
+  have hs : sin x < x := Real.sin_lt h0
+  have ht : x < tan x := Real.lt_tan h0 h1
+  have hc : 0 < cos x := Real.cos_pos_of_mem_Ioo ⟨by linarith [Real.pi_pos], h1⟩
+  have hsin : 0 < sin x := Real.sin_pos_of_pos_of_lt_pi h0 (by linarith [Real.pi_pos])
+  rw [Real.tan_eq_sin_div_cos] at ht ⊢
+  rw [lt_div_iff₀ hc] at ht
+  refine ⟨Real.one_sub_sq_div_two_lt_cos h0.ne', ?_, ?_, ?_, ?_⟩
+  · rw [lt_div_iff₀ h0]; linarith
+  · rw [div_lt_one h0]; exact hs
+  · rw [one_lt_div h0, lt_div_iff₀ hc]; linarith
+  · rw [div_div, div_lt_div_iff₀ (mul_pos hc h0) hc]; nlinarith
+
+/-- The cosine's ceiling. For 0 < x < π/2 the cosine overshoots its small-angle rule
+1 - x²/2 by less than x⁴/8: cos x < 1 - x²/2 + x⁴/8. -/
+theorem cos_lt_one_sub_sq_div_two_add_pow_four_div_eight (x : ℝ) (h0 : 0 < x) (h1 : x < π / 2) :
+    cos x < 1 - x ^ 2 / 2 + x ^ 4 / 8 := by
+  have hpi : π ≤ 4 := Real.pi_le_four
+  have hx2 : 0 < x / 2 := by linarith
+  have hs := Real.sin_gt_sub_cube hx2
+  have hpos : 0 < x / 2 - (x / 2) ^ 3 / 6 := by
+    have h2 : x < 2 := by linarith
+    have hxx : x ^ 2 < 4 := by nlinarith
+    have : x * x ^ 2 < x * 4 := mul_lt_mul_of_pos_left hxx h0
+    nlinarith
+  have hc : cos x = 1 - 2 * sin (x / 2) ^ 2 := by
+    rw [← Real.cos_two_mul_eq_one_sub]; ring_nf
+  have hsq : (x / 2 - (x / 2) ^ 3 / 6) ^ 2 < sin (x / 2) ^ 2 := by
+    have := hs
+    nlinarith
+  rw [hc]
+  nlinarith [sq_nonneg x, pow_pos h0 6]
+
+-- The pendulum's 5° is π/36 radians; the figure's 40° is 2π/9 radians; 180° is π radians.
+example : 5 * π / 180 = π / 36 := by ring
+example : 40 * π / 180 = 2 * π / 9 := by ring
+example : 180 * π / 180 = π := by ring
+-- Archimedes' published fractions: 3 10/71 is 223/71 and 3 1/7 is 22/7, and the first is below the second.
+example : (3 : ℚ) + 10 / 71 = 223 / 71 ∧ (3 : ℚ) + 1 / 7 = 22 / 7 := by norm_num
+example : (223 : ℚ) / 71 < 22 / 7 := by norm_num
+-- Archimedes' angle π/96: 30° halved four times, and 96 such angles make a half turn.
+example : π / 6 / 2 / 2 / 2 / 2 = π / 96 := by ring
+example : 96 * (π / 96) = π := by ring
+
+#print axioms sin_lt_self_lt_tan
+#print axioms small_angle_chain
+#print axioms cos_lt_one_sub_sq_div_two_add_pow_four_div_eight
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sin_lt_self_lt_tan' depends on axioms: [propext, Classical.choice, Quot.sound]
+'small_angle_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cos_lt_one_sub_sq_div_two_add_pow_four_div_eight' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -406,7 +497,7 @@ The chain pins sin x ÷ x ever closer to 1 as the angle shrinks, yet no angle ma
 
 ## Sources
 
-Verified 2026-09-24: every link below opens a page naming the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - OpenStax. *Calculus Volume 1*, section 2.3, "The Limit Laws." [Textbook page](https://openstax.org/books/calculus-volume-1/pages/2-3-the-limit-laws). The same figure, and the squeeze built on it.
 - OpenStax. *University Physics Volume 1*, section 15.4, "Pendulums." [Textbook page](https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums). The pull as weight times sine, and the small-angle swap.

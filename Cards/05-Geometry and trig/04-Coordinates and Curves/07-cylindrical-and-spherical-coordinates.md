@@ -8,9 +8,13 @@
 
 Tokyo sits at 35.68° north, 139.69° east: an address on the globe. A GPS receiver needs another: three distances along axes at right angles through the Earth's centre, the (x, y, z) of a grid in space.
 
-Treat the Earth as a ball 6371 km in radius, its mean size. The first axis points from the centre to where the equator meets the Greenwich meridian (a meridian is a half-circle from pole to pole; Greenwich's has longitude zero), the second to 90° east, the third to the North Pole. Tokyo is then (−3946.3, 3347.9, 3715.9), in kilometres: 3715.9 km above the equator's plane and 5175.1 km from the spin axis.
+Treat the Earth as a ball 6371 km in radius, its mean size. A meridian is a half-circle from pole to pole; Greenwich's has longitude zero.
 
-A radius and two angles name the same point: **spherical coordinates**. A distance from the axis, one angle and a height name it too: **cylindrical coordinates**. Both are built from the plane's polar coordinates ([Polar coordinates](03-polar-coordinates.md)): cylindrical uses them once, spherical twice. The difficulty is bookkeeping: latitude opens up from the equator, the mathematician's angle opens down from the pole, and one letter means different angles in different books.
+The first axis points from the centre to where the equator meets the Greenwich meridian, the second to 90° east, the third to the North Pole. Tokyo is then (−3946.3, 3347.9, 3715.9), in kilometres: 3715.9 km above the equator's plane and 5175.1 km from the spin axis.
+
+A radius and two angles name the same point: **spherical coordinates**. A distance from the axis, one angle and a height name it too: **cylindrical coordinates**. Both are built from the plane's polar coordinates ([Polar coordinates](03-polar-coordinates.md)): cylindrical uses them once, spherical twice.
+
+The difficulty is bookkeeping: latitude opens up from the equator, the mathematician's angle opens down from the pole, and one letter means different angles in different books.
 
 **Drop a point straight down to the equator's plane: its shadow is a polar-coordinate problem and its height is one number, so a point in space is a radius and two angles, or a distance from the axis, one angle and a height.**
 
@@ -26,7 +30,13 @@ Drawn at 1000 km = 15 units. O is the Earth's centre. The radius ρ to Tokyo is 
 
 ## The formula
 
-Three new letters, in words first. The Greek letter rho, $\rho$, is the distance from the centre. The Greek letter theta, $\theta$, is the angle around the axis: on Earth, the longitude. The Greek letter phi, $\phi$, is the angle down from the North Pole, called the **colatitude**, which is 90° minus the latitude. Spherical coordinates list them as (ρ, θ, φ), and cylindrical coordinates as (r, θ, z), with $r$ the distance from the axis and $z$ the height.
+Three new letters, in words first.
+
+- The Greek letter rho, $\rho$, is the distance from the centre.
+- The Greek letter theta, $\theta$, is the angle around the axis: on Earth, the longitude.
+- The Greek letter phi, $\phi$, is the angle down from the North Pole, called the **colatitude**, which is 90° minus the latitude.
+
+Spherical coordinates list them as (ρ, θ, φ), and cylindrical coordinates as (r, θ, z), with $r$ the distance from the axis and $z$ the height.
 
 Spherical to grid:
 
@@ -77,7 +87,9 @@ The shadow lies at distance r from the centre, at angle θ from the Greenwich di
 
 ### Step 2: the meridian triangle gives r and z
 
-Join the centre O, Tokyo, and Tokyo's shadow. The shadow-to-Tokyo line is vertical and the O-to-shadow line flat, so the right angle is at the shadow and the long side is ρ. The angle at O between ρ and the vertical axis is the colatitude φ. Sine and cosine in a right triangle ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)) give the side next to φ as z = ρ cos φ and the side facing it as r = ρ sin φ.
+Join the centre O, Tokyo, and Tokyo's shadow. The shadow-to-Tokyo line is vertical and the O-to-shadow line flat, so the right angle is at the shadow and the long side is ρ.
+
+The angle at O between ρ and the vertical axis is the colatitude φ. Sine and cosine in a right triangle ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)) give the side next to φ as z = ρ cos φ and the side facing it as r = ρ sin φ.
 
 South of the equator the colatitude passes 90°: Rio de Janeiro, at 22.91° south, has 112.91°. The cosine past 90° is negative ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)), so z = −2480.1 km: below the equator, with no separate rule needed. The sine stays positive up to 180°, so r stays a distance.
 
@@ -313,6 +325,146 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three facts for every point off the axis, not just Tokyo and Rio.
+
+- Every point off the axis has exactly one address (ρ, θ, φ). The ranges are ρ > 0, θ above −180° and up to 180°, and φ from 0° to 180°.
+- Step 4's recipe, ρ = √(x^2 + y^2 + z^2), θ = atan2(y, x) and φ = atan2(r, z), gives an address in those ranges. It lands back on the same point.
+- For any radius and any two angles, the spherical formulas give x^2 + y^2 + z^2 = ρ^2.
+
+The decimal values for Tokyo and Rio, the tunnel, the flattened Earth and the mistakes are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 111 lines</summary>
+
+```lean
+-- Cylindrical and spherical coordinates: every point off the axis has exactly one spherical address (ρ, θ, φ), the atan2 recipe finds it, and ρ² = x² + y² + z².
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open Real
+
+/-- The length of the complex number u + v i is √(u² + v²). -/
+lemma norm_mk_eq_sqrt (u v : ℝ) : ‖(⟨u, v⟩ : ℂ)‖ = √(u ^ 2 + v ^ 2) := by
+  rw [Complex.norm_def, Complex.normSq_apply]
+  congr 1
+  simp only
+  ring
+
+/-- The atan2 recipe gives an address in the ranges that lands back on the point. -/
+lemma back_from_grid_aux (x y z : ℝ) (h : 0 < x ^ 2 + y ^ 2) :
+    0 < √(x ^ 2 + y ^ 2 + z ^ 2) ∧ Complex.arg ⟨x, y⟩ ∈ Set.Ioc (-π) π ∧
+      Complex.arg ⟨z, √(x ^ 2 + y ^ 2)⟩ ∈ Set.Icc 0 π ∧
+      x = √(x ^ 2 + y ^ 2 + z ^ 2) * sin (Complex.arg ⟨z, √(x ^ 2 + y ^ 2)⟩) *
+        cos (Complex.arg ⟨x, y⟩) ∧
+      y = √(x ^ 2 + y ^ 2 + z ^ 2) * sin (Complex.arg ⟨z, √(x ^ 2 + y ^ 2)⟩) *
+        sin (Complex.arg ⟨x, y⟩) ∧
+      z = √(x ^ 2 + y ^ 2 + z ^ 2) * cos (Complex.arg ⟨z, √(x ^ 2 + y ^ 2)⟩) := by
+  have hr : 0 ≤ √(x ^ 2 + y ^ 2) := Real.sqrt_nonneg _
+  have hn : ‖(⟨z, √(x ^ 2 + y ^ 2)⟩ : ℂ)‖ = √(x ^ 2 + y ^ 2 + z ^ 2) := by
+    rw [norm_mk_eq_sqrt, Real.sq_sqrt h.le]
+    congr 1
+    ring
+  have hs := Complex.norm_mul_sin_arg (⟨z, √(x ^ 2 + y ^ 2)⟩ : ℂ)
+  have hc := Complex.norm_mul_cos_arg (⟨z, √(x ^ 2 + y ^ 2)⟩ : ℂ)
+  have hs' := Complex.norm_mul_sin_arg (⟨x, y⟩ : ℂ)
+  have hc' := Complex.norm_mul_cos_arg (⟨x, y⟩ : ℂ)
+  rw [hn] at hs hc
+  rw [norm_mk_eq_sqrt] at hs' hc'
+  simp only at hs hc hs' hc'
+  refine ⟨Real.sqrt_pos.mpr (by positivity), Complex.arg_mem_Ioc _,
+    ⟨Complex.arg_nonneg_iff.mpr hr, Complex.arg_le_pi _⟩, ?_, ?_, hc.symm⟩
+  · rw [hs, hc']
+  · rw [hs, hs']
+
+#print axioms norm_mk_eq_sqrt
+#print axioms back_from_grid_aux
+
+/-- A point written as r cos θ + r sin θ i with r > 0 and θ in (−π, π] has angle θ. -/
+lemma arg_mk_mul_cos_sin {r θ : ℝ} (hr : 0 < r) (hθ : θ ∈ Set.Ioc (-π) π) :
+    Complex.arg ⟨r * cos θ, r * sin θ⟩ = θ := by
+  have e : (⟨r * cos θ, r * sin θ⟩ : ℂ) =
+      (r : ℂ) * (Complex.cos θ + Complex.sin θ * Complex.I) := by
+    apply Complex.ext <;>
+      simp [← Complex.ofReal_cos, ← Complex.ofReal_sin, Complex.mul_re, Complex.mul_im]
+  rw [e, Complex.arg_mul_cos_add_sin_mul_I hr hθ]
+
+#print axioms arg_mk_mul_cos_sin
+
+/-- Every point off the axis has exactly one address: for a point (x, y, z) with
+r = √(x² + y²) > 0 there is exactly one triple (ρ, θ, φ) with ρ > 0, θ above −π and up to π,
+φ from 0 to π, such that x = ρ sin φ cos θ, y = ρ sin φ sin θ and z = ρ cos φ.
+The triple is written p = (ρ, θ, φ), so p.1 = ρ, p.2.1 = θ, p.2.2 = φ. -/
+theorem off_axis_point_has_unique_spherical_address (x y z : ℝ) (h : 0 < x ^ 2 + y ^ 2) :
+    ∃! p : ℝ × ℝ × ℝ,
+      0 < p.1 ∧ p.2.1 ∈ Set.Ioc (-π) π ∧ p.2.2 ∈ Set.Icc 0 π ∧
+      x = p.1 * sin p.2.2 * cos p.2.1 ∧
+      y = p.1 * sin p.2.2 * sin p.2.1 ∧
+      z = p.1 * cos p.2.2 := by
+  obtain ⟨h0, h1, h2, h3, h4, h5⟩ := back_from_grid_aux x y z h
+  refine ⟨(√(x ^ 2 + y ^ 2 + z ^ 2), Complex.arg ⟨x, y⟩,
+    Complex.arg ⟨z, √(x ^ 2 + y ^ 2)⟩), ⟨h0, h1, h2, h3, h4, h5⟩, ?_⟩
+  rintro ⟨ρ, θ, φ⟩ ⟨hρ, hθ, hφ, hx, hy, hz⟩
+  simp only at hρ hθ hφ hx hy hz
+  have sθ := sin_sq_add_cos_sq θ
+  have sφ := sin_sq_add_cos_sq φ
+  have hsinφ : 0 ≤ sin φ := Real.sin_nonneg_of_nonneg_of_le_pi hφ.1 hφ.2
+  have hxy : x ^ 2 + y ^ 2 = (ρ * sin φ) ^ 2 := by
+    rw [hx, hy]; linear_combination (ρ * sin φ) ^ 2 * sθ
+  have hxyz : x ^ 2 + y ^ 2 + z ^ 2 = ρ ^ 2 := by
+    rw [hxy, hz]; linear_combination ρ ^ 2 * sφ
+  have hr : √(x ^ 2 + y ^ 2) = ρ * sin φ := by
+    rw [hxy, Real.sqrt_sq (mul_nonneg hρ.le hsinφ)]
+  have hrpos : 0 < ρ * sin φ := by
+    rw [← hr]; exact Real.sqrt_pos.mpr h
+  have eρ : √(x ^ 2 + y ^ 2 + z ^ 2) = ρ := by
+    rw [hxyz, Real.sqrt_sq hρ.le]
+  have eθ : Complex.arg ⟨x, y⟩ = θ := by
+    rw [hx, hy]; exact arg_mk_mul_cos_sin hrpos hθ
+  have eφ : Complex.arg ⟨z, √(x ^ 2 + y ^ 2)⟩ = φ := by
+    rw [hr, hz, mul_comm ρ (sin φ), mul_comm ρ (cos φ), ← mul_comm ρ, ← mul_comm ρ]
+    exact arg_mk_mul_cos_sin hρ ⟨by linarith [hφ.1, Real.pi_pos], hφ.2⟩
+  rw [eρ, eθ, eφ]
+
+/-- Back from the grid: for a point off the axis, with r = √(x² + y²),
+ρ = √(x² + y² + z²), θ = atan2(y, x) and φ = atan2(r, z) give an address in the ranges
+(ρ > 0, θ above −π and up to π, φ from 0 to π) that lands back on the same point.
+Here atan2(v, u) is the angle of the direction u across, v up, which Mathlib calls
+`Complex.arg` of u + v i. -/
+theorem back_from_grid_recovers_point (x y z : ℝ) (h : 0 < x ^ 2 + y ^ 2) :
+    let r := √(x ^ 2 + y ^ 2)
+    let ρ := √(x ^ 2 + y ^ 2 + z ^ 2)
+    let θ := Complex.arg ⟨x, y⟩
+    let φ := Complex.arg ⟨z, r⟩
+    0 < ρ ∧ θ ∈ Set.Ioc (-π) π ∧ φ ∈ Set.Icc 0 π ∧
+      x = ρ * sin φ * cos θ ∧ y = ρ * sin φ * sin θ ∧ z = ρ * cos φ := by
+  exact back_from_grid_aux x y z h
+
+/-- The spherical formulas keep the distance from the centre: for every radius and both
+angles, x² + y² + z² = ρ², using sin² + cos² = 1 twice. -/
+theorem spherical_sum_of_squares (ρ θ φ : ℝ) :
+    (ρ * sin φ * cos θ) ^ 2 + (ρ * sin φ * sin θ) ^ 2 + (ρ * cos φ) ^ 2 = ρ ^ 2 := by
+  linear_combination (ρ ^ 2 * sin φ ^ 2) * sin_sq_add_cos_sq θ + ρ ^ 2 * sin_sq_add_cos_sq φ
+
+#print axioms off_axis_point_has_unique_spherical_address
+#print axioms back_from_grid_recovers_point
+#print axioms spherical_sum_of_squares
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'norm_mk_eq_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'back_from_grid_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arg_mk_mul_cos_sin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'off_axis_point_has_unique_spherical_address' depends on axioms: [propext, Classical.choice, Quot.sound]
+'back_from_grid_recovers_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'spherical_sum_of_squares' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -352,6 +504,8 @@ The two outputs match line for line.
 - [Triple integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/02-triple-integrals.md): volumes of balls and cylinders, summed slice by slice in these coordinates.
 - [Hydrogen in outline](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/07-the-hydrogen-atom-in-outline.md): an atom's electron shapes, written in a radius and two angles.
 - The Laplacian in round coordinates, and the modes it splits into: the equations of heat and gravity rewritten for round problems.
+
+Left open: the tunnel from Tokyo to Rio is 12660.0 km, but a ship or a plane stays on the surface; how far is the trip along the sphere?
 
 ---
 

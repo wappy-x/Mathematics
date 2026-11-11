@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A surveyor sets a tripod at a point C. Two landmarks are in view: a marker post B and a pylon A. A laser rangefinder reads 300 m to the marker and 450 m to the pylon, and the tripod's dial reads 52° between the two sightings. A pond lies between marker and pylon, so no tape can cross it. How far apart are they?
+A surveyor sets a tripod at a point C. Two landmarks are in view: a marker post B and a pylon A. A laser rangefinder reads 300 m to the marker and 450 m to the pylon, and the tripod's dial reads 52° between the two sightings.
+
+A pond lies between marker and pylon, so no tape can cross it. How far apart are they?
 
 Two sides and the angle between them fix a triangle: that is the SAS rule, side-angle-side, of [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md). The rule says the distance has one value, not what it is. The answer is 355.35 m.
 
@@ -79,11 +81,19 @@ $$c^2 = (b - a\cos C)^2 + (a\sin C)^2$$
 
 ### Step 3: expand, and the identity collapses it
 
-The first bracket expands to $b^2 - 2ab\cos C + a^2\cos^2 C$, where $\cos^2 C$ means the cosine squared; the second is $a^2\sin^2 C$. The terms carrying $a^2$ add to $a^2(\cos^2 C + \sin^2 C)$, and that bracket is 1 ([Trig identities](03-trig-identities.md)). What is left is the law. The correction is two rectangles, each the base $b$ by the near piece $a\cos C$, as Euclid drew it.
+The first bracket expands to $b^2 - 2ab\cos C + a^2\cos^2 C$, where $\cos^2 C$ means the cosine squared; the second is $a^2\sin^2 C$. The terms carrying $a^2$ add to $a^2(\cos^2 C + \sin^2 C)$, and that bracket is 1 ([Trig identities](03-trig-identities.md)). What is left is the law.
+
+The correction is two rectangles, each the base $b$ by the near piece $a\cos C$, as Euclid drew it.
 
 ### Step 4: a wide angle pushes the foot outside
 
-Open the sightings to 128°. The height now lands behind C, on the base line extended. Past 90° the cosine is negative, and the sign carries the geometry: the near piece is −184.70 m, meaning 184.70 m behind C, and the far piece grows to 634.70 m. Steps 2 and 3 go through unchanged. Subtracting a negative correction adds, giving 677.30 m against Pythagoras's 540.83 m. The foot can also land beyond A, when $a\cos C$ exceeds $b$: the far piece turns negative, and its square is unchanged.
+Open the sightings to 128°. The height now lands behind C, on the base line extended.
+
+Past 90° the cosine is negative, and the sign carries the geometry: the near piece is −184.70 m, meaning 184.70 m behind C, and the far piece grows to 634.70 m.
+
+Steps 2 and 3 go through unchanged. Subtracting a negative correction adds, giving 677.30 m against Pythagoras's 540.83 m.
+
+The foot can also land beyond A, when $a\cos C$ exceeds $b$: the far piece turns negative, and its square is unchanged.
 
 ### The picture: the same sightings opened to 128°
 
@@ -110,9 +120,11 @@ Half the base times the height ([Area](../01-Angles%2C%20Triangles%20and%20Congr
 
 ### Step 6: run it backwards
 
-From 0° to 180° the cosine falls steadily from 1 to −1, so each cosine names exactly one angle, which the inverse cosine returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)). From 300, 450 and 355.35 m the rearranged law gives A = 41.70°, B = 86.30° and C = 52.00°, each found on its own. They add to 180.00°, as the angle sum requires ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). A sine could not do this: 52° and 128° share one.
+From 0° to 180° the cosine falls steadily from 1 to −1, so each cosine names exactly one angle, which the inverse cosine returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)).
 
-A second route uses arrows. With $u$ the arrow from C to A and $v$ from C to B, the arrow across, from B to A, is $u - v$, and the dot product expands its squared length, bars meaning length:
+From 300, 450 and 355.35 m the rearranged law gives A = 41.70°, B = 86.30° and C = 52.00°, each found on its own. They add to 180.00°, as the angle sum requires ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). A sine could not do this: 52° and 128° share one.
+
+A second route uses arrows. With $u$ the arrow from C to A and $v$ from C to B, the arrow across, from B to A, is $u - v$. The dot product $u \cdot v$ multiplies the matching east and north parts of two arrows and adds the results. It expands the squared length of $u - v$, with bars meaning length:
 
 $$\lvert u - v\rvert^2 = \lvert u\rvert^2 + \lvert v\rvert^2 - 2\,u \cdot v$$
 
@@ -150,7 +162,11 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Python's math library supplies only cosine, sine and the square root. The distance takes two roads: the law, and a grid on which the landmarks sit at directions 20° and 72° from due east, their gap measured by Pythagoras, so the cosine of 52° is never taken. The area is half base times height, and again by Heron's rule from the three sides alone ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). The angles come back by halving an interval until the cosine matches.
+Python's math library supplies only cosine, sine and the square root.
+
+The distance takes two roads: the law, and a grid. On the grid the landmarks sit at directions 20° and 72° from due east, and Pythagoras measures their gap, so the cosine of 52° is never taken.
+
+The area is half base times height, and again by Heron's rule from the three sides alone ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). The angles come back by halving an interval until the cosine matches.
 
 ### Python
 
@@ -342,6 +358,93 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the law for any three points on a flat plane, at any angle, plus two facts beside it.
+
+- The law: the side facing an angle, squared, is the other two squared and added, minus twice their product times the angle's cosine.
+- Three sides that close: the rearranged law's cosine is above −1 and below 1 exactly when each side is shorter than the other two together.
+- The arrow route: the dot product $u \cdot v$ is the two arrows' lengths times the cosine of the angle at C.
+- The numbers: at 90° the correction is 0, and sides of 300, 450 and 800 m ask for a cosine below −1.
+
+The decimals, the area, Heron's rule and the angles found by halving are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 60 lines</summary>
+
+```lean
+-- Law of cosines: in a flat plane, the square of the side facing an angle equals the sum of the squares of the two sides that form it, minus twice their product times the angle's cosine.
+import Mathlib.Geometry.Euclidean.Triangle
+import Mathlib.Analysis.InnerProductSpace.PiL2
+
+open EuclideanGeometry
+
+/-- The law of cosines. For any three points A, B, C on a flat plane, with sides
+a = CB and b = CA meeting at the corner C and c = AB the side facing C:
+c² = a² + b² − 2ab cos C. At a right angle the cosine is 0 and Pythagoras is left. -/
+theorem law_of_cosines (A B C : EuclideanSpace ℝ (Fin 2)) :
+    dist A B ^ 2 = dist C B ^ 2 + dist C A ^ 2
+      - 2 * dist C B * dist C A * Real.cos (∠ A C B) := by
+  have h := dist_sq_eq_dist_sq_add_dist_sq_sub_two_mul_dist_mul_dist_mul_cos_angle A C B
+  rw [dist_comm A C, dist_comm B C] at h
+  nlinarith [h]
+
+/-- Three sides that close. For positive lengths a, b, c, the cosine the rearranged law asks for,
+(a² + b² − c²) / (2ab), lies strictly between −1 and 1 exactly when each side is shorter than
+the other two together. -/
+theorem law_of_cosines_sss_range (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+    (-1 < (a ^ 2 + b ^ 2 - c ^ 2) / (2 * a * b) ∧ (a ^ 2 + b ^ 2 - c ^ 2) / (2 * a * b) < 1) ↔
+      (a < b + c ∧ b < a + c ∧ c < a + b) := by
+  have h2 : 0 < 2 * a * b := by positivity
+  rw [lt_div_iff₀ h2, div_lt_iff₀ h2]
+  constructor
+  · rintro ⟨h1, h3⟩
+    refine ⟨?_, ?_, ?_⟩
+    · nlinarith [sq_nonneg (a - b - c), sq_nonneg (a - b + c)]
+    · nlinarith [sq_nonneg (b - a - c), sq_nonneg (b - a + c)]
+    · nlinarith [sq_nonneg (c - a - b), sq_nonneg (c + a + b)]
+  · rintro ⟨h1, h3, h4⟩
+    constructor
+    · nlinarith [mul_pos (by linarith : 0 < a + b - c) (by linarith : 0 < a + b + c)]
+    · nlinarith [mul_pos (by linarith : 0 < c - a + b) (by linarith : 0 < c + a - b)]
+
+/-- The arrow route. With u the arrow from C to A and v the arrow from C to B, the dot product
+u · v equals |u| |v| cos C, the two lengths times the cosine of the angle between them. -/
+theorem dot_product_eq_mul_cos_angle (A B C : EuclideanSpace ℝ (Fin 2)) :
+    inner ℝ (A - C) (B - C) = dist C A * dist C B * Real.cos (∠ A C B) := by
+  rw [EuclideanGeometry.angle, dist_comm C A, dist_comm C B, dist_eq_norm, dist_eq_norm,
+    ← InnerProductGeometry.cos_angle_mul_norm_mul_norm]
+  simp only [vsub_eq_sub]
+  ring
+
+-- The survey: square the sightings and add.
+example : (300 : ℝ) ^ 2 + 450 ^ 2 = 292500 := by norm_num
+
+-- At a right angle the correction is 0 and Pythagoras is left.
+example : (300 : ℝ) ^ 2 + 450 ^ 2 - 2 * 300 * 450 * Real.cos (Real.pi / 2) = 292500 := by
+  rw [Real.cos_pi_div_two]; norm_num
+
+-- Sides of 300, 450 and 800 m ask for a cosine below −1, so no triangle exists.
+example : ((300 : ℝ) ^ 2 + 450 ^ 2 - 800 ^ 2) / (2 * 300 * 450) < -1 := by norm_num
+
+-- The same failure seen as sides: 800 is not shorter than 300 and 450 together.
+example : ¬ ((800 : ℝ) < 300 + 450) := by norm_num
+
+#print axioms law_of_cosines
+#print axioms law_of_cosines_sss_range
+#print axioms dot_product_eq_mul_cos_angle
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'law_of_cosines' depends on axioms: [propext, Classical.choice, Quot.sound]
+'law_of_cosines_sss_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dot_product_eq_mul_cos_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -375,6 +478,9 @@ The two outputs match line for line.
 
 ## What this builds on
 
+- [Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md): the right-triangle rule the proof runs on, and the answer the law gives at 90°.
+- [Sine, cosine and tangent](01-right-triangle-trigonometry.md): the ratios that turn the 300 m sighting into the height and the near piece.
+- [The unit circle](02-radians-and-the-unit-circle.md): cosine past 90°, where it turns negative and the correction adds.
 - [Trig identities](03-trig-identities.md): a sine squared plus a cosine squared makes 1, the step that collapses the algebra to the law.
 
 ## Where this goes next

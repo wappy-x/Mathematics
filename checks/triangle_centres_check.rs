@@ -6,7 +6,7 @@ fn dist(p: P, q: P) -> f64 { ((p.0 - q.0).powi(2) + (p.1 - q.1).powi(2)).sqrt() 
 fn side(p: P, u: P, v: P) -> f64 { // distance from p to the road u-v, signed:
     ((v.0 - u.0) * (p.1 - u.1) - (v.1 - u.1) * (p.0 - u.0)) / dist(u, v) // + on the triangle's side
 }
-fn zoom(f: &dyn Fn(P) -> f64) -> P { // road two: best point of a 21 x 21 grid, then a
+fn zoom(f: &dyn Fn(P) -> f64) -> P { // route two: best point of a 21 x 21 grid, then a
     let (mut x, mut y, mut w) = (0.0, 0.0, 40.0); // smaller grid round it, repeated
     for _ in 0..70 {
         let (mut best, mut fb) = ((x, y), f64::INFINITY);
@@ -20,7 +20,7 @@ fn zoom(f: &dyn Fn(P) -> f64) -> P { // road two: best point of a 21 x 21 grid, 
     }
     (x, y)
 }
-fn centres(a_: P, b_: P, c_: P) -> ((f64, f64, f64), P, P, P) { // road one: the formulas
+fn centres(a_: P, b_: P, c_: P) -> ((f64, f64, f64), P, P, P) { // route one: the formulas
     let (a, b, c) = (dist(b_, c_), dist(c_, a_), dist(a_, b_));
     let g = ((a_.0 + b_.0 + c_.0) / 3.0, (a_.1 + b_.1 + c_.1) / 3.0);
     let row = |q: P| (2.0 * (q.0 - a_.0), 2.0 * (q.1 - a_.1), q.0 * q.0 + q.1 * q.1 - a_.0 * a_.0 - a_.1 * a_.1);
@@ -68,7 +68,7 @@ fn main() {
     let svg = |p: P| format!("({:.2}, {:.2})", 80.0 + 22.0 * p.0, 178.0 - 22.0 * p.1);
     println!("figure, 1 km = 22 units: A {}, B {}, C {}, G {}, O {}, I {}, R {:.2}, r {:.2}",
              svg(fa), svg(fb), svg(fc), svg(g), svg(o), svg(i), 22.0 * dist(o, fa), 22.0 * k / s);
-    assert!(dist(g, g2) < 1e-6 && dist(o, o2) < 1e-6 && dist(i, i2) < 1e-6); // two roads each
+    assert!(dist(g, g2) < 1e-6 && dist(o, o2) < 1e-6 && dist(i, i2) < 1e-6); // two routes each
     assert!((r2 - k / s).abs() < 1e-6); // largest pond = area / half-perimeter
     let d3 = f3(o3);
     assert!(d3.iter().cloned().fold(f64::MIN, f64::max) - d3.iter().cloned().fold(f64::INFINITY, f64::min) < 1e-9);

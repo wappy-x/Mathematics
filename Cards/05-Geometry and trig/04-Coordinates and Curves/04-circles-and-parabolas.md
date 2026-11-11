@@ -76,13 +76,17 @@ Put the focus at (0, p) and the directrix at y = −p. For a point (x, y) above 
 
 $$x^2 + (y-p)^2 = (y+p)^2$$
 
-Expand both brackets. Each side carries $y^2$ and $p^2$; they cancel. What is left is $x^2 - 2py = 2py$, so $x^2 = 4py$. The 4 is the two cross terms, −2py and +2py, meeting across the equals sign. At P (40, 10) the distance to F is the square root of 1600 + 900, which is 50; the drop to the directrix is 10 + 40, also 50.
+Expand both brackets. Each side carries $y^2$ and $p^2$; they cancel. What is left is $x^2 - 2py = 2py$, so $x^2 = 4py$. The 4 is the two cross terms, −2py and +2py, meeting across the equals sign.
+
+At P (40, 10) the distance to F is the square root of 1600 + 900, which is 50; the drop to the directrix is 10 + 40, also 50.
 
 ### Step 3: read the parts back
 
 The maker knows width and depth, not focus. The rim at (40, 10) must satisfy $x^2 = 4py$: 1600 = 4p × 10, so 4p = 160, the equation is $x^2 = 160y$, and p = 40 cm.
 
-A circle given in expanded form is read by **completing the square**, adding the number that turns $y^2 - 80y$ into a perfect square ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)). Take $x^2 + y^2 - 80y - 900 = 0$. Since $(y - 40)^2 = y^2 - 80y + 1600$, add 1600 to both sides: $x^2 + (y-40)^2 = 2500$. The centre is (0, 40), the receiver; the radius is the square root of 2500, 50 cm. Both rim points lie on it.
+A circle given in expanded form is read by **completing the square**, adding the number that turns $y^2 - 80y$ into a perfect square ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)).
+
+Take $x^2 + y^2 - 80y - 900 = 0$. Since $(y - 40)^2 = y^2 - 80y + 1600$, add 1600 to both sides: $x^2 + (y-40)^2 = 2500$. The centre is (0, 40), the receiver; the radius is the square root of 2500, 50 cm. Both rim points lie on it.
 
 ### Step 4: why every ray reaches the focus
 
@@ -135,7 +139,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord; a **discriminant** $b^2 - 4c$ of 0 in $x^2 + bx + c = 0$ means one repeated root. The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord: a straight line joining two nearby points of the curve. A **discriminant** $b^2 - 4c$ of 0 in $x^2 + bx + c = 0$ means one repeated root. The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 ### Python
 
@@ -328,6 +332,169 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's three facts for every point of the flat plane, every positive radius and every nonzero focal length.
+
+- A point lies at distance $r$ from the centre $(h, k)$ exactly when $(x-h)^2 + (y-k)^2 = r^2$.
+- A point is as far from the focus $(h, k+p)$ as from the directrix $y = k - p$ exactly when $(x-h)^2 = 4p(y-k)$.
+- On $x^2 = 4py$, the line of points equally far from F and D meets the curve at P alone.
+- From P, that line makes the same angle with PF as with PD, so a ray falling along DP leaves along PF.
+- The card's own sums: 4p = 160 and p = 40, both 50 cm distances, $x^2 + (y-40)^2 = 2500$, the three points on the circle, and the zero discriminant.
+
+The bounced rays, the short chord, the three-point centre, the mistakes and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 132 lines</summary>
+
+```lean
+-- Circles and parabolas: in the flat plane, the points at distance r > 0 from a centre are exactly the solutions of (x-h)^2 + (y-k)^2 = r^2, the points equally far from a focus and a horizontal directrix are exactly the solutions of (x-h)^2 = 4p(y-k), and the line of points equally far from the focus and a curve point's foot on the directrix touches the parabola only there and makes equal angles with the two.
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Topology.MetricSpace.HausdorffDistance
+import Mathlib.Geometry.Euclidean.Angle.Unoriented.Affine
+
+open EuclideanGeometry
+
+theorem dist_vec2 (a b c d : ℝ) :
+    dist !₂[a, b] !₂[c, d] = Real.sqrt ((a - c) ^ 2 + (b - d) ^ 2) := by
+  rw [EuclideanSpace.dist_eq]
+  simp [Fin.sum_univ_two, Real.dist_eq, sq_abs]
+
+theorem dist_pt_eq (Q : EuclideanSpace ℝ (Fin 2)) (c d : ℝ) :
+    dist Q !₂[c, d] = Real.sqrt ((Q 0 - c) ^ 2 + (Q 1 - d) ^ 2) := by
+  rw [EuclideanSpace.dist_eq]
+  simp [Fin.sum_univ_two, Real.dist_eq, sq_abs]
+
+theorem infDist_line (x y c : ℝ) :
+    Metric.infDist !₂[x, y] {q : EuclideanSpace ℝ (Fin 2) | q 1 = c} = |y - c| := by
+  have hmem : !₂[x, c] ∈ {q : EuclideanSpace ℝ (Fin 2) | q 1 = c} := by simp
+  apply le_antisymm
+  · calc _ ≤ dist !₂[x, y] !₂[x, c] := Metric.infDist_le_dist_of_mem hmem
+      _ = |y - c| := by rw [dist_vec2]; simp [Real.sqrt_sq_eq_abs]
+  · rw [Metric.le_infDist ⟨_, hmem⟩]
+    intro q hq
+    simp only [Set.mem_ofPred_eq] at hq
+    rw [dist_comm, dist_pt_eq, ← hq, ← Real.sqrt_sq_eq_abs]
+    apply Real.sqrt_le_sqrt
+    simp
+    nlinarith [sq_nonneg (q 0 - x)]
+
+#print axioms dist_vec2
+#print axioms dist_pt_eq
+#print axioms infDist_line
+
+/-- The parabola as a distance rule. In the flat plane with a square grid, take a nonzero focal
+length p, a focus at (h, k + p) and a directrix, the grid line y = k - p. A point (x, y) is
+exactly as far from the focus as from the directrix if and only if (x - h)^2 = 4p(y - k).
+With the vertex at the origin (h = k = 0) this is x^2 = 4py. -/
+theorem parabola_equidistant_iff_equation {p : ℝ} (hp : p ≠ 0) (h k x y : ℝ) :
+    dist !₂[x, y] !₂[h, k + p] =
+        Metric.infDist !₂[x, y] {q : EuclideanSpace ℝ (Fin 2) | q 1 = k - p} ↔
+      (x - h) ^ 2 = 4 * p * (y - k) := by
+  rw [dist_vec2, infDist_line, ← Real.sqrt_sq_eq_abs,
+    Real.sqrt_inj (by positivity) (by positivity)]
+  constructor <;> intro H <;> linarith
+
+/-- The circle as a distance rule. In the flat plane with a square grid, for a positive radius r,
+a point (x, y) lies at distance r from the centre (h, k) if and only if
+(x - h)^2 + (y - k)^2 = r^2. -/
+theorem circle_iff_equation {r : ℝ} (hr : 0 < r) (h k x y : ℝ) :
+    !₂[x, y] ∈ Metric.sphere !₂[h, k] r ↔ (x - h) ^ 2 + (y - k) ^ 2 = r ^ 2 := by
+  rw [Metric.mem_sphere, dist_vec2]
+  constructor
+  · intro H
+    rw [← H, Real.sq_sqrt (by positivity)]
+  · intro H
+    rw [H, Real.sqrt_sq hr.le]
+
+/-- Why every ray reaches the focus. Take the parabola x^2 = 4py with p nonzero, focus F = (0, p),
+a point P = (x₀, x₀^2/(4p)) on it, and D = (x₀, -p), P's foot on the directrix. The line of points
+equally far from F and D (the tangent at P) meets the parabola at P alone, and from P it makes
+the same angle with PF as with PD, so a ray falling along DP bounces off along PF. -/
+theorem parabola_tangent_touches_once_and_halves_angle {p : ℝ} (hp : p ≠ 0) (x₀ : ℝ) :
+    {Q : EuclideanSpace ℝ (Fin 2) |
+        dist Q !₂[0, p] = dist Q !₂[x₀, -p] ∧ Q 0 ^ 2 = 4 * p * Q 1} =
+        {!₂[x₀, x₀ ^ 2 / (4 * p)]} ∧
+      ∀ Q : EuclideanSpace ℝ (Fin 2), dist Q !₂[0, p] = dist Q !₂[x₀, -p] →
+        ∠ !₂[0, p] !₂[x₀, x₀ ^ 2 / (4 * p)] Q = ∠ !₂[x₀, -p] !₂[x₀, x₀ ^ 2 / (4 * p)] Q := by
+  have hc : 4 * p * (x₀ ^ 2 / (4 * p)) = x₀ ^ 2 := by field_simp
+  have key : ∀ Q : EuclideanSpace ℝ (Fin 2), dist Q !₂[0, p] = dist Q !₂[x₀, -p] →
+      (Q 0 - 0) ^ 2 + (Q 1 - p) ^ 2 = (Q 0 - x₀) ^ 2 + (Q 1 - -p) ^ 2 := by
+    intro Q hQ
+    rw [dist_pt_eq, dist_pt_eq, Real.sqrt_inj (by positivity) (by positivity)] at hQ
+    exact hQ
+  refine ⟨?_, ?_⟩
+  · ext Q
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]
+    constructor
+    · rintro ⟨h1, h2⟩
+      have h1 := key Q h1
+      have ha : (Q 0 - x₀) ^ 2 = 0 := by linear_combination h2 - h1
+      have ha' : Q 0 = x₀ := by
+        have := pow_eq_zero_iff (n := 2) (by norm_num) |>.mp ha
+        linarith
+      have hb : Q 1 = x₀ ^ 2 / (4 * p) := by
+        field_simp
+        rw [← ha']
+        linarith
+      ext i
+      fin_cases i
+      · simpa using ha'
+      · simpa using hb
+    · rintro rfl
+      refine ⟨?_, ?_⟩
+      · rw [dist_pt_eq, dist_pt_eq]
+        congr 1
+        simp
+        linear_combination (-1) * hc
+      · simp
+        linear_combination (-1) * hc
+  · intro Q hQ
+    have hQ' := key Q hQ
+    have h1 : inner ℝ (!₂[0, p] -ᵥ !₂[x₀, x₀ ^ 2 / (4 * p)]) (Q -ᵥ !₂[x₀, x₀ ^ 2 / (4 * p)]) =
+        inner ℝ (!₂[x₀, -p] -ᵥ !₂[x₀, x₀ ^ 2 / (4 * p)]) (Q -ᵥ !₂[x₀, x₀ ^ 2 / (4 * p)]) := by
+      simp [PiLp.inner_apply, Fin.sum_univ_two]
+      linear_combination (-1/2) * hQ' + (-1/2) * hc
+    have h2 : ‖!₂[0, p] -ᵥ !₂[x₀, x₀ ^ 2 / (4 * p)]‖ =
+        ‖!₂[x₀, -p] -ᵥ !₂[x₀, x₀ ^ 2 / (4 * p)]‖ := by
+      simp [EuclideanSpace.norm_eq, Fin.sum_univ_two]
+      congr 1
+      linear_combination (-1) * hc
+    simp only [EuclideanGeometry.angle, InnerProductGeometry.angle, h1, h2]
+
+-- The dish: rim point (40, 10) on x^2 = 4py gives 4p = 160, so p = 40.
+example : (40 : ℤ) ^ 2 = 160 * 10 := by norm_num
+example : (4 : ℤ) * 40 = 160 := by norm_num
+-- Rim to receiver: 40^2 + 30^2 = 50^2; rim to directrix: 10 + 40 = 50.
+example : (40 : ℤ) ^ 2 + (40 - 10) ^ 2 = 50 ^ 2 := by norm_num
+example : (10 : ℤ) + 40 = 50 := by norm_num
+-- The circle x^2 + y^2 - 80y = 900 becomes x^2 + (y - 40)^2 = 2500 = 50^2 after adding 1600.
+example : (900 : ℤ) + 1600 = 2500 ∧ (2500 : ℤ) = 50 ^ 2 := by norm_num
+-- Both rim points and (30, 80) lie on it.
+example : (40 : ℤ) ^ 2 + 10 ^ 2 - 80 * 10 - 900 = 0 := by norm_num
+example : (-40 : ℤ) ^ 2 + 10 ^ 2 - 80 * 10 - 900 = 0 := by norm_num
+example : (30 : ℤ) ^ 2 + 80 ^ 2 - 80 * 80 - 900 = 0 := by norm_num
+-- The tangent at P meets x^2 = 160y in x^2 - 80x + 1600 = 0, whose discriminant is 0.
+example : (-80 : ℤ) ^ 2 - 4 * 1600 = 0 := by norm_num
+
+#print axioms parabola_equidistant_iff_equation
+#print axioms circle_iff_equation
+#print axioms parabola_tangent_touches_once_and_halves_angle
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'dist_vec2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dist_pt_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'infDist_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+'parabola_equidistant_iff_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'circle_iff_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'parabola_tangent_touches_once_and_halves_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

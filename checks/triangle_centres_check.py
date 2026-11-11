@@ -5,13 +5,13 @@ def dist(p, q): return ((p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2) ** 0.5
 def side(p, u, v):                        # distance from p to the road u-v,
     cr = (v[0] - u[0]) * (p[1] - u[1]) - (v[1] - u[1]) * (p[0] - u[0])
     return cr / dist(u, v)                # signed: positive on the triangle's side
-def zoom(f, x=0.0, y=0.0, w=40.0):        # road two: best point of a 21 x 21 grid,
+def zoom(f, x=0.0, y=0.0, w=40.0):        # route two: best point of a 21 x 21 grid,
     for _ in range(70):                   # then a smaller grid round it, repeated
         pts = [(x + w * i / 10, y + w * j / 10) for i in range(-10, 11) for j in range(-10, 11)]
         x, y = min(pts, key=f)
         w *= 0.7
     return (x, y)
-def centres(A, B, C):                     # road one: the formulas on the card
+def centres(A, B, C):                     # route one: the formulas on the card
     a, b, c = dist(B, C), dist(C, A), dist(A, B)
     G = ((A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3)
     (p1, q1, k1), (p2, q2, k2) = [(2 * (Q[0] - A[0]), 2 * (Q[1] - A[1]),  # perpendicular
@@ -53,7 +53,7 @@ print(f"obtuse: midpoint of AB {pt(M3)} to farms {three(dist(M3, F) for F in (A3
 svg = lambda p: f"({80 + 22 * p[0]:.2f}, {178 - 22 * p[1]:.2f})"
 print(f"figure, 1 km = 22 units: A {svg(A)}, B {svg(B)}, C {svg(C)}, G {svg(G)}, O {svg(O)}, I {svg(I)}, "
       f"R {22 * dist(O, A):.2f}, r {22 * K / s:.2f}")
-assert dist(G, G2) < 1e-6 and dist(O, O2) < 1e-6 and dist(I, I2) < 1e-6   # two roads each
+assert dist(G, G2) < 1e-6 and dist(O, O2) < 1e-6 and dist(I, I2) < 1e-6   # two routes each
 assert abs(min(roads(I2)) - K / s) < 1e-6                 # largest pond = area / half-perimeter
 assert max(dist(O3, F) for F in (A3, B3, C3)) - min(dist(O3, F) for F in (A3, B3, C3)) < 1e-9
 assert dist(O3, O4) < 1e-6 and side(O3, A3, B3) < 0      # obtuse: the well leaves the triangle

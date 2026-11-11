@@ -14,7 +14,7 @@ Nothing in that count needs the layer to be round. Any solid that keeps one cros
 
 **A solid whose every slice matches its base holds the base's area times its height; standing upright, its walls unroll into one rectangle as wide as the base's perimeter.**
 
-**What kind of fact this is:** a theorem. Why it works proves the upright case from two rules for volume: a box holds length times width times height, and pieces that do not overlap add. The leaning case rests on Cavalieri's principle, proved on a later card.
+**What kind of fact this is:** a theorem. Why it works proves the upright case from two rules for volume: a box holds length times width times height, and pieces that do not overlap add. The leaning case rests on Cavalieri's principle (equal slices at every height, equal volumes), proved on [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md).
 
 ### The picture: the tank as three one-metre slices
 
@@ -32,7 +32,7 @@ $$V = B\,h \qquad L = P\,h \qquad S = P\,h + 2B$$
 
 **Read it aloud:** the volume is one slice's area times the height; the walls are the way round times the height; the surface area adds the two ends.
 
-For a cylinder of radius $r$ (centre to rim), the circle card ([Circles](01-circle-circumference-and-area.md)) gives $B = \pi r^2$ and $P = 2\pi r$, where $\pi$ (pi) is every circle's circumference divided by its diameter, about 3.141593.
+For a cylinder of radius $r$ (centre to rim), the circle card ([Circles](01-circle-circumference-and-area.md)) gives $B = \pi r^2$ and $P = 2\pi r$. Here $\pi$ (pi) is every circle's circumference divided by its diameter, about 3.141593.
 
 $$V = \pi r^2 h \qquad L = 2\pi r\,h \qquad S = 2\pi r\,h + 2\pi r^2$$
 
@@ -89,7 +89,7 @@ At every height a leaning prism's slice is the upright prism's, shifted sideways
 
 The box's four walls are rectangles 2 m wide and 3 m tall. Side by side they make one rectangle 8 m (the way round the floor) by 3 m: 24 square metres. Floor and lid add 4 each: 32 square metres.
 
-The tank's wall curves only one way; up the wall it is straight. Cut down one vertical line and it unrolls flat, like a label off a tin, without stretching: a rectangle 3 m tall and 6.28 m wide, once round the rim, so 18.85 square metres. Lid and floor are circles of 3.14 square metres each: 25.13 square metres in all.
+The tank's wall curves only one way; up the wall it is straight. Cut down one vertical line and it unrolls flat, like a label off a tin, without stretching. It makes a rectangle 3 m tall and 6.28 m wide, once round the rim, so 18.85 square metres. Lid and floor are circles of 3.14 square metres each: 25.13 square metres in all.
 
 ### The picture: the tank's surface, laid flat
 
@@ -99,7 +99,7 @@ Scale 1 m = 30 units. The shaded wall's left and right edges were the single cut
 
 ### Step 4: a cylinder ends a run of prisms
 
-Put a square inside the tank's circle, corners on the rim, and another outside, sides touching it. Prisms on them hold 6000 and 12000 litres, bracketing the tank. Double the sides again and again: each new corner goes on the rim, halfway between two old ones. Each new side is the long side of a right-angled triangle whose short sides are half the old side and the gap from its middle out to the rim ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)), so no π enters.
+Put a square inside the tank's circle, corners on the rim, and another outside, sides touching it. Prisms on them hold 6000 and 12000 litres, bracketing the tank. Double the sides again and again: each new corner goes on the rim, halfway between two old ones. Each new side is the long side of a right-angled triangle. Its short sides are half the old side and the gap from the old side's middle out to the rim ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)), so no π enters.
 
 At 16 sides the prisms hold 9184.40 to 9547.79 litres; at 4096, 9424.77 to 9424.78. Their walls close in on 18.849556 square metres. Every prism obeys $V = B\,h$ and $L = P\,h$, so the cylinder they close in on does too. Book XII of Euclid's *Elements* doubles the sides of an inside square the same way to compare cylinders.
 
@@ -326,6 +326,155 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the volume rule for any solid whose slices all match its base, and the cylinder formula for every size.
+
+- A solid holds $B\,h$ when its slice at every height from 0 to $h$ matches the base, and it has nothing above or below. The slices may shift sideways or turn, so a leaning prism counts.
+- A cylinder of radius $r$ and height $h$ holds $\pi r^2 h$.
+- A cylinder twice as wide and just as tall holds four times as much. So the width put in for the radius gives four times the truth.
+- The box sums hold: 1000 litre cubes to the cubic metre, 12000 litres in the box, and 32 square metres of skin.
+- Counting litre cubes on the tank's floor gives 8280 wholly inside and 10320 touching, as Step 1 says.
+
+The walls and surface area, the decimal litres, the millilitre counts and the prisms closing in are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 120 lines</summary>
+
+```lean
+-- Prisms and cylinders: a solid whose every horizontal slice is a congruent copy of its base, from height 0 up to height h, has volume equal to the base's area times h, and so a cylinder of radius r and height h holds π r² h.
+import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
+import Mathlib.MeasureTheory.Measure.Prod
+import Mathlib.Data.Int.Interval
+import Mathlib.Data.Finset.Prod
+import Mathlib.Analysis.Normed.Affine.MazurUlam
+import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+
+open MeasureTheory Metric Set
+open scoped Real ENNReal
+
+/-! Space is modelled as `EuclideanSpace ℝ (Fin 2) × ℝ`: a point of the flat base plane, and a
+height measured square on (at right angles) to that plane. Its `volume` is the product of area
+on the plane and length on the height axis, which is ordinary volume in three dimensions.
+The horizontal slice of a solid `S` at height `z` is the set of base-plane points `p` with
+`(p, z) ∈ S`. -/
+
+/-- A distance-keeping map of the plane does not change the area of any set. -/
+theorem volume_image_isometryEquiv (e : EuclideanSpace ℝ (Fin 2) ≃ᵢ EuclideanSpace ℝ (Fin 2))
+    (B : Set (EuclideanSpace ℝ (Fin 2))) : volume (e '' B) = volume B := by
+  set g := e.symm
+  set f := g.trans (IsometryEquiv.addRight (g 0)).symm
+  have hf0 : f 0 = 0 := by simp [f]
+  set L := f.toRealLinearIsometryEquivOfMapZero hf0
+  have hg : ∀ x, g x = L x + g 0 := by
+    intro x
+    simp [L, IsometryEquiv.coe_toRealLinearIsometryEquivOfMapZero, f]
+  have himg : e '' B = L ⁻¹' ((· + g 0) ⁻¹' B) := by
+    rw [show ⇑e '' B = ⇑e.symm ⁻¹' B from e.toEquiv.image_eq_preimage_symm B]
+    ext x
+    show g x ∈ B ↔ L x + g 0 ∈ B
+    rw [hg]
+  rw [himg, (LinearIsometryEquiv.measurePreserving L).measure_preimage_emb
+    L.toHomeomorph.measurableEmbedding, measure_preimage_add_right]
+
+#print axioms volume_image_isometryEquiv
+
+/-- Volume is cross-section times height. Take a base `B` in the plane and a solid `S` whose
+horizontal slice at every height from 0 to h is a congruent copy of `B` (moved by some
+distance-keeping map of the plane, which may shift it sideways, so leaning prisms count), and
+which has nothing outside those heights. Then the solid holds the base's area times the
+height h, measured square on. -/
+theorem volume_eq_base_area_mul_height
+    (B : Set (EuclideanSpace ℝ (Fin 2))) (S : Set (EuclideanSpace ℝ (Fin 2) × ℝ)) (h : ℝ)
+    (hS : MeasurableSet S)
+    (hslice : ∀ z ∈ Icc (0 : ℝ) h,
+      ∃ e : EuclideanSpace ℝ (Fin 2) ≃ᵢ EuclideanSpace ℝ (Fin 2), {p | (p, z) ∈ S} = e '' B)
+    (hout : ∀ z ∉ Icc (0 : ℝ) h, {p | (p, z) ∈ S} = ∅) :
+    volume S = volume B * ENNReal.ofReal h := by
+  rw [Measure.volume_eq_prod, Measure.prod_apply_symm hS]
+  have hz : ∀ z, volume ((fun x => (x, z)) ⁻¹' S)
+      = (Icc (0 : ℝ) h).indicator (fun _ => volume B) z := by
+    intro z
+    by_cases hzI : z ∈ Icc (0 : ℝ) h
+    · obtain ⟨e, he⟩ := hslice z hzI
+      rw [indicator_of_mem hzI, ← volume_image_isometryEquiv e B, ← he]
+      rfl
+    · rw [indicator_of_notMem hzI]
+      have := hout z hzI
+      change volume {p | (p, z) ∈ S} = 0
+      rw [this, measure_empty]
+  simp_rw [hz]
+  rw [lintegral_indicator_const measurableSet_Icc, Real.volume_Icc, sub_zero]
+
+/-- The cylinder. An upright cylinder whose base is a disc of radius r (centre to rim) and whose
+height is h holds π r² h: base area π r² times height. -/
+theorem cylinder_volume_eq_pi_mul_radius_sq_mul_height
+    (c : EuclideanSpace ℝ (Fin 2)) (r h : ℝ) (hr : 0 ≤ r) :
+    volume (closedBall c r ×ˢ Icc (0 : ℝ) h) = ENNReal.ofReal (π * r ^ 2 * h) := by
+  rw [Measure.volume_eq_prod, Measure.prod_prod, EuclideanSpace.volume_closedBall_fin_two, Real.volume_Icc,
+    sub_zero, ← ENNReal.ofReal_pow hr, ← ENNReal.ofReal_mul (by positivity),
+    ← ENNReal.ofReal_mul (by positivity)]
+  congr 1
+  ring
+
+/-- The usual mistake, measured. A cylinder twice as wide but just as tall holds four times
+as much, because the radius is squared: putting the width in for the radius gives four times
+the true volume. -/
+theorem cylinder_double_radius_four_times_volume
+    (c : EuclideanSpace ℝ (Fin 2)) (r h : ℝ) :
+    volume (closedBall c (2 * r) ×ˢ Icc (0 : ℝ) h)
+      = 4 * volume (closedBall c r ×ˢ Icc (0 : ℝ) h) := by
+  rcases lt_or_ge r 0 with hr | hr
+  · rw [closedBall_eq_empty.mpr (by linarith), closedBall_eq_empty.mpr hr]
+    simp
+  · rw [cylinder_volume_eq_pi_mul_radius_sq_mul_height c (2 * r) h (by linarith),
+      cylinder_volume_eq_pi_mul_radius_sq_mul_height c r h hr,
+      show (4 : ℝ≥0∞) = ENNReal.ofReal 4 by norm_num, ← ENNReal.ofReal_mul (by norm_num)]
+    congr 1
+    ring
+
+-- A cubic metre holds 10 × 10 × 10 litre cubes.
+example : 10 * 10 * 10 = 1000 := by decide
+-- The square box the tank fits in, 2 m by 2 m by 3 m: 20 × 20 = 400 litre cubes a layer.
+example : 20 * 20 = 400 := by decide
+-- 30 layers, each 10 cm deep, fill it: 12000 litres.
+example : 400 * 30 = 12000 := by decide
+-- The box's walls unroll into one rectangle 8 m (once round the floor) by 3 m: 24 square metres.
+example : (2 + 2 + 2 + 2) * 3 = 24 := by decide
+-- Floor and lid add 4 square metres each: 32 square metres in all.
+example : 24 + 2 * (2 * 2) = 32 := by decide
+-- Litre cubes on the tank's floor (radius 10 cube edges): 276 squares lie wholly inside the
+-- circle (farthest corner inside), and 30 layers give 8280 litres.
+example :
+    ((Finset.Ico (-10 : ℤ) 10 ×ˢ Finset.Ico (-10 : ℤ) 10).filter
+      (fun q : ℤ × ℤ => max (q.1 * q.1) ((q.1 + 1) * (q.1 + 1))
+        + max (q.2 * q.2) ((q.2 + 1) * (q.2 + 1)) ≤ 100)).card = 276 := by
+  decide +kernel
+example : 276 * 30 = 8280 := by decide
+-- 344 squares touch the circle (nearest corner inside), and 30 layers give 10320 litres.
+example :
+    ((Finset.Ico (-10 : ℤ) 10 ×ˢ Finset.Ico (-10 : ℤ) 10).filter
+      (fun q : ℤ × ℤ => min (q.1 * q.1) ((q.1 + 1) * (q.1 + 1))
+        + min (q.2 * q.2) ((q.2 + 1) * (q.2 + 1)) < 100)).card = 344 := by
+  decide +kernel
+example : 344 * 30 = 10320 := by decide
+
+#print axioms volume_eq_base_area_mul_height
+#print axioms cylinder_volume_eq_pi_mul_radius_sq_mul_height
+#print axioms cylinder_double_radius_four_times_volume
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'volume_image_isometryEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volume_eq_base_area_mul_height' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cylinder_volume_eq_pi_mul_radius_sq_mul_height' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cylinder_double_radius_four_times_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
