@@ -16,6 +16,8 @@ Same buoy, two pairs of numbers: (5, 3) one way, (4, -1) the other. Neither is m
 
 **A basis is a list of vectors that reaches every point with nothing spare; each point then has exactly one list of amounts against it, and every basis of the same space is the same length — that length is the dimension.**
 
+**What kind of fact this is:** a theorem, proved for the plane in Why it works and sketched in general in a fold; basis and dimension are definitions.
+
 ### The picture: two ways to the buoy
 
 ```mermaid
@@ -73,6 +75,13 @@ flowchart TD
   X -->|"not zero"| Bas["a basis: every point has exactly one pair of amounts"]
 ```
 
+### When it holds
+
+- **The list spans.** Every point must be some mix of the basis vectors. Steer by (1, 1) and (2, 2) and the cross-number is 0: both lie on the river, and the buoy has no address.
+- **The list is independent.** Nothing in it may be a mix of the others. Keep a spare third vector and the buoy has two addresses, (4, -1, 0) and (3, 0, 2).
+- **The list is in a fixed order.** The first amount goes with $b_1$, the second with $b_2$. Swap the amounts and you land on (-5, 3), not the buoy.
+- **Some finite list spans the space.** Otherwise there is no finite basis to count, and the swap argument in the fold does not apply.
+
 ---
 
 ## Why it works
@@ -117,13 +126,13 @@ A basis must be independent, so it cannot be three or longer; it must span, so i
 <details>
 <summary>The same argument, in general</summary>
 
-One lemma does it in any space: an independent list can never be longer than a spanning list. Swap the independent vectors into the spanning list one at a time, each throwing out a spanning vector it replaces; the list keeps spanning, so the swaps cannot run out. Two bases are each independent and each spanning, so each is at most as long as the other. Same length. The plane argument above is that lemma with numbers in it.
+One lemma (a helper fact proved on the way to a bigger one) does it in any space: an independent list can never be longer than a spanning list. Swap the independent vectors into the spanning list one at a time, each throwing out a spanning vector it replaces; the list keeps spanning, so the swaps cannot run out. Two bases are each independent and each spanning, so each is at most as long as the other. Same length. The plane argument above is that lemma with numbers in it.
 
 </details>
 
 ### The other route
 
-Stack the vectors as the columns of a matrix and all of this becomes one question: is that matrix invertible? The cross-number is then the determinant — the route taken properly on [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md).
+Stack the vectors as the columns of a matrix and all of this becomes one question: is that matrix invertible, so that its effect can be undone? The cross-number is then the determinant — the route taken properly on [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md).
 
 ---
 
@@ -363,6 +372,128 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the first two facts for every space a finite list spans, and the count of two for the plane.
+
+- A list that spans and is independent gives every point exactly one list of amounts: one address.
+- Any two such lists for one space have the same length, and that length is the dimension.
+- Every basis of the plane has exactly two vectors.
+- It also re-checks the card's sums: the cross-numbers, the solve, the buoy, the finish marker, the mistakes and the Try changing points.
+
+The cross-number rule's division, the chart rows and the printed output are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 95 lines</summary>
+
+```lean
+-- Basis and dimension: in any real vector space, a list of vectors that spans and has nothing spare gives every vector exactly one list of amounts, every two such lists have the same length and that length is the dimension, every basis of the plane has exactly two vectors, and the card's buoy numbers come out as it says.
+import Mathlib.LinearAlgebra.Dimension.Finrank
+import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+import Mathlib.LinearAlgebra.LinearIndependent.Defs
+import Mathlib.LinearAlgebra.Span.Defs
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.NormNum
+import Mathlib.LinearAlgebra.Basis.Basic
+import Mathlib.LinearAlgebra.Dimension.Constructions
+import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+
+/-! A list of `n` vectors in an order is a function `b : Fin n → V`: `b 0` is the first
+vector, `b 1` the second, and so on, so the order is built in. The list "spans the space" when
+the span of its vectors is everything (`Submodule.span ℝ (Set.range b) = ⊤`), and "nothing in
+it is spare" is Mathlib's `LinearIndependent ℝ b`. A point of the plane is a list of two real
+numbers, `Fin 2 → ℝ`, and `![5, 3]` is the pair (5, 3). Mathlib's `Module.finrank ℝ V` is the
+dimension of `V`. -/
+
+/-- The count never changes. In any real vector space, take two finite lists of vectors, each
+in an order, each spanning the space and each with nothing spare. Then the two lists have the
+same length, and that length is the dimension of the space. -/
+theorem every_basis_has_the_same_length {V : Type*} [AddCommGroup V] [Module ℝ V] {m n : ℕ}
+    (b : Fin m → V) (hb_spans : Submodule.span ℝ (Set.range b) = ⊤)
+    (hb_indep : LinearIndependent ℝ b)
+    (b' : Fin n → V) (hb'_spans : Submodule.span ℝ (Set.range b') = ⊤)
+    (hb'_indep : LinearIndependent ℝ b') :
+    m = n ∧ Module.finrank ℝ V = n := by
+  classical
+  have hm : Module.finrank ℝ V = m := by
+    rw [Module.finrank_eq_card_basis (Module.Basis.mk hb_indep hb_spans.ge), Fintype.card_fin]
+  have hn : Module.finrank ℝ V = n := by
+    rw [Module.finrank_eq_card_basis (Module.Basis.mk hb'_indep hb'_spans.ge), Fintype.card_fin]
+  exact ⟨hm.symm.trans hn, hn⟩
+
+/-- One address per point. In any real vector space, if a finite list `b` of vectors, in an
+order, spans the space and has nothing spare, then every vector `v` is reached by exactly one
+list of amounts `c`: `c 0` of the first vector plus `c 1` of the second, and so on, lands on
+`v` for this `c` and for no other. -/
+theorem basis_gives_exactly_one_address {V : Type*} [AddCommGroup V] [Module ℝ V] {n : ℕ}
+    (b : Fin n → V) (h_spans : Submodule.span ℝ (Set.range b) = ⊤)
+    (h_indep : LinearIndependent ℝ b) (v : V) :
+    ∃! c : Fin n → ℝ, ∑ i, c i • b i = v := by
+  classical
+  have hv : v ∈ Submodule.span ℝ (Set.range b) := by rw [h_spans]; exact Submodule.mem_top
+  obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℝ).mp hv
+  refine ⟨c, hc, fun d hd => ?_⟩
+  have h0 : ∑ i, (d - c) i • b i = 0 := by
+    simp only [Pi.sub_apply, sub_smul, Finset.sum_sub_distrib, hc, hd, sub_self]
+  funext i
+  have := Fintype.linearIndependent_iff.mp h_indep (d - c) h0 i
+  simpa [sub_eq_zero] using this
+
+/-- Every basis of the plane has exactly two vectors: a finite list of points of the plane that
+spans the plane and has nothing spare has length 2, since one vector never spans it and three
+are never independent. -/
+theorem every_basis_of_the_plane_has_two_vectors {n : ℕ} (b : Fin n → (Fin 2 → ℝ))
+    (h_spans : Submodule.span ℝ (Set.range b) = ⊤) (h_indep : LinearIndependent ℝ b) :
+    n = 2 := by
+  classical
+  have h := Module.finrank_eq_card_basis (Module.Basis.mk h_indep h_spans.ge)
+  rw [Fintype.card_fin, Module.finrank_fin_fun] at h
+  exact h.symm
+
+-- The cross-numbers: river basis 1 × 1 − (-1) × 1 = 2, east-north basis 1, and (1, 1) with (2, 2) gives 0.
+example : (1 : ℤ) * 1 - (-1) * 1 = 2 ∧ (1 : ℤ) * 1 - 0 * 0 = 1 ∧ (1 : ℤ) * 2 - 2 * 1 = 0 := by
+  norm_num
+-- Step 3, the solve: x − y = 5 and x + y = 3; adding gives 2x = 8, so x = 4 and y = 3 − 4 = -1.
+example : (2 : ℤ) * 4 = 5 + 3 ∧ (3 : ℤ) - 4 = -1 ∧ (4 : ℤ) - (-1) = 5 ∧ (4 : ℤ) + (-1) = 3 := by
+  norm_num
+-- The buoy rebuilt from the river basis: 4 × (1, 1) − 1 × (-1, 1) = (5, 3).
+example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-1 : ℤ) • ![-1, 1] = ![5, 3] := by decide
+-- The buoy in the standard basis: 5 × (1, 0) + 3 × (0, 1) = (5, 3).
+example : (5 : ℤ) • (![1, 0] : Fin 2 → ℤ) + (3 : ℤ) • ![0, 1] = ![5, 3] := by decide
+-- The finish marker (0, 6): 3 downstream, 3 across.
+example : (3 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (3 : ℤ) • ![-1, 1] = ![0, 6] := by decide
+-- The mistakes: east-north numbers used as river coordinates land at (2, 8); the pair the
+-- other way round lands at (-5, 3); (2, 2) is twice (1, 1).
+example : (5 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (3 : ℤ) • ![-1, 1] = ![2, 8] := by decide
+example : (-1 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (4 : ℤ) • ![-1, 1] = ![-5, 3] := by decide
+example : (2 : ℤ) • (![1, 1] : Fin 2 → ℤ) = ![2, 2] := by decide
+-- A spare third vector (1, 0): two different addresses, (4, -1, 0) and (3, 0, 2), both reach the buoy.
+example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-1 : ℤ) • ![-1, 1] + (0 : ℤ) • ![1, 0] = ![5, 3] ∧
+    (3 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (0 : ℤ) • ![-1, 1] + (2 : ℤ) • ![1, 0] = ![5, 3] ∧
+    (![4, -1, 0] : Fin 3 → ℤ) ≠ ![3, 0, 2] := by decide
+-- Try changing: across vector (1, -1) has cross-number -2 and the buoy's address is (4, 1);
+-- the point (7, 1) has river address (4, -3).
+example : (1 : ℤ) * (-1) - 1 * 1 = -2 ∧
+    (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (1 : ℤ) • ![1, -1] = ![5, 3] := by decide
+example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-3 : ℤ) • ![-1, 1] = ![7, 1] := by decide
+
+#print axioms every_basis_has_the_same_length
+#print axioms basis_gives_exactly_one_address
+#print axioms every_basis_of_the_plane_has_two_vectors
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'every_basis_has_the_same_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'basis_gives_exactly_one_address' depends on axioms: [propext, Classical.choice, Quot.sound]
+'every_basis_of_the_plane_has_two_vectors' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to the two bases and the two points.
@@ -388,7 +519,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Choosing better axes.** Measuring along a natural grain — downstream and across, or with the wind and across it — is a change of basis, and the numbers get easier ([Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
-- **File and audio compression.** A sound clip is a vector with thousands of entries. Rewriting it in a basis where most coordinates land near zero, then discarding those, is most of a codec.
+- **File and audio compression.** A sound clip is a vector with thousands of entries. Rewriting it in a basis where most coordinates land near zero, then discarding those, is most of a codec, the program that shrinks the file and plays it back.
 - **Data with too many columns.** A spreadsheet of 200 measurements often holds a handful of independent directions. The dimension of the span says how many quantities it really records.
 - **Engineering.** The independent forces on a truss are a basis for every other force in it. Count them and you know how many to measure.
 
@@ -409,6 +540,8 @@ The two outputs match line for line.
 - [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map does to dimension — how many directions survive, how many are flattened.
 - [Gram-Schmidt](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): straightening any basis into one whose vectors are at right angles and one unit long.
 - [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): translating an address from one basis to another, both ways.
+
+The question this card leaves open: how do you turn an address in one basis into its address in another without solving from scratch each time?
 
 ---
 

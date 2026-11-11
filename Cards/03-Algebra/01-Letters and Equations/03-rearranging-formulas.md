@@ -16,6 +16,8 @@ The letter a formula hands you — the one sitting alone on one side — is call
 
 **A formula is one relationship between its letters, not one calculation, and rearranging it picks which letter it hands back.**
 
+**What kind of fact this is:** a method, justified in Why it works: doing the same thing to both sides keeps an equation true. The temperature rule itself is a definition: it is how the two scales are set against each other.
+
 ### The picture: the same two steps, forwards and backwards
 
 ```mermaid
@@ -38,7 +40,7 @@ $$F = 1.8C + 32$$
 
 **Read it aloud:** every Celsius degree is worth 1.8 Fahrenheit degrees, and the two scales start 32 apart, so multiply then add.
 
-The last two rows of the table are this shelf's taxi: $3 to start plus $2 a mile, so the fare is 3 + 2m, where $m$ is the miles.
+The last two rows of the table are this shelf's taxi: $3 to start (the flagfall) plus $2 a mile, so the fare is 3 + 2m, where $m$ is the miles.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -56,6 +58,13 @@ $$C = (F - 32) / 1.8$$
 **Read it aloud:** take off the 32 the scales start apart, then share what is left out at 1.8 Fahrenheit degrees per Celsius degree.
 
 The taxi behaves the same way. Make $m$ the subject and the meter reads backwards: m = (fare − 3) / 2. A $13.00 fare is 5 miles.
+
+### When it holds
+
+- **The same move on both sides.** Take 32 off one side only and the two sides stop being the same number. Every line after that is untrue.
+- **Steps undone in reverse order.** Divide by 1.8 before taking off the 32 and Chicago comes out at 10.78 degrees C, not 25.
+- **A number you divide by that is not zero.** If the 1.8 were zero, every Celsius reading would give the same 32 degrees F, and no way back would exist.
+- **A step with one undo.** A square root undoes a square, but a positive number has two square roots, one positive and one negative. The rug's radius takes the positive one, 1.9544 feet.
 
 ---
 
@@ -89,9 +98,13 @@ $C$ now stands by itself, so write it on the left: $C = (F - 32) / 1.8$. The bra
 <summary>The same three lines, with the move named each time</summary>
 
 $F = 1.8C + 32$ — the formula as given.
+
 $F - 32 = 1.8C + 32 - 32$ — take 32 off **both** sides. On the right, $+32 - 32$ is nothing, so the 32 goes.
+
 $F - 32 = 1.8C$ — tidy.
+
 $(F - 32) / 1.8 = 1.8C / 1.8$ — divide **both** sides by 1.8. On the right, multiplying by 1.8 and then dividing by 1.8 leaves $C$ alone.
+
 $(F - 32) / 1.8 = C$ — done. Flip the sides to read it forwards.
 
 </details>
@@ -100,6 +113,7 @@ $(F - 32) / 1.8 = C$ — done. Flip the sides to read it forwards.
 <summary>When the letter you want is squared, or raised to a power</summary>
 
 A square is undone by a square root ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). The area of a circle is 3.14159… × radius × radius. Make the radius the subject: radius = the square root of (area / 3.14159…). A round rug of area 12.00 square feet has a radius of 1.9544 feet, so it is a little under four feet across.
+
 Compound interest is the same move with a bigger power. A = P × (1 + r)^n, where P is the money put in, r the yearly rate, n the years and A the balance at the end. Solve it for the rate: r = (A / P)^(1/n) − 1, the n-th root undoing the n-th power. $100.00 that reached $162.89 in 10 years grew at 5.00% a year.
 
 </details>
@@ -325,6 +339,97 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three rearrangements true for every number, not only the ones the code tries.
+
+- A formula that multiplies by a number that is not zero, then adds another, says the same thing as its rearranged form.
+- F = 1.8C + 32 and C = (F − 32) / 1.8 are true for exactly the same temperatures.
+- A circle's radius cannot be negative, so it is the square root of (area / 3.14159…).
+- The by-hand numbers: 25 to 77 and back, the table, the taxi, and two of the mistakes.
+
+The rug, the interest rate, the hunting road and the rounded decimals are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 64 lines</summary>
+
+```lean
+-- Rearranging a formula: when a is not zero, F = a C + b and C = (F - b) / a say exactly the same thing, so Fahrenheit and Celsius convert both ways, and a circle's area gives back its radius as a square root because a radius cannot be negative.
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Tactic.NormNum
+
+/-- A formula is one relationship between its letters, and rearranging it picks which letter it
+hands back. If `F = a * C + b`, with a multiplier `a` that is not zero (so the multiplying has an
+undo), then taking `b` off both sides and dividing both sides by `a`, in that reverse order, makes
+`C` the subject: `C = (F - b) / a`. The two formulas hold for exactly the same pairs of numbers. -/
+theorem rearranged_formula_same_relationship (a b F C : ℝ) (ha : a ≠ 0) :
+    F = a * C + b ↔ C = (F - b) / a := by
+  constructor
+  · intro h
+    rw [h]
+    field_simp
+    ring
+  · intro h
+    rw [h]
+    field_simp
+    ring
+
+/-- The card's own formula. `F = 1.8 C + 32` turns Celsius into Fahrenheit, and rearranged,
+`C = (F - 32) / 1.8` turns Fahrenheit back into Celsius. Both are true for exactly the same
+temperatures. -/
+theorem celsius_from_fahrenheit (F C : ℝ) :
+    F = 1.8 * C + 32 ↔ C = (F - 32) / 1.8 := by
+  exact rearranged_formula_same_relationship 1.8 32 F C (by norm_num)
+
+/-- A square is undone by a square root, but only for a letter that cannot be negative.
+If a circle of radius `r` has area `A = π r²`, and `r` is a length (so `r ≥ 0`), then making the
+radius the subject gives `r = √(A / π)`. -/
+theorem radius_from_area (A r : ℝ) (hr : 0 ≤ r) (hA : A = Real.pi * r ^ 2) :
+    r = Real.sqrt (A / Real.pi) := by
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  have h : A / Real.pi = r ^ 2 := by
+    rw [hA]
+    field_simp
+  rw [h, Real.sqrt_sq hr]
+
+-- The card's 1.8 is exact: it is 9/5, so the examples below use 9/5.
+example : (1.8 : ℚ) = 9 / 5 := by norm_num
+-- Forwards: 1.8 × 25 = 45, then 45 + 32 = 77.
+example : (9 / 5 : ℚ) * 25 = 45 := by norm_num
+example : (45 : ℚ) + 32 = 77 := by norm_num
+-- Backwards: 77 − 32 = 45, then 45 / 1.8 = 25.
+example : (77 : ℚ) - 32 = 45 := by norm_num
+example : (45 : ℚ) / (9 / 5) = 25 := by norm_num
+-- The table and the plotted line: 0, 5, 10, 15, 20, 25 degrees C are 32, 41, 50, 59, 68, 77
+-- degrees F, and the rearranged formula brings each one back.
+example : ([0, 5, 10, 15, 20, 25] : List ℚ).map (fun c => 9 / 5 * c + 32)
+    = [32, 41, 50, 59, 68, 77] := by norm_num
+example : ([32, 41, 50, 59, 68, 77] : List ℚ).map (fun f => (f - 32) / (9 / 5))
+    = [0, 5, 10, 15, 20, 25] := by norm_num
+-- The taxi: 5 miles costs 3 + 2 × 5 = 13, and rearranged, a 13 dollar fare is (13 − 3) / 2 = 5 miles.
+example : (3 : ℕ) + 2 * 5 = 13 := by decide
+example : ((13 : ℚ) - 3) / 2 = 5 := by norm_num
+-- Undoing in the wrong order (divide first, then take off 32) does not give 25.
+example : (77 : ℚ) / (9 / 5) - 32 ≠ 25 := by norm_num
+-- Forgetting the flagfall: 13 / 2 is not 5 miles.
+example : (13 : ℚ) / 2 ≠ 5 := by norm_num
+
+#print axioms rearranged_formula_same_relationship
+#print axioms celsius_from_fahrenheit
+#print axioms radius_from_area
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rearranged_formula_same_relationship' depends on axioms: [propext, Classical.choice, Quot.sound]
+'celsius_from_fahrenheit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'radius_from_area' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program if a number comes out wrong, and these are pinned to Chicago's 77 degrees, so expect one to stop it.
@@ -368,6 +473,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Two equations, two unknowns](04-two-equations-two-unknowns.md): what to do when one formula is not enough to pin the letters down, and two of them are needed at once. Rearranging one of them to make a letter the subject is the first move.
+
+Left open: if both the $3 flagfall and the $2 a mile were unknown, one fare could not fix them both, so what would?
 
 ---
 

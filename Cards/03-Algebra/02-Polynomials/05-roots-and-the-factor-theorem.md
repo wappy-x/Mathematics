@@ -20,6 +20,8 @@ So the edges are the inputs that make the cubic come out zero — its roots ([Po
 
 **A root and a factor are one fact in two costumes: the polynomial comes out zero at r exactly when x - r divides it, and since every root uses up one bracket and a polynomial whose highest power is n has only n brackets to give, n is the ceiling on how many different roots it can have.**
 
+**What kind of fact this is:** two theorems, the factor theorem and the root ceiling, both proved on this card in Why it works.
+
 ### The picture: three crossings, and that is the lot
 
 ```mermaid
@@ -57,6 +59,13 @@ $$\text{a polynomial of degree } n \text{, not the flat zero, has at most } n \t
 | $x - r$ | the linear factor that root forces | x - 1, x - 2, x - 3 | — |
 | $q$ | the quotient: what is left after peeling one factor off | x^2 - 5x + 6 after peeling x - 1 | its degree is always one below $n$ |
 | $c$ | the remainder: the plain number left after dividing by x - r | 0 at r = 1, -24 at r = -1 | anything but zero and x - r is not a factor |
+
+### When it holds
+
+- **The polynomial is not the flat zero.** The flat zero comes out zero at every input, so no ceiling holds for it.
+- **Ordinary numbers, where a product is zero only when one factor is zero.** Step 2 turns on that fact. In clock arithmetic, which wraps round, two numbers that are not zero can multiply to zero ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)). There a polynomial can have more roots than its degree.
+- **Different roots, counted once each.** x^3 - 6x^2 + 9x - 4 peels off x - 1 twice, but it is zero at only 2 different numbers, 1 and 4. Count 1 twice and you report 3 roots for a cubic that has 2.
+- **Whole-number coefficients, for the root hunt only.** Then a whole-number root must divide the constant term, so the tank's cubic needs only the divisors of 6 tested. With fractions in the coefficients, that shortcut proves nothing.
 
 ---
 
@@ -109,6 +118,7 @@ Note the wording: **at most** n, not exactly n. Change the tank's volume from 6 
 <summary>Where to look for the first root</summary>
 
 Peeling needs a first root, and guessing is slow. If a whole number r is a root of the tank's cubic, then r^3 - 6r^2 + 11r = 6, and the left side is r times a whole number, so r divides 6 ([Divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md)). Eight candidates instead of infinitely many: -6, -3, -2, -1, 1, 2, 3, 6. The cubic at those is -504, -120, -60, -24, 0, 0, 0 and 60. Three hits, and they are the whole answer.
+
 This is the rational-root test, stripped to the case where the highest power has a plain 1 in front of it. The full version: a fraction in lowest terms can only be a root if its top divides the constant term and its bottom divides the number in front of the highest power.
 
 </details>
@@ -339,6 +349,108 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three general facts for every polynomial, and checks the tank's numbers exactly.
+
+- Dividing any polynomial p by x - r leaves the plain number p(r) as the remainder. That is Step 0.
+- The factor theorem: p(r) = 0 exactly when x - r divides p with nothing left over. It holds in clock arithmetic too.
+- The root ceiling: a polynomial of degree n, not the flat zero, has at most n different roots. This needs ordinary numbers, where a product is zero only when one factor is zero.
+- The tank's cubic is zero at 1, 2 and 3, and it equals (x - 1)(x - 2)(x - 3).
+- At -1 the cubic is -24. At the eight divisors of 6 it gives -504, -120, -60, -24, 0, 0, 0 and 60.
+- From -20 to 20, the tank's cubic is zero only at 1, 2 and 3. The volume-12 cubic is zero only at 4.
+- x^3 - 6x^2 + 9x - 4 equals (x - 1)(x - 1)(x - 4), yet it is zero only at 1 and 4.
+- On a 12-hour clock, x^2 - 1 is zero at 1, 5, 7 and 11: four roots for degree 2.
+
+The chart's decimals and the step-by-step division printouts are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 71 lines</summary>
+
+```lean
+-- Roots and factors: over any commutative ring, p(r) = 0 exactly when x - r divides p, and over numbers with no zero divisors a polynomial that is not zero has at most as many different roots as its degree.
+import Mathlib.Algebra.Polynomial.Roots
+import Mathlib.Algebra.Polynomial.Div
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.Int.Interval
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+
+open Polynomial
+
+/-- The root ceiling. Work in numbers where a product is zero only when a factor is zero
+(a commutative ring with no zero divisors, such as the whole numbers, fractions or reals).
+A polynomial p that is not the flat zero, with degree n, has at most n different roots:
+any finite set of different numbers that all make p come out zero has at most n members. -/
+theorem polynomial_of_degree_n_has_at_most_n_roots {R : Type*} [CommRing R] [IsDomain R]
+    (p : R[X]) (hp : p ≠ 0) (S : Finset R) (hS : ∀ r ∈ S, p.eval r = 0) :
+    S.card ≤ p.natDegree := by
+  classical
+  calc S.card ≤ p.roots.toFinset.card :=
+        Finset.card_le_card (fun r hr => by
+          rw [Multiset.mem_toFinset, mem_roots hp]
+          exact hS r hr)
+    _ ≤ Multiset.card p.roots := Multiset.toFinset_card_le _
+    _ ≤ p.natDegree := card_roots' p
+
+/-- The factor theorem. A polynomial p comes out zero at r exactly when the bracket x - r
+divides it with nothing left over: p(x) = (x - r) q(x) for some polynomial q. -/
+theorem root_iff_x_minus_r_is_a_factor {R : Type*} [CommRing R] (p : R[X]) (r : R) :
+    p.eval r = 0 ↔ ∃ q : R[X], p = (X - C r) * q := by
+  exact (dvd_iff_isRoot (a := r) (p := p)).symm
+
+/-- The remainder theorem (Step 0). Dividing p by x - r leaves a plain number, and that
+number is p(r): p(x) = (x - r) q(x) + p(r) for some polynomial q. -/
+theorem dividing_by_x_minus_r_leaves_p_of_r {R : Type*} [CommRing R] (p : R[X]) (r : R) :
+    ∃ q : R[X], p = (X - C r) * q + C (p.eval r) := by
+  refine ⟨p /ₘ (X - C r), ?_⟩
+  rw [← modByMonic_X_sub_C_eq_C_eval, add_comm]
+  exact (modByMonic_add_div p (q := X - C r)).symm
+
+-- The tank's cubic x^3 - 6x^2 + 11x - 6 comes out 0 at 1, 2 and 3.
+example : (X ^ 3 - 6 * X ^ 2 + 11 * X - 6 : ℤ[X]).eval 1 = 0 ∧
+    (X ^ 3 - 6 * X ^ 2 + 11 * X - 6 : ℤ[X]).eval 2 = 0 ∧
+    (X ^ 3 - 6 * X ^ 2 + 11 * X - 6 : ℤ[X]).eval 3 = 0 := by norm_num
+-- Peeling: the cubic is (x - 1)(x^2 - 5x + 6), and x^2 - 5x + 6 = (x - 2)(x - 3).
+example : (X ^ 3 - 6 * X ^ 2 + 11 * X - 6 : ℤ[X]) = (X - 1) * (X ^ 2 - 5 * X + 6) := by ring
+example : (X ^ 2 - 5 * X + 6 : ℤ[X]) = (X - 2) * (X - 3) := by ring
+example : (X ^ 3 - 6 * X ^ 2 + 11 * X - 6 : ℤ[X]) = (X - 1) * (X - 2) * (X - 3) := by ring
+-- The edges 1, 2, 3: sum 6, pairwise products 11, volume 6.
+example : (1 + 2 + 3 : ℤ) = 6 ∧ (1 * 2 + 1 * 3 + 2 * 3 : ℤ) = 11 ∧ (1 * 2 * 3 : ℤ) = 6 := by decide
+-- The cubic at -1 is -24 (so x + 1 is not a factor), and at 4 it is 6.
+example : (X ^ 3 - 6 * X ^ 2 + 11 * X - 6 : ℤ[X]).eval (-1) = -24 ∧
+    (X ^ 3 - 6 * X ^ 2 + 11 * X - 6 : ℤ[X]).eval 4 = 6 := by norm_num
+-- At the divisors of 6, the cubic is -504, -120, -60, -24, 0, 0, 0 and 60.
+example : [-6, -3, -2, -1, 1, 2, 3, 6].map (fun x : ℤ => x ^ 3 - 6 * x ^ 2 + 11 * x - 6) =
+    [-504, -120, -60, -24, 0, 0, 0, 60] := by decide
+-- The sweep from -20 to 20: the tank's cubic is zero only at 1, 2, 3.
+example : ∀ x ∈ Finset.Icc (-20 : ℤ) 20,
+    (x ^ 3 - 6 * x ^ 2 + 11 * x - 6 = 0 ↔ x = 1 ∨ x = 2 ∨ x = 3) := by decide
+-- Volume 12: x^3 - 6x^2 + 11x - 12 is zero only at 4 in the sweep.
+example : ∀ x ∈ Finset.Icc (-20 : ℤ) 20, (x ^ 3 - 6 * x ^ 2 + 11 * x - 12 = 0 ↔ x = 4) := by
+  decide
+-- The repeated root: x^3 - 6x^2 + 9x - 4 = (x - 1)(x - 1)(x - 4), zero only at 1 and 4.
+example : (X ^ 3 - 6 * X ^ 2 + 9 * X - 4 : ℤ[X]) = (X - 1) * (X - 1) * (X - 4) := by ring
+example : ∀ x ∈ Finset.Icc (-20 : ℤ) 20, (x ^ 3 - 6 * x ^ 2 + 9 * x - 4 = 0 ↔ x = 1 ∨ x = 4) := by
+  decide
+-- Clock arithmetic breaks the ceiling: on a 12-hour clock, x^2 - 1 (degree 2) has 4 roots.
+example : ∀ x : ZMod 12, (x ^ 2 - 1 = 0 ↔ x = 1 ∨ x = 5 ∨ x = 7 ∨ x = 11) := by decide
+
+#print axioms polynomial_of_degree_n_has_at_most_n_roots
+#print axioms root_iff_x_minus_r_is_a_factor
+#print axioms dividing_by_x_minus_r_leaves_p_of_r
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'polynomial_of_degree_n_has_at_most_n_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'root_iff_x_minus_r_is_a_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dividing_by_x_minus_r_leaves_p_of_r' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to the tank.
@@ -385,6 +497,8 @@ The two outputs match line for line.
 
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): peeling factors off a polynomial is the same move as pulling primes out of a whole number.
 - [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): what it takes to turn "at most n" into "exactly n".
+
+The cubic for a volume of 12 has degree 3 but only one root, 4. Whether its missing roots live somewhere beyond the ordinary number line is the question this card leaves open.
 
 ---
 

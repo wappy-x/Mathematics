@@ -18,6 +18,8 @@ There is a tidier way to say that, and it is the one everyone uses. One bag of A
 
 **A list of vectors is linearly independent when the only mix of them landing on the zero vector is the mix that uses zero of everything. If any other mix lands there, one of the vectors was already reachable from the rest.**
 
+**What kind of fact this is:** a definition: independence and dependence are names, chosen, not proved. That a dependent list always holds one vector that is a mix of the rest is a theorem, proved on this card in Why it works.
+
 ### The picture: mixes that get back to nothing
 
 ```mermaid
@@ -57,13 +59,19 @@ The sentence is a *for every*: for every set of amounts landing on nothing, ever
 | $0$ | the zero vector, (0, 0): nothing in either slot | (0, 0) | — |
 | the cross-number | first slot times the other's second slot, minus the other way round | 70, for A and B | only zero against not-zero matters |
 
-A second wording: a list is dependent exactly when one of its vectors sits in the span of the rest ([Linear combinations and span](03-linear-combinations-and-span.md)).
+A second wording: a list is dependent exactly when one of its vectors sits in the span of the rest: the set of every mix of them ([Linear combinations and span](03-linear-combinations-and-span.md)).
 
 $$C = x\,A + y\,B$$
 
 Here x = 1 and y = 1 do it.
 
 Two vectors get a shortcut: they are dependent exactly when one is a multiple of the other, and the cross-number tests that in one line. For A and B it is 10 × 8 − 2 × 5 = 70. Not zero, so A and B are independent.
+
+### When it holds
+
+- **Amounts may be negative or fractions.** Allow only positive amounts and no mix but zero empties the barrow: all three bags added give (24, 26). The dependent trio would then pass as independent.
+- **Every vector has the same slots, in the same order.** A mix adds nitrogen to nitrogen and phosphorus to phosphorus. A bag written phosphorus first gives the wrong mix; one with a third slot gives no mix at all.
+- **The cross-number test is for two vectors only.** Applied to the pairs of a longer list, it misleads: the pairs give 70, 70 and −70, none zero, and the trio is still dependent.
 
 ---
 
@@ -100,7 +108,7 @@ Drop C and the equations lose their z, leaving the cross-number to decide. It is
 
 ### Step 4: three vectors in the plane are always dependent
 
-Two equations cannot pin down three unknowns. Fix two amounts with them and the third is free: choose it to be anything but zero and a relation appears. Any three vectors in the plane are dependent, however carefully picked — here every pair passes the cross-number test, 70, 70 and −70, and the trio fails anyway. The proof of that cap is on [Basis and dimension](05-basis-and-dimension.md).
+Two equations cannot pin down three unknowns. Fix two amounts with them and the third is free: choose it to be anything but zero and a relation appears. Any three vectors in the plane (vectors with two slots) are dependent, however carefully picked — here every pair passes the cross-number test, 70, 70 and −70, and the trio fails anyway. The proof of that cap is on [Basis and dimension](05-basis-and-dimension.md).
 
 ```mermaid
 flowchart TD
@@ -336,6 +344,149 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three general facts, with amounts that may be negative or fractions.
+
+- A mix with amounts not all zero lands on the zero vector exactly when one vector is a mix of the rest.
+- A list is linearly independent exactly when the only mix landing on the zero vector uses zero of everything.
+- Two vectors in the plane are linearly independent exactly when their cross-number is not zero.
+
+The bag numbers are checked exactly too; the decimal elimination and the printed tables are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 117 lines</summary>
+
+```lean
+-- Linear independence: a list of vectors has a mix with amounts not all zero landing on the zero vector exactly when one of its vectors is a mix of the others, independence means only the all-zero mix lands there, two vectors in the plane are independent exactly when their cross-number is not zero, and the card's fertiliser numbers come out as it says.
+import Mathlib.LinearAlgebra.LinearIndependent.Defs
+import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+import Mathlib.LinearAlgebra.Span.Defs
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Algebra.Field.Basic
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.FinCases
+
+/-! A list of `n` vectors is a function `v : Fin n → V`: `v 0` is the first vector, `v 1` the
+second, and so on. All of them live in the same space `V`, so they have the same slots in the
+same order. A mix gives each vector an amount `c i` from a field `K` (so amounts may be negative
+or fractions) and adds up `∑ i, c i • v i`. "One vector is a mix of the others" is Mathlib's
+`v i ∈ Submodule.span K (v '' {j | j ≠ i})`: `v i` lies in the span of the rest of the list.
+A point of the plane is a list of two numbers, `Fin 2 → K`, and `![10, 5]` is the pair (10, 5). -/
+
+/-- Dependence means redundancy. For any list of vectors, with amounts that may be negative or
+fractions: some mix with amounts not all zero lands on the zero vector exactly when one of the
+vectors is already a mix of the others. -/
+theorem dependent_iff_one_vector_is_a_mix_of_the_rest {K V : Type*} [Field K] [AddCommGroup V]
+    [Module K V] {n : ℕ} (v : Fin n → V) :
+    (∃ c : Fin n → K, ∑ i, c i • v i = 0 ∧ ∃ i, c i ≠ 0) ↔
+      ∃ i, v i ∈ Submodule.span K (v '' {j | j ≠ i}) := by
+  have hs : ∀ i : Fin n, ({j | j ≠ i} : Set (Fin n)) = Set.univ \ {i} := by
+    intro i; ext j; simp
+  rw [← Fintype.not_linearIndependent_iff, linearIndependent_iff_notMem_span]
+  simp only [not_forall, not_not, hs]
+
+/-- The card's definition is Mathlib's. A list of vectors is linearly independent exactly when
+the only mix of them landing on the zero vector is the one that uses zero of everything. -/
+theorem independent_iff_only_the_zero_mix_lands_on_zero {K V : Type*} [Field K] [AddCommGroup V]
+    [Module K V] {n : ℕ} (v : Fin n → V) :
+    LinearIndependent K v ↔ ∀ c : Fin n → K, ∑ i, c i • v i = 0 → ∀ i, c i = 0 := by
+  exact Fintype.linearIndependent_iff
+
+/-- The two-vector shortcut. Two vectors `u` and `w` of the plane are linearly independent
+exactly when their cross-number, first slot times the other's second slot minus the other way
+round, is not zero. -/
+theorem two_vectors_independent_iff_cross_number_ne_zero {K : Type*} [Field K]
+    (u w : Fin 2 → K) :
+    LinearIndependent K ![u, w] ↔ u 0 * w 1 - w 0 * u 1 ≠ 0 := by
+  rw [LinearIndependent.pair_iff]
+  constructor
+  · intro h hd
+    by_cases h1 : w 1 = 0 ∧ u 1 = 0
+    · by_cases h0 : w 0 = 0 ∧ u 0 = 0
+      · have hu : u = 0 := by
+          funext k; fin_cases k
+          · simpa using h0.2
+          · simpa using h1.2
+        have := h 1 0 (by simp [hu])
+        exact one_ne_zero this.1
+      · have := h (w 0) (-u 0) (by
+          funext k; fin_cases k
+          · simp; ring
+          · simp [h1.1, h1.2])
+        apply h0
+        exact ⟨this.1, neg_eq_zero.mp this.2⟩
+    · have := h (w 1) (-u 1) (by
+        funext k; fin_cases k
+        · simp; linear_combination hd
+        · simp; ring)
+      exact h1 ⟨this.1, neg_eq_zero.mp this.2⟩
+  · intro hd s t hst
+    have e0 := congrFun hst 0
+    have e1 := congrFun hst 1
+    simp at e0 e1
+    constructor
+    · have : s * (u 0 * w 1 - w 0 * u 1) = 0 := by
+        linear_combination w 1 * e0 - w 0 * e1
+      exact (mul_eq_zero.mp this).resolve_right hd
+    · have : t * (u 0 * w 1 - w 0 * u 1) = 0 := by
+        linear_combination u 0 * e1 - u 1 * e0
+      exact (mul_eq_zero.mp this).resolve_right hd
+
+-- The relation: one bag of A = (10, 5), plus one of B = (2, 8), minus one of C = (12, 13) is (0, 0).
+example : (1 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (1 : ℤ) • ![2, 8] + (-1 : ℤ) • ![12, 13] = ![0, 0] := by
+  decide
+-- C is one bag of A plus one bag of B.
+example : (![10, 5] : Fin 2 → ℤ) + ![2, 8] = ![12, 13] := by decide
+-- The cross-numbers: A with B is 70, A with C is 70, B with C is -70.
+example : (10 : ℤ) * 8 - 2 * 5 = 70 ∧ (10 : ℤ) * 13 - 12 * 5 = 70 ∧ (2 : ℤ) * 13 - 12 * 8 = -70 := by
+  norm_num
+-- The solve with z = -1: 10x + 2y = 12 and 5x + 8y = 13; doubling and subtracting gives
+-- (16 - 2)y = 26 - 12, so 14y = 14, y = 1, and x = (12 - 2 × 1) ÷ 10 = 1.
+example : (16 : ℤ) - 2 = 14 ∧ (26 : ℤ) - 12 = 14 ∧ (12 - 2 * 1 : ℤ) = 10 * 1 ∧
+    (10 : ℤ) * 1 + 2 * 1 = 12 ∧ (5 : ℤ) * 1 + 8 * 1 = 13 := by
+  norm_num
+-- The two slot equations hold at x = 1, y = 1, z = -1.
+example : (10 : ℤ) * 1 + 2 * 1 + 12 * (-1) = 0 ∧ (5 : ℤ) * 1 + 8 * 1 + 13 * (-1) = 0 := by
+  norm_num
+-- The mistakes: the all-zero mix gives (0, 0); all three bags added give (24, 26).
+example : (0 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (0 : ℤ) • ![2, 8] + (0 : ℤ) • ![12, 13] = ![0, 0] := by
+  decide
+example : (![10, 5] : Fin 2 → ℤ) + ![2, 8] + ![12, 13] = ![24, 26] := by decide
+-- The picture: t bags each of A and B with t of C taken back out leaves (0, 0); without C the
+-- barrow holds 12t kg of nitrogen and 13t kg of phosphorus, for t = 0, 1, 2, 3.
+example : ∀ t : Fin 4, (t : ℤ) • (![10, 5] : Fin 2 → ℤ) + (t : ℤ) • ![2, 8] + (-(t : ℤ)) • ![12, 13]
+    = ![0, 0] := by
+  decide
+example : ∀ t : Fin 4, (t : ℤ) • (![10, 5] : Fin 2 → ℤ) + (t : ℤ) • ![2, 8]
+    = ![12 * (t : ℤ), 13 * (t : ℤ)] := by
+  decide
+-- Try changing: with C = (12, 14) the relation is 34 A + 40 B - 35 C = (0, 0); with C = (20, 10)
+-- it is 2 A - C = (0, 0), and the cross-number of A and C falls to 0.
+example : (34 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (40 : ℤ) • ![2, 8] + (-35 : ℤ) • ![12, 14] = ![0, 0] := by
+  decide
+example : (2 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (-1 : ℤ) • ![20, 10] = ![0, 0] ∧
+    (10 : ℤ) * 10 - 20 * 5 = 0 := by
+  decide
+
+#print axioms dependent_iff_one_vector_is_a_mix_of_the_rest
+#print axioms independent_iff_only_the_zero_mix_lands_on_zero
+#print axioms two_vectors_independent_iff_cross_number_ne_zero
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'dependent_iff_one_vector_is_a_mix_of_the_rest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'independent_iff_only_the_zero_mix_lands_on_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_vectors_independent_iff_cross_number_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to the three bags.
@@ -378,6 +529,8 @@ The two outputs match line for line.
 
 - [Basis and dimension](05-basis-and-dimension.md): an independent list that also spans everything, and the proof that the number of slots caps how many independent vectors fit.
 - [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): the same test as one matrix equation, where dependence is a solution other than zero.
+
+Left open: three vectors in the plane are always too many, so how many independent vectors does a space hold, and is that number fixed?
 
 ---
 

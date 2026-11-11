@@ -62,11 +62,13 @@ $$\text{rank}(A) + \text{nullity}(A) = n$$
 
 The points (3, 4, 5) and (3, 4, 9) both draw (3, 4). Subtract one from the other: (0, 0, 4). Feed that to the projector and nothing comes out — the zero output.
 
-A matrix applied to a difference gives the difference of the results ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)), so every collision is a killed direction showing up twice: counting killed directions counts every way information is lost.
+A matrix applied to a difference gives the difference of the results ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)). So every collision is a killed direction showing up twice: counting killed directions counts every way information is lost.
 
 ### Step 1: elimination sorts the columns into two piles
 
-Run the three legal row moves from [Gaussian elimination](02-gaussian-elimination.md) until the matrix is a staircase. Each column then either carries a pivot — the leading entry of a step — or it does not. No third option: pivot columns and free columns. The projector is already a staircase, column 1 leading row 1, column 2 leading row 2, column 3 leading nothing: two pivot columns, one free.
+Run the three legal row moves from [Gaussian elimination](02-gaussian-elimination.md) until the matrix is a staircase: each row starts further right than the row above, and all-zero rows sit at the bottom. Each column then either carries a pivot — the leading entry of a step — or it does not. No third option: pivot columns and free columns.
+
+The projector is already a staircase, column 1 leading row 1, column 2 leading row 2, column 3 leading nothing: two pivot columns, one free.
 
 ### Step 2: each free column buys exactly one killed direction
 
@@ -76,7 +78,7 @@ Do that once per free column. The results are independent, they reach every kill
 
 ### Step 3: each pivot column carries one surviving direction
 
-The pivot columns are independent, and every free column is a mixture of the pivot columns to its left. Row moves keep those mixtures, so the matching columns of the original matrix are a basis for its column space ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)): the rank is the number of pivot columns.
+The pivot columns are independent, and every free column is a mixture of the pivot columns to its left. Row moves keep those mixtures, so the matching columns of the original matrix are a basis for its column space: independent directions that build all of it ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)). So the rank is the number of pivot columns.
 
 The projector's columns 1 and 2 are (1, 0) and (0, 1) — the whole screen. Rank 2. The loss is on the way in, not the way out.
 
@@ -85,7 +87,7 @@ The projector's columns 1 and 2 are (1, 0) and (0, 1) — the whole screen. Rank
 
 Take the staircase in reduced form: every pivot is 1, its column 0 elsewhere. Row moves are reversible, so the staircase kills exactly what the matrix kills.
 
-**Killed.** Step 2's directions are killed, and each carries a 1 where the others carry 0, so none is a mixture of the rest. They miss nothing: from a killed input subtract those directions, weighted by its own free numbers; the leftover is killed with 0 in every free place, so each staircase row forces its pivot place to 0 too: nothing is left.
+**Killed.** Step 2's directions are killed, and each carries a 1 where the others carry 0, so none is a mixture of the rest. They miss nothing. From a killed input, subtract those directions, weighted by its own free numbers. The leftover is killed with 0 in every free place, so each staircase row forces its pivot place to 0 too: nothing is left.
 
 **Kept.** A mixture of pivot columns cancelling to nothing is a killed input with 0 in every free place, so that reading makes it zero: those columns are independent. Read backwards, they make each free column a mixture of pivot columns to its left. So the pivot columns build the whole column space.
 
@@ -102,7 +104,7 @@ The **row space** is everything you can build out of the rows, and its size is a
 
 </details>
 
-**The other route.** The rank is also the size of the biggest square block cut from the matrix — any rows with any columns — whose determinant is not zero ([Determinants](04-determinants.md)): such a block squashes nothing flat. It shares no working with elimination, which is why the code takes it as the second road.
+**The other route.** The rank is also the size of the biggest square block cut from the matrix — any rows with any columns — whose determinant is not zero ([Determinants](04-determinants.md)). The determinant is the one number that says how much a square block stretches space, so such a block squashes nothing flat. It shares no working with elimination, which is why the code takes it as the second road.
 
 ---
 
@@ -123,7 +125,7 @@ The projector, step by step.
 
 One direction's worth of the model is gone: the screen point (3, 4) has not one source but a line of them, (3, 4, 0) plus any amount of (0, 0, 1).
 
-**A harder one.** The flattener B = `[[1, 2, 3], [2, 4, 6]]` is also 2 by 3, but its second row is twice its first, so one row move wipes it out: a staircase with one step. One pivot column, two free — rank 1, nullity 2, 1 + 2 still 3. B squashes the whole model onto one line.
+**A harder one.** The flattener B = `[[1, 2, 3], [2, 4, 6]]` is also 2 by 3. But its second row is twice its first, so one row move wipes it out: a staircase with one step. One pivot column, two free — rank 1, nullity 2, 1 + 2 still 3. B squashes the whole model onto one line.
 
 ```
 five blocks = one direction, out of 3 inputs in both cases
@@ -352,6 +354,106 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the three general claims for every matrix of ordinary numbers, of any size.
+
+- The rank plus the nullity is the number of columns.
+- Two inputs give the same output exactly when the matrix kills their difference.
+- Different inputs always give different outputs exactly when the nullity is 0.
+
+Finding each matrix's rank and nullity, by elimination and by the biggest square block, is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 74 lines</summary>
+
+```lean
+-- Rank and nullity: for every matrix of real numbers, the directions it keeps plus the directions it kills add up to its number of columns, two inputs collide exactly when their difference is killed, and nullity 0 means different inputs always give different outputs.
+import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+
+open Matrix
+
+/-! A matrix with `m` rows and `n` columns of real numbers is `A : Matrix (Fin m) (Fin n) ℝ`.
+An input is a list of `n` real numbers, `x : Fin n → ℝ`, and `A *ᵥ x` is the output.
+`A.mulVecLin` is the matrix read as a machine (a linear map) from inputs to outputs.
+Mathlib's `A.rank` is the dimension of the column space: everything the matrix hits
+(the range of `A.mulVecLin`). The nullity is the dimension of the null space: every input the
+matrix sends to zero, `Module.finrank ℝ (LinearMap.ker A.mulVecLin)`. -/
+
+/-- Rank plus nullity is the number of columns. For every matrix of real numbers, with any
+finite number `m` of rows and `n` of columns, the number of independent directions it keeps
+(the rank, the size of the column space) plus the number of independent directions it sends to
+zero (the nullity, the size of the null space) is `n`, the number of numbers fed in. -/
+theorem rank_add_nullity_eq_columns {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) :
+    A.rank + Module.finrank ℝ (LinearMap.ker A.mulVecLin) = n := by
+  have h := A.mulVecLin.finrank_range_add_finrank_ker
+  rw [Module.finrank_fin_fun] at h
+  exact h
+
+/-- Step 0: two inputs collide exactly when their difference dies. For every real matrix `A`
+and any two inputs `x` and `y`, `A` gives them the same output exactly when `A` sends their
+difference `x - y` to zero. -/
+theorem collide_iff_difference_killed {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ)
+    (x y : Fin n → ℝ) :
+    A *ᵥ x = A *ᵥ y ↔ A *ᵥ (x - y) = 0 := by
+  rw [Matrix.mulVec_sub, sub_eq_zero]
+
+/-- Nullity 0 is one-to-one. For every real matrix `A`, different inputs always give different
+outputs exactly when the nullity of `A` is 0. -/
+theorem one_to_one_iff_nullity_zero {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) :
+    Function.Injective (fun x : Fin n → ℝ => A *ᵥ x) ↔
+      Module.finrank ℝ (LinearMap.ker A.mulVecLin) = 0 := by
+  rw [Submodule.finrank_eq_zero, LinearMap.ker_eq_bot]
+  rfl
+
+-- The projector P = [[1, 0, 0], [0, 1, 0]] sends (3, 4, 5) and (3, 4, 9) both to (3, 4).
+example : (!![1, 0, 0; 0, 1, 0] : Matrix (Fin 2) (Fin 3) ℤ) *ᵥ ![3, 4, 5] = ![3, 4] ∧
+    (!![1, 0, 0; 0, 1, 0] : Matrix (Fin 2) (Fin 3) ℤ) *ᵥ ![3, 4, 9] = ![3, 4] := by decide
+-- Their difference is (0, 0, 4) = 4 × (0, 0, 1), and the projector kills both.
+example : (![3, 4, 9] : Fin 3 → ℤ) - ![3, 4, 5] = ![0, 0, 4] ∧
+    (![0, 0, 4] : Fin 3 → ℤ) = (4 : ℤ) • ![0, 0, 1] ∧
+    (!![1, 0, 0; 0, 1, 0] : Matrix (Fin 2) (Fin 3) ℤ) *ᵥ ![0, 0, 4] = 0 ∧
+    (!![1, 0, 0; 0, 1, 0] : Matrix (Fin 2) (Fin 3) ℤ) *ᵥ ![0, 0, 1] = 0 := by decide
+-- The projector keeps 2 and kills 1: 2 + 1 = 3, the number of columns.
+example : (2 : ℕ) + 1 = 3 := by decide
+-- The flattener B = [[1, 2, 3], [2, 4, 6]]: row 2 is twice row 1, and B kills (-2, 1, 0) and (-3, 0, 1).
+example : (!![1, 2, 3; 2, 4, 6] : Matrix (Fin 2) (Fin 3) ℤ) 1 =
+      (2 : ℤ) • (!![1, 2, 3; 2, 4, 6] : Matrix (Fin 2) (Fin 3) ℤ) 0 ∧
+    (!![1, 2, 3; 2, 4, 6] : Matrix (Fin 2) (Fin 3) ℤ) *ᵥ ![-2, 1, 0] = 0 ∧
+    (!![1, 2, 3; 2, 4, 6] : Matrix (Fin 2) (Fin 3) ℤ) *ᵥ ![-3, 0, 1] = 0 := by decide
+-- The flattener keeps 1 and kills 2: 1 + 2 = 3.
+example : (1 : ℕ) + 2 = 3 := by decide
+-- The mistakes: rows minus rank gives nullity 2 - 2 = 0 for P; reading B's rank as 2 gives 2 + 2 = 4, not 3.
+example : (2 : ℕ) - 2 = 0 ∧ (2 : ℕ) + 2 = 4 ∧ (2 : ℕ) + 2 ≠ 3 := by decide
+-- Try changing: B's second row as (2, 4, 7) still kills (-2, 1, 0), and the sum is 2 + 1 = 3.
+example : (!![1, 2, 3; 2, 4, 7] : Matrix (Fin 2) (Fin 3) ℤ) *ᵥ ![-2, 1, 0] = 0 ∧
+    (2 : ℕ) + 1 = 3 := by decide
+-- Try changing: a dead fourth column on P kills (0, 0, 0, 1) as well as (0, 0, 1, 0); 2 + 2 = 4.
+example : (!![1, 0, 0, 0; 0, 1, 0, 0] : Matrix (Fin 2) (Fin 4) ℤ) *ᵥ ![0, 0, 1, 0] = 0 ∧
+    (!![1, 0, 0, 0; 0, 1, 0, 0] : Matrix (Fin 2) (Fin 4) ℤ) *ᵥ ![0, 0, 0, 1] = 0 ∧
+    (2 : ℕ) + 2 = 4 := by decide
+-- Try changing: P with a third row (0, 0, 1) sends (3, 4, 5) to itself.
+example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3, 4, 5] = ![3, 4, 5] := by
+  decide
+
+#print axioms rank_add_nullity_eq_columns
+#print axioms collide_iff_difference_killed
+#print axioms one_to_one_iff_nullity_zero
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rank_add_nullity_eq_columns' depends on axioms: [propext, Classical.choice, Quot.sound]
+'collide_iff_difference_killed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_to_one_iff_nullity_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

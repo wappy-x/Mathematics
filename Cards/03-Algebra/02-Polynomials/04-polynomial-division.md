@@ -16,6 +16,8 @@ Dividing 17 by 5 gives 3 with 2 left over, and the 2 stays put because it is sma
 
 **Divide one polynomial by another the way you divide whole numbers. Stop when what is left has a lower highest power than the thing you divided by. And if you divided by x minus a number, what is left is that polynomial worked out at that number.**
 
+**What kind of fact this is:** a theorem. Why it works proves that the division stops and that the remainder is the value at the root; that only one pair fits is proved in [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
+
 ### The picture: the loop, one step at a time
 
 ```mermaid
@@ -39,10 +41,11 @@ The size rule is half the formula: the scrap's degree must be lower than the div
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
+| $x$ | the number, in cm, that sets the box's size | 2 gives the 3 by 4 by 5 box | every edge grows with it: at 10 the box is 11 by 12 by 13 |
 | $p(x)$ | the polynomial you are cutting up | the volume, x^3 + 6x^2 + 11x + 6 | a higher power here means a longer quotient |
 | $d(x)$ | the divisor: what you divide by | the known edge, x + 1 | a higher power leaves a shorter quotient, a roomier scrap |
 | $q(x)$ | the quotient: how many of the divisor fit | the face, x^2 + 5x + 6 | its degree is p's degree minus d's |
-| $s(x)$ | the scrap left at the end, always lower degree than the divisor | 0 for this edge; 60 for x - 2 | raise d's degree and the scrap may keep an x |
+| $s(x)$ | the remainder, or scrap: what is left at the end, always lower degree than the divisor | 0 for this edge; 60 for x - 2 | raise d's degree and the scrap may keep an x |
 | $r$ | a root: the number that makes x - r equal zero | -1 for the edge x + 1; 2 for x - 2 | move r and the scrap traces the curve of p |
 
 Now the second formula. Divide by x - r and the scrap is a plain number — and that number is p worked out at r:
@@ -50,6 +53,12 @@ Now the second formula. Divide by x - r and the scrap is a plain number — and 
 $$p(x) = (x - r)\,q(x) + p(r)$$
 
 **Read it aloud:** dividing by x minus a number leaves the polynomial's value at that number.
+
+### When it holds
+
+- **You can divide by the divisor's leading number.** Each pass divides by it. Here it is 1, so every number stays whole. Divide by 2x + 1 and fractions turn up; allow whole numbers only and the division can get stuck.
+- **The scrap's degree is below the divisor's.** That rule makes the pair the only one. Drop it and quotient x^2 + 5x with leftover 6x + 6 also adds back to the volume.
+- **A divisor of the form x minus a number, for the second formula.** Only then is the scrap a plain number to match with p(r). Divide by x^2 and the scrap may keep an x.
 
 ---
 
@@ -72,7 +81,9 @@ Add up what you took: x^2 + 5x + 6. That is the quotient, the face of the box.
 <details>
 <summary>The short way once you trust it: synthetic division</summary>
 
-Dividing by x + 1 means r = -1. Write the coefficients 1, 6, 11, 6. Bring the 1 down. Multiply by -1 and add to the 6: 5. Multiply by -1, add to the 11: 6. Multiply by -1, add to the 6: 0. What you wrote is 1, 5, 6, then 0 — the quotient x^2 + 5x + 6, remainder 0. Same arithmetic, no x's on the page. It only works for a divisor of the form x minus a number.
+Dividing by x + 1 means r = -1. Write the coefficients, the numbers in front of each power: 1, 6, 11, 6. Bring the 1 down. Multiply by -1 and add to the 6: 5. Multiply by -1, add to the 11: 6. Multiply by -1, add to the 6: 0.
+
+What you wrote is 1, 5, 6, then 0 — the quotient x^2 + 5x + 6, remainder 0. Same arithmetic, no x's on the page. It only works for a divisor of the form x minus a number.
 
 </details>
 
@@ -133,7 +144,7 @@ Divide the same volume by x - 2 and it does not go exactly: quotient x^2 + 8x + 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Stopping while an x is still standing | quotient x^2 + 5x, leftover 6x + 6 | the leftover is degree 1, same as x + 1: one more bite left |
-| Binning the remainder 60 | 0 at x = 2, not 60 | x - 2 is zero at x = 2, so the quotient contributes nothing there |
+| Dropping the remainder 60 | 0 at x = 2, not 60 | x - 2 is zero at x = 2, so the quotient contributes nothing there |
 | Reading the root of x + 1 as 1 | p(1) = 24, so x + 1 looks like no factor | the root is what makes the divisor zero, which is -1 |
 
 The code prints all three.
@@ -142,7 +153,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The division is the loop from Step 1: kill the leading power, subtract, repeat. It runs on x + 1, then on x - 2. Two roads check it. The first multiplies the quotient back out against the volume, and against (x + 2)(x + 3). The second drops polynomials: at x = 10 the box is 11 by 12 by 13 cm, so 1716 divided by 11 gives 156, the face at 10. Last, the remainder for x - r is matched to the volume at r, at seven values of r.
+Nothing is imported. The division is the loop from Step 1: kill the leading power, subtract, repeat. It runs on x + 1, then on x - 2.
+
+Two roads check it. The first multiplies the quotient back out against the volume, and against (x + 2)(x + 3). The second drops polynomials: at x = 10 the box is 11 by 12 by 13 cm, so 1716 divided by 11 gives 156, the face at 10. Last, the remainder for x - r is matched to the volume at r, at seven values of r.
 
 ### Python
 
@@ -344,6 +357,127 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three general claims for every polynomial, and checks the box's numbers exactly.
+
+- Divide by a divisor whose leading number you can divide by. Exactly one quotient and remainder fit, with the remainder of lower degree.
+- Divide p by x - r, and p(x) = (x - r) q(x) + p(r) for some quotient q.
+- Any division by x - r that leaves a remainder of lower degree than x - r leaves exactly p(r).
+- The box: x + 1 goes in exactly with quotient x^2 + 5x + 6, and x - 2 leaves 60.
+
+Running the loop step by step and printing each leftover is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 94 lines</summary>
+
+```lean
+-- Polynomial long division: when the divisor is not zero and its leading number can be divided by, there is exactly one quotient and remainder with the remainder of lower degree, and dividing by x - r leaves the value p(r).
+import Mathlib.Algebra.Polynomial.Div
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+
+open Polynomial
+
+/-- Division with a remainder, for polynomials. Let d be a divisor that is not the zero
+polynomial and whose leading number can be divided by (it has an inverse). Then for every
+polynomial p there is exactly one pair, a quotient q and a remainder s, with
+p(x) = d(x) q(x) + s(x) and the remainder of lower degree than the divisor. -/
+theorem polynomial_division_with_remainder_exists_and_is_unique {R : Type*} [CommRing R]
+    (p d : R[X]) (hd : d ≠ 0) (hlead : IsUnit d.leadingCoeff) :
+    ∃! qs : R[X] × R[X], p = d * qs.1 + qs.2 ∧ qs.2.degree < d.degree := by
+  rcases subsingleton_or_nontrivial R with hR | hR
+  · exact absurd (Subsingleton.elim d 0) hd
+  obtain ⟨u, hu⟩ := hlead
+  have hbu : C (↑u⁻¹ : R) * C (↑u : R) = 1 := by rw [← C_mul, Units.inv_mul, C_1]
+  have hm : Monic (d * C (↑u⁻¹ : R)) :=
+    monic_mul_C_of_leadingCoeff_mul_eq_one (by rw [← hu, Units.mul_inv])
+  have hle : ∀ (f : R[X]) (a : R), (f * C a).degree ≤ f.degree := by
+    intro f a
+    have h := degree_mul_le_of_le (p := f) (q := C a) le_rfl degree_C_le
+    rwa [add_zero] at h
+  have hdeg : (d * C (↑u⁻¹ : R)).degree = d.degree := by
+    apply le_antisymm (hle _ _)
+    have : d = d * C (↑u⁻¹ : R) * C (↑u : R) := by rw [mul_assoc, hbu, mul_one]
+    conv_lhs => rw [this]
+    exact hle _ _
+  refine ⟨(C (↑u⁻¹ : R) * (p /ₘ (d * C (↑u⁻¹ : R))), p %ₘ (d * C (↑u⁻¹ : R))), ⟨?_, ?_⟩, ?_⟩
+  · have h := modByMonic_add_div p (d * C (↑u⁻¹ : R))
+    calc p = p %ₘ (d * C (↑u⁻¹ : R)) + d * C (↑u⁻¹ : R) * (p /ₘ (d * C (↑u⁻¹ : R))) := h.symm
+      _ = _ := by ring
+  · rw [← hdeg]; exact degree_modByMonic_lt _ hm
+  · rintro ⟨q', s'⟩ ⟨hp, hs⟩
+    have key := div_modByMonic_unique (f := p) (C (↑u : R) * q') s' hm
+      ⟨by
+        calc s' + d * C (↑u⁻¹ : R) * (C (↑u : R) * q')
+            = s' + d * (C (↑u⁻¹ : R) * C (↑u : R)) * q' := by ring
+          _ = p := by rw [hbu, mul_one, hp, add_comm],
+       by rw [hdeg]; exact hs⟩
+    rw [key.1, key.2, ← mul_assoc, hbu, one_mul]
+
+/-- The remainder theorem, as a formula. Dividing p by x minus a number r leaves the plain
+number p(r): p(x) = (x - r) q(x) + p(r) for some polynomial q. -/
+theorem dividing_by_x_minus_r_leaves_p_of_r {R : Type*} [CommRing R] (p : R[X]) (r : R) :
+    ∃ q : R[X], p = (X - C r) * q + C (p.eval r) := by
+  refine ⟨p /ₘ (X - C r), ?_⟩
+  rw [← modByMonic_X_sub_C_eq_C_eval, add_comm, modByMonic_add_div]
+
+/-- The remainder is the value at the root (Step 3). Whatever quotient q and remainder s
+come out of dividing p by x - r, as long as the remainder has lower degree than x - r,
+the remainder is the plain number p(r). -/
+theorem remainder_on_dividing_by_x_minus_r_is_p_of_r {R : Type*} [CommRing R]
+    (p : R[X]) (r : R) (q s : R[X]) (hdiv : p = (X - C r) * q + s)
+    (hdeg : s.degree < (X - C r).degree) :
+    s = C (p.eval r) := by
+  rw [← modByMonic_X_sub_C_eq_C_eval]
+  exact ((div_modByMonic_unique q s (monic_X_sub_C r) ⟨by rw [hdiv, add_comm], hdeg⟩).2).symm
+
+-- The whole-number original: 17 = 5 × 3 + 2, and 2 is smaller than 5.
+example : (17 : ℕ) = 5 * 3 + 2 ∧ 2 < 5 := by decide
+-- The box: x^3 + 6x^2 + 11x + 6 divided by the edge x + 1 is x^2 + 5x + 6, remainder 0.
+example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X + 1) * (X ^ 2 + 5 * X + 6) + 0 := by
+  ring
+-- The loop's leftovers: after x^2 lots of x + 1, then 5x lots, then 6 lots.
+example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) - X ^ 2 * (X + 1) = 5 * X ^ 2 + 11 * X + 6 := by
+  ring
+example : (5 * X ^ 2 + 11 * X + 6 : ℤ[X]) - 5 * X * (X + 1) = 6 * X + 6 := by ring
+example : (6 * X + 6 : ℤ[X]) - 6 * (X + 1) = 0 := by ring
+-- The face un-multiplies: x^2 + 5x + 6 = (x + 2)(x + 3).
+example : (X ^ 2 + 5 * X + 6 : ℤ[X]) = (X + 2) * (X + 3) := by ring
+-- At x = 2 the box is 3 by 4 by 5, holding 60 cubic cm.
+example : (2 + 1 : ℤ) * (2 + 2) * (2 + 3) = 60 ∧ (3 * 4 * 5 : ℤ) = 60 := by decide
+-- The same box divided by x - 2: quotient x^2 + 8x + 27, remainder 60.
+example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X - 2) * (X ^ 2 + 8 * X + 27) + 60 := by
+  ring
+-- The volume at the root -1 of x + 1 is 0, at 2 it is 60, and at 1 (the wrong sign) it is 24.
+example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval (-1) = 0 ∧
+    (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval 2 = 60 ∧
+    (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval 1 = 24 := by norm_num
+-- The chart: for r = -3 to 3, the volume at r is 0, 0, 0, 6, 24, 60, 120.
+example : [-3, -2, -1, 0, 1, 2, 3].map (fun x : ℤ => x ^ 3 + 6 * x ^ 2 + 11 * x + 6) =
+    [0, 0, 0, 6, 24, 60, 120] := by decide
+-- Drop the degree rule and the pair is not unique: quotient x^2 + 5x, leftover 6x + 6.
+example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X + 1) * (X ^ 2 + 5 * X) + (6 * X + 6) := by
+  ring
+-- Plain numbers at x = 10: the box is 11 by 12 by 13, and 1716 / 11 = 156 with nothing left.
+example : (11 * 12 * 13 : ℕ) = 1716 ∧ 1716 / 11 = 156 ∧ 1716 % 11 = 0 ∧
+    (10 ^ 2 + 5 * 10 + 6 : ℕ) = 156 := by decide
+
+#print axioms polynomial_division_with_remainder_exists_and_is_unique
+#print axioms dividing_by_x_minus_r_leaves_p_of_r
+#print axioms remainder_on_dividing_by_x_minus_r_is_p_of_r
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'polynomial_division_with_remainder_exists_and_is_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dividing_by_x_minus_r_leaves_p_of_r' depends on axioms: [propext, Classical.choice, Quot.sound]
+'remainder_on_dividing_by_x_minus_r_is_p_of_r' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to this box.
@@ -386,7 +520,9 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Roots and factors](05-roots-and-the-factor-theorem.md): a remainder of zero means x - r is a factor, which caps a degree-n polynomial at n roots.
-- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): gcds, the Euclidean algorithm and factoring, carried over from whole numbers on the back of this division.
+- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): greatest common divisors, the Euclidean algorithm and factoring, carried over from whole numbers on the back of this division.
+
+Left open: a remainder of zero finds one factor at a time. How many factors, and so how many roots, can a polynomial have?
 
 ---
 

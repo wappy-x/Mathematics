@@ -10,9 +10,11 @@ A game sprite is drawn on the unit square: corners (0, 0), (1, 0), (1, 1), (0, 1
 
 The first leans it: the bottom edge stays put, the top edge slides one step right, and the square becomes a slanted parallelogram — a **shear**. The second spins the sprite a quarter turn anticlockwise about (0, 0).
 
-Both buttons are rules: feed in a point, get a point back. Neither bends a straight edge, and neither budges the corner at (0, 0). Those habits mark a **linear map**; two exact tests pin it down below.
+Both buttons are rules: feed in a point, get a point back. Neither bends a straight edge, and neither budges the corner at (0, 0), the origin. Those habits mark a **linear map**; two exact tests pin it down below.
 
-Such a map needs no rule written out: four numbers hold it. Watch where it sends (1, 0), one step along the bottom, and (0, 1), one step up the side. Those two answers, down the columns of a table, reproduce the map everywhere. The shear's table is `[[1, 1], [0, 1]]`, the turn's `[[0, -1], [1, 0]]` — matrices ([Matrices](01-matrices-and-the-matrix-zoo.md)), 2 × 2, rows × columns. Press both buttons in a row and the trip is one matrix, the product of theirs.
+Such a map needs no rule written out: four numbers hold it. Watch where it sends (1, 0), one step along the bottom, and (0, 1), one step up the side. Those two answers, down the columns of a table, reproduce the map everywhere.
+
+The shear's table, written row by row, is `[[1, 1], [0, 1]]`, the turn's `[[0, -1], [1, 0]]` — matrices ([Matrices](01-matrices-and-the-matrix-zoo.md)), 2 × 2, rows × columns. Press both buttons in a row and the trip is one matrix, the product of theirs.
 
 **A rule that respects adding and stretching is pinned down by where it sends the two axis arrows — which is why it is a matrix, and why one rule after another is those matrices multiplied, first move on the right.**
 
@@ -48,7 +50,7 @@ $$A = [\;T(e_1)\;\;T(e_2)\;] \qquad\text{and then}\qquad T(v) = A v \text{ for e
 
 **Read it aloud:** each axis arrow's answer is a column, and from then on the matrix *is* the map.
 
-Then the composition, with $A$ the shear's matrix and $B$ the turn's:
+Then the composition (one map done after another), with $A$ the shear's matrix and $B$ the turn's:
 
 $$\text{turn, then shear} = A B \qquad\text{and}\qquad \text{shear, then turn} = B A$$
 
@@ -77,7 +79,7 @@ $$\text{turn, then shear} = A B \qquad\text{and}\qquad \text{shear, then turn} =
 
 ### Step 0: every point is a mix of the two axis arrows
 
-The corner (1, 1) is one step right plus one step up: (1, 1) = 1 × (1, 0) + 1 × (0, 1). Any point (x, y) is x of the first arrow plus y of the second — [Basis and dimension](../03-Vectors/05-basis-and-dimension.md) calling (1, 0) and (0, 1) a **basis**: every vector is their mix, in exactly one way.
+The corner (1, 1) is one step right plus one step up: (1, 1) = 1 × (1, 0) + 1 × (0, 1). Any point (x, y) is x of the first arrow plus y of the second. [Basis and dimension](../03-Vectors/05-basis-and-dimension.md) calls (1, 0) and (0, 1) a **basis**: every vector is their mix, in exactly one way.
 
 ### Step 1: the tests move the pieces instead of the point
 
@@ -110,7 +112,9 @@ So matrix multiplication is no arbitrary recipe: it is whatever it must be for "
 <details>
 <summary>Detailed proof: linear everywhere, and no other matrix fits</summary>
 
-**The shear** sends the pair (x, y) to (x + y, y). Add it to a second pair (x', y') first and (x + x', y + y') goes to (x + x' + y + y', y + y'), the sum of the separate answers. Stretch first and (cx, cy) goes to (cx + cy, cy), c times the answer for (x, y). Both tests hold everywhere, not only at the corners. **The turn** sends (x, y) to (-y, x): a swap with one sign change survives both tests by the same two lines.
+**The shear** sends the pair (x, y) to (x + y, y). Add it to a second pair (x', y') first and (x + x', y + y') goes to (x + x' + y + y', y + y'), the sum of the separate answers. Stretch first and (cx, cy) goes to (cx + cy, cy), c times the answer for (x, y). Both tests hold everywhere, not only at the corners.
+
+**The turn** sends (x, y) to (-y, x): a swap with one sign change survives both tests by the same two lines.
 
 **Only one matrix fits.** Two matrices agreeing on (1, 0) and (0, 1) share both columns, so they are equal.
 
@@ -346,6 +350,146 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's three facts for every linear map, between spaces of any size, not only for the shear and the turn.
+
+- A rule that passes both tests at every input is its matrix times the vector, the columns being where the axis arrows go.
+- Two matrices that send each axis arrow to the same place are equal: only one matrix fits.
+- One linear map after another has the product matrix, with the move made first on the right.
+- It also re-checks the card's numbers: both matrices, both products, and the corner (1, 1) in both orders.
+- It re-checks the wrong answers too: rows instead of columns, the missing minus sign, the slide, and squaring the first number.
+
+Running the code, with its printed corners and asserts, stays with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 112 lines</summary>
+
+```lean
+-- Linear maps: any rule that respects adding and stretching equals multiplication by the matrix whose columns are where it sends the axis arrows, only that matrix fits, and one rule after another has the product matrix with the first move on the right; the card's shear, quarter turn and corner (1, 1) come out as it says.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+import Mathlib.LinearAlgebra.Matrix.ToLin
+
+open Matrix
+
+/-- The matrix built from a rule `T`: column `j` is `T` of the `j`-th axis arrow
+(`Pi.single j 1`, a 1 in place `j` and 0 elsewhere). -/
+def matrixOf {m n : ℕ} (T : (Fin n → ℝ) → (Fin m → ℝ)) : Matrix (Fin m) (Fin n) ℝ :=
+  Matrix.of fun i j => T (Pi.single j 1) i
+
+/-- A rule is secretly a matrix. If a rule `T` passes both tests at every input,
+`T (u + v) = T u + T v` and `T (c • u) = c • T u`, then `T` is matrix times vector for the
+matrix whose columns are where `T` sends the axis arrows: `T v = A v` for every `v`. This holds
+between spaces of any sizes; when they differ, the matrix is rectangular. -/
+theorem linear_map_is_matrix_of_axis_images {m n : ℕ} (T : (Fin n → ℝ) → (Fin m → ℝ))
+    (hadd : ∀ u v, T (u + v) = T u + T v) (hsmul : ∀ (c : ℝ) u, T (c • u) = c • T u) :
+    ∀ v, T v = matrixOf T *ᵥ v := by
+  intro v
+  let L : (Fin n → ℝ) →ₗ[ℝ] (Fin m → ℝ) :=
+    { toFun := T, map_add' := hadd, map_smul' := hsmul }
+  have hL : LinearMap.toMatrix' L = matrixOf T := by
+    ext i j
+    simp [LinearMap.toMatrix'_apply, matrixOf, L]
+  rw [← hL, LinearMap.toMatrix'_mulVec]
+  rfl
+
+/-- Only one matrix fits. Two matrices that send every axis arrow to the same place share
+every column, so they are equal. -/
+theorem matrix_fixed_by_axis_images {m n : ℕ} (A B : Matrix (Fin m) (Fin n) ℝ)
+    (h : ∀ j, A *ᵥ Pi.single j 1 = B *ᵥ Pi.single j 1) : A = B := by
+  ext i j
+  have := congrFun (h j) i
+  simpa [Matrix.mulVec_single_one] using this
+
+/-- One rule after another is one product, the move made first on the right. If `S` and `T`
+both pass the two tests, the matrix of "`S` first, then `T`" is `T`'s matrix times `S`'s. -/
+theorem matrix_of_composition_is_product {m n p : ℕ}
+    (S : (Fin n → ℝ) → (Fin m → ℝ)) (T : (Fin m → ℝ) → (Fin p → ℝ))
+    (hSadd : ∀ u v, S (u + v) = S u + S v) (hSsmul : ∀ (c : ℝ) u, S (c • u) = c • S u)
+    (hTadd : ∀ u v, T (u + v) = T u + T v) (hTsmul : ∀ (c : ℝ) u, T (c • u) = c • T u) :
+    matrixOf (T ∘ S) = matrixOf T * matrixOf S := by
+  ext i j
+  have hT := linear_map_is_matrix_of_axis_images T hTadd hTsmul (S (Pi.single j 1))
+  simp only [matrixOf, Matrix.of_apply, Function.comp_apply, Matrix.mul_apply]
+  rw [hT]
+  simp [Matrix.mulVec, dotProduct, matrixOf]
+
+/-- The shear: (x, y) goes to (x + y, y). -/
+def shear (v : Fin 2 → ℝ) : Fin 2 → ℝ := ![v 0 + v 1, v 1]
+/-- The quarter turn anticlockwise: (x, y) goes to (-y, x). -/
+def turn (v : Fin 2 → ℝ) : Fin 2 → ℝ := ![-v 1, v 0]
+/-- Squaring the first number: keeps (0, 0) fixed but is not linear. -/
+def squareFirst (v : Fin 2 → ℝ) : Fin 2 → ℝ := ![v 0 ^ 2, v 1]
+
+-- The two buttons' matrices, read off the axis arrows.
+example : matrixOf shear = !![1, 1; 0, 1] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [matrixOf, shear]
+example : matrixOf turn = !![0, -1; 1, 0] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [matrixOf, turn]
+-- The two products: turn then shear is AB, shear then turn is BA.
+example : !![(1 : ℝ), 1; 0, 1] * !![0, -1; 1, 0] = !![1, -1; 1, 0] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+example : !![(0 : ℝ), -1; 1, 0] * !![1, 1; 0, 1] = !![0, -1; 1, 1] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+-- The corner (1, 1): turn then shear ends at (0, 1), by two steps and by one matrix.
+example : turn ![1, 1] = ![-1, 1] := by
+  ext i; fin_cases i <;> simp [turn]
+example : shear (turn ![1, 1]) = ![0, 1] := by
+  ext i; fin_cases i <;> simp [shear, turn]
+example : !![(1 : ℝ), -1; 1, 0] *ᵥ ![1, 1] = ![0, 1] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+-- Shear then turn ends at (-1, 2), by two steps and by one matrix.
+example : shear ![1, 1] = ![2, 1] := by
+  ext i; fin_cases i <;> norm_num [shear]
+example : turn (shear ![1, 1]) = ![-1, 2] := by
+  ext i; fin_cases i <;> norm_num [shear, turn]
+example : !![(0 : ℝ), -1; 1, 1] *ᵥ ![1, 1] = ![-1, 2] := by
+  ext i; fin_cases i <;> norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+-- The mistakes: shear laid in as rows sends (1, 1) to (1, 2); the turn with no minus leaves it alone.
+example : !![(1 : ℝ), 0; 1, 1] *ᵥ ![1, 1] = ![1, 2] := by
+  ext i; fin_cases i <;> norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+example : !![(0 : ℝ), 1; 1, 0] *ᵥ ![1, 1] = ![1, 1] := by
+  ext i; fin_cases i <;> norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+-- The code's linearity check on the shear, u = (1, 0), v = (0, 1), c = 3:
+-- T(u + v) = (2, 1) = T(u) + T(v), and T(3u) = (3, 0) = 3 T(u).
+example : shear (![1, 0] + ![0, 1]) = ![2, 1] ∧ shear ![1, 0] + shear ![0, 1] = ![2, 1] := by
+  constructor <;> (ext i; fin_cases i <;> norm_num [shear])
+example : shear ((3 : ℝ) • ![1, 0]) = ![3, 0] ∧ (3 : ℝ) • shear ![1, 0] = ![3, 0] := by
+  constructor <;> (ext i; fin_cases i <;> norm_num [shear])
+-- Sliding right by 1 fails the first test: D(u + v) = (2, 1) but D(u) + D(v) = (3, 1).
+example : (![1, 0] + ![0, 1] : Fin 2 → ℝ) + ![1, 0] = ![2, 1] ∧
+    ((![1, 0] : Fin 2 → ℝ) + ![1, 0]) + (![0, 1] + ![1, 0]) = ![3, 1] := by
+  constructor <;> (ext i; fin_cases i <;> norm_num)
+-- A fixed origin is not enough: squaring the first number keeps (0, 0), sends (1, 1) to (1, 1)
+-- and (2, 2) to (4, 2), not twice (1, 1).
+example : squareFirst 0 = 0 := by
+  ext i; fin_cases i <;> simp [squareFirst]
+example : squareFirst ![1, 1] = ![1, 1] := by
+  ext i; fin_cases i <;> norm_num [squareFirst]
+example : squareFirst ![2, 2] = ![4, 2] := by
+  ext i; fin_cases i <;> norm_num [squareFirst]
+example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1, 1] := by
+  intro h; have := congrFun h 0; norm_num [squareFirst] at this
+
+#print axioms linear_map_is_matrix_of_axis_images
+#print axioms matrix_fixed_by_axis_images
+#print axioms matrix_of_composition_is_product
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'linear_map_is_matrix_of_axis_images' depends on axioms: [propext, Classical.choice, Quot.sound]
+'matrix_fixed_by_axis_images' depends on axioms: [propext, Classical.choice, Quot.sound]
+'matrix_of_composition_is_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

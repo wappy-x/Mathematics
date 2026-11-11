@@ -22,7 +22,9 @@ Move the height a little and those whole numbers stop being whole; factoring goe
 
 The quadratic formula never goes quiet. Hand it the three numbers the equation is built from and back come the answers. It also carries the **discriminant**: one number, worked out first, saying whether there are two answers, one, or none.
 
-**Completing the square turns any quadratic into "something squared equals a number"; do it once with letters instead of numbers and out comes a formula that solves every quadratic there will ever be.**
+**Completing the square turns any quadratic into "something squared equals a number"; do it once with letters instead of numbers and out comes a formula that solves every quadratic.**
+
+**What kind of fact this is:** a theorem, proved on this card in Why it works by completing the square.
 
 ### The picture: the ball, and the 15 metre line
 
@@ -78,6 +80,12 @@ flowchart TD
     B -->|"exactly zero"| E["one answer.<br>20 m up: D = 0, so t = 2 s"]
     B -->|"below zero"| F["no answer on the number line.<br>25 m up: D = -100, so never"]
 ```
+
+### When it holds
+
+- **$a$ is not zero.** With no squared term the formula divides by zero. Solve the straight-line equation instead ([Linear equations](../01-Letters%20and%20Equations/02-linear-equations.md)).
+- **The unknown is squared, and no higher.** Completing the square cannot absorb a cubed term, so higher degrees need other methods, and some have no formula at all ([Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md)).
+- **$D$ is not below zero, for answers on the number line.** At 25 metres $D = -100$, nothing on the number line squares to a negative, and the formula gives no time.
 
 ---
 
@@ -383,6 +391,143 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the formula, the answer count and the sum and product for every quadratic with $a$ not zero.
+
+- When $D$ is not below zero, a number solves $a x^2 + b x + c = 0$ exactly when it is one of the formula's two answers.
+- $D$ above zero gives exactly two answers on the number line, $D$ exactly zero gives one, $-b/(2a)$, and $D$ below zero gives none.
+- The formula's two answers add to $-b/a$ and multiply to $c/a$.
+
+The ball's decimal times, the third mistake and the square root built by Newton's method are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 112 lines</summary>
+
+```lean
+-- The quadratic formula: for real a, b, c with a not zero, the real solutions of a x^2 + b x + c = 0 are exactly (-b ± √(b^2 - 4ac)) / (2a), the discriminant b^2 - 4ac being above, at or below zero gives two, one or no solutions, and the two solutions add to -b/a and multiply to c/a.
+import Mathlib.Algebra.QuadraticDiscriminant
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Data.Set.Card
+import Mathlib.Tactic.NormNum.RealSqrt
+
+/-- The quadratic formula. Take real numbers a, b and c with a not zero, and write the equation
+with one side zero: a x^2 + b x + c = 0. When the discriminant D = b^2 - 4ac is not below zero,
+a real number x solves the equation exactly when x = (-b + √D) / (2a) or x = (-b - √D) / (2a). -/
+theorem quadratic_formula_solves_every_quadratic (a b c : ℝ) (ha : a ≠ 0)
+    (hD : 0 ≤ discrim a b c) (x : ℝ) :
+    a * x ^ 2 + b * x + c = 0 ↔
+      x = (-b + Real.sqrt (discrim a b c)) / (2 * a) ∨
+        x = (-b - Real.sqrt (discrim a b c)) / (2 * a) := by
+  have hs : discrim a b c = Real.sqrt (discrim a b c) * Real.sqrt (discrim a b c) :=
+    (Real.mul_self_sqrt hD).symm
+  have h := quadratic_eq_zero_iff ha hs x
+  rw [← h]
+  constructor <;> intro h' <;> nlinarith [h', sq x]
+
+/-- The discriminant counts the answers on the number line. With a not zero: if D = b^2 - 4ac is
+above zero, a x^2 + b x + c = 0 has exactly two real solutions; if D is exactly zero, its one
+real solution is -b / (2a); if D is below zero, it has no real solution at all. -/
+theorem discriminant_says_how_many_answers (a b c : ℝ) (ha : a ≠ 0) :
+    (0 < discrim a b c → {x : ℝ | a * x ^ 2 + b * x + c = 0}.ncard = 2) ∧
+      (discrim a b c = 0 → {x : ℝ | a * x ^ 2 + b * x + c = 0} = {-b / (2 * a)}) ∧
+      (discrim a b c < 0 → {x : ℝ | a * x ^ 2 + b * x + c = 0} = ∅) := by
+  have hsq : ∀ D : ℝ, 0 ≤ D → Real.sqrt D * Real.sqrt D = D := fun D h => Real.mul_self_sqrt h
+  have key : ∀ x : ℝ, a * x ^ 2 + b * x + c = 0 ↔ a * (x * x) + b * x + c = 0 := by
+    intro x; constructor <;> intro h <;> nlinarith [h]
+  refine ⟨?_, ?_, ?_⟩
+  · intro hD
+    have hs : discrim a b c = Real.sqrt (discrim a b c) * Real.sqrt (discrim a b c) :=
+      (hsq _ hD.le).symm
+    have hpos : 0 < Real.sqrt (discrim a b c) := Real.sqrt_pos.mpr hD
+    have hset : {x : ℝ | a * x ^ 2 + b * x + c = 0} =
+        {(-b + Real.sqrt (discrim a b c)) / (2 * a), (-b - Real.sqrt (discrim a b c)) / (2 * a)} := by
+      ext x
+      simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+      rw [key]
+      exact quadratic_eq_zero_iff ha hs x
+    rw [hset]
+    apply Set.ncard_pair
+    intro h
+    have h2a : (2 * a) ≠ 0 := mul_ne_zero two_ne_zero ha
+    rw [div_left_inj' h2a] at h
+    linarith
+  · intro hD
+    have hs : discrim a b c = 0 * 0 := by rw [hD]; ring
+    ext x
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]
+    rw [key, quadratic_eq_zero_iff ha hs x]
+    simp
+  · intro hD
+    ext x
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+    intro h
+    unfold discrim at hD
+    have e : b ^ 2 - 4 * a * c = (2 * a * x + b) ^ 2 := by linear_combination (-4 * a) * h
+    rw [e] at hD
+    exact absurd hD (not_lt.mpr (sq_nonneg _))
+
+/-- Vieta's formulas, read off the quadratic formula. With a not zero and D = b^2 - 4ac not below
+zero, the two answers (-b + √D) / (2a) and (-b - √D) / (2a) add to -b/a and multiply to c/a. -/
+theorem quadratic_answers_add_to_neg_b_over_a_and_multiply_to_c_over_a (a b c : ℝ) (ha : a ≠ 0)
+    (hD : 0 ≤ discrim a b c) :
+    (-b + Real.sqrt (discrim a b c)) / (2 * a) + (-b - Real.sqrt (discrim a b c)) / (2 * a)
+        = -b / a ∧
+      (-b + Real.sqrt (discrim a b c)) / (2 * a) * ((-b - Real.sqrt (discrim a b c)) / (2 * a))
+        = c / a := by
+  have h2 := Real.mul_self_sqrt hD
+  have h2a : (2 * a) ≠ 0 := mul_ne_zero two_ne_zero ha
+  constructor
+  · field_simp
+    ring
+  · unfold discrim at h2 ⊢
+    field_simp
+    nlinarith [h2]
+
+-- The ball: height 20t - 5t^2 is 20 metres at t = 2, and 15 metres at t = 1 and t = 3.
+example : (20 : ℝ) * 2 - 5 * 2 ^ 2 = 20 ∧ (20 : ℝ) * 1 - 5 * 1 ^ 2 = 15 ∧
+    (20 : ℝ) * 3 - 5 * 3 ^ 2 = 15 := by norm_num
+-- Landing: 20t - 5t^2 = 0 at 0 and 4 seconds.
+example : (20 : ℝ) * 0 - 5 * 0 ^ 2 = 0 ∧ (20 : ℝ) * 4 - 5 * 4 ^ 2 = 0 := by norm_num
+-- The 15 metre question: 5t^2 - 20t + 15 = 0 is solved by t = 1 and t = 3.
+example : (5 : ℝ) * 1 ^ 2 + (-20) * 1 + 15 = 0 ∧ (5 : ℝ) * 3 ^ 2 + (-20) * 3 + 15 = 0 := by
+  norm_num
+-- Completing the square on the numbers: (t - 2)^2 = 1 at t = 1 and t = 3.
+example : ((1 : ℝ) - 2) ^ 2 = 1 ∧ ((3 : ℝ) - 2) ^ 2 = 1 := by norm_num
+-- Worked numbers by hand: b^2 = 400, 4ac = 300, D = 100, its root 10, -b = 20, 2a = 10.
+example : (-20 : ℝ) ^ 2 = 400 ∧ (4 : ℝ) * 5 * 15 = 300 ∧ discrim (5 : ℝ) (-20) 15 = 100 ∧
+    Real.sqrt 100 = 10 ∧ -(-20 : ℝ) = 20 ∧ (2 : ℝ) * 5 = 10 := by
+  norm_num [discrim]
+-- The formula itself hands back 1 and 3.
+example : (-(-20 : ℝ) - Real.sqrt (discrim 5 (-20) 15)) / (2 * 5) = 1 ∧
+    (-(-20 : ℝ) + Real.sqrt (discrim 5 (-20) 15)) / (2 * 5) = 3 := by
+  norm_num [discrim]
+-- Sum and product: 1 + 3 = 20/5 = -b/a and 1 × 3 = 15/5 = c/a.
+example : (1 : ℝ) + 3 = -(-20) / 5 ∧ (1 : ℝ) * 3 = 15 / 5 := by norm_num
+-- 20 metres: D = 400 - 400 = 0, and the one answer is 20 / 10 = 2.
+example : discrim (5 : ℝ) (-20) 20 = 0 ∧ -(-20 : ℝ) / (2 * 5) = 2 := by norm_num [discrim]
+-- 25 metres: D = 400 - 500 = -100, below zero, so never.
+example : discrim (5 : ℝ) (-20) 25 = -100 := by norm_num [discrim]
+-- A lower height, 10 metres: D = 200.
+example : discrim (5 : ℝ) (-20) 10 = 200 := by norm_num [discrim]
+-- The first two mistakes: using b for -b gives -3 and -1; dividing only the root gives 19 and 21.
+example : ((-20 : ℝ) - 10) / 10 = -3 ∧ ((-20 : ℝ) + 10) / 10 = -1 ∧
+    (20 : ℝ) - 10 / 10 = 19 ∧ (20 : ℝ) + 10 / 10 = 21 := by norm_num
+
+#print axioms quadratic_formula_solves_every_quadratic
+#print axioms discriminant_says_how_many_answers
+#print axioms quadratic_answers_add_to_neg_b_over_a_and_multiply_to_c_over_a
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'quadratic_formula_solves_every_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'discriminant_says_how_many_answers' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert halts the program when a number comes out wrong, and these are pinned to the ball.
@@ -408,7 +553,7 @@ The two outputs match line for line.
 
 - **Anything thrown, dropped or fired.** Height under gravity is a quadratic in time. "When does it pass this height" and "when does it land" are one question asked twice: the landing is 20t - 5t^2 = 0, answered at 0 and 4 seconds.
 - **Break-even in a plan.** Sales fall as the price rises, so revenue — price times sales — is a quadratic in price. Set it against costs and the answers are the break-even prices; the discriminant says whether any price pays at all.
-- **Inside bigger machinery.** [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md) ends on a quadratic, solved by this formula.
+- **Inside bigger machinery.** [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md), the directions a matrix only stretches and the stretch factors, ends on a quadratic, solved by this formula.
 
 > **Say it back**
 > A quadratic has a squared unknown, a plain unknown and a number. The one shape that unwinds in a single step is "something squared equals a number", so force the equation into it: halve the middle coefficient, square it, add it, take it back off. Do that once on letters and out drops the quadratic formula. Under its square root sits the discriminant, counting the answers before you find them: above zero two, exactly zero one, below zero none. The ball is 15 metres up at 1 second and again at 3, touches 20 metres at 2 seconds, and never sees 25.
@@ -427,6 +572,8 @@ The two outputs match line for line.
 - [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): where the answers go when the discriminant is negative.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): degree 3 and 4 have formulas like this one; degree 5 provably has none.
 - [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): a 2 by 2 matrix hands you a quadratic; this formula finishes it.
+
+Left open: when the discriminant is below zero, as at 25 metres, are there truly no answers, or do they live off the number line?
 
 ---
 

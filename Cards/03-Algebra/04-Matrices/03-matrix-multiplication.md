@@ -10,11 +10,13 @@ A workshop makes cold brew and sourdough. A batch of brew takes 20 g of coffee b
 
 The question: how many grams of beans and of flour come down each day?
 
-Two steps answer it: one turns a day into a count of products, the other turns products into grams. Multiplying those tables builds the single table that does both at once, and its recipe — a row of the first against a column of the second, multiplied in pairs and added — is no convention someone picked. It is what "do this, then that" comes out as when both steps are tables.
+Two steps answer it: one turns a day into a count of products, the other turns products into grams. Multiplying those tables, called matrices, builds the single table that does both at once.
+
+Its recipe — a row of the first against a column of the second, multiplied in pairs and added — is no convention someone picked. It is what "do this, then that" comes out as when both steps are tables.
 
 **Multiplying matrices is chaining two steps into one, and row-by-column is the arithmetic that chaining forces.**
 
-**What kind of fact this is:** a definition, but a forced one: Why it works derives it from composition and proves the size and grouping rules.
+**What kind of fact this is:** a definition, but a forced one: Why it works derives it from composition, one step done after another, and proves the size and grouping rules.
 
 ```mermaid
 flowchart LR
@@ -54,7 +56,7 @@ That is the dot product of [Matrix times vector](02-matrix-times-vector.md), onc
 
 - **The inner numbers match.** Padding a table to force a product invents numbers.
 - **The middle labels agree, in the same order** — here brews and loaves. Sizes can match while labels do not, and then the arithmetic means nothing.
-- **The entries are plain numbers**, so sums and products regroup freely: the grouping rule rests on that.
+- **The entries are plain numbers**, so sums and products regroup freely: the grouping rule, $(AB)C = A(BC)$ in Step 5, rests on that.
 - **One fixed table per step.** A brew takes 20 g whether the workshop makes one or ten.
 
 ---
@@ -63,7 +65,7 @@ That is the dot product of [Matrix times vector](02-matrix-times-vector.md), onc
 
 ### Step 0: a matrix is a machine, not a spreadsheet
 
-A matrix takes a list of numbers in and hands a list back ([Matrix times vector](02-matrix-times-vector.md)): feed the schedule matrix a day, get products; feed the recipe matrix products, get grams.
+A matrix takes a list of numbers in and hands a list back ([Matrix times vector](02-matrix-times-vector.md)). Feed the schedule matrix a day, get products; feed the recipe matrix products, get grams.
 
 Two machines in a row is composition, one function inside another ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)), whose order is baked in: the inner one first.
 
@@ -77,7 +79,7 @@ Monday's beans paired the beans row of the recipe matrix with the Monday column 
 
 Stack the two days side by side: the grams-per-day table `[[40, 20], [60, 60]]`, rows beans and flour, columns Monday and Tuesday.
 
-### Step 3: the size rule is the recipe, not red tape
+### Step 3: the size rule is part of the recipe, not an extra rule
 
 Pairing a row with a column entry by entry needs equal lengths: a row is as long as the matrix has columns, a column as long as it has rows. So the left's column count must equal the right's row count, and the answer has one entry per row of the left and column of the right: $m$ × $p$.
 
@@ -93,13 +95,17 @@ Chain on a third matrix: $C$ counts each weekday in a four-week month, four Mond
 
 Two routes to the month's list. Grams per day first, then the days: `[[40, 20], [60, 60]]` times `[[4], [4]]` gives `[[240], [480]]`. Or products per month first — `[[2, 1], [1, 1]]` times `[[4], [4]]` gives `[[12], [8]]`, twelve brews and eight loaves — then the recipes: `[[240], [480]]`.
 
-Both give 240 g of beans and 480 g of flour, and must: each is "do $C$, then $B$, then $A$". Order is load-bearing; grouping is not.
+Both give 240 g of beans and 480 g of flour, and must: each is "do $C$, then $B$, then $A$". Order carries meaning; grouping does not.
 
 <details>
 <summary>Detailed proof: why the grouping never matters</summary>
 
-Expand one entry both ways. An entry of $(AB)C$ adds, over the days, a grams-per-day figure times that weekday's count; each such figure is a sum over the products, so multiplying out leaves one term per product-and-day pairing: grams per unit, times units that day, times that day's count.
+Expand one entry both ways.
+
+An entry of $(AB)C$ adds, over the days, a grams-per-day figure times that weekday's count. Each such figure is a sum over the products. So multiplying out leaves one term per product-and-day pairing: grams per unit, times units that day, times that day's count.
+
 An entry of $A(BC)$ groups the same multiplication the other way, over the products first, and multiplies out to the same terms for the same pairings.
+
 One identical list either way, and a finite sum totals the same in any order, so $(AB)C = A(BC)$ whenever the sizes fit.
 
 </details>
@@ -108,6 +114,7 @@ One identical list either way, and a finite sum totals the same in any order, so
 <summary>One column times one row, and why it is worth knowing</summary>
 
 Take column 1 of $A$, one brew's ingredients (20, 0) standing up, and row 1 of $B$, brews each day (2, 1) lying down. Multiply tall by wide: out comes a 2 × 2 grid, `[[40, 20], [0, 0]]`, the whole brew business. A column times a row, a grid instead of one number, is an **outer product**.
+
 Column 2 of $A$ against row 2 of $B$ gives the loaves, `[[0, 0], [60, 60]]`; added, the grids give $AB$. So the product reads entry by entry, or slice by slice, and the code does both.
 
 </details>
@@ -356,6 +363,129 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three rules for every size that fits and any plain-number entries, not just the workshop's tables.
+
+- One table does "$B$, then $A$" on every list fed in exactly when each entry is a row of $A$ against a column of $B$.
+- The grouping never matters: $(AB)C = A(BC)$ whenever the sizes fit.
+- The order can matter: for square tables of every size from 2 × 2 up, some pair gives $AB$ different from $BA$.
+- The workshop's numbers match the card: $AB$, $BA$, $BC$, both groupings of the month, the outer products, and the entry-by-entry mistake.
+
+Showing that $C$ on the left of $AB$ is no product, and printing the tables, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 96 lines</summary>
+
+```lean
+-- Matrix multiplication: the row-by-column rule is the only table that does "B, then A" in one step, grouping a chain never changes it, order can change it at every square size from 2 up, and the card's workshop numbers come out as it says.
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.LinearAlgebra.Matrix.Hadamard
+import Mathlib.Data.Matrix.Basis
+
+open Matrix
+
+/-- Row by column is what "do this, then that" forces. Take `B` of size n × p (the first step)
+and `A` of size m × n (the second step), with entries plain numbers. A table `M` of size m × p
+does both steps in one, on every input list `v`, exactly when each of its entries is a row of `A`
+against a column of `B`, multiplied in pairs and added:
+`M i j = A i 1 * B 1 j + A i 2 * B 2 j + ... + A i n * B n j`. -/
+theorem row_by_column_is_forced_by_chaining {R : Type*} [CommRing R] {m n p : ℕ}
+    (A : Matrix (Fin m) (Fin n) R) (B : Matrix (Fin n) (Fin p) R)
+    (M : Matrix (Fin m) (Fin p) R) :
+    (∀ v : Fin p → R, M *ᵥ v = A *ᵥ (B *ᵥ v)) ↔
+      ∀ i j, M i j = ∑ k, A i k * B k j := by
+  rw [show (∀ v : Fin p → R, M *ᵥ v = A *ᵥ (B *ᵥ v)) ↔ M = A * B by
+    simp_rw [Matrix.mulVec_mulVec]
+    exact Matrix.ext_iff_mulVec.symm]
+  constructor
+  · rintro rfl i j
+    exact Matrix.mul_apply
+  · intro h
+    ext i j
+    rw [h i j, Matrix.mul_apply]
+
+/-- Brackets do not carry meaning. For any sizes that fit (`A` is m × n, `B` is n × p, `C` is
+p × q) and plain-number entries, multiplying `A` by `B` first and then by `C` gives the same
+table as multiplying `B` by `C` first and then `A` by that. -/
+theorem grouping_never_matters {R : Type*} [CommRing R] {m n p q : ℕ}
+    (A : Matrix (Fin m) (Fin n) R) (B : Matrix (Fin n) (Fin p) R)
+    (C : Matrix (Fin p) (Fin q) R) :
+    (A * B) * C = A * (B * C) := by
+  exact Matrix.mul_assoc A B C
+
+/-- The order carries the meaning. For square tables of every size from 2 × 2 up, with
+plain-number entries (so 1 is not 0), there are two tables `A` and `B` for which `A * B` and
+`B * A` differ. -/
+theorem order_can_change_the_answer {R : Type*} [CommRing R] [Nontrivial R] (n : ℕ)
+    (hn : 2 ≤ n) :
+    ∃ A B : Matrix (Fin n) (Fin n) R, A * B ≠ B * A := by
+  classical
+  refine ⟨Matrix.single ⟨0, by omega⟩ ⟨1, by omega⟩ 1,
+    Matrix.single ⟨1, by omega⟩ ⟨0, by omega⟩ 1, ?_⟩
+  intro h
+  have h2 := congrFun (congrFun h ⟨0, by omega⟩) ⟨0, by omega⟩
+  rw [Matrix.single_mul_single_same, Matrix.single_mul_single_same, Matrix.single_apply_same,
+    Matrix.single_apply_of_ne] at h2
+  · simp at h2
+  · simp [Fin.ext_iff]
+
+/-- `A`: grams per product. Rows beans and flour, columns brew and loaf. -/
+def recipe : Matrix (Fin 2) (Fin 2) ℤ := !![20, 0; 0, 60]
+
+/-- `B`: products per day. Rows brew and loaf, columns Monday and Tuesday. -/
+def schedule : Matrix (Fin 2) (Fin 2) ℤ := !![2, 1; 1, 1]
+
+/-- `C`: how many of each weekday in four weeks. Rows Monday and Tuesday, one column. -/
+def month : Matrix (Fin 2) (Fin 1) ℤ := !![4; 4]
+
+-- The four entries of AB, worked by hand.
+example : (20 : ℤ) * 2 + 0 * 1 = 40 := by norm_num
+example : (20 : ℤ) * 1 + 0 * 1 = 20 := by norm_num
+example : (0 : ℤ) * 2 + 60 * 1 = 60 := by norm_num
+example : (0 : ℤ) * 1 + 60 * 1 = 60 := by norm_num
+-- A row 2, column 1 is 0: no flour in a brew.
+example : recipe 1 0 = 0 := by decide
+-- Monday through both machines: Monday's column (2, 1) of products becomes 40 g and 60 g.
+example : recipe *ᵥ ![2, 1] = ![40, 60] := by decide
+-- The grams-per-day table AB.
+example : recipe * schedule = !![40, 20; 60, 60] := by decide
+-- The flipped order BA: same tables, different answer.
+example : schedule * recipe = !![40, 60; 20, 60] := by decide
+example : recipe * schedule ≠ schedule * recipe := by decide
+-- Products per month BC: twelve brews and eight loaves.
+example : schedule * month = !![12; 8] := by decide
+-- Both groupings of the month: 240 g of beans and 480 g of flour.
+example : (recipe * schedule) * month = !![240; 480] := by decide
+example : recipe * (schedule * month) = !![240; 480] := by decide
+-- One column times one row: the outer products, and their sum is AB.
+example : vecMulVec (fun i => recipe i 0) (fun j => schedule 0 j) = !![40, 20; 0, 0] := by decide
+example : vecMulVec (fun i => recipe i 1) (fun j => schedule 1 j) = !![0, 0; 60, 60] := by decide
+example : (!![40, 20; 0, 0] : Matrix (Fin 2) (Fin 2) ℤ) + !![0, 0; 60, 60] = !![40, 20; 60, 60] := by
+  decide
+-- The mistake: entry by entry gives a different table.
+example : recipe ⊙ schedule = !![40, 0; 0, 60] := by decide
+-- The slices of AB against C: 160 + 80 and 240 + 240.
+example : vecMulVec (fun i => (recipe * schedule) i 0) (fun j => month 0 j) = !![160; 240] := by
+  decide
+example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !![80; 240] := by
+  decide
+
+#print axioms row_by_column_is_forced_by_chaining
+#print axioms grouping_never_matters
+#print axioms order_can_change_the_answer
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'row_by_column_is_forced_by_chaining' depends on axioms: [propext, Classical.choice, Quot.sound]
+'grouping_never_matters' depends on axioms: [propext, Classical.choice, Quot.sound]
+'order_can_change_the_answer' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to the workshop's numbers.
@@ -372,7 +502,7 @@ The two outputs match line for line.
 >
 > - **Multiplying entry by entry** gives `[[40, 0], [0, 60]]`: nothing was added.
 > - **Stopping after the first product** gives `[[40, 20], [0, 0]]`: row against column means multiply *and add*.
-> - **Treating the size rule as bureaucracy.** $C$ on the left of $AB$ is no product — not a zero, not an error.
+> - **Treating the size rule as a formality.** $C$ on the left of $AB$ is no product — not a zero, not an error.
 > - **Losing the labels.** Rows come from the left matrix, columns from the right.
 
 ---
@@ -384,7 +514,7 @@ The two outputs match line for line.
 - **Neural networks.** Each layer multiplies its input by a table of learned numbers, and a step between layers that is no matrix keeps the stack from collapsing into one. Nearly all the electricity a large model burns goes on these products.
 
 > **Say it back**
-> To multiply two matrices, take a row from the left and a column from the right, multiply the pairs and add them up, and put that number at that row and column of the answer. Recipes times schedule gave `[[40, 20], [60, 60]]`: 40 g of beans and 60 g of flour on Monday, 20 g and 60 g on Tuesday. It works that way because a product means one step and then the other, so swapping the order asks a different question.
+> To multiply two matrices, take a row from the left and a column from the right, and multiply the pairs and add them up. Put that number at that row and column of the answer. Recipes times schedule gave `[[40, 20], [60, 60]]`: 40 g of beans and 60 g of flour on Monday, 20 g and 60 g on Tuesday. It works that way because a product means one step and then the other, so swapping the order asks a different question.
 
 ---
 

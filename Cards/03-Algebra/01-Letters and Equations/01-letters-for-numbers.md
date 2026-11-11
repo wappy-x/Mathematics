@@ -14,6 +14,8 @@ One rule made both numbers: three dollars, plus two dollars a mile. Write the nu
 
 **A letter is a slot for a number, and an expression is the instruction sheet you run once you know what goes in the slot.**
 
+**What kind of fact this is:** a definition, a way of writing a rule down; the rewritings 6 + 4m and 2(3 + 2m) are proved in Why it works from the rearranging laws.
+
 ### The picture: one taxi and two, from 0 to 10 miles
 
 ```mermaid
@@ -48,6 +50,13 @@ $$F = 3 + 2m$$
 | $2(3 + 2m)$ | the same two fares, written as double one fare | $30 | — |
 
 Each piece separated by a plus or minus sign is a **term**. So 3 + 2m has two terms: the number 3, and the term 2m. The 2 sitting in front of the m is the **coefficient**: how many of that letter you have.
+
+### When it holds
+
+- **One number per letter.** In 3 + 2m + 3 + 2m, both m's are the same trip. Give them two different rides and the fares no longer collect into 6 + 4m.
+- **Multiply before you add.** Add the 3 and the 2 first and the 6-mile fare comes out at 30, not 15.
+- **A fixed start fee and a fixed rate.** If the price per mile changes partway through the ride, 3 + 2m stops matching the meter.
+- **Trying values needs a whole-number answer.** The search from 0 to 20 miles finds one ride, m = 6, for a $15 meter. A fare that no whole number of miles gives leaves the search empty.
 
 ---
 
@@ -307,6 +316,87 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three rules for every number of miles, not just the 0 to 20 the code tries.
+
+- Two fares added, 3 + 2m + 3 + 2m, collect to 6 + 4m, and the bracketed 2(3 + 2m) is the same 6 + 4m.
+- Starting at $3 and adding $2 once for each mile always lands on 3 + 2m, for any whole number of miles.
+- A $15 meter means exactly 6 miles. No other whole number of miles gives $15, however far you search.
+
+It also checks the worked numbers exactly: the 6- and 10-mile fares, the plotted lines, the search up to 20 and the four mistakes. The printed tables and the running code are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 55 lines</summary>
+
+```lean
+-- Letters for numbers: for every number of miles m, two taxi fares 3 + 2m added together, the collected form 6 + 4m and the bracketed form 2(3 + 2m) are the same number, the fare built a mile at a time is 3 + 2m, a fare of 15 means exactly 6 whole miles, and the card's worked numbers and wrong readings come out as it says.
+import Mathlib.Algebra.Ring.Defs
+import Mathlib.Logic.Function.Iterate
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-- Two taxis on the same trip of `m` miles, where each charges 3 dollars to start plus
+2 dollars a mile. Adding the two fares `3 + 2m` and collecting like terms gives `6 + 4m`, and
+doubling one fare with a bracket, `2(3 + 2m)`, multiplies out to the same `6 + 4m`. Both taxis
+share the one letter `m`, the 2 multiplies the `m`, and the start fee is charged by each taxi.
+This uses only the rearranging laws, so it holds for any number `m` in any number system that
+obeys them (a commutative semiring), whole numbers included. -/
+theorem two_fares_collected_equals_bracketed {R : Type*} [CommSemiring R] (m : R) :
+    (3 + 2 * m) + (3 + 2 * m) = 6 + 4 * m ∧ 2 * (3 + 2 * m) = 6 + 4 * m := by
+  constructor <;> ring
+
+/-- The fare built a mile at a time: start at 3 dollars and add 2 dollars once for each of the
+`m` miles. That always lands on the recipe `3 + 2m`, whatever whole number `m` is. -/
+theorem fare_a_mile_at_a_time (m : ℕ) : (fun total => total + 2)^[m] 3 = 3 + 2 * m := by
+  induction m with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', ih]
+    omega
+
+/-- The letter as an unknown: the meter reads 15 dollars on a whole number of miles `m`
+exactly when `m` is 6. (The card tries every whole number up to 20; this holds for all of them.) -/
+theorem fare_fifteen_means_six_miles (m : ℕ) : 3 + 2 * m = 15 ↔ m = 6 := by
+  omega
+
+-- Substituting into 3 + 2m: 6 miles, 10 miles and no miles at all.
+example : 2 * 6 = 12 := by decide
+example : 3 + 2 * 6 = 15 := by decide
+example : 3 + 2 * 10 = 23 := by decide
+example : 3 + 2 * 0 = 3 := by decide
+-- A mile at a time for 6 miles.
+example : 3 + 2 + 2 + 2 + 2 + 2 + 2 = 15 := by decide
+-- The two-taxi fare three ways at 6 miles.
+example : 15 + 15 = 30 := by decide
+example : 6 + 4 * 6 = 30 := by decide
+example : 2 * (3 + 2 * 6) = 30 := by decide
+-- The plotted lines at 0, 2, 4, 6, 8 and 10 miles.
+example : [0, 2, 4, 6, 8, 10].map (fun m => 3 + 2 * m) = [3, 7, 11, 15, 19, 23] := by decide
+example : [0, 2, 4, 6, 8, 10].map (fun m => 6 + 4 * m) = [6, 14, 22, 30, 38, 46] := by decide
+-- Only 6 of the whole numbers 0 to 20 gives a 15-dollar fare.
+example : (List.range 21).filter (fun m => 3 + 2 * m = 15) = [6] := by decide
+-- The four mistakes at 6 miles: 5m, 2 + m, 6 + 2m and 3 + 4m.
+example : 5 * 6 = 30 := by decide
+example : 3 + (2 + 6) = 11 := by decide
+example : 6 + 2 * 6 = 18 := by decide
+example : 3 + 4 * 6 = 27 := by decide
+
+#print axioms two_fares_collected_equals_bracketed
+#print axioms fare_a_mile_at_a_time
+#print axioms fare_fifteen_means_six_miles
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'two_fares_collected_equals_bracketed' depends on axioms: [propext]
+'fare_a_mile_at_a_time' depends on axioms: [propext, Quot.sound]
+'fare_fifteen_means_six_miles' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program if a number comes out wrong, and these are pinned to the taxi's numbers, so expect one to stop it.
@@ -350,6 +440,8 @@ The two outputs match line for line.
 
 - [Linear equations](02-linear-equations.md): finding the unknown without trying every value, by doing the same thing to both sides.
 - [Polynomials](../02-Polynomials/01-polynomials.md): expressions where the letter carries powers, collected and bracketed by the same two moves.
+
+Left open: when the meter shows a fare, how do you find the miles without trying every value?
 
 ---
 
