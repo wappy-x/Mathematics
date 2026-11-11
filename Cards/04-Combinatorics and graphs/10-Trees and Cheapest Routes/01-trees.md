@@ -6,11 +6,13 @@
 
 ## General Overview
 
-A village has seven houses, A to G, and six lanes: A-B, B-C, B-D, D-E, D-F and F-G. Every house can be reached from every other, and nobody has a way round: leave a house, never turning back along the lane just used, and there is no way home.
+A village has seven houses, A to G, and six lanes: A-B, B-C, B-D, D-E, D-F and F-G. Every house can be reached from every other, and nobody has a way round. Leave a house, never turning back along the lane just used, and there is no way home.
 
 Cut one lane and somebody is stranded: lose B-D and A, B, C lose contact with D, E, F, G. Lay one lane and a loop appears: A to G closes the ring A, B, D, F, G. The village has the lanes it needs, not one spare.
 
-Such a map is a **tree**, the name Cayley gave it in 1857: *connected*, meaning some route joins every pair of houses ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)), and free of any *cycle*, meaning no route leaves a house and comes back to it repeating nothing else on the way ([Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)). Four descriptions with nothing obvious in common then pick out the same maps, two of them counts that trace no route.
+Such a map is a **tree**, the name Cayley gave it in 1857. It is *connected*: some route joins every pair of houses ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)). It is free of any *cycle*, or loop: no route leaves a house and comes back to it repeating nothing else on the way ([Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)).
+
+Four descriptions with nothing obvious in common then pick out the same maps, two of them counts that trace no route.
 
 **Connected with no cycle, one route between every pair, and one lane fewer than houses paired with either joined-up or loop-free — all the same maps, and every one of them with two houses or more has at least two houses served by a single lane.**
 
@@ -34,7 +36,9 @@ B and D carry three lanes each, F two; A, C, E and G carry one apiece.
 
 ## The formula
 
-Notation first. A map is its houses and the pairs a lane joins: $V$ the houses, $E$ the lanes, $n$ and $m$ how many of each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). $G$ is any map, $T$ a tree; $c(G)$ counts its pieces and $\deg(v)$ the lanes at house $v$, its **degree** ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A house of degree 1 is a **leaf**, and the double arrow $\Longleftrightarrow$ reads "exactly when".
+Notation first. A map is its houses and the pairs a lane joins: $V$ the houses, $E$ the lanes, $n$ and $m$ how many of each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)).
+
+$G$ is any map, $T$ a tree; $c(G)$ counts its pieces and $\deg(v)$ the lanes at house $v$, its **degree** ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A house of degree 1 is a **leaf**, and the double arrow $\Longleftrightarrow$ reads "exactly when".
 
 $$m = n - 1$$
 
@@ -48,7 +52,7 @@ $$m = n - c(G)$$
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$, $G$ | a tree; any map, tree or not | the village; the trap, 6 lanes in 2 pieces | — |
+| $T$, $G$ | a tree; any map, tree or not | the village; the trap, a triangle A-B-C beside the path D-E-F-G, 6 lanes in 2 pieces | — |
 | $V$, $E$, $n$, $m$ | houses, lanes, how many of each | A to G; six lanes; 7 and 6 | one more house than lanes, always |
 | $c(G)$ | pieces the map falls into | 1, then 2 once B-D is cut | one lane fewer for each extra piece |
 | $\deg(v)$ | lanes at a house | 3 at B, 1 at A | fewer leaves |
@@ -66,7 +70,9 @@ $$m = n - c(G)$$
 
 ### Step 0: a second route is a loop, and a loop is a second route
 
-Follow two different routes from $v$ to $w$. Let $x$ be the last house they share before parting, $z$ the first beyond $x$ lying on both — they meet again, since both end at $w$. The two stretches from $x$ to $z$ share only their ends, so together they close a loop, and they cannot both be the lane from $x$ to $z$, there being at most one. The loop takes in three houses or more: a cycle. Read backwards, a cycle gives two routes between any two of its houses, one each way round. Spare routes and loops are one fact seen twice.
+Follow two different routes from $v$ to $w$. Let $x$ be the last house they share before parting, $z$ the first beyond $x$ lying on both — they meet again, since both end at $w$. The two stretches from $x$ to $z$ share only their ends, so together they close a loop. They cannot both be the lane from $x$ to $z$, since there is at most one. The loop takes in three houses or more: a cycle.
+
+Read backwards, a cycle gives two routes between any two of its houses, one each way round. Spare routes and loops are one fact seen twice.
 
 ### Step 1: so joined up and loop-free gives one route per pair
 
@@ -74,7 +80,9 @@ Connected gives every pair a route; no cycle forbids a second. Exactly one each:
 
 ### Step 2: two houses or more means two leaves or more
 
-Finitely many routes, so one of them is longest. Its first house is a leaf. A second lane there would run to a house $w$: with $w$ off the route, that lane on the front makes a longer route; with $w$ on it, the stretch along to $w$ closes a loop. Neither is allowed, and the far end goes the same way. The village has four leaves, A, C, E and G, its degrees adding to 12 — twice its six lanes ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)).
+Finitely many routes, so one of them is longest. Its first house is a leaf. A second lane there would run to a house $w$. With $w$ off the route, that lane on the front makes a longer route. With $w$ on it, the stretch along to $w$ closes a loop. Neither is allowed, and the far end goes the same way.
+
+The village has four leaves, A, C, E and G, its degrees adding to 12 — twice its six lanes ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)).
 
 ### Step 3: peel the leaves and the lanes count themselves
 
@@ -90,13 +98,13 @@ flowchart LR
     P2 -->|"peel a leaf"| P1["1 house<br/>0 lanes"]
 ```
 
-Each step drops a house and a lane together, which is all $m = n - 1$ says: one house holds $0 = 1 - 1$ lanes, and a tree on $n$ houses is a tree on one fewer with a house and a lane put back ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Each step drops a house and a lane together, which is all $m = n - 1$ says. One house holds $0 = 1 - 1$ lanes, and a tree on $n$ houses is a tree on one fewer with a house and a lane put back ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 ### Step 4: the count, with one companion, is enough
 
 Connected with $m = n - 1$ forbids a cycle. Drop a lane of the supposed cycle and the map stays connected, the rest of the loop still joining that lane's ends; keep going until no loop is left. What remains is a tree, with $n - 1$ lanes by Step 3 — yet lanes were thrown away. So there was no cycle.
 
-Loop-free with $m = n - 1$ forces a single piece: every piece is a tree in its own right, carrying one lane fewer than its houses, so the pieces add to the forest law, and $m = n - 1$ makes $c(G) = 1$.
+Loop-free with $m = n - 1$ forces a single piece. Every piece is a tree in its own right, carrying one lane fewer than its houses, so the pieces add to the forest law. Then $m = n - 1$ makes $c(G) = 1$.
 
 <details>
 <summary>Detailed proof: why four descriptions need only six implications</summary>
@@ -107,7 +115,9 @@ Call them (1) connected and no cycle, (2) one route between each pair, (3) conne
 
 ### Step 5: every lane a bridge, every missing lane one loop
 
-Each lane is the only route between its own two ends, so losing it leaves none: the pieces go from one to two and the forest law reads off the remainder, $5 = 7 - 2$ lanes. Every lane of a tree is therefore a **bridge**, a lane whose loss raises the piece count ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)). Adding a lane closes the unique old route between its ends into a ring, and no other: a new cycle must use the new lane, and the route it completes is unique. The check cuts all six lanes and adds all fifteen missing ones.
+Each lane is the only route between its own two ends, so losing it leaves none. The pieces go from one to two, and the forest law reads off the remainder, $5 = 7 - 2$ lanes. Every lane of a tree is therefore a **bridge**, a lane whose loss raises the piece count ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
+
+Adding a lane closes the unique old route between its ends into a ring, and no other. A new cycle must use the new lane, and the route it completes is unique. The check cuts all six lanes and adds all fifteen missing ones.
 
 A second road lists maps instead of arguing: of the 1024 lane maps on five houses, all four descriptions pick the same 125. Counting trees rather than testing them is [Spanning trees](03-spanning-trees-and-cayleys-formula.md).
 
@@ -330,6 +340,149 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves these for every map meeting When it holds, not just the village, and checks the village's own numbers.
+
+- With one house or more, these pick out the same maps: connected with no cycle, one route per pair, and $m = n - 1$ paired with either.
+- A tree with two houses or more has at least two leaves.
+- A map with no cycle, joined up or not, obeys the forest law $m = n - c(G)$.
+- The village spends 6 lanes on 7 houses, its degrees add to 12, and its leaves are A, C, E and G.
+- The trap also spends 6 lanes on 7 houses.
+
+Each lane being a bridge, each new lane closing one loop, and the 1024-map census are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 112 lines</summary>
+
+```lean
+-- Trees: for a finite simple graph, being connected with no cycle, having exactly one path between each pair of vertices, being connected with one edge fewer than vertices, and having no cycle with one edge fewer than vertices are the same thing; every such tree on two or more vertices has at least two leaves, a forest has as many edges as vertices minus pieces, and the card's village numbers check out.
+import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+
+open Finset
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
+omit [DecidableEq V] in
+lemma trees_ncard_edgeSet_eq (G : SimpleGraph V) [DecidableRel G.Adj] :
+    G.edgeSet.ncard = G.edgeFinset.card := by
+  rw [← Nat.card_coe_set_eq, Nat.card_eq_fintype_card, SimpleGraph.edgeFinset_card]
+
+omit [DecidableEq V] in
+lemma trees_isTree_iff_connected_card [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj] :
+    G.IsTree ↔ G.Connected ∧ G.edgeFinset.card + 1 = Fintype.card V := by
+  rw [SimpleGraph.isTree_iff_connected_and_card, Nat.card_coe_set_eq,
+    trees_ncard_edgeSet_eq, Nat.card_eq_fintype_card]
+
+omit [DecidableEq V] in
+lemma trees_isTree_iff_acyclic_card [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj] :
+    G.IsTree ↔ G.IsAcyclic ∧ G.edgeFinset.card + 1 = Fintype.card V := by
+  rw [SimpleGraph.isTree_iff_isAcyclic_and_ncard_edgeSet_add_one_eq_card,
+    trees_ncard_edgeSet_eq, Nat.card_eq_fintype_card]
+
+/-- Four descriptions, one kind of map. On finitely many houses (at least one), with lanes running
+both ways, at most one lane per pair and none from a house to itself, these say the same thing:
+(1) connected with no cycle; (2) exactly one route (a path, repeating no house) between every
+pair; (3) connected with one lane fewer than houses, `m + 1 = n`; (4) no cycle with one lane
+fewer than houses. -/
+theorem tree_four_descriptions_equivalent [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj] :
+    List.TFAE
+      [G.Connected ∧ G.IsAcyclic,
+       ∀ v w : V, ∃! p : G.Walk v w, p.IsPath,
+       G.Connected ∧ G.edgeFinset.card + 1 = Fintype.card V,
+       G.IsAcyclic ∧ G.edgeFinset.card + 1 = Fintype.card V] := by
+  have h1 : G.IsTree ↔ G.Connected ∧ G.IsAcyclic := SimpleGraph.isTree_iff G
+  have h2 : G.IsTree ↔ ∀ v w : V, ∃! p : G.Walk v w, p.IsPath := by
+    rw [SimpleGraph.isTree_iff_existsUnique_path]
+    exact ⟨fun h => h.2, fun h => ⟨inferInstance, h⟩⟩
+  tfae_have 1 ↔ 2 := h1.symm.trans h2
+  tfae_have 1 ↔ 3 := h1.symm.trans (trees_isTree_iff_connected_card G)
+  tfae_have 1 ↔ 4 := h1.symm.trans (trees_isTree_iff_acyclic_card G)
+  tfae_finish
+
+/-- Two leaves at least. A finite tree with two houses or more has at least two houses served by
+a single lane. -/
+theorem tree_has_two_leaves (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.IsTree)
+    (hn : 2 ≤ Fintype.card V) :
+    2 ≤ (univ.filter (fun v => G.degree v = 1)).card := by
+  have : Nontrivial V := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+  obtain ⟨u, v, huv, hu, hv⟩ := hG.exists_ne_and_degree_eq_one
+  have hsub : ({u, v} : Finset V) ⊆ univ.filter (fun v => G.degree v = 1) := by
+    intro x hx
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hx
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    rcases hx with rfl | rfl
+    · convert hu
+    · convert hv
+  calc 2 = ({u, v} : Finset V).card := (Finset.card_pair huv).symm
+    _ ≤ _ := Finset.card_le_card hsub
+
+/-- The forest law. A finite map with no cycle anywhere, joined up or not, has as many lanes as
+houses minus pieces: `m + c(G) = n`, that is `m = n - c(G)`. -/
+theorem forest_edges_add_components_eq_vertices (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hG : G.IsAcyclic) :
+    G.edgeFinset.card + Fintype.card G.ConnectedComponent = Fintype.card V := by
+  have := hG.ncard_edgeSet_add_card_connectedComponent
+  rwa [trees_ncard_edgeSet_eq, Nat.card_eq_fintype_card, Nat.card_eq_fintype_card] at this
+
+/-- A map on seven houses from a list of lanes, each running both ways. Houses A to G are
+`0` to `6`. -/
+def mapOf (L : List (Fin 7 × Fin 7)) (hL : ∀ p ∈ L, p.1 ≠ p.2) : SimpleGraph (Fin 7) where
+  Adj u v := (u, v) ∈ L ∨ (v, u) ∈ L
+  symm := ⟨fun _ _ h => h.symm⟩
+  loopless := ⟨fun _ h => by rcases h with h | h <;> exact hL _ h rfl⟩
+
+instance (L : List (Fin 7 × Fin 7)) (hL) : DecidableRel (mapOf L hL).Adj :=
+  fun u v => inferInstanceAs (Decidable ((u, v) ∈ L ∨ (v, u) ∈ L))
+
+/-- The village lanes A-B, B-C, B-D, D-E, D-F, F-G. -/
+def villageLanes : List (Fin 7 × Fin 7) := [(0, 1), (1, 2), (1, 3), (3, 4), (3, 5), (5, 6)]
+/-- The trap: triangle A-B-C beside the path D-E-F-G. -/
+def trapLanes : List (Fin 7 × Fin 7) := [(0, 1), (1, 2), (2, 0), (3, 4), (4, 5), (5, 6)]
+
+abbrev village : SimpleGraph (Fin 7) := mapOf villageLanes (by decide)
+abbrev trap : SimpleGraph (Fin 7) := mapOf trapLanes (by decide)
+
+-- Seven houses, six lanes: 6 = 7 − 1.
+example : village.edgeFinset.card = 6 ∧ village.edgeFinset.card + 1 = Fintype.card (Fin 7) := by
+  decide
+-- Degrees A to G are 1 3 1 3 1 2 1, adding to 12 = 2 × 6 lanes.
+example : (List.finRange 7).map (fun v => village.degree v) = [1, 3, 1, 3, 1, 2, 1] := by decide
+example : ∑ v, village.degree v = 12 ∧ 12 = 2 * 6 := by decide
+-- The leaves are A, C, E and G: four of them.
+example : univ.filter (fun v => village.degree v = 1) = ({0, 2, 4, 6} : Finset (Fin 7)) := by decide
+-- 21 pairs of houses, 15 of them with no lane.
+example : Nat.choose 7 2 = 21 ∧ 21 - 6 = 15 := by decide
+-- The trap also spends six lanes on seven houses.
+example : trap.edgeFinset.card = 6 := by decide
+-- Cut B-D: 5 = 7 − 2; cut D-F too: 4 = 7 − 3.
+example : 5 + 2 = 7 ∧ 4 + 3 = 7 := by decide
+-- Five houses: 2^10 = 1024 lane maps, C(10, 4) = 210 use four lanes, 85 of those not trees.
+example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85 := by decide
+
+#print axioms trees_ncard_edgeSet_eq
+#print axioms trees_isTree_iff_connected_card
+#print axioms trees_isTree_iff_acyclic_card
+#print axioms tree_four_descriptions_equivalent
+#print axioms tree_has_two_leaves
+#print axioms forest_edges_add_components_eq_vertices
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'trees_ncard_edgeSet_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'trees_isTree_iff_connected_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'trees_isTree_iff_acyclic_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tree_four_descriptions_equivalent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tree_has_two_leaves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forest_edges_add_components_eq_vertices' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

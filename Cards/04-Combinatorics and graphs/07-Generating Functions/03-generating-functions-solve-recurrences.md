@@ -10,7 +10,7 @@ A drum machine holds a bar of 12 beats. Every note is worth one beat or two, and
 
 Nobody counts those by hand. The first note takes one beat, leaving an 11-beat bar, or two, leaving a 10-beat bar. Nothing else can happen, so 12's count is 11's plus 10's — the Fibonacci rule.
 
-A step rule answers one step at a time: asked for position 12 it wants 11 and 10, and those want more. Hang the counts on powers of one letter instead — a generating function ([Generating functions](01-ordinary-generating-functions.md)) — and the rule becomes one equation whose only unknown is the series. Solving it gives x / (1 − x − x^2), the Fibonacci series, which holds every count at once: the 12-beat bar's 233 sits on x^13, since Fibonacci opens with a 0 that counts no bar.
+A step rule answers one step at a time: asked for position 12 it wants 11 and 10, and those want more. Hang the counts on powers of one letter, x, instead — a generating function ([Generating functions](01-ordinary-generating-functions.md)) — and the rule becomes one equation whose only unknown is the series. Solving it gives x / (1 − x − x^2), the Fibonacci series, which holds every count at once: the 12-beat bar's 233 sits on x^13, since Fibonacci opens with a 0 that counts no bar.
 
 **Multiply a fixed-weight step rule by the letter raised to the step number, add over every step, and the series solves out as one polynomial over another; splitting that fraction reads off a formula for any term.**
 
@@ -38,7 +38,7 @@ One reminder first. A **generating function** hangs the number at position n on 
 
 $$G(x) = F(0) + F(1)x + F(2)x^2 + \cdots = \sum_{n\ge 0} F(n)\,x^n$$
 
-The sigma sign means "add what follows over every n from 0 upward" (this wing's binomial-theorem card).
+The sigma sign means "add what follows over every n from 0 upward" ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
 
 Any rule reaching two terms back with unchanging weights, $a(n) = c_1 a(n-1) + c_2 a(n-2)$ from n = 2, gives one polynomial over another:
 
@@ -72,7 +72,7 @@ The two amounts come from matching coefficients: two equations, two unknowns ([T
 
 - **Fixed weights, nothing added.** In a(n) = n × a(n−1) the weight changes with the step, so no single equation in the series comes out. Something added each step brings its own series, and the answer stays a ratio only if that series is one.
 - **A bottom starting at 1.** That division never stalls ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)); a constant term of 0 divides by zero at once.
-- **Two different brackets.** 1 − 4x + 4x^2 is one bracket squared, and needs a piece carrying that square: wing 06's work.
+- **Two different brackets.** 1 − 4x + 4x^2 is one bracket squared, and needs a piece carrying that square, which [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md) builds.
 
 ---
 
@@ -123,7 +123,7 @@ Multiply the right-hand side by 1 − cx: every term is cancelled by the next, l
 
 $$F(n) = A\,\varphi^n + B\,\psi^n = \frac{\varphi^n - \psi^n}{\sqrt{5}}$$
 
-Binet's formula, which [The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md) also reaches by guessing geometric sequences. The fraction earns its keep when a rule adds something at each step, or when a sequence arrives as a product of series ([Counting by multiplying series](02-counting-with-generating-functions.md)).
+Binet's formula, which [The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md) also reaches by guessing geometric sequences. The fraction is most useful when a rule adds something at each step, or when a sequence arrives as a product of series ([Counting by multiplying series](02-counting-with-generating-functions.md)).
 
 ---
 
@@ -354,6 +354,134 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the method's theorem and the split for any fixed weights and starting values, then checks the drum bar and the whole-number case.
+
+- A rule with fixed weights c1 and c2 gives a series equal to the card's top over 1 − c1·x − c2·x^2.
+- When the bottom is two different brackets, every term is A times the first rate to the n, plus B times the second.
+- Here A + B = a(0) and A times the first rate plus B times the second equals a(1).
+- The Fibonacci series is x/(1 − x − x^2).
+- F(0) to F(13) run 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233.
+- A 4-beat bar has five patterns: 1111, 112, 121, 211, 22.
+- (1 − 2x)(1 − 3x) = 1 − 5x + 6x^2, and 2^n + 3^n lists 2, 5, 13, 35, 97, 275, 793, 2315, 6817.
+- Signs copied down give 1297 at position 4, and the split fitted to the constant gives 32.
+
+The decimal values of phi, psi, A and B, the listed 12-beat patterns, and mistake 1 are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 97 lines</summary>
+
+```lean
+-- Solving a recurrence with a generating function: a sequence that obeys a fixed-weight two-step rule has as its series one polynomial over another, with bottom 1 minus each weight on its power of x and top built from the two starting values; when the bottom factors into two different brackets the split gives a closed formula for every term, and the Fibonacci series is x / (1 - x - x^2).
+import Mathlib.RingTheory.PowerSeries.Inverse
+import Mathlib.Data.Nat.Fib.Basic
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.FieldSimp
+
+open PowerSeries
+
+/-- The method's theorem. Take any numbers and a rule with fixed weights c₁ and c₂ and nothing
+added: a(n) = c₁ · a(n−1) + c₂ · a(n−2) from n = 2 on. Then the series a(0) + a(1) x + a(2) x² + ⋯
+is one polynomial over another: on top a(0) + (a(1) − c₁ · a(0)) x, underneath 1 − c₁ x − c₂ x².
+The bottom starts at 1, so the division never stalls. -/
+theorem fixed_weight_rule_series_is_ratio_of_polynomials {K : Type*} [Field K]
+    (c₁ c₂ : K) (a : ℕ → K) (h : ∀ n, a (n + 2) = c₁ * a (n + 1) + c₂ * a n) :
+    mk a = (C (a 0) + C (a 1 - c₁ * a 0) * X) * (1 - C c₁ * X - C c₂ * X ^ 2)⁻¹ := by
+  rw [eq_mul_inv_iff_mul_eq (by simp)]
+  have e : mk a * (1 - C c₁ * X - C c₂ * X ^ 2)
+      = mk a - C c₁ * (mk a * X ^ 1) - C c₂ * (mk a * X ^ 2) := by ring
+  rw [e]
+  ext n
+  rcases n with _ | _ | n
+  · simp [coeff_mul_X_pow', coeff_C_mul, coeff_X]
+  · simp [coeff_mul_X_pow', coeff_C_mul, coeff_X]
+  · simp [coeff_mul_X_pow', coeff_C_mul, coeff_X, h]
+
+/-- Factor and split. If the bottom 1 − c₁ x − c₂ x² is two different brackets (1 − r x)(1 − s x),
+with r ≠ s, then splitting the fraction into A / (1 − r x) + B / (1 − s x) and reading off each
+geometric piece gives every term: a(n) = A · rⁿ + B · sⁿ, where the two amounts solve the two
+equations A + B = a(0) and A r + B s = a(1). -/
+theorem split_gives_closed_formula {K : Type*} [Field K]
+    (c₁ c₂ r s : K) (a : ℕ → K) (h : ∀ n, a (n + 2) = c₁ * a (n + 1) + c₂ * a n)
+    (hfac : (1 - C c₁ * X - C c₂ * X ^ 2 : K⟦X⟧) = (1 - C r * X) * (1 - C s * X))
+    (hrs : r ≠ s) :
+    ∀ n, a n = (a 1 - s * a 0) / (r - s) * r ^ n + (r * a 0 - a 1) / (r - s) * s ^ n := by
+  have e : (1 - C r * X) * (1 - C s * X) = (1 - C (r + s) * X - C (-(r * s)) * X ^ 2 : K⟦X⟧) := by
+    simp only [map_add, map_neg, map_mul]; ring
+  rw [e] at hfac
+  have h1 := congrArg (coeff 1) hfac
+  have h2 := congrArg (coeff 2) hfac
+  simp only [map_sub, coeff_one, coeff_C_mul, coeff_X, coeff_X_pow] at h1 h2
+  norm_num at h1 h2
+  have hc1 : c₁ = r + s := by linear_combination -h1
+  have hc2 : c₂ = -(r * s) := by linear_combination -h2
+  have hrs' : r - s ≠ 0 := sub_ne_zero.mpr hrs
+  set f : ℕ → K := fun n => (a 1 - s * a 0) / (r - s) * r ^ n + (r * a 0 - a 1) / (r - s) * s ^ n
+    with hf
+  have key : ∀ n, a n = f n ∧ a (n + 1) = f (n + 1) := by
+    intro n
+    induction n with
+    | zero =>
+      constructor
+      · simp only [hf]; field_simp; ring
+      · simp only [hf]; field_simp; ring
+    | succ n ih =>
+      refine ⟨ih.2, ?_⟩
+      rw [show n + 1 + 1 = n + 2 by ring, h, ih.1, ih.2]
+      rw [hc1, hc2]
+      simp only [hf]; field_simp; ring
+  intro n
+  exact (key n).1
+
+/-- The drum bar. The Fibonacci series F(0) + F(1) x + F(2) x² + ⋯ , with F(0) = 0 and F(1) = 1,
+is x / (1 − x − x²). -/
+theorem fibonacci_series_eq_x_over_one_sub_x_sub_x_sq :
+    mk (fun n => (Nat.fib n : ℚ)) = X * (1 - X - X ^ 2)⁻¹ := by
+  have := fixed_weight_rule_series_is_ratio_of_polynomials (1 : ℚ) 1 (fun n => (Nat.fib n : ℚ)) (by intro n; simp [Nat.fib_add_two]; ring)
+  rw [this]
+  simp
+
+-- The drum bar's counts: F(0) to F(13), ending at 233 on x^13.
+example : (List.range 14).map Nat.fib = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233] := by
+  decide
+-- A 4-beat bar has five patterns of one- and two-beat notes: 1111, 112, 121, 211, 22.
+example : [[1, 1, 1, 1], [1, 1, 2], [1, 2, 1], [2, 1, 1], [2, 2]].map List.sum = [4, 4, 4, 4, 4] ∧
+    [[1, 1, 1, 1], [1, 1, 2], [1, 2, 1], [2, 1, 1], [2, 2]].Nodup ∧ Nat.fib 5 = 5 := by
+  decide
+-- The whole-number case: (1 − 2x)(1 − 3x) = 1 − 5x + 6x², the rates 2 and 3.
+example : ((1 - 2 * X) * (1 - 3 * X) : ℤ⟦X⟧) = 1 - 5 * X + 6 * X ^ 2 := by
+  ring
+-- a(n) = 2^n + 3^n lists 2, 5, 13, 35, 97, 275, 793, 2315, 6817 and obeys a(n) = 5 a(n−1) − 6 a(n−2).
+example : (List.range 9).map (fun n => 2 ^ n + 3 ^ n) = [2, 5, 13, 35, 97, 275, 793, 2315, 6817] := by
+  decide
+example : ∀ n < 7, (2 : ℤ) ^ (n + 2) + 3 ^ (n + 2) = 5 * (2 ^ (n + 1) + 3 ^ (n + 1)) - 6 * (2 ^ n + 3 ^ n) := by
+  decide
+-- The split's two amounts are 1 and 1: A + B = 2 and 2A + 3B = 5.
+example : (1 : ℤ) + 1 = 2 ∧ 2 * 1 + 3 * 1 = 5 := by decide
+-- Mistake 2, the signs copied down: 1 − 5x − 6x² gives 2, 5, 37, 215, 1297, so a(4) = 1297, not 97.
+example : (5 : ℤ) * 2 + 6 * 0 + (-5) = 5 ∧ (5 : ℤ) * 5 + 6 * 2 = 37 ∧ (5 : ℤ) * 37 + 6 * 5 = 215 ∧
+    (5 : ℤ) * 215 + 6 * 37 = 1297 := by decide
+-- Mistake 3, the split fitted to the constant only: A = 2, B = 0 gives 2 · 2^4 = 32, not 97.
+example : 2 * 2 ^ 4 = 32 ∧ 2 ^ 4 + 3 ^ 4 = 97 := by decide
+
+#print axioms fixed_weight_rule_series_is_ratio_of_polynomials
+#print axioms split_gives_closed_formula
+#print axioms fibonacci_series_eq_x_over_one_sub_x_sub_x_sq
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'fixed_weight_rule_series_is_ratio_of_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]
+'split_gives_closed_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fibonacci_series_eq_x_over_one_sub_x_sub_x_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

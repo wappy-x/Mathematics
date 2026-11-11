@@ -39,7 +39,9 @@ Solid lines are the ten open paths; dotted is the shut bridge.
 
 ## The formula
 
-Notation first, in words. A graph is two lists, its junctions and its joined pairs: $V$ for the junctions, $E$ for the paths, $n$ and $m$ for how many of each ([Graphs](01-graphs-vertices-and-edges.md)). A path here is one track; a **route** is a string of them — the walk of [Walks, paths and cycles](03-walks-paths-and-cycles.md). Write $u \sim v$ when some route joins them, and $d(v)$ for the fewest paths a route from the start $S$ to $v$ can use.
+Notation first, in words. A graph is two lists, its junctions and its joined pairs: $V$ for the junctions, $E$ for the paths, $n$ and $m$ for how many of each ([Graphs](01-graphs-vertices-and-edges.md)).
+
+A path here is one track; a **route** is a string of them — the walk of [Walks, paths and cycles](03-walks-paths-and-cycles.md). Write $u \sim v$ when some route joins them, and $d(v)$ for the fewest paths a route from the start $S$ to $v$ can use.
 
 $$u \sim v \quad\text{exactly when}\quad \text{some route in } G \text{ runs from } u \text{ to } v$$
 
@@ -77,7 +79,9 @@ $$r(S) = 0, \qquad r(w) = r(v) + 1 \text{ for the junction } v \text{ that first
 
 ### Step 0: reaching spreads, so the reached set closes up
 
-A rider who reaches D reaches every neighbour of D: ride to D, take one more path. So the reachable set holds every neighbour of everything in it — read backwards, the flood's stopping rule. And a set holding the station and all its members' neighbours holds everything a route from the station reaches: a step out would land on a neighbour, already inside. So the flood halting with six marked means no path runs from them to F, G or H. Not "none was found": none exists.
+A rider who reaches D reaches every neighbour of D: ride to D, take one more path. So the reachable set holds every neighbour of everything in it — read backwards, the flood's stopping rule.
+
+And a set holding the station and all its members' neighbours holds everything a route from the station reaches: a step out would land on a neighbour, already inside. So the flood halting with six marked means no path runs from them to F, G or H. Not "none was found": none exists.
 
 ### Step 1: reaching cuts the junctions into blocks
 
@@ -120,12 +124,14 @@ One path decides it. With D-F open a single flood covers all nine, H standing 5 
 
 ### Step 5: the other search dives instead of spreading
 
-Swap the queue for a stack — last in, first out — and the search dives, following one neighbour as far as it goes before trying the next. Alphabetically: S to A, A to B, B to D, D to C, C to E, backing up only where nothing unmarked remains. This is **depth-first search**. Steps 0 and 1 said nothing about order, so it finds the same six junctions, but its chain to E runs five paths, S-A-B-D-C-E, against a fewest of three. The dive answers whether a route exists, the flood how far.
+Swap the queue for a stack — last in, first out — and the search dives, following one neighbour as far as it goes before trying the next. Alphabetically: S to A, A to B, B to D, D to C, C to E, backing up only where nothing unmarked remains. This is **depth-first search**.
+
+Steps 0 and 1 said nothing about order, so it finds the same six junctions, but its chain to E runs five paths, S-A-B-D-C-E, against a fewest of three. The dive answers whether a route exists, the flood how far.
 
 <details>
 <summary>A third road to the pieces, with no searching at all</summary>
 
-Every junction starts in its own group; merge the groups at each path's two ends, and the groups left are the components. The bookkeeping that makes merging fast is a later card.
+Every junction starts in its own group; merge the groups at each path's two ends, and the groups left are the components. The bookkeeping that makes merging fast is in [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md).
 
 </details>
 
@@ -356,6 +362,253 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the flood's facts, round by round, for every finite map whose paths run both ways and count alike.
+
+- After round k, the flood has marked a junction exactly when some route of at most k paths joins it to the start. So a ring number is the fewest paths.
+- The flood halts: some round adds nothing. From then on, the marked junctions are exactly those some route joins to the start.
+- Flooding from every junction gives as many different marked sets as the map has components.
+- A map is connected exactly when one flood, from any start, marks every junction.
+- In the town, the rings are S; A B; C D; E, and the pieces hold 6 and 3 junctions, with 8 and 2 paths.
+- With the bridge open, one flood marks all nine, and H is five steps out.
+
+The queue, the dive's order and the eight routes to E are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 213 lines</summary>
+
+```lean
+-- Connected or not: flooding a finite graph round by round from a start vertex halts having marked exactly the vertices some route joins to it, each first marked in the round equal to its fewest steps, fresh floods count the pieces, the graph is connected exactly when one flood marks everything, and the card's town numbers check out.
+import Mathlib.Combinatorics.SimpleGraph.Metric
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+import Mathlib.Data.Fintype.Card
+
+open Finset
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
+/-- The flood from the start `s`: after round `0` only `s` is marked; each round then also marks
+every neighbour of a marked vertex. A vertex's ring number is the first round that marks it. -/
+def flood (G : SimpleGraph V) [DecidableRel G.Adj] (s : V) : ℕ → Finset V
+  | 0 => {s}
+  | k + 1 => flood G s k ∪ univ.filter (fun w => ∃ v ∈ flood G s k, G.Adj v w)
+
+theorem flood_mem_iff_walk (G : SimpleGraph V) [DecidableRel G.Adj] (s : V) :
+    ∀ (k : ℕ) (v : V), v ∈ flood G s k ↔ ∃ p : G.Walk s v, p.length ≤ k := by
+  intro k
+  induction k with
+  | zero =>
+    intro v
+    constructor
+    · intro h
+      have : v = s := by simpa [flood] using h
+      subst this
+      exact ⟨SimpleGraph.Walk.nil, le_refl _⟩
+    · rintro ⟨p, hp⟩
+      have := SimpleGraph.Walk.eq_of_length_eq_zero (Nat.le_zero.mp hp)
+      subst this
+      simp [flood]
+  | succ k ih =>
+    intro v
+    have e : flood G s (k + 1) =
+        flood G s k ∪ univ.filter (fun w => ∃ u ∈ flood G s k, G.Adj u w) := rfl
+    rw [e, Finset.mem_union, Finset.mem_filter]
+    constructor
+    · rintro (h | ⟨-, u, hu, huv⟩)
+      · obtain ⟨p, hp⟩ := (ih v).mp h
+        exact ⟨p, by omega⟩
+      · obtain ⟨p, hp⟩ := (ih u).mp hu
+        exact ⟨p.concat huv, by rw [SimpleGraph.Walk.length_concat]; omega⟩
+    · rintro ⟨p, hp⟩
+      by_cases hk : p.length ≤ k
+      · exact Or.inl ((ih v).mpr ⟨p, hk⟩)
+      · right
+        refine ⟨Finset.mem_univ _, ?_⟩
+        have hlen : p.reverse.length = k + 1 := by
+          rw [SimpleGraph.Walk.length_reverse]; omega
+        cases hq : p.reverse with
+        | nil => rw [hq] at hlen; simp at hlen
+        | cons h q =>
+          rw [hq, SimpleGraph.Walk.length_cons] at hlen
+          refine ⟨_, (ih _).mpr ⟨q.reverse, ?_⟩, h.symm⟩
+          rw [SimpleGraph.Walk.length_reverse]; omega
+
+theorem flood_mem_iff_reach_dist (G : SimpleGraph V) [DecidableRel G.Adj] (s : V)
+    (k : ℕ) (v : V) : v ∈ flood G s k ↔ G.Reachable s v ∧ G.dist s v ≤ k := by
+  rw [flood_mem_iff_walk]
+  constructor
+  · rintro ⟨p, hp⟩
+    exact ⟨⟨p⟩, (SimpleGraph.dist_le p).trans hp⟩
+  · rintro ⟨hr, hd⟩
+    obtain ⟨p, hp⟩ := hr.exists_walk_length_eq_dist
+    exact ⟨p, hp ▸ hd⟩
+
+theorem dist_lt_card_of_reachable (G : SimpleGraph V) {s v : V} (h : G.Reachable s v) :
+    G.dist s v < Fintype.card V := by
+  obtain ⟨p⟩ := h
+  exact lt_of_le_of_lt (SimpleGraph.dist_le p.bypass) p.bypass_isPath.length_lt
+
+theorem flood_mem_iff_reach_of_card_le (G : SimpleGraph V) [DecidableRel G.Adj] (s : V)
+    {k : ℕ} (hk : Fintype.card V ≤ k) (v : V) : v ∈ flood G s k ↔ G.Reachable s v := by
+  rw [flood_mem_iff_reach_dist]
+  constructor
+  · exact fun h => h.1
+  · intro h
+    exact ⟨h, (dist_lt_card_of_reachable G h).le.trans hk⟩
+
+theorem flood_card_mem_iff (G : SimpleGraph V) [DecidableRel G.Adj] (v w : V) :
+    w ∈ flood G v (Fintype.card V) ↔ G.connectedComponentMk w = G.connectedComponentMk v := by
+  rw [flood_mem_iff_reach_of_card_le G v le_rfl, SimpleGraph.ConnectedComponent.eq]
+  exact ⟨fun h => h.symm, fun h => h.symm⟩
+
+#print axioms flood_mem_iff_walk
+#print axioms flood_mem_iff_reach_dist
+#print axioms dist_lt_card_of_reachable
+#print axioms flood_mem_iff_reach_of_card_le
+#print axioms flood_card_mem_iff
+
+/-- Breadth-first search finds the start's piece and the fewest steps. On a finite graph whose
+paths run both ways and all count the same, the flood from `s` has marked a vertex by round `k`
+exactly when some route joins `s` to it and the fewest paths such a route needs is at most `k`
+(so a vertex's ring number is its fewest steps). The flood halts: some round adds nothing. And
+whenever a round adds nothing, the marked vertices are exactly those some route joins to `s`. -/
+theorem flood_marks_reachable_numbered_by_fewest_steps (G : SimpleGraph V) [DecidableRel G.Adj]
+    (s : V) :
+    (∀ (k : ℕ) (v : V), v ∈ flood G s k ↔ G.Reachable s v ∧ G.dist s v ≤ k) ∧
+      (∃ k, flood G s (k + 1) = flood G s k) ∧
+      (∀ k, flood G s (k + 1) = flood G s k → ∀ v, v ∈ flood G s k ↔ G.Reachable s v) := by
+  refine ⟨flood_mem_iff_reach_dist G s, ⟨Fintype.card V, ?_⟩, ?_⟩
+  · ext v
+    rw [flood_mem_iff_reach_of_card_le G s (Nat.le_succ _),
+      flood_mem_iff_reach_of_card_le G s le_rfl]
+  · intro k hk
+    have hstab : ∀ n, flood G s (k + n) = flood G s k := by
+      intro n
+      induction n with
+      | zero => rfl
+      | succ n ih =>
+        have e : flood G s (k + (n + 1)) =
+            flood G s (k + n) ∪ univ.filter (fun w => ∃ u ∈ flood G s (k + n), G.Adj u w) := rfl
+        rw [e, ih]
+        exact hk
+    intro v
+    constructor
+    · intro h
+      exact ((flood_mem_iff_reach_dist G s k v).mp h).1
+    · intro h
+      rw [← hstab (G.dist s v), flood_mem_iff_reach_dist]
+      exact ⟨h, by omega⟩
+
+/-- Fresh starts count the pieces. Flood from every vertex for as many rounds as there are
+vertices: the different marked sets that come out number exactly the graph's components. -/
+theorem card_distinct_floods_eq_card_components (G : SimpleGraph V) [DecidableRel G.Adj] :
+    (univ.image (fun v => flood G v (Fintype.card V))).card =
+      Fintype.card G.ConnectedComponent := by
+  classical
+  let h : G.ConnectedComponent → Finset V :=
+    fun C => univ.filter (fun w => G.connectedComponentMk w = C)
+  have hf : (fun v => flood G v (Fintype.card V)) = h ∘ G.connectedComponentMk := by
+    funext v
+    ext w
+    simp [h, flood_card_mem_iff]
+  have hinj : Function.Injective h := by
+    intro C D hCD
+    obtain ⟨w, rfl⟩ := C.exists_rep
+    change h (G.connectedComponentMk w) = h D at hCD
+    have hw : w ∈ h (G.connectedComponentMk w) := by simp [h]
+    rw [hCD] at hw
+    have hw' : G.connectedComponentMk w = D := by simpa [h] using hw
+    exact hw'
+  have hs : Function.Surjective G.connectedComponentMk := fun C => C.exists_rep
+  rw [hf, ← Finset.image_image, Finset.card_image_of_injective _ hinj,
+    Finset.image_univ_of_surjective hs]
+  convert Finset.card_univ
+
+/-- Connected or not. A finite graph is connected exactly when one flood, from any start `s`,
+marks every vertex once it halts. -/
+theorem connected_iff_flood_marks_all (G : SimpleGraph V) [DecidableRel G.Adj] (s : V) :
+    G.Connected ↔ flood G s (Fintype.card V) = univ := by
+  rw [SimpleGraph.connected_iff_exists_forall_reachable, Finset.eq_univ_iff_forall]
+  simp only [flood_mem_iff_reach_of_card_le G s le_rfl]
+  constructor
+  · rintro ⟨u, hu⟩ v
+    exact (hu s).symm.trans (hu v)
+  · intro h
+    exact ⟨s, h⟩
+
+/-- The town's eleven cycle paths, junctions numbered S = 0, A = 1, B = 2, C = 3, D = 4, E = 5,
+F = 6, G = 7, H = 8. The river bridge D-F is the pair `(4, 6)`. -/
+def openPaths : List (Fin 9 × Fin 9) :=
+  [(0, 1), (0, 2), (1, 2), (1, 3), (2, 4), (3, 4), (3, 5), (4, 5), (4, 6), (6, 7), (7, 8)]
+/-- The ten paths left once the bridge shuts. -/
+def shutPaths : List (Fin 9 × Fin 9) := openPaths.erase (4, 6)
+
+/-- The town as a graph on its paths, each running both ways. -/
+def townOf (P : List (Fin 9 × Fin 9)) (hP : ∀ p ∈ P, p.1 ≠ p.2) : SimpleGraph (Fin 9) where
+  Adj u v := (u, v) ∈ P ∨ (v, u) ∈ P
+  symm := ⟨fun _ _ h => h.symm⟩
+  loopless := ⟨fun _ h => by rcases h with h | h <;> exact hP _ h rfl⟩
+
+instance (P : List (Fin 9 × Fin 9)) (hP) : DecidableRel (townOf P hP).Adj :=
+  fun u v => inferInstanceAs (Decidable ((u, v) ∈ P ∨ (v, u) ∈ P))
+
+/-- The town with the bridge shut, and with it open. -/
+abbrev town : SimpleGraph (Fin 9) := townOf shutPaths (by decide)
+abbrev townOpen : SimpleGraph (Fin 9) := townOf openPaths (by decide)
+
+-- Nine junctions, ten paths after the bridge shuts.
+example : shutPaths.length = 10 ∧ openPaths.length = 11 := by decide
+-- Rings 0 to 4 from S: S; A B; C D; E; nothing new, so the flood halts.
+example : flood town 0 0 = {0} := by decide
+example : flood town 0 1 \ flood town 0 0 = {1, 2} := by decide
+example : flood town 0 2 \ flood town 0 1 = {3, 4} := by decide
+example : flood town 0 3 \ flood town 0 2 = {5} := by decide
+example : flood town 0 4 = flood town 0 3 := by decide
+-- The station's piece: 1 + 2 + 2 + 1 = 6 junctions, holding 10 − 2 = 8 paths.
+example : flood town 0 3 = {0, 1, 2, 3, 4, 5} ∧ (flood town 0 3).card = 6 := by decide
+example : (shutPaths.filter (fun p => p.1 ∈ flood town 0 3 ∧ p.2 ∈ flood town 0 3)).length = 8 := by
+  decide
+-- A fresh start at F marks F, G, H: 3 junctions, 2 paths.
+example : flood town 6 2 = {6, 7, 8} ∧ flood town 6 3 = flood town 6 2 := by decide
+example : (shutPaths.filter (fun p => p.1 ∈ flood town 6 2 ∧ p.2 ∈ flood town 6 2)).length = 2 := by
+  decide
+-- Two pieces, 6 + 3 = 9: not connected.
+example : (univ.image (fun v => flood town v 9)).card = 2 ∧ 6 + 3 = 9 := by decide
+example : flood town 0 9 ≠ univ := by decide
+-- Fewest paths to E is 3, by S-A-C-E.
+example : 5 ∉ flood town 0 2 ∧ 5 ∈ flood town 0 3 := by decide
+example : town.Adj 0 1 ∧ town.Adj 1 3 ∧ town.Adj 3 5 := by decide
+-- Work: 6 queue places, 8 paths seen twice = 16.
+example : 2 * 8 = 16 := by decide
+-- The dive S-A-B-D-C-E puts E five paths down its chain, against a fewest of three.
+example : town.Adj 0 1 ∧ town.Adj 1 2 ∧ town.Adj 2 4 ∧ town.Adj 4 3 ∧ town.Adj 3 5 := by decide
+-- Bridge reopened: one flood covers all nine, F, G, H at 3, 4, 5 steps, one piece.
+example : flood townOpen 0 5 = univ ∧ 8 ∉ flood townOpen 0 4 := by decide
+example : 6 ∈ flood townOpen 0 3 \ flood townOpen 0 2 ∧ 7 ∈ flood townOpen 0 4 \ flood townOpen 0 3 := by
+  decide
+example : (univ.image (fun v => flood townOpen v 9)).card = 1 := by decide
+
+#print axioms flood_marks_reachable_numbered_by_fewest_steps
+#print axioms card_distinct_floods_eq_card_components
+#print axioms connected_iff_flood_marks_all
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'flood_mem_iff_walk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flood_mem_iff_reach_dist' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dist_lt_card_of_reachable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flood_mem_iff_reach_of_card_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flood_card_mem_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flood_marks_reachable_numbered_by_fewest_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_distinct_floods_eq_card_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+'connected_iff_flood_marks_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this town, so expect one to stop it.
@@ -402,7 +655,7 @@ The two outputs match line for line.
 - [The giant component](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/02-the-giant-component.md): piece sizes when paths fall at random.
 - Mapper and Reeb graphs: components of a map built from measurements.
 
-Every path here counted the same, which let the rings come out in order; the repair when one runs longer — serve the nearest junction, not the earliest — is [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md).
+Every path here counted the same, which let the rings come out in order. The repair when one runs longer — serve the nearest junction, not the earliest — is [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md).
 
 ---
 

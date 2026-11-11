@@ -56,7 +56,7 @@ $$C(x) = \frac{1 - \sqrt{1 - 4x}}{2x}$$
 - **Exactly one last merge.** Removing it leaves one plan each side; a plan coming apart two ways would be counted twice.
 - **The one-stack plan counts.** $C_0 = 1$ is what the rounds grow from; drop it and every coefficient comes out 0.
 - **The marker sits in front of the square.** That is why a round settles one more coefficient; without it nothing does.
-- **A number in place of x is a spot-check only.** The square root needs 1 - 4x at zero or above, so x at most one quarter: 0.6 at x = 0.1. At x = 0 the fraction reads 0 over 0, while the equal form 2/(1 + sqrt(1 - 4x)) below reads 1.
+- **A number in place of x is a spot-check only.** The square root needs 1 - 4x at zero or above, so x at most one quarter: 1 - 4x is 0.6 at x = 0.1. At x = 0 the fraction reads 0 over 0, while the equal form 2/(1 + sqrt(1 - 4x)) below reads 1.
 
 ---
 
@@ -99,7 +99,7 @@ At x = 0 that reads 2 over 1 + 1, which is 1: the do-nothing plan, $C_0$. The pl
 
 </details>
 
-One step is left undone: reading the coefficient of x^n off the square root needs sqrt(1 - 4x) expanded in powers of x, which waits for wing 06. The code closes the circle from the other side, pushing the closed count C(2n, n)/(n + 1) through 1 + x C^2 - C and leaving 0 out to x^10.
+One step is left undone: reading the coefficient of x^n off the square root needs sqrt(1 - 4x) expanded in powers of x, which waits for wing 06. The code closes the circle from the other side, pushing the closed count C(2n, n)/(n + 1) through 1 + x C^2 - C and leaving 0 out to x^10. Here C(2n, n) is "2n choose n", the number of ways to pick n things from 2n; it is not the series C.
 
 ---
 
@@ -118,7 +118,7 @@ Each round squares the series so far, shifts it up one power of x, and adds 1.
 | by the closed count | C(2n, n)/(n + 1) at n = 5 | **42** |
 | the closed form | (1 - 0.774596669241)/0.2 at x = 0.1 | **1.127016653793** |
 
-Six stacks merge in 42 nestings, and the rounds gave up the counts for one to five on the way. The code also tests its series multiply on the shelf's two dice: 6 at x^7, 36 in all.
+Six stacks merge in 42 nestings, and the rounds gave up the counts for one to five on the way. The code also tests its series multiply on the shelf's two dice from [Generating functions](01-ordinary-generating-functions.md): 6 at x^7, the six ways to throw 7, and 36 throws in all.
 
 ### What breaks if you drop a piece
 
@@ -135,7 +135,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads reach the same six counts and share no arithmetic: iterating C <- 1 + x C^2 on series cut above x^5; simulating every merge order of one to six stacks and keeping the distinct nestings; and the closed count C(2n, n)/(n + 1), also pushed through 1 + x C^2 - C out to x^10. The square root is the script's own, by Heron's method.
+Nothing is imported. Three roads reach the same six counts and share no arithmetic: iterating C <- 1 + x C^2 on series cut above x^5; simulating every merge order of one to six stacks and keeping the distinct nestings; and the closed count C(2n, n)/(n + 1), also pushed through 1 + x C^2 - C out to x^10. The square root is the script's own, by Heron's method: average a guess with the number divided by that guess, and repeat.
 
 ### Python
 
@@ -334,6 +334,145 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three steps, for every number of merges and every allowed x.
+
+- The plan counts, hung on powers of x, satisfy C = 1 + x C^2. A plan is one stack, or a last merge joining a left plan to a right plan.
+- Start from C = 1 and iterate. After k rounds, every coefficient up to x^k is its Catalan number, and it never moves again.
+- Take a number x, not 0 and at most one quarter. Then x C^2 - C + 1 = 0 has exactly two solutions: the minus root and the plus root.
+- The minus root equals 2/(1 + sqrt(1 - 4x)).
+- The counts 1, 1, 2, 5, 14, 42; five plans for four stacks; 42 plans for six; and 120 merge orders for five merges.
+
+Choosing the minus root, the decimals at x = 0.1 and the listing of merge orders are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 111 lines</summary>
+
+```lean
+-- The Catalan generating function: the series whose coefficient of x^n counts merge plans with n merges satisfies C = 1 + x C^2, iterating that equation from C = 1 settles one more coefficient each round, and over the reals the quadratic x C^2 - C + 1 = 0 has exactly the two roots (1 ± sqrt(1 - 4x))/(2x), the minus root being 2/(1 + sqrt(1 - 4x)).
+import Mathlib.Combinatorics.Enumerative.Catalan.Tree
+import Mathlib.RingTheory.PowerSeries.Catalan
+import Mathlib.Data.Real.Sqrt
+import Mathlib.Tactic.NormNum
+
+open PowerSeries BinaryTree
+
+/-- The first-return split becomes `C = 1 + x C^2`. A merge plan with `n` merges is a binary
+tree with `n` internal nodes: each node is a merge, its two subtrees are the plans for the left
+and right blocks, and the empty tree is the do-nothing plan for one stack. Hang the number of
+such plans on `X ^ n` and the resulting power series `C` satisfies `C = 1 + X * C ^ 2`. -/
+theorem plan_series_eq_one_add_X_mul_sq :
+    PowerSeries.mk (fun n => (treesOfNumNodesEq n).card) =
+      1 + X * (PowerSeries.mk (fun n => (treesOfNumNodesEq n).card)) ^ 2 := by
+  have h : PowerSeries.mk (fun n => (treesOfNumNodesEq n).card) = catalanSeries := by
+    ext n
+    simp [treesOfNumNodesEq_card_eq_catalan]
+  rw [h]
+  rw [← catalanSeries_sq_mul_X_add_one]
+  nth_rewrite 1 [← catalanSeries_sq_mul_X_add_one]
+  ring
+
+/-- Iterating settles one coefficient a round: start from the series `C = 1` and apply
+`C ↦ 1 + X * C ^ 2` a total of `k` times. Every coefficient of `X ^ n` with `n ≤ k` is then the
+Catalan number `C_n`, and it never moves again in later rounds. -/
+theorem iterate_settles_catalan_coeff (k n : ℕ) (hn : n ≤ k) :
+    coeff n ((fun C : PowerSeries ℕ => 1 + X * C ^ 2)^[k] 1) = catalan n := by
+  have hfix : (fun C : PowerSeries ℕ => 1 + X * C ^ 2) catalanSeries = catalanSeries := by
+    simp only
+    rw [← catalanSeries_sq_mul_X_add_one]
+    nth_rewrite 2 [← catalanSeries_sq_mul_X_add_one]
+    ring
+  have key : ∀ (A : PowerSeries ℕ) (m : ℕ),
+      (∀ i ≤ m, coeff i A = coeff i catalanSeries) →
+      ∀ j ≤ m + 1, coeff j (1 + X * A ^ 2) = coeff j (1 + X * catalanSeries ^ 2) := by
+    intro A m hA j hj
+    rcases j with _ | j
+    · simp
+    · rw [map_add, map_add, coeff_succ_X_mul, coeff_succ_X_mul, sq, sq, coeff_mul, coeff_mul]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro p hp
+      have h1 := (Finset.mem_antidiagonal.mp hp)
+      rw [hA p.1 (by omega), hA p.2 (by omega)]
+  induction k generalizing n with
+  | zero =>
+    have : n = 0 := by omega
+    subst this
+    simp
+  | succ k ih =>
+    rw [Function.iterate_succ_apply']
+    rw [key _ k (fun i hi => by rw [ih i hi, catalanSeries_coeff]) n hn]
+    have := congrArg (coeff n) hfix
+    simp only at this
+    rw [this, catalanSeries_coeff]
+
+/-- The quadratic formula names the series: for a real number `x` with `x ≠ 0` and
+`x ≤ 1/4`, the solutions of `x C^2 - C + 1 = 0` are exactly `(1 - √(1 - 4x))/(2x)` and
+`(1 + √(1 - 4x))/(2x)`, and the minus root equals `2/(1 + √(1 - 4x))`. -/
+theorem catalan_quadratic_roots (x : ℝ) (hx0 : x ≠ 0) (hx : x ≤ 1 / 4) :
+    (∀ c : ℝ, x * c ^ 2 - c + 1 = 0 ↔
+      c = (1 - Real.sqrt (1 - 4 * x)) / (2 * x) ∨ c = (1 + Real.sqrt (1 - 4 * x)) / (2 * x)) ∧
+    (1 - Real.sqrt (1 - 4 * x)) / (2 * x) = 2 / (1 + Real.sqrt (1 - 4 * x)) := by
+  have hs0 : 0 ≤ Real.sqrt (1 - 4 * x) := Real.sqrt_nonneg _
+  have hs2 : Real.sqrt (1 - 4 * x) ^ 2 = 1 - 4 * x := Real.sq_sqrt (by linarith)
+  set s := Real.sqrt (1 - 4 * x) with hs
+  have h2x : 2 * x ≠ 0 := by positivity
+  refine ⟨fun c => ?_, ?_⟩
+  · constructor
+    · intro h
+      have h' : (2 * x * c - 1 - s) * (2 * x * c - 1 + s) = 0 := by nlinarith
+      rcases mul_eq_zero.mp h' with h'' | h''
+      · right
+        field_simp
+        linarith
+      · left
+        field_simp
+        linarith
+    · rintro (h | h)
+      · rw [h]
+        field_simp
+        nlinarith
+      · rw [h]
+        field_simp
+        nlinarith
+  · have h1s : 1 + s ≠ 0 := by positivity
+    rw [div_eq_div_iff h2x h1s]
+    nlinarith
+
+-- The counts for one to six stacks: 1, 1, 2, 5, 14, 42.
+example : catalan 0 = 1 ∧ catalan 1 = 1 ∧ catalan 2 = 2 ∧ catalan 3 = 5 ∧ catalan 4 = 14 ∧
+    catalan 5 = 42 := by
+  simp only [catalan_eq_centralBinom_div, Nat.centralBinom]
+  decide
+
+-- Four stacks (three merges) allow five plans, counted from the trees themselves.
+example : (treesOfNumNodesEq 3).card = 5 := by decide +kernel
+
+-- Six stacks (five merges) allow 42 plans, counted from the trees themselves.
+example : (treesOfNumNodesEq 5).card = 42 := by decide +kernel
+
+-- The closed count C(2n, n)/(n + 1) at n = 5 is 42.
+example : Nat.choose 10 5 / (5 + 1) = 42 := by decide
+
+-- Five merges can be done in 120 orders, but they build only 42 nestings.
+example : Nat.factorial 5 = 120 := by decide
+
+#print axioms plan_series_eq_one_add_X_mul_sq
+#print axioms iterate_settles_catalan_coeff
+#print axioms catalan_quadratic_roots
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'plan_series_eq_one_add_X_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'iterate_settles_catalan_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'catalan_quadratic_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it; the asserts are pinned to six stacks, so expect one to stop the program.
@@ -374,7 +513,6 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): Newton's series for a fractional power, the step that turns the closed form into C(2n, n)/(n + 1).
-- Expanding the square root in powers of x is Newton's binomial series for a fractional power, a wing 06 matter; that step turns this closed form into C(2n, n)/(n + 1).
 
 The equation holds every count, but the rounds give them up one at a time; whether a line of algebra can name the coefficient of x^n outright is what that expansion settles.
 
