@@ -6,11 +6,11 @@
 
 ## General Overview
 
-Three new houses stand on a close. Each needs gas, water and electricity: nine connections, to the gas main, the water main and the substation. All nine go in one shallow trench layer, so no two may cross. A crossing means a second layer, and a second bill.
+Three new houses stand on a dead-end street. Each needs gas, water and electricity: nine connections, to the gas main, the water main and the substation. All nine go in one shallow trench layer, so no two may cross. A crossing means a second layer, and a second bill.
 
-The job is impossible, and not for want of ingenuity: six points on a flat sheet, no pair joined twice and no three closing a ring, carry eight connections at most — one short of nine.
+The job is impossible, and not for want of ingenuity. Six points on a flat sheet, no pair joined twice and no three closing a ring, carry eight connections at most — one short of nine.
 
-The reason is a count. A crossing-free drawing cuts the sheet into regions, Euler's identity fixes how many, and no region closes without a minimum of lines around it. That sets a ceiling on the lines: on V dots, 3V − 6, and 2V − 4 when no three dots close a ring. Break the ceiling and no routing helps. Kazimierz Kuratowski proved in 1930 that two small networks — this one, and five dots each joined to all the rest — are the only obstructions, dots along their lines allowed.
+The reason is a count. A crossing-free drawing cuts the sheet into regions, Euler's formula fixes how many, and no region closes without a minimum of lines around it. That sets a ceiling on the lines: on V dots, 3V − 6, and 2V − 4 when no three dots close a ring. Break the ceiling and no routing helps. Kazimierz Kuratowski proved in 1930 that two small networks — this one, and five dots each joined to all the rest — are the only obstructions, dots along their lines allowed.
 
 **A flat drawing spends its lines walling regions, and no region closes with fewer than three, so V dots carry at most 3V − 6 lines: a network wanting more cannot be drawn flat.**
 
@@ -37,7 +37,9 @@ Nine lines on six dots, none joining two houses or two mains: the ceiling is 8.
 
 ## The formula
 
-A reminder from the sibling card: $V$ counts a drawing's dots, $E$ its lines and $F$ its regions, the patch outside counted as one ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The graphs shelf calls them vertices and edges, and a dot's **degree** is the lines meeting it. Two names are new: **K(5)** is five dots with every pair joined, 10 lines; **K(3,3)** is two groups of three, every cross pair joined and none inside a group, 9 lines — the houses and the mains.
+A reminder from the sibling card: $V$ counts a drawing's dots, $E$ its lines and $F$ its regions, the patch outside counted as one ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The graphs shelf calls them vertices and edges, and a dot's **degree** is the lines meeting it.
+
+Two names are new. **K(5)** is five dots with every pair joined, 10 lines. **K(3,3)** is two groups of three, every cross pair joined and none inside a group, 9 lines — the houses and the mains.
 
 $$E \le 3V - 6$$
 
@@ -60,7 +62,7 @@ $$E \le 2V - 4$$
 - **Simple: one line per pair, none from a dot to itself.** A doubled line walls a two-sided region, and the count needs three.
 - **Three dots or more.** Two dots and one line read 1 > 0, a false verdict of impossible.
 - **For the second ceiling, no ring of three.** Lines drawn only between two groups close no ring ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
-- **One direction only.** Over the ceiling proves no flat drawing; under it proves nothing, as Petersen below shows.
+- **One direction only.** Over the ceiling proves no flat drawing; under it proves nothing, as the Petersen network in Step 5 shows.
 
 ---
 
@@ -82,7 +84,7 @@ $$2E \ge 3F$$
 
 ### Step 2: trade regions for lines
 
-Euler's identity fixes the regions of a crossing-free drawing in one piece: $F = E - V + 2$ ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). Substitute and take $2E$ from both sides:
+Euler's formula fixes the regions of a crossing-free drawing in one piece: $F = E - V + 2$ ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). Substitute and take $2E$ from both sides:
 
 $$2E \ge 3(E - V + 2), \qquad E \le 3V - 6$$
 
@@ -119,7 +121,7 @@ Insert a junction box along a pipe: the network gains a dot of degree 2, and the
 
 Kuratowski's theorem (1930) is the converse, and the surprise: **a finite network can be drawn flat exactly when it holds no subdivision of K(5) and none of K(3,3).** Klaus Wagner's 1937 version contracts lines — merging two joined dots — and reaches the same two.
 
-Petersen shows why the theorem is needed: a pentagon, a five-pointed star inside, five spokes joining them, 10 dots and 15 lines. Both ceilings stay silent, 15 being under 24 and under 16, and still no flat drawing exists: the code exhausts all 1024 cyclic orders and reaches 5 regions where 7 are needed. Kuratowski's test fires where counting cannot — a subdivision of K(3,3) sits inside.
+Petersen shows why the theorem is needed: a pentagon, a five-pointed star inside, five spokes joining them, 10 dots and 15 lines. Both ceilings stay silent, 15 being under 24 and under 16, and still no flat drawing exists. The code exhausts all 1024 cyclic orders (the orders in which lines leave each dot, going round it) and reaches 5 regions where 7 are needed. Kuratowski's test fires where counting cannot — a subdivision of K(3,3) sits inside.
 
 ```mermaid
 flowchart TB
@@ -146,7 +148,7 @@ Counting is the cheap test, Kuratowski's the complete one. The code below runs a
 | sides nine pipes supply | 2 × 9 | **18** |
 | as a ceiling | 2 × 6 − 4 | **8**, one short of 9 |
 
-So the close needs a second trench layer.
+So the street needs a second trench layer.
 
 ### What breaks if you drop a piece
 
@@ -162,7 +164,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one is the arithmetic above: count the lines, work out both ceilings, report which is broken. Road two never mentions a ceiling: a flat drawing is recorded by the cyclic order in which lines leave each dot, so the code tries every order at every dot and keeps the best region count. For a network in one piece, a flat drawing is the one reaching $E - V + 2$. Road one can only say no, so on K(5) minus one line and on Petersen road two answers alone.
+Nothing is imported. Road one is the arithmetic above: count the lines, work out both ceilings, report which is broken. Road two never mentions a ceiling. A flat drawing is recorded by the cyclic order in which lines leave each dot, so the code tries every order at every dot and keeps the best region count. For a network in one piece, a flat drawing is the one reaching $E - V + 2$. Road one can only say no, so on K(5) minus one line and on Petersen road two answers alone.
 
 ### Python
 

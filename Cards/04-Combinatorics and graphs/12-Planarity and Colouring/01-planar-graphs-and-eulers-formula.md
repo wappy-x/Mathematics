@@ -32,7 +32,9 @@ The third arrow is the one people leave out.
 
 ## The formula
 
-Three counts, in words first. $V$ is how many dots the drawing has — pads here — and $E$ how many lines join them: tracks. $F$ is new on this card: the number of **faces**, the patches the drawing cuts the sheet into, the one outside everything included. A drawing whose lines meet only at dots is a **plane drawing**; a network that can be drawn that way is **planar**.
+Three counts, in words first. $V$ is how many dots, or vertices, the drawing has — pads here — and $E$ how many lines, or edges, join them: tracks. $F$ is new on this card: the number of **faces**, the patches the drawing cuts the sheet into, the one outside everything included.
+
+A drawing whose lines meet only at dots is a **plane drawing**; a network of dots and lines, a graph, that can be drawn that way is **planar**.
 
 $$V - E + F = 2$$
 
@@ -95,7 +97,7 @@ Read the copper as borders: the large square a coastline, the rest internal fron
 
 Put a dot inside each face, six in all, and join two whenever their faces share a border; each of the 12 borders gives one join. The result is again a plane drawing: the **dual**.
 
-Its counts are the board's, shuffled: 6 dots for its faces, 12 lines for its lines, 8 faces for its dots. So 6 − 12 + 8 = 2, and a second dual brings the board back. This dual is the octahedron's skeleton, the cube's partner among the solids ([Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)).
+Its counts are the board's, shuffled: 6 dots for the board's faces, 12 lines for its tracks, 8 faces for its pads. So 6 − 12 + 8 = 2, and a second dual brings the board back. This dual is the octahedron's skeleton (the corners and edges of the eight-faced solid), the cube's partner among the solids ([Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)).
 
 Drop the sea's dot and the four joins reaching it: five dots, eight joins, five faces, 5 − 8 + 5 = 2 — the region graph colouring works on ([Colouring](03-vertex-colouring-and-chromatic-number.md)).
 
@@ -118,7 +120,7 @@ flowchart TB
     R4 --- R1
 ```
 
-The centre region touches all four corridors, which close into a ring: degrees 3, 3, 3, 3 and 4. Cauchy's route to the same count runs the other way, peeling triangles off a drawing whose every patch is a triangle.
+The centre region touches all four corridors, which close into a ring: degrees (the number of lines at each dot) 3, 3, 3, 3 and 4. Cauchy's route to the same count runs the other way, peeling triangles off a drawing whose every patch is a triangle.
 
 ---
 
@@ -371,7 +373,7 @@ The two outputs match line for line.
 
 - **Single-layer board layout.** A one-layer board is a plane drawing. A wiring list that cannot be drawn flat needs a second layer, and the case for "cannot" starts here ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)).
 - **Map colouring.** Turning a map into its region graph, as Step 4 does, starts every colouring result ([Colouring](03-vertex-colouring-and-chromatic-number.md), [Colouring maps](05-five-and-four-colour-theorems.md)).
-- **Meshes.** Graphics software checks a surface mesh by this count; any other number means a hole or a tear.
+- **Meshes.** Graphics software checks a surface mesh, a surface built from small flat faces, by this count; any other number means a hole or a tear.
 - **Solids.** Flatten a convex solid's skeleton from a point above one face: a plane drawing, so this is the polyhedron count ([Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)).
 
 > **Say it back**
@@ -391,7 +393,7 @@ The two outputs match line for line.
 - [Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md): the same count on solids, where Euler found it.
 - [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): dots and lines as a matrix, for large drawings.
 - Euler characteristic: the same count elsewhere, where the 2 names the surface.
-- Cycle double cover: the six faces here cover each of the 12 tracks twice; whether cycles can do that without a flat drawing is open.
+- Cycle double cover: the six faces here are cycles that cover each of the 12 tracks exactly twice; whether every network with no bridge (a line whose removal splits it) has such cycles, flat or not, is open.
 
 This card assumes a crossing-free drawing is in hand and never asks whether one exists; deciding that is [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md).
 

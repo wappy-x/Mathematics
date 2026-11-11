@@ -73,7 +73,7 @@ $$\nu(G) \;=\; \lvert A\rvert - \max_S \bigl(\lvert S\rvert - \lvert N(S)\rvert\
 - **Finitely many applicants.** The induction must reach the bottom. With infinitely many, the condition can hold and placement still fail: one applicant qualified for posts 1, 2, 3, …, and applicant 1 for post 1 alone, applicant 2 for post 2 alone, and so on.
 - **Two sides, lines only across.** If lines may join two applicants, the condition is not enough; a different test (Tutte's) takes over.
 - **One side covered, not both.** With more posts than applicants, some posts stay empty.
-- **Existence, not a best choice.** Whether anyone would swap, and what a placement costs, are separate questions ([Stable matching](04-stable-matching-gale-shapley.md), The assignment problem).
+- **Existence, not a best choice.** Whether anyone would swap, and what a placement costs, are separate questions ([Stable matching](04-stable-matching-gale-shapley.md), [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md)).
 
 ---
 
@@ -156,6 +156,8 @@ The crowded corner after Cleo's laundry training: three applicants, three posts.
 ## Code, from first principles, and it actually runs
 
 Nothing is imported. Both hirings are settled three ways that share no arithmetic: Hall's condition on all 64 groups; an augmenting-path search that never mentions Hall; and a census of complete placements. A third hiring, the repaired one minus accounts, tests the defect count.
+
+An augmenting path runs from an unplaced applicant to an empty post, switching between unused and used lines. Swapping which of its lines are used places one more applicant ([Matchings](01-matchings-and-augmenting-paths.md)).
 
 ### Python
 

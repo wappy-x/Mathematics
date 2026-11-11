@@ -8,7 +8,7 @@
 
 A council prints a wall map of its twelve wards, lettered A to L. Ward A sits in the middle, five wards ring it — B, C, D, E, F — and six wrap round the outside: G, H, I, J, K, L. Wards sharing a stretch of border need different inks, or the border vanishes on the sheet.
 
-Four inks do it: A 1, B 2, C 3, D 2, E 3, F 4, G 1, H 2, I 1, J 4, K 1, L 3. Three do not, and the reason is on the sheet: the five wards ringing A close a ring of odd length, so two inks cannot alternate right round it and the ring alone takes three; A borders all five and takes a fourth.
+Four inks do it: A 1, B 2, C 3, D 2, E 3, F 4, G 1, H 2, I 1, J 4, K 1, L 3. Three do not, and the reason is on the sheet: the five wards ringing A close a ring of odd length, so two inks cannot alternate right round it and the ring alone takes three. A borders all five and takes a fourth.
 
 Four is not this map's luck: every map drawn flat takes four inks, however many regions it holds — the four colour theorem, settled in 1976 by a machine check no person has read end to end. Five inks need an evening and a pencil.
 
@@ -57,7 +57,7 @@ $$\chi(G) \le 5 \qquad\text{and}\qquad \chi(G) \le 4 \qquad\text{for every plana
 
 - **Drawn flat, no crossings.** The count belongs to the sheet and the sphere; on a doughnut it rises to seven.
 - **Each region in one piece, borders that are stretches, not points.** A ward printed as two patches sharing one ink can force a fifth; wards meeting at a corner are not neighbours.
-- **At least three regions.** Below three dots the bound $E \le 3V - 6$ does not start ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)).
+- **At least three regions.** Below three dots the bound $E \le 3V - 6$ does not start ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)). One or two regions need no proof: they take at most two inks.
 
 ---
 
@@ -77,7 +77,7 @@ That averages under six lines a dot, and whole numbers cannot all sit above thei
 
 ### Step 2: six colours, by lifting one ward out
 
-Lift out a ward with at most five neighbours — Step 1 promises one. What remains is still flat, so assume six inks shade it. Put the ward back: its neighbours wear five inks at most, so a sixth is free. Six wards or fewer get an ink apiece, where the induction stops ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Lift out a ward with at most five neighbours — Step 1 promises one. What remains is still flat, so assume six inks shade it. Put the ward back: its neighbours wear five inks at most, so a sixth is free. Six wards or fewer get an ink apiece, where the induction stops ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). Induction is this pattern: settle the smallest maps, then show each size follows from the one below.
 
 The code runs that proof: lift the least busy ward over and over, never finding one with more than 3 borders left at its lift, then shade back in reverse to A4 B1 C2 D1 E3 F2 G4 H1 I3 J2 K1 L3 — four inks, well under six.
 
@@ -87,7 +87,9 @@ Five neighbours block five inks, which is why six was easy. One case is hard: th
 
 Lift out A. Its neighbours, in the order they sit round it, are B, C, D, E, F; give them inks 1 to 5 and fill the outer ring as G 3, H 1, I 4, J 1, K 2, L 4. No ink is left for A.
 
-Here B and D share no border. Follow the wards wearing ink 1 or ink 3 from B: B (1) borders G (3), G borders H (1), and it ends — a **Kempe chain**, wards wearing two inks, linked border to border, followed as far as it goes. D wears 3 and is off it, so trade the two inks along the chain: B becomes 3, G becomes 1, H becomes 3. Borders inside it still hold two inks, both ends having moved, and a border leaving it ends on a ward wearing neither. A's neighbours now wear 3, 2, 3, 4, 5, so ink 1 is free.
+Here B and D share no border. Follow the wards wearing ink 1 or ink 3 from B: B (1) borders G (3), G borders H (1), and it ends — a **Kempe chain**, wards wearing two inks, linked border to border, followed as far as it goes.
+
+D wears 3 and is off it, so trade the two inks along the chain: B becomes 3, G becomes 1, H becomes 3. Borders inside it still hold two inks, both ends having moved, and a border leaving it ends on a ward wearing neither. A's neighbours now wear 3, 2, 3, 4, 5, so ink 1 is free.
 
 Had the chain reached D, nothing would be freed. But a chain of 1s and 3s from B to D, closed by A's two lines, pens C inside with E outside, so no chain of 2s and 4s runs from C to E: trading those frees ink 2 instead.
 
@@ -96,7 +98,7 @@ Had the chain reached D, nothing would be freed. But a chain of 1s and 3s from B
 
 Induct on the number of dots. Five or fewer: one colour each. Otherwise delete a dot v of degree at most 5 — Step 1 promises one — shade the rest by induction, and restore v. A colour is free unless v's five neighbours wear five colours.
 
-In that case run the steps above with v for A. Name the neighbours P, Q, R, S, T in the order their lines leave v; some pair not side by side is unjoined, since a line P–R would fence Q off from S. Trade 1 and 3 along P's chain, or, if that chain reaches R, trade 2 and 4 along Q's instead, which the closed curve through v keeps clear of S. Only the Jordan curve theorem is taken on trust.
+In that case run the steps above with v for A. Name the neighbours P, Q, R, S, T in the order their lines leave v; some pair not side by side is unjoined, since a line P–R would fence Q off from S. Trade 1 and 3 along P's chain, or, if that chain reaches R, trade 2 and 4 along Q's instead, which the closed curve through v keeps clear of S. Only the Jordan curve theorem is taken on trust: a closed curve drawn flat splits the sheet into an inside and an outside.
 
 </details>
 
@@ -353,7 +355,7 @@ The two outputs match line for line.
 
 - **Printed maps and atlases.** The question began there: Francis Guthrie noticed in 1852, colouring the counties of England, that four inks always sufficed.
 - **Shaded data maps.** Four tints keep neighbouring districts distinct, leaving the rest of the palette to carry the data.
-- **Timetables and register allocation.** The same machinery runs on clash networks nowhere near flat, where four is no help ([Colouring](03-vertex-colouring-and-chromatic-number.md), [Edge colouring](06-edge-colouring-and-round-robin.md)).
+- **Timetables and register allocation.** Register allocation shares a processor's few fast storage slots among a program's values. The same machinery runs on clash networks nowhere near flat, where four is no help ([Colouring](03-vertex-colouring-and-chromatic-number.md), [Edge colouring](06-edge-colouring-and-round-robin.md)).
 
 > **Say it back**
 > Turn a map into a network: a dot per region, a line per shared border. A flat drawing cannot be crowded, so some dot has five lines or fewer. Lift it out, shade the rest, put it back: five neighbours block five colours, so six always work. Five work too, by trading two colours along a chain of regions wearing them, freeing a colour for the dot that had none. Four work as well, but only by a machine check of hundreds of patterns.
