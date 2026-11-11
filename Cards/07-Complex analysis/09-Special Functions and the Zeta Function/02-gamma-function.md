@@ -10,7 +10,9 @@ Treat a football as a perfect ball and take its radius as the unit of length. It
 
 One formula covers every dimension n: the volume is π^(n/2) divided by (n/2)!. The **factorial** n! is 1 × 2 × … × n, the number of orders n things can stand in; 4! = 24. The football, n = 3, needs (3/2)!, and no one lines up one and a half things.
 
-The **gamma function** supplies that number, from an integral rather than a count. It obeys the factorial's rule, "multiply by the next number", so at whole numbers it gives the factorials back: Γ(5) = 4! = 24. At the half-integers it brings in √π: (3/2)! is 3√π/4 = 1.329340, and π^(3/2)/1.329340 = 4.188790, the football again. Run the same rule backwards and gamma reaches negative inputs, and complex ones across the left half of the plane: Γ(−1/2) = −2√π. At 0, −1, −2, … it would divide by zero, and there it has poles.
+The **gamma function** supplies that number, from an integral rather than a count. It obeys the factorial's rule, "multiply by the next number", so at whole numbers it gives the factorials back: Γ(5) = 4! = 24. At the half-integers it brings in √π: (3/2)! is 3√π/4 = 1.329340, and π^(3/2)/1.329340 = 4.188790, the football again.
+
+Run the same rule backwards and gamma reaches negative inputs, and complex ones across the left half of the plane: Γ(−1/2) = −2√π. At 0, −1, −2, … it would divide by zero, and there it has poles: points where it grows without bound.
 
 **Euler's integral defines gamma where the real part is positive; integration by parts gives it the factorial's recurrence, and that recurrence, run backwards, carries it over the whole plane except 0, −1, −2, …, where it has simple poles.**
 
@@ -33,7 +35,7 @@ The one line is π^(n/2)/Γ(n/2 + 1). The code gets the same ten values by slici
 
 ## The formula
 
-Γ is the Greek capital gamma; the input z is complex, with real part Re z. For t > 0 the power $t^{z-1}$ means $e^{(z-1)\ln t}$, with the real logarithm, so no branch cut is involved.
+Γ is the Greek capital gamma; the input z is complex, with real part Re z. For t > 0 the power $t^{z-1}$ means $e^{(z-1)\ln t}$, with the real logarithm, so no branch cut (a line where a complex logarithm jumps) is involved.
 
 $$\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\, dt, \qquad \operatorname{Re} z > 0.$$
 
@@ -81,12 +83,12 @@ The factorial rule is n! = n × (n − 1)!. Differentiating $t^z$ brings down a 
 
 Write σ for Re z. The integrand has size $t^{\sigma-1}e^{-t}$. On (0, 1] its area is at most 1/σ; on [1, ∞) the factor e^(−t) beats any power of t. So the improper integral ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)) converges.
 
-Cut the integral off to run from 1/k to k; each cut-off is holomorphic (has a complex derivative) in z. On any strip a ≤ Re z ≤ b with a > 0, the discarded tails have bounds free of z, so the cut-offs approach Γ uniformly. A uniform limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
+Cut the integral off to run from 1/k to k; each cut-off is holomorphic (has a complex derivative) in z. On any strip a ≤ Re z ≤ b with a > 0, the discarded tails have bounds free of z, so the cut-offs approach Γ uniformly, at one rate for every z in the strip. A uniform limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
 <details>
 <summary>Detailed proof: the tail bounds</summary>
 
-Let 0 < a ≤ σ ≤ b. The left tail below ε ≤ 1 is at most the integral of t^(a−1) from 0 to ε, which is ε^a/a. Pick a whole number k ≥ b. For t ≥ 1, t^(σ−1) ≤ t^k ≤ 2^k k! e^(t/2), from the series for e^(t/2), so the tail beyond R is at most 2^(k+1) k! e^(−R/2). Neither bound mentions z. Each cut-off integral is holomorphic: its Riemann sums are finite sums of entire functions, converging uniformly for z in any closed disc because the integrand is uniformly continuous on that disc times [1/k, k].
+Let 0 < a ≤ σ ≤ b. The left tail below ε ≤ 1 is at most the integral of t^(a−1) from 0 to ε, which is ε^a/a. Pick a whole number k ≥ b. For t ≥ 1, t^(σ−1) ≤ t^k ≤ 2^k k! e^(t/2), from the series for e^(t/2), so the tail beyond R is at most 2^(k+1) k! e^(−R/2). Neither bound mentions z. Each cut-off integral is holomorphic: its Riemann sums are finite sums of entire functions (holomorphic on the whole plane), converging uniformly for z in any closed disc because the integrand is uniformly continuous on that disc times [1/k, k].
 
 </details>
 
@@ -132,7 +134,9 @@ The second factor is holomorphic near −n and at −n equals Γ(1)/((−n)(−n
 
 ### Step 6: the reflection formula
 
-For real 0 < a < 1, [The beta function](03-beta-function.md) rewrites Γ(a)Γ(1 − a) as the area under x^(a−1)/(1 + x) from 0 to infinity, and [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md) evaluates that area as π/sin(πa). Both sides are holomorphic off the whole numbers and agree on the segment from 0 to 1, so by [Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md) they agree everywhere off the whole numbers. The right side is never 0, so Γ has no zeros.
+For real 0 < a < 1, [The beta function](03-beta-function.md) rewrites Γ(a)Γ(1 − a) as the area under x^(a−1)/(1 + x) from 0 to infinity, and [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md) evaluates that area as π/sin(πa).
+
+Both sides are holomorphic off the whole numbers and agree on the segment from 0 to 1, so by [Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md) they agree everywhere off the whole numbers. The right side is never 0, so Γ has no zeros.
 
 The code checks it at 1/4: 3.625610 × 1.225417 = 4.442883 = π/sin(π/4); and at −1/2: Γ(−1/2)Γ(3/2) = −3.141593 = π/sin(−π/2).
 
@@ -369,6 +373,255 @@ ALL CHECKS PASS
 
 The outputs match line for line.
 
+### Lean
+
+Lean proves gamma's main facts for every complex input off the poles, and the card's worked numbers exactly.
+
+- For Re z > 0, gamma equals Euler's integral.
+- For any m ≥ 1, the continuation formula holds wherever Re z > −m and z avoids 0, −1, …, −(m − 1).
+- Gamma is holomorphic everywhere except 0, −1, −2, ….
+- Near each −n, (z + n) Γ(z) tends to (−1)^n/n!. So gamma has a simple pole there, with that residue.
+- Any other holomorphic extension of the integral to that same region equals gamma.
+- For Re z > 0, Γ(z + 1) = z Γ(z). For every whole number n, Γ(n + 1) = n!. And Γ(1/2) = √π.
+- Reflection holds for every complex z off the whole numbers, not only the real case. Gamma is never 0 off its poles.
+- The hand arithmetic holds exactly: Γ(5) = 24, not 5! = 120, and Γ(5/2) = 3√π/4. So do Γ(−1/2) = −2√π, the football's 4π/3 and the residues 1, −1, 1/2, −1/6.
+
+Decimals, Gauss's product, the other ball volumes, the integral at −1/2, the period-1 multiplier and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 215 lines</summary>
+
+```lean
+-- The gamma function: Euler's integral, continued by its recurrence, is holomorphic off 0, -1, -2, ... with simple poles of residue (-1)^n/n! there, and satisfies Γ(z+1) = zΓ(z), Γ(n+1) = n!, Γ(1/2) = √π and the reflection formula.
+import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+import Mathlib.Analysis.Normed.Module.Connected
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+
+open Complex Filter Topology MeasureTheory Set
+open scoped Nat
+
+
+/-- Euler's integral form of gamma for positive real part. -/
+theorem gammaAux_integral (z : ℂ) (hz : 0 < z.re) :
+    Gamma z = ∫ t in Ioi (0 : ℝ), (t : ℂ) ^ (z - 1) * Complex.exp (-(t : ℂ)) := by
+  rw [Gamma_eq_integral hz, GammaIntegral]
+  refine setIntegral_congr_fun measurableSet_Ioi fun t _ => ?_
+  push_cast
+  ring
+
+/-- The recurrence run backwards m times. -/
+theorem gammaAux_prod (m : ℕ) (z : ℂ) (hz : ∀ k : ℕ, k < m → z ≠ -(k : ℂ)) :
+    Gamma z * ∏ k ∈ Finset.range m, (z + k) = Gamma (z + m) := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+    rw [Finset.prod_range_succ, ← mul_assoc, ih (fun k hk => hz k (by omega))]
+    have hne : z + m ≠ 0 := by
+      intro h
+      apply hz m (by omega)
+      linear_combination h
+    rw [mul_comm, ← Gamma_add_one _ hne]
+    push_cast
+    ring_nf
+
+/-- The product (-n)(-n+1)⋯(-1) equals (-1)^n n!. -/
+theorem gammaAux_prod_neg (n : ℕ) :
+    ∏ k ∈ Finset.range n, (-(n : ℂ) + k) = (-1) ^ n * (n ! : ℂ) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.prod_range_succ']
+    have : ∏ k ∈ Finset.range n, (-((n + 1 : ℕ) : ℂ) + ((k + 1 : ℕ) : ℂ)) =
+        ∏ k ∈ Finset.range n, (-(n : ℂ) + k) := by
+      refine Finset.prod_congr rfl fun k _ => ?_
+      push_cast
+      ring
+    rw [this, ih, Nat.factorial_succ]
+    push_cast
+    ring
+
+/-- Euler's integral defines gamma where the real part is positive. The recurrence, run
+backwards m times, continues it to Re z > -m:
+Γ(z) = (Euler's integral at z + m) / (z (z+1) ⋯ (z+m-1)) for z off 0, -1, ..., -(m-1).
+The continued gamma is holomorphic on the whole plane except 0, -1, -2, ...; at each -n it has
+a simple pole with residue (-1)^n/n!; and any other holomorphic extension of the integral to
+that region equals it. -/
+theorem euler_integral_continues_to_plane_with_simple_poles :
+    (∀ z : ℂ, 0 < z.re →
+      Gamma z = ∫ t in Ioi (0 : ℝ), (t : ℂ) ^ (z - 1) * Complex.exp (-(t : ℂ))) ∧
+    (∀ m : ℕ, 1 ≤ m → ∀ z : ℂ, -(m : ℝ) < z.re → (∀ k : ℕ, k < m → z ≠ -(k : ℂ)) →
+      Gamma z = (∫ t in Ioi (0 : ℝ), (t : ℂ) ^ (z + m - 1) * Complex.exp (-(t : ℂ))) /
+        ∏ k ∈ Finset.range m, (z + k)) ∧
+    (∀ z : ℂ, (∀ n : ℕ, z ≠ -(n : ℂ)) → DifferentiableAt ℂ Gamma z) ∧
+    (∀ n : ℕ, Tendsto (fun z : ℂ => (z + n) * Gamma z) (𝓝[≠] (-(n : ℂ)))
+      (𝓝 ((-1 : ℂ) ^ n / (n ! : ℂ)))) ∧
+    (∀ F : ℂ → ℂ, DifferentiableOn ℂ F {z : ℂ | ∀ n : ℕ, z ≠ -(n : ℂ)} →
+      (∀ z : ℂ, 0 < z.re →
+        F z = ∫ t in Ioi (0 : ℝ), (t : ℂ) ^ (z - 1) * Complex.exp (-(t : ℂ))) →
+      ∀ z : ℂ, (∀ n : ℕ, z ≠ -(n : ℂ)) → F z = Gamma z) := by
+  refine ⟨gammaAux_integral, ?_, ?_, ?_, ?_⟩
+  · intro m _ z hre hz
+    have hprod : ∏ k ∈ Finset.range m, (z + k) ≠ 0 := by
+      rw [Finset.prod_ne_zero_iff]
+      intro k hk h
+      exact hz k (Finset.mem_range.1 hk) (by linear_combination h)
+    rw [← gammaAux_integral (z + m) (by simp; linarith), ← gammaAux_prod m z hz]
+    field_simp
+  · intro z hz
+    exact differentiableAt_Gamma z hz
+  · intro n
+    have hev : (fun z : ℂ => (z + n) * Gamma z) =ᶠ[𝓝[≠] (-(n : ℂ))]
+        (fun z : ℂ => Gamma (z + ((n + 1 : ℕ) : ℂ)) / ∏ k ∈ Finset.range n, (z + k)) := by
+      have h1 : ∀ᶠ z in 𝓝 (-(n : ℂ)), ∀ k ∈ Finset.range n, z ≠ -(k : ℂ) := by
+        rw [Filter.eventually_all_finset]
+        intro k hk
+        apply eventually_ne_nhds
+        intro h
+        have h2 : n = k := by exact_mod_cast neg_inj.1 h
+        have := Finset.mem_range.1 hk
+        omega
+      filter_upwards [nhdsWithin_le_nhds h1, self_mem_nhdsWithin] with z hz hzn
+      have hall : ∀ k : ℕ, k < n + 1 → z ≠ -(k : ℂ) := by
+        intro k hk
+        rcases Nat.lt_succ_iff_lt_or_eq.1 hk with h | h
+        · exact hz k (Finset.mem_range.2 h)
+        · subst h; exact hzn
+      have hprod : ∏ k ∈ Finset.range n, (z + k) ≠ 0 := by
+        rw [Finset.prod_ne_zero_iff]
+        intro k hk h
+        exact hz k hk (by linear_combination h)
+      rw [← gammaAux_prod (n + 1) z hall, Finset.prod_range_succ]
+      field_simp
+    refine Tendsto.congr' hev.symm ?_
+    apply tendsto_nhdsWithin_of_tendsto_nhds
+    have hc : ContinuousAt (fun z : ℂ => Gamma (z + ((n + 1 : ℕ) : ℂ)) /
+        ∏ k ∈ Finset.range n, (z + k)) (-(n : ℂ)) := by
+      apply ContinuousAt.div
+      · apply ContinuousAt.comp (g := Gamma)
+        · have : -(n : ℂ) + ((n + 1 : ℕ) : ℂ) = 1 := by push_cast; ring
+          rw [this]
+          exact differentiableAt_Gamma_one.continuousAt
+        · exact (continuous_id.add continuous_const).continuousAt
+      · fun_prop
+      · rw [gammaAux_prod_neg]
+        exact mul_ne_zero (pow_ne_zero _ (by norm_num)) (by exact_mod_cast n.factorial_ne_zero)
+    have hv : Gamma (-(n : ℂ) + ((n + 1 : ℕ) : ℂ)) / ∏ k ∈ Finset.range n, (-(n : ℂ) + k) =
+        (-1 : ℂ) ^ n / (n ! : ℂ) := by
+      have : -(n : ℂ) + ((n + 1 : ℕ) : ℂ) = 1 := by push_cast; ring
+      rw [this, Gamma_one, gammaAux_prod_neg]
+      have hf : (n ! : ℂ) ≠ 0 := by exact_mod_cast n.factorial_ne_zero
+      have hs : ((-1 : ℂ) ^ n) * (-1) ^ n = 1 := by
+        rw [← mul_pow]; norm_num
+      rw [div_eq_div_iff (mul_ne_zero (pow_ne_zero _ (by norm_num)) hf) hf]
+      linear_combination -(n ! : ℂ) * hs
+    rw [← hv]
+    exact hc.tendsto
+  · intro F hF hFint z hz
+    set U : Set ℂ := {z : ℂ | ∀ n : ℕ, z ≠ -(n : ℂ)} with hUdef
+    have hUeq : U = {z : ℂ | (Gamma z)⁻¹ ≠ 0} := by
+      ext w
+      simp [hUdef, Gamma_eq_zero_iff]
+    have hUo : IsOpen U := by
+      rw [hUeq]
+      exact isOpen_ne_fun differentiable_one_div_Gamma.continuous continuous_const
+    have hUc : IsPreconnected U := by
+      have : U = (Set.range fun n : ℕ => -(n : ℂ))ᶜ := by
+        ext w
+        simp [hUdef, eq_comm]
+      rw [this]
+      exact ((countable_range _).isConnected_compl_of_one_lt_rank
+        (by rw [Complex.rank_real_complex]; norm_num)).isPreconnected
+    have hGd : DifferentiableOn ℂ Gamma U := fun w hw =>
+      (differentiableAt_Gamma w hw).differentiableWithinAt
+    have h1 : (1 : ℂ) ∈ U := by
+      intro n h
+      have := congrArg Complex.re h
+      simp at this
+      have : (0 : ℝ) ≤ n := n.cast_nonneg
+      linarith
+    have hev : F =ᶠ[𝓝 (1 : ℂ)] Gamma := by
+      have hopen : IsOpen {w : ℂ | 0 < w.re} := isOpen_lt continuous_const continuous_re
+      filter_upwards [hopen.mem_nhds (by simp : (0 : ℝ) < (1 : ℂ).re)] with w hw
+      rw [hFint w hw, gammaAux_integral w hw]
+    exact (hF.analyticOnNhd hUo).eqOn_of_preconnected_of_eventuallyEq (hGd.analyticOnNhd hUo)
+      hUc h1 hev hz
+
+/-- For Re z > 0, Γ(z + 1) = z Γ(z); so Γ(n + 1) = n! for every whole number n; and
+Γ(1/2) = √π. -/
+theorem gamma_recurrence_factorial_and_half :
+    (∀ z : ℂ, 0 < z.re → Gamma (z + 1) = z * Gamma z) ∧
+    (∀ n : ℕ, Gamma (n + 1) = (n ! : ℂ)) ∧
+    Gamma (1 / 2) = (Real.sqrt Real.pi : ℂ) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro z hz
+    have : z ≠ 0 := by
+      rintro rfl
+      simp at hz
+    exact Gamma_add_one z this
+  · intro n
+    exact Gamma_nat_eq_factorial n
+  · rw [show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by push_cast; ring, Gamma_ofReal,
+      Real.Gamma_one_half_eq]
+
+/-- Reflection: for z off the whole numbers, Γ(z) Γ(1 - z) = π / sin(πz); so gamma has no
+zeros off its poles. -/
+theorem gamma_reflection_and_no_zeros :
+    (∀ z : ℂ, (∀ n : ℤ, z ≠ (n : ℂ)) →
+      Gamma z * Gamma (1 - z) = (Real.pi : ℂ) / Complex.sin (Real.pi * z)) ∧
+    (∀ z : ℂ, (∀ n : ℕ, z ≠ -(n : ℂ)) → Gamma z ≠ 0) := by
+  exact ⟨fun z _ => Gamma_mul_Gamma_one_sub z, fun z hz => Gamma_ne_zero hz⟩
+
+-- The card's worked numbers, exactly.
+example : Gamma 5 = 24 := by
+  rw [show (5 : ℂ) = ((4 : ℕ) : ℂ) + 1 by norm_num, Gamma_nat_eq_factorial]
+  norm_num [Nat.factorial]
+example : (4 ! : ℕ) = 24 := by decide
+example : (5 ! : ℕ) = 120 := by decide
+example : Real.Gamma (5 / 2) = 3 * Real.sqrt Real.pi / 4 := by
+  rw [show (5 / 2 : ℝ) = 1 / 2 + 1 + 1 by norm_num, Real.Gamma_add_one (by norm_num),
+    Real.Gamma_add_one (by norm_num), Real.Gamma_one_half_eq]
+  ring
+example : Real.Gamma (-1 / 2) = -2 * Real.sqrt Real.pi := by
+  have h := Real.Gamma_add_one (s := -1 / 2) (by norm_num)
+  rw [show (-1 / 2 : ℝ) + 1 = 1 / 2 by norm_num, Real.Gamma_one_half_eq] at h
+  linarith
+example : Real.pi ^ ((3 : ℝ) / 2) / Real.Gamma (3 / 2 + 1) = 4 * Real.pi / 3 := by
+  have hg : Real.Gamma (3 / 2 + 1) = 3 * Real.sqrt Real.pi / 4 := by
+    rw [show (3 / 2 + 1 : ℝ) = 1 / 2 + 1 + 1 by norm_num, Real.Gamma_add_one (by norm_num),
+      Real.Gamma_add_one (by norm_num), Real.Gamma_one_half_eq]
+    ring
+  have hp : Real.pi ^ ((3 : ℝ) / 2) = Real.pi * Real.sqrt Real.pi := by
+    rw [show (3 : ℝ) / 2 = 1 + 1 / 2 by norm_num, Real.rpow_add Real.pi_pos, Real.rpow_one,
+      Real.sqrt_eq_rpow]
+  have hs : 0 < Real.sqrt Real.pi := Real.sqrt_pos.2 Real.pi_pos
+  rw [hg, hp]
+  field_simp
+example : ((-1 : ℚ) ^ 0 / (0 ! : ℚ), (-1 : ℚ) ^ 1 / (1 ! : ℚ), (-1 : ℚ) ^ 2 / (2 ! : ℚ),
+    (-1 : ℚ) ^ 3 / (3 ! : ℚ)) = (1, -1, 1 / 2, -1 / 6) := by norm_num [Nat.factorial]
+
+#print axioms gammaAux_integral
+#print axioms gammaAux_prod
+#print axioms gammaAux_prod_neg
+#print axioms euler_integral_continues_to_plane_with_simple_poles
+#print axioms gamma_recurrence_factorial_and_half
+#print axioms gamma_reflection_and_no_zeros
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gammaAux_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gammaAux_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gammaAux_prod_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'euler_integral_continues_to_plane_with_simple_poles' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_recurrence_factorial_and_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_reflection_and_no_zeros' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -414,6 +667,8 @@ The outputs match line for line.
 - [The Mellin transform](07-mellin-transform.md): Euler's integral with e^(−t) replaced by any function.
 - [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): gamma as the factor in zeta's symmetry.
 - The functional equation: that symmetry proved in full.
+
+The question this card leaves open: the ball volumes fall after n = 5 because gamma outgrows the power of π, so how fast does gamma grow?
 
 ---
 

@@ -35,7 +35,7 @@ Each box is one pair of terms meeting at 1/12^s.
 
 ## The formula
 
-Notation first, in words. An **arithmetic function** gives one number for each whole number n; the weights above are an example. The bar in $d \mid n$ reads "d divides n". For complex s, $n^{-s}$ means $e^{-s \ln n}$, of size n to the power −Re s. A **Dirichlet series** adds an arithmetic function's values against these powers:
+Notation first, in words. An **arithmetic function** gives one number for each whole number n; the weights above are an example. The bar in $d \mid n$ reads "d divides n". For complex s, $n^{-s}$ means $e^{-s \ln n}$, of size n to the power −Re s, where Re s is the real part of s. A **Dirichlet series** adds an arithmetic function's values against these powers:
 
 $$F_a(s)=\sum_{n=1}^{\infty}\frac{a(n)}{n^s},\qquad(a*b)(n)=\sum_{d\mid n}a(d)\,b(n/d),\qquad F_a(s)\,F_b(s)=F_{a*b}(s)$$
 
@@ -88,13 +88,15 @@ The pair (m, k) with m × k = 12 contributes $a(m)\,b(k)\,12^{-s}$. The six pair
 
 Fix s with real part x, and let $A = \sum |a(m)| m^{-x}$ and $B = \sum |b(k)| k^{-x}$ be finite. The sizes of the product's first N terms add to at most the sum over pairs with mk up to N, at most AB, so the product converges absolutely.
 
-Pairs with m and k both up to M give the product of two length-M partial sums, tending to $F_a F_b$. For N at least M × M, the pairs with mk up to N contain that square; the rest are at most B times the tail of A past M plus A times the tail of B past M, which tends to 0. Those pairs regroup finitely into the product's first N terms. Letting N, then M, grow gives $F_{a*b} = F_a F_b$.
+Pairs with m and k both up to M give the product of two length-M partial sums, tending to $F_a F_b$. For N at least M × M, the pairs with mk up to N contain that square. The rest are at most B times the tail of A past M plus A times the tail of B past M, which tends to 0. Those pairs regroup finitely into the product's first N terms. Letting N, then M, grow gives $F_{a*b} = F_a F_b$.
 
 </details>
 
 ### Step 2: convolution keeps multiplicativity
 
-Split 12 as 4 × 3, no shared prime. Each divisor of 12 is uniquely a divisor of 4 times one of 3, so for multiplicative a and b a divisor sum at 12 splits into sums at 4 and at 3: $a * b$ is multiplicative. At a prime power τ is the exponent plus one, so τ(12) = (2 + 1)(1 + 1) = 6. The divisor sum σ is "n itself" convolved with $\mathbf 1$, and splits the same way.
+Split 12 as 4 × 3, no shared prime. Each divisor of 12 is uniquely a divisor of 4 times one of 3. So for multiplicative a and b, a divisor sum at 12 splits into sums at 4 and at 3: $a * b$ is multiplicative.
+
+At a prime power τ is the exponent plus one, so τ(12) = (2 + 1)(1 + 1) = 6. The divisor sum σ is "n itself" convolved with $\mathbf 1$, and splits the same way.
 
 ### Step 3: the Möbius signs over the divisors of n cancel unless n is 1
 
@@ -114,7 +116,9 @@ A second road: the Euler product ([The zeta function](05-zeta-function-and-euler
 
 ### Step 5: Möbius inversion is dividing by zeta
 
-If $g = \mathbf 1 * f$ then $F_g = \zeta F_f$, and dividing by zeta gives $F_f = F_\mu F_g$, so $f = \mu * g$. Without series: both groupings of $\mu * \mathbf 1 * f$ add $\mu(a) f(c)$ over triples with a × b × c = n, so convolution is associative and $\mu * (\mathbf 1 * f) = (\mu * \mathbf 1) * f = \varepsilon * f = f$.
+If $g = \mathbf 1 * f$ then $F_g = \zeta F_f$, and dividing by zeta gives $F_f = F_\mu F_g$, so $f = \mu * g$.
+
+Without series: both groupings of $\mu * \mathbf 1 * f$ add $\mu(a) f(c)$ over triples with a × b × c = n, so convolution is associative and $\mu * (\mathbf 1 * f) = (\mu * \mathbf 1) * f = \varepsilon * f = f$.
 
 At n = 6 with $f(n) = n$, g is σ. The signs 1, −1, −1, 1 on the divisors 1, 2, 3, 6 meet σ(6), σ(3), σ(2), σ(1): 12 − 4 − 3 + 1 = 6.
 
@@ -354,6 +358,140 @@ mistake 3, ten terms of each series multiplied: 12^-s gets -1, not 0
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the product rule, 1/ζ and inversion wherever the card says they hold, and the clock numbers exactly.
+
+- If two Dirichlet series converge absolutely at s, so does their product, and its weights are the Dirichlet convolution a * b.
+- For every s with Re s > 1, the Möbius series converges absolutely and equals 1/ζ(s).
+- For every arithmetic function f, g = 1 * f holds exactly when f = μ * g.
+- 12 has six divisors, so τ(12) = 6 = (2 + 1)(1 + 1).
+- τ(4) × τ(3) = 6, but τ(2) × τ(2) = 4 while τ(4) = 3.
+- μ(1) to μ(10) are 1, −1, −1, 0, −1, 1, −1, 0, 0, 1, with μ(6) = 1 and μ(12) = 0.
+- The Möbius signs over the divisors of 12 are 1, −1, −1, 0, 1, 0, and they add to 0.
+- σ(6) = 12 and σ(12) = 28, and Möbius weighting brings them back to 6 and 12.
+- Signs that count repeated primes add to 1, not 0, over the divisors of 4.
+
+Decimals near s = 2, the Euler-product route and the ten-term mistake are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 101 lines</summary>
+
+```lean
+-- Dirichlet series: the product of two absolutely convergent Dirichlet series is the series of the divisor convolution of their weights, one over zeta is the series with the Möbius weights where Re s > 1, and Möbius weights undo any divisor sum.
+import Mathlib.NumberTheory.LSeries.Convolution
+import Mathlib.NumberTheory.LSeries.Dirichlet
+import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+
+open Finset ArithmeticFunction
+open scoped ArithmeticFunction.Moebius ArithmeticFunction.Omega
+
+open scoped LSeries.notation in
+/-- Helper: the divisor-sum weights have the same L-series terms as the convolution `a ⍟ b`. -/
+theorem divisor_sum_term_eq_term_convolution (a b : ℕ → ℂ) (s : ℂ) :
+    LSeries.term (fun n => ∑ d ∈ n.divisors, a d * b (n / d)) s = LSeries.term (a ⍟ b) s := by
+  funext n
+  rcases eq_or_ne n 0 with rfl | hn
+  · simp
+  · rw [LSeries.term_of_ne_zero hn, LSeries.term_of_ne_zero hn, LSeries.convolution_def]
+    simp only
+    rw [Nat.sum_divisorsAntidiagonal (fun x y => a x * b y)]
+
+#print axioms divisor_sum_term_eq_term_convolution
+
+/-- Multiplying two Dirichlet series convolves their weights over divisors. Let a and b give one
+complex number for each whole number n, and let s be a complex number at which both series
+∑ a(n)/n^s and ∑ b(n)/n^s converge absolutely. Then the series whose weight at n is the divisor
+sum (a ∗ b)(n) = ∑_{d ∣ n} a(d) b(n/d) also converges absolutely at s, and its value is the
+product of the two series' values. -/
+theorem dirichlet_series_mul_eq_series_of_divisor_convolution (a b : ℕ → ℂ) (s : ℂ)
+    (ha : Summable (fun n => ‖LSeries.term a s n‖))
+    (hb : Summable (fun n => ‖LSeries.term b s n‖)) :
+    Summable (fun n => ‖LSeries.term (fun n => ∑ d ∈ n.divisors, a d * b (n / d)) s n‖) ∧
+      LSeries (fun n => ∑ d ∈ n.divisors, a d * b (n / d)) s = LSeries a s * LSeries b s := by
+  have ha' : LSeriesSummable a s := summable_norm_iff.mp ha
+  have hb' : LSeriesSummable b s := summable_norm_iff.mp hb
+  have hc := ha'.convolution hb'
+  have hT := divisor_sum_term_eq_term_convolution a b s
+  refine ⟨?_, ?_⟩
+  · rw [hT]; exact summable_norm_iff.mpr hc
+  · rw [← LSeries_convolution' ha' hb']
+    unfold LSeries
+    rw [hT]
+
+/-- One over zeta has the Möbius weights. For every complex s with real part greater than 1, the
+series ∑ μ(n)/n^s converges absolutely and equals 1/ζ(s). -/
+theorem one_div_riemannZeta_eq_moebius_series (s : ℂ) (hs : 1 < s.re) :
+    Summable (fun n => ‖LSeries.term (fun n => (μ n : ℂ)) s n‖) ∧
+      1 / riemannZeta s = LSeries (fun n => (μ n : ℂ)) s := by
+  have hm : LSeriesSummable (fun n => (μ n : ℂ)) s := LSeriesSummable_moebius_iff.mpr hs
+  refine ⟨summable_norm_iff.mpr hm, ?_⟩
+  have h := LSeries_zeta_mul_Lseries_moebius hs
+  rw [LSeries_zeta_eq_riemannZeta hs] at h
+  have hz : riemannZeta s ≠ 0 := by
+    intro h0; rw [h0, zero_mul] at h; exact zero_ne_one h
+  rw [eq_comm, eq_div_iff hz, mul_comm]
+  exact h
+
+/-- Möbius inversion, for every arithmetic function. If g at each n ≥ 1 is the sum of f over the
+divisors of n (g = 1 ∗ f), then f at each n ≥ 1 is the Möbius-weighted divisor sum of g
+(f = μ ∗ g), and the other way round. -/
+theorem moebius_inversion {R : Type*} [CommRing R] (f g : ℕ → R) :
+    (∀ n > 0, g n = ∑ d ∈ n.divisors, f d) ↔
+      (∀ n > 0, f n = ∑ d ∈ n.divisors, (μ d : R) * g (n / d)) := by
+  have h := (sum_eq_iff_sum_mul_moebius_eq (f := f) (g := g))
+  simp only [Nat.sum_divisorsAntidiagonal (fun x y => (μ x : R) * g y)] at h
+  constructor
+  · intro H n hn; exact (h.mp (fun m hm => (H m hm).symm) n hn).symm
+  · intro H n hn; exact (h.mpr (fun m hm => (H m hm).symm) n hn).symm
+
+-- The six ways to cut the clock: 12 has six divisors, so τ(12) = 6, and (2 + 1)(1 + 1) = 6.
+example : Nat.divisors 12 = {1, 2, 3, 4, 6, 12} := by decide
+example : (Nat.divisors 12).card = 6 := by decide
+example : (2 + 1) * (1 + 1) = 6 := by norm_num
+-- τ is multiplicative across 4 × 3, but a shared prime breaks it: τ(2) × τ(2) = 4, τ(4) = 3.
+example : (Nat.divisors 4).card * (Nat.divisors 3).card = 6 := by decide
+example : (Nat.divisors 2).card * (Nat.divisors 2).card = 4 := by decide
+example : (Nat.divisors 4).card = 3 := by decide
+-- The weights of 1/ζ: μ(1) to μ(10) are 1, −1, −1, 0, −1, 1, −1, 0, 0, 1.
+example : (List.range' 1 10).map (fun n => μ n) = [1, -1, -1, 0, -1, 1, -1, 0, 0, 1] := by
+  decide +kernel
+-- μ(6) = 1 and μ(12) = 0.
+example : μ 6 = 1 := by decide +kernel
+example : μ 12 = 0 := by decide +kernel
+-- The Möbius signs over the divisors 1, 2, 3, 4, 6, 12 are 1, −1, −1, 0, 1, 0 and add to 0.
+example : ([1, 2, 3, 4, 6, 12] : List ℕ).map (fun n => μ n) = [1, -1, -1, 0, 1, 0] := by
+  decide +kernel
+example : ∑ d ∈ Nat.divisors 12, μ d = 0 := by decide +kernel
+-- Divisor sums: σ(6) = 1 + 2 + 3 + 6 = 12 and σ(12) = 28.
+example : ∑ d ∈ Nat.divisors 6, d = 12 := by decide
+example : ∑ d ∈ Nat.divisors 12, d = 28 := by decide
+-- σ(6) back to 6: 12 − 4 − 3 + 1 = 6.
+example : ∑ d ∈ Nat.divisors 6, μ d * ((∑ e ∈ Nat.divisors (6 / d), e : ℕ) : ℤ) = 6 := by
+  decide +kernel
+-- σ(12) back to 12: 28 − 12 − 7 + 0 + 3 + 0 = 12.
+example : ∑ d ∈ Nat.divisors 12, μ d * ((∑ e ∈ Nat.divisors (12 / d), e : ℕ) : ℤ) = 12 := by
+  decide +kernel
+-- Signs that count repeated primes, (−1) to the number of prime factors with repeats, add to 1,
+-- not 0, over the divisors of 4.
+example : ∑ d ∈ Nat.divisors 4, (-1 : ℤ) ^ (Ω d) = 1 := by decide +kernel
+
+#print axioms dirichlet_series_mul_eq_series_of_divisor_convolution
+#print axioms one_div_riemannZeta_eq_moebius_series
+#print axioms moebius_inversion
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'divisor_sum_term_eq_term_convolution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dirichlet_series_mul_eq_series_of_divisor_convolution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_div_riemannZeta_eq_moebius_series' depends on axioms: [propext, Classical.choice, Quot.sound]
+'moebius_inversion' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first:** drop 7 from the Euler-product brackets. The second assert fails at n = 7: no term reaches 1/7^s.
@@ -396,7 +534,7 @@ ALL CHECKS PASS
 - Dirichlet L-functions: weights repeating around a clock.
 - The class number formula: a zeta built on ideals.
 
-Everything here stops at Re s > 1, where zeta cannot vanish; whether 1/ζ stays finite further left, once [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md) carries zeta there, and what that says about the primes, is [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md).
+Everything here stops at Re s > 1, where zeta cannot vanish. Whether 1/ζ stays finite further left, once [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md) carries zeta there, and what that says about the primes, is [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md).
 
 ---
 

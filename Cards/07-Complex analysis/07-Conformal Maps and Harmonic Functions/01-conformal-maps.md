@@ -10,7 +10,7 @@ In 1569 Gerardus Mercator published a world chart for sailors. A ship holding a 
 
 The chart is two steps. **Stereographic projection** lays the globe flat: a line from the south pole through each northern point marks where it meets the equator's plane. The north pole lands at 0, the equator on the circle of radius 1, meridians on rays from 0, the course on a spiral into 0. Then the complex logarithm turns rays, circles and the spiral into straight lines.
 
-Neither step keeps lengths; both keep angles. For the logarithm the reason is this card's theorem: near a point where its derivative is not zero, a holomorphic function (one with a complex derivative throughout a region) multiplies small arrows by one complex number, one turn and one stretch. Such an angle-keeping map is **conformal**. The smallest example: z^2 at 1 + i turns short arrows by 45 degrees and stretches them by 2.828427.
+Neither step keeps lengths; both keep angles. For the logarithm the reason is this card's theorem. Near a point where its derivative is not zero, a holomorphic function (one with a complex derivative throughout a region) multiplies small arrows by one complex number, one turn and one stretch. Such an angle-keeping map is **conformal**. The smallest example: z^2 at 1 + i turns short arrows by 45 degrees and stretches them by 2.828427.
 
 **Where f'(a) is not zero, a holomorphic f multiplies every small arrow at a by f'(a), so crossing angles survive, and near a it has a holomorphic inverse.**
 
@@ -57,7 +57,7 @@ $$w = -i\,\mathrm{Log}\, z = \lambda + i\,\ln \tan\!\left(\frac{\pi}{4} + \frac{
 
 ### When it holds
 
-- **f holomorphic near a.** Otherwise there is no single multiplier: the mirror map z-bar sends a 45-degree angle to −45.
+- **f holomorphic near a.** Otherwise there is no single multiplier: the mirror map z-bar, x + iy to x − iy ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)), sends a 45-degree angle to −45.
 - **f'(a) not zero.** Otherwise the next term takes over: z^2 at 0 sends rays 45 degrees apart to 90 degrees apart.
 - **Small shapes only.** Chords (straight segments) from 1 + i to 1.1 + i and to 1.1 + 1.1i, 45 degrees apart, come out 46.397181 apart.
 - **Local, not global.** z^2 sends both 1 + i and −1 − i to 2i. A holomorphic function one-to-one on a whole region is **univalent**; a nonzero derivative does not make it so.
@@ -103,7 +103,7 @@ As t → 0, (γ(t) − a)/t → v and γ(t) − a → 0. For every η > 0 there 
 
 ### Step 3: where f' is zero, angles multiply
 
-At 0 the derivative of z^2 is 0, and nothing cancels. With z = s e^(iα), z^2 = s^2 e^(2iα): the angle doubles, so rays at 0 and 45 degrees land at 0 and 90. If f(a + h) − f(a) begins with c h^m, c not zero, angles at a multiply by m and each point near f(a), other than f(a), has m preimages near a, counted by [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
+At 0 the derivative of z^2 is 0, and nothing cancels. With z = s e^(iα), z^2 = s^2 e^(2iα): the angle doubles, so rays at 0 and 45 degrees land at 0 and 90. If f(a + h) − f(a) begins with c h^m, c not zero and m a whole number, angles at a multiply by m. Each point near f(a), other than f(a), has m preimages (points sent to it) near a, counted by [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
 
 ### Step 4: a nonzero derivative gives a holomorphic local inverse
 
@@ -111,13 +111,17 @@ As a map of the plane, (x, y) to (u, v), with f'(a) = A + iB, its matrix of part
 
 $$\begin{pmatrix} A & -B \\ B & A \end{pmatrix}, \qquad \det = A^2 + B^2 = |f'(a)|^2 > 0$$
 
-f' is continuous: holomorphic functions have derivatives of every order ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)). So the nonzero determinant lets the inverse function theorem for maps of the plane ([Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md)) supply small discs around a and f(a) with a smooth inverse g between them. Its matrix is the inverse matrix, multiplication by 1/f'(a) in real form, so g'(w) = 1/f'(g(w)). For z^2 near 1 + i, g(2i) = 1 + i and g'(2i) = 1/(2 + 2i) = 0.25 − 0.25i: a turn back by 45 degrees and a shrink by 2.828427. Newton's method in the code agrees. Only locally: −1 − i also squares to 2i.
+f' is continuous: holomorphic functions have derivatives of every order ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)). So the nonzero determinant lets the inverse function theorem for maps of the plane ([Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md)) supply small discs around a and f(a) with a smooth inverse g between them.
+
+Its matrix is the inverse matrix, multiplication by 1/f'(a) in real form, so g'(w) = 1/f'(g(w)).
+
+For z^2 near 1 + i, g(2i) = 1 + i and g'(2i) = 1/(2 + 2i) = 0.25 − 0.25i: a turn back by 45 degrees and a shrink by 2.828427. [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) in the code, repeated tangent-line steps towards a root, agrees. Only locally: −1 − i also squares to 2i.
 
 ### Step 5: Mercator's chart is the logarithm of the flat globe
 
 Stereographic projection keeps angles too; Snyder (below) derives it. It puts 72 degrees north at r = 0.158384.
 
-Then −i Log z: the principal logarithm ln|z| + i arg z ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)), then a quarter turn clockwise. Its derivative −i/z is never zero, so by Step 2 it keeps angles off the negative real axis, where Log jumps. It gives −i(ln r + iλ) = λ − i ln r, and −ln tan(π/4 − φ/2) = ln tan(π/4 + φ/2) since the tangents are reciprocals: Mercator's formula, 1.842730 at 72 degrees by both roads.
+Then −i Log z: the principal logarithm ln|z| + i arg z ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)), then a quarter turn clockwise. Its derivative −i/z is never zero, so by Step 2 it keeps angles off the negative real axis, where Log jumps. It gives −i(ln r + iλ) = λ − i ln r. Since the tangents are reciprocals, −ln tan(π/4 − φ/2) = ln tan(π/4 + φ/2): Mercator's formula, 1.842730 at 72 degrees by both roads.
 
 The stretches multiply: (1 + r^2)/2 for the projection, 1/r for the logarithm. With r = tan β and 2β = π/2 − φ, (1 + r^2)/(2r) = 1/sin 2β = 1/cos φ: 3.236068 at 72 degrees, 1 at the equator.
 
@@ -325,6 +329,193 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the main theorem for every holomorphic f wherever f'(a) is not zero, and Mercator's formula at every latitude between the poles.
+
+- Let f be holomorphic near a, with f'(a) not zero. Then f(a + h) = f(a) + f'(a)h + ε(h)h, where ε(h) → 0.
+- As a map of the plane, f multiplies every arrow at a by f'(a).
+- So the angle from one arrow to another, direction included, is the same after the map: f is conformal at a.
+- Near a, f has a holomorphic local inverse g: g undoes f near a, f undoes g near f(a), and g'(w) = 1/f'(g(w)).
+- z^2 has the nonzero derivative 2z at every z other than 0, yet it is not one-to-one there, so it is not univalent.
+- For latitude φ strictly between −π/2 and π/2, and longitude λ in (−π, π], r = tan(π/4 − φ/2) is positive.
+- Then −i Log(r e^(iλ)) = λ + i ln tan(π/4 + φ/2): Mercator's formula.
+- The chart's stretch (1 + r^2)/(2r) equals 1/cos φ.
+- For z^2 at 1 + i: f'(1 + i) = 2 + 2i, and |f'(1 + i)|^2 = 8.
+- Times 2 + 2i, the arrows 1 and 1 + i land on 2 + 2i and 4i, and their quotient is unchanged.
+- (1 + i)^2 = (−1 − i)^2 = 2i, and 1/(2 + 2i) = 0.25 − 0.25i.
+- z-bar sends the arrow 1 + i to 1 − i.
+
+Decimals, chords, angle doubling at 0, Newton's method, the globe's projection and the straight course are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 152 lines</summary>
+
+```lean
+-- Conformal maps: where f'(a) is not zero a holomorphic f multiplies small arrows at a by f'(a), keeps crossing angles and has a holomorphic inverse near a (not always a global one), and Mercator's chart is -i Log of the stereographic globe.
+import Mathlib.Analysis.Complex.Conformal
+import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Deriv
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
+import Mathlib.Analysis.SpecialFunctions.Complex.Log
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Tactic.NormNum
+
+open Filter Topology Complex Asymptotics
+
+/-- The card's main claim. Let f be holomorphic near a (complex differentiable at every point
+near a) with f'(a) not zero. Then:
+1. f(a + h) = f(a) + f'(a) h + ε(h) h with ε(h) → 0, that is, the error is small next to h;
+2. as a map of the plane, f multiplies every small arrow u at a by f'(a);
+3. so the angle from one arrow to another, direction included, is the same after the map:
+   arg (f'(a) u / f'(a) v) = arg (u / v), and f is conformal at a in Mathlib's sense;
+4. near a, f has a holomorphic inverse g: g undoes f near a, f undoes g near f(a), and
+   g'(w) = 1 / f'(g(w)) at every w near f(a). -/
+theorem holomorphic_nonzero_derivative_conformal {f : ℂ → ℂ} {a : ℂ}
+    (hf : ∀ᶠ z in 𝓝 a, DifferentiableAt ℂ f z) (ha : deriv f a ≠ 0) :
+    ((fun h : ℂ => f (a + h) - f a - deriv f a * h) =o[𝓝 0] fun h : ℂ => h) ∧
+    (∀ u : ℂ, fderiv ℝ f a u = deriv f a * u) ∧
+    (∀ u v : ℂ, u ≠ 0 → v ≠ 0 →
+      Complex.arg (fderiv ℝ f a u / fderiv ℝ f a v) = Complex.arg (u / v)) ∧
+    ConformalAt f a ∧
+    ∃ g : ℂ → ℂ, (∀ᶠ z in 𝓝 a, g (f z) = z) ∧ (∀ᶠ w in 𝓝 (f a), f (g w) = w) ∧
+      (∀ᶠ w in 𝓝 (f a), HasDerivAt g (1 / deriv f (g w)) w) := by
+  have hd : DifferentiableAt ℂ f a := hf.self_of_nhds
+  have hfd : ∀ u : ℂ, fderiv ℝ f a u = deriv f a * u := by
+    intro u
+    rw [hd.fderiv_restrictScalars ℝ]
+    show fderiv ℂ f a u = deriv f a * u
+    have : u = u • (1 : ℂ) := by simp
+    rw [this, (fderiv ℂ f a).map_smul, fderiv_apply_one_eq_deriv, smul_eq_mul, mul_comm]
+    simp
+  have han : AnalyticAt ℂ f a := analyticAt_iff_eventually_differentiableAt.2 hf
+  refine ⟨?_, hfd, ?_, hd.conformalAt ha, ?_⟩
+  · have := hasDerivAt_iff_isLittleO_nhds_zero.1 hd.hasDerivAt
+    simpa [smul_eq_mul, mul_comm] using this
+  · intro u v hu hv
+    rw [hfd, hfd, mul_div_mul_left _ _ ha]
+  · have hs := (han.hasStrictDerivAt).hasStrictFDerivAt_equiv ha
+    set e := hs.toOpenPartialHomeomorph f with he
+    have hecoe : (e : ℂ → ℂ) = f := hs.toOpenPartialHomeomorph_coe
+    have hsrc : a ∈ e.source := hs.mem_toOpenPartialHomeomorph_source
+    have htgt : f a ∈ e.target := hs.image_mem_toOpenPartialHomeomorph_target
+    have hga : e.symm (f a) = a := by
+      have := e.left_inv hsrc
+      rwa [hecoe] at this
+    refine ⟨e.symm, ?_, ?_, ?_⟩
+    · filter_upwards [e.open_source.mem_nhds hsrc] with z hz
+      have := e.left_inv hz
+      rwa [hecoe] at this
+    · filter_upwards [e.open_target.mem_nhds htgt] with w hw
+      have := e.right_inv hw
+      rwa [hecoe] at this
+    · have hderiv : ∀ᶠ z in 𝓝 a, deriv f z ≠ 0 :=
+        han.deriv.continuousAt.eventually_ne ha
+      have hS : ∀ᶠ z in 𝓝 a, DifferentiableAt ℂ f z ∧ deriv f z ≠ 0 := hf.and hderiv
+      have hcont : Tendsto e.symm (𝓝 (f a)) (𝓝 a) := by
+        have := e.continuousAt_symm htgt
+        rwa [ContinuousAt, hga] at this
+      filter_upwards [hcont.eventually hS, e.open_target.mem_nhds htgt] with w ⟨hw1, hw2⟩ hw
+      have := HasDerivAt.of_local_left_inverse (e.continuousAt_symm hw) hw1.hasDerivAt hw2 ?_
+      · simpa using this
+      · filter_upwards [e.open_target.mem_nhds hw] with y hy
+        have := e.right_inv hy
+        rwa [hecoe] at this
+
+/-- Local, not global: z^2 has a nonzero derivative 2z at every point other than 0, yet it is
+not one-to-one there (1 + i and -1 - i both go to 2i). So a nonzero derivative does not make a
+holomorphic function univalent. -/
+theorem nonzero_derivative_not_univalent :
+    (∀ z : ℂ, z ≠ 0 → HasDerivAt (fun w : ℂ => w ^ 2) (2 * z) z ∧ 2 * z ≠ 0) ∧
+    ¬ Set.InjOn (fun w : ℂ => w ^ 2) {0}ᶜ := by
+  refine ⟨fun z hz => ⟨?_, mul_ne_zero two_ne_zero hz⟩, ?_⟩
+  · simpa using hasDerivAt_pow 2 z
+  · intro h
+    have h1 : (1 + I : ℂ) ≠ 0 := by
+      intro h0; simpa using congrArg Complex.re h0
+    have h2 : (-1 - I : ℂ) ≠ 0 := by
+      intro h0; simpa using congrArg Complex.re h0
+    have heq := h (Set.mem_compl_singleton_iff.2 h1) (Set.mem_compl_singleton_iff.2 h2)
+      (by simp only; ring)
+    have := congrArg Complex.re heq
+    norm_num at this
+
+/-- Mercator's chart is -i Log of the stereographic globe. A point at latitude φ strictly
+between -π/2 and π/2 and longitude λ in (-π, π] projects to z = r e^(iλ) with
+r = tan(π/4 - φ/2). Then r > 0, -i Log z = λ + i ln tan(π/4 + φ/2), and the chart's stretch
+(1 + r^2)/(2r) equals 1/cos φ. -/
+theorem mercator_is_log_of_stereographic (φ l : ℝ)
+    (hφ₁ : -(Real.pi / 2) < φ) (hφ₂ : φ < Real.pi / 2)
+    (hl₁ : -Real.pi < l) (hl₂ : l ≤ Real.pi) :
+    0 < Real.tan (Real.pi / 4 - φ / 2) ∧
+    -I * Complex.log ((Real.tan (Real.pi / 4 - φ / 2) : ℂ) * Complex.exp (l * I)) =
+      l + I * Real.log (Real.tan (Real.pi / 4 + φ / 2)) ∧
+    (1 + Real.tan (Real.pi / 4 - φ / 2) ^ 2) / (2 * Real.tan (Real.pi / 4 - φ / 2)) =
+      1 / Real.cos φ := by
+  set t := Real.pi / 4 - φ / 2 with ht
+  have ht0 : 0 < t := by rw [ht]; linarith
+  have ht1 : t < Real.pi / 2 := by rw [ht]; linarith
+  have hpos : 0 < Real.tan t := Real.tan_pos_of_pos_of_lt_pi_div_two ht0 ht1
+  have hc : 0 < Real.cos t := Real.cos_pos_of_mem_Ioo ⟨by linarith, ht1⟩
+  have hs : 0 < Real.sin t := Real.sin_pos_of_pos_of_lt_pi ht0 (by linarith)
+  refine ⟨hpos, ?_, ?_⟩
+  · have hinv : Real.tan (Real.pi / 4 + φ / 2) = (Real.tan t)⁻¹ := by
+      rw [← Real.tan_pi_div_two_sub]; congr 1; rw [ht]; ring
+    rw [hinv, Real.log_inv]
+    have hr : ((Real.tan t : ℝ) : ℂ) = Complex.exp (Real.log (Real.tan t)) := by
+      rw [← Complex.ofReal_exp, Real.exp_log hpos]
+    rw [hr, ← Complex.exp_add, Complex.log_exp]
+    · push_cast
+      ring_nf
+      rw [I_sq]
+      ring
+    · simp [Complex.add_im, Complex.ofReal_im]
+      linarith
+    · simp [Complex.add_im, Complex.ofReal_im]
+      linarith
+  · have hcos : Real.cos φ = 2 * Real.sin t * Real.cos t := by
+      rw [← Real.sin_two_mul, ← Real.cos_pi_div_two_sub]; congr 1; rw [ht]; ring
+    rw [hcos, Real.tan_eq_sin_div_cos]
+    have h1 := Real.sin_sq_add_cos_sq t
+    field_simp
+    nlinarith [h1]
+
+-- f(z) = z^2 at 1 + i: f'(1 + i) = 2(1 + i) = 2 + 2i, and |f'|^2 = 2^2 + 2^2 = 8.
+example : (2 : ℂ) * (1 + I) = 2 + 2 * I := by ring
+example : Complex.normSq (2 + 2 * I) = 8 := by
+  simp [Complex.normSq_apply]; norm_num
+-- Arrows 1 (east) and 1 + i (north-east), times 2 + 2i, land on 2 + 2i and 4i: 45 and 90 degrees.
+example : (2 + 2 * I) * 1 = 2 + 2 * I ∧ (2 + 2 * I) * (1 + I) = 4 * I := by
+  constructor
+  · ring
+  · ring_nf; rw [I_sq]; ring
+-- The quotient of the image arrows equals the quotient of the arrows: the multiplier cancels.
+example : (2 + 2 * I) * (1 + I) / ((2 + 2 * I) * 1) = (1 + I) / 1 := by
+  rw [mul_div_mul_left]; intro h; simpa using congrArg Complex.re h
+-- Not one-to-one: (1 + i)^2 = (-1 - i)^2 = 2i.
+example : (1 + I) ^ 2 = 2 * I ∧ (-1 - I) ^ 2 = 2 * I := by
+  constructor <;> (ring_nf; rw [I_sq]; ring)
+-- The local inverse's slope at 2i: 1/f'(1 + i) = 1/(2 + 2i) = 1/4 - (1/4) i.
+example : 1 / (2 + 2 * I) = 1 / 4 - (1 / 4) * I := by
+  rw [Complex.ext_iff]; simp [Complex.inv_re, Complex.inv_im, Complex.normSq]; norm_num
+-- z-bar sends the north-east arrow 1 + i to 1 - i: 45 degrees becomes -45.
+example : (starRingEnd ℂ) (1 + I) = 1 - I := by simp [sub_eq_add_neg]
+
+#print axioms holomorphic_nonzero_derivative_conformal
+#print axioms nonzero_derivative_not_univalent
+#print axioms mercator_is_log_of_stereographic
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'holomorphic_nonzero_derivative_conformal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nonzero_derivative_not_univalent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mercator_is_log_of_stereographic' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -367,6 +558,8 @@ The two outputs match line for line.
 
 - [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md): the conformal maps that are one-to-one on the whole plane with infinity added.
 - Modular forms: functions that keep their shape under a whole group of conformal maps of the half plane.
+
+Left open: angles survive near every point, but which maps are one-to-one on a whole region?
 
 ---
 

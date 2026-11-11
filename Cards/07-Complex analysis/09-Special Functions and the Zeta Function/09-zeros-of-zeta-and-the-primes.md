@@ -36,7 +36,9 @@ Orange: the staircase ψ(x), defined below. Green: the smooth part. Dark: plus t
 
 ## The formula
 
-Notation first, in words. Λ(n), "big lambda of n", is ln p when n is a power of a prime p, else 0: Λ(8) = ln 2, Λ(6) = 0. Adding Λ(n) up to x gives ψ(x), "psi of x": the staircase with each step ln p tall, plus steps at prime powers. A zero of zeta off the real axis is ρ, "rho"; the sum over ρ takes zeros in mirror pairs, lowest first.
+Notation first, in words. Λ(n), "big lambda of n", is ln p when n is a power of a prime p, else 0: Λ(8) = ln 2, Λ(6) = 0. Adding Λ(n) up to x gives ψ(x), "psi of x": the staircase with each step ln p tall, plus steps at prime powers.
+
+Re s is the real part of s. A zero of zeta off the real axis is ρ, "rho"; every ρ lies in the strip 0 ≤ Re s ≤ 1 (Step 6). The sum over ρ takes zeros in mirror pairs, lowest first.
 
 $$-\frac{\zeta'(s)}{\zeta(s)} = \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^{s}} \qquad (\operatorname{Re} s > 1)$$
 
@@ -87,7 +89,7 @@ At s = 2 the prime-power sum gives 0.56996, and zeta's measured slope gives 0.56
 
 ### Step 2: a contour integral turns a series into a running total
 
-Up a vertical line right of 0, the integral of y^s/s over 2πi is 1 when y > 1 and 0 when y < 1: a switch. With y = x/n it keeps the terms with n below x:
+Up a vertical line right of 0, the line Re s = c, the integral of y^s/s over 2πi is 1 when y > 1 and 0 when y < 1: a switch. With y = x/n it keeps the terms with n below x:
 
 $$\psi(x) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} \left(-\frac{\zeta'(s)}{\zeta(s)}\right) \frac{x^{s}}{s}\, ds, \qquad c > 1.$$
 
@@ -95,7 +97,7 @@ This is the inversion of [The Mellin transform](07-mellin-transform.md) applied 
 
 ### Step 3: slide the line left and collect residues
 
-By [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md), −ζ′/ζ has residue (coefficient of 1/(s − a)) +1 at zeta's pole and −1 at each simple zero. Slide the line far left, collecting: x at s = 1; −x^ρ/ρ at each zero ρ; −ln 2π at s = 0; and −½ ln(1 − x^(−2)) from the trivial zeros. That is the explicit formula.
+By [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md), −ζ′/ζ has residue (coefficient of 1/(s − a)) +1 at zeta's pole and −1 at each simple zero. Slide the line far left, collecting: x at s = 1; −x^ρ/ρ at each zero ρ; −ln 2π at s = 0; and −½ ln(1 − x^(−2)) from the trivial zeros (the zeros at −2, −4, −6, …). That is the explicit formula.
 
 <details>
 <summary>Detailed proof: why the line may be moved</summary>
@@ -106,21 +108,25 @@ Cut the line at heights ±T away from zeros; close it into a rectangle with left
 
 ### Step 4: each pair of zeros is one wave
 
-Zeros on the line pair as 1/2 + it and 1/2 − it. Their terms add to 2√x/|ρ| times cos(t ln x − arg ρ): a wave in ln x of frequency t and amplitude like √x. The first frequencies are 14.135, 21.022, 25.011, 30.425, 32.935, 37.586.
+Zeros on the line pair as 1/2 + it and 1/2 − it. Their terms add to 2√x/|ρ| times cos(t ln x − arg ρ): a wave in ln x of frequency t and amplitude like √x. Here arg ρ is the angle ρ makes with the positive real axis. The first frequencies are 14.135, 21.022, 25.011, 30.425, 32.935, 37.586.
 
 At 13.5 and 14.5 the staircase reads 12.79 twice; 29 pairs rebuild it as 12.96 and 12.77, the smooth part alone as 13.66 and 14.66. The zeros are the staircase's spectrum.
 
 ### Step 5: from ψ(x) to π(x) and li(x)
 
-ψ(x) is close to x, so primes near t, each weighing ln t, come one in every ln t numbers. Adding that density up to x gives li(x), by summation by parts (the discrete form of integration by parts). π(x)/li(x) tends to 1 when ψ(x)/x does, which needs no zero on Re s = 1, proved in 1896 by Hadamard and de la Vallée Poussin: The zero-free region, then The prime number theorem.
+ψ(x) is close to x, so primes near t, each weighing ln t, come one in every ln t numbers. Adding that density up to x gives li(x), by summation by parts (the discrete form of integration by parts).
+
+π(x)/li(x) tends to 1 when ψ(x)/x does, which needs no zero on Re s = 1, proved in 1896 by Hadamard and de la Vallée Poussin: The zero-free region, then The prime number theorem.
 
 li beats x ÷ ln x because it charges each stretch its own density, not the thinnest. Series and direct integration both give 30.13 and 78,627.55.
 
 ### Step 6: where the zeros are
 
-The Euler product has no zero for Re s > 1; the mirror carries that to Re s < 0, bar the trivial zeros. The rest lie in the **critical strip**, 0 ≤ Re s ≤ 1, symmetric about the **critical line** Re s = 1/2.
+The Euler product has no zero for Re s > 1; the mirror (the functional equation, which ties ζ(s) to ζ(1 − s)) carries that to Re s < 0, bar the trivial zeros. The rest lie in the **critical strip**, 0 ≤ Re s ≤ 1, symmetric about the **critical line** Re s = 1/2.
 
-The first zero, two ways. Round the box 0 ≤ Re s ≤ 1, 10 ≤ Im s ≤ 20, walked anticlockwise, zeta's value turns 1.000000 times round 0: one zero inside. The same walk, each step weighted by its point s, puts it at 0.500000 + 14.134725i. A secant chase (a root finder following the line through its last two guesses) from 0.6 + 14i lands on the same point, the published 14.134725142 to eight places.
+The first zero, two ways. Round the box 0 ≤ Re s ≤ 1, 10 ≤ Im s ≤ 20, walked anticlockwise, zeta's value turns 1.000000 times round 0: one zero inside. The same walk, each step weighted by its point s, puts it at 0.500000 + 14.134725i.
+
+A secant chase (a root finder following the line through its last two guesses) from 0.6 + 14i lands on the same point, the published 14.134725142 to eight places.
 
 <p align="center"><img src="../figures/zeros-of-zeta-and-the-primes.svg" alt="The critical strip 0 to 1, the critical line Re s = 1/2 with the first six zeros of zeta at heights 14.13 to 37.59, the box from height 10 to 20 walked anticlockwise, and the pole at 1" width="420"></p>
 
@@ -360,6 +366,102 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the prime-power series and where zeta's zeros can lie, for every complex s, plus five exact numbers.
+
+- For every complex s with Re s > 1, the series of Λ(n)/n^s adds up, and its sum is −ζ′(s)/ζ(s).
+- Zeta has no zero where Re s ≥ 1, so none on the line Re s = 1.
+- Every zero of zeta other than the trivial zeros −2, −4, −6, … lies in the critical strip 0 ≤ Re s ≤ 1.
+- The staircase at 100 is 25.
+- Legendre's count agrees: 22 + 4 − 1 = 25, where 22 numbers up to 100 have no factor 2, 3, 5 or 7.
+- Λ(8) = ln 2 and Λ(6) = 0.
+
+The explicit formula, the zeros' heights, li, −ζ′/ζ(2) and the counts at a million are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 67 lines</summary>
+
+```lean
+-- Zeta's zeros and the primes: minus zeta's slope over zeta is the series with weight ln p on every prime power where Re s > 1, zeta has no zero where Re s ≥ 1, and every zero of zeta other than the trivial zeros -2, -4, -6, … lies in the critical strip 0 ≤ Re s ≤ 1.
+import Mathlib.NumberTheory.LSeries.Nonvanishing
+import Mathlib.NumberTheory.LSeries.RiemannZeta
+import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
+import Mathlib.NumberTheory.PrimeCounting
+import Mathlib.Tactic.NormNum
+
+open ArithmeticFunction
+
+/-- Zeta's logarithmic derivative counts prime powers. For every complex s with real part
+greater than 1, the series ∑ Λ(n)/n^s, with weight Λ(n) = ln p when n is a power of a prime p
+and 0 otherwise, converges, and its value is -ζ′(s)/ζ(s). -/
+theorem neg_zeta_log_derivative_eq_von_mangoldt_series (s : ℂ) (hs : 1 < s.re) :
+    Summable (fun n : ℕ => (Λ n : ℂ) / (n : ℂ) ^ s) ∧
+      -deriv riemannZeta s / riemannZeta s = ∑' n : ℕ, (Λ n : ℂ) / (n : ℂ) ^ s := by
+  have h0 : (fun n : ℕ => (Λ n : ℂ)) 0 = 0 := by simp
+  have hterm : LSeries.term (fun n : ℕ => (Λ n : ℂ)) s = fun n : ℕ => (Λ n : ℂ) / (n : ℂ) ^ s := by
+    funext n
+    rw [LSeries.term_def]
+    split_ifs with h
+    · subst h; simp
+    · rfl
+  refine ⟨?_, ?_⟩
+  · have := LSeriesSummable_vonMangoldt hs
+    rw [LSeriesSummable, hterm] at this
+    exact this
+  · rw [← LSeries_vonMangoldt_eq_deriv_riemannZeta_div hs, LSeries_def₀ h0]
+
+/-- No zero on or right of the line Re s = 1. The Euler product has no zero where Re s > 1,
+and (Hadamard and de la Vallée Poussin, 1896) zeta has no zero on the line Re s = 1 either. -/
+theorem zeta_ne_zero_where_re_ge_one (s : ℂ) (hs : 1 ≤ s.re) : riemannZeta s ≠ 0 := by
+  exact riemannZeta_ne_zero_of_one_le_re hs
+
+/-- Where the zeros are. Every zero of zeta other than the trivial zeros -2, -4, -6, … lies in
+the critical strip 0 ≤ Re s ≤ 1. -/
+theorem nontrivial_zero_in_critical_strip (s : ℂ) (hz : riemannZeta s = 0)
+    (hnt : ∀ n : ℕ, s ≠ -2 * ((n : ℂ) + 1)) :
+    0 ≤ s.re ∧ s.re ≤ 1 := by
+  refine ⟨?_, ?_⟩
+  · by_contra h
+    rw [not_le] at h
+    obtain ⟨n, hn⟩ := (riemannZeta_eq_zero_iff_of_re_nonpos h.le).mp hz
+    exact hnt n hn
+  · by_contra h
+    rw [not_le] at h
+    exact riemannZeta_ne_zero_of_one_le_re h.le hz
+
+-- The staircase at 100: 25 primes, 2, 3, 5, …, 97.
+example : Nat.primeCounting 100 = 25 := by
+  rw [Nat.primeCounting, Nat.primeCounting', Nat.count_eq_card_filter_range]
+  decide
+-- Legendre's count at 100: 22 numbers from 1 to 100 have none of 2, 3, 5, 7 as a factor,
+-- and 22 + 4 - 1 = 25.
+example : (List.range' 1 100).countP (fun n => Nat.gcd n 210 == 1) = 22 := by decide
+example : 22 + 4 - 1 = 25 := by norm_num
+-- The weights: Λ(8) = ln 2 and Λ(6) = 0.
+example : Λ 8 = Real.log 2 := by
+  rw [show (8 : ℕ) = 2 ^ 3 by norm_num, vonMangoldt_apply_pow (by norm_num),
+    vonMangoldt_apply_prime Nat.prime_two]
+  norm_num
+example : Λ 6 = 0 := by
+  rw [vonMangoldt_eq_zero_iff]
+  decide
+
+#print axioms neg_zeta_log_derivative_eq_von_mangoldt_series
+#print axioms zeta_ne_zero_where_re_ge_one
+#print axioms nontrivial_zero_in_critical_strip
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'neg_zeta_log_derivative_eq_von_mangoldt_series' depends on axioms: [propext, Classical.choice, Quot.sound]
+'zeta_ne_zero_where_re_ge_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nontrivial_zero_in_critical_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -403,6 +505,8 @@ The two outputs match line for line.
 - The prime number theorem: the theorem in full.
 - The explicit formula: Step 3's estimates.
 - The Riemann hypothesis: equivalent forms.
+
+The question this card leaves open: do all the zeros in the strip lie on the line Re s = 1/2, as the 29 found here do?
 
 ---
 

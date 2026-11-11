@@ -10,7 +10,7 @@ A long corridor has its floor held at 0 degrees and its ceiling at 100. Draw it 
 
 Steady temperature is **harmonic**: at every inside point it equals the average of its values round any small circle there ([Harmonic functions](04-harmonic-functions-and-conjugates.md)). Here a guess works: the temperature climbs evenly, 100y/π degrees, so 31.830989 at 1 + i.
 
-Most regions allow no guess. A conformal map (holomorphic with nonzero derivative, so it keeps angles) bends the corridor onto the upper half plane, where the answer takes one line; it is then carried back point by point. The corridor tests the method against the guess; a quarter plane, with a corner, is the second case.
+Most regions allow no guess. A conformal map is holomorphic (complex-differentiable) with nonzero derivative, so it keeps angles. Such a map bends the corridor onto the upper half plane, where the answer takes one line. The answer is then carried back point by point. The corridor tests the method against the guess; a quarter plane, with a corner, is the second case.
 
 **A harmonic function evaluated at the output of a conformal map is again harmonic, and a one-to-one map carries walls to walls, so a steady-temperature problem on a hard region is solved on the half plane or disc and carried back.**
 
@@ -38,7 +38,7 @@ $$U(w) = \frac{100}{\pi}\arg w,$$
 
 **Read it aloud:** the temperature is the angle of w, measured from the positive real axis, scaled so that the angle π reads 100.
 
-Here arg w lies in (0, π). For a temperature g(t) at each wall point t of the real axis, the half plane's Poisson integral gives the answer at w = a + ib (the disc's formula from [The Poisson formula](06-poisson-integral-formula.md), carried over by a Möbius map):
+Here arg w lies in (0, π). Let g(t) be the temperature at each wall point t of the real axis. The half plane's Poisson integral gives the answer at w = a + ib. It is the disc's formula from [The Poisson formula](06-poisson-integral-formula.md), carried over by a Möbius map, a ratio of two first-degree polynomials ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)):
 
 $$U(a + ib) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{b\,g(t)}{(t - a)^2 + b^2}\,dt$$
 
@@ -72,7 +72,9 @@ Near any point, a holomorphic f moves a small step h to roughly f'(z) times h: t
 
 ### Step 1: the chain rule makes Step 0 exact
 
-Write f = φ + iψ, with φ and ψ its real and imaginary parts. Differentiate U(φ, ψ) twice by the chain rule and add. The Cauchy–Riemann equations (φ_x = ψ_y and φ_y = −ψ_x, a subscript marking a partial derivative) collapse the result: cross terms cancel, both squared-slope terms equal $\lvert f' \rvert^2$, and the terms carrying $\Delta\varphi$ and $\Delta\psi$ vanish, since φ and ψ are harmonic.
+Write f = φ + iψ, with φ and ψ its real and imaginary parts. Differentiate U(φ, ψ) twice by the chain rule and add.
+
+The Cauchy–Riemann equations are φ_x = ψ_y and φ_y = −ψ_x, where a subscript marks a partial derivative. They collapse the result: cross terms cancel, both squared-slope terms equal $\lvert f' \rvert^2$, and the terms carrying $\Delta\varphi$ and $\Delta\psi$ vanish, since φ and ψ are harmonic.
 
 At 1 + i with f = e^z and U = (Re w)^2, whose Laplacian is 2 everywhere, finite differences give 14.778113; the formula gives 2 e^2 = 14.778112.
 
@@ -94,17 +96,23 @@ Cauchy–Riemann gives φ_x ψ_x + φ_y ψ_y = φ_x ψ_x − ψ_x φ_x = 0. It a
 
 ### Step 2: walls ride along with the map
 
-Let f be one-to-one onto the easy region and extend continuously to the edges, walls to walls. Each wall temperature moves to the image point; solve there for a bounded U. Then u = U after f is harmonic by Step 1, and as z nears a wall point, f(z) nears its image, so u nears the right value. Bounded answers are unique: the difference of two is bounded, harmonic and 0 on the walls, and the maximum principle ([Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md)), in its form for bounded functions, forces it to 0.
+Let f be one-to-one onto the easy region and extend continuously to the edges, walls to walls. Each wall temperature moves to the image point; solve there for a bounded U. Then u = U after f is harmonic by Step 1, and as z nears a wall point, f(z) nears its image, so u nears the right value.
+
+Bounded answers are unique. The difference of two is bounded, harmonic and 0 on the walls. The maximum principle ([Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md)), in its form for bounded functions, forces it to 0.
 
 ### Step 3: the corridor through e^z
 
-With z = x + iy, e^z = e^x (cos y + i sin y): modulus e^x, angle y ([The standard maps](03-standard-maps-and-composing-them.md)). For y between 0 and π the angle fills (0, π) exactly once, so the corridor goes one-to-one onto the upper half plane. The floor y = 0 goes to e^x, the positive real axis, at 0 degrees. The ceiling y = π goes to −e^x, the negative real axis, at 100.
+With z = x + iy, e^z = e^x (cos y + i sin y): modulus e^x, angle y ([The standard maps](03-standard-maps-and-composing-them.md)). For y between 0 and π the angle fills (0, π) exactly once, so the corridor goes one-to-one onto the upper half plane.
+
+The floor y = 0 goes to e^x, the positive real axis, at 0 degrees. The ceiling y = π goes to −e^x, the negative real axis, at 100.
 
 U(w) = (100/π) arg w is harmonic, since arg w is the imaginary part of the holomorphic logarithm ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). Carried back: u(z) = (100/π) arg e^z = 100y/π, the guess. At 1 + i, e^(1+i) = 1.468694 + 2.287355i, its angle is 1, and u = 31.830989.
 
 ### Step 4: the quarter plane through z^2
 
-The quarter plane holds the points with positive real and imaginary parts. Hold the positive real axis at 0 degrees and the positive imaginary axis at 100. Squaring doubles angles, so z^2 sends angles in (0, π/2) one-to-one onto (0, π): the quarter plane onto the half plane. The wall 2 goes to 4, at 0 degrees; the wall 2i goes to −4, at 100. Carried back:
+The quarter plane holds the points with positive real and imaginary parts. Hold the positive real axis at 0 degrees and the positive imaginary axis at 100.
+
+Squaring doubles angles, so z^2 sends angles in (0, π/2) one-to-one onto (0, π): the quarter plane onto the half plane. The wall 2 goes to 4, at 0 degrees; the wall 2i goes to −4, at 100. Carried back:
 
 $$u(z) = \frac{100}{\pi}\arg(z^2) = \frac{200}{\pi}\arg z.$$
 
@@ -142,7 +150,11 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Three roads: the closed forms; the half-plane Poisson integral at the mapped point, by a hand-written Simpson's rule that never uses an angle; and the |f'|^2 rule, tested by a finite-difference Laplacian on a non-harmonic function under both maps.
+The code takes three roads to the answer:
+
+- the closed forms;
+- the half-plane Poisson integral at the mapped point, by a hand-written Simpson's rule (an integral as a weighted sum of sample values) that never uses an angle;
+- the |f'|^2 rule, tested on a non-harmonic function under both maps by a finite-difference Laplacian (second derivatives estimated from values at nearby points).
 
 ### Python
 
@@ -325,6 +337,246 @@ break 4, factor |f'|^2 dropped: Laplacian 2.000000 instead of 14.778112
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the Laplacian rule for every holomorphic map, and it proves the corridor and the quarter plane exactly.
+
+- Take any holomorphic map f and any U with continuous second partial derivatives. The Laplacian of U after f is the square of the local stretch times the Laplacian of U at f(z).
+- So a harmonic U after a holomorphic map is harmonic. The map need not be one-to-one, and f' may be 0.
+- e^z sends the corridor one-to-one onto the upper half plane. The floor lands where the half-plane temperature is 0, the ceiling where it is 100.
+- Carried back through e^z, the half-plane temperature (100/π) arg w is 100y/π.
+- z^2 sends the quarter plane one-to-one onto the upper half plane. The positive real axis lands at 0 degrees, the positive imaginary axis at 100.
+- Carried back through z^2, the half-plane temperature is (200/π) arg z.
+- The hand arithmetic holds exactly: (1 + 2i)^2 = −3 + 4i, 2 goes to 4 and 2i to −4, and z^2 sends 2 and −2 both to 4.
+
+The Poisson integral, all decimal values, the finite differences and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 210 lines</summary>
+
+```lean
+-- Solving by mapping: the Laplacian of U after a holomorphic map f is |f'|^2 times the Laplacian of U at the image point, so a harmonic function stays harmonic under such a map, and e^z and z^2 carry the corridor and the quarter plane one-to-one onto the upper half plane, walls to walls, giving the temperatures 100y/pi and (200/pi) arg z.
+import Mathlib.Analysis.InnerProductSpace.Harmonic.Basic
+import Mathlib.Analysis.InnerProductSpace.Harmonic.Constructions
+import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.Complex.RealDeriv
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Tactic.NormNum
+
+open Set Complex Laplacian InnerProductSpace
+
+/-- The card's formula. Let f be holomorphic (complex-differentiable) on an open set s, let z be
+a point of s, and let U be a real function with continuous second partial derivatives near f(z).
+Then the Laplacian of U after f, at z, equals the square of the local stretch |f'(z)| times the
+Laplacian of U at the image point f(z). -/
+theorem laplacian_comp_holomorphic {s : Set ℂ} {f : ℂ → ℂ} {U : ℂ → ℝ} {z : ℂ}
+    (hs : IsOpen s) (hf : DifferentiableOn ℂ f s) (hz : z ∈ s)
+    (hU : ContDiffAt ℝ 2 U (f z)) :
+    Δ (U ∘ f) z = ‖deriv f z‖ ^ 2 * Δ U (f z) := by
+  have hfa : AnalyticAt ℂ f z := hf.analyticAt (hs.mem_nhds hz)
+  have hfC : ContDiffAt ℂ ⊤ f z := hfa.contDiffAt
+  have hfR : ContDiffAt ℝ ⊤ f z := hfC.restrict_scalars ℝ
+  have hfdR : DifferentiableAt ℝ f z := hfR.differentiableAt (by simp)
+  have hΔf : Δ f z = 0 := (hfC.of_le (by simp)).harmonicAt.2.eq_of_nhds
+  have hev : fderiv ℝ (U ∘ f) =ᶠ[nhds z]
+      fun y => (fderiv ℝ U (f y)).comp (fderiv ℝ f y) := by
+    have h1 : ∀ᶠ y in nhds z, DifferentiableAt ℝ U (f y) := by
+      have := hU.eventually (by simp)
+      exact (hfR.continuousAt.eventually this).mono fun y hy => hy.differentiableAt (by simp)
+    have h2 : ∀ᶠ y in nhds z, DifferentiableAt ℝ f y :=
+      (hfR.eventually (by simp)).mono fun y hy => hy.differentiableAt (by simp)
+    filter_upwards [h1, h2] with y hy1 hy2
+    exact fderiv_comp y hy1 hy2
+  have hDU : DifferentiableAt ℝ (fderiv ℝ U) (f z) :=
+    (hU.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
+  have hDf : DifferentiableAt ℝ (fderiv ℝ f) z :=
+    (hfR.fderiv_right (m := 1) (by simp)).differentiableAt (by norm_num)
+  have hc : DifferentiableAt ℝ (fun y => fderiv ℝ U (f y)) z := hDU.comp z hfdR
+  have key : ∀ v : ℂ, fderiv ℝ (fderiv ℝ (U ∘ f)) z v v =
+      fderiv ℝ (fderiv ℝ U) (f z) (fderiv ℝ f z v) (fderiv ℝ f z v)
+        + fderiv ℝ U (f z) (fderiv ℝ (fderiv ℝ f) z v v) := by
+    intro v
+    rw [hev.fderiv_eq, fderiv_clm_comp hc hDf,
+      show (fun y => fderiv ℝ U (f y)) = fderiv ℝ U ∘ f from rfl, fderiv_comp z hDU hfdR]
+    simp only [add_apply, ContinuousLinearMap.comp_apply,
+      ContinuousLinearMap.compL_apply, ContinuousLinearMap.flip_apply]
+    rw [add_comm]
+  have hfd : ∀ v : ℂ, fderiv ℝ f z v = v * deriv f z := by
+    intro v
+    rw [hfC.differentiableAt (by simp) |>.fderiv_restrictScalars ℝ]
+    simp only [ContinuousLinearMap.coe_restrictScalars']
+    rw [← fderiv_apply_one_eq_deriv, ← smul_eq_mul, ← map_smul, smul_eq_mul, mul_one]
+  rw [laplacian_eq_iteratedFDeriv_complexPlane, laplacian_eq_iteratedFDeriv_complexPlane] at *
+  simp only [iteratedFDeriv_two_apply, Matrix.cons_val_zero, Matrix.cons_val_one] at hΔf ⊢
+  rw [key 1, key I, hfd, hfd]
+  have hlin : fderiv ℝ U (f z) (fderiv ℝ (fderiv ℝ f) z 1 1)
+      + fderiv ℝ U (f z) (fderiv ℝ (fderiv ℝ f) z I I) = 0 := by
+    rw [← map_add, hΔf, map_zero]
+  set a := deriv f z
+  have ha : 1 * a = (a.re : ℝ) • (1 : ℂ) + (a.im : ℝ) • I := by
+    apply Complex.ext <;> simp
+  have hIa : I * a = (-a.im : ℝ) • (1 : ℂ) + (a.re : ℝ) • I := by
+    apply Complex.ext <;> simp
+  rw [ha, hIa]
+  simp only [map_add, map_smul, add_apply, smul_apply,
+    smul_eq_mul]
+  rw [Complex.sq_norm, Complex.normSq_apply]
+  linear_combination hlin
+
+/-- Harmonic stays harmonic. If f is holomorphic on an open set s and sends s into a set V on
+which U is harmonic, then u = U after f is harmonic on s. Only holomorphy is used: f need not be
+one-to-one, and f' may vanish. -/
+theorem harmonic_comp_holomorphic {s V : Set ℂ} {f : ℂ → ℂ} {U : ℂ → ℝ}
+    (hs : IsOpen s) (hf : DifferentiableOn ℂ f s) (hmap : MapsTo f s V)
+    (hU : HarmonicOnNhd U V) :
+    HarmonicOnNhd (U ∘ f) s := by
+  intro z hz
+  have hfR : ContDiffAt ℝ 2 f z :=
+    ((hf.analyticAt (hs.mem_nhds hz)).contDiffAt (n := 2)).restrict_scalars ℝ
+  have hUz := hU (f z) (hmap hz)
+  refine ⟨hUz.1.comp z hfR, ?_⟩
+  have h1 : ∀ᶠ y in nhds z, ContDiffAt ℝ 2 U (f y) :=
+    hfR.continuousAt.eventually (hUz.1.eventually (by simp))
+  have h2 : ∀ᶠ y in nhds z, Δ U (f y) = 0 := hfR.continuousAt.eventually hUz.2
+  filter_upwards [h1, h2, hs.mem_nhds hz] with y hy1 hy2 hy3
+  rw [laplacian_comp_holomorphic hs hf hy3 hy1, hy2, mul_zero]
+  rfl
+
+/-- The card's two worked cases. The half-plane temperature is U(w) = (100/π) arg w: 0 on the
+positive real axis, 100 on the negative one.
+Corridor: e^z sends the strip 0 < Im z < π one-to-one onto the upper half plane, the floor to the
+positive real axis (0 degrees) and the ceiling to the negative real axis (100 degrees), and the
+answer carried back is U(e^z) = 100y/π.
+Quarter plane: z^2 sends the points with positive real and imaginary parts one-to-one onto the
+upper half plane, the positive real axis to 0 degrees and the positive imaginary axis to 100,
+and the answer carried back is U(z^2) = (200/π) arg z. -/
+theorem corridor_and_quarter_plane_by_mapping :
+    (BijOn exp {z : ℂ | 0 < z.im ∧ z.im < Real.pi} {w : ℂ | 0 < w.im} ∧
+      (∀ x : ℝ, 100 / Real.pi * arg (exp (x : ℂ)) = 0) ∧
+      (∀ x : ℝ, 100 / Real.pi * arg (exp ((x : ℂ) + Real.pi * I)) = 100) ∧
+      ∀ z : ℂ, 0 < z.im → z.im < Real.pi →
+        100 / Real.pi * arg (exp z) = 100 * z.im / Real.pi) ∧
+    (BijOn (fun z : ℂ => z ^ 2) {z : ℂ | 0 < z.re ∧ 0 < z.im} {w : ℂ | 0 < w.im} ∧
+      (∀ t : ℝ, 0 < t → 100 / Real.pi * arg ((t : ℂ) ^ 2) = 0) ∧
+      (∀ t : ℝ, 0 < t → 100 / Real.pi * arg (((t : ℂ) * I) ^ 2) = 100) ∧
+      ∀ z : ℂ, 0 < z.re → 0 < z.im →
+        100 / Real.pi * arg (z ^ 2) = 200 / Real.pi * arg z) := by
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  have hargexp : ∀ z : ℂ, -Real.pi < z.im → z.im ≤ Real.pi → arg (exp z) = z.im := by
+    intro z h1 h2
+    rw [← log_im, log_exp h1 h2]
+  -- arg of a point in the upper half plane lies in (0, π)
+  have harg_up : ∀ w : ℂ, 0 < w.im → 0 < arg w ∧ arg w < Real.pi := by
+    intro w hw
+    refine ⟨?_, ?_⟩
+    · rcases lt_or_eq_of_le (arg_nonneg_iff.mpr hw.le) with h | h
+      · exact h
+      · exfalso
+        have := (arg_eq_zero_iff.mp h.symm).2
+        linarith
+    · exact arg_lt_pi_iff.mpr (Or.inr hw.ne')
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
+  · refine ⟨?_, ?_, ?_⟩
+    · intro z ⟨h1, h2⟩
+      show 0 < (exp z).im
+      rw [exp_im]
+      exact mul_pos (Real.exp_pos _) (Real.sin_pos_of_pos_of_lt_pi h1 h2)
+    · intro z ⟨h1, h2⟩ w ⟨h3, h4⟩ h
+      rw [← log_exp (by linarith) h2.le, ← log_exp (by linarith) h4.le, h]
+    · intro w hw
+      have hw0 : w ≠ 0 := fun h => by simp [h] at hw
+      obtain ⟨a1, a2⟩ := harg_up w hw
+      exact ⟨log w, ⟨by rw [log_im]; exact a1, by rw [log_im]; exact a2⟩, exp_log hw0⟩
+  · intro x
+    rw [← ofReal_exp, arg_ofReal_of_nonneg (Real.exp_pos x).le, mul_zero]
+  · intro x
+    rw [hargexp _ (by simp; linarith [Real.pi_pos]) (by simp)]
+    simp
+  · intro z h1 h2
+    rw [hargexp z (by linarith [Real.pi_pos]) h2.le]
+    ring
+  · refine ⟨?_, ?_, ?_⟩
+    · intro z ⟨h1, h2⟩
+      show 0 < (z ^ 2).im
+      rw [sq, mul_im]
+      nlinarith
+    · intro z ⟨h1, h2⟩ w ⟨h3, h4⟩ h
+      have h' : z ^ 2 = w ^ 2 := h
+      rcases sq_eq_sq_iff_eq_or_eq_neg.mp h' with h5 | h5
+      · exact h5
+      · exfalso
+        have := congrArg re h5
+        simp at this
+        linarith
+    · intro w hw
+      have hw0 : w ≠ 0 := fun h => by simp [h] at hw
+      obtain ⟨a1, a2⟩ := harg_up w hw
+      refine ⟨exp (log w / 2), ⟨?_, ?_⟩, ?_⟩
+      · rw [exp_re]
+        apply mul_pos (Real.exp_pos _)
+        apply Real.cos_pos_of_mem_Ioo
+        have : (log w / 2).im = arg w / 2 := by simp [log_im]
+        rw [this]
+        constructor <;> linarith
+      · rw [exp_im]
+        apply mul_pos (Real.exp_pos _)
+        apply Real.sin_pos_of_pos_of_lt_pi
+        · have : (log w / 2).im = arg w / 2 := by simp [log_im]
+          rw [this]; linarith
+        · have : (log w / 2).im = arg w / 2 := by simp [log_im]
+          rw [this]; linarith
+      · show exp (log w / 2) ^ 2 = w
+        rw [← exp_nat_mul]
+        push_cast
+        rw [mul_div_cancel₀ _ two_ne_zero, exp_log hw0]
+  · intro t ht
+    rw [← ofReal_pow, arg_ofReal_of_nonneg (by positivity), mul_zero]
+  · intro t ht
+    have : ((t : ℂ) * I) ^ 2 = ((-(t ^ 2) : ℝ) : ℂ) := by
+      rw [mul_pow, I_sq]; push_cast; ring
+    rw [this, arg_ofReal_of_neg (by nlinarith)]
+    field_simp
+  · intro z h1 h2
+    have hz0 : z ≠ 0 := fun h => by simp [h] at h1
+    have a1 : 0 < arg z := (harg_up z h2).1
+    have a2 : arg z < Real.pi / 2 := by
+      have := abs_arg_lt_pi_div_two_iff.mpr (Or.inl h1)
+      exact (abs_lt.mp this).2
+    have h2l : (2 * log z).im = 2 * arg z := by simp [log_im]
+    have : z ^ 2 = exp (2 * log z) := by
+      rw [show (2 : ℂ) = ((2 : ℕ) : ℂ) by norm_num, exp_nat_mul, exp_log hz0]
+    rw [this, hargexp _ (by rw [h2l]; linarith [Real.pi_pos]) (by rw [h2l]; linarith), h2l]
+    ring
+
+/-- Worked numbers: (1 + 2i)^2 = 1 + 4i - 4 = -3 + 4i. -/
+example : ((1 : ℂ) + 2 * I) ^ 2 = -3 + 4 * I := by
+  apply Complex.ext <;> simp [sq] <;> norm_num
+
+/-- Quarter-plane walls: 2 goes to 4 and 2i goes to -4. -/
+example : (2 : ℂ) ^ 2 = 4 ∧ ((2 : ℂ) * I) ^ 2 = -4 := by
+  constructor
+  · norm_num
+  · rw [mul_pow, I_sq]; norm_num
+
+/-- The fold: z^2 on the half plane sends 2 and -2 to the same point 4. -/
+example : (2 : ℂ) ^ 2 = 4 ∧ (-2 : ℂ) ^ 2 = 4 := by
+  constructor <;> norm_num
+
+#print axioms laplacian_comp_holomorphic
+#print axioms harmonic_comp_holomorphic
+#print axioms corridor_and_quarter_plane_by_mapping
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'laplacian_comp_holomorphic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'harmonic_comp_holomorphic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'corridor_and_quarter_plane_by_mapping' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Warmer floor.** Guess first: with the floor at 20 degrees, what is the corridor's temperature? Set U to 20 + (80/π) arg w. Answer: u = 20 + 80y/π.
@@ -362,6 +614,8 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md): every simply connected region (one with no holes) except the whole plane maps onto the disc, and polygons have a formula for the map.
+
+Left open: which regions have a one-to-one conformal map onto the half plane at all, and how to find it when no standard map fits.
 
 ---
 

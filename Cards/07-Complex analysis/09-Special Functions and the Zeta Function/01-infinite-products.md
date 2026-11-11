@@ -73,7 +73,7 @@ $$\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1}$$
 
 - **The sizes must add up, not the signed parts.** Rates of ±1/√n have a finite signed total, 0.396682 by year 100,000, yet the balance drains to 0.005316.
 - **No factor may be zero.** One zero factor makes the product zero; the sine product uses that to place its zeros.
-- **In the plane, one bound must serve a whole disc.** Then the product is holomorphic there; for sine on the disc |z| ≤ R the bound is R^2/n^2.
+- **In the plane, one bound must serve a whole disc.** Then the product is holomorphic there, that is, differentiable in the complex sense; for sine on the disc |z| ≤ R the bound is R^2/n^2.
 - **Matching zeros is not enough.** e^z sin(πz) has sine's zeros too; Step 5 pins down the free factor.
 
 ---
@@ -94,11 +94,11 @@ If $S$ is finite, the parts shrink to 0, so past some year every |a_n| is at mos
 
 ### Step 3: for positive parts the test runs both ways
 
-When every a_n is at least 0, multiplying out gives P_N ≥ 1 + a_1 + … + a_N, and 1 + a ≤ e^a gives P_N ≤ e^(a_1 + … + a_N). Product and sum are bounded together or not at all: 2.644934 ≤ 3.676078 ≤ 5.180668 on the first account. The 1/n account telescopes, 2 × 3/2 × 4/3 × … × (N + 1)/N = N + 1, unbounded like the harmonic sum.
+When every a_n is at least 0, multiplying out gives P_N ≥ 1 + a_1 + … + a_N, and 1 + a ≤ e^a gives P_N ≤ e^(a_1 + … + a_N). Product and sum are bounded together or not at all: 2.644934 ≤ 3.676078 ≤ 5.180668 on the first account. The 1/n account telescopes, 2 × 3/2 × 4/3 × … × (N + 1)/N = N + 1, unbounded like the harmonic sum 1 + 1/2 + 1/3 + ….
 
 ### Step 4: in the plane the product is holomorphic
 
-Now a_n(z) = −z^2/n^2. On the disc |z| ≤ R the sizes are at most R^2/n^2, a finite total. Past the first few factors, Step 1 makes the sum of logs converge uniformly on the disc, so it is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)), and so is e to it. The early factors are polynomials. The product is holomorphic everywhere and zero exactly where a factor is: at 0, ±1, ±2, …, the zeros of sin(πz).
+Now a_n(z) = −z^2/n^2. On the disc |z| ≤ R the sizes are at most R^2/n^2, a finite total. Past the first few factors, Step 1 makes the sum of logs converge uniformly on the disc (one error bound for every point at once), so it is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)), and so is e to it. The early factors are polynomials. The product is holomorphic everywhere and zero exactly where a factor is: at 0, ±1, ±2, …, the zeros of sin(πz).
 
 ### Step 5: Euler's product equals sine
 
@@ -125,7 +125,7 @@ The coefficient of z^2 in the product is minus the sum of 1/n^2; in sin(πz)/(π
 
 </details>
 
-Building any entire function from its zeros, the Weierstrass and Hadamard factorisations, is left to wing 21.
+Building any entire function (one holomorphic on the whole plane) from its zeros, the Weierstrass and Hadamard factorisations, is left to wing 21, Algebraic and analytic number theory.
 
 ---
 
@@ -352,6 +352,107 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the product test and its bounds for positive parts in general, and Euler's sine product at every point of the plane.
+
+- Let the small parts a_n be complex numbers, with no factor 1 + a_n equal to zero. If the sizes |a_n| have a finite total, the product settles on a limit that is not zero.
+- If every a_n is 0 or more and their total S is finite, the product settles on a limit P with 1 + S ≤ P ≤ e^S.
+- At every point z of the plane, πz times the product of 1 − z^2/n^2 for n = 1 to N tends to sin(πz) as N grows.
+- The 1/n^2 account holds exactly 2, 5/2 and 25/9 after years 1, 2 and 3.
+- The 1/n account holds exactly 11 after 10 years and 101 after 100.
+- Losses of 1/(n + 1) for 100 years leave exactly 1/101.
+- At z = 3 the factor for n = 3 is 1 − 9/9 = 0, so the sine product is 0 there.
+
+The decimals, the limit sinh(π)/π, Wallis's product, the ±1/√n account, the chart and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 71 lines</summary>
+
+```lean
+-- Infinite products: a product of factors 1 + a n with no zero factor and with sizes ‖a n‖ of finite total settles on a nonzero limit, for parts 0 or more that limit lies between 1 + S and e^S, and sin(πz) is πz times the product of 1 - z^2/n^2.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.EulerSineProd
+import Mathlib.Analysis.SpecialFunctions.Log.Summable
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Tactic.NormNum
+
+open Filter Topology Finset
+
+/-- The product test. Take complex small parts a 0, a 1, a 2, … with no factor 1 + a n equal to
+zero. If the sizes ‖a n‖ have a finite total, the partial products (1 + a 0)(1 + a 1)…(1 + a (N-1))
+settle on a limit P, and that limit is not zero. -/
+theorem product_converges_of_summable_sizes (a : ℕ → ℂ)
+    (h_sizes : Summable fun n => ‖a n‖) (h_no_zero : ∀ n, 1 + a n ≠ 0) :
+    ∃ P : ℂ, P ≠ 0 ∧
+      Tendsto (fun N => ∏ n ∈ range N, (1 + a n)) atTop (𝓝 P) := by
+  have hl := Complex.summable_log_one_add_of_summable (Summable.of_norm h_sizes)
+  exact ⟨_, Complex.exp_ne_zero _,
+    (Complex.hasProd_of_hasSum_log h_no_zero hl.hasSum).tendsto_prod_nat⟩
+
+/-- Positive parts. If every a n is 0 or more and their total S is finite, the partial products
+settle on a limit P with 1 + S ≤ P ≤ e^S. -/
+theorem product_between_one_add_sum_and_exp (a : ℕ → ℝ)
+    (h_nonneg : ∀ n, 0 ≤ a n) (h_sum : Summable a) :
+    ∃ P : ℝ, Tendsto (fun N => ∏ n ∈ range N, (1 + a n)) atTop (𝓝 P) ∧
+      1 + ∑' n, a n ≤ P ∧ P ≤ Real.exp (∑' n, a n) := by
+  have hpos : ∀ n, 0 < 1 + a n := fun n => by linarith [h_nonneg n]
+  have hl := Real.summable_log_one_add_of_summable h_sum
+  have ht := (Real.hasProd_of_hasSum_log hpos hl.hasSum).tendsto_prod_nat
+  refine ⟨_, ht, ?_, ?_⟩
+  · refine le_of_tendsto_of_tendsto' (h_sum.hasSum.tendsto_sum_nat.const_add 1) ht ?_
+    intro N
+    induction N with
+    | zero => simp
+    | succ N ih =>
+      rw [Finset.sum_range_succ, Finset.prod_range_succ]
+      have h0 : 0 ≤ ∑ i ∈ range N, a i := Finset.sum_nonneg fun i _ => h_nonneg i
+      have h1 : 1 ≤ ∏ i ∈ range N, (1 + a i) := by linarith
+      nlinarith [h_nonneg N]
+  · exact le_of_tendsto_of_tendsto' ht
+      (Real.continuous_exp.continuousAt.tendsto.comp h_sum.hasSum.tendsto_sum_nat)
+      (fun N => Real.prod_one_add_le_exp_sum _ h_nonneg)
+
+/-- Euler's sine product. For every complex number z, πz times the product of 1 - z^2/n^2 over
+n = 1, 2, …, N tends to sin(πz) as N grows. -/
+theorem sin_eq_euler_product (z : ℂ) :
+    Tendsto (fun N => (Real.pi : ℂ) * z * ∏ n ∈ range N, (1 - z ^ 2 / ((n : ℂ) + 1) ^ 2))
+      atTop (𝓝 (Complex.sin (Real.pi * z))) := by
+  exact Complex.tendsto_euler_sin_prod z
+
+-- The 1/n^2 account, years 1, 2, 3: 2, then 5/2, then 25/9 (the card's 2.00, 2.50, 2.78).
+example : ∏ n ∈ range 1, (1 + 1 / ((n : ℚ) + 1) ^ 2) = 2 := by
+  norm_num [Finset.prod_range_succ]
+example : ∏ n ∈ range 2, (1 + 1 / ((n : ℚ) + 1) ^ 2) = 5 / 2 := by
+  norm_num [Finset.prod_range_succ]
+example : ∏ n ∈ range 3, (1 + 1 / ((n : ℚ) + 1) ^ 2) = 25 / 9 := by
+  norm_num [Finset.prod_range_succ]
+-- The 1/n account telescopes to N + 1: 11 and 101 after 10 and 100 years.
+example : ∏ n ∈ range 10, (1 + 1 / ((n : ℚ) + 1)) = 11 := by
+  norm_num [Finset.prod_range_succ]
+example : ∏ n ∈ range 100, (1 + 1 / ((n : ℚ) + 1)) = 101 := by
+  norm_num [Finset.prod_range_succ]
+-- Losses of 1/(n + 1) for 100 years leave 1/101, the card's 0.009901.
+example : ∏ n ∈ range 100, (1 - 1 / ((n : ℚ) + 2)) = 1 / 101 := by
+  norm_num [Finset.prod_range_succ]
+-- At z = 3 the factor for n = 3 is 1 - 9/9 = 0, so the sine product is 0 there.
+example : (1 : ℚ) - 3 ^ 2 / 3 ^ 2 = 0 := by
+  norm_num
+
+#print axioms product_converges_of_summable_sizes
+#print axioms product_between_one_add_sum_and_exp
+#print axioms sin_eq_euler_product
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'product_converges_of_summable_sizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'product_between_one_add_sum_and_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sin_eq_euler_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -394,6 +495,8 @@ The two outputs match line for line.
 
 - [The zeta function](05-zeta-function-and-euler-product.md): the product over primes that equals the sum of 1/n^s.
 - Mertens' theorems: how fast the product of 1 − 1/p over primes p sinks to zero.
+
+The question this card leaves open: zeta's product has one factor per prime, not one per zero, so for which s do its small parts have a finite total, and what does the product equal?
 
 ---
 

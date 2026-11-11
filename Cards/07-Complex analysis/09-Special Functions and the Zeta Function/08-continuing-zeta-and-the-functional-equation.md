@@ -43,6 +43,8 @@ $$\zeta(s) = \frac{\eta(s)}{1 - 2^{1-s}}, \qquad \operatorname{Res}_{s=1} \zeta 
 
 **Read it aloud:** zeta is eta divided by one minus two to the one minus s, with a single pole, at 1, of residue 1.
 
+This quotient is road one. Road two is a second route to zeta that skips eta, the Euler–Maclaurin formula of Step 5.
+
 $$\zeta(s) = 2^{s}\, \pi^{s-1} \sin\!\left(\frac{\pi s}{2}\right) \Gamma(1-s)\, \zeta(1-s)$$
 
 **Read it aloud:** zeta at s is zeta at the mirror point 1 − s, times a known factor.
@@ -63,7 +65,7 @@ $$\zeta(s) = 2^{s}\, \pi^{s-1} \sin\!\left(\frac{\pi s}{2}\right) \Gamma(1-s)\, 
 - **Re s > 0 for eta.** At s = 0 its partial sums swing between 1 and 0. Averaged, they give 1/2, eta's continued value; road two confirms it. Further left, only the mirror or road two reaches.
 - **Not at s = 1.** The divisor is 0 but eta is ln 2: a genuine pole. Zeta continues to the plane minus that point.
 - **The divisor's other zeros are harmless.** At 1 ± 9.064720i eta vanishes too, and zeta is finite.
-- **The mirror needs every factor.** At s = 2, 4, … the sine is 0 but Γ(1 − s) has a pole; they cancel to a non-zero value. At s = 3, 5, … that pole meets a trivial zero of ζ(1 − s).
+- **The mirror needs every factor.** At s = 2, 4, … the sine is 0 but Γ(1 − s) has a pole; they cancel to a non-zero value. At s = 3, 5, … that pole meets a trivial zero of ζ(1 − s), one of the zeros at −2, −4, ….
 
 ---
 
@@ -75,7 +77,9 @@ A holomorphic function (one with a complex derivative throughout a region) exten
 
 ### Step 1: flipped signs make neighbours cancel
 
-Pair eta's terms: 1/n^s − 1/(n+1)^s is the drop of x^(−s) across one step, at most |s|/n^(Re s + 1) in size. Those sizes add to a finite total when Re s > 0, though 1/n^s alone does not. The convergence is uniform on any closed bounded piece of the half-plane, so eta is holomorphic there ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)). The partial sums swing about the limit; averaging neighbours twelve times cancels the swing, giving η(0.5) = 0.604899 from 4,000 terms.
+Pair eta's terms: 1/n^s − 1/(n+1)^s is the drop of x^(−s) across one step, at most |s|/n^(Re s + 1) in size. Those sizes add to a finite total when Re s > 0, though 1/n^s alone does not.
+
+The convergence is uniform on any closed bounded piece of the half-plane, so eta is holomorphic there ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)). The partial sums swing about the limit; averaging neighbours twelve times cancels the swing, giving η(0.5) = 0.604899 from 4,000 terms.
 
 ### Step 2: eta is zeta with the even terms taken off twice
 
@@ -110,7 +114,9 @@ Add the first N − 1 terms; replace the rest by the area under x^(−s) from N 
 
 $$\zeta(s) = \sum_{n=1}^{N-1} \frac{1}{n^s} + \frac{N^{1-s}}{s-1} + \frac{1}{2N^s} + \frac{s}{12\,N^{s+1}} - \cdots$$
 
-The area term carries the pole, residue 1 on sight. With three corrections the leftover is holomorphic for Re s > −5; each further one reaches two units further left. So road two continues zeta without eta, matching road one: −1.460355 at 0.5, −1/2 at 0. At s = −1, N = 30 it reads 435 − 450 + 15, then the correction −0.083333; later corrections carry the factor s + 1 and vanish. So ζ(−1) = −1/12 exactly.
+The area term carries the pole, residue 1 on sight. With three corrections the leftover is holomorphic for Re s > −5; each further one reaches two units further left. So road two continues zeta without eta, matching road one: −1.460355 at 0.5, −1/2 at 0.
+
+At s = −1, N = 30 it reads 435 − 450 + 15, then the correction −0.083333; later corrections carry the factor s + 1 and vanish. So ζ(−1) = −1/12 exactly.
 
 ### Step 6: the mirror
 
@@ -401,11 +407,13 @@ ALL CHECKS PASS
 - [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): the zeros in the strip, and the primes.
 - The functional equation: the mirror proved by theta and Poisson summation.
 
+Do all the zeros in the strip 0 < Re s < 1 lie on the mirror line Re s = 1/2? That is the Riemann hypothesis, unproved as of 2026-11-11.
+
 ---
 
 ## Sources
 
-Verified 2026-09-28: every link below opens a page naming the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Riemann, Bernhard. "Über die Anzahl der Primzahlen unter einer gegebenen Grösse", 1859. [Manuscript and translation, Clay Mathematics Institute](https://www.claymath.org/collections/riemanns-1859-manuscript/). The functional equation, first stated.
 - NIST Digital Library of Mathematical Functions, §25.4 Reflection Formulas. [DLMF 25.4](https://dlmf.nist.gov/25.4). Equation 25.4.2 is the functional equation in this card's form.

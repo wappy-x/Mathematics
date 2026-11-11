@@ -53,7 +53,7 @@ The "minus 1" matches the gamma function's convention. The ramp x(1 − x)^2 has
 ### When it holds
 
 - **a > 0 and b > 0.** Near 0 the bump behaves like x^(a−1), finite in area only if a > 0; near 1, the same for b. At b = 0 the curve 1/(1 − x) has area 2.3026, 4.6052, 6.9078 up to 1 − 0.1, 1 − 0.01, 1 − 0.001: no end.
-- **Complex a and b.** The integral converges when the real parts of a and b are positive, and there it is holomorphic in each (has a complex derivative). The gamma ratio makes sense unless a or b is 0, −1, −2, …, the poles of Γ: that ratio is the beta function continued, where the integral no longer converges.
+- **Complex a and b.** The integral converges when the real parts of a and b are positive, and there it is holomorphic in each (has a complex derivative). The gamma ratio makes sense unless a or b is 0, −1, −2, …, the poles of Γ (the points where it blows up): that ratio is the beta function continued, where the integral no longer converges.
 - **Base 0 to 1, these powers exactly.** On a base of length L, x^(a−1)(L − x)^(b−1) has area L^(a+b−1) B(a, b), by x = Ly. A shape such as x(1 − x^2) is not a beta area as it stands.
 
 ---
@@ -309,6 +309,110 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the gamma formula for every real a and b above 0, and for every complex pair with positive real parts.
+
+- For real a > 0 and b > 0, the area under x^(a−1)(1 − x)^(b−1) from 0 to 1 is Γ(a)Γ(b)/Γ(a + b).
+- The same formula holds for complex a and b whose real parts are both positive.
+- B(1/2, 1/2) = π, the value that gives Γ(1/2) = √π.
+- The hand arithmetic holds exactly: the ramp's 1/12 both ways, the first three mistakes, B(3, 3/2) = 16/105 and the binomial count 12.
+
+The two roads' nine-place values, the arch's π/8 and the b = 0 tail are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 76 lines</summary>
+
+```lean
+-- The beta function: for a, b > 0 the area under x^(a-1)(1-x)^(b-1) from 0 to 1 equals Γ(a)Γ(b)/Γ(a+b), also for complex a, b with positive real parts, and B(1/2, 1/2) = π.
+import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+
+open Real
+
+/-- Helper: the real beta integral, cast to ℂ, is the complex beta integral at real arguments. -/
+lemma beta_real_integral_ofReal (a b : ℝ) :
+    ((∫ x in (0 : ℝ)..1, x ^ (a - 1) * (1 - x) ^ (b - 1) : ℝ) : ℂ) =
+      ∫ x in (0 : ℝ)..1, (x : ℂ) ^ ((a : ℂ) - 1) * (1 - (x : ℂ)) ^ ((b : ℂ) - 1) := by
+  rw [← intervalIntegral.integral_ofReal]
+  refine intervalIntegral.integral_congr fun x hx => ?_
+  rw [Set.uIcc_of_le zero_le_one] at hx
+  have h0 : 0 ≤ x := hx.1
+  have h1 : 0 ≤ 1 - x := by linarith [hx.2]
+  simp only [Complex.ofReal_mul]
+  rw [Complex.ofReal_cpow h0, Complex.ofReal_cpow h1]
+  push_cast
+  ring_nf
+
+#print axioms beta_real_integral_ofReal
+
+/-- The beta function as a gamma ratio: for real a > 0 and b > 0, the area under
+x^(a-1)(1-x)^(b-1) from 0 to 1 is Γ(a)Γ(b)/Γ(a+b). -/
+theorem beta_integral_eq_gamma_ratio (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
+    ∫ x in (0 : ℝ)..1, x ^ (a - 1) * (1 - x) ^ (b - 1) =
+      Real.Gamma a * Real.Gamma b / Real.Gamma (a + b) := by
+  have h := Complex.betaIntegral_eq_Gamma_mul_div (a : ℂ) (b : ℂ) (by simpa using ha)
+    (by simpa using hb)
+  rw [Complex.betaIntegral, ← beta_real_integral_ofReal, ← Complex.ofReal_add,
+    Complex.Gamma_ofReal, Complex.Gamma_ofReal, Complex.Gamma_ofReal] at h
+  exact_mod_cast h
+
+/-- The same formula for complex a and b: when the real parts of a and b are positive,
+the integral of x^(a-1)(1-x)^(b-1) over 0 to 1 is Γ(a)Γ(b)/Γ(a+b). -/
+theorem beta_integral_eq_gamma_ratio_complex (a b : ℂ) (ha : 0 < a.re) (hb : 0 < b.re) :
+    ∫ x in (0 : ℝ)..1, (x : ℂ) ^ (a - 1) * (1 - (x : ℂ)) ^ (b - 1) =
+      Complex.Gamma a * Complex.Gamma b / Complex.Gamma (a + b) := by
+  rw [← Complex.betaIntegral_eq_Gamma_mul_div a b ha hb]
+  rfl
+
+/-- The half values: B(1/2, 1/2), the area under x^(-1/2)(1-x)^(-1/2) from 0 to 1, is π. -/
+theorem beta_half_half_eq_pi :
+    ∫ x in (0 : ℝ)..1, x ^ ((1 : ℝ) / 2 - 1) * (1 - x) ^ ((1 : ℝ) / 2 - 1) = π := by
+  rw [beta_integral_eq_gamma_ratio _ _ (by norm_num) (by norm_num)]
+  norm_num [Real.Gamma_one_half_eq, Real.mul_self_sqrt Real.pi_pos.le]
+
+-- The ramp as gammas: Γ(2)Γ(3)/Γ(5) = 1!·2!/4! = 2/24 = 1/12.
+example : ((Nat.factorial 1 * Nat.factorial 2 : ℕ) : ℚ) / (Nat.factorial 4 : ℕ) = 1 / 12 := by
+  norm_num [Nat.factorial]
+
+-- The ramp term by term: x(1-x)^2 = x - 2x^2 + x^3 has area 1/2 - 2/3 + 1/4 = 1/12.
+example : (1 / 2 : ℚ) - 2 / 3 + 1 / 4 = 1 / 12 := by norm_num
+
+-- Mistake 1: B(3, 4) = 2!·3!/6! = 1/60, a fifth of 1/12.
+example : ((Nat.factorial 2 * Nat.factorial 3 : ℕ) : ℚ) / (Nat.factorial 6 : ℕ) = 1 / 60 := by
+  norm_num [Nat.factorial]
+
+-- Mistake 2: factorials with no shift, 2!·3!/5! = 1/10.
+example : ((Nat.factorial 2 * Nat.factorial 3 : ℕ) : ℚ) / (Nat.factorial 5 : ℕ) = 1 / 10 := by
+  norm_num [Nat.factorial]
+
+-- Mistake 3: stretch factor dropped, Γ(2)Γ(3)/Γ(4) = 1!·2!/3! = 1/3.
+example : ((Nat.factorial 1 * Nat.factorial 2 : ℕ) : ℚ) / (Nat.factorial 3 : ℕ) = 1 / 3 := by
+  norm_num [Nat.factorial]
+
+-- B(3, 3/2): Γ(9/2) = (7/2)(5/2)(3/2)(1/2)Γ(1/2) = (105/16)Γ(1/2), and Γ(3)Γ(3/2) = 2·(1/2)Γ(1/2),
+-- so B(3, 3/2) = 1 / (105/16) = 16/105.
+example : (7 / 2 : ℚ) * (5 / 2) * (3 / 2) * (1 / 2) = 105 / 16 := by norm_num
+example : (2 * (1 / 2) : ℚ) / (105 / 16) = 16 / 105 := by norm_num
+
+-- Binomial coefficients: 1/B(2, 3) = (3 + 1) · (3 choose 1) = 12 for the ramp.
+example : (3 + 1) * Nat.choose 3 1 = 12 := by decide
+
+#print axioms beta_integral_eq_gamma_ratio
+#print axioms beta_integral_eq_gamma_ratio_complex
+#print axioms beta_half_half_eq_pi
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'beta_real_integral_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'beta_integral_eq_gamma_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'beta_integral_eq_gamma_ratio_complex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'beta_half_half_eq_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -322,7 +426,7 @@ The two outputs match line for line.
 > [!warning]
 > **Dropping the "minus 1".** B(2, 3) is the area under x(1 − x)^2, powers 1 and 2. Integrating x^2(1 − x)^3 instead gives B(3, 4) = 0.016667, a fifth of the true 0.083333.
 >
-> - **Calling the bump a probability.** The ramp encloses 1/12, not 1. Dividing by B(a, b) scales it to area 1; what that curve models is wing 09.
+> - **Calling the bump a probability.** The ramp encloses 1/12, not 1. Dividing by B(a, b) scales it to area 1; what that curve models is on [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 
 ---
 
@@ -331,7 +435,7 @@ The two outputs match line for line.
 - **Binomial coefficients.** At whole numbers, 1/B(k + 1, n − k + 1) = (n + 1) times the number of ways to choose k of n. The ramp has k = 1, n = 3: 4 × 3 = 12, and 1/12 is its area.
 - **The square root of π.** Γ(1/2) = √π comes from B(1/2, 1/2) = π, and so does every half-integer gamma; [Stirling's formula](04-stirlings-formula.md) needs them.
 - **Transforms.** B(a, 1 − a) is the area under t^(a−1)/(1 + t), a single value of the transform on [The Mellin transform](07-mellin-transform.md).
-- **Probability (wing 09).** The bump divided by its area is the beta distribution, the standard curve for an unknown fraction.
+- **Probability.** The bump divided by its area is the beta distribution, the standard curve for an unknown fraction, on [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 - **History.** Euler introduced both integrals in 1729; Binet named this one beta.
 
 > **Say it back**
@@ -348,7 +452,9 @@ The two outputs match line for line.
 
 - [Stirling's formula](04-stirlings-formula.md): how large Γ is for a large argument, and so how small B(a, b) is when both a and b are large.
 - [The Mellin transform](07-mellin-transform.md): the area under t^(a−1) times a function, of which B(a, 1 − a) is one case.
-- The beta distribution, in wing 09, divides the bump by B(a, b) and gives it a model.
+- [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): the beta distribution, which divides the bump by B(a, b) and gives it a model.
+
+Left open: how small does B(a, b) get when a and b are both large, without multiplying out every factorial?
 
 ---
 
