@@ -56,3 +56,4 @@ geo_re = partial(geo_rearranged, 60)
 assert abs(geo_re - 2 / 3) < 1e-12   # absolute convergence: order is harmless
 print(f"1-1/2+1/4-...: in order={geo:.9f}  reordered={geo_re:.9f}  closed form 2/3={2 / 3:.9f}")
 print("all checks passed")
+print("ALL CHECKS PASS")

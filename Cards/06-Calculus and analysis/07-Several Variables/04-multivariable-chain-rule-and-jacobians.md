@@ -16,7 +16,7 @@ The one-variable chain rule multiplied single rates ([Chain rule](../02-Derivati
 
 **When maps are chained, the table of rates of the whole chain is the product of the links' tables, outer link on the left, each table read where the chain actually is.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; the Jacobian matrix it multiplies is a definition.
+**What kind of fact this is:** a theorem, proved on this card in Why it works; the Jacobian matrix it multiplies (a map's table of rates) is a definition.
 
 ### The picture: three maps, three tables
 
@@ -35,7 +35,9 @@ Each arrow carries its link's table. Their product, outer first, is −12 °C pe
 
 A reminder: a partial derivative, written with a curly d, is an output's rate when one input moves alone ([Partial derivatives](01-partial-derivatives.md)).
 
-One new notation, in words first: the **Jacobian matrix** of a map g, written $J_g$, is the table of its partial derivatives, one row per output and one column per input, in a declared order. Row i, column j holds the rate of output i per unit of input j, in output units per input unit. A one-output map's Jacobian is its gradient as a row; a path's is its velocity as a column.
+One new notation, in words first: the **Jacobian matrix** of a map g, written $J_g$, is the table of its partial derivatives, one row per output and one column per input, in a declared order.
+
+Row i, column j holds the rate of output i per unit of input j, in output units per input unit. A one-output map's Jacobian is its gradient (the list of its partial derivatives, [Gradient](03-gradient-and-directional-derivatives.md)) as a row; a path's is its velocity as a column.
 
 For $g$ after $f$, the chain rule reads
 
@@ -113,9 +115,13 @@ Put v = Mh + E(h). Then g(f(a + h)) − g(b) = NMh + N E(h) + R(v). Given 0 < ε
 
 ### Step 4: order is fixed, grouping is free
 
-The outer table sits on the left because it acts last; the shapes fit no other way. Grouping is free, since matrix multiplication is associative. Right pair first: the weather changes at (−6, 12), air in °C per hour and wind in km/h per hour; the felt row turns that into −12. Left pair first: (−1.60, −4.40) °C per km, the felt temperature's gradient on the map; its dot product with the velocity (2, 2) is again −12, the directional rate of [Gradient](03-gradient-and-directional-derivatives.md).
+The outer table sits on the left because it acts last; the shapes fit no other way. Grouping is free, since matrix multiplication is associative.
 
-Left-first grouping over thousands of links is Reverse mode.
+Right pair first: the weather changes at (−6, 12), air in °C per hour and wind in km/h per hour; the felt row turns that into −12.
+
+Left pair first: (−1.60, −4.40) °C per km, the felt temperature's gradient on the map; its dot product with the velocity (2, 2), each entry times its partner and then added, is again −12, the directional rate of [Gradient](03-gradient-and-directional-derivatives.md).
+
+Left-first grouping over thousands of links is [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md).
 
 ---
 
@@ -148,7 +154,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Road 1 multiplies the three Jacobians. Road 2 composes the walk into one function of time and takes shrinking secants, with a central secant for the tight comparison. The script also checks the left-grouped product against nudges in x and y.
+Road 1 multiplies the three Jacobians. Road 2 composes the walk into one function of time and takes shrinking secants, with a central secant (the average rate from t − h to t + h) for the tight comparison. The script also checks the left-grouped product against nudges in x and y.
 
 ### Python
 
@@ -340,6 +346,186 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the chain rule for any two linked maps, of any sizes, and checks the hiker and the crease exactly.
+
+- If f is differentiable at a and g at f(a), the Jacobian of g after f at a is J_g(f(a)) times J_f(a).
+- Each Jacobian has one row per output and one column per input, as the card declares.
+- For the hiker, one hour in, the felt temperature F(G(p(t))) is falling at exactly 12 °C per hour.
+- At the crease of q, both partials at the origin are 0, yet the rate along the walk (t, t) is 0.5. So q is not differentiable there.
+- The hand arithmetic holds exactly, as fractions: the felt row (1.2, −0.4), the four routes, both groupings, and the mistakes' −11.20, −2.40 and −6.
+
+The secants, the tolerance step, the nudged gradient and the chart values are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 152 lines</summary>
+
+```lean
+-- Chain rule in several variables: when f is differentiable at a and g is differentiable at f(a), the Jacobian matrix of g after f at a is the Jacobian of g read at f(a) times the Jacobian of f read at a, the card's hiker feels the temperature fall at exactly 12 °C per hour, and a map with partial derivatives but no derivative breaks the rule.
+import Mathlib.Analysis.Calculus.FDeriv.Comp
+import Mathlib.Analysis.Calculus.FDeriv.Pi
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Analysis.Calculus.Deriv.Prod
+
+open Matrix
+
+/-- **The chain rule in several variables.** Let f send points with n coordinates to points
+with m coordinates, and g send points with m coordinates to points with k coordinates.
+The Jacobian matrix of a map at a point is its table of rates: entry (i, j) is the rate of
+output i per unit of input j (here `LinearMap.toMatrix'` of the derivative `fderiv`).
+If f is differentiable at a and g is differentiable at the point f(a) that f delivers, then
+the Jacobian of g after f at a is the product of the two tables, outer map on the left, each
+read where the chain actually is: J_{g ∘ f}(a) = J_g(f(a)) J_f(a). -/
+theorem jacobian_comp_eq_mul {n m k : ℕ}
+    (f : (Fin n → ℝ) → (Fin m → ℝ)) (g : (Fin m → ℝ) → (Fin k → ℝ)) (a : Fin n → ℝ)
+    (hf : DifferentiableAt ℝ f a) (hg : DifferentiableAt ℝ g (f a)) :
+    LinearMap.toMatrix' (fderiv ℝ (g ∘ f) a : (Fin n → ℝ) →ₗ[ℝ] (Fin k → ℝ)) =
+      LinearMap.toMatrix' (fderiv ℝ g (f a) : (Fin m → ℝ) →ₗ[ℝ] (Fin k → ℝ)) *
+        LinearMap.toMatrix' (fderiv ℝ f a : (Fin n → ℝ) →ₗ[ℝ] (Fin m → ℝ)) := by
+  rw [fderiv_comp a hg hf, ← LinearMap.toMatrix'_comp]
+  rfl
+
+/-- **The hiker.** She walks the path p(t) = (2t, t^2) km (east, north). The weather map
+G(x, y) = (13 - x - y^2, 5 + xy + 3y) gives air temperature A in °C and wind w in km/h, and
+the felt temperature is F(A, w) = A - 0.02 w (30 - A) (written 1/50 here). One hour in, the
+felt temperature F(G(p(t))) is falling at exactly 12 °C per hour: its rate at t = 1 is -12. -/
+theorem hiker_felt_temperature_rate :
+    HasDerivAt
+      (fun t : ℝ =>
+        let x := 2 * t
+        let y := t ^ 2
+        let A := 13 - x - y ^ 2
+        let w := 5 + x * y + 3 * y
+        A - 1 / 50 * w * (30 - A))
+      (-12) 1 := by
+  have hx : HasDerivAt (fun t : ℝ => 2 * t) 2 1 := by
+    simpa using HasDerivAt.const_mul (2:ℝ) (hasDerivAt_id' (x := (1:ℝ)))
+  have hy : HasDerivAt (fun t : ℝ => t ^ 2) 2 1 := by
+    simpa using hasDerivAt_pow 2 (1:ℝ)
+  have hA : HasDerivAt (fun t : ℝ => 13 - 2 * t - (t ^ 2) ^ 2) (-6) 1 := by
+    have h1 := HasDerivAt.sub (HasDerivAt.sub (hasDerivAt_const (1:ℝ) (13:ℝ)) hx) (hy.pow 2)
+    convert h1 using 1; norm_num
+  have hw : HasDerivAt (fun t : ℝ => 5 + 2 * t * t ^ 2 + 3 * t ^ 2) 12 1 := by
+    have h1 := HasDerivAt.add (HasDerivAt.add (hasDerivAt_const (1:ℝ) (5:ℝ)) (HasDerivAt.mul hx hy)) (HasDerivAt.const_mul 3 hy)
+    convert h1 using 1; norm_num
+  have h := HasDerivAt.sub hA (HasDerivAt.mul (HasDerivAt.const_mul (1/50 : ℝ) hw) (HasDerivAt.sub (hasDerivAt_const (1:ℝ) (30:ℝ)) hA))
+  convert h using 1
+  · norm_num
+
+/-- **Partial derivatives are not enough.** The field q(x, y) = x^2 y / (x^2 + y^2), with
+q = 0 at the origin (Lean's division by zero already gives 0 there), has both partial
+derivatives 0 at the origin, so the chain rule with partials would predict rate 0 along the
+walk t ↦ (t, t). The real rate along that walk is 1/2, and q is not differentiable at the
+origin. -/
+theorem crease_partials_zero_but_rate_half :
+    let q : ℝ × ℝ → ℝ := fun v => v.1 ^ 2 * v.2 / (v.1 ^ 2 + v.2 ^ 2)
+    HasDerivAt (fun x : ℝ => q (x, 0)) 0 0 ∧
+    HasDerivAt (fun y : ℝ => q (0, y)) 0 0 ∧
+    HasDerivAt (fun t : ℝ => q (t, t)) (1 / 2) 0 ∧
+    ¬ DifferentiableAt ℝ q (0, 0) := by
+  intro q
+  have h1 : HasDerivAt (fun x : ℝ => q (x, 0)) 0 0 := by
+    have : (fun x : ℝ => q (x, 0)) = fun _ => 0 := by
+      funext x; simp [q]
+    rw [this]; exact hasDerivAt_const _ _
+  have h2 : HasDerivAt (fun y : ℝ => q (0, y)) 0 0 := by
+    have : (fun y : ℝ => q (0, y)) = fun _ => 0 := by
+      funext y; simp [q]
+    rw [this]; exact hasDerivAt_const _ _
+  have h3 : HasDerivAt (fun t : ℝ => q (t, t)) (1 / 2) 0 := by
+    have : (fun t : ℝ => q (t, t)) = fun t => (1 / 2) * t := by
+      funext t
+      simp only [q]
+      rcases eq_or_ne t 0 with rfl | ht
+      · simp
+      · have : t ^ 2 + t ^ 2 ≠ 0 := by positivity
+        field_simp
+        ring
+    rw [this]
+    simpa using HasDerivAt.const_mul (1/2 : ℝ) (hasDerivAt_id' (x := (0:ℝ)))
+  refine ⟨h1, h2, h3, ?_⟩
+  intro hd
+  set L := fderiv ℝ q (0, 0)
+  have hL := hd.hasFDerivAt
+  have c1 : HasDerivAt (fun x : ℝ => ((x, 0) : ℝ × ℝ)) ((1 : ℝ), (0 : ℝ)) 0 :=
+    HasDerivAt.prodMk (hasDerivAt_id' (x := (0:ℝ))) (hasDerivAt_const (0:ℝ) (0:ℝ))
+  have c2 : HasDerivAt (fun y : ℝ => ((0, y) : ℝ × ℝ)) ((0 : ℝ), (1 : ℝ)) 0 :=
+    HasDerivAt.prodMk (hasDerivAt_const (0:ℝ) (0:ℝ)) (hasDerivAt_id' (x := (0:ℝ)))
+  have c3 : HasDerivAt (fun t : ℝ => ((t, t) : ℝ × ℝ)) ((1 : ℝ), (1 : ℝ)) 0 :=
+    HasDerivAt.prodMk (hasDerivAt_id' (x := (0:ℝ))) (hasDerivAt_id' (x := (0:ℝ)))
+  have e1 : L (1, 0) = 0 := by
+    have := HasFDerivAt.comp_hasDerivAt (f := fun x : ℝ => ((x, 0) : ℝ × ℝ)) (0:ℝ) hL c1
+    exact h1.unique this |>.symm
+  have e2 : L (0, 1) = 0 := by
+    have := HasFDerivAt.comp_hasDerivAt (f := fun y : ℝ => ((0, y) : ℝ × ℝ)) (0:ℝ) hL c2
+    exact h2.unique this |>.symm
+  have e3 : L (1, 1) = 1 / 2 := by
+    have := HasFDerivAt.comp_hasDerivAt (f := fun t : ℝ => ((t, t) : ℝ × ℝ)) (0:ℝ) hL c3
+    exact h3.unique this |>.symm
+  have : ((1 : ℝ), (1 : ℝ)) = (1, 0) + (0, 1) := by simp
+  rw [this, map_add, e1, e2] at e3
+  norm_num at e3
+
+-- Worked numbers, by hand. Position at 1 h: (2 × 1, 1 × 1) = (2, 1); air and wind there.
+example : (13 : ℚ) - 2 - 1 ^ 2 = 10 ∧ (5 : ℚ) + 2 * 1 + 3 * 1 = 10 := by norm_num
+-- Felt temperature there: 10 - 0.02 × 10 × 20 = 6.
+example : (10 : ℚ) - 1 / 50 * 10 * (30 - 10) = 6 := by norm_num
+-- The felt row: 1 + 0.02 × 10 = 1.2 and -0.02 × 20 = -0.4.
+example : (1 : ℚ) + 1 / 50 * 10 = 6 / 5 ∧ -(1 / 50 : ℚ) * (30 - 10) = -2 / 5 := by norm_num
+-- Weather rates per hour: J_G J_p = (-6, 12).
+example : (!![-1, -2; 1, 5] : Matrix (Fin 2) (Fin 2) ℚ) * (!![2; 2] : Matrix (Fin 2) (Fin 1) ℚ) =
+    !![-6; 12] := by
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_two]
+-- The three tables multiply to -12 °C per hour.
+example : (!![6 / 5, -2 / 5] : Matrix (Fin 1) (Fin 2) ℚ) *
+    (!![-1, -2; 1, 5] : Matrix (Fin 2) (Fin 2) ℚ) * (!![2; 2] : Matrix (Fin 2) (Fin 1) ℚ) =
+    !![-12] := by
+  ext i j; fin_cases i; fin_cases j; norm_num [Matrix.mul_apply, Fin.sum_univ_two]
+-- The four routes: -2.40, -4.80, -0.80, -4.00 add to -12.
+example : (6 / 5 : ℚ) * (-1) * 2 + 6 / 5 * (-2) * 2 + (-2 / 5) * 1 * 2 + (-2 / 5) * 5 * 2 = -12 := by
+  norm_num
+-- Left pair first: J_F J_G = (-1.60, -4.40), and its dot product with the velocity (2, 2) is -12.
+example : (!![6 / 5, -2 / 5] : Matrix (Fin 1) (Fin 2) ℚ) *
+    (!![-1, -2; 1, 5] : Matrix (Fin 2) (Fin 2) ℚ) = !![-8 / 5, -22 / 5] := by
+  ext i j; fin_cases i; fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_two]
+example : (-8 / 5 : ℚ) * 2 + (-22 / 5) * 2 = -12 := by norm_num
+-- Mistake 1, weather table read at (1, 1): rows (-1, -2), (1, 4) give -11.20.
+example : (!![6 / 5, -2 / 5] : Matrix (Fin 1) (Fin 2) ℚ) *
+    (!![-1, -2; 1, 4] : Matrix (Fin 2) (Fin 2) ℚ) * (!![2; 2] : Matrix (Fin 2) (Fin 1) ℚ) =
+    !![-56 / 5] := by
+  ext i j; fin_cases i; fin_cases j; norm_num [Matrix.mul_apply, Fin.sum_univ_two]
+-- Mistake 2, weather table transposed: -2.40.
+example : (!![6 / 5, -2 / 5] : Matrix (Fin 1) (Fin 2) ℚ) *
+    (!![-1, -2; 1, 5] : Matrix (Fin 2) (Fin 2) ℚ)ᵀ * (!![2; 2] : Matrix (Fin 2) (Fin 1) ℚ) =
+    !![-12 / 5] := by
+  ext i j; fin_cases i; fin_cases j
+  norm_num [Matrix.mul_apply, Fin.sum_univ_two, Matrix.vecMul, dotProduct]
+-- Mistake 3, wind ignored, felt taken as air: the air rate alone, -1 × 2 + (-2) × 2 = -6.
+example : (-1 : ℚ) * 2 + (-2) * 2 = -6 := by norm_num
+
+#print axioms jacobian_comp_eq_mul
+#print axioms hiker_felt_temperature_rate
+#print axioms crease_partials_zero_but_rate_half
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'jacobian_comp_eq_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hiker_felt_temperature_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'crease_partials_zero_but_rate_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ### The felt temperature along the walk
 
 ```mermaid
@@ -375,7 +561,7 @@ The curve is the felt temperature along the walk; the straight line is its tange
 
 ## Where you meet it in real life
 
-- **Training neural networks.** A network is a long chain of maps; Backpropagation is this product grouped from the left.
+- **Training neural networks.** A network is a long chain of maps; [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md) is this product grouped from the left.
 - **Error budgets.** Input errors spread through a formula by its Jacobian ([Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md)).
 - **Risk from market quotes.** A price depends on model settings, which depend on quotes: a chain of tables ([Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md)).
 
@@ -398,9 +584,9 @@ The curve is the felt temperature along the walk; the straight line is its tange
 - [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): errors pushed through a formula.
 - [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): steps downhill on chained gradients.
 - [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md): the product grouped from the output end.
-- Automatic differentiation: derivatives of whole programs.
-- Newton in several unknowns, and Broyden when a Jacobian is too expensive: the Jacobian as Newton's slope.
-- Reverse mode: left-first grouping, mechanised.
+- [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md): derivatives of whole programs.
+- [Newton in several unknowns, and Broyden when a Jacobian is too expensive](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/07-newton-for-systems-and-broyden.md): the Jacobian as Newton's slope.
+- [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md): left-first grouping, mechanised.
 - Canonical form: coordinates chosen to simplify an equation.
 - Curvature and torsion at any speed: bending, whatever clock traces the curve.
 - Tangent space and differential: the Jacobian without coordinates.

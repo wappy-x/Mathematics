@@ -50,3 +50,4 @@ print(f"n/2^n: ratio at n=2 {half(3) / half(2):.6f}, at n=20 {half(21) / half(20
 print(f"n/2^n, N=20: added {h20:.6f}, closed form 2 - 22/2^20 = {closed:.6f}")
 print(f"integral of 1/x^2 from 1 to 1000000: {1 - 1 / 1000000:.6f}")
 print("All 4 asserts passed.")
+print("ALL CHECKS PASS")

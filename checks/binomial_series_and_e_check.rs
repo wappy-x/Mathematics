@@ -2,7 +2,6 @@
 // Road one: a series, term by term.  Road two never touches it: Heron's root,
 // a dollar compounded a million times, a direct count of clean draws.
 const N: usize = 1000000;
-
 fn binom_terms(a: f64, x: f64, count: usize) -> Vec<f64> {
     let (mut terms, mut c, mut p) = (Vec::new(), 1.0, 1.0); // C(a, k) x^k
     for k in 0..count {
@@ -77,4 +76,5 @@ fn main() {
     assert!((root - root2).abs() < 1e-14); // binomial series against Heron
     assert!((e - e2).abs() < 2e-6); // series against compounding
     assert!((inv - inv2).abs() < 1e-6); // alternating series against discounting
+    println!("ALL CHECKS PASS");
 }

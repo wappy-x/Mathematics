@@ -63,7 +63,7 @@ $d_n$ is the d(n) plotted above, a sequence with n as its clock.
 
 ### When it holds
 
-- **n is a positive whole number.** The bound holds from n = 1 up; fractions need the gamma function.
+- **n is a positive whole number.** The bound holds from n = 1 up; fractions need the gamma function, which extends n! beyond whole numbers ([The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md)).
 - **Agreement is in ratio, not difference.** At n = 20 the ratio is 0.995842, yet the difference is 1.0115 × 10^16, and it grows without bound.
 - **1/(12n) is the first of a string of corrections** that never settles for a fixed n: more terms help for a while, then hurt.
 
@@ -73,7 +73,7 @@ $d_n$ is the d(n) plotted above, a sequence with n as its clock.
 
 ### Step 0: turn the product into a sum, and trap the sum between areas
 
-The log of a product is the sum of the logs: ln 20! = ln 2 + ln 3 + … + ln 20. Each ln k is the height of a strip of width 1 under the rising curve y = ln x, so it is trapped between the area just before it and the area just after. Areas under ln x have the exact antiderivative x ln x − x. The proof tightens that trap.
+The log of a product is the sum of the logs: ln 20! = ln 2 + ln 3 + … + ln 20. Each ln k is the height of a strip of width 1 under the rising curve y = ln x. So it is trapped between the area just before it and the area just after. Areas under ln x have the exact antiderivative x ln x − x. The proof tightens that trap.
 
 ### Step 1: two integrals give the shape (n/e)^n
 
@@ -109,7 +109,7 @@ Every term is positive, so the leftover falls at every step. Each term is also a
 
 $$d_n - d_{n+1} < \frac{1}{12n(n+1)} = \frac{1}{12n} - \frac{1}{12(n+1)}$$
 
-Rearranged: d_n − 1/(12n) rises at every step. A falling sequence sits above a rising one with a gap of 1/(12n) that shrinks to nothing, so the real numbers having no gaps force both onto one number, called C ([No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). So C < d_n < C + 1/(12n), which unpacks to
+Rearranged: d_n − 1/(12n) rises at every step. A falling sequence sits above a rising one, with a gap of 1/(12n) that shrinks to nothing. The real numbers have no gaps, so both close on one number, called C ([No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). So C < d_n < C + 1/(12n), which unpacks to
 
 $$n! = e^{C}\sqrt{n}\left(\frac{n}{e}\right)^{n} e^{\theta_n}, \qquad 0 < \theta_n < \frac{1}{12n}$$
 
@@ -123,7 +123,7 @@ Between 0 and π/2, sin x lies between 0 and 1, so a higher power is never large
 
 $$P_m \le \frac{\pi}{2} \le P_m\,\frac{2m+1}{2m}, \qquad P_m = \frac{2^{4m}\,(m!)^4}{\big((2m)!\big)^2\,(2m+1)}$$
 
-At m = 1000 this reads 1.570404 ≤ π/2 ≤ 1.571189. The check confirms the rule on W_20: Simpson's rule and the parts formula both give 0.2767696821.
+At m = 1000 this reads 1.570404 ≤ π/2 ≤ 1.571189. The check confirms the rule on W_20: Simpson's rule (an area estimate that fits parabolas through evenly spaced points) and the parts formula both give 0.2767696821.
 
 ### Step 4: feed Step 2 into Step 3 and C comes out
 
@@ -144,7 +144,7 @@ The middle factor tends to 1/4; the exponent lies between −1/(12m) and 1/(3m),
 
 From Step 3, 0 ≤ π/2 − P_m ≤ π/(4m): for any ε > 0, every m > π/(4ε) puts P_m within ε of π/2. A sequence has one limit, so e^(2C)/4 = π/2.
 
-Step 2's settling: d_n falls and stays above d_1 − 1/12, so it converges to its greatest lower bound C; d_n − 1/(12n) differs from it by 1/(12n), which tends to 0. Both move strictly at every step, so the inequalities are strict.
+Step 2's settling: d_n falls and stays above d_1 − 1/12, so it converges to its greatest lower bound C. Then d_n − 1/(12n) differs from d_n by 1/(12n), which tends to 0. Both move strictly at every step, so the inequalities are strict.
 
 </details>
 
@@ -379,6 +379,191 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Stirling's approximation, the 1/(12n) bound for every n from 1 up, and Wallis's bracket for every m from 1 up.
+
+- The ratio n! / (√(2πn) (n/e)^n) heads for 1 as n grows.
+- For every positive whole number n, n! = √(2πn) (n/e)^n e^θ for some repair exponent θ with 0 < θ < 1/(12n).
+- For every positive whole number m, π/2 lies between P_m and P_m × (2m + 1)/(2m).
+- Twenty runners finish in 20! = 2432902008176640000 orders.
+- At n = 20 the bound 1/(12n) is 1/240.
+
+Decimals, the integral band, the squeeze on C, the Simpson check, the mistake table and the chart are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 153 lines</summary>
+
+```lean
+-- Stirling's approximation: n! divided by √(2πn)·(n/e)^n tends to 1, at every n ≥ 1 the true n! is that estimate times e^θ with 0 < θ < 1/(12n), and Wallis's factorial products pin π/2 between P_m and P_m·(2m+1)/(2m).
+import Mathlib.Analysis.SpecialFunctions.Stirling
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Data.Nat.Factorial.Basic
+import Mathlib.Tactic.NormNum
+
+open Real Filter Topology Nat
+
+lemma stirling_aux_eq (n : ℕ) :
+    (n ! : ℝ) / (√(2 * π * n) * ((n : ℝ) / exp 1) ^ n) = Stirling.stirlingSeq n / √π := by
+  unfold Stirling.stirlingSeq
+  rw [div_div, show (2 * π * n : ℝ) = π * (2 * n) by ring,
+    Real.sqrt_mul (by positivity)]
+  ring
+
+/-- Telescoped Robbins bound. -/
+lemma stirling_aux_tele (n : ℕ) (hn : 1 ≤ n) (k : ℕ) :
+    Real.log (Stirling.stirlingSeq n) - Real.log (Stirling.stirlingSeq (n + k))
+      ≤ 1 / (12 * n) - 1 / (12 * (n + k)) := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    have h := Stirling.log_stirlingSeq_sdiff_le (n + k)
+    have hn' : (1 : ℝ) ≤ n := by exact_mod_cast hn
+    have hk : (0 : ℝ) ≤ k := by positivity
+    calc Real.log (Stirling.stirlingSeq n) - Real.log (Stirling.stirlingSeq (n + (k + 1)))
+        = (Real.log (Stirling.stirlingSeq n) - Real.log (Stirling.stirlingSeq (n + k)))
+          + (Real.log (Stirling.stirlingSeq (n + k))
+            - Real.log (Stirling.stirlingSeq (n + k + 1))) := by
+          rw [← add_assoc]; ring
+      _ ≤ (1 / (12 * n) - 1 / (12 * (n + k)))
+          + 1 / (12 * ((n + k : ℕ) : ℝ) * (((n + k : ℕ) : ℝ) + 1)) := add_le_add ih h
+      _ = _ := by
+          have : (0 : ℝ) < n + k := by linarith
+          push_cast
+          field_simp
+          ring
+
+lemma stirling_aux_upper (n : ℕ) (hn : 1 ≤ n) :
+    Real.log (Stirling.stirlingSeq n) - Real.log √π ≤ 1 / (12 * n) := by
+  have hlim : Tendsto (fun k : ℕ => Real.log (Stirling.stirlingSeq n)
+      - Real.log (Stirling.stirlingSeq (n + k))) atTop
+      (𝓝 (Real.log (Stirling.stirlingSeq n) - Real.log √π)) := by
+    refine tendsto_const_nhds.sub ?_
+    have h1 : Tendsto (fun k : ℕ => Stirling.stirlingSeq (n + k)) atTop (𝓝 √π) := by
+      have := Stirling.tendsto_stirlingSeq_sqrt_pi.comp (tendsto_add_atTop_nat n)
+      simpa [Function.comp_def, add_comm] using this
+    exact (Real.continuousAt_log (by positivity)).tendsto.comp h1
+  refine le_of_tendsto hlim (Eventually.of_forall fun k => ?_)
+  have := stirling_aux_tele n hn k
+  have : 0 ≤ 1 / (12 * ((n : ℝ) + k)) := by positivity
+  linarith
+
+lemma stirling_aux_step (m : ℕ) :
+    0 < Real.log (Stirling.stirlingSeq (m + 1)) - Real.log (Stirling.stirlingSeq (m + 2)) ∧
+    Real.log (Stirling.stirlingSeq (m + 1)) - Real.log (Stirling.stirlingSeq (m + 2))
+      < 1 / (12 * ((m + 1 : ℕ) : ℝ) * (((m + 1 : ℕ) : ℝ) + 1)) := by
+  have hs := Stirling.log_stirlingSeq_sdiff_hasSum m
+  set r : ℝ := ((1 : ℝ) / (2 * ((m + 1 : ℕ) : ℝ) + 1)) ^ 2 with hr
+  have hr0 : 0 < r := by positivity
+  have hr1 : r < 1 := by
+    rw [hr]; push_cast
+    rw [div_pow, one_pow, div_lt_one (by positivity)]
+    have : (0 : ℝ) ≤ m := by positivity
+    nlinarith
+  constructor
+  · refine hasSum_lt (f := fun _ => (0 : ℝ)) (i := 0) (fun k => by positivity) ?_ hasSum_zero hs
+    positivity
+  · have hg : HasSum (fun j : ℕ ↦ r ^ (j + 1) / 3)
+        ((1 : ℝ) / (12 * ((m + 1 : ℕ) : ℝ) * (((m + 1 : ℕ) : ℝ) + 1))) := by
+      have := ((hasSum_geometric_of_lt_one hr0.le hr1).mul_right r).div_const 3
+      convert this using 1
+      · ext j; ring
+      · have hm0 : (0 : ℝ) ≤ m := by positivity
+        have h1r : (1 : ℝ) - r = 4 * (m + 1) * (m + 2) / (2 * m + 3) ^ 2 := by
+          rw [hr]; push_cast; field_simp; ring
+        rw [h1r, hr]; push_cast; field_simp; ring
+    refine hasSum_lt (i := 1) (fun j => ?_) ?_ hs hg
+    · simp only
+      rw [div_eq_mul_one_div (r ^ (j+1)) 3, mul_comm]
+      gcongr
+      have : (0:ℝ) ≤ j := by positivity
+      push_cast
+      linarith
+    · have : 0 < r ^ 2 := by positivity
+      norm_num
+      linarith
+
+#print axioms stirling_aux_eq
+#print axioms stirling_aux_tele
+#print axioms stirling_aux_upper
+#print axioms stirling_aux_step
+
+/-- **Stirling's approximation.** The factorial of n is, in ratio, the square root of 2πn times
+n over e to the nth power: the ratio n! / (√(2πn)·(n/e)^n) heads for 1 as n grows. -/
+theorem factorial_div_stirling_tendsto_one :
+    Tendsto (fun n : ℕ => (n ! : ℝ) / (√(2 * π * n) * ((n : ℝ) / exp 1) ^ n)) atTop (𝓝 1) := by
+  simp_rw [stirling_aux_eq]
+  have h : √π ≠ 0 := by positivity
+  simpa [div_self h] using Stirling.tendsto_stirlingSeq_sqrt_pi.div_const √π
+
+/-- **The sharper statement, true from n = 1 up.** For every positive whole number n,
+n! = √(2πn)·(n/e)^n·e^θ for some repair exponent θ with 0 < θ < 1/(12n): the estimate is
+always a little low, and the factor that repairs it lies strictly between 1 and e^(1/(12n)). -/
+theorem factorial_eq_stirling_mul_exp_theta (n : ℕ) (hn : 1 ≤ n) :
+    ∃ θ : ℝ, 0 < θ ∧ θ < 1 / (12 * n) ∧
+      (n ! : ℝ) = √(2 * π * n) * ((n : ℝ) / exp 1) ^ n * exp θ := by
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  have hspos := Stirling.stirlingSeq'_pos m
+  refine ⟨Real.log (Stirling.stirlingSeq (m + 1)) - Real.log √π, ?_, ?_, ?_⟩
+  · obtain ⟨h1, -⟩ := stirling_aux_step m
+    have h2 := Real.log_le_log (by positivity)
+      (Stirling.sqrt_pi_le_stirlingSeq (n := m + 2) (by omega))
+    linarith
+  · obtain ⟨-, h1⟩ := stirling_aux_step m
+    have h2 := stirling_aux_upper (m + 2) (by omega)
+    have e : 1 / (12 * ((m + 1 : ℕ) : ℝ) * (((m + 1 : ℕ) : ℝ) + 1)) + 1 / (12 * ((m + 2 : ℕ) : ℝ))
+        = 1 / (12 * ((m + 1 : ℕ) : ℝ)) := by
+      push_cast; field_simp; ring
+    linarith
+  · have hpi : 0 < √π := by positivity
+    rw [Real.exp_sub, Real.exp_log hspos, Real.exp_log hpi]
+    have := stirling_aux_eq (m + 1)
+    have hd : 0 < √(2 * π * ((m + 1 : ℕ) : ℝ)) * (((m + 1 : ℕ) : ℝ) / exp 1) ^ (m + 1) := by
+      positivity
+    rw [← this]
+    field_simp
+
+/-- **Wallis's bracket (Step 3).** For every positive whole number m, with
+P_m = 2^(4m)·(m!)^4 / (((2m)!)^2·(2m+1)), the number π/2 lies between P_m and
+P_m·(2m+1)/(2m). -/
+theorem wallis_bracket_pi_div_two (m : ℕ) (hm : 1 ≤ m) :
+    (2 : ℝ) ^ (4 * m) * (m ! : ℝ) ^ 4 / (((2 * m) ! : ℝ) ^ 2 * (2 * m + 1)) ≤ π / 2 ∧
+      π / 2 ≤ (2 : ℝ) ^ (4 * m) * (m ! : ℝ) ^ 4 / (((2 * m) ! : ℝ) ^ 2 * (2 * m + 1)) *
+        ((2 * m + 1) / (2 * m)) := by
+  rw [← Real.Wallis.W_eq_factorial_ratio]
+  refine ⟨Real.Wallis.W_le m, ?_⟩
+  have h := Real.Wallis.le_W m
+  have hm' : (1 : ℝ) ≤ m := by exact_mod_cast hm
+  have hW := Real.Wallis.W_pos m
+  have hpi := Real.pi_pos
+  rw [div_mul_eq_mul_div, div_le_iff₀ (by positivity)] at h
+  rw [mul_div_assoc', le_div_iff₀ (by positivity)]
+  nlinarith
+
+-- Twenty runners finish in 20! orders: 20 × 19 × … × 1 = 2432902008176640000.
+example : (20 : ℕ)! = 2432902008176640000 := by decide
+-- The repair exponent at n = 20 lies below 1/(12 × 20) = 1/240.
+example : (12 : ℕ) * 20 = 240 := by norm_num
+
+#print axioms factorial_div_stirling_tendsto_one
+#print axioms factorial_eq_stirling_mul_exp_theta
+#print axioms wallis_bracket_pi_div_two
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stirling_aux_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stirling_aux_tele' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stirling_aux_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stirling_aux_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'factorial_div_stirling_tendsto_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'factorial_eq_stirling_mul_exp_theta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wallis_bracket_pi_div_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -401,8 +586,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Sorting.** Sorting by comparing pairs must tell all n! orders apart, so it needs at least log2 n! comparisons (log to base 2: each comparison halves the choices). Stirling makes that roughly n log2 n, the floor in Sorting and searching.
-- **Physics and information.** Arrangements of many particles or symbols are ratios of factorials; the log form n ln n − n turns them into entropy.
+- **Sorting.** Sorting by comparing pairs must tell all n! orders apart, so it needs at least log2 n! comparisons (log to base 2: each comparison halves the choices). Stirling makes that roughly n log2 n, the floor in [Sorting and searching](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/05-sorting-and-searching.md).
+- **Physics and information.** Arrangements of many particles or symbols are ratios of factorials; the log form n ln n − n turns them into entropy, the log of the number of arrangements.
 - **Software.** Scientific libraries return ln n! through a log-gamma function, because n! overflows; for large n they use Stirling's series.
 
 > **Say it back**

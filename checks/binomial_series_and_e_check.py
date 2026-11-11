@@ -2,7 +2,6 @@
 # Road one: a series, term by term.  Road two never touches it: Heron's root,
 # a dollar compounded a million times, a direct count of clean draws.
 N = 1000000
-
 def binom_terms(a, x, count):            # C(a, k) x^k for k = 0 .. count - 1
     terms, c, p = [], 1.0, 1.0
     for k in range(count):
@@ -58,3 +57,4 @@ print(f"signs dropped, six people: 720 x {exp_sum(1, 7):.6f} = {720 * exp_sum(1,
 assert abs(root - root2) < 1e-14                  # binomial series against Heron
 assert abs(e - e2) < 2e-6                         # series against compounding
 assert abs(inv - inv2) < 1e-6                     # alternating series against discounting
+print("ALL CHECKS PASS")

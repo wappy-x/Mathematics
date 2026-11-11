@@ -75,4 +75,5 @@ fn main() {
     assert!((geo_re - 2.0 / 3.0).abs() < 1e-12);
     println!("1-1/2+1/4-...: in order={:.9}  reordered={:.9}  closed form 2/3={:.9}", geo, geo_re, 2.0 / 3.0);
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

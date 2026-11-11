@@ -70,4 +70,5 @@ fn main() {
     println!("breaks, flat Hessian: x^4+y^4 at (0.1,0) {:.6}; x^4-y^4 at (0,0.1) {:.6}", 0.1_f64.powi(4), -0.1_f64.powi(4));
     let g = |x: f64, y: f64| x * x + y * y - x.powi(4);
     println!("breaks, x^2+y^2-x^4: value 0 at the local minimum (0,0), g(2,0) = {:.6}", g(2.0, 0.0));
+    println!("ALL CHECKS PASS");
 }

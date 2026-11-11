@@ -10,7 +10,7 @@ A spring day starts at 10 °C at midnight, warms to 24.4 °C at noon and falls b
 
 A cone-shaped tank, point down, stands 4 m deep with a rim 2 m in radius. It is full of water. How heavy is the water, and how much work does a pump do lifting all of it out over the rim? The water near the rim is wide and barely needs lifting. The water near the tip is narrow and must be lifted almost 4 m.
 
-Both questions have one shape. A quantity is known piece by piece: a temperature at each moment, a mass per metre of height, a lift for each layer. Multiply each piece by its width, add, and let the pieces shrink: an integral ([The integral](01-riemann-integral.md)), evaluated by an antiderivative ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)). The answers: 16,755.2 kg of water, 164,368.1 joules of work.
+Both questions have one shape. A quantity is known piece by piece: a temperature at each moment, a mass per metre of height, a lift for each layer. Multiply each piece by its width, add, and let the pieces shrink: an integral ([The integral](01-riemann-integral.md)), evaluated by an antiderivative, a function whose rate of change is that quantity ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)). The answers: 16,755.2 kg of water, 164,368.1 joules of work.
 
 **A total is the integral of an amount-per-unit over the units; an average is that total divided by how many units there were.**
 
@@ -82,7 +82,7 @@ Over a short stretch a density or rate barely changes, so the amount in that pie
 
 Replace the day's curve by a constant temperature with the same total of degree-hours. The total is the integral, 470.4 degree-hours. Spread over 24 hours, the constant is 470.4 / 24 = 19.6 °C: the average value.
 
-Averaging readings is the same idea, coarser. The 24 readings on the hour average 19.5833 °C: a rectangle sum divided by 24. Midpoint strips close in: 19.608333 for 24 strips, 19.600083 for 240, 19.600001 for 2400.
+Averaging readings is the same idea, coarser. The 24 readings on the hour average 19.5833 °C: a rectangle sum divided by 24. Midpoint strips, each read at its middle, close in: 19.608333 for 24 strips, 19.600083 for 240, 19.600001 for 2400.
 
 ### Step 2: a continuous quantity reaches its average
 
@@ -97,7 +97,11 @@ Let f be continuous on the closed interval from a to b, with a < b. By the [Extr
 
 $$\text{lo}\,(b-a) \le \int_a^b f(t)\,dt \le \text{hi}\,(b-a),$$
 
-so lo ≤ $\bar{f}$ ≤ hi after dividing by the positive length b − a. On the closed interval between p and q, f is continuous and runs from lo to hi, so the intermediate value theorem gives a point c with f(c) = $\bar{f}$. Then $\int_a^b f(t)\,dt = f(c)(b-a)$. The step function 10 before noon, 20 after, shows continuity cannot be dropped: its average is 15 and it never takes that value.
+so lo ≤ $\bar{f}$ ≤ hi after dividing by the positive length b − a.
+
+On the closed interval between p and q, f is continuous and runs from lo to hi, so the intermediate value theorem gives a point c with f(c) = $\bar{f}$. Then $\int_a^b f(t)\,dt = f(c)(b-a)$.
+
+The step function 10 before noon, 20 after, shows continuity cannot be dropped: its average is 15 and it never takes that value.
 
 </details>
 
@@ -123,7 +127,9 @@ Adding weight times lift over all layers:
 
 $$W = \int_0^4 9.81 \cdot 250\pi y^2 (4 - y)\,dy = 9.81 \cdot 250\pi\left[\frac{4y^3}{3} - \frac{y^4}{4}\right]_0^4 \approx 164{,}368.1 \text{ J}.$$
 
-Four 1 m layers, each lifted from its middle, give 169,504.6 J; 40 layers give 164,419.5 J; 400 give 164,368.6 J. The rule $W = \int_a^b F(x)\,dx$ also covers one object pushed along a line by a changing force. Stretching a spring that resists with 200 N per metre of stretch takes F(x) = 200x newtons at stretch x metres. Over the first 0.3 m, W = 100 × 0.3^2 = 9 J. The spring's own pull, −200x, points against the stretch, so over the same trip it does −9 J: a force opposing the motion does negative work.
+Four 1 m layers, each lifted from its middle, give 169,504.6 J; 40 layers give 164,419.5 J; 400 give 164,368.6 J.
+
+The rule $W = \int_a^b F(x)\,dx$ also covers one object pushed along a line by a changing force. Stretching a spring that resists with 200 N per metre of stretch takes F(x) = 200x newtons at stretch x metres. Over the first 0.3 m, W = 100 × 0.3^2 = 9 J. The spring's own pull, −200x, points against the stretch, so over the same trip it does −9 J: a force opposing the motion does negative work.
 
 A third road waits one shelf on. Lifting the whole 16,755.2 kg through 1 m gives the same 164,368.1 J, because the water's balance point sits 1 m below the rim. Finding that point is [Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md).
 
@@ -328,6 +334,197 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the mean value theorem for integrals for every continuous f on every interval with b > a, and the card's exact totals.
+
+- Let a < b and f be continuous from a to b. Then at some point c of that stretch, f(c) equals the average of f.
+- If lo ≤ f(t) ≤ hi throughout, the total lies between lo(b − a) and hi(b − a). The average lies between lo and hi.
+- The heater at 10 °C before noon and 20 °C after averages 15 °C over the day, yet the room is never at 15 °C.
+- The day's total is 470.4 degree-hours, and its mean is 19.6 °C, by the integral and by the arithmetic by hand.
+- The midpoint of the extremes is 17.2 °C. The 24 readings on the hour average exactly 235/12 °C, about 19.5833 °C.
+- The 24 midpoint strips average exactly 2353/120 °C, about 19.608333 °C.
+- The temperature equals its mean at t = 12 − 4√3 and 12 + 4√3 hours: 5.0718 h and 18.9282 h.
+- The water's mass is 16000π/3 kg, by the integral and by the cone-volume rule.
+- For any pull of gravity g, the pump's work equals the whole mass times g times a 1 m lift.
+- Measuring the lift from the tip gives three times the true work. A cylinder of radius 2 m gives three times the true mass.
+- The spring force 200x does 9 J over the first 0.3 m; the spring's own pull, −200x, does −9 J.
+
+The decimals with g = 9.81, the other strip sums, the bisection, the chart and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 157 lines</summary>
+
+```lean
+-- Averages, mass and work: a continuous function on an interval of positive length takes its average value somewhere, and the card's day, tank and spring totals come out exactly.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.MeasureTheory.Integral.IntervalAverage
+
+open Set intervalIntegral MeasureTheory Real
+
+/-- **Mean value theorem for integrals.** Let a < b and let f be continuous on the closed
+interval from a to b. Then at some point c of that interval, f takes its average value:
+f(c) = (1/(b − a)) ∫_a^b f(t) dt, so ∫_a^b f(t) dt = f(c)(b − a). -/
+theorem continuous_function_takes_its_average_value (f : ℝ → ℝ) (a b : ℝ) (hab : a < b)
+    (hf : ContinuousOn f (Icc a b)) :
+    ∃ c ∈ Icc a b, f c = (∫ t in a..b, f t) / (b - a) := by
+  have hf' : ContinuousOn f (uIcc a b) := by rwa [uIcc_of_le hab.le]
+  obtain ⟨c, hc, hfc⟩ := exists_eq_interval_average hab.ne hf'
+  refine ⟨c, ?_, by rw [hfc, interval_average_eq_div]⟩
+  rw [uIoo_of_le hab.le] at hc
+  exact Ioo_subset_Icc_self hc
+
+/-- **The average lies between the least and greatest values.** Let a < b and let f be continuous
+on the closed interval from a to b. If lo ≤ f(t) ≤ hi at every t of the interval, then the total
+lies between lo(b − a) and hi(b − a), and the average lies between lo and hi. -/
+theorem average_between_least_and_greatest (f : ℝ → ℝ) (a b lo hi : ℝ) (hab : a < b)
+    (hf : ContinuousOn f (Icc a b))
+    (hlo : ∀ t ∈ Icc a b, lo ≤ f t) (hhi : ∀ t ∈ Icc a b, f t ≤ hi) :
+    lo * (b - a) ≤ ∫ t in a..b, f t ∧ ∫ t in a..b, f t ≤ hi * (b - a) ∧
+    lo ≤ (∫ t in a..b, f t) / (b - a) ∧ (∫ t in a..b, f t) / (b - a) ≤ hi := by
+  have hint : IntervalIntegrable f volume a b :=
+    (hf.mono (by rw [uIcc_of_le hab.le])).intervalIntegrable
+  have h1 : lo * (b - a) ≤ ∫ t in a..b, f t := by
+    have := intervalIntegral.integral_mono_on hab.le intervalIntegrable_const hint hlo
+    simpa [mul_comm] using this
+  have h2 : ∫ t in a..b, f t ≤ hi * (b - a) := by
+    have := intervalIntegral.integral_mono_on hab.le hint intervalIntegrable_const hhi
+    simpa [mul_comm] using this
+  have hpos : 0 < b - a := sub_pos.mpr hab
+  refine ⟨h1, h2, ?_, ?_⟩
+  · rw [le_div_iff₀ hpos]; exact h1
+  · rw [div_le_iff₀ hpos]; exact h2
+
+/-- **Continuity cannot be dropped.** The heater that holds the room at 10 °C before noon and
+20 °C from noon on averages 15 °C over the 24-hour day, yet the room is never at 15 °C. -/
+theorem step_heater_never_reaches_its_average :
+    (∫ t in (0 : ℝ)..24, (if t < 12 then (10 : ℝ) else 20)) / 24 = 15 ∧
+    ∀ t : ℝ, (if t < 12 then (10 : ℝ) else 20) ≠ 15 := by
+  refine ⟨?_, fun t => by split_ifs <;> norm_num⟩
+  have hi : ∀ a b : ℝ, IntervalIntegrable (fun t : ℝ => if t < 12 then (10 : ℝ) else 20) volume a b := by
+    intro a b
+    have hm : Monotone (fun t : ℝ => if t < 12 then (10 : ℝ) else 20) := by
+      intro x y hxy
+      dsimp only
+      split_ifs with h1 h2 h2 <;> first | (exfalso; linarith) | norm_num
+    exact hm.intervalIntegrable
+  rw [← intervalIntegral.integral_add_adjacent_intervals (b := 12) (hi 0 12) (hi 12 24)]
+  have e1 : ∫ t in (0:ℝ)..12, (if t < 12 then (10 : ℝ) else 20) = ∫ t in (0:ℝ)..12, (10:ℝ) := by
+    apply intervalIntegral.integral_congr_ae
+    have : ∀ᵐ x ∂(volume : Measure ℝ), x ≠ 12 := by
+      rw [ae_iff]; simp
+    filter_upwards [this] with x hx hmem
+    rw [uIoc_of_le (by norm_num)] at hmem
+    have : x < 12 := lt_of_le_of_ne hmem.2 hx
+    simp [this]
+  have e2 : ∫ t in (12:ℝ)..24, (if t < 12 then (10 : ℝ) else 20) = ∫ t in (12:ℝ)..24, (20:ℝ) := by
+    apply intervalIntegral.integral_congr
+    intro x hx
+    rw [uIcc_of_le (by norm_num)] at hx
+    simp [not_lt.mpr hx.1]
+  rw [e1, e2]; simp; norm_num
+
+-- The day: T(t) = 10 + t(24 − t)/10. Its total over 24 hours is 470.4 = 2352/5 degree-hours.
+example : ∫ t in (0 : ℝ)..24, (10 + t * (24 - t) / 10) = 2352 / 5 := by
+  have : (fun t : ℝ => 10 + t * (24 - t) / 10) = fun t => 10 + ((12/5) * t - t^2/10) := by
+    ext t; ring
+  rw [this]
+  have c1 : Continuous fun t : ℝ => (12/5) * t - t^2/10 := by fun_prop
+  have c2 : Continuous fun t : ℝ => (12/5) * t := by fun_prop
+  have c3 : Continuous fun t : ℝ => t^2/10 := by fun_prop
+  rw [intervalIntegral.integral_add intervalIntegrable_const (c1.intervalIntegrable _ _)]
+  rw [intervalIntegral.integral_sub (c2.intervalIntegrable _ _) (c3.intervalIntegrable _ _)]
+  rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_div]
+  simp [integral_pow, integral_id]
+  norm_num
+
+-- The day's mean: 470.4 / 24 = 19.6 = 98/5 °C.
+example : (∫ t in (0 : ℝ)..24, (10 + t * (24 - t) / 10)) / 24 = 98 / 5 := by
+  have h : ∫ t in (0 : ℝ)..24, (10 + t * (24 - t) / 10) = 2352 / 5 := by
+    have : (fun t : ℝ => 10 + t * (24 - t) / 10) = fun t => 10 + ((12/5) * t - t^2/10) := by
+      ext t; ring
+    rw [this]
+    have c1 : Continuous fun t : ℝ => (12/5) * t - t^2/10 := by fun_prop
+    have c2 : Continuous fun t : ℝ => (12/5) * t := by fun_prop
+    have c3 : Continuous fun t : ℝ => t^2/10 := by fun_prop
+    rw [intervalIntegral.integral_add intervalIntegrable_const (c1.intervalIntegrable _ _)]
+    rw [intervalIntegral.integral_sub (c2.intervalIntegrable _ _) (c3.intervalIntegrable _ _)]
+    rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_div]
+    simp [integral_pow, integral_id]
+    norm_num
+  rw [h]; norm_num
+
+-- By hand: the antiderivative read at the ends, 240 + (6912 − 4608)/10 = 470.4, and 470.4 / 24 = 19.6.
+example : (10 * 24 + (12 * 24 ^ 2 - 24 ^ 3 / 3) / 10 : ℚ) = 240 + (6912 - 4608) / 10 := by norm_num
+example : (240 + (6912 - 4608) / 10 : ℚ) = 2352 / 5 := by norm_num
+example : (2352 / 5 / 24 : ℚ) = 98 / 5 := by norm_num
+
+-- The midpoint of the extremes: (T(12) + T(0))/2 = (24.4 + 10)/2 = 17.2, not 19.6.
+example : ((10 + 12 * (24 - 12) / 10) + (10 + 0 * (24 - 0) / 10)) / 2 = (86 / 5 : ℚ) := by norm_num
+
+-- The 24 readings on the hour average 235/12 = 19.5833… °C.
+example : (∑ k ∈ Finset.range 24, (10 + (k : ℚ) * (24 - k) / 10)) / 24 = 235 / 12 := by
+  norm_num [Finset.sum_range_succ]
+
+-- 24 midpoint strips, each read at its middle, average 2353/120 = 19.608333… °C.
+example : (∑ k ∈ Finset.range 24,
+    (10 + ((k : ℚ) + 1 / 2) * (24 - ((k : ℚ) + 1 / 2)) / 10)) / 24 = 2353 / 120 := by
+  norm_num [Finset.sum_range_succ]
+
+-- The temperature equals its mean at t = 12 − 4√3 ≈ 5.0718 h and at t = 12 + 4√3 ≈ 18.9282 h.
+example : 10 + (12 - 4 * √3) * (24 - (12 - 4 * √3)) / 10 = (98 / 5 : ℝ) ∧
+    10 + (12 + 4 * √3) * (24 - (12 + 4 * √3)) / 10 = (98 / 5 : ℝ) := by
+  have h : √3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  constructor <;> nlinarith [h]
+
+-- The tank's mass: ∫₀⁴ 1000π(y/2)² dy = 250π · 4³/3 = 16000π/3 kg (about 16,755.2 kg).
+example : ∫ y in (0 : ℝ)..4, 1000 * π * (y / 2) ^ 2 = 16000 * π / 3 := by
+  have : (fun y : ℝ => 1000 * π * (y / 2) ^ 2) = fun y => (250 * π) * y ^ 2 := by ext y; ring
+  rw [this, intervalIntegral.integral_const_mul, integral_pow]; ring
+
+-- The same mass with no calculus: one third of the cylinder, π · 2² · 4 / 3 cubic metres at 1000 kg each.
+example : 1000 * (π * 2 ^ 2 * 4 / 3) = 16000 * π / 3 := by ring
+
+-- The pump's work, for any pull of gravity g: ∫₀⁴ g · 1000π(y/2)² · (4 − y) dy equals the
+-- whole mass times g times a 1 m lift (with g = 9.81, about 164,368.1 J).
+example (g : ℝ) : ∫ y in (0 : ℝ)..4, g * (1000 * π * (y / 2) ^ 2) * (4 - y) = (16000 * π / 3) * g * 1 := by
+  have : (fun y : ℝ => g * (1000 * π * (y / 2) ^ 2) * (4 - y)) = fun y => (1000 * g * π) * y ^ 2 - (250 * g * π) * y ^ 3 := by ext y; ring
+  have c1 : Continuous fun y : ℝ => (1000 * g * π) * y ^ 2 := by fun_prop
+  have c2 : Continuous fun y : ℝ => (250 * g * π) * y ^ 3 := by fun_prop
+  rw [this, intervalIntegral.integral_sub (c1.intervalIntegrable _ _) (c2.intervalIntegrable _ _)]
+  rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul, integral_pow, integral_pow]; ring
+
+-- The mistake of lifting from the tip, y instead of 4 − y, gives three times the true work.
+example (g : ℝ) : ∫ y in (0 : ℝ)..4, g * (1000 * π * (y / 2) ^ 2) * y = 3 * ((16000 * π / 3) * g * 1) := by
+  have : (fun y : ℝ => g * (1000 * π * (y / 2) ^ 2) * y) = fun y => (250 * g * π) * y ^ 3 := by ext y; ring
+  rw [this, intervalIntegral.integral_const_mul, integral_pow]; ring
+
+-- The mistake of a cylinder of radius 2 m gives three times the true mass.
+example : 1000 * π * 2 ^ 2 * 4 = 3 * (16000 * π / 3) := by ring
+
+-- The spring: F(x) = 200x newtons over the first 0.3 m does 9 J; the spring's own pull, −200x, does −9 J.
+example : ∫ x in (0 : ℝ)..(3 / 10), 200 * x = 9 := by
+  rw [intervalIntegral.integral_const_mul, integral_id]; norm_num
+example : ∫ x in (0 : ℝ)..(3 / 10), -200 * x = -9 := by
+  rw [intervalIntegral.integral_const_mul, integral_id]; norm_num
+
+#print axioms continuous_function_takes_its_average_value
+#print axioms average_between_least_and_greatest
+#print axioms step_heater_never_reaches_its_average
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'continuous_function_takes_its_average_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+'average_between_least_and_greatest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'step_heater_never_reaches_its_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -366,6 +563,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md): the balance point, an average of position weighted by mass.
+
+Left open: where is the water's balance point, and why does lifting all of it through that point's 1 m lift give the same work?
 
 ---
 

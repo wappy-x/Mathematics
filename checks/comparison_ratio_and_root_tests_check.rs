@@ -59,4 +59,5 @@ fn main() {
     println!("n/2^n, N=20: added {:.6}, closed form 2 - 22/2^20 = {:.6}", h20, closed);
     println!("integral of 1/x^2 from 1 to 1000000: {:.6}", 1.0 - 1.0 / 1000000.0);
     println!("All 4 asserts passed.");
+    println!("ALL CHECKS PASS");
 }

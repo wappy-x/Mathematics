@@ -72,13 +72,13 @@ For the bowl, the wall is $y = r^2/2$, so a disc at height $y$ has $r(y)^2 = 2y$
 
 ### Step 0: a thin piece is nearly a shape whose volume is known
 
-A cylinder of radius r and height h holds pi r^2 h ([Prisms and cylinders](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/04-prisms-and-cylinders.md)). A slice of the bowl has a sloping wall, but the bowl widens upward: the cylinder on the slice's bottom radius sits inside it, and the one on its top radius holds it.
+A cylinder of radius r and height h holds pi r^2 h ([Prisms and cylinders](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/04-prisms-and-cylinders.md)). A slice of the bowl has a sloping wall, but the bowl widens upward. The cylinder on the slice's bottom radius sits inside it, and the one on its top radius holds it.
 
 ### Step 1: discs, squeezed
 
 Cut the depth into $n$ equal slices; the volume lies between the inside and outside cylinder totals. With 10 slices the totals are 282.743339 and 345.575192; with 100, 311.017673 and 317.300858; with 1000, 313.845106 and 314.473425. The gap, 62.831853, then 6.283185, then 0.628319, shrinks tenfold per tenfold more slices: neighbouring cylinders cancel, leaving the top slice's area times one slice's height.
 
-Both totals are the sums whose limit is the integral, so the volume is the integral of the slice area, 2 pi y. An antiderivative (a function whose rate is the slice area) is pi y^2; at 10 cm it gives 100 pi = 314.159265 cm^3.
+Both totals are Riemann sums, the sums whose limit is the integral ([The integral](../04-Integrals/01-riemann-integral.md)), so the volume is the integral of the slice area, 2 pi y. An antiderivative (a function whose rate is the slice area) is pi y^2; at 10 cm it gives 100 pi = 314.159265 cm^3.
 
 ### Step 2: washers subtract a hole
 
@@ -101,7 +101,9 @@ Let $r(y)$ grow as $y$ rises from $a$ to $b$; cut $[a, b]$ into $n$ slices of he
 
 Each inside cylinder but the lowest is the outside cylinder of the slice below, so $U_n - L_n = \pi\big(r(b)^2 - r(a)^2\big)(b-a)/n$: for the bowl, 628.318531 over n. Both totals are Riemann sums of the continuous $\pi r(y)^2$, so both tend to its integral, and $V$, trapped between them for every n, equals it.
 
-For shells, let $\ell(\rho)$ shrink as $\rho$ grows, and cut $[0, c]$ into $n$ tubes of width $w = c/n$. The tube from $u$ to $v$ lies between exact tubes of lengths $\ell(v)$ and $\ell(u)$, each $2\pi\cdot\tfrac{u+v}{2}\,w$ times its length by Step 3's identity. Since $2\pi\rho\,\ell(\rho)$ lies between $2\pi\rho\,\ell(v)$ and $2\pi\rho\,\ell(u)$ on the tube, its integral there lies between the same two numbers. So $V$ and the shell integral share the bracket. This gap does not telescope, but each middle radius is at most $c$, so $U_n - L_n \le 2\pi c\, w \sum (\ell(u) - \ell(v)) = 2\pi c^2 \big(\ell(0) - \ell(c)\big)/n$: for the bowl, 1256.637061 over n. The gap tends to 0, so $V$ equals the shell integral. A profile that rises and falls is split where it turns.
+For shells, let $\ell(\rho)$ shrink as $\rho$ grows, and cut $[0, c]$ into $n$ tubes of width $w = c/n$. The tube from $u$ to $v$ lies between exact tubes of lengths $\ell(v)$ and $\ell(u)$, each $2\pi\cdot\tfrac{u+v}{2}\,w$ times its length by Step 3's identity. Since $2\pi\rho\,\ell(\rho)$ lies between $2\pi\rho\,\ell(v)$ and $2\pi\rho\,\ell(u)$ on the tube, its integral there lies between the same two numbers. So $V$ and the shell integral share the bracket.
+
+This gap does not telescope: neighbouring tubes do not cancel. But each middle radius is at most $c$, so $U_n - L_n \le 2\pi c\, w \sum (\ell(u) - \ell(v)) = 2\pi c^2 \big(\ell(0) - \ell(c)\big)/n$: for the bowl, 1256.637061 over n. The gap tends to 0, so $V$ equals the shell integral. A profile that rises and falls is split where it turns.
 
 </details>
 
@@ -160,7 +162,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Only square roots and pi are imported. Two roads sharing no step, disc cylinders and exact tubes, each squeeze 314.159265, and a midpoint sum checks the shell antiderivative. The glass wall is summed both ways; a bisection finds the 150 ml line without the square-root formula.
+Only square roots and pi are imported. Two roads sharing no step, disc cylinders and exact tubes, each squeeze 314.159265, and a midpoint sum checks the shell antiderivative. The glass wall is summed both ways; a bisection, which halves the search range until it pins the height, finds the 150 ml line without the square-root formula.
 
 ### Python
 
@@ -354,6 +356,307 @@ figure, bottom y 200, rim y 40.00, control y 360.00, stem to y 224; rim x 18.45 
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the disc, washer and shell rules for every continuous radius or length, and checks the bowl's sums.
+
+- Discs: spin the region under a radius r(y) ≥ 0, from height a to b. The solid's volume is the integral of pi r(y)^2.
+- Washers: a hole of radius r(y) sits inside an outer radius R(y), with 0 ≤ r(y) ≤ R(y). The volume is the integral of pi (R(y)^2 − r(y)^2).
+- Shells: the tube at distance ρ from the axis, for ρ from 0 to c, has length ℓ(ρ) ≥ 0. The volume is the integral of 2 pi ρ ℓ(ρ).
+- Each tube may start at any height. Lean also does not need the radius to grow, as the squeeze above did.
+- The bowl's wall: 2 cm out it stands 2 cm high, 4 cm out 8 cm, and the rim sits where r^2 = 20.
+- The slice area 2 pi y adds to 100 pi from 0 to 10 cm. The tubes 2 pi ρ (10 − ρ^2/2) add to 100 pi from 0 to √20.
+- The can holds pi × 20 × 10 = 200 pi, twice the bowl. The glass is 2 pi × 0.3 × 10 + pi × 0.3^2 = 6.09 pi.
+- The disc gap is 200 pi over n, and the shell gap's bound is 400 pi over n.
+- Filled to half the depth, the bowl holds pi × 5^2 = 25 pi, a quarter of 100 pi.
+
+The decimals, the slice totals, the 150 ml search, the mistake values and the chart are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 266 lines</summary>
+
+```lean
+-- Volumes: a solid made by spinning a flat region round an axis has volume equal to the disc integral of pi r squared along the axis, the washer integral of pi (R squared minus r squared), and the shell integral of 2 pi rho times the tube length, and the wine glass bowl holds 100 pi.
+import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
+import Mathlib.MeasureTheory.Measure.Prod
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.MeasureTheory.Constructions.HaarToSphere
+
+open MeasureTheory Set
+open scoped Real
+
+/-! Space is modelled as `EuclideanSpace ℝ (Fin 2) × ℝ`: a point `q.1` of the flat plane square
+on (at right angles) to the axis, and a height `q.2` up the axis. The axis is the line of points
+whose plane part is `0`, so a point's distance from the axis is `‖q.1‖`. The `volume` of this
+space is area on the plane times length up the axis: ordinary volume in three dimensions. -/
+
+/-- Volume from slices: a solid whose slice at height `y` has area `f y` on `[a, b]`, and is
+empty elsewhere, has volume the integral of `f`. -/
+lemma volume_eq_of_slices (S : Set (EuclideanSpace ℝ (Fin 2) × ℝ)) (hS : MeasurableSet S)
+    (f : ℝ → ℝ) (a b : ℝ) (hab : a ≤ b) (hf : ContinuousOn f (Icc a b))
+    (hf0 : ∀ y ∈ Icc a b, 0 ≤ f y)
+    (hslice : ∀ y, volume ((fun x => (x, y)) ⁻¹' S) = (Icc a b).indicator (fun y => ENNReal.ofReal (f y)) y) :
+    volume S = ENNReal.ofReal (∫ y in a..b, f y) := by
+  rw [Measure.volume_eq_prod, Measure.prod_apply_symm hS]
+  simp_rw [hslice]
+  rw [lintegral_indicator measurableSet_Icc,
+    ← ofReal_integral_eq_lintegral_ofReal (hf.integrableOn_compact isCompact_Icc)
+      ((ae_restrict_iff' measurableSet_Icc).2 (Filter.Eventually.of_forall hf0)),
+    intervalIntegral.integral_of_le hab, integral_Icc_eq_integral_Ioc]
+
+/-- A function continuous on `[a, b]`, clamped, is continuous everywhere. -/
+lemma continuous_clamp (f : ℝ → ℝ) (a b : ℝ) (hab : a ≤ b) (hf : ContinuousOn f (Icc a b)) :
+    Continuous (fun y => f (max a (min b y))) :=
+  hf.comp_continuous (by fun_prop) (fun y => ⟨le_max_left _ _, max_le hab (min_le_left _ _)⟩)
+
+/-- Clamping leaves points of `[a, b]` alone. -/
+lemma clamp_eq (a b y : ℝ) (hy : y ∈ Icc a b) : max a (min b y) = y := by
+  rw [min_eq_right hy.2, max_eq_right hy.1]
+
+#print axioms volume_eq_of_slices
+#print axioms continuous_clamp
+#print axioms clamp_eq
+
+/-- Discs. Spin round the axis the region under a radius `r(y)`, for heights y from a to b, where
+every radius is a distance from the axis (never negative) and the radius is an unbroken
+(continuous) function of height. The solid holds the integral from a to b of the slice area
+pi r(y)², exactly. -/
+theorem volume_solid_of_revolution_eq_disc_integral
+    (r : ℝ → ℝ) (a b : ℝ) (hab : a ≤ b)
+    (hr : ContinuousOn r (Icc a b)) (hr0 : ∀ y ∈ Icc a b, 0 ≤ r y) :
+    volume {q : EuclideanSpace ℝ (Fin 2) × ℝ | q.2 ∈ Icc a b ∧ ‖q.1‖ ≤ r q.2}
+      = ENNReal.ofReal (∫ y in a..b, π * r y ^ 2) := by
+  have hc := continuous_clamp r a b hab hr
+  set r' := fun y => r (max a (min b y))
+  have hS : {q : EuclideanSpace ℝ (Fin 2) × ℝ | q.2 ∈ Icc a b ∧ ‖q.1‖ ≤ r q.2}
+      = {q : EuclideanSpace ℝ (Fin 2) × ℝ | q.2 ∈ Icc a b ∧ ‖q.1‖ ≤ r' q.2} := by
+    ext q
+    simp only [mem_setOf_eq, r']
+    constructor
+    · rintro ⟨h1, h2⟩; exact ⟨h1, by rwa [clamp_eq a b _ h1]⟩
+    · rintro ⟨h1, h2⟩; exact ⟨h1, by rwa [clamp_eq a b _ h1] at h2⟩
+  rw [hS]
+  apply volume_eq_of_slices _ _ (fun y => π * r y ^ 2) a b hab (by fun_prop)
+  · intro y hy; have := hr0 y hy; positivity
+  · intro y
+    by_cases hy : y ∈ Icc a b
+    · rw [indicator_of_mem hy]
+      have : (fun x : EuclideanSpace ℝ (Fin 2) => (x, y)) ⁻¹'
+          {q : EuclideanSpace ℝ (Fin 2) × ℝ | q.2 ∈ Icc a b ∧ ‖q.1‖ ≤ r' q.2}
+          = Metric.closedBall 0 (r y) := by
+        ext x; simp [r', hy.1, hy.2]
+      rw [this, EuclideanSpace.volume_closedBall_fin_two, ← ENNReal.ofReal_pow (hr0 y hy),
+        ← ENNReal.ofReal_mul (by positivity), mul_comm]
+    · rw [indicator_of_notMem hy]
+      have : (fun x : EuclideanSpace ℝ (Fin 2) => (x, y)) ⁻¹'
+          {q : EuclideanSpace ℝ (Fin 2) × ℝ | q.2 ∈ Icc a b ∧ ‖q.1‖ ≤ r' q.2} = ∅ := by
+        ext x
+        simp only [mem_preimage, mem_setOf_eq, mem_empty_iff_false, iff_false]
+        exact fun h => hy h.1
+      rw [this, measure_empty]
+  · exact (measurableSet_Icc.preimage measurable_snd).inter
+      (measurableSet_le (by fun_prop) (hc.measurable.comp measurable_snd))
+
+/-- Washers. A solid of revolution with a hole: at height y, from a to b, it fills the points
+farther than the hole's radius r(y) from the axis and no farther than the outer radius R(y),
+the hole lying inside the outer edge (0 ≤ r(y) ≤ R(y)), both radii unbroken (continuous).
+Its volume is the integral of pi R(y)² minus pi r(y)²: areas subtracted, not radii. -/
+theorem volume_washer_solid_eq_integral
+    (r R : ℝ → ℝ) (a b : ℝ) (hab : a ≤ b)
+    (hr : ContinuousOn r (Icc a b)) (hR : ContinuousOn R (Icc a b))
+    (hrR : ∀ y ∈ Icc a b, 0 ≤ r y ∧ r y ≤ R y) :
+    volume {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        q.2 ∈ Icc a b ∧ r q.2 < ‖q.1‖ ∧ ‖q.1‖ ≤ R q.2}
+      = ENNReal.ofReal (∫ y in a..b, π * (R y ^ 2 - r y ^ 2)) := by
+  have hc := continuous_clamp r a b hab hr
+  have hC := continuous_clamp R a b hab hR
+  set r' := fun y => r (max a (min b y))
+  set R' := fun y => R (max a (min b y))
+  have hS : {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        q.2 ∈ Icc a b ∧ r q.2 < ‖q.1‖ ∧ ‖q.1‖ ≤ R q.2}
+      = {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        q.2 ∈ Icc a b ∧ r' q.2 < ‖q.1‖ ∧ ‖q.1‖ ≤ R' q.2} := by
+    ext q
+    simp only [mem_setOf_eq, r', R']
+    constructor
+    · rintro ⟨h1, h2⟩; rw [clamp_eq a b _ h1]; exact ⟨h1, h2⟩
+    · rintro ⟨h1, h2⟩; rw [clamp_eq a b _ h1] at h2; exact ⟨h1, h2⟩
+  rw [hS]
+  apply volume_eq_of_slices _ _ (fun y => π * (R y ^ 2 - r y ^ 2)) a b hab (by fun_prop)
+  · intro y hy
+    have h := hrR y hy
+    have : r y ^ 2 ≤ R y ^ 2 := pow_le_pow_left₀ h.1 h.2 2
+    have := Real.pi_pos
+    nlinarith
+  · intro y
+    by_cases hy : y ∈ Icc a b
+    · rw [indicator_of_mem hy]
+      have h := hrR y hy
+      have : (fun x : EuclideanSpace ℝ (Fin 2) => (x, y)) ⁻¹'
+          {q : EuclideanSpace ℝ (Fin 2) × ℝ | q.2 ∈ Icc a b ∧ r' q.2 < ‖q.1‖ ∧ ‖q.1‖ ≤ R' q.2}
+          = Metric.closedBall 0 (R y) \ Metric.closedBall 0 (r y) := by
+        ext x; simp [r', R', hy.1, hy.2, and_comm]
+      rw [this, measure_sdiff (Metric.closedBall_subset_closedBall h.2)
+          measurableSet_closedBall.nullMeasurableSet measure_closedBall_lt_top.ne,
+        EuclideanSpace.volume_closedBall_fin_two, EuclideanSpace.volume_closedBall_fin_two,
+        ← ENNReal.ofReal_pow h.1, ← ENNReal.ofReal_pow (h.1.trans h.2),
+        ← ENNReal.ofReal_mul (by positivity), ← ENNReal.ofReal_mul (by positivity),
+        ← ENNReal.ofReal_sub _ (by positivity)]
+      congr 1; ring
+    · rw [indicator_of_notMem hy]
+      have : (fun x : EuclideanSpace ℝ (Fin 2) => (x, y)) ⁻¹'
+          {q : EuclideanSpace ℝ (Fin 2) × ℝ | q.2 ∈ Icc a b ∧ r' q.2 < ‖q.1‖ ∧ ‖q.1‖ ≤ R' q.2}
+          = ∅ := by
+        ext x
+        simp only [mem_preimage, mem_setOf_eq, mem_empty_iff_false, iff_false]
+        exact fun h => hy h.1
+      rw [this, measure_empty]
+  · exact (measurableSet_Icc.preimage measurable_snd).inter
+      ((measurableSet_lt (hc.measurable.comp measurable_snd) (by fun_prop)).inter
+      (measurableSet_le (by fun_prop) (hC.measurable.comp measurable_snd)))
+
+/-- Shells. A solid of revolution cut into tubes round the axis: the tube at distance ρ from the
+axis, for ρ from 0 to c, runs up the axis from height g(ρ) for a length ℓ(ρ) ≥ 0, with g and ℓ
+unbroken (continuous). Counting each distance once, from 0 up, the solid holds the integral
+from 0 to c of circumference times length, 2 pi ρ ℓ(ρ). -/
+theorem volume_solid_of_revolution_eq_shell_integral
+    (g ℓ : ℝ → ℝ) (c : ℝ) (hc : 0 ≤ c)
+    (hg : ContinuousOn g (Icc 0 c)) (hℓ : ContinuousOn ℓ (Icc 0 c))
+    (hℓ0 : ∀ ρ ∈ Icc 0 c, 0 ≤ ℓ ρ) :
+    volume {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        ‖q.1‖ ≤ c ∧ g ‖q.1‖ ≤ q.2 ∧ q.2 ≤ g ‖q.1‖ + ℓ ‖q.1‖}
+      = ENNReal.ofReal (∫ ρ in (0 : ℝ)..c, 2 * π * ρ * ℓ ρ) := by
+  have hgc := continuous_clamp g 0 c hc hg
+  have hℓc := continuous_clamp ℓ 0 c hc hℓ
+  set g' := fun y => g (max 0 (min c y))
+  set ℓ' := fun y => ℓ (max 0 (min c y))
+  have hℓ'0 : ∀ y, 0 ≤ ℓ' y := fun y =>
+    hℓ0 _ ⟨le_max_left _ _, max_le hc (min_le_left _ _)⟩
+  have hS : {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        ‖q.1‖ ≤ c ∧ g ‖q.1‖ ≤ q.2 ∧ q.2 ≤ g ‖q.1‖ + ℓ ‖q.1‖}
+      = {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        ‖q.1‖ ≤ c ∧ g' ‖q.1‖ ≤ q.2 ∧ q.2 ≤ g' ‖q.1‖ + ℓ' ‖q.1‖} := by
+    ext q
+    simp only [mem_setOf_eq, g', ℓ']
+    constructor
+    · rintro ⟨h1, h2⟩; rw [clamp_eq 0 c _ ⟨norm_nonneg _, h1⟩]; exact ⟨h1, h2⟩
+    · rintro ⟨h1, h2⟩; rw [clamp_eq 0 c _ ⟨norm_nonneg _, h1⟩] at h2; exact ⟨h1, h2⟩
+  have hmeas : MeasurableSet {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        ‖q.1‖ ≤ c ∧ g' ‖q.1‖ ≤ q.2 ∧ q.2 ≤ g' ‖q.1‖ + ℓ' ‖q.1‖} := by
+    have h1 : Measurable fun q : EuclideanSpace ℝ (Fin 2) × ℝ => g' ‖q.1‖ :=
+      hgc.measurable.comp (by fun_prop)
+    have h2 : Measurable fun q : EuclideanSpace ℝ (Fin 2) × ℝ => ℓ' ‖q.1‖ :=
+      hℓc.measurable.comp (by fun_prop)
+    exact (measurableSet_le (measurable_norm.comp measurable_fst) measurable_const).inter
+      ((measurableSet_le h1 measurable_snd).inter
+      (measurableSet_le measurable_snd (h1.add h2)))
+  rw [hS, Measure.volume_eq_prod, Measure.prod_apply hmeas]
+  have hslice : ∀ x : EuclideanSpace ℝ (Fin 2),
+      volume (Prod.mk x ⁻¹' {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+        ‖q.1‖ ≤ c ∧ g' ‖q.1‖ ≤ q.2 ∧ q.2 ≤ g' ‖q.1‖ + ℓ' ‖q.1‖})
+      = ENNReal.ofReal ((Metric.closedBall (0 : EuclideanSpace ℝ (Fin 2)) c).indicator
+          (fun x => ℓ' ‖x‖) x) := by
+    intro x
+    by_cases hx : ‖x‖ ≤ c
+    · have : Prod.mk x ⁻¹' {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+          ‖q.1‖ ≤ c ∧ g' ‖q.1‖ ≤ q.2 ∧ q.2 ≤ g' ‖q.1‖ + ℓ' ‖q.1‖}
+          = Icc (g' ‖x‖) (g' ‖x‖ + ℓ' ‖x‖) := by
+        ext y; simp [hx]
+      rw [this, Real.volume_Icc, indicator_of_mem (by simpa using hx)]
+      congr 1; ring
+    · have : Prod.mk x ⁻¹' {q : EuclideanSpace ℝ (Fin 2) × ℝ |
+          ‖q.1‖ ≤ c ∧ g' ‖q.1‖ ≤ q.2 ∧ q.2 ≤ g' ‖q.1‖ + ℓ' ‖q.1‖} = ∅ := by
+        ext y; simp [hx]
+      rw [this, measure_empty, indicator_of_notMem (by simpa using hx), ENNReal.ofReal_zero]
+  simp_rw [hslice]
+  have hint : Integrable ((Metric.closedBall (0 : EuclideanSpace ℝ (Fin 2)) c).indicator
+          (fun x => ℓ' ‖x‖)) :=
+    ((hℓc.comp continuous_norm).continuousOn.integrableOn_compact (isCompact_closedBall 0 c)).integrable_indicator
+      measurableSet_closedBall
+  rw [← ofReal_integral_eq_lintegral_ofReal hint
+    (Filter.Eventually.of_forall fun x => indicator_nonneg (fun x _ => hℓ'0 _) x)]
+  congr 1
+  have hfun : (Metric.closedBall (0 : EuclideanSpace ℝ (Fin 2)) c).indicator (fun x => ℓ' ‖x‖)
+      = fun x => (Iic c).indicator ℓ' ‖x‖ := by
+    funext x
+    by_cases hx : ‖x‖ ≤ c
+    · rw [indicator_of_mem (by simpa using hx), indicator_of_mem (by simpa using hx)]
+    · rw [indicator_of_notMem (by simpa using hx), indicator_of_notMem (by simpa using hx)]
+  rw [hfun, integral_fun_norm_addHaar volume ((Iic c).indicator ℓ')]
+  have hfun2 : (fun y : ℝ => y ^ (Module.finrank ℝ (EuclideanSpace ℝ (Fin 2)) - 1) •
+      (Iic c).indicator ℓ' y) = (Iic c).indicator (fun y => y * ℓ' y) := by
+    funext y
+    by_cases hy : y ∈ Iic c <;> simp [hy]
+  rw [hfun2, setIntegral_indicator measurableSet_Iic, Ioi_inter_Iic,
+    intervalIntegral.integral_of_le hc]
+  have hball : volume.real (Metric.ball (0 : EuclideanSpace ℝ (Fin 2)) 1) = π := by
+    simp [Measure.real, Real.pi_pos.le]
+  rw [hball, finrank_euclideanSpace_fin]
+  simp_rw [mul_assoc]
+  rw [integral_const_mul, integral_const_mul, nsmul_eq_mul, smul_eq_mul]
+  have : ∫ y in Ioc 0 c, y * ℓ' y = ∫ y in Ioc 0 c, y * ℓ y := by
+    refine setIntegral_congr_fun measurableSet_Ioc fun y hy => ?_
+    simp only [ℓ', clamp_eq 0 c y ⟨hy.1.le, hy.2⟩]
+  rw [this]; push_cast; ring
+
+-- The bowl's wall is y = r²/2: 2 cm out it stands 2 cm high, 4 cm out 8 cm, and the 10 cm rim
+-- sits where r² = 20.
+example : (2 : ℚ) ^ 2 / 2 = 2 ∧ (4 : ℚ) ^ 2 / 2 = 8 ∧ (2 : ℚ) * 10 = 20 := by norm_num
+-- Discs: the slice area is pi r² = 2 pi y, and adding them from 0 to 10 cm gives 100 pi.
+example : ∫ y in (0 : ℝ)..10, π * (2 * y) = 100 * π := by
+  rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul, integral_id]
+  norm_num
+  ring
+-- Discs by the antiderivative: pi y² at 10 is 100 pi.
+example : π * 10 ^ 2 = 100 * π := by ring
+-- Shells: 2 pi (5 rho² - rho⁴/8) at rho² = 20 is 2 pi (100 - 50) = 100 pi.
+example : 2 * π * (5 * 20 - 20 ^ 2 / 8) = 100 * π := by ring
+-- Shells, as an integral: tubes 2 pi rho (10 - rho²/2) from 0 to the rim, sqrt 20, add to 100 pi.
+example : ∫ ρ in (0 : ℝ)..√20, 2 * π * ρ * (10 - ρ ^ 2 / 2) = 100 * π := by
+  have h : ∀ ρ : ℝ, 2 * π * ρ * (10 - ρ ^ 2 / 2) = 20 * π * ρ ^ 1 - π * ρ ^ 3 := fun ρ => by ring
+  simp_rw [h]
+  rw [intervalIntegral.integral_sub, intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_const_mul, integral_pow, integral_pow]
+  · have h2 : (√20 : ℝ) ^ 2 = 20 := Real.sq_sqrt (by norm_num)
+    have h4 : (√20 : ℝ) ^ 4 = 400 := by rw [show (4 : ℕ) = 2 * 2 from rfl, pow_mul, h2]; norm_num
+    norm_num [h2, h4]
+    ring
+  all_goals exact (Continuous.intervalIntegrable (by fun_prop) _ _)
+-- The can round the bowl: pi × 20 × 10 = 200 pi, twice the bowl's 100 pi.
+example : π * 20 * 10 = 2 * (100 * π) := by ring
+-- The disc squeeze's gap: pi (r(b)² - r(a)²)(b - a) = pi (20 - 0) × 10 = 200 pi, over n slices.
+example : π * (20 - 0) * 10 = 200 * π := by ring
+-- The shell squeeze's bound: 2 pi c² (ℓ(0) - ℓ(c)) = 2 pi × 20 × (10 - 0) = 400 pi, over n tubes.
+example : 2 * π * 20 * (10 - 0) = 400 * π := by ring
+-- Washers for the glass: the outer radius² 2(y + 3/10) minus the hole's 2y is 3/5 at every
+-- height, so each washer is 2 pi × 3/10.
+example (y : ℝ) : π * (2 * (y + 3 / 10) - 2 * y) = 2 * π * (3 / 10) := by ring
+-- The glass: 2 pi × 3/10 × 10 for the wall plus pi (3/10)² for the cap is 609/100 pi (6.09 pi).
+example : 2 * π * (3 / 10) * 10 + π * (3 / 10) ^ 2 = 609 / 100 * π := by ring
+-- The usual mistake: filled to half the depth, 5 cm, the bowl holds pi × 5² = 25 pi, a quarter
+-- of 100 pi.
+example : π * 5 ^ 2 * 4 = π * 10 ^ 2 := by ring
+
+#print axioms volume_solid_of_revolution_eq_disc_integral
+#print axioms volume_washer_solid_eq_integral
+#print axioms volume_solid_of_revolution_eq_shell_integral
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'volume_eq_of_slices' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_clamp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'clamp_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volume_solid_of_revolution_eq_disc_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volume_washer_solid_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volume_solid_of_revolution_eq_shell_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Set H to 5.** Guess first: what fraction of the wine? A quarter, 78.539816; the last assert fails, since 150 ml no longer fits.
@@ -394,7 +697,7 @@ ALL CHECKS PASS
 
 - [Centre of mass](05-centre-of-mass-and-pappus.md): the same volumes from one area and the path of its balance point.
 
-These slices work because each is a circle; a solid whose slices are any shape at all is added one small box at a time, by the double and triple integrals of this wing.
+These slices work because each is a circle. A solid whose slices are any shape at all is added one small box at a time, by [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md) and [Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md).
 
 ---
 

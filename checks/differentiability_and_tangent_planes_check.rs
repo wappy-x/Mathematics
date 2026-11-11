@@ -60,4 +60,5 @@ fn main() {
     println!("chart, hill (m): {}", join(&hill, 2));
     println!("chart, plane (m): {}", join(&flat, 2));
     println!("mistake, plane without the shift, at (110, 70): {:.6} m", z + sx * 110.0 + sy * 70.0);
+    println!("ALL CHECKS PASS");
 }
