@@ -8,7 +8,11 @@
 
 Three potholes sit on a road through the plane, each a point where a formula divides by zero.
 
-The first is sin z/z at 0. A step 0.1 east gives 0.998334; 0.1 north gives 1.001668. One slab is missing: set the value at 0 to 1 and the hole is gone. The second is 1/(z − 2)^2 at 2. At distance 0.1 its size is 100; at half that, 400, in every direction: a hole of definite depth. The third is e^(1/z) at 0: 2980.957987 at 1/8, 0.000335 at −1/8. A sinkhole with no bottom.
+The first is sin z/z at 0. A step 0.1 east gives 0.998334; 0.1 north gives 1.001668. One slab is missing: set the value at 0 to 1 and the hole is gone.
+
+The second is 1/(z − 2)^2 at 2. At distance 0.1 its size is 100; at half that, 400, in every direction: a hole of definite depth.
+
+The third is e^(1/z) at 0: 2980.957987 at 1/8, 0.000335 at −1/8. A sinkhole with no bottom.
 
 From here on a pothole is an **isolated singularity**: a point where a function is undefined, though holomorphic (has a complex derivative) everywhere else on a small disc round it. The kinds are **removable**, **pole** and **essential**. One test sorts them: write the Laurent series, a power series allowed negative powers ([Laurent series](01-laurent-series.md)), and read the negative powers.
 
@@ -65,7 +69,7 @@ A function is **meromorphic** on an open set when it is holomorphic there apart 
 
 - **Holomorphic on a whole punctured disc**, or there is no Laurent series: 1/sin(1/z) has poles crowding into 0, so 0 is not isolated.
 - **Bounded on the whole punctured disc, not along a path.** e^(1/z) stays below 1 along the negative real axis, yet 0 is essential.
-- **Holomorphic, not merely bounded.** z-bar/z has size 1 everywhere, but is 1 on the real axis and −1 on the imaginary axis: no value at 0 fits.
+- **Holomorphic, not merely bounded.** z-bar/z, where z-bar is z reflected in the real axis, has size 1 everywhere, but is 1 on the real axis and −1 on the imaginary axis: no value at 0 fits.
 
 ---
 
@@ -89,15 +93,23 @@ The left side does not depend on r, so shrinking r squeezes it to 0, for every k
 
 ### Step 3: a lowest negative power is a pole
 
-Suppose the lowest power is −m. Multiply by $(z-a)^m$: every power becomes 0 or more, so $g = (z-a)^m f$ is a power series with $g(a) = c_{-m} \ne 0$. Near a, g stays near that value, so |f| is about $|c_{-m}|$ over distance to the m-th power, in every direction. For 1/(z − 2)^2, g is 1; at z = 2.01, multiplying f by $(z - 2)^m$ gives sizes 100, 1 and 0.01 for m = 1, 2, 3. Only the true order leaves a finite, nonzero value. Conversely, if |f| tends to infinity at a, then a is a pole (Detailed proof, below). Merely unbounded is not enough: e^(1/z) is unbounded near 0.
+Suppose the lowest power is −m. Multiply by $(z-a)^m$: every power becomes 0 or more, so $g = (z-a)^m f$ is a power series with $g(a) = c_{-m} \ne 0$. Near a, g stays near that value, so |f| is about $|c_{-m}|$ over distance to the m-th power, in every direction.
+
+For 1/(z − 2)^2, g is 1; at z = 2.01, multiplying f by $(z - 2)^m$ gives sizes 100, 1 and 0.01 for m = 1, 2, 3. Only the true order leaves a finite, nonzero value.
+
+Conversely, if |f| tends to infinity at a, then a is a pole (Detailed proof, below). Merely unbounded is not enough: e^(1/z) is unbounded near 0.
 
 ### Step 4: no lowest power, and nothing settles
 
-With infinitely many negative coefficients, no power of z − a tames f. Put 1/z into the series e^u = Σ u^k/k!: e^(1/z) = Σ z^(−k)/k!, every coefficient nonzero, so 0 is essential. The loop integrals agree: 1, 0.5 and 0.166667 on the powers −1, −2, −3. Its size depends on direction: 2980.957987 at 1/8, 0.000335 at −1/8, and exactly 1 at i/(16π), where 1/z is −16πi.
+With infinitely many negative coefficients, no power of z − a tames f. Put 1/z into the series e^u = Σ u^k/k!: e^(1/z) = Σ z^(−k)/k!, every coefficient nonzero, so 0 is essential.
+
+The loop integrals agree: 1, 0.5 and 0.166667 on the powers −1, −2, −3. Its size depends on direction: 2980.957987 at 1/8, 0.000335 at −1/8, and exactly 1 at i/(16π), where 1/z is −16πi.
 
 ### Step 5: near an essential point, f comes close to everything
 
-Suppose f stayed at least $\varepsilon$ from some value $w$ on a punctured disc. Then $h = 1/(f - w)$ is holomorphic there with size at most $1/\varepsilon$, so by Step 2 it fills in at a. Solving back, $f = w + 1/h$: removable if h(a) is not 0, a pole if it is. Either way a is not essential. Felice Casorati published this in 1868, Karl Weierstrass in 1876.
+Suppose f stayed at least $\varepsilon$ from some value $w$ on a punctured disc. Then $h = 1/(f - w)$ is holomorphic there with size at most $1/\varepsilon$, so by Step 2 it fills in at a.
+
+Solving back, $f = w + 1/h$: removable if h(a) is not 0, a pole if it is. Either way a is not essential. Felice Casorati published this in 1868, Karl Weierstrass in 1876.
 
 <details>
 <summary>Detailed proof</summary>
@@ -110,7 +122,7 @@ Suppose f stayed at least $\varepsilon$ from some value $w$ on a punctured disc.
 
 </details>
 
-For e^(1/z) the truth is stronger: every value except 0 is hit exactly. For $w$ = 2 + 3i, 1/z must be ln|w| + i(arg w + 2πk) for a whole number k, with ln|w| = 1.282475 and arg w = 0.982794. So
+For e^(1/z) the truth is stronger: every value except 0 is hit exactly. For $w$ = 2 + 3i, 1/z must be ln|w| + i(arg w + 2πk) for a whole number k, where arg w is the angle of w from the positive real axis. Here ln|w| = 1.282475 and arg w = 0.982794. So
 
 $$z_k = \frac{1}{\ln|w| + i(\arg w + 2\pi k)}$$
 
@@ -156,7 +168,7 @@ A division by zero may hide a harmless gap, a hole of fixed depth, or a point wh
 
 ## Code, from first principles, and it actually runs
 
-Road one finds each Laurent coefficient as a trapezoid sum over 64 points of a circle of radius 1. Road two uses independent facts: the series 1/k!, direct values, the order test, sinh(0.5)/0.5, and exact solutions of e^(1/z) = w. The trapezoid error on the coefficient 1 of e^(1/z) falls from 0.008336089 with 4 points to 0.000002756 with 8, and below print with 16. e^z is built from exp, cos and sin; Rust defines its own (re, im) struct.
+Road one finds each Laurent coefficient as a trapezoid sum: an average over 64 equally spaced points of a circle of radius 1. Road two uses independent facts: the series 1/k!, direct values, the order test, sinh(0.5)/0.5, and exact solutions of e^(1/z) = w. The trapezoid error on the coefficient 1 of e^(1/z) falls from 0.008336089 with 4 points to 0.000002756 with 8, and below print with 16. e^z is built from exp, cos and sin; Rust defines its own (re, im) struct.
 
 ### Python
 
@@ -381,6 +393,8 @@ The two outputs match line for line.
 
 - [Rational functions](03-rational-functions-and-partial-fractions.md): quotients of polynomials, whose only singularities are poles, split into principal parts.
 - [Residues](04-residues.md): the coefficient on the power −1, found without the whole series.
+
+The question this card leaves open: a loop integral sees only $c_{-1}$, so how can that one coefficient be found at a pole without writing out the whole series?
 
 ---
 

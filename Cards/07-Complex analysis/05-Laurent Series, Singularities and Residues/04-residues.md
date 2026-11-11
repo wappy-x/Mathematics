@@ -59,7 +59,7 @@ At an **essential singularity** (no m tames it), expand and read off $c_{-1}$.
 
 ### When it holds
 
-- **The bad point is isolated.** f must be holomorphic (have a complex derivative) on a ring 0 < |z − a| < R. The logarithm at 0 fails: its branch cut runs into the point.
+- **The bad point is isolated.** f must be holomorphic (have a complex derivative) on a ring 0 < |z − a| < R. The logarithm at 0 fails: its branch cut, the line where it jumps by 2πi, runs into the point ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)).
 - **The limit and p/q' need a simple pole.** At the double pole of 1/(z^2 + 1)^2 at i, q'(i) = 0 and p/q' divides by zero; the residue is −i/4.
 - **The derivative formula needs m at least the true order.** Too small and the limit blows up; too large still works.
 - **An essential singularity has no m.** Only the series or the loop works.
@@ -363,7 +363,7 @@ ALL CHECKS PASS
 
 - **Real integrals.** The integral of 1/(1 + x^2) over the real line is π, the booth at i's toll, proved by closing the line into a loop in [The residue theorem](05-the-residue-theorem.md).
 - **Circuits and control.** A circuit's response, written as a fraction in a complex variable, returns to a signal in time as a sum of residues at its poles; the engineers' "cover-up" trick is the simple-pole limit.
-- **Counting primes.** Perron's formula reads sums over whole numbers off residues of zeta-built functions.
+- **Counting primes.** Perron's formula reads sums over whole numbers off residues of functions built from [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md), the sum of 1/n^s over n = 1, 2, 3, …
 
 > **Say it back**
 > Near an isolated bad point a function is a series in powers of (z − a), negative ones included. A loop round the point returns 2πi times the coefficient of 1/(z − a): the residue. At a simple pole, cancel the bad factor and take the limit, or divide the top by the bottom's slope. At a pole of order m, differentiate the tamed factor m − 1 times and divide by (m − 1)!; at an essential singularity, read the series.
@@ -372,12 +372,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
+- [Laurent series](01-laurent-series.md): the two-sided series whose coefficient $c_{-1}$ is the residue, and the loop formula for it.
 - [Isolated singularities](02-classifying-singularities.md): the pole order m, and why e^(1/z) has none.
 
 ## Where this goes next
 
 - [The residue theorem](05-the-residue-theorem.md): a loop round several booths pays the sum of their tolls, 2πi times the sum of their residues.
 - Perron's formula: residues turning a sum over whole numbers into a loop integral.
+
+The question this card leaves open: why does a loop round several booths pay exactly the sum of their tolls?
 
 ---
 

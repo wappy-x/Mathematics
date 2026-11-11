@@ -79,7 +79,7 @@ No choice was made: the ordinary laws plus $i^2 = -1$ leave only this rule.
 
 Put $c = 0$ and $d = 1$: $i(a + bi) = -b + ai$. The drone (3, 4) goes to (−4, 3).
 
-The length from 0 is unchanged, $\sqrt{(-b)^2 + a^2} = \sqrt{a^2 + b^2}$: both points are 5 km out. The two arrows meet at a square corner, since their dot product is $a(-b) + b(a) = 0$. Same length, square corner, anticlockwise: a quarter turn.
+The length from 0 is unchanged, $\sqrt{(-b)^2 + a^2} = \sqrt{a^2 + b^2}$: both points are 5 km out. The two arrows meet at a square corner, since their dot product, east times east plus north times north, is $a(-b) + b(a) = 0$ ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). Same length, square corner, anticlockwise: a quarter turn.
 
 Turn four times and the drone is home: −4 + 3i, −3 − 4i, 4 − 3i, then 3 + 4i. Two quarter turns make a half turn, which points the arrow backwards: multiplying by −1. That is why $i \times i = -1$.
 
@@ -114,7 +114,7 @@ Write $z = (a, b)$, $w = (c, d)$, $u = (e, f)$, with the product $(a, b)(c, d) =
 
 Take $x^2 + 2x + 5 = 0$. The quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) needs the square root of the discriminant, $2^2 - 4 \times 5 = -16$, which has none on the real line. In $\mathbb{C}$ it has one, $4i$, since $(4i)^2 = 16\,i^2 = -16$. The roots are $-1 \pm 2i$.
 
-Check −1 + 2i: its square is −3 − 4i, twice it is −2 + 4i, and the three terms sum to 0. Every non-constant polynomial has a complex root: the [The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md). Rafael Bombelli first wrote down rules for adding and multiplying such numbers, in his *Algebra* of 1572.
+Check −1 + 2i: its square is −3 − 4i, twice it is −2 + 4i, and the three terms sum to 0. Every non-constant polynomial has a complex root: [The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md). Rafael Bombelli first wrote down rules for adding and multiplying such numbers, in his *Algebra* of 1572.
 
 A second road writes a + bi as the matrix `[[a, -b], [b, a]]`; multiplying matrices then multiplies complex numbers: [Complex vectors and matrices](07-complex-vectors-and-matrices.md).
 
@@ -331,6 +331,139 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the rules for adding and multiplying, and the quarter turn, for all real a, b, c and d.
+
+- i × i = −1.
+- For any real numbers a, b, c, d: (a + bi) + (c + di) = (a + c) + (b + d)i.
+- Their product is (ac − bd) + (ad + bc)i.
+- Times i sends a + bi to −b + ai: the point (a, b) moves to (−b, a).
+- The turned point is the same distance from 0. East times east plus north times north is 0: a square corner.
+- No ordering of the complex numbers respects adding and multiplying the way the order of the real numbers does.
+- For the drone: z + w = 4 + 6i, z − w = 2 + 2i, and zw = wz = −5 + 10i.
+- Turn and add, z + 2(iz), also lands on −5 + 10i.
+- Four quarter turns give −4 + 3i, −3 − 4i, 4 − 3i, then 3 + 4i again.
+- On the real axis, (2 + 0i)(−3 + 0i) = −6. Grouping does not matter: (zw)i and z(wi) are both −10 − 5i.
+- $(4i)^2 = -16$, $(-1 + 2i)^2 = -3 - 4i$, and both −1 + 2i and −1 − 2i solve $x^2 + 2x + 5 = 0$.
+- The three mistakes give 3 + 8i, 11 + 10i and 4 − 3i, and none is the right answer.
+
+The figure's coordinates, the quadratic formula's working and the printed decimals are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 98 lines</summary>
+
+```lean
+-- Complex numbers: in the complex numbers i times i is -1, adding a + bi and c + di goes part by part, the product is (ac - bd) + (ad + bc)i, multiplying by i turns a point a quarter turn about 0, and no ordering of the complex numbers respects multiplying.
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Algebra.Order.Ring.Defs
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Complex
+
+/-- The rules of complex arithmetic. The new number i has i × i = -1. For any real numbers
+a, b, c, d, the point a + bi plus the point c + di is (a + c) + (b + d)i, and their product is
+(ac - bd) + (ad + bc)i: the east part ac minus bd, the north part ad plus bc. -/
+theorem complex_add_and_mul_rules (a b c d : ℝ) :
+    I * I = -1 ∧
+    ((a : ℂ) + b * I) + ((c : ℂ) + d * I) = ((a + c : ℝ) : ℂ) + ((b + d : ℝ) : ℂ) * I ∧
+    ((a : ℂ) + b * I) * ((c : ℂ) + d * I) = ((a * c - b * d : ℝ) : ℂ) + ((a * d + b * c : ℝ) : ℂ) * I := by
+  refine ⟨Complex.I_mul_I, ?_, ?_⟩
+  · push_cast; ring
+  · push_cast; ring_nf; rw [Complex.I_sq]; ring
+
+/-- Multiplying by i is a quarter turn. For any real a and b, i(a + bi) = -b + ai: the point
+(a, b) moves to (-b, a). It stays the same distance from 0, and the two arrows meet at a square
+corner (east times east plus north times north is 0). -/
+theorem mul_I_is_quarter_turn (a b : ℝ) :
+    I * ((a : ℂ) + b * I) = ((-b : ℝ) : ℂ) + (a : ℂ) * I ∧
+    ‖I * ((a : ℂ) + b * I)‖ = ‖(a : ℂ) + b * I‖ ∧
+    ((a : ℂ) + b * I).re * (I * ((a : ℂ) + b * I)).re
+      + ((a : ℂ) + b * I).im * (I * ((a : ℂ) + b * I)).im = 0 := by
+  have h : I * ((a : ℂ) + b * I) = ((-b : ℝ) : ℂ) + (a : ℂ) * I := by
+    push_cast; ring_nf; rw [Complex.I_sq]; ring
+  refine ⟨h, ?_, ?_⟩
+  · rw [norm_mul, Complex.norm_I, one_mul]
+  · rw [h]; simp; ring
+
+/-- No "bigger than": no way of putting the complex numbers in a line, smallest to largest,
+respects adding and multiplying the way the order of the real numbers does. -/
+theorem no_order_respects_multiplying (o : LinearOrder ℂ) :
+    ¬ @IsOrderedRing ℂ _ o.toPartialOrder := by
+  intro hR
+  let _ : LinearOrder ℂ := o
+  have h1 : (0 : ℂ) ≤ I * I := mul_self_nonneg I
+  rw [Complex.I_mul_I] at h1
+  have h2 : (0 : ℂ) ≤ 1 * 1 := mul_self_nonneg 1
+  rw [one_mul] at h2
+  have h3 : (1 : ℂ) ≤ 0 := by
+    have := add_le_add_left h1 1
+    simpa using this
+  exact one_ne_zero (le_antisymm h3 h2)
+
+-- The drone z = 3 + 4i and the multiplier w = 1 + 2i: sum, difference, and the product -5 + 10i.
+example : ((3 : ℂ) + 4 * I) + (1 + 2 * I) = 4 + 6 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : ((3 : ℂ) + 4 * I) - (1 + 2 * I) = 2 + 2 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : ((3 : ℂ) + 4 * I) * (1 + 2 * I) = -5 + 10 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+-- Turn and add: one copy of z plus two copies of iz lands on the same point.
+example : ((3 : ℂ) + 4 * I) + 2 * (I * (3 + 4 * I)) = -5 + 10 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+-- Order does not matter: wz is also -5 + 10i.
+example : ((1 : ℂ) + 2 * I) * (3 + 4 * I) = -5 + 10 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+-- The quarter turn, and four quarter turns bring the drone home.
+example : I * ((3 : ℂ) + 4 * I) = -4 + 3 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : I * (I * ((3 : ℂ) + 4 * I)) = -3 - 4 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : I * (I * (I * ((3 : ℂ) + 4 * I))) = 4 - 3 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : I * (I * (I * (I * ((3 : ℂ) + 4 * I)))) = 3 + 4 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+-- Real numbers multiply as before: (2 + 0i)(-3 + 0i) = -6.
+example : ((2 : ℂ) + 0 * I) * (-3 + 0 * I) = -6 := by
+  apply Complex.ext <;> norm_num [pow_two]
+-- Grouping does not matter: (zw)i and z(wi) are both -10 - 5i.
+example : (((3 : ℂ) + 4 * I) * (1 + 2 * I)) * I = -10 - 5 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : ((3 : ℂ) + 4 * I) * ((1 + 2 * I) * I) = -10 - 5 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+-- x^2 + 2x + 5 = 0: (4i)^2 = -16, and both roots -1 + 2i and -1 - 2i solve it.
+example : (4 * I) ^ 2 = -16 := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : ((-1 : ℂ) + 2 * I) ^ 2 = -3 - 4 * I := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : ((-1 : ℂ) + 2 * I) ^ 2 + 2 * (-1 + 2 * I) + 5 = 0 := by
+  apply Complex.ext <;> norm_num [pow_two]
+example : ((-1 : ℂ) - 2 * I) ^ 2 + 2 * (-1 - 2 * I) + 5 = 0 := by
+  apply Complex.ext <;> norm_num [pow_two]
+-- The three mistakes give 3 + 8i, 11 + 10i and 4 - 3i, none equal to the right answers.
+example : ((3 : ℂ) + 4 * I) * (1 + 2 * I) ≠ 3 + 8 * I := by
+  rw [Ne, Complex.ext_iff]; norm_num
+example : ((3 : ℂ) + 4 * I) * (1 + 2 * I) ≠ 11 + 10 * I := by
+  rw [Ne, Complex.ext_iff]; norm_num
+example : I * ((3 : ℂ) + 4 * I) ≠ 4 - 3 * I := by
+  rw [Ne, Complex.ext_iff]; norm_num
+
+#print axioms complex_add_and_mul_rules
+#print axioms mul_I_is_quarter_turn
+#print axioms no_order_respects_multiplying
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'complex_add_and_mul_rules' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mul_I_is_quarter_turn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_order_respects_multiplying' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -376,11 +509,13 @@ The two outputs match line for line.
 - Complex manifolds and Kahler forms: spaces that look like the complex plane up close.
 - Rotation group: the quaternions, which do for turns in space what i does for the plane.
 
+Times i turns the drone a quarter turn, but how far does w = 1 + 2i turn it, as an angle? That is [Polar form](03-polar-form-and-argument.md).
+
 ---
 
 ## Sources
 
-Verified 2026-09-28: every link below opens a page naming the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton Lectures in Analysis II. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 1: complex numbers as points, and their arithmetic.
 - O'Connor, J. J., and E. F. Robertson. "Rafael Bombelli." MacTutor Archive, University of St Andrews. [Biography](https://mathshistory.st-andrews.ac.uk/Biographies/Bombelli/). The 1572 *Algebra*, the first written rules for adding and multiplying complex numbers.

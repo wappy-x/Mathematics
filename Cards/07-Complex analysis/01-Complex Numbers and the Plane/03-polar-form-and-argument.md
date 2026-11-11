@@ -26,7 +26,9 @@ To scale, 9 units per km/h, 0 where the axes cross. The arc with the triangle is
 
 ## The formula
 
-Notation first, in words. The **argument** of $z$, written $\arg z$ and read "arg z", is the angle of the arrow from 0 to $z$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π]. Below, $r$ and $s$ are lengths, and $\theta$ (theta) and $\varphi$ (phi) are angles. 45 degrees is π/4 = 0.785398 radians ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)).
+Notation first, in words. The **argument** of $z$, written $\arg z$ and read "arg z", is the angle of the arrow from 0 to $z$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π].
+
+Below, $r$ and $s$ are lengths, and $\theta$ (theta) and $\varphi$ (phi) are angles. 45 degrees is π/4 = 0.785398 radians ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)).
 
 $$z = a + bi = r(\cos\theta + i\sin\theta), \qquad a = r\cos\theta,\quad b = r\sin\theta,\quad r = \sqrt{a^2 + b^2}$$
 
@@ -61,13 +63,17 @@ Any angle $\theta + 2\pi k$, with $k$ a whole number, names the same point. The 
 
 ### Step 1: from length and angle to a + bi
 
-East-and-north is one address for a point; distance-and-direction is another ([Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)). To pass between them, drop a line from the arrow's tip to the real axis. The right triangle has hypotenuse $r$ and angle $\theta$ at 0, so the east side is $r\cos\theta$ and the north side $r\sin\theta$. At π/4 cosine and sine are equal, so both parts of the wind are 7.071068 km/h.
+East-and-north is one address for a point; distance-and-direction is another ([Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)). To pass between them, drop a line from the arrow's tip to the real axis. The right triangle has hypotenuse $r$ and angle $\theta$ at 0, so the east side is $r\cos\theta$ and the north side $r\sin\theta$.
+
+At π/4 cosine and sine are equal, so both parts of the wind are 7.071068 km/h.
 
 ### Step 2: from a + bi back to length and angle
 
 The length is Pythagoras: for the wind, 10. The angle needs care. The slope $b/a$ fixes a line through 0, but a line points two ways. The south-west wind, −7.071068 − 7.071068i, has slope 1, like the north-east wind. The signs settle it: both negative puts the arrow lower left, at −135°, or −2.356194 radians.
 
-In code, the rule that reads both signs is atan2, short for "arctangent of two inputs"; it returns the principal argument. One trap: computers store a signed zero, and atan2 gives −π for −1 − 0.0i, so the checks return π on the negative real axis. The drone at 3 + 4i ([Conjugate and modulus](02-conjugate-and-modulus.md)) sits at 0.927295 radians, 53.130102°.
+In code, the rule that reads both signs is atan2, short for "arctangent of two inputs"; it returns the principal argument.
+
+One trap: computers store a signed zero, a zero that keeps a minus sign, written −0.0. atan2 gives −π for −1 − 0.0i, so the checks return π on the negative real axis. The drone at 3 + 4i ([Conjugate and modulus](02-conjugate-and-modulus.md)) sits at 0.927295 radians, 53.130102°.
 
 ### Step 3: lengths multiply, angles add
 
@@ -77,17 +83,21 @@ $$(\cos\theta + i\sin\theta)(\cos\varphi + i\sin\varphi) = (\cos\theta\cos\varph
 
 The brackets are the angle-addition identities ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)): $\cos(\theta + \varphi)$ and $\sin(\theta + \varphi)$. The real lengths $r$ and $s$ multiply out front. That proves the rule.
 
-On the wind: 10 times 2 is 20, and 45° plus 90° is 135°. The pair rule of the complex-numbers card, which uses no angle, reaches the same −14.142136 + 14.142136i.
+On the wind: 10 times 2 is 20, and 45° plus 90° is 135°. The pair rule of [Complex numbers](01-complex-numbers.md), which multiplies the parts out with $i^2 = -1$ and uses no angle, reaches the same −14.142136 + 14.142136i.
 
 Division runs the rule backwards: divide lengths, subtract angles. The product divided by 2i is the wind again, 7.071068 + 7.071068i.
 
 ### Step 4: angles wrap, so the argument needs a range
 
-Turn the product another 90° by multiplying by $i$. The angles add to 225°, at −14.142136 − 14.142136i. But 225° is 3.926991 radians, past π; one turn less is −2.356194, or −135°, the principal argument. So $\arg(zw) = \arg z + \arg w$ holds only up to a whole turn; here $k = -1$. The same wrap gives −1 − i its principal argument, −2.356194.
+Turn the product another 90° by multiplying by $i$. The angles add to 225°, at −14.142136 − 14.142136i. But 225° is 3.926991 radians, past π; one turn less is −2.356194, or −135°, the principal argument.
+
+So $\arg(zw) = \arg z + \arg w$ holds only up to a whole turn; here $k = -1$. The same wrap gives −1 − i its principal argument, −2.356194.
 
 ### Step 5: the jump cannot be removed
 
-Walk anticlockwise round the unit circle, 45° at a time. The principal argument reads 0, 45, 90, 135, 180, then −135 where 225 was due: a drop of a full turn. Points a thousandth above and below −1 have arguments 3.140593 and −3.140593, which are 6.281185 apart, nearly a full turn of 6.283185. Moving the range only moves the jump to another ray from 0.
+Walk anticlockwise round the unit circle, 45° at a time. The principal argument reads 0, 45, 90, 135, 180, then −135 where 225 was due: a drop of a full turn.
+
+Points a thousandth above and below −1 have arguments 3.140593 and −3.140593, which are 6.281185 apart, nearly a full turn of 6.283185. Moving the range only moves the jump to another ray from 0.
 
 <details>
 <summary>Detailed proof: the principal argument is unique, and some jump is unavoidable</summary>
@@ -131,7 +141,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two independent roads to each key number. The product comes from the pair rule, which uses no angle, and from lengths and angles. The argument comes from atan2 and from a bisection on the cosine alone plus the sign of the imaginary part, with no inverse trigonometry. Python uses its built-in complex type; Rust defines a pair type.
+Two independent roads to each key number. The product comes from the pair rule, which uses no angle, and from lengths and angles. The argument comes from atan2 and from a bisection on the cosine alone plus the sign of the imaginary part, with no inverse trigonometry. Bisection halves the range 0 to π again and again, closing in on the angle whose cosine is a/r. Python uses its built-in complex type; Rust defines a pair type.
 
 ### Python
 
@@ -310,6 +320,179 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the polar rules for every length and angle, and the card's wind, drone and cut numbers exactly.
+
+- Lengths multiply, angles add: r(cos θ + i sin θ) · s(cos φ + i sin φ) = rs(cos(θ + φ) + i sin(θ + φ)).
+- Every nonzero z is its length times cos θ + i sin θ, with θ its principal argument in (−π, π].
+- No other angle in (−π, π] does that, so the principal argument is unique.
+- At each point of the negative real axis the argument is π. Close above it the argument is near π; close below, near −π.
+- For nonzero z and w, arg(zw) is arg z + arg w plus some whole number k of full turns.
+- The wind, 10 at 45°, is exactly 5√2 + 5√2i. Times 2i it is 20 at 135°, which is −10√2 + 10√2i.
+- Turned once more by i, the product's principal argument is −135°, so k = −1.
+- The south-west direction −1 − i is at −135°, the drone 3 + 4i has length 5, and −5 is at π.
+
+The decimals, the bisection road, the jump's size near −1, the four mistakes and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 139 lines</summary>
+
+```lean
+-- Polar form: multiplying two complex numbers in polar form multiplies the lengths and adds the angles, every nonzero complex number has exactly one angle in (-π, π], and the argument of a product is the sum of the arguments only up to whole turns, with a jump on the negative real axis.
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+
+open Complex Real Filter Topology
+
+lemma polar_cos_three_pi_div_four : Real.cos (3 * π / 4) = -(Real.sqrt 2 / 2) := by
+  rw [show 3 * π / 4 = π - π / 4 by ring, Real.cos_pi_sub, Real.cos_pi_div_four]
+
+lemma polar_sin_three_pi_div_four : Real.sin (3 * π / 4) = Real.sqrt 2 / 2 := by
+  rw [show 3 * π / 4 = π - π / 4 by ring, Real.sin_pi_sub, Real.sin_pi_div_four]
+
+lemma polar_arg_real_polar {r θ : ℝ} (hr : 0 < r) (hθ : θ ∈ Set.Ioc (-π) π) :
+    arg ((r : ℂ) * (Real.cos θ + Real.sin θ * I)) = θ := by
+  rw [ofReal_cos, ofReal_sin]
+  exact arg_mul_cos_add_sin_mul_I hr hθ
+
+/-- Lengths multiply, angles add. A number of length r at angle θ times a number of length s at
+angle φ is the number of length r·s at angle θ + φ:
+r(cos θ + i sin θ) · s(cos φ + i sin φ) = rs(cos(θ + φ) + i sin(θ + φ)). -/
+theorem lengths_multiply_angles_add (r s θ φ : ℝ) :
+    ((r : ℂ) * (Real.cos θ + Real.sin θ * I)) * ((s : ℂ) * (Real.cos φ + Real.sin φ * I)) =
+      ((r * s : ℝ) : ℂ) * (Real.cos (θ + φ) + Real.sin (θ + φ) * I) := by
+  rw [Real.cos_add, Real.sin_add]
+  push_cast
+  ring_nf
+  rw [I_sq]
+  ring
+
+/-- Every nonzero complex number is its length times a direction: z = |z|(cos θ + i sin θ) with
+θ the principal argument, which lies in (-π, π]. No other angle in that range works, so the
+principal argument is unique. The range must jump somewhere: at every point x of the negative
+real axis the argument is π, it tends to π when you approach x from above, and it tends to -π
+when you approach x from below, a drop of a full turn. -/
+theorem principal_argument_unique_and_jumps_on_negative_axis (z : ℂ) (hz : z ≠ 0) :
+    (arg z ∈ Set.Ioc (-π) π ∧
+      z = (‖z‖ : ℂ) * (Real.cos (arg z) + Real.sin (arg z) * I) ∧
+      ∀ θ ∈ Set.Ioc (-π) π, z = (‖z‖ : ℂ) * (Real.cos θ + Real.sin θ * I) → θ = arg z) ∧
+    ∀ x : ℝ, x < 0 →
+      arg (x : ℂ) = π ∧
+      Tendsto arg (𝓝[{w : ℂ | 0 ≤ w.im}] (x : ℂ)) (𝓝 π) ∧
+      Tendsto arg (𝓝[{w : ℂ | w.im < 0}] (x : ℂ)) (𝓝 (-π)) := by
+  refine ⟨⟨arg_mem_Ioc z, ?_, ?_⟩, ?_⟩
+  · rw [ofReal_cos, ofReal_sin, norm_mul_cos_add_sin_mul_I]
+  · intro θ hθ h
+    have := polar_arg_real_polar (norm_pos_iff.mpr hz) hθ
+    rw [← h] at this
+    exact this.symm
+  · intro x hx
+    refine ⟨arg_ofReal_of_neg hx, ?_, ?_⟩
+    · exact tendsto_arg_nhdsWithin_im_nonneg_of_re_neg_of_im_zero (by simpa using hx) (by simp)
+    · exact tendsto_arg_nhdsWithin_im_neg_of_re_neg_of_im_zero (by simpa using hx) (by simp)
+
+/-- Arguments add only up to whole turns: for nonzero z and w, arg(zw) is arg z + arg w plus
+some whole number k of full turns, 2πk. -/
+theorem arg_of_product_up_to_whole_turns (z w : ℂ) (hz : z ≠ 0) (hw : w ≠ 0) :
+    ∃ k : ℤ, arg (z * w) = arg z + arg w + 2 * π * k := by
+  have h := arg_mul_coe_angle hz hw
+  rw [← Real.Angle.coe_add, Real.Angle.angle_eq_iff_two_pi_dvd_sub] at h
+  obtain ⟨k, hk⟩ := h
+  exact ⟨k, by linarith⟩
+
+-- The card's wind: 10 at 45 degrees is 5√2 + 5√2 i (the 7.071068 + 7.071068i of the card).
+example : (10 : ℂ) * (Real.cos (π / 4) + Real.sin (π / 4) * I) =
+    ((5 * Real.sqrt 2 : ℝ) : ℂ) + ((5 * Real.sqrt 2 : ℝ) : ℂ) * I := by
+  rw [Real.cos_pi_div_four, Real.sin_pi_div_four]
+  push_cast
+  ring
+-- The multiplier: 2 at 90 degrees is 2i.
+example : (2 : ℂ) * (Real.cos (π / 2) + Real.sin (π / 2) * I) = 2 * I := by
+  rw [Real.cos_pi_div_two, Real.sin_pi_div_two]
+  push_cast
+  ring
+-- Multiply in polar: 10 × 2 = 20, and 45° + 90° = 135°.
+example : ((10 : ℝ) : ℂ) * (Real.cos (π / 4) + Real.sin (π / 4) * I) *
+      (((2 : ℝ) : ℂ) * (Real.cos (π / 2) + Real.sin (π / 2) * I)) =
+    ((20 : ℝ) : ℂ) * (Real.cos (3 * π / 4) + Real.sin (3 * π / 4) * I) := by
+  rw [lengths_multiply_angles_add, show π / 4 + π / 2 = 3 * π / 4 by ring]
+  norm_num
+-- Multiply in pairs: (5√2 + 5√2 i)(2i) = -10√2 + 10√2 i, the -14.142136 + 14.142136i of the card.
+example : (((5 * Real.sqrt 2 : ℝ) : ℂ) + ((5 * Real.sqrt 2 : ℝ) : ℂ) * I) * (2 * I) =
+    ((-10 * Real.sqrt 2 : ℝ) : ℂ) + ((10 * Real.sqrt 2 : ℝ) : ℂ) * I := by
+  push_cast
+  ring_nf
+  rw [I_sq]
+  ring
+-- The product has length 20 and principal argument 135°, that is 3π/4.
+example : ‖((-10 * Real.sqrt 2 : ℝ) : ℂ) + ((10 * Real.sqrt 2 : ℝ) : ℂ) * I‖ = 20 ∧
+    arg (((-10 * Real.sqrt 2 : ℝ) : ℂ) + ((10 * Real.sqrt 2 : ℝ) : ℂ) * I) = 3 * π / 4 := by
+  have e : ((-10 * Real.sqrt 2 : ℝ) : ℂ) + ((10 * Real.sqrt 2 : ℝ) : ℂ) * I =
+      ((20 : ℝ) : ℂ) * (Real.cos (3 * π / 4) + Real.sin (3 * π / 4) * I) := by
+    rw [polar_cos_three_pi_div_four, polar_sin_three_pi_div_four]
+    push_cast
+    ring
+  rw [e]
+  refine ⟨?_, polar_arg_real_polar (by norm_num) ⟨by linarith [Real.pi_pos], by linarith [Real.pi_pos]⟩⟩
+  rw [norm_mul, ofReal_cos, ofReal_sin, norm_cos_add_sin_mul_I]
+  simp
+-- Turn once more by i: 135° + 90° = 225° is past π, so the principal argument is -135°, k = -1.
+example : arg ((((-10 * Real.sqrt 2 : ℝ) : ℂ) + ((10 * Real.sqrt 2 : ℝ) : ℂ) * I) * I) =
+    3 * π / 4 + π / 2 + 2 * π * (-1) := by
+  have e : (((-10 * Real.sqrt 2 : ℝ) : ℂ) + ((10 * Real.sqrt 2 : ℝ) : ℂ) * I) * I =
+      ((20 : ℝ) : ℂ) * (Real.cos (-(3 * π / 4)) + Real.sin (-(3 * π / 4)) * I) := by
+    rw [Real.cos_neg, Real.sin_neg, polar_cos_three_pi_div_four, polar_sin_three_pi_div_four]
+    push_cast
+    ring_nf
+    rw [I_sq]
+    ring
+  rw [e, polar_arg_real_polar (by norm_num) ⟨by linarith [Real.pi_pos], by linarith [Real.pi_pos]⟩]
+  ring
+-- The south-west wind -1 - i sits at -135°, not 225°.
+example : arg (-1 - I) = -(3 * π / 4) := by
+  have h2 : Real.sqrt 2 * Real.sqrt 2 = 2 := Real.mul_self_sqrt (by norm_num)
+  have e : (-1 - I : ℂ) =
+      ((Real.sqrt 2 : ℝ) : ℂ) * (Real.cos (-(3 * π / 4)) + Real.sin (-(3 * π / 4)) * I) := by
+    rw [Real.cos_neg, Real.sin_neg, polar_cos_three_pi_div_four, polar_sin_three_pi_div_four]
+    have h2c : ((Real.sqrt 2 : ℝ) : ℂ) * ((Real.sqrt 2 : ℝ) : ℂ) = 2 := by
+      rw [← ofReal_mul, h2]; norm_num
+    push_cast
+    linear_combination ((1:ℂ)/2 + I/2) * h2c
+  rw [e]
+  exact polar_arg_real_polar (by positivity) ⟨by linarith [Real.pi_pos], by linarith [Real.pi_pos]⟩
+-- The drone at 3 + 4i has length 5.
+example : ‖(3 : ℂ) + 4 * I‖ = 5 := by
+  rw [Complex.norm_def, Complex.normSq_apply]
+  simp
+  rw [show (3 * 3 + 4 * 4 : ℝ) = 5 ^ 2 by norm_num]
+  exact Real.sqrt_sq (by norm_num)
+-- Sitting on the cut: -5 has argument π, and -π is not in the range.
+example : arg (-5 : ℂ) = π ∧ -π ∉ Set.Ioc (-π) π := by
+  refine ⟨?_, by simp⟩
+  have := arg_ofReal_of_neg (show (-5 : ℝ) < 0 by norm_num)
+  simpa using this
+
+#print axioms polar_cos_three_pi_div_four
+#print axioms polar_sin_three_pi_div_four
+#print axioms polar_arg_real_polar
+#print axioms lengths_multiply_angles_add
+#print axioms principal_argument_unique_and_jumps_on_negative_axis
+#print axioms arg_of_product_up_to_whole_turns
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'polar_cos_three_pi_div_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polar_sin_three_pi_div_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polar_arg_real_polar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lengths_multiply_angles_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'principal_argument_unique_and_jumps_on_negative_axis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arg_of_product_up_to_whole_turns' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -330,7 +513,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Alternating current.** A voltage is an amplitude and a phase, a length and an angle; an impedance scales and shifts it: Phasors.
+- **Alternating current.** A voltage is an amplitude and a phase, a length and an angle; an impedance scales and shifts it: [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md).
 - **Programming.** Mainstream languages ship atan2, the principal argument up to that signed zero; robot and game headings wrap at its jump.
 - **Rotating images.** Turning a picture multiplies every pixel's position by a number of length 1 at the turning angle.
 - **Powers and roots.** Each repeated multiplication adds the angle again, which locates every root of a number: [Powers and roots](05-powers-roots-and-roots-of-unity.md).
@@ -351,6 +534,8 @@ The two outputs match line for line.
 
 - [Euler's formula](04-eulers-formula.md): writes cos θ + i sin θ as an exponential, so adding angles becomes adding exponents.
 - [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md): amplitude and phase of a current, multiplied by impedances.
+
+Left open: angles add when numbers multiply, just as exponents add when powers multiply; is cos θ + i sin θ a power, with θ in the exponent?
 
 ---
 

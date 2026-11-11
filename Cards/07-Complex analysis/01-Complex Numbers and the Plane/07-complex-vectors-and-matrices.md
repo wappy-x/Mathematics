@@ -26,7 +26,7 @@ To scale, 60 units per 1; each panel is a copy of the complex plane. Solid arrow
 
 ## The formula
 
-Notation first, in words. A complex vector is a column of complex numbers. Its **transpose**, $v^T$, is the same entries as a row. Its **conjugate transpose**, $v^*$, read "v-star", is that row with every entry conjugated. For a matrix, $A^T$ swaps rows for columns, and $A^*$ also conjugates every entry.
+Notation first, in words. A complex vector is a column of complex numbers. Its **transpose**, $v^T$, is the same entries as a row. Its **conjugate transpose**, $v^*$, read "v-star", is that row with every entry conjugated. For a matrix, $A^T$ swaps rows for columns, and $A^*$ also conjugates every entry. A bar, $\bar z$, is the conjugate of a number z, and $\lvert z\rvert$ is its modulus: its distance from 0.
 
 $$v^* w = \sum_{j=1}^{n} \bar v_j\, w_j, \qquad \lVert v\rVert = \sqrt{v^* v} = \sqrt{\lvert v_1\rvert^2 + \dots + \lvert v_n\rvert^2}$$
 
@@ -88,7 +88,7 @@ If $U v = \lambda v$ with v non-zero, lengths give $\lvert\lambda\rvert\,\lVert 
 
 $R$ is real, so $R^* = R^T$ = `[[0, 1], [-1, 0]]`, and $R^* R = I$: $R$ is unitary, and by Step 4 its eigenvalues have modulus 1.
 
-An eigenvalue makes the determinant of $R - \lambda I$ zero. Trace 0 and determinant 1 give $\lambda^2 + 1 = 0$, discriminant −4, so $\lambda = \pm i$ ([Powers and roots](05-powers-roots-and-roots-of-unity.md)).
+An eigenvalue makes the determinant of $R - \lambda I$ zero. Trace 0 (the sum of the diagonal entries) and determinant 1 give $\lambda^2 + 1 = 0$, discriminant −4, so $\lambda = \pm i$ ([Powers and roots](05-powers-roots-and-roots-of-unity.md)).
 
 A second road needs no quadratic. Four quarter turns are no turn, $R^4 = I$, so $\lambda^4 = 1$: a fourth root of unity, 1, i, −1 or −i. The top row of $R v = \lambda v$ makes the second entry −λ times the first, so test (1, −λ) for each. Only i and −i pass. For $\lambda = i$ the vector is (1, −i), and $R$(1, −i) = (i, 1) = i(1, −i), as drawn above.
 
@@ -334,6 +334,171 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three rules for complex columns and square matrices of every size, and checks the card's worked numbers exactly.
+
+- With v_j = a_j + b_j i, v* v equals the real number a_1^2 + b_1^2 + … + a_n^2 + b_n^2.
+- That sum is positive whenever v is not the zero vector.
+- If H is Hermitian and H v = λ v with v non-zero, then λ is a real number.
+- If U* U = I, then (U x)* (U x) = x* x for every column x: U keeps lengths.
+- For v = (1, i), the plain square v^T v is 0 and v* v is 2.
+- The four real squares of v, 1, 0, 0 and 1, add to 2.
+- For w = (1, −i), w* v = 0, while the plain w^T v = 2.
+- R(1, −i) = (i, 1) = i(1, −i), and R(1, i) = −i(1, i).
+- R* R = I, R is not Hermitian, and four quarter turns are no turn: R^4 = I.
+- For every real t, det(R − tI) = t^2 + 1.
+- 2I − iR equals H = `[[2, i], [-i, 2]]`; H is Hermitian, with H w = 3w and H v = v.
+- S = `[[0, i], [i, 0]]` equals its plain transpose but is not Hermitian, and S(1, 1) = i(1, 1).
+- For the drone pair x = (3 + 4i, 1 + 2i), x* x = 30; R x = (−1 − 2i, 3 + 4i), with squared length 30 too.
+
+The decimals, the two roads to R's eigenvalues, H's eigenvalue ratios and the figure's positions are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 128 lines</summary>
+
+```lean
+-- Complex vectors and matrices: with the first vector conjugated, a complex column's squared length is a sum of real squares and is positive unless the column is zero, a Hermitian matrix has only real eigenvalues, and a matrix with U* U = I keeps every length; the card's quarter turn, its eigenvectors and its Hermitian partner are checked exactly.
+import Mathlib.LinearAlgebra.Matrix.Hermitian
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Basic.Complex.BigOperators
+
+open Matrix Complex
+
+/-- Helper: the conjugated square of a complex column is the real sum of squares, positive
+unless the column is zero. -/
+theorem cvm_star_dot_self_aux (n : ℕ) (v : Fin n → ℂ) :
+    star v ⬝ᵥ v = ((∑ j, ((v j).re ^ 2 + (v j).im ^ 2) : ℝ) : ℂ) ∧
+      (v ≠ 0 → 0 < ∑ j, ((v j).re ^ 2 + (v j).im ^ 2)) := by
+  refine ⟨?_, ?_⟩
+  · rw [dotProduct, Complex.ofReal_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    apply Complex.ext <;> simp [Pi.star_apply, pow_two]; ring
+  · intro hv
+    obtain ⟨j, hj⟩ : ∃ j, v j ≠ 0 := by
+      by_contra h
+      push Not at h
+      exact hv (funext h)
+    apply Finset.sum_pos' (fun i _ => by positivity)
+    refine ⟨j, Finset.mem_univ _, ?_⟩
+    have := Complex.normSq_pos.mpr hj
+    rw [Complex.normSq_apply] at this
+    nlinarith
+
+/-- Hermitian matrices have real eigenvalues. Let `H` be a square complex matrix of any size `n`
+that equals its own conjugate transpose (`H* = H`). If `H v = λ v` for a non-zero complex column
+`v`, then the eigenvalue `λ` is a real number: its imaginary part is 0. -/
+theorem hermitian_eigenvalues_are_real (n : ℕ) (H : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian)
+    (lam : ℂ) (v : Fin n → ℂ) (hv : v ≠ 0) (heig : H *ᵥ v = lam • v) :
+    lam.im = 0 := by
+  obtain ⟨hs, hpos⟩ := cvm_star_dot_self_aux n v
+  have hne : star v ⬝ᵥ v ≠ 0 := by
+    rw [hs]; exact_mod_cast (hpos hv).ne'
+  have h1 : star v ⬝ᵥ (H *ᵥ v) = lam * (star v ⬝ᵥ v) := by
+    rw [heig, dotProduct_smul, smul_eq_mul]
+  have h2 : star v ⬝ᵥ (H *ᵥ v) = star lam * (star v ⬝ᵥ v) := by
+    rw [dotProduct_mulVec, ← hH.eq, ← star_mulVec, heig, star_smul, smul_dotProduct,
+      smul_eq_mul]
+  have h3 : lam = star lam := mul_right_cancel₀ hne (h1.symm.trans h2)
+  have := congrArg Complex.im h3
+  simp at this
+  linarith
+
+/-- Lengths that cannot vanish. For a complex column `v` with entries `v_j = a_j + b_j i`, the
+conjugated dot product `v* v` (conjugate each entry of the first copy, multiply, add) equals the real
+number `a_1² + b_1² + ... + a_n² + b_n²`, and that number is positive whenever `v` is not zero. -/
+theorem conjugate_dot_self_is_sum_of_squares (n : ℕ) (v : Fin n → ℂ) :
+    star v ⬝ᵥ v = ((∑ j, ((v j).re ^ 2 + (v j).im ^ 2) : ℝ) : ℂ) ∧
+      (v ≠ 0 → 0 < ∑ j, ((v j).re ^ 2 + (v j).im ^ 2)) := by
+  exact cvm_star_dot_self_aux n v
+
+/-- Unitary matrices keep lengths. If a square complex matrix `U` of any size satisfies `U* U = I`,
+then for every complex column `x`, the squared length of `U x` equals that of `x`:
+`(U x)* (U x) = x* x`. -/
+theorem unitary_keeps_length (n : ℕ) (U : Matrix (Fin n) (Fin n) ℂ) (hU : Uᴴ * U = 1)
+    (x : Fin n → ℂ) :
+    star (U *ᵥ x) ⬝ᵥ (U *ᵥ x) = star x ⬝ᵥ x := by
+  rw [star_mulVec, ← dotProduct_mulVec, mulVec_mulVec, hU, one_mulVec]
+
+/-! The card's worked numbers, checked exactly. R is the quarter turn, v = (1, i), w = (1, -i),
+H = 2I - iR, S the complex symmetric look-alike, x the drone pair (3 + 4i, 1 + 2i). -/
+
+-- plain square of v = (1, i) is 0; the conjugated square is 2
+example : (![1, I] : Fin 2 → ℂ) ⬝ᵥ ![1, I] = 0 := by
+  simp [dotProduct, Fin.sum_univ_two]
+example : star (![1, I] : Fin 2 → ℂ) ⬝ᵥ ![1, I] = 2 := by
+  simp [dotProduct, Fin.sum_univ_two]; norm_num
+-- four real squares for v: 1 + 0 + 0 + 1 = 2
+example : (1 : ℤ) ^ 2 + 0 ^ 2 + 0 ^ 2 + 1 ^ 2 = 2 := by decide
+-- w = (1, -i) and v = (1, i) are perpendicular: w* v = 0, while the plain w^T v = 2
+example : star (![1, -I] : Fin 2 → ℂ) ⬝ᵥ ![1, I] = 0 := by
+  simp [dotProduct, Fin.sum_univ_two]
+example : (![1, -I] : Fin 2 → ℂ) ⬝ᵥ ![1, I] = 2 := by
+  simp [dotProduct, Fin.sum_univ_two]; norm_num
+-- R (1, -i) = (i, 1) = i (1, -i), and R (1, i) = -i (1, i)
+example : (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ ![1, -I] = ![I, 1] := by
+  ext k; fin_cases k <;> simp [mulVec, dotProduct, Fin.sum_univ_two]
+example : (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ ![1, -I] = I • ![1, -I] := by
+  ext k; fin_cases k <;> simp [mulVec, dotProduct, Fin.sum_univ_two]
+example : (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ ![1, I] = (-I) • ![1, I] := by
+  ext k; fin_cases k <;> simp [mulVec, dotProduct, Fin.sum_univ_two]
+-- R is unitary: R* R = I; R is not Hermitian; four quarter turns are no turn
+example : (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ)ᴴ * !![0, -1; 1, 0] = 1 := by
+  rw [eta_fin_two (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ)ᴴ, mul_fin_two, one_fin_two]; simp
+example : ¬ (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ).IsHermitian := by
+  intro h
+  have := congrFun (congrFun h 0) 1
+  norm_num [conjTranspose_apply] at this
+example : (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ) ^ 4 = 1 := by decide
+-- no real eigenvalue for R: det(R - tI) = t^2 + 1, never below 1
+example (t : ℝ) : (!![0 - t, -1; 1, 0 - t] : Matrix (Fin 2) (Fin 2) ℝ).det = t ^ 2 + 1 := by
+  simp [det_fin_two]; ring
+-- H = 2I - iR = [[2, i], [-i, 2]] is Hermitian, with H w = 3 w and H v = 1 v
+example : (2 : Matrix (Fin 2) (Fin 2) ℂ) - I • !![0, -1; 1, 0] = !![2, I; -I, 2] := by
+  rw [ofNat_fin_two]; ext i j; fin_cases i <;> fin_cases j <;> simp
+example : (!![2, I; -I, 2] : Matrix (Fin 2) (Fin 2) ℂ).IsHermitian := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [conjTranspose_apply]
+example : (!![2, I; -I, 2] : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ ![1, -I] = (3 : ℂ) • ![1, -I] := by
+  ext k; fin_cases k <;> simp [mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+example : (!![2, I; -I, 2] : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ ![1, I] = (1 : ℂ) • ![1, I] := by
+  ext k; fin_cases k <;> simp [mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+-- S = [[0, i], [i, 0]] equals its transpose but is not Hermitian, and has the eigenvalue i on (1, 1)
+example : (!![0, I; I, 0] : Matrix (Fin 2) (Fin 2) ℂ)ᵀ = !![0, I; I, 0] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp
+example : ¬ (!![0, I; I, 0] : Matrix (Fin 2) (Fin 2) ℂ).IsHermitian := by
+  intro h
+  have := congrFun (congrFun h 0) 1
+  simp [conjTranspose_apply] at this
+  have := congrArg Complex.im this
+  norm_num at this
+example : (!![0, I; I, 0] : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ ![1, 1] = I • ![1, 1] := by
+  ext k; fin_cases k <;> simp [mulVec, dotProduct, Fin.sum_univ_two]
+-- the drone pair x = (3 + 4i, 1 + 2i): x* x = 25 + 5 = 30; R x = (-1 - 2i, 3 + 4i), squared length 5 + 25 = 30
+example : star (![3 + 4 * I, 1 + 2 * I] : Fin 2 → ℂ) ⬝ᵥ ![3 + 4 * I, 1 + 2 * I] = 30 := by
+  simp [dotProduct, Fin.sum_univ_two, map_ofNat]; ring_nf; simp [I_sq]; norm_num
+example : (!![0, -1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ ![3 + 4 * I, 1 + 2 * I]
+    = ![-1 - 2 * I, 3 + 4 * I] := by
+  ext k; fin_cases k <;> simp [mulVec, dotProduct, Fin.sum_univ_two]; ring
+example : star (![-1 - 2 * I, 3 + 4 * I] : Fin 2 → ℂ) ⬝ᵥ ![-1 - 2 * I, 3 + 4 * I] = 30 := by
+  simp [dotProduct, Fin.sum_univ_two, map_ofNat]; ring_nf; simp [I_sq]; norm_num
+
+#print axioms cvm_star_dot_self_aux
+#print axioms hermitian_eigenvalues_are_real
+#print axioms conjugate_dot_self_is_sum_of_squares
+#print axioms unitary_keeps_length
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cvm_star_dot_self_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hermitian_eigenvalues_are_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'conjugate_dot_self_is_sum_of_squares' depends on axioms: [propext, Classical.choice, Quot.sound]
+'unitary_keeps_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -356,7 +521,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Quantum computing.** A qubit's state is a complex vector of length 1; its gates are unitary, so probabilities keep adding to 1 (Qubits).
-- **Measurement in physics.** Measurable quantities are Hermitian matrices, so their readings, the eigenvalues, are real (States as vectors).
+- **Measurement in physics.** Measurable quantities are Hermitian matrices, so their readings, the eigenvalues, are real ([States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md)).
 - **Signals and audio.** The scaled discrete Fourier transform is unitary, so a signal's energy is unchanged ([The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)).
 
 > **Say it back**
@@ -380,13 +545,15 @@ The two outputs match line for line.
 - C-star algebras: the star turned into an axiom.
 - Qubits: unit complex vectors as quantum states.
 
+The question this card leaves open: what does the star become when a vector has infinitely many coordinates?
+
 ---
 
 ## Sources
 
-Verified 28 Sep 2026: each page below names the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Strang, Gilbert. "Lecture 26: Complex matrices; fast Fourier transform." MIT OpenCourseWare 18.06, Spring 2010. [Lecture page](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/resources/lecture-26-complex-matrices-fast-fourier-transform/). The (1, i) length problem.
-- Strang, Gilbert. *Introduction to Linear Algebra*, 6th ed. Wellesley-Cambridge Press, 2023. [Book page](https://math.mit.edu/~gs/linearalgebra/ila6/indexila6.html). Complex vectors, Hermitian and unitary matrices.
-- Axler, Sheldon. *Linear Algebra Done Right*, 4th ed. Springer, open access. [Book page](https://linear.axler.net/). Adjoints and the complex spectral theorem, proved.
+- Strang, Gilbert. *Introduction to Linear Algebra*, 6th ed. Wellesley-Cambridge Press, 2023. [Publisher page](https://wellesleycambridge.com/books/introduction-to-linear-algebra-6th-edition). Complex vectors, Hermitian and unitary matrices.
+- Axler, Sheldon. *Linear Algebra Done Right*, 4th ed. Springer, open access. [Publisher page](https://link.springer.com/book/10.1007/978-3-031-41026-0). Adjoints and the complex spectral theorem, proved.
 - Horn, Roger A., and Charles R. Johnson. *Matrix Analysis*. Cambridge University Press. [Publisher page](https://www.cambridge.org/core/books/matrix-analysis/9CF2CB491C9E97948B15FAD835EF9A8B). The standard reference for both families.

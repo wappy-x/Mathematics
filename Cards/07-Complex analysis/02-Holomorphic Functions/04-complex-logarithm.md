@@ -42,7 +42,8 @@ $$\operatorname{Log}(zw) = \operatorname{Log} z + \operatorname{Log} w + 2\pi i 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $w$ | points in the plane; two factors | −1 and −1 | — |
+| $z$, $w$ | points in the plane; two factors. In $e^w$, w = u + iv is an exponent | −1 and −1 | — |
+| $x$, $y$ | real and imaginary parts of z, so z = x + iy | −1 and 0 | — |
 | $u$, $v$ | real and imaginary parts of a logarithm | 0 and π | u stretches, v turns |
 | $\lvert z\rvert$, $\ln$ | length of z; the real natural log | 1; ln 1 = 0 | real part grows |
 | $\arg z$, $\operatorname{Arg} z$ | any angle of z; the one in (−π, π] | π, 3π, −π; π | — |
@@ -105,7 +106,7 @@ At z = i, Log i = 1.570796i, and the slope quotients with a real step and an ima
 <details>
 <summary>Detailed proof: the Cauchy-Riemann check</summary>
 
-Off the cut write z = x + iy. Log has real part U = (1/2) ln(x^2 + y^2) and imaginary part V, the principal angle, a smooth function with tan V = y/x (or cot V = x/y where x = 0).
+Off the cut write z = x + iy. Log has real part U = (1/2) ln(x^2 + y^2) and imaginary part V, the principal angle. V is a smooth function with tan V = y/x (or cot V = x/y where x = 0).
 
 Differentiating: $U_x = x/\lvert z\rvert^2$, $U_y = y/\lvert z\rvert^2$, $V_x = -y/\lvert z\rvert^2$, $V_y = x/\lvert z\rvert^2$.
 
@@ -139,7 +140,7 @@ A second road to Log: it is the one antiderivative of 1/z on the cut plane that 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Angle by atan(y/x) at −1 + 0.001i | −0.001000i, not 3.140593i | atan cannot tell z from −z; atan2 reads both signs |
+| Angle by atan(y/x) at −1 + 0.001i | −0.001000i, not 3.140593i | atan, the arctangent of y/x alone, cannot tell z from −z; atan2 reads the signs of x and y |
 | Log(zw) = Log z + Log w at z = w = −1 | 6.283185i, not 0 | The angles summed past π |
 | Slope of Log at −1, from below, step 0.001 | 6282.185308 | Log jumps 6.281185 across the cut |
 
@@ -149,7 +150,7 @@ Both checks print all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the logarithms of −1. Road one is the formula, with atan2 for the angle. Road two drives the ramp from 1, adding each small step over the mean position, and never calls atan2; its error at half a turn falls from 0.026096 with 10 steps to 0.000258 with 100 and 0.000003 with 1000. Four asserts compare the two roads, each floor's exponential with −1, the slopes at i with 1/i, and the slip with one circuit.
+Two roads to the logarithms of −1. Road one is the formula, with atan2 for the angle. Road two drives the ramp from 1, adding each small step over the mean position, and never calls atan2. Its error at half a turn falls from 0.026096 with 10 steps to 0.000258 with 100 and 0.000003 with 1000. Four asserts compare the two roads, each floor's exponential with −1, the slopes at i with 1/i, and the slip with one circuit.
 
 ### Python
 
@@ -333,6 +334,135 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's three facts for every nonzero z and w, and the worked values for z = −1 and z = i exactly.
+
+- Every nonzero z has exactly the logarithms ln|z| + i(Arg z + 2πk), one for each whole number k. So it has infinitely many.
+- Exactly one of them has its angle in (−π, π], and it is Log z.
+- Off the negative real axis, and away from 0, Log has derivative 1/z.
+- For nonzero z and w, Log(zw) = Log z + Log w + 2πiN, with N one of −1, 0, 1.
+- When Arg z + Arg w lies in (−π, π], N = 0, so Log(zw) = Log z + Log w exactly.
+- The worked values hold: −iπ, iπ and 3iπ are logarithms of −1, Log(−1) = iπ, and Log i = iπ/2.
+- The slip holds: Log 1 = 0 and 2 Log(−1) = 2πi, so N = −1. Also Log(e^(3iπ)) is iπ, not 3iπ.
+
+The ramp sums, the jump at the cut, the slope quotients, the atan mistake and the figures are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 99 lines</summary>
+
+```lean
+-- The complex logarithm: every nonzero z has the logarithms ln|z| + i(Arg z + 2πk), one per whole number k, the one with angle in (−π, π] is Log z, Log has derivative 1/z off the negative real axis, and Log(zw) = Log z + Log w + 2πiN with N in {−1, 0, 1}.
+import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+
+open Complex Real
+
+/-- Every nonzero z has infinitely many logarithms (solutions w of e^w = z): exactly the numbers
+ln|z| + i(Arg z + 2πk), one for each whole number k. The one whose imaginary part (its angle) lies
+in (−π, π] is the principal logarithm Log z. -/
+theorem logarithms_of_nonzero (z : ℂ) (hz : z ≠ 0) :
+    {w : ℂ | exp w = z} =
+        Set.range (fun k : ℤ => (Real.log ‖z‖ : ℂ) + ((arg z : ℂ) + 2 * π * k) * I) ∧
+      {w : ℂ | exp w = z}.Infinite ∧
+      ∀ w : ℂ, (exp w = z ∧ w.im ∈ Set.Ioc (-π) π) ↔ w = Complex.log z := by
+  have hset : {w : ℂ | exp w = z} =
+        Set.range (fun k : ℤ => (Real.log ‖z‖ : ℂ) + ((arg z : ℂ) + 2 * π * k) * I) := by
+    ext w
+    simp only [Set.mem_ofPred_eq, Set.mem_range]
+    conv_lhs => rw [← exp_log hz, exp_eq_exp_iff_exists_int]
+    constructor
+    · rintro ⟨n, hn⟩
+      refine ⟨n, ?_⟩
+      rw [hn, Complex.log]
+      ring
+    · rintro ⟨n, hn⟩
+      refine ⟨n, ?_⟩
+      rw [← hn, Complex.log]
+      ring
+  refine ⟨hset, ?_, ?_⟩
+  · rw [hset]
+    apply Set.infinite_range_of_injective
+    intro a b hab
+    have h := congrArg Complex.im hab
+    simpa [Real.pi_ne_zero] using h
+  · intro w
+    constructor
+    · rintro ⟨hw, h1, h2⟩
+      rw [← hw, log_exp h1 h2]
+    · rintro rfl
+      exact ⟨exp_log hz, by rw [log_im]; exact neg_pi_lt_arg z, by rw [log_im]; exact arg_le_pi z⟩
+
+/-- Off the negative real axis (and off 0), the principal logarithm Log has complex derivative 1/z. -/
+theorem log_hasDerivAt_inv_off_cut (z : ℂ) (hz : 0 < z.re ∨ z.im ≠ 0) :
+    HasDerivAt Complex.log z⁻¹ z := by
+  exact hasDerivAt_log (mem_slitPlane_iff.mpr hz)
+
+/-- For nonzero z and w, Log(zw) = Log z + Log w + 2πiN for some N in {−1, 0, 1}; and when
+Arg z + Arg w stays in (−π, π], N = 0, so Log(zw) = Log z + Log w exactly. -/
+theorem log_mul_up_to_full_turn (z w : ℂ) (hz : z ≠ 0) (hw : w ≠ 0) :
+    (∃ N : ℤ, N ∈ ({-1, 0, 1} : Set ℤ) ∧ Complex.log (z * w) = Complex.log z + Complex.log w + 2 * π * I * N) ∧
+      (arg z + arg w ∈ Set.Ioc (-π) π → Complex.log (z * w) = Complex.log z + Complex.log w) := by
+  refine ⟨?_, fun h => log_mul hz hw h⟩
+  have he : exp (Complex.log (z * w)) = exp (Complex.log z + Complex.log w) := by
+    rw [Complex.exp_add, exp_log hz, exp_log hw, exp_log (mul_ne_zero hz hw)]
+  obtain ⟨n, hn⟩ := exp_eq_exp_iff_exists_int.mp he
+  refine ⟨n, ?_, by rw [hn]; ring⟩
+  have him := congrArg Complex.im hn
+  simp only [add_im, log_im, mul_im, intCast_re, intCast_im, mul_re, ofReal_re, ofReal_im,
+    re_ofNat, im_ofNat, I_re, I_im] at him
+  have a1 := neg_pi_lt_arg z
+  have a2 := arg_le_pi z
+  have a3 := neg_pi_lt_arg w
+  have a4 := arg_le_pi w
+  have a5 := neg_pi_lt_arg (z * w)
+  have a6 := arg_le_pi (z * w)
+  have hp := Real.pi_pos
+  have hlt : (n : ℝ) < 2 := by nlinarith
+  have hgt : (-2 : ℝ) < n := by nlinarith
+  have h1 : n < 2 := by exact_mod_cast hlt
+  have h2 : -2 < n := by exact_mod_cast hgt
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
+  omega
+
+-- The floors k = −1, 0, 1 for z = −1: −iπ, iπ, 3iπ are all logarithms of −1.
+example : exp (-(π * I)) = -1 ∧ exp (π * I) = -1 ∧ exp (3 * π * I) = -1 := by
+  refine ⟨?_, exp_pi_mul_I, ?_⟩
+  · rw [Complex.exp_neg, exp_pi_mul_I]; norm_num
+  · have : 3 * π * I = π * I + (1 : ℤ) * (2 * π * I) := by push_cast; ring
+    rw [this, Complex.exp_add, exp_int_mul_two_pi_mul_I, exp_pi_mul_I, mul_one]
+
+-- The ground floor: Log(−1) = iπ.
+example : Complex.log (-1) = π * I := by exact log_neg_one
+
+-- The slip: Log((−1)(−1)) = Log 1 = 0, yet 2 Log(−1) = 2πi, so N = −1.
+example : Complex.log ((-1) * (-1)) = 0 ∧ 2 * Complex.log (-1) = 2 * π * I ∧
+    Complex.log ((-1) * (-1)) = Complex.log (-1) + Complex.log (-1) + 2 * π * I * (-1 : ℤ) := by
+  refine ⟨by norm_num, by rw [log_neg_one]; ring, ?_⟩
+  rw [log_neg_one]; norm_num; ring
+
+-- Log i = iπ/2.
+example : Complex.log I = π / 2 * I := by exact log_I
+
+-- Log(e^(3iπ)) is iπ, not 3iπ.
+example : Complex.log (exp (3 * π * I)) = π * I := by
+  have : 3 * π * I = π * I + (1 : ℤ) * (2 * π * I) := by push_cast; ring
+  rw [this, Complex.exp_add, exp_int_mul_two_pi_mul_I, exp_pi_mul_I, mul_one, log_neg_one]
+
+#print axioms logarithms_of_nonzero
+#print axioms log_hasDerivAt_inv_off_cut
+#print axioms log_mul_up_to_full_turn
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'logarithms_of_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_hasDerivAt_inv_off_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_mul_up_to_full_turn' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

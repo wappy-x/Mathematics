@@ -350,6 +350,100 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Euler's formula for every real angle, the series and the addition law for all complex numbers, and the card's exact values.
+
+- For every angle θ in radians, the series at iθ adds up to cos θ + i sin θ, a point at distance 1 from 0.
+- For every complex z, the series 1 + z + z^2/2! + ⋯ converges, and its sum is e^z.
+- Exponents add, for all complex z and w: e^(z + w) = e^z e^w.
+- For all real x and y, e^(x + iy) = e^x (cos y + i sin y): the real part sets the length, the imaginary part the direction.
+- Half turn: e^(iπ) + 1 = 0.
+- Stretch, then turn: e^(ln 2 + iπ/2) = 2i, and adding one more full turn, 2πi, still gives 2i.
+- A full turn returns the arrow: e^(2πi) = 1.
+
+The A440 decimals, the compounding road, the cut-off series, the mistake table and the figures are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 63 lines</summary>
+
+```lean
+-- Euler's formula: for every real angle θ the exponential power series at iθ adds up to cos θ + i sin θ, a point at distance 1 from 0; the series converges at every complex number, exponents add, and e^(x + iy) = e^x (cos y + i sin y).
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.Normed.Algebra.Exponential
+import Mathlib.Analysis.SpecialFunctions.Exponential
+
+open Complex
+
+/-- Helper: e^(ln 2 + iπ/2) = 2i. -/
+theorem exp_log_two_add_pi_div_two_mul_I :
+    Complex.exp ((Real.log 2 : ℂ) + (Real.pi / 2 : ℂ) * I) = 2 * I := by
+  rw [Complex.exp_add_mul_I, ← Complex.ofReal_exp, Real.exp_log two_pos]
+  have h : (Real.pi : ℂ) / 2 = ((Real.pi / 2 : ℝ) : ℂ) := by push_cast; ring
+  rw [h, ← Complex.ofReal_cos, ← Complex.ofReal_sin, Real.cos_pi_div_two, Real.sin_pi_div_two]
+  push_cast; ring
+
+/-- **Euler's formula.** For every real angle θ (in radians), the exponential power series
+1 + iθ + (iθ)^2/2! + (iθ)^3/3! + ⋯ converges, and its sum, e^(iθ), is cos θ + i sin θ: the point
+at angle θ on the circle of radius 1. That point is at distance exactly 1 from 0. -/
+theorem exp_series_at_I_mul_angle_eq_cos_add_I_sin (θ : ℝ) :
+    HasSum (fun n : ℕ => ((θ : ℂ) * I) ^ n / (n.factorial : ℂ))
+        ((Real.cos θ : ℂ) + (Real.sin θ : ℂ) * I) ∧
+      ‖(Real.cos θ : ℂ) + (Real.sin θ : ℂ) * I‖ = 1 := by
+  constructor
+  · have h := NormedSpace.expSeries_div_hasSum_exp ((θ : ℂ) * I)
+    rw [← Complex.exp_eq_exp_ℂ] at h
+    rwa [Complex.exp_mul_I, ← Complex.ofReal_cos, ← Complex.ofReal_sin] at h
+  · rw [Complex.ofReal_cos, Complex.ofReal_sin]
+    exact Complex.norm_cos_add_sin_mul_I θ
+
+/-- **The series converges for every complex exponent.** For every complex number z, the power
+series 1 + z + z^2/2! + z^3/3! + ⋯ converges, and its sum is the complex exponential e^z
+(Mathlib's `Complex.exp`). So `Complex.exp` is the card's e^z, defined by the series. -/
+theorem exp_series_converges_to_exp (z : ℂ) :
+    HasSum (fun n : ℕ => z ^ n / (n.factorial : ℂ)) (Complex.exp z) := by
+  rw [Complex.exp_eq_exp_ℂ]
+  exact NormedSpace.expSeries_div_hasSum_exp z
+
+/-- **Exponents add, so a real part stretches.** For all complex z and w,
+e^(z + w) = e^z · e^w. In particular, for all real x and y, e^(x + iy) = e^x (cos y + i sin y):
+the real part of the exponent sets the length e^x, the imaginary part sets the angle y. -/
+theorem exp_add_and_exp_real_add_I_mul :
+    (∀ z w : ℂ, Complex.exp (z + w) = Complex.exp z * Complex.exp w) ∧
+      ∀ x y : ℝ, Complex.exp ((x : ℂ) + (y : ℂ) * I) =
+        (Real.exp x : ℂ) * ((Real.cos y : ℂ) + (Real.sin y : ℂ) * I) := by
+  refine ⟨fun z w => Complex.exp_add z w, fun x y => ?_⟩
+  rw [Complex.exp_add_mul_I, ← Complex.ofReal_exp, ← Complex.ofReal_cos, ← Complex.ofReal_sin]
+
+-- The card's exact worked values.
+-- Half turn (Euler's identity): e^(iπ) + 1 = 0.
+example : Complex.exp ((Real.pi : ℂ) * I) + 1 = 0 := by rw [Complex.exp_pi_mul_I]; ring
+-- Stretch, then turn: e^(ln 2 + iπ/2) = 2i.
+example : Complex.exp ((Real.log 2 : ℂ) + (Real.pi / 2 : ℂ) * I) = 2 * I := by exact exp_log_two_add_pi_div_two_mul_I
+-- One more full turn changes nothing: e^(ln 2 + iπ/2 + 2πi) = 2i.
+example : Complex.exp ((Real.log 2 : ℂ) + (Real.pi / 2 : ℂ) * I + 2 * (Real.pi : ℂ) * I) = 2 * I := by
+  rw [Complex.exp_add, Complex.exp_two_pi_mul_I, mul_one, exp_log_two_add_pi_div_two_mul_I]
+-- A full turn returns the arrow: e^(2πi) = 1.
+example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_pi_mul_I
+
+#print axioms exp_log_two_add_pi_div_two_mul_I
+#print axioms exp_series_at_I_mul_angle_eq_cos_add_I_sin
+#print axioms exp_series_converges_to_exp
+#print axioms exp_add_and_exp_real_add_I_mul
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'exp_log_two_add_pi_div_two_mul_I' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_series_at_I_mul_angle_eq_cos_add_I_sin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_series_converges_to_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_add_and_exp_real_add_I_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -375,7 +469,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Sound synthesis.** A tone is computed as a spinning arrow and played as its shadow.
-- **AC circuits.** Voltages swinging at one frequency become fixed arrows, called phasors, and impedance, a part's opposition to current, becomes multiplication: Phasors.
+- **AC circuits.** Voltages swinging at one frequency become fixed arrows, called phasors, and impedance, a part's opposition to current, becomes multiplication: [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md).
 - **Frequency analysis.** Fourier series write a repeating signal as a sum of spinning arrows: [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md).
 
 > **Say it back**
@@ -404,11 +498,13 @@ The two outputs match line for line.
 - [Bode plots](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): stretch and turn per frequency.
 - [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md): circuits with fixed arrows.
 
+Left open: exponents 2πi apart give the same point, so which exponent should undo it?
+
 ---
 
 ## Sources
 
-Verified 28 Sep 2026: every link below opens a page naming the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euler, Leonhard. *Introductio in analysin infinitorum*, volume 1, 1748. [Euler Archive, E101](https://scholarlycommons.pacific.edu/euler-works/101/). Chapter 8 derives the formula.
 - Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 1: power series and $e^z$.

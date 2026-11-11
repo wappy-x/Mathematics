@@ -86,7 +86,7 @@ $$\frac{1 + 2i}{3 + 4i} = \frac{(1 + 2i)(3 - 4i)}{(3 + 4i)(3 - 4i)} = \frac{3 - 
 
 The bottom is now real. With $p = 1$ this gives the reciprocal, $1/z = \bar z / \lvert z\rvert^2$: for the drone, 0.12 − 0.16i.
 
-A second road skips the conjugate. Ask which $x + iy$ gives $(3 + 4i)(x + iy) = 1 + 2i$. Matching parts gives two real equations, $3x - 4y = 1$ and $4x + 3y = 2$, solved by $x = 11/25$, $y = 2/25$. The 25 reappears as their determinant, 3 × 3 + 4 × 4: the conjugate solves the pair in one move.
+A second road skips the conjugate. Ask which $x + iy$ gives $(3 + 4i)(x + iy) = 1 + 2i$. Matching parts gives two real equations, $3x - 4y = 1$ and $4x + 3y = 2$, solved by $x = 11/25$, $y = 2/25$. The 25 reappears as their determinant, 3 × 3 + 4 × 4, the number both answers are divided by ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The conjugate solves the pair in one move.
 
 ### Step 4: lengths multiply
 
@@ -102,7 +102,9 @@ By Step 1:
 
 $$\lvert z + w\rvert^2 = (z + w)(\bar z + \bar w) = \lvert z\rvert^2 + \lvert w\rvert^2 + 2\,\mathrm{Re}(z\,\bar w)$$
 
-The middle terms, $z\bar w$ and $\bar z w$, are mirror images, so by Step 2 they add to twice the real part. A real part never exceeds the length, $a \le \sqrt{a^2 + b^2}$, so $\mathrm{Re}(z\bar w) \le \lvert z\bar w\rvert = \lvert z\rvert\,\lvert w\rvert$, by Step 4 and because the flip keeps length. The right side is then at most $(\lvert z\rvert + \lvert w\rvert)^2$; square roots give the triangle inequality. Drone plus beacon: $\lvert z + p\rvert$ ≈ 7.211103, under 5 + $\sqrt 5$ ≈ 7.236068. The second drone gives equality, $\lvert w\rvert = \lvert z\rvert + \lvert w - z\rvert$, 10 = 5 + 5: depot and drones share one line.
+The middle terms, $z\bar w$ and $\bar z w$, are mirror images, so by Step 2 they add to twice the real part. A real part never exceeds the length, $a \le \sqrt{a^2 + b^2}$, so $\mathrm{Re}(z\bar w) \le \lvert z\bar w\rvert = \lvert z\rvert\,\lvert w\rvert$, by Step 4 and because the flip keeps length. The right side is then at most $(\lvert z\rvert + \lvert w\rvert)^2$; square roots give the triangle inequality.
+
+Drone plus beacon: $\lvert z + p\rvert$ ≈ 7.211103, under 5 + $\sqrt 5$ ≈ 7.236068. The second drone gives equality, $\lvert w\rvert = \lvert z\rvert + \lvert w - z\rvert$, 10 = 5 + 5: depot and drones share one line.
 
 Applied to $z = (z - w) + w$, the same rule gives the **reverse triangle inequality**, $\bigl\lvert \lvert z\rvert - \lvert w\rvert \bigr\rvert \le \lvert z - w\rvert$: two distances from 0 differ by at most the distance between the points.
 
@@ -111,7 +113,7 @@ Applied to $z = (z - w) + w$, the same rule gives the **reverse triangle inequal
 
 **When the triangle inequality is an equality.** Equality needs $\mathrm{Re}(z\bar w) = \lvert z\bar w\rvert$, so $z\bar w$ is real and non-negative. For $w \ne 0$, $z/w = z\bar w / \lvert w\rvert^2$ is then a non-negative real number: $z$ is $w$ stretched, pointing the same way.
 
-**The modulus is the longest shadow.** The shadow of $z = a + bi$ on the direction at angle $t$ radians from east, how far $z$ reaches that way, is $a\cos t + b\sin t = \mathrm{Re}(z\,\overline{u})$, with $u = \cos t + i\sin t$ of length 1. By Step 5 it is at most $\lvert z\rvert$, and $u = z / \lvert z\rvert$ reaches it. So $\lvert z\rvert$ is the largest shadow, found by a search over $t$ with no square root.
+**The modulus is the longest shadow.** The shadow of $z = a + bi$ on the direction at angle $t$ radians from east is how far $z$ reaches that way. It is $a\cos t + b\sin t = \mathrm{Re}(z\,\overline{u})$, with $u = \cos t + i\sin t$ of length 1. By Step 5 it is at most $\lvert z\rvert$, and $u = z / \lvert z\rvert$ reaches it. So $\lvert z\rvert$ is the largest shadow, found by a search over $t$ with no square root.
 
 </details>
 
@@ -338,6 +340,140 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's rules for every complex number, and the division rule for every nonzero bottom.
+
+- For any $z = a + bi$, the conjugate $\bar z$ is $a - bi$, and $z\,\bar z$ is the real number $a^2 + b^2$.
+- The modulus $\lvert z\rvert$ is $\sqrt{a^2 + b^2}$, so $z\,\bar z$ is $\lvert z\rvert^2$, the squared distance from 0.
+- To divide $p$ by a nonzero $z$, multiply by $\bar z$ and divide by the real number $\lvert z\rvert^2$.
+- Lengths multiply: $\lvert z w\rvert = \lvert z\rvert\,\lvert w\rvert$.
+- The triangle inequality holds: $\lvert z + w\rvert \le \lvert z\rvert + \lvert w\rvert$.
+- The reverse triangle inequality holds: two distances from 0 differ by at most the distance between the points.
+- The drone times its flip is exactly 25, and the drone is exactly 5 km out.
+- The beacon times the flip is 11 + 2i, the quotient is (11 + 2i)/25, and the reciprocal is (3 − 4i)/25.
+- The drones are 5 km apart, the second drone is 10 = 5 + 5 km out, and the mirror is 8 km away.
+- The drone times the beacon is exactly −5 + 10i.
+
+The decimals, the longest shadow, the two-equation road and the mistakes table are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 101 lines</summary>
+
+```lean
+-- Conjugate and modulus: a complex number times its conjugate is its squared length, which gives the modulus, division by a nonzero number, and the product and triangle rules for lengths.
+import Mathlib.Analysis.Complex.Norm
+
+open Complex ComplexConjugate
+
+/-- For every complex number z = a + bi, the conjugate z-bar = a - bi flips the sign of the
+imaginary part, z times z-bar is the real number a² + b², the modulus |z| is √(a² + b²),
+and so z times z-bar is |z|², the squared distance from 0 to z. -/
+theorem mul_conj_eq_sq_modulus (z : ℂ) :
+    conj z = (z.re : ℂ) - (z.im : ℂ) * I ∧
+    z * conj z = ((z.re ^ 2 + z.im ^ 2 : ℝ) : ℂ) ∧
+    ‖z‖ = Real.sqrt (z.re ^ 2 + z.im ^ 2) ∧
+    z * conj z = ((‖z‖ ^ 2 : ℝ) : ℂ) := by
+  refine ⟨?_, ?_, Complex.norm_eq_sqrt_sq_add_sq z, ?_⟩
+  · apply Complex.ext <;> simp
+  · rw [Complex.mul_conj, Complex.normSq_apply]; push_cast; ring
+  · rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
+
+/-- To divide p by a nonzero complex number z, multiply by z-bar and divide by the real
+number |z|²: p / z = p z-bar / |z|². -/
+theorem div_eq_mul_conj_div_sq_modulus (p z : ℂ) (hz : z ≠ 0) :
+    p / z = p * conj z / ((‖z‖ ^ 2 : ℝ) : ℂ) := by
+  have h : ((‖z‖ ^ 2 : ℝ) : ℂ) = z * conj z := by
+    rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
+  have hc : conj z ≠ 0 := by simpa using hz
+  rw [h]; field_simp
+
+/-- Lengths multiply, |zw| = |z||w|; the length of a sum is at most the sum of the lengths,
+|z + w| ≤ |z| + |w| (the triangle inequality); and two distances from 0 differ by at most
+the distance between the points, ||z| - |w|| ≤ |z - w| (the reverse triangle inequality). -/
+theorem modulus_mul_and_triangle (z w : ℂ) :
+    ‖z * w‖ = ‖z‖ * ‖w‖ ∧
+    ‖z + w‖ ≤ ‖z‖ + ‖w‖ ∧
+    |‖z‖ - ‖w‖| ≤ ‖z - w‖ := by
+  exact ⟨Complex.norm_mul z w, norm_add_le z w, abs_norm_sub_norm_le z w⟩
+
+-- The drone times its flip: (3 + 4i)(3 - 4i) = 25.
+example : ((3 : ℂ) + 4 * I) * conj ((3 : ℂ) + 4 * I) = 25 := by
+  apply Complex.ext <;> simp <;> norm_num
+
+-- The drone is 5 km from the depot: |3 + 4i| = 5.
+example : ‖(3 : ℂ) + 4 * I‖ = 5 := by
+  rw [Complex.norm_eq_sqrt_sq_add_sq]
+  simp
+  rw [show (3:ℝ) ^ 2 + 4 ^ 2 = 5 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+
+-- The beacon times the flip: (1 + 2i)(3 - 4i) = 11 + 2i.
+example : ((1 : ℂ) + 2 * I) * conj ((3 : ℂ) + 4 * I) = 11 + 2 * I := by
+  apply Complex.ext <;> simp <;> norm_num
+
+-- The quotient: (1 + 2i)/(3 + 4i) = (11 + 2i)/25.
+example : ((1 : ℂ) + 2 * I) / ((3 : ℂ) + 4 * I) = (11 + 2 * I) / 25 := by
+  have h : (3 : ℂ) + 4 * I ≠ 0 := by
+    intro h; have := congrArg Complex.re h; simp at this
+  rw [div_eq_div_iff h (by norm_num)]
+  apply Complex.ext <;> simp <;> norm_num
+
+-- The reciprocal: 1/(3 + 4i) = (3 - 4i)/25.
+example : (1 : ℂ) / ((3 : ℂ) + 4 * I) = (3 - 4 * I) / 25 := by
+  have h : (3 : ℂ) + 4 * I ≠ 0 := by
+    intro h; have := congrArg Complex.re h; simp at this
+  rw [div_eq_div_iff h (by norm_num)]
+  apply Complex.ext <;> simp <;> norm_num
+
+-- Distance between the drones: |(6 + 8i) - (3 + 4i)| = 5.
+example : ‖((6 : ℂ) + 8 * I) - ((3 : ℂ) + 4 * I)‖ = 5 := by
+  rw [Complex.norm_eq_sqrt_sq_add_sq]
+  simp
+  norm_num
+  rw [show (25:ℝ) = 5 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+
+-- The second drone is 10 km out, so the triangle inequality is an equality: 10 = 5 + 5.
+example : ‖(6 : ℂ) + 8 * I‖ = ‖(3 : ℂ) + 4 * I‖ + ‖((6 : ℂ) + 8 * I) - ((3 : ℂ) + 4 * I)‖ := by
+  have h1 : ‖(3 : ℂ) + 4 * I‖ = 5 := by
+    rw [Complex.norm_eq_sqrt_sq_add_sq]
+    simp
+    rw [show (3:ℝ) ^ 2 + 4 ^ 2 = 5 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  have h2 : ‖((6 : ℂ) + 8 * I) - ((3 : ℂ) + 4 * I)‖ = 5 := by
+    rw [Complex.norm_eq_sqrt_sq_add_sq]
+    simp
+    norm_num
+    rw [show (25:ℝ) = 5 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  have h3 : ‖(6 : ℂ) + 8 * I‖ = 10 := by
+    rw [Complex.norm_eq_sqrt_sq_add_sq]
+    simp
+    rw [show (6:ℝ) ^ 2 + 8 ^ 2 = 10 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  rw [h1, h2, h3]; norm_num
+
+-- Mirror to drone: (3 + 4i) - (3 - 4i) = 8i, a distance of 8 km.
+example : ‖((3 : ℂ) + 4 * I) - conj ((3 : ℂ) + 4 * I)‖ = 8 := by
+  rw [Complex.norm_eq_sqrt_sq_add_sq]
+  simp
+  norm_num
+
+-- Drone times beacon: (3 + 4i)(1 + 2i) = -5 + 10i.
+example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
+  apply Complex.ext <;> simp <;> norm_num
+
+#print axioms mul_conj_eq_sq_modulus
+#print axioms div_eq_mul_conj_div_sq_modulus
+#print axioms modulus_mul_and_triangle
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mul_conj_eq_sq_modulus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'div_eq_mul_conj_div_sq_modulus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'modulus_mul_and_triangle' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -360,7 +496,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Navigation and mapping.** Planar positions stored as complex numbers are compared by $\lvert w - z\rvert$, the drone arithmetic here.
-- **Electrical engineering.** An alternating current is written as a complex number whose modulus is its amplitude; dividing a voltage by a complex impedance uses Step 3's conjugate trick.
+- **Electrical engineering.** An alternating current is written as a complex number whose modulus is its amplitude; dividing a voltage by a complex impedance, a part's opposition to current, uses Step 3's conjugate trick.
 - **Complex vectors.** The squared length of a list of complex numbers adds $z\bar z$ over the entries, the starting point of [Complex vectors and matrices](07-complex-vectors-and-matrices.md).
 
 > **Say it back**
@@ -378,6 +514,8 @@ The two outputs match line for line.
 
 - [Polar form](03-polar-form-and-argument.md): the modulus becomes the r of polar form, joined by an angle.
 - [Complex vectors and matrices](07-complex-vectors-and-matrices.md): the conjugate gives a complex vector its length.
+
+Left open: multiplying by $w$ stretches every length by $\lvert w\rvert$, but how does it turn the arrow?
 
 ---
 

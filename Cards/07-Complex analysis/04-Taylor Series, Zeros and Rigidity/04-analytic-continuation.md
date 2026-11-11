@@ -20,13 +20,13 @@ The sum describes a function only where it settles; the formula 1/r describes th
 
 <p align="center"><img src="../figures/analytic-continuation.svg" alt="A chain of five discs walking the geometric series from the unit disc, round the pole at 1, to the negative-rate point T just right of it" width="420"></p>
 
-To scale: 100 units per 1, 0 at (110, 135). Centres 0, 0.5 + 0.5i, 1 + 0.4i, 1.2 + 0.1i and 1.02; the pole at (210.0, 135.0); T = 1.005025, the discount factor at −0.5%, at (210.5, 135.0). Shaded: where the sum settles.
+To scale: 100 units per 1, 0 at (110, 135). Centres 0, 0.5 + 0.5i, 1 + 0.4i, 1.2 + 0.1i and 1.02; the pole, the point 1 where 1/(1 − z) grows without bound, at (210.0, 135.0); T = 1.005025, the discount factor at −0.5%, at (210.5, 135.0). Shaded: where the sum settles, the unit disc of points less than 1 from 0.
 
 ---
 
 ## The formula
 
-Notation first, in words. The discount factor is $z = 1/(1+r)$, with $r$ the annual rate; below, $z$ may be any complex number. The sign Σ means "add up" over the terms its limits name. **Holomorphic** means having a complex derivative at every point of a region.
+Notation first, in words. The discount factor is $z = 1/(1+r)$, with $r$ the annual rate; below, $z$ may be any complex number. $|z|$ is the distance from $z$ to 0. The sign Σ means "add up" over the terms its limits name. **Holomorphic** means having a complex derivative at every point of a region.
 
 $$P = \sum_{n=1}^{\infty} z^n = \frac{z}{1-z} = \frac{1}{r} \qquad \text{when } |z| < 1$$
 
@@ -66,7 +66,7 @@ $$f,\ g \text{ holomorphic on a connected open } U,\ \ f = g \text{ on a set pil
 
 ### Step 0: a holomorphic function is rigid
 
-A holomorphic function equals its Taylor series on any disc inside its region ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). Values on a small patch fix the derivatives, the derivatives fix the disc, and overlapping discs cross a connected region.
+A holomorphic function equals its Taylor series, the power series built from its derivatives at the disc's centre, on any disc inside its region ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). Values on a small patch fix the derivatives, the derivatives fix the disc, and overlapping discs cross a connected region.
 
 ### Step 1: the sum and the formula agree on the unit disc
 
@@ -83,17 +83,25 @@ Let $g$ be any holomorphic function on $U$ that agrees with the sum on the unit 
 <details>
 <summary>Detailed proof</summary>
 
-Let h = f − g, and A the points of $U$ where h and all its derivatives vanish. A is open: there h's Taylor series is 0. Its complement is open: a non-zero derivative stays non-zero nearby. A connected set cannot split into two disjoint non-empty open pieces, and A holds the unit disc, so A is all of $U$. If h vanished only on points piling up at q, a first non-zero Taylor coefficient at q would make q an isolated zero; so every coefficient is 0 and q is in A.
+Let h = f − g, and A the points of $U$ where h and all its derivatives vanish. A is open: there h's Taylor series is 0. Its complement is open: a non-zero derivative stays non-zero nearby. A connected set cannot split into two disjoint non-empty open pieces, and A holds the unit disc, so A is all of $U$.
+
+If h vanished only on points piling up at q, a first non-zero Taylor coefficient at q would make q an isolated zero. So every coefficient is 0 and q is in A.
 
 </details>
 
 ### Step 4: walking forward along a chain of discs
 
-Usually no ready-made formula exists, and the continuation is built by walking. The sum's termwise derivative, 1 + 2z + 3z^2 + …, is also the sum times itself, so f′ = f^2 on the unit disc, and by Step 3 wherever $f$ goes. Differentiating again, f″ = 2f f′ = 2f^3; in general the k-th derivative is k! times the (k+1)-th power of f. So at a centre $c$ with value $v$ the Taylor coefficients are v, v^2, v^3, …:
+Usually no ready-made formula exists, and the continuation is built by walking. The sum's termwise derivative, 1 + 2z + 3z^2 + …, is also the sum times itself, so f′ = f^2 on the unit disc, and by Step 3 wherever $f$ goes.
+
+Differentiating again, f″ = 2f f′ = 2f^3; in general the k-th derivative is k! times the (k+1)-th power of f. So at a centre $c$ with value $v$ the Taylor coefficients are v, v^2, v^3, …:
 
 $$f(z) = \sum_{k=0}^{\infty} v^{k+1} (z - c)^k, \qquad |z - c| < 1/|v|$$
 
-One number fixes the local series, which settles on a disc of radius 1/|v|. The walk carries it: sum the current series at the next centre to get the next v. From v = 1 at 0 it hands on 1 + i at 0.5 + 0.5i, 2.5i at 1 + 0.4i, −4 + 2i at 1.2 + 0.1i, and −50 at 1.02. That disc, radius 0.020000, holds T with ratio 0.748744 and gives f(T) = −199, so P = −200, without ever using 1/(1 − z). Every step's ratio, distance over radius, stays below 1. Any route round 1 lands on the same value, because 1/(1 − z) is one function on $U$; for the logarithm, one lap round 0 adds 2πi, so in general a walk's result can depend on its route.
+One number fixes the local series, which settles on a disc of radius 1/|v|. The walk carries it: sum the current series at the next centre to get the next v.
+
+From v = 1 at 0 it hands on 1 + i at 0.5 + 0.5i, 2.5i at 1 + 0.4i, −4 + 2i at 1.2 + 0.1i, and −50 at 1.02. That disc, radius 0.020000, holds T with ratio 0.748744 and gives f(T) = −199, so P = −200, without ever using 1/(1 − z). Every step's ratio, distance over radius, stays below 1.
+
+Any route round 1 lands on the same value, because 1/(1 − z) is one function on $U$. For the logarithm, one lap round 0 adds 2πi, so in general a walk's result can depend on its route.
 
 ### Step 5: what −200 is, and is not
 
@@ -101,7 +109,11 @@ The first N payments at −0.5% add to exactly (1 − z^N)/r = −200 + 200 z^N:
 
 ### Step 6: the same reading of −1/12
 
-The zeta function ζ(s) is the sum 1 + 1/2^s + 1/3^s + …, which settles only for s greater than 1 (for complex s, real part greater than 1). It continues uniquely to every s except 1, with value −1/12 at s = −1. There the sum would be 1 + 2 + 3 + …, which reaches 5050 by 100 terms and keeps growing. So "1 + 2 + 3 + … = −1/12" names ζ's continued value, as −200 names 1/r. Smoothing shows Step 5's split: weight the n-th term by e^(−nt) for small $t$; the total is a growing 1/t^2, plus −1/12, plus vanishing terms. At t = 0.01 the total minus 1/t^2 is −0.083333.
+The zeta function ζ(s) is the sum 1 + 1/2^s + 1/3^s + …, which settles only for s greater than 1 (for complex s, real part greater than 1). It continues uniquely to every s except 1, with value −1/12 at s = −1.
+
+There the sum would be 1 + 2 + 3 + …, which reaches 5050 by 100 terms and keeps growing. So "1 + 2 + 3 + … = −1/12" names ζ's continued value, as −200 names 1/r.
+
+Smoothing shows Step 5's split: weight the n-th term by e^(−nt) for small $t$; the total is a growing 1/t^2, plus −1/12, plus vanishing terms. At t = 0.01 the total minus 1/t^2 is −0.083333.
 
 Another route, Schwarz reflection, mirrors a function real on part of the real axis across it.
 
@@ -305,6 +317,184 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the identity theorem for every connected open region, and that 1/(1 − z) and 1/r are the only continuations.
+
+- Two holomorphic functions on a connected open region agree everywhere on it if they agree on a set piling up at a point inside.
+- The plane without the point 1 is connected.
+- 1/(1 − z) is holomorphic on the plane without 1, and equals the sum 1 + z + z^2 + … on the unit disc.
+- Any holomorphic function on the plane without 1 that matches the sum on the unit disc is 1/(1 − z) there.
+- The discount factors of positive rates fill the segment from 0 to 1, and pile up at 0.5 inside it.
+- Let g be holomorphic on the plane without 1, and match the perpetuity sum at every positive rate. Then g gives 1/r at every rate except 0 and −100%.
+- The by-hand numbers: 20 at 5%, −200 at −0.5%, f(T) = −199, each v along the chain, 21 for the mistake, and 5050.
+
+Payment sums, the walk's series sums, the rival formula, the −1/12 smoothing and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 146 lines</summary>
+
+```lean
+-- Analytic continuation: two holomorphic functions on a connected open region that agree on a set piling up at a point of the region agree on all of it, so 1/(1 - z) is the only continuation of the geometric series and 1/r the only continuation of the perpetuity price to negative rates.
+import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.Analytic.IsolatedZeros
+import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum
+import Mathlib.Analysis.Normed.Module.Connected
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+
+open Set Filter Topology
+
+/-- The plane without the point 1 is connected. -/
+theorem ac_compl_one_isConnected : IsConnected ({1}ᶜ : Set ℂ) :=
+  isConnected_compl_singleton_of_one_lt_rank (Complex.rank_real_complex ▸ Nat.one_lt_ofNat) _
+
+/-- The points of the real interval (0, 1) pile up at 1/2 in the complex plane. -/
+theorem ac_accPt_half :
+    AccPt ((1 / 2 : ℝ) : ℂ) (𝓟 ((fun x : ℝ => (x : ℂ)) '' Ioo (0 : ℝ) 1)) := by
+  rw [accPt_iff_frequently_nhdsNE]
+  have hT : Tendsto (fun x : ℝ => (x : ℂ)) (𝓝[≠] (1 / 2 : ℝ)) (𝓝[≠] ((1 / 2 : ℝ) : ℂ)) := by
+    apply Complex.continuous_ofReal.continuousWithinAt.tendsto_nhdsWithin
+    intro x hx h
+    exact hx (Complex.ofReal_injective h)
+  have hev : ∀ᶠ x in 𝓝[≠] (1 / 2 : ℝ), x ∈ Ioo (0 : ℝ) 1 :=
+    nhdsWithin_le_nhds (Ioo_mem_nhds (by norm_num) (by norm_num))
+  exact hT.frequently (hev.frequently.mono fun x hx => mem_image_of_mem _ hx)
+
+#print axioms ac_compl_one_isConnected
+#print axioms ac_accPt_half
+
+/-- The identity theorem, the card's main claim. Let f and g be holomorphic (complex
+differentiable at every point) on a connected open region U. If f = g on a set S that piles up
+at a point z₀ of U (every disc round z₀ holds a point of S other than z₀), then f = g on all of
+U. So a function given on a small patch has at most one holomorphic extension to a larger
+connected region. -/
+theorem analytic_continuation_unique {U S : Set ℂ} {f g : ℂ → ℂ} {z₀ : ℂ}
+    (hU : IsOpen U) (hconn : IsConnected U)
+    (hf : DifferentiableOn ℂ f U) (hg : DifferentiableOn ℂ g U)
+    (hfg : EqOn f g S) (hz₀ : z₀ ∈ U) (hacc : AccPt z₀ (𝓟 S)) :
+    EqOn f g U := by
+  have hfa := hf.analyticOnNhd hU
+  have hga := hg.analyticOnNhd hU
+  refine hfa.eqOn_of_preconnected_of_frequently_eq hga hconn.isPreconnected hz₀ ?_
+  exact (accPt_iff_frequently_nhdsNE.mp hacc).mono fun z hz => hfg hz
+
+/-- The geometric series 1 + z + z^2 + ... settles only on the unit disc, but 1/(1 - z) is
+holomorphic on the plane without the point 1, agrees with the sum on the unit disc, and is the
+only holomorphic function on the plane without 1 that does. -/
+theorem geometric_series_unique_continuation :
+    DifferentiableOn ℂ (fun z : ℂ => (1 - z)⁻¹) {1}ᶜ ∧
+    (∀ z : ℂ, ‖z‖ < 1 → ∑' n : ℕ, z ^ n = (1 - z)⁻¹) ∧
+    ∀ g : ℂ → ℂ, DifferentiableOn ℂ g {1}ᶜ →
+      (∀ z : ℂ, ‖z‖ < 1 → g z = ∑' n : ℕ, z ^ n) →
+      ∀ z : ℂ, z ≠ 1 → g z = (1 - z)⁻¹ := by
+  have hd : DifferentiableOn ℂ (fun z : ℂ => (1 - z)⁻¹) {1}ᶜ := by
+    intro z hz
+    apply DifferentiableAt.differentiableWithinAt
+    apply DifferentiableAt.inv ((differentiableAt_const _).sub differentiableAt_id)
+    intro h
+    exact hz (by simpa using (sub_eq_zero.mp h).symm)
+  refine ⟨hd, fun z hz => tsum_geometric_of_norm_lt_one hz, ?_⟩
+  intro g hg hgs z hz
+  have hopen : IsOpen ({1}ᶜ : Set ℂ) := isOpen_compl_singleton
+  have hacc : AccPt (0 : ℂ) (𝓟 (Metric.ball (0 : ℂ) 1)) := by
+    rw [accPt_iff_frequently_nhdsNE]
+    have hev : ∀ᶠ y in 𝓝[≠] (0 : ℂ), y ∈ Metric.ball (0 : ℂ) 1 :=
+      nhdsWithin_le_nhds (Metric.ball_mem_nhds (0 : ℂ) one_pos)
+    exact hev.frequently
+  have hEq : EqOn g (fun z : ℂ => (1 - z)⁻¹) (Metric.ball (0 : ℂ) 1) := by
+    intro w hw
+    have hw' : ‖w‖ < 1 := by simpa using hw
+    rw [hgs w hw', tsum_geometric_of_norm_lt_one hw']
+  exact analytic_continuation_unique hopen ac_compl_one_isConnected hg hd hEq
+    (by simp) hacc hz
+
+/-- Positive rates alone fix the perpetuity price everywhere. If g is holomorphic in the discount
+factor z on the plane without 1, and at every positive rate r it equals the perpetuity sum
+z + z^2 + z^3 + ... at z = 1/(1 + r), then at every rate r other than 0 and -100% the
+continued price g(1/(1 + r)) is 1/r. At -0.5% that is -200. -/
+theorem perpetuity_continuation_eq_inv_rate (g : ℂ → ℂ) (hg : DifferentiableOn ℂ g {1}ᶜ)
+    (hsum : ∀ r : ℝ, 0 < r → g (1 / (1 + (r : ℂ))) = ∑' n : ℕ, (1 / (1 + (r : ℂ))) ^ (n + 1))
+    (r : ℝ) (hr : r ≠ 0) (hr1 : 1 + r ≠ 0) :
+    g (1 / (1 + (r : ℂ))) = 1 / (r : ℂ) := by
+  have hopen : IsOpen ({1}ᶜ : Set ℂ) := isOpen_compl_singleton
+  have hd : DifferentiableOn ℂ (fun z : ℂ => z * (1 - z)⁻¹) {1}ᶜ := by
+    intro z hz
+    apply DifferentiableAt.differentiableWithinAt
+    apply differentiableAt_id.mul
+    apply DifferentiableAt.inv ((differentiableAt_const _).sub differentiableAt_id)
+    intro h
+    exact hz (by simpa using (sub_eq_zero.mp h).symm)
+  have hEq : EqOn g (fun z : ℂ => z * (1 - z)⁻¹) ((fun x : ℝ => (x : ℂ)) '' Ioo (0 : ℝ) 1) := by
+    rintro _ ⟨x, ⟨hx0, hx1⟩, rfl⟩
+    have hr : 0 < 1 / x - 1 := by
+      rw [sub_pos, lt_div_iff₀ hx0]; linarith
+    have key : (1 / (1 + (((1 / x - 1 : ℝ)) : ℂ))) = (x : ℂ) := by
+      have hx0' : (x : ℂ) ≠ 0 := by exact_mod_cast hx0.ne'
+      push_cast
+      field_simp
+      ring
+    have h := hsum (1 / x - 1) hr
+    rw [key] at h
+    rw [h]
+    have hn : ‖(x : ℂ)‖ < 1 := by
+      rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos hx0]; exact hx1
+    simp only [pow_succ']
+    rw [tsum_mul_left, tsum_geometric_of_norm_lt_one hn]
+  have hacc := ac_accPt_half
+  have hz : (1 / (1 + (r : ℂ))) ∈ ({1}ᶜ : Set ℂ) := by
+    intro h
+    simp only [mem_singleton_iff] at h
+    have h1 : (1 + (r : ℂ)) ≠ 0 := by exact_mod_cast hr1
+    rw [div_eq_one_iff_eq h1] at h
+    apply hr
+    have : (r : ℂ) = 0 := by linear_combination -h
+    exact_mod_cast this
+  rw [analytic_continuation_unique hopen ac_compl_one_isConnected hg hd hEq
+    (by norm_num) hacc hz]
+  have h1 : (1 + (r : ℂ)) ≠ 0 := by exact_mod_cast hr1
+  have h2 : (r : ℂ) ≠ 0 := by exact_mod_cast hr
+  field_simp
+  simp [h2]
+
+-- At 5%: z = 1/1.05 = 20/21, and the perpetuity price z/(1 - z) is 20, which is 1/r.
+example : (1 : ℚ) / (1 + 5 / 100) = 20 / 21 := by norm_num
+example : ((20 : ℚ) / 21) / (1 - 20 / 21) = 20 ∧ (1 : ℚ) / (5 / 100) = 20 := by norm_num
+-- At -0.5%: the continued price 1/r is -200.
+example : (1 : ℚ) / (-5 / 1000) = -200 := by norm_num
+-- f at T: 0.995 / (0.995 - 1) = -199, and P = f(T) - 1 = -200.
+example : ((995 : ℚ) / 1000) / (995 / 1000 - 1) = -199 ∧ (-199 : ℚ) - 1 = -200 := by norm_num
+-- The chain of discs by hand, v = 1/(1 - c) at each centre c.
+example : (1 - ((1 : ℂ) / 2 + (1 / 2) * Complex.I))⁻¹ = 1 + Complex.I := by
+  rw [Complex.ext_iff]; simp [Complex.inv_re, Complex.inv_im, Complex.normSq]; norm_num
+example : (1 - ((1 : ℂ) + (2 / 5) * Complex.I))⁻¹ = (5 / 2) * Complex.I := by
+  rw [Complex.ext_iff]; simp
+example : (1 - ((6 : ℂ) / 5 + (1 / 10) * Complex.I))⁻¹ = -4 + 2 * Complex.I := by
+  rw [Complex.ext_iff]; simp [Complex.inv_re, Complex.inv_im, Complex.normSq]; norm_num
+example : (1 - (102 : ℚ) / 100)⁻¹ = -50 := by norm_num
+-- The mistake: counting a payment today, 1/(1 - z) at 5% is 21, not 20.
+example : (1 - (20 : ℚ) / 21)⁻¹ = 21 := by norm_num
+-- 1 + 2 + ... + 100 = 5050.
+example : ∑ n ∈ Finset.range 101, n = 5050 := by decide
+
+#print axioms analytic_continuation_unique
+#print axioms geometric_series_unique_continuation
+#print axioms perpetuity_continuation_eq_inv_rate
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ac_compl_one_isConnected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ac_accPt_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'analytic_continuation_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'geometric_series_unique_continuation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'perpetuity_continuation_eq_inv_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -327,7 +517,7 @@ The two outputs match line for line.
 
 - **Annuities at negative rates.** N years of payments are worth (1 − z^N)/r, a finite sum valid at any rate but 0.
 - **Special functions.** The factorial, as an integral, continues uniquely: [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md).
-- **Prime numbers.** Zeros of the continued zeta function, beyond the edge of its sum, govern how evenly primes are spread: Zeta of a complex variable.
+- **Prime numbers.** Zeros of the continued zeta function, beyond the edge of its sum, govern how evenly primes are spread: [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md).
 
 > **Say it back**
 > A series may describe a function only on a disc. A holomorphic function is fixed on a connected region by any patch, so it extends in at most one way. The perpetuity sum settles for positive rates; 1/r, or a chain of discs, continues it to −200 at −0.5%. That is a value, not a sum, and so is −1/12.
@@ -336,6 +526,7 @@ The two outputs match line for line.
 
 ## What this builds on
 
+- [Taylor series in the plane](01-taylor-series-in-the-plane.md): a holomorphic function equals its power series on a disc, the fact behind Step 0 and the walk in Step 4.
 - [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): the engine of Step 3.
 - [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factor.
 
@@ -343,7 +534,7 @@ The two outputs match line for line.
 
 - [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): the factorial continued.
 - [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md): zeta continued, and −1/12 computed.
-- Zeta of a complex variable: continued zeta at work on primes.
+- [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): continued zeta at work on primes.
 - [The maximum modulus principle](05-maximum-modulus-principle.md): size peaks on the rim, from the same rigidity.
 
 Uniqueness forces a continuation once it exists; which formula carries zeta past s = 1 is the question [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md) answers.

@@ -339,6 +339,86 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the track's whole-power laps, the conjugate's lap for every radius, and the ML bound for every path of finitely many smooth pieces.
+
+- Round the unit circle, run once anticlockwise, z^n dz gives 2πi when n = −1 and 0 for every other whole number n.
+- Round a circle of radius R centred at 0, run once anticlockwise, the conjugate's lap gives 2πiR². On the unit circle that is 2πi.
+- Take a path of finitely many smooth pieces, f continuous on it, and f's size at most M everywhere on it. The integral's size is at most M times the length.
+
+The stride sums, the e^z/z^2 lap, the clockwise, joined and repeated laps, and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 54 lines</summary>
+
+```lean
+-- Contour integrals: round the unit circle the integral of z^n dz is 2πi when n = −1 and 0 for every other whole number n, the conjugate's lap round a circle of radius R is 2πiR², and along a path with finitely many smooth pieces the integral's size is at most M times the length.
+import Mathlib.MeasureTheory.Integral.CircleIntegral
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+
+open Complex MeasureTheory Set ComplexConjugate
+
+/-- Round the unit circle, run once anticlockwise, a whole power of z integrates to 2πi
+when the power is −1 (that is, 1/z) and to 0 for every other whole number n. -/
+theorem circle_integral_zpow_unit_circle (n : ℤ) :
+    (∮ z in C(0, 1), z ^ n) = if n = -1 then 2 * Real.pi * I else 0 := by
+  split_ifs with hn
+  · subst hn
+    have h := circleIntegral.integral_sub_inv_of_mem_ball (c := 0) (w := 0) (R := 1)
+      (by simp)
+    simpa using h
+  · have h := circleIntegral.integral_sub_zpow_of_ne hn 0 0 1
+    simpa using h
+
+/-- The conjugate z̄ integrated once anticlockwise round the circle of radius R centred at 0
+gives 2πiR²; on the unit circle, where z̄ = 1/z, this is 2πi. -/
+theorem circle_integral_conj (R : ℝ) :
+    (∮ z in C(0, R), conj z) = 2 * Real.pi * I * (R : ℂ) ^ 2 := by
+  unfold circleIntegral
+  have key : ∀ θ : ℝ, deriv (circleMap 0 R) θ • conj (circleMap 0 R θ) = I * (R : ℂ) ^ 2 := by
+    intro θ
+    rw [deriv_circleMap, smul_eq_mul, mul_comm (circleMap 0 R θ) I, mul_assoc, Complex.mul_conj,
+      Complex.normSq_eq_norm_sq, norm_circleMap_zero]
+    push_cast
+    rw [← Complex.ofReal_pow, sq_abs, Complex.ofReal_pow]
+  simp_rw [key]
+  rw [intervalIntegral.integral_const, sub_zero, Complex.real_smul]
+  push_cast
+  ring
+
+/-- The ML bound. A path z(t), a ≤ t ≤ b, made of finitely many smooth pieces (velocity z'
+off a finite set of corners), with f continuous on the path and |f| ≤ M everywhere on it:
+the contour integral ∫ f(z(t)) z'(t) dt has size at most M times the length ∫ |z'(t)| dt. -/
+theorem norm_contour_integral_le_ml (f : ℂ → ℂ) (z z' : ℝ → ℂ) (a b M : ℝ) (s : Finset ℝ)
+    (hab : a ≤ b) (hz : ContinuousOn z (Icc a b))
+    (hderiv : ∀ t ∈ Ioo a b \ (s : Set ℝ), HasDerivAt z (z' t) t)
+    (hz' : IntervalIntegrable z' volume a b)
+    (hf : ContinuousOn f (z '' Icc a b))
+    (hM : ∀ t ∈ Icc a b, ‖f (z t)‖ ≤ M) :
+    ‖∫ t in a..b, f (z t) * z' t‖ ≤ M * ∫ t in a..b, ‖z' t‖ := by
+  have hint : IntervalIntegrable (fun t => M * ‖z' t‖) volume a b := hz'.norm.const_mul M
+  rw [← intervalIntegral.integral_const_mul]
+  refine intervalIntegral.norm_integral_le_of_norm_le hab (Filter.Eventually.of_forall ?_) hint
+  intro t ht
+  rw [norm_mul]
+  exact mul_le_mul_of_nonneg_right (hM t (Ioc_subset_Icc_self ht)) (norm_nonneg _)
+
+#print axioms circle_integral_zpow_unit_circle
+#print axioms circle_integral_conj
+#print axioms norm_contour_integral_le_ml
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'circle_integral_zpow_unit_circle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'circle_integral_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'norm_contour_integral_le_ml' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -385,7 +465,7 @@ Round the track z gave 0 while z̄ and 1/z gave 2πi; why some functions give 0 
 
 ## Sources
 
-Verified 28 Sep 2026: every link below opens a page naming the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Orloff, Jeremy. "Topic 3: Line integrals and Cauchy's theorem." MIT OpenCourseWare 18.04, Spring 2018. [Course notes](https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic3/). Parametrised complex line integrals.
 - Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 1, section 3: integration along curves.

@@ -26,7 +26,7 @@ To scale: 35 units per unit, origin at (180, 120). Sine's zeros sit at x = 70.04
 
 ## The formula
 
-Notation first, in words. The letter $a$ names a zero, a point with f(a) = 0. The Taylor coefficients $c_k$ are the numbers in f(z) = c_0 + c_1(z − a) + c_2(z − a)^2 + …, with c_k = f^(k)(a)/k!, the k-th derivative at a over k factorial ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). A **domain** $D$ is open and connected: any two of its points join by a path inside it.
+Notation first, in words. The letter $a$ names a zero, a point with f(a) = 0. The Taylor coefficients $c_k$ are the numbers in f(z) = c_0 + c_1(z − a) + c_2(z − a)^2 + …. Each c_k = f^(k)(a)/k!, the k-th derivative at a over k factorial ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). A **domain** $D$ is open and connected: any two of its points join by a path inside it.
 
 $$f(z) = (z - a)^m\, g(z), \qquad g(a) = c_m \neq 0$$
 
@@ -50,7 +50,7 @@ $$f_1(z_n) = f_2(z_n) \text{ for all } n,\quad z_n \in D,\quad z_n \neq a,\quad 
 ### When it holds
 
 - **Holomorphic, not merely smooth.** The real bump e^(−1/x^2) for x > 0, and 0 for x ≤ 0, is zero on a half-line yet 0.018316 at 0.5.
-- **A connected domain.** A function that is 0 on one disc and 1 on a separate disc agrees with 0 on a whole disc.
+- **A connected domain.** A function that is 0 on one disc and 1 on a separate disc agrees with 0 on a whole disc, yet it is 1 at 3.
 - **The pile-up point inside D.** The zeros of sin(1/z), at 1/(kπ), crowd onto 0, outside its domain; yet sin(1/0.2) = −0.958924.
 - **Piling up, not just many.** sin z and 0 agree at points 3.141593 apart, which pile up nowhere.
 
@@ -82,7 +82,7 @@ The difference h = f_1 − f_2 is holomorphic and zero at every z_n, and by cont
 
 ### Step 4: connectedness carries the zero across the domain
 
-Join a to any point b of D by a path inside D. The path stays a fixed distance from the edge of D, so every point on it has a Taylor disc at least that wide; walk it in shorter hops. Each new stop lies in a disc where h is zero, so Step 3 applies there too. Finitely many hops reach b, so h(b) = 0 and f_1 = f_2 on all of D. Taking f_2 = 0 closes a gap in Step 1: a holomorphic f that is zero on one disc is zero on all of D, so if f is not zero everywhere, every zero has a finite order.
+Join a to any point b of D by a path inside D. The path stays a fixed distance from the edge of D, so every point on it has a Taylor disc at least that wide; walk it in shorter hops. Each new stop lies in a disc where h is zero, so Step 3 applies there too. Finitely many hops reach b, so h(b) = 0 and f_1 = f_2 on all of D. Taking f_2 = 0 closes a gap in Step 1. A holomorphic f that is zero on one disc is zero on all of D. So if f is not zero everywhere, every zero has a finite order.
 
 <details>
 <summary>Detailed proof</summary>
@@ -95,7 +95,7 @@ Join a to any point b of D by a path inside D. The path stays a fixed distance f
 
 ### Step 5: the identity sin^2 + cos^2 = 1 goes complex
 
-Let h(z) = sin^2 z + cos^2 z − 1. Sums and products of power series are power series, so h is holomorphic on the whole plane, which is connected. It is zero at every real number, including every 1/n, and 1/n closes in on 0. By Steps 3 and 4, h is zero everywhere. At 1 + 2i the two squares are 6.182117 + 12.407326i and −5.182117 − 12.407326i, and they add to 1, though sine there, 3.165779 + 1.959601i, lies far outside the unit circle: the identity is algebra between power series, not the unit circle.
+Let h(z) = sin^2 z + cos^2 z − 1. Sums and products of power series are power series, so h is holomorphic on the whole plane, which is connected. It is zero at every real number, including every 1/n, and 1/n closes in on 0. By Steps 3 and 4, h is zero everywhere. At 1 + 2i the two squares are 6.182117 + 12.407326i and −5.182117 − 12.407326i, and they add to 1. Yet sine there, 3.165779 + 1.959601i, lies far outside the unit circle. The identity is algebra between power series, not a fact about the unit circle.
 
 A direct road for this one identity: sin^2 z + cos^2 z = e^(iz) e^(−iz) = 1, from [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md).
 
@@ -325,6 +325,148 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three main facts for every holomorphic function on every domain, and checks the worked coefficients exactly.
+
+- Two holomorphic functions agreeing at points z_n ≠ a that close in on a point a inside a domain agree on all of it.
+- At a zero a of a holomorphic f, not zero everywhere on its domain, the order m is a whole number, at least 1.
+- Near that zero, f(z) = (z − a)^m g(z), with g holomorphic near a and g(a) = c_m, not zero.
+- Some small disc round that zero holds no other zero of f.
+- z^2(z − 1) = −z^2 + z^3, so the cubic's coefficients at 0 are 0, 0, −1, 1, and its order is 2.
+- Sine's coefficients at 0 are 0, 1, 0, −1/6, so its order is 1.
+- n! times the coefficient of z^n in sin^2 z + cos^2 z, for n = 0 to 10, is 1, then ten zeros.
+- sin^2 z + cos^2 z = 1 at z = 1 + 2i.
+
+The contour sums, the decimal values, Newton's method and the four broken cases are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 111 lines</summary>
+
+```lean
+-- Zeros and the identity theorem: two holomorphic functions that agree at points closing in on a point of a connected open region agree on all of it, and near a zero a holomorphic function that is not zero everywhere is (z − a)^m times a factor not zero at a, so its zeros stand apart.
+import Mathlib.Analysis.Analytic.IsolatedZeros
+import Mathlib.Analysis.Analytic.Order
+import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+
+open Complex Filter Topology Metric Finset
+
+/-- **The identity theorem.** Let D be a domain (an open, connected set of complex numbers)
+and let f₁, f₂ be holomorphic on D (complex-differentiable at every point of D). If the points
+z₁, z₂, z₃, … all lie in D, none of them equals a, they close in on a point a that lies inside D,
+and f₁(zₙ) = f₂(zₙ) for every n, then f₁ = f₂ at every point of D. -/
+theorem identity_theorem {D : Set ℂ} (hD : IsOpen D) (hDc : IsConnected D) {f₁ f₂ : ℂ → ℂ}
+    (hf₁ : DifferentiableOn ℂ f₁ D) (hf₂ : DifferentiableOn ℂ f₂ D) {a : ℂ} (ha : a ∈ D)
+    {z : ℕ → ℂ} (hzD : ∀ n, z n ∈ D) (hza : ∀ n, z n ≠ a) (hlim : Tendsto z atTop (𝓝 a))
+    (heq : ∀ n, f₁ (z n) = f₂ (z n)) :
+    Set.EqOn f₁ f₂ D := by
+  have h₁ : AnalyticOnNhd ℂ f₁ D := (analyticOnNhd_iff_differentiableOn hD).mpr hf₁
+  have h₂ : AnalyticOnNhd ℂ f₂ D := (analyticOnNhd_iff_differentiableOn hD).mpr hf₂
+  have ht : Tendsto z atTop (𝓝[≠] a) :=
+    tendsto_nhdsWithin_iff.mpr ⟨hlim, Eventually.of_forall hza⟩
+  have hfr : ∃ᶠ w in 𝓝[≠] a, f₁ w = f₂ w :=
+    ht.frequently (Frequently.of_forall heq)
+  exact h₁.eqOn_of_preconnected_of_frequently_eq h₂ hDc.isPreconnected ha hfr
+
+/-- **A zero factors out.** Let f be holomorphic on a domain D and not zero everywhere on D,
+and let a be a point of D with f(a) = 0. Then the zero has a finite order m ≥ 1: the derivatives
+f(a), f′(a), …, f^(m−1)(a) are all 0, and near a, f(z) = (z − a)^m · g(z) for a function g that
+is holomorphic near a with g(a) = f^(m)(a)/m!, the m-th Taylor coefficient c_m, and g(a) ≠ 0. -/
+theorem zero_factors_as_power_times_nonzero {D : Set ℂ} (hD : IsOpen D) (hDc : IsConnected D)
+    {f : ℂ → ℂ} (hf : DifferentiableOn ℂ f D) (hne : ∃ w ∈ D, f w ≠ 0) {a : ℂ} (ha : a ∈ D)
+    (hfa : f a = 0) :
+    ∃ m : ℕ, 0 < m ∧ (∀ k < m, iteratedDeriv k f a = 0) ∧
+      ∃ g : ℂ → ℂ, AnalyticAt ℂ g a ∧ g a = iteratedDeriv m f a / (m.factorial : ℂ) ∧
+        g a ≠ 0 ∧ ∀ᶠ z in 𝓝 a, f z = (z - a) ^ m * g z := by
+  have hA : AnalyticOnNhd ℂ f D := (analyticOnNhd_iff_differentiableOn hD).mpr hf
+  have hfa' : AnalyticAt ℂ f a := hA a ha
+  have htop : analyticOrderAt f a ≠ ⊤ := by
+    obtain ⟨w, hw, hfw⟩ := hne
+    refine hA.analyticOrderAt_ne_top_of_isPreconnected hDc.isPreconnected hw ha ?_
+    rw [(hA w hw).analyticOrderAt_eq_zero.mpr hfw]
+    exact ENat.zero_ne_top
+  set m := analyticOrderNatAt f a with hmdef
+  have hm : analyticOrderAt f a = m := (Nat.cast_analyticOrderNatAt htop).symm
+  obtain ⟨hlow, hmne⟩ := (analyticOrderAt_eq_nat_iff_iteratedDeriv_eq_zero hfa').mp hm
+  have hpos : 0 < m := by
+    rcases Nat.eq_zero_or_pos m with h | h
+    · exfalso
+      rw [h] at hmne
+      simp [hfa] at hmne
+    · exact h
+  have hf'a : AnalyticAt ℂ (fun w => f (w + a)) 0 := by
+    have hs : AnalyticAt ℂ (fun w : ℂ => w + a) 0 := by fun_prop
+    exact AnalyticAt.comp_of_eq hfa' hs (by simp)
+  obtain ⟨F, hF, hFeq⟩ := hf'a.exists_eventuallyEq_sum_add_pow_mul (m + 1)
+  have hder : ∀ i, iteratedDeriv i (fun w => f (w + a)) 0 = iteratedDeriv i f a := fun i => by
+    simp [iteratedDeriv_comp_add_const]
+  have hFa : AnalyticAt ℂ (fun z => F (z - a)) a := by
+    have hs : AnalyticAt ℂ (fun z : ℂ => z - a) a := by fun_prop
+    exact AnalyticAt.comp_of_eq hF hs (by simp)
+  refine ⟨m, hpos, hlow, fun z => iteratedDeriv m f a / (m.factorial : ℂ) + (z - a) * F (z - a),
+    ?_, ?_, ?_, ?_⟩
+  · exact analyticAt_const.add ((analyticAt_id.sub analyticAt_const).mul hFa)
+  · simp
+  · simp only [sub_self, zero_mul, add_zero]
+    exact div_ne_zero hmne (Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero m))
+  · have ht : Tendsto (fun z => z - a) (𝓝 a) (𝓝 0) := by
+      simpa using (continuous_sub_right a).tendsto a
+    filter_upwards [ht.eventually hFeq] with z hz
+    simp only [sub_add_cancel, hder, Finset.sum_range_succ, smul_eq_mul] at hz
+    have hs : ∑ x ∈ Finset.range m, (z - a) ^ x / (x.factorial : ℂ) * iteratedDeriv x f a = 0 :=
+      Finset.sum_eq_zero fun i hi => by rw [hlow i (Finset.mem_range.mp hi), mul_zero]
+    rw [hz, hs]
+    ring
+
+/-- **Zeros stand apart.** Let f be holomorphic on a domain D and not zero everywhere on D,
+and let a be a point of D with f(a) = 0. Then some small disc round a holds no other zero of f. -/
+theorem zeros_are_isolated {D : Set ℂ} (hD : IsOpen D) (hDc : IsConnected D)
+    {f : ℂ → ℂ} (hf : DifferentiableOn ℂ f D) (hne : ∃ w ∈ D, f w ≠ 0) {a : ℂ} (ha : a ∈ D)
+    (hfa : f a = 0) :
+    ∃ r > 0, ∀ z ∈ ball a r, z ≠ a → f z ≠ 0 := by
+  obtain ⟨m, hm, -, g, hg, -, hga, hfg⟩ :=
+    zero_factors_as_power_times_nonzero hD hDc hf hne ha hfa
+  have hev : ∀ᶠ z in 𝓝 a, f z = (z - a) ^ m * g z ∧ g z ≠ 0 :=
+    hfg.and (hg.continuousAt.eventually_ne hga)
+  obtain ⟨r, hr, hball⟩ := Metric.eventually_nhds_iff_ball.mp hev
+  refine ⟨r, hr, fun z hz hza => ?_⟩
+  obtain ⟨h1, h2⟩ := hball z hz
+  rw [h1]
+  exact mul_ne_zero (pow_ne_zero _ (sub_ne_zero.mpr hza)) h2
+
+-- The cubic multiplied out: z^2(z − 1) = −z^2 + z^3, so its coefficients at 0 are 0, 0, −1, 1.
+example (z : ℂ) : z ^ 2 * (z - 1) = -z ^ 2 + z ^ 3 := by ring
+-- The order is the place of the first non-zero coefficient: 2 for the cubic, not its top power 3.
+example : List.findIdx (· ≠ 0) [(0 : ℤ), 0, -1, 1] = 2 := by decide
+-- Sine's coefficients at 0 are 0, 1, 0, −1/6 (the card's −0.166667), so its zero has order 1.
+example : (List.range 4).map (fun k => if k % 2 = 0 then (0 : ℚ)
+    else (-1) ^ (k / 2) / (k.factorial : ℚ)) = [0, 1, 0, -1 / 6] := by norm_num [List.range_succ, Nat.factorial]
+example : List.findIdx (· ≠ 0) [(0 : ℚ), 1, 0, -1 / 6] = 1 := by decide
+-- n! times the coefficient of z^n in sin^2 z + cos^2 z, n = 0 to 10: 1, then ten zeros.
+example : (List.range 11).map (fun n => ∑ k ∈ range (n + 1), (Nat.choose n k : ℤ) *
+    ([0, 1, 0, -1].getD (k % 4) 0 * [0, 1, 0, -1].getD ((n - k) % 4) 0 +
+     [1, 0, -1, 0].getD (k % 4) 0 * [1, 0, -1, 0].getD ((n - k) % 4) 0)) =
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] := by decide
+-- The identity carried off the real line: sin^2 + cos^2 = 1 at 1 + 2i.
+example : Complex.sin (1 + 2 * I) ^ 2 + Complex.cos (1 + 2 * I) ^ 2 = 1 :=
+  Complex.sin_sq_add_cos_sq _
+
+#print axioms identity_theorem
+#print axioms zero_factors_as_power_times_nonzero
+#print axioms zeros_are_isolated
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'identity_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'zero_factors_as_power_times_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'zeros_are_isolated' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -346,12 +488,12 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Extending formulas.** Real identities such as sin 2z = 2 sin z cos z hold for complex z with no new proof.
-- **Special functions.** Gamma and zeta, the special functions of shelf 09, are defined on part of the plane, then extended; the identity theorem makes the extension unique ([Analytic continuation](04-analytic-continuation.md)).
+- **Special functions.** [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md) and [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md) are defined on part of the plane, then extended; the identity theorem makes the extension unique ([Analytic continuation](04-analytic-continuation.md)).
 - **Counting roots.** Isolated zeros with whole-number orders can be counted inside a loop ([The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md)).
 - **Signal processing.** A signal built from a finite band of frequencies is holomorphic in complex time, so it cannot fall silent for an interval without being silent always.
 
 > **Say it back**
-> Near a zero, a holomorphic function is (z − a) to a whole power m, the order, times a factor not zero there. So every zero stands alone in a small disc. If two holomorphic functions agree on points piling up inside a connected domain, their difference has a zero that is not alone, so it vanishes on a disc, and hopping along paths spreads that everywhere. So sin^2 z + cos^2 z = 1 holds at 1 + 2i.
+> Near a zero, a holomorphic function is (z − a) to a whole power m, the order, times a factor not zero there. So every zero stands alone in a small disc. If two holomorphic functions agree on points piling up inside a connected domain, their difference has a zero that is not alone. So the difference vanishes on a disc, and hopping along paths spreads that everywhere. So sin^2 z + cos^2 z = 1 holds at 1 + 2i.
 
 ---
 
@@ -365,7 +507,7 @@ The two outputs match line for line.
 - [The maximum modulus principle](05-maximum-modulus-principle.md): a second rigidity, no peak of the modulus inside the domain.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): a contour integral that counts zeros with their orders.
 
-A small piece now fixes the function, but only inside the domain it came with; whether the piece can be carried further, and whether the route matters, is what analytic-continuation settles.
+A small piece now fixes the function, but only inside the domain it came with. Whether the piece can be carried further, and whether the route matters, is what [Analytic continuation](04-analytic-continuation.md) settles.
 
 ---
 

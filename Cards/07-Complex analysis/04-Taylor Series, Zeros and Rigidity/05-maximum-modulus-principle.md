@@ -67,11 +67,11 @@ $$f(a) = \frac{1}{2\pi i}\oint \frac{f(\zeta)}{\zeta - a}\,d\zeta.$$
 
 Walk the circle as $\zeta = a + re^{it}$. Then $d\zeta = ire^{it}\,dt$ and $\zeta - a = re^{it}$; both cancel, leaving the mean-value form.
 
-For e^z at a = 0 and r = 1 the average is 1 = e^0. The trapezoid sum with 4 points misses by 0.041691470, with 8 points by 0.000024802, with 16 by less than 0.000000001.
+For e^z at a = 0 and r = 1 the average is 1 = e^0. The trapezoid sum, the plain average of f at n equally spaced points on the circle, misses with 4 points by 0.041691470, with 8 points by 0.000024802, with 16 by less than 0.000000001.
 
 ### Step 2: the modulus at the centre is at most the average modulus
 
-By the triangle inequality summed round the circle, the modulus of an average is at most the average modulus, which is at most the largest:
+The triangle inequality says the modulus of a sum is at most the sum of the moduli. Summed round the circle, the modulus of an average is at most the average modulus, which is at most the largest:
 
 $$\lvert f(a)\rvert \le \frac{1}{2\pi}\int_0^{2\pi} \lvert f(a + re^{it})\rvert\,dt \le \max_{t} \lvert f(a + re^{it})\rvert.$$
 
@@ -96,7 +96,7 @@ The bracket is continuous and never negative, since a real part never exceeds th
 
 ### Step 4: constant near one point means constant everywhere
 
-f − f(a) is holomorphic and zero on a whole disc, so its zeros are not isolated; by [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md) it is zero on all of D, since D is in one piece. This is the local form of the principle: **a holomorphic function whose modulus has a local maximum inside a region is constant there.**
+f − f(a) is holomorphic and zero on a whole disc, so its zeros are not isolated: each has other zeros as close to it as you like. By [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md) it is then zero on all of D, since D is in one piece. This is the local form of the principle: **a holomorphic function whose modulus has a local maximum inside a region is constant there.**
 
 ### Step 5: on a bounded region the maximum sits on the edge
 
@@ -106,7 +106,7 @@ For e^z the edge values are e^cos t, largest at t = 0: e at z = 1. For z^2 + 1 t
 
 ### Step 6: the minimum version needs no zeros
 
-If f has no zeros on the closure, 1/f is holomorphic inside and continuous up to the edge, so by Step 5 its largest modulus, 1 over the smallest of |f|, sits on the edge. For e^z, 1/e^z = e^−z peaks at z = −1 with value e, so |e^z| is smallest at −1, with value 1/e = 0.367879.
+If f has no zeros on the closure, 1/f is holomorphic inside and continuous up to the edge. By Step 5 its largest modulus, 1 over the smallest of |f|, sits on the edge. For e^z, 1/e^z = e^−z peaks at z = −1 with value e, so |e^z| is smallest at −1, with value 1/e = 0.367879.
 
 <details>
 <summary>A consequence: the Schwarz lemma</summary>
@@ -119,7 +119,7 @@ If f has no zeros on the closure, 1/f is holomorphic inside and continuous up to
 
 </details>
 
-A second road: the **open mapping theorem** (a non-constant holomorphic function sends a small disc about a onto a set containing a whole disc about f(a)) puts a value of larger modulus near any candidate peak; Stein and Shakarchi prove it.
+A second road is the **open mapping theorem**: a non-constant holomorphic function sends a small disc about a onto a set containing a whole disc about f(a). That disc holds a value of larger modulus near any candidate peak. Stein and Shakarchi prove it.
 
 ---
 
@@ -345,6 +345,128 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the principle for every bounded region and every function holomorphic on it, and the local form on every region.
+
+- Take f holomorphic inside a bounded region, continuous up to the edge, and not constant. Then |f| has a largest value on the closure, reached only on the edge.
+- If f also has no zeros on the closure, |f| has a smallest value there, also reached only on the edge.
+- If |f| has a local maximum at a point inside a region, even a flat one, then f is constant on the whole region.
+- The whole-number examples hold exactly: |z^2 + 1| is 2 at 1 and −1, z^2 + 1 is 0 at i, and |z^2 + 1| is 3 at 2i.
+
+The mean-value form, the decimals for e^z, the Schwarz example and the mistakes table are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 95 lines</summary>
+
+```lean
+-- The maximum modulus principle: a non-constant holomorphic function on a bounded region, continuous up to the edge, takes its largest modulus only on the edge (and its smallest too when it has no zeros), and a local peak of the modulus inside a region makes the function constant there.
+import Mathlib.Analysis.Complex.AbsMax
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Tactic.NormNum
+
+open Set Complex
+
+/-- **The maximum modulus principle.** Let D be a bounded region: an open set in the plane, in
+one piece, that fits inside some disc. Let f be holomorphic (complex-differentiable) at every
+point of D, continuous on D together with its edge (the closure of D), and not constant on D.
+Then the modulus |f| takes a largest value on the closure of D, and every point of the closure
+where it does so lies on the boundary (the frontier) of D: |f| has no interior peak. -/
+theorem max_modulus_only_on_boundary {D : Set ℂ} {f : ℂ → ℂ}
+    (hD : IsOpen D) (hconn : IsPreconnected D) (hbdd : Bornology.IsBounded D)
+    (hf : DifferentiableOn ℂ f D) (hcont : ContinuousOn f (closure D))
+    (hnc : ∃ z ∈ D, ∃ w ∈ D, f z ≠ f w) :
+    (∃ z ∈ closure D, IsMaxOn (fun w => ‖f w‖) (closure D) z) ∧
+      ∀ z ∈ closure D, IsMaxOn (fun w => ‖f w‖) (closure D) z → z ∈ frontier D := by
+  have hnc' := hnc
+  obtain ⟨a, haD, -⟩ := hnc
+  have hK : IsCompact (closure D) := hbdd.isCompact_closure
+  refine ⟨hK.exists_isMaxOn ⟨a, subset_closure haD⟩ (continuous_norm.comp_continuousOn hcont), ?_⟩
+  intro z hz hmax
+  by_contra hfr
+  have hzD : z ∈ D := by
+    rw [hD.frontier_eq] at hfr
+    by_contra h
+    exact hfr ⟨hz, h⟩
+  have hm : IsMaxOn (norm ∘ f) D z := fun w hw => hmax (subset_closure hw)
+  have hEq := Complex.eqOn_of_isPreconnected_of_isMaxOn_norm hconn hD hf hzD hm
+  obtain ⟨x, hx, y, hy, hxy⟩ := hnc'
+  exact hxy ((hEq hx).trans (hEq hy).symm)
+
+/-- **The minimum version.** With the same bounded region D and the same non-constant f,
+holomorphic on D and continuous up to the edge, suppose also that f has no zeros on the closure
+of D. Then |f| takes a smallest value on the closure of D, and every point of the closure where
+it does so lies on the boundary of D. -/
+theorem min_modulus_only_on_boundary_of_no_zeros {D : Set ℂ} {f : ℂ → ℂ}
+    (hD : IsOpen D) (hconn : IsPreconnected D) (hbdd : Bornology.IsBounded D)
+    (hf : DifferentiableOn ℂ f D) (hcont : ContinuousOn f (closure D))
+    (hnc : ∃ z ∈ D, ∃ w ∈ D, f z ≠ f w) (hzero : ∀ z ∈ closure D, f z ≠ 0) :
+    (∃ z ∈ closure D, IsMinOn (fun w => ‖f w‖) (closure D) z) ∧
+      ∀ z ∈ closure D, IsMinOn (fun w => ‖f w‖) (closure D) z → z ∈ frontier D := by
+  have hg : DifferentiableOn ℂ (fun w => (f w)⁻¹) D := fun w hw =>
+    (hf w hw).inv (hzero w (subset_closure hw))
+  have hgc : ContinuousOn (fun w => (f w)⁻¹) (closure D) := hcont.inv₀ hzero
+  have hgnc : ∃ z ∈ D, ∃ w ∈ D, (f z)⁻¹ ≠ (f w)⁻¹ := by
+    obtain ⟨x, hx, y, hy, hxy⟩ := hnc
+    exact ⟨x, hx, y, hy, fun h => hxy (inv_injective h)⟩
+  have key : ∀ z ∈ closure D, IsMinOn (fun w => ‖f w‖) (closure D) z ↔
+      IsMaxOn (fun w => ‖(f w)⁻¹‖) (closure D) z := by
+    intro z hz
+    constructor
+    · intro h w hw
+      have h1 : ‖f z‖ ≤ ‖f w‖ := h hw
+      have hz0 : 0 < ‖f z‖ := norm_pos_iff.mpr (hzero z hz)
+      show ‖(f w)⁻¹‖ ≤ ‖(f z)⁻¹‖
+      rw [norm_inv, norm_inv]
+      exact inv_anti₀ hz0 h1
+    · intro h w hw
+      have h1 : ‖(f w)⁻¹‖ ≤ ‖(f z)⁻¹‖ := h hw
+      have hw0 : 0 < ‖f w‖ := norm_pos_iff.mpr (hzero w hw)
+      show ‖f z‖ ≤ ‖f w‖
+      rw [norm_inv, norm_inv] at h1
+      exact (inv_le_inv₀ hw0 (norm_pos_iff.mpr (hzero z hz))).mp h1
+  obtain ⟨⟨z, hz, hzmax⟩, hfr⟩ := max_modulus_only_on_boundary hD hconn hbdd hg hgc hgnc
+  exact ⟨⟨z, hz, (key z hz).mpr hzmax⟩, fun w hw hmin => hfr w hw ((key w hw).mp hmin)⟩
+
+/-- **The local form.** If f is holomorphic on a region D (open, in one piece) and its modulus
+|f| has a local maximum at a point c inside D (|f(z)| ≤ |f(c)| for all z near c, a flat top
+allowed), then f is constant on D: f(z) = f(c) for every z in D. -/
+theorem eq_const_of_isLocalMax_norm {D : Set ℂ} {f : ℂ → ℂ} {c : ℂ}
+    (hD : IsOpen D) (hconn : IsPreconnected D) (hf : DifferentiableOn ℂ f D) (hc : c ∈ D)
+    (hmax : IsLocalMax (fun w => ‖f w‖) c) :
+    ∀ z ∈ D, f z = f c := by
+  have hev : ∀ᶠ z in nhds c, f z = f c :=
+    Complex.eventually_eq_of_isLocalMax_norm
+      (Filter.eventually_of_mem (hD.mem_nhds hc) fun z hz => hf.differentiableAt (hD.mem_nhds hz))
+      hmax
+  have han : AnalyticOnNhd ℂ f D := hf.analyticOnNhd hD
+  have := han.eqOn_of_preconnected_of_eventuallyEq analyticOnNhd_const hconn hc hev
+  exact fun z hz => this hz
+
+-- The card's whole-number examples.
+-- z^2 + 1 reaches modulus 2 at the rim points 1 and −1 of the unit disc.
+example : ‖(1 : ℂ) ^ 2 + 1‖ = 2 := by norm_num
+example : ‖(-1 : ℂ) ^ 2 + 1‖ = 2 := by norm_num
+-- Zeros allowed: z^2 + 1 is 0 at i, inside the disc of radius 2 ...
+example : I ^ 2 + 1 = 0 := by norm_num
+-- ... while on its edge, at 2i, the modulus is 3 (the edge minimum).
+example : ‖(2 * I) ^ 2 + 1‖ = 3 := by norm_num [mul_pow]
+
+#print axioms max_modulus_only_on_boundary
+#print axioms min_modulus_only_on_boundary_of_no_zeros
+#print axioms eq_const_of_isLocalMax_norm
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'max_modulus_only_on_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'min_modulus_only_on_boundary_of_no_zeros' depends on axioms: [propext, Classical.choice, Quot.sound]
+'eq_const_of_isLocalMax_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -381,7 +503,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Interpolation: the principle on a strip becomes the three-lines bound that proves Riesz–Thorin.
+- Interpolation: on a strip, the principle becomes the three-lines bound. It says the largest modulus on a line between the two edges is at most a weighted geometric mean of the largest moduli on the edges. That bound proves Riesz–Thorin: a linear map bounded at two sizes is bounded at every size between.
 
 On an unbounded region the plain statement fails, as e^z on the half-plane showed; how two edges and a limit on growth restore control is the three-lines bound on that card.
 

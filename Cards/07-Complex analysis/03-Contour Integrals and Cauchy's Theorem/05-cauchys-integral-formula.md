@@ -53,7 +53,7 @@ $$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta$$
 
 - **f holomorphic on and inside the loop.** Drop it and the formula fails: z-bar has no complex derivative, and the loop returns 0 at the point 0.5, not 0.5.
 - **a strictly inside.** Outside, the recipe returns 0: at 4 it gives 0, not e^4 = 54.598150. On the loop itself the integral does not exist, since z − a hits 0.
-- **One anticlockwise lap.** Run clockwise and the sign flips, −1.648721. For a loop that winds round a several times, the answer is the winding number times f(a) ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)).
+- **One anticlockwise lap.** Run clockwise and the sign flips, −1.648721. For a loop that winds round a several times, the answer is the winding number (the count of laps round a) times f(a) ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)).
 - **The average form needs a circle centred at a.** On any other loop only the integral form holds.
 
 ---
@@ -107,7 +107,7 @@ $$\oint_C \frac{g(z)}{z-a}\,dz = 2\pi i\, g(a)$$
 
 Take e^z/(z(z − 3)) round the rim. The point 3 lies outside, so write it as g(z)/(z − 0) with g(z) = e^z/(z − 3), holomorphic inside. The answer is 2πi × e^0/(0 − 3) = −2.094395i. The loop sum with 128 points prints the same.
 
-A second road to the formula: the function (f(z) − f(a))/(z − a) is holomorphic inside except at a, where it stays bounded, close to f′(a). Its loop integral is still 0: shrink the loop round a, and a bounded integrand on an ever shorter circle gives an ever smaller integral. What is left is f(a) times the loop integral of 1/(z − a), which is 2πi. The shelf's house example is this with f = 1: 1/z round a course enclosing the origin gives 2πi.
+A second road to the formula: the function (f(z) − f(a))/(z − a) is holomorphic inside except at a, where it stays bounded, close to f′(a), the complex derivative of f at a. Its loop integral is still 0: shrink the loop round a, and a bounded integrand on an ever shorter circle gives an ever smaller integral. What is left is f(a) times the loop integral of 1/(z − a), which is 2πi. The shelf's house example is this with f = 1: 1/z round the regatta course of [Cauchy's theorem](03-cauchys-theorem.md), tripled to enclose the origin, gives 2πi.
 
 ---
 
@@ -359,6 +359,7 @@ The two outputs match line for line.
 
 ## What this builds on
 
+- [Cauchy's theorem](03-cauchys-theorem.md): a loop with no bad point inside integrates to 0, which settles Step 0 and the outside point.
 - [Deforming a loop](04-deforming-contours-and-winding-numbers.md): shrinking the rim onto a small circle without changing the integral, and the winding number for loops that lap more than once.
 
 ## Where this goes next
@@ -373,7 +374,7 @@ The rim fixes f(a); whether it also fixes f′(a), f″(a) and every higher deri
 
 ## Sources
 
-Verified 28 Sep 2026: every link below opens a page naming the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 2 proves the formula by shrinking a keyhole contour.
 - Orloff, Jeremy. "Topic 4: Cauchy's integral formula." MIT OpenCourseWare 18.04, Spring 2018. [Course notes](https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic4/). Free notes with worked one-pole integrals.

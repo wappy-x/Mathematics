@@ -102,7 +102,9 @@ When $|q| = 1$ the leftover $q^N$ keeps length 1 and walks round the circle. Wit
 
 ### Step 4: absolute convergence, and why the disc is open
 
-The tread lengths 1, 0.8, 0.8^2, … add to 1/(1 − 0.8) = 5 metres. Each tread's east and north parts are no longer than the tread, so the real comparison test ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) makes both coordinate series converge, and Step 1 finishes. No stop lies beyond 2.566107 metres: the stops form a bounded set.
+The tread lengths 1, 0.8, 0.8^2, … add to 1/(1 − 0.8) = 5 metres. The real comparison test says a real series converges when the sizes of its terms stay below the terms of a convergent series of positive numbers. Each tread's east and north parts are no longer than the tread, so the real comparison test ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) makes both coordinate series converge, and Step 1 finishes.
+
+No stop lies beyond 2.566107 metres: the stops form a bounded set.
 
 The working ratios form the open disc $D(0, 1)$. It is open: this q sits 0.2 inside the rim, so every ratio within 0.2 of it works too. It is connected, since a straight segment joins any two of its points inside it, so it is a domain. Its boundary, the unit circle, holds no working ratio.
 
@@ -114,7 +116,9 @@ To scale: 80 units per 1, 0 at (180, 120). The ratio q sits at (235.43, 88.00), 
 
 ### Step 5: the point at infinity
 
-With ratio 1.25 turned 30 degrees the stops are 11934.3 metres out after 40 treads. Such a sequence tends to infinity, $z_n \to \infty$: $|z_n|$ passes every bound, in any direction, and $\infty$ counts as one extra point. Rest a ball on the plane at 0. The straight line from a plane point to the ball's top meets the ball at exactly one other point; send the plane point there. Far points in every direction land near the top, and the top itself is the point at infinity. The ball, so labelled, is the **Riemann sphere**.
+With ratio 1.25 turned 30 degrees the stops are 11934.3 metres out after 40 treads. Such a sequence tends to infinity, $z_n \to \infty$: $|z_n|$ passes every bound, in any direction, and $\infty$ counts as one extra point.
+
+Rest a ball on the plane at 0. The straight line from a plane point to the ball's top meets the ball at exactly one other point; send the plane point there. Far points in every direction land near the top, and the top itself is the point at infinity. The ball, so labelled, is the **Riemann sphere**.
 
 <details>
 <summary>Detailed proof: limits by tolerance, coordinates, and absolute convergence</summary>
@@ -347,6 +351,93 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three facts for every complex sequence, every ratio q and every series with terms of finite total length.
+
+- A sequence tends to L exactly when its real parts tend to Re L and its imaginary parts tend to Im L.
+- For every ratio q in the open unit disc, the partial sums 1 + q + … + q^(N−1) tend to 1/(1 − q).
+- For every q with |q| ≥ 1, on the boundary circle or outside it, the partial sums have no limit.
+- If the lengths |a_n| have a finite total, the partial sums tend to some S, and |S| is at most that total.
+- The path length 1/(1 − 0.8) is exactly 5 metres.
+
+The staircase's decimals, the rim and outside walks, and the figure positions are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 59 lines</summary>
+
+```lean
+-- Limits and regions in the plane: a complex sequence converges exactly when its real and imaginary parts converge, the complex geometric series sums to 1/(1 - q) inside the unit disc and has no limit for |q| ≥ 1, and absolutely convergent complex series converge.
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.Analysis.Normed.Group.InfiniteSum
+import Mathlib.Tactic.NormNum
+
+open Filter Topology Finset
+
+/-- A sequence of complex numbers tends to `L` exactly when its real parts tend to
+the real part of `L` and its imaginary parts tend to the imaginary part of `L`. -/
+theorem complex_tendsto_iff_re_and_im_tendsto (z : ℕ → ℂ) (L : ℂ) :
+    Tendsto z atTop (𝓝 L) ↔
+      Tendsto (fun n => (z n).re) atTop (𝓝 L.re) ∧
+      Tendsto (fun n => (z n).im) atTop (𝓝 L.im) := by
+  constructor
+  · intro h
+    exact ⟨(Complex.continuous_re.tendsto L).comp h, (Complex.continuous_im.tendsto L).comp h⟩
+  · rintro ⟨hre, him⟩
+    have h := (hre.ofReal).add (him.ofReal.mul_const Complex.I)
+    simpa only [Complex.re_add_im] using h
+
+/-- The geometric series with complex ratio `q`: for every `q` in the open unit disc
+the partial sums `1 + q + ... + q^(N-1)` tend to `1/(1 - q)`; for `|q| ≥ 1`
+(on the boundary circle or outside it) the partial sums have no limit. -/
+theorem complex_geometric_series_sum_iff_in_open_unit_disc :
+    (∀ q : ℂ, ‖q‖ < 1 →
+      Tendsto (fun N => ∑ n ∈ range N, q ^ n) atTop (𝓝 (1 - q)⁻¹)) ∧
+    (∀ q : ℂ, 1 ≤ ‖q‖ →
+      ¬ ∃ S : ℂ, Tendsto (fun N => ∑ n ∈ range N, q ^ n) atTop (𝓝 S)) := by
+  refine ⟨fun q hq => (hasSum_geometric_of_norm_lt_one hq).tendsto_sum_nat, ?_⟩
+  rintro q hq ⟨S, hS⟩
+  have h1 : Tendsto (fun N => ∑ n ∈ range (N + 1), q ^ n) atTop (𝓝 S) :=
+    hS.comp (tendsto_add_atTop_nat 1)
+  have h2 : Tendsto (fun N => q ^ N) atTop (𝓝 (S - S)) := by
+    have := h1.sub hS
+    refine this.congr (fun N => ?_)
+    simp [Finset.sum_range_succ]
+  rw [sub_self] at h2
+  have h3 : Tendsto (fun N => ‖q ^ N‖) atTop (𝓝 0) := by
+    simpa using h2.norm
+  have h4 : ∀ N : ℕ, 1 ≤ ‖q ^ N‖ := fun N => by
+    rw [norm_pow]; exact one_le_pow₀ hq
+  have h5 : (1 : ℝ) ≤ 0 := ge_of_tendsto' h3 h4
+  norm_num at h5
+
+/-- Absolute convergence: if the lengths `|a n|` of a complex series have a finite total,
+the partial sums of the series converge to some `S`, and `|S|` is at most that total. -/
+theorem complex_absolutely_convergent_series_converges (a : ℕ → ℂ)
+    (h : Summable (fun n => ‖a n‖)) :
+    ∃ S : ℂ, Tendsto (fun N => ∑ n ∈ range N, a n) atTop (𝓝 S) ∧
+      ‖S‖ ≤ ∑' n, ‖a n‖ := by
+  refine ⟨∑' n, a n, (Summable.of_norm h).hasSum.tendsto_sum_nat, norm_tsum_le_tsum_norm h⟩
+
+-- The card's path length: tread lengths 1, 0.8, 0.8^2, ... add to 1/(1 - 0.8) = 5 metres.
+example : (1 - (4 / 5 : ℝ))⁻¹ = 5 := by norm_num
+
+#print axioms complex_tendsto_iff_re_and_im_tendsto
+#print axioms complex_geometric_series_sum_iff_in_open_unit_disc
+#print axioms complex_absolutely_convergent_series_converges
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'complex_tendsto_iff_re_and_im_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'complex_geometric_series_sum_iff_in_open_unit_disc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'complex_absolutely_convergent_series_converges' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -390,6 +481,8 @@ The two outputs match line for line.
 - [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md): discs of convergence.
 - [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): series of spinning arrows.
 - [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): convergence on a half-plane.
+
+Left open: if the ratio becomes a variable z, for which z does the sum converge, and what function of z does it make?
 
 ---
 
