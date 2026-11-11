@@ -85,7 +85,7 @@ A pocket telescope closes into two rings with nothing between: such a sum is sai
 
 ### Step 2: to add a list, find the list it is the jumps of
 
-The identity earns its keep backwards: given numbers to add, find the list whose jumps they are. For 1 + 2 + … + n that means Δa(n) = n, and since differencing drops a rule's degree by one, the list is degree 2. Try a(n) = n(n−1)/2:
+The identity is most useful run backwards: given numbers to add, find the list whose jumps they are. For 1 + 2 + … + n that means Δa(n) = n, and since differencing drops a rule's degree by one, the list is degree 2. Try a(n) = n(n−1)/2:
 
 $$\Delta a(n) = \frac{(n+1)n}{2} - \frac{n(n-1)}{2} = \frac{n\,[(n+1) - (n-1)]}{2} = n$$
 
@@ -112,20 +112,20 @@ Travel down the triangle instead. Differencing a degree-2 rule leaves a degree-1
 
 Let B(j, n) be the list whose n-th term is C(n−1, j). Pascal's rule, C(n, j) = C(n−1, j) + C(n−1, j−1), gives its difference:
 $$\Delta B(j, n) = C(n, j) - C(n-1, j) = C(n-1, j-1) = B(j-1, n).$$
-Differencing shifts each list one place down the family, and B(0, n), 1 everywhere, differences to zero. So for numbers c(0) … c(k) and a(n) = c(0)·B(0, n) + … + c(k)·B(k, n), differencing j times drops every piece j places, and at n = 1 only one survives: Δ^j a(1) = c(j), read straight off the edge — Newton's formula.
+Differencing shifts each list one place down the family, and B(0, n), 1 everywhere, differences to zero. So take numbers c(0) … c(k) and a(n) = c(0)·B(0, n) + … + c(k)·B(k, n). Differencing j times drops every piece j places, and at n = 1 only one survives: Δ^j a(1) = c(j), read straight off the edge — Newton's formula.
 
-A flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−1, j) has degree j, the list has degree k, leading coefficient c(k) over 1 × 2 × … × k: for the tins, k = 2 and c(2) = 1 give the 1/2 in n(n+1)/2.
+A flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−1, j) has degree j, the list has degree k. Its leading coefficient, the number in front of the largest power, is c(k) over 1 × 2 × … × k. For the tins, k = 2 and c(2) = 1 give the 1/2 in n(n+1)/2.
 
 </details>
 
 <details>
 <summary>When the terms are a product of two lists</summary>
 
-Δ(a(n)·b(n)) = a(n+1)·Δb(n) + b(n)·Δa(n): summing both sides and collapsing the left turns a sum of a·Δb into two ends minus a sum of b·Δa — summation by parts, taught with the analysis wing.
+Δ(a(n)·b(n)) = a(n+1)·Δb(n) + b(n)·Δa(n). Summing both sides and collapsing the left turns a sum of a·Δb into two ends minus a sum of b·Δa — summation by parts, taught with the analysis wing.
 
 </details>
 
-Induction reaches n(n+1)/2 too, but only once the answer is guessed; telescoping produces it. Multiplying a step rule by a chosen factor until it telescopes solves a loan in [First-order recurrences](03-first-order-recurrences-and-loans.md).
+[Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md), proving a claim for 1 and then each step from the one before, reaches n(n+1)/2 too, but only once the answer is guessed; telescoping produces it. Multiplying a step rule by a chosen factor until it telescopes solves a loan in [First-order recurrences](03-first-order-recurrences-and-loans.md).
 
 ---
 
@@ -141,13 +141,13 @@ Induction reaches n(n+1)/2 too, but only once the answer is guessed; telescoping
 | the fractions to k = 99 | 1/1 − 1/100 | **0.99** |
 | the shelf's hallway | F(1) + … + F(9), against 89 − 1 | **88** |
 
-Fifty-five tins fill a ten-row display; the fractions land a hundredth short of 1. The last row checks the shelf's house example: a 2 × 10 hallway takes 1 × 2 tiles in F(11) = 89 ways ([Recurrences](01-recurrences-and-fibonacci.md)), and each Fibonacci number is the difference of the next two, so the first nine telescope to 88.
+Fifty-five tins fill a ten-row display; the fractions land a hundredth short of 1. The last row checks the shelf's house example: a 2 × 10 hallway takes 1 × 2 tiles in F(11) = 89 ways ([Recurrences](01-recurrences-and-fibonacci.md)). Each Fibonacci number is the difference of the next two, so the first nine telescope to 88.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The flat 1 read as the rule n^2 | 25 at five rows, not 15 | the constant is twice the leading coefficient |
+| The flat 1 read as the rule n^2 | 25 at five rows, not 15 | the constant is twice the leading coefficient, the number in front of n^2 |
 | The collapse stopped at a(n) | 45 for ten rows, not 55 | the last jump ends one term further on |
 | The split written with a plus | 9.36, not 0.99 | nothing cancels; every middle term survives |
 
@@ -355,6 +355,109 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three sums for every length n, not just ten rows or 99 fractions.
+
+- Adding the jumps Δa(1) + Δa(2) + ⋯ + Δa(n) leaves a(n+1) − a(1), for any list.
+- The tins: 1 + 2 + 3 + ⋯ + n = n(n+1)/2.
+- The fractions 1/(k(k+1)), for k from 1 to n, add to exactly 1 − 1/(n+1).
+- It also re-checks the card's numbers: 1, 3, 6, 10, 15, the flat row, Newton's 15, 55 tins, 0.99, 88, 25 and 45.
+
+Printing the output line by line is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 76 lines</summary>
+
+```lean
+-- Finite differences: a sum of the jumps a(k+1) − a(k) for k from 1 to n collapses to a(n+1) − a(1), which gives 1 + 2 + ⋯ + n = n(n+1)/2 and 1/(1·2) + ⋯ + 1/(n(n+1)) = 1 − 1/(n+1).
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Data.Nat.Fib.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+
+open Finset
+
+/-- Telescoping. For any list a(1), a(2), a(3), … of quantities that can be added and
+subtracted (whole numbers, fractions, any additive group), with every term present, adding the
+jumps Δa(k) = a(k+1) − a(k) for k from 1 to n leaves only the term one past the end minus the
+first: Δa(1) + Δa(2) + ⋯ + Δa(n) = a(n+1) − a(1). -/
+theorem sum_of_differences_telescopes {G : Type*} [AddCommGroup G] (a : ℕ → G) (n : ℕ) :
+    ∑ k ∈ Icc 1 n, (a (k + 1) - a k) = a (n + 1) - a 1 := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), ih]
+    abel
+
+/-- The tins. For every n, the whole numbers 1 + 2 + 3 + ⋯ + n add to n(n+1)/2. -/
+theorem sum_one_to_n_eq_half_n_mul_succ (n : ℕ) :
+    ∑ k ∈ Icc 1 n, k = n * (n + 1) / 2 := by
+  have h : ∀ m : ℕ, (∑ k ∈ Icc 1 m, k) * 2 = m * (m + 1) := by
+    intro m
+    induction m with
+    | zero => simp
+    | succ m ih =>
+      rw [Finset.sum_Icc_succ_top (by omega), add_mul, ih]
+      ring
+  have := h n
+  omega
+
+/-- The fractions. For every n, since 1/(k(k+1)) = 1/k − 1/(k+1), the sum
+1/(1·2) + 1/(2·3) + ⋯ + 1/(n(n+1)) collapses to exactly 1 − 1/(n+1). -/
+theorem sum_one_div_k_mul_succ_telescopes (n : ℕ) :
+    ∑ k ∈ Icc 1 n, (1 : ℚ) / ((k : ℚ) * ((k : ℚ) + 1)) = 1 - 1 / ((n : ℚ) + 1) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), ih]
+    push_cast
+    field_simp
+    ring
+
+-- The display row by row: running totals 1, 3, 6, 10, 15.
+example : (List.range 5).map (fun i => ∑ k ∈ Icc 1 (i + 1), k) = [1, 3, 6, 10, 15] := by decide
+-- First differences 2, 3, 4, 5, and second differences 1, 1, 1.
+example : (List.range 4).map (fun i => (∑ k ∈ Icc 1 (i + 2), k) - ∑ k ∈ Icc 1 (i + 1), k) =
+    [2, 3, 4, 5] := by decide
+example : [3 - 2, 4 - 3, 5 - 4] = [1, 1, 1] := by decide
+-- Newton's formula from the edge 1, 2, 1 at five rows: 1 + 2·C(4,1) + C(4,2) = 1 + 8 + 6 = 15.
+example : 1 + 2 * Nat.choose 4 1 + Nat.choose 4 2 = 15 ∧ 2 * Nat.choose 4 1 = 8 ∧
+    Nat.choose 4 2 = 6 := by decide
+-- Newton's formula gives the same totals for rows 1 to 10.
+example : (List.range 10).map (fun i => 1 + 2 * Nat.choose i 1 + Nat.choose i 2) =
+    [1, 3, 6, 10, 15, 21, 28, 36, 45, 55] := by decide
+-- Ten rows: 1 + 2 + ⋯ + 10 = 55 = 10 × 11 / 2.
+example : ∑ k ∈ Icc 1 10, k = 55 ∧ 10 * 11 / 2 = 55 := by decide
+-- The jumps 2 + 3 + ⋯ + 10 add to 54 = 55 − 1.
+example : ∑ k ∈ Icc 2 10, k = 54 ∧ 55 - 1 = 54 := by decide
+-- The fractions to k = 99, added exactly: 99/100.
+example : ∑ k ∈ Icc (1 : ℕ) 99, (1 : ℚ) / ((k : ℚ) * ((k : ℚ) + 1)) = 99 / 100 := by
+  decide +kernel
+-- The hallway: F(11) = 89, and F(1) + ⋯ + F(9) = 88 = 89 − 1.
+example : Nat.fib 11 = 89 ∧ ∑ k ∈ Icc 1 9, Nat.fib k = 88 ∧ 89 - 1 = 88 := by decide
+-- The mistakes: n² gives 25 at five rows, not 15; stopping early gives 45, not 55.
+example : 5 ^ 2 = 25 ∧ ∑ k ∈ Icc 1 9, k = 45 := by decide
+
+#print axioms sum_of_differences_telescopes
+#print axioms sum_one_to_n_eq_half_n_mul_succ
+#print axioms sum_one_div_k_mul_succ_telescopes
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_of_differences_telescopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_one_to_n_eq_half_n_mul_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_one_div_k_mul_succ_telescopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the tins, so the last two below stop the program.
@@ -367,7 +470,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Treating a flat row in the triangle as proof of the rule.** Five totals fit endless rules that agree on those five and part company at the sixth. The flat row is safe here for a reason outside the table: row n holds n tins by construction.
+> **Treating a flat row in the triangle as proof of the rule.** Five totals fit endless rules that agree on those five and differ at the sixth. The flat row is safe here for a reason outside the table: row n holds n tins by construction.
 >
 > - **Stopping the collapse one term early.** a(n) − a(1) in place of a(n+1) − a(1): 45, not 55.
 > - **Reading the constant as the leading coefficient.** A flat second difference of 1 does not make the rule n^2: 25 at five rows, not 15.
@@ -395,7 +498,7 @@ The two outputs match line for line.
 
 - [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): the same collapse, run down the levels of a rule that halves its input.
 
-Telescoping needs terms that are jumps of a list one can name, easy enough when a rule steps one place at a time; what to do when it halves the problem starts a later card.
+Telescoping needs terms that are jumps of a list one can name. That is easy enough when a rule steps one place at a time; what to do when it halves the problem starts a later card.
 
 ---
 

@@ -8,13 +8,13 @@
 
 Three pegs stand in a row. Six discs of different sizes sit stacked on the left peg, largest at the bottom. Move the stack to the right peg, one disc at a time, never a larger disc onto a smaller one.
 
-It takes 63 moves, and no fewer. The count falls out without touching a disc: the largest disc cannot cross until the other five sit on the spare peg, so six discs cost five shifted, one move, and five shifted back. Five discs are paid for twice, plus one move.
+It takes 63 moves, and no fewer. The count can be found without touching a disc. The largest disc cannot cross until the other five sit on the spare peg, so six discs cost five shifted, one move, and five shifted back. Five discs are paid for twice, plus one move.
 
-h(6) = 2 h(5) + 1, with h(0) = 0, since no discs take no moves.
+Write h(n) for the moves that n discs need. Then h(6) = 2 h(5) + 1, with h(0) = 0, since no discs take no moves. That starting value, h(0), is the seed.
 
 Earlier cards on this shelf built each term from earlier terms alone. The added 1 is new: it arrives from outside at every step. Such an amount is the **driving term**, written f(n). A rule carrying one is **nonhomogeneous**, a rule without one **homogeneous**.
 
-A second case, in dollars: an account paying 1% a month takes a deposit at each month's end of 10n dollars — $10 in the first month, and $10 more every month after. Its balance follows s(n) = 1.01 s(n-1) + 10n, reaching $809.33 in a year.
+A second case, in dollars: an account paying 1% a month takes a deposit at each month's end of 10n dollars. That is $10 in the first month, and $10 more every month after. Its balance after n months, s(n), follows s(n) = 1.01 s(n-1) + 10n, reaching $809.33 in a year.
 
 **Solve the rule with the driving term deleted, add any one sequence obeying the whole rule, and let the starting value pick the single member of that family.**
 
@@ -94,7 +94,9 @@ The copies of f(n) cancel, so d obeys the stripped rule, and stepping down to 0 
 
 ### Step 2: guess a constant, then fit the seed
 
-For the discs, f(n) is the constant 1 and c = 2. Guess a constant B: B = 2B + 1, so B = −1, and indeed 2 × (−1) + 1 = −1. That is a particular solution and a nonsense move count — one solution, not the wanted one. The letter B was left undetermined and the rule pinned it: hence **undetermined coefficients**.
+For the discs, f(n) is the constant 1 and c = 2. Guess a constant B: B = 2B + 1, so B = −1, and indeed 2 × (−1) + 1 = −1.
+
+That is a particular solution and a nonsense move count — one solution, not the wanted one. The letter B was left undetermined and the rule pinned it: hence **undetermined coefficients**.
 
 The stripped rule is doubling, so its solutions are A 2^n. Adding the parts gives h(n) = A 2^n − 1, and h(0) = 0 forces A = 1. So h(n) = 2^n − 1, and six discs cost 2^6 − 1 = 63 moves, with every other count answered at the same time.
 
@@ -104,15 +106,19 @@ The account has c = 1.01 and f(n) = 10n. Guess a straight line back, p(n) = Bn +
 
 $$Bn + C = 1.01\big(B(n-1) + C\big) + 10n.$$
 
-Two straight lines agree at every n only if their n parts and constant parts agree separately ([Linear equations](../../03-Algebra/01-Letters%20and%20Equations/02-linear-equations.md)). The n parts give B = 1.01B + 10, so B = −1000; the constant parts give C = −1.01B + 1.01C, so C = −101000. An empty account, s(0) = 0, fixes A = 101000:
+Two straight lines agree at every n only if their n parts and constant parts agree separately ([Linear equations](../../03-Algebra/01-Letters%20and%20Equations/02-linear-equations.md)).
+
+The n parts give B = 1.01B + 10, so B = −1000; the constant parts give C = −1.01B + 1.01C, so C = −101000. An empty account, s(0) = 0, fixes A = 101000:
 
 $$s(n) = 101000 \times 1.01^n - 1000n - 101000.$$
 
 ### Step 4: when the guess is already homogeneous
 
-Try t(n) = 2 t(n-1) + 2^n with the guess B 2^n. It gives B 2^n = 2B 2^(n-1) + 2^n, whose first two terms are equal, leaving 0 = 2^n. No B saves it: B 2^n already solves the stripped rule, and the homogeneous part never produces the driving term. A factor of n breaks the tie: B n 2^n gives Bn = B(n-1) + 1, so B = 1, and t(0) = 0 leaves t(n) = n 2^n, matching the forward run 2, 8, 24, 64, 160.
+Try t(n) = 2 t(n-1) + 2^n with the guess B 2^n. It gives B 2^n = 2B 2^(n-1) + 2^n, whose first two terms are equal, leaving 0 = 2^n. No B saves it: B 2^n already solves the stripped rule, and the homogeneous part never produces the driving term. This clash, a driving term that already solves the stripped rule, is called resonance.
 
-One road avoids guessing: multiply each amount handed in by c once per remaining step and add them up — exact, and slow. That sum telescopes on [Finite differences](02-finite-differences-and-telescoping-sums.md); another road makes the step a matrix ([A recurrence is a matrix](06-recurrences-as-matrix-powers.md)).
+A factor of n breaks the tie. The guess B n 2^n gives Bn = B(n-1) + 1, so B = 1. Then t(0) = 0 leaves t(n) = n 2^n, matching the forward run 2, 8, 24, 64, 160.
+
+One road avoids guessing: multiply each amount handed in by c once per remaining step and add them up — exact, and slow. That sum telescopes (consecutive terms cancel, so it collapses) on [Finite differences](02-finite-differences-and-telescoping-sums.md); another road makes the step a matrix ([A recurrence is a matrix](06-recurrences-as-matrix-powers.md)).
 
 ---
 
@@ -344,6 +350,129 @@ mistake 4, resonance with a plain geometric guess: 0 at n = 5, not 160
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves Step 1's theorem for any fixed c and any driving term, and the two formulas for every n.
+
+- If p(n) obeys the full rule, a sequence obeys it exactly when it equals A c^n + p(n).
+- Only one number A fits each solution, and the starting value a(0) fixes it.
+- From h(0) = 0, the discs' rule gives h(n) = 2^n − 1 moves for every n.
+- From s(0) = 0, the account holds 101000 × 1.01^n − 1000n − 101000 dollars after n months.
+- The worked numbers hold: 63 moves, B = −1000, C = −101000, A = 101000, and $809.33 after a year.
+- The 3^n and resonance runs match their formulas for n = 1 to 5.
+
+Making the moves on real pegs, and growing each deposit on its own, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 94 lines</summary>
+
+```lean
+-- Recurrences with a driving term: every solution of a(n) = c·a(n−1) + f(n) is one particular solution plus A·c^n for exactly one number A, so the Tower of Hanoi takes 2^n − 1 moves and the card's savings account holds 101000·1.01^n − 1000n − 101000 dollars.
+import Mathlib.Basic.Real.Basic
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-- Particular plus homogeneous: fix the multiplier `c` and any driving term `f`, and let
+`p` be one sequence obeying the full rule `p(n) = c·p(n−1) + f(n)` for every `n ≥ 1`.
+Then a sequence `a` obeys the same rule exactly when `a(n) = A·c^n + p(n)` for every `n`,
+and the number `A` is then the only one that works (it is fixed by the seed `a(0)`). -/
+theorem solution_eq_homogeneous_add_particular (c : ℝ) (f p : ℕ → ℝ)
+    (hp : ∀ n, p (n + 1) = c * p n + f (n + 1)) (a : ℕ → ℝ) :
+    (∀ n, a (n + 1) = c * a n + f (n + 1)) ↔ ∃! A : ℝ, ∀ n, a n = A * c ^ n + p n := by
+  constructor
+  · intro ha
+    refine ⟨a 0 - p 0, ?_, ?_⟩
+    · intro n
+      induction n with
+      | zero => simp
+      | succ n ih => rw [ha n, hp n, ih]; ring
+    · intro B hB
+      have := hB 0
+      simp at this
+      rw [this]; ring
+  · rintro ⟨A, hA, -⟩ n
+    rw [hA (n + 1), hA n, hp n]
+    ring
+
+/-- The Tower of Hanoi count: if `h(0) = 0` and `h(n) = 2·h(n−1) + 1` for every `n ≥ 1`,
+then `h(n) = 2^n − 1` for every `n`. -/
+theorem hanoi_closed_form (h : ℕ → ℕ) (h0 : h 0 = 0)
+    (hstep : ∀ n, h (n + 1) = 2 * h n + 1) (n : ℕ) :
+    h n = 2 ^ n - 1 := by
+  have key : ∀ m, h m + 1 = 2 ^ m := by
+    intro m
+    induction m with
+    | zero => simp [h0]
+    | succ m ih => rw [hstep m, pow_succ]; omega
+  have := key n
+  omega
+
+/-- The savings account: if `s(0) = 0` and `s(n) = 1.01·s(n−1) + 10n` for every `n ≥ 1`
+(1% a month, a deposit of `10n` dollars at the end of month `n`), then
+`s(n) = 101000·1.01^n − 1000n − 101000` for every `n`. -/
+theorem savings_closed_form (s : ℕ → ℝ) (h0 : s 0 = 0)
+    (hstep : ∀ n, s (n + 1) = 101 / 100 * s n + 10 * ((n : ℝ) + 1)) (n : ℕ) :
+    s n = 101000 * (101 / 100 : ℝ) ^ n - 1000 * n - 101000 := by
+  induction n with
+  | zero => simp [h0]
+  | succ n ih =>
+    rw [hstep n, ih]
+    push_cast
+    ring
+
+-- The discs, stepped forward from h(0) = 0: 1, 3, 7, 15, 31, 63, matching 2^n − 1.
+example : (List.range 6).map (fun n => Nat.rec (motive := fun _ => ℕ) 0 (fun _ h => 2 * h + 1) (n + 1))
+    = [1, 3, 7, 15, 31, 63] := by decide
+example : (List.range 6).map (fun n => 2 ^ (n + 1) - 1) = [1, 3, 7, 15, 31, 63] := by decide
+-- Six discs: 2^6 − 1 = 63 moves.
+example : 2 ^ 6 - 1 = 63 := by norm_num
+-- The constant guess B = 2B + 1 gives B = −1, and A − 1 = 0 gives A = 1.
+example : (-1 : ℤ) = 2 * (-1) + 1 := by norm_num
+example : (1 : ℤ) * 2 ^ 0 + (-1) = 0 := by norm_num
+-- The account's n parts: B = 1.01B + 10 at B = −1000; constant parts: C = −1.01B + 1.01C at C = −101000.
+example : (-1000 : ℚ) = 101 / 100 * (-1000) + 10 := by norm_num
+example : (-101000 : ℚ) = -(101 / 100) * (-1000) + 101 / 100 * (-101000) := by norm_num
+-- The seed s(0) = 0: A − 101000 = 0 gives A = 101000.
+example : (101000 : ℚ) * (101 / 100) ^ 0 - 1000 * 0 - 101000 = 0 := by norm_num
+-- Twelve months: the closed form rounds to $809.33 (within half a cent).
+example : (161865 / 200 : ℚ) ≤ 101000 * (101 / 100) ^ 12 - 1000 * 12 - 101000 ∧
+    (101000 : ℚ) * (101 / 100) ^ 12 - 1000 * 12 - 101000 < 161867 / 200 := by norm_num
+-- At 0% the deposits add up to 5n(n+1): $780 after twelve months.
+example : ∑ k ∈ Finset.range 13, 10 * k = 780 ∧ 5 * 12 * (12 + 1) = 780 := by decide
+-- t(n) = 2t(n−1) + 3^n from 0 runs 3, 15, 57, 195, 633, matching 3^(n+1) − 3·2^n.
+example : (List.range 5).map
+      (fun n => Nat.rec (motive := fun _ => ℕ) 0 (fun k t => 2 * t + 3 ^ (k + 1)) (n + 1))
+    = [3, 15, 57, 195, 633] := by decide
+example : (List.range 5).map (fun n => 3 ^ (n + 2) - 3 * 2 ^ (n + 1)) = [3, 15, 57, 195, 633] := by
+  decide
+-- Resonance: t(n) = 2t(n−1) + 2^n from 0 runs 2, 8, 24, 64, 160, matching n·2^n.
+example : (List.range 5).map
+      (fun n => Nat.rec (motive := fun _ => ℕ) 0 (fun k t => 2 * t + 2 ^ (k + 1)) (n + 1))
+    = [2, 8, 24, 64, 160] := by decide
+example : (List.range 5).map (fun n => (n + 1) * 2 ^ (n + 1)) = [2, 8, 24, 64, 160] := by decide
+-- The guess B·n·2^n with B = 1 obeys the rule: n·2^n = 2·(n − 1)·2^(n−1) + 2^n.
+example : ∀ n < 10, (n + 1) * 2 ^ (n + 1) = 2 * (n * 2 ^ n) + 2 ^ (n + 1) := by decide
+-- Mistakes: dropping the added 1 and fitting A·2^n at one disc gives A = 1/2 and 32 moves;
+-- a(n) = a(n−1) + 1 from 0 gives a(6) = 6.
+example : (1 / 2 : ℚ) * 2 ^ 1 = 1 ∧ (1 / 2 : ℚ) * 2 ^ 6 = 32 := by norm_num
+example : Nat.rec (motive := fun _ => ℕ) 0 (fun _ a => a + 1) 6 = 6 := by decide
+
+#print axioms solution_eq_homogeneous_add_particular
+#print axioms hanoi_closed_form
+#print axioms savings_closed_form
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'solution_eq_homogeneous_add_particular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hanoi_closed_form' depends on axioms: [propext, Quot.sound]
+'savings_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert stops the program when a number comes out wrong.
@@ -386,7 +515,7 @@ ALL CHECKS PASS
 - [A recurrence is a matrix](06-recurrences-as-matrix-powers.md): the same step as a matrix, carrying the driving term along without a guess.
 - [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): rules that halve the problem rather than shorten it, the work at each level again a driving term.
 
-The table leaves out driving terms of other shapes; the machinery that produces the right guess rather than recognising it is the generating function.
+The table leaves out driving terms of other shapes; the machinery that produces the right guess rather than recognising it is the generating function, which hangs the whole sequence on powers of x ([Solving a recurrence with a generating function](../07-Generating%20Functions/03-generating-functions-solve-recurrences.md)).
 
 ---
 

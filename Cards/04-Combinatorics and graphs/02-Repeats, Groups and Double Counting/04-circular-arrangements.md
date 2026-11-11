@@ -12,7 +12,9 @@ In a row the eight make 40,320 orders: eight choices for the first place, seven 
 
 So divide by eight: 40,320 / 8 = 5,040, which is 7!.
 
-Now string six different beads — red, orange, yellow, green, blue, violet — on a ring. In a row they make 6! = 720 orders, and turning the ring changes nothing, as before: 720 / 6 = 120. A ring where turning is the only move allowed is a **necklace**. A **bracelet** can also be slipped off and turned over, which reverses the bead order; count a ring and its mirror image as one and the 120 halve to 60.
+Now string six different beads — red, orange, yellow, green, blue, violet — on a ring. In a row they make 6! = 720 orders, and turning the ring changes nothing, as before: 720 / 6 = 120.
+
+A ring where turning is the only move allowed is a **necklace**. A **bracelet** can also be slipped off and turned over, which reverses the bead order; count a ring and its mirror image as one and the 120 halve to 60.
 
 **Count the arrangements as if every position were labelled, then divide by how many labelled orders describe the same thing.**
 
@@ -31,7 +33,7 @@ Four of them — Ada, Ben, Cleo, Dev — by initial. Each row is one dinner, fou
 | ADBC, DBCA, BCAD, CADB |
 | ADCB, DCBA, CBAD, BADC |
 
-All 24 orders appear, four to a row: 24 / 4 = 6 dinners. Every row starts with Ada — the second road, below.
+All 24 orders appear, four to a row: 24 / 4 = 6 dinners. Every row starts with Ada — the count with one guest nailed down, Step 3 below.
 
 ---
 
@@ -109,7 +111,9 @@ Number the positions round the ring; all $n$ items differ.
 
 ### Step 5: the division fails the moment two things match
 
-Repeat a bead and an arrangement can survive a move. Its family is then smaller than the rest, and one division cannot serve all. Take six beads, two red, two blue, one green, one yellow: R R B B G Y. There are 180 different orders in a row and 30 necklaces, so halving gives 15 — but the brute force in the code finds 16 bracelets. The gap is the 2 necklaces left unchanged when the ring is turned over: they have no partner to pair with, so 16 = (30 + 2) / 2.
+Repeat a bead and an arrangement can survive a move. Its family is then smaller than the rest, and one division cannot serve all.
+
+Take six beads, two red, two blue, one green, one yellow: R R B B G Y. There are 180 different orders in a row and 30 necklaces, so halving gives 15 — but the brute force in the code finds 16 bracelets. The gap is the 2 necklaces left unchanged when the ring is turned over: they have no partner to pair with, so 16 = (30 + 2) / 2.
 
 The general repair counts what each move leaves unchanged and averages over the moves ([Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md)). Where only the do-nothing move spares anything, that average collapses back to the division used here.
 
@@ -338,6 +342,233 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves these counts for any number $n$ of different things, not just eight guests or six beads.
+
+- Round a table, $n$ different guests make $(n-1)!$ dinners.
+- Every family of row-orders that turning makes the same holds exactly $n$ orders.
+- With $n$ at least 3, $n$ different beads make $(n-1)!/2$ bracelets.
+- The card's own numbers come out exactly: 40,320, 5,040, 2,520, 720, 120 and 60, and the arithmetic behind 15 and 16.
+
+The brute-force sorting into families, and the 16 bracelets for R R B B G Y, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 196 lines</summary>
+
+```lean
+-- Round tables and bracelets: n different things placed round a ring make (n - 1)! arrangements when turning the ring counts as the same, each such family holding exactly n row-orders, and (n - 1)! / 2 when turning it over counts as the same too, for n at least 3.
+import Mathlib.Data.Fintype.Perm
+import Mathlib.SetTheory.Cardinal.Finite
+import Mathlib.Data.Nat.Factorial.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib
+
+/-! An arrangement of n different things round a ring is a one-to-one matching
+`f : Fin n ≃ α` of the n positions with the n things: position `i` holds thing `f i`.
+Turning the ring by `k` places gives the arrangement `i ↦ f (i + k)`; turning it over as
+well gives `i ↦ f (k - i)` (positions are counted round the ring, so `+` and `-` wrap). -/
+
+theorem card_eq_mul_card_quot_of_classes {X : Type*} [Finite X] (r : X → X → Prop)
+    (hr : Equivalence r) (m : ℕ) (hm : ∀ x, Nat.card {y // r x y} = m) :
+    Nat.card X = m * Nat.card (Quot r) := by
+  classical
+  have hfib : ∀ q : Quot r, Nat.card {y // Quot.mk r y = q} = m := by
+    intro q
+    induction q using Quot.ind with
+    | mk x =>
+      rw [← hm x]
+      apply Nat.card_congr
+      apply Equiv.subtypeEquivRight
+      intro y
+      constructor
+      · intro hy
+        exact hr.symm ((hr.eqvGen_iff).mp (Quot.eqvGen_exact hy))
+      · intro hy
+        exact Quot.sound (hr.symm hy)
+  have := Fintype.ofFinite X
+  have : Fintype (Quot r) := Fintype.ofFinite _
+  rw [← Nat.card_congr (Equiv.sigmaFiberEquiv (Quot.mk r)), Nat.card_sigma]
+  simp only [hfib, Finset.sum_const, Finset.card_univ, smul_eq_mul, Nat.card_eq_fintype_card]
+  ring
+
+theorem card_equiv_fin_eq_factorial {α : Type*} [Fintype α] (n : ℕ)
+    (h : Fintype.card α = n) : Nat.card (Fin n ≃ α) = n.factorial := by
+  classical
+  rw [Nat.card_eq_fintype_card, Fintype.card_equiv (Fintype.equivFinOfCardEq h).symm,
+    Fintype.card_fin]
+
+theorem card_quot_fin_zero_equiv {α : Type*} [Fintype α] (h : Fintype.card α = 0)
+    (r : (Fin 0 ≃ α) → (Fin 0 ≃ α) → Prop) : Nat.card (Quot r) = 1 := by
+  rw [Nat.card_eq_one_iff_unique]
+  refine ⟨⟨fun a b => ?_⟩, ⟨Quot.mk _ (Fintype.equivFinOfCardEq h).symm⟩⟩
+  induction a using Quot.ind with
+  | mk a =>
+    induction b using Quot.ind with
+    | mk b =>
+      congr 1
+      exact Equiv.ext fun i => Fin.elim0 i
+
+#print axioms card_eq_mul_card_quot_of_classes
+#print axioms card_equiv_fin_eq_factorial
+#print axioms card_quot_fin_zero_equiv
+
+theorem rotation_family_card {α : Type*} [Fintype α] (n : ℕ)
+    (f : Fin n ≃ α) :
+    Nat.card {g : Fin n ≃ α // ∃ k : Fin n, ∀ i, g i = f (i + k)} = n := by
+  rcases n with _ | m
+  · simp
+  · let φ : Fin (m+1) → (Fin (m+1) ≃ α) := fun k => (Equiv.addRight k).trans f
+    have hφ : Function.Injective φ := by
+      intro k l hkl
+      have := congrArg (fun g : Fin (m+1) ≃ α => g 0) hkl
+      simpa [φ] using this
+    refine (Nat.card_fin (m+1)).symm.trans ?_ |>.symm
+    refine Nat.card_congr ((Equiv.ofInjective φ hφ).trans (Equiv.subtypeEquivRight ?_))
+    intro g
+    simp only [Set.mem_range]
+    constructor
+    · rintro ⟨k, rfl⟩
+      exact ⟨k, fun i => rfl⟩
+    · rintro ⟨k, hk⟩
+      exact ⟨k, Equiv.ext fun i => (hk i).symm⟩
+
+#print axioms rotation_family_card
+
+/-- Round a table, where moving everyone the same number of chairs round counts as the same
+dinner, n different guests make (n - 1)! different dinners: the n! orders in a row, divided
+by the n rotations of each one. -/
+theorem round_table_count {α : Type*} [Fintype α] (n : ℕ)
+    (h : Fintype.card α = n) :
+    Nat.card (Quot fun f g : Fin n ≃ α => ∃ k : Fin n, ∀ i, g i = f (i + k)) =
+      (n - 1).factorial := by
+  rcases n with _ | m
+  · simpa using card_quot_fin_zero_equiv h _
+  · have hr : Equivalence fun f g : Fin (m+1) ≃ α => ∃ k : Fin (m+1), ∀ i, g i = f (i + k) := by
+      refine ⟨fun f => ⟨0, fun i => by simp⟩, ?_, ?_⟩
+      · rintro f g ⟨k, hk⟩
+        exact ⟨-k, fun i => by simp [hk]⟩
+      · rintro f g e ⟨k, hk⟩ ⟨l, hl⟩
+        exact ⟨l + k, fun i => by simp [hl, hk, add_assoc]⟩
+    have key := card_eq_mul_card_quot_of_classes _ hr (m+1)
+      (fun f => rotation_family_card (m+1) f)
+    rw [card_equiv_fin_eq_factorial (m+1) h, Nat.factorial_succ] at key
+    simp only [Nat.add_sub_cancel]
+    exact (Nat.eq_of_mul_eq_mul_left (Nat.succ_pos m) key).symm
+
+/-- Every family of row-orders that turning the ring makes the same holds exactly n of them,
+one per starting position, because the n things all differ. -/
+theorem round_table_family_size {α : Type*} [Fintype α] (n : ℕ)
+    (f : Fin n ≃ α) :
+    Nat.card {g : Fin n ≃ α // ∃ k : Fin n, ∀ i, g i = f (i + k)} = n := by
+  exact rotation_family_card n f
+
+/-- On a bracelet, which can be turned round and also turned over (reversing the order),
+n different beads, with n at least 3, make (n - 1)! / 2 different bracelets: the n! orders
+in a row, divided by the 2n turns and flips. -/
+theorem bracelet_count {α : Type*} [Fintype α] (n : ℕ)
+    (h : Fintype.card α = n) (hn : 3 ≤ n) :
+    Nat.card (Quot fun f g : Fin n ≃ α =>
+        ∃ k : Fin n, (∀ i, g i = f (i + k)) ∨ (∀ i, g i = f (k - i))) =
+      (n - 1).factorial / 2 := by
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
+  have two_ne : (2 : Fin (m+3)) ≠ 0 := by
+    intro h2
+    have := congrArg Fin.val h2
+    simp at this
+    rw [Nat.mod_eq_of_lt (by omega)] at this
+    exact absurd this (by norm_num)
+  have hr : Equivalence fun f g : Fin (m+3) ≃ α =>
+      ∃ k : Fin (m+3), (∀ i, g i = f (i + k)) ∨ (∀ i, g i = f (k - i)) := by
+    refine ⟨fun f => ⟨0, Or.inl fun i => by simp⟩, ?_, ?_⟩
+    · rintro f g ⟨k, hk | hk⟩
+      · exact ⟨-k, Or.inl fun i => by simp [hk]⟩
+      · exact ⟨k, Or.inr fun i => by simp [hk]⟩
+    · rintro f g e ⟨k, hk | hk⟩ ⟨l, hl | hl⟩
+      · exact ⟨l + k, Or.inl fun i => by simp [hl, hk, add_assoc]⟩
+      · exact ⟨l + k, Or.inr fun i => by rw [hl, hk]; congr 1; abel⟩
+      · exact ⟨k - l, Or.inr fun i => by rw [hl, hk]; congr 1; abel⟩
+      · exact ⟨k - l, Or.inl fun i => by rw [hl, hk]; congr 1; abel⟩
+  have hcls : ∀ f : Fin (m+3) ≃ α, Nat.card {g : Fin (m+3) ≃ α // ∃ k : Fin (m+3),
+      (∀ i, g i = f (i + k)) ∨ (∀ i, g i = f (k - i))} = 2 * (m+3) := by
+    intro f
+    let φ : Fin (m+3) ⊕ Fin (m+3) → (Fin (m+3) ≃ α) :=
+      Sum.elim (fun k => (Equiv.addRight k).trans f) (fun k => (Equiv.subLeft k).trans f)
+    have hφ : Function.Injective φ := by
+      rintro (k | k) (l | l) hkl
+      · have := congrArg (fun g : Fin (m+3) ≃ α => g 0) hkl
+        simpa [φ] using this
+      · have h0 := congrArg (fun g : Fin (m+3) ≃ α => g 0) hkl
+        have h1 := congrArg (fun g : Fin (m+3) ≃ α => g 1) hkl
+        simp [φ] at h0 h1
+        subst h0
+        let := Fin.instCommRing (m+3)
+        exact absurd (by linear_combination h1) two_ne
+      · have h0 := congrArg (fun g : Fin (m+3) ≃ α => g 0) hkl
+        have h1 := congrArg (fun g : Fin (m+3) ≃ α => g 1) hkl
+        simp [φ] at h0 h1
+        subst h0
+        let := Fin.instCommRing (m+3)
+        exact absurd (by linear_combination -h1) two_ne
+      · have := congrArg (fun g : Fin (m+3) ≃ α => g 0) hkl
+        simpa [φ] using this
+    have e := (Equiv.ofInjective φ hφ).trans (Equiv.subtypeEquivRight (p := (· ∈ Set.range φ))
+      (q := fun g => ∃ k : Fin (m+3), (∀ i, g i = f (i + k)) ∨ (∀ i, g i = f (k - i))) ?_)
+    · rw [← Nat.card_congr e, Nat.card_sum, Nat.card_fin]
+      ring
+    · intro g
+      simp only [Set.mem_range]
+      constructor
+      · rintro ⟨k | k, rfl⟩
+        · exact ⟨k, Or.inl fun i => rfl⟩
+        · exact ⟨k, Or.inr fun i => rfl⟩
+      · rintro ⟨k, hk | hk⟩
+        · exact ⟨Sum.inl k, Equiv.ext fun i => (hk i).symm⟩
+        · exact ⟨Sum.inr k, Equiv.ext fun i => (hk i).symm⟩
+  have key := card_eq_mul_card_quot_of_classes _ hr _ hcls
+  rw [card_equiv_fin_eq_factorial (m+3) h] at key
+  have hf : (m+3).factorial = (m+3) * (m+2).factorial := Nat.factorial_succ _
+  simp only [show m + 3 - 1 = m + 2 by omega]
+  rw [hf] at key
+  have : (m+2).factorial = 2 * Nat.card _ :=
+    Nat.eq_of_mul_eq_mul_left (by omega : 0 < m + 3) (by rw [key]; ring)
+  rw [this]
+  simp
+
+-- Eight friends: 8! = 40,320 orders in a row, 8 rotations each, 40,320 / 8 = 5,040 = 7! dinners.
+example : Nat.factorial 8 = 40320 := by decide
+example : 40320 / 8 = 5040 ∧ Nat.factorial 7 = 5040 := by decide
+-- Halving the dinner table, the wrong answer: 2,520.
+example : Nat.factorial 7 / 2 = 2520 := by decide
+-- The picture: four guests, 24 orders, 4 to a row, 6 dinners = 3!.
+example : Nat.factorial 4 = 24 ∧ 24 / 4 = 6 ∧ Nat.factorial 3 = 6 := by decide
+-- Six different beads: 720 orders, 120 necklaces, 60 bracelets, both ways round.
+example : Nat.factorial 6 = 720 ∧ 720 / 6 = 120 ∧ Nat.factorial 5 = 120 := by decide
+example : 720 / 12 = 60 ∧ 120 / 2 = 60 ∧ Nat.factorial 5 / 2 = 60 := by decide
+-- Three different beads: 2 necklaces, 1 bracelet.
+example : Nat.factorial 2 = 2 ∧ Nat.factorial 2 / 2 = 1 := by decide
+-- R R B B G Y: 180 orders, 30 necklaces; halving says 15, the 2 mirror-image necklaces make it 16.
+example : Nat.factorial 6 / (2 * 2) = 180 ∧ 180 / 6 = 30 ∧ 30 / 2 = 15 ∧ (30 + 2) / 2 = 16 := by decide
+
+#print axioms round_table_count
+#print axioms round_table_family_size
+#print axioms bracelet_count
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'card_eq_mul_card_quot_of_classes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_equiv_fin_eq_factorial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_quot_fin_zero_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rotation_family_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'round_table_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'round_table_family_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bracelet_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to eight guests and six beads, so expect one to stop the program.
@@ -360,7 +591,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Seating plans.** A round table for eight has 5,040 arrangements, not 40,320; a host who fixes one guest and works round is using the second road.
+- **Seating plans.** A round table for eight has 5,040 arrangements, not 40,320; a host who fixes one guest and works round is counting as Step 3 does.
 - **Bead work.** A piece that can only turn: 120 necklaces. One that can also be worn either way up: 60 bracelets.
 - **Round trips.** A van that leaves a depot, calls once at each of seven stops and returns has 5,040 routes, half of them the same loop backwards.
 - **Repeats, not rotations.** The same division handles identical items ([Arranging with repeats](01-multiset-permutations.md)) and interchangeable groups ([Splitting into groups](03-splitting-into-groups.md)).
@@ -387,6 +618,6 @@ Every division here needed the families to come out equal, a promise dividing ca
 Verified 14 Sep 2026: every link below resolves to the publisher's page.
 
 - Rosen, Kenneth H. *Discrete Mathematics and Its Applications*. McGraw Hill. [Publisher page](https://www.mheducation.com/highered/product/discrete-mathematics-and-its-applications-rosen.html). The rule of division, seating round a table its example.
-- Brualdi, Richard A. *Introductory Combinatorics* (Classic Version), 5th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/introductory-combinatorics-classic-version/P200000006138/9780137981045). Circular permutations in full; Pólya counting for the general case.
+- Brualdi, Richard A. *Introductory Combinatorics* (Classic Version), 5th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/introductory-combinatorics-classic-version/P200000006138/9780137981045). Circular permutations in full; Pólya counting, the method for rings whose beads repeat, for the general case.
 - Levin, Oscar. *Discrete Mathematics: An Open Introduction*, 3rd ed. [Full text, free](https://discrete.openmathbooks.org/dmoi3.html). The factorial and the choose count, built from the product rule.
-- Stanley, Richard P. *Enumerative Combinatorics*, vol. 1, 2nd ed. Cambridge University Press. [doi:10.1017/CBO9781139058520](https://doi.org/10.1017/CBO9781139058520). Counting up to a set of moves, treated as counting orbits.
+- Stanley, Richard P. *Enumerative Combinatorics*, vol. 1, 2nd ed. Cambridge University Press. [doi:10.1017/CBO9781139058520](https://doi.org/10.1017/CBO9781139058520). Counting up to a set of moves, treated as counting orbits, the families of this card.

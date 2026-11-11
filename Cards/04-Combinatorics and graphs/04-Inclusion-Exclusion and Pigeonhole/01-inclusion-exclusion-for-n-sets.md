@@ -12,7 +12,7 @@ Adding the lines gives 120 in a hotel of 100. Impossible: a guest who took break
 
 The overlaps are on record: 20 took breakfast and parking, 15 breakfast and spa, 10 parking and spa, 5 took all three. Subtracting the pairs gives 75 — too low, since the 5 who took everything came off once too often. Add them back: 80 bought something, 20 bought nothing.
 
-Two sets and three were settled earlier ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)); this card takes any number.
+Two sets and three were settled earlier ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)); this card takes any number. The method is also called a sieve: it filters a pool down to the members in none of the sets.
 
 **Add the sets, subtract every pair, add every triple, flipping the sign to the last overlap: each member of at least one set then contributes exactly 1, each member of none 0.**
 
@@ -34,7 +34,7 @@ Each arrow names the damage the next box repairs.
 
 ## The formula
 
-Notation first. Bars count members: $\lvert A\rvert$ is the size of a set A. The cup ∪ means "in at least one", the cap ∩ "in all" ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)). Sigma is the add-up sign, and C(n, j), "n choose j", counts the ways to pick j from n.
+Notation first. Bars count members: $\lvert A\rvert$ is the size of a set A. The cup ∪ means "in at least one", and what it collects is the union; the cap ∩ means "in all", an overlap ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)). Sigma is the add-up sign, and C(n, j), "n choose j", counts the ways to pick j from n.
 
 Call the sets $A_i$, numbered 1 up to $n$: breakfast, parking, spa, so $n$ is 3. Layer j takes the sets j at a time and adds up those overlaps' sizes.
 
@@ -76,7 +76,9 @@ Take the guest who took breakfast and parking, not the spa. Layer 1 counts them 
 
 ### Step 1: how often one member is counted
 
-Write $k$ for how many sets a member belongs to; that guest's $k$ is 2. Which overlaps hold them? Only those built from their own sets — an overlap naming the spa cannot hold a guest who skipped it. So the layer-j overlaps holding a member are the ways to choose j of their own k sets: C(k, j) of them, here C(2, 1) = 2 in layer 1 and C(2, 2) = 1 in layer 2.
+Write $k$ for how many sets a member belongs to; that guest's $k$ is 2. Which overlaps hold them? Only those built from their own sets — an overlap naming the spa cannot hold a guest who skipped it.
+
+So the layer-j overlaps holding a member are the ways to choose j of their own k sets: C(k, j) of them. For this guest that is C(2, 1) = 2 in layer 1 and C(2, 2) = 1 in layer 2.
 
 That is what makes n sets no harder than three: only a member's own $k$ matters.
 
@@ -132,7 +134,7 @@ Eighty of the hundred June guests bought an extra, twenty none.
 
 ### Four properties at once
 
-How many of 1 to 1,000 are divisible by none of 2, 3, 5 and 7? The four share no factor, so an overlap is divisibility by their product, and each count is a division with the remainder dropped: 500 are divisible by 2, and 166 by 2 and 3 together.
+How many of 1 to 1,000 are divisible by none of 2, 3, 5 and 7? The four share no factor, so an overlap is divisibility by their product, and each count is a division with the remainder dropped. For example, 500 are divisible by 2, and 166 by 2 and 3 together.
 
 | Layer | Overlaps counted | Total |
 | --- | --- | --- |
@@ -355,11 +357,193 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the formula for any number of finite sets, and checks the card's own numbers.
+
+- For any number of finite sets, the size of the union is the layers added and subtracted in turn, starting with a plus.
+- A member in k sets, for any k of 1 or more, is counted C(k, 1) − C(k, 2) + C(k, 3) − … times: exactly 1.
+- Inside a finite pool holding all the sets, the count in none of them is the pool minus that union.
+- The hotel's layers are 120, 45 and 5, so 80 guests bought an extra and 20 none. The three mistakes come out at 120, 75 and 70.
+- Sieving 1 to 1,000 by 2, 3, 5 and 7 leaves 228, both by layers and by testing every number.
+- Sieving by 2, 3 and 5 leaves 266, which matches 33 × 8 + 2. Of the first 30 numbers, 8 escape.
+
+Building the hotel roster guest by guest, and testing every number for the 266, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 152 lines</summary>
+
+```lean
+-- Inclusion-exclusion for any number of sets: for finite sets A₁, …, Aₙ the size of their union is S₁ − S₂ + S₃ − ⋯ ± Sₙ, where Sⱼ adds the sizes of all j-at-a-time overlaps, because a member of k ≥ 1 sets is counted C(k, 1) − C(k, 2) + ⋯ = 1 time.
+import Mathlib.Data.Set.Card
+import Mathlib.Data.Finset.Powerset
+import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.Ring.Int
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Tactic.NormNum
+
+import Mathlib.Combinatorics.Enumerative.InclusionExclusion
+import Mathlib.Data.Nat.Choose.Sum
+
+open Finset
+
+/-- The intersection of the sets indexed by a nonempty `t`, as a `Finset` infimum. -/
+lemma ie_helper_inter_ncard {α : Type*} [DecidableEq α] {n : ℕ} (A : Fin n → Set α) (hA : ∀ i, (A i).Finite)
+    (t : Finset (Fin n)) (ht : t.Nonempty) :
+    ((t.inf' ht (fun i => (hA i).toFinset)).card : ℤ) = ((⋂ i ∈ t, A i).ncard : ℤ) := by
+  rw [← Set.ncard_coe_finset]
+  congr 2
+  ext x
+  simp [Finset.mem_inf']
+
+
+/-- **Inclusion-exclusion for `n` sets.** For finite sets `A₁, …, Aₙ`, let layer `Sⱼ` add up the
+sizes `|A_{i₁} ∩ ⋯ ∩ A_{iⱼ}|` over every choice of `j` of the sets. Then the number of members in at
+least one set is `|A₁ ∪ ⋯ ∪ Aₙ| = S₁ − S₂ + S₃ − ⋯ + (−1)^(n+1) Sₙ`: add the sets, subtract every
+pair, add every triple, flipping the sign down to the last overlap. -/
+theorem card_union_eq_alternating_sum_of_layers {α : Type*} (n : ℕ) (A : Fin n → Set α)
+    (hA : ∀ i, (A i).Finite) :
+    ((⋃ i, A i).ncard : ℤ) =
+      ∑ j ∈ Icc 1 n, (-1 : ℤ) ^ (j + 1) *
+        ∑ t ∈ (univ : Finset (Fin n)).powersetCard j, ((⋂ i ∈ t, A i).ncard : ℤ) := by
+  classical
+  have hU : (⋃ i, A i) = ((univ : Finset (Fin n)).biUnion (fun i => (hA i).toFinset) : Set α) := by
+    ext x; simp
+  rw [hU, Set.ncard_coe_finset, inclusion_exclusion_card_biUnion]
+  rw [Fintype.sum_congr _ (fun t => (-1 : ℤ) ^ (t.1.card + 1) * ((⋂ i ∈ t.1, A i).ncard : ℤ))
+    (fun t => by rw [ie_helper_inter_ncard])]
+  rw [Finset.sum_coe_sort ((univ : Finset (Fin n)).powerset.filter (·.Nonempty))
+    (fun t => (-1 : ℤ) ^ (t.card + 1) * ((⋂ i ∈ t, A i).ncard : ℤ))]
+  rw [← Finset.sum_fiberwise_of_maps_to (g := Finset.card) (t := Icc 1 n)]
+  · apply Finset.sum_congr rfl
+    intro j hj
+    rw [Finset.mul_sum]
+    have hj1 : 1 ≤ j := (Finset.mem_Icc.1 hj).1
+    have hs : ((univ : Finset (Fin n)).powerset.filter (·.Nonempty)).filter (fun t => t.card = j)
+        = (univ : Finset (Fin n)).powersetCard j := by
+      ext t
+      simp only [Finset.mem_filter, Finset.mem_powerset, Finset.mem_powersetCard]
+      constructor
+      · rintro ⟨⟨h1, _⟩, h3⟩; exact ⟨h1, h3⟩
+      · rintro ⟨h1, h3⟩
+        refine ⟨⟨h1, ?_⟩, h3⟩
+        rw [← Finset.card_pos]; omega
+    rw [hs]
+    apply Finset.sum_congr rfl
+    intro t ht
+    rw [(Finset.mem_powersetCard.1 ht).2]
+  · intro t ht
+    simp only [Finset.mem_filter, Finset.mem_powerset] at ht
+    rw [Finset.mem_Icc]
+    refine ⟨Finset.card_pos.2 ht.2, ?_⟩
+    simpa using Finset.card_le_card ht.1
+
+/-- **One member's count.** A member that lies in exactly `k` of the sets, with `k` at least 1, is
+counted `C(k, 1) − C(k, 2) + C(k, 3) − ⋯ + (−1)^(k+1) C(k, k)` times by the layers, and that
+alternating sum is always exactly 1. -/
+theorem alternating_sum_choose_eq_one (k : ℕ) (hk : 1 ≤ k) :
+    ∑ j ∈ Icc 1 k, (-1 : ℤ) ^ (j + 1) * (k.choose j : ℤ) = 1 := by
+  have h := Int.alternating_sum_range_choose (n := k)
+  rw [ite_eq_right_iff.2 (fun h0 => absurd h0 (by omega))] at h
+  have hr : range (k + 1) = insert 0 (Icc 1 k) := by
+    ext x; simp; omega
+  rw [hr, Finset.sum_insert (by simp)] at h
+  have h2 : ∑ j ∈ Icc 1 k, (-1 : ℤ) ^ (j + 1) * (k.choose j : ℤ)
+      = - ∑ j ∈ Icc 1 k, (-1 : ℤ) ^ j * (k.choose j : ℤ) := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  rw [h2]
+  simp at h
+  linarith
+
+/-- **The sieve: members in none of the sets.** Inside a finite pool `P` holding the sets
+`A₁, …, Aₙ`, the members in none of them number `|P| − S₁ + S₂ − S₃ + ⋯ + (−1)ⁿ Sₙ`, the pool
+minus the union. -/
+theorem card_pool_diff_union_eq_sieve {α : Type*} (n : ℕ) (P : Set α) (hP : P.Finite)
+    (A : Fin n → Set α) (hAP : ∀ i, A i ⊆ P) :
+    ((P \ ⋃ i, A i).ncard : ℤ) =
+      (P.ncard : ℤ) + ∑ j ∈ Icc 1 n, (-1 : ℤ) ^ j *
+        ∑ t ∈ (univ : Finset (Fin n)).powersetCard j, ((⋂ i ∈ t, A i).ncard : ℤ) := by
+  have hU : (⋃ i, A i) ⊆ P := Set.iUnion_subset hAP
+  have hA : ∀ i, (A i).Finite := fun i => hP.subset (hAP i)
+  have hUf : (⋃ i, A i).Finite := hP.subset hU
+  have h1 := card_union_eq_alternating_sum_of_layers n A hA
+  have h2 : (P \ ⋃ i, A i).ncard + (⋃ i, A i).ncard = P.ncard := by
+    rw [← Set.ncard_union_eq Set.disjoint_sdiff_left (hP.sdiff) hUf, Set.sdiff_union_of_subset hU]
+  have h3 : ∑ j ∈ Icc 1 n, (-1 : ℤ) ^ j *
+        ∑ t ∈ (univ : Finset (Fin n)).powersetCard j, ((⋂ i ∈ t, A i).ncard : ℤ)
+      = - ∑ j ∈ Icc 1 n, (-1 : ℤ) ^ (j + 1) *
+        ∑ t ∈ (univ : Finset (Fin n)).powersetCard j, ((⋂ i ∈ t, A i).ncard : ℤ) := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  rw [h3, ← h1]
+  have h2' : ((P \ ⋃ i, A i).ncard : ℤ) + ((⋃ i, A i).ncard : ℤ) = (P.ncard : ℤ) := by
+    exact_mod_cast h2
+  linarith
+
+-- The hotel: layers 50 + 40 + 30 = 120, 20 + 15 + 10 = 45, and 5; union 120 − 45 + 5 = 80; none 20.
+example : (50 + 40 + 30 : ℤ) = 120 ∧ (20 + 15 + 10 : ℤ) = 45 ∧ (120 - 45 + 5 : ℤ) = 80 ∧
+    (100 - 80 : ℤ) = 20 := by norm_num
+
+-- The three mistakes: stop after adding 120, stop after the pairs 75, subtract the triple 70.
+example : (120 - 45 : ℤ) = 75 ∧ (120 - 45 - 5 : ℤ) = 70 := by norm_num
+
+-- One member's count off Pascal's triangle: 1; 2 − 1; 3 − 3 + 1; 4 − 6 + 4 − 1 all equal 1.
+example : (1 : ℤ) = 1 ∧ (2 - 1 : ℤ) = 1 ∧ (3 - 3 + 1 : ℤ) = 1 ∧ (4 - 6 + 4 - 1 : ℤ) = 1 := by
+  norm_num
+
+-- Overlaps holding the breakfast-and-parking guest: C(2, 1) = 2 in layer 1, C(2, 2) = 1 in layer 2.
+example : Nat.choose 2 1 = 2 ∧ Nat.choose 2 2 = 1 := by decide
+
+-- Layers hold C(n, j) counts, 2ⁿ − 1 in all: 7 for three sets, 15 for four, 31 for five.
+example : Nat.choose 3 1 + Nat.choose 3 2 + Nat.choose 3 3 = 7 ∧ 2 ^ 4 - 1 = 15 ∧
+    2 ^ 5 - 1 = 31 := by decide
+
+-- Sieve 1 to 1000 by 2, 3, 5, 7: layers 1175, 478, 79, 4; union 772; none 228.
+example : 1000 / 2 + 1000 / 3 + 1000 / 5 + 1000 / 7 = 1175 ∧
+    1000 / 6 + 1000 / 10 + 1000 / 14 + 1000 / 15 + 1000 / 21 + 1000 / 35 = 478 ∧
+    1000 / 30 + 1000 / 42 + 1000 / 70 + 1000 / 105 = 79 ∧ 1000 / 210 = 4 ∧
+    (1175 - 478 + 79 - 4 : ℤ) = 772 ∧ (1000 - 772 : ℤ) = 228 := by norm_num
+
+-- The same 228, by testing every number from 1 to 1000.
+example : ((Icc 1 1000).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x ∧ ¬ 7 ∣ x)).card = 228 := by
+  decide +kernel
+
+-- Sieve 1 to 1000 by 2, 3, 5: layers 1033, 332, 33; union 734; none 266 = 33 × 8 + 2.
+example : 1000 / 2 + 1000 / 3 + 1000 / 5 = 1033 ∧ 1000 / 6 + 1000 / 10 + 1000 / 15 = 332 ∧
+    1000 / 30 = 33 ∧ (1033 - 332 + 33 : ℤ) = 734 ∧ (1000 - 734 : ℤ) = 266 ∧
+    33 * 8 + 2 = 266 := by norm_num
+
+-- Euler's totient by the sieve: 8 of 1 to 30 dodge 2, 3 and 5.
+example : ((Icc 1 30).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x)).card = 8 := by decide
+
+#print axioms ie_helper_inter_ncard
+#print axioms card_union_eq_alternating_sum_of_layers
+#print axioms alternating_sum_choose_eq_one
+#print axioms card_pool_diff_union_eq_sieve
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ie_helper_inter_ncard' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_union_eq_alternating_sum_of_layers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'alternating_sum_choose_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_pool_diff_union_eq_sieve' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the ledger and the two sieves, so expect one to stop the program.
 > - **Break the sign.** In `union`, change `(-1) ** j` to `(-1) ** (j + 1)`: every layer flips and the hotel reads −80.
-> - **Stop early.** Make `union` return the first layer minus the second: 75, below the truth — a Bonferroni bound.
+> - **Stop early.** Make `union` return the first layer minus the second: 75, below the truth — a Bonferroni bound, a cut-short sum that is sure to fall on one side of the answer ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 > - **Sieve by 2, 3, 5, 7, 11.** Add 11 to the four-divisor list: 31 overlap counts replace 15, and the roads still agree, on 207 survivors.
 
 ---

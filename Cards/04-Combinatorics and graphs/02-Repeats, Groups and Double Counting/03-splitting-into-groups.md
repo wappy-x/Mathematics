@@ -37,7 +37,11 @@ Nine players lettered A to I. Each of the 280 unnamed splits can be pinned to nu
 
 ## The formula
 
-Notation first, in words. Factorial is written with an exclamation mark: 9! means 1 × 2 × 3 × … × 9, the number of ways to line nine distinct things up. This count gets a notation of its own: write it $C(n; n_1, n_2, \ldots, n_k)$, the **multinomial coefficient**, the semicolon saying that a list of pile sizes follows, not one choice. Books often stack the sizes under the n instead. The binomial coefficient $C(n, k)$, "n choose k", is its two-pile case.
+Notation first, in words. Factorial is written with an exclamation mark: 9! means 1 × 2 × 3 × … × 9, the number of ways to line nine distinct things up ([Factorials](../01-Counting%20Principles/03-factorial.md)).
+
+The splitting count gets a notation of its own: write it $C(n; n_1, n_2, \ldots, n_k)$, the **multinomial coefficient**, the semicolon saying that a list of pile sizes follows, not one choice. Books often stack the sizes under the n instead.
+
+The binomial coefficient $C(n, k)$, "n choose k", is its two-pile case: the number of ways to pick k of n things when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 $$C(n; n_1, n_2, \ldots, n_k) = \frac{n!}{n_1!\,n_2!\cdots n_k!}$$
 
@@ -64,7 +68,7 @@ All three piles are trios, so $m$ is 3 and the count is 1,680 / 6 = 280. With ev
 
 - **The things being split are distinct.** Nine named players. Where items repeat, the job is [Arranging with repeats](01-multiset-permutations.md).
 - **The sizes are fixed in advance and add up to $n$.** Let them vary and the question becomes how many size lists exist, which is [Stars and bars](02-stars-and-bars.md).
-- **Order inside a pile does not count.** Rank each table first, second and third board and the divisions are wrong: the count is 362,880.
+- **Order inside a pile does not count.** Rank each table's three as first, second and third board (an order of play) and the divisions are wrong: the count is 362,880.
 - **Only equal-sized unnamed piles get the extra division.** Piles of 4, 3 and 2 cannot be mistaken for each other, so named and unnamed agree at 1,260; dividing anyway gives 210.
 
 ---
@@ -150,7 +154,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads with no arithmetic in common reach the named count: hand out table numbers and keep the handouts that fill every table, divide factorials, or fill one table at a time from a Pascal's triangle the script builds. Two reach the unnamed count: collect the distinct splits the first road throws up, or divide the factorial count by 6. Tables of 4, 3 and 2 run the same machinery.
+Nothing is imported. Three roads with no arithmetic in common reach the named count: hand out table numbers and keep the handouts that fill every table, divide factorials, or fill one table at a time from a Pascal's triangle the script builds. Pascal's triangle is the table of n-choose-k numbers in which each entry is the sum of the two above it ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
+
+Two reach the unnamed count: collect the distinct splits the first road throws up, or divide the factorial count by 6. Tables of 4, 3 and 2 run the same machinery.
 
 ### Python
 

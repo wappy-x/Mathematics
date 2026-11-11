@@ -84,7 +84,7 @@ Fix a set of n options and write S(k) for the strings of length k drawn from it.
 
 **Base, k = 0.** There is one way to write nothing, so S(0) has 1 member and n^0 = 1.
 
-**Step.** Suppose S(k−1) has n^(k−1) members. Match each string in S(k) to the pair made of its first k−1 entries and its last entry. One-to-one: two strings with the same front and the same last entry agree entry by entry. Onto: any short string and any option glue into a string of length k, because nothing restricts the last entry — the step that fails the moment repeats are banned. So S(k) has as many members as those pairs, n^(k−1) × n = n^k, and the induction closes. It never asked what the options were, so it holds for digits, letters and the words "in" and "out" alike.
+**Step.** Suppose S(k−1) has n^(k−1) members. Match each string in S(k) to the pair made of its first k−1 entries and its last entry. One-to-one (no two strings give the same pair): two strings with the same front and the same last entry agree entry by entry. Onto (every pair comes from some string): any short string and any option glue into a string of length k, because nothing restricts the last entry — the step that fails the moment repeats are banned. So S(k) has as many members as those pairs, n^(k−1) × n = n^k, and the induction closes. It never asked what the options were, so it holds for digits, letters and the words "in" and "out" alike.
 
 </details>
 
@@ -103,6 +103,8 @@ A 20-player squad must name a travelling party. Each player is in or out, and th
 That is the count wing 01 reaches for the subsets of a set ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)): every subset is a yes-or-no string, and every yes-or-no string a subset.
 
 A second road reaches the same total without multiplying. Split the parties by size: nobody, one player, two, out to twenty. Each count is the sum of two from the row above, since a party of a given size either takes the newest player or leaves him behind, so the row is built by addition alone. Totalled for 20 players it lands on 1,048,576. Splitting by size is [Combinations, n choose k](05-n-choose-k.md).
+
+Stack these rows, one for each squad size from 0 players up, and they form the sum triangle the code builds. Its usual name is Pascal's triangle ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
 
 ---
 
@@ -335,6 +337,112 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves all three counts for any number of options and positions, and checks the card's worked numbers.
+
+- When each of k positions is filled from the same n options, repeats allowed, there are n^k strings.
+- A set of k members has n^k functions into a set of n members.
+- A set of n members has 2^n subsets, the empty one and the whole set included.
+
+Building every string one at a time and counting the list is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 80 lines</summary>
+
+```lean
+-- Strings with repetition: the strings of length k over n options number n^k, the functions from a k-member set into an n-member set number n^k, and the subsets of an n-member set number 2^n.
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fintype.Powerset
+import Mathlib.Data.Fintype.CardEmbedding
+import Mathlib.Data.Nat.Choose.Sum
+
+open Finset
+
+/-- When each of k positions is filled from the same n options and repeats are allowed, the
+number of strings is n multiplied by itself k times: the strings of length k (lists with exactly
+k entries) drawn from a finite set of options number (number of options) ^ k. -/
+theorem card_strings_eq_pow {α : Type*} [Fintype α] (k : ℕ) :
+    Fintype.card (List.Vector α k) = Fintype.card α ^ k := by
+  exact card_vector k
+
+/-- A string is a function: a set of k members has n^k functions into a set of n members. -/
+theorem card_functions_eq_pow {α β : Type*} [DecidableEq α] [Fintype α] [Fintype β] :
+    Fintype.card (α → β) = Fintype.card β ^ Fintype.card α := by
+  exact Fintype.card_fun
+
+/-- Subsets are strings of yes and no: a set of n members (the squad) has 2^n subsets (the
+travelling parties), the empty one and the whole set included. -/
+theorem card_subsets_eq_two_pow {α : Type*} (s : Finset α) :
+    s.powerset.card = 2 ^ s.card := by
+  exact Finset.card_powerset s
+
+-- The small picture: two positions over the digits 0, 1, 2 give 3 × 3 = 9 strings.
+example : (Finset.univ : Finset (Fin 2 → Fin 3)).card = 9 := by decide
+example : Fintype.card (List.Vector (Fin 3) 2) = 9 := by norm_num [card_vector]
+
+-- The empty string: filling no positions can be done exactly one way, so n^0 = 1.
+example : Fintype.card (List.Vector (Fin 10) 0) = 1 := by norm_num [card_vector]
+
+-- PIN stages, 0 to 4 positions: 1, 10, 100, 1,000, 10,000.
+example : (10 : ℕ) ^ 0 = 1 ∧ (10 : ℕ) ^ 1 = 10 ∧ (10 : ℕ) ^ 2 = 100 ∧ (10 : ℕ) ^ 3 = 1000 ∧
+    (10 : ℕ) ^ 4 = 10000 := by norm_num
+
+-- A four-digit PIN: 10 options at each of 4 positions, 10^4 = 10,000 PINs.
+example : Fintype.card (List.Vector (Fin 10) 4) = 10000 := by norm_num [card_vector]
+example : Fintype.card (Fin 4 → Fin 10) = 10000 := by norm_num [Fintype.card_fun]
+
+-- The plate: three letters then three digits, 26^3 × 10^3 = 17,576 × 1,000 = 17,576,000.
+example : Fintype.card (List.Vector (Fin 26) 3) = 17576 := by norm_num [card_vector]
+example : Fintype.card (List.Vector (Fin 10) 3) = 1000 := by norm_num [card_vector]
+example : Fintype.card (List.Vector (Fin 26) 3 × List.Vector (Fin 10) 3) = 17576000 := by
+  norm_num [card_vector]
+
+-- The squad of 20, each player in or out: 2^20 = 1,048,576 travelling parties.
+example : (Finset.univ : Finset (Fin 20)).powerset.card = 1048576 := by
+  norm_num [Finset.card_powerset]
+example : Fintype.card (Fin 20 → Bool) = 1048576 := by norm_num [Fintype.card_fun]
+
+-- The same total by adding only: row 20 of Pascal's triangle totals 1,048,576.
+example : ∑ i ∈ range 21, Nat.choose 20 i = 1048576 := by decide
+example : (List.map (Nat.choose 20) (List.range 6)) = [1, 20, 190, 1140, 4845, 15504] := by decide
+
+-- A 12-player squad both ways: 2^12 = 4,096, and row 12 totals 4,096.
+example : Fintype.card (Fin 12 → Bool) = 4096 := by norm_num [Fintype.card_fun]
+example : ∑ i ∈ range 13, Nat.choose 12 i = 4096 := by decide
+
+-- A byte: 8 positions over 2 options, 2^8 = 256.
+example : Fintype.card (List.Vector Bool 8) = 256 := by norm_num [card_vector]
+
+-- Mistake 1, adding the options: 10 + 10 + 10 + 10 = 40, not 10,000.
+example : 10 + 10 + 10 + 10 = (40 : ℕ) ∧ (40 : ℕ) ≠ 10 ^ 4 := by norm_num
+
+-- Mistake 2, no digit reused: 10 × 9 × 8 × 7 = 5,040 one-to-one PINs, fewer than 10,000.
+example : Fintype.card (Fin 4 ↪ Fin 10) = 5040 := by
+  rw [Fintype.card_embedding_eq]; decide
+example : 10 * 9 * 8 * 7 = (5040 : ℕ) ∧ (5040 : ℕ) < 10 ^ 4 := by norm_num
+
+-- Mistake 3, options and positions swapped: 4^10 = 1,048,576, not 10^4 = 10,000.
+example : (4 : ℕ) ^ 10 = 1048576 ∧ (4 : ℕ) ^ 10 ≠ 10 ^ 4 ∧ (4 : ℕ) ^ 10 = 2 ^ 20 := by norm_num
+
+-- Mistake 4, the plate read as one 36-symbol alphabet: 36^6 = 2,176,782,336, not 17,576,000.
+example : (36 : ℕ) ^ 6 = 2176782336 ∧ (36 : ℕ) ^ 6 ≠ 26 ^ 3 * 10 ^ 3 := by norm_num
+
+#print axioms card_strings_eq_pow
+#print axioms card_functions_eq_pow
+#print axioms card_subsets_eq_two_pow
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'card_strings_eq_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_functions_eq_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_subsets_eq_two_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the PIN's numbers, so expect one to stop the program.
@@ -358,7 +466,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **PINs, passwords and keys.** A four-digit PIN has 10,000 settings, which is why cash machines allow three tries. A cryptographic key is the same count with two options and hundreds of positions, which is why key length is quoted in bits.
+- **PINs, passwords and keys.** A four-digit PIN has 10,000 settings, which is why cash machines allow three tries. A cryptographic key is the same count with two options and hundreds of positions, which is why key length is quoted in bits, one bit for each two-option position.
 - **Plates, postcodes and part numbers.** A registry picks the shape of the code to fit the fleet: three letters then three digits carry 17,576,000 plates, and one more letter multiplies that by 26.
 - **Bytes.** Eight positions over two options: 2^8 = 256, the reason one byte holds 256 values.
 - **Team sheets and order forms.** Any list of in-or-out decisions is a yes-or-no string: the squad of 20 has 1,048,576 travelling parties, and a form with 20 optional extras as many orders.

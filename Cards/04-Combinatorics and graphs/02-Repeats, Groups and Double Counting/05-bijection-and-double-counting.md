@@ -34,7 +34,7 @@ flowchart TB
     T4 --- T5
 ```
 
-Ten lines, so 10 matches. Counted from the teams instead, each of the 5 touches 4 lines: 20 line-ends, two per match. The same story as a grid: 25 cells, 5 blank on the diagonal, 20 filled cells holding 10 matches twice over.
+Ten lines, so 10 matches. Counted from the teams instead, each of the 5 touches 4 lines: 20 line-ends, two per match. The same story as a 5-by-5 grid of team against team: 25 cells, 5 blank on the diagonal where a team meets itself, 20 filled cells holding 10 matches twice over.
 
 ---
 
@@ -52,9 +52,11 @@ $$\lvert A \rvert = d \times \lvert B \rvert$$
 
 **Read it aloud:** a listing running d entries per thing counted is d times too long, so divide by d.
 
-Here A is the 380 slips, B the matches, d is 2. Worked for any number of teams, the two rules give this card's identities:
+Here A is the 380 fixture slips, one per team per opponent, so team 3 holds a slip naming team 11. B is the matches, and d is 2. Worked for any number of teams, the two rules give this card's identities:
 
 $$C(n, 2) = \frac{n(n-1)}{2} \qquad \text{and} \qquad C(n, k) = C(n, n-k)$$
+
+For k, the league later sends 6 of its 20 teams to a playoff: C(20, 6) = 38760 possible sixes, counted in Step 3.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -362,6 +364,90 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves both counting rules for any two finite collections, and both identities for every n and k.
+
+- A rule that is one to one and onto, between two finite collections, makes them the same size.
+- When every member of B is named by exactly d members of A, the same d each time, A holds d times as many as B.
+- With n teams, the matches number C(n, 2) = n(n − 1) / 2.
+- For any k up to n, C(n, k) = C(n, n − k).
+
+It also checks the league's numbers: 380 slips, 190 matches, the five-team picture, 38760 sixes and fourteens, and the mistakes. Listing all 1048576 strings, running the swap over them and the 15 buckets are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 57 lines</summary>
+
+```lean
+-- Bijections and double counting: a one-to-one and onto rule between two finite collections forces equal sizes, a rule naming every target exactly d times makes the first collection d times the second, and these give C(n, 2) = n(n - 1)/2 and C(n, k) = C(n, n - k), with the card's 20-team league numbers checked.
+import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+/-- The card's two counting rules, for any two finite collections `A` and `B` and any rule
+`f` sending each member of `A` to a member of `B`.
+Bijection rule: if `f` is one to one and onto, then `|A| = |B|`.
+Division rule: if every member `b` of `B` is named by exactly `d` members of `A`, the same `d`
+for every `b`, then `|A| = d × |B|`. -/
+theorem bijection_and_double_counting {A B : Type*} [Fintype A] [Fintype B] [DecidableEq B]
+    (f : A → B) :
+    (Function.Bijective f → Fintype.card A = Fintype.card B) ∧
+      (∀ d : ℕ, (∀ b : B, (Finset.univ.filter (fun a => f a = b)).card = d) →
+        Fintype.card A = d * Fintype.card B) := by
+  refine ⟨fun hf => Fintype.card_of_bijective hf, fun d hd => ?_⟩
+  rw [← Finset.card_univ, Finset.card_eq_sum_card_fiberwise (f := f) (t := Finset.univ)
+    (fun _ _ => Finset.mem_univ _)]
+  simp only [hd, Finset.sum_const, Finset.card_univ]
+  exact Nat.mul_comm _ _
+
+/-- Every team plays every other team once: with `n` teams the matches number
+`C(n, 2) = n(n − 1) / 2`. -/
+theorem choose_two_eq_half_n_mul_pred (n : ℕ) : n.choose 2 = n * (n - 1) / 2 := by
+  exact Nat.choose_two_right n
+
+/-- Choosing who is in is choosing who is out: for `k` of `n`, `C(n, k) = C(n, n − k)`. -/
+theorem choose_eq_choose_sub (n k : ℕ) (hk : k ≤ n) : n.choose k = n.choose (n - k) := by
+  exact (Nat.choose_symm hk).symm
+
+-- The 20-team league: 20 teams, 19 opponents each, 380 fixture slips, 2 per match, 190 matches.
+example : 20 * 19 = 380 := by decide
+example : 380 / 2 = 190 ∧ 380 = 2 * 190 := by decide
+example : Nat.choose 20 2 = 190 := by decide
+example : 20 * (20 - 1) / 2 = 190 := by decide
+-- The slips and the matches, listed as pairs of teams and counted.
+example : ((Finset.univ : Finset (Fin 20 × Fin 20)).filter (fun p => p.1 ≠ p.2)).card = 380 := by
+  decide +kernel
+example : ((Finset.univ : Finset (Fin 20 × Fin 20)).filter (fun p => p.1 < p.2)).card = 190 := by
+  decide +kernel
+-- The five-team picture: 25 cells, 5 blank, 20 line-ends, 10 matches.
+example : 5 * 5 = 25 ∧ 5 * 5 - 5 = 20 ∧ 5 * 4 = 20 ∧ 20 / 2 = 10 := by decide
+example : Nat.choose 5 2 = 10 := by decide
+-- Matches for 2, 3, 4, 5 and 6 teams: 1, 3, 6, 10, 15.
+example : Nat.choose 2 2 = 1 ∧ Nat.choose 3 2 = 3 ∧ Nat.choose 4 2 = 6 ∧
+    Nat.choose 5 2 = 10 ∧ Nat.choose 6 2 = 15 := by decide
+-- The playoff six and the fourteen left out: 38760 each.
+example : Nat.choose 20 6 = 38760 := by decide
+example : Nat.choose 20 14 = 38760 := by decide
+-- The mistakes: stopping at the slips gives 380; letting a team play itself gives 400 slips, 200 matches.
+example : 20 * 20 = 400 ∧ 400 / 2 = 200 := by decide
+
+#print axioms bijection_and_double_counting
+#print axioms choose_two_eq_half_n_mul_pred
+#print axioms choose_eq_choose_sub
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bijection_and_double_counting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'choose_two_eq_half_n_mul_pred' depends on axioms: [propext]
+'choose_eq_choose_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

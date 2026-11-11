@@ -39,7 +39,13 @@ Arrows in a row are stages and multiply; arrows forking from one box are cases a
 
 ## The formula
 
-The notation first, in words. A **set** is a collection of distinct things, written in braces: the breads are {rye, white, sourdough, flat}. Bars count it: $\lvert A\rvert$ is how many members the set $A$ has, read "the size of A". Two sets combine in two ways, both met earlier ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the **union** $A \cup B$ holds everything in either, the **intersection** $A \cap B$ only what is in both. The empty set, $\varnothing$, has no members. And $A \times B$ is the set of **ordered pairs**: a member of $A$, then a member of $B$ ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
+The notation first, in words.
+
+- A **set** is a collection of distinct things, written in braces: the breads are {rye, white, sourdough, flat}.
+- Bars count it: $\lvert A\rvert$ is how many members the set $A$ has, read "the size of A".
+- Two sets combine in two ways, both met earlier ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the **union** $A \cup B$ holds everything in either, the **intersection** $A \cap B$ only what is in both.
+- The empty set, $\varnothing$, has no members.
+- $A \times B$ is the set of **ordered pairs**: a member of $A$, then a member of $B$ ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
 
 The rule of product:
 
@@ -102,6 +108,8 @@ The argument never said what the stages were. A further stage of size $n_3$ make
 
 <details>
 <summary>Detailed proof: any number of stages, by induction</summary>
+
+Induction proves a claim for one stage, then shows that each added stage keeps it true ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 **Claim.** For stages of sizes $n_1$, $n_2$ and so on, where a stage's options number the same whatever was picked before, the completed choices number $n_1 \times n_2 \times \cdots$.
 
@@ -345,6 +353,100 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves both rules for every set with a size, not just the lunch deal.
+
+- Picking one member of $A$ and then one of $B$ gives $\lvert A\rvert \times \lvert B\rvert$ ordered pairs.
+- When two cases share no member, $\lvert A \cup B\rvert = \lvert A\rvert + \lvert B\rvert$.
+- A second stage whose options change with the first pick still multiplies, if every branch offers the same number.
+- Any number of stages, one pick from each, gives the product of the stage sizes.
+
+Lean also checks the card's numbers, from 63 lunches to the four mistakes; listing every lunch is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 67 lines</summary>
+
+```lean
+-- The rules of sum and product: for finite sets, picks made in stages multiply (also when a stage's options change with earlier picks but always number the same), cases that share nothing add, and the card's lunch, captain and rye-or-chilli numbers come out as it says.
+import Mathlib.Data.Finset.Prod
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Sigma
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+
+/-- The rules of sum and product, for any finite sets.
+Rule of product: taking one member of `A` and then one member of `B` (an ordered pair,
+a member of `A × B`) can be done in `|A| × |B|` ways.
+Rule of sum: when two cases `C` and `D` share no member, everything in either numbers
+`|C| + |D|`. -/
+theorem rules_of_sum_and_product {α β γ : Type*} [DecidableEq γ]
+    (A : Finset α) (B : Finset β) (C D : Finset γ) :
+    (A ×ˢ B).card = A.card * B.card ∧
+      (Disjoint C D → (C ∪ D).card = C.card + D.card) := by
+  exact ⟨Finset.card_product A B, fun h => Finset.card_union_of_disjoint h⟩
+
+/-- A second stage whose options depend on the first pick still multiplies, as long as every
+first pick leaves the same number `n` of options (the card's captain and vice-captain:
+each of 20 captains leaves 19 vice-captains). The completed two-stage choices number
+`|A| × n`. -/
+theorem equal_branches_multiply {α : Type*} {β : α → Type*}
+    (A : Finset α) (B : (a : α) → Finset (β a)) (n : ℕ)
+    (hB : ∀ a ∈ A, (B a).card = n) :
+    (A.sigma B).card = A.card * n := by
+  rw [Finset.card_sigma, Finset.sum_const_nat hB]
+
+/-- Any number `k` of stages: picking one option from each stage's set, in order, can be
+done in as many ways as the product of the stage sizes. Each further stage adds a factor. -/
+theorem stages_multiply {k : ℕ} {β : Fin k → Type*} [∀ i, DecidableEq (β i)]
+    (S : (i : Fin k) → Finset (β i)) :
+    (Fintype.piFinset S).card = ∏ i, (S i).card := by
+  exact Fintype.card_piFinset S
+
+-- The lunch deal: 4 breads, 5 fillings, 3 sauces, or one of 3 soups.
+-- Breads and fillings: 20 pairs.
+example : (Finset.range 4 ×ˢ Finset.range 5).card = 20 := by decide
+-- Sandwiches: 4 × 5 × 3 = 60.
+example : (Finset.range 4 ×ˢ Finset.range 5 ×ˢ Finset.range 3).card = 60 := by decide
+example : 4 * 5 * 3 = 60 := by decide
+-- Lunches: a sandwich or a soup, never both, 60 + 3 = 63.
+example : Fintype.card ((Fin 4 × Fin 5 × Fin 3) ⊕ Fin 3) = 63 := by decide
+example : 60 + 3 = 63 := by decide
+-- Captain then a different vice-captain from 20 players: 20 × 19 = 380.
+set_option maxRecDepth 20000 in
+example : ((Finset.range 20 ×ˢ Finset.range 20).filter (fun p => p.1 ≠ p.2)).card = 380 := by
+  decide
+example : 20 * 19 = 380 := by decide
+-- Rye sandwiches 15, chilli sandwiches 20, both 5, rye or chilli 30, not 15 + 20 = 35.
+example :
+    ((Finset.univ : Finset (Fin 4 × Fin 5 × Fin 3)).filter (fun s => s.1 = 0)).card = 15 ∧
+      ((Finset.univ : Finset (Fin 4 × Fin 5 × Fin 3)).filter (fun s => s.2.2 = 0)).card = 20 ∧
+      ((Finset.univ : Finset (Fin 4 × Fin 5 × Fin 3)).filter
+        (fun s => s.1 = 0 ∧ s.2.2 = 0)).card = 5 ∧
+      ((Finset.univ : Finset (Fin 4 × Fin 5 × Fin 3)).filter
+        (fun s => s.1 = 0 ∨ s.2.2 = 0)).card = 30 := by
+  decide
+example : 15 + 20 = 35 := by decide
+-- The mistakes: stages added give 12, cases multiplied give 180, a vice-captain from all 20 gives 400.
+example : 4 + 5 + 3 = 12 := by decide
+example : 60 * 3 = 180 := by decide
+example : 20 * 20 = 400 := by decide
+
+#print axioms rules_of_sum_and_product
+#print axioms equal_branches_multiply
+#print axioms stages_multiply
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rules_of_sum_and_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'equal_branches_multiply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stages_multiply' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The first keeps both roads in step; the others break one road, and the run stops.
@@ -357,7 +459,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading "and" as a case and "or" as a stage.** The board says bread *and* filling *and* sauce, then sandwich *or* soup. Stages joined by "and" multiply; cases joined by "or" add. Swap them and 60 becomes 12, 63 becomes 180.
+> **Reading "and" as a case and "or" as a stage.** The board says bread *and* filling *and* sauce, then sandwich *or* soup. Stages joined by "and" multiply; cases joined by "or" add. Add the stages and 60 becomes 12; multiply the cases and 63 becomes 180.
 >
 > - **Adding overlapping groups.** 15 rye plus 20 chilli is 35, not 30: the 5 that are both get counted twice.
 > - **Keeping the stage size when the stage shrinks.** 20 × 20 = 400 names a captain who is also vice-captain; the count is 380.
