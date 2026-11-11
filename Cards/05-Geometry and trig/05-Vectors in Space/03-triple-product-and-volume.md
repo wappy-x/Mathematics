@@ -8,7 +8,9 @@
 
 A shipping crate comes off a forklift knocked out of square. Its floor is now a slanted parallelogram and all four corner posts lean the same way, but every face is still flat. How much does it hold?
 
-Measure three edges from one bottom corner in decimetres (tenths of a metre): a cube one decimetre on a side holds one litre. Edge a runs 20 dm along the floor. Edge b crosses the floor, 15 dm deep and 5 dm sideways. Edge c, a corner post, climbs 12 dm while leaning 4 dm sideways and 3 dm back. Multiplying the three edge lengths gives 4110.96 litres. The crate holds 3600 litres.
+Measure three edges from one bottom corner in decimetres (tenths of a metre): a cube one decimetre on a side holds one litre. Edge a runs 20 dm along the floor. Edge b crosses the floor, 15 dm deep and 5 dm sideways. Edge c, a corner post, climbs 12 dm while leaning 4 dm sideways and 3 dm back.
+
+Multiplying the three edge lengths gives 4110.96 litres. The crate holds 3600 litres.
 
 A box whose six faces are parallelograms is a **parallelepiped**. The triple product turns its three edges into its volume, signed by the edges' order. Zero means the edges lie flat, which tests whether four points, such as a lid's corners, share a plane.
 
@@ -26,7 +28,9 @@ Scale 1 dm = 7 units across and up; depth at half scale on a 30° slant. Dashed 
 
 ## The formula
 
-Notation first, in words. An edge is a vector, a list of three numbers: how far it runs sideways, back and up. Its entries are $a_1$, $a_2$, $a_3$, position labels, not powers. The dot · is the dot product: pair the entries, multiply, add. The cross × is the cross product of [Cross product](01-cross-product-and-oriented-area.md): $a \times b$ is an arrow square to both edges whose length is the area of the parallelogram they span.
+Notation first, in words. An edge is a vector, a list of three numbers: how far it runs sideways, back and up. Its entries are $a_1$, $a_2$, $a_3$, position labels, not powers.
+
+The dot · is the dot product: pair the entries, multiply, add. The cross × is the cross product of [Cross product](01-cross-product-and-oriented-area.md): $a \times b$ is an arrow square to both edges whose length is the area of the parallelogram they span.
 
 $$V = (a \times b) \cdot c$$
 
@@ -65,7 +69,7 @@ $$\big((Q - P) \times (R - P)\big) \cdot (S - P) = 0$$
 
 ### Step 0: a leaning box holds floor area times height
 
-Slice the crate into thin horizontal layers. Each is a copy of the floor, slid sideways by the lean, so the crate holds what an upright crate on the same floor and height holds: floor area times height. Euclid proves it for boxes (*Elements* XI.31), as does [Prisms and cylinders](../02-Circles%20and%20Solids/04-prisms-and-cylinders.md). The task is to get both from the edges.
+Slice the crate into thin horizontal layers. Each is a copy of the floor, slid sideways by the lean. So the crate holds what an upright crate on the same floor and height holds: floor area times height. Euclid proves it for boxes (*Elements* XI.31), as does [Prisms and cylinders](../02-Circles%20and%20Solids/04-prisms-and-cylinders.md). The task is to get both from the edges.
 
 ### Step 1: the cross product delivers the floor
 
@@ -73,7 +77,7 @@ The floor is the parallelogram on a and b. Their cross product, (0, 0, 300), poi
 
 ### Step 2: the dot product picks out the height
 
-The dot product of two arrows is their lengths times the cosine of the angle between them. The post c is 13 dm long, and its length times the cosine of its angle with the floor arrow is its rise square to the floor, the height 12 dm. So $(a \times b) \cdot c$ = floor area × height = 300 × 12 = 3600.
+The dot product of two arrows is their lengths times the cosine of the angle between them ([Law of cosines](../03-Trigonometry/06-law-of-cosines.md)). The post c is 13 dm long, and its length times the cosine of its angle with the floor arrow is its rise square to the floor, the height 12 dm. So $(a \times b) \cdot c$ = floor area × height = 300 × 12 = 3600.
 
 The sign comes free. Curl the right hand's fingers from a towards b; the thumb points along $a \times b$. A post rising on the thumb's side gives a positive height. Swapping a and b turns the arrow over: −3600, same box, opposite order.
 
@@ -135,7 +139,15 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The capacity is found three ways: cross then dot; a determinant expanded along its top row; and a count of quarter-decimetre cubes whose centres fall inside the crate, tested by undoing the lean one edge at a time (this works because a lies along the first axis and b in the floor). A second box, with no zero in its top row, checks the determinant where every sign counts. The plane test runs two ways: the triple product, and walking from P along two edges to stand under S and reading the height left over. That leftover times the base's shadow on the floor must equal the triple product, for the level lid and for the leaning front panel with one corner pushed 0.5 dm forward.
+Nothing is imported. The capacity is found three ways:
+
+- cross then dot;
+- a determinant expanded along its top row;
+- a count of quarter-decimetre cubes whose centres fall inside the crate, tested by undoing the lean one edge at a time (this works because a lies along the first axis and b in the floor).
+
+A second box, with no zero in its top row, checks the determinant where every sign counts.
+
+The plane test runs two ways: the triple product, and walking from P along two edges to stand under S and reading the height left over. That leftover times the base's shadow on the floor must equal the triple product, for the level lid and for the leaning front panel with one corner pushed 0.5 dm forward.
 
 ### Python
 
@@ -332,6 +344,149 @@ ALL CHECKS PASS
 
 The outputs agree line for line. The cube count is exact here: every row of cubes across the crate spans 20 dm and every layer 15 dm, so each layer holds 80 × 60 cubes whatever the lean. The front panel's gap, 0.485 dm, is less than the 0.5 dm push because the panel leans.
 
+### Lean
+
+Lean proves the formula for every three edges and every four points in space, and checks the crate's numbers exactly.
+
+- For any three edges from one corner, the slanted box on them holds the triple product with its sign dropped, on square axes.
+- The triple product $(a \times b) \cdot c$ is the determinant with rows a, b, c.
+- Cycling the edges to the order b, c, a keeps the triple product; swapping two edges flips its sign.
+- Any four points P, Q, R, S share a plane exactly when the triple product of the edges from P is zero.
+
+The cube count, decimal lengths such as 15.811388, and the leftover-height plane test are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 116 lines</summary>
+
+```lean
+-- Triple product: for any three edges a, b, c from one corner in space, the slanted box they span holds |(a × b) · c| cubic units, (a × b) · c is the determinant with rows a, b, c, cycling the edges keeps it while swapping two flips its sign, four points share a plane exactly when the triple product of the edges from one of them is zero, and the card's crate numbers come out as it says.
+import Mathlib.LinearAlgebra.CrossProduct
+import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+import Mathlib.Data.Fin.VecNotation
+
+/-! An edge in space is a list of three real numbers, `a : Fin 3 → ℝ` (sideways, back, up),
+and `![20, 0, 0]` is the edge (20, 0, 0). Mathlib's `a ⨯₃ b` (`crossProduct`) is the card's
+cross product and `u ⬝ᵥ v` its dot product. `Matrix.det ![a, b, c]` is the determinant of the
+3 by 3 matrix whose rows are `a`, `b`, `c`. `parallelepiped ![a, b, c]` is the slanted box on
+the three edges from the corner 0: every point `s a + t b + u c` with `s`, `t`, `u` between 0
+and 1, so its faces are flat and all three edges leave one shared corner. `volume` is the
+ordinary volume on square axes (Lebesgue measure on `Fin 3 → ℝ`), in the edges' unit cubed.
+`Coplanar ℝ {P, Q, R, S}` says the four points lie in one plane. -/
+
+open MeasureTheory Matrix
+
+/-- The triple product is the box's volume and a determinant. For any three edges `a`, `b`,
+`c` leaving one corner, the slanted box (parallelepiped) on them holds `|(a × b) · c|` cubic
+units: the triple product with its sign dropped. And the triple product itself,
+`(a × b) · c`, is the determinant of the 3 by 3 matrix with rows `a`, `b`, `c`. -/
+theorem triple_product_is_box_volume_and_determinant (a b c : Fin 3 → ℝ) :
+    volume (parallelepiped ![a, b, c]) = ENNReal.ofReal |(a ⨯₃ b) ⬝ᵥ c| ∧
+      (a ⨯₃ b) ⬝ᵥ c = Matrix.det ![a, b, c] := by
+  have hdet : (a ⨯₃ b) ⬝ᵥ c = Matrix.det ![a, b, c] := by
+    rw [dotProduct_comm, triple_product_permutation, triple_product_eq_det]
+  refine ⟨?_, hdet⟩
+  have h : (Pi.basisFun ℝ (Fin 3)).addHaar = volume := by
+    rw [← addHaarMeasure_eq_volume_pi, ← Module.Basis.parallelepiped_basisFun, ← Module.Basis.addHaar_def]
+  rw [← h, Measure.addHaar_parallelepiped, Pi.basisFun_det_apply, hdet]
+  rfl
+
+/-- The sign is the order. For any three edges, cycling them to the order `b`, `c`, `a`
+keeps the triple product, and swapping two edges (`b` before `a`) flips its sign. -/
+theorem triple_product_cycle_keeps_swap_flips (a b c : Fin 3 → ℝ) :
+    (b ⨯₃ c) ⬝ᵥ a = (a ⨯₃ b) ⬝ᵥ c ∧ (b ⨯₃ a) ⬝ᵥ c = -((a ⨯₃ b) ⬝ᵥ c) := by
+  constructor <;>
+  · simp [cross_apply, dotProduct, Fin.sum_univ_succ]
+    ring
+
+/-- Zero means flat. Any four points `P`, `Q`, `R`, `S` in space lie in one plane exactly
+when the triple product of the edges from `P` is zero:
+`((Q − P) × (R − P)) · (S − P) = 0`. -/
+theorem four_points_share_a_plane_iff_triple_product_zero (P Q R S : Fin 3 → ℝ) :
+    Coplanar ℝ ({P, Q, R, S} : Set (Fin 3 → ℝ)) ↔ ((Q - P) ⨯₃ (R - P)) ⬝ᵥ (S - P) = 0 := by
+  set v : Fin 3 → Fin 3 → ℝ := ![Q - P, R - P, S - P] with hv
+  have hspan : vectorSpan ℝ ({P, Q, R, S} : Set (Fin 3 → ℝ)) = Submodule.span ℝ (Set.range v) := by
+    rw [vectorSpan_eq_span_vsub_set_right ℝ (Set.mem_insert P _)]
+    simp [hv, Set.image_insert_eq, Matrix.range_cons, Matrix.range_empty, Submodule.span_insert_zero]
+    congr 1
+    ext x
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
+    tauto
+  rw [coplanar_iff_finrank_le_two, hspan,
+    (triple_product_is_box_volume_and_determinant _ _ _).2]
+  have hle : (Set.range v).finrank ℝ ≤ 3 := by
+    simpa using finrank_range_le_card (R := ℝ) v
+  have hli : LinearIndependent ℝ v ↔ Matrix.det (Matrix.of v) ≠ 0 := by
+    rw [← isUnit_iff_ne_zero, ← Matrix.isUnit_iff_isUnit_det, ← linearIndependent_row_iff_isUnit]
+    rfl
+  have h3 : LinearIndependent ℝ v ↔ 3 = (Set.range v).finrank ℝ := by
+    simpa using (linearIndependent_iff_card_eq_finrank_span (R := ℝ) (b := v))
+  change Module.finrank ℝ (Submodule.span ℝ (Set.range v)) ≤ 2 ↔ Matrix.det (Matrix.of v) = 0
+  have : Module.finrank ℝ (Submodule.span ℝ (Set.range v)) = (Set.range v).finrank ℝ := rfl
+  rw [this]
+  constructor
+  · intro h
+    by_contra hd
+    have := h3.1 (hli.2 hd)
+    omega
+  · intro hd
+    by_contra h
+    have : 3 = (Set.range v).finrank ℝ := by omega
+    exact (hli.1 (h3.2 this)) hd
+
+-- The crate: a = (20, 0, 0), b = (5, 15, 0), c = (4, 3, 12) in dm.
+-- The floor arrow a × b = (0, 0, 300), as long as the floor's area: 300² = 90000.
+example : (![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0] = ![0, 0, 300] := by decide
+example : (![0, 0, 300] : Fin 3 → ℤ) ⬝ᵥ ![0, 0, 300] = 300 ^ 2 := by decide
+-- Dot with the post: (a × b) · c = 3600 litres, and the determinant with rows a, b, c is 3600.
+example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![4, 3, 12] = 3600 := by decide
+example : Matrix.det ![(![20, 0, 0] : Fin 3 → ℤ), ![5, 15, 0], ![4, 3, 12]] = 3600 := by
+  decide
+-- The height: 3600 / 300 = 12 dm.
+example : (3600 : ℤ) / 300 = 12 := by decide
+-- Order: a · (b × c) = 3600 and (b × a) · c = −3600.
+example : (![20, 0, 0] : Fin 3 → ℤ) ⬝ᵥ (![5, 15, 0] ⨯₃ ![4, 3, 12]) = 3600 := by decide
+example : ((![5, 15, 0] : Fin 3 → ℤ) ⨯₃ ![20, 0, 0]) ⬝ᵥ ![4, 3, 12] = -3600 := by decide
+-- The post is 13 dm long (4² + 3² + 12² = 13²), so floor area × post = 300 × 13 = 3900, the
+-- second mistake.
+example : (![4, 3, 12] : Fin 3 → ℤ) ⬝ᵥ ![4, 3, 12] = 13 ^ 2 ∧ (300 : ℤ) * 13 = 3900 := by
+  decide
+-- The flat lid: edges from P are a, b and a + b = (25, 15, 0); the triple product is 0.
+example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![25, 15, 0] = 0 := by decide
+-- The sagging lid: third edge (25, 15, −1/2) gives −150, a gap of −150 / 300 = −1/2 dm.
+example : ((![20, 0, 0] : Fin 3 → ℚ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![25, 15, -1/2] = -150 ∧
+    (-150 : ℚ) / 300 = -1/2 := by
+  simp [cross_apply, dotProduct, Fin.sum_univ_succ]; norm_num
+-- The bent front: P = O, Q = a, R = c, S = (24, 5/2, 12) give 120.
+example : ((![20, 0, 0] : Fin 3 → ℚ) ⨯₃ ![4, 3, 12]) ⬝ᵥ ![24, 5/2, 12] = 120 := by
+  simp [cross_apply, dotProduct, Fin.sum_univ_succ]; norm_num
+-- Mistake 3: the corner positions Q = (24, 3, 12), R = (9, 18, 12), S = (29, 18, 12) of the
+-- flat lid used as edges give −3600.
+example : ((![24, 3, 12] : Fin 3 → ℤ) ⨯₃ ![9, 18, 12]) ⬝ᵥ ![29, 18, 12] = -3600 := by decide
+-- The second box, rows (1, 2, 3), (2, −1, 1), (0, 3, 1): triple product 10, determinant 10.
+example : ((![1, 2, 3] : Fin 3 → ℤ) ⨯₃ ![2, -1, 1]) ⬝ᵥ ![0, 3, 1] = 10 := by decide
+example : Matrix.det ![(![1, 2, 3] : Fin 3 → ℤ), ![2, -1, 1], ![0, 3, 1]] = 10 := by decide
+-- Try changing: post straight up (0, 0, 12) gives 3600; post (4, 3, 6) gives 1800;
+-- corner sagging to 11, third edge (25, 15, −1), gives −300.
+example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![0, 0, 12] = 3600 := by decide
+example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![4, 3, 6] = 1800 := by decide
+example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![25, 15, -1] = -300 := by decide
+
+#print axioms triple_product_is_box_volume_and_determinant
+#print axioms triple_product_cycle_keeps_swap_flips
+#print axioms four_points_share_a_plane_iff_triple_product_zero
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'triple_product_is_box_volume_and_determinant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'triple_product_cycle_keeps_swap_flips' depends on axioms: [propext, Classical.choice, Quot.sound]
+'four_points_share_a_plane_iff_triple_product_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: stand the post straight up, c = (0, 0, 12). The capacity stays 3600 litres; leaning never changed it.
@@ -366,6 +521,7 @@ The outputs agree line for line. The cube count is exact here: every row of cube
 
 ## What this builds on
 
+- [Cross product](01-cross-product-and-oriented-area.md): the floor as an arrow, square to two edges and as long as their parallelogram's area.
 - [Lines and planes](02-lines-and-planes-in-space.md): the plane through three points and its square-on arrow, reused by the four-point test.
 - [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the 3 by 3 determinant and its meaning as a volume scale.
 

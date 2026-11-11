@@ -53,3 +53,4 @@ assert abs(area - strip) < 1e-6                        # two roads, one area
 assert back == -area and shoelace(moved) == area       # direction flips the sign; the peg does not matter
 assert [v < 0 for v in turns] == [False, False, False, True, False, False]
 assert abs(notch - (-turns[3] / 2)) < 1e-6             # the right turn's triangle is the notch
+print("ALL CHECKS PASS")

@@ -69,4 +69,5 @@ fn main() {
     assert!(back == -area && shoelace(&moved) == area); // direction flips the sign; the peg does not matter
     assert!(turns.iter().map(|&v| v < 0).collect::<Vec<_>>() == vec![false, false, false, true, false, false]);
     assert!((notch - (-turns[3] as f64 / 2.0)).abs() < 1e-6); // the right turn's triangle is the notch
+    println!("ALL CHECKS PASS");
 }

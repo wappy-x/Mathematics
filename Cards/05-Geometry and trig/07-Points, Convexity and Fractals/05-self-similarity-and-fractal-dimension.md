@@ -34,7 +34,9 @@ $$N = s^D \qquad\text{so}\qquad D = \frac{\log N}{\log s}$$
 
 Magnified 3 times, a segment holds 3 copies ($D$ = 1), a square 9 = 3^2 ($D$ = 2), a cube 27 = 3^3 ($D$ = 3).
 
-One side of the snowflake, magnified 3 times, holds 4 copies of itself: $D$ = log 4 / log 3 = 1.2619. The Sierpinski triangle (join the midpoints of a triangle's sides, remove the middle one of the four small triangles, and repeat on every piece left) magnified 2 times holds 3: $D$ = log 3 / log 2 = 1.5850. Any log base works if top and bottom share it ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+One side of the snowflake, magnified 3 times, holds 4 copies of itself: $D$ = log 4 / log 3 = 1.2619.
+
+The Sierpinski triangle starts from a triangle: join the midpoints of its sides, remove the middle one of the four small triangles, and repeat on every piece left. Magnified 2 times, it holds 3: $D$ = log 3 / log 2 = 1.5850. Any log base works if top and bottom share it ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
 For the snowflake itself, with first side $L$ and stage number $n$:
 
@@ -78,7 +80,7 @@ Four thirds is more than 1, so the powers pass any length named in advance. For 
 
 Stage n adds a small triangle on each of the 3 × 4^(n−1) sides of stage n − 1. Its sides are L/3^n, so its area is $A_0$ / 9^n: shrink lengths by 3^n and areas shrink by 9^n, the square ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
 
-Stage 1 adds a third of the first area, reaching 420.8883 cm^2. Each later stage adds four ninths of the last gain: four times the triangles, each a ninth the size. Induction gives the formula for $A_n$.
+Stage 1 adds a third of the first area, reaching 420.8883 cm^2. Each later stage adds four ninths of the last gain: four times the triangles, each a ninth the size. Induction gives the formula for $A_n$: check stage 0, then show each stage carries it to the next ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 <details>
 <summary>Detailed proof: the area formula, by induction</summary>
@@ -103,7 +105,7 @@ Drawn to scale, 1 cm = 12 units, so the cap is 93.53 units high. Dashed: the cap
 
 The four small caps sit inside the big one: two share its 30° corners, two have their peaks on its slopes. Each later stage stays inside the small caps, whose own caps sit inside them, and so on down.
 
-The triangle plus its three caps is a regular hexagon. Each cap holds a third of the triangle's area, so the hexagon holds 631.3325 cm^2, and no stage passes that. In the code, none of stage 6's 12288 corners reaches past the hexagon's sides, 13.5000 cm from the centre.
+The triangle plus its three caps is a regular hexagon. Each cap holds a third of the triangle's area, so the hexagon holds 631.3325 cm^2, and no stage passes that. In the code, none of stage 6's 12288 corners reaches past the hexagon's sides, 13.5000 cm from the centre (the apothem in the output).
 
 ### Step 4: why the power, and why it is not a whole number
 
@@ -150,7 +152,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The script builds each stage as a list of corners and takes two roads to each claim. Perimeter: distances round the corners, against 81 × (4/3)^n. Area: the shoelace formula ([Shoelace formula](01-polygon-area-and-orientation.md)), against the closed form. Stage counts: stepping, against logs. Dimension: log 4 / log 3, against a box count. The fence is a dot-product test on stage 6. Only `math` is imported.
+The script builds each stage as a list of corners and takes two roads to each claim. Perimeter: distances round the corners, against 81 × (4/3)^n. Area: the shoelace formula ([Shoelace formula](01-polygon-area-and-orientation.md)), against the closed form. Stage counts: stepping, against logs. Dimension: log 4 / log 3, against a box count.
+
+The fence is a dot-product test on stage 6: it measures how far each corner reaches toward each side of the hexagon ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). Only `math` is imported.
 
 ### Python
 
@@ -336,6 +340,154 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the dimension formula and the snowflake's perimeter and area facts for every magnification above 1 and every starting side.
+
+- When $s$ is more than 1 and $N$ is at least 1, exactly one power $D$ has $s^D = N$: $D$ = log N / log s.
+- With first side $L$, stage n has 3 × 4^n sides of L/3^n, and this perimeter passes any length named in advance.
+- Stage n adds 3 × 4^(n−1) triangles of $A_0$ / 9^n, and these add up to the formula for $A_n$ at every stage.
+- The area stays below the hexagon's 2 × $A_0$ at every stage and settles at 8/5 × $A_0$.
+- log 4 / log 3 for the Koch edge and log 3 / log 2 for the Sierpinski triangle both lie strictly between 1 and 2.
+- The card's own sums: perimeters 81 to 256 cm, stages 25 and 62, the side counts, the hexagon as twice the triangle, and Sierpinski's 729 triangles.
+
+The corners themselves, the shoelace areas, the hexagon fence, the box count and the mistakes are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 119 lines</summary>
+
+```lean
+-- Fractals: the power D with s^D = N is exactly log N / log s, the Koch snowflake's perimeter passes every bound while its area stays under the hexagon and settles at 8/5 of the first triangle, and the Koch and Sierpinski dimensions lie strictly between 1 and 2.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Tactic.NormNum
+
+open Filter Topology
+
+/-- The similarity dimension. Magnify a shape s times (s more than 1) and count N copies of the
+original inside (at least one). Then there is exactly one power D with s^D = N, and it is
+D = log N / log s. -/
+theorem similarity_dimension_eq_log_div_log (s : ℝ) (N : ℕ) (hs : 1 < s) (hN : 0 < N) (D : ℝ) :
+    s ^ D = (N : ℝ) ↔ D = Real.log N / Real.log s := by
+  have hs0 : 0 < s := by linarith
+  have hls : 0 < Real.log s := Real.log_pos hs
+  have hN' : (0 : ℝ) < N := by exact_mod_cast hN
+  constructor
+  · intro h
+    rw [eq_div_iff hls.ne', ← h, Real.log_rpow hs0]
+  · intro h
+    rw [Real.rpow_def_of_pos hs0, h, mul_div_cancel₀ _ hls.ne', Real.exp_log hN']
+
+/-- The Koch snowflake from a first triangle with side L. Stage n has 3 × 4^n sides, each
+L / 3^n long, so its perimeter passes any length named in advance. Stage k + 1 adds 3 × 4^k
+small triangles, each 1/9^(k+1) of the first triangle's area A₀ = (√3/4) L². So the area at
+stage n is A₀ (8/5 − 3/5 (4/9)^n), it never reaches the hexagon's 2 A₀, and it settles at
+8/5 A₀: endless perimeter, finite area. -/
+theorem koch_snowflake_endless_perimeter_finite_area (L : ℝ) (hL : 0 < L) :
+    let A₀ : ℝ := Real.sqrt 3 / 4 * L ^ 2
+    let area : ℕ → ℝ := fun n => A₀ + ∑ k ∈ Finset.range n, 3 * 4 ^ k * (A₀ / 9 ^ (k + 1))
+    (∀ M : ℝ, ∃ n : ℕ, M < (3 * 4 ^ n : ℝ) * (L / 3 ^ n)) ∧
+    (∀ n : ℕ, area n = A₀ * (8 / 5 - 3 / 5 * (4 / 9) ^ n)) ∧
+    (∀ n : ℕ, area n < 2 * A₀) ∧
+    Tendsto area atTop (𝓝 (8 / 5 * A₀)) := by
+  intro A₀ area
+  have hA : 0 < A₀ := by
+    show 0 < Real.sqrt 3 / 4 * L ^ 2
+    have : 0 < Real.sqrt 3 := Real.sqrt_pos.mpr (by norm_num)
+    positivity
+  have hform : ∀ n : ℕ, area n = A₀ * (8 / 5 - 3 / 5 * (4 / 9) ^ n) := by
+    intro n
+    induction n with
+    | zero => simp [area]; norm_num
+    | succ n ih =>
+      have : area (n + 1) = area n + 3 * 4 ^ n * (A₀ / 9 ^ (n + 1)) := by
+        simp only [area, Finset.sum_range_succ]; ring
+      rw [this, ih, div_pow, div_pow]
+      field_simp
+      ring
+  refine ⟨?_, hform, ?_, ?_⟩
+  · intro M
+    obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt (M / (3 * L)) (by norm_num : (1 : ℝ) < 4 / 3)
+    refine ⟨n, ?_⟩
+    have h3L : 0 < 3 * L := by positivity
+    have heq : (3 * 4 ^ n : ℝ) * (L / 3 ^ n) = 3 * L * (4 / 3) ^ n := by
+      rw [div_pow]; field_simp
+    rw [heq]
+    rw [div_lt_iff₀ h3L] at hn
+    linarith
+  · intro n
+    rw [hform n]
+    have : 0 ≤ (4 / 9 : ℝ) ^ n := by positivity
+    nlinarith
+  · have hfun : area = fun n => A₀ * (8 / 5 - 3 / 5 * (4 / 9 : ℝ) ^ n) := funext hform
+    rw [hfun]
+    have ht : Tendsto (fun n : ℕ => (4 / 9 : ℝ) ^ n) atTop (𝓝 0) :=
+      tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)
+    have := ((ht.const_mul (3 / 5)).const_sub (8 / 5)).const_mul A₀
+    convert this using 2
+    ring
+
+/-- Not a whole number: the Koch edge (4 copies at a third the size) and the Sierpinski
+triangle (3 copies at half the size) both have dimension strictly between a line's 1 and a
+surface's 2. -/
+theorem koch_and_sierpinski_dimensions_between_one_and_two :
+    (1 < Real.log 4 / Real.log 3 ∧ Real.log 4 / Real.log 3 < 2) ∧
+    (1 < Real.log 3 / Real.log 2 ∧ Real.log 3 / Real.log 2 < 2) := by
+  have h2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have h3 : 0 < Real.log 3 := Real.log_pos (by norm_num)
+  have h23 : Real.log 2 < Real.log 3 := Real.log_lt_log (by norm_num) (by norm_num)
+  have h34 : Real.log 3 < Real.log 4 := Real.log_lt_log (by norm_num) (by norm_num)
+  have h49 : Real.log 4 < Real.log 9 := Real.log_lt_log (by norm_num) (by norm_num)
+  have h9 : Real.log 9 = 2 * Real.log 3 := by
+    rw [show (9 : ℝ) = 3 ^ 2 by norm_num, Real.log_pow]; norm_num
+  have h4 : Real.log 4 = 2 * Real.log 2 := by
+    rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]; norm_num
+  refine ⟨⟨?_, ?_⟩, ?_, ?_⟩
+  · rw [lt_div_iff₀ h3]; linarith
+  · rw [div_lt_iff₀ h3]; linarith
+  · rw [lt_div_iff₀ h2]; linarith
+  · rw [div_lt_iff₀ h2]; linarith
+
+-- Magnified 3 times: a segment holds 3 copies, a square 9 = 3^2, a cube 27 = 3^3.
+example : 3 ^ 1 = 3 ∧ 3 ^ 2 = 9 ∧ 3 ^ 3 = 27 := by decide
+-- Two Koch stages as one: magnify 9 = 3^2 times and 16 = 4^2 copies fit.
+example : 4 ^ 2 = 16 ∧ 3 ^ 2 = 9 := by decide
+-- Sides: 3 at stage 0, 12 at stage 1, 48 at stage 2, 12288 at stage 6; stage 1 sides are 27 / 3 = 9 cm.
+example : 3 * 4 ^ 0 = 3 ∧ 3 * 4 ^ 1 = 12 ∧ 3 * 4 ^ 2 = 48 ∧ 3 * 4 ^ 6 = 12288 ∧ 27 / 3 = 9 := by decide
+-- Perimeter 3 × 27 × (4/3)^n: 81, 108, 144, 192, 256 cm.
+example : (3 * 27 : ℚ) * (4 / 3) ^ 0 = 81 ∧ (3 * 27 : ℚ) * (4 / 3) ^ 1 = 108 ∧
+    (3 * 27 : ℚ) * (4 / 3) ^ 2 = 144 ∧ (3 * 27 : ℚ) * (4 / 3) ^ 3 = 192 ∧
+    (3 * 27 : ℚ) * (4 / 3) ^ 4 = 256 := by norm_num
+-- The perimeter first passes 1 km = 100,000 cm at stage 25.
+example : (81 : ℚ) * (4 / 3) ^ 24 ≤ 100000 ∧ 100000 < (81 : ℚ) * (4 / 3) ^ 25 := by norm_num
+-- The perimeter first passes the equator, 40075 km = 4,007,500,000 cm, at stage 62.
+example : (81 : ℚ) * (4 / 3) ^ 61 ≤ 4007500000 ∧ 4007500000 < (81 : ℚ) * (4 / 3) ^ 62 := by norm_num
+-- Area formula, in units of the first triangle: 1 at stage 0, 4/3 at stage 1 (a third added).
+example : (8 / 5 - 3 / 5 * (4 / 9) ^ 0 : ℚ) = 1 ∧ (8 / 5 - 3 / 5 * (4 / 9) ^ 1 : ℚ) = 1 + 1 / 3 := by norm_num
+-- Stage 1 adds 3 triangles of 1/9 the area; stage 2 adds 12 of 1/81, four ninths of stage 1's gain.
+example : (3 : ℚ) * (1 / 9) = 1 / 3 ∧ (12 : ℚ) * (1 / 81) = 4 / 9 * (1 / 3) := by norm_num
+-- The hexagon: the triangle plus three caps, each a third of the triangle, is twice the triangle.
+example : (1 : ℚ) + 3 * (1 / 3) = 2 := by norm_num
+-- Sierpinski stage 6: 3^6 = 729 triangles, each 1/4^6 of the area, so (3/4)^6 of the area is left.
+example : 3 ^ 6 = 729 ∧ (729 : ℚ) / 4 ^ 6 = (3 / 4) ^ 6 := by norm_num
+
+#print axioms similarity_dimension_eq_log_div_log
+#print axioms koch_snowflake_endless_perimeter_finite_area
+#print axioms koch_and_sierpinski_dimensions_between_one_and_two
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'similarity_dimension_eq_log_div_log' depends on axioms: [propext, Classical.choice, Quot.sound]
+'koch_snowflake_endless_perimeter_finite_area' depends on axioms: [propext, Classical.choice, Quot.sound]
+'koch_and_sierpinski_dimensions_between_one_and_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -359,7 +511,7 @@ The two outputs match line for line.
 
 - **Coastlines.** Measured with shorter rulers, a rocky coast keeps getting longer. Benoit Mandelbrot's 1967 paper read a dimension between 1 and 2 off that growth.
 - **Image analysis.** Box counting gives one number for how rough a boundary is: cell outlines, cracks, porous rock.
-- **Inside or outside.** The fence test is the convex case of [Inside or outside](03-point-in-polygon-and-segment-tests.md); the hexagon is convex in the sense of [Convex sets](02-convex-sets-and-convex-hulls.md).
+- **Inside or outside.** The fence test is the convex case of [Inside or outside](03-point-in-polygon-and-segment-tests.md); the hexagon is convex, with no dents, in the sense of [Convex sets](02-convex-sets-and-convex-hulls.md).
 
 > **Say it back**
 > The Koch snowflake replaces every side with four sides a third as long, for ever. Its perimeter multiplies by four thirds a stage and passes any length. Its area gains four ninths of the last gain, stays inside a hexagon and settles at eight fifths of the first triangle. A self-similar shape magnified s times holds N copies of itself, and its dimension D solves s^D = N. For the Koch edge that is 1.2619: more than a line, less than a surface.
@@ -370,12 +522,15 @@ The two outputs match line for line.
 
 - [Shoelace formula](01-polygon-area-and-orientation.md): the shoelace formula that measures each stage's area from its corners.
 - [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): solving s^D = N for the power, and finding the stage that passes a given length.
+- [Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md): shrink lengths by a factor and areas shrink by its square, which is why each stage adds less area.
 
 ## Where this goes next
 
+- [The Cantor set](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/07-the-cantor-set.md): the simplest self-similar set, two copies a third the size, and why its total length is zero.
+- [The Lorenz system](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): a fractal from three weather equations, whose dimension is estimated from how fast paths stretch and squeeze, not counted from copies.
 - The test spaces: shapes like the Koch curve as test cases for what "curve" and "connected" mean.
 
-This card counted copies of a shape defined by an endless process; what the finished shape is as a set of points, and in what sense the stages approach it, is what topology answers.
+This card counted copies of a shape defined by an endless process. What the finished shape is as a set of points, and in what sense the stages approach it, is what topology answers.
 
 ---
 
