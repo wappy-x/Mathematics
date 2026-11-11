@@ -26,7 +26,13 @@ To scale: 100 px per metre of tank, 40 px of arrow per 0.01 m/s of water speed. 
 
 ## The formula
 
-Notation first, in words. Put the tank's centre at the origin: length runs from −1 to 1 m along x, width and height from −0.5 to 0.5 m along y and z. A solid is named $V$. Its whole skin, nothing left open, is written $\partial V$, read "the boundary of V". On the skin, $\mathbf n$ is the arrow of length one pointing straight out. The flow $\mathbf F$ has components $F_1$, $F_2$, $F_3$: velocities along x, y and z. The dot product $\mathbf F\cdot\mathbf n$ is the part of the flow crossing the skin. $dS$ is a small patch of skin, $dV$ a small piece of volume; a triple integral adds through a volume ([Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md)).
+Notation first, in words. Put the tank's centre at the origin: length runs from −1 to 1 m along x, width and height from −0.5 to 0.5 m along y and z.
+
+- A solid is named $V$. Its whole skin, nothing left open, is written $\partial V$, read "the boundary of V".
+- On the skin, $\mathbf n$ is the arrow of length one pointing straight out.
+- The flow $\mathbf F$ has components $F_1$, $F_2$, $F_3$: velocities along x, y and z.
+- The dot product $\mathbf F\cdot\mathbf n$ is the part of the flow crossing the skin.
+- $dS$ is a small patch of skin, $dV$ a small piece of volume; a triple integral adds through a volume ([Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md)).
 
 $$\iint_{\partial V} \mathbf F\cdot\mathbf n\,dS \;=\; \iiint_V \operatorname{div}\mathbf F\,dV, \qquad \operatorname{div}\mathbf F = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}$$
 
@@ -64,7 +70,7 @@ Cut the tank into small cells. Water crossing a wall between two cells leaves on
 
 ### Step 1: one pair of opposite faces is the fundamental theorem of calculus
 
-Take the end faces, x = −1 and x = 1. Only $F_1$ crosses them. The right end's normal is (1, 0, 0), so its flux is the area integral of $F_1$ at x = 1; the left end's is (−1, 0, 0), giving minus the integral at x = −1. For each fixed width and height, the fundamental theorem of calculus turns the difference into an integral along the length:
+Take the end faces, x = −1 and x = 1. Only $F_1$ crosses them. The right end's normal is (1, 0, 0), so its flux is the area integral of $F_1$ at x = 1; the left end's is (−1, 0, 0), giving minus the integral at x = −1. Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). For each fixed width and height, it turns the difference into an integral along the length:
 
 $$F_1(1, y, z) - F_1(-1, y, z) = \int_{-1}^{1} \frac{\partial F_1}{\partial x}\,dx$$
 
@@ -321,11 +327,188 @@ figure, 100 px per m, 4000 px per m/s; arrow tips right 320,120 top 180,50 corne
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the theorem for every box, and its height part for every solid between a floor graph and a ceiling graph.
+
+- Take any box and any field whose first partial derivatives are continuous on the box and just beyond. The flux out through all six faces, with outward normals, equals the divergence added through the box.
+- Take a solid over a closed, bounded flat region D, between a floor z = g(x, y) and a ceiling z = h(x, y). Both have continuous partial derivatives. Suppose $F_3$ and $\partial F_3/\partial z$ are continuous on the solid. Then the flux of (0, 0, $F_3$) through ceiling plus floor equals $\partial F_3/\partial z$ added through the solid.
+- The hand arithmetic holds exactly: the tank's 60 L/s both ways, and the ends supply's 30, 60, 40 and 80. So do the ball's 40π and 320π, and the breaks' −60 and 50.
+
+The ball's curved skin, the hose at the centre, the Simpson sums and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 152 lines</summary>
+
+```lean
+-- Divergence theorem: the flux of a smooth field out through all six faces of a box equals its divergence added through the box, the height part of that holds on any solid between a floor graph and a ceiling graph, and the card's tank and ball numbers check out.
+import Mathlib.MeasureTheory.Integral.DivergenceTheorem
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.Calculus.ContDiff.Defs
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Set MeasureTheory
+
+/-! Points of space are `Fin 3 → ℝ`: coordinate `0` is x, `1` is y, `2` is z. A field
+`F : (Fin 3 → ℝ) → (Fin 3 → ℝ)` gives the flow `(F₁, F₂, F₃)` at each point. `volume` on
+`Fin 3 → ℝ` is ordinary volume, so `∫ x in Icc a b, …` is the triple integral over the box
+`[a₀, b₀] × [a₁, b₁] × [a₂, b₂]`; on `Fin 2 → ℝ` it is ordinary area, the `dS` of a flat face. -/
+
+/-- The divergence `∂F₁/∂x + ∂F₂/∂y + ∂F₃/∂z` of the field `F` at the point `x`: the rate of
+change of the `i`-th component along the `i`-th direction, added over the three directions. -/
+noncomputable def divergence (F : (Fin 3 → ℝ) → Fin 3 → ℝ) (x : Fin 3 → ℝ) : ℝ :=
+  ∑ i : Fin 3, fderiv ℝ F x (Pi.single i 1) i
+
+/-- The outward flux `∬_{∂V} F · n dS` of `F` through the whole skin of the box `[a, b]`.
+The skin is six flat faces. For each direction `i` there is a far face `x_i = b_i`, whose outward
+unit normal is `e_i = Pi.single i 1`, and a near face `x_i = a_i`, whose outward unit normal is
+`-e_i`. A face is parametrised by its two free coordinates `y`, which run over the rectangle
+`Icc (a ∘ i.succAbove) (b ∘ i.succAbove)`, and `Fin.insertNth i c y` is the point of space with
+`i`-th coordinate `c` and the other two from `y`. Each face adds the area integral of `F · n`. -/
+noncomputable def boxOutwardFlux (F : (Fin 3 → ℝ) → Fin 3 → ℝ) (a b : Fin 3 → ℝ) : ℝ :=
+  ∑ i : Fin 3,
+    ((∫ y in Icc (a ∘ i.succAbove) (b ∘ i.succAbove),
+        F (Fin.insertNth i (b i) y) ⬝ᵥ Pi.single i 1) +
+      ∫ y in Icc (a ∘ i.succAbove) (b ∘ i.succAbove),
+        F (Fin.insertNth i (a i) y) ⬝ᵥ -Pi.single i 1)
+
+/-- **Divergence theorem on a box.** Take a solid box `[a, b]` in space (each side `a_i ≤ b_i`),
+its whole closed skin of six faces, and the outward normal on each face. Let the field `F` have
+continuous first partial derivatives at every point of the box and just beyond: on some open set
+`U` containing the box. Then the flux of `F` out through the whole skin equals the triple integral
+of its divergence through the box: what leaves through the skin is what is made inside. -/
+theorem flux_out_of_box_eq_divergence_summed_inside
+    (F : (Fin 3 → ℝ) → Fin 3 → ℝ) (a b : Fin 3 → ℝ) (hab : a ≤ b)
+    (hF : ∃ U : Set (Fin 3 → ℝ), IsOpen U ∧ Icc a b ⊆ U ∧ ContDiffOn ℝ 1 F U) :
+    boxOutwardFlux F a b = ∫ x in Icc a b, divergence F x := by
+  obtain ⟨U, hU, hsub, hFU⟩ := hF
+  have hdiff : ∀ x ∈ U, HasFDerivAt F (fderiv ℝ F x) x := fun x hx =>
+    ((hFU.differentiableOn one_ne_zero) x hx).differentiableAt (hU.mem_nhds hx) |>.hasFDerivAt
+  have hcont' : ContinuousOn (fun x => ∑ i : Fin 3, fderiv ℝ F x (Pi.single i 1) i) U := by
+    have := hFU.continuousOn_fderiv_of_isOpen hU le_rfl
+    refine continuousOn_finsetSum _ fun i _ => ?_
+    exact (continuous_apply i).comp_continuousOn
+      ((this.clm_apply continuousOn_const))
+  have key := integral_divergence_of_hasFDerivAt_off_countable a b hab F (fderiv ℝ F) ∅
+    Set.countable_empty (hFU.continuousOn.mono hsub)
+    (fun x hx => hdiff x (hsub (by
+      rcases hx with ⟨hx, -⟩
+      exact ⟨fun i => (hx i (mem_univ i)).1.le, fun i => (hx i (mem_univ i)).2.le⟩)))
+    ((hcont'.mono hsub).integrableOn_compact isCompact_Icc)
+  unfold boxOutwardFlux divergence
+  rw [key]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  simp only [dotProduct_neg, dotProduct_single, mul_one, integral_neg, sub_eq_add_neg]
+
+/-- **The height part on a solid between two graphs.** The solid lies over a closed bounded flat
+region `D`, between a floor `z = g(x, y)` and a ceiling `z = h(x, y)` with `g ≤ h` on `D`; floor
+and ceiling have continuous partial derivatives (`g'`, `h'`). Take the height part `(0, 0, F₃)` of
+a smooth field: `F₃` is continuous on the solid, and its height rate `∂F₃/∂z` (`dF₃`) exists and is
+continuous there, floor and ceiling included. Parametrise the ceiling by
+`(x, y)`: the cross product of its tangent arrows is the outward normal `(−h_x, −h_y, 1)`; the
+floor's is `(g_x, g_y, −1)`. The flux through ceiling plus floor equals `∂F₃/∂z` added through the
+solid. (The vertical side walls pass nothing, since their normals have no height part.) -/
+theorem height_flux_between_two_graphs_eq_dz_summed_inside
+    {F₃ dF₃ : ℝ × ℝ × ℝ → ℝ} {g h : ℝ × ℝ → ℝ} {g' h' : ℝ × ℝ → ℝ × ℝ →L[ℝ] ℝ}
+    {D : Set (ℝ × ℝ)} (hD : IsCompact D)
+    (hg : ∀ p ∈ D, HasFDerivAt g (g' p) p) (hh : ∀ p ∈ D, HasFDerivAt h (h' p) p)
+    (hg' : ContinuousOn g' D) (hh' : ContinuousOn h' D)
+    (hgh : ∀ p ∈ D, g p ≤ h p)
+    (hF₃ : ContinuousOn F₃ {q | (q.1, q.2.1) ∈ D ∧ q.2.2 ∈ Icc (g (q.1, q.2.1)) (h (q.1, q.2.1))})
+    (hF : ∀ p ∈ D, ∀ z ∈ Icc (g p) (h p),
+      HasDerivWithinAt (fun t => F₃ (p.1, p.2, t)) (dF₃ (p.1, p.2, z)) (Icc (g p) (h p)) z)
+    (hdF : ContinuousOn dF₃ {q | (q.1, q.2.1) ∈ D ∧ q.2.2 ∈ Icc (g (q.1, q.2.1)) (h (q.1, q.2.1))}) :
+    (∫ p in D, ![0, 0, F₃ (p.1, p.2, h p)] ⬝ᵥ ![-(h' p (1, 0)), -(h' p (0, 1)), 1]) +
+      (∫ p in D, ![0, 0, F₃ (p.1, p.2, g p)] ⬝ᵥ ![g' p (1, 0), g' p (0, 1), -1]) =
+      ∫ p in D, ∫ z in g p..h p, dF₃ (p.1, p.2, z) := by
+  have hDm : MeasurableSet D := hD.isClosed.measurableSet
+  have hgc : ContinuousOn g D := fun p hp => (hg p hp).continuousAt.continuousWithinAt
+  have hhc : ContinuousOn h D := fun p hp => (hh p hp).continuousAt.continuousWithinAt
+  set S := {q : ℝ × ℝ × ℝ | (q.1, q.2.1) ∈ D ∧ q.2.2 ∈ Icc (g (q.1, q.2.1)) (h (q.1, q.2.1))}
+  have hcomp : ∀ k : ℝ × ℝ → ℝ, ContinuousOn k D → (∀ p ∈ D, k p ∈ Icc (g p) (h p)) →
+      ContinuousOn (fun p : ℝ × ℝ => F₃ (p.1, p.2, k p)) D := by
+    intro k hk hkm
+    refine hF₃.comp (continuousOn_fst.prodMk (continuousOn_snd.prodMk hk)) ?_
+    intro p hp
+    exact ⟨by simpa using hp, by simpa using hkm p hp⟩
+  have hH := (hcomp h hhc fun p hp => ⟨hgh p hp, le_rfl⟩).integrableOn_compact (μ := volume) hD
+  have hG := (hcomp g hgc fun p hp => ⟨le_rfl, hgh p hp⟩).integrableOn_compact (μ := volume) hD
+  have hL1 : (fun p : ℝ × ℝ => ![0, 0, F₃ (p.1, p.2, h p)] ⬝ᵥ
+      ![-(h' p (1, 0)), -(h' p (0, 1)), 1]) = fun p => F₃ (p.1, p.2, h p) := by
+    funext p; simp [dotProduct, Fin.sum_univ_three]
+  have hL2 : (fun p : ℝ × ℝ => ![0, 0, F₃ (p.1, p.2, g p)] ⬝ᵥ
+      ![g' p (1, 0), g' p (0, 1), -1]) = fun p => -F₃ (p.1, p.2, g p) := by
+    funext p; simp [dotProduct, Fin.sum_univ_three]
+  rw [hL1, hL2, integral_neg, ← sub_eq_add_neg, ← integral_sub hH hG]
+  refine setIntegral_congr_fun hDm fun p hp => ?_
+  symm
+  have hle := hgh p hp
+  have hmaps : MapsTo (fun t : ℝ => ((p.1, p.2, t) : ℝ × ℝ × ℝ)) (Icc (g p) (h p)) S := by
+    intro t ht
+    exact ⟨by simpa using hp, by simpa using ht⟩
+  have hpc : Continuous (fun t : ℝ => ((p.1, p.2, t) : ℝ × ℝ × ℝ)) := by fun_prop
+  refine intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le hle
+    (fun t ht => (hF p hp t ht).continuousWithinAt) ?_ ?_
+  · intro t ht
+    have h1 := hF p hp t (Ioo_subset_Icc_self ht)
+    exact ((h1.hasDerivAt (Icc_mem_nhds ht.1 ht.2))).hasDerivWithinAt
+  · exact ((hdF.comp hpc.continuousOn hmaps).intervalIntegrable_of_Icc hle)
+
+/-! ### The card's worked numbers (speeds in m/s, k = 1/100 per second, 1 m³ = 1000 L) -/
+
+-- Even supply: divergence 3 × 0.01 = 0.03 per second, which is 30 L/s per m³;
+-- over the 2 m³ tank that is 60 L/s.
+example : (3:ℚ) * (1 / 100) * 1000 = 30 ∧ (30:ℚ) * 2 = 60 := by norm_num
+
+-- Right end face: 0.01 m/s through 1 m² is 10 L/s. Top face: 0.005 m/s through 2 m² is 10 L/s.
+-- Six faces of 10 L/s each: 60 L/s, the same as the supply.
+example : (1 / 100 : ℚ) * 1 * 1000 = 10 ∧ (1 / 200 : ℚ) * 2 * 1000 = 10 ∧ (6:ℚ) * 10 = 60 := by
+  norm_num
+
+-- Ends supply F₁ = k(x³ + x): divergence 0.01(3x² + 3) is 30 L/s per m³ at the middle (x = 0)
+-- and 60 at an end (x = 1).
+example : (1 / 100 : ℚ) * (3 * 0 ^ 2 + 3) * 1000 = 30 ∧
+    (1 / 100 : ℚ) * (3 * 1 ^ 2 + 3) * 1000 = 60 := by norm_num
+
+-- Ends supply: the end pair passes 2 × 0.02 m/s × 1 m² = 40 L/s; along the length 3x² adds to 2
+-- and 1 adds to 2, so 0.01 × 4 = 0.04 m³/s, 40 L/s again; total 40 + 20 + 20 = 80 L/s, and
+-- 8 × 0.01 m³/s = 80 L/s.
+example : (2:ℚ) * (2 / 100) * 1 * 1000 = 40 ∧ (1 / 100 : ℚ) * (2 + 2) * 1000 = 40 ∧
+    (40:ℚ) + 20 + 20 = 80 ∧ (8:ℚ) * (1 / 100) * 1000 = 80 := by norm_num
+
+-- Spherical tank of radius 1 m: inside, 30 L/s per m³ times 4π/3 m³ = 40π L/s; skin, kR = 0.01 m/s
+-- over 4π m² is 0.04π m³/s = 40π L/s. Radius 2 m: both sides are eight times that, 320π.
+example : (30:ℝ) * (4 / 3 * Real.pi * 1 ^ 3) = 40 * Real.pi ∧
+    (1 / 100 : ℝ) * 1 * (4 * Real.pi * 1 ^ 2) * 1000 = 40 * Real.pi ∧
+    (30:ℝ) * (4 / 3 * Real.pi * 2 ^ 3) = 320 * Real.pi ∧
+    (1 / 100 : ℝ) * 2 * (4 * Real.pi * 2 ^ 2) * 1000 = 320 * Real.pi := by
+  refine ⟨by ring, by ring, by ring, by ring⟩
+
+-- What breaks: inward normals read −60 L/s; with the lid left out five faces pass 50 L/s
+-- against 60 inside.
+example : -((6:ℚ) * 10) = -60 ∧ (5:ℚ) * 10 = 50 ∧ (50:ℚ) ≠ 60 := by norm_num
+
+#print axioms flux_out_of_box_eq_divergence_summed_inside
+#print axioms height_flux_between_two_graphs_eq_dz_summed_inside
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'flux_out_of_box_eq_divergence_summed_inside' depends on axioms: [propext, Classical.choice, Quot.sound]
+'height_flux_between_two_graphs_eq_dz_summed_inside' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Double the ball's radius.** Guess first. The flux goes from 125.664 to 1005.310 L/s, eight times: area times skin speed grows as R^3.
 > - **Drop the `s *` in `face`.** Guess first. Opposite faces cancel, the skin reads 0, and the first assert fails.
-> - **Move the hose: make the first line of `hose` read `p = (p[0] - 0.5, p[1], p[2])`.** Guess first. The faces still pass 20 L/s; the hose is still inside.
+> - **Move the hose: add `p = (p[0] - 0.5, p[1], p[2])` as a new first line inside `hose`.** Guess first. The faces still pass 20 L/s; the hose is still inside.
 
 ---
 
@@ -353,6 +536,7 @@ ALL CHECKS PASS
 ## What this builds on
 
 - [Surface integrals](05-surface-integrals-and-flux.md): flux through a surface, and the cross product that gives its normal.
+- [Divergence and curl](03-divergence-and-curl.md): divergence, the supply rate per unit volume that this card adds through the solid.
 - [Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md): adding a quantity through a volume, one direction at a time.
 
 ## Where this goes next

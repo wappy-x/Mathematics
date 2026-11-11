@@ -6,9 +6,9 @@
 
 ## General Overview
 
-The bell curve of statistics is drawn with a height of 0.398942 at its centre. It falls to 0.24 one unit out and 0.05 two units out. That odd peak height makes the total area under the curve exactly 1, so areas under the bell read as shares of a whole: a share 0.682689 lies within one unit of the centre, 0.954500 within two, 0.997300 within three.
+The bell curve of statistics is drawn with a height of 0.398942 at its centre. It falls to 0.24 one unit out and 0.05 two units out. That odd peak height makes the total area under the curve exactly 1. So areas under the bell read as shares of a whole: a share 0.682689 lies within one unit of the centre, 0.954500 within two, 0.997300 within three.
 
-Why that height? The curve is a scaled copy of e to the minus x squared, running out to infinity both ways. No formula built from powers, roots, logs, exponentials and trig functions has this curve as its rate (a theorem of Liouville, not proved here), so the route through an antiderivative (a function whose rate is the curve) is closed.
+Why that height? The curve is a scaled copy of e to the minus x squared, running out to infinity both ways. No formula built from powers, roots, logarithms, exponentials and trigonometric functions has this curve as its rate. This is a theorem of Liouville, not proved here. So the route through an antiderivative (a function whose rate is the curve) is closed.
 
 The way round, credited to Poisson, is to square the unknown area. The square is a total over the plane with circular symmetry, and polar coordinates finish it. Out comes π; the area is its square root.
 
@@ -101,7 +101,7 @@ The factor r is the whole trick: r e^(−r^2) is the rate of −e^(−r^2)/2. At
 
 <p align="center"><img src="../figures/gaussian-integral.svg" alt="The square from minus 1 to 1, trapped between the disk of radius 1 inside it and the disk of radius 1.414 around it, drawn to scale" width="420"></p>
 
-Scale: 60 px per unit, origin at (180, 120), R = 1.
+Scale: 60 pixels per unit, origin at (180, 120), R = 1.
 
 The disk of radius R fits inside the square. Every corner of the square is at distance R√2 from the centre, so the square fits inside the disk of radius R√2. The integrand is positive, so a bigger region holds more:
 
@@ -348,6 +348,79 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's whole-line areas, for e^(−x^2), for every positive squeeze factor a, and for the bell.
+
+- The area under e^(−x^2) over the whole line exists and is √π.
+- The area from −R to R heads for √π as the cutoff R heads for infinity.
+- For any positive squeeze factor a, the area under e^(−ax^2) exists and is √(π/a).
+- The bell, e^(−x^2/2) divided by √(2π), has area exactly 1.
+
+The decimals, the squeeze between two disks, the grid and the mistakes are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 46 lines</summary>
+
+```lean
+-- The Gaussian integral: the area under e to the minus x squared over the whole real line is the square root of pi, and the bell curve with peak height one over the square root of 2 pi has area exactly 1.
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+
+open Real MeasureTheory Filter Topology
+
+/-- The area under `e^(-x^2)` over the whole real line exists and is the square root of π:
+the function is integrable, its integral is `√π`, and the cutoff areas from `-R` to `R`
+head for `√π` as `R` heads for infinity. -/
+theorem integral_exp_neg_sq_eq_sqrt_pi :
+    Integrable (fun x : ℝ => exp (-x ^ 2)) ∧
+    ∫ x : ℝ, exp (-x ^ 2) = √π ∧
+    Tendsto (fun R : ℝ => ∫ x in (-R)..R, exp (-x ^ 2)) atTop (𝓝 (√π)) := by
+  have hi : Integrable (fun x : ℝ => exp (-x ^ 2)) := by
+    simpa using integrable_exp_neg_mul_sq (b := 1) one_pos
+  have hv : ∫ x : ℝ, exp (-x ^ 2) = √π := by
+    simpa using integral_gaussian 1
+  refine ⟨hi, hv, ?_⟩
+  rw [← hv]
+  exact intervalIntegral_tendsto_integral hi (tendsto_neg_atTop_atBot) tendsto_id
+
+/-- For any positive squeeze factor `a`, the area under `e^(-a x^2)` over the whole real line
+exists and is the square root of `π / a`. -/
+theorem integral_exp_neg_mul_sq_eq_sqrt_pi_div {a : ℝ} (ha : 0 < a) :
+    Integrable (fun x : ℝ => exp (-a * x ^ 2)) ∧
+    ∫ x : ℝ, exp (-a * x ^ 2) = √(π / a) := by
+  exact ⟨integrable_exp_neg_mul_sq ha, integral_gaussian a⟩
+
+/-- The bell curve `e^(-x^2/2) / √(2π)` has total area exactly 1 over the whole real line. -/
+theorem integral_bell_curve_eq_one :
+    ∫ x : ℝ, exp (-x ^ 2 / 2) / √(2 * π) = 1 := by
+  rw [integral_div]
+  have h : ∫ x : ℝ, exp (-x ^ 2 / 2) = √(2 * π) := by
+    have := integral_gaussian (1 / 2)
+    have e : (fun x : ℝ => exp (-(1 / 2) * x ^ 2)) = fun x : ℝ => exp (-x ^ 2 / 2) := by
+      funext x; ring_nf
+    rw [e] at this
+    rw [this]
+    congr 1
+    field_simp
+  rw [h]
+  have : 0 < √(2 * π) := Real.sqrt_pos.mpr (by positivity)
+  exact div_self this.ne'
+
+#print axioms integral_exp_neg_sq_eq_sqrt_pi
+#print axioms integral_exp_neg_mul_sq_eq_sqrt_pi_div
+#print axioms integral_bell_curve_eq_one
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_exp_neg_sq_eq_sqrt_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_exp_neg_mul_sq_eq_sqrt_pi_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_bell_curve_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -388,9 +461,11 @@ The two outputs match line for line.
 - [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): a Gaussian that widens with time and keeps its area.
 - [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell read as probabilities, with a centre and a width.
 - [Black-Scholes by expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): an option price as a Gaussian integral.
-- Weighted Gauss rules: integrating against e^(−x^2) with a few well-placed points.
+- [Weighted Gauss rules](../../16-Numerical%20analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules.md): integrating against e^(−x^2) with a few well-placed points.
 - Similarity solutions: the area up to a point, not the whole line.
 - Two pairs worth memorising: the Gaussian as its own frequency picture.
+
+The question this card leaves open: the area up to a given point, not the whole line, has no formula of this kind, so how is it found?
 
 ---
 

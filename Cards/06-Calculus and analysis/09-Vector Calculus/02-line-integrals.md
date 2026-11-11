@@ -40,6 +40,7 @@ In parts, the same integral is $\int_C P\,dx + Q\,dy$: east push times eastward 
 | $t$, $a$, $b$; $s$, $\varphi$ | the clock and its start and end; a second clock and the rule turning it into the first | 0 to 1; $t = s^2$ | a new clock leaves the answer alone |
 | $r'(t)$ | velocity: metres per unit of clock | straight: $(40, 30)$ | — |
 | $dr$ | a small step along the route, velocity times a small clock step | — | — |
+| $\cdot$ | the dot product: east parts multiplied, plus north parts multiplied | straight, at clock t: $3t \times 40 + (-1) \times 30$ | — |
 | $T$, $ds$ | direction of travel, length 1; a small length along the route | straight: $(0.8, 0.6)$, 50 m in all | — |
 | $W$ | the work done by the wind, joules | straight: 30 J | — |
 
@@ -68,7 +69,7 @@ Cut the route into short pieces. Dot the wind at each piece's middle with its ch
 
 On the curve, 4 pieces give 9.375000 J, short by 0.625000 J; 16 pieces, short by 0.039062 J. To land within 0.01 J, 32 pieces suffice: short by 0.009766 J. With 64, 0.002441 J.
 
-Over a short clock step the chord is almost $r'(t)$ times the step, so the sum is almost a sum of $F(r(t)) \cdot r'(t)$ times clock steps: a Riemann sum ([The integral](../04-Integrals/01-riemann-integral.md)), and it closes in on the integral.
+Over a short clock step the chord is almost $r'(t)$ times the step, so the sum is almost a sum of $F(r(t)) \cdot r'(t)$ times clock steps. That is a Riemann sum ([The integral](../04-Integrals/01-riemann-integral.md)), and it closes in on the integral.
 
 <details>
 <summary>Detailed proof: every fine force-times-chord sum tends to the integral</summary>
@@ -99,9 +100,11 @@ In general, a forward clock change $t = \varphi(s)$ leaves the integral unchange
 
 Every route covers 40 m east and 30 m north, but one doing its eastward travel further north collects more help. The 1 N drift costs every route the same −30 J.
 
-Go out north-then-east (90 J) and back along the hedge route reversed (+30 J). The cart ends where it began, yet the wind did 120 J: 0.1 N per metre times the area, 40 m × 30 m. No accident: the wind's shear, how fast its eastward push changes going north, sets its **curl** ([Divergence and curl](03-divergence-and-curl.md)), here −0.1 N per metre. [Green's theorem](06-greens-theorem.md) proves that the work round an anticlockwise loop is the curl added over the enclosed area. This loop runs clockwise, so its work is the negative: +120 J.
+Go out north-then-east (90 J) and back along the hedge route reversed (+30 J). The cart ends where it began, yet the wind did 120 J: 0.1 N per metre times the area, 40 m × 30 m.
 
-If the field is the gradient of a function, each step's dot product is that function's rate along the step ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)), so the work is its change from A to B and every loop gets 0 J. This wind is no gradient; [Conservative fields](04-conservative-fields-and-potentials.md) takes that road.
+No accident: the wind's shear, how fast its eastward push changes going north, sets its **curl** ([Divergence and curl](03-divergence-and-curl.md)), here −0.1 N per metre. [Green's theorem](06-greens-theorem.md) proves that the work round an anticlockwise loop is the curl added over the enclosed area. This loop runs clockwise, so its work is the negative: +120 J.
+
+A gradient field is made of one function's rates of change, east and north ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)). For such a field, each step's dot product is that function's rate along the step. So the work is its change from A to B, and every loop gets 0 J. This wind is no gradient; [Conservative fields](04-conservative-fields-and-potentials.md) takes that road.
 
 ---
 
@@ -331,6 +334,317 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three facts of Why it works for any route with a continuous velocity, and any field continuous along it.
+
+- Run a route backwards, from B to A, and its work is the negative of the forward work.
+- Change to a forward clock that starts and ends where the old one does, and the work stays the same.
+- Force-times-chord sums close in on the work. Make every clock step short enough, and every sum lands as close as you like, whatever readings are picked.
+- The hand values hold exactly: 30 J straight, 10 J on the curve, 30 J at a slow start, and −30 J from B to A.
+- The table's legs hold too: −30 J north, 120 J east along the top, then 90 J and −30 J for the L-shaped routes.
+- The loop gets 90 + 30 = 120 J, which is 0.1 N per metre times 40 m × 30 m.
+- On the curve, 4 pieces give 9.375 J, short by 0.625 J.
+
+The 1,024-chord sums, the 16-, 32- and 64-piece sums, the four mistakes and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 280 lines</summary>
+
+```lean
+-- Line integrals of a field: for a route with a continuous velocity and a field continuous along it, reversing the route flips the sign of the work, a forward change of clock leaves it unchanged, force-times-chord sums close in on it, and the card's wind gives 30, 10, −30 and 90 J on its four routes and 120 J round the loop.
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
+import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.Topology.UniformSpace.HeineCantor
+import Mathlib.Topology.Order.ProjIcc
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Tactic
+
+open Set RealInnerProductSpace
+
+/-- Telescoping over `Fin`: the steps of a list of numbers add up to last minus first. -/
+theorem fin_sum_succ_sub_castSucc : ∀ (m : ℕ) (u : Fin (m + 1) → ℝ),
+    ∑ i : Fin m, (u i.succ - u i.castSucc) = u (Fin.last m) - u 0 := by
+  intro m
+  induction m with
+  | zero => intro u; simp
+  | succ m ih =>
+    intro u
+    rw [Fin.sum_univ_castSucc]
+    have h := ih (fun i => u i.castSucc)
+    simp only [Fin.succ_castSucc] at h ⊢
+    rw [h, Fin.succ_last, Fin.castSucc_zero]
+    ring
+
+/-- **Reversing the route flips the sign.** A route r(t), for clock t from a to b, has a
+continuous velocity r'(t) (r is continuously differentiable: a smooth piece), and the field F is
+continuous along the route. The work is ∫ from a to b of F(r(t)) · r'(t) dt. Run the same route
+backwards, from B to A, by the clock s ↦ r(a + b − s). Its work is the negative of the forward work. -/
+theorem line_integral_reverse_eq_neg {n : ℕ} (F : EuclideanSpace ℝ (Fin n) → EuclideanSpace ℝ (Fin n))
+    (r : ℝ → EuclideanSpace ℝ (Fin n)) {a b : ℝ} (hab : a ≤ b)
+    (hr : ContDiff ℝ 1 r) (hF : ContinuousOn F (r '' Icc a b)) :
+    (∫ s in a..b, ⟪F (r (a + b - s)), deriv (fun s => r (a + b - s)) s⟫) =
+      -∫ t in a..b, ⟪F (r t), deriv r t⟫ := by
+  have hdiff : Differentiable ℝ r := hr.differentiable one_ne_zero
+  have hd : ∀ s, deriv (fun s => r (a + b - s)) s = -deriv r (a + b - s) := by
+    intro s
+    have h1 : HasDerivAt r (deriv r (a + b - s)) (a + b - s) := (hdiff _).hasDerivAt
+    have h2 : HasDerivAt (fun s : ℝ => a + b - s) (-1) s := by
+      simpa using (hasDerivAt_id s).const_sub (a + b)
+    have h3 := h1.scomp s h2
+    have h4 : (r ∘ fun s : ℝ => a + b - s) = fun s => r (a + b - s) := rfl
+    rw [h4] at h3
+    rw [h3.deriv]
+    simp
+  simp_rw [hd, inner_neg_right]
+  rw [intervalIntegral.integral_neg,
+    intervalIntegral.integral_comp_sub_left (fun x => ⟪F (r x), deriv r x⟫) (a + b)]
+  congr 2 <;> ring
+
+/-- **The pace does not matter.** A route r(t), clock t from a to b, has a continuous velocity,
+and the field F is continuous along it. A new clock s runs from c to d, and t = φ(s) turns it into
+the old one: φ has a continuous rate of change, runs forward (never goes back), and starts at a
+and ends at b. Then the work along the new-clock route r(φ(s)), ∫ from c to d of
+F(r(φ(s))) · (r ∘ φ)'(s) ds, equals the work ∫ from a to b of F(r(t)) · r'(t) dt. -/
+theorem line_integral_reparam_eq {n : ℕ} (F : EuclideanSpace ℝ (Fin n) → EuclideanSpace ℝ (Fin n))
+    (r : ℝ → EuclideanSpace ℝ (Fin n)) (φ : ℝ → ℝ) {a b c d : ℝ} (hcd : c ≤ d)
+    (hr : ContDiff ℝ 1 r) (hF : ContinuousOn F (r '' Icc a b))
+    (hφ : ContDiff ℝ 1 φ) (hmono : MonotoneOn φ (Icc c d)) (hφc : φ c = a) (hφd : φ d = b) :
+    (∫ s in c..d, ⟪F (r (φ s)), deriv (r ∘ φ) s⟫) = ∫ t in a..b, ⟪F (r t), deriv r t⟫ := by
+  have hdiff : Differentiable ℝ r := hr.differentiable one_ne_zero
+  have hφdiff : Differentiable ℝ φ := hφ.differentiable one_ne_zero
+  set g : ℝ → ℝ := fun t => ⟪F (r t), deriv r t⟫ with hg
+  have hd : ∀ s, deriv (r ∘ φ) s = deriv φ s • deriv r (φ s) := by
+    intro s
+    exact ((hdiff (φ s)).hasDerivAt.scomp s (hφdiff s).hasDerivAt).deriv
+  have hint : ∀ s, ⟪F (r (φ s)), deriv (r ∘ φ) s⟫ = (g ∘ φ) s * deriv φ s := by
+    intro s
+    rw [hd, inner_smul_right]
+    simp only [hg, Function.comp]
+    ring
+  simp_rw [hint]
+  have hgc : ContinuousOn g (Icc a b) :=
+    (hF.comp hr.continuous.continuousOn (mapsTo_image r _)).inner
+      (hr.continuous_deriv le_rfl).continuousOn
+  rw [intervalIntegral.integral_comp_mul_deriv' (f := φ) (f' := deriv φ) (g := g)
+    (fun x _ => (hφdiff x).hasDerivAt) (hφ.continuous_deriv le_rfl).continuousOn, hφc, hφd]
+  apply hgc.mono
+  rintro _ ⟨x, hx, rfl⟩
+  rw [uIcc_of_le hcd] at hx
+  refine ⟨?_, ?_⟩
+  · rw [← hφc]; exact hmono ⟨le_rfl, hcd⟩ hx hx.1
+  · rw [← hφd]; exact hmono hx ⟨hcd, le_rfl⟩ hx.2
+
+/-- **Force-times-chord sums close in on the work.** A route r(t), clock t from a to b, has a
+continuous velocity, and the field F is continuous along it. Cut the clock at
+a = t₀ ≤ t₁ ≤ … ≤ tₙ = b with every step shorter than δ, pick any reading τᵢ in each step, and
+add F(r(τᵢ)) · (r(tᵢ) − r(tᵢ₋₁)): the wind at that reading dotted with the step's chord.
+For every ε > 0 there is a δ > 0 that keeps every such sum within ε of the work
+∫ from a to b of F(r(t)) · r'(t) dt, whatever readings are picked. -/
+theorem chord_sums_tend_to_line_integral {n : ℕ}
+    (F : EuclideanSpace ℝ (Fin n) → EuclideanSpace ℝ (Fin n))
+    (r : ℝ → EuclideanSpace ℝ (Fin n)) {a b : ℝ} (hab : a ≤ b)
+    (hr : ContDiff ℝ 1 r) (hF : ContinuousOn F (r '' Icc a b)) :
+    ∀ ε > 0, ∃ δ > 0, ∀ (m : ℕ) (t : Fin (m + 1) → ℝ) (τ : Fin m → ℝ),
+      t 0 = a → t (Fin.last m) = b →
+      (∀ i : Fin m, t i.castSucc ≤ τ i ∧ τ i ≤ t i.succ) →
+      (∀ i : Fin m, t i.succ - t i.castSucc < δ) →
+      |(∑ i : Fin m, ⟪F (r (τ i)), r (t i.succ) - r (t i.castSucc)⟫) -
+          ∫ s in a..b, ⟪F (r s), deriv r s⟫| < ε := by
+  intro ε hε
+  have hdiff : Differentiable ℝ r := hr.differentiable one_ne_zero
+  set p : ℝ → ℝ := fun x => (projIcc a b hab x : ℝ) with hp
+  have hpc : Continuous p := continuous_subtype_val.comp continuous_projIcc
+  have hpI : ∀ x ∈ Icc a b, p x = x := fun x hx => by simp [hp, projIcc_of_mem hab hx]
+  have hpm : ∀ x, p x ∈ Icc a b := fun x => (projIcc a b hab x).2
+  have hr' : Continuous (deriv r) := hr.continuous_deriv le_rfl
+  have hrc : Continuous r := hr.continuous
+  set G : ℝ → EuclideanSpace ℝ (Fin n) := fun x => F (r (p x)) with hG
+  have hGc : Continuous G :=
+    hF.comp_continuous (hrc.comp hpc) (fun x => mem_image_of_mem r (hpm x))
+  set g : ℝ → ℝ := fun x => ⟪G x, deriv r x⟫ with hg
+  have hgc : Continuous g := hGc.inner hr'
+  set H : ℝ → ℝ := fun x => ∫ s in a..x, g s with hH
+  have hHd : ∀ x, HasDerivAt H (g x) x := fun x =>
+    (hgc.integral_hasStrictDerivAt a x).hasDerivAt
+  obtain ⟨M, hM⟩ : ∃ M, ∀ x ∈ Icc a b, ‖deriv r x‖ ≤ M :=
+    isCompact_Icc.exists_bound_of_continuousOn hr'.continuousOn
+  have hM0 : 0 ≤ M := le_trans (norm_nonneg _) (hM a ⟨le_rfl, hab⟩)
+  have hba : 0 ≤ b - a := sub_nonneg.2 hab
+  set η : ℝ := ε / (2 * (M + 1) * (b - a + 1)) with hη
+  have hden : 0 < 2 * (M + 1) * (b - a + 1) := by positivity
+  have hη0 : 0 < η := div_pos hε hden
+  have hηeq : η * (2 * (M + 1) * (b - a + 1)) = ε := by
+    rw [hη]; field_simp
+  have huc := (isCompact_Icc (a := a) (b := b)).uniformContinuousOn_of_continuous hGc.continuousOn
+  rw [Metric.uniformContinuousOn_iff] at huc
+  obtain ⟨δ, hδ, hδG⟩ := huc η hη0
+  refine ⟨δ, hδ, ?_⟩
+  intro m t τ h0 hlast hτ hstep
+  have hmono : Monotone t := Fin.monotone_iff_le_succ.2 (fun i => (hτ i).1.trans (hτ i).2)
+  have htI : ∀ j, t j ∈ Icc a b := fun j =>
+    ⟨h0 ▸ hmono (Fin.zero_le j), hlast ▸ hmono (Fin.le_last j)⟩
+  have hint : ∫ s in a..b, ⟪F (r s), deriv r s⟫ = H b - H a := by
+    have h1 : ∫ s in a..b, ⟪F (r s), deriv r s⟫ = ∫ s in a..b, g s := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [uIcc_of_le hab] at hx
+      simp [hg, hG, hpI x hx]
+    rw [h1, hH]
+    simp
+  have htel : H b - H a = ∑ i : Fin m, (H (t i.succ) - H (t i.castSucc)) := by
+    rw [← h0, ← hlast]
+    exact (fin_sum_succ_sub_castSucc m (fun j => H (t j))).symm
+  rw [hint, htel, ← Finset.sum_sub_distrib]
+  have hterm : ∀ i : Fin m,
+      |⟪F (r (τ i)), r (t i.succ) - r (t i.castSucc)⟫ - (H (t i.succ) - H (t i.castSucc))| ≤
+        η * M * (t i.succ - t i.castSucc) := by
+    intro i
+    have hxy : t i.castSucc ≤ t i.succ := (hτ i).1.trans (hτ i).2
+    have hτI : τ i ∈ Icc a b :=
+      ⟨(htI _).1.trans (hτ i).1, (hτ i).2.trans (htI _).2⟩
+    have hGτ : G (τ i) = F (r (τ i)) := by simp [hG, hpI _ hτI]
+    let K : ℝ → ℝ := fun s => ⟪F (r (τ i)), r s⟫ - H s
+    have hK : ∀ s, HasDerivAt K (⟪F (r (τ i)), deriv r s⟫ - g s) s := by
+      intro s
+      have h1 := (hasDerivAt_const s (F (r (τ i)))).inner ℝ (hdiff s).hasDerivAt
+      have h2 : HasDerivAt K (⟪F (r (τ i)), deriv r s⟫ + ⟪(0 : EuclideanSpace ℝ (Fin n)), r s⟫ - g s) s :=
+        h1.sub (hHd s)
+      convert h2 using 1
+      simp
+    have hb : ∀ s ∈ Ico (t i.castSucc) (t i.succ),
+        ‖⟪F (r (τ i)), deriv r s⟫ - g s‖ ≤ η * M := by
+      intro s hs
+      have hsI : s ∈ Icc a b :=
+        ⟨(htI _).1.trans hs.1, hs.2.le.trans (htI _).2⟩
+      have hGs : G s = F (r s) := by simp [hG, hpI s hsI]
+      have hdist : dist (G (τ i)) (G s) < η := by
+        apply hδG _ hτI _ hsI
+        rw [Real.dist_eq, abs_lt]
+        have := hstep i
+        constructor <;> linarith [(hτ i).1, (hτ i).2, hs.1, hs.2]
+      rw [Real.norm_eq_abs, hg]
+      simp only
+      rw [← inner_sub_left]
+      calc |⟪F (r (τ i)) - G s, deriv r s⟫| ≤ ‖F (r (τ i)) - G s‖ * ‖deriv r s‖ :=
+            abs_real_inner_le_norm _ _
+        _ ≤ η * M := by
+            apply mul_le_mul _ (hM s hsI) (norm_nonneg _) hη0.le
+            rw [← dist_eq_norm, ← hGτ]
+            exact hdist.le
+    have hmv := norm_image_sub_le_of_norm_deriv_le_segment' (f := K)
+      (fun s _ => (hK s).hasDerivWithinAt) hb (t i.succ) ⟨hxy, le_rfl⟩
+    rw [Real.norm_eq_abs] at hmv
+    convert hmv using 2
+    simp only [K, inner_sub_right]
+    ring
+  calc |∑ i : Fin m, (⟪F (r (τ i)), r (t i.succ) - r (t i.castSucc)⟫ -
+          (H (t i.succ) - H (t i.castSucc)))|
+      ≤ ∑ i : Fin m, |⟪F (r (τ i)), r (t i.succ) - r (t i.castSucc)⟫ -
+          (H (t i.succ) - H (t i.castSucc))| := Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ i : Fin m, η * M * (t i.succ - t i.castSucc) := Finset.sum_le_sum (fun i _ => hterm i)
+    _ = η * M * (b - a) := by
+        rw [← Finset.mul_sum, fin_sum_succ_sub_castSucc m t, h0, hlast]
+    _ < ε := by
+        have h1 : η * M * (b - a) ≤ η * ((M + 1) * (b - a + 1)) := by
+          apply le_trans (le_of_eq (mul_assoc _ _ _))
+          apply mul_le_mul_of_nonneg_left _ hη0.le
+          nlinarith
+        nlinarith
+
+-- The card's wind is (y/10, −1) N at (x, y) m; the cart goes from A (0, 0) to B (40, 30).
+-- Straight route (40t, 30t): wind (3t, −1), velocity (40, 30); the work is 120/2 − 30 = 30 J.
+example : (∫ t in (0 : ℝ)..1, ((30 * t / 10) * 40 + (-1) * 30)) = 30 := by
+  have h : ∀ x ∈ uIcc (0:ℝ) 1, HasDerivAt (fun t : ℝ => 60 * t ^ 2 - 30 * t ^ 1)
+      ((30 * x / 10) * 40 + (-1) * 30) x := by
+    intro x _
+    have := ((hasDerivAt_pow 2 x).const_mul 60).sub ((hasDerivAt_pow 1 x).const_mul 30)
+    convert this using 1
+    simp; ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt h
+    (by apply Continuous.intervalIntegrable; fun_prop)]
+  norm_num
+-- The curve (40t, 30t^2): wind (3t^2, −1), velocity (40, 60t); the work is 40 − 30 = 10 J.
+example : (∫ t in (0 : ℝ)..1, ((30 * t ^ 2 / 10) * 40 + (-1) * (60 * t))) = 10 := by
+  have h : ∀ x ∈ uIcc (0:ℝ) 1, HasDerivAt (fun t : ℝ => 40 * t ^ 3 - 30 * t ^ 2)
+      ((30 * x ^ 2 / 10) * 40 + (-1) * (60 * x)) x := by
+    intro x _
+    have := ((hasDerivAt_pow 3 x).const_mul 40).sub ((hasDerivAt_pow 2 x).const_mul 30)
+    convert this using 1
+    simp; ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt h
+    (by apply Continuous.intervalIntegrable; fun_prop)]
+  norm_num
+-- Its dot product is 120t^2 − 60t, with antiderivative 40t^3 − 30t^2.
+example : ∀ t : ℚ, (30 * t ^ 2 / 10) * 40 + (-1) * (60 * t) = 120 * t ^ 2 - 60 * t := by
+  intro t; ring
+example : (40 : ℚ) * 1 ^ 3 - 30 * 1 ^ 2 - (40 * 0 ^ 3 - 30 * 0 ^ 2) = 10 := by norm_num
+-- The straight route at a slow start, (40s^2, 30s^2): velocity (80s, 60s), work 30 J again.
+example : (∫ s in (0 : ℝ)..1, ((30 * s ^ 2 / 10) * (80 * s) + (-1) * (60 * s))) = 30 := by
+  have h : ∀ x ∈ uIcc (0:ℝ) 1, HasDerivAt (fun t : ℝ => 60 * t ^ 4 - 30 * t ^ 2)
+      ((30 * x ^ 2 / 10) * (80 * x) + (-1) * (60 * x)) x := by
+    intro x _
+    have := ((hasDerivAt_pow 4 x).const_mul 60).sub ((hasDerivAt_pow 2 x).const_mul 30)
+    convert this using 1
+    simp; ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt h
+    (by apply Continuous.intervalIntegrable; fun_prop)]
+  norm_num
+-- The straight route from B to A, (40 − 40s, 30 − 30s): velocity (−40, −30), work −30 J.
+example : (∫ s in (0 : ℝ)..1, ((30 * (1 - s) / 10) * (-40) + (-1) * (-30))) = -30 := by
+  have h : ∀ x ∈ uIcc (0:ℝ) 1, HasDerivAt (fun t : ℝ => 60 * t ^ 2 - 90 * t ^ 1)
+      ((30 * (1 - x) / 10) * (-40) + (-1) * (-30)) x := by
+    intro x _
+    have := ((hasDerivAt_pow 2 x).const_mul 60).sub ((hasDerivAt_pow 1 x).const_mul 90)
+    convert this using 1
+    simp; ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt h
+    (by apply Continuous.intervalIntegrable; fun_prop)]
+  norm_num
+-- Straight route: length √(40^2 + 30^2) = 50 m, direction (40/50, 30/50) = (0.8, 0.6).
+example : (40 : ℚ) ^ 2 + 30 ^ 2 = 50 ^ 2 ∧ (40 : ℚ) / 50 = 4 / 5 ∧ (30 : ℚ) / 50 = 3 / 5 := by
+  norm_num
+-- North leg on either edge: −1 N × 30 m = −30 J. East leg along the top: 3 N × 40 m = 120 J.
+example : (-1 : ℚ) * 30 = -30 ∧ (30 : ℚ) / 10 * 40 = 120 := by norm_num
+-- North, then east: −30 + 120 = 90 J. East, then north: 0 + (−30) = −30 J.
+example : (-30 : ℚ) + 120 = 90 ∧ (0 : ℚ) + (-30) = -30 := by norm_num
+-- The loop, out north-then-east and back along the hedge route reversed: 90 + 30 = 120 J,
+-- which is 0.1 N per metre times the area 40 m × 30 m.
+example : (90 : ℚ) + 30 = 120 ∧ (1 : ℚ) / 10 * (40 * 30) = 120 := by norm_num
+-- On the curve, 4 force-times-chord pieces give 9.375 J = 75/8 J, short by 0.625 J = 5/8 J.
+-- Piece i runs over clock [i/4, (i+1)/4]: wind at its middle (3((2i+1)/8)^2, −1), chord
+-- (10, 30((i+1)^2 − i^2)/16).
+example : (∑ i ∈ Finset.range 4,
+    (3 * ((2 * (i : ℚ) + 1) / 8) ^ 2 * 10 + (-1) * (30 * ((i + 1) ^ 2 - i ^ 2) / 16))) = 75 / 8 := by
+  norm_num [Finset.sum_range_succ]
+example : (10 : ℚ) - 75 / 8 = 5 / 8 := by norm_num
+
+#print axioms fin_sum_succ_sub_castSucc
+#print axioms line_integral_reverse_eq_neg
+#print axioms line_integral_reparam_eq
+#print axioms chord_sums_tend_to_line_integral
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'fin_sum_succ_sub_castSucc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'line_integral_reverse_eq_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'line_integral_reparam_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chord_sums_tend_to_line_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -354,9 +668,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Mechanics.** Work by a force along a path is this integral: Newton's laws.
-- **Electricity.** The voltage driven round a wire loop is the electric field's line integral round it: Magnetic fields.
-- **Heat engines.** A gas's work depends on its route through pressure and volume, so an engine cycle can deliver net work: The thermodynamic laws.
+- **Mechanics.** Work by a force along a path is this integral: [Newton's laws](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/01-newtons-laws-work-and-energy.md).
+- **Electricity.** The voltage driven round a wire loop is the electric field's line integral round it: [Magnetic fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md).
+- **Heat engines.** A gas's work depends on its route through pressure and volume, so an engine cycle can deliver net work: [The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md).
 
 > **Say it back**
 > A line integral of a field adds the field's part along the motion times each small step. With a clock, it is the field dotted with the velocity, added over the clock. Pace does not change it; reversal flips its sign. Across the windy field, routes from A to B get 30, 10, −30 and 90 J, and a loop gets 120 J, because the wind shears.
