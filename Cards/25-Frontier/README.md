@@ -89,7 +89,7 @@ State each open problem exactly, say what is proved around it and what is not, t
 
 1. The September 2026 Navier-Stokes claim: forced finite-time blow-up for versions C and D
 2. Collatz: halve if even, triple and add one if odd, and always reach 1
-3. The August 2026 zeta-zeros claim: a reported rise in the proportion of zeros on the line from 41.6 to 67.2 percent
+3. The August 2026 zeta-zeros claim: a reported rise in the proved lower bound for zeros on the line, from 41.6 to 67.2 percent
 4. The Jacobian conjecture: a polynomial map with constant nonzero Jacobian has a polynomial inverse
 5. Two algebra questions: is every group sofic, and is the sum of two nil left ideals nil (Kothe)
 6. Percolation: when does a random lattice connect, and the reported 'dying percolation' result to verify

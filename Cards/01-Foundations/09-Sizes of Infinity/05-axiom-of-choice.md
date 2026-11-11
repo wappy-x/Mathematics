@@ -81,7 +81,7 @@ The pile can dwarf the hotel: a box for every non-empty set of real numbers is m
 
 A solid ball can be cut into five pieces which, moved and turned but never stretched, fit together into two balls the size of the first. That is Banach–Tarski: a theorem, not a trick. The pieces are so ragged no volume can be given to them; the axiom conjures them. Quoted, not computed: no program reaches it.
 
-The axiom is rarely used raw. The everyday form is Zorn's lemma, waiting in the algebra wing. Zorn's lemma and the line-up each give the axiom back: one claim, three sets of clothes.
+The axiom is rarely used raw. The everyday form is Zorn's lemma; see the topology wing's Tychonoff card (planned). Zorn's lemma and the line-up each give the axiom back: one claim, three sets of clothes.
 
 ---
 
@@ -344,7 +344,7 @@ example : (Fintype.piFinset fun i : Fin 10 =>
 
 ## Where this goes next
 
-Last card on the shelf. Zorn's lemma, the axiom in working clothes and equivalent to it, waits in the algebra wing. Behind it: [Same size means pairable](01-same-size-by-pairing.md), [Countable sets](02-countable-sets.md), [Cantor's diagonal](03-cantors-diagonal-argument.md).
+Last card on the shelf. Zorn's lemma, the axiom in working clothes and equivalent to it, comes on the topology wing's Tychonoff card (planned). Behind it: [Same size means pairable](01-same-size-by-pairing.md), [Countable sets](02-countable-sets.md), [Cantor's diagonal](03-cantors-diagonal-argument.md).
 
 The question this card leaves open: which theorems truly need the axiom?
 
