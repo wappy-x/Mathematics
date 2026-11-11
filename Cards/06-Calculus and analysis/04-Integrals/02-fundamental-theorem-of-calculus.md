@@ -28,7 +28,9 @@ Scale: 28 units across per minute, 7 up per litre a minute. The sloping line is 
 
 ## The formula
 
-Notation first, in words. A function whose derivative is f is an **antiderivative** of f: it runs the derivative backwards. An integral with a letter x as its upper end is a **running total**, a function of where the interval stops; the t inside only counts time along the way.
+Notation first, in words. A function's derivative is its rate: $A'(x)$, read "A prime of x", is how fast A grows at x ([The derivative](../02-Derivatives/01-the-derivative.md)).
+
+A function whose derivative is f is an **antiderivative** of f: it runs the derivative backwards. An integral with a letter x as its upper end is a **running total**, a function of where the interval stops; the t inside only counts time along the way.
 
 The first half says the running total grows at the rate:
 
@@ -71,7 +73,9 @@ In a short slice of time the flow barely changes, so the water arriving is close
 
 ### Step 1: the running total grows at the rate
 
-Step h minutes past minute 4. The water arriving is $A(4 + h) - A(4)$. Meanwhile the flow stays between f(4) = 11 and f(4 + h) = 11 + 2h, so the slice's one-strip lower and upper sums are 11h and (11 + 2h)h, and the water lies between them. Divide by h: the slice's average rate lies between 11 and 11 + 2h. Computed from sums alone, the average reads 12 for a step of 1 minute, 11.1 for 0.1, 11.01 for 0.01.
+Step h minutes past minute 4. The water arriving is $A(4 + h) - A(4)$. Meanwhile the flow stays between f(4) = 11 and f(4 + h) = 11 + 2h, so the slice's one-strip lower and upper sums are 11h and (11 + 2h)h, and the water lies between them.
+
+Divide by h: the slice's average rate lies between 11 and 11 + 2h. Computed from sums alone, the average reads 12 for a step of 1 minute, 11.1 for 0.1, 11.01 for 0.01.
 
 The limit, played with numbers: to land within 0.001 of 11, keep the step below 0.0005 minutes, so 11 + 2h stays below 11.001. At h = 0.0005 the average reads 11.0005.
 
@@ -315,6 +319,139 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves both halves and the constant rule in general, plus the tank's numbers and one arch of sin.
+
+- Let a be no larger than b, and let G be continuous on the closed interval from a to b.
+- Let G have rate f at every inside point, and let f have an integral. Then adding up f from a to b gives G(b) − G(a).
+- Continuity of f is not needed for that second half.
+- Let the rate f be continuous on the closed interval. Then the running total A has rate f(x) at every x in it.
+- At a and b only the inward step counts: a one-sided derivative.
+- Two antiderivatives of f, both continuous on the closed interval, differ by one constant C across it.
+- The tank: G(10) − G(0) = 130, G(10) − G(2) = 120, and f(4) = 11.
+- Each one-minute change in G is 2k + 2, the flow at the half minute. The ten changes, 4 to 22, add to 130.
+- The level at each whole minute is 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130.
+- The one-minute rectangles using each minute's starting flow add to 120.
+- Adding up 3 + 2t from 0 to 10 gives exactly 130.
+- One arch of sin, from 0 to pi, holds exactly 2.
+
+The strip sums and their gaps, the slopes at minute 4, the three breaks and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 98 lines</summary>
+
+```lean
+-- Fundamental theorem of calculus: the integral of a rate over an interval equals the change in any function with that rate, and the running total of a continuous rate has that rate as its derivative.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
+open Set intervalIntegral MeasureTheory
+
+/-- **Accumulation gives the change (the second half).** Let a ≤ b. If G is continuous on the
+closed interval from a to b, has rate f at every inside point, and the rate f has an integral
+over the interval, then adding up f from a to b gives G at the end minus G at the start:
+∫_a^b f(t) dt = G(b) − G(a). Continuity of f is not needed. -/
+theorem integral_of_rate_eq_change (f G : ℝ → ℝ) (a b : ℝ) (hab : a ≤ b)
+    (hG : ContinuousOn G (Icc a b))
+    (hderiv : ∀ x ∈ Ioo a b, HasDerivAt G (f x) x)
+    (hint : IntervalIntegrable f volume a b) :
+    ∫ t in a..b, f t = G b - G a := by
+  exact integral_eq_sub_of_hasDerivAt_of_le hab hG hderiv hint
+
+/-- **The running total grows at the rate (the first half).** If the rate f is continuous on the
+closed interval from a to b, then the running total A(x) = ∫_a^x f(t) dt has derivative f(x) at
+every x in the interval. The derivative is taken within the interval, so at a and b it is the
+one-sided derivative from the inside. -/
+theorem running_total_has_derivative_rate (f : ℝ → ℝ) (a b : ℝ)
+    (hf : ContinuousOn f (Icc a b)) (x : ℝ) (hx : x ∈ Icc a b) :
+    HasDerivWithinAt (fun u => ∫ t in a..u, f t) (f x) (Icc a b) x := by
+  have hab : a ≤ b := hx.1.trans hx.2
+  have hsub : uIcc a x ⊆ Icc a b := by
+    rw [uIcc_of_le hx.1]; exact Icc_subset_Icc le_rfl hx.2
+  have : Fact (x ∈ Icc a b) := ⟨hx⟩
+  exact integral_hasDerivWithinAt_right ((hf.mono hsub).intervalIntegrable)
+    (hf.stronglyMeasurableAtFilter_nhdsWithin measurableSet_Icc x) (hf x hx)
+
+/-- **Two antiderivatives differ by a constant.** If G₁ and G₂ are both continuous on the closed
+interval from a to b and both have rate f at every inside point, then there is one constant C with
+G₁(x) = G₂(x) + C for every x in the interval; so C cancels in G(b) − G(a). -/
+theorem antiderivatives_differ_by_constant (f G₁ G₂ : ℝ → ℝ) (a b : ℝ)
+    (h₁ : ContinuousOn G₁ (Icc a b)) (h₂ : ContinuousOn G₂ (Icc a b))
+    (hd₁ : ∀ x ∈ Ioo a b, HasDerivAt G₁ (f x) x)
+    (hd₂ : ∀ x ∈ Ioo a b, HasDerivAt G₂ (f x) x) :
+    ∃ C : ℝ, ∀ x ∈ Icc a b, G₁ x = G₂ x + C := by
+  refine ⟨G₁ a - G₂ a, fun x hx => ?_⟩
+  rcases eq_or_lt_of_le hx.1 with h | h
+  · subst h; ring
+  · have hc : ContinuousOn (fun y => G₁ y - G₂ y) (Icc a x) :=
+      (h₁.mono (Icc_subset_Icc le_rfl hx.2)).sub (h₂.mono (Icc_subset_Icc le_rfl hx.2))
+    have hd : ∀ y ∈ Ioo a x, HasDerivAt (fun y => G₁ y - G₂ y) ((fun _ => (0:ℝ)) y) y := by
+      intro y hy
+      have hy' : y ∈ Ioo a b := ⟨hy.1, hy.2.trans_le hx.2⟩
+      have h3 := (hd₁ y hy').sub (hd₂ y hy')
+      rw [sub_self] at h3
+      exact h3
+    obtain ⟨c, _, hc'⟩ := exists_hasDerivAt_eq_slope (fun y => G₁ y - G₂ y) (fun _ => (0:ℝ)) h hc hd
+    have hne : x - a ≠ 0 := sub_ne_zero.mpr (ne_of_gt h)
+    have := hc'.symm
+    rw [div_eq_zero_iff] at this
+    rcases this with h0 | h0
+    · linarith
+    · exact absurd h0 hne
+
+-- The tank: G(t) = 3t + t², read at the ends. G(10) = 30 + 100 = 130, G(0) = 0.
+example : (3 * 10 + 10 ^ 2 : ℤ) = 130 := by norm_num
+example : (3 * 0 + 0 ^ 2 : ℤ) = 0 := by norm_num
+example : (3 * 10 + 10 ^ 2 : ℤ) - (3 * 0 + 0 ^ 2) = 130 := by norm_num
+
+-- The rate at minute 4: f(4) = 3 + 2·4 = 11 litres a minute.
+example : (3 + 2 * 4 : ℤ) = 11 := by norm_num
+
+-- Minutes 2 to 10 only: G(10) − G(2) = 130 − 10 = 120.
+example : (3 * 10 + 10 ^ 2 : ℤ) - (3 * 2 + 2 ^ 2) = 120 := by norm_num
+
+-- Minute by minute: the ten changes 4, 6, …, 22 add to 130.
+example : ∑ k ∈ Finset.range 10, (2 * (k + 1) + 2) = 130 := by decide
+
+-- Each one-minute change G(k) − G(k − 1) is 2k + 2, the flow at the half minute, f(k − 1/2).
+example : ∀ k ∈ Finset.Icc (1 : ℕ) 10,
+    ((3 * k + k ^ 2 : ℚ) - (3 * (k - 1) + (k - 1) ^ 2) = 2 * k + 2 ∧
+     (3 + 2 * ((k : ℚ) - 1/2)) = 2 * k + 2) := by
+  intro k _; constructor <;> ring
+
+-- The level G(k) at each whole minute: 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130.
+example : (List.range 11).map (fun t => 3 * t + t ^ 2) = [0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130] := by
+  decide
+
+-- One-minute left rectangles fall 10 litres short: 3 + 5 + … + 21 = 120.
+example : ∑ k ∈ Finset.range 10, (3 + 2 * k) = 120 := by decide
+
+-- The tank's integral itself: ∫₀¹⁰ (3 + 2t) dt = 130.
+example : ∫ t in (0 : ℝ)..10, (3 + 2 * t) = 130 := by
+  rw [integral_add (by simp) ((by fun_prop : Continuous fun t : ℝ => 2 * t).intervalIntegrable 0 10),
+    intervalIntegral.integral_const_mul, integral_id]
+  norm_num
+
+-- One arch of sin: ∫₀^π sin t dt = −cos π + cos 0 = 2.
+example : ∫ t in (0 : ℝ)..Real.pi, Real.sin t = 2 := by
+  norm_num [integral_sin]
+
+#print axioms integral_of_rate_eq_change
+#print axioms running_total_has_derivative_rate
+#print axioms antiderivatives_differ_by_constant
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_of_rate_eq_change' depends on axioms: [propext, Classical.choice, Quot.sound]
+'running_total_has_derivative_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'antiderivatives_differ_by_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

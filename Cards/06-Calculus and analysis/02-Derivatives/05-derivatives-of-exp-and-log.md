@@ -34,7 +34,7 @@ The curving line is the balance. The straight line is its tangent at ten years, 
 
 ## The formula
 
-A reminder from [The derivative](01-the-derivative.md): f'(x), also written dy/dx, is the rate of y per unit of x. Written in front of an expression, d/dx means "the rate, per unit of x, of what follows".
+A reminder from [The derivative](01-the-derivative.md): f'(x), also written dy/dx, is the rate of y per unit of x. Written in front of an expression, d/dx means "the rate, per unit of x, of what follows". A secant is the average rate over a step h, the difference quotient (f(x + h) − f(x))/h; the rate is its limit as h shrinks.
 
 $$\frac{d}{dx}\,e^x = e^x, \qquad \frac{d}{dx}\,\ln x = \frac{1}{x} \quad (x > 0)$$
 
@@ -116,11 +116,15 @@ The chain rule feeds rt into e^x and multiplies by the inner rate r: dB/dt = r �
 
 The log undoes the exponential: y = ln x exactly when e^y = x. Put a log in place of h in the same two inequalities and they trap the log's difference quotient over a step k > 0 between 1/(x + k) and 1/x. Both walls close on 1/x.
 
-In money terms, the years to reach a balance B are $T$ = ln(B/100)/r, with rate 1/(rB) years per dollar. Reaching 200 dollars takes 13.862944 years; each extra dollar of target adds 0.1 year. At 164.87 dollars it costs 0.121306 years, which is 1/8.243606: years per dollar flips dollars per year. The flip for any inverse is [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md).
+In money terms, the years to reach a balance B are $T$ = ln(B/100)/r, with rate 1/(rB) years per dollar. Reaching 200 dollars takes 13.862944 years; each extra dollar of target adds 0.1 year.
+
+At 164.87 dollars it costs 0.121306 years, which is 1/8.243606: years per dollar flips dollars per year. The flip for any inverse is [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md).
 
 ### Step 4: any other base goes through e
 
-A positive base is a power of e: b = e^(ln b), so b^x = e^(x ln b), and the chain rule supplies the inner rate ln b. Yearly compounding at 5% is base 1.05, and ln 1.05 = 0.048790. At ten years that balance is 162.889463 dollars, growing at 7.947404 dollars per year. The log to base b is ln x divided by the constant ln b, so its rate is 1/(x ln b). Likewise x^a = e^(a ln x) has rate a x^(a−1) for x > 0.
+A positive base is a power of e: b = e^(ln b), so b^x = e^(x ln b), and the chain rule supplies the inner rate ln b. Yearly compounding at 5% is base 1.05, and ln 1.05 = 0.048790. At ten years that balance is 162.889463 dollars, growing at 7.947404 dollars per year.
+
+The log to base b is ln x divided by the constant ln b, so its rate is 1/(x ln b). Likewise, for a constant power a, x^a = e^(a ln x) has rate a x^(a−1) for x > 0.
 
 ### Step 5: logarithmic differentiation adds relative rates
 
@@ -128,7 +132,9 @@ Logs turn products into sums: ln(np) = ln n + ln p. Differentiate with the chain
 
 $$\frac{V'}{V} = \frac{n'}{n} + \frac{p'}{p}.$$
 
-A fund starts with 100 shares and buys 10 a year, so at ten years $n$ = 200 shares, relative rate 10/200 = 0.05. Each share's price $p$ = 20e^(0.05t) is 32.974425 dollars, relative rate 0.05. The value $V$ = 6594.885083 has relative rate 0.10, so it grows at 659.488508 dollars per year. The product rule from [Product and quotient rules](02-product-and-quotient-rules.md) agrees; for long products, logs are shorter.
+A fund starts with 100 shares and buys 10 a year, so at ten years $n$ = 200 shares, relative rate 10/200 = 0.05. Each share's price $p$ = 20e^(0.05t) is 32.974425 dollars, relative rate 0.05.
+
+The value $V$ = 6594.885083 has relative rate 0.10, so it grows at 659.488508 dollars per year. The product rule from [Product and quotient rules](02-product-and-quotient-rules.md) agrees; for long products, logs are shorter.
 
 ---
 
@@ -336,6 +342,80 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves all three rules: for e^x and ln x, for any other positive base, and for the log of a positive quantity.
+
+- At every x, the rate of e^x is e^x. At every x > 0, the rate of ln x is 1/x.
+- For a positive base b, the rate of b^x is b^x ln b at every x.
+- When also b ≠ 1, the log to base b has rate 1/(x ln b) at every x > 0.
+- If a quantity f is positive at x and has a rate f' there, ln f has rate f'/f: its relative rate.
+
+Lean also checks four worked numbers exactly: the Step 1 walls, the time per extra dollar, and the fund's shares and relative rate. The squeeze, the secants, the balances and the staircase are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 47 lines</summary>
+
+```lean
+-- Derivatives of exp and log: e^x has rate e^x everywhere, ln x has rate 1/x for x > 0, any positive base b picks up the factor ln b, and the log of a positive function has rate f'/f.
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Tactic.NormNum
+
+/-- The function `e^x` changes at a rate equal to its own value at every real `x`,
+and its inverse, the natural log `ln x`, changes at rate `1/x` at every positive `x`. -/
+theorem exp_rate_is_itself_and_log_rate_is_reciprocal :
+    (∀ x : ℝ, HasDerivAt Real.exp (Real.exp x) x) ∧
+    (∀ x : ℝ, 0 < x → HasDerivAt Real.log (1 / x) x) := by
+  refine ⟨fun x => Real.hasDerivAt_exp x, fun x hx => ?_⟩
+  simpa [one_div] using Real.hasDerivAt_log hx.ne'
+
+/-- Every other base picks up the factor `ln b`: for a positive base `b`, `b^x` has rate
+`b^x · ln b` at every real `x`; and when also `b ≠ 1`, the log to base `b` has rate
+`1 / (x · ln b)` at every positive `x`. -/
+theorem other_base_rate_picks_up_log_b (b : ℝ) (hb : 0 < b) :
+    (∀ x : ℝ, HasDerivAt (fun y => b ^ y) (b ^ x * Real.log b) x) ∧
+    (b ≠ 1 → ∀ x : ℝ, 0 < x → HasDerivAt (Real.logb b) (1 / (x * Real.log b)) x) := by
+  refine ⟨fun x => (Real.hasStrictDerivAt_const_rpow hb x).hasDerivAt, fun _ x hx => ?_⟩
+  have h := (Real.hasDerivAt_log hx.ne').div_const (Real.log b)
+  have e : x⁻¹ / Real.log b = 1 / (x * Real.log b) := by ring
+  rw [e] at h
+  exact h
+
+/-- Logarithmic differentiation: if a quantity `f` is positive at `x` and has rate `f'` there,
+then its log has rate `f' / f(x)` at `x`, its relative rate. -/
+theorem log_rate_is_relative_rate (f : ℝ → ℝ) (f' x : ℝ)
+    (hf : HasDerivAt f f' x) (hpos : 0 < f x) :
+    HasDerivAt (fun y => Real.log (f y)) (f' / f x) x := by
+  exact hf.log hpos.ne'
+
+-- Worked numbers, by hand.
+-- Step 1 walls at h = 0.01 and h = −0.01: 1/(1 − 0.01) = 1.010101, 1/(1 + 0.01) = 0.990099.
+example : (1 : ℚ) / (1 - 1 / 100) = 100 / 99 ∧ (1 : ℚ) / (1 + 1 / 100) = 100 / 101 := by norm_num
+-- Time per extra dollar at 200: 1 ÷ (0.05 × 200) = 0.1 year.
+example : (1 : ℚ) / ((1 / 20) * 200) = 1 / 10 := by norm_num
+-- Fund shares at ten years: 100 + 10 × 10 = 200.
+example : (100 : ℕ) + 10 * 10 = 200 := by norm_num
+-- Fund relative rate: 10 ÷ 200 + 0.05 = 0.10 per year.
+example : (10 : ℚ) / 200 + 1 / 20 = 1 / 10 := by norm_num
+
+#print axioms exp_rate_is_itself_and_log_rate_is_reciprocal
+#print axioms other_base_rate_picks_up_log_b
+#print axioms log_rate_is_relative_rate
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'exp_rate_is_itself_and_log_rate_is_reciprocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'other_base_rate_picks_up_log_b' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_rate_is_relative_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -384,7 +464,7 @@ The two outputs match line for line.
 
 ## Sources
 
-Verified 2026-09-27: every link below opens the named work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Strang, Gilbert, and Edwin "Jed" Herman. *Calculus Volume 1*. OpenStax. [Section 3.9, Derivatives of Exponential and Logarithmic Functions](https://openstax.org/books/calculus-volume-1/pages/3-9-derivatives-of-exponential-and-logarithmic-functions). The formulas for any base, and logarithmic differentiation worked through.
 - Lebl, Jiří. *Basic Analysis I: Introduction to Real Analysis*. [Section 5.4, The logarithm and the exponential](https://www.jirka.org/ra/html/sec_logandexp.html). A full construction of ln and exp with proofs of both derivatives.

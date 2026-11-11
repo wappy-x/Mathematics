@@ -141,6 +141,9 @@ A second road, by logarithms, turns a product into a sum: [Derivatives of exp an
 | bags' contribution | 14 × (−4) | −56.00 |
 | rate of revenue | 92 − 56 | **36.00 dollars a week, per week** |
 | price back from revenue ÷ bags | (36 × 184 − 2576 × (−4)) / 184^2 = 16928 / 33856 | **0.5 dollars a week** |
+
+In week 4 revenue is still rising, at 36 dollars a week, per week, and the quotient rule hands back the 50-cent weekly price rise.
+
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
@@ -156,7 +159,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads. The first applies the rules. The second never uses them: it takes the difference quotient (change over step) with the step shrinking from 4 weeks to 0.001 and prints the gap closing. The code also recovers the price rate both ways, builds the power rule from repeated products, finds the peak by bisection (halving an interval around the rate's sign change) and by a grid search, and prints each wrong answer.
+Two roads. The first applies the rules. The second never uses them: it takes the difference quotient (change over step) with the step shrinking from 4 weeks to 0.001 and prints the gap closing. The code also recovers the price rate both ways and builds the power rule from repeated products. It finds the peak by bisection (halving an interval around the rate's sign change) and by a grid search, and prints each wrong answer.
 
 ### Python
 
@@ -346,6 +349,84 @@ chart tangent: 2432, 2504, 2576, 2648, 2720, 2792, 2864, 2936, 3008, 3080, 3152
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves all three rules in general, for real numbers, under the conditions in When it holds.
+
+- Product rule: if f and g both have a derivative at a point, the rate of f g there is f′ g + f g′.
+- Quotient rule: if also the bottom g is not zero at the point, the rate of f / g there is (f′ g − f g′) / g^2.
+- Power rule: for every whole number n ≠ 0, the rate of x^n is n x^(n−1), with x ≠ 0 when n is negative.
+
+Lean also checks the hand-worked numbers exactly; the difference quotients, the corner and the peak search are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 52 lines</summary>
+
+```lean
+-- Product and quotient rules: the derivative of a product of two differentiable real functions is f' g + f g', of a ratio is (f' g - f g') / g^2 where the bottom is not zero, and of x^n is n x^(n-1) for every nonzero whole number n.
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Calculus.Deriv.ZPow
+import Mathlib.Tactic.NormNum
+
+/-- Product rule: if two real functions `f` and `g` both have a derivative at the point `x`,
+with rates `f'` and `g'`, then their product has a derivative there, equal to the first's rate
+times the second plus the first times the second's rate: `(f g)' = f' g + f g'`. -/
+theorem product_rule (f g : ℝ → ℝ) (f' g' x : ℝ)
+    (hf : HasDerivAt f f' x) (hg : HasDerivAt g g' x) :
+    HasDerivAt (fun y => f y * g y) (f' * g x + f x * g') x := by
+  exact hf.mul hg
+
+/-- Quotient rule: if `f` and `g` both have a derivative at `x` and the bottom `g x` is not zero,
+then `f / g` has a derivative there, equal to the top's rate times the bottom, minus the top
+times the bottom's rate, all over the bottom squared: `(f / g)' = (f' g - f g') / g^2`. -/
+theorem quotient_rule (f g : ℝ → ℝ) (f' g' x : ℝ)
+    (hf : HasDerivAt f f' x) (hg : HasDerivAt g g' x) (hx : g x ≠ 0) :
+    HasDerivAt (fun y => f y / g y) ((f' * g x - f x * g') / g x ^ 2) x := by
+  exact hf.div hg hx
+
+/-- Power rule: for every whole number `n ≠ 0`, possibly negative, the derivative of `x ^ n`
+is `n * x ^ (n - 1)`, with `x ≠ 0` required when `n` is negative. -/
+theorem power_rule_int (n : ℤ) (x : ℝ) (hn : n ≠ 0) (hx : n < 0 → x ≠ 0) :
+    HasDerivAt (fun y : ℝ => y ^ n) ((n : ℝ) * x ^ (n - 1)) x := by
+  apply hasDerivAt_zpow n x
+  by_cases h : n < 0
+  · exact Or.inl (hx h)
+  · exact Or.inr (by omega)
+
+-- Week 4: price 14, bags 184, revenue 14 × 184 = 2576.
+example : (12 + (1 / 2 : ℚ) * 4) = 14 ∧ (200 - 4 * 4 : ℚ) = 184 ∧ (14 * 184 : ℚ) = 2576 := by norm_num
+-- Product rule in week 4: 0.5 × 184 + 14 × (−4) = 92 − 56 = 36.
+example : (1 / 2 : ℚ) * 184 + 14 * (-4) = 36 := by norm_num
+-- The 4-week step: 2 × 184 + 14 × (−16) + 2 × (−16) = 112 = 16 × 168 − 2576.
+example : (2 * 184 + 14 * (-16) + 2 * (-16) : ℚ) = 112 ∧ (16 * 168 - 2576 : ℚ) = 112 := by norm_num
+-- Quotient rule recovers the price rate: (36 × 184 − 2576 × (−4)) / 184^2 = 16928 / 33856 = 0.5.
+example : ((36 * 184 - 2576 * (-4)) / 184 ^ 2 : ℚ) = 16928 / 33856 ∧ (16928 / 33856 : ℚ) = 1 / 2 := by
+  norm_num
+-- Power rule at x = 2: the rate of x^3 is 3 × 2^2 = 12, and the rate of x^(−2) is −2 × 2^(−3) = −0.25.
+example : (3 : ℚ) * 2 ^ 2 = 12 ∧ (-2 : ℚ) * (2 : ℚ) ^ (-3 : ℤ) = -1 / 4 := by norm_num
+-- Revenue peaks in week 13: price 18.5 times 148 bags is 2738, and there 0.5 × 148 + 18.5 × (−4) = 0.
+example : (12 + (1 / 2 : ℚ) * 13) * (200 - 4 * 13) = 2738 ∧
+    (1 / 2 : ℚ) * (200 - 4 * 13) + (12 + (1 / 2 : ℚ) * 13) * (-4) = 0 := by norm_num
+-- The usual mistakes: product of rates 0.5 × (−4) = −2; reversed quotient −0.5; unsquared bottom 92.
+example : (1 / 2 : ℚ) * (-4) = -2 ∧ ((2576 * (-4) - 36 * 184) / 184 ^ 2 : ℚ) = -1 / 2 ∧
+    ((36 * 184 - 2576 * (-4)) / 184 : ℚ) = 92 := by norm_num
+
+#print axioms product_rule
+#print axioms quotient_rule
+#print axioms power_rule_int
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'product_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quotient_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'power_rule_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first:** set `dq` to 0. The rule reads 92, the price's contribution alone, and the first assert fails: `q` still falls, so rule and limit disagree.
@@ -387,6 +468,9 @@ ALL CHECKS PASS
 - [Chain rule](03-chain-rule.md): the rate of one function fed into another.
 - [Integration by parts](../04-Integrals/04-integration-by-parts.md): the product rule run backwards to undo a derivative.
 - [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): a multiplier chosen so that one side becomes the product rule's output.
+
+Left open: if bags sold depend on the price, and the price moves with time, what is the rate of bags per week?
+
 ---
 
 ## Sources

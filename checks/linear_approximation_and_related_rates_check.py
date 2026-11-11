@@ -49,3 +49,4 @@ assert abs((radius(V0 + PUMP * 1e-4) - R0) / 1e-4 - rate) < 1e-5   # road two me
 assert abs(q1 - rate1) < 1e-5                                      # the second case too
 assert -bound <= errs[0] < 0                                       # below the tangent, within the bound
 assert 3.8 < errs[1] / errs[2] < 4.2                               # halve the step, quarter the error
+print("ALL CHECKS PASS")

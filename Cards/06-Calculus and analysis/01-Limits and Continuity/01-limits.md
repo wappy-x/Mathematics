@@ -10,7 +10,9 @@ Take the fraction (x squared minus 1) over (x minus 1). At x = 0.9 it gives 1.9;
 
 At x = 1 the fraction breaks: top and bottom are both 0, and 0 divided by 0 has no value. The rule has a hole exactly where its outputs point.
 
-A **limit** names the value the outputs head for, without asking what happens at the point. "Heading for" is a metaphor; the card replaces it with a promise that can be checked. Name a tolerance on the output, say 0.001. Then find a distance on the input, here also 0.001, that keeps every x that close to 1, other than 1 itself, within 0.001 of 2. A limit is that promise kept for every tolerance, however small.
+A **limit** names the value the outputs head for, without asking what happens at the point. "Heading for" is a metaphor; the card replaces it with a promise that can be checked.
+
+Name a tolerance on the output, say 0.001. Then find a distance on the input, here also 0.001, that keeps every x that close to 1, other than 1 itself, within 0.001 of 2. A limit is that promise kept for every tolerance, however small.
 
 **A function has limit L at a point when, for every output tolerance, some input distance keeps all nearby inputs (the point itself excluded) within that tolerance of L.**
 
@@ -45,7 +47,7 @@ $$0 < \lvert x - 1\rvert < 0.001 \implies \left\lvert \frac{x^2 - 1}{x - 1} - 2 
 | $a$ | the input being approached | 1 | examines the rule somewhere else |
 | $L$ | the value the outputs head for | 2 | a wrong L fails at small tolerances |
 | $\lim_{x \to a} f(x)$ | the limit itself | 2 | — |
-| $\lvert x - a\rvert$ | input distance from the point | at most 0.001 | wider lets in worse outputs |
+| $\lvert x - a\rvert$ | input distance from the point | under 0.001 | wider lets in worse outputs |
 | $\lvert f(x) - L\rvert$ | output miss from the limit | under 0.001 | looser allows a wider window |
 | $m$ | slope of a line, in Step 4 | 3 | the window shrinks to tolerance ÷ slope |
 
@@ -83,7 +85,9 @@ The output misses 2 by exactly as much as the input misses 1, for every x other 
 
 ### Step 3: answer every tolerance
 
-Name a tolerance, 0.001. Choose the input distance 0.001. Any x with 0 < |x − 1| < 0.001 then has |f(x) − 2| = |x − 1| < 0.001. The same move answers every tolerance, named or not: that makes it a proof, and the overview's table only evidence. Any smaller distance also works; the definition asks for one, not the widest.
+Name a tolerance, 0.001. Choose the input distance 0.001. Any x with 0 < |x − 1| < 0.001 then has |f(x) − 2| = |x − 1| < 0.001.
+
+The same move answers every tolerance, named or not: that makes it a proof, and the overview's values only evidence. Any smaller distance also works; the definition asks for one, not the widest.
 
 ### Step 4: a steeper line needs a narrower window
 
@@ -95,7 +99,11 @@ For any straight line with slope $m$ (not zero), the answer to a tolerance is to
 
 Fill the hole with the value 100 and call the result $g$: $g(1)$ = 100. The promise never tests x = 1, so $g$ keeps limit 2, with distance 0.001 at tolerance 0.001. When value and limit agree, the rule is continuous there ([Continuity](05-continuity.md)).
 
-A jump is different. Take the rule giving 0 for x below 1 and 1 from 1 upwards. Every window around 1 holds outputs 0 and 1. No single L sits within 0.25 of both, so at tolerance 0.25 no window works: no limit. The best candidate, L = 0.5, still misses by 0.5. From the left alone the rule heads for 0, from the right for 1; these one-sided limits exist but disagree.
+A jump is different. Take the rule giving 0 for x below 1 and 1 from 1 upwards.
+
+Every window around 1 holds outputs 0 and 1. No single L sits within 0.25 of both, so at tolerance 0.25 no window works: no limit. The best candidate, L = 0.5, still misses by 0.5.
+
+From the left alone the rule heads for 0, from the right for 1; these one-sided limits exist but disagree.
 
 <details>
 <summary>Detailed proof: the definition in symbols, the linear case, and why a limit is unique</summary>
@@ -304,6 +312,117 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves the fraction's limit, the window for every straight line, and that the jump has no limit.
+
+- As x heads for 1, with 1 itself left out, the fraction (x^2 − 1) ÷ (x − 1) heads for 2.
+- For any line mx + c with slope m not zero, at any point a, the distance tolerance ÷ |m| answers every tolerance.
+- The rule giving 0 below 1 and 1 from 1 upwards has no limit at 1: no L works.
+- The worked numbers: 1.999 just below 1, 2.001 just above, and 0 ÷ 0 at 1.
+- The cancelling x^2 − 1 = (x − 1)(x + 1), checked at x = 5 and x = −3.
+- Both lines x + 1 and 3x − 1 pass through (1, 2).
+- For 3x − 1, the distance 0.001 fails: x = 1.0009 misses 2 by 0.0027.
+- The jump's best candidate 0.5 misses both 0 and 1 by 0.5, more than the tolerance 0.25.
+
+The patched rule, the bisection search, the tables of outputs and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 80 lines</summary>
+
+```lean
+-- Limits: the fraction (x^2 - 1)/(x - 1) heads for 2 as x heads for 1, any straight line of nonzero slope m meets an output tolerance with an input distance of tolerance ÷ |m|, and a rule that jumps from 0 to 1 at 1 has no limit there.
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Tactic.NormNum
+
+open Filter Topology
+
+/-- The card's main example. As x heads for 1, with x = 1 itself left out, the fraction
+(x^2 - 1)/(x - 1) heads for 2. In Mathlib's terms: the fraction tends to 2 along the inputs
+near 1 other than 1 (the filter `𝓝[≠] 1`), which unfolds to the card's promise: for every
+output tolerance there is an input distance keeping every x with 0 < |x - 1| < distance
+within that tolerance of 2. The value of the fraction at 1 is never tested. -/
+theorem fraction_tends_to_two_at_one :
+    Tendsto (fun x : ℝ => (x ^ 2 - 1) / (x - 1)) (𝓝[≠] (1 : ℝ)) (𝓝 2) := by
+  have h1 : Tendsto (fun x : ℝ => x + 1) (𝓝[≠] (1 : ℝ)) (𝓝 2) := by
+    have : Tendsto (fun x : ℝ => x + 1) (𝓝 (1 : ℝ)) (𝓝 (1 + 1)) :=
+      (continuous_id.add continuous_const).tendsto 1
+    norm_num at this
+    exact this.mono_left nhdsWithin_le_nhds
+  refine h1.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx' : x - 1 ≠ 0 := sub_ne_zero.mpr hx
+  field_simp
+  ring
+
+/-- The linear case, Steps 3 and 4. For a straight line m x + c with slope m not zero, at any
+point a: for every output tolerance ε > 0, the input distance ε / |m| is positive and keeps
+every x with 0 < |x - a| < ε / |m| within ε of the line's value m a + c. -/
+theorem line_distance_is_tolerance_over_slope (m c a : ℝ) (hm : m ≠ 0) (ε : ℝ) (hε : 0 < ε) :
+    0 < ε / |m| ∧
+      ∀ x : ℝ, 0 < |x - a| → |x - a| < ε / |m| → |(m * x + c) - (m * a + c)| < ε := by
+  have hm' : 0 < |m| := abs_pos.mpr hm
+  refine ⟨div_pos hε hm', fun x _ hx => ?_⟩
+  have e : (m * x + c) - (m * a + c) = m * (x - a) := by ring
+  rw [e, abs_mul]
+  calc |m| * |x - a| < |m| * (ε / |m|) := mul_lt_mul_of_pos_left hx hm'
+    _ = ε := by field_simp
+
+/-- Step 5, the jump. The rule giving 0 for x below 1 and 1 from 1 upwards has no limit at 1:
+there is no value L that the outputs head for as x heads for 1, with 1 itself left out. -/
+theorem jump_has_no_limit_at_one :
+    ¬ ∃ L : ℝ, Tendsto (fun x : ℝ => if x < 1 then (0 : ℝ) else 1) (𝓝[≠] (1 : ℝ)) (𝓝 L) := by
+  rintro ⟨L, hL⟩
+  have hlt : Tendsto (fun x : ℝ => if x < 1 then (0 : ℝ) else 1) (𝓝[<] (1 : ℝ)) (𝓝 L) :=
+    hL.mono_left (nhdsWithin_mono _ (fun x hx => by simpa using ne_of_lt (show x < 1 from hx)))
+  have hgt : Tendsto (fun x : ℝ => if x < 1 then (0 : ℝ) else 1) (𝓝[>] (1 : ℝ)) (𝓝 L) :=
+    hL.mono_left (nhdsWithin_mono _ (fun x hx => by simpa using ne_of_gt (show 1 < x from hx)))
+  have h0 : Tendsto (fun x : ℝ => if x < 1 then (0 : ℝ) else 1) (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    refine tendsto_const_nhds.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    simp [show x < 1 from hx]
+  have h1 : Tendsto (fun x : ℝ => if x < 1 then (0 : ℝ) else 1) (𝓝[>] (1 : ℝ)) (𝓝 1) := by
+    refine tendsto_const_nhds.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    simp [not_lt.mpr (le_of_lt (show 1 < x from hx))]
+  have e0 : L = 0 := tendsto_nhds_unique hlt h0
+  have e1 : L = 1 := tendsto_nhds_unique hgt h1
+  rw [e0] at e1
+  norm_num at e1
+
+-- The card's numbers, exactly, as fractions. Just below and just above 1 (x = 999/1000 and 1001/1000).
+example : (((999 / 1000 : ℚ) ^ 2 - 1) = -1999 / 1000000) ∧ ((999 / 1000 : ℚ) - 1 = -1 / 1000) ∧
+    ((999 / 1000 : ℚ) ^ 2 - 1) / ((999 / 1000 : ℚ) - 1) = 1999 / 1000 := by norm_num
+example : (((1001 / 1000 : ℚ) ^ 2 - 1) = 2001 / 1000000) ∧ ((1001 / 1000 : ℚ) - 1 = 1 / 1000) ∧
+    ((1001 / 1000 : ℚ) ^ 2 - 1) / ((1001 / 1000 : ℚ) - 1) = 2001 / 1000 := by norm_num
+-- At x = 1 top and bottom are both 0.
+example : (1 : ℤ) ^ 2 - 1 = 0 ∧ (1 : ℤ) - 1 = 0 := by decide
+-- The cancelling: x^2 - 1 = (x - 1)(x + 1), checked at whole numbers.
+example : (5 : ℤ) ^ 2 - 1 = (5 - 1) * (5 + 1) ∧ (-3 : ℤ) ^ 2 - 1 = (-3 - 1) * (-3 + 1) := by decide
+-- Both lines pass through (1, 2): x + 1 and 3x - 1.
+example : (1 : ℤ) + 1 = 2 ∧ 3 * (1 : ℤ) - 1 = 2 := by decide
+-- Reusing distance 1/1000 for 3x - 1 fails: x = 10009/10000 misses 2 by 27/10000, more than 1/1000.
+example : |3 * (10009 / 10000 : ℚ) - 1 - 2| = 27 / 10000 ∧ (1 / 1000 : ℚ) < 27 / 10000 := by
+  norm_num [abs_of_pos]
+-- The jump: the best candidate 1/2 misses both outputs 0 and 1 by 1/2, more than the tolerance 1/4.
+example : |(0 : ℚ) - 1 / 2| = 1 / 2 ∧ |(1 : ℚ) - 1 / 2| = 1 / 2 ∧ (1 / 4 : ℚ) < 1 / 2 := by
+  norm_num [abs_of_pos]
+
+#print axioms fraction_tends_to_two_at_one
+#print axioms line_distance_is_tolerance_over_slope
+#print axioms jump_has_no_limit_at_one
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'fraction_tends_to_two_at_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'line_distance_is_tolerance_over_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jump_has_no_limit_at_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

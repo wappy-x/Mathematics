@@ -87,7 +87,7 @@ For e^x at 0 every derivative is 1, so the coefficients are 1/k! and $P_3(0.1)$ 
 
 For n = 0 the claim is $f(x) = f(a) + f'(\xi)h$: the mean value theorem ([Mean value theorem](02-mean-value-theorem.md)). Taylor's theorem pushes it up n rungs.
 
-The proof in words: freeze the target x and slide the anchor to t. Measure how far the polynomial anchored at t falls short of f(x), less one extra next-power term whose constant makes the total 0 at t = a. It is also 0 at t = x. Rolle's theorem gives a flat point between; differentiated, the sum cancels in pairs, and the flat point forces the constant to be $f^{(n+1)}(\xi)$.
+The proof in words: freeze the target x and slide the anchor to t. Measure how far the polynomial anchored at t falls short of f(x), less one extra next-power term whose constant makes the total 0 at t = a. It is also 0 at t = x. Rolle's theorem (equal values at both ends force a flat point in between) gives such a point; differentiated, the sum cancels in pairs, and the flat point forces the constant to be $f^{(n+1)}(\xi)$.
 
 <details>
 <summary>Detailed proof</summary>
@@ -116,7 +116,7 @@ The degree-3 remainder carries the fourth power of the step, so halving the step
 
 The theorem only says $\xi$ exists. With the true e^0.1 in hand, solving $e^{\xi}$ × 0.000004167 = 0.000004251 gives $\xi$ = 0.020134, inside the stretch.
 
-A second route writes the remainder as an integral, by integrating by parts n times; Error bounds and Romberg leans on that form.
+A second route writes the remainder as an integral, by integrating by parts n times ([Integration by parts](../04-Integrals/04-integration-by-parts.md)); [Error bounds and Romberg](../../16-Numerical%20analysis/05-Quadrature/02-error-bounds-and-romberg.md) leans on that form.
 
 ---
 
@@ -150,7 +150,7 @@ The corner function has slope −1.00 at 0, so its tangent line reads −0.05 at
 
 ## Code, from first principles, and it actually runs
 
-Two roads share no arithmetic. Road one sums four Taylor terms and builds the Lagrange window. Road two uses no series: the natural log as the area under 1/t (a fact the Integrals shelf proves), summed by Simpson's rule and inverted by bisection. The asserts check that the window traps road two, that $\xi$ lies between 0 and 0.1, that both agree to six decimals, and that halving the step divides the error by 16 to within 1.
+Two roads share no arithmetic. Road one sums four Taylor terms and builds the Lagrange window. Road two uses no series: the natural log as the area under 1/t (a fact the Integrals shelf proves), summed by Simpson's rule (parabolas through sampled heights, [Numerical integration](../04-Integrals/08-numerical-integration.md)) and inverted by bisection. The asserts check that the window traps road two, that $\xi$ lies between 0 and 0.1, that both agree to six decimals, and that halving the step divides the error by 16 to within 1.
 
 ### Python
 
@@ -345,6 +345,136 @@ corner |x - 0.05|: slope at 0 = -1.00, P1(0.1) = -0.05, f(0.1) = 0.05, Lagrange 
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves Taylor's theorem and the error bound for every f, n, anchor and target that meet When it holds, and the e^0.1 window.
+
+- Take f with n + 1 derivatives strictly between a and x, the n-th continuous up to both ends, and x other than a.
+- Then some $\xi$ strictly between a and x gives $f(x) = P_n(x) + R_n(x)$, with $f^{(n+1)}$ read at $\xi$.
+- At the anchor itself, Lean reads each derivative from the side facing the target.
+- If $\lvert f^{(n+1)}\rvert \le M$ everywhere between a and x, then $\lvert R_n(x)\rvert \le M\,\lvert h\rvert^{n+1}/(n+1)!$.
+- e^0.1 is at least the four terms plus 0.1^4/4!, and at most the four terms over 1 − 0.1^4/4!. No value of e is assumed.
+- The factorials 3! = 6, 0! = 1 and 4! = 24, and the four terms summing to exactly 6631/6000.
+- The window's ends, exactly 265241/240000 and 265240/239999, both round to 1.105171.
+- Without factorials the sum is 1.111. The corner function has remainder 0.1, so Lagrange would need f″ = 20.
+
+The true e^0.1, $\xi$ = 0.020134, the ratios near 16, five terms and the chart are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 99 lines</summary>
+
+```lean
+-- Taylor's theorem: a function equals its degree-n Taylor polynomial plus a next term with the next derivative read strictly between anchor and target, so a ceiling on that derivative bounds the error, and four terms trap e^(1/10) in the card's window.
+import Mathlib.Analysis.Calculus.Taylor
+import Mathlib.Analysis.SpecialFunctions.Exponential
+
+open Set Nat
+
+/-- **Taylor's theorem, Lagrange's form of the remainder.** If f has n + 1 derivatives strictly
+between the anchor a and the target x, with the n-th continuous up to both ends, then for x ≠ a
+there is a point ξ strictly between a and x with
+f(x) = Σ_{k=0}^{n} f^(k)(a)/k! · (x − a)^k + f^(n+1)(ξ)/(n+1)! · (x − a)^(n+1).
+Derivatives are taken within the closed stretch from a to x, so at the anchor they are one-sided. -/
+theorem taylor_lagrange_remainder (f : ℝ → ℝ) (a x : ℝ) (n : ℕ) (hx : a ≠ x)
+    (hf : ContDiffOn ℝ n f (uIcc a x))
+    (hf' : DifferentiableOn ℝ (iteratedDerivWithin n f (uIcc a x)) (uIoo a x)) :
+    ∃ ξ ∈ uIoo a x,
+      f x = (∑ k ∈ Finset.range (n + 1),
+              iteratedDerivWithin k f (uIcc a x) a / (k ! : ℝ) * (x - a) ^ k)
+            + iteratedDerivWithin (n + 1) f (uIcc a x) ξ / ((n + 1) ! : ℝ) * (x - a) ^ (n + 1) := by
+  obtain ⟨ξ, hξ, h⟩ := taylor_mean_remainder_lagrange hx hf hf'
+  refine ⟨ξ, hξ, ?_⟩
+  rw [taylor_within_apply] at h
+  have hs : (∑ k ∈ Finset.range (n + 1),
+        ((k ! : ℝ)⁻¹ * (x - a) ^ k) • iteratedDerivWithin k f (uIcc a x) a)
+      = ∑ k ∈ Finset.range (n + 1),
+          iteratedDerivWithin k f (uIcc a x) a / (k ! : ℝ) * (x - a) ^ k := by
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [smul_eq_mul]; ring
+  rw [hs] at h
+  have : iteratedDerivWithin (n + 1) f (uIcc a x) ξ * (x - a) ^ (n + 1) / ((n + 1)! : ℝ)
+      = iteratedDerivWithin (n + 1) f (uIcc a x) ξ / ((n + 1)! : ℝ) * (x - a) ^ (n + 1) := by
+    ring
+  linarith
+
+/-- **The error bound.** Under the same hypotheses, if the (n+1)-th derivative stays within M
+everywhere between a and x, then the gap between f(x) and its degree-n Taylor polynomial is at
+most M · |x − a|^(n+1) / (n+1)!. -/
+theorem taylor_remainder_bound (f : ℝ → ℝ) (a x M : ℝ) (n : ℕ) (hx : a ≠ x)
+    (hf : ContDiffOn ℝ n f (uIcc a x))
+    (hf' : DifferentiableOn ℝ (iteratedDerivWithin n f (uIcc a x)) (uIoo a x))
+    (hM : ∀ y ∈ uIoo a x, |iteratedDerivWithin (n + 1) f (uIcc a x) y| ≤ M) :
+    |f x - ∑ k ∈ Finset.range (n + 1),
+        iteratedDerivWithin k f (uIcc a x) a / (k ! : ℝ) * (x - a) ^ k|
+      ≤ M * |x - a| ^ (n + 1) / ((n + 1) ! : ℝ) := by
+  obtain ⟨ξ, hξ, h⟩ := taylor_lagrange_remainder f a x n hx hf hf'
+  rw [h, add_sub_cancel_left, abs_mul, abs_div, abs_pow, Nat.abs_cast]
+  have hpos : (0 : ℝ) < ((n + 1)! : ℝ) := by exact_mod_cast Nat.factorial_pos _
+  rw [div_mul_eq_mul_div]
+  apply div_le_div_of_nonneg_right _ hpos.le
+  exact mul_le_mul_of_nonneg_right (hM ξ hξ) (by positivity)
+
+/-- **The card's example: e^0.1 caught from both sides.** With four terms
+P₃ = 1 + 0.1 + 0.1²/2! + 0.1³/3! and remainder e^ξ · 0.1⁴/4! with 0 < ξ < 0.1, the low side uses
+e^ξ ≥ 1 and the high side uses e^ξ ≤ e^0.1, solved for e^0.1. No value of e is assumed. -/
+theorem exp_one_tenth_window :
+    (1 + 1/10 + (1/10 : ℝ) ^ 2 / 2 + (1/10 : ℝ) ^ 3 / 6) + (1/10 : ℝ) ^ 4 / 24 ≤ Real.exp (1/10) ∧
+    Real.exp (1/10) ≤
+      (1 + 1/10 + (1/10 : ℝ) ^ 2 / 2 + (1/10 : ℝ) ^ 3 / 6) / (1 - (1/10 : ℝ) ^ 4 / 24) := by
+  have h1 := Real.sum_le_exp_of_nonneg (x := (1/10 : ℝ)) (by norm_num) 5
+  have h2 := Real.exp_bound' (x := (1/10 : ℝ)) (by norm_num) (by norm_num) (n := 5) (by norm_num)
+  simp only [Finset.sum_range_succ, Finset.sum_range_zero, Nat.factorial] at h1 h2
+  norm_num at h1 h2 ⊢
+  constructor
+  · linarith
+  · rw [le_div_iff₀ (by norm_num)]
+    nlinarith
+
+-- Step 1: differentiating (x − a)^3 three times leaves 3! = 3 × 2 × 1 = 6; and 0! = 1.
+example : (3 : ℕ)! = 3 * 2 * 1 := by decide
+example : (3 : ℕ)! = 6 := by decide
+example : (0 : ℕ)! = 1 := by decide
+example : (4 : ℕ)! = 24 := by decide
+
+-- The four terms of P₃(0.1), exactly: 1 + 1/10 + 1/200 + 1/6000 = 6631/6000 (the card's 1.105166667).
+example : (1 + 1/10 + (1/10 : ℚ) ^ 2 / 2 + (1/10 : ℚ) ^ 3 / 6) = 6631 / 6000 := by norm_num
+example : (1/10 : ℚ) ^ 2 / 2 = 1 / 200 := by norm_num
+example : (1/10 : ℚ) ^ 3 / 6 = 1 / 6000 := by norm_num
+
+-- The remainder factor 0.1^4 / 4! = 1/240000 (the card's 0.000004167).
+example : (1/10 : ℚ) ^ 4 / 24 = 1 / 240000 := by norm_num
+
+-- The window's ends, exactly: low = 265241/240000, high = 265240/239999.
+example : (6631/6000 : ℚ) + 1/240000 = 265241 / 240000 := by norm_num
+example : (6631/6000 : ℚ) / (1 - 1/240000) = 265240 / 239999 := by norm_num
+
+-- Both ends round to 1.105171 at six decimals.
+example : (11051705/10000000 : ℚ) ≤ 265241 / 240000 ∧ (265240 / 239999 : ℚ) < 11051715/10000000 := by
+  norm_num
+
+-- What breaks, no factorials: 1 + 0.1 + 0.01 + 0.001 = 1.111.
+example : (1 + 1/10 + (1/10 : ℚ) ^ 2 + (1/10 : ℚ) ^ 3) = 1111 / 1000 := by norm_num
+
+-- What breaks, the corner |x − 0.05| with anchor 0, n = 1: remainder f(0.1) − (f(0) − 0.1) = 1/10,
+-- and Lagrange would need f'' = 2 · (1/10) / (1/10)^2 = 20.
+example : |(1/10 : ℚ) - 1/20| - (|(0 : ℚ) - 1/20| - 1/10) = 1/10 := by norm_num [abs_of_pos, abs_of_neg]
+example : 2 * (1/10 : ℚ) / (1/10) ^ 2 = 20 := by norm_num
+
+#print axioms taylor_lagrange_remainder
+#print axioms taylor_remainder_bound
+#print axioms exp_one_tenth_window
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'taylor_lagrange_remainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'taylor_remainder_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_one_tenth_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first:** keep five terms, `taylor(h, 4)`. Answer: 1.105170833, remainder under 0.000000092 with e^0.1 ≤ 1.105171272 as ceiling; both ends round to 1.105171.
@@ -392,12 +522,12 @@ ALL CHECKS PASS
 - [Duration and convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): a bond's first two terms in yield.
 - [The Greeks together](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md): daily profit as a sum of Greeks.
 - [The volatility surface](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): local expansions of a price surface.
-- Two different errors: the remainder as truncation error.
-- Newton and secant: why Newton's error squares.
-- The interpolation error theorem: the same form through several points.
-- Error bounds and Romberg: the integral remainder at work.
-- Runge-Kutta: steps built to match Taylor terms.
-- Forward, backward and central differences: difference formulas ranked by Taylor terms.
+- [Two different errors](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/04-truncation-versus-rounding-error.md): the remainder as truncation error.
+- [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): why Newton's error squares.
+- [The interpolation error theorem](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/03-polynomial-interpolation-error.md): the same form through several points.
+- [Error bounds and Romberg](../../16-Numerical%20analysis/05-Quadrature/02-error-bounds-and-romberg.md): the integral remainder at work.
+- [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): steps built to match Taylor terms.
+- [Forward, backward and central differences](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/01-forward-backward-and-central-differences.md): difference formulas ranked by Taylor terms.
 
 The theorem controls one polynomial of fixed degree; whether adding terms forever recovers e^x far from 0 is the question [Taylor series](../06-Series/05-taylor-series.md) answers.
 

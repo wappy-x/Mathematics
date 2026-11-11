@@ -58,4 +58,5 @@ fn main() {
     assert!((q1 - rate1).abs() < 1e-5); // the second case too
     assert!(-bound <= errs[0] && errs[0] < 0.0); // below the tangent, within the bound
     assert!(3.8 < errs[1] / errs[2] && errs[1] / errs[2] < 4.2); // halve the step, quarter the error
+    println!("ALL CHECKS PASS");
 }

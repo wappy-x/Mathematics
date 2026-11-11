@@ -50,3 +50,4 @@ print(f"try, sides up to 3 m: K {2 * 3.0:.6f}, tolerance {EPS / (2 * 3.0):.8f}; 
 print("figure, side m:", " ".join(f"{c:.2f}" for c in cs))
 print("figure, best tolerance mm:", " ".join(f"{1000 * p:.2f}" for p in pts))
 print("all four checks passed")
+print("ALL CHECKS PASS")

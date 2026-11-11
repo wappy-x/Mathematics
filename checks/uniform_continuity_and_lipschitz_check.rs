@@ -70,4 +70,5 @@ fn main() {
     println!("figure, side m: {}", side.join(" "));
     println!("figure, best tolerance mm: {}", mm.join(" "));
     println!("all four checks passed");
+    println!("ALL CHECKS PASS");
 }

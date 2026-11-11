@@ -26,7 +26,9 @@ To scale: 80 pixels per kilometre, 16 pixels per dollar. Steps S are the stepped
 
 ## The formula
 
-A reminder from [Limits](01-limits.md): $\lim_{d \to a} f(d) = L$ says "f(d) heads for L as d heads for a", and the value at a plays no part. Two new marks, in words first: a small minus sign above the a, $\lim_{d \to a^-}$, means approach from below only; a small plus sign, $\lim_{d \to a^+}$, from above only. These are the **one-sided limits**.
+A reminder from [Limits](01-limits.md): $\lim_{d \to a} f(d) = L$ says "f(d) heads for L as d heads for a", and the value at a plays no part.
+
+Two new marks, in words first: a small minus sign above the a, $\lim_{d \to a^-}$, means approach from below only; a small plus sign, $\lim_{d \to a^+}$, from above only. These are the **one-sided limits**.
 
 $$f \text{ is continuous at } a \quad\text{when}\quad \lim_{d \to a} f(d) = f(a)$$
 
@@ -40,7 +42,7 @@ $$S(d) = 3 + 2\lceil d \rceil, \qquad M(d) = 3 + 2d$$
 
 The theorem: if $f$ and $g$ are continuous at a point, so are
 
-$$f + g, \qquad f \cdot g, \qquad \text{and the chain } f(g(t)) \text{ at } t = a, \text{ if } f \text{ is continuous at } g(a).$$
+$$f + g, \qquad f \cdot g, \qquad \text{and the chain (composition) } f(g(t)) \text{ at } t = a, \text{ if } f \text{ is continuous at } g(a).$$
 
 **Read it aloud:** sums, products and chains of continuous functions are continuous, the outer one needing continuity where the inner one lands.
 
@@ -57,7 +59,7 @@ $$f + g, \qquad f \cdot g, \qquad \text{and the chain } f(g(t)) \text{ at } t = 
 
 ### The four ways to fail
 
-- **Removable (a hole).** The limit exists; the value is missing or wrong. A meter that blanks at 2 km shows $0 while both sides head for $7; setting $7 repairs it. The house fraction (x^2 − 1)/(x − 1) has no value at x = 1, though its neighbours head for 2.
+- **Removable (a hole).** The limit exists; the value is missing or wrong. A meter that blanks at 2 km shows $0 while both sides head for $7; setting $7 repairs it. The fraction (x^2 − 1)/(x − 1) from [Limits](01-limits.md) has no value at x = 1, though its neighbours head for 2.
 - **Jump.** The one-sided limits differ: the stepped fare at 1 km, $5 from below, $7 from above. No choice of value repairs it.
 - **Infinite.** The outputs grow without bound: the metered price per kilometre, M(d)/d, is $32 at 0.1 km, $302 at 0.01 km, $3002 at 0.001 km.
 - **Oscillating.** The outputs swing forever, as the sine of one over d does near d = 0.
@@ -94,7 +96,11 @@ To land the total within a cent, land each part within half a cent. The fare nee
 
 A surge multiplier rises 5% a minute, 1 + 0.05 t. The charge is fare times multiplier: 7 × 1.2 = $8.40 at 4 minutes.
 
-A product's change is the fare's change times the multiplier, plus the fare times the multiplier's change. Keep each part within an amount h of its value, with h at most 1. The multiplier then stays below 1.2 + 1, so the product moves less than h × (7 + 1.2 + 1). For a cent, h = 0.01 / (7.00 + 1.20 + 1) = 0.001087. The fare moves $1 a minute, so t within 0.001087 minutes; the multiplier moves 0.05 a minute, so 0.022 minutes. The smaller, 0.001087 minutes, is the recipe. The quadratic formula gives the exact widest window, 0.006450 minutes, and the brute-force search agrees.
+A product's change is the fare's change times the multiplier, plus the fare times the multiplier's change. Keep each part within an amount h of its value, with h at most 1. The multiplier then stays below 1.2 + 1, so the product moves less than h × (7 + 1.2 + 1).
+
+For a cent, h = 0.01 / (7.00 + 1.20 + 1) = 0.001087. The fare moves $1 a minute, so t within 0.001087 minutes; the multiplier moves 0.05 a minute, so 0.022 minutes. The smaller, 0.001087 minutes, is the recipe.
+
+The quadratic formula gives the exact widest window, 0.006450 minutes, and the brute-force search agrees.
 
 ### Step 4: chains pass the window along
 
@@ -340,6 +346,128 @@ figure, 80 px per km, 16 px per dollar; step tops at y = 130, 98, 66, 34; meter 
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the combination rules for every real function, the jump at every whole kilometre, and that every polynomial is continuous.
+
+- If f and g are continuous at a point, so are f + g and f times g.
+- If g is continuous at a and f is continuous at g(a), the chain f(g(t)) is continuous at a.
+- At every whole kilometre n, the stepped fare shows 3 + 2n dollars, and from below it heads for that same value.
+- From above it heads for 5 + 2n dollars, so it is continuous from the left at n, and not continuous there.
+- Every polynomial is continuous everywhere.
+- The stepped fares by formula: 3, 5, 5, 7, 7, 9 and 11 dollars.
+- The 0.005 km window, and the price per km of 32, 302 and 3002 dollars.
+- At 4 minutes: fare 7, total 8, surge charge 8.40 dollars, chain window 0.01 minutes, and the stepped fare 7, then 9 a moment later.
+
+The simulated meter, the blanking meter, the window searches, the product recipe's decimals and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 91 lines</summary>
+
+```lean
+-- Continuity: sums, products and chains of real functions continuous at a point stay continuous there, every polynomial is continuous, and the stepped taxi fare 3 + 2⌈d⌉ jumps from 3 + 2n to 5 + 2n at every whole kilometre n, so it is continuous from the left there but not continuous.
+import Mathlib.Topology.Algebra.Polynomial
+import Mathlib.Topology.Algebra.Order.Floor
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Tactic.NormNum
+
+open Filter Topology
+
+/-- Sums, products and chains of continuous functions stay continuous. If f and g are continuous
+at a point a, so are f + g and f · g. For a chain f(g(t)), g must be continuous at a and the outer
+function f continuous where g lands, at g(a). -/
+theorem sum_product_chain_stay_continuous (f g : ℝ → ℝ) (a : ℝ) :
+    (ContinuousAt f a → ContinuousAt g a →
+        ContinuousAt (fun x => f x + g x) a ∧ ContinuousAt (fun x => f x * g x) a) ∧
+      (ContinuousAt g a → ContinuousAt f (g a) → ContinuousAt (fun x => f (g x)) a) := by
+  refine ⟨fun hf hg => ⟨hf.add hg, hf.mul hg⟩, fun hg hf => ?_⟩
+  exact hf.comp hg
+
+/-- The stepped fare S(d) = 3 + 2⌈d⌉ (3 dollars at the kerb, 2 for every kilometre started)
+jumps at every whole kilometre n. At n it shows 3 + 2n; from below it heads for that same value,
+from above it heads for 5 + 2n, 2 dollars more. So it is continuous from the left at n, and not
+continuous at n. -/
+theorem stepped_fare_jumps_at_every_whole_km (n : ℕ) :
+    let S : ℝ → ℝ := fun d => 3 + 2 * (⌈d⌉ : ℝ)
+    S n = 3 + 2 * n ∧
+      Tendsto S (𝓝[<] (n : ℝ)) (𝓝 (3 + 2 * n)) ∧
+      Tendsto S (𝓝[>] (n : ℝ)) (𝓝 (5 + 2 * n)) ∧
+      ContinuousWithinAt S (Set.Iic (n : ℝ)) n ∧
+      ¬ ContinuousAt S n := by
+  intro S
+  have hSn : S n = 3 + 2 * n := by
+    simp only [S, Int.ceil_natCast, Int.cast_natCast]
+  have hL : ∀ᶠ d in 𝓝[≤] (n : ℝ), S d = 3 + 2 * n := by
+    filter_upwards [Ioc_mem_nhdsLE (show (n : ℝ) - 1 < n by linarith)] with d hd
+    have hc : ⌈d⌉ = (n : ℤ) := by
+      rw [Int.ceil_eq_iff]
+      push_cast
+      exact ⟨hd.1, hd.2⟩
+    simp only [S, hc, Int.cast_natCast]
+  have hR : ∀ᶠ d in 𝓝[>] (n : ℝ), S d = 5 + 2 * n := by
+    filter_upwards [Ioo_mem_nhdsGT (show (n : ℝ) < n + 1 by linarith)] with d hd
+    have hc : ⌈d⌉ = (n : ℤ) + 1 := by
+      rw [Int.ceil_eq_iff]
+      push_cast
+      exact ⟨by linarith [hd.1], hd.2.le⟩
+    simp only [S, hc]
+    push_cast
+    ring
+  have hLim : Tendsto S (𝓝[≤] (n : ℝ)) (𝓝 (3 + 2 * n)) :=
+    tendsto_const_nhds.congr' (hL.mono fun d hd => hd.symm)
+  have hRlim : Tendsto S (𝓝[>] (n : ℝ)) (𝓝 (5 + 2 * n)) :=
+    tendsto_const_nhds.congr' (hR.mono fun d hd => hd.symm)
+  refine ⟨hSn, hLim.mono_left (nhdsWithin_mono _ Set.Iio_subset_Iic_self), hRlim, ?_, ?_⟩
+  · show Tendsto S (𝓝[≤] (n : ℝ)) (𝓝 (S n))
+    rw [hSn]
+    exact hLim
+  · intro hc
+    have h1 : Tendsto S (𝓝[>] (n : ℝ)) (𝓝 (3 + 2 * n)) := by
+      rw [← hSn]
+      exact hc.tendsto.mono_left nhdsWithin_le_nhds
+    have := tendsto_nhds_unique h1 hRlim
+    linarith
+
+/-- Every polynomial is continuous everywhere: it is built from constants and the function that
+returns its own input by sums and products. -/
+theorem every_polynomial_is_continuous (p : Polynomial ℝ) : Continuous fun x : ℝ => p.eval x := by
+  exact p.continuous
+
+-- Stepped fare by formula at 0, 4/10, 1, 1001/1000, 2, 5/2 and 32/10 km: 3, 5, 5, 7, 7, 9, 11 dollars.
+example : (3 + 2 * ⌈(0 : ℚ)⌉, 3 + 2 * ⌈(4 / 10 : ℚ)⌉, 3 + 2 * ⌈(1 : ℚ)⌉, 3 + 2 * ⌈(1001 / 1000 : ℚ)⌉)
+    = (3, 5, 5, 7) := by norm_num
+example : (3 + 2 * ⌈(2 : ℚ)⌉, 3 + 2 * ⌈(5 / 2 : ℚ)⌉, 3 + 2 * ⌈(32 / 10 : ℚ)⌉) = (7, 9, 11) := by
+  norm_num
+-- Worked numbers at 1 km: 5 dollars at and just below, 7 just above, a jump of 2.
+example : (3 + 2 * 1 : ℤ) = 5 ∧ (3 + 2 * 2 : ℤ) = 7 ∧ (7 - 5 : ℤ) = 2 := by decide
+-- Metered fare M(d) = 3 + 2d: 7 dollars at 2 km; window for one cent at 2 km is 1/100 ÷ 2 = 5/1000 km.
+example : (3 + 2 * 2 : ℚ) = 7 ∧ (1 / 100 : ℚ) / 2 = 5 / 1000 := by norm_num
+-- Metered price per km M(d)/d at 1/10, 1/100, 1/1000 km: 32, 302, 3002 dollars.
+example : (3 + 2 * (1 / 10 : ℚ)) / (1 / 10) = 32 ∧ (3 + 2 * (1 / 100 : ℚ)) / (1 / 100) = 302 ∧
+    (3 + 2 * (1 / 1000 : ℚ)) / (1 / 1000) = 3002 := by norm_num
+-- At 4 minutes: fare 3 + 4 = 7, waiting total 3 + (5/4)·4 = 8, surge 1 + (5/100)·4 = 6/5,
+-- surge charge 7 · 6/5 = 42/5 dollars; chain window 5/1000 ÷ (1/2) = 1/100 minute.
+example : (3 + 4 : ℚ) = 7 ∧ (3 + 5 / 4 * 4 : ℚ) = 8 ∧ (1 + 5 / 100 * 4 : ℚ) = 6 / 5 ∧
+    (7 * (6 / 5) : ℚ) = 42 / 5 ∧ (5 / 1000 : ℚ) / (1 / 2) = 1 / 100 := by norm_num
+-- Stepped fare over time: at 4 minutes the cab is at 2 km and the fare is 7; a moment later, 9.
+example : 3 + 2 * ⌈(1 / 2 * 4 : ℚ)⌉ = 7 ∧ 3 + 2 * ⌈(1 / 2 * (4000001 / 1000000) : ℚ)⌉ = 9 := by
+  norm_num
+
+#print axioms sum_product_chain_stay_continuous
+#print axioms stepped_fare_jumps_at_every_whole_km
+#print axioms every_polynomial_is_continuous
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_product_chain_stay_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stepped_fare_jumps_at_every_whole_km' depends on axioms: [propext, Classical.choice, Quot.sound]
+'every_polynomial_is_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -374,6 +502,7 @@ ALL CHECKS PASS
 ## What this builds on
 
 - [Limits](01-limits.md): the limit, its notation and the tolerance game continuity is built from.
+- [Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md): limits of sums, products and quotients, and the quotient law this card borrows.
 
 ## Where this goes next
 
@@ -384,6 +513,8 @@ ALL CHECKS PASS
 - Limits and continuity with distances: the same game with any notion of distance.
 - Continuity by pre-images, and homeomorphism: continuity with no distances at all.
 - Homotopy: continuous deformations of one map into another.
+
+Left open: the stepped fare jumps from $5 to $7 and skips every fare between; must a function with no jumps on an interval show every value between its end values? That is the [Intermediate value theorem](06-intermediate-value-theorem.md).
 
 ---
 

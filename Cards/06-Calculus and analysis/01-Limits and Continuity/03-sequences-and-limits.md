@@ -89,7 +89,9 @@ If 1, −1, 1, −1… headed for L, then with tolerance 0.1 both 1 and −1 wou
 
 ### Step 4: climbing under a ceiling forces a limit
 
-Let a list never step down and never pass a ceiling. The real numbers have no gaps, so the terms have a least upper bound; call it L. Take tolerance 0.1. Since L − 0.1 is below the lowest ceiling, it is no ceiling: some term, the K-th say, lies above it. Every later term is at least that term and at most L, so within 0.1 of L. The same runs for any tolerance. That is the monotone convergence theorem.
+Let a list never step down and never pass a ceiling. The real numbers have no gaps, so the terms have a least upper bound; call it L.
+
+Take tolerance 0.1. Since L − 0.1 is below the lowest ceiling, it is no ceiling: some term, the K-th say, lies above it. Every later term is at least that term and at most L, so within 0.1 of L. The same runs for any tolerance. That is the monotone convergence theorem.
 
 It proves a limit exists before its value is known. The **climb** $c_n$ starts at 0 and makes each next term the square root of 2 plus the last: 0, 1.414214, 1.847759, 1.961571, 1.990369, 1.997591.
 
@@ -105,7 +107,7 @@ xychart-beta
 
 The rising line is the climb; the flat line is the ceiling 2.
 
-Two facts, by induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). **Below 2:** a term below 2 gives a next term below the square root of 4. **Never steps down:** for a term c at least 0 and below 2, the next term beats c exactly when (2 − c)(1 + c) is positive, which it is.
+Two facts, by induction: show a fact for the first term, then show each term passes it to the next ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). **Below 2:** a term below 2 gives a next term below the square root of 4. **Never steps down:** for a term c at least 0 and below 2, the next term beats c exactly when (2 − c)(1 + c) is positive, which it is.
 
 So the climb has a limit L. The limit laws ([Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md)) pass "next squared equals 2 plus last" to the limit: L times L equals 2 + L, roots 2 and −1. No term is negative, so L is 2.
 
@@ -113,7 +115,11 @@ Prove the limit exists before solving for it: doubling from 1 "solves" L = 2L to
 
 ### Step 5: crowding, without naming the limit
 
-A list is **Cauchy** when every tolerance has a cutoff past which any two terms lie within that tolerance of each other. No limit is named. The shares pass: past place 10, every share lies between 0 and 1/11, so any two differ by less than 0.1. The running total 1 + 1/2 + … fails, though its steps shrink: from place n to place 2n it gains at least n × 1/(2n) = 1/2, however late n is. On the real line, Cauchy and convergent are the same; the folded proof gets it from monotone convergence.
+A list is **Cauchy** when every tolerance has a cutoff past which any two terms lie within that tolerance of each other. No limit is named.
+
+The shares pass: past place 10, every share lies between 0 and 1/11, so any two differ by less than 0.1.
+
+The running total 1 + 1/2 + … fails, though its steps shrink: from place n to place 2n it gains at least n × 1/(2n) = 1/2, however late n is. On the real line, Cauchy and convergent are the same; the folded proof gets it from monotone convergence.
 
 <details>
 <summary>Detailed proof</summary>
@@ -346,6 +352,144 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves monotone convergence in general, and the card's claims about the shares and the climb exactly as stated.
+
+- Monotone convergence: a list of real numbers that never steps down and never passes a ceiling heads for its least upper bound.
+- The shares head for 0: for every tolerance t above 0, any whole number at least 1/t is a cutoff.
+- The climb steps up at every place, stays below 2 at every place, and heads for 2.
+
+Lean also checks the hand-worked numbers exactly; the cutoff scans, the running total and the twenty climb terms are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 112 lines</summary>
+
+```lean
+-- Sequences: a real sequence that never steps down and stays under a ceiling heads for its least upper bound, the shares 1/n head for 0 with any whole number at least 1/t as the cutoff for tolerance t, and the climb c(n+1) = sqrt(2 + c(n)) from 0 rises, stays below 2 and heads for 2.
+import Mathlib.Topology.Order.MonotoneConvergence
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Algebra.Order.Floor.Ring
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Filter Topology
+
+/-- Monotone convergence. A list of real numbers that never steps down
+(a 1 ≤ a 2 ≤ a 3 ≤ ...) and never passes a ceiling B heads for its least upper bound,
+the supremum of its terms. -/
+theorem monotone_bounded_sequence_tends_to_its_sup (a : ℕ → ℝ) (B : ℝ)
+    (h_up : ∀ n, a n ≤ a (n + 1)) (h_ceiling : ∀ n, a n ≤ B) :
+    Tendsto a atTop (𝓝 (sSup (Set.range a))) := by
+  have hmono : Monotone a := monotone_nat_of_le_succ h_up
+  have hbdd : BddAbove (Set.range a) := ⟨B, by rintro _ ⟨n, rfl⟩; exact h_ceiling n⟩
+  exact tendsto_atTop_ciSup hmono hbdd
+
+/-- The shares head for 0, in the card's tolerance-and-cutoff form: for every tolerance t > 0,
+any whole number N at least 1/t is a cutoff, so every share 1/n with n past N is closer to 0
+than t. -/
+theorem shares_one_over_n_tend_to_zero (t : ℝ) (ht : 0 < t) (N : ℕ) (hN : 1 / t ≤ N) :
+    ∀ n : ℕ, N < n → |1 / (n : ℝ) - 0| < t := by
+  intro n hn
+  have h1t : 0 < 1 / t := by positivity
+  have hNpos : (0 : ℝ) < N := lt_of_lt_of_le h1t hN
+  have hnN : (N : ℝ) < n := by exact_mod_cast hn
+  have hnpos : (0 : ℝ) < n := lt_trans hNpos hnN
+  have hlt : 1 / t < n := lt_of_le_of_lt hN hnN
+  rw [sub_zero, abs_of_pos (by positivity)]
+  rw [div_lt_iff₀ hnpos]
+  rw [div_lt_iff₀ ht] at hlt
+  linarith [mul_comm t (n : ℝ)]
+
+/-- The climb: start at 0 and make each next term the square root of 2 plus the last.
+(The card counts from place 1; here place 1 is index 0.) -/
+noncomputable def climb : ℕ → ℝ
+  | 0 => 0
+  | n + 1 => Real.sqrt (2 + climb n)
+
+/-- The climb steps up at every place, stays below 2 at every place, and heads for 2. -/
+theorem climb_rises_stays_below_two_and_tends_to_two :
+    (∀ n, climb n < climb (n + 1)) ∧ (∀ n, climb n < 2) ∧
+      Tendsto climb atTop (𝓝 2) := by
+  have hnn : ∀ n, 0 ≤ climb n := by
+    intro n
+    cases n with
+    | zero => simp [climb]
+    | succ n => simp only [climb]; exact Real.sqrt_nonneg _
+  have hlt2 : ∀ n, climb n < 2 := by
+    intro n
+    induction n with
+    | zero => simp [climb]
+    | succ n ih =>
+      simp only [climb]
+      rw [Real.sqrt_lt' (by norm_num)]
+      linarith
+  have hup : ∀ n, climb n < climb (n + 1) := by
+    intro n
+    show climb n < Real.sqrt (2 + climb n)
+    rw [Real.lt_sqrt (hnn n)]
+    nlinarith [hnn n, hlt2 n]
+  refine ⟨hup, hlt2, ?_⟩
+  have hmono : Monotone climb := monotone_nat_of_le_succ (fun n => (hup n).le)
+  have hbdd : BddAbove (Set.range climb) := ⟨2, by rintro _ ⟨n, rfl⟩; exact (hlt2 n).le⟩
+  have hL := tendsto_atTop_ciSup hmono hbdd
+  set L := ⨆ n, climb n with hLdef
+  have hL0 : 0 ≤ L := le_trans (hnn 0) (le_ciSup hbdd 0)
+  have h1 : Tendsto (fun n => climb (n + 1)) atTop (𝓝 L) :=
+    hL.comp (tendsto_add_atTop_nat 1)
+  have h2 : Tendsto (fun n => climb (n + 1)) atTop (𝓝 (Real.sqrt (2 + L))) := by
+    have : Tendsto (fun n => Real.sqrt (2 + climb n)) atTop (𝓝 (Real.sqrt (2 + L))) :=
+      ((Real.continuous_sqrt.comp (continuous_const.add continuous_id)).tendsto L).comp hL
+    simpa [climb] using this
+  have heq : L = Real.sqrt (2 + L) := tendsto_nhds_unique h1 h2
+  have hsq : L ^ 2 = 2 + L := by
+    have h := Real.sq_sqrt (show 0 ≤ 2 + L by linarith)
+    rw [← heq] at h
+    exact h
+  have : (L - 2) * (L + 1) = 0 := by nlinarith
+  rcases mul_eq_zero.mp this with h | h
+  · have : L = 2 := by linarith
+    rw [this] at hL
+    exact hL
+  · linarith
+
+-- Tolerance 1/10: term 10 equals the tolerance (not below), term 11 is inside.
+example : ¬ ((1 : ℚ) / 10 < 1 / 10) := by norm_num
+example : (1 : ℚ) / 11 < 1 / 10 := by norm_num
+-- The cutoff is the whole part of 1/t: 10 for 1/10, 100 for 1/100, 333 for 3/1000.
+example : ⌊(1 : ℚ) / (1 / 10)⌋ = 10 := by norm_num
+example : ⌊(1 : ℚ) / (1 / 100)⌋ = 100 := by norm_num
+example : ⌊(1 : ℚ) / (3 / 1000)⌋ = 333 := by norm_num
+example : 10 / 1 = 10 ∧ 100 / 1 = 100 ∧ 1000 / 3 = 333 := by decide
+-- The fraction (x^2 - 1)/(x - 1) at x = 1 + 1/11 is off 2 by exactly 1/11.
+example : (((1 + 1 / 11 : ℚ) ^ 2 - 1) / ((1 + 1 / 11) - 1)) - 2 = 1 / 11 := by norm_num
+-- Bounded is not convergent: (-1)^n at places 101 and 102 gives -1 and 1, a gap of 2.
+example : (-1 : ℤ) ^ 101 = -1 ∧ (-1 : ℤ) ^ 102 = 1 ∧ (1 : ℤ) - (-1) = 2 := by decide
+-- Never steps down: the next climb term beats c exactly when 2 + c - c^2 = (2 - c)(1 + c) > 0.
+example (c : ℝ) : 2 + c - c ^ 2 = (2 - c) * (1 + c) := by ring
+-- L * L = 2 + L has roots 2 and -1.
+example : (2 : ℤ) * 2 = 2 + 2 ∧ (-1 : ℤ) * (-1) = 2 + (-1) := by decide
+-- Solving before proving: doubling from 1, the twentieth term is 2^19 = 524288.
+example : (2 : ℕ) ^ 19 = 524288 := by norm_num
+-- Doubling-block bound for 1 + 1/2 + ... + 1/1024: 1 + 10/2 = 6.
+example : (1 : ℚ) + 10 / 2 = 6 := by norm_num
+
+#print axioms monotone_bounded_sequence_tends_to_its_sup
+#print axioms shares_one_over_n_tend_to_zero
+#print axioms climb_rises_stays_below_two_and_tends_to_two
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'monotone_bounded_sequence_tends_to_its_sup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shares_one_over_n_tend_to_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'climb_rises_stays_below_two_and_tends_to_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -390,6 +534,8 @@ The two outputs match line for line.
 - [Riesz-Fischer](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/05-completeness-of-lp.md): Cauchy lists of functions settle.
 - Limits and continuity with distances: the tolerance game with any distance.
 - Compactness three ways: every list has a settling sub-list.
+
+This card leaves one question open: how do limits behave when lists are added, multiplied or divided, and when the terms are functions instead of numbers?
 
 ---
 

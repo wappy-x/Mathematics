@@ -97,26 +97,26 @@ The π arrived through the limits: sine first reaches 1 at a quarter turn, 1.570
 
 ### Step 4: honestly, what this proves and what it borrows
 
-The rate of sin θ was proved by trapping a slice of circle between two triangles, and that slice's area came from the disc's area. So this calculation confirms πr^2 rather than proving it from nothing. The midpoint sum in x stands alone: square roots only, and it closes on 28.274334.
+The rate of sin θ was proved by trapping a slice of circle between two triangles, and that slice's area came from the disc's area. So this calculation confirms πr^2 rather than proving it from nothing. The midpoint sum in x (equal strips, each at its centre's height) stands alone: square roots only, and it closes on 28.274334.
 
 <details>
-<summary>Detailed proof</summary>
+<summary>Detailed proof: the substitution theorem, the antiderivative in x, and angle as arc length</summary>
 
-**The substitution, read right to left.** Let f(x) = √(9 − x^2), continuous on [−3, 3], and g(θ) = 3 sin θ, with continuous rate 3 cos θ. The substitution theorem says the integral of f(g(θ)) g'(θ) from −π/2 to π/2 equals the integral of f from g(−π/2) = −3 to g(π/2) = 3. No inverse is used; the branch only turns f(g(θ)) = 3|cos θ| into 3 cos θ.
+**The substitution, read right to left.** Let f(x) = √(9 − x^2), continuous on [−3, 3], and g(θ) = 3 sin θ, with continuous rate g'(θ) = 3 cos θ. The substitution theorem says the integral of f(g(θ)) g'(θ) from −π/2 to π/2 equals the integral of f from g(−π/2) = −3 to g(π/2) = 3. No inverse is used; the branch only turns f(g(θ)) = 3|cos θ| into 3 cos θ.
 
 **The antiderivative in x.** For −3 < x < 3, θ(x) = arcsin(x/3) has rate 1/√(9 − x^2). Then F(x) = ½(x√(9 − x^2) + 9θ(x)) has rate ½(√(9 − x^2) − x^2/√(9 − x^2) + 9/√(9 − x^2)) = √(9 − x^2). By continuity at ±3, F(3) − F(−3) = 9π/2.
 
-**Removing the borrowed area.** Measure angle by arc length ([Arc length](../05-Curves%20and%20Solids/02-arc-length.md)): the unit circle's arc from its top to the point above s has length the integral of 1/√(1 − t^2) from 0 to s, which gives arcsin its rate, and sine its rate, with no slice of disc. The calculation then proves the area outright.
+**Removing the borrowed area.** Measure angle by arc length ([Arc length](../05-Curves%20and%20Solids/02-arc-length.md)): the unit circle's arc from its top to the point above s has length the integral of 1/√(1 − t^2) from 0 to s. That gives arcsin its rate, and sine its rate, with no slice of disc. The calculation then proves the area outright.
 
 </details>
 
 ### Step 5: a relative, through the 3-4-5 triangle
 
-Take the integral of 1/√(9 + x^2) from 0 to 4. Put x = 3 tan θ, θ short of π/2. The root becomes 3 sec θ and dx = 3 sec^2 θ dθ, so the integrand becomes sec θ, whose antiderivative is ln(sec θ + tan θ): its rate is (sec θ tan θ + sec^2 θ)/(sec θ + tan θ) = sec θ.
+Take the integral of 1/√(9 + x^2) from 0 to 4. Put x = 3 tan θ, θ short of π/2. The root becomes 3 sec θ and dx = 3 sec^2 θ dθ, so the integrand becomes sec θ. Its antiderivative is ln(sec θ + tan θ), where ln is the natural logarithm: its rate is (sec θ tan θ + sec^2 θ)/(sec θ + tan θ) = sec θ.
 
 At x = 4 the triangle has legs 3 and 4 and hypotenuse 5: tan θ = 4/3, sec θ = 5/3. At x = 0 the sum sec θ + tan θ is 1. The integral is ln 3 = 1.098612, and the angle itself was never needed.
 
-A second route to roots of a^2 + x^2 is x = 3 sinh t, since cosh^2 t − sinh^2 t = 1; it has no pole at π/2 to avoid.
+A second route to roots of a^2 + x^2 is x = 3 sinh t, since cosh^2 t − sinh^2 t = 1. Here sinh and cosh are the hyperbolic sine and cosine, the odd and even halves of the exponential ([Hyperbolic functions](../02-Derivatives/07-hyperbolic-functions.md)). This route has no blow-up at π/2 to avoid.
 
 ---
 
@@ -331,6 +331,150 @@ ALL CHECKS PASS
 
 The outputs match line for line. Road two closes slowly, 0.273556530 off at 10 strips and 0.000008768 at 10000, because the bank meets the line at right angles. In θ the area is the smooth wave 18 cos^2 θ, and 10 strips are exact to nine places.
 
+### Lean
+
+Lean proves the card's formula for every radius a ≥ 0, the antiderivative in x, and the integral that gives ln 3.
+
+- For any radius a ≥ 0, √(a^2 − x^2) accumulated from −a to a equals a cos θ times a cos θ accumulated over −π/2 to π/2.
+- Both equal πa^2/2, half of pi a squared.
+- For a > 0 and x strictly between −a and a, ½(x√(a^2 − x^2) + a^2 arcsin(x/a)) has rate √(a^2 − x^2).
+- 1/√(9 + x^2) accumulated from 0 to 4 is exactly ln 3.
+- At x = 1.5, 9 − x^2 = 27/4, and 9 cos^2 θ = 9 × 3/4 = 27/4 too.
+- Twice the half pond, π × 3^2/2, is 9π, and so is twice (9/2)(π/2 + π/2).
+- With the dx factor dropped, 2 × 3 × (1 − (−1)) = 12.
+- The 3-4-5 triangle: 3^2 + 4^2 = 5^2, 9 + 4^2 = 5^2, and 5/3 + 4/3 = 3.
+
+The decimals, the midpoint sums, the off-branch sign and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 113 lines</summary>
+
+```lean
+-- Trig substitution: for a radius a ≥ 0, the root √(a^2 - x^2) accumulated from -a to a equals a cos θ times a cos θ accumulated over θ from -π/2 to π/2, and both equal π a^2/2; the antiderivative is (x√(a^2 - x^2) + a^2 arcsin(x/a))/2, and the tangent relative 1/√(9 + x^2) from 0 to 4 gives ln 3.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Real Set
+
+/-- The card's formula: for a radius `a ≥ 0`, the root `√(a^2 - x^2)` accumulated from `x = -a`
+to `x = a` equals the root `a cos θ` times the restretched width `a cos θ` accumulated over the
+half turn from `θ = -π/2` to `θ = π/2` (the substitution `x = a sin θ` on that branch), and both
+equal half of pi a squared. -/
+theorem integral_sqrt_sq_sub_sq_eq_half_pi_mul_sq (a : ℝ) (ha : 0 ≤ a) :
+    ((∫ x in (-a)..a, √(a ^ 2 - x ^ 2)) = ∫ θ in (-(π / 2))..(π / 2), a * cos θ * (a * cos θ)) ∧
+    (∫ θ in (-(π / 2))..(π / 2), a * cos θ * (a * cos θ)) = π * a ^ 2 / 2 := by
+  have h2 : (∫ θ in (-(π / 2))..(π / 2), a * cos θ * (a * cos θ)) = π * a ^ 2 / 2 := by
+    have : (fun θ => a * cos θ * (a * cos θ)) = fun θ => a ^ 2 * cos θ ^ 2 := by
+      funext θ; ring
+    rw [this, intervalIntegral.integral_const_mul, integral_cos_sq]
+    simp
+    ring
+  refine ⟨?_, h2⟩
+  rw [h2]
+  have key := intervalIntegral.smul_integral_comp_mul_left (fun x => √(a ^ 2 - x ^ 2)) a
+    (a := -1) (b := 1)
+  simp only [mul_neg, mul_one, smul_eq_mul] at key
+  rw [← key]
+  have : (fun x : ℝ => √(a ^ 2 - (a * x) ^ 2)) = fun x => a * √(1 - x ^ 2) := by
+    funext x
+    have : a ^ 2 - (a * x) ^ 2 = a ^ 2 * (1 - x ^ 2) := by ring
+    rw [this, Real.sqrt_mul (sq_nonneg a), Real.sqrt_sq ha]
+  rw [this, intervalIntegral.integral_const_mul, integral_sqrt_one_sub_sq]
+  ring
+
+/-- The antiderivative without limits: for a radius `a > 0` and every `x` strictly between `-a`
+and `a`, the function `(x √(a^2 - x^2) + a^2 θ)/2`, with `θ = arcsin(x/a)` the angle on the branch
+from `-π/2` to `π/2` whose sine is `x/a`, has rate `√(a^2 - x^2)` at `x`. -/
+theorem hasDerivAt_trig_substitution_antiderivative (a x : ℝ) (ha : 0 < a) (hx : x ∈ Ioo (-a) a) :
+    HasDerivAt (fun x => (x * √(a ^ 2 - x ^ 2) + a ^ 2 * arcsin (x / a)) / 2)
+      (√(a ^ 2 - x ^ 2)) x := by
+  obtain ⟨h1, h2⟩ := hx
+  have hpos : 0 < a ^ 2 - x ^ 2 := by nlinarith
+  have hs : 0 < √(a ^ 2 - x ^ 2) := Real.sqrt_pos.mpr hpos
+  have hxa1 : x / a ≠ -1 := by
+    intro h; rw [div_eq_iff ha.ne'] at h; linarith
+  have hxa2 : x / a ≠ 1 := by
+    intro h; rw [div_eq_iff ha.ne'] at h; linarith
+  have d1 : HasDerivAt (fun x => a ^ 2 - x ^ 2) (-(2 * x)) x := by
+    simpa using (hasDerivAt_pow 2 x).const_sub (a ^ 2)
+  have d2 := d1.sqrt hpos.ne'
+  have d3 := (hasDerivAt_id' x).mul d2
+  have d4 := (Real.hasDerivAt_arcsin hxa1 hxa2).comp x ((hasDerivAt_id' x).div_const a)
+  have d5 := (d3.add (d4.const_mul (a ^ 2))).div_const 2
+  refine d5.congr_deriv ?_
+  have e : √(1 - (x / a) ^ 2) = √(a ^ 2 - x ^ 2) / a := by
+    have : 1 - (x / a) ^ 2 = (a ^ 2 - x ^ 2) / a ^ 2 := by field_simp
+    rw [this, Real.sqrt_div' _ (sq_nonneg a), Real.sqrt_sq ha.le]
+  rw [e]
+  field_simp
+  rw [Real.sq_sqrt hpos.le]
+  ring
+
+/-- The relative through the 3-4-5 triangle: `1/√(9 + x^2)` accumulated from `x = 0` to `x = 4`
+is `ln 3`, found by `x = 3 tan θ` and the antiderivative `ln(sec θ + tan θ)`. -/
+theorem integral_inv_sqrt_nine_add_sq_zero_four :
+    ∫ x in (0 : ℝ)..4, 1 / √(9 + x ^ 2) = log 3 := by
+  have hpos : ∀ x : ℝ, 0 < 9 + x ^ 2 := fun x => by positivity
+  have hsg : ∀ x : ℝ, |x| < √(9 + x ^ 2) := fun x => by
+    rw [← Real.sqrt_sq_eq_abs]
+    exact Real.sqrt_lt_sqrt (sq_nonneg x) (by linarith)
+  have hS : ∀ x : ℝ, 0 < x + √(9 + x ^ 2) := fun x => by
+    have := hsg x; have := neg_abs_le x; linarith
+  have hd : ∀ x ∈ uIcc (0:ℝ) 4, HasDerivAt (fun x => log (x + √(9 + x ^ 2)))
+      (1 / √(9 + x ^ 2)) x := by
+    intro x _
+    have d1 : HasDerivAt (fun x => 9 + x ^ 2) (2 * x) x := by
+      simpa using (hasDerivAt_pow 2 x).const_add 9
+    have d2 := ((hasDerivAt_id' x).add (d1.sqrt (hpos x).ne')).log (hS x).ne'
+    refine d2.congr_deriv ?_
+    simp only [Pi.add_apply]
+    have hs : 0 < √(9 + x ^ 2) := Real.sqrt_pos.mpr (hpos x)
+    have := (hS x).ne'
+    field_simp
+    ring
+  have hcont : Continuous fun x : ℝ => 1 / √(9 + x ^ 2) := by
+    refine Continuous.div continuous_const (by fun_prop) ?_
+    intro x; exact (Real.sqrt_pos.mpr (hpos x)).ne'
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hd (hcont.intervalIntegrable _ _)]
+  have h25 : √(9 + (4:ℝ) ^ 2) = 5 := by
+    rw [show (9 + (4:ℝ) ^ 2) = 5 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  have h9 : √(9 + (0:ℝ) ^ 2) = 3 := by
+    rw [show (9 + (0:ℝ) ^ 2) = 3 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  simp only [h25, h9]
+  rw [← Real.log_div (by norm_num) (by norm_num)]
+  norm_num
+
+-- Step 0 at x = 3/2: 9 - x^2 = 27/4, and (3 cos θ)^2 with cos θ = √3/2 gives 9 · 3/4 = 27/4.
+example : (9 : ℚ) - (3 / 2) ^ 2 = 27 / 4 ∧ (9 : ℚ) * (3 / 4) = 27 / 4 := by norm_num
+-- The whole pond: twice the half pond π · 3^2 / 2 is 9π.
+example : 2 * (π * 3 ^ 2 / 2) = 9 * π := by ring
+-- Step 3: (9/2)(π/2 - (-π/2)), doubled, is again 9π.
+example : 2 * ((9 / 2) * (π / 2 - (-(π / 2)))) = 9 * π := by ring
+-- The mistake with the dx factor dropped: 2 · 3 · (sin(π/2) - sin(-π/2)) = 2 · 3 · 2 = 12.
+example : (2 : ℤ) * 3 * (1 - (-1)) = 12 := by decide
+-- Step 5: the 3-4-5 triangle, tan θ = 4/3 and sec θ = 5/3 at x = 4, with sec θ + tan θ = 3.
+example : (3 : ℕ) ^ 2 + 4 ^ 2 = 5 ^ 2 := by decide
+example : (9 : ℕ) + 4 ^ 2 = 5 ^ 2 := by decide
+example : (5 / 3 : ℚ) + 4 / 3 = 3 := by norm_num
+
+#print axioms integral_sqrt_sq_sub_sq_eq_half_pi_mul_sq
+#print axioms hasDerivAt_trig_substitution_antiderivative
+#print axioms integral_inv_sqrt_nine_add_sq_zero_four
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_sqrt_sq_sub_sq_eq_half_pi_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_trig_substitution_antiderivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_inv_sqrt_nine_add_sq_zero_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -370,6 +514,8 @@ The outputs match line for line. Road two closes slowly, 0.273556530 off at 10 s
 - [Improper integrals](07-improper-integrals.md): integrands that run off to infinity at an end, such as 1/√(9 − x^2) at x = 3.
 - [Numerical integration](08-numerical-integration.md): error ceilings set by a curve's derivatives, which the bank's vertical ends break.
 - [Averages, mass and work](09-average-value-mass-and-work.md): averages as integrals; the pond's mean width is its area over 6 m.
+
+Left open: 1/√(9 − x^2) runs off to infinity at x = 3, so what does its integral from 0 to 3 mean?
 
 ---
 

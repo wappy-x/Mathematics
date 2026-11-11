@@ -8,9 +8,9 @@
 
 Take the curve whose height at each x is x times e^(x^2): zero at x = 0, 0.47 at x = 0.4, 2.72 at x = 1. The area under it from x = 0 to x = 1 is a definite number. No power rule produces it directly, because the exponent is itself a function of x.
 
-The way in is a matched pair. The exponent x^2 has rate 2x, and the factor x in front is half of that rate. Rename the exponent u. The integrand becomes e^u / 2, strip by strip, and the area is (e − 1)/2 = 0.859141.
+The way in is a matched pair. The exponent x^2 has rate 2x, and the factor x in front is half of that rate. Rename the exponent u. The integrand, the height being summed, becomes e^u / 2, strip by strip, and the area is (e − 1)/2 = 0.859141.
 
-That renaming is **substitution**: change the variable, move the two limits with it, and integrate the simpler thing. The chain rule says how fast a function of a function changes; substitution spots such a rate inside an integral and undoes it.
+That renaming is **substitution**: change the variable, move the two limits (the ends of the range, here 0 and 1) with it, and integrate the simpler thing. The chain rule says how fast a function of a function changes; substitution spots such a rate inside an integral and undoes it.
 
 **Substitution replaces an inner function and its rate together: the integrand f(g(x)) times g'(x), accumulated from a to b, equals f(u) accumulated from g(a) to g(b).**
 
@@ -101,7 +101,7 @@ Let H(x) = F(g(x)). Each g(x) lies in I, so the chain rule applies everywhere: H
 
 The second part, applied to H: the integral of f(g(x)) g'(x) from a to b is H(b) − H(a) = F(g(b)) − F(g(a)). Applied to F on u from g(a) to g(b), it gives the same difference; when g(b) is below g(a), the integral carries a minus sign, as backward limits always do.
 
-Nothing required g to be one-to-one or its rate non-zero. The hypothesis that I holds every value of g is used once: F needs a rate at each g(x). Without limits, two antiderivatives of the same rate differ by a function of rate zero, which the mean value theorem makes a constant: the C.
+Nothing required g to be one-to-one or its rate non-zero. The hypothesis that I holds every value of g is used once: F needs a rate at each g(x). Without limits, two antiderivatives of the same rate differ by a function of rate zero, which the mean value theorem ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) makes a constant: the C.
 
 </details>
 
@@ -330,6 +330,112 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line. The midpoint sum up to 0.9999 lags the true value, −8.517139 against −8.517243, because a spike that steep outruns the fixed grid of strips.
+
+### Lean
+
+Lean proves the substitution rule for every f, g, a and b that meet its conditions, and the card's areas under x e^(x^2).
+
+- Let g have a continuous rate from a to b, and f be continuous at every value g takes. Then f(g(x)) g'(x) accumulated from a to b equals f(u) accumulated from g(a) to g(b).
+- The limits keep the order g(a), g(b), even downhill, and g need not be one-to-one.
+- The rate of e^(x^2)/2 is x e^(x^2).
+- For any limits a and b, the area under x e^(x^2) from a to b is (e^(b^2) − e^(a^2))/2.
+- From x = 0 to x = 1 the area is (e − 1)/2.
+- From x = −1 to x = 2, where u turns back, the area is (e^4 − e)/2, the same as from x = 1 to x = 2.
+- The moved limits: 0^2 and 1^2 are 0 and 1; 1^2 and 2^2 are 1 and 4; (−1)^2 and 1^2 are both 1.
+- The four quarter strips land as u strips 1/16, 3/16, 5/16 and 7/16, each 2 times its centre times 1/4.
+
+The decimals, the midpoint sums, the mistake table, the hole in 1/u, the chart and the figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 73 lines</summary>
+
+```lean
+-- Substitution: if the inner function g has a continuous rate from a to b and the outer function f is continuous at every value g takes there, then f(g(x)) g'(x) accumulated from a to b equals f(u) accumulated from g(a) to g(b), and the card's area under x e^(x^2) from 0 to 1 is (e - 1)/2.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Tactic.NormNum
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+
+open Set
+
+/-- Helper: `e^(x^2)/2` has rate `x e^(x^2)`. -/
+theorem hasDerivAt_half_exp_sq (x : ℝ) :
+    HasDerivAt (fun x : ℝ => Real.exp (x ^ 2) / 2) (x * Real.exp (x ^ 2)) x := by
+  have h := (HasDerivAt.exp (hasDerivAt_pow 2 x)).div_const 2
+  convert h using 1
+  push_cast
+  ring
+
+/-- Helper: the area under `x e^(x^2)` from `a` to `b` is `(e^(b^2) - e^(a^2))/2`. -/
+theorem integral_x_exp_x_sq (a b : ℝ) :
+    ∫ x in a..b, x * Real.exp (x ^ 2) = (Real.exp (b ^ 2) - Real.exp (a ^ 2)) / 2 := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun x _ => hasDerivAt_half_exp_sq x)]
+  · ring
+  · apply Continuous.intervalIntegrable
+    fun_prop
+
+#print axioms hasDerivAt_half_exp_sq
+#print axioms integral_x_exp_x_sq
+
+/-- Substitution: suppose the inner function `g` has rate `g' x` at every `x` from `a` to `b`,
+that rate `g'` is continuous from `a` to `b`, and the outer function `f` is continuous at every
+value `g` takes from `a` to `b`. Then `f (g x) * g' x` accumulated from `a` to `b` equals `f u`
+accumulated from `g a` to `g b`. The limits keep their order, even when `g` runs downhill, and
+`g` need not be one-to-one. -/
+theorem integral_substitution (f g g' : ℝ → ℝ) (a b : ℝ)
+    (hg : ∀ x ∈ uIcc a b, HasDerivAt g (g' x) x)
+    (hg' : ContinuousOn g' (uIcc a b))
+    (hf : ContinuousOn f (g '' uIcc a b)) :
+    ∫ x in a..b, f (g x) * g' x = ∫ u in g a..g b, f u := by
+  exact intervalIntegral.integral_comp_mul_deriv' hg hg' hf
+
+/-- The card's example: the area under `x e^(x^2)` from `x = 0` to `x = 1` is `(e - 1)/2`,
+the same as the area under `e^u / 2` from `u = 0` to `u = 1`. -/
+theorem integral_x_exp_x_sq_zero_one :
+    ∫ x in (0 : ℝ)..1, x * Real.exp (x ^ 2) = (Real.exp 1 - 1) / 2 := by
+  rw [integral_x_exp_x_sq]
+  norm_num
+
+/-- When `u = x^2` turns back: from `x = -1` to `x = 2`, `u` runs 1 down to 0 and up to 4, the
+retraced stretch cancels, and the area is `(e^4 - e)/2`, the same as from `x = 1` to `x = 2`. -/
+theorem integral_x_exp_x_sq_neg_one_two :
+    ∫ x in (-1 : ℝ)..2, x * Real.exp (x ^ 2) = (Real.exp 4 - Real.exp 1) / 2 := by
+  rw [integral_x_exp_x_sq]
+  norm_num
+
+-- Moving the limits for x from 0 to 1 and for x from 1 to 2: u = x^2.
+example : ((0 : ℕ) ^ 2, (1 : ℕ) ^ 2) = (0, 1) := by decide
+example : ((1 : ℕ) ^ 2, (2 : ℕ) ^ 2) = (1, 4) := by decide
+-- x from -1 to 1: u runs from 1 to 1, so the right side is empty.
+example : ((-1 : ℤ) ^ 2, (1 : ℤ) ^ 2) = (1, 1) := by decide
+-- Step 1: the four quarter strips in x land as u strips of width 1/16, 3/16, 5/16, 7/16,
+-- each equal to 2 times its centre times 1/4.
+example : ((1 / 4 : ℚ) ^ 2 - 0 ^ 2 = 2 * (1 / 8) * (1 / 4)) ∧ ((1 / 4 : ℚ) ^ 2 = 1 / 16) := by
+  norm_num
+example : ((1 / 2 : ℚ) ^ 2 - (1 / 4) ^ 2 = 2 * (3 / 8) * (1 / 4)) ∧
+    ((1 / 2 : ℚ) ^ 2 - (1 / 4) ^ 2 = 3 / 16) := by norm_num
+example : ((3 / 4 : ℚ) ^ 2 - (1 / 2) ^ 2 = 2 * (5 / 8) * (1 / 4)) ∧
+    ((3 / 4 : ℚ) ^ 2 - (1 / 2) ^ 2 = 5 / 16) := by norm_num
+example : ((1 : ℚ) ^ 2 - (3 / 4) ^ 2 = 2 * (7 / 8) * (1 / 4)) ∧
+    ((1 : ℚ) ^ 2 - (3 / 4) ^ 2 = 7 / 16) := by norm_num
+
+#print axioms integral_substitution
+#print axioms integral_x_exp_x_sq_zero_one
+#print axioms integral_x_exp_x_sq_neg_one_two
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'hasDerivAt_half_exp_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_x_exp_x_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_substitution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_x_exp_x_sq_zero_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_x_exp_x_sq_neg_one_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

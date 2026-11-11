@@ -89,7 +89,9 @@ $$\sin h < h < \tan h$$
 
 Dividing the left half by h gives (sin h)/h < 1. Dividing the right half by h and multiplying by cos h, positive there, gives cos h < (sin h)/h. The ratio is trapped between cos h and 1.
 
-The tolerance game makes "heads for 1" precise. To land within 0.001 of 1, cos h above 0.999 suffices. Step 2 shows 1 − cos h is at most $h^2/2$, so any h below 0.044721 will do. At h = 0.04, cos h is 0.999200 and (sin h)/h is 0.999733: inside the band. Every tighter target gets its own h the same way: that is lim (h → 0) (sin h)/h = 1, read "(sin h)/h heads for 1 as h heads for 0".
+The tolerance game makes "heads for 1" precise: name a target band around 1, then find a step h small enough to land inside it ([Limits](../01-Limits%20and%20Continuity/01-limits.md)). To land within 0.001 of 1, cos h above 0.999 suffices. Step 2 shows 1 − cos h is at most $h^2/2$, so any h below 0.044721 will do.
+
+At h = 0.04, cos h is 0.999200 and (sin h)/h is 0.999733: inside the band. Every tighter target gets its own h the same way: that is lim (h → 0) (sin h)/h = 1, read "(sin h)/h heads for 1 as h heads for 0".
 
 A negative h changes nothing: sin(−h)/(−h) equals sin h/h, since sine is odd.
 
@@ -135,6 +137,8 @@ With L = 14 cm at 30° this is 3.97486 cm per radian, against the yoke's 3.46410
 
 <details>
 <summary>Detailed proof: the two limits with epsilon and delta</summary>
+
+Here ε (epsilon) is any allowed error above 0, however small, and δ (delta) is a step size small enough to keep the error under it.
 
 For every ε > 0, take δ = min(1, √(2ε)). If 0 < h < δ, the sandwich gives cos h < sin h / h < 1, so $\lvert \sin h / h - 1 \rvert < 1 - \cos h < h^2/2 < \varepsilon$; negative h gives the same ratio.
 
@@ -350,6 +354,89 @@ figure, centre (120.00, 130.00), pin (189.28, 90.00), arrow tip (169.28, 55.36),
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the rules for sine, cosine, tangent and secant at every angle in radians, with cos x not zero for the last two.
+
+- At every angle x, the rate of sin x is cos x and the rate of cos x is minus sin x.
+- Wherever cos x is not zero, tangent's rate is 1 / $\cos^2 x$, which is $\sec^2 x$.
+- Wherever cos x is not zero, secant's rate is sin x / $\cos^2 x$, which is sec x tan x.
+- As h heads for 0, (sin h)/h heads for 1 and (cos h − 1)/h heads for 0.
+
+Lean also checks the 30° values exactly. The rise-over-run quotients, the piston speed and the rod engine are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 56 lines</summary>
+
+```lean
+-- Derivatives of sine and cosine: in radians, at every real x the rate of sin is cos x and the rate of cos is -sin x, tangent and secant have rates 1/cos^2 x and sin x/cos^2 x wherever cos x is not 0, and the two limits at zero behind the proof are (sin h)/h to 1 and (cos h - 1)/h to 0.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Tactic.NormNum
+
+open Real Filter Topology
+
+/-- In radians (Mathlib's `Real.sin` and `Real.cos` take radians), at every angle x the rate of
+sin is cos x and the rate of cos is minus sin x. -/
+theorem deriv_sin_is_cos_and_deriv_cos_is_neg_sin (x : ℝ) :
+    HasDerivAt sin (cos x) x ∧ HasDerivAt cos (-sin x) x := by
+  exact ⟨hasDerivAt_sin x, hasDerivAt_cos x⟩
+
+/-- By the quotient rule, wherever cos x is not zero: tangent, sin over cos, has rate
+1 / cos² x (that is sec² x), and secant, 1 over cos, has rate sin x / cos² x (that is
+sec x tan x). -/
+theorem deriv_tan_and_sec (x : ℝ) (hx : cos x ≠ 0) :
+    HasDerivAt tan (1 / cos x ^ 2) x ∧
+      HasDerivAt (fun y => 1 / cos y) (sin x / cos x ^ 2) x := by
+  refine ⟨hasDerivAt_tan hx, ?_⟩
+  have h := (hasDerivAt_cos x).inv hx
+  have e : (fun y => 1 / cos y) = fun y => (cos y)⁻¹ := by
+    funext y; rw [one_div]
+  rw [e]
+  convert h using 1
+  ring
+
+/-- The two limits at zero that settle every angle: as the step h heads for 0 (never equal to
+0), (sin h) / h heads for 1 and (cos h - 1) / h heads for 0. -/
+theorem sin_div_tendsto_one_and_cos_sub_one_div_tendsto_zero :
+    Tendsto (fun h : ℝ => sin h / h) (𝓝[≠] 0) (𝓝 1) ∧
+      Tendsto (fun h : ℝ => (cos h - 1) / h) (𝓝[≠] 0) (𝓝 0) := by
+  refine ⟨tendsto_sin_div_nhdsNE_zero, ?_⟩
+  have h := (hasDerivAt_iff_tendsto_slope.mp (hasDerivAt_cos 0))
+  simp only [sin_zero, neg_zero] at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  rw [slope_def_field, cos_zero, sub_zero]
+
+-- The crank at 30 degrees, π/6 radians, with arm 4 cm: the piston is 4 sin x = 2 cm up.
+example : 4 * sin (π / 6) = 2 := by rw [sin_pi_div_six]; norm_num
+-- The pin's sideways reach 4 cos x changes at -4 sin x = -2 cm per radian, not +2.
+example : -(4 * sin (π / 6)) = -2 := by rw [sin_pi_div_six]; norm_num
+-- Tangent's rate at 30 degrees: 1 / cos² x = 4/3 (the card's 1.333333).
+example : 1 / cos (π / 6) ^ 2 = 4 / 3 := by rw [cos_pi_div_six]; norm_num [div_pow]
+-- Secant's rate at 30 degrees: sin x / cos² x = 2/3 (the card's 0.666667).
+example : sin (π / 6) / cos (π / 6) ^ 2 = 2 / 3 := by
+  rw [sin_pi_div_six, cos_pi_div_six]; norm_num [div_pow]
+-- The mistake tan² x gives 1/3 (the card's 0.333333), not 4/3.
+example : (sin (π / 6) / cos (π / 6)) ^ 2 = 1 / 3 := by
+  rw [sin_pi_div_six, cos_pi_div_six]; norm_num [div_pow]
+
+#print axioms deriv_sin_is_cos_and_deriv_cos_is_neg_sin
+#print axioms deriv_tan_and_sec
+#print axioms sin_div_tendsto_one_and_cos_sub_one_div_tendsto_zero
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'deriv_sin_is_cos_and_deriv_cos_is_neg_sin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'deriv_tan_and_sec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sin_div_tendsto_one_and_cos_sub_one_div_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -383,13 +470,17 @@ ALL CHECKS PASS
 
 ## What this builds on
 
+- [Product and quotient rules](02-product-and-quotient-rules.md): the quotient rule that turns the rates of sine and cosine into those of tangent and secant in Step 5.
 - [Chain rule](03-chain-rule.md): turns cm per radian into cm per second, and handles the rod engine.
 - [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the addition formulas that do Step 0, and the half-angle identity of Step 2.
 - [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md): the sandwich sin h < h < tan h.
 
 ## Where this goes next
 
+- [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md): reads the rate of arcsin, the undo of sine, off sine's rate.
 - [Trig substitution](../04-Integrals/06-trig-substitution.md): runs these rules backwards, swapping a square root for a sine to find areas.
+
+Applying the rule twice turns sine into minus sine; which function is exactly its own rate, with no minus sign, is answered in [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 
 ---
 

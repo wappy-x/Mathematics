@@ -20,13 +20,13 @@ No single window gives 20; every window is an average. The number the averages h
 
 <p align="center"><img src="../figures/the-derivative.svg" alt="The odometer curve from 4 s to 6.2 s, the straight line through P at 5 s and Q at 6 s with slope 22 m/s, and the tangent line at P with slope 20 m/s" width="420"></p>
 
-Drawn to scale: 1 s is 140 units across, 1 m is 4 units up, the axis at 30 m. P is (5 s, 50 m); Q is (6 s, 72 m). As Q slides towards P, the solid line swings onto the dashed one.
+Drawn to scale: 1 s is 140 units across, 1 m is 4 units up, the axis at 30 m. P is (5 s, 50 m); Q is (6 s, 72 m). As Q slides towards P, the solid line (the secant, through two points of the curve) swings onto the dashed one (the tangent at P, the line the secants settle on).
 
 ---
 
 ## The formula
 
-Notation first, in words. The derivative of a function f at a point $a$ is written $f'(a)$, read "f prime of a", or $\frac{dy}{dx}$ when output is y and input x, read "the rate of y per unit of x". Reminder from [Limits](../01-Limits%20and%20Continuity/01-limits.md): $\lim_{h \to 0}$ reads "what this heads for as h heads for 0".
+Notation first, in words. The derivative of a function f at a point $a$ is written $f'(a)$, read "f prime of a". When output is y and input x, it is also written $\frac{dy}{dx}$, read "the rate of y per unit of x". Reminder from [Limits](../01-Limits%20and%20Continuity/01-limits.md): $\lim_{h \to 0}$ reads "what this heads for as h heads for 0".
 
 $$f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}$$
 
@@ -89,12 +89,12 @@ $$f(a+h) - f(a) = h \times \frac{f(a+h) - f(a)}{h}$$
 
 If the derivative exists, the average heads for a fixed number while h heads for 0, so their product, the gap, heads for 0. For the car: 2.02 m at a 0.1 s window, 0.2002 m at 0.01 s, 0.020002 m at 0.001 s.
 
-The converse fails. A car that stops dead at 5 s is continuous (gaps 0.019998 m and 0 m over a thousandth of a second), but its left and right averages are 19.998 and 0: a corner, with no derivative.
+The converse fails. A car that stops dead at 5 s is continuous: its gaps over a thousandth of a second are 0.019998 m and 0 m. But its left and right averages are 19.998 and 0: a corner, with no derivative.
 
 <details>
-<summary>Detailed proof</summary>
+<summary>Detailed proof: the tolerance form of the definition, the car, why a derivative forces continuity, and the corner</summary>
 
-The tolerance form of the definition: f'(a) = L means that for every tolerance ε (epsilon) greater than 0 there is a window size δ (delta) greater than 0 such that every window h with 0 < |h| < δ gives an average within ε of L.
+The tolerance form of the definition: f'(a) = L means that for every tolerance ε (epsilon) greater than 0 there is a window size δ (delta) greater than 0 that works. Works means: every window h with 0 < |h| < δ gives an average within ε of L.
 
 **The car.** The average minus 20 is exactly 2h, so δ = ε/2 works. With ε = 0.001, δ = 0.0005, as in Step 2.
 
@@ -296,6 +296,88 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves that its own derivative is the card's limit, that a derivative forces continuity, and the car's speed at every instant.
+
+- f'(a) = L exactly when the average rate over a window h heads for L as h heads for 0, from either side.
+- If the average rates at a head for a finite number, the function is continuous at a.
+- The car's average speed from any instant a heads for 4a as the window shrinks: 20 m/s at 5 s.
+
+Lean also checks the hand-worked numbers; the shrinking windows, halving search, corner, jump and figure are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 56 lines</summary>
+
+```lean
+-- The derivative: Mathlib's derivative of a real function at a point is exactly the limit of the average rates (f(a + h) - f(a)) / h as the window h heads for 0, a function with such a limit is continuous there, and the car's odometer 2t^2 has speed 4a at every instant a.
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Tactic.NormNum
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.Deriv.Mul
+
+open Filter Topology
+
+/-- The derivative is the limit of average rates over shrinking windows. A real function f has
+derivative L at the point a exactly when the average rate (f(a + h) - f(a)) / h heads for L as the
+window h heads for 0 from either side, never equal to 0. The limit must be a single finite number,
+the same from both sides. -/
+theorem derivative_is_limit_of_average_rates (f : ℝ → ℝ) (a L : ℝ) :
+    HasDerivAt f L a ↔ Tendsto (fun h : ℝ => (f (a + h) - f a) / h) (𝓝[≠] 0) (𝓝 L) := by
+  rw [hasDerivAt_iff_tendsto_slope_zero]
+  simp only [smul_eq_mul, inv_mul_eq_div]
+
+/-- A derivative forces continuity. If the average rates of f at a head for a finite number L as
+the window shrinks, then f(x) heads for f(a) as x heads for a: f is continuous at a. -/
+theorem average_rates_converge_implies_continuous (f : ℝ → ℝ) (a L : ℝ)
+    (hf : Tendsto (fun h : ℝ => (f (a + h) - f a) / h) (𝓝[≠] 0) (𝓝 L)) :
+    ContinuousAt f a := by
+  exact ((derivative_is_limit_of_average_rates f a L).2 hf).continuousAt
+
+/-- The car. Its odometer reads s(t) = 2t^2 metres at t seconds. At every instant a, the average
+speed over a window of h seconds is 4a + 2h, so the averages head for 4a: the speed at a is 4a
+metres per second (20 m/s at 5 s, 8 m/s at 2 s). -/
+theorem car_speed_is_four_a (a : ℝ) :
+    Tendsto (fun h : ℝ => (2 * (a + h) ^ 2 - 2 * a ^ 2) / h) (𝓝[≠] 0) (𝓝 (4 * a)) := by
+  have hd : HasDerivAt (fun t : ℝ => 2 * t ^ 2) (4 * a) a := by
+    have h2 : HasDerivAt (fun x : ℝ => x ^ 2) ((2 : ℕ) * a ^ (2 - 1)) a := hasDerivAt_pow 2 a
+    have := HasDerivAt.const_mul (2 : ℝ) h2
+    convert this using 1
+    push_cast
+    ring
+  exact (derivative_is_limit_of_average_rates (fun t : ℝ => 2 * t ^ 2) a (4 * a)).1 hd
+
+-- The odometer readings: 50 m at 5 s, 72 m at 6 s.
+example : (2 * 5 * 5 : ℤ) = 50 ∧ (2 * 6 * 6 : ℤ) = 72 := by decide
+-- Readings at 0 to 6 s, and the metres covered in each second.
+example : (List.range 7).map (fun t : ℕ => 2 * t * t) = [0, 2, 8, 18, 32, 50, 72] := by decide
+example : (List.range 6).map (fun k : ℕ => 2 * (k + 1) * (k + 1) - 2 * k * k)
+    = [2, 6, 10, 14, 18, 22] := by decide
+-- One-second windows: 22 m/s after 5 s (h = 1) and 18 m/s before it (h = -1), each 20 + 2h.
+example : ((2 * 6 * 6 - 2 * 5 * 5 : ℚ) / 1) = 20 + 2 * 1 := by norm_num
+example : ((2 * 4 * 4 - 2 * 5 * 5 : ℚ) / (-1)) = 20 + 2 * (-1) := by norm_num
+-- Whole-second readings: the mean of the fifth and sixth seconds is 20 m/s.
+example : ((18 + 22) / 2 : ℚ) = 20 := by norm_num
+-- 20 m/s is 72 km/h; the speed at 2 s is 4 × 2 = 8 m/s.
+example : (20 * 3600 / 1000 : ℚ) = 72 ∧ (4 * 2 : ℤ) = 8 := by norm_num
+-- The usual mistakes: the whole-trip average is 50 m over 5 s = 10 m/s, half the true 20.
+example : (50 / 5 : ℚ) = 10 ∧ (10 : ℚ) * 2 = 20 := by norm_num
+
+#print axioms derivative_is_limit_of_average_rates
+#print axioms average_rates_converge_implies_continuous
+#print axioms car_speed_is_four_a
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'derivative_is_limit_of_average_rates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'average_rates_converge_implies_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'car_speed_is_four_a' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -321,7 +403,7 @@ The two outputs agree line for line.
 
 - **Speedometers.** The needle estimates the odometer's derivative from wheel turns over a short window.
 - **Marginal cost.** The derivative of total cost with respect to quantity, in dollars per item.
-- **Option hedging.** An option's delta is its price's rate per dollar of the stock price ([Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
+- **Option hedging.** An option is a contract to buy or sell a stock later at a set price. Its delta is its price's rate per dollar of the stock price ([Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
 - **Every derivative rule.** All come from this one limit: [Product and quotient rules](02-product-and-quotient-rules.md), [Chain rule](03-chain-rule.md), [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md), [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 
 > **Say it back**
@@ -344,6 +426,8 @@ The two outputs agree line for line.
 - [The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the window may point any direction in a plane.
 - [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): equations that state a rate and ask for the function.
 - Unbounded operators: differentiation as an operation on whole functions.
+
+Left open: every derivative on this card took its own limit; can the derivative of a product or a chain of functions come from the parts' derivatives, with no new limit?
 
 ---
 
