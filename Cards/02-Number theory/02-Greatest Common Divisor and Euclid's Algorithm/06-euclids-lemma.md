@@ -325,6 +325,7 @@ example : Nat.gcd 6 4 = 2 := by norm_num
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
+'prime_dividing_product_and_missing_one_factor_divides_the_other' depends on axioms: [propext, Classical.choice, Quot.sound]
 'prime_missing_a_number_is_coprime_to_it' depends on axioms: [propext, Classical.choice, Quot.sound]
 'composite_divides_a_product_but_neither_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```

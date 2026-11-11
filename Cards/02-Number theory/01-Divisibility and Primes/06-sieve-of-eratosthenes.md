@@ -455,6 +455,7 @@ example : ((passNumbers 100).foldl (sievePass (fun p => p * p)) (Finset.Icc 1 10
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
+'takeWhile_range'_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
 'sieve_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
 'sieveWith_eq_primes' depends on axioms: [propext, Classical.choice, Quot.sound]
 'sieve_leaves_exactly_the_primes' depends on axioms: [propext, Classical.choice, Quot.sound]

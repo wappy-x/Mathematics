@@ -526,6 +526,7 @@ example : ((-20 : ℝ) - 10) / 10 = -3 ∧ ((-20 : ℝ) + 10) / 10 = -1 ∧
 ```
 'quadratic_formula_solves_every_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
 'discriminant_says_how_many_answers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quadratic_answers_add_to_neg_b_over_a_and_multiply_to_c_over_a' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]
