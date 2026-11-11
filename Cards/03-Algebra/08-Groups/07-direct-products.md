@@ -35,7 +35,15 @@ The first two bars match: the padlock's joint notch and a 15-dial's notch both t
 
 ## The formula
 
-Notation in words first. A pair goes in round brackets, the first group's member first: (2, 4). The group of all such pairs takes a cross, $G \times H$, said "G cross H" — the cross that counted 15 settings ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)). Bars count members, $\lvert G\rvert$; $*$ is whichever operation the group at hand uses; $e$, the identity, changes nothing; $\operatorname{ord}$ counts the repeats that bring a member home ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)); $\cong$ means the same group relabelled ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)).
+Notation in words first.
+
+- A pair goes in round brackets, the first group's member first: (2, 4).
+- The group of all such pairs takes a cross, $G \times H$, said "G cross H" — the cross that counted 15 settings ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
+- Bars count members, $\lvert G\rvert$.
+- $*$ is whichever operation the group at hand uses.
+- $e$, the identity, changes nothing.
+- $\operatorname{ord}$ counts the repeats that bring a member home ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)).
+- $\cong$ means the same group relabelled ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)).
 
 The rule that makes the pairs a group:
 
@@ -56,6 +64,7 @@ Settings multiply; return times do not. The pair is home only when both halves a
 | $g$, $h$, $a$, $b$, $e$ | members, first group then second; $e$ changes nothing | notch counts; (0, 0) | — |
 | $*$, $k$, $m$, $n$ | the group's operation; a repeat count or a reading; two clock sizes | notch addition; 0 to 14; 3 and 5 | — |
 | $\operatorname{ord}$, $\operatorname{lcm}$, $\cong$ | repeats that bring a member home; smallest number two others divide into; the same group relabelled | 15 for the joint notch; lcm(3, 5) = 15; the padlock and one 15-dial | a longer joint return |
+| $\text{Z mod } n$, $\bmod$ | the n-position clock; the remainder left after dividing | Z mod 15, the 15-dial; (10 × 2 + 6 × 4) mod 15 = 14 | — |
 
 ### When it holds
 
@@ -69,7 +78,12 @@ Settings multiply; return times do not. The pair is home only when both halves a
 
 ### Step 0: two calculations that never meet
 
-The four rules of a group ([Groups](01-groups.md)) pass one half at a time: each half combines inside its own group, so the pair is closed; brackets move freely in each half; the pair of the two identities changes neither half; each half is undone on its own.
+The four rules of a group ([Groups](01-groups.md)) pass one half at a time:
+
+- each half combines inside its own group, so the pair is closed: two pairs combine to a pair;
+- brackets move freely in each half;
+- the pair of the two identities changes neither half;
+- each half is undone on its own.
 
 Swapping the order of two pairs swaps the order inside each half, so the product is commutative — order does not matter — exactly when both halves are.
 
@@ -83,7 +97,13 @@ On the padlock the joint notch is the pair (1, 1): the 3-dial home every 3 notch
 
 Equal size is not the same group, so the claim needs a relabelling that carries the operation.
 
-Send reading k on a 15-dial to the pair (remainder of k on 3, remainder of k on 5); the code prints that grid. Remainders respect addition ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)), so adding then translating matches translating then adding. Two readings landing on one pair would differ by a multiple of 3 and of 5, hence of 15, since those share no factor ([Coprime numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — on a 15-dial, by nothing. Fifteen readings, fifteen pairs, no collisions. Writing Z mod n for the n-position clock ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)):
+Send reading k on a 15-dial to the pair (remainder of k on 3, remainder of k on 5); the code prints that grid.
+
+Remainders respect addition ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)), so adding then translating matches translating then adding.
+
+Two readings landing on one pair would differ by a multiple of 3 and of 5, hence of 15, since those share no factor ([Coprime numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — on a 15-dial, by nothing. Fifteen readings, fifteen pairs, no collisions.
+
+Writing Z mod n for the n-position clock ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)):
 
 $$\text{Z mod 15} \;\cong\; \text{Z mod 3} \times \text{Z mod 5}$$
 
@@ -109,7 +129,9 @@ flowchart LR
 
 The two short loops are the switch patterns under "flip both": four patterns, never one loop. The four-node loop is the 4-dial.
 
-Each switch is home after 2 flips, so by Step 1 no pattern's return time passes 2: the code prints 1, 2, 2, 2 against a 4-dial's 1, 4, 2, 4. A relabelling cannot change a return time — repeats match one for one through it — so a member needing four repeats must land on one needing four, and the switch group has none. It has a name: the Klein four-group.
+Each switch is home after 2 flips, so by Step 1 no pattern's return time passes 2: the code prints 1, 2, 2, 2 against a 4-dial's 1, 4, 2, 4.
+
+A relabelling cannot change a return time — repeats match one for one through it — so a member needing four repeats must land on one needing four, and the switch group has none. It has a name: the Klein four-group.
 
 The general rule, proved below: two clocks of m and n positions make one clock of m × n exactly when m and n share no factor above 1. Second case in the code, a 6-dial with a 4-dial: 24 settings, longest return 12.
 
@@ -133,7 +155,7 @@ Every finite commutative group is a direct product of clocks: stated here, prove
 
 </details>
 
-The same relabelling, done in remainders instead of pairs, is the [The Chinese remainder theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
+The same relabelling, done in remainders instead of pairs, is [The Chinese remainder theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
 
 ---
 
@@ -362,6 +384,129 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three general claims for all groups and clock sizes, and checks the padlock's numbers exactly.
+
+- Take clocks of m and n positions, each at least 1. Side by side, they are one m × n clock relabelled exactly when m and n share no factor above 1.
+- In any two groups, if both halves come home, a pair's return time is the least common multiple of the halves' return times.
+- For two finite groups, the settings multiply: $\lvert G \times H\rvert = \lvert G\rvert \times \lvert H\rvert$.
+- The padlock: 15 settings, the joint notch visiting all 15, reading 14 as the pair (2, 4), and all 225 pair sums matching the 15-clock.
+- The switches: every pattern comes home in two flips, while a 4-dial's notch needs four.
+
+Building the pairs as a group and walking each return time step by step are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 95 lines</summary>
+
+```lean
+-- Direct products: two clocks of m and n positions, run side by side, are one clock of m × n positions exactly when m and n share no factor, a pair comes home after the least common multiple of its halves' return times, and the settings multiply.
+import Mathlib.Data.ZMod.Basic
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.SetTheory.Cardinal.Finite
+import Mathlib.Tactic.Linarith
+
+/-- Two clocks make one bigger clock exactly when their sizes share no factor. For clocks of
+m and n positions (m and n at least 1), the pairs of readings, each clock turning on its own,
+are the m × n clock relabelled (a relabelling that carries addition) exactly when m and n have
+no common factor above 1. -/
+theorem two_clocks_make_one_clock_iff_coprime (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
+    Nonempty (ZMod (m * n) ≃+ ZMod m × ZMod n) ↔ Nat.Coprime m n := by
+  constructor
+  · rintro ⟨e⟩
+    have h1 : addOrderOf (1 : ZMod (m * n)) = m * n := by
+      rw [ZMod.addOrderOf_one]
+    have h2 : addOrderOf (e 1) = m * n := by
+      rw [AddEquiv.addOrderOf_eq e, h1]
+    have h3 : ∀ (k : ℕ) (a : ZMod k), addOrderOf a ∣ k := fun k a =>
+      addOrderOf_dvd_of_nsmul_eq_zero (by rw [nsmul_eq_mul]; simp)
+    have h4 : m * n ∣ Nat.lcm m n := by
+      rw [← h2]
+      generalize e 1 = x
+      rw [Prod.addOrderOf]
+      exact Nat.lcm_dvd ((h3 m x.1).trans (Nat.dvd_lcm_left m n)) ((h3 n x.2).trans (Nat.dvd_lcm_right m n))
+    have h5 : Nat.gcd m n * Nat.lcm m n = m * n := Nat.gcd_mul_lcm m n
+    have h6 : 0 < Nat.lcm m n := Nat.lcm_pos hm hn
+    have h7 := Nat.le_of_dvd h6 h4
+    have h8 : Nat.gcd m n = 1 := by
+      have : 0 < Nat.gcd m n := Nat.gcd_pos_of_pos_left n hm
+      by_contra hne
+      have : 2 ≤ Nat.gcd m n := by omega
+      nlinarith [Nat.mul_le_mul_right (Nat.lcm m n) this]
+    exact h8
+  · intro h
+    exact ⟨(ZMod.chineseRemainder h).toAddEquiv⟩
+
+/-- A pair comes home when both halves do at once. In any two groups, if g and h each come
+home after some number of repeats, the pair (g, h) comes home first after the least common
+multiple of their return times. -/
+theorem pair_order_eq_lcm {G H : Type*} [Group G] [Group H] (g : G) (h : H)
+    (hg : IsOfFinOrder g) (hh : IsOfFinOrder h) :
+    orderOf (g, h) = Nat.lcm (orderOf g) (orderOf h) := by
+  rw [Prod.orderOf_mk]
+
+/-- The settings multiply. For two finite groups, the direct product has as many members as
+the first group times the second. -/
+theorem card_prod_eq_mul {G H : Type*} [Group G] [Group H] [Finite G] [Finite H] :
+    Nat.card (G × H) = Nat.card G * Nat.card H := by
+  have := Nat.card_prod G H
+  exact this
+
+-- The padlock: 3 × 5 = 15 settings; adding the dial counts gives 8, the mistake.
+example : Fintype.card (ZMod 3 × ZMod 5) = 15 := by decide
+example : 3 * 5 = 15 ∧ 3 + 5 = 8 := by decide
+-- The joint notch from (0,0): 15 settings visited, all different, before coming home.
+example : (List.range 15).map (fun k => (k % 3, k % 5)) =
+    [(0, 0), (1, 1), (2, 2), (0, 3), (1, 4), (2, 0), (0, 1), (1, 2), (2, 3), (0, 4), (1, 0),
+      (2, 1), (0, 2), (1, 3), (2, 4)] := by decide
+example : ((List.range 15).map (fun k => (k % 3, k % 5))).Nodup := by decide
+-- The joint notch's return time: lcm(3, 5) = 15, and no earlier repeat has both dials home.
+example : Nat.lcm 3 5 = 15 := by decide
+example : ∀ k < 15, 0 < k → k % 3 ≠ 0 ∨ k % 5 ≠ 0 := by decide
+-- Orders by reading 0 to 14, walked on the 15-dial and from the lcm of each dial's own return time.
+example : (List.range 15).map (fun k => 15 / Nat.gcd k 15) =
+    [1, 15, 15, 5, 15, 3, 5, 15, 15, 5, 3, 15, 5, 15, 15] := by decide
+example : (List.range 15).map (fun k => Nat.lcm (3 / Nat.gcd (k % 3) 3) (5 / Nat.gcd (k % 5) 5)) =
+    [1, 15, 15, 5, 15, 3, 5, 15, 15, 5, 3, 15, 5, 15, 15] := by decide
+-- Reading 14 is the pair (2, 4); the reverse (10 × 2 + 6 × 4) mod 15 gives 14.
+example : 14 % 3 = 2 ∧ 14 % 5 = 4 ∧ (10 * 2 + 6 * 4) % 15 = 14 := by decide
+-- 10 carries the 3-dial, 6 the 5-dial.
+example : 10 % 3 = 1 ∧ 10 % 5 = 0 ∧ 6 % 3 = 0 ∧ 6 % 5 = 1 := by decide
+-- The grid of readings, rows the 3-dial, columns the 5-dial.
+example : (List.range 3).map (fun a => (List.range 5).map (fun b => (10 * a + 6 * b) % 15)) =
+    [[0, 6, 12, 3, 9], [10, 1, 7, 13, 4], [5, 11, 2, 8, 14]] := by decide
+-- All 15 settings translate back, and all 225 pair sums match the 15-clock.
+example : ∀ k < 15, (10 * (k % 3) + 6 * (k % 5)) % 15 = k := by decide
+example : ∀ a < 3, ∀ b < 5, ∀ c < 3, ∀ d < 5,
+    (10 * ((a + c) % 3) + 6 * ((b + d) % 5)) % 15 =
+      ((10 * a + 6 * b) % 15 + (10 * c + 6 * d) % 15) % 15 := by decide
+-- Two switches: every pattern comes home in two flips at most; a 4-dial's notch does not.
+example : ∀ x : ZMod 2 × ZMod 2, x + x = 0 := by decide
+example : (1 : ZMod 4) + 1 ≠ 0 ∧ (1 : ZMod 4) + 1 + 1 ≠ 0 ∧ (1 : ZMod 4) + 1 + 1 + 1 = 0 := by
+  decide
+-- Multiplying the switch return times gives 4; the lcm gives 2. 2 and 2 share a factor; 3 and 5 do not.
+example : 2 * 2 = 4 ∧ Nat.lcm 2 2 = 2 := by decide
+example : ¬ Nat.Coprime 2 2 ∧ Nat.Coprime 3 5 := by decide
+-- A 6-dial with a 4-dial: 24 settings, longest return lcm(6, 4) = 12, gcd(6, 4) = 2.
+example : 6 * 4 = 24 ∧ Nat.lcm 6 4 = 12 ∧ Nat.gcd 6 4 = 2 := by decide
+-- Try changing: a 3-dial with a 6-dial reaches only lcm(3, 6) = 6 of 18 settings.
+example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
+
+#print axioms two_clocks_make_one_clock_iff_coprime
+#print axioms pair_order_eq_lcm
+#print axioms card_prod_eq_mul
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'two_clocks_make_one_clock_iff_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pair_order_eq_lcm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_prod_eq_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the 3-and-5 padlock.
@@ -378,7 +523,7 @@ The two outputs match line for line.
 >
 > - **Letting the halves mix.** The rule never allows the first dial to change the second.
 > - **Multiplying return times.** For two switches that gives 4 where the answer is 2; it is right for 3 and 5 only because numbers sharing no factor have a least common multiple equal to their product.
-> - **Expecting every group to come apart.** The pairing always builds a group; the reverse fails often. Two dials commute, and the shelf's square tile — eight moves that do not — is no pair of dials.
+> - **Expecting every group to come apart.** The pairing always builds a group; the reverse fails often. Two dials commute, and the shelf's square tile ([Groups](01-groups.md)) — eight turns and flips that do not — is no pair of dials.
 
 ---
 

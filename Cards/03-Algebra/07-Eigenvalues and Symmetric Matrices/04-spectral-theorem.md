@@ -18,7 +18,7 @@ Push mixes through it. A mix is a pair: (4, 2) is four parts bank to two parts i
 
 ### The picture: how hard the table stretches each direction
 
-A direction's **stretch** is a ratio of two dot products: the direction dotted with its own output, over the direction dotted with itself. Tilt it through the lines (1, s).
+A direction's **stretch** is a ratio of two dot products: the direction dotted with its own output, over the direction dotted with itself. Tilt it through the lines (1, s), where s is the slope.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -35,7 +35,7 @@ The line is the stretch. It bottoms out at 1.000000 at slope -1, the direction (
 
 ## The formula
 
-A square matrix of real numbers equal to its own transpose is **symmetric**. For every one of them:
+A square matrix of real numbers equal to its own transpose (the same matrix with rows and columns swapped, marked with a superscript T) is **symmetric**. For every one of them:
 
 $$A = Q D Q^{\mathsf T}, \qquad Q^{\mathsf T} Q = I$$
 
@@ -73,7 +73,9 @@ A symmetric matrix steps from one side of a dot product to the other. Everything
 
 ### Step 1: two different factors force a right angle
 
-Say the matrix keeps v with factor $\lambda$ and w with factor $\mu$. Then $(A v) \cdot w = \lambda (v \cdot w)$ and $v \cdot (A w) = \mu (v \cdot w)$. Step 0 makes those equal, so $(\lambda - \mu)(v \cdot w) = 0$. A product is zero only if a factor is, so different factors force v · w = 0. For our table 3 and 1 differ, so (1, 1) · (1, -1) = 0 was no coincidence. A repeated factor is the loose case: a plane is kept, and Gram-Schmidt picks a perpendicular pair from it.
+Say the matrix keeps v with factor $\lambda$ and w with factor $\mu$. Then $(A v) \cdot w = \lambda (v \cdot w)$ and $v \cdot (A w) = \mu (v \cdot w)$. Step 0 makes those equal, so $(\lambda - \mu)(v \cdot w) = 0$. A product is zero only if a factor is, so different factors force v · w = 0. For our table 3 and 1 differ, so (1, 1) · (1, -1) = 0 was no coincidence.
+
+A repeated factor is the loose case: a plane is kept, and Gram-Schmidt picks a perpendicular pair from it.
 
 ### Step 2: at 2 by 2 the factors are always real
 
@@ -89,7 +91,7 @@ Shrink the two directions to length one and stand them up as the columns of $Q$.
 
 $$A Q = Q D$$
 
-Every entry of $Q^{\mathsf T} Q$ is one of those dot products: 1s down the diagonal, 0s off it. So $Q^{\mathsf T} Q = I$ and $Q^{\mathsf T}$ is the inverse of $Q$. Multiply on the right by it:
+Every entry of $Q^{\mathsf T} Q$ is one of those dot products: 1s down the diagonal, 0s off it. So $Q^{\mathsf T} Q = I$ and $Q^{\mathsf T}$ is the inverse of $Q$, written $Q^{-1}$, the matrix that undoes $Q$. Multiply on the right by it:
 
 $$A = Q D Q^{\mathsf T}$$
 
@@ -346,6 +348,144 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three general claims for every size of real symmetric matrix, not just 2 by 2.
+
+- Every symmetric matrix of real numbers splits as $A = Q D Q^{\mathsf T}$, with $Q^{\mathsf T} Q = I$ and the stretch factors down D's diagonal.
+- Two eigenvectors with different eigenvalues meet at a right angle: their dot product is 0.
+- The stretch factors are real. Even when complex numbers are allowed, every eigenvalue has imaginary part zero.
+
+It also checks the card's table exactly: the two axes and factors, the rebuild, the mix (4, 2) and both mistakes. The decimals, the multiply-then-shrink road, the 4002-direction sweep and the fleet table are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 112 lines</summary>
+
+```lean
+-- The spectral theorem: every real square matrix equal to its own transpose can be written as Q D Qᵀ with Qᵀ Q = I and D diagonal, its eigenvectors for different eigenvalues are perpendicular, its eigenvalues are real, and the card's table [[2, 1], [1, 2]] splits along (1, 1) and (1, -1) with factors 3 and 1.
+import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.LinearAlgebra.Matrix.Symmetric
+import Mathlib.Tactic.NormNum
+
+open Matrix
+
+/-- The spectral theorem. For every size `n`, every `n × n` matrix `A` of real numbers that
+equals its own transpose can be written as `A = Q D Qᵀ`, where `Q` is a real matrix whose
+columns are perpendicular and one unit long (`Qᵀ Q = I`) and `D` is a diagonal matrix of real
+stretch factors `d`. -/
+theorem symmetric_matrix_eq_orthogonal_diagonal_orthogonal_transpose (n : ℕ)
+    (A : Matrix (Fin n) (Fin n) ℝ) (hA : Aᵀ = A) :
+    ∃ (Q : Matrix (Fin n) (Fin n) ℝ) (d : Fin n → ℝ),
+      Qᵀ * Q = 1 ∧ A = Q * diagonal d * Qᵀ := by
+  have hH : A.IsHermitian := by
+    rw [Matrix.IsHermitian, Matrix.conjTranspose_eq_transpose_of_trivial]; exact hA
+  refine ⟨((hH.eigenvectorUnitary : Matrix.unitaryGroup (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ),
+    hH.eigenvalues, ?_, ?_⟩
+  · have h := Unitary.coe_star_mul_self (hH.eigenvectorUnitary)
+    rwa [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial] at h
+  · have h := hH.spectral_theorem
+    rw [Unitary.conjStarAlgAut_apply] at h
+    simp only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial] at h
+    simpa using h
+
+/-- Step 1 of the card: two different factors force a right angle. If a real matrix `A`
+equals its own transpose, keeps `v` on its line with factor `λ` and keeps `w` on its line with
+factor `μ`, and `λ ≠ μ`, then `v · w = 0`. -/
+theorem symmetric_eigenvectors_of_different_eigenvalues_perpendicular (n : ℕ)
+    (A : Matrix (Fin n) (Fin n) ℝ) (hA : Aᵀ = A) (v w : Fin n → ℝ) (l m : ℝ)
+    (hv : A *ᵥ v = l • v) (hw : A *ᵥ w = m • w) (hlm : l ≠ m) :
+    v ⬝ᵥ w = 0 := by
+  have h1 : v ⬝ᵥ (A *ᵥ w) = (A *ᵥ v) ⬝ᵥ w := by
+    rw [Matrix.dotProduct_mulVec]
+    conv_lhs => rw [← hA]
+    rw [Matrix.vecMul_transpose]
+  rw [hw, hv] at h1
+  simp only [dotProduct_smul, smul_dotProduct, smul_eq_mul] at h1
+  have h2 : (m - l) * (v ⬝ᵥ w) = 0 := by linarith
+  rcases mul_eq_zero.mp h2 with h | h
+  · exact absurd (by linarith) hlm
+  · exact h
+
+/-- The stretch factors are real. If a real matrix `A` equals its own transpose, then every
+eigenvalue it has, even when complex numbers are allowed as factors and as vector entries,
+has imaginary part zero. -/
+theorem symmetric_matrix_eigenvalues_are_real (n : ℕ)
+    (A : Matrix (Fin n) (Fin n) ℝ) (hA : Aᵀ = A) (μ : ℂ) (v : Fin n → ℂ) (hv0 : v ≠ 0)
+    (hv : (A.map (fun x : ℝ => (x : ℂ))) *ᵥ v = μ • v) :
+    μ.im = 0 := by
+  set B : Matrix (Fin n) (Fin n) ℂ := A.map (fun x : ℝ => (x : ℂ)) with hB
+  have hBH : Bᴴ = B := by
+    ext i j
+    have h : A j i = A i j := by
+      have := congrFun (congrFun hA i) j
+      simpa [Matrix.transpose_apply] using this
+    simp [hB, Matrix.conjTranspose_apply, h]
+  have h1 : star v ⬝ᵥ (B *ᵥ v) = star (B *ᵥ v) ⬝ᵥ v := by
+    rw [Matrix.star_mulVec, hBH, Matrix.dotProduct_mulVec]
+  rw [hv] at h1
+  have hs : star v ⬝ᵥ v ≠ 0 := by
+    open scoped ComplexOrder in
+    exact fun h => hv0 (dotProduct_star_self_eq_zero.mp h)
+  have h2 : (μ - star μ) * (star v ⬝ᵥ v) = 0 := by
+    simp only [dotProduct_smul, star_smul, smul_dotProduct, smul_eq_mul] at h1
+    linear_combination h1
+  have h3 : μ - star μ = 0 := (mul_eq_zero.mp h2).resolve_right hs
+  have h4 := congrArg Complex.im h3
+  simp at h4
+  linarith
+
+-- The card's table: rows (2, 1) and (1, 2), equal to its own transpose.
+example : (!![2, 1; 1, 2] : Matrix (Fin 2) (Fin 2) ℝ)ᵀ = !![2, 1; 1, 2] := by
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num
+-- "Both up together", (1, 1), comes out as (3, 3): factor 3.
+example : (!![2, 1; 1, 2] : Matrix (Fin 2) (Fin 2) ℝ) *ᵥ ![1, 1] = (3 : ℝ) • ![1, 1] := by
+  ext i; fin_cases i <;> norm_num [mulVec, dotProduct, Fin.sum_univ_two]
+-- "One up, one down", (1, -1), comes out untouched: factor 1.
+example : (!![2, 1; 1, 2] : Matrix (Fin 2) (Fin 2) ℝ) *ᵥ ![1, -1] = (1 : ℝ) • ![1, -1] := by
+  ext i; fin_cases i <;> norm_num [mulVec, dotProduct, Fin.sum_univ_two]
+-- The two axes meet at a right angle: (1, 1) · (1, -1) = 0.
+example : (![1, 1] : Fin 2 → ℝ) ⬝ᵥ ![1, -1] = 0 := by
+  norm_num [dotProduct, Fin.sum_univ_two]
+-- Trace 4 and determinant 3, so the factors solve L² - 4L + 3 = 0: L = 3 and L = 1.
+example : (2 : ℝ) + 2 = 4 ∧ (2 : ℝ) * 2 - 1 * 1 = 3 := by norm_num
+example : (3 : ℝ) ^ 2 - 4 * 3 + 3 = 0 ∧ (1 : ℝ) ^ 2 - 4 * 1 + 3 = 0 := by norm_num
+-- Under the square root: (a - d)² + 4b² = (2 - 2)² + 4 · 1² = 4.
+example : ((2 : ℝ) - 2) ^ 2 + 4 * 1 ^ 2 = 4 := by norm_num
+-- The mix (4, 2) goes to (10, 8).
+example : (!![2, 1; 1, 2] : Matrix (Fin 2) (Fin 2) ℝ) *ᵥ ![4, 2] = ![10, 8] := by
+  ext i; fin_cases i <;> norm_num [mulVec, dotProduct, Fin.sum_univ_two]
+-- Q D Qᵀ rebuilds the table. Q is R / √2 with R having columns (1, 1) and (1, -1), so
+-- Q D Qᵀ = (1/2) R D Rᵀ, and that is exactly rows (2, 1) and (1, 2).
+example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![3, 0; 0, 1] * (!![1, 1; 1, -1])ᵀ :
+    Matrix (Fin 2) (Fin 2) ℝ) = !![2, 1; 1, 2] := by
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_two, vecMul, dotProduct]
+-- Qᵀ Q = I, in the same form: (1/2) Rᵀ R = I.
+example : (1 / 2 : ℝ) • ((!![1, 1; 1, -1])ᵀ * !![1, 1; 1, -1] : Matrix (Fin 2) (Fin 2) ℝ) = 1 := by
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_two, vecMul, dotProduct]
+-- Mistake: the raw axes as Q, without shrinking, give rows (4, 2) and (2, 4), twice the table.
+example : (!![1, 1; 1, -1] * !![3, 0; 0, 1] * (!![1, 1; 1, -1])ᵀ : Matrix (Fin 2) (Fin 2) ℝ) =
+    !![4, 2; 2, 4] := by
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_two, vecMul, dotProduct]
+-- Mistake: 3 and 1 swapped in D alone give rows (2, -1) and (-1, 2).
+example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1])ᵀ :
+    Matrix (Fin 2) (Fin 2) ℝ) = !![2, -1; -1, 2] := by
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_two, vecMul, dotProduct]
+
+#print axioms symmetric_matrix_eq_orthogonal_diagonal_orthogonal_transpose
+#print axioms symmetric_eigenvectors_of_different_eigenvalues_perpendicular
+#print axioms symmetric_matrix_eigenvalues_are_real
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'symmetric_matrix_eq_orthogonal_diagonal_orthogonal_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'symmetric_eigenvectors_of_different_eigenvalues_perpendicular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'symmetric_matrix_eigenvalues_are_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert stops the program on a wrong number, and these are pinned to this table.
@@ -392,9 +532,9 @@ The two outputs match line for line.
 - [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): a bell curve's axes.
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): biggest factors summarise data.
 - [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): real measured factors.
-- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): that summary, applied.
+- [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): that summary, applied.
 - [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): where to cut a network.
-- Semidefinite programs: non-negative factors, optimised.
+- [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): non-negative factors, optimised.
 - Iterating instead of factoring: factors set solver speed.
 - Adjoints: Step 0 as a definition.
 - Compact and symmetric: the infinite version.

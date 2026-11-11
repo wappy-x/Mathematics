@@ -111,7 +111,7 @@ Write $d$ for the greatest common divisor of a reading $a$ with the dial size. M
 
 ### Step 4: two more rings
 
-**Polynomials with whole-number coefficients** ([Polynomials](../02-Polynomials/01-polynomials.md)). Adding adds matching coefficients, multiplying gathers multiplied-out terms, and both inherit every rule from the coefficients. No zero divisors: a product's leading coefficient is the product of the two leading ones. So an integral domain whose only units are 1 and −1 — the shortage that makes polynomials divide with a remainder instead ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)).
+**Polynomials with whole-number coefficients** ([Polynomials](../02-Polynomials/01-polynomials.md)). Adding adds matching coefficients, multiplying gathers multiplied-out terms, and both inherit every rule from the coefficients. No zero divisors: a product's leading coefficient, the number in front of its highest power, is the product of the two leading ones. So an integral domain whose only units are 1 and −1 — the shortage that makes polynomials divide with a remainder instead ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)).
 
 **The 2 by 2 matrices of whole numbers** ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)). Adding is entry by entry, multiplying row into column. Two comforts go at once. With A = `[[1, 1], [0, 1]]` and B = `[[1, 0], [1, 1]]`, AB is `[[2, 1], [1, 1]]` while BA is `[[1, 1], [1, 2]]`; and `[[1, 0], [0, 0]]` times `[[0, 0], [0, 1]]` is all zeros.
 
@@ -351,6 +351,121 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three facts for every dial size and every ring, and checks the card's dial, whole-number and matrix numbers.
+
+- On a dial of any size, every nonzero reading is a unit or a zero divisor, never both.
+- In every ring, commutative or not, a unit is never a zero divisor.
+- On a dial of any size, a reading is a unit exactly when its greatest common divisor with the dial size is 1.
+- On the 12-hour dial, 3 × 4 = 0 and 5 × 5 = 1.
+- The units are exactly 1, 5, 7 and 11, each its own undo.
+- The nonzero zero divisors are exactly 2, 3, 4, 6, 8, 9 and 10, with partners 6, 4, 3, 2, 3, 4 and 6.
+- The bar heights are 1 12 6 4 3 12 2 12 3 4 6 12.
+- 2x = 1 has no answer, and 2x = 2 has exactly two, 1 and 7.
+- The distributive rule holds on all 1728 triples of readings.
+- From −20 to 20, 2k = 1 has no answer, and the only units are −1 and 1.
+- For the matrices, AB is `[[2, 1], [1, 1]]`, BA is `[[1, 1], [1, 2]]`, and `[[1, 0], [0, 0]]` times `[[0, 0], [0, 1]]` is all zeros.
+
+The polynomial product (x + 1)(x − 1) is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 81 lines</summary>
+
+```lean
+-- Rings: on a clock dial of any size every nonzero reading is a unit or a zero divisor and never both, in every ring a unit is never a zero divisor, a reading is a unit exactly when it shares no factor with the dial size, and the card's 12-hour dial, whole-number and matrix numbers come out as it says.
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.ZMod.Units
+import Mathlib.Data.Int.Interval
+import Mathlib.LinearAlgebra.Matrix.Notation
+
+/-- On a clock dial of any size `n` (the readings `0` to `n − 1`, wrapping at `n`), every nonzero
+reading is either a unit (some reading multiplies it up to `1`) or a zero divisor (some nonzero
+reading multiplies it to `0`), and never both. On the 12-hour dial the units are 1, 5, 7, 11 and
+the zero divisors 2, 3, 4, 6, 8, 9, 10. -/
+theorem dial_reading_unit_or_zero_divisor (n : ℕ) [NeZero n] (a : ZMod n) (ha : a ≠ 0) :
+    Xor (IsUnit a) (∃ b : ZMod n, b ≠ 0 ∧ a * b = 0) := by
+  classical
+  by_cases hu : IsUnit a
+  · left
+    refine ⟨hu, ?_⟩
+    rintro ⟨b, hb, hab⟩
+    obtain ⟨u, rfl⟩ := hu
+    apply hb
+    calc b = (↑u⁻¹ : ZMod n) * ((u : ZMod n) * b) := by rw [← mul_assoc, Units.inv_mul, one_mul]
+      _ = 0 := by rw [hab, mul_zero]
+  · right
+    refine ⟨?_, hu⟩
+    have hni : ¬ Function.Injective (fun x : ZMod n => a * x) := by
+      intro hinj
+      have hsurj : Function.Surjective (fun x : ZMod n => a * x) := Finite.injective_iff_surjective.mp hinj
+      obtain ⟨c, hc⟩ := hsurj 1
+      exact hu (IsUnit.of_mul_eq_one c hc)
+    rw [Function.Injective] at hni
+    push_neg at hni
+    obtain ⟨x, y, hxy, hne⟩ := hni
+    exact ⟨x - y, sub_ne_zero.mpr hne, by rw [mul_sub, hxy]; exact sub_self _⟩
+
+/-- In every ring, a unit is never a zero divisor: if `a` has a multiplicative undo and
+`a * b = 0`, then `b = 0`. No commuting is assumed. -/
+theorem unit_is_not_zero_divisor {R : Type*} [Ring R] (a b : R) (ha : IsUnit a)
+    (h : a * b = 0) : b = 0 := by
+  obtain ⟨u, rfl⟩ := ha
+  calc b = (↑u⁻¹ : R) * ((u : R) * b) := by rw [← mul_assoc, Units.inv_mul, one_mul]
+    _ = 0 := by rw [h, mul_zero]
+
+/-- The greatest-common-divisor test: on a dial of size `n`, the reading `a` has a
+multiplicative undo exactly when `a` and `n` share no factor above 1. -/
+theorem dial_unit_iff_coprime (n : ℕ) (a : ℕ) :
+    IsUnit (a : ZMod n) ↔ Nat.Coprime a n := by
+  exact ZMod.isUnit_iff_coprime a n
+
+-- Three jumps of four hours make one whole turn; five fives make two turns and an hour.
+example : (3 : ZMod 12) * 4 = 0 := by decide
+example : (5 : ZMod 12) * 5 = 1 := by decide
+-- The units of the 12-hour dial: exactly 1, 5, 7 and 11, each its own undo.
+example : (Finset.univ.filter fun a : ZMod 12 => ∃ b, a * b = 1) = {1, 5, 7, 11} := by decide
+example : (1 : ZMod 12) * 1 = 1 ∧ (5 : ZMod 12) * 5 = 1 ∧ (7 : ZMod 12) * 7 = 1 ∧
+    (11 : ZMod 12) * 11 = 1 := by decide
+-- The nonzero zero divisors: 2, 3, 4, 6, 8, 9, 10, with partners 6, 4, 3, 2, 3, 4, 6.
+example : (Finset.univ.filter fun a : ZMod 12 => a ≠ 0 ∧ ∃ b, b ≠ 0 ∧ a * b = 0) =
+    {2, 3, 4, 6, 8, 9, 10} := by decide
+example : (2 : ZMod 12) * 6 = 0 ∧ (3 : ZMod 12) * 4 = 0 ∧ (4 : ZMod 12) * 3 = 0 ∧
+    (6 : ZMod 12) * 2 = 0 ∧ (8 : ZMod 12) * 3 = 0 ∧ (9 : ZMod 12) * 4 = 0 ∧
+    (10 : ZMod 12) * 6 = 0 := by decide
+-- How many readings each multiplier reaches: 1 12 6 4 3 12 2 12 3 4 6 12.
+example : (List.finRange 12).map (fun a => (Finset.univ.image fun x : ZMod 12 => (a : ZMod 12) * x).card)
+    = [1, 12, 6, 4, 3, 12, 2, 12, 3, 4, 6, 12] := by decide
+-- Twice a reading is always even, so 2 has no undo; and 2x = 2 has two answers, 1 and 7.
+example : ∀ x : ZMod 12, 2 * x ≠ 1 := by decide
+example : (Finset.univ.filter fun x : ZMod 12 => 2 * x = 2) = {1, 7} := by decide
+-- The distributive rule holds on all 1728 triples of readings.
+example : ∀ a b c : ZMod 12, a * (b + c) = a * b + a * c := by decide
+-- The whole numbers from −20 to 20: 2k = 1 has no answer, and the only units are −1 and 1.
+example : ∀ k ∈ Finset.Icc (-20 : ℤ) 20, 2 * k ≠ 1 := by decide
+example : ((Finset.Icc (-20 : ℤ) 20).filter fun k =>
+      ((Finset.Icc (-20 : ℤ) 20).filter fun m => k * m = 1).Nonempty)
+    = {-1, 1} := by decide
+-- The 2 by 2 whole-number matrices: AB is not BA, and two nonzero matrices multiply to zero.
+example : !![(1 : ℤ), 1; 0, 1] * !![1, 0; 1, 1] = !![2, 1; 1, 1] := by decide
+example : !![(1 : ℤ), 0; 1, 1] * !![1, 1; 0, 1] = !![1, 1; 1, 2] := by decide
+example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
+
+#print axioms dial_reading_unit_or_zero_divisor
+#print axioms unit_is_not_zero_divisor
+#print axioms dial_unit_iff_coprime
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'dial_reading_unit_or_zero_divisor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'unit_is_not_zero_divisor' does not depend on any axioms
+'dial_unit_iff_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert stops the program when a number comes out wrong, and these are pinned to the dial.
@@ -387,7 +502,7 @@ The two outputs match line for line.
 - [Groups](../08-Groups/01-groups.md): one operation, four rules.
 - [Polynomials](../02-Polynomials/01-polynomials.md): coefficients added, terms multiplied out.
 - [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): row into column.
-- [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): a reading is a pile.
+- [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): a reading is a bucket, every whole number with the same remainder.
 - [The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md): which readings undo.
 - [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): regrouping and brackets.
 
@@ -398,9 +513,9 @@ The two outputs match line for line.
 - [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): endless units.
 - [Boolean algebra](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): and and or.
 - Banach algebras: members with size.
-- C-star algebras: those, conjugated.
-- Algebraic integers: whole, further out.
-- Rings of integers: that ring listed.
+- C-star algebras: Banach algebras with a mirror operation, like swapping $i$ for $-i$ in a complex number.
+- Algebraic integers: numbers beyond the whole numbers that still form a ring.
+- Rings of integers: the algebraic integers inside one larger number system.
 - Domains, principal ideals and unique factorisation: factoring into primes.
 
 Dividing stays a privilege of the few here, which is the next card's question: what changes when every nonzero member has an undo.

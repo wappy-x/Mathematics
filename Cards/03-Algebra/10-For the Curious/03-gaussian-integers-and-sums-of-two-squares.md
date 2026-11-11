@@ -10,13 +10,15 @@ A courtyard is paved in square tiles, a metre to a side. Pin a wire from one til
 
 Which whole numbers can be a squared length? 5 can, 13 can (9 + 4), and 21 cannot: no two of 0, 1, 4, 9 and 16 add to 21.
 
-Among whole numbers 5 is prime: 1 and 5 are its only divisors. Now allow i, ruled only by i × i = -1 ([The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md) admitted it two cards ago). Then 5 = (2 + i)(2 - i): expanding, the middle terms cancel, -i × i is +1, and 4 + 1 = 5. Likewise 13 = (3 + 2i)(3 - 2i) = 9 + 4. A factorisation and a sum of two squares are one fact in two costumes.
+Among whole numbers 5 is prime: 1 and 5 are its only divisors. Now allow i, ruled only by i × i = -1 ([The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md) admitted it two cards ago).
+
+Then 5 = (2 + i)(2 - i): expanding, the middle terms cancel, -i × i is +1, and 4 + 1 = 5. Likewise 13 = (3 + 2i)(3 - 2i) = 9 + 4. A factorisation and a sum of two squares are one fact in two costumes.
 
 A point a across and b up is written a + bi. These are the **Gaussian integers** from here on, and the squared length of one is its **norm**.
 
 **A whole number is a sum of two squares exactly when it splits into a Gaussian integer times its mirror image, and which numbers split is settled by their ordinary prime factors.**
 
-**What kind of fact this is:** a definition — the Gaussian integers and their norm — carrying two theorems. That norms multiply is proved below. Fermat's rule is stated here and proved on Two squares.
+**What kind of fact this is:** a definition — the Gaussian integers and their norm — carrying two theorems. That norms multiply is proved below. Fermat's rule, on which primes are sums of two squares, is stated here and proved on Two squares.
 
 ### The picture: norms in one corner of the grid
 
@@ -86,7 +88,9 @@ Watch it pay. (2 + i)(3 + 2i) = 4 + 7i, whose norm 4^2 + 7^2 = 65 is 5 × 13: a 
 
 A **unit** is a point whose reciprocal is also on the grid, carrying no information, as 1 and -1 do among whole numbers. Two points multiplying to 1 have norms multiplying to 1, and norms are whole and never negative, so both are 1. Then a^2 + b^2 = 1: only 1, -1, i, -i.
 
-So 5 = (2 + i)(2 - i) is a factorisation worth the name: both factors have norm 5, so neither is a unit, and a product of two non-units is not prime. **5 is not prime among the Gaussian integers**, and nor is 13. But 3 cannot split: it sits at 3 + 0i, norm 9, so a split needs two factors of norm 3 — and no point has norm 3, or 7.
+So 5 = (2 + i)(2 - i) is a factorisation worth the name: both factors have norm 5, so neither is a unit, and a product of two non-units is not prime. **5 is not prime among the Gaussian integers**, and nor is 13.
+
+But 3 cannot split: it sits at 3 + 0i, norm 9, so a split needs two factors of norm 3 — and no point has norm 3, or 7.
 
 ### Step 3: the norm rules a divisor out, never in
 
@@ -94,7 +98,9 @@ To divide, multiply top and bottom by the conjugate of the bottom, turning the b
 
 $$\frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{c^2 + d^2}$$
 
-So c + di divides a + bi exactly when c^2 + d^2 divides both coordinates of the top. Dividing 5 by 2 + i gives numerators (10, -5) over 5: quotient 2 - i, exact. Dividing 2 + i by 2 - i gives numerators (3, 4) over 5 — three fifths and four fifths, off the grid, though both norms are 5 and their ratio a clean 1. Failing the norm test finishes a candidate; passing it shows nothing.
+So c + di divides a + bi exactly when c^2 + d^2 divides both coordinates of the top. Dividing 5 by 2 + i gives numerators (10, -5) over 5: quotient 2 - i, exact.
+
+Dividing 2 + i by 2 - i gives numerators (3, 4) over 5 — three fifths and four fifths, off the grid, though both norms are 5 and their ratio a clean 1. Failing the norm test finishes a candidate; passing it shows nothing.
 
 <details>
 <summary>Dividing with a remainder, and why factorisation here is unique</summary>
@@ -109,7 +115,7 @@ Round each coordinate of the exact quotient to the nearest whole number: each is
 
 So 5 = 2^2 + 1^2 and 13 = 3^2 + 2^2, both remainder 1, while 3 and 7 leave remainder 3 and have none. A remainder-1 prime splits into a point times its mirror; a remainder-3 prime stays prime; and 2 = (1 + i)(1 - i).
 
-The callout proves half. The hard half, that every remainder-1 prime splits, is proved on Two squares.
+The fold below proves the easy half. The hard half, that every remainder-1 prime splits, is proved on Two squares.
 
 <details>
 <summary>Detailed proof: no number leaving remainder 3 on division by 4 is a sum of two squares</summary>
@@ -155,9 +161,9 @@ The 65 came from multiplying, not searching.
 | --- | --- | --- |
 | Reading i × i as +1 | 3 | (2 + i)(2 - i) becomes 4 - 1 |
 | Trusting the norm test | ratio 1, so 2 - i passes for a divisor | the quotient is three fifths, four fifths |
-| Using the prime rule on 21 | 21 mod 4 = 1, so 21 passes | composites need the exponents |
+| Using the prime rule on 21 | 21 mod 4 = 1 (remainder 1 on division by 4), so 21 passes | composites need the exponents |
 
-The code prints all three, and 25.
+The code prints all three, and 25, the norm of 5 + 0i.
 
 ---
 
@@ -367,6 +373,154 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's main facts for every whole number and every Gaussian integer, not just the examples.
+
+- A whole number is a sum of two squares exactly when it is a Gaussian integer times its mirror image.
+- A whole number is a sum of two squares exactly when every remainder-3 prime appears in its factorisation to an even power. This includes the half the card leaves to Two squares.
+- The norm of a + bi is a^2 + b^2, and the norm of a product is the product of the norms.
+- The only units are 1, -1, i and -i.
+- It also re-checks the card's numbers: 5, 13, 21, 45 and 65, the two divisions, and the norm grid.
+
+Printing the output line by line is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 120 lines</summary>
+
+```lean
+-- Gaussian integers: a whole number is a sum of two squares exactly when it is a Gaussian integer times its mirror image, exactly when every prime leaving remainder 3 on division by 4 divides it an even number of times; norms multiply; and the only units are 1, -1, i and -i.
+import Mathlib.NumberTheory.SumTwoSquares
+import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+import Mathlib.Data.Nat.Factorization.Basic
+
+/-- Which whole numbers are a sum of two squares. For every whole number n, three things are the
+same: n is a² + b² for some whole numbers a and b; n is a Gaussian integer z times its mirror
+image (its conjugate, written `star z`); and every ordinary prime q leaving remainder 3 on
+division by 4 appears in the prime factorisation of n to an even power. -/
+theorem sum_of_two_squares_iff_splits_iff_remainder_three_primes_even (n : ℕ) :
+    ((∃ a b : ℕ, n = a ^ 2 + b ^ 2) ↔ ∃ z : GaussianInt, z * star z = (n : GaussianInt)) ∧
+      ((∃ a b : ℕ, n = a ^ 2 + b ^ 2) ↔
+        ∀ q : ℕ, q.Prime → q % 4 = 3 → Even (n.factorization q)) := by
+  have hA : (∃ a b : ℕ, n = a ^ 2 + b ^ 2) ↔ ∃ z : GaussianInt, z * star z = (n : GaussianInt) := by
+    constructor
+    · rintro ⟨a, b, h⟩
+      refine ⟨⟨a, b⟩, ?_⟩
+      rw [← Zsqrtd.norm_eq_mul_conj, Zsqrtd.norm_def, h]
+      apply Zsqrtd.ext <;> simp [sq]
+    · rintro ⟨z, hz⟩
+      have h2 : Zsqrtd.norm z = (n : ℤ) := by
+        have h1 : ((Zsqrtd.norm z : ℤ) : GaussianInt) = ((n : ℤ) : GaussianInt) := by
+          rw [Zsqrtd.norm_eq_mul_conj, hz]; simp
+        exact Int.cast_injective h1
+      refine ⟨z.re.natAbs, z.im.natAbs, ?_⟩
+      rw [Zsqrtd.norm_def] at h2
+      zify
+      rw [sq_abs, sq_abs, ← h2]
+      simp; ring
+  have hB : (∃ a b : ℕ, n = a ^ 2 + b ^ 2) ↔
+      ∀ q : ℕ, q.Prime → q % 4 = 3 → Even (n.factorization q) := by
+    rw [Nat.eq_sq_add_sq_iff]
+    constructor
+    · intro h q hq h4
+      rw [Nat.factorization_def n hq]
+      by_cases hmem : q ∈ n.primeFactors
+      · exact h q hmem h4
+      · rcases eq_or_ne n 0 with hn | hn
+        · subst hn; simp
+        · have hd : ¬ q ∣ n := fun hd => hmem (Nat.mem_primeFactors.mpr ⟨hq, hd, hn⟩)
+          have : Fact q.Prime := ⟨hq⟩
+          rw [padicValNat.eq_zero_of_not_dvd hd]; exact Even.zero
+    · intro h q hq h4
+      have := h q (Nat.prime_of_mem_primeFactors hq) h4
+      rwa [Nat.factorization_def n (Nat.prime_of_mem_primeFactors hq)] at this
+  exact ⟨hA, hB⟩
+
+/-- Norms multiply. The norm of a + bi is a² + b², and the norm of a product of two Gaussian
+integers is the product of their norms; in coordinates,
+(ac - bd)² + (ad + bc)² = (a² + b²)(c² + d²). So a sum of two squares times a sum of two
+squares is again a sum of two squares. -/
+theorem norm_of_product_is_product_of_norms (z w : GaussianInt) :
+    Zsqrtd.norm z = z.re ^ 2 + z.im ^ 2 ∧
+      Zsqrtd.norm (z * w) = Zsqrtd.norm z * Zsqrtd.norm w := by
+  refine ⟨?_, Zsqrtd.norm_mul z w⟩
+  rw [Zsqrtd.norm_def]; ring
+
+/-- The units. A Gaussian integer has a reciprocal on the grid exactly when it is 1, -1, i or -i,
+the four points of norm 1. -/
+theorem units_are_one_minus_one_i_minus_i (z : GaussianInt) :
+    IsUnit z ↔ z = ⟨1, 0⟩ ∨ z = ⟨-1, 0⟩ ∨ z = ⟨0, 1⟩ ∨ z = ⟨0, -1⟩ := by
+  rw [← Zsqrtd.norm_eq_one_iff' (by norm_num : (-1 : ℤ) ≤ 0)]
+  obtain ⟨a, b⟩ := z
+  simp only [Zsqrtd.norm_def, Zsqrtd.mk.injEq]
+  constructor
+  · intro h
+    have ha : a * a ≤ 1 := by nlinarith [mul_self_nonneg b]
+    have hb : b * b ≤ 1 := by nlinarith [mul_self_nonneg a]
+    have ha1 : -1 ≤ a := by nlinarith
+    have ha2 : a ≤ 1 := by nlinarith
+    have hb1 : -1 ≤ b := by nlinarith
+    have hb2 : b ≤ 1 := by nlinarith
+    interval_cases a <;> interval_cases b <;> simp_all
+  · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;> norm_num
+
+-- The wire: 2 across, 1 up, squared length 5; and 13 = 9 + 4.
+example : 2 ^ 2 + 1 ^ 2 = 5 ∧ 3 ^ 2 + 2 ^ 2 = 13 := by decide
+-- 21 is not a sum of two squares: no two of 0, 1, 4, 9, 16 add to 21 (and 5² is already too big).
+example : ∀ a ∈ Finset.range 5, ∀ b ∈ Finset.range 5, a ^ 2 + b ^ 2 ≠ 21 := by decide
+example : 5 ^ 2 > 21 := by decide
+-- No point has norm 3 or 7.
+example : ∀ a ∈ Finset.range 3, ∀ b ∈ Finset.range 3, a ^ 2 + b ^ 2 ≠ 3 ∧ a ^ 2 + b ^ 2 ≠ 7 := by
+  decide
+-- i × i = -1.
+example : (⟨0, 1⟩ * ⟨0, 1⟩ : GaussianInt) = ⟨-1, 0⟩ := by decide
+-- (2 + i) + (3 + 2i) = 5 + 3i.
+example : (⟨2, 1⟩ + ⟨3, 2⟩ : GaussianInt) = ⟨5, 3⟩ := by decide
+-- 5 = (2 + i)(2 - i) and 13 = (3 + 2i)(3 - 2i).
+example : (⟨2, 1⟩ * ⟨2, -1⟩ : GaussianInt) = ⟨5, 0⟩ ∧ (⟨3, 2⟩ * ⟨3, -2⟩ : GaussianInt) = ⟨13, 0⟩ :=
+  by decide
+-- Both factors of 5 have norm 5, so neither is a unit; the norm of 5 + 0i is 25, not 5.
+example : Zsqrtd.norm (⟨2, 1⟩ : GaussianInt) = 5 ∧ Zsqrtd.norm (⟨2, -1⟩ : GaussianInt) = 5 ∧
+    Zsqrtd.norm (⟨1, 2⟩ : GaussianInt) = 5 ∧ Zsqrtd.norm (⟨5, 0⟩ : GaussianInt) = 25 := by decide
+-- (2 + i)(3 + 2i) = 4 + 7i, whose norm 65 = 5 × 13 = 4² + 7².
+example : (⟨2, 1⟩ * ⟨3, 2⟩ : GaussianInt) = ⟨4, 7⟩ ∧ Zsqrtd.norm (⟨4, 7⟩ : GaussianInt) = 65 ∧
+    (65 : ℤ) = 5 * 13 ∧ (4 : ℤ) ^ 2 + 7 ^ 2 = 65 := by decide
+-- 5 over 2 + i: numerators (10, -5) over 5, quotient 2 - i, exact.
+example : (⟨5, 0⟩ * ⟨2, -1⟩ : GaussianInt) = ⟨10, -5⟩ ∧ (⟨2, 1⟩ * ⟨2, -1⟩ : GaussianInt) = ⟨5, 0⟩ :=
+  by decide
+-- 2 + i over 2 - i: numerators (3, 4) over 5, off the grid, though both norms are 5.
+example : (⟨2, 1⟩ * ⟨2, 1⟩ : GaussianInt) = ⟨3, 4⟩ ∧ ¬ (5 : ℤ) ∣ 3 ∧ ¬ (5 : ℤ) ∣ 4 := by decide
+-- Fermat's rule on small primes: 5 and 13 leave remainder 1; 3 and 7 leave remainder 3.
+example : 5 % 4 = 1 ∧ 13 % 4 = 1 ∧ 3 % 4 = 3 ∧ 7 % 4 = 3 := by decide
+-- 2 = (1 + i)(1 - i).
+example : (⟨1, 1⟩ * ⟨1, -1⟩ : GaussianInt) = ⟨2, 0⟩ := by decide
+-- 21 = 3 × 7, each once; 45 = 3² × 5, and 45 = 3² + 6².
+example : 21 = 3 * 7 ∧ 45 = 3 ^ 2 * 5 ∧ 45 = 3 ^ 2 + 6 ^ 2 := by decide
+-- 65 = 5 × 13 in two ways: 1² + 8² and 4² + 7².
+example : 65 = 1 ^ 2 + 8 ^ 2 ∧ 65 = 4 ^ 2 + 7 ^ 2 := by decide
+-- The mistakes: reading i × i as +1 gives 3; 21 leaves remainder 1 yet fails.
+example : 2 * 2 - 1 * 1 = 3 ∧ 21 % 4 = 1 := by decide
+-- The norm grid, rows b = 3 down to 0, columns a = 0 to 4.
+example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
+    (List.range 5).map (fun a => a ^ 2 + 2 ^ 2) = [4, 5, 8, 13, 20] ∧
+    (List.range 5).map (fun a => a ^ 2 + 1 ^ 2) = [1, 2, 5, 10, 17] ∧
+    (List.range 5).map (fun a => a ^ 2 + 0 ^ 2) = [0, 1, 4, 9, 16] := by decide
+
+#print axioms sum_of_two_squares_iff_splits_iff_remainder_three_primes_even
+#print axioms norm_of_product_is_product_of_norms
+#print axioms units_are_one_minus_one_i_minus_i
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_of_two_squares_iff_splits_iff_remainder_three_primes_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'norm_of_product_is_product_of_norms' depends on axioms: [propext, Quot.sound]
+'units_are_one_minus_one_i_minus_i' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

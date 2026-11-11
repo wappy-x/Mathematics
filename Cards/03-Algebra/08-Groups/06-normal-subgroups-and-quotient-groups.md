@@ -10,7 +10,9 @@ A wall clock has twelve marks. Count fifteen hours on from midnight and the hand
 
 So the clock is the whole numbers with the multiples of 12 thrown away. Sort the integers from -24 to 35 by "these two differ by a multiple of 12" and 12 piles come out, with an addition of their own: pile 7 plus pile 8 is pile 3.
 
-Two things went right. The multiples of 12 are a subgroup of the integers under addition, and the piles add cleanly: no answer depends on which member named a pile. The second is fragile, as a square tile shows. The tile sits down 8 ways, 4 turns and 4 flips; throw away the 4 turns and the report "turn or flip" still combines, 8 moves becoming 2 piles. Throw away do nothing and one chosen flip instead, and those 4 piles will not combine at all.
+Two things went right. The multiples of 12 are a subgroup of the integers under addition, and the piles add cleanly: no answer depends on which member named a pile.
+
+The second is fragile, as a square tile shows. The tile sits down 8 ways, 4 turns and 4 flips; throw away the 4 turns and the report "turn or flip" still combines, 8 moves becoming 2 piles. Throw away "do nothing" and one chosen flip instead, and those 4 piles will not combine at all.
 
 **A subgroup can be collapsed to a point exactly when it looks the same from every position in the group; its piles are then a group in their own right, and the clock is that construction on the integers.**
 
@@ -25,7 +27,7 @@ flowchart LR
     C --> D["the clock<br/>Z mod 12, a group of 12"]
 ```
 
-Every integer lands in one pile, and the piles add.
+Every integer lands in one pile, and the piles add. Z is the usual letter for the integers, and Z mod 12 names this group of 12 remainder piles.
 
 ---
 
@@ -39,7 +41,7 @@ $$gNg^{-1} = N \quad\text{for every } g \text{ in } G$$
 
 **Read it aloud:** from every position in the group, the subgroup is the same subgroup.
 
-Equivalently, applying $g$ after each member of $N$ gives that same pile. Either way, piles combine by combining names:
+Equivalently, writing $g$ after each member of $N$ gives that same pile. Either way, piles combine by combining names:
 
 $$(gN)(kN) = (gk)N$$
 
@@ -65,7 +67,7 @@ That is the **first isomorphism theorem**; the sign means isomorphic, one group 
 - $N$ must be a subgroup first, or its piles differ in size.
 - The test covers every member of $G$: the tile's flip subgroup survives the half turn, dies at the quarter turn.
 - Normality concerns $N$ inside $G$, never $N$ alone, and needs no finiteness: the integers do not run out.
-- Where moves commute every subgroup passes, a conjugate being the original move, so the clock could not fail.
+- Where moves commute, giving one result in either order, every subgroup passes, a conjugate being the original move, so the clock could not fail.
 
 ---
 
@@ -83,9 +85,13 @@ The middle bracket is $h$ conjugated by the undo of $k$. Normality returns it to
 
 Adding integers ignores order, so a conjugate is the original addition and every subgroup of the integers is normal. Its 12 piles are the remainder buckets of [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md), built twice in the check: from differences, and from remainders.
 
-The tile does not commute, so the test bites. A turn conjugated by a turn is a turn, and by a flip the reversed turn, still a turn: all 32 conjugates of the 4 turns stay turns. So 8 moves collapse to 2 piles, and two flips make a turn — the 2-clock, Z mod 2. A second road never names a pile: take each move as where it sends the 4 corners. Those maps rebuild all 64 products, and a flip is the corners running backwards, a count adding mod 2. Quicker still, any subgroup leaving exactly 2 piles is normal, the other pile being the leftovers.
+The tile does not commute, so the test bites. A turn conjugated by a turn is a turn, and by a flip the reversed turn, still a turn: all 32 conjugates of the 4 turns stay turns. So 8 moves collapse to 2 piles, and two flips make a turn — the 2-clock, Z mod 2.
 
-The failure: keep do nothing and one chosen flip, a subgroup since that flip twice is do nothing. A quarter turn carries the mirror line with the tile, so the conjugate is a different flip, `(2, 1)` — two quarter turns, then 1 for flipped — outside the subgroup, while the half turn returns it unchanged. One position is no test. And do nothing and the flip name one pile, yet each with a quarter turn lands in `[(1, 0), (1, 1)]` and `[(3, 0), (3, 1)]`: one product, 2 answers.
+A second road never names a pile: take each move as where it sends the 4 corners. Those maps rebuild all 64 products, and a flip is the corners running backwards, a count adding mod 2. Quicker still, any subgroup leaving exactly 2 piles is normal, the other pile being the leftovers.
+
+The failure: keep "do nothing" and one chosen flip, a subgroup since that flip twice is "do nothing". A quarter turn carries the mirror line with the tile, so the conjugate is a different flip, `(2, 1)` — two quarter turns, then 1 for flipped — outside the subgroup, while the half turn returns it unchanged. One position is no test.
+
+And "do nothing" and the flip name one pile, yet each with a quarter turn lands in `[(1, 0), (1, 1)]` and `[(3, 0), (3, 1)]`: one product, 2 answers.
 
 <details>
 <summary>Normal also means whole families of look-alikes</summary>
@@ -96,12 +102,15 @@ Conjugate moves are one move seen from different positions; a family of them is 
 
 ### Step 2: every homomorphism hands over a quotient
 
-The 24-hour clock maps to the 12-hour clock by the remainder after 12: 13:00 is 1 o'clock, and addition survives. Its kernel is 0 and 12, a subgroup of 2; its image is all 12 hours. Kernels are always normal, since the map sends a conjugate to the image of $g$, the identity, then the undo of that image. Collapse by the kernel: 24 over 2 is 12 piles, each labelled by the value its members share — one-to-one, onto the image, addition-respecting on 576 pairs. The 12-clock, renamed.
+The 24-hour clock maps to the 12-hour clock by the remainder after 12: 13:00 is 1 o'clock, and addition survives. Its kernel is 0 and 12, a subgroup of 2; its image is all 12 hours. Kernels are always normal, since the map sends a conjugate to the image of $g$, the identity, then the undo of that image.
+
+Collapse by the kernel: 24 over 2 is 12 piles, each labelled by the value its members share — one-to-one, onto the image, addition-respecting on 576 pairs. The 12-clock, renamed.
 
 <details>
 <summary>Detailed proof of the first isomorphism theorem</summary>
 
 Let $\varphi$ run from $G$ to a second group, with kernel $N$.
+
 1. **$N$ is normal.** $\varphi$ sends $ghg^{-1}$ to the image of $g$, the identity, then the undo of that image, so $gNg^{-1}$ lies in $N$; the same line with $g^{-1}$ gives the reverse.
 2. **Labelling $gN$ by the image of $g$ is well-defined and one-to-one.** If $gN$ and $kN$ are one pile, the undo of $k$ with $g$ lies in $N$, so the two share an image; equal images force the reverse.
 3. **Onto and operation-keeping.** Every value reached is some $g$'s image, the label of $gN$, and $(gk)N$ carries the images of $g$ and $k$ combined. An isomorphism.
@@ -327,6 +336,130 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's facts for every group, every homomorphism and every clock size, not just these examples.
+
+- A subgroup $N$ is normal exactly when $gNg^{-1} = N$ for every $g$ in $G$, with no finiteness needed.
+- $N$ is normal exactly when piles combine by combining names, no answer depending on which member named a pile.
+- Collapse a group by a map's kernel and a copy of its image is left: the first isomorphism theorem.
+- The integers collapsed by the multiples of any $n$ give Z mod $n$, each pile landing on its remainder.
+- It also re-checks the card's numbers: 15 and -9 on the clock, the 12 piles, the tile's 32 conjugates, its 2 answers, and the 24-clock.
+
+The road through the corners, the families of look-alikes, and the four mistakes are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 96 lines</summary>
+
+```lean
+-- Normal subgroups and quotient groups: in any group, the piles (cosets) of a subgroup multiply by multiplying their names exactly when the subgroup is normal, collapsing a group by a map's kernel leaves a copy of the map's image, and the integers collapsed by the multiples of n are Z mod n.
+import Mathlib.GroupTheory.QuotientGroup.Basic
+import Mathlib.GroupTheory.SpecificGroups.Dihedral
+import Mathlib.Data.ZMod.QuotientGroup
+import Mathlib.Algebra.Group.Pointwise.Set.Basic
+import Mathlib.Data.Int.Interval
+import Mathlib.Tactic.NormNum
+
+open Pointwise DihedralGroup
+
+/-- A subgroup can be collapsed exactly when it looks the same from every position. For a
+subgroup `N` of any group `G` (no finiteness needed): `N` is normal (Mathlib's `Subgroup.Normal`)
+exactly when the card's test passes, `g N g⁻¹ = N` for every `g`; and that happens exactly when
+piles combine by combining names, `(gN)(kN) = (gk)N`, with no answer depending on which member
+named a pile: whenever `gN = g'N` and `kN = k'N`, also `(gk)N = (g'k')N`. -/
+theorem collapse_works_iff_normal {G : Type*} [Group G] (N : Subgroup G) :
+    (N.Normal ↔ ∀ g : G, (fun h => g * h * g⁻¹) '' (N : Set G) = (N : Set G)) ∧
+    (N.Normal ↔ ∀ g g' k k' : G, g • (N : Set G) = g' • (N : Set G) →
+      k • (N : Set G) = k' • (N : Set G) → (g * k) • (N : Set G) = (g' * k') • (N : Set G)) := by
+  have hconj : N.Normal ↔ ∀ g : G, (fun h => g * h * g⁻¹) '' (N : Set G) = (N : Set G) := by
+    constructor
+    · intro hn g
+      ext x
+      constructor
+      · rintro ⟨h, hh, rfl⟩
+        exact hn.conj_mem h hh g
+      · intro hx
+        refine ⟨g⁻¹ * x * g, ?_, ?_⟩
+        · simpa using hn.conj_mem x hx g⁻¹
+        · simp [mul_assoc]
+    · intro h
+      refine ⟨fun n hn g => ?_⟩
+      have h1 : g * n * g⁻¹ ∈ (fun h => g * h * g⁻¹) '' (N : Set G) := ⟨n, hn, rfl⟩
+      rw [h g] at h1
+      exact h1
+  have hcos : N.Normal ↔ ∀ g g' k k' : G, g • (N : Set G) = g' • (N : Set G) →
+      k • (N : Set G) = k' • (N : Set G) → (g * k) • (N : Set G) = (g' * k') • (N : Set G) := by
+    constructor
+    · intro hn g g' k k' h1 h2
+      rw [leftCoset_eq_iff] at h1 h2 ⊢
+      have h3 := hn.conj_mem _ h1 k⁻¹
+      have h4 := N.mul_mem (by simpa [mul_assoc] using h3) h2
+      simpa [mul_assoc] using h4
+    · intro h
+      refine ⟨fun n hn g => ?_⟩
+      have e1 : g • (N : Set G) = (g * n) • (N : Set G) := by
+        rw [leftCoset_eq_iff]; simpa using hn
+      have := h g (g * n) g⁻¹ g⁻¹ e1 rfl
+      rw [leftCoset_eq_iff] at this
+      simpa [mul_assoc] using this
+  exact ⟨hconj, hcos⟩
+
+/-- The first isomorphism theorem: collapse a group by what a homomorphism `φ` forgets (its
+kernel) and a copy of its image is left. The pile `g ker φ` is labelled by the value `φ g`,
+and this labelling is an isomorphism from `G / ker φ` onto the image of `φ`. -/
+theorem first_isomorphism_theorem {G H : Type*} [Group G] [Group H] (φ : G →* H) :
+    ∃ e : G ⧸ φ.ker ≃* φ.range, ∀ g : G, (e (g : G ⧸ φ.ker) : H) = φ g := by
+  refine ⟨QuotientGroup.quotientKerEquivRange φ, fun g => ?_⟩
+  rfl
+
+/-- Z mod n is the model: collapsing the integers by the subgroup of multiples of `n` gives
+`ZMod n`, the pile of an integer `a` being sent to `a` read mod `n`, with addition kept. -/
+theorem integers_mod_multiples_is_zmod (n : ℕ) :
+    ∃ e : (ℤ ⧸ AddSubgroup.zmultiples (n : ℤ)) ≃+ ZMod n,
+      ∀ a : ℤ, e (a : ℤ ⧸ AddSubgroup.zmultiples (n : ℤ)) = (a : ZMod n) := by
+  exact ⟨Int.quotientZMultiplesNatEquivZMod n, fun a => rfl⟩
+
+-- The clock: 15 and -9 land on the same mark, 3, and pile 7 plus pile 8 is pile 3.
+example : (15 : ZMod 12) = 3 ∧ (-9 : ZMod 12) = 3 ∧ (15 : ZMod 12) = -9 := by decide
+example : (7 : ZMod 12) + 8 = 3 := by decide
+-- The integers from -24 to 35, sorted by remainder after 12, fall into 12 piles.
+example : ((Finset.Icc (-24 : ℤ) 35).image (fun x => x % 12)).card = 12 := by decide +kernel
+
+-- The square tile: 8 moves, `r i` the turns and `sr i` the flips.
+example : Fintype.card (DihedralGroup 4) = 8 := by decide
+-- All 32 conjugates of the 4 turns are turns: the turns are normal.
+example : ∀ g : DihedralGroup 4, ∀ i : ZMod 4, ∃ j : ZMod 4, g * r i * g⁻¹ = r j := by decide
+-- The flip subgroup {do nothing, sr 0}: the half turn leaves the flip alone, the quarter turn
+-- carries it to a different flip, outside the subgroup.
+example : r 2 * sr 0 * (r 2)⁻¹ = (sr 0 : DihedralGroup 4) := by decide
+example : r 1 * sr 0 * (r 1)⁻¹ = (sr 2 : DihedralGroup 4) ∧
+    (sr 2 : DihedralGroup 4) ≠ 1 ∧ (sr 2 : DihedralGroup 4) ≠ sr 0 := by decide
+-- One pile, two names ("do nothing" and the flip), each times a quarter turn: two different piles.
+example : ({r 1 * 1, r 1 * sr 0} : Finset (DihedralGroup 4)) = {r 1, sr 3} ∧
+    ({sr 0 * r 1 * 1, sr 0 * r 1 * sr 0} : Finset (DihedralGroup 4)) = {r 3, sr 1} ∧
+    ({r 1, sr 3} : Finset (DihedralGroup 4)) ≠ {r 3, sr 1} := by decide
+
+-- The 24-hour clock to the 12-hour clock: 13:00 reads 1, the kernel is {0, 12}, 24 / 2 = 12.
+example : (((13 : ZMod 24).val : ℕ) : ZMod 12) = 1 := by decide
+example : Finset.univ.filter (fun x : ZMod 24 => ((x.val : ℕ) : ZMod 12) = 0) = {0, 12} := by
+  decide
+example : (24 : ℕ) / 2 = 12 := by norm_num
+
+#print axioms collapse_works_iff_normal
+#print axioms first_isomorphism_theorem
+#print axioms integers_mod_multiples_is_zmod
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'collapse_works_iff_normal' depends on axioms: [propext, Quot.sound]
+'first_isomorphism_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integers_mod_multiples_is_zmod' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

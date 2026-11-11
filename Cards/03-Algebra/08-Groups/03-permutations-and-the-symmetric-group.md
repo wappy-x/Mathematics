@@ -93,7 +93,9 @@ Through rt, t going first: 1 to 2, then 2 to 3; 2 to 1, then 1 to 2; 3 stays, th
 
 ### Step 4: cycles come from following one place round
 
-Follow the arrows from any place: 1 to 2, 2 to 3, 3 to 1. The places are finite, so the trail must revisit one, and since each place receives one card only, the first revisit is the start: the trail closes into a loop, a **cycle**. Start again at an unused place, and the new cycle shares nothing with the old — so every shuffle splits into cycles with no place in common, which is what cycle notation writes. Reversing its arrows undoes a cycle: the undo of (1 2 3) is (1 3 2).
+Follow the arrows from any place: 1 to 2, 2 to 3, 3 to 1. The places are finite, so the trail must revisit one, and since each place receives one card only, the first revisit is the start: the trail closes into a loop, a **cycle**.
+
+Start again at an unused place, and the new cycle shares nothing with the old — so every shuffle splits into cycles with no place in common, which is what cycle notation writes. Reversing its arrows undoes a cycle: the undo of (1 2 3) is (1 3 2).
 
 ### Step 5: swaps, and why even or odd never changes
 
@@ -112,7 +114,11 @@ The do-nothing list starts at zero, even, so the count is even exactly when the 
 
 </details>
 
-Out-of-order pairs are a second road to the label: r has two, so it is even; the code checks both roads across all 24 shuffles of four places. Lengths add when chains join, so even with even is even, and the even shuffles close under the operation and hold each other's undos — a group inside $S_n$, the **alternating group**, exactly half of it from two places up: in $S_3$, e with (1 2 3) and (1 3 2). Written as +1 for even and −1 for odd, the label multiplies when shuffles compose; the map it becomes belongs to [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md).
+Out-of-order pairs are a second road to the label: r has two, so it is even; the code checks both roads across all 24 shuffles of four places.
+
+Lengths add when chains join, so even with even is even. The even shuffles close under the operation and hold each other's undos. They form a group inside $S_n$, the **alternating group**, exactly half of it from two places up: in $S_3$, e with (1 2 3) and (1 3 2).
+
+Written as +1 for even and −1 for odd, the label multiplies when shuffles compose; the map it becomes belongs to [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md).
 
 <details>
 <summary>Every finite group is a group of shuffles</summary>
@@ -352,6 +358,153 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the main claims for any finite number of labelled places, and checks the three-card and tile numbers.
+
+- Shuffles compose into shuffles, the do-nothing shuffle is one, bracketing never matters, and every shuffle has an undo: a group.
+- n places have exactly n × (n − 1) × … × 1 shuffles.
+- Two chains of swaps giving the same shuffle are both even or both odd in length.
+- From three places up, some two shuffles give different results in the two orders.
+- On three cards, rt is (1 3), tr is (2 3), and the undo of r is (1 3 2).
+- r is two swaps and even, with two out-of-order pairs; t is odd; the four-cycle (1 2 3 4) is odd.
+- One to five places give 1, 2, 6, 24 and 120 shuffles; $S_3$ has 3 even ones.
+- Exactly 8 of the tile's 24 corner shuffles keep neighbours neighbouring, and 2, 2, 1 is not a shuffle.
+
+The fewest-swaps formula, the parity match over all four-place shuffles, and the tile's turns and flips are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 116 lines</summary>
+
+```lean
+-- Permutations: the one-to-one and onto rearrangements of n labelled places compose into rearrangements, each has an undo, there are n! of them, no rearrangement is both an even and an odd number of swaps, and from three places up the order of composing matters, with the card's three-card and four-corner numbers checked.
+import Mathlib.Data.Finite.Perm
+import Mathlib.Data.Fintype.Perm
+import Mathlib.GroupTheory.Perm.Sign
+import Mathlib.GroupTheory.SpecificGroups.Alternating
+import Mathlib.Logic.Equiv.Fin.Rotate
+import Mathlib.Tactic.NormNum
+
+/-- The card's main claim, for any finite collection `α` of labelled places, a shuffle being a
+rule `f : α → α` that is one to one and onto.
+Doing one shuffle and then another gives a shuffle; the do-nothing rule is a shuffle; grouping
+three shuffles either way gives the same shuffle; every shuffle has an undo that is itself a
+shuffle and cancels it from either side. So the shuffles form a group under composition, the
+symmetric group, and there are exactly `n! = n × (n − 1) × ⋯ × 1` of them when `α` has `n`
+members. -/
+theorem shuffles_form_symmetric_group_of_size_factorial {α : Type*} [Finite α] :
+    (∀ f g : α → α, Function.Bijective f → Function.Bijective g →
+        Function.Bijective (g ∘ f)) ∧
+      Function.Bijective (id : α → α) ∧
+      (∀ f g h : α → α, (h ∘ g) ∘ f = h ∘ (g ∘ f)) ∧
+      (∀ f : α → α, Function.Bijective f →
+        ∃ g : α → α, Function.Bijective g ∧ g ∘ f = id ∧ f ∘ g = id) ∧
+      Nat.card {f : α → α // Function.Bijective f} = (Nat.card α).factorial := by
+  classical
+  have : Fintype α := Fintype.ofFinite α
+  refine ⟨fun f g hf hg => hg.comp hf, Function.bijective_id, fun f g h => rfl, ?_, ?_⟩
+  · intro f hf
+    refine ⟨(Equiv.ofBijective f hf).symm, (Equiv.ofBijective f hf).symm.bijective, ?_, ?_⟩
+    · funext x
+      exact (Equiv.ofBijective f hf).symm_apply_apply x
+    · funext x
+      exact (Equiv.ofBijective f hf).apply_symm_apply x
+  · let e : Equiv.Perm α ≃ {f : α → α // Function.Bijective f} :=
+      { toFun := fun σ => ⟨σ, σ.bijective⟩
+        invFun := fun f => Equiv.ofBijective f.1 f.2
+        left_inv := fun σ => by ext; rfl
+        right_inv := fun f => by apply Subtype.ext; rfl }
+    rw [← Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_perm,
+      Nat.card_eq_fintype_card]
+
+/-- No shuffle is both even and odd: if one shuffle of the finite places `α` is written as a
+chain of swaps in two ways, the two chains are both even in length or both odd. -/
+theorem no_shuffle_is_both_even_and_odd {α : Type*} [Fintype α] [DecidableEq α]
+    (l l' : List (Equiv.Perm α)) (hl : ∀ τ ∈ l, τ.IsSwap) (hl' : ∀ τ ∈ l', τ.IsSwap)
+    (h : l.prod = l'.prod) :
+    Even l.length ↔ Even l'.length := by
+  have h1 := Equiv.Perm.sign_prod_list_swap hl
+  have h2 := Equiv.Perm.sign_prod_list_swap hl'
+  rw [h] at h1
+  have h3 : ((-1 : ℤˣ)) ^ l.length = (-1) ^ l'.length := h1.symm.trans h2
+  have hne : (-1 : ℤˣ) ≠ 1 := by decide
+  rw [← neg_one_pow_eq_one_iff_even hne, ← neg_one_pow_eq_one_iff_even hne, h3]
+
+/-- Order is part of the answer: as soon as there are at least three labelled places, some two
+shuffles give different results when done in the two orders. -/
+theorem shuffle_order_matters_from_three_places {α : Type*} [Finite α]
+    (h : 3 ≤ Nat.card α) :
+    ∃ σ τ : Equiv.Perm α, σ * τ ≠ τ * σ := by
+  classical
+  have : Fintype α := Fintype.ofFinite α
+  rw [Nat.card_eq_fintype_card] at h
+  obtain ⟨e⟩ : Nonempty (Fin 3 ↪ α) := Function.Embedding.nonempty_of_card_le (by simpa using h)
+  have hab : e 0 ≠ e 1 := fun h => by simpa using e.injective h
+  have hbc : e 1 ≠ e 2 := fun h => by simpa using e.injective h
+  refine ⟨Equiv.swap (e 0) (e 1), Equiv.swap (e 1) (e 2), fun H => ?_⟩
+  have := congrArg (fun p : Equiv.Perm α => p (e 0)) H
+  have hac : e 0 ≠ e 2 := fun h => by simpa using e.injective h
+  simp [Equiv.swap_apply_of_ne_of_ne, hab, hbc, hac, hac.symm] at this
+
+-- Places 1, 2, 3 on the card are 0, 1, 2 here. `r` shifts each card one place along, (1 2 3);
+-- `t` swaps places 1 and 2, (1 2). In `r * t` the right-hand shuffle `t` goes first.
+-- Shuffles of 1, 2, 3, 4, 5 places: 1, 2, 6, 24, 120, and n! gives the same counts.
+example : Fintype.card (Equiv.Perm (Fin 1)) = 1 ∧ Fintype.card (Equiv.Perm (Fin 2)) = 2 ∧
+    Fintype.card (Equiv.Perm (Fin 3)) = 6 ∧ Fintype.card (Equiv.Perm (Fin 4)) = 24 ∧
+    Fintype.card (Equiv.Perm (Fin 5)) = 120 := by
+  decide
+example : Nat.factorial 3 = 3 * 2 * 1 ∧ Nat.factorial 3 = 6 ∧ Nat.factorial 4 = 24 ∧
+    Nat.factorial 5 = 120 := by
+  decide
+-- r has destinations 2, 3, 1 and t has destinations 2, 1, 3.
+example : (finRotate 3 0, finRotate 3 1, finRotate 3 2) = (1, 2, 0) := by decide
+example : (Equiv.swap (0 : Fin 3) 1 0, Equiv.swap (0 : Fin 3) 1 1, Equiv.swap (0 : Fin 3) 1 2) =
+    (1, 0, 2) := by
+  decide
+-- Swap then shift, rt, is (1 3); shift then swap, tr, is (2 3).
+example : finRotate 3 * Equiv.swap 0 1 = Equiv.swap 0 2 := by decide
+example : Equiv.swap 0 1 * finRotate 3 = Equiv.swap 1 2 := by decide
+example : finRotate 3 * Equiv.swap 0 1 ≠ Equiv.swap 0 1 * finRotate 3 := by decide
+-- The seven starts in place 1: t then r takes it to place 3, r then t brings it to place 1.
+example : (finRotate 3 * Equiv.swap 0 1 : Equiv.Perm (Fin 3)) 0 = 2 ∧
+    (Equiv.swap 0 1 * finRotate 3 : Equiv.Perm (Fin 3)) 0 = 0 := by
+  decide
+-- The undo of r has destinations 3, 1, 2: the cycle (1 3 2).
+example : ((finRotate 3)⁻¹ 0, (finRotate 3)⁻¹ 1, (finRotate 3)⁻¹ 2) = (2, 0, 1) := by decide
+-- r is the two swaps (1 3)(1 2), right-hand swap first, so it is even; t is one swap, odd.
+example : finRotate 3 = Equiv.swap 0 2 * Equiv.swap 0 1 := by decide
+example : Equiv.Perm.sign (finRotate 3) = 1 ∧ Equiv.Perm.sign (Equiv.swap (0 : Fin 3) 1) = -1 := by
+  decide
+-- Out-of-order pairs in the list 2, 3, 1: two.
+example : ((Finset.univ : Finset (Fin 3 × Fin 3)).filter
+    (fun p => p.1 < p.2 ∧ finRotate 3 p.2 < finRotate 3 p.1)).card = 2 := by
+  decide
+-- S_3 splits into 3 even and 3 odd shuffles: the even ones are e, (1 2 3), (1 3 2).
+example : Fintype.card (alternatingGroup (Fin 3)) = 3 := by decide
+-- The four-cycle (1 2 3 4) is three swaps, odd.
+example : Equiv.Perm.sign (finRotate 4) = -1 := by decide
+-- The square tile: of its 24 corner shuffles, 8 keep neighbouring corners neighbouring.
+example : ((Finset.univ : Finset (Equiv.Perm (Fin 4))).filter
+    (fun p => ∀ i : Fin 4, p (i + 1) - p i = 1 ∨ p (i + 1) - p i = 3)).card = 8 := by
+  decide
+-- The list 2, 2, 1 is not a shuffle.
+example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
+
+#print axioms shuffles_form_symmetric_group_of_size_factorial
+#print axioms no_shuffle_is_both_even_and_odd
+#print axioms shuffle_order_matters_from_three_places
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'shuffles_form_symmetric_group_of_size_factorial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_shuffle_is_both_even_and_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shuffle_order_matters_from_three_places' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert stops the program when a number comes out wrong; all four are pinned to the cards and the tile.
@@ -376,7 +529,7 @@ The two outputs match line for line.
 
 - **Sorting.** A routine that swaps neighbours pays one swap per out-of-order pair: the proof's count is the sort's workload.
 - **Puzzles.** Each slide of a sliding-tile puzzle swaps a tile with the blank, and returning the blank home takes an even number of slides, so the numbered tiles are shuffled evenly. Prise two tiles out and swap them: that target is odd, so no slides reach it.
-- **Symmetry and determinants.** Label a shape's corners and each rigid motion becomes a shuffle — the tile's 8 turns and flips among 24 corner shuffles; counting with symmetry is [Group actions](08-group-actions-and-counting.md). A determinant's signs are this same label.
+- **Symmetry and determinants.** Label a shape's corners and each rigid motion becomes a shuffle — the tile's 8 turns and flips among 24 corner shuffles; counting with symmetry is [Group actions](08-group-actions-and-counting.md). A determinant's signs are this same label ([Determinants](../05-Solving%20Systems/04-determinants.md): the one number that says how much a matrix stretches area).
 
 > **Say it back**
 > A permutation rearranges labelled places, each sending its card to one place and receiving one, so it can be undone. One after another gives another permutation, so the collection is a group: the symmetric group, with n × (n − 1) × … × 1 members, six for three cards. Order matters: swap then shift is (1 3), the other order (2 3). Following one place round cuts a shuffle into cycles, a cycle of k places being k − 1 swaps — the fewest, though only even-or-odd is fixed.

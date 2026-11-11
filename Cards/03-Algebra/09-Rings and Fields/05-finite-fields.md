@@ -12,7 +12,7 @@ Four is not prime, and a clock divides only at a prime number of hours ([Fields]
 
 **A finite field's size is always a prime raised to a positive whole power: at prime sizes it is the clock, and at every other size it is polynomials wrapped at one that does not factor.**
 
-**What kind of fact this is:** a theorem, proved in Why it works, which also builds the four-element field. Existence at every prime power, sameness after renaming, and one element's powers giving the rest are stated here, proved in Finite fields.
+**What kind of fact this is:** a theorem, proved in Why it works, which also builds the four-element field. Existence at every prime power, sameness after renaming, and one element's powers giving the rest are stated here, proved in the later card Finite fields, in Algebraic and analytic number theory.
 
 ### The picture: four symbols, two readings
 
@@ -30,7 +30,11 @@ Same four symbols on both branches; only the arithmetic differs.
 
 ## The formula
 
-A field of a given size is written GF of that size, for Galois field, after Évariste Galois; GF(2) is the two-hour clock, 0 and 1 with 1 + 1 = 0. A polynomial over GF(2) has coefficients 0 and 1 only, its letter $x$ a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)), and is **irreducible** when it is not two smaller polynomials multiplied. Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)), and GF($p$)[$x$] means polynomials in $x$ over GF($p$):
+A field of a given size is written GF of that size, for Galois field, after Évariste Galois; GF(2) is the two-hour clock, 0 and 1 with 1 + 1 = 0.
+
+A polynomial over GF(2) has coefficients 0 and 1 only, its letter $x$ a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)), and is **irreducible** when it is not two smaller polynomials multiplied.
+
+Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)), and GF($p$)[$x$] means polynomials in $x$ over GF($p$):
 
 $$\mathrm{GF}(p^k) = \mathrm{GF}(p)[x] \,/\, (f), \qquad f \text{ irreducible of degree } k$$
 
@@ -61,7 +65,9 @@ Multiplying two elements means multiplying out and then trading every $a^2$ for 
 
 ### Step 0: what you wrap by must have no factors
 
-Both halves of this card are one move: divide by a fixed thing, keep the remainder. Division survives only when that thing has no factors, and Euclid's algorithm is the reason — run on two things sharing no factor it ends with one multiple of each adding to 1, and after the wrap the fixed thing's multiple is 0, leaving the other's multiplier as its reciprocal. Should the fixed thing factor, its factors survive as nonzero elements with product 0, and nothing in a zero product divides.
+Both halves of this card are one move: divide by a fixed thing, keep the remainder.
+
+Division survives only when that thing has no factors, and Euclid's algorithm is the reason — run on two things sharing no factor it ends with one multiple of each adding to 1, and after the wrap the fixed thing's multiple is 0, leaving the other's multiplier as its reciprocal. Should the fixed thing factor, its factors survive as nonzero elements with product 0, and nothing in a zero product divides.
 
 So a prime clock divides — the previous card's theorem ([Fields](02-fields.md)) — and that clock, GF($p$), is where the coefficients will live. The check confirms the seven-day week by both roads, 1, 4, 5, 2, 3, 6 each time, and at twelve hours 3 times 4 wraps to 0.
 
@@ -81,7 +87,11 @@ None of that was special to this modulus. Any irreducible $f$ shares no factor w
 
 ### Step 2: why the count is a prime power
 
-Add 1 to itself over and over. A finite field runs out of new elements, so the total returns to one already seen, and the first return is to 0. That count is the **characteristic**. It cannot be composite: splitting it in two gives two nonzero elements multiplying to 0. So it is a prime, $p$, and the $p$ multiples of 1 are a copy of the $p$-hour clock inside the field. Take the fewest elements from which every element is built by multiplying with clock numbers and adding: call that many $k$. Every element is then one list of $k$ coefficients from that clock, different lists naming different elements, each coefficient chosen $p$ ways: the count is $p^k$.
+Add 1 to itself over and over. A finite field runs out of new elements, so the total returns to one already seen, and the first return is to 0. That count is the **characteristic**.
+
+It cannot be composite: splitting it in two gives two nonzero elements multiplying to 0. So it is a prime, $p$, and the $p$ multiples of 1 are a copy of the $p$-hour clock inside the field.
+
+Take the fewest elements from which every element is built by multiplying with clock numbers and adding: call that many $k$. Every element is then one list of $k$ coefficients from that clock, different lists naming different elements, each coefficient chosen $p$ ways: the count is $p^k$.
 
 <details>
 <summary>Detailed proof: why the characteristic cannot be composite</summary>
@@ -92,7 +102,7 @@ Call the smallest positive number of 1's adding to 0 the count, and suppose it f
 
 ### Step 3: three facts stated, proved elsewhere
 
-One field exists for every prime power, and any two of a size are one field after a renaming, both proved in Finite fields. The third is the one hardware uses: the nonzero elements are the powers of a single one of them, a primitive root, now in a field instead of a clock ([The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
+One field exists for every prime power, and any two of a size are one field after a renaming, both proved in the later card Finite fields, in Algebraic and analytic number theory. The third is the one hardware uses: the nonzero elements are the powers of a single one of them, a primitive root, now in a field instead of a clock ([The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
 
 ```mermaid
 flowchart LR
@@ -140,7 +150,7 @@ The code prints both.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Two roads reach all sixteen products, sharing no arithmetic and compared on every pair: one shifts and XORs the packed polynomials, folding the top power away with $x^2 + x + 1$; the other multiplies coefficients by a rule taken from $a^2 = a + 1$. The clock side is done twice too, by search and by Euclid.
+Nothing is imported. Two roads reach all sixteen products, sharing no arithmetic and compared on every pair: one shifts and XORs the packed polynomials, folding the top power away with $x^2 + x + 1$; the other multiplies coefficients by a rule taken from $a^2 = a + 1$. The clock side is done twice too, by search and by Euclid. XOR, short for exclusive or, adds two bit patterns place by place with 1 + 1 = 0, which is adding coefficients wrapped at 2.
 
 ### Python
 
@@ -338,6 +348,113 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three main facts in general: for every finite field, every clock, and every polynomial over a prime clock.
+
+- A finite field's size is always a prime raised to a positive whole power.
+- A clock is a field exactly when its number of hours is prime.
+- Wrap polynomials over the prime clock GF($p$) by a nonzero one of degree $k$. Exactly $p^k$ elements are left.
+- That wrap gives a field exactly when the polynomial does not factor.
+- It also re-checks the card's numbers: the four-, seven- and twelve-hour clocks, the GF(4) table, and the missing sizes 6 and 10.
+
+Multiplying by shift and XOR, matching it against the coordinate rule, and Euclid's road to reciprocals are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 79 lines</summary>
+
+```lean
+-- Finite fields: every finite field has a prime power number of elements, the n-hour clock is a field exactly when n is prime, and wrapping polynomials over a prime clock by one of degree k gives p ^ k elements and a field exactly when that polynomial does not factor.
+import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.FieldTheory.Finiteness
+import Mathlib.RingTheory.AdjoinRoot
+import Mathlib.Algebra.IsPrimePow
+import Mathlib.Data.ZMod.Basic
+
+open Polynomial
+
+/-- A finite field's size is always a prime raised to a positive whole power: for every field F
+with finitely many elements there is a prime p and a whole number k ≥ 1 with |F| = p ^ k. -/
+theorem finite_field_card_eq_prime_pow (F : Type*) [Field F] [Fintype F] :
+    ∃ p k : ℕ, p.Prime ∧ 0 < k ∧ Fintype.card F = p ^ k := by
+  classical
+  obtain ⟨n, hp, hn⟩ := FiniteField.card F (ringChar F)
+  exact ⟨ringChar F, n, hp, n.pos, hn⟩
+
+/-- A clock divides only at a prime number of hours: the whole numbers wrapped at n
+(the n-hour clock) form a field exactly when n is prime. -/
+theorem clock_is_field_iff_prime (n : ℕ) : IsField (ZMod n) ↔ n.Prime := by
+  constructor
+  · intro h
+    by_cases hn : n = 0
+    · subst hn
+      exact absurd h Int.not_isField
+    · have : Nontrivial (ZMod n) := h.nontrivial
+      have : IsDomain (ZMod n) := h.isDomain
+      rcases CharP.char_is_prime_or_zero (ZMod n) n with hp | hz
+      · exact hp
+      · exact absurd hz hn
+  · intro hp
+    have := Fact.mk hp
+    exact Field.toIsField (ZMod n)
+
+/-- GF(p ^ k) = GF(p)[x] / (f). Take a prime p and a nonzero polynomial f of degree k with
+coefficients on the p-hour clock. Discarding the multiples of f leaves exactly p ^ k elements,
+and they form a field exactly when f does not factor (is irreducible). -/
+theorem polynomial_quotient_has_prime_pow_size_and_is_field_iff_irreducible
+    (p : ℕ) [Fact p.Prime] (f : (ZMod p)[X]) (hf : f ≠ 0) :
+    Nat.card (AdjoinRoot f) = p ^ f.natDegree ∧ (IsField (AdjoinRoot f) ↔ Irreducible f) := by
+  have hfin : Module.Finite (ZMod p) (AdjoinRoot f) := (AdjoinRoot.powerBasis hf).finite
+  refine ⟨?_, AdjoinRoot.isField_iff_irreducible⟩
+  rw [Module.natCard_eq_pow_finrank (K := ZMod p) (V := AdjoinRoot f), Nat.card_zmod]
+  congr 1
+  rw [← AdjoinRoot.powerBasis_dim hf, PowerBasis.finrank]
+
+-- The four-hour clock: 2 times 2 wraps to 0, 1 + 1 = 2, and 2 has no reciprocal.
+example : (2 : ZMod 4) * 2 = 0 ∧ (1 : ZMod 4) + 1 = 2 := by decide
+example : ∀ r : ZMod 4, (2 : ZMod 4) * r ≠ 1 := by decide
+-- The seven-day week: 3 times 5 = 15 wraps to 1; reciprocals of 1 to 6 are 1 4 5 2 3 6.
+example : (3 * 5 : ℕ) = 15 ∧ 15 % 7 = 1 := by decide
+example : (1 : ZMod 7) * 1 = 1 ∧ (2 : ZMod 7) * 4 = 1 ∧ (3 : ZMod 7) * 5 = 1 ∧
+    (4 : ZMod 7) * 2 = 1 ∧ (5 : ZMod 7) * 3 = 1 ∧ (6 : ZMod 7) * 6 = 1 := by decide
+-- The twelve-hour clock: 3 times 4 wraps to 0, and only 1, 5, 7, 11 have a reciprocal.
+example : (3 : ZMod 12) * 4 = 0 := by decide
+example : ∀ a : ZMod 12, (∃ b : ZMod 12, a * b = 1) ↔ (a = 1 ∨ a = 5 ∨ a = 7 ∨ a = 11) := by
+  decide
+-- x^2 + x + 1 has no root on the two-hour clock: 1 at x = 0, and 1 + 1 + 1 wraps to 1 at x = 1.
+example : ∀ x : ZMod 2, x ^ 2 + x + 1 ≠ 0 := by decide
+-- Wrapping by x^2 + 1 or by x^2 + x fails: each has a root, and x^2 + 1 = (x + 1)^2 there.
+example : (1 : ZMod 2) ^ 2 + 1 = 0 ∧ (0 : ZMod 2) ^ 2 + 0 = 0 ∧
+    ∀ x : ZMod 2, (x + 1) ^ 2 = x ^ 2 + 1 := by decide
+-- GF(4) in coordinates c + d·a with a^2 = a + 1 (the card's road two), a = (0, 1):
+-- a times a + 1 = 1, a + 1 squared = a, the powers of a are 1, a, a + 1, 1,
+-- every element added to itself is 0, and every nonzero row of the table holds a 1.
+example :
+    let mul : ZMod 2 × ZMod 2 → ZMod 2 × ZMod 2 → ZMod 2 × ZMod 2 :=
+      fun u v => (u.1 * v.1 + u.2 * v.2, u.1 * v.2 + u.2 * v.1 + u.2 * v.2)
+    mul (0, 1) (1, 1) = (1, 0) ∧ mul (1, 1) (1, 1) = (0, 1) ∧
+      mul (0, 1) (0, 1) = (1, 1) ∧ mul (mul (0, 1) (0, 1)) (0, 1) = (1, 0) ∧
+      (∀ u : ZMod 2 × ZMod 2, u + u = 0) ∧
+      (∀ u : ZMod 2 × ZMod 2, u ≠ 0 → ∃ v, mul u v = (1, 0)) := by
+  decide
+-- Sizes: 4 is a prime power, 6 and 10 are not, so no field has 6 or 10 elements.
+example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
+
+#print axioms finite_field_card_eq_prime_pow
+#print axioms clock_is_field_iff_prime
+#print axioms polynomial_quotient_has_prime_pow_size_and_is_field_iff_irreducible
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'finite_field_card_eq_prime_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'clock_is_field_iff_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polynomial_quotient_has_prime_pow_size_and_is_field_iff_irreducible' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Each change stops the script.
@@ -359,8 +476,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **QR symbols and CDs.** Reed–Solomon repair reads a block as a polynomial over a finite field and solves for the lost pieces — exact division, no rounding (Hamming and Reed-Solomon).
-- **AES, in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $k$ = 8 (AES).
+- **QR symbols and CDs.** Reed–Solomon repair reads a block as a polynomial over a finite field and solves for the lost pieces — exact division, no rounding ([Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md)).
+- **AES (the Advanced Encryption Standard), in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $k$ = 8 ([AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md)).
 
 > **Say it back**
 > A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other size is polynomials over a prime clock, the multiples of one that does not factor discarded. GF(2) and $x^2 + x + 1$ give 0, 1, a and a + 1, with a squared = a + 1, so a times a + 1 = 1. No four-hour clock copies that, and sizes are prime powers only.
@@ -380,7 +497,7 @@ The two outputs match line for line.
 - [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the field inside a cipher.
 - [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): curves over a finite field.
 - Quadratic reciprocity: squares on a prime clock.
-- Finite fields: existence, uniqueness, symmetry.
+- Finite fields, in Algebraic and analytic number theory: existence, uniqueness, symmetry.
 - The curve mod p: counting points field by field.
 
 Degree two over GF(2) was easy by hand; whether an irreducible polynomial of every degree exists is the next question.

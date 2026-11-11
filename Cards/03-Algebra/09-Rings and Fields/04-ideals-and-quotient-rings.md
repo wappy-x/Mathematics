@@ -29,7 +29,9 @@ flowchart LR
 
 ## The formula
 
-Write $R$ for the ring being collapsed ([Rings](01-rings.md)) and $I$ for the set thrown away — here the multiples of 9, written 9Z, with Z naming the whole numbers. A **class** is a pile the collapse leaves: everything differing from a name $a$ by a thrown-away amount.
+A ring is a collection where you can add, subtract and multiply, but not always divide ([Rings](01-rings.md)).
+
+Write $R$ for the ring being collapsed and $I$ for the set thrown away — here the multiples of 9, written 9Z, with Z naming the whole numbers. A **class** is a pile the collapse leaves: everything differing from a name $a$ by a thrown-away amount.
 
 $$a + I = \{\, a + i : i \in I \,\} \qquad a + I = b + I \ \text{ exactly when } \ a - b \in I$$
 
@@ -88,7 +90,9 @@ Those nine classes are Z mod 9 ([Adding and multiplying on the clock](../../02-N
 
 A **ring map** $\varphi$ carries both operations across: sums go to sums, products to products. Casting out nines is one; its **kernel**, all it sends to 0, is the multiples of 9.
 
-Every kernel passes the test. If $a$ and $b$ go to 0, so does $a - b$: closed. If $a$ goes to 0, so do ra and ar, each an image times 0: absorbing. And sending each member to its class is a ring map with kernel $I$, so ideals and kernels are one list. The **first isomorphism theorem** states the pairing:
+Every kernel passes the test. If $a$ and $b$ go to 0, so does $a - b$: closed. If $a$ goes to 0, so do ra and ar, each an image times 0: absorbing.
+
+And sending each member to its class is a ring map with kernel $I$, so ideals and kernels are one list. The **first isomorphism theorem** states the pairing:
 
 $$R/\ker\varphi \;\cong\; \operatorname{im}\varphi$$
 
@@ -98,6 +102,7 @@ $$R/\ker\varphi \;\cong\; \operatorname{im}\varphi$$
 <summary>Detailed proof: collapsing by the kernel leaves the image</summary>
 
 Write K for the kernel, and send the class a + K to its image.
+
 - **A function, and one-to-one.** If a + K = b + K then a − b is in K, so the two names have one image. Backwards: equal images make the image of a − b zero, so a − b is in K and the classes were equal.
 - **Onto, and carrying the arithmetic.** Every image is hit by the class of its input; sums go to sums, products to products. That is ≅.
 
@@ -106,7 +111,9 @@ Write K for the kernel, and send the class a + K to its image.
 <details>
 <summary>When the collapsed world has no zero divisors, and when it has division</summary>
 
-Collapsing promises nothing about division: in Z mod 9 the class 3 is not 0, yet 3 × 3 = 0, a pair of zero divisors. Two conditions govern them where multiplication order does not matter. An ideal is **prime** when a product landing inside forces a factor inside, and no zero divisors survive: an **integral domain**. It is **maximal** when no ideal fits between it and the ring, and every nonzero class then has a reciprocal: a **field**.
+Collapsing promises nothing about division: in Z mod 9 the class 3 is not 0, yet 3 × 3 = 0, a pair of zero divisors. Two conditions govern them where multiplication order does not matter.
+
+An ideal is **prime** when a product landing inside forces a factor inside, and no zero divisors survive: an **integral domain**. It is **maximal** when no ideal fits between it and the ring, and every nonzero class then has a reciprocal: a **field** ([Fields](02-fields.md)).
 
 | The ideal | The collapsed world | The ideal is |
 | --- | --- | --- |
@@ -131,7 +138,9 @@ The roads agree, so the total passes; a mismatch would prove an error.
 
 ### A second collapse: polynomials by x^2 + 1
 
-The same runs on polynomials ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)). Throw away every multiple of x^2 + 1. Division with remainder gives each class one name c + dx, two coordinates, and x^2 + 1 being 0 makes squaring x give −1. Multiplying (2 + 3x)(4 + x) out gives 8 + 14x + 3x^2; replacing 3x^2 by −3 leaves **5 + 14x**. The coordinate rule, with c, d, u, v real,
+The same runs on polynomials ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)). Throw away every multiple of x^2 + 1. Division with remainder gives each class one name c + dx, two coordinates, and x^2 + 1 being 0 makes squaring x give −1.
+
+Multiplying (2 + 3x)(4 + x) out gives 8 + 14x + 3x^2; replacing 3x^2 by −3 leaves **5 + 14x**. The coordinate rule, with c, d, u, v real,
 
 $$(c + dx)(u + vx) = (cu - dv) + (cv + du)x$$
 
@@ -339,6 +348,114 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three facts, for every ring map and every whole number n.
+
+- Every ring map's kernel is closed under subtraction and absorbs multiplication on both sides. Collapsing by it leaves the image.
+- Every ideal of Z is the multiples of some n.
+- Collapsing Z by the multiples of n gives Z mod n.
+- The invoice, the 121 shifted pairs, the clock sets, the x^2 + 1 product and the reciprocal counts are checked exactly too.
+
+Adding digits, and the constants failing the test in the x^2 = -1 world, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 81 lines</summary>
+
+```lean
+-- Ideals and quotient rings: the kernel of every ring map passes the two-part ideal test and collapsing by it leaves the image, every ideal of the whole numbers is the multiples of some n, and collapsing the whole numbers by the multiples of n gives Z mod n.
+import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.PrincipalIdealDomain
+import Mathlib.Data.ZMod.QuotientRing
+import Mathlib.Data.Int.Interval
+import Mathlib.Algebra.Polynomial.Basic
+import Mathlib.Tactic.Ring
+
+/-- Kernels are ideals, and collapsing by the kernel leaves the image. Take any ring map
+φ from a ring R to a ring S (multiplication order may matter). Everything φ sends to 0 passes
+the ideal test: it is closed under subtraction, and a member times anything in R, on either
+side, stays inside. And R collapsed by that kernel is the image of φ under new names:
+R / ker φ ≅ im φ (the first isomorphism theorem). -/
+theorem kernel_is_ideal_and_quotient_by_kernel_is_image
+    {R S : Type*} [Ring R] [Ring S] (φ : R →+* S) :
+    ((∀ a ∈ RingHom.ker φ, ∀ b ∈ RingHom.ker φ, a - b ∈ RingHom.ker φ) ∧
+      (∀ a ∈ RingHom.ker φ, ∀ r : R, r * a ∈ RingHom.ker φ ∧ a * r ∈ RingHom.ker φ)) ∧
+    Nonempty ((R ⧸ RingHom.ker φ) ≃+* φ.range) := by
+  refine ⟨⟨?_, ?_⟩, ⟨RingHom.quotientKerEquivRange φ⟩⟩
+  · intro a ha b hb
+    rw [RingHom.mem_ker] at ha hb ⊢
+    rw [map_sub, ha, hb, sub_zero]
+  · intro a ha r
+    simp only [RingHom.mem_ker] at ha ⊢
+    simp [ha]
+
+/-- The multiples of n are the model: every ideal of the whole numbers Z is the set of
+multiples of some n (its smallest positive member, or 0). -/
+theorem every_ideal_of_int_is_the_multiples_of_some_n (I : Ideal ℤ) :
+    ∃ n : ℕ, I = Ideal.span {(n : ℤ)} := by
+  obtain ⟨g, hg⟩ := (IsPrincipalIdealRing.principal I).principal
+  refine ⟨g.natAbs, ?_⟩
+  rw [hg]
+  simp
+
+
+/-- Clock arithmetic is this construction: collapsing the whole numbers by the multiples of n
+gives Z mod n, for every n. -/
+theorem int_collapsed_by_multiples_of_n_is_zmod_n (n : ℕ) :
+    Nonempty ((ℤ ⧸ Ideal.span {(n : ℤ)}) ≃+* ZMod n) := by
+  exact ⟨Int.quotientSpanNatEquivZMod n⟩
+
+-- The invoice: 47 crates at $23 come to $1,081.
+example : 47 * 23 = 1081 := by norm_num
+-- Casting out nines: 47 leaves 2, 23 leaves 5, 2 × 5 = 10 leaves 1, and 1,081 leaves 1.
+example : 47 % 9 = 2 ∧ 23 % 9 = 5 ∧ 2 * 5 = 10 ∧ 10 % 9 = 1 ∧ 1081 % 9 = 1 := by decide
+-- The same check as arithmetic of classes in Z mod 9.
+example : (47 : ZMod 9) * 23 = 1081 ∧ (2 : ZMod 9) * 5 = 1 ∧ (1081 : ZMod 9) = 1 := by decide
+-- Other names, same class: 56 × 32 = 1,792, class 1.
+example : 56 * 32 = 1792 ∧ 1792 % 9 = 1 := by decide
+-- All 121 pairs of names shifted by multiples of 9 (i, j from -5 to 5) land in class 1.
+example : ∀ i ∈ Finset.Icc (-5 : ℤ) 5, ∀ j ∈ Finset.Icc (-5 : ℤ) 5,
+    ((47 + 9 * i) * (23 + 9 * j)) % 9 = 1 := by decide
+-- A passed check is not proof: the wrong total 1,090 is class 1 too.
+example : (1090 : ZMod 9) = 1081 := by decide
+-- The kernel of casting out nines, from 0 to 40, is 0, 9, 18, 27, 36.
+example : (Finset.range 41).filter (fun k => k % 9 = 0) = {0, 9, 18, 27, 36} := by decide
+-- On the 12-hour clock, {0, 3, 6, 9} passes both halves of the ideal test.
+example : ∀ a ∈ ({0, 3, 6, 9} : Finset (ZMod 12)), ∀ b ∈ ({0, 3, 6, 9} : Finset (ZMod 12)),
+    a - b ∈ ({0, 3, 6, 9} : Finset (ZMod 12)) ∧
+    ∀ r : ZMod 12, r * a ∈ ({0, 3, 6, 9} : Finset (ZMod 12)) := by decide
+-- {0, 4, 6, 8} absorbs every product, yet 4 + 6 = 10 lies outside it.
+example : (∀ a ∈ ({0, 4, 6, 8} : Finset (ZMod 12)), ∀ r : ZMod 12,
+    r * a ∈ ({0, 4, 6, 8} : Finset (ZMod 12))) ∧
+    (4 : ZMod 12) + 6 = 10 ∧ (10 : ZMod 12) ∉ ({0, 4, 6, 8} : Finset (ZMod 12)) := by decide
+-- Collapsing by x^2 + 1: (2 + 3x)(4 + x) = 8 + 14x + 3x^2, which differs from 5 + 14x
+-- by 3 times x^2 + 1, so its class is 5 + 14x.
+open Polynomial in
+example : ((2 + 3 * X) * (4 + X) : ℤ[X]) = 8 + 14 * X + 3 * X ^ 2 ∧
+    ((2 + 3 * X) * (4 + X) : ℤ[X]) = (5 + 14 * X) + 3 * (X ^ 2 + 1) := by
+  constructor <;> ring
+-- Z mod 9 has zero divisors: 3 × 3 = 0 with 3 not zero.
+example : (3 : ZMod 9) * 3 = 0 ∧ (3 : ZMod 9) ≠ 0 := by decide
+-- 6 of the 8 nonzero classes of Z mod 9 have a reciprocal; all 6 of Z mod 7 do.
+example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a * b = 1)).card = 6 ∧
+    ((Finset.univ : Finset (ZMod 7)).filter (fun a => a ≠ 0 ∧ ∃ b, a * b = 1)).card = 6 := by
+  decide
+
+#print axioms kernel_is_ideal_and_quotient_by_kernel_is_image
+#print axioms every_ideal_of_int_is_the_multiples_of_some_n
+#print axioms int_collapsed_by_multiples_of_n_is_zmod_n
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'kernel_is_ideal_and_quotient_by_kernel_is_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+'every_ideal_of_int_is_the_multiples_of_some_n' depends on axioms: [propext, Classical.choice, Quot.sound]
+'int_collapsed_by_multiples_of_n_is_zmod_n' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert stops the program when a number comes out wrong.
@@ -374,7 +491,7 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Normal subgroups and quotient groups](../08-Groups/06-normal-subgroups-and-quotient-groups.md): the same collapse with one operation; absorbing is its condition once piles multiply.
-- [Rings](01-rings.md): the two operations, and the distributive law absorbing leans on.
+- [Rings](01-rings.md): the two operations, and the distributive law absorbing leans on: a multiplier reaches every term in a bracket.
 - [Polynomials behave like integers](03-polynomials-behave-like-integers.md): division with remainder, one name per class.
 - [Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): arithmetic on leftovers, the case this generalises.
 

@@ -34,7 +34,7 @@ Both loops close after three notes. The top holds 0, the jump that changes nothi
 
 ## The formula
 
-Write the operation as $*$ and the undo of a member b as $b^{-1}$. Let $G$ be the group, $H$ some of its members.
+Write the operation as $*$ and the undo of a member b as $b^{-1}$. Let $G$ be the group, $H$ some of its members. The sign $\in$ means "is a member of".
 
 $H$ is a subgroup of $G$ exactly when $H$ is not empty and, for every $a$ and $b$ in $H$:
 
@@ -54,7 +54,7 @@ The **order** of a member is the repeat count that first reaches the identity, a
 
 $$\operatorname{ord}(a) = \frac{n}{\gcd(a, n)}$$
 
-The clock size divided by the largest whole number dividing both it and the jump.
+The clock size divided by the largest whole number dividing both it and the jump ([Greatest common divisor](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -118,7 +118,9 @@ The line is each jump's order, peaking at jumps 1, 5, 7 and 11. Jump 0 never lea
 
 Label each member by how many repeats of the generator produced it. Combining members adds labels, since j repeats then k repeats is j + k repeats.
 
-If no positive number of repeats returns to the identity, no two labels name one member and the group is a copy of the whole numbers under addition — infinite and cyclic at once. Otherwise the first return sets a period and labels wrap at it: a copy of a clock that size. Nothing else is possible, so up to relabelling ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)) there is one cyclic group of each size.
+If no positive number of repeats returns to the identity, no two labels name one member. The group is then a copy of the whole numbers under addition — infinite and cyclic at once.
+
+Otherwise the first return sets a period and labels wrap at it: a copy of a clock that size. Nothing else is possible, so up to relabelling ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)) there is one cyclic group of each size.
 
 <details>
 <summary>Detailed proof</summary>
@@ -162,7 +164,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each order is found twice, by roads sharing no arithmetic: walking — add the jump, wrap at 12, stop when a note repeats, count — and 12 divided by the greatest common divisor of the jump and 12, Euclid's algorithm written out. A third road brute-forces the subgroup test. Four asserts pin the results to the formula and to lists written by hand.
+Nothing is imported. Each order is found twice, by roads sharing no arithmetic. Road one walks: add the jump, wrap at 12, stop when a note repeats, count. Road two divides 12 by the greatest common divisor of the jump and 12, Euclid's algorithm written out. A third road brute-forces the subgroup test. Four asserts pin the results to the formula and to lists written by hand.
 
 ### Python
 
@@ -355,6 +357,105 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the subgroup test, the order formula and Step 4, for every group and every clock size above 0.
+
+- The subgroup test: a set is a subgroup exactly when it is not empty and every $a * b^{-1}$ lands inside.
+- On a clock of n notes, jump a has order n ÷ gcd(a, n), and the subgroup it generates has that many members.
+- Every cyclic group is, up to relabelling, the whole numbers under addition or a clock with one note per member.
+
+Walking each jump home and listing every cyclic subgroup are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 73 lines</summary>
+
+```lean
+-- Subgroups and cyclic groups: a nonempty set in a group is a subgroup exactly when every a * b⁻¹ stays inside, a jump of a on a clock of n notes has order n / gcd(a, n), and every cyclic group is a copy of the whole numbers or of a clock.
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
+import Mathlib.Data.ZMod.Basic
+
+/-- The subgroup test. In any group G, a set H of members is a subgroup (a smaller group under
+the same operation) exactly when H is not empty and, for every a and b in H, a * b⁻¹ is in H. -/
+theorem subgroup_iff_nonempty_and_mul_inv_mem {G : Type*} [Group G] (H : Set G) :
+    (∃ K : Subgroup G, (K : Set G) = H) ↔
+      H.Nonempty ∧ ∀ a ∈ H, ∀ b ∈ H, a * b⁻¹ ∈ H := by
+  constructor
+  · rintro ⟨K, rfl⟩
+    exact ⟨⟨1, K.one_mem⟩, fun a ha b hb => K.mul_mem ha (K.inv_mem hb)⟩
+  · rintro ⟨hne, hs⟩
+    exact ⟨Subgroup.ofDiv H hne hs, rfl⟩
+
+/-- The order formula. On a clock of n notes (n not 0, so the group is finite), the jump a comes
+home for the first time after n / gcd(a, n) jumps, and the subgroup it generates has exactly
+that many members. -/
+theorem clock_jump_order_eq_n_div_gcd (n a : ℕ) (hn : n ≠ 0) :
+    addOrderOf (a : ZMod n) = n / Nat.gcd a n ∧
+      Nat.card (AddSubgroup.zmultiples (a : ZMod n)) = n / Nat.gcd a n := by
+  have h := ZMod.addOrderOf_coe a hn
+  rw [Nat.gcd_comm] at h
+  exact ⟨h, by rw [Nat.card_zmultiples, h]⟩
+
+/-- Every cyclic group is a clock or the whole numbers. A group generated by one member is, up to
+relabelling, either the whole numbers under addition, or a clock of m notes for some m above 0,
+where m is the number of members of the group. -/
+theorem cyclic_group_is_integers_or_clock {G : Type*} [Group G] (h : IsCyclic G) :
+    Nonempty (G ≃* Multiplicative ℤ) ∨
+      ∃ m : ℕ, 0 < m ∧ Nat.card G = m ∧ Nonempty (G ≃* Multiplicative (ZMod m)) := by
+  cases finite_or_infinite G with
+  | inl hfin =>
+    right
+    exact ⟨Nat.card G, Nat.card_pos, rfl, ⟨(zmodCyclicMulEquiv h).symm⟩⟩
+  | inr hinf =>
+    left
+    exact ⟨(intCyclicMulEquiv (G := G)).symm⟩
+
+-- Jump 4 from C: 0, 4, 8, then 12 wraps to 0.
+example : (List.range 4).map (fun k => (k * 4 : ZMod 12)) = [0, 4, 8, 0] := by decide
+-- Order of jump 4: 12 / gcd(4, 12) = 12 / 4 = 3.
+example : Nat.gcd 4 12 = 4 ∧ 12 / Nat.gcd 4 12 = 3 := by decide
+-- Jump 5 walks through all twelve notes: the circle of fourths.
+example : (List.range 12).map (fun k => (k * 5) % 12) = [0, 5, 10, 3, 8, 1, 6, 11, 4, 9, 2, 7] := by
+  decide
+-- Order of jump 5: 12 / gcd(5, 12) = 12 / 1 = 12.
+example : Nat.gcd 5 12 = 1 ∧ 12 / Nat.gcd 5 12 = 12 := by decide
+-- The order of every jump 0 to 11 on the twelve-note clock.
+example : (List.range 12).map (fun a => 12 / Nat.gcd a 12) = [1, 12, 6, 4, 3, 12, 2, 12, 3, 4, 6, 12] := by
+  decide
+-- The jumps that fill the clock are exactly those coprime to 12: 1, 5, 7, 11.
+example : (List.range 12).filter (fun a => Nat.gcd a 12 = 1) = [1, 5, 7, 11] := by decide
+-- The tile's quarter turns have order 4, its half turns order 2.
+example : 4 / Nat.gcd 1 4 = 4 ∧ 4 / Nat.gcd 2 4 = 2 := by decide
+-- The triad 0, 4, 8 passes the subgroup test, and the undo of jump 4 is 8.
+example : ∀ a ∈ ({0, 4, 8} : Finset (ZMod 12)), ∀ b ∈ ({0, 4, 8} : Finset (ZMod 12)),
+    a - b ∈ ({0, 4, 8} : Finset (ZMod 12)) := by decide
+example : (-4 : ZMod 12) = 8 := by decide
+-- Keeping only 0 and 4 fails: 4 + 4 gives 8, outside.
+example : (4 + 4 : ZMod 12) = 8 ∧ (8 : ZMod 12) ∉ ({0, 4} : Finset (ZMod 12)) := by decide
+example : ¬ ∀ a ∈ ({0, 4} : Finset (ZMod 12)), ∀ b ∈ ({0, 4} : Finset (ZMod 12)),
+    a - b ∈ ({0, 4} : Finset (ZMod 12)) := by decide
+-- The shifted loop 1, 5, 9 holds no 0, so it is not a subgroup.
+example : (0 : ZMod 12) ∉ ({1, 5, 9} : Finset (ZMod 12)) := by decide
+-- Multiplying instead of adding: 4^3 wraps to 4, while three jumps of 4 give 0.
+example : (4 : ZMod 12) ^ 3 = 4 ∧ 3 • (4 : ZMod 12) = 0 := by decide
+-- The cyclic subgroups came out at sizes 1, 2, 3, 4, 6, 12: the divisors of 12.
+example : (List.range 13).filter (fun d => 0 < d ∧ 12 % d = 0) = [1, 2, 3, 4, 6, 12] := by decide
+
+#print axioms subgroup_iff_nonempty_and_mul_inv_mem
+#print axioms clock_jump_order_eq_n_div_gcd
+#print axioms cyclic_group_is_integers_or_clock
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'subgroup_iff_nonempty_and_mul_inv_mem' depends on axioms: [propext]
+'clock_jump_order_eq_n_div_gcd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cyclic_group_is_integers_or_clock' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the twelve-note clock, so expect one to stop it.
@@ -371,7 +472,7 @@ The two outputs match line for line.
 >
 > - **A loop that misses the identity is not a subgroup.** The notes 1, 5 and 9 close up under the same jumps with no do-nothing member: a shifted copy, named in [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md).
 > - **Repeating means repeating the group's own operation.** Three repeats of 4 is three jumps, home at 0, not 4 × 4 × 4, which wraps to 4 and never comes home.
-> - **One generator is a strong demand.** Every cyclic group is commutative, but some commutative groups have no member that reaches everything ([Direct products](07-direct-products.md)).
+> - **One generator is a strong demand.** Every cyclic group is commutative — order does not matter, $a * b = b * a$ — but some commutative groups have no member that reaches everything ([Direct products](07-direct-products.md)).
 
 ---
 
@@ -396,7 +497,7 @@ The two outputs match line for line.
 
 - [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): shifted copies like 1, 5 and 9 get a name, and prove a subgroup's size divides the group's.
 - [Direct products](07-direct-products.md): two groups bolted together, and the smallest commutative group no member generates.
-- The circle's fundamental group is the integers: loops on a circle are Step 4's infinite cyclic group.
+- The circle's fundamental group is the whole numbers under addition: loops on a circle are Step 4's infinite cyclic group.
 - Cyclotomic fields: n points round a circle, multiplied not added: the same clock.
 - Torsion points: curve points that come home after finitely many additions.
 
