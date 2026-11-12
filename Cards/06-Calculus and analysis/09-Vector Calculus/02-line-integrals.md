@@ -373,10 +373,10 @@ The two outputs match line for line.
 - [Conservative fields](04-conservative-fields-and-potentials.md): fields whose work depends only on the ends.
 - [Green's theorem](06-greens-theorem.md): work round a loop as the curl over the area inside.
 - [Contour integrals](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): the same sum in the complex plane.
-- Magnetic fields: the voltage round a loop.
-- Newton's laws: work and the energy it changes.
-- Continuity and Bernoulli: a flow added along a streamline.
-- The thermodynamic laws: work and heat that depend on the route.
+- [Magnetic fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md): the voltage round a loop.
+- [Newton's laws](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/01-newtons-laws-work-and-energy.md): work and the energy it changes.
+- [Continuity and Bernoulli](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/01-continuity-and-bernoulli.md): a flow added along a streamline.
+- [The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md): work and heat that depend on the route.
 
 Four routes gave four answers; which fields give one answer on every route, and how to tell without trying routes, is [Conservative fields](04-conservative-fields-and-potentials.md).
 

@@ -385,7 +385,7 @@ ALL CHECKS PASS
 
 ## Where this goes next
 
-- Buckling: the pitchfork in a loaded column.
+- [Buckling](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/08-buckling-and-stability.md): the pitchfork in a loaded column.
 - Reaction-diffusion: a uniform state losing stability across space.
 
 ---

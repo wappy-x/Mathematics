@@ -368,7 +368,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Diagonalisation](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $A_B$ diagonal turns many moves into small multiplies.
-- The DFT and the FFT: the same translation on a whole signal, samples in time becoming pure tones.
+- [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): the same translation on a whole signal, samples in time becoming pure tones.
 - Representation: conjugation again, for matrices forming a group.
 
 Any invertible $P$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.

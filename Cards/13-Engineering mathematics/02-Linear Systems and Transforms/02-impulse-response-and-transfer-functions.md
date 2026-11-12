@@ -580,7 +580,7 @@ The two outputs match line for line.
 - [Bode plots](04-frequency-response-and-bode-plots.md): G along the imaginary axis, as gain and phase against frequency.
 - [The z-transform](08-z-transform-and-discrete-time-systems.md): the same ratio for a system that moves in steps.
 - [Feedback](../03-Feedback%20Control/01-feedback-and-closed-loop-transfer-functions.md): wrapping a controller round G, and the algebra of the closed loop.
-- State space: the matrix form that gives G for many inputs and outputs at once.
+- [State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md): the matrix form that gives G for many inputs and outputs at once.
 
 The car's ratio has one pole, at −0.025 1/s, and its speed settles; why the sign of that pole decides between settling and running away is [Poles and zeros](03-poles-zeros-and-stability.md).
 

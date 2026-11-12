@@ -592,7 +592,7 @@ The two outputs are identical line for line.
 
 - [Fokker-Planck](03-fokker-planck-forward-equation.md): the forward twin, for the density of the price instead of the expected payoff, with the generator replaced by its adjoint.
 - Feller semigroups: the map from payoff to expected payoff as an operator semigroup, with the generator as its derivative.
-- Feynman-Kac: existence, regularity and uniqueness for both Kolmogorov equations, proved with PDE tools.
+- [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): existence, regularity and uniqueness for both Kolmogorov equations, proved with PDE tools.
 
 The backward equation fixes the payoff and lets the start vary; the question left open is how the law of the price itself spreads from a fixed start, which the forward equation answers.
 

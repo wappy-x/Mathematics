@@ -378,7 +378,7 @@ The two outputs match line for line.
 - [Rings](../09-Rings%20and%20Fields/01-rings.md): two operations at once.
 - [Symmetry](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/04-symmetry-and-tilings.md): repeating patterns.
 - [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): an operation built to fit.
-- Symmetry and conservation: symmetry paying out.
+- [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): symmetry paying out.
 - Diffie-Hellman and ElGamal: key exchange.
 - The fundamental group: loops end to end.
 - Rational points on a cubic: generating a curve's points.

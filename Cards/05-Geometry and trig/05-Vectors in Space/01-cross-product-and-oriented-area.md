@@ -368,8 +368,8 @@ The card also leans on the dot product for lengths and right angles ([The dot pr
 - [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the third part alone, for flat polygons.
 - [Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md): how a flow swirls.
 - [Surface integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/05-surface-integrals-and-flux.md): area vectors of small patches, added over a surface.
-- Magnetic fields: the push on a moving charge, square to motion and field.
-- Precession: torque turning a spinning axis.
+- [Magnetic fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md): the push on a moving charge, square to motion and field.
+- [Precession](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/03-gyroscopes-and-precession.md): torque turning a spinning axis.
 - Frenet-Serret frame: a curve's third frame direction from the first two.
 - Differential form: the shadows kept as they are, in any dimension.
 

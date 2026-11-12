@@ -381,7 +381,7 @@ The two outputs match line for line.
 
 - [Frobenius](02-frobenius-and-regular-singular-points.md): a series centred at a bad point, times a power of x.
 - [Legendre's equation](04-legendre-polynomials.md): a recurrence that stops by itself.
-- The quantum oscillator: a series forced to stop, so energy comes in steps.
+- [The quantum oscillator](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/04-quantum-harmonic-oscillator.md): a series forced to stop, so energy comes in steps.
 
 ---
 

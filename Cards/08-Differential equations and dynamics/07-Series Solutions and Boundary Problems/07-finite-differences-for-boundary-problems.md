@@ -376,7 +376,7 @@ ALL CHECKS PASS
 
 - [Green's function](10-greens-function-for-a-boundary-problem.md): the exact solution as an integral of the load.
 - [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same difference, now with time steps.
-- Finite elements: small elements on any shape.
+- [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): small elements on any shape.
 - Two-point boundary problems: nonlinear problems and higher-order methods.
 - Galerkin: why finite elements converge.
 

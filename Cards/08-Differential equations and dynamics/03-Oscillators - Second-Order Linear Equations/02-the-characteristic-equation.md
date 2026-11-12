@@ -392,7 +392,7 @@ ALL CHECKS PASS
 - [From one equation to a system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): the roots as eigenvalues.
 - [Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): the two shapes fitted to two ends.
 - [The perpetual American put](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md): a trial power pricing an option.
-- Pole placement: choosing the roots by feedback.
+- [Pole placement](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/04-pole-placement-and-observers.md): choosing the roots by feedback.
 
 ---
 

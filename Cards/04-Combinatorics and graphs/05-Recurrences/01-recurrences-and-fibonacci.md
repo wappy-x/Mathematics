@@ -374,7 +374,7 @@ The two outputs match line for line.
 - [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): a whole sequence carried by one function.
 - [The chromatic polynomial](../12-Planarity%20and%20Colouring/04-chromatic-polynomial.md): a recurrence on networks, from deleting a link.
 - Recurrences: a running time read off a recurrence unsolved.
-- Dynamic programming: storing what a recurrence computed instead of recomputing it.
+- [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): storing what a recurrence computed instead of recomputing it.
 
 Stepping forward costs one step per position, hopeless far out; the next cards reach the answer in one jump.
 

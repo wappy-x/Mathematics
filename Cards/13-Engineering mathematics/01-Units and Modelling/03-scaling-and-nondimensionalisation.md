@@ -593,7 +593,7 @@ Orange: the plug, $\bar u^* = \tau$, the answer with the small term dropped. Gre
 
 - [Similarity](04-similarity-and-model-testing.md): matching the rescaled coefficients between a model and the real thing.
 - [Regular perturbation](05-regular-perturbation.md): keeping the small term and adding its effect as a correction, step by step, when it is small everywhere.
-- Navier-Stokes: the full equations of fluid motion, rescaled.
+- [Navier-Stokes](../08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md): the full equations of fluid motion, rescaled.
 
 Dropping a small term gave the core right and the wall wrong; how to build an answer that is right at both, by matching a core solution to a wall-layer solution, is the job of [Boundary layers](06-boundary-layers-and-singular-perturbation.md).
 

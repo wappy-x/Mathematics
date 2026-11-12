@@ -379,7 +379,7 @@ ALL CHECKS PASS
 
 ## Where this goes next
 
-- Orbits: why an inverse-square pull sends a body along exactly these curves, sun at a focus.
+- [Orbits](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/09-orbital-mechanics-and-the-kepler-problem.md): why an inverse-square pull sends a body along exactly these curves, sun at a focus.
 - Projective varieties: points at infinity, where a hyperbola's two arms join and the four conics become one.
 
 This card gives an orbit's shape, not the reason for it; why gravity produces a conic at all is the orbital mechanics card's result.

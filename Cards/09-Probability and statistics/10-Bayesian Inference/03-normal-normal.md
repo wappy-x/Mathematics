@@ -649,7 +649,7 @@ The first line (orange) is the posterior for the true temperature, spread 0.3333
 - [Black-Litterman](../../12-Financial%20mathematics/37-Portfolio%20Theory/06-black-litterman.md): the same blend with a vector of returns and a matrix of precisions.
 - [A moving hedge ratio](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/07-kalman-filter-for-dynamic-hedge-ratios.md): the one-reading-at-a-time update tracking a hedge ratio that drifts.
 - [Credibility and reinsurance](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/08-credibility-and-reinsurance.md): the weight on the data, renamed the credibility factor, setting premiums.
-- The Kalman filter: the update in a loop, with a prediction step that widens the belief between readings.
+- [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md): the update in a loop, with a prediction step that widens the belief between readings.
 
 The rate of a count, such as server alarms per hour, needs a different conjugate pair: [Gamma-Poisson](04-gamma-poisson.md).
 

@@ -373,7 +373,7 @@ The two outputs match line for line.
 - [Lyapunov functions](04-lyapunov-functions.md): verdicts where the matrix is silent.
 - [Predator and prey](06-predator-prey.md): a linear centre that truly is one.
 - [Limit cycles](08-limit-cycles-and-van-der-pol.md): an unstable rest whose paths settle on a loop.
-- Linearisation: the same step with a control input.
+- [Linearisation](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/02-linearisation-about-an-equilibrium.md): the same step with a control input.
 
 ---
 

@@ -702,7 +702,7 @@ The two outputs are identical, line for line.
 ## Where this goes next
 
 - [The central limit theorem, proved](07-central-limit-theorem.md): in its second road, a second-order expansion of φ near 0 shows the scaled total's characteristic function tends to e^(−t^2/2) for every law with a finite variance; Lévy's converse finishes the proof.
-- Characteristic functions: the same object read as a Fourier transform, opening the shelf that proves Lévy's inversion formula and his continuity theorem in full.
+- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the same object read as a Fourier transform, opening the shelf that proves Lévy's inversion formula and his continuity theorem in full.
 
 This card showed that convergence of characteristic functions is enough; it left open why, for every law with a finite variance, the scaled totals' characteristic functions converge to the normal's, and that is what the central limit theorem's second road supplies.
 

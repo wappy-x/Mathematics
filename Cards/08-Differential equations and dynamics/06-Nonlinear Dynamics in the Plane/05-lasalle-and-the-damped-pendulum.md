@@ -384,7 +384,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Passivity: systems that only store or burn energy, and feedback proved stable by the same pause-set argument.
+- [Passivity](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/05-passivity-and-absolute-stability.md): systems that only store or burn energy, and feedback proved stable by the same pause-set argument.
 
 Physics handed the swing its energy function; for a controller or a circuit with no obvious energy, the open question is how to build one whose rate is never positive, and passivity supplies it.
 

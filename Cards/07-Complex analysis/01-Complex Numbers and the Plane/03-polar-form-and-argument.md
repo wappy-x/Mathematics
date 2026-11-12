@@ -350,7 +350,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Euler's formula](04-eulers-formula.md): writes cos θ + i sin θ as an exponential, so adding angles becomes adding exponents.
-- Phasors: amplitude and phase of a current, multiplied by impedances.
+- [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md): amplitude and phase of a current, multiplied by impedances.
 
 ---
 

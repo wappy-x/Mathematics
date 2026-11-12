@@ -389,8 +389,8 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Electromagnetic waves: the same equation for light, standing in a cavity.
-- Waves on strings and drums: harmonics as the model for quantised states.
+- [Electromagnetic waves](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/08-electromagnetic-waves.md): the same equation for light, standing in a cavity.
+- [Waves on strings and drums](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/01-wave-equation-for-strings-and-membranes.md): harmonics as the model for quantised states.
 - Drumheads: a drum's harmonics, no longer whole multiples.
 
 ---

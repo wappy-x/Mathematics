@@ -375,9 +375,9 @@ The two outputs match line for line.
 
 - [Conservative fields](04-conservative-fields-and-potentials.md): zero curl as the test for a gradient field, and where it fails.
 - [Surface integrals](05-surface-integrals-and-flux.md): outflow across a curved surface.
-- Electric fields: divergence of the electric field as charge.
-- Continuity and Bernoulli: zero divergence as conservation of fluid.
-- Navier-Stokes: both operators in the fluid equations.
+- [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): divergence of the electric field as charge.
+- [Continuity and Bernoulli](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/01-continuity-and-bernoulli.md): zero divergence as conservation of fluid.
+- [Navier-Stokes](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md): both operators in the fluid equations.
 - Vorticity: the curl of a flow, followed in time.
 - Exterior derivative: gradient, curl and divergence as one operation.
 

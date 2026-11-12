@@ -374,7 +374,7 @@ The two outputs agree line for line. The circle at 10 s starts further off, 2% a
 
 - [Optimisation](../03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): the sign of the second derivative telling a peak from a trough.
 - [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): Step 3's bracket extended to every derivative, with its error stated.
-- Stress, strain and bending: a beam's bending as the second derivative of its sag.
+- [Stress, strain and bending](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md): a beam's bending as the second derivative of its sag.
 - Cubic splines: curves stitched so their second derivatives agree at the joins.
 
 ---

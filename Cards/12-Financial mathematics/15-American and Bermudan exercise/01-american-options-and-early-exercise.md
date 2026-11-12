@@ -648,7 +648,7 @@ The two outputs are byte-identical.
 - [Merton's theorem](02-mertons-no-early-exercise-theorem.md): why an American call on a share that pays nothing is never exercised early, and what a dividend changes.
 - [Bermudan options](03-bermudan-options.md): exercise on a schedule of dates, between European and American.
 - [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md): how the American price moves with its inputs, and running it backwards for volatility.
-- Optimal stopping: the backward walk as a general method for any decision of when to stop.
+- [Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): the backward walk as a general method for any decision of when to stop.
 
 This card finds the price but not the rule's shape: the level at which the best holder sells, and how it rises toward the strike as expiry nears, is the next question, answered on [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md).
 

@@ -600,7 +600,7 @@ The roads agree to six decimals for P in both loops (the four-state gap is 0.000
 ## Where this goes next
 
 - [The LQR](06-linear-quadratic-regulator.md): instead of fixing the gain and then solving for P, choose the gain that makes x^T P x as small as possible; the Lyapunov equation becomes a Riccati equation.
-- Passivity: a second kind of energy certificate, for systems joined to each other, where the energy flows in and out through the connections.
+- [Passivity](../10-Robustness%20and%20Adaptation/05-passivity-and-absolute-stability.md): a second kind of energy certificate, for systems joined to each other, where the energy flows in and out through the connections.
 
 This card certifies one known model; what happens when the model itself is wrong by some amount is the question it leaves open.
 

@@ -372,9 +372,9 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md): the same pair of equations with a control to choose.
-- Lagrangian and Hamiltonian mechanics: machines with several coordinates.
-- Symmetry and conservation: a coordinate missing from $H$ has a conserved momentum.
-- Symplectic steps: why kept area bounds the energy error.
+- [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): machines with several coordinates.
+- [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): a coordinate missing from $H$ has a conserved momentum.
+- [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): why kept area bounds the energy error.
 - Hamilton-Jacobi: a function whose slopes are the momenta.
 - Symplectic form: the kept area as a geometric object.
 - Einstein equations: variational field equations on curved spacetime.

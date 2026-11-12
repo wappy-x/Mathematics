@@ -679,7 +679,7 @@ The two outputs agree line for line: both draw the same SplitMix64 stream and do
 
 ## Where this goes next
 
-- The Kalman filter: the discrete filter with many hidden states at once, in matrices, as engineers run it.
+- [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md): the discrete filter with many hidden states at once, in matrices, as engineers run it.
 
 This card tracks one hidden number with a known model; it leaves open how to track several at once and run the filter step by step on a computer, which the engineering card answers.
 

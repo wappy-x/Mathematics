@@ -639,7 +639,7 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [Time delays](10-smith-predictor-and-time-delays.md): a delay adds phase lag that no lead can repay at high frequency, and the Smith predictor's way around it.
-- H-infinity design: loop shaping made systematic, with weights on $S$ and its partners and the largest peak minimised directly.
+- [H-infinity design](../10-Robustness%20and%20Adaptation/03-h-infinity-control-in-outline.md): loop shaping made systematic, with weights on $S$ and its partners and the largest peak minimised directly.
 
 Hand shaping hits a margin and an error target but leaves the time delay as a fixed cost in phase; how far a predictor can remove that cost is the question the Smith predictor card answers.
 

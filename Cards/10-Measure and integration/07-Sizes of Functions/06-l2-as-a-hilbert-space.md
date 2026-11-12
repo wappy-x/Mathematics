@@ -658,7 +658,7 @@ The two outputs match line for line.
 
 - [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): von Neumann's proof applies Riesz representation on an L2 space to produce a density.
 - [Conditional expectation as a projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): conditional expectation defined as the projection onto the functions of the known information.
-- Finite elements: projection onto hat functions to solve differential equations.
+- [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): projection onto hat functions to solve differential equations.
 - Inner products: the same geometry on any complete inner product space.
 - Riesz representation: the representation theorem for every Hilbert space and its consequences.
 - The Fredholm alternative: solvability of equations read off from perpendicular complements.

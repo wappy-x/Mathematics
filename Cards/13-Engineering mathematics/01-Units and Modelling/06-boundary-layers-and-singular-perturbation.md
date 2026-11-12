@@ -613,7 +613,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Lift and drag: real aerofoils, where the outer speed varies along the chord, the layer can separate, and turbulent friction takes over.
+- [Lift and drag](../08-Fluids%20and%20Heat/04-lift-drag-and-boundary-layers.md): real aerofoils, where the outer speed varies along the chord, the layer can separate, and turbulent friction takes over.
 
 This card's wing is a flat skin in a uniform stream; what the layer does when the aerofoil's shape speeds the air up and then slows it, and when that costs lift, is the question the lift-and-drag card answers.
 

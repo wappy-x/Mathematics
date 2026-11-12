@@ -669,7 +669,7 @@ The two outputs agree line for line.
 
 - [PID in practice](08-pid-on-real-hardware.md): anti-windup, a filtered derivative, a fast inner loop (cascade) and feedforward.
 - [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping $L(j\omega)$ directly when three terms are not enough.
-- Adapting as you go: changing the gains as the room's gain and delay change, instead of tuning once for the worst case.
+- [Adapting as you go](../10-Robustness%20and%20Adaptation/04-gain-scheduling-and-adaptive-control.md): changing the gains as the room's gain and delay change, instead of tuning once for the worst case.
 
 This card tunes a loop for a radiator that can deliver anything asked of it, read by a quiet thermometer; what changes with a valve that has limits, a noisy thermometer and disturbances that can be measured is the question pid-on-real-hardware answers.
 

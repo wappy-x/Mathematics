@@ -632,7 +632,7 @@ The two outputs agree line for line, including the simulated markets: both progr
 - [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting a pricing model's inputs to market prices by squared misses.
 - [CAPM](../../12-Financial%20mathematics/37-Portfolio%20Theory/04-capm-and-beta.md): beta as a least-squares slope.
 - [Imperfect hedges](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/03-hedge-ratios-basis-risk-and-cross-hedging.md): the minimum-variance hedge ratio is covariance over variance.
-- Adapting as you go: a controller that refits its model by least squares as data arrive.
+- [Adapting as you go](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/04-gain-scheduling-and-adaptive-control.md): a controller that refits its model by least squares as data arrive.
 - Loss and empirical risk: squared error as one loss among several.
 - Nonlinear least squares: the same score when the model is curved in its parameters.
 - Least squares two ways: why software avoids the raw normal equations of road 2 on hard problems.

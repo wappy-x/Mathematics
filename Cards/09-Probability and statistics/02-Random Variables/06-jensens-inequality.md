@@ -592,7 +592,7 @@ The two outputs match line for line, simulation included, because both languages
 - [Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md): concave utility turns Jensen's gap into a price for risk.
 - [A random hazard](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): a survival chance averaged over a random hazard exceeds the survival chance at the average hazard, because the exponential is convex.
 - KL divergence: Jensen on the logarithm proves the divergence is never negative.
-- Jensen's inequality: supporting lines in many dimensions, and the inequality as an optimisation tool.
+- [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md): supporting lines in many dimensions, and the inequality as an optimisation tool.
 
 Jensen says which side of the average a bent function lands on and, for the square, by exactly how much; how far a random quantity can stray from its average, with only the mean and variance known, is [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md).
 

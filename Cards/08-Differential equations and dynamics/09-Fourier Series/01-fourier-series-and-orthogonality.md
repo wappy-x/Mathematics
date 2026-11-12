@@ -374,8 +374,8 @@ The two outputs are identical line for line.
 
 - [Convergence](02-convergence-jumps-and-gibbs.md): when the sum returns the signal, and the overshoot at a jump.
 - [Half-range series](04-half-range-sine-and-cosine-series.md): a wave on half a cycle, as sines only or cosines only.
-- Sampling: why sampling faster than twice the top harmonic's frequency captures a signal.
-- Wavelets: waves confined in time, where sines run for ever.
+- [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): why sampling faster than twice the top harmonic's frequency captures a signal.
+- [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): waves confined in time, where sines run for ever.
 - Von Neumann analysis: a numerical scheme tested one Fourier mode at a time.
 - Orthonormal bases: orthogonality in any space with a dot product.
 - Completeness of sines and cosines: why no repeating signal lies outside all harmonics.

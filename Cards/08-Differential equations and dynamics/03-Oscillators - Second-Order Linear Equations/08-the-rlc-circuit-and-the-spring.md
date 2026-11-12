@@ -402,7 +402,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Damping ratio and natural frequency](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): ω0 and ζ as the two numbers that describe any such system, circuit or spring.
-- RLC resonance: the same circuit driven by an alternating voltage.
+- [RLC resonance](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/03-rlc-circuits-and-resonance.md): the same circuit driven by an alternating voltage.
 
 ---
 

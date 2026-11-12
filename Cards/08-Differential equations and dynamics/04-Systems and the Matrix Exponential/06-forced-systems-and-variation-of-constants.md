@@ -398,7 +398,7 @@ The two outputs match line for line.
 
 - [Convolution](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the integral here is a convolution, and e^(At) is the response to a single kick.
 - [Pontryagin's principle](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/06-pontryagins-principle-and-bang-bang-control.md): choosing b(t) to reach a target state as fast as possible.
-- State space: the engineer's state-space model, with measured outputs added.
+- [State space](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md): the engineer's state-space model, with measured outputs added.
 
 ---
 

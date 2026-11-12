@@ -381,8 +381,8 @@ The two outputs match line for line.
 
 - [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md): the whole family of such problems, and why their modes are perpendicular.
 - [Half-range series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md): any pluck shape written as a sum of these sines.
-- Buckling: the lowest eigenvalue as the load a column can bear.
-- Schrodinger's equation: eigenvalues as the energies an electron may have.
+- [Buckling](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/08-buckling-and-stability.md): the lowest eigenvalue as the load a column can bear.
+- [Schrodinger's equation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/03-schrodinger-equation-and-the-particle-in-a-box.md): eigenvalues as the energies an electron may have.
 - Self-adjoint extensions: end conditions as the choice that makes the operator symmetric.
 - Helmholtz: the same question for a drum or a room.
 - Volume form and Laplace-Beltrami: the bending operator on a curved surface.

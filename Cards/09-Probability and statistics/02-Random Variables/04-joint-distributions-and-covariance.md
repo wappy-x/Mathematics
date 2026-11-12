@@ -570,7 +570,7 @@ ALL CHECKS PASS
 - [Two assets](../../12-Financial%20mathematics/37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): choosing a and b to make the spread smallest.
 - [Default correlation](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): correlation between two yes-or-no readings, defaulted or not.
 - [The fundamental law](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/04-information-coefficient-and-the-fundamental-law.md): the correlation of a forecast with what happened, as a measure of skill.
-- Wiener and LMS: filters tuned from the covariance of a signal and its noise.
+- [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md): filters tuned from the covariance of a signal and its noise.
 - Conditional entropy and mutual information: a measure of dependence that the wind example cannot fool.
 
 ---

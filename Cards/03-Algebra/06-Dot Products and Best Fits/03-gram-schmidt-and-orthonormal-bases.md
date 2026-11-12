@@ -400,7 +400,7 @@ The two outputs match line for line.
 
 - [The spectral theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): symmetric matrices carry their own perpendicular directions.
 - [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): solutions of a differential equation, perpendicular under an integral.
-- Wavelets: perpendicular unit directions, one per band of frequencies.
+- [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): perpendicular unit directions, one per band of frequencies.
 - Lattices: a skewed basis as the secret, straightening it as the attack.
 - QR: the same factorisation from reflections, steady at machine size.
 - Orthonormal bases: endlessly many such directions, squared length still a sum of squares.

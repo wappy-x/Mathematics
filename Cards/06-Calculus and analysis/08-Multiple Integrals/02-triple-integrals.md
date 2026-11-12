@@ -364,7 +364,7 @@ ALL CHECKS PASS
 
 - [Change of variables](03-change-of-variables-and-jacobians.md): the stretch factor for any coordinates, of which r is one case.
 - [Divergence theorem](../09-Vector%20Calculus/07-divergence-theorem.md): outflow from each piece, added over a solid, equals the flow through its surface.
-- Rotation: squared distance times mass, for spinning bodies.
+- [Rotation](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/02-rigid-body-rotation-and-moment-of-inertia.md): squared distance times mass, for spinning bodies.
 - Ricci and scalar curvature: volumes of small balls in curved space, integrated the same way.
 
 ---

@@ -632,7 +632,7 @@ The two outputs agree line for line at the printed precision.
 
 - [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md): the left end of the plot as the settled answer to a step, and the bandwidth read off the magnitude curve.
 - [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the same complex numbers used to judge a closed loop, and the gain and phase margins read straight off a Bode plot.
-- Sampling: what happens to the frequency axis when the signal is only measured at sample times.
+- [Sampling](../05-Signals/01-sampling-and-the-nyquist-theorem.md): what happens to the frequency axis when the signal is only measured at sample times.
 
 This card says how much and how late the car follows each wobble on its own; whether a controller wrapped around it settles or rings is the question the Nyquist card answers from these same curves.
 

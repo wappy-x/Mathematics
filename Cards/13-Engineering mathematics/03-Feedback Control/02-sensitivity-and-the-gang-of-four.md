@@ -632,7 +632,7 @@ The two outputs agree line for line, including the noise figures, since both lan
 
 ## Where this goes next
 
-- Writing down model error: $T$ measures how a model error in the room is fed back on itself, and the small-gain theorem turns that into a guarantee of stability.
+- [Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): $T$ measures how a model error in the room is fed back on itself, and the small-gain theorem turns that into a guarantee of stability.
 
 This card shows that a 4 min pipe lag left out of the model raised the peak of $\lvert S\rvert$ from 1 to 1.6580; how large a model error a loop can survive without going unstable is the question the small-gain theorem answers.
 

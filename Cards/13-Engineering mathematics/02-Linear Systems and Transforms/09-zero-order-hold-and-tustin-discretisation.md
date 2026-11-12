@@ -661,7 +661,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Predictive control: steps the ZOH model forward over a horizon and chooses the next few heater powers by solving a small optimisation each tick.
+- [Predictive control](../04-State%20Space%20and%20Optimal%20Control/10-model-predictive-control.md): steps the ZOH model forward over a horizon and chooses the next few heater powers by solving a small optimisation each tick.
 
 The thermostat now has an exact model of what one tick of heater power does; what it lacks is a rule for choosing that power when the heater can only heat and the sensor must not overshoot, which model-predictive-control supplies.
 

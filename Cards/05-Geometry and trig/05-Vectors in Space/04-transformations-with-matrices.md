@@ -357,7 +357,7 @@ ALL CHECKS PASS
 
 - [Perspective](05-perspective-and-projective-coordinates.md): a bottom row other than `0 0 1`, and the division that makes far things small.
 - [Symmetry](../06-Beyond%20Euclid/04-symmetry-and-tilings.md): the moves that leave a pattern unchanged, and how they combine.
-- Spin one-half: rotation matrices acting on a quantum state instead of a logo.
+- [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): rotation matrices acting on a quantum state instead of a logo.
 - Rotation group: turns in three dimensions, and a four-number shortcut for chaining them.
 
 ---

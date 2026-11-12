@@ -666,7 +666,7 @@ The two outputs match line for line, simulations included, since both languages 
 - [Unit roots](04-differencing-and-unit-roots.md): what to do when the carry-over is 1, and how to test for it.
 - [GARCH](06-garch-and-volatility-clustering.md): autoregression applied to the size of the shocks, not their direction.
 - [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md): AR(1) in continuous time, traded.
-- Spectral estimation: the same memory seen as a spectrum, and AR fits as a spectral estimate.
+- [Spectral estimation](../../13-Engineering%20mathematics/05-Signals/06-spectral-estimation-and-periodograms.md): the same memory seen as a spectrum, and AR fits as a spectral estimate.
 
 An AR model keeps memory in past values, so every shock echoes forever; the open question is how to model a shock that matters for exactly one or two days and then vanishes, which [Moving average and ARMA](03-ma-and-arma.md) answers.
 

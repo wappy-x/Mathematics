@@ -375,7 +375,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a unitary matrix of roots of unity.
-- States as vectors: Hermitian measurements, unitary time steps.
+- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): Hermitian measurements, unitary time steps.
 - Adjoints: the star in infinitely many coordinates.
 - C-star algebras: the star turned into an axiom.
 - Qubits: unit complex vectors as quantum states.

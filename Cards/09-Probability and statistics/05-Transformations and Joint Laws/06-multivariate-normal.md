@@ -657,7 +657,7 @@ The two outputs match line for line, simulated numbers included: both languages 
 - [Several Brownian motions](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md): correlated noise in continuous time, built by the same Cholesky mix.
 - [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): the factor at work over many time steps.
 - [Parametric VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md): the portfolio's bell turned into a regulatory loss figure.
-- The Kalman filter: linear maps and conditioning of normal vectors, repeated every time step.
+- [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md): linear maps and conditioning of normal vectors, repeated every time step.
 - Covariance matrices: the positive definite matrices as a curved space of their own.
 - Random projection: a matrix of independent normal draws used to shrink data while keeping distances.
 

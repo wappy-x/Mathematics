@@ -371,7 +371,7 @@ The two outputs match line for line. The figure's curve runs through the `figure
 ## Where this goes next
 
 - [Inverse trig](05-inverse-trig-and-solving-equations.md): the formula run backwards, from a height to the times it happens.
-- Phasors: amplitude and phase kept as an arrow, so waves of one period add like arrows.
+- [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md): amplitude and phase kept as an arrow, so waves of one period add like arrows.
 
 The formula turns a time into a height. A skipper needs the reverse: the times when the water is deep enough.
 

@@ -393,7 +393,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): a step rule that keeps an oscillator's energy from creeping up, the fix for the 2788 mJ.
-- Vibration modes: modes of real structures, with damping and a driving force.
+- [Vibration modes](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md): modes of real structures, with damping and a driving force.
 
 ---
 

@@ -384,7 +384,7 @@ The two outputs match line for line.
 
 - [Stirling's approximation](../06-Series/09-stirlings-approximation.md): n! sized by comparing a sum with an integral.
 - [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by quadrature.
-- Digital filters: the trapezoid rule as a filter design.
+- [Digital filters](../../13-Engineering%20mathematics/05-Signals/04-digital-filters-fir-and-iir.md): the trapezoid rule as a filter design.
 - Trapezoid, midpoint and Simpson: the whole family of weighted rules.
 
 Equal slices and fixed weights are one choice; which points and weights buy the most accuracy per height is the question Trapezoid, midpoint and Simpson takes up.

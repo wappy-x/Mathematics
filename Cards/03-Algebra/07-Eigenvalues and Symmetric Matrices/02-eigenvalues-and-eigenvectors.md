@@ -403,10 +403,10 @@ ALL CHECKS PASS
 - [Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): whole curves.
 - [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): probability, properly.
 - [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): trade schedules.
-- Pole placement: factors by design.
-- Vibration modes: vibration modes.
-- The quantum oscillator: allowed energies.
-- Spin one-half: measured values.
+- [Pole placement](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/04-pole-placement-and-observers.md): factors by design.
+- [Vibration modes](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md): vibration modes.
+- [The quantum oscillator](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/04-quantum-harmonic-oscillator.md): allowed energies.
+- [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): measured values.
 - PageRank by power iteration: road two at scale.
 - The graph Laplacian: network cuts.
 - Every root at once: the trick reversed.

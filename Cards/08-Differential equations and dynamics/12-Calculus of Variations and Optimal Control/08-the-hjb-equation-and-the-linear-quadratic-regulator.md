@@ -409,7 +409,7 @@ The two outputs match line for line. Halving the RK4 step on the Riccati equatio
 ## Where this goes next
 
 - [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): noise adds a second-derivative term; Feynman-Kac ties it to averages.
-- The LQR: many states, a matrix $P$, the matrix Riccati equation.
+- [The LQR](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md): many states, a matrix $P$, the matrix Riccati equation.
 - The HJB equation: value functions with corners.
 - [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the stochastic HJB equation choosing a stock holding.
 

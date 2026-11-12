@@ -363,7 +363,7 @@ The two outputs match line for line. The washer error closes more slowly than Si
 
 ## Where this goes next
 
-- Rotation: weighting each piece by its distance squared instead of its distance, which sets how hard a body is to spin.
+- [Rotation](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/02-rigid-body-rotation-and-moment-of-inertia.md): weighting each piece by its distance squared instead of its distance, which sets how hard a body is to spin.
 
 ---
 

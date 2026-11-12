@@ -374,7 +374,7 @@ The two outputs match line for line.
 - [Small angles](08-small-angles-and-the-sine-bound.md): a short arc against its height.
 - [Polar coordinates](../04-Coordinates%20and%20Curves/03-polar-coordinates.md): from a point back to its angle.
 - [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): the circle's points as numbers.
-- AC power: three points a third of a turn apart.
+- [AC power](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/09-power-and-three-phase.md): three points a third of a turn apart.
 - Runge's phenomenon: circle points dropped onto a diameter.
 
 The circle says where one swing lands; where a jib hinged on a jib lands, one angle added to another, is the addition formula of [Trig identities](03-trig-identities.md).

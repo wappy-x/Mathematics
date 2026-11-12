@@ -350,7 +350,7 @@ The two outputs match line for line.
 
 - [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): distances along the surface, not through it, from the same two angles.
 - [Triple integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/02-triple-integrals.md): volumes of balls and cylinders, summed slice by slice in these coordinates.
-- Hydrogen in outline: an atom's electron shapes, written in a radius and two angles.
+- [Hydrogen in outline](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/07-the-hydrogen-atom-in-outline.md): an atom's electron shapes, written in a radius and two angles.
 - The Laplacian in round coordinates, and the modes it splits into: the equations of heat and gravity rewritten for round problems.
 
 ---

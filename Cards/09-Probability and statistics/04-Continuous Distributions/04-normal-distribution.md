@@ -592,7 +592,7 @@ The two outputs match line for line, simulated counts included: both languages d
 - Rate and distortion: the normal source as the hardest to compress.
 - EM: fitting a mixture of bells.
 - Weighted Gauss rules: averages under the bell by a few weighted points.
-- The heat kernel: heat spreading as a widening bell.
+- [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat spreading as a widening bell.
 - Erdos-Kac: the count of a number's prime factors follows the bell.
 
 ---

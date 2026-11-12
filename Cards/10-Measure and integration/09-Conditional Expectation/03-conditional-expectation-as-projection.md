@@ -624,7 +624,7 @@ The two outputs agree line for line.
 
 ## Where this goes next
 
-- Projection: a closest point in any closed subspace of any Hilbert space, and the orthogonal complement.
+- [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): a closest point in any closed subspace of any Hilbert space, and the orthogonal complement.
 - [The rules of conditional expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and conditional Jensen, several of them read off the projection.
 - [Conditioning on a random variable](05-conditioning-on-a-random-variable.md): the forecast as a function of an observed quantity, such as the season.
 - [Filtrations and martingales](06-filtrations-and-martingales.md): projections onto information that grows over time.

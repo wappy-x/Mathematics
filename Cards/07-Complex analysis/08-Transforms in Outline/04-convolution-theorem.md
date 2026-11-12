@@ -383,7 +383,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- The DFT and the FFT: convolving long sampled signals by multiplying their discrete transforms.
+- [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): convolving long sampled signals by multiplying their discrete transforms.
 - The fast Fourier transform: the algorithm that makes the multiply-instead route fast.
 - Tempered distributions: smearing signals that are not integrable, such as a constant or a single sharp spike.
 - The convolution theorem: every steady, linear system is a convolution with its response to one kick.

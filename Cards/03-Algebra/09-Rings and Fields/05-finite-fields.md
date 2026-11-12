@@ -378,7 +378,7 @@ The two outputs match line for line.
 
 - Hamming and Reed-Solomon: the codes behind it.
 - AES: the field inside a cipher.
-- Elliptic curves: curves over a finite field.
+- [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): curves over a finite field.
 - Quadratic reciprocity: squares on a prime clock.
 - Finite fields: existence, uniqueness, symmetry.
 - The curve mod p: counting points field by field.

@@ -394,7 +394,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- RLC resonance: the same amplitude curve in a circuit.
+- [RLC resonance](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/03-rlc-circuits-and-resonance.md): the same amplitude curve in a circuit.
 
 How damping sets the peak's width, and so how sharply a circuit picks one frequency, is left to that card.
 

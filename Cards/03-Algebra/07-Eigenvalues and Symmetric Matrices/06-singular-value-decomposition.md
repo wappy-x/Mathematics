@@ -407,11 +407,11 @@ Step 3 writes the matrix as one piece per factor: $\sigma_1$ times the grid made
 ## Where this goes next
 
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): these axes on centred data.
-- Principal components: how many axes a wide table needs.
+- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): how many axes a wide table needs.
 - Singular value decomposition: the factors without building $A^T A$; best answers to unsolvable systems.
-- Can you steer every state, and can you see every state: rank off the factors, deciding whether a system steers.
-- Writing down model error: the largest factor as worst-case gain.
-- Compressed sensing: recovery when a matrix flattens most of its input.
+- [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank off the factors, deciding whether a system steers.
+- [Writing down model error](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): the largest factor as worst-case gain.
+- [Compressed sensing](../../13-Engineering%20mathematics/05-Signals/10-compressed-sensing-in-outline.md): recovery when a matrix flattens most of its input.
 
 One question stays open, and every application above turns on it: the tip above prices what a dropped factor costs the matrix, never what it costs the answer.
 

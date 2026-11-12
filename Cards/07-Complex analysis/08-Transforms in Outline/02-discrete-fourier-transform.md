@@ -378,10 +378,10 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices for many strikes from one FFT.
-- The DFT and the FFT: windows, leakage and spectra of real signals.
+- [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): windows, leakage and spectra of real signals.
 - Von Neumann analysis: each grid frequency tested for growth.
 - The fast Fourier transform: the even-odd split built and costed.
-- Sampling: why k past N/2 is a mirror.
+- [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): why k past N/2 is a mirror.
 - The large sieve: Parseval-type bounds used to count primes.
 - Shor and Grover: the transform as a quantum circuit that finds periods.
 

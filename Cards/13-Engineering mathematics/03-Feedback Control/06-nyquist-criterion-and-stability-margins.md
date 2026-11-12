@@ -631,7 +631,7 @@ The two outputs agree line for line at the printed precision.
 
 - [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): bending the curve away from −1 on purpose, buying phase margin near the crossover without giving up gain at low frequency.
 - [Time delays](10-smith-predictor-and-time-delays.md): a controller that models the pipe and so removes most of the delay's lag from the loop.
-- Writing down model error: replacing two one-at-a-time margins by a guarantee against every model error up to a stated size.
+- [Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): replacing two one-at-a-time margins by a guarantee against every model error up to a stated size.
 
 The margins measure how far the curve is from −1; how to reshape the curve so that it keeps that distance while the thermostat works harder is the question loop shaping answers.
 

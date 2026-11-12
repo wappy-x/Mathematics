@@ -383,7 +383,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Parseval's identity](03-parsevals-identity.md): the energy in the error, which does shrink to 0 even with a jump.
-- Windows: tapering the top harmonics to tame the ringing.
+- [Windows](../../13-Engineering%20mathematics/05-Signals/03-windows-and-spectral-leakage.md): tapering the top harmonics to tame the ringing.
 - Dirichlet's theorem: the two kinds of convergence this card contrasts, made exact.
 - The Gibbs overshoot and the cure: averaging the partial sums, which removes the overshoot entirely.
 

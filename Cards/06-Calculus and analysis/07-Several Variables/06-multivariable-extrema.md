@@ -375,7 +375,7 @@ The two outputs agree line for line.
 - [Lagrange multipliers](08-lagrange-multipliers.md): flat spots when the inputs must satisfy an equation that cannot be solved by hand, as the volume was.
 - [Convex functions](09-convex-functions.md): every pit global, no fence needed.
 - [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): model fitting as a pit.
-- The LQR: control as the pit of a quadratic cost.
+- [The LQR](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md): control as the pit of a quadratic cost.
 - Local and global minima: local against global in general.
 - Optimality conditions: these tests in any number of inputs.
 

@@ -347,8 +347,8 @@ ALL CHECKS PASS
 - [A partial differential equation](../10-The%20Classical%20PDEs/01-what-a-pde-says.md): conditions on the edge of a region.
 - [The Euler-Lagrange equation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): best paths between two fixed ends.
 - [Boundary layers](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md): a tiny coefficient on y'' makes a thin end layer.
-- Stress, strain and bending: the beam law behind the strut.
-- Viscosity: flow fixed at two walls.
+- [Stress, strain and bending](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md): the beam law behind the strut.
+- [Viscosity](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/02-viscosity-and-pipe-flow.md): flow fixed at two walls.
 - Lax-Milgram: one answer from an energy argument.
 - Weak solutions: answers without a second derivative.
 - Boundary conditions: the three types on a surface.

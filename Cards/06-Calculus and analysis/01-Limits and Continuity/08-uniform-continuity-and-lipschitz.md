@@ -383,7 +383,7 @@ The two outputs agree line for line.
 
 - [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): K from a bounded derivative; K below 1 forces one fixed point.
 - [Uniform convergence](../06-Series/07-uniform-convergence.md): "one tolerance first" for a sequence of functions.
-- Fixed points: iteration error bounded by powers of K.
+- [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): iteration error bounded by powers of K.
 - Uniform continuity: Heine–Cantor for any distance, compactness replacing closed and bounded.
 - Bounded operators: for linear maps, K is the operator norm.
 - Approximate identities: uniform continuity making smoothing converge everywhere at once.

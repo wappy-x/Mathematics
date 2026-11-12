@@ -399,7 +399,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Electric fields: the electric potential, found this way.
+- [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): the electric potential, found this way.
 - Closed and exact forms: zero curl and having a potential in any dimension, and why they agree without holes.
 - De Rham cohomology: counting holes with such fields.
 

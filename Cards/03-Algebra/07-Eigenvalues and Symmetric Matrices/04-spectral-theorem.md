@@ -391,8 +391,8 @@ The two outputs match line for line.
 - [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): axes as motions.
 - [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): a bell curve's axes.
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): biggest factors summarise data.
-- States as vectors: real measured factors.
-- Principal components: that summary, applied.
+- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): real measured factors.
+- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): that summary, applied.
 - The graph Laplacian: where to cut a network.
 - Semidefinite programs: non-negative factors, optimised.
 - Iterating instead of factoring: factors set solver speed.

@@ -393,7 +393,7 @@ ALL CHECKS PASS
 - [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md): the grid of Step 3 and its step limit.
 - [The heat kernel](10-the-heat-kernel.md): the solution from one hot point.
 - [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md): the equation as an average over random paths.
-- Fourier's law: real materials and walls.
+- [Fourier's law](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/05-heat-conduction-and-fouriers-law.md): real materials and walls.
 - Three families: the model parabolic equation.
 - Hille-Yosida: when such a law defines an evolution.
 - Two evolutions: the solution as an exponential of the bend.

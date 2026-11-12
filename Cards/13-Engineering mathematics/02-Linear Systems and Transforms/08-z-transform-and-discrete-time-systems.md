@@ -680,8 +680,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md): the exact a and b for a heater held over each tick, and how an s-plane controller becomes a z-plane one.
-- Sampling: why the point z = −1, half the sampling rate, is the fastest wobble a sampled system can see, and what happens to faster ones.
-- Digital filters: difference equations designed on purpose, with poles and zeros placed to pass some frequencies and stop others.
+- [Sampling](../05-Signals/01-sampling-and-the-nyquist-theorem.md): why the point z = −1, half the sampling rate, is the fastest wobble a sampled system can see, and what happens to faster ones.
+- [Digital filters](../05-Signals/04-digital-filters-fir-and-iir.md): difference equations designed on purpose, with poles and zeros placed to pass some frequencies and stop others.
 
 This card took the update rule a = 0.998, b = 0.04 as given; where those numbers come from when a continuous tip is sampled every 0.1 s, and how much the choice of sampling map changes the poles, is what zero-order-hold-and-tustin-discretisation answers.
 

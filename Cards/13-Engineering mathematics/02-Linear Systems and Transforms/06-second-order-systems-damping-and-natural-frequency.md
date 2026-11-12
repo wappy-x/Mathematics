@@ -658,8 +658,8 @@ The two outputs match line for line.
 
 - [Step response specs](07-step-response-specifications.md): rise time, peak time, overshoot and settling as written requirements, and what a third pole does to them.
 - [Root locus](../03-Feedback%20Control/05-root-locus.md): how the poles, and so ζ and ω_n, move as a feedback gain is turned up.
-- RLC resonance: the same two numbers in a circuit, with the quality factor Q = 1/(2ζ).
-- Vibration modes: a structure with many masses has one ω_n and ζ per mode.
+- [RLC resonance](../06-Circuits%20and%20Electromagnetism/03-rlc-circuits-and-resonance.md): the same two numbers in a circuit, with the quality factor Q = 1/(2ζ).
+- [Vibration modes](../07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md): a structure with many masses has one ω_n and ζ per mode.
 
 The corner meets its 4.60% only if nothing but a force pushes it; when a specification also limits rise time and settling, the question becomes which numbers to write in the requirement, which step-response-specifications answers.
 

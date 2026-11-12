@@ -410,7 +410,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Recurrences: the working statement, rounding and shrinking-join condition included.
+- [Recurrences](01-recurrences-and-fibonacci.md): the working statement, rounding and shrinking-join condition included.
 - The fast Fourier transform: the flat case carrying a workhorse of engineering.
 
 The three cases cover the powers and nothing between them, so a joining cost of n times a logarithm has no answer here; supplying one is a later card's first job.

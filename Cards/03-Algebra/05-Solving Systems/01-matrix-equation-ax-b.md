@@ -385,8 +385,8 @@ The two outputs match line for line.
 - [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the other question, $b$ a multiple of $x$.
 - [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): far more rows than unknowns.
 - [Hedging three Greeks at once](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/02-delta-gamma-vega-hedging.md): hedge sizes as the cancelling $x$.
-- Kirchhoff's laws: junction and loop rules, one system.
-- Finite elements: a heat or stress field, chopped up.
+- [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): junction and loop rules, one system.
+- [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): a heat or stress field, chopped up.
 - Linear programs: the same rows, plus inequalities and a cost.
 - Conjugate gradient: huge systems by descent, no $A^{-1}$.
 - Linear programs: rows as walls, answers as corners.

@@ -380,7 +380,7 @@ The line is the rope's height at 1 m, from the formula with its velocity term: f
 ## Where this goes next
 
 - [Standing waves](06-standing-waves-on-a-string.md): the finite string, where reflected copies add into standing patterns.
-- Electromagnetic waves: the same equation for light.
+- [Electromagnetic waves](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/08-electromagnetic-waves.md): the same equation for light.
 - d'Alembert: characteristics, energy and uniqueness in full.
 
 The formula leaves open what the string does once the copies hit the held ends at 0.50 s; the standing-waves card answers it.

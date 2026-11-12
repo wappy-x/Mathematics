@@ -360,8 +360,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md): settling proved from V' ≤ 0 alone, on the damped swing.
-- Stability of a state-space model: for stable linear systems a quadratic V always exists, found from a matrix equation.
-- Passivity: stored energy as V for whole families of feedback loops.
+- [Stability of a state-space model](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/05-hurwitz-schur-and-lyapunov-stability.md): for stable linear systems a quadratic V always exists, found from a matrix equation.
+- [Passivity](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/05-passivity-and-absolute-stability.md): stored energy as V for whole families of feedback loops.
 
 ---
 

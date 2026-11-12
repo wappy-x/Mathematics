@@ -396,7 +396,7 @@ The two outputs match line for line.
 
 - [Forced systems](06-forced-systems-and-variation-of-constants.md): the heating back on, with e^(A(t−s)) inside an integral.
 - [Discretising a design](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md): e^(Ah) as the exact step of a sampled system.
-- State space: the same object with inputs and outputs attached.
+- [State space](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md): the same object with inputs and outputs attached.
 - Evolution as an equation: e^(A(s+t)) = e^(As) e^(At) kept when A acts on functions and the series fails.
 - Lie algebra: from rates to rotations.
 

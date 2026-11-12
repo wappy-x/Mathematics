@@ -404,7 +404,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Hydrogen in outline: P_n in the shapes of electron states.
+- [Hydrogen in outline](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/07-the-hydrogen-atom-in-outline.md): P_n in the shapes of electron states.
 - Orthogonal polynomials: the same polynomials from 1, x, x^2, … with no equation.
 - The Laplacian in round coordinates, and the modes it splits into: the equation's origin and the factor (r/R)^n.
 

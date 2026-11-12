@@ -367,7 +367,7 @@ ALL CHECKS PASS
 
 - [Divergence theorem](07-divergence-theorem.md): flux out of a closed surface from the divergence inside.
 - [Stokes' theorem](08-stokes-theorem.md): curl flux through a sheet from circulation round its edge.
-- Electric fields: electric flux and enclosed charge.
+- [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): electric flux and enclosed charge.
 - Integration on an oriented manifold: the area vector as a form, in any dimension.
 
 The taut and sagging tarps differ in area yet match in flux, because they share an edge; when flux depends only on the edge is what the divergence theorem and Stokes' theorem decide.

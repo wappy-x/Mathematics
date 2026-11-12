@@ -415,11 +415,11 @@ The two outputs match line for line.
 - [Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md): ω made complex, and where the integral converges.
 - [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): transforms of probability densities, inverted.
 - [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices from the inversion integral.
-- Sampling: how often to sample a signal whose spectrum stops.
-- Uncertainty: narrow in time forces wide in frequency.
+- [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): how often to sample a signal whose spectrum stops.
+- [Uncertainty](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): narrow in time forces wide in frequency.
 - Plancherel: the transform keeps energy, up to 2π.
 - Tempered distributions: a transform for f = 1 and other signals without finite area.
-- Sampling: sampling as multiplying by a train of spikes.
+- [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): sampling as multiplying by a train of spikes.
 - The Fourier transform of an absolutely integrable signal, and why it fades at infinity: why every finite-area signal's spectrum fades at high frequency.
 
 The flash's spectrum is known; what multiplying it by a filter's spectrum does back in time is [Convolution](04-convolution-theorem.md).

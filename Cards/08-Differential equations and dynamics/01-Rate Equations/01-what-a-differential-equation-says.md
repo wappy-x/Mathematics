@@ -368,7 +368,7 @@ ALL CHECKS PASS
 - [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md): road two made precise, with its error.
 - [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): the same rules with random noise added.
 - [Nondimensionalisation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/03-scaling-and-nondimensionalisation.md): rescaling time and temperature so the constant disappears.
-- Newton's laws: the second-order equation of motion.
+- [Newton's laws](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/01-newtons-laws-work-and-energy.md): the second-order equation of motion.
 
 ---
 

@@ -381,7 +381,7 @@ The outputs agree line for line.
 
 - [Laplace on a rectangle](08-laplace-on-a-rectangle.md): the sine series the code sums, by separation of variables.
 - Maximum principles: the principle for wider families of equations, heat included.
-- Harmonic functions: harmonic functions in any dimension.
+- [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): harmonic functions in any dimension.
 
 The formula for a rectangle: [Laplace on a rectangle](08-laplace-on-a-rectangle.md).
 

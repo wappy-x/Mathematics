@@ -381,7 +381,7 @@ The orange line is the hoop's spin, from road two: 4.53 when the bead is highest
 ## Where this goes next
 
 - [Hamilton's equations](05-hamiltons-equations.md): trade each speed for its momentum and get two first-order equations per coordinate.
-- Lagrangian and Hamiltonian mechanics: the same recipe for linkages and vibrating structures.
+- [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the same recipe for linkages and vibrating structures.
 - Noether: every continuous symmetry of the action, and the quantity it conserves.
 
 ---

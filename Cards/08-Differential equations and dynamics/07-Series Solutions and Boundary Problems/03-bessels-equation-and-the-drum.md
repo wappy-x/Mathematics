@@ -404,7 +404,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md): why the zeros never run out, and why the shapes are orthogonal.
-- Waves on strings and drums: the wave equation behind the ring balance.
+- [Waves on strings and drums](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/01-wave-equation-for-strings-and-membranes.md): the wave equation behind the ring balance.
 - Drumheads: every mode, including those with still diameters.
 
 A real strike sounds many notes at once; how much of each it contains is the orthogonality question Sturm-Liouville answers.
