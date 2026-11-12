@@ -8,9 +8,15 @@
 
 A simulator takes ten settings and returns one cost. It might be a reservoir model scoring a release rule with ten numbers against a year of rain, the shelf's house example. Nothing else comes back: no formula, no slope. A run is cheap enough that a budget of 20,000 runs is fine, but far too few to try everything. The aim is the smallest cost, so this is a **minimisation**.
 
-This card uses a stand-in surface whose bottom is known, so every answer can be graded. Read its cost as the rule's yearly cost in thousand pounds above the best possible rule, so 0 is the best rule. It is a rotated version of the Rastrigin test function: a bowl with ripples cut into it. Measured along ten tilted axes (its hidden coordinates, defined in The formula), it has one valley around every point whose coordinates are whole numbers, and the true minimum is 0, at the origin. Run 1's random start costs 167.50 thousand pounds a year more than the best rule.
+This card uses a stand-in surface whose bottom is known, so every answer can be graded. Read its cost as the rule's yearly cost in thousand pounds above the best possible rule, so 0 is the best rule.
 
-Three kinds of method work from values alone. **Nelder-Mead** moves a cluster of points downhill by mirroring the worst point through the others. **Simulated annealing** takes random steps and sometimes accepts a step uphill, less often as a "temperature" falls. **Population methods**, here differential evolution, move 40 points at once, each taking steps the size of the gaps between the others. Over 10 seeded runs of 20,000 evaluations each, the best cost found averages 42.29 for Nelder-Mead restarted from a fresh random start whenever its cluster collapses, 29.78 for annealing and 28.04 for differential evolution. A single Nelder-Mead run stops long before the budget, after about 1,077 evaluations, at 78.00 on average. None reaches 0. An operator would adopt the best rule found and, on a real simulator, could not tell how far above the best rule it sits.
+It is a rotated version of the Rastrigin test function: a bowl with ripples cut into it. Measured along ten tilted axes (its hidden coordinates, defined in The formula), it has one valley around every point whose coordinates are whole numbers, and the true minimum is 0, at the origin. Run 1's random start costs 167.50 thousand pounds a year more than the best rule.
+
+Three kinds of method work from values alone. **Nelder-Mead** moves a cluster of points downhill by mirroring the worst point through the others. **Simulated annealing** takes random steps and sometimes accepts a step uphill, less often as a "temperature" falls. **Population methods**, here differential evolution, move 40 points at once, each taking steps the size of the gaps between the others.
+
+Over 10 seeded runs of 20,000 evaluations each (a seed fixes a run's random choices, so it can be repeated), the best cost found averages 42.29 for Nelder-Mead restarted from a fresh random start whenever its cluster collapses, 29.78 for annealing and 28.04 for differential evolution. A single Nelder-Mead run stops long before the budget, after about 1,077 evaluations, at 78.00 on average.
+
+None reaches 0. An operator would adopt the best rule found and, on a real simulator, could not tell how far above the best rule it sits.
 
 Then the honest part. No method that only reads values can prove it has found the bottom. Nelder-Mead promises only that its best value never rises, and annealing's theorems are about an endless run. A certified answer needs extra knowledge, such as a bound on how steep the surface can be, and then costs $10^{35.73}$ evaluations here.
 
@@ -116,23 +122,27 @@ McKinnon showed they need not. His function is
 
 $$f(u, v) = \begin{cases} 360\,u^2 + v + v^2 & u \le 0 \\ 6\,u^2 + v + v^2 & u > 0 \end{cases}$$
 
-It is strictly convex with a continuous slope, and calculus gives its minimum: $u = 0$ and $1 + 2v = 0$, so $v = -0.5$ and $f = -0.250000$. McKinnon proved that from the start of Step 1 every step is an inside contraction. The simplex shrinks onto (0, 0), where the slope is (0, 1), not zero. The checks stop at (0.000000, 0.000000) with $f$ = 0.000000 after 165 evaluations. A fresh simplex of side 1 started at that point finds (0.000000, −0.500000) with $f$ = −0.250000, after 286 evaluations in all. Restarting a collapsed simplex is the usual fix. It is a habit, not a theorem.
+It is strictly convex with a continuous slope, and calculus gives its minimum: $u = 0$ and $1 + 2v = 0$, so $v = -0.5$ and $f = -0.250000$. McKinnon proved that from the start of Step 1 every step is an inside contraction. The simplex shrinks onto (0, 0), where the slope is (0, 1), not zero.
+
+The checks stop at (0.000000, 0.000000) with $f$ = 0.000000 after 165 evaluations. A fresh simplex of side 1 started at that point finds (0.000000, −0.500000) with $f$ = −0.250000, after 286 evaluations in all. Restarting a collapsed simplex is the usual fix. It is a habit, not a theorem.
 
 On the ripples each run collapses into a valley after 1077.3 evaluations on average. Spending the rest of the budget on fresh random starts, **multistart**, brings the mean best down from 78.00 to 42.29.
 
 ### Step 3: annealing pays for uphill steps
 
-Annealing changes one setting at a time by a normal step of spread 1, about the distance between valleys. It takes every step down. It takes a step up by $\Delta$ with chance $e^{-\Delta/T}$, so a climb of 10 is accepted with chance 0.716531 at $T = 30$, and almost never once $T$ is below 1.
+Annealing changes one setting at a time by a normal (bell-curve) random step of spread 1, about the distance between valleys. It takes every step down. It takes a step up by $\Delta$ with chance $e^{-\Delta/T}$, so a climb of 10 is accepted with chance 0.716531 at $T = 30$, and almost never once $T$ is below 1.
 
 Why does that find low valleys? Hold $T$ fixed. The acceptance rule satisfies detailed balance: in the long run each step is made as often as its reverse. So the walk spends its time in proportion to $e^{-f/T}$, as [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md) states and [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) proves. Lower valleys get exponentially more weight, and the weight piles up faster as $T$ falls.
 
-The checks test this on one ripple at $T = 5$. A walk of 200,000 steps spends 0.2525 of its time within 0.5 of the bottom, with a standard error of 0.0024. Simpson's rule (a standard way to compute an area under a curve from sampled heights) applied to $e^{-g/T}$ says 0.2513. The two agree.
+The checks test this on one ripple at $T = 5$. A walk of 200,000 steps spends 0.2525 of its time within 0.5 of the bottom, with a standard error (the likely size of the error in that estimate) of 0.0024. Simpson's rule (a standard way to compute an area under a curve from sampled heights) applied to $e^{-g/T}$ says 0.2513. The two agree.
 
 ### Step 4: the cooling schedule, and what it can promise
 
 The runs here cool geometrically, from 30 to 0.1. The factor is $q = (0.1/30)^{1/20000}$ = 0.999715 per evaluation, and halfway through $T$ = 1.7321. This schedule, the one nearly everyone uses, carries no guarantee. Its results are measured run by run.
 
-Two kinds of theorem exist, and neither covers these runs. For a finite search with local moves, Hajek's theorem, stated on [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md), needs the slow schedule $T_k = T_0 / \ln(k + 2)$ (that card's $c / \ln(t + 1)$, shifted because $k$ counts from 0 here and $\ln 1 = 0$), with $T_0$ at least the depth of the deepest trap. For a continuous surface, Bélisle proved that if every proposal can land anywhere in the region, with a chance density bounded away from zero, and the temperature falls to 0, then under mild further conditions the current value converges in probability to the global minimum value: the chance of sitting more than any fixed amount above it shrinks to 0.
+Two kinds of theorem exist, and neither covers these runs. For a finite search with local moves, Hajek's theorem, stated on [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md), needs the slow schedule $T_k = T_0 / \ln(k + 2)$, with $T_0$ at least the depth of the deepest trap. That card writes it $c / \ln(t + 1)$; it is shifted here because $k$ counts from 0 and $\ln 1 = 0$.
+
+For a continuous surface, Bélisle proved a limit result. Suppose every proposal can land anywhere in the region, with a chance density bounded away from zero, and the temperature falls to 0. Then under mild further conditions the current value converges in probability to the global minimum value: the chance of sitting more than any fixed amount above it shrinks to 0.
 
 Both are statements about the limit $k \to \infty$, not about 20,000 evaluations. The checks run the logarithmic schedule with $T_0 = 30$, with no proof that 30 is deep enough. At the end of the budget it is still at $T$ = 3.0292. Its walks end at 46.54 on average, and their best is 32.56, against 29.78 for geometric cooling.
 
@@ -147,7 +157,9 @@ Suppose a method has evaluated $f$ at $K$ points. Pick any point it did not eval
 
 </details>
 
-What breaks the argument is extra knowledge. A **Lipschitz bound** $L$ says the cost can change by at most $L$ times the distance moved. Here $\|\nabla f\| \le 2\|y\| + 20\pi\sqrt{n}$, and $\|y\| = \|x\| \le 5.12\sqrt{10}$ inside the box, so $L$ = 231.07. Lay a grid over the box. The minimiser is within half a grid diagonal of some grid point, so the best grid value is at most $L$ times that half-diagonal above the minimum. To be within 1 of the minimum, the spacing must be 0.002737: 3743 points per axis, $10^{35.73}$ points in all. That is a certificate, at a cost no budget can meet.
+What breaks the argument is extra knowledge. A **Lipschitz bound** $L$ says the cost can change by at most $L$ times the distance moved. Here $\nabla f$ is the slope of the surface and $\|\nabla f\|$ is its length, the steepness. The box is the region where every setting lies from −5.12 to 5.12. Then $\|\nabla f\| \le 2\|y\| + 20\pi\sqrt{n}$, and $\|y\| = \|x\| \le 5.12\sqrt{10}$ inside the box, because the rotation keeps lengths, so $L$ = 231.07.
+
+Lay a grid over the box. The minimiser is within half a grid diagonal of some grid point, so the best grid value is at most $L$ times that half-diagonal above the minimum. To be within 1 of the minimum, the spacing must be 0.002737: 3743 points per axis, $10^{35.73}$ points in all. That is a certificate, at a cost no budget can meet.
 
 Random search has a guarantee too. One draw lands within 0.5 of the origin, inside the bottom valley, with chance 1.9646 in $10^{13}$. On average that takes 5.09 million million draws. In 20,000 draws its best averages 65.53.
 
@@ -241,7 +253,7 @@ Orange: Nelder-Mead with multistart, at 24.87 by 4,000 evaluations and never bet
 
 ## Code, from first principles, and it actually runs
 
-The script builds the rotated surface, then runs Nelder-Mead (one run and multistart), four temperature schedules for annealing, differential evolution and random search, each for 20,000 evaluations from 10 seeded starts. Cost is counted in evaluations, never seconds. Random numbers come from SplitMix64, written out, so both languages print the same. It takes four independent roads: every best found against the proved floor $f \ge 0$; the fixed-temperature walk against Simpson's rule on $e^{-g/T}$; Nelder-Mead on McKinnon's function against its calculus minimum, and on a smooth bowl against 0; and the rotation checked orthogonal.
+The script builds the rotated surface, then runs Nelder-Mead (one run and multistart), four temperature schedules for annealing, differential evolution and random search, each for 20,000 evaluations from 10 seeded starts. Cost is counted in evaluations, never seconds. Random numbers come from SplitMix64, a small random-number generator, written out, so both languages print the same. It takes four independent roads: every best found against the proved floor $f \ge 0$; the fixed-temperature walk against Simpson's rule on $e^{-g/T}$; Nelder-Mead on McKinnon's function against its calculus minimum, and on a smooth bowl against 0; and the rotation checked orthogonal.
 
 ### Python
 
@@ -632,6 +644,222 @@ fixed T = 5, one ripple: walk spends 0.2525 of its time in |y| < 0.5 (se 0.0024)
 certificate by grid: L = 231.07, spacing 0.002737, 3743 points per axis, 10^35.73 points
 random search: one draw lands within 0.5 of the origin with chance 1.9646 in 10^13; expected draws 5.09 million million
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the two facts of Why it works and the floor of the surface, for any number of settings.
+
+- No method that only reads values can certify a global minimum. A pit away from every evaluated point leaves the values unchanged, yet dips one unit below them all.
+- Nelder-Mead's best value never rises from one step to the next. When the cost has a floor, the best values settle to some number.
+- For any rotation $Q$, the surface $f$ is never below 0, and it is 0 only at the origin.
+- The worked numbers: McKinnon's function is 8 at (1, 1) and 0 at (0, 0), and one ripple is 0, 1, 4 and 9 at 0, 1, 2 and 3.
+
+The runs, the annealing and population results, and McKinnon's stall are left to the Python and Rust checks.
+
+```lean
+-- Search without derivatives: no method that reads finitely many values can certify a global minimum, Nelder-Mead's best value never rises, and the rotated ripple surface is never below 0 and is 0 only at the origin.
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.LinearAlgebra.UnitaryGroup
+import Mathlib.Topology.Order.MonotoneConvergence
+
+open Filter Topology
+
+/-- A method that reads values only: at step `k` it picks its next point from the `k` values
+it has seen so far. -/
+def ValueMethod (E : Type*) := (k : ℕ) → (Fin k → ℝ) → E
+
+/-- The point a value-only method evaluates at step `k` when run on `f`. -/
+noncomputable def ValueMethod.trace {E : Type*} (q : ValueMethod E) (f : E → ℝ) (k : ℕ) : E :=
+  q k (fun i : Fin k => f (q.trace f i.1))
+termination_by k
+decreasing_by exact i.2
+
+/-- No method that sees finitely many values can certify a global minimum. For any method that
+reads only values, any number `K` of evaluations and any cost `f` on `n` settings (`n ≥ 1`),
+there is a ball holding none of the evaluated points and a new cost `g`, equal to `f` outside
+that ball and differing from it by a continuous pit, on which the method makes exactly the same
+`K` choices, sees the same values, and yet `g` dips at least one unit below every value seen. -/
+theorem no_finite_list_of_values_certifies_global_minimum (n : ℕ) (hn : 0 < n)
+    (q : ValueMethod (EuclideanSpace ℝ (Fin n))) (f : EuclideanSpace ℝ (Fin n) → ℝ) (K : ℕ) :
+    ∃ (c : EuclideanSpace ℝ (Fin n)) (r : ℝ), 0 < r ∧ (∀ k < K, q.trace f k ∉ Metric.ball c r) ∧
+      ∃ g : EuclideanSpace ℝ (Fin n) → ℝ,
+        (∀ x ∉ Metric.ball c r, g x = f x) ∧ Continuous (g - f) ∧
+        (∀ k < K, q.trace g k = q.trace f k ∧ g (q.trace g k) = f (q.trace f k)) ∧
+        ∃ z, ∀ k < K, g z ≤ f (q.trace f k) - 1 := by
+  classical
+  set M : ℝ := (∑ k ∈ Finset.range K, ‖q.trace f k‖) + 2 with hM
+  set e : EuclideanSpace ℝ (Fin n) := EuclideanSpace.single (⟨0, hn⟩ : Fin n) (1 : ℝ) with he
+  have he1 : ‖e‖ = 1 := (EuclideanSpace.orthonormal_single (𝕜 := ℝ) (ι := Fin n)).1 _
+  set c : EuclideanSpace ℝ (Fin n) := M • e with hc
+  have hMnn : 0 ≤ ∑ k ∈ Finset.range K, ‖q.trace f k‖ :=
+    Finset.sum_nonneg (fun _ _ => norm_nonneg _)
+  have hcn : ‖c‖ = M := by
+    rw [hc, norm_smul, he1, mul_one, Real.norm_eq_abs, abs_of_nonneg (by linarith)]
+  have hout : ∀ k < K, q.trace f k ∉ Metric.ball c 1 := by
+    intro k hk hmem
+    rw [Metric.mem_ball, dist_eq_norm] at hmem
+    have h1 : ‖q.trace f k‖ ≤ ∑ k ∈ Finset.range K, ‖q.trace f k‖ :=
+      Finset.single_le_sum (f := fun k => ‖q.trace f k‖) (fun _ _ => norm_nonneg _)
+        (Finset.mem_range.2 hk)
+    have h2 : ‖c‖ ≤ ‖q.trace f k‖ + ‖q.trace f k - c‖ := by
+      have := norm_sub_le (q.trace f k) (q.trace f k - c)
+      simpa using this
+    linarith
+  set D : ℝ := |f c| + (∑ k ∈ Finset.range K, |f (q.trace f k)|) + 1 with hD
+  set h : EuclideanSpace ℝ (Fin n) → ℝ := fun x => -D * max 0 (1 - dist x c) with hh
+  have hcont : Continuous h :=
+    continuous_const.mul (continuous_const.max (continuous_const.sub
+      (continuous_id.dist continuous_const)))
+  have hzero : ∀ x ∉ Metric.ball c 1, h x = 0 := by
+    intro x hx
+    rw [Metric.mem_ball, not_lt] at hx
+    simp only [hh]
+    rw [max_eq_left (by linarith)]
+    ring
+  refine ⟨c, 1, one_pos, hout, fun x => f x + h x, ?_, ?_, ?_, c, ?_⟩
+  · intro x hx
+    simp [hzero x hx]
+  · have : ((fun x => f x + h x) - f) = h := by
+      funext x; simp
+    rw [this]; exact hcont
+  · have key : ∀ k, k < K → q.trace (fun x => f x + h x) k = q.trace f k := by
+      intro k
+      induction k using Nat.strong_induction_on with
+      | _ k ih =>
+        intro hk
+        rw [ValueMethod.trace, ValueMethod.trace]
+        congr 1
+        funext i
+        rw [ih i.1 i.2 (lt_trans i.2 hk), hzero _ (hout _ (lt_trans i.2 hk)), add_zero]
+    intro k hk
+    refine ⟨key k hk, ?_⟩
+    rw [key k hk]
+    show f (q.trace f k) + h (q.trace f k) = f (q.trace f k)
+    rw [hzero _ (hout _ hk), add_zero]
+  · intro k hk
+    have hhc : h c = -D := by simp [hh]
+    have h1 : |f (q.trace f k)| ≤ ∑ k ∈ Finset.range K, |f (q.trace f k)| :=
+      Finset.single_le_sum (f := fun k => |f (q.trace f k)|) (fun _ _ => abs_nonneg _)
+        (Finset.mem_range.2 hk)
+    have h2 := neg_abs_le (f (q.trace f k))
+    have h3 := le_abs_self (f c)
+    show f c + h c ≤ _
+    rw [hhc, hD]
+    linarith
+
+/-- One Nelder-Mead step on a simplex of `n + 2` corners in `n + 1` settings, sorted best first.
+Every trial point is `c + t (worst - c)`, with `c` the centre of all corners but the worst:
+reflect (`t = -1`), expand (`t = -2`), contract outside (`t = -1/2`) or inside (`t = 1/2`),
+and otherwise shrink every corner halfway toward the best. -/
+noncomputable def nelderMeadStep (n : ℕ) (f : EuclideanSpace ℝ (Fin (n + 1)) → ℝ)
+    (P : Fin (n + 2) → EuclideanSpace ℝ (Fin (n + 1))) : Fin (n + 2) → EuclideanSpace ℝ (Fin (n + 1)) :=
+  let w : Fin (n + 2) := Fin.last (n + 1)
+  let c : EuclideanSpace ℝ (Fin (n + 1)) := (1 / ((n : ℝ) + 1)) • ∑ i : Fin (n + 1), P i.castSucc
+  let pt : ℝ → EuclideanSpace ℝ (Fin (n + 1)) := fun t => c + t • (P w - c)
+  let xr := pt (-1)
+  if f xr < f (P 0) then
+    Function.update P w (if f (pt (-2)) < f xr then pt (-2) else xr)
+  else if f xr < f (P (Fin.last n).castSucc) then
+    Function.update P w xr
+  else
+    let xc := pt (if f xr < f (P w) then -1 / 2 else 1 / 2)
+    if f xc < min (f xr) (f (P w)) then Function.update P w xc
+    else fun i => P 0 + (1 / 2 : ℝ) • (P i - P 0)
+
+/-- Nelder-Mead's best value never rises: if every simplex is sorted best first and each one is a
+re-sorting of one Nelder-Mead step from the one before, the best corner's value never goes up,
+and when the cost has a floor these best values settle to some number. -/
+theorem nelder_mead_best_value_never_rises (n : ℕ) (f : EuclideanSpace ℝ (Fin (n + 1)) → ℝ)
+    (S : ℕ → Fin (n + 2) → EuclideanSpace ℝ (Fin (n + 1)))
+    (hsorted : ∀ k, Monotone (fun i => f (S k i)))
+    (hstep : ∀ k, ∃ σ : Equiv.Perm (Fin (n + 2)), S (k + 1) = nelderMeadStep n f (S k) ∘ σ) :
+    Antitone (fun k => f (S k 0)) ∧
+      ((∃ m, ∀ x, m ≤ f x) → ∃ L, Tendsto (fun k => f (S k 0)) atTop (𝓝 L)) := by
+  have h0 : ∀ P : Fin (n + 2) → EuclideanSpace ℝ (Fin (n + 1)), nelderMeadStep n f P 0 = P 0 := by
+    intro P
+    have hne : (0 : Fin (n + 2)) ≠ Fin.last (n + 1) := (Fin.last_pos).ne
+    unfold nelderMeadStep
+    simp only
+    split_ifs <;> simp [hne]
+  have hanti : Antitone (fun k => f (S k 0)) := by
+    apply antitone_nat_of_succ_le
+    intro k
+    obtain ⟨σ, hσ⟩ := hstep k
+    have h1 : f (S (k + 1) 0) ≤ f (S (k + 1) (σ.symm 0)) := hsorted (k + 1) (Fin.zero_le _)
+    rw [hσ] at h1 ⊢
+    simpa [Function.comp, h0] using h1
+  refine ⟨hanti, ?_⟩
+  rintro ⟨m, hm⟩
+  exact ⟨_, tendsto_atTop_ciInf hanti ⟨m, by rintro _ ⟨k, rfl⟩; exact hm _⟩⟩
+
+/-- One ripple: a parabola with a cosine dent, `g(y) = y² - 10 cos(2πy) + 10`. -/
+noncomputable def ripple (y : ℝ) : ℝ := y ^ 2 - 10 * Real.cos (2 * Real.pi * y) + 10
+
+/-- The rotated ripple surface: `f(x) = Σ g(y_i)` with hidden coordinates `y = Qx`. -/
+noncomputable def roughSurface {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ) (x : Fin n → ℝ) : ℝ :=
+  ∑ i, ripple ((Q.mulVec x) i)
+
+/-- The floor: for any rotation `Q`, the rotated ripple surface is never negative, and it is `0`
+only at the origin. -/
+theorem rough_surface_floor_zero_only_at_origin (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ)
+    (hQ : Q ∈ Matrix.orthogonalGroup (Fin n) ℝ) (x : Fin n → ℝ) :
+    0 ≤ roughSurface Q x ∧ (roughSurface Q x = 0 ↔ x = 0) := by
+  have hr : ∀ y, y ^ 2 ≤ ripple y := by
+    intro y
+    unfold ripple
+    have := Real.cos_le_one (2 * Real.pi * y)
+    nlinarith
+  have hnn : ∀ i ∈ (Finset.univ : Finset (Fin n)), 0 ≤ ripple ((Q.mulVec x) i) :=
+    fun i _ => le_trans (sq_nonneg _) (hr _)
+  refine ⟨Finset.sum_nonneg hnn, ?_⟩
+  unfold roughSurface
+  rw [Finset.sum_eq_zero_iff_of_nonneg hnn]
+  constructor
+  · intro h
+    have hy : Q.mulVec x = 0 := by
+      funext i
+      have := h i (Finset.mem_univ _)
+      have := hr ((Q.mulVec x) i)
+      have := sq_nonneg ((Q.mulVec x) i)
+      simpa using (show ((Q.mulVec x) i) ^ 2 = 0 by linarith)
+    have hQ' := (Matrix.mem_orthogonalGroup_iff' (Fin n) ℝ).1 hQ
+    calc x = (Q.transpose * Q).mulVec x := by rw [hQ', Matrix.one_mulVec]
+      _ = Q.transpose.mulVec (Q.mulVec x) := by rw [Matrix.mulVec_mulVec]
+      _ = 0 := by rw [hy, Matrix.mulVec_zero]
+  · rintro rfl i _
+    simp [ripple]
+
+/-- McKinnon's function: `360u² + v + v²` for `u ≤ 0` and `6u² + v + v²` for `u > 0`. -/
+noncomputable def mckinnon (u v : ℝ) : ℝ := (if u ≤ 0 then 360 else 6) * u ^ 2 + v + v ^ 2
+
+-- The worst corner of the worked step: f(1, 1) = 6 + 1 + 1 = 8.
+example : mckinnon 1 1 = 8 := by norm_num [mckinnon]
+-- The best corner of the worked step: f(0, 0) = 0.
+example : mckinnon 0 0 = 0 := by norm_num [mckinnon]
+-- Valley floors of one ripple: g(0) = 0, g(1) = 1, g(2) = 4, g(3) = 9.
+example : ripple 0 = 0 ∧ ripple 1 = 1 ∧ ripple 2 = 4 ∧ ripple 3 = 9 := by
+  have h : ∀ m : ℕ, Real.cos (2 * Real.pi * m) = 1 := by
+    intro m; rw [mul_comm]; exact Real.cos_nat_mul_two_pi m
+  have h1 := h 1
+  have h2 := h 2
+  have h3 := h 3
+  push_cast at h1 h2 h3
+  simp only [mul_one] at h1
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [ripple, h1, h2, h3] <;> norm_num
+
+#print axioms no_finite_list_of_values_certifies_global_minimum
+#print axioms nelder_mead_best_value_never_rises
+#print axioms rough_surface_floor_zero_only_at_origin
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'no_finite_list_of_values_certifies_global_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nelder_mead_best_value_never_rises' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rough_surface_floor_zero_only_at_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

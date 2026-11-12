@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A hydro reservoir holds up to 40 million m³ of water. Once a month its operator decides how much to send through the turbines: nothing, 10 million m³ or 20 million m³. Released water earns money: £80,000 for 10 million m³, £120,000 for 20 million m³. Then the month's rain arrives. If the reservoir overflows, the spilled water floods land downstream at £100,000 per 10 million m³. If it ends a month empty, the town's supply must be bought in at £120,000. The operator wants the rule, "at this level, release this much", that **maximises** the money earned over the years ahead, with next month's pound counted as 90p today.
+A hydro reservoir holds up to 40 million m³ of water. Once a month its operator decides how much to send through the turbines: nothing, 10 million m³ or 20 million m³. Released water earns money: £80,000 for 10 million m³, £120,000 for 20 million m³.
 
-The earlier cards on this shelf solve problems of this kind when the rain's chances are written down ([Value and policy iteration](03-value-and-policy-iteration.md)); this reservoir has its own numbers, and here nobody has written its chances down. There is only a simulator: hand it a level and a release, and it plays out one month of rain and reports the money and the new level. This card runs it for 20,000 simulated months. A table with one cell per pair (level, release) starts at zero. After each month, one cell is nudged towards what that month suggests it should be. After 20,000 months the table picks the same rule that the full model proves best: hold the water at 0 to 10 million m³, release 10 million m³ at 20 or 30 million m³, release 20 million m³ when full.
+Then the month's rain arrives. If the reservoir overflows, the spilled water floods land downstream at £100,000 per 10 million m³. If it ends a month empty, the town's supply must be bought in at £120,000. The operator wants the rule, "at this level, release this much", that **maximises** the money earned over the years ahead, with next month's pound counted as 90p today.
 
-That method is **Q-learning**. It needs no chances, only experience. The price is that the operator must sometimes try a release it believes is worse, to find out whether it is. Here exploring, together with the early wrong guesses, costs £5.19k a month against the best rule while the table learns.
+The earlier cards on this shelf solve problems of this kind when the rain's chances are written down ([Value and policy iteration](03-value-and-policy-iteration.md)). This reservoir has its own numbers, and nobody has written its chances down. There is only a simulator: hand it a level and a release, and it plays out one month of rain and reports the money and the new level.
+
+This card runs it for 20,000 simulated months. A table with one cell per pair (level, release) starts at zero. After each month, one cell is nudged towards what that month suggests it should be. After 20,000 months the table picks the same rule that the full model proves best: hold the water at 0 to 10 million m³, release 10 million m³ at 20 or 30 million m³, release 20 million m³ when full.
+
+That method is **Q-learning**. It needs no chances, only experience. The price is that the operator must sometimes try a release it believes is worse, to find out whether it is. Here exploring, together with the early wrong guesses, costs £5.19k (thousand pounds) a month against the best rule while the table learns.
 
 **Q-learning keeps a table of the value of each action in each state, and after every step moves one entry a small way towards "the money just earned plus the discounted value of the best action from where you landed"; at the true values those targets average to the values themselves, and from any other table they average to one sweep of value iteration, which shrinks the worst error by at least the factor 0.9; so with every pair tried often enough and steps that shrink at the right speed, the table settles on the true values and the best rule.**
 
@@ -35,7 +39,9 @@ The loop never consults the chances of rain. They act only through the months th
 
 ## The formula
 
-The shelf's notation comes from [Markov decision processes](02-markov-decision-processes.md): state $s$, action $a$, reward $r$, discount $\gamma$, rule (policy) $\pi$. This card introduces one new object, in words first. The **Q-value** $Q^{*}(s, a)$ is the money, counted in today's pounds, that you can expect if you take action $a$ in state $s$ now and then follow the best rule ever after. The learning table holds a running estimate of it, written $Q(s, a)$. Money on this card is in thousands of pounds, written £k.
+The shelf's notation comes from [Markov decision processes](02-markov-decision-processes.md): state $s$, action $a$, reward $r$, discount $\gamma$, rule (policy) $\pi$. This card introduces one new object, in words first.
+
+The **Q-value** $Q^{*}(s, a)$ is the money, counted in today's pounds, that you can expect if you take action $a$ in state $s$ now and then follow the best rule ever after. The learning table holds a running estimate of it, written $Q(s, a)$. Money on this card is in thousands of pounds, written £k.
 
 In the reservoir a unit is 10 million m³. The level $s$ is 0 to 4 units, the release $a$ is 0, 1 or 2 units and never more than $s$, and the rain $w$ is 0, 1 or 2 units with chances 30%, 40% and 30%. The next level is $s' = \min(s - a + w,\ 4)$, and anything above 4 spills.
 
@@ -71,7 +77,7 @@ The step size used throughout is $\alpha_n = 10/(9 + n)$, where $n$ counts the v
 - **The level is the whole state.** The update assumes next month depends only on this month's level and release. If rain followed the seasons, one table cell would average wet and dry months, and the learned rule would suit neither.
 - **Every pair is tried again and again.** A cell that is never revisited keeps its first, possibly unlucky, value. With no exploring, the code's table ends £789.38k wrong in one cell and picks the wrong release at two levels.
 - **Steps shrink, but not too fast.** The steps for each cell must add up to infinity (so the table can travel any distance) while their squares add up to a finite number (so the noise dies out). A constant step never stops jittering. The plain average, $\alpha_n = 1/n$, meets both conditions but is so slow here that after 20,000 months the table is still £363.28k out.
-- **Discount below 1, money bounded.** At $\gamma = 1$ the Bellman operator no longer shrinks distances ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), and the guarantee goes.
+- **Discount below 1, money bounded.** At $\gamma = 1$ the Bellman operator (one sweep of value iteration) no longer shrinks distances ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), and the guarantee goes.
 - **The table fits in memory.** Here it has 12 cells. A problem with millions of states needs a fitted function in place of the table, and then the convergence theorem no longer applies.
 
 ---
@@ -100,7 +106,9 @@ With $\alpha_n = 1/n$ the update is exactly the running mean. If $m_{n-1}$ is th
 
 $$m_{n-1} + \tfrac{1}{n}\,(x_n - m_{n-1}) = \tfrac{1}{n}\,\big((n-1)\,m_{n-1} + x_n\big) = m_n .$$
 
-If the targets were fresh draws from a fixed law, the law of large numbers would finish the proof. They are not fixed: each target uses the current table, which is still wrong. Two facts rescue the method. The Bellman operator shrinks the table's largest error by the factor $\gamma = 0.9$ ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), so targets built from a table that is $e$ out are on average at most $0.9e$ out. The noise, meanwhile, is averaged away by the shrinking steps. Error contracts, noise averages, and the two together drive the table to $Q^{*}$.
+If the targets were fresh draws from a fixed law, the law of large numbers would finish the proof. They are not fixed: each target uses the current table, which is still wrong.
+
+Two facts rescue the method. The Bellman operator shrinks the table's largest error by the factor $\gamma = 0.9$ ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), so targets built from a table that is $e$ out are on average at most $0.9e$ out. The noise, meanwhile, is averaged away by the shrinking steps. Error contracts, noise averages, and the two together drive the table to $Q^{*}$.
 
 ### Step 4: the convergence theorem, stated
 
@@ -117,7 +125,7 @@ The theorem promises nothing about speed. The code therefore prints the error at
 
 ### Step 5: exploring, and learning one rule while following another
 
-The target always uses the best next action, $\max_{a'}$, whatever the operator actually does next month. So the table learns the values of the best rule, even while the operator behaves differently. This is called **off-policy** learning. It means the operator is free to explore. The rule used here is **ε-greedy**: in 90% of months take the release with the largest Q, and in 10% take a random allowed release. Every pair keeps being tried, which is the third condition of Step 4.
+The target always uses the best next action, $\max_{a'}$, whatever the operator actually does next month. So the table learns the values of the best rule, even while the operator behaves differently. This is called **off-policy** learning. It means the operator is free to explore. The rule used here is **ε-greedy**: in 90% of months take the greedy release, the one with the largest Q, and in 10% take a random allowed release. Every pair keeps being tried, which is the third condition of Step 4.
 
 Exploring has a cost, paid in money while learning. Exploiting (using the current best guess) has a cost too: wrong guesses are never corrected. The table at the end of "How the table fills in, month by month" puts numbers on both.
 
@@ -170,7 +178,9 @@ The puzzle: the table starts at zero, and each month changes only one of its 12 
 | 5 | 3 | 0 | 0 | 0 | 3 | 0.00 | 1.000 | 0.00 |
 | 6 | 3 | 0 | 0 | 0 | 3 | 0.00 | 0.909 | 0.00 |
 
-Ties go to the smaller release, so at first the greedy operator holds. A spill in month 2 makes holding at full look bad. A smaller spill in month 3 makes releasing 1 unit look bad too, at −20. Month 4 releases 2 units and earns £120k. From then on, release 2 is the greedy choice at full, and the −20 for release 1 sticks until exploring revisits it. That single unlucky month is the £789.38k error in the no-exploring run: there $Q(4, 1)$ stays at −20 against a true 769.38.
+Ties go to the smaller release, so at first the greedy operator holds. A spill in month 2 makes holding at full look bad. A smaller spill in month 3 makes releasing 1 unit look bad too, at −20. Month 4 releases 2 units and earns £120k.
+
+From then on, release 2 is the greedy choice at full, and the −20 for release 1 sticks until exploring revisits it. That single unlucky month is the £789.38k error in the no-exploring run: there $Q(4, 1)$ stays at −20 against a true 769.38.
 
 ### Where the 20,000 months went
 
@@ -224,7 +234,14 @@ Never exploring is the worst of both worlds: the operator earns little and learn
 
 ## Code, from first principles, and it actually runs
 
-The code builds the reservoir model and takes four roads. Road 1 is value iteration on the known model; it gives $Q^{*}$ and its Bellman residual. Road 2 lists all 54 rules, solves each one's five linear equations by elimination, and confirms that one rule is best at every level and matches road 1: that is the certificate of optimality. Road 3 is Q-learning on 20,000 simulated months. It never reads the chances of rain, only the simulator's draws, and it must find the same rule. Road 4 is TD(0) on the rule "release 1 if you can", checked against road 2's exact solve. Random numbers come from SplitMix64, a small generator written out in both languages with stated seeds, so the two programs print identical output.
+The code builds the reservoir model and takes four roads.
+
+- Road 1 is value iteration on the known model; it gives $Q^{*}$ and its Bellman residual, the largest amount by which $Q^{*}$ misses the equation of Step 1.
+- Road 2 lists all 54 rules, solves each one's five linear equations by elimination, and confirms that one rule is best at every level and matches road 1: that is the certificate of optimality.
+- Road 3 is Q-learning on 20,000 simulated months. It never reads the chances of rain, only the simulator's draws, and it must find the same rule.
+- Road 4 is TD(0) on the rule "release 1 if you can", checked against road 2's exact solve.
+
+Random numbers come from SplitMix64, a small generator written out in both languages with stated seeds, so the two programs print identical output.
 
 ### Python
 
@@ -640,6 +657,186 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the averaging and shrinking steps for every finite model, and checks the card's step sizes and hand arithmetic.
+
+- Take any model with finitely many states, releases and kinds of month, chances that add up to 1, and a discount below 1.
+- In that model, average the targets built from any table: that is one sweep of value iteration. Its worst gap from the true values is at most the discount times the table's worst gap.
+- At the true values, the TD error averages to zero in every cell, so the updates stop pushing on average.
+- The card's steps 10/(9 + n) add up to infinity, while their squares add up to a finite number.
+- The first five months of the learning run, the update in month 2 and the step 0.909 (10/11) on a second visit all check exactly.
+- So do the rain's chances adding to 1, the 12 cells, the 54 rules and the 20,000 visits.
+
+The convergence theorem stays stated, not proved; the reservoir's values, the learning run and TD(0) are left to the Python and Rust checks.
+
+```lean
+-- Q-learning: the Q-learning targets average, at the true values, to the values themselves and, from any other table, to one sweep of value iteration that shrinks the worst error by the discount factor, and the card's step sizes 10/(9 + n) meet the Robbins–Monro conditions.
+import Mathlib.Analysis.Normed.Group.Constructions
+import Mathlib.Analysis.Normed.Order.Lattice
+import Mathlib.Analysis.PSeries
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Finset.Lattice.Fold
+
+open Filter Topology
+
+/-- The Q-learning target after one month: the money `r s a w` earned when the month's random
+outcome (the rain) is `w`, plus `γ` times the best table entry at the level `next s a w` where
+the month ends. Tables are `(s : S) → A s → ℝ`, one cell per state and allowed action. -/
+noncomputable def qTarget {S W : Type*} {A : S → Type*} [∀ s, Fintype (A s)] [∀ s, Nonempty (A s)]
+    (r : (s : S) → A s → W → ℝ) (next : (s : S) → A s → W → S) (γ : ℝ)
+    (Q : (s : S) → A s → ℝ) (s : S) (a : A s) (w : W) : ℝ :=
+  r s a w + γ * Finset.univ.sup' Finset.univ_nonempty (Q (next s a w))
+
+/-- One sweep of value iteration for Q (the Bellman operator): each cell becomes the average of
+its Q-learning targets, weighted by the chances `p w` of the outcomes. -/
+noncomputable def qBellman {S W : Type*} [Fintype W] {A : S → Type*} [∀ s, Fintype (A s)]
+    [∀ s, Nonempty (A s)] (p : W → ℝ) (r : (s : S) → A s → W → ℝ) (next : (s : S) → A s → W → S)
+    (γ : ℝ) (Q : (s : S) → A s → ℝ) : (s : S) → A s → ℝ :=
+  fun s a => ∑ w, p w * qTarget r next γ Q s a w
+
+/-- Helper: the largest entries of two finite tables differ by at most the largest gap. -/
+theorem sup'_sub_sup'_abs_le {ι : Type*} [Fintype ι] [Nonempty ι] (f g : ι → ℝ) :
+    |Finset.univ.sup' Finset.univ_nonempty f - Finset.univ.sup' Finset.univ_nonempty g|
+      ≤ ‖f - g‖ := by
+  rw [abs_sub_le_iff]
+  constructor
+  · rw [sub_le_iff_le_add]
+    apply Finset.sup'_le
+    intro i _
+    have h1 := norm_le_pi_norm (f - g) i
+    rw [Pi.sub_apply, Real.norm_eq_abs] at h1
+    have h2 := Finset.le_sup' g (Finset.mem_univ i)
+    linarith [le_abs_self (f i - g i)]
+  · rw [sub_le_iff_le_add]
+    apply Finset.sup'_le
+    intro i _
+    have h1 := norm_le_pi_norm (f - g) i
+    rw [Pi.sub_apply, Real.norm_eq_abs] at h1
+    have h2 := Finset.le_sup' f (Finset.mem_univ i)
+    linarith [neg_abs_le (f i - g i)]
+
+#print axioms sup'_sub_sup'_abs_le
+
+/-- The card's main claim: with finitely many states, a nonempty finite set of allowed actions in
+each state, finitely many outcomes with chances that are non-negative and add up to 1, and a
+discount `0 ≤ γ < 1`, let `Q*` be the true values (they satisfy the Bellman equation
+`Q* = T Q*`). Then for any table `Q`, the targets built from `Q` average to one sweep `T Q`,
+which is at most `γ` times as far from `Q*` in the worst cell: `‖T Q - Q*‖∞ ≤ γ ‖Q - Q*‖∞`.
+(Mathlib's norm on tables over finite types is the sup norm, the largest gap over cells.) -/
+theorem q_learning_target_shrinks_worst_error {S W : Type*} [Fintype S] [Fintype W]
+    {A : S → Type*} [∀ s, Fintype (A s)] [∀ s, Nonempty (A s)]
+    (p : W → ℝ) (r : (s : S) → A s → W → ℝ) (next : (s : S) → A s → W → S) (γ : ℝ)
+    (hp_nonneg : ∀ w, 0 ≤ p w) (hp_sum : ∑ w, p w = 1) (hγ0 : 0 ≤ γ) (hγ1 : γ < 1)
+    (Qstar : (s : S) → A s → ℝ) (hstar : qBellman p r next γ Qstar = Qstar)
+    (Q : (s : S) → A s → ℝ) :
+    ‖qBellman p r next γ Q - Qstar‖ ≤ γ * ‖Q - Qstar‖ := by
+  have hr : 0 ≤ γ * ‖Q - Qstar‖ := mul_nonneg hγ0 (norm_nonneg _)
+  rw [pi_norm_le_iff_of_nonneg hr]
+  intro s
+  rw [pi_norm_le_iff_of_nonneg hr]
+  intro a
+  have h := congrFun (congrFun hstar s) a
+  rw [Pi.sub_apply, Pi.sub_apply, Real.norm_eq_abs, ← h]
+  simp only [qBellman, qTarget]
+  rw [← Finset.sum_sub_distrib]
+  calc _ ≤ ∑ w, |p w * (r s a w + γ * Finset.univ.sup' Finset.univ_nonempty (Q (next s a w)))
+          - p w * (r s a w + γ * Finset.univ.sup' Finset.univ_nonempty (Qstar (next s a w)))| :=
+        Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ w, p w * (γ * ‖Q - Qstar‖) := by
+        apply Finset.sum_le_sum
+        intro w _
+        have e : p w * (r s a w + γ * Finset.univ.sup' Finset.univ_nonempty (Q (next s a w)))
+            - p w * (r s a w + γ * Finset.univ.sup' Finset.univ_nonempty (Qstar (next s a w)))
+            = p w * (γ * (Finset.univ.sup' Finset.univ_nonempty (Q (next s a w))
+              - Finset.univ.sup' Finset.univ_nonempty (Qstar (next s a w)))) := by ring
+        rw [e, abs_mul, abs_mul, abs_of_nonneg (hp_nonneg w), abs_of_nonneg hγ0]
+        have h1 := sup'_sub_sup'_abs_le (Q (next s a w)) (Qstar (next s a w))
+        have h2 := norm_le_pi_norm (Q - Qstar) (next s a w)
+        rw [Pi.sub_apply] at h2
+        exact mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (h1.trans h2) hγ0)
+          (hp_nonneg w)
+    _ = γ * ‖Q - Qstar‖ := by rw [← Finset.sum_mul, hp_sum, one_mul]
+
+/-- Step 2 of the card: at the true values `Q*` (a solution of the Bellman equation), the
+temporal-difference error `δ = target - Q*(s, a)` averages to zero over the outcomes, in every
+cell, so `Q*` is the table where the updates stop pushing on average. -/
+theorem td_error_averages_to_zero_at_true_values {S W : Type*} [Fintype W]
+    {A : S → Type*} [∀ s, Fintype (A s)] [∀ s, Nonempty (A s)]
+    (p : W → ℝ) (r : (s : S) → A s → W → ℝ) (next : (s : S) → A s → W → S) (γ : ℝ)
+    (hp_nonneg : ∀ w, 0 ≤ p w) (hp_sum : ∑ w, p w = 1)
+    (Qstar : (s : S) → A s → ℝ) (hstar : qBellman p r next γ Qstar = Qstar) :
+    ∀ s a, ∑ w, p w * (qTarget r next γ Qstar s a w - Qstar s a) = 0 := by
+  intro s a
+  have h := congrFun (congrFun hstar s) a
+  simp only [qBellman] at h
+  simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, hp_sum, one_mul, h, sub_self]
+
+/-- Step 4 of the card: the step sizes `α_n = 10/(9 + n)`, `n = 1, 2, 3, …`, meet the
+Robbins–Monro conditions: their sum grows without limit, while the sum of their squares is
+finite. -/
+theorem card_step_sizes_meet_robbins_monro :
+    Tendsto (fun N : ℕ => ∑ n ∈ Finset.range N, (10 : ℝ) / (9 + ((n : ℝ) + 1))) atTop atTop ∧
+    Summable (fun n : ℕ => ((10 : ℝ) / (9 + ((n : ℝ) + 1))) ^ 2) := by
+  constructor
+  · refine tendsto_atTop_mono (fun N => ?_) Real.tendsto_sum_range_one_div_nat_succ_atTop
+    apply Finset.sum_le_sum
+    intro n _
+    have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+    rw [div_le_div_iff₀ (by positivity) (by positivity)]
+    nlinarith
+  · have hs : Summable (fun n : ℕ => 100 * (1 / ((n : ℝ) + 1) ^ 2)) := by
+      have := (summable_nat_add_iff 1).mpr (Real.summable_one_div_nat_pow.mpr one_lt_two)
+      push_cast at this
+      exact this.mul_left 100
+    refine Summable.of_nonneg_of_le (fun n => by positivity) (fun n => ?_) hs
+    have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+    rw [div_pow, mul_one_div, div_le_div_iff₀ (by positivity) (by positivity)]
+    nlinarith
+
+/-- The card's reservoir month, in units of 10 million m³ and thousands of pounds: from level `s`,
+release `a`, rain `w`; earn 0, 80 or 120 for the release, pay 100 per unit spilled above 4, and
+pay 120 if the month ends empty. Returns the money and the new level `min (s - a + w) 4`. -/
+def reservoirMonth (s a w : ℤ) : ℤ × ℤ :=
+  let x := s - a + w
+  let s' := min x 4
+  ((if a = 0 then 0 else if a = 1 then 80 else 120) - 100 * max (x - 4) 0
+    - (if s' = 0 then 120 else 0), s')
+
+-- The first five months of the learning run: (money, new level) for each (level, release, rain).
+example : reservoirMonth 2 0 2 = (0, 4) := by decide
+example : reservoirMonth 4 0 1 = (-100, 4) := by decide
+example : reservoirMonth 4 1 2 = (-20, 4) := by decide
+example : reservoirMonth 4 2 1 = (120, 3) := by decide
+example : reservoirMonth 3 0 0 = (0, 3) := by decide
+-- Month 2's update: first visit, so α = 10/(9 + 1) = 1, and the target is -100 + 0.9 × 0 = -100.
+example : (10 : ℚ) / (9 + 1) = 1 := by norm_num
+example : (0 : ℚ) + 10 / (9 + 1) * ((-100 + 9/10 * 0) - 0) = -100 := by norm_num
+-- The second visit to a cell uses α = 10/11 (printed as 0.909).
+example : (10 : ℚ) / (9 + 2) = 10 / 11 := by norm_num
+-- The rain's chances 30%, 40%, 30% add up to 1.
+example : (3 : ℚ) / 10 + 4 / 10 + 3 / 10 = 1 := by norm_num
+-- Levels 0 to 4 allow 1, 2, 3, 3, 3 releases: 12 table cells and 1 × 2 × 3 × 3 × 3 = 54 rules.
+example : ∑ s ∈ Finset.range 5, (min s 2 + 1) = 12 := by decide
+example : ∏ s ∈ Finset.range 5, (min s 2 + 1) = 54 := by decide
+-- The twelve cells' visit counts add up to the 20,000 simulated months.
+example : 202 + 3459 + 228 + 273 + 6617 + 257 + 242 + 4854 + 1411 + 77 + 90 + 2290 = 20000 := by
+  norm_num
+
+#print axioms q_learning_target_shrinks_worst_error
+#print axioms td_error_averages_to_zero_at_true_values
+#print axioms card_step_sizes_meet_robbins_monro
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sup'_sub_sup'_abs_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'q_learning_target_shrinks_worst_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'td_error_averages_to_zero_at_true_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_step_sizes_meet_robbins_monro' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

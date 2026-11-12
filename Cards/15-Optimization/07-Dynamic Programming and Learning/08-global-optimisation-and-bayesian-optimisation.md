@@ -6,9 +6,9 @@
 
 ## General Overview
 
-A hydro station has just fitted a new turbine. Three settings decide how much of the falling water's energy it turns into electricity: the **gate opening** (0 to 100 percent), the **blade angle** (10 to 30 degrees) and the **air injection** that calms the swirl below the runner (0 to 4 litres a second). The engineers want the settings that give the highest efficiency, so this is a **maximisation**.
+A hydro station has just fitted a new turbine. Three settings decide how much of the falling water's energy it turns into electricity: the **gate opening** (0 to 100 percent), the **blade angle** (10 to 30 degrees) and the **air injection** that calms the swirl below the runner, the turbine's spinning wheel (0 to 4 litres a second). The engineers want the settings that give the highest efficiency, so this is a **maximisation**.
 
-Each test is dear. One setting means draining down, running the unit for a day on the test rig and reading the efficiency: about £20,000 a trial. The budget is **15 trials**, £300,000. A fine grid of 21 values per setting would need 9,261 trials and £185,220,000. Nobody has a formula for efficiency either, and no slope to follow: each trial returns one number and nothing else.
+Each test is expensive. One setting means draining down, running the unit for a day on the test rig and reading the efficiency: about £20,000 a trial. The budget is **15 trials**, £300,000. A fine grid of 21 values per setting would need 9,261 trials and £185,220,000. Nobody has a formula for efficiency either, and no slope to follow: each trial returns one number and nothing else.
 
 So the question is not "how do I climb?" but **"which trial should I run next?"** Bayesian optimisation answers it in two moves. First it fits a **surrogate**: a cheap statistical guess of the whole efficiency surface, with an error bar at every setting, built from the trials so far. Then it scores every untried setting by its **expected improvement**: how much, on average, it would beat the best result so far. It runs the top-scoring trial, adds the result, refits and repeats.
 
@@ -37,11 +37,13 @@ Orange: Bayesian optimisation with expected improvement. Green: random settings,
 
 ## The formula
 
-Notation first, in words. A setting is a point $x$ = (gate, blade, air), each part scaled to run from 0 to 1 (gate 0 to 100 percent, blade 10 to 30 degrees, air 0 to 4 litres a second). The true efficiency at $x$ is $f(x)$, in percent; nobody knows it until a trial is run. After $n$ trials we hold settings $x_1, \dots, x_n$ and readings $y_1, \dots, y_n$. A **kernel** $k(x, x')$ is a number saying how strongly the efficiencies at two settings move together: large when the settings are close, near zero when they are far apart. This card uses
+Notation first, in words. A setting is a point $x$ = (gate, blade, air), each part scaled to run from 0 to 1 (gate 0 to 100 percent, blade 10 to 30 degrees, air 0 to 4 litres a second). The true efficiency at $x$ is $f(x)$, in percent; nobody knows it until a trial is run. After $n$ trials we hold settings $x_1, \dots, x_n$ and readings $y_1, \dots, y_n$.
+
+A **kernel** $k(x, x')$ is a number saying how strongly the efficiencies at two settings move together: large when the settings are close, near zero when they are far apart. This card uses
 
 $$k(x, x') = \sigma^2 \exp\!\Big(-\frac{\lVert x - x' \rVert^2}{2\ell^2}\Big),$$
 
-where $\lVert x - x' \rVert$ is the ordinary straight-line distance. Gather the kernel between every pair of trials into the $n \times n$ table $K$, and between a new setting and each trial into the column $k_n(x)$. $I$ is the identity table and $y - m$ the column of readings minus the prior mean.
+where $\lVert x - x' \rVert$ is the ordinary straight-line distance. Gather the kernel between every pair of trials into the $n \times n$ table $K$. Gather it between a new setting and each trial into the column $k_n(x)$. $I$ is the identity table and $y - m$ the column of readings minus the prior mean.
 
 The **surrogate** (a Gaussian process: a random function whose values at any finite set of settings are jointly normal) gives at every setting a mean and a spread:
 
@@ -66,7 +68,7 @@ $$\mathrm{EI}_n(x) = \big(\mu_n(x) - f^+\big)\,\Phi(z) + \sigma_n(x)\,\varphi(z)
 | $\mu_n(x)$, $\sigma_n(x)$ | surrogate's mean and spread at $x$ after $n$ trials | 85.7769 and 4.6000 at trial 6's setting | — |
 | $f^+$ | best reading so far | 86.93 after five trials | a higher bar, smaller EI everywhere |
 | $z$, $Z$, $\Phi$, $\varphi$ | standard score of the gap; a standard normal variable; normal CDF (chance below); normal density (bell height) | $z$ = −0.2501, $\Phi$ = 0.401259, $\varphi$ = 0.386659 | — |
-| $\mathrm{EI}_n(x)$ | expected improvement: average gain over $f^+$ if $x$ is tested | 1.3170 at trial 6's setting | that setting gets picked |
+| $\mathrm{EI}_n(x)$, $x_{n+1}$ | expected improvement: average gain over $f^+$ if $x$ is tested; the next trial's setting, the argmax (the $x$ where EI is largest) | 1.3170 at trial 6's setting, (1.00, 0.35, 0.95) | that setting gets picked |
 
 ### When it holds
 
@@ -86,7 +88,9 @@ Global optimisation is hard because nothing local tells you about the far side o
 
 ### Step 1: the surrogate is a multivariate normal
 
-Pick any finite set of settings. The surrogate says their efficiencies are jointly normal, each with mean $m$ and variance $\sigma^2$, with covariance $k(x, x')$ between any two. That is exactly a [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md) with covariance table built from the kernel. Close settings get covariance near $\sigma^2$, so they move together; settings far apart get nearly zero, so they are nearly independent. The length scale $\ell$ sets what "close" means. The kernel table is a valid covariance (positive semidefinite) for every choice of points, which is what lets one formula describe a whole surface.
+Pick any finite set of settings. The surrogate says their efficiencies are jointly normal, each with mean $m$ and variance $\sigma^2$, with covariance $k(x, x')$ between any two. That is exactly a [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md) with covariance table built from the kernel. Close settings get covariance near $\sigma^2$, so they move together; settings far apart get nearly zero, so they are nearly independent.
+
+The length scale $\ell$ sets what "close" means. The kernel table is a valid covariance (positive semidefinite) for every choice of points, which is what lets one formula describe a whole surface.
 
 ### Step 2: conditioning on the trials
 
@@ -115,17 +119,29 @@ $$E[\max(Y - f^+, 0)] = (\mu - f^+)\,\Phi(z) + \sigma\,\varphi(z).$$
 
 </details>
 
-The code checks this formula against Simpson's rule on the integral itself: both give 1.317008 at trial 6's setting.
+The code checks this formula against Simpson's rule (a numerical way to add up an integral from many thin slices) on the integral itself: both give 1.317008 at trial 6's setting.
 
 ### Step 4: one score balances guessing well and learning
 
-Differentiate the formula. Its slope with respect to $\mu$ is $\Phi(z)$ and with respect to $\sigma$ is $\varphi(z)$, both positive (the other terms cancel because $\varphi'(z) = -z\varphi(z)$). So expected improvement **rises with a higher predicted efficiency and with a wider error bar**. A setting predicted slightly worse than the best but very uncertain can win; a setting predicted well but already measured cannot. At trial 5's own setting the mean is 86.9265 and the spread only 0.1000, so EI is 0.0395. At the candidate 0.2 away the mean is lower, 86.1685, but the spread is 3.9758, and EI is 1.2355, far more. This is the **exploration–exploitation trade-off** (exploit: test where the guess is good; explore: test where you know little) settled by one number instead of a hand-set dial.
+Differentiate the formula. Its slope with respect to $\mu$ is $\Phi(z)$ and with respect to $\sigma$ is $\varphi(z)$, both positive (the other terms cancel because $\varphi'(z) = -z\varphi(z)$). So expected improvement **rises with a higher predicted efficiency and with a wider error bar**. A setting predicted slightly worse than the best but very uncertain can win; a setting predicted well but already measured cannot.
+
+At trial 5's own setting the mean is 86.9265 and the spread only 0.1000, so EI is 0.0395. At the candidate 0.2 away the mean is lower, 86.1685, but the spread is 3.9758, and EI is 1.2355, far more.
+
+This is the **exploration–exploitation trade-off** (exploit: test where the guess is good; explore: test where you know little) settled by one number instead of a hand-set dial.
 
 ### Step 5: what it costs, and what it promises
 
-Each step factors the $n \times n$ table once, about $n^3/6$ multiplications by the Cholesky method, then scores every candidate with about $n^2/2$ more: here 9,261 candidates at $n \le 14$, every step. That is the price of thinking hard before spending £20,000.
+Each step factors the $n \times n$ table once by the Cholesky method (rewriting it as a triangular table times its own mirror image across the diagonal): about $n^3/6$ multiplications. Then it scores every candidate with about $n^2/2$ more: here 9,261 candidates at $n \le 14$, every step. That is the price of thinking hard before spending £20,000.
 
-The promise is modest, and it does not cover this run. Vazquez and Bect proved that expected improvement's trial points eventually fill the whole box, for every surface in the space the kernel describes, so its best found tends to the true maximum. Their theorem needs three things: a kernel with what they call the No-Empty-Ball property (the error bar at a setting shrinks to zero only if trials come arbitrarily close to it), exact readings, and each trial chosen from the whole box. The property is proved for kernels such as the Matérn family, which allow rougher surfaces, and is not known for the Gaussian kernel used here. These runs also read with noise and choose only among the 9,261 grid settings, which can never fill the box. So this run has no proved convergence guarantee, not even one about infinitely many trials. For 15 trials there is only evidence: here, the grid search on the stand-in.
+The promise is modest, and it does not cover this run. Vazquez and Bect proved that expected improvement's trial points eventually fill the whole box, for every surface in the space the kernel describes, so its best found tends to the true maximum. Their theorem needs three things:
+
+- a kernel with what they call the No-Empty-Ball property (the error bar at a setting shrinks to zero only if trials come arbitrarily close to it);
+- exact readings;
+- each trial chosen from the whole box.
+
+The property is proved for kernels such as the Matérn family, which allow rougher surfaces, and is not known for the Gaussian kernel used here.
+
+These runs also read with noise and choose only among the 9,261 grid settings, which can never fill the box. So this run has no proved convergence guarantee, not even one about infinitely many trials. For 15 trials there is only evidence: here, the grid search on the stand-in.
 
 ---
 
@@ -188,7 +204,9 @@ The puzzle: fifteen trials, three settings, a high narrow hill near the middle a
 | 14 | (0.70, 0.35, 0.60) | EI 0.210 | 94.01 | 94.01 |
 | 15 | (0.00, 1.00, 0.05) | EI 0.075 | 82.08 | 94.01 |
 
-The five starting trials are a spread-out design: each setting takes each of five levels once. Trials 6 and 7 explore near the best start, then trial 8 lands on the flank of the high hill. Trials 9 to 14 close in on the hill's top, and the expected improvement falls, unevenly, from 1.502 at trial 8 to 0.210 at trial 14 as the surrogate grows sure there is little left to gain nearby. By trial 15 the best guess near the peak promises less than a far, unknown corner, so the method spends its last trial exploring. That is not a bug: with nothing more to win locally, the error bar elsewhere is worth more.
+The five starting trials are a spread-out design: each setting takes each of five levels once. Trials 6 and 7 explore near the best start, then trial 8 lands on the flank of the high hill. Trials 9 to 14 close in on the hill's top. The expected improvement falls, unevenly, from 1.502 at trial 8 to 0.210 at trial 14, as the surrogate grows sure there is little left to gain nearby.
+
+By trial 15 the best guess near the peak promises less than a far, unknown corner, so the method spends its last trial exploring. That is not a bug: with nothing more to win locally, the error bar elsewhere is worth more.
 
 Falling expected improvement is also the natural stopping signal: when the best score on the grid drops below what a trial is worth to you, stop paying.
 
@@ -196,7 +214,12 @@ Falling expected improvement is also the natural stopping signal: when the best 
 
 ## Code, from first principles, and it actually runs
 
-The script stands in a formula for the test rig: a high hill of width 0.2 centred at (0.70, 0.35, 0.60) and a lower hill of width 0.3 at (0.30, 0.70, 0.30). The method never sees the formula, only the readings. It builds the surrogate with its own Cholesky factorisation, writes its own normal CDF (a series in the middle, a continued fraction in the tails) and runs 15 trials by expected improvement: road 1. Road 2 evaluates the rig at all 9,261 grid points, something no real turbine allows, and confirms the method reached the best of them. A compass search from that point (step one setting up or down, halving the step when no step helps) then finds the rig's true peak, 94.09 at (0.684, 0.364, 0.588), between grid points: the grid search certifies only the grid. Road 3 checks the pieces independently: expected improvement against Simpson's rule on its defining integral, the surrogate's mean against plain Gaussian elimination, and the one-trial case against the bivariate-normal rule. Road 4 runs random search 2,000 times from a written-out SplitMix64 generator (seed 2026) and checks its success rate against the share of the box above 93 percent, measured on a 40 × 40 × 40 grid of cell centres. Both languages print the same lines.
+The script stands in a formula for the test rig: a high hill of width 0.2 centred at (0.70, 0.35, 0.60) and a lower hill of width 0.3 at (0.30, 0.70, 0.30). The method never sees the formula, only the readings. The script takes four roads, and both languages print the same lines.
+
+- **Road 1.** It builds the surrogate with its own Cholesky factorisation and writes its own normal CDF (a series in the middle, a continued fraction in the tails). Then it runs 15 trials by expected improvement.
+- **Road 2.** It evaluates the rig at all 9,261 grid points, something no real turbine allows, and confirms the method reached the best of them. A compass search from that point (step one setting up or down, halving the step when no step helps) then finds the rig's true peak, 94.09 at (0.684, 0.364, 0.588), between grid points. So the grid search certifies only the grid.
+- **Road 3.** It checks the pieces independently: expected improvement against Simpson's rule on its defining integral, the surrogate's mean against plain Gaussian elimination, and the one-trial case against the bivariate-normal rule.
+- **Road 4.** It runs random search 2,000 times from a written-out SplitMix64 random-number generator (seed 2026). It checks the success rate against the share of the box above 93 percent, measured on a 40 × 40 × 40 grid of cell centres.
 
 ### Python
 
@@ -593,6 +616,276 @@ broken: peak narrower, width 0.1   87.67, grid best 94.01
 try: length scale 0.1  best 94.01 at (0.70, 0.35, 0.60), trial 15
 try: length scale 0.3  best 93.57 at (0.65, 0.40, 0.55), trial 15
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the formula of Step 3 and the slopes of Step 4, for every mean $\mu$, best so far $f^+$ and spread $\sigma > 0$.
+
+- Let $Y$ be normal with mean $\mu$ and spread $\sigma > 0$, and let $z = (\mu - f^+)/\sigma$. Then the average of $\max(Y - f^+, 0)$ is exactly $(\mu - f^+)\Phi(z) + \sigma\varphi(z)$.
+- The slope of expected improvement with respect to $\mu$ is $\Phi(z)$, and with respect to $\sigma$ it is $\varphi(z)$. Both slopes are above zero.
+- So expected improvement always rises when $\mu$ rises, and always rises when the spread $\sigma$ widens.
+- The whole-number facts hold exactly: 9,261 grid settings, £185,220,000 to test them all, £300,000 for 15 trials, and 64,000 cells in Road 4.
+
+The surrogate, the 15-trial run, the decimals, the grid search and the random-search comparison are left to the Python and Rust checks.
+
+```lean
+-- Bayesian optimisation: the expected improvement of a normal reading over the best so far has the closed form (mu - f+) Phi(z) + sigma phi(z), and it rises with both the predicted mean and the spread.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+
+open MeasureTheory ProbabilityTheory
+
+noncomputable section
+
+/-- The standard normal CDF, `Φ(z)`: the chance a standard normal variable is at most `z`. -/
+abbrev stdNormalCDF (z : ℝ) : ℝ := cdf (gaussianReal 0 1) z
+
+/-- The standard normal density, `φ(z)`: the bell-curve height at `z`. -/
+abbrev stdNormalPDF (z : ℝ) : ℝ := gaussianPDFReal 0 1 z
+
+/-- The card's expected-improvement score `EI = (μ - f⁺) Φ(z) + σ φ(z)` with `z = (μ - f⁺)/σ`. -/
+abbrev expectedImprovement (fbest μ σ : ℝ) : ℝ :=
+  (μ - fbest) * stdNormalCDF ((μ - fbest) / σ) + σ * stdNormalPDF ((μ - fbest) / σ)
+
+lemma stdPDF_eq (z : ℝ) :
+    stdNormalPDF z = (√(2 * Real.pi))⁻¹ * Real.exp (-z ^ 2 / 2) := by
+  simp [stdNormalPDF, gaussianPDFReal]
+
+#print axioms stdPDF_eq
+
+lemma stdPDF_fun_eq :
+    stdNormalPDF = fun x : ℝ => (√(2 * Real.pi))⁻¹ * Real.exp (-x ^ 2 / 2) := by
+  funext x; exact stdPDF_eq x
+
+#print axioms stdPDF_fun_eq
+
+lemma stdPDF_continuous : Continuous stdNormalPDF := by
+  rw [stdPDF_fun_eq]; fun_prop
+
+#print axioms stdPDF_continuous
+
+lemma stdPDF_hasDerivAt (z : ℝ) : HasDerivAt stdNormalPDF (-z * stdNormalPDF z) z := by
+  have h1 : HasDerivAt (fun x : ℝ => -x ^ 2 / 2) (-(2 * z) / 2) z := by
+    convert ((hasDerivAt_pow 2 z).neg).div_const 2 using 1
+    simp
+  have h := (h1.exp).const_mul (√(2 * Real.pi))⁻¹
+  rw [stdPDF_eq, stdPDF_fun_eq]
+  convert h using 1
+  ring
+
+#print axioms stdPDF_hasDerivAt
+
+lemma stdPDF_tendsto_atBot : Filter.Tendsto stdNormalPDF Filter.atBot (nhds 0) := by
+  rw [stdPDF_fun_eq]
+  have h2 : Filter.Tendsto (fun y : ℝ => y ^ 2 / 2) Filter.atTop Filter.atTop :=
+    (Filter.tendsto_pow_atTop two_ne_zero).atTop_div_const (by norm_num)
+  have h3 : Filter.Tendsto (fun x : ℝ => -x ^ 2 / 2) Filter.atBot Filter.atBot := by
+    have := Filter.tendsto_neg_atTop_atBot.comp (h2.comp Filter.tendsto_neg_atBot_atTop)
+    refine this.congr ?_
+    intro x; simp [Function.comp, neg_div]
+  have h4 := (Real.tendsto_exp_atBot.comp h3).const_mul (√(2 * Real.pi))⁻¹
+  simpa using h4
+
+#print axioms stdPDF_tendsto_atBot
+
+lemma integrable_mul_stdPDF : MeasureTheory.Integrable (fun t : ℝ => t * stdNormalPDF t) := by
+  have h := (integrable_mul_exp_neg_mul_sq (b := 1 / 2) (by norm_num)).const_mul
+    (√(2 * Real.pi))⁻¹
+  refine h.congr (Filter.Eventually.of_forall fun x => ?_)
+  simp only [stdPDF_eq]
+  ring_nf
+
+#print axioms integrable_mul_stdPDF
+
+lemma stdCDF_eq (z : ℝ) : stdNormalCDF z = ∫ t in Set.Iic z, stdNormalPDF t := by
+  show cdf (gaussianReal 0 1) z = _
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (integral_nonneg fun t => gaussianPDFReal_nonneg _ _ _)]
+
+#print axioms stdCDF_eq
+
+lemma stdCDF_hasDerivAt (z : ℝ) : HasDerivAt stdNormalCDF (stdNormalPDF z) z := by
+  have hint : ∀ a : ℝ, IntegrableOn stdNormalPDF (Set.Iic a) := fun a =>
+    (integrable_gaussianPDFReal 0 1).integrableOn
+  have heq : stdNormalCDF = fun x => stdNormalCDF 0 + ∫ t in (0 : ℝ)..x, stdNormalPDF t := by
+    funext x
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hint 0) (hint x), stdCDF_eq, stdCDF_eq]
+    ring
+  rw [heq]
+  have hc := stdPDF_continuous
+  exact (intervalIntegral.integral_hasDerivAt_right (hc.intervalIntegrable _ _)
+    hc.aestronglyMeasurable.stronglyMeasurableAtFilter hc.continuousAt).const_add _
+
+#print axioms stdCDF_hasDerivAt
+
+lemma stdCDF_pos (z : ℝ) : 0 < stdNormalCDF z := by
+  show 0 < cdf (gaussianReal 0 1) z
+  rw [cdf_eq_real, measureReal_def]
+  apply ENNReal.toReal_pos
+  · intro h
+    have := gaussianReal_absolutelyContinuous' 0 one_ne_zero h
+    simp at this
+  · exact measure_ne_top _ _
+
+#print axioms stdCDF_pos
+
+lemma stdPDF_pos (z : ℝ) : 0 < stdNormalPDF z :=
+  gaussianPDFReal_pos 0 1 z one_ne_zero
+
+#print axioms stdPDF_pos
+
+lemma integral_Iic_mul_stdPDF (z : ℝ) :
+    ∫ t in Set.Iic z, t * stdNormalPDF t = -stdNormalPDF z := by
+  have := integral_Iic_of_hasDerivAt_of_tendsto' (a := z) (m := 0)
+    (f := fun x => -stdNormalPDF x) (f' := fun t => t * stdNormalPDF t)
+    (fun x _ => by
+      convert (stdPDF_hasDerivAt x).neg using 1
+      ring)
+    integrable_mul_stdPDF.integrableOn
+    (by simpa using stdPDF_tendsto_atBot.neg)
+  simpa using this
+
+#print axioms integral_Iic_mul_stdPDF
+
+lemma stdNormal_partial_expectation (z : ℝ) :
+    ∫ t, gaussianPDFReal 0 1 t • max (z - t) 0 = z * stdNormalCDF z + stdNormalPDF z := by
+  rw [← setIntegral_eq_integral_of_forall_compl_eq_zero (s := Set.Iic z)]
+  swap
+  · intro t ht
+    simp only [Set.mem_Iic, not_le] at ht
+    rw [max_eq_right (by linarith), smul_zero]
+  rw [setIntegral_congr_fun measurableSet_Iic
+    (g := fun t => z * stdNormalPDF t - t * stdNormalPDF t)]
+  swap
+  · intro t ht
+    simp only [Set.mem_Iic] at ht
+    simp only [smul_eq_mul]
+    rw [max_eq_left (by linarith)]
+    ring
+  rw [integral_sub, integral_const_mul, ← stdCDF_eq, integral_Iic_mul_stdPDF]
+  · ring
+  · exact ((integrable_gaussianPDFReal 0 1).integrableOn).const_mul z
+  · exact integrable_mul_stdPDF.integrableOn
+
+#print axioms stdNormal_partial_expectation
+
+/-- Step 3 of the card: if the efficiency `Y` at a setting is normal with mean `μ` and
+spread `σ > 0`, then its expected improvement over the best reading so far `f⁺`,
+`E[max(Y - f⁺, 0)]`, equals `(μ - f⁺) Φ(z) + σ φ(z)` with `z = (μ - f⁺)/σ`. -/
+theorem expected_improvement_closed_form (μ fbest σ : ℝ) (hσ : 0 < σ) :
+    ∫ y, max (y - fbest) 0 ∂(gaussianReal μ (Real.toNNReal (σ ^ 2))) =
+      (μ - fbest) * stdNormalCDF ((μ - fbest) / σ) +
+        σ * stdNormalPDF ((μ - fbest) / σ) := by
+  have hσ0 : σ ≠ 0 := hσ.ne'
+  have hmeas : gaussianReal μ (Real.toNNReal (σ ^ 2)) =
+      (gaussianReal 0 1).map (fun t => μ - σ * t) := by
+    have hc : (fun t : ℝ => μ - σ * t) = (fun x => μ - x) ∘ (fun t => σ * t) := rfl
+    rw [hc, ← Measure.map_map (by fun_prop) (by fun_prop), gaussianReal_map_const_mul,
+      gaussianReal_map_const_sub]
+    congr 1
+    · simp
+    · ext
+      simp [sq_nonneg]
+  have hcont : Continuous fun y : ℝ => max (y - fbest) 0 := by fun_prop
+  rw [hmeas, integral_map (by fun_prop) hcont.aestronglyMeasurable]
+  set z := (μ - fbest) / σ with hz
+  have hσz : σ * z = μ - fbest := by rw [hz]; field_simp
+  have hpt : ∀ t, max (μ - σ * t - fbest) 0 = σ * max (z - t) 0 := by
+    intro t
+    have h : μ - σ * t - fbest = σ * (z - t) := by linear_combination -hσz
+    rw [h, mul_max_of_nonneg _ _ hσ.le, mul_zero]
+  simp only [hpt]
+  rw [integral_const_mul, integral_gaussianReal_eq_integral_smul one_ne_zero,
+    stdNormal_partial_expectation]
+  linear_combination (stdNormalCDF z) * hσz
+
+/-- Step 4 of the card: the slope of expected improvement with respect to the predicted
+mean `μ` is `Φ(z)`, and with respect to the spread `σ` is `φ(z)`; both slopes are
+positive, so expected improvement rises with a higher prediction and with a wider error bar. -/
+theorem expected_improvement_slopes (μ fbest σ : ℝ) (hσ : 0 < σ) :
+    HasDerivAt (fun m => expectedImprovement fbest m σ)
+        (stdNormalCDF ((μ - fbest) / σ)) μ ∧
+      HasDerivAt (fun s => expectedImprovement fbest μ s)
+        (stdNormalPDF ((μ - fbest) / σ)) σ ∧
+      0 < stdNormalCDF ((μ - fbest) / σ) ∧
+      0 < stdNormalPDF ((μ - fbest) / σ) := by
+  have hσ0 : σ ≠ 0 := hσ.ne'
+  have hg : HasDerivAt (fun m : ℝ => (m - fbest) / σ) (1 / σ) μ :=
+    ((hasDerivAt_id' μ).sub_const fbest).div_const σ
+  have hgs : HasDerivAt (fun s : ℝ => (μ - fbest) / s)
+      ((0 * σ - (μ - fbest) * 1) / σ ^ 2) σ :=
+    (hasDerivAt_const σ (μ - fbest)).div (hasDerivAt_id' σ) hσ0
+  refine ⟨?_, ?_, stdCDF_pos _, stdPDF_pos _⟩
+  · have h := (((hasDerivAt_id' μ).sub_const fbest).mul
+      ((stdCDF_hasDerivAt ((μ - fbest) / σ)).comp μ hg)).add
+      (((stdPDF_hasDerivAt ((μ - fbest) / σ)).comp μ hg).const_mul σ)
+    refine h.congr_deriv ?_
+    simp only [Function.comp_apply]
+    field_simp
+    ring
+  · have h := (((stdCDF_hasDerivAt ((μ - fbest) / σ)).comp σ hgs).const_mul (μ - fbest)).add
+      ((hasDerivAt_id' σ).mul ((stdPDF_hasDerivAt ((μ - fbest) / σ)).comp σ hgs))
+    refine h.congr_deriv ?_
+    simp only [Function.comp_apply]
+    field_simp
+    ring
+
+/-- Consequence of Step 4 stated as monotonicity: for a fixed best-so-far `f⁺`,
+expected improvement strictly increases in the mean `μ` (for each fixed `σ > 0`)
+and strictly increases in the spread `σ` on `σ > 0` (for each fixed `μ`). -/
+theorem expected_improvement_strictly_increasing (fbest : ℝ) :
+    (∀ σ : ℝ, 0 < σ → StrictMono (fun m => expectedImprovement fbest m σ)) ∧
+      (∀ μ : ℝ, StrictMonoOn (fun s => expectedImprovement fbest μ s) (Set.Ioi 0)) := by
+  refine ⟨fun σ hσ => ?_, fun μ => ?_⟩
+  · apply strictMono_of_deriv_pos
+    intro m
+    rw [(expected_improvement_slopes m fbest σ hσ).1.deriv]
+    exact stdCDF_pos _
+  · apply strictMonoOn_of_deriv_pos (convex_Ioi 0)
+    · intro s hs
+      exact (expected_improvement_slopes μ fbest s hs).2.1.continuousAt.continuousWithinAt
+    · intro s hs
+      rw [interior_Ioi] at hs
+      rw [(expected_improvement_slopes μ fbest s hs).2.1.deriv]
+      exact stdPDF_pos _
+
+end
+
+-- The card's whole-number facts: a 21-value grid in three settings, and the costs.
+example : 21 ^ 3 = 9261 := by norm_num
+example : 9261 * 20000 = 185220000 := by norm_num
+example : 15 * 20000 = 300000 := by norm_num
+example : 40 ^ 3 = 64000 := by norm_num
+
+#print axioms expected_improvement_closed_form
+#print axioms expected_improvement_slopes
+#print axioms expected_improvement_strictly_increasing
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stdPDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_fun_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_tendsto_atBot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integrable_mul_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdCDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdCDF_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdCDF_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_Iic_mul_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormal_partial_expectation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expected_improvement_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expected_improvement_slopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expected_improvement_strictly_increasing' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]
