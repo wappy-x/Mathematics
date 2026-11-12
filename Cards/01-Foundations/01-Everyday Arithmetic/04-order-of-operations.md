@@ -14,9 +14,11 @@ Write it on one line and it looks like this:
 
 Type those keystrokes into a spreadsheet and it answers 775. The right answer is 25. The spreadsheet is not broken. The line says something you did not mean.
 
-A line of arithmetic is not a to-do list worked through in reading order. It is a shape flattened onto one line, and the rules for folding it back up are the **order of operations** — the same in every calculator, spreadsheet and programming language.
+A line of arithmetic is not a to-do list worked through in reading order. It is a shape flattened onto one line, and the rules for folding it back up are the **order of operations** — the same in every scientific calculator, spreadsheet and programming language.
 
 **In one sentence: multiplying and dividing are packages that get unwrapped before any adding or subtracting can touch them, and brackets exist so you can say "this part first" when that default is wrong.**
+
+**What kind of fact this is:** a convention, an agreed rule for reading a line, not a theorem. Why it works shows why this agreement is the natural one.
 
 ```mermaid
 flowchart TD
@@ -30,7 +32,7 @@ flowchart TD
 
 $$(1000 - 12 \times 75) \div 4 = 25$$
 
-**Read it aloud: take the cash, subtract what the apples cost, split what is left between the friends.**
+**Read it aloud:** take the cash, subtract what the apples cost, split what is left between the friends.
 
 Which part happens first is settled by a four-rung ladder, in words:
 
@@ -44,6 +46,13 @@ Higher rung first, and left to right inside a rung.
 | $\div$ | **divide**, third rung as well | 100 cents four ways is 25 |
 | $-$ | **subtract**, fourth rung, so it waits | 1000 less 900 is 100 |
 | $(\;\;)$ | **brackets**, top rung: finish what is inside first | they stop the divide reaching the apples |
+
+### When it holds
+
+- **The machine uses the rungs.** Spreadsheets, scientific calculators and programming languages do. A cheap four-function calculator works strictly left to right and gives a different number.
+- **Left to right inside a rung.** Take a rung in any other order and `8 ÷ 2 × 4` gives 1, not 16.
+- **The brackets go round the whole quantity you mean.** Drop them and the line gives 775, not 25.
+- **The divide comes out even.** 100 cents split four ways is exactly 25. The code divides in whole cents, so a split that does not come out even would silently lose the leftover cents.
 
 ---
 
@@ -193,6 +202,81 @@ ALL CHECKS PASS
 
 Two languages, different code, identical output line for line: the rungs are not a school rule, they are what machines actually run on.
 
+### Lean
+
+Lean proves three of the card's facts for every number, not just the apples, and checks the card's numbers exactly.
+
+- Each friend's cost plus each friend's change is the note split the same number of ways, whenever the change splits evenly.
+- Multiplying is shorthand for adding: any whole number times an amount is that amount written out that many times and added up.
+- Multiply and divide share a rung: dividing by 2 is multiplying by a half, and the same holds for every number.
+- Every number in the worked example, the mistakes table and the Try changing box comes out as the card says. Lean reads each line by the same rungs.
+
+Showing that real programming languages read a line by the same rungs is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 48 lines</summary>
+
+```lean
+-- Order of operations: splitting the change and splitting the bill add back up to splitting the note when the change divides evenly, multiplying is repeated adding, dividing is multiplying by the reciprocal, and the card's worked numbers come out as it says.
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.Ring.Int
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.NormNum
+
+/-- The money lands twice: if the change (cash minus bill) splits evenly between the friends,
+then each friend's share of the bill plus each friend's share of the change is exactly
+the cash split the same number of ways. Amounts are whole cents. -/
+theorem split_bill_add_split_change_eq_split_cash (cash bill friends : ℤ)
+    (h : friends ∣ cash - bill) :
+    bill / friends + (cash - bill) / friends = cash / friends := by
+  obtain ⟨k, hk⟩ := h
+  have hc : cash = bill + friends * k := by omega
+  by_cases hf : friends = 0
+  · subst hf
+    simp
+  · have h1 : (cash - bill) / friends = k := by
+      rw [hk]; exact Int.mul_ediv_cancel_left k hf
+    rw [h1, hc, Int.add_mul_ediv_left bill k hf]
+
+/-- Multiplying is shorthand for adding: `n × a` is `a` written out `n` times and added up. -/
+theorem mul_eq_repeated_add (n : ℕ) (a : ℤ) :
+    (n : ℤ) * a = ∑ _i ∈ Finset.range n, a := by
+  simp
+
+/-- Multiply and divide share a rung: dividing by `b` is the same as multiplying by `1 / b`. -/
+theorem div_eq_mul_one_div_rung (a b : ℚ) : a / b = a * (1 / b) := by
+  rw [mul_one_div]
+
+-- The card's worked numbers, in whole cents (Lean reads these lines with the same rungs).
+example : 12 * 75 = 900 := by decide
+example : 1000 - 900 = 100 := by decide
+example : 100 / 4 = 25 := by decide
+example : (1000 - 12 * 75) / 4 = 25 := by decide
+example : 1000 - 12 * 75 / 4 = 775 := by decide
+example : 1000 - 12 * 75 = 100 := by decide
+example : 12 * 75 / 4 = 225 := by decide
+example : 12 * 75 / 4 + (1000 - 12 * 75) / 4 = 1000 / 4 := by decide
+example : 1000 / 4 = 250 := by decide
+example : 8 / 2 * 4 = 16 := by decide
+example : 8 / (2 * 4) = 1 := by decide
+example : (1000 - 12 * 75) / 5 = 20 := by decide
+example : (1000 - 12 * 80) / 4 = 10 := by decide
+
+#print axioms split_bill_add_split_change_eq_split_cash
+#print axioms mul_eq_repeated_add
+#print axioms div_eq_mul_one_div_rung
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'split_bill_add_split_change_eq_split_cash' depends on axioms: [propext, Quot.sound]
+'mul_eq_repeated_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'div_eq_mul_one_div_rung' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **One more friend.** Change the 4 to a 5 and 25 cents each becomes **20 cents**. Same change, more ways to cut it.
@@ -226,6 +310,8 @@ Two languages, different code, identical output line for line: the rungs are not
 ## Where this goes next
 
 - [The three rearranging laws](05-arithmetic-laws.md): swapping, regrouping, and spreading multiplication over addition. This card says which operation goes first; that one says which rearrangements are safe inside a rung.
+
+This card leaves one question open: when can you reorder or regroup a line and still get the same answer?
 
 ---
 

@@ -12,6 +12,8 @@ Four numbers, four **kinds**. Counting the planks needs only 1, 2, 3. The shortf
 
 **The number families are a ladder: each rung was added so one more operation would always have an answer.**
 
+**What kind of fact this is:** definitions. Each family is named and built here, not proved. The one theorem it leans on, that no fraction lands on the diagonal, is proved in [Irrational numbers](03-irrational-numbers.md).
+
 ### The picture
 
 ```mermaid
@@ -46,6 +48,13 @@ Each arrow is an operation the family on its left cannot do.
 
 The dots mean the digits go on without end. They also never repeat, which is what puts the number outside the fractions.
 
+### When it holds
+
+- **Exact numbers, not tape readings.** The families sort exact values. Take the reading 42.43 as the diagonal and, times itself, it gives 1800.3049, not 1800.
+- **A fraction's bottom is never zero.** Division by zero has no answer in any family, so the fractions leave it out.
+- **A square corner on the tile.** Pythagoras' rule, 900 + 900 = 1800, needs a right angle. Skew the tile and the diagonal changes.
+- **Where N starts.** This card counts from zero, the empty bench. Some books leave zero out of N; then zero first appears in the integers.
+
 ---
 
 ## Why it works
@@ -68,7 +77,11 @@ Integers plus that splitting are the **fractions**. Division now always works, e
 
 ### Step 3: fractions run out at measuring
 
-The tile is 30 cm a side. The square on its diagonal holds four half-tiles — two whole tiles — so the diagonal times itself is 900 + 900 = 1800. That is Pythagoras' rule. Reach for the diagonal with the tape and multiply each reading by itself: 42.42 × 42.42 = 1799.4564, under; 42.43 × 42.43 = 1800.3049, over. The diagonal sits between the 42.4 and 42.5 millimetre marks; zoom in and it sits between 42.42 and 42.43; finer marks repeat the miss forever. No fraction lands on it either — that proof is [Irrational numbers](03-irrational-numbers.md). The number is 42.426406871…, or 30 × root 2, root 2 being the number that gives 2 when multiplied by itself.
+The tile is 30 cm a side. The square on its diagonal holds four half-tiles — two whole tiles — so the diagonal times itself is 900 + 900 = 1800. That is Pythagoras' rule.
+
+Reach for the diagonal with the tape and multiply each reading by itself: 42.42 × 42.42 = 1799.4564, under; 42.43 × 42.43 = 1800.3049, over. The diagonal sits between the 42.4 cm and 42.5 cm marks, a millimetre apart; zoom in and it sits between 42.42 and 42.43; finer marks repeat the miss forever.
+
+No fraction lands on it either — that proof is [Irrational numbers](03-irrational-numbers.md). The number is 42.426406871…, or 30 × root 2, root 2 being the number that gives 2 when multiplied by itself.
 
 Fractions plus every spot they miss are the **reals**.
 
@@ -222,6 +235,122 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the ladder and the nesting for every number, and the diagonal for any square tile 30 cm a side.
+
+- Counting numbers have no answer when you take away more than you have; integers always have one.
+- Integers cannot always share out evenly; fractions always can, except by zero.
+- Some number at or above zero is no fraction times itself. Every real at or above zero is some real times itself.
+- Each family sits inside the next. Going up keeps different numbers different, and 3 is the same 3 by any route.
+- A diagonal that times itself gives 900 + 900 is 30 × root 2, and no fraction lands on it.
+- The card's worked sums come out exactly: the short plank, the off-cut in three, 1800, and the two tape marks.
+
+The diagonal's decimal digits, found by both roads, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 87 lines</summary>
+
+```lean
+-- The number families: each family (counting numbers, integers, fractions, reals) answers an operation the one before it cannot, the families nest, and the carpenter's tile diagonal is no fraction.
+import Mathlib.NumberTheory.Real.Irrational
+import Mathlib.Data.Real.Sqrt
+import Mathlib.Data.Rat.Cast.CharZero
+import Mathlib.Tactic.NormNum
+
+/-- The ladder. Counting numbers cannot take away more than you have; integers always can.
+Integers cannot always share out evenly; fractions always can, except by zero.
+Fractions cannot always measure a diagonal (a square root); reals always can. -/
+theorem number_families_ladder :
+    (∀ a b : ℕ, a < b → ¬ ∃ n : ℕ, n + b = a) ∧
+    (∀ a b : ℤ, ∃ x : ℤ, x + b = a) ∧
+    (∃ a b : ℤ, b ≠ 0 ∧ ¬ ∃ x : ℤ, x * b = a) ∧
+    (∀ a b : ℚ, b ≠ 0 → ∃ x : ℚ, x * b = a) ∧
+    (∃ a : ℚ, 0 ≤ a ∧ ¬ ∃ x : ℚ, x * x = a) ∧
+    (∀ a : ℝ, 0 ≤ a → ∃ x : ℝ, x * x = a) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro a b h
+    omega
+  · intro a b
+    exact ⟨a - b, by ring⟩
+  · exact ⟨1, 2, by norm_num, by omega⟩
+  · intro a b hb
+    exact ⟨a / b, div_mul_cancel₀ a hb⟩
+  · refine ⟨2, by norm_num, ?_⟩
+    rintro ⟨x, hx⟩
+    have hx' : ((x : ℝ)) * (x : ℝ) = 2 := by exact_mod_cast hx
+    have hs : Real.sqrt 2 = |(x : ℝ)| := by
+      rw [← hx', Real.sqrt_mul_self_eq_abs]
+    have hirr : Irrational |(x : ℝ)| := by
+      rw [← hs]; exact irrational_sqrt_two
+    exact hirr ⟨|x|, by simp⟩
+  · intro a ha
+    exact ⟨Real.sqrt a, Real.mul_self_sqrt ha⟩
+
+/-- The families nest: going up throws nothing away. Each step up is one-to-one, and a counting
+number or integer means the same thing whichever route it takes up the ladder. -/
+theorem number_families_nest :
+    Function.Injective (fun n : ℕ => (n : ℤ)) ∧
+    Function.Injective (fun z : ℤ => (z : ℚ)) ∧
+    Function.Injective (fun q : ℚ => (q : ℝ)) ∧
+    (∀ n : ℕ, ((n : ℤ) : ℚ) = (n : ℚ)) ∧
+    (∀ z : ℤ, ((z : ℚ) : ℝ) = (z : ℝ)) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · exact Nat.cast_injective
+  · exact Int.cast_injective
+  · exact Rat.cast_injective
+  · intro n; simp
+  · intro z; simp
+
+/-- The diagonal of a square tile 30 cm a side (a length that times itself gives 900 + 900)
+is 30 times root 2, and no fraction lands on it. -/
+theorem tile_diagonal_not_a_fraction (d : ℝ) (hd : 0 ≤ d) (hsq : d * d = 30 * 30 + 30 * 30) :
+    d = 30 * Real.sqrt 2 ∧ Irrational d := by
+  have h2 : (0:ℝ) ≤ 30 * Real.sqrt 2 := by positivity
+  have hd' : d = 30 * Real.sqrt 2 := by
+    have : d * d = (30 * Real.sqrt 2) * (30 * Real.sqrt 2) := by
+      have := Real.mul_self_sqrt (show (0:ℝ) ≤ 2 by norm_num)
+      nlinarith
+    exact (mul_self_inj hd h2).mp this
+  refine ⟨hd', ?_⟩
+  rw [hd']
+  have h30 := irrational_sqrt_two.ratCast_mul (q := 30) (by norm_num)
+  simpa using h30
+
+
+-- The card's worked numbers, in centimetres.
+example : (225 : ℤ) - 240 = -15 := by norm_num
+example : (240 : ℤ) + (-15) = 225 := by norm_num
+example : ¬ ∃ n : ℕ, n + 240 = 225 := by omega
+example : 100 / 3 = 33 ∧ 100 % 3 = 1 := by decide
+example : 33 * 3 + 1 = 100 := by decide
+example : 33 * 3 = 99 := by decide
+example : ¬ ∃ x : ℤ, x * 3 = 100 := by omega
+example : (33 : ℚ) + 1 / 3 = 100 / 3 := by norm_num
+example : ((33 : ℚ) + 1 / 3) * 3 = 100 := by norm_num
+example : 30 * 30 + 30 * 30 = 1800 := by decide
+example : 900 + 900 = 1800 := by decide
+-- The tape marks 42.42 and 42.43, counted in hundredths of a centimetre: one squares under 1800, one over.
+example : 4242 * 4242 = 17994564 ∧ 4243 * 4243 = 18003049 := by norm_num
+example : 4242 * 4242 < 1800 * 100 * 100 ∧ 1800 * 100 * 100 < 4243 * 4243 := by norm_num
+-- 3 is a counting number, an integer, a fraction (3 over 1) and a real, all the same 3.
+example : (((3 : ℕ) : ℤ) : ℚ) = (3 : ℚ) / 1 := by norm_num
+
+#print axioms number_families_ladder
+#print axioms number_families_nest
+#print axioms tile_diagonal_not_a_fraction
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'number_families_ladder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'number_families_nest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tile_diagonal_not_a_fraction' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the carpenter's numbers, so expect one to fire.
@@ -245,7 +374,7 @@ The two outputs match line for line.
 
 - **Any tape measure.** The printed marks are fractions; the thing measured is a real: [The real numbers have no gaps](04-real-numbers-no-gaps.md).
 - **Tills and spreadsheets.** A count of items is an integer; a price is not. A price in a whole-number cell loses the cents.
-- **Programming.** Integer types and floating-point types are machine stand-ins for Z and R. Integer division returning 33 rather than 33 + 1/3 has broken real invoices.
+- **Programming.** Integer types and floating-point types (decimals kept to a fixed number of digits) are machine stand-ins for Z and R. Integer division returning 33 rather than 33 + 1/3 has broken real invoices.
 
 > **Say it back**
 > Counting gives you N. Ask for 225 − 240, get no answer, add negatives: Z, the integers. Ask for 100 ÷ 3, get no integer answer, add splitting: Q, the fractions. Measure a tile's diagonal, find no fraction on it, add every missed spot: R, the reals. Each family sits inside the next. Not four kinds of number — one number line, built in four goes.
@@ -263,11 +392,13 @@ The two outputs match line for line.
 - [Peano's three rules](../06-Proof/07-peano-and-one-plus-one.md): the bottom rung built from "start at zero and take one more step".
 - [Countable sets](../09-Sizes%20of%20Infinity/02-countable-sets.md): as many fractions as counting numbers, and strictly more reals.
 
+The question this card leaves open: the reals were added to fill every spot the fractions miss, so what guarantees that no spot is still empty?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Stillwell, John. *The Real Numbers*. Springer, 2013. [doi:10.1007/978-3-319-01577-4](https://doi.org/10.1007/978-3-319-01577-4). Each family built from the problem that forced it.
 - Dedekind, Richard. *Essays on the Theory of Numbers*, trans. W. W. Beman. Open Court, 1901. [Project Gutenberg](https://www.gutenberg.org/ebooks/21016). The essays that made the top rung rigorous.

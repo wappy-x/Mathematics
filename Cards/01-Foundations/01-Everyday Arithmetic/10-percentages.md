@@ -12,6 +12,8 @@ Percent means *per hundred* — *per cento*, the way Italian merchants wrote it.
 
 **A percent is a count of hundredths: to take a percent of an amount, multiply by the percent, then divide by 100.**
 
+**What kind of fact this is:** a definition: "percent" means hundredths, and every rule on this card follows from that in Why it works.
+
 ### The picture: the jacket's three prices
 
 ```
@@ -42,6 +44,8 @@ Undoing one turns that multiply into a divide:
 
 **$64.80 before the 8% tax = 64.80 × 100 ÷ 108 = $60.00**
 
+**Read it aloud:** twenty-five percent of eighty dollars is eighty times twenty-five, divided by one hundred: twenty dollars.
+
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
 | a percent, % | a count of hundredths; % means "÷ 100" | 25, 8, 15 |
@@ -49,6 +53,13 @@ Undoing one turns that multiply into a divide:
 | the part | that percent's share of the amount | $20.00 off, $4.80 tax |
 | a cut | keep the rest: 100 minus the percent | 100 − 25 = 75 |
 | a rise | pay the extra: 100 plus the percent | 100 + 8 = 108 |
+
+### When it holds
+
+- **The percent names its amount.** The 8% tax is of the $60.00 sale price. Without "of what", a percent has no size.
+- **Each step in a chain is taken of the amount it meets.** Add the percents instead and the till says $66.40, not $64.80.
+- **To undo a step, divide by the same multiply.** Add the 25% back instead and $60.00 becomes $75.00, not the $80.00 tag.
+- **A change in a rate is counted in points.** Read 15% to 18% as "3% more" and the tip is $7.11, not $8.28.
 
 ---
 
@@ -218,6 +229,99 @@ ALL CHECKS PASS
 
 The two outputs match line for line, cent for cent.
 
+### Lean
+
+Lean proves three rules for every amount and every percent, not just the card's numbers.
+
+- A rise is one multiply: times 100 plus the percent, then ÷ 100. A cut is the same with 100 minus the percent.
+- To undo a step, multiply by 100 and divide by the same multiply. This works for every step except a 100% cut, whose multiply is zero.
+- Percents do not add. A cut then a rise equals the single cut you get by adding the percents only if the amount or one percent is zero.
+
+The worked numbers are checked here in whole cents too; printing the price list is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 67 lines</summary>
+
+```lean
+-- Percentages: a cut or a rise by a percent is one multiply by 100 minus or plus that percent over 100, dividing by the same multiply undoes it, a cut then a rise never equals the single cut you get by adding the percents unless one of them is zero, and the card's jacket and dinner numbers come out as it says.
+import Mathlib.Algebra.Field.Rat
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-- A cut or a rise in one multiply: an amount with `p` percent added on is the amount
+times `100 + p`, divided by 100; an amount with `p` percent taken off is the amount
+times `100 - p`, divided by 100. (The part, `p` percent of `a`, is `a × p ÷ 100`.) -/
+theorem percent_rise_and_cut_in_one_multiply (a p : ℚ) :
+    a + a * p / 100 = a * (100 + p) / 100 ∧
+    a - a * p / 100 = a * (100 - p) / 100 := by
+  constructor <;> ring
+
+/-- To undo a step, divide by the same multiply: if a step multiplied the amount by `m`
+and divided by 100 (`m = 100 + p` for a rise, `100 - p` for a cut), then multiplying
+the result by 100 and dividing by `m` gives back the amount. -/
+theorem undo_percent_step_by_same_multiply (a m : ℚ) (hm : m ≠ 0) :
+    a * m / 100 * 100 / m = a := by
+  field_simp
+
+/-- Percents do not add: a cut of `p` percent followed by a rise of `q` percent, each taken
+of the amount it meets, equals a single cut of `p - q` percent only when the amount is zero
+or one of the two percents is zero. -/
+theorem percents_do_not_add (a p q : ℚ) :
+    a * (100 - p) / 100 * (100 + q) / 100 = a * (100 - (p - q)) / 100 ↔
+      a = 0 ∨ p = 0 ∨ q = 0 := by
+  have key : a * (100 - p) / 100 * (100 + q) / 100 - a * (100 - (p - q)) / 100
+      = -(a * p * q) / 10000 := by ring
+  constructor
+  · intro h
+    have h0 : -(a * p * q) / 10000 = 0 := by rw [← key, h]; ring
+    have h1 : a * p * q = 0 := by linarith
+    rcases mul_eq_zero.mp h1 with h2 | h2
+    · rcases mul_eq_zero.mp h2 with h3 | h3
+      · exact Or.inl h3
+      · exact Or.inr (Or.inl h3)
+    · exact Or.inr (Or.inr h2)
+  · intro h
+    have h1 : a * p * q = 0 := by
+      rcases h with h | h | h <;> simp [h]
+    have : a * (100 - p) / 100 * (100 + q) / 100 - a * (100 - (p - q)) / 100 = 0 := by
+      rw [key, h1]; ring
+    linarith
+
+-- The card's worked numbers, in whole cents.
+example : 8000 * 25 / 100 = 2000 := by decide            -- 25% of the $80.00 tag
+example : 8000 - 2000 = 6000 := by decide                -- sale price
+example : 8000 * (100 - 25) / 100 = 6000 := by decide    -- the same, in one multiply
+example : 6000 * 8 / 100 = 480 := by decide              -- 8% tax on the sale price
+example : 6000 + 480 = 6480 := by decide                 -- total at the till
+example : 6000 * (100 + 8) / 100 = 6480 := by decide     -- the same, in one multiply
+example : 6480 * 100 / 108 = 6000 := by decide           -- undo the tax
+example : 6000 * 100 / 75 = 8000 := by decide            -- undo the cut
+example : 8000 * 108 / 100 * 75 / 100 = 6480 := by decide -- tax first, then the sale
+example : 4600 * 15 / 100 = 690 := by decide             -- 15% tip on the $46.00 dinner
+example : 4600 * 18 / 100 = 828 := by decide             -- the same tip at 18%
+example : 75 * 108 / 100 = 81 := by decide               -- 25% off then 8% on is 81% of the tag
+-- The mistakes.
+example : 8000 * (100 - 17) / 100 = 6640 := by decide    -- adding the percents
+example : 6000 * (100 + 25) / 100 = 7500 := by decide    -- adding 25% back
+example : (690 * 103 + 50) / 100 = 711 := by decide      -- "3% more tip", to the nearest cent
+
+#print axioms percent_rise_and_cut_in_one_multiply
+#print axioms undo_percent_step_by_same_multiply
+#print axioms percents_do_not_add
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'percent_rise_and_cut_in_one_multiply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'undo_percent_step_by_same_multiply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'percents_do_not_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
@@ -256,11 +360,13 @@ The two outputs match line for line, cent for cent.
 
 - [Growth factors](../04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): the one-multiply step given its own name, so changes chain — why a 50% fall then a 50% rise does not break even.
 
+This card leaves one question open: what happens when the same percent is applied again and again, each time to a new amount?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Sigler, Laurence E., trans. *Fibonacci's Liber Abaci*. Springer, 2002. [doi:10.1007/978-1-4613-0079-3](https://doi.org/10.1007/978-1-4613-0079-3). Where merchant arithmetic — profit, interest, per cento — put a hundred under the fraction.
 - Eurostat. *Statistics Explained: Percentage point*. [Glossary entry](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Percentage%20point). The official points-versus-percent rule.

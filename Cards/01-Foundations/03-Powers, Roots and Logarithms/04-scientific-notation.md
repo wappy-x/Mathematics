@@ -12,6 +12,8 @@ Scientific notation — also called **standard form** — splits a number in two
 
 **Write the front number, then the count of tens it rides on, and the number is written.**
 
+**What kind of fact this is:** a convention for writing numbers, not a theorem. Why it works shows nothing is lost.
+
 ### The picture: how far apart these two are
 
 ```
@@ -47,6 +49,12 @@ Each number, written out then split:
 
 The minus in 10^-6 does not make the number negative. It says *divide* by ten six times: still positive, only small ([Exponents](01-exponents-and-powers.md)).
 
+### When it holds
+
+- **The front number is from 1 up to, not including, 10.** Otherwise 0.2142857 x 10^17 is the right size but hard to read.
+- **The power counts places the dot moves, not zeros.** Count zeros in 0.000007 and the cell comes out at 0.000070 m.
+- **Both numbers are in one unit.** Leave the Sun in km and its power is 8, not 11.
+
 ---
 
 ## Why it works
@@ -57,9 +65,9 @@ Each column of a written number is worth ten times the column on its right. Slid
 
 ### Step 1: slide until one digit stands in front
 
-150,000,000 km. The dot sits unwritten at the right-hand end; slide it left 8 places to reach 1.5. Sliding left 8 places divided it by ten 8 times, so multiply back: **1.5 x 10^8 km.**
+150,000,000 km. The dot sits unwritten at the right-hand end; slide it left 8 places to reach 1.5. That divided it by ten 8 times, so multiply back: **1.5 x 10^8 km.**
 
-0.000007 m. Slide the dot right 6 places to reach 7. Sliding right 6 places multiplied it by ten 6 times, so divide back: **7 x 10^-6 m.**
+0.000007 m. Slide the dot right 6 places to reach 7. That multiplied it by ten 6 times, so divide back: **7 x 10^-6 m.**
 
 ### Step 2: change the unit, the power moves
 
@@ -88,7 +96,7 @@ The power alone is the number's **order of magnitude**: its size to the nearest 
 | subtract the powers | 11 − (−6) | 17 |
 | slide back into standard form | 0.2142857 x 10^17 | **2.142857 x 10^16** |
 
-The two powers are 17 apart, and sliding the front number back between 1 and 10 drops that by one: the Sun is about 2.142857 x 10^16 blood-cell widths away.
+The Sun is about 2.142857 x 10^16 blood-cell widths away.
 
 ### What breaks if you drop a piece
 
@@ -97,8 +105,6 @@ The two powers are 17 apart, and sliding the front number back between 1 and 10 
 | Counting the zeros after the dot in 0.000007: 5 of them, so 7 x 10^-5 | 0.000070 m | The dot travels 6 places, past the 7 — ten times too wide |
 | Adding the powers instead of subtracting | 2.142857 x 10^4 | Division subtracts: 11 − (−6) |
 | Front number outside 1 to 10 | 0.2142857 x 10^17 | Right size, wrong form, unreadable at a glance |
-
-All three values appear in both outputs.
 
 ---
 
@@ -218,7 +224,129 @@ the mistakes come out at 0.000070 m and 2.142857 x 10^4
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line.
+### Lean
+
+Lean proves the rules for all numbers, not only the Sun and the cell, and checks the worked numbers exactly.
+
+- Every positive number splits into a front number from 1 up to, not including, 10, times a power of ten.
+- That split is the only one, so nothing is lost.
+- Multiplying multiplies the front numbers and adds the powers. Changing km into m is this rule, with 10^3.
+- Dividing divides the front numbers and subtracts the powers.
+- The worked numbers and the mistakes in the table come out as the card says, 2.142857 x 10^16 to six places.
+
+Building each number ten at a time, and comparing the two roads by plain division, is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 96 lines</summary>
+
+```lean
+-- Scientific notation: every positive number can be written in exactly one way as a front number from 1 up to, not including, 10 times a whole power of ten, and multiplying or dividing such numbers multiplies or divides the front numbers while the powers add or subtract.
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Int.Log
+import Mathlib.Algebra.Order.Field.Power
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Data.Real.Archimedean
+
+/-- The card's claim: any positive number can be split into a front number from 1 up to, not
+including, 10, times ten to a whole power, and the split is the only one, so nothing is lost. The
+pair is (front number, power): 150,000,000 is (1.5, 8) and 0.000007 is (7, -6). -/
+theorem scientific_notation_exists_unique (x : ℝ) (hx : 0 < x) :
+    ∃! p : ℝ × ℤ, 1 ≤ p.1 ∧ p.1 < 10 ∧ x = p.1 * (10 : ℝ) ^ p.2 := by
+  have key : ∀ (a b : ℝ) (m n : ℤ), 1 ≤ a → a < 10 → 1 ≤ b → b < 10 →
+      a * (10 : ℝ) ^ m = b * (10 : ℝ) ^ n → n ≤ m := by
+    intro a b m n ha ha' hb hb' h
+    by_contra hlt
+    push_neg at hlt
+    have h1 : m + 1 ≤ n := hlt
+    have hp : (0 : ℝ) < (10 : ℝ) ^ m := zpow_pos (by norm_num) m
+    have h2 : a * (10 : ℝ) ^ m < (10 : ℝ) ^ (m + 1) := by
+      rw [zpow_add_one₀ (by norm_num)]
+      nlinarith
+    have h3 : (10 : ℝ) ^ (m + 1) ≤ (10 : ℝ) ^ n :=
+      zpow_le_zpow_right₀ (by norm_num) h1
+    have hq : (0 : ℝ) < (10 : ℝ) ^ n := zpow_pos (by norm_num) n
+    have h4 : (10 : ℝ) ^ n ≤ b * (10 : ℝ) ^ n := by nlinarith [mul_nonneg (sub_nonneg.2 hb) hq.le]
+    linarith
+  have hk0 : (0 : ℝ) < (10 : ℝ) ^ (Int.log 10 x) := zpow_pos (by norm_num) _
+  have e1 : 1 ≤ x / (10 : ℝ) ^ (Int.log 10 x) := by
+    have := Int.zpow_log_le_self (b := 10) (by norm_num) hx
+    push_cast at this
+    rw [le_div_iff₀ hk0]
+    linarith
+  have e2 : x / (10 : ℝ) ^ (Int.log 10 x) < 10 := by
+    have := Int.lt_zpow_succ_log_self (b := 10) (by norm_num) x
+    rw [div_lt_iff₀ hk0]
+    rw [zpow_add_one₀ (by norm_num)] at this
+    push_cast at this
+    linarith
+  have e3 : x = x / (10 : ℝ) ^ (Int.log 10 x) * (10 : ℝ) ^ (Int.log 10 x) := by
+    field_simp
+  refine ⟨(x / (10 : ℝ) ^ (Int.log 10 x), Int.log 10 x), ⟨e1, e2, e3⟩, ?_⟩
+  rintro ⟨a, m⟩ ⟨ha, ha', hxa⟩
+  simp only at ha ha' hxa
+  have hm : m = Int.log 10 x := by
+    have k1 := key _ _ m _ ha ha' e1 e2 (hxa.symm.trans e3)
+    have k2 := key _ _ _ m e1 e2 ha ha' (e3.symm.trans hxa)
+    omega
+  rw [hm] at hxa
+  have : a = x / (10 : ℝ) ^ (Int.log 10 x) := by
+    rw [eq_div_iff hk0.ne']
+    exact hxa.symm
+  rw [this, hm]
+
+/-- Multiplying piles the tens up: multiply the front numbers and add the powers. Changing
+kilometres to metres is the case of multiplying by 10^3, so the power 8 becomes 11. -/
+theorem sci_mul_powers_add (a b : ℝ) (m n : ℤ) :
+    (a * (10 : ℝ) ^ m) * (b * (10 : ℝ) ^ n) = (a * b) * (10 : ℝ) ^ (m + n) := by
+  rw [zpow_add₀ (by norm_num)]
+  ring
+
+/-- Comparing is subtracting: to divide, divide the front numbers and subtract the powers. -/
+theorem sci_div_powers_subtract (a b : ℝ) (m n : ℤ) :
+    (a * (10 : ℝ) ^ m) / (b * (10 : ℝ) ^ n) = (a / b) * (10 : ℝ) ^ (m - n) := by
+  rw [zpow_sub₀ (by norm_num)]
+  field_simp
+
+-- The Sun: 150,000,000 km is 1.5 x 10^8 km, with 1.5 written as 3/2.
+example : (3 / 2 : ℝ) * (10 : ℝ) ^ (8 : ℤ) = 150000000 := by norm_num
+-- 150,000,000 has seven zeros, but the power is 8: it sits from 10^8 up to 10^9.
+example : (10 : ℕ) ^ 8 ≤ 150000000 ∧ 150000000 < (10 : ℕ) ^ 9 := by norm_num
+-- One kilometre is 1000 m, which is 10^3 m; the powers add, 8 + 3 = 11.
+example : (1000 : ℝ) = (10 : ℝ) ^ (3 : ℤ) := by norm_num
+example : (8 : ℤ) + 3 = 11 := by norm_num
+example : (3 / 2 : ℝ) * (10 : ℝ) ^ (11 : ℤ) = 150000000000 := by norm_num
+-- The cell: 0.000007 m, seven millionths, is 7 x 10^-6 m.
+example : (7 : ℝ) * (10 : ℝ) ^ (-6 : ℤ) = 7 / 1000000 := by norm_num
+-- Comparing: 11 - (-6) = 17, and the Sun over the cell is (1.5 / 7) x 10^17, which is (15 / 7) x 10^16.
+example : (11 : ℤ) - (-6) = 17 := by norm_num
+example : (150000000000 : ℝ) / (7 / 1000000) = (3 / 2 / 7) * (10 : ℝ) ^ (17 : ℤ) := by norm_num
+example : (3 / 2 / 7 : ℝ) * (10 : ℝ) ^ (17 : ℤ) = (15 / 7) * (10 : ℝ) ^ (16 : ℤ) := by norm_num
+-- The front number 15/7 is from 1 up to 10, and is 2.142857 to six places after the dot.
+example : (1 : ℝ) ≤ 15 / 7 ∧ (15 / 7 : ℝ) < 10 := by norm_num
+example : (2142857 / 1000000 : ℝ) < 15 / 7 ∧ (15 / 7 : ℝ) < 2142858 / 1000000 := by norm_num
+-- The mistakes: 7 x 10^-5 is 0.000070, ten times too wide; adding the powers gives 11 + (-6) = 5,
+-- that is (1.5 / 7) x 10^5 = (15 / 7) x 10^4.
+example : (7 : ℝ) * (10 : ℝ) ^ (-5 : ℤ) = 70 / 1000000 := by norm_num
+example : (11 : ℤ) + (-6) = 5 := by norm_num
+example : (3 / 2 / 7 : ℝ) * (10 : ℝ) ^ (5 : ℤ) = (15 / 7) * (10 : ℝ) ^ (4 : ℤ) := by norm_num
+
+#print axioms scientific_notation_exists_unique
+#print axioms sci_mul_powers_add
+#print axioms sci_div_powers_subtract
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'scientific_notation_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sci_mul_powers_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sci_div_powers_subtract' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -259,11 +387,13 @@ The two outputs match line for line.
 - [Logarithms](05-logarithms.md): "what power got me here?", when the power is not a whole number.
 - [Log laws and log scales](06-log-laws-and-log-scales.md): an axis marked 1, 10, 100 instead of 1, 2, 3 — this card's picture as a ruler.
 
+This card leaves one question open: which single power of ten is 1.5 x 10^8?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - NASA Goddard, *Sun Fact Sheet*. [nssdc.gsfc.nasa.gov](https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html). The Earth-to-Sun distance, rounded here to 150,000,000 km.
 - Dean, Laura. *Blood Groups and Red Cell Antigens*. NCBI Bookshelf, 2005. [ncbi.nlm.nih.gov](https://www.ncbi.nlm.nih.gov/books/NBK2263/). The red cell at a few millionths of a metre, rounded here to 0.000007 m.

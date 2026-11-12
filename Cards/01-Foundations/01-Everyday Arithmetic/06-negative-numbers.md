@@ -1,6 +1,6 @@
 # Negative numbers: the number line runs both ways
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Everyday Arithmetic](../README.md#s01) → Numbers below zero
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Everyday Arithmetic](../README.md#s01) → Negative numbers
 
 ---
 
@@ -10,11 +10,15 @@ The account is empty. You pay in $40. A bill for $65 goes out. The app shows **�
 
 Nothing broke. The counting numbers cannot answer 40 take away 65, so the numbers keep going past zero.
 
-Picture a road with zero in the middle. Walk right and count 1, 2, 3. Walk left and count the same distances the other way, each wearing a minus sign: −1, −2, −3. The road is **the number line**; everything left of zero is a **negative number**. −25 is not a damaged 25. It is a place, twenty-five steps the far side of zero. Whole numbers of either sign, zero included, are the **integers**, written ℤ.
+Picture a road with zero in the middle. Walk right and count 1, 2, 3. Walk left and count the same distances the other way, each wearing a minus sign: −1, −2, −3.
+
+The road is **the number line**; everything left of zero is a **negative number**. −25 is not a damaged 25. It is a place, twenty-five steps the far side of zero. Whole numbers of either sign, zero included, are the **integers**, written ℤ.
 
 A thermometer reads the same road: 3 below zero is −3, and after a 5-degree drop it reads −8.
 
 **A minus sign names the opposite: the same distance from zero, the other way. Once opposites exist, subtracting is adding an opposite.**
+
+**What kind of fact this is:** a definition and two theorems. The opposite of a number is a definition. The two sign rules for multiplying are theorems, proved on this card in Why it works from the spreading law.
 
 ### The picture: the account as the story runs
 
@@ -41,7 +45,7 @@ Then multiplying: three $25 fees charged, then all three cancelled.
 
 **3 × (−25) = −75  and  (−3) × (−25) = 75**
 
-Read it aloud: **to subtract, add the opposite; and when multiplying, same signs give a plus, different signs a minus.**
+**Read it aloud:** to subtract, add the opposite; and when multiplying, same signs give a plus, different signs a minus.
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
@@ -50,6 +54,13 @@ Read it aloud: **to subtract, add the opposite; and when multiplying, same signs
 | subtracting | adding the opposite | 40 − 65 is 40 + (−65) |
 | the size | how far from zero, sign ignored | −25 sits 25 from zero |
 | two signs multiplied | same signs a plus, different signs a minus | 3 × (−25) = −75 |
+
+### When it holds
+
+- **Every number has an opposite.** Without −65, the counting numbers have no answer for 40 − 65.
+- **The spreading law holds.** It is the only thing that forces the sign rules. Drop it, cancel the fees as −3 × 25, and the account ends at −175, not −25.
+- **A minus sign points the same way every time.** A bill, a fee and a colder day all move left. Move right for "5 colder" and −3 gives 2, not −8.
+- **You divide by a number other than 0.** −75 ÷ 3 = −25 undoes 3 × (−25). No number times 0 gives −75, so −75 ÷ 0 has no answer.
 
 ---
 
@@ -79,7 +90,7 @@ The same move, minus three lots.
 
 - (−3) × (25 + (−25)) = (−3) × 0 = 0.
 - Spread it: (−3) × 25 + (−3) × (−25) = 0.
-- (−3) × 25 is −75, by step 2 and the swapping law.
+- (−3) × 25 is −75, by step 2 and the swapping law (order does not matter when you multiply).
 - Only 75 cancels −75. So **(−3) × (−25) = 75**.
 
 Nobody chose it. Once spreading holds, plus is the only answer that fits: cancel three $25 charges and you are $75 better off.
@@ -222,6 +233,96 @@ ALL CHECKS PASS
 
 Identical, line for line.
 
+### Lean
+
+Lean proves the sign rules and subtracting for any numbers with opposites and the spreading law, and dividing for integers.
+
+- Subtracting a number is the same as adding its opposite, so 40 − 65 is 40 + (−65).
+- A plus times a minus is a minus, and so is a minus times a plus.
+- A minus times a minus is a plus.
+- For integers, dividing by a number other than 0 undoes multiplying by it.
+- Every worked number on the card is checked too, from 40 − 65 = −25 to the three mistakes.
+
+Printing the account story line by line, and the Try changing experiments, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 62 lines</summary>
+
+```lean
+-- Negative numbers: wherever every number has an opposite and the spreading law holds, subtracting is adding the opposite, same signs multiply to a plus and different signs to a minus, and in the integers dividing by a number other than 0 undoes multiplying by it.
+import Mathlib.Algebra.Ring.Defs
+import Mathlib.Algebra.Group.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.DivMod
+
+/-- The sign rules for multiplying, as the card proves them from the spreading law: in any number
+system where every number has an opposite and multiplying spreads over adding (a ring), a plus
+times a minus is a minus, a minus times a plus is a minus, and a minus times a minus is a plus. -/
+theorem sign_rules_for_multiplying {R : Type*} [Ring R] (a b : R) :
+    a * -b = -(a * b) ∧ -a * b = -(a * b) ∧ -a * -b = a * b := by
+  refine ⟨mul_neg a b, neg_mul a b, ?_⟩
+  rw [neg_mul, mul_neg, neg_neg]
+
+/-- Subtracting is adding the opposite: once every number has an opposite, taking `b` away from
+`a` gives the same answer as adding the opposite of `b` (40 − 65 is 40 + (−65)). -/
+theorem subtracting_is_adding_the_opposite {R : Type*} [Ring R] (a b : R) :
+    a - b = a + -b := by
+  exact sub_eq_add_neg a b
+
+/-- Dividing undoes multiplying, for whole numbers of either sign: when you divide by a number
+other than 0, multiplying by it and then dividing by it gets you back where you started
+(3 × (−25) = −75, and −75 ÷ 3 = −25). -/
+theorem dividing_undoes_multiplying (a b : ℤ) (hb : b ≠ 0) :
+    a * b / b = a := by
+  exact Int.mul_ediv_cancel a hb
+
+-- The opposite of 65 cancels it.
+example : (65 : ℤ) + -65 = 0 := by norm_num
+-- Paid in 40, then a bill of 65: −25, the same both ways.
+example : (40 : ℤ) - 65 = -25 := by norm_num
+example : (40 : ℤ) + -65 = -25 := by norm_num
+-- Three below zero, five degrees colder: −8.
+example : (-3 : ℤ) - 5 = -8 := by norm_num
+example : (-3 : ℤ) + -5 = -8 := by norm_num
+-- Step 2: three lots of a bracket worth zero, spread out, forces 3 × (−25) = −75.
+example : (3 : ℤ) * 25 + 3 * -25 = 0 := by norm_num
+example : (3 : ℤ) * -25 = -75 := by norm_num
+-- Step 3: the same move, minus three lots, forces (−3) × (−25) = 75.
+example : (-3 : ℤ) * 25 + -3 * -25 = 0 := by norm_num
+example : (-3 : ℤ) * -25 = 75 := by norm_num
+-- Dividing undoes it: −75 ÷ 3 = −25 and −75 ÷ (−25) = 3.
+example : (-75 : ℤ) / 3 = -25 := by norm_num
+example : (-75 : ℤ) / -25 = 3 := by norm_num
+-- The running balance: 0, 40, −25, −100, −25.
+example : (0 : ℤ) + 40 = 40 ∧ (40 : ℤ) - 65 = -25 ∧ (-25 : ℤ) + 3 * -25 = -100 ∧
+    (-100 : ℤ) + -3 * -25 = -25 := by norm_num
+-- Taking the fees back off: −100 − (−75) = −100 + 75 = −25.
+example : (-100 : ℤ) - -75 = -25 ∧ (-100 : ℤ) + 75 = -25 := by norm_num
+-- The three mistakes: −175, 25 and 2.
+example : (-25 : ℤ) + 3 * -25 + -3 * 25 = -175 := by norm_num
+example : (-100 : ℤ) - 75 = -175 := by norm_num
+example : (65 : ℤ) - 40 = 25 := by norm_num
+example : (-3 : ℤ) + 5 = 2 := by norm_num
+-- A bigger debt is a smaller number: −100 sits left of −25.
+example : (-100 : ℤ) < -25 := by norm_num
+-- Lifts: two floors up from −1 is 1.
+example : (-1 : ℤ) + 2 = 1 := by norm_num
+
+#print axioms sign_rules_for_multiplying
+#print axioms subtracting_is_adding_the_opposite
+#print axioms dividing_undoes_multiplying
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sign_rules_for_multiplying' depends on axioms: [propext]
+'subtracting_is_adding_the_opposite' depends on axioms: [propext]
+'dividing_undoes_multiplying' depends on axioms: [propext]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -262,12 +363,14 @@ Identical, line for line.
 - [Absolute value](../02-The%20Number%20Line/05-absolute-value-and-distance.md): the "size, sign ignored" row above, made into its own tool.
 - [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): a minus sign moved up into the count of the multiplications.
 
+This card leaves one question open: −75 shares evenly over 3 months, but what number is 25 shared between 3?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026: every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Euler, Leonhard. *Elements of Algebra*, trans. John Hewlett, 1822. [Internet Archive](https://archive.org/details/elementsofalgebr00eule). Euler's own argument that a minus times a minus must be a plus.
+- Euler, Leonhard. *Elements of Algebra*, trans. John Hewlett, 1828. [Internet Archive](https://archive.org/details/elementsofalgebr00eule). Euler's own argument that a minus times a minus must be a plus.
 - O'Connor, J. J., and E. F. Robertson. "Brahmagupta." *MacTutor History of Mathematics Archive*, University of St Andrews. [MacTutor](https://mathshistory.st-andrews.ac.uk/Biographies/Brahmagupta/). Brahmagupta wrote the sign rules in 628 AD, as fortunes and debts.
 - Lang, Serge. *Basic Mathematics*. Springer New York, 1988. [Publisher page](https://link.springer.com/book/9780387967875). The same rules from the same laws.

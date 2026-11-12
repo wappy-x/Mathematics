@@ -14,6 +14,8 @@ Write a percent change as one number you multiply by, and it stops being a trick
 
 **A percent change is one multiplier: 1 plus the change for a rise, 1 minus it for a cut. Chain changes by multiplying the factors, never by adding the percents.**
 
+**What kind of fact this is:** a rule that follows from what a percent means, shown in Why it works.
+
 ### The picture: four prices
 
 ```
@@ -39,6 +41,8 @@ Write the percent as a decimal — 25% is 0.25 ([Percentages](../01-Everyday%20A
 
 **the two changes as one number: 1.25 × 0.75 = 0.9375, and $80.00 × 0.9375 = $75.00**
 
+**Read it aloud:** eighty dollars times one and a quarter is a hundred; times three quarters, seventy-five.
+
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
 | the change, as a decimal | the percent divided by 100 | 0.25, 0.50 |
@@ -51,6 +55,12 @@ Write the percent as a decimal — 25% is 0.25 ([Percentages](../01-Everyday%20A
 **new amount = old amount × (1 + the change)**, and the change is negative for a cut.
 
 Above 1 is a rise, below 1 a cut, exactly 1 no change.
+
+### When it holds
+
+- **Each change is taken of the price it meets.** Take the sale of the March tag instead and the jacket ends at $80.00.
+- **The factor is 1 plus or minus the change.** Multiply by 0.25 alone and the jacket comes out at $20.00.
+- **To undo a factor, divide by it.** A matching 25% cut takes $100.00 to $75.00.
 
 ---
 
@@ -68,7 +78,7 @@ The long way up: 25% of $80.00 is $20.00, add it on, $100.00. The factor way: 80
 
 The sale multiplies the raised price, not the March tag: 100.00 × 0.75 = $75.00. That is 80.00 × 1.25 × 0.75. Multiplying can be grouped any way, so gather the factors first: 1.25 × 0.75 = 0.9375, and 80.00 × 0.9375 = $75.00.
 
-To read a factor back as a percent, take it from 1: 1 − 0.9375 = 0.0625, so 6.25% down. Up 25% then down 25% is a 6.25% cut.
+To read a factor back as a percent, take it from 1: 1 − 0.9375 = 0.0625, so 6.25% down.
 
 Run the sale first — 80.00 × 0.75 = $60.00, then × 1.25 — and it is $75.00 again. The order is not what costs the money. It is that 0.9375 is not 1.
 
@@ -79,9 +89,6 @@ To undo a multiply, divide. 1 ÷ 1.25 = 0.80, a 20% cut: 100.00 × 0.80 = $80.00
 ### Step 4: half off, half on
 
 The second jacket, also $80.00: halved to $40.00, then up 50%, 40.00 × 1.50 = $60.00. As factors, 0.50 × 1.50 = 0.75, a 25% cut. Half off then half on loses a quarter, whatever the price.
-
-The same factor over and over — 1.05 a year on a savings account — is compound interest: [Compound interest](03-compound-interest.md). [Simple interest](02-simple-interest.md) is the flat version that does add.
-
 ---
 
 ## Worked numbers, by hand
@@ -231,6 +238,112 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three rules for every price and every change, not just the $80.00 jacket.
+
+- Two changes, each taken of the price it meets, come to the start times the two growth factors multiplied. Adding the percents gives the same answer only when the price or one change is zero.
+- A rise and a cut of the same percent, not zero, leave any positive price lower than it began.
+- Any rise is undone exactly by dividing by its factor, and the cut that does it is always smaller than the rise.
+- Every price in the worked numbers, the three mistakes and the Try changing box comes out exactly as the card says.
+
+Rounding each price to the nearest cent is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 79 lines</summary>
+
+```lean
+-- Growth factors: two percent changes, each taken of the price it meets, come to the start times the product of the two growth factors, which matches adding the percents only when the price or one change is zero; a rise and a cut of the same percent leave a positive price lower; a rise is undone by a smaller cut; and the card's jacket prices come out exactly as it says.
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Positivity
+
+/-- Percent changes chain by multiplying the factors, never by adding the percents.
+Start at price `p`. Apply a change `r` (a decimal, negative for a cut) of that price, giving
+`p₁ = p + p × r`; then a change `s` of the price it meets, giving `p₂ = p₁ + p₁ × s`.
+Then the result is the start times one growth factor, `(1 + r) × (1 + s)`. And it equals what
+adding the percents would give, `p + p × (r + s)`, only when the price or one of the changes
+is zero. -/
+theorem percent_changes_chain_by_multiplying (p r s p₁ p₂ : ℝ)
+    (h₁ : p₁ = p + p * r) (h₂ : p₂ = p₁ + p₁ * s) :
+    p₂ = p * ((1 + r) * (1 + s)) ∧
+      (p₂ = p + p * (r + s) ↔ p = 0 ∨ r = 0 ∨ s = 0) := by
+  subst h₂ h₁
+  refine ⟨by ring, ?_⟩
+  constructor
+  · intro h
+    have h3 : p * r * s = 0 := by linarith
+    rcases mul_eq_zero.mp h3 with h4 | h4
+    · rcases mul_eq_zero.mp h4 with h5 | h5
+      · exact Or.inl h5
+      · exact Or.inr (Or.inl h5)
+    · exact Or.inr (Or.inr h4)
+  · rintro (h | h | h) <;> subst h <;> ring
+
+/-- Same percent up, same percent down, lands below the start: for a positive price `p` and
+any nonzero change `r`, a rise by `r` then a cut by `r` (factors `1 + r` and `1 - r`) leaves
+the price strictly lower than it began. -/
+theorem same_percent_up_then_down_lands_lower (p r : ℝ) (hp : 0 < p) (hr : r ≠ 0) :
+    p * (1 + r) * (1 - r) < p := by
+  have hr2 : 0 < r ^ 2 := by positivity
+  have : p * (1 + r) * (1 - r) = p - p * r ^ 2 := by ring
+  rw [this]
+  nlinarith [mul_pos hp hr2]
+
+/-- To undo a factor, divide by it, so a rise is undone by a smaller cut, never a matching
+one: for a rise `r > 0`, the cut `r / (1 + r)` (factor `1 / (1 + r)`) brings the price
+exactly back, and that cut is strictly smaller than the rise. -/
+theorem rise_undone_by_smaller_cut (r : ℝ) (hr : 0 < r) :
+    (1 + r) * (1 - r / (1 + r)) = 1 ∧ r / (1 + r) < r := by
+  have h1 : (1 + r) ≠ 0 := by linarith
+  refine ⟨?_, ?_⟩
+  · field_simp
+    ring
+  · exact div_lt_self hr (by linarith)
+
+-- The card's jacket, in exact fractions of a dollar: 1.25 = 5/4, 0.75 = 3/4, 0.80 = 4/5.
+example : (80 : ℚ) * (1 + 1 / 4) = 100 := by norm_num              -- 25% rise
+example : (100 : ℚ) * (1 - 1 / 4) = 75 := by norm_num              -- 25% sale
+example : (5 / 4 : ℚ) * (3 / 4) = 15 / 16 := by norm_num           -- the season as one factor, 0.9375
+example : (80 : ℚ) * (15 / 16) = 75 := by norm_num
+example : (1 : ℚ) - 15 / 16 = 1 / 16 := by norm_num                -- 6.25% down
+example : (80 : ℚ) * (3 / 4) * (5 / 4) = 75 := by norm_num         -- sale first, same $75
+example : (80 : ℚ) * (3 / 4) = 60 := by norm_num
+example : (1 : ℚ) / (5 / 4) = 4 / 5 := by norm_num                 -- undoing the rise
+example : (100 : ℚ) * (4 / 5) = 80 := by norm_num
+-- The second jacket: half off, then half on.
+example : (80 : ℚ) * (1 / 2) = 40 := by norm_num
+example : (40 : ℚ) * (3 / 2) = 60 := by norm_num
+example : (1 / 2 : ℚ) * (3 / 2) = 3 / 4 := by norm_num
+-- The three mistakes.
+example : (80 : ℚ) * 1 = 80 := by norm_num                         -- +25 and -25 read as no change
+example : (80 : ℚ) * (1 / 4) = 20 := by norm_num                   -- the part used as the factor
+example : (80 : ℚ) * (5 / 4 + 3 / 4) = 160 := by norm_num          -- factors added
+-- Try changing: a 20% sale after the rise is back to $80; half off needs a 100% rise.
+example : (100 : ℚ) * (1 - 1 / 5) = 80 := by norm_num
+example : (40 : ℚ) * (1 + 1) = 80 := by norm_num
+-- A 5% rise is factor 1.05.
+example : (1 : ℚ) + 5 / 100 = 105 / 100 := by norm_num
+
+#print axioms percent_changes_chain_by_multiplying
+#print axioms same_percent_up_then_down_lands_lower
+#print axioms rise_undone_by_smaller_cut
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'percent_changes_chain_by_multiplying' depends on axioms: [propext, Classical.choice, Quot.sound]
+'same_percent_up_then_down_lands_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rise_undone_by_smaller_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first. The asserts hold the house numbers, so one will fire.
@@ -253,7 +366,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Stacked sale tags.** "Extra 30% off marked-down prices" multiplies the factors; percents never add ([Percentages](../01-Everyday%20Arithmetic/10-percentages.md)).
-- **A savings account.** 5% a year is a multiply by 1.05, for as long as the money sits: [Simple interest](02-simple-interest.md), then [Compound interest](03-compound-interest.md).
+- **A savings account.** 5% a year is a multiply by 1.05, for as long as the money sits.
 - **A fund that drops and recovers.** Down 50% needs a 100% rise to get level, which is why a bad year hurts longer than it looks.
 
 > **Say it back**

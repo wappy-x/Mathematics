@@ -18,6 +18,8 @@ The **real numbers** are the fractions plus every landing place they miss.
 
 **Every point on the tape is a real number, and every real number is a point on the tape.**
 
+**What kind of fact this is:** an axiom, a starting rule that is not proved. Build the reals from cuts (Why it works, Step 3) and it becomes a theorem.
+
 ### The picture: the marks closing in on the dart
 
 ```mermaid
@@ -40,6 +42,8 @@ One promise carries the card:
 
 **If a collection of numbers has a member, and some one number sits above everything in it, then there is a lowest such number — and it is a real number too.**
 
+**Read it aloud:** a collection with a member and a ceiling has a lowest ceiling, and it is a real number.
+
 Drop either condition and the promise says nothing: the counting numbers 1, 2, 3, ... have no ceiling.
 
 On the dart, in metres:
@@ -53,6 +57,12 @@ On the dart, in metres:
 | a ceiling (upper bound) | nothing in the collection passes it | 1.5, 1.42, 2 |
 | the lowest ceiling (least upper bound) | the smallest ceiling there is | 1.41421356..., where the dart hit |
 | completeness | that lowest ceiling is always a real number | the reals keep it, fractions break it |
+
+### When it holds
+
+- **It has a member.** If it is empty, every number is a ceiling, and none is the lowest.
+- **It has a ceiling.** The counting numbers have none, so nothing can be the lowest.
+- **The numbers are the reals.** Among the fractions it fails: 1.415 and 1.4143 are both ceilings, and every fraction ceiling has a smaller one (Step 2).
 
 ---
 
@@ -80,7 +90,7 @@ The reals close that hole: wherever a squeeze like this happens, a number sits a
 
 That is **completeness**: what makes the reals the reals instead of the fractions, which obey every other rule of arithmetic and fail this one.
 
-Richard Dedekind, in 1872, took another route: split all the fractions into a left pile and a right pile so the left pile has no largest member, and call the split itself a number.
+Richard Dedekind, in 1872, took another route: split all the fractions into a left pile and a right pile so the left pile has no largest member, and call the split itself (a cut) a number.
 
 ---
 
@@ -223,6 +233,153 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the promise for every collection of real numbers, and both dart claims beside it.
+
+- Any collection of real numbers with a member and a ceiling has a lowest ceiling, and it is a real number.
+- Among the reals, the numbers whose square is under 2 have root 2 as their lowest ceiling.
+- Among the fractions, the same collection has a member and a ceiling, yet every fraction ceiling has a smaller one.
+- So no fraction is its lowest ceiling.
+
+The tape's squares, such as 1.4143 × 1.4143, are checked in Lean too; halving the bracket forty times is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 120 lines</summary>
+
+```lean
+-- The real numbers have no gaps: every collection of real numbers with a member and a ceiling has a lowest ceiling that is a real number, for the numbers whose square is under 2 that lowest ceiling is root 2, and among the fractions the same collection has no lowest ceiling at all.
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Order.Bounds.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.NumberTheory.Real.Irrational
+
+/-- Completeness: if a collection of real numbers has a member, and some one number sits above
+everything in it, then there is a lowest such number (a least upper bound), and it is a real
+number too. -/
+theorem nonempty_bounded_above_has_lowest_ceiling (S : Set ℝ) (hne : S.Nonempty)
+    (hbdd : BddAbove S) : ∃ x : ℝ, IsLUB S x := by
+  exact ⟨sSup S, isLUB_csSup hne hbdd⟩
+
+/-- The dart: among the real numbers, the collection of every number whose square is under 2
+has root 2 as its lowest ceiling. -/
+theorem sqrt_two_is_lowest_ceiling : IsLUB {x : ℝ | x * x < 2} (√2) := by
+  have h2 : √2 * √2 = 2 := Real.mul_self_sqrt (by norm_num)
+  have hpos : 0 < √2 := Real.sqrt_pos.mpr (by norm_num)
+  constructor
+  · intro x hx
+    simp only [Set.mem_setOf_eq] at hx
+    by_contra h
+    push_neg at h
+    nlinarith
+  · intro b hb
+    have h1 : (1 : ℝ) ≤ b := hb (by simp only [Set.mem_setOf_eq]; norm_num)
+    by_contra h
+    push_neg at h
+    have hm : ((b + √2) / 2) ∈ {x : ℝ | x * x < 2} := by
+      simp only [Set.mem_setOf_eq]
+      nlinarith
+    have := hb hm
+    linarith
+
+/-- The fractions have a gap: the fractions whose square is under 2 have a member (1) and a
+ceiling (for example 3/2), but every fraction ceiling has a smaller fraction ceiling under it,
+so no fraction is the lowest ceiling. -/
+theorem fractions_have_no_lowest_ceiling :
+    ({q : ℚ | q * q < 2}).Nonempty ∧ BddAbove {q : ℚ | q * q < 2} ∧
+      (∀ r ∈ upperBounds {q : ℚ | q * q < 2}, ∃ r' ∈ upperBounds {q : ℚ | q * q < 2}, r' < r) ∧
+      ¬ ∃ r : ℚ, IsLUB {q : ℚ | q * q < 2} r := by
+  have key : ∀ r ∈ upperBounds {q : ℚ | q * q < 2}, ∃ r' ∈ upperBounds {q : ℚ | q * q < 2}, r' < r := by
+    intro r hr
+    have h1 : (1 : ℚ) ≤ r := hr (by simp only [Set.mem_setOf_eq]; norm_num)
+    have hne : r * r ≠ 2 := by
+      intro h
+      apply irrational_sqrt_two
+      refine ⟨r, ?_⟩
+      have h2 : ((r : ℝ)) * (r : ℝ) = 2 := by exact_mod_cast h
+      have h0 : (0 : ℝ) ≤ (r : ℝ) := by exact_mod_cast (by linarith : (0 : ℚ) ≤ r)
+      rw [← h2]
+      exact (Real.sqrt_mul_self h0).symm
+    have hge : 2 < r * r := by
+      by_contra hcon
+      push_neg at hcon
+      have hlt : r * r < 2 := lt_of_le_of_ne hcon hne
+      have hr2 : r < 2 := by nlinarith
+      set δ : ℚ := (2 - r * r) / 5 with hδ
+      have hδpos : 0 < δ := by rw [hδ]; linarith
+      have hδle : δ ≤ 1 := by rw [hδ]; nlinarith
+      have hin : (r + δ) ∈ {q : ℚ | q * q < 2} := by
+        simp only [Set.mem_setOf_eq]
+        nlinarith
+      have := hr hin
+      linarith
+    refine ⟨r / 2 + 1 / r, ?_, ?_⟩
+    · intro q hq
+      simp only [Set.mem_setOf_eq] at hq
+      have hrpos : 0 < r := by linarith
+      have hr' : 0 < r / 2 + 1 / r := by positivity
+      have hsq : 2 ≤ (r / 2 + 1 / r) * (r / 2 + 1 / r) := by
+        have : (r / 2 + 1 / r) * (r / 2 + 1 / r) - 2 = (r * r - 2) ^ 2 / (4 * (r * r)) := by
+          field_simp
+          ring
+        have : 0 ≤ (r * r - 2) ^ 2 / (4 * (r * r)) := by positivity
+        linarith
+      by_contra h
+      push_neg at h
+      nlinarith
+    · have hrpos : 0 < r := by linarith
+      have : r / 2 + 1 / r < r ↔ 2 < r * r := by
+        rw [show r / 2 + 1 / r = (r * r + 2) / (2 * r) by field_simp, div_lt_iff₀ (by positivity)]
+        constructor <;> intro h <;> nlinarith
+      exact this.mpr hge
+  refine ⟨⟨1, by simp only [Set.mem_setOf_eq]; norm_num⟩, ⟨2, ?_⟩, key, ?_⟩
+  · intro q hq
+    simp only [Set.mem_setOf_eq] at hq
+    by_contra h
+    push_neg at h
+    nlinarith
+  · rintro ⟨r, hr⟩
+    obtain ⟨r', hr', hlt⟩ := key r hr.1
+    have := hr.2 hr'
+    linarith
+
+-- 1 is in the collection: 1 × 1 = 1, under 2.
+example : (1 * 1 : ℕ) = 1 ∧ (1 : ℕ) < 2 := by decide
+-- No places: 1 × 1 = 1 is under 2, and 2 × 2 = 4 is over it.
+example : (1 * 1 : ℕ) < 2 ∧ (2 : ℕ) < 2 * 2 := by decide
+-- One place, in tenths: 14 × 14 = 196 is under 200, and 15 × 15 = 225 is over it (1.96 and 2.25).
+example : (14 * 14 : ℕ) = 196 ∧ (15 * 15 : ℕ) = 225 ∧ (196 : ℕ) < 2 * 10 ^ 2 ∧
+    2 * 10 ^ 2 < (225 : ℕ) := by norm_num
+-- Two places, in hundredths: 141 × 141 = 19881 and 142 × 142 = 20164 sit either side of 20000.
+example : (141 * 141 : ℕ) = 19881 ∧ (142 * 142 : ℕ) = 20164 ∧ (19881 : ℕ) < 2 * 10 ^ 4 ∧
+    2 * 10 ^ 4 < (20164 : ℕ) := by norm_num
+-- Three places: 1414 × 1414 = 1999396 and 1415 × 1415 = 2002225 sit either side of 2000000.
+example : (1414 * 1414 : ℕ) = 1999396 ∧ (1415 * 1415 : ℕ) = 2002225 ∧
+    (1999396 : ℕ) < 2 * 10 ^ 6 ∧ 2 * 10 ^ 6 < (2002225 : ℕ) := by norm_num
+-- Four places: 14142 × 14142 = 199996164 and 14143 × 14143 = 200024449 sit either side of 200000000.
+example : (14142 * 14142 : ℕ) = 199996164 ∧ (14143 * 14143 : ℕ) = 200024449 ∧
+    (199996164 : ℕ) < 2 * 10 ^ 8 ∧ 2 * 10 ^ 8 < (200024449 : ℕ) := by norm_num
+-- 1.415 is a ceiling, but 1.4143 is a smaller one: 14143 < 14150, and 14143 × 14143 is still over 2 × 10^8.
+example : (14143 : ℕ) < 1415 * 10 ∧ 2 * 10 ^ 8 < (14143 * 14143 : ℕ) := by norm_num
+-- Stopping at 1.4142 is wrong: its square is under 2, so it is in the collection, not a ceiling.
+example : (14142 * 14142 : ℕ) < 2 * 10 ^ 8 := by norm_num
+
+#print axioms nonempty_bounded_above_has_lowest_ceiling
+#print axioms sqrt_two_is_lowest_ceiling
+#print axioms fractions_have_no_lowest_ceiling
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'nonempty_bounded_above_has_lowest_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sqrt_two_is_lowest_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fractions_have_no_lowest_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -259,14 +416,17 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-Nothing on this shelf needs this card. It finishes with [Absolute value](05-absolute-value-and-distance.md), which does not need completeness.
+- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the same promise in symbols. The lowest ceiling is named the supremum and used to prove that roots exist.
+
+Nothing else on this shelf needs this card. It finishes with [Absolute value](05-absolute-value-and-distance.md), which does not need completeness.
+
+The question this card leaves open: how does calculus use the lowest ceiling to prove a number exists?
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Dedekind, Richard. *Essays on the Theory of Numbers*, trans. W. W. Beman. Open Court, 1901. [Project Gutenberg](https://www.gutenberg.org/ebooks/21016). The 1872 essay that first said the line has no gaps.
 - Abbott, Stephen. *Understanding Analysis*, 2nd ed. Springer, 2015. [doi:10.1007/978-1-4939-2712-8](https://doi.org/10.1007/978-1-4939-2712-8). Section 1.3 states the promise, on this collection.
-- Rudin, Walter. *Principles of Mathematical Analysis*, 3rd ed. McGraw-Hill, 1976. [Publisher page](https://www.mheducation.com/highered/product/principles-mathematical-analysis-rudin/M9780070542358.html). Chapter 1 builds the reals from cuts.

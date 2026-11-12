@@ -14,6 +14,8 @@ So mark it differently: 1 at the bottom, then 10, 100, 1,000, each mark ten time
 
 **On a log scale, distance is a count of tens — so multiplying two numbers only adds their distances.**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works for whole counts of tens.
+
 ### The picture: where each place lands
 
 ```mermaid
@@ -37,9 +39,11 @@ The line is the step count: village to town two steps, town to city three. On an
 
 The plain way agrees: 100 × 10,000 = 1,000,000, six tens.
 
-**Read it aloud: the count of a product is the sum of the counts.** Dividing subtracts: **log10(10,000,000 ÷ 100) = 7 − 2 = 5**, and 10,000,000 ÷ 100 = 100,000. A number times itself repeats the addition: **log10(10,000 × 10,000) = 4 + 4 = 8**; three of them, 3 × 4 = 12. That is the power law.
+**Read it aloud:** the count of a product is the sum of the counts.
 
-Change of base, for counting in bigger steps:
+Dividing subtracts: **log10(10,000,000 ÷ 100) = 7 − 2 = 5**, and 10,000,000 ÷ 100 = 100,000. A number times itself repeats the addition: **log10(10,000 × 10,000) = 4 + 4 = 8**; three of them, 3 × 4 = 12. That is the power law.
+
+Change of base, for counting in bigger steps. **log100(x)** counts steps of 100 instead of steps of ten:
 
 **log100(1,000,000) = log10(1,000,000) ÷ log10(100) = 6 ÷ 2 = 3**
 
@@ -50,6 +54,13 @@ Said aloud: divide by how many tens one step is worth.
 | the base | the number multiplied over and over | 10, one mark to the next | fewer steps, smaller counts |
 | the count, or log | how many of the base reach a number | 2, 4 and 7 | one more is ten times the people |
 | a mark on the axis | one step, a multiply by ten | 1, 10, 100, 1,000 | — spacing only, the multiply stays ten |
+
+### When it holds
+
+- **Both numbers are positive.** No run of tens multiplies out to zero or to a negative number, so neither has a count.
+- **The numbers are multiplied, not added.** A sum such as 100 + 10,000 = 10,100 does not split.
+- **Every count uses the same base.** Tens and villages do not add. Convert first: 6 tens are 3 villages.
+- **Each mark is one fixed multiply above the last.** Mark it by fixed amounts and halfway from 100 to 10,000 moves to 5,050.
 
 ---
 
@@ -234,6 +245,80 @@ ALL CHECKS PASS
 
 The two outputs match line for line; the fraction 3.5 is exact.
 
+### Lean
+
+Lean proves the log laws for any two positive numbers, not only whole runs of tens.
+
+- The count of a product is the sum of the counts: log10(x × y) = log10(x) + log10(y).
+- Dividing subtracts: log10(x ÷ y) = log10(x) − log10(y).
+- Change of base: log100(x) = log10(x) ÷ log10(100), for any positive x.
+- The chart's numbers: counts 2, 4 and 7, the product's 6, the quotient's 5, the square's 8, and the 1,000 mark halfway.
+
+The city's 3.5 village-steps and the counting routine's own asserts are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 47 lines</summary>
+
+```lean
+-- Log laws and log scales: for positive numbers the base-10 log of a product is the sum of the logs, the log of a quotient is the difference, and a count in steps of 100 is the count in tens divided by the log of 100.
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.Tactic.NormNum.NatLog
+
+open Real
+
+/-- The count of a product is the sum of the counts: for any two positive numbers `x` and `y`,
+the base-10 log of `x * y` equals the base-10 log of `x` plus the base-10 log of `y`. On a log
+scale, multiplying two numbers adds their distances from the 1 mark. -/
+theorem log10_of_product_is_sum_of_logs (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
+    logb 10 (x * y) = logb 10 x + logb 10 y := by
+  rw [logb, logb, logb, Real.log_mul hx.ne' hy.ne', add_div]
+
+/-- Dividing subtracts: for any two positive numbers `x` and `y`, the base-10 log of `x / y`
+equals the base-10 log of `x` minus the base-10 log of `y`. -/
+theorem log10_of_quotient_is_difference_of_logs (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
+    logb 10 (x / y) = logb 10 x - logb 10 y := by
+  rw [logb, logb, logb, Real.log_div hx.ne' hy.ne', sub_div]
+
+/-- Change of base: counting a positive number `x` in steps of 100 gives its count in tens
+divided by how many tens one step of 100 is worth, `log10 (100)`. -/
+theorem log100_is_log10_divided_by_log10_of_100 (x : ℝ) (hx : 0 < x) :
+    logb 100 x = logb 10 x / logb 10 100 := by
+  rw [logb, logb, logb]
+  rw [div_div_div_cancel_right₀]
+  exact (Real.log_pos (by norm_num : (1:ℝ) < 10)).ne'
+
+-- The counts of the village, the town and the city: 2, 4 and 7 tens.
+example : Nat.log 10 100 = 2 ∧ Nat.log 10 10000 = 4 ∧ Nat.log 10 10000000 = 7 := by norm_num
+-- Village times town: 100 x 10,000 = 1,000,000, count 6 = 2 + 4.
+example : 100 * 10000 = 1000000 ∧ Nat.log 10 1000000 = 6 ∧ 10 ^ 2 * 10 ^ 4 = 10 ^ (2 + 4) := by
+  norm_num
+-- City over village: 10,000,000 / 100 = 100,000, count 5 = 7 - 2.
+example : 10000000 / 100 = 100000 ∧ Nat.log 10 100000 = 5 ∧ 10 ^ 7 / 10 ^ 2 = 10 ^ (7 - 2) := by
+  norm_num
+-- The town squared: 10,000 x 10,000 = 100,000,000, count 8 = 4 + 4.
+example : 10000 * 10000 = 100000000 ∧ Nat.log 10 100000000 = 8 := by norm_num
+-- In villages: 1,000,000 is three steps of 100, and 6 / 2 = 3.
+example : 100 * 100 * 100 = 1000000 ∧ Nat.log 100 1000000 = 3 ∧ 6 / 2 = 3 := by norm_num
+-- Halfway from the 100 mark to the 10,000 mark is count (2 + 4) / 2 = 3, the 1,000 mark.
+example : (2 + 4) / 2 = 3 ∧ 10 ^ ((2 + 4) / 2) = 1000 := by norm_num
+-- The three mistakes: 100 + 10,000 = 10,100, its half 5,050, and 2 x 4 = 8.
+example : 100 + 10000 = 10100 ∧ (100 + 10000) / 2 = 5050 ∧ 2 * 4 = 8 := by norm_num
+
+#print axioms log10_of_product_is_sum_of_logs
+#print axioms log10_of_quotient_is_difference_of_logs
+#print axioms log100_is_log10_divided_by_log10_of_100
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'log10_of_product_is_sum_of_logs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log10_of_quotient_is_difference_of_logs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log100_is_log10_divided_by_log10_of_100' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -272,12 +357,14 @@ The two outputs match line for line; the fraction 3.5 is exact.
 
 - [Natural log and doubling time](../04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the base growth picks for itself, and the log law turned into a time.
 
+This card leaves one question open: when something grows a little each year, not tenfold, how many years make one step?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Briggs, Henry. *Arithmetica Logarithmica*. London, 1624. [Internet Archive](https://archive.org/details/arithmeticalogar00brig). The base-10 tables that turned multiplying into adding.
-- Dehaene, Stanislas, Véronique Izard, Elizabeth Spelke, and Pierre Pica. "Log or Linear?" *Science* 320 (2008): 1217–1220. [PubMed Central](https://pmc.ncbi.nlm.nih.gov/articles/PMC2610411/). Spacing by multiplies is the older instinct.
+- Dehaene, Stanislas, Véronique Izard, Elizabeth Spelke, and Pierre Pica. "Log or Linear?" *Science* 320 (2008): 1217–1220. [doi:10.1126/science.1156540](https://doi.org/10.1126/science.1156540). Spacing by multiplies is the older instinct.
 - Tufte, Edward R. *The Visual Display of Quantitative Information*. 2nd ed. Graphics Press, 2001. [Publisher page](https://www.edwardtufte.com/book/the-visual-display-of-quantitative-information/). What an axis promises its reader.

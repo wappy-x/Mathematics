@@ -14,6 +14,8 @@ Writing 3 × 3 × 3 × 3 × 3 gets old fast, so it has a shorthand: **3^5**, sai
 
 **An exponent counts copies of the base. Once counts can be added and taken away, an exponent of zero and a negative exponent each have only one possible meaning.**
 
+**What kind of fact this is:** a definition, then three rules that follow from counting, shown in Why it works. The meanings of 3^0 and 3^-3 are the only ones that keep those rules true.
+
 ### The picture: five rounds
 
 ```mermaid
@@ -36,6 +38,8 @@ The written-out multiplication **is** the definition:
 
 **3^5 = 3 × 3 × 3 × 3 × 3 = 243**
 
+**Read it aloud:** three to the fifth is five 3s multiplied together, and that is 243.
+
 Three moves do the rest, on our numbers:
 
 - **3^2 × 3^3 = 3^5.** Multiplying powers of the same base adds the exponents.
@@ -49,6 +53,12 @@ Three moves do the rest, on our numbers:
 | the power | the answer | 243, reached in round 5 |
 | an exponent of 0 | no copies at all, which is 1 | round 0, the woman who started it |
 | a negative exponent | 1 divided by the power | 3^-3 is 1 ÷ 27 |
+
+### When it holds
+
+- **The same base on both sides.** 3^2 × 3^3 joins into 3^5 because every copy is a 3. With two different bases there is no single count to add, and the adding rule fails.
+- **An exponent that is a whole number or its negative.** Half a round is not a count, so this card gives it no meaning; [Roots](03-roots-and-fractional-exponents.md) does.
+- **A base that is not 0.** 3^0 = 1 and 3^-3 = 1/27 come from dividing by the base. You cannot divide by 0, so 0^0 and negative powers of 0 get no meaning.
 
 ---
 
@@ -232,6 +242,111 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the rules for every base that is not 0, and every exponent that is a whole number or its negative.
+
+- Multiplying powers of the same base adds the exponents. Dividing subtracts them. A power of a power multiplies them.
+- If an exponent of 1 or more counts copies and the subtraction rule holds, an exponent of 0 must give 1.
+- Under the same rule, a negative exponent must mean 1 divided by the matching power. So 3^-3 is 1/27.
+- Every number on the card comes out exactly: the rounds, the 364 total, the ratios and the three mistakes.
+
+Building each power one multiplication at a time, and printing the table, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 79 lines</summary>
+
+```lean
+-- Exponents: for a nonzero base and whole-number or negative exponents, multiplying powers adds the exponents, dividing subtracts them and a power of a power multiplies them; the subtraction rule forces a zero exponent to give 1 and a negative exponent to give 1 over the matching power; and the card's chain-message numbers come out exactly as it says.
+import Mathlib.Algebra.GroupWithZero.Units.Basic
+import Mathlib.Algebra.Field.Basic
+import Mathlib.Algebra.Field.Rat
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Tactic.NormNum
+
+/-- The three rules of exponents. Take a base `a` that is not 0 and exponents `m`, `n` that
+are whole numbers or their negatives. Multiplying powers of the same base adds the exponents,
+`a^m × a^n = a^(m + n)`; dividing subtracts them, `a^m ÷ a^n = a^(m − n)`; and a power of a
+power multiplies them, `(a^m)^n = a^(m × n)`. -/
+theorem exponent_rules_add_subtract_multiply {K : Type*} [Field K] (a : K) (ha : a ≠ 0)
+    (m n : ℤ) :
+    a ^ m * a ^ n = a ^ (m + n) ∧ a ^ m / a ^ n = a ^ (m - n) ∧ (a ^ m) ^ n = a ^ (m * n) := by
+  refine ⟨(zpow_add₀ ha m n).symm, (zpow_sub₀ ha m n).symm, (zpow_mul a m n).symm⟩
+
+/-- Zero and negative powers have only one possible meaning. Take a base `a` that is not 0,
+and any way `f` of giving a value to every whole-number or negative exponent. Suppose it agrees
+with repeated multiplication for every count of 1 or more (`f n = a × a × ⋯ × a`, `n` copies),
+and keeps the subtraction rule, `f (m − n) = f m ÷ f n`, for all whole numbers `m`, `n`. Then
+the zero power must be 1, and the power `−n` must be 1 divided by the matching power `a^n`. -/
+theorem zero_and_negative_powers_are_forced {K : Type*} [Field K] (a : K) (ha : a ≠ 0)
+    (f : ℤ → K)
+    (h_count : ∀ n : ℕ, 0 < n → f n = a ^ n)
+    (h_sub : ∀ m n : ℕ, f ((m : ℤ) - n) = f m / f n) :
+    f 0 = 1 ∧ ∀ n : ℕ, f (-(n : ℤ)) = 1 / a ^ n := by
+  have h1 : f 1 = a := by simpa using h_count 1 (by norm_num)
+  have h0 : f 0 = 1 := by
+    have := h_sub 1 1
+    simp only [Nat.cast_one, sub_self] at this
+    rw [this, h1]
+    exact div_self ha
+  refine ⟨h0, fun n => ?_⟩
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · simp [h0]
+  · have := h_sub 0 n
+    simp only [Nat.cast_zero, zero_sub] at this
+    rw [this, h0, h_count n hn]
+
+-- The definition: 3^5 is five 3s multiplied together, round 5 of the chain.
+example : (3 : ℚ) ^ 5 = 3 * 3 * 3 * 3 * 3 := by norm_num
+example : (3 : ℚ) ^ 5 = 243 := by norm_num
+example : (3 : ℚ) ^ 1 = 3 := by norm_num
+example : (3 : ℚ) ^ 2 = 3 * 3 := by norm_num
+example : (3 : ℚ) ^ 2 = 9 := by norm_num
+-- The six rounds, and everyone holding the message.
+example : (List.range 6).map (fun r => 3 ^ r) = [1, 3, 9, 27, 81, 243] := by decide
+example : (1 : ℕ) + 3 + 9 + 27 + 81 + 243 = 364 := by norm_num
+example : ∑ r ∈ Finset.range 6, (3 : ℕ) ^ r = 364 := by decide
+example : (List.range 6).map (fun r => ∑ i ∈ Finset.range (r + 1), (3 : ℕ) ^ i) =
+    [1, 4, 13, 40, 121, 364] := by decide
+-- Round 5 by the other road: 3^2 × 3^3, or 9 × 27.
+example : (3 : ℚ) ^ 2 * 3 ^ 3 = 3 ^ 5 := by norm_num
+example : (9 : ℚ) * 27 = 243 := by norm_num
+-- A power of a power: (3^2)^3 is 9 × 9 × 9, or 3^6.
+example : ((3 : ℚ) ^ 2) ^ 3 = 3 ^ 6 := by norm_num
+example : (9 : ℚ) * 9 * 9 = 729 := by norm_num
+example : (3 : ℚ) ^ 6 = 729 := by norm_num
+-- The ratios: 3^5 ÷ 3^2, 3^5 ÷ 3^5 and 3^2 ÷ 3^5, as plain fractions and as integer powers.
+example : (243 : ℚ) / 9 = 27 := by norm_num
+example : (3 : ℚ) ^ (5 : ℤ) / 3 ^ (2 : ℤ) = 3 ^ (3 : ℤ) := by norm_num
+example : (243 : ℚ) / 243 = 1 := by norm_num
+example : (3 : ℚ) ^ (0 : ℤ) = 1 := by norm_num
+example : (9 : ℚ) / 243 = 1 / 27 := by norm_num
+example : (3 : ℚ) ^ (-3 : ℤ) = 1 / 27 := by norm_num
+example : (3 : ℚ) ^ (2 : ℤ) / 3 ^ (5 : ℤ) = 3 ^ (-3 : ℤ) := by norm_num
+-- The ladder read backwards ends at round 0: 3 ÷ 3 = 1.
+example : (3 : ℚ) / 3 = 1 := by norm_num
+-- The three mistakes come out at 729, 15 and −27, none of them the right answer.
+example : (3 : ℚ) ^ 6 = 729 ∧ (3 : ℚ) ^ 6 ≠ 3 ^ 2 * 3 ^ 3 := by norm_num
+example : (3 : ℚ) * 5 = 15 ∧ (3 : ℚ) * 5 ≠ 3 ^ 5 := by norm_num
+example : -((3 : ℚ) ^ 3) = -27 ∧ -((3 : ℚ) ^ 3) ≠ 3 ^ (-3 : ℤ) := by norm_num
+-- Different bases: 3^2 × 5^2 is not 15^4.
+example : (3 : ℚ) ^ 2 * 5 ^ 2 ≠ 15 ^ 4 := by norm_num
+-- Try changing: a sixth round adds 729, not another 243.
+example : (3 : ℕ) ^ 6 = 729 := by norm_num
+
+#print axioms exponent_rules_add_subtract_multiply
+#print axioms zero_and_negative_powers_are_forced
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'exponent_rules_add_subtract_multiply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'zero_and_negative_powers_are_forced' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -280,8 +395,8 @@ The two outputs match line for line.
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Euler, Leonhard. *Elements of Algebra*, trans. John Hewlett, 1822. [Internet Archive](https://archive.org/details/elementsofalgebr00eule). Powers from the pattern, zero and negative exponents included.
-- Cajori, Florian. *A History of Mathematical Notations*. Dover. [Publisher page](https://store.doverpublications.com/products/9780486677668). Where the raised number came from.
+- Euler, Leonhard. *Elements of Algebra*, trans. John Hewlett. Longman, Rees, Orme, 1828. [Internet Archive](https://archive.org/details/elementsofalgebr00eule). Powers from the pattern, zero and negative exponents included.
+- Cajori, Florian. *A History of Mathematical Notations*, vol. 1. Open Court, 1928. [Internet Archive](https://archive.org/details/b29980343_0001). Where the raised number came from.
 - Weisstein, Eric W. "Power." *MathWorld*. [mathworld.wolfram.com](https://mathworld.wolfram.com/Power.html). The modern statement of the three rules.

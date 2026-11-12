@@ -14,6 +14,8 @@ That tape is the **number line**. The rest of this card reads it: which spot is 
 
 **One number is less than another exactly when it sits further left on the number line.**
 
+**What kind of fact this is:** a definition: "less than" is read off the line. The flip under -1, and a fraction between any two fractions, are theorems, proved on this card in Why it works.
+
 ### The picture: the night against the band
 
 ```mermaid
@@ -43,7 +45,9 @@ The band the thermostat holds:
 
 **18 <= the reading <= 22**
 
-Read aloud: 18 or more, and 22 or less. `<=` lets both ends count as inside. `>=` is its mirror: the same spot, or further right. A stretch of line written that way is an **interval**.
+**Read it aloud:** 18 or more, and 22 or less.
+
+`<=` lets both ends count as inside. `>=` is its mirror: the same spot, or further right. A stretch of line written that way is an **interval**.
 
 And the move in the title:
 
@@ -55,6 +59,13 @@ And the move in the title:
 | `>` | greater than: further right | 21 > 20 |
 | `<=` | further left, or the same spot | 18 <= 18 |
 | an interval | everything between two marks | 18 <= the reading <= 22 |
+
+### When it holds
+
+- **Numbers that sit on one line.** Each reading is one spot, so any two compare. Things measured by two numbers at once have no single left-to-right order: that is [Orders](../08-Relations%20and%20Functions/07-partial-and-total-orders.md).
+- **The same change on both sides.** Doubling both keeps 17 < 18 as 34 < 36. Double only the left and it becomes 34 > 18.
+- **The sign of the multiplier.** A positive one keeps the mark; a negative one flips it once: 17 < 19 becomes -17 > -19.
+- **Fractions allowed.** Between 18 and 19 sits 37/2. With whole numbers only, nothing sits between them.
 
 ---
 
@@ -239,6 +250,101 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three rules for every pair of numbers, not just the night's readings.
+
+- Multiplying both numbers by a negative flips the mark: 17 < 19 becomes -17 > -19.
+- Adding the same number to both keeps the mark, and so does multiplying both by a positive number.
+- Between any two different fractions, their midpoint is a fraction strictly between them.
+
+It also checks the card's whole-number and fraction sums exactly: the night in order, the band counts, the flips, the shortfalls and the halfway points. Sorting the list and printing the decimals are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 69 lines</summary>
+
+```lean
+-- The number line and inequalities: multiplying both sides by a negative number flips the less-than mark, adding the same number or multiplying by a positive one keeps it, and the midpoint of two different fractions is a fraction strictly between them.
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Data.Int.Interval
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-- Multiplying by a negative flips the mark, once: for any two numbers on the line and any
+negative multiplier, the first is less than the second exactly when, after both are multiplied,
+the first is greater than the second (17 < 19 becomes -17 > -19). -/
+theorem mul_neg_flips_less_than (a b c : ℝ) (hc : c < 0) :
+    a < b ↔ c * b < c * a := by
+  constructor
+  · intro h; nlinarith
+  · intro h; nlinarith
+
+/-- Sliding and stretching leave the order alone: adding the same number to both sides keeps the
+mark, and so does multiplying both sides by the same positive number. -/
+theorem slide_and_stretch_keep_less_than (a b : ℝ) :
+    (∀ c : ℝ, a < b ↔ a + c < b + c) ∧ (∀ k : ℝ, 0 < k → (a < b ↔ k * a < k * b)) := by
+  refine ⟨fun c => ?_, fun k hk => ?_⟩
+  · constructor <;> intro h <;> linarith
+  · constructor
+    · intro h; nlinarith
+    · intro h; by_contra hc; push_neg at hc; nlinarith
+
+/-- Between any two fractions sits another fraction: add two different fractions and halve, and
+the answer is a fraction strictly between them, so no two fractions are next door. -/
+theorem midpoint_between_fractions (p q : ℚ) (h : p < q) :
+    p < (p + q) / 2 ∧ (p + q) / 2 < q := by
+  constructor <;> linarith
+
+-- The night, laid on the line left to right: -2, 17, 18, 19, 20, 21, 22.
+example : (-2 : ℤ) < 17 ∧ (17 : ℤ) < 18 ∧ (18 : ℤ) < 19 ∧ (19 : ℤ) < 20 ∧ (20 : ℤ) < 21 ∧
+    (21 : ℤ) < 22 := by decide
+-- At 3am the room was too cold: 17 < 18.
+example : (17 : ℤ) < 18 := by decide
+-- Five of the six readings hold the band 18 <= reading <= 22.
+example : (([22, 20, 18, 17, 19, 21] : List ℤ).filter (fun t => 18 ≤ t ∧ t ≤ 22)).length = 5 := by
+  decide
+-- Using < at the ends instead of <= loses both ends: 3 inside, not 5.
+example : (([22, 20, 18, 17, 19, 21] : List ℤ).filter (fun t => 18 < t ∧ t < 22)).length = 3 := by
+  decide
+-- Doubling both keeps the mark: 17 < 18 becomes 34 < 36.
+example : (2 * 17 : ℤ) = 34 ∧ (2 * 18 : ℤ) = 36 ∧ (34 : ℤ) < 36 := by decide
+-- Doubling only the left side: 34 > 18.
+example : (2 * 17 : ℤ) > 18 := by decide
+-- Times -1 flips the mark: 17 < 19 becomes -17 > -19.
+example : (17 : ℤ) < 19 ∧ (-1 * 17 : ℤ) > -1 * 19 := by decide
+-- Keeping the mark after the turn is wrong: -17 < -18 is false.
+example : ¬ ((-17 : ℤ) < -18) := by decide
+-- The readings 17 to 22 times -1 run downhill: -17, -18, -19, -20, -21, -22.
+example : ([17, 18, 19, 20, 21, 22] : List ℤ).map (fun t => -t) = [-17, -18, -19, -20, -21, -22] ∧
+    (-17 : ℤ) > -18 ∧ (-18 : ℤ) > -19 ∧ (-19 : ℤ) > -20 ∧ (-20 : ℤ) > -21 ∧ (-21 : ℤ) > -22 := by
+  decide
+-- The shortfalls from 20: 20 - 17 = 3 and 20 - 19 = 1, and the colder room's is bigger.
+example : (20 - 17 : ℤ) = 3 ∧ (20 - 19 : ℤ) = 1 ∧ (3 : ℤ) > 1 := by decide
+-- Halfway points: 20 between 18 and 22, 19 between 18 and 20.
+example : ((18 + 22) / 2 : ℚ) = 20 ∧ ((18 + 20) / 2 : ℚ) = 19 := by norm_num
+-- Halfway between 18 and 19 is 37/2, and it sits strictly between them.
+example : ((18 + 19) / 2 : ℚ) = 37 / 2 ∧ (18 : ℚ) < 37 / 2 ∧ (37 / 2 : ℚ) < 19 := by norm_num
+-- Halfway between 18 and 37/2 is 73/4.
+example : ((18 + 37 / 2) / 2 : ℚ) = 73 / 4 := by norm_num
+-- With whole numbers only, nothing sits between 18 and 19.
+example : Finset.Ioo (18 : ℤ) 19 = ∅ := by decide
+
+#print axioms mul_neg_flips_less_than
+#print axioms slide_and_stretch_keep_less_than
+#print axioms midpoint_between_fractions
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mul_neg_flips_less_than' depends on axioms: [propext, Classical.choice, Quot.sound]
+'slide_and_stretch_keep_less_than' depends on axioms: [propext, Classical.choice, Quot.sound]
+'midpoint_between_fractions' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -276,14 +382,17 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Irrational numbers](03-irrational-numbers.md): spots on the line no fraction lands on, however far you halve.
+- [The real numbers have no gaps](04-real-numbers-no-gaps.md): fractions and irrationals together fill the line, with no holes left.
 - [Absolute value](05-absolute-value-and-distance.md): how far apart two spots are, rather than which is left.
 - [Orders](../08-Relations%20and%20Functions/07-partial-and-total-orders.md): when things cannot all be laid on one line, and some pairs do not compare.
+
+The question this card leaves open: fractions crowd every gap and still miss root 2, so what does it take to fill the line?
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Tao, Terence. *Analysis I*, 4th ed. Springer, 2022. [doi:10.1007/978-981-19-7261-4](https://doi.org/10.1007/978-981-19-7261-4). The order rules, built from scratch.
 - Stillwell, John. *The Real Numbers*. Springer, 2013. [doi:10.1007/978-3-319-01577-4](https://doi.org/10.1007/978-3-319-01577-4). Why fractions crowd the line and still leave holes.
