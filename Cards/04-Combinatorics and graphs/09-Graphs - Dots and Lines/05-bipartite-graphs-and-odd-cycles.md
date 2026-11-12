@@ -376,7 +376,7 @@ The two outputs match line for line.
 - [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): three colours or more, where no clean test survives.
 - [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md): pairing the sides one to one.
 - [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many lines a triangle-free graph carries, its record holders bipartite.
-- Communities: groups in a network where no split is clean.
+- [Communities](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/06-community-detection.md): groups in a network where no split is clean.
 
 This card decides whether two heaps exist; who works which shift, one each, is the matching card's question.
 

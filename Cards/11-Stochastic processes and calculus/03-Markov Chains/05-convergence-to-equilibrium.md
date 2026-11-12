@@ -647,7 +647,7 @@ The coupling rows are one seeded sample; another seed moves each estimate by abo
 ## Where this goes next
 
 - [MCMC](07-markov-chain-monte-carlo.md): builds a chain with a chosen stationary law and uses this card's convergence to sample from it.
-- Expanders: the rate from the spectral gap, and graphs on which walks forget their start fast.
+- [Expanders](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/07-expanders-and-mixing.md): the rate from the spectral gap, and graphs on which walks forget their start fast.
 
 This card takes a chain as given and measures how fast it forgets its start; the question it leaves open is the reverse one, how to build a chain that settles on a law someone wants to sample, and how long to run it.
 

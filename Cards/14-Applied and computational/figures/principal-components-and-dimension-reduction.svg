@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" font-family="Helvetica, Arial, sans-serif">
+<title>Fifty of the 20,000 synthetic orders plotted on their first two principal component scores, drawn to scale: households open circles, trade buyers filled, with the centre of each group marked</title>
+<rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<text x="190" y="16" font-size="13" text-anchor="middle" fill="#1d1d1d">Order scores, PC1 across, PC2 up, same scale</text>
+<rect x="30" y="26" width="320" height="188" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="160" y1="26" x2="160" y2="214" stroke="#1d1d1d" stroke-width="0.75" stroke-opacity="0.45" stroke-dasharray="3 3"/>
+<line x1="30" y1="120" x2="350" y2="120" stroke="#1d1d1d" stroke-width="0.75" stroke-opacity="0.45" stroke-dasharray="3 3"/>
+<line x1="70" y1="214" x2="70" y2="219" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="70" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d">−5</text>
+<line x1="160" y1="214" x2="160" y2="219" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="160" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d">0</text>
+<line x1="250" y1="214" x2="250" y2="219" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="250" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d">5</text>
+<line x1="340" y1="214" x2="340" y2="219" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="340" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d">10</text>
+<line x1="25" y1="48" x2="30" y2="48" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="52" font-size="13" text-anchor="end" fill="#1d1d1d">4</text>
+<line x1="25" y1="120" x2="30" y2="120" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="124" font-size="13" text-anchor="end" fill="#1d1d1d">0</text>
+<line x1="25" y1="192" x2="30" y2="192" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="196" font-size="13" text-anchor="end" fill="#1d1d1d">−4</text>
+<circle cx="133" cy="128" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="227" cy="154" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="126" cy="108" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="140" cy="120" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="158" cy="114" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="158" cy="170" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="226" cy="188" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="140" cy="82" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="257" cy="127" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="96" cy="107" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="120" cy="118" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="158" cy="106" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="70" cy="139" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="126" cy="188" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="164" cy="185" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="125" cy="107" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="123" cy="100" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="163" cy="123" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="236" cy="152" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="225" cy="132" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="130" cy="115" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="160" cy="131" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="170" cy="119" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="165" cy="142" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="189" cy="114" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="228" cy="77" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="147" cy="141" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="154" cy="129" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="129" cy="111" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="158" cy="68" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="129" cy="96" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="119" cy="74" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="173" cy="121" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="135" cy="132" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="161" cy="80" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="135" cy="128" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="146" cy="119" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="137" cy="72" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="126" cy="158" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="124" cy="140" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="122" cy="95" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="105" cy="129" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="143" cy="167" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="128" cy="110" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="257" cy="114" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="116" cy="125" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="197" cy="170" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="110" cy="129" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="153" cy="140" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="140" cy="87" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<path d="M141 118H155M148 111V125" stroke="#e76f51" stroke-width="2.5"/>
+<path d="M219 131H233M226 124V138" stroke="#e76f51" stroke-width="2.5"/>
+<circle cx="268" cy="40" r="3" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<text x="276" y="44" font-size="13" fill="#1d1d1d">household</text>
+<circle cx="268" cy="58" r="3" fill="#264653" stroke="#1d1d1d" stroke-width="1"/>
+<text x="276" y="62" font-size="13" fill="#1d1d1d">trade</text>
+<path d="M262 76H274M268 70V82" stroke="#e76f51" stroke-width="2.5"/>
+<text x="276" y="80" font-size="13" fill="#1d1d1d">centre</text>
+</svg>

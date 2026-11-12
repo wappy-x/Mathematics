@@ -407,7 +407,7 @@ The two outputs match line for line.
 - [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): how few groups leave no line inside a group.
 - [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): six vertices force three all joined or three all unjoined.
 - [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): which pairs get a line, chosen at random.
-- Small worlds and hubs: the tallies real networks show.
+- [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md): the tallies real networks show.
 - Vietoris-Rips, Cech and alpha complexes: joining nearby data points, then filling triangles.
 - Graph isomorphism: how hard sameness is when renamings cannot all be tried.
 

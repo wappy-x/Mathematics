@@ -616,7 +616,7 @@ The two outputs match line for line, and that match is the replay test: each pro
 - [Monte Carlo](04-monte-carlo-estimates-and-error.md): why the dart estimate's error shrinks like one over the square root of the number of darts.
 - Randomised algorithms: algorithms that flip coins to run faster, and what their average cost means.
 - Fair choices from a list you cannot hold: fair shuffles and samples built from a generator's draws.
-- Seeds: seeds, parallel streams and version pinning in practice.
+- [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): seeds, parallel streams and version pinning in practice.
 - Pseudorandomness: when a fixed rule can provably replace true randomness.
 
 A generator hands out flat draws between 0 and 1, but a simulation needs waiting times, heights and prices with other shapes; [Inverse transform](02-inverse-transform-sampling.md) turns one into the other.

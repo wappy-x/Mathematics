@@ -549,7 +549,7 @@ The two outputs match line for line, including the simulated rows, because both 
 - [Default probability, recovery and expected loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): expected loss as chance times loss.
 - Randomised algorithms: linearity counting comparisons and collisions.
 - Entropy: the expectation of surprise.
-- Nash equilibrium: players choosing mixed moves by expected payoff.
+- [Nash equilibrium](../../14-Applied%20and%20computational/05-Operations%20Research/09-game-theory-and-nash-equilibrium.md): players choosing mixed moves by expected payoff.
 - States: expectation taken as a linear rule in its own right.
 - Regret: expected loss against the best fixed choice.
 

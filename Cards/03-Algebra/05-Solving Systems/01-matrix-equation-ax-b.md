@@ -387,9 +387,9 @@ The two outputs match line for line.
 - [Hedging three Greeks at once](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/02-delta-gamma-vega-hedging.md): hedge sizes as the cancelling $x$.
 - [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): junction and loop rules, one system.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): a heat or stress field, chopped up.
-- Linear programs: the same rows, plus inequalities and a cost.
+- [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): the same rows, plus inequalities and a cost.
 - Conjugate gradient: huge systems by descent, no $A^{-1}$.
-- Linear programs: rows as walls, answers as corners.
+- [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): rows as walls, answers as corners.
 - Newton in several unknowns, and Broyden when a Jacobian is too expensive: a curved system, one solve per step.
 - Matrix norms and the condition number: how far $x$ moves when $b$ is rounded.
 - One polynomial through n points: a curve through points, solved for coefficients.

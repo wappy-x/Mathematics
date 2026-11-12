@@ -350,7 +350,7 @@ ALL CHECKS PASS
 
 - [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): the best whole curve, not the best single number.
 - [Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the parameter making observed data most probable.
-- Stock: the can's trade-off in a warehouse.
+- [Stock](../../14-Applied%20and%20computational/05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md): the can's trade-off in a warehouse.
 
 ---
 

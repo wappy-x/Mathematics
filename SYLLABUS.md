@@ -4,7 +4,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**1,147 of 1,866 cards are ready to read.**
+**1,181 of 1,866 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -21,7 +21,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 | 11 | [Stochastic processes and calculus](Cards/11-Stochastic%20processes%20and%20calculus/README.md) | Randomness in motion: random walks to Brownian motion. | 9 | 60 of 60 |
 | 12 | [Financial mathematics](Cards/12-Financial%20mathematics/README.md) | Interest, pricing, risk and markets, from loans to derivatives. | 51 | 332 of 332 |
 | 13 | [Engineering mathematics](Cards/13-Engineering%20mathematics/README.md) | Units, signals, control, circuits, mechanics, heat. | 10 | 86 of 86 |
-| 14 | [Applied and computational](Cards/14-Applied%20and%20computational/README.md) | Algorithms, information, cryptography, machine learning. | 8 | 0 of 71 · planned |
+| 14 | [Applied and computational](Cards/14-Applied%20and%20computational/README.md) | Algorithms, information, cryptography, machine learning. | 8 | 34 of 71 |
 | 15 | [Optimization](Cards/15-Optimization/README.md) | Finding the best choice under limits. | 7 | 0 of 64 · planned |
 | 16 | [Numerical analysis](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 8 | 0 of 68 · planned |
 | 17 | [Topology](Cards/17-Topology/README.md) | Shape without measurement: stretching, holes and knots. | 6 | 0 of 51 · planned |

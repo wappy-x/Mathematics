@@ -395,7 +395,7 @@ The two outputs match line for line.
 
 - [Hall's theorem](02-halls-marriage-theorem.md): when a matching can cover one whole side.
 - [Stable matching](04-stable-matching-gale-shapley.md): pairings that respect preferences, not only size.
-- The assignment problem: the cheapest perfect matching when every pair has a cost.
+- [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): the cheapest perfect matching when every pair has a cost.
 - Total unimodularity: why matching problems solved with fractions still land on whole pairs.
 - Permanent against determinant: counting perfect matchings, the 2 here, is easy to state and hard to compute.
 

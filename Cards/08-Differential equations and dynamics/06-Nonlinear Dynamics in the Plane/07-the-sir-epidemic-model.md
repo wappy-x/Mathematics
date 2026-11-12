@@ -408,7 +408,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Epidemics on a network: the same boxes when people meet only their neighbours.
+- [Epidemics on a network](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/05-epidemics-on-networks.md): the same boxes when people meet only their neighbours.
 
 ---
 

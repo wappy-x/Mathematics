@@ -366,8 +366,8 @@ The two outputs agree line for line.
 - [Lagrange multipliers](08-lagrange-multipliers.md): at a constrained best point, two gradients line up.
 - [Line integrals of a field](../09-Vector%20Calculus/02-line-integrals.md): the gradient summed along a path returns the height change.
 - [Whose risk is it](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md): risk's gradient, shared among positions.
-- Gradient descent: small steps down an error's fall line.
-- Gradient descent: how fast they reach the bottom.
+- [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): small steps down an error's fall line.
+- [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): how fast they reach the bottom.
 - Covectors and tensor fields: the gradient as a rule turning a direction into a rate.
 
 ---

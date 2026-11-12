@@ -401,7 +401,7 @@ The two outputs match line for line.
 
 - Polynomial or exponential: what separates 4,980,736 records from 60,822,550,204,416,000 tours, and both from "fast".
 - Approximation: heuristics with a guaranteed ratio.
-- Integer programs: floors and pruning made into an exact method.
+- [Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md): floors and pruning made into an exact method.
 - Four classic models: the tour as whole-number variables and constraints.
 - Heuristics with a promise: how close a quick method can be promised to get.
 - Karp's list: the family this problem joins, and how membership is proved.

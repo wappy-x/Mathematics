@@ -601,7 +601,7 @@ The two outputs match line for line, including the simulated ones: the generator
 ## Where this goes next
 
 - [Hitting times](06-first-passage-and-hitting-times.md): the whole law of the first-passage time to one level, why the fair walk returns for sure, and why the mean wait is infinite.
-- Random walks as circuits: the chance of hitting one wall first as a voltage, on any graph.
+- [Random walks as circuits](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/08-random-walks-and-electrical-networks.md): the chance of hitting one wall first as a voltage, on any graph.
 
 What this card leaves open: with only one wall, how fast the chance of still waiting shrinks round by round, and whether a fair walk always comes back to where it started.
 

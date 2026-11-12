@@ -358,7 +358,7 @@ The two outputs match line for line.
 - [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): one fixed table, its columns waves, times a list of samples.
 - [From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): this product as the rule pushing a state forward in time.
 - Hamming and Reed-Solomon: a table times a message, the answer betraying which bit flipped.
-- The perceptron and its stack: one layer is one such product, with a bend after it.
+- [The perceptron and its stack](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/03-perceptron-and-neural-networks.md): one layer is one such product, with a bend after it.
 - Three model operators: the list becomes a function, the table an integral, the rule unchanged.
 
 This card mixes the columns for one list of weights; many lists at once, each wanting the same table, is [Matrix multiplication](03-matrix-multiplication.md).

@@ -381,7 +381,7 @@ The two outputs match line for line.
 
 - [Konig's theorem](03-konigs-theorem-and-vertex-cover.md): the same fact as the fewest dots touching every line.
 - [Max-flow min-cut](06-max-flow-min-cut.md): the crowded group as the cheapest cut of a network.
-- The assignment problem: from "a placement exists" to "the cheapest one".
+- [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): from "a placement exists" to "the cheapest one".
 
 Checking the condition meant listing all 64 groups, a count that doubles with each applicant; finding the crowded group without that list is [Konig's theorem](03-konigs-theorem-and-vertex-cover.md).
 

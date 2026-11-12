@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240">
+<title>Synthetic league of 24 clubs in four divisions of six: solid lines are division fixtures, dashed lines the 16 cup ties (schematic)</title>
+<rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<line x1="90.0" y1="25.0" x2="124.6" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="25.0" x2="124.6" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="25.0" x2="90.0" y2="105.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="25.0" x2="55.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="25.0" x2="55.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="45.0" x2="124.6" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="45.0" x2="90.0" y2="105.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="45.0" x2="55.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="45.0" x2="55.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="85.0" x2="90.0" y2="105.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="85.0" x2="55.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="85.0" x2="55.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="105.0" x2="55.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="105.0" x2="55.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="55.4" y1="85.0" x2="55.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="25.0" x2="304.6" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="25.0" x2="304.6" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="25.0" x2="270.0" y2="105.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="25.0" x2="235.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="25.0" x2="235.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="45.0" x2="304.6" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="45.0" x2="270.0" y2="105.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="45.0" x2="235.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="45.0" x2="235.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="85.0" x2="270.0" y2="105.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="85.0" x2="235.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="85.0" x2="235.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="105.0" x2="235.4" y2="85.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="105.0" x2="235.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="235.4" y1="85.0" x2="235.4" y2="45.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="135.0" x2="124.6" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="135.0" x2="124.6" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="135.0" x2="90.0" y2="215.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="135.0" x2="55.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="135.0" x2="55.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="155.0" x2="124.6" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="155.0" x2="90.0" y2="215.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="155.0" x2="55.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="155.0" x2="55.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="195.0" x2="90.0" y2="215.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="195.0" x2="55.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124.6" y1="195.0" x2="55.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="215.0" x2="55.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="90.0" y1="215.0" x2="55.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="55.4" y1="195.0" x2="55.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="135.0" x2="304.6" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="135.0" x2="304.6" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="135.0" x2="270.0" y2="215.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="135.0" x2="235.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="135.0" x2="235.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="155.0" x2="304.6" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="155.0" x2="270.0" y2="215.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="155.0" x2="235.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="155.0" x2="235.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="195.0" x2="270.0" y2="215.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="195.0" x2="235.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="304.6" y1="195.0" x2="235.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="215.0" x2="235.4" y2="195.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="270.0" y1="215.0" x2="235.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="235.4" y1="195.0" x2="235.4" y2="155.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="55.4" y1="45.0" x2="304.6" y2="155.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="124.6" y1="195.0" x2="270.0" y2="135.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="90.0" y1="105.0" x2="270.0" y2="105.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="270.0" y1="25.0" x2="124.6" y2="155.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="124.6" y1="85.0" x2="304.6" y2="195.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="304.6" y1="85.0" x2="124.6" y2="155.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="124.6" y1="45.0" x2="55.4" y2="155.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="55.4" y1="195.0" x2="304.6" y2="195.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="235.4" y1="85.0" x2="304.6" y2="195.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="90.0" y1="25.0" x2="55.4" y2="195.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="90.0" y1="135.0" x2="235.4" y2="195.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="55.4" y1="155.0" x2="235.4" y2="155.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="235.4" y1="45.0" x2="55.4" y2="155.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="304.6" y1="85.0" x2="124.6" y2="195.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="270.0" y1="25.0" x2="235.4" y2="195.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="55.4" y1="45.0" x2="304.6" y2="85.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<circle cx="90.0" cy="25.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="90.0" y="28.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">A1</text>
+<circle cx="124.6" cy="45.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="124.6" y="48.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">A2</text>
+<circle cx="124.6" cy="85.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="124.6" y="88.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">A3</text>
+<circle cx="90.0" cy="105.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="90.0" y="108.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">A4</text>
+<circle cx="55.4" cy="85.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="55.4" y="88.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">A5</text>
+<circle cx="55.4" cy="45.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="55.4" y="48.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">A6</text>
+<circle cx="270.0" cy="25.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="270.0" y="28.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">B1</text>
+<circle cx="304.6" cy="45.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="304.6" y="48.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">B2</text>
+<circle cx="304.6" cy="85.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="304.6" y="88.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">B3</text>
+<circle cx="270.0" cy="105.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="270.0" y="108.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">B4</text>
+<circle cx="235.4" cy="85.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="235.4" y="88.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">B5</text>
+<circle cx="235.4" cy="45.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="235.4" y="48.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">B6</text>
+<circle cx="90.0" cy="135.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="90.0" y="138.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">C1</text>
+<circle cx="124.6" cy="155.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="124.6" y="158.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">C2</text>
+<circle cx="124.6" cy="195.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="124.6" y="198.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">C3</text>
+<circle cx="90.0" cy="215.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="90.0" y="218.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">C4</text>
+<circle cx="55.4" cy="195.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="55.4" y="198.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">C5</text>
+<circle cx="55.4" cy="155.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="55.4" y="158.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">C6</text>
+<circle cx="270.0" cy="135.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="270.0" y="138.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">D1</text>
+<circle cx="304.6" cy="155.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="304.6" y="158.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">D2</text>
+<circle cx="304.6" cy="195.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="304.6" y="198.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">D3</text>
+<circle cx="270.0" cy="215.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="270.0" y="218.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">D4</text>
+<circle cx="235.4" cy="195.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="235.4" y="198.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">D5</text>
+<circle cx="235.4" cy="155.0" r="9" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="235.4" y="158.5" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1d1d1d">D6</text>
+<text x="22" y="70" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1d1d1d">A</text>
+<text x="338" y="70" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1d1d1d">B</text>
+<text x="22" y="180" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1d1d1d">C</text>
+<text x="338" y="180" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1d1d1d">D</text>
+</svg>

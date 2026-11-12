@@ -387,7 +387,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): divide each row by its degree and the counts become chances for a wandering train.
-- Centrality: multiplying by the table over and over to rank pages by the traffic reaching them.
+- [Centrality](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/01-centrality-and-pagerank.md): multiplying by the table over and over to rank pages by the traffic reaching them.
 - Sparse storage and Krylov methods: multiplying a table of mostly zeros on a network of millions.
 
 Each further power costs another full multiply; the escape is that a symmetric table splits into a handful of eigenvalues and their directions, and every walk count follows from those.

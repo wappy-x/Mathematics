@@ -636,7 +636,7 @@ The simulation found 8,011 positives among 400,000 people, 4,020 of them carrier
 - [Conditioning on a random variable](../../10-Measure%20and%20integration/09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): conditioning on evidence that has chance zero, such as an exact measurement, where the division here breaks.
 - [Hidden Markov models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md): Bayes' rule applied step after step to a hidden state that changes over time.
 - [The spread](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/02-bid-ask-spread-and-adverse-selection.md): a dealer's quote as the answer to a Bayes update on who is trading.
-- Deciding under uncertainty: what a test is worth before it is run, priced by the decisions its result would change.
+- [Deciding under uncertainty](../../14-Applied%20and%20computational/05-Operations%20Research/08-decision-theory-and-the-value-of-information.md): what a test is worth before it is run, priced by the decisions its result would change.
 
 [Independence](07-independence.md) answers the question Step 5 left open: when does a second piece of evidence carry fresh information, so that its likelihood ratio may be multiplied in?
 

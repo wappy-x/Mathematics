@@ -671,7 +671,7 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 - [Black-Cox](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): default as a barrier touched by a simulated path.
 - [Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): what a counterparty might owe, path by path and date by date.
 - Monte Carlo integration: why the square-root law ignores the count of dimensions.
-- Seeds: keeping a run repeatable, and what a seed does not prove.
+- [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): keeping a run repeatable, and what a seed does not prove.
 
 A four-cent error bar cost a hundred thousand futures, and the square-root law prices a one-cent bar at sixteen times as many; the next card shrinks the bar without paying that bill, by making each draw carry more information ([Cheaper Monte Carlo](02-variance-reduction-for-pricing.md)).
 

@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348 284" style="max-width:420px;width:100%;height:auto">
+<title>96 of the 20,000 synthetic orders plotted by basket value across and discount share up, two of their twelve numbers, with the four k-means centres marked</title>
+<rect x="0" y="0" width="348" height="284" fill="#ffffff"/>
+<rect x="44.0" y="14.0" width="288.0" height="224.0" fill="none" stroke="#999999" stroke-width="1"/>
+<text x="40.0" y="254.0" font-size="13" fill="#1d1d1d">-4</text>
+<text x="72.0" y="254.0" font-size="13" fill="#1d1d1d">-3</text>
+<text x="104.0" y="254.0" font-size="13" fill="#1d1d1d">-2</text>
+<text x="136.0" y="254.0" font-size="13" fill="#1d1d1d">-1</text>
+<text x="168.0" y="254.0" font-size="13" fill="#1d1d1d">0</text>
+<text x="200.0" y="254.0" font-size="13" fill="#1d1d1d">1</text>
+<text x="232.0" y="254.0" font-size="13" fill="#1d1d1d">2</text>
+<text x="264.0" y="254.0" font-size="13" fill="#1d1d1d">3</text>
+<text x="296.0" y="254.0" font-size="13" fill="#1d1d1d">4</text>
+<text x="328.0" y="254.0" font-size="13" fill="#1d1d1d">5</text>
+<text x="26.0" y="242.0" font-size="13" fill="#1d1d1d">-3</text>
+<text x="26.0" y="210.0" font-size="13" fill="#1d1d1d">-2</text>
+<text x="26.0" y="178.0" font-size="13" fill="#1d1d1d">-1</text>
+<text x="26.0" y="146.0" font-size="13" fill="#1d1d1d">0</text>
+<text x="26.0" y="114.0" font-size="13" fill="#1d1d1d">1</text>
+<text x="26.0" y="82.0" font-size="13" fill="#1d1d1d">2</text>
+<text x="26.0" y="50.0" font-size="13" fill="#1d1d1d">3</text>
+<text x="26.0" y="18.0" font-size="13" fill="#1d1d1d">4</text>
+<line x1="172.0" y1="14.0" x2="172.0" y2="238.0" stroke="#cccccc" stroke-width="1"/>
+<line x1="44.0" y1="142.0" x2="332.0" y2="142.0" stroke="#cccccc" stroke-width="1"/>
+<circle cx="144.5" cy="147.9" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M213.2,167.4 L219.2,173.4 M213.2,173.4 L219.2,167.4" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="114.6,147.8 111.1,154.8 118.1,154.8" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="156.1,209.3 152.6,216.3 159.6,216.3" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="100.0" y="106.8" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="131.4" y="84.6" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="111.8" y="98.2" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="166.0" cy="133.2" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="177.5" cy="172.9" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="186.4" cy="158.0" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="199.8" cy="114.7" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M253.6,166.8 L259.6,172.8 M253.6,172.8 L259.6,166.8" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="182.5,199.4 179.0,206.4 186.0,206.4" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="189.3,178.3 185.8,185.3 192.8,185.3" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="135.6" y="85.8" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="133.2" y="102.3" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="145.4" y="71.6" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="231.5" cy="135.6" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="159.1" cy="132.5" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="155.4" cy="166.6" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="185.7" cy="153.6" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M248.2,204.6 L254.2,210.6 M248.2,210.6 L254.2,204.6" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="151.0,197.0 147.5,204.0 154.5,204.0" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="154.8,113.3 151.3,120.3 158.3,120.3" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="193.3" y="99.9" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="158.3" y="100.4" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="131.6" y="90.0" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="167.5" cy="164.1" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="190.8" cy="117.5" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="189.7" cy="182.1" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="142.6" cy="123.7" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M248.0,188.9 L254.0,194.9 M248.0,194.9 L254.0,188.9" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="145.7,130.7 142.2,137.7 149.2,137.7" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="192.2,179.6 188.7,186.6 195.7,186.6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="66.4" y="55.6" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="153.5" y="63.3" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="178.3" y="124.3" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="163.9" cy="117.8" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="227.5" cy="191.3" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="158.4" cy="146.8" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="207.7" cy="155.4" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M302.1,188.8 L308.1,194.8 M302.1,194.8 L308.1,188.8" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="167.7,153.9 164.2,160.9 171.2,160.9" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="151.3,191.7 147.8,198.7 154.8,198.7" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="131.0" y="87.1" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="121.4" y="70.9" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="138.2" y="80.3" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="172.6" cy="134.5" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="180.3" cy="149.7" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="206.6" cy="129.5" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="159.3" cy="137.5" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M220.6,155.1 L226.6,161.1 M220.6,161.1 L226.6,155.1" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="137.4,161.6 133.9,168.6 140.9,168.6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="140.7,159.4 137.2,166.4 144.2,166.4" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="156.1" y="57.0" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="111.8" y="60.8" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="175.7" y="73.4" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="198.2" cy="150.7" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="201.5" cy="150.1" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="171.7" cy="155.5" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="182.1" cy="128.7" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M225.8,140.9 L231.8,146.9 M225.8,146.9 L231.8,140.9" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="167.3,133.4 163.8,140.4 170.8,140.4" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="162.3,186.4 158.8,193.4 165.8,193.4" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="151.2" y="32.4" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="153.4" y="54.2" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="118.1" y="95.6" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="209.9" cy="117.3" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="175.4" cy="126.5" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="204.6" cy="116.6" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="214.6" cy="124.0" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M237.7,212.9 L243.7,218.9 M237.7,218.9 L243.7,212.9" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="178.8,165.6 175.3,172.6 182.3,172.6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="131.5,177.3 128.0,184.3 135.0,184.3" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="131.0" y="62.0" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="161.1" y="75.5" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="135.0" y="93.2" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="222.7" cy="98.9" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="169.6" cy="122.2" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="223.0" cy="147.3" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="200.4" cy="131.8" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M280.6,146.1 L286.6,152.1 M280.6,152.1 L286.6,146.1" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="149.0,187.3 145.5,194.3 152.5,194.3" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="219.8,178.5 216.3,185.5 223.3,185.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="164.1" y="105.1" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="162.2" y="64.3" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="158.1" y="38.6" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="173.3" cy="124.1" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="190.7" cy="137.6" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="165.6" cy="132.6" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="164.9" cy="119.0" r="3.5" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M257.2,171.0 L263.2,177.0 M257.2,177.0 L263.2,171.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="197.0,165.7 193.5,172.7 200.5,172.7" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="130.4,180.0 126.9,187.0 133.9,187.0" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="117.8" y="86.8" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="112.8" y="75.2" width="6" height="6" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="188.1" y1="142.4" x2="240.8" y2="114.8" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="188.1" cy="142.4" r="6" fill="#1d1d1d"/>
+<text x="242.4" y="110.0" font-size="13" font-weight="bold" fill="#1d1d1d">family</text>
+<line x1="140.0" y1="77.9" x2="76.0" y2="33.2" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="140.0" cy="77.9" r="6" fill="#1d1d1d"/>
+<text x="47.2" y="28.4" font-size="13" font-weight="bold" fill="#1d1d1d">bargain</text>
+<line x1="252.0" y1="173.5" x2="274.4" y2="220.4" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="252.0" cy="173.5" r="6" fill="#1d1d1d"/>
+<text x="261.6" y="228.4" font-size="13" font-weight="bold" fill="#1d1d1d">big-ticket</text>
+<line x1="155.7" y1="158.0" x2="98.4" y2="172.4" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="155.7" cy="158.0" r="6" fill="#1d1d1d"/>
+<text x="47.2" y="174.0" font-size="13" font-weight="bold" fill="#1d1d1d">late-night</text>
+<text x="44.0" y="276" font-size="13" fill="#1d1d1d">basket value, common scale (filled dots: centres)</text>
+<text x="12" y="16.0" font-size="13" fill="#1d1d1d" transform="rotate(-90 12 16.0)" text-anchor="end">discount share</text>
+</svg>

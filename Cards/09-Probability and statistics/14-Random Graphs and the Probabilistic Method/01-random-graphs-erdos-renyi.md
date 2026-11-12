@@ -628,8 +628,8 @@ The two outputs match line for line: the generator is integer arithmetic in both
 
 - [The giant component](02-the-giant-component.md): once the average degree passes 1, one cluster swallows a fixed share of the town.
 - [Random walks on a graph](05-random-walks-on-graphs-and-mixing.md): wandering from friend to friend, and how fast a walk forgets where it began.
-- Small worlds and hubs: models that add the clustering and the hubs this one lacks.
-- Epidemics on a network: infection spreading along random edges.
+- [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md): models that add the clustering and the hubs this one lacks.
+- [Epidemics on a network](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/05-epidemics-on-networks.md): infection spreading along random edges.
 - Percolation: the sharp change at the threshold, seen as a physical phase change.
 
 This card counts friends one person at a time; whether those friendships knit the town into one connected whole is the question [The giant component](02-the-giant-component.md) answers.

@@ -619,7 +619,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Loss and empirical risk: training error as empirical risk, for losses other than the squared miss.
+- [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md): training error as empirical risk, for losses other than the squared miss.
 - Bayesian optimisation: searching many tuning settings when each cross-validation run is expensive.
 - Fitting instead of passing through: polynomial fits that stay stable at high degree, and why equally spaced interpolation swings at the ends.
 - Persistence in practice: telling real shape from noise, asked of holes and loops.

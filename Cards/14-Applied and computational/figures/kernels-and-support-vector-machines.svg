@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" font-family="sans-serif">
+<title>Six orders drawn to scale by amount score and hour score: three honest orders near the origin, three fraud orders up and to the right, the widest-gap boundary x1 + x2 = 2.5 with its two edges at 1 and 4, and a perceptron line at 3 that sits closer to the fraud</title>
+<rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<line x1="40" y1="200" x2="300" y2="200" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="60" y1="220" x2="60" y2="15" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="40,130 130,220 280,220 80,20 40,20" fill="#1d1d1d" fill-opacity="0.12" stroke="none"/>
+<line x1="40" y1="130" x2="130" y2="220" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="80" y1="20" x2="280" y2="220" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="55" x2="205" y2="220" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="40" y1="30" x2="230" y2="220" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="60" cy="200" r="5" fill="#ffffff" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="110" cy="200" r="5" fill="#ffffff" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="60" cy="150" r="5" fill="#ffffff" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="160" cy="100" r="5" fill="#1d1d1d"/>
+<circle cx="210" cy="50" r="5" fill="#1d1d1d"/>
+<circle cx="260" cy="150" r="5" fill="#1d1d1d"/>
+<circle cx="110" cy="200" r="9" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="60" cy="150" r="9" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="160" cy="100" r="9" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="219" y="55" font-size="13" fill="#1d1d1d">fraud</text>
+<text x="6" y="172" font-size="13" fill="#1d1d1d">honest</text>
+<text x="35" y="60" font-size="13" fill="#1d1d1d" text-anchor="end">2.5</text>
+<text x="35" y="35" font-size="13" fill="#1d1d1d" text-anchor="end">3</text>
+<text x="88" y="17" font-size="13" fill="#1d1d1d">4</text>
+<text x="35" y="135" font-size="13" fill="#1d1d1d" text-anchor="end">1</text>
+<text x="200" y="236" font-size="13" fill="#1d1d1d" text-anchor="middle">x1, amount score</text>
+<text x="345" y="19" font-size="13" fill="#1d1d1d" text-anchor="end">x2, hour score (up)</text>
+</svg>

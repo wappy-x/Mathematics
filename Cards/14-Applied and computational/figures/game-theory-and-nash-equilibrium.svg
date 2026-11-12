@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" style="max-width:420px;width:100%;height:auto">
+<title>Best replies in the penalty kick: the kicker's and the keeper's best-reply lines cross once, at p = 0.383, q = 0.417</title>
+<rect x="0" y="0" width="360" height="290" fill="#ffffff"/>
+<rect x="60" y="30" width="200" height="200" fill="none" stroke="#999999" stroke-width="1"/>
+<polyline points="260,230 260,146.7 60,146.7 60,30" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polyline points="60,230 136.7,230 136.7,30 260,30" fill="none" stroke="#1d1d1d" stroke-width="2" stroke-dasharray="7 4"/>
+<circle cx="136.7" cy="146.7" r="5" fill="#1d1d1d"/>
+<text x="144" y="140" font-size="13" fill="#1d1d1d">(0.383, 0.417)</text>
+<text x="168" y="172" font-size="13" fill="#1d1d1d">kicker's best</text>
+<text x="168" y="188" font-size="13" fill="#1d1d1d">reply, solid</text>
+<text x="146" y="56" font-size="13" fill="#1d1d1d">keeper's best</text>
+<text x="146" y="72" font-size="13" fill="#1d1d1d">reply, dashed</text>
+<text x="56" y="246" font-size="13" fill="#1d1d1d">0</text>
+<text x="123" y="246" font-size="13" fill="#1d1d1d">0.383</text>
+<text x="256" y="246" font-size="13" fill="#1d1d1d">1</text>
+<text x="44" y="234" font-size="13" fill="#1d1d1d">0</text>
+<text x="18" y="151" font-size="13" fill="#1d1d1d">0.417</text>
+<text x="44" y="35" font-size="13" fill="#1d1d1d">1</text>
+<text x="60" y="270" font-size="13" fill="#1d1d1d">p: kicker's chance of shooting Left</text>
+<text x="275" y="125" font-size="13" fill="#1d1d1d">q: keeper's</text>
+<text x="275" y="141" font-size="13" fill="#1d1d1d">chance of</text>
+<text x="275" y="157" font-size="13" fill="#1d1d1d">diving Left</text>
+</svg>

@@ -396,8 +396,8 @@ The curve is the felt temperature along the walk; the straight line is its tange
 - [Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the determinant as an area scale.
 - [Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md): all price sensitivities in one backward pass.
 - [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): errors pushed through a formula.
-- Gradient descent: steps downhill on chained gradients.
-- Backpropagation: the product grouped from the output end.
+- [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): steps downhill on chained gradients.
+- [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md): the product grouped from the output end.
 - Automatic differentiation: derivatives of whole programs.
 - Newton in several unknowns, and Broyden when a Jacobian is too expensive: the Jacobian as Newton's slope.
 - Reverse mode: left-first grouping, mechanised.

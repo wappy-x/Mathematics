@@ -683,7 +683,7 @@ The two outputs match line for line: the generator is integer arithmetic, and th
 - [Gambler's ruin](04-gamblers-ruin.md): the same walk stopped when it hits $0 or a target.
 - [Reflection principle](05-reflection-principle-for-walks.md): the chance the walk touches a level on the way, not only at the end.
 - [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md): the walk with small steps and short rounds, seen from far away.
-- Random walks as circuits: walks on graphs, and their hitting chances as voltages.
+- [Random walks as circuits](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/08-random-walks-and-electrical-networks.md): walks on graphs, and their hitting chances as voltages.
 
 This card fixes where the walk tends to be at a round chosen in advance; it says nothing about when the walk first reaches a level such as $10 down, and that question, with its answer for a gambler holding 10 chips, is [Gambler's ruin](04-gamblers-ruin.md).
 

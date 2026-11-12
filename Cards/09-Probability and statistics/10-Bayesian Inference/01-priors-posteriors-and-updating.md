@@ -643,7 +643,7 @@ The two outputs match line for line, including the simulated numbers, because bo
 
 - [Beta-binomial](02-beta-binomial.md): the priors $\theta^{a}(1-\theta)^{b}$ used here form a family that the coin's data keep inside itself, so updating becomes adding heads and tails to two counters. That card names the curve $\theta^{a}(1-\theta)^{b}$ Beta($a + 1$, $b + 1$), one more than each power, so the flat-prior posterior $\theta^{7}(1-\theta)^{3}$ here is its Beta(8, 4).
 - [Normal-normal](03-normal-normal.md): the same update for an unknown average measured with bell-curve noise, where certainty adds up measurement by measurement.
-- Deciding under uncertainty: turning a posterior into an action, and pricing the next flip before paying for it.
+- [Deciding under uncertainty](../../14-Applied%20and%20computational/05-Operations%20Research/08-decision-theory-and-the-value-of-information.md): turning a posterior into an action, and pricing the next flip before paying for it.
 
 The normalisation here took a polynomial expansion; which priors make that step collapse into adding counts, and what the posterior then says about the next flip, is [Beta-binomial](02-beta-binomial.md).
 

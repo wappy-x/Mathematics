@@ -651,7 +651,7 @@ The outputs agree line for line, the simulated rows included: both programs run 
 
 - [Risk premium](03-certainty-equivalent-and-risk-premium.md): the certainty equivalent and risk premium studied on their own, for insurance, pricing and comparisons between people.
 - [Stochastic dominance](04-stochastic-dominance.md): when every risk-averse saver agrees on a ranking, without choosing a score.
-- Deciding under uncertainty: expected utility as a general decision rule, and what a better forecast is worth before it is bought.
+- [Deciding under uncertainty](../../14-Applied%20and%20computational/05-Operations%20Research/08-decision-theory-and-the-value-of-information.md): expected utility as a general decision rule, and what a better forecast is worth before it is bought.
 
 This card ranks two choices for one saver with a known score; the open question is how much of the fund a saver should give up to avoid its risk, and how that sure-money price compares across savers, which [Risk premium](03-certainty-equivalent-and-risk-premium.md) answers.
 

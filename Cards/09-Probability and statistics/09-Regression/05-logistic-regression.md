@@ -670,9 +670,9 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Cox regression in outline](../13-Survival%2C%20Design%20and%20Causality/03-cox-proportional-hazards-in-outline.md): not whether a loan defaults but when, with coefficients read as hazard multipliers.
-- The perceptron and its stack: logistic units stacked in layers, fitted by the same likelihood.
-- Softmax and cross-entropy: more than two outcomes, one score each.
-- Support vector machines: a dividing line chosen for its margin rather than its likelihood, which welcomes the separation that breaks this fit.
+- [The perceptron and its stack](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/03-perceptron-and-neural-networks.md): logistic units stacked in layers, fitted by the same likelihood.
+- [Softmax and cross-entropy](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/05-softmax-and-cross-entropy-for-classification.md): more than two outcomes, one score each.
+- [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): a dividing line chosen for its margin rather than its likelihood, which welcomes the separation that breaks this fit.
 
 This card sorts each loan into two outcomes; when there are three or more, such as repaid, late and defaulted, the log-odds line becomes one score per outcome, and how those scores share out the chance is Softmax and cross-entropy.
 

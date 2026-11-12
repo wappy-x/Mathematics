@@ -658,7 +658,7 @@ The two outputs agree line for line.
 
 ## Where this goes next
 
-- Queues: Little's law, $L = \lambda W$, for any queue, and queues with many servers or general service times.
+- [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md): Little's law, $L = \lambda W$, for any queue, and queues with many servers or general service times.
 - [Renewal processes](06-renewal-processes-in-outline.md), the next card: what survives when the gaps between events are not exponential.
 
 The M/M/1 desk puts a caller in the system for an hour on average, from nothing more than a count of 4 people and an arrival rate of 4 an hour; why that division works for every queue, whatever its gaps, is the question Queues answers.

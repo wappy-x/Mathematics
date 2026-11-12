@@ -366,7 +366,7 @@ ALL CHECKS PASS
 
 - [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping a simulated price, whose noise is random.
 - [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): input errors carried through a model by derivatives.
-- Backpropagation: exact derivatives by the chain rule, no step.
+- [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md): exact derivatives by the chain rule, no step.
 - Forward, backward and central differences: higher-order formulas and Richardson extrapolation.
 - Choosing the step: the step rule in floating-point detail.
 

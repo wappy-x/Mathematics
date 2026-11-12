@@ -395,7 +395,7 @@ The two outputs match line for line.
 - [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): the same split in continuous time.
 - [n-step transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md): eigenvalue 1 among probabilities.
 - [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): these powers on credit ratings.
-- PageRank by power iteration: why repetition finds one direction.
+- [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): why repetition finds one direction.
 - Eigenvalues by iteration: eigenvalues for a thousand rows.
 - Bounded and symmetric: infinitely many directions.
 - Semigroups: with time as the power.

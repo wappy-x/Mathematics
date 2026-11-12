@@ -590,7 +590,7 @@ The two outputs match line for line, simulated counts included: both languages d
 - [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): many defaults tied by one shared normal factor.
 - Channel capacity: normal noise sets a channel's limit.
 - Rate and distortion: the normal source as the hardest to compress.
-- EM: fitting a mixture of bells.
+- [EM](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/08-em-algorithm.md): fitting a mixture of bells.
 - Weighted Gauss rules: averages under the bell by a few weighted points.
 - [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat spreading as a widening bell.
 - Erdos-Kac: the count of a number's prime factors follows the bell.

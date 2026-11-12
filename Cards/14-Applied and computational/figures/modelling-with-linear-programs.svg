@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" font-family="sans-serif">
+<title>The bakery's feasible plans: a five-cornered region cut out by the oven, flour and demand limits, with the best margin line touching the corner at 12 sponge and 6 fruit batches</title>
+<rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<polygon points="45,205 210,205 177,127 89,75 45,75" fill="#1d1d1d" fill-opacity="0.12" stroke="none"/>
+<line x1="45" y1="205" x2="330" y2="205" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="45" y1="205" x2="45" y2="25" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="45" y1="49" x2="309" y2="205" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="210" y1="205" x2="138.5" y2="36" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="45" y1="75" x2="330" y2="75" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="276" y1="205" x2="61.5" y2="36" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="177" cy="127" r="4.5" fill="#1d1d1d"/>
+<text x="184" y="120" font-size="13" fill="#1d1d1d">best (12, 6): £840</text>
+<text x="292" y="180" font-size="13" fill="#1d1d1d">oven</text>
+<text x="150" y="50" font-size="13" fill="#1d1d1d">flour</text>
+<text x="270" y="69" font-size="13" fill="#1d1d1d">demand</text>
+<text x="56" y="160" font-size="13" fill="#1d1d1d">plans that</text>
+<text x="56" y="175" font-size="13" fill="#1d1d1d">fit every limit</text>
+<text x="45" y="220" font-size="13" fill="#1d1d1d" text-anchor="middle">0</text>
+<text x="210" y="220" font-size="13" fill="#1d1d1d" text-anchor="middle">15</text>
+<text x="309" y="220" font-size="13" fill="#1d1d1d" text-anchor="middle">24</text>
+<text x="38" y="79" font-size="13" fill="#1d1d1d" text-anchor="end">10</text>
+<text x="38" y="53" font-size="13" fill="#1d1d1d" text-anchor="end">12</text>
+<text x="190" y="235" font-size="13" fill="#1d1d1d" text-anchor="middle">x1, sponge batches a day</text>
+<text x="50" y="18" font-size="13" fill="#1d1d1d">x2, fruit batches a day</text>
+</svg>

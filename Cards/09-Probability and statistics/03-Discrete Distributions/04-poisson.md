@@ -589,7 +589,7 @@ The two outputs match line for line. The simulated tail, 0.01150 with standard e
 - [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): arrivals through time, with a Poisson count in every window.
 - [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): a Poisson number of price jumps added to a smooth stock path.
 - [The order book](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/01-the-limit-order-book.md): order arrivals as Poisson streams.
-- Queues: what Poisson arrivals do to a queue.
+- [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md): what Poisson arrivals do to a queue.
 - Infinitely divisible laws: the Poisson law as a building block of every law that splits into any number of independent equal parts.
 
 ---

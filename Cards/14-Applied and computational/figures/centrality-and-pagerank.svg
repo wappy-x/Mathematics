@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" width="360" height="250">
+<title>Ten bike stations and their eighteen regular routes, schematic; the route from Hill Top down to Riverside is ridden one way only</title>
+<rect x="0" y="0" width="360" height="250" fill="#ffffff"/>
+<g stroke="#1d1d1d" stroke-width="1.5" fill="none">
+<line x1="60" y1="40" x2="150" y2="40"/>
+<line x1="60" y1="40" x2="25" y2="110"/>
+<line x1="60" y1="40" x2="105" y2="110"/>
+<line x1="60" y1="40" x2="60" y2="170"/>
+<line x1="150" y1="40" x2="105" y2="110"/>
+<line x1="150" y1="40" x2="190" y2="110"/>
+<line x1="150" y1="40" x2="150" y2="170"/>
+<line x1="25" y1="110" x2="105" y2="110"/>
+<line x1="25" y1="110" x2="60" y2="170"/>
+<line x1="105" y1="110" x2="190" y2="110"/>
+<line x1="105" y1="110" x2="60" y2="170"/>
+<line x1="105" y1="110" x2="150" y2="170"/>
+<line x1="190" y1="110" x2="150" y2="170"/>
+<line x1="60" y1="170" x2="150" y2="170"/>
+<line x1="60" y1="170" x2="105" y2="220"/>
+<line x1="150" y1="170" x2="105" y2="220"/>
+<line x1="105" y1="220" x2="199" y2="220"/>
+<line x1="215" y1="220" x2="320" y2="220"/>
+</g>
+<polygon points="201,220 189,214 189,226" fill="#1d1d1d"/>
+<g stroke="#1d1d1d" stroke-width="2" fill="#ffffff">
+<circle cx="60" cy="40" r="14"/>
+<circle cx="150" cy="40" r="14"/>
+<circle cx="25" cy="110" r="14"/>
+<circle cx="105" cy="110" r="14"/>
+<circle cx="190" cy="110" r="14"/>
+<circle cx="60" cy="170" r="14"/>
+<circle cx="150" cy="170" r="14"/>
+<circle cx="105" cy="220" r="14"/>
+<circle cx="215" cy="220" r="14"/>
+<circle cx="320" cy="220" r="14"/>
+</g>
+<g fill="#1d1d1d" font-family="sans-serif" font-size="13" text-anchor="middle">
+<text x="60" y="45">A</text>
+<text x="150" y="45">B</text>
+<text x="25" y="115">C</text>
+<text x="105" y="115">M</text>
+<text x="190" y="115">E</text>
+<text x="60" y="175">F</text>
+<text x="150" y="175">G</text>
+<text x="105" y="225">H</text>
+<text x="215" y="225">R</text>
+<text x="320" y="225">Q</text>
+<text x="160" y="208">one way</text>
+<text x="268" y="208">two-way</text>
+</g>
+</svg>

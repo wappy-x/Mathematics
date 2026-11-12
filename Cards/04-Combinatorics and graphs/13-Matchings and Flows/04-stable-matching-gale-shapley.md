@@ -395,7 +395,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Auctions: rules under which nobody gains by misreporting.
+- [Auctions](../../14-Applied%20and%20computational/05-Operations%20Research/10-auctions-and-mechanism-design.md): rules under which nobody gains by misreporting.
 - Minimax: another existence theorem for two opposed sides.
 
 This card assumed true rankings; whether anyone gains by lying about theirs is Auctions.

@@ -613,7 +613,7 @@ The two outputs are identical line for line.
 - [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md): exponential waits between changes of state, with a rate matrix in place of one rate.
 - [Renewal processes](06-renewal-processes-in-outline.md): independent gaps of any law, such as the evenly spread gaps above.
 - [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md): independent, stationary increments in general, built from Poisson jumps and Brownian motion.
-- Queues: Poisson arrivals meeting a server.
+- [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md): Poisson arrivals meeting a server.
 
 This card fixes how many calls a window holds; where inside the window they sit is what the arrival-times card answers.
 

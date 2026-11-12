@@ -389,7 +389,7 @@ The two outputs match line for line.
 
 - [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md): the count as a ceiling on a flat drawing's lines, and the two networks that break it.
 - [Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md): the same count on solids, where Euler found it.
-- The graph Laplacian: dots and lines as a matrix, for large drawings.
+- [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): dots and lines as a matrix, for large drawings.
 - Euler characteristic: the same count elsewhere, where the 2 names the surface.
 - Cycle double cover: the six faces here cover each of the 12 tracks twice; whether cycles can do that without a flat drawing is open.
 

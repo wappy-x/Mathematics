@@ -709,7 +709,7 @@ The two outputs match line for line.
 - [Fisher information](07-fisher-information-and-cramer-rao.md): the lowest variance any unbiased rule can reach.
 - [Regularisation](../09-Regression/06-ridge-and-lasso.md): shrinking many regression coefficients at once.
 - [Estimation error](../../12-Financial%20mathematics/37-Portfolio%20Theory/07-estimation-error-and-shrinkage.md): the same pull applied to noisy return and risk estimates.
-- Loss and empirical risk: squared error as one loss among several, averaged over data.
+- [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md): squared error as one loss among several, averaged over data.
 - Wavelet denoising: shrinking coefficients to strip noise from a signal.
 
 The shrunk rule beat the average by accepting bias; among rules that refuse any bias, how small can the variance be made? The next card, [Fisher information](07-fisher-information-and-cramer-rao.md), sets that floor.

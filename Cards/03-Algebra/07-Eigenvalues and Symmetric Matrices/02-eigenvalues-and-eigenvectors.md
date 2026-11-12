@@ -407,8 +407,8 @@ ALL CHECKS PASS
 - [Vibration modes](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md): vibration modes.
 - [The quantum oscillator](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/04-quantum-harmonic-oscillator.md): allowed energies.
 - [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): measured values.
-- PageRank by power iteration: road two at scale.
-- The graph Laplacian: network cuts.
+- [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): road two at scale.
+- [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): network cuts.
 - Every root at once: the trick reversed.
 - Eigenvalues by iteration: no quadratic.
 - Spectrum: infinite dimensions.

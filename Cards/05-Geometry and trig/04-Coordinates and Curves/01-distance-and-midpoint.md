@@ -373,7 +373,7 @@ The two outputs match line for line.
 - [Lines](02-lines-slopes-and-intersections.md): the line through A and B as an equation, and the perpendicular bisector.
 - [Polar coordinates](03-polar-coordinates.md): a point named by its distance from the origin and a direction.
 - [Circles and parabolas](04-circles-and-parabolas.md): a circle is this formula set equal to one number.
-- k-means: distance and averaging over many points, to find groups.
+- [k-means](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/06-k-means-and-clustering.md): distance and averaging over many points, to find groups.
 - The unit-distance problem: how many pairs among many points can sit exactly one unit apart, still open.
 
 This card measures between two fixed points; describing every point on a given line or at a given distance needs an equation, which starts with [Lines](02-lines-slopes-and-intersections.md).

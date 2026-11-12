@@ -374,7 +374,7 @@ The two outputs match line for line.
 - [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): least risk, set return.
 - [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): selling a fixed block at least cost.
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the multiplier as a force.
-- Support vector machines: multipliers pick support points.
+- [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): multipliers pick support points.
 - The slope transform: prices as a transform.
 - Minimax: solve for the prices first.
 - Regular value theorem: a regular rule cuts a smooth surface.

@@ -663,8 +663,8 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): Markov chains in general, with Kac's return-time rule proved.
-- Centrality: PageRank at web scale, and other ways to rank the dots of a network.
-- Expanders: sparse networks whose spectral gap stays large, so walks on them mix in a few steps.
+- [Centrality](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/01-centrality-and-pagerank.md): PageRank at web scale, and other ways to rank the dots of a network.
+- [Expanders](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/07-expanders-and-mixing.md): sparse networks whose spectral gap stays large, so walks on them mix in a few steps.
 
 The six-page site mixes in 4 clicks, but nothing here says how the mixing time grows as a network grows; which networks keep it small is the question Expanders answers.
 

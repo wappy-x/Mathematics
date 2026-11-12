@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" font-family="Helvetica, Arial, sans-serif">
+<title>Bakery fit-out drawn to scale: nine jobs at their earliest starts over 22 working days; critical jobs filled, float shown dashed</title>
+<rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<text x="180" y="16" font-size="13" text-anchor="middle" fill="#1d1d1d">Earliest starts, in working days</text>
+<line x1="40" y1="24" x2="40" y2="206" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.35"/>
+<line x1="105" y1="24" x2="105" y2="206" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.35"/>
+<line x1="170" y1="24" x2="170" y2="206" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.35"/>
+<line x1="235" y1="24" x2="235" y2="206" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.35"/>
+<line x1="300" y1="24" x2="300" y2="206" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.35"/>
+<line x1="326" y1="24" x2="326" y2="206" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.35"/>
+<text x="30" y="39" font-size="13" text-anchor="end" fill="#1d1d1d">A</text>
+<rect x="40" y="27" width="39" height="14" fill="#264653" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="59" font-size="13" text-anchor="end" fill="#1d1d1d">B</text>
+<rect x="79" y="47" width="52" height="14" fill="#264653" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="79" font-size="13" text-anchor="end" fill="#1d1d1d">C</text>
+<rect x="79" y="67" width="65" height="14" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="144" y1="74" x2="170" y2="74" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="170" y1="69" x2="170" y2="79" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="99" font-size="13" text-anchor="end" fill="#1d1d1d">D</text>
+<rect x="131" y="87" width="39" height="14" fill="#264653" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="119" font-size="13" text-anchor="end" fill="#1d1d1d">E</text>
+<rect x="170" y="107" width="78" height="14" fill="#264653" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="139" font-size="13" text-anchor="end" fill="#1d1d1d">F</text>
+<rect x="170" y="127" width="65" height="14" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="159" font-size="13" text-anchor="end" fill="#1d1d1d">G</text>
+<rect x="235" y="147" width="39" height="14" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="274" y1="154" x2="300" y2="154" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="300" y1="149" x2="300" y2="159" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="179" font-size="13" text-anchor="end" fill="#1d1d1d">H</text>
+<rect x="248" y="167" width="52" height="14" fill="#264653" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="199" font-size="13" text-anchor="end" fill="#1d1d1d">I</text>
+<rect x="300" y="187" width="26" height="14" fill="#264653" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="208" x2="326" y2="208" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="208" x2="40" y2="213" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="40" y="227" font-size="13" text-anchor="middle" fill="#1d1d1d">0</text>
+<line x1="105" y1="208" x2="105" y2="213" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="105" y="227" font-size="13" text-anchor="middle" fill="#1d1d1d">5</text>
+<line x1="170" y1="208" x2="170" y2="213" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="170" y="227" font-size="13" text-anchor="middle" fill="#1d1d1d">10</text>
+<line x1="235" y1="208" x2="235" y2="213" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="235" y="227" font-size="13" text-anchor="middle" fill="#1d1d1d">15</text>
+<line x1="300" y1="208" x2="300" y2="213" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="300" y="227" font-size="13" text-anchor="middle" fill="#1d1d1d">20</text>
+<line x1="326" y1="208" x2="326" y2="213" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="326" y="227" font-size="13" text-anchor="middle" fill="#1d1d1d">22</text>
+</svg>

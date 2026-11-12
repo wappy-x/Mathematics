@@ -668,7 +668,7 @@ The two outputs are identical line for line. The simulated 1 percent point, −2
 - [Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the same inversion under currency-desk conventions, where some deltas need a search like Step 4.
 - [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): quantiles of a loan book's loss, built from $\Phi^{-1}$ of default probabilities.
 - [Expected exposure over time](../../12-Financial%20mathematics/46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): potential future exposure, a high quantile of what a counterparty could owe.
-- Stock: the order quantity as a quantile of demand.
+- [Stock](../../14-Applied%20and%20computational/05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md): the order quantity as a quantile of demand.
 
 This card sets a cutoff when the bell curve is taken as given; the value-at-risk card asks what happens beyond the cutoff, where the bell curve is least trustworthy.
 

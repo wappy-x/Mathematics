@@ -393,7 +393,7 @@ The two outputs match line for line.
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): biggest factors summarise data.
 - [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): real measured factors.
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): that summary, applied.
-- The graph Laplacian: where to cut a network.
+- [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): where to cut a network.
 - Semidefinite programs: non-negative factors, optimised.
 - Iterating instead of factoring: factors set solver speed.
 - Adjoints: Step 0 as a definition.
