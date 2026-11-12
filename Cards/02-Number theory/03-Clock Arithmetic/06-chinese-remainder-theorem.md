@@ -235,9 +235,6 @@ Lean proves the card's three facts for any number of rotas, not just 3, 5 and 7.
 
 Running the code and printing its output line by line is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 125 lines</summary>
-
 ```lean
 -- The Chinese remainder theorem: when no two cycle lengths share a factor, every set of day numbers is read on exactly one day of the combined cycle, two days read the same exactly when they differ by whole combined cycles, and folding two cycles with an inverse builds that day.
 import Mathlib.Data.Nat.ChineseRemainder
@@ -365,8 +362,6 @@ example : (List.range 105).filter (fun d => d % 3 = 2 ∧ d % 5 = 3 ∧ d % 7 = 
 #print axioms same_readings_iff_differ_by_combined_cycles
 #print axioms fold_two_rotas_with_an_inverse
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

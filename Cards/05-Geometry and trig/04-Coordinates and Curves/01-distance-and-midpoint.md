@@ -345,9 +345,6 @@ Lean proves the card's facts for any two points: in the plane, in space, or with
 
 The decimal roots, such as 5.8309518948 km, and the search along the segment are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 109 lines</summary>
-
 ```lean
 -- Distance and midpoint: on axes at right angles with one unit on every axis, the distance between two points is the square root of the summed squared coordinate moves, and the midpoint, found by averaging coordinates on any straight axes, is the one point on the segment equally far from both ends.
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -459,8 +456,6 @@ example : ((9 : ℤ) - 3) ^ 2 + ((12 : ℤ) - 4) ^ 2 = 10 ^ 2 := by decide
 #print axioms midpoint_coordinates_are_averages
 #print axioms midpoint_is_halfway_and_unique
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

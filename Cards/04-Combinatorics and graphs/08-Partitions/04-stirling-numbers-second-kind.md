@@ -354,9 +354,6 @@ Lean proves these for every n and k, by counting the splits themselves, not just
 
 Listing the 52 splits one by one and printing the triangle are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 337 lines</summary>
-
 ```lean
 -- Stirling numbers of the second kind: the number of splits of n named items into exactly k unnamed non-empty groups obeys S(n, k) = k S(n−1, k) + S(n−1, k−1), named groups multiply it by k!, and it matches Mathlib's Stirling table, with the card's five-tool numbers checked.
 import Mathlib.Combinatorics.Enumerative.Stirling
@@ -696,8 +693,6 @@ example : Nat.choose 5 3 = 10 ∧ Nat.choose 5 3 = Nat.stirlingSecond 5 4 := by 
 #print axioms card_surjective_eq_factorial_mul_stirling_second
 #print axioms card_finpartition_eq_stirlingSecond
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

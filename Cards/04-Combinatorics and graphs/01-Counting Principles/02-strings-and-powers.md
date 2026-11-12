@@ -347,9 +347,6 @@ Lean proves all three counts for any number of options and positions, and checks
 
 Building every string one at a time and counting the list is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 80 lines</summary>
-
 ```lean
 -- Strings with repetition: the strings of length k over n options number n^k, the functions from a k-member set into an n-member set number n^k, and the subsets of an n-member set number 2^n.
 import Mathlib.Data.Fintype.BigOperators
@@ -432,8 +429,6 @@ example : (36 : ℕ) ^ 6 = 2176782336 ∧ (36 : ℕ) ^ 6 ≠ 26 ^ 3 * 10 ^ 3 := 
 #print axioms card_functions_eq_pow
 #print axioms card_subsets_eq_two_pow
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

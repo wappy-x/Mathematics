@@ -237,9 +237,6 @@ Lean proves the rule and its two side facts for every positive whole number, not
 
 Lean also checks the worked numbers for 96, 360 and 100; the printed output and the slow road are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 154 lines</summary>
-
 ```lean
 -- Counting divisors: for every positive whole number n, the number of positive divisors of n is the product, over the primes in n's factorisation, of one more than how many times that prime appears; the count is odd exactly when n is a square, and otherwise the rectangle shapes are half the divisors.
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
@@ -396,8 +393,6 @@ example : #(Nat.divisors 97) = 2 := by decide
 #print axioms card_divisors_odd_iff_is_square
 #print axioms shapes_are_half_the_divisors_when_not_square
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

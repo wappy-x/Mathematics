@@ -358,9 +358,6 @@ Lean proves that the power, the exponential and the Cayley map are each one-to-o
 
 The decimals, the grid counts, the agreement of the two roads, the three mistakes and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 193 lines</summary>
-
 ```lean
 -- The standard maps: the power z ^ (π / α) opens a wedge of angle α onto the upper half plane, the exponential lays the band of heights 0 to π onto it with the principal log as inverse, and the Cayley map (w - i) / (w + i) carries it onto the unit disc, each one-to-one and onto.
 import Mathlib.Analysis.SpecialFunctions.Pow.Complex
@@ -556,8 +553,6 @@ example : (2 * exp (↑(Real.pi / 8) * I)) ^ 4 = 16 * I := by
 #print axioms exp_lays_corridor_onto_upper_half_plane
 #print axioms cayley_maps_upper_half_plane_onto_disc
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

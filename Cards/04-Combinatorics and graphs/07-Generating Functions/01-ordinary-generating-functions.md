@@ -334,9 +334,6 @@ Lean proves the card's three facts about series for every size $n$ and every pai
 
 The other three mistakes, and the cut-off ones leaving −1 at the top, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 62 lines</summary>
-
 ```lean
 -- Generating functions: multiplying two formal power series convolves their coefficient lists, the series of all 1s is the one inverse of 1 - x, and squaring it counts n + 1 splits.
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -401,8 +398,6 @@ example : ∑ k ∈ Finset.range 8, (if k ≤ 5 then 1 else 0) * (if 7 - k ≤ 5
 #print axioms one_sub_X_mul_ones_eq_one_and_unique
 #print axioms coeff_ones_sq
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

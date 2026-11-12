@@ -372,9 +372,6 @@ Lean proves the disc, washer and shell rules for every continuous radius or leng
 
 The decimals, the slice totals, the 150 ml search, the mistake values and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 266 lines</summary>
-
 ```lean
 -- Volumes: a solid made by spinning a flat region round an axis has volume equal to the disc integral of pi r squared along the axis, the washer integral of pi (R squared minus r squared), and the shell integral of 2 pi rho times the tube length, and the wine glass bowl holds 100 pi.
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
@@ -643,8 +640,6 @@ example : π * 5 ^ 2 * 4 = π * 10 ^ 2 := by ring
 #print axioms volume_washer_solid_eq_integral
 #print axioms volume_solid_of_revolution_eq_shell_integral
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

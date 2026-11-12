@@ -379,9 +379,6 @@ Lean proves the tour count and both ends of the bracket for any number of towns,
 
 The Python and Rust checks are left to show greed's choices, the six restarts, the set-by-set records, and that this tree is the cheapest.
 
-<details>
-<summary>The Lean proof, 568 lines</summary>
-
 ```lean
 -- The travelling salesman: n towns with a direct two-way road between every pair hold exactly (n - 1)!/2 different rounds, the cheapest connecting tree costs no more than any round and, when no detour beats the direct road, some round costs at most twice the tree, and the card's six-town chart gives 60 rounds, the best at 148 miles, the worst at 267, greed at 160 and the tree at 105.
 import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
@@ -952,8 +949,6 @@ example : 5 * 2 ^ 4 = 80 ∧ 19 * 2 ^ 18 = 4980736 := by norm_num
 #print axioms cheapest_tree_at_most_any_tour
 #print axioms some_tour_at_most_twice_any_tree
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

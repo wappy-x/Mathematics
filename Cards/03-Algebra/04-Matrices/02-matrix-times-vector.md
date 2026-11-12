@@ -330,9 +330,6 @@ Lean proves the card's three general facts for every table size and any plain-nu
 
 Printing the takings, and refusing three prices with a message, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 75 lines</summary>
-
 ```lean
 -- Matrix times vector: for every table of m rows and n columns and every list of n weights, mixing the columns with those weights gives the same list as running each row along the weights, that list is Mathlib's matrix-times-vector product, it always lands in the span of the columns, and the card's cafe numbers come out as it says.
 import Mathlib.Data.Matrix.Mul
@@ -410,8 +407,6 @@ example : (!![2, 1; 1, 1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![4, 3] = ![11, 7] 
 #print axioms matrix_times_vector_is_the_column_mix
 #print axioms matrix_times_vector_lands_in_the_column_span
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

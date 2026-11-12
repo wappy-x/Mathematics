@@ -346,9 +346,6 @@ Lean proves the card's three steps, for every number of merges and every allowed
 
 Choosing the minus root, the decimals at x = 0.1 and the listing of merge orders are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 111 lines</summary>
-
 ```lean
 -- The Catalan generating function: the series whose coefficient of x^n counts merge plans with n merges satisfies C = 1 + x C^2, iterating that equation from C = 1 settles one more coefficient each round, and over the reals the quadratic x C^2 - C + 1 = 0 has exactly the two roots (1 ± sqrt(1 - 4x))/(2x), the minus root being 2/(1 + sqrt(1 - 4x)).
 import Mathlib.Combinatorics.Enumerative.Catalan.Tree
@@ -462,8 +459,6 @@ example : Nat.factorial 5 = 120 := by decide
 #print axioms iterate_settles_catalan_coeff
 #print axioms catalan_quadratic_roots
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

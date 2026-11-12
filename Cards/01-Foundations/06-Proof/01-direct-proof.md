@@ -240,9 +240,6 @@ Lean proves the card's theorem for every pair of whole numbers, and counts the 8
 
 Taking pairs off one by one and tallying the board square by square are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 49 lines</summary>
-
 ```lean
 -- Direct proof: two even whole numbers always add to an even number, and an 8 by 8 chessboard has 32 black and 32 white squares.
 import Mathlib.Algebra.Group.Nat.Even
@@ -294,8 +291,6 @@ example : 8 * 4 = (32 : ℕ) ∧ 4 * 4 = (16 : ℕ) ∧ 32 + 32 = (64 : ℕ) := 
 #print axioms chessboard_black_squares
 #print axioms chessboard_white_squares
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

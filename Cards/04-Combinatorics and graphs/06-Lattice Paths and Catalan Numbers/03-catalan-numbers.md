@@ -380,9 +380,6 @@ Lean proves all three formulas for the safe queues, for every number of pairs n,
 
 Listing all 252 orders, and testing the swap on each of the 210 stranded ones, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 69 lines</summary>
-
 ```lean
 -- Catalan numbers: the paths of n up-steps and n down-steps that never dip below the start number C(2n, n)/(n + 1), which also equals C(2n, n) - C(2n, n + 1) and obeys the first-return recurrence.
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -454,8 +451,6 @@ example : 42 * Nat.factorial 5 * Nat.factorial 5 = 604800 := by decide
 #print axioms card_never_dip_paths_eq_choose_sub_choose
 #print axioms card_never_dip_paths_first_return
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

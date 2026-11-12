@@ -360,9 +360,6 @@ Lean proves Taylor's theorem and the error bound for every f, n, anchor and targ
 
 The true e^0.1, $\xi$ = 0.020134, the ratios near 16, five terms and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 99 lines</summary>
-
 ```lean
 -- Taylor's theorem: a function equals its degree-n Taylor polynomial plus a next term with the next derivative read strictly between anchor and target, so a ceiling on that derivative bounds the error, and four terms trap e^(1/10) in the card's window.
 import Mathlib.Analysis.Calculus.Taylor
@@ -464,8 +461,6 @@ example : 2 * (1/10 : ℚ) / (1/10) ^ 2 = 20 := by norm_num
 #print axioms taylor_remainder_bound
 #print axioms exp_one_tenth_window
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

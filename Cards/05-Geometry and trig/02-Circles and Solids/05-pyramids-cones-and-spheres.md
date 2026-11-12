@@ -353,9 +353,6 @@ Lean proves the one-third rule for every base shape and tip, the ball's volume f
 
 The wall's $\pi r \ell$ and the skin's $4\pi r^2$ in general, and the slabs, polygons and bands, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 199 lines</summary>
-
 ```lean
 -- Pyramids, cones and spheres: a pyramid or cone of any base holds one third of base area times height, a ball of radius r holds four thirds of pi r cubed, and three equal pyramids with one shared tip fill a cube.
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
@@ -557,8 +554,6 @@ example : 4 / 3 * Real.pi * 2 ^ 3 = 8 * (4 / 3 * Real.pi * 1 ^ 3) := by ring
 #print axioms ball_volume_eq_four_thirds_pi_r_cubed
 #print axioms three_pyramids_fill_cube
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

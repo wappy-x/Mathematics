@@ -236,9 +236,6 @@ Lean proves that the integers and the fractions each fit in one queue, and that 
 
 The card's own diagonal walk is checked only by Python and Rust, over its first 60 rooms.
 
-<details>
-<summary>The Lean proof, 93 lines</summary>
-
 ```lean
 -- Countable sets: the integers and the fractions each pair off exactly with the counting numbers, a set fits in one queue exactly when it is finite or pairs off with the counting numbers, the card's bounce-out-from-zero rule gives every integer exactly one room, and the card's room numbers for integers and fractions come out as it says.
 import Mathlib.Data.Rat.Denumerable
@@ -334,8 +331,6 @@ example : (fractionQueue 4).tail[1]? = some (1, 2) ∧ (fractionQueue 4).tail[2]
 #print axioms countable_iff_finite_or_pairs_with_counting_numbers
 #print axioms every_integer_gets_exactly_one_room
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

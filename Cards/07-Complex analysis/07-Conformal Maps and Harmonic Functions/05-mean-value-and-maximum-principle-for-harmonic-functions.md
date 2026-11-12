@@ -352,9 +352,6 @@ Lean proves all three results for every harmonic function on every region they c
 
 The circle averages, Cauchy's loop sum, the grid films and the three mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 123 lines</summary>
-
 ```lean
 -- Mean value and maximum principle: a harmonic function on a plane region equals its average round any circle whose closed disk fits in the region, and on a bounded region with continuous boundary values it stays between its lowest and highest boundary values, so the boundary values fix it.
 import Mathlib.Analysis.Complex.Harmonic.MeanValue
@@ -480,8 +477,6 @@ example : ((2 : ℤ) - 3) + (-2 - 3) = -6 := by norm_num
 #print axioms harmonic_between_boundary_min_and_max
 #print axioms harmonic_eq_of_eq_on_boundary
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

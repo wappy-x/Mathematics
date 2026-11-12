@@ -241,9 +241,6 @@ Lean proves the general facts for every clock size and every whole number, not j
 
 The long division of 1/n, and its repeat matching the order of 10, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 120 lines</summary>
-
 ```lean
 -- The order of a number and primitive roots: for a number sharing no factor above 1 with the clock size n, its powers return to 1 exactly at the multiples of its order, that order divides phi(n), an order equal to phi(n) makes the powers reach every remainder sharing no factor with n, and a shared factor stops the powers from ever reaching 1.
 import Mathlib.FieldTheory.Finite.Basic
@@ -366,8 +363,6 @@ example : 10 % 3 = 1 ∧ 3 * 3 = 9 := by decide
 #print axioms powers_return_to_one_exactly_at_multiples_of_order
 #print axioms shared_factor_never_reaches_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

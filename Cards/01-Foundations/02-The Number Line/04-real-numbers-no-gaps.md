@@ -244,9 +244,6 @@ Lean proves the promise for every collection of real numbers, and both dart clai
 
 The tape's squares, such as 1.4143 × 1.4143, are checked in Lean too; halving the bracket forty times is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 120 lines</summary>
-
 ```lean
 -- The real numbers have no gaps: every collection of real numbers with a member and a ceiling has a lowest ceiling that is a real number, for the numbers whose square is under 2 that lowest ceiling is root 2, and among the fractions the same collection has no lowest ceiling at all.
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
@@ -369,8 +366,6 @@ example : (14142 * 14142 : ℕ) < 2 * 10 ^ 8 := by norm_num
 #print axioms sqrt_two_is_lowest_ceiling
 #print axioms fractions_have_no_lowest_ceiling
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

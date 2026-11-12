@@ -388,9 +388,6 @@ Lean proves gamma's main facts for every complex input off the poles, and the ca
 
 Decimals, Gauss's product, the other ball volumes, the integral at −1/2, the period-1 multiplier and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 215 lines</summary>
-
 ```lean
 -- The gamma function: Euler's integral, continued by its recurrence, is holomorphic off 0, -1, -2, ... with simple poles of residue (-1)^n/n! there, and satisfies Γ(z+1) = zΓ(z), Γ(n+1) = n!, Γ(1/2) = √π and the reflection formula.
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
@@ -608,8 +605,6 @@ example : ((-1 : ℚ) ^ 0 / (0 ! : ℚ), (-1 : ℚ) ^ 1 / (1 ! : ℚ), (-1 : ℚ
 #print axioms gamma_recurrence_factorial_and_half
 #print axioms gamma_reflection_and_no_zeros
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

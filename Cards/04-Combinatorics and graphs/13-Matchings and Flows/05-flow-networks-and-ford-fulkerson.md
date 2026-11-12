@@ -385,9 +385,6 @@ Lean proves Steps 1 and 2 and the integrality theorem for every network with fin
 
 Running the method push by push, and counting the pushes until it stops, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 414 lines</summary>
-
 ```lean
 -- Flows: pushing any amount up to the smallest leftover along a source-to-sink route keeps a flow legal and raises its value by that amount, no flow beats any cut, and whole-number capacities always have a best flow in whole loads whose value equals a cut's price.
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
@@ -804,8 +801,6 @@ example : ∀ q : Fin 4 × Fin 4 × Fin 4 × Fin 4 × Fin 2,
 
 end FordFulkerson
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

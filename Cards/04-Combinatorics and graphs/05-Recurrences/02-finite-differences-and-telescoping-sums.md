@@ -366,9 +366,6 @@ Lean proves the card's three sums for every length n, not just ten rows or 99 fr
 
 Printing the output line by line is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 76 lines</summary>
-
 ```lean
 -- Finite differences: a sum of the jumps a(k+1) − a(k) for k from 1 to n collapses to a(n+1) − a(1), which gives 1 + 2 + ⋯ + n = n(n+1)/2 and 1/(1·2) + ⋯ + 1/(n(n+1)) = 1 − 1/(n+1).
 import Mathlib.Algebra.BigOperators.Intervals
@@ -447,8 +444,6 @@ example : 5 ^ 2 = 25 ∧ ∑ k ∈ Icc 1 9, k = 45 := by decide
 #print axioms sum_one_to_n_eq_half_n_mul_succ
 #print axioms sum_one_div_k_mul_succ_telescopes
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -245,9 +245,6 @@ Lean proves the doubling facts for every positive rate and every starting amount
 
 The decimal answers from logs, such as 9.006, 14.207 and 8.664, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 90 lines</summary>
-
 ```lean
 -- Natural log and doubling time: money growing at a steady yearly rate r, interest left in and paid once a year, doubles exactly at ln 2 / ln (1 + r) years, that time is always longer than ln 2 / r, and with continuous compounding it is exactly ln 2 / r.
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -340,8 +337,6 @@ example : (41577 / 200 : ℚ) ≤ 100 * (21 / 20) ^ 15 ∧ (100 : ℚ) * (21 / 2
 #print axioms doubling_time_above_log_two_div_rate
 #print axioms continuous_doubling_time_eq_log_two_div_rate
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

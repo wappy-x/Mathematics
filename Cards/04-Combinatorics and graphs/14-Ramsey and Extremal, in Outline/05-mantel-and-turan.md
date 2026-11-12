@@ -384,9 +384,6 @@ Lean proves both theorems, and when each cap is reached, for every network of pl
 
 The star, the search through every network on up to six servers, and the decimal shares are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 185 lines</summary>
-
 ```lean
 -- Mantel and Turan: a simple graph on n vertices with no triangle has at most n^2/4 edges (rounded down), with equality exactly for two groups as equal as possible fully cross-linked, and with no r + 1 vertices all linked it has at most the edges of the Turan graph T(n, r), with equality exactly for T(n, r).
 import Mathlib.Combinatorics.SimpleGraph.Extremal.Turan
@@ -574,8 +571,6 @@ example : [2, 4, 6, 8, 10].map (fun n => n ^ 2 / 4) = [1, 4, 9, 16, 25] := by de
 #print axioms turan_clique_free_edges_le_turanGraph
 #print axioms turanGraph_clique_free_and_edges_le
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

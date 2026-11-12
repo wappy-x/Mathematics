@@ -370,9 +370,6 @@ Lean proves the method's theorem and the split for any fixed weights and startin
 
 The decimal values of phi, psi, A and B, the listed 12-beat patterns, and mistake 1 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 97 lines</summary>
-
 ```lean
 -- Solving a recurrence with a generating function: a sequence that obeys a fixed-weight two-step rule has as its series one polynomial over another, with bottom 1 minus each weight on its power of x and top built from the two starting values; when the bottom factors into two different brackets the split gives a closed formula for every term, and the Fibonacci series is x / (1 - x - x^2).
 import Mathlib.RingTheory.PowerSeries.Inverse
@@ -472,8 +469,6 @@ example : 2 * 2 ^ 4 = 32 ∧ 2 ^ 4 + 3 ^ 4 = 97 := by decide
 #print axioms split_gives_closed_formula
 #print axioms fibonacci_series_eq_x_over_one_sub_x_sub_x_sq
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

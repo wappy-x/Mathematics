@@ -370,9 +370,6 @@ Lean proves the 2 by 2 formula, the inverse test and the one-inverse rule, for a
 
 Lean also redoes the card's exact sums; the Gauss-Jordan runs and the decimal arithmetic are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 127 lines</summary>
-
 ```lean
 -- The inverse matrix: the 2 by 2 swap-flip-divide formula gives a matrix that undoes A from both sides whenever ps - qr is not zero, a square matrix over a field has an inverse exactly when its determinant is not zero (equivalently its columns are independent, equivalently only the zero vector goes to zero), and an inverse is unique.
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -502,8 +499,6 @@ example : (2 : ZMod 4) ≠ 0 ∧ ∀ x : ZMod 4, 2 * x ≠ 1 := by decide
 #print axioms inverse_exists_iff_det_ne_zero
 #print axioms inverse_matrix_is_unique
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

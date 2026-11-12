@@ -251,9 +251,6 @@ Lean proves the formula and both comparisons for any starting amount and yearly 
 
 The chart's other years, the interest earned in years 3 and 10, and the year-by-year decimal balance are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 100 lines</summary>
-
 ```lean
 -- Compound interest: a balance that earns the same rate once a year with the interest left in is the start times the growth factor raised to the number of years, it beats the same rate taken out from the second year on by a gap that keeps widening, and the card's account comes out at the cents it says.
 import Mathlib.Data.Real.Basic
@@ -356,8 +353,6 @@ example : 10000 * 105 / 100 * 95 / 100 = 9975 := by norm_num    -- 5% up then 5%
 #print axioms compound_beats_simple_from_year_two
 #print axioms compound_gap_keeps_widening
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

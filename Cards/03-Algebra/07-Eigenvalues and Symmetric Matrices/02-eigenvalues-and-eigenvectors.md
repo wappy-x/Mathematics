@@ -369,9 +369,6 @@ Lean proves the card's three claims for every real matrix of the stated size, no
 
 Lean also checks the fleet's numbers exactly; only the decimals and the sixty-one-month run are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 127 lines</summary>
-
 ```lean
 -- Eigenvalues and eigenvectors: a number is an eigenvalue of a 2 by 2 real matrix [[a, b], [c, d]] exactly when it solves the quadratic lambda^2 - (a + d) lambda + (ad - bc) = 0, at every size a number is an eigenvalue exactly when det (A - lambda I) = 0, and when the discriminant is not negative the two roots of the quadratic are eigenvalues that add to the trace and multiply to the determinant; the card's rental-fleet numbers are checked exactly.
 import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
@@ -501,8 +498,6 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 #print axioms eigenvalue_iff_det_shift_eq_zero
 #print axioms quadratic_roots_are_eigenvalues_summing_to_trace_and_multiplying_to_det
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

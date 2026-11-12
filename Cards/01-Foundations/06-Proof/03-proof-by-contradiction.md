@@ -223,9 +223,6 @@ Lean proves this card's three claims in every case: any 31 dominoes, any domino,
 
 Lean also confirms the counts on this card; the Python and Rust checks print them and let you change the board.
 
-<details>
-<summary>The Lean proof, 163 lines</summary>
-
 ```lean
 -- Proof by contradiction: 31 dominoes cannot cover a chessboard with two opposite corners cut off, because every domino covers one dark square and one light, and no fraction squares to 2.
 import Mathlib.Data.Finset.Prod
@@ -391,8 +388,6 @@ example : (99 : ℤ) * 99 = 9801 ∧ (2 : ℤ) * (70 * 70) = 9800 ∧ (9801 : �
 #print axioms domino_covers_one_dark_one_light
 #print axioms no_fraction_squares_to_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

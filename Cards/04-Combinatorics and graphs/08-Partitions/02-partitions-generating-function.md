@@ -352,9 +352,6 @@ Lean proves both product formulas for every total n, and checks the eight-marble
 
 The count p(50) = 204,226, the general pentagonal recurrence and the all-plus 46 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 201 lines</summary>
-
 ```lean
 -- Euler's product: multiplying one geometric bracket 1/(1 - x^k) for every part size k gives the power series whose coefficient of x^n is the number of partitions of n, and the product of the brackets 1 + x^k equals the product of 1/(1 - x^k) over odd k, so partitions into distinct parts and into odd parts are equally many for every n.
 import Mathlib.Combinatorics.Enumerative.Partition.GenFun
@@ -558,8 +555,6 @@ example : Fintype.card (Composition 8) = 128 := by simp [composition_card]
 #print axioms coeff_finite_euler_product_eq_card_partition
 #print axioms distinct_parts_product_eq_odd_parts_product
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

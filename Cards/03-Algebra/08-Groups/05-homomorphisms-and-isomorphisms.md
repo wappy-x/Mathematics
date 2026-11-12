@@ -354,9 +354,6 @@ Lean proves the card's three facts for any two groups, finite or infinite, and a
 
 Lean also checks the clock and tile counts, such as 576 pairs and 16 cells; the printed output is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 121 lines</summary>
-
 ```lean
 -- Homomorphisms and isomorphisms: a map between groups that respects the operation is one-to-one exactly when only the identity lands on the identity, it always sends the identity to the identity and inverses to inverses with its kernel a subgroup, and when it is also one-to-one and onto its undo respects the operation too.
 import Mathlib.Algebra.Group.Subgroup.Defs
@@ -480,8 +477,6 @@ example : [1, 3, 5, 7].map (fun u => (List.range' 1 8).find? (fun n => u ^ n % 8
 #print axioms identity_and_inverses_come_free_and_kernel_is_a_subgroup
 #print axioms inverse_of_an_isomorphism_respects_the_operation
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

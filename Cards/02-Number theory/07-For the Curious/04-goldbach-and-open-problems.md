@@ -245,9 +245,6 @@ Lean does not prove Goldbach; it proves the facts around it for every number, an
 
 The sieve, trial division and their agreement are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 70 lines</summary>
-
 ```lean
 -- Goldbach, twin primes and friends: one even number from 4 up with no pair of primes would disprove Goldbach's claim, two primes always add to at least 4, an odd total needs 2 as one of its primes, and the card's pair counts for 4, 98, 100, 102, 11 and 2 are exact.
 import Mathlib.Data.Nat.Prime.Basic
@@ -320,8 +317,6 @@ example : 101 + 2 = 103 := by decide
 #print axioms two_primes_sum_at_least_four
 #print axioms odd_sum_of_two_primes_uses_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

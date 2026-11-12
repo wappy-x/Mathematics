@@ -367,9 +367,6 @@ Lean proves the Poisson formula for every harmonic u on the unit disc, the weigh
 
 The half-plane integral, the decimals, the kernel sums, the pressed drum, the chart and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 305 lines</summary>
-
 ```lean
 -- The Poisson formula: a harmonic function on the unit disc that is continuous up to the rim equals the Poisson-kernel weighted average of its rim values, the weights are positive and total 1, and the same average builds a harmonic function from any continuous rim.
 import Mathlib.Analysis.Complex.Harmonic.Poisson
@@ -677,8 +674,6 @@ example : (3 * I - I) / (3 * I + I) = (1 / 2 : ℂ) := by
 #print axioms poisson_kernel_pos_and_total_one
 #print axioms poisson_integral_solves_dirichlet
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

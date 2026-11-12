@@ -357,9 +357,6 @@ Lean proves the card's rules for every complex number, and the division rule for
 
 The decimals, the longest shadow, the two-equation road and the mistakes table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 101 lines</summary>
-
 ```lean
 -- Conjugate and modulus: a complex number times its conjugate is its squared length, which gives the modulus, division by a nonzero number, and the product and triangle rules for lengths.
 import Mathlib.Analysis.Complex.Norm
@@ -463,8 +460,6 @@ example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
 #print axioms div_eq_mul_conj_div_sq_modulus
 #print axioms modulus_mul_and_triangle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -353,9 +353,6 @@ Lean proves three facts for every size n: n pairs, n forks, n + 2 corners, 2n se
 
 The Python and Rust checks cover the rest: the tree and polygon recipes running both ways, the words that cancel away, and the four mistakes.
 
-<details>
-<summary>The Lean proof, 1032 lines</summary>
-
 ```lean
 -- Catalan everywhere: for every n, never-dipping bracket words, plane binary trees, triangulations of a convex (n + 2)-gon and non-crossing handshakes among 2n seats all number Cat(n), with the base-triangle split and the handshake-to-word recipe proved too.
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -1390,8 +1387,6 @@ example : Nat.choose 12 6 / (6 + 1) = 132 := by decide
 
 end CatalanEverywhere
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

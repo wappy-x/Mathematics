@@ -361,9 +361,6 @@ Lean proves the combination rules for every real function, the jump at every who
 
 The simulated meter, the blanking meter, the window searches, the product recipe's decimals and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 91 lines</summary>
-
 ```lean
 -- Continuity: sums, products and chains of real functions continuous at a point stay continuous there, every polynomial is continuous, and the stepped taxi fare 3 + 2⌈d⌉ jumps from 3 + 2n to 5 + 2n at every whole kilometre n, so it is continuous from the left there but not continuous.
 import Mathlib.Topology.Algebra.Polynomial
@@ -457,8 +454,6 @@ example : 3 + 2 * ⌈(1 / 2 * 4 : ℚ)⌉ = 7 ∧ 3 + 2 * ⌈(1 / 2 * (4000001 /
 #print axioms stepped_fare_jumps_at_every_whole_km
 #print axioms every_polynomial_is_continuous
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

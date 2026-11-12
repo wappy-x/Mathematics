@@ -352,9 +352,6 @@ Lean proves the recurrence and the cycle-type count for any number of keys, then
 
 That every row adds to $n!$ is left to the Python and Rust checks, which confirm it for five keys.
 
-<details>
-<summary>The Lean proof, 293 lines</summary>
-
 ```lean
 -- Counting shuffles by their loops: the number of rearrangements of n labelled keys whose trace makes exactly k loops (a key left on its own hook counts as a loop of length 1) obeys c(n, k) = (n − 1) c(n − 1, k) + c(n − 1, k − 1) with c(1, 1) = 1, the rearrangements of one cycle type number n! divided by the product of j^(a_j) × a_j!, and the derangements are exactly those with no loop of length 1, with the card's five-key numbers checked.
 import Mathlib.GroupTheory.Perm.Cycle.Type
@@ -650,8 +647,6 @@ example : 3 * 6 + 11 = 29 ∧ Nat.stirlingSecond 5 3 = 25 := by decide
 #print axioms card_rehangs_of_cycle_type
 #print axioms derangement_iff_no_loop_of_length_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

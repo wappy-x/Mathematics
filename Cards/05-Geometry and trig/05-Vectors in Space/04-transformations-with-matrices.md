@@ -341,9 +341,6 @@ Lean proves the card's matrix rules for every angle, pivot, slide, scale factor 
 
 The six-place decimals, the second road by distance and angle, the 30-radians mistake and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 232 lines</summary>
-
 ```lean
 -- Moving shapes with matrices: with a third coordinate of 1 on every point, turns, mirrors, scalings and shifts are 3 by 3 matrices that chain by multiplication (first move on the right), a turn about any pivot keeps the pivot and every distance, and signed area is multiplied by the determinant, which is 1 for a turn, -1 for the mirror and k × k for a scaling.
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
@@ -578,8 +575,6 @@ example : (shiftM 3 1 * turnM (-(π / 6)) * shiftM (-3) (-1)) *ᵥ ![7, 1, 1] =
 #print axioms turn_about_pivot_keeps_pivot_and_distances
 #print axioms signed_area_scales_by_det_turn_keeps_mirror_flips_scale_squares
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

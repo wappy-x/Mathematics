@@ -369,9 +369,6 @@ Lean proves the theorem for every list of different numbers and every pair of ru
 
 The labels of Step 0, the walk back in Step 3 and the three mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 295 lines</summary>
-
 ```lean
 -- Erdos-Szekeres: any list of more than (r - 1)(s - 1) different real numbers has r terms that rise or s terms that fall, in list order with gaps allowed, the longest rise times the longest fall is at least the list's length, and (r - 1)(s - 1) numbers are not enough, with the card's Harlow Cement closes checked in whole cents.
 import Mathlib.Basic.Real.Basic
@@ -669,8 +666,6 @@ example : ∀ t : Finset (Fin 9), (∀ i ∈ t, ∀ j ∈ t, i < j → nineDays 
 #print axioms length_le_longest_rise_mul_longest_fall
 #print axioms exists_list_without_rising_or_falling_run
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

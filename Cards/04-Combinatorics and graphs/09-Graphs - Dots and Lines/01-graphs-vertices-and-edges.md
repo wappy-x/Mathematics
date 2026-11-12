@@ -379,9 +379,6 @@ Lean proves these facts for every graph with finitely many stations, one line at
 
 Lean checks the three maps' numbers; the adjacency list and the cube's 4 lines per direction are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 173 lines</summary>
-
 ```lean
 -- Graphs: a finite simple graph on n vertices has at most C(n, 2) = n(n - 1)/2 edges, the named families K(n), C(n), P(n) and K(m, k) have C(n, 2), n, n - 1 and m × k edges, and a renaming that matches two graphs keeps the vertex count, edge count, every vertex's degree and the triangle count, with the card's metro map, tourist leaflet and decoy checked.
 import Mathlib.Combinatorics.SimpleGraph.Finite
@@ -557,8 +554,6 @@ example : (ring.cliqueFinset 3).card = 0 ∧ (tourist.cliqueFinset 3).card = 0 �
 #print axioms named_family_edge_counts
 #print axioms iso_keeps_fingerprint
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

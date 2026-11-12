@@ -364,9 +364,6 @@ Lean proves the card's three general facts for every polynomial, and checks the 
 
 The chart's decimals and the step-by-step division printouts are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 71 lines</summary>
-
 ```lean
 -- Roots and factors: over any commutative ring, p(r) = 0 exactly when x - r divides p, and over numbers with no zero divisors a polynomial that is not zero has at most as many different roots as its degree.
 import Mathlib.Algebra.Polynomial.Roots
@@ -440,8 +437,6 @@ example : ∀ x : ZMod 12, (x ^ 2 - 1 = 0 ↔ x = 1 ∨ x = 5 ∨ x = 7 ∨ x = 
 #print axioms root_iff_x_minus_r_is_a_factor
 #print axioms dividing_by_x_minus_r_leaves_p_of_r
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

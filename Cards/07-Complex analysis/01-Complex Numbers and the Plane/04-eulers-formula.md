@@ -364,9 +364,6 @@ Lean proves Euler's formula for every real angle, the series and the addition la
 
 The A440 decimals, the compounding road, the cut-off series, the mistake table and the figures are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 63 lines</summary>
-
 ```lean
 -- Euler's formula: for every real angle θ the exponential power series at iθ adds up to cos θ + i sin θ, a point at distance 1 from 0; the series converges at every complex number, exponents add, and e^(x + iy) = e^x (cos y + i sin y).
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -432,8 +429,6 @@ example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_
 #print axioms exp_series_converges_to_exp
 #print axioms exp_add_and_exp_real_add_I_mul
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

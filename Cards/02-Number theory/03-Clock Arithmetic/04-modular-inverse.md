@@ -249,9 +249,6 @@ Lean proves these facts for every key and every clock size, not just 7 and 26.
 
 Running Euclid's chain step by step to find 15, and the printed run, stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 71 lines</summary>
-
 ```lean
 -- The modular inverse: a key a has an inverse on a clock of size n, a number b with a × b ≡ 1 (mod n), exactly when a and n are coprime, that inverse is the only one up to whole turns of the clock, and so a coprime key can be cancelled.
 import Mathlib.Data.Nat.ModEq
@@ -325,8 +322,6 @@ example : Nat.Coprime 5 26 ∧ 5 * 21 = 105 ∧ 5 * 21 ≡ 1 [MOD 26] := by norm
 #print axioms modular_inverse_unique
 #print axioms cancel_coprime_key
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

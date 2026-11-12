@@ -334,9 +334,6 @@ Lean proves the card's three facts for every surface, and checks the hill's hand
 
 The difference quotients, the chart, the path ratios, the 360-direction scan and the crease's diagonal numbers are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 243 lines</summary>
-
 ```lean
 -- Tangent planes: a surface whose two slopes exist near a point and are continuous there is differentiable, the two slopes are the only possible plane, and the crease xy/sqrt(x^2+y^2) has both slopes zero yet no tangent plane.
 import Mathlib.Analysis.Calculus.MeanValue
@@ -582,8 +579,6 @@ example : (125 : ℚ) / 2 - 225 / 1000 * 110 - 1 / 4 * 70 = 2025 / 100 := by nor
 #print axioms tangent_plane_slopes_are_partials
 #print axioms crease_has_slopes_but_no_tangent_plane
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -346,9 +346,6 @@ Lean proves the tiling rule and the Hanoi closed form for every length and every
 
 Walking the Hanoi recipe move by move, and laying every floor by search, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 567 lines</summary>
-
 ```lean
 -- Recurrences: the tilings of a 2 x n hallway by 1 x 2 tiles obey T(n) = T(n-1) + T(n-2) with seeds T(1) = 1 and T(2) = 2, so they are the Fibonacci numbers F(n+1), and the Tower of Hanoi rule h(n) = 2h(n-1) + 1 with h(0) = 0 gives h(n) = 2^n - 1.
 import Mathlib.Combinatorics.SimpleGraph.Hasse
@@ -918,8 +915,6 @@ example : 2 ^ 0 ≠ 0 ∧ 2 ^ 10 = 1024 := by norm_num
 #print axioms hallway_tilings_eq_fib_succ
 #print axioms hanoi_moves_closed_form
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

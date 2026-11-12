@@ -350,9 +350,6 @@ Lean proves each centre's main facts for any farms not in a row, not just the th
 
 The decimals, the zoom searches, the figure and O falling outside the obtuse triangle are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 376 lines</summary>
-
 ```lean
 -- Triangle centres: for three points not in a row, the perpendicular bisectors meet at exactly one point, the angle bisectors meet at the weighted average of the corners, at distance area over half-perimeter from every side, and the centroid sits two-thirds along every median and has the least total of squared distances.
 import Mathlib.Geometry.Euclidean.PerpBisector
@@ -731,8 +728,6 @@ example : ((4 : ℤ) - 0) ^ 2 + 0 ^ 2 = 16 ∧ ((4 : ℤ) - 8) ^ 2 + 0 ^ 2 = 16 
 #print axioms angle_bisectors_meet_at_incentre
 #print axioms centroid_on_medians_and_least_squares
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

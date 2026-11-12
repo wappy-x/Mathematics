@@ -353,9 +353,6 @@ Lean proves the sine and cosine rules for every value u from −1 to 1, and ever
 
 The tide's four times, the windows above 2 m and the decimals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 70 lines</summary>
-
 ```lean
 -- Inverse trig: for any value u from -1 to 1, the angles whose sine is u are exactly arcsin u and its mirror pi - arcsin u plus whole turns, the angles whose cosine is u are plus or minus arccos u plus whole turns, and a value outside -1 to 1 is never a sine.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -428,8 +425,6 @@ example : π - arcsin (1 / 3) ≠ arcsin (1 / 3) := by
 #print axioms cos_eq_iff_plus_or_minus_arccos_plus_turns
 #print axioms no_angle_has_sine_outside_minus_one_to_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -370,9 +370,6 @@ Lean proves all three counts for every number of items and boxes, not just the g
 
 Building and decoding the rows, and the 5 shapes left when the labels go, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 101 lines</summary>
-
 ```lean
 -- Stars and bars: n identical items go into k labelled boxes in C(n + k - 1, k - 1) ways, in C(n - 1, k - 1) ways when no box may be empty, and a whole number n is an ordered sum of positive parts in 2^(n - 1) ways.
 import Mathlib.Combinatorics.Enumerative.Composition
@@ -476,8 +473,6 @@ example : (5 + 4 - 1).choose (4 - 1) = 56 ∧ (6 + 3 - 1).choose (3 - 1) = 28 :=
 #print axioms stars_and_bars_no_empty_box
 #print axioms compositions_count
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

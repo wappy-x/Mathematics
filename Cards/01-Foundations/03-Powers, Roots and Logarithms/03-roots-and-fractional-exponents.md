@@ -242,9 +242,6 @@ Lean proves the card's three root facts for every base, not just 50 and 8.
 
 The twelve-digit decimals, and the rounds that settle on them, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 100 lines</summary>
-
 ```lean
 -- Roots: for a base of zero or more, the power with exponent 1/n is the one number of zero or more whose n-th power is the base, a positive base has exactly two square roots and a negative one none, every real number has exactly one cube root, and the card's bed and tank numbers come out exactly as it says.
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -347,8 +344,6 @@ example : (7 : ℤ) * 7 = 49 ∧ (-7 : ℤ) * (-7) = 49 := by decide
 #print axioms square_root_has_minus_twin
 #print axioms every_number_has_one_cube_root
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

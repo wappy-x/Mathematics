@@ -351,9 +351,6 @@ Lean proves the three general facts for every loop and function that obey When i
 
 The decimals, and the laps each actual path makes, such as the figure-eight's +1 and −1, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 554 lines</summary>
-
 ```lean
 -- Deforming a loop: for a function holomorphic except at finitely many holes, the integral round any closed piecewise smooth loop that misses the holes is the sum over the holes of the loop's winding number times a small circle's integral, the winding number is always a whole number, and a small circle round a hole of strength c gives 2πi c.
 import Mathlib.MeasureTheory.Integral.CircleIntegral
@@ -910,8 +907,6 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 #print axioms winding_number_is_whole
 #print axioms small_circle_integral_eq_two_pi_I_mul_strength
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

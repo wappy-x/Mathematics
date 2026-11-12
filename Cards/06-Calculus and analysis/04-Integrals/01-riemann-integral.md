@@ -363,9 +363,6 @@ Lean proves the definition's key facts for every continuous or monotone rate, an
 
 The valve's sums, the 200- and 20000-slice searches, the figure and the fraction rule are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 518 lines</summary>
-
 ```lean
 -- The integral: a continuous or monotone rate on a closed interval has exactly one number between all its lower and upper sums, that number is its integral, no lower sum passes an upper sum, and the card's tank holds 130 litres.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -886,8 +883,6 @@ example : (Finset.range 20).sum (fun k => 3 + (k + 1)) = 270 ∧ 270 / 2 = 135 :
 #print axioms lower_sum_le_upper_sum
 #print axioms tank_sums_close_on_130
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

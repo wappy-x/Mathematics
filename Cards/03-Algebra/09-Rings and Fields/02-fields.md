@@ -352,9 +352,6 @@ Lean proves the card's three facts for every field and every cycle size from 2 u
 
 Building each reciprocal by Euclid's algorithm, and printing the tables, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 81 lines</summary>
-
 ```lean
 -- Fields: in any field, a times x equals b with a nonzero has exactly one answer x, two nonzero elements never multiply to zero, and the n-day cycle (n at least 2) is a field exactly when n is prime.
 import Mathlib.Algebra.Field.Basic
@@ -438,8 +435,6 @@ example : (Finset.Icc 2 12).filter Nat.Prime = {2, 3, 5, 7, 11} := by decide
 #print axioms field_has_no_zero_divisors
 #print axioms cycle_is_field_iff_prime
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

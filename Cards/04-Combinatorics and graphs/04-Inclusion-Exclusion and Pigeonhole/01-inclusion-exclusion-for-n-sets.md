@@ -370,9 +370,6 @@ Lean proves the formula for any number of finite sets, and checks the card's own
 
 Building the hotel roster guest by guest, and testing every number for the 266, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 152 lines</summary>
-
 ```lean
 -- Inclusion-exclusion for any number of sets: for finite sets A₁, …, Aₙ the size of their union is S₁ − S₂ + S₃ − ⋯ ± Sₙ, where Sⱼ adds the sizes of all j-at-a-time overlaps, because a member of k ≥ 1 sets is counted C(k, 1) − C(k, 2) + ⋯ = 1 time.
 import Mathlib.Data.Set.Card
@@ -527,8 +524,6 @@ example : ((Icc 1 30).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x)
 #print axioms alternating_sum_choose_eq_one
 #print axioms card_pool_diff_union_eq_sieve
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

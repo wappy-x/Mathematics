@@ -256,9 +256,6 @@ Lean proves the log laws for any two positive numbers, not only whole runs of te
 
 The city's 3.5 village-steps and the counting routine's own asserts are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 47 lines</summary>
-
 ```lean
 -- Log laws and log scales: for positive numbers the base-10 log of a product is the sum of the logs, the log of a quotient is the difference, and a count in steps of 100 is the count in tens divided by the log of 100.
 import Mathlib.Analysis.SpecialFunctions.Log.Base
@@ -308,8 +305,6 @@ example : 100 + 10000 = 10100 ∧ (100 + 10000) / 2 = 5050 ∧ 2 * 4 = 8 := by n
 #print axioms log10_of_quotient_is_difference_of_logs
 #print axioms log100_is_log10_divided_by_log10_of_100
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

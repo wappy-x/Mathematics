@@ -355,9 +355,6 @@ Lean proves the formula for every three edges and every four points in space, an
 
 The cube count, decimal lengths such as 15.811388, and the leftover-height plane test are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 116 lines</summary>
-
 ```lean
 -- Triple product: for any three edges a, b, c from one corner in space, the slanted box they span holds |(a × b) · c| cubic units, (a × b) · c is the determinant with rows a, b, c, cycling the edges keeps it while swapping two flips its sign, four points share a plane exactly when the triple product of the edges from one of them is zero, and the card's crate numbers come out as it says.
 import Mathlib.LinearAlgebra.CrossProduct
@@ -476,8 +473,6 @@ example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![25, 15, -1
 #print axioms triple_product_cycle_keeps_swap_flips
 #print axioms four_points_share_a_plane_iff_triple_product_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

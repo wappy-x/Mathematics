@@ -362,9 +362,6 @@ Lean proves the area formula for every power a strictly between 0 and 1, and the
 
 The keyhole itself is left to the Python and Rust checks: the four pieces, the engine equation, the circle bounds and the decimals.
 
-<details>
-<summary>The Lean proof, 160 lines</summary>
-
 ```lean
 -- The keyhole contour: for every power a strictly between 0 and 1, the area under x^(a-1)/(1+x) from 0 to infinity is finite and equals π/sin(πa).
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
@@ -527,8 +524,6 @@ example : π / Real.sin (π * (1 / 4)) = π * √2 := by
 #print axioms keyhole_banks_solve
 #print axioms integral_rpow_div_one_add_symm
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

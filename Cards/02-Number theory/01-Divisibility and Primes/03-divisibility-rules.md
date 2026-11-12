@@ -245,9 +245,6 @@ Lean proves every rule on this card for every whole number, not just the $1,236 
 
 The printed table, and each rule run against the real division, stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 104 lines</summary>
-
 ```lean
 -- Divisibility rules: for every whole number, 2, 4, 5, 8 and 10 are decided by its last one, two or three digits, 3 and 9 by its digit sum, and 6 by the 2 test and the 3 test together, while the digit sum works for no other divisor on the card.
 import Mathlib.Data.Nat.Digits.Div
@@ -354,8 +351,6 @@ example : 2 ∣ 12 ∧ 4 ∣ 12 ∧ ¬ 8 ∣ 12 := by decide
 #print axioms digit_sum_test_works_only_for_three_and_nine
 #print axioms eight_needs_three_digits_and_not_two_and_four
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

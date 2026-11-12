@@ -360,9 +360,6 @@ Lean proves the two bounds and the second floor for every graph with finitely ma
 
 Running greedy and trying every colouring are left to the Python and Rust checks; Brooks' own proof stays with the sources.
 
-<details>
-<summary>The Lean proof, 184 lines</summary>
-
 ```lean
 -- Colouring: in every finite graph the chromatic number is at least the size of the largest all-joined set and at most one more than the largest degree, the dot count is at most the chromatic number times the largest unjoined set, and the card's six exams need exactly three sessions.
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
@@ -549,8 +546,6 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 #print axioms cliqueNum_le_chromaticNumber_le_maxDegree_add_one
 #print axioms card_le_chromaticNumber_mul_indepNum
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

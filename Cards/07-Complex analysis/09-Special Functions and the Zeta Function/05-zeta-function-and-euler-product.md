@@ -365,9 +365,6 @@ Lean proves the main result for every s with real part above 1, the coprime shar
 
 Every number computed up to 1,000, the sine product, the chart and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 349 lines</summary>
-
 ```lean
 -- The zeta function: for complex s with real part above 1 the sum of 1/n^s converges to a holomorphic function equal to the product over the primes of 1/(1 - 1/p^s), at s = 2 it is π^2/6, its reciprocal 6/π^2 is the limiting share of coprime pairs, and the sum of 1/p over the primes diverges.
 import Mathlib.Analysis.Complex.Basic
@@ -719,8 +716,6 @@ example : (1 / (1 - 1/2^2 : ℚ)) * (1 / (1 - 1/3^2)) * (1 / (1 - 1/5^2)) = 25/1
 #print axioms coprime_pair_share_tendsto_six_div_pi_sq
 #print axioms sum_one_div_primes_diverges
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

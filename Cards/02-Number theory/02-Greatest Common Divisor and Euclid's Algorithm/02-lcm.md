@@ -223,9 +223,6 @@ Lean proves these claims for every pair of whole loop lengths of 1 beat or more,
 
 Running the three roads step by step, on loops you pick, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 75 lines</summary>
-
 ```lean
 -- Least common multiple: for any two whole numbers of 1 or more, the smallest number both go into is their product divided by their greatest common divisor, so the gcd times that smallest shared multiple is the product, and every shared multiple is a multiple of the smallest one.
 import Mathlib.Data.Nat.GCD.Basic
@@ -303,8 +300,6 @@ example : Nat.gcd 4 8 = 4 ∧ Nat.lcm 4 8 = 8 := by decide
 #print axioms gcd_mul_first_shared_multiple_eq_product
 #print axioms shared_multiples_are_multiples_of_first
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

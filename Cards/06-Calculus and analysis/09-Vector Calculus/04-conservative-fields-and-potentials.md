@@ -379,9 +379,6 @@ Lean proves the endpoint formula and the test in general, and that the whirlpool
 
 The Simpson sums, the planet's routes and cross rates, the square loops and the figures are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 221 lines</summary>
-
 ```lean
 -- Conservative fields: a field that is the gradient of a potential does work equal to the potential's change along every route inside its region, a potential forces the two cross rates to agree, and the whirlpool round a drain passes that test yet has no potential.
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -605,8 +602,6 @@ example : ∀ g R : ℚ, -(g * R) = 2 * (-(g * R / 2)) := by intro g R; ring
 #print axioms cross_rates_eq_of_potential
 #print axioms whirlpool_zero_curl_and_no_potential
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

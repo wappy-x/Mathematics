@@ -348,9 +348,6 @@ Lean proves all three laws on a sphere of any radius, for any three corners not 
 
 The London numbers, the chord, the flat triangles, the mistakes and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 804 lines</summary>
-
 ```lean
 -- Triangles on a sphere: on a sphere of any radius R, a triangle's area is R^2 times the amount its angles overshoot pi, and its sides and angles obey the spherical laws of cosines and sines.
 import Mathlib.Geometry.Euclidean.Angle.Unoriented.Basic
@@ -1157,8 +1154,6 @@ example (R A B C K : ℝ) (h : 4 * A * R ^ 2 + 4 * B * R ^ 2 + 4 * C * R ^ 2 = 4
 #print axioms spherical_law_of_cosines
 #print axioms spherical_law_of_sines
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

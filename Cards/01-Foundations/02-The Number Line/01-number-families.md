@@ -248,9 +248,6 @@ Lean proves the ladder and the nesting for every number, and the diagonal for an
 
 The diagonal's decimal digits, found by both roads, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 87 lines</summary>
-
 ```lean
 -- The number families: each family (counting numbers, integers, fractions, reals) answers an operation the one before it cannot, the families nest, and the carpenter's tile diagonal is no fraction.
 import Mathlib.NumberTheory.Real.Irrational
@@ -340,8 +337,6 @@ example : (((3 : ℕ) : ℤ) : ℚ) = (3 : ℚ) / 1 := by norm_num
 #print axioms number_families_nest
 #print axioms tile_diagonal_not_a_fraction
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

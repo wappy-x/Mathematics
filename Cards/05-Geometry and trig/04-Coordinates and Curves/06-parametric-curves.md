@@ -335,9 +335,6 @@ Lean proves the eliminated equations and the spoke's circle for every wheel radi
 
 The worked numbers, the 100,000-click turn, the pebble's 8R arch and the pivot rule are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 48 lines</summary>
-
 ```lean
 -- Parametric curves: removing the turn θ from the rolling-wheel formulas x = Rθ − b sin θ, y = R − b cos θ gives x from y alone on the rising half of each arch, a second formula on the falling half, and a circle for the valve seen from the hub.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -388,8 +385,6 @@ theorem valve_from_hub_on_circle (b θ : ℝ) :
 #print axioms valve_x_from_y_falling_half
 #print axioms valve_from_hub_on_circle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

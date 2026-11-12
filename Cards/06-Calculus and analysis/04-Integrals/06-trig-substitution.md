@@ -346,9 +346,6 @@ Lean proves the card's formula for every radius a ≥ 0, the antiderivative in x
 
 The decimals, the midpoint sums, the off-branch sign and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 113 lines</summary>
-
 ```lean
 -- Trig substitution: for a radius a ≥ 0, the root √(a^2 - x^2) accumulated from -a to a equals a cos θ times a cos θ accumulated over θ from -π/2 to π/2, and both equal π a^2/2; the antiderivative is (x√(a^2 - x^2) + a^2 arcsin(x/a))/2, and the tangent relative 1/√(9 + x^2) from 0 to 4 gives ln 3.
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -464,8 +461,6 @@ example : (5 / 3 : ℚ) + 4 / 3 = 3 := by norm_num
 #print axioms hasDerivAt_trig_substitution_antiderivative
 #print axioms integral_inv_sqrt_nine_add_sq_zero_four
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

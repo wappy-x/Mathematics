@@ -235,9 +235,6 @@ Lean proves the method correct for every base, every whole-number exponent and e
 
 Running the method as real programs, where Rust's `i64` whole numbers must hold every product, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 117 lines</summary>
-
 ```lean
 -- Powers on the clock: square-and-multiply, keeping only the remainder after every step, always gives the remainder of b to the e divided by n, with at most two multiplications per halving of e and no product as big as n × n.
 import Mathlib.Data.Nat.Log
@@ -357,8 +354,6 @@ example : 7 ^ 64 % 1000 = 401 := by norm_num
 #print axioms ladder_uses_at_most_two_multiplications_per_halving
 #print axioms ladder_products_stay_below_modulus_squared
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

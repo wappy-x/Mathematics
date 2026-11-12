@@ -329,9 +329,6 @@ Lean proves the formula for every case the card allows, the engine at every radi
 
 The decimals, the arc at each radius, the beam-angle route and the gap-1 example are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 850 lines</summary>
-
 ```lean
 -- The semicircle contour: for a ratio of polynomials p/q whose bottom degree beats the top by at least 2 and whose bottom has no real zero, the integral over the whole real line converges and equals 2πi times the sum of the residues (the 1/(z - a) Laurent coefficients) at the zeros of q above the real axis, segment plus arc already equals that sum at every radius beyond the poles, and so the area under 1/(1 + x^2) is π and under 1/(1 + x^2)^2 is π/2.
 import Mathlib.Algebra.Polynomial.Roots
@@ -1184,8 +1181,6 @@ example : Real.pi * 2 / (2 ^ 2 - 1) = 2 * Real.pi / 3 := by ring
 
 end SemicircleContours
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -248,9 +248,6 @@ Lean proves three facts for any payment, rate and whole number of years, and che
 
 The continuous case, 1.051271 and 95.12, and the years from three to nine are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 119 lines</summary>
-
 ```lean
 -- Discounting: dividing a payment by the growth factor once per year of waiting gives the one deposit that grows back into it, the yearly cuts shrink as the wait grows, multiplying by one minus the rate instead comes out too low, and the card's $100 at 5% lands on the cents it says.
 import Mathlib.Basic.Real.Basic
@@ -372,8 +369,6 @@ example : (11973 / 2 : ℚ) ≤ 10000 * (95 / 100) ^ 10 ∧
 #print axioms discount_cuts_shrink
 #print axioms taking_the_rate_off_undershoots
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

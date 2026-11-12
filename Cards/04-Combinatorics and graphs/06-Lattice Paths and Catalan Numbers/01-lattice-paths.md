@@ -349,9 +349,6 @@ Lean proves the card's three counting rules for every grid, with either side all
 
 Listing the routes in each of the five groups along the cut is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 262 lines</summary>
-
 ```lean
 -- Lattice paths: the routes that step only east or north from a start corner to the corner m blocks east and n blocks north number C(m + n, n), the route counts on the corners follow Pascal's rule, and the routes through a named corner number the routes to it times the routes onward, with the card's museum, cafe and cut numbers checked.
 import Mathlib.Data.Set.Card
@@ -616,8 +613,6 @@ example : Nat.choose (7 + 0) 0 = 1 := by decide
 
 end LatticePaths
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

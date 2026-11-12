@@ -365,9 +365,6 @@ Lean proves the rules for sine, cosine, tangent and secant at every angle in rad
 
 Lean also checks the 30° values exactly. The rise-over-run quotients, the piston speed and the rod engine are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 56 lines</summary>
-
 ```lean
 -- Derivatives of sine and cosine: in radians, at every real x the rate of sin is cos x and the rate of cos is -sin x, tangent and secant have rates 1/cos^2 x and sin x/cos^2 x wherever cos x is not 0, and the two limits at zero behind the proof are (sin h)/h to 1 and (cos h - 1)/h to 0.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
@@ -426,8 +423,6 @@ example : (sin (π / 6) / cos (π / 6)) ^ 2 = 1 / 3 := by
 #print axioms deriv_tan_and_sec
 #print axioms sin_div_tendsto_one_and_cos_sub_one_div_tendsto_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

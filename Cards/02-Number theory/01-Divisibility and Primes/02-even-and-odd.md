@@ -246,9 +246,6 @@ Lean proves the parity table and the switch rule for every whole number, negativ
 
 Printing the table line by line, as above, stays with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 53 lines</summary>
-
 ```lean
 -- Even and odd: every whole number is even or odd and never both, whether a sum or product is even follows from the parities going in, and a switch pressed n times is back where it started exactly when n is even.
 import Mathlib.Algebra.Ring.Int.Parity
@@ -304,8 +301,6 @@ example : Even (6 : ℤ) ∧ Even (2 : ℤ) ∧ (6 : ℤ) / 2 = 3 ∧ Odd (3 : �
 #print axioms every_integer_is_even_or_odd_and_not_both
 #print axioms switch_back_to_start_iff_presses_even
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

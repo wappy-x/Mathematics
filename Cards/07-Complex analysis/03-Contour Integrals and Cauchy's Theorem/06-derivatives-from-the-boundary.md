@@ -365,9 +365,6 @@ Lean proves the derivative formula, holomorphic once means holomorphic forever, 
 
 Morera's theorem, the loop sums, the regatta triangle, the e^z errors and the x|x| contrast are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 148 lines</summary>
-
 ```lean
 -- Derivatives from the boundary: for f holomorphic on and inside a circle, every derivative at an inside point is n!/(2πi) times the loop integral of f(z)/(z - a)^(n+1), every derivative of a holomorphic function is again holomorphic, and Cauchy's estimate caps the n-th derivative at the centre by n! M / r^n.
 import Mathlib.Analysis.Complex.CauchyIntegral
@@ -518,8 +515,6 @@ example : ((0 : ℚ) * 0 - 2 * 0 + (2 * 1 - 1 * 0) + (1 * 0 - 0 * 1)) / 2 = 1 :=
 #print axioms holomorphic_once_means_holomorphic_forever
 #print axioms cauchy_estimate
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

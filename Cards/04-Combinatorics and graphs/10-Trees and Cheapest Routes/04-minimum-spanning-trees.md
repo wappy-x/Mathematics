@@ -372,9 +372,6 @@ Lean proves these for every map on finitely many vertices where some chain of ed
 
 The step-by-step groups-left counts and the cheapest networks that keep a skipped run are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 348 lines</summary>
-
 ```lean
 -- The cheapest skeleton: in a connected graph with fixed real weights on its edges, a cheapest edge across any split of the vertices lies in some cheapest spanning tree, and stays addable to any kept set that already sits inside one, an edge dearer than every other on a loop lies in no cheapest spanning tree, and the card's seven-building campus gives Kruskal's and Prim's six runs at 39, with 141 of the 462 six-run sets joining all seven and only one of them at 39.
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
@@ -725,8 +722,6 @@ example : total (skeletonRuns.take 5) = 30 ∧ total (kruskal cheapToDear.revers
 #print axioms kept_edges_plus_safe_edge_in_min_spanning_tree
 #print axioms dearest_edge_on_loop_in_no_min_spanning_tree
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

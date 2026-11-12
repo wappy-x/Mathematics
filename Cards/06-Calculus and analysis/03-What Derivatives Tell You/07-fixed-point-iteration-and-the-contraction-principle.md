@@ -354,9 +354,6 @@ Lean proves the contraction rule for every rule and closed interval that meet it
 
 The decimals, the press counts, the sampled chords and the arccos run are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 175 lines</summary>
-
 ```lean
 -- Fixed points: a contraction of a closed interval into itself has exactly one fixed point, pressing it from any start converges there with the first-step and last-step error bounds, a slope bound q makes a rule a contraction with factor q, and cos is a contraction of [0, 1] with factor sin 1.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -534,8 +531,6 @@ example : ∀ x : ℝ, 1 ≤ x → x + 1 / x ≠ x := by
 #print axioms slope_bound_gives_contraction
 #print axioms cos_is_contraction_on_unit_interval
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -376,9 +376,6 @@ Lean proves both counting rules for any two finite collections, and both identit
 
 It also checks the league's numbers: 380 slips, 190 matches, the five-team picture, 38760 sixes and fourteens, and the mistakes. Listing all 1048576 strings, running the swap over them and the 15 buckets are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 57 lines</summary>
-
 ```lean
 -- Bijections and double counting: a one-to-one and onto rule between two finite collections forces equal sizes, a rule naming every target exactly d times makes the first collection d times the second, and these give C(n, 2) = n(n - 1)/2 and C(n, k) = C(n, n - k), with the card's 20-team league numbers checked.
 import Mathlib.Data.Fintype.Card
@@ -438,8 +435,6 @@ example : 20 * 20 = 400 ∧ 400 / 2 = 200 := by decide
 #print axioms choose_two_eq_half_n_mul_pred
 #print axioms choose_eq_choose_sub
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

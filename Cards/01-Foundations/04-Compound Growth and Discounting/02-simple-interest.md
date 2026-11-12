@@ -236,9 +236,6 @@ Lean proves the simple-interest rules for every principal, every rate and every 
 
 The printed tables and the year-by-year runs are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 91 lines</summary>
-
 ```lean
 -- Simple interest: when the same charge, principal times rate, is added every year, the balance after n years is the principal plus principal times rate times n, the balance climbs in equal steps along a straight line, interest that earns interest ends up strictly higher from year two on, and the card's cousin-loan numbers come out as it says.
 import Mathlib.Basic.Real.Basic
@@ -332,8 +329,6 @@ example : (60832.5 : ℚ) ≤ 500 * (1 + 4 / 100) ^ 5 * 100 ∧
 #print axioms simple_interest_straight_line
 #print axioms interest_on_interest_bill_higher
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

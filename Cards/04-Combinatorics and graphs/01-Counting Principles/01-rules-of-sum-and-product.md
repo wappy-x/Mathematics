@@ -364,9 +364,6 @@ Lean proves both rules for every set with a size, not just the lunch deal.
 
 Lean also checks the card's numbers, from 63 lunches to the four mistakes; listing every lunch is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 67 lines</summary>
-
 ```lean
 -- The rules of sum and product: for finite sets, picks made in stages multiply (also when a stage's options change with earlier picks but always number the same), cases that share nothing add, and the card's lunch, captain and rye-or-chilli numbers come out as it says.
 import Mathlib.Data.Finset.Prod
@@ -436,8 +433,6 @@ example : 20 * 20 = 400 := by decide
 #print axioms equal_branches_multiply
 #print axioms stages_multiply
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -367,9 +367,6 @@ Lean proves the subgroup test, the order formula and Step 4, for every group and
 
 Walking each jump home and listing every cyclic subgroup are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 73 lines</summary>
-
 ```lean
 -- Subgroups and cyclic groups: a nonempty set in a group is a subgroup exactly when every a * b⁻¹ stays inside, a jump of a on a clock of n notes has order n / gcd(a, n), and every cyclic group is a copy of the whole numbers or of a clock.
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
@@ -445,8 +442,6 @@ example : (List.range 13).filter (fun d => 0 < d ∧ 12 % d = 0) = [1, 2, 3, 4, 
 #print axioms clock_jump_order_eq_n_div_gcd
 #print axioms cyclic_group_is_integers_or_clock
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

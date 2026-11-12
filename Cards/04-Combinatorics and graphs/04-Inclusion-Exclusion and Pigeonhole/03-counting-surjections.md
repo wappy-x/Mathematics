@@ -364,9 +364,6 @@ Lean proves the formula for every number of items $n$ and recipients $k$, and ch
 
 Listing every handout one by one, and the 6 share-out patterns, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 156 lines</summary>
-
 ```lean
 -- Onto functions: the number of onto functions from n different items to k named recipients is the sieve sum of (-1)^j C(k, j) (k - j)^n, it equals k! times the Stirling number S(n, k), and the sum is 0 when there are fewer items than recipients.
 import Mathlib.Combinatorics.Enumerative.Stirling
@@ -525,8 +522,6 @@ example : 3 * sieveSum 5 1 + 3 * sieveSum 5 2 + 1 * sieveSum 5 3 = 243 := by dec
 #print axioms card_onto_eq_factorial_mul_stirlingSecond
 #print axioms sieve_sum_eq_zero_of_lt
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

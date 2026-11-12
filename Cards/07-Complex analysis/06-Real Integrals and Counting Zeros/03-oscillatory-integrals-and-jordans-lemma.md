@@ -362,9 +362,6 @@ Lean proves Jordan's lemma for every a > 0 and every radius, and both real-line 
 
 Lean reaches both integrals without residues; the loop's residue price, the decimals, the charts and the mistakes table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 479 lines</summary>
-
 ```lean
 -- Jordan's lemma: for a > 0 the integral of g(z) e^(iaz) over the upper half-circle of radius R is at most π/a times the largest size of g on that arc, the click's cosine integral of cos(ax)/(1 + x²) over the real line is π e^(−|a|), and the tilted pulse's improper integral of x sin(ax)/(1 + x²) is π e^(−a) for a > 0.
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -846,8 +843,6 @@ example : Real.pi * 16 / (1 * (16 ^ 2 - 1)) = 16 * Real.pi / 255 := by
 #print axioms integral_cos_mul_div_one_add_sq
 #print axioms tendsto_integral_mul_sin_div_one_add_sq
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

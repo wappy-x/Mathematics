@@ -376,9 +376,6 @@ Lean proves the geometric formulas and the term test in every case the card allo
 
 The decimals, the chart, the 100-year totals and the harmonic bounds up to 1,024 terms are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 73 lines</summary>
-
 ```lean
 -- Infinite series: the running totals of a geometric series a + ar + ar^2 + ... head for a/(1 - r) whenever the ratio r is strictly between -1 and 1, the first n terms add to a(1 - r^n)/(1 - r) whenever r is not 1, and any series whose running totals settle has terms that shrink to 0.
 import Mathlib.Algebra.Field.GeomSum
@@ -454,8 +451,6 @@ example : (1 : ℚ) / 3 + 1 / 4 ≥ 1 / 2 ∧ (1 : ℚ) / 5 + 1 / 6 + 1 / 7 + 1 
 #print axioms finite_geometric_sum
 #print axioms term_test
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

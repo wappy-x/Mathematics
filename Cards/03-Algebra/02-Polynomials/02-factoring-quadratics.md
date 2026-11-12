@@ -348,9 +348,6 @@ Lean proves the card's rules in general, not only for the ball and the patio.
 
 The half-second heights of the ball and the program that hunts for the brackets are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 84 lines</summary>
-
 ```lean
 -- Factoring: when two whole numbers p and q add to b and multiply to c, x^2 + bx + c equals (x + p)(x + q) and is zero only at x = -p or x = -q, because a product of real numbers is zero exactly when one factor is, and a square minus a square splits as (x + k)(x - k) while a square plus a nonzero square does not.
 import Mathlib.Basic.Real.Basic
@@ -437,8 +434,6 @@ example : (0 - 5 : ℤ) * (0 - 6) = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by 
 #print axioms product_is_zero_iff_a_factor_is
 #print axioms square_minus_square_splits_square_plus_square_does_not
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

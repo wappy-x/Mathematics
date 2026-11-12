@@ -328,9 +328,6 @@ Lean proves the fraction's limit, the window for every straight line, and that t
 
 The patched rule, the bisection search, the tables of outputs and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 80 lines</summary>
-
 ```lean
 -- Limits: the fraction (x^2 - 1)/(x - 1) heads for 2 as x heads for 1, any straight line of nonzero slope m meets an output tolerance with an input distance of tolerance ÷ |m|, and a rule that jumps from 0 to 1 at 1 has no limit there.
 import Mathlib.Topology.Instances.Real.Lemmas
@@ -413,8 +410,6 @@ example : |(0 : ℚ) - 1 / 2| = 1 / 2 ∧ |(1 : ℚ) - 1 / 2| = 1 / 2 ∧ (1 / 4
 #print axioms line_distance_is_tolerance_over_slope
 #print axioms jump_has_no_limit_at_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -337,9 +337,6 @@ Lean proves the three angle rules for any lines in a flat plane, not just the 70
 
 Placing the ladder on a grid and measuring its angles with the protractor are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 95 lines</summary>
-
 ```lean
 -- Angles: in the flat plane, two angles that share a straight line add to a half turn, vertical angles are equal, and a line crossing two parallel lines meets both at the same angle.
 import Mathlib.Geometry.Euclidean.Angle.Unoriented.Affine
@@ -437,8 +434,6 @@ example : (Nat.divisors 100).card = 9 := by decide
 #print axioms angles_on_straight_line_add_to_pi
 #print axioms vertical_angles_eq
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

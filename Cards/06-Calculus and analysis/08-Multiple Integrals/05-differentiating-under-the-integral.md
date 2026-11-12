@@ -354,9 +354,6 @@ Lean proves the fixed-end and moving-end rules for every f meeting the condition
 
 The Simpson sums, the difference quotients, the moving-cutoff numbers and the broken-hypothesis example are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 185 lines</summary>
-
 ```lean
 -- Differentiating under the integral: if a function and its rate in the parameter are continuous on a closed rectangle, the derivative of its integral over a fixed interval is the integral of that rate, moving ends add height times speed at the right and subtract it at the left, and the area under x^n e^(-tx) from 0 to infinity is n!/t^(n+1).
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -544,8 +541,6 @@ example : ((Nat.factorial 3 : ℚ) / 1 ^ 4) / ((Nat.factorial 3 : ℚ) / 2 ^ 4) 
 #print axioms leibniz_integral_rule
 #print axioms integral_pow_mul_exp_neg_mul_eq_factorial_div
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

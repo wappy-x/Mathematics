@@ -371,9 +371,6 @@ Lean proves the swap for any integrand, the closed form for every allowed A, B a
 
 The decimals, the residue by its limit, the trapezoid sums, the smaller loop, the mistakes and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 254 lines</summary>
-
 ```lean
 -- Integrals round a full turn: for real A, B, C with A > √(B² + C²), the integral of 1/(A + B cos t + C sin t) over t from 0 to 2π is 2π/√(A² − B² − C²), setting z = e^(it) turns any full-turn integral in cos t and sin t into the loop integral round the unit circle with cos t = (z + 1/z)/2, sin t = (z − 1/z)/(2i), dt = dz/(iz), and for the Ferris wheel's 1/(2 + cos t) that loop integral is 2πi times the residue 1/(i√3) at the one pole −2 + √3 inside the circle.
 import Mathlib.MeasureTheory.Integral.CircleIntegral
@@ -630,8 +627,6 @@ example : ¬ (Real.sqrt (1 ^ 2 + 0 ^ 2) < (1 : ℝ)) := by
 
 end TrigonometricIntegralsOnTheUnitCircle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

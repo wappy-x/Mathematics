@@ -374,9 +374,6 @@ Lean proves the theorem for every matrix with real entries, any number of rows a
 
 The decimals and the measuring road through 100002 directions are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 330 lines</summary>
-
 ```lean
 -- The singular value decomposition: every real matrix of any shape equals an orthogonal matrix times a stretch along perpendicular axes times a second orthogonal matrix, the stretch factors are always its singular values (the square roots of the eigenvalues of A transpose A, largest first, never negative), and the card's sprite numbers are checked exactly.
 import Mathlib.Analysis.InnerProductSpace.SingularValues
@@ -709,8 +706,6 @@ example : Real.sqrt 25 = 5 := by
 #print axioms stretch_factors_are_the_singular_values
 #print axioms singular_values_are_square_roots_of_eigenvalues_of_transpose_mul_self
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

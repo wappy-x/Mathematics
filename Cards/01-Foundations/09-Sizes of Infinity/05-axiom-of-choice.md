@@ -238,9 +238,6 @@ Lean takes the axiom as a starting rule and proves these: the big claims in ever
 
 Building every pick one box at a time, and checking that no two are the same, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 53 lines</summary>
-
 ```lean
 -- The axiom of choice: for any family of non-empty boxes there is a choice function taking one member out of every box at once, every set can be lined up so that each non-empty part has a first member, and every vector space has a basis.
 import Mathlib.Data.Fintype.Pi
@@ -296,8 +293,6 @@ example : (Fintype.piFinset fun i : Fin 10 =>
 #print axioms every_set_can_be_well_ordered
 #print axioms every_vector_space_has_a_basis
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

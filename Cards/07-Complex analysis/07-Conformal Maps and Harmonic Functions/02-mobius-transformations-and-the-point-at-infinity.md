@@ -385,9 +385,6 @@ Lean proves the three main facts for every a, b, c, d with ad − bc not zero, a
 
 The map through three points, the half plane filling the disc, and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 428 lines</summary>
-
 ```lean
 -- Mobius transformations: on the plane plus one point at infinity, a map (az + b)/(cz + d) with ad − bc not zero carries every circle and every line onto a circle or a line, is undone by the map (dw − b)/(−cw + a), and composes like its 2 by 2 matrix.
 import Mathlib.Analysis.Complex.Basic
@@ -818,8 +815,6 @@ end
 #print axioms mobius_inv_genCircle_aux
 #print axioms mobius_affine_aux
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

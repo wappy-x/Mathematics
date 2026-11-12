@@ -346,9 +346,6 @@ Lean proves the shoelace formula for every polygon with a simple boundary, the b
 
 Road two's strips, the notch at D, the crossed lobes and the table of what breaks are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 1774 lines</summary>
-
 ```lean
 -- Shoelace formula: for a polygon whose fences never cross, half the sum of the cross products of consecutive corners is its area, plus when the inside lies to the left of the walk and minus when it lies to the right; walking backwards flips the sign, and on three corners the sum is half the turn test.
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
@@ -2125,8 +2122,6 @@ open Shoelace
 #print axioms far_facts
 #print axioms final_case
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

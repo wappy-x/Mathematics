@@ -347,9 +347,6 @@ Lean proves Stokes' theorem for every surface with one smooth chart over a recta
 
 The bowl and lid integrals, the Simpson sums, the decimals, breaks 1 and 3, and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 250 lines</summary>
-
 ```lean
 -- Stokes' theorem: for a wind with continuous rates on a surface given by one twice-smooth grid over a rectangle, the circulation once round the rim equals the flux of the curl through the surface, and the card's drain wind shows why the wind must be smooth on the whole surface.
 import Mathlib.LinearAlgebra.CrossProduct
@@ -602,8 +599,6 @@ example : (1 : ℚ) * (2 * 2 ^ 2) = 8 ∧ (8 : ℚ) = 2 * 4 := by norm_num
 #print axioms rates_difference_eq_curl_dot_cross
 #print axioms drain_curl_zero_off_axis_but_circulation_four_pi
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -345,9 +345,6 @@ Lean proves the card's three facts for every point of the flat plane, every posi
 
 The bounced rays, the short chord, the three-point centre, the mistakes and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 132 lines</summary>
-
 ```lean
 -- Circles and parabolas: in the flat plane, the points at distance r > 0 from a centre are exactly the solutions of (x-h)^2 + (y-k)^2 = r^2, the points equally far from a focus and a horizontal directrix are exactly the solutions of (x-h)^2 = 4p(y-k), and the line of points equally far from the focus and a curve point's foot on the directrix touches the parabola only there and makes equal angles with the two.
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -482,8 +479,6 @@ example : (-80 : ℤ) ^ 2 - 4 * 1600 = 0 := by norm_num
 #print axioms circle_iff_equation
 #print axioms parabola_tangent_touches_once_and_halves_angle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

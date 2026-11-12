@@ -375,9 +375,6 @@ Lean proves the flood's facts, round by round, for every finite map whose paths 
 
 The queue, the dive's order and the eight routes to E are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 213 lines</summary>
-
 ```lean
 -- Connected or not: flooding a finite graph round by round from a start vertex halts having marked exactly the vertices some route joins to it, each first marked in the round equal to its fewest steps, fresh floods count the pieces, the graph is connected exactly when one flood marks everything, and the card's town numbers check out.
 import Mathlib.Combinatorics.SimpleGraph.Metric
@@ -593,8 +590,6 @@ example : (univ.image (fun v => flood townOpen v 9)).card = 1 := by decide
 #print axioms card_distinct_floods_eq_card_components
 #print axioms connected_iff_flood_marks_all
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

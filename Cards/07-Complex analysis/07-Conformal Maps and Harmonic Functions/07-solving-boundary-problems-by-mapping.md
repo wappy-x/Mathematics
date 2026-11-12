@@ -351,9 +351,6 @@ Lean proves the Laplacian rule for every holomorphic map, and it proves the corr
 
 The Poisson integral, all decimal values, the finite differences and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 210 lines</summary>
-
 ```lean
 -- Solving by mapping: the Laplacian of U after a holomorphic map f is |f'|^2 times the Laplacian of U at the image point, so a harmonic function stays harmonic under such a map, and e^z and z^2 carry the corridor and the quarter plane one-to-one onto the upper half plane, walls to walls, giving the temperatures 100y/pi and (200/pi) arg z.
 import Mathlib.Analysis.InnerProductSpace.Harmonic.Basic
@@ -566,8 +563,6 @@ example : (2 : ℂ) ^ 2 = 4 ∧ (-2 : ℂ) ^ 2 = 4 := by
 #print axioms harmonic_comp_holomorphic
 #print axioms corridor_and_quarter_plane_by_mapping
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

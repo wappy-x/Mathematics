@@ -359,9 +359,6 @@ Lean proves all three rules in general, for real numbers, under the conditions i
 
 Lean also checks the hand-worked numbers exactly; the difference quotients, the corner and the peak search are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 52 lines</summary>
-
 ```lean
 -- Product and quotient rules: the derivative of a product of two differentiable real functions is f' g + f g', of a ratio is (f' g - f g') / g^2 where the bottom is not zero, and of x^n is n x^(n-1) for every nonzero whole number n.
 import Mathlib.Analysis.Calculus.Deriv.Mul
@@ -416,8 +413,6 @@ example : (1 / 2 : ℚ) * (-4) = -2 ∧ ((2576 * (-4) - 36 * 184) / 184 ^ 2 : �
 #print axioms quotient_rule
 #print axioms power_rule_int
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

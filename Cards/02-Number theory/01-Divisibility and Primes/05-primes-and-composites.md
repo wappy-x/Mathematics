@@ -237,9 +237,6 @@ Lean proves the card's rules for every whole number, not just 97 and 91.
 
 Running the two roads as programs, and counting 168 primes below 1,000, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 93 lines</summary>
-
 ```lean
 -- Primes and composites: a whole number bigger than 1 is prime exactly when nothing but 1 and itself divides it, and exactly when no trial divisor d from 2 up, with d × d at or below the number, goes in; a number is prime exactly when it has two divisors, and 2 is the only even prime.
 import Mathlib.Data.Nat.Prime.Basic
@@ -335,8 +332,6 @@ example : ((Finset.range 100).filter (fun n => 1 < n ∧ n % 2 = 1)).card = 49 :
 #print axioms prime_iff_exactly_two_divisors
 #print axioms two_is_the_only_even_prime
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

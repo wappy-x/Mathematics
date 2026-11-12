@@ -370,9 +370,6 @@ The two outputs match line for line.
 
 Lean proves both rules for every whole power, whenever order of multiplication does not matter, and that each row adds to 2^n. Python and Rust check the worked numbers.
 
-<details>
-<summary>The Lean proof, 111 lines</summary>
-
 ```lean
 -- The binomial theorem: for any whole power n, (a + b)^n is the sum of C(n, k) a^(n-k) b^k, and (a + b + c)^n is the sum of n!/(i! j! l!) a^i b^j c^l over all splits i + j + l = n, whenever the letters can be multiplied in either order.
 import Mathlib.Data.Nat.Choose.Sum
@@ -486,8 +483,6 @@ example : (10 : ℕ) ^ 4 + 1 ^ 4 = 10001 ∧ (10 + 1 : ℕ) ^ 4 ≠ 10 ^ 4 + 1 ^
 #print axioms trinomial_theorem_split_counts
 #print axioms pascal_row_sums_to_two_pow
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

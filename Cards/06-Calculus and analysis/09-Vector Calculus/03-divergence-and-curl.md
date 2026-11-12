@@ -354,9 +354,6 @@ Lean proves the square limits for any flat wind with continuous rates, and check
 
 Winds in space, the straws, the level-axis breeze, the Simpson's rule sums and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 258 lines</summary>
-
 ```lean
 -- Divergence and curl: for a flat wind with continuous rates, the outflow and the anticlockwise circulation round a small square, divided by its area, tend to dP/dx + dQ/dy and dQ/dx - dP/dy as the square shrinks, and the card's wind gives exactly the card's numbers at S and E.
 import Mathlib.Analysis.Calculus.ContDiff.Basic
@@ -617,8 +614,6 @@ example : (-(1 : ℚ) / 10) * 40 * 30 = -120 := by norm_num
 #print axioms card_wind_div_and_curl_at_S_and_E
 #print axioms card_wind_square_ratios
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

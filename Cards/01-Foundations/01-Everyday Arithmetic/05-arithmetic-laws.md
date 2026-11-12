@@ -231,9 +231,6 @@ Lean proves the three laws for every whole number, and proves that minus and div
 
 Printing the table and running the bill as a program are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 65 lines</summary>
-
 ```lean
 -- The three rearranging laws: for every three whole numbers, adding and multiplying both swap and regroup freely and a multiplier spreads over a sum, subtraction and division neither swap nor regroup, and the card's apple-bill numbers come out as it says.
 import Mathlib.Data.Rat.Defs
@@ -301,8 +298,6 @@ example : (1000 - 900) - 100 = 0 := by decide
 #print axioms swap_regroup_spread_whole_numbers
 #print axioms minus_and_divide_neither_swap_nor_regroup
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

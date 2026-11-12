@@ -245,9 +245,6 @@ Lean proves the sign rules and subtracting for any numbers with opposites and th
 
 Printing the account story line by line, and the Try changing experiments, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 62 lines</summary>
-
 ```lean
 -- Negative numbers: wherever every number has an opposite and the spreading law holds, subtracting is adding the opposite, same signs multiply to a plus and different signs to a minus, and in the integers dividing by a number other than 0 undoes multiplying by it.
 import Mathlib.Algebra.Ring.Defs
@@ -312,8 +309,6 @@ example : (-1 : ℤ) + 2 = 1 := by norm_num
 #print axioms subtracting_is_adding_the_opposite
 #print axioms dividing_undoes_multiplying
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

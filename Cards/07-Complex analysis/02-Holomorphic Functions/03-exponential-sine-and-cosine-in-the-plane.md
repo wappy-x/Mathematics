@@ -371,9 +371,6 @@ Lean proves the card's identities for every complex z and every real x and y, an
 
 The decimals, the slopes, the separate cosine and sine series, the mistakes and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 88 lines</summary>
-
 ```lean
 -- The elementary functions: complex cosine and sine are built from two exponentials and turn into cosh and i sinh up the imaginary axis, |sin(x + iy)|^2 = sin^2 x + sinh^2 y so complex sine is unbounded, and the exponential is the sum of its series, its own derivative, never 0 and repeats every 2πi.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -464,8 +461,6 @@ example : Complex.sin (1 + 3 * I) =
 #print axioms norm_sin_sq_eq_and_sin_unbounded
 #print axioms exp_series_deriv_ne_zero_periodic
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

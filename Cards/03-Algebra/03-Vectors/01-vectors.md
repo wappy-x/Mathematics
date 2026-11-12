@@ -324,9 +324,6 @@ Lean proves these facts for vectors of every length, not just the two-number leg
 
 The chart numbers are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 70 lines</summary>
-
 ```lean
 -- Vectors: in R^n, written as lists of n real numbers, adding two vectors adds matching slots and scaling multiplies every slot, scaling by a whole number k is adding the vector to itself k times, the all-zeros vector changes nothing and scaling by -1 gives the vector that cancels it, and the cyclist's numbers come out as the card says.
 import Mathlib.Algebra.Group.Fin.Tuple
@@ -399,8 +396,6 @@ example : (![2 * 3, 4] : Fin 2 → ℝ) ≠ (2 : ℝ) • ![3, 4] := by
 #print axioms scale_by_whole_number_is_repeated_adding
 #print axioms zero_vector_and_opposite
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

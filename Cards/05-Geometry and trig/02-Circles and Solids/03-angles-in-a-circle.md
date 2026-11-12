@@ -356,9 +356,6 @@ Lean proves the card's three theorems for every circle and every camera spot on 
 
 Views off the circle, the best aisle spot, the decimals and the grid search are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 181 lines</summary>
-
 ```lean
 -- Angles at a circle: a spot on a circle sees a chord at half the centre's angle on the far arc, a diameter at a right angle, and a line touching the circle once meets the radius square on.
 import Mathlib.Geometry.Euclidean.Angle.Sphere
@@ -542,8 +539,6 @@ example : ((4 : ℝ) + 16) / 2 ≠ Real.sqrt (4 * 16) := by norm_num
 #print axioms diameter_seen_at_right_angle
 #print axioms tangent_meets_radius_at_right_angle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

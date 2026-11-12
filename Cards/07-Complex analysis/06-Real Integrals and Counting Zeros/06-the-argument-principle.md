@@ -334,9 +334,6 @@ Lean proves the argument principle for every circle, both as a loop integral and
 
 The z-bar break, the trapezoid error, the coarse compass readings, every decimal and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 416 lines</summary>
-
 ```lean
 -- The argument principle: for a function holomorphic on and inside a circle except at poles, with no zero or pole on the circle and not identically zero, the loop integral of f′/f divided by 2πi, and the needle's total turn along the walk counted in whole turns, both equal the zeros inside minus the poles inside, each counted by its multiplicity or order.
 import Mathlib.Analysis.Meromorphic.Divisor
@@ -755,8 +752,6 @@ example : (1 : ℤ) - 1 = 0 ∧ (1 : ℤ) - 1 ≠ 1 - 3 := by decide
 
 end TheArgumentPrinciple
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -346,9 +346,6 @@ Lean proves the card's rules for every wave y = a sin(b(t − c)) + d in which n
 
 The height at 09:00, the decimals of b, road two's measuring and three of the mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 121 lines</summary>
-
 ```lean
 -- Trig graphs: the wave y = a sin(b(t - c)) + d swings between d - |a| and d + |a|, repeats first after 2π/|b|, rises through its midline at t = c and peaks a quarter period later.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -472,8 +469,6 @@ example : (20 + 30 : ℤ) = 50 ∧ (20 - 30 : ℤ) = -10 := by decide  -- swing 
 #print axioms sine_wave_phase_shift
 #print axioms sine_wave_equivalent_forms
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -238,9 +238,6 @@ Lean proves all three claims for every pair of whole numbers, not just 15 with 2
 
 It also checks the card's numbers exactly: the shared factors, the mixes, the slot lists, the pairings, 15/27 in lowest terms and the usual mistake. The lowest-terms rule in general and walking the gears turn by turn are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 115 lines</summary>
-
 ```lean
 -- Coprime numbers: two whole numbers have greatest common divisor 1 exactly when some whole-number mix of them equals 1, neighbours are always coprime, and a gear stepping a slots at a time round b slots meets exactly b ÷ gcd(a, b) of them, so all b when the counts are coprime.
 import Mathlib.Data.Int.GCD
@@ -358,8 +355,6 @@ example : ¬ Nat.Prime 15 ∧ ¬ Nat.Prime 28 ∧ Nat.Coprime 15 28 := by norm_n
 #print axioms neighbours_are_coprime
 #print axioms slots_met_by_tooth_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

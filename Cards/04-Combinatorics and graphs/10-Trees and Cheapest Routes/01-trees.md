@@ -353,9 +353,6 @@ Lean proves these for every map meeting When it holds, not just the village, and
 
 Each lane being a bridge, each new lane closing one loop, and the 1024-map census are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 112 lines</summary>
-
 ```lean
 -- Trees: for a finite simple graph, being connected with no cycle, having exactly one path between each pair of vertices, being connected with one edge fewer than vertices, and having no cycle with one edge fewer than vertices are the same thing; every such tree on two or more vertices has at least two leaves, a forest has as many edges as vertices minus pieces, and the card's village numbers check out.
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
@@ -470,8 +467,6 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 #print axioms tree_has_two_leaves
 #print axioms forest_edges_add_components_eq_vertices
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

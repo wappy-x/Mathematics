@@ -238,9 +238,6 @@ Lean proves both pairings for every room number, not just the first 8, and prove
 
 The printed lists, and each pairing read backwards, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 118 lines</summary>
-
 ```lean
 -- Same size means pairable: doubling pairs the counting numbers with the even counting numbers, moving up one pairs them with every room from 2 on, and a set is infinite exactly when it pairs with a part of itself that leaves something out.
 import Mathlib.Data.Set.Function
@@ -361,8 +358,6 @@ example : ((Finset.Icc 1 8).filter Even).card = 4 := by decide
 #print axioms move_up_one_frees_room_one
 #print axioms infinite_iff_pairs_with_proper_part
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -370,9 +370,6 @@ Lean proves the power rule at both ends for every power p, and the comparison te
 
 The decimals, the Simpson sums on doubling and halving blocks, the comparison examples and the four breaks are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 201 lines</summary>
-
 ```lean
 -- Improper integrals: the power rule decides when 1/t^p totals to a finite amount from 1 for ever (p > 1, giving 1/(p - 1)) and up to a spike at 0 (p < 1, giving 1/(1 - p)), and a never-negative rate below a rate with a finite total has a finite total too.
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -576,8 +573,6 @@ example : (-1 : ℚ) / 1 - (-1 / (-1)) = -2 := by norm_num
 #print axioms power_rule_at_spike
 #print axioms comparison_test
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

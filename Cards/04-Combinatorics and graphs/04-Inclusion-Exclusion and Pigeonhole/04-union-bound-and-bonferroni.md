@@ -348,9 +348,6 @@ Lean proves the card's claims for every finite family of finite sets, with any o
 
 The count of days under each number of headings and the sweep of 4096 small families are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 148 lines</summary>
-
 ```lean
 -- Stopping the sieve early: for any finite family of finite sets, the inclusion-exclusion sum cut off after an odd number of layers is at least the size of the union and cut off after an even number is at most it, with the union bound and the one-day tally 1 - (-1)^m C(k-1, m) behind it.
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
@@ -501,8 +498,6 @@ example : (List.range 4).map (fun i => ∑ j ∈ Icc 1 (i + 1), (-1 : ℤ) ^ (j 
 #print axioms card_union_le_sum_card
 #print axioms one_day_tally_eq
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

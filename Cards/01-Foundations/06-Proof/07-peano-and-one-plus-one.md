@@ -244,9 +244,6 @@ Lean proves the card's claims from the three rules alone, for any start and next
 
 Building ropes as data, and rule two without the outer next landing on 2, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 101 lines</summary>
-
 ```lean
 -- Peano's three rules: in any system with a start, a next that is never the start and never shared, and induction, the two rules of plus force 1 + 1 = 2, fix plus completely, and the system is a copy of the counting numbers.
 import Mathlib.Data.ZMod.Defs
@@ -350,8 +347,6 @@ example : (fun k : ℕ => min (k + 1) 3)^[3] 2 = 3 := by decide
 #print axioms plus_unique_from_two_rules
 #print axioms peano_rules_pin_down_counting_numbers
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

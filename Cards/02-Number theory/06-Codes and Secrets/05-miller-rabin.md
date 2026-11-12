@@ -236,9 +236,6 @@ Lean proves Steps 0 and 2 for every prime and every base below it, then re-check
 
 The two roads to each power and the printed lines stay with the Python and Rust checks; Rabin's three-in-four bound stays on trust.
 
-<details>
-<summary>The Lean proof, 105 lines</summary>
-
 ```lean
 -- The Miller-Rabin test: on a prime clock the chain of squarings of any base either starts at 1 or shows one-below the number, so a chain with neither shape proves the number composite, as bases 18 and 137 do for 221 = 13 × 17 while base 174 lies.
 import Mathlib.Data.Nat.ModEq
@@ -346,8 +343,6 @@ example : 13 ^ 55 % 221 ≠ 1 ∧ 13 ^ 55 % 221 ≠ 220 ∧ 13 ^ 110 % 221 ≠ 2
 #print axioms miller_rabin_prime_chain_starts_at_one_or_shows_minus_one
 #print axioms prime_clock_square_roots_of_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

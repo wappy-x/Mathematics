@@ -362,9 +362,6 @@ Lean proves Hall's theorem and the defect count for every hiring with finitely m
 
 The augmenting-path search, which places applicants without ever mentioning Hall, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 248 lines</summary>
-
 ```lean
 -- Hall's theorem: with finitely many applicants, every applicant can get a post of her own exactly when every group of applicants is qualified, between them, for at least as many posts as the group has members; and in general the most that can be placed is the number of applicants minus the worst group's shortfall.
 import Mathlib.Combinatorics.Hall.Basic
@@ -615,8 +612,6 @@ example : (∀ S : Finset (Fin 6), S.card ≤ (S.biUnion noAccounts).card + 1) �
 #print axioms full_placement_iff_hall_condition
 #print axioms max_placed_eq_card_sub_defect
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

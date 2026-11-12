@@ -337,9 +337,6 @@ Lean proves the rate formula, the steepest climb and the right angle for every h
 
 The quotients at 10, 1 and 0.01 m, the heading search, the contour chords and the crease are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 154 lines</summary>
-
 ```lean
 -- Gradient: where a function of n real inputs has a tangent plane, its gradient is the list of its partial derivatives, the rate along any direction of length 1 is the gradient dotted with that direction, the steepest climb runs along the gradient at a rate equal to its length, and the gradient meets every level curve through the point at a right angle.
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -496,8 +493,6 @@ example : ((500 : ℚ) - 104 ^ 2 / 800 - 92 ^ 2 / 400) - 466 = -68 / 100 := by n
 #print axioms gradient_points_up_the_steepest_climb
 #print axioms gradient_perpendicular_to_contour
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

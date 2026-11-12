@@ -338,9 +338,6 @@ Lean proves the card's three facts for every pair of lines and every camera, and
 
 The left rail's decimals far out, the branch rails' meet, the skipped divide and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 136 lines</summary>
-
 ```lean
 -- Perspective: any two distinct lines of the projective plane meet in exactly one point, the cross product of their triples finds it, and parallel scene lines all head for the image of their shared direction, the vanishing point.
 import Mathlib.LinearAlgebra.Projectivization.Constructions
@@ -479,8 +476,6 @@ example : (50 : ℚ) * (-3/2) / 15 = -5 ∧ ((-15/2 : ℚ) + (-15/4)) / 2 = -45/
 #print axioms cross_product_is_the_meet_of_two_lines
 #print axioms parallel_lines_vanish_at_image_of_direction
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

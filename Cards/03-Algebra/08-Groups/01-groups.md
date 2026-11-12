@@ -350,9 +350,6 @@ Lean proves the tile's facts exactly, and the clock fact for every prime size, n
 
 The printed tables, the 64 pairs and the 512 triples stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 124 lines</summary>
-
 ```lean
 -- Groups: the moves that fit a square tile into its recess form a group of eight that is not abelian, each move is "negate the corner number or not, then add a shift, wrapping at 4", and the nonzero hours of a prime clock form a group under multiplication.
 import Mathlib.Data.ZMod.Basic
@@ -479,8 +476,6 @@ example : (2 * 3 : ZMod 6) = 0 := by decide
 #print axioms tile_move_is_sign_then_shift
 #print axioms nonzero_hours_of_prime_clock_form_a_group
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

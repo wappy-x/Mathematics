@@ -339,9 +339,6 @@ Lean proves the volume rule for any solid whose slices all match its base, and t
 
 The walls and surface area, the decimal litres, the millilitre counts and the prisms closing in are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 120 lines</summary>
-
 ```lean
 -- Prisms and cylinders: a solid whose every horizontal slice is a congruent copy of its base, from height 0 up to height h, has volume equal to the base's area times h, and so a cylinder of radius r and height h holds π r² h.
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
@@ -464,8 +461,6 @@ example : 344 * 30 = 10320 := by decide
 #print axioms cylinder_volume_eq_pi_mul_radius_sq_mul_height
 #print axioms cylinder_double_radius_four_times_volume
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

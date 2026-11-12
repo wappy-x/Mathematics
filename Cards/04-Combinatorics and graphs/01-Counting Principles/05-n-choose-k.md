@@ -362,9 +362,6 @@ Lean proves three claims, for any n different things and any whole number k from
 
 Lean also checks the lottery and squad numbers; building Pascal's triangle and listing every line-up are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 79 lines</summary>
-
 ```lean
 -- Combinations, n choose k: from n different things, the number of ways to pick k with the order thrown away is the number of ordered picks divided by k!, which is n!/(k! (n-k)!), and picking k is the same count as picking the n-k left out.
 import Mathlib.Data.Finset.Powerset
@@ -446,8 +443,6 @@ example : 167960 * 11 ! = 6704425728000 := by decide
 #print axioms ordered_picks_eq_unordered_picks_mul_factorial
 #print axioms picks_of_k_eq_picks_of_n_sub_k
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -356,9 +356,6 @@ Lean proves the arc formula, the sector formula and Step 0 for every radius and 
 
 It also checks the card's sums exactly, in terms of $\pi$: 60° as $\pi$/3, the slice, the second case and the mistakes. The decimals, the chord walk and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 215 lines</summary>
-
 ```lean
 -- Radians: on a circle of radius r centred at the corner, the arc cut by an angle of θ radians has length r × θ, the sector it cuts has area r² × θ / 2 when θ is at most one turn, and arc over radius does not depend on the circle's size.
 import Mathlib.Topology.EMetricSpace.BoundedVariation
@@ -576,8 +573,6 @@ example : (15 : ℚ) ^ 2 * 60 / 2 = 6750 := by norm_num
 #print axioms sector_area_eq_half_radius_sq_mul_angle
 #print axioms arc_over_radius_ignores_circle_size
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -368,9 +368,6 @@ Lean proves the card's three general claims for every polynomial, and checks the
 
 Running the loop step by step and printing each leftover is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 94 lines</summary>
-
 ```lean
 -- Polynomial long division: when the divisor is not zero and its leading number can be divided by, there is exactly one quotient and remainder with the remainder of lower degree, and dividing by x - r leaves the value p(r).
 import Mathlib.Algebra.Polynomial.Div
@@ -467,8 +464,6 @@ example : (11 * 12 * 13 : ℕ) = 1716 ∧ 1716 / 11 = 156 ∧ 1716 % 11 = 0 ∧
 #print axioms dividing_by_x_minus_r_leaves_p_of_r
 #print axioms remainder_on_dividing_by_x_minus_r_is_p_of_r
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

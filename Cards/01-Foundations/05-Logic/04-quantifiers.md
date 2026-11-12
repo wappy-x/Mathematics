@@ -260,9 +260,6 @@ Lean proves the theorem for every group of people and keys, and checks this offi
 
 Finding the largest reach of any one key, and printing the table, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 94 lines</summary>
-
 ```lean
 -- Quantifiers: one thing that works for everyone always gives everyone something that works, the reverse can fail, and the card's office of six people and three keys is a case where it does.
 import Mathlib.Data.Fintype.Card
@@ -359,8 +356,6 @@ example : (Finset.univ.filter (fun k => carries ana k = true)).card = 2 ∧
 #print axioms not_forall_exists_imp_exists_forall
 #print axioms office_everyone_has_a_key_but_no_master_key
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

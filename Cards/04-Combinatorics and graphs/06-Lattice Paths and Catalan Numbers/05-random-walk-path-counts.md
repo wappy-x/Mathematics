@@ -341,9 +341,6 @@ Lean proves the three counts for every number of flips, not just ten.
 
 Listing the whole ten-flip row path by path, and the 50.4 from the wrong divisor, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 300 lines</summary>
-
 ```lean
 -- Counting coin-flip paths: of the n-flip paths scored +1 per head and −1 per tail, those ending at height h number C(n, (n + h)/2), and of the 2m-flip paths ending at zero, Cat(m) never dip below zero and Cat(m − 1) stay strictly above zero in between, with the card's ten-flip numbers checked.
 import Mathlib.Combinatorics.Enumerative.Catalan.Basic
@@ -646,8 +643,6 @@ example : Nat.choose 10 2 = 45 ∧ 252 % 5 = 2 := by decide
 #print axioms never_below_zero_returns_eq_catalan
 #print axioms strictly_above_zero_returns_eq_catalan_pred
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

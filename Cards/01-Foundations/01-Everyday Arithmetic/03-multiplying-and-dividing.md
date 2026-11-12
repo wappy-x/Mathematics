@@ -248,9 +248,6 @@ Lean proves the card's three facts for all whole numbers, not just the apples an
 
 Lean also checks the card's own sums, so only the dollars-and-cents printing is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 63 lines</summary>
-
 ```lean
 -- Multiplying and dividing: any whole-number pile shared by one or more people splits into exactly one share and one leftover smaller than the number sharing, repeated adding gives the same total whichever way the block is turned, and no number of zeros adds up to a pile that is not empty.
 import Mathlib.Basic.ExistsUnique
@@ -316,8 +313,6 @@ example : ∀ q, q < 100 → (List.replicate q 0).sum ≠ 12 := by decide
 #print axioms repeated_adding_order_does_not_matter
 #print axioms dividing_by_zero_has_no_answer
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

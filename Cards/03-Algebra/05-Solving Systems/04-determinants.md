@@ -370,9 +370,6 @@ Lean proves the card's rules for square matrices of real numbers at every size, 
 
 The corner measurement of the sprite, row moves to a staircase, and the nudged flattener's 0.2 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 76 lines</summary>
-
 ```lean
 -- Determinants: applying a square matrix multiplies the area (volume) of every shape by the size of its determinant, a zero determinant means two different points land on the same spot so nothing can undo the map, determinants of products multiply, and a staircase matrix's determinant is its diagonal multiplied out.
 import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
@@ -451,8 +448,6 @@ example : Matrix.det !![(4 : ℤ), 2, 2; 0, 1, 1; 1, 0, 4] = 16 := by
 #print axioms det_of_product_is_product_of_dets
 #print axioms det_of_staircase_is_diagonal_product
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

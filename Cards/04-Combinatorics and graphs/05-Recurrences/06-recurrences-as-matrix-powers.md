@@ -348,9 +348,6 @@ Lean proves the three general claims for every length, not just the ten-foot hal
 
 Laying real tiles, the eigenvalue decimals, Binet's formula and the millionth term wrapped at 1,000,000,007 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 127 lines</summary>
-
 ```lean
 -- A recurrence is a matrix: for a whole-number rule a(n+2) = p a(n+1) + q a(n) with fixed coefficients and nothing added, the n-th power of the companion matrix [[p, q], [1, 0]] moves the stack of two terms n steps at once, the n-th power of [[1, 1], [1, 0]] holds the tiling counts T(n), T(n-1), T(n-2), its eigenvalues are exactly the solutions of λ² − λ − 1 = 0, and the card's worked numbers come out as it says.
 import Mathlib.Data.Matrix.Basic
@@ -480,8 +477,6 @@ example : (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℕ) ^ 10 *ᵥ ![1, 1] = ![14
 #print axioms fibonacci_matrix_power_entries_are_tiling_counts
 #print axioms eigenvalues_solve_characteristic_eq
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

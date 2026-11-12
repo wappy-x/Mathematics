@@ -350,9 +350,6 @@ Lean proves completeness for every collection of reals, and the card's claims ab
 
 The decimal printouts, the grid scans and the halving runs are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 104 lines</summary>
-
 ```lean
 -- No gaps: every non-empty collection of real numbers with a ceiling has a lowest ceiling, the interval (0, 1) has lowest ceiling 1 and no largest member, and the fractions whose square is under 2 have no lowest fraction ceiling.
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
@@ -459,8 +456,6 @@ example : 40 + 250 * (0 : ℚ) = 40 ∧ 40 + 250 * ((1 : ℚ) / 2) = 165 ∧ 40 
 #print axioms sup_of_open_unit_interval_is_one_with_no_max
 #print axioms fractions_square_under_two_have_no_lowest_ceiling
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

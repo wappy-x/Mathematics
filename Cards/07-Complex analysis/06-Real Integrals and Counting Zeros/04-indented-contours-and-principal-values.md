@@ -371,9 +371,6 @@ Lean proves the arc rule for every simple pole and every arc, and both worked ex
 
 The general principal-value formula, the closed loops and every decimal are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 385 lines</summary>
-
 ```lean
 -- Poles on the path: a shrinking arc round a simple pole picks up i times the angle it sweeps times the residue (so a half-circle dent keeps −iπ times it), the area under sin x/x is π, and the principal value of 1/(x(1 + x²)) is 0 although each side of the pole is infinite.
 import Mathlib.Analysis.Analytic.Basic
@@ -761,8 +758,6 @@ example : (-2 : ℝ) / (1 / 100) = -200 := by norm_num
 
 end IndentedContoursAndPrincipalValues
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

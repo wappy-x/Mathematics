@@ -374,9 +374,6 @@ Lean proves the product rule, 1/ζ and inversion wherever the card says they hol
 
 Decimals near s = 2, the Euler-product route and the ten-term mistake are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 101 lines</summary>
-
 ```lean
 -- Dirichlet series: the product of two absolutely convergent Dirichlet series is the series of the divisor convolution of their weights, one over zeta is the series with the Möbius weights where Re s > 1, and Möbius weights undo any divisor sum.
 import Mathlib.NumberTheory.LSeries.Convolution
@@ -480,8 +477,6 @@ example : ∑ d ∈ Nat.divisors 4, (-1 : ℤ) ^ (Ω d) = 1 := by decide +kernel
 #print axioms one_div_riemannZeta_eq_moebius_series
 #print axioms moebius_inversion
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

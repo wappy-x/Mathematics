@@ -354,9 +354,6 @@ Lean proves the pit, peak and saddle test and the zero gradient rule for every f
 
 Newton's method, difference quotients, step rises, the grid search, the chart and the D = 0 examples are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 317 lines</summary>
-
 ```lean
 -- Extrema in several variables: a smooth lowest or highest point inside a region has zero gradient, the two-input second derivative test sorts a flat spot into strict pit, strict peak or saddle by the signs of D = AC - B^2 and A, and the card's 4 cubic metre bin uses least steel, 12 square metres, exactly at the 2 by 2 base.
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -676,8 +673,6 @@ example : (2 : ℤ) ^ 2 + 0 ^ 2 - 2 ^ 4 = -12 := by norm_num
 #print axioms gradient_eq_zero_of_local_extremum
 #print axioms open_bin_global_minimum
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

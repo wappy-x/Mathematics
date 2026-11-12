@@ -359,9 +359,6 @@ Lean proves the chain rule in general, for real functions, under the conditions 
 
 Secants, the tolerance game, the parked car, the mistakes and the chart points are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 127 lines</summary>
-
 ```lean
 -- Chain rule: if the inner function has a rate at t and the outer function has a rate at the value handed over, the composite's rate is the product of the two, and the card's fuel bill rises at 14.76 dollars per hour.
 import Mathlib.Analysis.Calculus.Deriv.Comp
@@ -491,8 +488,6 @@ example : (9 / 5 : ℚ) * (3 / 50) * 100 = 54 / 5 ∧ (9 / 5 : ℚ) * (9 / 100) 
 #print axioms fuel_bill_rate_at_one_hour
 #print axioms fuel_bill_no_rate_at_corner
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -364,9 +364,6 @@ Lean proves the card's facts for every number of people, not just six.
 
 Printing the table and reaching $e$ by compounding are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 168 lines</summary>
-
 ```lean
 -- Derangements: the number of shuffles of n names with nobody on their own name equals the alternating sieve sum of (-1)^k C(n, k) (n - k)!, which is also n!/k! summed with signs, obeys D(n) = (n - 1)(D(n - 1) + D(n - 2)) from D(0) = 1, D(1) = 0, and is the nearest whole number to n!/e from one person up, with the share D(n)/n! closing on 1/e.
 import Mathlib.Combinatorics.Derangements.Exponential
@@ -537,8 +534,6 @@ example : 720 - 6 * 120 = 0 ∧ 265 - 1 = 264 ∧ 5 * 44 + 9 = 229 := by decide
 #print axioms derangements_recurrence
 #print axioms derangements_share_and_rounding
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

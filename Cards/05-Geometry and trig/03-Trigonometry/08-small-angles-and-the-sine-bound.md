@@ -368,9 +368,6 @@ Lean proves the card's three inequalities for every angle x in radians strictly 
 
 The 5° and 40° decimals, the pendulum's lengths, both roads and Archimedes' 96 sides are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 65 lines</summary>
-
 ```lean
 -- Small angles: for every angle x in radians strictly between 0 and a right angle, sin x < x < tan x, which gives the chain 1 - x^2/2 < cos x < sin x / x < 1 < tan x / x < 1 / cos x and the cosine's ceiling cos x < 1 - x^2/2 + x^4/8.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
@@ -438,8 +435,6 @@ example : 96 * (π / 96) = π := by ring
 #print axioms small_angle_chain
 #print axioms cos_lt_one_sub_sq_div_two_add_pow_four_div_eight
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -357,9 +357,6 @@ Lean proves the split for every fully factored bottom, and the piece integrals o
 
 The decimals, Simpson strips and mistakes table are left to the Python and Rust checks; nothing checks higher quadratic powers or that only one split works.
 
-<details>
-<summary>The Lean proof, 316 lines</summary>
-
 ```lean
 -- Partial fractions: every ratio of real polynomials whose bottom is factored into distinct linear factors and rootless quadratics equals a polynomial plus one simple fraction per power of each factor, each piece integrates to a log, a fraction or a log plus an arctangent, and 1/(x^2 - 1) splits into halves whose area from 2 to 3 is half of ln(3/2).
 import Mathlib.Algebra.Polynomial.PartialFractions
@@ -678,8 +675,6 @@ example : ((3 : ℚ) - 2) / (1 + 3 * 2) = 1 / 7 := by norm_num
 #print axioms partial_fraction_pieces_integrate
 #print axioms one_div_sq_sub_one_split_and_area
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

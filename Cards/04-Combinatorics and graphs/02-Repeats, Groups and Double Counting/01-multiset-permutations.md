@@ -355,9 +355,6 @@ Lean proves the division for every line, every number of kinds and every set of 
 
 Building all 34,650 MISSISSIPPI words one at a time is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 162 lines</summary>
-
 ```lean
 -- Arranging with repeats: a line of n places filled with a₁ copies of kind 1, a₂ of kind 2, and so on (the counts adding to n) can be filled in exactly n! / (a₁! a₂! ⋯ aₘ!) distinct ways, which is also C(n, a₁) C(n − a₁, a₂) ⋯, one kind's places at a time.
 import Mathlib.Data.Fin.VecNotation
@@ -522,8 +519,6 @@ example : 12 ! / (2 ! * 4 ! * 4 ! * 2 !) = 207900 := by decide
 #print axioms card_arrangements_mul_prod_factorial_eq_factorial
 #print axioms card_arrangements_eq_prod_choose
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

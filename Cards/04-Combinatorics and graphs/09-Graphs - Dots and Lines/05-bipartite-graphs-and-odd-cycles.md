@@ -351,9 +351,6 @@ Lean proves three facts for every graph with plain lines, then checks the card's
 
 The search code, the triangle counts and the 0 of 16384 cuts for roster and cafes together are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 319 lines</summary>
-
 ```lean
 -- Bipartite graphs: a graph's dots split into two sides with every line crossing exactly when it has no cycle of odd length, the parity of the distance from a root gives the sides, a graph in two pieces splits only when both pieces do, and the card's roster, cafes and metro map have the cuts, distances and odd cycle it claims.
 import Mathlib.Combinatorics.SimpleGraph.Paths
@@ -675,8 +672,6 @@ example : IsTwoSideCut metro {0, 2, 4} {1, 3, 5} := by
 #print axioms distance_parity_colours_are_the_sides
 #print axioms side_by_side_cuts_iff_both_cut
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

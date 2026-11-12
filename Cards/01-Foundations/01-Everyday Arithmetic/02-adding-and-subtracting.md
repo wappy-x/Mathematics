@@ -235,9 +235,6 @@ Lean proves that carrying and borrowing give the right answer for every pair of 
 
 The running bill, apple by apple, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 187 lines</summary>
-
 ```lean
 -- Adding and subtracting: adding two whole numbers column by column with carrying, and taking a smaller number from a bigger one column by column with borrowing, always gives the right answer, and adding the change back to the bill gives back the note.
 import Mathlib.Data.Nat.Digits.Defs
@@ -427,8 +424,6 @@ example : 25 + 25 + 25 + 25 = 100 := by norm_num
 #print axioms column_subtraction_gives_the_difference
 #print axioms change_add_bill_eq_note
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

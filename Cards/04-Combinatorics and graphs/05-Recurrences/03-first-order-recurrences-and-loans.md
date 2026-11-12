@@ -385,9 +385,6 @@ Lean proves the closed form and the fixed point for every factor other than 1, a
 
 The month-by-month schedule, the savings plan and the hunt for the payment are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 114 lines</summary>
-
 ```lean
 -- First-order recurrences: a rule that multiplies by a factor other than 1 and adds a constant has exactly one fixed point, its value after n steps is the factor to the n times the starting gap to that fixed point plus the fixed point, a loan's balance lands on zero at month n exactly when the payment is the level-payment formula, and the card's car loan comes out at the cents it says.
 import Mathlib.Basic.Real.Basic
@@ -504,8 +501,6 @@ example : (7579 / 200 : ℚ) ≤ (fun b : ℚ => b * (201 / 200) - 469)^[48] 200
 #print axioms fixed_point_iff
 #print axioms loan_clears_iff_level_payment
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

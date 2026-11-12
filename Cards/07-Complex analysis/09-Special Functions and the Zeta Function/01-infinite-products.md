@@ -366,9 +366,6 @@ Lean proves the product test and its bounds for positive parts in general, and E
 
 The decimals, the limit sinh(π)/π, Wallis's product, the ±1/√n account, the chart and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 71 lines</summary>
-
 ```lean
 -- Infinite products: a product of factors 1 + a n with no zero factor and with sizes ‖a n‖ of finite total settles on a nonzero limit, for parts 0 or more that limit lies between 1 + S and e^S, and sin(πz) is πz times the product of 1 - z^2/n^2.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.EulerSineProd
@@ -442,8 +439,6 @@ example : (1 : ℚ) - 3 ^ 2 / 3 ^ 2 = 0 := by
 #print axioms product_between_one_add_sum_and_exp
 #print axioms sin_eq_euler_product
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

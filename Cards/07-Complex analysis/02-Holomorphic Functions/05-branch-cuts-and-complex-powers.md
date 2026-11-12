@@ -360,9 +360,6 @@ Lean proves the definition, the branches, the count of values and the jump at th
 
 The walks that follow a value, Newton's cube roots, the six-decimal values and the figure coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 226 lines</summary>
-
 ```lean
 -- Branch cuts and complex powers: the principal power z ^ a jumps by the factor e^(2πia) across the negative real axis, the values e^(a·L) over all logarithms L of z are z ^ a times e^(2πiak), and there are q of them when a = p/q in lowest terms and infinitely many when a is not rational.
 import Mathlib.Analysis.SpecialFunctions.Pow.Complex
@@ -591,8 +588,6 @@ example : (1 : ℂ) ^ ((1 : ℂ) / 2) = 1 := by simp
 #print axioms cpow_eq_exp_mul_log_and_branches
 #print axioms number_of_values_of_complex_power
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

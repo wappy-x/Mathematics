@@ -243,9 +243,6 @@ Lean proves the rules below for every fraction, the list rule for every number, 
 
 The decimals, the search over bottom numbers up to 400, and pi are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 331 lines</summary>
-
 ```lean
 -- Continued fractions: a number's list of steps stops exactly when it is a fraction, the stops build from the steps, and each stop after step 1 or later is as close as any fraction with a bottom number no bigger than its own.
 import Mathlib.Algebra.ContinuedFractions.Computation.TerminatesIffRat
@@ -579,8 +576,6 @@ example : (GenContFract.of (97 / 400 : ℚ)).h = 0 ∧
 #print axioms steps_stop_iff_number_is_a_fraction
 #print axioms stops_build_from_steps
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -365,9 +365,6 @@ Lean proves both length formulas for every curve whose slope has no jumps, and t
 
 The decimals, the Simpson sums, the chord totals and the 40 m step are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 367 lines</summary>
-
 ```lean
 -- Arc length: for a point moving in the plane with rates that have no jumps, the least upper bound of its chord totals equals the integral of its speed, a graph's length is the integral of √(1 + f'(x)^2), and the card's cable y = x^2/1000 from −200 to 200 m is exactly 500(0.4·√1.16 + asinh 0.4) metres long.
 import Mathlib.Topology.EMetricSpace.BoundedVariation
@@ -737,8 +734,6 @@ example : (340 : ℚ) - 20 = 4 / 5 * 400 := by norm_num
 #print axioms graph_length_eq_integral_sqrt_one_add_deriv_sq
 #print axioms cable_length_closed_form
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

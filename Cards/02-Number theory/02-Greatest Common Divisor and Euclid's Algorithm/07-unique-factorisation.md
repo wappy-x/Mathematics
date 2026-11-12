@@ -242,9 +242,6 @@ Lean proves the theorem for every whole number above 1, and two facts the proof 
 
 Running the factoring code on the day, row by row, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 92 lines</summary>
-
 ```lean
 -- Why the factorisation is unique: every whole number above 1 is a product of primes, any two such prime lists are the same up to order, a prime dividing a product of primes is one of them, and in the world 1, 5, 9, 13, ... uniqueness fails at 441.
 import Mathlib.Data.Nat.Factors
@@ -339,8 +336,6 @@ example : 96 * 900 = 86400 := by norm_num
 #print axioms prime_dividing_a_product_of_primes_is_on_the_list
 #print axioms uniqueness_fails_in_the_one_mod_four_world
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

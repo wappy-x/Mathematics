@@ -354,9 +354,6 @@ Lean proves the three rules for complex columns and square matrices of every siz
 
 The decimals, the two roads to R's eigenvalues, H's eigenvalue ratios and the figure's positions are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 128 lines</summary>
-
 ```lean
 -- Complex vectors and matrices: with the first vector conjugated, a complex column's squared length is a sum of real squares and is positive unless the column is zero, a Hermitian matrix has only real eigenvalues, and a matrix with U* U = I keeps every length; the card's quarter turn, its eigenvectors and its Hermitian partner are checked exactly.
 import Mathlib.LinearAlgebra.Matrix.Hermitian
@@ -487,8 +484,6 @@ example : star (![-1 - 2 * I, 3 + 4 * I] : Fin 2 → ℂ) ⬝ᵥ ![-1 - 2 * I, 3
 #print axioms conjugate_dot_self_is_sum_of_squares
 #print axioms unitary_keeps_length
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

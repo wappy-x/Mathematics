@@ -371,9 +371,6 @@ Lean proves the strip, the sliding line and the damping rule for every signal th
 
 Every decimal, the rectangle loops, the lines slid past a pole and the mistakes table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 226 lines</summary>
-
 ```lean
 -- Where a transform lives: a signal that grows at most exponentially at each end has a two-sided Laplace transform that converges and is holomorphic on the open strip between the two growth rates, the inverse integral up any vertical line in that strip returns the signal wherever it is continuous, and damping by e^(−at) turns the Fourier transform into the transform read along Re s = a.
 import Mathlib.Analysis.MellinInversion
@@ -602,8 +599,6 @@ example : (240 : ℚ) + 800 * (-1 / 5) = 80 ∧ (240 : ℚ) + 800 * (1 / 20) = 2
 #print axioms slx_locint
 #print axioms slx_mul_unit_iff
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

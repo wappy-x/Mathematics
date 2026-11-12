@@ -369,9 +369,6 @@ Lean proves Stirling's formula for real s growing without bound, with the peak, 
 
 The 1 + 1/(12s) correction, the values at 4.5, 0.5 and 10i, and the negative-axis failure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 185 lines</summary>
-
 ```lean
 -- Stirling's formula: as the real number s grows, the gamma integral Γ(s + 1) divided by √(2πs) (s/e)^s tends to 1, the integrand t^s e^(-t) peaks at t = s with height (s/e)^s, the bell fitted there has area √(2πs) (s/e)^s, and the card's whole-number factorials 10!, 9! and 52! check out.
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -559,8 +556,6 @@ example : 80658175 * 10 ^ 60 ≤ Nat.factorial 52 ∧ Nat.factorial 52 < 8065818
 #print axioms gamma_integrand_peak
 #print axioms stirling_bell_area
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

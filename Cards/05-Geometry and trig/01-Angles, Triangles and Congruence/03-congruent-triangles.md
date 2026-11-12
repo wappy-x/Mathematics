@@ -336,9 +336,6 @@ Lean proves the four tests for any two triangles in a flat plane, and shows that
 
 The grid constructions, the halving search, the scan and the figure coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 169 lines</summary>
-
 ```lean
 -- Congruent triangles: in the flat plane, each of the four tests SSS, SAS, ASA and RHS forces two triangles to match in all three sides and all three angles, while SSA and AAA do not.
 import Mathlib.Geometry.Euclidean.Triangle
@@ -510,8 +507,6 @@ example : (170 : ℕ) - 136 = 34 := by norm_num
 #print axioms side_side_angle_is_not_a_test
 #print axioms angle_angle_angle_is_not_a_test
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

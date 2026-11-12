@@ -347,9 +347,6 @@ Lean proves the theorem in any number of dimensions, the three factors in the ta
 
 The decimals, the grid road, the difference-quotient Jacobians, the patch polygons and the mistake values are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 262 lines</summary>
-
 ```lean
 -- Change of variables: a total over places equals the total over addresses weighted by the size of the Jacobian determinant, the polar, cylindrical and spherical factors are r, r and ρ^2 sin φ, and the card's valley takes exactly 60π mm km^2 of rain.
 import Mathlib.MeasureTheory.Function.Jacobian
@@ -614,8 +611,6 @@ example : 2 * π * (100 ^ 2 / 2) = 10000 * π := by norm_num; ring
 #print axioms jacobian_det_polar_cylindrical_spherical
 #print axioms valley_rain_total
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

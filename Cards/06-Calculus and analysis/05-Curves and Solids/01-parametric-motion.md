@@ -358,9 +358,6 @@ Lean proves the three rules for any two coordinate functions that meet their con
 
 The decimals, the difference quotients, the halving search for the top, the chart and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 121 lines</summary>
-
 ```lean
 -- Parametric motion: velocity is the pair of coordinate rates, speed is the limit of distance over time by Pythagoras, and the path's slope is dy/dt over dx/dt wherever dx/dt is not zero.
 import Mathlib.Analysis.Calculus.Darboux
@@ -484,8 +481,6 @@ example : (16 : ℕ) ^ 2 = 256 := by norm_num
 #print axioms velocity_iff_componentwise
 #print axioms distance_over_time_tendsto_speed
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

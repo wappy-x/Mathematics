@@ -363,9 +363,6 @@ Lean proves the recurrence and the polynomial claim for every finite network, an
 
 The sum over sets of walls and the fewest-colours search are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 513 lines</summary>
-
 ```lean
 -- The chromatic polynomial: the number of proper colourings of a finite simple graph with q colours equals the count with one edge deleted minus the count with that edge contracted, it is a monic polynomial in q whose degree is the number of vertices and whose next coefficient is minus the number of edges, a ring of n rooms has (q - 1)^n + (-1)^n (q - 1) colourings, and the card's counts 24, 18, 6, 12 and 30 check out.
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
@@ -881,8 +878,6 @@ example : (24 : ℕ) + 6 = 30 ∧ 24 < 24 + 6 := by norm_num
 #print axioms chromatic_count_is_polynomial
 #print axioms ring_chromatic_count
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

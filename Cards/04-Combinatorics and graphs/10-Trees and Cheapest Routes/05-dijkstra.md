@@ -370,9 +370,6 @@ Lean proves the method right on every map with finitely many points and no cost 
 
 Listing all 13 routes, walking the predecessors home and the 16-minute mistake are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 302 lines</summary>
-
 ```lean
 -- Dijkstra's algorithm: on finitely many points joined by one-way roads whose costs are never below zero, settling the cheapest unsettled point and relaxing its roads, round after round until every point is settled, ends with every guess equal to the cheapest route cost from the start, while one negative cost can leave a wrong answer.
 import Mathlib.Algebra.Order.Monoid.WithTop
@@ -677,8 +674,6 @@ example : (runOn rebate 0 [0, 2, 1]).d 2 = 2 ∧ routeCost rebate [0, 1, 2] = 1 
 #print axioms smallest_unsettled_guess_is_cheapest
 #print axioms negative_cost_breaks_settling
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

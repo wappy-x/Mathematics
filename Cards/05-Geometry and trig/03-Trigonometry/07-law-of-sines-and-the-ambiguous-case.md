@@ -373,9 +373,6 @@ Lean proves the law of sines, the two-angles rule and the SSA count for every fl
 
 Decimals, the inverse sine by halving, the sightlines crossed on a grid, and the figure coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 342 lines</summary>
-
 ```lean
 -- Law of sines: in every flat triangle each side over the sine of the angle it faces equals the diameter of the circle through the corners, two angles and a side fix every side, and two sides with an angle not between them fit no triangle, one or two, as the card's table says.
 import Mathlib.Geometry.Euclidean.Angle.Sphere
@@ -720,8 +717,6 @@ example : (105 : ℚ) / 30 = 7 / 2 := by norm_num
 #print axioms two_angles_and_a_side_fix_every_side
 #print axioms ssa_triangle_count
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

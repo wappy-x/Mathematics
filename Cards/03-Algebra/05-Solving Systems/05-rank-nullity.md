@@ -365,9 +365,6 @@ Lean proves the three general claims for every matrix of ordinary numbers, of an
 
 Finding each matrix's rank and nullity, by elimination and by the biggest square block, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 74 lines</summary>
-
 ```lean
 -- Rank and nullity: for every matrix of real numbers, the directions it keeps plus the directions it kills add up to its number of columns, two inputs collide exactly when their difference is killed, and nullity 0 means different inputs always give different outputs.
 import Mathlib.LinearAlgebra.Matrix.Rank
@@ -444,8 +441,6 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 #print axioms collide_iff_difference_killed
 #print axioms one_to_one_iff_nullity_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

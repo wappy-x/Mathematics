@@ -359,9 +359,6 @@ Lean proves the card's three general facts for any map on finitely many stations
 
 The line-by-station table and the printed output are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 151 lines</summary>
-
 ```lean
 -- The adjacency matrix: in every finite simple graph the k-th power of the adjacency matrix counts, in row i and column j, the walks of exactly k edges from i to j, its square has the degrees down the diagonal, the trace of its cube is six times the number of triangles, and the card's six-station metro numbers check out.
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
@@ -515,8 +512,6 @@ example : ((metro.adjMatrix ℕ + 1 : Matrix (Fin 6) (Fin 6) ℕ) ^ 3) 0 5 = 9 :
 
 end AdjacencyMatrixAndWalkCounting
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -239,9 +239,6 @@ Lean proves three claims, the first for every if-then and the other two for ever
 
 Lean also checks the drivers' verdicts and the count to 20, so only the printed table is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 59 lines</summary>
-
 ```lean
 -- Proof by contrapositive: an if-then and its contrapositive are the same claim, so if a whole number times itself is odd, the number is odd.
 import Mathlib.Algebra.Ring.Parity
@@ -303,8 +300,6 @@ example : (Finset.Icc 1 20).filter (fun n : ℕ => (n * n) % 2 = 1)
 #print axioms odd_of_odd_mul_self
 #print axioms even_mul_self_of_even
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

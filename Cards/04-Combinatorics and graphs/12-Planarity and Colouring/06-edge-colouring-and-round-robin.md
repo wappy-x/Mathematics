@@ -364,9 +364,6 @@ Lean proves Vizing's bound, König's equality and the league answer for every fi
 
 The backtracking search, the printed rounds and grid, and the two censuses of small networks are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 1134 lines</summary>
-
 ```lean
 -- Edge colouring: a finite simple graph's edges need at least its largest degree in colours and at most one more, exactly that many when it is bipartite, and the complete graph on n dots needs n - 1 colours for even n and n for odd n.
 import Mathlib.Combinatorics.SimpleGraph.LineGraph
@@ -1503,8 +1500,6 @@ example : ¬ ∃ k : Fin 6, (0 + 1) % 6 = 2 * k.val % 6 := by decide
 #print axioms konig_bipartite_chromatic_index_eq_max_degree
 #print axioms complete_graph_chromatic_index
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

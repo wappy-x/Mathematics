@@ -260,9 +260,6 @@ Lean proves the three rules for every pair of numbers, not just the night's read
 
 It also checks the card's whole-number and fraction sums exactly: the night in order, the band counts, the flips, the shortfalls and the halfway points. Sorting the list and printing the decimals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 69 lines</summary>
-
 ```lean
 -- The number line and inequalities: multiplying both sides by a negative number flips the less-than mark, adding the same number or multiplying by a positive one keeps it, and the midpoint of two different fractions is a fraction strictly between them.
 import Mathlib.Data.Real.Basic
@@ -334,8 +331,6 @@ example : Finset.Ioo (18 : ℤ) 19 = ∅ := by decide
 #print axioms slide_and_stretch_keep_less_than
 #print axioms midpoint_between_fractions
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

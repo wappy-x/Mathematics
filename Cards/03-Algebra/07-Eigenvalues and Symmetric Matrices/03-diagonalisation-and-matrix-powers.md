@@ -373,9 +373,6 @@ Lean proves the power formula for every real square matrix with a full set of in
 
 The decimal runs, the month-by-month table and the other three mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 149 lines</summary>
-
 ```lean
 -- Diagonalisation: a real square matrix whose eigenvectors fill the columns of an invertible matrix P has n-th power P D^n P⁻¹ with each eigenvalue raised to the n-th power on the diagonal, the card's car fleet after n months is (600 + 400 × 0.5^n, 400 − 400 × 0.5^n), the shear has no such factorisation, and the card's worked numbers come out as it says.
 import Mathlib.Data.Matrix.Basic
@@ -527,8 +524,6 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 #print axioms fleet_after_n_months
 #print axioms shear_is_not_diagonalisable
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -230,9 +230,6 @@ Lean proves the card's three general facts for every prime clock and every whole
 
 Running both streets step by step is left to the Python and Rust checks; that the way back stays slow is a conjecture.
 
-<details>
-<summary>The Lean proof, 128 lines</summary>
-
 ```lean
 -- One-way streets: when a number's powers visit every non-zero slot on a prime clock, the exponent that lands on a slot is unique (and when they do not, two exponents land together), trial division only needs primes up to the square root, and the card's numbers 1,009 × 1,013 = 1,022,117 and 11 to the 613 on a clock of 1,009 landing on 956 check out.
 import Mathlib.Data.ZMod.Basic
@@ -363,8 +360,6 @@ example : (11 : ZMod 1013) ^ 46 = 1 ∧ ∀ k ∈ Finset.Icc 1 45, (11 : ZMod 10
 #print axioms exponent_not_unique_when_powers_miss_a_slot
 #print axioms composite_has_prime_factor_at_most_sqrt
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

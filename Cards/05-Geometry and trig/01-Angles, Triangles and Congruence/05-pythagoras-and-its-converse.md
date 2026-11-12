@@ -339,9 +339,6 @@ Lean proves both claims for every flat triangle, not just the 3-4-5 truss.
 
 It also checks the card's whole-number sums exactly: the truss, the dissection, the missing rafter, the 6-8-10 and 5-12-13 trusses, and the mistakes. The decimal roots, the shoelace area and the search round the circle are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 53 lines</summary>
-
 ```lean
 -- Pythagoras: in a flat triangle ABC the angle at C is a right angle exactly when BC^2 + CA^2 = AB^2.
 import Mathlib.Geometry.Euclidean.Angle.Unoriented.RightAngle
@@ -397,8 +394,6 @@ example : (3 : ℤ) ^ 2 + 5 ^ 2 - 4 ^ 2 = 18 := by decide
 #print axioms hypotenuse_eq_sqrt_sum_of_leg_squares
 #print axioms dissection_area_count
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

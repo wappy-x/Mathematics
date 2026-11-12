@@ -358,9 +358,6 @@ Lean proves both formulas for every circle in a flat plane, and proves Archimede
 
 The decimals, the polygon runs and the hop walk are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 158 lines</summary>
-
 ```lean
 -- Circles: in the flat plane a disc of radius r has area pi times r squared, one full turn round a circle of diameter d is pi times d long, and pi lies between Archimedes' 3 10/71 and 3 1/7.
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
@@ -521,8 +518,6 @@ example : 4 * ((Finset.range 35 ×ˢ Finset.range 35).filter
 #print axioms circumference_eq_pi_mul_diameter
 #print axioms archimedes_bounds_on_pi
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

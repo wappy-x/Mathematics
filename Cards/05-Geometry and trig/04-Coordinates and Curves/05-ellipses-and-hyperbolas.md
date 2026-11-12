@@ -359,9 +359,6 @@ Lean proves these facts for every size of curve with the right gap, foci at (−
 
 The sign test, the halving searches, the asymptotes and decimals such as 97.98 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 202 lines</summary>
-
 ```lean
 -- Ellipses and hyperbolas: with foci at (-c, 0) and (c, 0), the points whose distances to the foci add to 2a are exactly the solutions of x^2/a^2 + y^2/(a^2 - c^2) = 1, the points whose distances differ by 2a are exactly the solutions of x^2/a^2 - y^2/(c^2 - a^2) = 1, and on the ellipse the distance to the focus (c, 0) is a - (c/a)x, between a - c and a + c.
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -566,8 +563,6 @@ example : 1 + (9 : ℚ) / 16 = (5 / 4) ^ 2 := by norm_num
 #print axioms hyperbola_fixed_difference_iff_standard_form
 #print axioms ellipse_focal_distances
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

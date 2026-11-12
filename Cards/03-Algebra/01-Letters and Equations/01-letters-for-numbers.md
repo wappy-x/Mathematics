@@ -326,9 +326,6 @@ Lean proves the card's three rules for every number of miles, not just the 0 to 
 
 It also checks the worked numbers exactly: the 6- and 10-mile fares, the plotted lines, the search up to 20 and the four mistakes. The printed tables and the running code are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 55 lines</summary>
-
 ```lean
 -- Letters for numbers: for every number of miles m, two taxi fares 3 + 2m added together, the collected form 6 + 4m and the bracketed form 2(3 + 2m) are the same number, the fare built a mile at a time is 3 + 2m, a fare of 15 means exactly 6 whole miles, and the card's worked numbers and wrong readings come out as it says.
 import Mathlib.Algebra.Ring.Defs
@@ -386,8 +383,6 @@ example : 3 + 4 * 6 = 27 := by decide
 #print axioms fare_a_mile_at_a_time
 #print axioms fare_fifteen_means_six_miles
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

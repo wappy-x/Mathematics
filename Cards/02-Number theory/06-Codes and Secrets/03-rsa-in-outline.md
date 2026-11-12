@@ -249,9 +249,6 @@ Lean proves the message comes back for any two different primes and every messag
 
 Squaring and multiplying, the search that finds 2753, and the printed run stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 112 lines</summary>
-
 ```lean
 -- RSA in outline: for two different primes, unlocking a locked message below their product brings it back, the hidden count is the totient of the product, and a private key exists exactly when the public exponent shares no factor with that count.
 import Mathlib.Data.Nat.Totient
@@ -366,8 +363,6 @@ example : 3298 = 65 + 3233 ∧ (3298 ^ 17 % 3233) ^ 2753 % 3233 = 65 := by decid
 #print axioms totient_mul_two_primes
 #print axioms private_key_exists_iff_coprime
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

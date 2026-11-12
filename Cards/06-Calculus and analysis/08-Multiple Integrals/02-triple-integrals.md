@@ -346,9 +346,6 @@ Lean proves two general facts for every density meeting the card's conditions, a
 
 The cube sums and their gaps, the decimals, the centre's y and z, and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 382 lines</summary>
-
 ```lean
 -- Triple integrals: a continuous density on a closed box can be integrated one direction at a time in any of the six orders, the centre of mass of a bounded solid with positive mass is the one point about which the density-weighted positions cancel, and the card's wedge of radius R, height H and angle α with density 1 + r/40 has mass αH(R²/2 + R³/120) and x-moment 2 sin(α/2) H (R³/3 + R⁴/160).
 import Mathlib.MeasureTheory.Integral.Prod
@@ -733,8 +730,6 @@ example : (110000 / 3) / (2000 * π / 3) = 55 / π := by
 #print axioms centre_of_mass_balances
 #print axioms wedge_mass_and_moment
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

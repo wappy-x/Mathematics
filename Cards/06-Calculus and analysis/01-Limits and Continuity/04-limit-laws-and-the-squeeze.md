@@ -343,9 +343,6 @@ Lean proves the limit laws and the squeeze for every real function, and the card
 
 The decimals, the grid scans, the chart, infinite limits and limits at infinity are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 108 lines</summary>
-
 ```lean
 -- Limit laws and the squeeze: limits of real functions pass through sums, multiples, products and quotients (bottom limit not 0), a function trapped on a window around a between two functions with the same limit has that limit too, and so x^2 sin(1/x) heads for 0 at 0 although sin(1/x) has no limit there.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -456,8 +453,6 @@ example : Real.sqrt (1 / 1000) ^ 2 = 1 / 1000 := by
 #print axioms squeeze_theorem
 #print axioms x_sq_sin_inv_tendsto_zero_though_sin_inv_has_no_limit
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

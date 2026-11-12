@@ -367,9 +367,6 @@ Lean proves the rim, triangle and parallel claims for every true radius, every t
 
 The decimals, the fish's drawn ends, the pole triangle's three right angles and the polygon rims are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 209 lines</summary>
-
 ```lean
 -- Three geometries: circles of the same true radius have less rim on a sphere and more in the Poincaré disc than on flat ground (the disc rim is exactly 2π sinh ρ), a disc triangle's angles add to less than π, two great circles always meet, and through a point off a disc line pass infinitely many disc lines that never meet it.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
@@ -581,8 +578,6 @@ example : (0 : ℚ) ^ 2 + (5 / 4 - 1 / 2) ^ 2 = (3 / 4) ^ 2 ∧ (0 : ℚ) ^ 2 + 
 #print axioms disc_triangle_angle_sum_lt_pi
 #print axioms parallels_none_on_sphere_endless_in_disc
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

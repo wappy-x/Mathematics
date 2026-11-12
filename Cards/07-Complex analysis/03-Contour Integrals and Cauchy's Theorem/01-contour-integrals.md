@@ -349,9 +349,6 @@ Lean proves the track's whole-power laps, the conjugate's lap for every radius, 
 
 The stride sums, the e^z/z^2 lap, the clockwise, joined and repeated laps, and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 54 lines</summary>
-
 ```lean
 -- Contour integrals: round the unit circle the integral of z^n dz is 2πi when n = −1 and 0 for every other whole number n, the conjugate's lap round a circle of radius R is 2πiR², and along a path with finitely many smooth pieces the integral's size is at most M times the length.
 import Mathlib.MeasureTheory.Integral.CircleIntegral
@@ -408,8 +405,6 @@ theorem norm_contour_integral_le_ml (f : ℂ → ℂ) (z z' : ℝ → ℂ) (a b 
 #print axioms circle_integral_conj
 #print axioms norm_contour_integral_le_ml
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

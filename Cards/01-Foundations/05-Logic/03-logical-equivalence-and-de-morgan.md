@@ -251,9 +251,6 @@ Lean proves both laws for any two yes-or-no sentences, not only nuts and dairy.
 
 The printed table and the second road, with 1s and 0s, stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 71 lines</summary>
-
 ```lean
 -- Logical equivalence and De Morgan: for any two yes-or-no sentences, "not (A or B)" says the same as "(not A) and (not B)", "not (A and B)" says the same as "(not A) or (not B)", and "not both" is not the same as "neither".
 import Mathlib.Data.Fintype.Prod
@@ -327,8 +324,6 @@ example : (!true || true) = true ∧ (!(true || true)) = false := by decide
 #print axioms de_morgan_every_dish
 #print axioms not_both_ne_neither
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

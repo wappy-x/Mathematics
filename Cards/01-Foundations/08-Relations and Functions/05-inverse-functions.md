@@ -239,9 +239,6 @@ Lean proves three facts for every function, whatever its inputs and outputs, and
 
 The runs with 1.8 as a decimal, and the printed lines, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 79 lines</summary>
-
 ```lean
 -- Inverse functions: a function has a two-sided inverse exactly when it is a bijection, that inverse is unique, and a composite is undone in reverse order.
 import Mathlib.Logic.Function.Basic
@@ -323,8 +320,6 @@ example : ∀ d ∈ Finset.Icc 1 12, ((Finset.range 12).filter (fun h => dial h 
 #print axioms inverse_unique
 #print axioms inverse_of_comp_reverse_order
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

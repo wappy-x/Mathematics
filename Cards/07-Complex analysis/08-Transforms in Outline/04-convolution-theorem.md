@@ -358,9 +358,6 @@ Lean proves the convolution theorem at every frequency, for every pair of signal
 
 The tent's shape, the box's transform and the f = g = 1 break are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 122 lines</summary>
-
 ```lean
 -- Convolution: for any two signals on the line with finite area under their absolute values, the Fourier transform (with e^(−iωt) and no constant in front) of their convolution is the product of their transforms, the convolution itself has finite area, and the unflipped version (correlation) with a real second signal transforms to f-hat times the conjugate of g-hat.
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
@@ -485,8 +482,6 @@ example : (List.range' 2 11).map (fun n =>
 #print axioms convolution_is_integrable
 #print axioms fourier_transform_of_correlation
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

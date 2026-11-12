@@ -367,9 +367,6 @@ Lean proves the card's three facts for every column and every row, not just the 
 
 Building the triangle by addition alone and printing each line are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 109 lines</summary>
-
 ```lean
 -- The hockey stick: adding the binomial coefficients C(k,k) + C(k+1,k) + ... + C(n,k) down one column of Pascal's triangle gives C(n+1,k+1), the picks of k+1 labels from n+1 split by their largest label give that same sum, and a triangular layer of m rows holds C(m+1,2) tins.
 import Mathlib.Data.Nat.Choose.Sum
@@ -481,8 +478,6 @@ example : ∑ j ∈ range 7, Nat.choose 6 j = 64 := by decide
 #print axioms picks_with_largest_label_count
 #print axioms triangular_layer_holds_choose_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

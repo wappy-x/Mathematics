@@ -363,9 +363,6 @@ Lean proves the card's three facts for every linear map, between spaces of any s
 
 Running the code, with its printed corners and asserts, stays with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 112 lines</summary>
-
 ```lean
 -- Linear maps: any rule that respects adding and stretching equals multiplication by the matrix whose columns are where it sends the axis arrows, only that matrix fits, and one rule after another has the product matrix with the first move on the right; the card's shear, quarter turn and corner (1, 1) come out as it says.
 import Mathlib.Data.Matrix.Mul
@@ -480,8 +477,6 @@ example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1,
 #print axioms matrix_fixed_by_axis_images
 #print axioms matrix_of_composition_is_product
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -345,9 +345,6 @@ Lean proves the inverse rule and the slope rule in general, and the arcsin rate 
 
 The arctan and arccos rules, the shrinking quotients and every decimal are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 119 lines</summary>
-
 ```lean
 -- Implicit and inverse differentiation: the undo g of a function f that is one-to-one and continuous on an open interval has rate 1/f'(a) at b = f(a) whenever f'(a) is not 0, a differentiable branch of the circle x^2 + y^2 = R^2 has slope -x/y wherever y is not 0, and arcsin has rate 1/cos(arcsin u) = 1/√(1 - u^2) for -1 < u < 1.
 import Mathlib.Analysis.Calculus.Deriv.Inverse
@@ -469,8 +466,6 @@ example : ((1 / 10 : ℚ) / (1 / 10) ^ 3) = 100 ∧ ((1 / 100 : ℚ) / (1 / 100)
 #print axioms circle_branch_slope_is_neg_x_div_y
 #print axioms arcsin_rate_is_one_div_sqrt_one_sub_sq
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

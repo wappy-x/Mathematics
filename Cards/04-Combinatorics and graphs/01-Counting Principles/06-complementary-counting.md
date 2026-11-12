@@ -359,9 +359,6 @@ Lean proves the method for every finite collection and every rule, and both exam
 
 Listing all 1,048,576 squad subsets one by one, and the 85.81% share, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 94 lines</summary>
-
 ```lean
 -- Counting the complement: the objects a rule allows number the whole collection minus the objects it refuses, which gives 36^6 - 26^6 = 1,867,866,560 six-character passwords with a digit and C(20, 11) - C(18, 11) = 136,136 elevens with a goalkeeper.
 import Mathlib.Data.Finset.Card
@@ -458,8 +455,6 @@ example : 2 * Nat.choose 19 10 = 184756 := by decide +kernel
 #print axioms card_strings_with_at_least_one
 #print axioms card_picks_with_at_least_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

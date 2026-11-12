@@ -367,9 +367,6 @@ Lean proves the product rule and the rack count for every pair of count lists an
 
 Multiplying out this rack's series, its coefficients 5/4 and 1/4, and the four mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 174 lines</summary>
-
 ```lean
 -- Exponential generating functions: multiplying two series whose counts are divided by n! gives the series of the binomial convolution, so n! times the coefficient of x^n counts the arrangements of a rack of tiles.
 import Mathlib
@@ -546,8 +543,6 @@ example : Nat.factorial 4 / (Nat.factorial 2 * Nat.factorial 2) + Nat.factorial 
 #print axioms hand_out_places_eq_binomial_convolution
 #print axioms rack_words_eq_factorial_mul_coeff
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

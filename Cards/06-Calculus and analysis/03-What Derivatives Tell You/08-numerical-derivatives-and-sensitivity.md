@@ -340,9 +340,6 @@ Lean proves both truncation laws and the central error bound for every smooth $C
 
 The forward total-error bound, the best steps, the Black–Scholes numbers, the chart and the tables are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 193 lines</summary>
-
 ```lean
 -- Numerical derivatives: for a function with a continuous third derivative across the bumped range, the central difference misses the derivative by exactly h^2/6 times a third derivative at some inside point, the forward difference (with a continuous second derivative) by h/2 times a second derivative, and with prices off by at most η the central error is at most h^2 M₃/6 + η/h.
 import Mathlib.Analysis.Calculus.ContDiff.Basic
@@ -538,8 +535,6 @@ example : (1 / 100 : ℚ) / (2 * (1 / 100)) = 1 / 2 := by norm_num
 #print axioms forward_difference_error
 #print axioms central_difference_total_error
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

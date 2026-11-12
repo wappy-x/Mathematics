@@ -378,9 +378,6 @@ Lean proves the method for every map in one piece with every street a positive l
 
 The maps' shortest walks, the search over sets of streets and the open round stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 864 lines</summary>
-
 ```lean
 -- The Chinese postman: on a connected map with positive street lengths, the shortest closed round from any junction that walks every street is the total street length plus the cheapest pairing of the odd junctions, each pair charged its shortest walk, and 2k odd junctions can be paired in 1 × 3 × 5 × ⋯ × (2k − 1) ways.
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
@@ -1247,8 +1244,6 @@ example : [3‼, 5‼, 7‼, 9‼] = [3, 15, 105, 945] := by decide
 
 end ChinesePostman
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

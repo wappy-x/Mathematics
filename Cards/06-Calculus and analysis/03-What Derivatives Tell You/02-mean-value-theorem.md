@@ -352,9 +352,6 @@ Lean proves three theorems, for every function on the real numbers that meets th
 
 The train's exact arithmetic is checked too; the decimals, bisection, grid search and difference quotients are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 65 lines</summary>
-
 ```lean
 -- Mean value theorem: a real function continuous on [a, b] and differentiable inside has, at some point strictly between a and b, a derivative equal to its average rate (f b - f a) / (b - a); with Rolle's theorem and "zero derivative on an unbroken stretch means constant".
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
@@ -422,8 +419,6 @@ example : ((200 : ℚ) * (1 / 2) - 0) / (1 - 0) = 100 := by norm_num
 #print axioms rolle_equal_ends_force_a_flat_point
 #print axioms zero_derivative_on_unbroken_stretch_means_constant
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

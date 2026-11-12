@@ -356,9 +356,6 @@ Lean proves these facts for every curve with no cusp or self-crossing, wherever 
 
 The line scans, the 216 sampled triples, the 1728 triples mod 7 and the figure's coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 270 lines</summary>
-
 ```lean
 -- Elliptic curves: the chord-and-tangent rule, with an extra point O as zero, adds points of y² = x³ + ax + b (no cusp or self-crossing) so that the sum stays on the curve and the laws of ordinary addition hold.
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
@@ -631,8 +628,6 @@ open EllipticCard
 #print axioms add_some_some
 #print axioms add_hom
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

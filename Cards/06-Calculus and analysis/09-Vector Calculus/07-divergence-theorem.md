@@ -337,9 +337,6 @@ Lean proves the theorem for every box, and its height part for every solid betwe
 
 The ball's curved skin, the hose at the centre, the Simpson sums and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 152 lines</summary>
-
 ```lean
 -- Divergence theorem: the flux of a smooth field out through all six faces of a box equals its divergence added through the box, the height part of that holds on any solid between a floor graph and a ceiling graph, and the card's tank and ball numbers check out.
 import Mathlib.MeasureTheory.Integral.DivergenceTheorem
@@ -494,8 +491,6 @@ example : -((6:ℚ) * 10) = -60 ∧ (5:ℚ) * 10 = 50 ∧ (50:ℚ) ≠ 60 := by 
 #print axioms flux_out_of_box_eq_divergence_summed_inside
 #print axioms height_flux_between_two_graphs_eq_dz_summed_inside
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

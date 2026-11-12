@@ -384,9 +384,6 @@ Lean proves the recursion, its parity step, the binomial ceiling and $R(3,4) = 9
 
 The searches, the six-town brute force and the floors for $R(3,5)$ and $R(4,4)$ are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 253 lines</summary>
-
 ```lean
 -- Ramsey numbers: when every road between towns is paved or gravel, the threshold for s all-paved or t all-gravel towns is at most the sum of its two feeders (one less when both are even), it is at most C(s+t-2, s-1) so it always exists, and R(3,4) = 9.
 import Mathlib.Combinatorics.SimpleGraph.Clique
@@ -642,8 +639,6 @@ example : Nat.choose 17 4 = 2380 ∧ Nat.choose 13 5 = 1287 ∧
 #print axioms ramsey_le_choose
 #print axioms ramsey_three_four_eq_nine
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

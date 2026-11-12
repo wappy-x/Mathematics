@@ -355,9 +355,6 @@ Lean proves Green's theorem on every rectangle, the P part on every region betwe
 
 The flux form, square counts, vortex and Simpson decimals are left to the Python and Rust checks; nothing checks curved fences in general.
 
-<details>
-<summary>The Lean proof, 239 lines</summary>
-
 ```lean
 -- Green's theorem: the work a smooth field P dx + Q dy does once anticlockwise round a rectangle equals its curl Q_x − P_y added over the rectangle, the P part of that holds on any region between two graphs, and each straight fence adds one shoelace term to the area integral ½(x dy − y dx).
 import Mathlib.MeasureTheory.Integral.CurveIntegral.Basic
@@ -599,8 +596,6 @@ example : (12:ℚ) + 23 / 5 = 83 / 5 ∧ (24:ℚ) / 5 + -(24 / 5) = 0 := by norm
 #print axioms p_part_between_two_graphs_eq_minus_py_summed
 #print axioms area_form_along_fence_eq_shoelace_term
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

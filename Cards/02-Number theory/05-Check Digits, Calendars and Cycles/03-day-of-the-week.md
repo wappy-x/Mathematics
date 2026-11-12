@@ -241,9 +241,6 @@ Lean proves the rule for every date from 1900 to 2099, and its one-day slip from
 
 Turning leftovers into day names and printing the running sums are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 129 lines</summary>
-
 ```lean
 -- Day of the week for any date: for every real date from 1900 to 2099, the card's sum (day of the month, plus the month's offset, plus years since 1900, plus leap days, with one taken back in January and February of a leap year) leaves the same remainder mod 7 as counting every day from Monday 1 January 1900, the month offsets are the month lengths shrunk mod 7, from 2100 the rule runs one day late, and the card's numbers come out as it says.
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
@@ -375,8 +372,6 @@ example : 90 % 7 = 6 := by decide
 #print axioms month_offset_is_days_before_mod_seven
 #print axioms day_of_week_rule_one_day_late_from_2100
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

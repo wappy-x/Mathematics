@@ -354,9 +354,6 @@ Lean proves the card's theorem for every matrix of real numbers, of any size.
 
 The elimination steps and the printed decimals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 162 lines</summary>
-
 ```lean
 -- Solving A x = b: for a square matrix of real numbers, independent columns give exactly one answer for every b, dependent columns give a whole infinite set of answers when b is a mix of the columns and no answer when it is not, two different answers always force a line of answers, and for 2 by 2 the columns test ad - bc says which case you are in.
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -521,8 +518,6 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 #print axioms two_answers_force_a_line_of_answers
 #print axioms columns_test_two_by_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -246,9 +246,6 @@ Lean proves Bezout's identity for every two whole numbers that are not both 0, n
 
 Running Euclid's chain step by step and printing each line is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 104 lines</summary>
-
 ```lean
 -- Bezout's identity: for whole numbers a and b, not both 0, every mix a × x + b × y is a multiple of their gcd, the gcd itself is such a mix, a target is reachable exactly when the gcd divides it, and the mixing counts are never unique.
 import Mathlib.Data.Int.GCD
@@ -355,8 +352,6 @@ example : (3 : ℤ) ∣ 6 ∧ (3 : ℤ) ∣ 9 ∧ ¬ ((3 : ℤ) ∣ 4) := by dec
 #print axioms target_is_a_mix_iff_gcd_divides
 #print axioms bezout_counts_slide_and_are_infinitely_many
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

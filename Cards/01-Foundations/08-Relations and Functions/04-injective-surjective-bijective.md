@@ -249,9 +249,6 @@ Lean proves the three general facts for every function, on finite sets where siz
 
 The printed rows of arrivals, and the check that reading forwards agrees with counting arrivals, stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 97 lines</summary>
-
 ```lean
 -- One-to-one and onto: a function is both one-to-one and onto exactly when every output has exactly one input arriving, on finite sets of equal size one-to-one and onto stand or fall together, more inputs than outputs rules out one-to-one and fewer rules out onto, and the card's clock and seatings come out as it says.
 import Mathlib.Data.Fintype.Card
@@ -351,8 +348,6 @@ example : ¬ Injective crowded ∧ ¬ Surjective crowded := by decide
 #print axioms injective_iff_surjective_of_card_eq
 #print axioms size_rules_out_one_test
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

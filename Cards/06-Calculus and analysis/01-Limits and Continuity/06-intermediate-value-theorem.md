@@ -332,9 +332,6 @@ Lean proves three things.
 
 It also checks the halving fractions and the cubic's values exactly. The decimals, the jump j and the bisection runs are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 66 lines</summary>
-
 ```lean
 -- Intermediate value theorem: a function continuous on a closed interval [a, b] takes every value between f(a) and f(b).
 import Mathlib.Topology.Order.IntermediateValue
@@ -403,8 +400,6 @@ example : (-1 : ℤ) ^ 3 - (-1) = 0 ∧ (0 : ℤ) ^ 3 - 0 = 0 ∧ (1 : ℤ) ^ 3 
 #print axioms sign_change_gives_root
 #print axioms no_fraction_in_one_two_squares_to_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

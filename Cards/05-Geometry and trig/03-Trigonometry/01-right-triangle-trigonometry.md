@@ -354,9 +354,6 @@ Lean proves the card's three rules for every right triangle with an angle A stri
 
 The 40° decimals, the crane's lengths and both roads are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 95 lines</summary>
-
 ```lean
 -- Sine, cosine and tangent: in every right triangle with an acute angle A, sin A, cos A and tan A are the side ratios opposite over hypotenuse, adjacent over hypotenuse and opposite over adjacent, so each ratio depends on the angle alone, and the other acute angle swaps sine and cosine.
 import Mathlib.Geometry.Euclidean.Angle.Unoriented.RightAngle
@@ -454,8 +451,6 @@ example : Real.sin (π / 4) = 1 / Real.sqrt 2 ∧ Real.cos (π / 4) = 1 / Real.s
 #print axioms side_ratios_depend_on_angle_alone
 #print axioms other_acute_angle_swaps_sine_and_cosine
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

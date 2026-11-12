@@ -356,9 +356,6 @@ Lean proves the counts for any number of distinct things and any pile sizes, not
 
 Writing out all 19,683 handouts and collecting the distinct splits one by one is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 350 lines</summary>
-
 ```lean
 -- Splitting into groups: n distinct things go into named piles of fixed sizes in n! / (n₁! n₂! ⋯ n_k!) ways, and with the names taken off the count is divided once more by m! for each size that m piles share, with the card's nine-player numbers checked.
 import Mathlib.Data.Fintype.Pi
@@ -711,8 +708,6 @@ example : Nat.factorial 9 / (Nat.factorial 3 * Nat.factorial 6) *
 #print axioms card_unnamed_splits
 #print axioms card_unnamed_equal_splits
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

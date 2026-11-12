@@ -356,9 +356,6 @@ Lean proves the principle for every bounded region and every function holomorphi
 
 The mean-value form, the decimals for e^z, the Schwarz example and the mistakes table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 95 lines</summary>
-
 ```lean
 -- The maximum modulus principle: a non-constant holomorphic function on a bounded region, continuous up to the edge, takes its largest modulus only on the edge (and its smallest too when it has no zeros), and a local peak of the modulus inside a region makes the function constant there.
 import Mathlib.Analysis.Complex.AbsMax
@@ -456,8 +453,6 @@ example : ‖(2 * I) ^ 2 + 1‖ = 3 := by norm_num [mul_pow]
 #print axioms min_modulus_only_on_boundary_of_no_zeros
 #print axioms eq_const_of_isLocalMax_norm
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

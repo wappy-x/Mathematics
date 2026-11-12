@@ -363,9 +363,6 @@ Lean proves the theorem for every region without holes, the rule for every disc 
 
 The Schwarz-Christoffel integral, Simpson's rule, the decimals, the second map's turn, the breaks and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 1489 lines</summary>
-
 ```lean
 -- The Riemann mapping theorem: every open simply connected region of the plane other than the whole plane has exactly one one-to-one holomorphic map onto the unit disc sending a chosen point to 0 with real positive derivative there, every such self-map of the disc is a Blaschke factor times a turn, and sin z maps the half strip of width π one-to-one onto the upper half plane.
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
@@ -1857,8 +1854,6 @@ example : I * (-I / 2) * (Real.sqrt 2 : ℂ) = (Real.sqrt 2 : ℂ) / 2 := by
 #print axioms disc_self_map_iff_blaschke_times_turn
 #print axioms sin_bijOn_half_strip_upper_half_plane
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

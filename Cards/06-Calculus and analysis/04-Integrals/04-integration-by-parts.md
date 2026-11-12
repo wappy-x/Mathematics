@@ -333,9 +333,6 @@ Lean proves integration by parts for every u, v, a and b that meet its condition
 
 The decimals, Simpson sums, (ln x)^n recurrence, antiderivative rates, mistake table and figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 68 lines</summary>
-
 ```lean
 -- Integration by parts: for u and v with continuous rates on a closed interval, the integral of u times the rate of v is the change in u v between the ends minus the integral of v times the rate of u, and this gives the card's reduction formula and its two areas of 1.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
@@ -406,8 +403,6 @@ theorem area_x_mul_exp_and_area_log_eq_one :
 #print axioms reduction_formula_x_pow_mul_exp
 #print axioms area_x_mul_exp_and_area_log_eq_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

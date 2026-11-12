@@ -339,9 +339,6 @@ Lean proves both halves and the constant rule in general, plus the tank's number
 
 The strip sums and their gaps, the slopes at minute 4, the three breaks and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 98 lines</summary>
-
 ```lean
 -- Fundamental theorem of calculus: the integral of a rate over an interval equals the change in any function with that rate, and the running total of a continuous rate has that rate as its derivative.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -442,8 +439,6 @@ example : ∫ t in (0 : ℝ)..Real.pi, Real.sin t = 2 := by
 #print axioms running_total_has_derivative_rate
 #print axioms antiderivatives_differ_by_constant
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

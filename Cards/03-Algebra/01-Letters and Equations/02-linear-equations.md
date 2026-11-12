@@ -332,9 +332,6 @@ Lean proves the solving rule and the sign flip for every choice of a, b and c.
 
 The fare grid, the second road and the three mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 59 lines</summary>
-
 ```lean
 -- Linear equations: for real numbers with a not zero, a x + b = c holds exactly when x = (c - b) / a, an unknown that cancels leaves no answer or every number, and solving a x + b < c flips the sign when a is negative.
 import Mathlib.Data.Real.Basic
@@ -396,8 +393,6 @@ example : ∀ m : ℝ, 3 + m + m = 3 + 2 * m := by intro m; ring
 #print axioms linear_equation_unknown_cancels
 #print axioms linear_inequality_flips_for_negative
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

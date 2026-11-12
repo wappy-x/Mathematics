@@ -243,9 +243,6 @@ Lean proves the card's three facts for every clock size and every coprime base, 
 
 Running the code and printing its output line by line is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 88 lines</summary>
-
 ```lean
 -- Euler's theorem: a whole number that shares no factor with the clock size n, raised to the count phi(n) of numbers below n coprime to n, leaves 1 on the n-clock, so exponents can be cut by phi(n), and multiplying the coprime list by that number only reorders it.
 import Mathlib.Data.Nat.Totient
@@ -336,8 +333,6 @@ example : φ 7 = 6 ∧ 3 ^ 10 % 7 = 4 ∧ 3 ^ (10 % 6) % 7 = 4 ∧ 3 ^ (10 % 7) 
 #print axioms exponent_cuts_by_totient
 #print axioms multiplying_the_coprime_list_only_shuffles_it
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

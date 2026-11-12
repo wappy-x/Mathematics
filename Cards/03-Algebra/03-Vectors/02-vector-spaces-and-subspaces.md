@@ -359,9 +359,6 @@ Lean proves the subspace test for every vector space, and the slot rule for list
 
 Printing the outputs, and testing the eight rules on shortbread, sponge and oat biscuit, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 109 lines</summary>
-
 ```lean
 -- Vector spaces and subspaces: inside any real vector space, a subset that holds the zero and is closed under adding and under scaling by every real number holds every opposite and is a vector space in its own right, a set cut out by "this slot equals c" passes exactly when c is 0, and the never-negative recipes lose their opposites.
 import Mathlib.Algebra.Module.Submodule.Defs
@@ -473,8 +470,6 @@ example : ((4 : ℤ) • (![200, 100, 50] : Fin 3 → ℤ) + (-3 : ℤ) • ![20
 #print axioms slot_pinned_set_is_subspace_iff_zero
 #print axioms never_negative_recipes_lack_opposites
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

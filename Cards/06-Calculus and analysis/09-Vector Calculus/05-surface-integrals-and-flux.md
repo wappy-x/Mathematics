@@ -349,9 +349,6 @@ Lean proves that area and flux do not depend on the grid, for any smooth sheet, 
 
 The sagging tarp, the Heron mesh, the shadow sums and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 199 lines</summary>
-
 ```lean
 -- Surface integrals: the area of a sheet, the sum of the lengths of r_u × r_v over the grid, does not depend on which grid is lifted, the flux, the sum of F · (r_u × r_v), stays the same under a grid change that keeps the side and flips sign under one that swaps it, and the card's taut tarp has 15 m^2 of fabric and catches 120 litres an hour in still air and 165 blown north.
 import Mathlib.MeasureTheory.Function.Jacobian
@@ -553,8 +550,6 @@ example : (![0, 0, -1/100] : Fin 3 → ℚ) ⬝ᵥ ![0, 3/4, -1] * 12 * 1000 = 1
 #print axioms flux_independent_of_grid_up_to_side
 #print axioms taut_tarp_area_and_flux
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

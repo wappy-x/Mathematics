@@ -243,9 +243,6 @@ Lean proves the card's three facts for every clock size, not just 7.
 
 Printing the output line by line is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 104 lines</summary>
-
 ```lean
 -- Wilson's theorem: for a clock size n of at least 2, the product 1 × 2 × ... × (n - 1) reads -1 on the n-clock exactly when n is prime, every composite clock reads 0 except the 4-clock, which reads 2, and on a prime clock only 1 and -1 are their own partner.
 import Mathlib.NumberTheory.Wilson
@@ -352,8 +349,6 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 #print axioms composite_clock_reads_zero_or_two
 #print axioms own_partner_iff_one_or_neg_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

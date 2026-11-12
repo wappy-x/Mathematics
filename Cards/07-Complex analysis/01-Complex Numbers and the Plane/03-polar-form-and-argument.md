@@ -335,9 +335,6 @@ Lean proves the polar rules for every length and angle, and the card's wind, dro
 
 The decimals, the bisection road, the jump's size near −1, the four mistakes and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 139 lines</summary>
-
 ```lean
 -- Polar form: multiplying two complex numbers in polar form multiplies the lengths and adds the angles, every nonzero complex number has exactly one angle in (-π, π], and the argument of a product is the sum of the arguments only up to whole turns, with a jump on the negative real axis.
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
@@ -479,8 +476,6 @@ example : arg (-5 : ℂ) = π ∧ -π ∉ Set.Ioc (-π) π := by
 #print axioms principal_argument_unique_and_jumps_on_negative_axis
 #print axioms arg_of_product_up_to_whole_turns
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

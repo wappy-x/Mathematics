@@ -371,9 +371,6 @@ Lean proves the card's facts for every whole number and every cap, not just for 
 
 The count of 22, the build-up by note length and the ten printed pairs are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 197 lines</summary>
-
 ```lean
 -- Integer partitions: for every n and every cap k, the partitions of n with at most k parts are exactly as many as those with every part at most k, because turning the dot diagram swaps the part count with the biggest part and undoes itself.
 import Mathlib.Combinatorics.Enumerative.Partition.YoungDiagram
@@ -573,8 +570,6 @@ example : 2 ^ (8 - 1) = 128 := by norm_num
 #print axioms conjugate_swaps_part_count_and_biggest_part
 #print axioms at_most_k_parts_recurrence
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

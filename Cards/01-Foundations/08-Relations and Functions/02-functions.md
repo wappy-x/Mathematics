@@ -246,9 +246,6 @@ Lean proves three general claims for any domain and codomain, not just the vendi
 
 It also checks the worked numbers and mistakes; reading the wiring forwards and backwards in code is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 109 lines</summary>
-
 ```lean
 -- Functions: a relation is a function exactly when every input appears as a first entry exactly once, the preimage counts of all outputs add up to the number of inputs, and adding an indicator function counts the set it marks.
 import Mathlib.Data.Fintype.Card
@@ -360,8 +357,6 @@ example : univ.filter (fun b => wiring b ∈ soldOut) = {A3} := by decide
 #print axioms sum_preimage_counts_eq_domain_size
 #print axioms sum_indicator_eq_card
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

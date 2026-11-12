@@ -359,9 +359,6 @@ Lean proves these facts for every finite network, not just the metro, with loops
 
 It also checks the metro exactly: its degrees, its two roads to 16, its four odd stations, the loop and second-track mistakes, and the party numbers. The census of all 64 networks on four stations, and Havel-Hakimi, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 83 lines</summary>
-
 ```lean
 -- Degrees and the handshaking lemma: in any finite network of dots and lines, loops and parallel lines allowed, the degrees add to twice the number of lines, so the odd-degree dots are even in number.
 import Mathlib.Data.Sym.Sym2
@@ -447,8 +444,6 @@ example : ¬ Even (3 * 5) := by decide
 #print axioms odd_degree_dots_are_even_in_number
 #print axioms regular_degree_times_dots_is_even
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

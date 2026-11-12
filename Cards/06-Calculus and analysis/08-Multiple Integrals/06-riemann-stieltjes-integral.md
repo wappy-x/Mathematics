@@ -337,9 +337,6 @@ Lean proves the existence theorem and the working formula in general, and the ca
 
 The fee's split sums, the 120- and 1200-slice sums, the contract-by-contract average and the area above G are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 474 lines</summary>
-
 ```lean
 -- Stieltjes integrals: a continuous value has a Stieltjes integral against every nondecreasing integrator, a steady rise plus jumps gives an ordinary integral plus one term per jump, and the card's 1,000 contracts average $35.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -816,8 +813,6 @@ example : 400 + 500 + 100 - 400 = 600 ∧ (600 : ℚ) / 1000 = 3 / 5 := by norm_
 #print axioms stieltjes_integral_rate_plus_jumps
 #print axioms book_average_payout_is_35
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

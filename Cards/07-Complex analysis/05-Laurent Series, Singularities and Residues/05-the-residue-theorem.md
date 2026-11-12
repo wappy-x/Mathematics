@@ -332,9 +332,6 @@ Lean proves the theorem for every circle and for every closed loop inside a disc
 
 The trapezoid sums, their errors, the shrunk circle and the z-bar break are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 512 lines</summary>
-
 ```lean
 -- The residue theorem: the integral of a function, holomorphic except at finitely many isolated points, once anticlockwise round a circle that passes through none of them equals 2πi times the sum of the residues (the 1/(z - a) Laurent coefficients) at the points inside, a general loop weights each residue by its winding number, and a small circle round one point keeps only that point's 1/(z - a) term.
 import Mathlib.MeasureTheory.Integral.CircleIntegral
@@ -849,8 +846,6 @@ example : 2 * Real.pi * I * 1 ≠ Real.pi := by
 
 end TheResidueTheorem
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

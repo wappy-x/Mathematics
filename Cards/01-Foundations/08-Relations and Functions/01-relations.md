@@ -239,9 +239,6 @@ Lean proves these for any set of people, any relation and any heights, not just 
 
 Lean also recounts the office's numbers and the test table, so the Python and Rust checks are left only with printing the output.
 
-<details>
-<summary>The Lean proof, 148 lines</summary>
-
 ```lean
 -- Relations: each of the four tests on a relation (reflexive, symmetric, antisymmetric, transitive) is a condition on its set of ordered pairs, a relation passes both symmetric and antisymmetric exactly when every pair in it is a loop, and "is at least as tall as" is always reflexive and transitive and is antisymmetric exactly when no two heights tie.
 import Mathlib.Basic.Rel
@@ -392,8 +389,6 @@ example : cmTie Maya ≤ cmTie Priya ∧ cmTie Priya ≤ cmTie Maya ∧ Maya ≠
 #print axioms symm_and_antisymm_iff_only_loops
 #print axioms at_least_as_tall_tests
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

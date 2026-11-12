@@ -360,9 +360,6 @@ Lean proves the Laurent series theorem for every ring round any centre, and both
 
 The decimals, the circle averages and their error, and the series of e^z/z^3 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 397 lines</summary>
-
 ```lean
 -- Laurent series: a function with a complex derivative on an open ring round a centre equals exactly one series in positive and negative powers of z minus the centre, its coefficients are loop integrals, and 1/(z(z - 1)) has different series inside and outside the unit circle.
 import Mathlib.MeasureTheory.Integral.CircleIntegral
@@ -762,8 +759,6 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 #print axioms laurent_coeff_eq_circle_integral
 #print axioms laurent_series_of_inv_z_mul_z_sub_one_inside_and_outside
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

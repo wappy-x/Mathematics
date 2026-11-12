@@ -681,9 +681,6 @@ Lean proves the matrix facts behind the correction, for every size of state and 
 
 The pendulum's numbers (beyond A squaring to 16 I), the simulated runs and the surprise test are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 157 lines</summary>
-
 ```lean
 -- The Kalman filter: for any prior covariance, any linear reading and any positive reading noise, the gain P Hᵀ S⁻¹ gives the smallest error covariance of every linear correction, that smallest covariance is (I - K H) P, and in precision form the precisions add.
 import Mathlib.LinearAlgebra.Matrix.PosDef
@@ -843,8 +840,6 @@ example : !![(0 : ℤ), 1; 16, 0] * !![0, 1; 16, 0] = (16 : ℤ) • (1 : Matrix
 #print axioms kf_S_posDef
 #print axioms kf_square
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

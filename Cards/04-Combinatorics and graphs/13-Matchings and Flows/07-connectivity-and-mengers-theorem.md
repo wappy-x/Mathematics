@@ -367,9 +367,6 @@ Lean proves Menger's theorem in both forms, and the bridge rule, for every finit
 
 The counts of 4 routes and 10 separating pairs, the full bridge and cut-vertex lists, and the flows are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 743 lines</summary>
-
 ```lean
 -- How many cuts break a network: in every finite network the most routes between two stations that share no line equals the fewest lines whose closure separates them, the same holds for stations when the two are not joined by a line, a line is a bridge exactly when it lies on no loop, and the card's eight-station railway numbers check out.
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
@@ -1115,8 +1112,6 @@ example : 2 * 2 = 4 := by decide
 
 end ConnectivityAndMengersTheorem
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

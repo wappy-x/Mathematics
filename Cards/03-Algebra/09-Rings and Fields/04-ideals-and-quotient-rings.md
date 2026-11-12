@@ -359,9 +359,6 @@ Lean proves three facts, for every ring map and every whole number n.
 
 Adding digits, and the constants failing the test in the x^2 = -1 world, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 81 lines</summary>
-
 ```lean
 -- Ideals and quotient rings: the kernel of every ring map passes the two-part ideal test and collapsing by it leaves the image, every ideal of the whole numbers is the multiples of some n, and collapsing the whole numbers by the multiples of n gives Z mod n.
 import Mathlib.RingTheory.Ideal.Quotient.Operations
@@ -445,8 +442,6 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 #print axioms every_ideal_of_int_is_the_multiples_of_some_n
 #print axioms int_collapsed_by_multiples_of_n_is_zmod_n
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

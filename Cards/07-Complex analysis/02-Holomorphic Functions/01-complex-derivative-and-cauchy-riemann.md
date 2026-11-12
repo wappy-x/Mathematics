@@ -375,9 +375,6 @@ Lean proves the Cauchy-Riemann equations and their converse for every complex fu
 
 Decimals, shrinking steps, the turn angle and the figure are left to the Python and Rust checks; no check proves the mirror fails everywhere.
 
-<details>
-<summary>The Lean proof, 306 lines</summary>
-
 ```lean
 -- The complex derivative: a complex derivative at a point forces the Cauchy-Riemann equations with f' = u_x + i v_x, those equations with continuous partials near the point give the derivative back, sqrt|xy| passes the equations at 0 yet has no derivative there, and |z|^2 has a derivative at 0 alone so is holomorphic on no open region.
 import Mathlib.Analysis.Complex.Basic
@@ -686,8 +683,6 @@ example : (1 : ℂ) / (1 + I) = 1 / 2 - I / 2 := by
 #print axioms sqrt_abs_xy_passes_equations_but_not_differentiable
 #print axioms norm_sq_differentiable_only_at_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

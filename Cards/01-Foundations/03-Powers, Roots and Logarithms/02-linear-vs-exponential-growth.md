@@ -236,9 +236,6 @@ Lean proves three claims for any number of days, and checks the card's pond numb
 
 Stepping each pond forward a day at a time, and printing the tables, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 95 lines</summary>
-
 ```lean
 -- Linear versus exponential growth: any straight line is eventually and forever passed by growth that starts at one or more and multiplies by a factor bigger than 1, the last doubling adds more than all the doublings before it, and with factor 1 the gardener wins.
 import Mathlib.Data.Real.Basic
@@ -336,8 +333,6 @@ example : 2 ^ 5 - 2 ^ 4 = 16 ∧ 2 ^ 20 - 2 ^ 19 = 524288 := by norm_num
 #print axioms last_doubling_beats_all_before
 #print axioms factor_one_gardener_wins
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

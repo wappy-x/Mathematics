@@ -365,9 +365,6 @@ Lean proves the card's main facts for any number of cars, and checks the four ca
 
 The printed decimals, and running both roads in code, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 266 lines</summary>
-
 ```lean
 -- Least squares: a choice of coefficients makes the total squared miss as small as possible exactly when it solves the normal equations A^T A x = A^T b, the squared miss of any other choice is the best one plus a Pythagoras term, and when the ages are not all equal the best straight line is unique and given by the card's cross-multiplied formulas, with the card's four used cars checked exactly.
 import Mathlib.Data.Matrix.Mul
@@ -636,8 +633,6 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 #print axioms squared_miss_splits_by_pythagoras
 #print axioms best_fit_line_unique_when_ages_differ
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -372,9 +372,6 @@ Lean proves both theorems for every sequence and series of real functions, and t
 
 The decimals, the witness inputs, the grid, the three-thirds budget and the caps $x^k$ are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 129 lines</summary>
-
 ```lean
 -- Uniform convergence: a uniform limit of continuous functions is continuous, number caps with a finite sum make a series converge uniformly with the caps' leftover bounding the error, and x^n settles on [0, 1] input by input but uniformly only on a cut interval such as [0, 9/10].
 import Mathlib.Topology.UniformSpace.UniformApproximation
@@ -506,8 +503,6 @@ example : (1 : ℚ) / 2 ^ 12 < 1 / 3000 ∧ ¬ ((1 : ℚ) / 2 ^ 11 < 1 / 3000) :
 #print axioms weierstrass_m_test_uniform_with_tail_bound
 #print axioms pow_converges_pointwise_not_uniformly_on_unit_interval
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

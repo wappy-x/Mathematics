@@ -373,9 +373,6 @@ Lean proves the theorem for any number of doctors and hospitals, each ranking th
 
 The proposal ceiling, the round-by-round runs and the 46656 ranking profiles are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 284 lines</summary>
-
 ```lean
 -- Stable matching: with n doctors and n hospitals who each rank the whole other side strictly, some placement has no blocking pair, and one such placement gives every doctor her best stable partner and every hospital its worst.
 import Mathlib.Logic.Equiv.Fintype
@@ -662,8 +659,6 @@ example : (Finset.univ.filter fun d => DR d (MD d) ≠ 0).card = 2 ∧
 
 end StableMatching
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

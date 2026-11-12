@@ -348,9 +348,6 @@ Lean proves these facts for any pool and any number of places, and checks the ca
 
 Writing out all 336 podiums and counting them one by one is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 78 lines</summary>
-
 ```lean
 -- Ordered picks: the ways to fill k different places from a pool of n things, with nothing used twice, number n(n-1)...(n-k+1) = n!/(n-k)!, which is n times the picks of k-1 from n-1 and also (n choose k) times k!.
 import Mathlib.Data.Fintype.CardEmbedding
@@ -431,8 +428,6 @@ example : (20 : ℕ) ^ 5 = 3200000 := by norm_num
 #print axioms ordered_picks_first_place_then_smaller_pick
 #print axioms ordered_picks_eq_choose_mul_factorial
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

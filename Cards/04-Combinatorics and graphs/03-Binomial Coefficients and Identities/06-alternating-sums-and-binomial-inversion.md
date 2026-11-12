@@ -343,9 +343,6 @@ Lean proves three claims for every case, not just the five tunes.
 
 Lean also checks the worked numbers; listing every pick and every setlist is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 217 lines</summary>
-
 ```lean
 -- Alternating sums: every row of Pascal's triangle past row 0 adds to zero with alternating signs, a nonempty set has as many even-size as odd-size subsets, and so a binomial sum can be undone by the same row with signs.
 import Mathlib.Data.Nat.Choose.Sum
@@ -565,8 +562,6 @@ example : ∑ k ∈ Ico 1 6, (-1 : ℤ) ^ (5 - k) * (Nat.choose 5 k : ℤ) *
 #print axioms binomial_inversion
 #print axioms even_size_picks_eq_odd_size_picks
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

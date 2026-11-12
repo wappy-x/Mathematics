@@ -344,9 +344,6 @@ Lean proves the unit circle's rules for every angle θ, every arm length r above
 
 The walk in 1.5 mm steps, the decimals and the figures' coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 109 lines</summary>
-
 ```lean
 -- The unit circle: a point one unit from the origin whose angle from due east is θ (anticlockwise positive, whole turns ignored) is exactly the point (cos θ, sin θ), an arm of length r ends at (r cos θ, r sin θ), and a half turn or a mirror in an axis only flips the signs of cosine and sine.
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
@@ -458,8 +455,6 @@ example : 33 * (2 * π) < 210 ∧ 210 < 34 * (2 * π) := by
 #print axioms arm_of_length_r_ends_at_r_cos_r_sin
 #print axioms half_turn_and_mirrors_flip_signs
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

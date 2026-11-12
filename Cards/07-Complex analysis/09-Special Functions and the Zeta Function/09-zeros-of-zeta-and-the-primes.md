@@ -379,9 +379,6 @@ Lean proves the prime-power series and where zeta's zeros can lie, for every com
 
 The explicit formula, the zeros' heights, li, −ζ′/ζ(2) and the counts at a million are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 67 lines</summary>
-
 ```lean
 -- Zeta's zeros and the primes: minus zeta's slope over zeta is the series with weight ln p on every prime power where Re s > 1, zeta has no zero where Re s ≥ 1, and every zero of zeta other than the trivial zeros -2, -4, -6, … lies in the critical strip 0 ≤ Re s ≤ 1.
 import Mathlib.NumberTheory.LSeries.Nonvanishing
@@ -451,8 +448,6 @@ example : Λ 6 = 0 := by
 #print axioms zeta_ne_zero_where_re_ge_one
 #print axioms nontrivial_zero_in_critical_strip
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -393,9 +393,6 @@ Lean proves the expansion for every power and every added bit between −1 and 1
 
 The decimals, Heron's root, the error bound for the root of 1.1 and the root-of-4 failure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 162 lines</summary>
-
 ```lean
 -- The binomial series and the number e: for every real power a, (1 + x)^a is the sum of the extended choice counts C(a, k) times x^k whenever x is strictly between −1 and 1 (or a is a whole number, for any x), compounding (1 + 1/n)^n stays under the series 1 + 1 + 1/2! + … and heads for e, which that series equals, and the alternating series is 1/e, the limit of the clean-draw share D(n)/n!, with D(n) equal to n!/e rounded from n = 1 on.
 import Mathlib.Analysis.Analytic.Binomial
@@ -560,8 +557,6 @@ example : (1 : ℚ) + 1 + 1 / 2 = 5 / 2 := by norm_num
 #print axioms compounding_le_series_and_both_reach_e
 #print axioms alternating_series_inv_e_and_derangements_round
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

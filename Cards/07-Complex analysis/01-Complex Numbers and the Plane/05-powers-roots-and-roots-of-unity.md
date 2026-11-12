@@ -363,9 +363,6 @@ Lean proves de Moivre's formula, the n roots and the zero sum for every n, plus 
 
 The decimals, (1 + i)^10, Newton's method, the geometric-series check, mistakes 1 and 4, and the figures are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 185 lines</summary>
-
 ```lean
 -- Powers and roots: a whole-number power multiplies the angle and powers the length (de Moivre), so every nonzero complex number has exactly n n-th roots, evenly spaced on one circle, and for n at least 2 the n-th roots of 1 add to zero.
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -553,8 +550,6 @@ example : (2 : ℂ) ^ 4 = 16 ∧ (2 : ℂ) ^ 4 ≠ -16 := by
 #print axioms sqrt_three_sq_helper
 #print axioms spinner_sq_helper
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -347,9 +347,6 @@ Lean proves the count for every election in which A gets more votes than B, read
 
 Writing each order as a string of votes and running the mirror as a program is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 425 lines</summary>
-
 ```lean
 -- The reflection principle: when a votes for A and b votes for B (with a larger than b) are counted one at a time, the counting orders that keep A strictly ahead after every vote number (a - b) / (a + b) times C(a + b, a), which is C(a + b - 1, a - 1) - C(a + b - 1, a), because mirroring up to the first level score pairs the spoiled A-openers one for one with the B-openers.
 import Mathlib.Data.Finset.Powerset
@@ -777,8 +774,6 @@ example : #((countingOrders 5 5).filter (fun S => ∀ k ∈ range 11, -1 ≤ lea
 #print axioms ballot_orders_eq_choose_sub_choose
 #print axioms card_spoiled_A_openers_eq_card_B_openers
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

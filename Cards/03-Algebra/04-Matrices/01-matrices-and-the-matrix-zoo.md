@@ -359,9 +359,6 @@ Lean proves the transpose and symmetry rules for tables of every size, and check
 
 Printing the tables, and the experiments in the box below, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 79 lines</summary>
-
 ```lean
 -- Matrices: transposing an m by n table gives an n by m table with each entry's row and column numbers swapped, doing it twice gives the table back, the column totals of a table are the row totals of its transpose, and a square table is symmetric exactly when every entry a_ij equals a_ji off the diagonal; the cafe's own tables are checked number by number.
 import Mathlib.LinearAlgebra.Matrix.Symmetric
@@ -443,8 +440,6 @@ example : (1 : Matrix (Fin 2) (Fin 2) ℤ).trace = 2 := by decide
 #print axioms column_totals_are_row_totals_of_transpose
 #print axioms symmetric_iff_entries_match_off_diagonal
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

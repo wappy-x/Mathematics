@@ -241,9 +241,6 @@ Lean proves all three claims for every number on the line, not just the street's
 
 The street's sums are checked in Lean too; counting each gap house by house is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 86 lines</summary>
-
 ```lean
 -- Absolute value: for all real numbers, |a + b| is at most |a| + |b| (equal exactly when a and b point the same way), and the distance |x - y| is the same whichever number you subtract first.
 import Mathlib.Data.Real.Basic
@@ -332,8 +329,6 @@ example : (40 : ℤ) + 65 = 105 := by decide
 #print axioms triangle_rule_equal_iff_same_direction
 #print axioms abs_is_size_and_distance_is_symmetric
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

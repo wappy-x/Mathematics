@@ -342,9 +342,6 @@ Lean proves both tests for any straight-run fence and any two segments, under th
 
 The winding angle, where each ray meets a fence, the crossing at (98, 70) and the grid are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 1551 lines</summary>
-
 ```lean
 -- Inside or outside: a point off a fence that does not cross itself is inside exactly when its eastward ray meets the fence an odd number of times, and two segments with no three ends in line cross exactly when each one's ends lie on opposite sides of the other.
 import Mathlib.Analysis.Convex.Segment
@@ -1898,8 +1895,6 @@ example : orient (150, 0) (170, 60) (70, 80) = 6400 := by norm_num [orient]
 #print axioms inside_iff_ray_crossings_odd
 #print axioms segments_cross_iff_straddle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

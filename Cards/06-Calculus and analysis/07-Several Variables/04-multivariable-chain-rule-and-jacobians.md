@@ -358,9 +358,6 @@ Lean proves the chain rule for any two linked maps, of any sizes, and checks the
 
 The secants, the tolerance step, the nudged gradient and the chart values are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 152 lines</summary>
-
 ```lean
 -- Chain rule in several variables: when f is differentiable at a and g is differentiable at f(a), the Jacobian matrix of g after f at a is the Jacobian of g read at f(a) times the Jacobian of f read at a, the card's hiker feels the temperature fall at exactly 12 °C per hour, and a map with partial derivatives but no derivative breaks the rule.
 import Mathlib.Analysis.Calculus.FDeriv.Comp
@@ -515,8 +512,6 @@ example : (-1 : ℚ) * 2 + (-2) * 2 = -6 := by norm_num
 #print axioms hiker_felt_temperature_rate
 #print axioms crease_partials_zero_but_rate_half
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

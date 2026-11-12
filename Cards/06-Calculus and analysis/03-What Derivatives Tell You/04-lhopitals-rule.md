@@ -355,9 +355,6 @@ Lean proves both forms of the rule for any pair of functions, and the card's two
 
 The decimals, the in-between point c, the 9.1180 threshold, two mistakes and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 256 lines</summary>
-
 ```lean
 -- L'Hopital's rule: if top and bottom both head for 0, or the bottom blows up, as x heads for a number a (from both sides) or for plus or minus infinity, both have rates there, the bottom's rate is never 0, and the rate ratio heads for a number L or for plus or minus infinity, then the ratio heads for the same place; so sin x / x heads for 1 at 0 and x e^(-x) heads for 0 as x grows.
 import Mathlib.Analysis.Calculus.LHopital
@@ -616,8 +613,6 @@ example : (20 * π + sin (20 * π)) / (20 * π) = 1 ∧ (21 * π + sin (21 * π)
 #print axioms lhopital_infinity_over_infinity
 #print axioms sin_div_self_tendsto_one_and_mul_exp_neg_tendsto_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -243,9 +243,6 @@ Lean proves the theorem for every set and every sameness rule, not just the cloc
 
 The yes-or-no runs of the three tests, pair by pair on each rule, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 149 lines</summary>
-
 ```lean
 -- Equivalence relations and partitions: a reflexive, symmetric and transitive rule cuts any set into non-empty blocks that cover it and never overlap, "in the same block" gives the rule back, a partition gives a sameness rule whose blocks are the piles, and the card's clock and sock counts come out as it says.
 import Mathlib.Order.Setoid.Partition
@@ -397,8 +394,6 @@ example : ¬ (pile 8 = pile 8 ∧ (8 : ℕ) ≠ 8 ∧ (8 : ℕ) ≠ 8) := by dec
 #print axioms blocks_that_share_a_member_are_equal
 #print axioms partition_gives_equivalence_relation_with_piles_as_blocks
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

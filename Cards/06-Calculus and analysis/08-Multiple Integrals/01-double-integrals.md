@@ -352,9 +352,6 @@ Lean proves Fubini's theorem for every continuous depth on a region described by
 
 Patch sums, midpoint sums, the bracket, the mistake table and the figure are left to the Python and Rust checks; nothing checks jumps along curves.
 
-<details>
-<summary>The Lean proof, 283 lines</summary>
-
 ```lean
 -- Double integrals: for a depth with no jumps on a region described by strips both ways, the double integral equals the strips-of-strips integral in either order, the card's catchment holds exactly 40 mm·km^2 of rain both ways, and the unbounded spike gives π/4 one way and −π/4 the other.
 import Mathlib.MeasureTheory.Integral.Prod
@@ -640,8 +637,6 @@ example : (1 : ℚ) / (1 + (1 / 2) ^ 2) = 4 / 5 := by norm_num
 #print axioms catchment_rain_eq_forty
 #print axioms spike_iterated_integrals_disagree
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

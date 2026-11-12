@@ -379,9 +379,6 @@ Lean proves the test and its bound for all sizes that never grow and head for ze
 
 The decimals, Simpson's ln 2, the 500-term walk, the 64 pairs and the geometric reordering are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 282 lines</summary>
-
 ```lean
 -- Alternating series: a sum whose signs take turns and whose sizes fall steadily to zero settles on a limit that the first term left out bounds, 1 − 1/2 + 1/3 − ⋯ settles on ln 2 but lands on 3/2 · ln 2 when reordered two up and one down, and an absolutely convergent sum keeps its value under every reordering.
 import Mathlib.Analysis.SpecificLimits.Normed
@@ -666,8 +663,6 @@ example : ∑ k ∈ range 6, (-1 : ℚ) ^ (twoUpOneDown k) / ((twoUpOneDown k : 
 #print axioms alternating_harmonic_reordered_changes_sum
 #print axioms absolutely_convergent_series_reorder_keeps_sum
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

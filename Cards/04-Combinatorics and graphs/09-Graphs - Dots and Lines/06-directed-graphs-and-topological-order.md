@@ -368,9 +368,6 @@ Lean proves these facts for every directed graph with finitely many vertices, co
 
 Counting the 210 valid listings, running Kahn's peeling itself, and finding the strongly connected pieces are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 111 lines</summary>
-
 ```lean
 -- Directed graphs: a finite directed graph can be listed with every arrow pointing forward exactly when no run of arrows returns to its start, the in-degrees and the out-degrees each add up to the arrow count, a finite graph with no way back has a vertex nothing points at, and the card's recipe numbers come out as it says.
 import Mathlib.Combinatorics.Digraph.Basic
@@ -484,8 +481,6 @@ example : ∀ v, ∃ u, metro.Adj u v := by decide
 #print axioms sum_in_degree_eq_card_arcs_eq_sum_out_degree
 #print axioms exists_source_of_no_directed_cycle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

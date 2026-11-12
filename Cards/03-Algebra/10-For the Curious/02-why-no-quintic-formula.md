@@ -357,9 +357,6 @@ Lean proves the card's theorem for every degree from 5 up, and the group half fo
 
 The decimal roots, found by halving and Newton's step, and the printed peel chains are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 231 lines</summary>
-
 ```lean
 -- Why there is no quintic formula: for every degree from 5 up there is a polynomial with rational coefficients having a complex root that no radical expression writes, because the shuffles of 5 or more roots never peel down to nothing while those of 3 and 4 do.
 import Mathlib.FieldTheory.AbelRuffini
@@ -593,8 +590,6 @@ example : (Finset.univ.filter fun σ : Perm (Fin 5) => σ.support.card = 3).card
 #print axioms shuffles_of_n_roots_peel_to_nothing_iff_n_le_four
 #print axioms peel_of_five_shuffles_is_the_even_sixty_and_stays_there
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

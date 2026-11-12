@@ -369,9 +369,6 @@ Lean proves three facts for every dial size and every ring, and checks the card'
 
 The polynomial product (x + 1)(x − 1) is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 81 lines</summary>
-
 ```lean
 -- Rings: on a clock dial of any size every nonzero reading is a unit or a zero divisor and never both, in every ring a unit is never a zero divisor, a reading is a unit exactly when it shares no factor with the dial size, and the card's 12-hour dial, whole-number and matrix numbers come out as it says.
 import Mathlib.Data.ZMod.Basic
@@ -455,8 +452,6 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 #print axioms unit_is_not_zero_divisor
 #print axioms dial_unit_iff_coprime
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

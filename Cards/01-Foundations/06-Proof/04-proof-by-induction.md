@@ -222,9 +222,6 @@ Lean proves the handshake count for every party size from 1 up.
 
 Building the count one guest at a time is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 72 lines</summary>
-
 ```lean
 -- Induction: at a party of n people, n at least 1, where every pair shakes hands once, the handshakes number n × (n − 1) ÷ 2, proved from a base case and a step.
 import Mathlib.Data.Finset.Powerset
@@ -299,8 +296,6 @@ example : 1 * (1 - 1) / 2 + 1 ≠ 0 := by norm_num
 #print axioms induction_from_one
 #print axioms handshake_step
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

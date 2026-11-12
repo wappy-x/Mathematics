@@ -401,9 +401,6 @@ Lean proves the formula, the answer count and the sum and product for every quad
 
 The ball's decimal times, the third mistake and the square root built by Newton's method are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 112 lines</summary>
-
 ```lean
 -- The quadratic formula: for real a, b, c with a not zero, the real solutions of a x^2 + b x + c = 0 are exactly (-b ± √(b^2 - 4ac)) / (2a), the discriminant b^2 - 4ac being above, at or below zero gives two, one or no solutions, and the two solutions add to -b/a and multiply to c/a.
 import Mathlib.Algebra.QuadraticDiscriminant
@@ -518,8 +515,6 @@ example : ((-20 : ℝ) - 10) / 10 = -3 ∧ ((-20 : ℝ) + 10) / 10 = -1 ∧
 #print axioms discriminant_says_how_many_answers
 #print axioms quadratic_answers_add_to_neg_b_over_a_and_multiply_to_c_over_a
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

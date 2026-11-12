@@ -306,9 +306,6 @@ Lean proves that its own derivative is the card's limit, that a derivative force
 
 Lean also checks the hand-worked numbers; the shrinking windows, halving search, corner, jump and figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 56 lines</summary>
-
 ```lean
 -- The derivative: Mathlib's derivative of a real function at a point is exactly the limit of the average rates (f(a + h) - f(a)) / h as the window h heads for 0, a function with such a limit is continuous there, and the car's odometer 2t^2 has speed 4a at every instant a.
 import Mathlib.Analysis.Calculus.Deriv.Slope
@@ -367,8 +364,6 @@ example : (50 / 5 : ℚ) = 10 ∧ (10 : ℚ) * 2 = 20 := by norm_num
 #print axioms average_rates_converge_implies_continuous
 #print axioms car_speed_is_four_a
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

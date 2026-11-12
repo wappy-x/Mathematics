@@ -252,9 +252,6 @@ Lean proves the card's three facts for every modulus n, not just 12, 5 and 6.
 
 Running the code and printing its output line by line is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 92 lines</summary>
-
 ```lean
 -- Residue classes: sorting the whole numbers by their remainder after dividing by n puts each one in exactly one of n buckets, the buckets add and multiply whichever member you pick, and no two non-zero buckets multiply to 0 exactly when n is prime.
 import Mathlib.Data.Int.ModEq
@@ -349,8 +346,6 @@ example : (2 * 3 : ZMod 6) = 2 * 0 ∧ (3 : ZMod 6) ≠ 0 := by decide
 #print axioms every_whole_number_lands_in_exactly_one_bucket
 #print axioms no_zero_product_of_nonzero_buckets_iff_prime
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

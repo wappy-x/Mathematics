@@ -249,9 +249,6 @@ Lean proves the rule for every whole number, not just 60, and re-checks the card
 
 Testing each length one at a time and printing the lists stays with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 71 lines</summary>
-
 ```lean
 -- Divides: for whole numbers, a divides b exactly when b is a times a whole number, which is the same as leaving no remainder; divisors of a number come in pairs, one of each pair at most its square root; and 1 divides everything, everything divides 0, and 0 divides only 0.
 import Mathlib.NumberTheory.Divisors
@@ -325,8 +322,6 @@ example : Nat.divisors 59 = {1, 59} := by decide
 #print axioms divisors_come_in_pairs
 #print axioms one_and_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

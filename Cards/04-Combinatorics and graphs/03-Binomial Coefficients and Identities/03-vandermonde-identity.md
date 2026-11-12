@@ -359,9 +359,6 @@ Lean proves the identity for every pair of groups and every number of seats, not
 
 Lean also checks the band's numbers and the four mistakes; listing every band one at a time is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 63 lines</summary>
-
 ```lean
 -- Vandermonde's identity: choosing r people from two groups that share no member is counted by splitting on how many come from the first group, multiplying the two counts in each split and adding the splits, so C(m + n, r) is the sum over k from 0 to r of C(m, k) × C(n, r − k), and with two equal groups the middle entry C(2n, n) is the sum of the squares C(n, k)².
 import Mathlib.Data.Finset.Powerset
@@ -427,8 +424,6 @@ example : Nat.choose 9 5 = 126 := by decide
 #print axioms vandermonde_identity
 #print axioms central_binomial_eq_sum_of_squares
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

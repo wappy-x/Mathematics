@@ -364,9 +364,6 @@ Lean proves the three facts the methods rest on, for any number of points anywhe
 
 It also checks the card's whole-number turns exactly: the hull's corners, the dents at G and H, and both sweeps. It checks the brute-force edge AB, the shoelace total 392, G's weights and the notch midpoint too. Running the two sweeps, the fence lengths, the grid count and the ninth tree are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 128 lines</summary>
-
 ```lean
 -- Convex sets: the convex hull of finitely many points in the plane is exactly the set of their weighted averages (the smallest convex region holding them), the ground left of a line is convex, and a hull lies left of any line that has every point on its left.
 import Mathlib.Analysis.Convex.Combination
@@ -497,8 +494,6 @@ example : 0 ≤ turn (2, 0) (14, 2) (13 / 2, 4) ∧ 0 ≤ turn (14, 2) (8, 6) (1
 #print axioms left_half_plane_convex
 #print axioms hull_left_of_string_when_every_point_is
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

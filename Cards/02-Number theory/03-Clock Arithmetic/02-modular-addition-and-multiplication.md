@@ -233,9 +233,6 @@ Lean proves the rule on every clock, for every pair of whole numbers, not just t
 
 The two step-by-step roads, adding digits again and again and taking 9s away, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 67 lines</summary>
-
 ```lean
 -- Adding and multiplying on the clock: on every clock, reducing two whole numbers before adding or multiplying lands on the same remainder as reducing after, and on any clock where 10 leaves 1 a number leaves the same remainder as its digit sum.
 import Mathlib.Data.Nat.ModEq
@@ -305,8 +302,6 @@ example : 47 * 24 = 1128 ∧ 1128 % 9 = 3 := by decide
 #print axioms congruent_numbers_add_and_multiply_to_congruent
 #print axioms digit_sum_same_remainder_when_ten_leaves_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

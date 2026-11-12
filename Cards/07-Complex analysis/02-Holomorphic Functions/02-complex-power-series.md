@@ -367,9 +367,6 @@ Lean proves the disc and the termwise slope for every power series with complex 
 
 The decimals, the sums at 1.2 and 2.3, the radius about 1, the mistake table and the figures are left to Python and Rust.
 
-<details>
-<summary>The Lean proof, 291 lines</summary>
-
 ```lean
 -- Power series in the plane: a complex power series converges absolutely on the open disc whose radius R is given by the Cauchy–Hadamard formula 1/R = limsup |a_n|^(1/n) and fails outside it, inside that disc it can be differentiated term by term with the same radius, and the bump 1/(1 + z^2) has series radius exactly 1, the distance from 0 to its poles i and −i.
 import Mathlib.Analysis.Calculus.Deriv.Basic
@@ -663,8 +660,6 @@ example : ((1 : ℂ) - I) * (starRingEnd ℂ ((1 : ℂ) - I)) = 2 := by
 #print axioms power_series_termwise_derivative
 #print axioms bump_series_radius_equals_distance_to_poles
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

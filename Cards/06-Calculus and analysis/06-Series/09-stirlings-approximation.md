@@ -391,9 +391,6 @@ Lean proves Stirling's approximation, the 1/(12n) bound for every n from 1 up, a
 
 Decimals, the integral band, the squeeze on C, the Simpson check, the mistake table and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 153 lines</summary>
-
 ```lean
 -- Stirling's approximation: n! divided by √(2πn)·(n/e)^n tends to 1, at every n ≥ 1 the true n! is that estimate times e^θ with 0 < θ < 1/(12n), and Wallis's factorial products pin π/2 between P_m and P_m·(2m+1)/(2m).
 import Mathlib.Analysis.SpecialFunctions.Stirling
@@ -549,8 +546,6 @@ example : (12 : ℕ) * 20 = 240 := by norm_num
 #print axioms factorial_eq_stirling_mul_exp_theta
 #print axioms wallis_bracket_pi_div_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

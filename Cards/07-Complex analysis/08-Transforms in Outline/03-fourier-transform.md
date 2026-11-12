@@ -382,9 +382,6 @@ Lean proves the Gaussian and flash transforms for every frequency, and the inver
 
 The Cauchy bell's transform π e^(−|ω|), the rectangle's edges, every decimal, the chart and the rebuilt signals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 108 lines</summary>
-
 ```lean
 -- The Fourier transform: with the card's convention f-hat(ω) = ∫ f(t) e^(−iωt) dt, the Gaussian e^(−t²/2) has transform √(2π) e^(−ω²/2), the one-second flash has transform 2 sin(ω/2)/ω, and the inverse integral with 1/(2π) in front rebuilds any signal with |f| and |f-hat| of finite area wherever it is continuous.
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
@@ -495,8 +492,6 @@ example : (1 / (2 * Real.pi)) * (2 * Real.pi) = 1 := by have := Real.pi_ne_zero;
 #print axioms flash_fourier_transform
 #print axioms fourier_inversion_at_continuity_point
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

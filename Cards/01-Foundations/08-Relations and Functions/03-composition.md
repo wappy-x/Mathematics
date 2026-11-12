@@ -250,9 +250,6 @@ Lean proves three facts: the first for every price over $5, the other two for an
 
 It also checks the jacket and coat numbers exactly. Whole cents and the printed tables are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 60 lines</summary>
-
 ```lean
 -- Composing functions: for every price over $5, taking 20% off then a $5 coupon gives 0.8 × price − 5 while the coupon first gives 0.8 × price − 4, so the coupon-first order always costs exactly $1 more; the do-nothing rule changes no chain, regrouping a chain of three changes nothing, and the card's jacket and coat numbers come out as it says.
 import Mathlib.Algebra.Order.Ring.Rat
@@ -315,8 +312,6 @@ example : percentOff 50 = 40 ∧ percentOff (couponOff 50) = 36 := by norm_num [
 #print axioms identity_changes_nothing
 #print axioms composing_is_associative
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

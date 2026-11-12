@@ -374,9 +374,6 @@ Lean proves the three rules for every size that fits and any plain-number entrie
 
 Showing that $C$ on the left of $AB$ is no product, and printing the tables, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 96 lines</summary>
-
 ```lean
 -- Matrix multiplication: the row-by-column rule is the only table that does "B, then A" in one step, grouping a chain never changes it, order can change it at every square size from 2 up, and the card's workshop numbers come out as it says.
 import Mathlib.LinearAlgebra.Matrix.Notation
@@ -475,8 +472,6 @@ example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !!
 #print axioms grouping_never_matters
 #print axioms order_can_change_the_answer
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

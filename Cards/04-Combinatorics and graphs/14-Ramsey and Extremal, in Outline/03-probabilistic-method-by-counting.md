@@ -355,9 +355,6 @@ Lean proves the card's three facts for every hall size n and clique size k, not 
 
 Listing every plan of K(4) and K(5), and printing the output, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 258 lines</summary>
-
 ```lean
 -- Erdos's counting trick: the two-colourings of K(n) with a one-colour K(k) number at most 2 x C(n,k) x 2^(C(n,2) - C(k,2)), so when 2 x C(n,k) < 2^C(k,2) a colouring with no one-colour K(k) exists, and for k at least 3 this holds whenever n ≤ 2^(k/2), giving R(k,k) > 2^(k/2).
 import Mathlib.Combinatorics.SimpleGraph.Clique
@@ -618,8 +615,6 @@ example : ∀ p ∈ List.zip (List.range' 3 14) [2, 4, 5, 8, 11, 16, 22, 32, 45,
 #print axioms bad_colourings_le
 #print axioms good_colouring_of_two_mul_choose_lt
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

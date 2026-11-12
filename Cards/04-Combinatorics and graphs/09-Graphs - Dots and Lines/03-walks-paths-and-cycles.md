@@ -382,9 +382,6 @@ Lean proves the card's general facts for every map, of any size, and re-checks t
 
 The sweep, the listing of every route and the printed table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 226 lines</summary>
-
 ```lean
 -- Walks, paths and cycles: every walk in a graph contains a path with the same ends and no more steps, so on a connected graph the distance is the step count of a shortest path, it is symmetric and obeys the triangle rule, the radius is at most the diameter and the diameter at most twice the radius, and the card's metro map has the distances, diameter 3, radius 2 and girth 4 it claims.
 import Mathlib.Combinatorics.SimpleGraph.Paths
@@ -613,8 +610,6 @@ example : walkBCB.length = 2 ∧ ¬ walkBCB.IsCycle := by
 #print axioms metro_ediam
 #print axioms metro_no_closed_three
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -232,9 +232,6 @@ Lean proves the card's three claims for any two cycle lengths, not just 10 and 1
 
 The year names, the printed pairs and the counting-up road stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 85 lines</summary>
-
 ```lean
 -- When cycles meet again: two cycles of lengths a and b, both read off one count n, first come home together after a × b ÷ gcd(a, b) steps, a pair of positions ever happens exactly when the two positions leave the same remainder on division by gcd(a, b), and so exactly a × b ÷ gcd(a, b) of the a × b pairs ever happen.
 import Mathlib.Data.Nat.GCD.Basic
@@ -322,8 +319,6 @@ example : 94900 = 5 * 18980 ∧ 94900 / 365 = 260 := by decide
 #print axioms remainder_pair_happens_iff_agree_mod_gcd
 #print axioms pairs_that_happen_count
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

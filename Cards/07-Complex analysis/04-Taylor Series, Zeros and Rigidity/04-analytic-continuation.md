@@ -331,9 +331,6 @@ Lean proves the identity theorem for every connected open region, and that 1/(1 
 
 Payment sums, the walk's series sums, the rival formula, the −1/12 smoothing and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 146 lines</summary>
-
 ```lean
 -- Analytic continuation: two holomorphic functions on a connected open region that agree on a set piling up at a point of the region agree on all of it, so 1/(1 - z) is the only continuation of the geometric series and 1/r the only continuation of the perpetuity price to negative rates.
 import Mathlib.Analysis.Complex.CauchyIntegral
@@ -482,8 +479,6 @@ example : ∑ n ∈ Finset.range 101, n = 5050 := by decide
 #print axioms geometric_series_unique_continuation
 #print axioms perpetuity_continuation_eq_inv_rate
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

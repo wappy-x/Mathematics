@@ -252,9 +252,6 @@ Lean proves the stamp claim for every amount from 8 cents up, and well-ordering 
 
 Running the step forward, and the step that looks back one amount, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 66 lines</summary>
-
 ```lean
 -- Strong induction and the least element: every amount of 8 cents or more can be paid exactly with 3-cent and 5-cent stamps, the only amounts that can never be paid are 1, 2, 4 and 7, and every non-empty set of counting numbers has a smallest member.
 import Mathlib.Data.Set.Basic
@@ -323,8 +320,6 @@ example : ∀ k : ℕ, 8 + 3 * k ≠ 9 := by intro k; omega
 #print axioms well_ordering_principle
 #print axioms payable_iff_not_one_two_four_seven
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

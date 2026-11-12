@@ -356,9 +356,6 @@ Lean proves inversion, the unitary matrix and Parseval for every N and any N com
 
 The other outputs, the FFT, the amplitude and peak hour, and the mistakes table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 180 lines</summary>
-
 ```lean
 -- The discrete Fourier transform: for every N and every N complex samples, the conjugate matrix divided by N undoes the transform, the matrix divided by the square root of N is unitary, and Parseval's energy identity holds; with the card's eight temperature readings as examples.
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
@@ -541,8 +538,6 @@ example : ∑ k : Fin 8, ‖∑ m : Fin 8, (![11, 9, 10, 15, 20, 22, 19, 14] : F
 #print axioms dft_matrix_div_sqrt_unitary
 #print axioms dft_parseval
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

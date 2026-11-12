@@ -396,9 +396,6 @@ Lean proves the card's three general claims for all groups and clock sizes, and 
 
 Building the pairs as a group and walking each return time step by step are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 95 lines</summary>
-
 ```lean
 -- Direct products: two clocks of m and n positions, run side by side, are one clock of m × n positions exactly when m and n share no factor, a pair comes home after the least common multiple of its halves' return times, and the settings multiply.
 import Mathlib.Data.ZMod.Basic
@@ -496,8 +493,6 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 #print axioms pair_order_eq_lcm
 #print axioms card_prod_eq_mul
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

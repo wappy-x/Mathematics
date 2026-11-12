@@ -343,9 +343,6 @@ Lean proves the rule, the in-or-out split behind it, and the row sum, for every 
 
 The factorial formula and the listing of every pick for rows 0 to 10 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 95 lines</summary>
-
 ```lean
 -- Pascal's rule: each count C(n + 1, k + 1) is C(n, k) + C(n, k + 1), the picks of a finite set split exactly by one singled-out item kept in or left out, and row n of the triangle adds to 2^n, with the card's five-song numbers checked.
 import Mathlib.Data.Nat.Choose.Sum
@@ -443,8 +440,6 @@ example : ∑ k ∈ range 5, Nat.choose 4 k = 16 := by decide
 #print axioms picks_split_by_one_item
 #print axioms row_sum_eq_two_pow
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

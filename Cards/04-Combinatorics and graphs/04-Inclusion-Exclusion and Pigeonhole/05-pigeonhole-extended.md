@@ -334,9 +334,6 @@ Lean proves all three claims for any number of items and boxes, not just 100 ema
 
 The 2,000 random ten-day lists and the search over every small filing are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 123 lines</summary>
-
 ```lean
 -- Pigeonhole, extended: however n items are put into k boxes, some box holds at least n/k rounded up, some filing makes that the fullest box exactly, and any n whole numbers in a row hide a run of consecutive ones summing to a multiple of n, with the card's 100-email and ten-day numbers checked.
 import Mathlib.Combinatorics.Pigeonhole
@@ -462,8 +459,6 @@ example : 41 + 17 + 8 + 36 + 52 + 12 + 29 + 4 + 31 = 230 ∧ 230 % 10 = 0 := by 
 #print axioms ceil_div_bound_is_attained
 #print axioms exists_consecutive_run_sum_dvd
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

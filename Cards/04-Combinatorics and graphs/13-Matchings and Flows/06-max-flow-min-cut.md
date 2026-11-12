@@ -376,9 +376,6 @@ Lean proves the theorem for every network with finitely many junctions and capac
 
 The pushing runs, the fun run's 1024 cuts and 91 sets of pairs, and greedy pairing are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 723 lines</summary>
-
 ```lean
 -- Max-flow min-cut: in every finite network with capacities at least 0, the largest flow equals the cheapest cut, the side still reachable on leftover when no augmenting route remains is such a cut, and in a two-sided network of capacity 1 the largest flow is the largest pairing.
 import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
@@ -1104,8 +1101,6 @@ example : (∀ X : Finset (Fin 5), X.card ≤ (X.biUnion canDoBroken).card + 1) 
 #print axioms no_augmenting_route_reachable_side_is_min_cut
 #print axioms max_flow_eq_max_pairing
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -361,9 +361,6 @@ Lean proves the antiderivative formula for every path of finitely many smooth pi
 
 The trapezoid sums and their error, log z carried step by step, and the figures are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 254 lines</summary>
-
 ```lean
 -- Antiderivatives: if F' = f on an open set holding a piecewise smooth path, the integral of f along the path is F(end) − F(start), while 1/z has no antiderivative on any open set holding a circle round 0 and is the only power of z without one.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -620,8 +617,6 @@ example : (∫ t in (0 : ℝ)..1, (exp (π * I * t))⁻¹ * (π * I * exp (π * 
 #print axioms inv_loop_and_no_antiderivative
 #print axioms zpow_has_antiderivative_iff
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

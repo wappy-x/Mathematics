@@ -288,9 +288,6 @@ Lean proves the formulas for any groups you can count to the end, not just this 
 
 Printing the table, and seeing what breaks when you change a roster, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 79 lines</summary>
-
 ```lean
 -- Inclusion-exclusion: for any finite groups, the number in at least one is the group sizes added, minus every shared-by-two count, plus the shared-by-all-three count, and the card's class of 30 gives 23, 7, 28 and 2.
 import Mathlib.Data.Finset.Card
@@ -372,8 +369,6 @@ example : (18 : ℤ) + 12 + 10 - 7 - 4 - 3 - 2 = 24 := by norm_num
 #print axioms card_union_two
 #print axioms card_none_of_three
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

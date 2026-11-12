@@ -245,9 +245,6 @@ Lean proves the card's three rules for any two finite sets.
 
 Lean also checks the deck and café numbers; building and printing the pairs is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 55 lines</summary>
-
 ```lean
 -- Ordered pairs and the Cartesian product: for finite sets A and B, the set of all ordered pairs (a, b) with a from A and b from B has exactly |A| times |B| members, two pairs are equal exactly when both slots match, and when A and B share no member, A × B and B × A share no pair.
 import Mathlib.Data.Finset.Prod
@@ -305,8 +302,6 @@ example : 4 + 13 = 17 ∧ 4 * 12 = 48 := by norm_num
 #print axioms ordered_pair_eq_iff
 #print axioms cartesian_product_disjoint_flip
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

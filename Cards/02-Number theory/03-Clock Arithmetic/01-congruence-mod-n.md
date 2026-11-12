@@ -246,9 +246,6 @@ Lean proves the two tests agree for every pair of whole numbers and every modulu
 
 Walking the hand round 100 single ticks, and printing the table, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 59 lines</summary>
-
 ```lean
 -- Congruence: for whole numbers a and b and a modulus n of 1 or more, a and b leave the same remainder on division by n exactly when n divides a - b; every whole number has one remainder from 0 to n - 1; and adding whole turns of n never changes it.
 import Mathlib.Data.Int.ModEq
@@ -310,8 +307,6 @@ example : ((List.range 15).map fun i : ℕ => ((96 + i : ℕ) : ℤ) % 12) =
 #print axioms remainder_exists_and_is_unique
 #print axioms whole_turns_do_not_move_the_remainder
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

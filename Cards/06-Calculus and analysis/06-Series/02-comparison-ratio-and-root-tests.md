@@ -357,9 +357,6 @@ Lean proves the p-series rule for every real power, the ratio test, and the inte
 
 The decimals, including the box around pi^2/6, are left to Python and Rust; Lean does not prove the root or comparison tests in general.
 
-<details>
-<summary>The Lean proof, 121 lines</summary>
-
 ```lean
 -- Convergence tests: one over n to the power p adds to a finite total exactly when p > 1, the ratio test decides when the limit of neighbour ratios is not 1, and the integral test traps the running totals between two areas.
 import Mathlib.Analysis.PSeries
@@ -483,8 +480,6 @@ example : (∑ n ∈ range 20, ((n : ℚ) + 1) / 2 ^ (n + 1)) = 2 - 22 / 2 ^ 20 
 #print axioms ratio_test
 #print axioms integral_test_sandwich
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

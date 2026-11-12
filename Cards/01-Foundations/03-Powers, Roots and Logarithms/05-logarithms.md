@@ -245,9 +245,6 @@ Lean proves the counting rule for every base bigger than 1, and checks each of t
 
 Running the divide-and-count steps, and the assert that fires on 5,000,000, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 108 lines</summary>
-
 ```lean
 -- Logarithms: for a base bigger than 1 and a number above 0 that is a whole power of the base, the log is exactly the count of the base multiplied together to reach the number, both as the whole-number count of divisions and as the real log, and no power of the base is 0 or negative.
 import Mathlib.Data.Nat.Log
@@ -358,8 +355,6 @@ example : ∀ k : ℕ, 10 ^ k ≠ 5000000 := by
 #print axioms real_logb_is_the_count_of_multiplies
 #print axioms power_of_base_never_zero_or_negative
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

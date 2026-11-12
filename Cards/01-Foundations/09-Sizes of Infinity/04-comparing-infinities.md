@@ -251,9 +251,6 @@ Lean proves both theorems for every collection, not just the four-room hotel, an
 
 Running all 65536 handouts one by one, and the printed tables, stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 64 lines</summary>
-
 ```lean
 -- Comparing infinities: every set fits one-to-one inside its power set but no handout of subsets covers them all (the set of members left off their own subset is always missed), two one-to-one fittings in opposite directions give a pairing, a segment of the line pairs with a whole square, and the card's four-room hotel numbers come out as it says.
 import Mathlib.Logic.Function.Basic
@@ -320,8 +317,6 @@ example : ∀ a < 100, ∀ b < 100,
 #print axioms fits_both_ways_means_same_size
 #print axioms segment_and_square_have_equally_many_points
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

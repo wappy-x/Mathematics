@@ -324,9 +324,6 @@ Lean proves the sign test and the closed-interval candidates for every function 
 
 The decimals, both roads to 3.7449 cm, the second derivative and the slot's best are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 118 lines</summary>
-
 ```lean
 -- Optimisation: a positive slope on an interval makes a function rise and a negative one makes it fall, a continuous function on a closed interval takes its lowest and highest values at an end or where its slope is zero or missing, and a closed can of fixed volume uses least metal exactly when its height equals its diameter.
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
@@ -447,8 +444,6 @@ example : (3 * 0 ^ 2 : ℚ) = 0 ∧ (-1 / 10 : ℚ) ^ 3 = -1 / 1000 ∧ (1 / 10 
 #print axioms extremes_on_closed_interval_are_candidates
 #print axioms can_least_metal_iff_height_eq_diameter
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

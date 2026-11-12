@@ -362,9 +362,6 @@ Lean proves monotone convergence in general, and the card's claims about the sha
 
 Lean also checks the hand-worked numbers exactly; the cutoff scans, the running total and the twenty climb terms are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 112 lines</summary>
-
 ```lean
 -- Sequences: a real sequence that never steps down and stays under a ceiling heads for its least upper bound, the shares 1/n head for 0 with any whole number at least 1/t as the cutoff for tolerance t, and the climb c(n+1) = sqrt(2 + c(n)) from 0 rises, stays below 2 and heads for 2.
 import Mathlib.Topology.Order.MonotoneConvergence
@@ -479,8 +476,6 @@ example : (1 : ℚ) + 10 / 2 = 6 := by norm_num
 #print axioms shares_one_over_n_tend_to_zero
 #print axioms climb_rises_stays_below_two_and_tends_to_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -314,9 +314,6 @@ Lean proves the theorem for every function continuous on a closed interval of re
 
 The decimals, the tolerance game and the best grid points for N = 81 and 243 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 82 lines</summary>
-
 ```lean
 -- Extreme value theorem: a function continuous on a closed interval [a, b] of real numbers, with a ≤ b, takes a largest and a smallest value at inputs in that interval; the bed's area x(1 - x) has top 1/4 at x = 1/2 only and bottom 0 at the ends; and dropping an end, continuity or a finite end can lose the extreme.
 import Mathlib.Topology.Order.Compact
@@ -401,8 +398,6 @@ example : (10 : ℤ) * (1 - 10) = -90 ∧ (100 : ℤ) * (1 - 100) = -9900 := by 
 #print axioms bed_area_top_quarter_at_half_bottom_zero_at_ends
 #print axioms dropping_a_hypothesis_loses_the_extreme
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

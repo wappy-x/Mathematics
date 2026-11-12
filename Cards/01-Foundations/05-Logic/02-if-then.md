@@ -255,9 +255,6 @@ Lean proves three facts for every pair of yes-or-no statements, and checks the f
 
 Printing the customer table, and the Try changing edits, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 65 lines</summary>
-
 ```lean
 -- If-then: an if-then sentence is false only when its if part holds and its then part fails, its contrapositive always agrees with it, and its converse disagrees exactly when the two parts differ.
 import Mathlib.Data.Fintype.Prod
@@ -325,8 +322,6 @@ example : Odd (2 : ℕ) → (1 : ℕ) = 0 := by decide
 #print axioms if_then_iff_contrapositive
 #print axioms if_then_iff_converse_iff
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

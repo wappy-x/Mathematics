@@ -245,9 +245,6 @@ Lean proves that a fail proves composite for every number and base, and checks 3
 
 The printed run, by squaring and multiplying and by one step at a time, stays with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 70 lines</summary>
-
 ```lean
 -- The Fermat test: a base sharing no factor with n that, raised to n - 1 on the n clock, lands anywhere but 1 proves n composite, while landing on 1 proves nothing, as 341 and 561 show.
 import Mathlib.Data.Nat.ModEq
@@ -320,8 +317,6 @@ example : ((Finset.range 1729).filter
 #print axioms fermat_test_pass_does_not_prove_prime
 #print axioms fermat_test_fooled_by_every_coprime_base_of_561
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

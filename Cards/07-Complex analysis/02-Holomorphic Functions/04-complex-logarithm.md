@@ -349,9 +349,6 @@ Lean proves the card's three facts for every nonzero z and w, and the worked val
 
 The ramp sums, the jump at the cut, the slope quotients, the atan mistake and the figures are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 99 lines</summary>
-
 ```lean
 -- The complex logarithm: every nonzero z has the logarithms ln|z| + i(Arg z + 2πk), one per whole number k, the one with angle in (−π, π] is Log z, Log has derivative 1/z off the negative real axis, and Log(zw) = Log z + Log w + 2πiN with N in {−1, 0, 1}.
 import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
@@ -453,8 +450,6 @@ example : Complex.log (exp (3 * π * I)) = π * I := by
 #print axioms log_hasDerivAt_inv_off_cut
 #print axioms log_mul_up_to_full_turn
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

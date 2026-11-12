@@ -366,9 +366,6 @@ Lean proves the card's three facts for any number of days and unknowns, with exa
 
 The whole-dollar hunt, the forced swap and the printed output are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 322 lines</summary>
-
 ```lean
 -- Gaussian elimination: swaps, nonzero scalings and taking a multiple of one row from another bring every linear system over a field to row echelon form without changing its solutions, and a staircase with a pivot in every column and no row reading 0 = nonzero has exactly one solution.
 import Mathlib.LinearAlgebra.Matrix.Echelon.Basic
@@ -693,8 +690,6 @@ example : transvection (2 : Fin 3) 1 (-1 : ℚ) *ᵥ (transvection 2 0 (-(3/2)) 
 #print axioms legal_row_moves_change_no_solution
 #print axioms staircase_with_a_pivot_for_every_unknown_has_one_answer
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

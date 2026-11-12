@@ -236,9 +236,6 @@ Lean proves the card's claims for every pair of seeds and every triple, not just
 
 The counting-up search for a missing leg and the printed rows are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 238 lines</summary>
-
 ```lean
 -- Pythagorean triples: three positive whole numbers form a triple exactly when they come from two seeds, bigger first, coprime and one odd one even, through the recipe (difference of squares, twice the product, sum of squares) scaled up by a whole number; the recipe always gives a triple for any seeds with the bigger first; and every triple has an even leg.
 import Mathlib.Data.Nat.GCD.Basic
@@ -479,8 +476,6 @@ example : 45 * 45 + 60 * 60 = 75 * 75 ∧ 45 = 15 * 3 ∧ 60 = 15 * 4 ∧ 75 = 1
 #print axioms recipe_gives_triple
 #print axioms triple_has_even_leg
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

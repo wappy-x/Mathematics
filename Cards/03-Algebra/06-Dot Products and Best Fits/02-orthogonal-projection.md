@@ -394,9 +394,6 @@ Lean proves the card's claims for any vector u and any direction v that is not t
 
 The decimal lengths, the parabola fitted through three distances, and the four mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 163 lines</summary>
-
 ```lean
 -- Projection: for any nonzero direction v, the shadow ((u · v) / (v · v)) v leaves a leftover perpendicular to v, it is the only such split and the strictly closest point on the line, the squared lengths add up by Pythagoras, and the same holds for a plane named by two perpendicular directions.
 import Mathlib.Data.Matrix.Mul
@@ -562,8 +559,6 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 #print axioms projection_pythagoras
 #print axioms plane_projection_perpendicular_and_closest
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

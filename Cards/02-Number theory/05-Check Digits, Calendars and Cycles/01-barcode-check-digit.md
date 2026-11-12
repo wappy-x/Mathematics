@@ -238,9 +238,6 @@ Lean proves the card's three claims for every EAN-13 code, not just 590123412345
 
 Reading a barcode as text and printing the table of totals stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 86 lines</summary>
-
 ```lean
 -- Barcode check digits: weighting the digits 1, 3, 1, 3 from the left, exactly one last digit puts an EAN-13's total on a multiple of 10, every single wrong digit is then caught, and a swap of neighbours slips through only when the two digits are equal or 5 apart.
 import Mathlib.Algebra.BigOperators.Fin
@@ -329,8 +326,6 @@ example : 2 * 7 = 14 ∧ 14 / 10 + 14 % 10 = 5 := by decide
 #print axioms one_wrong_digit_is_always_caught
 #print axioms swapped_neighbours_pass_iff_equal_or_five_apart
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

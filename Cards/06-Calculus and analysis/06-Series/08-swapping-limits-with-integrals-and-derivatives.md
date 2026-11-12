@@ -356,9 +356,6 @@ Lean proves both theorems on every closed, bounded interval, and checks the card
 
 The decimals, the rectangle and Simpson sums, the spikes' and waves' failures, and the difference quotients are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 225 lines</summary>
-
 ```lean
 -- Swapping limits: on a closed, bounded interval a uniform limit of integrable functions is integrable with integral equal to the limit of the integrals (the areas missing by at most width times worst gap), and when the slopes converge uniformly and one height settles, the functions converge uniformly to a limit whose slope is the limit of the slopes.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -586,8 +583,6 @@ example : (10 : ℚ) * (1 / 10) = 1 ∧ (1000 : ℚ) * (1 / 1000) = 1 := by
 #print axioms integral_gap_le_width_mul_worst_gap
 #print axioms uniform_limit_of_slopes_is_slope_of_limit
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -237,9 +237,6 @@ Lean proves the four verdicts over all 4 situations, with each fact a plain yes 
 
 Running the code and printing its table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 77 lines</summary>
-
 ```lean
 -- Valid arguments: over all four yes-or-no situations, modus ponens and modus tollens have no counterexample, while affirming the consequent and denying the antecedent each fail on exactly one situation, on time with a fee.
 import Mathlib.Data.Fintype.Prod
@@ -319,8 +316,6 @@ example : (Finset.univ.filter (fun c : Bool Ã— Bool => c.1 && !c.2)).card = 1 âˆ
 #print axioms affirming_the_consequent_fails_only_on_time_with_fee
 #print axioms denying_the_antecedent_fails_only_on_time_with_fee
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

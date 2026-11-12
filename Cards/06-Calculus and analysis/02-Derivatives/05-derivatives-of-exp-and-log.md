@@ -353,9 +353,6 @@ Lean proves all three rules: for e^x and ln x, for any other positive base, and 
 
 Lean also checks four worked numbers exactly: the Step 1 walls, the time per extra dollar, and the fund's shares and relative rate. The squeeze, the secants, the balances and the staircase are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 47 lines</summary>
-
 ```lean
 -- Derivatives of exp and log: e^x has rate e^x everywhere, ln x has rate 1/x for x > 0, any positive base b picks up the factor ln b, and the log of a positive function has rate f'/f.
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
@@ -405,8 +402,6 @@ example : (10 : ℚ) / 200 + 1 / 20 = 1 / 10 := by norm_num
 #print axioms other_base_rate_picks_up_log_b
 #print axioms log_rate_is_relative_rate
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

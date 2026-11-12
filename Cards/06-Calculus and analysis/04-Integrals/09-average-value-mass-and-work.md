@@ -352,9 +352,6 @@ Lean proves the mean value theorem for integrals for every continuous f on every
 
 The decimals with g = 9.81, the other strip sums, the bisection, the chart and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 157 lines</summary>
-
 ```lean
 -- Averages, mass and work: a continuous function on an interval of positive length takes its average value somewhere, and the card's day, tank and spring totals come out exactly.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -514,8 +511,6 @@ example : ∫ x in (0 : ℝ)..(3 / 10), -200 * x = -9 := by
 #print axioms average_between_least_and_greatest
 #print axioms step_heater_never_reaches_its_average
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

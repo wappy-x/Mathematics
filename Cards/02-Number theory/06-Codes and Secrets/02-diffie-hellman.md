@@ -239,9 +239,6 @@ Lean proves the two sides agree for every clock size, every base and every pair 
 
 The square-and-multiply road and the printed run stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 47 lines</summary>
-
 ```lean
 -- Diffie-Hellman key exchange: on any clock, with any base and any two kept counts, both sides of the exchange land on the same shared number, the base multiplied out the product of the counts.
 import Mathlib.Algebra.Group.Nat.Defs
@@ -291,8 +288,6 @@ example : (Finset.Icc 1 22).filter (fun c => 2 ^ c % 23 = 18) = {6, 17} := by de
 #print axioms diffie_hellman_shared_number_eq_pow_mul
 #print axioms pow_multiplied_out_eq_pow_mul
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

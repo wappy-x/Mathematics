@@ -345,9 +345,6 @@ Lean proves both theorems, and the one-comparison shortcut, for every triangle o
 
 It also checks the card's whole-number sums exactly: the 3, 4 and 8 m fence, the 5 m bed, third panels of 1 to 8 m, and the mistakes. The decimal angles, the swing and the 1000 random triangles are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 127 lines</summary>
-
 ```lean
 -- Triangles: in the flat plane, three lengths make a genuine triangle exactly when each is less than the other two added together, and the three angles of any genuine triangle add to a half-turn.
 import Mathlib.Geometry.Euclidean.Triangle
@@ -477,8 +474,6 @@ example : (180 : ℤ) - 100 - 90 = -10 := by decide
 #print axioms triangle_angle_sum_eq_half_turn
 #print axioms two_shorter_against_longest_suffices
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

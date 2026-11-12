@@ -213,9 +213,6 @@ Lean proves three of the card's facts for every number, not just the apples, and
 
 Showing that real programming languages read a line by the same rungs is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 48 lines</summary>
-
 ```lean
 -- Order of operations: splitting the change and splitting the bill add back up to splitting the note when the change divides evenly, multiplying is repeated adding, dividing is multiplying by the reciprocal, and the card's worked numbers come out as it says.
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
@@ -266,8 +263,6 @@ example : (1000 - 12 * 80) / 4 = 10 := by decide
 #print axioms mul_eq_repeated_add
 #print axioms div_eq_mul_one_div_rung
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -237,9 +237,6 @@ Lean proves the three tests for divides on every number's divisors, the Hasse di
 
 The yes-no test table, the rules that fail a test, and adding 5 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 90 lines</summary>
-
 ```lean
 -- Orders: divides is a partial order on the divisors of any number, a finite order is rebuilt from its covers, and on the divisors of 12 divides is partial but not total while less-than-or-equal is total.
 import Mathlib.NumberTheory.Divisors
@@ -332,8 +329,6 @@ example : ∀ a ∈ Nat.divisors 8, ∀ b ∈ Nat.divisors 8, a ∣ b ∨ b ∣ 
 #print axioms finite_order_rebuilt_from_covers
 #print axioms number_line_has_no_covers
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

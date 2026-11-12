@@ -378,9 +378,6 @@ Lean proves the card's facts for every independent list of real lines, of any si
 
 The six-decimal values and the second road, solving the equations, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 160 lines</summary>
-
 ```lean
 -- Gram-Schmidt: the card's loop turns any independent list of real vectors into perpendicular unit directions that reach the same points, every point they reach is the sum of its dot products with them, a leftover is zero exactly when the line was already a mix of the finished directions, a square matrix with such columns has Qᵀ Q = I, and the card's survey numbers come out as it says.
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -543,8 +540,6 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 #print axioms leftover_is_zero_iff_line_is_a_mix
 #print axioms orthonormal_columns_give_transpose_times_Q_identity
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

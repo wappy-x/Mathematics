@@ -335,9 +335,6 @@ Lean proves the card's three facts for every point off the axis, not just Tokyo 
 
 The decimal values for Tokyo and Rio, the tunnel, the flattened Earth and the mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 111 lines</summary>
-
 ```lean
 -- Cylindrical and spherical coordinates: every point off the axis has exactly one spherical address (ρ, θ, φ), the atan2 recipe finds it, and ρ² = x² + y² + z².
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
@@ -451,8 +448,6 @@ theorem spherical_sum_of_squares (ρ θ φ : ℝ) :
 #print axioms back_from_grid_recovers_point
 #print axioms spherical_sum_of_squares
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

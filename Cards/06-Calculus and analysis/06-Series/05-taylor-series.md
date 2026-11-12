@@ -367,9 +367,6 @@ Lean proves the four series at centre 0, the wall at radius 1 for ln(1 + x), and
 
 The decimals, the error and bound rows, and the impostor's difference quotients are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 286 lines</summary>
-
 ```lean
 -- Taylor series: the Taylor series of exp, sin and cos add up to the function at every x, the one for ln(1 + x) does so for x above −1 and at most 1 and settles on nothing outside that range, and the smooth function e^(−1/x²) has Taylor series 0 at 0 yet is not 0 anywhere else.
 import Mathlib.Analysis.Calculus.Taylor
@@ -658,8 +655,6 @@ example : ∑ k ∈ range 21, 2 ^ k = 2097151 := by
 #print axioms log_one_add_taylor_series_diverges_outside
 #print axioms smooth_impostor_not_equal_to_its_taylor_series
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

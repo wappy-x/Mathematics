@@ -373,9 +373,6 @@ Lean proves the card's laws for every universe and every Boolean algebra, not ju
 
 Flooding the switch network with current, and printing each row, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 116 lines</summary>
-
 ```lean
 -- Boolean algebra: the subsets of any fixed universe, ordered by "is inside", form a lattice whose meet is intersection and join is union, with distributivity both ways and a complement for every set; in every Boolean algebra the light rule distributes and De Morgan gives its off rule; and a complement is unique.
 import Mathlib.Order.Bounds.Basic
@@ -494,8 +491,6 @@ example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 6 c = 1 ∧ Nat.lcm 6 c = 12 := 
 #print axioms light_rule_distributes_and_de_morgan
 #print axioms complement_is_unique
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

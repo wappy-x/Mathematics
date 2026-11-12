@@ -356,9 +356,6 @@ Lean proves the three error bounds for every curve with the needed derivatives, 
 
 The bell curve's numbers, its ceilings, the slice counts for six decimals, the figure and the mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 440 lines</summary>
-
 ```lean
 -- Numerical integration: on n equal slices of [a, b], the midpoint and trapezoid rules miss the integral by at most K₂(b - a)h^2/24 and K₂(b - a)h^2/12 when the second derivative exists with size at most K₂, and Simpson's rule (n even) by at most K₄(b - a)h^4/180 when the fourth derivative exists with size at most K₄.
 import Mathlib.Analysis.Calculus.Deriv.Basic
@@ -801,8 +798,6 @@ example : (1 : ℚ) / 3 * ((-1) ^ 3 + 4 * 0 ^ 3 + 1 ^ 3) = 0 := by norm_num
 #print axioms trapezoid_rule_error_bound
 #print axioms simpson_rule_error_bound
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

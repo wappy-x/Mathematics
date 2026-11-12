@@ -242,9 +242,6 @@ Lean proves the principle for every finite set of pigeons and holes, not just th
 
 Reading the sentence's first letters, and printing the counts, stays with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 64 lines</summary>
-
 ```lean
 -- Pigeonhole: when finitely many pigeons each land in one of fewer holes, two share a hole, so no such placing is one-to-one, and more than n times as many pigeons as holes puts more than n in some hole.
 import Mathlib.Combinatorics.Pigeonhole
@@ -311,8 +308,6 @@ example : (born 2 + 1 : Fin 12) = 7 ∧ (born 12 + 1 : Fin 12) = 7 := by decide
 #print axioms no_one_to_one_function_into_smaller_finite_set
 #print axioms more_than_n_rounds_some_hole_holds_more_than_n
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -339,9 +339,6 @@ Lean proves the three line tests for any lines on axes at right angles, same uni
 
 Finding the junction by halving route A, and placing the roads on the figure, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 94 lines</summary>
-
 ```lean
 -- Lines: on square axes two lines cross at a right angle exactly when their slopes multiply to -1, two lines with a nonzero crossing number meet at the one point the crossing formula gives, and lines with equal slopes and different intercepts never meet.
 import Mathlib.Geometry.Euclidean.Angle.Unoriented.Affine
@@ -438,8 +435,6 @@ example : (1 : ℚ) / (-2) = -1 / 2 ∧ (1 : ℚ) * 1 + (-2) * (-1 / 2) = 2 := b
 #print axioms lines_meet_at_crossing_formula
 #print axioms equal_slopes_different_intercepts_never_meet
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

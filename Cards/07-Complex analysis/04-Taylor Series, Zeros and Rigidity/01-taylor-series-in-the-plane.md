@@ -346,9 +346,6 @@ Lean proves the main theorem for every function and every disc, the failure past
 
 The contour sums, the radius from the coefficients' decay, the long sums and the z-bar break are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 122 lines</summary>
-
 ```lean
 -- Taylor series in the plane: a function with a complex derivative on an open disc equals its Taylor series at every point of that disc, holomorphic and analytic are the same on open sets, and the series of 1/(1 + z^2) about 0 fails past the poles ±i.
 import Mathlib.Analysis.Complex.TaylorSeries
@@ -473,8 +470,6 @@ example : (2 : ℕ) ^ 2 + 1 ^ 2 = 5 := by norm_num
 #print axioms holomorphic_iff_analytic_on_open
 #print axioms taylor_series_of_inv_one_add_sq_diverges_past_poles
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

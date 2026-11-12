@@ -381,9 +381,6 @@ Lean proves Kőnig's theorem and Gallai's identities for every graph with finite
 
 Growing the matching by alternating walks, and the edits in the Try changing box, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 516 lines</summary>
-
 ```lean
 -- Konig's theorem: in every finite bipartite graph the largest matching has as many lines as the smallest set of dots touching every line.
 import Mathlib.Combinatorics.SimpleGraph.Matching
@@ -902,8 +899,6 @@ example : ∀ C : Finset (Fin 3), (∀ s ∈ ring, s.1 ∈ C ∨ s.2 ∈ C) → 
 #print axioms matching_card_le_vertex_cover_card
 #print axioms gallai_identities
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

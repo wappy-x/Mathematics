@@ -232,9 +232,6 @@ The outputs match line for line.
 
 Lean proves the 4-or-5 diagonal number is on no list, so the reals outnumber the counting numbers; Python and Rust run the long division.
 
-<details>
-<summary>The Lean proof, 173 lines</summary>
-
 ```lean
 -- Cantor's diagonal: every list of real numbers, one per counting number, misses a real between 0 and 1, the 4-or-5 diagonal number is one it misses, and so the reals are a strictly bigger infinity than the counting numbers.
 import Mathlib.Analysis.Real.Cardinality
@@ -410,8 +407,6 @@ example : [1, 0, 3, 5, 5].map (fun d => (d + 1) % 10) = [2, 1, 4, 6, 6] := by de
 #print axioms digit_tail
 #print axioms diag_main
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

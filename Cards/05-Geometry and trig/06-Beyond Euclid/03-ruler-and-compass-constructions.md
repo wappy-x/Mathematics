@@ -361,9 +361,6 @@ Lean starts from two points, 0 and 1, and proves these facts for every length an
 
 The 17-gon's tower of square roots, the decimal values, the n-gon list, the mistakes and the figures are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 879 lines</summary>
-
 ```lean
 -- Ruler and compass: the points built from 0 and 1 by ruler and compass give exactly the real lengths reachable from 1 by the four operations and square roots, so a real root of a fraction-coefficient cubic with no fraction root, such as the 7-gon's cosine, cos 20° or the cube root of 2, can never be built.
 import Mathlib.LinearAlgebra.AffineSpace.AffineSubspace.Defs
@@ -1245,8 +1242,6 @@ example : 17 - 1 = 2 ^ 4 ∧ 7 - 1 = 2 * 3 := by
 #print axioms constructible_iff_sqrt_reachable
 #print axioms seven_gon_trisection_and_cube_doubling_impossible
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

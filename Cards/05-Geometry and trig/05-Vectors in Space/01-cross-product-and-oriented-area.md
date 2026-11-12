@@ -338,9 +338,6 @@ Lean proves the card's three facts and the right-hand rule for every pair of edg
 
 The unit normal, the tilt road, the 36.87° angle, the half triangle and the figure coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 104 lines</summary>
-
 ```lean
 -- Cross product: for any two arrows u and v in three dimensions, u × v is square to both, its length is |u| |v| sin θ (the parallelogram's area), its squared length is |u|² |v|² − (u · v)², the rows u, v, u × v have determinant (u × v) · (u × v) so the three are right-handed, swapping the edges reverses the arrow, and the card's solar-panel numbers come out as it says.
 import Mathlib.LinearAlgebra.CrossProduct
@@ -447,8 +444,6 @@ example : (![0, 36, 48] : Fin 3 → ℚ) ⬝ᵥ ![0, 24/5, 18/5] = 1728/5 := by
 #print axioms cross_product_length_sq_eq_area_sq
 #print axioms cross_product_right_handed_and_order_reverses
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

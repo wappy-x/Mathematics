@@ -354,9 +354,6 @@ Lean proves the card's three general facts, with amounts that may be negative or
 
 The bag numbers are checked exactly too; the decimal elimination and the printed tables are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 117 lines</summary>
-
 ```lean
 -- Linear independence: a list of vectors has a mix with amounts not all zero landing on the zero vector exactly when one of its vectors is a mix of the others, independence means only the all-zero mix lands there, two vectors in the plane are independent exactly when their cross-number is not zero, and the card's fertiliser numbers come out as it says.
 import Mathlib.LinearAlgebra.LinearIndependent.Defs
@@ -476,8 +473,6 @@ example : (2 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (-1 : ℤ) • ![20, 10] = 
 #print axioms independent_iff_only_the_zero_mix_lands_on_zero
 #print axioms two_vectors_independent_iff_cross_number_ne_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

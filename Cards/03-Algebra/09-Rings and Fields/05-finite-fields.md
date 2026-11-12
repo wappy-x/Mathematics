@@ -360,9 +360,6 @@ Lean proves the card's three main facts in general: for every finite field, ever
 
 Multiplying by shift and XOR, matching it against the coordinate rule, and Euclid's road to reciprocals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 79 lines</summary>
-
 ```lean
 -- Finite fields: every finite field has a prime power number of elements, the n-hour clock is a field exactly when n is prime, and wrapping polynomials over a prime clock by one of degree k gives p ^ k elements and a field exactly when that polynomial does not factor.
 import Mathlib.FieldTheory.Finite.Basic
@@ -444,8 +441,6 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 #print axioms clock_is_field_iff_prime
 #print axioms polynomial_quotient_has_prime_pow_size_and_is_field_iff_irreducible
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

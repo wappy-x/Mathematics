@@ -235,9 +235,6 @@ Lean proves the algorithm stops at the gcd for every pair of whole numbers, at l
 
 The printed table is left to the Python and Rust checks, and Lamé's ceiling is checked only for 55 and 34.
 
-<details>
-<summary>The Lean proof, 110 lines</summary>
-
 ```lean
 -- Euclid's algorithm: for whole numbers a and b, not both 0, repeatedly swapping the pair for (divisor, remainder) reaches a zero remainder, and the number divided by at that moment is the biggest number dividing both a and b.
 import Mathlib.Logic.Function.Iterate
@@ -350,8 +347,6 @@ example : Nat.gcd 1071 460 = 1 := by norm_num
 #print axioms common_divisors_unchanged_by_division
 #print axioms zero_and_zero_have_no_greatest_common_divisor
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

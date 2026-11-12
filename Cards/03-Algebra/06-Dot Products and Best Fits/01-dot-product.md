@@ -377,9 +377,6 @@ Lean proves the three readings for lists of real numbers of any length, and chec
 
 The decimal scores for the twelve directions are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 106 lines</summary>
-
 ```lean
 -- The dot product: for lists of real numbers of any length, the square root of a list dotted with itself is its straight-line length, two arrows that go somewhere meet at a right angle exactly when their dot product is 0, the alignment score always lies between -1 and 1 and reaches 1 or -1 exactly for arrows on one line, and the card's shop and map numbers come out as it says.
 import Mathlib.Data.Matrix.Mul
@@ -488,8 +485,6 @@ example : ∀ d ∈ [(![5, 0] : Fin 2 → ℤ), ![4, 3], ![3, 4], ![0, 5], ![-3,
 #print axioms length_is_sqrt_of_dot_with_itself
 #print axioms right_angle_iff_dot_product_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

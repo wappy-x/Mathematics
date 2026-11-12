@@ -239,9 +239,6 @@ Lean proves the card's rules for every whole-number top and every bottom that is
 
 Tidying to lowest terms and the printed rows are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 85 lines</summary>
-
 ```lean
 -- Fractions: for whole-number tops and nonzero bottoms, fractions add and take away over the common bottom made by multiplying the bottoms, multiply tops by tops and bottoms by bottoms, divide by flipping the second one, keep their size when top and bottom are cut finer or tidied by the same number, and a top shared by a bottom is the whole share plus the leftover over the bottom.
 import Mathlib.Algebra.Order.Field.Rat
@@ -329,8 +326,6 @@ example : (4 : ℚ) / 8 + 1 / 4 = 3 / 4 := by norm_num
 #print axioms fraction_scale_top_and_bottom
 #print axioms fraction_is_share_plus_leftover
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

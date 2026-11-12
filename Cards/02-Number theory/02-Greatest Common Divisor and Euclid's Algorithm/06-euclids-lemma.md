@@ -242,9 +242,6 @@ Lean proves three things for every whole number, not just the office's, and chec
 
 Searching for the mix landing on 1, and printing each step, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 72 lines</summary>
-
 ```lean
 -- Euclid's lemma: if a prime divides a product of two whole numbers and misses one of them, it divides the other, a prime that misses a number shares only 1 with it, and every composite divides some product while dividing neither factor.
 import Mathlib.Data.Nat.Prime.Basic
@@ -319,8 +316,6 @@ example : Nat.gcd 6 4 = 2 := by norm_num
 #print axioms prime_missing_a_number_is_coprime_to_it
 #print axioms composite_divides_a_product_but_neither_factor
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

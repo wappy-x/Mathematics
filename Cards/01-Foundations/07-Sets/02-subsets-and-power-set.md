@@ -242,9 +242,6 @@ Lean proves these facts for every finite set, and checks the three-topping shop 
 
 Building the menu one topping at a time, and printing the eight pizzas in order, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 86 lines</summary>
-
 ```lean
 -- Subsets and the power set: a finite set of n members has exactly 2^n subsets, each new member doubles the count, and the subsets that leave out one member are exactly the subsets of what remains.
 import Mathlib.Data.Finset.Powerset
@@ -333,8 +330,6 @@ example : 2 + 2 + 2 = (6 : ℕ) ∧ 2 + 2 + 2 ≠ (8 : ℕ) := by decide
 #print axioms card_powerset_insert_doubles
 #print axioms subsets_without_eq_powerset_erase
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

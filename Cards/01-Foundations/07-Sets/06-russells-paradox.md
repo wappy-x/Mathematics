@@ -251,9 +251,6 @@ Lean proves the flip for every set and every village, and recounts the three-vil
 
 Python and Rust build the eight lists as sets of sets and show the Russell set, holding all 8, is not among them.
 
-<details>
-<summary>The Lean proof, 61 lines</summary>
-
 ```lean
 -- Russell's paradox: no set contains exactly the sets that are not members of themselves, no barber can shave exactly those who do not shave themselves, and the Russell cut of any set is never a member of that set.
 import Mathlib.SetTheory.ZFC.Basic
@@ -317,8 +314,6 @@ example : (Finset.univ.filter (fun l : Finset (Fin 3) => l.card = 8)).card = 0 :
 #print axioms no_barber_shaves_exactly_non_self_shavers
 #print axioms russell_cut_not_mem
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

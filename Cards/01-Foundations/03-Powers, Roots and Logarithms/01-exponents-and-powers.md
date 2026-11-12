@@ -253,9 +253,6 @@ Lean proves the rules for every base that is not 0, and every exponent that is a
 
 Building each power one multiplication at a time, and printing the table, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 79 lines</summary>
-
 ```lean
 -- Exponents: for a nonzero base and whole-number or negative exponents, multiplying powers adds the exponents, dividing subtracts them and a power of a power multiplies them; the subtraction rule forces a zero exponent to give 1 and a negative exponent to give 1 over the matching power; and the card's chain-message numbers come out exactly as it says.
 import Mathlib.Algebra.GroupWithZero.Units.Basic
@@ -337,8 +334,6 @@ example : (3 : ℕ) ^ 6 = 729 := by norm_num
 #print axioms exponent_rules_add_subtract_multiply
 #print axioms zero_and_negative_powers_are_forced
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

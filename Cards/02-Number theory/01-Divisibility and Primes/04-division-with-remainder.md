@@ -244,9 +244,6 @@ Lean proves the theorem for every count of 0 or more and every divisor of 1 or m
 
 The printed table, the taking-7-away loop and the weekday names stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 74 lines</summary>
-
 ```lean
 -- Division with a remainder: for a whole number b and a divisor a of 1 or more, exactly one pair of whole numbers q and r gives b = q × a + r with r smaller than a, that pair is b / a and b % a, and without the rule r < a the answer is no longer one.
 import Mathlib.Basic.ExistsUnique
@@ -323,8 +320,6 @@ example : 100 / 60 = 1 ∧ 100 % 60 = 40 := by decide
 #print axioms quotient_and_remainder_are_div_and_mod
 #print axioms without_leftover_rule_answer_is_not_unique
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

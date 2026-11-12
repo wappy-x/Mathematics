@@ -363,9 +363,6 @@ Lean proves the three facts for every complex sequence, every ratio q and every 
 
 The staircase's decimals, the rim and outside walks, and the figure positions are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 59 lines</summary>
-
 ```lean
 -- Limits and regions in the plane: a complex sequence converges exactly when its real and imaginary parts converge, the complex geometric series sums to 1/(1 - q) inside the unit disc and has no limit for |q| ≥ 1, and absolutely convergent complex series converge.
 import Mathlib.Analysis.Complex.Basic
@@ -427,8 +424,6 @@ example : (1 - (4 / 5 : ℝ))⁻¹ = 5 := by norm_num
 #print axioms complex_geometric_series_sum_iff_in_open_unit_disc
 #print axioms complex_absolutely_convergent_series_converges
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

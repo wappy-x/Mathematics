@@ -352,9 +352,6 @@ Lean proves the below-the-tangent theorem and the raw-readings limit for every f
 
 Decimals, shrinking windows, the halving search, curvature at 7 s, three-point circles and the charts are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 163 lines</summary>
-
 ```lean
 -- Second derivatives: a function whose second derivative is negative throughout an open interval has its graph strictly below each of its tangent lines there, the second difference (f(t+h) - 2f(t) + f(t-h))/h² heads for f''(t) as the window h shrinks, and the card's car s(t) = (3/2)t² - (1/10)t³ has velocity 3t - (3/10)t², acceleration 3 - (3/5)t, jerk -3/5, and a central second difference equal to its acceleration at every window.
 import Mathlib.Analysis.Convex.Deriv
@@ -520,8 +517,6 @@ example : (12 * 0 ^ 2 : ℚ) = 0 ∧ (12 * (-1 / 10) ^ 2 : ℚ) = 3 / 25 ∧ (12
 #print axioms second_difference_tends_to_second_deriv
 #print axioms car_derivatives_and_exact_central_difference
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

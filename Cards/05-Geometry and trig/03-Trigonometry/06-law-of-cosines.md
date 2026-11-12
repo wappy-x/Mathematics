@@ -369,9 +369,6 @@ Lean proves the law for any three points on a flat plane, at any angle, plus two
 
 The decimals, the area, Heron's rule and the angles found by halving are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 60 lines</summary>
-
 ```lean
 -- Law of cosines: in a flat plane, the square of the side facing an angle equals the sum of the squares of the two sides that form it, minus twice their product times the angle's cosine.
 import Mathlib.Geometry.Euclidean.Triangle
@@ -434,8 +431,6 @@ example : ¬ ((800 : ℝ) < 300 + 450) := by norm_num
 #print axioms law_of_cosines_sss_range
 #print axioms dot_product_eq_mul_cos_angle
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

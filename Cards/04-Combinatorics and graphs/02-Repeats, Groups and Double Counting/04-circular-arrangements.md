@@ -353,9 +353,6 @@ Lean proves these counts for any number $n$ of different things, not just eight 
 
 The brute-force sorting into families, and the 16 bracelets for R R B B G Y, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 196 lines</summary>
-
 ```lean
 -- Round tables and bracelets: n different things placed round a ring make (n - 1)! arrangements when turning the ring counts as the same, each such family holding exactly n row-orders, and (n - 1)! / 2 when turning it over counts as the same too, for n at least 3.
 import Mathlib.Data.Fintype.Perm
@@ -554,8 +551,6 @@ example : Nat.factorial 6 / (2 * 2) = 180 ∧ 180 / 6 = 30 ∧ 30 / 2 = 15 ∧ (
 #print axioms round_table_family_size
 #print axioms bracelet_count
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

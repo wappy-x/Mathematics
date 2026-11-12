@@ -358,9 +358,6 @@ Lean proves all twelve counts for any n ≥ 1 things and k ≥ 1 boxes, two step
 
 The two growth rules in general, and the listing of all 243 loadings for every cell, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 641 lines</summary>
-
 ```lean
 -- The twelvefold way: for every n ≥ 1 things and k ≥ 1 boxes, each of the twelve ways of putting the things into the boxes (things named or not, boxes named or not, any number, at most one or at least one per box) is counted by its formula in the card's table.
 import Mathlib.Combinatorics.Enumerative.Stirling
@@ -1004,8 +1001,6 @@ example : Nat.stirlingSecond 4 3 = 6 ∧ Nat.stirlingSecond 4 2 = 7 ∧ 3 * 6 + 
 #print axioms tw_part_atmost
 #print axioms tw_part_ones
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

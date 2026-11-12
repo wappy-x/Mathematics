@@ -360,9 +360,6 @@ Lean proves the card's three claims for every number of things n, not just ten s
 
 Stirling's estimate and the tally that only adds are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 71 lines</summary>
-
 ```lean
 -- Factorials: the number of ways to line up n different things is n!, n! beats 2^n from n = 4 on, and n! eventually beats every fixed power n^k, with the card's playlist and race numbers checked.
 import Mathlib.Data.Fintype.Perm
@@ -436,8 +433,6 @@ example : 10 ! / 2 = 1814400 := by decide
 #print axioms two_pow_lt_factorial
 #print axioms pow_lt_factorial_eventually
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

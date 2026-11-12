@@ -356,9 +356,6 @@ Lean proves the turn rule for every lattice, the two-flip rule for every pair of
 
 The searches of all 4096 strips and of every set of marks, and the figure, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 324 lines</summary>
-
 ```lean
 -- Symmetry: a turn that maps a flat lattice to itself is a full, half, third, quarter or sixth of a revolution and every one of those occurs, two flips make a turn by twice the angle between their mirrors, the six-armed snowflake's symmetries form a group of 12 moves, and the card's whole-number counts (7 strip kinds, the costs of 2 for all 17 walls) come out as it says.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -685,8 +682,6 @@ example :
 #print axioms two_flips_make_a_turn
 #print axioms snowflake_symmetries_form_group_of_twelve
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

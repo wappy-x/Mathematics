@@ -344,9 +344,6 @@ Lean proves the radius, the ratio formula and term-by-term calculus for every po
 
 The log's error bound, the decimals, the Simpson areas and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 418 lines</summary>
-
 ```lean
 -- Power series: every power series has a radius R inside which it converges and can be differentiated and integrated term by term and outside which it fails, the coefficient ratios give R = 1/L, and the card's two series 1 + x + x² + ⋯ and x − x²/2 + x³/3 − ⋯ work exactly on −1 < x < 1 and −1 < x ≤ 1.
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -767,8 +764,6 @@ example : (1 : ℚ) / (1 - 2) = -1 ∧ (List.range 4).map (fun n : ℕ => (2 : �
 #print axioms radius_is_one_over_ratio_limit
 #print axioms geometric_and_log_series_where_they_work
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

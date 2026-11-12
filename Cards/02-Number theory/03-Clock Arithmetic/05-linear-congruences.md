@@ -256,9 +256,6 @@ Lean proves the gcd rule for every step and target, and every dial of 1 or more 
 
 Running the rule line by line and printing each step is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 166 lines</summary>
-
 ```lean
 -- Solving a x ≡ b (mod n): on a dial of n positions, a x ≡ b (mod n) has answers exactly when gcd(a, n) divides b, and then it has exactly gcd(a, n) answers from 0 to n - 1, spaced n ÷ gcd(a, n) apart, the same answers as the shrunk congruence with a, b and n all divided by the gcd.
 import Mathlib.Data.Nat.ModEq
@@ -427,8 +424,6 @@ theorem linear_congruence_answers_are_spaced_n_over_gcd (a b n : ℕ) (hn : 0 < 
 #print axioms linear_congruence_same_answers_after_shrinking
 #print axioms linear_congruence_answers_are_spaced_n_over_gcd
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

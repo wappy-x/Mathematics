@@ -252,9 +252,6 @@ Lean proves the column rule for every whole number and any number of columns, no
 
 Printing the apple stall's numbers and the column table is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 121 lines</summary>
-
 ```lean
 -- Place value: every whole number that fits in a given number of columns has exactly one way to be written with one digit 0 to 9 per column, biggest column first, each column worth ten times the one on its right, and the digits are the remainders from dividing by ten over and over.
 import Mathlib.Algebra.BigOperators.Fin
@@ -378,8 +375,6 @@ example : 5 + 2 + 3 = 10 := by norm_num
 #print axioms column_beats_all_nines_to_its_right
 #print axioms remainders_from_dividing_by_ten_rebuild_the_number
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

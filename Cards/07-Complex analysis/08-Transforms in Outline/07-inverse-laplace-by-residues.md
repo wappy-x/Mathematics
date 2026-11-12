@@ -344,9 +344,6 @@ Lean proves the method for any V made of finitely many simple poles, A/(s − a)
 
 The decimals, the line and arc sums, the forward check, the pulse and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 268 lines</summary>
-
 ```lean
 -- Inverting a Laplace transform: for a transform V made of finitely many simple poles left of the line Re s = c and falling like 1/|s|^2, the Bromwich integral up that line gives the residue sum of V(s)e^(st) for t > 0 and 0 for t < 0, and each residue is the limit of (s - a)V(s)e^(st).
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -617,8 +614,6 @@ example : (25 : ℤ) * 4 = 100 ∧ (245 : ℤ) - 100 = 145 := by norm_num
 #print axioms residue_at_simple_pole_eq_limit
 #print axioms bromwich_integral_eq_zero_of_neg
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -343,9 +343,6 @@ Lean proves the stretch rule, the gamma example and the gamma-zeta integral for 
 
 The two-sided Laplace form, the s = 1 blow-up, the mistakes and the decimal runs are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 148 lines</summary>
-
 ```lean
 -- The Mellin transform: for Re s > 1 the Mellin transform of 1/(e^t - 1) is Γ(s)ζ(s), stretching the input by k > 0 multiplies the transform by k^(-s), and the transform of e^(-t) is Γ(s) for Re s > 0.
 import Mathlib.Analysis.MellinTransform
@@ -496,8 +493,6 @@ example : mellin (fun t : ℝ => ((1 / (Real.exp t - 1) : ℝ) : ℂ)) 4 = (π :
 #print axioms mellin_stretch
 #print axioms mellin_exp_neg_eq_gamma
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

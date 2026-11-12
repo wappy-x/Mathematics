@@ -353,9 +353,6 @@ Lean proves the card's identities for every angle, in radians, and the fold for 
 
 The 40° crane's numbers, finding φ from its sine, and road 2's halved angles are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 103 lines</summary>
-
 ```lean
 -- Trig identities: for every pair of angles the sine and cosine of their sum come from each angle's sine and cosine, sine squared plus cosine squared is one with the double- and half-angle formulas following, and two locked booms' rises fold into one sine R sin(θ + φ) that peaks at R.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -461,8 +458,6 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 #print axioms pythagorean_double_and_half_angles
 #print axioms two_locked_booms_fold_into_one_sine
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -363,9 +363,6 @@ Lean proves Step 1's theorem for any fixed c and any driving term, and the two f
 
 Making the moves on real pegs, and growing each deposit on its own, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 94 lines</summary>
-
 ```lean
 -- Recurrences with a driving term: every solution of a(n) = c·a(n−1) + f(n) is one particular solution plus A·c^n for exactly one number A, so the Tower of Hanoi takes 2^n − 1 moves and the card's savings account holds 101000·1.01^n − 1000n − 101000 dollars.
 import Mathlib.Basic.Real.Basic
@@ -462,8 +459,6 @@ example : Nat.rec (motive := fun _ => ℕ) 0 (fun _ a => a + 1) 6 = 6 := by deci
 #print axioms hanoi_closed_form
 #print axioms savings_closed_form
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

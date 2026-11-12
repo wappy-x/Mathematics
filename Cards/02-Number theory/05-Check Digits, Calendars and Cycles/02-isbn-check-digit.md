@@ -227,9 +227,6 @@ Lean proves the swap and wrong-digit rules for any ten digits from 0 to 10, with
 
 Running the code and printing its lines are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 125 lines</summary>
-
 ```lean
 -- ISBN-10 and the prime modulus 11: with weights 10 down to 1 and digits from 0 to 10, a swap shifts the total by the weight gap times the digit gap, so every swap of two different digits and every single wrong digit moves the total to a new remainder on 11.
 import Mathlib.Algebra.BigOperators.Fin
@@ -357,8 +354,6 @@ example : isbnTotal ![0, 3, 0, 6, 4, 0, 6, 1, 5, 3] = 133 ∧ 133 % 11 = 1 := by
 #print axioms swap_shifts_total_by_weight_gap_times_digit_gap
 #print axioms one_wrong_digit_is_always_caught
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

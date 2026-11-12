@@ -400,9 +400,6 @@ Lean proves the identity and the rates for every real t, and the log formulas fo
 
 The inverses' rates, the chain's slope and length, and every decimal are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 76 lines</summary>
-
 ```lean
 -- Hyperbolic functions: cosh and sinh are the even and odd halves of exp with cosh² − sinh² = 1, each is the other's rate, and the three log formulas undo sinh, cosh (on t ≥ 0) and tanh.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -481,8 +478,6 @@ example : arcosh (5 / 4) = log 2 := by
 #print axioms sinh_cosh_each_others_rate
 #print axioms log_formulas_undo_sinh_cosh_tanh
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

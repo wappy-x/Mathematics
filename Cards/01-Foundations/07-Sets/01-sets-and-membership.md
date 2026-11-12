@@ -252,9 +252,6 @@ Lean proves the three rules for sets of any kind of thing, and checks every numb
 
 Running the rule as a program and printing the table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 71 lines</summary>
-
 ```lean
 -- Sets: a set is fixed by its members alone, so two sets with the same members are equal, there is exactly one set with no members, and the card's office guest list comes out as it says.
 import Mathlib.Data.Set.Basic
@@ -328,8 +325,6 @@ example : ({("Ana", 24), ("Ben", 31), ("Cleo", 28), ("Dev", 41), ("Eli", 29)} :
 #print axioms exactly_one_empty_set
 #print axioms set_builder_equal_iff_same_answers
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

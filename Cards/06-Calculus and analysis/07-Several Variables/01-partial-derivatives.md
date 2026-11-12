@@ -361,9 +361,6 @@ Lean proves the mixed-partials theorem for every function of two inputs that mee
 
 The shrinking-step decimals, the widest step within 0.1, the chart points and G's small-step quotients are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 221 lines</summary>
-
 ```lean
 -- Partial derivatives: when both mixed partials of a two-input function exist and are continuous near a point they agree there (Clairaut's theorem), the card's G gives -1 and +1 without that continuity, and the card's house has board rate -125, glass rate 40 and mixed rate 5/4 both ways.
 import Mathlib.Analysis.Calculus.MeanValue
@@ -587,8 +584,6 @@ example : (20 : ℚ) * (120 / 2 + 5 / 2 * 21) - 20 * (120 / 2 + 5 / 2 * 20) = 50
 #print axioms clairaut_counterexample
 #print axioms house_partials_at_6_20
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

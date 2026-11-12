@@ -350,9 +350,6 @@ Lean proves three rearrangements true for every number, not only the ones the co
 
 The rug, the interest rate, the hunting road and the rounded decimals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 64 lines</summary>
-
 ```lean
 -- Rearranging a formula: when a is not zero, F = a C + b and C = (F - b) / a say exactly the same thing, so Fahrenheit and Celsius convert both ways, and a circle's area gives back its radius as a square root because a radius cannot be negative.
 import Mathlib.Analysis.Real.Sqrt
@@ -419,8 +416,6 @@ example : (13 : ℚ) / 2 ≠ 5 := by norm_num
 #print axioms celsius_from_fahrenheit
 #print axioms radius_from_area
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

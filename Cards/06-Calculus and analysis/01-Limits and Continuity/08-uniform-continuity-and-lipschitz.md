@@ -361,9 +361,6 @@ Lean proves three theorems, for every function on the real numbers that meets th
 
 It also checks the worked fractions exactly; the decimals, bisection searches and sampled chords are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 123 lines</summary>
-
 ```lean
 -- Uniform continuity: a function continuous on a closed, bounded interval is uniformly continuous there, a Lipschitz bound K gives the tolerance ε / K directly, and neither step reverses (the square root, squaring on the whole line).
 import Mathlib.Topology.UniformSpace.HeineCantor
@@ -489,8 +486,6 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 #print axioms lipschitz_tolerance_is_output_tolerance_over_K
 #print axioms neither_arrow_reverses
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

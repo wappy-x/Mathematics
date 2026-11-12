@@ -246,9 +246,6 @@ Lean proves the three claims for every whole number, not just 0 to 40, and re-ch
 
 The printed table, and the two routes for claim 1, dividing and flipping, stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 50 lines</summary>
-
 ```lean
 -- Choosing a proof strategy: there is exactly one whole number that leaves every sum unchanged, any two such numbers are equal, and every whole number is even or odd.
 import Mathlib.Algebra.Ring.Parity
@@ -301,8 +298,6 @@ example : (Finset.range 41).filter
 #print axioms do_nothings_are_equal
 #print axioms every_nat_even_or_odd
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

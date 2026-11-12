@@ -353,9 +353,6 @@ Lean proves Rouché's theorem when the loop is a circle, the quintic's two root 
 
 Turn counts, root decimals, the cubics' roots and the pole are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 463 lines</summary>
-
 ```lean
 -- Rouche's theorem: if f and g are holomorphic on and inside a circle and |g| < |f| at every point of the circle, then f + g and f have the same number of zeros inside it, counted with multiplicity; so z^5 + 3z + 1 has one root inside the unit circle and all five inside radius 2, and every monic polynomial of degree n has all n roots inside any circle of radius above 1 and above the sum of its lower coefficients' sizes.
 import Mathlib.Analysis.Analytic.Order
@@ -821,8 +818,6 @@ example : (1 : ℕ) + 3 = 4 ∧ 3 < 4 := by norm_num
 
 end RouchesTheorem
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

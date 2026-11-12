@@ -225,9 +225,6 @@ The outputs match line for line.
 
 Lean proves the card's theorems for any number; Python and Rust dig out the digits.
 
-<details>
-<summary>The Lean proof, 105 lines</summary>
-
 ```lean
 -- Irrational numbers: no fraction multiplied by itself gives 2, and a fraction's decimal always stops or repeats, so a decimal that does neither is irrational.
 import Mathlib.NumberTheory.Real.Irrational
@@ -335,8 +332,6 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 #print axioms fraction_decimal_stops_or_repeats
 #print axioms non_repeating_decimal_is_irrational
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

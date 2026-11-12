@@ -362,9 +362,6 @@ Lean proves the card's three claims for any finite set of currencies and any rea
 
 The logs, the six-decimal costs and the round-by-round table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 379 lines</summary>
-
 ```lean
 -- Bellman-Ford: relaxing every arrow n - 1 times leaves every cheapest route cost on the table when no loop has a negative total, one more round improves something exactly when a loop reachable from the start has a negative total, and with positive rates and costs minus their logs a loop's rates multiply above 1 exactly when its costs add below 0.
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
@@ -746,8 +743,6 @@ example : 3 - 1 = 2 := by norm_num
 #print axioms extra_round_improves_iff_reachable_loop_pays
 #print axioms rates_multiply_above_one_iff_costs_add_below_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

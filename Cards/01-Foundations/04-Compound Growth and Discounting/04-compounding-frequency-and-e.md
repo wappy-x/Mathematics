@@ -254,9 +254,6 @@ Lean proves the card's claims for one dollar at 100%, and again at any fixed yea
 
 The decimals, such as 2.718281828 and $105.13, are left to the Python and Rust checks, and so is how each extra payment helps less.
 
-<details>
-<summary>The Lean proof, 116 lines</summary>
-
 ```lean
 -- Compounding more often, and the number e: cutting a year's interest at a fixed rate into more equal payments always ends the year higher, never reaches the ceiling exp r (which is e at 100%), and gets as close to it as you like, and that ceiling is the sum of the shrinking list 1 + r + r^2/2 + r^3/6 + ...
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
@@ -375,8 +372,6 @@ example : (1 : ℚ) / 2 / 3 = 1 / 6 ∧ (1 : ℚ) / 6 / 4 = 1 / 24 := by norm_nu
 #print axioms more_payments_at_any_rate_capped_by_exp
 #print axioms ceiling_is_the_shrinking_list
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

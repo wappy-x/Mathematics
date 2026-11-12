@@ -675,9 +675,6 @@ Lean proves the card's formula $C - P = S\,e^{-qT} - K\,e^{-rT}$ for any pricing
 
 The only prices it needs are one dollar due on expiry day and the prepaid share. It also proves the payoff identity at every share price, the forward form $e^{-rT}(F - K)$, and the card's whole-number payoff checks at strike 100. The call and put prices themselves, the volatility, the tree, the conversion trade and every decimal are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 74 lines</summary>
-
 ```lean
 -- Put-call parity: if prices add up (two packages paying the same cost the same), a call minus a put at one strike costs the prepaid share minus the discounted strike, whatever the share does.
 import Mathlib.Analysis.SpecialFunctions.Exp
@@ -754,8 +751,6 @@ example : max ((140 : ℤ) - 100) 0 + 100 = max (100 - 140) 0 + 140 := by norm_n
 #print axioms call_payoff_sub_put_payoff
 #print axioms parity_gap_eq_discounted_forward_minus_strike
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

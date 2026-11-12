@@ -369,9 +369,6 @@ Lean proves Berge's theorem and the repair for every finite graph, and checks th
 
 Running the search code, and recounting perfect matchings over all 120 ways to hand out the jobs, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 563 lines</summary>
-
 ```lean
 -- Matchings: in any finite graph a matching is as large as possible exactly when no augmenting path exists, and flipping an augmenting path gives a matching one line larger.
 import Mathlib.Combinatorics.SimpleGraph.Matching
@@ -937,8 +934,6 @@ example : (symmDiff greedyPairs otherPerfect).card = 9 ∧ (otherPerfect \ greed
 #print axioms matching_maximum_iff_no_augmenting_path
 #print axioms augmenting_path_flip_adds_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

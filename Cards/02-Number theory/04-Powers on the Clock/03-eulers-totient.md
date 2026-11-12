@@ -235,9 +235,6 @@ Lean proves the card's three rules for every clock size n, not only 12.
 
 Walking each jump until it comes home, and the printed lines, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 73 lines</summary>
-
 ```lean
 -- Euler's totient: for every whole number n, the count of numbers from 1 to n sharing no factor with n equals n times one bracket (1 - 1/p) for each different prime p dividing n, the count multiplies across coprime parts, and a prime p gives p - 1.
 import Mathlib.Data.Nat.Totient
@@ -313,8 +310,6 @@ example : ∀ n ∈ Finset.Icc 1 60,
 #print axioms totient_mul_of_coprime_parts
 #print axioms totient_of_prime
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -345,9 +345,6 @@ Lean proves the ring facts for every number of digits and every code length, and
 
 Finding the circuit, brute force at the larger sizes, the lock's ring and the greedy walk are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 296 lines</summary>
-
 ```lean
 -- De Bruijn sequences: for any alphabet of n digits and any code length k there is a ring of n^k digits that reads every k-digit code exactly once, no ring holding every code is shorter, and a flat string of n^k + k - 1 presses also holds every code.
 import Mathlib.Algebra.Order.Group.Nat
@@ -646,8 +643,6 @@ example : 10 ^ 4 + 4 - 1 = 10003 ∧ 4 * 10 ^ 4 = 40000 ∧ 40000 - 10003 = 2999
 #print axioms de_bruijn_ring_length_ge
 #print axioms de_bruijn_flat_presses
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

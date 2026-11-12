@@ -383,9 +383,6 @@ Lean proves the three cases for every rule of this shape, on sizes that are exac
 
 The shuffled deck's 8,946 comparisons, the searches and the decimal watershed powers are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 209 lines</summary>
-
 ```lean
 -- Divide-and-conquer recurrences: on sizes that are exact powers of the split, the cost rule T(n) = a T(n/b) + n^d with T(1) = 0 adds up level by level, and its total grows like n^(log_b a), n^d log_b n or n^d as d is below, equal to or above log_b a.
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -597,8 +594,6 @@ example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 #print axioms total_work_is_the_sum_of_the_levels
 #print axioms pieces_at_the_bottom_as_a_power
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

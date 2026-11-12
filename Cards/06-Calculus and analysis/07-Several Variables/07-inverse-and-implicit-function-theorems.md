@@ -360,9 +360,6 @@ Lean proves both theorems for every map with continuous partials, in any number 
 
 The difference quotients, the tolerance search, the solved change, the chart and carbon dioxide's numbers are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 197 lines</summary>
-
 ```lean
 -- Inverse and implicit function theorems: where the rate block in the unknowns is invertible, an equation fixes the unknowns as a smooth function of the rest near a known state, and a map with an invertible Jacobian can be undone nearby.
 import Mathlib.Analysis.Calculus.ImplicitContDiff
@@ -562,8 +559,6 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 #print axioms implicit_function_one_unknown
 #print axioms inverse_function_theorem
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

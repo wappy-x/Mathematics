@@ -359,9 +359,6 @@ Lean proves the card's whole-line areas, for e^(−x^2), for every positive sque
 
 The decimals, the squeeze between two disks, the grid and the mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 46 lines</summary>
-
 ```lean
 -- The Gaussian integral: the area under e to the minus x squared over the whole real line is the square root of pi, and the bell curve with peak height one over the square root of 2 pi has area exactly 1.
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
@@ -410,8 +407,6 @@ theorem integral_bell_curve_eq_one :
 #print axioms integral_exp_neg_mul_sq_eq_sqrt_pi_div
 #print axioms integral_bell_curve_eq_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

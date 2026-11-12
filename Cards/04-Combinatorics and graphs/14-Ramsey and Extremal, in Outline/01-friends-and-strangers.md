@@ -372,9 +372,6 @@ Lean proves the card's theorem for every party of six or more guests, and the es
 
 The 12 five-guest escapes, and the 12 escapes with one pair undecided, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 168 lines</summary>
-
 ```lean
 -- Friends and strangers: whenever every pair among six or more people is either acquainted or strangers, some three all know each other or some three are all strangers, five people seated in a ring of acquaintance escape this, and six people always hold at least two such trios.
 import Mathlib.Combinatorics.SimpleGraph.Clique
@@ -545,8 +542,6 @@ example : (twoTeams.cliqueFinset 3).card = 0 ∧ (twoTeams.indepSetFinset 3).car
 #print axioms five_guests_in_a_ring_escape
 #print axioms six_guests_hold_at_least_two_trios_all_alike
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

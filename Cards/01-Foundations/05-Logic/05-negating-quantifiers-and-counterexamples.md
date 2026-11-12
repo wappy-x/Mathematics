@@ -248,9 +248,6 @@ Lean proves both swaps for any group you can list and any yes-or-no test, not on
 
 The printed lines, including the counterexample line, stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 55 lines</summary>
-
 ```lean
 -- Negating a quantifier: on any listed group, "not every covered case passes" equals "some covered case fails", and "not some case passes" equals "every case fails".
 import Mathlib.Data.Finset.Card
@@ -308,8 +305,6 @@ example : ∀ a b c : Bool,
 #print axioms not_some_iff_every_fails
 #print axioms not_every_iff_counterexample_count_pos
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

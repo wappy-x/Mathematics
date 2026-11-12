@@ -387,9 +387,6 @@ Lean proves the three tests agree for every real symmetric 2 by 2 matrix, and th
 
 The decimal eigenvalues, the repeated multiplying and the scan of 10001 mixes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 170 lines</summary>
-
 ```lean
 -- Quadratic forms: for a real symmetric matrix, the form x^T A x is above zero for every mix but all zeros exactly when every eigenvalue is above zero, and for a 2 by 2 matrix exactly when its first entry and its determinant are above zero; the card's matrix [[4, 1], [1, 9]] is checked number by number.
 import Mathlib.Analysis.Matrix.PosDef
@@ -562,8 +559,6 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 #print axioms pos_def_iff_all_eigenvalues_pos
 #print axioms quadratic_form_two_by_two_expand
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

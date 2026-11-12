@@ -371,9 +371,6 @@ Lean proves both theorems for every function of two inputs, and checks the swap 
 
 The cube law, the slope and bend formulas, the difference quotients and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 342 lines</summary>
-
 ```lean
 -- Hessian: when the second partial derivatives of a two-input function are continuous near a point, value plus gradient times step plus half the Hessian's quadratic form misses by less than any multiple of the step squared, mixed partials continuous at the point agree, xy(x^2 - y^2)/(x^2 + y^2) gives -1 and +1 without that continuity, and the card's house numbers come out exactly.
 import Mathlib.Analysis.Calculus.Deriv.Basic
@@ -718,8 +715,6 @@ example : (15368 / 9 : ℚ) + 100 / 27 = 46204 / 27 := by norm_num
 #print axioms hessian_mixed_partials_agree
 #print axioms mixed_partials_disagree_without_continuity
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

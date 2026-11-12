@@ -386,9 +386,6 @@ Lean proves the card's main facts for every whole number and every Gaussian inte
 
 Printing the output line by line is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 120 lines</summary>
-
 ```lean
 -- Gaussian integers: a whole number is a sum of two squares exactly when it is a Gaussian integer times its mirror image, exactly when every prime leaving remainder 3 on division by 4 divides it an even number of times; norms multiply; and the only units are 1, -1, i and -i.
 import Mathlib.NumberTheory.SumTwoSquares
@@ -511,8 +508,6 @@ example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
 #print axioms norm_of_product_is_product_of_norms
 #print axioms units_are_one_minus_one_i_minus_i
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

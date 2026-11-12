@@ -373,9 +373,6 @@ Lean proves the main claims for any finite number of labelled places, and checks
 
 The fewest-swaps formula, the parity match over all four-place shuffles, and the tile's turns and flips are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 116 lines</summary>
-
 ```lean
 -- Permutations: the one-to-one and onto rearrangements of n labelled places compose into rearrangements, each has an undo, there are n! of them, no rearrangement is both an even and an odd number of swaps, and from three places up the order of composing matters, with the card's three-card and four-corner numbers checked.
 import Mathlib.Data.Finite.Perm
@@ -494,8 +491,6 @@ example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
 #print axioms no_shuffle_is_both_even_and_odd
 #print axioms shuffle_order_matters_from_three_places
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

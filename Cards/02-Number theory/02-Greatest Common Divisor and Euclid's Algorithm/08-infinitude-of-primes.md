@@ -243,9 +243,6 @@ Lean proves the card's three facts for every finite list of primes, not just 2, 
 
 The printed output and the trial-division search stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 63 lines</summary>
-
 ```lean
 -- There are infinitely many primes: the set of primes is infinite, because multiplying any finite list of primes and adding one gives a number with a prime factor the list does not hold.
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
@@ -311,8 +308,6 @@ example : 5 * 7 + 1 = 36 ∧ 36 = 2 * 2 * 3 * 3 := by norm_num
 #print axioms euclid_number_prime_factors_are_new
 #print axioms euclid_number_leaves_remainder_one
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

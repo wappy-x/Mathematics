@@ -361,9 +361,6 @@ Lean proves the convergence rule for every function near a simple root, and the 
 
 The decimal runs, the guarded cubic, the decimal counts, the error ratios and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 209 lines</summary>
-
 ```lean
 -- Newton's method: near a root where the slope is not zero, the tangent-line step x - f(x)/f'(x) keeps every guess close, never meets a flat tangent, and squares the error each round; for the tile, x^2 - 2, the new error is exactly the old one squared over 2x; and a residual divided by the smallest slope size bounds the error.
 import Mathlib.Analysis.Calculus.ContDiff.Basic
@@ -575,8 +572,6 @@ example : |(1 / 10 ^ 12 : ℚ) * (1 ^ 2 - 2)| < 1 / 10 ^ 10 ∧
 #print axioms tile_newton_error_squared
 #print axioms residual_div_min_slope_bounds_error
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -345,9 +345,6 @@ Lean proves the line-up and the price for any smooth objective and regular rule 
 
 Road two's search along the fence, the decimal outputs and the figure's pixel points are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 136 lines</summary>
-
 ```lean
 -- Lagrange multipliers: at a best point of a smooth function on a regular rule in the plane, its gradient is a multiple of the rule's gradient, that multiple is the rate at which the best value grows as the rule is loosened, and the card's 40 m fence is best as a 10 m square.
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -486,8 +483,6 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 #print axioms multiplier_is_price_of_rule
 #print axioms fence_forty_best_is_ten_square
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

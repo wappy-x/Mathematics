@@ -369,9 +369,6 @@ Lean proves the card's three main claims, for every pair of whole numbers above 
 
 The decimals, the places each fraction gets right and the search to 10,000 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 206 lines</summary>
-
 ```lean
 -- Pell's equation: the positive whole-number solutions of x^2 - 2y^2 = 1 are exactly the powers of 3 + 2 root 2, there are infinitely many of them, and each x/y sits just above root 2, closer with every step.
 import Mathlib.Analysis.Real.Sqrt
@@ -580,8 +577,6 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 #print axioms pell_aux_above
 #print axioms pell_aux_step
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -372,9 +372,6 @@ Lean proves the three general facts for any finite group, then re-checks the squ
 
 The printed tables, the check that the tile's moves keep both promises, and the other three mistakes stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 110 lines</summary>
-
 ```lean
 -- Group actions: for a finite group moving the members of a set, every member's orbit size times its stabiliser size equals the group's size, the orbits split the set into non-overlapping blocks, and the 16 two-coloured square tiles fall into 6 orbits.
 import Mathlib.GroupTheory.GroupAction.Quotient
@@ -487,8 +484,6 @@ example : (∑ k : ZMod 4,
 #print axioms orbits_partition_set
 #print axioms sum_fixed_points_eq_orbit_count_mul_group_size
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -347,9 +347,6 @@ Lean proves Cayley's formula for every number of named places, along with the tw
 
 It also checks the card's counts by listing: 20 triples and 16 plans on four villages, 4 of them stars, 125 on five, 8 on the sparse map. It checks the four-village determinant, 16, too. The flood's rings and the Prüfer words are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 631 lines</summary>
-
 ```lean
 -- Spanning trees: a finite map has a spanning tree exactly when it is in one piece, every spanning tree on n places has n - 1 roads, and the complete map on n named places has n ^ (n - 2) spanning trees (Cayley's formula), with the card's village counts checked.
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
@@ -983,8 +980,6 @@ example : Matrix.det !![(3 : ℤ), -1, -1; -1, 3, -1; -1, -1, 3] = 16 := by
 
 end SpanningTreesAndCayleysFormula
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

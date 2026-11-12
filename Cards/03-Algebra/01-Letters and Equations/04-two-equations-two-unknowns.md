@@ -370,9 +370,6 @@ Lean proves the card's three rules for every set of counts and totals, not only 
 
 Running the three roads in whole cents, the three mistakes and the printed chart lines are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 116 lines</summary>
-
 ```lean
 -- Two equations, two unknowns: when the crossing number a × d − b × c is not zero, the pair a x + b y = p, c x + d y = q has exactly one solution, given by x = (p d − b q) / (a d − b c) and y = (a q − c p) / (a d − b c); when it is zero, there is no solution or there are infinitely many.
 import Mathlib.Data.Real.Basic
@@ -491,8 +488,6 @@ example : (24 : ℤ) - 41 = -17 ∧ (24 : ℤ) - 2 * (-17) = 58 := by decide
 #print axioms crossing_formula_solves_the_pair
 #print axioms zero_crossing_number_gives_none_or_infinitely_many
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

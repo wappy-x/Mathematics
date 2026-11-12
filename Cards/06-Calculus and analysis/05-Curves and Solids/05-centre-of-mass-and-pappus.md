@@ -345,9 +345,6 @@ Lean proves Pappus's theorem for every flat region that meets its conditions, an
 
 The decimals, the washer sums, the circle crossing the axis and the figures are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 337 lines</summary>
-
 ```lean
 -- Centre of mass: a bounded flat region on one side of an axis, spun once round it, sweeps a solid whose volume is the region's area times the circle its centroid travels, so a swim ring holds 2π²Rr² and a half-disc's centroid sits 4r/(3π) up from its flat edge.
 import Mathlib.MeasureTheory.Integral.Bochner.Set
@@ -687,8 +684,6 @@ example : (4 / 10 : ℚ) / (3 / 10) = 4 / 3 ∧ (2 / 10 : ℚ) / (3 / 10) = 2 / 
 #print axioms torus_volume_eq_two_pi_sq_mul
 #print axioms half_disc_centroid_height
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

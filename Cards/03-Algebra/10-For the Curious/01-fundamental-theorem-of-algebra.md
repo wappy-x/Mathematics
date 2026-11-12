@@ -366,9 +366,6 @@ Lean proves the card's theorem for every polynomial with complex coefficients an
 
 Printing the flight table and the scan of 41 times is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 90 lines</summary>
-
 ```lean
 -- The fundamental theorem of algebra: every polynomial of degree n ≥ 1 with complex coefficients is its leading coefficient times n brackets (x - r), one per root counted with repeats, so it has a root and exactly n roots.
 import Mathlib.Analysis.Complex.Polynomial.Basic
@@ -461,8 +458,6 @@ example : (5 * 1 ^ 2 - 20 * 1 + 25 : ℤ) = 10 ∧ (5 * 3 ^ 2 - 20 * 3 + 25 : �
 #print axioms complex_polynomial_of_degree_at_least_one_has_a_root
 #print axioms degree_n_gives_exactly_n_roots_counted_with_repeats
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

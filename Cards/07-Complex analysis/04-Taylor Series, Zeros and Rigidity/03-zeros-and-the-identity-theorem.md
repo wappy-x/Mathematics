@@ -340,9 +340,6 @@ Lean proves the three main facts for every holomorphic function on every domain,
 
 The contour sums, the decimal values, Newton's method and the four broken cases are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 111 lines</summary>
-
 ```lean
 -- Zeros and the identity theorem: two holomorphic functions that agree at points closing in on a point of a connected open region agree on all of it, and near a zero a holomorphic function that is not zero everywhere is (z − a)^m times a factor not zero at a, so its zeros stand apart.
 import Mathlib.Analysis.Analytic.IsolatedZeros
@@ -456,8 +453,6 @@ example : Complex.sin (1 + 2 * I) ^ 2 + Complex.cos (1 + 2 * I) ^ 2 = 1 :=
 #print axioms zero_factors_as_power_times_nonzero
 #print axioms zeros_are_isolated
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

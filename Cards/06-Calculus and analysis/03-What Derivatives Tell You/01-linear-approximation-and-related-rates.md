@@ -346,9 +346,6 @@ Lean proves both ideas for every function with the needed derivatives, and the r
 
 The decimals, the cube roots, the difference quotients and the chart are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 122 lines</summary>
-
 ```lean
 -- Linear approximation: the tangent-line remainder divided by the step tends to 0, it is at most M h^2 / 2 when |f''| ≤ M, and a sphere's volume rate is 4πr^2 times its radius rate.
 import Mathlib.Analysis.Calculus.Deriv.Slope
@@ -473,8 +470,6 @@ example : 500 / (4 * π * (20 : ℝ) ^ 2) = 500 / (4 * π * 10 ^ 2) / 4 := by fi
 #print axioms linear_approximation_remainder_le_half_bound_mul_sq
 #print axioms sphere_volume_rate_eq_surface_mul_radius_rate
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

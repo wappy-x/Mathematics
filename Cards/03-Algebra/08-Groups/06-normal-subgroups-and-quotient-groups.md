@@ -349,9 +349,6 @@ Lean proves the card's facts for every group, every homomorphism and every clock
 
 The road through the corners, the families of look-alikes, and the four mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 96 lines</summary>
-
 ```lean
 -- Normal subgroups and quotient groups: in any group, the piles (cosets) of a subgroup multiply by multiplying their names exactly when the subgroup is normal, collapsing a group by a map's kernel leaves a copy of the map's image, and the integers collapsed by the multiples of n are Z mod n.
 import Mathlib.GroupTheory.QuotientGroup.Basic
@@ -450,8 +447,6 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 #print axioms first_isomorphism_theorem
 #print axioms integers_mod_multiples_is_zmod
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

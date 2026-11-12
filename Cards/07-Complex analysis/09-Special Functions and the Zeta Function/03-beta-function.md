@@ -320,9 +320,6 @@ Lean proves the gamma formula for every real a and b above 0, and for every comp
 
 The two roads' nine-place values, the arch's π/8 and the b = 0 tail are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 76 lines</summary>
-
 ```lean
 -- The beta function: for a, b > 0 the area under x^(a-1)(1-x)^(b-1) from 0 to 1 equals Γ(a)Γ(b)/Γ(a+b), also for complex a, b with positive real parts, and B(1/2, 1/2) = π.
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
@@ -401,8 +398,6 @@ example : (3 + 1) * Nat.choose 3 1 = 12 := by decide
 #print axioms beta_integral_eq_gamma_ratio_complex
 #print axioms beta_half_half_eq_pi
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

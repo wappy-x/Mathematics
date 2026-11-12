@@ -346,9 +346,6 @@ Lean proves the card's rule for every network with finitely many lines, repeated
 
 Hierholzer's method, the brute-force hunt and the cheapest set of repeats are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 582 lines</summary>
-
 ```lean
 -- Euler circuits: a finite network whose lines may repeat or loop has a closed route using every line exactly once exactly when its lines sit in one piece and every dot has even degree, with an open route between the two odd dots when there are exactly two, and the card's Königsberg, figure-eight and street-grid numbers check out.
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
@@ -933,8 +930,6 @@ example : UsesEveryLineOnce (grid + {(4, 5), (6, 7), (3, 6), (1, 4)})
 
 end EulerCircuits
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

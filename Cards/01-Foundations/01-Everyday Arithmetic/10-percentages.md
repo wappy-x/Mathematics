@@ -239,9 +239,6 @@ Lean proves three rules for every amount and every percent, not just the card's 
 
 The worked numbers are checked here in whole cents too; printing the price list is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 67 lines</summary>
-
 ```lean
 -- Percentages: a cut or a rise by a percent is one multiply by 100 minus or plus that percent over 100, dividing by the same multiply undoes it, a cut then a rise never equals the single cut you get by adding the percents unless one of them is zero, and the card's jacket and dinner numbers come out as it says.
 import Mathlib.Algebra.Field.Rat
@@ -311,8 +308,6 @@ example : (690 * 103 + 50) / 100 = 711 := by decide      -- "3% more tip", to th
 #print axioms undo_percent_step_by_same_multiply
 #print axioms percents_do_not_add
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

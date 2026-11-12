@@ -240,9 +240,6 @@ The two outputs match line for line.
 
 Lean proves every number above 1 splits into primes, one way only; Python and Rust run the roads.
 
-<details>
-<summary>The Lean proof, 53 lines</summary>
-
 ```lean
 -- Prime factorisation: every whole number bigger than 1 is a product of primes, and any two lists of primes with that product are the same list apart from order.
 import Mathlib.Data.Nat.Factors
@@ -298,8 +295,6 @@ example : Nat.Prime 7 := by norm_num
 #print axioms factor_tree_finishes
 #print axioms same_primes_whichever_route
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

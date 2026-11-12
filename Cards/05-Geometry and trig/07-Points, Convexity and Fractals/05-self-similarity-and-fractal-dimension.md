@@ -353,9 +353,6 @@ Lean proves the dimension formula and the snowflake's perimeter and area facts f
 
 The corners themselves, the shoelace areas, the hexagon fence, the box count and the mistakes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 119 lines</summary>
-
 ```lean
 -- Fractals: the power D with s^D = N is exactly log N / log s, the Koch snowflake's perimeter passes every bound while its area stays under the hexagon and settles at 8/5 of the first triangle, and the Koch and Sierpinski dimensions lie strictly between 1 and 2.
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -477,8 +474,6 @@ example : 3 ^ 6 = 729 ∧ (729 : ℚ) / 4 ^ 6 = (3 / 4) ^ 6 := by norm_num
 #print axioms koch_snowflake_endless_perimeter_finite_area
 #print axioms koch_and_sierpinski_dimensions_between_one_and_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

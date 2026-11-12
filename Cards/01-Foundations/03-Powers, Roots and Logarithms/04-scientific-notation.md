@@ -236,9 +236,6 @@ Lean proves the rules for all numbers, not only the Sun and the cell, and checks
 
 Building each number ten at a time, and comparing the two roads by plain division, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 96 lines</summary>
-
 ```lean
 -- Scientific notation: every positive number can be written in exactly one way as a front number from 1 up to, not including, 10 times a whole power of ten, and multiplying or dividing such numbers multiplies or divides the front numbers while the powers add or subtract.
 import Mathlib.Data.Real.Basic
@@ -337,8 +334,6 @@ example : (3 / 2 / 7 : ℝ) * (10 : ℝ) ^ (5 : ℤ) = (15 / 7) * (10 : ℝ) ^ (
 #print axioms sci_mul_powers_add
 #print axioms sci_div_powers_subtract
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

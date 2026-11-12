@@ -245,9 +245,6 @@ Lean proves that eight perfect riffles restore 52 cards, and proves the doubling
 
 Printing the tables, and counting riffles on a list of cards, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 204 lines</summary>
-
 ```lean
 -- Perfect shuffles: eight perfect out-riffles put every 52-card deck back in its starting order, because one riffle sends the card at position p to 2p on a clock of 2m - 1 spots, so t riffles restore a deck of 2m cards exactly when 2^t leaves 1 on that clock.
 import Mathlib.Data.Nat.ModEq
@@ -454,8 +451,6 @@ example : 2 ^ 52 % 53 = 1 ∧ ∀ t < 52, 0 < t → 2 ^ t % 53 ≠ 1 := by decid
 #print axioms perfect_riffle_doubles_position_mod_deck_size_minus_one
 #print axioms riffles_restore_deck_iff_two_pow_eq_one_mod
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

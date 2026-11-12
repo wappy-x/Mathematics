@@ -234,9 +234,6 @@ ALL CHECKS PASS
 
 Lean proves the theorem for every prime dial and every whole number, not just 13 and 2. It proves both forms on this card and the shuffle the proof rests on, and it re-checks the card's 13-dial numbers. The printed tables and the long-way runs stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 80 lines</summary>
-
 ```lean
 -- Fermat's little theorem: for a prime p and a whole number a that p does not divide, a to the power p − 1 leaves remainder 1 on division by p, and a to the power p always reads a.
 import Mathlib.FieldTheory.Finite.Basic
@@ -319,8 +316,6 @@ example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
 #print axioms fermat_little_pow_self
 #print axioms fermat_multiply_shuffles_live_positions
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

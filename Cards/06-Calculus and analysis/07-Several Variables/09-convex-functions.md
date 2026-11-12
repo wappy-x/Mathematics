@@ -370,9 +370,6 @@ Lean proves the three theorems for any number of variables, and checks the seedl
 
 The downhill walks, the stretch factors 33.62 and 2.38, and the wavy curve w are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 132 lines</summary>
-
 ```lean
 -- Convex functions: a local minimum of a convex function on a convex set is a global minimum, a Hessian that is never negative in any direction makes a function convex, Jensen's inequality holds for k weighted points, and the card's seedling numbers are exact.
 import Mathlib.Analysis.Convex.Extrema
@@ -507,8 +504,6 @@ example : ((2 * 4) * (2 * (4 * 2 ^ 2)) - (2 * (4 * 2)) ^ 2 : ℚ) = 0 ∧
 #print axioms convex_of_hessian_nonneg
 #print axioms jensen_inequality
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -383,9 +383,6 @@ Lean proves the first two facts for every space a finite list spans, and the cou
 
 The cross-number rule's division, the chart rows and the printed output are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 95 lines</summary>
-
 ```lean
 -- Basis and dimension: in any real vector space, a list of vectors that spans and has nothing spare gives every vector exactly one list of amounts, every two such lists have the same length and that length is the dimension, every basis of the plane has exactly two vectors, and the card's buoy numbers come out as it says.
 import Mathlib.LinearAlgebra.Dimension.Finrank
@@ -483,8 +480,6 @@ example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-3 : ℤ) • ![-1, 1] = ![
 #print axioms basis_gives_exactly_one_address
 #print axioms every_basis_of_the_plane_has_two_vectors
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

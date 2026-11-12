@@ -329,9 +329,6 @@ Lean proves the card's two main facts for every flat triangle, not just the flag
 
 The bisection, the counted squares and the figure coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 105 lines</summary>
-
 ```lean
 -- Similar triangles: two equal angles force every side to scale by one factor k and the area by k squared, and a line parallel to one side cuts the other two sides in the same ratio.
 import Mathlib.Geometry.Euclidean.Volume.Triangle
@@ -439,8 +436,6 @@ example : (100 : ℚ) * 960 / 120 = 800 := by norm_num
 #print axioms similar_of_two_angles_sides_scale_area_scales_sq
 #print axioms parallel_cut_divides_sides_proportionally
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

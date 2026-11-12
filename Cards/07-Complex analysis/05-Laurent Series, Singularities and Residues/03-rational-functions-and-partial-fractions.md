@@ -376,9 +376,6 @@ Lean proves the main theorem for all complex polynomials, the cover-up rule at e
 
 Newton's method, the growth-rate orders, the loop sums and F's order-2 coefficients are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 256 lines</summary>
-
 ```lean
 -- Rational functions: a ratio of complex polynomials with the top of lower degree is the sum of its principal parts, one per pole, with the cover-up rule at simple poles and zeros of order n turning into poles of order n under the reciprocal.
 import Mathlib.Analysis.Meromorphic.Order
@@ -637,8 +634,6 @@ example : (1 : ℚ) / (3 ^ 2 + 1) ^ 2 = 1 / 100 := by norm_num
 #print axioms cover_up_rule
 #print axioms zero_of_order_n_is_pole_of_order_n_of_reciprocal
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

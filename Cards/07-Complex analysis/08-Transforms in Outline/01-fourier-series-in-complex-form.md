@@ -361,9 +361,6 @@ Lean proves closeness on average, Parseval and the coefficient formula for every
 
 Closeness at each point, uniform closeness, the Gibbs overshoot, a_n and b_n, and π^2/8 are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 265 lines</summary>
-
 ```lean
 -- Fourier series: for a signal that repeats every 2π and has a finite average of |f|^2, the sums of the arrows c_n e^(inx), with each c_n the average of f(x) e^(−inx) over one cycle, close in on the signal on average and Parseval holds; a convergent sum of arrows gives back its own amounts as these averages; and the square wave's amounts are 2/(iπn) for odd n and 0 for even n.
 import Mathlib.Analysis.Fourier.AddCircle
@@ -631,8 +628,6 @@ example : (1 : ℚ) + 1 / 9 + 1 / 25 = 259 / 225 := by norm_num
 #print axioms fourier_coefficient_eq_average
 #print axioms square_wave_fourier_coefficients
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

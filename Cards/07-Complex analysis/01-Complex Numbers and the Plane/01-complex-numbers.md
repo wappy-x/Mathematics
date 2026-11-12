@@ -350,9 +350,6 @@ Lean proves the rules for adding and multiplying, and the quarter turn, for all 
 
 The figure's coordinates, the quadratic formula's working and the printed decimals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 98 lines</summary>
-
 ```lean
 -- Complex numbers: in the complex numbers i times i is -1, adding a + bi and c + di goes part by part, the product is (ac - bd) + (ad + bc)i, multiplying by i turns a point a quarter turn about 0, and no ordering of the complex numbers respects multiplying.
 import Mathlib.Analysis.Complex.Basic
@@ -453,8 +450,6 @@ example : I * ((3 : ℂ) + 4 * I) ≠ 4 - 3 * I := by
 #print axioms mul_I_is_quarter_turn
 #print axioms no_order_respects_multiplying
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

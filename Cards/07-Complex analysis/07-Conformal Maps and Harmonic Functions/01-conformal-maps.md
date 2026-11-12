@@ -348,9 +348,6 @@ Lean proves the main theorem for every holomorphic f wherever f'(a) is not zero,
 
 Decimals, chords, angle doubling at 0, Newton's method, the globe's projection and the straight course are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 152 lines</summary>
-
 ```lean
 -- Conformal maps: where f'(a) is not zero a holomorphic f multiplies small arrows at a by f'(a), keeps crossing angles and has a holomorphic inverse near a (not always a global one), and Mercator's chart is -i Log of the stereographic globe.
 import Mathlib.Analysis.Complex.Conformal
@@ -505,8 +502,6 @@ example : (starRingEnd ℂ) (1 + I) = 1 - I := by simp [sub_eq_add_neg]
 #print axioms nonzero_derivative_not_univalent
 #print axioms mercator_is_log_of_stereographic
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

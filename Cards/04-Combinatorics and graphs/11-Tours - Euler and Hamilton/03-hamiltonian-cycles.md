@@ -360,9 +360,6 @@ Lean proves Dirac's theorem and the two-sided test for every network, and checks
 
 Counting the rounds (6, 72, and none on the depots) and the six-corner census are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 433 lines</summary>
-
 ```lean
 -- Hamiltonian cycles: a simple network on three or more vertices whose every degree is at least half the vertex count has a round through every vertex once (Dirac), a two-sided network with unequal sides has none, the cube warehouse has one below Dirac's bar, and the card's warehouse and depot numbers check out.
 import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
@@ -798,8 +795,6 @@ example : Nat.factorial (10 - 1) / 2 = 181440 := by decide
 
 end HamiltonianCycles
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

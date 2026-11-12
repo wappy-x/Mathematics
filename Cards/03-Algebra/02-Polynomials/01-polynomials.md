@@ -365,9 +365,6 @@ Lean proves the degree rules for every polynomial with ordinary numbers as coeff
 
 The half-second heights, the second road and the level point at 0.375 seconds are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 80 lines</summary>
-
 ```lean
 -- Polynomials: multiplying two real polynomials adds their degrees, adding two never raises the degree above the bigger one, the two product patterns hold for all real numbers, and the football's height 20t - 5t^2 gives the card's numbers.
 import Mathlib.Algebra.Polynomial.Degree.Operations
@@ -450,8 +447,6 @@ example : (20 : ℤ) * 3 - 5 * 3 ^ 2 = 15 := by decide
 #print axioms degree_of_sum_at_most_bigger_degree
 #print axioms square_of_sum_and_difference_of_squares
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

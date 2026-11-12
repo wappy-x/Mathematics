@@ -331,9 +331,6 @@ Lean proves the card's main claims for every wire, clock and density meeting Whe
 
 Decimal values, the chord totals, the out-and-back and signed-length mistakes, and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 370 lines</summary>
-
 ```lean
 -- Line integrals of a function: the piece totals of density times piece length along a wire close in on the integral of density times speed, that integral is the same for every clock that runs the wire once in either direction, and the card's wire y = x^2/2 with density 3x weighs exactly 5√5 − 2√2 kg.
 import Mathlib.Topology.EMetricSpace.BoundedVariation
@@ -706,8 +703,6 @@ example : (3 : ℚ) - 1 = 2 ∧ (3 : ℚ) - 2 = 1 ∧ (-1 : ℚ) ^ 2 = 1 := by n
 #print axioms integral_density_mul_speed_indep_of_clock
 #print axioms card_wire_mass
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

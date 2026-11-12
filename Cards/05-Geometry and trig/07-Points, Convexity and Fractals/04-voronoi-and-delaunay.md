@@ -355,9 +355,6 @@ Lean proves the three map rules for any number of hospitals on flat ground, and 
 
 Cutting the cells, the counted areas, the triangle and edge counts, and the figure positions are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 150 lines</summary>
-
 ```lean
 -- Nearest-neighbour maps: in the flat plane the spots equally far from two hospitals form the straight bisector line 2 (Q − P) · X = |Q|² − |P|², every Voronoi cell is convex, the centre of the circle through three hospitals is a corner of the map exactly when no hospital lies strictly inside that circle, and the card's county numbers come out as it says.
 import Mathlib.Geometry.Euclidean.Circumcenter
@@ -510,8 +507,6 @@ example : 2 * 5 - 2 - 4 = 4 ∧ 3 * 5 - 3 - 4 = 8 ∧ Nat.choose 5 3 = 10 := by 
 #print axioms equally_far_iff_bisector_equation
 #print axioms voronoi_cell_convex
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

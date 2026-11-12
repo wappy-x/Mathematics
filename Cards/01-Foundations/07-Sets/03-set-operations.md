@@ -249,9 +249,6 @@ Lean proves three laws for any universe and any two sets in it, then checks the 
 
 The film-by-film walk and the Try changing edits are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 91 lines</summary>
-
 ```lean
 -- Set operations: for any universe and any two sets in it, "on neither" is "not on A and not on B" and "not on both" is "not on A or not on B" (De Morgan), a union counts the overlap once, the four piles add back to the universe, and the card's 12-film watchlist comes out as it says.
 import Mathlib.Data.Set.Basic
@@ -345,8 +342,6 @@ example : watchlist.card - (serviceA ∩ serviceB).card = 10 := by decide
 #print axioms union_counts_overlap_once
 #print axioms four_piles_add_back_to_universe
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

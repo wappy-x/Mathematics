@@ -338,9 +338,6 @@ Lean proves the card's three claims for every line, plane and point, not just th
 
 The general point-to-line distance and the searches that never use the formulas are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 179 lines</summary>
-
 ```lean
 -- Lines and planes: a line whose direction is not level with a plane meets it at exactly one time t = (c - n·p) / (n·d), the foot of the perpendicular along the normal is the one closest point of the plane at distance |n·p - c| / |n|, two edges with a non-zero cross product span exactly the points that pass the plane's test, and the card's drone and panel numbers come out as it says.
 import Mathlib.LinearAlgebra.CrossProduct
@@ -522,8 +519,6 @@ example : (![0, -3, 4] : Fin 3 → ℚ) ⬝ᵥ ![2, 3, 9 / 4] = 0 ∧ (5 : ℚ) 
 #print axioms foot_of_perpendicular_is_closest
 #print axioms plane_from_edges_is_normal_test
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -345,9 +345,6 @@ Lean proves the main theorem for every open region, and the tower's bound and sl
 
 The rim values, the Cauchy sums, the harmonic growth at 1, sin(nz)/n and the zeta floor's value are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 206 lines</summary>
-
 ```lean
 -- Limits of holomorphic functions: if holomorphic functions on an open set converge uniformly on every closed disc inside it, the limit is holomorphic there and every derivative of the approximations converges to the same derivative of the limit, and the card's tower (the sum of z^n/n^2) is within 1/N of its first N floors everywhere on the closed unit disc, with slope 2 ln 2 at z = 1/2.
 import Mathlib.Analysis.Complex.LocallyUniformLimit
@@ -556,8 +553,6 @@ example : (1 : ℚ) / 5 ^ 2 = 1 / 25 := by norm_num
 #print axioms tower_gap_le_tail_lt_inv
 #print axioms tower_hasDerivAt_floor_slopes
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

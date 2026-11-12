@@ -376,9 +376,6 @@ Lean proves the counts for every finite tree, whatever its root and its height.
 
 It also checks the card's sums: the cup draw, the folder tree and the two mistakes. The three walks, the mirror and the sorted keys are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 260 lines</summary>
-
 ```lean
 -- Rooted trees: a finite tree hung from a root, where every vertex has two children or none and every leaf sits at depth h, has 2^k vertices at each depth k, 2^(h+1) - 1 vertices in all, 2^h leaves and 2^h - 1 inner vertices, and in any such two-or-none tree the inner vertices run one behind the leaves.
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
@@ -641,8 +638,6 @@ example : 2 ^ (5 + 1) - 1 = 63 ∧ 2 ^ (15 + 1) - 1 = 65535 := by norm_num
 #print axioms perfect_binary_tree_levels
 #print axioms full_binary_tree_inner_add_one_eq_leaves
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

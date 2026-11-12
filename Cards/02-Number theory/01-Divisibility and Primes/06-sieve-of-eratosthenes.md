@@ -240,9 +240,6 @@ Lean proves the sieve leaves exactly the primes for a corridor of any length, no
 
 Trial division's 236 divisions, and printing each pass line by line, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 204 lines</summary>
-
 ```lean
 -- The sieve of Eratosthenes: for every corridor length N, shutting locker 1 and then, for each door still open whose number times itself fits in the corridor, slamming its multiples leaves open exactly the primes from 1 to N.
 import Mathlib.Data.Nat.Prime.Defs
@@ -449,8 +446,6 @@ example : ((passNumbers 100).foldl (sievePass (fun p => p * p)) (Finset.Icc 1 10
 #print axioms composite_is_hit_by_its_smallest_prime_divisor
 #print axioms pass_start_at_double_gives_the_same_sieve
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

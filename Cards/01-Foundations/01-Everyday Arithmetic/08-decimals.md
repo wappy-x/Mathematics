@@ -233,9 +233,6 @@ Lean proves the method and the stopping rule for every decimal and every fractio
 
 Lean also checks the fill's whole-number sums, but the printed strings, like 78.625 and $78.63, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 120 lines</summary>
-
 ```lean
 -- Decimals: multiplying two stopping decimals is multiplying their whole-number digits and putting the point back by the total count of places, a fraction stops as a decimal exactly when its bottom in lowest terms has no prime factor but 2 and 5, and so one third never stops.
 import Mathlib.Data.Rat.Lemmas
@@ -358,8 +355,6 @@ example : 185 * 430 = 79550 ∧ 185 * 430 / 10 = 7955 := by norm_num
 #print axioms stops_as_decimal_iff_bottom_twos_and_fives
 #print axioms one_third_never_stops
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

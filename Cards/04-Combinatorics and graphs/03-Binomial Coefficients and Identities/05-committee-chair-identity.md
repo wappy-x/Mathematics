@@ -360,9 +360,6 @@ Lean proves the absorption identity, the weighted row sum and the pair count for
 
 Walking all 1,024 committees one at a time and pairing each with its opposite are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 77 lines</summary>
-
 ```lean
 -- Committee and chair: for every n at least 1, k C(n, k) = n C(n - 1, k - 1) across the whole row (with C(n - 1, -1) = 0), the weighted row sum k C(n, k) over k = 0..n is n 2^(n - 1), and the committee-and-chair pairs of n people number n 2^(n - 1), with the card's office-of-ten and front-room numbers checked.
 import Mathlib.Data.Nat.Choose.Sum
@@ -442,8 +439,6 @@ example : (List.range 5).map (fun k =>
 #print axioms weighted_row_sum
 #print axioms committee_chair_pairs_card
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

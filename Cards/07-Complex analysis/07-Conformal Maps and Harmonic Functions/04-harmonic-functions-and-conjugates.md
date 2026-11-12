@@ -361,9 +361,6 @@ Lean proves the card's three facts for every holomorphic function on any open re
 
 The finite differences, the Simpson walks, the hot wire's 6.283185 per lap and the mistakes table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 293 lines</summary>
-
 ```lean
 -- Harmonic functions: the real and imaginary parts of a holomorphic function are harmonic, a harmonic function on a simply connected open region is the real part of a holomorphic function, and where the derivative is not zero the gradients of the two parts are nonzero and perpendicular, so their level curves cross at right angles.
 import Mathlib.Analysis.InnerProductSpace.Harmonic.Constructions
@@ -659,8 +656,6 @@ example : (0 : ℤ) + 2 * 2 = 4 := by norm_num
 #print axioms exists_harmonic_conjugate_of_simply_connected
 #print axioms level_curves_cross_at_right_angles
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

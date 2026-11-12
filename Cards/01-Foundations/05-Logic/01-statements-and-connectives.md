@@ -239,9 +239,6 @@ Lean proves the card's rules for every pair of true-or-false statements, not onl
 
 The printed table and the counting road stay with the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 60 lines</summary>
-
 ```lean
 -- Statements and connectives: two true-or-false statements can land only four ways, so a joining word's rule is fixed by its four-line truth table, on which and is true once, or three times, and not flips each value.
 import Mathlib.Data.Fintype.Prod
@@ -304,8 +301,6 @@ example : ([(true, true), (true, false), (false, true), (false, false)].filter
 #print axioms truth_table_four_lines_and_one_or_three
 #print axioms not_flips_and_twice_returns
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

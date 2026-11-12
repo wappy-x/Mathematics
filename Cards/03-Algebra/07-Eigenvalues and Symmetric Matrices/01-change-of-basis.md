@@ -341,9 +341,6 @@ Lean proves the card's rules for square matrices of any size, not just 2 × 2, a
 
 The decimal printing and the elimination method are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 172 lines</summary>
-
 ```lean
 -- Change of basis: if n new directions in n-dimensional space are independent and sit down the columns of a matrix P, then P turns a new address into the old one, P inverse turns an old address into the unique new one, a linear map with matrix A has matrix P^-1 A P in the new basis (so both routes move a point to the same place, and trace and determinant do not change), and the card's treasure numbers come out as it says.
 import Mathlib.LinearAlgebra.Matrix.ToLin
@@ -518,8 +515,6 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 #print axioms both_roads_give_the_same_point
 #print axioms change_of_basis_keeps_det_and_trace
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

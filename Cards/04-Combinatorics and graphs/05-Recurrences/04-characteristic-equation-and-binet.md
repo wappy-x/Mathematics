@@ -374,9 +374,6 @@ Lean proves the method for every two-term step rule with fixed real weights, a s
 
 Laying tiles, the decimals and rounding the big root are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 110 lines</summary>
-
 ```lean
 -- The characteristic equation: every sequence obeying a two-term rule with fixed weights is a fitted mix of the root sequences of its quadratic, and for Fibonacci that mix is Binet's formula.
 import Mathlib.NumberTheory.Real.GoldenRatio
@@ -489,8 +486,6 @@ example : 3 * (2 : ℤ) ^ 4 - 3 ^ 4 = -33 := by norm_num
 #print axioms geometric_obeys_rule_iff_characteristic_equation
 #print axioms binet_formula
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

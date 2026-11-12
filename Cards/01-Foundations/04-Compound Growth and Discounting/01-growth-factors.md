@@ -249,9 +249,6 @@ Lean proves the card's three rules for every price and every change, not just th
 
 Rounding each price to the nearest cent is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 79 lines</summary>
-
 ```lean
 -- Growth factors: two percent changes, each taken of the price it meets, come to the start times the product of the two growth factors, which matches adding the percents only when the price or one change is zero; a rise and a cut of the same percent leave a positive price lower; a rise is undone by a smaller cut; and the card's jacket prices come out exactly as it says.
 import Mathlib.Data.Real.Basic
@@ -333,8 +330,6 @@ example : (1 : ℚ) + 5 / 100 = 105 / 100 := by norm_num
 #print axioms same_percent_up_then_down_lands_lower
 #print axioms rise_undone_by_smaller_cut
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

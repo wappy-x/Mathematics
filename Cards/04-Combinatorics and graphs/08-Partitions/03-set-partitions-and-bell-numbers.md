@@ -351,9 +351,6 @@ Lean proves the recurrence and its floor for every n, counting the splits themse
 
 Listing every split, Aitken's triangle, the 5 size patterns and the zero floor are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 271 lines</summary>
-
 ```lean
 -- Set partitions and Bell numbers: the number B(n) of ways to split n named people into unnamed non-empty groups satisfies B(0) = 1 and B(n + 1) = C(n,0) B(0) + ... + C(n,n) B(n), equals Mathlib's Bell number for any finite set, and the card's counts 15, 52, ..., 4140 come out as it says.
 import Mathlib.Order.Partition.Finpartition
@@ -627,8 +624,6 @@ example : Nat.choose 4 0 * 1 + Nat.choose 4 1 * 1 + Nat.choose 4 2 * 2 + Nat.cho
 #print axioms set_partitions_of_empty_crowd
 #print axioms card_set_partitions_eq_bell
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

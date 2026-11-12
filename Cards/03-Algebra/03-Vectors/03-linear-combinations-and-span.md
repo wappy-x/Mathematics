@@ -335,9 +335,6 @@ Lean proves the cross-number test for any two vectors with two slots, and the sp
 
 The decimal amounts, such as 0.9714 bags of A, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 133 lines</summary>
-
 ```lean
 -- Linear combinations and span: two vectors in the plane reach every point exactly when their cross-number is not zero, the mixes of any list of vectors form the smallest subspace holding them, and the lawn target (14, 21) is reached by bags A and B but not by bags A and C.
 import Mathlib.LinearAlgebra.Span.Defs
@@ -473,8 +470,6 @@ example : (2 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (1 : ℤ) • ![2, 8] = ![2
 #print axioms mixes_form_smallest_subspace
 #print axioms lawn_target_in_span_of_A_and_B_not_of_A_and_C
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

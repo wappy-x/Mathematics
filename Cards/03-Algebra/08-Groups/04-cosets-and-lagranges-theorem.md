@@ -351,9 +351,6 @@ Lean proves these facts for every finite group, not just the clock.
 
 Lean rechecks the clock numbers and the units of 12 as arithmetic only. Building the blocks two ways and finding the units two ways is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 89 lines</summary>
-
 ```lean
 -- Cosets and Lagrange's theorem: in a finite group the left cosets of a subgroup are equal-sized blocks that never overlap unless equal, so the group's size is the number of cosets times the subgroup's size, and the subgroup's size and every member's order divide the group's size.
 import Mathlib.GroupTheory.Coset.Card
@@ -445,8 +442,6 @@ example : 2 ^ 12 % 12 = 4 := by norm_num
 #print axioms left_cosets_equal_size_disjoint_or_equal
 #print axioms order_of_member_dvd_card
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

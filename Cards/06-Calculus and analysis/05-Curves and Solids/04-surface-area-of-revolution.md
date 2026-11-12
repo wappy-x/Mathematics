@@ -367,9 +367,6 @@ Lean proves the band limit for every profile that meets When it holds, and the s
 
 The band totals from 6 to 6000, Step 5's numbers, the mistakes table and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 319 lines</summary>
-
 ```lean
 -- Surface area: the frustum bands swept by chords of a non-negative profile with a continuous slope add up, as the bands thin, to the integral of 2π f(x) √(1 + f'(x)^2), and a slice of a ball of radius R and height h has area 2πRh, so the whole ball has 4πR^2.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -691,8 +688,6 @@ example : 48 * π * (1 / 500) = 12 * π / 125 := by ring
 #print axioms ball_radius_times_slant_factor_eq_radius
 #print axioms ball_slice_area_eq_two_pi_R_h
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

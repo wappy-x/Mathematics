@@ -358,9 +358,6 @@ Lean proves the three general claims for every size of real symmetric matrix, no
 
 It also checks the card's table exactly: the two axes and factors, the rebuild, the mix (4, 2) and both mistakes. The decimals, the multiply-then-shrink road, the 4002-direction sweep and the fleet table are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 112 lines</summary>
-
 ```lean
 -- The spectral theorem: every real square matrix equal to its own transpose can be written as Q D Qᵀ with Qᵀ Q = I and D diagonal, its eigenvectors for different eigenvalues are perpendicular, its eigenvalues are real, and the card's table [[2, 1], [1, 2]] splits along (1, 1) and (1, -1) with factors 3 and 1.
 import Mathlib.Analysis.Matrix.Spectrum
@@ -475,8 +472,6 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 #print axioms symmetric_eigenvectors_of_different_eigenvalues_perpendicular
 #print axioms symmetric_matrix_eigenvalues_are_real
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

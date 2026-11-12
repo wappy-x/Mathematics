@@ -348,9 +348,6 @@ Lean proves the three facts of Why it works for any route with a continuous velo
 
 The 1,024-chord sums, the 16-, 32- and 64-piece sums, the four mistakes and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 280 lines</summary>
-
 ```lean
 -- Line integrals of a field: for a route with a continuous velocity and a field continuous along it, reversing the route flips the sign of the work, a forward change of clock leaves it unchanged, force-times-chord sums close in on it, and the card's wind gives 30, 10, −30 and 90 J on its four routes and 120 J round the loop.
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -633,8 +630,6 @@ example : (10 : ℚ) - 75 / 8 = 5 / 8 := by norm_num
 #print axioms line_integral_reparam_eq
 #print axioms chord_sums_tend_to_line_integral
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -361,9 +361,6 @@ Lean proves the method for any number of kinds and any allowed amounts, then the
 
 The mistakes of adding the factors or starting each at its own coin, and running the code, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 103 lines</summary>
-
 ```lean
 -- Counting by multiplying series: the coefficient of x^n in a product of factors, each listing once the amounts one kind may contribute, equals the number of ways to pick one allowed amount per kind with total n, so the till's four coin factors give 49 piles for 50 cents and k all-ones factors give the stars-and-bars count.
 import Mathlib.RingTheory.PowerSeries.Basic
@@ -469,8 +466,6 @@ example : Nat.choose 53 3 = 23426 := by decide
 #print axioms till_fifty_cents_coeff
 #print axioms coeff_all_ones_pow_eq_choose
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -235,9 +235,6 @@ Lean proves all three claims for every pair of whole numbers bigger than zero, n
 
 Lean also checks the card's numbers; running road one and road two as code is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 86 lines</summary>
-
 ```lean
 -- Greatest common divisor: for two whole numbers bigger than zero, their gcd is the largest number going into both, it equals the product of the primes they share with each prime kept as often as the poorer side holds it, and every number going into both goes into the gcd.
 import Mathlib.Data.Nat.Factorization.Basic
@@ -326,8 +323,6 @@ example : Nat.gcd 180 180 = 180 ∧ Nat.gcd 180 200 = 20 ∧ 2 * 2 * 5 = 20 := b
 #print axioms gcd_eq_product_of_shared_primes
 #print axioms common_divisors_are_divisors_of_gcd
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

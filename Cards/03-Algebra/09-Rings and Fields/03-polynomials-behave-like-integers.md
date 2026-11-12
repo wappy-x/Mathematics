@@ -344,9 +344,6 @@ Lean proves the card's three results for polynomials over every field, and check
 
 Running the loop as a program, which finds x - 1 without being told, is left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 172 lines</summary>
-
 ```lean
 -- Polynomials behave like integers: over a field, polynomials divide with exactly one quotient and a remainder of lower degree, Euclid's swap keeps every common divisor and leads to exactly one monic greatest common divisor, and every polynomial of degree 1 or more is a constant times monic irreducibles that are the same every time up to order.
 import Mathlib.Algebra.Polynomial.FieldDivision
@@ -521,8 +518,6 @@ example : [-2, -1, 1, 2].map (fun t : ℤ => t ^ 2 - 2) = [2, -1, -1, 2] := by d
 #print axioms euclid_swap_keeps_common_divisors_and_monic_gcd_is_unique
 #print axioms polynomial_factorises_uniquely_into_monic_irreducibles
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

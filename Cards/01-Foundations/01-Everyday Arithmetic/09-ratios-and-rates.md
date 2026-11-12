@@ -233,9 +233,6 @@ Lean proves three ratio rules for any amounts, not just the paint tin.
 
 Lean also checks the card's sums as exact fractions; the decimals the programs print are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 75 lines</summary>
-
 ```lean
 -- Ratios and rates: multiplying both sides of a ratio by the same nonzero number leaves it unchanged, scaling one side alone changes it, and splitting a total by a ratio gives two shares that add back to the total and keep the ratio.
 import Mathlib.Data.Real.Basic
@@ -313,8 +310,6 @@ example : (120 : ℚ) / 2 = 60 ∧ (60 : ℚ) * 2 = 120 := by norm_num
 #print axioms split_total_by_ratio
 #print axioms scaling_one_side_changes_ratio
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

@@ -346,9 +346,6 @@ Lean proves the substitution rule for every f, g, a and b that meet its conditio
 
 The decimals, the midpoint sums, the mistake table, the hole in 1/u, the chart and the figure are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 73 lines</summary>
-
 ```lean
 -- Substitution: if the inner function g has a continuous rate from a to b and the outer function f is continuous at every value g takes there, then f(g(x)) g'(x) accumulated from a to b equals f(u) accumulated from g(a) to g(b), and the card's area under x e^(x^2) from 0 to 1 is (e - 1)/2.
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
@@ -424,8 +421,6 @@ example : ((1 : ℚ) ^ 2 - (3 / 4) ^ 2 = 2 * (7 / 8) * (1 / 4)) ∧
 #print axioms integral_x_exp_x_sq_zero_one
 #print axioms integral_x_exp_x_sq_neg_one_two
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

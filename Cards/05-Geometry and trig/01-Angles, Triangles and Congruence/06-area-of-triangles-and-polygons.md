@@ -377,9 +377,6 @@ Lean proves the three area rules for every triangle and trapezoid on flat ground
 
 The decimals, the thin strips, the 4-5-8 m case and the figure positions are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 308 lines</summary>
-
 ```lean
 -- Area: in the flat plane a triangle's area is half a side times the square-on height to that side, a trapezoid's area is the average of its parallel sides times the distance between them, and Heron's rule gives the same triangle area from the three sides alone.
 import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
@@ -690,8 +687,6 @@ example : (3 : ℕ) * 2 = 6 := by decide
 #print axioms trapezoid_area_eq_average_of_parallel_sides_times_height
 #print axioms heron_triangle_area
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

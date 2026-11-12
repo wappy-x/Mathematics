@@ -368,9 +368,6 @@ Lean proves the card's three claims for every case, not just z^4 + 1.
 
 It also checks the worked numbers exactly: p(1) = 2, p'(1) = 4, the slope -1, the 15 on |z| = 2, the football's roots 2 ± i, and the mirror-pair split. The decimals, Newton's method, the loop integrals and the circle-by-circle sampling are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 69 lines</summary>
-
 ```lean
 -- Liouville's theorem: a bounded function with a complex derivative everywhere is constant, so every complex polynomial of degree at least 1 has a root and splits into one bracket per root.
 import Mathlib.Analysis.Calculus.FDeriv.Basic
@@ -442,8 +439,6 @@ example (z : ℂ) :
 #print axioms polynomial_of_positive_degree_has_root
 #print axioms polynomial_splits_into_degree_many_brackets
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

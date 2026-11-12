@@ -374,9 +374,6 @@ Lean proves the card's three facts for every row and every pick size, not just r
 
 The strict rise and fall along the row, and decimal figures such as 49,932.19, are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 136 lines</summary>
-
 ```lean
 -- The middle of the row: the middle entry C(2n, n) of row 2n is its largest entry and lies between 4^n/(2n+1) and 4^n, neighbouring entries satisfy k C(n,k) = (n-k+1) C(n,k-1), and for 1 ≤ k ≤ n the count C(n,k) lies between (n/k)^k and n^k/k!.
 import Mathlib.Data.Nat.Choose.Central
@@ -515,8 +512,6 @@ example : 4 ^ 10 / 2 = 524288 := by
 #print axioms choose_neighbour_ratio
 #print axioms choose_between_pow_bounds
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

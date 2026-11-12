@@ -366,9 +366,6 @@ Lean proves Cauchy's theorem for every simply connected region and every loop ma
 
 The trapezoid sums, Green's area integral, 1/z giving 0 and 2πi, and z-bar's two routes are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 391 lines</summary>
-
 ```lean
 -- Cauchy's theorem: a function with a complex derivative at every point of an open region with no holes integrates to zero round every closed loop made of finitely many smooth pieces in that region, so it has an antiderivative there, and (Goursat) it integrates to zero round the edge of any filled triangle inside an open set where it has a complex derivative.
 import Mathlib.MeasureTheory.Integral.CurveIntegral.Basic
@@ -762,8 +759,6 @@ example : (140 + 50 * (-2), 150 - 50 * (-1)) = ((40 : ℤ), (200 : ℤ)) ∧
 #print axioms exists_antiderivative_of_isSimplyConnected
 #print axioms goursat_triangle_integral_eq_zero
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

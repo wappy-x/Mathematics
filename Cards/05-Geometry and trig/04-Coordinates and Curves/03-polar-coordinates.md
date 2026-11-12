@@ -338,9 +338,6 @@ Lean proves the card's conversions and coverage test for every point, not just t
 
 The arccosine road, decimal values such as 233.13°, the mistakes table and the figure coordinates are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 235 lines</summary>
-
 ```lean
 -- Polar coordinates: turning a range r > 0 and an angle θ in one turn into grid offsets (r cos θ, r sin θ) and back by Pythagoras and the sign-aware arctangent returns the same pair, and every point other than the centre comes back to itself the other way round.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
@@ -578,8 +575,6 @@ example : (40 : ℤ) ^ 2 = 1600 := by decide
 #print axioms bearing_gives_east_r_sin_north_r_cos
 #print axioms inside_cardioid_iff_grid_test
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

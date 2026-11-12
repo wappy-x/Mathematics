@@ -233,9 +233,6 @@ Lean proves Euclid's recipe for every count of doublings whose Mersenne number i
 
 The sum 2325392 for 2096128 and the record prime's digit counts are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 73 lines</summary>
-
 ```lean
 -- Perfect numbers and Mersenne primes: whenever one less than a doubling of 1 is prime, that prime times the doubling below it is a perfect number (Euclid), all its divisors add to twice it, a prime Mersenne number needs a prime count of doublings, and the card's numbers 6, 28, 496, 8128 and 2047 = 23 × 89 come out as it says.
 import Mathlib.NumberTheory.LucasLehmer
@@ -311,8 +308,6 @@ example : mersenne 6 = 63 ∧ 7 ∣ 63 := by
 #print axioms sum_all_divisors_is_twice
 #print axioms mersenne_prime_needs_prime_count
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 

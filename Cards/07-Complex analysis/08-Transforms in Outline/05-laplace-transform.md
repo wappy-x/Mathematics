@@ -386,9 +386,6 @@ Lean proves the half plane of convergence, the derivative rule and the four tabl
 
 The shutter, the Simpson sums, the stepped car, e^(t^2) and the decimals are left to the Python and Rust checks.
 
-<details>
-<summary>The Lean proof, 217 lines</summary>
-
 ```lean
 -- The Laplace transform: for a continuous signal that grows no faster than M e^(at) and has a differentiable stretch after time zero, the transform of its derivative is s times its transform minus its starting value at every s with Re s > a; such a signal's transform converges there, and 1, t, e^(at) and cos(bt) transform to 1/s, 1/s^2, 1/(s − a) and s/(s^2 + b^2).
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
@@ -608,8 +605,6 @@ example : (1 : ℚ) / (1 / 2 - 1) = -2 := by norm_num
 #print axioms laplace_integrable_of_exp_bound
 #print axioms laplace_table
 ```
-
-</details>
 
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
