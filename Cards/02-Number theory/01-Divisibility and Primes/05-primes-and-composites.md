@@ -14,6 +14,8 @@ A number bigger than 1 that will not split into equal rows of more than one is *
 
 **A number bigger than 1 is prime when nothing divides it but 1 and itself, and you find out by trying 2, 3, 4, 5 and up — stopping the moment the number you are trying, times itself, passes the number tested.**
 
+**What kind of fact this is:** a definition, plus a theorem: the stop rule, proved in Why it works.
+
 ### The picture: how many divisors, 91 to 100
 
 ```mermaid
@@ -37,6 +39,8 @@ The test, run on our two numbers:
 
 **91: try 2 to 6, leftovers 1, 1, 3, 1, 1. Then 7 goes in with nothing left: 91 = 7 × 13. 91 is composite.**
 
+**Read it aloud:** every try from 2 to 9 leaves something over from 97, so 97 is prime; 7 goes into 91 exactly, so 91 is composite.
+
 | Piece | Plain meaning | In our two numbers |
 | --- | --- | --- |
 | a divisor | goes in with nothing left over ([Divides](01-divides.md)) | 1, 7, 13, 91 divide 91 |
@@ -44,6 +48,12 @@ The test, run on our two numbers:
 | the leftover | chairs still standing ([Division with a remainder](04-division-with-remainder.md)) | 6, from 97 in rows of 7 |
 | prime | bigger than 1, no divisor but 1 and itself | 97 |
 | composite | bigger than 1, something else divides it | 91, because 7 does |
+
+### When it holds
+
+- **A whole number bigger than 1.** 1 has one divisor, not two, so it is neither prime nor composite. Count it as prime and the primes below 100 come out at 26, not 25.
+- **Nothing left over, exactly.** 97 in rows of 2 leaves 1 over. Close is not a divisor; only a leftover of 0 is, as 7 is for 91.
+- **Every trial divisor up to the stop.** Stop the trials at 5 instead, and 49, 77 and 91 pass as prime: 28 primes below 100.
 
 ---
 
@@ -213,6 +223,129 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's rules for every whole number, not just 97 and 91.
+
+- A number bigger than 1 is prime exactly when nothing divides it but 1 and itself.
+- The stop rule holds: such a number is prime exactly when no trial divisor goes in with nothing left over.
+- Those trial divisors run from 2 up, while the trial divisor times itself stays at or below the number.
+- A number is prime exactly when it has two divisors, so 1 is not prime.
+- 2 is prime, and it is the only even prime.
+- The hall's numbers check out: the leftovers for 97 and 91, 91 = 7 × 13, and the bar chart.
+- So do the mistakes: 26 primes if 1 counts, 28 if the trials stop at 5, and 49 odd numbers.
+
+Running the two roads as programs, and counting 168 primes below 1,000, is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 93 lines</summary>
+
+```lean
+-- Primes and composites: a whole number bigger than 1 is prime exactly when nothing but 1 and itself divides it, and exactly when no trial divisor d from 2 up, with d × d at or below the number, goes in; a number is prime exactly when it has two divisors, and 2 is the only even prime.
+import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.NumberTheory.Divisors
+import Mathlib.Tactic.NormNum.Prime
+
+/-- The definition and the stop rule. Take a whole number n bigger than 1. It is prime exactly when
+nothing divides it but 1 and itself. And you can find out by trial division: it is prime exactly
+when no trial divisor d = 2, 3, 4, ... goes in with nothing left over, where you only try d while
+d × d is at or below n. -/
+theorem prime_iff_no_trial_divisor_up_to_the_stop (n : ℕ) (hn : 1 < n) :
+    (Nat.Prime n ↔ ∀ d : ℕ, d ∣ n → d = 1 ∨ d = n) ∧
+      (Nat.Prime n ↔ ∀ d : ℕ, 2 ≤ d → d * d ≤ n → n % d ≠ 0) := by
+  have h2 : Nat.Prime n ↔ ∀ d : ℕ, d ∣ n → d = 1 ∨ d = n := by
+    rw [Nat.prime_def]
+    exact ⟨fun h => h.2, fun h => ⟨hn, h⟩⟩
+  refine ⟨h2, ?_⟩
+  rw [Nat.prime_def_le_sqrt]
+  constructor
+  · rintro ⟨_, h⟩ d hd hdd hmod
+    exact h d hd (Nat.le_sqrt.2 hdd) (Nat.dvd_of_mod_eq_zero hmod)
+  · intro h
+    refine ⟨hn, fun m hm hms hdvd => ?_⟩
+    exact h m hm (Nat.le_sqrt.1 hms) (Nat.mod_eq_zero_of_dvd hdvd)
+
+/-- The second road, and the bar chart. A whole number is prime exactly when it has two divisors,
+1 and itself. (1 has only one divisor, so it is not prime.) -/
+theorem prime_iff_exactly_two_divisors (n : ℕ) :
+    Nat.Prime n ↔ n.divisors.card = 2 := by
+  constructor
+  · intro h
+    rw [Nat.Prime.divisors h]
+    have : 1 ≠ n := h.one_lt.ne
+    simp [Finset.card_pair this]
+  · intro h
+    have hn0 : n ≠ 0 := by
+      rintro rfl
+      simp at h
+    have hn1 : n ≠ 1 := by
+      rintro rfl
+      simp at h
+    rw [Nat.prime_def]
+    refine ⟨by omega, fun d hd => ?_⟩
+    have h1 : (1 : ℕ) ∈ n.divisors := Nat.mem_divisors.2 ⟨one_dvd n, hn0⟩
+    have hn : n ∈ n.divisors := Nat.mem_divisors.2 ⟨dvd_refl n, hn0⟩
+    have hdm : d ∈ n.divisors := Nat.mem_divisors.2 ⟨hd, hn0⟩
+    obtain ⟨a, b, hab, hs⟩ := Finset.card_eq_two.1 h
+    rw [hs] at h1 hn hdm
+    simp only [Finset.mem_insert, Finset.mem_singleton] at h1 hn hdm
+    omega
+
+/-- 2 is prime, and it is the only even prime: a prime number is even exactly when it is 2. -/
+theorem two_is_the_only_even_prime (p : ℕ) :
+    Nat.Prime p ∧ Even p ↔ p = 2 := by
+  constructor
+  · rintro ⟨hp, he⟩
+    exact (hp.even_iff).1 he
+  · rintro rfl
+    exact ⟨Nat.prime_two, even_two⟩
+
+-- 97 in rows of 2 to 9: leftovers 1, 1, 1, 2, 1, 6, 1, 7.
+example : (List.range' 2 8).map (97 % ·) = [1, 1, 1, 2, 1, 6, 1, 7] := by decide
+-- The stop: 9 × 9 = 81 is under 97, 10 × 10 = 100 is past it.
+example : 9 * 9 = 81 ∧ 81 < 97 ∧ 10 * 10 = 100 ∧ 97 < 100 := by decide
+-- 97 is prime.
+example : Nat.Prime 97 := by norm_num
+-- 91 in rows of 2 to 7: leftovers 1, 1, 3, 1, 1, then 0.
+example : (List.range' 2 6).map (91 % ·) = [1, 1, 3, 1, 1, 0] := by decide
+-- 91 = 7 × 13, so 91 is composite.
+example : 91 = 7 * 13 ∧ ¬ Nat.Prime 91 := by norm_num
+-- The divisors: 97 has 1 and 97; 91 has 1, 7, 13, 91.
+example : Nat.divisors 97 = {1, 97} ∧ Nat.divisors 91 = {1, 7, 13, 91} := by decide
+-- The bar chart: how many divisors, 91 to 100.
+example : (List.range' 91 10).map (fun n => (Nat.divisors n).card) = [4, 6, 4, 4, 4, 12, 2, 6, 6, 9] := by
+  decide
+-- 1 has one divisor, so it is neither prime nor composite.
+example : (Nat.divisors 1).card = 1 ∧ ¬ Nat.Prime 1 := by decide
+-- 25 primes below 100; counting 1 as prime gives 26.
+example : ((Finset.range 100).filter Nat.Prime).card = 25 := by decide
+example : ((Finset.range 100).filter (fun n => n = 1 ∨ Nat.Prime n)).card = 26 := by decide
+-- Stopping the trials at 5: 49, 77 and 91 slip through, so 28 pass as prime.
+example : ((Finset.range 100).filter
+      (fun n => 2 ≤ n ∧ ¬ Nat.Prime n ∧ n % 2 ≠ 0 ∧ n % 3 ≠ 0 ∧ n % 4 ≠ 0 ∧ n % 5 ≠ 0)) =
+      {49, 77, 91} := by
+  decide
+example : ((Finset.range 100).filter
+      (fun n => 2 ≤ n ∧ ∀ d ∈ Finset.Icc 2 5, d < n → n % d ≠ 0)).card = 28 := by
+  decide
+-- 49 odd numbers above 1 and below 100; only 25 primes.
+example : ((Finset.range 100).filter (fun n => 1 < n ∧ n % 2 = 1)).card = 49 := by decide
+
+#print axioms prime_iff_no_trial_divisor_up_to_the_stop
+#print axioms prime_iff_exactly_two_divisors
+#print axioms two_is_the_only_even_prime
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'prime_iff_no_trial_divisor_up_to_the_stop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prime_iff_exactly_two_divisors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_is_the_only_even_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
@@ -255,6 +388,8 @@ The two outputs match line for line.
 - [Prime factorisation](07-prime-factorisation.md): what a composite is made of — 91 breaks into 7 and 13.
 - [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): the fact that makes those pieces unique, proved properly.
 - [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): multiplying large primes is easy, undoing it is not.
+
+This card tests one number at a time; the question it leaves open is how to find every prime in a block of numbers without testing each one.
 
 ---
 

@@ -16,6 +16,8 @@ One number does that: 15 and 27 both divide by 3; 15 and 28 divide by nothing bu
 
 **Two numbers are coprime when the only whole number that divides both of them is 1 — their greatest common divisor is 1.**
 
+**What kind of fact this is:** a definition, then a theorem proved in Why it works: a pair is coprime exactly when some whole-number mix of the two equals 1.
+
 ### The picture: where tooth 0 can land on the 27-gear
 
 ```mermaid
@@ -48,6 +50,12 @@ The same fact in the form that does the work:
 | greatest common divisor | the biggest common factor ([Greatest common divisor](01-gcd.md)) | 1 here, 3 for 15 and 27 |
 | coprime | that divisor is 1 | 15 and 28 |
 | a whole-number mix | so many of one, less so many of the other ([Bezout's identity](04-bezouts-identity.md)) | 28 × 7 − 15 × 13 |
+
+### When it holds
+
+- **Whole numbers.** The test counts whole teeth and whole helpings. Allow fractions and any two numbers mix to 1, so the test says nothing.
+- **The mix may take away.** 28 × 7 − 15 × 13 reaches 1 only by taking thirteen 15s away. Adding alone, 15s and 28s never make 1.
+- **The shared factor is exactly 1.** At 3, as with 15 and 27, the smallest mix is 3 and tooth 0 meets only 9 of the 27 slots.
 
 ---
 
@@ -220,6 +228,147 @@ ALL CHECKS PASS
 
 Both outputs match line for line.
 
+### Lean
+
+Lean proves all three claims for every pair of whole numbers, not just 15 with 28 and 27.
+
+- Two whole numbers are coprime exactly when some whole-number mix of them equals 1. The mix may take away.
+- Any two neighbours are coprime.
+- A small gear drives a big one. Tooth 0 meets the big gear's slot count divided by the shared factor. So it meets every slot exactly when the counts are coprime.
+
+It also checks the card's numbers exactly: the shared factors, the mixes, the slot lists, the pairings, 15/27 in lowest terms and the usual mistake. The lowest-terms rule in general and walking the gears turn by turn are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 115 lines</summary>
+
+```lean
+-- Coprime numbers: two whole numbers have greatest common divisor 1 exactly when some whole-number mix of them equals 1, neighbours are always coprime, and a gear stepping a slots at a time round b slots meets exactly b ÷ gcd(a, b) of them, so all b when the counts are coprime.
+import Mathlib.Data.Int.GCD
+import Mathlib.RingTheory.Coprime.Lemmas
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+import Mathlib.Data.Int.Interval
+import Mathlib.Data.Set.Card
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.NormNum.GCD
+import Mathlib.Tactic.NormNum.Prime
+
+/-- Coprime is a licence to build 1. Two whole numbers a and b are coprime (their greatest common
+divisor is 1) exactly when some whole-number mix of them, a × x + b × y with counts x and y that
+may be negative, equals 1. -/
+theorem coprime_iff_some_mix_equals_one (a b : ℤ) :
+    Int.gcd a b = 1 ↔ ∃ x y : ℤ, a * x + b * y = 1 := by
+  rw [← Int.isCoprime_iff_gcd_eq_one]
+  constructor
+  · rintro ⟨u, v, h⟩
+    exact ⟨u, v, by linarith⟩
+  · rintro ⟨x, y, h⟩
+    exact ⟨x, y, by linarith⟩
+
+/-- Neighbours are always coprime: for every whole number n, the only common divisor of n and
+n + 1 is 1. -/
+theorem neighbours_are_coprime (n : ℤ) : Int.gcd n (n + 1) = 1 := by
+  rw [← Int.isCoprime_iff_gcd_eq_one]
+  exact ⟨-1, 1, by ring⟩
+
+/-- The gears. A small gear with a teeth drives a big gear with b slots, numbered 0 to b − 1.
+After k turns of the small gear, tooth 0 drops into slot (k × a) mod b. Over all turns, tooth 0
+meets exactly b ÷ gcd(a, b) different slots; so it meets every one of the b slots exactly when
+a and b are coprime. -/
+theorem slots_met_by_tooth_zero (a b : ℕ) (hb : 0 < b) :
+    Set.ncard {s : ℕ | ∃ k : ℕ, k * a % b = s} = b / Nat.gcd a b ∧
+      (Set.ncard {s : ℕ | ∃ k : ℕ, k * a % b = s} = b ↔ Nat.Coprime a b) := by
+  have hg : 0 < Nat.gcd a b := Nat.gcd_pos_of_pos_right a hb
+  have hgb : Nat.gcd a b ∣ b := Nat.gcd_dvd_right a b
+  have hS : {s : ℕ | ∃ k : ℕ, k * a % b = s} =
+      (fun m => Nat.gcd a b * m) '' Set.Iio (b / Nat.gcd a b) := by
+    ext s
+    simp only [Set.mem_ofPred_eq, Set.mem_image, Set.mem_Iio]
+    constructor
+    · rintro ⟨k, rfl⟩
+      have hd : Nat.gcd a b ∣ k * a % b :=
+        (Nat.dvd_mod_iff hgb).2 (Dvd.dvd.mul_left (Nat.gcd_dvd_left a b) k)
+      obtain ⟨m, hm⟩ := hd
+      refine ⟨m, ?_, hm.symm⟩
+      rw [Nat.lt_div_iff_mul_lt' hgb, ← hm]
+      exact Nat.mod_lt _ hb
+    · rintro ⟨m, hm, rfl⟩
+      rw [Nat.lt_div_iff_mul_lt' hgb] at hm
+      rcases Nat.eq_zero_or_pos m with rfl | hm0
+      · exact ⟨0, by simp⟩
+      · have hlt : Nat.gcd a b < b := by
+          calc Nat.gcd a b = Nat.gcd a b * 1 := (mul_one _).symm
+            _ ≤ Nat.gcd a b * m := Nat.mul_le_mul_left _ hm0
+            _ < b := hm
+        obtain ⟨x, -, hx⟩ := Nat.exists_mul_mod_eq_gcd hlt
+        refine ⟨x * m, ?_⟩
+        calc x * m * a % b = (a * x % b) * m % b := by
+              rw [Nat.mod_mul_mod]
+              congr 1
+              ring
+          _ = Nat.gcd a b * m % b := by rw [hx]
+          _ = Nat.gcd a b * m := Nat.mod_eq_of_lt hm
+  have hcard : Set.ncard {s : ℕ | ∃ k : ℕ, k * a % b = s} = b / Nat.gcd a b := by
+    rw [hS, Set.ncard_image_of_injective _ (fun x y h => Nat.eq_of_mul_eq_mul_left hg h)]
+    have : Set.Iio (b / Nat.gcd a b) = ((Finset.range (b / Nat.gcd a b) : Finset ℕ) : Set ℕ) := by
+      ext; simp
+    rw [this, Set.ncard_coe_finset, Finset.card_range]
+  refine ⟨hcard, ?_⟩
+  rw [hcard, Nat.div_eq_self]
+  constructor
+  · rintro (h | h)
+    · omega
+    · exact h
+  · intro h
+    exact Or.inr h
+
+-- The card's gears: 15 and 28 share only 1; 15 and 27 share 3.
+example : Nat.gcd 15 28 = 1 ∧ Nat.Coprime 15 28 := by norm_num
+example : Nat.gcd 15 27 = 3 ∧ ¬ Nat.Coprime 15 27 := by norm_num
+-- The mix: seven 28s take away thirteen 15s lands on 1.
+example : (28 : ℤ) * 7 - 15 * 13 = 1 := by decide
+-- 15 and 27: the smallest mix is 3.
+example : (27 : ℤ) * 4 - 15 * 7 = 3 := by decide
+-- Counts from -9 to 9 never mix 15 and 27 to 1 or 2.
+example : ∀ i ∈ Finset.Icc (-9 : ℤ) 9, ∀ j ∈ Finset.Icc (-9 : ℤ) 9,
+    15 * i + 27 * j ≠ 1 ∧ 15 * i + 27 * j ≠ 2 := by decide
+-- Adding alone (counts 0 to 9), 15s and 28s never make 1.
+example : ∀ i ∈ Finset.range 10, ∀ j ∈ Finset.range 10, 15 * i + 28 * j ≠ 1 := by decide
+-- On the 28-gear tooth 0 starts at slots 0, 15, 2, 17 and meets all 28 slots.
+example : (List.range 4).map (fun k => k * 15 % 28) = [0, 15, 2, 17] := by decide
+example : ((Finset.range 28).image (fun k => k * 15 % 28)).card = 28 := by decide
+-- On the 27-gear tooth 0 meets only nine slots, all multiples of 3.
+example : (List.range 9).map (fun k => k * 15 % 27) = [0, 15, 3, 18, 6, 21, 9, 24, 12] := by
+  decide
+example : (Finset.range 27).image (fun k => k * 15 % 27) = {0, 15, 3, 18, 6, 21, 9, 24, 12} := by
+  decide
+-- Pairings used: 15 × 28 = 420 of 420, and 15 × 9 = 135 of 405.
+example : 15 * 28 = 420 ∧ 15 * 27 = 405 ∧ 15 * 9 = 135 := by decide
+example : Nat.lcm 15 28 = 420 ∧ Nat.lcm 15 27 = 135 := by norm_num
+-- Neighbours 27 and 28: 28 − 27 = 1, so they are coprime.
+example : (28 : ℤ) - 27 = 1 ∧ Nat.Coprime 27 28 := by norm_num
+-- Lowest terms: 15/27 cancels to 5/9; 15/28 does not cancel.
+example : (15 : ℚ) / 27 = 5 / 9 := by norm_num
+example : ((15 : ℚ) / 28).num = 15 ∧ ((15 : ℚ) / 28).den = 28 := by
+  decide +kernel
+-- Neither 15 nor 28 is prime, yet they are coprime.
+example : ¬ Nat.Prime 15 ∧ ¬ Nat.Prime 28 ∧ Nat.Coprime 15 28 := by norm_num
+
+#print axioms coprime_iff_some_mix_equals_one
+#print axioms neighbours_are_coprime
+#print axioms slots_met_by_tooth_zero
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'coprime_iff_some_mix_equals_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'neighbours_are_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'slots_met_by_tooth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -263,11 +412,13 @@ Both outputs match line for line.
 - [Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md): which remainder puzzles have answers, decided by the shared factor.
 - [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): two remainders pin down one number when the counts are coprime.
 
+Left open: a coprime pair can build 1, but how does that 1 undo a multiplication on a clock face?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euclid. *Elements*, Book VII, Proposition 22, c. 300 BC. [D. E. Joyce's edition](https://mathcs.clarku.edu/~djoyce/elements/bookVII/propVII22.html). Lowest terms and coprime, one theorem, 2,300 years old.
 - Graham, Ronald L., Donald E. Knuth and Oren Patashnik. *Concrete Mathematics*, 2nd ed. Addison-Wesley, 1994. [Publisher page](https://www.informit.com/store/concrete-mathematics-a-foundation-for-computer-science-9780201558029). Section 4.5, "Relative primality".

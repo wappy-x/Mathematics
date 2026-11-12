@@ -16,6 +16,8 @@ This is called **casting out nines**. It works because shrinking first then mult
 
 **Remainders add and multiply on their own. Reduce before or reduce after, you land on the same remainder.**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works, for every clock, not only the 9-clock.
+
 ### The picture: two roads, one answer
 
 ```mermaid
@@ -38,7 +40,7 @@ On a 9-hour clock, 47 leaves 2 and 23 leaves 5. So:
 
 **Read it aloud:** reduce 47 and 23 to 2 and 5, multiply those, and land where 1,081 lands.
 
-Card 01's shorthand for that: 47 ≡ 2 (mod 9) and 23 ≡ 5 (mod 9), so 47 × 23 ≡ 2 × 5 (mod 9) and 47 + 23 ≡ 2 + 5 (mod 9). We picked 9 because the digit trick comes free with it. The rule holds on any clock.
+The shorthand from [Congruence](01-congruence-mod-n.md): 47 ≡ 2 (mod 9) and 23 ≡ 5 (mod 9), so 47 × 23 ≡ 2 × 5 (mod 9) and 47 + 23 ≡ 2 + 5 (mod 9). We picked 9 because the digit trick comes free with it. The rule holds on any clock.
 
 | Piece | Plain meaning | On the receipt |
 | --- | --- | --- |
@@ -46,6 +48,12 @@ Card 01's shorthand for that: 47 ≡ 2 (mod 9) and 23 ≡ 5 (mod 9), so 47 × 23
 | a remainder | what is left when whole 9s are gone | 47 leaves 2 |
 | ≡ … (mod 9) | same remainder on the 9-clock | 47 ≡ 2 (mod 9) |
 | casting out nines | reduce both sides, compare | 2 × 5 gives 1, 1,081 gives 1 |
+
+### When it holds
+
+- **Adding and multiplying only.** Dividing does not carry over: 3 × 4 = 12 and 3 × 1 = 3 both leave 3, yet 4 is not 1.
+- **Both sides reduced, on the same clock.** Compare 1,081 with 10 instead of 1 with 1, and a right receipt looks wrong.
+- **Digit sums need a clock where 10 leaves 1.** The 9-clock is one. On a 10-clock, adding the digits does not give the remainder.
 
 ---
 
@@ -214,6 +222,100 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole numbers, nothing to round.
 
+### Lean
+
+Lean proves the rule on every clock, for every pair of whole numbers, not just the receipt.
+
+- Reduce two numbers first, then add or multiply and reduce: you land on the same remainder as reducing at the end.
+- If two numbers leave the same remainders as two others on one clock, their sums match, and so do their products.
+- On any clock where 10 leaves 1, a number leaves the same remainder as its digit sum.
+- The receipt's numbers, exactly: 47 × 23 = 1,081, both roads landing on 1, the swapped 1,801, the slipped 1,061 and the dividing trap.
+
+The two step-by-step roads, adding digits again and again and taking 9s away, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 67 lines</summary>
+
+```lean
+-- Adding and multiplying on the clock: on every clock, reducing two whole numbers before adding or multiplying lands on the same remainder as reducing after, and on any clock where 10 leaves 1 a number leaves the same remainder as its digit sum.
+import Mathlib.Data.Nat.ModEq
+import Mathlib.Data.Nat.Digits.Lemmas
+import Mathlib.Tactic.NormNum
+
+/-- Remainders add and multiply on their own. On a clock with `n` hours, take any two whole
+numbers `a` and `b`. Reduce them first and then add (or multiply) and reduce: you land on the
+same remainder as adding (or multiplying) first and reducing at the end. -/
+theorem reduce_before_or_after_same_remainder (n a b : ℕ) :
+    (a + b) % n = (a % n + b % n) % n ∧ (a * b) % n = (a % n * (b % n)) % n := by
+  exact ⟨Nat.add_mod a b n, Nat.mul_mod a b n⟩
+
+/-- The card's formula, in the shorthand of congruence. If `a` leaves the same remainder as `a'`
+and `b` leaves the same remainder as `b'` on the same clock, then `a + b` leaves the same
+remainder as `a' + b'`, and `a × b` the same as `a' × b'`. -/
+theorem congruent_numbers_add_and_multiply_to_congruent (n a a' b b' : ℕ)
+    (ha : a ≡ a' [MOD n]) (hb : b ≡ b' [MOD n]) :
+    a + b ≡ a' + b' [MOD n] ∧ a * b ≡ a' * b' [MOD n] := by
+  exact ⟨ha.add hb, ha.mul hb⟩
+
+/-- Why digit sums work. On any clock where 10 leaves the same remainder as 1 (the 9-clock is
+one), every whole number leaves the same remainder as the sum of its decimal digits. -/
+theorem digit_sum_same_remainder_when_ten_leaves_one (n m : ℕ) (h : 10 ≡ 1 [MOD n]) :
+    m ≡ (Nat.digits 10 m).sum [MOD n] := by
+  by_cases h1 : n = 1
+  · subst h1
+    exact Nat.modEq_one
+  · have h10 : 10 % n = 1 := by
+      have : 1 % n = 1 := by
+        rcases Nat.eq_zero_or_pos n with h0 | h0
+        · subst h0; rfl
+        · exact Nat.mod_eq_of_lt (by omega)
+      unfold Nat.ModEq at h
+      omega
+    exact Nat.modEq_digits_sum n 10 h10 m
+
+-- The receipt: 47 leaves 2 and 23 leaves 5 on the 9-clock.
+example : 47 % 9 = 2 ∧ 23 % 9 = 5 := by decide
+-- Step 0: 47 = 45 + 2 with 45 five 9s; 23 = 18 + 5 with 18 two 9s.
+example : 47 = 5 * 9 + 2 ∧ 23 = 2 * 9 + 5 := by decide
+-- Multiplying: 47 × 23 = 1,081, and both roads land on 1.
+example : 47 * 23 = 1081 ∧ 1081 % 9 = 1 ∧ (2 * 5) % 9 = 1 := by decide
+-- 1,081 by taking 9s away 120 times leaves 1.
+example : 1081 = 120 * 9 + 1 := by decide
+-- Adding: 47 + 23 = 70, and 70 and 2 + 5 both leave 7.
+example : 47 + 23 = 70 ∧ 70 % 9 = 7 ∧ (2 + 5) % 9 = 7 := by decide
+-- Digit sums: 47 gives 11, then 2; 23 gives 5; 1,081 gives 10, then 1.
+example : (Nat.digits 10 47).sum = 11 ∧ (Nat.digits 10 11).sum = 2 := by norm_num
+example : (Nat.digits 10 23).sum = 5 := by norm_num
+example : (Nat.digits 10 1081).sum = 10 ∧ (Nat.digits 10 10).sum = 1 := by norm_num
+-- 10, 100 and 1,000 each leave 1 on the 9-clock.
+example : 10 % 9 = 1 ∧ 100 % 9 = 1 ∧ 1000 % 9 = 1 := by decide
+-- A digit total of 9 is remainder 0.
+example : 9 % 9 = 0 ∧ 18 % 9 = 0 := by decide
+-- The swapped 1,801 passes anyway; the slipped 1,061 leaves 8 and is caught.
+example : 1801 % 9 = 1 ∧ 1801 ≠ 1081 := by decide
+example : 1061 % 9 = 8 := by decide
+-- Dividing does not carry over: 3 × 4 and 3 × 1 both leave 3, yet 4 and 1 do not match.
+example : (3 * 4) % 9 = 3 ∧ (3 * 1) % 9 = 3 ∧ 4 % 9 ≠ 1 % 9 := by decide
+-- On a 10-clock digit sums fail: 1,061 has digit sum 8, but leaves 1.
+example : (Nat.digits 10 1061).sum = 8 ∧ 1061 % 10 = 1 := by norm_num
+-- Try changing: 47 × 24 = 1,128 leaves 3, not 1.
+example : 47 * 24 = 1128 ∧ 1128 % 9 = 3 := by decide
+
+#print axioms reduce_before_or_after_same_remainder
+#print axioms congruent_numbers_add_and_multiply_to_congruent
+#print axioms digit_sum_same_remainder_when_ten_leaves_one
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'reduce_before_or_after_same_remainder' depends on axioms: [propext]
+'congruent_numbers_add_and_multiply_to_congruent' depends on axioms: [propext]
+'digit_sum_same_remainder_when_ten_leaves_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -256,11 +358,13 @@ The two outputs match line for line: whole numbers, nothing to round.
 - [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): this check, built into every barcode.
 - [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): the 7-hour clock, and what day a date lands on.
 
+This card leaves division open: when can you divide on the clock? [The modular inverse](04-modular-inverse.md) answers it.
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Gauss, Carl Friedrich. *Disquisitiones Arithmeticae*. Trans. Arthur A. Clarke. Springer, 1986. [doi:10.1007/978-1-4939-7560-0](https://doi.org/10.1007/978-1-4939-7560-0). Articles 1 to 8: where congruences are first added and multiplied.
-- Hardy, G. H., and E. M. Wright. *An Introduction to the Theory of Numbers*, 6th ed. Oxford University Press, 2008. [Publisher page](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865). Chapter V, congruences.
+- Hardy, G. H., and E. M. Wright. *An Introduction to the Theory of Numbers*, 6th ed. Oxford University Press, 2008. [doi:10.1093/oso/9780199219858.001.0001](https://doi.org/10.1093/oso/9780199219858.001.0001). Chapter V, congruences.

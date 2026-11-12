@@ -18,7 +18,9 @@ The count is a whole number, 0 or more. The divisor is a whole number, 1 or more
 
 **Every division has exactly one answer of this shape: so many whole copies of the divisor, plus a leftover too small to make one more copy.**
 
-Textbooks call this the division algorithm, or the division theorem. It is one step, not the Euclidean algorithm, which repeats it.
+**What kind of fact this is:** a theorem, proved on this card in Why it works: a leftover under the divisor always exists, and only one does.
+
+Textbooks call this the division algorithm, or the division theorem. It is one step, not [Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md), which repeats it.
 
 ### The picture: where the birthday has drifted to
 
@@ -41,7 +43,9 @@ The year, written out, is the statement:
 
 **365 = 52 × 7 + 1, and 1 is smaller than 7**
 
-Read aloud: 365 days is 52 whole weeks plus 1 day that cannot fill another week. The leap year, same shape:
+**Read it aloud:** 365 days is 52 whole weeks plus 1 day that cannot fill another week.
+
+The leap year, same shape:
 
 **366 = 52 × 7 + 2, and 2 is smaller than 7**
 
@@ -56,6 +60,13 @@ Later cards write it short: b = q × a + r, with r below a — b what you starte
 | the quotient, q | how many whole helpings fit | 52 weeks |
 | the remainder, r | what is left, too small for another helping | 1 day |
 | the rule on r | at least 0, under the divisor | 1 is under 7 |
+
+### When it holds
+
+- **The divisor is 1 or more.** Take away a divisor of 0 and the pile never shrinks, so the long way never stops.
+- **The leftover is under the divisor.** Drop this rule and the answer is no longer one: 51 × 7 + 8 is also 365.
+- **Whole helpings only.** Allow part of a week and nothing is left over: the spare day becomes a fraction of a week.
+- **A count of 0 or more.** Count days back before 2026 and Python and Rust disagree on the leftover. [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md) settles which one to keep.
 
 ---
 
@@ -222,6 +233,108 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole days, nothing to round.
 
+### Lean
+
+Lean proves the theorem for every count of 0 or more and every divisor of 1 or more, not just 365 and 7.
+
+- Exactly one quotient and one remainder fit, with the remainder under the divisor.
+- That one pair is the whole weeks and days over that the code's // and % give.
+- Drop the rule that the leftover is under the divisor, and two different answers fit once the count reaches the divisor.
+- The card's numbers check out: 365 and 366 days, 51 weeks with 8 over, the birthday drift, 365 split by 5, and the clock.
+
+The printed table, the taking-7-away loop and the weekday names stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 74 lines</summary>
+
+```lean
+-- Division with a remainder: for a whole number b and a divisor a of 1 or more, exactly one pair of whole numbers q and r gives b = q × a + r with r smaller than a, that pair is b / a and b % a, and without the rule r < a the answer is no longer one.
+import Mathlib.Basic.ExistsUnique
+import Mathlib.Data.Nat.Init
+
+theorem aux_div_mod_unique (b a q r : ℕ) (ha : 1 ≤ a)
+    (h : b = q * a + r) (hr : r < a) :
+    q = b / a ∧ r = b % a := by
+  have hpos : 0 < a := ha
+  have hq : b / a = q := by
+    rw [h, Nat.add_comm, Nat.add_mul_div_right _ _ hpos, Nat.div_eq_of_lt hr, Nat.zero_add]
+  have hm := Nat.div_add_mod' b a
+  refine ⟨hq.symm, ?_⟩
+  rw [hq] at hm
+  omega
+
+#print axioms aux_div_mod_unique
+
+/-- Division with a remainder. Take a whole number b (0 or more) and a divisor a (1 or more).
+There is exactly one pair of whole numbers, a quotient q and a remainder r, with
+b = q × a + r and r smaller than a. -/
+theorem quotient_and_remainder_exist_and_are_unique (b a : ℕ) (ha : 1 ≤ a) :
+    ∃! p : ℕ × ℕ, b = p.1 * a + p.2 ∧ p.2 < a := by
+  refine ⟨(b / a, b % a), ⟨(Nat.div_add_mod' b a).symm, Nat.mod_lt _ ha⟩, ?_⟩
+  rintro ⟨q, r⟩ ⟨h, hr⟩
+  obtain ⟨h1, h2⟩ := aux_div_mod_unique b a q r ha h hr
+  simp only [Prod.mk.injEq]
+  exact ⟨h1, h2⟩
+
+/-- The one pair is what whole-number division gives: if b = q × a + r with r smaller than a,
+then q is b / a (whole copies, Python's //) and r is b % a (the leftover, Python's %). -/
+theorem quotient_and_remainder_are_div_and_mod (b a q r : ℕ) (ha : 1 ≤ a)
+    (h : b = q * a + r) (hr : r < a) :
+    q = b / a ∧ r = b % a := by
+  exact aux_div_mod_unique b a q r ha h hr
+
+/-- Drop the rule that the leftover is under the divisor and the answer is no longer one:
+whenever b is at least a, two different pairs (q, r) give b = q × a + r. -/
+theorem without_leftover_rule_answer_is_not_unique (b a : ℕ) (ha : 1 ≤ a) (hb : a ≤ b) :
+    ∃ p p' : ℕ × ℕ, p ≠ p' ∧ b = p.1 * a + p.2 ∧ b = p'.1 * a + p'.2 := by
+  have hpos : 0 < a := ha
+  have hq : 1 ≤ b / a := (Nat.le_div_iff_mul_le hpos).2 (by omega)
+  obtain ⟨k, hk⟩ : ∃ k, b / a = k + 1 := ⟨b / a - 1, by omega⟩
+  have hm := Nat.div_add_mod' b a
+  rw [hk] at hm
+  refine ⟨(k + 1, b % a), (k, b % a + a), ?_, ?_, ?_⟩
+  · simp
+  · simp only; omega
+  · simp only; rw [Nat.add_mul] at hm; omega
+
+-- An ordinary year: 365 = 52 × 7 + 1, and 1 is smaller than 7.
+example : 365 = 52 * 7 + 1 ∧ 1 < 7 := by decide
+-- A leap year: 366 = 52 × 7 + 2, and 2 is smaller than 7.
+example : 366 = 52 * 7 + 2 ∧ 2 < 7 := by decide
+-- The code's // and %: 52 weeks with 1 day over, then 52 weeks with 2 days over.
+example : 365 / 7 = 52 ∧ 365 % 7 = 1 ∧ 366 / 7 = 52 ∧ 366 % 7 = 2 := by decide
+-- Whole weeks in a year, and the days over.
+example : 52 * 7 = 364 ∧ 365 - 364 = 1 ∧ 366 - 364 = 2 := by decide
+-- Stopping at 51 weeks: 365 = 51 × 7 + 8 is true arithmetic, but 8 is not under 7.
+example : 365 = 51 * 7 + 8 ∧ ¬ (8 < 7) := by decide
+-- Trying every week count from 0 to 99: only 52 leaves a leftover under 7, and that leftover is 1.
+example : (List.range 100).filter (fun q => 7 * q ≤ 365 ∧ 365 - 7 * q < 7) = [52] ∧
+    365 - 7 * 52 = 1 := by decide
+-- The birthday drifts 0, then 1, then 3, then 4 weekdays (Sunday, Monday, Wednesday, Thursday).
+example : (0 + 365 % 7) % 7 = 1 ∧ (1 + 366 % 7) % 7 = 3 ∧ (3 + 365 % 7) % 7 = 4 := by decide
+-- Giving every year 365 days lands on 3 (Wednesday) in 2029, not 4.
+example : (0 + 3 * (365 % 7)) % 7 = 3 := by decide
+-- Taking 5 away instead of 7: a quotient of 73, nothing over.
+example : 365 / 5 = 73 ∧ 365 % 5 = 0 ∧ 365 = 73 * 5 + 0 := by decide
+-- Clocks: 100 minutes is 1 hour and 40 minutes.
+example : 100 / 60 = 1 ∧ 100 % 60 = 40 := by decide
+
+#print axioms quotient_and_remainder_exist_and_are_unique
+#print axioms quotient_and_remainder_are_div_and_mod
+#print axioms without_leftover_rule_answer_is_not_unique
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'aux_div_mod_unique' depends on axioms: [propext, Quot.sound]
+'quotient_and_remainder_exist_and_are_unique' depends on axioms: [propext, Quot.sound]
+'quotient_and_remainder_are_div_and_mod' depends on axioms: [propext, Quot.sound]
+'without_leftover_rule_answer_is_not_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the house numbers.
@@ -264,11 +377,13 @@ The two outputs match line for line: whole days, nothing to round.
 - [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): keeping the remainder and throwing the quotient away, negative counts included.
 - [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): this drift, built into a rule for any date.
 
+The question this card leaves open: what is the remainder when the count is negative?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euclid. *Elements*, Book VII, Propositions 1 and 2, in David E. Joyce's edition, Clark University. [Book VII](https://mathcs.clarku.edu/~djoyce/elements/bookVII/bookVII.html). The oldest written form of it.
 - Graham, Ronald L., Donald E. Knuth and Oren Patashnik. *Concrete Mathematics*, 2nd ed. Addison-Wesley, 1994. [Publisher page](https://www.informit.com/store/concrete-mathematics-a-foundation-for-computer-science-9780201558029). Chapter 3, quotients and remainders, negative counts included.

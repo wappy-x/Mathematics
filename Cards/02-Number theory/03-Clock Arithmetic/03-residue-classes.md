@@ -14,6 +14,8 @@ Up 7 semitones from C is G; up 7 more is 14 semitones, an octave (12) and 2 over
 
 **A residue class is every number leaving the same remainder — bucket 2 out of 12 is ... -22, -10, 2, 14, 26 ... — and the n buckets add and multiply among themselves.**
 
+**What kind of fact this is:** a definition, the buckets, plus a theorem proved in Why it works: the buckets add and multiply whichever member you pick.
+
 ### The picture: stacking fifths
 
 ```mermaid
@@ -44,6 +46,12 @@ A bucket is a set, running on forever:
 | the remainder | what is left after whole n's come off ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)) | 14 leaves 2 |
 | a residue class | every number with that remainder, as one thing | bucket 2: ... 2, 14, 26 ... |
 | Z mod n | Z, the whole numbers, sorted into all n buckets, with their own plus and times | Z mod 12, the pitch classes |
+
+### When it holds
+
+- **Every remainder runs from 0 to n − 1, negatives included.** Let a remainder go negative, as some calculators do, and -22 seems to land in "bucket -10", which is not one of the 12.
+- **Plus and times only.** Any member stands in for its bucket there: 19 + 19 = 38 still lands in bucket 2. Division is not covered ([The modular inverse](04-modular-inverse.md)).
+- **A prime modulus, if no two non-zero buckets may multiply to 0.** Out of 5 there are 0 such pairs; out of 6, which splits as 2 × 3, there are 4.
 
 ---
 
@@ -233,6 +241,125 @@ ALL CHECKS PASS
 
 Both outputs match line for line.
 
+### Lean
+
+Lean proves the card's three facts for every modulus n, not just 12, 5 and 6.
+
+- Every whole number, negatives included, lands in exactly one bucket, with a remainder from 0 to n − 1.
+- Swap any member for another from the same bucket, and the sum and the product still land in the same bucket.
+- With more than one bucket, no two non-zero buckets multiply to 0 exactly when n is prime.
+- It also re-checks the card's numbers: bucket 2's members, both walks, the three tables and the zero pairs out of 5 and 6.
+
+Running the code and printing its output line by line is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 92 lines</summary>
+
+```lean
+-- Residue classes: sorting the whole numbers by their remainder after dividing by n puts each one in exactly one of n buckets, the buckets add and multiply whichever member you pick, and no two non-zero buckets multiply to 0 exactly when n is prime.
+import Mathlib.Data.Int.ModEq
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.Field.ZMod
+
+/-- The buckets add and multiply whichever member you pick. Take any modulus `n`. If `a'` is in
+the same bucket as `a` (same remainder after dividing by `n`), and `b'` is in the same bucket as
+`b`, then `a' + b'` lands in the same bucket as `a + b`, and `a' * b'` in the same bucket as
+`a * b`. -/
+theorem buckets_add_and_multiply_whichever_member (n : ℕ) {a a' b b' : ℤ}
+    (ha : a' ≡ a [ZMOD n]) (hb : b' ≡ b [ZMOD n]) :
+    a' + b' ≡ a + b [ZMOD n] ∧ a' * b' ≡ a * b [ZMOD n] := by
+  exact ⟨ha.add hb, ha.mul hb⟩
+
+/-- Every whole number lands in one bucket and no other. For `n` buckets, every whole number,
+negatives included, has exactly one remainder `r` from 0 to `n - 1` whose bucket it is in. -/
+theorem every_whole_number_lands_in_exactly_one_bucket (n : ℕ) (hn : 0 < n) (x : ℤ) :
+    ∃! r : ℕ, r < n ∧ x ≡ r [ZMOD n] := by
+  have hn' : (0 : ℤ) < n := by exact_mod_cast hn
+  refine ⟨(x % n).toNat, ⟨?_, ?_⟩, ?_⟩
+  · have h1 := Int.emod_nonneg x hn'.ne'
+    have h2 := Int.emod_lt_of_pos x hn'
+    omega
+  · have h1 := Int.emod_nonneg x hn'.ne'
+    have : (((x % n).toNat : ℕ) : ℤ) = x % n := Int.toNat_of_nonneg h1
+    rw [this]
+    exact (Int.mod_modEq x n).symm
+  · rintro r ⟨hr, hxr⟩
+    have h1 := Int.emod_nonneg x hn'.ne'
+    have h2 := Int.emod_lt_of_pos x hn'
+    have h3 : (r : ℤ) = x % n := by
+      have := hxr.symm.eq
+      rw [Int.emod_eq_of_lt (by positivity) (by exact_mod_cast hr)] at this
+      exact this
+    omega
+
+/-- No two non-zero buckets multiply to 0 exactly when the modulus is prime. With more than one
+bucket, in `Z mod n` a product of buckets is bucket 0 only when one factor is bucket 0, if and
+only if `n` is prime. -/
+theorem no_zero_product_of_nonzero_buckets_iff_prime (n : ℕ) (hn : 1 < n) :
+    (∀ a b : ZMod n, a * b = 0 → a = 0 ∨ b = 0) ↔ n.Prime := by
+  constructor
+  · intro h
+    have : NoZeroDivisors (ZMod n) := ⟨fun {a b} hab => h a b hab⟩
+    exact CharP.char_is_prime_of_two_le (ZMod n) n hn
+  · intro hp a b hab
+    have : Fact n.Prime := ⟨hp⟩
+    exact mul_eq_zero.mp hab
+
+-- Up a fifth twice: 7 + 7 = 14 lands in bucket 2 out of 12. An octave up, 19 + 19 = 38, also bucket 2.
+example : (7 + 7 : ℤ) % 12 = 2 := by decide
+example : (19 + 19 : ℤ) % 12 = 2 := by decide
+-- Bucket 2 out of 12 holds ... -22, -10, 2, 14, 26 ...
+example : ∀ x ∈ ([-22, -10, 2, 14, 26] : List ℤ), x % 12 = 2 := by decide
+-- Stacking fifths walks through all 12 buckets before coming home.
+example : (List.range 12).map (fun k => 7 * k % 12) = [0, 7, 2, 9, 4, 11, 6, 1, 8, 3, 10, 5] ∧
+    7 * 12 % 12 = 0 := by decide
+-- Stacking 8 semitones instead reaches only 3 buckets: 0, 8, 4, then home.
+example : (List.range 3).map (fun k => 8 * k % 12) = [0, 8, 4] ∧ 8 * 3 % 12 = 0 := by decide
+-- The mod 5 adding table, row by row.
+example : (List.range 5).map (fun a => (List.range 5).map (fun b => (a + b) % 5)) =
+    [[0, 1, 2, 3, 4], [1, 2, 3, 4, 0], [2, 3, 4, 0, 1], [3, 4, 0, 1, 2], [4, 0, 1, 2, 3]] := by
+  decide
+-- The mod 5 multiplying table.
+example : (List.range 5).map (fun a => (List.range 5).map (fun b => a * b % 5)) =
+    [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 1, 3], [0, 3, 1, 4, 2], [0, 4, 3, 2, 1]] := by
+  decide
+-- The mod 6 multiplying table.
+example : (List.range 6).map (fun a => (List.range 6).map (fun b => a * b % 6)) =
+    [[0, 0, 0, 0, 0, 0], [0, 1, 2, 3, 4, 5], [0, 2, 4, 0, 2, 4], [0, 3, 0, 3, 0, 3],
+     [0, 4, 2, 0, 4, 2], [0, 5, 4, 3, 2, 1]] := by
+  decide
+-- The tables built again from far-off members, three clocks up and six down, agree.
+example : ∀ a ∈ List.range 5, ∀ b ∈ List.range 5,
+    ((a + 15 : ℤ) + (b - 30)) % 5 = ((a + b : ℕ) : ℤ) % 5 ∧
+    ((a + 15 : ℤ) * (b - 30)) % 5 = ((a * b : ℕ) : ℤ) % 5 := by decide
+example : ∀ a ∈ List.range 6, ∀ b ∈ List.range 6,
+    ((a + 18 : ℤ) * (b - 36)) % 6 = ((a * b : ℕ) : ℤ) % 6 := by decide
+-- Out of 5 there are 0 pairs of non-zero buckets multiplying to 0.
+example : (Finset.univ.filter (fun p : ZMod 5 × ZMod 5 => p.1 ≠ 0 ∧ p.2 ≠ 0 ∧ p.1 * p.2 = 0)).card
+    = 0 := by decide
+-- Out of 6 there are 4: 2 x 3, 3 x 2, 3 x 4, 4 x 3.
+example : Finset.univ.filter (fun p : ZMod 6 × ZMod 6 => p.1 ≠ 0 ∧ p.2 ≠ 0 ∧ p.1 * p.2 = 0)
+    = {(2, 3), (3, 2), (3, 4), (4, 3)} := by decide
+-- Cancelling the 2 in 2 x 3 = 2 x 0, out of 6, would give 3 = 0, which is false.
+example : (2 * 3 : ZMod 6) = 2 * 0 ∧ (3 : ZMod 6) ≠ 0 := by decide
+
+#print axioms buckets_add_and_multiply_whichever_member
+#print axioms every_whole_number_lands_in_exactly_one_bucket
+#print axioms no_zero_product_of_nonzero_buckets_iff_prime
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'buckets_add_and_multiply_whichever_member' depends on axioms: [propext, Classical.choice, Quot.sound]
+'every_whole_number_lands_in_exactly_one_bucket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_zero_product_of_nonzero_buckets_iff_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run. The asserts are pinned to the house numbers, so the first change fires one.
@@ -272,11 +399,13 @@ Both outputs match line for line.
 - [The modular inverse](04-modular-inverse.md): which buckets you may divide by, and why bucket 2 fails out of 6.
 - [Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md): counting the buckets that have an undo.
 
+Left open: out of 6, nothing undoes bucket 2; which buckets can be undone, for any n?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Gauss, Carl Friedrich. *Disquisitiones Arithmeticae* (1801), trans. Arthur A. Clarke. Springer. [doi:10.1007/978-1-4939-7560-0](https://doi.org/10.1007/978-1-4939-7560-0). Section I, where the buckets start.
 - Ireland, Kenneth, and Michael Rosen. *A Classical Introduction to Modern Number Theory*, 2nd ed. Springer, 1990. [doi:10.1007/978-1-4757-2103-4](https://doi.org/10.1007/978-1-4757-2103-4). Chapter 3, computing with the buckets.

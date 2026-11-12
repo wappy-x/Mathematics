@@ -14,6 +14,8 @@ Every whole number is one of two kinds. **Even**: it pairs off with nothing left
 
 **Parity is predictable under adding and multiplying: you can tell whether an answer is even or odd from the numbers going in, without doing the sum.**
 
+**What kind of fact this is:** even and odd are definitions; the parity table is a theorem, proved in Why it works by pairing off.
+
 ### The picture: the whole parity table
 
 | Two numbers | Added, they give | Multiplied, they give |
@@ -42,12 +44,21 @@ Pairing off:
 
 **38 = 19 × 2** — nineteen pairs, nothing over: even.
 
+**Read it aloud:** 37 is 18 twos and one left over, so it is odd; 38 is 19 twos and none left over, so it is even.
+
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
 | even | pairs off with nothing over; 2 divides it ([Divides](01-divides.md)) | 4, 30, 38, and 0 |
 | odd | pairs off with exactly one over | 3, 11, 33, 37 |
 | parity | which of the two a number is | 37 has odd parity |
 | a flip | one press of the switch | 37 of them all week |
+
+### When it holds
+
+- **Whole numbers only.** A fraction does not pair off at all, so it has no parity and the table says nothing about it.
+- **Adding and multiplying only.** Dividing has no row: two evens can divide to an odd.
+- **Every press flips the switch.** If one press fails to register, 37 counted presses no longer say the light is on.
+- **A known start.** Parity gives the change, not the state. Without the start, 37 flips says only that the light changed.
 
 ---
 
@@ -221,6 +232,89 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole counts, nothing to round.
 
+### Lean
+
+Lean proves the parity table and the switch rule for every whole number, negatives included, not just 33, 37 and 38.
+
+- Every whole number is even or odd, and never both.
+- A sum is even exactly when the two numbers going in have the same parity.
+- A product is even exactly when at least one number going in is even, so only odd times odd stays odd.
+- From either start, a switch is back where it started exactly when it was pressed an even number of times.
+- It re-checks the worked numbers 33, 37, 38 and 30, their parities, and 37 and 38 paired off.
+- It re-checks that 37 flips from off leave the light on, and 38 flips leave it off.
+- It re-checks 0 and -4 as even, -3 as odd, and two evens, 6 and 2, dividing to an odd 3.
+
+Printing the table line by line, as above, stays with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 53 lines</summary>
+
+```lean
+-- Even and odd: every whole number is even or odd and never both, whether a sum or product is even follows from the parities going in, and a switch pressed n times is back where it started exactly when n is even.
+import Mathlib.Algebra.Ring.Int.Parity
+import Mathlib.Algebra.Group.Nat.Even
+import Mathlib.Logic.Function.Iterate
+
+/-- The parity table. For any two whole numbers a and b (negatives included), you can tell
+whether a + b and a × b are even from whether a and b are even, without doing the sum:
+a + b is even exactly when a and b have the same parity (even + even, odd + odd), and
+a × b is even exactly when at least one of them is even, so only odd × odd stays odd. -/
+theorem parity_of_sum_and_product_follows_from_parities (a b : ℤ) :
+    (Even (a + b) ↔ (Even a ↔ Even b)) ∧ (Even (a * b) ↔ (Even a ∨ Even b)) := by
+  exact ⟨Int.even_add, Int.even_mul⟩
+
+/-- The two-way split. Every whole number either pairs off with nothing left over (even) or
+pairs off with exactly one left over (odd), and no number is both. -/
+theorem every_integer_is_even_or_odd_and_not_both (n : ℤ) :
+    (Even n ∨ Odd n) ∧ ¬(Even n ∧ Odd n) := by
+  refine ⟨Int.even_or_odd n, ?_⟩
+  rintro ⟨h1, h2⟩
+  exact (Int.not_even_iff_odd.mpr h2) h1
+
+/-- The light switch. Whatever state the switch starts in, pressing it n times (each press
+flips it) leaves it as it started exactly when n is even; parity gives the change, not the
+state. -/
+theorem switch_back_to_start_iff_presses_even (n : ℕ) (start : Bool) :
+    (fun s : Bool => !s)^[n] start = start ↔ Even n := by
+  have key : ∀ (n : ℕ) (b : Bool), (fun s : Bool => !s)^[n] b = (if Even n then b else !b) := by
+    intro n
+    induction n with
+    | zero => intro b; simp
+    | succ k ih =>
+      intro b
+      rw [Function.iterate_succ, Function.comp_apply, ih]
+      by_cases h : Even k <;> cases b <;> simp [h, Nat.even_add_one]
+  rw [key]
+  by_cases h : Even n <;> cases start <;> simp [h]
+
+-- The card's worked numbers.
+example : (11 : ℤ) * 3 = 33 ∧ Odd (11 : ℤ) ∧ Odd (3 : ℤ) ∧ Odd (33 : ℤ) := by decide
+example : (33 : ℤ) + 4 = 37 ∧ Even (4 : ℤ) ∧ Odd (37 : ℤ) := by decide
+example : (37 : ℤ) = 18 * 2 + 1 ∧ (38 : ℤ) = 19 * 2 := by decide
+example : (33 : ℤ) + 5 = 38 ∧ Odd (5 : ℤ) ∧ Even (38 : ℤ) := by decide
+example : (10 : ℤ) * 3 = 30 ∧ Even (30 : ℤ) := by decide
+example : Even (0 : ℤ) ∧ Even (-4 : ℤ) ∧ Odd (-3 : ℤ) := by decide
+-- Starting off (false), 37 presses leave the light on, 38 leave it off.
+example : (fun s : Bool => !s)^[37] false = true := by decide
+example : (fun s : Bool => !s)^[38] false = false := by decide
+-- No row for dividing: two evens can divide to an odd.
+example : Even (6 : ℤ) ∧ Even (2 : ℤ) ∧ (6 : ℤ) / 2 = 3 ∧ Odd (3 : ℤ) := by decide
+
+#print axioms parity_of_sum_and_product_follows_from_parities
+#print axioms every_integer_is_even_or_odd_and_not_both
+#print axioms switch_back_to_start_iff_presses_even
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'parity_of_sum_and_product_follows_from_parities' depends on axioms: [propext, Classical.choice, Quot.sound]
+'every_integer_is_even_or_odd_and_not_both' depends on axioms: [propext, Classical.choice, Quot.sound]
+'switch_back_to_start_iff_presses_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to these numbers, so expect one to fire.
@@ -261,12 +355,15 @@ The two outputs match line for line: whole counts, nothing to round.
 ## Where this goes next
 
 - [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md): parity rules out shapes of triple that cannot exist, before the hunt starts.
+- [Division with a remainder](04-division-with-remainder.md): the leftover when you split by any number, not just by 2.
+
+Splitting by 2 leaves 0 or 1 over. What can be left over when you split by 3?
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Author's site](https://richardhammack.github.io/BookOfProof/), free [full text](https://richardhammack.github.io/BookOfProof/Main.pdf), CC BY-NC-ND. Chapter 4: even and odd, the first claim a proof is tried on.
 - Euclid, *Elements*, Book IX, propositions 21 to 34, in David E. Joyce's edition. [Clark University](https://mathcs.clarku.edu/~djoyce/elements/bookIX/bookIX.html). This card's table, proposition by proposition, from about 300 BC.

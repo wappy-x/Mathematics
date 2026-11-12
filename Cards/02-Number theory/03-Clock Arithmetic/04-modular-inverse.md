@@ -18,6 +18,8 @@ It does not always exist. Key 13 sends both H (7) and J (9) to N, and nothing pu
 
 **A key can be undone exactly when it and the modulus are coprime — sharing no factor above 1 ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — and the undoing is itself a multiplication, which Euclid's chain ([Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)) run backwards hands you.**
 
+**What kind of fact this is:** a definition, then a theorem proved in Why it works: a key has an inverse exactly when it is coprime to the modulus, and only one.
+
 ### The picture
 
 ```mermaid
@@ -33,9 +35,9 @@ flowchart LR
 
 **7 × 15 = 105 = 4 × 26 + 1**
 
-**Read it aloud: seven fifteens is four alphabets and one letter over, so 7 then 15 leaves a letter where it started.**
+**Read it aloud:** seven fifteens is four alphabets and one letter over, so 7 then 15 leaves a letter where it started.
 
-In general: **key times inverse is a whole number of alphabets, plus 1** — here, 7 × 15 ≡ 1 (mod 26).
+In general: **key times inverse is a whole number of alphabets, plus 1** — here, 7 × 15 ≡ 1 (mod 26). The sign ≡ reads "lands on the same letter as", and (mod 26) names the 26-letter clock ([Congruence](01-congruence-mod-n.md)).
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
@@ -44,6 +46,12 @@ In general: **key times inverse is a whole number of alphabets, plus 1** — her
 | the inverse | what multiplies the key back to 1 | 15 |
 | coprime | sharing no factor above 1 (gcd, the biggest divisor of both, is 1) | gcd(7, 26) = 1 |
 | a letter's number | A is 0, up to Z is 25 | H is 7 |
+
+### When it holds
+
+- **Key and modulus coprime.** gcd(7, 26) = 1, so 7 has an inverse. Key 13 shares 13 with 26: 13 times any letter lands only on 0 or 13, never on 1, so H and J both become N.
+- **Whole alphabets come off.** As plain numbers, 7 × 15 is 105, and no whole number times 7 makes 1. Only with four alphabets taken off does 105 land on 1.
+- **One clock size throughout.** 15 undoes 7 on 26 letters. Change the 26 and run Euclid again: the inverse belongs to its clock.
 
 ---
 
@@ -55,7 +63,11 @@ Multiplying by 7 then by 15 is multiplying by 105, whether the alphabets come of
 
 ### Step 1: a shared factor kills the inverse
 
-Start with numbers already here: 7 × 15 − 4 × 26 = 1. That is a **mix** of 7 and 26 — each times a whole number, added up. Anything dividing 7 and 26 divides both parts, so it divides the left side ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)), so it divides 1. Only 1 does. Any key and its undoing number make the same kind of mix, so a key sharing a factor with 26 has no inverse: 13 divides both 13 and 26.
+Start with numbers already here: 7 × 15 − 4 × 26 = 1. That is a **mix** of 7 and 26 — each times a whole number, added up.
+
+Anything dividing 7 and 26 divides both parts, so it divides the left side ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)), so it divides 1. Only 1 does.
+
+Any key and its undoing number make the same kind of mix, so a key sharing a factor with 26 has no inverse: 13 divides both 13 and 26.
 
 ### Step 2: coprime, and Bezout hands you the inverse
 
@@ -67,7 +79,9 @@ The 26s are whole alphabets: they vanish, leaving 7 × (−11) on 1. So −11 un
 
 ### Step 3: one inverse only, so cancelling is safe
 
-Two undoing numbers: their difference times 7 lands on 0, a whole run of alphabets. Multiply 7 × (−11) + 26 × 3 = 1 by that difference ([Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)): the 26 term is a run of alphabets, and so is the 7 term, being 7 times the difference — so the difference is one too. −11 and 15 are the same slot, one inverse. Cancelling is then safe: 7 times one letter equal to 7 times another means the letters are equal.
+Two undoing numbers: their difference times 7 lands on 0, a whole run of alphabets. Multiply 7 × (−11) + 26 × 3 = 1 by that difference ([Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)): the 26 term is a run of alphabets, and so is the 7 term, being 7 times the difference — so the difference is one too.
+
+−11 and 15 are the same slot, one inverse. Cancelling is then safe: 7 times one letter equal to 7 times another means the letters are equal.
 
 A prime modulus opens another route: [Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md). 26 is not prime, so it is shut.
 
@@ -220,6 +234,108 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves these facts for every key and every clock size, not just 7 and 26.
+
+- A key has an inverse, a number that multiplies it back to 1, exactly when it and the clock size are coprime.
+- A coprime key has only one inverse: any two inverses land on the same slot.
+- Cancelling a coprime key is safe: if the key times one letter lands where it times another does, the letters share a slot.
+- On 26 letters it re-checks the cipher: HI goes out as XE, and 15 reads X back as H.
+- It re-checks the formula 7 × 15 = 105 = 4 × 26 + 1, and that no whole number times 7 makes 1.
+- It re-checks Euclid down and back up, 7 × (−11) + 26 × 3 = 1, and −11 + 26 = 15.
+- It re-checks the search: 15 is the only inverse of 7 from 0 to 25, and key 13 lands only on 0 or 13.
+- It re-checks the mistakes, 5, 17 and 13, and that key 5 has inverse 21.
+
+Running Euclid's chain step by step to find 15, and the printed run, stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 71 lines</summary>
+
+```lean
+-- The modular inverse: a key a has an inverse on a clock of size n, a number b with a × b ≡ 1 (mod n), exactly when a and n are coprime, that inverse is the only one up to whole turns of the clock, and so a coprime key can be cancelled.
+import Mathlib.Data.Nat.ModEq
+import Mathlib.Data.Int.ModEq
+import Mathlib.Tactic.NormNum.GCD
+import Mathlib.Data.Int.GCD
+
+/-- The modular inverse. On a clock of size n, a key a can be undone by multiplying, that is,
+some whole number b gives a × b ≡ 1 (mod n), a whole number of turns plus 1, exactly when a and n
+are coprime: they share no factor above 1. -/
+theorem modular_inverse_exists_iff_coprime (a n : ℕ) :
+    (∃ b : ℕ, a * b ≡ 1 [MOD n]) ↔ Nat.Coprime a n := by
+  constructor
+  · rintro ⟨b, hb⟩
+    have h := hb.gcd_eq
+    rw [Nat.gcd_one_left] at h
+    exact (Nat.coprime_mul_iff_left.1 h).1
+  · intro h
+    rcases Nat.lt_or_ge 1 n with hn | hn
+    · obtain ⟨m, -, hm⟩ := Nat.exists_mul_mod_eq_one_of_coprime h hn
+      exact ⟨m, by rw [Nat.ModEq, hm, Nat.mod_eq_of_lt hn]⟩
+    · rcases (by omega : n = 0 ∨ n = 1) with rfl | rfl
+      · have : a = 1 := by simpa using h
+        exact ⟨1, by subst this; exact Nat.ModEq.refl _⟩
+      · exact ⟨0, Nat.modEq_one⟩
+
+/-- Only one inverse. If a key a is coprime to the clock size n, it has an inverse b, and every
+other number c with a × c ≡ 1 (mod n) lands on the same slot as b. -/
+theorem modular_inverse_unique (a n : ℕ) (h : Nat.Coprime a n) :
+    ∃ b : ℕ, a * b ≡ 1 [MOD n] ∧ ∀ c : ℕ, a * c ≡ 1 [MOD n] → c ≡ b [MOD n] := by
+  obtain ⟨b, hb⟩ := (modular_inverse_exists_iff_coprime a n).2 h
+  refine ⟨b, hb, fun c hc => ?_⟩
+  exact Nat.ModEq.cancel_left_of_coprime (by rw [Nat.gcd_comm]; exact h) (hc.trans hb.symm)
+
+/-- Cancelling is safe. If a key a is coprime to the clock size n, and a times one letter x lands
+on the same slot as a times another letter y, then x and y are on the same slot. -/
+theorem cancel_coprime_key (a n x y : ℕ) (h : Nat.Coprime a n) (hxy : a * x ≡ a * y [MOD n]) :
+    x ≡ y [MOD n] := by
+  exact Nat.ModEq.cancel_left_of_coprime (by rw [Nat.gcd_comm]; exact h) hxy
+
+-- The cipher: H is 7 goes to 23 (X), I is 8 goes to 4 (E), so HI goes out as XE.
+example : 7 * 7 = 49 ∧ 49 = 1 * 26 + 23 ∧ (7 * 7) % 26 = 23 ∧ (8 * 7) % 26 = 4 := by decide
+-- Reading back with 15: X is 23, 23 × 15 = 345, thirteen alphabets and 7 over; E is 4 goes back to 8.
+example : 23 * 15 = 345 ∧ 345 = 13 * 26 + 7 ∧ (4 * 15) % 26 = 8 ∧ 4 * 15 = 60 := by decide
+-- The formula: 7 × 15 = 105 = 4 × 26 + 1, so 7 × 15 ≡ 1 (mod 26).
+example : 7 * 15 = 105 ∧ 105 = 4 * 26 + 1 ∧ 7 * 15 ≡ 1 [MOD 26] := by decide
+-- As plain numbers no whole number times 7 makes 1.
+example : ∀ k : ℕ, 7 * k ≠ 1 := by omega
+-- Key 7 and 26 are coprime; key 13 shares 13 with 26.
+example : Nat.gcd 7 26 = 1 ∧ Nat.Coprime 7 26 ∧ Nat.gcd 13 26 = 13 := by norm_num
+-- Euclid down: 26 = 3 × 7 + 5, 7 = 1 × 5 + 2, 5 = 2 × 2 + 1.
+example : 26 = 3 * 7 + 5 ∧ 7 = 1 * 5 + 2 ∧ 5 = 2 * 2 + 1 := by decide
+-- Euclid back up: 1 = 5 − 2 × 2 = 3 × 5 − 2 × 7 = 3 × 26 − 11 × 7 = 78 − 77.
+example : (1 : ℤ) = 5 - 2 * 2 ∧ (1 : ℤ) = 3 * 5 - 2 * 7 ∧ (1 : ℤ) = 3 * 26 - 11 * 7 ∧
+    (3 : ℤ) * 26 = 78 ∧ (11 : ℤ) * 7 = 77 := by decide
+-- So 7 × (−11) + 26 × 3 = 1, and −11 + 26 = 15: −11 and 15 are the same slot.
+example : (7 : ℤ) * (-11) + 26 * 3 = 1 ∧ (-11 : ℤ) + 26 = 15 ∧ (-11 : ℤ) ≡ 15 [ZMOD 26] := by decide
+-- By search, 15 is the only k from 0 to 25 with 7 × k ≡ 1 (mod 26).
+example : ∀ k < 26, (7 * k) % 26 = 1 ↔ k = 15 := by decide
+-- Key 13: 13 times any letter lands only on 0 or 13, never on 1.
+example : ∀ k < 26, (13 * k) % 26 = 0 ∨ (13 * k) % 26 = 13 := by decide
+example : ∀ k < 26, (13 * k) % 26 ≠ 1 := by decide
+-- Key 13 sends H (7) and J (9) both to 13, that is N.
+example : (13 * 7) % 26 = 13 ∧ (13 * 9) % 26 = 13 := by decide
+-- The three mistakes: reading X (23) with 7, 3 and 13 gives 5, 17 and 13.
+example : (23 * 7) % 26 = 5 ∧ (23 * 3) % 26 = 17 ∧ (23 * 13) % 26 = 13 := by decide
+-- Try changing: key 5 is coprime to 26 too, with inverse 21, and 5 × 21 = 105.
+example : Nat.Coprime 5 26 ∧ 5 * 21 = 105 ∧ 5 * 21 ≡ 1 [MOD 26] := by norm_num [Nat.ModEq]
+
+#print axioms modular_inverse_exists_iff_coprime
+#print axioms modular_inverse_unique
+#print axioms cancel_coprime_key
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'modular_inverse_exists_iff_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'modular_inverse_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cancel_coprime_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first.
@@ -265,12 +381,14 @@ The two outputs match line for line.
 - [Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md): the other route, for a prime modulus.
 - [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): one inverse nobody else can compute.
 
+Left open: when a key shares a factor with the clock size, which multiplications on the clock can still be undone?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026: every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Shoup, Victor. *A Computational Introduction to Number Theory and Algebra*, 2nd ed. Cambridge University Press, 2008. [Full text](https://shoup.net/ntb/). Chapter 4: chain and inverse.
 - Knuth, Donald E. *The Art of Computer Programming, Volume 2*, 3rd ed. Addison-Wesley, 1997. [Publisher page](https://www.informit.com/store/art-of-computer-programming-volume-2-seminumerical-9780201896848). Section 4.5.2, the carried counts.
-- Gauss, Carl Friedrich. *Disquisitiones Arithmeticae*, 1801, trans. Arthur A. Clarke. [Archive copy](https://archive.org/details/disquisitionesar0000carl). Section II, where congruence notation began.
+- Gauss, Carl Friedrich. *Disquisitiones Arithmeticae*, 1801, trans. Arthur A. Clarke. Springer, 1986. [doi:10.1007/978-1-4939-7560-0](https://doi.org/10.1007/978-1-4939-7560-0). Section II, congruences of the first degree, where an inverse is first solved for.

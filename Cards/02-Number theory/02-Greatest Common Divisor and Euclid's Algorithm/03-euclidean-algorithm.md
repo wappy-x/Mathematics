@@ -1,6 +1,6 @@
 # Euclid's algorithm: divide, keep the remainder, repeat, and the last non-zero remainder is the gcd
 
-[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Running the algorithm
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Euclid's algorithm
 
 ---
 
@@ -19,6 +19,8 @@ Euclid's way takes three divisions. Divide the bigger by the smaller, keep the r
 The last remainder before that zero is 21. Cut at **21 m**: 51 pieces off the big drum, 22 off the small, 73 in all, both empty.
 
 **Each division swaps the pair for a smaller pair with the same common divisors, so when a remainder hits zero the number you were dividing by is the answer.**
+
+**What kind of fact this is:** an algorithm (a fixed recipe of steps) backed by a theorem, proved in Why it works: the run always stops, and always at the gcd.
 
 ### The picture
 
@@ -49,6 +51,12 @@ The run is the formula:
 | the gcd | biggest number dividing both | 21 |
 
 The quotients do no work here, but they are not junk: [Bezout's identity](04-bezouts-identity.md) uses them, and [Continued fractions](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md) reads them as a number.
+
+### When it holds
+
+- **Whole numbers.** The stop relies on whole numbers that cannot fall for ever. A square's side and diagonal never give a zero remainder, so the loop never ends.
+- **A remainder smaller than the divisor.** Allow a "remainder" as big as the number divided by, and the pair need not shrink, so the loop need not stop.
+- **At least one number above zero.** With two zeros there is no biggest divisor: every whole number divides 0.
 
 ---
 
@@ -216,6 +224,146 @@ ALL CHECKS PASS
 
 Both outputs match line for line: whole metres, nothing to round.
 
+### Lean
+
+Lean proves the algorithm stops at the gcd for every pair of whole numbers, at least one above zero.
+
+- A remainder always hits zero, and the number divided by at that moment is the biggest number dividing both.
+- The swap loses nothing: whatever divides a pair divides the divisor and remainder, and back.
+- With two zeros there is no biggest divisor, since every whole number divides 0.
+- The drums' three divisions, the wrong cuts, the 55 and 34 run, and both Try changing edits come out as stated.
+
+The printed table is left to the Python and Rust checks, and Lamé's ceiling is checked only for 55 and 34.
+
+<details>
+<summary>The Lean proof, 110 lines</summary>
+
+```lean
+-- Euclid's algorithm: for whole numbers a and b, not both 0, repeatedly swapping the pair for (divisor, remainder) reaches a zero remainder, and the number divided by at that moment is the biggest number dividing both a and b.
+import Mathlib.Logic.Function.Iterate
+import Mathlib.Data.Nat.GCD.Basic
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Tactic.NormNum.GCD
+
+/-- One division of Euclid's algorithm: the pair (a, b) becomes (b, remainder of a divided by b). -/
+def euclidStep (p : ℕ × ℕ) : ℕ × ℕ := (p.2, p.1 % p.2)
+
+theorem euclidStep_gcd (p : ℕ × ℕ) : Nat.gcd (euclidStep p).1 (euclidStep p).2 = Nat.gcd p.1 p.2 := by
+  obtain ⟨a, b⟩ := p
+  simp only [euclidStep]
+  rw [Nat.gcd_comm b (a % b), ← Nat.gcd_rec, Nat.gcd_comm]
+
+#print axioms euclidStep_gcd
+
+theorem euclidStep_iter_gcd (n : ℕ) (p : ℕ × ℕ) :
+    Nat.gcd (euclidStep^[n] p).1 (euclidStep^[n] p).2 = Nat.gcd p.1 p.2 := by
+  induction n generalizing p with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply, ih, euclidStep_gcd]
+
+#print axioms euclidStep_iter_gcd
+
+theorem euclidStep_reaches_zero (b : ℕ) : ∀ a : ℕ, ∃ n : ℕ, (euclidStep^[n] (a, b)).2 = 0 := by
+  induction b using Nat.strong_induction_on with
+  | _ b ih =>
+    intro a
+    rcases Nat.eq_zero_or_pos b with hb | hb
+    · exact ⟨0, by simp [hb]⟩
+    · obtain ⟨n, hn⟩ := ih (a % b) (Nat.mod_lt a hb) b
+      exact ⟨n + 1, by
+        rw [Function.iterate_succ_apply]
+        simpa [euclidStep] using hn⟩
+
+#print axioms euclidStep_reaches_zero
+
+/-- Euclid's algorithm. Take two whole numbers a and b, at least one above zero. Divide, keep the
+remainder, and repeat with the divisor and that remainder. After some number n of divisions a
+remainder is zero (and none was zero before), and the number divided by at that moment, the last
+non-zero remainder, is above zero, divides both a and b, and is at least as big as every number
+dividing both: it is the greatest common divisor. -/
+theorem euclid_last_nonzero_remainder_is_greatest_common_divisor (a b : ℕ) (h : 0 < a ∨ 0 < b) :
+    ∃ n : ℕ, (euclidStep^[n] (a, b)).2 = 0 ∧ (∀ m < n, (euclidStep^[m] (a, b)).2 ≠ 0) ∧
+      0 < (euclidStep^[n] (a, b)).1 ∧
+      (euclidStep^[n] (a, b)).1 ∣ a ∧ (euclidStep^[n] (a, b)).1 ∣ b ∧
+      ∀ d : ℕ, d ∣ a → d ∣ b → d ≤ (euclidStep^[n] (a, b)).1 := by
+  have hex : ∃ n : ℕ, (euclidStep^[n] (a, b)).2 = 0 := euclidStep_reaches_zero b a
+  have hpos : 0 < Nat.gcd a b := by
+    rcases h with h | h
+    · exact Nat.gcd_pos_of_pos_left _ h
+    · exact Nat.gcd_pos_of_pos_right _ h
+  classical
+  refine ⟨Nat.find hex, Nat.find_spec hex, fun m hm => Nat.find_min hex hm, ?_⟩
+  have hg := euclidStep_iter_gcd (Nat.find hex) (a, b)
+  rw [Nat.find_spec hex, Nat.gcd_zero_right] at hg
+  simp only at hg
+  rw [hg]
+  refine ⟨hpos, Nat.gcd_dvd_left a b, Nat.gcd_dvd_right a b, ?_⟩
+  intro d hda hdb
+  exact Nat.le_of_dvd hpos (Nat.dvd_gcd hda hdb)
+
+/-- The swap loses nothing. If a = q × b + r, then the numbers dividing both a and b are exactly
+the numbers dividing both b and r. -/
+theorem common_divisors_unchanged_by_division (a b q r d : ℕ) (hdiv : a = q * b + r) :
+    (d ∣ a ∧ d ∣ b) ↔ (d ∣ b ∧ d ∣ r) := by
+  subst hdiv
+  constructor
+  · rintro ⟨h1, h2⟩
+    exact ⟨h2, (Nat.dvd_add_right (Dvd.dvd.mul_left h2 q)).mp h1⟩
+  · rintro ⟨h2, h3⟩
+    exact ⟨Nat.dvd_add (Dvd.dvd.mul_left h2 q) h3, h2⟩
+
+/-- Why "at least one number above zero" is needed: every whole number divides 0, so 0 and 0 have
+no biggest common divisor. -/
+theorem zero_and_zero_have_no_greatest_common_divisor :
+    ¬ ∃ g : ℕ, ∀ d : ℕ, d ∣ 0 → d ∣ 0 → d ≤ g := by
+  rintro ⟨g, hg⟩
+  have := hg (g + 1) (dvd_zero _) (dvd_zero _)
+  omega
+
+-- The drums, 1071 m and 462 m: three divisions.
+example : 1071 = 2 * 462 + 147 ∧ 462 = 3 * 147 + 21 ∧ 147 = 7 * 21 + 0 := by norm_num
+example : euclidStep (1071, 462) = (462, 147) ∧ euclidStep (462, 147) = (147, 21) ∧
+    euclidStep (147, 21) = (21, 0) := by decide
+-- The run stops after 3 divisions, at 21, with no zero remainder before.
+example : euclidStep^[3] (1071, 462) = (21, 0) ∧ (euclidStep^[1] (1071, 462)).2 ≠ 0 ∧
+    (euclidStep^[2] (1071, 462)).2 ≠ 0 := by decide
+example : Nat.gcd 1071 462 = 21 := by norm_num
+-- The second road: every length up to 462 tried, and 21 is the biggest dividing both.
+example : ∀ d ∈ Finset.Icc 1 462, d ∣ 1071 → d ∣ 462 → d ≤ 21 := by decide +kernel
+-- Pieces at 21 m: 51 and 22, 73 in all.
+example : 1071 / 21 = 51 ∧ 462 / 21 = 22 ∧ 51 + 22 = 73 := by norm_num
+-- The mistakes: cut at 7 m gives 153 and 66 (219 pieces); at 3 m, 357 and 154 (511 pieces);
+-- stopping at 147 m leaves 21 m stranded on the 462 m drum.
+example : 1071 / 7 = 153 ∧ 462 / 7 = 66 ∧ 153 + 66 = 219 := by norm_num
+example : 1071 / 3 = 357 ∧ 462 / 3 = 154 ∧ 357 + 154 = 511 := by norm_num
+example : 462 % 147 = 21 ∧ ¬ (147 ∣ 462) := by decide
+-- The slowest pair its size: gcd(55, 34) = 1 after 8 divisions; Lamé's ceiling 5 × 2 = 10.
+example : euclidStep^[8] (55, 34) = (1, 0) ∧ (euclidStep^[7] (55, 34)).2 ≠ 0 ∧ 5 * 2 = 10 := by
+  decide
+-- Swap the drums: the first division leaves 462 over and flips the pair into order.
+example : euclidStep (462, 1071) = (1071, 462) := by decide
+-- Change 462 to 460: the last non-zero remainder is 1, so the drums are coprime.
+example : Nat.gcd 1071 460 = 1 := by norm_num
+
+#print axioms euclid_last_nonzero_remainder_is_greatest_common_divisor
+#print axioms common_divisors_unchanged_by_division
+#print axioms zero_and_zero_have_no_greatest_common_divisor
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'euclidStep_gcd' depends on axioms: [propext, Quot.sound]
+'euclidStep_iter_gcd' depends on axioms: [propext, Quot.sound]
+'euclidStep_reaches_zero' depends on axioms: [propext]
+'euclid_last_nonzero_remainder_is_greatest_common_divisor' depends on axioms: [propext, Quot.sound]
+'common_divisors_unchanged_by_division' depends on axioms: [propext]
+'zero_and_zero_have_no_greatest_common_divisor' depends on axioms: [propext, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the drums, so one will fire.
@@ -256,12 +404,14 @@ Both outputs match line for line: whole metres, nothing to round.
 - [Bezout's identity](04-bezouts-identity.md): run the same divisions backwards and the gcd comes out as whole-number helpings of the two starting numbers.
 - [Continued fractions](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the discarded quotients, in order, give the best simple fractions near a ratio — how calendars pick leap years.
 
+Left open: 21 is the biggest length both drums share, but can 21 itself be built by adding and taking away whole drum-lengths?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euclid. *The Thirteen Books of the Elements, Vol. 2*, trans. Thomas L. Heath. Dover, 1956. [Publisher page](https://store.doverpublications.com/products/9780486600895). Book VII, Propositions 1 and 2.
 - Knuth, Donald E. *The Art of Computer Programming, Volume 2*, 3rd ed. Addison-Wesley, 1997. [Publisher page](https://www.informit.com/store/art-of-computer-programming-volume-2-seminumerical-9780201896848). Section 4.5.2: step counts, Lamé's bound.
-- Shoup, Victor. *A Computational Introduction to Number Theory and Algebra*, 2nd ed. Cambridge University Press, 2009. [Author's full text](https://www.shoup.net/ntb/). Chapter 4: the algorithm and its speed.
+- Shoup, Victor. *A Computational Introduction to Number Theory and Algebra*, 2nd ed. Cambridge University Press, 2009. [Publisher page](https://doi.org/10.1017/CBO9780511814549). Chapter 4: the algorithm and its speed.

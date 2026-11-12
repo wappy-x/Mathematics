@@ -14,6 +14,8 @@ Four jump sizes tour the octave: 1, 5, 7 and 11 — the numbers from 1 to 12 sha
 
 **Euler's totient, written phi(n), or φ in books, is how many of the numbers 1 to n share no factor with n, and the factorisation of n gives that count without any listing.**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works: the count from the primes always equals the count by listing.
+
 ### The picture: how far a jump gets
 
 ```mermaid
@@ -39,7 +41,7 @@ Now from the factorisation: 12 is 2 × 2 × 3 ([Prime factorisation](../01-Divis
 
 One bracket for the 2, one for the 3. The 2 appears twice. It still gets one bracket. Count different primes, not copies.
 
-**Read it aloud: start with all 12, throw away the half that 2 divides, then the third of what is left that 3 divides.**
+**Read it aloud:** start with all 12, throw away the half that 2 divides, then the third of what is left that 3 divides.
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
@@ -49,6 +51,13 @@ One bracket for the 2, one for the 3. The 2 appears twice. It still gets one bra
 | a bracket, (1 − 1/2) | the share left after one prime is thrown away | a half |
 
 Write p for a prime. A prime clock gets one bracket: phi(7) = 7 × (1 − 1/7) = 6. Of 1 to 7 only 7 shares a factor with 7, so **phi(p) = p − 1**.
+
+### When it holds
+
+- **One bracket per different prime.** A bracket for each copy of 2 gives 2, not 4.
+- **A bracket for every different prime.** Stop after the 2 and you get 6.
+- **Parts that share no factor.** 4 and 3 share none, so phi(4) × phi(3) = 2 × 2 = 4. Parts that share a factor do not multiply this way.
+- **phi(p) = p − 1 needs a prime clock.** On the 12-note clock it gives 11, not 4.
 
 ---
 
@@ -216,6 +225,105 @@ ALL CHECKS PASS
 
 Both outputs match line for line.
 
+### Lean
+
+Lean proves the card's three rules for every clock size n, not only 12.
+
+- For every n, the count of 1 to n sharing no factor with n equals n times one bracket per different prime.
+- Parts that share no factor multiply: phi(4 × 3) = phi(4) × phi(3), and the same holds for any such pair.
+- On every prime clock, phi(p) = p − 1.
+
+Walking each jump until it comes home, and the printed lines, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 73 lines</summary>
+
+```lean
+-- Euler's totient: for every whole number n, the count of numbers from 1 to n sharing no factor with n equals n times one bracket (1 - 1/p) for each different prime p dividing n, the count multiplies across coprime parts, and a prime p gives p - 1.
+import Mathlib.Data.Nat.Totient
+import Mathlib.Data.Nat.PrimeFin
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Tactic.NormNum
+
+/-- Euler's totient from the factorisation. For every whole number n, the count of the numbers
+1, 2, up to n that share no factor with n equals n × (1 − 1/p) × ... with one bracket for each
+different prime p dividing n: one bracket per prime, no matter how many copies of it n holds. -/
+theorem count_coprime_eq_n_times_prime_brackets (n : ℕ) :
+    ((((Finset.Icc 1 n).filter (fun k => Nat.Coprime k n)).card : ℕ) : ℚ) =
+      (n : ℚ) * ∏ p ∈ n.primeFactors, (1 - 1 / (p : ℚ)) := by
+  have hcard : ((Finset.Icc 1 n).filter (fun k => Nat.Coprime k n)).card = Nat.totient n := by
+    have h := Nat.filter_coprime_Ico_eq_totient n 1
+    have e : Finset.Ico 1 (1 + n) = Finset.Icc 1 n := by
+      ext x; simp only [Finset.mem_Ico, Finset.mem_Icc]; omega
+    rw [e] at h
+    rw [← h]
+    congr 1
+    ext k
+    simp only [Finset.mem_filter, Nat.coprime_comm]
+  rw [hcard, Nat.totient_eq_mul_prod_factors]
+  simp [one_div]
+
+/-- Coprime parts multiply. If m and n share no factor above 1, the totient of m × n is the
+totient of m times the totient of n. (Mathlib's `Nat.totient`, written φ, counts the numbers below
+n that share no factor with n, which is the same count as 1 to n.) -/
+theorem totient_mul_of_coprime_parts (m n : ℕ) (h : Nat.Coprime m n) :
+    Nat.totient (m * n) = Nat.totient m * Nat.totient n := by
+  exact Nat.totient_mul h
+
+/-- A prime clock. For a prime p, every number from 1 to p − 1 shares no factor with p, so the
+totient of p is p − 1. -/
+theorem totient_of_prime (p : ℕ) (hp : Nat.Prime p) : Nat.totient p = p - 1 := by
+  exact Nat.totient_prime hp
+
+-- Jump 7 from C round the 12-note clock: 0 7 2 9 4 11 6 1 8 3 10 5, then back to 0.
+example : (List.range 12).map (fun k => 7 * k % 12) = [0, 7, 2, 9, 4, 11, 6, 1, 8, 3, 10, 5] := by
+  decide
+-- Notes visited by jumps 1 to 12: 12 6 4 3 12 2 12 3 4 6 12 1.
+example : (List.range' 1 12).map (fun j => ((Finset.range 12).image (fun k => j * k % 12)).card) =
+    [12, 6, 4, 3, 12, 2, 12, 3, 4, 6, 12, 1] := by decide
+-- The numbers 1 to 12 sharing no factor with 12 are 1, 5, 7 and 11, so phi(12) = 4.
+example : (Finset.Icc 1 12).filter (fun k => Nat.Coprime k 12) = {1, 5, 7, 11} := by decide
+example : Nat.totient 12 = 4 := by decide
+-- From the primes: 12 = 2 × 2 × 3, and 12 × (1 − 1/2) × (1 − 1/3) = 12 × 1/2 × 2/3 = 4.
+example : (12 : ℕ) = 2 * 2 * 3 := by decide
+example : Nat.primeFactors 12 = {2, 3} := by decide +kernel
+example : (12 : ℚ) * (1 - 1 / 2) * (1 - 1 / 3) = 4 ∧ (12 : ℚ) * (1 / 2) * (2 / 3) = 4 := by norm_num
+-- Crossing out: 6 multiples of 2, 4 of 3, 2 counted twice, so 6 + 4 − 2 = 8 out and 4 stand.
+example : ((Finset.Icc 1 12).filter (2 ∣ ·)).card = 6 ∧ ((Finset.Icc 1 12).filter (3 ∣ ·)).card = 4 ∧
+    ((Finset.Icc 1 12).filter (6 ∣ ·)).card = 2 ∧ 12 - (6 + 4 - 2) = 4 := by decide
+-- Coprime parts: 4 and 3 share no factor, phi(4) × phi(3) = 2 × 2 = 4.
+example : Nat.Coprime 4 3 ∧ Nat.totient 4 = 2 ∧ Nat.totient 3 = 2 ∧
+    Nat.totient 4 * Nat.totient 3 = Nat.totient 12 := by decide
+example : (4 : ℚ) * (1 - 1 / 2) = 2 ∧ (3 : ℚ) * (1 - 1 / 3) = 2 := by norm_num
+-- A prime clock: phi(7) = 7 × (1 − 1/7) = 7 − 1 = 6; and phi(9) = 6.
+example : Nat.totient 7 = 6 ∧ Nat.totient 9 = 6 := by decide
+example : (7 : ℚ) * (1 - 1 / 7) = 6 := by norm_num
+-- The three mistakes: 12 − 1 = 11, a bracket per copy gives 2, stopping after the evens gives 6.
+example : 12 - 1 = 11 ∧ Nat.totient 12 ≠ 11 := by decide
+example : (12 : ℚ) * (1 - 1 / 2) * (1 - 1 / 2) * (1 - 1 / 3) = 2 ∧ (12 : ℚ) * (1 - 1 / 2) = 6 := by
+  norm_num
+-- Parts that share a factor do not multiply: 12 = 2 × 6, but phi(2) × phi(6) = 2, not phi(12) = 4.
+example : Nat.totient 2 * Nat.totient 6 = 2 ∧ Nat.totient 2 * Nat.totient 6 ≠ Nat.totient 12 := by
+  decide
+-- The two roads agree on every clock size from 1 to 60 (listing 1 to n against Mathlib's totient).
+example : ∀ n ∈ Finset.Icc 1 60,
+    ((Finset.Icc 1 n).filter (fun k => Nat.Coprime k n)).card = Nat.totient n := by decide
+
+#print axioms count_coprime_eq_n_times_prime_brackets
+#print axioms totient_mul_of_coprime_parts
+#print axioms totient_of_prime
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'count_coprime_eq_n_times_prime_brackets' depends on axioms: [propext, Classical.choice, Quot.sound]
+'totient_mul_of_coprime_parts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'totient_of_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run. The asserts are pinned to the octave, so one fires.
@@ -257,14 +365,16 @@ Both outputs match line for line.
 
 ## Where this goes next
 
-- [Euler's theorem](04-eulers-theorem.md): raise anything coprime to n to the phi(n) and the clock shows 1 — Fermat with the primes taken out.
+- [Euler's theorem](04-eulers-theorem.md): raise anything coprime to n to the phi(n) and the clock shows 1 — the rule of [Fermat's little theorem](02-fermats-little-theorem.md), freed from prime clocks.
+
+The card leaves one question open: phi(n) counts the jumps that tour the clock, so what does it say when you multiply round the clock instead of adding?
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026: every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Gauss, Carl Friedrich. *Disquisitiones Arithmeticae*. Springer, 1986. [doi:10.1007/978-1-4939-7560-0](https://doi.org/10.1007/978-1-4939-7560-0). Article 38, where the count gets its letter.
-- Shoup, Victor. *A Computational Introduction to Number Theory and Algebra*, 2nd ed. Cambridge, 2008. [Free full text](https://shoup.net/ntb/). Chapter 2, the count and the formula.
+- Shoup, Victor. *A Computational Introduction to Number Theory and Algebra*, 2nd ed. Cambridge, 2008. [doi:10.1017/CBO9780511814549](https://doi.org/10.1017/CBO9780511814549). Chapter 2, the count and the formula.
 - OEIS Foundation. Sequence A000010, Euler's totient. [Sequence page](https://oeis.org/A000010). The values in a row.
