@@ -18,6 +18,8 @@ The proof has a second shape too. If it fails anywhere there is a smallest failu
 
 **Let the step lean on every earlier case, or grab the smallest counterexample and watch it break: two faces of one fact about the counting numbers.**
 
+**What kind of fact this is:** a method of proof. The stamp claim is a theorem, proved with it on this card in Why it works. The method rests on the well-ordering principle, a rule of the counting numbers that follows from [Peano's three rules](07-peano-and-one-plus-one.md).
+
 ### The picture: three by hand, the rest leaning back
 
 ```mermaid
@@ -40,6 +42,8 @@ The claim is the formula:
 
 **Every amount of 8 cents or more can be paid exactly with 3-cent and 5-cent stamps.**
 
+**Read it aloud:** pay 8, 9 and 10 cents by hand, and every larger amount is a 3-cent stamp added to one already paid.
+
 **Base cases:** pay 8, 9 and 10 by hand. **The strong step:** for any larger amount, assume everything below it from 8 up is payable; that amount minus 3 is one of those, so pay it and add a 3-cent stamp.
 
 | Piece | Plain meaning | In our post office |
@@ -50,6 +54,13 @@ The claim is the formula:
 | the strong hypothesis | 8 to k, all payable | 8, 9, 10 payable |
 | the strong step | back three, add a 3-cent stamp | 11 = 8 + 3 |
 | well-ordering | any non-empty set of counting numbers has a least member | the least unpayable amount |
+
+### When it holds
+
+- **The base cases fill the whole reach.** The step goes back 3, so it needs three amounts in a row. From 8 alone, 9 is never paid.
+- **The step lands on an amount already covered.** A step back one amount needs a 1-cent stamp, so the chain stops at 11.
+- **The claim starts at the first base case.** Start it at 7 and it fails at once: 7 cannot be paid.
+- **The cases are counting numbers.** Well-ordering needs a smallest member. The whole numbers below zero have none, so there is no first failure to point at.
 
 ---
 
@@ -230,6 +241,99 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the stamp claim for every amount from 8 cents up, and well-ordering for every collection of counting numbers.
+
+- Every amount of 8 cents or more can be paid exactly with 3-cent and 5-cent stamps.
+- Every non-empty collection of counting numbers has a smallest member.
+- The amounts that can never be paid are exactly 1, 2, 4 and 7.
+- The worked numbers, and why 8 alone never reaches 9, exactly.
+
+Running the step forward, and the step that looks back one amount, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 66 lines</summary>
+
+```lean
+-- Strong induction and the least element: every amount of 8 cents or more can be paid exactly with 3-cent and 5-cent stamps, the only amounts that can never be paid are 1, 2, 4 and 7, and every non-empty set of counting numbers has a smallest member.
+import Mathlib.Data.Set.Basic
+import Mathlib.Data.Finset.Card
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-- With only 3-cent and 5-cent stamps, every amount of 8 cents or more can be paid exactly:
+for every whole number `n ≥ 8` there are counts `a` of 3-cent stamps and `b` of 5-cent stamps
+with `n = 3a + 5b`. -/
+theorem every_amount_from_eight_payable_with_three_and_five (n : ℕ) (h : 8 ≤ n) :
+    ∃ a b : ℕ, n = 3 * a + 5 * b := by
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+    by_cases h8 : n = 8
+    · exact ⟨1, 1, by omega⟩
+    by_cases h9 : n = 9
+    · exact ⟨3, 0, by omega⟩
+    by_cases h10 : n = 10
+    · exact ⟨0, 2, by omega⟩
+    obtain ⟨a, b, hab⟩ := ih (n - 3) (by omega) (by omega)
+    exact ⟨a + 1, b, by omega⟩
+
+/-- The well-ordering principle: every non-empty collection of counting numbers has a smallest
+member. -/
+theorem well_ordering_principle (S : Set ℕ) (hS : S.Nonempty) :
+    ∃ m ∈ S, ∀ k ∈ S, m ≤ k := by
+  classical
+  exact ⟨Nat.find hS, Nat.find_spec hS, fun k hk => Nat.find_min' hS hk⟩
+
+/-- The amounts that can never be paid with 3-cent and 5-cent stamps are exactly 1, 2, 4 and 7:
+an amount `n` is `3a + 5b` for some counts `a`, `b` exactly when `n` is not one of those four. -/
+theorem payable_iff_not_one_two_four_seven (n : ℕ) :
+    (∃ a b : ℕ, n = 3 * a + 5 * b) ↔ n ∉ ({1, 2, 4, 7} : Finset ℕ) := by
+  constructor
+  · rintro ⟨a, b, h⟩ hm
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hm
+    omega
+  · intro hn
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hn
+    by_cases h8 : 8 ≤ n
+    · exact every_amount_from_eight_payable_with_three_and_five n h8
+    · have : n = 0 ∨ n = 3 ∨ n = 5 ∨ n = 6 := by omega
+      rcases this with h | h | h | h
+      · exact ⟨0, 0, by omega⟩
+      · exact ⟨1, 0, by omega⟩
+      · exact ⟨0, 1, by omega⟩
+      · exact ⟨2, 0, by omega⟩
+
+-- The base cases, paid by hand: 8 = 3 + 5, 9 = 3 + 3 + 3, 10 = 5 + 5.
+example : (8 : ℕ) = 3 * 1 + 5 * 1 := by norm_num
+example : (9 : ℕ) = 3 * 3 + 5 * 0 := by norm_num
+example : (10 : ℕ) = 3 * 0 + 5 * 2 := by norm_num
+-- The strong step: 11 = 8 + 3, 12 = 9 + 3, 13 = 10 + 3.
+example : (11 : ℕ) = 8 + 3 := by norm_num
+example : (12 : ℕ) = 9 + 3 := by norm_num
+example : (13 : ℕ) = 10 + 3 := by norm_num
+-- 7 cents cannot be paid: no counts of 3s and 5s add up to 7.
+example : ¬ ∃ a b : ℕ, 7 = 3 * a + 5 * b := by rintro ⟨a, b, h⟩; omega
+-- Never payable at all: 1, 2, 4 and 7, four of them.
+example : ({1, 2, 4, 7} : Finset ℕ).card = 4 := by decide
+-- One base case, 8 alone: the step lands on 11, 14, 17, never 9.
+example : ∀ k : ℕ, 8 + 3 * k ≠ 9 := by intro k; omega
+
+#print axioms every_amount_from_eight_payable_with_three_and_five
+#print axioms well_ordering_principle
+#print axioms payable_iff_not_one_two_four_seven
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'every_amount_from_eight_payable_with_three_and_five' depends on axioms: [propext, Quot.sound]
+'well_ordering_principle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'payable_iff_not_one_two_four_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -268,6 +372,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Choosing a proof strategy](06-choosing-a-proof-strategy.md): which move fits which claim.
+
+Left open: when a claim can be proved both ways, which shape gives the shorter proof.
 
 ---
 

@@ -14,6 +14,8 @@ Now the clock on her phone. It shows 13:00 as a dial reading of 1. Hand someone 
 
 **A rule can be undone exactly when it never crowds two inputs onto one output and never leaves an output unreached: the two halves of a bijection, from [One-to-one and onto](04-injective-surjective-bijective.md).**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works; the inverse itself is a definition.
+
 ### The picture: one trip that comes home, one that cannot
 
 ```mermaid
@@ -47,6 +49,12 @@ The undo is called the **inverse**. If f is the forward rule, the inverse is wri
 | onto | every output is reached | every Fahrenheit temperature has a Celsius behind it |
 | a bijection | one-to-one and onto at once | the temperature rule, not the clock |
 | the identity | hands back what it was given | 20 °C out and back is 20 °C |
+
+### When it holds
+
+- **No two inputs share an output.** The clock fails: 01:00 and 13:00 both read 1, so the walk back has 2 answers.
+- **Every output is reached.** An output nothing produces leaves the inverse with no input to hand back.
+- **The inputs are fixed first.** Cut the clock to the morning, 00:00 to 11:00, and 1 hour lands on dial 1: the same rule now has an inverse.
 
 ---
 
@@ -219,6 +227,113 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three facts for every function, whatever its inputs and outputs, and checks the card's numbers exactly.
+
+- A function has an inverse exactly when it is a bijection: no two inputs share an output, and every output is reached.
+- Only one rule undoes a function both ways round.
+- Two rules done one after the other are undone in reverse order: the last one on comes off first.
+- The temperatures, with 1.8 written exactly as 9/5: 20 °C goes out to 68 °F and home, and all 4 round trips come home.
+- The clock: 01:00 and 13:00 both read 1, every reading has 2 hours behind it, and the morning has 1.
+
+The runs with 1.8 as a decimal, and the printed lines, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 79 lines</summary>
+
+```lean
+-- Inverse functions: a function has a two-sided inverse exactly when it is a bijection, that inverse is unique, and a composite is undone in reverse order.
+import Mathlib.Logic.Function.Basic
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Finset.Card
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Data.Int.Interval
+import Mathlib.Algebra.Field.Rat
+import Mathlib.Tactic.NormNum
+
+open Function
+
+/-- A function can be undone, meaning some rule sends every output back to its input and
+both round trips are the identity, exactly when the function is a bijection: no two inputs
+share an output and every output is reached. -/
+theorem has_inverse_iff_bijective {α β : Type*} (f : α → β) :
+    (∃ g : β → α, LeftInverse g f ∧ RightInverse g f) ↔ Bijective f := by
+  constructor
+  · rintro ⟨g, hl, hr⟩
+    exact ⟨hl.injective, hr.surjective⟩
+  · intro hf
+    refine ⟨Function.surjInv hf.2, ?_, ?_⟩
+    · exact Function.leftInverse_surjInv hf
+    · exact Function.rightInverse_surjInv hf.2
+
+/-- Only one rule undoes a function: two rules that each undo f both ways round are the same rule. -/
+theorem inverse_unique {α β : Type*} (f : α → β) (g₁ g₂ : β → α)
+    (h₁ : LeftInverse g₁ f ∧ RightInverse g₁ f) (h₂ : LeftInverse g₂ f ∧ RightInverse g₂ f) :
+    g₁ = g₂ := by
+  funext b
+  have := h₁.2 b
+  calc g₁ b = g₁ (f (g₂ b)) := by rw [h₂.2 b]
+    _ = g₂ b := h₁.1 (g₂ b)
+
+/-- Undo the jobs in reverse order: if g undoes f and k undoes h, then doing f then h is
+undone by undoing h first, then f. -/
+theorem inverse_of_comp_reverse_order {α β γ : Type*} (f : α → β) (g : β → α) (h : β → γ)
+    (k : γ → β) (hf : LeftInverse g f ∧ RightInverse g f) (hh : LeftInverse k h ∧ RightInverse k h) :
+    LeftInverse (g ∘ k) (h ∘ f) ∧ RightInverse (g ∘ k) (h ∘ f) := by
+  refine ⟨?_, ?_⟩
+  · intro a
+    simp only [Function.comp]
+    rw [hh.1 (f a)]
+    exact hf.1 a
+  · intro c
+    simp only [Function.comp]
+    rw [hf.2 (k c)]
+    exact hh.2 c
+
+/-- The 24-hour clock read on a 12-hour dial. -/
+def dial (h : ℕ) : ℕ := if h % 12 = 0 then 12 else h % 12
+
+-- Temperatures, with 1.8 written exactly as 9/5: 20 °C goes out to 68 °F.
+example : (9 / 5 : ℚ) * 20 + 32 = 68 := by norm_num
+-- The way back: 68 − 32 = 36, and 36 ÷ 9/5 = 20.
+example : (68 : ℚ) - 32 = 36 := by norm_num
+example : ((68 : ℚ) - 32) / (9 / 5) = 20 := by norm_num
+-- Four temperatures out and back: −40, 0, 20, 100 °C go to −40, 32, 68, 212 °F and all come home.
+example : ([-40, 0, 20, 100] : List ℚ).map (fun c => (9 / 5) * c + 32) = [-40, 32, 68, 212] := by
+  norm_num
+example : ([-40, 32, 68, 212] : List ℚ).map (fun f => (f - 32) / (9 / 5)) = [-40, 0, 20, 100] := by
+  norm_num
+-- At −40 the scales agree.
+example : (9 / 5 : ℚ) * (-40) + 32 = -40 := by norm_num
+-- Undone in the wrong order, 68 ÷ 9/5 − 32 is not 20.
+example : (68 : ℚ) / (9 / 5) - 32 ≠ 20 := by norm_num
+-- Whole degrees −50 to 100: only 20 °C gives 68 °F (9/5 × C + 32 = 68, times 5 to stay in whole numbers).
+example : ((Finset.Icc (-50 : ℤ) 100).filter (fun c => 9 * c + 160 = 5 * 68)) = {20} := by decide
+-- The clock: hours 01:00 and 13:00 both read 1.
+example : (Finset.range 24).filter (fun h => dial h = 1) = {1, 13} := by decide
+-- All 12 readings are reached, so the clock is onto, and each has 2 hours behind it.
+example : (Finset.range 24).image dial = Finset.Icc 1 12 := by decide
+example : ∀ d ∈ Finset.Icc 1 12, ((Finset.range 24).filter (fun h => dial h = d)).card = 2 := by decide
+-- Cut to the morning, 00:00 to 11:00: one hour lands on each reading.
+example : (Finset.range 12).filter (fun h => dial h = 1) = {1} := by decide
+example : ∀ d ∈ Finset.Icc 1 12, ((Finset.range 12).filter (fun h => dial h = d)).card = 1 := by decide
+
+#print axioms has_inverse_iff_bijective
+#print axioms inverse_unique
+#print axioms inverse_of_comp_reverse_order
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'has_inverse_iff_bijective' depends on axioms: [Classical.choice]
+'inverse_unique' depends on axioms: [Quot.sound]
+'inverse_of_comp_reverse_order' does not depend on any axioms
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the numbers above, so one will fire.
@@ -257,13 +372,13 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-Nothing later on this shelf leans on it; the shelf turns to [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md). Undoing returns wherever a rule runs in reverse: solving for an input, a logarithm undoing a power, decrypting a message.
+Nothing later on this shelf leans on it; the shelf turns to [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md). Undoing returns wherever a rule runs in reverse: solving for an input, a logarithm undoing a power ([Logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)), decrypting a message. The question this card leaves open: when a rule crowds inputs together, which inputs do you keep so it can be undone?
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed., 2018. [Book page](https://richardhammack.github.io/BookOfProof/). Chapter 12: the proof that undoable means bijective.
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Section 10: inverses and composites.

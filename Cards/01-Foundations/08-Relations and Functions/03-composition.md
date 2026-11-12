@@ -16,6 +16,8 @@ Each offer is a rule that takes a price and hands back a price: a function, as i
 
 **Feeding one function's output into another makes one new function, and the order you feed them in usually changes the answer.**
 
+**What kind of fact this is:** a definition, plus a fact shown by example in Why it works: order can change the answer.
+
 ### The picture: the same $50, two orders
 
 ```mermaid
@@ -45,7 +47,7 @@ Each chain collapses into one rule. Step 2 does the working; here is where they 
 
 **f after g: 0.8 × (price − 5), so a $50 jacket costs $36**
 
-**Read it aloud: put the first rule's answer where the second rule's input goes, and two steps become one.**
+**Read it aloud:** put the first rule's answer where the second rule's input goes, and two steps become one.
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
@@ -56,13 +58,19 @@ Each chain collapses into one rule. Step 2 does the working; here is where they 
 | f after g, written f(g(price)) | do g, hand the answer to f | $36.00 |
 | the do-nothing rule | hands back the price untouched | $50.00 gives $50.00 |
 
+### When it holds
+
+- **Each rule's outputs are inputs the next accepts.** Here, a price over $5. Below that, the coupon hands back less than nothing.
+- **Each rule works on what the one before handed it.** Take the 20% off the $50 tag, not the $45 left, and you pay $40.00, not $36.00.
+- **The order stays as written.** Swap the rules and the chain is a different function: $36.00, not $35.00.
+
 ---
 
 ## Why it works
 
 ### Step 0: the first rule's output must be the second rule's kind of input
 
-Both offers take a price over $5 and hand back a price. That is the only reason they chain, in either order. If the coupon handed back a colour, no price rule could follow. Checking a chain is checking that each rule's outputs are inputs the next accepts: the domain and codomain of [Functions](02-functions.md).
+Both offers take a price over $5 and hand back a price. That is the only reason they chain, in either order. If the coupon handed back a colour, no price rule could follow. Checking a chain is checking that each rule's outputs are inputs the next accepts: the codomain (what a rule hands back) and domain (what it accepts) of [Functions](02-functions.md).
 
 ### Step 1: run them in order, on the real number
 
@@ -232,6 +240,92 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole cents throughout, and the fifths are exact.
 
+### Lean
+
+Lean proves three facts: the first for every price over $5, the other two for any rules that chain.
+
+- 20% off then the coupon is always 0.8 × price − 5. The coupon first is always 0.8 × price − 4. So the coupon first always costs exactly $1 more.
+- The do-nothing rule, put on either end of a chain, changes nothing.
+- With three rules in a queue, which pair you collapse into one rule first changes nothing.
+
+It also checks the jacket and coat numbers exactly. Whole cents and the printed tables are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 60 lines</summary>
+
+```lean
+-- Composing functions: for every price over $5, taking 20% off then a $5 coupon gives 0.8 × price − 5 while the coupon first gives 0.8 × price − 4, so the coupon-first order always costs exactly $1 more; the do-nothing rule changes no chain, regrouping a chain of three changes nothing, and the card's jacket and coat numbers come out as it says.
+import Mathlib.Algebra.Order.Ring.Rat
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-- The 20% offer `f`: keep four fifths of the price. -/
+def percentOff (price : ℚ) : ℚ := 4 / 5 * price
+
+/-- The $5 coupon `g`: take five dollars off the price. -/
+def couponOff (price : ℚ) : ℚ := price - 5
+
+/-- Order changes the answer. For any price over $5, "g after f" (20% off first, then the
+coupon) collapses to the one rule `0.8 × price − 5`, and "f after g" (the coupon first, then
+20% off) collapses to `0.8 × price − 4`. So the coupon-first order costs exactly $1 more,
+whatever the price: through the 20%, the $5 coupon is worth only $4. -/
+theorem coupon_first_costs_one_dollar_more (price : ℚ) (h : 5 < price) :
+    (couponOff ∘ percentOff) price = 4 / 5 * price - 5 ∧
+      (percentOff ∘ couponOff) price = 4 / 5 * price - 4 ∧
+      (percentOff ∘ couponOff) price = (couponOff ∘ percentOff) price + 1 := by
+  have h1 : (couponOff ∘ percentOff) price = 4 / 5 * price - 5 := by
+    simp [Function.comp, couponOff, percentOff]
+  have h2 : (percentOff ∘ couponOff) price = 4 / 5 * price - 4 := by
+    simp only [Function.comp, couponOff, percentOff]; ring
+  refine ⟨h1, h2, ?_⟩
+  rw [h1, h2]; ring
+
+/-- The do-nothing rule changes no chain: putting the identity on either end of any function
+`f` gives back `f`. -/
+theorem identity_changes_nothing {α β : Type*} (f : α → β) :
+    id ∘ f = f ∧ f ∘ id = f := by
+  exact ⟨rfl, rfl⟩
+
+/-- With three rules in a queue, only the queue order matters: collapsing the first pair or
+the last pair into one rule first gives the same chain. -/
+theorem composing_is_associative {α β γ δ : Type*} (f : α → β) (g : β → γ) (h : γ → δ) :
+    h ∘ (g ∘ f) = (h ∘ g) ∘ f := by
+  rfl
+
+-- The jacket: 20% off $50, then the coupon.
+example : percentOff 50 = 40 := by norm_num [percentOff]
+example : couponOff 40 = 35 := by norm_num [couponOff]
+example : (couponOff ∘ percentOff) 50 = 35 := by norm_num [couponOff, percentOff]
+-- The coupon first, then 20% off.
+example : couponOff 50 = 45 := by norm_num [couponOff]
+example : percentOff 45 = 36 := by norm_num [percentOff]
+example : (percentOff ∘ couponOff) 50 = 36 := by norm_num [couponOff, percentOff]
+-- The gap, and the coupon seen through the 20%.
+example : (36 : ℚ) - 35 = 1 := by norm_num
+example : percentOff 5 = 4 := by norm_num [percentOff]
+-- The same orders on an $80 coat.
+example : (couponOff ∘ percentOff) 80 = 59 := by norm_num [couponOff, percentOff]
+example : (percentOff ∘ couponOff) 80 = 60 := by norm_num [couponOff, percentOff]
+-- Do nothing, then 20% off: what the 20% does alone.
+example : (percentOff ∘ id) 50 = 40 := by norm_num [percentOff]
+-- The mistake: taking the 20% off the $50 tag instead of the $45 left.
+example : percentOff 50 = 40 ∧ percentOff (couponOff 50) = 36 := by norm_num [couponOff, percentOff]
+
+#print axioms coupon_first_costs_one_dollar_more
+#print axioms identity_changes_nothing
+#print axioms composing_is_associative
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'coupon_first_costs_one_dollar_more' depends on axioms: [propext, Classical.choice, Quot.sound]
+'identity_changes_nothing' does not depend on any axioms
+'composing_is_associative' does not depend on any axioms
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to these numbers, so expect one to fire.
@@ -270,11 +364,13 @@ The two outputs match line for line: whole cents throughout, and the fifths are 
 
 - [Inverse functions](05-inverse-functions.md): chaining a rule with the one that undoes it, and when that exists.
 
+Left open: when can a chain run backwards, from the money paid to the tag price?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed., 2018. [Book page](https://richardhammack.github.io/BookOfProof/). Chapter 12: composition, read right to left.
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Section 10: composites from ordered pairs alone.

@@ -16,6 +16,8 @@ Now flip it. A passenger says: **some bag here is over 20 kg.** One bag under 20
 
 **A claim about "every" dies to one case; a claim about "some" only dies when you have checked all of them.**
 
+**What kind of fact this is:** a theorem of logic, proved in Why it works from De Morgan's laws. It holds for any group you can list, not only these five bags.
+
 ### The picture: what evidence kills a claim
 
 ```mermaid
@@ -51,6 +53,12 @@ The two statements, written out:
 | a counterexample | one case it covers that fails | bag 3: 6 kg, refused |
 
 The description survives the flip: the negation is "some bag **under 7 kg** was refused".
+
+### When it holds
+
+- **The description stays on.** Drop "under 7 kg" and the 9 and 11 kg bags look like counterexamples, but the sign covered only 3 bags.
+- **Each case is a plain yes or no.** Bag 3 went in the cabin or it did not. If a case can be "unknown", "not every" no longer proves that some case failed.
+- **The group stays the same.** Both claims are about these 5 bags. Add a bag over 20 kg and "some bag over 20 kg?" turns T.
 
 ---
 
@@ -227,6 +235,90 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves both swaps for any group you can list and any yes-or-no test, not only these five bags.
+
+- Not-every is some-not: "not every case the description covers passes" is the same claim as "some covered case fails".
+- Not-some is every-not: "no case passes" is the same claim as "every case fails".
+- Counting agrees: an "every" claim is false exactly when there is at least 1 counterexample.
+- The gate: the sign covers 3 bags, 1 was refused, and it is bag 3 at 6 kg.
+- The four rows of the worked table come out F, T, F, T, and the wreck row comes out F.
+- All 8 yes/no patterns for the three light bags pass both swaps.
+
+The printed lines, including the counterexample line, stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 55 lines</summary>
+
+```lean
+-- Negating a quantifier: on any listed group, "not every covered case passes" equals "some covered case fails", and "not some case passes" equals "every case fails".
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Fin.VecNotation
+
+/-- Not-every is some-not, with the description kept on: for any listed group `s`,
+a description `P` (which cases the claim covers) and a yes/no test `Q`,
+"it is not true that every case in `s` fitting `P` passes `Q`" holds exactly when
+"some case in `s` fits `P` and fails `Q`" — that is, when there is a counterexample. -/
+theorem not_every_iff_some_counterexample {α : Type*} (s : Finset α) (P Q : α → Prop) :
+    (¬ ∀ x ∈ s, P x → Q x) ↔ ∃ x ∈ s, P x ∧ ¬ Q x := by
+  simp only [not_forall, exists_prop, and_assoc]
+
+/-- Not-some is every-not: for any listed group `s` and yes/no test `R`,
+"it is not true that some case in `s` passes `R`" holds exactly when
+"every case in `s` fails `R`" — so killing a "some" claim means checking them all. -/
+theorem not_some_iff_every_fails {α : Type*} (s : Finset α) (R : α → Prop) :
+    (¬ ∃ x ∈ s, R x) ↔ ∀ x ∈ s, ¬ R x := by
+  simp only [not_exists, not_and]
+
+/-- Road 2, by counting: an "every" claim on a listed group is false exactly when
+the number of counterexamples (covered cases that fail) is at least 1. -/
+theorem not_every_iff_counterexample_count_pos {α : Type*} (s : Finset α)
+    (P Q : α → Prop) [DecidablePred P] [DecidablePred Q] :
+    (¬ ∀ x ∈ s, P x → Q x) ↔ 1 ≤ (s.filter (fun x => P x ∧ ¬ Q x)).card := by
+  rw [Nat.one_le_iff_ne_zero, Ne, Finset.card_eq_zero, ← Ne, ← Finset.nonempty_iff_ne_empty]
+  simp only [Finset.Nonempty, Finset.mem_filter, not_forall, exists_prop, and_assoc]
+
+/-! The gate: bags 1 to 5 (indices 0 to 4), weights in kg, and whether each went in the cabin. -/
+
+def kg : Fin 5 → ℕ := ![4, 5, 6, 9, 11]
+def cabin : Fin 5 → Bool := ![true, true, false, false, false]
+
+-- The sign covers 3 bags; of those, 1 was refused, and it is bag 3 at 6 kg.
+example : (Finset.univ.filter (fun i : Fin 5 => kg i < 7)).card = 3 := by decide
+example : (Finset.univ.filter (fun i : Fin 5 => kg i < 7 ∧ cabin i = false)).card = 1 := by decide
+example : Finset.univ.filter (fun i : Fin 5 => kg i < 7 ∧ cabin i = false) = {2} := by decide
+example : kg 2 = 6 := by decide
+-- "Every bag under 7 kg in the cabin?" F.
+example : ¬ ∀ i : Fin 5, kg i < 7 → cabin i = true := by decide
+-- "Some bag under 7 kg refused?" T.
+example : ∃ i : Fin 5, kg i < 7 ∧ cabin i = false := by decide
+-- "Some bag over 20 kg?" F.
+example : ¬ ∃ i : Fin 5, kg i > 20 := by decide
+-- "Every bag 20 kg or under?" T.
+example : ∀ i : Fin 5, kg i ≤ 20 := by decide
+-- The wreck, "every under-7 bag refused": F.
+example : ¬ ∀ i : Fin 5, kg i < 7 → cabin i = false := by decide
+-- All 8 yes/no patterns for the three light bags: both swaps hold.
+example : ∀ a b c : Bool,
+    (!(a && b && c)) = (!a || !b || !c) ∧ (!(a || b || c)) = (!a && !b && !c) := by decide
+
+#print axioms not_every_iff_some_counterexample
+#print axioms not_some_iff_every_fails
+#print axioms not_every_iff_counterexample_count_pos
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'not_every_iff_some_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'not_some_iff_every_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'not_every_iff_counterexample_count_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the gate above, so expect one to fire.
@@ -260,16 +352,19 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Quantifiers](04-quantifiers.md): what "every" and "some" claim, and why their order matters once you stack them.
+- [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): the two laws that move a "not" through an "and" or an "or", used in Why it works.
 
 ## Where this goes next
 
 - [Valid arguments](06-valid-arguments.md): what follows from a claim once you know whether it is an "every" or a "some".
 
+This card shows how to knock a claim down. It leaves open which steps are safe when you build a new claim up from true ones.
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed., 2018. [Book page](https://richardhammack.github.io/BookOfProof/). Section 2.10: both swaps and the counterexample rule.
 - Shapiro, Stewart, and Teresa Kouri Kissel. "Classical Logic." *Stanford Encyclopedia of Philosophy*. [plato.stanford.edu/entries/logic-classical](https://plato.stanford.edu/entries/logic-classical/). Why the swaps are guaranteed.

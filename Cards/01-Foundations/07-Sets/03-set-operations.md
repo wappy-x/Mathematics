@@ -14,6 +14,8 @@ Each takes the two lists — and, for the last one, the whole watchlist — and 
 
 **Combining two sets is one question per thing — or, and, and-not, not-at-all — and keeping everything that answers yes.**
 
+**What kind of fact this is:** four definitions, plus one theorem, De Morgan's law, shown in Why it works by sorting all 12 films.
+
 ### The picture: two gates, four piles
 
 ```mermaid
@@ -45,7 +47,7 @@ Nectar, Onyx and Pike are on neither. The four answers:
 **A − B = {Drift, Ember, Fathom, Glint} — 4 films**
 **not (A ∪ B) = {Nectar, Onyx, Pike} — 3 films**
 
-**Read them aloud:** on either service, on both, on A but not B, on neither.
+**Read it aloud:** on either service, on both, on A but not B, on neither.
 
 | Symbol | Plain meaning | In the watchlist |
 | --- | --- | --- |
@@ -64,6 +66,13 @@ The complement of A appears as A^c or Ā; the universe as U; and A − B as A \ 
 </details>
 
 A complement needs everything in play named first: the **universe**, written U — here, the 12 films.
+
+### When it holds
+
+- **The universe is named first.** Without it, "not on A" has no answer; with the watchlist, it is 6 films.
+- **Each question has a yes-or-no answer.** A film that is half on A fits no pile, and the four piles stop adding back to 12.
+- **A thing in both sets is one thing.** Count it once and the union is 9; count it on each list and you get 11.
+- **The order stays fixed in a difference.** A − B is 4 films; B − A is 3.
 
 ---
 
@@ -229,6 +238,124 @@ the three mistakes come out at 11, 1 and 10
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves three laws for any universe and any two sets in it, then checks the 12-film watchlist.
+
+- De Morgan: not on either is not on A and not on B. Not on both is not on A or not on B.
+- The union counts the overlap once: its size is the two sizes added, minus the shared part.
+- When A and B sit inside the universe, the four piles add back to the whole universe.
+- For the watchlist, every pile and every count in the two tables above comes out as the card says.
+
+The film-by-film walk and the Try changing edits are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 91 lines</summary>
+
+```lean
+-- Set operations: for any universe and any two sets in it, "on neither" is "not on A and not on B" and "not on both" is "not on A or not on B" (De Morgan), a union counts the overlap once, the four piles add back to the universe, and the card's 12-film watchlist comes out as it says.
+import Mathlib.Data.Set.Basic
+import Mathlib.Data.Finset.Card
+
+/-- De Morgan's law for sets, with the universe `U` named first and every complement taken
+inside it. Not on either is not on A and not on B: `U − (A ∪ B) = (U − A) ∩ (U − B)`.
+The mirror law: not on both is not on A or not on B: `U − (A ∩ B) = (U − A) ∪ (U − B)`. -/
+theorem de_morgan_complement_in_universe {α : Type*} (U A B : Set α) :
+    U \ (A ∪ B) = (U \ A) ∩ (U \ B) ∧ U \ (A ∩ B) = (U \ A) ∪ (U \ B) := by
+  constructor
+  · ext x; simp only [Set.mem_diff, Set.mem_union, Set.mem_inter_iff]; tauto
+  · ext x; simp only [Set.mem_diff, Set.mem_union, Set.mem_inter_iff]; tauto
+
+/-- The union counts the overlap once: for any two finite sets, the size of the union is the
+two sizes added with the shared part taken off once, `#(A ∪ B) = #A + #B − #(A ∩ B)`. -/
+theorem union_counts_overlap_once {α : Type*} [DecidableEq α] (A B : Finset α) :
+    (A ∪ B).card = A.card + B.card - (A ∩ B).card := by
+  have h := Finset.card_union_add_card_inter A B
+  omega
+
+/-- Two gates, four piles: when A and B sit inside a finite universe `U`, every thing lands in
+exactly one of A only, both, B only and neither, so the four piles add back to the universe:
+`#(A − B) + #(A ∩ B) + #(B − A) + #(U − (A ∪ B)) = #U`. -/
+theorem four_piles_add_back_to_universe {α : Type*} [DecidableEq α] (U A B : Finset α)
+    (hA : A ⊆ U) (hB : B ⊆ U) :
+    (A \ B).card + (A ∩ B).card + (B \ A).card + (U \ (A ∪ B)).card = U.card := by
+  have h1 : (A \ B).card + (A ∩ B).card = A.card := by
+    have := Finset.card_sdiff_add_card_inter A B
+    omega
+  have h2 : (U \ (A ∪ B)).card + (A ∪ B).card = U.card := by
+    have := Finset.card_sdiff_add_card_eq_card (Finset.union_subset hA hB)
+    omega
+  have h3 : (A ∪ B).card + (A ∩ B).card = A.card + B.card := Finset.card_union_add_card_inter A B
+  have h4 : (B \ A).card + (A ∩ B).card = B.card := by
+    have := Finset.card_sdiff_add_card_inter B A
+    rw [Finset.inter_comm] at this
+    omega
+  omega
+
+/-- The card's twelve films. -/
+inductive Film
+  | Drift | Ember | Fathom | Glint | Halo | Ivory
+  | Kestrel | Lantern | Moth | Nectar | Onyx | Pike
+  deriving DecidableEq
+
+open Film
+
+/-- The watchlist, the universe, named first: all twelve films. -/
+def watchlist : Finset Film :=
+  {Drift, Ember, Fathom, Glint, Halo, Ivory, Kestrel, Lantern, Moth, Nectar, Onyx, Pike}
+/-- The films on service A. -/
+def serviceA : Finset Film := {Drift, Ember, Fathom, Glint, Halo, Ivory}
+/-- The films on service B. -/
+def serviceB : Finset Film := {Halo, Ivory, Kestrel, Lantern, Moth}
+
+-- The universe and the two lists: 12, 6 and 5 films.
+example : watchlist.card = 12 := by decide
+example : serviceA.card = 6 ∧ serviceB.card = 5 := by decide
+-- The union: 9 films, the overlap counted once, 6 + 5 − 2 = 9.
+example : serviceA ∪ serviceB =
+    {Drift, Ember, Fathom, Glint, Halo, Ivory, Kestrel, Lantern, Moth} := by decide
+example : (serviceA ∪ serviceB).card = 9 := by decide
+example : 6 + 5 - 2 = 9 := by decide
+-- The intersection: Halo and Ivory, 2 films.
+example : serviceA ∩ serviceB = {Halo, Ivory} := by decide
+example : (serviceA ∩ serviceB).card = 2 := by decide
+-- The difference keeps its order: A − B is 4 films, B − A is 3.
+example : serviceA \ serviceB = {Drift, Ember, Fathom, Glint} := by decide
+example : (serviceA \ serviceB).card = 4 ∧ 6 - 2 = 4 := by decide
+example : serviceB \ serviceA = {Kestrel, Lantern, Moth} := by decide
+example : (serviceB \ serviceA).card = 3 ∧ 5 - 2 = 3 := by decide
+-- Not on either, off the union: Nectar, Onyx, Pike, 12 − 9 = 3.
+example : watchlist \ (serviceA ∪ serviceB) = {Nectar, Onyx, Pike} := by decide
+example : (watchlist \ (serviceA ∪ serviceB)).card = 3 ∧ 12 - 9 = 3 := by decide
+-- Not on either, one service at a time: not on A is 6 films, not on B is 7, on both lists 3.
+example : (watchlist \ serviceA).card = 6 ∧ 12 - 6 = 6 := by decide
+example : (watchlist \ serviceB).card = 7 ∧ 12 - 5 = 7 := by decide
+example : (watchlist \ serviceA) ∩ (watchlist \ serviceB) = {Nectar, Onyx, Pike} := by decide
+-- The mirror law: not on both services is 10 films.
+example : (watchlist \ (serviceA ∩ serviceB)).card = 10 := by decide
+example : ((watchlist \ serviceA) ∪ (watchlist \ serviceB)).card = 10 := by decide
+-- The four piles add back to 12.
+example : 4 + 2 + 3 + 3 = 12 := by decide
+-- The three mistakes: 6 + 5 = 11, 6 − 5 = 1, and "or" for "and" gives 12 − 2 = 10.
+example : serviceA.card + serviceB.card = 11 := by decide
+example : serviceA.card - serviceB.card = 1 := by decide
+example : watchlist.card - (serviceA ∩ serviceB).card = 10 := by decide
+
+#print axioms de_morgan_complement_in_universe
+#print axioms union_counts_overlap_once
+#print axioms four_piles_add_back_to_universe
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'de_morgan_complement_in_universe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'union_counts_overlap_once' depends on axioms: [propext, Classical.choice, Quot.sound]
+'four_piles_add_back_to_universe' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this watchlist, so one fires each time.
@@ -271,11 +398,13 @@ ALL CHECKS PASS
 - [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): every member of one set paired with every member of the other.
 - [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into piles that do not overlap and leave nothing out.
 
+The question this card leaves open: with three services instead of two, how do you count the union without counting any film twice?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Sections 4 and 5: unions and intersections from the axioms.
 - Enderton, Herbert B. *Elements of Set Theory*. Academic Press, 1977. [doi:10.1016/C2009-0-22079-4](https://doi.org/10.1016/C2009-0-22079-4). Chapter 2: the algebra of these four, De Morgan included.

@@ -1,6 +1,6 @@
 # Functions: one output for every input, with domain, codomain and range
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → What a function is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Relations and Functions](../README.md#s08) → Functions
 
 ---
 
@@ -13,6 +13,8 @@ Press a button and exactly one snack drops. Never nothing. Never two. That promi
 Two buttons are wired to the same crisps, A1 and A2, because crisps sell. Nothing is wired to the mints; they sit there, stocked and unreachable. Neither breaks the promise, which is only about pressing.
 
 **A function is a rule that hands every input exactly one output: no input left unanswered, no input answered twice.**
+
+**What kind of fact this is:** a definition: it names the promise, and Why it works shows how to test a list of pairs against it.
 
 ### The picture: what each button is wired to
 
@@ -39,7 +41,9 @@ The wiring is the function. Write each press as an ordered pair (button, snack),
 
 Written short: **f: buttons → snacks**. Left of the arrow is the domain, right the codomain.
 
-Call the rule f, so f(A1) = crisps reads "press A1, get crisps". A relation is a function exactly when every button appears as a first name **exactly once**: at least once, so nothing goes unanswered; at most once, so nothing is ambiguous.
+**Read it aloud:** f is a rule from the 6 buttons to the 5 snacks stocked, and each button gets exactly one snack.
+
+Call the rule f, so f(A1) = crisps reads "press A1, get crisps". A relation is a function exactly when every button appears as a first name (the first entry of a pair) **exactly once**: at least once, so nothing goes unanswered; at most once, so nothing is ambiguous.
 
 **domain = the 6 buttons, codomain = the 5 snacks stocked, range = the 4 reached**
 
@@ -50,6 +54,12 @@ Call the rule f, so f(A1) = crisps reads "press A1, get crisps". A relation is a
 | codomain | where outputs are declared to live | the 5 snacks stocked |
 | range | the outputs actually produced | crisps, chocolate, flapjack, gum |
 | preimage of a snack | every input that lands on it | crisps: A1 and A2 |
+
+### When it holds
+
+- **Every button gives something.** If B3 jams, only 5 of the 6 buttons are answered, and the wiring is not a function.
+- **No button gives two.** If A1 drops crisps and chocolate, there are 7 pairs for 6 buttons, and f(A1) has no single answer.
+- **Every output is in the codomain.** A button that drops raisins, which are not stocked, breaks the declaration f: buttons → snacks.
 
 ---
 
@@ -75,7 +85,11 @@ Counting backwards tests forwards. Buttons behind each snack: crisps 2, chocolat
 
 ### The indicator function
 
-Chocolate and mints have sold out. Write that as a function from the 5 snacks stocked to two values: 1 if sold out, 0 if not. In order it reads 0 1 0 0 1 — the **indicator function** of the sold-out set, also called the characteristic function, written 1_A. Add the five values: 2, the number sold out. Turning a yes or no into a 1 or a 0 makes counting into adding — why probability leans on it. It sends two snacks to 1: chocolate and mints. Push that pair back through f and you get the buttons that will disappoint: A3 alone, 1 button. Not 2: the sold-out mints had no button.
+Chocolate and mints have sold out. Write that as a function from the 5 snacks stocked to two values: 1 if sold out, 0 if not. In order it reads 0 1 0 0 1 — the **indicator function** of the sold-out set, also called the characteristic function, written 1_A, where A names the set it marks: here, the sold-out snacks.
+
+Add the five values: 2, the number sold out. Turning a yes or no into a 1 or a 0 makes counting into adding — why probability leans on it.
+
+It sends two snacks to 1: chocolate and mints. Push that pair back through f and you get the buttons that will disappoint: A3 alone, 1 button. Not 2: the sold-out mints had no button.
 
 ---
 
@@ -222,6 +236,141 @@ ALL CHECKS PASS
 
 The two outputs match line for line: all counting.
 
+### Lean
+
+Lean proves three general claims for any domain and codomain, not just the vending machine.
+
+- A relation is a function exactly when every input appears as a first name exactly once.
+- When the domain and codomain are finite, count the inputs behind each output and add: the total is the number of inputs.
+- Adding an indicator function's 1s and 0s over a finite codomain gives the number of members of the set it marks.
+
+It also checks the worked numbers and mistakes; reading the wiring forwards and backwards in code is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 109 lines</summary>
+
+```lean
+-- Functions: a relation is a function exactly when every input appears as a first entry exactly once, the preimage counts of all outputs add up to the number of inputs, and adding an indicator function counts the set it marks.
+import Mathlib.Data.Fintype.Card
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Group.Indicator
+
+open Finset
+
+/-- A relation (a set of ordered pairs (input, output)) is a function from the inputs to the
+outputs exactly when every input appears as a first entry exactly once: at least once, so no input
+goes unanswered, and at most once, so no input is answered twice. -/
+theorem relation_is_function_iff_exactly_once {α β : Type*} (R : Set (α × β)) :
+    (∃ f : α → β, R = {p | f p.1 = p.2}) ↔ ∀ a : α, ∃! b : β, (a, b) ∈ R := by
+  constructor
+  · rintro ⟨f, rfl⟩ a
+    exact ⟨f a, rfl, fun b hb => hb.symm⟩
+  · intro h
+    choose f hf using fun a => (h a).exists
+    refine ⟨f, ?_⟩
+    ext ⟨a, b⟩
+    constructor
+    · intro hab
+      exact (h a).unique (hf a) hab
+    · intro hb
+      have hb' : f a = b := hb
+      subst hb'
+      exact hf a
+
+/-- Counting backwards tests forwards: for a function between finite sets, the number of inputs
+behind each output, added over every output in the codomain, is the number of inputs. -/
+theorem sum_preimage_counts_eq_domain_size {α β : Type*} [Fintype α] [Fintype β] [DecidableEq β]
+    (f : α → β) :
+    ∑ b : β, (univ.filter (fun a => f a = b)).card = Fintype.card α := by
+  have h := Finset.card_eq_sum_card_fiberwise (f := f) (s := (univ : Finset α))
+    (t := (univ : Finset β)) (fun _ _ => mem_univ _)
+  rw [← Finset.card_univ]
+  exact h.symm
+
+/-- The indicator function of a set A sends members of A to 1 and everything else to 0, and adding
+its values over the whole finite codomain gives the number of members of A. -/
+theorem sum_indicator_eq_card {β : Type*} [Fintype β] (A : Finset β) :
+    ∑ x : β, (A : Set β).indicator (fun _ => (1 : ℕ)) x = A.card := by
+  classical
+  simp [Set.indicator_apply]
+
+-- The vending machine: 6 buttons, 5 snacks stocked, and the wiring.
+inductive Button | A1 | A2 | A3 | B1 | B2 | B3
+  deriving DecidableEq
+
+inductive Snack | crisps | chocolate | flapjack | gum | mints
+  deriving DecidableEq
+
+open Button Snack
+
+instance : Fintype Button :=
+  ⟨⟨{A1, A2, A3, B1, B2, B3}, by decide⟩, fun x => by cases x <;> decide⟩
+
+instance : Fintype Snack :=
+  ⟨⟨{crisps, chocolate, flapjack, gum, mints}, by decide⟩, fun x => by cases x <;> decide⟩
+
+def wiring : Button → Snack
+  | A1 => crisps | A2 => crisps | A3 => chocolate | B1 => flapjack | B2 => gum | B3 => gum
+
+-- The wiring as a list of pairs, and the two broken versions: B3 jams, A1 drops two.
+def pairs : Finset (Button × Snack) :=
+  {(A1, crisps), (A2, crisps), (A3, chocolate), (B1, flapjack), (B2, gum), (B3, gum)}
+def jammed : Finset (Button × Snack) := pairs.filter (fun p => p.1 ≠ B3)
+def double : Finset (Button × Snack) := insert (A1, chocolate) pairs
+
+-- Domain 6 buttons, codomain 5 snacks.
+example : Fintype.card Button = 6 ∧ Fintype.card Snack = 5 := by decide
+
+-- Every button appears as a first entry exactly once, 6 pairs for 6 buttons.
+example : ∀ b : Button, (pairs.filter (fun p => p.1 = b)).card = 1 := by decide
+example : pairs.card = 6 := by decide
+example : pairs = univ.image (fun b => (b, wiring b)) := by decide
+
+-- Broken: a jammed B3 leaves 5 of 6 answered; A1 dropping two gives 7 pairs for 6 buttons.
+example : jammed.card = 5 ∧ (jammed.filter (fun p => p.1 = B3)).card = 0 := by decide
+example : double.card = 7 ∧ (double.filter (fun p => p.1 = A1)).card = 2 := by decide
+
+-- The range: crisps, chocolate, flapjack, gum; 4 snacks, never the mints.
+example : univ.image wiring = {crisps, chocolate, flapjack, gum} := by decide
+example : (univ.image wiring).card = 4 ∧ mints ∉ univ.image wiring := by decide
+
+-- Preimage of crisps is A1 and A2; preimage of mints is empty.
+example : univ.filter (fun b => wiring b = crisps) = {A1, A2} := by decide
+example : univ.filter (fun b => wiring b = mints) = ∅ := by decide
+
+-- Buttons per snack: 2 + 1 + 1 + 2 + 0 = 6.
+example : (univ.filter (fun b => wiring b = crisps)).card = 2 ∧
+    (univ.filter (fun b => wiring b = chocolate)).card = 1 ∧
+    (univ.filter (fun b => wiring b = flapjack)).card = 1 ∧
+    (univ.filter (fun b => wiring b = gum)).card = 2 ∧
+    (univ.filter (fun b => wiring b = mints)).card = 0 := by decide
+example : ∑ s : Snack, (univ.filter (fun b => wiring b = s)).card = 6 := by decide
+
+-- Image of {A1, A3} is crisps and chocolate: 2 snacks.
+example : ({A1, A3} : Finset Button).image wiring = {crisps, chocolate} := by decide
+
+-- Sold out {chocolate, mints}: indicator 0 1 0 0 1, sum 2; only A3 hits it.
+def soldOut : Finset Snack := {chocolate, mints}
+example : [crisps, chocolate, flapjack, gum, mints].map (fun s => if s ∈ soldOut then 1 else 0)
+    = [0, 1, 0, 0, 1] := by decide
+example : ∑ s : Snack, (if s ∈ soldOut then 1 else 0) = 2 := by decide
+example : univ.filter (fun b => wiring b ∈ soldOut) = {A3} := by decide
+
+#print axioms relation_is_function_iff_exactly_once
+#print axioms sum_preimage_counts_eq_domain_size
+#print axioms sum_indicator_eq_card
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'relation_is_function_iff_exactly_once' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_preimage_counts_eq_domain_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_indicator_eq_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the wiring above, so expect one to fire.
@@ -266,7 +415,7 @@ The two outputs match line for line: all counting.
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed., 2018. [Book page](https://richardhammack.github.io/BookOfProof/). Chapter 12: function as a relation, image, preimage.
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Section 8: functions from ordered pairs alone.

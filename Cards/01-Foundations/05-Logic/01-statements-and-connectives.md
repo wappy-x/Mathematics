@@ -16,6 +16,8 @@ The doorman lets in exactly one of them. He checks two facts about each person a
 
 **A sentence settled true or false is a statement. The joining words — and, or, not — each have a fixed rule you can write out in full, because the parts can land only so many ways.**
 
+**What kind of fact this is:** a definition: the rules for and, or and not are fixed by agreement, and Why it works shows why four lines cover every case.
+
 ### The picture: what the doorman does
 
 ```mermaid
@@ -37,6 +39,8 @@ Nothing to memorise. Each joining word's rule is the sentence written out:
 
 **"Showed ID and over 21" is true only when both halves are true.**
 
+**Read it aloud:** two gates in a row; if either one stays shut, the answer is no.
+
 | Piece | Plain meaning | At this door |
 | --- | --- | --- |
 | a statement | a sentence settled true or false, nothing between | "Sam is over 21" — false |
@@ -49,6 +53,13 @@ Nothing to memorise. Each joining word's rule is the sentence written out:
 Books use formal names. **And** is *conjunction*, written ∧. **Or** is *disjunction*, ∨. **Not** is *negation*, ¬. What a statement lands on, true or false, is its **truth value**. Logic's or, which keeps the both case, is *inclusive or*; the speech one, one-but-not-both, is *exclusive or*. The names let you read anyone else's book.
 
 The sign itself is not a statement. It is an order: you obey it or not, you cannot mark it true or false. The doorman turns it into a statement about each person — "Sam showed ID and Sam is over 21" — and that is what the connective acts on. Questions and unsettled opinions never get a truth value either.
+
+### When it holds
+
+- **Each part is a statement.** Give the rule an order or a question and there is nothing for it to act on.
+- **Each part is true or false, nothing between.** A "maybe" at the door adds lines the four-line table does not have.
+- **Or means inclusive or.** Read it as one-but-not-both and 2 of 4 get in, not 3.
+- **Only the truth values count.** Logic's and ignores order and time. Speech's "and then" carries a time order the table cannot see.
 
 ---
 
@@ -215,6 +226,95 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's rules for every pair of true-or-false statements, not only the four people at the door.
+
+- Two statements can land only four ways, so a truth table has four lines.
+- A joining word's rule is settled by its truth table: two rules that agree on all four lines are the same rule.
+- **And** is true on exactly one line of four, and **or** is true on exactly three.
+- **Not** flips every truth value, and flipping twice brings you back.
+- Each person's row at the door checks out, and so do the counts: 1, 3 and 2 of 4.
+- Reading "or" as one-but-not-both lets in 2 of 4 and refuses Nia; checking only the ID lets in 2 of 4.
+
+The printed table and the counting road stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 60 lines</summary>
+
+```lean
+-- Statements and connectives: two true-or-false statements can land only four ways, so a joining word's rule is fixed by its four-line truth table, on which and is true once, or three times, and not flips each value.
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Bool.Basic
+
+/-- A joining word's rule can be written out in full: when each part is true or false and
+nothing between, any two rules for joining two statements are the same rule exactly when
+they give the same answer on the four lines of the truth table. -/
+theorem connective_settled_by_truth_table (f g : Bool → Bool → Bool) :
+    f = g ↔ (f true true = g true true ∧ f true false = g true false ∧
+      f false true = g false true ∧ f false false = g false false) := by
+  constructor
+  · rintro rfl
+    exact ⟨rfl, rfl, rfl, rfl⟩
+  · rintro ⟨h1, h2, h3, h4⟩
+    funext a b
+    cases a <;> cases b <;> assumption
+
+/-- There are only four ways two statements can land, and on those four lines "and" is
+true on exactly one, while inclusive "or" is true on exactly three. -/
+theorem truth_table_four_lines_and_one_or_three :
+    Fintype.card (Bool × Bool) = 4 ∧
+    (Finset.univ.filter (fun x : Bool × Bool => (x.1 && x.2) = true)).card = 1 ∧
+    (Finset.univ.filter (fun x : Bool × Bool => (x.1 || x.2) = true)).card = 3 := by
+  refine ⟨by decide, by decide, by decide⟩
+
+/-- "Not" just flips: it turns every truth value into the other one, and flipping twice
+brings you back to where you started. -/
+theorem not_flips_and_twice_returns (p : Bool) : (!p) ≠ p ∧ (!!p) = p := by
+  cases p <;> decide
+
+-- The four people at the door: (showed ID, over 21) for Nia, Sam, Ray and Jo.
+-- Nia: yes, yes. Not over 21 is no; and is yes; or is yes.
+example : (!true) = false ∧ (true && true) = true ∧ (true || true) = true := by decide
+-- Sam: yes, no. Not over 21 is yes; and is no; or is yes.
+example : (!false) = true ∧ (true && false) = false ∧ (true || false) = true := by decide
+-- Ray: no, yes. Not over 21 is no; and is no; or is yes.
+example : (!true) = false ∧ (false && true) = false ∧ (false || true) = true := by decide
+-- Jo: no, no. Not over 21 is yes; and is no; or is no.
+example : (!false) = true ∧ (false && false) = false ∧ (false || false) = false := by decide
+
+-- And lets in 1 of 4, or would let in 3 of 4, and "not over 21" is true for 2 of 4.
+example : ([(true, true), (true, false), (false, true), (false, false)].filter
+    (fun x : Bool × Bool => x.1 && x.2)).length = 1 := by decide
+example : ([(true, true), (true, false), (false, true), (false, false)].filter
+    (fun x : Bool × Bool => x.1 || x.2)).length = 3 := by decide
+example : ([(true, true), (true, false), (false, true), (false, false)].filter
+    (fun x : Bool × Bool => !x.2)).length = 2 := by decide
+
+-- The mistakes: reading "or" as one-but-not-both lets in 2 of 4, and Nia is refused;
+-- checking only the ID lets in 2 of 4.
+example : ([(true, true), (true, false), (false, true), (false, false)].filter
+    (fun x : Bool × Bool => xor x.1 x.2)).length = 2 := by decide
+example : xor true true = false := by decide
+example : ([(true, true), (true, false), (false, true), (false, false)].filter
+    (fun x : Bool × Bool => x.1)).length = 2 := by decide
+
+#print axioms connective_settled_by_truth_table
+#print axioms truth_table_four_lines_and_one_or_three
+#print axioms not_flips_and_twice_returns
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'connective_settled_by_truth_table' depends on axioms: [Quot.sound]
+'truth_table_four_lines_and_one_or_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'not_flips_and_twice_returns' does not depend on any axioms
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the sign as written, so expect one to fire.
@@ -254,11 +354,13 @@ Nothing before it on this shelf. You need only read a sentence and say whether i
 - [If-then](02-if-then.md): the connective on the front of the sign — after 9 pm, *then* this rule applies — and the one row where it breaks.
 - Then the shelf: [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md), [Quantifiers](04-quantifiers.md) on the sign's "everyone", [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md), and [Valid arguments](06-valid-arguments.md).
 
+This card leaves one question open: the rule applies only after 9 pm, so is it true or false at 8 pm, when it asks for nothing?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Author page, free PDF](https://richardhammack.github.io/BookOfProof/). Chapter 2, statements and the and/or/not tables.
 - Velleman, Daniel J. *How to Prove It*, 3rd ed. Cambridge University Press, 2019. [doi:10.1017/9781108539890](https://doi.org/10.1017/9781108539890). Chapter 1, turning English into connectives (paid).

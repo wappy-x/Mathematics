@@ -18,6 +18,8 @@ Same move, other holes: the sentence below runs to 27 words, and there are 26 le
 
 **More pigeons than holes, and some hole holds two — for any placing at all, without looking at it.**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works by contradiction.
+
 ### The picture: thirteen guests, twelve months
 
 ```mermaid
@@ -50,6 +52,12 @@ The statement is the arithmetic, on the dinner:
 Same line, the sentence: 26 letters × 1 word each = 26 words, and there are 27.
 
 **More than one round.** Twenty-five guests, the same twelve months: give every month two and you have placed 24, so some month holds three. Each further round of the holes drives the fullest one deeper. Spread them evenly and that is exactly how deep it gets.
+
+### When it holds
+
+- **Finitely many pigeons and holes.** With infinitely many, "more" forces nothing: double every whole number and they land in the even numbers, no two the same.
+- **Strictly more pigeons than holes.** Equal counts force nothing: the first 12 guests in 12 months all sit apart, and the fullest month holds 1.
+- **Every pigeon lands in a hole.** Leave one guest's month off the list and only 12 are placed, which forces nothing, as the line above shows.
 
 ---
 
@@ -221,6 +229,99 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole counts, nothing to round.
 
+### Lean
+
+Lean proves the principle for every finite set of pigeons and holes, not just the dinner and the sentence.
+
+- More pigeons than holes, and two different pigeons land in the same hole, whatever the placing.
+- From a bigger finite set into a smaller one, no function is one-to-one.
+- Fill every hole the same number of times; if pigeons are still left over, some hole holds more than that number.
+- The card's arithmetic holds: 12 × 1 = 12, below 13; 12 × 2 = 24, below 25; 26 letters, below 27 words.
+- At the dinner, guests 3 and 13 both land on July; 1 month holds two, 11 hold one, none is empty.
+- The first 12 guests all sit apart, and moving every birthday on a month moves the shared month to August.
+
+Reading the sentence's first letters, and printing the counts, stays with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 64 lines</summary>
+
+```lean
+-- Pigeonhole: when finitely many pigeons each land in one of fewer holes, two share a hole, so no such placing is one-to-one, and more than n times as many pigeons as holes puts more than n in some hole.
+import Mathlib.Combinatorics.Pigeonhole
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Fintype.Pigeonhole
+
+open Finset
+
+/-- More pigeons than holes means some hole holds two: put a finite set of pigeons `α`
+into a finite set of holes `β`, every pigeon into exactly one hole (a function `f`). If
+there are strictly more pigeons than holes, then two different pigeons land in the same
+hole, whatever the placing. -/
+theorem more_pigeons_than_holes_some_hole_holds_two {α β : Type*} [Fintype α] [Fintype β]
+    (f : α → β) (h : Fintype.card β < Fintype.card α) :
+    ∃ x y, x ≠ y ∧ f x = f y := by
+  exact Fintype.exists_ne_map_eq_of_card_lt f h
+
+/-- Said as a function: from a bigger finite set into a smaller one, no function is
+one-to-one. -/
+theorem no_one_to_one_function_into_smaller_finite_set {α β : Type*} [Fintype α] [Fintype β]
+    (h : Fintype.card β < Fintype.card α) (f : α → β) :
+    ¬ Function.Injective f := by
+  intro hf
+  exact absurd (Fintype.card_le_of_injective f hf) (not_le.mpr h)
+
+/-- More than one round: if there are more than `n` pigeons for every hole (more pigeons than
+`n` times the holes), then some hole holds more than `n` pigeons. Twenty-five guests in
+twelve months: 12 × 2 = 24 < 25, so some month holds three. -/
+theorem more_than_n_rounds_some_hole_holds_more_than_n {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq β] (f : α → β) (n : ℕ) (h : n * Fintype.card β < Fintype.card α) :
+    ∃ y : β, n < #(univ.filter fun x => f x = y) := by
+  rw [mul_comm] at h
+  exact Fintype.exists_lt_card_fiber_of_mul_lt_card f h
+
+/-! ### The card's worked numbers -/
+
+-- The dinner: 12 months hold 12 guests with nothing shared, 13 turned up, 1 left over.
+example : 12 * 1 = 12 ∧ 12 < 13 ∧ 13 - 12 = 1 := by decide
+-- Twenty-five guests, twelve months: two rounds place 24, and 25 turned up.
+example : 12 * 2 = 24 ∧ 24 < 25 := by decide
+-- The sentence: 27 words, 26 letters to start them, 1 word left over.
+example : 26 * 1 < 27 ∧ 27 - 26 = 1 := by decide
+
+/-- The card's dinner placing, months numbered January = 0 to December = 11: guest `i + 1`
+was born in month `born i`. -/
+def born : Fin 13 → Fin 12 :=
+  ![2, 10, 6, 0, 8, 11, 3, 5, 1, 7, 4, 9, 6]
+
+-- Guests 3 and 13 share July (month 6).
+example : born 2 = 6 ∧ born 12 = 6 := by decide
+-- Exactly 1 month holds two or more guests, 11 hold one, and none is empty.
+example : #(univ.filter fun m : Fin 12 => 2 ≤ #(univ.filter fun g => born g = m)) = 1 := by
+  decide
+example : #(univ.filter fun m : Fin 12 => #(univ.filter fun g => born g = m) = 1) = 11 := by
+  decide
+example : #(univ.filter fun m : Fin 12 => #(univ.filter fun g => born g = m) = 0) = 0 := by
+  decide
+-- What breaks: the first 12 guests into 12 months all sit apart.
+example : Function.Injective (fun g : Fin 12 => born (Fin.castSucc g)) := by decide
+-- Every guest born a month later: the shared month moves to August (month 7).
+example : (born 2 + 1 : Fin 12) = 7 ∧ (born 12 + 1 : Fin 12) = 7 := by decide
+
+#print axioms more_pigeons_than_holes_some_hole_holds_two
+#print axioms no_one_to_one_function_into_smaller_finite_set
+#print axioms more_than_n_rounds_some_hole_holds_more_than_n
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'more_pigeons_than_holes_some_hole_holds_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_one_to_one_function_into_smaller_finite_set' depends on axioms: [propext, Classical.choice, Quot.sound]
+'more_than_n_rounds_some_hole_holds_more_than_n' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the dinner, so expect one to fire.
@@ -266,8 +367,8 @@ Finiteness is the whole condition. Double every whole number and you land in the
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed., 2018. [Book page](https://richardhammack.github.io/BookOfProof/). One-to-one, and the counting that breaks it.
-- Rosen, Kenneth H. *Discrete Mathematics and Its Applications*, 8th ed. McGraw Hill. [Publisher page](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen/M9781259676512.html). Section 6.2, the standard statement.
-- Aigner, Martin, and Günter M. Ziegler. *Proofs from THE BOOK*, 6th ed. Springer, 2018. [doi:10.1007/978-3-662-57265-8](https://doi.org/10.1007/978-3-662-57265-8). Chapter 27, what it proves once aimed properly.
+- Rosen, Kenneth H. *Discrete Mathematics and Its Applications*. McGraw Hill. [Publisher page](https://www.mheducation.com/highered/product/discrete-mathematics-and-its-applications-rosen.html). The section "The Pigeonhole Principle", the standard statement.
+- Aigner, Martin, and Günter M. Ziegler. *Proofs from THE BOOK*, 6th ed. Springer, 2018. [doi:10.1007/978-3-662-57265-8](https://doi.org/10.1007/978-3-662-57265-8). Chapter 28, "Pigeon-hole and double counting", what it proves once aimed properly.

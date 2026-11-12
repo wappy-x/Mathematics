@@ -1,6 +1,6 @@
 # Quantifiers: 'everyone' and 'someone', and why their order matters
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Everyone and someone
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Quantifiers
 
 ---
 
@@ -15,6 +15,8 @@ The auditor asks something else: **is there one key that everyone has?** Now wal
 All that changed is which came first, "everyone" or "one key". Words like every, all and some are **quantifiers**: they say how much of a named group a claim covers.
 
 **"Every person has some key" and "some key is held by every person" are different claims, and what separates them is which of the two you pick first.**
+
+**What kind of fact this is:** a definition of two words, plus one theorem proved in Why it works: one key everyone has always gives everyone a key, but the reverse can fail, as this office shows.
 
 ### The picture: which one you pick first
 
@@ -43,7 +45,9 @@ The two claims:
 
 **∃ key ∀ person: that person carries that key**
 
-Read left to right: each symbol is a choice made in that order.
+**Read it aloud:** the first line says each of the six people carries at least one key; the second says one key is carried by all six.
+
+Read left to right: each symbol is a choice made in that order. The colon means "such that".
 
 | Symbol | Plain meaning | In our office |
 | --- | --- | --- |
@@ -51,6 +55,12 @@ Read left to right: each symbol is a choice made in that order.
 | ∃ | there exists, at least one is enough | the three keys |
 | the domain | the group a quantifier ranges over | six people; three keys |
 | the property | what gets checked about each one | "carries that key" |
+
+### When it holds
+
+- **The group is named.** Shrink the office to the five who carry front and "there is one key everyone has" turns True, 5 of 5.
+- **The order stays as written.** Swap the two symbols and the claim changes: here "everyone has a key" is True and "there is one key everyone has" is False.
+- **"Some" means at least one.** Read it as "exactly one" and Ana, who carries 2, wrongly fails.
 
 ---
 
@@ -80,7 +90,7 @@ Same and and or as [Statements and connectives](01-statements-and-connectives.md
 
 **Whatever is written second may depend on whatever is written first.**
 
-### Step 3: one direction always carries, the other never does
+### Step 3: one direction always carries, the other does not
 
 Hand out a master key and everyone has a key, so ∃ then ∀ gives ∀ then ∃ for free. The reverse fails, and this office is the proof: everyone has a key, no master key.
 
@@ -236,6 +246,130 @@ ALL CHECKS PASS
 
 The two outputs match line for line: counts, nothing to round.
 
+### Lean
+
+Lean proves the theorem for every group of people and keys, and checks this office of six exactly.
+
+- One key everyone has always gives everyone a key, for any people, any keys and any rule of who carries what.
+- The reverse can fail: "everyone has a key" does not always give "there is one key everyone has".
+- In this office, everyone has a key, but there is no one key everyone has.
+- The carryings add up to 9 across the people, and again down the keys.
+- Front reaches 5 of 6 and misses Finn.
+- Shrink the office to the five who carry front, and front is one key everyone has.
+- Ana carries 2 keys and still counts as having a key.
+
+Finding the largest reach of any one key, and printing the table, is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 94 lines</summary>
+
+```lean
+-- Quantifiers: one thing that works for everyone always gives everyone something that works, the reverse can fail, and the card's office of six people and three keys is a case where it does.
+import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Tactic.NormNum
+
+/-- One key everyone has always gives everyone a key: for any group of people, any set of
+keys and any rule saying who carries what, if some key is carried by every person, then every
+person carries some key. -/
+theorem exists_forall_imp_forall_exists {Person Key : Type*} (carries : Person → Key → Prop) :
+    (∃ k, ∀ p, carries p k) → ∀ p, ∃ k, carries p k := by
+  rintro ⟨k, hk⟩ p
+  exact ⟨k, hk p⟩
+
+/-- The reverse can fail: it is not true that for every group of people, every set of keys
+and every rule of who carries what, "every person carries some key" gives "some key is carried
+by every person". -/
+theorem not_forall_exists_imp_exists_forall :
+    ¬ ∀ (Person Key : Type) (carries : Person → Key → Prop),
+      (∀ p, ∃ k, carries p k) → ∃ k, ∀ p, carries p k := by
+  intro h
+  obtain ⟨k, hk⟩ := h Bool Bool (fun p k => p = k) (fun p => ⟨p, rfl⟩)
+  have := hk (!k)
+  cases k <;> simp at this
+
+/-- The office on the card. -/
+inductive Person
+  | ana | ben | cara | dev | eve | finn
+  deriving DecidableEq
+
+inductive Key
+  | front | store | server
+  deriving DecidableEq
+
+open Person Key
+
+instance : Fintype Person :=
+  ⟨{ana, ben, cara, dev, eve, finn}, fun p => by cases p <;> decide⟩
+
+instance : Fintype Key :=
+  ⟨{front, store, server}, fun k => by cases k <;> decide⟩
+
+/-- Ana carries front and store, Ben and Dev carry front, Cara and Eve carry front and server,
+Finn carries store alone. -/
+def carries : Person → Key → Bool
+  | ana, front => true
+  | ana, store => true
+  | ben, front => true
+  | cara, front => true
+  | cara, server => true
+  | dev, front => true
+  | eve, front => true
+  | eve, server => true
+  | finn, store => true
+  | _, _ => false
+
+/-- In this office everyone has a key, but there is no one key that everyone has. -/
+theorem office_everyone_has_a_key_but_no_master_key :
+    (∀ p : Person, ∃ k : Key, carries p k = true) ∧ ¬ ∃ k : Key, ∀ p : Person, carries p k = true := by
+  constructor <;> decide
+
+-- Keys carried, person by person: Ana 2, Ben 1, Cara 2, Dev 1, Eve 2, Finn 1.
+example : [ana, ben, cara, dev, eve, finn].map
+    (fun p => (Finset.univ.filter (fun k => carries p k = true)).card) = [2, 1, 2, 1, 2, 1] := by
+  decide
+
+-- People reached, key by key: front 5, store 2, server 2.
+example : [front, store, server].map
+    (fun k => (Finset.univ.filter (fun p => carries p k = true)).card) = [5, 2, 2] := by
+  decide
+
+-- The nine carryings, added across the people and again down the keys.
+example : (Finset.univ.filter (fun pk : Person × Key => carries pk.1 pk.2 = true)).card = 9 := by
+  decide
+
+example : (2 + 1 + 2 + 1 + 2 + 1 : ℕ) = 9 ∧ (5 + 2 + 2 : ℕ) = 9 := by norm_num
+
+-- Everyone has a key: True.
+example : ∀ p : Person, ∃ k : Key, carries p k = true := by decide
+
+-- There is one key everyone has: False. Front misses Finn.
+example : ¬ ∃ k : Key, ∀ p : Person, carries p k = true := by decide
+
+example : carries finn front = false := by decide
+
+-- Shrink the office to the five who carry front: there is one key everyone has turns True, 5 of 5.
+example : ∃ k : Key, ∀ p ∈ [ana, ben, cara, dev, eve], carries p k = true := by decide
+
+-- "Some" means at least one: Ana carries 2 keys and still counts as having a key.
+example : (Finset.univ.filter (fun k => carries ana k = true)).card = 2 ∧
+    ∃ k : Key, carries ana k = true := by decide
+
+#print axioms exists_forall_imp_forall_exists
+#print axioms not_forall_exists_imp_exists_forall
+#print axioms office_everyone_has_a_key_but_no_master_key
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'exists_forall_imp_forall_exists' does not depend on any axioms
+'not_forall_exists_imp_exists_forall' depends on axioms: [propext]
+'office_everyone_has_a_key_but_no_master_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this office, so an assert fires the moment the carryings change.
@@ -276,11 +410,13 @@ The two outputs match line for line: counts, nothing to round.
 - [Induction](../06-Proof/04-proof-by-induction.md): proving a "for every" claim about an endless list, one rung at a time.
 - [Sets](../07-Sets/01-sets-and-membership.md): writing the domain down as a set, so it never goes unsaid.
 
+This card leaves one question open: how do you prove each claim false, and how many cases must you check to do it?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Velleman, Daniel J. *How to Prove It*, 3rd ed. Cambridge University Press, 2019. [doi:10.1017/9781108539890](https://doi.org/10.1017/9781108539890). Chapter 2 is this card done carefully.
 - Westerståhl, Dag. "Generalized Quantifiers." *Stanford Encyclopedia of Philosophy*, revised 2024. [Entry page](https://plato.stanford.edu/entries/generalized-quantifiers/). Every and some among the counting words.

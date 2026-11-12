@@ -1,6 +1,6 @@
 # Direct proof: what a proof is, and the straight-line kind
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → What a proof is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Direct proof
 
 ---
 
@@ -11,6 +11,8 @@ An egg tray holds 12: two rows of six. A second holds 18: two rows of nine. Tip 
 A count that splits into two equal whole rows is **even**. The claim: two even counts add to an even count. Check trays all night and you still cannot know. Four lines settle it for every pair there will ever be. Those lines are a **proof**.
 
 **A proof is a chain from agreed meanings to the claim, with no step anyone can object to. A direct proof is that chain walked forwards: given to wanted, no detours.**
+
+**What kind of fact this is:** a method, not a single fact. Its example, two evens add to an even, is a theorem proved on this card in Why it works.
 
 ### The picture: the chain
 
@@ -43,6 +45,12 @@ Letters cover every pair at once. Let m and n be the counts, a and b their row l
 | a theorem | a claim proved from those | two evens add to an even |
 | m, n, a, b | the two counts, then their row lengths | 12, 18; 6, 9 |
 | a proof | the chain, no gaps | the steps below |
+
+### When it holds
+
+- **Both counts are even.** Make one odd, 12 + 15, and the total is 27: 13 pairs, 1 over.
+- **Both parts carry the 2.** Pull it from one part only, 2 × 6 + 9, and you get 21, not 30.
+- **The cases cover every possibility.** Count only the rows that start black and the board gives 16, not 32.
 
 ---
 
@@ -221,6 +229,82 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole eggs, whole squares.
 
+### Lean
+
+Lean proves the card's theorem for every pair of whole numbers, and counts the 8 by 8 board.
+
+- Two even counts always add to an even count. No pair is left out.
+- A board of 8 rows of 8, coloured alternately, has exactly 32 black squares.
+- The same board has exactly 32 white squares.
+- The trays add to 30 = 2 × 15, and the three mistakes give 27, 16 and 21.
+
+Taking pairs off one by one and tallying the board square by square are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 49 lines</summary>
+
+```lean
+-- Direct proof: two even whole numbers always add to an even number, and an 8 by 8 chessboard has 32 black and 32 white squares.
+import Mathlib.Algebra.Group.Nat.Even
+import Mathlib.Data.Finset.Prod
+import Mathlib.Data.Finset.Card
+
+/-- Two even counts add to an even count: if m and n are both even whole numbers,
+then m + n is even. -/
+theorem even_add_even (m n : ℕ) (hm : Even m) (hn : Even n) : Even (m + n) := by
+  obtain ⟨a, ha⟩ := hm
+  obtain ⟨b, hb⟩ := hn
+  exact ⟨a + b, by omega⟩
+
+/-- Proof by cases on a chessboard: on an 8 by 8 board coloured alternately, with the
+square in row r and column c black when r + c is even, exactly 32 squares are black. -/
+theorem chessboard_black_squares :
+    ((Finset.range 8 ×ˢ Finset.range 8).filter (fun p : ℕ × ℕ => (p.1 + p.2) % 2 = 0)).card
+      = 32 := by
+  decide
+
+/-- The same board has exactly 32 white squares, those where r + c is odd. -/
+theorem chessboard_white_squares :
+    ((Finset.range 8 ×ˢ Finset.range 8).filter (fun p : ℕ × ℕ => (p.1 + p.2) % 2 = 1)).card
+      = 32 := by
+  decide
+
+-- The egg trays: 12 = 2 × 6 and 18 = 2 × 9, and the proof's chain gives 30 = 2 × 15.
+example : (12 : ℕ) = 2 * 6 ∧ (18 : ℕ) = 2 * 9 := by decide
+example : (12 : ℕ) + 18 = 2 * 6 + 2 * 9 ∧ 2 * 6 + 2 * 9 = 2 * (6 + 9) ∧
+    2 * (6 + 9) = 2 * 15 ∧ 2 * 15 = (30 : ℕ) := by decide
+example : Even (12 + 18 : ℕ) := by decide
+
+-- Thirty eggs make 15 pairs with none over.
+example : (30 : ℕ) / 2 = 15 ∧ (30 : ℕ) % 2 = 0 := by decide
+
+-- One tray odd: 12 + 15 = 27, which is 13 pairs and 1 over, so not even.
+example : (12 : ℕ) + 15 = 27 ∧ (27 : ℕ) = 2 * 13 + 1 := by decide
+example : ¬ Even (12 + 15 : ℕ) := by decide
+
+-- The 2 pulled from one part only: 2 × 6 + 9 = 21, not 30.
+example : 2 * 6 + 9 = (21 : ℕ) := by decide
+
+-- Each row has 4 black and 4 white; 8 rows give 32 and 32; only half the rows give 16.
+example : ((Finset.range 8).filter (fun c : ℕ => c % 2 = 0)).card = 4 := by decide
+example : ((Finset.range 8).filter (fun c : ℕ => c % 2 = 1)).card = 4 := by decide
+example : 8 * 4 = (32 : ℕ) ∧ 4 * 4 = (16 : ℕ) ∧ 32 + 32 = (64 : ℕ) := by decide
+
+#print axioms even_add_even
+#print axioms chessboard_black_squares
+#print axioms chessboard_white_squares
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'even_add_even' depends on axioms: [propext, Quot.sound]
+'chessboard_black_squares' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chessboard_white_squares' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -244,7 +328,7 @@ The two outputs match line for line: whole eggs, whole squares.
 
 - **Guarantees in software.** "This never returns a negative balance" is a theorem about the code, argued forwards through what each line does. Tests are trays.
 - **Contracts.** Arguing from the definitions section to a conclusion is a direct proof — which is why definitions sit at the front.
-- **Covering every option.** "Whatever the weather, the event is fine" holds only if the weathers listed leave no gap: proof by cases in a coat. Single steps: [Valid arguments](../05-Logic/06-valid-arguments.md).
+- **Covering every option.** "Whatever the weather, the event is fine" holds only if the weathers listed leave no gap: that is proof by cases. Single steps: [Valid arguments](../05-Logic/06-valid-arguments.md).
 
 > **Say it back**
 > A definition fixes what a word means. An axiom is a starting rule taken as given. A theorem is proved from those, and a proof is the chain to it with no gap. A direct proof walks forwards: assume the *if* part, unpack it with a definition, push on with agreed rules, stop when the *then* part is on the page. Two evens are 2 × a and 2 × b, so the total is 2 × (a + b). When a claim changes shape case to case, cover every case.
@@ -261,11 +345,13 @@ The two outputs match line for line: whole eggs, whole squares.
 - [Induction](04-proof-by-induction.md): the chain made endless — prove the first case, then that each hands on the next.
 - [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md): where these proofs earn their keep, on collections instead of counts.
 
+Left open: what to do when no forward chain from the *if* part reaches the *then* part.
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Book home](https://richardhammack.github.io/BookOfProof/), free PDF. Chapter 4: direct proof, even and odd; §4.4: cases.
 - Velleman, Daniel J. *How to Prove It*, 3rd ed. Cambridge, 2019. [doi:10.1017/9781108539890](https://doi.org/10.1017/9781108539890). §3.5: cases must be exhaustive, not necessarily exclusive.

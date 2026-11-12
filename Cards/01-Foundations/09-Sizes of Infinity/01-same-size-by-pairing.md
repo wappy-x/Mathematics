@@ -16,6 +16,8 @@ A hotel with 8 rooms can do neither.
 
 **Two collections are the same size when you can pair them off with nothing left over on either side — no counting involved.**
 
+**What kind of fact this is:** a definition, then a theorem proved in Why it works: the even numbers are the same size as the counting numbers.
+
 ### The picture: every guest into an even room
 
 ```mermaid
@@ -54,6 +56,12 @@ It is a real pairing — a **bijection** — exactly when it passes both tests f
 
 From here on the hotel is just the picture. **Bijection** does the work; **set** is the plain word for a collection taken together; **cardinality** is the word for the size two paired sets share.
 
+### When it holds
+
+- **No last room.** A hotel of 8 rooms has no room 9: moving up one houses 7 of 8, and the even rooms house 4 of 8.
+- **Both tests pass.** Sending every guest to room 2 is not one-to-one, so it is no pairing.
+- **Nothing left over on either side.** Stop the even rooms at 14 and the guest from room 8 has nowhere to go.
+
 ---
 
 ## Why it works
@@ -76,7 +84,7 @@ Both tests pass, so this is a bijection. **The even numbers are the same size as
 
 8 rooms, 8 guests. Move everyone up one and the guest from room 8 has no room 9: 7 housed, 1 outside. Even rooms only leaves rooms 2, 4, 6, 8: 4 housed, 4 outside.
 
-Turn that around and you have Dedekind's test: with the usual set-theory assumptions ([The axiom of choice](05-axiom-of-choice.md)), a set is infinite exactly when it pairs with a part of itself that leaves something out. Infinite does not mean enormous. It means pairable with a piece of yourself. Same size then behaves like equality — reflexive, symmetric, transitive: [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md).
+Turn that around and you have Dedekind's test: with the usual set-theory assumptions ([The axiom of choice](05-axiom-of-choice.md)), a set is infinite exactly when it pairs with a part of itself that leaves something out. Infinite does not mean enormous. It means pairable with a piece of yourself. Same size then behaves like equality — reflexive (every set pairs with itself), symmetric (a pairing runs backwards), transitive (two pairings chain into one): [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md).
 
 ---
 
@@ -218,6 +226,152 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves both pairings for every room number, not just the first 8, and proves Dedekind's test for every set.
+
+- Doubling, room n to room 2n, is a bijection from the counting numbers onto the even counting numbers.
+- Moving up one, room n to room n+1, is a bijection from the counting numbers onto every room from 2 on.
+- Dedekind's test: a set is infinite exactly when it pairs, one-to-one and onto, with a part of itself that leaves something out.
+- That last proof leans on the axiom of choice, as Step 3 says.
+- The worked numbers check out: rooms 2 to 9, the 8 even rooms up to 16, and 7 of 8 and 4 of 8 in the finite hotel.
+
+The printed lists, and each pairing read backwards, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 118 lines</summary>
+
+```lean
+-- Same size means pairable: doubling pairs the counting numbers with the even counting numbers, moving up one pairs them with every room from 2 on, and a set is infinite exactly when it pairs with a part of itself that leaves something out.
+import Mathlib.Data.Set.Function
+import Mathlib.Data.Set.Finite.Basic
+import Mathlib.Algebra.Group.Nat.Even
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Data.Set.Card
+import Mathlib.Tactic
+
+/-- The even numbers are the same size as the counting numbers: the rule "room n goes to
+room 2n" pairs the counting numbers 1, 2, 3, ... with the even counting numbers 2, 4, 6, ...,
+one-to-one and onto, with nothing left over on either side. -/
+theorem doubling_pairs_counting_numbers_with_evens :
+    Set.BijOn (fun n : ℕ => 2 * n) {n : ℕ | 1 ≤ n} {m : ℕ | 1 ≤ m ∧ Even m} := by
+  refine ⟨?_, ?_, ?_⟩
+  · rintro n (hn : 1 ≤ n)
+    show 1 ≤ 2 * n ∧ Even (2 * n)
+    exact ⟨by omega, even_two_mul n⟩
+  · intro a _ b _ h
+    simp only at h
+    omega
+  · rintro m ⟨hm, k, hk⟩
+    exact ⟨k, by simp only [Set.mem_ofPred_eq]; omega, by simp only; omega⟩
+
+/-- The full hotel takes one more guest: the rule "room n goes to room n + 1" pairs the
+counting numbers with the counting numbers from 2 on, so room 1 is freed and nobody is lost. -/
+theorem move_up_one_frees_room_one :
+    Set.BijOn (fun n : ℕ => n + 1) {n : ℕ | 1 ≤ n} {m : ℕ | 2 ≤ m} := by
+  refine ⟨?_, ?_, ?_⟩
+  · rintro n (hn : 1 ≤ n)
+    show 2 ≤ n + 1
+    omega
+  · intro a _ b _ h
+    simp only at h
+    omega
+  · rintro m (hm : 2 ≤ m)
+    exact ⟨m - 1, by simp only [Set.mem_ofPred_eq]; omega, by simp only; omega⟩
+
+/-- Dedekind's test: a set is infinite exactly when some rule pairs it, one-to-one and onto,
+with a part of itself that leaves something out. -/
+theorem infinite_iff_pairs_with_proper_part {α : Type*} (s : Set α) :
+    s.Infinite ↔ ∃ t ⊂ s, ∃ f : α → α, Set.BijOn f s t := by
+  classical
+  constructor
+  · intro hs
+    let e := hs.natEmbedding s
+    let g : α → α := fun x => if h : ∃ n, (e n : α) = x then (e (h.choose + 1) : α) else x
+    have hg1 : ∀ n, g (e n) = e (n + 1) := by
+      intro n
+      have h : ∃ k, (e k : α) = e n := ⟨n, rfl⟩
+      have hc : h.choose = n := by
+        apply e.injective
+        exact Subtype.ext h.choose_spec
+      simp only [g, dif_pos h, hc]
+    have hg2 : ∀ x, (¬ ∃ n, (e n : α) = x) → g x = x := by
+      intro x hx
+      simp only [g, dif_neg hx]
+    refine ⟨s \ {(e 0 : α)}, ?_, g, ?_, ?_, ?_⟩
+    · refine ⟨Set.sdiff_subset, fun h => ?_⟩
+      have := h (e 0).2
+      exact this.2 rfl
+    · intro x hx
+      by_cases h : ∃ n, (e n : α) = x
+      · obtain ⟨n, rfl⟩ := h
+        rw [hg1]
+        refine ⟨(e (n + 1)).2, ?_⟩
+        intro h0
+        have : e (n + 1) = e 0 := Subtype.ext h0
+        have := e.injective this
+        omega
+      · rw [hg2 x h]
+        refine ⟨hx, ?_⟩
+        intro h0
+        exact h ⟨0, h0.symm⟩
+    · intro x hx y hy hxy
+      by_cases h : ∃ n, (e n : α) = x
+      · obtain ⟨n, rfl⟩ := h
+        by_cases h' : ∃ m, (e m : α) = y
+        · obtain ⟨m, rfl⟩ := h'
+          simp only [hg1] at hxy
+          have := e.injective (Subtype.ext hxy)
+          have : n = m := by omega
+          rw [this]
+        · simp only [hg1, hg2 y h'] at hxy
+          exact absurd ⟨n + 1, hxy⟩ h'
+      · by_cases h' : ∃ m, (e m : α) = y
+        · obtain ⟨m, rfl⟩ := h'
+          simp only [hg1, hg2 x h] at hxy
+          exact absurd ⟨m + 1, hxy.symm⟩ h
+        · simpa only [hg2 x h, hg2 y h'] using hxy
+    · intro y hy
+      by_cases h : ∃ m, (e m : α) = y
+      · obtain ⟨m, rfl⟩ := h
+        have hm : m ≠ 0 := by
+          rintro rfl
+          exact hy.2 rfl
+        obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hm
+        exact ⟨e k, (e k).2, hg1 k⟩
+      · exact ⟨y, hy.1, hg2 y h⟩
+  · rintro ⟨t, hts, f, hf⟩ hfin
+    have h1 : s.ncard = t.ncard := hf.ncard_eq
+    have h2 : t = s := Set.eq_of_subset_of_ncard_le hts.subset h1.le hfin
+    exact hts.ne h2
+
+-- Worked numbers: everyone up one, rooms 1 to 8 land in rooms 2 to 9.
+example : (Finset.Icc 1 8).image (fun n : ℕ => n + 1) = Finset.Icc 2 9 := by decide
+-- Every guest doubled lands in exactly the even rooms up to 16.
+example : (Finset.Icc 1 8).image (fun n : ℕ => 2 * n) = (Finset.Icc 1 16).filter Even := by decide
+-- Those even rooms, counted: 8.
+example : ((Finset.Icc 1 16).filter Even).card = 8 := by decide
+-- The finite hotel of 8 rooms: moving up one houses 7 of 8.
+example : ((Finset.Icc 1 8).filter (fun n : ℕ => n + 1 ∈ Finset.Icc 1 8)).card = 7 := by decide
+-- The finite hotel of 8 rooms: the even rooms are 2, 4, 6, 8, so 4 rooms for 8 guests.
+example : (Finset.Icc 1 8).filter Even = {2, 4, 6, 8} := by decide
+example : ((Finset.Icc 1 8).filter Even).card = 4 := by decide
+
+#print axioms doubling_pairs_counting_numbers_with_evens
+#print axioms move_up_one_frees_room_one
+#print axioms infinite_iff_pairs_with_proper_part
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'doubling_pairs_counting_numbers_with_evens' depends on axioms: [propext, Quot.sound]
+'move_up_one_frees_room_one' depends on axioms: [propext, Quot.sound]
+'infinite_iff_pairs_with_proper_part' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the hotel above, so expect one to fire.
@@ -259,6 +413,8 @@ The two outputs match line for line.
 - [Cantor's diagonal](03-cantors-diagonal-argument.md): a set that cannot be paired with them, however you try.
 - [Comparing infinities](04-comparing-infinities.md): fitting both ways means equal, and every set loses to its own power set, from [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md).
 - [The axiom of choice](05-axiom-of-choice.md): what it takes to make infinitely many picks at once.
+
+This card leaves one question open: can every endless set be paired with the counting numbers?
 
 ---
 

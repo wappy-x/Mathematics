@@ -16,6 +16,8 @@ The axiom of choice says the picks exist anyway.
 
 **Given a pile of boxes, none empty, you may take one thing out of every box at once — even when nothing written down says which.**
 
+**What kind of fact this is:** an axiom: a starting rule of set theory, not proved. Step 1 of Why it works says why.
+
 ### The picture: when the axiom is needed
 
 ```mermaid
@@ -46,6 +48,12 @@ A full set of picks has a proper name: a **choice function**, a function reading
 | a full pick | one thing out of every box, at once | one sock from each box |
 | a choice function | the proper name for a full pick | what the axiom hands you |
 | a rule | a sentence naming the pick in every box | "take the left one" |
+
+### When it holds
+
+- **Every box has something in it.** Empty one box of the ten and the full picks drop from 1024 to 0.
+- **The axiom matters only for infinitely many boxes.** Three boxes give 8 picks, and you can write one out by hand.
+- **The axiom matters only when no rule names a pick.** With shoes, "take the left one" names 1 pick out of 1024, and the rule does the job.
 
 ---
 
@@ -217,6 +225,88 @@ different picks, ten socks in each           1024
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean takes the axiom as a starting rule and proves these: the big claims in every case, the counts for ten boxes.
+
+- Every pile of boxes, none empty, has a choice function, however many boxes there are.
+- Every set can be lined up so that every non-empty part has a first member.
+- Every vector space has a basis.
+- Three boxes of two socks give 8 full picks, and ten boxes give 1024.
+- The shoe rule names exactly 1 of the 1024 picks.
+- With one of the ten boxes empty, there are 0 full picks.
+
+Building every pick one box at a time, and checking that no two are the same, is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 53 lines</summary>
+
+```lean
+-- The axiom of choice: for any family of non-empty boxes there is a choice function taking one member out of every box at once, every set can be lined up so that each non-empty part has a first member, and every vector space has a basis.
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.Order.Defs.Unbundled
+import Mathlib.Tactic.NormNum
+import Mathlib.SetTheory.Cardinal.Order
+
+/-- The axiom of choice: take any pile of boxes, one box `box i` for each index `i` (finitely
+or infinitely many), each box a set of things from `X`. If no box is empty, there is a choice
+function: a function `f` that picks one member `f i` out of every box `box i`, all at once. -/
+theorem axiom_of_choice {ι X : Type*} (box : ι → Set X) (h : ∀ i, (box i).Nonempty) :
+    ∃ f : ι → X, ∀ i, f i ∈ box i := by
+  exact ⟨fun i => (h i).some, fun i => (h i).some_mem⟩
+
+/-- The well-ordering theorem: every set can be lined up (a total order `r`, where `r a b`
+means `a` comes no later than `b`) so that every non-empty part of it has a first member. -/
+theorem every_set_can_be_well_ordered (α : Type*) :
+    ∃ r : α → α → Prop, IsLinearOrder α r ∧
+      ∀ S : Set α, S.Nonempty → ∃ m ∈ S, ∀ x ∈ S, r m x := by
+  let _ : LinearOrder α := (WellOrderingRel.isWellOrder (α := α)).linearOrder
+  refine ⟨(· ≤ ·), inferInstance, ?_⟩
+  intro S hS
+  obtain ⟨m, hm, hmin⟩ := (WellOrderingRel.isWellOrder (α := α)).wf.has_min S hS
+  exact ⟨m, hm, fun x hx => not_lt.mp (hmin x hx)⟩
+
+/-- Every vector space has a basis: for every field `K` and every vector space `V` over `K`,
+there is a set `s` of vectors in `V` that is a basis of `V`. -/
+theorem every_vector_space_has_a_basis (K V : Type*) [Field K] [AddCommGroup V] [Module K V] :
+    ∃ s : Set V, Nonempty (Module.Basis s K V) := by
+  exact ⟨_, ⟨Module.Basis.ofVectorSpace K V⟩⟩
+
+-- Ten boxes (rooms 1 to 10, here 0 to 9), two socks in each (0 = left, 1 = right).
+-- Three boxes, by hand: 2 × 2 × 2 = 8 full picks.
+example : 2 * 2 * 2 = 8 := by norm_num
+example : (Fintype.piFinset fun _ : Fin 3 => (Finset.univ : Finset (Fin 2))).card = 8 := by
+  decide
+-- Ten boxes: ten twos multiplied, 1024 full picks; built and counted, also 1024.
+example : 2 ^ 10 = 1024 := by norm_num
+example : (Fintype.piFinset fun _ : Fin 10 => (Finset.univ : Finset (Fin 2))).card = 1024 := by
+  rw [Fintype.card_piFinset]; simp
+-- The shoe rule, "take the left one", names exactly 1 of the 1024 picks.
+example : ((Fintype.piFinset fun _ : Fin 10 => (Finset.univ : Finset (Fin 2))).filter
+    (fun p => p = fun _ => 0)).card = 1 := by
+  rw [Finset.filter_eq']; simp
+-- One of the ten boxes empty: 0 full picks.
+example : (Fintype.piFinset fun i : Fin 10 =>
+    if i = 9 then (∅ : Finset (Fin 2)) else Finset.univ).card = 0 := by
+  rw [Fintype.card_piFinset]; decide
+
+#print axioms axiom_of_choice
+#print axioms every_set_can_be_well_ordered
+#print axioms every_vector_space_has_a_basis
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'axiom_of_choice' depends on axioms: [Classical.choice]
+'every_set_can_be_well_ordered' depends on axioms: [propext, Classical.choice, Quot.sound]
+'every_vector_space_has_a_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the ten boxes.
@@ -256,11 +346,13 @@ ALL CHECKS PASS
 
 Last card on the shelf. Zorn's lemma, the axiom in working clothes and equivalent to it, waits in the algebra wing. Behind it: [Same size means pairable](01-same-size-by-pairing.md), [Countable sets](02-countable-sets.md), [Cantor's diagonal](03-cantors-diagonal-argument.md).
 
+The question this card leaves open: which theorems truly need the axiom?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Bell, John L. "The Axiom of Choice." *Stanford Encyclopedia of Philosophy*. [plato.stanford.edu](https://plato.stanford.edu/entries/axiom-choice/). Statement, history, argument.
 - Herrlich, Horst. *Axiom of Choice*. Springer, 2006. [doi:10.1007/11601562](https://doi.org/10.1007/11601562). What breaks without it, what turns strange with it.

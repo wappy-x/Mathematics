@@ -18,6 +18,8 @@ The claim tells you — not its subject, its **shape**: the words it opens with.
 
 **Read the shape — for every, there is, exactly one, not, if-then — and the shape names the move.**
 
+**What kind of fact this is:** a method for choosing a proof, not a theorem. The three claims are theorems, proved on this card in Why it works.
+
 ### The picture: the sheet
 
 ```mermaid
@@ -44,7 +46,7 @@ The sheet is the formula, one line each.
 
 **For every → induction. Several earlier cases → strong induction. There is → produce one. Exactly one → produce one, then assume two and show they are equal. Not → assume the opposite. If-then → forwards, or flipped and swapped.**
 
-A claim's opening words name the move.
+**Read it aloud:** a claim's opening words name the move.
 
 | Piece | Plain meaning | On our sheet |
 | --- | --- | --- |
@@ -52,6 +54,13 @@ A claim's opening words name the move.
 | existence | at least one such thing is out there | some number leaves sums alone |
 | a witness | the thing itself, named and checked | 0, since 0 + 7 = 7 |
 | uniqueness | no second, different one | only one such number does |
+
+### When it holds
+
+- **The shape is read off the whole claim.** Read "exactly one" as "there is" and the proof stops at 0: existence done, uniqueness untouched.
+- **The witness is checked against the definition.** An unchecked guess can be wrong: 1 + 7 = 8, not 7.
+- **A "for every" claim gets a proof, not a search.** The search checks 41 numbers, 0 to 40. Only the proof reaches the rest.
+- **The sheet gives a first move, not a guarantee.** If the move stalls, work backwards from the line you want, or assume the claim false.
 
 ---
 
@@ -226,6 +235,83 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three claims for every whole number, not just 0 to 40, and re-checks the card's numbers.
+
+- Exactly one whole number is a do-nothing for adding: added on either side, it leaves every number unchanged.
+- If a and b are both do-nothings, then a = b.
+- Every whole number is even or odd.
+- The card's numbers hold: 0, 7 and 8 by hand, the witness 0 + 7 = 7, the wrong guess 1 + 7 = 8, and 1 of 41 candidates.
+
+The printed table, and the two routes for claim 1, dividing and flipping, stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 50 lines</summary>
+
+```lean
+-- Choosing a proof strategy: there is exactly one whole number that leaves every sum unchanged, any two such numbers are equal, and every whole number is even or odd.
+import Mathlib.Algebra.Ring.Parity
+import Mathlib.Data.Finset.Card
+
+/-- Exactly one do-nothing for adding: there is exactly one whole number z that, added to
+any whole number n on either side, leaves it unchanged (z + n = n and n + z = n). -/
+theorem exists_unique_additive_identity :
+    ∃! z : ℕ, ∀ n : ℕ, z + n = n ∧ n + z = n := by
+  refine ⟨0, fun n => ⟨Nat.zero_add n, Nat.add_zero n⟩, ?_⟩
+  intro y hy
+  have := (hy 0).1
+  simpa using this
+
+/-- The uniqueness job on its own: if a and b both leave every sum unchanged, then a = b
+(read a + b twice: it is a because b does nothing, and b because a does nothing). -/
+theorem do_nothings_are_equal (a b : ℕ)
+    (ha : ∀ n : ℕ, a + n = n ∧ n + a = n) (hb : ∀ n : ℕ, b + n = n ∧ n + b = n) :
+    a = b := by
+  have h1 := (ha b).2
+  have h2 := (hb a).1
+  rw [← h1, h2]
+
+/-- Every whole number is even or odd. -/
+theorem every_nat_even_or_odd (n : ℕ) : Even n ∨ Odd n := by
+  exact Nat.even_or_odd n
+
+-- Claim 1 by hand: 0 = 2 × 0 is even; 7 = 2 × 3 + 1 is odd; one step on, 8 = 2 × 4 is even.
+example : (0 : ℕ) = 2 * 0 ∧ (7 : ℕ) = 2 * 3 + 1 ∧ (8 : ℕ) = 2 * 4 := by decide
+example : Even (0 : ℕ) ∧ Odd (7 : ℕ) ∧ Even (8 : ℕ) := by decide
+example : 2 * (3 + 1) = (8 : ℕ) := by decide
+
+-- Every number from 0 to 40 is even or odd: all 41 of them.
+example : ((Finset.range 41).filter (fun n : ℕ => Even n ∨ Odd n)).card = 41 := by decide
+
+-- Claim 2, the witness checked: 0 + 7 = 7 and 0 + 23 = 23.
+example : (0 : ℕ) + 7 = 7 ∧ (0 : ℕ) + 23 = 23 := by decide
+
+-- A guessed witness that fails: 1 + 7 = 8, not 7.
+example : (1 : ℕ) + 7 = 8 ∧ (1 : ℕ) + 7 ≠ 7 := by decide
+
+-- Claim 3, the search: among the 41 candidates 0 to 40, exactly one leaves every sum
+-- from 0 to 40 unchanged, and it is 0.
+example : ((Finset.range 41).filter
+    (fun z : ℕ => ∀ n ∈ Finset.range 41, z + n = n)).card = 1 := by decide
+example : (Finset.range 41).filter
+    (fun z : ℕ => ∀ n ∈ Finset.range 41, z + n = n) = {0} := by decide
+
+#print axioms exists_unique_additive_identity
+#print axioms do_nothings_are_equal
+#print axioms every_nat_even_or_odd
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'exists_unique_additive_identity' depends on axioms: [propext]
+'do_nothings_are_equal' does not depend on any axioms
+'every_nat_even_or_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -266,11 +352,13 @@ The two outputs match line for line.
 
 Nothing waits on this card: it is the sheet you keep beside the other five. The shelf closes with [Peano's three rules](07-peano-and-one-plus-one.md), where the counting numbers begin.
 
+The question this card leaves open: every move here leaned on the whole numbers, with 0, a next one and adding, so where do their rules come from?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Velleman, Daniel J. *How to Prove It*, 3rd ed. Cambridge, 2019. [doi:10.1017/9781108539890](https://doi.org/10.1017/9781108539890). Section 3.6, existence and uniqueness.
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Book home](https://richardhammack.github.io/BookOfProof/) · [free PDF](https://richardhammack.github.io/BookOfProof/Main.pdf). Chapter 7, the claims that are not if-thens.

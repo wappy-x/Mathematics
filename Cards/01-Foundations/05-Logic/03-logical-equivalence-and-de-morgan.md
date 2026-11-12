@@ -14,6 +14,8 @@ The menu will not settle that. A list will. A dish can be four ways — nuts and
 
 **Two sentences are equivalent when they agree in every case, and moving a "not" inside brackets flips "and" to "or" and "or" to "and".**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works by checking all four dishes.
+
 A sentence that comes out yes in every case is a **tautology**; equivalence is "these two agree" being one.
 
 ### The picture: the "not" walks in
@@ -36,7 +38,7 @@ Nothing to memorise. Two swaps, in the cafe's words. **Nuts** means "contains nu
 
 **Law 2: not (nuts and dairy)   is the same claim as   (no nuts) or (no dairy)**
 
-**Read them aloud:** if neither is in the dish, both are absent; if they are not both in it, at least one is absent.
+**Read it aloud:** if neither is in the dish, both are absent; if they are not both in it, at least one is absent.
 
 Those swaps are **De Morgan's laws**, written down in 1847.
 
@@ -47,6 +49,12 @@ Those swaps are **De Morgan's laws**, written down in 1847.
 | or | true when at least one is, both counted | "nuts or dairy" |
 | brackets | how much the "not" covers | "not (nuts or dairy)" |
 | equivalent | same answer in every case | the note and her version |
+
+### When it holds
+
+- **Every sentence is plainly yes or no.** Allow "may contain traces" and the four dishes no longer cover every case.
+- **"Or" counts both.** Read "nuts or dairy" as one-but-not-both and "not (nuts or dairy)" says yes to dish 1, where the note says no.
+- **The "not" covers the whole bracket.** Let it cover only "nuts" and you get "(no nuts) or dairy", which lets any dairy dish through.
 
 ---
 
@@ -231,6 +239,105 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves both laws for any two yes-or-no sentences, not only nuts and dairy.
+
+- Law 1: "not (this or that)" is the same claim as "no this and no that".
+- Law 2: "not (this and that)" is the same claim as "no this or no that".
+- Both laws give the same answer on all four dishes.
+- "Not both" is not the same claim as "neither": some dish gets different answers.
+- The card's counts: four dishes, the note lets 1 through, "not both" lets 3, and they disagree on dishes 2 and 3.
+
+The printed table and the second road, with 1s and 0s, stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 71 lines</summary>
+
+```lean
+-- Logical equivalence and De Morgan: for any two yes-or-no sentences, "not (A or B)" says the same as "(not A) and (not B)", "not (A and B)" says the same as "(not A) or (not B)", and "not both" is not the same as "neither".
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Fintype.Card
+
+/-- De Morgan's laws: for any two sentences p and q, each plainly true or false,
+"not (p or q)" is equivalent to "(not p) and (not q)", and
+"not (p and q)" is equivalent to "(not p) or (not q)". Here "or" is inclusive
+and the "not" covers the whole bracket. -/
+theorem de_morgan_laws (p q : Prop) :
+    (¬ (p ∨ q) ↔ ¬ p ∧ ¬ q) ∧ (¬ (p ∧ q) ↔ ¬ p ∨ ¬ q) := by
+  constructor
+  · exact not_or
+  · exact not_and_or
+
+/-- The truth-table form: with nuts and dairy each a plain yes or no, both laws give
+the same answer on every one of the four dishes. -/
+theorem de_morgan_every_dish :
+    ∀ nuts dairy : Bool,
+      (!(nuts || dairy)) = (!nuts && !dairy) ∧ (!(nuts && dairy)) = (!nuts || !dairy) := by
+  intro nuts dairy
+  cases nuts <;> cases dairy <;> decide
+
+/-- The usual mistake: "not both nuts and dairy" is not equivalent to "no nuts and no
+dairy"; some dish gets different answers from the two. -/
+theorem not_both_ne_neither :
+    ¬ ∀ nuts dairy : Bool, (!(nuts && dairy)) = (!nuts && !dairy) := by
+  intro h
+  have := h true false
+  revert this
+  decide
+
+-- Dish 2 by hand (nuts yes, dairy no): "nuts or dairy" is yes, its flip is no,
+-- "no nuts and no dairy" is no; "nuts and dairy" is no, its flip is yes,
+-- "(no nuts) or (no dairy)" is yes.
+example : (true || false) = true ∧ (!(true || false)) = false ∧ (!true && !false) = false := by
+  decide
+example : (true && false) = false ∧ (!(true && false)) = true ∧ (!true || !false) = true := by
+  decide
+
+-- There are exactly four dishes: two yes-or-no questions.
+example : Fintype.card (Bool × Bool) = 4 := by decide
+
+-- Law 1 holds on all 4 rows, and law 2 holds on all 4 rows.
+example : (Finset.univ.filter
+    (fun d : Bool × Bool => (!(d.1 || d.2)) = (!d.1 && !d.2))).card = 4 := by decide
+example : (Finset.univ.filter
+    (fun d : Bool × Bool => (!(d.1 && d.2)) = (!d.1 || !d.2))).card = 4 := by decide
+
+-- The menu note lets 1 dish through; "not both" lets 3 through.
+example : (Finset.univ.filter (fun d : Bool × Bool => (!d.1 && !d.2) = true)).card = 1 := by
+  decide
+example : (Finset.univ.filter (fun d : Bool × Bool => (!(d.1 && d.2)) = true)).card = 3 := by
+  decide
+
+-- "Not both" and the note disagree on 2 dishes: dishes 2 and 3.
+example : (Finset.univ.filter
+    (fun d : Bool × Bool => (!(d.1 && d.2)) ≠ (!d.1 && !d.2))).card = 2 := by decide
+example : (!(true && false)) ≠ (!true && !false) ∧ (!(false && true)) ≠ (!false && !true) := by
+  decide
+
+-- Forgetting the flip: "(no nuts) or (no dairy)" is true on 3 dishes, not 1.
+example : (Finset.univ.filter (fun d : Bool × Bool => (!d.1 || !d.2) = true)).card = 3 := by
+  decide
+
+-- Dropping the brackets: "(no nuts) or dairy" lets dish 1 (nuts and dairy) through,
+-- where "not (nuts or dairy)" says no.
+example : (!true || true) = true ∧ (!(true || true)) = false := by decide
+
+#print axioms de_morgan_laws
+#print axioms de_morgan_every_dish
+#print axioms not_both_ne_neither
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'de_morgan_laws' depends on axioms: [propext, Classical.choice, Quot.sound]
+'de_morgan_every_dish' does not depend on any axioms
+'not_both_ne_neither' does not depend on any axioms
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run. The asserts are pinned to the four dishes, so expect one to fire.
@@ -270,11 +377,13 @@ The two outputs match line for line.
 - [Quantifiers](04-quantifiers.md): "everyone" and "someone" are an "and" and an "or" stretched over a crowd; this flip waits there.
 - [Set operations](../07-Sets/03-set-operations.md): the same laws, with groups of things instead of sentences.
 
+The question this card leaves open: what does a "not" do to "everyone" and "someone"?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - De Morgan, Augustus. *Formal Logic*. Taylor and Walton, 1847. [Internet Archive](https://archive.org/details/formallogicorthe00demouoft). The book they are named after, page 118.
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Author's page](https://richardhammack.github.io/BookOfProof/). Chapter 2, equivalence by truth table.

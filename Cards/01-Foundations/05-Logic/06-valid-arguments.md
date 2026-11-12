@@ -19,6 +19,8 @@ Each tenant takes something as given, a premise, and says something follows, a c
 
 **An argument is valid when no situation makes every premise true and the conclusion false. Testing one means hunting for that situation, not asking whether the sentences are true.**
 
+**What kind of fact this is:** a definition, valid, and two rules that meet it, modus ponens and modus tollens, proved in Why it works by checking all 4 situations.
+
 ### The picture: the whole test
 
 ```mermaid
@@ -50,6 +52,12 @@ Rosa's argument **is** the formula.
 | valid | no situation has premises true, conclusion false | Rosa's and Sam's |
 | a counterexample | one situation that does | on time, charged for a key |
 | sound | valid, and the premises true too | Rosa's, if the lease says so |
+
+### When it holds
+
+- **Each fact is a plain yes or no.** That gives the 4 situations. A vague fact, such as rent paid an hour late, must be settled as yes or no before the test.
+- **The rule is one of the premises.** Drop it and (1, 0) comes back: a late rent, no fee. Rosa's conclusion then fails.
+- **Every situation is checked.** Check only (1, 1) and Tess looks valid. Her counterexample is (0, 1).
 
 ---
 
@@ -217,6 +225,111 @@ both look-alikes fail on the same case: late 0, fee 1
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the four verdicts over all 4 situations, with each fact a plain yes or no and the lease rule as a premise.
+
+- Modus ponens is valid: no situation makes the rule and a late rent true, yet the fee false.
+- Modus tollens is valid: no situation makes the rule and no fee true, yet the rent late.
+- Affirming the consequent fails in exactly one situation, (0, 1): on time, with a fee.
+- Denying the antecedent fails in exactly that same situation, (0, 1).
+- Every count in the worked numbers table is right, and so is the count when the rule always holds.
+
+Running the code and printing its table are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 77 lines</summary>
+
+```lean
+-- Valid arguments: over all four yes-or-no situations, modus ponens and modus tollens have no counterexample, while affirming the consequent and denying the antecedent each fail on exactly one situation, on time with a fee.
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Fintype.Card
+
+/-- Modus ponens and modus tollens are valid. Each fact is a plain yes or no, so a
+situation is a pair (late, fee) of true/false values, and the rule "if late, then fee"
+is one of the premises. Then no situation makes every premise true and the conclusion
+false: not for Rosa (rule, late; so fee), and not for Sam (rule, no fee; so not late). -/
+theorem modus_ponens_and_modus_tollens_valid :
+    (¬ ∃ late fee : Bool, (late = true → fee = true) ∧ late = true ∧ ¬ fee = true) ∧
+    (¬ ∃ late fee : Bool, (late = true → fee = true) ∧ fee = false ∧ ¬ late = false) := by
+  decide
+
+/-- Affirming the consequent is invalid: with the rule "if late, then fee" and "a fee"
+as premises, the conclusion "late" fails in exactly one situation, on time with a fee,
+(0, 1). -/
+theorem affirming_the_consequent_fails_only_on_time_with_fee :
+    ∀ late fee : Bool,
+      ((late = true → fee = true) ∧ fee = true ∧ ¬ late = true) ↔
+        (late = false ∧ fee = true) := by
+  decide
+
+/-- Denying the antecedent is invalid: with the rule "if late, then fee" and "not late"
+as premises, the conclusion "no fee" fails in exactly one situation, the same one,
+on time with a fee, (0, 1). -/
+theorem denying_the_antecedent_fails_only_on_time_with_fee :
+    ∀ late fee : Bool,
+      ((late = true → fee = true) ∧ late = false ∧ ¬ fee = false) ↔
+        (late = false ∧ fee = true) := by
+  decide
+
+-- The worked numbers. A situation is (late, fee); the rule is "not late, or a fee".
+-- Situations to check: 4.
+example : Fintype.card (Bool × Bool) = 4 := by decide
+
+-- The rule by itself is false in exactly 1 situation, (1, 0).
+example : (Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) = false)).card = 1 := by
+  decide
+example : Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) = false) = {(true, false)} := by
+  decide
+
+-- Rosa, modus ponens: premises hold in 1 situation, 0 counterexamples.
+example : (Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && c.1)).card = 1 := by
+  decide
+example : (Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && c.1 && !c.2)).card = 0 := by
+  decide
+
+-- Sam, modus tollens: premises hold in 1 situation, 0 counterexamples.
+example : (Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && !c.2)).card = 1 := by
+  decide
+example : (Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && !c.2 && c.1)).card = 0 := by
+  decide
+
+-- Tess, affirming the consequent: premises hold in 2 situations, 1 counterexample, (0, 1).
+example : (Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && c.2)).card = 2 := by
+  decide
+example : Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && c.2 && !c.1)
+    = {(false, true)} := by
+  decide
+
+-- Vic, denying the antecedent: premises hold in 2 situations, 1 counterexample, (0, 1).
+example : (Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && !c.1)).card = 2 := by
+  decide
+example : Finset.univ.filter (fun c : Bool × Bool => (!c.1 || c.2) && !c.1 && c.2)
+    = {(false, true)} := by
+  decide
+
+-- Delete the promise (the rule always true): all four arguments get 1 counterexample each.
+example : (Finset.univ.filter (fun c : Bool × Bool => c.1 && !c.2)).card = 1 ∧
+    (Finset.univ.filter (fun c : Bool × Bool => !c.2 && c.1)).card = 1 ∧
+    (Finset.univ.filter (fun c : Bool × Bool => c.2 && !c.1)).card = 1 ∧
+    (Finset.univ.filter (fun c : Bool × Bool => !c.1 && c.2)).card = 1 := by
+  decide
+
+#print axioms modus_ponens_and_modus_tollens_valid
+#print axioms affirming_the_consequent_fails_only_on_time_with_fee
+#print axioms denying_the_antecedent_fails_only_on_time_with_fee
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'modus_ponens_and_modus_tollens_valid' does not depend on any axioms
+'affirming_the_consequent_fails_only_on_time_with_fee' does not depend on any axioms
+'denying_the_antecedent_fails_only_on_time_with_fee' does not depend on any axioms
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -258,11 +371,13 @@ ALL CHECKS PASS
 
 - [Direct proof](../06-Proof/01-direct-proof.md): stringing these forced steps together until the last is what you set out to show.
 
+Left open: one forced step is easy to check, so how do you chain many of them to prove something new?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Book home](https://richardhammack.github.io/BookOfProof/) · [free PDF](https://richardhammack.github.io/BookOfProof/Main.pdf). Chapter 2.
 - Magnus, P.D., et al. *forall x: Calgary*. Open Logic Project. [Book home](https://forallx.openlogicproject.org/) · [free PDF](https://forallx.openlogicproject.org/forallxyyc.pdf). Free; validity and both fallacies.

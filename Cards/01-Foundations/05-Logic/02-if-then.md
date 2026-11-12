@@ -19,6 +19,8 @@ Only Ben can say the warranty was broken. Cal's free phone does not break it: th
 
 **A sentence shaped "if this, then that" makes one claim: you will never see the first part happen and the second fail to follow. One case breaks it. Everything else leaves it standing.**
 
+**What kind of fact this is:** a definition: the meaning logic gives "if… then". The claims about the converse and the contrapositive follow from it, checked on all 4 rows in Why it works.
+
 ### The picture: the only way to break it
 
 ```mermaid
@@ -51,6 +53,12 @@ Write 1 for yes and 0 for no. The sentence is four verdicts, in the order Ana, B
 | the contrapositive | both flipped (a *not* in front), then swapped | if we did not replace it free, it did not crack |
 
 Books call this an **implication**, written P → Q, where → is read "if… then". P is the **hypothesis** (the if part), Q the **conclusion** (the then part). The or-form is ¬P ∨ Q: ¬ is *not*, ∨ is *or*. Cal's and Dee's rows are **vacuously true** — true because nothing was owed.
+
+### When it holds
+
+- **Each half is a plain yes or no.** That gives exactly 4 rows. A half with a third answer, such as "cracked a little", has no row in the table.
+- **The verdict uses the two answers alone.** Everyday speech often adds a cause between the halves. The table ignores it, so "If 2 is odd, then 1 = 0" still reads 1. Where everyday "if" leaves the table: the Edgington entry in Sources.
+- **The promise runs one way.** Read it as "if and only if" and Cal's row wrongly reads 0.
 
 ---
 
@@ -234,6 +242,100 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three facts for every pair of yes-or-no statements, and checks the four customers row by row.
+
+- An if-then is false exactly when the if part happens and the then part fails.
+- The contrapositive always gives the same verdict as the if-then.
+- The converse agrees with the if-then exactly when both halves have the same answer.
+- The warranty reads 1, 0, 1, 1, and the "no crack, or replaced free" route reads the same.
+- The warranty is broken on 1 row, the converse disagrees on 2, and the contrapositive on 0.
+- "If 2 is odd, then 1 = 0" reads 1.
+
+Printing the customer table, and the Try changing edits, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 65 lines</summary>
+
+```lean
+-- If-then: an if-then sentence is false only when its if part holds and its then part fails, its contrapositive always agrees with it, and its converse disagrees exactly when the two parts differ.
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Fintype.Card
+import Mathlib.Algebra.Ring.Parity
+
+/-- An if-then promise breaks only one way: for any two yes-or-no statements P and Q,
+"if P then Q" is false exactly when P happens and Q fails to follow. -/
+theorem if_then_false_iff_if_and_not_then (P Q : Prop) : ¬ (P → Q) ↔ P ∧ ¬ Q := by
+  exact not_imp
+
+/-- The contrapositive is the same promise: "if P then Q" holds exactly when
+"if not Q then not P" holds. -/
+theorem if_then_iff_contrapositive (P Q : Prop) : (P → Q) ↔ (¬ Q → ¬ P) := by
+  exact not_imp_not.symm
+
+/-- The converse is a different promise: "if P then Q" and its converse "if Q then P"
+give the same verdict exactly when P and Q have the same answer, so they disagree on the
+two rows where the halves differ. -/
+theorem if_then_iff_converse_iff (P Q : Prop) : ((P → Q) ↔ (Q → P)) ↔ (P ↔ Q) := by
+  by_cases hp : P <;> by_cases hq : Q <;> simp [hp, hq]
+
+-- The four customers in the order Ana, Ben, Cal, Dee: (cracked, replaced free), 1 = true, 0 = false.
+-- The warranty's verdicts are 1, 0, 1, 1.
+example : [(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => decide (p.1 = true → p.2 = true)) = [true, false, true, true] := by
+  decide
+
+-- The second route, "no crack, or replaced free", gives the same verdicts 1, 0, 1, 1.
+example : [(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => decide (p.1 = false ∨ p.2 = true)) = [true, false, true, true] := by
+  decide
+
+-- The converse, "if replaced free, then it cracked", reads 1, 1, 0, 1: Cal's row is 0.
+example : [(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => decide (p.2 = true → p.1 = true)) = [true, true, false, true] := by
+  decide
+
+-- The contrapositive, "if not replaced free, then no crack", reads 1, 0, 1, 1.
+example : [(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => decide (p.2 = false → p.1 = false)) = [true, false, true, true] := by
+  decide
+
+-- Of the 4 rows, the warranty is broken on exactly 1 (Ben's).
+example : (Finset.univ.filter
+    (fun p : Bool × Bool => ¬ (p.1 = true → p.2 = true))).card = 1 := by
+  decide
+
+-- The converse disagrees with the warranty on 2 rows (Ben and Cal).
+example : (Finset.univ.filter
+    (fun p : Bool × Bool => ((p.1 = true → p.2 = true) ↔ (p.2 = true → p.1 = true)) → False)).card
+      = 2 := by
+  decide
+
+-- The contrapositive disagrees with the warranty on 0 rows.
+example : (Finset.univ.filter
+    (fun p : Bool × Bool => ((p.1 = true → p.2 = true) ↔ (p.2 = false → p.1 = false)) → False)).card
+      = 0 := by
+  decide
+
+-- "If 2 is odd, then 1 = 0" reads 1: the if part never happens.
+example : Odd (2 : ℕ) → (1 : ℕ) = 0 := by decide
+
+#print axioms if_then_false_iff_if_and_not_then
+#print axioms if_then_iff_contrapositive
+#print axioms if_then_iff_converse_iff
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'if_then_false_iff_if_and_not_then' depends on axioms: [propext, Classical.choice, Quot.sound]
+'if_then_iff_contrapositive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'if_then_iff_converse_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -276,11 +378,13 @@ The two outputs match line for line.
 - [Valid arguments](06-valid-arguments.md): what you may conclude from an if-then and one half.
 - [Proof by contrapositive](../06-Proof/02-proof-by-contrapositive.md): proving the flipped sentence on purpose.
 
+Left open: given the warranty and one fact about a customer, which conclusions are safe to draw?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Book home](https://richardhammack.github.io/BookOfProof/) · [free PDF](https://richardhammack.github.io/BookOfProof/Main.pdf). Section 2.3.
 - Velleman, Daniel J. *How to Prove It*, 3rd ed. Cambridge University Press, 2019. [doi:10.1017/9781108539890](https://doi.org/10.1017/9781108539890). Converse and contrapositive side by side (paid).

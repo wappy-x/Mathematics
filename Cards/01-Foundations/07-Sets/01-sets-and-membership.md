@@ -1,6 +1,6 @@
 # Sets: a collection defined only by what belongs, with the empty set and set-builder shorthand
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Sets and membership
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Sets
 
 ---
 
@@ -13,6 +13,8 @@ The list answers one question: hand it a name, it says yes or no. Ana, yes. Ben,
 A collection like that — settled entirely by what is on it — is what we mean by a **set**. Its contents are its **members**.
 
 **A set is nothing but its membership: same members, same set.**
+
+**What kind of fact this is:** a definition: what a set is, and when two sets are the same. Set theory takes "same members, same set" as an axiom, a starting rule that is not proved.
 
 ### The picture: the one question a set answers
 
@@ -40,7 +42,7 @@ Or state the test instead. This is **set-builder shorthand**:
 
 **G = {x in the office : x is under 30}**
 
-Read it aloud: "G is the set of people x from the office such that x is under 30." The letter x stands for one person at a time; the colon reads "such that". Two spellings, one set.
+**Read it aloud:** "G is the set of people x from the office such that x is under 30." The letter x stands for one person at a time; the colon reads "such that". Two spellings, one set.
 
 | Symbol | Plain meaning | In our party |
 | --- | --- | --- |
@@ -50,6 +52,13 @@ Read it aloud: "G is the set of people x from the office such that x is under 30
 | $\emptyset$ | the empty set: nobody on it | the office under-20s |
 | { } | braces: the members are what sits inside | {Ana, Cleo, Eli} |
 | : | inside braces, "such that" | {x in the office : x is under 30} |
+
+### When it holds
+
+- **Each candidate gets a clear yes or no.** "Under 30" is strict, so a 30-year-old is out. A vague test, such as "young", picks no definite set.
+- **Repeats do not count.** Count the repeat in {Eli, Ana, Cleo, Ana} and you get 4 guests, not 3.
+- **Order does not count.** Treat the list as ordered and three guests turn into 6 different spellings.
+- **The rule picks from a fixed collection, here the office.** With no fence around what it picks from, a rule can name a set that cannot exist ([Russell's paradox](06-russells-paradox.md)).
 
 ---
 
@@ -228,6 +237,108 @@ ALL CHECKS PASS
 
 The two outputs match.
 
+### Lean
+
+Lean proves the three rules for sets of any kind of thing, and checks every number in the party table.
+
+- Same members, same set: two sets are equal exactly when every candidate is on both or on neither.
+- There is exactly one empty set.
+- Two rules picking from one fixed collection name the same set exactly when they give the same answer for everyone in it.
+- The rule "under 30" picks {Ana, Cleo, Eli} from the office: 3 guests out of 5.
+- Ana is on the list, Ben is not, and a 30-year-old is out.
+- {Eli, Ana, Cleo, Ana} is the same set, with 3 members, though the list has 4 entries.
+- As an ordered list, three guests have 6 spellings.
+- Nobody is under 20 and nobody is over 60, so both rules give the empty set.
+
+Running the rule as a program and printing the table are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 71 lines</summary>
+
+```lean
+-- Sets: a set is fixed by its members alone, so two sets with the same members are equal, there is exactly one set with no members, and the card's office guest list comes out as it says.
+import Mathlib.Data.Set.Basic
+import Mathlib.Data.Finset.Image
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.List.Permutation
+
+/-- Same members, same set (extensionality): for any two sets `A` and `B` of things of one
+kind, `A` and `B` are the same set exactly when, for every candidate `x`, `x` is in `A`
+precisely when `x` is in `B`. -/
+theorem sets_equal_iff_same_members {α : Type*} (A B : Set α) :
+    A = B ↔ ∀ x, x ∈ A ↔ x ∈ B := by
+  constructor
+  · rintro rfl x
+    exact Iff.rfl
+  · intro h
+    exact Set.ext h
+
+/-- The empty set: among sets of things of one kind, there is exactly one set with no
+members, so any two rules that pick nobody name the same set. -/
+theorem exactly_one_empty_set {α : Type*} :
+    ∃! E : Set α, ∀ x, x ∉ E := by
+  refine ⟨∅, fun x => Set.notMem_empty x, ?_⟩
+  intro E hE
+  exact Set.eq_empty_iff_forall_notMem.mpr hE
+
+/-- Set-builder shorthand: two rules picking from the same fixed collection `S` name the same
+set `{x ∈ S : p x} = {x ∈ S : q x}` exactly when they give the same yes-or-no answer for
+every member of `S`. -/
+theorem set_builder_equal_iff_same_answers {α : Type*} (S : Set α) (p q : α → Prop) :
+    {x ∈ S | p x} = {x ∈ S | q x} ↔ ∀ x ∈ S, p x ↔ q x := by
+  constructor
+  · intro h x hx
+    have h1 : x ∈ {x ∈ S | p x} ↔ x ∈ {x ∈ S | q x} := by rw [h]
+    simpa [hx] using h1
+  · intro h
+    ext x
+    simp only [Set.mem_ofPred_eq]
+    constructor
+    · rintro ⟨hx, hp⟩
+      exact ⟨hx, (h x hx).mp hp⟩
+    · rintro ⟨hx, hq⟩
+      exact ⟨hx, (h x hx).mpr hq⟩
+
+-- The office: five people with their ages.
+example : ({("Ana", 24), ("Ben", 31), ("Cleo", 28), ("Dev", 41), ("Eli", 29)} :
+    Finset (String × ℕ)).card = 5 := by decide
+-- The guest list by the rule "under 30" is the roster {Ana, Cleo, Eli}, three guests.
+example : (({("Ana", 24), ("Ben", 31), ("Cleo", 28), ("Dev", 41), ("Eli", 29)} :
+    Finset (String × ℕ)).filter (fun p => p.2 < 30)).image Prod.fst =
+    ({"Ana", "Cleo", "Eli"} : Finset String) := by decide
+example : ({"Ana", "Cleo", "Eli"} : Finset String).card = 3 := by decide
+-- Ana is on the list, Ben is not; the rule is strict, so a 30-year-old is out.
+example : "Ana" ∈ ({"Ana", "Cleo", "Eli"} : Finset String) := by decide
+example : "Ben" ∉ ({"Ana", "Cleo", "Eli"} : Finset String) := by decide
+example : ¬ (30 < 30) := by decide
+-- The scrambled spelling {Eli, Ana, Cleo, Ana} is the same set, three members, not four.
+example : ({"Eli", "Ana", "Cleo", "Ana"} : Finset String) = {"Ana", "Cleo", "Eli"} := by decide
+example : ({"Eli", "Ana", "Cleo", "Ana"} : Finset String).card = 3 := by decide
+example : ["Eli", "Ana", "Cleo", "Ana"].length = 4 := by decide
+-- Treated as an ordered list, three guests have 3 × 2 × 1 = 6 spellings.
+example : (["Ana", "Cleo", "Eli"].permutations).length = 6 := by
+  rw [List.length_permutations]; decide
+-- Nobody under 20, nobody over 60: two rules, both the empty set.
+example : ({("Ana", 24), ("Ben", 31), ("Cleo", 28), ("Dev", 41), ("Eli", 29)} :
+    Finset (String × ℕ)).filter (fun p => p.2 < 20) = ∅ := by decide
+example : ({("Ana", 24), ("Ben", 31), ("Cleo", 28), ("Dev", 41), ("Eli", 29)} :
+    Finset (String × ℕ)).filter (fun p => 60 < p.2) = ∅ := by decide
+
+#print axioms sets_equal_iff_same_members
+#print axioms exactly_one_empty_set
+#print axioms set_builder_equal_iff_same_answers
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sets_equal_iff_same_members' depends on axioms: [propext, Quot.sound]
+'exactly_one_empty_set' depends on axioms: [propext, Quot.sound]
+'set_builder_equal_iff_same_answers' depends on axioms: [propext, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the party as written, so expect one to fire.
@@ -267,12 +378,14 @@ The two outputs match.
 - [Subsets and the power set](02-subsets-and-power-set.md): a whole set sitting inside another, and how many ways to pick some members.
 - [Russell's paradox](06-russells-paradox.md): what goes wrong when a rule picks with no fence around what it picks from.
 
+Left open: how do two sets compare when they are not equal?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Chapter 1: membership as the one undefined idea.
-- Enderton, Herbert B. *Elements of Set Theory*. Academic Press, 1977. [doi:10.1016/C2009-0-22079-4](https://doi.org/10.1016/C2009-0-22079-4). Chapter 1 makes same-members-same-set an axiom; the empty set falls out.
+- Enderton, Herbert B. *Elements of Set Theory*. Academic Press, 1977. [doi:10.1016/C2009-0-22079-4](https://doi.org/10.1016/C2009-0-22079-4). Chapter 2 makes same-members-same-set an axiom; the empty set falls out.
 - Bagaria, Joan. "Set Theory." *Stanford Encyclopedia of Philosophy*, revised 2023. [plato.stanford.edu](https://plato.stanford.edu/entries/set-theory/). Free; section 2.1.

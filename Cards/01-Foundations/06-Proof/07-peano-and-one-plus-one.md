@@ -16,6 +16,8 @@ That third rule is induction, the method [Induction](04-proof-by-induction.md) r
 
 **Fix a start, fix a next, rule out everything else — then addition is a definition, and 1 + 1 = 2 unfolds from it.**
 
+**What kind of fact this is:** a theorem, proved in Why it works, from three axioms (starting rules, never proved) and a definition of plus.
+
 ### The picture: one move, one direction
 
 ```mermaid
@@ -38,11 +40,14 @@ Numerals name short ropes:
 Addition is not a fourth rule. Two lines say what plus does:
 
 **Rule one: anything plus zero is that thing.**
+
 **Rule two: anything plus next(n) is next of (that thing plus n).**
 
 Point them at 1 + 1:
 
 **1 + 1 = 1 + next(zero) = next(1 + zero) = next(1) = 2**
+
+**Read it aloud:** one plus one is one plus next of zero, then next of one plus zero, then next of one, which is 2.
 
 | Piece | Plain meaning | On the shepherd's rope |
 | --- | --- | --- |
@@ -52,6 +57,12 @@ Point them at 1 + 1:
 | 1 | next(zero) | one knot |
 | 2 | next(next(zero)) | two knots |
 | plus | the two rules above, nothing more | 1 + 1 gives 2 |
+
+### When it holds
+
+- **No next is zero.** Drop it and the rope closes into a ring: on a ring of four, 2 + 3 lands on 1.
+- **No two ropes share a next.** Drop it and the far end sticks: 2 + 3 lands on 3.
+- **Nothing else counts as a rope.** Drop it and a stray rope sits off to the side, out of induction's reach.
 
 ---
 
@@ -221,6 +232,135 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's claims from the three rules alone, for any start and next that obey them.
+
+- With plus given by rule one and rule two, 1 + 1 = 2 follows from the rules.
+- The two rules fix plus completely: two ways of adding that both obey them agree on every pair of ropes.
+- The three rules pin down the counting numbers: tying knots from the start reaches every rope, and different knot counts never meet.
+- The unfolding 1 + 1 = 1 + next(zero) = next(1 + zero) = next(1) = 2 holds step by step, and 2 + 3 = 5.
+- On a ring of four, 2 + 3 lands on 1. With the far end stuck at 3, three steps from 2 land on 3.
+
+Building ropes as data, and rule two without the outer next landing on 2, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 101 lines</summary>
+
+```lean
+-- Peano's three rules: in any system with a start, a next that is never the start and never shared, and induction, the two rules of plus force 1 + 1 = 2, fix plus completely, and the system is a copy of the counting numbers.
+import Mathlib.Data.ZMod.Defs
+import Mathlib.Logic.Function.Iterate
+
+/-- 1 + 1 = 2 is a conclusion, not a fact. Take any system of counting numbers: a start
+`zero` and a successor `next`, where no next is zero, no two numbers share a next, and
+induction holds (nothing else counts as a number). Let `plus` obey the two rules
+"anything plus zero is that thing" and "anything plus next(n) is next of (that thing
+plus n)". Then 1 + 1 = 2, where 1 = next(zero) and 2 = next(next(zero)). -/
+theorem one_add_one_eq_two_from_peano_rules {N : Type*} (zero : N) (next : N → N)
+    (next_ne_zero : ∀ n, next n ≠ zero)
+    (next_injective : Function.Injective next)
+    (induction : ∀ P : N → Prop, P zero → (∀ n, P n → P (next n)) → ∀ n, P n)
+    (plus : N → N → N)
+    (rule_one : ∀ m, plus m zero = m)
+    (rule_two : ∀ m n, plus m (next n) = next (plus m n)) :
+    plus (next zero) (next zero) = next (next zero) := by
+  rw [rule_two, rule_one]
+
+/-- Addition is a definition, not a fourth rule: the two rules of plus pin it down
+completely. Any two ways of adding that both obey rule one and rule two give the same
+answer on every pair of numbers, because induction reaches every number. -/
+theorem plus_unique_from_two_rules {N : Type*} (zero : N) (next : N → N)
+    (induction : ∀ P : N → Prop, P zero → (∀ n, P n → P (next n)) → ∀ n, P n)
+    (plus plus' : N → N → N)
+    (rule_one : ∀ m, plus m zero = m)
+    (rule_two : ∀ m n, plus m (next n) = next (plus m n))
+    (rule_one' : ∀ m, plus' m zero = m)
+    (rule_two' : ∀ m n, plus' m (next n) = next (plus' m n)) :
+    ∀ m n, plus m n = plus' m n := by
+  intro m n
+  refine induction (fun n => plus m n = plus' m n) ?_ ?_ n
+  · show plus m zero = plus' m zero
+    rw [rule_one, rule_one']
+  · intro k hk
+    show plus m (next k) = plus' m (next k)
+    rw [rule_two, rule_two']
+    exact congrArg next hk
+
+/-- The three rules pin down the counting numbers: any system with a start, a next that
+is never the start and never shared, and induction, is a copy of the whole numbers.
+Counting k knots from the start reaches every number exactly once. -/
+theorem peano_rules_pin_down_counting_numbers {N : Type*} (zero : N) (next : N → N)
+    (next_ne_zero : ∀ n, next n ≠ zero)
+    (next_injective : Function.Injective next)
+    (induction : ∀ P : N → Prop, P zero → (∀ n, P n → P (next n)) → ∀ n, P n) :
+    ∃ f : ℕ → N, Function.Bijective f ∧ f 0 = zero ∧ ∀ k, f (k + 1) = next (f k) := by
+  have hinj : ∀ k j : ℕ, next^[k] zero = next^[j] zero → k = j := by
+    intro k
+    induction k with
+    | zero =>
+      intro j h
+      cases j with
+      | zero => rfl
+      | succ j =>
+        exfalso
+        rw [Function.iterate_succ_apply'] at h
+        exact next_ne_zero _ h.symm
+    | succ k ih =>
+      intro j h
+      cases j with
+      | zero =>
+        exfalso
+        rw [Function.iterate_succ_apply'] at h
+        exact next_ne_zero _ h
+      | succ j =>
+        rw [Function.iterate_succ_apply', Function.iterate_succ_apply'] at h
+        exact congrArg Nat.succ (ih j (next_injective h))
+  refine ⟨fun k => next^[k] zero, ⟨fun a b h => hinj a b h, ?_⟩, rfl, ?_⟩
+  · intro y
+    refine induction (fun y => ∃ a : ℕ, next^[a] zero = y) ?_ ?_ y
+    · exact ⟨0, rfl⟩
+    · rintro n ⟨a, ha⟩
+      exact ⟨a + 1, by rw [Function.iterate_succ_apply', ha]⟩
+  · intro k
+    exact Function.iterate_succ_apply' next k zero
+
+-- The numerals name short ropes: 1 = next(zero), 2 = next(next(zero)), and next(3) = 4.
+example : (1 : ℕ) = Nat.succ 0 ∧ (2 : ℕ) = Nat.succ (Nat.succ 0) := by decide
+example : Nat.succ 3 = (4 : ℕ) := by decide
+
+-- The unfolding: 1 + 1 = 1 + next(zero) = next(1 + zero) = next(1) = 2.
+example : (1 : ℕ) + 1 = 1 + Nat.succ 0 ∧ 1 + Nat.succ 0 = Nat.succ (1 + 0) ∧
+    Nat.succ (1 + 0) = Nat.succ 1 ∧ Nat.succ 1 = (2 : ℕ) := by decide
+
+-- The same rules on 2 + 3: next(next(next(2 + zero))) = 5.
+example : (2 : ℕ) + 3 = Nat.succ (Nat.succ (Nat.succ (2 + 0))) ∧
+    Nat.succ (Nat.succ (Nat.succ (2 + 0))) = (5 : ℕ) := by decide
+
+-- Second road: tie three knots onto 2, one at a time, and land on 5.
+example : Nat.succ^[3] 2 = (5 : ℕ) := by decide
+
+-- Drop "no next is zero" (a ring of four): 2 + 3 lands on 1, because 5 and 1 are one rope.
+example : (2 : ZMod 4) + 3 = 1 ∧ (5 : ZMod 4) = 1 := by decide
+
+-- Drop "no two ropes share a next" (the far end sticks at 3): three steps from 2 land on 3.
+example : (fun k : ℕ => min (k + 1) 3)^[3] 2 = 3 := by decide
+
+#print axioms one_add_one_eq_two_from_peano_rules
+#print axioms plus_unique_from_two_rules
+#print axioms peano_rules_pin_down_counting_numbers
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'one_add_one_eq_two_from_peano_rules' does not depend on any axioms
+'plus_unique_from_two_rules' does not depend on any axioms
+'peano_rules_pin_down_counting_numbers' depends on axioms: [propext, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -259,15 +399,18 @@ The two outputs match line for line.
 
 ## Where this goes next
 
+- [Strong induction and the least element](05-strong-induction-and-well-ordering.md): every non-empty collection of counting numbers has a smallest member, the least-element property.
 - [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the least-element property at work.
 - [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the reals, the last step.
+
+Left open: how are negatives, fractions and the reals built on these ropes?
 
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Peano, Giuseppe. *Arithmetices principia, nova methodo exposita*. Turin, 1889. [Internet Archive scan](https://archive.org/details/arithmeticespri00peangoog). The original rules, in Latin; Peano starts at 1, not 0, but the theory is the same after renaming.
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Full text, free](https://richardhammack.github.io/BookOfProof/Main.pdf). The successor picture and induction as a principle.

@@ -16,6 +16,8 @@ When neither side wins, a second tool settles it: if each of two collections fit
 
 **Fitting one way says "no bigger". Fitting both ways says "the same size". Nothing fits both ways with its own power set, so there is no biggest infinity.**
 
+**What kind of fact this is:** two theorems: Cantor's, proved in Why it works, and Cantor–Bernstein, stated without proof.
+
 ### The picture: two comparisons
 
 ```mermaid
@@ -40,11 +42,19 @@ Two statements, written out.
 
 **Cantor–Bernstein: the segment fits inside the square and the square inside the segment, so the two hold equally many points.**
 
+**Read it aloud:** one list is always left over, and fitting both ways means the same size.
+
 | Piece | Plain meaning | In the hotel |
 | --- | --- | --- |
 | fits inside | each member gets its own slot: one-to-one, [One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md) | room 1 to {1}, the list with just room 1 |
 | the guest lists | all of them at once: the power set | 16, for 4 rooms |
 | the same size | pairable one for one: [Same size means pairable](01-same-size-by-pairing.md) | segment, square |
+
+### When it holds
+
+- **A fitting never shares a slot.** Let two members share one slot and the fitting says nothing about size.
+- **Cantor–Bernstein needs both fittings.** The 4 rooms fit inside the 16 lists, but the lists do not fit back.
+- **No decimal ends in all 9s.** Allow those endings and one square point shuffles to two segment points.
 
 ---
 
@@ -72,7 +82,7 @@ Step 2 never used the number four, or the order of the rooms. Any collection, an
 
 ### Step 4: fitting both ways means equal
 
-Cantor–Bernstein: two fittings, one each way, sew into a single pairing. No extra assumption is needed — no axiom of choice.
+Cantor–Bernstein: two fittings, one each way, sew into a single pairing. No extra assumption is needed — no axiom of choice (one pick from each of endlessly many boxes).
 
 A segment fits inside a square: lay it along the bottom edge. The square fits inside the segment — a square point is two decimals, so shuffle their digits together, first of one, first of the other, and out comes a single decimal. Write each decimal so it never ends in all 9s, and no two collide. So a segment holds as many points as a whole square. Cantor wrote to Dedekind: I see it, but I do not believe it.
 
@@ -229,6 +239,98 @@ each point comes back as itself         10000
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves both theorems for every collection, not just the four-room hotel, and the segment and square claim for every point.
+
+- Every collection fits inside its guest lists: each member goes to the list naming just it.
+- However the lists are handed out, the list of members left off their own list is never one handed out.
+- Fitting both ways means the same size: two fittings, one each way, give a single pairing.
+- A segment and a whole square hold equally many points: they pair one for one.
+- The hotel numbers come out as the card says: 16 lists, 65536 handouts, the missed list {2,3}, and 10000 shuffles that come back.
+
+Running all 65536 handouts one by one, and the printed tables, stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 64 lines</summary>
+
+```lean
+-- Comparing infinities: every set fits one-to-one inside its power set but no handout of subsets covers them all (the set of members left off their own subset is always missed), two one-to-one fittings in opposite directions give a pairing, a segment of the line pairs with a whole square, and the card's four-room hotel numbers come out as it says.
+import Mathlib.Logic.Function.Basic
+import Mathlib.SetTheory.Cardinal.SchroederBernstein
+import Mathlib.Analysis.Real.Cardinality
+import Mathlib.Data.Fintype.Powerset
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Tactic.NormNum
+
+/-- Every collection is strictly smaller than its power set. It fits inside: some one-to-one
+rule sends each member to its own subset (each member to the list naming just it). And no
+handout covers the power set: however each member `a` is handed a subset `g a`, the list of
+the members left off their own list, `{x | x ∉ g x}`, is never one that was handed out. -/
+theorem every_set_is_smaller_than_its_power_set (α : Type*) :
+    (∃ f : α → Set α, Function.Injective f) ∧
+      ∀ g : α → Set α, ∀ a : α, g a ≠ {x | x ∉ g x} := by
+  refine ⟨⟨fun a => {a}, Set.singleton_injective⟩, ?_⟩
+  intro g a h
+  have h1 : a ∈ g a ↔ a ∈ {x | x ∉ g x} := by rw [← h]
+  simp only [Set.mem_setOf_eq] at h1
+  by_cases ha : a ∈ g a
+  · exact (h1.mp ha) ha
+  · exact ha (h1.mpr ha)
+
+/-- Cantor–Bernstein: fitting both ways means the same size. If `α` fits one-to-one inside `β`
+and `β` fits one-to-one inside `α`, then there is a single rule pairing `α` with `β` one for
+one. -/
+theorem fits_both_ways_means_same_size {α β : Type*} (f : α → β) (g : β → α)
+    (hf : Function.Injective f) (hg : Function.Injective g) :
+    ∃ h : α → β, Function.Bijective h := by
+  exact Function.Embedding.schroeder_bernstein hf hg
+
+/-- A segment holds as many points as a whole square: the points of `[0, 1]` pair one for one
+with the points of the square `[0, 1] × [0, 1]`. -/
+theorem segment_and_square_have_equally_many_points :
+    Nonempty (Set.Icc (0 : ℝ) 1 ≃ Set.Icc (0 : ℝ) 1 × Set.Icc (0 : ℝ) 1) := by
+  have h1 : Cardinal.mk (Set.Icc (0 : ℝ) 1) = Cardinal.continuum := Cardinal.mk_Icc_real (by norm_num)
+  have h2 : Cardinal.mk (Set.Icc (0 : ℝ) 1 × Set.Icc (0 : ℝ) 1) = Cardinal.mk (Set.Icc (0 : ℝ) 1) := by
+    rw [Cardinal.mk_prod, h1, Cardinal.lift_id, Cardinal.continuum_mul_self]
+  exact Cardinal.eq.mp h2.symm
+
+-- The four-room hotel has 16 guest lists, and 16 ^ 4 = 65536 ways to hand one list to each room.
+example : Fintype.card (Finset (Fin 4)) = 16 := by decide
+example : Fintype.card (Fin 4 → Finset (Fin 4)) = 65536 := by
+  simp [Fintype.card_finset]
+
+-- The handout from Step 2: room 1 gets {1,2}, room 2 gets {1,3,4}, room 3 gets {}, room 4 gets {2,4}.
+-- Walking the corridor builds the missed list {2,3}, and no room was handed {2,3}.
+example :
+    let a : ℕ → Finset ℕ := fun r =>
+      if r = 1 then {1, 2} else if r = 2 then {1, 3, 4} else if r = 3 then ∅ else {2, 4}
+    ({1, 2, 3, 4} : Finset ℕ).filter (fun r => r ∉ a r) = {2, 3} ∧
+      ∀ r ∈ ({1, 2, 3, 4} : Finset ℕ), a r ≠ {2, 3} := by
+  decide
+
+-- The square to four digits: shuffling the digits of each of the 100 × 100 points into one
+-- four-digit number and unshuffling gives the point back, so all 10000 shuffles are different.
+example : ∀ a < 100, ∀ b < 100,
+    let t := a / 10 * 1000 + b / 10 * 100 + a % 10 * 10 + b % 10
+    (t / 1000 * 10 + t / 10 % 10, t / 100 % 10 * 10 + t % 10) = (a, b) := by
+  decide +kernel
+
+#print axioms every_set_is_smaller_than_its_power_set
+#print axioms fits_both_ways_means_same_size
+#print axioms segment_and_square_have_equally_many_points
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'every_set_is_smaller_than_its_power_set' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fits_both_ways_means_same_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+'segment_and_square_have_equally_many_points' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -268,11 +370,13 @@ ALL CHECKS PASS
 
 - [The axiom of choice](05-axiom-of-choice.md): one pick from each of endlessly many boxes — not needed for anything above, and not everybody wants it.
 
+The question this card leaves open: is there a size strictly between the rooms and their guest lists?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Sections 22 to 25.
 - Cantor, Georg. *Contributions to the Founding of the Theory of Transfinite Numbers*. Dover, 1955. [Publisher page](https://store.doverpublications.com/products/9780486600451). The author's own words.

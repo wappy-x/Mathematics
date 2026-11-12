@@ -18,6 +18,8 @@ It *is* the sign, respelled.
 
 **To prove "if A then B" — A the if part, B the then part — prove "if not B then not A" instead. Same claim, easier place to stand.**
 
+**What kind of fact this is:** a theorem of logic, proved in Why it works: an if-then and its contrapositive break in the same case, so they are one claim.
+
 ### The picture: the move
 
 ```mermaid
@@ -43,6 +45,12 @@ flowchart TD
 | the contrapositive | both flipped, then swapped | if you paid, it was not validated |
 | the converse | swapped, no flips | if you pay nothing, you were validated |
 | the move | prove the contrapositive, get the original free | assume you paid, show no stamp |
+
+### When it holds
+
+- **The claim is an if-then.** A claim with no if part has nothing to flip.
+- **Both halves get a *not*, and they swap.** Swap without the *nots* and you get the converse, which disagrees with the sign on 2 drivers.
+- **Each half is either true or false.** A ticket is validated or it is not; you paid nothing or you paid something. If a half could be neither, "not B" would miss a case, and the two sentences could come apart.
 
 ---
 
@@ -221,6 +229,91 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three claims, the first for every if-then and the other two for every whole number.
+
+- When each half is either true or false, an if-then and its contrapositive are one claim.
+- The twin claim: if a number times itself is odd, the number is odd.
+- The flipped version: if a number is even, the number times itself is even.
+
+Lean also checks the drivers' verdicts and the count to 20, so only the printed table is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 59 lines</summary>
+
+```lean
+-- Proof by contrapositive: an if-then and its contrapositive are the same claim, so if a whole number times itself is odd, the number is odd.
+import Mathlib.Algebra.Ring.Parity
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Data.Finset.Card
+
+/-- An if-then and its contrapositive are one claim: when each half is either true or false,
+"if A then B" holds exactly when "if not B then not A" holds. -/
+theorem imp_iff_contrapositive (A B : Prop) (hA : A ∨ ¬A) (hB : B ∨ ¬B) :
+    (A → B) ↔ (¬B → ¬A) := by
+  constructor
+  · intro h hnB ha
+    exact hnB (h ha)
+  · intro h ha
+    rcases hB with hb | hnb
+    · exact hb
+    · exact absurd ha (h hnb)
+
+/-- The twin claim: for every whole number n, if n × n is odd, then n is odd. -/
+theorem odd_of_odd_mul_self (n : ℕ) (h : Odd (n * n)) : Odd n := by
+  by_contra hn
+  rw [Nat.not_odd_iff_even] at hn
+  exact (Nat.not_even_iff_odd.mpr h) (hn.mul_right n)
+
+/-- The flipped version the card actually proves: for every whole number n,
+if n is even, then n × n is even. -/
+theorem even_mul_self_of_even (n : ℕ) (h : Even n) : Even (n * n) := by
+  exact h.mul_right n
+
+-- The four drivers as (validated, paid nothing). An if-then is kept unless the if part holds
+-- and the then part fails. The sign reads 1, 0, 1, 1.
+example : [(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => !p.1 || p.2) = [true, false, true, true] := by decide
+
+-- The contrapositive (paid something, so not validated) reads 1, 0, 1, 1: it disagrees on nobody.
+example : [(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => !(!p.2) || !p.1) = [true, false, true, true] := by decide
+
+-- The converse (paid nothing, so validated) reads 1, 1, 0, 1: it disagrees on Wes and Yaz, 2 rows.
+example : [(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => !p.2 || p.1) = [true, true, false, true] := by decide
+example : (([(true, true), (true, false), (false, true), (false, false)].map
+    (fun p : Bool × Bool => ((!p.1 || p.2) != (!p.2 || p.1)))).filter id).length = 2 := by decide
+
+-- The twin claim at n = 6: 6 = 2 × 3, so 6 × 6 = 2 × (3 × 6) = 2 × 18 = 36, even.
+example : (6 : ℕ) = 2 * 3 ∧ 6 * 6 = 2 * (3 * 6) ∧ 2 * (3 * 6) = 2 * 18 ∧ 2 * 18 = (36 : ℕ) := by
+  decide
+example : Even (6 * 6 : ℕ) := by decide
+
+-- 7 × 7 = 49, odd: it agrees with the claim and proves nothing.
+example : (7 : ℕ) * 7 = 49 ∧ Odd (7 * 7 : ℕ) := by decide
+
+-- Of the whole numbers 1 to 20, exactly 10 have n × n odd, and they are exactly the odd ones.
+example : ((Finset.Icc 1 20).filter (fun n : ℕ => (n * n) % 2 = 1)).card = 10 := by decide
+example : (Finset.Icc 1 20).filter (fun n : ℕ => (n * n) % 2 = 1)
+    = (Finset.Icc 1 20).filter (fun n : ℕ => n % 2 = 1) := by decide
+
+#print axioms imp_iff_contrapositive
+#print axioms odd_of_odd_mul_self
+#print axioms even_mul_self_of_even
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'imp_iff_contrapositive' does not depend on any axioms
+'odd_of_odd_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'even_mul_self_of_even' depends on axioms: [propext]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -245,7 +338,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Car parks, cloakrooms, doors.** "No ticket, no entry" and "if you are inside, you have a ticket" are one rule, read from either end. Chaining rules: [Valid arguments](../05-Logic/06-valid-arguments.md).
-- **Anything you diagnose backwards.** "If the deploy worked, the new version is live." The old version is live, so the deploy did not work. Contrapositive, without thinking.
+- **Anything you diagnose backwards.** "If the deploy (the release of new software) worked, the new version is live." The old version is live, so the deploy did not work. Contrapositive, without thinking.
 - **Proof itself.** Claims about even, odd and factors flip well: "not even" is a fact you can write down. Which move fits which claim: [Choosing a proof strategy](06-choosing-a-proof-strategy.md).
 
 > **Say it back**
@@ -262,11 +355,13 @@ The two outputs match line for line.
 
 - [Proof by contradiction](03-proof-by-contradiction.md): assume the claim is false and wait for it to break — the move confused with this one.
 
+This card leaves one question open: what if neither end of the claim gives you anything to write down?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Book home](https://richardhammack.github.io/BookOfProof/) · [free PDF](https://richardhammack.github.io/BookOfProof/Main.pdf). Chapter 5, free.
 - Sundstrom, Ted. *Mathematical Reasoning: Writing and Proof*, v3. Grand Valley State University, 2020. [Book page](https://scholarworks.gvsu.edu/books/24/). Section 3.2, free.

@@ -16,6 +16,8 @@ Eight is not luck: each topping is a yes-or-no, and the menu doubles at every on
 
 **A subset is any part of a set, none of it and all of it included; the power set is those parts collected into one set; and because every member is an on-or-off choice, a set of n members — n is how many are on the list — has 2^n subsets, n twos multiplied.**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works; subset and power set are definitions.
+
 ### The picture: one doubling per topping
 
 ```mermaid
@@ -39,6 +41,8 @@ The count is the choices, multiplied:
 
 One 2 per topping, on or off, and the 2s multiply because the choices do not interfere. Three 2s multiplied is written **2^3**, said "two to the power of three", so n members give **2^n** subsets.
 
+**Read it aloud:** a set with n members has two to the power n subsets, so three toppings give 2 × 2 × 2 = 8 pizzas.
+
 | Piece | Plain meaning | In the pizza shop |
 | --- | --- | --- |
 | a set | a collection, fixed by what belongs | the three toppings |
@@ -49,6 +53,13 @@ One 2 per topping, on or off, and the 2s multiply because the choices do not int
 | 2^n | n twos multiplied | 2 × 2 × 2 = 8 |
 
 The subset sign is ⊆: A ⊆ B reads "every member of A is in B". The power set of A is written P(A).
+
+### When it holds
+
+- **The set is finite.** n must be a count. An infinite set has infinitely many subsets, and 2^n gives no number.
+- **Each member is on or off, whatever the others do.** Tie two together, such as "chilli only with olive", and some of the 8 pizzas leave the menu.
+- **Each member counts once.** A set has no repeats. Write mushroom on the board twice and it is still 3 toppings and 8 pizzas, not 16.
+- **Order does not matter.** Mushroom then olive is the same pizza as olive then mushroom. Count the orders and the total runs past 8.
 
 ---
 
@@ -219,6 +230,120 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole counts, no rounding.
 
+### Lean
+
+Lean proves these facts for every finite set, and checks the three-topping shop exactly.
+
+- A set with n members has exactly 2^n subsets.
+- Putting up a new member, one not already in the set, doubles the number of subsets.
+- The subsets that leave out one member are exactly the subsets of what remains.
+- The menu grows 1, 2, 4, 8, 16 as toppings go up.
+- Three toppings give the eight pizzas listed, 4 of them chilli-free and 7 with a topping.
+
+Building the menu one topping at a time, and printing the eight pizzas in order, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 86 lines</summary>
+
+```lean
+-- Subsets and the power set: a finite set of n members has exactly 2^n subsets, each new member doubles the count, and the subsets that leave out one member are exactly the subsets of what remains.
+import Mathlib.Data.Finset.Powerset
+import Mathlib.Data.Finset.Card
+
+open Finset
+
+/-- A finite set with n members has exactly 2^n subsets: the power set of a finite set s,
+the set of every subset of s (the empty set and s itself included), has 2 ^ (number of members
+of s) members. -/
+theorem card_powerset_eq_two_pow {α : Type*} (s : Finset α) :
+    s.powerset.card = 2 ^ s.card := by
+  simp [Finset.card_powerset]
+
+/-- Each new member doubles the list: putting a member a that is not already in s up on the
+board turns the power set into one exactly twice as big. -/
+theorem card_powerset_insert_doubles {α : Type*} [DecidableEq α] (s : Finset α) (a : α)
+    (ha : a ∉ s) :
+    (insert a s).powerset.card = 2 * s.powerset.card := by
+  rw [Finset.card_powerset, Finset.card_powerset, Finset.card_insert_of_notMem ha]
+  rw [pow_succ, Nat.mul_comm]
+
+/-- Double inclusion: the subsets of s that leave out a member a (the chilli-free pizzas) are
+exactly the subsets of s with a taken off the board. -/
+theorem subsets_without_eq_powerset_erase {α : Type*} [DecidableEq α] (s : Finset α) (a : α) :
+    s.powerset.filter (fun t => a ∉ t) = (s.erase a).powerset := by
+  ext t
+  simp only [Finset.mem_filter, Finset.mem_powerset, Finset.subset_erase]
+
+-- The pizza shop: three toppings on the board, and anchovy waiting for the fourth.
+inductive Topping | mushroom | olive | chilli | anchovy
+  deriving DecidableEq
+
+open Topping
+
+-- Three toppings, eight pizzas: 2 × 2 × 2 = 8.
+example : ({mushroom, olive, chilli} : Finset Topping).card = 3 := by decide
+example : ({mushroom, olive, chilli} : Finset Topping).powerset.card = 8 := by decide
+example : 2 * 2 * 2 = (8 : ℕ) ∧ 2 ^ 3 = (8 : ℕ) := by decide
+
+-- The eight pizzas, listed: plain, the three singles, the three pairs, and the loaded one.
+example : ({mushroom, olive, chilli} : Finset Topping).powerset =
+    {∅, {mushroom}, {olive}, {mushroom, olive}, {chilli}, {mushroom, chilli}, {olive, chilli},
+      {mushroom, olive, chilli}} := by decide
+
+-- The plain pizza and the loaded pizza are both on the menu.
+example : (∅ : Finset Topping) ∈ ({mushroom, olive, chilli} : Finset Topping).powerset := by decide
+example : ({mushroom, olive, chilli} : Finset Topping) ∈
+    ({mushroom, olive, chilli} : Finset Topping).powerset := by decide
+
+-- The menu size after each topping goes up: 1, 2, 4, 8, 16.
+example : (∅ : Finset Topping).powerset.card = 1 := by decide
+example : ({mushroom} : Finset Topping).powerset.card = 2 := by decide
+example : ({mushroom, olive} : Finset Topping).powerset.card = 4 := by decide
+example : ({mushroom, olive, chilli} : Finset Topping).powerset.card = 8 := by decide
+example : ({mushroom, olive, chilli, anchovy} : Finset Topping).powerset.card = 16 := by decide
+example : 1 * 2 = (2 : ℕ) ∧ 2 * 2 = (4 : ℕ) ∧ 4 * 2 = (8 : ℕ) := by decide
+
+-- The chilli-free pizzas are exactly P({mushroom, olive}) = { { }, {mushroom}, {olive},
+-- {mushroom, olive} }: four of them, 2 × 2.
+example : ({mushroom, olive, chilli} : Finset Topping).powerset.filter (fun t => chilli ∉ t) =
+    {∅, {mushroom}, {olive}, {mushroom, olive}} := by decide
+example : (({mushroom, olive, chilli} : Finset Topping).powerset.filter
+    (fun t => chilli ∉ t)).card = 4 := by decide
+example : ({mushroom, olive} : Finset Topping).powerset =
+    {∅, {mushroom}, {olive}, {mushroom, olive}} := by decide
+
+-- Pizzas with at least one topping: 8 − 1 = 7.
+example : (({mushroom, olive, chilli} : Finset Topping).powerset.filter
+    (fun t => t ≠ ∅)).card = 7 := by decide
+example : 8 - 1 = (7 : ℕ) := by decide
+
+-- Each member counts once: mushroom written twice is still 3 toppings and 8 pizzas.
+example : ({mushroom, mushroom, olive, chilli} : Finset Topping) = {mushroom, olive, chilli} := by
+  decide
+example : ({mushroom, mushroom, olive, chilli} : Finset Topping).powerset.card = 8 := by decide
+
+-- Order does not matter: mushroom then olive is the same pizza as olive then mushroom.
+example : ({mushroom, olive} : Finset Topping) = {olive, mushroom} := by decide
+
+-- The three mistakes: 7 (plain pizza left out), 3 (toppings counted), 6 (2s added).
+example : ({mushroom, olive, chilli} : Finset Topping).card = 3 := by decide
+example : 2 + 2 + 2 = (6 : ℕ) ∧ 2 + 2 + 2 ≠ (8 : ℕ) := by decide
+
+#print axioms card_powerset_eq_two_pow
+#print axioms card_powerset_insert_doubles
+#print axioms subsets_without_eq_powerset_erase
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'card_powerset_eq_two_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_powerset_insert_doubles' depends on axioms: [propext, Classical.choice, Quot.sound]
+'subsets_without_eq_powerset_erase' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to three toppings, so one will fire.
@@ -260,11 +385,13 @@ The two outputs match line for line: whole counts, no rounding.
 - [Set operations](03-set-operations.md): union, intersection, difference and complement — how two subsets of one set combine.
 - [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): the power set is always bigger than the set it came from, infinite sets included — how one infinity beats another.
 
+Left open: how many of the 8 pizzas carry exactly two toppings, and how do you count subsets of one size without listing them?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hammack, Richard. *Book of Proof*, 3rd ed. [Free PDF](https://richardhammack.github.io/BookOfProof/Main.pdf). Subsets and power sets in chapter 1; double inclusion in chapter 8.
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Section 5: the axiom that a power set exists at all.
