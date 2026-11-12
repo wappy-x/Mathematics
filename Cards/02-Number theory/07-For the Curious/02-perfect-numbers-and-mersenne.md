@@ -16,6 +16,8 @@ Each of those goes into 28 with nothing left over — a **divisor** ([Divides](.
 
 Almost nothing does this: 6, 28, 496, 8128, then nothing until the numbers get huge.
 
+**What kind of fact this is:** a theorem, proved in Why it works: Euclid's recipe always makes a perfect number. Euler's converse for even numbers is stated without proof, and odd perfect numbers are an open question as of 2026-11-11.
+
 ### The picture: every divisor of 28
 
 | twos taken | 1 | 2 | 4 |
@@ -33,12 +35,20 @@ Three moves:
 
 **Double 1 along: 1, 2, 4, then 8. Take one off that last doubling: 8 − 1 = 7. If that is prime, multiply it by the doubling just below: 4 × 7 = 28, and 28 is perfect.**
 
+**Read it aloud:** eight take away one is seven, seven is prime, so four times seven, twenty-eight, is perfect.
+
 | Piece | Plain meaning | In our 28 |
 | --- | --- | --- |
 | the doubling run | 1, doubled again and again ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)) | 1, 2, 4 — the next doubling is 8 |
 | a Mersenne number | one less than a doubling, after Marin Mersenne, a French friar of the 1600s | 8 − 1 = 7 |
 | a Mersenne prime | that number when prime: no divisor but 1 and itself ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 7 |
 | the perfect number | the Mersenne prime times the doubling below it | 4 × 7 = 28 |
+
+### When it holds
+
+- **The Mersenne number is prime.** 2047 = 23 × 89 is not, so 1024 × 2047 = 2096128 has proper divisors adding to 2325392, not 2096128.
+- **Proper divisors only.** Count 28 itself and the sum is 56, twice the number.
+- **Even numbers only.** The recipe and Euler's proof cover even perfect numbers. No odd one is known, and none is ruled out.
 
 ---
 
@@ -56,7 +66,9 @@ Three moves:
 
 The bottom row is the top row times 7, so add both at once: (1 + 2 + 4) × (1 + 7) = 7 × 8 = 56. The first bracket is the doubling run, 8 − 1 = 7 by Step 0. The second is 1 + 7 only because 7 is prime, with no other divisors to add in.
 
-So every divisor of 28 adds to 56, which is 2 × 28. Drop the 28 and the proper divisors add to 28. Nothing here was special to 28: the brackets multiply to twice the number whenever the recipe's Mersenne number is prime. That is Euclid, around 300 BC. Euler proved the return trip a century later, published only after his death — every even perfect number is built this way. Odd ones are the open question: none found, none ruled out.
+So every divisor of 28 adds to 56, which is 2 × 28. Drop the 28 and the proper divisors add to 28. Nothing here was special to 28: the brackets multiply to twice the number whenever the recipe's Mersenne number is prime.
+
+That is Euclid, around 300 BC. Euler proved the return trip in the 1700s, published only after his death — every even perfect number is built this way. Odd ones are the open question: none found, none ruled out.
 
 <details>
 <summary>Why the count of doublings has to be prime too</summary>
@@ -210,6 +222,107 @@ ALL CHECKS PASS
 
 Both outputs match line for line: whole numbers, nothing to round.
 
+### Lean
+
+Lean proves Euclid's recipe for every count of doublings whose Mersenne number is prime.
+
+- When the Mersenne number is prime, it times the doubling just below it is perfect.
+- Then every divisor of that number, itself included, adds to twice the number.
+- A Mersenne number can be prime only when the count of doublings is prime.
+- The card's numbers: 28's proper divisors, 6, 28, 496 and 8128 perfect, and 2047 = 23 × 89.
+
+The sum 2325392 for 2096128 and the record prime's digit counts are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 73 lines</summary>
+
+```lean
+-- Perfect numbers and Mersenne primes: whenever one less than a doubling of 1 is prime, that prime times the doubling below it is a perfect number (Euclid), all its divisors add to twice it, a prime Mersenne number needs a prime count of doublings, and the card's numbers 6, 28, 496, 8128 and 2047 = 23 × 89 come out as it says.
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.Divisors
+import Mathlib.Tactic.Simproc.Divisors
+import Mathlib.Tactic.NormNum.Prime
+
+open Nat
+
+open ArithmeticFunction in
+open scoped ArithmeticFunction.sigma in
+theorem helper_sum_divisors (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
+    ∑ i ∈ (2 ^ k * mersenne (k + 1)).divisors, i = 2 * (2 ^ k * mersenne (k + 1)) := by
+  have h2 : σ 1 (2 ^ k) = mersenne (k + 1) := by
+    simp_rw [sigma_one_apply, mersenne, ← one_add_one_eq_two, ← geom_sum_mul_add 1 (k + 1)]
+    norm_num
+  rw [← mul_assoc, ← pow_succ', ← sigma_one_apply, mul_comm,
+    isMultiplicative_sigma.map_mul_of_coprime ((Odd.coprime_two_right (by simp)).pow_right _),
+    h2]
+  simp [hp, sigma_one_apply]
+
+#print axioms helper_sum_divisors
+
+/-- Euclid's recipe. Double 1 along `k + 1` times to reach `2 ^ (k + 1)`, and take one off to get
+the Mersenne number `mersenne (k + 1) = 2 ^ (k + 1) - 1`. If that Mersenne number is prime, then
+it times the doubling just below, `2 ^ k`, is perfect: its proper divisors (every divisor except
+the number itself) add back up to it. -/
+theorem euclid_mersenne_prime_gives_perfect (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
+    Nat.Perfect (2 ^ k * mersenne (k + 1)) := by
+  rw [Nat.perfect_iff_sum_divisors_eq_two_mul (by positivity)]
+  exact helper_sum_divisors k hp
+
+/-- Counting the number itself too: when the Mersenne number `2 ^ (k + 1) - 1` is prime, every
+divisor of `2 ^ k * (2 ^ (k + 1) - 1)`, the number included, adds to exactly twice the number. -/
+theorem sum_all_divisors_is_twice (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
+    ∑ i ∈ (2 ^ k * mersenne (k + 1)).divisors, i = 2 * (2 ^ k * mersenne (k + 1)) := by
+  exact helper_sum_divisors k hp
+
+/-- The count of doublings has to be prime too: if `2 ^ p - 1` is prime, then `p` is prime.
+(Required, not sufficient: `p = 11` is prime but `2 ^ 11 - 1 = 2047 = 23 × 89` is not.) -/
+theorem mersenne_prime_needs_prime_count (p : ℕ) (hp : (mersenne p).Prime) : p.Prime := by
+  exact Nat.Prime.of_mersenne hp
+
+-- 28 = 1 + 2 + 4 + 7 + 14: its proper divisors, and they add back to 28.
+example : Nat.properDivisors 28 = {1, 2, 4, 7, 14} := by decide
+example : ∑ i ∈ Nat.properDivisors 28, i = 28 := by decide
+-- Counting 28 itself: every divisor adds to 56, twice 28.
+example : ∑ i ∈ Nat.divisors 28, i = 56 := by decide
+-- Step 0: the doubling run 1 + 2 + 4 is one short of 8.
+example : 1 + 2 + 4 = 8 - 1 := by decide
+-- Euclid's two brackets for 28.
+example : (1 + 2 + 4) * (1 + 7) = 56 ∧ 56 = 2 * 28 := by decide
+-- The recipe on the first four Mersenne primes: 2 × 3, 4 × 7, 16 × 31, 64 × 127.
+example : mersenne 2 = 3 ∧ mersenne 3 = 7 ∧ mersenne 5 = 31 ∧ mersenne 7 = 127 := by
+  simp [mersenne]
+example : (3 : ℕ).Prime ∧ (7 : ℕ).Prime ∧ (31 : ℕ).Prime ∧ (127 : ℕ).Prime := by norm_num
+example : 2 * 3 = 6 ∧ 4 * 7 = 28 ∧ 16 * 31 = 496 ∧ 64 * 127 = 8128 := by decide
+example : Nat.Perfect 6 := by decide
+example : Nat.Perfect 28 := by decide
+example : Nat.Perfect 496 := by decide
+example : Nat.Perfect 8128 := by
+  rw [Nat.perfect_iff_sum_properDivisors (by norm_num)]
+  simp [Nat.properDivisors_ofNat]
+-- Eleven doublings: 11 is prime, but 2047 = 23 × 89 is not, and 1024 × 2047 = 2096128.
+example : mersenne 11 = 2047 ∧ 2047 = 23 * 89 ∧ 1024 * 2047 = 2096128 := by
+  simp [mersenne]
+example : (11 : ℕ).Prime ∧ ¬ (2047 : ℕ).Prime := by norm_num
+-- Six doublings: 2 ^ 6 - 1 = 63, and 7 goes into it.
+example : mersenne 6 = 63 ∧ 7 ∣ 63 := by
+  simp [mersenne]
+
+#print axioms euclid_mersenne_prime_gives_perfect
+#print axioms sum_all_divisors_is_twice
+#print axioms mersenne_prime_needs_prime_count
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'helper_sum_divisors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'euclid_mersenne_prime_gives_perfect' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_all_divisors_is_twice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mersenne_prime_needs_prime_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned, so expect one to fire.
@@ -246,13 +359,20 @@ Both outputs match line for line: whole numbers, nothing to round.
 
 ## Where this goes next
 
-Nothing depends on this card; shelf 7 is detours. Its neighbours: [Pythagorean triples](01-pythagorean-triples.md), [How primes thin out](03-how-primes-thin-out.md), [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md) — where the odd perfect number's unproven cousins live — and [Continued fractions](05-continued-fractions-and-leap-years.md).
+Nothing depends on this card; shelf 7 is detours. Its neighbours:
+
+- [Pythagorean triples](01-pythagorean-triples.md): another recipe that turns two small numbers into whole numbers with a hidden pattern.
+- [How primes thin out](03-how-primes-thin-out.md): how many primes there are on average, where this card hunts single huge ones.
+- [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md): where the odd perfect number's unproven cousins live.
+- [Continued fractions](05-continued-fractions-and-leap-years.md): Euclid again, his algorithm read as nested fractions.
+
+The question this card leaves open: is there an odd perfect number, and do the Mersenne primes ever run out?
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Great Internet Mersenne Prime Search. "52nd Known Mersenne Prime Discovered", 21 October 2024. [Press release](https://www.mersenne.org/primes/press/M136279841.html). The record prime and its digits.
 - Euclid. *Elements*, Book IX, Proposition 36, in D. E. Joyce's edition. [Clark University](https://mathcs.clarku.edu/~djoyce/elements/bookIX/propIX36.html). The recipe, about 300 BC.

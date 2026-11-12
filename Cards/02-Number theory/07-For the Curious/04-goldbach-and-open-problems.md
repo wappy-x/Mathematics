@@ -14,6 +14,8 @@ In 1742 Christian Goldbach and Leonhard Euler traded letters about it: is every 
 
 **One miss would kill the claim on the spot; no pile of hits will ever prove it.**
 
+**What kind of fact this is:** a conjecture: believed, but unproved as of 2026-11-11. The twin claim is open too; only the odd cousin is proved, in Helfgott's paper in Sources.
+
 ### The picture: what would settle it
 
 ```mermaid
@@ -49,6 +51,13 @@ Three famous claims, each covering every case:
 | a pair | two primes adding to it, smaller first | 3 + 97 |
 | a for-all claim | every case, no exceptions | "every even number from 4 up…" |
 | a counterexample | one case it gets wrong | an even number with no pair |
+
+### When it holds
+
+- **The number is even.** Drop that and the claim fails at once: 11 has 0 ways.
+- **The number is 4 or more.** 2 has 0 ways, because two primes added come to at least 4.
+- **Each pair counts once, smaller first.** Count 3 + 97 and 97 + 3 as two and 100 shows 12 ways, not 6.
+- **Only as far as checked.** Every even number up to 4,000,000,000,000,000,000 has a pair. Past that, it is a guess.
 
 ---
 
@@ -223,6 +232,105 @@ ALL CHECKS PASS
 
 The two outputs match line for line: whole numbers, nothing to round.
 
+### Lean
+
+Lean does not prove Goldbach; it proves the facts around it for every number, and re-checks the card's counts.
+
+- Goldbach's claim is false exactly when some even number from 4 up has no pair.
+- Any two primes added together come to at least 4, so 2 has no pair.
+- If two primes add to an odd number, one of them is 2.
+- 100 has 6 pairs, 4 has 1, 98 has 3 and 102 has 8.
+- Counting 3 + 97 and 97 + 3 as two gives 12 for 100; 11 and 2 have 0 ways.
+- 101 and 103 are both prime, two apart.
+
+The sieve, trial division and their agreement are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 70 lines</summary>
+
+```lean
+-- Goldbach, twin primes and friends: one even number from 4 up with no pair of primes would disprove Goldbach's claim, two primes always add to at least 4, an odd total needs 2 as one of its primes, and the card's pair counts for 4, 98, 100, 102, 11 and 2 are exact.
+import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Tactic.NormNum.Prime
+
+/-- One miss settles it: Goldbach's claim ("every even number from 4 up is two primes
+added together") is false exactly when there is an even number from 4 up that is not
+two primes added together. The claim itself is open; this is what a counterexample means. -/
+theorem goldbach_false_iff_one_miss :
+    (¬ ∀ n : ℕ, Even n → 4 ≤ n → ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ p + q = n) ↔
+      ∃ n : ℕ, Even n ∧ 4 ≤ n ∧ ∀ p q : ℕ, p.Prime → q.Prime → p + q ≠ n := by
+  constructor
+  · intro h
+    push_neg at h
+    obtain ⟨n, h1, h2, h3⟩ := h
+    exact ⟨n, h1, h2, h3⟩
+  · rintro ⟨n, h1, h2, h3⟩ h
+    obtain ⟨p, q, hp, hq, hpq⟩ := h n h1 h2
+    exact h3 p q hp hq hpq
+
+/-- Why the claim starts at 4: any two primes added together come to at least 4,
+so 2 (and 3) have no pair. -/
+theorem two_primes_sum_at_least_four {p q : ℕ} (hp : p.Prime) (hq : q.Prime) :
+    4 ≤ p + q := by
+  have := hp.two_le
+  have := hq.two_le
+  omega
+
+/-- Why "even" matters: if two primes add to an odd number, one of them is 2.
+So 11 would need 2 + 9, and 9 is not prime. -/
+theorem odd_sum_of_two_primes_uses_two {p q : ℕ} (hp : p.Prime) (hq : q.Prime)
+    (hodd : Odd (p + q)) : p = 2 ∨ q = 2 := by
+  obtain ⟨k, hk⟩ := hodd
+  rcases hp.eq_two_or_odd with h | h
+  · exact Or.inl h
+  · rcases hq.eq_two_or_odd with h' | h'
+    · exact Or.inr h'
+    · omega
+
+/-! The card's numbers. `pairs n` lists the smaller prime of each pair p + q = n,
+each pair counted once, smaller first. `orderedPairs n` counts 3 + 97 and 97 + 3 as two. -/
+
+def pairs (n : ℕ) : Finset ℕ :=
+  (Finset.Icc 2 (n / 2)).filter (fun p => p.Prime ∧ (n - p).Prime)
+
+def orderedPairs (n : ℕ) : Finset ℕ :=
+  (Finset.Icc 2 n).filter (fun p => p.Prime ∧ (n - p).Prime)
+
+-- 100 = 3 + 97 = 11 + 89 = 17 + 83 = 29 + 71 = 41 + 59 = 47 + 53, six ways.
+example : pairs 100 = {3, 11, 17, 29, 41, 47} := by decide
+example : (pairs 100).card = 6 := by decide
+example : 3 + 97 = 100 ∧ 11 + 89 = 100 ∧ 17 + 83 = 100 ∧ 29 + 71 = 100 ∧
+    41 + 59 = 100 ∧ 47 + 53 = 100 := by decide
+-- 5 is tried and fails: 95 = 5 x 19.
+example : 100 - 5 = 95 ∧ 95 = 5 * 19 ∧ ¬ (95 : ℕ).Prime := by norm_num
+-- The neighbours: 4 has 1 way (2 + 2), 98 has 3, 102 has 8.
+example : pairs 4 = {2} := by decide
+example : (pairs 98).card = 3 := by decide
+example : (pairs 102).card = 8 := by decide
+-- The three mistakes: ordered pairs of 100 come to 12, 11 has 0 ways, 2 has 0 ways.
+example : (orderedPairs 100).card = 12 := by decide
+example : (pairs 11).card = 0 := by decide
+example : (pairs 2).card = 0 := by decide
+-- Twin primes just above 100: 101 and 103, two apart and both prime.
+example : (101 : ℕ).Prime ∧ (103 : ℕ).Prime := by norm_num
+example : 101 + 2 = 103 := by decide
+
+#print axioms goldbach_false_iff_one_miss
+#print axioms two_primes_sum_at_least_four
+#print axioms odd_sum_of_two_primes_uses_two
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'goldbach_false_iff_one_miss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_primes_sum_at_least_four' depends on axioms: [propext, Quot.sound]
+'odd_sum_of_two_primes_uses_two' depends on axioms: [propext, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the house numbers, so one will fire.
@@ -261,13 +369,15 @@ The two outputs match line for line: whole numbers, nothing to round.
 
 ## Where this goes next
 
-This shelf is a detour from the main line. The neighbours are [How primes thin out](03-how-primes-thin-out.md) and [Continued fractions](05-continued-fractions-and-leap-years.md), which ends the shelf on a question that has an answer.
+This shelf is a detour from the main line. The neighbours are [How primes thin out](03-how-primes-thin-out.md), which shows how fast primes get rarer on average, and [Continued fractions](05-continued-fractions-and-leap-years.md), which ends the shelf on a question that has an answer.
+
+The question this card leaves open: is there an even number from 4 up with no pair? Nobody knows.
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Oliveira e Silva, Tomás, Siegfried Herzog and Silvio Pardi. "Empirical verification of the even Goldbach conjecture and computation of prime gaps up to 4·10<sup>18</sup>." *Mathematics of Computation* 83 (2014), 2033–2060. [doi:10.1090/S0025-5718-2013-02787-1](https://doi.org/10.1090/S0025-5718-2013-02787-1). The checked-to figure.
 - Helfgott, Harald A. "The ternary Goldbach conjecture is true." 2013. [arXiv:1312.7748](https://arxiv.org/abs/1312.7748). The odd cousin.

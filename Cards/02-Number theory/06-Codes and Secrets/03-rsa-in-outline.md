@@ -16,6 +16,8 @@ The pair is a padlock handed out open: anyone can shut it, nobody can open it. 3
 
 **Locking is raising to 17 on a 3233 clock and unlocking is raising to 2753, and they undo each other because 17 × 2753 is one past a run of 3120s — the count Euler's theorem sends back to 1.**
 
+**What kind of fact this is:** a theorem, proved in Why it works: the message comes back. That it stays secret is not proved. It rests on splitting a large clock size being slow.
+
 ### The picture
 
 ```mermaid
@@ -38,7 +40,7 @@ Making the keys:
 
 **3233 = 61 × 53** and **3120 = 60 × 52** and **17 × 2753 = 46801 = 15 × 3120 + 1**
 
-**Read it aloud: two primes multiply to the clock size; one off each and multiply again is the hidden count; 2753 turns 17 into one past a run of it.**
+**Read it aloud:** two primes multiply to the clock size; one off each and multiply again is the hidden count; 2753 turns 17 into one past a run of it.
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
@@ -48,6 +50,13 @@ Making the keys:
 | the public exponent | how many copies of the message multiply together | 17 |
 | the private exponent | what undoes 17 on a clock of the hidden count ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)) | 2753 |
 | the message | a number below the clock size, and what it becomes | 65, then 2790 |
+
+### When it holds
+
+- **The two primes are different.** Use one prime twice and "one off each and multiply" no longer gives the hidden count.
+- **17 shares no factor with 3120.** Otherwise nothing undoes 17, and there is no private key.
+- **The message sits below the clock size.** Send 3298 and 65 comes back.
+- **The primes stay secret.** Anyone who splits 3233 into 61 × 53 reaches 3120, then 2753.
 
 ---
 
@@ -226,6 +235,149 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the message comes back for any two different primes and every message below the clock size, not just 61, 53 and 65.
+
+- Take two different primes, and a public and private exponent whose product is one past a run of the hidden count. Lock any message below the clock size, unlock it, and it comes back.
+- That covers messages sharing a factor with the clock size too, the ones outside Euler's theorem.
+- For two different primes, the hidden count is one off each prime, multiplied, as 60 × 52 gives 3120.
+- A private exponent exists exactly when the public exponent shares no factor with the hidden count.
+- With 61 and 53, it re-checks 3233, then 3120 both ways, and 17 × 2753 = 15 × 3120 + 1.
+- It re-checks the lock to 2790, the unlock to 65, 65 to the 3120th landing on 1, and 65 to the 46801st giving 65.
+- It re-checks the mistakes: 17 unlocks to 1452, undoing 17 on a 3233 clock gives 2699, and 3298 returns as 65.
+
+Squaring and multiplying, the search that finds 2753, and the printed run stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 112 lines</summary>
+
+```lean
+-- RSA in outline: for two different primes, unlocking a locked message below their product brings it back, the hidden count is the totient of the product, and a private key exists exactly when the public exponent shares no factor with that count.
+import Mathlib.Data.Nat.Totient
+import Mathlib.Data.Nat.ModEq
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.GCD
+import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.Tactic.IntervalCases
+
+/-- Fermat in the form needed: x^(1 + (p-1) n) ≡ x mod p. -/
+theorem fermat_aux {p : ℕ} (hp : p.Prime) (n x : ℕ) :
+    x ^ (1 + (p - 1) * n) ≡ x [MOD p] := by
+  haveI := Fact.mk hp
+  rw [← ZMod.natCast_eq_natCast_iff]
+  push_cast
+  by_cases hx : (x : ZMod p) = 0
+  · rw [hx]; simp
+  · rw [pow_add, pow_mul, ZMod.pow_card_sub_one_eq_one hx]; simp
+
+#print axioms fermat_aux
+
+/-- RSA brings the message back: take two different primes p and q, a public exponent e and
+a private exponent d with e × d one past a run of (p − 1)(q − 1), and any message m below the
+clock size p × q. Raise m to the e-th power with the p × q's taken off, raise that to the d-th
+power with the p × q's taken off, and m comes back. -/
+theorem rsa_unlock_undoes_lock {p q e d m : ℕ} (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q)
+    (hed : e * d ≡ 1 [MOD (p - 1) * (q - 1)]) (hm : m < p * q) :
+    (m ^ e % (p * q)) ^ d % (p * q) = m := by
+  have hp2 := hp.two_le
+  have hq2 := hq.two_le
+  have hcop : p.Coprime q := (Nat.coprime_primes hp hq).mpr hpq
+  have hk1 : 2 ≤ (p - 1) * (q - 1) := by
+    by_contra hlt
+    have hpos : 0 < (p - 1) * (q - 1) := Nat.mul_pos (by omega) (by omega)
+    have h1 : (p - 1) * (q - 1) = 1 := by omega
+    rw [mul_eq_one] at h1
+    omega
+  have hmod : (e * d) % ((p - 1) * (q - 1)) = 1 := by
+    have h := hed
+    unfold Nat.ModEq at h
+    rw [h]
+    exact Nat.mod_eq_of_lt hk1
+  have hdiv : e * d = 1 + (p - 1) * (q - 1) * (e * d / ((p - 1) * (q - 1))) := by
+    have := Nat.mod_add_div (e * d) ((p - 1) * (q - 1))
+    omega
+  set n := e * d / ((p - 1) * (q - 1)) with hn
+  have h1 : m ^ (e * d) ≡ m [MOD p] := by
+    have h := fermat_aux hp ((q - 1) * n) m
+    have e1 : e * d = 1 + (p - 1) * ((q - 1) * n) := by rw [hdiv, mul_assoc]
+    rw [e1]; exact h
+  have h2 : m ^ (e * d) ≡ m [MOD q] := by
+    have h := fermat_aux hq ((p - 1) * n) m
+    have e1 : e * d = 1 + (q - 1) * ((p - 1) * n) := by
+      rw [hdiv, mul_comm (p - 1) (q - 1), mul_assoc]
+    rw [e1]; exact h
+  have h3 : m ^ (e * d) ≡ m [MOD p * q] :=
+    (Nat.modEq_and_modEq_iff_modEq_mul hcop).mp ⟨h1, h2⟩
+  have h4 : (m ^ e % (p * q)) ^ d ≡ m [MOD p * q] := by
+    have : (m ^ e % (p * q)) ^ d ≡ (m ^ e) ^ d [MOD p * q] :=
+      Nat.ModEq.pow d (Nat.mod_modEq _ _)
+    rw [← pow_mul] at this
+    exact this.trans h3
+  unfold Nat.ModEq at h4
+  rw [h4]
+  exact Nat.mod_eq_of_lt hm
+
+/-- The hidden count: for two different primes p and q, the numbers from 1 to p × q sharing no
+factor above 1 with p × q number (p − 1)(q − 1). -/
+theorem totient_mul_two_primes {p q : ℕ} (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q) :
+    Nat.totient (p * q) = (p - 1) * (q - 1) := by
+  rw [Nat.totient_mul ((Nat.coprime_primes hp hq).mpr hpq), Nat.totient_prime hp,
+    Nat.totient_prime hq]
+
+/-- A private key exists exactly when the public exponent shares no factor with the hidden
+count: some d makes e × d one past a run of k precisely when e and k are coprime. -/
+theorem private_key_exists_iff_coprime (e k : ℕ) :
+    (∃ d, e * d ≡ 1 [MOD k]) ↔ Nat.Coprime e k := by
+  constructor
+  · rintro ⟨d, hd⟩
+    exact Nat.coprime_of_mul_modEq_one d hd
+  · intro h
+    rcases Nat.lt_or_ge 1 k with hk | hk
+    · obtain ⟨m, -, hm⟩ := Nat.exists_mul_mod_eq_one_of_coprime h hk
+      exact ⟨m, by unfold Nat.ModEq; rw [hm, Nat.mod_eq_of_lt hk]⟩
+    · interval_cases k
+      · have : e = 1 := by simpa using h
+        subst this
+        exact ⟨1, by simp [Nat.ModEq]⟩
+      · exact ⟨0, by simp [Nat.ModEq]⟩
+
+-- Making the keys.
+example : Nat.Prime 61 := by norm_num
+example : Nat.Prime 53 := by norm_num
+example : 61 * 53 = 3233 := by norm_num
+example : (61 - 1) * (53 - 1) = 3120 := by norm_num
+example : 3233 - 53 - 61 + 1 = 3120 := by norm_num
+example : Nat.totient 3233 = 3120 := by decide +kernel
+example : Nat.gcd 17 3120 = 1 := by norm_num
+example : 17 * 2753 = 46801 ∧ 46801 = 15 * 3120 + 1 := by norm_num
+example : 17 * 2753 ≡ 1 [MOD 3120] := by decide
+-- Lock and unlock.
+example : 65 ^ 17 % 3233 = 2790 := by decide +kernel
+example : 2790 ^ 2753 % 3233 = 65 := by decide +kernel
+example : 65 ^ 3120 % 3233 = 1 := by decide +kernel
+example : 65 ^ 46801 % 3233 = 65 := by decide +kernel
+-- What breaks if you drop a piece.
+example : 2790 ^ 17 % 3233 = 1452 := by decide +kernel
+example : 17 * 2092 % 3233 = 1 ∧ 2790 ^ 2092 % 3233 = 2699 := by decide +kernel
+example : 3298 = 65 + 3233 ∧ (3298 ^ 17 % 3233) ^ 2753 % 3233 = 65 := by decide +kernel
+
+#print axioms rsa_unlock_undoes_lock
+#print axioms totient_mul_two_primes
+#print axioms private_key_exists_iff_coprime
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'fermat_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rsa_unlock_undoes_lock' depends on axioms: [propext, Classical.choice, Quot.sound]
+'totient_mul_two_primes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'private_key_exists_iff_coprime' depends on axioms: [propext, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first.
@@ -241,14 +393,14 @@ The two outputs match line for line.
 >
 > - **Unlocking with the public exponent.** 2790 read with 17 gives 1452.
 > - **Undoing 17 on the wrong clock.** Built on 3233, it brings 2790 back as 2699.
-> - **Shipping this raw.** 65 always locks to 2790, so a guess can be locked and checked. Multiply two locked numbers and you have multiplied the messages, no key. Real schemes pad.
+> - **Shipping this raw.** 65 always locks to 2790, so a guess can be locked and checked. Multiply two locked numbers and you have multiplied the messages, no key. Real schemes pad: they add random filler before locking.
 > - **Reading these as real keys.** 3233 gives up its primes to trial division on paper.
 
 ---
 
 ## Where you meet it in real life
 
-- **An SSH key pair.** The public half is a clock size and an exponent, given to every machine you log in to; the private half never leaves.
+- **An SSH (Secure Shell) key pair.** The public half is a clock size and an exponent, given to every machine you log in to; the private half never leaves.
 - **Locking a key, not a message.** Messages sit below the clock size, so this carries a short key and a faster cipher carries the rest.
 - **Strangers with no keys at all.** [Diffie-Hellman key exchange](02-diffie-hellman.md), over an open line.
 
@@ -267,12 +419,14 @@ The two outputs match line for line.
 
 Nothing later rests on this card. The rest of the shelf supplies what it assumed: [The Fermat test](04-fermat-test-and-carmichael.md) and [The Miller-Rabin test](05-miller-rabin.md) find primes the size real keys need.
 
+The question this card leaves open: is splitting a large clock size truly slow? Nobody has proved it.
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026: every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Rivest, R. L., A. Shamir, and L. Adleman. "A Method for Obtaining Digital Signatures and Public-Key Cryptosystems." *Communications of the ACM* 21, no. 2 (1978): 120–126. [doi:10.1145/359340.359342](https://doi.org/10.1145/359340.359342). The original; its example uses other numbers.
-- Shoup, Victor. *A Computational Introduction to Number Theory and Algebra*, 2nd ed. Cambridge University Press, 2008. [Full text](https://shoup.net/ntb/). Chapter 8, making the keys.
+- Shoup, Victor. *A Computational Introduction to Number Theory and Algebra*, 2nd ed. Cambridge University Press, 2008. [Full text](https://shoup.net/ntb/). Section 4.7, making the keys.
 - Menezes, A., P. van Oorschot, and S. Vanstone. *Handbook of Applied Cryptography*. CRC Press, 1996. [Free chapters](https://cacr.uwaterloo.ca/hac/). Chapter 8, the proof that covers every message.

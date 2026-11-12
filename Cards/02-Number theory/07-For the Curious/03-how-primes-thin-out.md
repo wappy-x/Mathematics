@@ -12,11 +12,13 @@ A thousand doors long: 168 open. A million long: 78,498 open, about one in thirt
 
 The primes never run out — [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md) settles that — but they spread out.
 
-That count has a shorthand. **pi(x)**, said "pi of x", is how many primes there are up to x (1 is not one of them) — nothing to do with circles. So pi(100) = 25, pi(1,000) = 168, pi(1,000,000) = 78,498.
+That count has a shorthand. **pi(x)**, said "pi of x", is how many primes there are up to x (1 is not one of them) — nothing to do with circles.
 
 And there is a rule for it, built out of a logarithm ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
 **Divide x by the natural log of x and you have roughly how many primes lie below x — and the further you walk, the better "roughly" does.**
+
+**What kind of fact this is:** a theorem from 1896; this card gives the idea, not the proof.
 
 ### The picture: primes per hundred lockers
 
@@ -35,6 +37,8 @@ Same corridor width each time; the primes are getting scarcer.
 
 **pi(x) is about x ÷ ln x**
 
+**Read it aloud:** pi of x is about x divided by the natural log of x: "n over log n".
+
 At a million:
 
 **pi(1,000,000) = 78,498, while 1,000,000 ÷ ln 1,000,000 = 1,000,000 ÷ 13.8155 = 72,382**
@@ -49,7 +53,11 @@ At a million:
 | x ÷ ln x | the estimate | 72,382 | a bigger log, a lower estimate |
 | the ratio | true count ÷ estimate, before rounding | 78,498 ÷ 72,382 = 1.084 | it heads towards 1 — the theorem |
 
-Out loud: "n over log n".
+### When it holds
+
+- **x is large.** At 100 the truth is 1.151 times the estimate.
+- **"About" means the ratio.** The gap grows to 6,116.
+- **The log is the natural one.** Base 10 predicts 166,667.
 
 ---
 
@@ -61,15 +69,15 @@ Every number that is not prime has a smaller prime dividing it; that is what the
 
 ### Step 1: near x, about one number in ln x is prime
 
-At a million, ln 1,000,000 = 13.8155, so about one locker in fourteen is prime that far along. A real count agrees: the hundred just under a million hold 8 primes. Back at the start, the same hundred held 25.
+At a million, ln 1,000,000 = 13.8155, so about one locker in fourteen is prime that far along. A real count agrees: the hundred just under a million hold 8 primes.
 
 ### Step 2: add the shares up, and that is the rule
 
-One in ln x prime, across x numbers, is about x ÷ ln x primes. Which also says how it goes wrong: the whole corridor is charged the log from the far end, where primes are thinnest, so the estimate lands low at every size in this card, and at every size past 17 — 22 against 25, 145 against 168, 72,382 against 78,498.
+One in ln x prime, across x numbers, is about x ÷ ln x primes. Which also says how it goes wrong: the whole corridor is charged the log from the far end, where primes are thinnest, so the estimate lands low at every size in this card, and at every size past 17.
 
 ### Step 3: what was proved
 
-Hadamard and de la Vallée Poussin, separately, in 1896: **the ratio of pi(x) to x ÷ ln x goes to 1 as x runs off without end.** That is the prime number theorem. Wing 06, complex analysis, proves it, and carries a sharper estimate — the logarithmic integral — that adds a share at every number.
+Hadamard and de la Vallée Poussin, separately, in 1896: **the ratio of pi(x) to x ÷ ln x goes to 1 as x runs off without end.** That is the prime number theorem. [Zeta's zeros and the primes](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md) sketches the proof, and carries a sharper estimate — the logarithmic integral — that adds a share at every number.
 
 ---
 
@@ -212,7 +220,6 @@ a flat 25 per hundred all the way would give 250,000, not 78,498
 ALL CHECKS PASS
 ```
 
-Both outputs match line for line.
 
 > [!TIP]
 > **Try changing**
@@ -229,7 +236,6 @@ Both outputs match line for line.
 >
 > - **pi(x) is not the x-th prime.** pi(1,000) = 168; the 1,000th prime is 7,919.
 > - **The log is the natural one.** Base 10 predicts 166,667 below a million, against 78,498.
-> - **Thinning is not stopping.** However far you walk there are more primes ahead ([There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md)).
 
 ---
 
@@ -253,14 +259,18 @@ Both outputs match line for line.
 
 ## Where this goes next
 
-Nothing later needs this card; shelf 7 is detours. Sideways: [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md) asks what this average cannot answer, and [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md) hunts single primes far past any corridor.
+- [Zeta's zeros and the primes](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): the sharper estimate, and the shape of the proof.
+
+Nothing else needs this card; shelf 7 is detours. Sideways: [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md) asks what this average cannot answer, and [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md) hunts single primes far past any corridor.
+
+The question left open: how close does pi(x) stay to its estimate?
 
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - OEIS Foundation. Sequence A006880, the primes below 10, 100, 1,000 and so on. [oeis.org/A006880](https://oeis.org/A006880). Where 25, 168 and 78,498 were checked.
-- Zagier, Don. "Newman's short proof of the prime number theorem". *American Mathematical Monthly* 104 (1997), 705-708. [PDF](https://people.mpim-bonn.mpg.de/zagier/files/doi/10.2307/2975232/fulltext.pdf). Three pages, dating the two 1896 proofs.
+- Zagier, Don. "Newman's short proof of the prime number theorem". *American Mathematical Monthly* 104 (1997), 705-708. [doi:10.1080/00029890.1997.11990704](https://doi.org/10.1080/00029890.1997.11990704). Three pages, dating the two 1896 proofs.
 - Crandall, Richard, and Carl Pomerance. *Prime Numbers: A Computational Perspective*. Springer, 2005. [doi:10.1007/0-387-28979-8](https://doi.org/10.1007/0-387-28979-8). Chapter 1 states the theorem and the sharper estimate.

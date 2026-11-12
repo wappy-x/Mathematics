@@ -16,6 +16,8 @@ The chat sees clock size 23 and base 5. Mia keeps the count 6 and posts 8, Ray k
 
 **Multiply the base into itself Mia's 6 times and then Ray's 15 times, and it lands where the other order lands: two strangers reach a number the open line never carried.**
 
+**What kind of fact this is:** a method. Why it works proves the two sides agree; that a listener stays stuck is believed, not proved.
+
 ### The picture
 
 ```mermaid
@@ -40,7 +42,7 @@ On the 23 clock, whole 23s dropped as you go, both routes land on the shed code:
 
 **19 multiplied out 6 times is 2. So is 8 multiplied out 15 times.**
 
-**Read it aloud: both end up multiplying 5 into itself ninety times, so both land on the same number.**
+**Read it aloud:** both end up multiplying 5 into itself ninety times, so both land on the same number.
 
 | Piece | Plain meaning | In the group chat |
 | --- | --- | --- |
@@ -50,6 +52,13 @@ On the 23 clock, whole 23s dropped as you go, both routes land on the shed code:
 | a posted number | the base, multiplied out your count | Mia's 8, Ray's 19 |
 | the shared number | their posted number, multiplied out your count | 2 |
 | the discrete logarithm | the count behind a posted number | 6, behind 8 |
+
+### When it holds
+
+- **The counts stay private.** Post 6, not 8, and anyone reaches 2 from Ray's 19.
+- **The base tours every slot.** Base 2 reaches only 11 of the 22, a shorter search.
+- **The clock is huge.** At 23, 22 tries find 6 at once.
+- **Nobody alters the posts.** Someone in the middle can run the exchange twice.
 
 ---
 
@@ -72,7 +81,7 @@ There are 22 counts to try, and the code below finds 6 instantly: these numbers 
 <details>
 <summary>What this card leaves out</summary>
 
-Real exchanges use a clock hundreds of digits wide: RFC 3526 (2003) publishes standard primes from 1536 bits up, about 460 digits. The shared number is normally hashed into a key, not used raw.
+Real exchanges use a clock hundreds of digits wide: RFC 3526 (2003), an internet standard, publishes standard primes from 1536 bits up, about 460 digits. The shared number is normally hashed (scrambled by a fixed public recipe) into a key, not used raw.
 
 </details>
 
@@ -217,6 +226,82 @@ mistakes: 8 x 19 lands on 14; base 2 shares 4 and reaches only 11 values
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the two sides agree for every clock size, every base and every pair of kept counts, not just 23, 5, 6 and 15.
+
+- Mia multiplying Ray's posting out her count lands where Ray multiplying Mia's posting out his count lands.
+- Each route equals the base multiplied out the two counts multiplied together, with whole clocks dropped as you go.
+- A product does not care how you group it: the base multiplied out one count, then the other, is one pile.
+- With clock 23 and base 5, it re-checks the postings 8 and 19 and the shared number 2.
+- It re-checks the listener's search: every count 1 to 22 against 8 finds only 6, and count 7 gives 17.
+- It re-checks the mistakes: 8 × 19 lands on 14, and base 2 agrees on 4 but reaches only 11 of 22 slots.
+
+The square-and-multiply road and the printed run stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 47 lines</summary>
+
+```lean
+-- Diffie-Hellman key exchange: on any clock, with any base and any two kept counts, both sides of the exchange land on the same shared number, the base multiplied out the product of the counts.
+import Mathlib.Algebra.Group.Nat.Defs
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Data.Finset.Image
+import Mathlib.Data.Finset.Card
+
+/-- The two sides agree: on a clock of size `n` with base `g`, Mia keeps the count `a` and posts
+`g ^ a % n`, Ray keeps `b` and posts `g ^ b % n`. Mia multiplies Ray's posting out `a` times,
+Ray multiplies Mia's posting out `b` times, and both land on the same number. -/
+theorem diffie_hellman_shared_numbers_agree (n g a b : ℕ) :
+    (g ^ b % n) ^ a % n = (g ^ a % n) ^ b % n := by
+  rw [← Nat.pow_mod, ← Nat.pow_mod, ← pow_mul, ← pow_mul, Nat.mul_comm]
+
+/-- Both routes are one pile: each side's shared number is the base multiplied out `a * b` times
+on the clock, so dropping whole clocks along the way changes nothing. -/
+theorem diffie_hellman_shared_number_eq_pow_mul (n g a b : ℕ) :
+    (g ^ a % n) ^ b % n = g ^ (a * b) % n ∧ (g ^ b % n) ^ a % n = g ^ (a * b) % n := by
+  refine ⟨?_, ?_⟩
+  · rw [← Nat.pow_mod, ← pow_mul]
+  · rw [← Nat.pow_mod, ← pow_mul, Nat.mul_comm]
+
+/-- A product does not care how you group it: `g` multiplied out `a` times, then that answer
+multiplied out `b` times, is `g` multiplied out `a * b` times. -/
+theorem pow_multiplied_out_eq_pow_mul (g a b : ℕ) : (g ^ a) ^ b = g ^ (a * b) := by
+  exact (pow_mul g a b).symm
+
+-- The card's worked numbers: clock 23, base 5, Mia keeps 6, Ray keeps 15.
+example : 5 ^ 6 = 15625 ∧ 15625 = 679 * 23 + 8 := by decide
+example : 5 ^ 15 = 30517578125 ∧ 30517578125 = 1326851222 * 23 + 19 := by decide
+example : 19 ^ 6 = 47045881 ∧ 47045881 = 2045473 * 23 + 2 := by decide
+example : 5 ^ 6 % 23 = 8 ∧ 5 ^ 15 % 23 = 19 := by decide
+example : 19 ^ 6 % 23 = 2 ∧ 8 ^ 15 % 23 = 2 := by decide
+example : 6 * 15 = 90 ∧ 5 ^ 90 % 23 = 2 := by decide
+-- The listener tries every count 1 to 22 against 8 and finds only 6; count 7 gives 17.
+example : (Finset.Icc 1 22).filter (fun c => 5 ^ c % 23 = 8) = {6} := by decide
+example : 5 ^ 7 % 23 = 17 := by decide
+-- Mistakes: combining the postings gives 14; base 2 still agrees, on 4, with Mia posting 18.
+example : 8 * 19 % 23 = 14 := by decide
+example : (2 ^ 15 % 23) ^ 6 % 23 = 4 ∧ 2 ^ 6 % 23 = 18 := by decide
+-- Base 5 tours all 22 non-zero slots; base 2 reaches only 11, so its search returns 6 and 17.
+example : ((Finset.Icc 1 22).image (fun c => 5 ^ c % 23)).card = 22 := by decide
+example : ((Finset.Icc 1 22).image (fun c => 2 ^ c % 23)).card = 11 := by decide
+example : (Finset.Icc 1 22).filter (fun c => 2 ^ c % 23 = 18) = {6, 17} := by decide
+
+#print axioms diffie_hellman_shared_numbers_agree
+#print axioms diffie_hellman_shared_number_eq_pow_mul
+#print axioms pow_multiplied_out_eq_pow_mul
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'diffie_hellman_shared_numbers_agree' depends on axioms: [propext]
+'diffie_hellman_shared_number_eq_pow_mul' depends on axioms: [propext]
+'pow_multiplied_out_eq_pow_mul' depends on axioms: [propext]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first; the asserts are pinned, so expect one to fire.
@@ -239,7 +324,7 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Browser connections.** A browser and a server that never met agree a key before any page content moves. TLS 1.3 builds its handshake on this exchange (RFC 8446, 2018), in practice on curve points, not a clock.
+- **Browser connections.** A browser and a server that never met agree a key before any page content moves. TLS 1.3, the protocol behind secure web pages, builds its handshake on this exchange (RFC 8446, 2018), in practice on curve points, not a clock.
 - **Starting from nothing.** No shared password, no private channel, same number at the end.
 - **The rest of this shelf.** [RSA in outline](03-rsa-in-outline.md) locks a message with the same arithmetic; [The Fermat test](04-fermat-test-and-carmichael.md) and [The Miller-Rabin test](05-miller-rabin.md) supply the primes.
 
@@ -260,6 +345,8 @@ ALL CHECKS PASS
 
 - [RSA in outline](03-rsa-in-outline.md): the same arithmetic, locking a message rather than agreeing a number.
 - [The Miller-Rabin test](05-miller-rabin.md): where primes big enough to matter come from.
+
+Left open: is working backwards truly slow, or is the fast road just not found yet?
 
 ---
 
