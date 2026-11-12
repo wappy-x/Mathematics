@@ -594,7 +594,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): solutions of a differential equation, perpendicular under an integral.
 - [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): perpendicular unit directions, one per band of frequencies.
 - [Lattices](../../14-Applied%20and%20computational/04-Cryptography/09-lattices-and-post-quantum-cryptography.md): a skewed basis as the secret, straightening it as the attack.
-- QR: the same factorisation from reflections, steady at machine size.
+- [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): the same factorisation from reflections, steady at machine size.
 - Orthonormal bases: endlessly many such directions, squared length still a sum of squares.
 - Orthogonal polynomials: this loop on 1, x, x^2, with an integral as the dot product.
 - The Haar wavelet: the plainest one, built by halving an interval.

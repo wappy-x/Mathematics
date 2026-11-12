@@ -623,7 +623,7 @@ The three roads agree: iteration and elimination to eleven decimals after 60 pas
 ## Where this goes next
 
 - [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md): the next card, where other eigenvalues of a network's table count its pieces and cut it in two.
-- Eigenvalues by iteration: power iteration as a general method for the largest eigenvalue of any big matrix, and its faster relatives.
+- [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): power iteration as a general method for the largest eigenvalue of any big matrix, and its faster relatives.
 
 The promise is 0.85 a pass on any network, but the real speed is set by $\lambda_2$, and which networks keep $\lambda_2$ small as they grow is left open here.
 

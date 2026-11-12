@@ -549,7 +549,7 @@ The two outputs match line for line. The simulated variance, 100.08, sits about 
 - [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): one integral that covers sums and densities alike.
 - [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): the rescaling rule applied to a measured input.
 - [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md): why the shortcut can fail in floating point.
-- Adding a million numbers without losing the small ones: the one-pass variance that stays accurate.
+- [Adding a million numbers without losing the small ones](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/07-summation-kahan-and-welford.md): the one-pass variance that stays accurate.
 
 One ticket's spread is now a number; what happens to it when two tickets, from the same raffle or different ones, are held together is the question [Two variables at once](04-joint-distributions-and-covariance.md) answers.
 

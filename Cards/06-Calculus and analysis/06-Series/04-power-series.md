@@ -830,7 +830,7 @@ example : (1 : ℚ) / (1 - 2) = -1 ∧ (List.range 4).map (fun n : ℕ => (2 : �
 - [Taylor series](05-taylor-series.md): the coefficients a function's own derivatives force.
 - [Power series in the plane](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md): the fence becomes a circle, explaining the radius.
 - [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): solving for a function by solving for its coefficients.
-- Weierstrass and the minimax fit: polynomials good over a whole interval.
+- [Weierstrass and the minimax fit](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md): polynomials good over a whole interval.
 
 Both series here were found by hand; which coefficients a given function forces, and whether the series then equals that function, is [Taylor series](05-taylor-series.md).
 

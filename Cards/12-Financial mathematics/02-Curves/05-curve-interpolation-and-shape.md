@@ -686,7 +686,7 @@ The two outputs match line for line: different languages, the same six roads, th
 ## Where this goes next
 
 - [Fitting a curve with four or six parameters](../33-Curves%20in%20Depth/03-nelson-siegel-and-svensson-fitting.md): the fitted family taken seriously — a second hump for the long end, weighting the quotes, and what the four numbers mean when they move day to day.
-- Cubic splines: the general machinery, including why a cubic spline's derivative ripples and what tension does about it.
+- [Cubic splines](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/05-splines.md): the general machinery, including why a cubic spline's derivative ripples and what tension does about it.
 
 This card trusted six quotes completely and asked only what to do between them; the next question is what to do when eighty quotes arrive and disagree with each other, which is where fitting a shape stops being a compromise and starts being the point.
 

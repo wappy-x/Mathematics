@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" width="360" height="260" font-family="Helvetica, Arial, sans-serif">
+<title>A 1 m square plate on a 5-cell grid, drawn to scale: the five-point stencil at a corner point reaching the hot top edge and the cold left edge, one row solved by the first sweep and one column by the second</title>
+<rect x="0" y="0" width="360" height="260" fill="#ffffff"/>
+<line x1="120" y1="30" x2="120" y2="230" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<line x1="80" y1="70" x2="280" y2="70" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<line x1="160" y1="30" x2="160" y2="230" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<line x1="80" y1="110" x2="280" y2="110" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<line x1="200" y1="30" x2="200" y2="230" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<line x1="80" y1="150" x2="280" y2="150" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<line x1="240" y1="30" x2="240" y2="230" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<line x1="80" y1="190" x2="280" y2="190" stroke="#1d1d1d" stroke-opacity="0.3" stroke-width="1"/>
+<rect x="80" y="30" width="200" height="200" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="80" y1="30" x2="280" y2="30" stroke="#1d1d1d" stroke-width="5"/>
+<line x1="120" y1="190" x2="240" y2="190" stroke="#1d1d1d" stroke-width="2.5" stroke-dasharray="8 5"/>
+<line x1="240" y1="190" x2="240" y2="70" stroke="#1d1d1d" stroke-width="2.5" stroke-dasharray="2 4"/>
+<line x1="120" y1="70" x2="80" y2="70" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="120" y1="70" x2="160" y2="70" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="120" y1="70" x2="120" y2="30" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="120" y1="70" x2="120" y2="110" stroke="#1d1d1d" stroke-width="3"/>
+<circle cx="120" cy="190" r="3.5" fill="#1d1d1d"/>
+<circle cx="120" cy="150" r="3.5" fill="#1d1d1d"/>
+<circle cx="120" cy="110" r="3.5" fill="#1d1d1d"/>
+<circle cx="120" cy="70" r="6" fill="#1d1d1d"/>
+<circle cx="160" cy="190" r="3.5" fill="#1d1d1d"/>
+<circle cx="160" cy="150" r="3.5" fill="#1d1d1d"/>
+<circle cx="160" cy="110" r="3.5" fill="#1d1d1d"/>
+<circle cx="160" cy="70" r="3.5" fill="#1d1d1d"/>
+<circle cx="200" cy="190" r="3.5" fill="#1d1d1d"/>
+<circle cx="200" cy="150" r="3.5" fill="#1d1d1d"/>
+<circle cx="200" cy="110" r="3.5" fill="#1d1d1d"/>
+<circle cx="200" cy="70" r="3.5" fill="#1d1d1d"/>
+<circle cx="240" cy="190" r="3.5" fill="#1d1d1d"/>
+<circle cx="240" cy="150" r="3.5" fill="#1d1d1d"/>
+<circle cx="240" cy="110" r="3.5" fill="#1d1d1d"/>
+<circle cx="240" cy="70" r="3.5" fill="#1d1d1d"/>
+<rect x="116" y="26" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="116" y="226" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="76" y="186" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="276" y="186" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="156" y="26" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="156" y="226" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="76" y="146" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="276" y="146" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="196" y="26" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="196" y="226" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="76" y="106" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="276" y="106" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="236" y="26" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="236" y="226" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="76" y="66" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="276" y="66" width="8" height="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="180" y="20" font-size="14" text-anchor="middle" fill="#1d1d1d">top edge 100 C</text>
+<text x="180" y="250" font-size="14" text-anchor="middle" fill="#1d1d1d">0 C</text>
+<text x="50" y="135" font-size="14" text-anchor="middle" fill="#1d1d1d">0 C</text>
+<text x="310" y="135" font-size="14" text-anchor="middle" fill="#1d1d1d">0 C</text>
+</svg>

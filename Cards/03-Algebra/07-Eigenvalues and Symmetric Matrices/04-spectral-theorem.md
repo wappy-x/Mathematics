@@ -530,7 +530,7 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 - [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): that summary, applied.
 - [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): where to cut a network.
 - [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): non-negative factors, optimised.
-- Iterating instead of factoring: factors set solver speed.
+- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): factors set solver speed.
 - Adjoints: Step 0 as a definition.
 - Compact and symmetric: the infinite version.
 - Principal, mean and Gaussian curvature: how a surface bends.

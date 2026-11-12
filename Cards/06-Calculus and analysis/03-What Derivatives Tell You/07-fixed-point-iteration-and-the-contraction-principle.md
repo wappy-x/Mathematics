@@ -581,8 +581,8 @@ example : ∀ x : ℝ, 1 ≤ x → x + 1 / x ≠ x := by
 
 - [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): the theorem on curves: one solution per equation.
 - [Yield from price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): a yield recovered by iteration.
-- The Bellman operator contracts: the discount factor as q.
-- Fixed points: rates, rounding and acceleration.
+- [The Bellman operator contracts](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/04-the-bellman-operator-as-a-contraction.md): the discount factor as q.
+- [Fixed points](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/06-fixed-point-iteration-and-contraction.md): rates, rounding and acceleration.
 - Banach's fixed point theorem: the same proof in any complete space.
 - Brouwer and Borsuk-Ulam: fixed points without shrinking, or a way to find them.
 - Neumann series: inverting a matrix by pressing.

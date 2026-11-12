@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240">
+<title>Domain of dependence on a 1 cm grid, drawn in grid units: over 5 time steps the leapfrog stencil reaches 5 cells each way. At Courant number 0.5 the sound lines reach 2.5 cells, inside that reach. At Courant number 2 they reach 10 cells, outside it, where a pulse sits that the scheme never reads.</title>
+<rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<text x="90" y="22" font-family="sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">ν = 0.5</text>
+<line x1="10" y1="48" x2="170" y2="48" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="90" cy="48" r="1.8" fill="#1d1d1d"/>
+<line x1="10" y1="74" x2="170" y2="74" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="84" cy="74" r="1.8" fill="#1d1d1d"/>
+<circle cx="90" cy="74" r="1.8" fill="#1d1d1d"/>
+<circle cx="96" cy="74" r="1.8" fill="#1d1d1d"/>
+<line x1="10" y1="100" x2="170" y2="100" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="78" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="84" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="90" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="96" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="102" cy="100" r="1.8" fill="#1d1d1d"/>
+<line x1="10" y1="126" x2="170" y2="126" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="72" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="78" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="84" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="90" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="96" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="102" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="108" cy="126" r="1.8" fill="#1d1d1d"/>
+<line x1="10" y1="152" x2="170" y2="152" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="66" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="72" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="78" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="84" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="90" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="96" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="102" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="108" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="114" cy="152" r="1.8" fill="#1d1d1d"/>
+<line x1="10" y1="178" x2="170" y2="178" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="60" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="66" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="72" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="78" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="84" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="90" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="96" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="102" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="108" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="114" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="120" cy="178" r="1.8" fill="#1d1d1d"/>
+<line x1="90" y1="48" x2="60" y2="178" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="90" y1="48" x2="75.0" y2="178" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="90" y1="48" x2="120" y2="178" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="90" y1="48" x2="105.0" y2="178" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="96" y="42" font-family="sans-serif" font-size="13" fill="#1d1d1d">P</text>
+<text x="270" y="22" font-family="sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">ν = 2</text>
+<line x1="190" y1="48" x2="350" y2="48" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="270" cy="48" r="1.8" fill="#1d1d1d"/>
+<line x1="190" y1="74" x2="350" y2="74" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="264" cy="74" r="1.8" fill="#1d1d1d"/>
+<circle cx="270" cy="74" r="1.8" fill="#1d1d1d"/>
+<circle cx="276" cy="74" r="1.8" fill="#1d1d1d"/>
+<line x1="190" y1="100" x2="350" y2="100" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="258" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="264" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="270" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="276" cy="100" r="1.8" fill="#1d1d1d"/>
+<circle cx="282" cy="100" r="1.8" fill="#1d1d1d"/>
+<line x1="190" y1="126" x2="350" y2="126" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="252" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="258" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="264" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="270" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="276" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="282" cy="126" r="1.8" fill="#1d1d1d"/>
+<circle cx="288" cy="126" r="1.8" fill="#1d1d1d"/>
+<line x1="190" y1="152" x2="350" y2="152" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="246" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="252" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="258" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="264" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="270" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="276" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="282" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="288" cy="152" r="1.8" fill="#1d1d1d"/>
+<circle cx="294" cy="152" r="1.8" fill="#1d1d1d"/>
+<line x1="190" y1="178" x2="350" y2="178" stroke="#1d1d1d" stroke-width="0.5" stroke-opacity="0.4"/>
+<circle cx="240" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="246" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="252" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="258" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="264" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="270" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="276" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="282" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="288" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="294" cy="178" r="1.8" fill="#1d1d1d"/>
+<circle cx="300" cy="178" r="1.8" fill="#1d1d1d"/>
+<line x1="270" y1="48" x2="240" y2="178" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="270" y1="48" x2="210.0" y2="178" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line x1="270" y1="48" x2="300" y2="178" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="270" y1="48" x2="330.0" y2="178" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="276" y="42" font-family="sans-serif" font-size="13" fill="#1d1d1d">P</text>
+<polyline points="192,178 210,160 228,178" fill="#1d1d1d" fill-opacity="0.15" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="210" y="194" font-family="sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">pulse</text>
+<text x="180" y="212" font-family="sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">solid: what the scheme reads, 5 cells in 5 steps</text>
+<text x="180" y="228" font-family="sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">dashed: where the sound comes from, ν × 5 cells</text>
+</svg>

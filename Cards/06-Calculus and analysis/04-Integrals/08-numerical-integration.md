@@ -857,7 +857,7 @@ example : (1 : ℚ) / 3 * ((-1) ^ 3 + 4 * 0 ^ 3 + 1 ^ 3) = 0 := by norm_num
 - [Stirling's approximation](../06-Series/09-stirlings-approximation.md): n! sized by comparing a sum with an integral.
 - [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by quadrature.
 - [Digital filters](../../13-Engineering%20mathematics/05-Signals/04-digital-filters-fir-and-iir.md): the trapezoid rule as a filter design.
-- Trapezoid, midpoint and Simpson: the whole family of weighted rules.
+- [Trapezoid, midpoint and Simpson](../../16-Numerical%20analysis/05-Quadrature/01-newton-cotes-and-composite-rules.md): the whole family of weighted rules.
 
 Equal slices and fixed weights are one choice; which points and weights buy the most accuracy per height is the question Trapezoid, midpoint and Simpson takes up.
 

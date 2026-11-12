@@ -575,9 +575,9 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): a heat or stress field, chopped up.
 - [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): the same rows, plus inequalities and a cost; rows as walls, answers as corners.
 - [Conjugate gradient](../../15-Optimization/02-Unconstrained%20Methods/07-conjugate-gradient-method.md): huge systems by descent, no $A^{-1}$.
-- Newton in several unknowns, and Broyden when a Jacobian is too expensive: a curved system, one solve per step, with the Jacobian (the table of slopes) as $A$.
-- Matrix norms and the condition number: how far $x$ moves when $b$ is rounded.
-- One polynomial through n points: a curve through points, solved for coefficients.
+- [Newton in several unknowns, and Broyden when a Jacobian is too expensive](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/07-newton-for-systems-and-broyden.md): a curved system, one solve per step, with the Jacobian (the table of slopes) as $A$.
+- [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far $x$ moves when $b$ is rounded.
+- [One polynomial through n points](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/02-lagrange-and-newton-interpolation.md): a curve through points, solved for coefficients.
 
 Which outcome holds is settled here; reaching the answer when the counts fill a page is the bookkeeping of [Gaussian elimination](02-gaussian-elimination.md).
 

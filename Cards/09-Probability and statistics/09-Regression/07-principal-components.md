@@ -644,7 +644,7 @@ The two outputs agree line for line. Both sum in the same order, so both land on
 
 - [Level, slope and curvature](../../12-Financial%20mathematics/33-Curves%20in%20Depth/01-principal-components-of-the-curve.md): the same analysis on real yield curves, and hedging with it.
 - [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): PCA inside learning pipelines, with choosing r.
-- Singular value decomposition: computing the components stably from the data table.
+- [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): computing the components stably from the data table.
 - Mapper and Reeb graphs: principal component scores as the lens for mapping the shape of data.
 - Reproducing kernels: kernel PCA, the same eigenvalue problem after a curved change of coordinates.
 - Frechet mean: averages and principal directions when the data live on a curved space.

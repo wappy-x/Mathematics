@@ -635,7 +635,7 @@ The two outputs are identical line for line.
 ## Where this goes next
 
 - [MCMC as a tool](08-markov-chain-monte-carlo-for-computation.md): when no direct sampler can reach the region that matters, a random walk draws from it instead, at the price of correlated draws.
-- Many dimensions: grids, random points and smarter point sets compared as rules for integrals.
+- [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids, random points and smarter point sets compared as rules for integrals.
 
 Plain darts fail on the 20-dimensional ball because almost none of them land inside; how to send the darts where the answer lives, without biasing the average, is the question this card leaves open.
 

@@ -509,7 +509,7 @@ example : 33 * (2 * π) < 210 ∧ 210 < 34 * (2 * π) := by
 - [Polar coordinates](../04-Coordinates%20and%20Curves/03-polar-coordinates.md): from a point back to its angle.
 - [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): the circle's points as numbers.
 - [AC power](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/09-power-and-three-phase.md): three points a third of a turn apart.
-- Runge's phenomenon: circle points dropped onto a diameter.
+- [Runge's phenomenon](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/04-runge-phenomenon-and-chebyshev-nodes.md): circle points dropped onto a diameter.
 
 The circle says where one swing lands; where a jib hinged on a jib lands, one angle added to another, is the addition formula of [Trig identities](03-trig-identities.md).
 

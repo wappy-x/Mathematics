@@ -578,7 +578,7 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 - [n-step transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md): eigenvalue 1 among probabilities.
 - [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): these powers on credit ratings.
 - [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): why repetition finds one direction.
-- Eigenvalues by iteration: eigenvalues for a thousand rows.
+- [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): eigenvalues for a thousand rows.
 - Bounded and symmetric: infinitely many directions.
 - Semigroups: with time as the power.
 

@@ -533,7 +533,7 @@ example : (List.range' 2 11).map (fun n =>
 ## Where this goes next
 
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): convolving long sampled signals by multiplying their discrete transforms.
-- The fast Fourier transform: the algorithm that makes the multiply-instead route fast.
+- [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md): the algorithm that makes the multiply-instead route fast.
 - Tempered distributions: smearing signals that are not integrable, such as a constant or a single sharp spike.
 - [Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): every steady, linear system is a convolution with its response to one kick.
 

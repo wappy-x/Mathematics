@@ -730,7 +730,7 @@ The two outputs match line for line at six decimals, from different bell-curve a
 
 ## Where this goes next
 
-- Reverse mode: the same sweep as a general tool rather than a finance trick — how memory is traded against recomputation, and how second derivatives arrive.
+- [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md): the same sweep as a general tool rather than a finance trick — how memory is traded against recomputation, and how second derivatives arrive.
 
 This card's tape was typed out by hand, which nobody does for a real pricer; how a program records its own tape as it runs is what a later card builds.
 

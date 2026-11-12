@@ -504,7 +504,7 @@ example : Matrix.det !![(4 : ℤ), 2, 2; 0, 1, 1; 1, 0, 4] = 16 := by
 - [Trace and determinant](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md): it decides how a system settles.
 - [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): steps built to keep it at 1.
 - [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): a 3 by 3 solve behind hedge weights.
-- LU with partial pivoting: elimination packaged, row swaps carrying the sign.
+- [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): elimination packaged, row swaps carrying the sign.
 - The resultant: zero exactly when two polynomials share a root.
 - Differential form: the alternating rule made an algebra.
 - Permanent against determinant: the same sum without minus signs is hard.

@@ -718,7 +718,7 @@ Four roads, one delta: the tree lands 0.000006 from the closed form having never
 ## Where this goes next
 
 - [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md): the bump taken to zero properly, inside the simulation.
-- Bumping a simulated price: the same bump-against-noise problem as numerical analysis.
+- [Bumping a simulated price](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/08-bumped-sensitivities-and-monte-carlo-noise.md): the same bump-against-noise problem as numerical analysis.
 - [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): bumping a price that can jump, where smoothness needs care.
 - [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): bumping a model with a volatility of its own to bump.
 - [American Greeks and implied volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): bumping a price that also depends on an exercise decision.

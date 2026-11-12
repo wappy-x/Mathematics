@@ -456,7 +456,7 @@ example : (-1 : ℤ) ^ 3 - (-1) = 0 ∧ (0 : ℤ) ^ 3 - 0 = 0 ∧ (1 : ℤ) ^ 3 
 - [Solving for the barrier](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/08-barrier-level-from-a-target-premium.md): the barrier that hits a premium.
 - [Correlation from a quanto price](../../12-Financial%20mathematics/24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md): correlation from a quanto price.
 - [Correlation from a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/06-implied-correlation-from-a-spread-option.md): correlation from a spread option.
-- Bisection: halving as an algorithm, with stopping rules.
+- [Bisection](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/01-bisection-and-bracketing.md): halving as an algorithm, with stopping rules.
 - Connected and path-connected: the property of an interval the proof uses.
 - What compactness and connectedness buy: the theorem in general form.
 

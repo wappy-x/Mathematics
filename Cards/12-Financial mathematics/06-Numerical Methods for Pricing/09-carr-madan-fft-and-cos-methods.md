@@ -705,7 +705,7 @@ ALL CHECKS PASS
 
 ## Where this goes next
 
-- Spectral methods: the same transform used to solve differential equations, where a cosine expansion becomes a way of differentiating.
+- [Spectral methods](../../16-Numerical%20analysis/07-PDE%20Solvers/10-spectral-methods-and-the-fft.md): the same transform used to solve differential equations, where a cosine expansion becomes a way of differentiating.
 - Pricing by transform: the same identity as harmonic analysis, with the integrability conditions proved rather than assumed.
 
 Both machines were handed a model whose parameters were already chosen. Turning that around — starting from quoted prices and searching for the parameters that reproduce them — is calibration, and it is why anyone needs prices this fast.

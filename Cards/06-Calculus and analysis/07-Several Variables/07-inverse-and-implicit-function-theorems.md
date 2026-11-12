@@ -605,7 +605,7 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 
 ## Where this goes next
 
-- Lagrange multipliers, proved: constraints as local graphs, regularity made precise.
+- [Lagrange multipliers, proved](../../15-Optimization/03-Constrained%20Optimisation/01-lagrange-multipliers-revisited.md): constraints as local graphs, regularity made precise.
 - Diffeomorphism, immersion, submersion: an invertible Jacobian as a local change of coordinates.
 - Regular value theorem: the solutions of F = 0 forming a smooth surface.
 - The Jacobian conjecture: whether a polynomial map with constant nonzero Jacobian determinant has a global polynomial inverse, still open.

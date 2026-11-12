@@ -4,7 +4,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**1,282 of 1,866 cards are ready to read.**
+**1,350 of 1,866 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -23,7 +23,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 | 13 | [Engineering mathematics](Cards/13-Engineering%20mathematics/README.md) | Units, signals, control, circuits, mechanics, heat. | 10 | 86 of 86 |
 | 14 | [Applied and computational](Cards/14-Applied%20and%20computational/README.md) | Algorithms, information, cryptography, machine learning. | 8 | 71 of 71 |
 | 15 | [Optimization](Cards/15-Optimization/README.md) | Finding the best choice under limits. | 7 | 64 of 64 |
-| 16 | [Numerical analysis](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 8 | 0 of 68 · planned |
+| 16 | [Numerical analysis](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 8 | 68 of 68 |
 | 17 | [Topology](Cards/17-Topology/README.md) | Shape without measurement: stretching, holes and knots. | 6 | 0 of 51 · planned |
 | 18 | [Functional analysis](Cards/18-Functional%20analysis/README.md) | Infinite-dimensional spaces behind modern analysis. | 6 | 0 of 56 · planned |
 | 19 | [Partial differential equations](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 7 | 0 of 62 · planned |

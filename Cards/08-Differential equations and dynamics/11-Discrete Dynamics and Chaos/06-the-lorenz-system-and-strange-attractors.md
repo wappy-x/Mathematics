@@ -382,7 +382,7 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [The doubling map](05-the-doubling-map-and-symbolic-dynamics.md): a path coded as symbols, here left and right lobes.
-- Runge-Kutta: higher-order steppers, which push the computed horizon back only a few units.
+- [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): higher-order steppers, which push the computed horizon back only a few units.
 - [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): rate laws with noise.
 
 One path is unforecastable past 25 units, yet the average height is near 23.5 from every start tried: averages over the butterfly can be forecast when single paths cannot.

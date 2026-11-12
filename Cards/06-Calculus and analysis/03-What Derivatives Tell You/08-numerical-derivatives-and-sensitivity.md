@@ -584,8 +584,8 @@ example : (1 / 100 : ℚ) / (2 * (1 / 100)) = 1 / 2 := by norm_num
 - [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping a simulated price, whose noise is random.
 - [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): input errors carried through a model by derivatives.
 - [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md): exact derivatives by the chain rule, no step.
-- Forward, backward and central differences: higher-order formulas and Richardson extrapolation.
-- Choosing the step: the step rule in floating-point detail.
+- [Forward, backward and central differences](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/01-forward-backward-and-central-differences.md): higher-order formulas and Richardson extrapolation.
+- [Choosing the step](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/04-choosing-the-step-truncation-against-rounding.md): the step rule in floating-point detail.
 
 This card leaves open how to get a derivative with no step, and so no rounding floor.
 

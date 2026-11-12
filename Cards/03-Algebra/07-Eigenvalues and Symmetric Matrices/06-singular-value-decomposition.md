@@ -767,7 +767,7 @@ Step 3 writes the matrix as one piece per factor: $\sigma_1$ times the grid made
 
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): these axes on centred data.
 - [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): how many axes a wide table needs.
-- Singular value decomposition: the factors without building $A^T A$; best answers to unsolvable systems.
+- [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): the factors without building $A^T A$; best answers to unsolvable systems.
 - [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank off the factors, deciding whether a system steers.
 - [Writing down model error](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): the largest factor as worst-case gain.
 - [Compressed sensing](../../13-Engineering%20mathematics/05-Signals/10-compressed-sensing-in-outline.md): recovery when a matrix flattens most of its input.

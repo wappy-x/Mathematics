@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240">
+  <title>A Householder reflection: the mirror sends x = (1, 1) to Hx = (-1.414, 0) on the first axis, keeping its length</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1d1d1d"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+  <line x1="40" y1="150" x2="320" y2="150" stroke="#1d1d1d" stroke-width="1"/>
+  <text x="300" y="168" font-family="sans-serif" font-size="13" fill="#1d1d1d">axis 1</text>
+  <line x1="157.14" y1="46.53" x2="229.08" y2="220.21" stroke="#1d1d1d" stroke-width="2"/>
+  <text x="96" y="40" font-family="sans-serif" font-size="13" fill="#1d1d1d">mirror</text>
+  <line x1="200" y1="150" x2="280" y2="70" stroke="#1d1d1d" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="248" y="58" font-family="sans-serif" font-size="13" fill="#1d1d1d">x = (1, 1)</text>
+  <line x1="200" y1="150" x2="86.86" y2="150" stroke="#1d1d1d" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="44" y="174" font-family="sans-serif" font-size="13" fill="#1d1d1d">Hx = (-1.414, 0)</text>
+  <line x1="86.86" y1="150" x2="280" y2="70" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="24" y="92" font-family="sans-serif" font-size="13" fill="#1d1d1d">along v = (2.414, 1)</text>
+  <circle cx="183.43" cy="110" r="3" fill="#1d1d1d"/>
+  <text x="190" y="97" font-family="sans-serif" font-size="12" fill="#1d1d1d">midpoint</text>
+  <text x="186" y="167" font-family="sans-serif" font-size="12" fill="#1d1d1d">0</text>
+</svg>

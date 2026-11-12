@@ -394,7 +394,7 @@ ALL CHECKS PASS
 - [The heat kernel](10-the-heat-kernel.md): the solution from one hot point.
 - [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md): the equation as an average over random paths.
 - [Fourier's law](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/05-heat-conduction-and-fouriers-law.md): real materials and walls.
-- Three families: the model parabolic equation.
+- [Three families](../../16-Numerical%20analysis/07-PDE%20Solvers/01-pde-families-elliptic-parabolic-hyperbolic.md): the model parabolic equation.
 - Hille-Yosida: when such a law defines an evolution.
 - Two evolutions: the solution as an exponential of the bend.
 - Solving differential equations by transform: the $n^2$ decay as a multiplier.

@@ -483,7 +483,7 @@ example : (1 : ℚ) / (-2) = -1 / 2 ∧ (1 : ℚ) * 1 + (-2) * (-1 / 2) = 2 := b
 
 - [Triangle centres](08-triangle-centres.md): special lines of a triangle, intersected, locate its centres.
 - [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a line through two points of a curve meets it in a third, which defines an addition.
-- Linear interpolation: the line through two readings, used to estimate between them.
+- [Linear interpolation](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/01-linear-interpolation-and-extrapolation.md): the line through two readings, used to estimate between them.
 
 Two distinct lines meet once or never; a line meeting a curve, possibly twice, is where [Circles and parabolas](04-circles-and-parabolas.md) begins.
 

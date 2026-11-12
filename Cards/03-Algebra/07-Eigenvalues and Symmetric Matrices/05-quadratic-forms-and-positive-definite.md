@@ -617,8 +617,8 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 - [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): convexity, tested by the quadratic form of the second derivatives.
 - [Convergence rates](../../15-Optimization/02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md): eigenvalue spread, the ratio of a bowl's largest to smallest eigenvalue, which sets how slowly a downhill search closes in.
 - [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): optimising over them, choosing a matrix under the rule that every mix keeps a variance of zero or more.
-- Cholesky: the fastest test.
-- Iterating instead of factoring: solving downhill.
+- [Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md): the fastest test.
+- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): solving downhill.
 - Elliptic, parabolic, hyperbolic: naming equations.
 - Point types: bowl, dome, saddle.
 - Riemannian metric: measuring length.

@@ -731,7 +731,7 @@ The two outputs agree line for line, including the 94-digit nonsense the unstabl
 - [Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): the same sweep with jumpiness that changes from node to node.
 - [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md): the curve the grid finds by itself, and the condition it satisfies.
 - [Two walls](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): contracts whose edges are the whole point.
-- Crank-Nicolson and the theta family: the dial as numerical analysis treats it, with the error orders proved.
+- [Crank-Nicolson and the theta family](../../16-Numerical%20analysis/07-PDE%20Solvers/04-crank-nicolson-and-theta-methods.md): the dial as numerical analysis treats it, with the error orders proved.
 
 This grid priced a contract with one fixed exercise date. Let the holder exercise on any day and every row needs a floor under it before the next sweep, which is a different animal: [American options on a grid](08-american-options-by-psor-and-lcp.md).
 

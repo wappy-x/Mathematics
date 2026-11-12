@@ -376,7 +376,7 @@ The two outputs are identical line for line.
 - [Half-range series](04-half-range-sine-and-cosine-series.md): a wave on half a cycle, as sines only or cosines only.
 - [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): why sampling faster than twice the top harmonic's frequency captures a signal.
 - [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): waves confined in time, where sines run for ever.
-- Von Neumann analysis: a numerical scheme tested one Fourier mode at a time.
+- [Von Neumann analysis](../../16-Numerical%20analysis/07-PDE%20Solvers/03-von-neumann-analysis-and-the-cfl-condition.md): a numerical scheme tested one Fourier mode at a time.
 - Orthonormal bases: orthogonality in any space with a dot product.
 - Completeness of sines and cosines: why no repeating signal lies outside all harmonics.
 - Fourier coefficients: the same amounts, proofs at full strength.

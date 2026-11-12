@@ -696,8 +696,8 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 - [The SVI smile](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): squared misses minimised against traded option prices.
 - [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a pull-back speed fitted from price history.
 - [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md): these equations re-solved as each reading arrives.
-- Least squares two ways: why software never forms $A^T A$.
-- Fitting instead of passing through: perpendicular columns, so curves fit without the small matrix.
+- [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): why software never forms $A^T A$.
+- [Fitting instead of passing through](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): perpendicular columns, so curves fit without the small matrix.
 
 Nothing here says how far to trust −3.4, and that question opens [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md).
 

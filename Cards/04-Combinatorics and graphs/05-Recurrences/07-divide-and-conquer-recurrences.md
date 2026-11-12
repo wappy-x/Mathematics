@@ -649,7 +649,7 @@ example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 
 - [Recurrences](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/04-recurrences-and-the-master-theorem.md): writing the rule from real code, with rounding, uneven pieces and a joining cost of n log n.
 - [Sorting and searching](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/05-sorting-and-searching.md): quicksort, and the proof that no sort by comparisons beats about n log n.
-- The fast Fourier transform: the flat case carrying a workhorse of engineering.
+- [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md): the flat case carrying a workhorse of engineering.
 
 The three cases cover the powers and nothing between them, so a joining cost of n times a logarithm has no answer here; supplying one is a later card's first job.
 

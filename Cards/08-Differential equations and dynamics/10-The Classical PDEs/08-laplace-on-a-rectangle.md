@@ -388,7 +388,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Two space dimensions: an L-shaped or heated plate has no series; grids solve it fast, a row and a column at a time.
+- [Two space dimensions](../../16-Numerical%20analysis/07-PDE%20Solvers/05-adi-and-multidimensional-grids.md): an L-shaped or heated plate has no series; grids solve it fast, a row and a column at a time.
 
 ---
 

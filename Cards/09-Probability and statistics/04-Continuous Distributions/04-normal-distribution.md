@@ -591,7 +591,7 @@ The two outputs match line for line, simulated counts included: both languages d
 - [Channel capacity](../../14-Applied%20and%20computational/03-Information%20Theory/07-channel-capacity-and-the-noisy-channel-theorem.md): normal noise sets a channel's limit.
 - [Rate and distortion](../../14-Applied%20and%20computational/03-Information%20Theory/10-lossy-compression-and-rate-distortion-in-outline.md): the normal source as the hardest to compress.
 - [EM](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/08-em-algorithm.md): fitting a mixture of bells.
-- Weighted Gauss rules: averages under the bell by a few weighted points.
+- [Weighted Gauss rules](../../16-Numerical%20analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules.md): averages under the bell by a few weighted points.
 - [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat spreading as a widening bell.
 - Erdos-Kac: the count of a number's prime factors follows the bell.
 

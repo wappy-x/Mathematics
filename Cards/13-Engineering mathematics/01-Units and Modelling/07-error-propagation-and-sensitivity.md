@@ -559,7 +559,7 @@ The first three roads agree to six decimals on $u(C_d)$ = 0.026126, and the four
 
 ## Where this goes next
 
-- Conditioning and stability: the same sensitivity, turned on a computation, where the condition number says how much a problem magnifies relative errors in its data.
+- [Conditioning and stability](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md): the same sensitivity, turned on a computation, where the condition number says how much a problem magnifies relative errors in its data.
 
 This card spreads measurement errors through one formula; the open question is how much any problem, solved by any algorithm, magnifies the errors it is fed, rounding included.
 

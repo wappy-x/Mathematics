@@ -556,7 +556,7 @@ example : (2 : ZMod 4) ≠ 0 ∧ ∀ x : ZMod 4, 2 * x ≠ 1 := by decide
 - [Absorption](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/06-absorption-and-first-step-analysis.md): average steps to the end of a random walk, from one inverse.
 - [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three option prices fixed by inverting a 3 by 3.
 - [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): portfolio weights from the inverse of a covariance table.
-- Matrix norms and the condition number: how far an almost-flat matrix magnifies an error.
+- [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far an almost-flat matrix magnifies an error.
 
 The determinant has been only a number that must not be zero; what it measures, and why zero flattens, is [Determinants](04-determinants.md).
 

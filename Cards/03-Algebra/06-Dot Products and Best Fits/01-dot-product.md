@@ -549,7 +549,7 @@ example : ∀ d ∈ [(![5, 0] : Fin 2 → ℤ), ![4, 3], ![3, 4], ![0, 5], ![-3,
 - [k-means](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/06-k-means-and-clustering.md): grouping by distance.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): dot products left implicit.
 - [Separating hyperplanes](../../15-Optimization/01-Convexity/06-separating-hyperplanes.md): one sign decides.
-- QR: perpendicular directions, safely.
+- [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): perpendicular directions, safely.
 - The distance menu: distance without dot products.
 - Inner products: the same rules, endlessly.
 - Riesz representation: every linear reading is a dot product.

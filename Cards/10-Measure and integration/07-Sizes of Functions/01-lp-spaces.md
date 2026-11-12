@@ -642,7 +642,7 @@ The two outputs match line for line.
 
 - [Holder's inequality](02-holders-inequality.md): the pairing bound with constant 1 for conjugate exponents.
 - [Jensen's inequality](04-jensens-inequality.md): why the p-norms rise with p on a probability.
-- Assembly and error: L^2 norms as the yardstick for simulation error.
+- [Assembly and error](../../16-Numerical%20analysis/07-PDE%20Solvers/08-finite-element-assembly-and-error.md): L^2 norms as the yardstick for simulation error.
 - The distance menu: the p-norm of a difference as a distance.
 - Sequence spaces: the counting-measure case on the whole numbers.
 - Function spaces C and Lp: L^p beside the continuous functions, as normed spaces.

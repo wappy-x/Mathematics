@@ -395,7 +395,7 @@ ALL CHECKS PASS
 - [The heat equation](03-the-heat-equation.md): the rod's equation from conservation of heat.
 - [Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): a parabolic equation from hedging.
 - [Navier-Stokes](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md): a nonlinear system mixing families.
-- Three families: a grid solver for each family.
+- [Three families](../../16-Numerical%20analysis/07-PDE%20Solvers/01-pde-families-elliptic-parabolic-hyperbolic.md): a grid solver for each family.
 - Weak solutions: solutions with corners, where u_xx fails to exist.
 - A PDE problem: well-posedness in general.
 

@@ -560,8 +560,8 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 - [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): measured values.
 - [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): road two at scale.
 - [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): network cuts.
-- Every root at once: the trick reversed.
-- Eigenvalues by iteration: no quadratic.
+- [Every root at once](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/08-polynomial-roots-and-companion-matrices.md): the trick reversed.
+- [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): no quadratic.
 - Spectrum: infinite dimensions.
 - Finitely many solutions: polynomial systems.
 - Smith normal form: all the shapes.

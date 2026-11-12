@@ -663,7 +663,7 @@ The two outputs match line for line: two languages, one series for the bell-curv
 
 ## Where this goes next
 
-- Quasi-Monte Carlo and sparse grids: the same idea without the finance, alongside sparse grids, with the discrepancy theory and the randomised versions done properly.
+- [Quasi-Monte Carlo and sparse grids](../../16-Numerical%20analysis/05-Quadrature/07-quasi-monte-carlo-and-sparse-grids.md): the same idea without the finance, alongside sparse grids, with the discrepancy theory and the randomised versions done properly.
 
 The rate here was measured, not bounded; recovering an honest error bar by shifting the points at random is where the quadrature card begins.
 

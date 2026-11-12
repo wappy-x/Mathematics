@@ -635,7 +635,7 @@ example : (-1 : ℚ) / 1 - (-1 / (-1)) = -2 := by norm_num
 - [The complex form](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): a series stretched into an integral.
 - [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): averages that diverge.
 - [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): what a stronger integral accepts.
-- Adaptive quadrature and awkward integrals: computing them to a stated error.
+- [Adaptive quadrature and awkward integrals](../../16-Numerical%20analysis/05-Quadrature/05-adaptive-and-improper-quadrature.md): computing them to a stated error.
 - Partial summation: sums turned into integrals.
 - The logarithmic integral: an integral of 1/ln t that estimates prime counts.
 

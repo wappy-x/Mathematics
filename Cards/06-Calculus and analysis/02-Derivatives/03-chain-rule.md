@@ -547,7 +547,7 @@ example : (9 / 5 : ℚ) * (3 / 50) * 100 = 54 / 5 ∧ (9 / 5 : ℚ) * (9 / 100) 
 - [The wave equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md): waves as shapes sliding at fixed speed.
 - [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md): an option's rate per dollar of stock.
 - [The Greeks of a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): sensitivities chained across currencies.
-- Forward-mode automatic differentiation: the chain carried out by computer.
+- [Forward-mode automatic differentiation](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/06-forward-mode-automatic-differentiation.md): the chain carried out by computer.
 
 The chain rule needs each link's rate; for sine, cosine and the exponential none is known yet, and [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md) supplies the first of them.
 

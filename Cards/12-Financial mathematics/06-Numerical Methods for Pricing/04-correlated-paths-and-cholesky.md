@@ -677,7 +677,7 @@ The two outputs match line for line: the counter-based draws and the mixing are 
 - [The exchange option](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/01-exchange-option-margrabe.md): two correlated shares where a formula replaces the simulation, the correlation entering as one combined volatility.
 - [Spread options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md): the difference of two shares, where no exact formula exists and these paths are one honest answer.
 - [Basket options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md): the weighted sum, with the chart above as its price sensitivity.
-- Cholesky: the same factoring as numerical linear algebra, with its cost, its stability, and tables only almost possible.
+- [Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md): the same factoring as numerical linear algebra, with its cost, its stability, and tables only almost possible.
 
 This card takes the dial as given, the one input no market quotes outright: where its numbers come from, and how to mend a table no factor will accept, is what later cards pick up.
 

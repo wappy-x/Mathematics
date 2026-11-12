@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 210" style="max-width:440px;width:100%;height:auto">
+<title>The 64 bits of the double that 0.1 + 0.2 produces, split into sign, exponent and fraction fields (schematic, not to scale)</title>
+<rect x="0" y="0" width="440" height="210" fill="#ffffff"/>
+<g fill="none" stroke="#1d1d1d" stroke-width="1.5">
+<rect x="20" y="60" width="40" height="44"/>
+<rect x="60" y="60" width="100" height="44"/>
+<rect x="160" y="60" width="260" height="44"/>
+</g>
+<g fill="#1d1d1d" font-family="sans-serif" font-size="13" text-anchor="middle">
+<text x="40" y="30">sign</text>
+<text x="40" y="48">bit 63</text>
+<text x="110" y="30">exponent e</text>
+<text x="110" y="48">bits 62 to 52</text>
+<text x="290" y="30">fraction f</text>
+<text x="290" y="48">bits 51 to 0</text>
+<text x="40" y="87" font-family="monospace">0</text>
+<text x="110" y="87" font-family="monospace">01111111101</text>
+<text x="290" y="87" font-family="monospace">0011 0011 0011 … 0011 0100</text>
+<text x="40" y="128">s = 0</text>
+<text x="110" y="128">e = 1021</text>
+<text x="290" y="128">f = 900719925474100</text>
+<text x="40" y="148">plus</text>
+<text x="110" y="148">E = e − 1023 = −2</text>
+<text x="290" y="148">front number 1 + f / 2^52</text>
+<text x="220" y="186">value = (1 + f / 2^52) × 2^−2 = 0.30000000000000004</text>
+</g>
+</svg>

@@ -609,7 +609,7 @@ The two outputs match line for line.
 - [Recurrences](04-recurrences-and-the-master-theorem.md): solving recurrences like halving's W(m) = 1 + W(⌊m/2⌋) for divide-and-conquer methods.
 - [Cost in practice](../08-Scientific%20Computing%20Practice/04-computational-cost-and-vectorisation.md): counted operations against a real machine's caches and memory.
 - Time and space classes: memory as a cost alongside comparisons.
-- Counting the work: turning a loop into a cost formula line by line.
+- [Counting the work](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md): turning a loop into a cost formula line by line.
 
 Big-O says which method wins for large n; whether the cost quoted is the one you will actually meet, worst, typical or averaged over many calls, is still open.
 

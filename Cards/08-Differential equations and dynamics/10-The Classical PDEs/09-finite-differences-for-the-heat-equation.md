@@ -365,7 +365,7 @@ The outputs match line for line: both languages do the same operations in the sa
 ## Where this goes next
 
 - [Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): explicit, implicit and Crank-Nicolson steps pricing an option.
-- Finite differences on a grid: why a consistent, stable scheme converges, for any linear equation.
+- [Finite differences on a grid](../../16-Numerical%20analysis/07-PDE%20Solvers/02-finite-differences-consistency-stability-and-convergence.md): why a consistent, stable scheme converges, for any linear equation.
 - [The heat kernel](10-the-heat-kernel.md): the exact solution for any start on an endless rod.
 
 One stable scheme converged on one rod here; whether stability guarantees convergence for every scheme is answered in Finite differences on a grid.

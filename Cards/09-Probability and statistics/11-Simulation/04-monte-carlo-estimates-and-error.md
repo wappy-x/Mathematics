@@ -595,8 +595,8 @@ The two outputs are identical line for line.
 - [The Asian option desks trade](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): a payoff with no closed formula, priced by simulation.
 - [Investing over a lifetime](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/05-life-cycle-and-glide-paths.md): simulated retirement savings paths and the spread of their outcomes.
 - [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why σ/√n with no dimension in it beats a grid in high dimensions.
-- Many dimensions: grids and random points compared as quadrature rules.
-- Bumping a simulated price: what the noise does to a difference of two simulated numbers.
+- [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids and random points compared as quadrature rules.
+- [Bumping a simulated price](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/08-bumped-sensitivities-and-monte-carlo-noise.md): what the noise does to a difference of two simulated numbers.
 
 The error bar has two levers, n and σ, and n is the expensive one: a hundred times the work for one digit. Whether σ can be cut instead, at no extra draws, is the question [Variance reduction](05-variance-reduction.md) answers.
 

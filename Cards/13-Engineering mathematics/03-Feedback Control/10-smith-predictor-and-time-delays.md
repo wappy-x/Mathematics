@@ -702,7 +702,7 @@ The two outputs are identical to the printed precision.
 
 ## Where this goes next
 
-- Pade approximants: Padé approximants of any order for any function, how their coefficients come from a series, and how their error behaves.
+- [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md): Padé approximants of any order for any function, how their coefficients come from a series, and how their error behaves.
 
 On the shower the second-order stand-in put the edge at 0.791288 against the true 0.785398, where the first-order one said 1.000; why a ratio of polynomials beats a plain series of the same length, and how far up in frequency each order can be trusted, is what pade-and-rational-approximation answers.
 
