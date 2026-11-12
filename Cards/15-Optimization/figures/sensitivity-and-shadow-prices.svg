@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 340" width="360" height="340" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Tables across, chairs up, to scale: the workshop's allowed plans shaded, the timber, labour and finish lines, the best corner at 32 tables and 16 chairs, and the finish line moved to 40 and to 160 litres, where the best corner reaches either end of the timber line</title>
+<rect x="0" y="0" width="360" height="340" fill="#ffffff"/>
+<polygon points="50,300 178,300 152.4,248.8 50,197.6" fill="#1d1d1d" fill-opacity="0.12" stroke="none"/>
+<line x1="50" y1="300" x2="270" y2="300" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="50" y1="300" x2="50" y2="20" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="114" y1="300" x2="114" y2="305" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="178" y1="300" x2="178" y2="305" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="242" y1="300" x2="242" y2="305" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="45" y1="172" x2="50" y2="172" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="45" y1="44" x2="50" y2="44" stroke="#1d1d1d" stroke-width="1.2"/>
+<text x="50" y="317" text-anchor="middle" fill="#1d1d1d">0</text>
+<text x="114" y="317" text-anchor="middle" fill="#1d1d1d">20</text>
+<text x="178" y="317" text-anchor="middle" fill="#1d1d1d">40</text>
+<text x="242" y="317" text-anchor="middle" fill="#1d1d1d">60</text>
+<text x="41" y="304" text-anchor="end" fill="#1d1d1d">0</text>
+<text x="41" y="176" text-anchor="end" fill="#1d1d1d">40</text>
+<text x="41" y="48" text-anchor="end" fill="#1d1d1d">80</text>
+<text x="160" y="334" text-anchor="middle" fill="#1d1d1d">tables t</text>
+<text x="14" y="172" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 14 172)">chairs c</text>
+<line x1="50" y1="44" x2="178" y2="300" stroke="#1d1d1d" stroke-width="2.5"/>
+<line x1="87.3" y1="28" x2="178" y2="300" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="50" y1="197.6" x2="254.8" y2="300" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="50" y1="236" x2="178" y2="300" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="50" y1="44" x2="254.8" y2="146.4" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="152.4" cy="248.8" r="4" fill="#1d1d1d"/>
+<circle cx="178" cy="300" r="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="50" cy="44" r="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="93" y="24" fill="#1d1d1d">labour 120 h</text>
+<text x="100" y="160" text-anchor="end" fill="#1d1d1d">timber</text>
+<text x="100" y="175" text-anchor="end" fill="#1d1d1d">160 m</text>
+<text x="56" y="230" fill="#1d1d1d">40 l</text>
+<text x="166" y="244" fill="#1d1d1d">best: 32 tables, 16 chairs</text>
+<text x="200" y="110" fill="#1d1d1d">finish 160 l</text>
+<text x="205" y="272" fill="#1d1d1d">finish 64 l</text>
+</svg>

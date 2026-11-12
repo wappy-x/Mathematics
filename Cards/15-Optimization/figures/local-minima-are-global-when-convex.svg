@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>Blends of Brazil, Colombia and Sumatra drawn to scale by Brazil share across and Colombia share up: the allowed triangle, the cheapest allowed blend where a cost contour touches the strength-7 edge, and the unconstrained dip outside</title><rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<polygon points="48.00,206.00 133.00,206.00 48.00,92.67" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+<polygon points="48.00,206.00 218.00,206.00 48.00,36.00" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<line x1="133.00" y1="206.00" x2="48.00" y2="92.67" stroke="currentColor" stroke-width="2"/>
+<polyline points="106.9,95.7 103.3,97.3 99.9,99.4 96.9,101.9 94.4,104.9 92.3,108.3 90.7,111.9 89.6,115.8 88.9,119.8 88.7,123.8 88.8,127.8 89.2,131.7 89.9,135.5 90.8,139.1 91.8,142.6 93.0,146.0 94.2,149.1 95.5,152.1 96.9,155.0 98.3,157.7 99.8,160.3 101.2,162.7 102.7,165.1 104.1,167.3 105.6,169.4 107.1,171.5 108.6,173.4 110.1,175.3 111.6,177.2 113.1,179.0 114.6,180.7 116.2,182.4 117.8,184.0 119.4,185.6 121.0,187.2 122.6,188.8 124.3,190.4 126.0,191.9 127.8,193.4 129.7,194.9 131.6,196.4 133.5,197.9 135.6,199.4 137.7,200.9 139.9,202.3 142.3,203.8 144.7,205.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polyline points="205.6,205.1 207.7,201.7 209.3,198.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="107.50" cy="172.00" r="4" fill="currentColor"/>
+<circle cx="150.00" cy="155.00" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="44" y="222" font-size="13" fill="currentColor" text-anchor="middle">E</text>
+<text x="133" y="222" font-size="13" fill="currentColor" text-anchor="middle">P</text>
+<text x="40" y="97" font-size="13" fill="currentColor" text-anchor="end">Q</text>
+<text x="218" y="222" font-size="13" fill="currentColor" text-anchor="middle">all Brazil</text>
+<text x="56" y="40" font-size="13" fill="currentColor" text-anchor="start">all Colombia</text>
+<text x="98" y="188" font-size="13" fill="currentColor" text-anchor="end">x*</text>
+<text x="236" y="74" font-size="13" fill="currentColor" text-anchor="start">shaded: allowed</text>
+<text x="236" y="92" font-size="13" fill="currentColor" text-anchor="start">thick: strength 7</text>
+<text x="236" y="110" font-size="13" fill="currentColor" text-anchor="start">dashed: £10.675</text>
+<text x="236" y="128" font-size="13" fill="currentColor" text-anchor="start">circle: the dip</text>
+<text x="236" y="146" font-size="13" fill="currentColor" text-anchor="start">dot: x*</text>
+</svg>

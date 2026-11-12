@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="400" height="260">
+<title>The workshop's plans drawn to scale: the four-cornered region cut by the timber, labour and finish lines, its corners (0, 0), (40, 0), (32, 16) and (0, 32), two crossings outside it at (35.2, 14.4) and (64, 0), and the dashed profit-928 line touching the region only at (32, 16)</title>
+<rect x="0" y="0" width="400" height="260" fill="#ffffff"/>
+<polygon points="50,215 230,215 194,151 50,87" fill="#1d1d1d" fill-opacity="0.10" stroke="none"/>
+<line x1="50" y1="215" x2="360" y2="215" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="50" y1="215" x2="50" y2="25" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="126.5" y1="31" x2="230" y2="215" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="161" y1="31" x2="230" y2="215" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="50" y1="87" x2="338" y2="215" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="104" y1="75" x2="248" y2="196.6" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="140" y1="215" x2="140" y2="220" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="230" y1="215" x2="230" y2="220" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="320" y1="215" x2="320" y2="220" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="45" y1="135" x2="50" y2="135" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="45" y1="55" x2="50" y2="55" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="50" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">0</text>
+<text x="140" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">20</text>
+<text x="230" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">40</text>
+<text x="320" y="232" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">60</text>
+<text x="40" y="139" font-size="13" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">20</text>
+<text x="40" y="59" font-size="13" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">40</text>
+<circle cx="50" cy="215" r="4" fill="#1d1d1d"/>
+<circle cx="230" cy="215" r="4" fill="#1d1d1d"/>
+<circle cx="194" cy="151" r="5" fill="#1d1d1d"/>
+<circle cx="50" cy="87" r="4" fill="#1d1d1d"/>
+<circle cx="208.4" cy="157.4" r="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="338" cy="215" r="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="112" y="26" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">timber</text>
+<text x="176" y="26" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">labour</text>
+<text x="300" y="183" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">finish</text>
+<text x="56" y="80" font-size="13" fill="#1d1d1d" font-family="sans-serif">(0, 32)</text>
+<text x="186" y="172" font-size="13" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">best (32, 16)</text>
+<text x="244" y="210" font-size="13" fill="#1d1d1d" font-family="sans-serif">(40, 0)</text>
+<text x="216" y="150" font-size="13" fill="#1d1d1d" font-family="sans-serif">(35.2, 14.4)</text>
+<text x="338" y="205" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">(64, 0)</text>
+<text x="250" y="44" font-size="13" fill="#1d1d1d" font-family="sans-serif">shaded: plans that fit</text>
+<text x="250" y="62" font-size="13" fill="#1d1d1d" font-family="sans-serif">dashed: profit £928</text>
+<text x="205" y="252" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">tables t</text>
+<text x="16" y="130" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif" transform="rotate(-90 16 130)">chairs c</text>
+</svg>

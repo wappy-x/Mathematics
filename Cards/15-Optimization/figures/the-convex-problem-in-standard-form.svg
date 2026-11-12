@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 352" width="400" height="352" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Every one-kilo blend as a point of a triangle, to scale: the taste disk around the house recipe, the caffeine line, the feasible part shaded, and the cost line through the cheapest blend</title>
+<rect x="0" y="0" width="400" height="352" fill="#ffffff"/>
+<polygon points="200,29 369.7,323 30.3,323" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<path d="M 221.6 223.8 A 48 48 0 0 1 171.2 161.4 Z" fill="#1d1d1d" fill-opacity="0.15" stroke="none"/>
+<circle cx="217" cy="176" r="48" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="301.8" y1="323" x2="143.4" y2="127" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="169" y1="104" x2="169" y2="310" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="217" cy="176" r="3" fill="#1d1d1d"/>
+<circle cx="169" cy="176" r="3.5" fill="#1d1d1d"/>
+<text x="210" y="34" fill="#1d1d1d">Brazil</text>
+<text x="30.3" y="342" text-anchor="middle" fill="#1d1d1d">Robusta</text>
+<text x="369.7" y="342" text-anchor="middle" fill="#1d1d1d">Colombia</text>
+<text x="205" y="120" text-anchor="middle" fill="#1d1d1d">house recipe</text>
+<text x="160" y="172" text-anchor="end" fill="#1d1d1d">x*</text>
+<text x="174" y="300" fill="#1d1d1d">£8.45 a kilo</text>
+<text x="296" y="342" text-anchor="end" fill="#1d1d1d">caffeine 1.6%</text>
+</svg>

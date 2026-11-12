@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" font-family="Helvetica, Arial, sans-serif">
+<title>Net weekly bean cost F(q) against kilos of Kenyan bought, with a kink at 40 kg and three supporting lines through it, slopes -1, 0 and +1</title>
+<rect x="0" y="0" width="360" height="250" fill="#ffffff"/>
+<g stroke="#1d1d1d" stroke-width="1.5" fill="none">
+<line x1="40" y1="210" x2="330" y2="210"/>
+<line x1="40" y1="210" x2="40" y2="35"/>
+<line x1="152" y1="210" x2="152" y2="214"/>
+<line x1="236" y1="210" x2="236" y2="214"/>
+<line x1="320" y1="210" x2="320" y2="214"/>
+<line x1="36" y1="167.5" x2="40" y2="167.5"/>
+<line x1="36" y1="125" x2="40" y2="125"/>
+<line x1="36" y1="82.5" x2="40" y2="82.5"/>
+<line x1="36" y1="40" x2="40" y2="40"/>
+<polyline points="40,125 152,176 236,150.5 320,48.5" stroke-width="2"/>
+<g stroke-dasharray="5 4">
+<line x1="96" y1="167.5" x2="208" y2="184.5"/>
+<line x1="96" y1="176" x2="208" y2="176"/>
+<line x1="96" y1="184.5" x2="208" y2="167.5"/>
+</g>
+</g>
+<circle cx="152" cy="176" r="3.5" fill="#1d1d1d"/>
+<g fill="#1d1d1d" font-size="13">
+<text x="40" y="227" text-anchor="middle">0</text>
+<text x="152" y="227" text-anchor="middle">40</text>
+<text x="236" y="227" text-anchor="middle">70</text>
+<text x="320" y="227" text-anchor="middle">100</text>
+<text x="185" y="245" text-anchor="middle">kilos of Kenyan bought a week, q (kg)</text>
+<text x="33" y="214" text-anchor="end">1000</text>
+<text x="33" y="171" text-anchor="end">1100</text>
+<text x="33" y="129" text-anchor="end">1200</text>
+<text x="33" y="86" text-anchor="end">1300</text>
+<text x="33" y="44" text-anchor="end">1400</text>
+<text x="46" y="24">F(q), net cost of the week's beans (£)</text>
+<text x="250" y="96">F(q)</text>
+<text x="152" y="202" text-anchor="middle">£1,080 at 40 kg</text>
+<text x="214" y="196">slopes −1, 0, +1</text>
+</g>
+</svg>

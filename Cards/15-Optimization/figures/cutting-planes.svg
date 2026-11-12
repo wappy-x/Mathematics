@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 250" width="440" height="250">
+<title>The festival region drawn to scale: 45 whole bookings as dots, the relaxed best corner at 4.6 headliners and 2.8 smaller acts, and the Gomory cut 3 x1 + x2 &lt;= 16 slicing that corner off while keeping every dot</title>
+<rect x="0" y="0" width="440" height="250" fill="#ffffff"/>
+<line x1="50" y1="215" x2="346.8" y2="215" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="50" y1="215" x2="50" y2="20" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="50" y="231" font-size="11" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">0</text>
+<text x="106" y="231" font-size="11" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">1</text>
+<text x="162" y="231" font-size="11" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">2</text>
+<text x="218" y="231" font-size="11" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">3</text>
+<text x="274" y="231" font-size="11" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">4</text>
+<text x="330" y="231" font-size="11" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">5</text>
+<text x="42" y="219" font-size="11" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">0</text>
+<text x="42" y="189" font-size="11" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">2</text>
+<text x="42" y="159" font-size="11" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">4</text>
+<text x="42" y="129" font-size="11" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">6</text>
+<text x="42" y="99" font-size="11" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">8</text>
+<text x="42" y="69" font-size="11" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">10</text>
+<text x="42" y="39" font-size="11" text-anchor="end" fill="#1d1d1d" font-family="sans-serif">12</text>
+<text x="190" y="246" font-size="12" fill="#1d1d1d" font-family="sans-serif" text-anchor="middle">headliners, x1</text>
+<text x="14" y="125" font-size="12" fill="#1d1d1d" font-family="sans-serif" text-anchor="middle" transform="rotate(-90 14 125)">smaller acts, x2</text>
+<polygon points="50,215 320.667,215 307.6,173 50,35" fill="#1d1d1d" fill-opacity="0.08" stroke="#1d1d1d" stroke-width="1.8"/>
+<polygon points="274,155 307.6,173 311.333,185" fill="#1d1d1d" fill-opacity="0.35" stroke="none"/>
+<line x1="240.4" y1="128" x2="324.4" y2="195.5" stroke="#1d1d1d" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="50" cy="215" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="200" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="185" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="170" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="155" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="140" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="125" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="110" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="95" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="80" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="65" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="50" r="2.4" fill="#1d1d1d"/>
+<circle cx="50" cy="35" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="215" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="200" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="185" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="170" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="155" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="140" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="125" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="110" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="95" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="80" r="2.4" fill="#1d1d1d"/>
+<circle cx="106" cy="65" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="215" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="200" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="185" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="170" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="155" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="140" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="125" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="110" r="2.4" fill="#1d1d1d"/>
+<circle cx="162" cy="95" r="2.4" fill="#1d1d1d"/>
+<circle cx="218" cy="215" r="2.4" fill="#1d1d1d"/>
+<circle cx="218" cy="200" r="2.4" fill="#1d1d1d"/>
+<circle cx="218" cy="185" r="2.4" fill="#1d1d1d"/>
+<circle cx="218" cy="170" r="2.4" fill="#1d1d1d"/>
+<circle cx="218" cy="155" r="2.4" fill="#1d1d1d"/>
+<circle cx="218" cy="140" r="2.4" fill="#1d1d1d"/>
+<circle cx="218" cy="125" r="2.4" fill="#1d1d1d"/>
+<circle cx="274" cy="215" r="2.4" fill="#1d1d1d"/>
+<circle cx="274" cy="200" r="2.4" fill="#1d1d1d"/>
+<circle cx="274" cy="185" r="2.4" fill="#1d1d1d"/>
+<circle cx="274" cy="170" r="2.4" fill="#1d1d1d"/>
+<circle cx="274" cy="155" r="2.4" fill="#1d1d1d"/>
+<circle cx="307.6" cy="173" r="4.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="316" y="160" font-size="12" fill="#1d1d1d" font-family="sans-serif">(4.6, 2.8): 7.4 acts</text>
+<text x="234.4" y="116" font-size="12" fill="#1d1d1d" font-family="sans-serif">cut: 3 x1 + x2 ≤ 16</text>
+<text x="70" y="39" font-size="12" fill="#1d1d1d" font-family="sans-serif">slots: 2 x1 + x2 ≤ 12</text>
+<text x="338" y="196" font-size="12" fill="#1d1d1d" font-family="sans-serif">budget:</text>
+<text x="338" y="210" font-size="12" fill="#1d1d1d" font-family="sans-serif">12 x1 + x2 ≤ 58</text>
+</svg>

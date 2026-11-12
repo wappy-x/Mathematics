@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" width="360" height="250" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Schematic network: the North and South mills on the left, the spare column and workshops W1, W2 and W3 on the right; thick lines carry the cheapest plan with its tonnes, thin dashed lines are routes left unused</title>
+<rect x="0" y="0" width="360" height="250" fill="#ffffff"/>
+<line x1="80.7" y1="92.1" x2="269.3" y2="202.9" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="82.5" y1="171.7" x2="267.5" y2="103.3" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="80.3" y1="167.2" x2="269.7" y2="47.8" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="83.6" y1="75.4" x2="266.4" y2="39.6" stroke="#1d1d1d" stroke-width="3"/>
+<text x="175" y="48" text-anchor="middle" fill="#1d1d1d">10 t</text>
+<line x1="83.9" y1="81.6" x2="266.1" y2="93.4" stroke="#1d1d1d" stroke-width="3"/>
+<text x="175" y="80" text-anchor="middle" fill="#1d1d1d">25 t</text>
+<line x1="82.8" y1="87.4" x2="267.2" y2="147.6" stroke="#1d1d1d" stroke-width="3"/>
+<text x="197" y="117" text-anchor="middle" fill="#1d1d1d">5 t</text>
+<line x1="83.9" y1="177.4" x2="266.1" y2="157.6" stroke="#1d1d1d" stroke-width="3"/>
+<text x="208" y="156" text-anchor="middle" fill="#1d1d1d">15 t</text>
+<line x1="83.7" y1="183.6" x2="266.3" y2="211.4" stroke="#1d1d1d" stroke-width="3"/>
+<text x="175" y="216" text-anchor="middle" fill="#1d1d1d">15 t</text>
+<circle cx="60" cy="80" r="24" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="60" y="84" text-anchor="middle" fill="#1d1d1d" font-size="11">North</text>
+<circle cx="60" cy="180" r="24" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="60" y="184" text-anchor="middle" fill="#1d1d1d" font-size="11">South</text>
+<circle cx="290" cy="35" r="24" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="290" y="39" text-anchor="middle" fill="#1d1d1d" font-size="11">spare</text>
+<circle cx="290" cy="95" r="24" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="290" y="99" text-anchor="middle" fill="#1d1d1d">W1</text>
+<circle cx="290" cy="155" r="24" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="290" y="159" text-anchor="middle" fill="#1d1d1d">W2</text>
+<circle cx="290" cy="215" r="24" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="290" y="219" text-anchor="middle" fill="#1d1d1d">W3</text>
+<text x="60" y="120" text-anchor="middle" fill="#1d1d1d">40 t</text>
+<text x="60" y="220" text-anchor="middle" fill="#1d1d1d">30 t</text>
+<text x="319" y="39" fill="#1d1d1d">10 t</text>
+<text x="319" y="99" fill="#1d1d1d">25 t</text>
+<text x="319" y="159" fill="#1d1d1d">20 t</text>
+<text x="319" y="219" fill="#1d1d1d">15 t</text>
+</svg>

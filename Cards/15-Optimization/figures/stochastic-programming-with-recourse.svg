@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Scenario tree for the reservoir, schematic: let out 30 million cubic metres now, then three rain scenarios, each with its own repair and cost</title>
+<rect x="0" y="0" width="400" height="240" fill="#ffffff"/>
+<line x1="64" y1="120" x2="186" y2="45" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="64" y1="120" x2="186" y2="120" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="64" y1="120" x2="186" y2="195" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="50" cy="120" r="14" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="50" y="95" text-anchor="middle" fill="#1d1d1d">now</text>
+<text x="50" y="155" text-anchor="middle" fill="#1d1d1d">let out</text>
+<text x="50" y="172" text-anchor="middle" fill="#1d1d1d">x = 30</text>
+<circle cx="200" cy="45" r="14" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="200" cy="120" r="14" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="200" cy="195" r="14" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="224" y="40" fill="#1d1d1d">dry, 30%, rain 10</text>
+<text x="224" y="58" fill="#1d1d1d">buy power 20: £200k</text>
+<text x="224" y="115" fill="#1d1d1d">normal, 50%, rain 30</text>
+<text x="224" y="133" fill="#1d1d1d">no repair: £0</text>
+<text x="224" y="190" fill="#1d1d1d">wet, 20%, rain 90</text>
+<text x="224" y="208" fill="#1d1d1d">overflow 10: £500k</text>
+<text x="200" y="232" text-anchor="middle" fill="#1d1d1d">after the rain</text>
+</svg>
