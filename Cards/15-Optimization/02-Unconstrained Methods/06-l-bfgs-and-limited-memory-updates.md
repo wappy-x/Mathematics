@@ -6,13 +6,15 @@
 
 ## General Overview
 
-A weather station logs the air temperature every ten minutes. After 347.2 days it holds 50,000 readings. Each one jitters by up to 1.5 °C of sensor noise around the true temperature. The station wants a smooth curve: one smoothed value per reading, so **50,000 numbers to choose**. The curve should stay close to the readings and should not jump from one reading to the next. Those two wishes pull against each other, and one cost adds them up. The job is to make that cost as small as possible, with no limits on the values. It is a minimisation.
+A weather station logs the air temperature every ten minutes. After 347.2 days it holds 50,000 readings. Each one jitters by up to 1.5 °C of sensor noise around the true temperature. The station wants a smooth curve: one smoothed value per reading, so **50,000 numbers to choose**.
+
+The curve should stay close to the readings and should not jump from one reading to the next. Those two wishes pull against each other, and one cost adds them up. The job is to make that cost as small as possible, with no limits on the values. It is a minimisation.
 
 [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md) solves problems like this by remembering curvature: how the slope changes as you move. BFGS keeps that memory as a square table with one row and one column per variable. Here that is 50,000 × 50,000 = 2,500,000,000 numbers, or 20.0 GB. Every step would read and rewrite all of it.
 
 **L-BFGS** ("limited-memory BFGS") keeps only the last ten steps instead: where it moved, and how the slope changed. That is 1,000,000 numbers, 8.0 MB. From those ten records it rebuilds the BFGS direction whenever it needs one, without ever writing the table down. Starting from the raw readings, it reaches the smooth curve in 138 steps. A printed certificate then shows that every smoothed value lies within 0.000759 °C of the best possible curve.
 
-This particular cost is also a test bench. It is quadratic, and each value is tied only to its two neighbours, so elimination along the chain solves it exactly in one sweep each way, with fewer operations than L-BFGS; the code uses that exact answer to check the certificate. L-BFGS needs only the cost and its slope, so the same 8.0 MB recipe still works where no such shortcut exists, for example when the roughness penalty is not a square.
+This particular cost is also a test bench. It is quadratic, and each value is tied only to its two neighbours, so elimination along the chain solves it exactly in one sweep each way, with fewer operations than L-BFGS. The code uses that exact answer to check the certificate. L-BFGS needs only the cost and its slope, so the same 8.0 MB recipe still works where no such shortcut exists, for example when the roughness penalty is not a square.
 
 **L-BFGS never stores the BFGS table: it keeps the last few steps and slope changes, and replays them as a short recipe that turns the current slope into the BFGS direction.**
 
@@ -79,10 +81,10 @@ $$\begin{aligned}
 
 ### When it holds
 
-- **Every stored pair has $y_i^{\mathsf T} s_i > 0$**: the slope rose along the step. Then every rebuilt direction points downhill (proof below). On the banana valley, a line search that checks only sufficient decrease (the Armijo test) lets a bad pair in, and the next direction points uphill: the run sticks at step 7. Skip bad pairs, as the code does, and it reaches (1, 1) in 45 steps. The Wolfe test of [Line search](04-line-search-armijo-and-wolfe.md) rules them out.
+- **Every stored pair has $y_i^{\mathsf T} s_i > 0$**: the slope rose along the step. Then every rebuilt direction points downhill (proof below). On the banana valley, a line search that checks only sufficient decrease (the Armijo test) lets a bad pair in, and the next direction points uphill: the run sticks at step 7. Skip bad pairs, as the code does, and it reaches (1, 1) in 45 steps. The Wolfe test of [Line search](04-line-search-armijo-and-wolfe.md), which also asks the slope along the step to rise enough, rules them out.
 - **The gradient is exact and cheap.** Here it costs a few passes over the list. Estimated by small nudges, it would cost two evaluations per value, 50,000 times over.
 - **The start guess $\gamma_k$ has the right size.** With $\gamma_k = 1$ instead, at step 40 the first trial step is 64.9 long instead of 0.443, and the line search must halve it 8 times.
-- **For a rate, the curvature is bounded.** If every curvature of $f$ lies between $\mu > 0$ and $L$ and every step passes the Wolfe tests, the cost's excess over its lowest value obeys $f(x_k) - f^* \le r^k\,(f(x_0) - f^*)$ for some fixed $r < 1$ (Liu and Nocedal, 1989, Theorem 6.1; stated, not proved here). This **R-linear** rate caps the whole history; it does not promise a fixed shrink at every step. Here $\mu$ = 2 and $L$ = 802. This card's runs backtrack instead of testing Wolfe; the paper notes the proof can be adapted to backtracking, and on the quadratic fit every pair has $y^{\mathsf T} s > 0$, so every direction points downhill. Unlike full BFGS, no faster rate is promised.
+- **For a rate, the curvature is bounded.** If every curvature of $f$ lies between $\mu > 0$ and $L$ and every step passes the Wolfe tests, the cost's excess over its lowest value obeys $f(x_k) - f^* \le r^k\,(f(x_0) - f^*)$ for some fixed $r < 1$ (Liu and Nocedal, 1989, Theorem 6.1; stated, not proved here). This **R-linear** rate caps the whole history; it does not promise a fixed shrink at every step. Here $\mu$ = 2 and $L$ = 802. This card's runs backtrack (halve the trial step until the cost falls enough) instead of testing Wolfe. The paper notes the proof can be adapted to backtracking. On the quadratic fit every pair has $y^{\mathsf T} s > 0$, so every direction points downhill. Unlike full BFGS, no faster rate is promised.
 - **No limits on the values.** Bounds, such as a floor under the values, need a variant that projects each step back inside them.
 
 ---
@@ -107,7 +109,11 @@ Work from the inside out.
 
 Each pair costs two dot products and two list updates, so the direction costs about $4mn$ multiply-adds, plus $n$ for the scaling.
 
-In numbers, on the shelf's house example, the banana valley $f(u, v) = (1 - u)^2 + 100\,(v - u^2)^2$ of [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md), minimised at (1, 1). Start at the classic point $x_0$ = (−1.2, 1), rather than that card's (0, 1), because from here a careless run fails (What breaks, below). With no pairs yet, the code takes the downhill slope scaled to length 1 as the first direction, and the line search lands at $x_1$ = (−0.9685, 1.0945), where the slope is $g_1$ = (56.6579, 31.2816). The one pair is $s_0$ = (0.23146, 0.09447) and $y_0$ = (272.2579, 119.2816), with $s_0^{\mathsf T} y_0$ = 74.2864, $y_0^{\mathsf T} y_0$ = 88,352.45 and $s_0^{\mathsf T} g_1$ = 16.0694. Then $a$ = 16.0694 / 74.2864 = 0.216318, and $q = g_1 - a y_0$ = (−2.2363, 5.4789). The guess is $\gamma$ = 74.2864 / 88,352.45 = 0.0008408. Then $b$ = 0.000506, and the direction is $d_1$ = (−0.048072, −0.024995).
+In numbers, on the shelf's house example, the banana valley $f(u, v) = (1 - u)^2 + 100\,(v - u^2)^2$ of [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md), minimised at (1, 1). Start at the classic point $x_0$ = (−1.2, 1), rather than that card's (0, 1), because from here a careless run fails (What breaks, below).
+
+With no pairs yet, the code takes the downhill slope scaled to length 1 as the first direction. The line search lands at $x_1$ = (−0.9685, 1.0945), where the slope is $g_1$ = (56.6579, 31.2816). The one pair is $s_0$ = (0.23146, 0.09447) and $y_0$ = (272.2579, 119.2816), with $s_0^{\mathsf T} y_0$ = 74.2864, $y_0^{\mathsf T} y_0$ = 88,352.45 and $s_0^{\mathsf T} g_1$ = 16.0694.
+
+Then $a$ = 16.0694 / 74.2864 = 0.216318, and $q = g_1 - a y_0$ = (−2.2363, 5.4789). The guess is $\gamma$ = 74.2864 / 88,352.45 = 0.0008408. Then $b$ = 0.000506, and the direction is $d_1$ = (−0.048072, −0.024995).
 
 <details>
 <summary>Detailed proof: the two loops give exactly the BFGS direction, and it points downhill</summary>
@@ -120,7 +126,7 @@ Write $W_{0} = \gamma I$ and $W_{j} = V_j^{\mathsf T} W_{j-1} V_j + \sigma_j s_j
 
 $$z + (a_m - b_m) s_m = z - \sigma_m s_m (y_m^{\mathsf T} z) + \sigma_m s_m (s_m^{\mathsf T} g) = V_m^{\mathsf T} z + \sigma_m s_m s_m^{\mathsf T} g = W_{m} g.$$
 
-**Downhill.** Suppose $\gamma > 0$ and every $\sigma_j > 0$. If $W_{j-1}$ is positive definite, then for any $g \neq 0$,
+**Downhill.** Suppose $\gamma > 0$ and every $\sigma_j > 0$. If $W_{j-1}$ is positive definite (it curves up in every direction: $g^{\mathsf T} W_{j-1} g > 0$ for every list $g \neq 0$), then for any $g \neq 0$,
 
 $$g^{\mathsf T} W_{j} g = (V_j g)^{\mathsf T} W_{j-1} (V_j g) + \sigma_j (s_j^{\mathsf T} g)^2 \ge 0.$$
 
@@ -140,7 +146,9 @@ The start guess covers every direction the pairs say nothing about. Here the cur
 
 ### Step 3: what ten pairs buy, and what they do not
 
-Ten pairs hold curvature along at most ten of 50,000 directions, so the rebuilt direction is nowhere near Newton's full step. At step 40 the code solves for Newton's step exactly and compares each direction with it in two ways: the cosine of the angle between them (1 when they point the same way), and the length as a fraction of Newton's. With no pairs, L-BFGS would use the slope scaled by $\gamma_{40}$: cosine 0.549, length 0.032. Ten pairs turn the direction a little towards Newton's, cosine 0.681, and lengthen it to 0.163. Twenty pairs give 0.675 and 0.162, nothing more than ten.
+Ten pairs hold curvature along at most ten of 50,000 directions, so the rebuilt direction is nowhere near Newton's full step. At step 40 the code solves for Newton's step exactly and compares each direction with it in two ways: the cosine of the angle between them (1 when they point the same way), and the length as a fraction of Newton's.
+
+With no pairs, L-BFGS would use the slope scaled by $\gamma_{40}$: cosine 0.549, length 0.032. Ten pairs turn the direction a little towards Newton's, cosine 0.681, and lengthen it to 0.163. Twenty pairs give 0.675 and 0.162, nothing more than ten.
 
 The steps tell the same story. The same run with different memory, to the same certificate:
 
@@ -153,7 +161,13 @@ pairs m   memory     steps to the certificate
   20     16.0 MB   ############################ 140
 ```
 
-One pair needs 159 steps and ten need 138, for ten times the memory; twenty pairs need 140. The one-pair count is fragile: adding the same sums in a different order moves it noticeably, while the counts for three or more pairs move by a step at most. L-BFGS works here because successive directions cooperate, each one not undoing the last. That is the idea of [Conjugate gradient](07-conjugate-gradient-method.md), and on a quadratic it explains why memory buys so little: if every step went to the lowest point along its line, L-BFGS would retrace conjugate gradient's steps whatever the number of pairs. Backtracking steps are not exact, so the counts differ a little. This sweep therefore says nothing about a cost whose curvature changes from place to place, where old pairs go stale and the memory has to be weighed on the problem itself. Gradient descent with step $1/L$ is guaranteed to reach the same certificate only within 7,079 steps, an estimate from its rate rather than a run.
+One pair needs 159 steps and ten need 138, for ten times the memory; twenty pairs need 140. The one-pair count is fragile: adding the same sums in a different order moves it noticeably, while the counts for three or more pairs move by a step at most.
+
+L-BFGS works here because successive directions cooperate, each one not undoing the last. That is the idea of [Conjugate gradient](07-conjugate-gradient-method.md). On a quadratic it explains why memory buys so little: if every step went to the lowest point along its line, L-BFGS would retrace conjugate gradient's steps whatever the number of pairs. Backtracking steps are not exact, so the counts differ a little.
+
+This sweep therefore says nothing about a cost whose curvature changes from place to place, where old pairs go stale and the memory has to be weighed on the problem itself.
+
+Gradient descent with step $1/L$ is guaranteed to reach the same certificate only within 7,079 steps, an estimate from its rate rather than a run.
 
 ### Step 4: a certificate that the curve is the best one
 
@@ -161,7 +175,7 @@ The cost's curvature is at least $\mu$ = 2 in every direction, because the misfi
 
 $$\lVert c - c^* \rVert \le \frac{\lVert \nabla f(c) \rVert}{\mu}$$
 
-and no single value can be off by more than the length of the whole error list. The cost is strictly convex, so $c^*$ is the only minimiser. At the end, $\lVert \nabla f \rVert$ = 0.001519, so every smoothed value lies within 0.000759 °C of the best curve. Because the cost is quadratic, the code can also solve for $c^*$ directly by elimination. The true largest gap is 1.41e-05 °C, well inside the bound.
+and no single value can be off by more than the length of the whole error list. The cost is strictly convex (it curves up in every direction), so $c^*$ is the only minimiser. At the end, $\lVert \nabla f \rVert$ = 0.001519, so every smoothed value lies within 0.000759 °C of the best curve. Because the cost is quadratic, the code can also solve for $c^*$ directly by elimination. The true largest gap is 1.41e-05 °C, well inside the bound.
 
 ---
 
@@ -580,6 +594,327 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the two-loop and downhill claims for any number of pairs, and the certificate for any cost with least curvature $\mu$.
+
+- For any start guess, any stored pairs and any slope, the two loops return exactly the table $W_m$ applied to the slope.
+- If the start guess $\gamma$ is positive and every stored pair has $y^{\mathsf T} s > 0$, the direction points downhill for every nonzero slope.
+- If the cost's curvature is at least $\mu > 0$ in every direction, every value lies within $\lVert \nabla f \rVert / \mu$ of the best curve.
+- The bill for one direction holds exactly: 20.0 GB for the table, 8.0 MB for ten pairs, 2,050,000 multiply-adds, the sweep's memory and $L$ = 802.
+
+The runs are left to the Python and Rust checks: the 138 steps, the 0.000759 °C bound, the banana valley and the memory sweep.
+
+```lean
+-- L-BFGS: the two-loop recursion returns exactly the BFGS inverse table, rebuilt from the stored step pairs, applied to the slope; when every pair has yᵀs > 0 and the start guess is positive that direction points downhill; and for a cost with curvature at least μ, every value lies within ‖∇f‖ / μ of the minimiser.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Analysis.Convex.Strong
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Tactic.NormNum
+import Mathlib.LinearAlgebra.Matrix.DotProduct
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Mul
+
+open Matrix
+
+namespace LBFGS
+
+variable {n : ℕ}
+
+/-- `σ = 1 / (yᵀ s)` for one stored pair `(s, y)`. -/
+noncomputable def sigma (s y : Fin n → ℝ) : ℝ := 1 / (y ⬝ᵥ s)
+
+/-- One BFGS update of the inverse table:
+`W' = Vᵀ W V + σ s sᵀ`, with `V = I - σ y sᵀ`. -/
+noncomputable def bfgsUpdate (W : Matrix (Fin n) (Fin n) ℝ) (s y : Fin n → ℝ) :
+    Matrix (Fin n) (Fin n) ℝ :=
+  let V : Matrix (Fin n) (Fin n) ℝ := 1 - sigma s y • vecMulVec y s
+  Vᵀ * W * V + sigma s y • vecMulVec s s
+
+/-- The table L-BFGS never stores: start from `W₀ = γ I` and apply the BFGS update for each
+stored pair `(s, y)`, oldest first. -/
+noncomputable def bfgsInv (γ : ℝ) (ps : List ((Fin n → ℝ) × (Fin n → ℝ))) :
+    Matrix (Fin n) (Fin n) ℝ :=
+  ps.foldl (fun W p => bfgsUpdate W p.1 p.2) (γ • (1 : Matrix (Fin n) (Fin n) ℝ))
+
+/-- The two-loop recursion on the slope `g`, with the pairs listed oldest first.
+First loop, newest pair to oldest: `a = σ sᵀ q`, `q ← q - a y`.
+Then `z = γ q`.
+Second loop, oldest pair to newest: `b = σ yᵀ z`, `z ← z + (a - b) s`.
+It returns `z`; the L-BFGS direction is `d = -z`. -/
+noncomputable def twoLoop (γ : ℝ) (ps : List ((Fin n → ℝ) × (Fin n → ℝ))) (g : Fin n → ℝ) :
+    Fin n → ℝ :=
+  -- first loop, newest to oldest; each `a` is put in front, so `as` ends up oldest first
+  let qa : (Fin n → ℝ) × List ℝ :=
+    ps.reverse.foldl
+      (fun acc p =>
+        let a := sigma p.1 p.2 * (p.1 ⬝ᵥ acc.1)
+        (acc.1 - a • p.2, a :: acc.2))
+      (g, [])
+  -- scale by the start guess
+  let z : Fin n → ℝ := γ • qa.1
+  -- second loop, oldest to newest
+  (ps.zip qa.2).foldl
+    (fun z pa =>
+      let b := sigma pa.1.1 pa.1.2 * (pa.1.2 ⬝ᵥ z)
+      z + (pa.2 - b) • pa.1.1)
+    z
+
+/-- The L-BFGS search direction `d = -z` from the two loops. -/
+noncomputable def direction (γ : ℝ) (ps : List ((Fin n → ℝ) × (Fin n → ℝ))) (g : Fin n → ℝ) :
+    Fin n → ℝ :=
+  -twoLoop γ ps g
+
+theorem firstLoop_append (L : List ((Fin n → ℝ) × (Fin n → ℝ))) (q : Fin n → ℝ) (l : List ℝ) :
+    L.foldl
+      (fun acc p =>
+        let a := sigma p.1 p.2 * (p.1 ⬝ᵥ acc.1)
+        (acc.1 - a • p.2, a :: acc.2)) (q, l) =
+    ((L.foldl
+      (fun acc p =>
+        let a := sigma p.1 p.2 * (p.1 ⬝ᵥ acc.1)
+        (acc.1 - a • p.2, a :: acc.2)) (q, [])).1,
+     (L.foldl
+      (fun acc p =>
+        let a := sigma p.1 p.2 * (p.1 ⬝ᵥ acc.1)
+        (acc.1 - a • p.2, a :: acc.2)) (q, [])).2 ++ l) := by
+  induction L generalizing q l with
+  | nil => simp
+  | cons p L ih =>
+    simp only [List.foldl_cons]
+    rw [ih, ih (l := [_])]
+    simp
+
+#print axioms firstLoop_append
+
+theorem firstLoop_length (L : List ((Fin n → ℝ) × (Fin n → ℝ))) (q : Fin n → ℝ) :
+    (L.foldl
+      (fun acc p =>
+        let a := sigma p.1 p.2 * (p.1 ⬝ᵥ acc.1)
+        (acc.1 - a • p.2, a :: acc.2)) (q, [])).2.length = L.length := by
+  induction L generalizing q with
+  | nil => simp
+  | cons p L ih =>
+    simp only [List.foldl_cons]
+    rw [firstLoop_append, List.length_append, ih]
+    simp
+
+#print axioms firstLoop_length
+
+theorem bfgsUpdate_mulVec (W : Matrix (Fin n) (Fin n) ℝ) (s y g : Fin n → ℝ) :
+    bfgsUpdate W s y *ᵥ g =
+      W *ᵥ (g - (sigma s y * (s ⬝ᵥ g)) • y) +
+        (sigma s y * (s ⬝ᵥ g) - sigma s y * (y ⬝ᵥ (W *ᵥ (g - (sigma s y * (s ⬝ᵥ g)) • y)))) • s := by
+  simp only [bfgsUpdate, transpose_sub, transpose_one, transpose_smul, transpose_vecMulVec,
+    add_mulVec, ← mulVec_mulVec, sub_mulVec, one_mulVec, smul_mulVec, vecMulVec_mulVec]
+  ext i
+  simp [mulVec_sub, mulVec_smul, dotProduct_sub, dotProduct_smul]
+  ring
+
+#print axioms bfgsUpdate_mulVec
+
+/-- The recipe gives exactly the BFGS direction: for any start guess `γ`, any stored pairs
+`(s, y)` and any slope `g`, the two loops return the BFGS inverse table `W_m`, built from
+`γ I` by the BFGS update pair by pair, applied to `g`; so L-BFGS never has to store the table. -/
+theorem two_loop_eq_bfgs_inverse_mul (γ : ℝ) (ps : List ((Fin n → ℝ) × (Fin n → ℝ)))
+    (g : Fin n → ℝ) :
+    twoLoop γ ps g = bfgsInv γ ps *ᵥ g := by
+  induction ps using List.reverseRecOn generalizing g with
+  | nil => simp [twoLoop, bfgsInv, smul_mulVec]
+  | append_singleton ps p ih =>
+    have hb : bfgsInv γ (ps ++ [p]) = bfgsUpdate (bfgsInv γ ps) p.1 p.2 := by
+      simp [bfgsInv, List.foldl_append]
+    rw [hb, bfgsUpdate_mulVec, ← ih]
+    simp only [twoLoop, List.reverse_append, List.reverse_singleton, List.singleton_append,
+      List.foldl_cons]
+    rw [firstLoop_append, List.zip_append (by rw [firstLoop_length, List.length_reverse]),
+      List.foldl_append]
+    simp
+
+theorem bfgsUpdate_posDef (W : Matrix (Fin n) (Fin n) ℝ)
+    (hW : ∀ v : Fin n → ℝ, v ≠ 0 → 0 < v ⬝ᵥ (W *ᵥ v)) (s y : Fin n → ℝ) (hys : 0 < y ⬝ᵥ s) :
+    ∀ v : Fin n → ℝ, v ≠ 0 → 0 < v ⬝ᵥ (bfgsUpdate W s y *ᵥ v) := by
+  intro v hv
+  have hσ : 0 < sigma s y := by unfold sigma; positivity
+  set a := sigma s y * (s ⬝ᵥ v) with ha
+  set u := v - a • y with hu
+  have key : v ⬝ᵥ (bfgsUpdate W s y *ᵥ v) = u ⬝ᵥ (W *ᵥ u) + sigma s y * (s ⬝ᵥ v) ^ 2 := by
+    rw [bfgsUpdate_mulVec]
+    simp only [← ha, ← hu, dotProduct_add, dotProduct_smul, smul_eq_mul]
+    rw [hu]
+    simp only [sub_dotProduct, smul_dotProduct, smul_eq_mul, dotProduct_comm v s]
+    rw [ha]; ring
+  rw [key]
+  by_cases hu0 : u = 0
+  · have hsv : s ⬝ᵥ v ≠ 0 := by
+      intro h0
+      apply hv
+      have : a = 0 := by rw [ha, h0, mul_zero]
+      rw [hu, this, zero_smul, sub_zero] at hu0
+      exact hu0
+    rw [hu0, zero_dotProduct, zero_add]
+    have : 0 < (s ⬝ᵥ v) ^ 2 := by positivity
+    positivity
+  · have := hW u hu0
+    have : 0 ≤ sigma s y * (s ⬝ᵥ v) ^ 2 := by positivity
+    linarith
+
+#print axioms bfgsUpdate_posDef
+
+theorem foldl_posDef (ps : List ((Fin n → ℝ) × (Fin n → ℝ)))
+    (hps : ∀ p ∈ ps, 0 < p.2 ⬝ᵥ p.1) (W : Matrix (Fin n) (Fin n) ℝ)
+    (hW : ∀ v : Fin n → ℝ, v ≠ 0 → 0 < v ⬝ᵥ (W *ᵥ v)) :
+    ∀ v : Fin n → ℝ, v ≠ 0 →
+      0 < v ⬝ᵥ (ps.foldl (fun W p => bfgsUpdate W p.1 p.2) W *ᵥ v) := by
+  induction ps generalizing W with
+  | nil => simpa using hW
+  | cons p ps ih =>
+    simp only [List.foldl_cons]
+    apply ih (fun q hq => hps q (List.mem_cons_of_mem _ hq))
+    exact bfgsUpdate_posDef W hW p.1 p.2 (hps p List.mem_cons_self)
+
+#print axioms foldl_posDef
+
+/-- Every rebuilt direction points downhill: if the start guess `γ` is positive and every stored
+pair has `yᵀ s > 0`, then for every nonzero slope `g` the L-BFGS direction `d` has `gᵀ d < 0`. -/
+theorem direction_downhill (γ : ℝ) (hγ : 0 < γ) (ps : List ((Fin n → ℝ) × (Fin n → ℝ)))
+    (hps : ∀ p ∈ ps, 0 < p.2 ⬝ᵥ p.1) (g : Fin n → ℝ) (hg : g ≠ 0) :
+    g ⬝ᵥ direction γ ps g < 0 := by
+  have h0 : ∀ v : Fin n → ℝ, v ≠ 0 →
+      0 < v ⬝ᵥ ((γ • (1 : Matrix (Fin n) (Fin n) ℝ)) *ᵥ v) := by
+    intro v hv
+    rw [smul_mulVec, one_mulVec, dotProduct_smul, smul_eq_mul]
+    have : 0 < v ⬝ᵥ v := by
+      have hn : 0 ≤ v ⬝ᵥ v := Finset.sum_nonneg fun i _ => mul_self_nonneg (v i)
+      rcases lt_or_eq_of_le hn with h | h
+      · exact h
+      · exact absurd (dotProduct_self_eq_zero.mp h.symm) hv
+    positivity
+  have := foldl_posDef ps hps _ h0 g hg
+  rw [direction, two_loop_eq_bfgs_inverse_mul, dotProduct_neg]
+  simpa [bfgsInv] using this
+
+theorem dist_le_grad_div {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [CompleteSpace E] (f : E → ℝ) (μ : ℝ) (hμ : 0 < μ)
+    (hf : StrongConvexOn Set.univ μ f) (cstar : E)
+    (hmin : ∀ c, f cstar ≤ f c) (c G : E) (hG : HasGradientAt f G c) :
+    ‖c - cstar‖ ≤ ‖G‖ / μ := by
+  set d := cstar - c with hd
+  set K := μ / 2 * ‖d‖ ^ 2 with hK
+  -- the line through c towards cstar
+  set φ : ℝ → ℝ := fun t => f (c + t • d) with hφ
+  have hφd : HasDerivAt φ (inner ℝ G d) 0 := by
+    have h1 : HasDerivAt (fun t : ℝ => c + t • d) d 0 := by
+      simpa using ((hasDerivAt_id (0 : ℝ)).smul_const d).const_add c
+    have h2 : HasFDerivAt f (InnerProductSpace.toDual ℝ E G) (c + (0 : ℝ) • d) := by
+      simpa using hG.hasFDerivAt
+    have := h2.comp_hasDerivAt (0 : ℝ) h1
+    simpa [Function.comp_def, InnerProductSpace.toDual_apply_apply] using this
+  -- slope bound for t ∈ (0, 1)
+  have hbound : ∀ t : ℝ, 0 < t → t < 1 → t⁻¹ • (φ (0 + t) - φ 0) ≤ -(2 * ((1 - t) * K)) := by
+    intro t ht0 ht1
+    have hA := hf.2 (Set.mem_univ cstar) (Set.mem_univ c) ht0.le (by linarith : (0 : ℝ) ≤ 1 - t)
+      (by ring)
+    have hB := hf.2 (Set.mem_univ c) (Set.mem_univ cstar) ht0.le (by linarith : (0 : ℝ) ≤ 1 - t)
+      (by ring)
+    have hm := hmin (t • c + (1 - t) • cstar)
+    have hpt : t • cstar + (1 - t) • c = c + t • d := by
+      rw [hd, smul_sub, sub_smul, one_smul]; abel
+    rw [hpt] at hA
+    have hn : ‖c - cstar‖ = ‖d‖ := by rw [hd, norm_sub_rev]
+    have hn' : ‖cstar - c‖ = ‖d‖ := by rw [hd]
+    rw [hn] at hB
+    rw [hn'] at hA
+    simp only [smul_eq_mul] at hA hB
+    simp only [hφ, zero_add, zero_smul, add_zero, smul_eq_mul]
+    rw [inv_mul_le_iff₀ ht0]
+    have hB' : t * f cstar ≤ t * f c - t * (1 - t) * K := by rw [hK]; nlinarith
+    have hB'' : f cstar ≤ f c - (1 - t) * K := by
+      have : t * f cstar ≤ t * (f c - (1 - t) * K) := by nlinarith
+      exact le_of_mul_le_mul_left this ht0
+    rw [hK]; rw [hK] at hB''
+    nlinarith
+  have hlim : inner ℝ G d ≤ -(2 * ((1 - 0) * K)) := by
+    have hT := hφd.tendsto_slope_zero_right
+    have hR : Filter.Tendsto (fun t : ℝ => -(2 * ((1 - t) * K))) (nhdsWithin 0 (Set.Ioi 0))
+        (nhds (-(2 * ((1 - 0) * K)))) := by
+      apply Filter.Tendsto.mono_left _ nhdsWithin_le_nhds
+      exact ((continuous_const.sub continuous_id).mul continuous_const).const_mul 2 |>.neg
+        |>.tendsto 0
+    apply le_of_tendsto_of_tendsto hT hR
+    have hev : ∀ᶠ t in nhdsWithin (0 : ℝ) (Set.Ioi 0), t ∈ Set.Ioo (0 : ℝ) 1 :=
+      Ioo_mem_nhdsGT (by norm_num)
+    filter_upwards [hev] with t ht
+    exact hbound t ht.1 ht.2
+  have hcs : -(inner ℝ G d) ≤ ‖G‖ * ‖d‖ := by
+    have := abs_real_inner_le_norm G d
+    linarith [neg_abs_le (inner ℝ G d), le_abs_self (-(inner ℝ G d)), abs_neg (inner ℝ G d)]
+  have hmain : μ * ‖d‖ ^ 2 ≤ ‖G‖ * ‖d‖ := by
+    rw [hK] at hlim; nlinarith
+  have hn : ‖c - cstar‖ = ‖d‖ := by rw [hd, norm_sub_rev]
+  rw [hn, le_div_iff₀ hμ]
+  rcases eq_or_lt_of_le (norm_nonneg d) with h | h
+  · rw [← h]; simp
+  · have : μ * ‖d‖ * ‖d‖ ≤ ‖G‖ * ‖d‖ := by nlinarith
+    have := le_of_mul_le_mul_right this h
+    linarith
+
+#print axioms dist_le_grad_div
+
+/-- The certificate: if the cost's curvature is at least `μ > 0` everywhere (it is `μ`-strongly
+convex), `cstar` is a lowest point and `G` is the gradient at `c`, then every value `c i` lies
+within `‖G‖ / μ` of `cstar i`. -/
+theorem certificate_from_gradient_length (f : EuclideanSpace ℝ (Fin n) → ℝ) (μ : ℝ) (hμ : 0 < μ)
+    (hf : StrongConvexOn Set.univ μ f) (cstar : EuclideanSpace ℝ (Fin n))
+    (hmin : ∀ c, f cstar ≤ f c) (c G : EuclideanSpace ℝ (Fin n)) (hG : HasGradientAt f G c) :
+    ∀ i, |c i - cstar i| ≤ ‖G‖ / μ := by
+  intro i
+  have h := dist_le_grad_div f μ hμ hf cstar hmin c G hG
+  have h2 := PiLp.norm_apply_le (c - cstar) i
+  simp only [PiLp.sub_apply, Real.norm_eq_abs] at h2
+  linarith
+
+/-! The card's bill for one direction, on the 50,000-reading fit with ten pairs. -/
+
+-- entries in a stored BFGS table, and the multiply-adds of table times slope
+example : 50000 * 50000 = 2500000000 := by norm_num
+-- its memory at 8 bytes per number: 20.0 GB
+example : 2500000000 * 8 = 20 * 10 ^ 9 := by norm_num
+-- numbers in ten pairs, and their memory: 8.0 MB
+example : 2 * 10 * 50000 = 1000000 := by norm_num
+example : 1000000 * 8 = 8 * 10 ^ 6 := by norm_num
+-- multiply-adds for the two loops, 4mn + n
+example : 4 * 10 * 50000 + 50000 = 2050000 := by norm_num
+-- the memory sweep: one pair 0.8 MB, twenty pairs 16.0 MB
+example : 2 * 1 * 50000 * 8 = 8 * 10 ^ 5 := by norm_num
+example : 2 * 20 * 50000 * 8 = 16 * 10 ^ 6 := by norm_num
+-- greatest curvature of the fit, L = 2 + 8 λ with λ = 100
+example : 2 + 8 * 100 = 802 := by norm_num
+
+#print axioms two_loop_eq_bfgs_inverse_mul
+#print axioms direction_downhill
+#print axioms certificate_from_gradient_length
+
+end LBFGS
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LBFGS.firstLoop_append' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.firstLoop_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.bfgsUpdate_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.bfgsUpdate_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.foldl_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.dist_le_grad_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.two_loop_eq_bfgs_inverse_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.direction_downhill' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LBFGS.certificate_from_gradient_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program if a number comes out wrong.
@@ -592,7 +927,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Thinking that L-BFGS approximates Newton's step.** Ten pairs see ten directions out of 50,000. At step 40 the rebuilt direction is only 0.163 of the length of Newton's step, and the cosine of the angle between them is 0.681, against 0.549 for the slope alone; twenty pairs give 0.162 and 0.675. What L-BFGS gets right is the curvature along its recent steps, which is enough for the steps to work together. On this quadratic fit, memory past ten pairs bought nothing: twenty pairs took 140 steps, ten took 138.
+> **Thinking that L-BFGS approximates Newton's step.** Ten pairs see ten directions out of 50,000. At step 40 the rebuilt direction is only 0.163 of the length of Newton's step, and the cosine of the angle between them is 0.681, against 0.549 for the slope alone. Twenty pairs give 0.162 and 0.675. What L-BFGS gets right is the curvature along its recent steps, which is enough for the steps to work together. On this quadratic fit, memory past ten pairs bought nothing: twenty pairs took 140 steps, ten took 138.
 >
 > - **Storing every pair.** One pair with $y^{\mathsf T} s \le 0$ sends the banana run uphill; it sticks at cost 3.3379.
 > - **Running the loops in the wrong order.** Nothing crashes, but the banana takes 127 steps instead of 45.

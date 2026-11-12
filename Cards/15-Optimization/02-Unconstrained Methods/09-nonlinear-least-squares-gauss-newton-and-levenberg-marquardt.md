@@ -10,11 +10,15 @@ A cast-iron pan comes off the heat at about 200 °C. A probe reads its temperatu
 
 A cooling pan loses the same fraction of its heat above room temperature every minute. So the readings should sit on a curve with three numbers to choose: the room temperature, the starting excess over room, and the cooling rate. The task is to **minimise** the sum of squared misses between curve and readings. The rate sits inside an exponential, so the misses are curved in it, and the one-shot straight-line fit of [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md) cannot solve it.
 
-Gauss-Newton repeats a straight-line fit instead. At the current guess, treat each miss as a straight line in the three numbers, solve that problem exactly, move there, repeat. Near the answer this is very fast. From a poor guess it can be ruinous. Started at a cooling rate of 0.6 per minute, far too fast, one undamped step sends the rate to −0.40071, a pan that heats itself up, and half the sum of squared misses jumps from 38332.6665 to 1.0414e+11. Damping the step (keeping it short until the straight-line picture earns trust) rescues the same start in 9 steps. The fit: room 21.661398 °C, 202.5733 °C at minute 0, rate 0.152744 per minute, so the heat above room halves every 4.5380 minutes.
+Gauss-Newton repeats a straight-line fit instead. At the current guess, treat each miss as a straight line in the three numbers, solve that problem exactly, move there, repeat. Near the answer this is very fast.
+
+From a poor guess it can be ruinous. Started at a cooling rate of 0.6 per minute, far too fast, one undamped step sends the rate to −0.40071, a pan that heats itself up. Half the sum of squared misses jumps from 38332.6665 to 1.0414e+11.
+
+Damping the step (keeping it short until the straight-line picture earns trust) rescues the same start in 9 steps. The fit: room 21.661398 °C, 202.5733 °C at minute 0, rate 0.152744 per minute, so the heat above room halves every 4.5380 minutes.
 
 **Gauss-Newton replaces each miss by its straight line and solves the resulting ordinary least-squares problem; that is nearly Newton's method when the misses are small, and Levenberg-Marquardt damping keeps each step inside the region where the straight lines can be trusted.**
 
-**What kind of fact this is:** a method, with two theorems proved on this card in Why it works: the damped step is the best step inside a ball whose size the damping sets, and near the answer Gauss-Newton's error shrinks each step by a factor set by the curvature it leaves out, which is weighted by the misses; the runs show that factor growing with the misses. The fit it returns is a local minimum, certified by a flat gradient and positive curvature, and the best found over the rates scanned.
+**What kind of fact this is:** a method, with two theorems proved on this card in Why it works. First, the damped step is the best step inside a ball whose size the damping sets. Second, near the answer Gauss-Newton's error shrinks each step by a factor set by the curvature it leaves out. That curvature is weighted by the misses, and the runs show the factor growing with them. The fit it returns is a local minimum, certified by a flat gradient and positive curvature, and the best found over the rates scanned.
 
 ### The picture: the readings, the fit, the start and the step that went wrong
 
@@ -45,7 +49,7 @@ At $\lambda = 0$ this is the Gauss-Newton step. [Calibration](../../12-Financial
 | $a$ | starting excess over room, °C | 180.911890 fitted | the curve starts higher |
 | $b$ | cooling rate, per minute | 0.152744 fitted; 0.6 at the start | the curve falls faster |
 | $\theta$, $\theta_k$, $\theta^*$ | the triple $(c, a, b)$; its value after step $k$, from $\theta_0$ = (30, 160, 0.6); the fit, a minimiser of $F$ | $\theta^*$ = (21.661398, 180.911890, 0.152744) | — |
-| $r_i$ | the miss: model minus reading, °C | rms 1.4789 °C at the fit | — |
+| $r_i$ | the miss: model minus reading, °C | root-mean-square (rms) 1.4789 °C at the fit | — |
 | $F$, $\nabla F$, $\nabla^2 F$ | half the sum of squared misses, its gradient and its Hessian (the table of second derivatives) | $F$ = 43.742655 at the fit | the fit is worse |
 | $J$ | the slope table (Jacobian), 40 rows by 3 columns | — | — |
 | $S$ | the curvature Gauss-Newton leaves out: $\sum_i r_i \nabla^2 r_i$ | small when misses are small | Gauss-Newton slows |
@@ -84,7 +88,7 @@ Near the answer $\theta^*$, the error after a Gauss-Newton step is, to first ord
 
 $$\theta_{k+1} - \theta^* \approx -\left(J^{\mathsf T}J\right)^{-1} S\,\left(\theta_k - \theta^*\right)$$
 
-That matrix's largest eigenvalue, in magnitude, is the factor the error shrinks by each step. The checks compute it by power iteration (multiplying a vector by the matrix again and again until its direction settles), then measure it by starting 0.001 off in $b$ and taking two steps:
+That matrix's largest eigenvalue, in magnitude, is the factor the error shrinks by each step. An eigenvalue is a factor by which the matrix stretches a direction it does not turn. The checks compute it by power iteration (multiplying a vector by the matrix again and again until its direction settles), then measure it by starting 0.001 off in $b$ and taking two steps:
 
 | Probe noise | rms miss at the fit | predicted factor | measured factor |
 | --- | ---: | ---: | ---: |
@@ -94,7 +98,7 @@ That matrix's largest eigenvalue, in magnitude, is the factor the error shrinks 
 
 The factor grows with the misses. At every noise level the convergence is linear, the error shrinking by a fixed factor per step, and the factor sets the speed. If the factor passes 1, Gauss-Newton fails to converge even from starts next to the answer.
 
-With zero misses at the answer, $S$ vanishes there and the step is Newton's own, with Newton's quadratic rate. The shelf's banana valley is such a problem. Write Rosenbrock's function as two misses, $10(y - x^2)$ and $1 - x$; half their squared sum is half the function. From $(-1.2, 1)$, Gauss-Newton lands at $(1, -3.84)$, then at the minimum $(1, 1)$: two steps, because the second miss is a straight line and the first becomes one once $x$ is fixed.
+With zero misses at the answer, $S$ vanishes there and the step is Newton's own, with Newton's quadratic rate: the number of correct digits roughly doubles each step. The shelf's banana valley is such a problem. Write Rosenbrock's function as two misses, $10(y - x^2)$ and $1 - x$; half their squared sum is half the function. From $(-1.2, 1)$, Gauss-Newton lands at $(1, -3.84)$, then at the minimum $(1, 1)$: two steps, because the second miss is a straight line and the first becomes one once $x$ is fixed.
 
 <details>
 <summary>Detailed proof: the error map near the answer</summary>
@@ -131,7 +135,11 @@ Raise $\lambda$ and the step shrinks. From the same start:
 | 1 | 120.732 | 0.24176 | 1.287 |
 | 10 | 29.991 | 0.51699 | 1.097 |
 
-The theorem behind the table: **the damped step is the best step of its own length.** Of every step $d'$ with $\lVert d' \rVert_D \le \lVert d \rVert_D$, none gives the straight-line model a lower value than $d$ does. So choosing $\lambda$ is choosing a trust radius $\Delta = \lVert d \rVert_D$, and the triple-or-divide-by-three rule is a trust-region update: grow the region after a success, shrink it after a failure. Here a success means only that $F$ fell, $\rho > 0$; the size of $\rho$ is printed but not used, unlike the quarter and three-quarter thresholds of [Trust regions](08-trust-region-methods.md). The checks test the claim at $\lambda = 1$: the model is 9567.5777 at the damped step, and the best of 29280 points spread through the same ball is 9572.1061.
+The theorem behind the table: **the damped step is the best step of its own length.** Of every step $d'$ with $\lVert d' \rVert_D \le \lVert d \rVert_D$, none gives the straight-line model a lower value than $d$ does.
+
+So choosing $\lambda$ is choosing a trust radius $\Delta = \lVert d \rVert_D$, and the triple-or-divide-by-three rule is a trust-region update: grow the region after a success, shrink it after a failure. Here a success means only that $F$ fell, $\rho > 0$; the size of $\rho$ is printed but not used, unlike the quarter and three-quarter thresholds of [Trust regions](08-trust-region-methods.md).
+
+The checks test the claim at $\lambda = 1$: the model is 9567.5777 at the damped step, and the best of 29280 points spread through the same ball is 9572.1061.
 
 Marquardt's $D$ makes "length" mean something: it measures each number's move by how much it shifts the predicted temperatures, so a change in the rate (per minute) is not weighed like a change in the room (°C).
 
@@ -588,6 +596,168 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the damped-step theorem and the gradient and Hessian formulas for any set of misses, and checks the Rosenbrock and damping arithmetic.
+
+- Take any slope table $J$, misses $r$ and damping $\lambda \ge 0$, and let $d$ solve the damped step equation with Marquardt's $D$.
+- Then no step $d'$ with $\lVert d' \rVert_D \le \lVert d \rVert_D$ gives the straight-line model a lower value than $d$ does.
+- For misses that are smooth (twice continuously differentiable), the gradient of $F$ is $J^{\mathsf T} r$.
+- For the same misses, the Hessian of $F$ is $J^{\mathsf T}J + S$, with $S = \sum_i r_i \nabla^2 r_i$.
+- Rosenbrock's function as two misses, $10(y - x^2)$ and $1 - x$: half their squared sum is half the function.
+- Gauss-Newton from $(-1.2, 1)$ lands at $(1, -3.84)$, then at the minimum $(1, 1)$, where both misses are zero.
+- The damping ladder: 0.001 tripled six times is 0.729, and 0.729 divided by 3 eight times is 1/9000, or 0.000111.
+
+The pan fit, the $\lambda$ table, the error factors and the certificate at the fit are left to the Python and Rust checks.
+
+```lean
+-- Nonlinear least squares: the Levenberg-Marquardt damped step is the best step of its own scaled length for the straight-line model, and the Hessian of half the sum of squared misses is J-transpose-J plus the misses times their own curvatures.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Analysis.Calculus.FDeriv.Mul
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.ContDiff.Comp
+import Mathlib.Data.Real.Basic
+
+open Matrix
+
+/-- The straight-line model of `F`: half the sum of squared misses when each miss is replaced
+by its straight line, `m(d) = ½ ‖r + J d‖²`. -/
+noncomputable def lineModel {m n : ℕ} (J : Matrix (Fin m) (Fin n) ℝ) (r : Fin m → ℝ)
+    (d : Fin n → ℝ) : ℝ :=
+  (1 / 2) * ∑ i, (r i + (J *ᵥ d) i) ^ 2
+
+/-- Marquardt's scaling `D = diag(JᵀJ)`: entry `j` is the sum of squares of column `j` of `J`. -/
+def marquardtDiag {m n : ℕ} (J : Matrix (Fin m) (Fin n) ℝ) (j : Fin n) : ℝ :=
+  ∑ i, J i j ^ 2
+
+/-- The squared scaled length `‖d‖_D² = Σ_j D_jj d_j²`. -/
+def scaledLengthSq {m n : ℕ} (J : Matrix (Fin m) (Fin n) ℝ) (d : Fin n → ℝ) : ℝ :=
+  ∑ j, marquardtDiag J j * d j ^ 2
+
+/-- The damped step is the best step of its own length: if `d` solves
+`(JᵀJ + λ D) d = -Jᵀ r` with `λ ≥ 0` and `D = diag(JᵀJ)`, then no step `d'` with
+`‖d'‖_D ≤ ‖d‖_D` gives the straight-line model a lower value than `d` does. -/
+theorem damped_step_is_best_in_its_ball {m n : ℕ} (J : Matrix (Fin m) (Fin n) ℝ)
+    (r : Fin m → ℝ) (lam : ℝ) (hlam : 0 ≤ lam) (d : Fin n → ℝ)
+    (hstep : (Jᵀ * J + lam • diagonal (marquardtDiag J)) *ᵥ d = -(Jᵀ *ᵥ r))
+    (d' : Fin n → ℝ) (hd' : scaledLengthSq J d' ≤ scaledLengthSq J d) :
+    lineModel J r d ≤ lineModel J r d' := by
+  have hD : ∀ j, 0 ≤ marquardtDiag J j := fun j => Finset.sum_nonneg (fun i _ => sq_nonneg _)
+  have key : ∀ j, ∑ i, J i j * (r i + (J *ᵥ d) i) = -(lam * (marquardtDiag J j * d j)) := by
+    intro j
+    have h := congrFun hstep j
+    rw [add_mulVec, ← mulVec_mulVec, smul_mulVec] at h
+    simp only [Pi.add_apply, Pi.smul_apply, Pi.neg_apply, smul_eq_mul, mulVec_diagonal] at h
+    simp only [mulVec, dotProduct, transpose_apply] at h ⊢
+    simp only [mul_add, Finset.sum_add_distrib]
+    linarith
+  -- cross term
+  have cross : ∑ i, (r i + (J *ᵥ d) i) * (J *ᵥ (d' - d)) i
+      = ∑ j, (d' j - d j) * -(lam * (marquardtDiag J j * d j)) := by
+    simp_rw [← key]
+    simp only [mulVec, dotProduct, Pi.sub_apply, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
+    ring
+  have hlin : ∀ i, (J *ᵥ d') i = (J *ᵥ d) i + (J *ᵥ (d' - d)) i := by
+    intro i
+    rw [mulVec_sub]; simp
+  have expand : lineModel J r d' = lineModel J r d
+      + ∑ i, (r i + (J *ᵥ d) i) * (J *ᵥ (d' - d)) i + (1 / 2) * ∑ i, ((J *ᵥ (d' - d)) i) ^ 2 := by
+    unfold lineModel
+    simp_rw [hlin]
+    rw [Finset.mul_sum, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib,
+      ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    ring
+  have hball : 0 ≤ ∑ j, (d' j - d j) * -(lam * (marquardtDiag J j * d j)) := by
+    have : ∑ j, (d' j - d j) * -(lam * (marquardtDiag J j * d j))
+        = lam * (∑ j, (marquardtDiag J j / 2) * (d' j - d j) ^ 2
+          + (1 / 2) * (scaledLengthSq J d - scaledLengthSq J d')) := by
+      unfold scaledLengthSq
+      rw [mul_sub, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_sub_distrib,
+        ← Finset.sum_add_distrib, Finset.mul_sum]
+      refine Finset.sum_congr rfl fun j _ => ?_
+      ring
+    rw [this]
+    apply mul_nonneg hlam
+    apply add_nonneg
+    · exact Finset.sum_nonneg fun j _ => mul_nonneg (div_nonneg (hD j) (by norm_num)) (sq_nonneg _)
+    · linarith
+  have hsq : 0 ≤ (1 / 2 : ℝ) * ∑ i, ((J *ᵥ (d' - d)) i) ^ 2 :=
+    mul_nonneg (by norm_num) (Finset.sum_nonneg fun i _ => sq_nonneg _)
+  rw [expand, cross]
+  linarith
+
+/-- Gradient and Hessian of `F = ½ Σ rᵢ²` for smooth misses: `∇F = Jᵀ r` and
+`∇²F = JᵀJ + S` with `S = Σᵢ rᵢ ∇²rᵢ`, the curvature Gauss-Newton leaves out. Here the
+`JᵀJ` term is `Σᵢ (∇rᵢ)(∇rᵢ)ᵀ`, written `(fderiv rᵢ).smulRight (fderiv rᵢ)`. -/
+theorem gradient_and_hessian_of_half_sum_of_squares {m n : ℕ}
+    (r : Fin m → (Fin n → ℝ) → ℝ) (hr : ∀ i, ContDiff ℝ 2 (r i)) (θ : Fin n → ℝ) :
+    fderiv ℝ (fun x => (1 / 2 : ℝ) * ∑ i, r i x ^ 2) θ
+        = ∑ i, r i θ • fderiv ℝ (r i) θ ∧
+    fderiv ℝ (fderiv ℝ (fun x => (1 / 2 : ℝ) * ∑ i, r i x ^ 2)) θ
+        = ∑ i, ((fderiv ℝ (r i) θ).smulRight (fderiv ℝ (r i) θ)
+                + r i θ • fderiv ℝ (fderiv ℝ (r i)) θ) := by
+  have hd : ∀ i, Differentiable ℝ (r i) := fun i => (hr i).differentiable (by norm_num)
+  have hd2 : ∀ i, Differentiable ℝ (fderiv ℝ (r i)) := fun i =>
+    ((hr i).fderiv_right (m := 1) (by norm_num)).differentiable (by norm_num)
+  have grad : ∀ x, fderiv ℝ (fun x => (1 / 2 : ℝ) * ∑ i, r i x ^ 2) x
+      = ∑ i, r i x • fderiv ℝ (r i) x := by
+    intro x
+    have h : HasFDerivAt (fun x => (1 / 2 : ℝ) * ∑ i, r i x * r i x)
+        ((1 / 2 : ℝ) • ∑ i, (r i x • fderiv ℝ (r i) x + r i x • fderiv ℝ (r i) x)) x := by
+      apply HasFDerivAt.const_mul
+      exact HasFDerivAt.fun_sum fun i _ => ((hd i x).hasFDerivAt).mul ((hd i x).hasFDerivAt)
+    simp_rw [sq]
+    rw [h.fderiv, Finset.smul_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [← two_smul ℝ, smul_smul]
+    norm_num
+  have gfun : fderiv ℝ (fun x => (1 / 2 : ℝ) * ∑ i, r i x ^ 2)
+      = fun x => ∑ i, r i x • fderiv ℝ (r i) x := funext grad
+  refine ⟨grad θ, ?_⟩
+  rw [gfun]
+  have h : HasFDerivAt (fun x => ∑ i, r i x • fderiv ℝ (r i) x)
+      (∑ i, (r i θ • fderiv ℝ (fderiv ℝ (r i)) θ
+        + (fderiv ℝ (r i) θ).smulRight (fderiv ℝ (r i) θ))) θ :=
+    HasFDerivAt.fun_sum fun i _ => ((hd i θ).hasFDerivAt).fun_smul ((hd2 i θ).hasFDerivAt)
+  rw [h.fderiv]
+  exact Finset.sum_congr rfl fun i _ => add_comm _ _
+
+-- Rosenbrock as two misses, `10 (y - x²)` and `1 - x`: half their squared sum is half the function.
+example (x y : ℚ) : (1 / 2) * ((10 * (y - x ^ 2)) ^ 2 + (1 - x) ^ 2)
+    = (1 / 2) * (100 * (y - x ^ 2) ^ 2 + (1 - x) ^ 2) := by ring
+
+-- Gauss-Newton step 1 from (-1.2, 1) lands at (1, -3.84): the move (2.2, -4.84) solves
+-- `J d = -r`, with slope rows (-20x, 10) and (-1, 0).
+example : let x : ℚ := -6 / 5; let y : ℚ := 1; let x' : ℚ := 1; let y' : ℚ := -96 / 25
+    (-20 * x) * (x' - x) + 10 * (y' - y) = -(10 * (y - x ^ 2)) ∧
+    (-1) * (x' - x) + 0 * (y' - y) = -(1 - x) := by norm_num
+
+-- Gauss-Newton step 2 from (1, -3.84) lands at the minimum (1, 1), where both misses are zero.
+example : let x : ℚ := 1; let y : ℚ := -96 / 25; let x' : ℚ := 1; let y' : ℚ := 1
+    ((-20 * x) * (x' - x) + 10 * (y' - y) = -(10 * (y - x ^ 2)) ∧
+      (-1) * (x' - x) + 0 * (y' - y) = -(1 - x)) ∧
+    10 * (y' - x' ^ 2) = 0 ∧ 1 - x' = 0 := by norm_num
+
+-- The damping ladder: 0.001 tripled six times is 0.729, and after eight accepted steps
+-- (each dividing by 3) the ninth step's damping is 0.000111..., that is 1/9000.
+example : (1 / 1000 : ℚ) * 3 ^ 6 = 729 / 1000 := by norm_num
+example : (729 / 1000 : ℚ) / 3 ^ 8 = 1 / 9000 := by norm_num
+
+#print axioms damped_step_is_best_in_its_ball
+#print axioms gradient_and_hessian_of_half_sum_of_squares
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'damped_step_is_best_in_its_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gradient_and_hessian_of_half_sum_of_squares' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

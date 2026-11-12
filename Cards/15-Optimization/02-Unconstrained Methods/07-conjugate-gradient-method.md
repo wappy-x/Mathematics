@@ -8,7 +8,9 @@
 
 A greenhouse thermometer logs the air once a minute for 1,000 minutes. The true temperature climbs steadily from 15 °C to 25 °C, but each reading jitters by up to 1 °C either way. The grower wants a smooth curve: 1,000 numbers, one per minute, that stay close to the readings without jumping much from one minute to the next. The card **minimises** a cost: the squared misses from the readings, plus 25 times the squared jumps between neighbouring minutes.
 
-That cost is a bowl in 1,000 dimensions. Its lowest point solves a linear system whose matrix has 1,000,000 entries, almost all zero. Conjugate gradient never writes the matrix down. It needs one rule, "multiply the matrix into a list of 1,000 numbers", and each entry of the answer uses only a minute and its two neighbours. It holds four lists: 4,000 numbers. For a single chain of minutes like this one, elimination along the chain is cheaper still, one sweep forward and one back, and exact; the code uses it as a check. Conjugate gradient pays off on grids in two or three dimensions, such as a photograph, where elimination turns many of the zeros into numbers it must store (see Where you meet it in real life).
+That cost is a bowl in 1,000 dimensions. Its lowest point solves a linear system whose matrix has 1,000,000 entries, almost all zero. Conjugate gradient never writes the matrix down. It needs one rule, "multiply the matrix into a list of 1,000 numbers", and each entry of the answer uses only a minute and its two neighbours. It holds four lists: 4,000 numbers.
+
+For a single chain of minutes like this one, elimination along the chain is cheaper still, one sweep forward and one back, and exact. The code uses it as a check. Conjugate gradient pays off on grids in two or three dimensions, such as a photograph, where elimination turns many of the zeros into numbers it must store (see Where you meet it in real life).
 
 From a flat 15 °C start, it shrinks the cost's slope to $10^{-8}$ of its starting size in 84 steps. Gradient descent, with the best step length each time, needs 882. The smoothed curve sits 0.129 °C from the true warming, root-mean-square (the typical size of a miss); the raw readings sit 0.573 °C from it.
 
@@ -16,7 +18,7 @@ The difference is the directions. Gradient descent heads straight downhill, and 
 
 **Conjugate gradient minimises a quadratic bowl along directions chosen so that no step spoils the progress of earlier ones; each new direction is the downhill slope plus a multiple of the last direction, each step costs one matrix-times-list product, and in exact arithmetic the bottom arrives within n steps.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works: on a symmetric positive definite bowl the directions are conjugate and the method ends within n steps in exact arithmetic. The speed bound in Step 3 is stated, with its source. The nonlinear version is a method with no step-count promise; on the banana valley its answer is certified by the cost's floor of 0.
+**What kind of fact this is:** a theorem, proved on this card in Why it works. On a symmetric positive definite bowl the directions are conjugate and the method ends within n steps in exact arithmetic. The speed bound in Step 3 is stated, with its source. The nonlinear version is a method with no step-count promise; on the banana valley (a curved test problem, in How it moves) its answer is certified by the cost's floor of 0.
 
 ### The picture: two readings, two moves
 
@@ -24,13 +26,13 @@ The same smoother with two readings, 18 °C and 15 °C, and jump weight 1. The a
 
 <p align="center"><img src="../figures/conjugate-gradient-method.svg" alt="Three nested tilted ovals centred on (17, 16). From the start (15, 15) a solid path moves right to (16.5, 15) and then straight to the centre. A dashed path from the same corner zigzags up and right in shrinking steps, never quite reaching the centre." width="420"></p>
 
-Both methods first move right to (16.5, 15), where the path touches an oval. Gradient descent then turns a right angle and zigzags, each move cutting the cost gap to a quarter. Conjugate gradient turns along a direction conjugate to the first, and lands on (17, 16) exactly.
+Both methods first move right to (16.5, 15), where the path touches an oval. Gradient descent then turns a right angle and zigzags, each move cutting the cost gap (how far the cost sits above its lowest value) to a quarter. Conjugate gradient turns along a direction conjugate to the first, and lands on (17, 16) exactly.
 
 ---
 
 ## The formula
 
-Notation first, in words. The cost is a **quadratic**, a bowl set by a matrix $A$ and a list $b$. Its gradient is $Ax - b$, so the bottom is where $Ax = b$. The **residual** $r = b - Ax$ is minus the gradient: the downhill direction. Directions $d_i$ and $d_j$ are **conjugate** when $d_i^T A\, d_j = 0$: perpendicular once the bowl's stretch is counted.
+Notation first, in words. The cost is a **quadratic**, a bowl set by a matrix $A$ and a list $b$. For two lists $u$ and $v$, $u^T v$ is their dot product: multiply entry by entry and add. Its gradient is $Ax - b$, so the bottom is where $Ax = b$. The **residual** $r = b - Ax$ is minus the gradient: the downhill direction. Directions $d_i$ and $d_j$ are **conjugate** when $d_i^T A\, d_j = 0$: perpendicular once the bowl's stretch is counted.
 
 $$f(x) = \tfrac12\, x^T A\, x - b^T x, \qquad \text{start } d_0 = r_0 = b - A x_0,$$
 
@@ -38,7 +40,7 @@ $$\alpha_k = \frac{r_k^T r_k}{d_k^T A\, d_k}, \quad x_{k+1} = x_k + \alpha_k d_k
 
 **Read it aloud:** go to the lowest point along the current direction, update the downhill slope, and make the next direction that slope plus a fraction of the old direction.
 
-For the thermometer, the cost $f(x) = \tfrac12 \sum_i (x_i - y_i)^2 + \tfrac{w}{2} \sum_i (x_{i+1} - x_i)^2$ is the quadratic above plus a constant, with $b = y$. Row $i$ of $Ax$ is $x_i + w\,(x_i - x_{i-1}) + w\,(x_i - x_{i+1})$, dropping the missing neighbour at each end. That line is all the code knows about $A$. This is the same smoother as on [L-BFGS](06-l-bfgs-and-limited-memory-updates.md), at half the scale and with its own letters; halving the cost halves every curvature, so the least curvature here is $\mu = 1$, not 2.
+For the thermometer, the cost $f(x) = \tfrac12 \sum_i (x_i - y_i)^2 + \tfrac{w}{2} \sum_i (x_{i+1} - x_i)^2$ is the quadratic above plus a constant, with $b = y$. Row $i$ of $Ax$ is $x_i + w\,(x_i - x_{i-1}) + w\,(x_i - x_{i+1})$, dropping the missing neighbour at each end. That line is all the code knows about $A$. This is the same smoother as on [L-BFGS](06-l-bfgs-and-limited-memory-updates.md), at half the scale and with its own letters. Halving the cost halves every curvature, so the least curvature here is $\mu = 1$, not 2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -53,13 +55,13 @@ For the thermometer, the cost $f(x) = \tfrac12 \sum_i (x_i - y_i)^2 + \tfrac{w}{
 | $\alpha_k$ | the step length along $d_k$ that reaches the lowest point on that line | 0.5, then 0.6667, for the two readings | — |
 | $\beta_k$, $\beta_k^{\text{FR}}$, $\beta_k^{\text{PR+}}$ | how much of the old direction joins the new slope; the two nonlinear versions | 0.25 for the two readings | 0 turns the method into gradient descent |
 | $n$ | the number of unknowns | 1,000 | the most steps exact arithmetic can need |
-| $\kappa = L/\mu$ | the stretch: largest eigenvalue $L$ of $A$ over the smallest $\mu$ | 101.00, from $L \approx 1 + 4w$ and $\mu = 1$ | more steps, growing like $\sqrt{\kappa}$ |
+| $\kappa = L/\mu$ | the stretch: largest eigenvalue $L$ of $A$ (the bowl's steepest curvature) over the smallest $\mu$ (its gentlest) | 101.00, from $L \approx 1 + 4w$ and $\mu = 1$ | more steps, growing like $\sqrt{\kappa}$ |
 
 ### When it holds
 
 - **$A$ is symmetric.** Otherwise the short recipe for $\beta_k$ stops producing conjugate directions, and the n-step promise is gone.
-- **$A$ is positive definite** (every direction curves upward: a bowl). Otherwise $d_k^T A d_k$ can be negative, there is no lowest point along $d_k$, and on the saddle in "What breaks" the method ends higher than it started.
-- **The arithmetic is exact, for the n-step promise.** Rounding slowly spoils conjugacy. The worst A-cosine (the cosine of the angle between two directions, measured the bowl's way: 0 when conjugate) is $10^{-13.36}$ among the first 20 directions and $10^{-12.17}$ among all 84: it creeps up as the run goes on, though here it stays tiny. Real codes stop on a residual tolerance.
+- **$A$ is positive definite** (every direction curves upward: a bowl; see [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Otherwise $d_k^T A d_k$ can be negative, there is no lowest point along $d_k$, and on the saddle in "What breaks" the method ends higher than it started.
+- **The arithmetic is exact, for the n-step promise.** Rounding slowly spoils conjugacy. The worst A-cosine (the cosine of the angle between two directions, measured the bowl's way: 0 when conjugate) is $10^{-13.36}$ among the first 20 directions and $10^{-12.17}$ among all 84. It creeps up as the run goes on, though here it stays tiny. Real codes stop on a residual tolerance.
 - **The stretch is modest, for speed.** The step count grows with $\sqrt{\kappa}$; n is only the ceiling.
 - **Off a bowl, the line search is accurate.** Steps must pass the strong Wolfe tests ([Line search](04-line-search-armijo-and-wolfe.md)): the cost drops enough and the slope along the line flattens enough. Without the second test the banana run takes 1,124 iterations, not 34.
 
@@ -112,7 +114,9 @@ For the thermometer, 1,000 steps would be no bargain. What matters is the speed 
 
 $$\lVert x_k - x^* \rVert_A \;\le\; 2 \left( \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1} \right)^{k} \lVert x_0 - x^* \rVert_A ,$$
 
-Gradient descent with exact steps has the factor $(\kappa - 1)/(\kappa + 1)$ instead, in the same units (Shewchuk, section 6.2; [Convergence rates](03-rates-of-convergence-and-conditioning.md) finds the same factor for the best fixed step). For the thermometer, $\kappa = 101.00$ gives 0.8190 a step against 0.9804. Measured the bounds' way, as the error in the bowl's units from the exact bottom found by elimination, the average shrink per step was 0.7906 and 0.9790, both inside; the code asserts each bound at the last step. A digit costs about $\sqrt{\kappa}$ steps instead of $\kappa$, each step one pass over the 1,000 minutes.
+Gradient descent with exact steps has the factor $(\kappa - 1)/(\kappa + 1)$ instead, in the same units (Shewchuk, section 6.2; [Convergence rates](03-rates-of-convergence-and-conditioning.md) finds the same factor for the best fixed step). For the thermometer, $\kappa = 101.00$ gives 0.8190 a step against 0.9804.
+
+Measured the bounds' way, as the error in the bowl's units from the exact bottom found by elimination, the average shrink per step was 0.7906 and 0.9790, both inside. The code asserts each bound at the last step. A digit costs about $\sqrt{\kappa}$ steps instead of $\kappa$, each step one pass over the 1,000 minutes.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -195,7 +199,9 @@ All three end at (1, 1) to five decimal places. The certificate: the cost is a s
 
 ## Code, from first principles, and it actually runs
 
-The script never stores the matrix; it multiplies by it with the three-neighbour rule. Three independent roads reach the bottom. Road 1 is conjugate gradient. Road 2 is elimination on the three-diagonal system (forward sweep, back substitution, as in [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)); the two agree to $10^{-7.45}$ °C. Road 3 is a certificate: the final residual has size $10^{-5.80}$, and with smallest eigenvalue $\mu = 1$ no smoothed value is further than that from the exact bottom. The two-reading answer is checked against $A$'s inverse, the banana runs against the floor of 0 at (1, 1). Asserts test all three roads, conjugacy, both rate bounds in the bowl's units, that smoothing cuts the error by more than 3 times, and the banana counts, Polak–Ribière+'s 34 included.
+The script never stores the matrix; it multiplies by it with the three-neighbour rule. Three independent roads reach the bottom. Road 1 is conjugate gradient. Road 2 is elimination on the three-diagonal system (forward sweep, back substitution, as in [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)); the two agree to $10^{-7.45}$ °C.
+
+Road 3 is a certificate: the final residual has size $10^{-5.80}$, and with smallest eigenvalue $\mu = 1$ no smoothed value is further than that from the exact bottom. The two-reading answer is checked against $A$'s inverse, the banana runs against the floor of 0 at (1, 1). Asserts test all three roads, conjugacy, both rate bounds in the bowl's units, that smoothing cuts the error by more than 3 times, and the banana counts, Polak–Ribière+'s 34 included.
 
 ### Python
 
@@ -573,6 +579,346 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the n-step promise and the conjugacy for every symmetric positive definite $A$, in exact arithmetic, from any start and any $b$.
+
+- For a symmetric positive definite $A$, after n steps the guess solves $Ax = b$. No point has a lower cost.
+- Every direction is conjugate to every earlier one: $d_k^T A\, d_j = 0$ whenever $j < k$.
+- Every residual is perpendicular to every earlier one: $r_k^T r_j = 0$ whenever $j < k$.
+- With the two readings 18 °C and 15 °C, the first move reaches (16.5, 15) and the second lands on (17, 16) exactly. The two directions are conjugate, and the start's cost sits 3 above the bottom's.
+- On the saddle `[[1, 2], [2, 1]]` with $b = (3, 0)$, $d_1^T A d_1 = -108$. The method stops at $(-1, 2)$ with cost 1.5, above the start's 0, while $f(10, -10) = -130$.
+
+The thermometer run, the speed bounds, the effect of rounding and the banana valley are left to the Python and Rust checks.
+
+```lean
+-- Conjugate gradient: on a symmetric positive definite matrix, in exact arithmetic, the method's directions are mutually conjugate and it reaches the bottom of the bowl, where A x = b, within n steps.
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Tactic.NormNum
+
+open Matrix
+
+set_option linter.unusedSimpArgs false
+
+namespace ConjugateGradient
+
+variable {n : ℕ} {K : Type*} [Field K]
+
+/-- The cost (the bowl) `f(x) = 1/2 xᵀ A x - bᵀ x`. -/
+def cost (A : Matrix (Fin n) (Fin n) K) (b x : Fin n → K) : K :=
+  (1 / 2 : K) * (x ⬝ᵥ (A *ᵥ x)) - b ⬝ᵥ x
+
+/-- What the method holds after each step: the guess `x`, the residual `r`, the direction `d`. -/
+structure State (n : ℕ) (K : Type*) where
+  x : Fin n → K
+  r : Fin n → K
+  d : Fin n → K
+
+/-- The start: `r₀ = d₀ = b - A x₀`. -/
+def init (A : Matrix (Fin n) (Fin n) K) (b x₀ : Fin n → K) : State n K :=
+  ⟨x₀, b - A *ᵥ x₀, b - A *ᵥ x₀⟩
+
+/-- One step of the card's formula:
+`α = rᵀr / dᵀAd`, `x' = x + α d`, `r' = r - α A d`, `β = r'ᵀr' / rᵀr`, `d' = r' + β d`.
+(Once the residual is zero, Lean's `0 / 0 = 0` keeps the method standing still: it has stopped.) -/
+def step (A : Matrix (Fin n) (Fin n) K) (s : State n K) : State n K :=
+  let α := (s.r ⬝ᵥ s.r) / (s.d ⬝ᵥ (A *ᵥ s.d))
+  let r' := s.r - α • (A *ᵥ s.d)
+  let β := (r' ⬝ᵥ r') / (s.r ⬝ᵥ s.r)
+  ⟨s.x + α • s.d, r', r' + β • s.d⟩
+
+/-- The state after `k` steps of conjugate gradient from `x₀`. -/
+def cg (A : Matrix (Fin n) (Fin n) K) (b x₀ : Fin n → K) (k : ℕ) : State n K :=
+  (step A)^[k] (init A b x₀)
+
+lemma dot_mulVec_symm {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian) (u v : Fin n → ℝ) :
+    u ⬝ᵥ (A *ᵥ v) = v ⬝ᵥ (A *ᵥ u) := by
+  have hT : Aᵀ = A := by
+    have := hA.eq
+    rwa [conjTranspose_eq_transpose_of_trivial] at this
+  rw [dotProduct_mulVec, ← mulVec_transpose, hT, dotProduct_comm]
+
+lemma quad_pos {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.PosDef) {v : Fin n → ℝ} (hv : v ≠ 0) :
+    0 < v ⬝ᵥ (A *ᵥ v) := by
+  simpa using hA.dotProduct_mulVec_pos hv
+
+lemma self_dot_ne {v : Fin n → ℝ} (hv : v ≠ 0) : v ⬝ᵥ v ≠ 0 :=
+  fun h => hv (dotProduct_self_eq_zero.mp h)
+
+lemma cg_succ (A : Matrix (Fin n) (Fin n) K) (b x₀ : Fin n → K) (k : ℕ) :
+    cg A b x₀ (k + 1) = step A (cg A b x₀ k) := by
+  simp only [cg]; rw [Function.iterate_succ_apply']
+
+/-- The core invariant of conjugate gradient, for any sequences obeying its update rules. -/
+lemma cg_inv {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.PosDef) (r d : ℕ → Fin n → ℝ)
+    (hd0 : d 0 = r 0)
+    (hr : ∀ k, r (k + 1) = r k - (r k ⬝ᵥ r k / (d k ⬝ᵥ (A *ᵥ d k))) • (A *ᵥ d k))
+    (hd : ∀ k, d (k + 1) = r (k + 1) + (r (k + 1) ⬝ᵥ r (k + 1) / (r k ⬝ᵥ r k)) • d k)
+    (k : ℕ) :
+    ∀ j ≤ k, ∀ i < j, r j ⬝ᵥ d i = 0 ∧ r j ⬝ᵥ r i = 0 ∧ d j ⬝ᵥ (A *ᵥ d i) = 0 := by
+  have hsym := dot_mulVec_symm hA.1
+  have dz : ∀ m, r m = 0 → d m = 0 := by
+    intro m h
+    cases m with
+    | zero => rw [hd0, h]
+    | succ m => rw [hd m, h]; simp
+  have key : ∀ m, (r m ⬝ᵥ r m / (d m ⬝ᵥ (A *ᵥ d m))) • (A *ᵥ d m) = r m - r (m + 1) := by
+    intro m; rw [hr m]; abel
+  induction k with
+  | zero => intro j hj i hi; omega
+  | succ k ih =>
+    intro j hj i hij
+    rcases Nat.lt_or_ge j (k + 1) with h | h
+    · exact ih j (by omega) i hij
+    obtain rfl : j = k + 1 := by omega
+    have rd : r k ⬝ᵥ d k = r k ⬝ᵥ r k := by
+      cases k with
+      | zero => rw [hd0]
+      | succ m =>
+        rw [hd m, dotProduct_add, dotProduct_smul, (ih (m + 1) le_rfl m (by omega)).1,
+          smul_zero, add_zero]
+    have P1 : ∀ i < k + 1, r (k + 1) ⬝ᵥ d i = 0 := by
+      intro i hi
+      rw [hr k, sub_dotProduct, smul_dotProduct, smul_eq_mul]
+      rcases Nat.lt_or_ge i k with hik | hik
+      · rw [(ih k le_rfl i hik).1, dotProduct_comm (A *ᵥ d k), hsym (d i) (d k),
+          (ih k le_rfl i hik).2.2]
+        ring
+      · obtain rfl : i = k := by omega
+        by_cases h0 : d i = 0
+        · simp [h0]
+        · rw [rd, dotProduct_comm (A *ᵥ d i), div_mul_cancel₀ _ (quad_pos hA h0).ne', sub_self]
+    have P2 : ∀ i < k + 1, r (k + 1) ⬝ᵥ r i = 0 := by
+      intro i hi
+      cases i with
+      | zero => rw [← hd0]; exact P1 0 hi
+      | succ m =>
+        have e : r (m + 1) = d (m + 1) - (r (m + 1) ⬝ᵥ r (m + 1) / (r m ⬝ᵥ r m)) • d m := by
+          rw [hd m]; abel
+        rw [e, dotProduct_sub, dotProduct_smul, P1 (m + 1) hi, P1 m (by omega)]
+        simp
+    refine ⟨P1 i hij, P2 i hij, ?_⟩
+    rw [hd k, add_dotProduct, smul_dotProduct, smul_eq_mul]
+    by_cases h0 : d i = 0
+    · simp [h0]
+    have hrne : r i ≠ 0 := fun h => h0 (dz i h)
+    have hq := (quad_pos hA h0).ne'
+    have hrr := self_dot_ne hrne
+    have hα : r i ⬝ᵥ r i / (d i ⬝ᵥ (A *ᵥ d i)) ≠ 0 := div_ne_zero hrr hq
+    have hrA : r (k + 1) ⬝ᵥ (A *ᵥ d i) * (r i ⬝ᵥ r i / (d i ⬝ᵥ (A *ᵥ d i))) =
+        r (k + 1) ⬝ᵥ r i - r (k + 1) ⬝ᵥ r (i + 1) := by
+      rw [← dotProduct_sub, ← key i, dotProduct_smul, smul_eq_mul, mul_comm]
+    rcases Nat.lt_or_ge i k with hik | hik
+    · rw [(ih k le_rfl i hik).2.2, mul_zero, add_zero]
+      have : r (k + 1) ⬝ᵥ (A *ᵥ d i) * (r i ⬝ᵥ r i / (d i ⬝ᵥ (A *ᵥ d i))) = 0 := by
+        rw [hrA, P2 i hij, P2 (i + 1) (by omega)]; simp
+      exact (mul_eq_zero.mp this).resolve_right hα
+    · obtain rfl : i = k := by omega
+      rw [P2 i hij, zero_sub] at hrA
+      have e : r (i + 1) ⬝ᵥ (A *ᵥ d i) =
+          (r (i + 1) ⬝ᵥ (A *ᵥ d i) * (r i ⬝ᵥ r i / (d i ⬝ᵥ (A *ᵥ d i)))) *
+            ((d i ⬝ᵥ (A *ᵥ d i)) / (r i ⬝ᵥ r i)) := by
+        field_simp
+      rw [e, hrA]
+      field_simp
+      ring
+
+/-- The residual stays `b - A x`. -/
+lemma cg_r_eq (A : Matrix (Fin n) (Fin n) ℝ) (b x₀ : Fin n → ℝ) (k : ℕ) :
+    (cg A b x₀ k).r = b - A *ᵥ (cg A b x₀ k).x := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    rw [cg_succ]
+    simp only [step]
+    rw [ih, mulVec_add, mulVec_smul]
+    abel
+
+/-- `cg_inv` applied to the actual iterates. -/
+lemma cg_inv' {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.PosDef) (b x₀ : Fin n → ℝ) (k : ℕ) :
+    ∀ j ≤ k, ∀ i < j, (cg A b x₀ j).r ⬝ᵥ (cg A b x₀ i).d = 0 ∧
+      (cg A b x₀ j).r ⬝ᵥ (cg A b x₀ i).r = 0 ∧
+      (cg A b x₀ j).d ⬝ᵥ (A *ᵥ (cg A b x₀ i).d) = 0 :=
+  cg_inv hA (fun m => (cg A b x₀ m).r) (fun m => (cg A b x₀ m).d) rfl
+    (fun k => by rw [cg_succ]; rfl)
+    (fun k => by rw [cg_succ]; rfl) k
+
+/-- Once the residual is zero it stays zero. -/
+lemma cg_r_zero_succ (A : Matrix (Fin n) (Fin n) ℝ) (b x₀ : Fin n → ℝ) (k : ℕ)
+    (h : (cg A b x₀ k).r = 0) : (cg A b x₀ (k + 1)).r = 0 := by
+  have hd : (cg A b x₀ k).d = 0 := by
+    cases k with
+    | zero => exact h
+    | succ m =>
+      have e : (cg A b x₀ (m + 1)).d = (cg A b x₀ (m + 1)).r +
+          ((cg A b x₀ (m + 1)).r ⬝ᵥ (cg A b x₀ (m + 1)).r /
+            ((cg A b x₀ m).r ⬝ᵥ (cg A b x₀ m).r)) • (cg A b x₀ m).d := by
+        rw [cg_succ]; rfl
+      rw [e, h]; simp
+  rw [cg_succ]
+  simp only [step]
+  rw [h, hd]; simp
+
+lemma cg_r_n_zero {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.PosDef) (b x₀ : Fin n → ℝ) :
+    (cg A b x₀ n).r = 0 := by
+  by_contra hn
+  have hne : ∀ i ≤ n, (cg A b x₀ i).r ≠ 0 := by
+    intro i hi h
+    apply hn
+    have stay : ∀ m, (cg A b x₀ (i + m)).r = 0 := by
+      intro m
+      induction m with
+      | zero => exact h
+      | succ m ih => exact cg_r_zero_succ A b x₀ _ ih
+    have := stay (n - i)
+    rwa [Nat.add_sub_cancel' hi] at this
+  let v : Fin (n + 1) → (Fin n → ℝ) := fun i => (cg A b x₀ i).r
+  have orth : ∀ i j : Fin (n + 1), i ≠ j → v i ⬝ᵥ v j = 0 := by
+    intro i j hij
+    rcases lt_or_gt_of_ne hij with h | h
+    · rw [dotProduct_comm]
+      exact (cg_inv' hA b x₀ n j (by omega) i h).2.1
+    · exact (cg_inv' hA b x₀ n i (by omega) j h).2.1
+  have hli : LinearIndependent ℝ v := by
+    rw [Fintype.linearIndependent_iff]
+    intro g hg i
+    have h1 : (∑ j, g j • v j) ⬝ᵥ v i = 0 := by rw [hg, zero_dotProduct]
+    rw [sum_dotProduct, Finset.sum_eq_single i] at h1
+    · rw [smul_dotProduct, smul_eq_mul] at h1
+      exact (mul_eq_zero.mp h1).resolve_right (self_dot_ne (hne i (by omega)))
+    · intro j _ hji
+      rw [smul_dotProduct, orth j i hji, smul_zero]
+    · intro hi; exact absurd (Finset.mem_univ i) hi
+  have := hli.fintype_card_le_finrank
+  simp at this
+
+lemma cost_le_of_solves {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.PosDef) (b x : Fin n → ℝ)
+    (hx : A *ᵥ x = b) (y : Fin n → ℝ) : cost A b x ≤ cost A b y := by
+  obtain ⟨z, rfl⟩ : ∃ z, y = x + z := ⟨y - x, by abel⟩
+  have hz : 0 ≤ z ⬝ᵥ (A *ᵥ z) := by
+    by_cases h : z = 0
+    · simp [h]
+    · exact (quad_pos hA h).le
+  have hs := dot_mulVec_symm hA.1 x z
+  subst hx
+  simp only [cost, mulVec_add, dotProduct_add, add_dotProduct]
+  rw [dotProduct_comm (A *ᵥ x) x, dotProduct_comm (A *ᵥ x) z, hs]
+  nlinarith
+
+#print axioms dot_mulVec_symm
+#print axioms quad_pos
+#print axioms self_dot_ne
+#print axioms cg_succ
+#print axioms cg_inv
+#print axioms cg_r_eq
+#print axioms cg_inv'
+#print axioms cg_r_zero_succ
+#print axioms cg_r_n_zero
+#print axioms cost_le_of_solves
+
+/-- Conjugate gradient finishes within n steps: for a symmetric positive definite matrix `A`
+(`Matrix.PosDef` includes symmetry), in exact arithmetic, after `n` steps the guess solves
+`A x = b`, and it is the lowest point of the bowl `f(x) = 1/2 xᵀAx - bᵀx`. -/
+theorem cg_reaches_bottom_within_n_steps (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.PosDef)
+    (b x₀ : Fin n → ℝ) :
+    A *ᵥ (cg A b x₀ n).x = b ∧ ∀ y : Fin n → ℝ, cost A b (cg A b x₀ n).x ≤ cost A b y := by
+  have hr := cg_r_n_zero hA b x₀
+  rw [cg_r_eq, sub_eq_zero] at hr
+  exact ⟨hr.symm, cost_le_of_solves hA b _ hr.symm⟩
+
+/-- Every direction is conjugate to every earlier one: `d_kᵀ A d_j = 0` for `j < k`. -/
+theorem cg_directions_conjugate (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.PosDef)
+    (b x₀ : Fin n → ℝ) {j k : ℕ} (hjk : j < k) :
+    (cg A b x₀ k).d ⬝ᵥ (A *ᵥ (cg A b x₀ j).d) = 0 := by
+  exact (cg_inv' hA b x₀ k k le_rfl j hjk).2.2
+
+/-- Every residual (downhill slope) is perpendicular to every earlier one: `r_kᵀ r_j = 0` for `j < k`. -/
+theorem cg_residuals_orthogonal (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.PosDef)
+    (b x₀ : Fin n → ℝ) {j k : ℕ} (hjk : j < k) :
+    (cg A b x₀ k).r ⬝ᵥ (cg A b x₀ j).r = 0 := by
+  exact (cg_inv' hA b x₀ k k le_rfl j hjk).2.1
+
+/-! The card's worked numbers: readings 18 and 15, weight 1, start (15, 15). -/
+
+/-- The two-reading bowl, `A = [[2, -1], [-1, 2]]`. -/
+def A₂ : Matrix (Fin 2) (Fin 2) ℝ := !![2, -1; -1, 2]
+
+-- first move: alpha 1/2 to (16.5, 15); new residual (0, 1.5); beta 1/4, new direction (0.75, 1.5)
+example : cg A₂ ![18, 15] ![15, 15] 1 = ⟨![33 / 2, 15], ![0, 3 / 2], ![3 / 4, 3 / 2]⟩ := by
+  simp only [cg, Function.iterate_one, step, init, A₂, State.mk.injEq]
+  refine ⟨?_, ?_, ?_⟩ <;> ext i <;> fin_cases i <;>
+    simp [mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail] <;> norm_num
+
+-- second move: alpha 2/3 lands on the bottom (17, 16) exactly; residual and direction become 0
+example : step A₂ ⟨![33 / 2, 15], ![0, 3 / 2], ![3 / 4, 3 / 2]⟩ = ⟨![17, 16], 0, 0⟩ := by
+  simp only [step, A₂, State.mk.injEq]
+  refine ⟨?_, ?_, ?_⟩ <;> ext i <;> fin_cases i <;>
+    simp [mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail] <;> norm_num
+
+-- the two directions are conjugate: d₁ᵀ A d₀ = 0, with d₀ = (3, 0) and d₁ = (0.75, 1.5)
+example : (cg A₂ ![18, 15] ![15, 15] 0).d = ![3, 0] ∧
+    ![3 / 4, 3 / 2] ⬝ᵥ (A₂ *ᵥ ![3, 0]) = (0 : ℝ) := by
+  refine ⟨?_, ?_⟩
+  · ext i; fin_cases i <;>
+      simp [cg, init, A₂, mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail] <;> norm_num
+  · simp [A₂, mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail]; norm_num
+
+-- the start sits 3 above the bottom's cost
+example : cost A₂ ![18, 15] ![15, 15] - cost A₂ ![18, 15] ![17, 16] = 3 := by
+  simp [cost, A₂, mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail]; norm_num
+
+/-! What breaks: the saddle `[[1, 2], [2, 1]]`, `b = (3, 0)`, start (0, 0). -/
+
+/-- A symmetric matrix that is not positive definite. -/
+def Asad : Matrix (Fin 2) (Fin 2) ℝ := !![1, 2; 2, 1]
+
+-- first move: to (3, 0), residual (0, -6), next direction (12, -6)
+example : cg Asad ![3, 0] 0 1 = ⟨![3, 0], ![0, -6], ![12, -6]⟩ := by
+  simp only [cg, Function.iterate_one, step, init, Asad, State.mk.injEq]
+  refine ⟨?_, ?_, ?_⟩ <;> ext i <;> fin_cases i <;>
+    simp [mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail] <;> norm_num
+
+-- the second direction curves down: d₁ᵀ A d₁ = -108
+example : ![12, -6] ⬝ᵥ (Asad *ᵥ ![12, -6]) = (-108 : ℝ) := by
+  simp [Asad, mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail]; norm_num
+
+-- second move: it stops at (-1, 2) with residual 0, so A x = b is solved ...
+example : step Asad ⟨![3, 0], ![0, -6], ![12, -6]⟩ = ⟨![-1, 2], 0, 0⟩ := by
+  simp only [step, Asad, State.mk.injEq]
+  refine ⟨?_, ?_, ?_⟩ <;> ext i <;> fin_cases i <;>
+    simp [mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail] <;> norm_num
+
+-- ... but its cost is 3/2, above the start's 0, while the cost at (10, -10) is -130
+example : cost Asad ![3, 0] ![-1, 2] = 3 / 2 ∧ cost Asad ![3, 0] 0 = 0 ∧
+    cost Asad ![3, 0] ![10, -10] = -130 := by
+  refine ⟨?_, ?_, ?_⟩ <;> simp [cost, Asad, mulVec, dotProduct, Fin.sum_univ_two, vecHead, vecTail] <;>
+    norm_num
+
+#print axioms cg_reaches_bottom_within_n_steps
+#print axioms cg_directions_conjugate
+#print axioms cg_residuals_orthogonal
+
+end ConjugateGradient
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ConjugateGradient.dot_mulVec_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.quad_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.self_dot_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_r_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_inv'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_r_zero_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_r_n_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cost_le_of_solves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_reaches_bottom_within_n_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_directions_conjugate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ConjugateGradient.cg_residuals_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: $w$ from 25 to 100, what happens to the step counts? Set `w` to `100.0`. $\kappa$ rises about fourfold, so conjugate gradient's steps roughly double and gradient descent's roughly quadruple; the second assert stops the run.
@@ -614,7 +960,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Iterating instead of factoring: huge systems solved by repeated products, with preconditioning to shrink $\kappa$ first.
+- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): huge systems solved by repeated products, with preconditioning to shrink $\kappa$ first.
 - [Trust regions](08-trust-region-methods.md): conjugate gradient, stopped at the region's edge, solves the inner problem.
 - [Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): each Gauss-Newton step is a bowl that conjugate gradient can solve without forming its matrix.
 - [L-BFGS](06-l-bfgs-and-limited-memory-updates.md): the other fast method with a few stored lists; on a bowl with exact line searches it retraces conjugate gradient's steps.

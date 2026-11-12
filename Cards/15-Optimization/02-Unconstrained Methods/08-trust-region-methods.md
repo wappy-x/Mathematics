@@ -10,7 +10,9 @@ Two settings, x and y, are chosen to **minimise** one number, f(x, y) = (1 − x
 
 A fast method builds a quadratic stand-in for f at the current point, from the slope and the curvature there, and jumps to the stand-in's lowest point. One such jump takes the search to the point called $x_1$, (−1.175281, 1.380674), where f = 4.731884. From there the stand-in's lowest point lies 4.95 units away. It promises that f falls by 4.22. It actually rises by 1,407: the jump leaves the valley and climbs its far wall.
 
-A trust region refuses to go that far. It draws a circle of radius 1 around the point and takes the stand-in's best step inside it. That step promises a fall of 1.54 and delivers a rise of 0.64. The ratio of delivered to promised fall is −0.41, so the step is refused and the radius is cut to a quarter, 0.25. The new step promises 0.42 and delivers 0.43: ratio 1.02. It is kept, and since the stand-in told the truth the radius is doubled for next time. After 24 tries, three of them refused, the search sits on (1, 1).
+A trust region refuses to go that far. It draws a circle of radius 1 around the point and takes the stand-in's best step inside it. That step promises a fall of 1.54 and delivers a rise of 0.64. The ratio of delivered to promised fall is −0.41, so the step is refused and the radius is cut to a quarter, 0.25.
+
+The new step promises 0.42 and delivers 0.43: ratio 1.02. It is kept, and since the stand-in told the truth the radius is doubled for next time. After 24 tries, three of them refused, the search sits on (1, 1).
 
 **A trust region takes the quadratic model's best step inside a circle, measures how much of the promised fall really happened, keeps the step only if enough did, and shrinks or grows the circle by that same measurement.**
 
@@ -120,7 +122,15 @@ While the slope is not zero this goes to 0 with the radius. Each refusal divides
 
 ### Step 3: from one kept step to the whole run
 
-The guarantee and the ratio test together give the standard theorem, stated here and proved in the source (Nocedal and Wright, Theorem 4.6): if f is bounded below, its slope changes at a bounded rate on the region below the starting value, the matrices $B_k$ stay bounded, $0 < \eta < \tfrac14$, and every step earns at least a fixed fraction of the straight-downhill guarantee, then the slope at the iterates tends to zero. Every kept step lowers f, so the run cannot climb out of the region it started in.
+The guarantee and the ratio test together give the standard theorem, stated here and proved in the source (Nocedal and Wright, Theorem 4.6). Suppose that:
+
+- f is bounded below;
+- its slope changes at a bounded rate on the region below the starting value;
+- the matrices $B_k$ stay bounded;
+- $0 < \eta < \tfrac14$;
+- every step earns at least a fixed fraction of the straight-downhill guarantee.
+
+Then the slope at the iterates tends to zero. Every kept step lowers f, so the run cannot climb out of the region it started in.
 
 Near a minimum where the Hessian is a bowl, the Newton point becomes short enough to fit in the circle, the dogleg returns it unchanged, and the run becomes Newton's method ([Newton and BFGS](05-newton-and-quasi-newton-bfgs.md)), with its fast finish. The last four kept points have $\log_{10} f$ of −4.19, −6.40, −11.54 and −21.07: the digits roughly double each step.
 
@@ -191,7 +201,11 @@ k = 22  ######                    0.2500  rho  1.001  accept
 k = 23  ######                    0.2500  rho  1.000  accept
 ```
 
-Three refusals, each followed by a quarter-size circle and a kept step. Two kinds of good step: at k = 2, 3, 13 and 16 the step hit the edge with a ratio above 0.75, so the circle doubled. At k = 0, 4 to 7, 10, 12 and 14, and from k = 17 on, the ratio was good but the Newton point fitted inside the circle, so the edge was not the limit and the circle stayed put. At k = 9 and 11 the ratios were 0.530 and 0.374: good enough to keep, not good enough to grow.
+Three refusals, each followed by a quarter-size circle and a kept step.
+
+Two kinds of good step: at k = 2, 3, 13 and 16 the step hit the edge with a ratio above 0.75, so the circle doubled. At k = 0, 4 to 7, 10, 12 and 14, and from k = 17 on, the ratio was good but the Newton point fitted inside the circle, so the edge was not the limit and the circle stayed put.
+
+At k = 9 and 11 the ratios were 0.530 and 0.374: good enough to keep, not good enough to grow.
 
 ### The picture: the promise against the delivery, at $x_1$
 
@@ -224,7 +238,12 @@ The one line is $\log_{10} f$, the error here since the minimum value is 0. It c
 
 ## Code, from first principles, and it actually runs
 
-The code writes out the model, the dogleg, the ratio test and the resizing rule, with two-by-two linear systems solved by elimination. It reaches the example's answers by three independent roads, and certifies the end point by a fourth. Road one checks the slope and curvature formulas against central differences (tiny steps either side). Road two solves the circle problem exactly, by bisection on the damping number, and again by scanning 100,000 points round the circle, and confirms the dogleg sits between the straight-downhill step and the exact answer. Road three predicts the delivered fall from the exact quartic leftover of Step 1 and matches the direct evaluation. The certificate: the slope at the end is below $10^{-8}$, the Hessian there is a bowl, and f, a sum of squares, is 0 at (1, 1). The stopping test is a slope length below $10^{-8}$.
+The code writes out the model, the dogleg, the ratio test and the resizing rule, with two-by-two linear systems solved by elimination. It reaches the example's answers by three independent roads, and certifies the end point by a fourth. The stopping test is a slope length below $10^{-8}$.
+
+- **Road one** checks the slope and curvature formulas against central differences (tiny steps either side).
+- **Road two** solves the circle problem exactly, by bisection on the damping number (halving the range that holds it, again and again), and again by scanning 100,000 points round the circle, and confirms the dogleg sits between the straight-downhill step and the exact answer.
+- **Road three** predicts the delivered fall from the exact quartic leftover of Step 1 and matches the direct evaluation.
+- **The certificate:** the slope at the end is below $10^{-8}$, the Hessian there is a bowl, and f, a sum of squares, is 0 at (1, 1).
 
 ### Python
 
@@ -615,6 +634,282 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the straight-downhill guarantee and that shrinking ends, for any number of variables, and the banana's model error at every point.
+
+- Take any slope $g$, any symmetric curvature matrix $B$ and any radius $\Delta$. Some straight-downhill step inside the circle promises a fall of at least $\tfrac12\lVert g\rVert \min(\Delta,\ \lVert g\rVert/\lVert B\rVert)$.
+- Let f have continuous second derivatives near $x$, with a slope that is not zero. Let every step stay inside its circle and earn a fixed fraction of that guarantee.
+- Then cutting the radius to a quarter after each refusal gives a ratio above $\tfrac34$ after finitely many cuts, and after every later cut too.
+- This holds for any symmetric $B$ in the model, not only the Hessian.
+- On Rosenbrock's f, for every point and every step $d = (u, v)$, f minus the model is exactly $100u^4 - 200u^2(v - 2xu)$.
+- The hand arithmetic holds exactly: f, slope and Hessian at $(-1.2, 1)$ and at $x_1$, and the Newton point's length of 4.95.
+- Pure Newton lands where f is between 1411 and 1412. At (1, 1), f and the slope are 0, the determinant is 400, and f is never lower.
+
+The dogleg, the 24-try run and the mistakes table are left to the Python and Rust checks; Step 3's theorem stays with its source.
+
+```lean
+-- Trust regions: the straight-downhill step inside a circle of radius Δ always earns a promised fall of at least ½‖g‖ min(Δ, ‖g‖/‖B‖), so when f is twice continuously differentiable, the model matches f's value and slope, and every step earns a fixed fraction of that, cutting the radius to a quarter after each refusal ends in a kept step with ratio above 3/4 after finitely many cuts; the banana valley's exact model error and the card's exact numbers are checked too.
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Mathlib.Analysis.Calculus.ContDiff.Defs
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Tactic
+
+open scoped Gradient RealInnerProductSpace
+
+/-! The choices live in `EuclideanSpace ℝ (Fin n)`: n numbers. At the current point the slope is
+a vector `g` and the curvature is a symmetric linear map `B` (`IsSelfAdjoint B`); `‖B‖` is its
+operator norm, the most `B` stretches any vector. The model is
+`m(d) = f(x) + ⟪g, d⟫ + ½ ⟪d, B d⟫`, so the fall it promises for a step `d` is
+`m(0) − m(d) = −(⟪g, d⟫ + ½ ⟪d, B d⟫)`. -/
+
+/-- The fall the quadratic model promises for the step `d`: `m(0) − m(d)`. -/
+noncomputable def promisedFall {n : ℕ} (g : EuclideanSpace ℝ (Fin n))
+    (B : EuclideanSpace ℝ (Fin n) →L[ℝ] EuclideanSpace ℝ (Fin n))
+    (d : EuclideanSpace ℝ (Fin n)) : ℝ :=
+  -(⟪g, d⟫ + 1 / 2 * ⟪d, B d⟫)
+
+/-- The straight-downhill guarantee `½ ‖g‖ min(Δ, ‖g‖/‖B‖)`. When `B = 0` the card's
+`‖g‖/‖B‖` is infinite and the minimum is `Δ`, so the bound is `½ ‖g‖ Δ`. -/
+noncomputable def cauchyBound {n : ℕ} (g : EuclideanSpace ℝ (Fin n))
+    (B : EuclideanSpace ℝ (Fin n) →L[ℝ] EuclideanSpace ℝ (Fin n)) (Δ : ℝ) : ℝ :=
+  if ‖B‖ = 0 then 1 / 2 * ‖g‖ * Δ else 1 / 2 * ‖g‖ * min Δ (‖g‖ / ‖B‖)
+
+/-- Helper: the curvature term is at most `‖B‖ ‖d‖²` in size. -/
+theorem trm_abs_inner_le {n : ℕ}
+    (B : EuclideanSpace ℝ (Fin n) →L[ℝ] EuclideanSpace ℝ (Fin n))
+    (d : EuclideanSpace ℝ (Fin n)) : |⟪d, B d⟫| ≤ ‖B‖ * ‖d‖ ^ 2 := by
+  calc |⟪d, B d⟫| ≤ ‖d‖ * ‖B d‖ := abs_real_inner_le_norm _ _
+    _ ≤ ‖d‖ * (‖B‖ * ‖d‖) := by gcongr; exact B.le_opNorm d
+    _ = ‖B‖ * ‖d‖ ^ 2 := by ring
+
+#print axioms trm_abs_inner_le
+
+/-- Helper: for small radii the ratio is above `3/4`. -/
+theorem trm_small_radius {n : ℕ} {f : EuclideanSpace ℝ (Fin n) → ℝ}
+    {x : EuclideanSpace ℝ (Fin n)} (hf : ContDiffAt ℝ 2 f x) (hg : ∇ f x ≠ 0)
+    (B : EuclideanSpace ℝ (Fin n) →L[ℝ] EuclideanSpace ℝ (Fin n))
+    {c : ℝ} (hc : 0 < c) (step : ℝ → EuclideanSpace ℝ (Fin n))
+    (hlen : ∀ Δ, 0 < Δ → ‖step Δ‖ ≤ Δ)
+    (hfall : ∀ Δ, 0 < Δ → c * cauchyBound (∇ f x) B Δ ≤ promisedFall (∇ f x) B (step Δ)) :
+    ∃ η > 0, ∀ Δ, 0 < Δ → Δ < η →
+      3 / 4 < (f x - f (x + step Δ)) / promisedFall (∇ f x) B (step Δ) := by
+  set g := ∇ f x with hgdef
+  have hG : 0 < ‖g‖ := norm_pos_iff.mpr hg
+  set G := ‖g‖
+  set L := ‖B‖
+  have hL : 0 ≤ L := norm_nonneg _
+  have hdiff : DifferentiableAt ℝ f x := hf.differentiableAt (by norm_num)
+  have hfd : HasFDerivAt f (InnerProductSpace.toDual ℝ _ g) x := hdiff.hasGradientAt.hasFDerivAt
+  have hlo := hasFDerivAt_iff_isLittleO_nhds_zero.mp hfd
+  have hε : 0 < c * G / 32 := by positivity
+  have hev := hlo.def hε
+  obtain ⟨δ, hδ, hball⟩ := Metric.eventually_nhds_iff.mp hev
+  refine ⟨min δ (min (G / (L + 1)) (c * G / (16 * (L + 1)))), by positivity, ?_⟩
+  intro Δ hΔ hΔη
+  have h1 : Δ < δ := lt_of_lt_of_le hΔη (min_le_left _ _)
+  have h2 : Δ < G / (L + 1) := lt_of_lt_of_le hΔη ((min_le_right _ _).trans (min_le_left _ _))
+  have h3 : Δ < c * G / (16 * (L + 1)) :=
+    lt_of_lt_of_le hΔη ((min_le_right _ _).trans (min_le_right _ _))
+  have hL1 : 0 < L + 1 := by linarith
+  have h2' : Δ * L ≤ G := by
+    rw [lt_div_iff₀ hL1] at h2; nlinarith
+  have h3' : 16 * (Δ * L) ≤ c * G := by
+    rw [lt_div_iff₀ (by positivity)] at h3; nlinarith
+  set d := step Δ
+  have hd : ‖d‖ ≤ Δ := hlen Δ hΔ
+  -- the promised fall is at least c G Δ / 2
+  have hcb : cauchyBound g B Δ = 1 / 2 * G * Δ := by
+    unfold cauchyBound
+    split_ifs with h0
+    · rfl
+    · have hLpos : 0 < L := lt_of_le_of_ne hL (Ne.symm h0)
+      rw [min_eq_left]
+      rw [le_div_iff₀ hLpos]; exact h2'
+  have hP : c * (1 / 2 * G * Δ) ≤ promisedFall g B d := by
+    rw [← hcb]; exact hfall Δ hΔ
+  have hPpos : 0 < promisedFall g B d := lt_of_lt_of_le (by positivity) hP
+  -- error bound
+  have hE : ‖f (x + d) - f x - (InnerProductSpace.toDual ℝ _ g) d‖ ≤ c * G / 32 * ‖d‖ := by
+    apply hball
+    rw [dist_zero_right]; exact lt_of_le_of_lt hd h1
+  rw [InnerProductSpace.toDual_apply_apply, Real.norm_eq_abs] at hE
+  have hQ := trm_abs_inner_le B d
+  have hd2 : ‖d‖ ^ 2 ≤ Δ ^ 2 := by gcongr
+  rw [lt_div_iff₀ hPpos]
+  unfold promisedFall at hP ⊢
+  have hn0 : 0 ≤ ‖d‖ := norm_nonneg _
+  have hEa := (abs_le.mp hE).2
+  have hQa := (abs_le.mp hQ).1
+  have : L * ‖d‖ ^ 2 ≤ L * Δ ^ 2 := by gcongr
+  have : c * G / 32 * ‖d‖ ≤ c * G / 32 * Δ := by gcongr
+  nlinarith
+
+#print axioms trm_small_radius
+
+/-- **Shrinking ends.** Let `f` have continuous second derivatives near the point `x`, with a
+slope `∇f(x)` that is not zero, and let the model match `f`'s value and slope at `x`, with any
+symmetric curvature map `B`. Let the step for radius `Δ` (`step Δ`) stay inside the circle and
+earn at least a fixed fraction `c > 0` of the straight-downhill guarantee. Start from any radius
+`Δ₀ > 0` and cut it to a quarter after each refusal. Then after finitely many cuts the ratio of
+delivered fall to promised fall, `ρ = (f(x) − f(x + d)) / (m(0) − m(d))`, is above `3/4` (and
+stays above it for every further cut), so the step is kept. -/
+theorem trust_region_shrinking_ends {n : ℕ} {f : EuclideanSpace ℝ (Fin n) → ℝ}
+    {x : EuclideanSpace ℝ (Fin n)} (hf : ContDiffAt ℝ 2 f x) (hg : ∇ f x ≠ 0)
+    (B : EuclideanSpace ℝ (Fin n) →L[ℝ] EuclideanSpace ℝ (Fin n)) (hB : IsSelfAdjoint B)
+    {c : ℝ} (hc : 0 < c) (step : ℝ → EuclideanSpace ℝ (Fin n))
+    (hlen : ∀ Δ, 0 < Δ → ‖step Δ‖ ≤ Δ)
+    (hfall : ∀ Δ, 0 < Δ → c * cauchyBound (∇ f x) B Δ ≤ promisedFall (∇ f x) B (step Δ))
+    {Δ₀ : ℝ} (hΔ₀ : 0 < Δ₀) :
+    ∃ N : ℕ, ∀ k ≥ N,
+      3 / 4 < (f x - f (x + step (Δ₀ / 4 ^ k))) / promisedFall (∇ f x) B (step (Δ₀ / 4 ^ k)) := by
+  obtain ⟨η, hη, hsmall⟩ := trm_small_radius hf hg B hc step hlen hfall
+  have ht : Filter.Tendsto (fun k : ℕ => Δ₀ / 4 ^ k) Filter.atTop (nhds 0) :=
+    tendsto_const_nhds.div_atTop (tendsto_pow_atTop_atTop_of_one_lt (by norm_num))
+  obtain ⟨N, hN⟩ := Filter.eventually_atTop.mp (ht.eventually (gt_mem_nhds hη))
+  exact ⟨N, fun k hk => hsmall _ (by positivity) (hN k hk)⟩
+
+/-- **The straight-downhill guarantee.** For any slope `g`, any symmetric curvature map `B` and
+any radius `Δ > 0`, some step straight downhill, `d = −t g` with `t ≥ 0` and `‖d‖ ≤ Δ`, makes
+the model promise a fall of at least `½ ‖g‖ min(Δ, ‖g‖/‖B‖)`. -/
+theorem cauchy_step_guarantee {n : ℕ} (g : EuclideanSpace ℝ (Fin n))
+    (B : EuclideanSpace ℝ (Fin n) →L[ℝ] EuclideanSpace ℝ (Fin n)) (hB : IsSelfAdjoint B)
+    {Δ : ℝ} (hΔ : 0 < Δ) :
+    ∃ t : ℝ, 0 ≤ t ∧ ‖t • g‖ ≤ Δ ∧ cauchyBound g B Δ ≤ promisedFall g B (-(t • g)) := by
+  have hpf : ∀ t : ℝ, promisedFall g B (-(t • g)) = t * ‖g‖ ^ 2 - 1 / 2 * t ^ 2 * ⟪g, B g⟫ := by
+    intro t
+    unfold promisedFall
+    simp only [map_neg, map_smul, inner_neg_left, inner_neg_right, real_inner_smul_left,
+      real_inner_smul_right, real_inner_self_eq_norm_sq]
+    ring
+  have hq : ⟪g, B g⟫ ≤ ‖B‖ * ‖g‖ ^ 2 := le_trans (le_abs_self _) (trm_abs_inner_le B g)
+  by_cases hg : g = 0
+  · subst hg
+    refine ⟨0, le_refl _, by simp; exact hΔ.le, ?_⟩
+    unfold cauchyBound promisedFall
+    simp
+  have hG : 0 < ‖g‖ := norm_pos_iff.mpr hg
+  set G := ‖g‖
+  set L := ‖B‖
+  have hL : 0 ≤ L := norm_nonneg _
+  by_cases hL0 : L = 0
+  · refine ⟨Δ / G, by positivity, ?_, ?_⟩
+    · rw [norm_smul, Real.norm_eq_abs, abs_of_pos (by positivity), div_mul_cancel₀ _ hG.ne']
+    · rw [hpf]
+      unfold cauchyBound
+      rw [ite_cond_eq_true _ _ (eq_true hL0)]
+      rw [hL0, zero_mul] at hq
+      have : 0 ≤ (Δ / G) ^ 2 := sq_nonneg _
+      have e : Δ / G * G ^ 2 = Δ * G := by field_simp
+      nlinarith
+  · have hLpos : 0 < L := lt_of_le_of_ne hL (Ne.symm hL0)
+    set m := min Δ (G / L)
+    have hm : 0 < m := lt_min hΔ (by positivity)
+    have hmL : m * L ≤ G := by
+      have := min_le_right Δ (G / L)
+      rwa [le_div_iff₀ hLpos] at this
+    refine ⟨m / G, by positivity, ?_, ?_⟩
+    · rw [norm_smul, Real.norm_eq_abs, abs_of_pos (by positivity), div_mul_cancel₀ _ hG.ne']
+      exact min_le_left _ _
+    · rw [hpf]
+      unfold cauchyBound
+      rw [ite_cond_eq_false _ _ (eq_false hL0)]
+      have e1 : m / G * G ^ 2 = m * G := by field_simp
+      have e2 : (m / G) ^ 2 * (L * G ^ 2) = m ^ 2 * L := by field_simp
+      have h4 : (m / G) ^ 2 * ⟪g, B g⟫ ≤ (m / G) ^ 2 * (L * G ^ 2) :=
+        mul_le_mul_of_nonneg_left hq (sq_nonneg _)
+      rw [e1]
+      nlinarith
+
+/-! Rosenbrock's banana `f(x, y) = (1 − x)² + 100 (y − x²)²`, its slope
+`(−2(1 − x) − 400 x (y − x²), 200 (y − x²))` and its Hessian `[[a, b], [b, c]]` with
+`a = 2 − 400 (y − x²) + 800 x²`, `b = −400 x`, `c = 200`. -/
+
+/-- Rosenbrock's banana. -/
+def rosen {K : Type*} [CommRing K] (x y : K) : K := (1 - x) ^ 2 + 100 * (y - x ^ 2) ^ 2
+
+/-- First part of the slope. -/
+def rosenGx {K : Type*} [CommRing K] (x y : K) : K := -2 * (1 - x) - 400 * x * (y - x ^ 2)
+
+/-- Second part of the slope. -/
+def rosenGy {K : Type*} [CommRing K] (x y : K) : K := 200 * (y - x ^ 2)
+
+/-- Hessian entry `a`. -/
+def rosenHa {K : Type*} [CommRing K] (x y : K) : K := 2 - 400 * (y - x ^ 2) + 800 * x ^ 2
+
+/-- Hessian entry `b`. -/
+def rosenHb {K : Type*} [CommRing K] (x _y : K) : K := -400 * x
+
+/-- **Where the banana model fails, exactly.** For every point `(x, y)` and every step
+`d = (u, v)`, the true value minus the quadratic model built from the value, slope and Hessian
+at `(x, y)` is exactly `100 u⁴ − 200 u² (v − 2 x u)`. -/
+theorem rosenbrock_model_error (x y u v : ℝ) :
+    rosen (x + u) (y + v) -
+        (rosen x y + rosenGx x y * u + rosenGy x y * v +
+          1 / 2 * (rosenHa x y * u ^ 2 + 2 * rosenHb x y * u * v + 200 * v ^ 2)) =
+      100 * u ^ 4 - 200 * u ^ 2 * (v - 2 * x * u) := by
+  unfold rosen rosenGx rosenGy rosenHa rosenHb
+  ring
+
+-- The start (−1.2, 1): f = 24.2, slope (−215.6, −88), Hessian a, b, c = 1330, 480, 200.
+example : rosen (-6 / 5 : ℚ) 1 = 121 / 5 ∧ rosenGx (-6 / 5 : ℚ) 1 = -1078 / 5 ∧
+    rosenGy (-6 / 5 : ℚ) 1 = -88 ∧ rosenHa (-6 / 5 : ℚ) 1 = 1330 ∧ rosenHb (-6 / 5 : ℚ) 1 = 480 := by
+  norm_num [rosen, rosenGx, rosenGy, rosenHa, rosenHb]
+
+-- Step 0 is the Newton point: solving [[1330, 480], [480, 200]] d = (1078/5, 88) gives
+-- d = (11/445, 847/2225), so x1 = (−523/445, 3072/2225) = (−1.175281…, 1.380674…).
+example : (1330 : ℚ) * (11 / 445) + 480 * (847 / 2225) = 1078 / 5 ∧
+    (480 : ℚ) * (11 / 445) + 200 * (847 / 2225) = 88 ∧
+    (-6 / 5 : ℚ) + 11 / 445 = -523 / 445 ∧ (1 : ℚ) + 847 / 2225 = 3072 / 2225 := by norm_num
+
+-- At x1: f = 4.731884… (between 4.731884 and 4.731885), slope (−4.637816…, −0.122207…),
+-- Hessian a = 1107.2726…, b = 470.1124…, c = 200.
+example : 4731884 / 1000000 < rosen (-523 / 445 : ℚ) (3072 / 2225) ∧
+    rosen (-523 / 445 : ℚ) (3072 / 2225) < 4731885 / 1000000 ∧
+    rosenGx (-523 / 445 : ℚ) (3072 / 2225) = -16347584 / 3524845 ∧
+    rosenGy (-523 / 445 : ℚ) (3072 / 2225) = -968 / 7921 ∧
+    rosenHa (-523 / 445 : ℚ) (3072 / 2225) = 8770706 / 7921 ∧
+    rosenHb (-523 / 445 : ℚ) (3072 / 2225) = 41840 / 89 := by
+  norm_num [rosen, rosenGx, rosenGy, rosenHa, rosenHb]
+
+-- Pure Newton from x1: the step (86152/44445, −8019158719/1760244225) has length 4.950945…
+-- (its square lies between 4.95² and 4.96²) and lands where f = 1411.845… (between 1411 and 1412).
+example : (4.95 : ℚ) ^ 2 < (86152 / 44445 : ℚ) ^ 2 + (-8019158719 / 1760244225 : ℚ) ^ 2 ∧
+    (86152 / 44445 : ℚ) ^ 2 + (-8019158719 / 1760244225 : ℚ) ^ 2 < (4.96 : ℚ) ^ 2 ∧
+    (-523 / 445 : ℚ) + 86152 / 44445 = 3018581 / 3955605 ∧
+    (3072 / 2225 : ℚ) + -8019158719 / 1760244225 = -5588835007 / 1760244225 ∧
+    1411 < rosen (3018581 / 3955605 : ℚ) (-5588835007 / 1760244225) ∧
+    rosen (3018581 / 3955605 : ℚ) (-5588835007 / 1760244225) < 1412 := by
+  norm_num [rosen]
+
+-- The certificate at (1, 1): f = 0, slope 0, Hessian a = 802 and determinant
+-- 802 · 200 − (−400)² = 400 > 0; and f, a sum of squares, is never below 0.
+example : rosen (1 : ℚ) 1 = 0 ∧ rosenGx (1 : ℚ) 1 = 0 ∧ rosenGy (1 : ℚ) 1 = 0 ∧
+    rosenHa (1 : ℚ) 1 = 802 ∧ rosenHa (1 : ℚ) 1 * 200 - rosenHb (1 : ℚ) 1 ^ 2 = 400 := by
+  norm_num [rosen, rosenGx, rosenGy, rosenHa, rosenHb]
+example (x y : ℝ) : rosen 1 1 ≤ rosen x y := by
+  norm_num [rosen]; positivity
+
+#print axioms trust_region_shrinking_ends
+#print axioms cauchy_step_guarantee
+#print axioms rosenbrock_model_error
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'trm_abs_inner_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'trm_small_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'trust_region_shrinking_ends' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cauchy_step_guarantee' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rosenbrock_model_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong.
@@ -642,7 +937,7 @@ The two outputs match line for line.
 - **Curve fitting and model calibration.** Fitting software minimises sums of squared misses with trust-region steps; Levenberg-Marquardt is the same idea with the radius written as a damping number. The finance wing's calibration fits five option quotes this way ([Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
 - **Camera and map reconstruction.** Building a 3D model from photographs adjusts thousands of camera positions and points at once, and the standard solvers use dogleg or damped trust-region steps.
 - **Engineering design with costly simulations.** When each evaluation of f is a crash or airflow simulation, a cheap stand-in is fitted from a few runs and trusted only inside a radius, resized by the same ratio of delivered to promised improvement.
-- **Training control policies.** Some reinforcement-learning methods limit how far each update may move the policy, a trust region measured in changed behaviour rather than in distance.
+- **Training control policies.** Some reinforcement-learning methods limit how far each update may move the policy (the rule that picks each action), a trust region measured in changed behaviour rather than in distance.
 
 > **Say it back**
 > A quadratic model of the cost is accurate near the current point and can be badly wrong further away. A trust region takes the model's best step inside a circle, found cheaply by the dogleg. It then compares the fall it got with the fall the model promised. A poor ratio means the step is refused and the circle cut to a quarter; a good ratio on a step that hit the edge doubles it. On Rosenbrock's valley the radius-1 step promised 1.54 and delivered −0.64, the radius-0.25 retry promised 0.42 and delivered 0.43, and the run reached the certified minimum (1, 1) in 24 tries.
@@ -657,7 +952,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the next card. Gauss-Newton's model of a sum of squares, and Levenberg-Marquardt as a trust region whose radius is set through a damping number.
-- [Gradient descent](02-gradient-descent-and-its-rate.md): the same model, step and ratio test when the choices live on a curved surface rather than in flat space.
+- Riemannian Hessian (planned): the same model, step and ratio test when the choices live on a curved surface rather than in flat space.
 - [Conjugate gradient](07-conjugate-gradient-method.md): with a million variables, the circle problem is solved by running conjugate gradient on the model and stopping where it leaves the circle. That stopped version, truncated conjugate gradient, is not worked through on either card.
 
 The open question is what to do when the Hessian is not a bowl: the dogleg then falls back on the straight-downhill step, and better steps follow the curvature's downhill directions.

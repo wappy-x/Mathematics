@@ -20,7 +20,9 @@ subject to x[1] + x[2] + x[3] == 1
            sum_squares(x - [0.5, 0.3, 0.2]) <= 0.04,  x >= 0
 ```
 
-The program does not solve this on trust. It first reads each line against a short rulebook: the thing minimised must be bowl-shaped (convex), every "at most" must have a bowl-shaped left side (an "at least" is first flipped into an "at most"), and every "equals" must be flat (a weighted sum plus a constant). Each line passes, so the problem is convex, so whatever bottom the solver finds is the true bottom. The answer: 50 percent Brazil, 15.86 percent Colombia, 34.14 percent Robusta, at **£8.45 a kilo**, with 1.64 percent caffeine. A one-line inequality on this card proves no allowed blend is cheaper.
+The program does not solve this on trust. It first reads each line against a short rulebook: the thing minimised must be bowl-shaped (convex), every "at most" must have a bowl-shaped left side (an "at least" is first flipped into an "at most"), and every "equals" must be flat (a weighted sum plus a constant). Each line passes, so the problem is convex, so whatever bottom the solver finds is the true bottom.
+
+The answer: 50 percent Brazil, 15.86 percent Colombia, 34.14 percent Robusta, at **£8.45 a kilo**, with 1.64 percent caffeine. A one-line inequality on this card proves no allowed blend is cheaper.
 
 **A convex problem in standard form minimises a convex function, keeps convex functions at or below zero and affine functions at exactly zero; a problem in that shape has a convex set of allowed points, so any local bottom is the global one, and a solver checks the shape by reading the formula, piece by piece.**
 
@@ -105,7 +107,9 @@ Both values on the right are at most zero, so their weighted average is too. The
 
 For an affine $h_j$ the mixing inequality is an equality, so two points with $h_j = 0$ mix to a point with $h_j = 0$: the set is a flat plane, and planes are convex.
 
-Why not allow a convex $h_j$? The rule "$h_j = 0$" is the pair "$h_j \le 0$ and $-h_j \le 0$". Step 1 needs both $h_j$ and $-h_j$ to be convex, so $h_j$ bends neither up nor down: it is affine. The taste circle shows the failure. The cheapest blend x* = (0.5000, 0.1586, 0.3414) and its mirror image through the recipe, (0.5000, 0.4414, 0.0586), both have taste exactly 0.0400. Their midpoint is the recipe itself, taste 0.0000: off the circle.
+Why not allow a convex $h_j$? The rule "$h_j = 0$" is the pair "$h_j \le 0$ and $-h_j \le 0$". Step 1 needs both $h_j$ and $-h_j$ to be convex, so $h_j$ bends neither up nor down: it is affine.
+
+The taste circle shows the failure. The cheapest blend x* = (0.5000, 0.1586, 0.3414) and its mirror image through the recipe, (0.5000, 0.4414, 0.0586), both have taste exactly 0.0400. Their midpoint is the recipe itself, taste 0.0000: off the circle.
 
 ### Step 3: overlap keeps convexity
 
@@ -124,7 +128,11 @@ The solver cannot test convexity numerically on every point, so it reads the for
 3. **Composition.** A convex atom applied to an affine expression stays convex. An increasing convex atom applied to a convex expression stays convex, and an increasing concave atom applied to a concave expression stays concave.
 4. **Anything else is "unknown"**, and an unknown piece is rejected.
 
-The taste piece passes in three moves: $x_1 - 0.5$ is affine, so its square is convex; three convex squares add to a convex sum; subtracting 0.04 keeps it convex. The rulebook is cautious, not clever. Write the same taste rule as $\sqrt{\lVert x - r\rVert^2} - 0.2 \le 0$ and it fails: a concave square root of a convex sum has no rule, though the result is the length $\lVert x - r\rVert$, which is convex. The code shows this twice: the rules say "unknown", and 0 of 2,000 random midpoint tests find a dent. Squared as above, it passes; written with rule 1's length atom it would pass too, though the code's small rulebook leaves that atom out. This discipline, building every formula from parts whose shape is known, is called **disciplined convex programming** (the paper of that name in Sources).
+The taste piece passes in three moves: $x_1 - 0.5$ is affine, so its square is convex; three convex squares add to a convex sum; subtracting 0.04 keeps it convex.
+
+The rulebook is cautious, not clever. Write the same taste rule as $\sqrt{\lVert x - r\rVert^2} - 0.2 \le 0$ and it fails: a concave square root of a convex sum has no rule, though the result is the length $\lVert x - r\rVert$, which is convex. The code shows this twice: the rules say "unknown", and 0 of 2,000 random midpoint tests find a dent. Squared as above, it passes; written with rule 1's length atom it would pass too, though the code's small rulebook leaves that atom out.
+
+This discipline, building every formula from parts whose shape is known, is called **disciplined convex programming** (the paper of that name in Sources).
 
 ### Step 6: a certificate for the blend
 
@@ -136,7 +144,9 @@ $$c^{\mathsf T}x = c^{\mathsf T}r + (0, 3, -3)^{\mathsf T}(x - r) \;\ge\; 9.30 -
 
 The middle step is the Cauchy–Schwarz inequality: a dot product is at least minus the product of the two lengths. The last step uses the taste rule, $\lVert x - r\rVert \le 0.2$. So no blend that tastes right costs less than £8.4515 a kilo, whatever its caffeine.
 
-The bound is met when $x - r$ points exactly against (0, 3, −3) with length 0.2: $x^\star = r - 0.2 \times (0, 3, -3)/4.2426$. That blend has 1.6414 percent caffeine, above the floor, and no negative bean. It is feasible and meets the bound, so it is optimal, and $p^\star = 8.4515$. The caffeine floor is not tight at the answer: it rules out the recipe, but the cheapest tasting-right blend clears it anyway. When a floor is tight, the certificate needs a price on that constraint too, a Lagrange multiplier; that general version waits for the KKT conditions on the constrained-optimisation shelf.
+The bound is met when $x - r$ points exactly against (0, 3, −3) with length 0.2: $x^\star = r - 0.2 \times (0, 3, -3)/4.2426$. That blend has 1.6414 percent caffeine, above the floor, and no negative bean. It is feasible and meets the bound, so it is optimal, and $p^\star = 8.4515$.
+
+The caffeine floor is not tight at the answer: it rules out the recipe, but the cheapest tasting-right blend clears it anyway. When a floor is tight, the certificate needs a price on that constraint too, a Lagrange multiplier; that general version waits for the [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md) (named for Karush, Kuhn and Tucker) on the constrained-optimisation shelf.
 
 ---
 
@@ -553,6 +563,132 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the standard-form facts for any number of variables and pieces, and proves the blend's cheapest cost exactly.
+
+- If every inequality function is convex and every equality function is affine, the feasible set is convex: any mix of two feasible points is feasible.
+- With a convex objective on that feasible set, a feasible point lowest among the feasible points near it is lowest among all of them.
+- No feasible blend costs less than 9.30 − 0.2 × √18, which is 93/10 − 3√2/5, about £8.4515 a kilo.
+- The blend (0.5, 0.3 − √2/10, 0.2 + √2/10) is feasible and costs exactly that, so the optimal value $p^\star$ is 93/10 − 3√2/5.
+- The hand arithmetic holds exactly: the recipe costs £9.30 at 1.5 percent caffeine. Prices minus their average 9 are (0, 3, −3), squared length 18.
+- The ratio mistake holds exactly: Brazil 7.5, Colombia 60/7, half and half 105/13, above their average 225/28.
+
+The rulebook verdicts, the midpoint tests, the grid search and the wrong-way caffeine answer are left to the Python and Rust checks.
+
+```lean
+-- The standard convex problem: a problem that keeps convex functions at or below zero and affine functions at exactly zero has a convex set of allowed points, a local bottom of a convex objective on it is the global bottom, and the card's coffee blend costs at least 93/10 - 3√2/5 pounds a kilo, a bound one allowed blend meets.
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.Convex.Extrema
+import Mathlib.LinearAlgebra.AffineSpace.AffineMap
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Order.Bounds.Basic
+import Mathlib.Tactic.NormNum
+
+open Set
+
+/-- A problem in standard form has a convex feasible set. The choice is `x`, a list of `n`
+real numbers. Keep `m` convex functions `f i` at or below zero and `p` affine functions `h j`
+(a weighted sum plus a constant) at exactly zero. Then the allowed points have no dents: any mix
+of two allowed points is allowed. -/
+theorem standard_form_feasible_set_is_convex {n m p : ℕ}
+    (f : Fin m → (Fin n → ℝ) → ℝ) (h : Fin p → (Fin n → ℝ) →ᵃ[ℝ] ℝ)
+    (hf : ∀ i, ConvexOn ℝ univ (f i)) :
+    Convex ℝ {x : Fin n → ℝ | (∀ i, f i x ≤ 0) ∧ ∀ j, h j x = 0} := by
+  intro x hx y hy a b ha hb hab
+  refine ⟨fun i => ?_, fun j => ?_⟩
+  · have key := (hf i).2 (mem_univ x) (mem_univ y) ha hb hab
+    simp only [smul_eq_mul] at key
+    have h1 := hx.1 i
+    have h2 := hy.1 i
+    nlinarith [mul_nonpos_of_nonneg_of_nonpos ha h1, mul_nonpos_of_nonneg_of_nonpos hb h2]
+  · rw [Convex.combo_affine_apply hab, hx.2 j, hy.2 j]
+    simp
+
+/-- No false bottoms. Minimise a convex objective `f₀` over the feasible set of a standard-form
+problem (convex `f i` at or below zero, affine `h j` at zero). If an allowed point `x` is lowest
+among the allowed points near it, then it is lowest among all allowed points. -/
+theorem standard_form_local_minimum_is_global {n m p : ℕ}
+    (f₀ : (Fin n → ℝ) → ℝ) (f : Fin m → (Fin n → ℝ) → ℝ) (h : Fin p → (Fin n → ℝ) →ᵃ[ℝ] ℝ)
+    (hf₀ : ConvexOn ℝ univ f₀) (hf : ∀ i, ConvexOn ℝ univ (f i)) (x : Fin n → ℝ)
+    (hx : x ∈ {y : Fin n → ℝ | (∀ i, f i y ≤ 0) ∧ ∀ j, h j y = 0})
+    (hloc : IsLocalMinOn f₀ {y : Fin n → ℝ | (∀ i, f i y ≤ 0) ∧ ∀ j, h j y = 0} x) :
+    IsMinOn f₀ {y : Fin n → ℝ | (∀ i, f i y ≤ 0) ∧ ∀ j, h j y = 0} x := by
+  have hS : Convex ℝ {y : Fin n → ℝ | (∀ i, f i y ≤ 0) ∧ ∀ j, h j y = 0} := by
+    intro x hx y hy a b ha hb hab
+    refine ⟨fun i => ?_, fun j => ?_⟩
+    · have key := (hf i).2 (mem_univ x) (mem_univ y) ha hb hab
+      simp only [smul_eq_mul] at key
+      have h1 := hx.1 i
+      have h2 := hy.1 i
+      nlinarith [mul_nonpos_of_nonneg_of_nonpos ha h1, mul_nonpos_of_nonneg_of_nonpos hb h2]
+    · rw [Convex.combo_affine_apply hab, hx.2 j, hy.2 j]
+      simp
+  exact IsMinOn.of_isLocalMinOn_of_convexOn hx hloc (hf₀.subset (subset_univ _) hS)
+
+/-- The certificate for the blend. Shares `x 0, x 1, x 2` of Brazil, Colombia and Robusta that
+add to one kilo, are never negative, give at least 1.6 percent caffeine (1.2, 1.4 and 2.4 percent
+per bean) and stay within squared distance 0.04 of the house recipe (0.5, 0.3, 0.2). Their cost,
+9, 12 and 6 pounds a kilo per bean, is never below 9.30 - 0.2 × √18 = 93/10 - 3√2/5 (about
+£8.4515), and the blend (0.5, 0.3 - √2/10, 0.2 + √2/10) is allowed and costs exactly that. So the
+optimal value p⋆ is 93/10 - 3√2/5. -/
+theorem blend_optimal_value :
+    IsLeast ((fun x : Fin 3 → ℝ => 9 * x 0 + 12 * x 1 + 6 * x 2) ''
+      {x : Fin 3 → ℝ | x 0 + x 1 + x 2 = 1 ∧
+        8 / 5 ≤ 6 / 5 * x 0 + 7 / 5 * x 1 + 12 / 5 * x 2 ∧
+        (x 0 - 1 / 2) ^ 2 + (x 1 - 3 / 10) ^ 2 + (x 2 - 1 / 5) ^ 2 ≤ 1 / 25 ∧
+        0 ≤ x 0 ∧ 0 ≤ x 1 ∧ 0 ≤ x 2})
+      (93 / 10 - 3 * Real.sqrt 2 / 5) := by
+  have hs0 : 0 ≤ Real.sqrt 2 := Real.sqrt_nonneg 2
+  have hs2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hs1 : 1 ≤ Real.sqrt 2 := by nlinarith
+  have hs3 : Real.sqrt 2 < 3 / 2 := by nlinarith
+  constructor
+  · refine ⟨![1 / 2, 3 / 10 - Real.sqrt 2 / 10, 1 / 5 + Real.sqrt 2 / 10], ?_, ?_⟩
+    · simp only [Set.mem_ofPred_eq, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+      refine ⟨by ring, by nlinarith, by nlinarith, by norm_num, by nlinarith, by nlinarith⟩
+    · simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+      ring
+  · rintro c ⟨x, ⟨hsum, -, hdist, -, -, -⟩, rfl⟩
+    show 93 / 10 - 3 * Real.sqrt 2 / 5 ≤ 9 * x 0 + 12 * x 1 + 6 * x 2
+    have ht : ((x 2 - 1 / 5) - (x 1 - 3 / 10)) ^ 2 ≤ 2 / 25 := by
+      nlinarith [sq_nonneg (x 1 - 3 / 10 + (x 2 - 1 / 5)), sq_nonneg (x 0 - 1 / 2)]
+    have hle : (x 2 - 1 / 5) - (x 1 - 3 / 10) ≤ Real.sqrt 2 / 5 := by
+      nlinarith [sq_nonneg ((x 2 - 1 / 5) - (x 1 - 3 / 10) - Real.sqrt 2 / 5)]
+    nlinarith
+
+-- The house recipe 50/30/20: cost £9.30 a kilo, caffeine 1.5 percent, short of 1.6.
+example : (9 : ℚ) * (1 / 2) + 12 * (3 / 10) + 6 * (1 / 5) = 93 / 10 := by norm_num
+example : (6 / 5 : ℚ) * (1 / 2) + 7 / 5 * (3 / 10) + 12 / 5 * (1 / 5) = 3 / 2 := by norm_num
+example : (3 / 2 : ℚ) < 8 / 5 := by norm_num
+-- The house recipe adds to one kilo and has taste 0.
+example : (1 / 2 : ℚ) + 3 / 10 + 1 / 5 = 1 := by norm_num
+-- Average price 9; prices minus the average are (0, 3, -3), whose squared length is 18.
+example : ((9 : ℤ) + 12 + 6) / 3 = 9 := by decide
+example : ((9 : ℤ) - 9, (12 : ℤ) - 9, (6 : ℤ) - 9) = (0, 3, -3) := by decide
+example : (0 : ℤ) ^ 2 + 3 ^ 2 + (-3) ^ 2 = 18 := by decide
+-- The ratio mistake: Brazil 7.5, Colombia 60/7, half and half 105/13, above their average 225/28.
+example : (9 : ℚ) / (6 / 5) = 15 / 2 := by norm_num
+example : (12 : ℚ) / (7 / 5) = 60 / 7 := by norm_num
+example : ((9 + 12) / 2 : ℚ) / ((6 / 5 + 7 / 5) / 2) = 105 / 13 := by norm_num
+example : ((15 / 2 : ℚ) + 60 / 7) / 2 = 225 / 28 := by norm_num
+example : (225 / 28 : ℚ) < 105 / 13 := by norm_num
+
+#print axioms standard_form_feasible_set_is_convex
+#print axioms standard_form_local_minimum_is_global
+#print axioms blend_optimal_value
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'standard_form_feasible_set_is_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'standard_form_local_minimum_is_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'blend_optimal_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this blend's facts, so some experiments stop the program.
@@ -579,7 +715,7 @@ The two outputs match line for line.
 - **Modelling software for convex problems.** Programs in several languages accept a problem written almost exactly as the five lines above, check it with these rules, and hand it to a solver; the modelling-language paper in Sources describes one.
 - **Blending and diet problems.** Feed mills, refineries and roasters choose fractions of ingredients to meet nutrient or quality floors at least cost. With only straight-line limits it is a linear program.
 - **Portfolios.** Choosing weights on assets to keep risk, a convex quadratic, below a limit at the best expected return is a standard-form problem; [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md) is a family of them.
-- **Machine learning.** Fitting a lasso or a support vector machine is a convex problem; writing it in standard form is what lets a general solver fit it.
+- **Machine learning.** Fitting a lasso (least squares with a penalty on the size of the weights) or a support vector machine (a classifier that finds the widest gap between two groups) is a convex problem; writing it in standard form is what lets a general solver fit it.
 - **Control.** Model predictive control solves one small convex problem at every time step, so its shape must be certified once, before the controller runs.
 
 > **Say it back**
@@ -595,6 +731,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Linear programs](../04-Linear%20Programming/01-linear-programs-and-polyhedra.md): the standard form with every piece affine. Drop the taste circle and the blend becomes one, and its answer moves to a corner of the feasible region.
+- [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md): adds a price, a multiplier, for each limit, so a certificate like Step 6's still works when a limit such as the caffeine floor is tight.
 
 The certificate here worked because only one inequality, the taste rule, was tight; what evidence proves an answer optimal when several limits press at once is the question the constrained-optimisation shelf answers with multipliers.
 

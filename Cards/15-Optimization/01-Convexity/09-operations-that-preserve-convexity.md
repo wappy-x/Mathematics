@@ -10,9 +10,13 @@ A roaster makes its house coffee from three beans: Brazil, Colombia and Ethiopia
 
 The roaster must fix the recipe before it knows which supplier will have stock that week. So it plans for the worst: the blend's cost is the **highest of the three quotes**. Two more pieces go on top. Any part of that cost above a £10 budget is bought on credit at half as much again. And the blend should score 7 on a strength scale (Brazil scores 5, Colombia 9, Ethiopia 7); every squared point of miss, too weak or too strong, is costed at £2 a kilo in lost sales.
 
-The roaster minimises this cost. First it wants to know: is the cost a **convex function**, a bowl with no dents, where any local bottom is the true bottom? The cost has kinks, so the curvature test does not apply, and there are too many pairs of recipes to check chords. Instead, each piece is built from simpler ones by an operation proved never to dent a bowl. The finished cost is a bowl by construction, so the bottom a downhill search finds, 52.3% Brazil, 43.0% Colombia and 4.7% Ethiopia at £9.93 a kilo, is the cheapest recipe there is.
+The roaster minimises this cost. First it wants to know: is the cost a **convex function**, a bowl with no dents, where any local bottom is the true bottom?
 
-**Sums with weights that are not negative, maxima, affine changes of variable, a convex rising function applied to a convex function, and minimising a jointly convex function over some of its variables all turn convex functions into convex functions, so an objective assembled only from these steps is convex without any further test.**
+The cost has kinks, so the curvature test, a second derivative never negative in any direction, does not apply. And there are too many pairs of recipes to check chords, the straight lines between two points of the graph, which must stay on or above it ([Convex functions](03-convex-functions-and-their-tests.md)).
+
+Instead, each piece is built from simpler ones by an operation proved never to dent a bowl. The finished cost is a bowl by construction, so the bottom a downhill search finds, 52.3% Brazil, 43.0% Colombia and 4.7% Ethiopia at £9.93 a kilo, is the cheapest recipe there is.
+
+**Sums with weights that are not negative, maxima, affine (straight-line) changes of variable, a convex rising function applied to a convex function, and minimising a jointly convex function (convex in all its variables together) over some of its variables all turn convex functions into convex functions, so an objective assembled only from these steps is convex without any further test.**
 
 **What kind of fact this is:** a set of theorems, each proved on this card in Why it works; the coffee costs are a model, an assumed price list, not data.
 
@@ -159,7 +163,13 @@ The two searches in the code agree on the recipe 67/128 Brazil, 55/128 Colombia,
 
 The best recipe sits where suppliers A and C quote the same, with the strength a little short of 7: pushing it to 7 would cost more in quotes than it saves in taste.
 
-**Why nothing is cheaper.** Average the price lists of the two tied suppliers: half of A plus half of C is (£8.50, £11.50, £10.00) per kilo of each bean. Add the slope of the taste penalty, 2w times the miss times each bean's score: (−3.75, −6.75, −5.25). The sum is (4.75, 4.75, 4.75), the same for every bean. That sum is a **subgradient** of $F$ at this recipe: a slope that the bowl lies above everywhere ([Subgradients](07-subgradients.md)). It qualifies for two reasons. Any average of the tied suppliers' price lists is a subgradient of the worst quote, by the maximum rule on that card. And the surcharge has slope 1 below £10, so it passes that slope through unchanged, while the taste penalty adds its own. Any change of recipe keeps the total at one kilo, so against equal entries it changes the tangent by 4.75 times zero. The bowl lies above a flat tangent, so £9.9296875 is the certified minimum, not just the best found.
+**Why nothing is cheaper.** Average the price lists of the two tied suppliers: half of A plus half of C is (£8.50, £11.50, £10.00) per kilo of each bean. Add the slope of the taste penalty, 2w times the miss times each bean's score: (−3.75, −6.75, −5.25). The sum is (4.75, 4.75, 4.75), the same for every bean.
+
+That sum is a **subgradient** of $F$ at this recipe: a slope that the bowl lies above everywhere ([Subgradients](07-subgradients.md)).
+
+It qualifies for two reasons. Any average of the tied suppliers' price lists is a subgradient of the worst quote, by the maximum rule on that card. And the surcharge has slope 1 below £10, so it passes that slope through unchanged, while the taste penalty adds its own.
+
+Any change of recipe keeps the total at one kilo, so against equal entries it changes the tangent by 4.75 times zero. The bowl lies above a flat tangent, so £9.9296875 is the certified minimum, not just the best found.
 
 ### The picture: the best cost for each Brazil contract
 
@@ -173,7 +183,7 @@ xychart-beta
     line [13.00, 12.78, 12.72, 12.48, 10.92, 10.00, 10.12, 10.98, 12.68, 15.02, 18.00]
 ```
 
-The orange line is $V(x_1)$, with the Colombia share chosen freely: a bowl, as Step 5 promised. Its smallest second difference on this grid is +0.09. The green line allows Colombia only at 0 or at all the rest. That choice is not a convex set, and the line dents at Brazil 0.3, second difference −1.32. From Brazil 0.6 on, the two lines agree: there all the rest goes to Colombia anyway.
+The orange line is $V(x_1)$, with the Colombia share chosen freely: a bowl, as Step 5 promised. A second difference is the two neighbouring values minus twice the middle one; a bowl never gives a negative one. Its smallest second difference on this grid is +0.09. The green line allows Colombia only at 0 or at all the rest. That choice is not a convex set, and the line dents at Brazil 0.3, second difference −1.32. From Brazil 0.6 on, the two lines agree: there all the rest goes to Colombia anyway.
 
 ### What breaks if you drop a piece
 
@@ -510,6 +520,207 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the five rules for every function that meets their conditions, and the coffee cost's convexity and exact minimum.
+
+- Adding two convex functions, or multiplying one by a weight at least 0, gives a convex function.
+- The larger of two convex functions is convex.
+- A convex function fed a straight-line change of variable, $\varphi(Ax + b)$, is convex, with no further condition.
+- A convex function that never falls, applied on top of a convex function, gives a convex function.
+- Minimising away some variables of a jointly convex function over a convex set $K$, not empty, gives a convex $V$, if $V$ is never $-\infty$.
+- The built cost $F$ is convex on the allowed recipes: shares at least 0 that add to 1.
+- The recipe 67/128 Brazil, 55/128 Colombia, 6/128 Ethiopia costs exactly £9.9296875 a kilo, and no allowed recipe costs less.
+- In 128ths of a pound, quotes A, B and C come to 1262, 1237 and 1262; the strength is 872 in 128ths of a point.
+- The taste penalty is 9/128, so the built cost is 1271/128, and the 1/128 grid holds 8,385 recipes.
+- The certificate's three entries are all equal, 4.75 each.
+
+The dents from broken rules, the coffee's best-cost curve $V$, the searches and the random chord tests are left to the Python and Rust checks.
+
+```lean
+-- Building convex functions: sums with weights that are not negative, maxima, affine changes of variable, convex rising outer functions and partial minimisation over a convex set keep convex functions convex, and the coffee cost built this way is convex with least value 1271/128 at the recipe (67/128, 55/128, 6/128).
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.Convex.StdSimplex
+import Mathlib.LinearAlgebra.AffineSpace.AffineMap
+import Mathlib.Data.Fin.VecNotation
+
+/-- The card's coffee cost per kilo for a recipe `x = (x₁, x₂, x₃)` of Brazil, Colombia and
+Ethiopia shares: the worst of the three quotes A (8, 12, 11), B (10, 9, 12), C (9, 11, 9),
+plus half of any part above the £10 budget, plus £2 times the squared miss of the strength
+`5x₁ + 9x₂ + 7x₃` from 7. -/
+noncomputable def coffeeCost (x : Fin 3 → ℝ) : ℝ :=
+  let Q := max (max (8 * x 0 + 12 * x 1 + 11 * x 2) (10 * x 0 + 9 * x 1 + 12 * x 2))
+    (9 * x 0 + 11 * x 1 + 9 * x 2)
+  (Q + 1 / 2 * max 0 (Q - 10)) + 2 * (5 * x 0 + 9 * x 1 + 7 * x 2 - 7) ^ 2
+
+/-- A function `c₀ x₀ + c₁ x₁ + c₂ x₂ + d` is convex on all of `ℝ³`. -/
+theorem coffee_affine_convexOn (c₀ c₁ c₂ d : ℝ) :
+    ConvexOn ℝ Set.univ (fun x : Fin 3 → ℝ => c₀ * x 0 + c₁ * x 1 + c₂ * x 2 + d) := by
+  refine ⟨convex_univ, fun x _ y _ a b _ _ hab => le_of_eq ?_⟩
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+  linear_combination (-d) * hab
+
+/-- The taste penalty `2 (5x₀ + 9x₁ + 7x₂ − 7)²` is convex on all of `ℝ³`. -/
+theorem coffee_taste_convexOn :
+    ConvexOn ℝ Set.univ (fun x : Fin 3 → ℝ => 2 * (5 * x 0 + 9 * x 1 + 7 * x 2 - 7) ^ 2) := by
+  refine ⟨convex_univ, fun x _ y _ a b ha hb hab => ?_⟩
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+  have hb' : b = 1 - a := by linarith
+  subst hb'
+  nlinarith [mul_nonneg ha hb, sq_nonneg ((5 * x 0 + 9 * x 1 + 7 * x 2) - (5 * y 0 + 9 * y 1 + 7 * y 2)),
+    mul_nonneg (mul_nonneg ha hb) (sq_nonneg ((5 * x 0 + 9 * x 1 + 7 * x 2) - (5 * y 0 + 9 * y 1 + 7 * y 2)))]
+
+/-- The budget step `t ↦ t + ½ max 0 (t − 10)` is convex on all of `ℝ`. -/
+theorem coffee_budget_convexOn :
+    ConvexOn ℝ Set.univ (fun t : ℝ => t + 1 / 2 * max 0 (t - 10)) := by
+  have h1 : ConvexOn ℝ Set.univ (fun t : ℝ => t) := convexOn_id convex_univ
+  have h2 : ConvexOn ℝ Set.univ (fun t : ℝ => max 0 (t - 10)) :=
+    (convexOn_const 0 convex_univ).sup ((convexOn_id convex_univ).add_const (-10)) |>.congr
+      (fun t _ => by simp [sub_eq_add_neg])
+  exact h1.add (h2.smul (by norm_num : (0:ℝ) ≤ 1 / 2))
+
+theorem coffee_budget_monotone : Monotone (fun t : ℝ => t + 1 / 2 * max 0 (t - 10)) := by
+  intro s t hst
+  have : max 0 (s - 10) ≤ max 0 (t - 10) := max_le_max le_rfl (by linarith)
+  simp only
+  linarith
+
+/-- The five rules. For convex functions `φ` and `ψ`:
+(1) `φ + ψ` and `a φ` with `a ≥ 0` are convex;
+(2) the larger of the two, `max φ ψ`, is convex;
+(3) `φ (A x + b)` is convex for any affine (straight-line) map, with no further condition;
+(4) `h (φ x)` is convex when `h` is convex and never falls;
+(5) `V x = inf_{y ∈ K} φ (x, y)` is convex when `φ` is convex in the pair `(x, y)`, `K` is a
+convex set, and `V` is never `-∞` (each infimum is bounded below; `K` is not empty). -/
+theorem operations_preserve_convexity
+    {E F : Type*} [AddCommGroup E] [Module ℝ E] [AddCommGroup F] [Module ℝ F] :
+    (∀ (s : Set E) (φ ψ : E → ℝ) (a : ℝ), ConvexOn ℝ s φ → ConvexOn ℝ s ψ → 0 ≤ a →
+        ConvexOn ℝ s (fun x => φ x + ψ x) ∧ ConvexOn ℝ s (fun x => a * φ x)) ∧
+    (∀ (s : Set E) (φ ψ : E → ℝ), ConvexOn ℝ s φ → ConvexOn ℝ s ψ →
+        ConvexOn ℝ s (fun x => max (φ x) (ψ x))) ∧
+    (∀ (t : Set F) (φ : F → ℝ) (A : E →ᵃ[ℝ] F), ConvexOn ℝ t φ →
+        ConvexOn ℝ (A ⁻¹' t) (fun x => φ (A x))) ∧
+    (∀ (s : Set E) (φ : E → ℝ) (h : ℝ → ℝ), ConvexOn ℝ s φ → ConvexOn ℝ Set.univ h →
+        Monotone h → ConvexOn ℝ s (fun x => h (φ x))) ∧
+    (∀ (K : Set F) (φ : E × F → ℝ), Convex ℝ K → K.Nonempty →
+        ConvexOn ℝ (Set.univ ×ˢ K) φ → (∀ x, BddBelow ((fun y => φ (x, y)) '' K)) →
+        ConvexOn ℝ Set.univ (fun x => sInf ((fun y => φ (x, y)) '' K))) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · intro s φ ψ a hφ hψ ha
+    exact ⟨hφ.add hψ, hφ.smul ha⟩
+  · intro s φ ψ hφ hψ
+    exact hφ.sup hψ
+  · intro t φ A hφ
+    exact hφ.comp_affineMap A
+  · intro s φ h hφ hh hmono
+    exact ⟨hφ.1, fun x hx y hy a b ha hb hab =>
+      (hmono (hφ.2 hx hy ha hb hab)).trans (hh.2 (Set.mem_univ _) (Set.mem_univ _) ha hb hab)⟩
+  · intro K φ hK hKne hφ hbdd
+    refine ⟨convex_univ, ?_⟩
+    intro x₁ _ x₂ _ a b ha hb hab
+    have hne : ∀ x, ((fun y => φ (x, y)) '' K).Nonempty := fun x => hKne.image _
+    show sInf _ ≤ a • sInf _ + b • sInf _
+    simp only [smul_eq_mul]
+    refine le_of_forall_pos_le_add fun ε hε => ?_
+    obtain ⟨_, ⟨y₁, hy₁, rfl⟩, h₁⟩ :=
+      exists_lt_of_csInf_lt (hne x₁) (lt_add_of_pos_right (sInf ((fun y => φ (x₁, y)) '' K)) hε)
+    obtain ⟨_, ⟨y₂, hy₂, rfl⟩, h₂⟩ :=
+      exists_lt_of_csInf_lt (hne x₂) (lt_add_of_pos_right (sInf ((fun y => φ (x₂, y)) '' K)) hε)
+    have hy : a • y₁ + b • y₂ ∈ K := hK hy₁ hy₂ ha hb hab
+    have hle : sInf ((fun y => φ (a • x₁ + b • x₂, y)) '' K) ≤ φ (a • x₁ + b • x₂, a • y₁ + b • y₂) :=
+      csInf_le (hbdd _) ⟨_, hy, rfl⟩
+    have hconv := hφ.2 (x := (x₁, y₁)) (y := (x₂, y₂)) ⟨Set.mem_univ _, hy₁⟩ ⟨Set.mem_univ _, hy₂⟩
+      ha hb hab
+    simp only [Prod.smul_mk, Prod.mk_add_mk, smul_eq_mul] at hconv
+    simp only at h₁ h₂
+    have e1 : a * φ (x₁, y₁) ≤ a * (sInf ((fun y => φ (x₁, y)) '' K) + ε) :=
+      mul_le_mul_of_nonneg_left h₁.le ha
+    have e2 : b * φ (x₂, y₂) ≤ b * (sInf ((fun y => φ (x₂, y)) '' K) + ε) :=
+      mul_le_mul_of_nonneg_left h₂.le hb
+    have hε' : a * ε + b * ε = ε := by rw [← add_mul, hab, one_mul]
+    nlinarith
+
+/-- Step 6, the certificate: the coffee cost, assembled only from the five rules, is convex
+on the set of recipes (shares at least 0 that add to 1). -/
+theorem coffee_cost_convex : ConvexOn ℝ (stdSimplex ℝ (Fin 3)) coffeeCost := by
+  have hA := coffee_affine_convexOn 8 12 11 0
+  have hB := coffee_affine_convexOn 10 9 12 0
+  have hC := coffee_affine_convexOn 9 11 9 0
+  simp only [add_zero] at hA hB hC
+  have hQ := (hA.sup hB).sup hC
+  have hH : ConvexOn ℝ Set.univ (fun x : Fin 3 → ℝ =>
+      (fun t : ℝ => t + 1 / 2 * max 0 (t - 10))
+        (max (max (8 * x 0 + 12 * x 1 + 11 * x 2) (10 * x 0 + 9 * x 1 + 12 * x 2))
+          (9 * x 0 + 11 * x 1 + 9 * x 2))) :=
+    ⟨convex_univ, fun x hx y hy a b ha hb hab =>
+      (coffee_budget_monotone (hQ.2 hx hy ha hb hab)).trans
+        (coffee_budget_convexOn.2 (Set.mem_univ _) (Set.mem_univ _) ha hb hab)⟩
+  exact (hH.add coffee_taste_convexOn).subset (Set.subset_univ _) (convex_stdSimplex ℝ (Fin 3))
+
+
+/-- The worked numbers and the subgradient certificate: the recipe 67/128 Brazil,
+55/128 Colombia, 6/128 Ethiopia costs exactly £9.9296875 = 1271/128 a kilo, and no recipe
+is cheaper. -/
+theorem coffee_cost_minimum :
+    coffeeCost ![67 / 128, 55 / 128, 6 / 128] = 1271 / 128 ∧
+      ∀ x ∈ stdSimplex ℝ (Fin 3), (1271 / 128 : ℝ) ≤ coffeeCost x := by
+  refine ⟨?_, ?_⟩
+  · simp only [coffeeCost, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.head_cons, Matrix.tail_cons]
+    norm_num
+  · intro x hx
+    obtain ⟨h0, hsum⟩ := hx
+    simp only [Fin.sum_univ_three] at hsum
+    have hx0 := h0 0
+    have hx1 := h0 1
+    have hx2 := h0 2
+    simp only [coffeeCost]
+    set A := 8 * x 0 + 12 * x 1 + 11 * x 2
+    set B := 10 * x 0 + 9 * x 1 + 12 * x 2
+    set C := 9 * x 0 + 11 * x 1 + 9 * x 2
+    set Q := max (max A B) C with hQ
+    have hAQ : A ≤ Q := (le_max_left A B).trans (le_max_left _ C)
+    have hCQ : C ≤ Q := le_max_right _ C
+    have hP : 0 ≤ max 0 (Q - 10) := le_max_left _ _
+    nlinarith [sq_nonneg (5 * x 0 + 9 * x 1 + 7 * x 2 - 872 / 128)]
+
+-- The worked numbers, in 128ths: quotes A, B, C and the strength at the best recipe.
+example : 8 * 67 + 12 * 55 + 11 * 6 = 1262 := by norm_num
+example : 10 * 67 + 9 * 55 + 12 * 6 = 1237 := by norm_num
+example : 9 * 67 + 11 * 55 + 9 * 6 = 1262 := by norm_num
+example : 5 * 67 + 9 * 55 + 7 * 6 = 872 := by norm_num
+example : 67 + 55 + 6 = 128 := by norm_num
+-- The grid search lists (128 + 1)(128 + 2)/2 = 8385 recipes.
+example : (128 + 1) * (128 + 2) / 2 = 8385 := by norm_num
+-- Built cost in 128ths: worst quote 1262 plus taste penalty 9 (2 × (872/128 − 7)² = 9/128).
+example : (2 : ℚ) * (872 / 128 - 7) ^ 2 = 9 / 128 := by norm_num
+example : 1262 + 9 = 1271 := by norm_num
+-- Certificate: A + C prices plus twice the taste slope are equal for every bean (2 × 4.75 = 9.5).
+example : ((8 + 9 : ℚ) + 2 * (2 * 2 * (872 / 128 - 7) * 5)) = 19 / 2 ∧
+    ((12 + 11 : ℚ) + 2 * (2 * 2 * (872 / 128 - 7) * 9)) = 19 / 2 ∧
+    ((11 + 9 : ℚ) + 2 * (2 * 2 * (872 / 128 - 7) * 7)) = 19 / 2 := by norm_num
+
+#print axioms coffee_affine_convexOn
+#print axioms coffee_taste_convexOn
+#print axioms coffee_budget_convexOn
+#print axioms coffee_budget_monotone
+#print axioms operations_preserve_convexity
+#print axioms coffee_cost_convex
+#print axioms coffee_cost_minimum
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'coffee_affine_convexOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coffee_taste_convexOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coffee_budget_convexOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coffee_budget_monotone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'operations_preserve_convexity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coffee_cost_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coffee_cost_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first:** what happens if the taste weight `W` goes from 2 to 20? The search moves to about 50.2% Brazil, 49.3% Colombia and 0.5% Ethiopia, strength almost exactly 7, at £9.9930. That recipe is off the 1/128 grid, whose best is £9.9971, so the first assert stops the run.
@@ -545,6 +756,9 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Convex functions](03-convex-functions-and-their-tests.md): the chord test and the curvature test, which this card replaces by rules when a function is built from pieces or has kinks.
+- [Convex sets](02-convex-sets.md): shapes where the segment between any two points stays inside; Step 0 turns every rule on this card into a fact about such sets.
+- [Subgradients](07-subgradients.md): slopes that still work at a kink, which certify that the best coffee recipe is the cheapest.
+- [Convexity pays off](04-local-minima-are-global-when-convex.md): every local bottom of a convex function is the lowest, the reason the downhill search can be trusted.
 
 ## Where this goes next
 

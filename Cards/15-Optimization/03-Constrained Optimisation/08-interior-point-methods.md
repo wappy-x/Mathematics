@@ -6,7 +6,9 @@
 
 ## General Overview
 
-Three pumps feed a town that needs 150 litres of water a second (L/s). Pump A draws 0.02 kW (kilowatts) times its flow squared, pump B 0.03 kW times its flow squared, and pump C 0.05 kW times its flow squared. The job is to **minimise** the power drawn, within pressure limits. The hill tank at the far end must hold between 35 m and 45 m of **head** (pressure, measured as the height of water it would lift): below 35 m the hill houses run dry, above 45 m old pipes burst. No pump can run backwards. The best plan, proved below, is 50 L/s from each pump, drawing 250 kW, £50 an hour at £0.20 per kWh, with the hill tank sitting exactly on its 35 m floor.
+Three pumps feed a town that needs 150 litres of water a second (L/s). Pump A draws 0.02 kW (kilowatts) times its flow squared, pump B 0.03 kW times its flow squared, and pump C 0.05 kW times its flow squared. The job is to **minimise** the power drawn, within pressure limits.
+
+The hill tank at the far end must hold between 35 m and 45 m of **head** (pressure, measured as the height of water it would lift). Below 35 m the hill houses run dry; above 45 m old pipes burst. No pump can run backwards. The best plan, proved below, is 50 L/s from each pump, drawing 250 kW, £50 an hour at £0.20 per kWh. The hill tank then sits exactly on its 35 m floor.
 
 An interior point method finds that plan without ever touching a limit. It puts a fence of cost along every limit: a charge that is tiny far away and grows without bound near the limit. Inside the fence no limits are left, so Newton's method can minimise. Then the method weakens the fence tenfold and minimises again. The plan walks to the floor along a smooth curve, the **central path**, always strictly inside.
 
@@ -64,7 +66,7 @@ For the pumps, $f_0 = 0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2$ kW and $h(x) = x_1 + x_
 
 ### Step 0: the fence turns limits into prices
 
-A plan that minimises cost plus fence is in balance: the cost pushes it towards the floor, and the fence pushes back with strength $1/s_i$ from limit $i$. Read each push, divided by $t$, as a price on that limit, and the balance becomes the KKT checklist, except that price times slack equals $1/t$ instead of zero. Because it is a KKT balance, the prices give a dual bound, which misses by $1/t$ per limit.
+A plan that minimises cost plus fence is in balance: the cost pushes it towards the floor, and the fence pushes back with strength $1/s_i$ from limit $i$. Read each push, divided by $t$, as a price on that limit, and the balance becomes the KKT (Karush–Kuhn–Tucker) checklist for a best plan, except that price times slack equals $1/t$ instead of zero. Because it is a KKT balance, the prices give a dual bound, which misses by $1/t$ per limit.
 
 ### Step 1: inside the fence there are no limits
 
@@ -74,7 +76,7 @@ The Newton step solves one linear system, the same shape as the [KKT conditions]
 
 $$\begin{bmatrix} \nabla^2 \Phi_t(x) & \nabla h \\ \nabla h^{\mathsf T} & 0 \end{bmatrix} \begin{bmatrix} d \\ w \end{bmatrix} = \begin{bmatrix} -\nabla \Phi_t(x) \\ 0 \end{bmatrix}.$$
 
-The second row keeps the total flow at 150 L/s. For the pumps it is a 4 by 4 system, solved by elimination.
+Here $\nabla$ is the gradient (the list of slopes), $\nabla^2$ is the Hessian (the table of second derivatives), and $\mathsf T$ turns a column into a row. The second row keeps the total flow at 150 L/s. For the pumps it is a 4 by 4 system, solved by elimination.
 
 ### Step 2: the centring condition is the KKT checklist with $1/t$ in place of zero
 
@@ -92,7 +94,7 @@ For the pumps at $t = 1$, the head is 35.0975 m, so the floor's slack is 0.09753
 
 ### Step 3: the prices prove the gap is $m/t$
 
-The [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md) card gives the dual function $q(\lambda, \nu)$, the least value of the Lagrangian $\mathcal{L}(x, \lambda, \nu) = f_0 + \sum \lambda_i f_i + \nu h$ over all $x$, and weak duality: $q(\lambda, \nu) \le p^*$ whenever every $\lambda_i \ge 0$. The reason is one line: at any allowed plan $\tilde x$, $q \le \mathcal{L}(\tilde x, \lambda, \nu) = f_0(\tilde x) + \sum \lambda_i f_i(\tilde x) \le f_0(\tilde x)$, because each $\lambda_i \ge 0$ and each $f_i(\tilde x) \le 0$.
+The [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md) card gives the dual function $q(\lambda, \nu)$: the least value of the Lagrangian $\mathcal{L}(x, \lambda, \nu) = f_0 + \sum \lambda_i f_i + \nu h$ over all $x$. It also gives weak duality: $q(\lambda, \nu) \le p^*$ whenever every $\lambda_i \ge 0$. The reason is one line: at any allowed plan $\tilde x$, $q \le \mathcal{L}(\tilde x, \lambda, \nu) = f_0(\tilde x) + \sum \lambda_i f_i(\tilde x) \le f_0(\tilde x)$, because each $\lambda_i \ge 0$ and each $f_i(\tilde x) \le 0$.
 
 With the path's prices, $\mathcal{L}$ is a sum of convex functions, so convex in $x$, and Step 2 makes its gradient zero at $x^*(t)$. A convex function with zero gradient is at its global minimum, so
 
@@ -106,9 +108,11 @@ The **barrier method** runs the path in rounds. Start strictly inside at $t = 1$
 
 $$\text{rounds} = 1 + \Big\lceil \frac{\log\big(m / (t_0\, \varepsilon)\big)}{\log 10} \Big\rceil.$$
 
-For $m = 5$, $t_0 = 1$ and $\varepsilon = 10^{-4}$ kW, the formula gives 6 rounds, which is what the code runs.
+The brackets $\lceil \; \rceil$ round up to a whole number. For $m = 5$, $t_0 = 1$ and $\varepsilon = 10^{-4}$ kW, the formula gives 6 rounds, which is what the code runs.
 
-Each centring is cheap because it starts near the new centre. The Newton step count is stated here, not proved. The log barrier of linear limits plus a convex quadratic cost is **self-concordant** (its third derivative is bounded by a power of its second), and for such functions Nesterov and Nemirovskii proved a bound on Newton steps per round that depends on $m$ and the growth factor, not on $t$ or the data. With a growth factor of $1 + 1/\sqrt{m}$ per round, the total is of order $\sqrt{m} \log(m/(t_0 \varepsilon))$ Newton steps (Boyd and Vandenberghe, §11.5). The pumps take 7 steps in each of the first two rounds and 6 in each of the other four, 38 in all.
+Each centring is cheap because it starts near the new centre. The Newton step count is stated here, not proved. The log barrier of linear limits plus a convex quadratic cost is **self-concordant** (its third derivative is bounded by a power of its second). For such functions Nesterov and Nemirovskii proved a bound on Newton steps per round that depends on $m$ and the growth factor, not on $t$ or the data.
+
+With a growth factor of $1 + 1/\sqrt{m}$ per round, the total is of order $\sqrt{m} \log(m/(t_0 \varepsilon))$ Newton steps (Boyd and Vandenberghe, §11.5). The pumps take 7 steps in each of the first two rounds and 6 in each of the other four, 38 in all.
 
 ### Step 5: the path ends at the KKT point
 
@@ -188,7 +192,13 @@ The upper line is the power drawn at each stop on the central path. The lower li
 
 ## Code, from first principles, and it actually runs
 
-The code solves the pump problem by the barrier method: Newton's method on $\Phi_t$, each step a 4 by 4 linear system solved by elimination, a halving line search that refuses any plan outside the limits, and $t$ raised tenfold until $m/t \le 10^{-4}$ kW. It reaches the answer by three independent roads. Road 1 is the central path itself. Road 2 computes the dual bound at every stop by minimising the Lagrangian in closed form, never using $m/t$, and asserts that the gap is $m/t$ and that $p^*$ lies between the bound and the power. Road 3 never uses a barrier: it tries all 32 ways of choosing which limits bind, solves the KKT equations for each, and keeps those with allowed flows and non-negative prices. Exactly one survives, the head floor alone, giving (50, 50, 50) L/s, and the barrier's last plan agrees with it to $10^{-4}$ L/s. Before the path starts, the script also checks the first Newton step's slope and curvature against central differences of $\Phi_t$, so a wrong gradient or Hessian stops it.
+The code solves the pump problem by the barrier method. It runs Newton's method on $\Phi_t$, each step a 4 by 4 linear system solved by elimination. A halving line search refuses any plan outside the limits, and $t$ rises tenfold until $m/t \le 10^{-4}$ kW. It reaches the answer by three independent roads:
+
+- **Road 1** is the central path itself.
+- **Road 2** computes the dual bound at every stop by minimising the Lagrangian in closed form, never using $m/t$. It asserts that the gap is $m/t$ and that $p^*$ lies between the bound and the power.
+- **Road 3** never uses a barrier: it tries all 32 ways of choosing which limits bind, solves the KKT equations for each, and keeps those with allowed flows and non-negative prices. Exactly one survives, the head floor alone, giving (50, 50, 50) L/s. The barrier's last plan agrees with it to $10^{-4}$ L/s.
+
+Before the path starts, the script also checks the first Newton step's slope and curvature against central differences of $\Phi_t$, so a wrong gradient or Hessian stops it.
 
 ### Python
 
@@ -557,6 +567,184 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the gap bound $m/t$ for every convex problem, and the pump problem's best plan exactly.
+
+- Take a convex cost, convex limits and a linear rule $h(x) = 0$, like total flow minus 150.
+- Suppose $x^*(t)$ minimises $\Phi_t$ exactly over the strictly inside plans that obey the rule. Then its cost is at most $m/t$ above every allowed plan's cost.
+- Lean proves this without prices or derivatives, so it needs no smoothness.
+- The plan of 50 L/s from each pump is allowed, sits on the 35 m floor and draws 250 kW.
+- No allowed plan draws less than 250 kW.
+- The hand arithmetic holds exactly: the start's head 38 m and power 287 kW, £50 an hour, and the 6 rounds.
+
+The path's plans and prices, the Newton step counts, and that no other plan draws 250 kW are left to the Python and Rust checks.
+
+```lean
+-- Interior point methods: an exact minimiser of the log-barrier objective of a convex problem is within m/t of the best plan, and the card's pump problem has best plan (50, 50, 50) drawing 250 kW.
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.LinearAlgebra.AffineSpace.AffineMap
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
+
+open Finset
+
+/-- The barrier method's gap bound. Take a convex problem: a convex cost `f₀`, `m` convex limits
+`f i x ≤ 0`, and affine rules `h x = 0`. Fix a weight `t > 0`. Suppose `xs` is strictly inside
+(every slack `-f i xs` is positive, `h xs = 0`) and minimises the barrier objective
+`t f₀(x) - ∑ log(-f i x)` over every strictly inside plan that obeys the rules (the centring is
+done exactly). Then `xs` is within `m / t` of the best: `f₀ xs - f₀ x ≤ m / t` for every allowed
+plan `x`. -/
+theorem central_path_gap_le_m_div_t
+    {E F : Type*} [AddCommGroup E] [Module ℝ E] [AddCommGroup F] [Module ℝ F]
+    {m : ℕ} (f₀ : E → ℝ) (f : Fin m → E → ℝ) (h : E →ᵃ[ℝ] F) {t : ℝ} (ht : 0 < t)
+    (hf₀ : ConvexOn ℝ Set.univ f₀) (hf : ∀ i, ConvexOn ℝ Set.univ (f i))
+    (xs : E) (hxs_rule : h xs = 0) (hxs_inside : ∀ i, f i xs < 0)
+    (hxs_min : ∀ y : E, h y = 0 → (∀ i, f i y < 0) →
+      t * f₀ xs - ∑ i, Real.log (-f i xs) ≤ t * f₀ y - ∑ i, Real.log (-f i y)) :
+    ∀ x : E, h x = 0 → (∀ i, f i x ≤ 0) → f₀ xs - f₀ x ≤ (m : ℝ) / t := by
+  intro x hx hxle
+  set D := f₀ xs - f₀ x with hD
+  -- key bound: for every s ∈ (0,1), t * D * (1 - s) ≤ m
+  have key : ∀ s : ℝ, 0 < s → s < 1 → t * D * (1 - s) ≤ m := by
+    intro s hs0 hs1
+    have h1s : 0 < 1 - s := by linarith
+    set y : E := (1 - s) • xs + s • x with hy
+    have hyl : y = AffineMap.lineMap xs x s := by
+      rw [AffineMap.lineMap_apply_module]
+    have hhy : h y = 0 := by
+      rw [hyl, AffineMap.apply_lineMap, hxs_rule, hx, AffineMap.lineMap_same_apply]
+    have hfy : ∀ i, f i y ≤ (1 - s) * f i xs + s * f i x := by
+      intro i
+      have := (hf i).2 (Set.mem_univ xs) (Set.mem_univ x) h1s.le hs0.le (by ring)
+      simpa [smul_eq_mul] using this
+    have hfy' : ∀ i, (1 - s) * (-f i xs) ≤ -f i y := by
+      intro i
+      have := hfy i
+      have := hxle i
+      nlinarith
+    have hinside : ∀ i, f i y < 0 := by
+      intro i
+      have := hfy' i
+      have := mul_pos h1s (neg_pos.mpr (hxs_inside i))
+      linarith
+    have hf0y : f₀ y ≤ (1 - s) * f₀ xs + s * f₀ x := by
+      have := hf₀.2 (Set.mem_univ xs) (Set.mem_univ x) h1s.le hs0.le (by ring)
+      simpa [smul_eq_mul] using this
+    have hlog : ∀ i, Real.log (1 - s) + Real.log (-f i xs) ≤ Real.log (-f i y) := by
+      intro i
+      have hp : 0 < -f i xs := neg_pos.mpr (hxs_inside i)
+      rw [← Real.log_mul h1s.ne' hp.ne']
+      exact Real.log_le_log (mul_pos h1s hp) (hfy' i)
+    have hsum : ∑ i, (Real.log (1 - s) + Real.log (-f i xs)) ≤ ∑ i, Real.log (-f i y) :=
+      Finset.sum_le_sum (fun i _ => hlog i)
+    rw [Finset.sum_add_distrib] at hsum
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at hsum
+    have hmin := hxs_min y hhy hinside
+    -- t s D ≤ - m log(1-s)
+    have hA : t * s * D ≤ -(m : ℝ) * Real.log (1 - s) := by
+      have := mul_le_mul_of_nonneg_left hf0y ht.le
+      rw [hD]; nlinarith
+    -- -log(1-s) ≤ s/(1-s)
+    have hL : -Real.log (1 - s) ≤ s / (1 - s) := by
+      have := Real.log_le_sub_one_of_pos (inv_pos.mpr h1s)
+      rw [Real.log_inv] at this
+      have e : (1 - s)⁻¹ - 1 = s / (1 - s) := by field_simp; ring
+      linarith
+    have hm : (0 : ℝ) ≤ m := Nat.cast_nonneg m
+    have hB : t * s * D ≤ (m : ℝ) * (s / (1 - s)) := by
+      have := mul_le_mul_of_nonneg_left hL hm
+      linarith
+    have hC : t * s * D * (1 - s) ≤ (m : ℝ) * s := by
+      have := mul_le_mul_of_nonneg_right hB h1s.le
+      rw [mul_assoc (m : ℝ), div_mul_cancel₀ _ h1s.ne'] at this
+      exact this
+    have : s * (t * D * (1 - s)) ≤ s * m := by nlinarith
+    exact le_of_mul_le_mul_left this hs0
+  rw [le_div_iff₀ ht]
+  by_contra hcon
+  push Not at hcon
+  have hm : (0 : ℝ) ≤ m := Nat.cast_nonneg m
+  have hpos : 0 < t * D := by nlinarith
+  set s := (t * D - m) / (2 * (t * D)) with hs
+  have hs0 : 0 < s := div_pos (by nlinarith) (by linarith)
+  have hs1 : s < 1 := by
+    rw [hs, div_lt_one (by linarith)]; linarith
+  have := key s hs0 hs1
+  have e : t * D * (1 - s) = (t * D + m) / 2 := by
+    have hD0 : D ≠ 0 := by rintro hz; rw [hz, mul_zero] at hpos; exact lt_irrefl _ hpos
+    have ht0 : t ≠ 0 := ht.ne'
+    rw [hs]; field_simp; ring
+  rw [e] at this
+  linarith
+
+/-- The card's pump problem. Minimise the power `0.02 x₁² + 0.03 x₂² + 0.05 x₃²` kW over flows
+with `x₁ + x₂ + x₃ = 150` L/s, head `0.1 x₁ + 0.2 x₂ + 0.4 x₃` between 35 m and 45 m, and every
+flow at least 0. The plan (50, 50, 50) is allowed, draws 250 kW and puts the hill tank exactly on
+its 35 m floor, and no allowed plan draws less than 250 kW. -/
+theorem pump_best_plan_is_fifty_each :
+    (let x₁ : ℝ := 50; let x₂ : ℝ := 50; let x₃ : ℝ := 50
+      x₁ + x₂ + x₃ = 150 ∧ 0 ≤ x₁ ∧ 0 ≤ x₂ ∧ 0 ≤ x₃ ∧
+      (1/10) * x₁ + (2/10) * x₂ + (4/10) * x₃ = 35 ∧
+      (2/100) * x₁ ^ 2 + (3/100) * x₂ ^ 2 + (5/100) * x₃ ^ 2 = 250) ∧
+    ∀ x₁ x₂ x₃ : ℝ, x₁ + x₂ + x₃ = 150 → 0 ≤ x₁ → 0 ≤ x₂ → 0 ≤ x₃ →
+      35 ≤ (1/10) * x₁ + (2/10) * x₂ + (4/10) * x₃ →
+      (1/10) * x₁ + (2/10) * x₂ + (4/10) * x₃ ≤ 45 →
+      250 ≤ (2/100) * x₁ ^ 2 + (3/100) * x₂ ^ 2 + (5/100) * x₃ ^ 2 := by
+  refine ⟨by norm_num, ?_⟩
+  intro x₁ x₂ x₃ hsum _ _ _ hlo _
+  nlinarith [sq_nonneg (x₁ - 50), sq_nonneg (x₂ - 50), sq_nonneg (x₃ - 50)]
+
+-- The start (40, 50, 60) L/s: head 38 m, power 287 kW, slacks 3, 7, 40, 50, 60.
+example : (1/10 : ℚ) * 40 + (2/10) * 50 + (4/10) * 60 = 38 := by norm_num
+example : (2/100 : ℚ) * 40 ^ 2 + (3/100) * 50 ^ 2 + (5/100) * 60 ^ 2 = 287 := by norm_num
+example : (38 : ℚ) - 35 = 3 ∧ (45 : ℚ) - 38 = 7 := by norm_num
+
+-- 250 kW at £0.20 per kWh is £50 an hour.
+example : (250 : ℚ) * (20/100) = 50 := by norm_num
+
+-- The gap m / t with m = 5: 5 kW at t = 1; at t = 10^4 it is still above ε = 10^-4 kW,
+-- and at t = 10^5 (the sixth stop) it is below, so six rounds are needed and enough.
+example : (5 : ℚ) / 1 = 5 := by norm_num
+example : (1 : ℚ) / 10000 < 5 / 10 ^ 4 ∧ (5 : ℚ) / 10 ^ 5 ≤ 1 / 10000 := by norm_num
+
+-- Starting outside at (70, 50, 30) L/s: head 29 m, so the floor's slack is -6.
+example : (1/10 : ℚ) * 70 + (2/10) * 50 + (4/10) * 30 = 29 ∧ (29 : ℚ) - 35 = -6 := by norm_num
+
+-- The round count: 1 + ⌈log(m / (t₀ ε)) / log 10⌉ = 6 for m = 5, t₀ = 1, ε = 10⁻⁴.
+example : (1 : ℤ) + ⌈Real.log (5 / (1 * (1 / 10000 : ℝ))) / Real.log 10⌉ = 6 := by
+  have h10 : 0 < Real.log 10 := Real.log_pos (by norm_num)
+  have e : (5 / (1 * (1 / 10000 : ℝ))) = 50000 := by norm_num
+  rw [e]
+  have hc : ⌈Real.log 50000 / Real.log 10⌉ = 5 := by
+    rw [Int.ceil_eq_iff]
+    constructor
+    · rw [lt_div_iff₀ h10]
+      have : Real.log ((10 : ℝ) ^ 4) < Real.log 50000 :=
+        Real.log_lt_log (by norm_num) (by norm_num)
+      rw [Real.log_pow] at this
+      push_cast at this ⊢
+      linarith
+    · rw [div_le_iff₀ h10]
+      have : Real.log 50000 ≤ Real.log ((10 : ℝ) ^ 5) :=
+        Real.log_le_log (by norm_num) (by norm_num)
+      rw [Real.log_pow] at this
+      push_cast at this ⊢
+      linarith
+  rw [hc]; norm_num
+
+#print axioms central_path_gap_le_m_div_t
+#print axioms pump_best_plan_is_fifty_each
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'central_path_gap_le_m_div_t' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pump_best_plan_is_fifty_each' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

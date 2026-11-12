@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A town needs at least 100 litres of water a second (L/s). Two pumps can supply it. Pump A draws 0.02 kW (kilowatts) times its flow squared; pump B, older, draws 0.03 kW times its flow squared. These laws are a fitted model, not pump physics. The job is to **minimise** the power drawn while delivering at least 100 L/s. The answer is 60 L/s from A and 40 from B: 120 kW, which is £24 an hour at £0.20 per kWh.
+A town needs at least 100 litres of water a second (L/s). Two pumps can supply it. Pump A draws 0.02 kW (kilowatts) times its flow squared; pump B, older, draws 0.03 kW times its flow squared. These laws are a fitted model, not pump physics.
+
+The job is to **minimise** the power drawn while delivering at least 100 L/s. The answer is 60 L/s from A and 40 from B: 120 kW, which is £24 an hour at £0.20 per kWh (kilowatt-hour).
 
 Now play it as a game between two people. The **planner** sets the two flows. The **price setter** names a price, λ ("lambda"), in kW per L/s. The planner's bill is the power drawn plus λ for every L/s short of 100, and minus λ for every L/s over. The planner wants the bill low. The price setter wants it high.
 
-Who moves first? If the planner moves first, any shortfall is fatal: the price setter answers with a huge price. So the planner must meet the demand, and the best it can do is the original problem: 120 kW. If the price setter moves first, it must pick a price the planner will then dodge as well as it can. The best price is 2.4 kW per L/s, and the planner's best answer to it is again 60 and 40 L/s, again a bill of 120 kW. The two orders give the same value. The point where they meet, flows (60, 40) and price 2.4, is a **saddle point**: neither player gains by moving away from it alone, and neither gains by moving second.
+Who moves first? If the planner moves first, any shortfall is fatal: the price setter answers with a huge price. So the planner must meet the demand, and the best it can do is the original problem: 120 kW. If the price setter moves first, it must pick a price the planner will then dodge as well as it can. The best price is 2.4 kW per L/s, and the planner's best answer to it is again 60 and 40 L/s, again a bill of 120 kW.
+
+The two orders give the same value. The point where they meet, flows (60, 40) and price 2.4, is a **saddle point**: neither player gains by moving away from it alone, and neither gains by moving second.
 
 **A constrained problem is a game in which a price setter charges for every broken rule; when the two orders of play give the same value, the meeting point is a saddle point, the plan there is optimal and the price there proves it.**
 
@@ -68,8 +72,8 @@ The **minimax theorem**, the result that lets the order be swapped, is stated in
 ### When it holds
 
 - **Convex cost and rules.** The planner's side must be convex: $f_0$ curves up and the shortfall is straight. With a nonconvex choice, such as a pump that is either off or at full power, the two orders can give different values, and then no saddle exists. The penalty kick below shows the same gap in a game played with plain choices.
-- **Concave in the price.** The bill must be concave in the price setter's choice. A Lagrangian is straight in $\lambda$, so this always holds; in a general game it can fail, and a game convex for both players can have a gap (What breaks).
-- **One side's choices closed and bounded.** The minimax theorem needs one player's set to be closed and bounded. Real pumps have a top flow, so the planner's set qualifies.
+- **Concave in the price.** The bill must be concave (curving down, or straight) in the price setter's choice. A Lagrangian is straight in $\lambda$, so this always holds; in a general game it can fail, and a game convex for both players can have a gap (What breaks).
+- **One side's choices closed and bounded.** The minimax theorem needs one player's set to be closed (its edge values are allowed) and bounded (no choice is infinitely large). Real pumps have a top flow, so the planner's set qualifies.
 - **The best price must exist.** Equal values are not enough for a saddle: the price setter's best price must be reached. Slater's condition (a plan that meets every inequality rule strictly) makes sure of it ([Slater's condition](05-slaters-condition-and-duality-gaps.md)). Without it, a problem can have equal values and no saddle (What breaks).
 - **No caps on the price.** If the price setter may charge at most 2 kW per L/s, the planner rationally leaves 16.6667 L/s unmet. The game still has a saddle, but it is a saddle of a different problem.
 
@@ -122,7 +126,7 @@ $$q(\lambda^*) \le \mathcal{L}(x^*, \lambda^*) \le P(x^*)$$
 
 by the definitions of a minimum and a maximum, and the two ends are equal, so $\mathcal{L}(x^*, \lambda^*)$ equals both. For any $\lambda$: $\mathcal{L}(x^*, \lambda) \le P(x^*) = \mathcal{L}(x^*, \lambda^*)$. For any $x$: $\mathcal{L}(x, \lambda^*) \ge q(\lambda^*) = \mathcal{L}(x^*, \lambda^*)$. That is the saddle inequality.
 
-**Optimality.** By Step 1, $P(x^*)$ finite means $x^*$ meets the rule, and $f_0(x^*) = P(x^*) = p^*$: no plan meeting the rule costs less. The left half at $\lambda = 0$ gives $\lambda^* f_1(x^*) \ge 0$, and $\lambda^* \ge 0$ with $f_1(x^*) \le 0$ gives $\lambda^* f_1(x^*) \le 0$, so $\lambda^* f_1(x^*) = 0$: the price is zero unless the rule binds. Together with the right half, which says $x^*$ minimises $\mathcal{L}(\cdot, \lambda^*)$, these are the [KKT conditions](02-kkt-conditions.md); for a convex problem the two descriptions coincide.
+**Optimality.** By Step 1, $P(x^*)$ finite means $x^*$ meets the rule, and $f_0(x^*) = P(x^*) = p^*$: no plan meeting the rule costs less. The left half at $\lambda = 0$ gives $\lambda^* f_1(x^*) \ge 0$, and $\lambda^* \ge 0$ with $f_1(x^*) \le 0$ gives $\lambda^* f_1(x^*) \le 0$, so $\lambda^* f_1(x^*) = 0$: the price is zero unless the rule binds. Together with the right half, which says $x^*$ minimises $\mathcal{L}(\cdot, \lambda^*)$, these are the [KKT conditions](02-kkt-conditions.md) (Karush–Kuhn–Tucker); for a convex problem the two descriptions coincide.
 
 </details>
 
@@ -151,7 +155,9 @@ At $\lambda = 1$ the planner delivers 41.6667 L/s, 58.3333 short, and $q'(1) = 1
 
 <p align="center"><img src="../figures/saddle-points-and-minimax.svg" alt="The pump Lagrangian over total flow T and price lambda: the level line L = 120 kW is a vertical line at 100 L/s and a sloping line, crossing at the saddle (100, 2.4); the dashed best-reply line of the planner passes through the same point, as does the dotted line lambda = 2.4" width="420"></p>
 
-The figure is to scale. The planner always splits a total $T$ the cheap way, which costs $0.012T^2$ kW, so the bill becomes $0.012T^2 + \lambda(100 - T)$. Shaded regions have a bill above 120 kW. Along the dotted horizontal line $\lambda = 2.4$ the bill rises on both sides of the saddle: the planner's minimum. Along the dashed best-reply line, from (70, 1.68) to (130, 3.12), it falls on both sides: the price setter's maximum. The bill is exactly 120 kW on the vertical line $T = 100$ and on the line from (70, 2.04) to (130, 2.76).
+The figure is to scale. The planner always splits a total $T$ the cheap way, which costs $0.012T^2$ kW, so the bill becomes $0.012T^2 + \lambda(100 - T)$. Shaded regions have a bill above 120 kW.
+
+Along the dotted horizontal line $\lambda = 2.4$ the bill rises on both sides of the saddle: the planner's minimum. Along the dashed best-reply line, from (70, 1.68) to (130, 3.12), it falls on both sides: the price setter's maximum. The bill is exactly 120 kW on the vertical line $T = 100$ and on the line from (70, 2.04) to (130, 2.76).
 
 ---
 
@@ -188,7 +194,13 @@ The capped game still has a saddle: the planner's worst bill over capped prices,
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the saddle by three independent roads. Road 1 is the hand calculation. Road 2 uses no formula: it lays a grid over plans (each flow 0 to 100 L/s in half litres) and prices (0 to 5 kW per L/s in steps of 0.1), plays the game in both orders by brute force, and tests the saddle inequality at every grid point. Road 3 is the price adjustment from Step 6: start at $\lambda_0 = 0$, move the price by $\alpha = 0.01$ times the shortfall, and stop when the shortfall is below $10^{-9}$ L/s. It also checks Danskin's slope against a central difference (the change in $q$ across a small step either side, divided by the step). The script ends with the four failures from the table, the spiral from The usual mistake, and the "try changing" numbers.
+The code reaches the saddle by three independent roads.
+
+- Road 1 is the hand calculation.
+- Road 2 uses no formula: it lays a grid over plans (each flow 0 to 100 L/s in half litres) and prices (0 to 5 kW per L/s in steps of 0.1), plays the game in both orders by brute force, and tests the saddle inequality at every grid point.
+- Road 3 is the price adjustment from Step 6: start at $\lambda_0 = 0$, move the price by $\alpha = 0.01$ times the shortfall, and stop when the shortfall is below $10^{-9}$ L/s. It also checks Danskin's slope against a central difference (the change in $q$ across a small step either side, divided by the step).
+
+The script ends with the four failures from the table, the spiral from The usual mistake, and the "try changing" numbers.
 
 ### Python
 
@@ -514,6 +526,186 @@ ALL CHECKS PASS
 
 The two outputs match line for line. The price adjustment shrinks the error by the factor $1 - 0.01 \times 41.6667 = 0.5833$ each step, as printed, and meets the stopping test after 47 steps. That rate needs a step below $2/41.6667 = 0.0480$, where 41.6667 is how fast the shortfall falls per unit of price.
 
+### Lean
+
+Lean proves the saddle-point theorem for any plans, cost and rule, and checks the card's worked numbers exactly.
+
+- A plan and a price form a saddle point exactly when both orders of play give the same value and both players' best choices are reached.
+- Whoever moves second can only gain: in every game, convex or not, the price-setter-first value is never above the planner-first value.
+- At a saddle point the plan meets the rule, and no plan that meets the rule costs less.
+- At a saddle point the price is zero unless the rule binds.
+- The planner's reply to the price 2.4 kW per L/s is (60, 40) L/s, with no shortfall.
+- That plan draws 72 + 48 = 120 kW, £24 an hour. The dual value is 240 − 120 = 120 kW, so the gap is 0.
+- On the chart, q(λ) is 116.6667 kW at prices 2 and 2.8, and 0 at 4.8.
+- With the price capped at 2, the planner delivers 83.3333 L/s and leaves 16.6667 L/s short.
+- Two equal pumps give a price of 2 and 100 kW. A demand of 120 L/s gives 2.88, the plan (72, 48) and 172.8 kW, £34.56 an hour.
+- In the penalty kick, plain choices give 70% and 93%, and mixing gives 79.5833% in both orders.
+- A price step of 0.01 shrinks the error by 0.5833 each step. Steps below 0.0480 converge, and a step of 0.04 gives the ratio −0.6667.
+
+The grids, Danskin's slope, the spiral and the two other breaks are left to the Python and Rust checks; the minimax theorem is only stated.
+
+```lean
+-- Saddle points: a plan and a price form a saddle point of the Lagrangian exactly when both orders of play give the same value and both players' best choices are reached, the price-setter-first value never exceeds the planner-first value, and at a saddle point the plan is optimal and the price is zero unless the rule binds.
+import Mathlib.Data.EReal.Basic
+import Mathlib.Data.NNReal.Basic
+import Mathlib.Order.CompleteLattice.Basic
+import Mathlib.Tactic.NormNum
+
+open NNReal
+
+/-! ### How the card's objects are written here
+
+The plans form any type `α`. The cost is `f₀ : α → ℝ` and the rule is `f₁ x ≤ 0`, with
+`f₁ : α → ℝ`. A price is a number `l ≥ 0`, written `l : ℝ≥0`. The Lagrangian (the bill) is
+`f₀ x + l * f₁ x`.
+
+The two orders of play may give the values `+∞` or `-∞`, so they are taken in `EReal`, the real
+line with `⊥ = -∞` and `⊤ = +∞` added:
+* `P x = ⨆ l, (f₀ x + l * f₁ x)`, the price setter's best reply to the plan `x`;
+* `q l = ⨅ x, (f₀ x + l * f₁ x)`, the planner's best reply to the price `l` (the dual function);
+* `p* = ⨅ x, P x`, planner first; `d* = ⨆ l, q l`, price setter first.
+
+A saddle point is a pair `(xs, ls)` with `f₀ xs + l * f₁ xs ≤ f₀ xs + ls * f₁ xs ≤ f₀ x + ls * f₁ x`
+for every price `l ≥ 0` and every plan `x`. -/
+
+/-- The saddle-point theorem (Step 4 and its detailed proof). A plan `xs` and a price `ls ≥ 0`
+form a saddle point of the Lagrangian `f₀ x + l * f₁ x` exactly when the two orders of play give
+the same value and both players' best choices are reached: the price setter's best reply to `xs`
+is the planner-first value `p*`, which equals the price-setter-first value `d*`, which is the
+planner's best bill at the price `ls`. -/
+theorem saddle_point_iff_equal_values_attained {α : Type*} (f₀ f₁ : α → ℝ) (xs : α) (ls : ℝ≥0) :
+    ((∀ l : ℝ≥0, f₀ xs + l * f₁ xs ≤ f₀ xs + ls * f₁ xs) ∧
+      (∀ x : α, f₀ xs + ls * f₁ xs ≤ f₀ x + ls * f₁ x)) ↔
+    ((⨆ l : ℝ≥0, ((f₀ xs + l * f₁ xs : ℝ) : EReal)) =
+        ⨅ x : α, ⨆ l : ℝ≥0, ((f₀ x + l * f₁ x : ℝ) : EReal) ∧
+      (⨅ x : α, ⨆ l : ℝ≥0, ((f₀ x + l * f₁ x : ℝ) : EReal)) =
+        ⨆ l : ℝ≥0, ⨅ x : α, ((f₀ x + l * f₁ x : ℝ) : EReal) ∧
+      (⨆ l : ℝ≥0, ⨅ x : α, ((f₀ x + l * f₁ x : ℝ) : EReal)) =
+        ⨅ x : α, ((f₀ x + ls * f₁ x : ℝ) : EReal)) := by
+  constructor
+  · rintro ⟨h_price, h_plan⟩
+    have hA : (⨆ l : ℝ≥0, ((f₀ xs + l * f₁ xs : ℝ) : EReal)) = ((f₀ xs + ls * f₁ xs : ℝ) : EReal) :=
+      le_antisymm (iSup_le fun l => EReal.coe_le_coe_iff.2 (h_price l))
+        (le_iSup (fun l : ℝ≥0 => ((f₀ xs + l * f₁ xs : ℝ) : EReal)) ls)
+    have hB : (⨅ x : α, ((f₀ x + ls * f₁ x : ℝ) : EReal)) = ((f₀ xs + ls * f₁ xs : ℝ) : EReal) :=
+      le_antisymm (iInf_le (fun x : α => ((f₀ x + ls * f₁ x : ℝ) : EReal)) xs)
+        (le_iInf fun x => EReal.coe_le_coe_iff.2 (h_plan x))
+    have hwd := iSup_iInf_le_iInf_iSup
+      (fun (l : ℝ≥0) (x : α) => ((f₀ x + l * f₁ x : ℝ) : EReal))
+    have hp : (⨅ x : α, ⨆ l : ℝ≥0, ((f₀ x + l * f₁ x : ℝ) : EReal)) ≤
+        ((f₀ xs + ls * f₁ xs : ℝ) : EReal) :=
+      hA ▸ iInf_le (fun x : α => ⨆ l : ℝ≥0, ((f₀ x + l * f₁ x : ℝ) : EReal)) xs
+    have hd : ((f₀ xs + ls * f₁ xs : ℝ) : EReal) ≤
+        ⨆ l : ℝ≥0, ⨅ x : α, ((f₀ x + l * f₁ x : ℝ) : EReal) :=
+      hB ▸ le_iSup (fun l : ℝ≥0 => ⨅ x : α, ((f₀ x + l * f₁ x : ℝ) : EReal)) ls
+    refine ⟨?_, ?_, ?_⟩
+    · rw [hA]; exact le_antisymm (hd.trans hwd) hp
+    · exact le_antisymm (hp.trans hd) hwd
+    · rw [hB]; exact le_antisymm (hwd.trans hp) hd
+  · rintro ⟨h1, h2, h3⟩
+    have hAB : (⨆ l : ℝ≥0, ((f₀ xs + l * f₁ xs : ℝ) : EReal)) =
+        ⨅ x : α, ((f₀ x + ls * f₁ x : ℝ) : EReal) := h1.trans (h2.trans h3)
+    have hle1 : ∀ l : ℝ≥0, ((f₀ xs + l * f₁ xs : ℝ) : EReal) ≤
+        ⨅ x : α, ((f₀ x + ls * f₁ x : ℝ) : EReal) := fun l =>
+      hAB ▸ le_iSup (fun l : ℝ≥0 => ((f₀ xs + l * f₁ xs : ℝ) : EReal)) l
+    have hle2 : ∀ x : α, ((f₀ xs + ls * f₁ xs : ℝ) : EReal) ≤ ((f₀ x + ls * f₁ x : ℝ) : EReal) :=
+      fun x => (hle1 ls).trans (iInf_le (fun x : α => ((f₀ x + ls * f₁ x : ℝ) : EReal)) x)
+    refine ⟨fun l => ?_, fun x => EReal.coe_le_coe_iff.1 (hle2 x)⟩
+    exact EReal.coe_le_coe_iff.1
+      ((hle1 l).trans (iInf_le (fun x : α => ((f₀ x + ls * f₁ x : ℝ) : EReal)) xs))
+
+/-- Whoever moves second can only gain (Step 3). In every two-player game, convex or not, with
+any payoff `L x y` that the `x` player minimises and the `y` player maximises, the value when
+the maximiser moves first, `max over y of min over x`, is at most the value when the minimiser
+moves first, `min over x of max over y`. For a Lagrangian this is weak duality, `d* ≤ p*`. -/
+theorem second_mover_can_only_gain {α β : Type*} (L : α → β → ℝ) :
+    (⨆ y : β, ⨅ x : α, (L x y : EReal)) ≤ ⨅ x : α, ⨆ y : β, (L x y : EReal) := by
+  exact iSup_iInf_le_iInf_iSup (fun (y : β) (x : α) => (L x y : EReal))
+
+/-- The plan at a saddle point is optimal and the price proves it (Step 4, Optimality). If
+`(xs, ls)` is a saddle point of the Lagrangian `f₀ x + l * f₁ x` over prices `l ≥ 0`, then `xs`
+meets the rule, no plan meeting the rule costs less, and the price is zero unless the rule
+binds: `ls * f₁ xs = 0`. -/
+theorem saddle_point_plan_is_optimal {α : Type*} (f₀ f₁ : α → ℝ) (xs : α) (ls : ℝ≥0)
+    (h_price : ∀ l : ℝ≥0, f₀ xs + l * f₁ xs ≤ f₀ xs + ls * f₁ xs)
+    (h_plan : ∀ x : α, f₀ xs + ls * f₁ xs ≤ f₀ x + ls * f₁ x) :
+    f₁ xs ≤ 0 ∧ (∀ x : α, f₁ x ≤ 0 → f₀ xs ≤ f₀ x) ∧ (ls : ℝ) * f₁ xs = 0 := by
+  have hf : f₁ xs ≤ 0 := by
+    have h := h_price (ls + 1)
+    push_cast at h
+    nlinarith
+  have hl0 : (0 : ℝ) ≤ ls := ls.2
+  have hz : (ls : ℝ) * f₁ xs = 0 := by
+    have h := h_price 0
+    push_cast at h
+    nlinarith
+  refine ⟨hf, fun x hx => ?_, hz⟩
+  have h := h_plan x
+  nlinarith
+
+/-! ### The card's worked numbers, exactly
+
+The card's decimals are exact fractions: 0.02 = 1/50, 0.03 = 3/100, 16.6667 = 50/3,
+41.6667 = 125/3, 20.8333 = 125/6, 2.4 = 12/5, 79.5833 = 955/12. -/
+
+-- The planner's reply to the price 2.4 = 12/5: x₁ = 25 λ = 60 and x₂ = (50/3) λ = 40 L/s.
+example : (25 : ℚ) * (12 / 5) = 60 ∧ (50 / 3 : ℚ) * (12 / 5) = 40 := by norm_num
+
+-- The best price: the shortfall 100 - (125/3) λ is zero at λ* = 12/5.
+example : (100 : ℚ) - 125 / 3 * (12 / 5) = 0 := by norm_num
+
+-- Power at the saddle plan: 0.02 × 3600 + 0.03 × 1600 = 72 + 48 = 120 kW, £24 an hour at £0.20.
+example : (1 / 50 : ℚ) * 60 ^ 2 = 72 ∧ (3 / 100 : ℚ) * 40 ^ 2 = 48 ∧
+    (1 / 50 : ℚ) * 60 ^ 2 + 3 / 100 * 40 ^ 2 = 120 ∧ (120 : ℚ) * (1 / 5) = 24 := by norm_num
+
+-- Dual value: q(12/5) = 100 × 12/5 - (125/6) × (12/5)² = 240 - 120 = 120 kW, so the gap is 0.
+example : (100 : ℚ) * (12 / 5) = 240 ∧ (125 / 6 : ℚ) * (12 / 5) ^ 2 = 120 ∧
+    (100 : ℚ) * (12 / 5) - 125 / 6 * (12 / 5) ^ 2 = 120 := by norm_num
+
+-- The chart: q(λ) = 100 λ - (125/6) λ² at λ = 2 and 2.8 is 350/3 = 116.6667 kW, and 0 at 4.8.
+example : (100 : ℚ) * 2 - 125 / 6 * 2 ^ 2 = 350 / 3 ∧
+    (100 : ℚ) * (14 / 5) - 125 / 6 * (14 / 5) ^ 2 = 350 / 3 ∧
+    (100 : ℚ) * (24 / 5) - 125 / 6 * (24 / 5) ^ 2 = 0 := by norm_num
+
+-- Price capped at 2: the reply is (50, 100/3) L/s, 250/3 = 83.3333 delivered, 50/3 = 16.6667 short.
+example : (25 : ℚ) * 2 = 50 ∧ (50 / 3 : ℚ) * 2 = 100 / 3 ∧ (50 : ℚ) + 100 / 3 = 250 / 3 ∧
+    (100 : ℚ) - 250 / 3 = 50 / 3 := by norm_num
+
+-- Two equal pumps (try changing): λ* = 2, plan (50, 50), power 0.02 × 2500 × 2 = 100 kW.
+example : (100 : ℚ) / 50 = 2 ∧ (1 / 50 : ℚ) * 50 ^ 2 + 1 / 50 * 50 ^ 2 = 100 := by norm_num
+
+-- More demand (try changing): λ* = 120 / (125/3) = 2.88, plan (72, 48), power 172.8 kW, £34.56.
+example : (120 : ℚ) / (125 / 3) = 72 / 25 ∧ (25 : ℚ) * (72 / 25) = 72 ∧
+    (50 / 3 : ℚ) * (72 / 25) = 48 ∧ (1 / 50 : ℚ) * 72 ^ 2 + 3 / 100 * 48 ^ 2 = 864 / 5 ∧
+    (864 / 5 : ℚ) * (1 / 5) = 864 / 25 := by norm_num
+
+-- Penalty kick [[58, 95], [93, 70]] with plain choices: the kicker moving first can guarantee
+-- max (min 58 95) (min 93 70) = 70; the keeper moving first holds the kicker to
+-- min (max 58 93) (max 95 70) = 93.
+example : max (min 58 95) (min 93 70) = (70 : ℕ) ∧ min (max 58 93) (max 95 70) = (93 : ℕ) := by
+  decide
+
+-- Penalty kick with mixing: both orders give (95 × 93 - 58 × 70) / (95 + 93 - 58 - 70) = 955/12.
+example : ((95 : ℚ) * 93 - 58 * 70) / (95 + 93 - 58 - 70) = 955 / 12 := by norm_num
+
+-- Price adjustment: the error shrinks by 1 - 0.01 × 125/3 = 7/12 = 0.5833 each step, and a step
+-- converges only below 2 / (125/3) = 0.048; at 0.04 the ratio is 1 - 0.04 × 125/3 = -2/3.
+example : (1 : ℚ) - 1 / 100 * (125 / 3) = 7 / 12 ∧ (2 : ℚ) / (125 / 3) = 6 / 125 ∧
+    (1 : ℚ) - 4 / 100 * (125 / 3) = -2 / 3 := by norm_num
+
+#print axioms saddle_point_iff_equal_values_attained
+#print axioms second_mover_can_only_gain
+#print axioms saddle_point_plan_is_optimal
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'saddle_point_iff_equal_values_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'second_mover_can_only_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'saddle_point_plan_is_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this network, so expect some to stop it.
@@ -554,7 +746,7 @@ The two outputs match line for line. The price adjustment shrinks the error by t
 
 ## Where this goes next
 
-- [KKT conditions](02-kkt-conditions.md): the minimax idea beyond Lagrangians, in games and decisions where one side chooses against the other.
+- [Robust and chance constraints](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/10-robust-and-chance-constrained-optimisation.md): the minimax idea beyond Lagrangians, in games and decisions where one side chooses against the other.
 - [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md): algorithms that move the price toward the shortfall, as Step 6 does, while keeping the planner's problem well behaved.
 
 This card finds the saddle when one exists; how fast a two-player method reaches it when neither player can reply fully, as in the spiral above, is the question it leaves open.

@@ -6,17 +6,25 @@
 
 ## General Overview
 
-A water company runs two pumps that feed a town's main. The town needs at least **140 litres a second**. Pump 1, the newer one, lifts 2.0 litres a second for each kilowatt (kW) of power; pump 2 lifts 1.5. Electricity costs £0.30 a kilowatt-hour, and each pump also wastes more as it is pushed harder, so its running cost grows faster than its power. The company **chooses** the two pump powers, wants the **hourly cost as small as possible** (this card minimises), and is **limited** by the demand.
+A water company runs two pumps that feed a town's main. The town needs at least **140 litres a second** (L/s). Pump 1, the newer one, lifts 2.0 litres a second for each kilowatt (kW) of power; pump 2 lifts 1.5. Electricity costs £0.30 a kilowatt-hour, and each pump also wastes more as it is pushed harder, so its running cost grows faster than its power. The company **chooses** the two pump powers, wants the **hourly cost as small as possible** (this card minimises), and is **limited** by the demand.
 
 The best plan turns out to be 40 kW on each pump, at **£40.00 an hour**. The question this card answers is different: how could anyone *prove* that no plan is cheaper, without trying them all?
 
-The trick is to stop treating the demand as a rule and start treating it as a price. Say every litre a second the pumps fall short of 140 is charged at 35p an hour, and every litre a second over 140 earns 35p back. Now each pump runs up to the point where one more kW costs as much as the extra water it lifts earns at 35p. That gives pump 1 at 32 kW and pump 2 at 30 kW, costing £28.375 an hour but delivering only 109 litres a second. Add the charge for the 31 missing, at 35p each. The total, **£39.225**, is a floor. No plan that meets demand can cost less. It is within **1.94 percent** of the truth.
+The trick is to stop treating the demand as a rule and start treating it as a price. Say every litre a second the pumps fall short of 140 is charged at 35p an hour, and every litre a second over 140 earns 35p back.
+
+Now each pump runs up to the point where one more kW costs as much as the extra water it lifts earns at 35p. That gives pump 1 at 32 kW and pump 2 at 30 kW, costing £28.375 an hour but delivering only 109 litres a second.
+
+Add the charge for the 31 missing, at 35p each. The total, **£39.225**, is a floor. No plan that meets demand can cost less. It is within **1.94 percent** of the truth.
 
 Raise the price to 40p and the floor rises to **£40.00**, exactly the cost of the best plan. The floor has met the ceiling, and the plan is proved best.
 
 **Charging a price for breaking a constraint gives, at every non-negative price, a lower bound on the best cost; the bound as a function of the price is concave, so climbing it is easy, and for a convex problem with a strictly feasible point the best bound equals the best cost.**
 
-**What kind of fact this is:** two theorems proved on this card in Why it works (weak duality: every price gives a lower bound; and the bound is concave in the price), and one theorem stated with its source (strong duality under Slater's condition), proved for one inequality on the [Slater's condition](05-slaters-condition-and-duality-gaps.md) card and in general in Boyd and Vandenberghe (section 5.3.2), and certified for the pump plan by the code.
+**What kind of fact this is:** three theorems.
+
+- **Weak duality** (every price gives a lower bound): proved on this card in Why it works.
+- **The bound is concave in the price:** proved on this card in Why it works.
+- **Strong duality under Slater's condition:** stated with its source. It is proved for one inequality on the [Slater's condition](05-slaters-condition-and-duality-gaps.md) card and in general in Boyd and Vandenberghe (section 5.3.2). The code certifies it for the pump plan.
 
 ### The picture: the bound at every price
 
@@ -84,7 +92,7 @@ The cost is in £ an hour, $f_1$ is the shortfall in litres a second, and $\lamb
 
 - **The price on an "at most" rule is at least zero.** Weak duality needs $\lambda f_1(x) \le 0$ for every legal plan: a legal plan has $f_1 \le 0$, so a non-negative price can only lower its priced cost. A negative price would reward a legal plan for its surplus, and the floor argument breaks.
 - **The minimum is over all plans, not just legal ones.** That is what makes $q$ easy to compute (each pump decides alone) and what makes it only a bound. Restrict the minimum to legal plans and $q$ is no easier than the problem itself.
-- **Strong duality needs convexity.** Replace pump 2 with a fixed-speed unit, off or at 70 kW, and the best bound stops at £44.40 while the best plan costs £46.54: a 4.60 percent gap no price closes.
+- **Strong duality needs convexity.** A convex cost curves upward or not at all, and a convex set of plans has no dents: the straight line between two legal plans stays legal ([Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md), [Convex sets](../01-Convexity/02-convex-sets.md)). Replace pump 2 with a fixed-speed unit, off or at 70 kW, and the best bound stops at £44.40 while the best plan costs £46.54: a 4.60 percent gap no price closes.
 - **Strong duality also needs a strictly feasible point** (Slater's condition): a plan that meets every inequality with room to spare. Here 50 kW on each pump delivers 175 litres a second, well over 140. Without such a point a convex problem can lose its best price, the bound only creeping up towards $p^\star$ ([Slater's condition](05-slaters-condition-and-duality-gaps.md)), and some convex problems even keep a gap.
 - **The model is a model.** Flow rising in a straight line with power, and cost as a square, are fitting assumptions for this card's numbers, not pump physics. The duality results hold for whatever $f_0$ and $f_1$ are; only the numbers depend on them.
 
@@ -146,7 +154,11 @@ The code tests this on every pair of 101 prices between 0 and 1: the bound at th
 
 ### Step 4: the slope of the hill is the shortfall
 
-At the trial price the pumps deliver 109 litres a second, 31 short. Raising the price a little makes both pumps run harder, and the bound rises at a rate equal to that shortfall: $q'(\lambda) = f_1\big(x(\lambda)\big)$. For prices above 0.20, with both pumps on, pump 1 delivers $2.0\,x_1(\lambda) = 320\lambda - 48$ litres a second and pump 2 delivers $1.5\,x_2(\lambda) = 300\lambda - 60$, so the shortfall is $140 - (320\lambda - 48) - (300\lambda - 60) = 248 - 620\lambda$. It falls by 620 litres a second for each unit of price (£1 an hour per litre a second), and the hill's top is where it is zero, $\lambda^\star = 248/620 = 0.40$. That gives the simplest way to climb, **dual ascent**: from a start $\lambda_0$, raise the price in proportion to the shortfall,
+At the trial price the pumps deliver 109 litres a second, 31 short. Raising the price a little makes both pumps run harder, and the bound rises at a rate equal to that shortfall: $q'(\lambda) = f_1\big(x(\lambda)\big)$.
+
+For prices above 0.20, with both pumps on, pump 1 delivers $2.0\,x_1(\lambda) = 320\lambda - 48$ litres a second and pump 2 delivers $1.5\,x_2(\lambda) = 300\lambda - 60$. So the shortfall is $140 - (320\lambda - 48) - (300\lambda - 60) = 248 - 620\lambda$. It falls by 620 litres a second for each unit of price (£1 an hour per litre a second), and the hill's top is where it is zero, $\lambda^\star = 248/620 = 0.40$.
+
+That gives the simplest way to climb, **dual ascent**: from a start $\lambda_0$, raise the price in proportion to the shortfall,
 
 $$\lambda_{k+1} = \max\big(0,\ \lambda_k + \alpha\, f_1(x(\lambda_k))\big).$$
 
@@ -571,6 +583,272 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves weak duality and concavity for every problem, and strong duality for the two pumps.
+
+- At every price of at least 0 on the "at most" rules, and any price on the equalities, $q(\lambda, \nu) \le p^\star$. So $d^\star \le p^\star$ too.
+- This needs no convexity. It holds when the minimum is only a greatest lower bound, and when no legal plan exists.
+- For any two prices and a weight $\theta$ between 0 and 1, the bound at the mixed price is at least the mixed bound. So $q$ is concave.
+- For the two pumps, with $x \ge 0$ kept inside the minimum, $q(\lambda)$ equals the card's formula at every price of at least 0.20.
+- At 40p the bound is £40.00, and both $p^\star$ and $d^\star$ are exactly £40.00.
+- The hand arithmetic holds exactly: trial and best prices, the plan (50, 50), the gap, the chart, the step factor and fixed-speed numbers.
+
+Slater's theorem in general stays with Boyd and Vandenberghe; the climb, shadow price and fixed-speed gap are left to the Python and Rust checks.
+
+```lean
+-- Lagrangian duality: every non-negative price on the constraints gives a lower bound on the best cost, the bound is concave in the prices, and for the card's two pumps the best bound meets the best cost at £40 an hour with the price 0.40.
+import Mathlib.Data.EReal.Basic
+import Mathlib.Data.EReal.Inv
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Finset
+
+namespace LagrangianDuality
+
+/-! ## The general problem
+
+Plans have type `E`; `S` is the set of allowed plans (for the pumps, both powers at least 0).
+`f0` is the cost to minimise, `f i x ≤ 0` (`i = 1, …, m`) are the "at most" rules and
+`h j x = 0` (`j = 1, …, p`) the equality rules. Values that may be unbounded live in `EReal`,
+the real line with `⊥ = -∞` and `⊤ = +∞`, so a minimum that is not reached is the greatest
+lower bound, and an infeasible problem has best cost `+∞`, as on the card. -/
+
+variable {E : Type*} {m p : ℕ}
+
+/-- The Lagrangian `L(x, lam, nu) = f0 x + Σ lam i * f i x + Σ nu j * h j x`: the priced cost. -/
+def lagrangian (f0 : E → ℝ) (f : Fin m → E → ℝ) (h : Fin p → E → ℝ)
+    (lam : Fin m → ℝ) (nu : Fin p → ℝ) (x : E) : ℝ :=
+  f0 x + ∑ i, lam i * f i x + ∑ j, nu j * h j x
+
+/-- The dual function `q(lam, nu)`: the lowest priced cost over every allowed plan, legal or not
+(the greatest lower bound in `EReal`). -/
+noncomputable def dualFn (S : Set E) (f0 : E → ℝ) (f : Fin m → E → ℝ) (h : Fin p → E → ℝ)
+    (lam : Fin m → ℝ) (nu : Fin p → ℝ) : EReal :=
+  ⨅ x ∈ S, ((lagrangian f0 f h lam nu x : ℝ) : EReal)
+
+/-- The legal plans: allowed, every "at most" rule `f i x ≤ 0` and every equality `h j x = 0`. -/
+def feasible (S : Set E) (f : Fin m → E → ℝ) (h : Fin p → E → ℝ) : Set E :=
+  {x | x ∈ S ∧ (∀ i, f i x ≤ 0) ∧ ∀ j, h j x = 0}
+
+/-- The best cost `p⋆`: the greatest lower bound of the cost over the legal plans
+(`+∞` when there are none). -/
+noncomputable def pStar (S : Set E) (f0 : E → ℝ) (f : Fin m → E → ℝ) (h : Fin p → E → ℝ) :
+    EReal :=
+  ⨅ x ∈ feasible S f h, ((f0 x : ℝ) : EReal)
+
+/-- The best bound `d⋆`: the highest the dual function gets over prices `lam ≥ 0` (entry by
+entry) and `nu` of any sign. -/
+noncomputable def dStar (S : Set E) (f0 : E → ℝ) (f : Fin m → E → ℝ) (h : Fin p → E → ℝ) :
+    EReal :=
+  ⨆ (lam : Fin m → ℝ) (_ : 0 ≤ lam) (nu : Fin p → ℝ), dualFn S f0 f h lam nu
+
+/-- Weak duality at one price (helper). -/
+theorem weak_aux (S : Set E) (f0 : E → ℝ) (f : Fin m → E → ℝ)
+    (h : Fin p → E → ℝ) (lam : Fin m → ℝ) (hlam : 0 ≤ lam) (nu : Fin p → ℝ) :
+    dualFn S f0 f h lam nu ≤ pStar S f0 f h := by
+  refine le_iInf₂ fun x hx => ?_
+  refine (iInf₂_le x hx.1).trans ?_
+  refine EReal.coe_le_coe_iff.2 ?_
+  obtain ⟨-, hf, hh⟩ := hx
+  have h1 : ∑ i, lam i * f i x ≤ 0 :=
+    Finset.sum_nonpos fun i _ => mul_nonpos_of_nonneg_of_nonpos (hlam i) (hf i)
+  have h2 : ∑ j, nu j * h j x = 0 := Finset.sum_eq_zero fun j _ => by simp [hh j]
+  simp only [lagrangian]
+  linarith
+
+/-- Weak duality (the card's main claim). For any problem at all, with no convexity: at every
+price `lam ≥ 0` on the "at most" rules and every price `nu` on the equalities, the dual
+function is a lower bound on the best cost, `q(lam, nu) ≤ p⋆`; so the best bound is too,
+`d⋆ ≤ p⋆`. -/
+theorem dual_function_le_best_cost (S : Set E) (f0 : E → ℝ) (f : Fin m → E → ℝ)
+    (h : Fin p → E → ℝ) :
+    (∀ (lam : Fin m → ℝ), 0 ≤ lam → ∀ nu : Fin p → ℝ, dualFn S f0 f h lam nu ≤ pStar S f0 f h) ∧
+      dStar S f0 f h ≤ pStar S f0 f h := by
+  exact ⟨fun lam hlam nu => weak_aux S f0 f h lam hlam nu,
+    iSup_le fun lam => iSup_le fun hlam => iSup_le fun nu => weak_aux S f0 f h lam hlam nu⟩
+
+/-- The dual function is always concave, again with no convexity of the problem: for any two
+prices `(lam, nu)`, `(lam', nu')` and any weight `θ` between 0 and 1, the bound at the mixed
+price is at least the mix of the two bounds,
+`θ q(lam, nu) + (1 - θ) q(lam', nu') ≤ q(θ lam + (1 - θ) lam', θ nu + (1 - θ) nu')`. -/
+theorem dual_function_concave (S : Set E) (f0 : E → ℝ) (f : Fin m → E → ℝ)
+    (h : Fin p → E → ℝ) (lam lam' : Fin m → ℝ) (nu nu' : Fin p → ℝ) (θ : ℝ)
+    (hθ0 : 0 ≤ θ) (hθ1 : θ ≤ 1) :
+    ((θ : ℝ) : EReal) * dualFn S f0 f h lam nu + ((1 - θ : ℝ) : EReal) * dualFn S f0 f h lam' nu'
+      ≤ dualFn S f0 f h (θ • lam + (1 - θ) • lam') (θ • nu + (1 - θ) • nu') := by
+  refine le_iInf₂ fun x hx => ?_
+  have e1 : dualFn S f0 f h lam nu ≤ ((lagrangian f0 f h lam nu x : ℝ) : EReal) := iInf₂_le x hx
+  have e2 : dualFn S f0 f h lam' nu' ≤ ((lagrangian f0 f h lam' nu' x : ℝ) : EReal) :=
+    iInf₂_le x hx
+  have hθ' : (0 : EReal) ≤ ((1 - θ : ℝ) : EReal) := EReal.coe_nonneg.2 (by linarith)
+  have hθ : (0 : EReal) ≤ ((θ : ℝ) : EReal) := EReal.coe_nonneg.2 hθ0
+  calc ((θ : ℝ) : EReal) * dualFn S f0 f h lam nu + ((1 - θ : ℝ) : EReal) * dualFn S f0 f h lam' nu'
+      ≤ ((θ : ℝ) : EReal) * ((lagrangian f0 f h lam nu x : ℝ) : EReal)
+        + ((1 - θ : ℝ) : EReal) * ((lagrangian f0 f h lam' nu' x : ℝ) : EReal) :=
+        add_le_add (mul_le_mul_of_nonneg_left e1 hθ) (mul_le_mul_of_nonneg_left e2 hθ')
+    _ = ((θ * lagrangian f0 f h lam nu x + (1 - θ) * lagrangian f0 f h lam' nu' x : ℝ) : EReal) := by
+        simp [EReal.coe_add, EReal.coe_mul]
+    _ = ((lagrangian f0 f h (θ • lam + (1 - θ) • lam') (θ • nu + (1 - θ) • nu') x : ℝ) : EReal) := by
+        congr 1
+        simp only [lagrangian, Pi.add_apply, Pi.smul_apply, smul_eq_mul, add_mul,
+          Finset.sum_add_distrib, mul_assoc, ← Finset.mul_sum]
+        ring
+
+/-! ## The pumps
+
+A plan is `x = (x1, x2)`, the two pump powers in kW, allowed when both are at least 0.
+Cost `f0(x) = 0.30 x1 + 0.00625 x1^2 + 0.30 x2 + 0.00375 x2^2` in £ an hour; the one rule is the
+shortfall `f1(x) = 140 - 2 x1 - 1.5 x2 ≤ 0` in litres a second; there are no equalities. -/
+
+/-- Allowed plans: both pump powers at least 0. -/
+def pumpPlans : Set (ℝ × ℝ) := {x | 0 ≤ x.1 ∧ 0 ≤ x.2}
+
+/-- The hourly running cost of the two pumps, £ an hour. -/
+def pumpCost (x : ℝ × ℝ) : ℝ := 0.30 * x.1 + 0.00625 * x.1 ^ 2 + 0.30 * x.2 + 0.00375 * x.2 ^ 2
+
+/-- The one "at most" rule: the shortfall below 140 litres a second. -/
+def pumpShortfall : Fin 1 → ℝ × ℝ → ℝ := fun _ x => 140 - 2 * x.1 - 1.5 * x.2
+
+/-- No equality rules. -/
+def noEq : Fin 0 → ℝ × ℝ → ℝ := ![]
+
+/-- Strong duality for the pumps (Step 5), with the card's formula for the bound. For every
+price `lam ≥ 0.20`, `q(lam) = 140 lam - (2 lam - 0.3)^2 / 0.025 - (1.5 lam - 0.3)^2 / 0.015`;
+at the price `0.40` the bound is £40; the best cost and the best bound are both £40. -/
+theorem pump_strong_duality :
+    (∀ lam : ℝ, 0.20 ≤ lam → dualFn pumpPlans pumpCost pumpShortfall noEq (fun _ => lam) ![] =
+        ((140 * lam - (2 * lam - 0.3) ^ 2 / 0.025 - (1.5 * lam - 0.3) ^ 2 / 0.015 : ℝ) : EReal)) ∧
+      dualFn pumpPlans pumpCost pumpShortfall noEq (fun _ => 0.40) ![] = 40 ∧
+      pStar pumpPlans pumpCost pumpShortfall noEq = 40 ∧
+      dStar pumpPlans pumpCost pumpShortfall noEq = 40 := by
+  have hq : ∀ lam : ℝ, 0.20 ≤ lam → dualFn pumpPlans pumpCost pumpShortfall noEq (fun _ => lam) ![] =
+        ((140 * lam - (2 * lam - 0.3) ^ 2 / 0.025 - (1.5 * lam - 0.3) ^ 2 / 0.015 : ℝ) : EReal) := by
+    intro lam hlam
+    have hL : ∀ x : ℝ × ℝ, lagrangian pumpCost pumpShortfall noEq (fun _ => lam) ![] x =
+        pumpCost x + lam * (140 - 2 * x.1 - 1.5 * x.2) := by
+      intro x
+      simp [lagrangian, pumpShortfall]
+    apply le_antisymm
+    · refine (iInf₂_le ((2 * lam - 0.3) / 0.0125, (1.5 * lam - 0.3) / 0.0075) ?_).trans ?_
+      · constructor
+        · show (0:ℝ) ≤ (2 * lam - 0.3) / 0.0125
+          apply div_nonneg <;> norm_num; linarith
+        · show (0:ℝ) ≤ (1.5 * lam - 0.3) / 0.0075
+          apply div_nonneg <;> norm_num; linarith
+      · refine le_of_eq (EReal.coe_eq_coe_iff.2 ?_)
+        rw [hL]
+        simp only [pumpCost]
+        ring
+    · refine le_iInf₂ fun x _ => EReal.coe_le_coe_iff.2 ?_
+      rw [hL]
+      simp only [pumpCost]
+      have key : 0.30 * x.1 + 0.00625 * x.1 ^ 2 + 0.30 * x.2 + 0.00375 * x.2 ^ 2
+            + lam * (140 - 2 * x.1 - 1.5 * x.2)
+          - (140 * lam - (2 * lam - 0.3) ^ 2 / 0.025 - (1.5 * lam - 0.3) ^ 2 / 0.015)
+          = 0.00625 * (x.1 - (2 * lam - 0.3) / 0.0125) ^ 2
+            + 0.00375 * (x.2 - (1.5 * lam - 0.3) / 0.0075) ^ 2 := by ring
+      have hpos : 0 ≤ 0.00625 * (x.1 - (2 * lam - 0.3) / 0.0125) ^ 2
+            + 0.00375 * (x.2 - (1.5 * lam - 0.3) / 0.0075) ^ 2 := by positivity
+      linarith
+  have h40 : dualFn pumpPlans pumpCost pumpShortfall noEq (fun _ => 0.40) ![] = 40 := by
+    rw [hq 0.40 (by norm_num)]
+    norm_num
+    rfl
+  have hp_le : pStar pumpPlans pumpCost pumpShortfall noEq ≤ 40 := by
+    refine (iInf₂_le ((40 : ℝ), (40 : ℝ)) ?_).trans (le_of_eq ?_)
+    · refine ⟨⟨by norm_num, by norm_num⟩, fun i => ?_, fun j => j.elim0⟩
+      simp [pumpShortfall]
+      norm_num
+    · simp only [pumpCost]
+      norm_num
+      rfl
+  have hp_ge : 40 ≤ pStar pumpPlans pumpCost pumpShortfall noEq := by
+    rw [← h40]
+    exact (dual_function_le_best_cost _ _ _ _).1 _ (fun _ => by norm_num) _
+  have hp : pStar pumpPlans pumpCost pumpShortfall noEq = 40 := le_antisymm hp_le hp_ge
+  refine ⟨hq, h40, hp, le_antisymm ?_ ?_⟩
+  · rw [← hp]
+    exact (dual_function_le_best_cost _ _ _ _).2
+  · rw [← h40]
+    exact le_iSup₂_of_le (fun _ => (0.40 : ℝ)) (fun _ => by norm_num)
+      (le_iSup_of_le ![] le_rfl)
+
+/-! ## Worked numbers, by hand (exact rationals) -/
+
+-- Trial price 0.35: pump 1 at (2.0 x 0.35 - 0.30) / 0.0125 = 32 kW, pump 2 at
+-- (1.5 x 0.35 - 0.30) / 0.0075 = 30 kW.
+example : (2 * 0.35 - 0.30 : ℚ) / 0.0125 = 32 ∧ (1.5 * 0.35 - 0.30 : ℚ) / 0.0075 = 30 := by
+  norm_num
+-- They deliver 64 + 45 = 109 L/s, short 31.
+example : (2 * 32 + 1.5 * 30 : ℚ) = 109 ∧ (140 - 109 : ℚ) = 31 := by norm_num
+-- Running cost f0(32, 30) = £28.375; bound 28.375 + 0.35 x 31 = £39.225.
+example : (0.30 * 32 + 0.00625 * 32 ^ 2 + 0.30 * 30 + 0.00375 * 30 ^ 2 : ℚ) = 28.375 ∧
+    (28.375 + 0.35 * 31 : ℚ) = 39.225 := by norm_num
+-- Pumps switch on above prices 0.30 / 2.0 = 0.15 and 0.30 / 1.5 = 0.20.
+example : (0.30 / 2 : ℚ) = 0.15 ∧ (0.30 / 1.5 : ℚ) = 0.20 := by norm_num
+-- Step 4: deliveries 2.0 x1(lam) = 320 lam - 48 and 1.5 x2(lam) = 300 lam - 60, so the
+-- shortfall is 248 - 620 lam.
+example (lam : ℚ) : 2 * ((2 * lam - 0.30) / 0.0125) = 320 * lam - 48 ∧
+    1.5 * ((1.5 * lam - 0.30) / 0.0075) = 300 * lam - 60 ∧
+    140 - (320 * lam - 48) - (300 * lam - 60) = 248 - 620 * lam := by
+  norm_num
+  refine ⟨by ring, by ring, by ring⟩
+-- The best price: 248 / 620 = 0.40, where both pumps run at 0.50 / 0.0125 = 0.30 / 0.0075 = 40 kW.
+example : (248 / 620 : ℚ) = 0.40 ∧ (0.50 / 0.0125 : ℚ) = 40 ∧ (0.30 / 0.0075 : ℚ) = 40 := by
+  norm_num
+-- At (40, 40): 80 + 60 = 140 L/s, exactly the demand, and the cost is £40.00.
+example : (2 * 40 + 1.5 * 40 : ℚ) = 140 ∧
+    (0.30 * 40 + 0.00625 * 40 ^ 2 + 0.30 * 40 + 0.00375 * 40 ^ 2 : ℚ) = 40 := by norm_num
+-- The strictly feasible plan (50, 50): 175 L/s at £55.00 an hour.
+example : (2 * 50 + 1.5 * 50 : ℚ) = 175 ∧
+    (0.30 * 50 + 0.00625 * 50 ^ 2 + 0.30 * 50 + 0.00375 * 50 ^ 2 : ℚ) = 55 := by norm_num
+-- Gap at the trial price: 40 - 39.225 = 0.775 = 310 x 0.05^2, which is 1.9375 percent of 40.
+example : (40 - 39.225 : ℚ) = 0.775 ∧ (310 * 0.05 ^ 2 : ℚ) = 0.775 ∧
+    (0.775 / 40 * 100 : ℚ) = 1.9375 := by norm_num
+-- Dual ascent with step 0.001 shrinks the distance by 1 - 620 x 0.001 = 0.38; it diverges past
+-- step 2 / 620 = 1 / 310.
+example : (1 - 620 * 0.001 : ℚ) = 0.38 ∧ (2 / 620 : ℚ) = 1 / 310 := by norm_num
+-- The chart: q(lam) = 140 lam - (2 lam - 0.3)^2 / 0.025 - (1.5 lam - 0.3)^2 / 0.015 at
+-- 0.20, 0.25, ..., 0.60 gives 27.600 33.025 36.900 39.225 40.000 39.225 36.900 33.025 27.600.
+example : ([0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60] : List ℚ).map
+      (fun lam => 140 * lam - (2 * lam - 0.3) ^ 2 / 0.025 - (1.5 * lam - 0.3) ^ 2 / 0.015) =
+    [27.600, 33.025, 36.900, 39.225, 40.000, 39.225, 36.900, 33.025, 27.600] := by
+  norm_num
+-- What breaks: pump 2 fixed at 70 kW costs 21 + 18.375 = £39.375 and lifts 105 L/s; pump 1 then
+-- runs at 17.5 kW, and the best plan costs £46.5390625 (pump 1 alone would cost £51.625).
+example : (0.30 * 70 + 0.00375 * 70 ^ 2 : ℚ) = 39.375 ∧ (1.5 * 70 : ℚ) = 105 ∧
+    ((140 - 105) / 2 : ℚ) = 17.5 ∧
+    (39.375 + 0.30 * 17.5 + 0.00625 * 17.5 ^ 2 : ℚ) = 46.5390625 ∧
+    (0.30 * 70 + 0.00625 * 70 ^ 2 : ℚ) = 51.625 := by norm_num
+-- Its best bound is £44.40 at the price 0.375: pump 1 at 36 kW, and pump 2's priced cost
+-- 39.375 - 0.375 x 105 is 0.
+example : ((2 * 0.375 - 0.30) / 0.0125 : ℚ) = 36 ∧ (39.375 - 0.375 * 105 : ℚ) = 0 ∧
+    (0.375 * 140 + 0.30 * 36 + 0.00625 * 36 ^ 2 - 0.375 * 2 * 36 : ℚ) = 44.4 := by norm_num
+
+#print axioms weak_aux
+#print axioms dual_function_le_best_cost
+#print axioms dual_function_concave
+#print axioms pump_strong_duality
+
+end LagrangianDuality
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LagrangianDuality.weak_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LagrangianDuality.dual_function_le_best_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LagrangianDuality.dual_function_concave' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LagrangianDuality.pump_strong_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Some asserts are pinned to this card's pumps, so a change may stop the program at an assert after everything is printed.
@@ -598,7 +876,7 @@ The two outputs match line for line.
 - **Electricity markets.** A market's clearing price is the multiplier on the demand balance in the dispatch problem, exactly as $\lambda^\star$ is here. Generators that must run at a fixed minimum or not at all leave a gap, which markets cover with side payments.
 - **Interior point solvers.** They carry a plan and a price together and stop when the duality gap is below a tolerance; that gap is the certificate they print ([Interior point methods](08-interior-point-methods.md)).
 - **Machine learning.** A support vector machine is trained by solving its dual, where the prices pick out the few points that hold up the margin.
-- **Integer programs.** Weak duality needs no convexity, so pricing an awkward rule of an integer program still gives a bound for branch-and-bound to prune with, gap and all.
+- **Integer programs.** Weak duality needs no convexity, so pricing an awkward rule of an integer program still gives a bound for branch-and-bound to prune with, gap and all. Branch-and-bound splits the problem into cases and drops any case whose bound is already worse than a plan in hand ([Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md)).
 
 > **Say it back**
 > Put a price on breaking each constraint and let the plan be anything: the cheapest priced cost is a floor under the true best, for every non-negative price on an "at most" rule. That floor, as a function of the price, is concave, so it can be climbed by raising the price in proportion to the shortfall. For a convex problem with a plan that meets every inequality with room to spare, the top of the climb equals the best cost. For the two pumps, 35p gives a floor of £39.225 an hour, within 1.94 percent, and 40p gives £40.00, the cost of running each pump at 40 kW. The best price, 40p, is also what one more litre a second of demand costs an hour.
@@ -616,7 +894,7 @@ The two outputs match line for line.
 - [Interior point methods](08-interior-point-methods.md): an algorithm that shrinks the duality gap on purpose, and stops on it.
 - [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md): the same theory for linear programs, where the dual is another linear program and the gap closes whenever both sides are feasible.
 - [Support vector machines](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/03-support-vector-machines-as-a-quadratic-program.md): a classifier trained by solving its dual.
-- [Lagrange multipliers, proved](01-lagrange-multipliers-revisited.md): the game-theory form of the same max-min exchange.
+- [Nash equilibrium](../../14-Applied%20and%20computational/05-Operations%20Research/09-game-theory-and-nash-equilibrium.md): zero-sum games, where one player's best guarantee meets the other's best hold. It is the game-theory form of the same max-min exchange.
 
 The question this card leaves open: when the gap does not close, as with the fixed-speed pump, what is the best way to use the floor, and how much of the gap can a better formulation remove?
 
