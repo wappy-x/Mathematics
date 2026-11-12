@@ -86,7 +86,7 @@ Take any plan that fits, tight or not. Its profit is $c_1 x_1 + c_2 x_2$. Replac
 
 $$c_1 x_1 + c_2 x_2 = y_1(2x_1 + x_2) + y_2(10x_1 + 15x_2) \le y_1 \cdot 60 + y_2 \cdot 600 = 1{,}260.$$
 
-The "at most" holds because each bracket is at most its limit and each $y$ is zero or more. So no plan beats £1,260. Prices that are all zero or more, and cover every margin, are a certificate: they prove the plan is best without checking any other corner. Finding such prices is itself a linear program, the **dual** (minimise $60y_1 + 600y_2 + 30y_3$ while every product's margin is covered). Its best value equals the bakery's best profit. The theory behind that equality is [Scheduling](04-scheduling-and-the-critical-path.md), on the optimisation wing. The calculus wing reaches the same price for curved problems: a shadow price is the [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md) card's multiplier, read off a straight-line model.
+The "at most" holds because each bracket is at most its limit and each $y$ is zero or more. So no plan beats £1,260. Prices that are all zero or more, and cover every margin, are a certificate: they prove the plan is best without checking any other corner. Finding such prices is itself a linear program, the **dual** (minimise $60y_1 + 600y_2 + 30y_3$ while every product's margin is covered). Its best value equals the bakery's best profit. The theory behind that equality is [LP duality](../../15-Optimization/04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md), on the optimisation wing. The calculus wing reaches the same price for curved problems: a shadow price is the [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md) card's multiplier, read off a straight-line model.
 
 ### Step 4: a limit with slack has price zero
 
@@ -635,8 +635,8 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [Integer programs](03-integer-programming-and-branch-and-bound.md): when batches or depots must be whole numbers, the relaxed program's prices still guide the search, but they no longer price a limit exactly.
-- [Integer programs](03-integer-programming-and-branch-and-bound.md): the optimisation wing's treatment, with prices for curved and many-limit problems.
-- [Scheduling](04-scheduling-and-the-critical-path.md): the dual program as a theorem: why its best value always equals the original's, and how the simplex method finds both at once.
+- Shadow prices (planned): the optimisation wing's treatment, with prices for curved and many-limit problems.
+- [LP duality](../../15-Optimization/04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md): the dual program as a theorem: why its best value always equals the original's, and how the simplex method finds both at once.
 
 This card leaves open what to do when the limits themselves are uncertain, so that the prices one plan relies on may not be the ones that turn up.
 

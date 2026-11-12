@@ -1116,7 +1116,7 @@ example : 2 * 240 * 20 ^ 2 - 2 * 20 ^ 3 / 3 = 186667 := by decide
 
 - [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): the next card, for systems too large to factor, where an SVD is out of reach.
 - [Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md): storing only the nonzeros, and Krylov methods such as GMRES that solve large sparse systems from products alone; the same Arnoldi basis also finds a few eigenvalues.
-- [LU with partial pivoting](02-lu-decomposition-and-pivoting.md): the SVD for operators on functions, where singular values fall to zero and truncation becomes regularisation.
+- Compact operators (planned): the SVD for operators on functions, where singular values fall to zero and truncation becomes regularisation.
 
 The question this card leaves open: when the singular values fall smoothly with no gap, where should the cut go?
 

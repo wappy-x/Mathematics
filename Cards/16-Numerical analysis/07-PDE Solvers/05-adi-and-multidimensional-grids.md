@@ -841,7 +841,7 @@ example : 999 ^ 2 = 998001 ∧ 4 * 998001 * 999 = 3988011996 ∧
 
 ## Where this goes next
 
-- [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md): the general idea behind ADI, breaking an operator into pieces that are easy to step one at a time, and what the order of the pieces costs.
+- Splitting (planned): the general idea behind ADI, breaking an operator into pieces that are easy to step one at a time, and what the order of the pieces costs.
 - [Finite elements](07-finite-elements-galerkin-and-hat-functions.md): the weak form and hat functions, on a cable in one dimension.
 - [Assembly and error](08-finite-element-assembly-and-error.md): the same method stated on triangles, the usual road for plates whose edges are not straight.
 - [Spectral methods](10-spectral-methods-and-the-fft.md): the fast Fourier transform splits grid values into waves that each step on their own, on a heated ring. Sine waves do the same for this card's five-point system.

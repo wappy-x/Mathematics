@@ -581,7 +581,7 @@ The two outputs match line for line. The simulated Lisbon bill, 2.249970 bits a 
 ## Where this goes next
 
 - [Rate and distortion](10-lossy-compression-and-rate-distortion-in-outline.md): when some error in the readings is allowed, the fewest bits per reading is a minimised mutual information, which is a divergence.
-- [Entropy](01-entropy.md): the cross-entropy as the training loss of a network that turns scores into chances.
+- [Softmax and cross-entropy](../06-Machine%20Learning%20Mathematics/05-softmax-and-cross-entropy-for-classification.md): the cross-entropy as the training loss of a network that turns scores into chances.
 
 The divergence measures how far a model sits from the data; how many days of data it takes before the fitted table can be trusted to a given divergence is the question this card leaves open.
 

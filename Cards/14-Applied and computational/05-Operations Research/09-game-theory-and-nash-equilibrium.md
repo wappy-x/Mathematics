@@ -146,7 +146,7 @@ The square is to scale: 0 to 1 on each side, the crossing at (0.383, 0.417).
 
 Nash proved in 1950 that every game with finitely many players and plain choices has at least one equilibrium once mixes are allowed. His proof uses a fixed-point theorem and is not repeated here. The penalty shows why mixes are needed: without them, this game has none.
 
-In a game like the penalty, where one side's gain is the other's loss (a **zero-sum** game), a second fact holds. The best scoring chance the kicker can guarantee, whatever the keeper does, equals the lowest the keeper can hold the kicker to, whatever the kicker does. Both are 79.58%, and the code finds them by brute force. That this always happens is the minimax theorem, the subject of [Linear programs](01-modelling-with-linear-programs.md).
+In a game like the penalty, where one side's gain is the other's loss (a **zero-sum** game), a second fact holds. The best scoring chance the kicker can guarantee, whatever the keeper does, equals the lowest the keeper can hold the kicker to, whatever the kicker does. Both are 79.58%, and the code finds them by brute force. That this always happens is the minimax theorem, the subject of [Saddle points](../../15-Optimization/03-Constrained%20Optimisation/06-saddle-points-and-minimax.md).
 
 ---
 
@@ -544,7 +544,7 @@ The two outputs match line for line. Fictitious play misses the formula by 0.002
 ## Where this goes next
 
 - [Auctions](10-auctions-and-mechanism-design.md): equilibrium bidding, and how a seller designs the rules so that the equilibrium is the outcome they want.
-- [Linear programs](01-modelling-with-linear-programs.md): the minimax theorem, which proves that in every zero-sum game the kicker's best guarantee equals the keeper's best hold, as the grid found at 79.58%.
+- [Saddle points](../../15-Optimization/03-Constrained%20Optimisation/06-saddle-points-and-minimax.md): the minimax theorem, which proves that in every zero-sum game the kicker's best guarantee equals the keeper's best hold, as the grid found at 79.58%.
 
 The card leaves open which equilibrium players reach when a game has several, as the vicious price war does.
 

@@ -1013,7 +1013,7 @@ example : 4 + 4 = 8 ∧ 2 + 5 = 7 ∧ 2 + 29 = 31 := by decide
 - [Newton's bad days](04-when-newton-fails.md): double roots, overshoot, and starts that never settle, where the laws above do not apply.
 - [Fixed points](06-fixed-point-iteration-and-contraction.md): Newton and the secant as rules of the form "next guess = rule(current guess)", and the contraction that makes such rules converge.
 - [Every root at once](08-polynomial-roots-and-companion-matrices.md): every root of a polynomial together, complex ones included; $x^3 - 2$ has two more roots, both complex.
-- [Bisection](01-bisection-and-bracketing.md): the secant step on a launch angle, where each function value is a whole simulation.
+- [Two-point boundary problems](../06-ODE%20Solvers/07-boundary-value-problems-shooting-and-collocation.md): the secant step on a launch angle, where each function value is a whole simulation.
 
 Left open: neither law says how close the start must be, so how can a method keep this speed without the risk of running away?
 

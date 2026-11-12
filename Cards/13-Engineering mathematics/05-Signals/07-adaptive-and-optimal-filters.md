@@ -611,7 +611,7 @@ The outputs agree line for line. Wiener from the averages gives (0.8, 0.4) exact
 ## Where this goes next
 
 - [Compressed sensing](10-compressed-sensing-in-outline.md): another way of recovering a signal from measurements, using the fact that it is mostly zeros rather than a known correlation.
-- [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): the downhill walk of Step 3 on any smooth bowl, not just a quadratic one.
+- Gradient descent (planned): the downhill walk of Step 3 on any smooth bowl, not just a quadratic one.
 
 The open question: when the noise path changes faster than LMS can follow, how much faster can a smarter update, such as recursive least squares, learn, and at what cost per sample?
 

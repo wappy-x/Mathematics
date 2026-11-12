@@ -582,9 +582,9 @@ The two outputs are identical, line for line.
 ## Where this goes next
 
 - [Scheduling](04-scheduling-and-the-critical-path.md): the next card. Jobs, their order and the critical path; deciding which of two jobs goes first on one oven is itself a yes-or-no variable.
-- [Shadow prices](02-shadow-prices-and-sensitivity.md): the optimisation wing's full treatment, adding cutting planes, extra limits that slice off fractional corners before branching.
-- [Scheduling](04-scheduling-and-the-critical-path.md): the modelling tricks above in full, including limits that a binary switches on and off.
-- [The assignment problem](05-assignment-and-the-hungarian-algorithm.md): branching and node rules, and why the tree can grow exponentially in the worst case.
+- Integer programs (planned): the optimisation wing's full treatment, adding cutting planes, extra limits that slice off fractional corners before branching.
+- [Yes-or-no variables](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/02-modelling-with-binary-variables-big-m-and-indicators.md): the modelling tricks above in full, including limits that a binary switches on and off.
+- [Branch and bound](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/03-branch-and-bound.md): branching and node rules, and why the tree can grow exponentially in the worst case.
 
 This card leaves open why some integer programs have tiny gaps and solve in seconds, while others of the same size have large gaps and resist every solver.
 

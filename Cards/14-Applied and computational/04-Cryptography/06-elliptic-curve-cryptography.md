@@ -597,7 +597,7 @@ ALL CHECKS PASS
 
 - [Digital signatures](07-digital-signatures.md): what any signature promises, with ECDSA as one scheme among several.
 - [Lattices](09-lattices-and-post-quantum-cryptography.md): the replacement when a quantum computer could undo kP.
-- [The one-time pad](01-one-time-pad-and-perfect-secrecy.md): how standard curves are chosen and checked against the special weaknesses.
+- Curves for keys (planned): how standard curves are chosen and checked against the special weaknesses.
 
 The open question this card leaves: is the square-root attack really the best possible on a well-chosen curve, or does a classical shortcut exist that nobody has found?
 

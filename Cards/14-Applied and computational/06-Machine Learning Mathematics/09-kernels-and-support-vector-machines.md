@@ -618,7 +618,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- [Gradient descent](02-gradient-descent-and-stochastic-gradient.md): the same problem in the optimisation wing, as a quadratic program, with the KKT conditions proved and the solver's convergence shown.
+- Support vector machines (planned): the same problem in the optimisation wing, as a quadratic program, with the KKT conditions proved and the solver's convergence shown.
 
 This card leaves open how to choose C and the kernel's reach without wasting data, and how to train on all 20,000 orders when the kernel table alone fills 3.2 GB.
 

@@ -800,7 +800,7 @@ example : !![(-24 : ℚ), 25; 25, -25] *ᵥ ![-1/10, 1/10] = ![49/10, -5] := by
 - [LU with partial pivoting](02-lu-decomposition-and-pivoting.md): the backward stable way to solve A x = b, whose error is then set by κ, as Step 4 assumed.
 - [QR](05-qr-householder-and-gram-schmidt.md): factoring with length-keeping turns, which leave κ₂ unchanged.
 - [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): methods whose number of steps grows with κ.
-- [The Thomas algorithm](03-tridiagonal-systems-and-the-thomas-algorithm.md): the same worst-stretch norm for maps on spaces with infinitely many directions.
+- Bounded operators (planned): the same worst-stretch norm for maps on spaces with infinitely many directions.
 
 The open question: Step 5 names Hager's method, which estimates ‖A⁻¹‖₁ from a few extra solves with the factors, but not how it works. How does it choose those solves, and how close does its estimate come to the true κ?
 

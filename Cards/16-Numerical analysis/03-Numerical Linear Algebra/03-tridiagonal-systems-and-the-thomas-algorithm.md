@@ -1073,7 +1073,7 @@ example : pivot (fun _ => 1) (fun i => if i = 2 then 1 + 1 / 10 ^ 12 else 1) (fu
 ## Where this goes next
 
 - [Cubic splines](../04-Interpolation%20and%20Approximation/05-splines.md): the curvature system with 4 on the diagonal, solved by this sweep.
-- [LU with partial pivoting](02-lu-decomposition-and-pivoting.md): implicit time steps that each cost one sweep.
+- [Crank-Nicolson and the theta family](../07-PDE%20Solvers/04-crank-nicolson-and-theta-methods.md): implicit time steps that each cost one sweep.
 - [Cholesky](04-cholesky-decomposition.md): the rod's matrix is also symmetric positive definite, and Cholesky on a band is the other safe route.
 - [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): for systems whose band is too wide to factor cheaply.
 

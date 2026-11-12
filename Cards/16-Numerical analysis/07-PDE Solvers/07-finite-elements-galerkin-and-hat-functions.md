@@ -1305,10 +1305,10 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 ## Where this goes next
 
 - [Assembly and error](08-finite-element-assembly-and-error.md): element matrices added into one sparse system, fixed and free ends, and the error estimate in general.
-- [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md): the method with any family of trial and test shapes, including different ones (Petrov-Galerkin).
-- [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md): why the weak form has exactly one solution whenever the pairing is bounded and positive.
-- [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md): what $y'$ means for a curve with corners, made precise.
-- [Two space dimensions](05-adi-and-multidimensional-grids.md): problems whose only solutions are weak ones, such as a cable under a point load.
+- Galerkin (planned): the method with any family of trial and test shapes, including different ones (Petrov-Galerkin).
+- Lax-Milgram (planned): why the weak form has exactly one solution whenever the pairing is bounded and positive.
+- Weak derivatives (planned): what $y'$ means for a curve with corners, made precise.
+- Weak solutions (planned): problems whose only solutions are weak ones, such as a cable under a point load.
 
 The proof here bounds the energy error, but the node heights fell twice as fast: what makes the heights more accurate than the slopes?
 

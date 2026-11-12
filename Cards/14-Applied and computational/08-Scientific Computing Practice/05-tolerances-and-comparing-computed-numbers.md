@@ -598,7 +598,7 @@ The two outputs match line for line. Both languages store and add numbers by the
 ## Where this goes next
 
 - [Two roads and a mutation](06-testing-numerical-code-two-roads-and-mutations.md): a tolerance passes correct code; that card shows the check also fails when the maths is broken on purpose.
-- [Floating point](01-floating-point-in-practice.md): choosing a stopping tolerance for an iteration, where the noise is the method's own error rather than rounding.
+- [When to stop](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/03-stopping-criteria-and-error-estimates.md): choosing a stopping tolerance for an iteration, where the noise is the method's own error rather than rounding.
 - Also on this shelf: [Seeds](03-reproducible-simulation-and-seeds.md) fixes a simulation's random numbers so its tolerance can be stated, [Cost in practice](04-computational-cost-and-vectorisation.md) counts the operations that set $n$, and [The check script](07-writing-a-check-script.md) holds numbers as printed on a card to half a unit in their last digit, the printed-number branch of this rule.
 
 The question this card leaves open is what to do when the window is empty: when the noise of a long computation reaches the size of the mistakes that matter.

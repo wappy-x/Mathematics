@@ -647,8 +647,8 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [Tolerances](05-tolerances-and-comparing-computed-numbers.md): once a result carries known error, an equality test must allow for it. That card turns this card's bounds into the tolerance an assert should use.
-- [Seeds](03-reproducible-simulation-and-seeds.md): the numerical analysis wing's full error analysis, with backward error and the general condition number of a problem.
-- [Cost in practice](04-computational-cost-and-vectorisation.md): pairwise summation, Kahan's method and their proved bounds side by side.
+- [Machine epsilon and cancellation](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md): the numerical analysis wing's full error analysis, with backward error and the general condition number of a problem.
+- [Adding a million numbers without losing the small ones](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/07-summation-kahan-and-welford.md): pairwise summation, Kahan's method and their proved bounds side by side.
 
 The question left open: given any formula, how do you find its condition number before you run it, rather than after a second road disagrees?
 

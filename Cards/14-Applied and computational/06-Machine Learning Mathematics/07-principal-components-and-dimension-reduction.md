@@ -582,7 +582,7 @@ The two outputs match line for line.
 
 - [EM](08-em-algorithm.md): hidden groups fitted as a mixture, each order given a share of responsibility; there, weekly and top-up shoppers in one spend histogram.
 - [Support vector machines](09-kernels-and-support-vector-machines.md): kernels, which bend a straight boundary into a curve; the same swap gives kernel principal components.
-- [Loss and empirical risk](01-loss-functions-and-empirical-risk.md): computing the components stably from very large tables.
+- [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): computing the components stably from very large tables.
 
 The 85% target is a convention; whether four components keep the variation that matters for a given decision, such as predicting returns, is a question principal components cannot answer, because they never look at the outcome.
 

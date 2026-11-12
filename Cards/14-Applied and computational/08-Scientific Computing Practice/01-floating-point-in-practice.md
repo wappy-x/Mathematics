@@ -624,8 +624,8 @@ The two outputs are identical, down to the last digit of the random test. That i
 - [Cancellation](02-catastrophic-cancellation-and-safe-formulas.md): subtracting nearly equal numbers, the one place a single operation loses most of its digits, and the rewrites that avoid it.
 - [Cost in practice](04-computational-cost-and-vectorisation.md): counting operations. Arrays may add in a different order from a loop, so their sums differ in the last bits.
 - [Tolerances](05-tolerances-and-comparing-computed-numbers.md): how to compare two computed numbers, with a tolerance sized by the error bounds on this card.
-- [Seeds](03-reproducible-simulation-and-seeds.md): the full standard, with subnormal numbers, the other rounding modes and exceptions.
-- [Cost in practice](04-computational-cost-and-vectorisation.md): the error analysis of whole algorithms, built on the one-operation promise.
+- [IEEE 754](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/02-ieee-floating-point.md): the full standard, with subnormal numbers, the other rounding modes and exceptions.
+- [Machine epsilon and cancellation](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md): the error analysis of whole algorithms, built on the one-operation promise.
 
 The promise covers one operation; how far a whole calculation can drift depends on the order of its steps, which is the question the error analysis of algorithms takes up.
 

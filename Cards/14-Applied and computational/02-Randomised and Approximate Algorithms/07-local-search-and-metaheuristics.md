@@ -593,8 +593,8 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- [Tail bounds](02-tail-bounds-and-repeated-trials.md): local search methods that do come with a bound on how far from the best they can stop.
-- [Fair choices from a list you cannot hold](03-shuffling-and-reservoir-sampling.md): the same walk on continuous settings, such as tuning a dial, where no gradient is available.
+- [Heuristics with a promise](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/08-heuristics-and-approximation-guarantees.md): local search methods that do come with a bound on how far from the best they can stop.
+- [Search without derivatives](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/09-derivative-free-and-metaheuristic-search.md): the same walk on continuous settings, such as tuning a dial, where no gradient is available.
 
 The question this card leaves open is how to know, on a problem with no known floor, when to stop searching.
 

@@ -624,7 +624,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Training neural networks.** Mini-batch gradient descent with momentum, or a close relative, fits nearly every network in use, from image recognisers to language models. The gradient itself comes from [Backpropagation](04-backpropagation.md).
+- **Training neural networks.** Mini-batch gradient descent with momentum, or a close relative, fits nearly every network in use, from image recognisers to language models. The gradient itself comes from [Stochastic gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md).
 - **Click and recommendation models.** Shops and streaming services refit scoring models on billions of logged events; no computer reads them all for every step, so batches are the only practical road.
 - **Echo cancellers and noise-cancelling headsets.** The least-mean-squares filter steps after every sample, a batch of one, and keeps tracking as the room or the engine changes ([Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md)).
 - **Classifiers scored in bits.** The same walk minimises the cross-entropy loss of [Softmax and cross-entropy](05-softmax-and-cross-entropy-for-classification.md); only the gradient formula changes.
@@ -646,9 +646,9 @@ The two outputs match line for line.
 
 - [The perceptron and its stack](03-perceptron-and-neural-networks.md): single units that learn by a mistake-driven step, and how layers of them draw boundaries one line cannot.
 - [k-means](06-k-means-and-clustering.md): another fit by repeated improving steps, this time by taking turns instead of following a gradient.
-- [The perceptron and its stack](03-perceptron-and-neural-networks.md): the optimisation wing's proofs of the rates for smooth and convex losses in general.
-- [Backpropagation](04-backpropagation.md): shrinking steps, and the proof that the noisy walk reaches the bottom.
-- [Softmax and cross-entropy](05-softmax-and-cross-entropy-for-classification.md): the accelerated rates sketched in Step 4, and step sizes that adapt for each weight.
+- Gradient descent (planned): the optimisation wing's proofs of the rates for smooth and convex losses in general.
+- [Stochastic gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): shrinking steps, and the proof that the noisy walk reaches the bottom.
+- [Momentum and Adam](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/09-momentum-adam-and-step-size-schedules.md): the accelerated rates sketched in Step 4, and step sizes that adapt for each weight.
 
 On a loss that is not a bowl, with many dips and flat ridges, what does the noise in a batch gradient do to where the walk ends up?
 

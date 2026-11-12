@@ -679,7 +679,7 @@ example : (10 ^ 7 : ℚ) * (1 / 10) = 10 ^ 6 := by norm_num
 ## Where this goes next
 
 - [Conditioning and stability](05-conditioning-and-stability.md): the third error source, input error magnified by the problem, and whether an algorithm keeps its own rounding small.
-- [Absolute and relative error](01-absolute-and-relative-error.md): where the bottom of the V sits, and the square-root and cube-root rules for finding it.
+- [Choosing the step](../08-Derivatives%20by%20Machine/04-choosing-the-step-truncation-against-rounding.md): where the bottom of the V sits, and the square-root and cube-root rules for finding it.
 
 This card shows how to recognise the crossover after a run; it leaves open how to predict the best step before one.
 

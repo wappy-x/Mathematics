@@ -623,7 +623,7 @@ ALL CHECKS PASS
 
 ## Where this goes next
 
-- [Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md): matching workers to jobs at least total cost, which builds on the flows and shortest paths here.
+- [The assignment problem](../05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): matching workers to jobs at least total cost, which builds on the flows and shortest paths here.
 
 Every cost on this card is a worst case, or counted on one synthetic city. Whether a heuristic like A*'s can be built with a guaranteed saving on real road maps is a question this card leaves open.
 

@@ -551,8 +551,8 @@ sampling rate   Butterworth order for 96.33 dB above the stop edge
 - [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): road 3 done properly, a block of readings turned into a list of frequencies, fast.
 - [Changing rate](05-resampling-decimation-and-interpolation.md): oversampling's second half, filtering digitally and dropping readings without aliasing.
 - Poisson summation and sampling (planned): Step 2's copies of the spectrum, proved, and sampling of signals in a band away from zero.
-- [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): the same theorem seen from functional analysis, where a row of spikes explains why evenly spaced readings suffice.
-- [Windows](03-windows-and-spectral-leakage.md): the transform used to solve differential equations, where taking a derivative becomes multiplying each frequency's amount by a number.
+- Sampling (planned): the same theorem seen from functional analysis, where a row of spikes explains why evenly spaced readings suffice.
+- [Spectral methods](../../16-Numerical%20analysis/07-PDE%20Solvers/10-spectral-methods-and-the-fft.md): the transform used to solve differential equations, where taking a derivative becomes multiplying each frequency's amount by a number.
 
 A real recording stops, so it is never exactly band-limited: how much error does cutting the sinc sum short leave, and how should the edges be tapered?
 

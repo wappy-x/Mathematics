@@ -985,7 +985,7 @@ example : (∏ k ∈ Finset.range 20, (X - C ((k : ℤ) + 1))).eval 0 = 24329020
 
 ## Where this goes next
 
-- [When to stop](03-stopping-criteria-and-error-estimates.md): systems of several polynomial equations in several unknowns, where the solutions again come out as eigenvalues of a matrix built from the equations.
+- Finitely many solutions (planned): systems of several polynomial equations in several unknowns, where the solutions again come out as eigenvalues of a matrix built from the equations.
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](07-newton-for-systems-and-broyden.md): the one-root-at-a-time road in many variables, where no companion matrix is available.
 
 Left open: the companion matrix is backward stable only in a norm sense, so how can a solver guarantee a small change to each coefficient separately?

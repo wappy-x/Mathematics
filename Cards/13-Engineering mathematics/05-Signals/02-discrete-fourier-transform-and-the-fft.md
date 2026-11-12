@@ -589,7 +589,7 @@ The two outputs match line for line.
 
 - [Windows](03-windows-and-spectral-leakage.md): tapering the block so a tone between bins stops leaking across the spectrum.
 - [Compressed sensing](10-compressed-sensing-in-outline.md): recovering a spectrum with only a few strong bins from far fewer samples than the block length.
-- [Sampling](01-sampling-and-the-nyquist-theorem.md): other splittings, by 3, 5 or any factor, and transforms of lengths that are not powers of two.
+- [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md): other splittings, by 3, 5 or any factor, and transforms of lengths that are not powers of two.
 
 The long block named the strings to within 1.25 Hz, but a tuner needs a few cents, a small fraction of a bin: how can a peak be placed between bins without waiting ten seconds for a longer record?
 

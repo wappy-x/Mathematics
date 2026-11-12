@@ -540,7 +540,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [The check script](07-writing-a-check-script.md): the asserts, roads and printed outputs that every card's script carries, including this one's.
-- [Floating point](01-floating-point-in-practice.md): turning a loop into a cost formula line by line.
+- [Counting the work](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md): turning a loop into a cost formula line by line.
 
 This card counts steps and operations but prices neither: how large s and e really are on a given machine, and what memory traffic adds, is left open.
 

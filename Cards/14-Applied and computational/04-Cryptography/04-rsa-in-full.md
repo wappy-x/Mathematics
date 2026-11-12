@@ -637,7 +637,7 @@ The two outputs match line for line.
 
 - [Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md): the next card. Two parties agree a secret in public, with a different hard problem underneath.
 - Average-case hardness (planned): why "hard" must mean hard for random keys, not just for the worst one.
-- [The one-time pad](01-one-time-pad-and-perfect-secrecy.md): where factoring sits among hard problems, and why no proof of its hardness exists.
+- P versus NP (planned): where factoring sits among hard problems, and why no proof of its hardness exists.
 
 The question this card leaves open: is decrypting without d really as hard as splitting n, and is splitting n really hard?
 

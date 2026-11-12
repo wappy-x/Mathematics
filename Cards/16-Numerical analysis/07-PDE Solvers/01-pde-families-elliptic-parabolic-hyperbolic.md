@@ -815,7 +815,7 @@ example : 19 ^ 2 = 361 := by norm_num
 ## Where this goes next
 
 - [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md): why a grid answer converges to the true one: consistency plus stability.
-- [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md): characteristics and well-posedness for each family, in the PDE wing.
+- Elliptic, parabolic, hyperbolic (planned): characteristics and well-posedness for each family, in the PDE wing.
 
 Left open: the step limits came from one wave at a time on a uniform bar. Does the same test settle stability for any scheme, and does stability then guarantee convergence?
 

@@ -643,8 +643,8 @@ The two outputs match line for line. The cell counts are for these synthetic tab
 
 ## Where this goes next
 
-- [Shadow prices](02-shadow-prices-and-sensitivity.md): why the program's switches can be relaxed to any fraction from 0 to 1 and the answer still comes out whole, so $u$, $v$ are the dual values of a [Linear programs](01-modelling-with-linear-programs.md) model, its [Shadow prices](02-shadow-prices-and-sensitivity.md).
-- [Integer programs](03-integer-programming-and-branch-and-bound.md): the assignment problem beside the transportation, shortest-path and flow models it belongs to.
+- [Total unimodularity](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md): why the program's switches can be relaxed to any fraction from 0 to 1 and the answer still comes out whole, so $u$, $v$ are the dual values of a [Linear programs](01-modelling-with-linear-programs.md) model, its [Total unimodularity](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md).
+- [Four classic models](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md): the assignment problem beside the transportation, shortest-path and flow models it belongs to.
 
 Left open: when a driver can take several rounds and rounds need several drivers, the table becomes a flow of counts, and the same cuts and dual values have to work on a network.
 

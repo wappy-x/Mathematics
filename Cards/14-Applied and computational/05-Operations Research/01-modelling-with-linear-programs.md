@@ -67,7 +67,7 @@ A solver works with equations, so each limit gets a **slack variable**: the amou
 ### When it holds
 
 - **Amounts scale in straight lines.** Twice the batches use twice the flour and earn twice the margin. A price that falls as you sell more bends the margin into a curve, and the best plan can then sit partway along an edge or inside the region, where corner-checking misses it.
-- **Amounts can be split.** The answer may be 12.67 batches. If only whole batches make sense, rounding can break a limit (see What breaks); that is the job of [Integer programs](03-integer-programming-and-branch-and-bound.md).
+- **Amounts can be split.** The answer may be 12.67 batches. If only whole batches make sense, rounding can break a limit (see What breaks); that is the job of [Corners are enough](../../15-Optimization/04-Linear%20Programming/02-corners-and-the-fundamental-theorem.md).
 - **The numbers are known.** Margins, recipes and the flour delivery are taken as certain. If the mill can send less than 300 kg, the plan for 300 kg can need flour that never arrives, and the model needs a margin for error the plain program does not have.
 - **There is a ceiling.** If nothing stops the margin from growing (drop both the oven and flour limits), there is no best plan: the solver reports "unbounded", not a number.
 - **At least one plan fits.** Limits that contradict each other (bake at least 20 sponge with 300 kg of flour) leave no region at all, and the solver reports "infeasible".
@@ -92,7 +92,7 @@ Take two plans $p$ and $q$ that both fit the oven limit, and a mix of them, $t$ 
 
 Take any allowed plan $p$. Draw a straight line through $p$. Because the region is convex, bounded and closed in by straight edges, the line leaves it at two edge points, and $p$ lies between them. By Step 0, one of those two edge points earns at least as much as $p$. That edge point lies between the two corners at the ends of its edge, and by Step 0 again one of those corners earns at least as much.
 
-So for every allowed plan there is a corner that earns at least as much. There are finitely many corners, so the best corner is the best plan. This is the corner theorem for two decisions; the general version, for any number of decisions, is proved on the card [Integer programs](03-integer-programming-and-branch-and-bound.md).
+So for every allowed plan there is a corner that earns at least as much. There are finitely many corners, so the best corner is the best plan. This is the corner theorem for two decisions; the general version, for any number of decisions, is proved on the card [Corners are enough](../../15-Optimization/04-Linear%20Programming/02-corners-and-the-fundamental-theorem.md).
 
 <details>
 <summary>The same argument as one inequality</summary>
@@ -579,8 +579,8 @@ The two outputs are identical, line for line.
 
 - [Shadow prices](02-shadow-prices-and-sensitivity.md): how to read dual values like these, and their ranges, off a solver's report, and which limit to buy more of first, worked on another branch's plan.
 - [Integer programs](03-integer-programming-and-branch-and-bound.md): yes-or-no decisions, worked on a choice of depot sites; the program with fractions allowed as a ceiling, like the £846.67 here, and branch and bound, the search tree that finds the best whole plan beneath it.
-- [Shadow prices](02-shadow-prices-and-sensitivity.md): the optimisation wing's card, where the simplex method walks the corners and duality is proved in general.
-- [Integer programs](03-integer-programming-and-branch-and-bound.md): the corner theorem for any number of decisions.
+- Linear programs (planned): the optimisation wing's card, where the simplex method walks the corners and duality is proved in general.
+- [Corners are enough](../../15-Optimization/04-Linear%20Programming/02-corners-and-the-fundamental-theorem.md): the corner theorem for any number of decisions.
 
 This card leaves one question open: when a solver walks from corner to corner, why does it reach the best one long before it has visited the 4,191,844,505,805,495 candidates?
 

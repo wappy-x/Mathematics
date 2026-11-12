@@ -123,7 +123,7 @@ Before the wall is fixed, $K$ is 8 by 8 and has no inverse. Lift the whole beam 
 
 The loads act only at nodes, so the true shape on each piece is a cubic (Step 1), which is one of the shapes the element can take. Among all the shapes built from these pieces, the method picks the one of least total energy. The true shape is among them and is the least of all, so the method returns it. That is why one, two, three or six elements all give 14.6909 mm at the tip.
 
-For a plate, a solid or a heat-conducting fin, the true shape is not a polynomial on each piece. The method then returns the best shape the pieces allow, measured by energy, and that best shape closes in on the truth as the pieces shrink. How fast it closes in is the subject of [Viscosity](02-viscosity-and-pipe-flow.md).
+For a plate, a solid or a heat-conducting fin, the true shape is not a polynomial on each piece. The method then returns the best shape the pieces allow, measured by energy, and that best shape closes in on the truth as the pieces shrink. How fast it closes in is the subject of [Assembly and error](../../16-Numerical%20analysis/07-PDE%20Solvers/08-finite-element-assembly-and-error.md).
 
 ### The contrast: finite differences
 
@@ -131,7 +131,7 @@ For a plate, a solid or a heat-conducting fin, the true shape is not a polynomia
 
 ### What this outline leaves out
 
-Triangles, bricks and curved elements; the general recipe for turning any differential equation into element matrices (the weak form); building meshes; error bounds; and solvers for matrices with millions of rows. [Continuity and Bernoulli](01-continuity-and-bernoulli.md) and [Viscosity](02-viscosity-and-pipe-flow.md) take these up. The mathematics of convergence belongs to the partial differential equations wing, and large sparse solvers to the numerical analysis wing.
+Triangles, bricks and curved elements; the general recipe for turning any differential equation into element matrices (the weak form); building meshes; error bounds; and solvers for matrices with millions of rows. [Continuity and Bernoulli](01-continuity-and-bernoulli.md) and [Assembly and error](../../16-Numerical%20analysis/07-PDE%20Solvers/08-finite-element-assembly-and-error.md) take these up. The mathematics of convergence belongs to the partial differential equations wing, and large sparse solvers to the numerical analysis wing.
 
 ---
 
@@ -593,8 +593,8 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- [Continuity and Bernoulli](01-continuity-and-bernoulli.md): triangles and bricks, the weak form that turns any boundary problem into element matrices, and heat as well as stress.
-- [Viscosity](02-viscosity-and-pipe-flow.md): how big sparse matrices (mostly zeros) are assembled and solved, and how fast the answer improves as the mesh is refined.
+- Finite elements (planned): triangles and bricks, the weak form that turns any boundary problem into element matrices, and heat as well as stress.
+- [Assembly and error](../../16-Numerical%20analysis/07-PDE%20Solvers/08-finite-element-assembly-and-error.md): how big sparse matrices (mostly zeros) are assembled and solved, and how fast the answer improves as the mesh is refined.
 
 This card used elements whose shapes contain the truth; how good the answer is when they do not, and how to tell from the computed numbers alone, is the question it leaves open.
 

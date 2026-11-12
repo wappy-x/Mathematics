@@ -684,7 +684,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Uncertainty](../09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): proves $\Delta t\,\Delta f \ge 1/(4\pi)$ for every window and shows why only the Gaussian bell reaches it.
-- [Sampling](01-sampling-and-the-nyquist-theorem.md): the sliding transform in its own right, with continuous time, its inverse formula, and which windows and hops let any signal be rebuilt.
+- Short-time Fourier transform (planned): the sliding transform in its own right, with continuous time, its inverse formula, and which windows and hops let any signal be rebuilt.
 
 This card fixes one window for the whole picture. Whether any time-frequency picture at all, of any construction, can beat the floor the uncertainty card sets is the question left open here.
 
