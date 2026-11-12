@@ -26,7 +26,9 @@ The shaded region is every plan that fits the stock, drawn to scale. Simplex hop
 
 ## The formula
 
-Notation first, in words. As on [Linear programs](01-linear-programs-and-polyhedra.md), the problem is written with equalities: a leftover variable is added for each resource, so the plan is $x = (x_1, \dots, x_5)$: tables, chairs, and leftover timber, labour and finish. The profits are $c$, the resource use per unit is the matrix $A$ (one row per resource) and the stock is $b$. As on [LP duality](04-lp-duality-and-complementary-slackness.md), $y$ holds a price for each resource, and a column's **surplus** is what its resources are worth at prices $y$, minus what it earns. That card writes the surplus $r = A^\mathsf{T} y - c$, and [Shadow prices](05-sensitivity-and-shadow-prices.md) calls it the reduced cost. Interior-point texts write it $s$, and so does this card: $s = A^\mathsf{T} y - c$. The slacks $s$ of those two cards are the leftovers $x_3$ to $x_5$ here. A leftover column's surplus is just that resource's price, so $s_3$ to $s_5$ are $y_1$ to $y_3$.
+Notation first, in words. As on [Linear programs](01-linear-programs-and-polyhedra.md), the problem is written with equalities: a leftover variable is added for each resource, so the plan is $x = (x_1, \dots, x_5)$: tables, chairs, and leftover timber, labour and finish. The profits are $c$, the resource use per unit is the matrix $A$ (one row per resource) and the stock is $b$.
+
+As on [LP duality](04-lp-duality-and-complementary-slackness.md), $y$ holds a price for each resource, and a column's **surplus** is what its resources are worth at prices $y$, minus what it earns. That card writes the surplus $r = A^\mathsf{T} y - c$, and [Shadow prices](05-sensitivity-and-shadow-prices.md) calls it the reduced cost. Interior-point texts write it $s$, and so does this card: $s = A^\mathsf{T} y - c$. The slacks $s$ of those two cards are the leftovers $x_3$ to $x_5$ here. A leftover column's surplus is just that resource's price, so $s_3$ to $s_5$ are $y_1$ to $y_3$.
 
 $$\text{maximise } c^\mathsf{T} x \text{ subject to } Ax = b,\; x \ge 0; \qquad \text{the central path: } Ax = b,\quad A^\mathsf{T} y - s = c,\quad x_j s_j = \mu \text{ for every } j,\quad x, s > 0.$$
 
@@ -38,7 +40,7 @@ and the gap $x^\mathsf{T} s = b^\mathsf{T} y - c^\mathsf{T} x$ after a step of l
 
 **Read it aloud:** keep the plan feasible and the prices feasible, ask every quantity times its surplus to equal the same small number μ, take a Newton step that aims at a fraction σ of today's μ, and the gap between the prices' ceiling and the plan's profit shrinks by the factor one minus α times one minus σ.
 
-The optimality conditions of the LP are the same three lines with $x_j s_j = 0$: complementary slackness, from [LP duality](04-lp-duality-and-complementary-slackness.md). For the two products it is that card's $x_j r_j = 0$; for the three leftovers it is its rule that a resource with stock to spare has price zero. The central path relaxes that to $x_j s_j = \mu$. It is the same path as the barrier card's $x^*(t)$, with $\mu = 1/t$ ([Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md)). Here μ is the average product $x^\mathsf{T} s / n$, not the strong-convexity μ of shelf 01.
+The optimality conditions of the linear program (LP) are the same three lines with $x_j s_j = 0$: complementary slackness, from [LP duality](04-lp-duality-and-complementary-slackness.md). For tables and chairs it is that card's $x_j r_j = 0$; for the three leftovers it is its rule that a resource with stock to spare has price zero. The central path relaxes that to $x_j s_j = \mu$. It is the same path as the barrier card's $x^*(t)$, with $\mu = 1/t$ ([Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md)). Here μ is the average product $x^\mathsf{T} s / n$, not the strong-convexity μ of shelf 01.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -113,7 +115,9 @@ For the workshop, $n = 5$ gives σ = 0.8211. Two centring steps bring the start 
 
 ### Step 5: from a gap to polynomial time
 
-The bound grows like $\sqrt{n}$ times the logarithm of the accuracy. To get an exact answer, not just a small gap, use the data's size. If the LP's whole-number data take $L$ bits to write, every corner's coordinates are fractions whose denominators are at most about $2^L$ (Cramer's rule). So two corners with different profits differ by at least a fixed power of $2^{-L}$. Once the gap is smaller than that, rounding to the nearest corner gives the exact best corner. Then $\ln(\text{gap}_0/\varepsilon)$ is of order $L$, and the count is of order $\sqrt{n}\,L$ iterations, each at most of order $n^3$ operations. That is $O(n^{3.5} L)$ arithmetic operations, the bound Karmarkar proved for his 1984 method: polynomial in the size of the input. Khachiyan's ellipsoid method had shown in 1979 that a polynomial bound exists; interior point methods made one fast in practice.
+The bound grows like $\sqrt{n}$ times the logarithm of the accuracy. To get an exact answer, not just a small gap, use the data's size. If the LP's whole-number data take $L$ bits to write, every corner's coordinates are fractions whose denominators are at most about $2^L$ (Cramer's rule). So two corners with different profits differ by at least a fixed power of $2^{-L}$. Once the gap is smaller than that, rounding to the nearest corner gives the exact best corner.
+
+Then $\ln(\text{gap}_0/\varepsilon)$ is of order $L$, and the count is of order $\sqrt{n}\,L$ iterations, each at most of order $n^3$ operations. That is $O(n^{3.5} L)$ arithmetic operations, the bound Karmarkar proved for his 1984 method: polynomial in the size of the input. Khachiyan's ellipsoid method had shown in 1979 that a polynomial bound exists; interior point methods made one fast in practice.
 
 ### Step 6: the simplex method's worst case
 
@@ -623,6 +627,184 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the gap rules for every linear program in equality form, and the short step's count for every $n$.
+
+- If $Ax = b$ and $s = A^\mathsf{T} y - c$, the prices' ceiling minus the profit equals the sum of products $x_j s_j$.
+- So when every $x_j$ and $s_j$ is at least zero, the ceiling is at least the profit.
+- Start from a plan and prices strictly inside, and solve the Newton system aimed at $\sigma\mu$. A step of any length $\alpha$ multiplies the gap by exactly $1 - \alpha(1 - \sigma)$.
+- Take $\sigma = 1 - 0.4/\sqrt{n}$, and let $k$ be at least $\sqrt{n}/0.4$ times $\ln(\text{gap}_0/\varepsilon)$. Then the gap $\sigma^k \text{gap}_0$ is at most $\varepsilon$.
+- The workshop's hand arithmetic holds exactly: the start plan, its surplus, the gap 1330, the corners, the prices (3, 0, 7), the tie at £1216, and each $2^d - 1$.
+
+The short step's neighbourhood lemma, the simplex pivot counts and every iteration count are left to the Python and Rust checks.
+
+```lean
+-- Interior point for linear programs: a primal-dual Newton step of length α aimed at σμ cuts the gap between the prices' ceiling and the plan's profit by exactly the factor 1 − α(1 − σ), that gap is a sum of quantity-times-surplus products, and the short step's gap falls below ε within √n / 0.4 · ln(gap₀ / ε) steps.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Tactic
+
+open Matrix
+
+/-- The gap falls by an exact factor. Take a linear program in equality form, maximise
+`c ⬝ᵥ x` subject to `A *ᵥ x = b`, `x ≥ 0`, with `m` resource rows and `n` variables. Start from a
+plan `x` and prices `y` strictly inside: `A *ᵥ x = b`, surplus `s = Aᵀ *ᵥ y - c`, and every `x j`
+and `s j` positive. Let `μ = (x ⬝ᵥ s) / n` be the average product and let `(dx, dy, ds)` solve
+the Newton system aimed at `σ μ`: `A *ᵥ dx = 0`, `Aᵀ *ᵥ dy - ds = 0` and
+`s j * dx j + x j * ds j = σ μ - x j * s j` for every `j`. Then for every step length `α`, the gap
+between the new prices' ceiling and the new plan's profit, `b ⬝ᵥ y' - c ⬝ᵥ x'`, is exactly
+`1 - α (1 - σ)` times the old gap `b ⬝ᵥ y - c ⬝ᵥ x`, and the same holds for the sum of products
+`x' ⬝ᵥ s'`. -/
+theorem newton_step_cuts_gap_by_exact_factor {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (x s : Fin n → ℝ) (y : Fin m → ℝ)
+    (hx : ∀ j, 0 < x j) (hs : ∀ j, 0 < s j)
+    (hprimal : A *ᵥ x = b) (hdual : Aᵀ *ᵥ y - s = c)
+    (σ μ : ℝ) (hμ : μ = (x ⬝ᵥ s) / n)
+    (dx ds : Fin n → ℝ) (dy : Fin m → ℝ)
+    (hdx : A *ᵥ dx = 0) (hds : Aᵀ *ᵥ dy - ds = 0)
+    (hnewton : ∀ j, s j * dx j + x j * ds j = σ * μ - x j * s j)
+    (α : ℝ) :
+    b ⬝ᵥ (y + α • dy) - c ⬝ᵥ (x + α • dx) = (1 - α * (1 - σ)) * (b ⬝ᵥ y - c ⬝ᵥ x) ∧
+      (x + α • dx) ⬝ᵥ (s + α • ds) = (1 - α * (1 - σ)) * (x ⬝ᵥ s) := by
+  have hds' : ds = Aᵀ *ᵥ dy := (sub_eq_zero.mp hds).symm
+  -- n * μ = x ⬝ᵥ s
+  have hnμ : (n : ℝ) * μ = x ⬝ᵥ s := by
+    rcases Nat.eq_zero_or_pos n with h | h
+    · subst h; simp [dotProduct]
+    · rw [hμ]; field_simp
+  -- sum of Newton rows
+  have hsum : s ⬝ᵥ dx + x ⬝ᵥ ds = σ * (x ⬝ᵥ s) - x ⬝ᵥ s := by
+    have : s ⬝ᵥ dx + x ⬝ᵥ ds = ∑ j, (σ * μ - x j * s j) := by
+      simp only [dotProduct, ← Finset.sum_add_distrib, hnewton]
+    rw [this, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+      nsmul_eq_mul, ← mul_assoc, mul_comm (n : ℝ) σ, mul_assoc, hnμ]
+    simp [dotProduct]
+  -- b ⬝ dy = x ⬝ ds
+  have hbdy : b ⬝ᵥ dy = x ⬝ᵥ ds := by
+    rw [← hprimal, hds', dotProduct_comm, dotProduct_mulVec, ← mulVec_transpose,
+      dotProduct_comm]
+  -- c ⬝ dx = - s ⬝ dx
+  have hcdx : c ⬝ᵥ dx = - (s ⬝ᵥ dx) := by
+    rw [← hdual, sub_dotProduct, mulVec_transpose, ← dotProduct_mulVec, hdx, dotProduct_zero,
+      dotProduct_comm]
+    ring
+  -- dx ⬝ ds = 0
+  have hdxds : dx ⬝ᵥ ds = 0 := by
+    rw [hds', dotProduct_comm, mulVec_transpose, ← dotProduct_mulVec, hdx, dotProduct_zero]
+  have hgap' : b ⬝ᵥ y - c ⬝ᵥ x = x ⬝ᵥ s := by
+    subst hprimal hdual
+    rw [sub_dotProduct, dotProduct_comm (A *ᵥ x) y, dotProduct_mulVec, ← mulVec_transpose,
+      dotProduct_comm (Aᵀ *ᵥ y) x, sub_sub_cancel, dotProduct_comm]
+  constructor
+  · rw [dotProduct_add, dotProduct_add, dotProduct_smul, dotProduct_smul, smul_eq_mul,
+      smul_eq_mul, hbdy, hcdx]
+    linear_combination α * hsum + α * (1 - σ) * hgap'
+  · rw [add_dotProduct, dotProduct_add, dotProduct_add, smul_dotProduct, smul_dotProduct,
+      dotProduct_smul, dotProduct_smul, hdxds, smul_eq_mul, smul_eq_mul, smul_eq_mul,
+      smul_eq_mul, dotProduct_comm dx s]
+    linear_combination α * hsum
+
+/-- The gap is a sum of products, and weak duality. If the plan satisfies `A *ᵥ x = b` and the
+surplus is `s = Aᵀ *ᵥ y - c`, then the prices' ceiling minus the plan's profit equals the sum of
+each quantity times its surplus, `∑ j, x j * s j`. So when `x ≥ 0` and `s ≥ 0`, every term is
+non-negative and the ceiling is at least the profit. -/
+theorem gap_is_sum_of_products {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (x s : Fin n → ℝ) (y : Fin m → ℝ)
+    (hprimal : A *ᵥ x = b) (hdual : Aᵀ *ᵥ y - s = c) :
+    b ⬝ᵥ y - c ⬝ᵥ x = ∑ j, x j * s j ∧
+      (0 ≤ x → 0 ≤ s → c ⬝ᵥ x ≤ b ⬝ᵥ y) := by
+  have key : b ⬝ᵥ y - c ⬝ᵥ x = ∑ j, x j * s j := by
+    subst hprimal hdual
+    rw [sub_dotProduct, dotProduct_comm (A *ᵥ x) y, dotProduct_mulVec, ← mulVec_transpose,
+      dotProduct_comm (Aᵀ *ᵥ y) x]
+    rw [sub_sub_cancel, dotProduct_comm]
+    rfl
+  refine ⟨key, fun h0 h1 => ?_⟩
+  have : 0 ≤ ∑ j, x j * s j := Finset.sum_nonneg fun j _ => mul_nonneg (h0 j) (h1 j)
+  linarith
+
+/-- The short step's count. With `n ≥ 1` variables, the short-step method uses
+`σ = 1 - 0.4 / √n` and multiplies the gap by exactly `σ` each step, so after `k` steps the gap is
+`σ ^ k * gap₀`. For any starting gap `gap₀ > 0` and tolerance `ε > 0`, once
+`k ≥ (√n / 0.4) * ln (gap₀ / ε)`, that gap is at most `ε`. -/
+theorem short_step_gap_below_tolerance (n : ℕ) (hn : 1 ≤ n)
+    (gap₀ ε : ℝ) (hgap : 0 < gap₀) (hε : 0 < ε) (k : ℕ)
+    (hk : Real.sqrt n / (2 / 5) * Real.log (gap₀ / ε) ≤ k) :
+    (1 - (2 / 5) / Real.sqrt n) ^ k * gap₀ ≤ ε := by
+  have hn' : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have hsq : 1 ≤ Real.sqrt n := by rw [Real.one_le_sqrt]; exact hn'
+  have hsq0 : 0 < Real.sqrt n := by linarith
+  set t := (2 / 5 : ℝ) / Real.sqrt n with ht
+  have ht0 : 0 < t := by positivity
+  have ht1 : t ≤ 2 / 5 := by
+    rw [ht, div_le_iff₀ hsq0]; nlinarith
+  have h1t : 0 ≤ 1 - t := by linarith
+  have hexp : (1 - t) ^ k ≤ Real.exp (-(t * k)) := by
+    calc (1 - t) ^ k ≤ (Real.exp (-t)) ^ k := by
+          apply pow_le_pow_left₀ h1t
+          have := Real.add_one_le_exp (-t); linarith
+      _ = Real.exp (-(t * k)) := by rw [← Real.exp_nat_mul]; ring_nf
+  have hlog : Real.log (gap₀ / ε) ≤ t * k := by
+    have : Real.log (gap₀ / ε) = t * (Real.sqrt n / (2 / 5) * Real.log (gap₀ / ε)) := by
+      rw [ht]; field_simp
+    rw [this]; exact mul_le_mul_of_nonneg_left hk ht0.le
+  have hexp2 : Real.exp (-(t * k)) ≤ ε / gap₀ := by
+    rw [show ε / gap₀ = Real.exp (- Real.log (gap₀ / ε)) by
+      rw [Real.exp_neg, Real.exp_log (by positivity), inv_div]]
+    exact Real.exp_le_exp.mpr (by linarith)
+  calc (1 - t) ^ k * gap₀ ≤ ε / gap₀ * gap₀ := by
+        apply mul_le_mul_of_nonneg_right (hexp.trans hexp2) hgap.le
+    _ = ε := by field_simp
+
+-- The workshop in equality form: rows timber (4, 2, 1, 0, 0), labour (3, 1, 0, 1, 0),
+-- finish (1, 2, 0, 0, 1); stock (160, 120, 64); profits (19, 20, 0, 0, 0).
+-- The start plan (10, 10, 100, 80, 34) uses the stock exactly.
+example : !![(4 : ℚ), 2, 1, 0, 0; 3, 1, 0, 1, 0; 1, 2, 0, 0, 1] *ᵥ ![10, 10, 100, 80, 34] =
+    ![160, 120, 64] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+-- Prices (5, 5, 5) give surplus s = Aᵀ y - c = (21, 5, 5, 5, 5).
+example : (!![(4 : ℚ), 2, 1, 0, 0; 3, 1, 0, 1, 0; 1, 2, 0, 0, 1])ᵀ *ᵥ ![5, 5, 5] -
+    ![19, 20, 0, 0, 0] = ![21, 5, 5, 5, 5] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+-- The start gap: 10 × 21 + 10 × 5 + (100 + 80 + 34) × 5 = 1330 = 1720 − 390; μ = 1330 / 5 = 266.
+example : 10 * 21 + 10 * 5 + (100 + 80 + 34) * 5 = 1330 := by norm_num
+example : (160 + 120 + 64) * 5 = 1720 ∧ 19 * 10 + 20 * 10 = 390 ∧ 1720 - 390 = 1330 := by decide
+example : 1330 / 5 = 266 := by norm_num
+-- The best plan (32, 16) fits all three limits and earns £928.
+example : 4 * 32 + 2 * 16 ≤ 160 ∧ 3 * 32 + 1 * 16 ≤ 120 ∧ 1 * 32 + 2 * 16 ≤ 64 := by decide
+example : 19 * 32 + 20 * 16 = 928 := by norm_num
+-- The prices (3, 0, 7) cover tables (19) and chairs (20) and value the stock at £928.
+example : 4 * 3 + 3 * 0 + 1 * 7 = 19 ∧ 2 * 3 + 1 * 0 + 2 * 7 = 20 := by decide
+example : 160 * 3 + 120 * 0 + 64 * 7 = 928 := by norm_num
+-- The corners and their profits: (0, 0) 0, (0, 32) 640, (32, 16) 928, (40, 0) 760.
+example : 19 * 0 + 20 * 0 = 0 ∧ 19 * 0 + 20 * 32 = 640 ∧ 19 * 40 + 20 * 0 = 760 := by decide
+-- Tied best plans: with chairs at £38, profit 19 x₁ + 38 x₂ = 19 (x₁ + 2 x₂) = 19 × 64 = 1216.
+example : 19 * 64 = 1216 ∧ 19 * 0 + 38 * 32 = 1216 ∧ 19 * 32 + 38 * 16 = 1216 := by decide
+-- Klee–Minty: Dantzig's rule takes 2^d − 1 pivots.
+example : 2 ^ 2 - 1 = 3 ∧ 2 ^ 4 - 1 = 15 ∧ 2 ^ 6 - 1 = 63 ∧ 2 ^ 8 - 1 = 255 ∧
+    2 ^ 10 - 1 = 1023 := by decide
+example : 2 ^ 20 - 1 = 1048575 := by norm_num
+example : 2 ^ 40 - 1 = 1099511627775 := by norm_num
+example : 2 ^ 80 - 1 = 1208925819614629174706175 := by norm_num
+
+#print axioms newton_step_cuts_gap_by_exact_factor
+#print axioms gap_is_sum_of_products
+#print axioms short_step_gap_below_tolerance
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'newton_step_cuts_gap_by_exact_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gap_is_sum_of_products' depends on axioms: [propext, Classical.choice, Quot.sound]
+'short_step_gap_below_tolerance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

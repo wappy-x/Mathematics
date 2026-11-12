@@ -10,7 +10,9 @@ A furniture workshop makes tables and chairs. A table earns £19 of profit and u
 
 The workshop **chooses** how many tables and chairs to make this week. It wants the **profit made as large as possible**. It is **limited** by the three stocks, and it cannot make a negative number of anything.
 
-Draw every possible week as a point: tables across, chairs up. Each limit is a straight line, a flat wall, and the plans on one side of it are allowed. Five walls (timber, labour, finish, and the two "no negative" walls) cut out a shaded shape with four corners: (0, 0), (40, 0), (32, 16) and (0, 32). The labour wall only grazes the shape at one corner, so it shapes nothing. The best week is 32 tables and 16 chairs, £928, at a corner; prices of £3 a metre on timber and £7 a litre on finish prove that no plan earns more.
+Draw every possible week as a point: tables across, chairs up. Each limit is a straight line, a flat wall, and the plans on one side of it are allowed. Five walls (timber, labour, finish, and the two "no negative" walls) cut out a shaded shape with four corners: (0, 0), (40, 0), (32, 16) and (0, 32). The labour wall only grazes the shape at one corner, so it shapes nothing.
+
+The best week is 32 tables and 16 chairs, £928, at a corner. Prices of £3 a metre on timber and £7 a litre on finish prove that no plan earns more.
 
 This card is about the shape. It rewrites the workshop in the form every solver reads, with a "slack" for each stock left over, and names the shape's pieces, its **faces**: corners, edges and the whole region. In that form a corner is a small system of equations, which makes corners computable.
 
@@ -28,7 +30,9 @@ Drawn to scale, tables a week across and chairs a week up. The steep line is tim
 
 ## The formula
 
-[Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md) in the computing wing builds such models and adds slacks in passing. This card makes the form exact and introduces the wing's notation for it, in words first. The **cost** is a weighted sum $c^{\mathsf T}x$: each variable times its cost, added (the small T, "transpose", lines the list of costs up against the list of variables). The limits are equations $Ax = b$: row $i$ of the table $A$ says how much of resource $i$ each variable uses, and $b_i$ is how much there is. Every variable is at least zero, $x \ge 0$, entry by entry.
+[Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md) in the computing wing builds such models and adds slacks in passing. This card makes the form exact and introduces the wing's notation for it, in words first.
+
+The **cost** is a weighted sum $c^{\mathsf T}x$: each variable times its cost, added (the small T, "transpose", lines the list of costs up against the list of variables). The limits are equations $Ax = b$: row $i$ of the table $A$ says how much of resource $i$ each variable uses, and $b_i$ is how much there is. Every variable is at least zero, $x \ge 0$, entry by entry.
 
 $$
 \text{minimise}\quad c^{\mathsf T}x \qquad \text{subject to}\quad Ax = b, \quad x \ge 0
@@ -71,7 +75,7 @@ A **basic solution** picks $m$ of the $n$ variables, called the **basis** $B$, s
 | $c$ | cost of one unit of each variable; profit carries a minus | (−19, −20, 0, 0, 0) | raise a chair's profit to £38 and a whole edge ties |
 | $A$ | resources used: one row per resource, one column per variable | the 3 by 5 table above | hungrier products shrink the shape |
 | $b$ | resources available | (160, 120, 64) | walls move outward, the shape grows |
-| $m$, $n$ | number of equations, number of variables | 3 and 5 | more possible bases: $\binom{n}{m}$ = 10 here |
+| $m$, $n$ | number of equations, number of variables | 3 and 5 | more possible bases: $\binom{n}{m}$, "n choose m", the ways to pick $m$ of $n$: 10 here |
 | $P$ | the polyhedron: every allowed $x$ | the shaded quadrilateral | — |
 | $B$ | a basis: the $m$ variables solved for | $x_1$, $x_2$, $s_2$ at the best corner | — |
 | $p^\star$ | the optimal value of the minimisation | −928, so £928 profit | — |
@@ -118,21 +122,35 @@ Pick any set of the five walls and make them tight. The points of $P$ that meet 
 | (0, 32) to (0, 0) | 1, the left edge | $x_1$ |
 | the whole quadrilateral | 2 | none |
 
-Four walls each give an edge, so the shape is a quadrilateral. Labour's face, "$s_2 = 0$", is only the point (40, 0). A wall whose face is smaller than an edge cuts nothing off, and here a one-line sum proves it: three quarters of the timber limit is $3x_1 + 1.5x_2 \le 120$, and adding half of "$-x_2 \le 0$" gives $3x_1 + x_2 \le 120$. The labour limit follows from the others, so it is **redundant**. The labour hours are not wasted: at the best plan 8 hours are spare.
+Four walls each give an edge, so the shape is a quadrilateral. Labour's face, "$s_2 = 0$", is only the point (40, 0).
 
-A face is also the set of best plans for some straight-line profit. Raise a chair's profit to £38 and the profit lines run parallel to the finish wall: both (0, 32) and (32, 16) earn £1,216, and so does every plan on the finish edge between them. The set of best plans is always a face, never a scatter of points, and the proof is short. Averaging best plans gives a best plan, so some best plan $w$ keeps above zero every variable that any best plan keeps above zero. Take any point $u$ of $P$ that is zero wherever $w$ is. A small step $\varepsilon$ from $w$ directly away from $u$, to $w + \varepsilon(w - u)$, still meets every equation and keeps every variable at least zero: where $w$ is zero, so is $u$, and where $w$ is above zero a small step keeps it there. The step's profit is the best plus $\varepsilon$ times (the best minus $u$'s profit). Nothing beats the best, so $u$ earns the best too. So the best plans are exactly the points of $P$ where $w$'s zero variables are zero: a face.
+A wall whose face is smaller than an edge cuts nothing off, and here a one-line sum proves it. Three quarters of the timber limit is $3x_1 + 1.5x_2 \le 120$, and adding half of "$-x_2 \le 0$" gives $3x_1 + x_2 \le 120$. The labour limit follows from the others, so it is **redundant**. The labour hours are not wasted: at the best plan 8 hours are spare.
+
+A face is also the set of best plans for some straight-line profit. Raise a chair's profit to £38 and the profit lines run parallel to the finish wall. Both (0, 32) and (32, 16) earn £1,216, and so does every plan on the finish edge between them.
+
+The set of best plans is always a face, never a scatter of points, and the proof is short. Averaging best plans gives a best plan, so some best plan $w$ keeps above zero every variable that any best plan keeps above zero. Take any point $u$ of $P$ that is zero wherever $w$ is.
+
+A small step $\varepsilon$ from $w$ directly away from $u$, to $w + \varepsilon(w - u)$, still meets every equation and keeps every variable at least zero. Where $w$ is zero, so is $u$, and where $w$ is above zero a small step keeps it there.
+
+The step's profit is the best plus $\varepsilon$ times (the best minus $u$'s profit). Nothing beats the best, so $u$ earns the best too. So the best plans are exactly the points of $P$ where $w$'s zero variables are zero: a face.
 
 ### Step 3: corners in algebra, as basic feasible solutions
 
 A point of $P$ is a corner exactly when it is a basic feasible solution. [Corners are enough](02-corners-and-the-fundamental-theorem.md) proves this for any standard-form program; here it is on the workshop. The basis $x_1$, $x_2$, $s_2$ sets $s_1 = s_3 = 0$: timber and finish are tight, the two walls cross at (32, 16), and $s_2 = 8$ hours of labour are left. That is the corner (32, 16) in the face table.
 
-Five variables, three in each basis, give $\binom{5}{3} = 10$ bases, and all ten give a solvable system here. Six are feasible, and they name the four corners. The corner (40, 0) is named three times, by $\{x_1, x_2, s_3\}$, $\{x_1, s_1, s_3\}$ and $\{x_1, s_2, s_3\}$, because three walls meet there where two would pin it down: its row in the face table has three variables at zero. A corner like this is **degenerate**. It does no harm to the shape, but a method that walks from basis to basis can change basis there without moving, which is the degenerate pivot on [The simplex method](03-simplex-method.md). The picture gives the same four corners with no algebra: five walls cross in 10 pairs at 8 distinct points (three pairs meet at (40, 0)), and 4 of the 8 satisfy every wall.
+Five variables, three in each basis, give $\binom{5}{3} = 10$ bases, and all ten give a solvable system here. Six are feasible, and they name the four corners.
+
+The corner (40, 0) is named three times, by $\{x_1, x_2, s_3\}$, $\{x_1, s_1, s_3\}$ and $\{x_1, s_2, s_3\}$, because three walls meet there where two would pin it down. Its row in the face table has three variables at zero. A corner like this is **degenerate**. It does no harm to the shape, but a method that walks from basis to basis can change basis there without moving, which is the degenerate pivot on [The simplex method](03-simplex-method.md).
+
+The picture gives the same four corners with no algebra: five walls cross in 10 pairs at 8 distinct points (three pairs meet at (40, 0)), and 4 of the 8 satisfy every wall.
 
 ### Step 4: why the corners are the right thing to compute
 
 A straight-line profit is best at a corner of the shape, if it has a best value at all ([Corners are enough](02-corners-and-the-fundamental-theorem.md) proves it). The four corners earn £0, £760, £928 and £640, so the best is (32, 16), £928, and in standard form $p^\star = -928$. The later cards on this shelf keep the workshop as a maximum, with $c = (19, 20, 0, 0, 0)$ and $p^\star = 928$: the same plan, with the signs flipped back.
 
-"Best among four corners" relies on that theorem. Separate evidence comes from prices. Charge £3 a metre for timber, nothing for labour and £7 a litre for finish. A table then "costs" $3 \times 4 + 7 \times 1 = 19$ and a chair $3 \times 2 + 7 \times 2 = 20$, exactly their profits. So any plan's profit is at most what its resources would fetch at those prices, which is at most $3 \times 160 + 7 \times 64 = 928$. Where such prices come from, and why they always exist, is [LP duality](04-lp-duality-and-complementary-slackness.md).
+"Best among four corners" relies on that theorem. Separate evidence comes from prices. Charge £3 a metre for timber, nothing for labour and £7 a litre for finish. A table then "costs" $3 \times 4 + 7 \times 1 = 19$ and a chair $3 \times 2 + 7 \times 2 = 20$, exactly their profits.
+
+So any plan's profit is at most what its resources would fetch at those prices, which is at most $3 \times 160 + 7 \times 64 = 928$. Where such prices come from, and why they always exist, is [LP duality](04-lp-duality-and-complementary-slackness.md).
 
 ---
 
@@ -536,6 +554,238 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's three general facts for every standard-form program, then checks the workshop's numbers exactly.
+
+- If a standard-form program has a best plan, its best plans are exactly the points of $P$ where some chosen variables are zero: a face.
+- Adding one slack per "at most" limit matches each allowed plan with exactly one point of $P$, and every point of $P$ is matched.
+- Take prices on the resources, each at least zero, that value every product at its profit or more. Then no allowed plan earns more than the stock would fetch.
+- The best corner (32, 16, 0, 8, 0) and the other three corners all meet $Ax = b$. The best corner costs −928 in standard form.
+- The four corners earn £0, £760, £928 and £640, and five variables with three in each basis give 10 bases.
+- Prices (3, 0, 7) value a table at £19 and a chair at £20, and the whole stock at £928.
+- Labour is redundant: three quarters of the timber limit plus half of "no negative chairs" gives the labour limit.
+- No whole-number week earns more than £928, and with chairs at £38 both ends of the finish edge earn £1,216.
+
+Listing the nine faces, sorting the ten bases into feasible and not, and the mistakes table are left to the Python and Rust checks.
+
+```lean
+-- Linear programs: the best plans of a standard-form linear program form a face, the slack form is the same shape as the picture, and resource prices bound the profit, checked on the furniture workshop.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.Real.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib
+
+open Matrix
+
+/-- The polyhedron of a standard-form program: every `x` with `A x = b` and `x ≥ 0`, entry by entry. -/
+def standardPolyhedron {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) : Set (Fin n → ℝ) :=
+  {x | A *ᵥ x = b ∧ 0 ≤ x}
+
+/-- The best plans: points of the polyhedron whose cost `c ⬝ᵥ x` is no larger than any other point's. -/
+def bestPlans {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ) :
+    Set (Fin n → ℝ) :=
+  {x | x ∈ standardPolyhedron A b ∧ ∀ y ∈ standardPolyhedron A b, c ⬝ᵥ x ≤ c ⬝ᵥ y}
+
+/-- The set of best plans is always a face, never a scatter of points: for a linear program
+minimise `c ⬝ᵥ x` subject to `A x = b`, `x ≥ 0`, if some best plan exists, then there is a set
+`S` of variables such that the best plans are exactly the points of the polyhedron where every
+variable in `S` is zero. -/
+theorem best_plans_form_a_face {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ)
+    (c : Fin n → ℝ) (hbest : (bestPlans A b c).Nonempty) :
+    ∃ S : Finset (Fin n),
+      bestPlans A b c = {x | x ∈ standardPolyhedron A b ∧ ∀ i ∈ S, x i = 0} := by
+  classical
+  obtain ⟨x0, hx0⟩ := hbest
+  refine ⟨Finset.univ.filter (fun i => ∀ x ∈ bestPlans A b c, x i = 0), ?_⟩
+  have hw : ∀ i, ∃ w ∈ bestPlans A b c,
+      (i ∉ Finset.univ.filter (fun i => ∀ x ∈ bestPlans A b c, x i = 0) → w i ≠ 0) := by
+    intro i
+    by_cases hi : i ∈ Finset.univ.filter (fun i => ∀ x ∈ bestPlans A b c, x i = 0)
+    · exact ⟨x0, hx0, fun h => (h hi).elim⟩
+    · simp only [Finset.mem_filter, Finset.mem_univ, true_and, not_forall] at hi
+      obtain ⟨w, hwB, hwi⟩ := hi
+      exact ⟨w, hwB, fun _ => hwi⟩
+  choose w hwB hwS using hw
+  have hval : ∀ u ∈ bestPlans A b c, c ⬝ᵥ u = c ⬝ᵥ x0 := fun u hu =>
+    le_antisymm (hu.2 x0 hx0.1) (hx0.2 u hu.1)
+  set t : ℝ := 1 / ((n : ℝ) + 1) with ht
+  have htpos : 0 < t := by positivity
+  set z : Fin n → ℝ := t • (x0 + ∑ i, w i) with hz
+  have hzA : A *ᵥ z = b := by
+    have h1 : ∀ i, A *ᵥ w i = b := fun i => (hwB i).1.1
+    rw [hz, mulVec_smul, mulVec_add, mulVec_sum, hx0.1.1]
+    simp only [h1, Finset.sum_const, Finset.card_univ, Fintype.card_fin]
+    funext k
+    simp only [Pi.smul_apply, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply, smul_eq_mul, Pi.natCast_apply, ht]
+    field_simp
+    ring
+  have hzapp : ∀ j, z j = t * (x0 j + ∑ i, w i j) := by
+    intro j; simp [hz, Finset.sum_apply, mul_add]
+  have hz0 : 0 ≤ z := by
+    intro j
+    rw [hzapp]
+    have : 0 ≤ ∑ i, w i j := Finset.sum_nonneg (fun i _ => (hwB i).1.2 j)
+    have := hx0.1.2 j
+    simp only [Pi.zero_apply] at *
+    positivity
+  have hzc : c ⬝ᵥ z = c ⬝ᵥ x0 := by
+    rw [hz, dotProduct_smul, dotProduct_add, dotProduct_sum]
+    simp only [fun i => hval (w i) (hwB i), Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+      nsmul_eq_mul, smul_eq_mul, ht]
+    field_simp
+    ring
+  have hzB : z ∈ bestPlans A b c := ⟨⟨hzA, hz0⟩, fun y hy => hzc ▸ hx0.2 y hy⟩
+  have hzpos : ∀ i, i ∉ Finset.univ.filter (fun i => ∀ x ∈ bestPlans A b c, x i = 0) → 0 < z i := by
+    intro i hi
+    have hwi : 0 < w i i := lt_of_le_of_ne ((hwB i).1.2 i) (Ne.symm (hwS i hi))
+    rw [hzapp]
+    have : w i i ≤ ∑ k, w k i :=
+      Finset.single_le_sum (f := fun k => w k i) (fun k _ => (hwB k).1.2 i) (Finset.mem_univ i)
+    have := hx0.1.2 i
+    simp only [Pi.zero_apply] at *
+    have : 0 < x0 i + ∑ k, w k i := by linarith
+    positivity
+  clear_value z t
+  ext x
+  constructor
+  · intro hx
+    refine ⟨hx.1, fun i hi => ?_⟩
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hi
+    exact hi x hx
+  · rintro ⟨hxP, hxS⟩
+    -- either x i = 0 or z i > 0
+    have hor : ∀ i, x i = 0 ∧ z i = 0 ∨ 0 < z i := by
+      intro i
+      by_cases hi : i ∈ Finset.univ.filter (fun i => ∀ x ∈ bestPlans A b c, x i = 0)
+      · left
+        refine ⟨hxS i hi, ?_⟩
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hi
+        exact hi z hzB
+      · exact Or.inr (hzpos i hi)
+    set T : ℝ := 1 + ∑ i, x i / z i with hT
+    have hsum0 : 0 ≤ ∑ i, x i / z i :=
+      Finset.sum_nonneg (fun i _ => div_nonneg (hxP.2 i) (hz0 i))
+    have hTpos : 0 < T := by linarith
+    set ε : ℝ := 1 / T with hε
+    have hεpos : 0 < ε := by positivity
+    have hεx : ∀ i, ε * x i ≤ z i := by
+      intro i
+      rcases hor i with ⟨h1, h2⟩ | h
+      · rw [h1, h2]; simp
+      · have hle : x i / z i ≤ ∑ k, x k / z k :=
+          Finset.single_le_sum (f := fun k => x k / z k)
+            (fun k _ => div_nonneg (hxP.2 k) (hz0 k)) (Finset.mem_univ i)
+        have hxi : x i = z i * (x i / z i) := by field_simp
+        rw [hε, div_mul_eq_mul_div, one_mul, div_le_iff₀ hTpos]
+        calc x i = z i * (x i / z i) := hxi
+          _ ≤ z i * T := by
+            apply mul_le_mul_of_nonneg_left _ (le_of_lt h)
+            linarith
+    clear_value ε
+    set y : Fin n → ℝ := z + ε • (z - x) with hy
+    have hyP : y ∈ standardPolyhedron A b := by
+      refine ⟨?_, ?_⟩
+      · rw [hy, mulVec_add, mulVec_smul, mulVec_sub, hzA, hxP.1]; simp
+      · intro i
+        have := hεx i
+        have := hz0 i
+        simp only [hy, Pi.add_apply, Pi.smul_apply, Pi.sub_apply, smul_eq_mul, Pi.zero_apply] at *
+        nlinarith
+    have hcy : c ⬝ᵥ y = c ⬝ᵥ z + ε * (c ⬝ᵥ z - c ⬝ᵥ x) := by
+      rw [hy, dotProduct_add, dotProduct_smul, dotProduct_sub, smul_eq_mul]
+    have h1 := hx0.2 y hyP
+    have hxz : c ⬝ᵥ x ≤ c ⬝ᵥ z := by
+      rw [hcy, hzc] at h1
+      have : 0 ≤ ε * (c ⬝ᵥ x0 - c ⬝ᵥ x) := by linarith
+      have := nonneg_of_mul_nonneg_right this hεpos
+      linarith
+    refine ⟨hxP, fun y' hy' => ?_⟩
+    have := hx0.2 y' hy'
+    linarith
+
+/-- The slack form is the same shape as the picture: adding one slack `s = b - A x` per
+"at most" limit matches each allowed plan `x ≥ 0`, `A x ≤ b` with exactly one point
+`(x, s) ≥ 0` satisfying `A x + s = b`. -/
+theorem slack_form_same_shape {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) :
+    Set.BijOn (fun x : Fin n → ℝ => (x, b - A *ᵥ x))
+      {x | 0 ≤ x ∧ A *ᵥ x ≤ b}
+      {p : (Fin n → ℝ) × (Fin m → ℝ) | 0 ≤ p.1 ∧ 0 ≤ p.2 ∧ A *ᵥ p.1 + p.2 = b} := by
+  refine ⟨?_, ?_, ?_⟩
+  · rintro x ⟨hx, hAx⟩
+    exact ⟨hx, sub_nonneg.mpr hAx, add_sub_cancel _ _⟩
+  · intro x _ y _ h
+    exact (Prod.mk.inj h).1
+  · rintro ⟨u, s⟩ ⟨hu, hs, heq⟩
+    refine ⟨u, ⟨hu, ?_⟩, ?_⟩
+    · rw [← heq]; exact le_add_of_nonneg_right hs
+    · simp only [Prod.mk.injEq, true_and]
+      rw [← heq]; simp
+
+/-- Prices prove that no plan earns more: if non-negative prices `y` on the resources make every
+product "cost" at least its profit (`p ≤ y A`, entry by entry), then every allowed plan
+`x ≥ 0`, `A x ≤ b` earns at most what the resources would fetch, `p ⬝ᵥ x ≤ y ⬝ᵥ b`. -/
+theorem prices_bound_profit {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ)
+    (p : Fin n → ℝ) (y : Fin m → ℝ) (hy : 0 ≤ y) (hprice : p ≤ y ᵥ* A)
+    (x : Fin n → ℝ) (hx : 0 ≤ x) (hAx : A *ᵥ x ≤ b) :
+    p ⬝ᵥ x ≤ y ⬝ᵥ b := by
+  calc p ⬝ᵥ x ≤ (y ᵥ* A) ⬝ᵥ x := dotProduct_le_dotProduct_of_nonneg_right hprice hx
+    _ = y ⬝ᵥ (A *ᵥ x) := (dotProduct_mulVec y A x).symm
+    _ ≤ y ⬝ᵥ b := dotProduct_le_dotProduct_of_nonneg_left hAx hy
+
+/-! The workshop: timber, labour and finish; tables, chairs and three slacks. -/
+
+/-- The workshop's standard-form table `A`. -/
+def workshopA : Matrix (Fin 3) (Fin 5) ℤ := !![4, 2, 1, 0, 0; 3, 1, 0, 1, 0; 1, 2, 0, 0, 1]
+
+-- The best corner from basis x1, x2, s2: x = (32, 16, 0, 8, 0) meets A x = b = (160, 120, 64).
+example : workshopA *ᵥ ![32, 16, 0, 8, 0] = ![160, 120, 64] := by
+  ext i; fin_cases i <;> simp [workshopA, mulVec, dotProduct, Fin.sum_univ_succ]
+-- Its standard-form cost with c = (-19, -20, 0, 0, 0) is p* = -928.
+example : ![(-19 : ℤ), -20, 0, 0, 0] ⬝ᵥ ![32, 16, 0, 8, 0] = -928 := by
+  simp [dotProduct, Fin.sum_univ_succ]
+-- The other corners solve A x = b too: (0, 0), (40, 0), (0, 32) with their slacks.
+example : workshopA *ᵥ ![0, 0, 160, 120, 64] = ![160, 120, 64] ∧
+    workshopA *ᵥ ![40, 0, 0, 0, 24] = ![160, 120, 64] ∧
+    workshopA *ᵥ ![0, 32, 96, 88, 0] = ![160, 120, 64] := by
+  refine ⟨?_, ?_, ?_⟩ <;> (ext i; fin_cases i <;> simp [workshopA, mulVec, dotProduct, Fin.sum_univ_succ])
+-- Profit at the four corners: £0, £760, £928, £640.
+example : 19 * 0 + 20 * 0 = 0 ∧ 19 * 40 + 20 * 0 = 760 ∧ 19 * 32 + 20 * 16 = 928 ∧
+    19 * 0 + 20 * 32 = 640 := by norm_num
+-- Prices y = (3, 0, 7): y A = (19, 20, 3, 0, 7) and y b = 928.
+example : ![(3 : ℤ), 0, 7] ᵥ* workshopA = ![19, 20, 3, 0, 7] := by
+  ext j; fin_cases j <;> simp [workshopA, vecMul, dotProduct, Fin.sum_univ_succ]
+example : ![(3 : ℤ), 0, 7] ⬝ᵥ ![160, 120, 64] = 928 := by
+  simp [dotProduct, Fin.sum_univ_succ]
+-- Five variables, three in each basis: 10 possible bases.
+example : Nat.choose 5 3 = 10 := by decide
+-- Labour is redundant: 3/4 of timber plus 1/2 of "x2 ≥ 0" gives 3 x1 + x2 ≤ 120.
+example (x₁ x₂ : ℝ) (ht : 4 * x₁ + 2 * x₂ ≤ 160) (h2 : 0 ≤ x₂) : 3 * x₁ + x₂ ≤ 120 := by
+  linarith
+-- A search of every whole-number week finds nothing above £928.
+example : ∀ x₁ < 41, ∀ x₂ < 33, 4 * x₁ + 2 * x₂ ≤ 160 → 3 * x₁ + x₂ ≤ 120 →
+    x₁ + 2 * x₂ ≤ 64 → 19 * x₁ + 20 * x₂ ≤ 928 := by decide
+-- Chairs at £38: both ends of the finish edge earn £1,216.
+example : 19 * 0 + 38 * 32 = 1216 ∧ 19 * 32 + 38 * 16 = 1216 := by norm_num
+
+#print axioms best_plans_form_a_face
+#print axioms slack_form_same_shape
+#print axioms prices_bound_profit
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'best_plans_form_a_face' depends on axioms: [propext, Classical.choice, Quot.sound]
+'slack_form_same_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prices_bound_profit' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

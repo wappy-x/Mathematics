@@ -8,9 +8,13 @@
 
 The shelf's festival again. A headliner costs £60k, needs 4 hours of stage time and draws about 5,500 extra tickets. A smaller act costs £5k, needs 2 hours and draws about 1,000. The budget is £290k and the stage licence gives 24 hours. The organiser books whole acts and wants as many tickets as possible, so this is a maximisation.
 
-Allow fractions and the best plan is 4.6 headliners and 2.8 smaller acts: 7.4 acts, 28,100 tickets ([Integer programs](01-integer-programs-and-relaxations.md)). Nobody books 0.6 of a band. The best whole booking is 4 and 4, for 26,000 tickets, so the fractional ceiling sits 2,100 tickets too high.
+Allow fractions and the best plan is 4.6 headliners and 2.8 smaller acts: 7.4 acts, 28,100 tickets ([Integer programs](01-integer-programs-and-relaxations.md)). This version with fractions allowed is the relaxed problem. Its best plan sits at a corner, where the budget and the stage hours are both used up exactly. Its best value is a ceiling, because no whole booking can beat it.
 
-[Branch and bound](03-branch-and-bound.md) attacks that ceiling by splitting into cases. A cutting plane attacks it differently. It adds one new limit that every whole booking already obeys and the 7.4-act corner breaks. Here the limit is $3x_1 + x_2 \le 16$, with $x_1$ headliners and $x_2$ smaller acts: score a headliner 3 and a smaller act 1, and keep the score at 16 or less. All 45 whole bookings pass. The corner scores 16.6 and is gone. Nothing is guessed: the limit is read off the simplex method's final table.
+Nobody books 0.6 of a band. The best whole booking is 4 and 4, for 26,000 tickets, so the fractional ceiling sits 2,100 tickets too high.
+
+[Branch and bound](03-branch-and-bound.md) attacks that ceiling by splitting into cases. A cutting plane attacks it differently. It adds one new limit that every whole booking already obeys and the 7.4-act corner breaks.
+
+Here the limit is $3x_1 + x_2 \le 16$, with $x_1$ headliners and $x_2$ smaller acts: score a headliner 3 and a smaller act 1, and keep the score at 16 or less. All 45 whole bookings pass. The corner scores 16.6 and is gone. Nothing is guessed: the limit is read off the simplex method's final table.
 
 **A cutting plane is a new inequality that every whole-number plan obeys and the fractional corner breaks, so adding it lowers the ceiling without losing a single real plan.**
 
@@ -66,7 +70,9 @@ To keep every number whole, money is counted in £5k units and time in 2-hour sl
 
 ### Step 0: whole plans make whole equations
 
-Each tableau row is a mixture of the original limits, so every plan, fractional or whole, satisfies it. At a whole booking all the variables in the row, slacks included, are whole numbers; only the row's coefficients and right side can be fractional. Split each of those into a whole part and a fractional part. The whole parts give a whole number, and the fractional parts must make up the rest. That forces an inequality the fractional corner cannot meet.
+Each tableau row is a mixture of the original limits, so every plan, fractional or whole, satisfies it. At a whole booking all the variables in the row, slacks included, are whole numbers; only the row's coefficients and right side can be fractional.
+
+Split each of those into a whole part and a fractional part. The whole parts give a whole number, and the fractional parts must make up the rest. That forces an inequality the fractional corner cannot meet.
 
 There is a second way to see the same cut. Mix the two limits, 0.1 of the budget row plus 0.9 of the stage row:
 
@@ -76,7 +82,7 @@ At a whole booking the left side is a whole number. A whole number no bigger tha
 
 ### Step 1: the tableau row at the 7.4-act corner
 
-Two simplex pivots reach the corner (4.6, 2.8). The row solved for $x_1$ reads
+Two simplex pivots (steps from one corner to the next) reach the corner (4.6, 2.8). The row solved for $x_1$ reads
 
 $$x_1 + 0.1\,s_1 - 0.1\,s_2 = 4.6 .$$
 
@@ -119,7 +125,9 @@ Replace the slacks by what they measure, $s_1 = 58 - 12x_1 - x_2$ and $s_2 = 12 
 
 $$3x_1 + x_2 \le 16 .$$
 
-The same cut as the mixture in Step 0. The corner scores 16.6; all 45 whole bookings score 16 or less, and (4, 4) scores exactly 16. Re-solve with the new limit and the best corner moves to (4.67, 2), worth 27,666.67 tickets. The ceiling has dropped from 28,100 and the gap to the best whole booking from 2,100 to 1,666.67 tickets. The corner is still fractional, so the work is not done.
+The same cut as the mixture in Step 0. The corner scores 16.6; all 45 whole bookings score 16 or less, and (4, 4) scores exactly 16.
+
+Re-solve with the new limit and the best corner moves to (4.67, 2), worth 27,666.67 tickets. The ceiling has dropped from 28,100 and the gap to the best whole booking from 2,100 to 1,666.67 tickets. The corner is still fractional, so the work is not done.
 
 The row solved for $x_2$, $x_2 - 0.2\,s_1 + 1.2\,s_2 = 2.8$, gives a second valid cut, $0.8\,s_1 + 0.2\,s_2 \ge 0.8$, or $10x_1 + x_2 \le 48$. It also removes the corner (which scores 48.8) but leaves a higher ceiling, 27,750 tickets at (4.5, 3). Rows differ in how deep they cut.
 
@@ -141,14 +149,16 @@ Gomory announced in 1958 that, with a careful choice of rows and of pivoting rul
 
 ### Step 6: branch and cut, both ideas in one search
 
-**Branch and cut** runs [Branch and bound](03-branch-and-bound.md) and, at each node of the search tree, adds cuts before deciding whether to branch. A Gomory cut derived at the root is valid for the whole problem, so it is kept and helps every node. Cuts lower the ceilings, so more nodes are pruned; branching guarantees progress when the cuts stall.
+**Branch and cut** runs [Branch and bound](03-branch-and-bound.md) and, at each node of the search tree (each case the split creates), adds cuts before deciding whether to branch. A Gomory cut derived at the root is valid for the whole problem, so it is kept and helps every node. Cuts lower the ceilings, so more nodes are pruned (dropped without being split further); branching guarantees progress when the cuts stall.
 
 On the festival:
 
 - **Branch and bound alone:** the root (4.6, 2.8) splits on $x_1$. The branch $x_1 \le 4$ lands on (4, 4), 26,000 tickets, a whole booking. The branch $x_1 \ge 5$ is empty: five headliners break the budget. Three nodes.
 - **One cut, then branch:** the root becomes (4.67, 2), ceiling 27,666.67. One split on $x_1$ gives the same two children. Three nodes.
 
-One cut does not shrink this tree (four cuts would, to a single node), so the cut's gain here is the root ceiling: 1,666.67 tickets above the answer instead of 2,100. On problems with thousands of variables that gap decides how many nodes survive pruning. Balas, Ceria, Cornuéjols and Natraj (1996) showed that rounds of Gomory cuts at the root, followed by branching, make Gomory's cuts practical on standard test problems, and integer-programming solvers combine cuts and branching in this way.
+One cut does not shrink this tree (four cuts would, to a single node), so the cut's gain here is the root ceiling: 1,666.67 tickets above the answer instead of 2,100.
+
+On problems with thousands of variables that gap decides how many nodes survive pruning. Balas, Ceria, Cornuéjols and Natraj (1996) showed that rounds of Gomory cuts at the root, followed by branching, make Gomory's cuts practical on standard test problems, and integer-programming solvers combine cuts and branching in this way.
 
 ---
 
@@ -181,7 +191,13 @@ The code prints all three. The last row is the hypothesis failing: the arithmeti
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows linear programming. The Python uses exact fractions; the Rust carries its own fraction type. There are three independent roads. Road one is the simplex method, pivot by pivot, which produces the tableau and the cut. Road two lists every corner of the region by crossing each pair of edges and keeping the crossings that obey all the limits. Road three lists all 45 whole bookings and checks each cut against every one, the pure-cutting rounds included. On top of those, a depth-first branch and bound counts nodes with and without the cut, and a loop repeats Gomory cuts until the corner is whole; its last corner must be the best booking from the list.
+Nothing imported knows linear programming. The Python uses exact fractions; the Rust carries its own fraction type. There are three independent roads:
+
+- Road one is the simplex method, pivot by pivot, which produces the tableau and the cut.
+- Road two lists every corner of the region by crossing each pair of edges and keeping the crossings that obey all the limits.
+- Road three lists all 45 whole bookings and checks each cut against every one, the pure-cutting rounds included.
+
+On top of those, a depth-first branch and bound counts nodes with and without the cut, and a loop repeats Gomory cuts until the corner is whole; its last corner must be the best booking from the list.
 
 ### Python
 
@@ -567,6 +583,140 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the Gomory cut is valid for every tableau row, and checks the festival's cut and numbers.
+
+- Take any tableau row and any point that satisfies it. If its variables are whole numbers and the non-basic ones are not negative, the point obeys the Gomory fractional cut.
+- At a corner every non-basic variable is zero. If the row's right side is fractional, that corner breaks the cut.
+- Every whole booking inside the budget and the stage limits obeys $3x_1 + x_2 \le 16$.
+- The hand arithmetic holds exactly: the 45 whole bookings, the best booking (4, 4) at 26,000 tickets, and the corner's score of 16.6.
+- So do the tableau row for $x_1$, the fractional parts, the second cut and the re-solved corner.
+- With the budget in millions, the recipe's cut $38x_1 + 19x_2 \le 222$ throws out (4, 4).
+
+The simplex pivots, the branch and bound searches and the four rounds of pure cutting are left to the Python and Rust checks.
+
+```lean
+-- Cutting planes: the Gomory fractional cut from a tableau row keeps every whole-number point, the corner with a fractional right side breaks it, and on the festival example the cut 3 x1 + x2 <= 16 keeps all 45 whole bookings.
+import Mathlib.Algebra.Order.Floor.Ring
+import Mathlib.Data.Rat.Floor
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Finset
+
+/-- The Gomory fractional cut is valid. Take a tableau row
+`x_B + ∑ⱼ āⱼ xⱼ = b̄` (the sum runs over the non-basic variables).
+At any point where the basic variable and every non-basic variable are whole numbers
+and the non-basic variables are not negative, the row's fractional parts satisfy
+`∑ⱼ f(āⱼ) xⱼ ≥ f(b̄)`, where `f(v) = v - ⌊v⌋` is the fractional part. -/
+theorem gomory_fractional_cut_keeps_whole_points
+    {ι : Type*} [Fintype ι] (a : ι → ℝ) (b : ℝ) (xB : ℤ) (x : ι → ℤ)
+    (hx : ∀ j, 0 ≤ x j)
+    (hrow : (xB : ℝ) + ∑ j, a j * (x j : ℝ) = b) :
+    Int.fract b ≤ ∑ j, Int.fract (a j) * (x j : ℝ) := by
+  set S : ℝ := ∑ j, Int.fract (a j) * (x j : ℝ) with hSdef
+  have hS : 0 ≤ S := Finset.sum_nonneg (fun j _ =>
+    mul_nonneg (Int.fract_nonneg _) (by exact_mod_cast hx j))
+  have hsplit : ∀ j, a j * (x j : ℝ) = (⌊a j⌋ : ℝ) * (x j : ℝ) + Int.fract (a j) * (x j : ℝ) := by
+    intro j; rw [Int.fract]; ring
+  have hb : b = (((xB + ∑ j, ⌊a j⌋ * x j : ℤ)) : ℝ) + S := by
+    rw [← hrow]; simp_rw [hsplit]; rw [Finset.sum_add_distrib, Int.cast_add, Int.cast_sum]; simp only [Int.cast_mul]; ring
+  rw [hb, Int.fract_intCast_add]
+  have h0 : (0 : ℤ) ≤ ⌊S⌋ := Int.floor_nonneg.mpr hS
+  have h0' : (0 : ℝ) ≤ (⌊S⌋ : ℝ) := by exact_mod_cast h0
+  rw [Int.fract]; linarith
+
+/-- The corner breaks the cut. At the corner every non-basic variable is zero,
+so the cut's left side is 0. When the row's right side is fractional
+(`f(b̄) ≠ 0`), 0 falls short of `f(b̄)`, so the corner is removed. -/
+theorem gomory_fractional_cut_removes_corner
+    {ι : Type*} [Fintype ι] (a : ι → ℝ) (b : ℝ) (x : ι → ℝ)
+    (hcorner : ∀ j, x j = 0)
+    (hfrac : Int.fract b ≠ 0) :
+    ∑ j, Int.fract (a j) * x j < Int.fract b := by
+  have hzero : ∑ j, Int.fract (a j) * x j = 0 := by simp [hcorner]
+  rw [hzero]
+  exact lt_of_le_of_ne (Int.fract_nonneg b) (Ne.symm hfrac)
+
+/-- On the festival (money in £5k units, time in 2-hour slots), every whole booking
+of `x₁` headliners and `x₂` smaller acts with `12 x₁ + x₂ ≤ 58` and `2 x₁ + x₂ ≤ 12`
+obeys the cut `3 x₁ + x₂ ≤ 16`. -/
+theorem festival_cut_keeps_whole_bookings (x₁ x₂ : ℤ) (h₁ : 0 ≤ x₁) (h₂ : 0 ≤ x₂)
+    (hbudget : 12 * x₁ + x₂ ≤ 58) (hstage : 2 * x₁ + x₂ ≤ 12) :
+    3 * x₁ + x₂ ≤ 16 := by
+  have _ := h₁
+  omega
+
+/-! ### The card's worked numbers -/
+
+/-- The whole bookings: pairs (headliners, smaller acts) inside both limits. -/
+def wholeBookings : Finset (ℕ × ℕ) :=
+  (range 13 ×ˢ range 13).filter (fun p => 12 * p.1 + p.2 ≤ 58 ∧ 2 * p.1 + p.2 ≤ 12)
+
+-- There are 45 whole bookings.
+example : wholeBookings.card = 45 := by decide
+
+-- All 45 whole bookings pass the cut 3 x₁ + x₂ ≤ 16.
+example : ∀ p ∈ wholeBookings, 3 * p.1 + p.2 ≤ 16 := by decide
+
+-- The second cut 10 x₁ + x₂ ≤ 48 also keeps all 45 whole bookings.
+example : ∀ p ∈ wholeBookings, 10 * p.1 + p.2 ≤ 48 := by decide
+
+-- The best whole booking is (4, 4): 26,000 tickets (5,500 per headliner, 1,000 per smaller act).
+example : (4, 4) ∈ wholeBookings ∧
+    ∀ p ∈ wholeBookings, 5500 * p.1 + 1000 * p.2 ≤ 5500 * 4 + 1000 * 4 := by decide
+example : 5500 * 4 + 1000 * 4 = 26000 := by norm_num
+
+-- (4, 4) scores exactly 16 on the cut.
+example : 3 * 4 + 4 = 16 := by norm_num
+
+-- The relaxed corner (4.6, 2.8) = (23/5, 14/5) meets both limits exactly, gives 28,100 tickets,
+-- and scores 16.6 > 16 on the cut.
+example : (12 : ℚ) * (23/5) + 14/5 = 58 ∧ (2 : ℚ) * (23/5) + 14/5 = 12 := by norm_num
+example : (5500 : ℚ) * (23/5) + 1000 * (14/5) = 28100 := by norm_num
+example : (3 : ℚ) * (23/5) + 14/5 = 83/5 ∧ (16 : ℚ) < 83/5 := by norm_num
+
+-- The tableau row x₁ + (1/10) s₁ - (1/10) s₂ = 23/5 holds at every point,
+-- with s₁ = 58 - 12 x₁ - x₂ and s₂ = 12 - 2 x₁ - x₂.
+example (x₁ x₂ : ℚ) :
+    x₁ + (1/10) * (58 - 12 * x₁ - x₂) - (1/10) * (12 - 2 * x₁ - x₂) = 23/5 := by ring
+
+-- The fractional parts: f(0.1) = 0.1, f(-0.1) = 0.9, f(4.6) = 0.6, and ⌊-0.1⌋ = -1.
+example : Int.fract ((1 : ℚ)/10) = 1/10 := by norm_num
+example : Int.fract (-(1 : ℚ)/10) = 9/10 := by norm_num
+example : Int.fract ((23 : ℚ)/5) = 3/5 := by norm_num
+example : ⌊(-(1 : ℚ)/10)⌋ = -1 := by norm_num
+
+-- Back into acts: the slack cut (1/10) s₁ + (9/10) s₂ ≥ 3/5 is 3 x₁ + x₂ ≤ 16.
+example (x₁ x₂ : ℚ) :
+    (1/10) * (58 - 12 * x₁ - x₂) + (9/10) * (12 - 2 * x₁ - x₂) - 3/5 = 16 - (3 * x₁ + x₂) := by
+  ring
+
+-- Re-solved corner (14/3, 2) after the first cut: on the cut and the budget, 27,666.67 = 83000/3 tickets.
+example : (3 : ℚ) * (14/3) + 2 = 16 ∧ (12 : ℚ) * (14/3) + 2 = 58 ∧
+    (5500 : ℚ) * (14/3) + 1000 * 2 = 83000/3 := by norm_num
+
+-- With the budget in millions, the recipe's cut 38 x₁ + 19 x₂ ≤ 222 throws out (4, 4).
+example : 38 * 4 + 19 * 4 = 228 ∧ 222 < 228 := by norm_num
+
+#print axioms gomory_fractional_cut_keeps_whole_points
+#print axioms gomory_fractional_cut_removes_corner
+#print axioms festival_cut_keeps_whole_bookings
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gomory_fractional_cut_keeps_whole_points' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gomory_fractional_cut_removes_corner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'festival_cut_keeps_whole_bookings' depends on axioms: [propext, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python. The final asserts are pinned to this festival, so a change of data may stop the run there, after everything has printed.
@@ -592,7 +742,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Integer-programming solvers.** Airline crew rostering, power-station scheduling and supply-chain planning run on branch and cut: rounds of cuts at the root, Gomory's among them, then branching.
-- **Travelling salesman tours.** Padberg and Rinaldi solved very large symmetric tours by adding cuts that forbid sub-tours and other fractional patterns; their 1991 paper made the name "branch and cut" standard.
+- **Travelling salesman tours.** Padberg and Rinaldi solved very large symmetric tours by adding cuts that forbid sub-tours (closed loops that skip some of the cities) and other fractional patterns; their 1991 paper made the name "branch and cut" standard.
 - **Knapsack covers.** A yes-or-no budget row says some groups of acts cannot all be booked. A **cover inequality** writes that down: if acts A, B and C together cost more than the budget, at most two of them are booked. Solvers generate these from any such row ([Yes-or-no variables](02-modelling-with-binary-variables-big-m-and-indicators.md)).
 - **When no cut is needed.** For assignment and network-flow problems every corner of the relaxation is already whole, so there is nothing to cut: [Total unimodularity](05-total-unimodularity.md).
 

@@ -36,7 +36,7 @@ $$\min_{X}\ \lVert X - C\rVert_F \quad \text{subject to}\quad X_{ii} = 1 \ \text
 
 **Read it aloud:** find the symmetric matrix closest to the desk's estimate whose diagonal is all ones, as a correlation matrix's must be, and under which no mix has a negative variance.
 
-The Schur complement, the tool that turns ratios into matrix conditions. For a number a, a column b and a positive definite block D:
+The Schur complement, the tool that turns ratios into matrix conditions. For a number a, a column b and a positive definite block D (every nonzero mix gives it a variance above zero):
 
 $$\begin{pmatrix} a & b^T \\ b & D \end{pmatrix} \succeq 0 \iff a - b^T D^{-1} b \ \ge\ 0, \qquad\text{so}\qquad \begin{pmatrix} s & r^T \\ r & t\,I \end{pmatrix} \succeq 0 \iff s \ \ge\ \frac{\lVert r\rVert^2}{t} \quad (t > 0).$$
 
@@ -57,7 +57,7 @@ $$\max_{X}\ \sum_{(i,j) \in E} \tfrac12\,(1 - X_{ij}) \quad \text{subject to}\qu
 | $\lVert X - C\rVert_F$ | the Frobenius distance: square every entry's change, add, take the root | 0.228688 | — |
 | $s$, $r$, $t$, $I$ | a bound, a vector, a positive divisor in the ratio $\lVert r\rVert^2/t$; $I$ the identity matrix | $s$ bounds the squared distance, with $t = 1$ | a larger $t$ loosens the limit |
 | $a$, $b$, $D$, $d$; $p$, $h$, $\varphi$ | the blocks of a matrix split after one row and column: corner, column, the rest, written $d$ when it is a single number; a test vector split the same way (number $p$, vector $h$) and its quadratic form $\varphi$ | pivot on Europe: Schur complement entries 0.19 and −0.61 | — |
-| $(\cdot)_+$ | the PSD part: the same matrix with negative eigenvalues clipped to zero | clipping $C$ puts 1.095278 on Europe's diagonal | — |
+| $(\cdot)_+$ | the PSD (positive semidefinite) part: the same matrix with negative eigenvalues clipped to zero | clipping $C$ puts 1.095278 on Europe's diagonal | — |
 | $\nu_i$, $q(\nu)$, $\operatorname{Diag}$, $\operatorname{diag}$ | the price on asset $i$'s rule $X_{ii} = 1$; the dual function, a floor under every repair; a list turned into a diagonal matrix, and back | $\nu$ = −0.065674 for UK and property, −0.166245 for Europe | — |
 | $E$, $z_i$, $v_i$ | a network's links; node $i$'s side, +1 or −1; its unit vector, with $X_{ij} = v_i \cdot v_j$ | a ring of five; best split cuts 4 links; neighbours meet at −0.809017 | — |
 | $L$, $u_i$ | the network's Laplacian (links per node on the diagonal, −1 per link off it), not the smoothness constant $L$ of other cards; dual prices per node | the $u_i$ add to 4.522542 | — |
@@ -65,7 +65,7 @@ $$\max_{X}\ \sum_{(i,j) \in E} \tfrac12\,(1 - X_{ij}) \quad \text{subject to}\qu
 
 ### When it holds
 
-- **The matrix is symmetric with real entries.** Positive semidefinite is then the same as "every eigenvalue is zero or more" ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). The desk's C fails: its smallest eigenvalue is −0.176715.
+- **The matrix is symmetric with real entries.** Positive semidefinite is then the same as "every eigenvalue, a stretch factor of the matrix, is zero or more" ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). The desk's C fails: its smallest eigenvalue is −0.176715.
 - **The Schur test needs a positive definite pivot.** With a negative one it lies: `[[-1, 1], [1, 0]]` gives a ratio test of 1.000000, which looks fine, yet the matrix has an eigenvalue of −1.618034.
 - **"Nearest" depends on the distance chosen.** The Frobenius distance makes the problem convex with one answer. Weighting the entries changes the answer, and the method below needs that weight written into it.
 - **The certificate needs a strictly feasible point.** The identity matrix, all correlations zero, has every eigenvalue 1, strictly inside. That is what lets the dual bound meet the answer with no gap.
@@ -79,7 +79,7 @@ $$\max_{X}\ \sum_{(i,j) \in E} \tfrac12\,(1 - X_{ij}) \quad \text{subject to}\qu
 
 For a fixed mix w, the variance $w^T X w$ is a sum of entries of X, each times a fixed number. So "this mix has variance zero or more" is a linear inequality in the entries of X: a flat wall with the allowed side marked. Positive semidefinite asks this for every mix at once, an infinite pile of flat walls. Any shape cut out by flat walls has no dents ([Convex sets](../01-Convexity/02-convex-sets.md)). So the allowed matrices form a convex set, and the curved edge in the picture is the envelope of infinitely many straight ones.
 
-The repair is then a convex bowl, the distance to C, over a convex set, with no false bottoms ([Convexity pays off](../01-Convexity/04-local-minima-are-global-when-convex.md)). The cone of [Second-order cone programs](04-second-order-cone-programs.md) is the special case of an arrow-shaped matrix, so every SOCP is an SDP.
+The repair is then a convex bowl, the distance to C, over a convex set, with no false bottoms ([Convexity pays off](../01-Convexity/04-local-minima-are-global-when-convex.md)). The cone of [Second-order cone programs](04-second-order-cone-programs.md) is the special case of an arrow-shaped matrix, so every second-order cone program (SOCP) is an SDP.
 
 ### Step 1: the Schur complement, by completing the square
 
@@ -89,7 +89,9 @@ $$a p^2 + 2p\, b^T h + h^T D h .$$
 
 For a fixed p, choose h to make this as small as possible. Because D is positive definite, the bowl in h has one bottom, at $h = -p D^{-1} b$, and the value there is $p^2\,(a - b^T D^{-1} b)$. Every other h gives more. So the whole form is never negative exactly when $a - b^T D^{-1} b \ge 0$.
 
-That leftover, $a - b^T D^{-1} b$, is the Schur complement. Its use is the ratio. The condition $s \ge \lVert r\rVert^2 / t$, with t above zero, is not linear in s, r and t. The matrix with corner s, column r and block $t I$ is linear in them, and by the test it is positive semidefinite exactly when the ratio condition holds. A ratio has become a matrix rule a solver accepts. With t = 1 it turns the squared distance in the repair into a linear objective: minimise s with the matrix of s and the changes $X - C$ kept positive semidefinite.
+That leftover, $a - b^T D^{-1} b$, is the Schur complement. Its use is the ratio.
+
+The condition $s \ge \lVert r\rVert^2 / t$, with t above zero, is not linear in s, r and t. The matrix with corner s, column r and block $t I$ is linear in them, and by the test it is positive semidefinite exactly when the ratio condition holds. A ratio has become a matrix rule a solver accepts. With t = 1 it turns the squared distance in the repair into a linear objective: minimise s with the matrix of s and the changes $X - C$ kept positive semidefinite.
 
 <details>
 <summary>Detailed proof: the Schur complement test, both directions</summary>
@@ -133,7 +135,11 @@ This is gradient ascent on the dual function. That function is
 
 $$q(\nu) = \tfrac12 \lVert C\rVert_F^2 + \sum_i \nu_i - \tfrac12 \lVert (C + \operatorname{Diag}\nu)_+\rVert_F^2 ,$$
 
-and for any prices at all it sits at or below half the squared distance of every allowed repair. Here is why. Add the priced rules $\sum_i \nu_i (1 - X_{ii})$ to half the squared distance and minimise over every $X \succeq 0$, diagonal rule dropped. Completing the square leaves half the squared distance from X to $C + \operatorname{Diag}\nu$, plus terms free of X, so by fact 1 the best X is $(C + \operatorname{Diag}\nu)_+$, with value q(ν). An allowed repair pays nothing for the rules and was among the X tried, so q(ν) is at most its half squared distance: weak duality, from [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md). The identity matrix, strictly inside, meets [Slater's condition](../03-Constrained%20Optimisation/05-slaters-condition-and-duality-gaps.md), which lets the best floor reach the repair.
+and for any prices at all it sits at or below half the squared distance of every allowed repair. Here is why.
+
+Add the priced rules $\sum_i \nu_i (1 - X_{ii})$ to half the squared distance and minimise over every $X \succeq 0$, diagonal rule dropped. Completing the square leaves half the squared distance from X to $C + \operatorname{Diag}\nu$, plus terms free of X, so by fact 1 the best X is $(C + \operatorname{Diag}\nu)_+$, with value q(ν).
+
+An allowed repair pays nothing for the rules and was among the X tried, so q(ν) is at most its half squared distance: weak duality, from [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md). The identity matrix, strictly inside, meets [Slater's condition](../03-Constrained%20Optimisation/05-slaters-condition-and-duality-gaps.md), which lets the best floor reach the repair.
 
 The slope of q is exactly the diagonal error in the update, and that slope changes no faster than the prices do, so a step of 1 is safe. For a slope with that property, gradient ascent is guaranteed an error falling like O(1/k) after k steps. On this matrix it does much better: from ν = 0, it stops after 25 steps with every diagonal entry within 10⁻¹⁰ of 1. A final rescaling makes the diagonal exactly 1.
 
@@ -143,11 +149,15 @@ The certificate: half the squared distance of the repair, minus q at the final p
 
 Five assets sit in a ring: each strongly linked to the next, the fifth to the first. Two traders split the book, and a linked pair inside one book concentrates that trader's risk, so split linked pairs as often as possible. Counting the links split across the two sides is **max-cut**. For large networks it is NP-hard: no fast method is known that always finds the best split.
 
-Give each asset a side $z_i$, +1 or −1. A link is cut when its two signs differ, and then $(1 - z_i z_j)/2$ is 1; otherwise it is 0. Now build the matrix $X = z z^T$, with entries $z_i z_j$. Its diagonal is all ones, and every mix w scores $(w \cdot z)^2$, never negative. So **every split is a correlation matrix**, one whose entries are all ±1 and whose rank is one.
+Give each asset a side $z_i$, +1 or −1. A link is cut when its two signs differ, and then $(1 - z_i z_j)/2$ is 1; otherwise it is 0. Now build the matrix $X = z z^T$, with entries $z_i z_j$. Its diagonal is all ones, and every mix w scores $(w \cdot z)^2$, never negative. So **every split is a correlation matrix**, one whose entries are all ±1 and whose rank is one: built from the single vector z.
 
 Drop the demand that the entries be ±1 and keep only "diagonal ones, positive semidefinite". That is the relaxation in the formula. The relaxed problem allows every split and more, so its best value is at least the best cut. On the ring it is 4.522542; the best cut, from listing all 32 sign patterns, is 4.
 
-To solve the relaxation, write $X_{ij} = v_i \cdot v_j$ with one unit vector per asset in three dimensions. The **mixing method** visits each asset in turn and points its vector straight away from the sum of its neighbours' vectors, the best direction for it with the others held still. From fixed starting vectors, stopping when no vector moves more than 10⁻¹², it takes 30 sweeps. The neighbours settle at an inner product of −0.809017, which is $\cos(4\pi/5)$, a five-pointed star. The certificate uses the network's Laplacian L: links per node on the diagonal, −1 per link off it. The objective equals $\tfrac14\langle L, X\rangle$, the entries of L times those of X, added. Give each asset the dual price $u_i = \tfrac14(2 - X_{i,i-1} - X_{i,i+1})$ from the mixing answer; by construction these add to its value, 4.522542, so the sum alone proves nothing. For any allowed X the objective is $\sum_i u_i$ minus the entry-by-entry product of $\operatorname{Diag}(u) - L/4$ with X. If $\operatorname{Diag}(u) - L/4$ is positive semidefinite, that product of two positive semidefinite matrices is never negative, so no allowed X scores above $\sum_i u_i$. That test is the certificate, and it passes (smallest eigenvalue 0.000000): the relaxation is solved.
+To solve the relaxation, write $X_{ij} = v_i \cdot v_j$ with one unit vector per asset in three dimensions. The **mixing method** visits each asset in turn and points its vector straight away from the sum of its neighbours' vectors, the best direction for it with the others held still. From fixed starting vectors, stopping when no vector moves more than 10⁻¹², it takes 30 sweeps. The neighbours settle at an inner product of −0.809017, which is $\cos(4\pi/5)$, a five-pointed star.
+
+The certificate uses the network's Laplacian L: links per node on the diagonal, −1 per link off it. The objective equals $\tfrac14\langle L, X\rangle$, the entries of L times those of X, added. Give each asset the dual price $u_i = \tfrac14(2 - X_{i,i-1} - X_{i,i+1})$ from the mixing answer; by construction these add to its value, 4.522542, so the sum alone proves nothing.
+
+For any allowed X the objective is $\sum_i u_i$ minus the entry-by-entry product of $\operatorname{Diag}(u) - L/4$ with X. If $\operatorname{Diag}(u) - L/4$ is positive semidefinite, that product of two positive semidefinite matrices is never negative, so no allowed X scores above $\sum_i u_i$. That test is the certificate, and it passes (smallest eigenvalue 0.000000): the relaxation is solved.
 
 ### Step 5: rounding back to a split
 
@@ -187,6 +197,8 @@ The cubic is the distance's slope along the edge set to zero. The repaired matri
 ## Code, from first principles, and it actually runs
 
 Both programs build every piece by hand: eigenvalues by Jacobi rotations (turning the matrix one pair of axes at a time until the off-diagonal entries vanish; why that works belongs to numerical methods), the PSD part from them, and the rest from loops. The repair is reached **three independent ways**: dual ascent with its certificate, Higham's alternating projections with Dykstra's correction, and a bisection for the root of the cubic along the Schur edge. Max-cut is reached two ways: listing all 32 sign patterns, and the mixing method with its dual certificate. Every number on this card is printed.
+
+Higham's method alternates two moves: clip to the PSD part, then reset the diagonal to 1. Dykstra's correction undoes the last clip's change before each new clip, so the loop lands on the nearest matrix.
 
 ### Python
 
@@ -607,6 +619,174 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves the Schur test, the max-cut bound and the convex shape of the allowed matrices, for every matrix size and every network.
+
+- Take a number a, a column b and a positive definite block D. The matrix with corner a, column b and block D is positive semidefinite exactly when $a - b^T D^{-1} b \ge 0$.
+- On any network, no split cuts more links than the best value of the max-cut relaxation.
+- The symmetric matrices that are positive semidefinite and obey any list of linear limits form a convex set.
+- The hand arithmetic holds exactly: the mix's variance of −0.2, or −80,000,000 pounds squared, the Schur complement on Europe and its determinant −0.336.
+- So do the 0.62 floor for UK–property and the negative pivot's ratio test of 1.
+- On the ring of five, the best split cuts 4 links, and 10 of the 32 splits reach it.
+
+The repair and its certificate, the ratio form, mixing, rounding and the 0.878567 guarantee are left to the Python and Rust checks.
+
+```lean
+-- Semidefinite programs: this file proves the Schur complement test for a positive definite pivot, the bound that the max-cut relaxation puts on every cut, and that a semidefinite program's allowed matrices form a convex set.
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Matrix.RowCol
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Combinatorics.SimpleGraph.CycleGraph
+import Mathlib.Analysis.Convex.Basic
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
+import Mathlib.Algebra.Order.Star.Real
+
+open Matrix
+
+/-- A one-by-one real matrix is positive semidefinite exactly when its entry is zero or more. -/
+theorem posSemidef_unit_iff (M : Matrix Unit Unit ℝ) : M.PosSemidef ↔ 0 ≤ M () () := by
+  rw [posSemidef_iff_dotProduct_mulVec]
+  constructor
+  · rintro ⟨-, h⟩
+    simpa [dotProduct, mulVec] using h (fun _ => 1)
+  · intro h
+    refine ⟨?_, fun x => ?_⟩
+    · ext i j; cases i; cases j; simp
+    · simp only [dotProduct, mulVec, Finset.univ_unique, Finset.sum_singleton, star_trivial,
+        PUnit.default_eq_unit]
+      nlinarith [mul_self_nonneg (x ())]
+
+/-- The **Schur complement test**. Take a real number `a`, a column `b` and a positive definite
+block `D`. The symmetric matrix with corner `a`, column `b` and block `D` is positive semidefinite
+exactly when the Schur complement `a - bᵀ D⁻¹ b` is zero or more. -/
+theorem schur_complement_psd_iff {n : Type*} [Fintype n] [DecidableEq n]
+    (a : ℝ) (b : n → ℝ) (D : Matrix n n ℝ) (hD : D.PosDef) :
+    (fromBlocks (of fun _ _ => a : Matrix Unit Unit ℝ) (replicateRow Unit b)
+        (replicateCol Unit b) D).PosSemidef ↔
+      0 ≤ a - b ⬝ᵥ (D⁻¹ *ᵥ b) := by
+  have : Invertible D := hD.isUnit.invertible
+  have hB : (replicateRow Unit b)ᴴ = replicateCol Unit b := by
+    rw [conjTranspose_replicateRow]; simp
+  rw [← hB, PosDef.fromBlocks₂₂ _ _ hD, posSemidef_unit_iff, hB]
+  rw [Matrix.mul_assoc, ← replicateCol_mulVec, replicateRow_mul_replicateCol]
+  rfl
+
+/-- The objective of the max-cut relaxation for a network `G` on nodes `0, …, n-1`:
+the sum over links `{i, j}` (counted once, with `i < j`) of `(1 - X i j) / 2`. -/
+noncomputable def maxCutObjective {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+    (X : Matrix (Fin n) (Fin n) ℝ) : ℝ :=
+  ∑ i, ∑ j, if i < j ∧ G.Adj i j then (1 - X i j) / 2 else 0
+
+/-- The number of links of `G` cut by the split that puts the nodes of `S` on one side
+and the rest on the other. -/
+def cutSize {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (S : Finset (Fin n)) : ℕ :=
+  (Finset.univ.filter fun p : Fin n × Fin n =>
+    p.1 < p.2 ∧ G.Adj p.1 p.2 ∧ (p.1 ∈ S ↔ p.2 ∉ S)).card
+
+/-- In a positive semidefinite matrix with ones on the diagonal, every entry is at least `-1`. -/
+theorem posSemidef_entry_ge_neg_one {n : ℕ} (X : Matrix (Fin n) (Fin n) ℝ) (hX : X.PosSemidef)
+    (hd : ∀ i, X i i = 1) (i j : Fin n) : -1 ≤ X i j := by
+  have h := (hX.submatrix ![i, j]).dotProduct_mulVec_nonneg ![1, 1]
+  simp [dotProduct, mulVec, Fin.sum_univ_two, hd] at h
+  have hs : star (X j i) = X i j := hX.1.apply i j
+  simp at hs
+  linarith
+
+/-- The max-cut objective of such a matrix is at most `n * n`. -/
+theorem maxCutObjective_le {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+    (X : Matrix (Fin n) (Fin n) ℝ) (hX : X.PosSemidef) (hd : ∀ i, X i i = 1) :
+    maxCutObjective G X ≤ (n : ℝ) * n := by
+  have : ∑ _i : Fin n, ∑ _j : Fin n, (1 : ℝ) = (n : ℝ) * n := by simp
+  rw [← this, maxCutObjective]
+  refine Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ => ?_
+  have := posSemidef_entry_ge_neg_one X hX hd i j
+  split_ifs <;> linarith
+
+/-- **The max-cut relaxation bounds every cut.** The best value of the relaxation, the largest
+`∑ (1 - X i j) / 2` over links among symmetric matrices `X` with ones on the diagonal that are
+positive semidefinite, is at least the number of links cut by any split of the network. -/
+theorem cutSize_le_maxCut_relaxation {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+    (S : Finset (Fin n)) :
+    (cutSize G S : ℝ) ≤
+      sSup {v : ℝ | ∃ X : Matrix (Fin n) (Fin n) ℝ,
+        X.PosSemidef ∧ (∀ i, X i i = 1) ∧ maxCutObjective G X = v} := by
+  apply le_csSup
+  · refine ⟨(n : ℝ) * n, ?_⟩
+    rintro v ⟨X, hX, hd, rfl⟩
+    exact maxCutObjective_le G X hX hd
+  · set s : Fin n → ℝ := fun i => if i ∈ S then 1 else -1 with hs
+    refine ⟨vecMulVec s s, ?_, ?_, ?_⟩
+    · simpa using posSemidef_vecMulVec_self_star s
+    · intro i; simp only [vecMulVec_apply, hs]; split_ifs <;> norm_num
+    · rw [maxCutObjective, cutSize, Finset.card_filter, Nat.cast_sum, ← Finset.univ_product_univ,
+        Finset.sum_product]
+      refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+      simp only [vecMulVec_apply, hs]
+      by_cases hi : i ∈ S <;> by_cases hj : j ∈ S <;> simp [hi, hj]
+
+/-- **The allowed matrices of a semidefinite program form a convex set.** The symmetric matrices
+that obey any family of linear limits `A k X ≤ c k` and are positive semidefinite
+(every mix has a variance of zero or more) form a convex set. -/
+theorem sdp_feasible_set_convex {n κ : Type*} [Fintype n]
+    (A : κ → Matrix n n ℝ →ₗ[ℝ] ℝ) (c : κ → ℝ) :
+    Convex ℝ {X : Matrix n n ℝ | X.PosSemidef ∧ ∀ k, A k X ≤ c k} := by
+  rintro X ⟨hX, hXc⟩ Y ⟨hY, hYc⟩ s t hs ht hst
+  refine ⟨(hX.smul hs).add (hY.smul ht), fun k => ?_⟩
+  rw [map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+  have h1 := mul_le_mul_of_nonneg_left (hXc k) hs
+  have h2 := mul_le_mul_of_nonneg_left (hYc k) ht
+  calc s * A k X + t * A k Y ≤ s * c k + t * c k := add_le_add h1 h2
+    _ = c k := by rw [← add_mul, hst, one_mul]
+
+-- The desk's matrix C, with UK-Europe 9/10, UK-property 1/5, Europe-property 9/10.
+-- The long UK, short Europe, long property mix w = (1, -1, 1) has variance -1/5.
+example :
+    (![1, -1, 1] : Fin 3 → ℝ) ⬝ᵥ
+      ((!![1, 9/10, 1/5; 9/10, 1, 9/10; 1/5, 9/10, 1] : Matrix (Fin 3) (Fin 3) ℝ) *ᵥ ![1, -1, 1])
+      = -1/5 := by
+  simp [dotProduct, mulVec, Fin.sum_univ_three]; norm_num
+-- In pounds squared, at 20,000 pounds of risk per asset: -80,000,000.
+example : (20000 : ℝ) ^ 2 * (-1/5) = -80000000 := by norm_num
+-- Schur complement on Europe: corner 1 - (9/10)^2 = 19/100, off-corner 1/5 - (9/10)^2 = -61/100,
+-- determinant -42/125 (the card's -0.336).
+example : (1 : ℝ) - (9/10) ^ 2 = 19/100 ∧ (1/5 : ℝ) - (9/10) ^ 2 = -61/100 ∧
+    (19/100 : ℝ) * (19/100) - (-61/100) ^ 2 = -42/125 := by norm_num
+-- The determinant of C by cofactors is the same -42/125.
+example : (!![1, 9/10, 1/5; 9/10, 1, 9/10; 1/5, 9/10, 1] : Matrix (Fin 3) (Fin 3) ℝ).det
+    = -42/125 := by
+  simp [det_fin_three]; norm_num
+-- Least UK-property correlation allowed: 2 (9/10)^2 - 1 = 31/50 (the card's 0.62).
+example : 2 * (9/10 : ℝ) ^ 2 - 1 = 31/50 := by norm_num
+-- The negative pivot [[-1, 1], [1, 0]]: the ratio test d - b^2/a gives 1.
+example : (0 : ℝ) - 1 ^ 2 / (-1) = 1 := by norm_num
+-- Max-cut on the ring of five: the best split cuts 4 links, and 10 of the 32 splits reach it.
+example : (Finset.univ : Finset (Finset (Fin 5))).sup (cutSize (SimpleGraph.cycleGraph 5)) = 4 := by
+  decide
+example : ((Finset.univ : Finset (Finset (Fin 5))).filter
+    fun S => cutSize (SimpleGraph.cycleGraph 5) S = 4).card = 10 := by
+  decide
+
+#print axioms posSemidef_unit_iff
+#print axioms posSemidef_entry_ge_neg_one
+#print axioms maxCutObjective_le
+#print axioms schur_complement_psd_iff
+#print axioms cutSize_le_maxCut_relaxation
+#print axioms sdp_feasible_set_convex
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'posSemidef_unit_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'posSemidef_entry_ge_neg_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'maxCutObjective_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'schur_complement_psd_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cutSize_le_maxCut_relaxation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sdp_feasible_set_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

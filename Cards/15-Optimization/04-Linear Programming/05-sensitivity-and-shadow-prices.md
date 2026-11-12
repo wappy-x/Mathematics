@@ -6,11 +6,17 @@
 
 ## General Overview
 
-A furniture workshop makes tables and chairs. A table earns £19 of profit and uses 4 metres of timber, 3 hours of labour and 1 litre of finish. A chair earns £20 and uses 2 m of timber, 1 hour and 2 litres. Each week there are 160 m of timber, 120 hours of labour and 64 litres of finish. The workshop **chooses** how many of each to make and **maximises** the week's profit. The best plan is 32 tables and 16 chairs, £928 a week.
+A furniture workshop makes tables and chairs. A table earns £19 of profit and uses 4 metres of timber, 3 hours of labour and 1 litre of finish. A chair earns £20 and uses 2 m of timber, 1 hour and 2 litres. Each week there are 160 m of timber, 120 hours of labour and 64 litres of finish.
 
-The owner can hire a carpenter for extra hours. What is one more hour of labour worth? **Nothing.** The best plan uses 112 of the 120 hours, so 8 hours already sit idle. The scarce stocks are the other two. One more litre of finish adds £7 to the week's profit, and that stays true for any amount of finish from 40 to 160 litres. One more metre of timber adds £3, from 64 m up to 169.6 m. Labour gets a price only if the hours fall below 112: from there down to 32 hours, each hour is worth £3.60.
+The workshop **chooses** how many of each to make and **maximises** the week's profit. The best plan is 32 tables and 16 chairs, £928 a week.
 
-These numbers are **shadow prices** (the extra profit one more unit of a limit brings). The [Shadow prices](../../14-Applied%20and%20computational/05-Operations%20Research/02-shadow-prices-and-sensitivity.md) card read them off a solver's report for a bakery. This card shows where they come from. They are the dual prices of [LP duality](04-lp-duality-and-complementary-slackness.md), they sit in the last row of the simplex method's final table, and the same table gives the **range** over which each one stays exact.
+The owner can hire a carpenter for extra hours. What is one more hour of labour worth? **Nothing.** The best plan uses 112 of the 120 hours, so 8 hours already sit idle.
+
+The scarce stocks are the other two. One more litre of finish adds £7 to the week's profit, and that stays true for any amount of finish from 40 to 160 litres. One more metre of timber adds £3, from 64 m up to 169.6 m. Labour gets a price only if the hours fall below 112: from there down to 32 hours, each hour is worth £3.60.
+
+These numbers are **shadow prices** (the extra profit one more unit of a limit brings). The [Shadow prices](../../14-Applied%20and%20computational/05-Operations%20Research/02-shadow-prices-and-sensitivity.md) card read them off a solver's report for a bakery. This card shows where they come from.
+
+They are the dual prices of [LP duality](04-lp-duality-and-complementary-slackness.md). In the dual, each stock gets a price, so that what each product uses is worth at least its profit, and the stocks' total value is as small as possible. They sit in the last row of the simplex method's final table, and the same table gives the **range** over which each one stays exact.
 
 **A shadow price is the dual variable of its limit; the final simplex tableau prints it in the slack's column of the profit row, and it stays exact while the corner's plan, recomputed for the new limit, stays non-negative.**
 
@@ -20,13 +26,22 @@ These numbers are **shadow prices** (the extra profit one more unit of a limit b
 
 <p align="center"><img src="../figures/sensitivity-and-shadow-prices.svg" alt="Tables across, chairs up, to scale: the shaded region of allowed plans, the timber, labour and finish lines, the best corner at 32 tables and 16 chairs, and dashed finish lines at 40 and 160 litres meeting the timber line at its two ends" width="420"></p>
 
-The shaded region holds every plan the three stocks allow. The best corner, the filled dot, is where the timber line (bold) meets the finish line. Add finish and the finish line slides up and right; the corner slides up the timber line with it. At 40 litres the corner reaches 40 tables and no chairs, the lower hollow dot. At 160 litres it reaches no tables and 80 chairs, the upper one. Between the two dots, every litre buys the same £7. Past them, the corner changes and so does the price.
+The shaded region holds every plan the three stocks allow. The best corner, the filled dot, is where the timber line (bold) meets the finish line. Add finish and the finish line slides up and right; the corner slides up the timber line with it.
+
+At 40 litres the corner reaches 40 tables and no chairs, the lower hollow dot. At 160 litres it reaches no tables and 80 chairs, the upper one. Between the two dots, every litre buys the same £7. Past them, the corner changes and so does the price.
 
 ---
 
 ## The formula
 
-Notation from [Linear programs](01-linear-programs-and-polyhedra.md) and [The simplex method](03-simplex-method.md): maximise $c^T x$ subject to $Ax + s = b$, $x \ge 0$, $s \ge 0$, with $x$ the plan and $s$ the slacks; $B$ is the columns of the basic variables (the ones the corner solves for; the rest sit at zero) at the final corner and $c_B$ their margins. The dual prices $y$ are those of [LP duality](04-lp-duality-and-complementary-slackness.md). This card adds $z^*(b)$, the best profit as a function of the limits; $\delta$, a change in one limit; $\ell_i$ and $u_i$, the ends of its range; and $r_j$, the profit-row entry of column $j$.
+Notation from [Linear programs](01-linear-programs-and-polyhedra.md) and [The simplex method](03-simplex-method.md): maximise $c^T x$ (the total profit) subject to $Ax + s = b$, $x \ge 0$, $s \ge 0$, with $x$ the plan and $s$ the slacks. $B$ is the columns of the basic variables (the ones the corner solves for; the rest sit at zero) at the final corner, and $c_B$ their margins (profit per item). The dual prices $y$ are those of [LP duality](04-lp-duality-and-complementary-slackness.md).
+
+This card adds four symbols:
+
+- $z^*(b)$, the best profit as a function of the limits;
+- $\delta$, a change in one limit;
+- $\ell_i$ and $u_i$, the ends of its range;
+- $r_j$, the profit-row entry of column $j$.
 
 $$
 y^T = c_B^T B^{-1}, \qquad r_j = y^T a_j - c_j, \qquad z^*(b_i + \delta) = z^*(b) + y_i\,\delta \ \text{ while } \ B^{-1}(b + \delta e_i) \ge 0
@@ -75,7 +90,9 @@ The basic variables solve $Bx_B + Nx_N = b$, where $N$ holds the zero variables'
 
 $$z = y^T b - \sum_{j \text{ zero}} r_j \cdot (\text{variable } j), \qquad y^T = c_B^T B^{-1}, \quad r_j = y^T a_j - c_j.$$
 
-A slack's column $a_j$ is a single 1 in its stock's row and its margin is 0, so under slack $i$ the profit row shows exactly $y_i$: £3, £0 and £7. [LP duality](04-lp-duality-and-complementary-slackness.md) proves, from this same final table, that these $y$ are the dual's best prices: the profit row's non-negative entries say every product is covered and every price is at least zero, and $y^T b = 3 \times 160 + 0 \times 120 + 7 \times 64 = 928$ equals the plan's profit. So the numbers in Step 0's deal are the dual variables. What follows is new: how far the deal stretches.
+A slack's column $a_j$ is a single 1 in its stock's row and its margin is 0, so under slack $i$ the profit row shows exactly $y_i$: £3, £0 and £7.
+
+[LP duality](04-lp-duality-and-complementary-slackness.md) proves, from this same final table, that these $y$ are the dual's best prices. The profit row's non-negative entries say every product is covered and every price is at least zero. And $y^T b = 3 \times 160 + 0 \times 120 + 7 \times 64 = 928$ equals the plan's profit. So the numbers in Step 0's deal are the dual variables. What follows is new: how far the deal stretches.
 
 ### Step 2: move one stock, and the corner moves in a straight line
 
@@ -95,7 +112,9 @@ A stock with spare has its slack basic. That slack's own row just says the spare
 
 ### Step 4: the same trick ranges the margins
 
-Raise a basic product's margin by $\varepsilon$ (pounds). Now $c_B$ changes, and by Step 1's formula the profit row gains $\varepsilon$ times that product's tableau row (its own column stays 0). The plan stays best while no profit-row entry turns negative. For tables, the row of $x_1$ has $\tfrac13$ under $s_1$ and $-\tfrac13$ under $s_3$, so the entries become $3 + \varepsilon/3$ and $7 - \varepsilon/3$. The first turns negative below a table margin of £10 and the second above £40, so the plan stays best for **a table margin of £10 to £40**. For chairs, the same reading gives £9.50 to £38.
+Raise a basic product's margin by $\varepsilon$ (pounds). Now $c_B$ changes, and by Step 1's formula the profit row gains $\varepsilon$ times that product's tableau row (its own column stays 0). The plan stays best while no profit-row entry turns negative.
+
+For tables, the row of $x_1$ has $\tfrac13$ under $s_1$ and $-\tfrac13$ under $s_3$, so the entries become $3 + \varepsilon/3$ and $7 - \varepsilon/3$. The first turns negative below a table margin of £10 and the second above £40, so the plan stays best for **a table margin of £10 to £40**. For chairs, the same reading gives £9.50 to £38.
 
 The profit-row entry of a product not in the plan prices it out. Suppose the workshop could also make a stool from 1 m of timber, 1 hour and 1 litre of finish, earning £9. At the current prices that stock is worth $3 + 0 + 7 = £10$, so $r = 10 - 9 = 1$: every stool forced into the plan costs £1. Raise the stool's margin to £11 and $r = -1$, so stools enter.
 
@@ -106,7 +125,9 @@ The dual is: minimise $b^T y$ subject to $A^T y \ge c$, $y \ge 0$. Its limits do
 
 $$z^*(b) = \min_k\, b^T y^{(k)}.$$
 
-Each $b^T y^{(k)}$ is a straight line in any one stock $b_i$, with slope $y^{(k)}_i$. The smallest of several straight lines is a broken line that bends downward (concave): as $b_i$ grows, the line in charge can only hand over to one with a smaller slope. So a stock's price can only fall as more of it is added. The bends sit where two dual corners tie, which is where the workshop's best corner is degenerate. At a bend the slope on the left and on the right differ: that is the one-sided price.
+Each $b^T y^{(k)}$ is a straight line in any one stock $b_i$, with slope $y^{(k)}_i$. The smallest of several straight lines is a broken line that bends downward (concave): as $b_i$ grows, the line in charge can only hand over to one with a smaller slope. So a stock's price can only fall as more of it is added.
+
+The bends sit where two dual corners tie, which is where the workshop's best corner is degenerate. At a bend the slope on the left and on the right differ: that is the one-sided price.
 
 For finish, the dual corners in charge give slopes 19, 7 and 0, with bends at 40 and 160 litres. Below 40 litres only finish binds and every litre goes into a £19 table; above 160 litres finish is spare.
 
@@ -172,7 +193,9 @@ The one line is the best profit $z^*$ with the finish moved and all else fixed. 
 
 ## Code, from first principles, and it actually runs
 
-Both programs work in exact fractions, so 169.6 and 1/3 are exact, not rounded. They take three independent roads. Road 1 runs the simplex method (Dantzig's rule, most negative profit-row entry first) and reads the prices, the ranges and the margin ranges off the final tableau. Road 2 lists every corner of the dual problem and finds the cheapest: the prices come out again, with no tableau in sight. Road 3 re-solves the workshop by listing every corner, at stocks just inside and just outside each range, at shifted margins, and with the stool added. The asserts check that the three roads agree.
+Both programs work in exact fractions, so 169.6 and 1/3 are exact, not rounded. They take three independent roads.
+
+Road 1 runs the simplex method (Dantzig's rule, most negative profit-row entry first) and reads the prices, the ranges and the margin ranges off the final tableau. Road 2 lists every corner of the dual problem and finds the cheapest: the prices come out again, with no tableau in sight. Road 3 re-solves the workshop by listing every corner, at stocks just inside and just outside each range, at shifted margins, and with the stool added. The asserts check that the three roads agree.
 
 ### Python
 
@@ -550,6 +573,258 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the price formula and its range for any linear program's final simplex tableau, and checks the workshop's arithmetic.
+
+- Move one stock by $\delta$. While the corner's recomputed amounts stay zero or more, the best profit moves by exactly $y_i\,\delta$.
+- Under slack $i$, the profit row shows exactly the shadow price $y_i$.
+- The prices are a feasible dual: none is negative, and each product's stock is worth at least its profit.
+- The stocks' value at those prices equals the best profit, and no feasible dual is cheaper.
+- At a non-degenerate best corner, the best profit has slope exactly $y_i$ in stock $i$, for small rises and small falls alike.
+- The plan of 32 tables and 16 chairs uses 160 m, 112 h and 64 l, and earns £928.
+- The prices £3, £0 and £7 value the stocks at £928, and price each table at £19 and each chair at £20.
+- The stool's profit-row entry is 1 at £9 and −1 at £11. At £11, 32 tables, 8 chairs and 16 stools fit and earn £944.
+- The finish range ends give £760 and £1,600, and the mistakes table's £1,628 and £912 come out as stated.
+
+Margin ranges, the timber and labour ranges, prices past each range end, and the re-solves are left to the Python and Rust checks.
+
+```lean
+-- Shadow prices: at a best corner read off a final simplex tableau, the profit row under each slack is that limit's dual price, and moving one limit changes the best profit by that price times the change for as long as the corner's recomputed plan stays non-negative.
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.Data.Real.Archimedean
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+
+open Matrix
+
+/-! Setting, in the card's notation. The program is: maximise `c ⬝ᵥ x` subject to `A *ᵥ x ≤ b`
+and `x ≥ 0`, so `A *ᵥ x + s = b` with slacks `s ≥ 0`. With slacks added the columns are
+`fromCols A 1` (products `Sum.inl j`, then slack `Sum.inr i` = a single 1 in row `i`) and the
+margins are `Sum.elim c 0`. The best profit is
+`z*(b) = sSup ((fun x => c ⬝ᵥ x) '' {x | 0 ≤ x ∧ A *ᵥ x ≤ b})`.
+A final simplex tableau is a basis `β` (one basic column per limit) whose matrix `B` is
+invertible, whose corner `B⁻¹ *ᵥ b` is non-negative, and whose profit row
+`r k = (y ᵥ* fromCols A 1) k - Sum.elim c 0 k`, with `y = c_B ᵥ* B⁻¹`, has no negative entry.
+Moving limit `i` by `δ` replaces `b` by `b + Pi.single i δ` (that is, `b + δ e_i`). -/
+
+lemma sp_weak {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (y b' : Fin m → ℝ) (c : Fin n → ℝ)
+    (hy : 0 ≤ y) (hc : c ≤ y ᵥ* A) (x : Fin n → ℝ) (hx : 0 ≤ x) (hAx : A *ᵥ x ≤ b') :
+    c ⬝ᵥ x ≤ y ⬝ᵥ b' := by
+  calc c ⬝ᵥ x ≤ (y ᵥ* A) ⬝ᵥ x :=
+        Finset.sum_le_sum fun j _ => mul_le_mul_of_nonneg_right (hc j) (hx j)
+    _ = y ⬝ᵥ (A *ᵥ x) := (dotProduct_mulVec _ _ _).symm
+    _ ≤ y ⬝ᵥ b' := Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (hAx i) (hy i)
+
+#print axioms sp_weak
+
+lemma sp_dual_feas {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (c : Fin n → ℝ) (y : Fin m → ℝ)
+    (hopt : ∀ k, 0 ≤ (y ᵥ* fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)) k
+                      - Sum.elim c (0 : Fin m → ℝ) k) :
+    0 ≤ y ∧ c ≤ y ᵥ* A := by
+  refine ⟨fun i => ?_, fun j => ?_⟩
+  · have := hopt (Sum.inr i)
+    simpa [vecMul_fromCols, vecMul_one] using this
+  · have := hopt (Sum.inl j)
+    simp only [vecMul_fromCols, Sum.elim_inl] at this
+    exact sub_nonneg.mp this
+
+#print axioms sp_dual_feas
+
+lemma sp_attained {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) ℝ) (c : Fin n → ℝ)
+    (β : Fin m → Fin n ⊕ Fin m) (B : Matrix (Fin m) (Fin m) ℝ)
+    (hBdef : B = (fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)).submatrix id β)
+    (hB : IsUnit B.det) (b' : Fin m → ℝ) (hb' : 0 ≤ B⁻¹ *ᵥ b') :
+    ∃ x : Fin n → ℝ, 0 ≤ x ∧ A *ᵥ x ≤ b' ∧
+      c ⬝ᵥ x = ((Sum.elim c (0 : Fin m → ℝ) ∘ β) ᵥ* B⁻¹) ⬝ᵥ b' := by
+  classical
+  set M := fromCols A (1 : Matrix (Fin m) (Fin m) ℝ) with hM
+  set v := B⁻¹ *ᵥ b' with hv
+  let P : Matrix (Fin n ⊕ Fin m) (Fin m) ℝ := Matrix.of fun k j => if β j = k then 1 else 0
+  have hMP : M * P = B := by
+    ext r j
+    simp [P, Matrix.mul_apply, hBdef]
+  have hcP : Sum.elim c (0 : Fin m → ℝ) ᵥ* P = Sum.elim c (0 : Fin m → ℝ) ∘ β := by
+    ext j
+    simp [P, Matrix.vecMul, dotProduct]
+  set w := P *ᵥ v with hw
+  have hw0 : 0 ≤ w := by
+    intro k
+    simp only [hw, Matrix.mulVec, dotProduct, Pi.zero_apply]
+    exact Finset.sum_nonneg fun j _ => by
+      simp only [P, Matrix.of_apply]
+      split_ifs
+      · simpa using hb' j
+      · simp
+  have hMw : M *ᵥ w = b' := by
+    rw [hw, mulVec_mulVec, hMP, hv, mulVec_mulVec, mul_nonsing_inv _ hB, one_mulVec]
+  refine ⟨w ∘ Sum.inl, fun j => hw0 _, ?_, ?_⟩
+  · have h := hMw
+    rw [hM, fromCols_mulVec, one_mulVec] at h
+    intro i
+    have hi := congrFun h i
+    simp only [Pi.add_apply] at hi
+    have := hw0 (Sum.inr i)
+    simp only [Pi.zero_apply] at this
+    simp only [Function.comp_apply] at hi ⊢
+    linarith
+  · rw [← dotProduct_mulVec, ← hv, ← hcP, ← dotProduct_mulVec, ← hw]
+    simp [dotProduct, Fintype.sum_sum_type]
+
+#print axioms sp_attained
+
+lemma sp_value {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) ℝ) (c : Fin n → ℝ)
+    (β : Fin m → Fin n ⊕ Fin m) (B : Matrix (Fin m) (Fin m) ℝ)
+    (hBdef : B = (fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)).submatrix id β)
+    (hB : IsUnit B.det)
+    (y : Fin m → ℝ) (hydef : y = (Sum.elim c (0 : Fin m → ℝ) ∘ β) ᵥ* B⁻¹)
+    (hopt : ∀ k, 0 ≤ (y ᵥ* fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)) k
+                      - Sum.elim c (0 : Fin m → ℝ) k)
+    (b' : Fin m → ℝ) (hb' : 0 ≤ B⁻¹ *ᵥ b') :
+    sSup ((fun x => c ⬝ᵥ x) '' {x | 0 ≤ x ∧ A *ᵥ x ≤ b'}) = y ⬝ᵥ b' := by
+  obtain ⟨hy, hc⟩ := sp_dual_feas A c y hopt
+  obtain ⟨x, hx, hAx, hcx⟩ := sp_attained A c β B hBdef hB b' hb'
+  apply IsGreatest.csSup_eq
+  refine ⟨⟨x, ⟨hx, hAx⟩, by simp [hcx, hydef]⟩, ?_⟩
+  rintro _ ⟨x', ⟨hx', hAx'⟩, rfl⟩
+  exact sp_weak A y b' c hy hc x' hx' hAx'
+
+#print axioms sp_value
+
+/-- The card's formula. Take the final simplex tableau of the program and its prices
+`yᵀ = c_Bᵀ B⁻¹`. Move one limit `i` by `δ`. As long as the corner's plan recomputed for the new
+limit, `B⁻¹ (b + δ e_i)`, stays non-negative, the best profit moves by the price times the change:
+`z*(b + δ e_i) = z*(b) + y_i δ`. -/
+theorem shadow_price_exact_over_its_range {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (β : Fin m → Fin n ⊕ Fin m) (B : Matrix (Fin m) (Fin m) ℝ)
+    (hBdef : B = (fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)).submatrix id β)
+    (hB : IsUnit B.det)
+    (y : Fin m → ℝ) (hydef : y = (Sum.elim c (0 : Fin m → ℝ) ∘ β) ᵥ* B⁻¹)
+    (hfeas : 0 ≤ B⁻¹ *ᵥ b)
+    (hopt : ∀ k, 0 ≤ (y ᵥ* fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)) k
+                      - Sum.elim c (0 : Fin m → ℝ) k)
+    (i : Fin m) (δ : ℝ) (hrange : 0 ≤ B⁻¹ *ᵥ (b + Pi.single i δ)) :
+    sSup ((fun x => c ⬝ᵥ x) '' {x | 0 ≤ x ∧ A *ᵥ x ≤ b + Pi.single i δ})
+      = sSup ((fun x => c ⬝ᵥ x) '' {x | 0 ≤ x ∧ A *ᵥ x ≤ b}) + y i * δ := by
+  rw [sp_value A c β B hBdef hB y hydef hopt _ hrange,
+    sp_value A c β B hBdef hB y hydef hopt _ hfeas, dotProduct_add, dotProduct_single]
+
+/-- The shadow price is the dual variable, printed in the slack's column. At the same final
+tableau, the profit-row entry under slack `i` is exactly `y i`; the prices `y` are a feasible
+dual (no price is negative, and what each product uses is worth at least its profit); their
+value `y ⬝ᵥ b` equals the best profit; and no feasible dual has a smaller value. -/
+theorem shadow_price_is_dual_price_in_slack_column {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (β : Fin m → Fin n ⊕ Fin m) (B : Matrix (Fin m) (Fin m) ℝ)
+    (hBdef : B = (fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)).submatrix id β)
+    (hB : IsUnit B.det)
+    (y : Fin m → ℝ) (hydef : y = (Sum.elim c (0 : Fin m → ℝ) ∘ β) ᵥ* B⁻¹)
+    (hfeas : 0 ≤ B⁻¹ *ᵥ b)
+    (hopt : ∀ k, 0 ≤ (y ᵥ* fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)) k
+                      - Sum.elim c (0 : Fin m → ℝ) k) :
+    (∀ i, (y ᵥ* fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)) (Sum.inr i)
+            - Sum.elim c (0 : Fin m → ℝ) (Sum.inr i) = y i) ∧
+      0 ≤ y ∧ c ≤ y ᵥ* A ∧
+      y ⬝ᵥ b = sSup ((fun x => c ⬝ᵥ x) '' {x | 0 ≤ x ∧ A *ᵥ x ≤ b}) ∧
+      ∀ y' : Fin m → ℝ, 0 ≤ y' → c ≤ y' ᵥ* A → y ⬝ᵥ b ≤ y' ⬝ᵥ b := by
+  obtain ⟨hy, hc⟩ := sp_dual_feas A c y hopt
+  refine ⟨fun i => by simp [vecMul_fromCols, vecMul_one], hy, hc,
+    (sp_value A c β B hBdef hB y hydef hopt b hfeas).symm, ?_⟩
+  intro y' hy' hc'
+  obtain ⟨x, hx, hAx, hcx⟩ := sp_attained A c β B hBdef hB b hfeas
+  rw [← hydef] at hcx
+  rw [← hcx]
+  exact sp_weak A y' b c hy' hc' x hx hAx
+
+/-- At a non-degenerate best corner (every basic amount strictly positive), the price is
+two-sided: the best profit, as a function of limit `i` alone, has slope exactly `y i` there,
+for one unit more and for one unit less alike. -/
+theorem shadow_price_two_sided_at_nondegenerate_corner {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (β : Fin m → Fin n ⊕ Fin m) (B : Matrix (Fin m) (Fin m) ℝ)
+    (hBdef : B = (fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)).submatrix id β)
+    (hB : IsUnit B.det)
+    (y : Fin m → ℝ) (hydef : y = (Sum.elim c (0 : Fin m → ℝ) ∘ β) ᵥ* B⁻¹)
+    (hnondeg : ∀ k, 0 < (B⁻¹ *ᵥ b) k)
+    (hopt : ∀ k, 0 ≤ (y ᵥ* fromCols A (1 : Matrix (Fin m) (Fin m) ℝ)) k
+                      - Sum.elim c (0 : Fin m → ℝ) k)
+    (i : Fin m) :
+    HasDerivAt
+      (fun t : ℝ => sSup ((fun x => c ⬝ᵥ x) '' {x | 0 ≤ x ∧ A *ᵥ x ≤ b + Pi.single i t}))
+      (y i) 0 := by
+  have hlin : HasDerivAt (fun t : ℝ => y ⬝ᵥ b + y i * t) (y i) 0 := by
+    simpa using ((hasDerivAt_id (0 : ℝ)).const_mul (y i)).const_add (y ⬝ᵥ b)
+  apply hlin.congr_of_eventuallyEq
+  have hev : ∀ᶠ t in nhds (0 : ℝ), 0 ≤ B⁻¹ *ᵥ (b + Pi.single i t) := by
+    have hall : ∀ᶠ t in nhds (0 : ℝ), ∀ k, 0 < (B⁻¹ *ᵥ (b + Pi.single i t)) k := by
+      rw [Filter.eventually_all]
+      intro k
+      have hcont : Continuous fun t : ℝ => (B⁻¹ *ᵥ b) k + B⁻¹ k i * t := by fun_prop
+      have h0 := hcont.continuousAt (x := (0 : ℝ))
+      have := h0.eventually (lt_mem_nhds (by simpa using hnondeg k))
+      refine this.mono fun t ht => ?_
+      rw [mulVec_add, mulVec_single]
+      simpa [mul_comm] using ht
+    exact hall.mono fun t ht k => (ht k).le
+  refine hev.mono fun t ht => ?_
+  simp only
+  rw [sp_value A c β B hBdef hB y hydef hopt _ ht, dotProduct_add, dotProduct_single]
+
+/-! The workshop: tables and chairs; timber, labour and finish. -/
+
+-- The plan 32 tables and 16 chairs uses 160 m of timber, 112 of the 120 hours, 64 litres of finish.
+example : (!![4, 2; 3, 1; 1, 2] : Matrix (Fin 3) (Fin 2) ℤ) *ᵥ ![32, 16] = ![160, 112, 64] := by
+  decide
+
+-- Its profit is £928.
+example : (![19, 20] : Fin 2 → ℤ) ⬝ᵥ ![32, 16] = 928 := by decide
+
+-- The prices £3, £0, £7 value the stocks at £928, the dual check.
+example : (![3, 0, 7] : Fin 3 → ℤ) ⬝ᵥ ![160, 120, 64] = 928 := by decide
+
+-- At those prices a table's stock is worth exactly £19 and a chair's exactly £20 (profit-row entry 0).
+example : (![3, 0, 7] : Fin 3 → ℤ) ᵥ* !![4, 2; 3, 1; 1, 2] = ![19, 20] := by decide
+
+-- The stool (1 m, 1 h, 1 l): its stock is worth £10, so r = 1 at a £9 margin and r = -1 at £11.
+example : (![3, 0, 7] : Fin 3 → ℤ) ⬝ᵥ ![1, 1, 1] - 9 = 1 := by decide
+example : (![3, 0, 7] : Fin 3 → ℤ) ⬝ᵥ ![1, 1, 1] - 11 = -1 := by decide
+
+-- Finish range ends: 928 + 7 × (40 - 64) = 760 = 19 × 40, and 928 + 7 × (160 - 64) = 1600 = 20 × 80.
+example : (928 : ℤ) + 7 * (40 - 64) = 760 ∧ (19 : ℤ) * 40 = 760 := by decide
+example : (928 : ℤ) + 7 * (160 - 64) = 1600 ∧ (20 : ℤ) * 80 = 1600 := by decide
+
+-- With the stool at £11: 32 tables, 8 chairs, 16 stools use 160 m, 120 h, 64 l and earn £944 = 928 + 16.
+example : (!![4, 2, 1; 3, 1, 1; 1, 2, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![32, 8, 16]
+    = ![160, 120, 64] := by decide
+example : (![19, 20, 11] : Fin 3 → ℤ) ⬝ᵥ ![32, 8, 16] = 944 ∧ (944 : ℤ) = 928 + 16 * 1 := by decide
+
+-- The mistakes: £7 for 100 more litres predicts 1628, not 1600; 16 forced stools at £9 give 912.
+example : (928 : ℤ) + 7 * 100 = 1628 ∧ (928 : ℤ) - 16 * 1 = 912 := by decide
+
+#print axioms shadow_price_exact_over_its_range
+#print axioms shadow_price_is_dual_price_in_slack_column
+#print axioms shadow_price_two_sided_at_nondegenerate_corner
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sp_weak' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sp_dual_feas' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sp_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sp_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shadow_price_exact_over_its_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shadow_price_is_dual_price_in_slack_column' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shadow_price_two_sided_at_nondegenerate_corner' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

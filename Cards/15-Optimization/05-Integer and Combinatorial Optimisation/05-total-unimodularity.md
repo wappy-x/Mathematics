@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A summer festival has six acts and six slots to put them in. The acts are a headliner, a rock band, a DJ, a folk trio, a brass band and a singer. The slots are the main stage on Friday, Saturday and Sunday, a late tent on Friday, and the tent on Saturday and on Sunday. The promoter has an estimate of the extra ticket sales each act brings in each slot, in thousands of pounds. The headliner on Saturday night is worth £60k. The DJ is worth most in the Friday late tent, £38k. The goal is to **maximise** total sales: one act per slot, one slot per act.
+A summer festival has six acts and six slots to put them in. The acts are a headliner, a rock band, a DJ, a folk trio, a brass band and a singer. The slots are the main stage on Friday, Saturday and Sunday, a late tent on Friday, and the tent on Saturday and on Sunday.
+
+The promoter has an estimate of the extra ticket sales each act brings in each slot, in thousands of pounds. The headliner on Saturday night is worth £60k. The DJ is worth most in the Friday late tent, £38k. The goal is to **maximise** total sales: one act per slot, one slot per act.
 
 An act is booked into a slot or it is not, so this is a whole-number decision, and those are usually hard. The cheap move is to allow fractions, solve the resulting linear program (straight-line value, straight-line limits), and hope. That fractional version is the **relaxation**, from [Integer programs](01-integer-programs-and-relaxations.md). Usually hope fails: add the festival's £80k budget and the relaxation books 19/40 of the headliner, and the work goes back to search.
 
@@ -34,7 +36,7 @@ Acts on the left, slots on the right, extra sales in £ thousand on each line; s
 
 ## The formula
 
-Write $x_{ij}$ for the share of act $i$ booked into slot $j$, and $c_{ij}$ for its value. The relaxation of the festival is a linear program in the standard form of the LP shelf, $c^T x$ made largest under $Ax \le b$, $x \ge 0$:
+Write $x_{ij}$ for the share of act $i$ booked into slot $j$, and $c_{ij}$ for its value. The relaxation of the festival is a linear program (LP) in the standard form of [Linear programs](../04-Linear%20Programming/01-linear-programs-and-polyhedra.md), $c^T x$ (each value $c_{ij}$ times its share $x_{ij}$, added up) made largest under $Ax \le b$, $x \ge 0$:
 
 $$\max \sum_{i,j} c_{ij}\,x_{ij} \quad\text{such that}\quad \sum_j x_{ij} \le 1 \text{ for each act},\quad \sum_i x_{ij} \le 1 \text{ for each slot},\quad x_{ij} \ge 0$$
 
@@ -64,19 +66,19 @@ The split rule: when a column's two nonzeros have the same sign they sit in diff
 | $S$, $S'$ | a square submatrix kept from $A$; $S'$ is $S$ with one row and one column removed | the 3-act, 3-slot table has 5004 of them | — |
 | $\det$ | determinant of a square table | −1, 0 or 1 for every $S$ here; 2 for the duet triangle below | a value other than ±1 or 0 lets fractions in |
 | $I$, $s$ | the identity block, one column per row; $s$ is the slack, the unused room in each row | 12 slack columns | — |
-| $B$, $x_B$ | the basis: the 12 columns of $[A \mid I]$ that a corner uses, as a square table; $x_B$ are their values | determinant ±1 after each of the 63 pivots | — |
+| $B$, $x_B$ | the basis: the 12 columns of $[A \mid I]$ that a corner uses, as a square table; $x_B$ are their values | determinant ±1 after each of the 63 pivots (simplex steps from one basis to the next) | — |
 | $B_k$, $(x_B)_k$ | $B$ with its $k$-th column swapped for $b$; $(x_B)_k$ is the $k$-th basic value | in the duet triangle, $\det(B_k) = 1$ for each $k$ | — |
 | $u_i$, $v_j$ | the dual prices $y$: what one more unit of act $i$, or of slot $j$, is worth | acts 55, 40, 38, 22, 21, 21; slots 0, 5, 4, 0, 0, 4 | — |
 | $R_1$, $R_2$ | the two row groups of the test | acts, slots | — |
 
-Simplex, on this card, means the LP shelf's corner-walking method, not a triangle-shaped set.
+Simplex, on this card, means [The simplex method](../04-Linear%20Programming/03-simplex-method.md), the LP shelf's corner-walking method, not a triangle-shaped set.
 
 ### When it holds
 
 - **Every square block, not just the entries.** A table of 0s and 1s can still fail. Three acts pairing up for duet sets give a 3 × 3 block with determinant 2, and the relaxation answers 1.5 duets when only 1 is possible.
 - **The right-hand side must be whole.** Cramer's rule divides by ±1, but it still copies whatever is in $b$, so a limit of half a slot can give a corner with half an act. The values $c$ never matter: any $c$ gives a whole best corner.
 - **No extra row that breaks the shape.** Add the festival's £80k budget as a 13th row, with fees 40, 25, 15, 8, 6 and 7, and the table is no longer totally unimodular (the 1 × 1 block holding 40 already fails). The relaxation then books 19/40 of the headliner.
-- **The solver must return a corner.** When two plans tie, the halfway point between them is also optimal and not whole. Simplex returns a corner; an interior-point method can return a point between them, such as the halfway point the code checks.
+- **The solver must return a corner.** When two plans tie, the halfway point between them is also optimal and not whole. Simplex returns a corner. An interior-point method cuts through the middle of the region instead ([Interior point for linear programs](../04-Linear%20Programming/08-interior-point-for-lp-and-complexity.md)), and can return a point between them, such as the halfway point the code checks.
 
 ---
 
@@ -125,7 +127,7 @@ This is Heller and Tompkins's sufficient condition. The full description of tota
 
 ### Step 5: the prices come out whole too, and they certify the plan
 
-The prices problem, the dual from the LP shelf, uses the transpose $A^T$. A submatrix of $A^T$ is the transpose of a submatrix of $A$, with the same determinant, so $A^T$ is totally unimodular too. With whole values $c$, the dual's corners are whole.
+The prices problem, the dual from [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md), uses the transpose $A^T$: the table with its rows and columns swapped. A submatrix of $A^T$ is the transpose of a submatrix of $A$, with the same determinant, so $A^T$ is totally unimodular too. With whole values $c$, the dual's corners are whole.
 
 The solver's final prices: acts 55, 40, 38, 22, 21, 21 and slots 0, 5, 4, 0, 0, 4. For every pair, act price plus slot price is at least the pair's value. Book any plan: each act and each slot appears once, so its value is at most the sum of all prices, 210. The plan found makes 210. That is the certificate: no plan does better, checked with 36 comparisons, not a search.
 
@@ -168,7 +170,7 @@ The budget is what turns the festival into a real integer program, needing [Bran
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows about linear programs or matrices. The relaxation is solved by a simplex tableau in exact fractions with Bland's rule (enter the lowest-numbered improving column, which cannot cycle), starting from the empty plan. The answer is reached **three independent ways**: the simplex method, a list of all 720 whole plans, and the dual prices as a certificate. Then the matrix itself is checked two ways: its column shape on the full table, and every square determinant of the 3-act, 3-slot table. The last two sections print each "what breaks" row and each "Try changing" answer.
+Nothing imported knows about linear programs or matrices. The relaxation is solved by a simplex tableau (the table of equations that simplex rewrites at each step) in exact fractions with Bland's rule (enter the lowest-numbered improving column, which cannot cycle), starting from the empty plan. The answer is reached **three independent ways**: the simplex method, a list of all 720 whole plans, and the dual prices as a certificate. Then the matrix itself is checked two ways: its column shape on the full table, and every square determinant of the 3-act, 3-slot table. The last two sections print each "what breaks" row and each "Try changing" answer.
 
 ### Python
 
@@ -561,6 +563,306 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the main theorem and the two-group test for every table, the price certificate for any number of acts, and the festival's numbers.
+
+- Take a whole-number table $A$ that is totally unimodular, and whole limits $b$. Every corner of $\{x : Ax \le b,\ x \ge 0\}$ is whole.
+- Take a table with entries −1, 0 or 1 and at most two nonzeros per column. If its rows split into two groups by the split rule, it is totally unimodular.
+- Suppose each act price plus slot price is at least that pair's value. Then any plan, one act per slot, is worth at most the sum of all prices.
+- The festival's plan uses each slot once and is worth 60 + 40 + 38 + 22 + 25 + 25 = 210, in £ thousand.
+- The prices add up to 210, and all 36 price checks hold. Headliner + Sat main and Rock band + Sat main tie exactly: 55 + 5 = 60 and 40 + 5 = 45.
+- The duet triangle has determinant 2, so it is not totally unimodular.
+
+The simplex run, all 720 plans, the 5004 determinants, the budget and the tie are left to the Python and Rust checks.
+
+```lean
+-- Total unimodularity: if every square submatrix of a whole-number table has determinant -1, 0 or 1 and the limits are whole, every corner of {x : Ax ≤ b, x ≥ 0} is whole; the two-group test proves a table qualifies, and prices certify the best assignment.
+import Mathlib.LinearAlgebra.Matrix.Determinant.TotallyUnimodular
+import Mathlib.Analysis.Convex.Extreme
+import Mathlib.Basic.Real.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib
+
+open Matrix
+
+/-- Helper: if a totally unimodular whole-number system has exactly one real solution, that
+solution is whole. -/
+theorem tu_unique_solution_whole {T n : Type*} [Fintype T] [Fintype n]
+    (M : Matrix T n ℤ) (hM : M.IsTotallyUnimodular)
+    (hinj : Function.Injective (M.map (Int.cast : ℤ → ℝ)).mulVec)
+    (c : T → ℤ) (y : n → ℝ) (hy : (M.map (Int.cast : ℤ → ℝ)) *ᵥ y = fun t => (c t : ℝ)) :
+    ∃ z : n → ℤ, y = fun j => (z j : ℝ) := by
+  classical
+  set M' := M.map (Int.cast : ℤ → ℝ) with hM'
+  have hrank : M'.rank = Fintype.card n := by
+    rw [Matrix.rank, LinearMap.finrank_range_of_inj (by exact hinj),
+      Module.finrank_fintype_fun_eq_card]
+  rw [M'.rank_eq_finrank_span_row] at hrank
+  obtain ⟨κ, a, ha, hsp, hli⟩ := exists_linearIndependent'.{_, _, 0} ℝ M'.row
+  have : Fintype κ := Fintype.ofInjective a ha
+  have hcard : Fintype.card κ = Fintype.card n := by
+    rw [← hrank, ← hsp, linearIndependent_iff_card_eq_finrank_span.mp hli, Set.finrank]
+  let e : n ≃ κ := Fintype.equivOfCardEq hcard.symm
+  let f : n → T := a ∘ e
+  let B : Matrix n n ℤ := M.submatrix f id
+  have hB' : B.map (Int.cast : ℤ → ℝ) = M'.submatrix f id := rfl
+  have hli' : LinearIndependent ℝ (B.map (Int.cast : ℤ → ℝ)).row := by
+    have := hli.comp e e.injective
+    exact this
+  have hunit : IsUnit (B.map (Int.cast : ℤ → ℝ)) := linearIndependent_row_iff_isUnit.mp hli'
+  have hdet0 : (B.map (Int.cast : ℤ → ℝ)).det ≠ 0 := by
+    rw [← isUnit_iff_ne_zero, ← Matrix.isUnit_iff_isUnit_det]; exact hunit
+  have hdetcast : ((B.det : ℤ) : ℝ) = (B.map (Int.cast : ℤ → ℝ)).det :=
+    (Int.castRingHom ℝ).map_det B
+  have htu := (isTotallyUnimodular_iff_fintype M).mp hM n f id
+  obtain ⟨s, hs⟩ := htu
+  have hsq : B.det * B.det = 1 := by
+    change (M.submatrix f id).det * (M.submatrix f id).det = 1
+    rw [← hs]
+    rcases s with _ | _ | _
+    · exfalso; apply hdet0; rw [← hdetcast]; change (((M.submatrix f id).det : ℤ) : ℝ) = 0
+      rw [← hs]; simp
+    · simp
+    · simp
+  -- adjugate argument
+  have hBy : (B.map (Int.cast : ℤ → ℝ)) *ᵥ y = fun j => (c (f j) : ℝ) := by
+    funext j
+    rw [hB']
+    have := congrFun hy (f j)
+    simpa [Matrix.mulVec, dotProduct, Matrix.submatrix] using this
+  have hadj := congrArg (fun v => (B.map (Int.cast : ℤ → ℝ)).adjugate *ᵥ v) hBy
+  simp only [Matrix.mulVec_mulVec, Matrix.adjugate_mul, Matrix.smul_mulVec, Matrix.one_mulVec] at hadj
+  refine ⟨fun j => B.det * (B.adjugate *ᵥ (c ∘ f)) j, ?_⟩
+  funext j
+  have hj := congrFun hadj j
+  have hmap : ((B.adjugate *ᵥ (c ∘ f)) j : ℝ) =
+      ((B.map (Int.cast : ℤ → ℝ)).adjugate *ᵥ fun j => (c (f j) : ℝ)) j := by
+    rw [show ((B.adjugate *ᵥ (c ∘ f)) j : ℝ) = Int.castRingHom ℝ ((B.adjugate *ᵥ (c ∘ f)) j) from rfl,
+      RingHom.map_mulVec]
+    congr 1
+    have := (Int.castRingHom ℝ).map_adjugate B
+    simpa using this
+  rw [← hdetcast] at hj
+  simp only [Pi.smul_apply, smul_eq_mul] at hj
+  have : ((B.det : ℝ) * (B.det : ℝ)) = 1 := by exact_mod_cast hsq
+  rw [Int.cast_mul, hmap, ← hj, ← mul_assoc, this, one_mul]
+
+#print axioms tu_unique_solution_whole
+
+/-- Hoffman and Kruskal, the direction the card proves: if every square submatrix of the
+whole-number table `A` has determinant -1, 0 or +1, and the right-hand side `b` is whole,
+then every corner (extreme point) of the region `{x : A x ≤ b, x ≥ 0}` has whole coordinates. -/
+theorem totally_unimodular_corners_are_whole {m n : Type*} [Fintype m] [Fintype n]
+    (A : Matrix m n ℤ) (hA : A.IsTotallyUnimodular) (b : m → ℤ) (x : n → ℝ)
+    (hx : x ∈ Set.extremePoints ℝ
+      {y : n → ℝ | (∀ i, (A.map (Int.cast : ℤ → ℝ) *ᵥ y) i ≤ (b i : ℝ)) ∧ ∀ j, 0 ≤ y j}) :
+    ∃ z : n → ℤ, x = fun j => (z j : ℝ) := by
+  classical
+  set S := {y : n → ℝ | (∀ i, (A.map (Int.cast : ℤ → ℝ) *ᵥ y) i ≤ (b i : ℝ)) ∧ ∀ j, 0 ≤ y j}
+    with hS
+  let N : Matrix (m ⊕ n) n ℤ := fromRows A (-1)
+  have hN : N.IsTotallyUnimodular := by
+    refine hA.fromRows_unitlike (fun _ j => ⟨j, -1, ?_⟩)
+    ext k
+    by_cases hjk : j = k
+    · subst hjk; simp
+    · simp [hjk, Ne.symm hjk]
+  let b' : m ⊕ n → ℤ := Sum.elim b 0
+  let Nr := N.map (Int.cast : ℤ → ℝ)
+  have hNr : ∀ (y : n → ℝ), (Nr *ᵥ y) = Sum.elim (A.map Int.cast *ᵥ y) (-y) := by
+    intro y
+    funext r
+    cases r with
+    | inl i => simp [Nr, N, Matrix.mulVec, dotProduct]
+    | inr j => simp [Nr, N, Matrix.mulVec, dotProduct, Matrix.one_apply]
+  have hSiff : ∀ y, y ∈ S ↔ ∀ r, (Nr *ᵥ y) r ≤ (b' r : ℝ) := by
+    intro y
+    simp only [hS, Set.mem_ofPred_eq, hNr, Sum.forall, Sum.elim_inl, Sum.elim_inr, b',
+      Pi.neg_apply, Pi.zero_apply, Int.cast_zero, neg_nonpos]
+  have hxS : x ∈ S := hx.1
+  have key : ∀ d : n → ℝ, (∀ r, (Nr *ᵥ x) r = (b' r : ℝ) → (Nr *ᵥ d) r = 0) → d = 0 := by
+    intro d hd
+    have hev : ∀ᶠ s in nhds (0 : ℝ), x + s • d ∈ S := by
+      simp only [hSiff]
+      refine Filter.eventually_all.2 fun r => ?_
+      have hlin : ∀ s : ℝ, (Nr *ᵥ (x + s • d)) r = (Nr *ᵥ x) r + s * (Nr *ᵥ d) r := by
+        intro s; simp [Matrix.mulVec_add, Matrix.mulVec_smul]
+      simp only [hlin]
+      by_cases ht : (Nr *ᵥ x) r = (b' r : ℝ)
+      · refine Filter.Eventually.of_forall fun s => ?_
+        rw [hd r ht, ht]; simp
+      · have hlt : (Nr *ᵥ x) r < (b' r : ℝ) := lt_of_le_of_ne ((hSiff x).1 hxS r) ht
+        have htend : Filter.Tendsto (fun s : ℝ => (Nr *ᵥ x) r + s * (Nr *ᵥ d) r) (nhds 0)
+            (nhds ((Nr *ᵥ x) r)) := by
+          have hc : Continuous (fun s : ℝ => (Nr *ᵥ x) r + s * (Nr *ᵥ d) r) :=
+            continuous_const.add (continuous_id.mul continuous_const)
+          exact hc.tendsto' 0 _ (by simp)
+        exact (htend.eventually_lt_const hlt).mono fun s hs => le_of_lt hs
+    obtain ⟨ε, hε, hball⟩ := Metric.eventually_nhds_iff.1 hev
+    have h1 : x + (ε / 2) • d ∈ S := hball (by
+      rw [Real.dist_eq, sub_zero, abs_of_pos (by linarith)]; linarith)
+    have h2 : x + (-(ε / 2)) • d ∈ S := hball (by
+      rw [Real.dist_eq, sub_zero, abs_neg, abs_of_pos (by linarith)]; linarith)
+    have hseg : x ∈ openSegment ℝ (x + (ε / 2) • d) (x + (-(ε / 2)) • d) := by
+      refine ⟨1 / 2, 1 / 2, by norm_num, by norm_num, by norm_num, ?_⟩
+      ext j; simp; ring
+    have := ((mem_extremePoints.1 hx).2 _ h1 _ h2 hseg).1
+    have h3 : (ε / 2) • d = 0 := by
+      have := congrArg (fun v => v - x) this
+      simpa using this
+    rcases smul_eq_zero.1 h3 with h | h
+    · linarith
+    · exact h
+  let T := {r : m ⊕ n // (Nr *ᵥ x) r = (b' r : ℝ)}
+  let M : Matrix T n ℤ := N.submatrix Subtype.val id
+  have hMv : ∀ y, (M.map (Int.cast : ℤ → ℝ)) *ᵥ y = fun t => (Nr *ᵥ y) t.1 := fun y => rfl
+  refine tu_unique_solution_whole M (hN.submatrix _ _) ?_ (fun t => b' t.1) x ?_
+  · intro d1 d2 h12
+    have hz := key (d1 - d2) (fun r hr => by
+      have := congrFun h12 ⟨r, hr⟩
+      rw [hMv, hMv] at this
+      simp only at this
+      rw [Matrix.mulVec_sub, Pi.sub_apply, this, sub_self])
+    exact sub_eq_zero.1 hz
+  · rw [hMv]
+    funext t
+    exact t.2
+
+/-- The two-group test (Heller and Tompkins): a table with entries -1, 0, 1, at most two
+nonzeros in each column, and its rows split into two groups so that a column's two nonzeros
+sit in different groups when they have the same sign and in the same group when they have
+opposite signs, is totally unimodular. -/
+theorem two_group_test_gives_totally_unimodular {m n : Type*} [Fintype m]
+    (A : Matrix m n ℤ) (hentry : ∀ i j, A i j = -1 ∨ A i j = 0 ∨ A i j = 1)
+    (hcol : ∀ j, (Finset.univ.filter fun i => A i j ≠ 0).card ≤ 2)
+    (group : m → Bool)
+    (hsplit : ∀ j i₁ i₂, i₁ ≠ i₂ → A i₁ j ≠ 0 → A i₂ j ≠ 0 →
+      (A i₁ j = A i₂ j ↔ group i₁ ≠ group i₂)) :
+    A.IsTotallyUnimodular := by
+  intro k
+  induction k with
+  | zero => intro f g _ _; exact ⟨1, by simp⟩
+  | succ k ih =>
+    intro f g hf hg
+    by_cases hcase : ∃ c : Fin (k + 1), ∃ r : Fin (k + 1), ∀ i, i ≠ r → A (f i) (g c) = 0
+    · obtain ⟨c, r, hr⟩ := hcase
+      rw [det_succ_column (A.submatrix f g) c,
+        Fintype.sum_eq_single r (fun i hi => by simp [hr i hi])]
+      change _ ∈ MonoidHom.mrange SignType.castHom.toMonoidHom
+      refine mul_mem (mul_mem (pow_mem ?_ _) ?_) ?_
+      · exact ⟨-1, by simp⟩
+      · rcases hentry (f r) (g c) with h | h | h
+        · exact ⟨-1, by simp [h]⟩
+        · exact ⟨0, by simp [h]⟩
+        · exact ⟨1, by simp [h]⟩
+      · rw [submatrix_submatrix]
+        exact ih _ _ (hf.comp Fin.succAbove_right_injective)
+          (hg.comp Fin.succAbove_right_injective)
+    · push Not at hcase
+      refine ⟨0, ?_⟩
+      rw [SignType.coe_zero, eq_comm]
+      classical
+      let w : Fin (k + 1) → ℤ := fun i => if group (f i) then 1 else -1
+      apply (Matrix.exists_vecMul_eq_zero_iff).1
+      refine ⟨w, ?_, ?_⟩
+      · intro h
+        have := congrFun h 0
+        simp only [w, Pi.zero_apply] at this
+        split_ifs at this; omega
+      · funext c
+        obtain ⟨r1, h1⟩ : ∃ r1, A (f r1) (g c) ≠ 0 := by
+          obtain ⟨i, _, hi⟩ := hcase c 0; exact ⟨i, hi⟩
+        obtain ⟨r2, h21, h2⟩ := hcase c r1
+        have hother : ∀ i, i ≠ r1 → i ≠ r2 → A (f i) (g c) = 0 := by
+          intro i hi1 hi2
+          by_contra hi
+          have h3 : 2 < (Finset.univ.filter fun i => A i (g c) ≠ 0).card := by
+            rw [Finset.two_lt_card_iff]
+            refine ⟨f r1, f r2, f i, by simpa using h1, by simpa using h2, by simpa using hi,
+              hf.ne (Ne.symm h21), hf.ne (Ne.symm hi1), hf.ne (Ne.symm hi2)⟩
+          have := hcol (g c)
+          omega
+        simp only [vecMul, dotProduct, Pi.zero_apply, submatrix_apply]
+        rw [Fintype.sum_eq_add r2 r1 h21 (fun i hi => by simp [hother i hi.2 hi.1])]
+        have hs := hsplit (g c) (f r2) (f r1) (hf.ne h21) h2 h1
+        simp only [w]
+        rcases hentry (f r1) (g c) with e1 | e1 | e1 <;>
+          rcases hentry (f r2) (g c) with e2 | e2 | e2 <;>
+          simp only [e1, e2] at h1 h2 hs ⊢ <;>
+          first
+          | exact absurd rfl h1
+          | exact absurd rfl h2
+          | (cases hg1 : group (f r1) <;> cases hg2 : group (f r2) <;> simp [hg1, hg2] at hs ⊢)
+
+/-- The price certificate for an assignment: if act prices `u` and slot prices `v` satisfy
+`u i + v j ≥ c i j` for every pair, then every plan that books each act into its own slot
+is worth at most the sum of all prices. -/
+theorem assignment_value_le_sum_of_prices {n : ℕ} (c : Fin n → Fin n → ℝ) (u v : Fin n → ℝ)
+    (hprice : ∀ i j, c i j ≤ u i + v j) (σ : Equiv.Perm (Fin n)) :
+    ∑ i, c i (σ i) ≤ ∑ i, u i + ∑ j, v j := by
+  calc ∑ i, c i (σ i) ≤ ∑ i, (u i + v (σ i)) := Finset.sum_le_sum fun i _ => hprice i (σ i)
+    _ = ∑ i, u i + ∑ j, v j := by rw [Finset.sum_add_distrib, Equiv.sum_comp σ v]
+
+/-- The festival's values, in £ thousand: rows Headliner, Rock band, DJ, Folk trio, Brass band,
+Singer; columns Fri main, Sat main, Sun main, Fri late tent, Sat tent, Sun tent. -/
+def festivalValue : Fin 6 → Fin 6 → ℤ :=
+  !![48, 60, 30, 20, 25, 22;
+     40, 45, 28, 22, 30, 26;
+     30, 35, 15, 38, 24, 18;
+     18, 20, 26, 12, 22, 24;
+     15, 18, 25, 10, 20, 21;
+     20, 22, 24, 14, 21, 25]
+
+/-- The dual prices: acts and slots. -/
+def actPrice : Fin 6 → ℤ := ![55, 40, 38, 22, 21, 21]
+def slotPrice : Fin 6 → ℤ := ![0, 5, 4, 0, 0, 4]
+
+/-- The relaxation's plan: Headliner to Sat main, Rock band to Fri main, DJ to Fri late tent,
+Folk trio to Sat tent, Brass band to Sun main, Singer to Sun tent. -/
+def festivalPlan : Fin 6 → Fin 6 := ![1, 0, 3, 4, 2, 5]
+
+-- The plan uses each slot once.
+example : Function.Injective festivalPlan := by decide
+
+-- Its value: 60 + 40 + 38 + 22 + 25 + 25 = 210.
+example : ∑ i, festivalValue i (festivalPlan i) = 210 := by decide
+
+-- The prices add up to 210.
+example : ∑ i, actPrice i + ∑ j, slotPrice j = 210 := by decide
+
+-- All 36 price checks: act price plus slot price is at least the pair's value.
+example : ∀ i j, festivalValue i j ≤ actPrice i + slotPrice j := by decide
+
+-- Headliner + Sat main: 55 + 5 = 60, and Rock band + Sat main: 40 + 5 = 45.
+example : actPrice 0 + slotPrice 1 = festivalValue 0 1 ∧
+    actPrice 1 + slotPrice 1 = festivalValue 1 1 := by decide
+
+-- The duet triangle has determinant 2.
+example : (!![1, 0, 1; 1, 1, 0; 0, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ).det = 2 := by
+  simp [Matrix.det_fin_three]
+
+-- So the duet triangle is not totally unimodular.
+example : ¬ (!![1, 0, 1; 1, 1, 0; 0, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ).IsTotallyUnimodular := by
+  intro h
+  obtain ⟨s, hs⟩ := h 3 id id Function.injective_id Function.injective_id
+  simp [Matrix.det_fin_three] at hs
+  cases s <;> simp at hs
+
+#print axioms totally_unimodular_corners_are_whole
+#print axioms two_group_test_gives_totally_unimodular
+#print axioms assignment_value_le_sum_of_prices
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'tu_unique_solution_whole' depends on axioms: [propext, Classical.choice, Quot.sound]
+'totally_unimodular_corners_are_whole' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_group_test_gives_totally_unimodular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'assignment_value_le_sum_of_prices' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > The "try" lines at the end of the output give each answer.
@@ -605,7 +907,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- [Yes-or-no variables](02-modelling-with-binary-variables-big-m-and-indicators.md): a closed bounded convex region is the convex hull of its corners, the reason "every corner whole" means the whole region is the hull of the whole plans.
+- Krein-Milman (planned): a closed bounded convex region is the convex hull of its corners (the smallest region with no dents containing them), the reason "every corner whole" means the whole region is the hull of the whole plans.
 - [Four classic models](06-classic-integer-models-knapsack-assignment-and-covering.md): assignment among knapsack, covering and routing, and which of them keep this shape.
 - [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): price the awkward row and solve what is left.
 

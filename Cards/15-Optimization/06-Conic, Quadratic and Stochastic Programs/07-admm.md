@@ -6,9 +6,15 @@
 
 ## General Overview
 
-A fund wants to copy a balanced index with as few of five holdings as possible: UK shares, US shares, UK gilts (government bonds), gold and property. It has eight months of returns (invented for this card), in percent a month, for the index and for each holding. It chooses five weights: the fraction of each pound to put in each holding, with whatever is left over kept in cash. It **minimises** a total of two parts. The **fit** is half the sum, over the eight months, of the squared gap between the copy's return and the index's return. The **penalty** is 2 times the sum of the weights' sizes. That is the lasso (least squares plus a charge on the size of every weight), and its charge pushes small holdings to exactly zero.
+A fund wants to copy a balanced index with as few of five holdings as possible: UK shares, US shares, UK gilts (government bonds), gold and property. It has eight months of returns (invented for this card), in percent a month, for the index and for each holding. It chooses five weights: the fraction of each pound to put in each holding, with whatever is left over kept in cash.
 
-Each part alone is easy. The fit alone is a smooth bowl, solved by one linear system. The penalty alone is solved weight by weight: shrink each weight towards zero and cut it to zero when it is small. Together they are awkward for plain gradient descent, because the penalty has corners. [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md) handles the pair with small steps, each sized by how sharply the bowl curves. ADMM (the alternating direction method of multipliers) gives each part its own copy of the weights. It solves the fit for one copy and the penalty for the other, then charges a price for the gap between the copies and does it again. Each half is solved exactly every round, and the fit's linear system keeps the same matrix throughout. How hard the gap is charged changes only the speed, never whether the copies meet, whereas a gradient step must stay under a limit set by the curvature. The same split also works when the penalty has no cheap shrink, or when the data sit on many machines.
+It **minimises** a total of two parts. The **fit** is half the sum, over the eight months, of the squared gap between the copy's return and the index's return. The **penalty** is 2 times the sum of the weights' sizes. That is the lasso (least squares plus a charge on the size of every weight), and its charge pushes small holdings to exactly zero.
+
+Each part alone is easy. The fit alone is a smooth bowl, solved by one linear system. The penalty alone is solved weight by weight: shrink each weight towards zero and cut it to zero when it is small. Together they are awkward for plain gradient descent, because the penalty has corners.
+
+[Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md) handles the pair with small steps, each sized by how sharply the bowl curves. ADMM (the alternating direction method of multipliers) gives each part its own copy of the weights. It solves the fit for one copy and the penalty for the other, then charges a price for the gap between the copies and does it again.
+
+Each half is solved exactly every round, and the fit's linear system keeps the same matrix throughout. How hard the gap is charged changes only the speed, never whether the copies meet, whereas a gradient step must stay under a limit set by the curvature. The same split also works when the penalty has no cheap shrink, or when the data sit on many machines.
 
 Starting from all zeros, with an agreement weight of 3 on the gap between the copies, the two copies agree to within 0.0000005 after **60 rounds**. The answer, per £1,000,000: **£312,500 in UK shares, £200,000 in US shares, £50,000 in property, nothing in gilts or gold, £437,500 in cash.** A list of all 243 sign patterns finds the same weights, and a check of the lasso's optimality conditions proves that no other weights cost less.
 
@@ -55,6 +61,8 @@ Stop when $r_{k+1} = \|x_{k+1} - z_{k+1}\|$ and $s_{k+1} = \rho\|z_{k+1} - z_k\|
 
 Here $S_t$ is soft-thresholding (shrink every entry towards zero by $t$, and set it to zero if it is smaller than $t$), the proximal step of the $\ell_1$ penalty taught on [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md).
 
+The other marks: $\|v\|$ is the length of a list of numbers $v$ (the square root of the sum of its squares), $\|v\|_1$ is the sum of the sizes of its entries, $A^T$ is $A$ with rows and columns swapped, and $\operatorname{argmin}_x$ names the $x$ that makes the bracket smallest.
+
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $A$, $b$, $I$ | the holdings' monthly returns (8 rows, 5 columns) and the index's, in percent; $I$ the 5-by-5 identity (1 on the diagonal, 0 elsewhere) | first month: $(2, 3, -1, 1, 2)$ and 1.8 | — |
@@ -74,7 +82,7 @@ The agreement weight $\rho$ is the penalty weight of [Penalties and augmented La
 
 ### When it holds
 
-- **Both halves convex, closed and proper.** Closed: at the edge of where the function is finite, it does not jump up above the values it approaches. Proper: never −∞, and finite somewhere. Here $f$ is a bowl and $g$ a sum of V shapes. If one half has two separate dips, ADMM can settle at a point that satisfies the stopping test but is only a local answer, and nothing on this card certifies it.
+- **Both halves convex, closed and proper.** Convex: a straight line between two points on the graph never dips below the graph. Closed: at the edge of where the function is finite, it does not jump up above the values it approaches. Proper: never −∞, and finite somewhere. Here $f$ is a bowl and $g$ a sum of V shapes. If one half has two separate dips, ADMM can settle at a point that satisfies the stopping test but is only a local answer, and nothing on this card certifies it.
 - **An optimum and a matching price exist.** The theorem needs a saddle point of the plain Lagrangian $L_0$: weights and a price where no change of weights lowers $L_0$ and no change of price raises it ([Saddle points](../03-Constrained%20Optimisation/06-saddle-points-and-minimax.md)). For the lasso one always exists. For a problem with no feasible point, $r_k$ never reaches zero and $u_k$ grows without bound.
 - **Exactly two blocks.** Updating three unknowns in turn with one shared price is not covered, and can blow up: in What breaks, the sizes grow from 1.7321 to 413.7233 in 200 rounds.
 - **The dual step equals $\rho$.** The price must move by exactly $\rho$ times the gap, which in scaled form is $u + (x - z)$. Any other step loses the property in Step 3 that makes the stopping test correct.
@@ -86,7 +94,9 @@ The agreement weight $\rho$ is the penalty weight of [Penalties and augmented La
 
 ### Step 0: give each half its own copy, then charge for disagreement
 
-Minimising $f(x) + g(x)$ in one go is hard because $f$ is smooth and $g$ has corners. Write the same problem with two copies, $f(x) + g(z)$ with $x = z$. Now each half sees only its own variable. The one thing joining them is the constraint $x = z$, and a constraint can be priced, as Lagrange multipliers do. A price $y$ on the gap plus a quadratic penalty on its size gives a cost that each copy can minimise separately while the other copy stays fixed.
+Minimising $f(x) + g(x)$ in one go is hard because $f$ is smooth and $g$ has corners. Write the same problem with two copies, $f(x) + g(z)$ with $x = z$. Now each half sees only its own variable.
+
+The one thing joining them is the constraint $x = z$, and a constraint can be priced, as Lagrange multipliers do. A price $y$ on the gap plus a quadratic penalty on its size gives a cost that each copy can minimise separately while the other copy stays fixed.
 
 ### Step 1: the augmented Lagrangian
 
@@ -102,7 +112,9 @@ Completing the square makes the steps tidy. With $u = y/\rho$,
 
 $$y^T(x - z) + \tfrac{\rho}{2}\|x - z\|^2 = \tfrac{\rho}{2}\|x - z + u\|^2 - \tfrac{\rho}{2}\|u\|^2 ,$$
 
-and the last term does not depend on $x$ or $z$. So the $x$ step minimises $f(x) + \tfrac{\rho}{2}\|x - z_k + u_k\|^2$. Setting its gradient to zero gives $A^T(Ax - b) + \rho(x - z_k + u_k) = 0$, the linear system in The formula. The $z$ step minimises $\lambda\|z\|_1 + \tfrac{\rho}{2}\|z - (x_{k+1} + u_k)\|^2$, which separates into five one-variable problems, each solved by shrinking by $\lambda/\rho$. The price update $y \leftarrow y + \rho(x - z)$ becomes $u \leftarrow u + x - z$.
+and the last term does not depend on $x$ or $z$. So the $x$ step minimises $f(x) + \tfrac{\rho}{2}\|x - z_k + u_k\|^2$. Setting its gradient to zero gives $A^T(Ax - b) + \rho(x - z_k + u_k) = 0$, the linear system in The formula.
+
+The $z$ step minimises $\lambda\|z\|_1 + \tfrac{\rho}{2}\|z - (x_{k+1} + u_k)\|^2$, which separates into five one-variable problems, each solved by shrinking by $\lambda/\rho$. The price update $y \leftarrow y + \rho(x - z)$ becomes $u \leftarrow u + x - z$.
 
 ### Step 3: why the two residuals are the right stopping test
 
@@ -118,7 +130,9 @@ The right side has size $s_{k+1}$. **The agreement condition is off by $r$**, by
 
 ### Step 4: the two residuals must fall to zero
 
-The convergence theorem (Gabay and Mercier 1976; in this form, Boyd and co-authors 2011, section 3.2): if $f$ and $g$ are closed, proper and convex and the plain Lagrangian $L_0$ has a saddle point, then for any $\rho > 0$, $r_k \to 0$, $f(x_k) + g(z_k) \to p^*$, and $y_k \to$ an optimal price. Nothing about smoothness or strong convexity is needed. Without more hypotheses the guaranteed rate is slow, $O(1/k)$ in an averaged sense (He and Yuan 2012). On this lasso the residuals fell much faster, by a roughly constant factor each round, as the straight lines in the chart show.
+The convergence theorem (Gabay and Mercier 1976; in this form, Boyd and co-authors 2011, section 3.2): if $f$ and $g$ are closed, proper and convex and the plain Lagrangian $L_0$ has a saddle point, then for any $\rho > 0$, $r_k \to 0$, $f(x_k) + g(z_k) \to p^*$, and $y_k \to$ an optimal price. Nothing about smoothness or strong convexity is needed.
+
+Without more hypotheses the guaranteed rate is slow, $O(1/k)$ in an averaged sense: the averaged error falls in proportion to $1/k$ (He and Yuan 2012). On this lasso the residuals fell much faster, by a roughly constant factor each round, as the straight lines in the chart show.
 
 <details>
 <summary>Detailed proof, in outline: a yardstick that falls every round</summary>
@@ -173,7 +187,7 @@ On each holding the fit's pull is exactly balanced by the charge of 2; towards g
 | No reconcile step: $u$ stays 0 | after 2,000 rounds, $z = 0$ and $x = x_1$; the gap is still 0.432478 | Without a price the rounds minimise $f(x) + g(z) + \tfrac{\rho}{2}\|x - z\|^2$, a different problem whose best point has the copies apart. The price is what closes the gap. |
 | Shrink by $\lambda$, not $\lambda/\rho$ | $z = (0.238889, 0.080556, 0, 0, 0)$ | The $z$ step solved a lasso with weight $\rho\lambda = 6$. ADMM converged, to the wrong problem. |
 | Stop when $s$ alone is small | stops at round 1 with $s_1 = 0$, holding nothing; $r_1 = 0.432478$ | At rounds 1 and 2 the penalty copy has not moved yet. Only both residuals together certify the answer. |
-| Three unknowns updated in turn, one price: minimise 0 subject to `[[1, 1, 1], [1, 1, 2], [1, 2, 2]]` times the unknowns equal to 0, $\rho = 1$, start `(1, 1, 1)` | the unknowns' size goes 1.7321, 3.2759, 6.9647, 32.0870, 413.7233 at rounds 0, 1, 50, 100, 200 | The answer is all zeros, but the theorem covers two blocks only. This is the counterexample of Chen, He, Ye and Yuan: the three-block sweep is not a contraction and the iterates grow without bound. |
+| Three unknowns updated in turn, one price: minimise 0 subject to `[[1, 1, 1], [1, 1, 2], [1, 2, 2]]` times the unknowns equal to 0, $\rho = 1$, start `(1, 1, 1)` | the unknowns' size goes 1.7321, 3.2759, 6.9647, 32.0870, 413.7233 at rounds 0, 1, 50, 100, 200 | The answer is all zeros, but the theorem covers two blocks only. This is the counterexample of Chen, He, Ye and Yuan: the three-block sweep is not a contraction (a step that brings every two points closer) and the iterates grow without bound. |
 
 ---
 
@@ -195,7 +209,11 @@ Each round, the fit copy pulls towards the index, the penalty copy towards few, 
 | 59 | 0.312500 | 0.200000 | 0.050000 | 0.000000518 | 0.000000102 |
 | 60 | 0.312500 | 0.200000 | 0.050000 | 0.000000420 | 0.000000081 |
 
-For two rounds the penalty copy holds nothing: the shrink of 2/3 is bigger than any entry of $x + u$. Meanwhile $u$ piles up the gap, so the penalty copy sees $x + u$, larger each round, and at round 3 US shares cross the threshold. By round 5 all three holdings are in. UK shares overshoot to 0.333 at round 10, then settle back to 0.3125. Round 59 is still just above the stopping level ($r = 5.18 \times 10^{-7}$); round 60 is below it on both counts. Gilts and gold stay at exactly zero in $z$ from the first round to the last. In $x$ they are never exactly zero: at round 60 they are 0.000000320 and 0.000000272.
+For two rounds the penalty copy holds nothing: the shrink of 2/3 is bigger than any entry of $x + u$. Meanwhile $u$ piles up the gap, so the penalty copy sees $x + u$, larger each round, and at round 3 US shares cross the threshold.
+
+By round 5 all three holdings are in. UK shares overshoot to 0.333 at round 10, then settle back to 0.3125.
+
+Round 59 is still just above the stopping level ($r = 5.18 \times 10^{-7}$); round 60 is below it on both counts. Gilts and gold stay at exactly zero in $z$ from the first round to the last. In $x$ they are never exactly zero: at round 60 they are 0.000000320 and 0.000000272.
 
 ### One force at a time: the agreement weight $\rho$
 
@@ -217,7 +235,9 @@ Of these weights, 10 is the fastest, not 3. No formula picks $\rho$ in general; 
 
 ## Code, from first principles, and it actually runs
 
-The script writes ADMM out in full: the $x$ step is a 5-by-5 linear system solved by Gauss–Jordan elimination, the $z$ step is soft-thresholding, the $u$ step one line. It reaches the answer by **four independent roads**. Road 1 is ADMM from zero. Road 2 lists all 243 sign patterns (each holding positive, negative or zero), solves the lasso's equations for each and keeps the one that passes the optimality test; exactly one does. Road 3 checks the lasso's optimality conditions at ADMM's answer, the certificate. Road 4 checks the convergence proof's inequality $V_{k+1} \le V_k - \rho r^2 - s^2/\rho$ at every round. Then it prints the mistakes, the three-block blow-up and the chart's points.
+The script writes ADMM out in full: the $x$ step is a 5-by-5 linear system solved by Gauss–Jordan elimination, the $z$ step is soft-thresholding, the $u$ step one line.
+
+It reaches the answer by **four independent roads**. Road 1 is ADMM from zero. Road 2 lists all 243 sign patterns (each holding positive, negative or zero), solves the lasso's equations for each and keeps the one that passes the optimality test; exactly one does. Road 3 checks the lasso's optimality conditions at ADMM's answer, the certificate. Road 4 checks the convergence proof's inequality $V_{k+1} \le V_k - \rho r^2 - s^2/\rho$ at every round. Then it prints the mistakes, the three-block blow-up and the chart's points.
 
 ### Python
 
@@ -603,6 +623,530 @@ three blocks, round 200: |v| = 413.7233
 try lam 1.0: z  0.294488  0.243661  0.036055  0.050899  0.107834
 try lam 4.0: z  0.294444  0.136111  0.000000  0.000000  0.000000
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the convergence theorem for any two closed, proper, convex halves, and checks the five-holding lasso answer exactly.
+
+- For two convex, closed, proper halves with a saddle point, and any $\rho > 0$, both residuals $r_k$ and $s_k$ fall to zero.
+- In the same setting, the cost tends to $p^*$ and the price $\rho u_k$ tends to an optimal price.
+- These hold from any start, with each half solved exactly and the price step equal to $\rho$.
+- After every round, the penalty's condition holds exactly, and the fit's condition is off by the dual residual.
+- When both residuals are zero, the fit's copy is optimal.
+- The weights $(0.3125, 0.2, 0, 0, 0.05)$ cost exactly $p^* = 1.533125$, and no other weights cost less.
+- $A^T A$, $A^T b$, the certificate rows and the split per £1,000,000 match Worked numbers exactly.
+
+The round counts, the residual table, the effect of $\rho$ and the three-block blow-up are left to the Python and Rust checks.
+
+```lean
+-- ADMM: for two closed, proper, convex halves whose plain Lagrangian has a saddle point, the ADMM rounds keep the penalty's optimality condition exactly, drive the copies' gap and the penalty copy's move to zero, and bring the cost to the optimum and the price to an optimal price; and the card's five-holding lasso answer is optimal.
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.Convex.Function
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Tactic.NormNum
+import Mathlib.Topology.MetricSpace.Sequences
+
+open Filter Topology RealInnerProductSpace Matrix
+
+/-! ### How the card's objects are written here
+
+The unknowns are lists of `n` real numbers, `EuclideanSpace ℝ (Fin n)`, with the usual length
+`‖v‖` and dot product `⟪v, w⟫`.
+
+A function that may take the value +∞ is written as a real function `f` together with the set
+`Df` where it is finite. Then:
+* proper: `Df` is not empty (and `f` is never −∞, automatic for a real function);
+* convex: `ConvexOn ℝ Df f` (the set `Df` is convex and `f` never dips below a chord on it);
+* closed: the epigraph `{(v, t) | v ∈ Df ∧ f v ≤ t}` is a closed set.
+
+ADMM in scaled form, for `k = 0, 1, 2, …`, from any starting `x 0`, `z 0`, `u 0`:
+* `x (k+1)` minimises `f v + ρ/2 ‖v - z k + u k‖²` over `v ∈ Df` (the fit half, solved exactly);
+* `z (k+1)` minimises `g w + ρ/2 ‖x (k+1) - w + u k‖²` over `w ∈ Dg` (the penalty half, exactly);
+* `u (k+1) = u k + x (k+1) - z (k+1)` (the reconcile step; the price is `y = ρ u`, so the price
+  moves by exactly `ρ` times the gap).
+
+The plain Lagrangian is `L₀ (x, z, y) = f x + g z + ⟪y, x - z⟫`. A saddle point `(xs, zs, ys)`
+has `L₀ (xs, zs, y) ≤ L₀ (xs, zs, ys) ≤ L₀ (x, z, ys)` for every price `y` and every `x ∈ Df`,
+`z ∈ Dg`. The optimal cost is then `p* = f xs + g zs`. -/
+
+/-- First-order condition for an exact proximal step on a convex function. -/
+theorem admm_prox_first_order {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (h : E → ℝ) (D : Set E) (hconv : ConvexOn ℝ D h) (ρ : ℝ) (hρ : 0 < ρ) (c p : E)
+    (hc : c ∈ D) (hmin : ∀ v ∈ D, h c + ρ / 2 * ‖c - p‖ ^ 2 ≤ h v + ρ / 2 * ‖v - p‖ ^ 2) :
+    ∀ v ∈ D, h c - ρ * ⟪c - p, v - c⟫ ≤ h v := by
+  intro v hv
+  apply le_of_forall_pos_lt_add
+  intro ε hε
+  set M := ρ / 2 * ‖v - c‖ ^ 2 with hM
+  have hM0 : 0 ≤ M := by positivity
+  set t := min 1 (ε / (M + 1)) with ht
+  have ht0 : 0 < t := lt_min one_pos (by positivity)
+  have ht1 : t ≤ 1 := min_le_left _ _
+  have ht2 : t ≤ ε / (M + 1) := min_le_right _ _
+  have htM : t * M < ε := by
+    have : t * (M + 1) ≤ ε := by
+      rw [le_div_iff₀ (by positivity)] at ht2; linarith
+    nlinarith
+  have hmem : (1 - t) • c + t • v ∈ D := hconv.1 hc hv (by linarith) ht0.le (by ring)
+  have hcv : h ((1 - t) • c + t • v) ≤ (1 - t) • h c + t • h v :=
+    hconv.2 hc hv (by linarith) ht0.le (by ring)
+  simp only [smul_eq_mul] at hcv
+  have hpt : (1 - t) • c + t • v - p = (c - p) + t • (v - c) := by
+    simp only [sub_smul, one_smul, smul_sub]; abel
+  have key := hmin _ hmem
+  rw [hpt, norm_add_sq_real, inner_smul_right, norm_smul, mul_pow, Real.norm_eq_abs, sq_abs]
+    at key
+  have : t * (h c - ρ * ⟪c - p, v - c⟫ - h v - t * M) ≤ 0 := by
+    rw [hM]; nlinarith
+  have : h c - ρ * ⟪c - p, v - c⟫ - h v - t * M ≤ 0 := by
+    by_contra hcon
+    rw [not_le] at hcon
+    have := mul_pos ht0 hcon
+    linarith
+  linarith
+
+/-- The optimality conditions after one ADMM round. -/
+theorem admm_round_conditions {n : ℕ}
+    (f g : EuclideanSpace ℝ (Fin n) → ℝ) (Df Dg : Set (EuclideanSpace ℝ (Fin n)))
+    (hf_convex : ConvexOn ℝ Df f) (hg_convex : ConvexOn ℝ Dg g)
+    (ρ : ℝ) (hρ : 0 < ρ) (x z u : ℕ → EuclideanSpace ℝ (Fin n))
+    (hx_mem : ∀ k, x (k + 1) ∈ Df)
+    (hx_min : ∀ k, ∀ v ∈ Df,
+      f (x (k + 1)) + ρ / 2 * ‖x (k + 1) - z k + u k‖ ^ 2 ≤ f v + ρ / 2 * ‖v - z k + u k‖ ^ 2)
+    (hz_mem : ∀ k, z (k + 1) ∈ Dg)
+    (hz_min : ∀ k, ∀ w ∈ Dg,
+      g (z (k + 1)) + ρ / 2 * ‖x (k + 1) - z (k + 1) + u k‖ ^ 2 ≤
+        g w + ρ / 2 * ‖x (k + 1) - w + u k‖ ^ 2)
+    (hu : ∀ k, u (k + 1) = u k + x (k + 1) - z (k + 1)) (k : ℕ) :
+    (∀ w ∈ Dg, g (z (k + 1)) + ⟪ρ • u (k + 1), w - z (k + 1)⟫ ≤ g w) ∧
+      (∀ v ∈ Df, f (x (k + 1)) +
+        ⟪-(ρ • u (k + 1)) - ρ • (z (k + 1) - z k), v - x (k + 1)⟫ ≤ f v) := by
+  constructor
+  · have hn : ∀ w, ‖x (k + 1) - w + u k‖ = ‖w - (x (k + 1) + u k)‖ := by
+      intro w; rw [← norm_neg]; congr 1; abel
+    have H := admm_prox_first_order g Dg hg_convex ρ hρ (z (k + 1)) (x (k + 1) + u k)
+      (hz_mem k) (by intro w hw; have := hz_min k w hw; rwa [hn, hn] at this)
+    intro w hw
+    have H1 := H w hw
+    have he : z (k + 1) - (x (k + 1) + u k) = -u (k + 1) := by rw [hu k]; abel
+    rw [he, inner_neg_left] at H1
+    rw [real_inner_smul_left]; linarith
+  · have hn : ∀ v, ‖v - z k + u k‖ = ‖v - (z k - u k)‖ := by
+      intro v; congr 1; abel
+    have H := admm_prox_first_order f Df hf_convex ρ hρ (x (k + 1)) (z k - u k)
+      (hx_mem k) (by intro v hv; have := hx_min k v hv; rwa [hn, hn] at this)
+    intro v hv
+    have H1 := H v hv
+    have he : -(ρ • u (k + 1)) - ρ • (z (k + 1) - z k) = (-ρ) • (x (k + 1) - (z k - u k)) := by
+      rw [hu k]; module
+    rw [he, real_inner_smul_left]; linarith
+
+/-- One round of ADMM shrinks the distance to a solution pair. -/
+theorem admm_lyapunov_step {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (f g : E → ℝ) (ρ : ℝ) (hρ : 0 < ρ) (u0 u1 x1 z0 z1 a us : E)
+    (hu : u1 = u0 + x1 - z1)
+    (hG1 : g z1 + ⟪ρ • u1, a - z1⟫ ≤ g a)
+    (hF1 : f x1 + ⟪-(ρ • u1) - ρ • (z1 - z0), a - x1⟫ ≤ f a)
+    (hS : f a + g a ≤ f x1 + g z1 + ρ * ⟪us, x1 - z1⟫)
+    (hG0 : g z0 + ⟪ρ • u0, z1 - z0⟫ ≤ g z1)
+    (hG10 : g z1 + ⟪ρ • u1, z0 - z1⟫ ≤ g z0) :
+    ‖u1 - us‖ ^ 2 + ‖z1 - a‖ ^ 2 ≤
+      ‖u0 - us‖ ^ 2 + ‖z0 - a‖ ^ 2 - ‖u1 - u0‖ ^ 2 - ‖z1 - z0‖ ^ 2 := by
+  subst hu
+  refine le_of_mul_le_mul_left ?_ hρ
+  simp only [← real_inner_self_eq_norm_sq]
+  simp only [inner_add_left, inner_add_right, inner_sub_left, inner_sub_right, inner_neg_left,
+    real_inner_smul_left] at *
+  simp only [real_inner_comm] at *
+  linarith
+
+/-- From squares to values. -/
+theorem admm_tendsto_of_sq {a : ℕ → ℝ} (ha : ∀ j, 0 ≤ a j)
+    (h : Tendsto (fun j => a j ^ 2) atTop (𝓝 0)) : Tendsto a atTop (𝓝 0) := by
+  have h2 := h.sqrt
+  have e : (fun j => √(a j ^ 2)) = a := funext fun j => Real.sqrt_sq (ha j)
+  rw [e, Real.sqrt_zero] at h2
+  exact h2
+
+/-- Squeeze towards zero. -/
+theorem admm_squeeze {a b : ℕ → ℝ} (ha : ∀ j, 0 ≤ a j) (hab : ∀ j, a j ≤ b j)
+    (hb : Tendsto b atTop (𝓝 0)) : Tendsto a atTop (𝓝 0) :=
+  tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hb ha hab
+
+/-- A nonnegative sequence that drops by at least `e j` each step converges, and `e j → 0`. -/
+theorem admm_antitone_lim {V e : ℕ → ℝ} (hV0 : ∀ j, 0 ≤ V j) (he0 : ∀ j, 0 ≤ e j)
+    (hdec : ∀ j, V (j + 1) ≤ V j - e j) :
+    Tendsto e atTop (𝓝 0) ∧ ∃ L, Tendsto V atTop (𝓝 L) := by
+  have anti : Antitone V := antitone_nat_of_succ_le fun j => by linarith [hdec j, he0 j]
+  have hL := tendsto_atTop_ciInf anti ⟨0, by rintro _ ⟨j, rfl⟩; exact hV0 j⟩
+  refine ⟨?_, _, hL⟩
+  have hd := hL.sub (hL.comp (tendsto_add_atTop_nat 1))
+  rw [sub_self] at hd
+  exact admm_squeeze he0 (fun j => by have := hdec j; simp only [Function.comp]; linarith) hd
+
+/-- The card's convergence theorem (Gabay and Mercier 1976; Boyd and co-authors 2011, section 3.2).
+Minimise `f x + g z` subject to `x = z`, with `f` and `g` closed, proper and convex, and suppose
+the plain Lagrangian has a saddle point `(xs, zs, ys)`. Run ADMM with any agreement weight
+`ρ > 0`, each half solved exactly, the price moved by exactly `ρ` times the gap. Then the primal
+residual `‖x k - z k‖` falls to zero, the dual residual `ρ ‖z (k+1) - z k‖` falls to zero, the
+cost `f (x k) + g (z k)` tends to the optimal cost `f xs + g zs`, and the price `ρ u k` tends to
+an optimal price: a price `ybar` that makes `(xs, zs, ybar)` a saddle point too. -/
+theorem admm_converges_for_two_convex_halves {n : ℕ}
+    (f g : EuclideanSpace ℝ (Fin n) → ℝ) (Df Dg : Set (EuclideanSpace ℝ (Fin n)))
+    (hf_proper : Df.Nonempty) (hg_proper : Dg.Nonempty)
+    (hf_convex : ConvexOn ℝ Df f) (hg_convex : ConvexOn ℝ Dg g)
+    (hf_closed : IsClosed {p : EuclideanSpace ℝ (Fin n) × ℝ | p.1 ∈ Df ∧ f p.1 ≤ p.2})
+    (hg_closed : IsClosed {p : EuclideanSpace ℝ (Fin n) × ℝ | p.1 ∈ Dg ∧ g p.1 ≤ p.2})
+    (xs zs ys : EuclideanSpace ℝ (Fin n)) (hxs : xs ∈ Df) (hzs : zs ∈ Dg)
+    (h_saddle_price : ∀ y, f xs + g zs + ⟪y, xs - zs⟫ ≤ f xs + g zs + ⟪ys, xs - zs⟫)
+    (h_saddle_weights : ∀ x ∈ Df, ∀ z ∈ Dg,
+      f xs + g zs + ⟪ys, xs - zs⟫ ≤ f x + g z + ⟪ys, x - z⟫)
+    (ρ : ℝ) (hρ : 0 < ρ) (x z u : ℕ → EuclideanSpace ℝ (Fin n))
+    (hx_mem : ∀ k, x (k + 1) ∈ Df)
+    (hx_min : ∀ k, ∀ v ∈ Df,
+      f (x (k + 1)) + ρ / 2 * ‖x (k + 1) - z k + u k‖ ^ 2 ≤ f v + ρ / 2 * ‖v - z k + u k‖ ^ 2)
+    (hz_mem : ∀ k, z (k + 1) ∈ Dg)
+    (hz_min : ∀ k, ∀ w ∈ Dg,
+      g (z (k + 1)) + ρ / 2 * ‖x (k + 1) - z (k + 1) + u k‖ ^ 2 ≤
+        g w + ρ / 2 * ‖x (k + 1) - w + u k‖ ^ 2)
+    (hu : ∀ k, u (k + 1) = u k + x (k + 1) - z (k + 1)) :
+    Tendsto (fun k => ‖x k - z k‖) atTop (𝓝 0) ∧
+      Tendsto (fun k => ρ * ‖z (k + 1) - z k‖) atTop (𝓝 0) ∧
+      Tendsto (fun k => f (x k) + g (z k)) atTop (𝓝 (f xs + g zs)) ∧
+      ∃ ybar : EuclideanSpace ℝ (Fin n),
+        Tendsto (fun k => ρ • u k) atTop (𝓝 ybar) ∧
+        (∀ y, f xs + g zs + ⟪y, xs - zs⟫ ≤ f xs + g zs + ⟪ybar, xs - zs⟫) ∧
+        ∀ x' ∈ Df, ∀ z' ∈ Dg, f xs + g zs + ⟪ybar, xs - zs⟫ ≤ f x' + g z' + ⟪ybar, x' - z'⟫ := by
+  classical
+  have hxz : xs = zs := by
+    have h := h_saddle_price (ys + (xs - zs))
+    rw [inner_add_left, real_inner_self_eq_norm_sq] at h
+    have h3 : ‖xs - zs‖ = 0 := by nlinarith [norm_nonneg (xs - zs)]
+    exact sub_eq_zero.mp (norm_eq_zero.mp h3)
+  subst hxz
+  have hround := admm_round_conditions f g Df Dg hf_convex hg_convex ρ hρ x z u hx_mem hx_min
+    hz_mem hz_min hu
+  have hx_eq : ∀ k, x (k + 1) = z (k + 1) + (u (k + 1) - u k) := by
+    intro k; rw [hu k]; abel
+  have lyap : ∀ a us : EuclideanSpace ℝ (Fin n), a ∈ Df → a ∈ Dg →
+      (∀ v ∈ Df, ∀ w ∈ Dg, f a + g a ≤ f v + g w + ρ * ⟪us, v - w⟫) → ∀ k,
+      ‖u (k + 1 + 1) - us‖ ^ 2 + ‖z (k + 1 + 1) - a‖ ^ 2 ≤
+        ‖u (k + 1) - us‖ ^ 2 + ‖z (k + 1) - a‖ ^ 2 - ‖u (k + 1 + 1) - u (k + 1)‖ ^ 2 -
+          ‖z (k + 1 + 1) - z (k + 1)‖ ^ 2 := by
+    intro a us haf hag hS k
+    exact admm_lyapunov_step f g ρ hρ (u (k + 1)) (u (k + 1 + 1)) (x (k + 1 + 1)) (z (k + 1))
+      (z (k + 1 + 1)) a us (hu (k + 1)) ((hround (k + 1)).1 a hag) ((hround (k + 1)).2 a haf)
+      (hS _ (hx_mem _) _ (hz_mem _)) ((hround k).1 _ (hz_mem _))
+      ((hround (k + 1)).1 _ (hz_mem _))
+  have hS0 : ∀ v ∈ Df, ∀ w ∈ Dg, f xs + g xs ≤ f v + g w + ρ * ⟪ρ⁻¹ • ys, v - w⟫ := by
+    intro v hv w hw
+    have h := h_saddle_weights v hv w hw
+    rw [sub_self, inner_zero_right, add_zero] at h
+    rw [real_inner_smul_left, ← mul_assoc, mul_inv_cancel₀ hρ.ne', one_mul]
+    exact h
+  obtain ⟨he0, -⟩ := admm_antitone_lim
+    (V := fun j => ‖u (j + 1) - ρ⁻¹ • ys‖ ^ 2 + ‖z (j + 1) - xs‖ ^ 2)
+    (e := fun j => ‖u (j + 1 + 1) - u (j + 1)‖ ^ 2 + ‖z (j + 1 + 1) - z (j + 1)‖ ^ 2)
+    (fun j => by positivity) (fun j => by positivity)
+    (fun j => by have := lyap xs (ρ⁻¹ • ys) hxs hzs hS0 j; linarith)
+  have hdu : Tendsto (fun k => u (k + 1) - u k) atTop (𝓝 0) := by
+    rw [← tendsto_add_atTop_iff_nat 1, tendsto_zero_iff_norm_tendsto_zero]
+    exact admm_tendsto_of_sq (fun j => norm_nonneg _)
+      (admm_squeeze (fun j => sq_nonneg _) (fun j => le_add_of_nonneg_right (sq_nonneg _)) he0)
+  have hdz : Tendsto (fun k => z (k + 1) - z k) atTop (𝓝 0) := by
+    rw [← tendsto_add_atTop_iff_nat 1, tendsto_zero_iff_norm_tendsto_zero]
+    exact admm_tendsto_of_sq (fun j => norm_nonneg _)
+      (admm_squeeze (fun j => sq_nonneg _) (fun j => le_add_of_nonneg_left (sq_nonneg _)) he0)
+  set V0 := ‖u (0 + 1) - ρ⁻¹ • ys‖ ^ 2 + ‖z (0 + 1) - xs‖ ^ 2 with hV0
+  have hbound : ∀ j, ‖u (j + 1) - ρ⁻¹ • ys‖ ^ 2 + ‖z (j + 1) - xs‖ ^ 2 ≤ V0 := by
+    intro j
+    induction j with
+    | zero => exact le_refl _
+    | succ j ih =>
+      have := lyap xs (ρ⁻¹ • ys) hxs hzs hS0 j
+      nlinarith [sq_nonneg ‖u (j + 1 + 1) - u (j + 1)‖, sq_nonneg ‖z (j + 1 + 1) - z (j + 1)‖]
+  obtain ⟨⟨ubar, zbar⟩, -, φ, hφ, hlim⟩ := tendsto_subseq_of_bounded
+    (Metric.isBounded_closedBall (x := (ρ⁻¹ • ys, xs)) (r := V0 + 1))
+    (x := fun j => (u (j + 1), z (j + 1))) (fun j => by
+      rw [Metric.mem_closedBall, Prod.dist_eq, dist_eq_norm, dist_eq_norm]
+      have := hbound j
+      refine max_le ?_ ?_
+      · nlinarith [norm_nonneg (u (j + 1) - ρ⁻¹ • ys), norm_nonneg (z (j + 1) - xs),
+          sq_nonneg (‖u (j + 1) - ρ⁻¹ • ys‖ - 1 / 2), sq_nonneg ‖z (j + 1) - xs‖]
+      · nlinarith [norm_nonneg (u (j + 1) - ρ⁻¹ • ys), norm_nonneg (z (j + 1) - xs),
+          sq_nonneg (‖z (j + 1) - xs‖ - 1 / 2), sq_nonneg ‖u (j + 1) - ρ⁻¹ • ys‖])
+  have hu_sub : Tendsto (fun j => u (φ j + 1)) atTop (𝓝 ubar) :=
+    (continuous_fst.tendsto _).comp hlim
+  have hz_sub : Tendsto (fun j => z (φ j + 1)) atTop (𝓝 zbar) :=
+    (continuous_snd.tendsto _).comp hlim
+  have hz_sub0 : Tendsto (fun j => z (φ j)) atTop (𝓝 zbar) := by
+    have h := hz_sub.sub (hdz.comp hφ.tendsto_atTop)
+    rw [sub_zero] at h
+    exact h.congr fun j => by simp
+  have hx_sub : Tendsto (fun j => x (φ j + 1)) atTop (𝓝 zbar) := by
+    have h := hz_sub.add (hdu.comp hφ.tendsto_atTop)
+    rw [add_zero] at h
+    exact h.congr fun j => (hx_eq (φ j)).symm
+  have hFlim : ∀ v ∈ Df, zbar ∈ Df ∧ f zbar - ρ * ⟪ubar, v - zbar⟫ ≤ f v := by
+    intro v hv
+    have hc : Tendsto (fun j => (x (φ j + 1), f v -
+        ⟪-(ρ • u (φ j + 1)) - ρ • (z (φ j + 1) - z (φ j)), v - x (φ j + 1)⟫)) atTop
+        (𝓝 (zbar, f v - ⟪-(ρ • ubar) - ρ • (zbar - zbar), v - zbar⟫)) := by
+      refine hx_sub.prodMk_nhds ?_
+      refine tendsto_const_nhds.sub (Tendsto.inner ?_ (tendsto_const_nhds.sub hx_sub))
+      exact ((hu_sub.const_smul ρ).neg).sub ((hz_sub.sub hz_sub0).const_smul ρ)
+    have hmem := hf_closed.mem_of_tendsto hc (Eventually.of_forall fun j => by
+      refine ⟨hx_mem _, ?_⟩
+      have := (hround (φ j)).2 v hv
+      simp only
+      linarith)
+    obtain ⟨h1, h2⟩ := hmem
+    refine ⟨h1, ?_⟩
+    simp only [sub_self, smul_zero, sub_zero, inner_neg_left, real_inner_smul_left] at h2
+    linarith
+  have hGlim : ∀ w ∈ Dg, zbar ∈ Dg ∧ g zbar + ρ * ⟪ubar, w - zbar⟫ ≤ g w := by
+    intro w hw
+    have hc : Tendsto (fun j => (z (φ j + 1), g w - ⟪ρ • u (φ j + 1), w - z (φ j + 1)⟫)) atTop
+        (𝓝 (zbar, g w - ⟪ρ • ubar, w - zbar⟫)) :=
+      hz_sub.prodMk_nhds (tendsto_const_nhds.sub
+        ((hu_sub.const_smul ρ).inner (tendsto_const_nhds.sub hz_sub)))
+    have hmem := hg_closed.mem_of_tendsto hc (Eventually.of_forall fun j => by
+      refine ⟨hz_mem _, ?_⟩
+      have := (hround (φ j)).1 w hw
+      simp only
+      linarith)
+    obtain ⟨h1, h2⟩ := hmem
+    refine ⟨h1, ?_⟩
+    rw [real_inner_smul_left] at h2
+    linarith
+  have hzbar_f : zbar ∈ Df := (hFlim xs hxs).1
+  have hzbar_g : zbar ∈ Dg := (hGlim xs hzs).1
+  have hSbar : ∀ v ∈ Df, ∀ w ∈ Dg, f zbar + g zbar ≤ f v + g w + ρ * ⟪ubar, v - w⟫ := by
+    intro v hv w hw
+    have h1 := (hFlim v hv).2
+    have h2 := (hGlim w hw).2
+    have e : ⟪ubar, v - w⟫ = ⟪ubar, v - zbar⟫ - ⟪ubar, w - zbar⟫ := by
+      simp only [inner_sub_right]; ring
+    rw [e]; linarith
+  obtain ⟨-, L, hL⟩ := admm_antitone_lim
+    (V := fun j => ‖u (j + 1) - ubar‖ ^ 2 + ‖z (j + 1) - zbar‖ ^ 2)
+    (e := fun j => ‖u (j + 1 + 1) - u (j + 1)‖ ^ 2 + ‖z (j + 1 + 1) - z (j + 1)‖ ^ 2)
+    (fun j => by positivity) (fun j => by positivity)
+    (fun j => by have := lyap zbar ubar hzbar_f hzbar_g hSbar j; linarith)
+  have hL0 : L = 0 := by
+    have h1 : Tendsto (fun j => ‖u (φ j + 1) - ubar‖ ^ 2 + ‖z (φ j + 1) - zbar‖ ^ 2) atTop
+        (𝓝 (‖ubar - ubar‖ ^ 2 + ‖zbar - zbar‖ ^ 2)) :=
+      (((hu_sub.sub tendsto_const_nhds).norm).pow 2).add
+        (((hz_sub.sub tendsto_const_nhds).norm).pow 2)
+    simp only [sub_self, norm_zero] at h1
+    norm_num at h1
+    exact tendsto_nhds_unique (hL.comp hφ.tendsto_atTop) h1
+  rw [hL0] at hL
+  have hu_lim : Tendsto u atTop (𝓝 ubar) := by
+    rw [← tendsto_add_atTop_iff_nat 1, tendsto_iff_norm_sub_tendsto_zero]
+    exact admm_tendsto_of_sq (fun j => norm_nonneg _)
+      (admm_squeeze (fun j => sq_nonneg _) (fun j => le_add_of_nonneg_right (sq_nonneg _)) hL)
+  have hz_lim : Tendsto z atTop (𝓝 zbar) := by
+    rw [← tendsto_add_atTop_iff_nat 1, tendsto_iff_norm_sub_tendsto_zero]
+    exact admm_tendsto_of_sq (fun j => norm_nonneg _)
+      (admm_squeeze (fun j => sq_nonneg _) (fun j => le_add_of_nonneg_left (sq_nonneg _)) hL)
+  have hz1 : Tendsto (fun k => z (k + 1)) atTop (𝓝 zbar) := hz_lim.comp (tendsto_add_atTop_nat 1)
+  have hu1 : Tendsto (fun k => u (k + 1)) atTop (𝓝 ubar) := hu_lim.comp (tendsto_add_atTop_nat 1)
+  have hx_lim : Tendsto (fun k => x (k + 1)) atTop (𝓝 zbar) := by
+    have h := hz1.add hdu
+    rw [add_zero] at h
+    exact h.congr fun k => (hx_eq k).symm
+  refine ⟨?_, ?_, ?_, ρ • ubar, hu_lim.const_smul ρ, ?_, ?_⟩
+  · rw [← tendsto_add_atTop_iff_nat 1]
+    have h := hdu.norm
+    rw [norm_zero] at h
+    exact h.congr fun k => by rw [hu k]; congr 1; abel
+  · have h := hdz.norm.const_mul ρ
+    rw [norm_zero, mul_zero] at h
+    exact h
+  · rw [← tendsto_add_atTop_iff_nat 1]
+    have hlow : Tendsto (fun k => f xs + g xs - ⟪ys, x (k + 1) - z (k + 1)⟫) atTop
+        (𝓝 (f xs + g xs)) := by
+      have h := (tendsto_const_nhds (x := f xs + g xs)).sub
+        ((tendsto_const_nhds (x := ys)).inner (hx_lim.sub hz1))
+      rw [sub_self, inner_zero_right, sub_zero] at h
+      exact h
+    have hup : Tendsto (fun k => f xs + g xs - ⟪ρ • u (k + 1), xs - z (k + 1)⟫ -
+        ⟪-(ρ • u (k + 1)) - ρ • (z (k + 1) - z k), xs - x (k + 1)⟫) atTop
+        (𝓝 (f xs + g xs)) := by
+      have h := ((tendsto_const_nhds (x := f xs + g xs)).sub
+        ((hu1.const_smul ρ).inner ((tendsto_const_nhds (x := xs)).sub hz1))).sub
+        ((((hu1.const_smul ρ).neg).sub ((hz1.sub hz_lim).const_smul ρ)).inner
+          ((tendsto_const_nhds (x := xs)).sub hx_lim))
+      have e : f xs + g xs - ⟪ρ • ubar, xs - zbar⟫ -
+          ⟪-(ρ • ubar) - ρ • (zbar - zbar), xs - zbar⟫ = f xs + g xs := by
+        simp only [sub_self, smul_zero, sub_zero, inner_neg_left]; ring
+      rw [e] at h
+      exact h
+    refine tendsto_of_tendsto_of_tendsto_of_le_of_le hlow hup (fun k => ?_) (fun k => ?_)
+    · have h := h_saddle_weights (x (k + 1)) (hx_mem k) (z (k + 1)) (hz_mem k)
+      rw [sub_self, inner_zero_right, add_zero] at h
+      simp only
+      linarith
+    · have h1 := (hround k).1 xs hzs
+      have h2 := (hround k).2 xs hxs
+      simp only
+      linarith
+  · intro y
+    rw [sub_self, inner_zero_right, inner_zero_right]
+  · intro x' hx' z' hz'
+    rw [sub_self, inner_zero_right, add_zero, real_inner_smul_left]
+    have h1 := h_saddle_weights zbar hzbar_f zbar hzbar_g
+    simp only [sub_self, inner_zero_right, add_zero] at h1
+    have h2 := hSbar x' hx' z' hz'
+    linarith
+
+/-- Step 3, why the stopping test is right. With `f` and `g` convex, each half solved exactly and
+the price `y = ρ u` moved by exactly `ρ` times the gap, after every round `k + 1`:
+* the penalty's condition holds exactly: the price `ρ u (k+1)` is a slope of `g` at `z (k+1)`;
+* the fit's condition is off by the dual residual: `-(ρ u (k+1)) - ρ (z (k+1) - z k)` is a slope
+  of `f` at `x (k+1)`;
+* so when both residuals are zero (`x (k+1) = z (k+1)` and `z (k+1) = z k`), `x (k+1)` is
+  optimal: no `w` where both halves are finite gives a lower `f w + g w`. -/
+theorem admm_residuals_measure_optimality {n : ℕ}
+    (f g : EuclideanSpace ℝ (Fin n) → ℝ) (Df Dg : Set (EuclideanSpace ℝ (Fin n)))
+    (hf_convex : ConvexOn ℝ Df f) (hg_convex : ConvexOn ℝ Dg g)
+    (ρ : ℝ) (hρ : 0 < ρ) (x z u : ℕ → EuclideanSpace ℝ (Fin n))
+    (hx_mem : ∀ k, x (k + 1) ∈ Df)
+    (hx_min : ∀ k, ∀ v ∈ Df,
+      f (x (k + 1)) + ρ / 2 * ‖x (k + 1) - z k + u k‖ ^ 2 ≤ f v + ρ / 2 * ‖v - z k + u k‖ ^ 2)
+    (hz_mem : ∀ k, z (k + 1) ∈ Dg)
+    (hz_min : ∀ k, ∀ w ∈ Dg,
+      g (z (k + 1)) + ρ / 2 * ‖x (k + 1) - z (k + 1) + u k‖ ^ 2 ≤
+        g w + ρ / 2 * ‖x (k + 1) - w + u k‖ ^ 2)
+    (hu : ∀ k, u (k + 1) = u k + x (k + 1) - z (k + 1)) (k : ℕ) :
+    (∀ w ∈ Dg, g (z (k + 1)) + ⟪ρ • u (k + 1), w - z (k + 1)⟫ ≤ g w) ∧
+      (∀ v ∈ Df, f (x (k + 1)) +
+        ⟪-(ρ • u (k + 1)) - ρ • (z (k + 1) - z k), v - x (k + 1)⟫ ≤ f v) ∧
+      (x (k + 1) = z (k + 1) → z (k + 1) = z k →
+        ∀ w ∈ Df ∩ Dg, f (x (k + 1)) + g (x (k + 1)) ≤ f w + g w) := by
+  obtain ⟨hG, hF⟩ := admm_round_conditions f g Df Dg hf_convex hg_convex ρ hρ x z u hx_mem
+    hx_min hz_mem hz_min hu k
+  refine ⟨hG, hF, ?_⟩
+  intro hxz hzz w hw
+  have h1 := hG w hw.2
+  have h2 := hF w hw.1
+  rw [hzz, sub_self, smul_zero, sub_zero, inner_neg_left] at h2
+  rw [hxz] at h2 ⊢
+  linarith
+
+/-! ### The card's five-holding lasso
+
+Eight months of returns (percent a month) for UK shares, US shares, UK gilts, gold and property,
+and the index `b = (1.8, 0.1, 1.6, 0.3, -0.6, 0.5, 0.9, 1.1)`, written as exact fractions. -/
+
+/-- The holdings' monthly returns: 8 months, 5 holdings. -/
+def lassoA : Matrix (Fin 8) (Fin 5) ℝ :=
+  !![2, 3, -1, 1, 2; -1, 1, 2, 0, -2; 3, 2, -2, 2, 1; 1, -2, 1, -1, 3;
+     -2, -1, 3, 1, -1; 0, 2, 0, -2, 1; 2, 0, -1, 3, 0; 1, 1, 1, 0, 2]
+
+/-- The index's monthly returns. -/
+noncomputable def lassoB : Fin 8 → ℝ :=
+  ![18 / 10, 1 / 10, 16 / 10, 3 / 10, -6 / 10, 5 / 10, 9 / 10, 11 / 10]
+
+/-- The lasso cost with weight `λ = 2`: half the sum of squared monthly gaps plus 2 times the sum
+of the weights' sizes. -/
+noncomputable def lassoCost (w : Fin 5 → ℝ) : ℝ :=
+  (1 / 2) * ∑ t, ((lassoA *ᵥ w) t - lassoB t) ^ 2 + 2 * ∑ i, |w i|
+
+/-- The card's answer, certified: the weights `(0.3125, 0.2, 0, 0, 0.05)` (UK shares, US shares,
+nothing in gilts or gold, property) cost exactly `p* = 1.533125`, and no other weights cost
+less. -/
+theorem lasso_answer_is_optimal :
+    lassoCost ![5 / 16, 1 / 5, 0, 0, 1 / 20] = 2453 / 1600 ∧
+      ∀ w : Fin 5 → ℝ, lassoCost ![5 / 16, 1 / 5, 0, 0, 1 / 20] ≤ lassoCost w := by
+  have hval : lassoCost ![5 / 16, 1 / 5, 0, 0, 1 / 20] = 2453 / 1600 := by
+    simp [lassoCost, lassoA, lassoB, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+    norm_num [abs_of_pos]
+  refine ⟨hval, fun w => ?_⟩
+  rw [hval]
+  simp only [lassoCost, lassoA, lassoB, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
+    Fin.sum_univ_zero]
+  simp
+  have a0 := le_abs_self (w 0)
+  have a1 := le_abs_self (w 1)
+  have a4 := le_abs_self (w 4)
+  have a2 := le_abs_self (w 2)
+  have b2 := neg_abs_le (w 2)
+  have a3 := le_abs_self (w 3)
+  have b3 := neg_abs_le (w 3)
+  linarith [sq_nonneg (2*(w 0 - 5/16) + 3*(w 1 - 1/5) - w 2 + w 3 + 2*(w 4 - 1/20)),
+    sq_nonneg (-(w 0 - 5/16) + (w 1 - 1/5) + 2*w 2 - 2*(w 4 - 1/20)),
+    sq_nonneg (3*(w 0 - 5/16) + 2*(w 1 - 1/5) - 2*w 2 + 2*w 3 + (w 4 - 1/20)),
+    sq_nonneg ((w 0 - 5/16) - 2*(w 1 - 1/5) + w 2 - w 3 + 3*(w 4 - 1/20)),
+    sq_nonneg (-2*(w 0 - 5/16) - (w 1 - 1/5) + 3*w 2 + w 3 - (w 4 - 1/20)),
+    sq_nonneg (2*(w 1 - 1/5) - 2*w 3 + (w 4 - 1/20)),
+    sq_nonneg (2*(w 0 - 5/16) - w 2 + 3*w 3),
+    sq_nonneg ((w 0 - 5/16) + (w 1 - 1/5) + w 2 + 2*(w 4 - 1/20))]
+
+/-! ### The card's worked numbers, checked exactly -/
+
+/-- `AᵀA` and `Aᵀb`, the data the fit sees (`Aᵀb = (12.7, 10.8, -6.1, 5.8, 9.2)`). -/
+example :
+    lassoAᵀ * lassoA = !![24, 12, -16, 11, 16; 12, 24, -9, 4, 5; -16, -9, 21, -6, -6;
+      11, 4, -6, 20, -2; 16, 5, -6, -2, 24] ∧
+    lassoAᵀ *ᵥ lassoB = ![127 / 10, 108 / 10, -61 / 10, 58 / 10, 92 / 10] := by
+  constructor
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [lassoA, Matrix.mul_apply, Fin.sum_univ_succ] <;> norm_num
+  · ext i
+    fin_cases i <;>
+      simp [lassoA, lassoB, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+
+/-- Certificate, the three holdings: each row of `AᵀA z` equals that row of `Aᵀb` minus `λ = 2`. -/
+example :
+    (24 * (5 / 16) + 12 * (1 / 5) + 16 * (1 / 20) : ℚ) = 127 / 10 - 2 ∧
+    (12 * (5 / 16) + 24 * (1 / 5) + 5 * (1 / 20) : ℚ) = 108 / 10 - 2 ∧
+    (16 * (5 / 16) + 5 * (1 / 5) + 24 * (1 / 20) : ℚ) = 92 / 10 - 2 := by
+  norm_num
+
+/-- Certificate, gilts and gold: the pull `-∇f` is 1 and 1.6625, both inside `[-2, 2]`. -/
+example :
+    (-61 / 10 - (-16) * (5 / 16) - (-9) * (1 / 5) - (-6) * (1 / 20) : ℚ) = 1 ∧
+    (58 / 10 - 11 * (5 / 16) - 4 * (1 / 5) - (-2) * (1 / 20) : ℚ) = 133 / 80 ∧
+    |(1 : ℚ)| ≤ 2 ∧ |(133 / 80 : ℚ)| ≤ 2 := by
+  norm_num
+
+/-- The cost splits as fit 0.408125 plus penalty 1.125, and per £1,000,000 the answer is
+£312,500 UK shares, £200,000 US shares, £50,000 property and £437,500 cash. -/
+example :
+    (2 * (5 / 16 + 1 / 5 + 1 / 20) : ℚ) = 1125 / 1000 ∧
+    (653 / 1600 + 1125 / 1000 : ℚ) = 2453 / 1600 ∧
+    (1000000 * (5 / 16) : ℚ) = 312500 ∧ (1000000 * (1 / 5) : ℚ) = 200000 ∧
+    (1000000 * (1 / 20) : ℚ) = 50000 ∧
+    (1000000 * (1 - (5 / 16 + 1 / 5 + 1 / 20)) : ℚ) = 437500 := by
+  norm_num
+
+#print axioms admm_prox_first_order
+#print axioms admm_round_conditions
+#print axioms admm_lyapunov_step
+#print axioms admm_tendsto_of_sq
+#print axioms admm_squeeze
+#print axioms admm_antitone_lim
+#print axioms admm_converges_for_two_convex_halves
+#print axioms admm_residuals_measure_optimality
+#print axioms lasso_answer_is_optimal
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'admm_prox_first_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'admm_round_conditions' depends on axioms: [propext, Classical.choice, Quot.sound]
+'admm_lyapunov_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'admm_tendsto_of_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'admm_squeeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+'admm_antitone_lim' depends on axioms: [propext, Classical.choice, Quot.sound]
+'admm_converges_for_two_convex_halves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'admm_residuals_measure_optimality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lasso_answer_is_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

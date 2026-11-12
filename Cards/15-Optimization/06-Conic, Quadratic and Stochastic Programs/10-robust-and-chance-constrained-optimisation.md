@@ -6,13 +6,21 @@
 
 ## General Overview
 
-A pension fund splits its money across five assets: UK shares, world shares, property, gilts (UK government bonds) and gold. Its analysts estimate each asset's expected return for the year: 7.00%, 7.40%, 6.80%, 4.00% and 5.00%. The fund wants the split with the largest expected return. One rule limits it: in at least 95 years out of 100, the fund must not lose more than 10%. That rule is a **chance constraint**, a limit that must hold with a stated probability rather than always. This card **maximises**.
+A pension fund splits its money across five assets: UK shares, world shares, property, gilts (UK government bonds) and gold. Its analysts estimate each asset's expected return for the year: 7.00%, 7.40%, 6.80%, 4.00% and 5.00%.
 
-Trust the estimates and the best split is 53.82% world shares, 8.53% property, 26.54% gilts and 11.11% gold, with an expected 6.1796%. But estimates of expected return are among the least reliable inputs a fund has. If every estimate may be a full point out at once, the cure is dull: every fully invested plan loses exactly 1 point, so no weight moves and the promise drops to 5.1796%. A sharper doubt lets the errors have a combined size (the square root of the sum of their squares) of up to 1 point: one estimate a full point out, or several out by less. Then the plan's real expected return may be as low as 5.5635%. The plan leaned hardest on world shares, so an error in that one estimate does the most damage.
+The fund wants the split with the largest expected return. One rule limits it: in at least 95 years out of 100, the fund must not lose more than 10%. That rule is a **chance constraint**, a limit that must hold with a stated probability rather than always. This card **maximises**.
 
-This card picks the split whose **worst case** is best instead. It names the set of estimates it is willing to believe (the **uncertainty set**), works out the worst return inside that set in closed form, and maximises that. The answer is 11.84% UK shares, 38.11% world shares, 10.53% property, 22.52% gilts and 16.99% gold. It promises 5.6159% for every set of estimates in the uncertainty set, an expected £56,159 a year on the fund's £1,000,000, and it meets the loss rule at the analysts' estimates. A printed certificate proves no split does better by more than 0.0000006.
+Trust the estimates and the best split is 53.82% world shares, 8.53% property, 26.54% gilts and 11.11% gold, with an expected 6.1796%. But estimates of expected return are among the least reliable inputs a fund has.
 
-**Robust optimisation replaces "the data are right" with "the data lie in a stated set" and optimises the worst case. For a ball of errors, the worst case of a return is the estimate minus the radius times the length of the weight list. For normal returns, a chance constraint has exactly the same shape: it is the worst case over an ellipsoid shaped by the risk.**
+If every estimate may be a full point out at once, the cure is dull: every fully invested plan loses exactly 1 point, so no weight moves and the promise drops to 5.1796%.
+
+A sharper doubt lets the errors have a combined size (the square root of the sum of their squares) of up to 1 point: one estimate a full point out, or several out by less. Then the plan's real expected return may be as low as 5.5635%. The plan leaned hardest on world shares, so an error in that one estimate does the most damage.
+
+This card picks the split whose **worst case** is best instead. It names the set of estimates it is willing to believe (the **uncertainty set**), works out the worst return inside that set in closed form, and maximises that.
+
+The answer is 11.84% UK shares, 38.11% world shares, 10.53% property, 22.52% gilts and 16.99% gold. It promises 5.6159% for every set of estimates in the uncertainty set, an expected £56,159 a year on the fund's £1,000,000, and it meets the loss rule at the analysts' estimates. A printed certificate proves no split does better by more than 0.0000006.
+
+**Robust optimisation replaces "the data are right" with "the data lie in a stated set" and optimises the worst case. For a ball of errors, the worst case of a return is the estimate minus the radius times the length of the weight list. For normal returns, a chance constraint has exactly the same shape: it is the worst case over an ellipsoid (a stretched ball) shaped by the risk.**
 
 **What kind of fact this is:** two theorems and a model. That the worst case over a ball is "estimate minus radius times length" is proved on this card in Why it works. So is the reduction of a normal chance constraint to the same form. Which uncertainty set to believe, and whether returns are normal, are modelling choices, not facts.
 
@@ -20,7 +28,11 @@ This card picks the split whose **worst case** is best instead. It names the set
 
 <p align="center"><img src="../figures/robust-and-chance-constrained-optimisation.svg" alt="A square of side 2 points and the circle of radius 1 inside it, both centred on the estimates 7.0 and 7.4; the worst point on the circle for a half-and-half plan sits at 6.49 percent, the box's corner at 6.20 percent" width="420"></p>
 
-Two of the assets, drawn to scale: UK shares across, world shares up, 1 point of return per 60 drawing units. The centre dot is the pair of estimates, 7.0 and 7.4. The square is the **box**: each estimate may be up to 1 point out, all at the same time. The circle is the **ball**: errors whose combined length is at most 1 point. Take a plan with half its money in each asset. Its worst point in the box is the corner, where both estimates are a full point low, and it returns 6.2000%. Its worst point on the ball is where the dashed line of equal return just touches the circle, and it returns 6.4929%. The ball is the milder set, because it does not let every error go against the plan at full size at once.
+Two of the assets, drawn to scale: UK shares across, world shares up, 1 point of return per 60 drawing units. The centre dot is the pair of estimates, 7.0 and 7.4.
+
+The square is the **box**: each estimate may be up to 1 point out, all at the same time. The circle is the **ball**: errors whose combined length is at most 1 point.
+
+Take a plan with half its money in each asset. Its worst point in the box is the corner, where both estimates are a full point low, and it returns 6.2000%. Its worst point on the ball is where the dashed line of equal return just touches the circle, and it returns 6.4929%. The ball is the milder set, because it does not let every error go against the plan at full size at once.
 
 ---
 
@@ -46,7 +58,7 @@ The card's problem puts the two together:
 
 $$\text{maximise } \hat\mu^{\mathsf T} w - \delta\lVert w\rVert \quad\text{subject to}\quad \hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T} w\rVert \ge -\ell,\quad \mathbf 1^{\mathsf T} w = 1,\quad w \ge 0.$$
 
-The contrast, in one line: for the box $\{\mu : |\mu_i - \hat\mu_i| \le \delta \text{ for every } i\}$, the worst case is $\hat\mu^{\mathsf T} w - \delta(|w_1| + \dots + |w_5|)$, and with no shorting the bracket is 1. So the box's counterpart is "subtract 1 point from every estimate". It moves no weight and only lowers the promise.
+The contrast, in one line: for the box $\{\mu : |\mu_i - \hat\mu_i| \le \delta \text{ for every } i\}$, the worst case is $\hat\mu^{\mathsf T} w - \delta(|w_1| + \dots + |w_5|)$, and with no shorting (no negative weights, $w \ge 0$) the bracket is 1. So the box's counterpart is "subtract 1 point from every estimate". It moves no weight and only lowers the promise.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -66,9 +78,9 @@ The contrast, in one line: for the box $\{\mu : |\mu_i - \hat\mu_i| \le \delta \
 ### When it holds
 
 - **The true expected returns lie in $\mathcal U$.** The promise of 5.6159% is a guarantee only inside the set. Outside it, nothing is promised. The set is a judgement about how wrong the analysts can be; a radius of 1 point is a choice, not a fact.
-- **The set is round (or an ellipsoid).** Then the worst case is a length, and the problem stays a second-order cone program. A box gives a sum of absolute values, which with no shorting collapses to a constant shift. A set of finitely many scenarios gives one straight-line limit per scenario.
-- **The returns are normal, for the chance constraint.** Then $z$ comes from the bell curve. If they are not, the same mean and standard deviation can hide a 25.80% chance of a 10.50% loss, as the checks print. Guarding against every law with that mean and spread needs $z$ = 4.3589 instead of 1.644854.
-- **$\varepsilon$ is below one half.** Then $z > 0$ and the chance constraint is a cone constraint, so the allowed set is convex. Above one half, $z$ turns negative, the constraint rewards risk, and the allowed set has dents.
+- **The set is round (or an ellipsoid).** Then the worst case is a length, and the problem stays a second-order cone program (a problem whose limits say that the length of a list is at most a straight-line expression). A box gives a sum of absolute values, which with no shorting collapses to a constant shift. A set of finitely many scenarios gives one straight-line limit per scenario.
+- **The returns are normal, for the chance constraint.** Then $z$ comes from the bell curve. If they are not, the same mean and standard deviation can hide a 25.80% chance of a 10.50% loss, as the checks print. Guarding against every law (probability distribution of the returns) with that mean and spread needs $z$ = 4.3589 instead of 1.644854.
+- **$\varepsilon$ is below one half.** Then $z > 0$ and the chance constraint is a cone constraint, so the allowed set is convex (any mix of two allowed plans is allowed). Above one half, $z$ turns negative, the constraint rewards risk, and the allowed set has dents.
 - **The chance constraint uses the same estimates.** It is evaluated at $\hat\mu$. At the ball's worst estimates (errors of combined size 1 point), the plan's 95% loss level is 10.49997%, not 10%.
 
 ---
@@ -91,13 +103,19 @@ For the box, each error is chosen separately, $\mu_i = \hat\mu_i - \delta$ where
 
 ### Step 2: why the ball rewards spreading the money
 
-$\lVert w\rVert$ is 1 when all the money sits in one asset and shrinks as the money spreads. So the ball's penalty $\delta\lVert w\rVert$ is a charge for concentration. The reason is the shape of the set. The ball allows one estimate to be a full point out, but if several are out together, each must be out by less. A spread plan is exposed to several errors at once, so to each only partly. The trusting plan has $\lVert w\rVert$ = 0.6162 and loses 0.6162 points in its worst case; the robust plan has 0.5000 and loses half a point.
+$\lVert w\rVert$ is 1 when all the money sits in one asset and shrinks as the money spreads. So the ball's penalty $\delta\lVert w\rVert$ is a charge for concentration.
+
+The reason is the shape of the set. The ball allows one estimate to be a full point out, but if several are out together, each must be out by less. A spread plan is exposed to several errors at once, so to each only partly.
+
+The trusting plan has $\lVert w\rVert$ = 0.6162 and loses 0.6162 points in its worst case; the robust plan has 0.5000 and loses half a point.
 
 The box lets all five errors be a full point at once, so spreading earns nothing there.
 
 ### Step 3: the chance constraint is a worst case too
 
-The plan's return for the year, $\xi^{\mathsf T} w$, is a sum of normal returns, so it is normal. Its mean is $\hat\mu^{\mathsf T} w$; its variance is $w^{\mathsf T}\Sigma w = \lVert C^{\mathsf T} w\rVert^2$. The chance of falling below $-\ell$ is the bell-curve area $N\big((-\ell - \hat\mu^{\mathsf T}w)/\lVert C^{\mathsf T}w\rVert\big)$. That is at most $\varepsilon$ exactly when the argument is at most $-z$, which rearranges to the formula. Read as a loss, it says the plan's 95% value at risk is at most $\ell$; the normal closed form is on [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
+The plan's return for the year, $\xi^{\mathsf T} w$, is a sum of normal returns, so it is normal. Its mean is $\hat\mu^{\mathsf T} w$; its variance is $w^{\mathsf T}\Sigma w = \lVert C^{\mathsf T} w\rVert^2$. The chance of falling below $-\ell$ is the bell-curve area $N\big((-\ell - \hat\mu^{\mathsf T}w)/\lVert C^{\mathsf T}w\rVert\big)$. That is at most $\varepsilon$ exactly when the argument is at most $-z$, which rearranges to the formula.
+
+Read as a loss, it says the plan's 95% value at risk (the loss exceeded with only a 5% chance) is at most $\ell$; the normal closed form is on [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
 
 Now run Step 1 backwards. With $\mathcal E = \{\hat\mu + zCu : \lVert u\rVert \le 1\}$, the lowest return over $\mathcal E$ is $\hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T}w\rVert$. So the chance constraint says: **the plan loses at most $\ell$ for every outcome in an ellipsoid of size $z$ shaped by the risk**. Both constraints are robust constraints. They differ in what they doubt:
 
@@ -110,9 +128,15 @@ Now run Step 1 backwards. With $\mathcal E = \{\hat\mu + zCu : \lVert u\rVert \l
 
 ### Step 4: solving it, and the certificate
 
-The objective is a straight line minus a length, so it is concave (it bends downward, so any local best is the overall best); the loss rule is a cone constraint, so the allowed set is convex. The whole problem is a second-order cone program, the class on [Second-order cone programs](04-second-order-cone-programs.md). The code solves it with a **log-barrier method**: for a weight $t$ it maximises $t$ times the objective plus the logarithms of every slack (each weight, and the room left under the loss rule), by Newton steps on four free weights (the fifth is one minus the rest). Then $t$ grows tenfold, and the rounds stop once 6/$t$ is below 0.000001.
+The objective is a straight line minus a length, so it is concave (it bends downward, so any local best is the overall best); the loss rule is a cone constraint, so the allowed set is convex. The whole problem is a second-order cone program, the class on [Second-order cone programs](04-second-order-cone-programs.md).
 
-At each centred point the method hands back prices: $\lambda = 1/(t \times \text{room under the loss rule})$ on the loss rule and $1/(t\,w_i)$ on each weight's floor. These prices satisfy the KKT conditions (the slope of the objective is balanced by priced limits) exactly except that each price times its slack is $1/t$ instead of 0. The barrier-method theorem (stated here, with its source, not proved) says this gives a dual bound: no allowed split beats the current one by more than (number of slacks)/$t$ = 6/$t$. The code asserts the balance holds to 0.000001 and prints the gap: at most 0.0000006, after 43 Newton steps from a start of 10% in each of UK shares, world shares and property, 50% gilts and 20% gold.
+The code solves it with a **log-barrier method**: for a weight $t$ it maximises $t$ times the objective plus the logarithms of every slack (each weight, and the room left under the loss rule), by Newton steps (each heads for the best point of a quadratic fitted to the cost at the current split) on four free weights (the fifth is one minus the rest). Then $t$ grows tenfold, and the rounds stop once 6/$t$ is below 0.000001.
+
+At each centred point the method hands back prices: $\lambda = 1/(t \times \text{room under the loss rule})$ on the loss rule and $1/(t\,w_i)$ on each weight's floor. These prices satisfy the KKT (Karush–Kuhn–Tucker) conditions (the slope of the objective is balanced by priced limits) exactly except that each price times its slack is $1/t$ instead of 0.
+
+The barrier-method theorem (stated here, with its source, not proved) says this gives a dual bound: no allowed split beats the current one by more than (number of slacks)/$t$ = 6/$t$.
+
+The code asserts the balance holds to 0.000001 and prints the gap: at most 0.0000006, after 43 Newton steps from a start of 10% in each of UK shares, world shares and property, 50% gilts and 20% gold.
 
 ### Step 5: with no loss rule, a closed form
 
@@ -120,7 +144,9 @@ Drop the loss rule and the robust problem solves by hand. Every held asset's wor
 
 $$w_i \propto \max(\hat\mu_i - \nu,\, 0), \qquad \textstyle\sum_i \max(\hat\mu_i - \nu, 0)^2 = \delta^2.$$
 
-This is **water-filling**: lower the level $\nu$ until the parts of the estimates above it have combined length $\delta$. Here $\nu$ = 6.5460 and the plan is 29.07% UK shares, 54.67% world shares and 16.26% property. It ignores risk entirely, and its 95% value at risk is 16.6024%, far over the limit, which is why the card's problem needs the loss rule too.
+This is **water-filling**: lower the level $\nu$ until the parts of the estimates above it have combined length $\delta$.
+
+Here $\nu$ = 6.5460 and the plan is 29.07% UK shares, 54.67% world shares and 16.26% property. It ignores risk entirely, and its 95% value at risk is 16.6024%, far over the limit, which is why the card's problem needs the loss rule too.
 
 <details>
 <summary>Detailed proof: water-filling is the best worst case, with a certificate</summary>
@@ -174,7 +200,14 @@ The fourth row is a modelling assumption failing: a two-point year with the robu
 
 ## Code, from first principles, and it actually runs
 
-The code builds the covariance matrix from the shelf's house figures, finds $z$ by bisection on a bell-curve area it integrates itself, and reaches the answer by **four independent roads**. Road 1 is the log-barrier method with its gap certificate and KKT balance. Road 2 tries every split in steps of 2% and checks that none beats the barrier. Road 3 checks the closed-form worst case by sampling 20,000 points on the ball, and checks water-filling by its saddle certificate. Road 4 simulates 200,000 years of correlated normal returns with a SplitMix64 generator and counts the bad ones. Nothing imported knows the answer; Python and Rust print the same lines.
+The code builds the covariance matrix from the shelf's house figures, finds $z$ by bisection on a bell-curve area it integrates itself, and reaches the answer by **four independent roads**:
+
+1. Road 1 is the log-barrier method with its gap certificate and KKT balance.
+2. Road 2 tries every split in steps of 2% and checks that none beats the barrier.
+3. Road 3 checks the closed-form worst case by sampling 20,000 points on the ball, and checks water-filling by its saddle certificate.
+4. Road 4 simulates 200,000 years of correlated normal returns with a SplitMix64 generator and counts the bad ones.
+
+Nothing imported knows the answer; Python and Rust print the same lines.
 
 ### Python
 
@@ -549,6 +582,224 @@ ALL CHECKS PASS
 ```
 
 The grid's best split, 14%, 36%, 10%, 22%, 18%, guarantees 5.6141%, 0.0018 below the barrier's answer, as a coarse grid should. The simulation counts 10,038 bad years in 200,000, a rate of 0.0502 against the target 0.0500, well inside four standard errors of 0.0005.
+
+### Lean
+
+Lean proves the card's three exact results for any number of assets, any weights and any radius $\delta \ge 0$, plus the figure's sums.
+
+- For the ball of radius $\delta$ around the estimates, the worst expected return exists and equals $\hat\mu^{\mathsf T} w - \delta\lVert w\rVert$.
+- For the box, where every estimate may be up to $\delta$ out at once, the worst case is $\hat\mu^{\mathsf T} w - \delta(|w_1| + |w_2| + \dots)$.
+- Let the returns be normal with mean $\hat\mu$ and covariance matrix $\Sigma$, with $C C^{\mathsf T} = \Sigma$ and $\varepsilon$ between 0 and 1.
+- Then the chance of losing more than $\ell$ is at most $\varepsilon$ exactly when $\hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T} w\rVert \ge -\ell$.
+- In the figure, the half-and-half plan's worst point in the box returns 6.2.
+- The same plan's weight list has squared length 1/2, so the ball charges only $1/\sqrt 2$ of a point.
+- With no shorting, the box's bracket is 1, for example for the even split of 1/5 in each asset.
+
+The best plans, the barrier certificate, water-filling, the 2% grid and the simulated years are left to the Python and Rust checks.
+
+```lean
+-- Robust and chance constraints: the worst return over a ball of estimates is the estimate minus the radius times the length of the weights, a box of errors instead costs the radius times the sum of the absolute weights, and a normal chance constraint is exactly the same kind of worst case shaped by the risk.
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Probability.Distributions.Gaussian.Multivariate
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory Matrix
+open scoped RealInnerProductSpace
+
+/-- The standard normal distribution function is strictly increasing. -/
+lemma gaussianReal_Iic_lt_of_lt {a b : ℝ} (hab : a < b) :
+    gaussianReal 0 1 (Set.Iic a) < gaussianReal 0 1 (Set.Iic b) := by
+  have hpos : 0 < gaussianReal 0 1 (Set.Ioc a b) := by
+    rw [pos_iff_ne_zero]
+    intro h
+    have := gaussianReal_absolutelyContinuous' (0 : ℝ) (v := 1) one_ne_zero h
+    simp [Real.volume_Ioc] at this
+    linarith
+  rw [← Set.Iic_union_Ioc_eq_Iic hab.le, measure_union (Set.Iic_disjoint_Ioc le_rfl)
+    measurableSet_Ioc]
+  exact ENNReal.lt_add_right (measure_ne_top _ _) hpos.ne'
+
+lemma gaussianReal_Iic_le_iff (a b : ℝ) :
+    gaussianReal 0 1 (Set.Iic a) ≤ gaussianReal 0 1 (Set.Iic b) ↔ a ≤ b := by
+  constructor
+  · intro h
+    by_contra hc
+    exact absurd h (not_le.mpr (gaussianReal_Iic_lt_of_lt (not_le.mp hc)))
+  · intro h
+    exact measure_mono (Set.Iic_subset_Iic.mpr h)
+
+lemma gaussianReal_Iio_le_iff {ε z : ℝ} (hε1 : ε < 1)
+    (hz : gaussianReal 0 1 (Set.Iic z) = ENNReal.ofReal (1 - ε)) (t : ℝ) :
+    gaussianReal 0 1 (Set.Iio t) ≤ ENNReal.ofReal ε ↔ t ≤ -z := by
+  have hneg : gaussianReal 0 1 (Set.Iio t) = gaussianReal 0 1 (Set.Ioi (-t)) := by
+    conv_lhs => rw [← neg_zero, ← gaussianReal_map_neg (μ := (0:ℝ)) (v := 1)]
+    rw [Measure.map_apply measurable_neg measurableSet_Iio]
+    congr 1
+    ext x; simp
+  rw [hneg, ← Set.compl_Iic, prob_compl_eq_one_sub measurableSet_Iic]
+  have hε : ENNReal.ofReal ε = 1 - ENNReal.ofReal (1 - ε) := by
+    rw [← ENNReal.ofReal_one, ← ENNReal.ofReal_sub _ (by linarith)]
+    congr 1; ring
+  rw [hε, ← hz, ENNReal.sub_le_sub_iff_left prob_le_one ENNReal.one_ne_top,
+    gaussianReal_Iic_le_iff]
+  constructor <;> intro h <;> linarith
+
+#print axioms gaussianReal_Iic_lt_of_lt
+#print axioms gaussianReal_Iic_le_iff
+#print axioms gaussianReal_Iio_le_iff
+
+/-- Robust counterpart for a ball. Let the uncertainty set be every estimate list
+`μ̂ + δ • u` with `‖u‖ ≤ 1`, a ball of radius `δ ≥ 0` around the analysts' estimates `μ̂`.
+For any weight list `w`, the worst expected return `μᵀw` over that set exists and equals the
+estimate's return minus the radius times the length of the weights:
+`min over μ in U of μᵀw = μ̂ᵀw - δ‖w‖`. -/
+theorem worst_case_over_ball_eq_estimate_minus_radius_times_length
+    {ι : Type*} [Fintype ι] (μhat w : EuclideanSpace ℝ ι) {δ : ℝ} (hδ : 0 ≤ δ) :
+    IsLeast ((fun μ => ⟪μ, w⟫) '' {μ | ∃ u : EuclideanSpace ℝ ι, ‖u‖ ≤ 1 ∧ μ = μhat + δ • u})
+      (⟪μhat, w⟫ - δ * ‖w‖) := by
+  constructor
+  · by_cases hw : w = 0
+    · refine ⟨μhat, ⟨0, by simp, by simp⟩, by simp [hw]⟩
+    · have hn : ‖w‖ ≠ 0 := norm_ne_zero_iff.mpr hw
+      refine ⟨μhat + δ • (-(‖w‖⁻¹ • w)), ⟨-(‖w‖⁻¹ • w), ?_, rfl⟩, ?_⟩
+      · rw [norm_neg, norm_smul, norm_inv, norm_norm, inv_mul_cancel₀ hn]
+      · simp only [inner_add_left, inner_smul_left, inner_neg_left, real_inner_self_eq_norm_sq,
+          RCLike.conj_to_real]
+        field_simp
+        ring
+  · rintro _ ⟨μ, ⟨u, hu, rfl⟩, rfl⟩
+    simp only [inner_add_left, real_inner_smul_left]
+    have h1 : -(‖u‖ * ‖w‖) ≤ ⟪u, w⟫ := by
+      have := abs_real_inner_le_norm u w
+      linarith [neg_abs_le ⟪u, w⟫]
+    have h2 : ‖u‖ * ‖w‖ ≤ ‖w‖ := by
+      have := norm_nonneg w
+      nlinarith
+    nlinarith
+
+/-- The box contrast. If each estimate may be out by up to `δ ≥ 0`, all at the same time
+(the set of `μ` with `|μ i - μ̂ i| ≤ δ` for every asset `i`), the worst expected return exists and
+equals the estimate's return minus `δ` times the sum of the absolute weights. With no shorting and
+full investment that sum is 1, so the box only subtracts `δ` from every plan and moves no weight. -/
+theorem worst_case_over_box_eq_estimate_minus_radius_times_sum_abs
+    {ι : Type*} [Fintype ι] (μhat w : ι → ℝ) {δ : ℝ} (hδ : 0 ≤ δ) :
+    IsLeast ((fun μ : ι → ℝ => ∑ i, μ i * w i) '' {μ | ∀ i, |μ i - μhat i| ≤ δ})
+      (∑ i, μhat i * w i - δ * ∑ i, |w i|) := by
+  constructor
+  · refine ⟨fun i => μhat i - δ * SignType.sign (w i), fun i => ?_, ?_⟩
+    · simp only [sub_sub_cancel_left, abs_neg, abs_mul, abs_of_nonneg hδ]
+      rcases lt_trichotomy (w i) 0 with h | h | h <;> simp [h, hδ]
+    · simp only [Finset.mul_sum, ← Finset.sum_sub_distrib]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rcases lt_trichotomy (w i) 0 with h | h | h
+      · simp [h, abs_of_neg h]; ring
+      · simp [h]
+      · simp [h, abs_of_pos h]; ring
+  · rintro _ ⟨μ, hμ, rfl⟩
+    simp only [Finset.mul_sum, ← Finset.sum_sub_distrib]
+    refine Finset.sum_le_sum fun i _ => ?_
+    have h := hμ i
+    have : |(μ i - μhat i) * w i| ≤ δ * |w i| := by
+      rw [abs_mul]; exact mul_le_mul_of_nonneg_right h (abs_nonneg _)
+    have := neg_abs_le ((μ i - μhat i) * w i)
+    nlinarith
+
+/-- The normal chance constraint. Let the year's returns `ξ` be normal with mean `μ̂` and
+covariance matrix `S`, and let `C` be any matrix with `C Cᵀ = S`. Let `0 < ε < 1` and let `z`
+be the point with `1 - ε` of the standard bell-curve area to its left, `z = N⁻¹(1 - ε)`.
+Then for any weights `w` and loss limit `ℓ`, the chance of losing more than `ℓ` is at most `ε`
+exactly when the expected return, less `z` standard deviations `‖Cᵀw‖`, is at least `-ℓ`:
+`Pr(ξᵀw < -ℓ) ≤ ε ↔ μ̂ᵀw - z‖Cᵀw‖ ≥ -ℓ`. -/
+theorem normal_chance_constraint_iff_worst_case_over_ellipsoid
+    {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ]
+    (μhat w : EuclideanSpace ℝ ι) (S : Matrix ι ι ℝ) (C : Matrix ι κ ℝ) (hC : C * Cᵀ = S)
+    {ε z ℓ : ℝ} (hε0 : 0 < ε) (hε1 : ε < 1)
+    (hz : gaussianReal 0 1 (Set.Iic z) = ENNReal.ofReal (1 - ε)) :
+    multivariateGaussian μhat S {ξ | ⟪ξ, w⟫ < -ℓ} ≤ ENNReal.ofReal ε ↔
+      -ℓ ≤ ⟪μhat, w⟫ - z * ‖Matrix.toEuclideanLin Cᵀ w‖ := by
+  have hS : S.PosSemidef := by
+    rw [← hC]
+    simpa [conjTranspose_eq_transpose_of_trivial] using posSemidef_self_mul_conjTranspose C
+  set P := multivariateGaussian μhat S with hP
+  set σ := ‖Matrix.toEuclideanLin Cᵀ w‖ with hσ
+  set m := ⟪μhat, w⟫ with hm
+  let L : StrongDual ℝ (EuclideanSpace ℝ ι) := innerSL ℝ w
+  have hL : ∀ x, L x = ⟪x, w⟫ := fun x => by simp [L, real_inner_comm]
+  have hmean : P[L] = m := by
+    rw [L.integral_comp_id_comm IsGaussian.integrable_id, hP, integral_id_multivariateGaussian,
+      hL]
+  have hvar : Var[L; P] = σ ^ 2 := by
+    have h1 := covarianceBilin_self (μ := P) IsGaussian.memLp_two_id w
+    rw [hP, covarianceBilin_multivariateGaussian hS] at h1
+    have h2 : (L : EuclideanSpace ℝ ι → ℝ) = fun u => ⟪w, u⟫ := by
+      funext u; simp [L]
+    rw [h2, ← h1, hσ, EuclideanSpace.norm_eq, Real.sq_sqrt (by positivity), ← hC]
+    rw [← mulVec_mulVec, dotProduct_mulVec, ← mulVec_transpose]
+    simp [Real.norm_eq_abs, dotProduct, pow_two]
+  have hmap : P.map L = gaussianReal m (σ ^ 2).toNNReal := by
+    rw [IsGaussian.map_eq_gaussianReal L, hmean, hvar]
+  have hset : P {ξ | ⟪ξ, w⟫ < -ℓ} = gaussianReal m (σ ^ 2).toNNReal (Set.Iio (-ℓ)) := by
+    rw [← hmap, Measure.map_apply L.continuous.measurable measurableSet_Iio]
+    congr 1
+    ext x; simp [hL]
+  rw [hset]
+  rcases (norm_nonneg (Matrix.toEuclideanLin Cᵀ w)).eq_or_lt with h0 | hpos
+  · rw [← hσ] at h0
+    have : ((σ ^ 2).toNNReal : NNReal) = 0 := by ext; simp [← h0]
+    rw [this, gaussianReal_zero_var, Measure.dirac_apply' _ measurableSet_Iio, ← h0]
+    by_cases hlt : m < -ℓ
+    · simp only [Set.indicator_of_mem (Set.mem_Iio.mpr hlt), Pi.one_apply]
+      constructor
+      · intro h
+        exfalso
+        rw [← ENNReal.ofReal_one, ENNReal.ofReal_le_ofReal_iff hε0.le] at h
+        linarith
+      · intro h; linarith
+    · simp only [Set.indicator_of_notMem (fun h => hlt (Set.mem_Iio.mp h)), zero_le, true_iff]
+      linarith
+  · rw [← hσ] at hpos
+    have hg : gaussianReal m (σ ^ 2).toNNReal =
+        ((gaussianReal 0 1).map (σ * ·)).map (m + ·) := by
+      rw [gaussianReal_map_const_mul, gaussianReal_map_const_add]
+      congr 1
+      · simp
+      · ext; simp [sq_nonneg]
+    rw [hg, Measure.map_apply (measurable_const_add m) measurableSet_Iio,
+      Measure.map_apply (measurable_const_mul σ) (measurableSet_Iio.preimage
+        (measurable_const_add m))]
+    have hpre : (σ * ·) ⁻¹' ((m + ·) ⁻¹' Set.Iio (-ℓ)) = Set.Iio ((-ℓ - m) / σ) := by
+      ext x
+      simp only [Set.mem_preimage, Set.mem_Iio]
+      rw [lt_div_iff₀ hpos]
+      constructor <;> intro h <;> linarith
+    rw [hpre, gaussianReal_Iio_le_iff hε1 hz, div_le_iff₀ hpos]
+    constructor <;> intro h <;> linarith
+
+-- The card's figure: half the money in UK shares (estimate 7.0) and half in world shares
+-- (estimate 7.4). The box's worst point is the corner, both a full point low: 6.2.
+example : (7 : ℚ) * (1 / 2) + (37 / 5) * (1 / 2) - 1 * (|(1 / 2 : ℚ)| + |(1 / 2 : ℚ)|) = 31 / 5 := by
+  norm_num
+-- The same plan's squared length is 1/2, so the ball charges only 1/√2 of a point, not 1.
+example : (1 / 2 : ℚ) ^ 2 + (1 / 2) ^ 2 = 1 / 2 := by norm_num
+-- With no shorting and full investment, the box's bracket |w₁| + ... + |w₅| is 1, for example
+-- for the even split of 1/5 in each asset.
+example : 5 * |(1 / 5 : ℚ)| = 1 := by norm_num
+
+#print axioms worst_case_over_ball_eq_estimate_minus_radius_times_length
+#print axioms worst_case_over_box_eq_estimate_minus_radius_times_sum_abs
+#print axioms normal_chance_constraint_iff_worst_case_over_ellipsoid
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gaussianReal_Iic_lt_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gaussianReal_Iic_le_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gaussianReal_Iio_le_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'worst_case_over_ball_eq_estimate_minus_radius_times_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'worst_case_over_box_eq_estimate_minus_radius_times_sum_abs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'normal_chance_constraint_iff_worst_case_over_ellipsoid' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

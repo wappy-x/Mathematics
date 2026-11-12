@@ -10,7 +10,11 @@ A council has a survey map of a site 100 m by 100 m. On it stand 60 houses: 30 b
 
 Most straight lines between the estates leave a narrow road that brushes some house. The widest one is 13.39 m wide. Only three houses touch its two kerbs: one in Northfield and two in Southgate. Move any of the other 57 a little, keeping it off the road, and the road does not change.
 
-A **support vector machine** (SVM) is this problem with labelled data points for houses: the road is its **street**, and the kerb houses are its **support vectors**. The applied wing introduced SVMs and kernels ([Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md)). This card does the optimisation. It writes the widest road as a quadratic program (a bowl-shaped cost under straight-line limits) that **minimises** the squared length of a vector, which maximises the width: 3 unknowns, 60 limits. Its dual (a second problem whose every answer is a floor under the road's cost) has one price per house, and 57 of the 60 prices come out exactly zero. The houses are simulated from a fixed seed, so every number can be checked.
+A **support vector machine** (SVM) is this problem with labelled data points for houses: the road is its **street**, and the kerb houses are its **support vectors**. The applied wing introduced SVMs and kernels ([Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md)). This card does the optimisation.
+
+It writes the widest road as a quadratic program (a bowl-shaped cost under straight-line limits) that **minimises** the squared length of a vector, which maximises the width: 3 unknowns, 60 limits. Its dual (a second problem whose every answer is a floor under the road's cost) has one price per house, and 57 of the 60 prices come out exactly zero.
+
+The houses are simulated from a fixed seed, so every number can be checked.
 
 **The widest road is the shortest vector w that puts every house at least one unit of score from the centre line, a quadratic program whose dual gives each house a price, and only the houses on the kerbs get a price above zero.**
 
@@ -53,7 +57,7 @@ and the road comes back from the prices as $w = \sum_i \lambda_i y_i x_i$.
 | $\lambda_i$ | house $i$'s price: how hard its limit pushes on the road | 0.011154, 0.001231, 0.009923, and 57 zeros | — |
 | $\mathcal{L}$, $q(\lambda)$ | the Lagrangian (cost minus priced limits) and the dual function | — | — |
 | $p^\star$, $d^\star$ | the best primal value and the best dual value | both 0.011153846 | — |
-| $Q$, $c$, $z$ | the shelf's QP form: matrix, linear term, unknowns $(w_1, w_2, b)$ | diag(1, 1, 0), 0 | — |
+| $Q$, $c$, $z$ | the shelf's quadratic-program form: matrix, linear term, unknowns $(w_1, w_2, b)$ | diag(1, 1, 0), 0 | — |
 | $\Lambda$, $D$ | Step 4: the price total on each estate, and the distance between the two hulls' nearest points | 0.011154 and 13.3907 m | a larger $D$ means a wider road |
 | $k$, $C$ | the solver's step count; the price per metre of trespass in the soft-margin version | 294 steps; $C$ = 1, 10, 100 | larger $C$ trusts every label more |
 
@@ -61,7 +65,7 @@ and the road comes back from the prices as $w = \sum_i \lambda_i y_i x_i$.
 
 - **The two estates can be split by a straight line.** Move one Southgate house into Northfield and no road clears every house: all 27,000 candidate roads fail, and the dual's value climbs without limit. The soft margin, with price $C$, is the fix (What breaks).
 - **Both coordinates in the same unit.** Width is ordinary length; with one axis in kilometres, "widest" would mean something else.
-- **A straight road is wanted.** A curved one needs a kernel, which slots into the dual because it uses houses only through $x_i^T x_j$.
+- **A straight road is wanted.** A curved one needs a kernel, a replacement for the dot product $x_i^T x_j$ that measures how alike two houses are. It slots into the dual because the dual uses houses only through $x_i^T x_j$.
 - **At least one house on each side.** With no Southgate house, every limit can be met with $w = 0$, and the "road" is infinitely wide.
 
 ---
@@ -120,13 +124,19 @@ If the road clears every house, each $s_i - 1 \ge 0$, and each $\lambda_i \ge 0$
 
 </details>
 
-The converse direction, that a zero-gap pair always exists, is **strong duality**. This card states it without proof: for a convex quadratic program whose straight-line limits can all be met, $d^\star = p^\star$ and the best prices exist (Boyd and Vandenberghe, sections 5.2.3 and 5.5, in Sources). The general theorem, strong duality under Slater's condition, is on [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md). Here the code exhibits the pair, which is all the certificate needs.
+The converse direction, that a zero-gap pair always exists, is **strong duality**. This card states it without proof: for a convex quadratic program whose straight-line limits can all be met, $d^\star = p^\star$ and the best prices exist (Boyd and Vandenberghe, sections 5.2.3 and 5.5, in Sources). The general theorem, strong duality under Slater's condition (some point meets every limit with room to spare), is on [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md). Here the code exhibits the pair, which is all the certificate needs.
 
 At the answer, Northfield's prices total the same as Southgate's, 0.011154 = 0.001231 + 0.009923, and all prices sum to $\lVert w\rVert^2$ = 0.022308, because the gap is zero.
 
 ### Step 4: the dual is the nearest-points problem
 
-Divide each estate's prices by its total, 0.011154. Then $w$ is that total times the gap between two weighted averages: a point inside Northfield's **convex hull** (the smallest convex region holding all its houses) and a point inside Southgate's. Call the price total on each estate $\Lambda$ and the distance between the two averaged points $D$. Then $\sum_i \lambda_i = 2\Lambda$ and $\lVert w\rVert = \Lambda D$, so $q = 2\Lambda - \tfrac12 \Lambda^2 D^2$. For a fixed $D$ the best total is $\Lambda = 2/D^2$, which makes $q = 2/D^2$. Maximising $q$ therefore means making $D$ as small as possible: pick the two nearest points of the hulls. Then $\lVert w\rVert = 2/D$, so the road's width is exactly $D$. Boyd and Vandenberghe (section 8.6, in Sources) give this nearest-points reading of the dual.
+Divide each estate's prices by its total, 0.011154. Then $w$ is that total times the gap between two weighted averages: a point inside Northfield's **convex hull** (the smallest convex region holding all its houses) and a point inside Southgate's.
+
+Call the price total on each estate $\Lambda$ and the distance between the two averaged points $D$. Then $\sum_i \lambda_i = 2\Lambda$ and $\lVert w\rVert = \Lambda D$, so $q = 2\Lambda - \tfrac12 \Lambda^2 D^2$.
+
+For a fixed $D$ the best total is $\Lambda = 2/D^2$, which makes $q = 2/D^2$. Maximising $q$ therefore means making $D$ as small as possible: pick the two nearest points of the hulls.
+
+Then $\lVert w\rVert = 2/D$, so the road's width is exactly $D$. Boyd and Vandenberghe (section 8.6, in Sources) give this nearest-points reading of the dual.
 
 For these houses the nearest Northfield point is house 10 itself, (40.60, 50.70). The nearest Southgate point is (33.01, 39.67), a mix of 0.8897 of house 57 and 0.1103 of house 34, lying on the edge between them. The two points are 13.3907 m apart, which is the width again. The price ratio 0.009923 : 0.001231 is that 0.8897 : 0.1103 mix.
 
@@ -145,7 +155,11 @@ xychart-beta
     line [0.30, 0.22, -0.19, -0.66, -0.38, -0.39, -0.67, -0.99, -0.99, -0.99, -0.99, -0.99, -0.99, -0.99, -0.99, -10.22]
 ```
 
-The one line is the log of the violation. It falls quickly, then stalls for about 150 steps while the solver shuttles price back and forth between the same few houses. The violation zigzags up and down on alternate steps there, and every charted point, one every 20 steps, lands on the low side at −0.99, so the chart draws the stall as flat. Then the right three are found, and it drops to −10.22 within a few steps. SMO is proved to stop for any positive tolerance (Keerthi and Gilbert, in Sources). No rate is proved for it here, and this card claims none: the evidence that the answer is optimal is the certificate in Step 2, not the step count.
+The one line is the log of the violation. It falls quickly, then stalls for about 150 steps while the solver shuttles price back and forth between the same few houses.
+
+The violation zigzags up and down on alternate steps there, and every charted point, one every 20 steps, lands on the low side at −0.99, so the chart draws the stall as flat. Then the right three are found, and it drops to −10.22 within a few steps.
+
+SMO is proved to stop for any positive tolerance (Keerthi and Gilbert, in Sources). No rate is proved for it here, and this card claims none: the evidence that the answer is optimal is the certificate in Step 2, not the step count.
 
 ---
 
@@ -185,7 +199,13 @@ A house whose estate record is lost stands at (60.0, 45.0). Its score is 1.9400,
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the same 60 houses from a SplitMix64 generator written out, seed 2026: positions rounded down to 10 cm, each at least 4 m from the surveyor's line $3x + 4y = 300$. Three independent roads reach the answer. **The method:** the dual solved by SMO. **Enumeration:** every road with one house on each kerb, or two on one kerb and one on the other, 27,000 in all, each checked against all 60 houses; the best road always has this form. **The certificate:** primal and dual values, feasibility, $\sum_i \lambda_i y_i$, complementary slackness and the distance between the hulls. No optimisation or linear-algebra library is imported.
+Both programs build the same 60 houses from a SplitMix64 random-number generator written out, seed 2026: positions rounded down to 10 cm, each at least 4 m from the surveyor's line $3x + 4y = 300$. Three independent roads reach the answer:
+
+- **The method:** the dual solved by SMO.
+- **Enumeration:** every road with one house on each kerb, or two on one kerb and one on the other, 27,000 in all, each checked against all 60 houses; the best road always has this form.
+- **The certificate:** primal and dual values, feasibility, $\sum_i \lambda_i y_i$, complementary slackness and the distance between the hulls.
+
+No optimisation or linear-algebra library is imported.
 
 ### Python
 
@@ -562,6 +582,224 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the two theorems from Why it works for any houses and labels, and checks the hand arithmetic exactly.
+
+- Take prices that are all at least zero, with equal totals on the two estates. Their dual value $q(\lambda)$ is at most $\tfrac12\lVert w\rVert^2$ for every road that clears every house.
+- Suppose $w = \sum_i \lambda_i y_i x_i$ and the totals balance. Then, for any offset $b$, the gap $\tfrac12\lVert w\rVert^2 - q(\lambda)$ equals $\sum_i \lambda_i (s_i - 1)$.
+- Suppose such a road clears every house and its gap is zero. Then no road that clears every house has a shorter $w$, so none is wider.
+- In that case every house off its kerb, with clearance score $s_i$ above 1, has price zero.
+- The hand numbers hold exactly as fractions. The kerb houses score +1, −1 and −1, the prices build $w$, and both estates' totals match.
+- The gap is exactly zero, with $p^\star = d^\star = 377/33800$. The width squared is $260^2/377$, and the lost record scores exactly 1.94.
+
+Building the 60 houses, the SMO solver, the 27,000-road search and the soft margin are left to the Python and Rust checks.
+
+```lean
+-- Support vector machines: any price list on the houses is a floor under every road's cost, the gap between a road and its prices is a sum of price times clearance surplus, and so a zero gap proves the road is the widest and gives every house off the kerb a price of zero.
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Tactic.NormNum
+
+open Finset
+
+lemma svm_inner_self_eq_double_sum
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (c : ι → ℝ) :
+    inner ℝ (∑ i, c i • x i) (∑ i, c i • x i)
+      = ∑ i, ∑ j, c i * c j * inner ℝ (x i) (x j) := by
+  rw [sum_inner]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [inner_sum]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [real_inner_smul_left, real_inner_smul_right]
+  ring
+
+lemma svm_sum_mul_inner
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (c : ι → ℝ) (w : E) :
+    ∑ i, c i * inner ℝ w (x i) = inner ℝ w (∑ i, c i • x i) := by
+  rw [inner_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [real_inner_smul_right]
+
+lemma svm_double_sum_eq
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (y lam : ι → ℝ) :
+    ∑ i, ∑ j, lam i * lam j * y i * y j * inner ℝ (x i) (x j)
+      = ‖∑ i, (lam i * y i) • x i‖ ^ 2 := by
+  rw [← real_inner_self_eq_norm_sq, svm_inner_self_eq_double_sum]
+  refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+  ring
+
+lemma svm_dual_value_le
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (y : ι → ℝ) (hy : ∀ i, y i = 1 ∨ y i = -1)
+    (w : E) (b : ℝ) (hfeas : ∀ i, 1 ≤ y i * (inner ℝ w (x i) + b))
+    (lam : ι → ℝ) (hlam : ∀ i, 0 ≤ lam i) (hbal : ∑ i, lam i * y i = 0) :
+    ∑ i, lam i - (1 / 2) * ∑ i, ∑ j, lam i * lam j * y i * y j * inner ℝ (x i) (x j)
+      ≤ (1 / 2) * ‖w‖ ^ 2 := by
+  set v : E := ∑ i, (lam i * y i) • x i with hv
+  rw [svm_double_sum_eq]
+  have h1 : ∑ i, lam i ≤ ∑ i, lam i * (y i * (inner ℝ w (x i) + b)) := by
+    refine Finset.sum_le_sum fun i _ => ?_
+    have := mul_le_mul_of_nonneg_left (hfeas i) (hlam i)
+    linarith
+  have h2 : ∑ i, lam i * (y i * (inner ℝ w (x i) + b)) = inner ℝ w v := by
+    have : ∑ i, lam i * (y i * (inner ℝ w (x i) + b))
+        = ∑ i, (lam i * y i) * inner ℝ w (x i) + b * ∑ i, lam i * y i := by
+      rw [Finset.mul_sum, ← Finset.sum_add_distrib]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      ring
+    rw [this, hbal, svm_sum_mul_inner]
+    ring
+  have h3 : 0 ≤ ‖w - v‖ ^ 2 := by positivity
+  rw [← real_inner_self_eq_norm_sq] at h3
+  rw [inner_sub_left, inner_sub_right, inner_sub_right,
+    real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq] at h3
+  have h4 : inner ℝ v w = inner ℝ w v := real_inner_comm w v
+  rw [← hv]
+  linarith
+
+lemma svm_gap_eq
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (y : ι → ℝ) (hy : ∀ i, y i = 1 ∨ y i = -1)
+    (lam : ι → ℝ) (hbal : ∑ i, lam i * y i = 0) (w : E) (hw : w = ∑ i, (lam i * y i) • x i)
+    (b : ℝ) :
+    (1 / 2) * ‖w‖ ^ 2
+      - (∑ i, lam i - (1 / 2) * ∑ i, ∑ j, lam i * lam j * y i * y j * inner ℝ (x i) (x j))
+      = ∑ i, lam i * (y i * (inner ℝ w (x i) + b) - 1) := by
+  have h2 : ∑ i, lam i * (y i * (inner ℝ w (x i) + b) - 1)
+      = ∑ i, (lam i * y i) * inner ℝ w (x i) + b * ∑ i, lam i * y i - ∑ i, lam i := by
+    rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    ring
+  rw [h2, hbal, svm_sum_mul_inner, svm_double_sum_eq, ← hw, real_inner_self_eq_norm_sq]
+  ring
+
+#print axioms svm_inner_self_eq_double_sum
+#print axioms svm_sum_mul_inner
+#print axioms svm_double_sum_eq
+#print axioms svm_dual_value_le
+#print axioms svm_gap_eq
+
+/-- The widest road and its kerb houses. Houses `x i` carry labels `y i = ±1`. Suppose the road
+`(w, b)` clears every house (`y i * (⟪w, x i⟫ + b) ≥ 1`), and the prices `lam i ≥ 0` balance the
+two estates (`∑ lam i * y i = 0`) and build the road (`w = ∑ lam i * y i • x i`). If the dual value
+`q(lam) = ∑ lam i - ½ ∑∑ lam i lam j y i y j ⟪x i, x j⟫` equals the road's cost `½‖w‖²`, then no road
+that clears every house has a shorter `w` (so none is wider), and every house standing off its
+kerb, with clearance score above 1, has price zero. -/
+theorem widest_road_certificate_and_kerb_prices
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (y : ι → ℝ) (hy : ∀ i, y i = 1 ∨ y i = -1)
+    (w : E) (b : ℝ) (hfeas : ∀ i, 1 ≤ y i * (inner ℝ w (x i) + b))
+    (lam : ι → ℝ) (hlam : ∀ i, 0 ≤ lam i) (hbal : ∑ i, lam i * y i = 0)
+    (hw : w = ∑ i, (lam i * y i) • x i)
+    (hgap : ∑ i, lam i - (1 / 2) * ∑ i, ∑ j, lam i * lam j * y i * y j * inner ℝ (x i) (x j)
+      = (1 / 2) * ‖w‖ ^ 2) :
+    (∀ (w' : E) (b' : ℝ), (∀ i, 1 ≤ y i * (inner ℝ w' (x i) + b')) →
+      (1 / 2) * ‖w‖ ^ 2 ≤ (1 / 2) * ‖w'‖ ^ 2) ∧
+    (∀ i, 1 < y i * (inner ℝ w (x i) + b) → lam i = 0) := by
+  refine ⟨fun w' b' hfeas' => ?_, fun i hi => ?_⟩
+  · rw [← hgap]
+    exact svm_dual_value_le x y hy w' b' hfeas' lam hlam hbal
+  · have hid := svm_gap_eq x y hy lam hbal w hw b
+    rw [hgap, sub_self] at hid
+    have hnn : ∀ j ∈ (Finset.univ : Finset ι),
+        0 ≤ lam j * (y j * (inner ℝ w (x j) + b) - 1) := fun j _ =>
+      mul_nonneg (hlam j) (by linarith [hfeas j])
+    have hz := (Finset.sum_eq_zero_iff_of_nonneg hnn).1 hid.symm i (Finset.mem_univ i)
+    rcases mul_eq_zero.1 hz with h | h
+    · exact h
+    · linarith
+
+/-- Weak duality (Step 2): any price list with every price at least zero and equal totals on the
+two estates gives a dual value `q(lam)` that is a floor under the cost `½‖w‖²` of every road
+`(w, b)` that clears every house. -/
+theorem dual_value_le_road_cost
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (y : ι → ℝ) (hy : ∀ i, y i = 1 ∨ y i = -1)
+    (w : E) (b : ℝ) (hfeas : ∀ i, 1 ≤ y i * (inner ℝ w (x i) + b))
+    (lam : ι → ℝ) (hlam : ∀ i, 0 ≤ lam i) (hbal : ∑ i, lam i * y i = 0) :
+    ∑ i, lam i - (1 / 2) * ∑ i, ∑ j, lam i * lam j * y i * y j * inner ℝ (x i) (x j)
+      ≤ (1 / 2) * ‖w‖ ^ 2 := by
+  exact svm_dual_value_le x y hy w b hfeas lam hlam hbal
+
+/-- The gap identity (Step 3): when the road direction is built from the prices,
+`w = ∑ lam i * y i • x i`, and the prices balance, `∑ lam i * y i = 0`, then for every offset `b`
+the gap between the road's cost and the dual value is the sum of each price times its house's
+clearance surplus: `½‖w‖² - q(lam) = ∑ lam i * (y i * (⟪w, x i⟫ + b) - 1)`. -/
+theorem duality_gap_eq_sum_price_mul_surplus
+    {E ι : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype ι]
+    (x : ι → E) (y : ι → ℝ) (hy : ∀ i, y i = 1 ∨ y i = -1)
+    (lam : ι → ℝ) (hbal : ∑ i, lam i * y i = 0) (w : E) (hw : w = ∑ i, (lam i * y i) • x i)
+    (b : ℝ) :
+    (1 / 2) * ‖w‖ ^ 2
+      - (∑ i, lam i - (1 / 2) * ∑ i, ∑ j, lam i * lam j * y i * y j * inner ℝ (x i) (x j))
+      = ∑ i, lam i * (y i * (inner ℝ w (x i) + b) - 1) := by
+  exact svm_gap_eq x y hy lam hbal w hw b
+
+/- The card's worked numbers, exactly, in fractions. Coordinates are in metres, written as
+tenths: house 10 at (406/10, 507/10), house 57 at (286/10, 427/10), house 34 at (686/10, 152/10).
+The road is w = (11/130, 16/130), b = -11278/1300; the prices are 1885/169000 on house 10,
+1677/169000 on house 57 and 208/169000 on house 34. -/
+
+-- The south kerb direction, house 57 to house 34, is (40, -27.5); (11, 16) is square to it.
+example : (11 : ℚ) * 40 + 16 * (-55 / 2) = 0 := by norm_num
+
+-- The length of (11, 16) is the square root of 377.
+example : (11 : ℕ) ^ 2 + 16 ^ 2 = 377 := by norm_num
+
+-- The climb from house 57 to house 10, (12, 8), along (11, 16) is 260 / √377, and the width
+-- 2 / ‖w‖ squared is the same number squared: 260² / 377.
+example : (11 : ℚ) * 12 + 16 * 8 = 260 := by norm_num
+example : (2 : ℚ) ^ 2 / ((11 / 130) ^ 2 + (16 / 130) ^ 2) = 260 ^ 2 / 377 := by norm_num
+
+-- The three kerb houses score exactly +1, -1 and -1.
+example : (11 / 130 : ℚ) * (406 / 10) + (16 / 130) * (507 / 10) + (-11278 / 1300) = 1 := by
+  norm_num
+example : (11 / 130 : ℚ) * (286 / 10) + (16 / 130) * (427 / 10) + (-11278 / 1300) = -1 := by
+  norm_num
+example : (11 / 130 : ℚ) * (686 / 10) + (16 / 130) * (152 / 10) + (-11278 / 1300) = -1 := by
+  norm_num
+
+-- The prices balance the two estates: 1885 = 1677 + 208, and Southgate's split is the
+-- foot of the square from house 10 onto the south kerb, 208 / 1885 of the way from 57 to 34.
+example : (1885 : ℚ) / 169000 - 1677 / 169000 - 208 / 169000 = 0 := by norm_num
+example : ((12 : ℚ) * 40 + 8 * (-55 / 2)) / (40 ^ 2 + (55 / 2) ^ 2) = 208 / 1885 := by norm_num
+
+-- The prices build the road: w = ∑ lam i * y i • x i, coordinate by coordinate.
+example : (1885 : ℚ) / 169000 * (406 / 10) - 1677 / 169000 * (286 / 10)
+    - 208 / 169000 * (686 / 10) = 11 / 130 := by norm_num
+example : (1885 : ℚ) / 169000 * (507 / 10) - 1677 / 169000 * (427 / 10)
+    - 208 / 169000 * (152 / 10) = 16 / 130 := by norm_num
+
+-- Zero gap: the dual value (sum of prices minus half of ‖w‖²) equals the road's cost ½‖w‖²,
+-- both 377/33800, and the prices sum to ‖w‖².
+example : ((1885 : ℚ) + 1677 + 208) / 169000 - (1 / 2) * ((11 / 130) ^ 2 + (16 / 130) ^ 2)
+    = (1 / 2) * ((11 / 130) ^ 2 + (16 / 130) ^ 2) := by norm_num
+example : (1 / 2 : ℚ) * ((11 / 130) ^ 2 + (16 / 130) ^ 2) = 377 / 33800 := by norm_num
+
+-- The lost record at (60, 45) scores 97/50 = 1.94, positive: Northfield.
+example : (11 / 130 : ℚ) * 60 + (16 / 130) * 45 + (-11278 / 1300) = 97 / 50 := by norm_num
+
+#print axioms widest_road_certificate_and_kerb_prices
+#print axioms dual_value_le_road_cost
+#print axioms duality_gap_eq_sum_price_mul_surplus
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'svm_inner_self_eq_double_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'svm_sum_mul_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'svm_double_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'svm_dual_value_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'svm_gap_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'widest_road_certificate_and_kerb_prices' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dual_value_le_road_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'duality_gap_eq_sum_price_mul_surplus' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first: does a far-off house matter?** Move house 0 to the site's corner, `(0.0, 100.0)`. The road stays 13.3907 m with the same support vectors 10, 34 and 57. Only the solver's path changes: 171 steps instead of 294.
@@ -588,7 +826,7 @@ The two outputs match line for line.
 - **Text and image classifiers.** Linear SVMs on word counts were a standard tool for sorting documents and filtering spam. The training problem is this quadratic program with thousands of features instead of two coordinates.
 - **Medical and biological screening.** Gene-expression studies with few patients and many measurements use the maximum-margin rule, because only the borderline cases (the support vectors) set it.
 - **Collision checks in robotics and games.** Whether two convex shapes touch, and how far apart they are, is the nearest-points problem of Step 4. A positive distance is a separating road.
-- **SVM software.** Standard solvers are refinements of the SMO method used here. A large soft-margin problem can instead be trained by stochastic gradient on the hinge loss ([Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md)).
+- **SVM software.** Standard solvers are refinements of the SMO method used here. A large soft-margin problem can instead be trained by stochastic gradient on the hinge loss, which charges each house its shortfall below a score of 1, or zero if it has none ([Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md)).
 
 > **Say it back**
 > The widest straight road between two labelled groups is the shortest vector $w$ that gives every point a score of at least 1 on its own side, and the road is $2/\lVert w\rVert$ wide. That is a convex quadratic program. Pricing each point's limit gives a dual program whose value can never exceed the road's cost, so a matching pair proves the road is best. The gap is a sum of price times surplus, so a zero gap forces every point off the kerb to have price zero. The points with positive prices are the support vectors: here three houses out of 60 fix a road 13.39 m wide.

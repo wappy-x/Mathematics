@@ -6,9 +6,17 @@
 
 ## General Overview
 
-A summer festival is booking acts for its one stage. A headliner costs £60k and draws about 5,500 extra tickets. A smaller act costs £5k and draws about 1,000. A headliner needs 4 hours of stage time (a long set plus a long changeover); a smaller act needs 2. The booking budget is £290k and the stage licence gives 24 hours over the weekend. The organiser wants as many tickets sold as possible. So the choice is how many of each kind to book, the thing made largest is tickets, and the limits are money and hours.
+A summer festival is booking acts for its one stage. A headliner costs £60k and draws about 5,500 extra tickets. A smaller act costs £5k and draws about 1,000.
 
-Allow fractions, and the answer is quick: book 4.6 headliners and 2.8 smaller acts, 7.4 acts in all, for 28,100 tickets. Nobody can book 0.6 of a band, so 7.4 acts is no answer. But the number 28,100 is still useful. No real booking can beat it, because every real booking was already on the list the fractional answer was chosen from. The best real booking turns out to be 4 headliners and 4 smaller acts: 8 acts, 26,000 tickets. That is more acts than the fractional answer, not fewer.
+A headliner needs 4 hours of stage time (a long set plus a long changeover); a smaller act needs 2. The booking budget is £290k and the stage licence gives 24 hours over the weekend.
+
+The organiser wants as many tickets sold as possible. So the choice is how many of each kind to book, the thing made largest is tickets, and the limits are money and hours.
+
+Allow fractions, and the answer is quick: book 4.6 headliners and 2.8 smaller acts, 7.4 acts in all, for 28,100 tickets. Nobody can book 0.6 of a band, so 7.4 acts is no answer.
+
+But the number 28,100 is still useful. No real booking can beat it, because every real booking was already on the list the fractional answer was chosen from.
+
+The best real booking turns out to be 4 headliners and 4 smaller acts: 8 acts, 26,000 tickets. That is more acts than the fractional answer, not fewer.
 
 The distance between the two, 2,100 tickets or 8.08%, is the **integrality gap**. A better way of writing down the same festival can shrink it. Adding the plain fact "at most 4 headliners, since five would cost £300k" closes it to zero.
 
@@ -50,7 +58,7 @@ Dropping "whole" is the **LP relaxation** (LP: linear program; relaxation: the s
 | gap | $z_{LP} - z_{IP}$, also as a share of $z_{IP}$ | 2,100 tickets, 8.08% | the ceiling says less about the answer |
 | $y = (y_1, y_2)$ | prices on £1k of budget and on one stage hour, in tickets | $(70, 325)$ | — (Step 2 finds them) |
 
-The convex hull and the set-builder braces $\{x : Ax \le b\}$ come from the convexity shelf: a set is **convex** when the straight segment between any two of its points stays inside it. [Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md) in the computing wing already bounds a depot choice by its fractional relaxation and quotes its gap. This card spends its space on why the bound holds, how to certify it, and how to compare two ways of writing the same problem.
+The convex hull and the set-builder braces $\{x : Ax \le b\}$ ("every $x$ with $Ax \le b$") come from [Convex sets](../01-Convexity/02-convex-sets.md): a set is **convex** when the straight segment between any two of its points stays inside it. [Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md) in the computing wing already bounds a depot choice by its fractional relaxation and quotes its gap. This card spends its space on why the bound holds, how to certify it, and how to compare two ways of writing the same problem.
 
 ### When it holds
 
@@ -87,7 +95,9 @@ A second road to the ceiling needs no search. Put a price, in tickets, on each u
 
 $$c^T x \le y^T A x \le y^T b \quad \text{whenever } A^T y \ge c,\ y \ge 0,\ Ax \le b,\ x \ge 0.$$
 
-Pick the prices so both acts exactly break even: $60y_1 + 4y_2 = 5500$ and $5y_1 + 2y_2 = 1000$. Then $y_1 = 70$ tickets per £1k and $y_2 = 325$ tickets per hour. The ceiling is $290 \times 70 + 24 \times 325 = 28{,}100$. The same number as the corner search, reached without listing a single corner. These are the dual prices of [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md). That such prices always exist to match the relaxed best is the strong duality theorem, proved there; on this card the two roads agree on the numbers, which is the evidence.
+Pick the prices so both acts exactly break even: $60y_1 + 4y_2 = 5500$ and $5y_1 + 2y_2 = 1000$. Then $y_1 = 70$ tickets per £1k and $y_2 = 325$ tickets per hour. The ceiling is $290 \times 70 + 24 \times 325 = 28{,}100$. The same number as the corner search, reached without listing a single corner.
+
+These are the dual prices of [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md). That such prices always exist to match the relaxed best is the strong duality theorem, proved there; on this card the two roads agree on the numbers, which is the evidence.
 
 ### Step 3: measure the gap, and see why rounding fails
 
@@ -128,7 +138,11 @@ For the festival, $S$ is a finite set of 45 points, so its hull is a polygon. In
 
 </details>
 
-Here the code builds the hull straight from the 45 dots, and its corners, $(0, 0)$, $(4, 0)$, $(4, 4)$ and $(0, 12)$, are exactly the corners of $P$ with $h \le 4$ added. So the one extra limit already gives the hull. Real models are rarely this kind: the hull can need enormously many limits, and finding them is as hard as the problem. Solving integer programs in general is NP-hard (no method is known that is fast on every case; Karp's 1972 list in Sources includes 0-1 integer programs). [Cutting planes](04-cutting-planes.md) adds hull limits a few at a time, and [Total unimodularity](05-total-unimodularity.md) picks out the matrices whose $P$ already equals the hull.
+Here the code builds the hull straight from the 45 dots, and its corners, $(0, 0)$, $(4, 0)$, $(4, 4)$ and $(0, 12)$, are exactly the corners of $P$ with $h \le 4$ added. So the one extra limit already gives the hull.
+
+Real models are rarely this kind: the hull can need enormously many limits, and finding them is as hard as the problem. Solving integer programs in general is NP-hard (no method is known that is fast on every case; Karp's 1972 list in Sources includes 0-1 integer programs).
+
+[Cutting planes](04-cutting-planes.md) adds hull limits a few at a time, and [Total unimodularity](05-total-unimodularity.md) picks out the matrices whose $P$ already equals the hull.
 
 ---
 
@@ -504,6 +518,122 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three general facts of Why it works for every matrix $A$, limits $b$ and score $c$, and checks the festival's arithmetic.
+
+- If both bests exist, the best score over whole bookings is never above the best score with fractions allowed: $z_{IP} \le z_{LP}$.
+- Suppose prices $y \ge 0$ make every act cost at least the tickets it draws: $A^T y \ge c$. Then every booking in $P$ has $c^T x \le y^T A x \le y^T b$.
+- If $z_{IP}$ is the best score over the whole bookings, then the best score over the convex hull $\operatorname{conv} S$ is exactly $z_{IP}$.
+- For the festival: 45 whole bookings, none above 26,000 tickets; the corner $(4.6, 2.8)$ sells 28,100; prices $(70, 325)$ give 28,100.
+- Also: the gap is 2,100 tickets, five headliners cost £300k, and rounding gives £315k or 24,000 tickets.
+
+Finding the corners, the hull's corners, the 25-hour model and the false cap of 7 acts are left to the Python and Rust checks.
+
+```lean
+-- Integer programs: the best score over whole points is never above the best score with fractions allowed, prices on the limits certify such a ceiling, and over the convex hull of the whole points the best score is exactly the whole-number best.
+import Mathlib.Analysis.Convex.Hull
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
+
+open Matrix
+
+variable {m n : Type*} [Fintype m] [Fintype n]
+
+/-- The relaxed region `P = {x : A x ≤ b, x ≥ 0}`: every point that fits, fractions allowed. -/
+def relaxedRegion (A : Matrix m n ℝ) (b : m → ℝ) : Set (n → ℝ) :=
+  {x | A *ᵥ x ≤ b ∧ 0 ≤ x}
+
+/-- The whole points `S = {x : A x ≤ b, x ≥ 0, x whole}`. -/
+def wholePoints (A : Matrix m n ℝ) (b : m → ℝ) : Set (n → ℝ) :=
+  {x | x ∈ relaxedRegion A b ∧ ∀ i, ∃ k : ℤ, x i = k}
+
+/-- The LP relaxation is a ceiling: if `z_IP` is the best score `c ⬝ x` over the whole points
+of `{x : A x ≤ b, x ≥ 0}`, and `z_LP` is the best score over the same region with fractions
+allowed, then `z_LP ≥ z_IP`. -/
+theorem relaxation_bounds_integer_optimum (A : Matrix m n ℝ) (b : m → ℝ) (c : n → ℝ)
+    (zIP zLP : ℝ)
+    (hIP : IsGreatest ((fun x => c ⬝ᵥ x) '' wholePoints A b) zIP)
+    (hLP : IsGreatest ((fun x => c ⬝ᵥ x) '' relaxedRegion A b) zLP) :
+    zIP ≤ zLP := by
+  obtain ⟨⟨x, hx, rfl⟩, -⟩ := hIP
+  exact hLP.2 ⟨x, hx.1, rfl⟩
+
+/-- Prices certify a ceiling: if prices `y ≥ 0` on the limits make every unknown cost at least
+its score (`Aᵀ y ≥ c`), then every point with `A x ≤ b` and `x ≥ 0` has
+`c ⬝ x ≤ y ⬝ (A x) ≤ y ⬝ b`. -/
+theorem price_certificate_bounds_score (A : Matrix m n ℝ) (b : m → ℝ) (c : n → ℝ)
+    (y : m → ℝ) (x : n → ℝ)
+    (hy : 0 ≤ y) (hcover : c ≤ y ᵥ* A) (hAx : A *ᵥ x ≤ b) (hx : 0 ≤ x) :
+    c ⬝ᵥ x ≤ y ⬝ᵥ (A *ᵥ x) ∧ y ⬝ᵥ (A *ᵥ x) ≤ y ⬝ᵥ b := by
+  refine ⟨?_, ?_⟩
+  · rw [dotProduct_mulVec]
+    unfold dotProduct
+    exact Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_right (hcover i) (hx i)
+  · unfold dotProduct
+    exact Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (hAx i) (hy i)
+
+/-- The convex hull is exact: if `z_IP` is the best score over the whole points `S`, then the
+best score over `conv S` is again exactly `z_IP`. -/
+theorem convex_hull_relaxation_exact (A : Matrix m n ℝ) (b : m → ℝ) (c : n → ℝ) (zIP : ℝ)
+    (hIP : IsGreatest ((fun x => c ⬝ᵥ x) '' wholePoints A b) zIP) :
+    IsGreatest ((fun x => c ⬝ᵥ x) '' convexHull ℝ (wholePoints A b)) zIP := by
+  obtain ⟨⟨x, hx, rfl⟩, hub⟩ := hIP
+  refine ⟨⟨x, subset_convexHull ℝ _ hx, rfl⟩, ?_⟩
+  have hlin : IsLinearMap ℝ (fun x : n → ℝ => c ⬝ᵥ x) :=
+    ⟨fun u v => dotProduct_add c u v, fun r u => dotProduct_smul r c u⟩
+  have hsub : convexHull ℝ (wholePoints A b) ⊆ {z | c ⬝ᵥ z ≤ c ⬝ᵥ x} :=
+    convexHull_min (fun z hz => hub ⟨z, hz, rfl⟩) (convex_halfSpace_le hlin _)
+  rintro _ ⟨z, hz, rfl⟩
+  exact hsub hz
+
+/-! The festival: `h` headliners and `t` smaller acts, fees `60h + 5t ≤ 290` (in £k),
+hours `4h + 2t ≤ 24`, tickets `5500h + 1000t`. -/
+
+-- There are 45 whole bookings (every whole booking has h ≤ 4 and t ≤ 12, so 30 is plenty).
+example : ((Finset.range 30 ×ˢ Finset.range 30).filter
+    (fun p : ℕ × ℕ => 60 * p.1 + 5 * p.2 ≤ 290 ∧ 4 * p.1 + 2 * p.2 ≤ 24)).card = 45 := by
+  decide +kernel
+
+-- The best whole booking is (4, 4): it fits, and no whole booking sells more than 26,000.
+example : 60 * 4 + 5 * 4 = 260 ∧ 4 * 4 + 2 * 4 = 24 ∧ 5500 * 4 + 1000 * 4 = 26000 := by
+  norm_num
+example : ∀ h ∈ Finset.range 30, ∀ t ∈ Finset.range 30,
+    60 * h + 5 * t ≤ 290 → 4 * h + 2 * t ≤ 24 → 5500 * h + 1000 * t ≤ 26000 := by
+  decide
+
+-- The relaxed corner (23/5, 14/5), that is 4.6 headliners and 2.8 smaller acts, uses the
+-- whole budget and all the hours, and sells 28,100 tickets.
+example : (60 : ℚ) * (23 / 5) + 5 * (14 / 5) = 290 ∧ (4 : ℚ) * (23 / 5) + 2 * (14 / 5) = 24 ∧
+    (5500 : ℚ) * (23 / 5) + 1000 * (14 / 5) = 28100 := by
+  norm_num
+
+-- Prices y = (70, 325) make both acts break even, and certify the same ceiling, 28,100.
+example : 60 * 70 + 4 * 325 = 5500 ∧ 5 * 70 + 2 * 325 = 1000 ∧ 290 * 70 + 24 * 325 = 28100 := by
+  norm_num
+
+-- The integrality gap is 2,100 tickets; five headliners cost 300 > 290, so h ≤ 4.
+example : 28100 - 26000 = 2100 ∧ 5 * 60 = 300 ∧ 300 > 290 := by
+  norm_num
+
+-- Rounding fails: (5, 3) costs 315 > 290, and (4, 2) sells 24,000, 2,000 short.
+example : 60 * 5 + 5 * 3 = 315 ∧ 5500 * 4 + 1000 * 2 = 24000 ∧ 26000 - 24000 = 2000 := by
+  norm_num
+
+#print axioms relaxation_bounds_integer_optimum
+#print axioms price_certificate_bounds_score
+#print axioms convex_hull_relaxation_exact
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'relaxation_bounds_integer_optimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'price_certificate_bounds_score' depends on axioms: [propext, Classical.choice, Quot.sound]
+'convex_hull_relaxation_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the festival as given, so expect some to stop the run; read the printed lines above the stop.
@@ -547,8 +677,9 @@ The two outputs match line for line.
 
 - [Yes-or-no variables](02-modelling-with-binary-variables-big-m-and-indicators.md): the next card. Writing switches and if-then rules with 0-or-1 unknowns, where a careless constant gives the kind of loose relaxation Step 4 measures.
 - [Branch and bound](03-branch-and-bound.md): splitting on a fractional variable and using this card's ceiling to discard whole branches.
+- [Cutting planes](04-cutting-planes.md): adding hull limits a few at a time until the relaxed best is whole, as $h \le 4$ does here.
 - [Total unimodularity](05-total-unimodularity.md): the matrices whose relaxation is already the convex hull, so the gap is always zero.
-- [Branch and bound](03-branch-and-bound.md): rounding a relaxed answer with a proved guarantee, the honest version of the mistake on this card.
+- [Heuristics with a promise](08-heuristics-and-approximation-guarantees.md): a quick whole answer with a proved guarantee against a relaxation's prices, the honest version of the mistake on this card.
 
 The open question: when the hull needs too many limits to write down, which few of them are worth adding?
 

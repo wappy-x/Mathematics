@@ -10,9 +10,11 @@ A furniture workshop makes tables and chairs. A table earns £19 and a chair £2
 
 The best plan is 32 tables and 16 chairs, for **£928**. It uses all the timber and all the finish, and leaves 8 hours of labour spare. [The simplex method](03-simplex-method.md) finds it. But a reader of the plan can fairly ask: how do we *know* no other plan earns more?
 
-Answer with prices. Put a value on each stock: **£3 a metre of timber, £0 an hour of labour, £7 a litre of finish**. At those prices, the inputs of one table are worth exactly £19 and the inputs of one chair exactly £20. So no product turns its inputs into more money than the inputs are worth. Whatever the plan, the profit can never exceed the value of the whole stock, and the stock is worth 160 × £3 + 120 × £0 + 64 × £7 = £928. The plan earns £928. The ceiling has been reached, so the plan is best.
+Answer with prices. Put a value on each stock: **£3 a metre of timber, £0 an hour of labour, £7 a litre of finish**. At those prices, the inputs of one table are worth exactly £19 and the inputs of one chair exactly £20.
 
-Those prices solve a second linear program, the **dual**: find the cheapest prices that value every product's inputs at no less than its profit. Its best value equals the best profit. The two answers fit by a rule called **complementary slackness**: labour has 8 spare hours, so its price is zero; tables and chairs are both made, so each is valued exactly at its profit.
+So no product turns its inputs into more money than the inputs are worth. Whatever the plan, the profit can never exceed the value of the whole stock, and the stock is worth 160 × £3 + 120 × £0 + 64 × £7 = £928. The plan earns £928. The ceiling has been reached, so the plan is best.
+
+Those prices solve a second linear program (LP), the **dual**: find the cheapest prices that value every product's inputs at no less than its profit. Its best value equals the best profit. The two answers fit by a rule called **complementary slackness**: labour has 8 spare hours, so its price is zero; tables and chairs are both made, so each is valued exactly at its profit.
 
 **Every linear program has a partner, the dual, whose every feasible price list bounds the original's best value; when either has a best answer both do, the two values are equal, and at that pair every spare resource has price zero and every product made just breaks even at the prices.**
 
@@ -22,13 +24,17 @@ Those prices solve a second linear program, the **dual**: find the cheapest pric
 
 <p align="center"><img src="../figures/lp-duality-and-complementary-slackness.svg" alt="The workshop's allowed plans drawn to scale, tables across and chairs up. The shaded region has corners at (0, 0), (40, 0), (32, 16) and (0, 32). The timber line and the finish line meet at the best corner (32, 16); the dashed labour line passes beside it. From the corner, an arrow (19, 20) for the profit is drawn as 3 times the timber arrow (4, 2) plus 7 times the finish arrow (1, 2)." width="420"></p>
 
-Tables run across, chairs up, to scale; the shaded area is every plan the stocks allow. At the best corner, (32, 16), the timber and finish lines cross. Each wall points outward along its usage numbers: (4, 2) for timber, (1, 2) for finish. The profit direction (19, 20), drawn to (51, 36), is 3 times the timber arrow (tip at (44, 22)) plus 7 times the finish arrow (tip at (39, 30), marked ×7). Those multipliers are the prices. The dashed labour line misses the corner, so its price is 0.
+Tables run across, chairs up, to scale; the shaded area is every plan the stocks allow. At the best corner, (32, 16), the timber and finish lines cross. Each wall points outward along its usage numbers: (4, 2) for timber, (1, 2) for finish.
+
+The profit direction (19, 20), drawn to (51, 36), is 3 times the timber arrow (tip at (44, 22)) plus 7 times the finish arrow (tip at (39, 30), marked ×7). Those multipliers are the prices. The dashed labour line misses the corner, so its price is 0.
 
 ---
 
 ## The formula
 
-Unlike the standard form on [Linear programs](01-linear-programs-and-polyhedra.md), which minimises with equations and slacks, this card keeps the workshop as "maximise $c^T x$ subject to $Ax \le b$, $x \ge 0$", inequalities holding entry by entry; the symbols keep their roles: the plan is $x$, the profit per item $c$, the usage table $A$ and the stocks $b$. $A^T$ is $A$ with rows and columns swapped. This card introduces $y$, the **dual prices**: one price per resource, in pounds per unit. The original problem is called the **primal**, and a plan or price list is **feasible** when it meets all its rules.
+Unlike the standard form on [Linear programs](01-linear-programs-and-polyhedra.md), which minimises with equations and slacks, this card keeps the workshop as "maximise $c^T x$ subject to $Ax \le b$, $x \ge 0$". The inequalities hold entry by entry. The symbols keep their roles: the plan is $x$, the profit per item $c$, the usage table $A$ and the stocks $b$. $A^T$ is $A$ with rows and columns swapped.
+
+This card introduces $y$, the **dual prices**: one price per resource, in pounds per unit. The original problem is called the **primal**, and a plan or price list is **feasible** when it meets all its rules.
 
 $$
 \textbf{primal: } \max_{x}\ c^T x \ \text{ subject to } Ax \le b,\ x \ge 0
@@ -45,11 +51,11 @@ $$
 For the workshop, with $x_1$ tables and $x_2$ chairs:
 
 $$
-\max\ 19x_1 + 20x_2 \quad\text{s.t.}\quad 4x_1 + 2x_2 \le 160,\ \ 3x_1 + x_2 \le 120,\ \ x_1 + 2x_2 \le 64,\ \ x \ge 0
+\max\ 19x_1 + 20x_2 \quad\text{subject to}\quad 4x_1 + 2x_2 \le 160,\ \ 3x_1 + x_2 \le 120,\ \ x_1 + 2x_2 \le 64,\ \ x \ge 0
 $$
 
 $$
-\min\ 160y_1 + 120y_2 + 64y_3 \quad\text{s.t.}\quad 4y_1 + 3y_2 + y_3 \ge 19,\ \ 2y_1 + y_2 + 2y_3 \ge 20,\ \ y \ge 0
+\min\ 160y_1 + 120y_2 + 64y_3 \quad\text{subject to}\quad 4y_1 + 3y_2 + y_3 \ge 19,\ \ 2y_1 + y_2 + 2y_3 \ge 20,\ \ y \ge 0
 $$
 
 Each primal row (a resource) becomes a dual variable (its price). Each primal column (a product) becomes a dual row (its break-even rule). The dual of the dual is the primal again.
@@ -81,7 +87,9 @@ Each primal row (a resource) becomes a dual variable (its price). Each primal co
 
 ### Step 0: a fair price list is a ceiling, and the gap is made of waste
 
-Suppose prices value each product's inputs at no less than its profit. Then every item earns at most the value of what it consumed, so profit is at most the value of the stock consumed, which is at most the value of the whole stock. That is weak duality. The excess of ceiling over profit is two kinds of waste at those prices: priced stock left over, and items made whose inputs are worth more than they earn. Strong duality says both can be removed when a best plan exists; complementary slackness says they are exactly what must vanish.
+Suppose prices value each product's inputs at no less than its profit. Then every item earns at most the value of what it consumed, so profit is at most the value of the stock consumed, which is at most the value of the whole stock. That is weak duality.
+
+The excess of ceiling over profit is two kinds of waste at those prices: priced stock left over, and items made whose inputs are worth more than they earn. Strong duality says both can be removed when a best plan exists; complementary slackness says they are exactly what must vanish.
 
 ### Step 1: weak duality, in one chain
 
@@ -105,7 +113,9 @@ $$
 b^T y - c^T x = (Ax + s)^T y - (A^T y - r)^T x = y^T s + x^T r .
 $$
 
-The terms $y^T Ax$ and $x^T A^T y$ are the same number and cancel. What remains is a sum of products of non-negative numbers. Try the prices (3, 1, 7), a list that also charges £1 an hour for labour. The stock is then worth £1,048, and the gap to £928 is £120. The identity splits it: £1 times the 8 spare hours, plus 32 tables each over-valued by £3, plus 16 chairs each over-valued by £1, that is $1 \times 8 + 32 \times 3 + 16 \times 1 = 120$.
+The terms $y^T Ax$ and $x^T A^T y$ are the same number and cancel. What remains is a sum of products of non-negative numbers.
+
+Try the prices (3, 1, 7), a list that also charges £1 an hour for labour. The stock is then worth £1,048, and the gap to £928 is £120. The identity splits it: £1 times the 8 spare hours, plus 32 tables each over-valued by £3, plus 16 chairs each over-valued by £1, that is $1 \times 8 + 32 \times 3 + 16 \times 1 = 120$.
 
 ### Step 3: complementary slackness
 
@@ -115,7 +125,14 @@ $$
 y_i\, s_i = 0 \ \text{ for every resource } i, \qquad x_j\, r_j = 0 \ \text{ for every product } j .
 $$
 
-In words: a resource with stock left over has price zero; a resource with a positive price is used up; a product that is made breaks even exactly at the prices; a product whose inputs are worth more than its profit is not made. **Theorem:** feasible $x$ and $y$ are both optimal if and only if these hold. If they hold, the gap is zero, so by weak duality no plan beats $x$ and no price list beats $y$. If the gap is not zero, then by strong duality (next step) a better plan or better prices exist.
+In words:
+
+- a resource with stock left over has price zero;
+- a resource with a positive price is used up;
+- a product that is made breaks even exactly at the prices;
+- a product whose inputs are worth more than its profit is not made.
+
+**Theorem:** feasible $x$ and $y$ are both optimal if and only if these hold. If they hold, the gap is zero, so by weak duality no plan beats $x$ and no price list beats $y$. If the gap is not zero, then by strong duality (next step) a better plan or better prices exist.
 
 At the workshop: labour has slack 8 and price 0; timber and finish have slack 0 and prices 3 and 7; tables and chairs have surplus 0 and are made. Every product in the table of the code's output is zero.
 
@@ -146,7 +163,7 @@ For the workshop, the last basis holds tables, chairs and spare labour. Its colu
 
 </details>
 
-The LP dual is the [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md) bound: price the stock rules with $y \ge 0$, and the best priced profit over $x \ge 0$ is $b^T y$ when $A^T y \ge c$, unlimited otherwise. For linear programs no strictly feasible point is needed.
+The LP dual is the [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md) bound: price the stock rules with $y \ge 0$, and the best priced profit over $x \ge 0$ is $b^T y$ when $A^T y \ge c$, unlimited otherwise. For linear programs no strictly feasible point (one that meets every rule with room to spare) is needed.
 
 ### Step 5: when no plan exists, the dual says why
 
@@ -156,7 +173,9 @@ $$
 (x_1 + 2x_2) + 2(-x_2) \le 64 + 2(-40) \quad\Longrightarrow\quad x_1 \le -16 ,
 $$
 
-which no plan with $x_1 \ge 0$ can meet. The weights $w = (0, 0, 1, 2)$ on the four rules are a **certificate of infeasibility**. They are also a direction in which the dual's prices can move forever: from (3, 0, 7, 0), each step $k$ along $w$ keeps every product covered and lowers the stock value by £16. The value runs 928, then £768 at $k = 10$, then −£672 at $k = 100$. That such weights always exist when no plan does is **Farkas' lemma**, the alternative form of strong duality (Bertsimas and Tsitsiklis, section 4.6).
+which no plan with $x_1 \ge 0$ can meet. The weights $w = (0, 0, 1, 2)$ on the four rules are a **certificate of infeasibility**.
+
+They are also a direction in which the dual's prices can move forever: from (3, 0, 7, 0), each step $k$ along $w$ keeps every product covered and lowers the stock value by £16. The value runs 928, then £768 at $k = 10$, then −£672 at $k = 100$. That such weights always exist when no plan does is **Farkas' lemma**, the alternative form of strong duality (Bertsimas and Tsitsiklis, section 4.6).
 
 ---
 
@@ -206,7 +225,9 @@ Still a valid ceiling, but £120 too high, and the identity names the cause: a p
 
 ## Code, from first principles, and it actually runs
 
-The code solves the workshop in exact fractions and reaches the prices by **three independent roads**. Road 1 runs the simplex method (largest profit enters first) and reads the prices off the final table's slack columns. Road 2 never runs simplex: it lists every corner of the dual's feasible region, by solving each set of three tight dual rules, and takes the cheapest. Road 3 solves the complementary-slackness equations from the plan. All three give (3, 0, 7), and the primal's four corners, listed separately, confirm the best profit £928. Then the gap identity is checked on the trial prices, weak duality on a grid of 881 plans and 933 price lists, and every broken case is printed. Every number on the card is printed.
+The code solves the workshop in exact fractions and reaches the prices by **three independent roads**. Road 1 runs the simplex method (largest profit enters first) and reads the prices off the final table's slack columns. Road 2 never runs simplex: it lists every corner of the dual's feasible region, by solving each set of three tight dual rules, and takes the cheapest. Road 3 solves the complementary-slackness equations from the plan. All three give (3, 0, 7), and the primal's four corners, listed separately, confirm the best profit £928.
+
+Then the gap identity is checked on the trial prices, weak duality on a grid of 881 plans and 933 price lists, and every broken case is printed. Every number on the card is printed.
 
 ### Python
 
@@ -563,6 +584,477 @@ try, chair profit 40: plan (0, 32), profit 1280, prices (0, 0, 20)
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the gap identity, weak duality, strong duality and complementary slackness for every linear program, plus the workshop's numbers.
+
+- Any plan and any price list: the gap $b^T y - c^T x$ is the price of the spare stock plus the over-valuation of the items made.
+- Every feasible plan earns at most every fair price list's stock value.
+- When the primal or the dual has a best answer, both do, and the best profit equals the cheapest stock value.
+- Lean reaches strong duality through Farkas' lemma, not the simplex method's last table.
+- A feasible plan and a fair price list are both best exactly when every spare resource has price zero and every product made breaks even.
+- These hold for any number of resources and products, with fractional quantities and prices allowed.
+- The plan (32, 16) is feasible, uses 160 m, 112 h and 64 litres, and earns £928.
+- The prices (3, 0, 7) are fair, value a table's inputs at £19 and a chair's at £20, and value the stock at £928.
+- The prices (3, 1, 7) value the inputs at £22 and £21 and the stock at £1,048, a gap of £120.
+- The prices (2, 0, 7) are not fair, and value the stock at £768. The prices (8, −6, 5) value it at £880.
+- The arithmetic of the 40-chair order and its falling dual value: −16, then £768 and −£672.
+
+The simplex runs, the dual corner search, the weak-duality grid and the Try changing numbers are left to the Python and Rust checks.
+
+```lean
+-- LP duality: every fair price list bounds every plan's profit, when either the maximising program or its pricing partner has a best answer both do and their values are equal, and a feasible pair is best exactly when every spare resource has price zero and every product made breaks even.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+import Mathlib
+
+open Matrix
+
+namespace LPDuality
+
+/-- Inequalities derivable from a set by nonnegative combinations. -/
+inductive Der {M : Type*} [AddCommMonoid M] [Module ℝ M] (S : Set M) : M → Prop
+  | mem {x : M} : x ∈ S → Der S x
+  | zero : Der S 0
+  | add {x y : M} : Der S x → Der S y → Der S (x + y)
+  | smul {c : ℝ} {x : M} : 0 ≤ c → Der S x → Der S (c • x)
+
+theorem Der.trans {M : Type*} [AddCommMonoid M] [Module ℝ M] {S T : Set M}
+    (hST : ∀ x ∈ S, Der T x) {w : M} (hw : Der S w) : Der T w := by
+  induction hw with
+  | mem h => exact hST _ h
+  | zero => exact Der.zero
+  | add _ _ ih1 ih2 => exact Der.add ih1 ih2
+  | smul hc _ ih => exact Der.smul hc ih
+
+theorem exists_between_finset {α : Type*} (S : Finset α) (lo hi : α → ℝ) (isLo isHi : α → Prop)
+    (h : ∀ p ∈ S, ∀ q ∈ S, isHi p → isLo q → lo q ≤ hi p) :
+    ∃ x : ℝ, (∀ q ∈ S, isLo q → lo q ≤ x) ∧ (∀ p ∈ S, isHi p → x ≤ hi p) := by
+  classical
+  by_cases hne : (S.filter isLo).Nonempty
+  · refine ⟨((S.filter isLo).image lo).max' (hne.image _), fun q hq hlo => ?_, fun p hp hhi => ?_⟩
+    · exact Finset.le_max' _ _ (Finset.mem_image_of_mem _ (Finset.mem_filter.2 ⟨hq, hlo⟩))
+    · obtain ⟨q, hq, hqe⟩ := Finset.mem_image.1 (Finset.max'_mem ((S.filter isLo).image lo)
+        (hne.image _))
+      rw [← hqe]
+      exact h p hp q (Finset.mem_filter.1 hq).1 hhi (Finset.mem_filter.1 hq).2
+  · obtain ⟨x, hx⟩ := Finset.bddBelow ((S.filter isHi).image hi)
+    refine ⟨x, fun q hq hlo => absurd ⟨q, Finset.mem_filter.2 ⟨hq, hlo⟩⟩ hne, fun p hp hhi => ?_⟩
+    exact hx (Finset.mem_image_of_mem _ (Finset.mem_filter.2 ⟨hp, hhi⟩))
+
+/-- Fourier–Motzkin form of Farkas' lemma. -/
+theorem fourier_motzkin : ∀ (n : ℕ) (S : Finset ((Fin n → ℝ) × ℝ)),
+    (¬∃ x : Fin n → ℝ, ∀ p ∈ S, p.1 ⬝ᵥ x ≤ p.2) →
+      ∃ β : ℝ, β < 0 ∧ Der (S : Set ((Fin n → ℝ) × ℝ)) ((0 : Fin n → ℝ), β)
+  | 0, S, h => by
+    push Not at h
+    obtain ⟨p, hp, hlt⟩ := h 0
+    refine ⟨p.2, by simpa using hlt, ?_⟩
+    have : p = ((0 : Fin 0 → ℝ), p.2) := Prod.ext (Subsingleton.elim _ _) rfl
+    exact this ▸ Der.mem hp
+  | n + 1, S, h => by
+    classical
+    let comb : ((Fin (n + 1) → ℝ) × ℝ) × ((Fin (n + 1) → ℝ) × ℝ) → (Fin (n + 1) → ℝ) × ℝ :=
+      fun pq => (-pq.2.1 0) • pq.1 + pq.1.1 0 • pq.2
+    let T : Finset ((Fin (n + 1) → ℝ) × ℝ) :=
+      S.filter (fun p => p.1 0 = 0) ∪
+        ((S ×ˢ S).filter (fun pq => 0 < pq.1.1 0 ∧ pq.2.1 0 < 0)).image comb
+    let L : (Fin (n + 1) → ℝ) × ℝ → (Fin n → ℝ) × ℝ := fun p => (fun (i : Fin n) => p.1 i.succ, p.2)
+    have hT0 : ∀ p ∈ T, p.1 0 = 0 := by
+      intro p hp
+      rcases Finset.mem_union.1 hp with hp | hp
+      · exact (Finset.mem_filter.1 hp).2
+      · obtain ⟨pq, -, rfl⟩ := Finset.mem_image.1 hp
+        simp only [comb, Prod.fst_add, Prod.smul_fst, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+        ring
+    have hTS : ∀ p ∈ (T : Set ((Fin (n + 1) → ℝ) × ℝ)), Der (S : Set _) p := by
+      intro p hp
+      rcases Finset.mem_union.1 hp with hp | hp
+      · exact Der.mem (Finset.mem_filter.1 hp).1
+      · obtain ⟨pq, hpq, rfl⟩ := Finset.mem_image.1 hp
+        obtain ⟨hmem, h1, h2⟩ := Finset.mem_filter.1 hpq
+        obtain ⟨hp1, hp2⟩ := Finset.mem_product.1 hmem
+        exact Der.add (Der.smul (neg_nonneg.2 h2.le) (Der.mem hp1)) (Der.smul h1.le (Der.mem hp2))
+    have hT' : ¬∃ x' : Fin n → ℝ, ∀ p ∈ T.image L, p.1 ⬝ᵥ x' ≤ p.2 := by
+      rintro ⟨x', hx'⟩
+      apply h
+      have hTx : ∀ p ∈ T, (fun (i : Fin n) => p.1 i.succ) ⬝ᵥ x' ≤ p.2 := fun p hp =>
+        hx' (L p) (Finset.mem_image_of_mem L hp)
+      let r : (Fin (n + 1) → ℝ) × ℝ → ℝ := fun p => p.2 - (fun (i : Fin n) => p.1 i.succ) ⬝ᵥ x'
+      obtain ⟨x0, hlo, hhi⟩ := exists_between_finset S (fun q => r q / q.1 0)
+        (fun p => r p / p.1 0) (fun q => q.1 0 < 0) (fun p => 0 < p.1 0) (by
+          intro p hp q hq hp0 hq0
+          have hc := hTx (comb (p, q)) (Finset.mem_union_right _ (Finset.mem_image_of_mem _
+            (Finset.mem_filter.2 ⟨Finset.mem_product.2 ⟨hp, hq⟩, hp0, hq0⟩)))
+          have he : (fun (i : Fin n) => (comb (p, q)).1 i.succ) =
+              (-q.1 0) • (fun (i : Fin n) => p.1 i.succ) + p.1 0 • (fun (i : Fin n) => q.1 i.succ) := by
+            funext i; simp [comb]
+          rw [he, add_dotProduct, smul_dotProduct, smul_dotProduct] at hc
+          simp only [comb, Prod.snd_add, Prod.smul_snd, smul_eq_mul] at hc
+          set a := r q / q.1 0 with ha
+          set b := r p / p.1 0 with hb
+          have hra : r q = a * q.1 0 := by rw [ha]; field_simp [hq0.ne]
+          have hrb : r p = b * p.1 0 := by rw [hb]; field_simp [hp0.ne']
+          have H : 0 ≤ (p.1 0 * -q.1 0) * (b - a) := by
+            have e1 : r q = q.2 - (fun (i : Fin n) => q.1 i.succ) ⬝ᵥ x' := rfl
+            have e2 : r p = p.2 - (fun (i : Fin n) => p.1 i.succ) ⬝ᵥ x' := rfl
+            nlinarith
+          have hpos : 0 < p.1 0 * -q.1 0 := mul_pos hp0 (neg_pos.2 hq0)
+          have := (mul_nonneg_iff_of_pos_left hpos).1 H
+          linarith)
+      refine ⟨Fin.cons x0 x', fun p hp => ?_⟩
+      have hdot : p.1 ⬝ᵥ (Fin.cons x0 x' : Fin (n + 1) → ℝ) =
+          p.1 0 * x0 + (fun (i : Fin n) => p.1 i.succ) ⬝ᵥ x' := by
+        simp [dotProduct, Fin.sum_univ_succ]
+      rw [hdot]
+      rcases lt_trichotomy (p.1 0) 0 with hneg | hzero | hpos
+      · have := hlo p hp hneg
+        rw [div_le_iff_of_neg hneg] at this
+        simp only [r] at this
+        linarith
+      · have := hTx p (Finset.mem_union_left _ (Finset.mem_filter.2 ⟨hp, hzero⟩))
+        rw [hzero]; linarith
+      · have := hhi p hp hpos
+        rw [le_div_iff₀ hpos] at this
+        simp only [r] at this
+        linarith
+    obtain ⟨β, hβ, hd⟩ := fourier_motzkin n (T.image L) hT'
+    have key : ∀ w', Der ((T.image L : Finset _) : Set ((Fin n → ℝ) × ℝ)) w' →
+        ∃ w, Der (T : Set ((Fin (n + 1) → ℝ) × ℝ)) w ∧ w.1 0 = 0 ∧ L w = w' := by
+      intro w' hw'
+      induction hw' with
+      | mem hm =>
+        obtain ⟨p, hp, rfl⟩ := Finset.mem_image.1 hm
+        exact ⟨p, Der.mem hp, hT0 p hp, rfl⟩
+      | zero => exact ⟨0, Der.zero, rfl, rfl⟩
+      | add _ _ ih1 ih2 =>
+        obtain ⟨w1, h1, z1, rfl⟩ := ih1
+        obtain ⟨w2, h2, z2, rfl⟩ := ih2
+        refine ⟨w1 + w2, Der.add h1 h2, by simp [z1, z2], rfl⟩
+      | smul hc _ ih =>
+        obtain ⟨w1, h1, z1, rfl⟩ := ih
+        refine ⟨_ • w1, Der.smul hc h1, by simp [z1], rfl⟩
+    obtain ⟨w, hw, hw0, hwL⟩ := key _ hd
+    have hweq : w = ((0 : Fin (n + 1) → ℝ), β) := by
+      refine Prod.ext ?_ (congrArg Prod.snd hwL : _)
+      funext i
+      refine Fin.cases ?_ (fun j => ?_) i
+      · exact hw0
+      · exact congrFun (congrArg Prod.fst hwL) j
+    exact ⟨β, hβ, Der.trans hTS (hweq ▸ hw)⟩
+
+#print axioms Der.trans
+#print axioms exists_between_finset
+#print axioms fourier_motzkin
+
+
+/-! ## The setting
+
+The primal: maximise `c ⬝ᵥ x` subject to `A *ᵥ x ≤ b` and `x ≥ 0`, with `m` resources (rows of
+`A`) and `n` products (columns of `A`). The dual: minimise `b ⬝ᵥ y` subject to `Aᵀ *ᵥ y ≥ c`
+and `y ≥ 0`. Inequalities between vectors hold entry by entry. Quantities and prices are real
+numbers, so fractions are allowed. -/
+
+variable {m n : ℕ}
+
+/-- A plan `x` is feasible: no negative amounts, and no resource used beyond its stock. -/
+def PrimalFeasible (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (x : Fin n → ℝ) : Prop :=
+  0 ≤ x ∧ A *ᵥ x ≤ b
+
+/-- A price list `y` is feasible (fair): no negative prices, and every product's inputs, valued
+at the prices, are worth at least its profit. -/
+def DualFeasible (A : Matrix (Fin m) (Fin n) ℝ) (c : Fin n → ℝ) (y : Fin m → ℝ) : Prop :=
+  0 ≤ y ∧ c ≤ Aᵀ *ᵥ y
+
+/-- `x` is a best plan: feasible, and no feasible plan earns more. -/
+def PrimalOptimal (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (x : Fin n → ℝ) : Prop :=
+  PrimalFeasible A b x ∧ ∀ x', PrimalFeasible A b x' → c ⬝ᵥ x' ≤ c ⬝ᵥ x
+
+/-- `y` is a best (cheapest) price list: fair, and no fair price list values the stock lower. -/
+def DualOptimal (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (y : Fin m → ℝ) : Prop :=
+  DualFeasible A c y ∧ ∀ y', DualFeasible A c y' → b ⬝ᵥ y ≤ b ⬝ᵥ y'
+
+/-- Farkas' lemma in the shape used for both directions of strong duality. -/
+theorem farkas_aux {p k : ℕ} (M : Matrix (Fin p) (Fin k) ℝ) (d : Fin p → ℝ) (g : Fin k → ℝ)
+    (e : ℝ) (h : ¬∃ z : Fin k → ℝ, 0 ≤ z ∧ M *ᵥ z ≤ d ∧ g ⬝ᵥ z ≤ e) :
+    ∃ (u : Fin p → ℝ) (t : ℝ), 0 ≤ u ∧ 0 ≤ t ∧ 0 ≤ Mᵀ *ᵥ u + t • g ∧ u ⬝ᵥ d + t * e < 0 := by
+  classical
+  let S : Finset ((Fin k → ℝ) × ℝ) :=
+    (Finset.univ.image fun j => (-Pi.single j (1 : ℝ), (0 : ℝ))) ∪
+      (Finset.univ.image fun i => (M i, d i)) ∪ {(g, e)}
+  have hS : ¬∃ x : Fin k → ℝ, ∀ q ∈ S, q.1 ⬝ᵥ x ≤ q.2 := by
+    rintro ⟨x, hx⟩
+    refine h ⟨x, fun j => ?_, fun i => ?_, ?_⟩
+    · have := hx (-Pi.single j (1 : ℝ), (0 : ℝ)) (by simp [S])
+      simpa using this
+    · have := hx (M i, d i) (Finset.mem_union_left _ (Finset.mem_union_right _
+        (Finset.mem_image_of_mem _ (Finset.mem_univ i))))
+      simpa [mulVec, dotProduct] using this
+    · exact hx (g, e) (by simp [S])
+  obtain ⟨β, hβ, hd⟩ := fourier_motzkin k S hS
+  have key : ∀ w, Der (S : Set ((Fin k → ℝ) × ℝ)) w → ∃ (s : Fin k → ℝ) (u : Fin p → ℝ) (t : ℝ),
+      0 ≤ s ∧ 0 ≤ u ∧ 0 ≤ t ∧ w = (-s + Mᵀ *ᵥ u + t • g, u ⬝ᵥ d + t * e) := by
+    intro w hw
+    induction hw with
+    | mem hm =>
+      simp only [S, Finset.coe_union, Finset.coe_image, Finset.coe_univ, Set.image_univ,
+        Finset.coe_singleton, Set.mem_union, Set.mem_range, Set.mem_singleton_iff] at hm
+      rcases hm with (⟨j, rfl⟩ | ⟨i, rfl⟩) | rfl
+      · exact ⟨Pi.single j 1, 0, 0, Pi.single_nonneg.2 zero_le_one, le_rfl, le_rfl, by simp⟩
+      · refine ⟨0, Pi.single i 1, 0, le_rfl, Pi.single_nonneg.2 zero_le_one, le_rfl, ?_⟩
+        simp
+        rfl
+      · exact ⟨0, 0, 1, le_rfl, le_rfl, zero_le_one, by simp⟩
+    | zero => exact ⟨0, 0, 0, le_rfl, le_rfl, le_rfl, by ext <;> simp⟩
+    | add _ _ ih1 ih2 =>
+      obtain ⟨s1, u1, t1, hs1, hu1, ht1, rfl⟩ := ih1
+      obtain ⟨s2, u2, t2, hs2, hu2, ht2, rfl⟩ := ih2
+      refine ⟨s1 + s2, u1 + u2, t1 + t2, add_nonneg hs1 hs2, add_nonneg hu1 hu2,
+        add_nonneg ht1 ht2, ?_⟩
+      refine Prod.ext ?_ ?_
+      · simp only [Prod.fst_add, mulVec_add, add_smul]; abel
+      · simp only [Prod.snd_add, add_dotProduct]; ring
+    | @smul c _ hc _ ih =>
+      obtain ⟨s1, u1, t1, hs1, hu1, ht1, rfl⟩ := ih
+      refine ⟨c • s1, c • u1, c * t1, smul_nonneg hc hs1, smul_nonneg hc hu1,
+        mul_nonneg hc ht1, ?_⟩
+      refine Prod.ext ?_ ?_
+      · simp only [Prod.smul_fst, mulVec_smul, smul_add, smul_neg, mul_smul]
+      · simp only [Prod.smul_snd, smul_dotProduct, smul_eq_mul]; ring
+  obtain ⟨s, u, t, hs, hu, ht, hw⟩ := key _ hd
+  refine ⟨u, t, hu, ht, fun j => ?_, ?_⟩
+  · have := congrFun (congrArg Prod.fst hw) j
+    simp only [Pi.zero_apply, Pi.add_apply, Pi.neg_apply] at this
+    simp only [Pi.zero_apply, Pi.add_apply]
+    have hsj := hs j
+    simp only [Pi.zero_apply] at hsj
+    linarith
+  · have := congrArg Prod.snd hw
+    simp only at this
+    linarith
+
+/-- Weak duality: a feasible plan earns at most a fair price list's stock value. -/
+theorem weak_aux {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (x : Fin n → ℝ) (y : Fin m → ℝ) (hx : PrimalFeasible A b x) (hy : DualFeasible A c y) :
+    c ⬝ᵥ x ≤ b ⬝ᵥ y := by
+  calc c ⬝ᵥ x ≤ (Aᵀ *ᵥ y) ⬝ᵥ x :=
+        Finset.sum_le_sum fun j _ => mul_le_mul_of_nonneg_right (hy.2 j) (hx.1 j)
+    _ = y ⬝ᵥ (A *ᵥ x) := by rw [mulVec_transpose, dotProduct_mulVec]
+    _ ≤ y ⬝ᵥ b := Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (hx.2 i) (hy.1 i)
+    _ = b ⬝ᵥ y := dotProduct_comm _ _
+
+#print axioms farkas_aux
+#print axioms weak_aux
+
+/-- **Strong duality.** For any linear program "maximise `c ⬝ᵥ x` subject to `A *ᵥ x ≤ b`,
+`x ≥ 0`" and its dual "minimise `b ⬝ᵥ y` subject to `Aᵀ *ᵥ y ≥ c`, `y ≥ 0`": when either one
+has a best answer, both do, and the best profit equals the cheapest stock value. -/
+theorem lp_strong_duality (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ) (c : Fin n → ℝ)
+    (h : (∃ x, PrimalOptimal A b c x) ∨ (∃ y, DualOptimal A b c y)) :
+    ∃ x y, PrimalOptimal A b c x ∧ DualOptimal A b c y ∧ c ⬝ᵥ x = b ⬝ᵥ y := by
+  rcases h with ⟨x, hxf, hxo⟩ | ⟨y, hyf, hyo⟩
+  · -- a best plan exists: find a fair price list valued at most its profit
+    have hex : ∃ y : Fin m → ℝ, 0 ≤ y ∧ (-Aᵀ) *ᵥ y ≤ -c ∧ b ⬝ᵥ y ≤ c ⬝ᵥ x := by
+      by_contra hne
+      obtain ⟨u, t, hu, ht, h1, h2⟩ := farkas_aux (-Aᵀ) (-c) b (c ⬝ᵥ x) hne
+      simp only [transpose_neg, transpose_transpose, neg_mulVec, dotProduct_neg] at h1 h2
+      rcases ht.lt_or_eq with htp | rfl
+      · have hfeas : PrimalFeasible A b (t⁻¹ • u) := by
+          refine ⟨smul_nonneg (inv_nonneg.2 ht) hu, fun i => ?_⟩
+          have := h1 i
+          simp only [Pi.zero_apply, Pi.add_apply, Pi.neg_apply, Pi.smul_apply,
+            smul_eq_mul] at this
+          rw [mulVec_smul, Pi.smul_apply, smul_eq_mul, inv_mul_le_iff₀ htp]
+          linarith
+        have := hxo _ hfeas
+        rw [dotProduct_smul, smul_eq_mul, inv_mul_le_iff₀ htp, dotProduct_comm] at this
+        linarith
+      · have hfeas : PrimalFeasible A b (x + u) := by
+          refine ⟨add_nonneg hxf.1 hu, fun i => ?_⟩
+          have := h1 i
+          simp only [Pi.zero_apply, Pi.add_apply, Pi.neg_apply, zero_smul,
+            add_zero] at this
+          rw [mulVec_add, Pi.add_apply]
+          linarith [hxf.2 i]
+        have := hxo _ hfeas
+        rw [dotProduct_add, dotProduct_comm c u] at this
+        linarith
+    obtain ⟨y, hy0, hyc, hyb⟩ := hex
+    have hyf : DualFeasible A c y := by
+      refine ⟨hy0, fun j => ?_⟩
+      have := hyc j
+      simp only [neg_mulVec, Pi.neg_apply, neg_le_neg_iff] at this
+      exact this
+    have heq : c ⬝ᵥ x = b ⬝ᵥ y := le_antisymm (weak_aux A b c x y hxf hyf) hyb
+    exact ⟨x, y, ⟨hxf, hxo⟩, ⟨hyf, fun y' hy' => heq ▸ weak_aux A b c x y' hxf hy'⟩, heq⟩
+  · -- a best price list exists: find a plan earning at least its value
+    have hex : ∃ x : Fin n → ℝ, 0 ≤ x ∧ A *ᵥ x ≤ b ∧ (-c) ⬝ᵥ x ≤ -(b ⬝ᵥ y) := by
+      by_contra hne
+      obtain ⟨u, t, hu, ht, h1, h2⟩ := farkas_aux A b (-c) (-(b ⬝ᵥ y)) hne
+      rcases ht.lt_or_eq with htp | rfl
+      · have hfeas : DualFeasible A c (t⁻¹ • u) := by
+          refine ⟨smul_nonneg (inv_nonneg.2 ht) hu, fun j => ?_⟩
+          have := h1 j
+          simp only [Pi.zero_apply, Pi.add_apply, Pi.neg_apply, Pi.smul_apply,
+            smul_eq_mul] at this
+          rw [mulVec_smul, Pi.smul_apply, smul_eq_mul, le_inv_mul_iff₀ htp]
+          linarith
+        have := hyo _ hfeas
+        rw [dotProduct_smul, smul_eq_mul, le_inv_mul_iff₀ htp, dotProduct_comm b u] at this
+        linarith
+      · have hfeas : DualFeasible A c (y + u) := by
+          refine ⟨add_nonneg hyf.1 hu, fun j => ?_⟩
+          have := h1 j
+          simp only [Pi.zero_apply, Pi.add_apply, zero_smul, add_zero] at this
+          rw [mulVec_add, Pi.add_apply]
+          linarith [hyf.2 j]
+        have := hyo _ hfeas
+        rw [dotProduct_add, dotProduct_comm b u] at this
+        linarith
+    obtain ⟨x, hx0, hxb, hxc⟩ := hex
+    have hxf : PrimalFeasible A b x := ⟨hx0, hxb⟩
+    have hxc' : b ⬝ᵥ y ≤ c ⬝ᵥ x := by
+      rw [neg_dotProduct] at hxc; linarith
+    have heq : c ⬝ᵥ x = b ⬝ᵥ y := le_antisymm (weak_aux A b c x y hxf hyf) hxc'
+    exact ⟨x, y, ⟨hxf, fun x' hx' => heq ▸ weak_aux A b c x' y hx' hyf⟩, ⟨hyf, hyo⟩, heq⟩
+
+/-- **Weak duality and the gap identity.** For every plan `x` and every price list `y`, the gap
+`b ⬝ᵥ y - c ⬝ᵥ x` equals the price of the spare stock, `y ⬝ᵥ s` with `s = b - A *ᵥ x`, plus the
+over-valuation of the items made, `x ⬝ᵥ r` with `r = Aᵀ *ᵥ y - c`. When the plan is feasible
+and the price list is fair, the gap is never negative: every plan's profit is at most every fair
+price list's stock value. -/
+theorem lp_weak_duality_and_gap (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ)
+    (c : Fin n → ℝ) (x : Fin n → ℝ) (y : Fin m → ℝ) :
+    b ⬝ᵥ y - c ⬝ᵥ x = y ⬝ᵥ (b - A *ᵥ x) + x ⬝ᵥ (Aᵀ *ᵥ y - c) ∧
+      (PrimalFeasible A b x → DualFeasible A c y → c ⬝ᵥ x ≤ b ⬝ᵥ y) := by
+  refine ⟨?_, weak_aux A b c x y⟩
+  rw [dotProduct_sub, dotProduct_sub, dotProduct_comm x (Aᵀ *ᵥ y), mulVec_transpose,
+    ← dotProduct_mulVec, dotProduct_comm y b, dotProduct_comm x c]
+  ring
+
+/-- **Complementary slackness.** A feasible plan `x` and a fair price list `y` are both best
+exactly when every resource with stock left over has price zero (`y i * s i = 0`) and every
+product that is made breaks even at the prices (`x j * r j = 0`). -/
+theorem lp_complementary_slackness (A : Matrix (Fin m) (Fin n) ℝ) (b : Fin m → ℝ)
+    (c : Fin n → ℝ) (x : Fin n → ℝ) (y : Fin m → ℝ)
+    (hx : PrimalFeasible A b x) (hy : DualFeasible A c y) :
+    (PrimalOptimal A b c x ∧ DualOptimal A b c y) ↔
+      ((∀ i, y i * (b - A *ᵥ x) i = 0) ∧ (∀ j, x j * (Aᵀ *ᵥ y - c) j = 0)) := by
+  have hgap := (lp_weak_duality_and_gap A b c x y).1
+  have hs : ∀ i, 0 ≤ y i * (b - A *ᵥ x) i := fun i =>
+    mul_nonneg (hy.1 i) (sub_nonneg.2 (hx.2 i))
+  have hr : ∀ j, 0 ≤ x j * (Aᵀ *ᵥ y - c) j := fun j =>
+    mul_nonneg (hx.1 j) (sub_nonneg.2 (hy.2 j))
+  have hs0 : 0 ≤ y ⬝ᵥ (b - A *ᵥ x) := Finset.sum_nonneg fun i _ => hs i
+  have hr0 : 0 ≤ x ⬝ᵥ (Aᵀ *ᵥ y - c) := Finset.sum_nonneg fun j _ => hr j
+  constructor
+  · rintro ⟨hxo, hyo⟩
+    obtain ⟨x', y', hx', hy', heq⟩ := lp_strong_duality A b c (Or.inl ⟨x, hxo⟩)
+    have e1 : c ⬝ᵥ x' ≤ c ⬝ᵥ x := hxo.2 x' hx'.1
+    have e2 : b ⬝ᵥ y ≤ b ⬝ᵥ y' := hyo.2 y' hy'.1
+    have e3 : c ⬝ᵥ x ≤ b ⬝ᵥ y := weak_aux A b c x y hx hy
+    have hS : y ⬝ᵥ (b - A *ᵥ x) = 0 := by linarith
+    have hR : x ⬝ᵥ (Aᵀ *ᵥ y - c) = 0 := by linarith
+    refine ⟨fun i => ?_, fun j => ?_⟩
+    · exact (Finset.sum_eq_zero_iff_of_nonneg fun i _ => hs i).1 hS i (Finset.mem_univ _)
+    · exact (Finset.sum_eq_zero_iff_of_nonneg fun j _ => hr j).1 hR j (Finset.mem_univ _)
+  · rintro ⟨hS, hR⟩
+    have h1 : y ⬝ᵥ (b - A *ᵥ x) = 0 := Finset.sum_eq_zero fun i _ => hS i
+    have h2 : x ⬝ᵥ (Aᵀ *ᵥ y - c) = 0 := Finset.sum_eq_zero fun j _ => hR j
+    have heq : c ⬝ᵥ x = b ⬝ᵥ y := by linarith
+    exact ⟨⟨hx, fun x' hx' => heq ▸ weak_aux A b c x' y hx' hy⟩,
+      ⟨hy, fun y' hy' => heq ▸ weak_aux A b c x y' hx hy'⟩⟩
+
+/-! ## The workshop: tables and chairs
+
+Usage table (rows timber, labour, finish; columns tables, chairs), stocks, and profits. -/
+
+/-- The workshop's usage table: a table takes (4, 3, 1), a chair (2, 1, 2). -/
+def Aw : Matrix (Fin 3) (Fin 2) ℝ := !![4, 2; 3, 1; 1, 2]
+/-- Stocks: 160 m of timber, 120 h of labour, 64 litres of finish. -/
+def bw : Fin 3 → ℝ := ![160, 120, 64]
+/-- Profits: £19 a table, £20 a chair. -/
+def cw : Fin 2 → ℝ := ![19, 20]
+
+-- The plan (32, 16) is feasible: it uses 160 m, 112 h and 64 litres.
+example : Aw *ᵥ ![32, 16] = ![160, 112, 64] := by
+  ext i; fin_cases i <;> simp [Aw, mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+example : PrimalFeasible Aw bw ![32, 16] := by
+  refine ⟨?_, ?_⟩ <;> intro i <;> fin_cases i <;>
+    simp [Aw, bw, mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+-- It earns £928.
+example : cw ⬝ᵥ ![32, 16] = 928 := by
+  simp [cw, dotProduct, Fin.sum_univ_succ]; norm_num
+-- The prices (3, 0, 7) are fair: a table's inputs are worth exactly £19, a chair's exactly £20.
+example : Awᵀ *ᵥ ![3, 0, 7] = ![19, 20] := by
+  ext j; fin_cases j <;> simp [Aw, mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+example : DualFeasible Aw cw ![3, 0, 7] := by
+  refine ⟨?_, ?_⟩ <;> intro i <;> fin_cases i <;>
+    simp [Aw, cw, mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+-- They value the stock at £928, so the gap is £0.
+example : bw ⬝ᵥ ![3, 0, 7] = 928 := by
+  simp [bw, dotProduct, Fin.sum_univ_succ]; norm_num
+-- Slackness at the best pair: price times slack is 3 × 0, 0 × 8, 7 × 0; made times surplus is
+-- 32 × 0, 16 × 0.
+example : (3 : ℤ) * 0 = 0 ∧ (0 : ℤ) * 8 = 0 ∧ (7 : ℤ) * 0 = 0 ∧ (32 : ℤ) * 0 = 0 ∧
+    (16 : ℤ) * 0 = 0 := by decide
+-- Solving slackness from the plan: y2 = 0, 4y1 + y3 = 19, 2y1 + 2y3 = 20 gives (3, 0, 7).
+example : 4 * 3 + 3 * 0 + 7 = 19 ∧ 2 * 3 + 0 + 2 * 7 = 20 := by decide
+-- The fair but not best prices (3, 1, 7): inputs £22 and £21, stock £1,048, gap £120,
+-- and by the identity 1 × 8 + 32 × 3 + 16 × 1 = 120.
+example : Awᵀ *ᵥ ![3, 1, 7] = ![22, 21] := by
+  ext j; fin_cases j <;> simp [Aw, mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+example : bw ⬝ᵥ ![3, 1, 7] = 1048 := by
+  simp [bw, dotProduct, Fin.sum_univ_succ]; norm_num
+example : 1048 - 928 = 120 ∧ 1 * 8 + 32 * 3 + 16 * 1 = 120 := by decide
+-- Broken: prices (2, 0, 7) value a table's inputs at £15 and a chair's at £18, so they are not
+-- fair; their stock value is £768, below £928 by £160.
+example : Awᵀ *ᵥ ![2, 0, 7] = ![15, 18] ∧ ¬ DualFeasible Aw cw ![2, 0, 7] := by
+  refine ⟨?_, ?_⟩
+  · ext j; fin_cases j <;> simp [Aw, mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+  · rintro ⟨-, h⟩
+    have := h 0
+    simp [Aw, cw, mulVec, dotProduct, Fin.sum_univ_succ] at this
+    norm_num at this
+example : bw ⬝ᵥ ![2, 0, 7] = 768 ∧ (928 : ℝ) - 768 = 160 := by
+  simp [bw, dotProduct, Fin.sum_univ_succ]; norm_num
+-- Broken: prices (8, -6, 5) cover both products but price labour negative; the "ceiling" is
+-- £880, £48 below the truth, which is -6 × 8 spare hours.
+example : Awᵀ *ᵥ ![8, -6, 5] = ![19, 20] ∧ bw ⬝ᵥ ![8, -6, 5] = 880 := by
+  refine ⟨?_, ?_⟩
+  · ext j; fin_cases j <;> simp [Aw, mulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+  · simp [bw, dotProduct, Fin.sum_univ_succ]; norm_num
+example : (928 : ℤ) - 880 = 48 ∧ (-6 : ℤ) * 8 = -48 := by decide
+-- An order for 40 chairs: finish plus twice the order rule gives x1 ≤ 64 - 80 = -16.
+example : (64 : ℤ) + 2 * (-40) = -16 := by decide
+-- Along w = (0, 0, 1, 2) the dual value falls by £16 a step: 928 - 160 = 768, 928 - 1600 = -672.
+example : (928 : ℤ) - 16 * 10 = 768 ∧ (928 : ℤ) - 16 * 100 = -672 := by decide
+
+#print axioms lp_strong_duality
+#print axioms lp_weak_duality_and_gap
+#print axioms lp_complementary_slackness
+
+end LPDuality
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LPDuality.Der.trans' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LPDuality.exists_between_finset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LPDuality.fourier_motzkin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LPDuality.farkas_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LPDuality.weak_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LPDuality.lp_strong_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LPDuality.lp_weak_duality_and_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LPDuality.lp_complementary_slackness' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: finish rises from 64 to 65 litres. What is the new best profit? Set the stocks to `[160, 120, 65]`. The plan moves to (31.67, 16.67) and profit rises to £935: exactly the finish price, £7, more. The prices stay (3, 0, 7).
@@ -574,7 +1066,9 @@ ALL CHECKS PASS
 ## The usual mistake
 
 > [!warning]
-> **Treating complementary slackness as the proof.** At the chairs-only corner (0, 32), finish is used up and timber and labour are spare. Slackness then forces timber and labour prices to zero and the chair rule to hold exactly, giving prices (0, 0, 10) and a stock value of £640, equal to that corner's profit. The gap is zero, yet the plan is not best. The prices value a table's inputs at £10, under its £19 profit, so they are not a fair list. Slackness pairs a plan with prices; the proof needs both sides feasible as well. Check that every price is at least zero and every product is covered, then check slackness.
+> **Treating complementary slackness as the proof.** At the chairs-only corner (0, 32), finish is used up and timber and labour are spare. Slackness then forces timber and labour prices to zero and the chair rule to hold exactly, giving prices (0, 0, 10) and a stock value of £640, equal to that corner's profit. The gap is zero, yet the plan is not best.
+>
+> The prices value a table's inputs at £10, under its £19 profit, so they are not a fair list. Slackness pairs a plan with prices; the proof needs both sides feasible as well. Check that every price is at least zero and every product is covered, then check slackness.
 >
 > - **Getting the dual's directions wrong.** A maximising primal with "at most" rules has a minimising dual with "at least" rules and prices at least zero. Write both product rules as "at most" and prices (2, 0, 7) look acceptable: a "ceiling" of £768, below the real £928.
 > - **Allowing a negative price.** Prices (8, −6, 5) cover both products and total £880, £48 under the true profit.
@@ -605,7 +1099,7 @@ ALL CHECKS PASS
 
 - [Shadow prices](05-sensitivity-and-shadow-prices.md): the dual prices as rates of change, with the stretch of stock over which each price holds.
 - [Network flows](06-network-flows-as-linear-programs.md): shipping problems whose dual prices are values at the nodes, and whose slackness picks out the routes used.
-- [Linear programs](01-linear-programs-and-polyhedra.md): the dual of moving one distribution onto another, where the prices become potentials.
+- Optimal transport (planned): the dual of moving one distribution onto another, where the prices become potentials.
 
 The question this card leaves open: the prices are exact only at the margin, so how far can a stock move before the best corner, and with it the price list, changes?
 

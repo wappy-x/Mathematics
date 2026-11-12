@@ -114,7 +114,7 @@ The roots are complex when the discriminant is negative: $(1 + \beta - s)^2 < 4\
 
 At the two edges the discriminant is zero and the two roots coincide. A recurrence with a double root $\rho$ has solutions $(A + Bk)\rho^k$. The start $x_{-1} = x_0$ gives $e_1 = (1 - s)e_0$, so $A = e_0$ and $B = e_1/\rho - e_0$. Along the floor ρ = 0.8182 and B = 1.8182: $x_{1,k} = (10 + 1.8182k)(0.8182)^k$. Across it ρ = −0.8182 and B = 1.8182 again. At step 20 this gives (0.837865, 0.675221), the loop's point to six decimals. The extra factor $k$ is why the count is 73, a little more than the rate alone suggests.
 
-Stability, roots inside the unit circle, needs $\beta < 1$ and $0 < s < 2(1 + \beta)$: at $s = 2(1+\beta)$ one root reaches −1. Here $\alpha L = 3.3058 < 2(1 + \beta) = 3.3388$. Plain descent needs $\alpha L < 2$, so momentum is what lets this long step survive.
+Stability, roots inside the unit circle (every root of size below 1), needs $\beta < 1$ and $0 < s < 2(1 + \beta)$: at $s = 2(1+\beta)$ one root reaches −1. Here $\alpha L = 3.3058 < 2(1 + \beta) = 3.3388$. Plain descent needs $\alpha L < 2$, so momentum is what lets this long step survive.
 
 </details>
 
@@ -162,9 +162,13 @@ When each slope comes from a sample of data, as on [Stochastic gradient](08-stoc
 | halve every 200 steps | 0.2036 | 0.1857 | 0.1786 | 0.1705 | 0.1157 | 0.0655 |
 | cosine from 0.3 to 0 | 0.2001 | 0.1785 | 0.1976 | 0.1904 | 0.1144 | 0.0770 |
 
-A constant step of 0.3 gets near the bottom in 100 steps and then hovers. Each step adds a noise kick roughly as long as the step itself, and the walk settles where the pull towards the bottom balances the kicks. A step of 0.03 hovers much closer, 0.0579 at step 1,000, but is still 1.8212 away at step 400. A **schedule**, a step size that changes with $k$ by a fixed rule, gets most of both: long steps while far away, short steps once close. Halving every 200 steps matches the fast start, is ten times closer than the slow step at step 400, and ends at 0.0655, near the slow step's 0.0579 and against 0.3579 for the constant 0.3. The cosine schedule, $\alpha_k = 0.15\,(1 + \cos(\pi k / 1000))$, slides smoothly from 0.3 to 0 and ends at 0.0770.
+A constant step of 0.3 gets near the bottom in 100 steps and then hovers. Each step adds a noise kick roughly as long as the step itself, and the walk settles where the pull towards the bottom balances the kicks. A step of 0.03 hovers much closer, 0.0579 at step 1,000, but is still 1.8212 away at step 400.
 
-The rule behind this is on [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md), proved there for plain stochastic steps: the steps must shrink to zero, so the noise dies down, but their sum must grow without limit, so the walk can still travel any distance. The two schedules here fit a fixed budget of 1,000 steps and meet only the first half: halving forever gives steps whose sum stays finite. A step such as $0.3/\sqrt k$ meets both halves. The Robbins–Monro condition stated on that card asks for more: the sum of the steps unlimited and the sum of their squares finite. $0.3/\sqrt k$ fails the second part, because its squares are $0.09/k$ and add up without limit; a step such as $0.3/k^{0.75}$ meets both.
+A **schedule**, a step size that changes with $k$ by a fixed rule, gets most of both: long steps while far away, short steps once close. Halving every 200 steps matches the fast start, is ten times closer than the slow step at step 400, and ends at 0.0655, near the slow step's 0.0579 and against 0.3579 for the constant 0.3. The cosine schedule, $\alpha_k = 0.15\,(1 + \cos(\pi k / 1000))$, slides smoothly from 0.3 to 0 and ends at 0.0770.
+
+The rule behind this is on [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md), proved there for plain stochastic steps: the steps must shrink to zero, so the noise dies down, but their sum must grow without limit, so the walk can still travel any distance. The two schedules here fit a fixed budget of 1,000 steps and meet only the first half: halving forever gives steps whose sum stays finite. A step such as $0.3/\sqrt k$ meets both halves.
+
+The Robbins–Monro condition stated on that card asks for more: the sum of the steps unlimited and the sum of their squares finite. $0.3/\sqrt k$ fails the second part, because its squares are $0.09/k$ and add up without limit; a step such as $0.3/k^{0.75}$ meets both.
 
 ### Step 6: what Adam does not promise
 
@@ -252,7 +256,7 @@ Orange: heavy ball, a straight fall of about two powers of ten per 25 steps, the
 
 ## Code, from first principles, and it actually runs
 
-The script writes out all four methods and runs them on the bowl. It takes three roads. Road 1 runs the loops. Road 2 solves each direction's recurrence in closed form, from the plain factor or the double root, and counts steps from that formula alone; for plain descent, heavy ball and Nesterov the counts agree. Road 3 checks Adam's first step by hand: exactly 0.3 in each variable. Adam's count, 192, comes from the loop alone; the same loop gives 192 again on walls of 150 and 10,000, as the scale argument of Step 4 predicts. It then turns the bowl, runs the noisy schedules with a SplitMix64 generator written out in both languages (seeds 0 to 19), and runs the Reddi–Kale–Kumar problem.
+The script writes out all four methods and runs them on the bowl. It takes three roads. Road 1 runs the loops. Road 2 solves each direction's recurrence in closed form, from the plain factor or the double root, and counts steps from that formula alone; for plain descent, heavy ball and Nesterov the counts agree. Road 3 checks Adam's first step by hand: exactly 0.3 in each variable. Adam's count, 192, comes from the loop alone; the same loop gives 192 again on walls of 150 and 10,000, as the scale argument of Step 4 predicts. It then turns the bowl, runs the noisy schedules with a SplitMix64 random-number generator written out in both languages (seeds 0 to 19), and runs the Reddi–Kale–Kumar problem.
 
 ### Python
 
@@ -645,6 +649,279 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's facts about heavy ball, Nesterov and Adam for every μ and L, and checks the hand arithmetic exactly.
+
+- Heavy ball with Polyak's settings: take any curvature λ between μ and L. Every root $r$ of $r^2 - (1 + \beta - s)\,r + \beta = 0$ then has size $(\sqrt\kappa - 1)/(\sqrt\kappa + 1)$. Complex roots count too.
+- Nesterov with α = 1/L and β = (√κ − 1)/(√κ + 1): let $\rho = 1 - 1/\sqrt\kappa$. Along the floor, $r^2 - (1 + \beta)(1 - s)\,r + \beta(1 - s)$ is exactly $(r - \rho)^2$.
+- Adam, with ε taken as 0: multiply every slope of one variable by a constant $c > 0$, and that variable's path stays the same at every step. This holds for any step-size schedule and any $\beta_1$, $\beta_2$.
+- The hand arithmetic holds exactly: heavy ball's α = 4/121 and β = 81/121, Nesterov's β = 9/11, and the plain step and rate. So do the stability check, the factoring into $(r - 0.9)^2$, and Adam's first step to (9.7, 0.7).
+
+The step counts, the race table, the noisy schedules, the turned bowl and the Reddi–Kale–Kumar run are left to the Python and Rust checks.
+
+```lean
+-- Momentum and Adam: with Polyak's tuning every curvature between μ and L shrinks at the one rate (√κ - 1)/(√κ + 1), Nesterov's tuning gives a double root 1 - 1/√κ along the floor, and Adam's path in one variable does not change when that variable's slopes are scaled.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-! ### How the card's objects are written here
+
+On a quadratic bowl each main direction runs its own one-number walk. Along a direction of
+curvature `lam`, with step `α` and momentum fraction `β`, put `s = α * lam`.
+
+* Heavy ball: `e (k+1) = (1 + β - s) e k - β e (k-1)`. Trying `e k = r ^ k` gives the
+  characteristic equation `r ^ 2 - (1 + β - s) r + β = 0`. Its roots, complex in general, are the
+  shrink factors per step along that direction.
+* Nesterov: `e (k+1) = (1 + β)(1 - s) e k - β (1 - s) e (k-1)`, with characteristic polynomial
+  `r ^ 2 - (1 + β)(1 - s) r + β (1 - s)`.
+
+The gentlest and steepest curvatures are `μ` and `L`, and `κ = L / μ` is the stretch ratio. -/
+
+/-- Polyak's tuned step size, `α = 4 / (√L + √μ) ^ 2`. -/
+noncomputable def polyakStep (μ L : ℝ) : ℝ := 4 / (Real.sqrt L + Real.sqrt μ) ^ 2
+
+/-- Polyak's tuned momentum fraction, `β = ((√κ - 1) / (√κ + 1)) ^ 2` with `κ = L / μ`. -/
+noncomputable def polyakMomentum (μ L : ℝ) : ℝ :=
+  ((Real.sqrt (L / μ) - 1) / (Real.sqrt (L / μ) + 1)) ^ 2
+
+/-- Nesterov's tuned momentum fraction, `β = (√κ - 1) / (√κ + 1)` with `κ = L / μ`
+(his step size is `α = 1 / L`). -/
+noncomputable def nesterovMomentum (μ L : ℝ) : ℝ :=
+  (Real.sqrt (L / μ) - 1) / (Real.sqrt (L / μ) + 1)
+
+/-- Helper: a root `x + i y` of `z ^ 2 - t z + B` with real `t`, `B` and `t ^ 2 ≤ 4 B` has
+`x ^ 2 + y ^ 2 = B`. -/
+theorem sum_sq_eq_of_quadratic (x y t B : ℝ) (hdisc : t ^ 2 ≤ 4 * B)
+    (hre : x ^ 2 - y ^ 2 - t * x + B = 0) (him : 2 * x * y - t * y = 0) :
+    x ^ 2 + y ^ 2 = B := by
+  have h : y * (2 * x - t) = 0 := by linear_combination him
+  rcases mul_eq_zero.mp h with hy | hx
+  · subst hy
+    have h2 : (2 * x - t) ^ 2 = t ^ 2 - 4 * B := by linear_combination 4 * hre
+    have h3 : 2 * x - t = 0 := by
+      apply pow_eq_zero_iff (two_ne_zero) |>.mp
+      exact le_antisymm (by linarith) (sq_nonneg _)
+    have ht : t = 2 * x := by linarith
+    subst ht
+    linear_combination -hre
+  · have ht : t = 2 * x := by linarith
+    subst ht
+    linear_combination -hre
+
+#print axioms sum_sq_eq_of_quadratic
+
+/-- The card's main theorem for heavy ball (Step 2 and its detailed proof). Take the bowl's
+curvatures between `μ > 0` and `L ≥ μ`, and Polyak's settings `α = 4 / (√L + √μ) ^ 2`,
+`β = ((√κ - 1) / (√κ + 1)) ^ 2`. Then for every curvature `lam` between `μ` and `L`, every root `r`
+(a complex number) of that direction's characteristic equation
+`r ^ 2 - (1 + β - α lam) r + β = 0` has the same size, `√β = (√κ - 1) / (√κ + 1)`: every direction
+shrinks at that one rate per step, whatever its curvature. -/
+theorem heavy_ball_every_curvature_shrinks_at_one_rate (μ L lam : ℝ) (hμ : 0 < μ)
+    (hμlam : μ ≤ lam) (hlamL : lam ≤ L) (r : ℂ)
+    (hr : r ^ 2 - ((1 + polyakMomentum μ L - polyakStep μ L * lam : ℝ) : ℂ) * r
+        + ((polyakMomentum μ L : ℝ) : ℂ) = 0) :
+    ‖r‖ = (Real.sqrt (L / μ) - 1) / (Real.sqrt (L / μ) + 1) := by
+  set s := Real.sqrt (L / μ) with hs_def
+  have hLμ : μ ≤ L := le_trans hμlam hlamL
+  have hs1 : 1 ≤ s := by
+    rw [hs_def, ← Real.sqrt_one]
+    exact Real.sqrt_le_sqrt (by rw [le_div_iff₀ hμ]; linarith)
+  have hs2 : s ^ 2 = L / μ := Real.sq_sqrt (div_nonneg (by linarith) hμ.le)
+  have hsqL : Real.sqrt L = s * Real.sqrt μ := by
+    have : Real.sqrt L = Real.sqrt (L / μ * μ) := by
+      congr 1; field_simp
+    rw [this, Real.sqrt_mul' _ hμ.le]
+  have hsμ : Real.sqrt μ ^ 2 = μ := Real.sq_sqrt hμ.le
+  have hsμpos : 0 < Real.sqrt μ := Real.sqrt_pos.mpr hμ
+  have hL : L = s ^ 2 * μ := by rw [hs2]; field_simp
+  set q := (s - 1) / (s + 1) with hq_def
+  have hq0 : 0 ≤ q := div_nonneg (by linarith) (by linarith)
+  have hβ : polyakMomentum μ L = q ^ 2 := by
+    simp only [polyakMomentum, hs_def, hq_def]
+  have hα : polyakStep μ L = 4 / (μ * (s + 1) ^ 2) := by
+    simp only [polyakStep]
+    rw [hsqL]
+    congr 1
+    rw [show s * Real.sqrt μ + Real.sqrt μ = (s + 1) * Real.sqrt μ by ring, mul_pow, hsμ]
+    ring
+  set t : ℝ := 1 + polyakMomentum μ L - polyakStep μ L * lam with ht_def
+  have ht : t = (2 * (s ^ 2 + 1) - 4 * (lam / μ)) / (s + 1) ^ 2 := by
+    rw [ht_def, hβ, hα, hq_def]
+    field_simp
+    ring
+  have hu1 : 1 ≤ lam / μ := by rw [le_div_iff₀ hμ]; linarith
+  have hu2 : lam / μ ≤ s ^ 2 := by rw [div_le_iff₀ hμ, ← hL]; exact hlamL
+  have hs1pos : 0 < (s + 1) ^ 2 := by positivity
+  have htle : t ≤ 2 * q := by
+    rw [ht, hq_def, div_le_iff₀ hs1pos]
+    have : 2 * ((s - 1) / (s + 1)) * (s + 1) ^ 2 = 2 * (s - 1) * (s + 1) := by
+      field_simp
+    rw [this]; nlinarith
+  have htge : -(2 * q) ≤ t := by
+    rw [ht, hq_def, le_div_iff₀ hs1pos]
+    have : -(2 * ((s - 1) / (s + 1))) * (s + 1) ^ 2 = -(2 * (s - 1) * (s + 1)) := by
+      field_simp
+    rw [this]; nlinarith
+  have hdisc : t ^ 2 ≤ 4 * q ^ 2 := by nlinarith
+  have hre := congrArg Complex.re hr
+  have him := congrArg Complex.im hr
+  simp only [sq, Complex.sub_re, Complex.add_re, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, Complex.zero_re, Complex.sub_im, Complex.add_im, Complex.mul_im,
+    Complex.zero_im] at hre him
+  rw [hβ] at hre
+  have key : r.re ^ 2 + r.im ^ 2 = q ^ 2 :=
+    sum_sq_eq_of_quadratic r.re r.im t (q ^ 2) hdisc (by linear_combination hre)
+      (by linear_combination him)
+  have hn : ‖r‖ ^ 2 = q ^ 2 := by
+    rw [← Complex.normSq_eq_norm_sq, Complex.normSq_apply, ← key]; ring
+  exact (pow_left_inj₀ (norm_nonneg r) hq0 two_ne_zero).mp hn
+
+/-- Step 3 and its detailed proof: with Nesterov's settings `α = 1 / L` and
+`β = (√κ - 1) / (√κ + 1)`, along the floor (curvature `μ`, so `s = α μ = 1 / κ`) the
+characteristic polynomial `r ^ 2 - (1 + β)(1 - s) r + β (1 - s)` is exactly `(r - ρ) ^ 2` with
+`ρ = 1 - 1 / √κ`: the two roots coincide at the rate `1 - 1 / √κ`. -/
+theorem nesterov_double_root_along_floor (μ L : ℝ) (hμ : 0 < μ) (hμL : μ ≤ L) (r : ℝ) :
+    r ^ 2 - (1 + nesterovMomentum μ L) * (1 - 1 / L * μ) * r
+        + nesterovMomentum μ L * (1 - 1 / L * μ)
+      = (r - (1 - 1 / Real.sqrt (L / μ))) ^ 2 := by
+  set s := Real.sqrt (L / μ) with hs_def
+  have hs1 : 1 ≤ s := by
+    rw [hs_def, ← Real.sqrt_one]
+    exact Real.sqrt_le_sqrt (by rw [le_div_iff₀ hμ]; linarith)
+  have hs2 : s ^ 2 = L / μ := Real.sq_sqrt (div_nonneg (by linarith) hμ.le)
+  have hLpos : 0 < L := by linarith
+  have hfrac : 1 / L * μ = 1 / s ^ 2 := by
+    rw [hs2]; field_simp
+  rw [hfrac]
+  simp only [nesterovMomentum, ← hs_def]
+  have hs0 : s ≠ 0 := by positivity
+  have hs1' : s + 1 ≠ 0 := by positivity
+  field_simp
+  ring
+
+/-! ### Adam in one variable
+
+Adam works on each variable separately. On the bowl the slope of a variable is its curvature
+`lam` times its value, `g k = lam * x (k-1)`. The state after step `k` is `(x k, m k, v k)`,
+starting from `(x₀, 0, 0)`, and step `k = 1, 2, …` is
+`m k = β₁ m (k-1) + (1 - β₁) g k`, `v k = β₂ v (k-1) + (1 - β₂) g k ^ 2`,
+`x k = x (k-1) - α k * (m k / (1 - β₁ ^ k)) / √(v k / (1 - β₂ ^ k))`,
+with any step-size schedule `α`. The guard `ε` is taken as 0, the card's "apart from the
+tiny ε". -/
+
+/-- Adam's state `(x, m, v)` after `k` steps in one variable whose slope is `lam * x`. -/
+noncomputable def adamRun (lam : ℝ) (α : ℕ → ℝ) (β₁ β₂ x₀ : ℝ) : ℕ → ℝ × ℝ × ℝ
+  | 0 => (x₀, 0, 0)
+  | k + 1 =>
+    let p := adamRun lam α β₁ β₂ x₀ k
+    let g := lam * p.1
+    let m := β₁ * p.2.1 + (1 - β₁) * g
+    let v := β₂ * p.2.2 + (1 - β₂) * g ^ 2
+    (p.1 - α (k + 1) * (m / (1 - β₁ ^ (k + 1))) / Real.sqrt (v / (1 - β₂ ^ (k + 1))), m, v)
+
+/-- Step 4: multiply every slope of one variable by a constant `c > 0` (here, make its wall
+curve `c` times more sharply). Then `m` grows by `c`, `v` by `c ^ 2`, the ratio
+`m̂ / √v̂` does not change, and Adam's path for that variable is exactly the same at every step,
+whatever the step-size schedule and memory fractions. -/
+theorem adam_path_ignores_slope_scale (lam c : ℝ) (hc : 0 < c) (α : ℕ → ℝ) (β₁ β₂ x₀ : ℝ)
+    (k : ℕ) :
+    (adamRun (c * lam) α β₁ β₂ x₀ k).1 = (adamRun lam α β₁ β₂ x₀ k).1 := by
+  have key : ∀ n : ℕ, adamRun (c * lam) α β₁ β₂ x₀ n =
+      ((adamRun lam α β₁ β₂ x₀ n).1, c * (adamRun lam α β₁ β₂ x₀ n).2.1,
+        c ^ 2 * (adamRun lam α β₁ β₂ x₀ n).2.2) := by
+    intro n
+    induction n with
+    | zero => simp [adamRun]
+    | succ n ih =>
+      rw [adamRun, ih, adamRun]
+      simp only
+      set x := (adamRun lam α β₁ β₂ x₀ n).1
+      set m := (adamRun lam α β₁ β₂ x₀ n).2.1
+      set v := (adamRun lam α β₁ β₂ x₀ n).2.2
+      have hm : β₁ * (c * m) + (1 - β₁) * (c * lam * x)
+          = c * (β₁ * m + (1 - β₁) * (lam * x)) := by ring
+      have hv : β₂ * (c ^ 2 * v) + (1 - β₂) * (c * lam * x) ^ 2
+          = c ^ 2 * (β₂ * v + (1 - β₂) * (lam * x) ^ 2) := by ring
+      rw [hm, hv]
+      refine Prod.ext ?_ (Prod.ext rfl rfl)
+      simp only
+      congr 1
+      set M := β₁ * m + (1 - β₁) * (lam * x)
+      set V := β₂ * v + (1 - β₂) * (lam * x) ^ 2
+      have hsq : Real.sqrt (c ^ 2 * V / (1 - β₂ ^ (n + 1)))
+          = c * Real.sqrt (V / (1 - β₂ ^ (n + 1))) := by
+        rw [mul_div_assoc, Real.sqrt_mul (sq_nonneg c), Real.sqrt_sq hc.le]
+      rw [hsq, mul_div_assoc, mul_div_assoc, mul_div_assoc, mul_div_assoc]
+      congr 1
+      rw [← mul_div_assoc, mul_div_mul_left _ _ hc.ne']
+  rw [key k]
+
+/-! ### The card's worked numbers, checked exactly (μ = 1, L = 100, so κ = 100 and √κ = 10) -/
+
+/-- Heavy ball's settings: `α = 4/121` and `β = 81/121 = (9/11) ^ 2`. -/
+example : polyakStep 1 100 = 4 / 121 ∧ polyakMomentum 1 100 = 81 / 121 := by
+  have h : Real.sqrt 100 = 10 := by
+    rw [show (100 : ℝ) = 10 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  have h1 : Real.sqrt 1 = 1 := Real.sqrt_one
+  refine ⟨?_, ?_⟩
+  · rw [polyakStep, h, h1]; norm_num
+  · rw [polyakMomentum, div_one, h]; norm_num
+
+/-- Nesterov's momentum fraction: `β = 9/11`. -/
+example : nesterovMomentum 1 100 = 9 / 11 := by
+  have h : Real.sqrt 100 = 10 := by
+    rw [show (100 : ℝ) = 10 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  rw [nesterovMomentum, div_one, h]; norm_num
+
+/-- Plain descent: step `2/(1 + 100) = 2/101`, rate `(100 - 1)/(100 + 1) = 99/101`, and the step
+factors along and across the floor are `+99/101` and `-99/101`. -/
+example : (2 / (1 + 100) : ℚ) = 2 / 101 ∧ ((100 - 1) / (100 + 1) : ℚ) = 99 / 101 ∧
+    (1 - 2 / 101 * 1 : ℚ) = 99 / 101 ∧ (1 - 2 / 101 * 100 : ℚ) = -(99 / 101) := by
+  norm_num
+
+/-- Heavy-ball stability: `α L = 400/121` is below `2 (1 + β) = 404/121`, but above plain
+descent's limit of 2; and the heavy-ball rate `√β = 9/11` squares to `β`. -/
+example : (4 / 121 * 100 : ℚ) = 400 / 121 ∧ (2 * (1 + 81 / 121) : ℚ) = 404 / 121 ∧
+    (400 / 121 : ℚ) < 404 / 121 ∧ (2 : ℚ) < 400 / 121 ∧ ((9 / 11) ^ 2 : ℚ) = 81 / 121 := by
+  norm_num
+
+/-- Nesterov with κ = 100: across the floor `1 - (1/100) * 100 = 0`, and along it the
+recurrence `r ^ 2 - 1.8 r + 0.81` is `(r - 0.9) ^ 2`, rate `1 - 1/10 = 9/10`. -/
+example : (1 - 1 / 100 * 100 : ℚ) = 0 ∧
+    (1 + 9 / 11 : ℚ) * (1 - 1 / 100) = 9 / 5 ∧ (9 / 11 : ℚ) * (1 - 1 / 100) = 81 / 100 ∧
+    ∀ r : ℚ, r ^ 2 - 9 / 5 * r + 81 / 100 = (r - 9 / 10) ^ 2 := by
+  refine ⟨by norm_num, by norm_num, by norm_num, fun r => by ring⟩
+
+/-- Adam's first step from `(10, 1)` with `α = 0.3`, `β₁ = 0.9`, `β₂ = 0.999` (and ε = 0): the
+slopes are 10 along the floor and 100 across it, yet both variables move exactly 0.3, to
+`(9.7, 0.7)`. -/
+example : (adamRun 1 (fun _ => 3 / 10) (9 / 10) (999 / 1000) 10 1).1 = 97 / 10 ∧
+    (adamRun 100 (fun _ => 3 / 10) (9 / 10) (999 / 1000) 1 1).1 = 7 / 10 := by
+  have h : Real.sqrt 100 = 10 := by
+    rw [show (100 : ℝ) = 10 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  have h2 : Real.sqrt 10000 = 100 := by
+    rw [show (10000 : ℝ) = 100 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  constructor
+  · simp only [adamRun]; norm_num [h]
+  · simp only [adamRun]; norm_num [h2]
+
+#print axioms heavy_ball_every_curvature_shrinks_at_one_rate
+#print axioms nesterov_double_root_along_floor
+#print axioms adam_path_ignores_slope_scale
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_sq_eq_of_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heavy_ball_every_curvature_shrinks_at_one_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nesterov_double_root_along_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'adam_path_ignores_slope_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Adam with a tenth of the step.** Guess first: how many steps? Run Adam with α = 0.03 instead of 0.3, as the `tries` line does. It is 1,354 steps, seven times as many, because Adam's step is a distance, not a multiple of the slope.
@@ -668,7 +945,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Training neural networks.** Adam, with $\beta_1 = 0.9$ and $\beta_2 = 0.999$, is the default way to fit networks whose slopes come from [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md). The step usually rises for a short warm-up, then falls on a cosine or stepped schedule, for the reason in Step 5.
-- **Image deblurring and the lasso.** Nesterov's look-ahead, added to a gradient step and a shrink, is FISTA on [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md).
+- **Image deblurring and the lasso.** The lasso is a data fit charged for the sum of its coefficients' sizes, which makes most of them exactly zero. Nesterov's look-ahead, added to a gradient step and a shrink, is FISTA on [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md).
 - **Large linear systems.** Conjugate gradient is heavy ball with α and β re-chosen at every step from the bowl itself, so it needs no estimate of μ or L.
 - **A ball rolling in a bowl.** The name is literal: heavy ball is a mass with friction, sampled at fixed times, and 1 − β is the share of its speed lost to friction each step.
 
@@ -681,7 +958,7 @@ The two outputs match line for line.
 
 - [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md): noisy slopes, and the step rules, Robbins–Monro's among them, that Step 5 measures its schedules against.
 - [Convergence rates](../02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md): what a rate per step means, and why the stretch ratio κ sets plain descent's pace.
-- [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): the step limit 2/L, momentum in outline, and the choice of step size on a real data fit.
+- [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md), on the computing wing: the step limit 2/L, momentum in outline, and the choice of step size on a real data fit.
 
 ## Where this goes next
 

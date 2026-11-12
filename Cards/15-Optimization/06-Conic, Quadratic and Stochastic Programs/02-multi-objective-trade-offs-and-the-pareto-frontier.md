@@ -24,7 +24,7 @@ The usual way to find frontier points is a **weighted sum**: fold the two goals 
 
 **A weighted sum with weights that are not negative always lands on the Pareto frontier, and when the problem is convex it can reach every frontier point where the frontier's slope is finite, which here is every point; when the frontier has a dent, the points in the dent are Pareto optimal but no weighting can reach them, and a limit on one goal reaches them instead.**
 
-**What kind of fact this is:** a theorem in two halves, both proved on this card in Why it works. The fund numbers are a model: the returns and variances are taken as known, and the funds are treated as uncorrelated.
+**What kind of fact this is:** a theorem in two halves, both proved on this card in Why it works. The fund numbers are a model: the returns and variances are taken as known, and the funds are treated as uncorrelated (one fund's surprise does not tend to move with another's).
 
 ### The picture: eleven portfolios as the weight on return rises
 
@@ -38,7 +38,9 @@ xychart-beta
     line [3.886, 4.210, 5.060, 6.224, 7.559, 8.313, 9.096, 9.943, 10.837, 11.628, 12.034]
 ```
 
-Orange: expected return. Green: standard deviation. Each τ gives one frontier portfolio, so the two lines read at the same τ are one point of the frontier, risk across and return up. The eleven points, with their weights and variances, are the table the code prints: that table is the traced frontier. Both lines climb as τ rises: each step buys return and pays for it in risk. The steps are not even: τ from 0 to 10 lifts the return from 3.741% to 4.267%, τ from 90 to 100 only from 7.066% to 7.167%. The frontier goes on past the chart and ends at τ = 500, all in emerging markets.
+Orange: expected return. Green: standard deviation. Each τ gives one frontier portfolio, so the two lines read at the same τ are one point of the frontier, risk across and return up. The eleven points, with their weights and variances, are the table the code prints: that table is the traced frontier.
+
+Both lines climb as τ rises: each step buys return and pays for it in risk. The steps are not even: τ from 0 to 10 lifts the return from 3.741% to 4.267%, τ from 90 to 100 only from 7.066% to 7.167%. The frontier goes on past the chart and ends at τ = 500, all in emerging markets.
 
 ---
 
@@ -48,7 +50,7 @@ Notation first, in words. The holdings are a list $x = (x_1, \dots, x_5)$: the f
 
 $$V(x) = \sum_i \sigma_i^2 x_i^2, \qquad R(x) = \sum_i \mu_i x_i .$$
 
-**Pareto optimality.** A feasible $y$ dominates $x$ when $V(y) \le V(x)$ and $R(y) \ge R(x)$, with at least one of the two strict. A feasible $x^*$ is Pareto optimal when nothing feasible dominates it.
+**Pareto optimality.** A split is feasible when the rules allow it: all the money invested, nothing sold short. A feasible $y$ dominates $x$ when $V(y) \le V(x)$ and $R(y) \ge R(x)$, with at least one of the two strict. A feasible $x^*$ is Pareto optimal when nothing feasible dominates it.
 
 **The weighted sum**, for a weight $\tau \ge 0$:
 
@@ -65,7 +67,7 @@ $$x_i = \max\!\Big(0,\; \frac{\tau\mu_i - \nu}{2\sigma_i^2}\Big).$$
 The two halves of the theorem:
 
 1. Every weighted-sum answer with $\tau \ge 0$ is Pareto optimal (when $\tau = 0$, because the answer is unique).
-2. If the set of choices is convex, $V$ is convex and $R$ is a straight-line function, every Pareto-optimal point where the frontier's slope is finite is a weighted-sum answer for some $\tau \ge 0$, and that $\tau$ is the slope there: the extra variance per extra point of return. The slope is finite everywhere except perhaps at the top end, the largest return. There it can be infinite on a curved choice set, and then no finite $\tau$ reaches that point. It stays finite when $V$ is quadratic and the choices are cut out by straight-line limits, as here, where τ = 500 reaches the top. Without convexity a Pareto point can be missed by every $\tau$; the **epsilon-constraint** form, minimise $V(x)$ subject to $R(x) \ge \varepsilon$, still finds it.
+2. If the set of choices is convex (a blend of any two choices is again a choice; see [Convex sets](../01-Convexity/02-convex-sets.md)), $V$ is convex (a bowl) and $R$ is a straight-line function, every Pareto-optimal point where the frontier's slope is finite is a weighted-sum answer for some $\tau \ge 0$, and that $\tau$ is the slope there: the extra variance per extra point of return. The slope is finite everywhere except perhaps at the top end, the largest return. There it can be infinite on a curved choice set, and then no finite $\tau$ reaches that point. It stays finite when $V$ is quadratic and the choices are cut out by straight-line limits, as here, where τ = 500 reaches the top. Without convexity a Pareto point can be missed by every $\tau$; the **epsilon-constraint** form, minimise $V(x)$ subject to $R(x) \ge \varepsilon$, still finds it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -109,11 +111,11 @@ If $\tau > 0$ either strict inequality makes this strict, contradicting that $x^
 
 ### Step 2: solving one weighted sum, with its certificate
 
-For a fixed τ the problem is a quadratic program: a bowl ($V$) tilted by a straight-line term ($-\tau R$) under straight-line limits. Its KKT conditions (the optimality conditions of [Quadratic programs](01-quadratic-programs-and-markowitz.md)) say: there is one budget price $\nu$ and multipliers $\lambda_i \ge 0$ with
+For a fixed τ the problem is a quadratic program: a bowl ($V$) tilted by a straight-line term ($-\tau R$) under straight-line limits. Its KKT conditions (Karush–Kuhn–Tucker conditions: the optimality conditions of [Quadratic programs](01-quadratic-programs-and-markowitz.md), set out in general in [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md)) say: there is one budget price $\nu$ and multipliers $\lambda_i \ge 0$ with
 
 $$2\sigma_i^2 x_i - \tau\mu_i + \nu - \lambda_i = 0, \qquad \lambda_i x_i = 0 .$$
 
-In words: every fund that is held has the same marginal score, $-\nu$. A fund left at zero has $\lambda_i = \nu - \tau\mu_i \ge 0$: adding a sliver of it would raise the score. Solve the first equation for $x_i$ and the closed shape of The formula falls out. Because the bowl is convex, any point that meets these conditions is the global minimum, not just a local one; that makes the printed conditions a certificate.
+In words: every fund that is held has the same marginal score (the change in score per extra sliver of that fund), $-\nu$. A fund left at zero has $\lambda_i = \nu - \tau\mu_i \ge 0$: adding a sliver of it would raise the score. Solve the first equation for $x_i$ and the closed shape of The formula falls out. Because the bowl is convex, any point that meets these conditions is the global minimum, not just a local one; that makes the printed conditions a certificate.
 
 The code finds the answer by trying all 31 possible sets of held funds and keeping one whose conditions hold. Any set that passes describes the same split: the strictly curved bowl has exactly one bottom.
 
@@ -153,7 +155,7 @@ To scale: variance across, return up. The dashed rubber band joins the four fund
 
 The epsilon-constraint form keeps one goal as the objective and turns the other into a limit: minimise variance subject to return at least ε. Set ε = 5% and the only funds allowed are property, UK equity and emerging markets; the least variance among them is property's 196. Setting ε to each fund's return in turn picks all five funds, the dent included. On the blended problem the same form traces the frontier at chosen returns; its multiplier on the return floor is the τ of Step 3.
 
-The price: one solve per ε, and a floor set where two choices tie on variance can return a point that is only weakly optimal, so a careful solver breaks the tie on return.
+The price: one solve per ε, and a floor set where two choices tie on variance can return a point that is only weakly optimal (nothing beats it on both goals, but a rival ties its variance and earns more), so a careful solver breaks the tie on return.
 
 ---
 
@@ -510,6 +512,222 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves both halves of the theorem in general, and the dent for the card's five funds under the one-fund rule.
+
+- Half 1: a weighted-sum answer with τ ≥ 0 is Pareto optimal. When τ = 0, this uses the fact that the answer is unique.
+- Half 2: take a convex choice set, a convex $V$ and a straight-line $R$. Every Pareto point with a finite frontier slope is a weighted-sum answer for some τ ≥ 0.
+- Under the one-fund rule, all five funds are Pareto optimal, property included.
+- At every τ, some other fund scores at least 55.2 below property, so no weighted sum ever picks it.
+- The limit "return at least 5%" picks property: every fund meeting it has a variance of at least 196.
+- The hand arithmetic holds: the 60/40 average returns 5% at variance 140.8, and the switch points are 39, 76.8 and 147.6.
+- All emerging markets starts at τ = 500, and the 2% grid has 316,251 splits.
+
+The eleven portfolios, the τ = 50 hand solve and the 6% slope match of 45.512 are left to the Python and Rust checks.
+
+```lean
+-- Two goals at once: a weighted sum with a weight that is not negative always picks a Pareto-optimal choice, in a convex problem every Pareto point with a finite frontier slope is picked by some weight, and the card's property fund is Pareto optimal yet never picked by any weight.
+import Mathlib.Data.Real.Basic
+import Mathlib.Analysis.Convex.Function
+import Mathlib.LinearAlgebra.AffineSpace.AffineMap
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
+
+/-- `y` dominates `x` for the two goals "make `V` small" and "make `R` large":
+`y` has at most the variance and at least the return of `x`, and is strictly better on one. -/
+def Dominates {α : Type*} (V R : α → ℝ) (y x : α) : Prop :=
+  V y ≤ V x ∧ R x ≤ R y ∧ (V y < V x ∨ R x < R y)
+
+/-- `x` is a feasible choice in `S` that no feasible choice dominates. -/
+def ParetoOptimal {α : Type*} (S : Set α) (V R : α → ℝ) (x : α) : Prop :=
+  x ∈ S ∧ ¬ ∃ y ∈ S, Dominates V R y x
+
+/-- Half 1. If `x` minimises the weighted sum `V - τ R` over the feasible set, with a weight
+`τ ≥ 0`, then `x` is Pareto optimal. When `τ = 0` this needs the minimiser to be unique. -/
+theorem weighted_sum_answer_is_pareto_optimal {α : Type*} (S : Set α) (V R : α → ℝ)
+    (τ : ℝ) (hτ : 0 ≤ τ) (x : α) (hx : x ∈ S)
+    (hmin : ∀ y ∈ S, V x - τ * R x ≤ V y - τ * R y)
+    (huniq : τ = 0 → ∀ y ∈ S, (∀ z ∈ S, V y - τ * R y ≤ V z - τ * R z) → y = x) :
+    ParetoOptimal S V R x := by
+  refine ⟨hx, ?_⟩
+  rintro ⟨y, hy, h1, h2, h3⟩
+  have hm := hmin y hy
+  have hle : V y - τ * R y ≤ V x - τ * R x := by nlinarith
+  rcases eq_or_lt_of_le hτ with h0 | hpos
+  · subst h0
+    have hyx : y = x := huniq rfl y hy (fun z hz => by
+      have := hmin z hz; linarith)
+    subst hyx
+    rcases h3 with h3 | h3 <;> linarith
+  · have hVeq : V y = V x := by nlinarith
+    have hReq : R y = R x := by
+      have : τ * (R y - R x) ≤ 0 := by linarith
+      have : R y - R x ≤ 0 := by
+        by_contra hc; push Not at hc; nlinarith
+      linarith
+    rcases h3 with h3 | h3 <;> linarith
+
+/-- Half 2. Take a convex set of choices, a variance `V` that is convex on it and a return `R`
+that is a straight-line (affine) function. If `x` is Pareto optimal and the frontier's slope at
+`x` is finite (going down from `x` in return, the variance saved per point of return given up is
+bounded by some `c`), then `x` is a weighted-sum answer for some weight `τ ≥ 0`, and `τ` is the
+slope of a line that supports the frontier at `x`. -/
+theorem convex_pareto_point_is_weighted_sum_answer {E : Type*} [AddCommGroup E] [Module ℝ E]
+    (S : Set E) (hS : Convex ℝ S) (V : E → ℝ) (hV : ConvexOn ℝ S V) (R : E →ᵃ[ℝ] ℝ)
+    (x : E) (hx : ParetoOptimal S V R x)
+    (hslope : ∃ c : ℝ, ∀ y ∈ S, R y ≤ R x → V x - V y ≤ c * (R x - R y)) :
+    ∃ τ : ℝ, 0 ≤ τ ∧ ∀ y ∈ S, V x - τ * R x ≤ V y - τ * R y := by
+  obtain ⟨hxS, hnd⟩ := hx
+  obtain ⟨c, hc⟩ := hslope
+  -- points with equal return have at least `x`'s variance
+  have heq : ∀ z ∈ S, R z = R x → V x ≤ V z := by
+    intro z hz hR
+    by_contra h; push Not at h
+    exact hnd ⟨z, hz, h.le, hR.ge, Or.inl h⟩
+  -- points with higher return have strictly higher variance
+  have hup : ∀ z ∈ S, R x < R z → V x < V z := by
+    intro z hz hR
+    by_contra h; push Not at h
+    exact hnd ⟨z, hz, h, hR.le, Or.inr hR⟩
+  -- the key convexity inequality
+  have key : ∀ y₁ ∈ S, ∀ y₂ ∈ S, R y₁ < R x → R x < R y₂ →
+      (R y₂ - R x) * (V x - V y₁) ≤ (R x - R y₁) * (V y₂ - V x) := by
+    intro y₁ h₁ y₂ h₂ hr₁ hr₂
+    set a := R y₂ - R x with ha
+    set b := R x - R y₁ with hb
+    have ha0 : 0 < a := by linarith
+    have hb0 : 0 < b := by linarith
+    have hab0 : 0 < a + b := by linarith
+    set t := a / (a + b) with ht
+    set u := b / (a + b) with hu
+    have ht0 : 0 ≤ t := by positivity
+    have hu0 : 0 ≤ u := by positivity
+    have htu : t + u = 1 := by
+      rw [ht, hu, ← add_div, div_self hab0.ne']
+    have hzS : t • y₁ + u • y₂ ∈ S := hS h₁ h₂ ht0 hu0 htu
+    have hVz := hV.2 h₁ h₂ ht0 hu0 htu
+    have hRz : R (t • y₁ + u • y₂) = t • R y₁ + u • R y₂ := Convex.combo_affine_apply htu
+    simp only [smul_eq_mul] at hVz hRz
+    have hRzx : R (t • y₁ + u • y₂) = R x := by
+      rw [hRz, ht, hu]
+      field_simp
+      rw [ha, hb]; ring
+    have h3 := heq _ hzS hRzx
+    have h4 : V x ≤ t * V y₁ + u * V y₂ := le_trans h3 hVz
+    rw [ht, hu] at h4
+    rw [div_mul_eq_mul_div, div_mul_eq_mul_div, ← add_div, le_div_iff₀ hab0] at h4
+    nlinarith
+  set L : Set ℝ := insert 0 {s | ∃ y ∈ S, R y < R x ∧ s = (V x - V y) / (R x - R y)} with hL
+  have hLb : BddAbove L := by
+    refine ⟨max c 0, ?_⟩
+    rintro s (rfl | ⟨y, hy, hr, rfl⟩)
+    · exact le_max_right _ _
+    · have hpos : 0 < R x - R y := by linarith
+      rw [div_le_iff₀ hpos]
+      have := hc y hy hr.le
+      nlinarith [le_max_left c 0, le_max_right c 0]
+  have hLne : L.Nonempty := ⟨0, Set.mem_insert _ _⟩
+  refine ⟨sSup L, le_csSup hLb (Set.mem_insert _ _), ?_⟩
+  intro y hy
+  rcases lt_trichotomy (R y) (R x) with hr | hr | hr
+  · have hpos : 0 < R x - R y := by linarith
+    have hmem : (V x - V y) / (R x - R y) ∈ L := Or.inr ⟨y, hy, hr, rfl⟩
+    have := le_csSup hLb hmem
+    rw [div_le_iff₀ hpos] at this
+    nlinarith
+  · have := heq y hy hr
+    rw [hr]; linarith
+  · have hpos : 0 < R y - R x := by linarith
+    have hτle : sSup L ≤ (V y - V x) / (R y - R x) := by
+      apply csSup_le hLne
+      rintro s (rfl | ⟨y₁, hy₁, hr₁, rfl⟩)
+      · have := hup y hy hr
+        positivity
+      · have hb : 0 < R x - R y₁ := by linarith
+        rw [div_le_div_iff₀ hb hpos]
+        have := key y₁ hy₁ y hy hr₁ hr
+        linarith
+    rw [le_div_iff₀ hpos] at hτle
+    nlinarith
+
+/-- The card's five funds, in order gilt, corporate bond, property, UK equity, emerging
+markets: variance (percent squared). -/
+noncomputable def fundVar : Fin 5 → ℝ := ![25, 64, 196, 256, 625]
+
+/-- The card's five funds: expected return (percent a year). -/
+noncomputable def fundRet : Fin 5 → ℝ := ![3, 4, 5, 13 / 2, 9]
+
+/-- The dent. Under the one-fund rule, the property fund (index 2) is Pareto optimal; yet for
+every weight `τ` some other fund scores at least 55.2 = 276/5 lower on `variance - τ × return`,
+so no weighted sum ever picks it; and the limit "return at least 5%" picks it, since every fund
+meeting that limit has at least property's variance. -/
+theorem property_fund_pareto_optimal_but_never_weighted_sum_answer :
+    ParetoOptimal (Set.univ : Set (Fin 5)) fundVar fundRet 2 ∧
+    (∀ τ : ℝ, ∃ j : Fin 5, j ≠ 2 ∧
+      fundVar j - τ * fundRet j + 276 / 5 ≤ fundVar 2 - τ * fundRet 2) ∧
+    (∀ j : Fin 5, 5 ≤ fundRet j → fundVar 2 ≤ fundVar j) := by
+  refine ⟨⟨Set.mem_univ _, ?_⟩, ?_, ?_⟩
+  · rintro ⟨j, -, h1, h2, h3⟩
+    revert h1 h2 h3
+    fin_cases j <;> norm_num [fundVar, fundRet]
+  · intro τ
+    by_cases h : τ ≤ 384 / 5
+    · refine ⟨1, by decide, ?_⟩
+      norm_num [fundVar, fundRet]
+      linarith
+    · refine ⟨3, by decide, ?_⟩
+      norm_num [fundVar, fundRet]
+      linarith
+  · intro j hj
+    revert hj
+    fin_cases j <;> norm_num [fundVar, fundRet]
+
+-- The 60/40 average of the corporate bond and UK equity points returns exactly 5%.
+example : (3 / 5 : ℚ) * 4 + (2 / 5) * (13 / 2) = 5 := by norm_num
+-- Its variance is 140.8 = 704/5, so property's 196 trails it by 55.2 = 276/5.
+example : (3 / 5 : ℚ) * 64 + (2 / 5) * 256 = 704 / 5 := by norm_num
+example : (196 : ℚ) - 704 / 5 = 276 / 5 := by norm_num
+-- Switch points of the one-fund sweep: 39, 76.8 = 384/5 and 147.6 = 738/5.
+example : ((64 : ℚ) - 25) / (4 - 3) = 39 := by norm_num
+example : ((256 : ℚ) - 64) / (13 / 2 - 4) = 384 / 5 := by norm_num
+example : ((625 : ℚ) - 256) / (9 - 13 / 2) = 738 / 5 := by norm_num
+-- All in emerging markets from τ = 2 × 625 / (9 − 6.5) = 500.
+example : 2 * (625 : ℚ) / (9 - 13 / 2) = 500 := by norm_num
+-- Variances are the squared standard deviations 5, 8, 14, 16, 25.
+example : ((5 : ℕ) ^ 2, (8 : ℕ) ^ 2, (14 : ℕ) ^ 2, (16 : ℕ) ^ 2, (25 : ℕ) ^ 2)
+    = (25, 64, 196, 256, 625) := by decide
+-- Twice the variances in the τ = 50 hand calculation.
+example : (2 * 25, 2 * 64, 2 * 196, 2 * 256, 2 * 625) = (50, 128, 392, 512, 1250) := by decide
+-- The 2% grid has C(54, 4) = 316,251 splits.
+example : Nat.choose 54 4 = 316251 := by decide
+-- Every one of the five funds is Pareto optimal under the one-fund rule.
+example : ∀ i : Fin 5, ParetoOptimal (Set.univ : Set (Fin 5)) fundVar fundRet i := by
+  intro i
+  refine ⟨Set.mem_univ _, ?_⟩
+  rintro ⟨j, -, h1, h2, h3⟩
+  revert h1 h2 h3
+  fin_cases i <;> fin_cases j <;> norm_num [fundVar, fundRet]
+
+#print axioms weighted_sum_answer_is_pareto_optimal
+#print axioms convex_pareto_point_is_weighted_sum_answer
+#print axioms property_fund_pareto_optimal_but_never_weighted_sum_answer
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'weighted_sum_answer_is_pareto_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'convex_pareto_point_is_weighted_sum_answer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'property_fund_pareto_optimal_but_never_weighted_sum_answer' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
