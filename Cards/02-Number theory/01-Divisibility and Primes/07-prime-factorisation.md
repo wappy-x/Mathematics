@@ -16,6 +16,8 @@ A number bigger than 1 that will not split is prime ([Primes and composites](05-
 
 **Split a number, split the pieces, keep going until every piece is prime. That always finishes, and whichever splits you choose you end with the same primes, each the same number of times.**
 
+**What kind of fact this is:** a theorem. Why it works proves the splitting always finishes. [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md) proves every route ends at the same primes; here the code checks every number from 2 to 1,000.
+
 ### The picture: two trees, the same ends
 
 ```mermaid
@@ -52,6 +54,8 @@ On our number:
 
 **360 = 2 × 2 × 2 × 3 × 3 × 5**
 
+**Read it aloud:** 360 equals two times two times two, times three times three, times five.
+
 Multiply those six and you get 360.
 
 The claim underneath:
@@ -67,6 +71,13 @@ A prime is already finished: 7 is just 7, a tree with no branches.
 | a factor tree | split, split the pieces, until you cannot | 360 = 6 × 60 |
 | the prime factorisation | the primes at the ends, repeats and all | 2 × 2 × 2 × 3 × 3 × 5 |
 | the fundamental theorem | that list is the same whichever route | three 2s, two 3s, a 5 |
+
+### When it holds
+
+- **Whole and bigger than 1.** 1 has no prime pieces. Allow 1s on the list and any list can take more of them.
+- **Every end is prime.** 36 × 10 is still 360, but 36 and 10 both split further.
+- **Repeats are kept.** Each prime once gives 30, not 360.
+- **Order does not count.** The hand tree ends 2 × 3 × 2 × 3 × 2 × 5; biggest factor first ends 5 × 3 × 3 × 2 × 2 × 2. Only the sorted lists match.
 
 ---
 
@@ -225,6 +236,79 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves every number above 1 splits into primes, one way only; Python and Rust run the roads.
+
+<details>
+<summary>The Lean proof, 53 lines</summary>
+
+```lean
+-- Prime factorisation: every whole number bigger than 1 is a product of primes, and any two lists of primes with that product are the same list apart from order.
+import Mathlib.Data.Nat.Factors
+import Mathlib.Tactic.Simproc.Factors
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.NumberTheory.Divisors
+
+/-- The fundamental theorem of arithmetic, as the card states it: every whole number bigger
+than 1 is a product of primes (the factor tree always finishes), and apart from the order it
+is that product and no other (every route ends at the same primes, repeats and all). -/
+theorem prime_factorisation_exists_unique (n : ℕ) (hn : 1 < n) :
+    ∃ l : List ℕ, (∀ p ∈ l, p.Prime) ∧ l.prod = n ∧
+      ∀ l' : List ℕ, (∀ p ∈ l', p.Prime) → l'.prod = n → l'.Perm l := by
+  refine ⟨Nat.primeFactorsList n, fun p hp => Nat.prime_of_mem_primeFactorsList hp,
+    Nat.prod_primeFactorsList (by omega), fun l' hl' hprod => ?_⟩
+  exact Nat.primeFactorsList_unique hprod hl'
+
+/-- The splitting always finishes: every whole number bigger than 1 can be split until every
+piece is prime, so it is a product of a list of primes. -/
+theorem factor_tree_finishes (n : ℕ) (hn : 1 < n) :
+    ∃ l : List ℕ, (∀ p ∈ l, p.Prime) ∧ l.prod = n := by
+  exact ⟨Nat.primeFactorsList n, fun p hp => Nat.prime_of_mem_primeFactorsList hp,
+    Nat.prod_primeFactorsList (by omega)⟩
+
+/-- Every route reaches the same atoms: two lists of primes with the same product hold the
+same primes, each the same number of times, so they match once sorted. -/
+theorem same_primes_whichever_route (l₁ l₂ : List ℕ) (h₁ : ∀ p ∈ l₁, p.Prime)
+    (h₂ : ∀ p ∈ l₂, p.Prime) (h : l₁.prod = l₂.prod) : l₁.Perm l₂ := by
+  exact (Nat.primeFactorsList_unique h h₁).trans (Nat.primeFactorsList_unique rfl h₂).symm
+
+-- 360 = 2 × 2 × 2 × 3 × 3 × 5, and those six are primes.
+example : 2 * 2 * 2 * 3 * 3 * 5 = 360 := by norm_num
+example : Nat.Prime 2 ∧ Nat.Prime 3 ∧ Nat.Prime 5 := by norm_num
+example : Nat.primeFactorsList 360 = [2, 2, 2, 3, 3, 5] := by simp
+-- Road one: take out a 2 three times, then a 3 twice: 180, 90, 45, 15, 5.
+example : 360 / 2 = 180 ∧ 180 / 2 = 90 ∧ 90 / 2 = 45 ∧ 45 / 3 = 15 ∧ 15 / 3 = 5 := by norm_num
+-- Road two, the hand tree: 360 = 6 × 60, 60 = 6 × 10, 6 = 2 × 3, 10 = 2 × 5.
+example : 6 * 60 = 360 ∧ 6 * 10 = 60 ∧ 2 * 3 = 6 ∧ 2 * 5 = 10 := by norm_num
+-- The three roads end at the same primes once sorted.
+example : [2, 3, 2, 3, 2, 5].Perm [2, 2, 2, 3, 3, 5] := by decide
+example : [5, 3, 3, 2, 2, 2].Perm [2, 2, 2, 3, 3, 5] := by decide
+-- 360 has 24 divisors: 24 equal whole-degree cuts of a circle.
+example : (Nat.divisors 360).card = 24 := by decide
+-- Stopping at 36 × 10 gives 360, but neither piece is prime.
+example : 36 * 10 = 360 ∧ ¬ Nat.Prime 36 ∧ ¬ Nat.Prime 10 := by norm_num
+-- Dropping one 2 gives 180; listing each prime once gives 30.
+example : 2 * 2 * 3 * 3 * 5 = 180 := by norm_num
+example : 2 * 3 * 5 = 30 := by norm_num
+-- 7 is already finished: a tree with no branches.
+example : Nat.Prime 7 := by norm_num
+
+#print axioms prime_factorisation_exists_unique
+#print axioms factor_tree_finishes
+#print axioms same_primes_whichever_route
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'prime_factorisation_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'factor_tree_finishes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'same_primes_whichever_route' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -267,6 +351,8 @@ The two outputs match line for line.
 - [Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md): two numbers side by side, and the pieces they share.
 - [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the proof that the route cannot change the ends.
 - [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the atoms never run out.
+
+The question this card leaves open: why must a prime that goes into a product go into one of its pieces?
 
 ---
 

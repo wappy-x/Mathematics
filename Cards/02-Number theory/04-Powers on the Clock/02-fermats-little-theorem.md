@@ -12,6 +12,8 @@ Twelve is one less than 13, and 13 is **prime**: nothing divides it but itself a
 
 **On a prime-sized dial, take a number the dial size does not divide, start at 1 and multiply by it one time fewer than there are positions: the reading is 1.**
 
+**What kind of fact this is:** a theorem, proved on this card in Why it works.
+
 Fermat stated it without proof in a letter to Frénicle de Bessy, 18 October 1640. It is his *little* theorem, not the Last Theorem. Huge powers get cheap: 2 taken a thousand times over runs to 302 digits; this drops the work to four multiplications.
 
 ### The picture: doubling deals the dial to itself
@@ -35,6 +37,8 @@ The dial is the statement:
 
 **Start at 1 and multiply by 2 twelve times = 4,096 = 315 × 13 + 1, so the 13-dial reads 1**
 
+**Read it aloud:** 2 multiplied in twelve times makes 4,096; take off 315 whole turns of the 13-dial and 1 is left.
+
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
 | the dial size | how many positions there are, and it must be prime | 13 |
@@ -45,6 +49,12 @@ The dial is the statement:
 With letters, the dial size is p, for prime, and the number a, which p must not divide: a to the p − 1 ≡ 1 (mod p). The ≡ means the same reading on the dial; the (mod p) says which dial.
 
 One more doubling takes that 1 back to 2: 2 taken thirteen times over is 8,192, and the dial reads 2. That second form, a to the p ≡ a (mod p), needs no condition.
+
+### When it holds
+
+- **The dial size is prime.** On a 15-dial, 2 taken fourteen times over reads 4, not 1.
+- **The dial size does not divide the number.** Start from 26 on the 13-dial: it reads 0.
+- **The power is one less than the dial size.** 2 taken thirteen times over reads 2, not 1.
 
 ---
 
@@ -87,7 +97,7 @@ The other classical route expands a bracket raised to a power, every middle term
 | what is left | 16 − 13 | **3** |
 | the long way, as a check | 2, a thousand times | **3** |
 
-The 83 round trips each read 1, so they cost nothing; only 2 taken four times over is left, 16, reading 3. A thousand multiplications became four.
+The 83 round trips each read 1, so they cost nothing; only 2 taken four times over is left, 16, reading 3.
 
 ### What breaks if you drop a piece
 
@@ -220,6 +230,106 @@ gone wrong: cut by 13 -> 1, base 26 -> 0, 14 on a 15-dial (16384) -> 4
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the theorem for every prime dial and every whole number, not just 13 and 2. It proves both forms on this card and the shuffle the proof rests on, and it re-checks the card's 13-dial numbers. The printed tables and the long-way runs stay with the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 80 lines</summary>
+
+```lean
+-- Fermat's little theorem: for a prime p and a whole number a that p does not divide, a to the power p − 1 leaves remainder 1 on division by p, and a to the power p always reads a.
+import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.Data.Int.GCD
+import Mathlib.Tactic.NormNum.Prime
+
+/-- Fermat's little theorem, as the card states it: on a prime-sized dial p, take a number a
+that the dial size does not divide, start at 1 and multiply by a one time fewer than there are
+positions (p − 1 times); the dial reads 1, that is a ^ (p − 1) ≡ 1 (mod p). -/
+theorem fermat_little_pow_pred_eq_one (p : ℕ) (hp : p.Prime) (a : ℤ) (ha : ¬ (p : ℤ) ∣ a) :
+    a ^ (p - 1) ≡ 1 [ZMOD p] := by
+  have hcop : IsCoprime a (p : ℤ) := by
+    have hirr : Irreducible (p : ℤ) := (Nat.prime_iff_prime_int.mp hp).irreducible
+    exact ((Irreducible.coprime_iff_not_dvd hirr).mpr ha).symm
+  exact Int.ModEq.pow_card_sub_one_eq_one hp hcop
+
+/-- The second form, which needs no condition on the number: on a prime-sized dial p, multiply
+by a as many times as there are positions and the dial reads a, that is a ^ p ≡ a (mod p). -/
+theorem fermat_little_pow_self (p : ℕ) (hp : p.Prime) (a : ℤ) :
+    a ^ p ≡ a [ZMOD p] := by
+  exact Int.ModEq.pow_prime_eq_self hp a
+
+/-- The engine of the proof: on a prime dial p, multiplying every live position 1, …, p − 1 by a
+number a that p does not divide deals the same p − 1 positions out again, shuffled; nothing
+lands on 0 and nothing lands twice. -/
+theorem fermat_multiply_shuffles_live_positions (p : ℕ) (hp : p.Prime) (a : ℕ) (ha : ¬ p ∣ a) :
+    (Finset.Icc 1 (p - 1)).image (fun k => a * k % p) = Finset.Icc 1 (p - 1) := by
+  have hcop : Nat.gcd p a = 1 := (Nat.Prime.coprime_iff_not_dvd hp).mpr ha
+  have hsub : (Finset.Icc 1 (p - 1)).image (fun k => a * k % p) ⊆ Finset.Icc 1 (p - 1) := by
+    intro x hx
+    simp only [Finset.mem_image, Finset.mem_Icc] at hx ⊢
+    obtain ⟨k, ⟨hk1, hk2⟩, rfl⟩ := hx
+    constructor
+    · rcases Nat.eq_zero_or_pos (a * k % p) with h | h
+      · exfalso
+        have hdvd : p ∣ a * k := Nat.dvd_of_mod_eq_zero h
+        rcases (Nat.Prime.dvd_mul hp).mp hdvd with h' | h'
+        · exact ha h'
+        · have := Nat.le_of_dvd (by omega) h'
+          omega
+      · omega
+    · have := Nat.mod_lt (a * k) hp.pos
+      omega
+  have hinj : Set.InjOn (fun k => a * k % p) (Finset.Icc 1 (p - 1) : Set ℕ) := by
+    intro k hk l hl hkl
+    simp only [Finset.coe_Icc, Set.mem_Icc] at hk hl
+    have h : a * k ≡ a * l [MOD p] := hkl
+    have h2 : k ≡ l [MOD p] := Nat.ModEq.cancel_left_of_coprime hcop h
+    unfold Nat.ModEq at h2
+    rwa [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at h2
+  apply Finset.eq_of_subset_of_card_le hsub
+  rw [Finset.card_image_of_injOn hinj]
+
+-- 13 is prime; twelve doublings make 4,096 = 315 × 13 + 1, so the 13-dial reads 1.
+example : Nat.Prime 13 := by norm_num
+example : 2 ^ 12 = 4096 ∧ 4096 = 315 * 13 + 1 := by norm_num
+example : 2 ^ 12 % 13 = 1 := by norm_num
+example : (2 : ℤ) ^ 12 ≡ 1 [ZMOD 13] := by decide
+-- One more doubling: 2 ^ 13 = 8,192, and the dial reads 2.
+example : 2 ^ 13 = 8192 ∧ 2 ^ 13 % 13 = 2 := by norm_num
+-- Doubling deals 1 to 12 out again: 2, 4, 6, 8, 10, 12, 1, 3, 5, 7, 9, 11.
+example : (List.range' 1 12).map (fun k => 2 * k % 13) = [2, 4, 6, 8, 10, 12, 1, 3, 5, 7, 9, 11] := by
+  decide
+-- The row multiplied, and the doubled row: both read 12 on the 13-dial.
+example : Nat.factorial 12 = 479001600 := by decide
+example : 4096 * 479001600 = 1961990553600 := by norm_num
+example : 479001600 % 13 = 12 ∧ 1961990553600 % 13 = 12 := by norm_num
+-- 2 taken a thousand times over: 1000 = 83 × 12 + 4, 2 ^ 4 = 16 reads 3, and so does 2 ^ 1000.
+example : 1000 = 83 * 12 + 4 := by norm_num
+example : 2 ^ 4 % 13 = 3 := by norm_num
+example : 2 ^ 1000 % 13 = 3 := by decide +kernel
+-- What breaks: splitting 1000 by 13 leaves 12, which reads 1; 26 reads 0; a 15-dial reads 4.
+example : 1000 % 13 = 12 ∧ 2 ^ 12 % 13 = 1 := by norm_num
+example : 26 ^ 12 % 13 = 0 := by decide
+example : 2 ^ 14 = 16384 ∧ 2 ^ 14 % 15 = 4 ∧ ¬ Nat.Prime 15 := by norm_num
+-- The undo of 2 on the 13-dial: 2 ^ 11 reads 7, and 2 × 7 is one dial and 1 over.
+example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
+
+#print axioms fermat_little_pow_pred_eq_one
+#print axioms fermat_little_pow_self
+#print axioms fermat_multiply_shuffles_live_positions
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'fermat_little_pow_pred_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fermat_little_pow_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fermat_multiply_shuffles_live_positions' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to house numbers, so expect one to fire.
@@ -263,11 +373,13 @@ ALL CHECKS PASS
 - [Euler's theorem](04-eulers-theorem.md): the same statement without the word prime.
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the theorem as a primality test, and the composites that pass anyway.
 
+Left open: on a dial that is not prime, like 15, what power brings the reading back to 1?
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026: every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euler, Leonhard. "Theorematum quorundam ad numeros primos spectantium demonstratio" (1741). [Euler Archive, E54](https://scholarlycommons.pacific.edu/euler-works/54/). The first published proof.
 - Gauss, Carl Friedrich. *Disquisitiones Arithmeticae*, 1801. [Wikisource, Third Section](https://en.wikisource.org/wiki/Translation:Disquisitiones_Arithmeticae/Third_Section), free; [Clarke translation](https://yalebooks.yale.edu/book/9780300094732/disquisitiones-arithmeticae/), paid. Articles 49 to 51, the shuffle made standard.

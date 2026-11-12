@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A football kicked straight up at 20 metres a second never reaches 25 metres. Asking when it does gives 5t^2 - 20t + 25 = 0, with roots 2 + i and 2 - i ([The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)). That card stated that every polynomial of degree 1 or more has a complex root, and left the proof for here.
+A football kicked straight up at 20 metres a second never reaches 25 metres. Asking when it does, t seconds in, gives 5t^2 - 20t + 25 = 0, with roots 2 + i and 2 - i ([The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)). That card stated that every polynomial of degree 1 or more has a complex root, and left the proof for here.
 
 A sharper case: on the real line z^4 + 1 never drops below 1, so it has no real root. In the plane it has four, at (±1 ± i)/√2: the points at distance 1 from 0, half-way between the axes.
 
@@ -20,13 +20,13 @@ The proof goes through a fact about functions. Call a function **entire** when i
 
 <p align="center"><img src="../figures/liouville-and-the-fundamental-theorem-of-algebra.svg" alt="The four roots of z^4 + 1 on the unit circle, the football&#x27;s roots 2 + i and 2 - i, the circle of radius 2 outside which |z^4 + 1| is at least 15, and the dashed circle of radius 0.75 round the point 1, drawn to scale" width="420"></p>
 
-To scale, 50 units per 1. Four dots at distance 1 are the roots of z^4 + 1; two at right, the football's. On and outside the solid circle, radius 2, |z^4 + 1| is at least 15. The dashed circle, radius 0.75 round 1, nearly touches the root 0.765367 away.
+To scale, 50 units per 1. Four dots at distance 1 are the roots of z^4 + 1; two at right, the football's. On and outside the solid circle, radius 2, the size |z^4 + 1| (its distance from 0) is at least 15. The dashed circle, radius 0.75 round 1, nearly touches the root 0.765367 away.
 
 ---
 
 ## The formula
 
-$f'(a)$ is the complex derivative of $f$ at the point $a$; the loop sign ∮ is the contour integral once round a circle, anticlockwise ([Contour integrals](01-contour-integrals.md)); $M(r)$ is the largest $|f(z)|$ on the circle of radius $r$ round $a$. Cauchy's estimate, from [Derivatives from the boundary](06-derivatives-from-the-boundary.md):
+$f'(a)$ is the complex derivative of $f$ at the point $a$. The loop sign ∮ is the contour integral once round a circle, anticlockwise ([Contour integrals](01-contour-integrals.md)). $M(r)$ is the largest size $|f(z)|$ on the circle of radius $r$ round $a$. Cauchy's estimate, from [Derivatives from the boundary](06-derivatives-from-the-boundary.md):
 
 $$|f'(a)| \le \frac{M(r)}{r}$$
 
@@ -84,13 +84,13 @@ Take p(z) = z^4 + 1, f = 1/p, a = 1. Here p(1) = 2 and p'(1) = 4, and the recipr
 
 If $f$ is entire, the circle round $a$ may have any radius; if $|f(z)| \le M$ everywhere, then $|f'(a)| \le M/r$ for every $r$. That tends to 0, so $f'(a) = 0$ at every $a$. Between two points, $f$ changes by the integral of its slope along the segment joining them ([Antiderivatives](02-antiderivatives-and-path-independence.md)), which is 0.
 
-1/(z^4 + 1) escapes. Round 1 its M(r)/r falls from 3.038576 at r = 0.25 to 2.306999 at r = 0.5, then jumps to 21.883435 at r = 0.75: the root 0.765367 away, where 1/p blows up, stops the circle growing.
+1/(z^4 + 1) escapes. Round 1 its M(r)/r falls from 3.038576 at r = 0.25 to 2.306999 at r = 0.5, then jumps to 21.883435 at r = 0.75. The root 0.765367 away, where 1/p blows up, stops the circle growing.
 
 ### Step 3: with no root, 1/p would be bounded
 
 Suppose, for contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)), that p(z) = z^4 + 1 had no root. Then 1/p would be entire, since division fails only at zero, and bounded:
 
-- **Far out.** The triangle inequality gives |z^4 + 1| ≥ |z|^4 - 1, which is 15 on |z| = 2 and more beyond; sampling finds 15.000000. So 1/p is at most 1/15 there.
+- **Far out.** The triangle inequality (the size of a sum is at least the first size minus the second) gives |z^4 + 1| ≥ |z|^4 - 1. That is 15 on |z| = 2 and more beyond; sampling finds 15.000000. So 1/p is at most 1/15 there.
 - **Inside.** On the closed disc of radius 2, 1/p would be continuous, and a continuous function on a closed, bounded region reaches a largest size.
 
 The chart walks p circle by circle: the smallest size falls from 1.00 to 0.00 on the unit circle, where the roots sit, then climbs to 15.00.
@@ -125,9 +125,11 @@ Bounded and entire, 1/p would be constant by Step 2, slope 0 everywhere. Step 1 
 
 ### Step 5: peel one bracket at a time
 
-One root gives one bracket and leaves a polynomial one degree lower ([The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)); Step 4 applies again until n brackets are off. The roots of z^4 + 1 come in mirror pairs across the real axis, and a pair z_1 and its conjugate z̄_1 ("z-one-bar") multiply to z^2 - 2 Re(z_1) z + |z_1|^2. So z^4 + 1 = (z^2 - 1.414214z + 1)(z^2 + 1.414214z + 1), and each quadratic splits into two brackets.
+One root gives one bracket and leaves a polynomial one degree lower ([The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)); Step 4 applies again until n brackets are off.
 
-A second route: as z runs round a large circle, p(z) winds n times round 0; round a tiny one, not at all when p(0) ≠ 0; and the winding number ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)) changes only by passing through 0.
+The roots of z^4 + 1 come in mirror pairs across the real axis. A pair z_1 and its conjugate z̄_1 ("z-one-bar") multiply to z^2 - 2 Re(z_1) z + |z_1|^2, where Re(z_1) is the real part of z_1. So z^4 + 1 = (z^2 - 1.414214z + 1)(z^2 + 1.414214z + 1), and each quadratic splits into two brackets.
+
+A second route uses the winding number, the count of turns round 0 ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)). As z runs round a large circle, p(z) winds n times round 0; round a tiny one, not at all when p(0) ≠ 0. The count changes only when p(z) passes through 0, so some circle in between meets a root.
 
 ---
 
@@ -158,7 +160,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Roots by two roads sharing no formula: the formulas, and Newton's method from 0.4 + 0.9i with each root divided out before the next hunt (Step 5 as an algorithm). A third road multiplies the brackets back. The slope of 1/p at 1 comes from the reciprocal rule and from Cauchy's integral summed round a circle; |z^4 + 1| is sampled on circles against |r^4 - 1|.
+Roots by two roads sharing no formula: the formulas, and Newton's method from 0.4 + 0.9i with each root divided out before the next hunt (Step 5 as an algorithm). [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) replaces a guess z by z - p(z)/p'(z), again and again, until p(z) is 0. A third road multiplies the brackets back. The slope of 1/p at 1 comes from the reciprocal rule and from Cauchy's integral summed round a circle; |z^4 + 1| is sampled on circles against |r^4 - 1|.
 
 ### Python
 
@@ -356,6 +358,101 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three claims for every case, not just z^4 + 1.
+
+- A bounded function with a complex derivative everywhere is constant.
+- Every complex polynomial of degree 1 or more has a root.
+- It splits as its leading coefficient times one bracket per root, repeats counted.
+
+It also checks the worked numbers exactly: p(1) = 2, p'(1) = 4, the slope -1, the 15 on |z| = 2, the football's roots 2 ± i, and the mirror-pair split. The decimals, Newton's method, the loop integrals and the circle-by-circle sampling are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 69 lines</summary>
+
+```lean
+-- Liouville's theorem: a bounded function with a complex derivative everywhere is constant, so every complex polynomial of degree at least 1 has a root and splits into one bracket per root.
+import Mathlib.Analysis.Calculus.FDeriv.Basic
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Algebra.Polynomial.Eval.Defs
+import Mathlib.Algebra.Polynomial.Degree.Defs
+import Mathlib.Algebra.BigOperators.Group.Multiset.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Analysis.Complex.Liouville
+import Mathlib.Analysis.Complex.Polynomial.Basic
+
+open Polynomial
+
+/-- Liouville's theorem: if f is entire (has a complex derivative at every point of the
+plane) and its size never passes a fixed ceiling M, then f is constant. -/
+theorem bounded_entire_function_is_constant
+    (f : ℂ → ℂ) (hf : Differentiable ℂ f) (M : ℝ) (hM : ∀ z, ‖f z‖ ≤ M) :
+    ∀ z w, f z = f w := by
+  intro z w
+  apply hf.apply_eq_apply_of_bounded _ z w
+  rw [Metric.isBounded_iff_subset_closedBall 0]
+  refine ⟨M, ?_⟩
+  rintro _ ⟨x, rfl⟩
+  simpa using hM x
+
+/-- The fundamental theorem of algebra: every complex polynomial of degree 1 or more
+has a complex root. -/
+theorem polynomial_of_positive_degree_has_root
+    (p : ℂ[X]) (hp : 1 ≤ p.natDegree) :
+    ∃ z : ℂ, p.eval z = 0 := by
+  have h : 0 < p.degree := by
+    exact Polynomial.natDegree_pos_iff_degree_pos.mp hp
+  obtain ⟨z, hz⟩ := Complex.exists_root h
+  exact ⟨z, hz⟩
+
+/-- Peeling roots one at a time: a complex polynomial p of degree n ≥ 1 with leading
+coefficient a_n has roots z_1, ..., z_n (repeats allowed) with
+p(z) = a_n (z - z_1)(z - z_2) ... (z - z_n). -/
+theorem polynomial_splits_into_degree_many_brackets
+    (p : ℂ[X]) (hp : 1 ≤ p.natDegree) :
+    ∃ s : Multiset ℂ, Multiset.card s = p.natDegree ∧
+      p = C p.leadingCoeff * (s.map (fun z => X - C z)).prod := by
+  have hs := IsAlgClosed.splits p
+  refine ⟨p.roots, ?_, hs.eq_prod_roots⟩
+  exact hs.natDegree_eq_card_roots.symm
+
+-- p(z) = z^4 + 1 at 1: p(1) = 2 and p'(1) = 4 × 1^3 = 4.
+example : (1 : ℤ) ^ 4 + 1 = 2 ∧ 4 * (1 : ℤ) ^ 3 = 4 := by decide
+-- The slope of 1/p at 1 by the reciprocal rule: -p'(1)/p(1)^2 = -4/2^2 = -1.
+example : -(4 : ℚ) / 2 ^ 2 = -1 := by norm_num
+-- On |z| = 2 the size of z^4 + 1 is at least 2^4 - 1 = 15.
+example : (2 : ℤ) ^ 4 - 1 = 15 := by decide
+-- The football: 5z^2 - 20z + 25 = 5((z - 2)^2 + 1), with roots 2 + i and 2 - i.
+example (z : ℂ) : 5 * z ^ 2 - 20 * z + 25 = 5 * ((z - 2) ^ 2 + 1) := by ring
+example : 5 * (2 + Complex.I) ^ 2 - 20 * (2 + Complex.I) + 25 = 0 := by
+  ring_nf; rw [Complex.I_sq]; ring
+example : 5 * (2 - Complex.I) ^ 2 - 20 * (2 - Complex.I) + 25 = 0 := by
+  ring_nf; rw [Complex.I_sq]; ring
+-- Mirror pairs: z^4 + 1 = (z^2 - √2 z + 1)(z^2 + √2 z + 1).
+example (z : ℂ) :
+    z ^ 4 + 1 = (z ^ 2 - (Real.sqrt 2 : ℂ) * z + 1) * (z ^ 2 + (Real.sqrt 2 : ℂ) * z + 1) := by
+  have h : ((Real.sqrt 2 : ℝ) : ℂ) ^ 2 = 2 := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num)]; norm_num
+  linear_combination z ^ 2 * h
+
+#print axioms bounded_entire_function_is_constant
+#print axioms polynomial_of_positive_degree_has_root
+#print axioms polynomial_splits_into_degree_many_brackets
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bounded_entire_function_is_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polynomial_of_positive_degree_has_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polynomial_splits_into_degree_many_brackets' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -397,6 +494,8 @@ The two outputs match line for line.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): counts the roots inside a loop without finding them.
 - [Rouche's theorem](../06-Real%20Integrals%20and%20Counting%20Zeros/07-rouches-theorem.md): the fundamental theorem again, in two lines.
 - Splitting fields: a number system where every polynomial splits is **algebraically closed**.
+
+This card proves the n roots exist but not where they lie; how many sit inside a given loop is the question [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md) answers.
 
 ---
 

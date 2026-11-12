@@ -1,6 +1,6 @@
 # Induction: knock over the first domino and show each knocks the next
 
-[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Proof by induction
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Proof](../README.md#s06) → Induction
 
 ---
 
@@ -15,6 +15,8 @@ A claim they can carry: eight friends at a party, everyone shaking hands with ev
 That covers every party size, and there is no largest party, so checking never finishes. Induction does, in two.
 
 **Check the claim at the smallest case, then show any case carries the next, and it is proved for all of them at once.**
+
+**What kind of fact this is:** a method of proof. The handshake count is a theorem, proved with it on this card in Why it works. The method itself is allowed by a rule of the counting numbers ([Peano's three rules](07-peano-and-one-plus-one.md)).
 
 ### The picture: a chain nobody has to walk
 
@@ -36,6 +38,8 @@ The formula is the thing being proved:
 
 **At a party of n people, where every pair shakes hands once, the handshakes number n × (n − 1) ÷ 2.**
 
+**Read it aloud:** take the number of people, multiply by one fewer, and halve the result.
+
 Two jobs prove it for every n. **Base case:** show it at 1 person. **Induction step:** any size k where it holds must hand it to k + 1.
 
 | Piece | Plain meaning | In our party |
@@ -45,6 +49,13 @@ Two jobs prove it for every n. **Base case:** show it at 1 person. **Induction s
 | the base case | checked by hand at the smallest size | 1 person, 0 handshakes |
 | the induction hypothesis | assuming it holds at k | 7 people, 21 handshakes |
 | the induction step | a guest arrives, claim holds | 21 + 7 = 28 |
+
+### When it holds
+
+- **The base case is checked by hand.** Skip it and a false claim can still pass the step. The count with a spare 1 added passes it, and gives 29 at eight people.
+- **The step runs from every size k.** If it fails from even one size, the chain stops there, and no larger party is proved.
+- **The sizes are whole numbers in a line.** The proof covers 1 person and every size after it, one guest at a time. It says nothing about sizes below the base case.
+- **Every pair shakes hands once.** Count each handshake from both ends and eight people give 56, not 28.
 
 ---
 
@@ -201,6 +212,104 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the handshake count for every party size from 1 up.
+
+- n people, every pair shaking once, make n × (n − 1) ÷ 2 handshakes.
+- The base-plus-step rule, and the algebra of the step.
+- The worked numbers and the mistakes, exactly.
+
+Building the count one guest at a time is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 72 lines</summary>
+
+```lean
+-- Induction: at a party of n people, n at least 1, where every pair shakes hands once, the handshakes number n × (n − 1) ÷ 2, proved from a base case and a step.
+import Mathlib.Data.Finset.Powerset
+import Mathlib.Data.Fintype.Fin
+import Mathlib.Data.Fintype.Powerset
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Finset
+
+/-! The people at a party of `n` are `Fin n`. Every pair shakes hands once, so a handshake
+is a two-person set `{a, b}` with `a ≠ b`: one handshake for each unordered pair, never
+counted from both ends. The handshakes are `(univ : Finset (Fin n)).powersetCard 2`. -/
+
+/-- The handshake count: at a party of `n` people, where every pair shakes hands once,
+there are `n × (n − 1) ÷ 2` handshakes. The proof covers 1 person and every size after it. -/
+theorem handshakes_eq_n_times_n_sub_one_div_two (n : ℕ) (hn : 1 ≤ n) :
+    ((univ : Finset (Fin n)).powersetCard 2).card = n * (n - 1) / 2 := by
+  rw [Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin, Nat.choose_two_right]
+
+/-- Proof by induction from a base case of 1: if a claim holds at 1, and holding at any
+size `k` (from 1 on) hands it to `k + 1`, then it holds at every size from 1 on. -/
+theorem induction_from_one (P : ℕ → Prop) (base : P 1)
+    (step : ∀ k, 1 ≤ k → P k → P (k + 1)) :
+    ∀ n, 1 ≤ n → P n := by
+  intro n hn
+  induction n, hn using Nat.le_induction with
+  | base => exact base
+  | succ k hk ih => exact step k hk ih
+
+/-- The induction step at the door: a party of `k` with `k × (k − 1) ÷ 2` handshakes,
+plus a new guest who shakes all `k` hands, gives the claim at `k + 1`,
+namely `(k + 1) × ((k + 1) − 1) ÷ 2`. -/
+theorem handshake_step (k : ℕ) :
+    k * (k - 1) / 2 + k = (k + 1) * ((k + 1) - 1) / 2 := by
+  rw [← Nat.add_mul_div_right _ _ (by norm_num : 0 < 2)]
+  congr 1
+  cases k with
+  | zero => simp
+  | succ m => simp only [Nat.add_sub_cancel]; ring
+
+/-! The card's worked numbers. -/
+
+-- The base case: a party of one has 0 handshakes, and 1 × 0 ÷ 2 = 0.
+example : ((univ : Finset (Fin 1)).powersetCard 2).card = 0 := by decide
+example : 1 * (1 - 1) / 2 = 0 := by norm_num
+-- The chart: 2 people shake 1, 3 shake 3, 4 shake 6.
+example : ((univ : Finset (Fin 2)).powersetCard 2).card = 1 := by decide
+example : ((univ : Finset (Fin 3)).powersetCard 2).card = 3 := by decide
+example : ((univ : Finset (Fin 4)).powersetCard 2).card = 6 := by decide
+-- The party filling up: 0 + 1 + 2 = 3, 3 + 3 + 4 = 10, 10 + 5 + 6 = 21, 21 + 7 = 28.
+example : 0 + 1 + 2 = 3 := by norm_num
+example : 3 + 3 + 4 = 10 := by norm_num
+example : 10 + 5 + 6 = 21 := by norm_num
+example : 21 + 7 = 28 := by norm_num
+-- Five people: 10. Seven people: 21. Eight friends: 8 × 7 ÷ 2 = 28.
+example : ((univ : Finset (Fin 5)).powersetCard 2).card = 10 := by decide
+example : 7 * (7 - 1) / 2 = 21 := by norm_num
+example : 8 * (8 - 1) / 2 = 28 := by norm_num
+-- Every pair at a party of eight, listed and counted: 28.
+example : ((univ : Finset (Fin 8)).powersetCard 2).card = 28 := by decide
+-- The mistakes: a spare 1 added gives 29; counting from both ends gives 8 × 7 = 56;
+-- "never more than 28" fails at 9 people, with 9 × 8 ÷ 2 = 36.
+example : 8 * (8 - 1) / 2 + 1 = 29 := by norm_num
+example : 8 * 7 = 56 := by norm_num
+example : 9 * (9 - 1) / 2 = 36 := by norm_num
+example : ¬ (((univ : Finset (Fin 9)).powersetCard 2).card ≤ 28) := by decide
+-- The spare 1 fails the base case: 1 × 0 ÷ 2 + 1 = 1, not 0.
+example : 1 * (1 - 1) / 2 + 1 ≠ 0 := by norm_num
+
+#print axioms handshakes_eq_n_times_n_sub_one_div_two
+#print axioms induction_from_one
+#print axioms handshake_step
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'handshakes_eq_n_times_n_sub_one_div_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'induction_from_one' does not depend on any axioms
+'handshake_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -241,12 +350,14 @@ The two outputs match line for line.
 - [Strong induction and the least element](05-strong-induction-and-well-ordering.md): when one step back is not enough, and the smallest-counterexample version.
 - [Peano's three rules](07-peano-and-one-plus-one.md): where induction comes from, as a rule of the counting numbers.
 
+Left open: why base-plus-step is allowed at all, and what to do when the step needs more than the one size just below it.
+
 ---
 
 ## Sources
 
-Verified 6 Sep 2026; every link resolves.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Rosen, Kenneth H. *Discrete Mathematics and Its Applications*, 8th ed. McGraw-Hill, 2019. [Publisher page](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen/M9781259676512.html). The standard chapter.
+- Rosen, Kenneth H. *Discrete Mathematics and Its Applications*. McGraw Hill. [Publisher page](https://www.mheducation.com/highered/product/discrete-mathematics-and-its-applications-rosen.html). The standard chapter.
 - Velleman, Daniel J. *How to Prove It*, 3rd ed. Cambridge University Press, 2019. [doi:10.1017/9781108539890](https://doi.org/10.1017/9781108539890). The step written out in full.
 - Halmos, Paul R. *Naive Set Theory*. Springer, 1974. [doi:10.1007/978-1-4757-1645-0](https://doi.org/10.1007/978-1-4757-1645-0). Why base-plus-step is allowed at all.

@@ -63,7 +63,7 @@ The **converse**: if three positive lengths satisfy $a^2 + b^2 = c^2$, their tri
 
 ### Step 0: count one area two ways
 
-Build one big square out of pieces and count its area twice: as a whole, and piece by piece. The two counts must agree; their agreement is the theorem.
+Build one big square out of pieces (a dissection) and count its area twice: as a whole, and piece by piece. The two counts must agree; their agreement is the theorem.
 
 ### The picture: four copies of the truss in a 7 m square
 
@@ -138,7 +138,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported; the square root is found by halving an interval. The area $c^2$ is reached three ways: the rule, the dissection's subtraction, and the shoelace formula, which finds a polygon's area from the grid positions of its corners and never measures a slanted side. For the converse, the program lays rafter $a$ along the ground, swings rafter $b$ round a circle, and searches for the point where the diagonal reads the tape's value. That point's sideways shift from the square position must equal the residual divided by twice $a$; the law of cosines, on the trigonometry shelf, says why. A second truss, rafters 3 m and 3 m, runs the same roads.
+Nothing is imported; the square root is found by halving an interval. The area $c^2$ is reached three ways: the rule, the dissection's subtraction, and the shoelace formula, which finds a polygon's area from the grid positions of its corners and never measures a slanted side. For the converse, the program lays rafter $a$ along the ground, swings rafter $b$ round a circle, and searches for the point where the diagonal reads the tape's value. That point's sideways shift from the square position must equal the residual divided by twice $a$; [Law of cosines](../03-Trigonometry/06-law-of-cosines.md), this rule with a correction for any corner angle, says why. A second truss, rafters 3 m and 3 m, runs the same roads.
 
 ### Python
 
@@ -330,6 +330,84 @@ figure, dissection 1 m = 30: outer (20, 10) to (230, 220); centre [(110, 220), (
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves both claims for every flat triangle, not just the 3-4-5 truss.
+
+- The corner at C is square exactly when the leg squares add up to the hypotenuse square. So the tie beam is the root of their sum.
+- The dissection's subtraction leaves $a^2 + b^2$ for any $a$ and $b$.
+
+It also checks the card's whole-number sums exactly: the truss, the dissection, the missing rafter, the 6-8-10 and 5-12-13 trusses, and the mistakes. The decimal roots, the shoelace area and the search round the circle are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 53 lines</summary>
+
+```lean
+-- Pythagoras: in a flat triangle ABC the angle at C is a right angle exactly when BC^2 + CA^2 = AB^2.
+import Mathlib.Geometry.Euclidean.Angle.Unoriented.RightAngle
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open EuclideanGeometry Real
+
+/-- Pythagoras and its converse, in the flat plane. Take corners A, B, C, with legs
+a = BC and b = CA meeting at C and the side c = AB opposite C. If the angle at C is a
+right angle, then a^2 + b^2 = c^2; and if three lengths of a triangle obey
+a^2 + b^2 = c^2, the angle at C, between a and b, is a right angle. -/
+theorem pythagoras_and_its_converse (A B C : EuclideanSpace ℝ (Fin 2)) :
+    ∠ B C A = π / 2 ↔ dist B C ^ 2 + dist C A ^ 2 = dist A B ^ 2 := by
+  have h := EuclideanGeometry.dist_sq_eq_dist_sq_add_dist_sq_iff_angle_eq_pi_div_two B C A
+  rw [← h, dist_comm B A, dist_comm A C]
+  constructor <;> intro h <;> nlinarith [h]
+
+/-- The formula turned into a length: with the right angle at C, the hypotenuse is the
+positive square root of the leg squares added, c = √(a^2 + b^2). -/
+theorem hypotenuse_eq_sqrt_sum_of_leg_squares (A B C : EuclideanSpace ℝ (Fin 2))
+    (h : ∠ B C A = π / 2) :
+    dist A B = √(dist B C ^ 2 + dist C A ^ 2) := by
+  rw [(pythagoras_and_its_converse A B C).1 h]
+  exact (Real.sqrt_sq dist_nonneg).symm
+
+/-- The dissection count of Step 3: a square of side a + b, less four corner triangles
+of area ab/2 each, leaves a^2 + b^2. -/
+theorem dissection_area_count (a b : ℝ) :
+    (a + b) ^ 2 - 4 * (a * b / 2) = a ^ 2 + b ^ 2 := by
+  ring
+
+-- The truss: rafters 3 m and 4 m give 9 + 16 = 25, and the tie beam is the root of 25, 5 m.
+example : 3 ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
+example : √((3 : ℝ) ^ 2 + 4 ^ 2) = 5 := by
+  rw [show (3 : ℝ) ^ 2 + 4 ^ 2 = 5 ^ 2 by norm_num]
+  exact Real.sqrt_sq (by norm_num)
+-- The dissection: outer square 7 x 7 = 49, four triangles 4 x (3 x 4 / 2) = 24, middle 25.
+example : 7 * 7 = 49 ∧ 4 * (3 * 4 / 2) = 24 ∧ 49 - 24 = 25 := by decide
+-- The missing rafter: span 5 m and rafter 3 m leave 25 - 9 = 16 = 4^2.
+example : 5 ^ 2 - 3 ^ 2 = 4 ^ 2 := by decide
+-- The symmetric truss: 9 + 9 = 18, and 18 has no whole-number root.
+example : 3 ^ 2 + 3 ^ 2 = 18 ∧ ¬ IsSquare (18 : ℕ) := by decide +kernel
+-- Try changing: rafters 6 and 8 span 10; rafters 5 and 12 span 13.
+example : 6 ^ 2 + 8 ^ 2 = 10 ^ 2 := by decide
+example : 5 ^ 2 + 12 ^ 2 = 13 ^ 2 := by decide
+-- Mistakes: adding the rafters gives 7, not 5; lengths 3, 5, 4 in that order leave residual 18.
+example : 3 + 4 = 7 ∧ (3 + 4) ^ 2 ≠ 3 ^ 2 + 4 ^ 2 := by decide
+example : (3 : ℤ) ^ 2 + 5 ^ 2 - 4 ^ 2 = 18 := by decide
+
+#print axioms pythagoras_and_its_converse
+#print axioms hypotenuse_eq_sqrt_sum_of_leg_squares
+#print axioms dissection_area_count
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'pythagoras_and_its_converse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hypotenuse_eq_sqrt_sum_of_leg_squares' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dissection_area_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Rafters 6 m and 8 m.** Guess first. Every length doubles, so the span doubles too: 10 m.
@@ -372,11 +450,13 @@ ALL CHECKS PASS
 - [Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the rule turned into the distance between two points on a grid.
 - [Law of cosines](../03-Trigonometry/06-law-of-cosines.md): what a wider ridge does to the span, and why a negative residual means an opened corner, once angles have a number.
 
+This card covers only a square corner; how long the tie beam must be when the rafters meet at any other angle is the question it leaves open.
+
 ---
 
 ## Sources
 
-Verified 2026-09-24: every link below opens a page naming the cited work.
+Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euclid. *Elements*, Book I, [Proposition 47](https://mathcs.clarku.edu/~djoyce/elements/bookI/propI47.html), David E. Joyce's edition, Clark University. The theorem, by Euclid's own area proof.
 - Euclid. *Elements*, Book I, [Proposition 48](https://mathcs.clarku.edu/~djoyce/elements/bookI/propI48.html), same edition. The converse, by the built triangle of Step 4.

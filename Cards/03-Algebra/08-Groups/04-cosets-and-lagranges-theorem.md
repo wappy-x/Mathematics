@@ -8,7 +8,7 @@
 
 A 12-hour clock carries twelve hour marks, 0 to 11, and adding hours wraps round: 11 o'clock plus one hour reads 0. The twelve hours under that addition are a group: a set with one operation, a member that changes nothing, and an undo for every member ([Groups](01-groups.md)).
 
-Inside them sit the quarter marks. From 0, keep adding 3: 0, 3, 6, 9, then 0 again. Those four are closed under the same addition and hold each other's undos, so they are a group in their own right — a **subgroup**, here called H.
+Inside them sit the quarter marks. From 0, keep adding 3: 0, 3, 6, 9, then 0 again. Those four are closed under the same addition: adding any two of them gives one of the four. They also hold each other's undos, so they are a group in their own right — a **subgroup**, here called H.
 
 Now slide H. Add 1 to every member: 1, 4, 7, 10. Add 2: 2, 5, 8, 11. Add 3 and the original four are back. Three sets, four hours each, every hour in exactly one. A slid copy of a subgroup is a **coset**, the word used from here on.
 
@@ -63,7 +63,7 @@ The right side is a whole number of copies of $\lvert H\rvert$: that is what "di
 
 - **A finite group.** Cosets slice infinite groups too, but with no count there is nothing to divide.
 - **A real subgroup, not a subset of the right size.** It must hold the member that changes nothing, any two members' combination, and every undo. Drop one and the copies overlap: those of 0, 3, 6, 7 make 12 sets, 48 slots for 12 hours.
-- **One side at a time.** Right-hand slides give as many blocks of the same size, but where order matters the two collections can differ, so a proof must keep to one side.
+- **One side at a time.** Here $g$ slides from the left, as in $g * H$. Sliding from the right gives as many blocks of the same size, but where the order of combining matters the two collections can differ, so a proof must keep to one side.
 
 ---
 
@@ -86,7 +86,7 @@ In general, if two cosets share a member, combining one slide's undo with the ot
 
 Suppose $a * H$ and $b * H$ share a member: $a * h = b * k$ for some $h$ and $k$ in H. Combine on the left with $b^{-1}$, then on the right with $h^{-1}$: $b^{-1} * a = k * h^{-1}$, which is in H, since subgroups hold undos and combinations.
 
-Since $b^{-1} * a$ is in H, so is $(b^{-1} * a) * h$ for every $h$ in H. And $a * h = b * ((b^{-1} * a) * h)$, so every member of $a * H$ lies in $b * H$. Swapping $a$ and $b$ puts $b * H$ inside $a * H$, so the sets are equal. No step needed the operation to ignore order.
+Since $b^{-1} * a$ is in H, so is $(b^{-1} * a) * h$ for every $h$ in H. And $a * h = b * ((b^{-1} * a) * h)$, so every member of $a * H$ lies in $b * H$. Swapping $a$ and $b$ puts $b * H$ inside $a * H$, so the sets are equal. No step needed the operation to ignore the order of combining.
 
 </details>
 
@@ -113,7 +113,7 @@ The theorem runs one way. The units group has size 4 and its members' orders are
 
 </details>
 
-A second road reaches the same partition: two members are related when combining one's undo with the other lands in H. That relation is reflexive, symmetric and transitive, and such a relation cuts a set into non-overlapping classes ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the cosets.
+A second road reaches the same partition: two members are related when combining one's undo with the other lands in H. That relation is reflexive, symmetric and transitive: every member is related to itself, the relation runs both ways, and two links in a row make one. Such a relation cuts a set into non-overlapping classes ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the cosets.
 
 ---
 
@@ -339,6 +339,123 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves these facts for every finite group, not just the clock.
+
+- Each coset is the size of H.
+- Two cosets are equal or share nothing.
+- Every member sits in its own coset.
+- The group's size is the number of blocks times the size of H.
+- Every member's order divides the group's size.
+
+Lean rechecks the clock numbers and the units of 12 as arithmetic only. Building the blocks two ways and finding the units two ways is left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 89 lines</summary>
+
+```lean
+-- Cosets and Lagrange's theorem: in a finite group the left cosets of a subgroup are equal-sized blocks that never overlap unless equal, so the group's size is the number of cosets times the subgroup's size, and the subgroup's size and every member's order divide the group's size.
+import Mathlib.GroupTheory.Coset.Card
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Algebra.Group.Pointwise.Set.Basic
+import Mathlib.Data.Nat.Totient
+
+open Pointwise
+
+/-- Lagrange's theorem, as the card states it: in a finite group G, a subgroup H and its left
+slides g * H cut G into blocks, and the size of G is the number of distinct blocks times the
+size of H, so the size of H divides the size of G. -/
+theorem lagrange_card_eq_cosets_mul_card {G : Type*} [Group G] [Finite G] (H : Subgroup G) :
+    Nat.card G = Nat.card (Set.range fun g : G => g • (H : Set G)) * Nat.card H ∧
+      Nat.card H ∣ Nat.card G := by
+  refine ⟨?_, Subgroup.card_subgroup_dvd_card H⟩
+  rw [Subgroup.card_eq_card_quotient_mul_card_subgroup H]
+  congr 1
+  let F : G ⧸ H → Set G := Quotient.lift (fun g : G => g • (H : Set G)) (by
+    intro x y hxy
+    exact (leftCoset_eq_iff H).2 (QuotientGroup.leftRel_apply.1 hxy))
+  have hF : Function.Injective F := by
+    intro p q hpq
+    induction p using QuotientGroup.induction_on
+    induction q using QuotientGroup.induction_on
+    exact QuotientGroup.eq.2 ((leftCoset_eq_iff H).1 hpq)
+  have hr : Set.range F = Set.range fun g : G => g • (H : Set G) := by
+    ext s
+    constructor
+    · rintro ⟨q, rfl⟩
+      induction q using QuotientGroup.induction_on with
+      | H g => exact ⟨g, rfl⟩
+    · rintro ⟨g, rfl⟩
+      exact ⟨(g : G ⧸ H), rfl⟩
+  rw [← hr, Nat.card_range_of_injective hF]
+
+/-- Steps 0 to 2: every left coset g * H holds as many members as H, two left cosets that
+share a member are the same set, and every member g lies in its own coset g * H. -/
+theorem left_cosets_equal_size_disjoint_or_equal {G : Type*} [Group G] (H : Subgroup G)
+    (a b : G) :
+    Nat.card ↥(a • (H : Set G) : Set G) = Nat.card H ∧
+      (a • (H : Set G) = b • (H : Set G) ∨ Disjoint (a • (H : Set G)) (b • (H : Set G))) ∧
+      a ∈ a • (H : Set G) := by
+  refine ⟨?_, ?_, mem_own_leftCoset H.toSubmonoid a⟩
+  · rw [← Set.image_smul, Nat.card_image_of_injective (MulAction.injective a)]
+    rfl
+  · by_cases h : Disjoint (a • (H : Set G)) (b • (H : Set G))
+    · exact Or.inr h
+    · left
+      rw [Set.not_disjoint_iff] at h
+      obtain ⟨x, hxa, hxb⟩ := h
+      rw [mem_leftCoset_iff] at hxa hxb
+      rw [leftCoset_eq_iff]
+      have : a⁻¹ * b = (a⁻¹ * x) * (b⁻¹ * x)⁻¹ := by simp [mul_assoc]
+      rw [this]
+      exact H.mul_mem hxa (H.inv_mem hxb)
+
+/-- Step 3: in a finite group, every member's order divides the group's size. -/
+theorem order_of_member_dvd_card {G : Type*} [Group G] [Finite G] (g : G) :
+    orderOf g ∣ Nat.card G := by
+  exact orderOf_dvd_natCard g
+
+-- The clock: H = 0, 3, 6, 9 slid by 1 and by 2.
+example : (({0, 3, 6, 9} : Finset ℕ).image fun h => (1 + h) % 12) = {1, 4, 7, 10} := by decide
+example : (({0, 3, 6, 9} : Finset ℕ).image fun h => (2 + h) % 12) = {2, 5, 8, 11} := by decide
+-- Sliding by 4 names the same block as sliding by 1; sliding by 3 returns H.
+example : (({0, 3, 6, 9} : Finset ℕ).image fun h => (4 + h) % 12) =
+    (({0, 3, 6, 9} : Finset ℕ).image fun h => (1 + h) % 12) := by decide
+example : (({0, 3, 6, 9} : Finset ℕ).image fun h => (3 + h) % 12) = {0, 3, 6, 9} := by decide
+-- Twelve slides give exactly 3 distinct blocks, and 3 blocks × 4 hours = 12.
+example : ((Finset.range 12).image fun g =>
+    ({0, 3, 6, 9} : Finset ℕ).image fun h => (g + h) % 12).card = 3 := by decide
+example : 3 * 4 = 12 := by norm_num
+-- The units of the 12-clock are 1, 5, 7, 11, and phi(12) = 4.
+example : (Finset.range 12).filter (fun a => Nat.Coprime a 12) = {1, 5, 7, 11} := by decide
+example : Nat.totient 12 = 4 := by decide
+-- Their orders are 1, 2, 2, 2: 5 × 5, 7 × 7 and 11 × 11 each wrap to 1.
+example : 5 * 5 % 12 = 1 ∧ 7 * 7 % 12 = 1 ∧ 11 * 11 % 12 = 1 := by norm_num
+-- Each unit to the fourth power reads 1.
+example : ∀ a ∈ ({1, 5, 7, 11} : Finset ℕ), a ^ 4 % 12 = 1 := by decide
+-- Mistakes: 4 × 4 = 16 slots; 0, 3, 6, 7 gives 12 copies, 48 slots; 2 multiplied in 12 times reads 4.
+example : 4 * 4 = 16 := by norm_num
+example : ((Finset.range 12).image fun g =>
+    ({0, 3, 6, 7} : Finset ℕ).image fun h => (g + h) % 12).card = 12 := by decide
+example : 12 * 4 = 48 := by norm_num
+example : 2 ^ 12 % 12 = 4 := by norm_num
+
+#print axioms lagrange_card_eq_cosets_mul_card
+#print axioms left_cosets_equal_size_disjoint_or_equal
+#print axioms order_of_member_dvd_card
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lagrange_card_eq_cosets_mul_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'left_cosets_equal_size_disjoint_or_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'order_of_member_dvd_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the quarter-hour subgroup, so expect one to stop the program.
@@ -361,8 +478,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Clock and calendar arithmetic.** The three blocks here are the remainder classes of division by 3: a congruence class is a coset, seen from the group side.
-- **Public-key cryptography.** RSA rests on Euler's theorem ([Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)), which Step 4 reaches as a block count.
+- **Clock and calendar arithmetic.** The three blocks here are the remainder classes of division by 3, also called congruence classes: each one is a coset, seen from the group side.
+- **Public-key cryptography.** RSA, the public-key code named for its inventors Rivest, Shamir and Adleman, rests on Euler's theorem ([Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)), which Step 4 reaches as a block count. [RSA in outline](../../02-Number%20theory/06-Codes%20and%20Secrets/03-rsa-in-outline.md) shows it at work.
 - **Symmetry.** The turns of a square tile are a subgroup of the ways it can be set down, so those ways fall into equal blocks — counted in [Group actions](08-group-actions-and-counting.md).
 
 > **Say it back**

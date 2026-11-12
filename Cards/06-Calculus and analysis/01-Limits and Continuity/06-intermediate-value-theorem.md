@@ -10,7 +10,9 @@ A square tile of side 1 m covers 1 square metre. A tile of side 2 m covers 4. So
 
 Measure the miss: side squared minus 2. At side 1 it is −1; at side 2 it is +2. As the side grows smoothly, the miss cannot get from below zero to above without passing through zero. That side is the square root of two, about 1.414213562373095 m.
 
-The **intermediate value theorem** turns this into a proof. It says a continuous function (one whose graph has no jumps or holes, [Continuity](05-continuity.md)) on a closed interval takes every value between its two end values. A sign change at the ends proves a root exists. Halving the interval over and over, called **bisection**, is both the proof and a way to close in on the root. How many roots there are, the theorem never says.
+The **intermediate value theorem** turns this into a proof. It says a continuous function (one whose graph has no jumps or holes, [Continuity](05-continuity.md)) on a closed interval takes every value between its two end values.
+
+A sign change at the ends proves a root exists. Halving the interval over and over, called **bisection**, is both the proof and a way to close in on the root. How many roots there are, the theorem never says.
 
 **A function that is continuous on a closed interval, below a target at one end and above it at the other, equals the target somewhere in between: at least once, possibly more.**
 
@@ -87,6 +89,8 @@ Continuity at c means f(x) heads for f(c) as x heads for c, written
 
 $$\lim_{x \to c} f(x) = f(c).$$
 
+That limit is a tolerance game: name an output tolerance, and some input window keeps f that close to f(c).
+
 For this f the tolerance game is plain arithmetic. On [1, 2], f(x) − f(c) = (x − c)(x + c), and x + c is at most 4. To land within 0.001 of f(c), stay within 0.00025 of c. The checks measure the worst case in that window: 0.000707.
 
 Suppose f(c) were above zero. With half of f(c) as the tolerance, continuity gives a window around c where f stays above zero. Once the brackets are narrow enough the left ends a_n sit in that window, yet f is below zero at each: a contradiction. The right ends b_n rule out f(c) below zero. So f(c) = 0.
@@ -98,7 +102,9 @@ Let f be continuous on [a, b], f(a) < 0 < f(b). Set a_0 = a, b_0 = b, and m = (a
 
 The a_n rise and are bounded by b, so c = sup of the a_n exists by completeness. Every b_n bounds every a_k, so a_n ≤ c ≤ b_n: both ends lie within (b − a)/2^n of c.
 
-Suppose f(c) > 0. Take ε = f(c)/2. Continuity at c gives δ > 0 with |f(x) − f(c)| < ε, so f(x) > 0, for every x in [a, b] with |x − c| < δ. Choose n with (b − a)/2^n < δ. Then |a_n − c| < δ, so f(a_n) > 0, against f(a_n) < 0. If f(c) < 0, take ε = −f(c)/2; the same window makes f(b_n) < 0, against f(b_n) > 0. Hence f(c) = 0.
+Suppose f(c) > 0. Take the output tolerance ε (epsilon) = f(c)/2. Continuity at c gives an input window δ (delta) > 0 with |f(x) − f(c)| < ε, so f(x) > 0, for every x in [a, b] with |x − c| < δ. Choose n with (b − a)/2^n < δ. Then |a_n − c| < δ, so f(a_n) > 0, against f(a_n) < 0.
+
+If f(c) < 0, take ε = −f(c)/2; the same window makes f(b_n) < 0, against f(b_n) > 0. Hence f(c) = 0.
 
 For another target y, apply this to f − y, or to y − f if f(a) > f(b).
 
@@ -314,6 +320,98 @@ jump: ends -1, 1; bisection closes on 1.5000000000, where it is 1
 x^3 - x on [-2, 2]: ends -6, 6; grid roots [-1.0, 0.0, 1.0]; first midpoint 0.0
 f rises at every step of the grid: yes
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves three things.
+
+- The theorem itself, for every function continuous on a closed interval of real numbers.
+- The target-0 form.
+- No fraction in [1, 2] squares to 2. So the theorem needs the number line to have no gaps.
+
+It also checks the halving fractions and the cubic's values exactly. The decimals, the jump j and the bisection runs are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 66 lines</summary>
+
+```lean
+-- Intermediate value theorem: a function continuous on a closed interval [a, b] takes every value between f(a) and f(b).
+import Mathlib.Topology.Order.IntermediateValue
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.NumberTheory.Real.Irrational
+
+open Set
+
+/-- A function that is continuous on a closed interval [a, b] takes every value y
+between f(a) and f(b) (in either order): some input c in [a, b] has f(c) = y.
+The theorem promises at least one such c, not exactly one. -/
+theorem continuous_function_hits_every_value_between_end_values
+    (f : ℝ → ℝ) (a b : ℝ) (hab : a ≤ b) (hf : ContinuousOn f (Icc a b))
+    (y : ℝ) (hy : y ∈ uIcc (f a) (f b)) :
+    ∃ c ∈ Icc a b, f c = y := by
+  have h := intermediate_value_Icc hab hf
+  have h' := intermediate_value_Icc' hab hf
+  rcases le_total (f a) (f b) with hle | hle
+  · rw [uIcc_of_le hle] at hy
+    exact h hy
+  · rw [uIcc_of_ge hle] at hy
+    exact h' hy
+
+/-- Bolzano's form, target 0: if f is continuous on [a, b], below zero at a and above
+zero at b, then f has a root somewhere in [a, b]. -/
+theorem sign_change_gives_root
+    (f : ℝ → ℝ) (a b : ℝ) (hab : a ≤ b) (hf : ContinuousOn f (Icc a b))
+    (ha : f a < 0) (hb : 0 < f b) :
+    ∃ c ∈ Icc a b, f c = 0 := by
+  exact intermediate_value_Icc hab hf ⟨ha.le, hb.le⟩
+
+/-- The gap-free line is needed: on the fractions, x^2 - 2 is below zero at 1 and above
+zero at 2, yet no fraction in [1, 2] makes it zero. -/
+theorem no_fraction_in_one_two_squares_to_two :
+    (1 : ℚ) ^ 2 - 2 < 0 ∧ 0 < (2 : ℚ) ^ 2 - 2 ∧
+      ∀ q : ℚ, 1 ≤ q → q ≤ 2 → q ^ 2 - 2 ≠ 0 := by
+  refine ⟨by norm_num, by norm_num, ?_⟩
+  intro q h1 _ hq
+  have hq2 : ((q : ℝ)) ^ 2 = 2 := by
+    have : q ^ 2 = 2 := by linarith
+    exact_mod_cast this
+  have hq0 : (0 : ℝ) ≤ q := by exact_mod_cast (show (0 : ℚ) ≤ q by linarith)
+  have hs : Real.sqrt 2 = q := by rw [← hq2, Real.sqrt_sq hq0]
+  exact irrational_sqrt_two ⟨q, hs.symm⟩
+
+-- The tile's miss x^2 - 2 changes sign on [1, 2]: -1 at side 1, 2 at side 2.
+example : (1 : ℚ) ^ 2 - 2 = -1 := by norm_num
+example : (2 : ℚ) ^ 2 - 2 = 2 := by norm_num
+-- The first four halvings, as fractions: 3/2, 5/4, 11/8, 23/16.
+example : (3 / 2 : ℚ) ^ 2 - 2 = 1 / 4 := by norm_num
+example : (5 / 4 : ℚ) ^ 2 - 2 = -7 / 16 := by norm_num
+example : (11 / 8 : ℚ) ^ 2 - 2 = -7 / 64 := by norm_num
+example : (23 / 16 : ℚ) ^ 2 - 2 = 17 / 256 := by norm_num
+-- After 12 halvings the bracket is [5792/4096, 5793/4096]: the sign test in whole numbers.
+example : 5792 * 5792 < 2 * 4096 * 4096 ∧ 2 * 4096 * 4096 < 5793 * 5793 := by decide
+-- Its width is (2 - 1)/2^12 = 1/4096, and the midpoint is within 1/8192 of the root.
+example : ((2 : ℚ) - 1) / 2 ^ 12 = 1 / 4096 := by norm_num
+example : (5793 : ℚ) / 4096 - 5792 / 4096 = 1 / 4096 := by norm_num
+-- The cubic h(x) = x^3 - x: -6 at -2, 6 at 2, and roots -1, 0 and 1.
+example : (-2 : ℤ) ^ 3 - (-2) = -6 ∧ (2 : ℤ) ^ 3 - 2 = 6 := by decide
+example : (-1 : ℤ) ^ 3 - (-1) = 0 ∧ (0 : ℤ) ^ 3 - 0 = 0 ∧ (1 : ℤ) ^ 3 - 1 = 0 := by decide
+
+#print axioms continuous_function_hits_every_value_between_end_values
+#print axioms sign_change_gives_root
+#print axioms no_fraction_in_one_two_squares_to_two
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'continuous_function_hits_every_value_between_end_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sign_change_gives_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_fraction_in_one_two_squares_to_two' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

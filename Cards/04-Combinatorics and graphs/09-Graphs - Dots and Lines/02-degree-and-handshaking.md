@@ -8,9 +8,9 @@
 
 Nine people leave a party. Each is asked how many of the others they shook hands with, and each says three. At least one answer is wrong: add them and 9 × 3 = 27. Every handshake was reported twice, so the answers total twice the handshakes. Twice anything is even. 27 is odd.
 
-Parties are incidental. In any network of dots joined by lines — vertices and edges, in the standard words ([Graphs](01-graphs-vertices-and-edges.md)) — the count of line-ends meeting a dot is its **degree**, and the degrees add to twice the line count, each line counted at both ends. This shelf's standing example is a six-station metro map: A to F, eight lines, degrees 2, 3, 3, 2, 3, 3, adding to 16 = 2 × 8.
+Parties are incidental. In any network of dots joined by lines — vertices and edges, in the standard words ([Graphs](01-graphs-vertices-and-edges.md)) — the count of line-ends meeting a dot is its **degree**. The degrees add to twice the line count, each line counted at both ends. This shelf's standing example is a six-station metro map: A to F, eight lines, degrees 2, 3, 3, 2, 3, 3, adding to 16 = 2 × 8.
 
-The leftover earns its keep: odd-degree dots cannot themselves be odd in number, so no network has exactly three. The metro has four.
+One more fact follows: odd-degree dots cannot themselves be odd in number, so no network has exactly three. The metro has four.
 
 **The degrees add to twice the line count, because each line is counted at both ends, so the odd-degree dots come in pairs.**
 
@@ -30,7 +30,7 @@ flowchart LR
     C --- F
 ```
 
-A and D sit on the ring only; B, C, E and F each carry a crossing too.
+A and D sit on the ring only, the loop A-B-C-D-E-F-A; B, C, E and F each carry a crossing too, B-E or C-F.
 
 ---
 
@@ -57,7 +57,7 @@ Shared out, that total is the average degree, $2\lvert E\rvert$ over $n$: 16 / 6
 ### When it holds
 
 - **Finitely many dots and lines.** Both sides are counts; with infinitely many, nothing to compare.
-- **A loop adds two, and parallel lines count separately.** Either shortcut breaks the count: scored as one end, a loop at A makes the metro read 17 for nine lines, odd.
+- **A loop adds two, and parallel lines count separately.** Parallel lines join the same pair of stations. Either shortcut breaks the count: scored as one end, a loop at A makes the metro read 17 for nine lines, odd.
 - **No arrows.** Tails add to the arrow count and heads add to it separately: two identities, not this one ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 
 ---
@@ -91,12 +91,12 @@ A 1 marks a line ending there. Row totals are the degrees, read across; every co
 
 ### Step 3: the odd-degree stations come in pairs
 
-Split the vertices by parity of degree. The even degrees add to an even number and the whole total is even, so the odd degrees add to an even number too. But odd numbers add to an even result only for an even count of them ([Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md)). So the odd-degree vertices number 0, 2, 4, never 1, 3 or 5.
+Split the vertices by parity of degree: whether the degree is even or odd. The even degrees add to an even number and the whole total is even, so the odd degrees add to an even number too. But odd numbers add to an even result only for an even count of them ([Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md)). So the odd-degree vertices number 0, 2, 4, never 1, 3 or 5.
 
 <details>
 <summary>Detailed proof, written out</summary>
 
-Let $V$ and $E$ be finite, and form one collection: every pair of a vertex and an end of an edge lying at it, a loop contributing two. Grouped by vertex, the group at $v$ holds $\deg(v)$ members, so the size is $\sum_{v \in V} \deg(v)$; grouped by edge, each group holds two, so the size is $2\lvert E\rvert$, and two counts of one collection are equal. The odd-degree vertices, set apart, have degrees adding to $2\lvert E\rvert$ less the even degrees, both even; a sum of odd numbers is even only for an even count of them. No step used connectedness or any drawing.
+Let $V$ and $E$ be finite, and form one collection: every pair of a vertex and an end of an edge lying at it, a loop contributing two. Grouped by vertex, the group at $v$ holds $\deg(v)$ members, so the size is $\sum_{v \in V} \deg(v)$. Grouped by edge, each group holds two, so the size is $2\lvert E\rvert$, and two counts of one collection are equal. The odd-degree vertices, set apart, have degrees adding to $2\lvert E\rvert$ less the even degrees, both even; a sum of odd numbers is even only for an even count of them. No step used connectedness or any drawing.
 
 </details>
 
@@ -115,7 +115,7 @@ The test, from Havel and Hakimi, serves the hungriest dot first and never return
 
 </details>
 
-A second route adds the lines one at a time: with none the total is 0, and each new line raises two degrees by one, or one by two for a loop. It is Step 2 in other clothes, a new line a new column.
+A second route adds the lines one at a time: with none the total is 0, and each new line raises two degrees by one, or one by two for a loop. It is Step 2 in another form, a new line a new column.
 
 ---
 
@@ -349,6 +349,115 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves these facts for every finite network, not just the metro, with loops and parallel lines allowed.
+
+- The degrees add to twice the number of lines.
+- The number of odd-degree dots is even.
+- In a regular network, the degree times the number of dots is even.
+
+It also checks the metro exactly: its degrees, its two roads to 16, its four odd stations, the loop and second-track mistakes, and the party numbers. The census of all 64 networks on four stations, and Havel-Hakimi, are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 83 lines</summary>
+
+```lean
+-- Degrees and the handshaking lemma: in any finite network of dots and lines, loops and parallel lines allowed, the degrees add to twice the number of lines, so the odd-degree dots are even in number.
+import Mathlib.Data.Sym.Sym2
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Group.Nat.Even
+import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Fintype.Sigma
+import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Algebra.BigOperators.Ring.Nat
+
+open Finset
+
+/-! A network is a finite set of dots `V` and a finite set of lines `E`; each line has an
+unordered pair of ends `ends e : Sym2 V`. A loop is a line whose two ends are the same dot,
+and two different lines may share their ends (parallel lines). No arrows: the pair is
+unordered. -/
+
+/-- The degree of a dot `v`: how many line-ends meet it. A loop at `v` puts both of its
+ends there, so it adds two; parallel lines each add their own ends. -/
+def lineEnds {V E : Type*} [Fintype E] [DecidableEq V] (ends : E → Sym2 V) (v : V) : ℕ :=
+  ∑ e, (ends e).toMultiset.count v
+
+/-- The handshaking lemma: in a network with finitely many dots and lines, loops and
+parallel lines allowed, the degrees of all the dots add up to twice the number of lines. -/
+theorem sum_of_degrees_eq_twice_number_of_lines
+    {V E : Type*} [Fintype V] [Fintype E] [DecidableEq V] (ends : E → Sym2 V) :
+    ∑ v, lineEnds ends v = 2 * Fintype.card E := by
+  unfold lineEnds
+  rw [Finset.sum_comm]
+  have h : ∀ e, ∑ v, (ends e).toMultiset.count v = 2 := by
+    intro e
+    rw [Multiset.sum_count_eq_card (s := (univ : Finset V)) (fun a _ => mem_univ a)]
+    exact Sym2.card_toMultiset (ends e)
+  simp [h, mul_comm]
+
+/-- The odd-degree dots come in pairs: in any such network the number of dots whose
+degree is odd is even (0, 2, 4, ..., never 1 or 3). -/
+theorem odd_degree_dots_are_even_in_number
+    {V E : Type*} [Fintype V] [Fintype E] [DecidableEq V] (ends : E → Sym2 V) :
+    Even (univ.filter (fun v => Odd (lineEnds ends v))).card := by
+  have h := sum_of_degrees_eq_twice_number_of_lines ends
+  have h2 : Even (∑ v, lineEnds ends v) := by rw [h]; exact even_two_mul _
+  exact (Finset.even_sum_iff_even_card_odd (s := univ) (fun v => lineEnds ends v)).1 h2
+
+/-- The veto for regular networks: if every dot has the same degree d, then d times the
+number of dots is even. So no network has nine dots each of degree 3, or five of degree 3. -/
+theorem regular_degree_times_dots_is_even
+    {V E : Type*} [Fintype V] [Fintype E] [DecidableEq V] (ends : E → Sym2 V)
+    (d : ℕ) (hreg : ∀ v, lineEnds ends v = d) :
+    Even (d * Fintype.card V) := by
+  have h := sum_of_degrees_eq_twice_number_of_lines ends
+  simp only [hreg, sum_const, card_univ, smul_eq_mul] at h
+  rw [mul_comm, h]
+  exact even_two_mul _
+
+/-! The card's worked numbers. Stations A to F are 0 to 5. -/
+
+/-- The metro: lines A-B, B-C, C-D, D-E, E-F, F-A and the crossings B-E, C-F. -/
+def metro : Fin 8 → Sym2 (Fin 6) :=
+  ![s(0, 1), s(1, 2), s(2, 3), s(3, 4), s(4, 5), s(5, 0), s(1, 4), s(2, 5)]
+
+-- The degrees read off the map: 2, 3, 3, 2, 3, 3.
+example : (List.ofFn fun v => lineEnds metro v) = [2, 3, 3, 2, 3, 3] := by decide
+-- Road one, the degrees added: 16. Road two, two ends a line: 2 × 8 = 16.
+example : ∑ v, lineEnds metro v = 16 := by decide
+example : 2 * Fintype.card (Fin 8) = 16 := by decide
+-- The odd-degree stations are B, C, E, F: four of them.
+example : univ.filter (fun v => Odd (lineEnds metro v)) = {1, 2, 4, 5} := by decide
+-- A loop at A adds two, not one: nine lines, degree total 18 (not 17).
+example : ∑ v, lineEnds (Fin.cons s(0, 0) metro) v = 18 := by decide
+-- A second B-C track counts separately: nine lines, degree total 18 (not 16).
+example : ∑ v, lineEnds (Fin.cons s(1, 2) metro) v = 18 := by decide
+-- Nine people each shaking three hands: 9 × 3 = 27, odd, so no such party.
+example : ¬ Even (3 * 9) := by decide
+-- Four hands each: 9 × 4 = 36 = 2 × 18 handshakes.
+example : 4 * 9 = 2 * 18 := by norm_num
+-- Five stations each meeting three lines: 3 × 5 = 15, odd.
+example : ¬ Even (3 * 5) := by decide
+
+#print axioms sum_of_degrees_eq_twice_number_of_lines
+#print axioms odd_degree_dots_are_even_in_number
+#print axioms regular_degree_times_dots_is_even
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_of_degrees_eq_twice_number_of_lines' depends on axioms: [propext, Classical.choice, Quot.sound]
+'odd_degree_dots_are_even_in_number' depends on axioms: [propext, Classical.choice, Quot.sound]
+'regular_degree_times_dots_is_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the metro map and the four wishes, so expect one to stop the program.
@@ -372,7 +481,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Street sweeping and postal rounds.** A route covering every line once and returning to its start needs every degree even; with the map in one piece, two odd dots allow an open route, and more than two allow neither. The metro's four odd stations are why its map cannot be swept in one closed trip ([Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md)).
-- **Fixtures, rotas and valences.** A round-robin of nine teams each playing three others is the impossible party again ([Edge colouring](../12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md)). Atoms behave the same, degree fixed by valence — carbon 4, hydrogen 1: a formula whose valences total an odd number describes nothing.
+- **Fixtures, rotas and valences.** A fixture list of nine teams each playing three others is the impossible party again ([Edge colouring](../12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md)). Atoms behave the same, degree fixed by valence, the number of bonds an atom makes — carbon 4, hydrogen 1: a formula whose valences total an odd number describes nothing.
 - **Network measurement.** A large network's headline figure is its average degree, 16 / 6 = 2.67 here, and random models are matched to it ([Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md)); the stored table of joined pairs gives the degrees as its row totals ([The adjacency matrix](07-adjacency-matrix-and-walk-counting.md)).
 
 > **Say it back**

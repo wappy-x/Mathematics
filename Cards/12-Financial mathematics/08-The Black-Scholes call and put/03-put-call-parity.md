@@ -10,7 +10,9 @@ Acme shares trade at $100.00 today. Two tickets are on sale, both for one year f
 
 Buy the call and sell the put. Now watch expiry day. Acme at $120.00: the call gets used, and one share is bought for $100.00. Acme at $80.00: whoever bought the put uses it, and one share is bought for $100.00. Either way, whatever Acme did in between, one share changes hands for $100.00 on that day. That is exactly the promise a **forward contract** makes: buy one share, fixed price, fixed date.
 
-So a call bought and a put sold are a forward in a costume. A forward can also be built with no options in it at all — buy just under one share today, so that its reinvested dividends grow the holding into one whole share, and borrow the cash that will have grown to $100.00 by expiry day. Two packages that pay the same in every future cannot cost different amounts, because the cheap one would be bought and the dear one sold until the difference closed.
+So a call bought and a put sold are a forward in a costume. A forward can also be built with no options in it at all. Buy just under one share today, so that its reinvested dividends grow the holding into one whole share. Then borrow the cash that will have grown to $100.00 by expiry day.
+
+Two packages that pay the same in every future cannot cost different amounts, because the cheap one would be bought and the dear one sold until the difference closed.
 
 On this shelf's market the call costs $9.23 and the put $6.33, a difference of $2.90. The homemade forward costs $98.02 of prepaid share less $95.12 of loan, which is also $2.90. That is the card: the difference between the two ticket prices is nailed down, so any three of the four prices fix the fourth.
 
@@ -76,7 +78,7 @@ Each price enters once, and only added or subtracted, so any three of the four f
 - **The two legs matched**: same share, strike, expiry day and size. Mismatch any of those and the kinks stop cancelling; what is left is a spread, not a forward, and the equation says nothing about it.
 - **One rate for borrowing and lending, and the share can be sold short.** Real markets charge more to borrow than they pay to lend, and charge a fee to borrow shares, so the equality widens into a band about as wide as those costs.
 - **Dividends known, and paid as a yield.** Announced cash amounts need [Known cash dividends](08-known-cash-dividends.md). Guess the yield 1% too high here and the forward shrinks, so the put backed out of the call comes out at $7.31 instead of $6.33: a dollar too dear.
-- **Prices that can actually be traded.** A stale mid-quote on an illiquid strike breaks parity on the screen and nowhere else, which is why a desk's first response to a violation is to try trading it.
+- **Prices that can actually be traded.** A stale mid-quote on an illiquid strike breaks parity on the screen and nowhere else, which is why a desk's first response to a violation is to try trading it. A mid-quote is the price halfway between what buyers bid and what sellers ask; an illiquid strike is one that rarely trades.
 
 ---
 
@@ -84,7 +86,7 @@ Each price enters once, and only added or subtracted, so any three of the four f
 
 ### Step 0: two packages that pay the same in every future cost the same today
 
-The proof rests on one rule. If two packages pay the same amount on the same day, whatever happens in between, they must cost the same today ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). If one were cheaper, buying it and selling the other would hand over cash today and leave nothing to settle later, and money like that on a screen is taken within seconds.
+The proof rests on one rule. If two packages pay the same amount on the same day, whatever happens in between, they must cost the same today ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). If one were cheaper, buying it and selling the other would hand over cash today and leave nothing to settle later. Money like that on a screen is taken within seconds.
 
 Nothing in that rule is a belief about Acme. So the job is to find two packages with identical payoffs, one built out of the two tickets and one built without them.
 
@@ -134,7 +136,7 @@ Suppose the put is quoted at $6.00 while parity says $6.330081. The pair of tick
 
 That $0.330081 is exactly the put's shortfall, $6.330081 - $6.00. On expiry day the legs cancel at every price: the short call and long put pay $-(S_T - K)$ between them, the share is worth $S_T$, the loan takes $100.00. The run prints the net at $60.00, $100.00 and $140.00, and it is zero in all three. Nothing is left to go wrong, so the $0.33 was riskless and was banked a year before expiry day.
 
-That package — long share, long put, short call — is a **conversion**. Reversed it is a **reversal**, which is what to do when the put is quoted too dear instead.
+That package — long share, long put, short call — is a **conversion**. "Long" means bought and held; "short" means sold. Reversed it is a **reversal**, which is what to do when the put is quoted too dear instead.
 
 <details>
 <summary>Detailed proof: both boxes, and both violation trades</summary>
@@ -156,7 +158,7 @@ Both boxes hold the larger of $S_T$ and $K$ in both columns, so by Step 0 they c
 
 **The prepaid share, carefully.** Reinvesting a dividend yield $q$ makes a holding of shares grow in number at rate $q$, so $e^{-qT}$ of a share today becomes exactly one share at expiry. That is the only place dividends enter, and it is why they enter as a factor on $S$ rather than as a term.
 
-**Both violation trades.** Write the price gap as $(C - P) - (S\,e^{-qT} - K\,e^{-rT})$. If it is positive, sell the call, buy the put, buy the prepaid share and borrow $K\,e^{-rT}$: the legs bring in that gap today, and on expiry day the package pays $-(S_T - K) + S_T - K = 0$ at every price, so the money was free. If the gap is negative, reverse all four legs and take in its size instead. Both signs produce free money, so the gap is zero.
+**Both violation trades.** Write the price gap as $(C - P) - (S\,e^{-qT} - K\,e^{-rT})$. If it is positive, sell the call, buy the put, buy the prepaid share and borrow $K\,e^{-rT}$. The legs bring in that gap today, and on expiry day the package pays $-(S_T - K) + S_T - K = 0$ at every price, so the money was free. If the gap is negative, reverse all four legs and take in its size instead. Both signs produce free money, so the gap is zero.
 
 **What this does not prove.** Parity pins the difference only. Adding the same amount to both prices leaves the difference untouched, so parity alone cannot say whether $9.23 and $6.33 are sane levels; that takes [Option price bounds](04-option-price-bounds.md).
 
@@ -195,7 +197,7 @@ Same market, right answers $2.90 for the gap and $6.33 for the put.
 | Dividend dropped, $S - K\,e^{-rT}$ | $4.88, so the put backs out at $4.35 | The forward collects none of the dividends a shareholder would, worth $1.98 |
 | Sides swapped, $K\,e^{-rT} - S\,e^{-qT}$ | −$2.90, so the put backs out at $12.12 | The forward is the wrong way round. The share sits with the put, the cash with the call |
 
-The code prints each wrong gap, and every wrong put is out by more than a real bid-offer spread.
+The code prints each wrong gap, and every wrong put is out by more than a real bid-offer spread (a dealer's selling price minus its buying price).
 
 ### The second picture: the prices move, the gap does not
 
@@ -216,7 +218,11 @@ The top line is the call, the middle one the put, the flat line at $2.90 the dif
 
 ## Code, from first principles, and it actually runs
 
-Four independent roads. Road 1 checks the payoff identity price by price, at 41 prices from $0.01 to $1000.00, printing both boxes beside it. Road 2 prices the call and the put with the formulas from their own cards. Road 3 prices each one again by brute force, averaging the payoff under the bell curve with Simpson's rule, touching neither those formulas nor parity. Road 4 prices each one again on a 1000-step coin-flip tree. Then the conversion trade runs, four wrong right-hand sides are computed, and the American put is priced on the same tree for contrast. Nothing imported already knows the answer: the bell-curve area comes from `math.erf` in Python and from adding up thin slices under the curve in Rust.
+Four independent roads. Road 1 checks the payoff identity price by price, at 41 prices from $0.01 to $1000.00, printing both boxes beside it. Road 2 prices the call and the put with the formulas from their own cards.
+
+Road 3 prices each one again by brute force, averaging the payoff under the bell curve with Simpson's rule, touching neither those formulas nor parity. Road 4 prices each one again on a 1000-step coin-flip tree.
+
+Then the conversion trade runs, four wrong right-hand sides are computed, and the American put is priced on the same tree for contrast. Nothing imported already knows the answer: the bell-curve area comes from `math.erf` in Python and from adding up thin slices under the curve in Rust.
 
 Watch roads 2 and 4 in the output. The tree's own call is $9.225062 and its put $6.328137, each about two tenths of a cent off the formula. Their difference is $2.896925, right to the last printed digit. A crude model gets both prices wrong by the same amount, because parity is not part of the model — it is arithmetic the model cannot help obeying.
 
@@ -660,6 +666,105 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line, from different code taking different routes to the bell-curve area.
 
+### Lean
+
+Lean proves the card's formula $C - P = S\,e^{-qT} - K\,e^{-rT}$ for any pricing rule with two properties.
+
+- Packages that pay the same cost the same.
+- Prices add up.
+
+The only prices it needs are one dollar due on expiry day and the prepaid share. It also proves the payoff identity at every share price, the forward form $e^{-rT}(F - K)$, and the card's whole-number payoff checks at strike 100. The call and put prices themselves, the volatility, the tree, the conversion trade and every decimal are left to the Python and Rust checks.
+
+<details>
+<summary>The Lean proof, 74 lines</summary>
+
+```lean
+-- Put-call parity: if prices add up (two packages paying the same cost the same), a call minus a put at one strike costs the prepaid share minus the discounted strike, whatever the share does.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Algebra.Module.LinearMap.Defs
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-!
+How the card's setting is written here.
+
+* A payoff is a function `ℝ → ℝ`: what a ticket pays on expiry day, given the share's
+  price `S_T` on that day. The call pays `max (S_T - K) 0`, the put `max (K - S_T) 0`.
+  Both are European: the payoff depends only on the one expiry-day price.
+* `price` gives today's price of every payoff. The card's one market assumption, that two
+  packages paying the same on expiry day cost the same today and that prices of packages
+  add up ("free money gets taken", one rate for borrowing and lending, short selling
+  allowed), is the statement that `price` is a linear map.
+* One dollar paid on expiry day (the cash leg) costs `exp (-r * T)` today.
+* One whole share delivered on expiry day (the prepaid share, dividends reinvested at
+  yield `q`) costs `S * exp (-q * T)` today.
+No model of how the share price moves appears, and no volatility.
+-/
+
+/-- Put-call parity. Under any pricing rule where packages that pay the same cost the same
+and prices add up, a European call minus a European put on the same share, at the same
+strike `K` and expiry, costs exactly the prepaid share minus the discounted strike:
+`C - P = S e^{-qT} - K e^{-rT}`. Nothing about how jumpy the share is enters. -/
+theorem call_minus_put_eq_prepaid_share_minus_discounted_strike
+    (price : (ℝ → ℝ) →ₗ[ℝ] ℝ) (S K r q T : ℝ)
+    (h_cash : price (fun _ => 1) = Real.exp (-r * T))
+    (h_share : price (fun x => x) = S * Real.exp (-q * T)) :
+    price (fun x => max (x - K) 0) - price (fun x => max (K - x) 0)
+      = S * Real.exp (-q * T) - K * Real.exp (-r * T) := by
+  have hfun : (fun x : ℝ => max (x - K) 0) - (fun x => max (K - x) 0)
+      = (fun x : ℝ => x) - K • (fun _ : ℝ => (1 : ℝ)) := by
+    funext x
+    simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, mul_one]
+    rcases le_total x K with h | h
+    · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+    · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+  rw [← map_sub, hfun, map_sub, map_smul, h_cash, h_share, smul_eq_mul]
+
+/-- Step 1 of the card: on expiry day, a call bought minus a put sold at the same strike
+pays exactly what a forward pays, `S_T - K`, at every share price. -/
+theorem call_payoff_sub_put_payoff (K x : ℝ) :
+    max (x - K) 0 - max (K - x) 0 = x - K := by
+  rcases le_total x K with h | h
+  · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+  · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+
+/-- The forward form: with the forward price `F = S e^{(r-q)T}`, the parity gap is the
+forward's lead over the strike, discounted back: `S e^{-qT} - K e^{-rT} = e^{-rT} (F - K)`. -/
+theorem parity_gap_eq_discounted_forward_minus_strike (S K r q T : ℝ) :
+    S * Real.exp (-q * T) - K * Real.exp (-r * T)
+      = Real.exp (-r * T) * (S * Real.exp ((r - q) * T) - K) := by
+  have h : Real.exp (-q * T) = Real.exp (-r * T) * Real.exp ((r - q) * T) := by
+    rw [← Real.exp_add]; ring_nf
+  rw [h]; ring
+
+-- The card's whole-number payoff checks, strike 100.
+-- At 60: long call 0, short put -40, sum -40, and 60 - 100 = -40.
+example : max ((60 : ℤ) - 100) 0 - max (100 - 60) 0 = 60 - 100 := by norm_num
+-- At 140: long call 40, short put 0, sum 40, and 140 - 100 = 40.
+example : max ((140 : ℤ) - 100) 0 - max (100 - 140) 0 = 140 - 100 := by norm_num
+-- At 80 and 120: -20 and 20.
+example : max ((80 : ℤ) - 100) 0 - max (100 - 80) 0 = -20 := by norm_num
+example : max ((120 : ℤ) - 100) 0 - max (100 - 120) 0 = 20 := by norm_num
+-- The two boxes at 60 and 140: call plus cash 100 equals put plus one share, the larger of the two.
+example : max ((60 : ℤ) - 100) 0 + 100 = max (100 - 60) 0 + 60 := by norm_num
+example : max ((140 : ℤ) - 100) 0 + 100 = max (100 - 140) 0 + 140 := by norm_num
+
+#print axioms call_minus_put_eq_prepaid_share_minus_discounted_strike
+#print axioms call_payoff_sub_put_payoff
+#print axioms parity_gap_eq_discounted_forward_minus_strike
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'call_minus_put_eq_prepaid_share_minus_discounted_strike' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_payoff_sub_put_payoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'parity_gap_eq_discounted_forward_minus_strike' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -675,7 +780,7 @@ The two outputs are identical line for line, from different code taking differen
 > [!warning]
 > **Using the equality on options that can be exercised early.** Listed single-share options in the US are American: usable any day, not only expiry day. Feed their prices into $C - P = S\,e^{-qT} - K\,e^{-rT}$ and the "free money" that appears is mostly the value of the early-exercise right, which is real and is nobody else's to collect. On the house market's 1000-step tree the American put is worth $6.659759 against the European $6.328137, and the difference between the American prices is $2.565303 instead of $2.896925. The equality becomes a corridor: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
 >
-> **Conventions verified 19 Sep 2026:** listed US single-share options are American-style, while most index options, SPX among them, are European and cash-settled, and there the equality holds as written.
+> **Conventions verified 19 Sep 2026:** listed US single-share options are American-style, while most index options, SPX among them, are European and cash-settled, and there the equality holds as written. SPX is the market's name for options on the S&P 500 index.
 >
 > - **Leaving the strike undiscounted.** $C - P = S - K$ gives $0.00 here, so the put backs out at $9.23 instead of $6.33. The whole gap is carry, and most of it is that year of interest on the strike.
 > - **Forgetting the dividend.** The gap comes out at $4.88 and the put at $4.35, light by $1.98 on a $6.33 put — exactly the dividends the forward misses. For a currency option the same slot holds the foreign interest rate.
@@ -686,11 +791,11 @@ The two outputs are identical line for line, from different code taking differen
 
 ## Where you meet it in real life
 
-- **Backing one price out of the other.** An illiquid put is quoted from the liquid call at the same strike, and no implied volatility is trusted until the pair has been checked against parity.
+- **Backing one price out of the other.** An illiquid put is quoted from the liquid call at the same strike. No implied volatility, the volatility that makes the formula give the quoted price, is trusted until the pair has been checked against parity.
 - **Reading the forward off the option screen.** The forward price is the strike plus the gap carried forward, $103.05 here, the same number cash and carry gives. Desks run it to find the dividend, or the share-borrowing cost, the options market is assuming: [Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md).
 - **Conversions and reversals.** A trader long the share, long the put and short the call holds no exposure to the share at all, only the carry — the standing way to lock a parity violation, and where the $0.33 of Step 4 came from.
 - **One volatility per strike.** For European tickets a call and a put at one strike must imply the same volatility. When they do not, the suspect is the forward, the rate or the dividend fed in, never the volatility.
-- **Barriers and choosers.** The same adding-up trick reappears elsewhere: a knock-in plus a knock-out at one barrier is the plain option ([Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), and a ticket whose holder picks call or put later is priced by parity ([Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md)).
+- **Barriers and choosers.** The same adding-up trick reappears elsewhere. A knock-out option dies the first time the share touches a set price, the barrier, and a knock-in option is born then. A knock-in plus a knock-out at one barrier is the plain option ([Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), and a ticket whose holder picks call or put later is priced by parity ([Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md)).
 - **A company's balance sheet.** Treat its shares as a call on its assets and its debt becomes the assets minus that call, which parity rewrites as a safe bond minus a put: [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md). That put is the risk of default.
 
 > **Say it back**
@@ -718,7 +823,7 @@ The two outputs are identical line for line, from different code taking differen
 - [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): currency options, where the dividend slot holds the foreign interest rate.
 - [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): shares as a call on a company's assets, its risky debt as a bond minus a put.
 
-Parity fixes the difference between the two prices and says nothing about the level of either, so a call could still be quoted above the share itself and pass this test; what rules that out is the next card, option price bounds.
+Parity fixes the difference between the two prices and says nothing about the level of either. So a call could still be quoted above the share itself and pass this test; what rules that out is the next card, [Option price bounds](04-option-price-bounds.md).
 
 ---
 

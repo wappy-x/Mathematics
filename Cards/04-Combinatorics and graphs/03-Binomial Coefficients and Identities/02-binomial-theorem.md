@@ -8,7 +8,9 @@
 
 Raise 11 to the fourth power: 14,641. The digits are 1, 4, 6, 4, 1 — row 4 of Pascal's triangle, the array in which each entry is the sum of the two above it ([Pascal's rule](01-pascals-rule-and-the-triangle.md)).
 
-No coincidence. 11 is 10 + 1, so 11^4 is four brackets of (10 + 1) multiplied together. Multiplying them out means taking the 10 or the 1 from each and multiplying the four things taken. There are 16 walks: one takes no 1 and gives 10,000, four take it once and give 1,000 apiece, six take it twice and give 100, four give 10, one gives 1. The piles add: 10,000 + 4,000 + 600 + 40 + 1 = 14,641.
+No coincidence. 11 is 10 + 1, so 11^4 is four brackets of (10 + 1) multiplied together. Multiplying them out means taking the 10 or the 1 from each and multiplying the four things taken.
+
+Call each such run of choices a walk. There are 16 walks: one takes no 1 and gives 10,000, four take it once and give 1,000 apiece, six take it twice and give 100, four give 10, one gives 1. Walks with the same product form a pile. The piles add: 10,000 + 4,000 + 600 + 40 + 1 = 14,641.
 
 A pile's size counts the ways of choosing which brackets handed over the 1, and the triangle holds those counts. This card states the rule for any two numbers and any whole power, adds the three-term version, and takes a familiar balance apart: $100 at 5% for ten years reaches $162.89, where simple interest alone would stop at $150.00.
 
@@ -42,7 +44,9 @@ $$(a + b)^n = \sum_{k=0}^{n} C(n, k)\; a^{\,n-k} b^{\,k}$$
 
 **Read it aloud:** take b from k brackets and a from the rest, count the ways, and add one piece for every k from none to all. A piece is a **term**.
 
-With a third thing, $c$, in the bracket, naming the brackets that gave $b$ no longer fixes a walk: each bracket has three doors. What fixes it is the split into the groups that gave $a$, $b$ and $c$ — sizes i, j and l, adding to n. Such splits number n! divided by i!, j! and l! ([Splitting into groups](../02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Write it C(n; i, j, l), read "n split into i, j and l".
+With a third thing, $c$, in the bracket, naming the brackets that gave $b$ no longer fixes a walk: each bracket has three doors, three things to take. What fixes it is the split into the groups that gave $a$, $b$ and $c$ — sizes i, j and l, adding to n.
+
+Such splits number n! divided by i!, j! and l! ([Splitting into groups](../02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Write it C(n; i, j, l), read "n split into i, j and l". Here n!, read "n factorial", is 1 × 2 × … × n, so 3! = 6 ([Factorials](../01-Counting%20Principles/03-factorial.md)).
 
 $$(a + b + c)^n = \sum C(n; i, j, l)\; a^{\,i} b^{\,j} c^{\,l}, \qquad C(n; i, j, l) = \frac{n!}{i!\; j!\; l!}$$
 
@@ -53,14 +57,16 @@ $$(a + b + c)^n = \sum C(n; i, j, l)\; a^{\,i} b^{\,j} c^{\,l}, \qquad C(n; i, j
 | $a$, $b$, $c$ | the things inside a bracket | 10 and 1, or 100, 10, 1 | pieces grow |
 | $n$ | the power: how many brackets | 4 | longer row |
 | $k$ | brackets handing over $b$ | 0 to 4 | weight to $b$ |
+| $i$, $j$, $l$ | brackets handing over $a$, $b$, $c$ | 1, 1, 1 | weight to that letter |
 | $\sum$ | add what follows, once per $k$ | k = 0 up to 4 | more to add |
 | $C(n, k)$ | ways to choose those $k$ | 1, 4, 6, 4, 1 | peaks mid-row |
 | $C(n; i, j, l)$ | splits into three named groups | C(3; 1, 1, 1) = 6 | more piles |
+| $n!$ | 1 × 2 × … × n, "n factorial" | 3! = 6 | grows fast |
 
 ### When it holds
 
 - **A whole power, zero or more.** At n = 4 the sum stops after five pieces; a half or a minus never stops — Newton's series ([The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md)).
-- **Order of multiplication must not matter.** Numbers are safe, square matrices are not: (A + B)^2 is A×A + A×B + B×A + B×B, and A×B + B×A need not be 2A×B.
+- **Order of multiplication must not matter.** Numbers are safe, square matrices (grids of numbers multiplied row by column) are not ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)): (A + B)^2 is A×A + A×B + B×A + B×B, and A×B + B×A need not be 2A×B.
 - **A negative b is fine; the sign rides in b^k.** Odd k subtracts: (10 − 1)^4 is 6,561, or 9^4.
 - **Empty powers count as 1, and 0! = 1.** That is what makes the ends of the row a^n and b^n.
 
@@ -359,6 +365,137 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves both rules for every whole power, whenever order of multiplication does not matter, and that each row adds to 2^n. Python and Rust check the worked numbers.
+
+<details>
+<summary>The Lean proof, 111 lines</summary>
+
+```lean
+-- The binomial theorem: for any whole power n, (a + b)^n is the sum of C(n, k) a^(n-k) b^k, and (a + b + c)^n is the sum of n!/(i! j! l!) a^i b^j c^l over all splits i + j + l = n, whenever the letters can be multiplied in either order.
+import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Data.Nat.Factorial.Basic
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Finset Nat
+
+/-- The binomial theorem. For every whole power n ≥ 0, multiplying out n brackets of
+(a + b) gives one piece per k from 0 to n: C(n, k) copies of a^(n-k) b^k, where C(n, k)
+counts the ways to choose which k brackets hand over b. The only condition is that a and b
+can be multiplied in either order (a × b = b × a); a and b may be any numbers, negative
+ones included, or anything else that adds and multiplies in the usual way. -/
+theorem binomial_theorem_choice_counts {R : Type*} [Semiring R]
+    (a b : R) (hab : Commute a b) (n : ℕ) :
+    (a + b) ^ n = ∑ k ∈ range (n + 1), (n.choose k : R) * a ^ (n - k) * b ^ k := by
+  rw [add_comm, hab.symm.add_pow]
+  refine sum_congr rfl fun k _ => ?_
+  rw [(hab.symm.pow_pow k (n - k)).eq, ← Nat.cast_comm, mul_assoc]
+
+/-- The three-term version. For every whole power n ≥ 0, (a + b + c)^n is the sum, over
+all whole i, j, l adding to n, of C(n; i, j, l) = n! / (i! j! l!) copies of a^i b^j c^l,
+where C(n; i, j, l) counts the ways to split the n brackets into the groups that hand over
+a, b and c. The condition is again that order of multiplication does not matter between
+any two of a, b, c. -/
+theorem trinomial_theorem_split_counts {R : Type*} [Semiring R]
+    (a b c : R) (hab : Commute a b) (hac : Commute a c) (hbc : Commute b c) (n : ℕ) :
+    (a + b + c) ^ n =
+      ∑ x ∈ (range (n + 1) ×ˢ range (n + 1) ×ˢ range (n + 1)).filter
+          (fun x => x.1 + x.2.1 + x.2.2 = n),
+        ((n ! / (x.1 ! * x.2.1 ! * x.2.2 !) : ℕ) : R) * a ^ x.1 * b ^ x.2.1 * c ^ x.2.2 := by
+  -- The split count n!/(i! j! l!) equals C(n, i+j) * C(i+j, j).
+  have coef : ∀ i j l : ℕ,
+      (i + j + l)! / (i ! * j ! * l !) = (i + j + l).choose (i + j) * (i + j).choose j := by
+    intro i j l
+    apply Nat.div_eq_of_eq_mul_left (by positivity)
+    have h1 := Nat.choose_mul_factorial_mul_factorial (Nat.le_add_right (i + j) l)
+    rw [Nat.add_sub_cancel_left] at h1
+    have h2 := Nat.add_choose_mul_factorial_mul_factorial i j
+    rw [← h1, ← h2]
+    ring
+  rw [(hac.add_left hbc).add_pow]
+  simp_rw [binomial_theorem_choice_counts a b hab, sum_mul]
+  rw [sum_sigma']
+  symm
+  apply sum_nbij' (fun x => (⟨x.1 + x.2.1, x.2.1⟩ : Σ _ : ℕ, ℕ))
+    (fun y => (y.1 - y.2, y.2, n - y.1))
+  · rintro ⟨i, j, l⟩ hx
+    simp only [mem_filter, mem_product, mem_range] at hx
+    simp only [mem_sigma, mem_range]
+    omega
+  · rintro ⟨m, j⟩ hx
+    simp only [mem_sigma, mem_range] at hx
+    simp only [mem_filter, mem_product, mem_range]
+    omega
+  · rintro ⟨i, j, l⟩ hx
+    simp only [mem_filter, mem_product, mem_range] at hx
+    simp only [Prod.mk.injEq, true_and]
+    omega
+  · rintro ⟨m, j⟩ hx
+    simp only [mem_sigma, mem_range] at hx
+    simp only [Sigma.mk.injEq, heq_eq_eq, and_true]
+    omega
+  · rintro ⟨i, j, l⟩ hx
+    simp only [mem_filter, mem_product, mem_range] at hx
+    obtain ⟨-, rfl⟩ := hx
+    simp only [coef, Nat.add_sub_cancel, Nat.add_sub_cancel_left, Nat.cast_mul]
+    simp only [mul_assoc]
+    rw [(Nat.cast_commute ((i + j + l).choose (i + j)) (((i + j).choose j : ℕ) : R)).left_comm]
+    congr 1
+    rw [Nat.cast_comm]
+    simp only [mul_assoc]
+
+/-- Setting a = b = 1: row n of Pascal's triangle adds to 2^n. -/
+theorem pascal_row_sums_to_two_pow (n : ℕ) :
+    ∑ k ∈ range (n + 1), n.choose k = 2 ^ n := by
+  exact Nat.sum_range_choose n
+
+-- Row 4 of Pascal's triangle is 1, 4, 6, 4, 1.
+example : (List.range 5).map (Nat.choose 4) = [1, 4, 6, 4, 1] := by decide
+
+-- (10 + 1)^4 term by term: 10,000 + 4,000 + 600 + 40 + 1 = 14,641 = 11^4.
+example : ∑ k ∈ range 5, Nat.choose 4 k * 10 ^ (4 - k) * 1 ^ k = 14641 := by decide
+example : (11 : ℕ) ^ 4 = 14641 := by norm_num
+
+-- (10 - 1)^4 with the sign riding in b^k: 10,000 - 4,000 + 600 - 40 + 1 = 6,561 = 9^4.
+example : ∑ k ∈ range 5, (Nat.choose 4 k : ℤ) * 10 ^ (4 - k) * (-1) ^ k = 6561 := by decide
+example : (9 : ℕ) ^ 4 = 6561 := by norm_num
+
+-- Row 10 adds to 1,024, and with alternating signs to 0.
+example : ∑ k ∈ range 11, Nat.choose 10 k = 1024 := by decide
+example : ∑ k ∈ range 11, (-1 : ℤ) ^ k * Nat.choose 10 k = 0 := by decide
+
+-- One bracket each: C(3; 1, 1, 1) = 3!/(1! 1! 1!) = 6, contributing 6 × 100 × 10 × 1 = 6,000.
+example : 3 ! / (1 ! * 1 ! * 1 !) = 6 := by decide
+example : 3 ! / (1 ! * 1 ! * 1 !) * 100 * 10 * 1 = 6000 := by decide
+
+-- (100 + 10 + 1)^3 by split counts is 1,367,631 = 111^3.
+example :
+    ∑ x ∈ (range 4 ×ˢ range 4 ×ˢ range 4).filter (fun x => x.1 + x.2.1 + x.2.2 = 3),
+      3 ! / (x.1 ! * x.2.1 ! * x.2.2 !) * 100 ^ x.1 * 10 ^ x.2.1 * 1 ^ x.2.2 = 1367631 := by
+  decide
+example : (111 : ℕ) ^ 3 = 1367631 := by norm_num
+
+-- The usual mistake: (10 + 1)^4 read as 10^4 + 1^4 gives 10,001, not 14,641.
+example : (10 : ℕ) ^ 4 + 1 ^ 4 = 10001 ∧ (10 + 1 : ℕ) ^ 4 ≠ 10 ^ 4 + 1 ^ 4 := by decide
+
+#print axioms binomial_theorem_choice_counts
+#print axioms trinomial_theorem_split_counts
+#print axioms pascal_row_sums_to_two_pow
+```
+
+</details>
+
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'binomial_theorem_choice_counts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'trinomial_theorem_split_counts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pascal_row_sums_to_two_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
