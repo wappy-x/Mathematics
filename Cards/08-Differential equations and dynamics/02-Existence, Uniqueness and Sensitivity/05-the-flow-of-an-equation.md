@@ -74,7 +74,7 @@ Both routes end at 2, as the composition law promises for every start and every 
 ### When it holds
 
 - **The rule reads only the state.** If it reads the clock, as in $y' = 2ty$, a wait depends on when it begins: the map from year 0, used twice, gives 1.1331 against 1.2840 for one move. Such an equation needs a map from a start time to an end time.
-- **One start gives one history, both ways in time.** Otherwise the flow is no function. The [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md) card guarantees it when $f$ is Lipschitz: its slope stays bounded. The leaking bucket, $h' = -0.2\sqrt{h}$, fails that at empty. Forward it is fine, but starts of 25 cm and 1 cm both read 0.00 at 60 s, so running back from empty has no single answer.
+- **One start gives one history, both ways in time.** Otherwise the flow is no function. [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md) guarantees it when $f$ is Lipschitz: its slope stays bounded. The leaking bucket, $h' = -0.2\sqrt{h}$, fails that at empty. Forward it is fine, but starts of 25 cm and 1 cm both read 0.00 at 60 minutes, so running back from empty has no single answer.
 - **The time stays inside the life span** ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)). From 100 animals that is under 1 year; at 1.5 years the formula prints −2.00, which is no colony.
 - **The colony model fits only while it is sparse.** Crowding stops real growth long before infinity.
 
@@ -138,6 +138,8 @@ A second road needs no flow formula. The time to grow from one head count to a l
 | time to grow 1 to 2 | 1/1 − 1/2 | 0.5 years |
 | life span from 1 | 1/1 | 1 year |
 
+Two quarter-year waits and one half-year wait both bring the colony of 100 to 200 animals, as long as the wait stays inside its 1-year life span.
+
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
@@ -145,7 +147,7 @@ A second road needs no flow formula. The time to grow from one head count to a l
 | Rule reads the clock, $y' = 2ty$: the year-0 map used twice | 1.1331 against 1.2840 | Waiting depends on when the wait starts |
 | Growth factor reused: 4/3 squared | 1.7778, not 2.0000 | Factors repeat only for a linear law such as $y' = y$ |
 | Formula used past the life span: $\varphi_{1.5}(1)$ | −2.00 | The colony ran out at 1 year; the flow is undefined there |
-| Bucket $h' = -0.2\sqrt{h}$ run backwards from empty | 0.00 or 1.00 cm, 10 s earlier | Two histories meet at empty, so no backward flow |
+| Bucket $h' = -0.2\sqrt{h}$ run backwards from empty | 0.00 or 1.00 cm, 10 minutes earlier | Two histories meet at empty, so no backward flow |
 
 ---
 
@@ -206,7 +208,7 @@ print(f"mistake, y' = 2ty: map from 0 used twice {m(0.25, m(0.25, 1.0)):.4f}, "
 print(f"mistake, growth factor reused: {a:.4f} x {a:.4f} = {a * a:.4f}, not {c:.4f}")
 print(f"mistake, formula past the life span: phi_1.5(1) = {phi(1.5, 1.0):.2f}")
 print(f"bucket: 25 cm empties at t = {math.sqrt(25) / 0.1:.0f}; at t = 60 starts of 25 cm and 1 cm "
-      f"read {level(60, 25):.2f} and {level(60, 1):.2f}; 10 s before empty: 0.00 or {level(-10, 0):.2f}")
+      f"read {level(60, 25):.2f} and {level(60, 1):.2f}; 10 min before empty: 0.00 or {level(-10, 0):.2f}")
 assert abs(t1 - 0.25) < 1e-9 and abs(t12 - 0.5) < 1e-9     # the integral recovers the times
 assert abs(euler(1.0, 0.5, 1e-5) - 2) < 1e-3 and 8 < errs[1] / errs[2] < 12
 assert worst < 1e-12 and shift < 1e-12                     # twice short equals once long
@@ -214,7 +216,7 @@ assert abs(m(0.25, m(0.25, 1.0)) - m(0.5, 1.0)) > 0.1      # a clock-reading rul
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 flow: phi_0.25(1) = 1.3333; phi_0.25(1.3333) = 2.0000; phi_0.5(1) = 2.0000; phi_-0.5(2) = 1.0000
@@ -232,7 +234,7 @@ order kept at every chart time: yes; life span from 1: 1.00, from 2: 0.50
 mistake, y' = 2ty: map from 0 used twice 1.1331, one move of 0.5 1.2840
 mistake, growth factor reused: 1.3333 x 1.3333 = 1.7778, not 2.0000
 mistake, formula past the life span: phi_1.5(1) = -2.00
-bucket: 25 cm empties at t = 50; at t = 60 starts of 25 cm and 1 cm read 0.00 and 0.00; 10 s before empty: 0.00 or 1.00
+bucket: 25 cm empties at t = 50; at t = 60 starts of 25 cm and 1 cm read 0.00 and 0.00; 10 min before empty: 0.00 or 1.00
 ALL CHECKS PASS
 ```
 
@@ -299,7 +301,7 @@ fn main() {
     println!("mistake, y' = 2ty: map from 0 used twice {:.4}, one move of 0.5 {:.4}", m(0.25, m(0.25, 1.0)), m(0.5, 1.0));
     println!("mistake, growth factor reused: {:.4} x {:.4} = {:.4}, not {:.4}", a, a, a * a, c);
     println!("mistake, formula past the life span: phi_1.5(1) = {:.2}", phi(1.5, 1.0));
-    println!("bucket: 25 cm empties at t = {:.0}; at t = 60 starts of 25 cm and 1 cm read {:.2} and {:.2}; 10 s before empty: 0.00 or {:.2}",
+    println!("bucket: 25 cm empties at t = {:.0}; at t = 60 starts of 25 cm and 1 cm read {:.2} and {:.2}; 10 min before empty: 0.00 or {:.2}",
         25f64.sqrt() / 0.1, level(60.0, 25.0), level(60.0, 1.0), level(-10.0, 0.0));
     assert!((t1 - 0.25).abs() < 1e-9 && (t12 - 0.5).abs() < 1e-9); // the integral recovers the times
     assert!((euler(1.0, 0.5, 1e-5) - 2.0).abs() < 1e-3 && errs[1] / errs[2] > 8.0 && errs[1] / errs[2] < 12.0);
@@ -309,7 +311,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 flow: phi_0.25(1) = 1.3333; phi_0.25(1.3333) = 2.0000; phi_0.5(1) = 2.0000; phi_-0.5(2) = 1.0000
@@ -327,8 +329,185 @@ order kept at every chart time: yes; life span from 1: 1.00, from 2: 0.50
 mistake, y' = 2ty: map from 0 used twice 1.1331, one move of 0.5 1.2840
 mistake, growth factor reused: 1.3333 x 1.3333 = 1.7778, not 2.0000
 mistake, formula past the life span: phi_1.5(1) = -2.00
-bucket: 25 cm empties at t = 50; at t = 60 starts of 25 cm and 1 cm read 0.00 and 0.00; 10 s before empty: 0.00 or 1.00
+bucket: 25 cm empties at t = 50; at t = 60 starts of 25 cm and 1 cm read 0.00 and 0.00; 10 min before empty: 0.00 or 1.00
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the composition law and the no-crossing rule for every rule that reads only the state, and the colony's flow formula.
+
+- For a rule that reads only the state and is Lipschitz near each state, waiting t then s is waiting s + t. This holds whenever s + t stays inside the life span.
+- Two solutions that read the same state at one moment are one history: their curves never cross.
+- The colony curve $x/(1 - tx)$ starts at x, obeys $y' = y^2$ and composes, as long as $tx$ stays under 1.
+- The worked numbers by hand are exact, from 4/3 and 2 down to the −2 past the life span.
+
+The Python and Rust checks cover the rest: the travel times by Simpson's rule, Euler's rule, the clock-reading rule and the leaking bucket.
+
+```lean
+-- The flow: for a rule y' = f(y) that reads only the state, with f locally Lipschitz, the flow on its largest time domain obeys "waiting t then s is waiting s + t", solution curves never cross, and the colony flow x / (1 - t x) of y' = y^2 composes the same way.
+import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Shift
+import Mathlib.Analysis.Normed.Module.Basic
+import Mathlib.Analysis.ODE.ExistUnique
+import Mathlib.Topology.Order.IntermediateValue
+import Mathlib.Topology.EMetricSpace.Lipschitz
+import Mathlib.Order.Interval.Set.OrdConnected
+import Mathlib.Tactic.NormNum
+
+/-- Helper: two solutions of y' = f(y) (f locally Lipschitz) on an open order-connected time set
+that meet once agree everywhere on it. -/
+theorem flow_helper_unique
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (f : E → E) (hf : LocallyLipschitz f)
+    (I : Set ℝ) (hI_open : IsOpen I) (hI_conn : I.OrdConnected)
+    (u w : ℝ → E)
+    (hu : ∀ τ ∈ I, HasDerivAt u (f (u τ)) τ) (hw : ∀ τ ∈ I, HasDerivAt w (f (w τ)) τ)
+    (t₀ : ℝ) (ht₀ : t₀ ∈ I) (hmeet : u t₀ = w t₀) :
+    Set.EqOn u w I := by
+  have hloc : ∀ τ ∈ I, u τ = w τ → ∀ᶠ σ in nhds τ, u σ = w σ := by
+    intro τ hτ heq
+    obtain ⟨K, U, hU, hL⟩ := hf (u τ)
+    have hIn : ∀ᶠ σ in nhds τ, σ ∈ I := hI_open.mem_nhds hτ
+    have huU : ∀ᶠ σ in nhds τ, u σ ∈ U := (hu τ hτ).continuousAt.preimage_mem_nhds hU
+    have hwU : ∀ᶠ σ in nhds τ, w σ ∈ U :=
+      (hw τ hτ).continuousAt.preimage_mem_nhds (heq ▸ hU)
+    have hIn2 : ∀ᶠ σ in nhds τ, ∀ᶠ ρ in nhds σ, ρ ∈ I := hIn.eventually_nhds
+    exact ODE_solution_unique_of_eventually (v := fun _ => f) (s := fun _ => U) (K := K)
+      (Filter.Eventually.of_forall fun _ => hL)
+      ((hIn.and huU).mono fun σ h => ⟨hu σ h.1, h.2⟩)
+      ((hIn.and hwU).mono fun σ h => ⟨hw σ h.1, h.2⟩) heq
+  set A := {τ : ℝ | ∀ᶠ σ in nhds τ, u σ = w σ}
+  set B := {τ : ℝ | ∀ᶠ σ in nhds τ, u σ ≠ w σ}
+  have hA : IsOpen A := isOpen_setOfPred_eventually_nhds
+  have hB : IsOpen B := isOpen_setOfPred_eventually_nhds
+  have hAB : Disjoint A B := by
+    rw [Set.disjoint_left]
+    intro τ h1 h2
+    exact (h1.and h2).exists.elim fun σ h => h.2 h.1
+  have hcover : I ⊆ A ∪ B := by
+    intro τ hτ
+    by_cases h : u τ = w τ
+    · exact Or.inl (hloc τ hτ h)
+    · right
+      have hc : ContinuousAt (fun σ => u σ - w σ) τ :=
+        (hu τ hτ).continuousAt.sub (hw τ hτ).continuousAt
+      exact (hc.eventually_ne (sub_ne_zero.mpr h)).mono fun σ hσ => sub_ne_zero.mp hσ
+  have hsub : I ⊆ A := hI_conn.isPreconnected.subset_left_of_subset_union hA hB hAB hcover
+    ⟨t₀, ht₀, hloc t₀ ht₀ hmeet⟩
+  intro τ hτ
+  exact (hsub hτ).self_of_nhds
+
+#print axioms flow_helper_unique
+
+/-- The composition law of the flow. Let the rule y' = f(y) read only the state, with f locally
+Lipschitz (one start gives one history, both ways in time). For each start x, let t ↦ φ t x be the
+solution with φ 0 x = x on its largest open time interval J x containing 0 (its life span: every
+solution from x on an open interval around 0 lives inside J x), so waiting no time changes
+nothing. Then for every wait t and every extra wait s with s + t still inside the life span of x,
+the wait s is inside the life span of z = φ t x and waiting t then s is the same as waiting s + t:
+φ s (φ t x) = φ (s + t) x. -/
+theorem flow_wait_then_wait_is_one_longer_wait
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (f : E → E) (hf : LocallyLipschitz f)
+    (φ : ℝ → E → E) (J : E → Set ℝ)
+    (hJ_open : ∀ x, IsOpen (J x)) (hJ_conn : ∀ x, (J x).OrdConnected)
+    (hJ_zero : ∀ x, (0 : ℝ) ∈ J x)
+    (hφ_start : ∀ x, φ 0 x = x)
+    (hφ_solves : ∀ x, ∀ τ ∈ J x, HasDerivAt (fun σ => φ σ x) (f (φ τ x)) τ)
+    (hJ_max : ∀ (x : E) (I : Set ℝ) (u : ℝ → E), IsOpen I → I.OrdConnected → (0 : ℝ) ∈ I →
+      u 0 = x → (∀ τ ∈ I, HasDerivAt u (f (u τ)) τ) → I ⊆ J x)
+    (x : E) (t s : ℝ) (ht : t ∈ J x) (hst : s + t ∈ J x) :
+    s ∈ J (φ t x) ∧ φ s (φ t x) = φ (s + t) x := by
+  set I : Set ℝ := (fun σ => σ + t) ⁻¹' J x with hIdef
+  have hI_open : IsOpen I := (hJ_open x).preimage (continuous_id.add continuous_const)
+  have hI_conn : I.OrdConnected := by
+    refine ⟨fun a ha b hb c hc => ?_⟩
+    exact (hJ_conn x).out ha hb ⟨by linarith [hc.1], by linarith [hc.2]⟩
+  have hI0 : (0 : ℝ) ∈ I := by simpa [hIdef] using ht
+  have hIs : s ∈ I := hst
+  set u : ℝ → E := fun σ => φ (σ + t) x with hudef
+  have hu0 : u 0 = φ t x := by simp [hudef]
+  have hu : ∀ τ ∈ I, HasDerivAt u (f (u τ)) τ := fun τ hτ =>
+    (hφ_solves x (τ + t) hτ).comp_add_const τ t
+  have hsub : I ⊆ J (φ t x) := hJ_max (φ t x) I u hI_open hI_conn hI0 hu0 hu
+  refine ⟨hsub hIs, ?_⟩
+  have heq := flow_helper_unique f hf I hI_open hI_conn u (fun σ => φ σ (φ t x)) hu
+    (fun τ hτ => hφ_solves (φ t x) τ (hsub hτ)) 0 hI0 (by simp [hu0, hφ_start])
+  exact (heq hIs).symm
+
+/-- Solution curves never cross. If the rule y' = f(y) has f locally Lipschitz and two
+solutions u and w on the same open time interval I read the same state at one moment t₀,
+they are one history: they agree at every time in I. -/
+theorem solution_curves_never_cross
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (f : E → E) (hf : LocallyLipschitz f)
+    (I : Set ℝ) (hI_open : IsOpen I) (hI_conn : I.OrdConnected)
+    (u w : ℝ → E)
+    (hu : ∀ τ ∈ I, HasDerivAt u (f (u τ)) τ) (hw : ∀ τ ∈ I, HasDerivAt w (f (w τ)) τ)
+    (t₀ : ℝ) (ht₀ : t₀ ∈ I) (hmeet : u t₀ = w t₀) :
+    Set.EqOn u w I := by
+  exact flow_helper_unique f hf I hI_open hI_conn u w hu hw t₀ ht₀ hmeet
+
+/-- The colony's flow. For y' = y², the curve t ↦ x / (1 - t x) starts at x and solves the law
+wherever t x < 1 (inside the life span 1/x), and it composes: if t x < 1 and the second wait s
+keeps z = x / (1 - t x) inside its own life span (s z < 1), then moving z on by s lands where one
+move of s + t lands, x / (1 - (s + t) x). -/
+theorem colony_flow_solves_and_composes (x t s : ℝ) (ht : t * x < 1)
+    (hs : s * (x / (1 - t * x)) < 1) :
+    x / (1 - 0 * x) = x ∧
+    HasDerivAt (fun τ => x / (1 - τ * x)) ((x / (1 - t * x)) ^ 2) t ∧
+    (x / (1 - t * x)) / (1 - s * (x / (1 - t * x))) = x / (1 - (s + t) * x) := by
+  have h1 : (1 - t * x) ≠ 0 := by linarith
+  have h1p : 0 < 1 - t * x := by linarith
+  refine ⟨by simp, ?_, ?_⟩
+  · have hd : HasDerivAt (fun τ => 1 - τ * x) (-x) t := by
+      simpa using ((hasDerivAt_id t).mul_const x).const_sub 1
+    have := (hasDerivAt_const t x).div hd h1
+    convert this using 1
+    rw [div_pow]
+    ring
+  · have h2 : 1 - s * (x / (1 - t * x)) = (1 - (s + t) * x) / (1 - t * x) := by
+      rw [eq_div_iff h1, sub_mul, mul_assoc, div_mul_cancel₀ x h1]
+      ring
+    have h3 : 1 - (s + t) * x ≠ 0 := by
+      intro h
+      have := h2
+      rw [h, zero_div] at this
+      linarith
+    rw [h2, div_div_div_cancel_right₀ h1]
+
+-- Worked numbers, by hand, with the colony flow φ_t(x) = x / (1 - t x), in hundreds of animals.
+-- First quarter-year from 100 animals: 4/3, about 133 animals.
+example : (1 : ℚ) / (1 - 1/4 * 1) = 4/3 := by norm_num
+-- Second quarter-year from 4/3: 2.
+example : ((4 : ℚ)/3) / (1 - 1/4 * (4/3)) = 2 := by norm_num
+-- One move of half a year from 1: 2, the same place.
+example : (1 : ℚ) / (1 - 1/2 * 1) = 2 := by norm_num
+-- Back half a year from 2: 1.
+example : (2 : ℚ) / (1 - (-1/2) * 2) = 1 := by norm_num
+-- Time to grow from 1 to 2 is 1/1 - 1/2 = 1/2 year; the quarter-years add up to it.
+example : (1 : ℚ)/1 - 1/2 = 1/2 ∧ ((1 : ℚ)/1 - 3/4) + (3/4 - 1/2) = 1/2 := by norm_num
+-- Life span from 1 is 1 year; from 2 it is 1/2 year.
+example : (1 : ℚ) / 1 = 1 ∧ (1 : ℚ) / 2 = 1/2 := by norm_num
+-- The usual mistake: reusing the growth factor 4/3 gives 16/9, not 2.
+example : ((4 : ℚ)/3) * (4/3) = 16/9 ∧ ((4 : ℚ)/3) * (4/3) ≠ 2 := by norm_num
+-- Past the life span the formula prints -2, which is no colony.
+example : (1 : ℚ) / (1 - 3/2 * 1) = -2 := by norm_num
+
+#print axioms flow_wait_then_wait_is_one_longer_wait
+#print axioms solution_curves_never_cross
+#print axioms colony_flow_solves_and_composes
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'flow_helper_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flow_wait_then_wait_is_one_longer_wait' depends on axioms: [propext, Classical.choice, Quot.sound]
+'solution_curves_never_cross' depends on axioms: [propext, Classical.choice, Quot.sound]
+'colony_flow_solves_and_composes' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]
@@ -346,7 +525,7 @@ ALL CHECKS PASS
 >
 > - **Composing a clock-reading rule with itself.** For $y' = 2ty$ this gives 1.1331 instead of 1.2840.
 > - **Forgetting the life span.** $\varphi_{1.5}(1) = -2$ is algebra past the blow-up at 1 year, not a population.
-> - **Running back without uniqueness.** 10 s before an empty reading, the bucket held anything from 0.00 to 1.00 cm.
+> - **Running back without uniqueness.** 10 minutes before an empty reading, the bucket held anything from 0.00 to 1.00 cm.
 
 ---
 
@@ -372,6 +551,8 @@ ALL CHECKS PASS
 - [The transport equation](../10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): a partial differential equation solved by riding a flow.
 - Semigroups: the composition law as a definition, for heat spreading in a rod.
 - Vector field and its flow: flows on curved spaces.
+
+Here the state is one number; when the state is a whole temperature profile along a rod, what still composes like elapsed time is the question Semigroups answers.
 
 ---
 

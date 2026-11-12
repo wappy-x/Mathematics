@@ -14,7 +14,7 @@ The average and the difference are the system's **modes**: fixed patterns that e
 
 **Write the start as a mix of eigenvectors; each piece then decays at its own eigenvalue, and the solution is the sum of the pieces.**
 
-**What kind of fact this is:** a method. Why it works proves it gives the only solution whenever the matrix has two independent real eigenvectors.
+**What kind of fact this is:** a method. Why it works proves it gives the only solution whenever the matrix has two independent real eigenvectors (neither a multiple of the other).
 
 ### The picture: both rooms through the night
 
@@ -59,7 +59,7 @@ $$T_1 = 20e^{-t} + 10e^{-3t}, \qquad T_2 = 20e^{-t} - 10e^{-3t}$$
 | $c_1$, $c_2$ | weights: how much of each mode the start holds | 20 and 10 | more of that mode |
 | $I$, $P$, $D$ | identity; eigenvectors as columns; eigenvalues on a diagonal | `[[1, 1], [1, -1]]` for P | — |
 
-The eigenvalues solve $\det(A - \lambda I) = 0$, the **characteristic equation**: A minus that stretch squashes some direction flat.
+The eigenvalues solve $\det(A - \lambda I) = 0$, the **characteristic equation**: A minus that stretch squashes some direction flat. Here det is the determinant: for a 2 × 2 matrix, top-left times bottom-right minus top-right times bottom-left.
 
 ### When it holds
 
@@ -107,7 +107,9 @@ Then (e^(−λ_1 t) z_1)' = e^(−λ_1 t)(z_1' − λ_1 z_1) = 0, so z_1 = z_1(0
 
 ### Step 4: read which mode dies fastest
 
-Adding the rate laws gives (T_1 + T_2)' = −(T_1 + T_2); subtracting gives (T_1 − T_2)' = −3(T_1 − T_2): the two modes, seen directly. The average is 20e^(−t), half-life ln 2 = 0.693 h. The difference is 20e^(−3t), half-life ln 2 / 3 = 0.231 h. The rooms are within 1 °C of each other at ln 20 / 3 = 0.999 h; the average reaches 1 °C only at ln 20 = 2.996 h, three times as long. The eigenvalue nearest zero sets how long the house takes to settle; the fast one, how soon the rooms look alike.
+Adding the rate laws gives (T_1 + T_2)' = −(T_1 + T_2); subtracting gives (T_1 − T_2)' = −3(T_1 − T_2): the two modes, seen directly. The average is 20e^(−t), half-life ln 2 = 0.693 h. The difference is 20e^(−3t), half-life ln 2 / 3 = 0.231 h.
+
+The rooms are within 1 °C of each other at ln 20 / 3 = 0.999 h; the average reaches 1 °C only at ln 20 = 2.996 h, three times as long. The eigenvalue nearest zero sets how long the house takes to settle; the fast one, how soon the rooms look alike.
 
 Early on, the 20 °C gap pushes heat through the wall faster than the bedroom loses it outdoors, so the bedroom rises to 10.887 °C at t = ln 1.5 / 2 = 0.2027 h.
 
@@ -119,7 +121,9 @@ Drawn to scale, 9 px per °C on both axes, origin at both rooms equal to outside
 
 ### Step 5: the eigenvectors need not be at right angles
 
-Take a second pair of rooms, the bedroom half the lounge's size with half its outside wall: T_1' = −3T_1 + T_2 and T_2' = 2T_1 − 4T_2. Then λ^2 + 7λ + 10 = 0: eigenvalues −2 and −5, eigenvectors (1, 1) and (1, −2), not at right angles. The weights still come from solving c_1 (1, 1) + c_2 (1, −2) = (30, 10): c_2 = 6.667 and c_1 = 23.333. At 1 h the rooms read 3.2027 °C and 3.0680 °C. Shortcuts that assume right angles fail (What breaks, third row).
+Take a second pair of rooms, the bedroom half the lounge's size with half its outside wall: T_1' = −3T_1 + T_2 and T_2' = 2T_1 − 4T_2. Then λ^2 + 7λ + 10 = 0: eigenvalues −2 and −5, eigenvectors (1, 1) and (1, −2), not at right angles.
+
+The weights still come from solving c_1 (1, 1) + c_2 (1, −2) = (30, 10): c_2 = 6.667 and c_1 = 23.333. At 1 h the rooms read 3.2027 °C and 3.0680 °C. Shortcuts that assume right angles fail (What breaks, third row).
 
 The same method, packed into one matrix, is the matrix exponential: e^(At) = P e^(Dt) P^(−1). Defined another way, e^(At) also covers the case with one eigenvector missing ([The matrix exponential](04-the-matrix-exponential.md)).
 
@@ -155,7 +159,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road one: eigenvalues from the characteristic equation, eigenvectors from the first row, weights by Cramer's rule, modes added. Road two never mentions an eigenvalue: it steps the coupled rates with Euler's rule, new state = old state + step length h × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). Halving h halves the error: Euler's error is proportional to h.
+Two roads. Road one: eigenvalues from the characteristic equation, eigenvectors from the first row, weights by Cramer's rule (each weight as a ratio of two determinants), modes added. Road two never mentions an eigenvalue: it steps the coupled rates with Euler's rule, new state = old state + step length h × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). Halving h halves the error: Euler's error is proportional to h.
 
 ### Python
 
@@ -350,6 +354,198 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's main claims for every 2 × 2 system meeting When it holds, and it proves the card's whole-number arithmetic exactly.
+
+- Take a constant 2 × 2 rate matrix A, no input, and two independent eigenvectors with real eigenvalues. Every start is a mix c_1 v_1 + c_2 v_2.
+- Take those weights. A state solves x' = Ax from that start exactly when it equals c_1 e^(λ_1 t) v_1 + c_2 e^(λ_2 t) v_2 at every time.
+- Along an eigenvector the matrix only stretches: the state e^(λt) v solves x' = Ax at every time (Step 0).
+- Distinct eigenvalues give independent eigenvectors: if neither eigenvector is zero, neither is a multiple of the other.
+- The hand arithmetic holds exactly. That covers both pairs of rooms, the P and dot-product mistakes, and the repeated eigenvalue's one direction.
+
+Decimal values, the Euler steps, the bedroom's peak, the half-lives, the swapped-rates mistake and the figure are left to the Python and Rust checks.
+
+```lean
+-- The eigenvalue method: for a constant real 2 × 2 system x' = Ax with two independent eigenvectors, every start is a mix c₁v₁ + c₂v₂ and the only solution is c₁e^(μ₁t)v₁ + c₂e^(μ₂t)v₂; the card's whole-number checks on the rooms are verified exactly.
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.Calculus.Deriv.Pi
+import Mathlib.LinearAlgebra.LinearIndependent.Basic
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Tactic
+import Mathlib.Analysis.ODE.ExistUnique
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+
+open Matrix
+
+/-! The state `x t` is a vector in `Fin 2 → ℝ`, the rate matrix `A` is a constant real
+2 × 2 matrix, and `A *ᵥ x t` is A times the state. `x' = Ax` with no input is
+`∀ t, HasDerivAt x (A *ᵥ x t) t`. The eigenvalues are written `μ₁, μ₂` (the card's
+`λ₁, λ₂`; `λ` is a reserved word in Lean). -/
+
+/-- **The eigenvalue method gives the only solution.** Let `A` be a constant real 2 × 2
+matrix with real eigenvalues `μ₁, μ₂` and eigenvectors `v₁, v₂` (`A v₁ = μ₁ v₁`,
+`A v₂ = μ₂ v₂`) that are independent (neither a multiple of the other). Then every start `x₀`
+is a mix `c₁ v₁ + c₂ v₂ = x₀`, and a path `x` solves `x' = Ax` with `x(0) = x₀` exactly when
+`x(t) = c₁ e^(μ₁ t) v₁ + c₂ e^(μ₂ t) v₂` for every time `t`. -/
+theorem eigenvalue_method_gives_the_only_solution
+    (A : Matrix (Fin 2) (Fin 2) ℝ) (μ₁ μ₂ : ℝ) (v₁ v₂ : Fin 2 → ℝ)
+    (h₁ : A *ᵥ v₁ = μ₁ • v₁) (h₂ : A *ᵥ v₂ = μ₂ • v₂)
+    (hind : LinearIndependent ℝ ![v₁, v₂]) (x₀ : Fin 2 → ℝ) :
+    ∃ c₁ c₂ : ℝ, c₁ • v₁ + c₂ • v₂ = x₀ ∧
+      ∀ x : ℝ → Fin 2 → ℝ,
+        ((∀ t, HasDerivAt x (A *ᵥ x t) t) ∧ x 0 = x₀) ↔
+          ∀ t, x t = (c₁ * Real.exp (μ₁ * t)) • v₁ + (c₂ * Real.exp (μ₂ * t)) • v₂ := by
+  classical
+  let b := basisOfPiSpaceOfLinearIndependent hind
+  have hb : ∀ i, b i = ![v₁, v₂] i := by
+    intro i; simp only [b, coe_basisOfPiSpaceOfLinearIndependent]
+  have hsum := b.sum_repr x₀
+  rw [Fin.sum_univ_two, hb, hb] at hsum
+  refine ⟨b.repr x₀ 0, b.repr x₀ 1, by simpa using hsum, ?_⟩
+  set c₁ := b.repr x₀ 0
+  set c₂ := b.repr x₀ 1
+  set y : ℝ → Fin 2 → ℝ :=
+    fun t => (c₁ * Real.exp (μ₁ * t)) • v₁ + (c₂ * Real.exp (μ₂ * t)) • v₂ with hy
+  have hyd : ∀ t, HasDerivAt y (A *ᵥ y t) t := by
+    intro t
+    have e1 : HasDerivAt (fun s => c₁ * Real.exp (μ₁ * s)) (c₁ * (Real.exp (μ₁ * t) * μ₁)) t :=
+      ((((hasDerivAt_id t).const_mul μ₁).exp).congr_deriv (by simp)).const_mul c₁
+    have e2 : HasDerivAt (fun s => c₂ * Real.exp (μ₂ * s)) (c₂ * (Real.exp (μ₂ * t) * μ₂)) t :=
+      ((((hasDerivAt_id t).const_mul μ₂).exp).congr_deriv (by simp)).const_mul c₂
+    have := (e1.smul_const v₁).add (e2.smul_const v₂)
+    convert this using 1
+    simp only [hy, Matrix.mulVec_add, Matrix.mulVec_smul, h₁, h₂, smul_smul]
+    congr 1 <;> congr 1 <;> ring
+  have hy0 : y 0 = x₀ := by simpa [hy] using hsum
+  have hlip : ∀ _t : ℝ, LipschitzOnWith ‖LinearMap.toContinuousLinearMap (Matrix.mulVecLin A)‖₊
+      (fun z => A *ᵥ z) Set.univ := fun _ =>
+    (LinearMap.toContinuousLinearMap (Matrix.mulVecLin A)).lipschitzWith.lipschitzOnWith
+  intro x
+  constructor
+  · rintro ⟨hx, hx0⟩
+    have := ODE_solution_unique_univ (t₀ := 0) hlip (fun t => ⟨hx t, Set.mem_univ _⟩)
+      (fun t => ⟨hyd t, Set.mem_univ _⟩) (by rw [hx0, hy0])
+    intro t
+    exact congrFun this t
+  · intro hxt
+    have : x = y := funext hxt
+    subst this
+    exact ⟨hyd, hy0⟩
+
+/-- **Along an eigenvector the system only stretches** (Step 0). If `A v = μ v`, the state
+that keeps the shape `v` and changes size as `e^(μ t)`, `x(t) = e^(μ t) v`, solves `x' = Ax`
+at every time `t`. -/
+theorem eigenvector_mode_solves_system
+    (A : Matrix (Fin 2) (Fin 2) ℝ) (μ : ℝ) (v : Fin 2 → ℝ) (hv : A *ᵥ v = μ • v) :
+    ∀ t, HasDerivAt (fun s => Real.exp (μ * s) • v) (A *ᵥ (Real.exp (μ * t) • v)) t := by
+  intro t
+  have e : HasDerivAt (fun s => Real.exp (μ * s)) (Real.exp (μ * t) * μ) t :=
+    (((hasDerivAt_id t).const_mul μ).exp).congr_deriv (by simp)
+  convert e.smul_const v using 1
+  rw [Matrix.mulVec_smul, hv, smul_smul]
+
+/-- **Distinct eigenvalues guarantee two independent eigenvectors.** If `v₁` and `v₂` are
+nonzero, `A v₁ = μ₁ v₁`, `A v₂ = μ₂ v₂` and `μ₁ ≠ μ₂`, then neither is a multiple of the other:
+`v₁, v₂` are linearly independent. -/
+theorem distinct_eigenvalues_give_independent_eigenvectors
+    (A : Matrix (Fin 2) (Fin 2) ℝ) (μ₁ μ₂ : ℝ) (v₁ v₂ : Fin 2 → ℝ)
+    (hv₁ : v₁ ≠ 0) (hv₂ : v₂ ≠ 0) (h₁ : A *ᵥ v₁ = μ₁ • v₁) (h₂ : A *ᵥ v₂ = μ₂ • v₂)
+    (hμ : μ₁ ≠ μ₂) :
+    LinearIndependent ℝ ![v₁, v₂] := by
+  rw [LinearIndependent.pair_iff]
+  intro s t hst
+  have hA : A *ᵥ (s • v₁ + t • v₂) = 0 := by rw [hst, Matrix.mulVec_zero]
+  rw [Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul, h₁, h₂, smul_smul,
+    smul_smul] at hA
+  have hs : (s * (μ₁ - μ₂)) • v₁ = 0 := by
+    have : (s * μ₁) • v₁ + (t * μ₂) • v₂ - μ₂ • (s • v₁ + t • v₂) = 0 := by
+      rw [hA, hst, smul_zero, sub_zero]
+    rw [← this, smul_add, smul_smul, smul_smul]
+    rw [mul_sub, sub_smul, mul_comm μ₂ t, mul_comm μ₂ s]
+    abel
+  rcases smul_eq_zero.mp hs with h | h
+  · rcases mul_eq_zero.mp h with h | h
+    · subst h
+      simp only [zero_smul, zero_add] at hst
+      exact ⟨rfl, (smul_eq_zero.mp hst).resolve_right hv₂⟩
+    · exact absurd (sub_eq_zero.mp h) hμ
+  · exact absurd h hv₁
+
+/-! The card's whole-number checks. -/
+
+-- The rooms: A = [[-2, 1], [1, -2]]. Diagonal sum −4, determinant 4 − 1 = 3.
+example : (!![-2, 1; 1, -2] : Matrix (Fin 2) (Fin 2) ℚ).trace = -4 := by
+  simp [Matrix.trace, Fin.sum_univ_two]; norm_num
+example : (!![-2, 1; 1, -2] : Matrix (Fin 2) (Fin 2) ℚ).det = 3 := by
+  rw [det_fin_two_of]; norm_num
+-- Characteristic equation: det(A − λI) = (−2 − λ)² − 1 = λ² + 4λ + 3 = (λ + 1)(λ + 3).
+example (l : ℚ) : (-2 - l) * (-2 - l) - 1 * 1 = l ^ 2 + 4 * l + 3 := by ring
+example (l : ℚ) : l ^ 2 + 4 * l + 3 = (l + 1) * (l + 3) := by ring
+-- A times (1, 1) is (−1, −1) = −1 × (1, 1); A times (1, −1) is (−3, 3) = −3 × (1, −1).
+example : (!![-2, 1; 1, -2] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, 1] = ![-1, -1] ∧
+    (![-1, -1] : Fin 2 → ℚ) = (-1 : ℚ) • ![1, 1] := by
+  refine ⟨?_, ?_⟩ <;> ext i <;> fin_cases i <;> simp [mulVec, dotProduct, Fin.sum_univ_two] <;>
+    norm_num
+example : (!![-2, 1; 1, -2] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, -1] = ![-3, 3] ∧
+    (![-3, 3] : Fin 2 → ℚ) = (-3 : ℚ) • ![1, -1] := by
+  refine ⟨?_, ?_⟩ <;> ext i <;> fin_cases i <;> simp [mulVec, dotProduct, Fin.sum_univ_two] <;>
+    norm_num
+-- Weights: 20 (1, 1) + 10 (1, −1) = (30, 10).
+example : (20 : ℚ) • (![1, 1] : Fin 2 → ℚ) + (10 : ℚ) • ![1, -1] = ![30, 10] := by
+  ext i; fin_cases i <;> simp <;> norm_num
+-- Adding the rows gives 2c₁ = 40, subtracting gives 2c₂ = 20.
+example : (30 : ℚ) + 10 = 2 * 20 ∧ (30 : ℚ) - 10 = 2 * 10 := by norm_num
+
+-- The half-size room: B = [[-3, 1], [2, -4]]. Diagonal sum −7, determinant 12 − 2 = 10,
+-- λ² + 7λ + 10 = (λ + 2)(λ + 5).
+example : (!![-3, 1; 2, -4] : Matrix (Fin 2) (Fin 2) ℚ).det = 10 := by
+  rw [det_fin_two_of]; norm_num
+example (l : ℚ) : (-3 - l) * (-4 - l) - 1 * 2 = (l + 2) * (l + 5) := by ring
+-- Eigenvectors (1, 1) for −2 and (1, −2) for −5.
+example : (!![-3, 1; 2, -4] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, 1] = (-2 : ℚ) • ![1, 1] ∧
+    (!![-3, 1; 2, -4] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, -2] = (-5 : ℚ) • ![1, -2] := by
+  refine ⟨?_, ?_⟩ <;> ext i <;> fin_cases i <;> simp [mulVec, dotProduct, Fin.sum_univ_two] <;>
+    norm_num
+-- They are not at right angles: 1 × 1 + 1 × (−2) = −1.
+example : (1 : ℚ) * 1 + 1 * (-2) = -1 := by norm_num
+-- Weights c₁ = 70/3 (23.333) and c₂ = 20/3 (6.667) rebuild (30, 10).
+example : (70 / 3 : ℚ) • (![1, 1] : Fin 2 → ℚ) + (20 / 3 : ℚ) • ![1, -2] = ![30, 10] := by
+  ext i; fin_cases i <;> simp <;> norm_num
+
+-- Mistake: weights from P times the start, P = [[1, 1], [1, -1]], give (40, 20), which rebuild
+-- (60, 20), not (30, 10).
+example : (!![1, 1; 1, -1] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![30, 10] = ![40, 20] := by
+  ext i; fin_cases i <;> simp [mulVec, dotProduct, Fin.sum_univ_two] <;> norm_num
+example : (40 : ℚ) • (![1, 1] : Fin 2 → ℚ) + (20 : ℚ) • ![1, -1] = ![60, 20] := by
+  ext i; fin_cases i <;> simp <;> norm_num
+-- Mistake: dot-product weights on the half-size room, (30 + 10)/2 = 20 and (30 − 20)/5 = 2,
+-- rebuild (22, 16), not (30, 10).
+example : ((30 : ℚ) * 1 + 10 * 1) / (1 * 1 + 1 * 1) = 20 ∧
+    ((30 : ℚ) * 1 + 10 * (-2)) / (1 * 1 + (-2) * (-2)) = 2 := by norm_num
+example : (20 : ℚ) • (![1, 1] : Fin 2 → ℚ) + (2 : ℚ) • ![1, -2] = ![22, 16] := by
+  ext i; fin_cases i <;> simp <;> norm_num
+-- Repeated eigenvalue: J = [[-1, 1], [0, -1]] has det(J − λI) = (λ + 1)², and (1, 0) is a
+-- direction it only stretches, by −1.
+example (l : ℚ) : (-1 - l) * (-1 - l) - 1 * 0 = (l + 1) ^ 2 := by ring
+example : (!![-1, 1; 0, -1] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, 0] = (-1 : ℚ) • ![1, 0] := by
+  ext i; fin_cases i <;> simp [mulVec, dotProduct, Fin.sum_univ_two]
+
+#print axioms eigenvalue_method_gives_the_only_solution
+#print axioms eigenvector_mode_solves_system
+#print axioms distinct_eigenvalues_give_independent_eigenvectors
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'eigenvalue_method_gives_the_only_solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'eigenvector_mode_solves_system' depends on axioms: [propext, Classical.choice, Quot.sound]
+'distinct_eigenvalues_give_independent_eigenvectors' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -391,7 +587,9 @@ The two outputs match line for line.
 - [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md): modes that turn as they fade.
 - [The matrix exponential](04-the-matrix-exponential.md): the method as one matrix e^(At), missing eigenvectors included.
 - [Normal modes](07-coupled-oscillators-and-normal-modes.md): the same splitting where modes oscillate.
-- Stiffness: a mode far faster than the rest forces tiny steps or blows up.
+- [Stiff equations](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md): a mode far faster than the rest forces tiny steps or blows up.
+
+Real eigenvalues give modes that only fade or grow; what a system does when its characteristic equation has no real roots is [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md).
 
 ---
 

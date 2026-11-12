@@ -8,7 +8,7 @@
 
 A 1 kg weight sits on a spring of stiffness 1 newton per metre. Its damper is wired backwards: instead of resisting motion it pushes along it, at 2 newtons per metre per second. With y the displacement from rest in cm and t the time in seconds, the rule is y'' = 2y' − y: acceleration is twice the velocity, minus the displacement. Rearranged, y'' − 2y' + y = 0.
 
-A second-order equation takes two starting facts, a position and a velocity, so it needs two genuinely different solutions to fit every start. The [The characteristic equation](02-the-characteristic-equation.md) method offers only one here. Trying y = e^(rt) gives r^2 − 2r + 1 = 0, which is (r − 1)^2 = 0: a double root, and the single solution e^t.
+A second-order equation takes two starting facts, a position and a velocity, so it needs two genuinely different solutions to fit every start. The method of [The characteristic equation](02-the-characteristic-equation.md) offers only one here. Trying y = e^(rt), for a constant r, gives r^2 − 2r + 1 = 0, which is (r − 1)^2 = 0: a double root, and the single solution e^t.
 
 Two questions follow. How can one tell that two solutions are really different, not one in disguise like e^t and 2e^t? And where is the missing second one? A determinant, the **Wronskian**, answers the first. Writing the unknown as a changing multiple of the known solution, **reduction of order**, answers the second: t e^t.
 
@@ -103,12 +103,14 @@ An exponential is never zero. So if W(t0) = 0, then W is zero at every time, and
 
 ### Step 3: W = 0 at one moment means one solution in disguise
 
-If W(t0) = 0, the starting arrows are parallel, so constants c1 and c2, not both zero, make c1 y1 + c2 y2 start at value 0 with slope 0. That combination is a solution, and a solution starting at rest at the rest position stays there. So c1 y1 + c2 y2 = 0 everywhere: the pair is dependent, in the sense of [Linear independence](../../03-Algebra/03-Vectors/04-linear-independence.md). If W(t0) is not zero, the arrows reach any starting state, so c1 y1 + c2 y2 covers every solution.
+If W(t0) = 0, the starting arrows are parallel, so constants c1 and c2, not both zero, make c1 y1 + c2 y2 start at value 0 with slope 0. That combination is a solution, and a solution starting at rest at the rest position stays there. So c1 y1 + c2 y2 = 0 everywhere: the pair is dependent, in the sense of [Linear independence](../../03-Algebra/03-Vectors/04-linear-independence.md).
+
+If W(t0) is not zero, the arrows reach any starting state, so c1 y1 + c2 y2 covers every solution.
 
 <details>
 <summary>Detailed proof: a non-zero Wronskian gives every solution</summary>
 
-Let p and q be continuous on an interval I, and y1, y2 solve the equation there with W(t0) ≠ 0. Take any solution z. The system c1 y1(t0) + c2 y2(t0) = z(t0), c1 y1'(t0) + c2 y2'(t0) = z'(t0) has determinant W(t0) ≠ 0, so Cramer's rule gives exactly one pair c1, c2.
+Let p and q be continuous on an interval I, and y1, y2 solve the equation there with W(t0) ≠ 0. Take any solution z. The system c1 y1(t0) + c2 y2(t0) = z(t0), c1 y1'(t0) + c2 y2'(t0) = z'(t0) has determinant W(t0) ≠ 0, so Cramer's rule (the formula that solves a two-by-two system by dividing by its determinant) gives exactly one pair c1, c2.
 
 Put d = z − c1 y1 − c2 y2. By superposition it solves the equation, with d(t0) = d'(t0) = 0. So does the zero function, and existence and uniqueness for linear equations with continuous coefficients allow only one such solution. So z = c1 y1 + c2 y2 on I.
 
@@ -157,7 +159,9 @@ Last row: a t^2 + b t|t| = 0 at t = 1 and −1 is a system with determinant −2
 
 ## Code, from first principles, and it actually runs
 
-Two roads. One: the closed forms t e^t and e^(2t), with W recomputed from slopes measured by finite differences (rise over a tiny step either side). Two: Euler steps on y'' = 2y' − y from t e^t's start, value 0 and slope 1 (new value = old value + step × rate, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)); the error halves with the step, and the stepped W closes on e^2. A second case, y'' + y = 0 from sin t, integrates by the midpoint rule (a sum of rectangle areas).
+Two roads. One: the closed forms t e^t and e^(2t), with W recomputed from slopes measured by finite differences (rise over a tiny step either side). Two: Euler steps on y'' = 2y' − y from t e^t's start, value 0 and slope 1 (new value = old value + step × rate, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)); the error halves with the step, and the stepped W closes on e^2.
+
+A second case, y'' + y = 0 from sin t, integrates by the midpoint rule (a sum of rectangle areas).
 
 ### Python
 
@@ -348,6 +352,312 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three results for any equation in standard form, with p and q continuous on an open interval.
+
+- Two solutions of one equation have a Wronskian that is zero at every time or at no time.
+- At any one time, W is non-zero exactly when the two solutions are genuinely different.
+- Abel's identity: W now is its starting value times e to the minus the accumulated p.
+- Reduction of order: if y1 is never zero, a v with slope e^(−∫p) / y1^2 makes y2 = v y1 a second solution.
+- That second solution's Wronskian with y1 is e^(−∫p), never zero.
+- The spring's hand arithmetic: the double root, W = e^(2t), v' = 1, c1 = 2 and c2 = −3, and the determinant −2.
+
+The decimal values, the Euler steps, the chart and the sine case are left to the Python and Rust checks.
+
+```lean
+-- The Wronskian: for two solutions of y'' + p y' + q y = 0 with p and q continuous on an open interval, the Wronskian is never zero or always zero, it is non-zero exactly when the solutions are linearly independent, it obeys Abel's identity, and reduction of order turns one non-vanishing solution into a second.
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.LinearAlgebra.LinearIndependent.Defs
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Analysis.ODE.Gronwall
+import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.FieldSimp
+
+open Real
+
+/-- Gronwall step: a solution with zero value and zero slope at the left end of [a, b]
+is zero at the right end. -/
+lemma wr_zero_right (a b : ℝ) (hab : a ≤ b) (p q : ℝ → ℝ)
+    (hp : ContinuousOn p (Set.Icc a b)) (hq : ContinuousOn q (Set.Icc a b))
+    (z z' : ℝ → ℝ)
+    (hz : ∀ t ∈ Set.Icc a b, HasDerivAt z (z' t) t ∧ HasDerivAt z' (-(p t) * z' t - q t * z t) t)
+    (h0 : z a = 0) (h0' : z' a = 0) : z b = 0 := by
+  obtain ⟨M1, hM1⟩ := isCompact_Icc.exists_bound_of_continuousOn hp
+  obtain ⟨M2, hM2⟩ := isCompact_Icc.exists_bound_of_continuousOn hq
+  have key := norm_le_gronwallBound_of_norm_deriv_right_le (f := fun t => (z t, z' t))
+    (f' := fun t => (z' t, -(p t) * z' t - q t * z t)) (δ := 0) (K := 1 + |M1| + |M2|) (ε := 0)
+    (fun t ht => (((hz t ht).1.continuousAt).prodMk
+      ((hz t ht).2.continuousAt)).continuousWithinAt)
+    (fun t ht => (HasDerivAt.prodMk (hz t (Set.Ico_subset_Icc_self ht)).1
+      (hz t (Set.Ico_subset_Icc_self ht)).2).hasDerivWithinAt)
+    (by simp [h0, h0'])
+    (by
+      intro t ht
+      have ht' := Set.Ico_subset_Icc_self ht
+      have h1 := hM1 t ht'
+      have h2 := hM2 t ht'
+      rw [Real.norm_eq_abs] at h1 h2
+      simp only [Prod.norm_def, Real.norm_eq_abs, add_zero]
+      have hm1 : |z t| ≤ max |z t| |z' t| := le_max_left _ _
+      have hm2 : |z' t| ≤ max |z t| |z' t| := le_max_right _ _
+      have hm0 : 0 ≤ max |z t| |z' t| := le_trans (abs_nonneg _) hm1
+      have hM1' : |p t| ≤ |M1| := h1.trans (le_abs_self _)
+      have hM2' : |q t| ≤ |M2| := h2.trans (le_abs_self _)
+      apply max_le
+      · nlinarith [abs_nonneg M1, abs_nonneg M2]
+      · have e1 : |-(p t) * z' t - q t * z t| ≤ |p t| * |z' t| + |q t| * |z t| := by
+          rw [show -(p t) * z' t - q t * z t = -(p t * z' t + q t * z t) by ring, abs_neg,
+            ← abs_mul, ← abs_mul]
+          exact abs_add_le _ _
+        have e2 : |p t| * |z' t| ≤ |M1| * max |z t| |z' t| :=
+          mul_le_mul hM1' hm2 (abs_nonneg _) (abs_nonneg _)
+        have e3 : |q t| * |z t| ≤ |M2| * max |z t| |z' t| :=
+          mul_le_mul hM2' hm1 (abs_nonneg _) (abs_nonneg _)
+        nlinarith)
+  have hb := key b ⟨hab, le_rfl⟩
+  rw [gronwallBound_ε0_δ0] at hb
+  have h := norm_le_zero_iff.mp hb
+  exact congrArg Prod.fst h
+
+/-- Mirror image of `wr_zero_right`: zero value and zero slope at the right end of [a, b]
+give zero at the left end. -/
+lemma wr_zero_left (a b : ℝ) (hab : a ≤ b) (p q : ℝ → ℝ)
+    (hp : ContinuousOn p (Set.Icc a b)) (hq : ContinuousOn q (Set.Icc a b))
+    (z z' : ℝ → ℝ)
+    (hz : ∀ t ∈ Set.Icc a b, HasDerivAt z (z' t) t ∧ HasDerivAt z' (-(p t) * z' t - q t * z t) t)
+    (h0 : z b = 0) (h0' : z' b = 0) : z a = 0 := by
+  have hmaps : Set.MapsTo (fun s : ℝ => -s) (Set.Icc (-b) (-a)) (Set.Icc a b) := by
+    intro s hs
+    simp only [Set.mem_Icc] at hs ⊢
+    constructor <;> linarith [hs.1, hs.2]
+  have := wr_zero_right (-b) (-a) (by linarith) (fun s => -p (-s)) (fun s => q (-s))
+    ((hp.comp continuousOn_neg hmaps).neg) (hq.comp continuousOn_neg hmaps)
+    (fun s => z (-s)) (fun s => -z' (-s)) ?_ (by simpa using h0) (by simpa using h0')
+  · simpa using this
+  · intro s hs
+    obtain ⟨h1, h2⟩ := hz (-s) (hmaps hs)
+    constructor
+    · exact (h1.comp s (hasDerivAt_neg s)).congr_deriv (by ring)
+    · exact (h2.comp s (hasDerivAt_neg s)).neg.congr_deriv (by ring)
+
+/-- Uniqueness: a solution with zero value and zero slope at one time of I is zero on I. -/
+lemma wr_zero_on (I : Set ℝ) (hIc : I.OrdConnected) (p q : ℝ → ℝ)
+    (hp : ContinuousOn p I) (hq : ContinuousOn q I) (z z' : ℝ → ℝ)
+    (hz : ∀ t ∈ I, HasDerivAt z (z' t) t ∧ HasDerivAt z' (-(p t) * z' t - q t * z t) t)
+    (t0 : ℝ) (ht0 : t0 ∈ I) (h0 : z t0 = 0) (h0' : z' t0 = 0) : ∀ t ∈ I, z t = 0 := by
+  intro t ht
+  rcases le_total t0 t with h | h
+  · have hsub : Set.Icc t0 t ⊆ I := hIc.out ht0 ht
+    exact wr_zero_right t0 t h p q (hp.mono hsub) (hq.mono hsub) z z'
+      (fun s hs => hz s (hsub hs)) h0 h0'
+  · have hsub : Set.Icc t t0 ⊆ I := hIc.out ht ht0
+    exact wr_zero_left t t0 h p q (hp.mono hsub) (hq.mono hsub) z z'
+      (fun s hs => hz s (hsub hs)) h0 h0'
+
+/-- The slope of t ↦ ∫ p from t0 to t is p(t), inside I. -/
+lemma wr_integral_hasDerivAt (I : Set ℝ) (hI : IsOpen I) (hIc : I.OrdConnected) (p : ℝ → ℝ)
+    (hp : ContinuousOn p I) (t0 t : ℝ) (ht0 : t0 ∈ I) (ht : t ∈ I) :
+    HasDerivAt (fun s => ∫ u in t0..s, p u) (p t) t :=
+  intervalIntegral.integral_hasDerivAt_right
+    ((hp.mono (hIc.uIcc_subset ht0 ht)).intervalIntegrable)
+    (hp.stronglyMeasurableAtFilter hI t ht) (hp.continuousAt (hI.mem_nhds ht))
+
+
+/-- Abel's identity (helper copy, so the first theorem can use it). -/
+lemma wr_abel
+    (I : Set ℝ) (hI : IsOpen I) (hIc : I.OrdConnected)
+    (p q : ℝ → ℝ) (hp : ContinuousOn p I) (_hq : ContinuousOn q I)
+    (y1 y1' y2 y2' : ℝ → ℝ)
+    (hy1 : ∀ t ∈ I, HasDerivAt y1 (y1' t) t ∧ HasDerivAt y1' (-(p t) * y1' t - q t * y1 t) t)
+    (hy2 : ∀ t ∈ I, HasDerivAt y2 (y2' t) t ∧ HasDerivAt y2' (-(p t) * y2' t - q t * y2 t) t)
+    (t0 : ℝ) (ht0 : t0 ∈ I) :
+    ∀ t ∈ I, y1 t * y2' t - y1' t * y2 t
+      = (y1 t0 * y2' t0 - y1' t0 * y2 t0) * exp (-∫ u in t0..t, p u) := by
+  intro t ht
+  have hderiv : ∀ s ∈ I, HasDerivAt
+      (fun s => (y1 s * y2' s - y1' s * y2 s) * exp (∫ u in t0..s, p u)) 0 s := by
+    intro s hs
+    obtain ⟨a1, b1⟩ := hy1 s hs
+    obtain ⟨a2, b2⟩ := hy2 s hs
+    have hint := wr_integral_hasDerivAt I hI hIc p hp t0 s ht0 hs
+    have := ((a1.mul b2).sub (b1.mul a2)).mul hint.exp
+    convert this using 1
+    simp only [Pi.mul_apply, Pi.sub_apply]
+    ring
+  have hconst := hI.is_const_of_deriv_eq_zero hIc.isPreconnected
+    (fun s hs => (hderiv s hs).differentiableAt.differentiableWithinAt)
+    (fun s hs => (hderiv s hs).deriv) ht ht0
+  simp only [intervalIntegral.integral_same, exp_zero, mul_one] at hconst
+  rw [← hconst, mul_assoc, ← exp_add]
+  simp
+
+/-- Two solutions y1, y2 of one linear equation y'' + p(t) y' + q(t) y = 0 in standard form,
+with p and q continuous on an open interval I, have a Wronskian W = y1·y2' − y1'·y2 that is
+either zero at every time in I or zero at no time in I; and at any time t0 in I it is non-zero
+exactly when the two solutions are genuinely different (linearly independent as functions on I).
+Here y1' and y2' are the slopes of y1 and y2, and each solution's slope has slope
+−p·(its slope) − q·(its value). -/
+theorem wronskian_ne_zero_iff_linearIndependent
+    (I : Set ℝ) (hI : IsOpen I) (hIc : I.OrdConnected)
+    (p q : ℝ → ℝ) (hp : ContinuousOn p I) (hq : ContinuousOn q I)
+    (y1 y1' y2 y2' : ℝ → ℝ)
+    (hy1 : ∀ t ∈ I, HasDerivAt y1 (y1' t) t ∧ HasDerivAt y1' (-(p t) * y1' t - q t * y1 t) t)
+    (hy2 : ∀ t ∈ I, HasDerivAt y2 (y2' t) t ∧ HasDerivAt y2' (-(p t) * y2' t - q t * y2 t) t)
+    (t0 : ℝ) (ht0 : t0 ∈ I) :
+    ((∀ t ∈ I, y1 t * y2' t - y1' t * y2 t = 0) ∨ (∀ t ∈ I, y1 t * y2' t - y1' t * y2 t ≠ 0)) ∧
+    (y1 t0 * y2' t0 - y1' t0 * y2 t0 ≠ 0 ↔ LinearIndependent ℝ ![I.restrict y1, I.restrict y2]) := by
+  have habel := wr_abel I hI hIc p q hp hq y1 y1' y2 y2' hy1 hy2 t0 ht0
+  refine ⟨?_, ?_⟩
+  · by_cases h : y1 t0 * y2' t0 - y1' t0 * y2 t0 = 0
+    · left
+      intro t ht
+      rw [habel t ht, h, zero_mul]
+    · right
+      intro t ht
+      rw [habel t ht]
+      exact mul_ne_zero h (exp_ne_zero _)
+  · rw [LinearIndependent.pair_iff]
+    constructor
+    · intro hW a b hab
+      have hpt : ∀ s ∈ I, a * y1 s + b * y2 s = 0 := by
+        intro s hs
+        have := congrFun hab ⟨s, hs⟩
+        simp at this
+        exact this
+      have hd : HasDerivAt (fun s => a * y1 s + b * y2 s) (a * y1' t0 + b * y2' t0) t0 :=
+        ((hy1 t0 ht0).1.const_mul a).add ((hy2 t0 ht0).1.const_mul b)
+      have hev : (fun s => a * y1 s + b * y2 s) =ᶠ[nhds t0] fun _ => (0:ℝ) := by
+        filter_upwards [hI.mem_nhds ht0] with s hs using hpt s hs
+      have hd0 : HasDerivAt (fun s => a * y1 s + b * y2 s) 0 t0 :=
+        (hasDerivAt_const t0 (0:ℝ)).congr_of_eventuallyEq hev
+      have e2 : a * y1' t0 + b * y2' t0 = 0 := hd.unique hd0
+      have e1 := hpt t0 ht0
+      have ha : a * (y1 t0 * y2' t0 - y1' t0 * y2 t0) = 0 := by
+        linear_combination y2' t0 * e1 - y2 t0 * e2
+      have hb : b * (y1 t0 * y2' t0 - y1' t0 * y2 t0) = 0 := by
+        linear_combination y1 t0 * e2 - y1' t0 * e1
+      exact ⟨(mul_eq_zero.mp ha).resolve_right hW, (mul_eq_zero.mp hb).resolve_right hW⟩
+    · intro hind
+      intro hW
+      obtain ⟨a, b, hab, e1, e2⟩ : ∃ a b : ℝ, ¬ (a = 0 ∧ b = 0) ∧
+          a * y1 t0 + b * y2 t0 = 0 ∧ a * y1' t0 + b * y2' t0 = 0 := by
+        by_cases c1 : y1 t0 = 0
+        · by_cases c2 : y1' t0 = 0
+          · exact ⟨1, 0, by simp, by simp [c1], by simp [c2]⟩
+          · exact ⟨y2' t0, -y1' t0, by simp [c2], by linear_combination hW, by ring⟩
+        · exact ⟨y2 t0, -y1 t0, by simp [c1], by ring, by linear_combination -hW⟩
+      apply hab
+      apply hind a b
+      funext ⟨s, hs⟩
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply]
+      refine wr_zero_on I hIc p q hp hq (fun s => a * y1 s + b * y2 s)
+        (fun s => a * y1' s + b * y2' s) ?_ t0 ht0 e1 e2 s hs
+      intro s hs
+      obtain ⟨a1, b1⟩ := hy1 s hs
+      obtain ⟨a2, b2⟩ := hy2 s hs
+      refine ⟨(a1.const_mul a).add (a2.const_mul b), ?_⟩
+      have := (b1.const_mul a).add (b2.const_mul b)
+      convert this using 1
+      ring
+
+/-- Abel's identity: for two solutions of y'' + p(t) y' + q(t) y = 0 with p and q continuous on
+an open interval I, the Wronskian at any time t in I is its value at the anchor time t0 times
+e to the minus the integral of p from t0 to t. -/
+theorem abel_identity
+    (I : Set ℝ) (hI : IsOpen I) (hIc : I.OrdConnected)
+    (p q : ℝ → ℝ) (hp : ContinuousOn p I) (hq : ContinuousOn q I)
+    (y1 y1' y2 y2' : ℝ → ℝ)
+    (hy1 : ∀ t ∈ I, HasDerivAt y1 (y1' t) t ∧ HasDerivAt y1' (-(p t) * y1' t - q t * y1 t) t)
+    (hy2 : ∀ t ∈ I, HasDerivAt y2 (y2' t) t ∧ HasDerivAt y2' (-(p t) * y2' t - q t * y2 t) t)
+    (t0 : ℝ) (ht0 : t0 ∈ I) :
+    ∀ t ∈ I, y1 t * y2' t - y1' t * y2 t
+      = (y1 t0 * y2' t0 - y1' t0 * y2 t0) * exp (-∫ u in t0..t, p u) := by
+  exact wr_abel I hI hIc p q hp hq y1 y1' y2 y2' hy1 hy2 t0 ht0
+
+/-- Reduction of order: if y1 solves y'' + p(t) y' + q(t) y = 0 on an open interval I where p and
+q are continuous, and y1 is never zero on I, then any v whose slope is v' = e^(−∫ p) / y1^2
+gives a second solution y2 = v·y1, whose Wronskian with y1 is e^(−∫ p), never zero. -/
+theorem reduction_of_order
+    (I : Set ℝ) (hI : IsOpen I) (hIc : I.OrdConnected)
+    (p q : ℝ → ℝ) (hp : ContinuousOn p I) (hq : ContinuousOn q I)
+    (y1 y1' : ℝ → ℝ)
+    (hy1 : ∀ t ∈ I, HasDerivAt y1 (y1' t) t ∧ HasDerivAt y1' (-(p t) * y1' t - q t * y1 t) t)
+    (hy1ne : ∀ t ∈ I, y1 t ≠ 0)
+    (t0 : ℝ) (ht0 : t0 ∈ I) (v : ℝ → ℝ)
+    (hv : ∀ t ∈ I, HasDerivAt v (exp (-∫ u in t0..t, p u) / y1 t ^ 2) t) :
+    let y2 : ℝ → ℝ := fun t => v t * y1 t
+    let y2' : ℝ → ℝ := fun t => exp (-∫ u in t0..t, p u) / y1 t ^ 2 * y1 t + v t * y1' t
+    (∀ t ∈ I, HasDerivAt y2 (y2' t) t ∧ HasDerivAt y2' (-(p t) * y2' t - q t * y2 t) t) ∧
+    (∀ t ∈ I, y1 t * y2' t - y1' t * y2 t = exp (-∫ u in t0..t, p u)) := by
+  intro y2 y2'
+  have hE : ∀ t ∈ I, HasDerivAt (fun s => exp (-∫ u in t0..s, p u))
+      (exp (-∫ u in t0..t, p u) * -(p t)) t :=
+    fun t ht => (wr_integral_hasDerivAt I hI hIc p hp t0 t ht0 ht).neg.exp
+  refine ⟨fun t ht => ⟨?_, ?_⟩, fun t ht => ?_⟩
+  · exact (hv t ht).mul (hy1 t ht).1
+  · obtain ⟨a1, b1⟩ := hy1 t ht
+    have hne := hy1ne t ht
+    have h := (((hE t ht).div (a1.pow 2) (pow_ne_zero 2 hne)).mul a1).add ((hv t ht).mul b1)
+    convert h using 1
+    simp only [y2, y2', Pi.div_apply, Pi.pow_apply, Nat.cast_ofNat]
+    norm_num
+    field_simp
+    ring
+  · simp only [y2, y2']
+    have := hy1ne t ht
+    field_simp
+    ring
+
+-- The spring y'' − 2y' + y = 0: trying e^(rt) gives r^2 − 2r + 1 = (r − 1)^2, a double root at 1.
+example (r : ℤ) : r ^ 2 - 2 * r + 1 = (r - 1) ^ 2 := by ring
+-- Direct check that t e^t solves it: (2 + t) − 2(1 + t) + t = 0.
+example (t : ℝ) : (2 + t) - 2 * (1 + t) + t = 0 := by ring
+-- The Wronskian of e^t and t e^t, from their slopes: e^t (1 + t)e^t − e^t · t e^t = e^(2t).
+example (t : ℝ) : exp t * ((1 + t) * exp t) - exp t * (t * exp t) = exp (2 * t) := by
+  rw [two_mul, Real.exp_add]; ring
+-- Reduction of order: v' = e^(2t) / (e^t)^2 = 1.
+example (t : ℝ) : exp (2 * t) / exp t ^ 2 = 1 := by
+  rw [two_mul, Real.exp_add, sq, div_self (mul_ne_zero (exp_ne_zero t) (exp_ne_zero t))]
+-- e^t and 2e^t: the same arrow twice, Wronskian zero.
+example (t : ℝ) : exp t * (2 * exp t) - exp t * (2 * exp t) = 0 := by ring
+-- Fit 2 cm at −1 cm/s: c1 = 2 and c1 + c2 = −1 give c1 = 2, c2 = −3.
+example : (2 : ℤ) = 2 ∧ (2 : ℤ) + (-3) = -1 := by norm_num
+-- Back to the rest position: 2 − 3t = 0 at t = 2/3 s.
+example : (2 : ℚ) - 3 * (2 / 3) = 0 := by norm_num
+-- t^2 and t|t| at t = 1 and t = −1: the system a t^2 + b t|t| = 0 has determinant −2.
+example : (1 : ℤ) ^ 2 * ((-1) * |(-1 : ℤ)|) - (1 * |(1 : ℤ)|) * (-1) ^ 2 = -2 := by norm_num
+
+#print axioms wr_zero_right
+#print axioms wr_zero_left
+#print axioms wr_zero_on
+#print axioms wr_integral_hasDerivAt
+#print axioms wr_abel
+#print axioms wronskian_ne_zero_iff_linearIndependent
+#print axioms abel_identity
+#print axioms reduction_of_order
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'wr_zero_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wr_zero_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wr_zero_on' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wr_integral_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wr_abel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wronskian_ne_zero_iff_linearIndependent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'abel_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reduction_of_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -370,7 +680,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Critically damped machinery.** The shelf's shock absorber at b = 4.472136 per s has a double root; reduction gives t e^(−2.236068 t), the start 1 cm at rest gives (1 + 2.236068 t) e^(−2.236068 t), and W(1) = 0.011423. See [The RLC circuit](08-the-rlc-circuit-and-the-spring.md).
+- **Critically damped machinery.** The shelf's shock absorber, with its damper setting b (the coefficient of y') at 4.472136 per s, has a double root; reduction gives t e^(−2.236068 t), the start 1 cm at rest gives (1 + 2.236068 t) e^(−2.236068 t), and W(1) = 0.011423. See [The RLC circuit](08-the-rlc-circuit-and-the-spring.md).
 - **Equations whose coefficients change with time.** On [The Cauchy-Euler equation](09-the-cauchy-euler-equation.md) one solution is often easy to guess; reduction of order finds the other.
 
 > **Say it back**

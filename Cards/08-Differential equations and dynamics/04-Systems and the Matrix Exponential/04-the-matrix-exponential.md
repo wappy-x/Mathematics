@@ -62,7 +62,7 @@ $$e^{At} = \tfrac12\begin{pmatrix} e^{-t} + e^{-3t} & e^{-t} - e^{-3t} \\ e^{-t}
 ### When it holds
 
 - **Any square matrix.** The series converges for every A and t (proof below); no eigenvectors needed.
-- **A fixed in time.** With rates that drift, exponentiating the accumulated rate matrix fails in general, since A at one time need not commute with A at another.
+- **A fixed in time.** With rates that drift, exponentiating the accumulated rate matrix fails in general, since A at one time need not commute with A at another, that is, give the same product in either order.
 - **e^(A+B) = e^A e^B only when AB = BA.** A = −2I + P + Q splits the wall into one-way flows P = `[[0, 1], [0, 0]]` and Q = `[[0, 0], [1, 0]]`; since PQ ≠ QP, e^(−2) e^P e^Q puts room 1 at 9.47 °C after an hour, not 7.86.
 - **The eigenvector shortcut needs a full set.** Without one, the series still works and a factor t appears (Step 3).
 
@@ -82,7 +82,9 @@ Term by term, A^k t^k/k! has rate A^k t^(k−1)/(k−1)!: A times the previous t
 
 An eigenvector is a direction the matrix only stretches, by its eigenvalue λ ([The eigenvalue method](02-the-eigenvalue-method.md)). For the rooms, (1, 1), rooms equal, shrinks at λ = −1 per hour; (1, −1), rooms opposite, at λ = −3. Along an eigenvector v, A^k v = λ^k v, so the series acts as a number and sums to e^(λt) v.
 
-Split the start: (30, 10) = 20(1, 1) + 10(1, −1), so x(t) = 20e^(−t)(1, 1) + 10e^(−3t)(1, −1). The starts (1, 0) and (0, 1) give the closed form's two columns. A matrix whose columns are solutions from independent starts is a fundamental matrix; e^(At), the one equal to I at t = 0, is also called the state-transition matrix. In matrix language, A = V D V^(−1), eigenvectors as the columns of V, eigenvalues on the diagonal of D, and e^(At) = V e^(Dt) V^(−1).
+Split the start: (30, 10) = 20(1, 1) + 10(1, −1), so x(t) = 20e^(−t)(1, 1) + 10e^(−3t)(1, −1). The starts (1, 0) and (0, 1) give the closed form's two columns.
+
+A matrix whose columns are solutions from independent starts is a fundamental matrix; e^(At), the one equal to I at t = 0, is also called the state-transition matrix. In matrix language, A = V D V^(−1), eigenvectors as the columns of V, eigenvalues on the diagonal of D, and e^(At) = V e^(Dt) V^(−1).
 
 ### Step 3: when eigenvectors run out, the series still sums
 
@@ -359,6 +361,185 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the series facts for every square matrix of any size, and the heater's closed form exactly.
+
+- For any square matrix A and start x0, the state x(t) = e^(At) x0 starts at x0 and has rate A x(t) at every time t.
+- Any state with rate A times itself and start x0 equals e^(At) x0 at every time: there is no other solution.
+- Running forward s hours, then t more, is running s + t: e^(A(s+t)) = e^(As) e^(At), for all real s and t.
+- For the heater matrix J, e^(Jt) = e^(−t) `[[1, t], [0, 1]]` at every time t.
+- The rooms' eigenvalues are −1 and −3, with eigenvectors (1, 1) and (1, −1).
+- The start splits as (30, 10) = 20(1, 1) + 10(1, −1), and the starting rates are −50 and +10 °C per hour.
+- A = −2I + P + Q with PQ ≠ QP, and J = −I + N with N times N zero and (1, 0) an eigenvector of J.
+
+The rooms' closed form, the decimals, the mistakes table and Euler's error are left to the Python and Rust checks.
+
+```lean
+-- The matrix exponential: for every square real matrix A, x(t) = e^(tA) x₀ solves x' = Ax with x(0) = x₀ and is the only solution, e^((s+t)A) = e^(sA) e^(tA), and the heater matrix with a missing eigenvector has e^(tJ) = e^(-t) [[1, t], [0, 1]].
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.MeanValue
+
+open Matrix NormedSpace
+
+theorem entry_deriv (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ) (t : ℝ) (i j : Fin n) :
+    HasDerivAt (fun u : ℝ => exp (u • A) i j) ((exp (t • A) * A) i j) t := by
+  open scoped Norms.Operator in
+  have h := hasDerivAt_exp_smul_const (𝕂 := ℝ) A t
+  open scoped Norms.Operator in
+  let L : Matrix (Fin n) (Fin n) ℝ →L[ℝ] ℝ :=
+    LinearMap.toContinuousLinearMap (Matrix.entryLinearMap ℝ ℝ i j)
+  exact HasFDerivAt.comp_hasDerivAt t L.hasFDerivAt h
+
+#print axioms entry_deriv
+
+theorem mulVec_deriv (n : ℕ) (M : ℝ → Matrix (Fin n) (Fin n) ℝ) (M' : Matrix (Fin n) (Fin n) ℝ)
+    (v : ℝ → Fin n → ℝ) (v' : Fin n → ℝ) (t : ℝ)
+    (hM : ∀ i j, HasDerivAt (fun u => M u i j) (M' i j) t) (hv : HasDerivAt v v' t) :
+    HasDerivAt (fun u => M u *ᵥ v u) (M' *ᵥ v t + M t *ᵥ v') t := by
+  rw [hasDerivAt_pi] at hv ⊢
+  intro i
+  simp only [Pi.add_apply, mulVec, dotProduct]
+  rw [← Finset.sum_add_distrib]
+  apply HasDerivAt.fun_sum
+  intro j _
+  exact (hM i j).mul (hv j)
+
+#print axioms mulVec_deriv
+
+theorem exp_deriv (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ) (x₀ : Fin n → ℝ) (t : ℝ) :
+    HasDerivAt (fun s : ℝ => exp (s • A) *ᵥ x₀) (A *ᵥ (exp (t • A) *ᵥ x₀)) t := by
+  have h := mulVec_deriv n (fun u => exp (u • A)) (exp (t • A) * A) (fun _ => x₀) 0 t
+    (entry_deriv n A t) (hasDerivAt_const t x₀)
+  have hc : Commute A (exp (t • A)) := (Commute.refl A).smul_right t |>.exp_right
+  convert h using 1
+  rw [mulVec_zero, add_zero, mulVec_mulVec, hc.eq]
+
+#print axioms exp_deriv
+
+/-- For every square matrix A (any size n, real entries, fixed in time) and every starting
+state x₀, the state x(t) = e^(tA) x₀ built from the power series starts at x₀, has rate
+A x(t) at every time t, and is the only function with that rate and that start: multiplying
+the start by e^(tA) gives the state at time t. No eigenvectors are needed. -/
+theorem matrix_exponential_solves_linear_system (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ)
+    (x₀ : Fin n → ℝ) :
+    exp ((0 : ℝ) • A) *ᵥ x₀ = x₀ ∧
+    (∀ t : ℝ, HasDerivAt (fun s : ℝ => exp (s • A) *ᵥ x₀) (A *ᵥ (exp (t • A) *ᵥ x₀)) t) ∧
+    (∀ y : ℝ → Fin n → ℝ, (∀ t, HasDerivAt y (A *ᵥ y t) t) → y 0 = x₀ →
+      ∀ t, y t = exp (t • A) *ᵥ x₀) := by
+  refine ⟨by simp, exp_deriv n A x₀, ?_⟩
+  intro y hy h0 t
+  set z : ℝ → Fin n → ℝ := fun u => exp (u • -A) *ᵥ y u with hz
+  have hzd : ∀ u, HasDerivAt z 0 u := by
+    intro u
+    have h := mulVec_deriv n (fun u => exp (u • -A)) (exp (u • -A) * -A) y (A *ᵥ y u) u
+      (entry_deriv n (-A) u) (hy u)
+    convert h using 1
+    rw [mulVec_mulVec, Matrix.mul_neg, Matrix.neg_mulVec, neg_add_cancel]
+  have hconst : z t = z 0 := is_const_of_deriv_eq_zero
+    (fun u => (hzd u).differentiableAt) (fun u => (hzd u).deriv) t 0
+  have hz0 : z 0 = x₀ := by simp [hz, h0]
+  have hinv : exp (t • A) * exp (t • -A) = 1 := by
+    rw [← Matrix.exp_add_of_commute _ _ (((Commute.refl A).smul_left t).neg_right.smul_right t)]
+    simp
+  calc y t = (exp (t • A) * exp (t • -A)) *ᵥ y t := by rw [hinv, one_mulVec]
+    _ = exp (t • A) *ᵥ z t := by rw [← mulVec_mulVec]
+    _ = exp (t • A) *ᵥ x₀ := by rw [hconst, hz0]
+
+/-- Running forward s hours and then t more is running s + t hours:
+e^((s+t)A) = e^(sA) e^(tA), for every square matrix A and all real s, t. -/
+theorem matrix_exponential_add_time (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ) (s t : ℝ) :
+    exp ((s + t) • A) = exp (s • A) * exp (t • A) := by
+  rw [add_smul]
+  exact Matrix.exp_add_of_commute _ _ (((Commute.refl A).smul_left s).smul_right t)
+
+/-- When eigenvectors run out the series still sums: for the heater matrix
+J = [[-1, 1], [0, -1]], whose repeated eigenvalue -1 has only one eigenvector,
+e^(tJ) = e^(-t) [[1, t], [0, 1]], and the factor t marks the missing eigenvector. -/
+theorem matrix_exponential_jordan_block (t : ℝ) :
+    exp (t • !![(-1 : ℝ), 1; 0, -1]) = Real.exp (-t) • !![(1 : ℝ), t; 0, 1] := by
+  have hsplit : t • !![(-1 : ℝ), 1; 0, -1] = (-t) • (1 : Matrix (Fin 2) (Fin 2) ℝ) + t • !![0, 1; 0, 0] := by
+    ext i j; fin_cases i <;> fin_cases j <;> simp
+  have hc : Commute ((-t) • (1 : Matrix (Fin 2) (Fin 2) ℝ)) (t • !![(0:ℝ), 1; 0, 0]) :=
+    ((Commute.one_left _).smul_left _)
+  rw [hsplit, Matrix.exp_add_of_commute _ _ hc]
+  have h1 : exp ((-t) • (1 : Matrix (Fin 2) (Fin 2) ℝ)) = Real.exp (-t) • (1 : Matrix (Fin 2) (Fin 2) ℝ) := by
+    have hd : (-t) • (1 : Matrix (Fin 2) (Fin 2) ℝ) = diagonal (fun _ => -t) := by
+      ext i j; fin_cases i <;> fin_cases j <;> simp
+    rw [hd, Matrix.exp_diagonal, Pi.exp_def, ← Real.exp_eq_exp_ℝ]
+    ext i j; fin_cases i <;> fin_cases j <;> simp
+  have h2 : exp (t • !![(0:ℝ), 1; 0, 0]) = 1 + t • !![(0:ℝ), 1; 0, 0] := by
+    have hN : !![(0:ℝ), 1; 0, 0] * !![(0:ℝ), 1; 0, 0] = 0 := by
+      ext i j; fin_cases i <;> fin_cases j <;> simp
+    rw [congrFun (exp_eq_tsum ℝ) _]
+    rw [tsum_eq_sum (s := Finset.range 2)]
+    · simp [Finset.sum_range_succ]
+    · intro k hk
+      simp only [Finset.mem_range, not_lt] at hk
+      obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le hk
+      have hp : !![(0:ℝ), 1; 0, 0] ^ (2 + m) = 0 := by
+        rw [pow_add, pow_two, hN, zero_mul]
+      rw [smul_pow, hp]
+      simp
+  rw [h1, h2]
+  ext i j; fin_cases i <;> fin_cases j <;> simp
+
+-- The rooms' eigenvalues: (-2 - λ)^2 - 1 = 0 at λ = -1 and λ = -3.
+example : ((-2 : ℝ) - (-1)) ^ 2 - 1 = 0 ∧ ((-2 : ℝ) - (-3)) ^ 2 - 1 = 0 := by norm_num
+
+-- "Rooms equal" (1, 1) shrinks at -1 per hour; "rooms opposite" (1, -1) at -3 per hour.
+example : !![(-2 : ℝ), 1; 1, -2] *ᵥ ![1, 1] = (-1 : ℝ) • ![1, 1] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> norm_num
+example : !![(-2 : ℝ), 1; 1, -2] *ᵥ ![1, -1] = (-3 : ℝ) • ![1, -1] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> norm_num
+
+-- Split the start: (30, 10) = 20 (1, 1) + 10 (1, -1).
+example : (![30, 10] : Fin 2 → ℝ) = (20 : ℝ) • ![1, 1] + (10 : ℝ) • ![1, -1] := by
+  ext i; fin_cases i <;> simp <;> norm_num
+
+-- Starting rates: room 1 at -50 C per hour, room 2 at 30 - 2 × 10 = +10 C per hour.
+example : !![(-2 : ℝ), 1; 1, -2] *ᵥ ![30, 10] = ![-50, 10] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> norm_num
+
+-- The wall split into one-way flows: A = -2I + P + Q, and PQ ≠ QP.
+example : !![(-2 : ℝ), 1; 1, -2] =
+    (-2 : ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℝ) + !![0, 1; 0, 0] + !![0, 0; 1, 0] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp
+example : !![(0 : ℝ), 1; 0, 0] * !![0, 0; 1, 0] ≠ !![0, 0; 1, 0] * !![0, 1; 0, 0] := by
+  intro h
+  have := congrFun (congrFun h 0) 0
+  simp at this
+
+-- The heater: J = -I + N with N N = 0, and (1, 0) is J's eigenvector for -1.
+example : !![(-1 : ℝ), 1; 0, -1] = -1 + !![0, 1; 0, 0] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp
+example : !![(0 : ℝ), 1; 0, 0] * !![0, 1; 0, 0] = 0 := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp
+example : !![(-1 : ℝ), 1; 0, -1] *ᵥ ![1, 0] = (-1 : ℝ) • ![1, 0] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+
+#print axioms matrix_exponential_solves_linear_system
+#print axioms matrix_exponential_add_time
+#print axioms matrix_exponential_jordan_block
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'entry_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mulVec_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'matrix_exponential_solves_linear_system' depends on axioms: [propext, Classical.choice, Quot.sound]
+'matrix_exponential_add_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+'matrix_exponential_jordan_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -406,7 +587,7 @@ The long-run shape read from A alone is [Trace and determinant](05-classifying-e
 
 ## Sources
 
-Verified 28 Sep 2026: each link opens the named work; the DOI checked against Crossref.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Lebl, Jiří. *Notes on Diffy Qs: Differential Equations for Engineers*, section 3.8, "Matrix exponentials". [Author's free edition](https://www.jirka.org/diffyqs/html/sec_matexp.html): the series, eigenvectors, repeated eigenvalues.
 - Teschl, Gerald. *Ordinary Differential Equations and Dynamical Systems*. AMS Graduate Studies in Mathematics 140, 2012. [Author's free online edition](https://www.mat.univie.ac.at/~gerald/ftp/book-ode/). Chapter 3, "Linear equations": the matrix exponential, its convergence and the product rule.

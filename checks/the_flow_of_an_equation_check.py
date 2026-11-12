@@ -48,7 +48,7 @@ print(f"mistake, y' = 2ty: map from 0 used twice {m(0.25, m(0.25, 1.0)):.4f}, "
 print(f"mistake, growth factor reused: {a:.4f} x {a:.4f} = {a * a:.4f}, not {c:.4f}")
 print(f"mistake, formula past the life span: phi_1.5(1) = {phi(1.5, 1.0):.2f}")
 print(f"bucket: 25 cm empties at t = {math.sqrt(25) / 0.1:.0f}; at t = 60 starts of 25 cm and 1 cm "
-      f"read {level(60, 25):.2f} and {level(60, 1):.2f}; 10 s before empty: 0.00 or {level(-10, 0):.2f}")
+      f"read {level(60, 25):.2f} and {level(60, 1):.2f}; 10 min before empty: 0.00 or {level(-10, 0):.2f}")
 assert abs(t1 - 0.25) < 1e-9 and abs(t12 - 0.5) < 1e-9     # the integral recovers the times
 assert abs(euler(1.0, 0.5, 1e-5) - 2) < 1e-3 and 8 < errs[1] / errs[2] < 12
 assert worst < 1e-12 and shift < 1e-12                     # twice short equals once long
