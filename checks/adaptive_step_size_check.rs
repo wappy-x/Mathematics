@@ -64,5 +64,5 @@ fn main() {
     let hmin = lens[..lens.len() - 1].iter().cloned().fold(f64::MAX, f64::min);
     println!("breaks: no safety factor rejects {}; uniform at smallest h needs {} steps", solve(25.0, 1.0, 1.0).3, (25.0 / hmin) as u32 + 1);
     println!("breaks: step doubling divided by 31, not 15: {:.4e}", (yc - yf) / 31.0);
-    println!("PASS");
+    println!("ALL CHECKS PASS");
 }

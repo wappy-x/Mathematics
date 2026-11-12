@@ -95,14 +95,14 @@ The school rumour, P' = 0.8P(1 − P/1000) with P the pupils who have heard it, 
 <details>
 <summary>Detailed proof</summary>
 
-Write b = (1/6, 1/3, 1/3, 1/6) for the weights, c = (0, 1/2, 1/2, 1) for where each slope is read, and A for the links (stage 2 uses 1/2 of k1, stage 3 uses 1/2 of k2, stage 4 all of k3). Expand the exact y(t + h) in powers of h using y' = f, y'' = f_t + f f_y and so on; expand the RK4 step by Taylor-expanding f at each trial point. Equating coefficients through h^4, one per nesting of derivatives of f:
+Write b = (1/6, 1/3, 1/3, 1/6) for the weights, c = (0, 1/2, 1/2, 1) for where each slope is read, and A for the links (stage 2 uses 1/2 of k1, stage 3 uses 1/2 of k2, stage 4 all of k3). Expand the exact y(t + h) in powers of h using y' = f, y'' = f_t + f f_y and so on (f_t and f_y: the rates of change of f with t and with y); expand the RK4 step by Taylor-expanding f at each trial point. Equating coefficients through h^4, one per nesting of derivatives of f:
 the sums of b, bc, bc^2, b(Ac), bc^3, bc(Ac), b(Ac^2) and b(AAc) must be 1, 1/2, 1/3, 1/6, 1/4, 1/8, 1/12 and 1/24.
 
-One over each sum prints as 1 2 3 4 6 8 12 24 in the checks. So the local error is at most C h^5, C bounding f's derivatives to fourth order. If the rate changes by at most L times any change in y (a Lipschitz constant), summing the steps bounds the global error at time T by C h^4 (e^(LT) − 1)/L; given ε > 0 (epsilon, a tolerance), any h making that below ε meets it. The nestings, drawn as trees, are Runge-Kutta.
+One over each sum prints as 1 2 3 4 6 8 12 24 in the checks. So the local error is at most C h^5, C bounding f's derivatives to fourth order. If the rate changes by at most L times any change in y (a Lipschitz constant), summing the steps bounds the global error at time T by C h^4 (e^(LT) − 1)/L; given ε > 0 (epsilon, a tolerance), any h making that below ε meets it. The planned card Runge-Kutta draws the nestings as trees.
 
 </details>
 
-A second route: when the rate depends on time alone, k2 and k3 coincide and RK4 is Simpson's rule, weights 1, 4, 1 over 6.
+A second route: when the rate depends on time alone, k2 and k3 coincide and RK4 is Simpson's rule for the area under a curve, weights 1, 4, 1 over 6.
 
 ---
 
@@ -382,11 +382,13 @@ Orange: exact. Green: Euler, 2-second steps. Dark: RK4, same steps, on the exact
 - Runge-Kutta: the whole family and its order conditions.
 - Geodesic and exponential map: shortest paths on curved surfaces, stepped.
 
+Left open: a fixed step never reports its own error, so how should a solver choose h as it runs?
+
 ---
 
 ## Sources
 
-Verified 2026-09-28: each DOI's title and first author confirmed at Crossref.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Runge, C. "Ueber die numerische Auflösung von Differentialgleichungen." *Mathematische Annalen* 46 (1895), 167–178. [doi:10.1007/BF01446807](https://doi.org/10.1007/BF01446807). Several slope readings per step.
 - Butcher, J. C. "A history of Runge-Kutta methods." *Applied Numerical Mathematics* 20 (1996), 247–260. [doi:10.1016/0168-9274(95)00108-5](https://doi.org/10.1016/0168-9274(95)00108-5). The road to the four-slope rule.

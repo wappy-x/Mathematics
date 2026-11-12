@@ -6,11 +6,11 @@
 
 ## General Overview
 
-A reactor makes a chemical intermediate that is formed and used up within about a thousandth of a second. Its level snaps onto a balance level set by the slow feed: cos t at time t seconds, in mmol per litre above the reactor's average. The level y obeys y' = −1000(y − cos t) − sin t: the level is pulled towards the balance level at 1000 per second times the distance, and the −sin t term is the balance level's own drift. The run starts at y = 0.
+A reactor makes a chemical intermediate that is formed and used up within about a thousandth of a second. Its level snaps onto a balance level set by the slow feed: cos t at time t seconds, in mmol per litre above the reactor's average. The level y obeys y' = −1000(y − cos t) − sin t. In words, the level is pulled towards the balance level at 1000 per second times the distance, and the −sin t term is the balance level's own drift. The run starts at y = 0.
 
 The exact level jumps onto the balance curve within milliseconds, then rides it, so steps of 0.01 s should do. Euler's rule at that step gives 10 after one step and −3.487e9 (about −3.5 billion) after ten: each step multiplies the gap between estimate and balance curve by −9.
 
-Backward Euler steps along the slope at the destination instead. It multiplies the same gap by 1/11, and its factor stays below 1 at every step size. Averaging the two slopes, the trapezoidal rule, is more accurate but multiplies the gap by −2/3, so it rings. An equation whose fast part forces tiny steps on a start-slope method, though the answer changes slowly, is **stiff**.
+Backward Euler steps along the slope at the destination instead. It multiplies the same gap by 1/11, and its factor stays below 1 at every step size. Averaging the two slopes, the trapezoidal rule, is more accurate but multiplies the gap by −2/3, so it rings: its estimate swings above and below the curve, flipping side at every step. An equation whose fast part forces tiny steps on a start-slope method, though the answer changes slowly, is **stiff**.
 
 **In a stiff equation the fast part decides whether a step is stable; a step built on the slope at its destination shrinks the fast part at every step size, so the step can be chosen for the slow part alone.**
 
@@ -35,7 +35,7 @@ Orange: the trapezoidal rule, ringing. Green: backward Euler. Dark blue: the exa
 
 ## The formula
 
-Reminder: $y' = f(t, y)$ says the rate of $y$ at time $t$ is the rule $f$; a step of size $h$ moves from time $t_n$ to $t_{n+1} = t_n + h$, and $y_n$ is the estimate after $n$ steps ([Euler's method](01-eulers-method.md)). The three steps differ only in where they read the slope:
+Reminder: $y' = f(t, y)$ says the rate of $y$ at time $t$ is the rule $f$. A step of size $h$ moves from time $t_n$ to $t_{n+1} = t_n + h$, and $y_n$ is the estimate after $n$ steps ([Euler's method](01-eulers-method.md)). The three steps differ only in where they read the slope:
 
 $$\text{forward: } y_{n+1} = y_n + h\,f(t_n, y_n)$$
 
@@ -67,7 +67,7 @@ $$R_{\text{forward}} = 1 + z, \qquad R_{\text{backward}} = \frac{1}{1 - z}, \qqu
 ### When it holds
 
 - **The fast part decays.** If it grows, backward Euler with a long step still shrinks it, hiding a real runaway.
-- **The destination equation can be solved.** Here by division; for a curved rule, by Newton's method each step.
+- **The destination equation can be solved.** Here by division; for a curved rule, by [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) at each step: it slides down tangent lines to the answer.
 - **Many variables.** A system has one rate per direction, the eigenvalues of its Jacobian (the matrix of the rule's partial derivatives); the picture holds direction by direction.
 
 ---
@@ -90,7 +90,7 @@ The gap shrinks only while $|1 - 1000h| < 1$: h < 0.002. At h = 0.0019, factor �
 
 The same split in the backward step gives $(1 + 1000h)\,d_{n+1} = d_n + \ell_n$. The factor $1/(1 + 1000h)$ is below 1 for every positive step: 0.500000 at h = 0.001, 0.090909 at 0.01, 0.000100 at 10. The longer the step, the harder the damping.
 
-The leftovers now pile up as a shrinking geometric series: once the start gap has died, the error is at most $h/2000$ (proof below). The run gives −2.720e-6, −1.356e-6 and −6.773e-7 at 1 s for h = 0.01, 0.005 and 0.0025: ratios 2.01 and 2.00, first order.
+The leftovers now pile up as a shrinking geometric series: once the start gap has died, the error is at most $h/2000$ (proof below). The run gives −2.720e-6, −1.356e-6 and −6.773e-7 at 1 s for h = 0.01, 0.005 and 0.0025: ratios 2.01 and 2.00. That is first order: halve the step and the error halves.
 
 ### Step 3: the trapezoid is second order, but rings
 
@@ -145,7 +145,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Only cosine, sine and the exponential are imported. Road one steps the three rules against the closed form, at three step sizes to show the order. Road two never uses the closed form: it nudges the start by 0.001, steps once from both starts, and divides the difference by the nudge: that is each gap factor, measured. The asserts compare those factors with the algebra, the error ratios with 2 and 4, the errors with the proved bounds, and the trapezoid's ringing with (−49/51)^10.
+Only cosine, sine and the exponential are imported. Road one steps the three rules against the closed form, at three step sizes to show the order. Road two never uses the closed form: it nudges the start by 0.001, steps once from both starts, and divides the difference by the nudge. That is each gap factor, measured. The asserts compare those factors with the algebra, the error ratios with 2 and 4, the errors with the proved bounds, and the trapezoid's ringing with (−49/51)^10.
 
 ### Python
 
@@ -328,6 +328,112 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves that the implicit steps damp the gap for every decaying rate λ, real or complex, and every positive step size h.
+
+- With z = hλ, backward Euler's gap factor 1/(1 − z) is below 1 in size.
+- A backward Euler step on the gap, d₁ = d₀ + hλd₁, leaves a new gap smaller in size than any nonzero old gap.
+- The trapezoid's gap factor (1 + z/2)/(1 − z/2) is also below 1 in size.
+- The hand arithmetic holds exactly: z = −10, the factors −9, 1/11 and −2/3, and the trapezoid's −49/51 at h = 0.1.
+- Forward Euler's factor is −0.9 at h = 0.0019 and −1.1 at h = 0.0021; the plug-in iteration multiplies by −10.
+
+The runs, the error sizes and orders, and the error bound h/2000 are left to the Python and Rust checks.
+
+```lean
+-- Stiff equations: for a decaying fast rate, the backward Euler and trapezoid gap factors are below 1 in size at every positive step size, so a backward Euler step always shrinks the gap.
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Tactic.NormNum
+
+theorem one_lt_norm_one_sub (lam : ℂ) (hlam : lam.re < 0)
+    (h : ℝ) (hh : 0 < h) : 1 < ‖1 - (h : ℂ) * lam‖ := by
+  have hre : (1 - (h : ℂ) * lam).re = 1 - h * lam.re := by simp
+  have h1 : (1 - (h : ℂ) * lam).re ≤ ‖1 - (h : ℂ) * lam‖ := Complex.re_le_norm _
+  have : 0 < h * (-lam.re) := mul_pos hh (by linarith)
+  linarith
+
+#print axioms one_lt_norm_one_sub
+
+/-- Backward Euler's gap factor `1 / (1 - z)`, with `z = h λ`, is below 1 in size
+for every decaying fast rate `λ` (real part below 0) and every positive step size `h`. -/
+theorem backward_euler_gap_factor_lt_one (lam : ℂ) (hlam : lam.re < 0)
+    (h : ℝ) (hh : 0 < h) :
+    ‖(1 - (h : ℂ) * lam)⁻¹‖ < 1 := by
+  rw [norm_inv]
+  exact inv_lt_one_of_one_lt₀ (one_lt_norm_one_sub lam hlam h hh)
+
+/-- A backward Euler step on the fast part `d' = λ d` reads the slope at its destination:
+`d₁ = d₀ + h (λ d₁)`. For a decaying rate and any positive step size, the new gap is
+smaller in size than the old one (unless the old gap was already 0). -/
+theorem backward_euler_step_shrinks_gap (lam : ℂ) (hlam : lam.re < 0)
+    (h : ℝ) (hh : 0 < h) (d₀ d₁ : ℂ)
+    (hstep : d₁ = d₀ + (h : ℂ) * (lam * d₁)) (hd₀ : d₀ ≠ 0) :
+    ‖d₁‖ < ‖d₀‖ := by
+  have hgt := one_lt_norm_one_sub lam hlam h hh
+  have hne : (1 - (h : ℂ) * lam) ≠ 0 := by
+    intro h0; rw [h0, norm_zero] at hgt; linarith
+  have hd : d₁ = (1 - (h : ℂ) * lam)⁻¹ * d₀ := by
+    rw [eq_inv_mul_iff_mul_eq₀ hne]
+    linear_combination hstep
+  rw [hd, norm_mul]
+  have := backward_euler_gap_factor_lt_one lam hlam h hh
+  have : 0 < ‖d₀‖ := norm_pos_iff.mpr hd₀
+  nlinarith
+
+/-- The trapezoid's gap factor `(1 + z/2) / (1 - z/2)`, with `z = h λ`, is also below 1
+in size for every decaying fast rate `λ` and every positive step size `h`. -/
+theorem trapezoid_gap_factor_lt_one (lam : ℂ) (hlam : lam.re < 0)
+    (h : ℝ) (hh : 0 < h) :
+    ‖(1 + (h : ℂ) * lam / 2) / (1 - (h : ℂ) * lam / 2)‖ < 1 := by
+  set w : ℂ := (h : ℂ) * lam / 2 with hw
+  have hwre : w.re < 0 := by
+    have : w.re = h * lam.re / 2 := by simp [hw]
+    rw [this]
+    have : h * lam.re < 0 := mul_neg_of_pos_of_neg hh hlam
+    linarith
+  have hsq : Complex.normSq (1 + w) < Complex.normSq (1 - w) := by
+    simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.sub_re,
+      Complex.sub_im, Complex.one_re, Complex.one_im]
+    nlinarith
+  have hn : ‖1 + w‖ < ‖1 - w‖ := by
+    rw [Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq] at hsq
+    exact lt_of_pow_lt_pow_left₀ 2 (norm_nonneg _) hsq
+  have hpos : 0 < ‖1 - w‖ := lt_of_le_of_lt (norm_nonneg _) hn
+  rw [norm_div, div_lt_one hpos]
+  exact hn
+
+-- Worked numbers: h = 1/100 s and λ = -1000 per s give z = -10.
+example : (1 / 100 : ℚ) * (-1000) = -10 := by norm_num
+-- Forward, backward and trapezoid gap factors at z = -10: -9, 1/11, -2/3.
+example : (1 : ℚ) + (-10) = -9 := by norm_num
+example : (1 : ℚ) / (1 - (-10)) = 1 / 11 := by norm_num
+example : ((1 : ℚ) + (-10) / 2) / (1 - (-10) / 2) = -2 / 3 := by norm_num
+-- Trapezoid at h = 1/10 s: z = -100, factor -49/51.
+example : ((1 : ℚ) + (1 / 10 * -1000) / 2) / (1 - (1 / 10 * -1000) / 2) = -49 / 51 := by norm_num
+-- Forward Euler factor 1 - 1000 h: -9/10 at h = 19/10000, -11/10 at h = 21/10000; limit h < 2/1000.
+example : (1 : ℚ) - 1000 * (19 / 10000) = -9 / 10 := by norm_num
+example : (1 : ℚ) - 1000 * (21 / 10000) = -11 / 10 := by norm_num
+example : |(1 : ℚ) - 1000 * (2 / 1000)| = 1 := by norm_num
+-- Backward factor 1 / (1 + 1000 h) at h = 1/1000 and h = 10: 1/2 and 1/10001.
+example : (1 : ℚ) / (1 + 1000 * (1 / 1000)) = 1 / 2 := by norm_num
+example : (1 : ℚ) / (1 + 1000 * 10) = 1 / 10001 := by norm_num
+-- Plug-in iteration of the backward step multiplies by 1000 h = 10 with a sign flip: factor -10.
+example : -(1000 : ℚ) * (1 / 100) = -10 := by norm_num
+
+#print axioms backward_euler_gap_factor_lt_one
+#print axioms backward_euler_step_shrinks_gap
+#print axioms trapezoid_gap_factor_lt_one
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'one_lt_norm_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'backward_euler_gap_factor_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'backward_euler_step_shrinks_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'trapezoid_gap_factor_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the rate 1000 per s.
@@ -369,7 +475,7 @@ The two outputs match line for line.
 - [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same step limit on a heat grid, and the Crank-Nicolson step, which is this trapezoid.
 - Stiffness: stability regions in the complex plane, and the order barrier.
 
-Backward Euler pays for stability with first-order accuracy, the trapezoid for accuracy with ringing; whether one method can have high order, full damping and stability together is what the Dahlquist barriers settle.
+Backward Euler pays for stability with first-order accuracy, the trapezoid for accuracy with ringing. Whether one method can have high order, full damping and stability together is what the Dahlquist barriers settle.
 
 ---
 

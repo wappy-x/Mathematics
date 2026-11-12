@@ -38,13 +38,13 @@ $$r' = r(1 - r^2), \qquad \theta' = 1.$$
 
 **Read it aloud:** the swing's size changes at the rate $r$ times one minus $r$ squared; the phase turns at one radian per millisecond.
 
-**Poincaré-Bendixson.** If a closed (edge included), bounded region $R$ of the plane holds no resting point (an equilibrium, where $f = g = 0$), and a path enters $R$ and never leaves, then $R$ contains a closed loop (a periodic path) that the trapped path approaches.
+**Poincaré-Bendixson.** Let $R$ be a closed (edge included), bounded region of the plane that holds no resting point (an equilibrium, where $f = g = 0$). If a path enters $R$ and never leaves, then $R$ contains a closed loop (a periodic path) that the trapped path approaches.
 
 **Bendixson's criterion.** The divergence of the field is
 
 $$f_x + g_y,$$
 
-where $f_x$ is how fast $f$ changes as $x$ moves with $y$ held fixed, and $g_y$ likewise. If on a region $D$ with no holes the divergence keeps one sign and is not zero throughout any patch, no closed loop lies in $D$.
+where $f_x$ is how fast $f$ changes as $x$ moves with $y$ held fixed, and $g_y$ likewise ([Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md)). If on a region $D$ with no holes the divergence keeps one sign and is not zero throughout any patch, no closed loop lies in $D$.
 
 **Read it aloud:** a flow that shrinks area everywhere, or grows it everywhere, cannot go round in a loop.
 
@@ -86,12 +86,16 @@ The angle turns at 1 everywhere except the origin, so the origin is the only res
 
 ### Step 3: a trapped, restless path must close up
 
-The points a trapped path keeps coming back close to, forever, form its **limit set**, non-empty because the ring is bounded. Take a short segment the flow crosses one way (a **transversal**). The path crosses it in order: each crossing, with the path since the last, fences off the way back. So the limit set meets a transversal once at most, and with no rest in it, that forces a single closed loop.
+The points a trapped path keeps coming back close to, forever, form its **limit set**, non-empty because the ring is bounded.
+
+Take a short segment the flow crosses one way (a **transversal**). The path crosses it in order: each crossing, with the path since the last, fences off the way back. So the limit set meets a transversal once at most, and with no rest in it, that forces a single closed loop.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let γ be trapped in the compact, rest-free region R, with limit set L: the points q with γ(tₙ) → q for some tₙ → ∞. L is non-empty, compact and made of whole paths. If γ crosses a transversal Σ at s1 and later at s2, the arc between them plus the segment s1 to s2 is a closed curve the flow crosses one way only, so later crossings lie beyond s2; the crossings converge, and L meets Σ at most once. Take q in L, and z in the limit set of q's path; F(z) ≠ 0 gives a transversal Σ at z. q's path lies in L and crosses Σ near z repeatedly, always at the one point L ∩ Σ, so it revisits a point: it is periodic, and γ spirals onto it.
+Let γ be trapped in the compact (closed and bounded), rest-free region R, with limit set L: the points q with γ(tₙ) → q for some tₙ → ∞. L is non-empty, compact and made of whole paths. If γ crosses a transversal Σ at s1 and later at s2, the arc between them plus the segment s1 to s2 is a closed curve the flow crosses one way only, so later crossings lie beyond s2; the crossings converge, and L meets Σ at most once.
+
+Take q in L, and z in the limit set of q's path; F(z) ≠ 0 gives a transversal Σ at z. q's path lies in L and crosses Σ near z repeatedly, always at the one point L ∩ Σ, so it revisits a point: it is periodic, and γ spirals onto it.
 
 </details>
 
@@ -128,7 +132,7 @@ Carry a small triangle of starting states along the shock absorber's flow for 1 
 | outer rim | 2 × (1 − 2^2) | −6: inward, into the ring |
 | swing from 0.5 V at 2 ms | 1 ÷ √(1 + 3e^(−4)) | 0.973609 V |
 | the loop's lap | 2π ÷ 1 | **6.283185 ms** |
-| shock divergence | ∂v/∂p + ∂(−5p − 2v)/∂v = 0 − 2 | **−2 per s** |
+| shock divergence | slope of v along p, plus slope of −5p − 2v along v: 0 − 2 | **−2 per s** |
 | edge sum round the ellipse | −2 × π × √5 × 5 | −70.248147, not 0 |
 
 The alarm settles to a 1-volt swing repeating every 6.283185 ms; the shock absorber cannot ring on forever. Row 3 solves $r' = r(1 - r^2)$ as a separable equation: $r^2 = 1 / (1 + (1/r_0^2 - 1)e^{-2t})$.

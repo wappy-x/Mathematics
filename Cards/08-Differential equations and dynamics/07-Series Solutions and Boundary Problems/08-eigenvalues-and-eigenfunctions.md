@@ -10,7 +10,7 @@ A 1 m guitar string is pinned at the nut and the bridge, tuned so ripples run al
 
 Each clean note is a **standing wave**: the string keeps one shape, only growing and shrinking. Newton's law turns that shape into a differential equation with one unknown number in it; the pins demand zero at both ends. For almost every value of the number only the flat string fits. A few special values let a nonzero shape through.
 
-Those values are **eigenvalues** (German *eigen*, "own"), and their shapes **eigenfunctions**: the words used when a matrix turns a vector v into a multiple of itself, λv, with λ (Greek lambda) a number. Here the matrix is replaced by "take the second derivative and flip its sign".
+Those values are **eigenvalues** (German *eigen*, "own"), and their shapes **eigenfunctions**. These are the words used when a matrix turns a vector v into a multiple of itself, λv, with λ (Greek lambda) a number. Here the matrix is replaced by "take the second derivative and flip its sign".
 
 **The problem −y'' = λy on a 1 m string with y = 0 at both ends has a nonzero solution only when λ = n^2π^2, n = 1, 2, 3, …, and it is then a multiple of sin(nπx): the n-th harmonic, at n times the lowest note.**
 
@@ -75,7 +75,7 @@ Turned round: f = c√λ/(2π). So √λ, not λ, sets the pitch.
 
 For λ = 0 the equation says y'' = 0, so y = A + Bx, a straight line. The nut gives A = 0; the bridge then gives B = 0.
 
-For negative λ, write λ = −k^2 with k > 0. The solutions are A cosh(kx) + B sinh(kx). The nut gives A = 0, and B sinh(k) = 0 forces B = 0, since sinh(k) > 0.
+For negative λ, write λ = −k^2 with k > 0. The solutions are A cosh(kx) + B sinh(kx), where cosh(kx) = (e^(kx) + e^(−kx))/2 and sinh(kx) = (e^(kx) − e^(−kx))/2 ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). The nut gives A = 0, and B sinh(k) = 0 forces B = 0, since sinh(k) > 0.
 
 Shooting from the nut with slope 0.1, the far end lands 10.00 cm up for λ = 0 and 11.75 cm up for λ = −1.
 
@@ -107,7 +107,7 @@ With √λ = nπ the shape is B sin(nπx), any B but zero, with n arches and n �
 
 **The list of solutions is complete.** A solution of −y'' = λy is fixed by y(0) and y'(0), by uniqueness for linear equations. cos(√λ x) and sin(√λ x)/√λ start at (1, 0) and (0, 1), so every solution combines them; likewise 1 and x at λ = 0, and cosh and sinh for negative λ. Steps 2 and 3 cover every real λ.
 
-**λ must be real and positive.** Let λ and y be complex, y zero at the pins but not everywhere. Multiply −y'' = λy by the conjugate ȳ and integrate from 0 to 1. Integration by parts moves one derivative across; the boundary term vanishes at the pins:
+**λ must be real and positive.** Let λ and y be complex, y zero at the pins but not everywhere. Multiply −y'' = λy by the conjugate ȳ (y with i replaced by −i) and integrate from 0 to 1. Integration by parts moves one derivative across; the boundary term vanishes at the pins:
 
 ∫ |y'|^2 dx = λ ∫ |y|^2 dx.
 
@@ -145,7 +145,13 @@ The string sounds the low A, the A above, and the E above that.
 
 ## Code, from first principles, and it actually runs
 
-Road one is the closed form n^2π^2. Road two shoots from the nut with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), scans λ in steps of 0.5 until the landing height changes sign, bisects, and counts nodes, then repeats with a free far end ([Shooting](06-the-shooting-method.md)). Road three replaces y'' by differences of neighbouring grid values ([Finite differences](07-finite-differences-for-boundary-problems.md)), which turns the problem into a matrix eigenvalue problem on 9, 19 and 39 inner points, and finds its eigenvalues by bisection on a count: the number of eigenvalues below a trial value s equals the number of negative pivots (the diagonal entries left after elimination) of the matrix minus s times the identity. Its error falls fourfold per halving of the spacing: second order.
+The code takes three roads to the eigenvalues.
+
+- **Road one** is the closed form n^2π^2.
+- **Road two** shoots from the nut with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). It scans λ in steps of 0.5 until the landing height changes sign, bisects (halves that interval again and again), and counts nodes. Then it repeats with a free far end ([Shooting](06-the-shooting-method.md)).
+- **Road three** replaces y'' by differences of neighbouring grid values ([Finite differences](07-finite-differences-for-boundary-problems.md)). That turns the problem into a matrix eigenvalue problem on 9, 19 and 39 inner points. It finds the eigenvalues by bisection on a count: the number of eigenvalues below a trial value s equals the number of negative pivots (the diagonal entries left after elimination) of the matrix minus s times the identity.
+
+Road three's error falls fourfold per halving of the spacing: second order.
 
 ### Python
 
@@ -341,6 +347,278 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the theorem for every real λ, negative, zero and positive, with no grid and no rounding.
+
+- With y = 0 at both pins, −y'' = λy has a nonzero solution exactly when λ = n^2π^2, n = 1, 2, 3, …
+- Every such nonzero solution is B sin(nπx), with B not zero: the n-th harmonic.
+- Inside the string, sin(nπx) is zero only at x = k/n with 0 < k < n: the n − 1 nodes.
+- The notes come out at 110, 220 and 330 Hz, and c√λ/(2π) at λ = 9π^2 is exactly 330 Hz.
+- Eigenvalues grow 1 : 4 : 9 while notes grow 1 : 2 : 3; the mistake gives 110, 440 and 990 Hz.
+- The midpoint node sits at figure pixel 140, and the free-end arithmetic gives 55, 165 and 275 Hz.
+
+The decimals, the shooting and grid roads, and the free-end eigenvalues themselves are left to the Python and Rust checks.
+
+```lean
+-- Eigenvalue problems: the pinned problem -y'' = λy, y(0) = y(1) = 0 on [0, 1] has a nonzero solution exactly when λ = n^2π^2 for some n = 1, 2, 3, ..., every such solution is a nonzero multiple of sin(nπx), and sin(nπx) is zero inside the string only at the n - 1 nodes k/n.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Tactic.NormNum
+import Mathlib.Analysis.ODE.Gronwall
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+
+open Real Set
+
+lemma pinned_aux_unique (lam : ℝ) (E E' : ℝ → ℝ)
+    (hd : ∀ x ∈ Icc (0 : ℝ) 1,
+      HasDerivWithinAt E (E' x) (Icc 0 1) x ∧ HasDerivWithinAt E' (-lam * E x) (Icc 0 1) x)
+    (h0 : E 0 = 0) (h0' : E' 0 = 0) : ∀ x ∈ Icc (0 : ℝ) 1, E x = 0 := by
+  have key := eq_zero_of_abs_deriv_le_mul_abs_self_of_eq_zero_right
+    (f := fun t => (E t, E' t)) (f' := fun t => (E' t, -lam * E t)) (K := 1 + |lam|) (a := 0) (b := 1)
+    ?_ ?_ (by simp [h0, h0']) ?_
+  · intro x hx
+    have := key x hx
+    simp only [Prod.mk_eq_zero] at this
+    exact this.1
+  · intro x hx
+    exact (HasDerivWithinAt.prodMk (hd x hx).1 (hd x hx).2).continuousWithinAt
+  · intro x hx
+    have hx' := Ico_subset_Icc_self hx
+    exact (HasDerivWithinAt.prodMk (hd x hx').1 (hd x hx').2).mono_of_mem_nhdsWithin (Icc_mem_nhdsGE_of_mem hx)
+  · intro x _
+    simp only [Prod.norm_def, Real.norm_eq_abs, abs_mul, abs_neg]
+    have h1 := le_max_left |E x| |E' x|
+    have h2 := le_max_right |E x| |E' x|
+    have h3 := abs_nonneg lam
+    have h4 := abs_nonneg (E x)
+    apply max_le <;> nlinarith
+
+#print axioms pinned_aux_unique
+
+lemma pinned_aux_eq (lam : ℝ) (y y' z z' : ℝ → ℝ)
+    (hd : ∀ x ∈ Icc (0 : ℝ) 1,
+      HasDerivWithinAt y (y' x) (Icc 0 1) x ∧ HasDerivWithinAt y' (-lam * y x) (Icc 0 1) x)
+    (hz : ∀ x, HasDerivAt z (z' x) x ∧ HasDerivAt z' (-lam * z x) x)
+    (h0 : y 0 = z 0) (h0' : y' 0 = z' 0) : ∀ x ∈ Icc (0 : ℝ) 1, y x = z x := by
+  intro x hx
+  have := pinned_aux_unique lam (fun t => y t - z t) (fun t => y' t - z' t) ?_ (by simp [h0])
+    (by simp [h0']) x hx
+  · simpa [sub_eq_zero] using this
+  · intro t ht
+    refine ⟨(hd t ht).1.sub (hz t).1.hasDerivWithinAt, ?_⟩
+    have := (hd t ht).2.sub (hz t).2.hasDerivWithinAt
+    convert this using 1
+    ring
+
+#print axioms pinned_aux_eq
+
+lemma pinned_aux_sine (lam : ℝ) (y y' : ℝ → ℝ)
+    (hd : ∀ x ∈ Icc (0 : ℝ) 1,
+      HasDerivWithinAt y (y' x) (Icc 0 1) x ∧ HasDerivWithinAt y' (-lam * y x) (Icc 0 1) x)
+    (h0 : y 0 = 0) (h1 : y 1 = 0) (hne : ∃ x ∈ Icc (0 : ℝ) 1, y x ≠ 0) :
+    ∃ n : ℕ, 0 < n ∧ lam = (n * π) ^ 2 ∧
+      ∃ B : ℝ, B ≠ 0 ∧ ∀ x ∈ Icc (0 : ℝ) 1, y x = B * sin (n * π * x) := by
+  obtain ⟨x₀, hx₀, hyx₀⟩ := hne
+  set p := y' 0 with hp
+  rcases lt_trichotomy lam 0 with hl | hl | hl
+  · -- lam < 0
+    exfalso
+    set μ := √(-lam) with hμ
+    have hμpos : 0 < μ := Real.sqrt_pos.mpr (by linarith)
+    have hμsq : μ ^ 2 = -lam := Real.sq_sqrt (by linarith)
+    have heq := pinned_aux_eq lam y y' (fun x => p / μ * sinh (μ * x)) (fun x => p * cosh (μ * x))
+      hd ?_ (by simp [h0]) (by simp [hp])
+    · have h1' := heq 1 ⟨zero_le_one, le_rfl⟩
+      rw [h1, mul_one] at h1'
+      have hs : 0 < sinh μ := Real.sinh_pos_iff.mpr hμpos
+      have hp0 : p = 0 := by
+        rcases mul_eq_zero.mp h1'.symm with h | h
+        · rcases div_eq_zero_iff.mp h with h | h
+          · exact h
+          · exact absurd h hμpos.ne'
+        · exact absurd h hs.ne'
+      apply hyx₀
+      rw [heq x₀ hx₀, hp0]; simp
+    · intro x
+      constructor
+      · have := ((hasDerivAt_id' x).const_mul μ).sinh.const_mul (p / μ)
+        convert this using 1
+        field_simp
+      · have := ((hasDerivAt_id' x).const_mul μ).cosh.const_mul p
+        convert this using 1
+        have : lam = -μ ^ 2 := by linarith
+        rw [this]
+        field_simp
+  · -- lam = 0
+    exfalso
+    subst hl
+    have heq := pinned_aux_eq 0 y y' (fun x => p * x) (fun _ => p)
+      hd ?_ (by simp [h0]) (by simp [hp])
+    · have h1' := heq 1 ⟨zero_le_one, le_rfl⟩
+      rw [h1, mul_one] at h1'
+      apply hyx₀
+      rw [heq x₀ hx₀, ← h1']; simp
+    · intro x
+      constructor
+      · simpa using (hasDerivAt_id' x).const_mul p
+      · simpa using hasDerivAt_const x p
+  · -- lam > 0
+    set ω := √lam with hω
+    have hωpos : 0 < ω := Real.sqrt_pos.mpr hl
+    have hωsq : ω ^ 2 = lam := Real.sq_sqrt hl.le
+    have heq := pinned_aux_eq lam y y' (fun x => p / ω * sin (ω * x)) (fun x => p * cos (ω * x))
+      hd ?_ (by simp [h0]) (by simp [hp])
+    · have h1' := heq 1 ⟨zero_le_one, le_rfl⟩
+      rw [h1, mul_one] at h1'
+      have hp0 : p ≠ 0 := by
+        intro hp0
+        apply hyx₀
+        rw [heq x₀ hx₀, hp0]; simp
+      have hs : sin ω = 0 := by
+        rcases mul_eq_zero.mp h1'.symm with h | h
+        · rcases div_eq_zero_iff.mp h with h | h
+          · exact absurd h hp0
+          · exact absurd h hωpos.ne'
+        · exact h
+      obtain ⟨k, hk⟩ := Real.sin_eq_zero_iff.mp hs
+      have hkpos : (0 : ℝ) < k := by
+        by_contra hneg
+        push Not at hneg
+        have : (k : ℝ) * π ≤ 0 := mul_nonpos_of_nonpos_of_nonneg hneg pi_pos.le
+        linarith
+      have hkpos' : 0 < k := by exact_mod_cast hkpos
+      refine ⟨k.toNat, by omega, ?_, p / ω, div_ne_zero hp0 hωpos.ne', ?_⟩
+      · have hcast : ((k.toNat : ℕ) : ℝ) = (k : ℝ) := by
+          have : ((k.toNat : ℤ) : ℝ) = (k : ℝ) := by rw [Int.toNat_of_nonneg hkpos'.le]
+          exact_mod_cast this
+        rw [hcast, hk, hωsq]
+      · intro x hx
+        have hcast : ((k.toNat : ℕ) : ℝ) = (k : ℝ) := by
+          have : ((k.toNat : ℤ) : ℝ) = (k : ℝ) := by rw [Int.toNat_of_nonneg hkpos'.le]
+          exact_mod_cast this
+        rw [heq x hx, hcast, hk]
+    · intro x
+      constructor
+      · have := ((hasDerivAt_id' x).const_mul ω).sin.const_mul (p / ω)
+        convert this using 1
+        field_simp
+      · have := ((hasDerivAt_id' x).const_mul ω).cos.const_mul p
+        convert this using 1
+        rw [← hωsq]
+        field_simp
+
+#print axioms pinned_aux_sine
+
+/-- The eigenvalues of the pinned string. Take a real number λ. Call y a solution if y has a
+slope y' at every point of the string 0 ≤ x ≤ 1 (one-sided at the ends), the slope y' has slope
+-λ y there (so -y'' = λ y), and y is zero at both pins: y(0) = 0 and y(1) = 0. Then a solution
+that is not zero everywhere on the string exists exactly when λ = n^2π^2 for some whole number
+n = 1, 2, 3, .... -/
+theorem pinned_string_eigenvalue_iff (lam : ℝ) :
+    (∃ y y' : ℝ → ℝ,
+      (∀ x ∈ Icc (0 : ℝ) 1,
+        HasDerivWithinAt y (y' x) (Icc 0 1) x ∧ HasDerivWithinAt y' (-lam * y x) (Icc 0 1) x) ∧
+      y 0 = 0 ∧ y 1 = 0 ∧ ∃ x ∈ Icc (0 : ℝ) 1, y x ≠ 0) ↔
+    ∃ n : ℕ, 0 < n ∧ lam = (n * π) ^ 2 := by
+  constructor
+  · rintro ⟨y, y', hd, h0, h1, hne⟩
+    obtain ⟨n, hn, hl, -⟩ := pinned_aux_sine lam y y' hd h0 h1 hne
+    exact ⟨n, hn, hl⟩
+  · rintro ⟨n, hn, rfl⟩
+    refine ⟨fun x => sin (n * π * x), fun x => n * π * cos (n * π * x), ?_, by simp, ?_, ?_⟩
+    · intro x _
+      constructor
+      · have := ((hasDerivAt_id' x).const_mul ((n : ℝ) * π)).sin
+        convert this.hasDerivWithinAt using 1
+        ring
+      · have := (((hasDerivAt_id' x).const_mul ((n : ℝ) * π)).cos).const_mul ((n : ℝ) * π)
+        convert this.hasDerivWithinAt using 1
+        ring
+    · simp only [mul_one]
+      exact Real.sin_nat_mul_pi n
+    · refine ⟨1 / (2 * n), ⟨by positivity, ?_⟩, ?_⟩
+      · have : (1 : ℝ) ≤ n := by exact_mod_cast hn
+        rw [div_le_one (by positivity)]; linarith
+      · have hn' : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+        have : (n : ℝ) * π * (1 / (2 * n)) = π / 2 := by field_simp
+        simp only [this, sin_pi_div_two]
+        norm_num
+
+/-- The eigenfunctions. If y solves -y'' = λ y on the string 0 ≤ x ≤ 1, is zero at both pins,
+and is not zero everywhere on the string, then for some n = 1, 2, 3, ... the number λ is
+n^2π^2 and y is a nonzero multiple of sin(nπx) at every point of the string: the n-th harmonic. -/
+theorem pinned_string_eigenfunction_is_sine (lam : ℝ) (y y' : ℝ → ℝ)
+    (hd : ∀ x ∈ Icc (0 : ℝ) 1,
+      HasDerivWithinAt y (y' x) (Icc 0 1) x ∧ HasDerivWithinAt y' (-lam * y x) (Icc 0 1) x)
+    (h0 : y 0 = 0) (h1 : y 1 = 0) (hne : ∃ x ∈ Icc (0 : ℝ) 1, y x ≠ 0) :
+    ∃ n : ℕ, 0 < n ∧ lam = (n * π) ^ 2 ∧
+      ∃ B : ℝ, B ≠ 0 ∧ ∀ x ∈ Icc (0 : ℝ) 1, y x = B * sin (n * π * x) := by
+  exact pinned_aux_sine lam y y' hd h0 h1 hne
+
+/-- The nodes. For n = 1, 2, 3, ..., the n-th mode sin(nπx) is zero at a point x strictly
+inside the string exactly when x = k/n for a whole number k with 0 < k < n: n - 1 nodes,
+evenly spaced. -/
+theorem sine_mode_nodes (n : ℕ) (hn : 0 < n) (x : ℝ) (hx : x ∈ Ioo (0 : ℝ) 1) :
+    sin (n * π * x) = 0 ↔ ∃ k : ℕ, 0 < k ∧ k < n ∧ x = k / n := by
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  constructor
+  · intro h
+    obtain ⟨k, hk⟩ := Real.sin_eq_zero_iff.mp h
+    have hkx : (k : ℝ) = n * x := by
+      have := pi_pos
+      have : (k : ℝ) * π = (n * x) * π := by rw [hk]; ring
+      exact mul_right_cancel₀ pi_pos.ne' this
+    have hk0 : (0 : ℝ) < k := by rw [hkx]; exact mul_pos hn' hx.1
+    have hkn : (k : ℝ) < n := by rw [hkx]; nlinarith [hx.2]
+    have hk0' : 0 < k := by exact_mod_cast hk0
+    refine ⟨k.toNat, by omega, ?_, ?_⟩
+    · have : k < (n : ℤ) := by exact_mod_cast hkn
+      omega
+    · have hcast : ((k.toNat : ℕ) : ℝ) = (k : ℝ) := by
+        have : ((k.toNat : ℤ) : ℝ) = (k : ℝ) := by rw [Int.toNat_of_nonneg hk0'.le]
+        exact_mod_cast this
+      rw [hcast, hkx]; field_simp
+  · rintro ⟨k, -, -, rfl⟩
+    have : (n : ℝ) * π * (k / n) = k * π := by field_simp
+    rw [this]
+    exact Real.sin_nat_mul_pi k
+
+-- Notes on the 220 m/s string: c × nπ/(2π) = 220n/2 = 110n, so 110, 220 and 330 Hz.
+example : (List.range' 1 3).map (fun n => 220 * n / 2) = [110, 220, 330] := by decide
+-- The pitch formula c√λ/(2π) at λ = (3π)^2 gives 330 Hz exactly.
+example : (220 : ℝ) * √((3 * π) ^ 2) / (2 * π) = 330 := by
+  rw [Real.sqrt_sq (by positivity)]; field_simp; norm_num
+-- Eigenvalues grow 1 : 4 : 9 while the notes grow 1 : 2 : 3.
+example : (List.range' 1 3).map (fun n => n ^ 2) = [1, 4, 9] := by decide
+-- The mistake "pitch in proportion to λ": 110 × n^2 gives 110, 440 and 990 Hz.
+example : (List.range' 1 3).map (fun n => 110 * n ^ 2) = [110, 440, 990] := by decide
+-- Nodes inside the string, n - 1 for n = 1, 2, 3: 0, 1, 2; for n = 3 they sit at 1/3 and 2/3.
+example : (List.range' 1 3).map (fun n => n - 1) = [0, 1, 2] := by decide
+example : (0 : ℚ) < 1 / 3 ∧ (1 : ℚ) / 3 < 2 / 3 ∧ (2 : ℚ) / 3 < 1 := by norm_num
+-- The midpoint node lies at figure pixel 30 + 220 × 1/2 = 140.
+example : (30 : ℚ) + 220 * (1 / 2) = 140 := by norm_num
+-- Far end free: √λ = (n - 1/2)π gives notes 220(2n - 1)/4 = 55, 165, 275 Hz, ratio 1 : 3 : 5.
+example : (List.range' 1 3).map (fun n => 220 * (2 * n - 1) / 4) = [55, 165, 275] := by decide
+example : (List.range' 1 3).map (fun n => 2 * n - 1) = [1, 3, 5] := by decide
+
+#print axioms pinned_string_eigenvalue_iff
+#print axioms pinned_string_eigenfunction_is_sine
+#print axioms sine_mode_nodes
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'pinned_aux_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pinned_aux_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pinned_aux_sine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pinned_string_eigenvalue_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pinned_string_eigenfunction_is_sine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sine_mode_nodes' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -364,8 +642,8 @@ The two outputs match line for line.
 
 - **Guitar harmonics.** A resting finger lets through only modes with a node under it: 220 Hz at the midpoint, 330 Hz at a third.
 - **Clarinets.** Air in a pipe closed at one end obeys the free-end case: odd multiples only, 1 : 3 : 5.
-- **Columns under load.** A pinned column stays straight until the load reaches a critical value set by the lowest eigenvalue of the same problem, then bows: Buckling.
-- **A particle in a box.** The same equation gives an electron's allowed energies, in the ratio 1 : 4 : 9: Schrodinger's equation.
+- **Columns under load.** A pinned column stays straight until the load reaches a critical value set by the lowest eigenvalue of the same problem, then bows: [Buckling](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/08-buckling-and-stability.md).
+- **A particle in a box.** The same equation gives an electron's allowed energies, in the ratio 1 : 4 : 9: [Schrodinger's equation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/03-schrodinger-equation-and-the-particle-in-a-box.md).
 
 > **Say it back**
 > A clean note on a pinned string keeps one shape, which must solve −y'' = λy with zero at both pins. The first pin removes the cosine; the second leaves only the flat string unless sin(√λ) = 0. So the eigenvalues are n^2π^2 and the eigenfunctions sin(nπx), with n − 1 nodes. The pitch follows √λ: 110, 220 and 330 Hz on this string.
@@ -383,9 +661,11 @@ The two outputs match line for line.
 - [Half-range series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md): any pluck shape written as a sum of these sines.
 - [Buckling](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/08-buckling-and-stability.md): the lowest eigenvalue as the load a column can bear.
 - [Schrodinger's equation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/03-schrodinger-equation-and-the-particle-in-a-box.md): eigenvalues as the energies an electron may have.
-- Self-adjoint extensions: end conditions as the choice that makes the operator symmetric.
+- Self-adjoint extensions: end conditions as the choice that makes the operator (here "take the second derivative and flip its sign") symmetric.
 - Helmholtz: the same question for a drum or a room.
 - Volume form and Laplace-Beltrami: the bending operator on a curved surface.
+
+Left open: on a string wound heavier in one half, the eigenvalues leave n^2π^2, so which facts about the modes survive?
 
 ---
 

@@ -57,4 +57,4 @@ print(f"v(25): adaptive {v:.9f}, exact {exact(25):.9f}, global error {sci(v - ex
 assert abs(v - exact(25)) < 1e-5
 print(f"breaks: no safety factor rejects {solve(25.0, 1.0, 1.0)[3]}; uniform at smallest h needs {int(25 / min(lens[:-1])) + 1} steps")
 print(f"breaks: step doubling divided by 31, not 15: {sci((yc - yf) / 31)}")
-print("PASS")
+print("ALL CHECKS PASS")

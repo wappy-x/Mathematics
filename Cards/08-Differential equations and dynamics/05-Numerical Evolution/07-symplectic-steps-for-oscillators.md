@@ -98,7 +98,7 @@ That band is 0.499507 to 0.5, a width of 0.099%. The proof counted no steps, so 
 
 ### Step 4: what symplectic does not promise
 
-Leapfrog turns the state by an angle $\theta = 2\arcsin(h/2)$ per step; the true motion turns by $h$. The difference, about $h^3/24$ per step, never cancels. After 1,000 orbits leapfrog is 1.0340 rad ahead: energy right to 0.099%, position 0.5114 where the truth is 1. Symplectic keeps the size of the orbit, not the clock.
+Leapfrog turns the state by an angle $\theta = 2\arcsin(h/2)$ per step; the true motion turns by $h$. The difference, about $h^3/24$ per step, never cancels. After 1,000 orbits leapfrog is 1.0340 radians (rad) ahead: energy right to 0.099%, position 0.5114 where the truth is 1. Symplectic keeps the size of the orbit, not the clock.
 
 <details>
 <summary>Detailed proof: the rotation, the stability limit, and the planet</summary>
@@ -109,7 +109,7 @@ Leapfrog turns the state by an angle $\theta = 2\arcsin(h/2)$ per step; the true
 
 **Stability limit.** At $h \ge 2$, $a \le -1$ and $b \le 0$, so $\tilde E$ bounds nothing. The matrix's stretch factors along fixed directions (its eigenvalues) are $a \pm \sqrt{a^2 - 1}$. At $h = 2.5$, $a$ = −2.125 and the larger is −4.0; the start (1, −0.75) lies along it. Area is still kept: one direction stretches as the other squeezes.
 
-**The planet.** Under the inverse-square pull, kick and drift are still shears, so the step keeps area (in four dimensions, the sum of the two position–velocity areas). Backward error analysis, proved in the Acta Numerica survey below, says a symplectic method with a fixed small step follows a nearby energy-keeping system, so the energy stays in a band of width proportional to $h^2$ for times exponentially long in $1/h$. Stated here without proof.
+**The planet.** Under the inverse-square pull, kick and drift are still shears, so the step keeps area (in four dimensions, the sum of the two position–velocity areas). Backward error analysis, proved in the Acta Numerica survey below, says a symplectic method with a fixed small step follows a nearby energy-keeping system. So the energy stays in a band of width proportional to $h^2$ for times that grow exponentially as $h$ shrinks, far longer than any real run. Stated here without proof.
 
 </details>
 
@@ -343,6 +343,154 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the spring's facts exactly, for every step size, start and number of steps the claims allow.
+
+- Leapfrog keeps the hidden energy $\tilde E = \tfrac12(b\,q^2 + v^2)$ exactly, for every step size, every start and every number of steps.
+- For a fixed step $h$ with $0 < h < 2$, started at $q = 1$, $v = 0$: the energy stays between $b/2$ and $1/2$ after every step, however many.
+- Euler's step multiplies the energy by exactly $1 + h^2$, so after $n$ steps it is $(1 + h^2)^n$ times the start.
+- At $h = 2.5$: $a = -2.125$, and the larger stretch factor is $a - \sqrt{a^2 - 1} = -4$.
+- At $h = 2.5$, one step sends (1, −0.75) to (−4, 3), and six steps reach $q$ = 4096, $v$ = −3072.
+
+The decimals, the timing lead, the error orders, the planet and the figure are left to the Python and Rust checks.
+
+```lean
+-- Symplectic steps: for the spring q'' = -q, the leapfrog step keeps a hidden energy exactly and so traps the energy started from (1, 0) between b/2 and 1/2 at every step when 0 < h < 2, while Euler's step multiplies the energy by 1 + h^2 every step.
+import Mathlib.Basic.Real.Basic
+import Mathlib.Logic.Function.Iterate
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+
+noncomputable section
+
+/-- One leapfrog (kick–drift–kick, velocity Verlet) step of size `h` for `q' = v`, `v' = -q`,
+on the state `(q, v)`: half kick `v - (h/2) q`, drift the position a whole step at that
+velocity, then the second half kick felt at the new position. -/
+def leapfrog (h : ℝ) (s : ℝ × ℝ) : ℝ × ℝ :=
+  let v₁ := s.2 - h / 2 * s.1
+  let q₁ := s.1 + h * v₁
+  (q₁, v₁ - h / 2 * q₁)
+
+/-- One Euler step of size `h` for `q' = v`, `v' = -q`: `(q + h v, v - h q)`. -/
+def eulerStep (h : ℝ) (s : ℝ × ℝ) : ℝ × ℝ :=
+  (s.1 + h * s.2, s.2 - h * s.1)
+
+/-- The energy `E = (q^2 + v^2)/2` of the state `(q, v)`. -/
+def energy (s : ℝ × ℝ) : ℝ :=
+  (s.1 ^ 2 + s.2 ^ 2) / 2
+
+/-- The hidden energy `Ẽ = (b q^2 + v^2)/2` with `b = 1 - h^2/4`. -/
+def hiddenEnergy (h : ℝ) (s : ℝ × ℝ) : ℝ :=
+  ((1 - h ^ 2 / 4) * s.1 ^ 2 + s.2 ^ 2) / 2
+
+/-- One leapfrog step keeps the hidden energy. -/
+theorem leapfrog_hidden_step (h : ℝ) (s : ℝ × ℝ) :
+    hiddenEnergy h (leapfrog h s) = hiddenEnergy h s := by
+  simp only [hiddenEnergy, leapfrog]
+  ring
+
+/-- One Euler step multiplies the energy by `1 + h^2`. -/
+theorem euler_energy_step (h : ℝ) (s : ℝ × ℝ) :
+    energy (eulerStep h s) = (1 + h ^ 2) * energy s := by
+  simp only [energy, eulerStep]
+  ring
+
+/-- At `h = 5/2`, a leapfrog step sends `(c, -3/4 c)` to `(-4 c, 3 c)`. -/
+theorem leapfrog_five_halves_stretch (c : ℝ) :
+    leapfrog (5 / 2) (c, -3 / 4 * c) = (-4 * c, -3 / 4 * (-4 * c)) := by
+  simp only [leapfrog, Prod.mk.injEq]
+  constructor <;> ring
+
+/-- Leapfrog keeps the hidden energy over any number of steps. -/
+theorem leapfrog_hidden_iterate (h : ℝ) (s : ℝ × ℝ) (n : ℕ) :
+    hiddenEnergy h ((leapfrog h)^[n] s) = hiddenEnergy h s := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply', leapfrog_hidden_step, ih]
+
+#print axioms leapfrog_hidden_step
+#print axioms leapfrog_hidden_iterate
+#print axioms euler_energy_step
+#print axioms leapfrog_five_halves_stretch
+
+/-- The band: for the frictionless spring `q'' = -q`, run leapfrog with one fixed step size
+`h` below the limit 2, starting at `q = 1`, `v = 0`. Then after every number of steps `n`,
+however large, the energy stays between `b/2` and `1/2`, where `b = 1 - h^2/4`. -/
+theorem leapfrog_energy_stays_in_band (h : ℝ) (hpos : 0 < h) (hlt : h < 2) (n : ℕ) :
+    (1 - h ^ 2 / 4) / 2 ≤ energy ((leapfrog h)^[n] (1, 0)) ∧
+      energy ((leapfrog h)^[n] (1, 0)) ≤ 1 / 2 := by
+  have hid := leapfrog_hidden_iterate h (1, 0) n
+  generalize (leapfrog h)^[n] (1, 0) = st at hid ⊢
+  obtain ⟨q, v⟩ := st
+  simp only [hiddenEnergy, energy] at hid ⊢
+  have hb : 0 < 1 - h ^ 2 / 4 := by nlinarith
+  have hb1 : 1 - h ^ 2 / 4 ≤ 1 := by nlinarith
+  have hq : q ^ 2 ≤ 1 := by nlinarith [sq_nonneg v, sq_nonneg q]
+  constructor
+  · nlinarith [sq_nonneg v, sq_nonneg q, sq_nonneg h]
+  · nlinarith [sq_nonneg v, sq_nonneg q, sq_nonneg h]
+
+/-- Leapfrog keeps the hidden energy `(b q^2 + v^2)/2`, `b = 1 - h^2/4`, exactly: for every
+step size `h`, every starting state and every number of steps, it never changes. -/
+theorem leapfrog_keeps_hidden_energy (h : ℝ) (s : ℝ × ℝ) (n : ℕ) :
+    hiddenEnergy h ((leapfrog h)^[n] s) = hiddenEnergy h s := by
+  exact leapfrog_hidden_iterate h s n
+
+/-- Euler's step multiplies the energy by exactly `1 + h^2` each step, so after `n` steps
+the energy is `(1 + h^2)^n` times the starting energy. -/
+theorem euler_energy_grows_by_one_plus_h_sq (h : ℝ) (s : ℝ × ℝ) (n : ℕ) :
+    energy ((eulerStep h)^[n] s) = (1 + h ^ 2) ^ n * energy s := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [Function.iterate_succ_apply', euler_energy_step, ih]; ring
+
+-- Beyond the limit, h = 5/2: a = 1 - h^2/2 = -17/8, and the larger stretch factor is
+-- a - sqrt(a^2 - 1) = -17/8 - 15/8 = -4.
+example : (1 : ℚ) - (5 / 2) ^ 2 / 2 = -17 / 8 ∧ (-17 / 8 : ℚ) ^ 2 - 1 = (15 / 8) ^ 2 ∧
+    (-17 / 8 : ℚ) - 15 / 8 = -4 := by norm_num
+
+-- At h = 5/2 the start (1, -3/4) lies along that stretch: one step sends it to (-4, 3).
+example : leapfrog (5 / 2) (1, -3 / 4) = (-4, 3) := by
+  have := leapfrog_five_halves_stretch 1
+  norm_num at this ⊢
+  exact this
+
+-- At h = 5/2, six steps from (1, -3/4) reach q = 4096, v = -3072.
+example : (leapfrog (5 / 2))^[6] (1, -3 / 4) = (4096, -3072) := by
+  have key : ∀ k : ℕ, (leapfrog (5 / 2))^[k] (1, -3 / 4) =
+      ((-4 : ℝ) ^ k, -3 / 4 * (-4 : ℝ) ^ k) := by
+    intro k
+    induction k with
+    | zero => simp
+    | succ k ih =>
+      rw [Function.iterate_succ_apply', ih, leapfrog_five_halves_stretch, pow_succ]
+      simp only [Prod.mk.injEq]
+      constructor <;> ring
+  rw [key]
+  norm_num
+
+#print axioms leapfrog_energy_stays_in_band
+#print axioms leapfrog_keeps_hidden_energy
+#print axioms euler_energy_grows_by_one_plus_h_sq
+
+end
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'leapfrog_hidden_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'leapfrog_hidden_iterate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'euler_energy_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'leapfrog_five_halves_stretch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'leapfrog_energy_stays_in_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'leapfrog_keeps_hidden_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'euler_energy_grows_by_one_plus_h_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -383,8 +531,10 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Hamilton's equations](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): motion written from its energy function; symplectic in general.
-- Symplectic steps: higher-order methods and the theorem behind the planet's band.
+- [Symplectic steps](../../16-Numerical%20analysis/06-ODE%20Solvers/06-symplectic-integrators.md): the numerical analysis wing's card, which takes leapfrog to a pendulum and states the theorem behind the planet's band.
 - Splitting: kick–drift–kick as one case of splitting a flow into exactly solvable pieces.
+
+The question this card leaves open: the spring's band comes from a hidden energy written in closed form, so what traps the planet's energy, where this card writes no such formula?
 
 ---
 

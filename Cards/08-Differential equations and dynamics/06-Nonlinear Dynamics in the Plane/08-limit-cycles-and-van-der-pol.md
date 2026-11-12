@@ -14,7 +14,7 @@ Start the model at a tiny voltage, 0.1, or a large one, 4. Both settle onto one 
 
 **A limit cycle is a closed loop in the plane of states that is isolated: nearby starts spiral onto it (or away from it), so the rhythm it carries is fixed by the law itself, not by where the motion began.**
 
-**What kind of fact this is:** a theorem about a defined object. For the polar model the attraction is proved in Why it works; for van der Pol it is Liénard's theorem, sketched in the folded Detailed proof and checked by two roads in the code.
+**What kind of fact this is:** a theorem about a defined object. For the warm-up polar model in The formula, the attraction is proved in Why it works. For van der Pol it is Liénard's theorem, sketched in the folded Detailed proof and checked by two roads in the code.
 
 ### The picture: two starts, one loop
 
@@ -62,7 +62,7 @@ The factor $e^{-2t}$ wipes out the start's offset.
 - **Two dimensions, a law fixed in time.** Drive the circuit with an outside periodic push and it can turn chaotic.
 - **A smooth law.** Paths then never cross, so a path inside the loop stays inside. Without it, spiralling on is not guaranteed.
 - **Strength above zero.** At $\mu$ = 0 every circle is a loop and none attracts. Below zero the law is the same law run backwards in time, so the loop repels.
-- **Isolated.** Nested loops, as in a centre, are not limit cycles, however closed each one is. A linear law never has one: scale a loop and you get another.
+- **Isolated.** Nested loops, as in a centre (a rest point ringed by closed loops), are not limit cycles, however closed each one is. A linear law never has one: scale a loop and you get another.
 
 ---
 
@@ -84,15 +84,19 @@ Put $u = 1/r^2$. The chain rule gives $u' = -2r'/r^3 = -2(1 - r^2)/r^2 = -2u + 2
 
 Take the spring's energy $E = (x^2 + v^2)/2$. Along a path its rate is $xv + v(\mu(1 - x^2)v - x) = \mu(1 - x^2)v^2$. Where $x$ lies between −1 and 1 that rate is positive: energy flows in. Outside, it drains. Small motions gain each lap, large ones lose.
 
-Linearisation confirms the first half. At the origin the Jacobian (the table of the law's rates of change) has trace 1 and determinant 1, so eigenvalues $(1 \pm \sqrt{1 - 4})/2$ = 0.500 ± 0.866i: a spiral outward ([Linearisation](02-linearisation-and-the-jacobian.md)).
+Linearisation confirms the first half. At the origin the Jacobian (the table of the law's rates of change) has trace 1 and determinant 1.
+
+The trace is the sum of its diagonal entries; the determinant is the product of the diagonal entries minus the product of the other two. The eigenvalues, the growth and turning rates near the rest point, are then $(1 \pm \sqrt{1 - 4})/2$ = 0.500 ± 0.866i: a spiral outward ([Linearisation](02-linearisation-and-the-jacobian.md)).
 
 ### Step 4: one lap as a map
 
-Start on the positive $x$ axis at a point $a$ with $v$ = 0. Follow the path once round to its next crossing of that half-axis; call the landing point $P(a)$, the return map. A loop is a start that lands on itself, $P(a) = a$. Below the loop $P(a) > a$, above it $P(a) < a$, so bisection on that sign finds the loop without waiting for anything to settle.
+Start on the positive $x$ axis at a point $a$ with $v$ = 0. Follow the path once round to its next crossing of that half-axis; call the landing point $P(a)$, the return map. A loop is a start that lands on itself, $P(a) = a$. Below the loop $P(a) > a$, above it $P(a) < a$, so bisection (repeated halving of an interval that holds the loop) on that sign finds the loop without waiting for anything to settle.
 
 ### Step 5: the pull per lap is an integral
 
-A small patch of starts changes area at a relative rate equal to the Jacobian's trace, here $\mu(1 - x^2)$. Over one lap, a patch on the loop keeps its width along the loop, since loop points return to themselves, so the whole area change lands on the width across it. The return map's slope is the exponential of the trace integrated over a lap: 8.597e-04, a small gap cut to under a thousandth in one beat. The polar model gives $e^{-4\pi}$ again.
+A small patch of starts changes area at a relative rate equal to the Jacobian's trace, here $\mu(1 - x^2)$. Over one lap, a patch on the loop keeps its width along the loop, since loop points return to themselves, so the whole area change lands on the width across it.
+
+The return map's slope is the exponential of the trace integrated over a lap: 8.597e-04, a small gap cut to under a thousandth in one beat. The polar model gives $e^{-4\pi}$ again.
 
 <details>
 <summary>Detailed proof: van der Pol has exactly one loop, and it attracts (Liénard's theorem)</summary>
@@ -101,7 +105,9 @@ Write $F(x) = \mu(x^3/3 - x)$ and $y = v - \mu(x - x^3/3)$, so the law becomes $
 
 The law is unchanged by $(x, y) \to (-x, -y)$, so a path from $(0, b)$ on the upper y axis closes exactly when its energy change $\Delta(b)$, up to the lower y axis, is zero.
 
-$F$ is negative for $x$ between 0 and $\sqrt{3}$ and positive beyond, so $-xF(x)$ is positive in the band and negative outside it. A half-lap inside the band gains energy: $\Delta(b) > 0$ for small $b$. Once it leaves the band, splitting the path at $x = \sqrt{3}$ and comparing pieces shows $\Delta(b)$ strictly decreasing, to minus infinity. So $\Delta(b)$ has exactly one zero: one loop, with paths climbing out below it and falling in above it. Full estimates: Perko, section 3.8.
+$F$ is negative for $x$ between 0 and $\sqrt{3}$ and positive beyond, so $-xF(x)$ is positive in the band and negative outside it. A half-lap inside the band gains energy: $\Delta(b) > 0$ for small $b$.
+
+Once it leaves the band, splitting the path at $x = \sqrt{3}$ and comparing pieces shows $\Delta(b)$ strictly decreasing, to minus infinity. So $\Delta(b)$ has exactly one zero: one loop, with paths climbing out below it and falling in above it. Full estimates: Perko, section 3.8.
 
 </details>
 
@@ -120,7 +126,7 @@ The polar model from $r_0$ = 0.1 at $t$ = 5, then the heart model.
 | offset left | 99 × 4.540e-05 | 0.004495 |
 | distance | 1 / √(1 + 0.004495) | **0.99776** |
 | from $r_0$ = 2 instead | the same four steps | **1.000017** |
-| rest point of van der Pol | trace 1, determinant 1 | 0.500 ± 0.866i, a source |
+| rest point of van der Pol | trace 1, determinant 1 | 0.500 ± 0.866i, a source (paths leave it) |
 | the beat | 6.6633 × 0.12 s | **0.800 s**, 75.0 a minute |
 
 By $t$ = 5 both polar starts sit within a quarter of a percent of the unit circle, one from each side.
@@ -137,7 +143,7 @@ By $t$ = 5 both polar starts sit within a quarter of a percent of the unit circl
 
 ## Code, from first principles, and it actually runs
 
-Both scripts step with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). Road one steps the polar model in $x$ and $v$, $x' = x(1 - r^2) - v$, $v' = v(1 - r^2) + x$, and meets its closed form; halving the step cuts the error by 16.2, the fourth-order rate. Road two settles van der Pol from both starts, finds the loop again by bisection on the return map, and measures the pull per lap by the map's slope and by the trace integral.
+Both scripts step with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). Road one steps the polar model in $x$ and $v$, $x' = x(1 - r^2) - v$, $v' = v(1 - r^2) + x$, and meets its closed form. Halving the step cuts the error by 16.2, the fourth-order rate. Road two settles van der Pol from both starts, finds the loop again by bisection on the return map, and measures the pull per lap by the map's slope and by the trace integral.
 
 ### Python
 
@@ -329,6 +335,199 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the polar model's pull onto the unit circle for every start but the origin, and van der Pol's energy rate exactly.
+
+- In the polar model, any path that starts at a distance above 0 tends to distance 1: the unit circle attracts it.
+- The formula for $r(t)$ starts at $r_0$, obeys $r' = r(1 - r^2)$ from time 0 on, and tends to 1.
+- Along any van der Pol path, the spring's energy $E = (x^2 + v^2)/2$ changes at rate $\mu(1 - x^2)v^2$, for every strength $\mu$.
+- The hand arithmetic holds exactly: the offset is 99 from $r_0$ = 0.1 and −3/4 from $r_0$ = 2.
+- At the rest point with $\mu$ = 1, the Jacobian has trace 1 and determinant 1, and 1 − 4 = −3 is negative: a spiral outward.
+
+Van der Pol's single loop, its peak 2.0086, its period 6.6633 and the pull per lap are left to the Python and Rust checks.
+
+```lean
+-- Limit cycles: in the polar model r' = r(1 - r^2) every start off the origin is pulled onto the unit circle, the closed form solves the law, and van der Pol's spring energy changes at rate mu(1 - x^2)v^2.
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.ODE.ExistUnique
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+
+open Filter Topology
+
+/-- The closed-form profile `1 / √(1 + c e^(-2t))` tends to 1. -/
+lemma closedForm_tendsto_one (c : ℝ) :
+    Tendsto (fun t : ℝ => 1 / Real.sqrt (1 + c * Real.exp (-2 * t))) atTop (𝓝 1) := by
+  have h1 : Tendsto (fun t : ℝ => Real.exp (-2 * t)) atTop (𝓝 0) := by
+    have := Real.tendsto_exp_neg_atTop_nhds_zero.comp
+      (tendsto_id.const_mul_atTop (show (0:ℝ) < 2 by norm_num))
+    refine this.congr (fun t => ?_)
+    simp [Function.comp, neg_mul]
+  have h2 : Tendsto (fun t : ℝ => 1 + c * Real.exp (-2 * t)) atTop (𝓝 (1 + c * 0)) :=
+    tendsto_const_nhds.add (h1.const_mul c)
+  have h3 := h2.sqrt.inv₀ (by simp)
+  simpa [one_div] using h3
+
+/-- For `t ≥ 0` and `r0 > 0`, the quantity `1 + (1/r0^2 - 1) e^(-2t)` is positive. -/
+lemma closedForm_denom_pos (r0 : ℝ) (h0 : 0 < r0) (t : ℝ) (ht : 0 ≤ t) :
+    0 < 1 + (1 / r0 ^ 2 - 1) * Real.exp (-2 * t) := by
+  have he : Real.exp (-2 * t) ≤ 1 := by
+    rw [Real.exp_le_one_iff]; linarith
+  have he' : 0 < Real.exp (-2 * t) := Real.exp_pos _
+  have hr : 0 < 1 / r0 ^ 2 := by positivity
+  nlinarith
+
+
+/-- The unit circle of the polar model is a limit cycle that attracts every start but the origin:
+if the distance `r` from the origin obeys `r' = r (1 - r^2)` from time 0 on and starts at any
+`r 0 > 0`, then `r t` tends to 1 as time runs on, from inside or from outside. -/
+theorem polar_model_every_start_spirals_onto_unit_circle (r : ℝ → ℝ) (hr0 : 0 < r 0)
+    (hr : ∀ t, 0 ≤ t → HasDerivAt r (r t * (1 - r t ^ 2)) t) :
+    Tendsto r atTop (𝓝 1) := by
+  set c := 1 / r 0 ^ 2 - 1 with hc
+  -- k measures the failure of `r^2 (1 + c e^(-2t)) = 1`.
+  set k : ℝ → ℝ := fun t => 1 - r t ^ 2 * (1 + c * Real.exp (-2 * t)) with hk
+  have hkd : ∀ t, 0 ≤ t → HasDerivAt k (-2 * r t ^ 2 * k t) t := by
+    intro t ht
+    have hE : HasDerivAt (fun s => 1 + c * Real.exp (-2 * s))
+        (c * (Real.exp (-2 * t) * (-2))) t := by
+      have := ((hasDerivAt_id t).const_mul (-2)).exp
+      simpa using (this.const_mul c).const_add 1
+    have := (((hr t ht).pow 2).mul hE).const_sub 1
+    convert this using 1
+    simp only [hk, Pi.pow_apply]
+    push_cast
+    ring
+  have hcont : ContinuousOn r (Set.Ici 0) := fun t ht =>
+    (hr t ht).continuousAt.continuousWithinAt
+  have hk2 : AntitoneOn (fun t => k t ^ 2) (Set.Ici 0) := by
+    apply antitoneOn_of_deriv_nonpos (convex_Ici 0)
+    · intro t ht
+      exact ((hkd t ht).pow 2).continuousAt.continuousWithinAt
+    · intro t ht
+      rw [interior_Ici] at ht
+      exact ((hkd t (le_of_lt ht)).pow 2).differentiableAt.differentiableWithinAt
+    · intro t ht
+      rw [interior_Ici] at ht
+      change deriv (k ^ 2) t ≤ 0
+      rw [((hkd t (le_of_lt ht)).pow 2).deriv]
+      have : (↑(2:ℕ) : ℝ) * k t ^ (2 - 1) * (-2 * r t ^ 2 * k t) = -4 * (r t * k t) ^ 2 := by
+        push_cast; ring
+      rw [this]
+      nlinarith [sq_nonneg (r t * k t)]
+  have hk0 : k 0 = 0 := by
+    simp only [hk, mul_zero, Real.exp_zero, mul_one, hc]
+    field_simp
+    ring
+  have hkz : ∀ t, 0 ≤ t → k t = 0 := by
+    intro t ht
+    have := hk2 ((Set.mem_Ici.mpr le_rfl)) (Set.mem_Ici.mpr ht) ht
+    simp only [hk0] at this
+    have : k t ^ 2 = 0 := le_antisymm (by simpa using this) (sq_nonneg _)
+    exact pow_eq_zero_iff (n := 2) (by norm_num) |>.mp this
+  have hpos : ∀ t, 0 ≤ t → 0 < r t := by
+    intro t ht
+    by_contra hneg
+    push Not at hneg
+    have hivt := intermediate_value_Icc' ht (hcont.mono (Set.Icc_subset_Ici_self))
+    obtain ⟨s, hs, hs0⟩ := hivt ⟨hneg, hr0.le⟩
+    have := hkz s hs.1
+    simp only [hk, hs0] at this
+    norm_num at this
+  have heq : ∀ t, 0 ≤ t → r t = 1 / Real.sqrt (1 + c * Real.exp (-2 * t)) := by
+    intro t ht
+    have h1 := hkz t ht
+    simp only [hk] at h1
+    have hD := closedForm_denom_pos (r 0) hr0 t ht
+    rw [← hc] at hD
+    have hrt := hpos t ht
+    have hsq : r t ^ 2 = 1 / (1 + c * Real.exp (-2 * t)) := by
+      rw [eq_div_iff hD.ne']; linarith
+    rw [← Real.sqrt_sq hrt.le, hsq, Real.sqrt_div' _ hD.le, Real.sqrt_one]
+  refine (closedForm_tendsto_one c).congr' ?_
+  filter_upwards [eventually_ge_atTop 0] with t ht
+  exact (heq t ht).symm
+
+/-- The closed form of the polar model: for a start `r0 > 0`,
+`r(t) = 1 / √(1 + (1/r0^2 - 1) e^(-2t))` starts at `r0`, obeys `r' = r (1 - r^2)` for all
+`t ≥ 0`, and tends to 1, the gap fading like `e^(-2t)`. -/
+theorem polar_model_closed_form (r0 : ℝ) (h0 : 0 < r0) :
+    let R : ℝ → ℝ := fun t => 1 / Real.sqrt (1 + (1 / r0 ^ 2 - 1) * Real.exp (-2 * t))
+    R 0 = r0 ∧ (∀ t, 0 ≤ t → HasDerivAt R (R t * (1 - R t ^ 2)) t) ∧ Tendsto R atTop (𝓝 1) := by
+  intro R
+  refine ⟨?_, ?_, closedForm_tendsto_one _⟩
+  · simp only [R, mul_zero, Real.exp_zero, mul_one, add_sub_cancel]
+    rw [Real.sqrt_div' 1 (sq_nonneg r0), Real.sqrt_sq h0.le, Real.sqrt_one]
+    field_simp
+  · intro t ht
+    set c := 1 / r0 ^ 2 - 1 with hc
+    have hD := closedForm_denom_pos r0 h0 t ht
+    rw [← hc] at hD
+    have hE : HasDerivAt (fun s => 1 + c * Real.exp (-2 * s))
+        (c * (Real.exp (-2 * t) * (-2))) t := by
+      have := ((hasDerivAt_id t).const_mul (-2)).exp
+      simpa using (this.const_mul c).const_add 1
+    have hS := hE.sqrt hD.ne'
+    have hR := (hasDerivAt_const t (1:ℝ)).div hS (Real.sqrt_pos.mpr hD).ne'
+    convert hR using 1
+    have hs := Real.sqrt_pos.mpr hD
+    have hsq := Real.sq_sqrt hD.le
+    show 1 / Real.sqrt (1 + c * Real.exp (-2 * t)) *
+      (1 - (1 / Real.sqrt (1 + c * Real.exp (-2 * t))) ^ 2) = _
+    generalize Real.sqrt (1 + c * Real.exp (-2 * t)) = s at hs hsq ⊢
+    generalize Real.exp (-2 * t) = E at hsq ⊢
+    field_simp
+    linear_combination hsq
+
+/-- Van der Pol trades energy: along any path of `x' = v`, `v' = μ (1 - x^2) v - x`, the spring's
+energy `E = (x^2 + v^2)/2` changes at rate `μ (1 - x^2) v^2`, so energy flows in while
+`-1 < x < 1` and drains outside (for `μ > 0`). -/
+theorem van_der_pol_energy_rate (μ : ℝ) (x v : ℝ → ℝ) (t : ℝ)
+    (hx : HasDerivAt x (v t) t) (hv : HasDerivAt v (μ * (1 - x t ^ 2) * v t - x t) t) :
+    HasDerivAt (fun s => (x s ^ 2 + v s ^ 2) / 2) (μ * (1 - x t ^ 2) * v t ^ 2) t := by
+  have h := ((hx.pow 2).add (hv.pow 2)).div_const 2
+  convert h using 1
+  push_cast
+  ring
+
+-- Worked numbers: the offset of the start r0 = 1/10 is 1/r0^2 - 1 = 99.
+example : (1 / (1 / 10 : ℚ) ^ 2 - 1) = 99 := by norm_num
+
+-- From r0 = 2 the offset is negative: 1/4 - 1 = -3/4.
+example : (1 / (2 : ℚ) ^ 2 - 1) = -3 / 4 := by norm_num
+
+-- Van der Pol with μ = 1: the Jacobian at the rest point is [[0, 1], [-1, 1]],
+-- with trace 1 and determinant 1.
+example : Matrix.trace !![(0 : ℤ), 1; -1, 1] = 1 := by
+  norm_num [Matrix.trace, Fin.sum_univ_two]
+
+example : Matrix.det !![(0 : ℤ), 1; -1, 1] = 1 := by
+  norm_num [Matrix.det_fin_two]
+
+-- Trace squared minus four times the determinant is 1 - 4 = -3 < 0, so the eigenvalues
+-- (1 ± √-3)/2 are complex with real part 1/2 > 0: a spiral source.
+example : (1 : ℤ) ^ 2 - 4 * 1 = -3 ∧ (1 : ℚ) / 2 > 0 := by norm_num
+
+#print axioms closedForm_tendsto_one
+#print axioms closedForm_denom_pos
+#print axioms polar_model_every_start_spirals_onto_unit_circle
+#print axioms polar_model_closed_form
+#print axioms van_der_pol_energy_rate
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'closedForm_tendsto_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'closedForm_denom_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polar_model_every_start_spirals_onto_unit_circle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polar_model_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'van_der_pol_energy_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -370,6 +569,8 @@ The two outputs match line for line.
 
 - [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md): when a trapped path must end on a loop, and when no loop can exist.
 - [Bifurcations](10-bifurcations-of-equilibria.md): how a loop is born from a rest point as a strength like $\mu$ crosses zero.
+
+This card found each loop by a formula or by Liénard's theorem. The question it leaves open: for a general law in the plane, how do you prove a loop exists, or that none can?
 
 ---
 

@@ -204,10 +204,10 @@ print(f"v(25): adaptive {v:.9f}, exact {exact(25):.9f}, global error {sci(v - ex
 assert abs(v - exact(25)) < 1e-5
 print(f"breaks: no safety factor rejects {solve(25.0, 1.0, 1.0)[3]}; uniform at smallest h needs {int(25 / min(lens[:-1])) + 1} steps")
 print(f"breaks: step doubling divided by 31, not 15: {sci((yc - yf) / 31)}")
-print("PASS")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 try h=1.000: fifth 8.882192107, fourth 8.882205827, estimate 1.3720e-5, allowed 9.8822e-6
@@ -223,7 +223,7 @@ figure, step lengths h: 0.84, 0.82, 0.95, 1.05, 1.14, 1.23, 1.31, 1.40, 1.50, 1.
 v(25): adaptive 48.669833145, exact 48.669840597, global error -7.452e-6
 breaks: no safety factor rejects 12; uniform at smallest h needs 31 steps
 breaks: step doubling divided by 31, not 15: -3.8440e-6
-PASS
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -295,11 +295,11 @@ fn main() {
     let hmin = lens[..lens.len() - 1].iter().cloned().fold(f64::MAX, f64::min);
     println!("breaks: no safety factor rejects {}; uniform at smallest h needs {} steps", solve(25.0, 1.0, 1.0).3, (25.0 / hmin) as u32 + 1);
     println!("breaks: step doubling divided by 31, not 15: {:.4e}", (yc - yf) / 31.0);
-    println!("PASS");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 try h=1.000: fifth 8.882192107, fourth 8.882205827, estimate 1.3720e-5, allowed 9.8822e-6
@@ -315,7 +315,94 @@ figure, step lengths h: 0.84, 0.82, 0.95, 1.05, 1.14, 1.23, 1.31, 1.40, 1.50, 1.
 v(25): adaptive 48.669833145, exact 48.669840597, global error -7.452e-6
 breaks: no safety factor rejects 12; uniform at smallest h needs 31 steps
 breaks: step doubling divided by 31, not 15: -3.8440e-6
-PASS
+ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the three rules behind the controller for every order p, as the step length h shrinks to 0.
+
+- Say the order-p answer misses the exact value by C h^(p+1), plus a remainder no bigger than a constant times h^(p+2). Say the order-(p+1) answer misses by such a remainder alone. Then the gap between the two answers is C h^(p+1), plus such a remainder.
+- Step doubling, for p ≥ 1: one step of h misses by C h^(p+1), two of h/2 by 2C(h/2)^(p+1), each plus such a remainder. Then the fine answer's error is (Y_c − Y_f)/(2^p − 1), plus such a remainder.
+- For positive C, h and τ, with E = C h^(p+1): the new length h(τ/E)^(1/(p+1)) makes C h_new^(p+1) exactly τ.
+- The pair's gap per unit, D(−0.2), is exactly 2.8e-7, so the first estimate, 49 × D(−0.2), is exactly 1.372e-5 m/s.
+- The order-4 member's z^5 coefficient is 1/120 + 97/120000 = 1097/120000. Step doubling with Runge-Kutta four divides by 2^4 − 1 = 15; the mistake's 31 is 2^5 − 1.
+
+The Dormand-Prince stages, the safety factor, the step counts, the figure and the final error are left to the Python and Rust checks.
+
+```lean
+-- Adaptive steps: the gap between an order-(p+1) and an order-p answer equals the order-p error to leading order, step doubling's fine error is the gap over 2^p - 1, and the step rule lands the leading error on the allowance.
+import Mathlib.Analysis.Asymptotics.Defs
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Order.Filter.Basic
+
+open Asymptotics Filter Topology
+
+/-- Two answers of different accuracy for the same step differ by about the error of the
+worse one: if the order-p answer `v4 h` has error `C h^(p+1) + O(h^(p+2))` against the exact
+value `u h` and the order-(p+1) answer `v5 h` has error `O(h^(p+2))`, then the gap
+`v4 h - v5 h` is `C h^(p+1) + O(h^(p+2))`, as the step length `h` goes to 0. -/
+theorem pair_gap_eq_lower_order_error_to_leading_order
+    (p : ℕ) (C : ℝ) (u v4 v5 : ℝ → ℝ)
+    (h4 : (fun h => v4 h - u h - C * h ^ (p + 1)) =O[𝓝 0] (fun h => h ^ (p + 2)))
+    (h5 : (fun h => v5 h - u h) =O[𝓝 0] (fun h => h ^ (p + 2))) :
+    (fun h => (v4 h - v5 h) - C * h ^ (p + 1)) =O[𝓝 0] (fun h => h ^ (p + 2)) := by
+  exact (h4.sub h5).congr_left (fun h => by ring)
+
+/-- Step doubling: if one step of length `h` has error `C h^(p+1) + O(h^(p+2))` and two half
+steps have the two half-step errors added, `2 C (h/2)^(p+1) + O(h^(p+2))`, then the fine
+answer's error is the coarse-minus-fine gap divided by `2^p - 1`, up to `O(h^(p+2))`. -/
+theorem step_doubling_fine_error_eq_gap_div
+    (p : ℕ) (hp : 0 < p) (C : ℝ) (u Yc Yf : ℝ → ℝ)
+    (hc : (fun h => Yc h - u h - C * h ^ (p + 1)) =O[𝓝 0] (fun h => h ^ (p + 2)))
+    (hf : (fun h => Yf h - u h - 2 * C * (h / 2) ^ (p + 1)) =O[𝓝 0] (fun h => h ^ (p + 2))) :
+    (fun h => (Yf h - u h) - (Yc h - Yf h) / (2 ^ p - 1)) =O[𝓝 0] (fun h => h ^ (p + 2)) := by
+  have h2 : (2 : ℝ) ^ p - 1 ≠ 0 := by
+    have : (2 : ℝ) ≤ 2 ^ p := by
+      calc (2 : ℝ) = 2 ^ 1 := by norm_num
+        _ ≤ 2 ^ p := pow_le_pow_right₀ (by norm_num) hp
+    linarith
+  refine (hf.sub ((hc.sub hf).const_mul_left (1 / (2 ^ p - 1)))).congr_left (fun h => ?_)
+  have e : (h / 2) ^ (p + 1) = h ^ (p + 1) / (2 ^ p * 2) := by rw [div_pow, pow_succ 2]
+  rw [e]
+  field_simp
+  ring
+
+/-- The step rule: if the estimate is `E = C h^(p+1)` and the constant `C` stays the same,
+the new length `h (τ/E)^(1/(p+1))` makes the leading error exactly the allowance `τ`. -/
+theorem step_rule_hits_allowance
+    (p : ℕ) (C h τ : ℝ) (hC : 0 < C) (hh : 0 < h) (hτ : 0 < τ) :
+    C * (h * (τ / (C * h ^ (p + 1))) ^ (1 / ((p : ℝ) + 1))) ^ (p + 1) = τ := by
+  have hE : 0 ≤ τ / (C * h ^ (p + 1)) := by positivity
+  have hx : (1 / ((p : ℝ) + 1)) = ((p + 1 : ℕ) : ℝ)⁻¹ := by push_cast; ring
+  rw [mul_pow, hx, Real.rpow_inv_natCast_pow hE (by omega)]
+  have : h ^ (p + 1) ≠ 0 := by positivity
+  field_simp
+
+-- The pair's gap per unit of 49 - v at z = -0.2: D(-1/5) = 2.8e-7 exactly.
+example : -(97 : ℚ) / 120000 * (-1 / 5) ^ 5 + 39 / 120000 * (-1 / 5) ^ 6
+    - 5 / 120000 * (-1 / 5) ^ 7 = 7 / 25000000 := by norm_num
+
+-- The first estimate: 49 × D(-1/5) = 1.372e-5 m/s.
+example : (49 : ℚ) * (7 / 25000000) = 343 / 25000000 := by norm_num
+
+-- The order-4 member's z^5 coefficient, 1/120 - (-97/120000) = 1097/120000.
+example : (1 : ℚ) / 120 + 97 / 120000 = 1097 / 120000 := by norm_num
+
+-- Step doubling with Runge-Kutta four divides by 2^4 - 1 = 15; the mistake uses 2^5 - 1 = 31.
+example : 2 ^ 4 - 1 = 15 ∧ 2 ^ 5 - 1 = 31 := by decide
+
+#print axioms pair_gap_eq_lower_order_error_to_leading_order
+#print axioms step_doubling_fine_error_eq_gap_div
+#print axioms step_rule_hits_allowance
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'pair_gap_eq_lower_order_error_to_leading_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'step_doubling_fine_error_eq_gap_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'step_rule_hits_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]
