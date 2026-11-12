@@ -6,91 +6,91 @@
 
 Analyse an algorithm's cost and choose a data structure, use randomness and approximation on purpose, measure information in bits and code it for storage and for a noisy channel, follow modern cryptography from the one-time pad to lattices, formulate an operations-research model and read a solver's answer, do the mathematics behind machine learning, and analyse a network as a matrix. Theory that belongs elsewhere is named and linked rather than half-taught: algorithms and duality for optimisation in wing 15, method derivations and error bounds in wing 16, complexity classes in wing 24.
 
-8 shelves · **34 of 71 cards ready to read**
+8 shelves · **71 of 71 cards ready to read**
 
-Click a shelf to jump to its cards, then click a card's title to read it. A title without a link is planned and not written yet.
+Click a shelf to jump to its cards, then click a card's title to read it.
 
-| Shelf | Cards | Ready to read |
-| --- | ---: | ---: |
-| [01 · Algorithms and Growth](#s01) | 9 | 0 of 9 · planned |
-| [02 · Randomised and Approximate Algorithms](#s02) | 8 | 0 of 8 · planned |
-| [03 · Information Theory](#s03) | 10 | 0 of 10 · planned |
-| [04 · Cryptography](#s04) | 10 | 0 of 10 · planned |
-| [05 · Operations Research](#s05) | 10 | 10 of 10 |
-| [06 · Machine Learning Mathematics](#s06) | 9 | 9 of 9 |
-| [07 · Network Science and Spectral Graphs](#s07) | 8 | 8 of 8 |
-| [08 · Scientific Computing Practice](#s08) | 7 | 7 of 7 |
+| Shelf | Cards |
+| --- | ---: |
+| [01 · Algorithms and Growth](#s01) | 9 |
+| [02 · Randomised and Approximate Algorithms](#s02) | 8 |
+| [03 · Information Theory](#s03) | 10 |
+| [04 · Cryptography](#s04) | 10 |
+| [05 · Operations Research](#s05) | 10 |
+| [06 · Machine Learning Mathematics](#s06) | 9 |
+| [07 · Network Science and Spectral Graphs](#s07) | 8 |
+| [08 · Scientific Computing Practice](#s08) | 7 |
 
 <a name="s01"></a>
 
-## 01 · Algorithms and Growth · 9 cards · planned
+## 01 · Algorithms and Growth · 9 cards
 
 *How cost grows, which case you are quoting, and the workhorse patterns: divide and conquer, sorting, structures, tables, greed*
 
-1. Big-O: the growth rate of a cost, not its stopwatch reading
-2. Which case are you quoting? Worst, average and amortised cost
-3. Polynomial or exponential: the line between doable and hopeless
-4. Recurrences: the cost of a method that calls itself, read off in one line
-5. Sorting and searching: merge sort, quicksort, binary search and the n log n floor
-6. Data structures: what each one makes cheap, and what it makes dear
-7. Dynamic programming: solve each small piece once and write the answer down
-8. Greedy: take the best next step, and the argument that it is safe
-9. Graph algorithms as code: the structures that make wing 04's theorems run fast
+1. [Big-O: the growth rate of a cost, not its stopwatch reading](01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md)
+2. [Which case are you quoting? Worst, average and amortised cost](01-Algorithms%20and%20Growth/02-worst-case-average-case-and-amortised.md)
+3. [Polynomial or exponential: the line between doable and hopeless](01-Algorithms%20and%20Growth/03-polynomial-versus-exponential-time.md)
+4. [Recurrences: the cost of a method that calls itself, read off in one line](01-Algorithms%20and%20Growth/04-recurrences-and-the-master-theorem.md)
+5. [Sorting and searching: merge sort, quicksort, binary search and the n log n floor](01-Algorithms%20and%20Growth/05-sorting-and-searching.md)
+6. [Data structures: what each one makes cheap, and what it makes dear](01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md)
+7. [Dynamic programming: solve each small piece once and write the answer down](01-Algorithms%20and%20Growth/07-dynamic-programming.md)
+8. [Greedy: take the best next step, and the argument that it is safe](01-Algorithms%20and%20Growth/08-greedy-algorithms-and-matroids.md)
+9. [Graph algorithms as code: the structures that make wing 04's theorems run fast](01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s02"></a>
 
-## 02 · Randomised and Approximate Algorithms · 8 cards · planned
+## 02 · Randomised and Approximate Algorithms · 8 cards
 
 *Randomness as a design tool: expectation, tail bounds, sketches, guaranteed ratios, and sampling used as computation*
 
-1. Randomised algorithms: coin flips inside the method, and the expected cost
-2. Tail bounds: why a random method almost never embarrasses you
-3. Fair choices from a list you cannot hold: Fisher-Yates and reservoir sampling
-4. Hashing for size: Bloom filters and sketches that trade certainty for memory
-5. Monte Carlo integration: random points beat a grid once the dimension climbs
-6. Approximation: a guaranteed ratio when the exact answer is out of reach
-7. Local search: hill climbing, restarts, annealing and genetic moves
-8. MCMC as a tool: Metropolis-Hastings when you cannot sample directly
+1. [Randomised algorithms: coin flips inside the method, and the expected cost](02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md)
+2. [Tail bounds: why a random method almost never embarrasses you](02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md)
+3. [Fair choices from a list you cannot hold: Fisher-Yates and reservoir sampling](02-Randomised%20and%20Approximate%20Algorithms/03-shuffling-and-reservoir-sampling.md)
+4. [Hashing for size: Bloom filters and sketches that trade certainty for memory](02-Randomised%20and%20Approximate%20Algorithms/04-hashing-bloom-filters-and-sketches.md)
+5. [Monte Carlo integration: random points beat a grid once the dimension climbs](02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md)
+6. [Approximation: a guaranteed ratio when the exact answer is out of reach](02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md)
+7. [Local search: hill climbing, restarts, annealing and genetic moves](02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md)
+8. [MCMC as a tool: Metropolis-Hastings when you cannot sample directly](02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s03"></a>
 
-## 03 · Information Theory · 10 cards · planned
+## 03 · Information Theory · 10 cards
 
 *Measuring information in bits, compressing it, and pushing it through a channel that makes mistakes*
 
-1. Entropy: the average number of yes-or-no questions an outcome costs
-2. Conditional entropy and mutual information: how much one signal tells you about another
-3. KL divergence: the bits you waste by coding for the wrong distribution
-4. Typical sequences: long messages all look alike, and that is where the limit comes from
-5. Huffman coding: the shortest prefix-free code, built from the bottom up
-6. Arithmetic and Lempel-Ziv coding: beating Huffman on fractions and on repetition
-7. Channel capacity: the fastest error-free rate a noisy link will allow
-8. Hamming and Reed-Solomon: codes that repair what the channel broke
-9. LDPC, turbo and polar codes: how modern links get within a whisker of capacity
-10. Rate and distortion: how many bits for a picture you can live with
+1. [Entropy: the average number of yes-or-no questions an outcome costs](03-Information%20Theory/01-entropy.md)
+2. [Conditional entropy and mutual information: how much one signal tells you about another](03-Information%20Theory/02-conditional-entropy-and-mutual-information.md)
+3. [KL divergence: the bits you waste by coding for the wrong distribution](03-Information%20Theory/03-kl-divergence-and-cross-entropy.md)
+4. [Typical sequences: long messages all look alike, and that is where the limit comes from](03-Information%20Theory/04-typical-sequences-and-the-aep.md)
+5. [Huffman coding: the shortest prefix-free code, built from the bottom up](03-Information%20Theory/05-source-coding-and-huffman.md)
+6. [Arithmetic and Lempel-Ziv coding: beating Huffman on fractions and on repetition](03-Information%20Theory/06-arithmetic-and-lempel-ziv-coding.md)
+7. [Channel capacity: the fastest error-free rate a noisy link will allow](03-Information%20Theory/07-channel-capacity-and-the-noisy-channel-theorem.md)
+8. [Hamming and Reed-Solomon: codes that repair what the channel broke](03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md)
+9. [LDPC, turbo and polar codes: how modern links get within a whisker of capacity](03-Information%20Theory/09-ldpc-turbo-and-polar-codes-in-outline.md)
+10. [Rate and distortion: how many bits for a picture you can live with](03-Information%20Theory/10-lossy-compression-and-rate-distortion-in-outline.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s04"></a>
 
-## 04 · Cryptography · 10 cards · planned
+## 04 · Cryptography · 10 cards
 
 *What each primitive promises, what breaks it, and the arithmetic underneath: pads, block ciphers, hashes, RSA, curves, lattices, proofs*
 
-1. The one-time pad: perfect secrecy, and the price that makes it impractical
-2. AES: a block cipher as a keyed shuffle, and the modes that use it safely
-3. Hashes and MACs: a fingerprint for data, and a tag only a key could make
-4. RSA in full: key generation, padding, and why factoring is the whole game
-5. Diffie-Hellman and ElGamal: agreeing a secret in public, then encrypting with it
-6. Elliptic curves: the same protocols with 256-bit keys instead of 3,072
-7. Digital signatures: hash then sign, and what a forgery would have to mean
-8. The TLS handshake: every primitive in one short conversation
-9. Lattices: hard problems a quantum computer does not break, and the new standards
-10. Zero-knowledge: convincing someone you know a secret without showing it
+1. [The one-time pad: perfect secrecy, and the price that makes it impractical](04-Cryptography/01-one-time-pad-and-perfect-secrecy.md)
+2. [AES: a block cipher as a keyed shuffle, and the modes that use it safely](04-Cryptography/02-symmetric-ciphers-and-aes.md)
+3. [Hashes and MACs: a fingerprint for data, and a tag only a key could make](04-Cryptography/03-hash-functions-and-macs.md)
+4. [RSA in full: key generation, padding, and why factoring is the whole game](04-Cryptography/04-rsa-in-full.md)
+5. [Diffie-Hellman and ElGamal: agreeing a secret in public, then encrypting with it](04-Cryptography/05-diffie-hellman-and-elgamal.md)
+6. [Elliptic curves: the same protocols with 256-bit keys instead of 3,072](04-Cryptography/06-elliptic-curve-cryptography.md)
+7. [Digital signatures: hash then sign, and what a forgery would have to mean](04-Cryptography/07-digital-signatures.md)
+8. [The TLS handshake: every primitive in one short conversation](04-Cryptography/08-key-exchange-in-practice-the-tls-handshake.md)
+9. [Lattices: hard problems a quantum computer does not break, and the new standards](04-Cryptography/09-lattices-and-post-quantum-cryptography.md)
+10. [Zero-knowledge: convincing someone you know a secret without showing it](04-Cryptography/10-zero-knowledge-proofs-in-outline.md)
 
 [↑ Back to the shelves](#top)
 

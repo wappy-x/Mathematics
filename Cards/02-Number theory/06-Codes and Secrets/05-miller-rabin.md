@@ -247,7 +247,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Randomised algorithms: coin-flipping algorithms and their error bounds.
+- [Randomised algorithms](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md): coin-flipping algorithms and their error bounds.
 - P and NP: where fast primality sits among problems computers solve quickly.
 
 

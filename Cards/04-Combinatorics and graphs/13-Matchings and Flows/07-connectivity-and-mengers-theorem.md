@@ -385,7 +385,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Graph algorithms as code: finding every bridge and cut vertex of a large network in one sweep, Tarjan's method, instead of trying each line and station in turn.
+- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): finding every bridge and cut vertex of a large network in one sweep, Tarjan's method, instead of trying each line and station in turn.
 
 Trying every line and station in turn finds the weak spots here, and that stops being affordable long before a national rail map.
 

@@ -399,8 +399,8 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Polynomial or exponential: what separates 4,980,736 records from 60,822,550,204,416,000 tours, and both from "fast".
-- Approximation: heuristics with a guaranteed ratio.
+- [Polynomial or exponential](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/03-polynomial-versus-exponential-time.md): what separates 4,980,736 records from 60,822,550,204,416,000 tours, and both from "fast".
+- [Approximation](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md): heuristics with a guaranteed ratio.
 - [Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md): floors and pruning made into an exact method.
 - Four classic models: the tour as whole-number variables and constraints.
 - Heuristics with a promise: how close a quick method can be promised to get.

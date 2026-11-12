@@ -370,7 +370,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Hamming and Reed-Solomon: shift registers and codes built from the same finite-field arithmetic.
+- [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): shift registers and codes built from the same finite-field arithmetic.
 - **Shift registers.** A few bits of memory and a feedback rule emit one of these rings a digit at a time, storing no table.
 - **Counting the walks.** The BEST theorem counts the circuits by turning them into spanning trees.
 

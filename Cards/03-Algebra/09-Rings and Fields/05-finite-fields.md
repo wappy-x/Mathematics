@@ -376,8 +376,8 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Hamming and Reed-Solomon: the codes behind it.
-- AES: the field inside a cipher.
+- [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): the codes behind it.
+- [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the field inside a cipher.
 - [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): curves over a finite field.
 - Quadratic reciprocity: squares on a prime clock.
 - Finite fields: existence, uniqueness, symmetry.

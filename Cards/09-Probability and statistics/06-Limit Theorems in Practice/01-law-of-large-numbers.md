@@ -662,7 +662,7 @@ The two outputs match line for line.
 - [The weak law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): the same law proved with measure, with only a finite mean.
 - [Kelly](../../12-Financial%20mathematics/36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md): the law applied to the logarithm of wealth.
 - [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): a large loan pool whose defaults share one factor, so the average settles on a random level, not a fixed one.
-- Typical sequences: the law applied to the log-probability of a message, which is why data compresses.
+- [Typical sequences](../../14-Applied%20and%20computational/03-Information%20Theory/04-typical-sequences-and-the-aep.md): the law applied to the log-probability of a message, which is why data compresses.
 - Stochastic gradient: optimising a sample average in place of an expectation.
 - Q-learning: running averages of rewards that settle on expected values.
 - Large gaps: primes modelled as random draws, whose counts obey the law.

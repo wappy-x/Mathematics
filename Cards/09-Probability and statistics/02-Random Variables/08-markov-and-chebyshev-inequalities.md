@@ -666,7 +666,7 @@ The two outputs match line for line. The simulated shares, 0.040111 and 0.090472
 - [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): Chebyshev on an average of $n$ draws, whose variance falls like $1/n$.
 - [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): Markov on an exponential, for tails that shrink exponentially.
 - [First and second moments](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md): both inequalities deciding whether a random graph holds a structure.
-- Tail bounds: running time and error chance of randomised programs.
+- [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md): running time and error chance of randomised programs.
 
 One ticket's tail is now capped by its mean and variance; what happens to the cap when many tickets are averaged, and why it then falls to zero, is the question [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) answers.
 

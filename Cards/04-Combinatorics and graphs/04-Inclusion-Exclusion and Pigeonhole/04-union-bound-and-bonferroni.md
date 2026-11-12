@@ -375,7 +375,7 @@ Both outputs match line for line.
 
 - [Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): the bound proving an object exists without producing one.
 - [Many tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md): the same inequality on chances.
-- Tail bounds: capping the chance that any of many trials goes wrong.
+- [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md): capping the chance that any of many trials goes wrong.
 - Learning with a guarantee: bounding the chance that any rule in a large collection misleads.
 
 A ceiling from sizes alone is generous when the sets overlap heavily, and nothing here says how generous without opening the log; turning that slack into a proof is a later card's work.

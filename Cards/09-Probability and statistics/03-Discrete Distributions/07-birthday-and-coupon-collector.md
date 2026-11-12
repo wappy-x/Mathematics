@@ -592,8 +592,8 @@ The simulated rooms give 0.5042 with standard error 0.0035, against the exact 0.
 
 ## Where this goes next
 
-- Hashing for size: collisions as the cost of hashing, and structures sized around them.
-- Hashes and MACs: the birthday bound setting how long a secure fingerprint must be.
+- [Hashing for size](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/04-hashing-bloom-filters-and-sketches.md): collisions as the cost of hashing, and structures sized around them.
+- [Hashes and MACs](../../14-Applied%20and%20computational/04-Cryptography/03-hash-functions-and-macs.md): the birthday bound setting how long a secure fingerprint must be.
 
 This card counts collisions when labels are drawn at random; what a hash function must do to behave like that random draw, and what an attacker gains when it does not, is the question those cards take up.
 

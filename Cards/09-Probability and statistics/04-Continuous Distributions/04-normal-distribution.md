@@ -588,8 +588,8 @@ The two outputs match line for line, simulated counts included: both languages d
 - [Kemna-Vorst](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): an average of normal logs is still normal.
 - [Merton's model](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): default chance as a normal tail.
 - [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): many defaults tied by one shared normal factor.
-- Channel capacity: normal noise sets a channel's limit.
-- Rate and distortion: the normal source as the hardest to compress.
+- [Channel capacity](../../14-Applied%20and%20computational/03-Information%20Theory/07-channel-capacity-and-the-noisy-channel-theorem.md): normal noise sets a channel's limit.
+- [Rate and distortion](../../14-Applied%20and%20computational/03-Information%20Theory/10-lossy-compression-and-rate-distortion-in-outline.md): the normal source as the hardest to compress.
 - [EM](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/08-em-algorithm.md): fitting a mixture of bells.
 - Weighted Gauss rules: averages under the bell by a few weighted points.
 - [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat spreading as a widening bell.

@@ -591,7 +591,7 @@ The two outputs match line for line, simulation included, because both languages
 - [The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): the square root is concave, so a volatility swap's fair strike sits below the square root of the variance swap's.
 - [Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md): concave utility turns Jensen's gap into a price for risk.
 - [A random hazard](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): a survival chance averaged over a random hazard exceeds the survival chance at the average hazard, because the exponential is convex.
-- KL divergence: Jensen on the logarithm proves the divergence is never negative.
+- [KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md): Jensen on the logarithm proves the divergence is never negative.
 - [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md): supporting lines in many dimensions, and the inequality as an optimisation tool.
 
 Jensen says which side of the average a bent function lands on and, for the square, by exactly how much; how far a random quantity can stray from its average, with only the mean and variance known, is [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md).

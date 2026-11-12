@@ -547,8 +547,8 @@ The two outputs match line for line, including the simulated rows, because both 
 - [The probabilistic method](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): if the average count is below 1, some case has count 0.
 - [State prices](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): prices as discounted expectations.
 - [Default probability, recovery and expected loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): expected loss as chance times loss.
-- Randomised algorithms: linearity counting comparisons and collisions.
-- Entropy: the expectation of surprise.
+- [Randomised algorithms](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md): linearity counting comparisons and collisions.
+- [Entropy](../../14-Applied%20and%20computational/03-Information%20Theory/01-entropy.md): the expectation of surprise.
 - [Nash equilibrium](../../14-Applied%20and%20computational/05-Operations%20Research/09-game-theory-and-nash-equilibrium.md): players choosing mixed moves by expected payoff.
 - States: expectation taken as a linear rule in its own right.
 - Regret: expected loss against the best fixed choice.

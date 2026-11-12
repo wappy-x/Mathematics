@@ -373,7 +373,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Elliptic curves: the mod-a-prime version at full size, and why undoing is hard.
+- [Elliptic curves](../../14-Applied%20and%20computational/04-Cryptography/06-elliptic-curve-cryptography.md): the mod-a-prime version at full size, and why undoing is hard.
 - Rational points on a cubic: finitely many rational points generate all the others.
 - The group law: O made precise, and associativity proved.
 

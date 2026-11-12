@@ -673,7 +673,7 @@ The two outputs agree line for line. The simulated average, 0.520532, sits withi
 - [Logistic regression](../09-Regression/05-logistic-regression.md): a likelihood with many dials and no closed-form peak.
 - [GARCH](../12-Time%20Series/06-garch-and-volatility-clustering.md): fitting a volatility model day by day.
 - [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): what a density height is, made exact, and why its version matters at an edge.
-- KL divergence: maximising likelihood as minimising a distance between the data and the model.
+- [KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md): maximising likelihood as minimising a distance between the data and the model.
 - [EM](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/08-em-algorithm.md): climbing the likelihood when part of the data is hidden.
 - Algebraic statistics: when two different parameter values give the same likelihood everywhere.
 - Fisher metric: the curvature of the log-likelihood as a way to measure distance between models.

@@ -418,7 +418,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Sorting and searching: log2 n! comparisons, read through Stirling, as the floor on sorting.
+- [Sorting and searching](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/05-sorting-and-searching.md): log2 n! comparisons, read through Stirling, as the floor on sorting.
 
 The formula sizes n!; how that size becomes a speed limit on sorting n items is the question Sorting and searching answers.
 

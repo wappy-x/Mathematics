@@ -623,7 +623,7 @@ The two outputs agree line for line.
 - [Convergence to equilibrium](05-convergence-to-equilibrium.md): when forecasts from any start approach $\pi$, and how fast.
 - [MCMC](07-markov-chain-monte-carlo.md): building a chain whose stationary distribution is a target.
 - [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the balance equations with rates in place of chances.
-- MCMC as a tool: sampling and counting by running a chain to its stationary distribution.
+- [MCMC as a tool](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md): sampling and counting by running a chain to its stationary distribution.
 - [Centrality](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/01-centrality-and-pagerank.md): a stationary distribution as a ranking.
 - Value and policy iteration: long-run average rewards, weighted by a policy's stationary distribution.
 

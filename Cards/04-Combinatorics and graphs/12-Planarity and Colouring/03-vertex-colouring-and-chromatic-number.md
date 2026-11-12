@@ -381,7 +381,7 @@ The two outputs match line for line.
 - [The chromatic polynomial](04-chromatic-polynomial.md): counts the colourings in $k$ colours rather than hunting one.
 - [Colouring maps](05-five-and-four-colour-theorems.md): the ceiling for graphs drawn flat with no crossings.
 - [Edge colouring](06-edge-colouring-and-round-robin.md): the same question asked of the lines.
-- Local search: clash graphs with thousands of exams.
+- [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md): clash graphs with thousands of exams.
 - Reductions: why no fast exact method is known.
 - Colouring the plane: the same count over every point of the plane.
 

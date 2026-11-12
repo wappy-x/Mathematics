@@ -393,8 +393,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [The travelling salesman](../11-Tours%20-%20Euler%20and%20Hamilton/04-travelling-salesman-in-outline.md): the skeleton as a floor under a tour's price, and how a tour is built from one.
-- Greedy: why a sorted greedy walk is right here and wrong for tours.
-- Graph algorithms as code: union-find and heaps, and what these walks cost on maps of millions of edges.
+- [Greedy](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/08-greedy-algorithms-and-matroids.md): why a sorted greedy walk is right here and wrong for tours.
+- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): union-find and heaps, and what these walks cost on maps of millions of edges.
 
 The skeleton says nothing about distances inside it — B reaches C only through E — so the price of one trip visiting every building is a separate question, the one travelling salesman opens.
 

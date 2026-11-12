@@ -707,7 +707,7 @@ The two outputs are identical line for line.
 
 ## Where this goes next
 
-- MCMC as a tool: MCMC as a working algorithm on many unknowns at once, with gradient-guided proposals, tuning and diagnostics across several chains.
+- [MCMC as a tool](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md): MCMC as a working algorithm on many unknowns at once, with gradient-guided proposals, tuning and diagnostics across several chains.
 
 This card graded its samplers against a posterior with an exact answer and a two-line mixing rate; what it leaves open is how to design and tune a chain that mixes fast when the unknowns number in the hundreds and no exact answer exists.
 

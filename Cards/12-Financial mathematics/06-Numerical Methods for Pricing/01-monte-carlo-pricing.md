@@ -670,7 +670,7 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 - [Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): the same machinery pointed at when a borrower fails.
 - [Black-Cox](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): default as a barrier touched by a simulated path.
 - [Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): what a counterparty might owe, path by path and date by date.
-- Monte Carlo integration: why the square-root law ignores the count of dimensions.
+- [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why the square-root law ignores the count of dimensions.
 - [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): keeping a run repeatable, and what a seed does not prove.
 
 A four-cent error bar cost a hundred thousand futures, and the square-root law prices a one-cent bar at sixteen times as many; the next card shrinks the bar without paying that bill, by making each draw carry more information ([Cheaper Monte Carlo](02-variance-reduction-for-pricing.md)).

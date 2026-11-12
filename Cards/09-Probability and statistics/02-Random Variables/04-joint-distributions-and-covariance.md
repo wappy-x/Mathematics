@@ -571,7 +571,7 @@ ALL CHECKS PASS
 - [Default correlation](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): correlation between two yes-or-no readings, defaulted or not.
 - [The fundamental law](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/04-information-coefficient-and-the-fundamental-law.md): the correlation of a forecast with what happened, as a measure of skill.
 - [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md): filters tuned from the covariance of a signal and its noise.
-- Conditional entropy and mutual information: a measure of dependence that the wind example cannot fool.
+- [Conditional entropy and mutual information](../../14-Applied%20and%20computational/03-Information%20Theory/02-conditional-entropy-and-mutual-information.md): a measure of dependence that the wind example cannot fool.
 
 ---
 

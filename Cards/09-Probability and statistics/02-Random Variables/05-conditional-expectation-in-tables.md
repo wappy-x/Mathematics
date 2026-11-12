@@ -591,7 +591,7 @@ The outputs agree line for line. Each simulated average sits within about one st
 - [Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md): a fair game, where the conditional average of tomorrow's value given today's history is today's value.
 - [Stochastic-local volatility](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): a volatility calibrated as the conditional average of variance given the price.
 - [Forward-start options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): an option priced by conditioning on the price at its start date, then averaging with the tower rule.
-- Conditional entropy and mutual information: the same average-within-each-group step, applied to uncertainty instead of size.
+- [Conditional entropy and mutual information](../../14-Applied%20and%20computational/03-Information%20Theory/02-conditional-entropy-and-mutual-information.md): the same average-within-each-group step, applied to uncertainty instead of size.
 
 On this shelf, [Jensen's inequality](06-jensens-inequality.md) compares the average of a curved function with the function of the average.
 

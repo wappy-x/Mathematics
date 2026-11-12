@@ -396,7 +396,7 @@ The two outputs match line for line.
 - [Round tables and bracelets](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): the same things round a table, no place first.
 - [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md): the n! orderings sorted by the loops they make.
 - [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md): where the square root and the 2 pi come from.
-- Sorting and searching: n! as the number of orders a sorting method must separate.
+- [Sorting and searching](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/05-sorting-and-searching.md): n! as the number of orders a sorting method must separate.
 
 Ten songs into ten slots is settled; open still is the count when only five of the ten make the disc, which [Ordered picks](04-ordered-picks.md) answers.
 

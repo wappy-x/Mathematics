@@ -405,7 +405,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Max-flow min-cut](06-max-flow-min-cut.md): the best plan and the cheapest split are always the same number.
-- Graph algorithms as code: what the shortest-route rule costs, and faster methods.
+- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): what the shortest-route rule costs, and faster methods.
 - Network flows: the same problem as a linear program, with the cut as its dual.
 
 A plan worth 6 sits beside a split priced 6. Whether the two must always meet is [Max-flow min-cut](06-max-flow-min-cut.md).

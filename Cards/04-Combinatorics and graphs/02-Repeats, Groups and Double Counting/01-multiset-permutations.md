@@ -386,7 +386,7 @@ The two outputs match line for line.
 - [Stars and bars](02-stars-and-bars.md): counts how many ways the block sizes themselves can be chosen.
 - [Splitting into groups](03-splitting-into-groups.md): the same division applied to piles rather than a line, and what changes when the piles have no names.
 - [Exponential generating functions](../07-Generating%20Functions/04-exponential-generating-functions.md): the same counts read off a product instead of assembled by hand.
-- Fair choices from a list you cannot hold: drawing one arrangement at random, all of them equally likely.
+- [Fair choices from a list you cannot hold](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/03-shuffling-and-reservoir-sampling.md): drawing one arrangement at random, all of them equally likely.
 
 Every count here started from block sizes handed over in advance: three kicks, two snares, one hat. How many ways those sizes could have been chosen is [Stars and bars](02-stars-and-bars.md).
 

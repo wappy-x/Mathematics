@@ -396,7 +396,7 @@ The two outputs match line for line.
 - [Holder's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): sizes of functions, bounded by convexity.
 - [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md): Jensen for integrals.
 - [Shape across strikes and expiries](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): option prices convex in strike.
-- KL divergence: Jensen makes it never negative.
+- [KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md): Jensen makes it never negative.
 - [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): linear cost, convex region.
 - [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): how fast the downhill walk closes.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): a classifier from a convex problem.

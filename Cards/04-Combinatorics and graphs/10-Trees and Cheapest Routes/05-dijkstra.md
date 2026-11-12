@@ -393,7 +393,7 @@ The two outputs match line for line.
 
 - [Bellman-Ford](06-bellman-ford-and-arbitrage.md): relaxes every road repeatedly, settling nothing, so negative costs are allowed — and a loop that pays is an arbitrage.
 - [The Chinese postman](../11-Tours%20-%20Euler%20and%20Hamilton/02-chinese-postman.md): the cheapest round trip covering every road, built on cheapest point-to-point costs.
-- Graph algorithms as code: what a heap and a target-directed search do on a country-sized map.
+- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): what a heap and a target-directed search do on a country-sized map.
 - Manifold learning: cheapest routes through data standing in for distance on a curved surface.
 
 Minutes never run backwards, and that one fact is everything the safety argument used; where a cost can genuinely fall below zero, no point may be settled at all.

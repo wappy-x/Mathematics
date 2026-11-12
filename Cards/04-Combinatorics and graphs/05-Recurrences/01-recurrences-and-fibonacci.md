@@ -373,7 +373,7 @@ The two outputs match line for line.
 - [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): rules reaching back by halving, not stepping.
 - [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): a whole sequence carried by one function.
 - [The chromatic polynomial](../12-Planarity%20and%20Colouring/04-chromatic-polynomial.md): a recurrence on networks, from deleting a link.
-- Recurrences: a running time read off a recurrence unsolved.
+- [Recurrences](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/04-recurrences-and-the-master-theorem.md): a running time read off a recurrence unsolved.
 - [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): storing what a recurrence computed instead of recomputing it.
 
 Stepping forward costs one step per position, hopeless far out; the next cards reach the answer in one jump.

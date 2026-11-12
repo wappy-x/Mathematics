@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 300" width="380" height="300">
+<title>Twelve talk proposals on a 9:00 to 18:00 timeline; the six kept by the earliest-finish rule are filled</title>
+<rect x="0" y="0" width="380" height="300" fill="#ffffff"/>
+<text x="190" y="18" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">Filled bars: the six talks earliest finish keeps</text>
+<text x="22" y="40" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">A</text>
+<rect x="40" y="30" width="144" height="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="58" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">B</text>
+<rect x="58" y="48" width="36" height="11" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="76" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">C</text>
+<rect x="76" y="66" width="45" height="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="94" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">D</text>
+<rect x="103" y="84" width="45" height="11" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="112" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">E</text>
+<rect x="139" y="102" width="27" height="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="130" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">F</text>
+<rect x="157" y="120" width="45" height="11" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="148" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">G</text>
+<rect x="184" y="138" width="36" height="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="166" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">H</text>
+<rect x="214" y="156" width="30" height="11" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="184" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">I</text>
+<rect x="238" y="174" width="36" height="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="202" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">J</text>
+<rect x="256" y="192" width="54" height="11" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="220" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">K</text>
+<rect x="292" y="210" width="54" height="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="22" y="238" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">L</text>
+<rect x="337" y="228" width="27" height="11" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="252" x2="364" y2="252" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="252" x2="40" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="40" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">9</text>
+<line x1="76" y1="252" x2="76" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="76" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">10</text>
+<line x1="112" y1="252" x2="112" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="112" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">11</text>
+<line x1="148" y1="252" x2="148" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="148" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">12</text>
+<line x1="184" y1="252" x2="184" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="184" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">13</text>
+<line x1="220" y1="252" x2="220" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="220" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">14</text>
+<line x1="256" y1="252" x2="256" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="256" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">15</text>
+<line x1="292" y1="252" x2="292" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="292" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">16</text>
+<line x1="328" y1="252" x2="328" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="328" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">17</text>
+<line x1="364" y1="252" x2="364" y2="257" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="364" y="271" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">18</text>
+<text x="202" y="292" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1d1d1d">Time of day, hours (to scale: 36 units per hour)</text>
+</svg>

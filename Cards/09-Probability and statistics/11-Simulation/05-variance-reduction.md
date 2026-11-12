@@ -694,7 +694,7 @@ The two outputs agree line for line.
 
 - [Importance sampling](06-importance-sampling.md): instead of arranging the darts, change where they are likely to land and reweight each score.
 - [Cheaper Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): the same three methods on option payoffs, with the Black–Scholes price as a control.
-- Monte Carlo integration: why grids fail in high dimension and what replaces them.
+- [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why grids fail in high dimension and what replaces them.
 
 All three methods keep the darts on the board's own law; the open question is what happens when the law itself is changed to send the darts where the score varies most.
 

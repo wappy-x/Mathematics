@@ -398,8 +398,8 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Data structures: keys held in a rooted tree, so a lookup costs a root-to-leaf path, not a scan.
-- Huffman coding: a binary tree whose leaves are letters, lopsided on purpose so common letters sit shallow.
+- [Data structures](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md): keys held in a rooted tree, so a lookup costs a root-to-leaf path, not a scan.
+- [Huffman coding](../../14-Applied%20and%20computational/03-Information%20Theory/05-source-coding-and-huffman.md): a binary tree whose leaves are letters, lopsided on purpose so common letters sit shallow.
 
 The cup draw is level only because sixteen teams fit a doubling shape exactly; data arriving in the wrong order grows the ladder instead, 15 deep for the same 31 vertices, and keeping a tree short as it grows is where a later card starts.
 

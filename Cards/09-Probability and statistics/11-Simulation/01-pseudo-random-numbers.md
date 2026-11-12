@@ -614,8 +614,8 @@ The two outputs match line for line, and that match is the replay test: each pro
 
 - [Inverse transform](02-inverse-transform-sampling.md): turning uniform draws into draws from any other law.
 - [Monte Carlo](04-monte-carlo-estimates-and-error.md): why the dart estimate's error shrinks like one over the square root of the number of darts.
-- Randomised algorithms: algorithms that flip coins to run faster, and what their average cost means.
-- Fair choices from a list you cannot hold: fair shuffles and samples built from a generator's draws.
+- [Randomised algorithms](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md): algorithms that flip coins to run faster, and what their average cost means.
+- [Fair choices from a list you cannot hold](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/03-shuffling-and-reservoir-sampling.md): fair shuffles and samples built from a generator's draws.
 - [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): seeds, parallel streams and version pinning in practice.
 - Pseudorandomness: when a fixed rule can provably replace true randomness.
 

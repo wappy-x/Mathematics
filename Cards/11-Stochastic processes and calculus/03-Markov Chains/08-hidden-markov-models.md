@@ -641,7 +641,7 @@ The two outputs match line for line. The simulated chance of the umbrella week, 
 
 - [Filtering](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md): the forward step for a hidden number that moves linearly, continuously in time, seen through Gaussian noise; the three forward numbers become a mean and a variance.
 - [Filtering a nonlinear plant](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/08-extended-kalman-filter-and-nonlinear-estimation.md): the same predict-then-update loop when the hidden motion and the sensor are curved, not straight-line, functions.
-- LDPC, turbo and polar codes: decoding by passing forward and backward chances along a code's structure.
+- [LDPC, turbo and polar codes](../../14-Applied%20and%20computational/03-Information%20Theory/09-ldpc-turbo-and-polar-codes-in-outline.md): decoding by passing forward and backward chances along a code's structure.
 
 This card took the model's chances as known and its weather as one of three kinds; what it leaves open is how to track a hidden quantity that moves continuously and is seen through continuous noise.
 
