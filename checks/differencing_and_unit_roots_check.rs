@@ -162,4 +162,5 @@ fn main() {
     assert!((ac1 + 0.5).abs() < 4.0 * (0.5 / dr.len() as f64).sqrt(), "over-differencing did not give -0.5");
     assert!(naive as f64 / rf > phi_left(-1.645) + 10.0 * se(naive as f64 / rf, rf), "normal cutoff was not too lenient");
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

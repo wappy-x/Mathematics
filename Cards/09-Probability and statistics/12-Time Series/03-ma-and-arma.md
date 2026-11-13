@@ -189,7 +189,11 @@ They differ in one way that matters. To fit a model, the surprises must be recov
 
 $$\varepsilon_t = X_t - \mu - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2}.$$
 
-Any error in the starting guess is fed back through the weights. With 0.6 and 0.3 the error shrinks each month; with 2 and 3.3333 it grows each month. The test is the echo polynomial $1 + \theta_1 z + \theta_2 z^2$, the echo weights as coefficients of a number $z$. The model is **invertible** (its surprises can be recovered from past sales) when every root of that polynomial has size greater than 1. The roots here are complex numbers, and size means distance from 0. The shop's roots have size 1.8257; the twin's 0.5477, the reciprocal. Equivalently, the recursion's own roots, the solutions of $\lambda^2 + 0.6\lambda + 0.3 = 0$, have size 0.5477, below 1: the form [Autoregression](02-ar-models.md) uses, and roughly the factor by which the starting error shrinks each month. Unless a root has size exactly 1, every MA correlogram has exactly one invertible version, and that is the one fitted and reported.
+Any error in the starting guess is fed back through the weights. With 0.6 and 0.3 the error shrinks each month; with 2 and 3.3333 it grows each month.
+
+The test is the echo polynomial $1 + \theta_1 z + \theta_2 z^2$, the echo weights as coefficients of a number $z$. The model is **invertible** (its surprises can be recovered from past sales) when every root of that polynomial has size greater than 1. The roots here are complex numbers, and size means distance from 0. The shop's roots have size 1.8257; the twin's 0.5477, the reciprocal.
+
+Equivalently, the recursion's own roots, the solutions of $\lambda^2 + 0.6\lambda + 0.3 = 0$, have size 0.5477, below 1: the form [Autoregression](02-ar-models.md) uses, and roughly the factor by which the starting error shrinks each month. Unless a root has size exactly 1, every MA correlogram has exactly one invertible version, and that is the one fitted and reported.
 
 Invertibility is also why an MA is an autoregression of infinite order. Substitute the recursion into itself: $\varepsilon_t$ becomes today's sales minus a weighted sum of all past sales, with weights shrinking roughly like $1.8257^{-j}$. That infinite tail is what keeps the MA's partial correlogram from cutting off.
 
@@ -246,7 +250,9 @@ The record's correlogram reads 0.5263, 0.1805, −0.0078, 0.0582, 0.0416, −0.0
 
 ## Code, from first principles, and it actually runs
 
-Four roads lead to the numbers. The autocovariances come from the Step 2 formula and, independently, from listing every pattern of surprises when each is +40 or −40 with equal chance (same average and variance, all Step 2 used). The ARMA correlations come from the closed form and from 400 terms of the weight sum. The partial correlations come from the Durbin–Levinson recursion and are checked against a direct solve of each Yule–Walker system, for both shops and the record. A simulated run of 120,000 months, cut into 60 batches of 2,000, gives each correlation with a standard error. Then a 240-month record is fitted by conditional least squares, and 200 more records check the standard errors. The random numbers come from SplitMix64 with stated seeds, turned normal by the Box–Muller formula, so both languages draw the same numbers. Every "chart," line is a plotted series.
+Four roads lead to the numbers. The autocovariances come from the Step 2 formula and, independently, from listing every pattern of surprises when each is +40 or −40 with equal chance (same average and variance, all Step 2 used). The ARMA correlations come from the closed form and from 400 terms of the weight sum. The partial correlations come from the Durbin–Levinson recursion and are checked against a direct solve of each Yule–Walker system (the equations that link an autoregression's coefficients to the correlogram, from [Autoregression](02-ar-models.md)), for both shops and the record.
+
+A simulated run of 120,000 months, cut into 60 batches of 2,000, gives each correlation with a standard error. Then a 240-month record is fitted by conditional least squares, and 200 more records check the standard errors. The random numbers come from SplitMix64 with stated seeds, turned normal by the Box–Muller formula, so both languages draw the same numbers. Every "chart," line is a plotted series.
 
 ### Python
 
@@ -388,9 +394,10 @@ assert abs(ok[23] - true_e[23]) < 0.01 and abs(bad[23]) > 1e6
 c = [1.0, 1.1, 0.6, 0.15]                             # surprises sharing part of last month's: u = e + 0.5 e(-1)
 r3f, r3e = acov_formula(c, 3, 1) / acov_formula(c, 0, 1), acov_enum(c, 3, 1) / acov_enum(c, 0, 1); assert abs(r3f - r3e) < 1e-12 and r3f > 0.05
 print(f"correlated surprises: rho3 formula {r3f:.4f}, enumerated {r3e:.4f}, independent 0.0000")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 MA(2) sales: mean 500, surprise sd 40, echo weights 1, 0.6, 0.3
@@ -436,6 +443,7 @@ twin: weights 1, 2.0000, 3.3333, sd 12.0000; root size 1.8257 vs 0.5477
   month 12: true surprise    42.90, recovered    42.89, twin recursion       742.56
   month 24: true surprise   -32.15, recovered   -32.15, twin recursion  18062489.75
 correlated surprises: rho3 formula 0.0579, enumerated 0.0579, independent 0.0000
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -609,11 +617,11 @@ fn main() {
     assert!((ok[23] - true_e[23]).abs() < 0.01 && bad[23].abs() > 1e6);
     let c = [1.0, 1.1, 0.6, 0.15]; // surprises sharing part of last month's: u = e + 0.5 e(-1)
     let (r3f, r3e) = (acov_formula(&c, 3, 1.0) / acov_formula(&c, 0, 1.0), acov_enum(&c, 3, 1.0) / acov_enum(&c, 0, 1.0)); assert!((r3f - r3e).abs() < 1e-12 && r3f > 0.05);
-    println!("correlated surprises: rho3 formula {:.4}, enumerated {:.4}, independent 0.0000", r3f, r3e);
+    println!("correlated surprises: rho3 formula {:.4}, enumerated {:.4}, independent 0.0000", r3f, r3e); println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 MA(2) sales: mean 500, surprise sd 40, echo weights 1, 0.6, 0.3
@@ -659,9 +667,150 @@ twin: weights 1, 2.0000, 3.3333, sd 12.0000; root size 1.8257 vs 0.5477
   month 12: true surprise    42.90, recovered    42.89, twin recursion       742.56
   month 24: true surprise   -32.15, recovered   -32.15, twin recursion  18062489.75
 correlated surprises: rho3 formula 0.0579, enumerated 0.0579, independent 0.0000
+ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves the moving-average covariance formula and its cut-off for every order $q$, the ARMA(1, 1) echo weights, and the twin's matching correlogram.
+
+- Take an MA($q$) whose surprises are uncorrelated, with average 0 and one fixed variance $\sigma^2$. Then $\gamma(h) = \sigma^2\sum_{k=0}^{q-h}\theta_k\theta_{k+h}$ for each gap $h \le q$, in every month.
+- Take the same model. Then $\gamma(h) = 0$ for every gap $h > q$: the correlogram cuts off.
+- Suppose a surprise's weight is 1 in month 0, $\phi + \theta_1$ in month 1, then $\phi$ times the month before. Then $\psi_j = \phi^{\,j-1}(\phi + \theta_1)$ for every $j \ge 1$.
+- Take an MA(2) with $\theta_2 \ne 0$, and its twin with weights 1, $\theta_1/\theta_2$ and $1/\theta_2$. Then the twin, with surprises of standard deviation $\sigma\theta_2$, has the same $\gamma(0)$, $\gamma(1)$ and $\gamma(2)$.
+- The hand arithmetic holds exactly: $\gamma(0) = 2320$, $\gamma(1) = 1248$, $\gamma(2) = 480$, and $\rho(1) = 78/145$, $\rho(2) = 6/29$.
+- Also exact: the twin's 2320, 1248 and 480, with weights 1, 2, 10/3 and standard deviation 12.
+- Also exact: the ARMA echo 80, 40, 20, 10, 5, its variance 8896/3 and its $\rho(1) = 92/139$.
+
+The general ARMA formula for $\rho(h)$, the partial correlogram, invertibility, the simulation and the fit are left to the Python and Rust checks.
+
+```lean
+-- Moving average and ARMA: in an MA(q) model the covariance of sales h months apart is sigma squared times the sum of shared echo-weight products and is exactly zero beyond lag q, an ARMA(1,1) echo shrinks by the factor phi each month, and the twin weights give the same correlogram.
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Algebra.BigOperators.Intervals
+
+open MeasureTheory ProbabilityTheory Finset
+
+/-- MA(q) autocovariance and cut-off. Let the surprises `ε t` have average 0, one fixed variance
+`σ^2`, and be uncorrelated across months. Let sales be `X t = m + ∑_{j=0}^{q} θ_j ε_{t-j}` with
+`θ_0 = 1`. Then for a gap of `h ≤ q` months the covariance of sales `h` months apart is
+`σ^2 ∑_{k=0}^{q-h} θ_k θ_{k+h}`, the same in every month, and for every gap `h > q` it is exactly 0. -/
+theorem ma_autocovariance_cuts_off_after_q
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (ε : ℤ → Ω → ℝ) (σ m : ℝ) (q : ℕ) (θ : ℕ → ℝ) (X : ℤ → Ω → ℝ)
+    (hL2 : ∀ t, MemLp (ε t) 2 P)
+    (hmean : ∀ t, P[ε t] = 0)
+    (hvar : ∀ t, Var[ε t; P] = σ ^ 2)
+    (huncorr : ∀ s t, s ≠ t → cov[ε s, ε t; P] = 0)
+    (hθ0 : θ 0 = 1)
+    (hX : ∀ t ω, X t ω = m + ∑ j ∈ range (q + 1), θ j * ε (t - j) ω) :
+    ∀ (t : ℤ) (h : ℕ),
+      (h ≤ q → cov[X t, X (t - h); P] = σ ^ 2 * ∑ k ∈ range (q - h + 1), θ k * θ (k + h)) ∧
+      (q < h → cov[X t, X (t - h); P] = 0) := by
+  have hc : ∀ a b : ℤ, cov[ε a, ε b; P] = if a = b then σ ^ 2 else 0 := by
+    intro a b
+    split_ifs with hab
+    · subst hab; rw [covariance_self (hL2 a).aemeasurable, hvar]
+    · exact huncorr a b hab
+  have hY : ∀ s : ℤ, ∀ j ∈ range (q + 1), MemLp (fun ω => θ j * ε (s - j) ω) 2 P :=
+    fun s j _ => (hL2 (s - j)).const_mul (θ j)
+  have hXeq : ∀ s : ℤ, X s = fun ω => (∑ j ∈ range (q + 1), θ j * ε (s - j) ω) + m := by
+    intro s; funext ω; rw [hX, add_comm]
+  have hInt : ∀ s : ℤ, Integrable (fun ω => ∑ j ∈ range (q + 1), θ j * ε (s - j) ω) P :=
+    fun s => (memLp_finsetSum' _ (hY s)).integrable one_le_two |>.congr
+      (Filter.Eventually.of_forall fun ω => by simp)
+  have key : ∀ t : ℤ, ∀ h : ℕ, cov[X t, X (t - h); P] =
+      ∑ j ∈ range (q + 1), if j + h < q + 1 then σ ^ 2 * (θ j * θ (j + h)) else 0 := by
+    intro t h
+    rw [hXeq, hXeq, covariance_add_const_left (hInt _), covariance_add_const_right (hInt _),
+      covariance_fun_sum_fun_sum' (hY _) (hY _)]
+    simp_rw [covariance_const_mul_left, covariance_const_mul_right, hc]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    have : ∀ i : ℕ, (t - (i : ℤ) = t - (h : ℤ) - (j : ℤ)) ↔ (j + h = i) := by
+      intro i; constructor <;> intro H <;> omega
+    simp_rw [this]
+    simp only [mul_ite, mul_zero]
+    rw [Finset.sum_ite_eq]
+    simp only [Finset.mem_range]
+    split_ifs <;> ring
+  intro t h
+  rw [key, ← Finset.sum_filter]
+  constructor
+  · intro hh
+    have : (range (q + 1)).filter (fun j => j + h < q + 1) = range (q - h + 1) := by
+      ext j; simp; omega
+    rw [this, Finset.mul_sum]
+  · intro hh
+    have : (range (q + 1)).filter (fun j => j + h < q + 1) = ∅ := by
+      ext j; simp; omega
+    rw [this, Finset.sum_empty]
+
+/-- ARMA(1,1) echo of one surprise. Follow a single unit surprise through
+`X_t = φ X_{t-1} + ε_t + θ₁ ε_{t-1}`: its weight is 1 in month 0, `φ + θ₁` in month 1, and after
+that each month carries the share `φ` of the month before. Then its weight `j ≥ 1` months on is
+`ψ_j = φ^(j-1) (φ + θ₁)`: the echo shrinks by the factor `φ` each month instead of stopping. -/
+theorem arma11_echo_weights (φ θ₁ : ℝ) (ψ : ℕ → ℝ)
+    (h0 : ψ 0 = 1) (h1 : ψ 1 = φ * ψ 0 + θ₁) (hrec : ∀ j, ψ (j + 2) = φ * ψ (j + 1)) :
+    ∀ j, 1 ≤ j → ψ j = φ ^ (j - 1) * (φ + θ₁) := by
+  intro j hj
+  induction j with
+  | zero => omega
+  | succ n ih =>
+    rcases Nat.eq_zero_or_pos n with rfl | hn
+    · simp [h1, h0]
+    · obtain ⟨k, rfl⟩ : ∃ k, n = k + 1 := ⟨n - 1, by omega⟩
+      rw [hrec, ih (by omega)]
+      simp [pow_succ]; ring
+
+/-- Two models, one correlogram. The MA(2) with echo weights `1, θ₁, θ₂` and surprise standard
+deviation `σ`, and its twin with weights `1, θ₁/θ₂, 1/θ₂` and standard deviation `σ θ₂`, have the
+same autocovariance at lags 0, 1 and 2 (by the Step 2 formula), so no record can tell them apart. -/
+theorem ma2_twin_same_autocovariance (σ θ₁ θ₂ : ℝ) (hθ₂ : θ₂ ≠ 0) :
+    (σ * θ₂) ^ 2 * (1 + (θ₁ / θ₂) ^ 2 + (1 / θ₂) ^ 2) = σ ^ 2 * (1 + θ₁ ^ 2 + θ₂ ^ 2) ∧
+    (σ * θ₂) ^ 2 * (θ₁ / θ₂ + θ₁ / θ₂ * (1 / θ₂)) = σ ^ 2 * (θ₁ + θ₁ * θ₂) ∧
+    (σ * θ₂) ^ 2 * (1 / θ₂) = σ ^ 2 * θ₂ := by
+  refine ⟨?_, ?_, ?_⟩ <;> field_simp <;> ring
+
+/-- The shop's echo weights 1, 0.6, 0.3 written as exact fractions. -/
+def shopθ : ℕ → ℚ := fun j => if j = 0 then 1 else if j = 1 then 3 / 5 else if j = 2 then 3 / 10 else 0
+
+-- The shop (σ = 40, q = 2): γ(0) = 2320, γ(1) = 1248, γ(2) = 480, from the formula in the main theorem.
+example : (40 : ℚ) ^ 2 * ∑ k ∈ range (2 - 0 + 1), shopθ k * shopθ (k + 0) = 2320 := by
+  norm_num [shopθ, Finset.sum_range_succ]
+example : (40 : ℚ) ^ 2 * ∑ k ∈ range (2 - 1 + 1), shopθ k * shopθ (k + 1) = 1248 := by
+  norm_num [shopθ, Finset.sum_range_succ]
+example : (40 : ℚ) ^ 2 * ∑ k ∈ range (2 - 2 + 1), shopθ k * shopθ (k + 2) = 480 := by
+  norm_num [shopθ, Finset.sum_range_succ]
+-- ρ(1) = 1248/2320 and ρ(2) = 480/2320 in lowest terms.
+example : (1248 : ℚ) / 2320 = 78 / 145 ∧ (480 : ℚ) / 2320 = 6 / 29 := by norm_num
+-- The twin: weights 1, 2, 10/3 with surprise sd 12 give 2320, 1248, 480 again.
+example : (12 : ℚ) ^ 2 * (1 + 2 ^ 2 + (10 / 3) ^ 2) = 2320 ∧
+    (12 : ℚ) ^ 2 * (2 + 2 * (10 / 3)) = 1248 ∧ (12 : ℚ) ^ 2 * (10 / 3) = 480 := by norm_num
+-- The ARMA(1,1) shop (φ = 1/2, θ₁ = 3/10): a +100 surprise echoes 80, 40, 20, 10, 5.
+example : [1, 2, 3, 4, 5].map (fun j : ℕ => (100 : ℚ) * (1 / 2) ^ (j - 1) * (1 / 2 + 3 / 10)) =
+    [80, 40, 20, 10, 5] := by
+  norm_num
+-- Its variance 1600 (1 + 2 φ θ₁ + θ₁²)/(1 − φ²) = 8896/3 and ρ(1) = (1 + φθ₁)(φ + θ₁)/(1 + 2φθ₁ + θ₁²) = 92/139.
+example : (1600 : ℚ) * (1 + 2 * (1 / 2) * (3 / 10) + (3 / 10) ^ 2) / (1 - (1 / 2) ^ 2) = 8896 / 3 ∧
+    (1 + 1 / 2 * (3 / 10) : ℚ) * (1 / 2 + 3 / 10) / (1 + 2 * (1 / 2) * (3 / 10) + (3 / 10) ^ 2) = 92 / 139 := by
+  norm_num
+
+#print axioms ma_autocovariance_cuts_off_after_q
+#print axioms arma11_echo_weights
+#print axioms ma2_twin_same_autocovariance
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ma_autocovariance_cuts_off_after_q' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arma11_echo_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ma2_twin_same_autocovariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

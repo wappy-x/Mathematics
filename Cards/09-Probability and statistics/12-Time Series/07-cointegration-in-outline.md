@@ -10,11 +10,11 @@ Two petrol stations face each other across a crossroads. Call them North and Sou
 
 Yet the gap between them does not wander. When North runs 10 cents above its usual gap, drivers cross the road, and within days North cuts or South creeps up. Two dogs on one leash: each roams the town, never far from the other.
 
-From here on the leash has its real name. Two wandering series are **cointegrated** when some fixed mix of them, here North's price minus South's, stops wandering and keeps coming back to a steady level. The card tests whether the tie is real, by the Engle–Granger two-step method (Robert Engle and Clive Granger, 1987), then fits an **error-correction model**: a rule for how much of today's gap each station closes tomorrow.
+From here on the leash has its real name. Two wandering series are **cointegrated** when some fixed mix of them, here North's price minus South's, stops wandering and keeps coming back to a steady level. The card tests whether the tie is real, by the Engle–Granger two-step method (Robert Engle and Clive Granger, 1987). Then it fits an **error-correction model**: a rule for how much of today's gap each station closes tomorrow.
 
 **Two series that each wander without a home are cointegrated when one fixed mix of them is steady; Engle–Granger fits that mix by least squares and tests the leftover for a pull back to its level, and the error-correction model measures who does the pulling.**
 
-**What kind of fact this is:** a method (the Engle–Granger test and the error-correction fit), built on a definition (cointegration). The two small theorems it rests on are proved in Why it works; the test's cutoff is simulated and matched to a published table; the Granger representation theorem is stated with its source.
+**What kind of fact this is:** a method (the Engle–Granger test and the error-correction fit), built on a definition (cointegration). The two small theorems it rests on are proved in Why it works. The test's cutoff is simulated and matched to a published table; the Granger representation theorem is stated with its source.
 
 ### The picture: a year of the two pump prices
 
@@ -36,7 +36,13 @@ Orange: North. Teal: South. Both climb about 50 cents over the year, and neither
 
 ## The formula
 
-Notation first. A small $t$ under a price names the day: $N_t$ is North's price on day $t$, $S_t$ South's. A capital delta, $\Delta$, means "change since yesterday": $\Delta N_t = N_t - N_{t-1}$. A hat marks a value fitted from data; a bar marks an average over the record, so $\bar N$ is North's average price. A series **wanders**, or is **integrated of order one**, written I(1), when its daily changes are steady but its level has no home ([Unit roots](04-differencing-and-unit-roots.md)). A series is **steady**, written I(0), when it keeps returning to a fixed level with a fixed spread ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
+Notation first.
+
+- A small $t$ under a price names the day: $N_t$ is North's price on day $t$, $S_t$ South's.
+- A capital delta, $\Delta$, means "change since yesterday": $\Delta N_t = N_t - N_{t-1}$.
+- A hat marks a value fitted from data; a bar marks an average over the record, so $\bar N$ is North's average price.
+- A series **wanders**, or is **integrated of order one**, written I(1), when its daily changes are steady but its level has no home ([Unit roots](04-differencing-and-unit-roots.md)).
+- A series is **steady**, written I(0), when it keeps returning to a fixed level with a fixed spread ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
 
 **The definition.** Two I(1) series are cointegrated when, for some fixed $\beta$ and $c$,
 
@@ -56,7 +62,7 @@ $$\Delta \hat z_t = \rho\, \hat z_{t-1} + e_t, \qquad \tau = \frac{\hat\rho}{\op
 
 **Read it aloud:** when yesterday's gap was wide, does today's change narrow it, and by how many standard errors is that pull away from zero?
 
-Its standard error is $\operatorname{se}(\hat\rho) = \sqrt{\big(\sum_t \hat e_t^2/(m-1)\big) \big/ \sum_t \hat z_{t-1}^2}$, over the $m = n - 1$ daily changes, with $\hat e_t$ the fitted values of $e_t$. "No tie" is rejected when $\tau$ falls below the 5% cutoff, the value unrelated pairs fall below only 5% of the time: **−3.353** for two series and 364 changes, from MacKinnon's published table. The one-series cutoff, **−2.870**, is the wrong one here.
+A standard error, se, is the typical size of the error in a fitted value. For $\hat\rho$ it is $\operatorname{se}(\hat\rho) = \sqrt{\big(\sum_t \hat e_t^2/(m-1)\big) \big/ \sum_t \hat z_{t-1}^2}$, over the $m = n - 1$ daily changes, with $\hat e_t$ the fitted values of $e_t$. "No tie" is rejected when $\tau$ falls below the 5% cutoff, the value unrelated pairs fall below only 5% of the time: **−3.353** for two series and 364 changes, from MacKinnon's published table. The one-series cutoff, **−2.870**, is the wrong one here.
 
 **The error-correction model.** Each station's daily change answers yesterday's gap:
 
@@ -72,10 +78,11 @@ $$\Delta N_t = \alpha_N\, \hat z_{t-1} + \varepsilon_{N,t}, \qquad \Delta S_t = 
 | $c$ | the premium: North's usual price above the tie | built $0.06; fitted $0.0806 | moves the level, not the pull |
 | $z_t$ | the leftover or gap, $N_t - c - \beta S_t$ | −$0.05 to $0.11 at the plotted days | North is dear against South |
 | $\Delta$ | change since yesterday | $\Delta N_t$, $\Delta \hat z_t$ | — |
-| $\rho$ | the daily pull-back: minus the share of yesterday's gap removed today (the slope called gamma on differencing-and-unit-roots, which keeps rho for the carry-over, here $\phi$) | fitted −0.1621 | more negative: gaps close faster |
+| $\rho$ | the daily pull-back: minus the share of yesterday's gap removed today (the slope called $\gamma$ on [Unit roots](04-differencing-and-unit-roots.md), which keeps $\rho$ for the carry-over, here $\phi$) | fitted −0.1621 | more negative: gaps close faster |
 | $\phi$ | the share of a gap still there tomorrow, $1 + \rho$ (the carry-over of [Autoregression](02-ar-models.md)) | built 0.85; fitted 0.8379 | towards 1: gaps linger; at 1 there is no tie |
 | $e_t$, $\varepsilon$, $u_t$ | news: the part of a day's change the pull does not explain; $u_t$ the gap's news, in the proof | — | — |
 | $R^2$ | the share of one series' movement that a fitted line appears to explain, from 0 to 1 | median 0.17 over 4,000 unrelated pairs; 0.67 for the unrelated price of Step 3 | nearer 1: the line looks better, which for two wandering series proves nothing |
+| $\operatorname{se}$ | standard error: the typical size of the error in a fitted value | $\operatorname{se}(\hat\rho)$ = 0.0288 | the fit is less sure |
 | $\tau$, $\tau_{5\%}$ | the test statistic; the cutoff it must fall below | −5.64; −3.353 | more negative: stronger evidence of a tie |
 | $\alpha_N$, $\alpha_S$ | each station's pull: its move per dollar of yesterday's gap | built −0.12, 0.03; fitted −0.1268, 0.0356 | that station closes more of the gap |
 | $\eta$, $v$, $w$ | first folded proof only: South's daily change, its variance, the leftover's variance | — | — |
@@ -115,7 +122,7 @@ Least squares minimises $\sum_t \big((N_t - \bar N) - b(S_t - \bar S)\big)^2$. E
 $$(\beta - b)^2 \sum_t (S_t - \bar S)^2 \;+\; 2(\beta - b) \sum_t (S_t - \bar S)(z_t - \bar z) \;+\; \sum_t (z_t - \bar z)^2 .$$
 The last does not depend on $b$, so it cannot move the fit. Setting the slope of the misfit in $b$ to zero gives
 $$\hat\beta - \beta = \frac{\sum_t (S_t - \bar S)(z_t - \bar z)}{\sum_t (S_t - \bar S)^2} .$$
-The bottom grows like $n^2$, since each of its $n$ terms has a size that grows with $n$. The top grows only like $n$: its $n$ products each have a size of about $\sqrt n$, but their signs follow $z$, which keeps crossing its level, so they largely cancel and their sum grows like $\sqrt n$ times $\sqrt n$. The fitted ratio's error therefore shrinks like $n / n^2 = 1/n$, faster than the $1/\sqrt n$ of an ordinary mean. This is **superconsistency**; Hamilton's cointegration chapter gives the full argument.
+The bottom grows like $n^2$, since each of its $n$ terms has a size that grows with $n$. The top grows only like $n$. Its $n$ products each have a size of about $\sqrt n$, but their signs follow $z$, which keeps crossing its level. So they largely cancel, and their sum grows like $\sqrt n$ times $\sqrt n$. The fitted ratio's error therefore shrinks like $n / n^2 = 1/n$, faster than the $1/\sqrt n$ of an ordinary mean. This is **superconsistency**; Hamilton's cointegration chapter gives the full argument.
 
 </details>
 
@@ -158,13 +165,13 @@ The two pulls rebuild step two exactly. The leftover's change is North's change 
 
 Suppose each change is a pull on yesterday's gap plus news: $\Delta N_t = \alpha_N z_{t-1} + \varepsilon_{N,t}$ and $\Delta S_t = \alpha_S z_{t-1} + \varepsilon_{S,t}$, with $z_t = N_t - c - \beta S_t$. Subtract $\beta$ times the second from the first. The premium $c$ does not change, so $\Delta z_t = (\alpha_N - \beta\alpha_S)\,z_{t-1} + (\varepsilon_{N,t} - \beta\varepsilon_{S,t})$, that is
 $$z_t = \phi\, z_{t-1} + u_t, \qquad \phi = 1 + \alpha_N - \beta\alpha_S,$$
-with $u_t$ the combined news. That is an AR(1) with carry-over $\phi$, which is steady exactly when $-1 < \phi < 1$ ([Autoregression](02-ar-models.md)). Here $\phi = 1 - 0.12 - 0.03 = 0.85$. The wholesale news enters both stations equally and cancels in $u_t$ when $\beta = 1$: Step 0 in symbols. So pulls of the right sign, not too strong, produce a cointegrated pair.
+with $u_t$ the combined news. That is an AR(1), an autoregression of order one, with carry-over $\phi$, which is steady exactly when $-1 < \phi < 1$ ([Autoregression](02-ar-models.md)). Here $\phi = 1 - 0.12 - 0.03 = 0.85$. The wholesale news enters both stations equally and cancels in $u_t$ when $\beta = 1$: Step 0 in symbols. So pulls of the right sign, not too strong, produce a cointegrated pair.
 
 The converse, that every cointegrated pair has an error-correction form, is the **Granger representation theorem**, proved in Engle and Granger (1987). It needs the moving-average algebra of [Moving average and ARMA](03-ma-and-arma.md) in two dimensions and is stated here, not proved.
 
 </details>
 
-A second road tests several series at once. The **Johansen procedure** fits the error-correction model for all of them together, needs no series on the left-hand side, and counts the independent ties from the eigenvalues of a matrix built from the same regressions. Two stations have at most one tie; five on one ring road could have four.
+A second road tests several series at once. The **Johansen procedure** fits the error-correction model for all of them together and needs no choice of which series goes on the left-hand side. It counts the independent ties from the eigenvalues, the stretch factors, of a matrix built from the same regressions ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). Two stations have at most one tie; five on one ring road could have four.
 
 ---
 
@@ -631,6 +638,169 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three facts from Why it works and How a gap closes, for every choice of numbers, and checks the worked numbers exactly.
+
+- Suppose South's daily changes are independent with variance $v > 0$, and the leftover $z_t$ has fixed variance $w$, independent of South. Then the variance of $N_t - b S_t$ stays bounded over all days exactly when $b = \beta$.
+- Suppose each station's daily change is its pull times yesterday's gap, plus news. Then tomorrow's gap is $\phi$ times today's, plus news, with $\phi = 1 + \alpha_N - \beta\alpha_S$.
+- Suppose the tie ratio is 1, there is no news after a jump of $g_0$, and $-1 < \phi < 1$. Then North moves $\alpha_N g_0 / (\alpha_S - \alpha_N)$ in all, summed over every day. South moves $\alpha_S g_0 / (\alpha_S - \alpha_N)$ in all.
+- The week by hand gives sums −14 and 31, so the fitted pull-back is −14 / 31.
+- The built pulls give $\phi$ = 0.85. A 10-cent jump moves North −1.20 and South +0.30 on day 0, and leaves a gap of 8.50 on day 1.
+- Summed over every day, North gives back 8 cents and South rises 2, so both end 2 cents dearer.
+
+How fast least squares finds the ratio, the test's cutoff and the fitted pulls are left to the Python and Rust checks.
+
+```lean
+-- Cointegration: only the true tying ratio turns a random walk and its tied partner into a mix of bounded variance, pulls on yesterday's gap make the gap follow an autoregression with carry-over 1 + αN - β αS, and a one-off gap is split between the two stations in the ratio of their pulls.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory Finset
+
+/-- The tying ratio is unique. South is a random walk: `S t = S₀ + η 0 + … + η (t-1)`, with
+independent daily changes `η i` of the same variance `v > 0`. North is tied to it:
+`N t = c + β S t + z t`, where the leftover `z t` has a fixed variance `w` and is independent of
+South's wander. Then for a trial ratio `b`, the variance of the mix `N t - b S t` (which is
+`(β - b)² t v + w`) stays bounded over all days `t` exactly when `b = β`: any other ratio leaves
+a mix that wanders without limit. -/
+theorem tying_ratio_unique {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] (η z : ℕ → Ω → ℝ) (S₀ c β b v w : ℝ)
+    (hη : ∀ i, MemLp (η i) 2 μ) (hηind : iIndepFun η μ)
+    (hv : ∀ i, variance (η i) μ = v) (hvpos : 0 < v)
+    (hz : ∀ t, MemLp (z t) 2 μ) (hw : ∀ t, variance (z t) μ = w)
+    (hzS : ∀ t, IndepFun (z t) (fun ω => ∑ i ∈ range t, η i ω) μ) :
+    BddAbove (Set.range fun t : ℕ =>
+        variance (fun ω => (c + β * (S₀ + ∑ i ∈ range t, η i ω) + z t ω)
+          - b * (S₀ + ∑ i ∈ range t, η i ω)) μ) ↔ b = β := by
+  set T : ℕ → Ω → ℝ := fun t ω => ∑ i ∈ range t, η i ω with hT
+  have hTmem : ∀ t, MemLp (T t) 2 μ := fun t => memLp_finsetSum _ (fun i _ => hη i)
+  have hTvar : ∀ t, variance (T t) μ = t * v := by
+    intro t
+    have h1 : T t = ∑ i ∈ range t, η i := by
+      ext ω; simp [hT, Finset.sum_apply]
+    rw [h1, IndepFun.variance_sum (fun i _ => hη i)
+      (fun i _ j _ hij => hηind.indepFun hij)]
+    simp [hv]
+  have hvar : ∀ t, variance (fun ω => (c + β * (S₀ + ∑ i ∈ range t, η i ω) + z t ω)
+          - b * (S₀ + ∑ i ∈ range t, η i ω)) μ = (β - b) ^ 2 * (t * v) + w := by
+    intro t
+    have hf : (fun ω => (c + β * (S₀ + ∑ i ∈ range t, η i ω) + z t ω)
+          - b * (S₀ + ∑ i ∈ range t, η i ω))
+        = fun ω => ((fun ω => (β - b) * T t ω) + z t) ω + (c + (β - b) * S₀) := by
+      ext ω; simp only [hT, Pi.add_apply]; ring
+    have hA : MemLp (fun ω => (β - b) * T t ω) 2 μ := (hTmem t).const_mul _
+    have hind : IndepFun (fun ω => (β - b) * T t ω) (z t) μ := by
+      have h2 : IndepFun (T t) (z t) μ := (hzS t).symm
+      exact h2.comp (φ := fun x => (β - b) * x) (ψ := id) (by fun_prop) measurable_id
+    rw [hf, variance_add_const (hA.add (hz t)).aestronglyMeasurable,
+      hind.variance_add hA (hz t), variance_const_mul, hTvar, hw]
+  simp_rw [hvar]
+  constructor
+  · intro hbdd
+    by_contra hne
+    have hk : 0 < (β - b) ^ 2 * v := by
+      have : β - b ≠ 0 := sub_ne_zero.mpr (Ne.symm hne)
+      positivity
+    obtain ⟨M, hM⟩ := hbdd
+    obtain ⟨n, hn⟩ := exists_nat_gt ((M - w) / ((β - b) ^ 2 * v))
+    have := hM ⟨n, rfl⟩
+    simp only at this
+    rw [div_lt_iff₀ hk] at hn
+    nlinarith
+  · rintro rfl
+    refine ⟨w, ?_⟩
+    rintro _ ⟨t, rfl⟩
+    simp
+
+/-- Pulls on yesterday's gap make the gap an autoregression of order one. If each day North's
+price changes by `αN` times yesterday's gap plus news, and South's by `αS` times yesterday's gap
+plus news, where the gap is `z t = N t - c - β S t`, then every day
+`z (t+1) = φ z t + u (t+1)` with carry-over `φ = 1 + αN - β αS` and combined news
+`u (t+1) = εN (t+1) - β εS (t+1)`. -/
+theorem error_correction_gap_is_ar1 (N S εN εS : ℕ → ℝ) (c β αN αS : ℝ)
+    (hN : ∀ t, N (t + 1) - N t = αN * (N t - c - β * S t) + εN (t + 1))
+    (hS : ∀ t, S (t + 1) - S t = αS * (N t - c - β * S t) + εS (t + 1)) :
+    ∀ t, N (t + 1) - c - β * S (t + 1)
+      = (1 + αN - β * αS) * (N t - c - β * S t) + (εN (t + 1) - β * εS (t + 1)) := by
+  intro t
+  linear_combination hN t - β * hS t
+
+/-- How a one-off gap is closed (tie ratio 1, no news after the jump). The gap starts at `g₀`
+and each day shrinks to `φ = 1 + αN - αS` times itself, with `-1 < φ < 1`. North moves by `αN`
+times each day's gap and South by `αS` times it. Summed over every day, North moves
+`αN g₀ / (αS - αN)` in all and South `αS g₀ / (αS - αN)`. -/
+theorem shock_split_by_pulls (αN αS g₀ : ℝ) (g : ℕ → ℝ)
+    (hg0 : g 0 = g₀) (hg : ∀ t, g (t + 1) = (1 + αN - αS) * g t)
+    (hφ : |1 + αN - αS| < 1) :
+    HasSum (fun t => αN * g t) (αN * g₀ / (αS - αN)) ∧
+      HasSum (fun t => αS * g t) (αS * g₀ / (αS - αN)) := by
+  have hne : αS - αN ≠ 0 := by
+    intro h
+    have : 1 + αN - αS = 1 := by linarith
+    rw [this] at hφ
+    simp at hφ
+  have hgt : ∀ t, g t = (1 + αN - αS) ^ t * g₀ := by
+    intro t
+    induction t with
+    | zero => simp [hg0]
+    | succ n ih => rw [hg, ih, pow_succ]; ring
+  have hgeo := hasSum_geometric_of_abs_lt_one hφ
+  have h1 : (1 - (1 + αN - αS))⁻¹ = (αS - αN)⁻¹ := by ring_nf
+  rw [h1] at hgeo
+  constructor
+  · have := hgeo.mul_left (αN * g₀)
+    convert this using 1
+    · ext t; rw [hgt]; ring
+    · field_simp
+  · have := hgeo.mul_left (αS * g₀)
+    convert this using 1
+    · ext t; rw [hgt]; ring
+    · field_simp
+
+/-! The card's whole-number and exact worked numbers. -/
+
+-- The week by hand, in cents: leftover 4, 3, 1, 2, 0, -1, 0.
+-- Sum of yesterday's gap times today's change is -14; sum of yesterday's gap squared is 31.
+example :
+    let toy : Fin 7 → ℤ := ![4, 3, 1, 2, 0, -1, 0]
+    (∑ i : Fin 6, toy i.castSucc * (toy i.succ - toy i.castSucc)) = -14 ∧
+      (∑ i : Fin 6, toy i.castSucc ^ 2) = 31 := by
+  decide
+
+-- The week's fitted pull-back is -14 / 31.
+example :
+    let toy : Fin 7 → ℚ := ![4, 3, 1, 2, 0, -1, 0]
+    (∑ i : Fin 6, toy i.castSucc * (toy i.succ - toy i.castSucc)) /
+      (∑ i : Fin 6, toy i.castSucc ^ 2) = -14 / 31 := by
+  norm_num [Fin.sum_univ_succ]
+
+-- The build: αN = -0.12, αS = 0.03, β = 1, so φ = 1 - 0.12 - 0.03 = 0.85.
+example : (1 + (-12 / 100) - 1 * (3 / 100) : ℚ) = 85 / 100 := by norm_num
+
+-- A 10-cent jump: day 0 moves North -1.20 and South +0.30; the gap on day 1 is 8.50.
+example : (-12 / 100 : ℚ) * 10 = -6 / 5 ∧ (3 / 100 : ℚ) * 10 = 3 / 10 ∧
+    (85 / 100 : ℚ) * 10 = 17 / 2 := by norm_num
+
+-- Summed over every day: North gives back 8 cents, South rises 2, so both end 2 cents dearer.
+example : (-12 / 100 : ℚ) * 10 / (3 / 100 - (-12 / 100)) = -8 ∧
+    (3 / 100 : ℚ) * 10 / (3 / 100 - (-12 / 100)) = 2 ∧ (10 : ℚ) + (-8) = 2 := by norm_num
+
+#print axioms tying_ratio_unique
+#print axioms error_correction_gap_is_ar1
+#print axioms shock_split_by_pulls
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'tying_ratio_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'error_correction_gap_is_ar1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shock_split_by_pulls' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -676,7 +846,7 @@ The two outputs match line for line.
 
 - [Pairs trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md): the same two steps on two share prices, with a position built in the fitted ratio and the gap traded for profit.
 
-The test says whether a tie exists and the pulls say how fast it acts; whether that speed is enough to earn money after trading costs is the question the pairs-trading card answers.
+The test says whether a tie exists and the pulls say how fast it acts. Whether that speed is enough to earn money after trading costs is the question the pairs-trading card answers.
 
 ---
 

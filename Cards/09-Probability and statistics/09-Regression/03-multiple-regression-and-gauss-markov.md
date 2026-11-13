@@ -25,7 +25,9 @@ Twelve houses sold last year within walking distance of one railway station. For
 
 What is one more square metre worth? A straight line through price against area alone says $1,769. But in this town the bigger houses sit farther from the station, and distance costs money. The line on area alone has quietly charged the bigger houses for their walk.
 
-Fitting all three predictors at once separates them. The answer becomes $2,288 per square metre, give or take $120: the price gap between two houses of the same age and the same walk that differ by one square metre. That reading, "holding the others fixed", is the first thing this card explains. The second is why the least-squares fit is the one to trust: among every rule that makes each coefficient a fixed weighted sum of the prices and is right on average, least squares has the smallest spread. That is the Gauss–Markov theorem, named for Carl Friedrich Gauss, who proved it in the 1820s, and Andrey Markov, who restated it later.
+Fitting all three predictors at once separates them. The answer becomes $2,288 per square metre, give or take $120: the price gap between two houses of the same age and the same walk that differ by one square metre.
+
+That reading, "holding the others fixed", is the first thing this card explains. The second is why the least-squares fit is the one to trust. Among every rule that makes each coefficient a fixed weighted sum of the prices and is right on average, least squares has the smallest spread. That is the Gauss–Markov theorem, named for Carl Friedrich Gauss, who proved it in the 1820s, and Andrey Markov, who restated it later.
 
 **Stack the predictors as columns, solve one linear system for all the coefficients at once, and each coefficient measures its own column with the others held fixed; if the errors average zero and share one spread without correlation, no other linear unbiased rule beats that fit.**
 
@@ -41,7 +43,14 @@ Drawn to scale from the `figure,` lines both checks print. Dots: the twelve sale
 
 ## The formula
 
-Notation first, in words. A **column** is a list of numbers written top to bottom, one per sale. The prices form the column $y$. The predictors form a table $X$ with one row per sale and one column per predictor, plus a leading column of 1s that carries the base price; it is called the **design matrix**. $X^T$ is $X$ turned on its side (its **transpose**), and $I$ is the identity matrix, 1s down the diagonal and 0s elsewhere. For a column of random numbers, $\operatorname{Cov}(\cdot)$ is the square table of all their covariances, variances down the diagonal: the **covariance matrix**. An estimate carries a hat.
+Notation first, in words.
+
+- A **column** is a list of numbers written top to bottom, one per sale. The prices form the column $y$.
+- The predictors form a table $X$ with one row per sale and one column per predictor, plus a leading column of 1s that carries the base price. It is called the **design matrix**.
+- $X^T$ is $X$ turned on its side (its **transpose**), and $I$ is the identity matrix, 1s down the diagonal and 0s elsewhere.
+- For a column of random numbers, $\operatorname{Cov}(\cdot)$ is the square table of all their covariances, variances down the diagonal: the **covariance matrix**.
+- $E[\cdot]$ is the average over repeated draws of the errors, and $\operatorname{Var}(\cdot)$ is a variance, the square of a spread.
+- An estimate carries a hat.
 
 The model says each price is a weighted sum of the predictors plus an error:
 
@@ -101,7 +110,9 @@ A rival rule that is right on average can differ from least squares only by a pi
 
 ### Step 1: the normal equations
 
-Write the miss as $e = y - X\hat\beta$. The fit makes the sum of squared misses as small as possible. At the minimum no small change of the coefficients helps, which forces the miss to be perpendicular to every column: $X^T e = 0$ ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) proves this for a line; the proof never used the number of columns). Expanding gives $X^T X \hat\beta = X^T y$, four equations in four unknowns ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). When no column copies the others, $X^T X$ has an inverse, and the solution is $\hat\beta = L y$ with $L = (X^T X)^{-1} X^T$.
+Write the miss as $e = y - X\hat\beta$. The fit makes the sum of squared misses as small as possible. At the minimum no small change of the coefficients helps, which forces the miss to be perpendicular to every column: $X^T e = 0$ ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) proves this for a line; the proof never used the number of columns).
+
+Expanding gives $X^T X \hat\beta = X^T y$, four equations in four unknowns ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). When no column copies the others, $X^T X$ has an inverse, and the solution is $\hat\beta = L y$ with $L = (X^T X)^{-1} X^T$.
 
 Two facts about $L$ carry the rest of the card. First, $L X = (X^T X)^{-1} X^T X = I$. Second, $L L^T = (X^T X)^{-1} X^T X (X^T X)^{-1} = (X^T X)^{-1}$.
 
@@ -115,7 +126,9 @@ Split the area column in two: the part age, distance and the 1s can predict, and
 - Against the miss $e$ it gives 0, since $e$ is perpendicular to every column and $r_1$ is built from columns.
 - Against the area column it gives $r_1^T r_1$, since the predictable part of area is perpendicular to $r_1$.
 
-So $r_1^T y = \hat\beta_1\, r_1^T r_1$, the helper formula. The area coefficient uses only the part of area that age and distance cannot predict. Among these twelve sales, that is what "holding age and distance fixed" means. This is the Frisch–Waugh–Lovell theorem: Frisch and Waugh proved it for time trends in 1933, Lovell in general in 1963.
+So $r_1^T y = \hat\beta_1\, r_1^T r_1$, the helper formula. The area coefficient uses only the part of area that age and distance cannot predict. Among these twelve sales, that is what "holding age and distance fixed" means.
+
+This is the Frisch–Waugh–Lovell theorem: Frisch and Waugh proved it for time trends in 1933, Lovell in general in 1963.
 
 ### Step 3: the fit is unbiased, and its spread is $\sigma^2 (X^T X)^{-1}$
 
@@ -125,7 +138,9 @@ For a fixed table of weights $M$, the covariance matrix of $M\varepsilon$ is $M 
 
 Step 2 gives the second helper: $\hat\beta_j$ weights the prices by $r_j / r_j^T r_j$, so its variance is $\sigma^2 / r_j^T r_j$. When the other columns predict area well, little of area is left over, and the area coefficient wobbles.
 
-In practice $\sigma$ is unknown. It is replaced by $s$, from the sum of squared misses divided by $n - p$, not $n$: fitting four coefficients uses up four of the twelve directions the misses could have taken. [Regression error bars](02-regression-inference.md) shows why. Over the 20,000 simulated markets below, $s^2$ averages 57.7601 ± 0.1573 against the true $\sigma^2$ = 57.76.
+In practice $\sigma$ is unknown. It is replaced by $s$, from the sum of squared misses divided by $n - p$, not $n$: fitting four coefficients uses up four of the twelve directions the misses could have taken. [Regression error bars](02-regression-inference.md) shows why.
+
+Over the 20,000 simulated markets below, $s^2$ averages 57.7601 ± 0.1573 against the true $\sigma^2$ = 57.76.
 
 ### Step 4: every unbiased rival pays extra spread (Gauss–Markov)
 
@@ -154,7 +169,9 @@ For any mix $c$ of coefficients, the rival's variance exceeds the fit's by $\sig
 
 </details>
 
-On the house data, one rival fits the first 8 sales only and ignores the last 4. It is linear and unbiased, since $A X = I$ holds to 1e-9. Per unit of $\sigma^2$, its area variance is 0.000481548 against least squares' 0.000251295: 1.9163 times larger. The gap, 0.000230253, equals the area entry of $D D^T$, as Step 4 says. Two hundred random unbiased rivals, built as $L$ plus a random table with the column-blind property, all lose: the extra variance runs from 0.000064659 to 0.000551976, never below zero.
+On the house data, one rival fits the first 8 sales only and ignores the last 4. It is linear and unbiased, since $A X = I$ holds to 1e-9. Per unit of $\sigma^2$, its area variance is 0.000481548 against least squares' 0.000251295: 1.9163 times larger. The gap, 0.000230253, equals the area entry of $D D^T$, as Step 4 says.
+
+Two hundred random unbiased rivals, built as $L$ plus a random table with the column-blind property, all lose: the extra variance runs from 0.000064659 to 0.000551976, never below zero.
 
 ### The picture: 20,000 imagined markets
 
@@ -174,13 +191,15 @@ Orange: least squares on all 12 sales. Green: the rival fit to the first 8. Both
 
 ### Step 5: what leaving a column out does
 
-Fit price on area alone and the slope is 1.768541. The two answers are linked exactly. Let the **drift** of a column be its own slope on area alone: among these sales, age drifts −0.182352 years per square metre (bigger houses are a little newer) and distance drifts 0.025320 km per square metre (bigger houses are farther out, about 25 metres per square metre). Then
+Fit price on area alone and the slope is 1.768541. The two answers are linked exactly. Let the **drift** of a column be its own slope on area alone. Among these sales, age drifts −0.182352 years per square metre (bigger houses are a little newer). Distance drifts 0.025320 km per square metre (bigger houses are farther out, about 25 metres per square metre). Then
 
 $$\text{slope on area alone} = \hat\beta_1 + \hat\beta_{\text{age}} \times \text{age drift} + \hat\beta_{\text{dist}} \times \text{distance drift}$$
 
-Proof: take the area-alone slope of both sides of $y = X\hat\beta + e$. Slope is linear in what it measures; the 1s column has slope 0, area has slope 1, and the miss has slope 0 because it is perpendicular to the 1s and to area. On the numbers, newness pushes the lone slope up and the walk pulls it down by more, landing at 1.768541. The lone slope is not wrong arithmetic. It answers a different question: how price differs between houses of different size, letting age and distance come along as they happen to in this town.
+Proof: take the area-alone slope of both sides of $y = X\hat\beta + e$. Slope is linear in what it measures. The 1s column has slope 0, area has slope 1, and the miss has slope 0 because it is perpendicular to the 1s and to area.
 
-A second road to the fit avoids forming $X^T X$: orthogonalise the columns one by one and back-substitute, the QR route of Least squares two ways. The checks take a close relative of it, Step 2's leftovers, and land on the same coefficients.
+On the numbers, newness pushes the lone slope up and the walk pulls it down by more, landing at 1.768541. The lone slope is not wrong arithmetic. It answers a different question: how price differs between houses of different size, letting age and distance come along as they happen to in this town.
+
+A second road to the fit avoids forming $X^T X$: orthogonalise the columns one by one and back-substitute. This is the QR route of [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): QR splits $X$ into perpendicular columns times a triangle of numbers. The checks take a close relative of it, Step 2's leftovers, and land on the same coefficients.
 
 ---
 
@@ -219,7 +238,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The fit comes by two roads sharing no arithmetic: the normal equations solved by elimination, and Step 2's leftovers built by Gram–Schmidt, which never forms $X^T X$; the error bars come out both ways. A third road rebuilds the area-alone slope from the full fit. Gauss–Markov is checked three ways: exact variances for the first-8 rival, 200 random unbiased rivals, and 20,000 simulated markets from a SplitMix64 generator, seed 20260928, written out in both languages; the same markets confirm that $s^2$ averages $\sigma^2$. The last block prints the what-breaks cases and the figure coordinates.
+The fit comes by two roads sharing no arithmetic: the normal equations solved by elimination, and Step 2's leftovers built by [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md), which never forms $X^T X$. Gram-Schmidt makes the other columns perpendicular one by one, then strips their shadows from the column in question. The error bars come out both ways. A third road rebuilds the area-alone slope from the full fit. Gauss–Markov is checked three ways: exact variances for the first-8 rival, 200 random unbiased rivals, and 20,000 simulated markets from a SplitMix64 generator, seed 20260928, written out in both languages; the same markets confirm that $s^2$ averages $\sigma^2$. The last block prints the what-breaks cases and the figure coordinates.
 
 ### Python
 
@@ -609,6 +628,314 @@ ALL CHECKS PASS
 
 The two outputs match line for line, the simulation included, because both draw the same SplitMix64 numbers and sum in the same order.
 
+### Lean
+
+Lean proves the card's three results for any number of sales and coefficients, when no column is a weighted sum of the others.
+
+- Suppose the errors average zero, with one common variance $\sigma^2$ and no correlation. Then the fit is unbiased, and its covariance matrix is $\sigma^2 (X^T X)^{-1}$.
+- Take those errors and any fixed rival table $A$ with $AX = I$. Then $\operatorname{Var}(c^T A y) \ge \operatorname{Var}(c^T \hat\beta)$ for every fixed mix $c$ of coefficients.
+- Take any prices $y$, and let $r_j$ be column $j$ minus a weighted sum of the others, perpendicular to each of them. Then $\hat\beta_j = r_j^T y / r_j^T r_j$.
+- The hand table's sums hold exactly: every entry of $X^T X$ and of $X^T y$.
+
+The solved coefficients, error bars, Step 5's drift identity, simulations and weighted fit are left to the Python and Rust checks.
+
+```lean
+-- Multiple regression: when the columns of the design matrix are independent and the errors average zero with one common variance and no correlation, the least-squares fit is unbiased with covariance σ²(XᵀX)⁻¹, each coefficient is a one-column slope on its column's leftover, and no linear unbiased rule has a smaller variance for any mix of coefficients (Gauss–Markov).
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.Moments.Variance
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.LinearIndependent.Defs
+import Mathlib.LinearAlgebra.Span.Defs
+import Mathlib.Tactic.NormNum
+import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+import Mathlib.LinearAlgebra.Matrix.DotProduct
+
+/-! Notation as on the card. `n` sales, `p` coefficients. `X` is the design matrix (one row per
+sale, one column per predictor, the 1s column included); its column `j` is `fun i => X i j`.
+`β` is the true coefficient column, `ε i` the error on sale `i`, a random number on the
+probability space `(Ω, μ)`, and the prices are `y = Xβ + ε`. The least-squares weights are
+`L = (XᵀX)⁻¹ Xᵀ`, and the fitted coefficients are `β̂ = L y`. A rival rule is a fixed table `A`
+of `p` by `n` weights, applied as `A y`; it is unbiased exactly when `A X = I`. -/
+
+open MeasureTheory ProbabilityTheory Matrix
+
+theorem gm_adj {n p : ℕ} (X : Matrix (Fin n) (Fin p) ℝ) (v : Fin p → ℝ) (y : Fin n → ℝ) :
+    (X *ᵥ v) ⬝ᵥ y = v ⬝ᵥ (Xᵀ *ᵥ y) := by
+  rw [mulVec_transpose, dotProduct_comm, dotProduct_mulVec, dotProduct_comm]
+
+#print axioms gm_adj
+
+theorem gm_mulVec_eq_zero_of_linIndep {n p : ℕ} (X : Matrix (Fin n) (Fin p) ℝ)
+    (hX : LinearIndependent ℝ (fun j : Fin p => fun i : Fin n => X i j))
+    (v : Fin p → ℝ) (hv : X *ᵥ v = 0) : v = 0 := by
+  rw [Fintype.linearIndependent_iff] at hX
+  funext j
+  apply hX v _ j
+  funext i
+  have := congrFun hv i
+  simpa [mulVec, dotProduct, Finset.sum_apply, mul_comm] using this
+
+#print axioms gm_mulVec_eq_zero_of_linIndep
+
+theorem gm_gram_isUnit {n p : ℕ} (X : Matrix (Fin n) (Fin p) ℝ)
+    (hX : LinearIndependent ℝ (fun j : Fin p => fun i : Fin n => X i j)) :
+    IsUnit (Xᵀ * X).det := by
+  rw [isUnit_iff_ne_zero, Ne, ← exists_mulVec_eq_zero_iff]
+  rintro ⟨v, hv0, hv⟩
+  apply hv0
+  apply gm_mulVec_eq_zero_of_linIndep X hX
+  have h1 : (X *ᵥ v) ⬝ᵥ (X *ᵥ v) = 0 := by
+    rw [gm_adj, mulVec_mulVec, hv, dotProduct_zero]
+  exact dotProduct_self_eq_zero.mp h1
+
+#print axioms gm_gram_isUnit
+
+theorem gm_left_inv {n p : ℕ} (X : Matrix (Fin n) (Fin p) ℝ)
+    (hX : LinearIndependent ℝ (fun j : Fin p => fun i : Fin n => X i j)) :
+    ((Xᵀ * X)⁻¹ * Xᵀ) * X = 1 := by
+  rw [Matrix.mul_assoc, nonsing_inv_mul _ (gm_gram_isUnit X hX)]
+
+#print axioms gm_left_inv
+
+theorem gm_LLt {n p : ℕ} (X : Matrix (Fin n) (Fin p) ℝ)
+    (hX : LinearIndependent ℝ (fun j : Fin p => fun i : Fin n => X i j)) :
+    ((Xᵀ * X)⁻¹ * Xᵀ) * ((Xᵀ * X)⁻¹ * Xᵀ)ᵀ = (Xᵀ * X)⁻¹ := by
+  have hsym : (Xᵀ * X)ᵀ = Xᵀ * X := by rw [transpose_mul, transpose_transpose]
+  rw [transpose_mul, transpose_transpose, transpose_nonsing_inv, hsym, ← Matrix.mul_assoc,
+    gm_left_inv X hX, Matrix.one_mul]
+
+#print axioms gm_LLt
+
+theorem gm_apply {n p : ℕ} (X : Matrix (Fin n) (Fin p) ℝ) (M : Matrix (Fin p) (Fin n) ℝ)
+    (hM : M * X = 1) (β : Fin p → ℝ) (e : Fin n → ℝ) (j : Fin p) :
+    (M *ᵥ (X *ᵥ β + e)) j = β j + (fun i => M j i) ⬝ᵥ e := by
+  rw [mulVec_add, mulVec_mulVec, hM, one_mulVec]
+  rfl
+
+#print axioms gm_apply
+
+theorem gm_dot_apply {n p : ℕ} (X : Matrix (Fin n) (Fin p) ℝ) (M : Matrix (Fin p) (Fin n) ℝ)
+    (hM : M * X = 1) (β : Fin p → ℝ) (e : Fin n → ℝ) (c : Fin p → ℝ) :
+    c ⬝ᵥ (M *ᵥ (X *ᵥ β + e)) = c ⬝ᵥ β + (Mᵀ *ᵥ c) ⬝ᵥ e := by
+  rw [mulVec_add, mulVec_mulVec, hM, one_mulVec, dotProduct_add, dotProduct_mulVec,
+    mulVec_transpose]
+
+#print axioms gm_dot_apply
+
+theorem gm_integrable {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    {n : ℕ} (ε : Fin n → Ω → ℝ) (hε : ∀ i, MemLp (ε i) 2 μ) (u : Fin n → ℝ) :
+    Integrable (fun ω => u ⬝ᵥ (fun i => ε i ω)) μ := by
+  simp only [dotProduct]
+  exact integrable_finsetSum (f := fun i ω => u i * ε i ω) _
+    fun i _ => ((hε i).const_mul (u i)).integrable one_le_two
+
+#print axioms gm_integrable
+
+theorem gm_cov_lin {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    {n : ℕ} (ε : Fin n → Ω → ℝ) (hε : ∀ i, MemLp (ε i) 2 μ) (σ : ℝ)
+    (hcov : ∀ i k, cov[ε i, ε k; μ] = if i = k then σ ^ 2 else 0)
+    (a b : ℝ) (w w' : Fin n → ℝ) :
+    cov[fun ω => a + w ⬝ᵥ (fun i => ε i ω), fun ω => b + w' ⬝ᵥ (fun i => ε i ω); μ]
+      = σ ^ 2 * (w ⬝ᵥ w') := by
+  have hm : ∀ (u : Fin n → ℝ) i, MemLp (fun ω => u i * ε i ω) 2 μ :=
+    fun u i => (hε i).const_mul (u i)
+  rw [covariance_const_add_left (gm_integrable μ ε hε w),
+    covariance_const_add_right (gm_integrable μ ε hε w')]
+  simp only [dotProduct]
+  rw [covariance_fun_sum_fun_sum (hm w) (hm w')]
+  simp only [covariance_const_mul_left, covariance_const_mul_right, hcov]
+  simp only [mul_ite, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true, Finset.mul_sum]
+  exact Finset.sum_congr rfl fun i _ => by ring
+
+#print axioms gm_cov_lin
+
+/-- **Gauss–Markov: least squares is best among linear unbiased rules.** Take the model
+`y = Xβ + ε` with fixed columns, no column a weighted sum of the others, errors that average
+zero and have finite variance, and one common variance `σ²` with no correlation between
+different errors (`Cov(ε) = σ² I`). Let `A` be any fixed table of weights with `A X = I`, a
+linear unbiased rule. Then for every fixed mix `c` of the coefficients,
+`Var(cᵀ A y) ≥ Var(cᵀ β̂)`, where `β̂ = (XᵀX)⁻¹ Xᵀ y` is the least-squares fit.
+Normal errors are not assumed. -/
+theorem gauss_markov_least_squares_best_linear_unbiased
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] {n p : ℕ}
+    (X : Matrix (Fin n) (Fin p) ℝ)
+    (hX : LinearIndependent ℝ (fun j : Fin p => fun i : Fin n => X i j))
+    (β : Fin p → ℝ) (ε : Fin n → Ω → ℝ) (hε : ∀ i, MemLp (ε i) 2 μ)
+    (hmean : ∀ i, ∫ ω, ε i ω ∂μ = 0) (σ : ℝ)
+    (hcov : ∀ i k, cov[ε i, ε k; μ] = if i = k then σ ^ 2 else 0)
+    (A : Matrix (Fin p) (Fin n) ℝ) (hA : A * X = 1) (c : Fin p → ℝ) :
+    Var[fun ω => c ⬝ᵥ (((Xᵀ * X)⁻¹ * Xᵀ) *ᵥ (X *ᵥ β + fun i => ε i ω)); μ]
+      ≤ Var[fun ω => c ⬝ᵥ (A *ᵥ (X *ᵥ β + fun i => ε i ω)); μ] := by
+  have hL := gm_left_inv X hX
+  simp_rw [gm_dot_apply X _ hL β, gm_dot_apply X A hA β]
+  rw [← covariance_self ((gm_integrable μ ε hε _).aemeasurable.const_add _),
+    ← covariance_self ((gm_integrable μ ε hε _).aemeasurable.const_add _),
+    gm_cov_lin μ ε hε σ hcov, gm_cov_lin μ ε hε σ hcov]
+  apply mul_le_mul_of_nonneg_left _ (sq_nonneg σ)
+  set L := (Xᵀ * X)⁻¹ * Xᵀ with hLdef
+  have key : ∀ M : Matrix (Fin p) (Fin n) ℝ, M * X = 1 → Xᵀ *ᵥ (Mᵀ *ᵥ c) = c := by
+    intro M hM
+    rw [mulVec_mulVec, ← transpose_mul, hM, transpose_one, one_mulVec]
+  have hl : Lᵀ *ᵥ c = X *ᵥ ((Xᵀ * X)⁻¹ᵀ *ᵥ c) := by
+    rw [hLdef, transpose_mul, transpose_transpose, mulVec_mulVec]
+  have h1 : (Lᵀ *ᵥ c) ⬝ᵥ (Aᵀ *ᵥ c) = ((Xᵀ * X)⁻¹ᵀ *ᵥ c) ⬝ᵥ c := by
+    rw [hl, gm_adj, key A hA]
+  have h2 : (Lᵀ *ᵥ c) ⬝ᵥ (Lᵀ *ᵥ c) = ((Xᵀ * X)⁻¹ᵀ *ᵥ c) ⬝ᵥ c := by
+    nth_rewrite 1 [hl]; rw [gm_adj, key L hL]
+  set l := Lᵀ *ᵥ c
+  set a := Aᵀ *ᵥ c
+  have hld : l ⬝ᵥ (a - l) = 0 := by
+    rw [dotProduct_sub, h1, h2, sub_self]
+  have hdd : 0 ≤ (a - l) ⬝ᵥ (a - l) := Finset.sum_nonneg fun i _ => mul_self_nonneg _
+  have : a = l + (a - l) := by abel
+  rw [this, add_dotProduct, dotProduct_add, dotProduct_add, hld, dotProduct_comm (a - l) l, hld]
+  linarith
+
+/-- **The fit is right on average, and its spread is `σ² (XᵀX)⁻¹`.** Under the same model
+(independent columns, errors averaging zero with finite variance, `Cov(ε) = σ² I`), each
+least-squares coefficient `β̂ⱼ` averages to the true `βⱼ`, and the covariance of `β̂ⱼ` and
+`β̂ₖ` is `σ²` times entry `(j, k)` of `(XᵀX)⁻¹`. -/
+theorem least_squares_unbiased_and_covariance
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] {n p : ℕ}
+    (X : Matrix (Fin n) (Fin p) ℝ)
+    (hX : LinearIndependent ℝ (fun j : Fin p => fun i : Fin n => X i j))
+    (β : Fin p → ℝ) (ε : Fin n → Ω → ℝ) (hε : ∀ i, MemLp (ε i) 2 μ)
+    (hmean : ∀ i, ∫ ω, ε i ω ∂μ = 0) (σ : ℝ)
+    (hcov : ∀ i k, cov[ε i, ε k; μ] = if i = k then σ ^ 2 else 0) :
+    (∀ j, ∫ ω, (((Xᵀ * X)⁻¹ * Xᵀ) *ᵥ (X *ᵥ β + fun i => ε i ω)) j ∂μ = β j) ∧
+      ∀ j k, cov[fun ω => (((Xᵀ * X)⁻¹ * Xᵀ) *ᵥ (X *ᵥ β + fun i => ε i ω)) j,
+                 fun ω => (((Xᵀ * X)⁻¹ * Xᵀ) *ᵥ (X *ᵥ β + fun i => ε i ω)) k; μ]
+        = σ ^ 2 * (Xᵀ * X)⁻¹ j k := by
+  have hL := gm_left_inv X hX
+  simp_rw [gm_apply X _ hL β]
+  refine ⟨fun j => ?_, fun j k => ?_⟩
+  · rw [integral_add (integrable_const _) (gm_integrable μ ε hε _), integral_const]
+    simp only [dotProduct]
+    rw [integral_finsetSum _ fun i _ => ((hε i).const_mul _).integrable one_le_two]
+    simp [integral_const_mul, hmean]
+  · rw [gm_cov_lin μ ε hε σ hcov]
+    have h := congrFun (congrFun (gm_LLt X hX) j) k
+    rw [Matrix.mul_apply] at h
+    rw [← h]
+    rfl
+
+/-- **"Holding the others fixed" (Frisch–Waugh–Lovell).** Let the columns of `X` be independent,
+and let `r` be column `j` after removing all it shares with the other columns: `r` is
+perpendicular to every other column, and column `j` minus `r` is a weighted sum of the other
+columns. Then for any prices `y`, the least-squares coefficient on column `j` is the one-column
+slope of `y` on that leftover: `β̂ⱼ = rᵀy / rᵀr`. -/
+theorem least_squares_coefficient_eq_slope_on_leftover {n p : ℕ}
+    (X : Matrix (Fin n) (Fin p) ℝ)
+    (hX : LinearIndependent ℝ (fun j : Fin p => fun i : Fin n => X i j))
+    (y : Fin n → ℝ) (j : Fin p) (r : Fin n → ℝ)
+    (hperp : ∀ k, k ≠ j → r ⬝ᵥ (fun i => X i k) = 0)
+    (hrest : (fun i => X i j) - r ∈
+      Submodule.span ℝ ((fun k : Fin p => fun i : Fin n => X i k) '' {k | k ≠ j})) :
+    (((Xᵀ * X)⁻¹ * Xᵀ) *ᵥ y) j = (r ⬝ᵥ y) / (r ⬝ᵥ r) := by
+  have hG := gm_gram_isUnit X hX
+  -- every vector in the span of the other columns is perpendicular to r
+  have hspan : ∀ z ∈ Submodule.span ℝ ((fun k : Fin p => fun i : Fin n => X i k) '' {k | k ≠ j}),
+      z ⬝ᵥ r = 0 := by
+    intro z hz
+    induction hz using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨k, hk, rfl⟩ := hx
+      rw [dotProduct_comm]; exact hperp k hk
+    | zero => exact zero_dotProduct _
+    | add x y _ _ hx hy => rw [add_dotProduct, hx, hy, add_zero]
+    | smul a x _ hx => rw [smul_dotProduct, hx, smul_zero]
+  have hjr : (fun i => X i j) ⬝ᵥ r = r ⬝ᵥ r := by
+    have := hspan _ hrest
+    rw [sub_dotProduct] at this
+    linarith
+  have hr0 : r ≠ 0 := by
+    rintro rfl
+    exact hX.notMem_span_image (s := {k | k ≠ j}) (x := j) (by simp) (by simpa using hrest)
+  have hrr : r ⬝ᵥ r ≠ 0 := fun h => hr0 (dotProduct_self_eq_zero.mp h)
+  -- r lies in the column space: r = X v
+  have hmem : (fun i => X i j) - r ∈
+      Submodule.span ℝ (Set.range (fun k : Fin p => fun i : Fin n => X i k)) :=
+    Submodule.span_mono (Set.image_subset_range _ _) hrest
+  obtain ⟨w, hw⟩ := (Submodule.mem_span_range_iff_exists_fun ℝ).mp hmem
+  have hXw : X *ᵥ w = (fun i => X i j) - r := by
+    rw [← hw]; funext i
+    simp [mulVec, dotProduct, Finset.sum_apply, mul_comm]
+  set v : Fin p → ℝ := Pi.single j 1 - w
+  have hv : X *ᵥ v = r := by
+    simp only [v, mulVec_sub, mulVec_single_one, hXw]
+    funext i; simp
+  have hXtr : Xᵀ *ᵥ r = Pi.single j (r ⬝ᵥ r) := by
+    funext k
+    by_cases hk : k = j
+    · subst hk
+      rw [Pi.single_eq_same, ← hjr]
+      simp [mulVec, dotProduct]
+    · rw [Pi.single_eq_of_ne hk, ← hperp k hk]
+      simp [mulVec, dotProduct, mul_comm]
+  set b := ((Xᵀ * X)⁻¹ * Xᵀ) *ᵥ y with hb
+  have hGb : (Xᵀ * X) *ᵥ b = Xᵀ *ᵥ y := by
+    rw [hb, mulVec_mulVec, ← Matrix.mul_assoc, mul_nonsing_inv _ hG, Matrix.one_mul]
+  have hry : r ⬝ᵥ y = b j * (r ⬝ᵥ r) := by
+    rw [← hv, gm_adj, ← hGb, ← mulVec_mulVec, ← gm_adj, hv, dotProduct_comm, gm_adj, hXtr,
+      dotProduct_single]
+  rw [hry, mul_div_assoc, div_self hrr, mul_one]
+
+/-! The card's worked numbers: the entries of `XᵀX` and `Xᵀy` for the twelve sales. Areas in
+square metres, ages in years, prices in thousands of dollars. Distances are written in tenths of
+a kilometre (0.5 km is 5), so a sum with one distance factor is 10 times the card's number and
+the sum of squared distances is 100 times it. -/
+
+-- First row of XᵀX: 12 sales; areas add to 1301, ages to 226, distances to 21.50 km.
+example : 62 + 75 + 80 + 88 + 95 + 104 + 110 + 118 + 125 + 136 + 148 + 160 = 1301 := by norm_num
+example : 35 + 12 + 28 + 5 + 40 + 18 + 8 + 30 + 15 + 22 + 10 + 3 = 226 := by norm_num
+example : 5 + 18 + 6 + 14 + 9 + 26 + 10 + 15 + 30 + 22 + 24 + 36 = 215 := by norm_num
+-- Area row: area against area 151103, against age 22669, against distance 2585.50.
+example : 62 * 62 + 75 * 75 + 80 * 80 + 88 * 88 + 95 * 95 + 104 * 104 + 110 * 110 + 118 * 118
+    + 125 * 125 + 136 * 136 + 148 * 148 + 160 * 160 = 151103 := by norm_num
+example : 62 * 35 + 75 * 12 + 80 * 28 + 88 * 5 + 95 * 40 + 104 * 18 + 110 * 8 + 118 * 30
+    + 125 * 15 + 136 * 22 + 148 * 10 + 160 * 3 = 22669 := by norm_num
+example : 62 * 5 + 75 * 18 + 80 * 6 + 88 * 14 + 95 * 9 + 104 * 26 + 110 * 10 + 118 * 15
+    + 125 * 30 + 136 * 22 + 148 * 24 + 160 * 36 = 25855 := by norm_num
+-- Age row: age against age 5884, against distance 326.90.
+example : 35 * 35 + 12 * 12 + 28 * 28 + 5 * 5 + 40 * 40 + 18 * 18 + 8 * 8 + 30 * 30
+    + 15 * 15 + 22 * 22 + 10 * 10 + 3 * 3 = 5884 := by norm_num
+example : 35 * 5 + 12 * 18 + 28 * 6 + 5 * 14 + 40 * 9 + 18 * 26 + 8 * 10 + 30 * 15
+    + 15 * 30 + 22 * 22 + 10 * 24 + 3 * 36 = 3269 := by norm_num
+-- Distance row: distance against distance 49.19.
+example : 5 * 5 + 18 * 18 + 6 * 6 + 14 * 14 + 9 * 9 + 26 * 26 + 10 * 10 + 15 * 15
+    + 30 * 30 + 22 * 22 + 24 * 24 + 36 * 36 = 4919 := by norm_num
+-- Xᵀy: prices add to 2532; area against price 292290, age 43288, distance 4902.
+example : 124 + 140 + 172 + 200 + 180 + 171 + 260 + 210 + 226 + 250 + 301 + 298 = 2532 := by
+  norm_num
+example : 62 * 124 + 75 * 140 + 80 * 172 + 88 * 200 + 95 * 180 + 104 * 171 + 110 * 260
+    + 118 * 210 + 125 * 226 + 136 * 250 + 148 * 301 + 160 * 298 = 292290 := by norm_num
+example : 35 * 124 + 12 * 140 + 28 * 172 + 5 * 200 + 40 * 180 + 18 * 171 + 8 * 260
+    + 30 * 210 + 15 * 226 + 22 * 250 + 10 * 301 + 3 * 298 = 43288 := by norm_num
+example : 5 * 124 + 18 * 140 + 6 * 172 + 14 * 200 + 9 * 180 + 26 * 171 + 10 * 260
+    + 15 * 210 + 30 * 226 + 22 * 250 + 24 * 301 + 36 * 298 = 49020 := by norm_num
+
+#print axioms gauss_markov_least_squares_best_linear_unbiased
+#print axioms least_squares_unbiased_and_covariance
+#print axioms least_squares_coefficient_eq_slope_on_leftover
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gm_adj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_mulVec_eq_zero_of_linIndep' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_gram_isUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_left_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_LLt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_dot_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gm_cov_lin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gauss_markov_least_squares_best_linear_unbiased' depends on axioms: [propext, Classical.choice, Quot.sound]
+'least_squares_unbiased_and_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'least_squares_coefficient_eq_slope_on_leftover' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -622,7 +949,7 @@ The two outputs match line for line, the simulation included, because both draw 
 ## The usual mistake
 
 > [!warning]
-> **Reading a coefficient as what happens when one thing changes in the world.** The area coefficient compares houses in this data that match on age and distance. It is not the price of building an extension: a bigger house may also have a bigger garden, a quieter street or anything else left out of the table, and each of those rides along with area exactly as distance did on the area-alone line. Correlation, adjusted or not, is not cause.
+> **Reading a coefficient as what happens when one thing changes in the world.** The area coefficient compares houses in this data that match on age and distance. It is not the price of building an extension. A bigger house may also have a bigger garden, a quieter street or anything else left out of the table, and each of those rides along with area exactly as distance did on the area-alone line. Correlation, adjusted or not, is not cause.
 >
 > - **Taking the lone slope for the adjusted one.** Area alone gives 1.768541; with age and distance held it is 2.288019. Neither is wrong; they answer different questions.
 > - **"Best" read as best of all.** Gauss–Markov ranks only linear rules that are unbiased for every truth. A rule that accepts a small bias can have a smaller average squared miss: [Bias and variance](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md) shows the trade, [Regularisation](06-ridge-and-lasso.md) applies it here.

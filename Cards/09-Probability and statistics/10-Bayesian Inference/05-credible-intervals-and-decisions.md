@@ -8,17 +8,19 @@
 
 A new coin comes out of a souvenir shop's bag. Flipped ten times, it lands heads 7 times. Two friends want to use it to settle a running bet: $10 a flip, even money, and one of them may pick the side. Should the coin be used, and on which side?
 
-Nobody knows the coin's true chance of heads. What is known is a curve over every candidate chance from 0 to 1, saying how believable each one is after the ten flips. [Beta-binomial](02-beta-binomial.md) gives the rule that builds that curve: add the heads to a beta law's first number and the tails to its second. Start from a flat prior (every chance equally believable, Beta(1, 1)), add 7 heads and 3 tails, and the posterior (the belief after the data) is Beta(8, 4). That card's gentler Beta(2, 2) prior gives Beta(9, 5) instead; the flat prior is used here, and the difference is measured below. This card does two things with the posterior.
+Nobody knows the coin's true chance of heads. What is known is a curve over every candidate chance from 0 to 1, saying how believable each one is after the ten flips. [Beta-binomial](02-beta-binomial.md) gives the rule that builds that curve: add the heads to a beta law's first number and the tails to its second.
+
+Start from a flat prior (the belief before the data, here every chance equally believable, Beta(1, 1)), add 7 heads and 3 tails, and the posterior (the belief after the data) is Beta(8, 4). That card's gentler Beta(2, 2) prior gives Beta(9, 5) instead; the flat prior is used here, and the difference is measured below. This card does two things with the posterior.
 
 **It says something.** Picture the posterior as a pile of sand spread along the line from 0 to 1, deepest near 0.7. A stretch of the line holding 95% of the sand is a **credible interval**, the term used from here on, and its sand is posterior probability. For this coin, the chance of heads lies between 0.39 and 0.89 with posterior probability 0.95. That sentence is about this coin, after these ten flips.
 
 **It does something.** Each action, bet heads, bet tails or decline, gains or loses money depending on the true chance. Weigh the money by the posterior at every chance, add up, and compare. Betting heads averages a profit of $3.33 a flip; betting tails averages a loss of $3.33; declining is $0. Bet heads.
 
-A confidence interval ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) looks similar, 0.35 to 0.93 for the same flips by the exact recipe of [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md), but promises something else: a recipe that catches the true chance 95 times in 100 at every possible coin. The card computes both promises and shows where they part.
+A confidence interval ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) looks similar: 0.35 to 0.93 for the same flips, by the exact recipe of [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md). But it promises something else: a recipe that catches the true chance 95 times in 100 at every possible coin. The card computes both promises and shows where they part.
 
 **Once the data are in, the posterior is the whole answer: a credible interval is a stretch holding a stated share of it, and the best action is the one whose loss, averaged over it, is smallest.**
 
-**What kind of fact this is:** a method. The credible interval is a definition and the rule "smallest average loss" is a convention for what "best" means; the facts underneath it (the interval's exact share, the mean as the best single number under squared loss, the 95% average coverage) are theorems proved on this card in Why it works.
+**What kind of fact this is:** a method. The credible interval is a definition and the rule "smallest average loss" is a convention for what "best" means. The facts underneath it (the interval's exact share, the mean as the best single number under squared loss, the 95% average coverage) are theorems proved on this card in Why it works.
 
 ### The picture: the posterior for the coin's chance of heads
 
@@ -63,7 +65,7 @@ $$\rho(d) \;=\; E[\,L(d,\theta) \mid x\,] \;=\; \int_0^1 L(d,\theta)\, f(\theta 
 | $x$ | the data | 7 heads in 10 flips | more heads: the posterior slides right |
 | $a$, $b$ | the posterior Beta(a, b): 1 + heads, 1 + tails under a flat prior | 8 and 4 | a + b larger: a narrower posterior |
 | $m$ | posterior mean, a/(a + b) | 0.6667 | betting heads pays more |
-| $v$ | posterior variance, the spread squared | 0.017094 (sd 0.1307) | wider intervals |
+| $v$ | posterior variance, the spread squared | 0.017094 (standard deviation, sd, 0.1307) | wider intervals |
 | $f(\theta \mid x)$ | posterior density: believability per unit of chance | peaks at 0.7, height 2.94 | — |
 | $F$ | posterior cumulative area up to a point | F(0.5) = 0.1133 | — |
 | $\alpha$ | the share left outside the interval | 0.05 | a shorter interval |
@@ -101,7 +103,7 @@ At the mark 1/2 every term has the same factor (1/2)^11 = 1/2048, and the counts
 
 $$F(\tfrac12) = \frac{165 + 55 + 11 + 1}{2048} = \frac{232}{2048} = \frac{29}{256} = 0.1133$$
 
-The posterior puts 0.1133 on "tails is the better side" and 0.8867 on "heads is". Integrating the density from 0 to 1/2 by Simpson's rule gives the same 0.113281.
+The posterior puts 0.1133 on "tails is the better side" and 0.8867 on "heads is". Integrating the density from 0 to 1/2 by Simpson's rule (adding up thin slices of area, each topped by a parabola) gives the same 0.113281.
 
 ### Step 2: the credible interval is two cut points
 
@@ -130,7 +132,7 @@ Because the loss is a straight line, only the posterior mean decides the bet. Th
 
 A worse offer shows the rule weighing odds. Suppose heads wins only $8 while tails still loses $10. Profit per flip at chance theta is 8θ − 10(1 − θ) = 18θ − 10, averaging 18 × 0.6667 − 10 = $2.00. The bet loses money whenever theta is below 10/18, which has posterior probability 0.2015, yet it is still worth taking. The payout at which betting heads breaks even is $5.00 against a $10 loss.
 
-One more average prices the uncertainty. Where tails is favoured, betting heads loses money; averaged over the posterior, that shortfall is $0.1595 a flip, small because only 0.1133 of the posterior lies below 1/2 and it sits close to 1/2. Knowing theta exactly would let the bettor switch to tails there and gain twice that, $0.32 a flip: the most perfect information could add.
+One more average prices the uncertainty. Where tails is favoured, betting heads loses money. Averaged over the posterior, that shortfall is $0.1595 a flip, small because only 0.1133 of the posterior lies below 1/2 and it sits close to 1/2. Knowing theta exactly would let the bettor switch to tails there and gain twice that, $0.32 a flip: the most perfect information could add.
 
 The rule itself, "take the smallest posterior expected loss", is the definition of best under the posterior. The axioms that single it out as the only coherent rule are in Berger and Robert, listed under Sources.
 
@@ -142,7 +144,7 @@ $$\rho(d) = E[(d-\theta)^2 \mid x] = v + (d - m)^2$$
 
 Expand (d − θ)^2 as ((d − m) − (θ − m))^2. The cross term averages to zero, because theta averages to m under the posterior. What remains is the variance $v$ plus the squared distance from the mean. The smallest value is at d = m. So under squared loss the best single number is the **posterior mean**, 0.6667, with expected loss 0.017094, which is v = 2/117.
 
-Other losses pick other numbers. Under absolute miss |d − θ| the best report is the **posterior median**, 0.6762. Under a loss of 0 inside a tiny window around the truth and 1 outside it, the best report tends to the **posterior mode**, the peak, 0.7000, as the window shrinks. Judged by squared loss, the median scores 0.017185 and the mode 0.018205. The mode is also the maximum-likelihood estimate here, since the prior is flat.
+Other losses pick other numbers. Under absolute miss |d − θ| the best report is the **posterior median**, 0.6762. Under a loss of 0 inside a tiny window around the truth and 1 outside it, the best report tends to the **posterior mode**, the peak, 0.7000, as the window shrinks. Judged by squared loss, the median scores 0.017185 and the mode 0.018205. The mode is also the maximum-likelihood estimate here, since the prior is flat: the chance that makes 7 heads in 10 most likely ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 
 <details>
 <summary>Detailed proof: absolute loss picks the median</summary>
@@ -163,14 +165,14 @@ A credible interval is judged at the data actually seen. Its 95% is area under t
 | 0.02 | 0.8171 | 0.9838 |
 | 0.002 | 0.0000 | 0.9802 |
 
-At 0.002 the credible recipe never covers. A coin with that chance almost always shows 0 heads in 10, and the equal-tailed interval for 0 heads must leave 2.5% of its posterior in the left tail, which cuts off every chance that small.
+At 0.002 the credible recipe never covers. A coin with that chance almost always shows 0 heads in 10. The equal-tailed interval for 0 heads must leave 2.5% of its posterior in the left tail, which cuts off every chance that small.
 
 What the credible recipe does promise is an average. Average its coverage over coins drawn from the flat prior and it is exactly 95%; the code's grid of 20,000 coins returns 0.9500.
 
 <details>
 <summary>Detailed proof: average coverage equals the credible level</summary>
 
-Draw a chance from the prior, flip ten times, get count x, build the credible interval for x. The chance the interval holds the drawn chance can be computed in two orders. Chance first: that is the coverage at each chance, averaged over the prior. Count first: each count x has some overall chance, 1/11 under the flat prior; given x, the drawn chance follows exactly the posterior for x, which puts 95% of its area in the interval for x. So the answer is 0.95 times the sum of the counts' chances, which is 0.95. The two orders count the same event, so the prior-average coverage is 0.95. No fixed coin is promised anything.
+Draw a chance from the prior, flip ten times, get count x, build the credible interval for x. The chance the interval holds the drawn chance can be computed in two orders. Chance first: that is the coverage at each chance, averaged over the prior. Count first: each count x has some overall chance, 1/11 under the flat prior. Given x, the drawn chance follows exactly the posterior for x, which puts 95% of its area in the interval for x. So the answer is 0.95 times the sum of the counts' chances, which is 0.95. The two orders count the same event, so the prior-average coverage is 0.95. No fixed coin is promised anything.
 
 </details>
 
@@ -191,7 +193,7 @@ xychart-beta
 
 Orange: the equal-tailed credible recipe, dipping to 0.91 near the ends and averaging 0.95 over the prior. Teal: the exact confidence recipe, never below 0.95, paid for with wider intervals. Dark: the 0.95 line. The saw-teeth come from whole-number counts: as the chance slides out of one count's interval, coverage drops by that count's chance.
 
-The simulation in the code is a third road to the posterior that uses no beta formula: draw a chance from the flat prior, flip ten times, keep the chance only if 7 heads appear. The kept chances are draws from the posterior. When a posterior has no closed form, this idea, grown into a walk that proposes near where the posterior already is, is how its areas get computed: [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md).
+The simulation in the code is a third road to the posterior that uses no beta formula: draw a chance from the flat prior, flip ten times, keep the chance only if 7 heads appear. The kept chances are draws from the posterior. When a posterior has no closed form, this idea, grown into a walk that proposes near where the posterior already is, is how its areas get computed: [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md). MCMC stands for Markov chain Monte Carlo.
 
 ---
 
@@ -629,7 +631,162 @@ figure, coverage exact 0.05..0.95: 0.99, 0.99, 0.99, 0.99, 0.98, 0.99, 0.98, 0.9
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line. The simulation keeps 20,116 of 220,000 runs, a share of 0.0914 against the exact 1/11 = 0.0909; its mean 0.6667 and its P(chance > 1/2) of 0.8830 sit within two standard errors of the exact 0.6667 and 0.8867.
+The two outputs match line for line. The simulation keeps 20,116 of 220,000 runs, a share of 0.0914 against the exact 1/11 = 0.0909. Its mean 0.6667 and its P(chance > 1/2) of 0.8830 sit within two standard errors of the exact 0.6667 and 0.8867.
+
+### Lean
+
+Lean proves the card's three theorems: average coverage for any number of flips, the mean under squared loss, and Step 1's binomial tail.
+
+- Suppose the prior is flat and every count's interval, inside 0 to 1, holds share $1-\alpha$ of its posterior. Then the recipe's coverage at a fixed coin, averaged over the prior, is exactly $1-\alpha$.
+- Take any posterior with a finite variance, and any report $d$. Then its expected squared miss is $v + (d - m)^2$, so the posterior mean is the best report.
+- Take any mark $t$. Then the Beta(8, 4) area from 0 to $t$ equals Step 1's binomial tail $F(t)$.
+- The hand counts check: 1320, the counts 165, 55, 11 and 1, F(1/2) = 29/256, the mean 2/3 and the variance 2/117.
+- The bet numbers check: 10/3 dollars a flip for heads, 2 at the worse offer, a break-even payout of 5, and 4 for the plug-in mistake.
+
+The Python and Rust checks cover the rest: the interval's ends, the shortest interval, the simulation, the coverage at fixed coins and the median.
+
+```lean
+-- Credible intervals and decisions: under a flat prior a credible recipe's coverage averages to its level, the posterior mean minimizes expected squared loss, and the Beta(8, 4) area up to any point is a binomial tail.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Data.Nat.Choose.Basic
+
+open MeasureTheory ProbabilityTheory Finset
+
+/-- Average coverage equals the credible level. With `n` flips and a flat prior,
+the posterior for `x` heads has density `(n + 1) * C(n, x) * θ^x * (1 - θ)^(n - x)` on `[0, 1]`.
+If, for every count `x`, the interval `[lo x, hi x]` inside `[0, 1]` holds share `1 - α`
+of that posterior, then the recipe's coverage at a fixed chance `θ`
+(the chance of a count whose interval contains `θ`), averaged over the flat prior,
+is exactly `1 - α`. -/
+theorem credible_coverage_averages_to_level (n : ℕ) (α : ℝ) (lo hi : ℕ → ℝ)
+    (h_lo : ∀ x, 0 ≤ lo x) (h_le : ∀ x, lo x ≤ hi x) (h_hi : ∀ x, hi x ≤ 1)
+    (h_mass : ∀ x ∈ range (n + 1),
+      ∫ θ in lo x..hi x, ((n : ℝ) + 1) * (n.choose x : ℝ) * θ ^ x * (1 - θ) ^ (n - x) = 1 - α) :
+    ∫ θ in (0 : ℝ)..1,
+      ∑ x ∈ range (n + 1),
+        Set.indicator (Set.Icc (lo x) (hi x))
+          (fun t => (n.choose x : ℝ) * t ^ x * (1 - t) ^ (n - x)) θ = 1 - α := by
+  have hc : ∀ x, Continuous (fun t : ℝ => (n.choose x : ℝ) * t ^ x * (1 - t) ^ (n - x)) := by
+    intro x; fun_prop
+  rw [intervalIntegral.integral_finsetSum (fun x _ => by
+    rw [intervalIntegrable_iff_integrableOn_Icc_of_le zero_le_one]
+    exact ((hc x).integrableOn_Icc).indicator measurableSet_Icc)]
+  have step : ∀ x ∈ range (n + 1),
+      ∫ θ in (0:ℝ)..1, Set.indicator (Set.Icc (lo x) (hi x))
+          (fun t => (n.choose x : ℝ) * t ^ x * (1 - t) ^ (n - x)) θ = (1 - α) / ((n:ℝ) + 1) := by
+    intro x hx
+    rw [intervalIntegral.integral_of_le zero_le_one, setIntegral_indicator measurableSet_Icc]
+    have hae : (Set.Ioc (0:ℝ) 1 ∩ Set.Icc (lo x) (hi x) : Set ℝ) =ᵐ[volume] Set.Icc (lo x) (hi x) := by
+      have h1 : (Set.Ioc (0:ℝ) 1 ∩ Set.Icc (lo x) (hi x) : Set ℝ) =ᵐ[volume]
+          (Set.Icc (0:ℝ) 1 ∩ Set.Icc (lo x) (hi x) : Set ℝ) :=
+        Ioc_ae_eq_Icc.inter (Filter.EventuallyEq.refl _ _)
+      have h2 : (Set.Icc (0:ℝ) 1 ∩ Set.Icc (lo x) (hi x) : Set ℝ) = Set.Icc (lo x) (hi x) :=
+        Set.inter_eq_right.mpr (Set.Icc_subset_Icc (h_lo x) (h_hi x))
+      rw [h2] at h1; exact h1
+    rw [setIntegral_congr_set hae, integral_Icc_eq_integral_Ioc,
+      ← intervalIntegral.integral_of_le (h_le x)]
+    have hm := h_mass x hx
+    have e : (fun θ : ℝ => ((n : ℝ) + 1) * (n.choose x : ℝ) * θ ^ x * (1 - θ) ^ (n - x)) =
+        fun θ => ((n : ℝ) + 1) * ((n.choose x : ℝ) * θ ^ x * (1 - θ) ^ (n - x)) := by
+      funext θ; ring
+    rw [e, intervalIntegral.integral_const_mul] at hm
+    have hpos : ((n:ℝ) + 1) ≠ 0 := by positivity
+    field_simp
+    linarith
+  rw [Finset.sum_congr rfl step, Finset.sum_const, card_range, nsmul_eq_mul]
+  push_cast
+  have hpos : ((n:ℝ) + 1) ≠ 0 := by positivity
+  field_simp
+
+/-- Reporting one number under squared loss: for any posterior law `μ` on the line with a
+finite second moment, the expected squared miss of a report `d` is the posterior variance
+plus the squared distance from `d` to the posterior mean, so the posterior mean gives the
+smallest expected squared loss. -/
+theorem posterior_mean_minimizes_squared_loss (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (h2 : MemLp id 2 μ) :
+    (∀ d : ℝ, ∫ θ, (d - θ) ^ 2 ∂μ = variance id μ + (d - ∫ θ, θ ∂μ) ^ 2) ∧
+    (∀ d : ℝ, ∫ θ, ((∫ s, s ∂μ) - θ) ^ 2 ∂μ ≤ ∫ θ, (d - θ) ^ 2 ∂μ) := by
+  have hi1 : Integrable (fun θ : ℝ => θ) μ := h2.integrable one_le_two
+  have hi2 : Integrable (fun θ : ℝ => θ ^ 2) μ := h2.integrable_sq
+  have key : ∀ d : ℝ, ∫ θ, (d - θ) ^ 2 ∂μ = variance id μ + (d - ∫ θ, θ ∂μ) ^ 2 := by
+    intro d
+    rw [variance_eq_sub h2]
+    have e : (fun θ : ℝ => (d - θ) ^ 2) = fun θ => (d ^ 2 - 2 * d * θ) + θ ^ 2 := by
+      funext θ; ring
+    have ha : Integrable (fun θ : ℝ => d ^ 2 - 2 * d * θ) μ :=
+      (integrable_const _).sub (hi1.const_mul _)
+    rw [e, integral_add ha hi2,
+      integral_sub (integrable_const _) (hi1.const_mul _), integral_const_mul, integral_const]
+    simp only [Pi.pow_apply, id]
+    simp
+    ring
+  refine ⟨key, fun d => ?_⟩
+  rw [key, key d]
+  simp
+  positivity
+
+/-- The area up to any point, by counting: the Beta(8, 4) posterior (7 heads in 10 flips,
+flat prior) has density `1320 θ^7 (1 - θ)^3`, and its area from 0 to any mark `t` equals the
+chance that at least 8 of 11 uniform points fall at or below `t`. -/
+theorem beta_8_4_area_eq_binomial_tail (t : ℝ) :
+    ∫ θ in (0 : ℝ)..t, (1320 : ℝ) * θ ^ 7 * (1 - θ) ^ 3 =
+      ∑ j ∈ Icc 8 11, ((Nat.choose 11 j : ℕ) : ℝ) * t ^ j * (1 - t) ^ (11 - j) := by
+  have hF : ∀ x ∈ Set.uIcc (0:ℝ) t, HasDerivAt
+      (fun θ : ℝ => 165 * θ ^ 8 - 440 * θ ^ 9 + 396 * θ ^ 10 - 120 * θ ^ 11)
+      ((1320 : ℝ) * x ^ 7 * (1 - x) ^ 3) x := by
+    intro x _
+    have := (((((hasDerivAt_pow 8 x).const_mul (165:ℝ)).sub
+      ((hasDerivAt_pow 9 x).const_mul (440:ℝ))).add
+      ((hasDerivAt_pow 10 x).const_mul (396:ℝ))).sub
+      ((hasDerivAt_pow 11 x).const_mul (120:ℝ)))
+    convert this using 1
+    push_cast
+    ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hF (by
+    apply Continuous.intervalIntegrable; fun_prop)]
+  have : Icc 8 11 = ({8, 9, 10, 11} : Finset ℕ) := by decide
+  rw [this]
+  simp [Finset.sum_insert, Nat.choose]
+  ring
+
+-- The density's constant: 1/B(8, 4) = 11 * C(10, 7) = 1320.
+example : 11 * Nat.choose 10 7 = 1320 := by decide
+
+-- The counts in Step 1: C(11, 8), C(11, 9), C(11, 10), C(11, 11).
+example : Nat.choose 11 8 = 165 ∧ Nat.choose 11 9 = 55 ∧ Nat.choose 11 10 = 11 ∧
+    Nat.choose 11 11 = 1 := by decide
+
+-- F(1/2) = (165 + 55 + 11 + 1) / 2048 = 232 / 2048 = 29/256.
+example : 165 + 55 + 11 + 1 = 232 ∧ 2 ^ 11 = 2048 := by decide
+example : ((165 + 55 + 11 + 1 : ℚ) / 2048) = 29 / 256 := by norm_num
+
+-- Posterior mean 8/(8 + 4) = 2/3 and variance 8 * 4 / (12^2 * 13) = 2/117.
+example : ((8 : ℚ) / (8 + 4)) = 2 / 3 := by norm_num
+example : ((8 * 4 : ℚ) / ((8 + 4) ^ 2 * (8 + 4 + 1))) = 2 / 117 := by norm_num
+
+-- Bet heads: 10 (2m - 1) = 10/3 dollars a flip; heads wins $8, tails loses $10: 18m - 10 = 2;
+-- the payout that breaks even is 10 (1 - m) / m = 5.
+example : (10 : ℚ) * (2 * (2 / 3) - 1) = 10 / 3 := by norm_num
+example : (18 : ℚ) * (2 / 3) - 10 = 2 := by norm_num
+example : (10 : ℚ) * (1 - 2 / 3) / (2 / 3) = 5 := by norm_num
+
+-- Plugging in the observed share 7/10 instead: 10 (2 * 7/10 - 1) = 4 dollars a flip.
+example : (10 : ℚ) * (2 * (7 / 10) - 1) = 4 := by norm_num
+
+#print axioms credible_coverage_averages_to_level
+#print axioms posterior_mean_minimizes_squared_loss
+#print axioms beta_8_4_area_eq_binomial_tail
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'credible_coverage_averages_to_level' depends on axioms: [propext, Classical.choice, Quot.sound]
+'posterior_mean_minimizes_squared_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'beta_8_4_area_eq_binomial_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -644,7 +801,7 @@ The two outputs match line for line. The simulation keeps 20,116 of 220,000 runs
 ## The usual mistake
 
 > [!warning]
-> **Reading a confidence interval as a credible one.** "There is a 95% chance the true value lies in 0.3475 to 0.9333" is a statement about the posterior, and under a flat prior that stretch holds 0.9838 of it, not 0.95. The confidence interval's 95% belongs to the recipe run on many data sets at a fixed coin. The reverse slip is as common: a 95% credible interval is not a promise to catch any particular coin 95 times in 100; at a coin with chance 0.02 the credible recipe catches it 0.8171 of the time.
+> **Reading a confidence interval as a credible one.** "There is a 95% chance the true value lies in 0.3475 to 0.9333" is a statement about the posterior. Under a flat prior that stretch holds 0.9838 of it, not 0.95. The confidence interval's 95% belongs to the recipe run on many data sets at a fixed coin. The reverse slip is as common: a 95% credible interval is not a promise to catch any particular coin 95 times in 100. At a coin with chance 0.02 the credible recipe catches it 0.8171 of the time.
 >
 > - **Deciding by the interval.** "0.5 is inside the interval, so the coin might be fair, so do not bet" throws away $3.33 a flip. A decision needs a loss; the interval has none.
 > - **Plugging in the best guess.** Profit computed at the observed share 0.7 is $4.00 a flip, 20% too high. Averaging over the posterior gives $3.33, and for a curved loss the gap can be larger.
@@ -674,13 +831,13 @@ The two outputs match line for line. The simulation keeps 20,116 of 220,000 runs
 
 - [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md): posteriors with no closed form, whose intervals and expected losses must be computed from draws, as the simulation road here did.
 
-Every area on this card came from a posterior with a formula; when the model has many unknowns and no formula, the question left open is how to draw from the posterior at all, which is what MCMC answers.
+Every area on this card came from a posterior with a formula. When the model has many unknowns and no formula, the question left open is how to draw from the posterior at all, which is what MCMC answers.
 
 ---
 
 ## Sources
 
-Verified 2026-09-29: every link below opens a page naming the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. *Bayesian Data Analysis*, 3rd ed. CRC Press, 2013. [Publisher page](https://www.routledge.com/Bayesian-Data-Analysis/Gelman-Carlin-Stern-Dunson-Vehtari-Rubin/p/book/9781439840955); [authors' page with free PDF](https://sites.stat.columbia.edu/gelman/book/). Chapter 2: the binomial posterior, equal-tailed and highest-density intervals.
 - Robert, Christian P. *The Bayesian Choice*, 2nd ed. Springer, 2007. [doi:10.1007/0-387-71599-1](https://doi.org/10.1007/0-387-71599-1). Chapter 2: losses, posterior expected loss, and the mean, median and mode as Bayes estimates.

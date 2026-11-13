@@ -6,11 +6,17 @@
 
 ## General Overview
 
-A risk desk simulates a share priced at $100 one year ahead. The model it uses says the price in a year is 100 times e raised to 0.01 plus 0.2 times a standard normal draw: a number from the bell curve with centre 0 and spread 1 ([Lognormal](../04-Continuous%20Distributions/06-lognormal-distribution.md)). The 0.2 is the share's yearly volatility, 20%. The 0.01 is the pricing drift: a 5% interest rate, minus 2% dividends, minus half of 0.2 squared. A draw of 0.479519 puts the share at $111.17; a negative draw puts it lower. A run of 200,000 simulated years needs 200,000 bell-curve draws.
+A risk desk simulates a share priced at $100 one year ahead. The model it uses says the price in a year is 100 times e raised to 0.01 plus 0.2 times a standard normal draw ([Lognormal](../04-Continuous%20Distributions/06-lognormal-distribution.md)). A standard normal draw is a number from the bell curve with centre 0 and spread 1.
 
-A computer's generator hands out uniform numbers: values between 0 and 1, every stretch of equal length equally likely ([Random numbers from a computer](01-pseudo-random-numbers.md)). The inverse transform turns a uniform into any law by reading its cumulative curve backwards ([Inverse transform](02-inverse-transform-sampling.md)). For the bell curve that backwards reading, the normal quantile, has no formula in logs, roots and powers; a computer finds it by searching ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)). Doing a search 200,000 times is slow, and the answer is only as good as the search.
+The 0.2 is the share's yearly volatility, 20%. The 0.01 is the pricing drift: a 5% interest rate, minus 2% dividends, minus half of 0.2 squared. A draw of 0.479519 puts the share at $111.17; a negative draw puts it lower. A run of 200,000 simulated years needs 200,000 bell-curve draws.
 
-Two exact tricks avoid the search. **Rejection sampling** draws from an easy law that sits above the hard one everywhere, then throws some draws away so the ones kept follow the hard law. It works for any density that can be bounded that way. **Box-Muller** takes two uniforms, reads them as a distance and an angle, and returns two independent bell-curve draws with one log, one square root, a cosine and a sine. Both return the exact law, not an approximation of it.
+A computer's generator hands out uniform numbers: values between 0 and 1, every stretch of equal length equally likely ([Random numbers from a computer](01-pseudo-random-numbers.md)). The inverse transform turns a uniform into any law, meaning any probability distribution, by reading its cumulative curve backwards ([Inverse transform](02-inverse-transform-sampling.md)).
+
+For the bell curve that backwards reading, the normal quantile, has no formula in logs, roots and powers; a computer finds it by searching ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)). Doing a search 200,000 times is slow, and the answer is only as good as the search.
+
+Two exact tricks avoid the search. **Rejection sampling** draws from an easy law that sits above the hard one everywhere, then throws some draws away so the ones kept follow the hard law. It works for any density (the curve whose area over a stretch is the chance of landing there) that can be bounded that way.
+
+**Box-Muller** takes two uniforms, reads them as a distance and an angle, and returns two independent bell-curve draws with one log, one square root, a cosine and a sine. Both return the exact law, not an approximation of it.
 
 **Keep a draw from an easy law with chance equal to the hard law's height over the easy law's raised height, and the kept draws follow the hard law exactly; read two uniforms as a radius and an angle, and the point they mark has two independent normal coordinates.**
 
@@ -128,7 +134,9 @@ $$P(Y \le y \mid \text{kept}) = \frac{F(y)/M}{1/M} = F(y).$$
 
 The kept draws have exactly the target's cumulative curve, so exactly the target law. Nothing was approximated. For this card's example the keep rate is 1/M = 0.760173, and the integral of $g$ times the keep chance, done numerically in the code, gives the same 0.760173.
 
-Each try is independent and succeeds with chance $1/M$, so the number of tries per kept draw is geometric (the count of attempts up to and including the first success), with average $M$ = 1.315489. The loop returns the first kept draw. If it comes on try j, the chance of that and of a value at or below y is (1 − 1/M)^(j−1) × F(y)/M; adding over every j gives F(y), so the returned draw follows the target law too. The sampler spends 1.315489 exponential draws, on average, per normal size it returns. A looser envelope, say $M$ = 2, still gives the exact law but wastes more proposals.
+Each try is independent and succeeds with chance $1/M$, so the number of tries per kept draw is geometric (the count of attempts up to and including the first success), with average $M$ = 1.315489. The loop returns the first kept draw. If it comes on try j, the chance of that and of a value at or below y is (1 − 1/M)^(j−1) × F(y)/M. Adding over every j gives F(y), so the returned draw follows the target law too.
+
+The sampler spends 1.315489 exponential draws, on average, per normal size it returns. A looser envelope, say $M$ = 2, still gives the exact law but wastes more proposals.
 
 The sign comes from a separate fair coin. The bell is symmetric, so a size with a random sign is a standard normal draw.
 
@@ -150,7 +158,7 @@ It splits into a factor in θ alone, 1/(2π), and a factor in r alone, r e^(−r
 
 $$P(R > r) = \int_r^\infty s\,e^{-s^2/2}\,ds = e^{-r^2/2}.$$
 
-Set this tail chance equal to a uniform and solve: $e^{-R^2/2} = U_1$ gives $R = \sqrt{-2\ln U_1}$. The inverse transform does this, run on the tail chance instead of the cumulative curve, which is allowed because 1 − U is uniform too ([Inverse transform](02-inverse-transform-sampling.md)); it works because the distance, unlike the normal itself, has a cumulative curve that can be turned round by algebra. Half the squared distance, $R^2/2 = -\ln U_1$, is an exponential draw with rate 1.
+Set this tail chance equal to a uniform and solve: $e^{-R^2/2} = U_1$ gives $R = \sqrt{-2\ln U_1}$. The inverse transform does this, run on the tail chance instead of the cumulative curve, which is allowed because 1 − U is uniform too ([Inverse transform](02-inverse-transform-sampling.md)). It works because the distance, unlike the normal itself, has a cumulative curve that can be turned round by algebra. Half the squared distance, $R^2/2 = -\ln U_1$, is an exponential draw with rate 1.
 
 ### Step 6: run it backwards
 
@@ -171,11 +179,17 @@ A joint density that is a product of one function of x and one of y means indepe
 
 ### Step 7: the polar method, where the two ideas meet
 
-Box-Muller needs a cosine and a sine. Marsaglia's polar method removes them with a rejection step. Throw a dart uniformly at the square from −1 to 1 on both axes, and keep it only if it lands inside the circle of radius 1. The keep rate is the circle's area over the square's, π/4 = 0.785398, the same count that estimates π from darts. A kept dart (x, y) has a uniform angle, and its squared distance W = x^2 + y^2 is uniform on (0, 1], since the area inside radius √w is a fraction w of the circle. The angle and W are also independent: in distance-and-angle coordinates the dart's flat density on the disc splits into a factor in the angle alone and one in the distance alone, as in Step 5. So W can stand in for $U_1$, and x/√W, y/√W are the cosine and sine of the angle for free:
+Box-Muller needs a cosine and a sine. Marsaglia's polar method removes them with a rejection step.
+
+Throw a dart uniformly at the square from −1 to 1 on both axes, and keep it only if it lands inside the circle of radius 1. The keep rate is the circle's area over the square's, π/4 = 0.785398, the same count that estimates π from darts.
+
+A kept dart (x, y) has a uniform angle, and its squared distance W = x^2 + y^2 is uniform on (0, 1], since the area inside radius √w is a fraction w of the circle. The angle and W are also independent: in distance-and-angle coordinates the dart's flat density on the disc splits into a factor in the angle alone and one in the distance alone, as in Step 5.
+
+So W can stand in for $U_1$, and x/√W, y/√W are the cosine and sine of the angle for free:
 
 $$Z_1 = x\sqrt{\frac{-2\ln W}{W}}, \qquad Z_2 = y\sqrt{\frac{-2\ln W}{W}}.$$
 
-The code runs it: of 127,375 darts, the kept share times 4 is 3.1403, with a standard error of 0.0046, and the draws pass the same checks as the other two samplers.
+The code runs it: of 127,375 darts, the kept share times 4 is 3.1403, with a standard error of 0.0046. A standard error is the typical size of the random scatter in a simulated figure ([Monte Carlo](04-monte-carlo-estimates-and-error.md)). The draws pass the same checks as the other two samplers.
 
 A third road to normals, adding twelve uniforms and subtracting 6, gives only an approximation: its draws can never exceed 6 in size, and its shape is only close to the bell. The two methods on this card are exact.
 
@@ -200,7 +214,11 @@ The same two uniforms, U = 0.3 and then U = 0.8, run through both methods.
 
 One pair of uniforms gives two simulated years for the share: one at \$111.17, and a second from $Z_2$ = −1.475807, a bad year.
 
-Across 200,000 draws each, the three samplers land where the bell says. Φ(1) = 0.841345 by numerical integration of the bell. The share of draws at or below 1 is 0.8404 ± 0.0008 by rejection, 0.8416 ± 0.0008 by Box-Muller, and 0.8423 ± 0.0008 by the polar method; the ± is one standard error, and each estimate sits within two of them of the true value. A grid of 1,000,000 evenly spaced uniform pairs, pushed through Box-Muller with no randomness at all, gives 0.841360.
+Across 200,000 draws each, the three samplers land where the bell says. Φ(1) = 0.841345 by numerical integration of the bell. The share of draws at or below 1 is 0.8404 ± 0.0008 by rejection, 0.8416 ± 0.0008 by Box-Muller, and 0.8423 ± 0.0008 by the polar method. The ± is one standard error, and each estimate sits within two of them of the true value.
+
+A grid of 1,000,000 evenly spaced uniform pairs, pushed through Box-Muller with no randomness at all, gives 0.841360.
+
+A call with strike $100 is the right to buy the share for $100 in a year. It pays the price minus $100 when that is positive, and nothing otherwise; its value today is that average payoff, brought back to today's money at the 5% rate.
 
 For the share, with the house market of the finance wing (rate 5%, dividends 2%, volatility 20%, one year):
 
@@ -220,13 +238,13 @@ The simulated call lands within one standard error of the Black-Scholes price ([
 | R = −2 ln U1, no square root | variance 4 | The squared radius used as the radius: draws four times too spread, and no longer bell-shaped |
 | Envelope M = 1, keep chance capped at 1 | beyond 2 in size: 0.0519 ± 0.0005 simulated, 0.0516 by integral, true 0.0455 | The unraised exponential sits below the target over a middle stretch round y = 1; capping thins the middle, so the tails come out too heavy |
 
-The code prints all three: the first two with their simulated variances beside the exact ones, the third with its mean and variance beside its tail shares. The third is the dangerous one: the mean is −0.0019 and the variance 1.0142, so a quick look passes it, while 2-sigma years are too common.
+The code prints all three: the first two with their simulated variances beside the exact ones, the third with its mean and variance beside its tail shares. The third is the dangerous one: the mean is −0.0019 and the variance 1.0142, so a quick look passes it, while years more than 2 standard deviations from the centre are too common.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported holds an answer: the generator is SplitMix64 written out, seed 20260929, so both languages draw the same numbers; the bell's area Φ is Simpson's rule (adding up thin slices with weights 1, 4, 2, 4, …) on the bell's height. The law is checked by independent roads: the exact integral, a grid of uniform pairs with no randomness, and three samplers that share no step. The rejection keep rate is found by formula, by integral and by simulation. The share's call is priced by formula and by 200,000 simulated years.
+Nothing imported holds an answer: the generator is SplitMix64 written out, seed 20260929, so both languages draw the same numbers. The bell's area Φ is Simpson's rule (adding up thin slices with weights 1, 4, 2, 4, …) on the bell's height. The law is checked by independent roads: the exact integral, a grid of uniform pairs with no randomness, and three samplers that share no step. The rejection keep rate is found by formula, by integral and by simulation. The share's call is priced by formula and by 200,000 simulated years.
 
 ### Python
 
@@ -611,6 +629,338 @@ ALL CHECKS PASS
 
 The two outputs match line for line: the same generator feeds the same arithmetic in the same order.
 
+### Lean
+
+Lean proves both theorems for every density, envelope and pair of uniforms that meet their conditions, and the card's envelope numbers.
+
+- Suppose $f(y) \le M\,g(y)$ at every y, and $U$ is a fresh uniform in (0, 1], independent of $Y$. Then $P(\text{kept}) = 1/M$, and $P(Y \le y \mid \text{kept}) = F(y)$ for every y.
+- Lean does not assume $M$ is positive or that $g$ reaches the target; the envelope forces both.
+- Take two independent uniforms $U_1$ and $U_2$ in (0, 1], and set $R$ and $\Theta$ as in the formula. Then $Z_1 = R\cos\Theta$ and $Z_2 = R\sin\Theta$ are two independent standard normal draws.
+- Take the card's example: $f$ the size of a normal draw, $g$ the exponential, and $M = \sqrt{2e/\pi}$. Then $f(y) \le M\,g(y)$ at every y, and the keep chance is $e^{-(y-1)^2/2}$.
+- Suppose some number $M'$ has $f(y) \le M'\,g(y)$ for every y ≥ 0. Then $M'$ is at least $\sqrt{2e/\pi}$, so no smaller envelope works.
+
+The loop of tries, the sign's coin, the polar method, the decimals and the share prices are left to the Python and Rust checks.
+
+```lean
+-- Rejection sampling and Box-Muller: the draws a rejection sampler keeps follow the target law exactly and are kept with chance 1/M, two independent uniforms on (0, 1] turned into a radius and an angle give two independent standard normals, and the card's raised exponential sits above the size of a normal draw with keep chance e^(−(y−1)²/2).
+import Mathlib.Probability.Distributions.Uniform
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.ConditionalProbability
+import Mathlib.Probability.HasLaw
+import Mathlib.Analysis.SpecialFunctions.PolarCoord
+import Mathlib.MeasureTheory.Function.JacobianOneDim
+
+open MeasureTheory ProbabilityTheory
+
+/-- Rejection sampling. Let f be a target density on the real line (nonnegative, area 1) and
+g a proposal density (nonnegative), with an envelope constant M such that f(y) ≤ M g(y) at
+every point. Draw Y with density g and a fresh uniform U on (0, 1], independent of Y, and
+keep Y when U ≤ f(Y) / (M g(Y)). Then a draw is kept with chance 1/M, and the kept draws
+have exactly the target's cumulative curve: P(Y ≤ y | kept) = F(y), the area under f to
+the left of y, for every y. -/
+theorem rejection_sampling_kept_draws_follow_target {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P]
+    (f g : ℝ → ℝ) (M : ℝ)
+    (hf_nonneg : ∀ y, 0 ≤ f y) (hf_meas : Measurable f) (hf_int : Integrable f)
+    (hf_one : ∫ y, f y = 1)
+    (hg_nonneg : ∀ y, 0 ≤ g y) (hg_meas : Measurable g)
+    (h_envelope : ∀ y, f y ≤ M * g y)
+    (Y U : Ω → ℝ)
+    (hY : HasLaw Y (volume.withDensity fun y => ENNReal.ofReal (g y)) P)
+    (hU : pdf.IsUniform U (Set.Ioc 0 1) P)
+    (h_indep : IndepFun Y U P) :
+    (P {ω | U ω ≤ f (Y ω) / (M * g (Y ω))}).toReal = 1 / M ∧
+      ∀ y : ℝ, (P[Y ⁻¹' Set.Iic y | {ω | U ω ≤ f (Y ω) / (M * g (Y ω))}]).toReal =
+        ∫ t in Set.Iic y, f t := by
+  have hM : 0 < M := by
+    by_contra hM
+    rw [not_lt] at hM
+    have hf0 : (fun y => f y) = fun _ => (0:ℝ) := by
+      funext y
+      exact le_antisymm ((h_envelope y).trans (by nlinarith [hg_nonneg y])) (hf_nonneg y)
+    rw [hf0] at hf_one
+    simp at hf_one
+  set h : ℝ → ℝ := fun y => f y / (M * g y) with hh_def
+  have hh_meas : Measurable h := hf_meas.div (measurable_const.mul hg_meas)
+  have hYm := hY.aemeasurable
+  have hUm := hU.aemeasurable
+  have hmapY : P.map Y = volume.withDensity fun y => ENNReal.ofReal (g y) := hY.map_eq
+  have hmapU : P.map U = volume[|Set.Ioc (0:ℝ) 1] := hU.map_eq
+  have hjoint : P.map (fun ω => (Y ω, U ω)) = (P.map Y).prod (P.map U) :=
+    (indepFun_iff_map_prod_eq_prod_map_map hYm hUm).1 h_indep
+  have hUIic : ∀ c, 0 ≤ c → c ≤ 1 → (P.map U) (Set.Iic c) = ENNReal.ofReal c := by
+    intro c hc0 hc1
+    rw [hmapU, cond_apply measurableSet_Ioc]
+    have : Set.Ioc (0:ℝ) 1 ∩ Set.Iic c = Set.Ioc 0 c := by
+      ext x
+      simp only [Set.mem_inter_iff, Set.mem_Ioc, Set.mem_Iic]
+      constructor
+      · rintro ⟨⟨h1, _⟩, h3⟩; exact ⟨h1, h3⟩
+      · rintro ⟨h1, h3⟩; exact ⟨⟨h1, h3.trans hc1⟩, h3⟩
+    rw [this]
+    simp [Real.volume_Ioc]
+  have key : ∀ A : Set ℝ, MeasurableSet A →
+      P (Y ⁻¹' A ∩ {ω | U ω ≤ h (Y ω)}) = ∫⁻ t in A, ENNReal.ofReal (f t / M) := by
+    intro A hA
+    have hW : MeasurableSet {p : ℝ × ℝ | p.1 ∈ A ∧ p.2 ≤ h p.1} :=
+      (measurable_fst hA).inter (measurableSet_le measurable_snd (hh_meas.comp measurable_fst))
+    have hpre : Y ⁻¹' A ∩ {ω | U ω ≤ h (Y ω)} =
+        (fun ω => (Y ω, U ω)) ⁻¹' {p : ℝ × ℝ | p.1 ∈ A ∧ p.2 ≤ h p.1} := rfl
+    rw [hpre, ← Measure.map_apply_of_aemeasurable (hYm.prodMk hUm) hW, hjoint,
+      Measure.prod_apply hW, hmapY,
+      lintegral_withDensity_eq_lintegral_mul _ (by fun_prop) (measurable_measure_prodMk_left hW),
+      ← lintegral_indicator hA]
+    refine lintegral_congr fun y => ?_
+    simp only [Pi.mul_apply, Set.indicator]
+    split_ifs with hy
+    · have hpre2 : Prod.mk y ⁻¹' {p : ℝ × ℝ | p.1 ∈ A ∧ p.2 ≤ h p.1} = Set.Iic (h y) := by
+        ext u; simp [hy]
+      rw [hpre2]
+      rcases (hg_nonneg y).lt_or_eq with hgpos | hg0
+      · have h0 : 0 ≤ h y := div_nonneg (hf_nonneg y) (mul_nonneg hM.le hgpos.le)
+        have h1 : h y ≤ 1 := (div_le_one (mul_pos hM hgpos)).2 (h_envelope y)
+        rw [hUIic _ h0 h1, ← ENNReal.ofReal_mul hgpos.le]
+        congr 1
+        simp only [hh_def]
+        field_simp
+      · have hf0 : f y = 0 :=
+          le_antisymm (by simpa [← hg0] using h_envelope y) (hf_nonneg y)
+        simp [← hg0, hf0]
+    · have hpre2 : Prod.mk y ⁻¹' {p : ℝ × ℝ | p.1 ∈ A ∧ p.2 ≤ h p.1} = ∅ := by
+        ext u; simp [hy]
+      simp [hpre2]
+  have hK_univ : P {ω | U ω ≤ h (Y ω)} = ENNReal.ofReal (1 / M) := by
+    have := key Set.univ MeasurableSet.univ
+    rw [Set.preimage_univ, Set.univ_inter, Measure.restrict_univ] at this
+    rw [this, ← ofReal_integral_eq_lintegral_ofReal]
+    · congr 1
+      rw [integral_div, hf_one]
+    · exact hf_int.div_const M
+    · exact Filter.Eventually.of_forall fun y => div_nonneg (hf_nonneg y) hM.le
+  refine ⟨by rw [hK_univ, ENNReal.toReal_ofReal (by positivity)], fun y => ?_⟩
+  rw [ProbabilityTheory.cond, Measure.smul_apply,
+    Measure.restrict_apply₀ (hYm.restrict.nullMeasurable measurableSet_Iic),
+    key _ measurableSet_Iic, hK_univ, ← ofReal_integral_eq_lintegral_ofReal]
+  · rw [smul_eq_mul, ENNReal.toReal_mul, ENNReal.toReal_inv, ENNReal.toReal_ofReal (by positivity),
+      ENNReal.toReal_ofReal, integral_div]
+    · field_simp
+    · exact integral_nonneg fun t => div_nonneg (hf_nonneg t) hM.le
+  · exact (hf_int.div_const M).integrableOn
+  · exact Filter.Eventually.of_forall fun t => div_nonneg (hf_nonneg t) hM.le
+
+/-- Box-Muller. Take two independent uniforms U₁ and U₂ on (0, 1]. Set
+R = √(−2 ln U₁) and Θ = 2πU₂, and return Z₁ = R cos Θ and Z₂ = R sin Θ. Then the pair
+(Z₁, Z₂) has the law of two independent standard normal draws: its joint law is the
+product of two copies of the standard bell curve. -/
+theorem box_muller_gives_independent_standard_normals {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P]
+    (U₁ U₂ : Ω → ℝ)
+    (hU₁ : pdf.IsUniform U₁ (Set.Ioc 0 1) P) (hU₂ : pdf.IsUniform U₂ (Set.Ioc 0 1) P)
+    (h_indep : IndepFun U₁ U₂ P) :
+    HasLaw
+      (fun ω => (Real.sqrt (-2 * Real.log (U₁ ω)) * Real.cos (2 * Real.pi * U₂ ω),
+                 Real.sqrt (-2 * Real.log (U₁ ω)) * Real.sin (2 * Real.pi * U₂ ω)))
+      ((gaussianReal 0 1).prod (gaussianReal 0 1)) P := by
+  have hU₁m := hU₁.aemeasurable
+  have hU₂m := hU₂.aemeasurable
+  set T : ℝ × ℝ → ℝ × ℝ := fun u =>
+    (Real.sqrt (-2 * Real.log u.1) * Real.cos (2 * Real.pi * u.2),
+      Real.sqrt (-2 * Real.log u.1) * Real.sin (2 * Real.pi * u.2)) with hT
+  have hTm : Measurable T := by fun_prop
+  have hjoint : P.map (fun ω => (U₁ ω, U₂ ω)) =
+      (volume.restrict (Set.Ioo (0:ℝ) 1)).prod (volume.restrict (Set.Ioo (0:ℝ) 1)) := by
+    rw [(indepFun_iff_map_prod_eq_prod_map_map hU₁m hU₂m).1 h_indep, hU₁.map_eq, hU₂.map_eq,
+      Measure.restrict_congr_set Ioo_ae_eq_Ioc]
+    simp [ProbabilityTheory.cond, Real.volume_Ioc]
+  have hcomp : (fun ω => (Real.sqrt (-2 * Real.log (U₁ ω)) * Real.cos (2 * Real.pi * U₂ ω),
+                 Real.sqrt (-2 * Real.log (U₁ ω)) * Real.sin (2 * Real.pi * U₂ ω))) =
+      T ∘ (fun ω => (U₁ ω, U₂ ω)) := rfl
+  refine ⟨hTm.comp_aemeasurable (hU₁m.prodMk hU₂m), ?_⟩
+  rw [hcomp, ← AEMeasurable.map_map_of_aemeasurable hTm.aemeasurable (hU₁m.prodMk hU₂m), hjoint,
+    gaussianReal_of_var_ne_zero 0 one_ne_zero,
+    prod_withDensity (measurable_gaussianPDF _ _) (measurable_gaussianPDF _ _),
+    ← Measure.volume_eq_prod]
+  set ψ : ℝ × ℝ → ENNReal := fun z => gaussianPDF 0 1 z.1 * gaussianPDF 0 1 z.2 with hψ
+  have hψm : Measurable ψ := by
+    simp only [hψ]
+    exact ((measurable_gaussianPDF _ _).comp measurable_fst).mul
+      ((measurable_gaussianPDF _ _).comp measurable_snd)
+  -- one-dimensional changes of variables
+  have himθ : (fun θ : ℝ => (θ + Real.pi) / (2 * Real.pi)) '' Set.Ioo (-Real.pi) Real.pi =
+      Set.Ioo 0 1 := by
+    ext u
+    simp only [Set.mem_image, Set.mem_Ioo]
+    constructor
+    · rintro ⟨θ, ⟨h1, h2⟩, rfl⟩
+      constructor
+      · apply div_pos <;> linarith [Real.pi_pos]
+      · rw [div_lt_one (by linarith [Real.pi_pos])]; linarith
+    · rintro ⟨h1, h2⟩
+      refine ⟨2 * Real.pi * u - Real.pi, ⟨by nlinarith [Real.pi_pos], by nlinarith [Real.pi_pos]⟩, ?_⟩
+      field_simp
+      ring
+  have hθ : ∀ k : ℝ → ENNReal, ∫⁻ u in Set.Ioo 0 1, k u =
+      ∫⁻ θ in Set.Ioo (-Real.pi) Real.pi,
+        ENNReal.ofReal (1 / (2 * Real.pi)) * k ((θ + Real.pi) / (2 * Real.pi)) := by
+    intro k
+    rw [← himθ, lintegral_image_eq_lintegral_abs_deriv_mul measurableSet_Ioo
+      (f' := fun _ => 1 / (2 * Real.pi))]
+    · simp only [abs_of_pos (show 0 < 1 / (2 * Real.pi) by positivity)]
+    · intro x _
+      apply HasDerivAt.hasDerivWithinAt
+      have := ((hasDerivAt_id x).add_const Real.pi).div_const (2 * Real.pi)
+      simpa using this
+    · intro a _ b _ hab
+      have h2 : (2 * Real.pi) ≠ 0 := by positivity
+      simp only at hab
+      field_simp at hab
+      linarith
+  have himr : (fun r : ℝ => Real.exp (-r ^ 2 / 2)) '' Set.Ioi 0 = Set.Ioo 0 1 := by
+    ext u
+    simp only [Set.mem_image, Set.mem_Ioi, Set.mem_Ioo]
+    constructor
+    · rintro ⟨r, hr, rfl⟩
+      refine ⟨Real.exp_pos _, ?_⟩
+      rw [← Real.exp_zero]
+      apply Real.exp_lt_exp.2
+      have : 0 < r ^ 2 := by positivity
+      linarith
+    · rintro ⟨h1, h2⟩
+      have hl : Real.log u < 0 := Real.log_neg h1 h2
+      refine ⟨Real.sqrt (-2 * Real.log u), Real.sqrt_pos.2 (by linarith), ?_⟩
+      rw [Real.sq_sqrt (by linarith)]
+      rw [show -(-2 * Real.log u) / 2 = Real.log u by ring, Real.exp_log h1]
+  have hr : ∀ k : ℝ → ENNReal, ∫⁻ u in Set.Ioo 0 1, k u =
+      ∫⁻ r in Set.Ioi 0, ENNReal.ofReal (r * Real.exp (-r ^ 2 / 2)) * k (Real.exp (-r ^ 2 / 2)) := by
+    intro k
+    rw [← himr, lintegral_image_eq_lintegral_abs_deriv_mul measurableSet_Ioi
+      (f' := fun r => -(r * Real.exp (-r ^ 2 / 2)))]
+    · refine setLIntegral_congr_fun measurableSet_Ioi fun r hr => ?_
+      simp only [Set.mem_Ioi] at hr
+      rw [abs_neg, abs_of_pos (by positivity)]
+    · intro x _
+      apply HasDerivAt.hasDerivWithinAt
+      have := (((hasDerivAt_pow 2 x).neg).div_const 2).exp
+      convert this using 1
+      simp
+      ring
+    · intro a ha b hb hab
+      simp only [Set.mem_Ioi] at ha hb
+      have := Real.exp_injective hab
+      nlinarith
+  ext S hS
+  rw [Measure.map_apply hTm hS, ← lintegral_indicator_one (hTm hS), withDensity_apply _ hS,
+    ← lintegral_indicator hS]
+  have hneg : MeasurePreserving (fun p : ℝ × ℝ => -p) volume volume := by
+    rw [Measure.volume_eq_prod]
+    exact (Measure.measurePreserving_neg (volume : Measure ℝ)).prod
+      (Measure.measurePreserving_neg (volume : Measure ℝ))
+  have hF : Measurable ((T ⁻¹' S).indicator (1 : ℝ × ℝ → ENNReal)) :=
+    measurable_one.indicator (hTm hS)
+  have hG : Measurable (S.indicator ψ) := hψm.indicator hS
+  have hpolm : Measurable fun q : ℝ × ℝ =>
+      ENNReal.ofReal q.1 • S.indicator ψ (-(polarCoord.symm q)) :=
+    (ENNReal.measurable_ofReal.comp measurable_fst).smul
+      (hG.comp continuous_polarCoord_symm.measurable.neg)
+  have htarget : (volume : Measure (ℝ × ℝ)).restrict polarCoord.target =
+      (volume.restrict (Set.Ioi (0:ℝ))).prod (volume.restrict (Set.Ioo (-Real.pi) Real.pi)) := by
+    rw [Measure.volume_eq_prod, Measure.prod_restrict]
+    rfl
+  rw [← hneg.lintegral_comp hG, ← lintegral_comp_polarCoord_symm,
+    lintegral_prod _ hF.aemeasurable, htarget, lintegral_prod _ hpolm.aemeasurable,
+    hr (fun u1 => ∫⁻ u2 in Set.Ioo 0 1, (T ⁻¹' S).indicator 1 (u1, u2))]
+  refine setLIntegral_congr_fun measurableSet_Ioi fun r hr0 => ?_
+  simp only [Set.mem_Ioi] at hr0
+  rw [hθ, ← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
+  refine setLIntegral_congr_fun measurableSet_Ioo fun θ hθ0 => ?_
+  have hpt : T (Real.exp (-r ^ 2 / 2), (θ + Real.pi) / (2 * Real.pi)) =
+      -(polarCoord.symm (r, θ)) := by
+    have hsq : Real.sqrt (-2 * Real.log (Real.exp (-r ^ 2 / 2))) = r := by
+      rw [Real.log_exp, show -2 * (-r ^ 2 / 2) = r ^ 2 by ring, Real.sqrt_sq hr0.le]
+    have hang : 2 * Real.pi * ((θ + Real.pi) / (2 * Real.pi)) = θ + Real.pi := by
+      field_simp
+    simp only [hT, polarCoord_symm_apply, hsq, hang, Real.cos_add_pi, Real.sin_add_pi]
+    ext <;> simp
+  by_cases hmem : -(polarCoord.symm (r, θ)) ∈ S
+  · rw [Set.indicator_of_mem (show _ ∈ T ⁻¹' S by rw [Set.mem_preimage, hpt]; exact hmem),
+      Set.indicator_of_mem hmem]
+    have hg0 : ∀ x, 0 ≤ gaussianPDFReal 0 1 x := fun x => gaussianPDFReal_nonneg _ _ x
+    simp only [Pi.one_apply, mul_one, smul_eq_mul, hψ, gaussianPDF]
+    rw [← ENNReal.ofReal_mul (by positivity), ← ENNReal.ofReal_mul (hg0 _),
+      ← ENNReal.ofReal_mul hr0.le]
+    congr 1
+    simp only [gaussianPDFReal, NNReal.coe_one, mul_one, sub_zero, polarCoord_symm_apply,
+      Prod.fst_neg, Prod.snd_neg]
+    have hsq : (√(2 * Real.pi))⁻¹ * (√(2 * Real.pi))⁻¹ = 1 / (2 * Real.pi) := by
+      rw [← mul_inv, Real.mul_self_sqrt (by positivity), one_div]
+    have he : Real.exp (-(-(r * Real.cos θ)) ^ 2 / 2) * Real.exp (-(-(r * Real.sin θ)) ^ 2 / 2) =
+        Real.exp (-r ^ 2 / 2) := by
+      rw [← Real.exp_add]
+      congr 1
+      linear_combination (-r ^ 2 / 2) * Real.cos_sq_add_sin_sq θ
+    rw [show r * ((√(2 * Real.pi))⁻¹ * Real.exp (-(-(r * Real.cos θ)) ^ 2 / 2) *
+        ((√(2 * Real.pi))⁻¹ * Real.exp (-(-(r * Real.sin θ)) ^ 2 / 2))) =
+        r * ((√(2 * Real.pi))⁻¹ * (√(2 * Real.pi))⁻¹) *
+          (Real.exp (-(-(r * Real.cos θ)) ^ 2 / 2) * Real.exp (-(-(r * Real.sin θ)) ^ 2 / 2))
+        by ring, hsq, he]
+    ring
+  · rw [Set.indicator_of_notMem (show _ ∉ T ⁻¹' S by rw [Set.mem_preimage, hpt]; exact hmem),
+      Set.indicator_of_notMem hmem]
+    simp
+
+/-- The card's envelope. For the size of a normal draw, f(y) = √(2/π) e^(−y²/2), against the
+exponential proposal g(y) = e^(−y), the constant M = √(2e/π) works at every point:
+f(y) ≤ M g(y), and the keep chance is f(y) / (M g(y)) = e^(−(y−1)²/2). It is also the smallest
+constant that works: any M' with f(y) ≤ M' g(y) for every y ≥ 0 is at least √(2e/π). -/
+theorem half_normal_exponential_envelope :
+    (∀ y : ℝ, Real.sqrt (2 / Real.pi) * Real.exp (-y ^ 2 / 2) ≤
+        Real.sqrt (2 * Real.exp 1 / Real.pi) * Real.exp (-y)) ∧
+      (∀ y : ℝ, Real.sqrt (2 / Real.pi) * Real.exp (-y ^ 2 / 2) /
+          (Real.sqrt (2 * Real.exp 1 / Real.pi) * Real.exp (-y)) =
+        Real.exp (-(y - 1) ^ 2 / 2)) ∧
+      ∀ M' : ℝ, (∀ y : ℝ, 0 ≤ y →
+          Real.sqrt (2 / Real.pi) * Real.exp (-y ^ 2 / 2) ≤ M' * Real.exp (-y)) →
+        Real.sqrt (2 * Real.exp 1 / Real.pi) ≤ M' := by
+  have hs : Real.sqrt (2 * Real.exp 1 / Real.pi) = Real.sqrt (2 / Real.pi) * Real.exp (1/2) := by
+    rw [show 2 * Real.exp 1 / Real.pi = (2 / Real.pi) * Real.exp (1/2) ^ 2 by
+      rw [← Real.exp_nat_mul]; norm_num; ring]
+    rw [Real.sqrt_mul (by positivity), Real.sqrt_sq (Real.exp_pos _).le]
+  have hc : 0 < Real.sqrt (2 / Real.pi) := Real.sqrt_pos.2 (by positivity)
+  rw [hs]
+  refine ⟨fun y => ?_, fun y => ?_, fun M' hM' => ?_⟩
+  · rw [mul_assoc]
+    apply mul_le_mul_of_nonneg_left _ hc.le
+    rw [← Real.exp_add]
+    apply Real.exp_le_exp.2
+    nlinarith [sq_nonneg (y - 1)]
+  · rw [div_eq_iff (by positivity)]
+    rw [show Real.exp (-(y - 1) ^ 2 / 2) * (Real.sqrt (2 / Real.pi) * Real.exp (1 / 2) * Real.exp (-y))
+        = Real.sqrt (2 / Real.pi) * (Real.exp (-(y - 1) ^ 2 / 2) * Real.exp (1 / 2) * Real.exp (-y))
+        by ring, ← Real.exp_add, ← Real.exp_add]
+    congr 2
+    ring
+  · have h1 := hM' 1 zero_le_one
+    have h2 : Real.sqrt (2 / Real.pi) * Real.exp (1 / 2) =
+        Real.sqrt (2 / Real.pi) * Real.exp (-1 ^ 2 / 2) / Real.exp (-1) := by
+      rw [mul_div_assoc, ← Real.exp_sub]
+      norm_num
+    rw [h2]
+    exact (div_le_iff₀ (Real.exp_pos _)).2 h1
+
+#print axioms rejection_sampling_kept_draws_follow_target
+#print axioms box_muller_gives_independent_standard_normals
+#print axioms half_normal_exponential_envelope
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rejection_sampling_kept_draws_follow_target' depends on axioms: [propext, Classical.choice, Quot.sound]
+'box_muller_gives_independent_standard_normals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'half_normal_exponential_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -638,7 +988,7 @@ The two outputs match line for line: the same generator feeds the same arithmeti
 - **Share and option simulations.** Every simulated price path starts from normal draws. Glasserman's text on Monte Carlo in finance covers Box-Muller, the polar method and a fast normal quantile in its section on normal draws.
 - **Standard libraries.** Python's `random.gauss` uses a Box-Muller form; Java's `Random.nextGaussian` documents the polar method. Faster modern normal samplers, such as the ziggurat, are rejection samplers with a staircase envelope built to keep almost every proposal.
 - **Laws with no invertible curve.** The gamma law of waiting times ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)) is sampled in practice by rejection against a simple envelope, and the beta law of proportions from two gamma draws.
-- **Bayesian computing.** A posterior known only up to a constant can be sampled by rejection, since the keep test needs $f$ only up to a fixed factor folded into $M$.
+- **Bayesian computing.** A posterior (the law of an unknown quantity after seeing data) is often known only up to a constant. It can still be sampled by rejection, since the keep test needs $f$ only up to a fixed factor folded into $M$.
 
 > **Say it back**
 > Rejection sampling raises an easy density until it sits above the wanted one, draws from the easy one, and keeps each draw with chance equal to the ratio of the two heights. The kept draws follow the wanted law exactly, and one proposal in M is kept. Box-Muller reads two uniforms as a distance √(−2 ln U1) and an angle 2πU2; because two independent normals form a round bell, the point's two coordinates are two independent normals. The polar method combines the two: darts in a square, kept inside the circle, give the same normals without a cosine or sine. Both methods are exact; the danger is an envelope that is not really above the target.

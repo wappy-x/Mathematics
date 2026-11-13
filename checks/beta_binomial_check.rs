@@ -136,4 +136,5 @@ fn main() {
     assert!(gr.iter().zip(&bb).all(|(g, q)| (g - q).abs() < 1e-10) && (v10 - v10c).abs() < 1e-12);
     assert!((sm - mean).abs() < 4.0 * ssd / kf.sqrt() && (pn - mean).abs() < 4.0 * se(pn, kf));
     assert!((acc - 16.0 / 143.0).abs() < 4.0 * se(acc, r as f64) && (p2 - f2[2]).abs() < 4.0 * se(p2, kf));
+    println!("ALL CHECKS PASS");
 }

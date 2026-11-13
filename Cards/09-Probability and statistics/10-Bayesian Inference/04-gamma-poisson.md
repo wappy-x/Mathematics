@@ -6,11 +6,13 @@
 
 ## General Overview
 
-A new help desk opens. Nobody knows how many emails an hour it will get. Desks like it run at about 12 an hour, give or take 2.45, and that is the belief on day one.
+A new help desk opens. Nobody knows how many emails an hour it will get. Desks like it run at about 12 an hour, give or take 2.45, and that is the belief on day one, called the prior.
 
 Then the desk is watched. From 9:00 to 11:00, 28 emails arrive. From 14:00 to 15:00, 17 more. That is 45 emails in 3 observed hours, 15 an hour. The two windows have different lengths, so the hours matter as much as the emails: 45 emails in three minutes would mean something else entirely.
 
-The updated belief puts the rate at 13.8 emails an hour, give or take 1.66. It sits between the old guess of 12 and the record's 15, closer to the record because three hours of watching outweigh the prior. And the question the desk manager asks is about the next hour: one person clears 20 emails an hour, so how often does an hour overflow? The answer is 0.058132, about 1 hour in 17. Treating 13.8 as the known rate gives 0.042431, about 1 in 24. The difference is the uncertainty still left in the rate.
+The updated belief, called the posterior, puts the rate at 13.8 emails an hour, give or take 1.66. It sits between the old guess of 12 and the record's 15, closer to the record because three hours of watching outweigh the prior.
+
+And the question the desk manager asks is about the next hour: one person clears 20 emails an hour, so how often does an hour overflow? The answer is 0.058132, about 1 hour in 17. Treating 13.8 as the known rate gives 0.042431, about 1 in 24. The difference is the uncertainty still left in the rate.
 
 The rule that produces these numbers is the gamma-Poisson update. The belief about the rate is a gamma law ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). Each window's count is a Poisson count ([Poisson](../03-Discrete%20Distributions/04-poisson.md)). Together they give a gamma law again, with two additions, and the forecast for a new hour is the negative binomial law.
 
@@ -36,7 +38,11 @@ Orange: the prior, Gamma(24, 2), centred on 12. Green: the posterior after 45 em
 
 ## The formula
 
-Notation first, in words. The desk's true rate, emails per hour, is $\lambda$ (lambda). It is unknown, so it is treated as a random quantity with a law of its own. Gamma(α, β), read "the gamma law with shape alpha and rate beta", is the density from the gamma card, $f(\lambda) = \beta^{\alpha}\lambda^{\alpha-1}e^{-\beta\lambda}/\Gamma(\alpha)$, where Γ (capital gamma) is the gamma integral, with Γ(a) = (a − 1)! for a whole number a. Its **shape** $\alpha$ counts emails and its **rate** $\beta$ is measured in hours; its mean is α/β and its variance α/β^2. Watching window i lasts $t_i$ hours and brings $y_i$ emails. Given the rate, the count in that window is Poisson with mean $t_i\lambda$: the exposure, the time watched, times the rate.
+Notation first, in words. The desk's true rate, emails per hour, is $\lambda$ (lambda). It is unknown, so it is treated as a random quantity with a law of its own.
+
+Gamma(α, β), read "the gamma law with shape alpha and rate beta", is the density from the gamma card, $f(\lambda) = \beta^{\alpha}\lambda^{\alpha-1}e^{-\beta\lambda}/\Gamma(\alpha)$. Here Γ (capital gamma) is the gamma integral, with Γ(a) = (a − 1)! for a whole number a. Its **shape** $\alpha$ counts emails and its **rate** $\beta$ is measured in hours; its mean is α/β and its variance α/β^2.
+
+Watching window i lasts $t_i$ hours and brings $y_i$ emails. Given the rate, the count in that window is Poisson with mean $t_i\lambda$: the exposure, the time watched, times the rate.
 
 Prior: $\lambda$ ~ Gamma(α, β). Record: $y_i$ given $\lambda$ ~ Poisson($t_i\lambda$), independently. Then, writing $K = \sum_i y_i$ for all the emails and $H = \sum_i t_i$ for all the hours,
 
@@ -91,7 +97,9 @@ The vertical bar ∣ is read "given", as in the conditional-probability cards: "
 
 ### Step 0: the prior and the evidence have the same shape in λ
 
-Written as a function of λ, a gamma density is a power of λ times an exponential, $\lambda^{\alpha-1}e^{-\beta\lambda}$. A Poisson mass, read as a function of λ with the count held fixed, is also a power of λ times an exponential, $\lambda^{y}e^{-t\lambda}$. Bayes' rule multiplies them. Powers of the same thing multiply by adding exponents, and so do exponentials. So the product has the gamma shape again, and the update is two additions. The gamma prior is called **conjugate** to the Poisson: prior and posterior belong to the same family. The beta prior plays the same part for the binomial ([Beta-binomial](02-beta-binomial.md)).
+Written as a function of λ, a gamma density is a power of λ times an exponential, $\lambda^{\alpha-1}e^{-\beta\lambda}$. A Poisson mass, read as a function of λ with the count held fixed, is also a power of λ times an exponential, $\lambda^{y}e^{-t\lambda}$. Bayes' rule multiplies them. Powers of the same thing multiply by adding exponents, and so do exponentials. So the product has the gamma shape again, and the update is two additions.
+
+The gamma prior is called **conjugate** to the Poisson: prior and posterior belong to the same family. The beta prior plays the same part for the binomial ([Beta-binomial](02-beta-binomial.md)).
 
 ### Step 1: the record's evidence depends only on total emails and total hours
 
@@ -129,7 +137,7 @@ If λ were known, the next t hours would bring a Poisson count with mean tλ. It
 
 $$P(N = k \mid \text{record}) = \int_0^\infty e^{-t\lambda}\frac{(t\lambda)^k}{k!}\cdot\frac{B^A\lambda^{A-1}e^{-B\lambda}}{\Gamma(A)}\,d\lambda$$
 
-The integrand is again a power of λ times an exponential, $\lambda^{A+k-1}e^{-(B+t)\lambda}$. The same gamma integral evaluates it, and the negative binomial formula falls out. For a whole-number shape it is the law of the number of failures before the A-th success, each trial succeeding with chance p = B/(B + t) ([Waiting for a success](../03-Discrete%20Distributions/02-geometric-and-negative-binomial.md) counts trials, which is failures plus A). The formula holds for any positive shape, where the story of successes no longer applies.
+The integrand is again a power of λ times an exponential, $\lambda^{A+k-1}e^{-(B+t)\lambda}$. The same gamma integral evaluates it, and the negative binomial formula falls out. For a whole-number shape it is the law of the number of failures before the A-th success, each trial succeeding with chance p = B/(B + t). [Waiting for a success](../03-Discrete%20Distributions/02-geometric-and-negative-binomial.md) counts trials instead, which is failures plus A. The formula holds for any positive shape, where the story of successes no longer applies.
 
 ### Step 6: two sources of spread
 
@@ -156,7 +164,7 @@ The recurrence Γ(a + 1) = aΓ(a) turns the ratio into $A(A+1)\cdots(A+k-1)/k!$,
 
 </details>
 
-Without conjugacy the same answer needs numerical work: multiply prior by likelihood on a grid of rates and add up areas, which is road 2 in the code, or draw from the posterior by a chain of random steps, which is [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md). Conjugacy replaces both with two additions.
+Without conjugacy the same answer needs numerical work. One way multiplies prior by likelihood on a grid of rates and adds up areas, which is road 2 in the code. Another draws from the posterior by a chain of random steps, which is [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md). Conjugacy replaces both with two additions.
 
 ---
 
@@ -179,7 +187,9 @@ Without conjugacy the same answer needs numerical work: multiply prior by likeli
 | chance of exactly 14 | negative binomial mass at k = 14 | 0.096502 |
 | **chance of more than 20** | 1 − (masses 0 to 20) | **0.058132** |
 
-In the world: the rate is 13.8 emails an hour, with a posterior standard deviation of 1.66, and with posterior probability 0.95 it lies between 10.74 and 17.24 an hour. The one-person desk overflows in about 1 hour in 17. The interval's ends come from the gamma card's Poisson sum: the rate is at most a mark with the same chance that a Poisson count with mean 5 times the mark is 69 or more, and halving the search range finds the two marks. The method, and choosing an action by its average cost, is worked on a coin in [Credible intervals and decisions](05-credible-intervals-and-decisions.md).
+In the world: the rate is 13.8 emails an hour, with a posterior standard deviation of 1.66, and with posterior probability 0.95 it lies between 10.74 and 17.24 an hour. The one-person desk overflows in about 1 hour in 17.
+
+The interval's ends come from the gamma card's Poisson sum. The rate is at most a mark with the same chance that a Poisson count with mean 5 times the mark is 69 or more. Halving the search range finds the two marks. The method, and choosing an action by its average cost, is worked on a coin in [Credible intervals and decisions](05-credible-intervals-and-decisions.md).
 
 ### The picture: next hour's forecast against a Poisson that forgets the doubt
 
@@ -208,7 +218,13 @@ Bars: a Poisson with the rate fixed at 13.8. Line: the negative binomial forecas
 
 ## Code, from first principles, and it actually runs
 
-The programs reach the posterior and the forecast by three roads. Road 1 is the formula: two additions, then the negative binomial masses built one from the next, and the interval's ends from the gamma's Poisson sum. Road 2 never uses the gamma algebra: it multiplies the prior density by the two windows' Poisson masses, kept separate with their own exposures, on 4,000 slices of rates from 0 to 40, and adds up areas by Simpson's rule, which fits small parabolas through the slices, for the posterior mean, spread, interval and every forecast chance up to 20. Road 3 simulates desks. Each simulated desk draws its rate from the prior, as the sum of 24 exponential waits of rate 2, then runs for 3 hours; only desks that received exactly 45 emails are kept, and each kept desk runs one more hour. Pooling the two windows is safe here, by Step 1. The random numbers come from SplitMix64, a small generator written out in both languages with seed 20260929, so both draw the same numbers; the simulated mean and overflow share are printed with their standard errors, and the asserts allow four of them. The simulation turns the definition of a posterior, belief about λ among the worlds consistent with the record, into counting.
+The programs reach the posterior and the forecast by three roads.
+
+- **Road 1** is the formula: two additions, then the negative binomial masses built one from the next, and the interval's ends from the gamma's Poisson sum.
+- **Road 2** never uses the gamma algebra. It multiplies the prior density by the two windows' Poisson masses, kept separate with their own exposures, on 4,000 slices of rates from 0 to 40. It adds up areas by Simpson's rule, which fits small parabolas through the slices, for the posterior mean, spread, interval and every forecast chance up to 20.
+- **Road 3** simulates desks. Each simulated desk draws its rate from the prior, as the sum of 24 exponential waits of rate 2, then runs for 3 hours. Only desks that received exactly 45 emails are kept, and each kept desk runs one more hour. Pooling the two windows is safe here, by Step 1.
+
+The random numbers come from SplitMix64, a small generator written out in both languages with seed 20260929, so both draw the same numbers. The simulated mean and overflow share are printed with their standard errors, the typical size of the simulation's chance error, and the asserts allow four of them. The simulation turns the definition of a posterior, belief about λ among the worlds consistent with the record, into counting.
 
 ### Python
 
@@ -638,6 +654,345 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, including the simulation, since both languages draw the same SplitMix64 stream.
 
+### Lean
+
+Lean proves the gamma-Poisson update and the negative binomial forecast for every positive prior shape and rate.
+
+- Take a prior Gamma(α, β) with α and β above 0, and a record with no email in a zero-length window. Then the chance of the record is $C\beta^{\alpha}\Gamma(A)/(\Gamma(\alpha)B^{A})$, as in the detailed proof.
+- Take the same prior and record. Then prior times likelihood, divided by that chance, is exactly the Gamma(A, B) density at every rate.
+- Take a rate with law Gamma(A, B), with A and B above 0, and a new window of $t > 0$ hours. Then the chance of k emails is the negative binomial mass with $p = B/(B + t)$, for every k.
+- Take the same A, B and t. Then the negative binomial masses add to 1, with mean $tA/B$ and variance $tA/B + t^2A/B^2$.
+- The hand arithmetic holds exactly: 45 emails, 3 hours, Gamma(69, 5), mean 69/5, p = 5/6 and variance 414/25.
+- The mistakes and the Try changing cases hold exactly: means 69/4, 138/7, 97/7, 237/16, 57/4 and 23/2.
+
+The decimals, the credible interval, the overflow chance and the posterior's own mean and spread are left to the Python and Rust checks.
+
+```lean
+-- Gamma-Poisson: a Gamma(α, β) prior on a rate, updated with Poisson counts y_i over t_i hours, becomes Gamma(α + Σ y_i, β + Σ t_i), and averaging a Poisson count over a Gamma(A, B) rate gives the negative binomial law with chance p = B/(B + t), mean tA/B and variance tA/B + t²A/B².
+import Mathlib.Probability.Distributions.Gamma
+import Mathlib.Probability.Distributions.Poisson.Basic
+import Mathlib.Analysis.Analytic.Binomial
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+open scoped NNReal
+
+lemma gp_integral_gammaPDFReal {a r : ℝ} (ha : 0 < a) (hr : 0 < r) :
+    ∫ x, gammaPDFReal a r x = 1 := by
+  rw [integral_eq_lintegral_of_nonneg_ae (ae_of_all _ (gammaPDFReal_nonneg ha hr))
+    (measurable_gammaPDFReal a r).aestronglyMeasurable]
+  have : (fun x => ENNReal.ofReal (gammaPDFReal a r x)) = gammaPDF a r := rfl
+  rw [this, lintegral_gammaPDF_eq_one ha hr, ENNReal.toReal_one]
+
+#print axioms gp_integral_gammaPDFReal
+
+lemma gp_rpow_mul {x : ℝ} (hx : 0 ≤ x) {a : ℝ} (ha : 0 < a) (n : ℕ) :
+    x ^ n * x ^ (a - 1) = x ^ (a + (n : ℝ) - 1) := by
+  rcases hx.eq_or_lt with h | h
+  · subst h
+    cases n with
+    | zero => simp
+    | succ n =>
+      rw [zero_pow (Nat.succ_ne_zero n), zero_mul, Real.zero_rpow]
+      apply ne_of_gt
+      have : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+      push_cast
+      linarith
+  · rw [← Real.rpow_natCast, ← Real.rpow_add h]; ring_nf
+
+#print axioms gp_rpow_mul
+
+lemma gp_prod_poisson {m : ℕ} (t : Fin m → ℝ≥0) (y : Fin m → ℕ) {x : ℝ} (hx : 0 ≤ x) :
+    (∏ i, (poissonMeasure (t i * x.toNNReal)).real {y i}) =
+      (∏ i, ((t i : ℝ) ^ (y i) / (y i).factorial)) * x ^ (∑ i, y i) *
+        Real.exp (-((∑ i, (t i : ℝ)) * x)) := by
+  simp_rw [poissonMeasure_real_singleton, NNReal.coe_mul, Real.coe_toNNReal _ hx]
+  have : ∀ i, Real.exp (-((t i : ℝ) * x)) * ((t i : ℝ) * x) ^ (y i) / ((y i).factorial : ℝ) =
+      ((t i : ℝ) ^ (y i) / (y i).factorial) * x ^ (y i) * Real.exp (-((t i : ℝ) * x)) :=
+    fun i => by ring
+  simp_rw [this, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, ← Real.exp_sum,
+    Finset.sum_neg_distrib, Finset.sum_mul]
+
+#print axioms gp_prod_poisson
+
+lemma gp_pointwise (α β : ℝ) (hα : 0 < α) (hβ : 0 < β)
+    (m : ℕ) (t : Fin m → ℝ≥0) (y : Fin m → ℕ) (x : ℝ) :
+    (∏ i, (poissonMeasure (t i * x.toNNReal)).real {y i}) * gammaPDFReal α β x =
+      (∏ i, ((t i : ℝ) ^ (y i) / (y i).factorial)) * β ^ α *
+            Real.Gamma (α + ∑ i, (y i : ℝ)) /
+          (Real.Gamma α * (β + ∑ i, (t i : ℝ)) ^ (α + ∑ i, (y i : ℝ))) *
+        gammaPDFReal (α + ∑ i, (y i : ℝ)) (β + ∑ i, (t i : ℝ)) x := by
+  rcases lt_or_ge x 0 with hx | hx
+  · simp [gammaPDFReal, not_le.mpr hx]
+  have hH : 0 ≤ ∑ i, (t i : ℝ) := Finset.sum_nonneg (fun i _ => (t i).2)
+  have hK : 0 ≤ ∑ i, (y i : ℝ) := Finset.sum_nonneg (fun i _ => Nat.cast_nonneg _)
+  have hG1 := Real.Gamma_pos_of_pos hα
+  have hG2 := Real.Gamma_pos_of_pos (show 0 < α + ∑ i, (y i : ℝ) by linarith)
+  have hP := Real.rpow_pos_of_pos (show 0 < β + ∑ i, (t i : ℝ) by linarith) (α + ∑ i, (y i : ℝ))
+  rw [gp_prod_poisson t y hx]
+  simp only [gammaPDFReal, hx, ↓reduceIte]
+  have hpow := gp_rpow_mul hx hα (∑ i, y i)
+  push_cast at hpow
+  rw [← hpow]
+  have hexp : Real.exp (-((β + ∑ i, (t i : ℝ)) * x)) =
+      Real.exp (-((∑ i, (t i : ℝ)) * x)) * Real.exp (-(β * x)) := by
+    rw [← Real.exp_add]; ring_nf
+  rw [hexp]
+  field_simp
+
+#print axioms gp_pointwise
+
+lemma gp_coeff (a : ℝ) (ha : 0 < a) (n : ℕ) :
+    Ring.choose (a + n - 1) n = Real.Gamma (a + n) / (Real.Gamma a * n.factorial) := by
+  have h1 : (ascPochhammer ℝ n).eval a * Real.Gamma a = Real.Gamma (a + n) := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [ascPochhammer_succ_eval, mul_right_comm, ih]
+      push_cast
+      rw [← add_assoc, Real.Gamma_add_one (by positivity), mul_comm]
+  rw [← Ring.multichoose_eq]
+  have h2 := Ring.factorial_nsmul_multichoose_eq_ascPochhammer a n
+  rw [Polynomial.ascPochhammer_smeval_eq_eval, nsmul_eq_mul] at h2
+  have hG := Real.Gamma_pos_of_pos ha
+  rw [← h1, ← h2]
+  field_simp
+
+#print axioms gp_coeff
+
+lemma gp_series (a : ℝ) (ha : 0 < a) (z : ℝ) (hz0 : 0 ≤ z) (hz1 : z < 1) :
+    HasSum (fun n : ℕ => Real.Gamma (a + n) / (Real.Gamma a * n.factorial) * z ^ n)
+      (1 / (1 - z) ^ a) := by
+  have hz : z ∈ Metric.eball (0 : ℝ) 1 := by
+    rw [Metric.mem_eball, edist_zero_right]
+    have : ‖z‖₊ < 1 := by
+      rw [← NNReal.coe_lt_coe]; simpa [abs_of_nonneg hz0] using hz1
+    simpa [enorm_eq_nnnorm] using this
+  have h := (Real.one_div_one_sub_rpow_hasFPowerSeriesOnBall_zero a).hasSum hz
+  simp only [FormalMultilinearSeries.ofScalars_apply_eq, zero_add, smul_eq_mul] at h
+  simpa only [gp_coeff a ha] using h
+
+#print axioms gp_series
+
+lemma gp_coeff_shift (a : ℝ) (ha : 0 < a) (k : ℕ) :
+    ((k + 1 : ℕ) : ℝ) * (Real.Gamma (a + (k + 1 : ℕ)) / (Real.Gamma a * (k + 1).factorial)) =
+      a * (Real.Gamma ((a + 1) + k) / (Real.Gamma (a + 1) * k.factorial)) := by
+  have hG := Real.Gamma_pos_of_pos ha
+  rw [Real.Gamma_add_one ha.ne', Nat.factorial_succ]
+  push_cast
+  rw [show a + (k + 1) = a + 1 + k by ring]
+  have : (0 : ℝ) < k.factorial := by positivity
+  field_simp
+
+#print axioms gp_coeff_shift
+
+lemma gp_series_mean (a : ℝ) (ha : 0 < a) (z : ℝ) (hz0 : 0 ≤ z) (hz1 : z < 1) :
+    HasSum (fun n : ℕ => (n : ℝ) * (Real.Gamma (a + n) / (Real.Gamma a * n.factorial) * z ^ n))
+      (a * z * (1 / (1 - z) ^ (a + 1))) := by
+  have h := (gp_series (a + 1) (by linarith) z hz0 hz1).mul_left (a * z)
+  refine (hasSum_nat_add_iff' 1).mp ?_
+  · convert h using 1
+    · funext j
+      rw [pow_succ, ← mul_assoc, ← mul_assoc, gp_coeff_shift a ha j]
+      ring
+    · simp
+
+#print axioms gp_series_mean
+
+lemma gp_series_fact2 (a : ℝ) (ha : 0 < a) (z : ℝ) (hz0 : 0 ≤ z) (hz1 : z < 1) :
+    HasSum (fun n : ℕ => (n : ℝ) * ((n : ℝ) - 1) *
+        (Real.Gamma (a + n) / (Real.Gamma a * n.factorial) * z ^ n))
+      (a * z * ((a + 1) * z * (1 / (1 - z) ^ (a + 1 + 1)))) := by
+  have h := (gp_series_mean (a + 1) (by linarith) z hz0 hz1).mul_left (a * z)
+  refine (hasSum_nat_add_iff' 1).mp ?_
+  · convert h using 1
+    · funext j
+      rw [pow_succ]
+      have := gp_coeff_shift a ha j
+      push_cast at this ⊢
+      rw [show (j : ℝ) + 1 - 1 = j by ring]
+      linear_combination (j : ℝ) * z ^ j * z * this
+    · simp
+
+#print axioms gp_series_fact2
+
+/-- The conjugate update. Take a gamma prior Gamma(α, β) on the rate λ, with α > 0 and β > 0
+(β a rate, not a scale), and a record of m windows: window i lasts t_i ≥ 0 hours and brings
+y_i emails, with no email in a window of zero length. Given λ the counts are independent Poisson
+counts with means t_i λ, so the likelihood is the product of the Poisson masses. Writing
+K = Σ y_i and H = Σ t_i, the evidence (the integral of prior times likelihood) is
+C β^α Γ(α + K) / (Γ(α) (β + H)^(α + K)) with C = Π t_i^(y_i) / y_i!, and Bayes' rule (prior times
+likelihood, divided by the evidence) gives exactly the Gamma(α + K, β + H) density at every λ. -/
+theorem gamma_poisson_conjugate_update (α β : ℝ) (hα : 0 < α) (hβ : 0 < β)
+    (m : ℕ) (t : Fin m → ℝ≥0) (y : Fin m → ℕ) (hzero : ∀ i, t i = 0 → y i = 0) :
+    (∫ x, (∏ i, (poissonMeasure (t i * x.toNNReal)).real {y i}) * gammaPDFReal α β x) =
+        (∏ i, ((t i : ℝ) ^ (y i) / (y i).factorial)) * β ^ α *
+            Real.Gamma (α + ∑ i, (y i : ℝ)) /
+          (Real.Gamma α * (β + ∑ i, (t i : ℝ)) ^ (α + ∑ i, (y i : ℝ))) ∧
+      ∀ lam : ℝ,
+        (∏ i, (poissonMeasure (t i * lam.toNNReal)).real {y i}) * gammaPDFReal α β lam /
+            (∫ x, (∏ i, (poissonMeasure (t i * x.toNNReal)).real {y i}) * gammaPDFReal α β x) =
+          gammaPDFReal (α + ∑ i, (y i : ℝ)) (β + ∑ i, (t i : ℝ)) lam := by
+  have hH : 0 ≤ ∑ i, (t i : ℝ) := Finset.sum_nonneg (fun i _ => (t i).2)
+  have hK : 0 ≤ ∑ i, (y i : ℝ) := Finset.sum_nonneg (fun i _ => Nat.cast_nonneg _)
+  have hint : (∫ x, (∏ i, (poissonMeasure (t i * x.toNNReal)).real {y i}) * gammaPDFReal α β x) =
+      (∏ i, ((t i : ℝ) ^ (y i) / (y i).factorial)) * β ^ α *
+            Real.Gamma (α + ∑ i, (y i : ℝ)) /
+          (Real.Gamma α * (β + ∑ i, (t i : ℝ)) ^ (α + ∑ i, (y i : ℝ))) := by
+    simp_rw [gp_pointwise α β hα hβ m t y]
+    rw [integral_const_mul, gp_integral_gammaPDFReal (by linarith) (by linarith), mul_one]
+  refine ⟨hint, fun lam => ?_⟩
+  have hC : (∏ i, ((t i : ℝ) ^ (y i) / (y i).factorial)) ≠ 0 := by
+    rw [Finset.prod_ne_zero_iff]
+    intro i _
+    apply div_ne_zero _ (by positivity)
+    by_cases h : t i = 0
+    · rw [hzero i h, pow_zero]; exact one_ne_zero
+    · exact pow_ne_zero _ (by exact_mod_cast h)
+  have hG1 := Real.Gamma_pos_of_pos hα
+  have hG2 := Real.Gamma_pos_of_pos (show 0 < α + ∑ i, (y i : ℝ) by linarith)
+  have hP := Real.rpow_pos_of_pos (show 0 < β + ∑ i, (t i : ℝ) by linarith) (α + ∑ i, (y i : ℝ))
+  have hb := Real.rpow_pos_of_pos hβ α
+  rw [hint, gp_pointwise α β hα hβ m t y lam, mul_div_cancel_left₀]
+  exact div_ne_zero (mul_ne_zero (mul_ne_zero hC hb.ne') hG2.ne') (mul_pos hG1 hP).ne'
+
+/-- The forecast is negative binomial. If the rate λ has the law Gamma(A, B), with A > 0 and
+B > 0, and given λ the count N in a new window of t > 0 hours is Poisson with mean tλ, then the
+chance that N = k, the Poisson mass averaged over the gamma density, is
+Γ(A + k) / (Γ(A) k!) · p^A (1 - p)^k with p = B/(B + t), for every k = 0, 1, 2, .... -/
+theorem gamma_poisson_forecast_negative_binomial (A B : ℝ) (hA : 0 < A) (hB : 0 < B)
+    (t : ℝ≥0) (ht : 0 < t) (k : ℕ) :
+    ∫ x, (poissonMeasure (t * x.toNNReal)).real {k} * gammaPDFReal A B x =
+      Real.Gamma (A + k) / (Real.Gamma A * k.factorial) *
+        (B / (B + t)) ^ A * (1 - B / (B + t)) ^ k := by
+  have h := (gamma_poisson_conjugate_update A B hA hB 1 (fun _ => t) (fun _ => k) (fun _ h => absurd h ht.ne')).1
+  simp only [Finset.univ_unique, Finset.prod_singleton, Finset.sum_singleton] at h
+  rw [h]
+  have ht' : (0 : ℝ) < t := ht
+  have hBt : 0 < B + t := by linarith
+  have hG1 := Real.Gamma_pos_of_pos hA
+  rw [Real.div_rpow hB.le hBt.le, Real.rpow_add_natCast hBt.ne',
+    show 1 - B / (B + t) = (t : ℝ) / (B + t) by field_simp; ring, div_pow]
+  have : (0 : ℝ) < k.factorial := by positivity
+  have := Real.rpow_pos_of_pos hBt A
+  field_simp
+
+/-- The forecast's total, mean and variance. With A > 0, B > 0, t > 0 and p = B/(B + t), the
+negative binomial masses q_k = Γ(A + k) / (Γ(A) k!) · p^A (1 - p)^k add to 1, their mean is
+tA/B, and their variance is tA/B + t²A/B²: the Poisson's own scatter tA/B plus the leftover
+doubt about the rate, so the forecast is wider than a Poisson with the same mean. -/
+theorem gamma_poisson_forecast_mean_variance (A B : ℝ) (hA : 0 < A) (hB : 0 < B)
+    (t : ℝ) (ht : 0 < t) :
+    let q : ℕ → ℝ := fun k => Real.Gamma (A + k) / (Real.Gamma A * k.factorial) *
+        (B / (B + t)) ^ A * (1 - B / (B + t)) ^ k
+    HasSum q 1 ∧ HasSum (fun k : ℕ => (k : ℝ) * q k) (t * A / B) ∧
+      HasSum (fun k : ℕ => ((k : ℝ) - t * A / B) ^ 2 * q k) (t * A / B + t ^ 2 * A / B ^ 2) := by
+  intro q
+  have hBt : 0 < B + t := by linarith
+  set p := B / (B + t) with hp_def
+  have hp : 0 < p := by positivity
+  have hz : 1 - p = t / (B + t) := by rw [hp_def]; field_simp; ring
+  have hz0 : 0 ≤ 1 - p := by rw [hz]; positivity
+  have hz1 : 1 - p < 1 := by linarith
+  have h1p : 1 - (1 - p) = p := by ring
+  have hpA : 0 < p ^ A := Real.rpow_pos_of_pos hp A
+  have hq : ∀ k : ℕ, q k = p ^ A * (Real.Gamma (A + k) / (Real.Gamma A * k.factorial) *
+      (1 - p) ^ k) := fun k => by simp only [q]; ring
+  have S0 := (gp_series A hA (1 - p) hz0 hz1).mul_left (p ^ A)
+  have S1 := (gp_series_mean A hA (1 - p) hz0 hz1).mul_left (p ^ A)
+  have S2 := (gp_series_fact2 A hA (1 - p) hz0 hz1).mul_left (p ^ A)
+  rw [h1p] at S0 S1 S2
+  rw [Real.rpow_add_one hp.ne'] at S1
+  rw [Real.rpow_add_one hp.ne', Real.rpow_add_one hp.ne'] at S2
+  have e0 : p ^ A * (1 / p ^ A) = 1 := by field_simp
+  have e1 : p ^ A * (A * (1 - p) * (1 / (p ^ A * p))) = t * A / B := by
+    rw [hz, hp_def]; field_simp
+  have e2 : p ^ A * (A * (1 - p) * ((A + 1) * (1 - p) * (1 / (p ^ A * p * p)))) =
+      t ^ 2 * A * (A + 1) / B ^ 2 := by
+    rw [hz, hp_def]; field_simp
+  rw [e0] at S0
+  rw [e1] at S1
+  rw [e2] at S2
+  have Q0 : HasSum q 1 := by
+    convert S0 using 1; funext k; exact hq k
+  have Q1 : HasSum (fun k : ℕ => (k : ℝ) * q k) (t * A / B) := by
+    convert S1 using 1; funext k; rw [hq]; ring
+  have Q2 : HasSum (fun k : ℕ => (k : ℝ) * ((k : ℝ) - 1) * q k) (t ^ 2 * A * (A + 1) / B ^ 2) := by
+    convert S2 using 1; funext k; rw [hq]; ring
+  refine ⟨Q0, Q1, ?_⟩
+  have := (Q2.add (Q1.mul_left (1 - 2 * (t * A / B)))).add (Q0.mul_left ((t * A / B) ^ 2))
+  convert this using 1
+  · funext k; ring
+  · field_simp; ring
+
+/-! The card's worked numbers, as exact whole numbers and fractions. -/
+
+-- Record: 28 emails in 2 hours, then 17 in 1 hour: K = 45, H = 3, the record's rate 45/3 = 15.
+example : 28 + 17 = 45 ∧ 2 + 1 = 3 ∧ 45 / 3 = 15 := by decide
+
+-- Prior Gamma(24, 2): mean 24/2 = 12, variance 24/2^2 = 6.
+example : (24 : ℚ) / 2 = 12 ∧ (24 : ℚ) / 2 ^ 2 = 6 := by norm_num
+
+-- Posterior Gamma(24 + 45, 2 + 3) = Gamma(69, 5): mean 69/5, variance 69/25.
+example : 24 + 45 = 69 ∧ 2 + 3 = 5 := by decide
+example : (69 : ℚ) / 5 ^ 2 = 69 / 25 := by norm_num
+
+-- The posterior mean as a weighted average: (2/5) × 12 + (3/5) × 15 = 69/5.
+example : (2 / 5 : ℚ) * (24 / 2) + (3 / 5) * (45 / 3) = 69 / 5 := by norm_num
+
+-- Order does not matter: morning first gives Gamma(52, 4), then Gamma(69, 5); afternoon first
+-- gives Gamma(41, 3), then the same Gamma(69, 5).
+example : 24 + 28 = 52 ∧ 2 + 2 = 4 ∧ 52 + 17 = 69 ∧ 4 + 1 = 5 ∧
+    24 + 17 = 41 ∧ 2 + 1 = 3 ∧ 41 + 28 = 69 ∧ 3 + 2 = 5 := by decide
+
+-- Next hour (t = 1): p = 5/(5 + 1) = 5/6, mean 69/5, variance 69/5 + 69/25 = 414/25.
+example : (5 : ℚ) / (5 + 1) = 5 / 6 := by norm_num
+example : (1 : ℚ) * 69 / 5 + 1 ^ 2 * 69 / 5 ^ 2 = 414 / 25 := by norm_num
+
+-- Mistake: windows (2) added to β instead of hours: mean 69/4 = 17.25.
+example : (69 : ℚ) / (2 + 2) = 69 / 4 := by norm_num
+
+-- Mistake: β = 2 read as a scale, rate 1/2: prior mean 48, posterior mean 69/(7/2) = 138/7.
+example : (24 : ℚ) / (1 / 2) = 48 ∧ (69 : ℚ) / (1 / 2 + 3) = 138 / 7 := by norm_num
+
+-- Mistake: morning entered twice: Gamma(97, 7), mean 97/7, variance 97/49.
+example : (69 + 28 : ℚ) / (5 + 2) = 97 / 7 ∧ (69 + 28 : ℚ) / (5 + 2) ^ 2 = 97 / 49 := by norm_num
+
+-- Try: prior Gamma(12/5, 1/5): mean (12/5 + 45)/(1/5 + 3) = 237/16.
+example : (12 / 5 + 45 : ℚ) / (1 / 5 + 3) = 237 / 16 := by norm_num
+
+-- Try: six hours, 90 emails: Gamma(114, 8), mean 57/4, variance 114/64.
+example : (24 + 90 : ℚ) / (2 + 6) = 57 / 4 ∧ (24 + 90 : ℚ) / (2 + 6) ^ 2 = 114 / 64 := by norm_num
+
+-- Try: half-hour window: mean (1/2)(69/5) = 69/10, variance 69/10 + (1/4)(69/25) = 759/100.
+example : (1 / 2 : ℚ) * 69 / 5 = 69 / 10 ∧
+    (1 / 2 : ℚ) * 69 / 5 + (1 / 2) ^ 2 * 69 / 5 ^ 2 = 759 / 100 := by norm_num
+
+-- Try: a fourth hour with no email: Gamma(69, 6), mean 69/6 = 23/2.
+example : (69 : ℚ) / (5 + 1) = 23 / 2 := by norm_num
+
+#print axioms gamma_poisson_conjugate_update
+#print axioms gamma_poisson_forecast_negative_binomial
+#print axioms gamma_poisson_forecast_mean_variance
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gp_integral_gammaPDFReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_rpow_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_prod_poisson' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_series' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_coeff_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_series_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gp_series_fact2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_poisson_conjugate_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_poisson_forecast_negative_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_poisson_forecast_mean_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -685,7 +1040,7 @@ The two outputs agree line for line, including the simulation, since both langua
 - [Credible intervals and decisions](05-credible-intervals-and-decisions.md): credible intervals and choosing an action by its average loss over the posterior, taught on a coin; the same steps apply to Gamma(69, 5) and the desk's overflow chance.
 - [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md): what to do when the prior is not conjugate and no two additions will do.
 
-Here a conjugate pair made the posterior two additions; what it leaves open is how to report a posterior and act on it, and how to compute one when no such pair exists, which the two cards above answer.
+Here a conjugate pair made the posterior two additions. What it leaves open is how to report a posterior and act on it, and how to compute one when no such pair exists, which the two cards above answer.
 
 ---
 

@@ -137,4 +137,4 @@ assert abs(cov12 - 0.95) < 4 * sqrt(0.95 * 0.05 / N)                            
 assert abs(mean12) < 4 * sd_sim[-1] / sqrt(N)                                     # simulated paths centre on f
 assert max([abs(L2 - lev), abs(T2 - tr)] + [abs(S2[i] - sea[i]) for i in range(M)]) < 1e-12  # two update forms agree
 assert abs(ses_l - ses_w) < 1e-9                                                   # recursion = fading weights
-print("all checks passed")
+print("ALL CHECKS PASS")

@@ -10,11 +10,13 @@ A new coin is flipped 10 times and shows 7 heads. Its chance of heads, call it p
 
 That answer came from a table of named laws. Change the prior to a triangle peaked at a fair coin, height min(p, 1 − p), and the table has no entry. The posterior's shape is still easy to state: prior times likelihood, one multiplication per value of p. What goes missing is the constant that makes the total area 1. Every question about the posterior (its average, its tails, its credible interval) needs that constant, and with several unknowns it is an integral nobody can do.
 
-**Markov chain Monte Carlo**, MCMC for short, gets round the constant. Picture a walker on the line from 0 to 1. At each step it proposes a small random move. A move uphill, to a more plausible value of p, is always taken. A move downhill is taken only sometimes, with a chance equal to the new height divided by the old. Rejected moves leave the walker where it is, and it writes that value down again. The list of positions is the sample. Here 100,000 positions average 0.6677, with a standard error of 0.0011: the exact 0.666667 sits one standard error away.
+**Markov chain Monte Carlo**, MCMC for short, gets round the constant. Picture a walker on the line from 0 to 1. At each step it proposes a small random move. A move uphill, to a more plausible value of p, is always taken. A move downhill is taken only sometimes, with a chance equal to the new height divided by the old. Rejected moves leave the walker where it is, and it writes that value down again.
+
+The list of positions is the sample. Here 100,000 positions average 0.6677, with a standard error (SE) of 0.0011: the exact 0.666667 sits one standard error away.
 
 **A random walk that always accepts uphill moves and accepts downhill moves with chance equal to the ratio of posterior heights spends its time in proportion to the posterior, so averages along the walk estimate posterior averages, with no normalising constant ever computed.**
 
-**What kind of fact this is:** a method. That the walk leaves the posterior unchanged is proved on this card in Why it works; that the walk forgets its start and that its averages converge are theorems stated here, checked by computation, and proved for finite chains, such as the grid walk below, in [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md) and [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
+**What kind of fact this is:** a method. That the walk leaves the posterior unchanged is proved on this card in Why it works. That the walk forgets its start and that its averages converge are theorems stated here and checked by computation. They are proved for finite chains, such as the grid walk below, in [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md) and [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
 
 ### The picture: where the walker spent its time
 
@@ -63,7 +65,7 @@ $$\bar p = \frac{1}{N}\sum_{t=1}^{N} p_t, \qquad \text{standard error} \approx \
 | $N_{\text{eff}}$ | effective sample size: independent draws the walk is worth | 15,276 | smaller standard error |
 | $\bar p$ | the walk's average, the estimate of the posterior mean | 0.6677 | — |
 
-The **burn-in** is the stretch of steps discarded at the start, here 1,000, while the walk leaves wherever it was put. **Effective sample size** answers a fair question: the 100,000 positions are not 100,000 independent draws, since each one sits next to the last, so how many independent draws carry the same information? Here 15,276, found by the batch-means method in Step 5.
+The **burn-in** is the stretch of steps discarded at the start, here 1,000, while the walk leaves wherever it was put. **Effective sample size** (ESS) answers a fair question: the 100,000 positions are not 100,000 independent draws, since each one sits next to the last, so how many independent draws carry the same information? Here 15,276, found by the batch-means method in Step 5.
 
 ### When it holds
 
@@ -86,7 +88,11 @@ The acceptance chance uses $f(p')/f(p_t)$. Since $g = f/Z$, the ratio of true po
 
 ### Step 2: flows balance between every pair of places
 
-Imagine a huge crowd of walkers, spread exactly like the posterior, all taking one step at once. Pick two places, a and b, with b higher. The flow from a to b is the crowd at a, times the chance of proposing b, times 1 (uphill is always accepted). The flow from b to a is the crowd at b, times the same proposal chance (the proposal is symmetric), times $f(a)/f(b)$. The crowd at b is the crowd at a times $f(b)/f(a)$, so the two flows are equal. This is **detailed balance**: in one step as many walkers go from a to b as from b to a. On a grid of 99 values of p the check builds each move chance from the same step function the grid walk runs, computes every such pair of flows and finds the largest imbalance to be 2.2e-19, rounding error.
+Imagine a huge crowd of walkers, spread exactly like the posterior, all taking one step at once.
+
+Pick two places, a and b, with b higher. The flow from a to b is the crowd at a, times the chance of proposing b, times 1 (uphill is always accepted). The flow from b to a is the crowd at b, times the same proposal chance (the proposal is symmetric), times $f(a)/f(b)$. The crowd at b is the crowd at a times $f(b)/f(a)$, so the two flows are equal.
+
+This is **detailed balance**: in one step as many walkers go from a to b as from b to a. On a grid of 99 values of p, the check builds each move chance from the same step function the grid walk runs. It computes every such pair of flows and finds the largest imbalance to be 2.2e-19, rounding error.
 
 ### Step 3: balance means the posterior stays put
 
@@ -118,17 +124,19 @@ xychart-beta
     line [1.000, 0.980, 0.890, 0.577, 0.063, 0.001, 0.000]
 ```
 
-The one line is the distance after each number of steps; the steps are not evenly spaced. After 10 steps, 0.890 of the probability is still in the wrong place. By 100 steps the gap is 0.001, and by 200 it is below the printed precision. The theorem behind the picture: a chain that can reach every state from every other, and does not cycle with a fixed period, approaches its resting state from any start. It is proved for finite chains, the grid walk among them, in [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md). The burn-in exists because of this picture: the first positions still remember the start.
+The one line is the distance after each number of steps; the steps are not evenly spaced. After 10 steps, 0.890 of the probability is still in the wrong place. By 100 steps the gap is 0.001, and by 200 it is below the printed precision.
+
+The theorem behind the picture: a chain that can reach every state from every other, and does not cycle with a fixed period, approaches its resting state from any start. It is proved for finite chains, the grid walk among them, in [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md). The burn-in exists because of this picture: the first positions still remember the start.
 
 ### Step 5: averages settle, at a price
 
-A companion theorem, proved in [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md), gives a law of large numbers for chains: the average along one long walk converges to the posterior average, as the average of independent draws does in [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). The price is correlation. Each position is at most 0.25 from the last, and about a third of the time it is the last. Neighbouring positions carry overlapping information, so the standard error is larger than the formula for independent draws says.
+A companion theorem, proved in [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md), gives a law of large numbers for chains. The average along one long walk converges to the posterior average, as the average of independent draws does in [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). The price is correlation. Each position is at most 0.25 from the last, and about a third of the time it is the last. Neighbouring positions carry overlapping information, so the standard error is larger than the formula for independent draws says.
 
 The **batch-means** method measures it without theory. Cut the 100,000 positions into 100 consecutive batches of 1,000 and average each batch. Batches this long are nearly independent of each other, so the spread of the 100 batch averages, divided by the square root of 100, is an honest standard error: 0.0011. The formula for independent draws, spread divided by the square root of N, gives 0.0004, about two and a half times too small. The effective sample size is the N that would make the independent-draws formula honest: the walk's variance over the squared batch standard error, 15,276.
 
 Road 4 in the code supplies the comparison. Beta(8, 4) happens to have an exact sampler: the 8th smallest of 11 uniform numbers. Twenty thousand such independent draws average 0.6642, standard error 0.0009, which is already sharper than the 100,000-step walk.
 
-Another way round the constant, importance sampling (drawing from an easy law and reweighting the draws), fails when the easy law misses where the posterior lives; MCMC trades that risk for correlation. More than one unknown at once, with a two-unknown Gibbs sampler worked through, is on [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md); the computational side is MCMC as a tool.
+Another way round the constant, importance sampling (drawing from an easy law and reweighting the draws), fails when the easy law misses where the posterior lives; MCMC trades that risk for correlation. More than one unknown at once, with a two-unknown Gibbs sampler worked through, is on [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md). A Gibbs sampler updates one unknown at a time, drawing it from its law given the others. The computational side is [MCMC as a tool](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md).
 
 ---
 
@@ -151,15 +159,19 @@ The walk starts at 0.5 with $h = 0.25$. Each row uses two uniform numbers from t
 | P(p > 0.5), exact | 1 − 232/2048, counting 11 fair flips with 8 or more heads | **0.886719** |
 | 95% credible interval | walk's 2.5% and 97.5% points; exact by bisection | 0.3915 to 0.8920; exact **0.3903 to 0.8907** |
 
-Step 4 is the one that makes this sampling rather than climbing: a downhill move, taken because the draw 0.0453 fell under 0.3518. The exact tail comes from a counting identity: the chance that a Beta(8, 4) value is below x equals the chance that at least 8 of 11 uniform numbers fall below x, so at x = 0.5 the chance is the share of 11 fair flips with 8 or more heads, 232 of 2048. Read back in the world: after 7 heads in 10, the coin favours heads with posterior chance about 0.89, and its chance of heads is between 0.39 and 0.89 with posterior probability 0.95, as [Credible intervals and decisions](05-credible-intervals-and-decisions.md) reads such an interval.
+Step 4 is the one that makes this sampling rather than climbing: a downhill move, taken because the draw 0.0453 fell under 0.3518.
 
-The triangle prior peaked at a fair coin, height min(p, 1 − p), has no named partner law. The same walk with $f(p) = \min(p, 1-p)\,p^7(1-p)^3$ averages 0.6272 (SE 0.0008); Simpson's rule on the unnormalised height, an independent road, gives 0.6272. The sceptical prior pulls the estimate toward 0.5.
+The exact tail comes from a counting identity. The chance that a Beta(8, 4) value is below x equals the chance that at least 8 of 11 uniform numbers fall below x. So at x = 0.5 the chance is the share of 11 fair flips with 8 or more heads, 232 of 2048.
+
+Read back in the world: after 7 heads in 10, the coin favours heads with posterior chance about 0.89. Its chance of heads is between 0.39 and 0.89 with posterior probability 0.95, as [Credible intervals and decisions](05-credible-intervals-and-decisions.md) reads such an interval.
+
+The triangle prior peaked at a fair coin, height min(p, 1 − p), has no named partner law. The same walk with $f(p) = \min(p, 1-p)\,p^7(1-p)^3$ averages 0.6272 (SE 0.0008); Simpson's rule on the unnormalised height, an independent road, gives 0.6272. Simpson's rule computes an area from the heights at evenly spaced points. The sceptical prior pulls the estimate toward 0.5.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Record only the moves, drop the repeats | mean 0.6628 (SE 0.0009), sd 0.1274 | Stays are how the walk weights places that are hard to leave, here the tails; dropping them over-weights places where moves are easy to accept, on the slope below the peak |
+| Record only the moves, drop the repeats | mean 0.6628 (SE 0.0009), sd (spread) 0.1274 | Stays are how the walk weights places that are hard to leave, here the tails; dropping them over-weights places where moves are easy to accept, on the slope below the peak |
 | Walk on log-odds with no stretch correction | mean 0.6988 (SE 0.0012), the Beta(7, 3) mean 0.7000 | The proposal is symmetric on the wrong scale; the missing factor p(1 − p) removes one head and one tail |
 | Steps of at most 0.002, 2,000 steps | acceptance 0.9970, mean 0.5188 (SE 0.0014), ESS 27 | Nearly every move is accepted and nearly none goes anywhere; the walk never left 0.5 |
 | Standard error as if draws were independent | 0.0004 instead of 0.0011 | Neighbouring positions are correlated; only 15,276 of the 100,000 count |
@@ -177,7 +189,9 @@ Log-odds is $\ln\frac{p}{1-p}$, a scale that runs over the whole number line. A 
 
 ## Code, from first principles, and it actually runs
 
-Both programs draw every random number from SplitMix64, written out, with seed 20260929, so they make the same walk and print the same digits. Five roads reach the coin's posterior. Road 1 counts: the Beta(8, 4) mean, spread, tail and interval from factorials and binomial sums. Road 2 integrates $p^7(1-p)^3$ by Simpson's rule, which recovers $Z$ = 1/1320 without factorials. Road 3 is the Metropolis walk. Road 4 draws independently, as the 8th smallest of 11 uniforms. Road 5 runs the walk on a grid of 99 points and pushes its entire distribution forward exactly. Seven asserts compare roads, and simulated numbers are allowed four standard errors.
+Both programs draw every random number from SplitMix64, written out, with seed 20260929, so they make the same walk and print the same digits. Five roads reach the coin's posterior.
+
+Road 1 counts: the Beta(8, 4) mean, spread, tail and interval from factorials and binomial sums. Road 2 integrates $p^7(1-p)^3$ by Simpson's rule, which recovers $Z$ = 1/1320 without factorials. Road 3 is the Metropolis walk. Road 4 draws independently, as the 8th smallest of 11 uniforms. Road 5 runs the walk on a grid of 99 points and pushes its entire distribution forward exactly. Seven asserts compare roads, and simulated numbers are allowed four standard errors.
 
 ### Python
 
@@ -560,6 +574,156 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line: the same generator drives the same walk, and every sum runs in the same order in both languages.
+
+### Lean
+
+Lean proves the walk's resting-state facts for any finite set of places with a symmetric proposal, and the card's exact counts.
+
+- Take finitely many places, each with a positive height, and a symmetric proposal. Then each move chance is at least 0, and the chances from any place add to 1.
+- Start a crowd spread like the posterior on that walk. Then as many walkers go from a to b in one step as from b to a: detailed balance.
+- After one step, that crowd is still spread like the posterior. The posterior is a stationary law of the walk.
+- Multiply every height by the same positive number, such as 1/Z. Then every move chance stays the same, so the walk never needs Z.
+- The exact tail holds: 232 of the 2048 outcomes of 11 fair flips have 8 or more heads.
+- Z is exactly 1/1320, and the Beta(8, 4) mean 8/12 is 2/3.
+- On the grid there are 20 proposals from each state, $i \pm 1$ to $i \pm 10$.
+
+The continuous walk, forgetting the start, settling averages and every decimal are left to the Python and Rust checks.
+
+```lean
+-- MCMC in outline: the Metropolis walk on a finite set of states, with a symmetric proposal, is a genuine Markov chain that keeps the posterior at rest, balances flows between every pair of states, and never needs the normalising constant.
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Basic.Real.Basic
+import Mathlib.Data.Int.Interval
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Data.Nat.Factorial.Basic
+import Mathlib.Tactic.NormNum
+
+open Finset
+
+/-- The Metropolis move chance on a finite set of states `ι`. `w i` is the posterior height at
+state `i` (prior times likelihood, constant unknown) and `Q i k` is the chance of proposing `k`
+from `i`. A move to `k ≠ i` happens with chance `Q i k * min 1 (w k / w i)`; the chance of
+staying at `i` is whatever is left over. -/
+noncomputable def metropolis {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (w : ι → ℝ) (Q : ι → ι → ℝ) (i k : ι) : ℝ :=
+  if k = i then 1 - ∑ j ∈ univ.erase i, Q i j * min 1 (w j / w i)
+  else Q i k * min 1 (w k / w i)
+
+/-- Helper: for positive heights, `a * min 1 (b / a) = min a b`. -/
+theorem metropolis_mul_min_ratio (a b : ℝ) (ha : 0 < a) : a * min 1 (b / a) = min a b := by
+  rw [mul_min_of_nonneg _ _ ha.le, mul_one, mul_div_cancel₀ _ ha.ne']
+
+/-- Helper: detailed balance without the normalising division. -/
+theorem metropolis_flow_symm {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (w : ι → ℝ) (hw : ∀ i, 0 < w i)
+    (Q : ι → ι → ℝ) (hsymm : ∀ i k, Q i k = Q k i) (i k : ι) :
+    w i * metropolis w Q i k = w k * metropolis w Q k i := by
+  unfold metropolis
+  by_cases h : k = i
+  · subst h; rfl
+  · rw [ite_eq_right h, ite_eq_right (Ne.symm h)]
+    have h1 : w i * (Q i k * min 1 (w k / w i)) = Q i k * (w i * min 1 (w k / w i)) := by ring
+    have h2 : w k * (Q k i * min 1 (w i / w k)) = Q k i * (w k * min 1 (w i / w k)) := by ring
+    rw [h1, h2, metropolis_mul_min_ratio _ _ (hw i), metropolis_mul_min_ratio _ _ (hw k),
+      hsymm i k, min_comm]
+
+#print axioms metropolis_mul_min_ratio
+#print axioms metropolis_flow_symm
+
+/-- A random walk that proposes moves symmetrically (a step from `i` to `k` is exactly as likely
+as a step from `k` to `i`), always accepts uphill moves, and accepts downhill moves with chance
+equal to the ratio of posterior heights, is a genuine Markov chain (move chances are at least 0
+and add to 1 from every state), and the posterior, each state's height divided by the total, is
+its resting state: one step of the walk applied to the posterior gives back the posterior. -/
+theorem metropolis_posterior_is_stationary {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (w : ι → ℝ) (hw : ∀ i, 0 < w i)
+    (Q : ι → ι → ℝ) (hQ0 : ∀ i k, 0 ≤ Q i k) (hQ1 : ∀ i, ∑ k, Q i k = 1)
+    (hsymm : ∀ i k, Q i k = Q k i) :
+    (∀ i k, 0 ≤ metropolis w Q i k) ∧
+    (∀ i, ∑ k, metropolis w Q i k = 1) ∧
+    (∀ k, ∑ i, (w i / ∑ j, w j) * metropolis w Q i k = w k / ∑ j, w j) := by
+  have hm : ∀ i j, 0 ≤ min 1 (w j / w i) := fun i j =>
+    le_min zero_le_one (div_nonneg (hw j).le (hw i).le)
+  have hle : ∀ i j, min 1 (w j / w i) ≤ 1 := fun i j => min_le_left _ _
+  have hnn : ∀ i k, 0 ≤ metropolis w Q i k := by
+    intro i k
+    unfold metropolis
+    split_ifs with h
+    · have hs : ∑ j ∈ univ.erase i, Q i j * min 1 (w j / w i) ≤ ∑ j, Q i j := by
+        calc ∑ j ∈ univ.erase i, Q i j * min 1 (w j / w i)
+            ≤ ∑ j ∈ univ.erase i, Q i j :=
+              sum_le_sum fun j _ => mul_le_of_le_one_right (hQ0 i j) (hle i j)
+          _ ≤ ∑ j, Q i j := sum_le_sum_of_subset_of_nonneg (erase_subset _ _)
+              fun j _ _ => hQ0 i j
+      rw [hQ1 i] at hs
+      linarith
+    · exact mul_nonneg (hQ0 i k) (hm i k)
+  have hrow : ∀ i, ∑ k, metropolis w Q i k = 1 := by
+    intro i
+    rw [← add_sum_erase _ _ (mem_univ i)]
+    have : ∑ k ∈ univ.erase i, metropolis w Q i k
+        = ∑ k ∈ univ.erase i, Q i k * min 1 (w k / w i) :=
+      sum_congr rfl fun k hk => by
+        unfold metropolis; rw [ite_eq_right (ne_of_mem_erase hk)]
+    rw [this]
+    unfold metropolis
+    rw [ite_eq_left rfl]
+    ring
+  refine ⟨hnn, hrow, fun k => ?_⟩
+  have hb : ∀ i, (w i / ∑ j, w j) * metropolis w Q i k
+      = (w k / ∑ j, w j) * metropolis w Q k i := fun i => by
+    rw [div_mul_eq_mul_div, div_mul_eq_mul_div, metropolis_flow_symm w hw Q hsymm i k]
+  rw [sum_congr rfl fun i _ => hb i, ← mul_sum, hrow k, mul_one]
+
+/-- Detailed balance: with a symmetric proposal, a crowd spread like the posterior sends as many
+walkers from `i` to `k` in one step as from `k` to `i`. -/
+theorem metropolis_detailed_balance {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (w : ι → ℝ) (hw : ∀ i, 0 < w i)
+    (Q : ι → ι → ℝ) (hsymm : ∀ i k, Q i k = Q k i) (i k : ι) :
+    (w i / ∑ j, w j) * metropolis w Q i k = (w k / ∑ j, w j) * metropolis w Q k i := by
+  rw [div_mul_eq_mul_div, div_mul_eq_mul_div, metropolis_flow_symm w hw Q hsymm i k]
+
+/-- Only ratios are needed, so the constant cancels: multiplying every height by the same
+positive constant (for example `1 / Z`, turning heights into the true posterior density) leaves
+every move chance of the walk unchanged. -/
+theorem metropolis_ignores_normalising_constant {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (w : ι → ℝ) (Q : ι → ι → ℝ) (c : ℝ) (hc : 0 < c) :
+    metropolis (fun i => c * w i) Q = metropolis w Q := by
+  funext i k
+  unfold metropolis
+  simp only [mul_div_mul_left _ _ hc.ne']
+
+-- The exact tail: 232 of the 2048 outcomes of 11 fair flips have 8 or more heads.
+example : ∑ k ∈ Icc 8 11, Nat.choose 11 k = 232 := by decide
+example : (2 : ℕ) ^ 11 = 2048 := by norm_num
+-- P(p > 0.5) for Beta(8, 4) is 1 - 232/2048 = 227/256 = 0.88671875, printed as 0.886719.
+example : (1 : ℚ) - 232 / 2048 = 227 / 256 := by norm_num
+-- The normalising constant: Z = 7! 3! / 11! = 1 / (4 * C(11, 4)) = 1 / 1320.
+example : Nat.factorial 11 = 1320 * (Nat.factorial 7 * Nat.factorial 3) := by decide
+example : 4 * Nat.choose 11 4 = 1320 := by decide
+example : ((Nat.factorial 7 * Nat.factorial 3 : ℕ) : ℚ) / (Nat.factorial 11 : ℕ) = 1 / 1320 := by
+  norm_num [Nat.factorial]
+-- The Beta(8, 4) mean 8/12 = 2/3 and variance 8 * 4 / (12^2 * 13) = 32/1872.
+example : (8 : ℚ) / 12 = 2 / 3 := by norm_num
+example : (8 * 4 : ℚ) / (12 ^ 2 * 13) = 32 / 1872 := by norm_num
+-- The grid walk proposes each of the 20 states i ± 1, ..., i ± 10 with chance 1/20.
+example : ((Finset.Icc (-10 : ℤ) 10).erase 0).card = 20 := by decide
+
+#print axioms metropolis_posterior_is_stationary
+#print axioms metropolis_detailed_balance
+#print axioms metropolis_ignores_normalising_constant
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'metropolis_mul_min_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'metropolis_flow_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'metropolis_posterior_is_stationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'metropolis_detailed_balance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'metropolis_ignores_normalising_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

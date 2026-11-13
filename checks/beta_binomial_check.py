@@ -29,7 +29,6 @@ def bdens(t, a, b):                          # beta density, whole a and b
 
 def pred(a, b, m, k):                        # road 1: chance of k heads in m more flips
     return comb(m, k) * rising(a, k) * rising(b, m - k) / rising(a + b, m)
-
 def urn(red, blue, m):                       # road 3: every draw path of a Polya urn
     ways = [0] * (m + 1)
     for path in range(2 ** m):
@@ -138,3 +137,4 @@ assert all(w10[k] == comb(10, k) * rising(A, k) * rising(B, 10 - k) for k in ran
 assert all(abs(g - q) < 1e-10 for g, q in zip(gr, bb)) and abs(v10 - 10 * A * B * (T + 10) / (T * T * (T + 1))) < 1e-12
 assert abs(sm - mean) < 4 * ssd / sqrt(kept) and abs(pn - mean) < 4 * se(pn, kept)
 assert abs(acc - 16 / 143) < 4 * se(acc, R) and abs(p2 - pred(A, B, 2, 2)) < 4 * se(p2, kept)
+print("ALL CHECKS PASS")

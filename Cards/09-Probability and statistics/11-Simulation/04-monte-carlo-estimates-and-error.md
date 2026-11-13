@@ -8,13 +8,17 @@
 
 Draw a square board one metre on a side. From its bottom-left corner, draw a quarter circle of radius one metre. The quarter circle covers π/4 of the board, about 78.5 percent, because a full circle of radius 1 has area π and a quarter of it sits inside the square.
 
-Now throw 10,000 darts so that each lands anywhere on the board with equal chance, independently of the others. A computer does the throwing: each dart is two random numbers between 0 and 1, its across and up positions. In the seeded run on this card, 7,856 darts land inside the quarter circle. The fraction inside is 0.7856, and four times it is 3.1424. That is π, estimated by throwing darts, and π is 3.141593.
+Now throw 10,000 darts so that each lands anywhere on the board with equal chance, independently of the others. A computer does the throwing: each dart is two random numbers between 0 and 1, its across and up positions.
 
-An estimate without an error bar is half an answer. The same run also says how far off it is likely to be: about 0.016 either way. So the answer is **3.14 plus or minus 0.02**. Throw 100 times as many darts and the error bar shrinks tenfold, not a hundredfold. This way of estimating a number by averaging random draws is called **Monte Carlo**, after the casino; Nicholas Metropolis and Stanislaw Ulam published it under that name in 1949.
+In the seeded run on this card, 7,856 darts land inside the quarter circle. The fraction inside is 0.7856, and four times it is 3.1424. That is π, estimated by throwing darts, and π is 3.141593.
+
+An estimate without an error bar is half an answer. The same run also says how far off it is likely to be: about 0.016 either way. So the answer is **3.14 plus or minus 0.02**.
+
+Throw 100 times as many darts and the error bar shrinks tenfold, not a hundredfold. This way of estimating a number by averaging random draws is called **Monte Carlo**, after the casino; Nicholas Metropolis and Stanislaw Ulam published it under that name in 1949.
 
 **Write the answer as an average of a random quantity, average many independent draws of it, and quote the result with its standard error: the spread of one draw divided by the square root of the number of draws.**
 
-**What kind of fact this is:** a method. Its error bar rests on two theorems: the spread of an average of n draws is σ/√n, one draw's spread σ divided by the square root of n, proved on this card in Why it works, and the central limit theorem, stated in [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md), which turns that spread into a 95 percent interval.
+**What kind of fact this is:** a method. Its error bar rests on two theorems. The first: the spread of an average of n draws is σ/√n, one draw's spread σ divided by the square root of n, proved on this card in Why it works. The second: the central limit theorem, stated in [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md), which turns that spread into a 95 percent interval.
 
 ### The picture: the first 20 darts
 
@@ -26,7 +30,9 @@ The square is the board, one unit a side; the shaded region is the quarter circl
 
 ## The formula
 
-Notation first, in words. A reminder from shelf 02: E[X] is the average value of X in the long run and Var(X) is its variance, the average squared distance from that mean. A hat marks an estimate, as on shelf 07: $\hat I_n$ is the estimate of $I$ from $n$ draws. The Greek letter σ (sigma) is the spread of one draw, its standard deviation; s is the same spread measured from the draws of one run.
+Notation first, in words. A reminder from shelf 02 ([Expectation](../02-Random%20Variables/02-expectation.md), [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)): E[X] is the average value of X in the long run and Var(X) is its variance, the average squared distance from that mean.
+
+A hat marks an estimate, as on shelf 07 ([Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md)): $\hat I_n$ is the estimate of $I$ from $n$ draws. The Greek letter σ (sigma) is the spread of one draw, its standard deviation; s is the same spread measured from the draws of one run.
 
 The integral to estimate is written as an average of a function $g$ of a random point $U$:
 
@@ -36,13 +42,13 @@ $$I = E[g(U)], \qquad \hat I_n = \frac{1}{n}\sum_{i=1}^{n} X_i, \quad X_i = g(U_
 
 $$\mathrm{SE} = \frac{\sigma}{\sqrt n}, \qquad \sigma^2 = \mathrm{Var}(X_i), \qquad \text{95 percent interval: } \hat I_n \pm 1.96\,\frac{s}{\sqrt n}$$
 
-**Read it aloud:** the estimate's typical miss is one draw's spread divided by the square root of the number of draws; in practice s stands in for σ, and 1.96 of those errors either side catches the truth in about 95 runs out of 100.
+**Read it aloud:** the estimate's typical miss is one draw's spread divided by the square root of the number of draws. In practice s stands in for σ, and 1.96 of those errors either side catches the truth in about 95 runs out of 100.
 
 For the darts, $U$ is a point $(x, y)$ in the square and $g$ scores 4 for a dart inside the quarter circle and 0 for one outside. The chance of scoring 4 is $p = \pi/4$, so
 
 $$\sigma = 4\sqrt{p(1-p)} = 1.642183, \qquad s = 4\sqrt{\hat p(1-\hat p)}\sqrt{\frac{n}{n-1}}$$
 
-In words: a score that is 4 or 0 has spread 4 times the spread of a yes-or-no count; the second formula is the same thing measured from the run, with the usual n − 1 correction from shelf 07.
+In words: a score that is 4 or 0 has spread 4 times the spread of a yes-or-no count. The second formula is the same thing measured from the run, with the usual n − 1 correction from shelf 07 ([Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -64,7 +70,7 @@ In words: a score that is 4 or 0 has spread 4 times the spread of a yes-or-no co
 ### When it holds
 
 - **Draws independent of each other.** If the two numbers of a dart are the same number, every dart lands on the diagonal and the estimate settles on 2.8284, not π; more darts only make it more precisely wrong.
-- **Draws from the intended law.** The average targets E[g(U)] for whatever law U actually follows; a generator that favours one corner estimates a different number. The generator is the subject of [Random numbers from a computer](01-pseudo-random-numbers.md).
+- **Draws from the intended law.** A law, also called a distribution, is the rule that gives each region its chance. The average targets E[g(U)] for whatever law U actually follows; a generator that favours one corner estimates a different number. The generator is the subject of [Random numbers from a computer](01-pseudo-random-numbers.md).
 - **Finite mean** for the average to settle, and **finite variance** for σ/√n to mean anything. In the infinite-variance test under What breaks, the 95 percent interval covered the truth in only 110 of 200 runs.
 - **Enough draws for the bell.** The 1.96 comes from the central limit theorem, a statement about large n. With few darts, or a target hit very rarely, the bell is a poor fit and the interval's coverage drifts from 95 percent.
 
@@ -78,15 +84,21 @@ A dart lands uniformly on a board of area 1. The chance it lands in a region equ
 
 ### Step 1: write π as an average
 
-Score each dart 4 inside the quarter circle and 0 outside. The long-run average score is 4 times the chance of a hit, $4 \times \pi/4 = \pi$. Any integral over the unit interval works the same way: if U is now a single uniform number on 0 to 1, then E[g(U)] is the integral of g from 0 to 1, because every stretch of the interval gets a chance equal to its length. The quarter circle's upper edge is the curve $y = \sqrt{1 - x^2}$, so π is also the average of $4\sqrt{1-x^2}$ at a random x. That second way reads the curve's height instead of counting hits; the code runs it too. On an interval from a to b, average $(b-a)\,g(a + (b-a)U)$: the factor b − a is the interval's length.
+Score each dart 4 inside the quarter circle and 0 outside. The long-run average score is 4 times the chance of a hit, $4 \times \pi/4 = \pi$. Any integral over the unit interval works the same way. If U is now a single uniform number on 0 to 1, then E[g(U)] is the integral of g from 0 to 1. This holds because every stretch of the interval gets a chance equal to its length.
+
+The quarter circle's upper edge is the curve $y = \sqrt{1 - x^2}$, so π is also the average of $4\sqrt{1-x^2}$ at a random x. That second way reads the curve's height instead of counting hits; the code runs it too.
+
+On an interval from a to b, average $(b-a)\,g(a + (b-a)U)$: the factor b − a is the interval's length.
 
 ### Step 2: the average is right on average
 
-Expectation passes through sums and constants (shelf 02). So $E[\hat I_n] = \frac1n(E[X_1] + \dots + E[X_n]) = I$. The estimator has no bias: it aims at the truth. Across 200 repeated runs of 10,000 darts, the estimates averaged 3.1415.
+Expectation passes through sums and constants ([Expectation](../02-Random%20Variables/02-expectation.md)). So $E[\hat I_n] = \frac1n(E[X_1] + \dots + E[X_n]) = I$. The estimator has no bias: it aims at the truth. Across 200 repeated runs of 10,000 darts, the estimates averaged 3.1415.
 
 ### Step 3: its spread is σ divided by root n
 
-Variances of independent quantities add: the variance of $X_1 + \dots + X_n$ is $n\sigma^2$. Dividing the sum by n divides its variance by $n^2$. So the average has variance $\sigma^2/n$ and standard deviation $\sigma/\sqrt n$. The cancellation from $n^2$ to $n$ is the whole story: n draws add n units of variance, but spreads are square roots of variances, so the typical miss falls only as $1/\sqrt n$. Four times the draws halve the error; a hundred times the draws buy one more decimal place.
+Variances of independent quantities add: the variance of $X_1 + \dots + X_n$ is $n\sigma^2$. Dividing the sum by n divides its variance by $n^2$. So the average has variance $\sigma^2/n$ and standard deviation $\sigma/\sqrt n$.
+
+The cancellation from $n^2$ to $n$ is the whole story. Here n draws add n units of variance, but spreads are square roots of variances, so the typical miss falls only as $1/\sqrt n$. Four times the draws halve the error; a hundred times the draws buy one more decimal place.
 
 <details>
 <summary>Detailed proof</summary>
@@ -95,7 +107,7 @@ Write $Z_i = X_i - I$, the i-th draw's miss. Each has mean 0 and variance $\sigm
 $$E\big[(\hat I_n - I)^2\big] = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} E[Z_i Z_j].$$
 For i ≠ j, independence gives $E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0$: the cross terms vanish. Only the n diagonal terms survive, each equal to $\sigma^2$. So the mean squared miss is $n\sigma^2/n^2 = \sigma^2/n$. Because the estimate has no bias, this is its variance, and its square root σ/√n is its standard error. Nothing here needs a bell curve: the formula holds exactly at every n, as long as σ is finite.
 
-Chebyshev's inequality (shelf 02) then gives a guarantee with no limit theorem at all:
+Chebyshev's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) then gives a guarantee with no limit theorem at all:
 $$P\big(|\hat I_n - I| \ge \varepsilon\big) \le \frac{\sigma^2}{n\varepsilon^2}.$$
 Set the right side to 0.05 and solve for n.
 
@@ -103,7 +115,9 @@ Set the right side to 0.05 and solve for n.
 
 ### Step 4: from a spread to an interval
 
-The central limit theorem says the average of many independent draws with finite variance is close to bell-shaped around I, with spread σ/√n. The standard bell puts 95 percent of its area within 1.96 spreads of its centre. So $\hat I_n \pm 1.96\,\sigma/\sqrt n$ catches I in about 95 percent of runs. That is a statement about the method: of 200 runs, 193 intervals caught π. Any one interval either contains π or it does not.
+The central limit theorem says the average of many independent draws with finite variance is close to bell-shaped around I, with spread σ/√n. The standard bell puts 95 percent of its area within 1.96 spreads of its centre. So $\hat I_n \pm 1.96\,\sigma/\sqrt n$ catches I in about 95 percent of runs.
+
+That is a statement about the method: of 200 runs, 193 intervals caught π. Any one interval either contains π or it does not.
 
 Chebyshev gives the same kind of promise without the bell, at a price. To be within 0.01 of π with 95 percent confidence, the bell asks for 103,595 darts; Chebyshev's guarantee asks for 539,353, about five times as many.
 
@@ -113,7 +127,9 @@ Chebyshev gives the same kind of promise without the bell, at a price. To be wit
 
 ### The other door: a grid
 
-Instead of random darts, put one dart at the centre of each cell of a 100 by 100 grid. The same 10,000 points give 3.142800, an error of about 0.0012, better than the random darts' 0.016. In two dimensions a grid wins. The grid loses as the dimension grows: in d dimensions, n points give only the d-th root of n points along each direction, while Monte Carlo's σ/√n has no d in it. That trade is the subject of Many dimensions.
+Instead of random darts, put one dart at the centre of each cell of a 100 by 100 grid. The same 10,000 points give 3.142800, an error of about 0.0012, better than the random darts' 0.016. In two dimensions a grid wins.
+
+The grid loses as the dimension grows. In d dimensions, n points give only the d-th root of n points along each direction, while Monte Carlo's σ/√n has no d in it. That trade is the subject of [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md).
 
 ---
 
@@ -145,7 +161,7 @@ xychart-beta
     line [0.1599, 0.0934, 0.0433, 0.0195, 0.0151, 0.0100]
 ```
 
-First line (orange): the true standard error σ/√n. Second line (green): the root-mean-square miss of 200 independent runs at each n. Each fourfold step in darts halves both; the categories are not evenly spaced in n.
+First line (orange): the true standard error σ/√n. Second line (green): the root-mean-square miss of 200 independent runs at each n, the square root of the average squared miss. Each fourfold step in darts halves both; the categories are not evenly spaced in n.
 
 ### What breaks if you drop a piece
 
@@ -160,7 +176,13 @@ First line (orange): the true standard error σ/√n. Second line (green): the r
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach π three independent ways: Machin's arctangent series (π = 16 arctan(1/5) − 4 arctan(1/239), summed term by term), a deterministic grid of cell centres counted in whole numbers, and seeded darts from a SplitMix64 generator written out in each language, so Python and Rust draw the same numbers. Then 200 repeated runs check that the miss shrinks as σ/√n and that 95 percent intervals cover π about 95 percent of the time. The normal quantile 1.96 comes from the bell's area summed as a series and solved by halving an interval, then checked by Simpson's rule; nothing imported knows it. Every what-breaks number is reproduced.
+Both programs reach π three independent ways:
+
+- Machin's arctangent series, π = 16 arctan(1/5) − 4 arctan(1/239), summed term by term;
+- a deterministic grid of cell centres, counted in whole numbers;
+- seeded darts from a SplitMix64 generator written out in each language, so Python and Rust draw the same numbers.
+
+Then 200 repeated runs check that the miss shrinks as σ/√n and that 95 percent intervals cover π about 95 percent of the time. The normal quantile 1.96 comes from the bell's area summed as a series and solved by halving an interval, then checked by Simpson's rule, an area formula that fits parabolas through evenly spaced points ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)); nothing imported knows it. Every what-breaks number is reproduced.
 
 ### Python
 
@@ -550,6 +572,171 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves Steps 2 and 3 and Chebyshev's guarantee for every n of 1 or more, and checks the card's counts.
+
+- Take n independent draws, each from the intended law, and a $g$ with finite variance. Then $E[\hat I_n] = I$: the estimator has no bias.
+- Take the same draws. Then $\mathrm{Var}(\hat I_n) = \sigma^2/n$, and the standard error is $\sigma/\sqrt n$, exactly at every n.
+- Take the same draws and any tolerance $\varepsilon > 0$. Then $P(|\hat I_n - I| \ge \varepsilon) \le \sigma^2/(n\varepsilon^2)$, Chebyshev's guarantee.
+- The 100 by 100 grid has 7,857 cell centres inside the quarter circle.
+- Four times 7,856 out of 10,000 is 3.1424, the seeded run's estimate.
+- The first 20 darts, 17 inside, give 3.40.
+- Squaring 2 gives 4 and squaring 10 gives 100: so four times the draws halve the error, and a hundred times divide it by ten.
+
+The bell's 95 percent interval, s in place of σ, and the simulated runs are left to the Python and Rust checks.
+
+```lean
+-- Monte Carlo: the average of n independent draws of g(U) aims exactly at E[g(U)], its spread is σ/√n, and Chebyshev bounds its chance of missing by ε or more by σ²/(nε²).
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open MeasureTheory ProbabilityTheory
+
+lemma mc_aemeas {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {P : Measure Ω} {ν : Measure α}
+    (n : ℕ) (U : Fin n → Ω → α) (g : α → ℝ)
+    (hlaw : ∀ i, P.map (U i) = ν) (hg : MemLp g 2 ν) (i : Fin n) :
+    AEMeasurable g (P.map (U i)) := by
+  rw [hlaw i]; exact hg.aestronglyMeasurable.aemeasurable
+
+lemma mc_memLp {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {P : Measure Ω} {ν : Measure α}
+    (n : ℕ) (U : Fin n → Ω → α) (g : α → ℝ)
+    (hU : ∀ i, Measurable (U i))
+    (hlaw : ∀ i, P.map (U i) = ν) (hg : MemLp g 2 ν) (i : Fin n) :
+    MemLp (fun ω => g (U i ω)) 2 P := by
+  have : MemLp g 2 (P.map (U i)) := by rw [hlaw i]; exact hg
+  exact this.comp_of_map (hU i).aemeasurable
+
+lemma mc_var_sum {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {P : Measure Ω} [IsProbabilityMeasure P] {ν : Measure α}
+    (n : ℕ) (U : Fin n → Ω → α) (g : α → ℝ)
+    (hU : ∀ i, Measurable (U i))
+    (hind : iIndepFun U P)
+    (hlaw : ∀ i, P.map (U i) = ν)
+    (hg : MemLp g 2 ν) :
+    variance (fun ω => ∑ i, g (U i ω)) P = n * variance g ν := by
+  have hind' : iIndepFun (fun i => (fun _ => g) i ∘ U i) P :=
+    hind.comp₀ (fun _ => g) (fun i => (hU i).aemeasurable) (mc_aemeas n U g hlaw hg)
+  have h1 : (fun ω => ∑ i, g (U i ω)) = ∑ i, (fun ω => g (U i ω)) := by
+    funext ω; simp [Finset.sum_apply]
+  rw [h1, IndepFun.variance_sum (fun i _ => mc_memLp n U g hU hlaw hg i)
+    (fun i _ j _ hij => hind'.indepFun hij)]
+  have h2 : ∀ i, variance (fun ω => g (U i ω)) P = variance g ν := by
+    intro i
+    rw [← hlaw i, variance_map (mc_aemeas n U g hlaw hg i) (hU i).aemeasurable]
+    rfl
+  simp [h2]
+
+lemma mc_var_avg {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {P : Measure Ω} [IsProbabilityMeasure P] {ν : Measure α}
+    (n : ℕ) (hn : 0 < n) (U : Fin n → Ω → α) (g : α → ℝ)
+    (hU : ∀ i, Measurable (U i))
+    (hind : iIndepFun U P)
+    (hlaw : ∀ i, P.map (U i) = ν)
+    (hg : MemLp g 2 ν) :
+    variance (fun ω => (∑ i, g (U i ω)) / n) P = variance g ν / n := by
+  simp_rw [div_eq_mul_inv]
+  rw [variance_mul_const, mc_var_sum n U g hU hind hlaw hg]
+  have : (n : ℝ) ≠ 0 := by positivity
+  field_simp
+
+/-- **The square-root-of-n error bar (Step 3).** Let `U 0, …, U (n−1)` be `n ≥ 1` random
+points, independent of each other, each drawn from the intended law `ν`, and let `g` be a
+function with finite variance under `ν` (its square has a finite average). Score each draw
+`X i = g (U i)` and average the scores: `Î_n = (X 0 + ⋯ + X (n−1)) / n`. Then the average's
+variance is one draw's variance `σ²` divided by `n`, and its standard deviation, the
+standard error, is `σ / √n`. This holds exactly at every `n`; no bell curve is needed. -/
+theorem monte_carlo_standard_error {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {P : Measure Ω} [IsProbabilityMeasure P] {ν : Measure α}
+    (n : ℕ) (hn : 0 < n) (U : Fin n → Ω → α) (g : α → ℝ)
+    (hU : ∀ i, Measurable (U i))
+    (hind : iIndepFun U P)
+    (hlaw : ∀ i, P.map (U i) = ν)
+    (hg : MemLp g 2 ν) :
+    variance (fun ω => (∑ i, g (U i ω)) / n) P = variance g ν / n ∧
+      Real.sqrt (variance (fun ω => (∑ i, g (U i ω)) / n) P)
+        = Real.sqrt (variance g ν) / Real.sqrt n := by
+  have h := mc_var_avg n hn U g hU hind hlaw hg
+  refine ⟨h, ?_⟩
+  rw [h, Real.sqrt_div' _ (Nat.cast_nonneg n)]
+
+/-- **The average is right on average (Step 2).** Under the same conditions, the long-run
+average of the estimate `Î_n` is the target `I = E[g(U)]`, the integral of `g` against the
+law `ν`: the estimator has no bias. -/
+theorem monte_carlo_unbiased {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {P : Measure Ω} [IsProbabilityMeasure P] {ν : Measure α}
+    (n : ℕ) (hn : 0 < n) (U : Fin n → Ω → α) (g : α → ℝ)
+    (hU : ∀ i, Measurable (U i))
+    (hind : iIndepFun U P)
+    (hlaw : ∀ i, P.map (U i) = ν)
+    (hg : MemLp g 2 ν) :
+    ∫ ω, (∑ i, g (U i ω)) / n ∂P = ∫ x, g x ∂ν := by
+  have hi : ∀ i, ∫ ω, g (U i ω) ∂P = ∫ x, g x ∂ν := by
+    intro i
+    rw [← hlaw i, integral_map (hU i).aemeasurable]
+    rw [hlaw i]; exact hg.aestronglyMeasurable
+  rw [integral_div, integral_finsetSum _ (fun i _ =>
+    (mc_memLp n U g hU hlaw hg i).integrable one_le_two)]
+  simp only [hi, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  have : (n : ℝ) ≠ 0 := by positivity
+  field_simp
+
+/-- **Chebyshev's guarantee (Detailed proof).** Under the same conditions, for any tolerance
+`ε > 0`, the chance that the estimate `Î_n` misses the target `I = E[g(U)]` by `ε` or more
+is at most `σ² / (n ε²)`, where `σ²` is one draw's variance. -/
+theorem monte_carlo_chebyshev {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {P : Measure Ω} [IsProbabilityMeasure P] {ν : Measure α}
+    (n : ℕ) (hn : 0 < n) (U : Fin n → Ω → α) (g : α → ℝ)
+    (hU : ∀ i, Measurable (U i))
+    (hind : iIndepFun U P)
+    (hlaw : ∀ i, P.map (U i) = ν)
+    (hg : MemLp g 2 ν) (ε : ℝ) (hε : 0 < ε) :
+    P {ω | ε ≤ |(∑ i, g (U i ω)) / n - ∫ x, g x ∂ν|}
+      ≤ ENNReal.ofReal (variance g ν / (n * ε ^ 2)) := by
+  have hY : MemLp (fun ω => (∑ i, g (U i ω)) / n) 2 P := by
+    have := memLp_finsetSum Finset.univ (fun i _ => mc_memLp n U g hU hlaw hg i)
+    simpa [div_eq_mul_inv] using this.mul_const ((n : ℝ)⁻¹)
+  have h := meas_ge_le_variance_div_sq hY hε
+  rw [monte_carlo_unbiased n hn U g hU hind hlaw hg,
+    mc_var_avg n hn U g hU hind hlaw hg, div_div] at h
+  exact h
+
+-- The grid door: of the 100 × 100 cell centres ((2i+1)/200, (2j+1)/200), 7,857 lie in the
+-- quarter circle, since x² + y² ≤ 1 is (2i+1)² + (2j+1)² ≤ 4·100².
+example : ((List.range 100).flatMap fun i => (List.range 100).map fun j => (i, j)).countP
+    (fun ij => (2 * ij.1 + 1) ^ 2 + (2 * ij.2 + 1) ^ 2 ≤ 4 * 100 * 100) = 7857 := by
+  decide +kernel
+-- The seeded run: 7,856 of 10,000 darts inside, so the estimate is 4 × 7856/10000 = 3.1424.
+example : (4 : ℚ) * 7856 / 10000 = 31424 / 10000 := by norm_num
+-- The first 20 darts: 17 inside, estimate 4 × 17/20 = 3.40.
+example : (4 : ℚ) * 17 / 20 = 340 / 100 := by norm_num
+-- Four times the darts halve the error bar and a hundred times divide it by ten: 2² = 4, 10² = 100.
+example : (2 : ℕ) ^ 2 = 4 ∧ (10 : ℕ) ^ 2 = 100 := by decide
+
+#print axioms mc_aemeas
+#print axioms mc_memLp
+#print axioms mc_var_sum
+#print axioms mc_var_avg
+#print axioms monte_carlo_standard_error
+#print axioms monte_carlo_unbiased
+#print axioms monte_carlo_chebyshev
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mc_aemeas' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mc_memLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mc_var_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mc_var_avg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monte_carlo_standard_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monte_carlo_unbiased' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monte_carlo_chebyshev' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **40,000 darts instead of 10,000.** Guess first: four times the work. The standard error falls from 0.0164 to 0.0082, exactly half.
@@ -595,7 +782,7 @@ The two outputs are identical line for line.
 - [The Asian option desks trade](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): a payoff with no closed formula, priced by simulation.
 - [Investing over a lifetime](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/05-life-cycle-and-glide-paths.md): simulated retirement savings paths and the spread of their outcomes.
 - [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why σ/√n with no dimension in it beats a grid in high dimensions.
-- [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids and random points compared as quadrature rules.
+- [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids and random points compared as quadrature rules, the recipes that turn a function's values into an integral.
 - [Bumping a simulated price](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/08-bumped-sensitivities-and-monte-carlo-noise.md): what the noise does to a difference of two simulated numbers.
 
 The error bar has two levers, n and σ, and n is the expensive one: a hundred times the work for one digit. Whether σ can be cut instead, at no extra draws, is the question [Variance reduction](05-variance-reduction.md) answers.

@@ -12,7 +12,7 @@ The typical day hides two kinds of week. In a calm week, such as week 129, the d
 
 The same holds for the share. The direction of tomorrow's move is close to unguessable: today's return and tomorrow's have a correlation of 0.03, which is noise. The size of tomorrow's move is not: today's squared return and tomorrow's have a correlation of 0.15, well clear of noise. From here on the storms have their proper name, **volatility clustering**: large moves follow large moves, of either sign, and small follow small.
 
-GARCH turns that observation into a rule. Each evening it sets tomorrow's variance, the expected squared move, from three pieces: a small constant, today's squared return, and today's variance. The rule has three settings. They are fitted to the record by maximum likelihood, and then the rule forecasts the spread of tomorrow, next week and next quarter. The share on this card is simulated from a GARCH rule with known settings, so the fit can be graded against the truth; real shares show the same clustering.
+GARCH turns that observation into a rule. Each evening it sets tomorrow's variance, the expected squared move, from three pieces: a small constant, today's squared return, and today's variance. The rule has three settings. They are fitted to the record by maximum likelihood, which picks the settings that make the record least surprising, and then the rule forecasts the spread of tomorrow, next week and next quarter. The share on this card is simulated from a GARCH rule with known settings, so the fit can be graded against the truth; real shares show the same clustering.
 
 **Tomorrow's variance is a small constant, plus a share of today's squared return, plus a share of today's variance; fitted by maximum likelihood, that rule explains the clustering and forecasts a variance that drifts back towards a long-run level.**
 
@@ -36,13 +36,15 @@ First line (orange): each week's measured typical daily move, the square root of
 
 ## The formula
 
-Notation first, in words. Trading days are counted by $t$. $r_t$ is day t's return in percent. $h_t$ is the variance of that return as it stands the evening before: the expected squared move, given everything known up to day t − 1. Its square root is the day's **volatility**, the size of a typical move. $z_t$ is a fresh draw from the standard normal law, independent of everything that came before. The model has three settings: $\omega$ (omega), a small constant; $\alpha$ (alpha), the weight on today's squared return; and $\beta$ (beta), the weight on today's variance.
+Notation first, in words. Trading days are counted by $t$. $r_t$ is day t's return in percent. $h_t$ is the variance of that return as it stands the evening before: the expected squared move, given everything known up to day t − 1. Its square root is the day's **volatility**, the size of a typical move. $z_t$ is a fresh draw from the standard normal law, independent of everything that came before.
+
+The model has three settings: $\omega$ (omega), a small constant; $\alpha$ (alpha), the weight on today's squared return; and $\beta$ (beta), the weight on today's variance.
 
 $$r_t = \sqrt{h_t}\; z_t, \qquad h_{t+1} = \omega + \alpha\, r_t^2 + \beta\, h_t$$
 
 **Read it aloud:** each day's return is a normal draw scaled by that day's volatility; tomorrow's variance is a small constant, plus alpha times today's squared return, plus beta times today's variance.
 
-The name spells out the idea: generalised autoregressive conditional heteroskedasticity. Heteroskedastic means of unequal spread; conditional, given the past; autoregressive, built from its own past, as on [Autoregression](02-ar-models.md); generalised, because yesterday's variance enters as well as yesterday's squared return. The (1,1) counts one day back of each.
+The name spells out the idea: generalised autoregressive conditional heteroskedasticity. Heteroskedastic means of unequal spread; conditional, given the past; autoregressive, built from its own past, as on [Autoregression](02-ar-models.md); generalised, because yesterday's variance enters as well as yesterday's squared return. The full name is GARCH(1,1): the (1,1) counts one day back of each.
 
 The sum $\phi = \alpha + \beta$ is the **persistence**: the share of today's variance above its long-run level that survives to tomorrow. When it is below 1, the variance has a long-run level, and the forecast k days ahead drifts towards it:
 
@@ -82,7 +84,7 @@ $$\ell(\omega, \alpha, \beta) = -\frac{1}{2} \sum_{t=1}^{n} \left[ \ln\left(2\pi
 - **Returns centred on zero.** The model reads the whole squared return as spread. A drift must be removed first, or it is counted as variance.
 - **Persistence below 1.** Then the long-run level exists and forecasts return to it. At exactly 1, EWMA's case, they never do. Above 1, the forecasts grow without limit.
 - **A positive constant and non-negative weights.** These keep every variance positive; a negative weight can make a variance negative.
-- **Normal surprises in the likelihood.** Even normal surprises give returns fatter tails than the normal law, because the scale moves. Real daily surprises are fatter-tailed still. The fitted settings stay sound (the quasi-maximum-likelihood result of Bollerslev and Wooldridge), but standard errors read off the curvature come out too small and need a correction.
+- **Normal surprises in the likelihood.** Even normal surprises give returns fatter tails than the normal law, because the scale moves. Real daily surprises are fatter-tailed still. The fitted settings stay sound (the quasi-maximum-likelihood result of Bollerslev and Wooldridge), but standard errors (the typical size of an estimate's error) read off the curvature come out too small and need a correction.
 - **Symmetry.** A fall and a rise of the same size raise tomorrow's variance equally. Real share prices react more to falls. Variants such as GJR-GARCH (after Glosten, Jagannathan and Runkle) add a separate weight for down days.
 
 ---
@@ -95,7 +97,9 @@ The model makes a return's direction fresh each day, through the normal draw, an
 
 ### Step 1: returns are uncorrelated, but their squares are not
 
-Take today's return and one from k days earlier. Given last evening's information, today's volatility and the earlier return are fixed numbers and today's draw averages zero, so their product averages zero; averaging over all evenings keeps it zero (the tower rule, [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md)). The returns are uncorrelated at every lag. On the share the measured correlations run from −0.05 to 0.03. Pure noise over 2,500 days stays inside ±0.04 about 19 times in 20; nine of the ten lags do, and one stray at lag 3 is what noise gives. That band is for independent noise. Returns that cluster are uncorrelated but not independent, and their measured correlations spread wider still, so the stray is even less remarkable.
+Take today's return and one from k days earlier. Given last evening's information, today's volatility and the earlier return are fixed numbers and today's draw averages zero, so their product averages zero; averaging over all evenings keeps it zero (the tower rule, [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md)). The returns are uncorrelated at every lag.
+
+On the share the measured correlations run from −0.05 to 0.03. Pure noise over 2,500 days stays inside ±0.04 about 19 times in 20; nine of the ten lags do, and one stray at lag 3 is what noise gives. That band is for independent noise. Returns that cluster are uncorrelated but not independent, and their measured correlations spread wider still, so the stray is even less remarkable.
 
 The squares are not. Given last evening, today's squared return averages $h_t$, which contains yesterday's squared return with weight α: a large move yesterday raises the expected square today. That correlation is the clustering. It is measured by the **autocorrelation**, the correlation of a series with itself k days earlier ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
 
@@ -238,7 +242,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The scripts simulate the share from the true rule, using a SplitMix64 generator (seed 2026) and Box–Muller normal draws ([Rejection sampling and Box-Muller](../11-Simulation/03-rejection-sampling-and-box-muller.md)). They fit both rules with searches written out here. Three roads meet. The fit is checked against the known truth and against a grid search with the long-run level pinned to the plain variance. The forecast formula is checked against 20,000 simulated futures ([Monte Carlo](../11-Simulation/04-monte-carlo-estimates-and-error.md)), with four standard errors allowed. The clustering is checked against the same days shuffled and, loosely, against the model's $\rho_1$; the $\rho_1$ formula itself is checked tightly against the ARMA(1,1)'s own weights, summed 4,000 days back.
+Nothing imported knows the answer. The scripts simulate the share from the true rule, using a SplitMix64 generator (seed 2026) and Box–Muller normal draws ([Rejection sampling and Box-Muller](../11-Simulation/03-rejection-sampling-and-box-muller.md)). They fit both rules with searches written out here.
+
+Three roads meet. The fit is checked against the known truth and against a grid search with the long-run level pinned to the plain variance. The forecast formula is checked against 20,000 simulated futures ([Monte Carlo](../11-Simulation/04-monte-carlo-estimates-and-error.md)), with four standard errors allowed. The clustering is checked against the same days shuffled and, loosely, against the model's $\rho_1$; the $\rho_1$ formula itself is checked tightly against the ARMA(1,1)'s own weights, summed 4,000 days back.
 
 ### Python
 
@@ -633,6 +639,186 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line: the same generator, the same climb and the same order of additions give the same bits.
+
+### Lean
+
+Lean proves Steps 2, 3 and 4 inside the model, for any positive constant and non-negative weights with persistence below 1.
+
+- **The forecast is pulled home.** Suppose each variance is the expected next squared return, given the past, and follows the rule. Then the forecast k days ahead is the long-run level plus the persistence to the power k − 1, times tomorrow's gap from it.
+- **The average variance settles.** Take the same model. Then the average variance over all histories approaches the long-run level $\bar h$ as the days go by.
+- **The squares' autocorrelation.** Suppose $3\alpha^2 + 2\alpha\beta + \beta^2 < 1$, and the squares' covariances obey the equations in Step 4's detailed proof. Then $\rho_k = \phi^{\,k-1}\,\rho_1$ for every k of 1 or more, with $\rho_1$ as in Step 4.
+- **The worked numbers.** The hand table checks out: long-run variance 2.5, tomorrow's variance 5.18, persistence 0.98, and 4.7344 ten days ahead.
+- **The finite-variance condition.** Take the true settings, α = 0.08 and β = 0.90. Then $3\alpha^2 + 2\alpha\beta + \beta^2$ is 0.9732, just below 1.
+
+The Python and Rust checks cover the rest: the fit by maximum likelihood, the covariance equations themselves, and the measured clustering.
+
+```lean
+-- GARCH: inside the GARCH(1,1) model, the k-day variance forecast is the long-run level ω/(1 − α − β) plus (α + β)^(k−1) times tomorrow's gap from it, the average variance settles at that level, and the squares' autocorrelations are ρ₁ then (α + β)^(k−1) ρ₁.
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+import Mathlib.Probability.Process.Filtration
+import Mathlib.Analysis.SpecificLimits.Basic
+
+open MeasureTheory Filter Topology
+
+/-- **The forecast is pulled home geometrically (Step 3).** Day `s`'s return is `r s`; the
+information known at the close of day `s` is `ℱ s`. The variance `h (s+1)` of the next return
+is the expected squared move given everything known up to day `s`, and tomorrow's variance
+follows the GARCH(1,1) rule `h (s+1) = ω + α r_s² + β h_s`. With a positive constant,
+non-negative weights and persistence `φ = α + β` below 1, the forecast made at the close of
+day `t` for the variance `k ≥ 1` days ahead is
+`E[h (t+k) | day t] = h̄ + φ^(k−1) (h (t+1) − h̄)`, where `h̄ = ω / (1 − φ)` is the long-run
+variance. -/
+theorem garch_variance_forecast {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω}
+    [IsProbabilityMeasure μ] (ℱ : Filtration ℕ m0)
+    (ω α β : ℝ) (hω : 0 < ω) (hα : 0 ≤ α) (hβ : 0 ≤ β) (hφ : α + β < 1)
+    (r h : ℕ → Ω → ℝ)
+    (hr : ∀ s, Integrable (fun x => r s x ^ 2) μ)
+    (hcond : ∀ s, μ[fun x => r (s + 1) x ^ 2 | ℱ s] =ᵐ[μ] h (s + 1))
+    (hrule : ∀ s x, h (s + 1) x = ω + α * r s x ^ 2 + β * h s x)
+    (t k : ℕ) (hk : 1 ≤ k) :
+    μ[h (t + k) | ℱ t] =ᵐ[μ]
+      fun x => ω / (1 - (α + β)) + (α + β) ^ (k - 1) * (h (t + 1) x - ω / (1 - (α + β))) := by
+  have hne : (1 - (α + β)) ≠ 0 := by linarith
+  have hint : ∀ s, Integrable (h (s + 1)) μ := fun s => integrable_condExp.congr (hcond s)
+  have key : ∀ i, μ[fun x => r (t + i + 1) x ^ 2 | ℱ t] =ᵐ[μ] μ[h (t + i + 1) | ℱ t] := by
+    intro i
+    have hle : ℱ t ≤ ℱ (t + i) := ℱ.mono (by omega)
+    exact (condExp_condExp_of_le hle (ℱ.le (t + i))).symm.trans (condExp_congr_ae (hcond (t + i)))
+  have P : ∀ i, μ[h (t + i + 1) | ℱ t] =ᵐ[μ]
+      fun x => ω / (1 - (α + β)) + (α + β) ^ i * (h (t + 1) x - ω / (1 - (α + β))) := by
+    intro i
+    induction i with
+    | zero =>
+      have e1 : μ[h (t + 0 + 1) | ℱ t] =ᵐ[μ] μ[μ[fun x => r (t + 1) x ^ 2 | ℱ t] | ℱ t] :=
+        condExp_congr_ae (hcond t).symm
+      rw [condExp_of_stronglyMeasurable (ℱ.le t) stronglyMeasurable_condExp integrable_condExp] at e1
+      refine (e1.trans (hcond t)).mono fun x hx => ?_
+      rw [hx]; simp
+    | succ i ih =>
+      have hfun : h (t + (i + 1) + 1) = (fun _ => ω) +
+          (α • (fun x => r (t + i + 1) x ^ 2) + β • h (t + i + 1)) := by
+        funext x
+        rw [show t + (i + 1) + 1 = (t + i + 1) + 1 by omega, hrule]
+        simp [smul_eq_mul]; ring
+      rw [hfun]
+      have e1 := condExp_add (integrable_const ω)
+        (((hr (t + i + 1)).smul α).add ((hint (t + i)).smul β)) (ℱ t)
+      have e2 := condExp_add ((hr (t + i + 1)).smul α) ((hint (t + i)).smul β) (ℱ t) (μ := μ)
+      have e3 := condExp_smul (μ := μ) α (fun x => r (t + i + 1) x ^ 2) (ℱ t)
+      have e4 := condExp_smul (μ := μ) β (h (t + i + 1)) (ℱ t)
+      rw [condExp_const (ℱ.le t)] at e1
+      filter_upwards [e1, e2, e3, e4, key i, ih] with x h1 h2 h3 h4 h5 h6
+      rw [h1, Pi.add_apply, h2, Pi.add_apply, h3, h4, Pi.smul_apply, Pi.smul_apply, h5, h6,
+        smul_eq_mul, smul_eq_mul]
+      field_simp
+      ring
+  obtain ⟨i, rfl⟩ : ∃ i, k = i + 1 := ⟨k - 1, by omega⟩
+  simpa [← add_assoc] using P i
+
+/-- **The variance has a long-run level (Step 2).** In the same model, with a positive
+constant, non-negative weights and persistence `α + β` below 1, the average variance
+`E[h s]` over all histories settles, as `s` grows, at the long-run level
+`h̄ = ω / (1 − (α + β))`. -/
+theorem garch_long_run_variance {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω}
+    [IsProbabilityMeasure μ] (ℱ : Filtration ℕ m0)
+    (ω α β : ℝ) (hω : 0 < ω) (hα : 0 ≤ α) (hβ : 0 ≤ β) (hφ : α + β < 1)
+    (r h : ℕ → Ω → ℝ)
+    (hr : ∀ s, Integrable (fun x => r s x ^ 2) μ)
+    (hcond : ∀ s, μ[fun x => r (s + 1) x ^ 2 | ℱ s] =ᵐ[μ] h (s + 1))
+    (hrule : ∀ s x, h (s + 1) x = ω + α * r s x ^ 2 + β * h s x) :
+    Tendsto (fun s => ∫ x, h s x ∂μ) atTop (𝓝 (ω / (1 - (α + β)))) := by
+  have hne : (1 - (α + β)) ≠ 0 := by linarith
+  have hint : ∀ s, Integrable (h (s + 1)) μ := fun s => integrable_condExp.congr (hcond s)
+  have hI : ∀ s, ∫ x, h (s + 1) x ∂μ = ∫ x, r (s + 1) x ^ 2 ∂μ := by
+    intro s
+    rw [← integral_congr_ae (hcond s), integral_condExp (ℱ.le s)]
+  have hrec : ∀ n, ∫ x, h (n + 2) x ∂μ = ω + (α + β) * ∫ x, h (n + 1) x ∂μ := by
+    intro n
+    have : (fun x => h (n + 2) x) = fun x => (ω + α * r (n + 1) x ^ 2) + β * h (n + 1) x :=
+      funext fun x => hrule (n + 1) x
+    have i1 : Integrable (fun x => ω + α * r (n + 1) x ^ 2) μ :=
+      (integrable_const ω).add ((hr (n + 1)).const_mul α)
+    have i2 : Integrable (fun x => β * h (n + 1) x) μ := (hint n).const_mul β
+    have i3 : Integrable (fun x => α * r (n + 1) x ^ 2) μ := (hr (n + 1)).const_mul α
+    rw [this, integral_add i1 i2, integral_add (integrable_const ω) i3,
+      integral_const_mul, integral_const_mul, ← hI n]
+    simp; ring
+  set c := ω / (1 - (α + β))
+  have hform : ∀ n, ∫ x, h (n + 1) x ∂μ = c + (α + β) ^ n * (∫ x, h 1 x ∂μ - c) := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [hrec n, ih, pow_succ]
+      simp only [c]
+      field_simp
+      ring
+  rw [← tendsto_add_atTop_iff_nat 1]
+  refine Tendsto.congr (fun n => (hform n).symm) ?_
+  have hp : Tendsto (fun n : ℕ => (α + β) ^ n) atTop (𝓝 0) :=
+    tendsto_pow_atTop_nhds_zero_of_lt_one (by linarith) hφ
+  simpa using (hp.mul_const (∫ x, h 1 x ∂μ - c)).const_add c
+
+/-- **The autocorrelation of the squares (Step 4, detailed proof).** Let `φ = α + β`, with
+non-negative weights and the finite-fourth-moment condition `3α² + 2αβ + β² < 1`. Let the
+surprises have variance `s > 0`, and let `g k` be the covariance of the centred squares `k`
+days apart. If the variance obeys `g 0 = φ² g 0 + s + β² s − 2φβ s`, lag one obeys
+`g 1 = φ g 0 − β s`, and each later lag is `φ` times the one before, then for every `k ≥ 1`
+the autocorrelation is `ρ_k = g k / g 0 = φ^(k−1) ρ₁` with
+`ρ₁ = α (1 − αβ − β²) / (1 − 2αβ − β²)`. -/
+theorem garch_squares_autocorrelation (α β s : ℝ) (hα : 0 ≤ α) (hβ : 0 ≤ β)
+    (h4 : 3 * α ^ 2 + 2 * α * β + β ^ 2 < 1) (hs : 0 < s) (g : ℕ → ℝ)
+    (hg0 : g 0 = (α + β) ^ 2 * g 0 + s + β ^ 2 * s - 2 * (α + β) * β * s)
+    (hg1 : g 1 = (α + β) * g 0 - β * s)
+    (hgk : ∀ k, 1 ≤ k → g (k + 1) = (α + β) * g k) :
+    ∀ k, 1 ≤ k → g k / g 0
+      = (α + β) ^ (k - 1) * (α * (1 - α * β - β ^ 2) / (1 - 2 * α * β - β ^ 2)) := by
+  have hA : 0 < 1 - (α + β) ^ 2 := by nlinarith [sq_nonneg α]
+  have hD : 0 < 1 - 2 * α * β - β ^ 2 := by nlinarith [sq_nonneg α, mul_nonneg hα hβ]
+  have hG : g 0 = s * (1 - 2 * α * β - β ^ 2) / (1 - (α + β) ^ 2) := by
+    field_simp; linarith
+  have hG0 : g 0 ≠ 0 := by rw [hG]; positivity
+  have hpow : ∀ i, g (i + 1) = (α + β) ^ i * g 1 := by
+    intro i
+    induction i with
+    | zero => simp
+    | succ i ih => rw [hgk (i + 1) (by omega), ih, pow_succ]; ring
+  intro k hk
+  obtain ⟨i, rfl⟩ : ∃ i, k = i + 1 := ⟨k - 1, by omega⟩
+  rw [hpow, Nat.add_sub_cancel, hg1, mul_div_assoc]
+  congr 1
+  rw [hG]
+  field_simp
+  ring
+
+-- Worked numbers, by hand, with the true rule ω = 0.05, α = 0.08, β = 0.90.
+-- Long-run variance: 0.05 / (1 − 0.08 − 0.90) = 2.5.
+example : (5 / 100 : ℚ) / (1 - 8 / 100 - 90 / 100) = 5 / 2 := by norm_num
+-- The storm day's square: (−6) × (−6) = 36.
+example : (-6 : ℤ) * (-6) = 36 := by norm_num
+-- Tomorrow's variance: 0.05 + 0.08 × 36 + 0.90 × 2.5 = 5.18.
+example : (5 / 100 : ℚ) + 8 / 100 * 36 + 90 / 100 * (5 / 2) = 518 / 100 := by norm_num
+-- Persistence: 0.08 + 0.90 = 0.98.
+example : (8 / 100 : ℚ) + 90 / 100 = 98 / 100 := by norm_num
+-- Ten days ahead: 2.5 + 0.98^9 × (5.18 − 2.5) lies between 4.7343 and 4.7345 (card: 4.7344).
+example : (47343 / 10000 : ℚ) < 5 / 2 + (98 / 100) ^ 9 * (518 / 100 - 5 / 2) ∧
+    5 / 2 + (98 / 100 : ℚ) ^ 9 * (518 / 100 - 5 / 2) < 47345 / 10000 := by norm_num
+-- The true settings meet the finite-fourth-moment condition, narrowly: 3α² + 2αβ + β² = 0.9732 < 1.
+example : 3 * (8 / 100 : ℚ) ^ 2 + 2 * (8 / 100) * (90 / 100) + (90 / 100) ^ 2 = 9732 / 10000 := by
+  norm_num
+
+#print axioms garch_variance_forecast
+#print axioms garch_long_run_variance
+#print axioms garch_squares_autocorrelation
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'garch_variance_forecast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'garch_long_run_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'garch_squares_autocorrelation' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

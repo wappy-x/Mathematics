@@ -6,9 +6,15 @@
 
 ## General Overview
 
-A simulation throws 100,000 darts at a square one unit on a side. A dart counts as a hit when it lands within one unit of the bottom-left corner, inside a quarter circle. The quarter circle covers π/4 of the square, so four times the share of hits estimates π. On Monday the program, started from the number 20260929, prints 3.13856, give or take a standard error of 0.00520. On Friday the same program, started from the same number, prints 3.13856 again, to every digit. Started from 20260930 it prints 3.14304. Both runs sit within one standard error of π = 3.14159.
+A simulation throws 100,000 darts at a square one unit on a side. A dart counts as a hit when it lands within one unit of the bottom-left corner, inside a quarter circle. The quarter circle covers π/4 of the square, so four times the share of hits estimates π.
 
-The darts were never random. A computer follows fixed rules, so every "random" number it hands out is computed from the one before. Think of a shuffled deck dealt from the top: the deal looks random, but the same shuffle gives the same deal every time. The rule is a **pseudo-random number generator**, from here on a **generator**. The dart program uses **MT19937**, the Mersenne Twister, built into Python and R; Step 5 opens it up. The number it starts from, 20260929 on Monday, is the **seed**. Same seed, same stream of numbers, same answer: that is what lets a bug be chased, a result be checked by someone else, and two designs be compared on identical luck.
+On Monday the program, started from the number 20260929, prints 3.13856, give or take a standard error of 0.00520. The standard error is the typical size of the luck in a run of this length. On Friday the same program, started from the same number, prints 3.13856 again, to every digit. Started from 20260930 it prints 3.14304. Both runs sit within one standard error of π = 3.14159.
+
+The darts were never random. A computer follows fixed rules, so every "random" number it hands out is computed from the one before. Think of a shuffled deck dealt from the top: the deal looks random, but the same shuffle gives the same deal every time.
+
+The rule is a **pseudo-random number generator**, from here on a **generator**. The dart program uses **MT19937**, the Mersenne Twister, built into Python and R; Step 5 opens it up.
+
+The number it starts from, 20260929 on Monday, is the **seed**. Same seed, same stream of numbers, same answer: that is what lets a bug be chased, a result be checked by someone else, and two designs be compared on identical luck.
 
 Two questions decide whether a generator can be trusted. How long does its stream run before it repeats? And does the stream pass for uniform draws between 0 and 1 ([Uniform](../04-Continuous%20Distributions/02-uniform-distribution.md)) under tests designed to catch it out?
 
@@ -131,11 +137,15 @@ The toy generator hides two quieter patterns. Its last binary digit, or **bit**,
 
 Every point satisfies $x + 3y = 9$, 25, 41 or 57: the check lists the 16 pairs and finds exactly those four values. Drawn to scale, one unit to 12.5 drawing units on both axes. The reason is one line of algebra: $y \equiv 5x + 3 \pmod{16}$, and $3 \times 5 = 15 \equiv -1$, so $3y \equiv -x + 9$, which gives $x + 3y \equiv 9 \pmod{16}$. Every LCG does this. George Marsaglia showed in 1968 that consecutive draws of any LCG, taken in pairs, triples or longer runs, lie on a limited number of flat sheets. A good multiplier makes the sheets many and close together; a bad one makes them few.
 
-The notorious bad one is **RANDU**, IBM's generator of the 1960s: $a = 65539$, $c = 0$, $m = 2^{31}$. Since $65539 = 2^{16} + 3$, squaring gives $a^2 \equiv 6a - 9 \pmod{2^{31}}$, so every output is fixed by the two before: $x_{n+2} \equiv 6x_{n+1} - 9x_n$. In the check, 9 times one output, minus 6 times the next, plus the one after, is a multiple of $2^{31}$ for all 10,000 triples of consecutive outputs, and those triples lie on just 15 planes in the unit cube. For MT19937 (its top 31 bits) the same combination is a multiple of $2^{31}$ in 0 of 10,000 triples.
+The notorious bad one is **RANDU**, IBM's generator of the 1960s: $a = 65539$, $c = 0$, $m = 2^{31}$. Since $65539 = 2^{16} + 3$, squaring gives $a^2 \equiv 6a - 9 \pmod{2^{31}}$, so every output is fixed by the two before: $x_{n+2} \equiv 6x_{n+1} - 9x_n$. In the check, 9 times one output, minus 6 times the next, plus the one after, is a multiple of $2^{31}$ for all 10,000 triples of consecutive outputs. Those triples lie on just 15 planes in the unit cube. For MT19937 (its top 31 bits) the same combination is a multiple of $2^{31}$ in 0 of 10,000 triples.
 
 ### Step 4: testing uniformity with chi-square
 
-A test asks one question: would honest uniform draws look this lumpy? Sort 10,000 draws into 10 equal bins, about 1000 expected in each. The chi-square total follows, for honest draws and to a close approximation when each bin expects many draws, the chi-square law with 9 **degrees of freedom** (the bin count less one, since the counts must add to 10,000) ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). Its p-value, the chance honest draws would score at least as high ([Hypothesis tests](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md)), comes from the area under that law's density. The checks compute it with their own Simpson's-rule integrator. At 16.919, the 5% point that printed tables give for 9 degrees of freedom, the integrator returns 0.0500.
+A test asks one question: would honest uniform draws look this lumpy? Sort 10,000 draws into 10 equal bins, about 1000 expected in each.
+
+For honest draws, the chi-square total follows the chi-square law with 9 **degrees of freedom** (the bin count less one, since the counts must add to 10,000) ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). The match is close when each bin expects many draws.
+
+Its p-value, the chance honest draws would score at least as high ([Hypothesis tests](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md)), comes from the area under that law's density. The checks compute it with their own Simpson's-rule integrator, which adds up the area in many thin slices. At 16.919, the 5% point that printed tables give for 9 degrees of freedom, the integrator returns 0.0500.
 
 | Generator | Chi-square | p-value |
 | --- | --- | --- |
@@ -163,7 +173,9 @@ The best generator of the three has the worst score and fails at the 5% level. A
 
 Modern generators keep a much larger state and stir it with bit operations: shifts (slide the binary digits left or right) and XOR (exclusive or: compare two numbers digit by digit, 1 where they differ).
 
-**MT19937**, the Mersenne Twister of Matsumoto and Nishimura (1998), holds 624 numbers of 32 bits. Each refill mixes every word with its neighbour and with the word 397 places on; each output is then scrambled further, "tempered", before release. Its loop has length $2^{19937} - 1$, a **Mersenne prime** (a prime one less than a power of 2), which gives the name; the 1998 paper proves it by polynomial algebra over bits, and this card takes it as stated. The check's version, from seed 5489, gives 4123659995 as its 10,000th output, the value the C++ standard fixes as the test of a correct implementation.
+**MT19937**, the Mersenne Twister of Matsumoto and Nishimura (1998), holds 624 numbers of 32 bits. Each refill mixes every word with its neighbour and with the word 397 places on; each output is then scrambled further, "tempered", before release.
+
+Its loop has length $2^{19937} - 1$, a **Mersenne prime** (a prime one less than a power of 2), which gives the name. The 1998 paper proves it by polynomial algebra over bits, and this card takes it as stated. The check's version, from seed 5489, gives 4123659995 as its 10,000th output, the value the C++ standard fixes as the test of a correct implementation.
 
 **SplitMix64**, written out in many checks on this wing, is a counter with a scrambler. Its state steps by a fixed odd number: an LCG with $a = 1$ and odd $c$, so by Step 2 its loop covers all $2^{64}$ states. On its own that is the counter of Step 3. A mixing function then shifts, XORs and multiplies the state so that neighbouring counts give unrelated outputs. Because the state after $n$ steps is the seed plus $n$ times the step, the 10,000th output can be computed directly; the check gets the same number both ways.
 
@@ -202,7 +214,12 @@ Each of the 16 values appears exactly once per loop, then the loop replays: the 
 
 ## Code, from first principles, and it actually runs
 
-Both programs write out their generators (linear congruential, MT19937, SplitMix64) and import no random module. Four roads: the full-cycle rule against brute force over every multiplier and increment; the 10,000th output by stepping, by jumping ahead and against published values; a hand-written Simpson's rule against the printed 5% table value; and simulated numbers held to their standard errors or a failure count, never to exact matches.
+Both programs write out their generators (linear congruential, MT19937, SplitMix64) and import no random module. Four roads:
+
+- the full-cycle rule against brute force over every multiplier and increment;
+- the 10,000th output by stepping, by jumping ahead and against published values;
+- a hand-written Simpson's rule against the printed 5% table value;
+- simulated numbers held to their standard errors or a failure count, never to exact matches.
 
 ### Python
 
@@ -567,7 +584,318 @@ darts,seed 20260930 3.14304,se 0.00519,pi 3.14159,gap between seeds 0.00448
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line, and that match is the replay test: each program asserts the 78,464 hits the other counted from seed 20260929, while the second run inside one program can only repeat the first. Every assert was also broken on purpose (a wrong rule, a wrong tempering shift, a wrong Simpson constant, a wider dart target, a wrong seed algebra, an even toy increment) and each stopped the run.
+The two outputs match line for line, and that match is the replay test: each program asserts the 78,464 hits the other counted from seed 20260929, while the second run inside one program can only repeat the first.
+
+Every assert was also broken on purpose (a wrong rule, a wrong tempering shift, a wrong Simpson constant, a wider dart target, a wrong seed algebra, an even toy increment) and each stopped the run.
+
+### Lean
+
+Lean proves the full-cycle rule for every power of 2 from 4 up, plus jumping ahead and RANDU's flaw for every seed.
+
+- Take $m$ a power of 2, at least 4. Then the loop length is $m$ from every seed exactly when $c$ is odd and $a \equiv 1 \pmod 4$.
+- Take $c = 0$ and any seed $x_0$ below $m$. Then $n$ steps give $x_n = a^n x_0 \bmod m$.
+- Take any RANDU state $x$, and the next two states, $y$ and $z$. Then $9x - 6y + z$ is a multiple of $2^{31}$.
+- The toy generator's 16 outputs from seed 7 come out exactly, and 7 first returns at step 16.
+- The even increment and the multiplier 3 each give a loop of 8 from seed 7.
+- Brute force over every $a$ and $c$ from 0 to 15 agrees with the rule, and the rule picks 32 pairs.
+- Take $a = 1$ and $c = 1$. Then the stream from 8 counts 8, 9, 10, 11, 12, 13.
+- The toy's pairs lie on the four lines, and its last bit alternates 0, 1.
+- Take RANDU's $a = 65539$. Then $a^2$ and $6a - 9$ leave the same remainder on division by $2^{31}$.
+- From seed 1, minstd's 10,000th state is 1043618065, by stepping and by jumping.
+
+The chi-square tests, MT19937, SplitMix64, the 15 planes, the seed-2 stream and the darts are left to the Python and Rust checks.
+
+```lean
+-- Random numbers from a computer: a linear congruential generator x ↦ (a x + c) mod 2^k (with 2^k at least 4) runs through all 2^k states before repeating exactly when c is odd and a leaves remainder 1 on division by 4; with no increment, n steps multiply the seed by a^n; and RANDU's every output is fixed by the two before it.
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Dynamics.PeriodicPts.Defs
+import Mathlib.Data.Int.Basic
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.Ring.GeomSum
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Positivity
+
+open Finset in
+lemma prn_sum_double (a n : ℕ) :
+    ∑ i ∈ range (2 * n), a ^ i = (∑ i ∈ range n, a ^ i) * (1 + a ^ n) := by
+  rw [two_mul, Finset.sum_range_add]
+  simp only [pow_add, ← Finset.mul_sum]
+  ring
+
+open Finset in
+lemma prn_sum_one_mod_four (a : ℕ) (ha : a % 4 = 1) (m : ℕ) :
+    ∃ t, ∑ i ∈ range (2 ^ m), a ^ i = 2 ^ m * (2 * t + 1) := by
+  induction m with
+  | zero => exact ⟨0, by simp⟩
+  | succ m ih =>
+    obtain ⟨t, ht⟩ := ih
+    have h4 : a ^ (2 ^ m) % 4 = 1 := by rw [Nat.pow_mod, ha]; simp
+    obtain ⟨q, hq⟩ : ∃ q, a ^ (2 ^ m) = 4 * q + 1 := ⟨a ^ (2 ^ m) / 4, by omega⟩
+    refine ⟨2 * t * q + t + q, ?_⟩
+    rw [pow_succ, mul_comm (2 ^ m) 2, prn_sum_double, ht, hq]
+    ring
+
+open Finset in
+lemma prn_sum_odd (a : ℕ) (ha : a % 2 = 1) (m : ℕ) :
+    2 ^ m ∣ ∑ i ∈ range (2 ^ m), a ^ i := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+    have h2 : 2 ∣ 1 + a ^ (2 ^ m) := by
+      have : a ^ (2 ^ m) % 2 = 1 := by rw [Nat.pow_mod, ha]; simp
+      omega
+    rw [show 2 ^ (m + 1) = 2 * 2 ^ m by ring, prn_sum_double, Nat.mul_comm 2 (2 ^ m)]
+    exact mul_dvd_mul ih h2
+
+open Finset in
+lemma prn_sum_three_mod_four (a : ℕ) (ha : a % 4 = 3) (m : ℕ) :
+    2 ^ (m + 2) ∣ ∑ i ∈ range (2 ^ (m + 1)), a ^ i := by
+  induction m with
+  | zero =>
+    norm_num [Finset.sum_range_succ]
+    omega
+  | succ m ih =>
+    have h2 : 2 ∣ 1 + a ^ (2 ^ (m + 1)) := by
+      have ha2 : a % 2 = 1 := by omega
+      have : a ^ (2 ^ (m + 1)) % 2 = 1 := by rw [Nat.pow_mod, ha2]; simp
+      omega
+    rw [show 2 ^ (m + 1 + 1) = 2 * 2 ^ (m + 1) by ring, prn_sum_double,
+      show 2 ^ (m + 1 + 2) = 2 ^ (m + 2) * 2 by ring]
+    exact mul_dvd_mul ih h2
+
+open Finset in
+lemma prn_iter (N a c : ℕ) (f : ZMod N → ZMod N) (hf : ∀ y, f y = (a : ZMod N) * y + c)
+    (n : ℕ) (x : ZMod N) :
+    f^[n] x = (a : ZMod N) ^ n * x + c * ∑ i ∈ range n, (a : ZMod N) ^ i := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', ih, hf, geom_sum_succ]
+    ring
+
+open Finset in
+lemma prn_iter_sub (N a c : ℕ) (f : ZMod N → ZMod N) (hf : ∀ y, f y = (a : ZMod N) * y + c)
+    (n : ℕ) (x : ZMod N) :
+    f^[n] x - x = (∑ i ∈ range n, (a : ZMod N) ^ i) * (((a : ZMod N) - 1) * x + c) := by
+  rw [prn_iter N a c f hf]
+  have := geom_sum_mul (a : ZMod N) n
+  linear_combination (-x) * this
+
+lemma prn_two_pow_ne_zero (j : ℕ) : (2 : ZMod (2 ^ (j + 2))) ^ (j + 1) ≠ 0 := by
+  intro h
+  have h' : ((2 ^ (j + 1) : ℕ) : ZMod (2 ^ (j + 2))) = 0 := by exact_mod_cast h
+  rw [ZMod.natCast_eq_zero_iff] at h'
+  have h1 := Nat.le_of_dvd (by positivity) h'
+  have h2 : 2 ^ (j + 1) < 2 ^ (j + 2) := Nat.pow_lt_pow_right (by norm_num) (by omega)
+  omega
+
+lemma prn_two_pow_eq_zero (j : ℕ) : (2 : ZMod (2 ^ (j + 2))) ^ (j + 2) = 0 := by
+  exact_mod_cast ZMod.natCast_self (2 ^ (j + 2))
+
+#print axioms prn_sum_double
+#print axioms prn_sum_one_mod_four
+#print axioms prn_sum_odd
+#print axioms prn_sum_three_mod_four
+#print axioms prn_iter
+#print axioms prn_iter_sub
+#print axioms prn_two_pow_ne_zero
+#print axioms prn_two_pow_eq_zero
+
+/-- The full-cycle rule (Hull and Dobell, 1962), for m a power of 2 and at least 4. The linear
+congruential generator x ↦ (a × x + c) mod m visits all m states before repeating, from every
+seed, exactly when the increment c is odd and the multiplier a leaves remainder 1 on division
+by 4. Here the states are the m remainders, and the loop length of a seed is the first number of
+steps that brings it back. -/
+theorem lcg_full_cycle_iff_c_odd_and_a_one_mod_four (k : ℕ) (hk : 2 ≤ k) (a c : ℕ) :
+    (∀ x : ZMod (2 ^ k),
+        Function.minimalPeriod (fun y : ZMod (2 ^ k) => (a : ZMod (2 ^ k)) * y + c) x = 2 ^ k) ↔
+      (Odd c ∧ a % 4 = 1) := by
+  obtain ⟨j, rfl⟩ : ∃ j, k = j + 2 := ⟨k - 2, by omega⟩
+  set f := fun y : ZMod (2 ^ (j + 2)) => (a : ZMod (2 ^ (j + 2))) * y + c with hfdef
+  have hf : ∀ y, f y = (a : ZMod (2 ^ (j + 2))) * y + c := fun y => rfl
+  have hlt : 2 ^ (j + 1) < 2 ^ (j + 2) := Nat.pow_lt_pow_right (by norm_num) (by omega)
+  constructor
+  · intro h
+    have hfix : ∀ x, f^[2 ^ (j + 2)] x = x := fun x => by
+      have := Function.iterate_minimalPeriod (f := f) (x := x)
+      rwa [h x] at this
+    have hhalf : ¬ (f^[2 ^ (j + 1)] (0 : ZMod (2 ^ (j + 2))) = 0) := by
+      intro h0
+      have hd := (show Function.IsPeriodicPt f (2 ^ (j + 1)) 0 from h0).minimalPeriod_dvd
+      rw [h 0] at hd
+      have := Nat.le_of_dvd (by positivity) hd
+      omega
+    have ha : a % 2 = 1 := by
+      by_contra hae
+      have hinj : Function.Injective f := by
+        have hid : f^[2 ^ (j + 2)] = id := funext hfix
+        have h2 : f^[2 ^ (j + 2)] = f^[2 ^ (j + 2) - 1] ∘ f := by
+          rw [← Function.iterate_succ]
+          congr 1
+          have := Nat.one_le_two_pow (n := j + 2)
+          omega
+        apply Function.Injective.of_comp (f := f^[2 ^ (j + 2) - 1])
+        rw [← h2, hid]
+        exact Function.injective_id
+      have hfe : f 0 = f ((2 : ZMod (2 ^ (j + 2))) ^ (j + 1)) := by
+        obtain ⟨b, rfl⟩ : ∃ b, a = 2 * b := ⟨a / 2, by omega⟩
+        rw [hf, hf]
+        push_cast
+        linear_combination (-(b : ZMod (2 ^ (j + 2)))) * prn_two_pow_eq_zero j
+      exact prn_two_pow_ne_zero j (hinj hfe).symm
+    have hit : f^[2 ^ (j + 1)] 0 =
+        ((c * ∑ i ∈ Finset.range (2 ^ (j + 1)), a ^ i : ℕ) : ZMod (2 ^ (j + 2))) := by
+      rw [prn_iter _ a c f hf]
+      push_cast
+      ring
+    have hc : c % 2 = 1 := by
+      by_contra hce
+      apply hhalf
+      rw [hit, ZMod.natCast_eq_zero_iff]
+      have hd := prn_sum_odd a ha (j + 1)
+      obtain ⟨d, rfl⟩ : ∃ d, c = 2 * d := ⟨c / 2, by omega⟩
+      have h2 : 2 ^ (j + 2) ∣ 2 * ∑ i ∈ Finset.range (2 ^ (j + 1)), a ^ i := by
+        rw [show 2 ^ (j + 2) = 2 * 2 ^ (j + 1) by ring]
+        exact mul_dvd_mul_left 2 hd
+      exact h2.trans (Dvd.intro d (by ring))
+    refine ⟨Nat.odd_iff.mpr hc, ?_⟩
+    by_contra h4
+    have h43 : a % 4 = 3 := by omega
+    apply hhalf
+    rw [hit, ZMod.natCast_eq_zero_iff]
+    exact Dvd.dvd.mul_left (prn_sum_three_mod_four a h43 j) c
+  · rintro ⟨hc, ha⟩ x
+    have hS2 := prn_sum_odd a (by omega) (j + 2)
+    have hper : Function.IsPeriodicPt f (2 ^ (j + 2)) x := by
+      show f^[_] x = x
+      rw [← sub_eq_zero, prn_iter_sub _ a c f hf]
+      have h0 : (∑ i ∈ Finset.range (2 ^ (j + 2)), (a : ZMod (2 ^ (j + 2))) ^ i) = 0 := by
+        have := (ZMod.natCast_eq_zero_iff _ _).mpr hS2
+        push_cast at this
+        exact this
+      rw [h0, zero_mul]
+    have hdvd := hper.minimalPeriod_dvd
+    rw [Nat.dvd_prime_pow Nat.prime_two] at hdvd
+    obtain ⟨i, hi, hieq⟩ := hdvd
+    rw [hieq]
+    by_contra hne
+    have hi' : i ≤ j + 1 := by
+      rcases lt_or_eq_of_le hi with h | h
+      · omega
+      · exact absurd (by rw [h]) hne
+    have hp : Function.IsPeriodicPt f (2 ^ (j + 1)) x := by
+      have : Function.minimalPeriod f x ∣ 2 ^ (j + 1) := by
+        rw [hieq]; exact Nat.pow_dvd_pow 2 hi'
+      exact (Function.isPeriodicPt_minimalPeriod f x).trans_dvd this
+    have h1 : f^[2 ^ (j + 1)] x - x = 0 := sub_eq_zero.mpr hp
+    rw [prn_iter_sub _ a c f hf] at h1
+    obtain ⟨t, ht⟩ := prn_sum_one_mod_four a ha (j + 1)
+    have hS : (∑ i ∈ Finset.range (2 ^ (j + 1)), (a : ZMod (2 ^ (j + 2))) ^ i) =
+        2 ^ (j + 1) * (2 * t + 1) := by
+      have := congrArg (Nat.cast : ℕ → ZMod (2 ^ (j + 2))) ht
+      push_cast at this
+      exact this
+    rw [hS] at h1
+    obtain ⟨r, hr⟩ : ∃ r, a = 4 * r + 1 := ⟨a / 4, by omega⟩
+    obtain ⟨s, hs⟩ := hc
+    rw [hr, hs] at h1
+    push_cast at h1
+    apply prn_two_pow_ne_zero j
+    linear_combination h1 - ((t : ZMod (2 ^ (j + 2))) + (2 * t + 1) * (2 * r * x + s)) *
+      prn_two_pow_eq_zero j
+
+/-- Jumping ahead. With no increment (c = 0), n steps of x ↦ (a × x) mod m multiply the seed by
+a exactly n times: from any seed x₀ (a state, so below m), the state after n steps is
+aⁿ × x₀ mod m. -/
+theorem lcg_no_increment_jump_ahead (m a x₀ n : ℕ) (hx : x₀ < m) :
+    (fun x : ℕ => a * x % m)^[n] x₀ = a ^ n * x₀ % m := by
+  induction n with
+  | zero => simp [Nat.mod_eq_of_lt hx]
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', ih, Nat.mul_mod, Nat.mod_mod, ← Nat.mul_mod, pow_succ]
+    ring_nf
+
+/-- RANDU's flaw. For RANDU, x ↦ 65539 × x mod 2³¹, take any output x and the next two, y and z.
+Then 9 × x − 6 × y + z is always a multiple of 2³¹: every output is fixed by the two before it. -/
+theorem randu_three_outputs_satisfy_nine_minus_six_plus_one (x : ℕ) :
+    let y : ℕ := 65539 * x % 2 ^ 31
+    let z : ℕ := 65539 * y % 2 ^ 31
+    (2 ^ 31 : ℤ) ∣ 9 * (x : ℤ) - 6 * (y : ℤ) + (z : ℤ) := by
+  intro y z
+  have hy : (y : ℤ) = 65539 * x - 2 ^ 31 * ((65539 * x : ℕ) / 2 ^ 31 : ℕ) := by
+    have := Nat.mod_add_div (65539 * x) (2 ^ 31)
+    simp only [y]
+    omega
+  have hz : (z : ℤ) = 65539 * y - 2 ^ 31 * ((65539 * y : ℕ) / 2 ^ 31 : ℕ) := by
+    have := Nat.mod_add_div (65539 * y) (2 ^ 31)
+    simp only [z]
+    omega
+  rw [hz, hy]
+  exact ⟨2 * x - 65533 * ((65539 * x : ℕ) / 2 ^ 31 : ℕ) - ((65539 * y : ℕ) / 2 ^ 31 : ℕ),
+    by push_cast; ring⟩
+
+-- One step of the toy generator: 5 × 7 + 3 = 38, and 38 mod 16 is 6.
+example : 5 * 7 + 3 = 38 ∧ 38 % 16 = 6 ∧ 38 = 2 * 16 + 6 := by decide
+-- The toy generator (5x + 3) mod 16 from seed 7: its 16 outputs, ending back at 7.
+example : (List.range 16).map (fun n => (fun x : ℕ => (5 * x + 3) % 16)^[n + 1] 7) =
+    [6, 1, 8, 11, 10, 5, 12, 15, 14, 9, 0, 3, 2, 13, 4, 7] := by decide
+-- Its loop length is 16: 7 first comes back after 16 steps.
+example : (fun x : ℕ => (5 * x + 3) % 16)^[16] 7 = 7 ∧
+    ∀ n ∈ Finset.Ico 1 16, (fun x : ℕ => (5 * x + 3) % 16)^[n] 7 ≠ 7 := by decide
+-- The rule for the toy generator: a = 5 leaves 1 on division by 4, and c = 3 is odd.
+example : 5 % 4 = 1 ∧ 3 % 2 = 1 := by decide
+-- Even increment: (5x + 2) mod 16 from 7 loops after 8. And a = 3 (remainder 3 on division
+-- by 4): (3x + 3) mod 16 from 7 also loops after 8.
+example : (fun x : ℕ => (5 * x + 2) % 16)^[8] 7 = 7 ∧
+    ∀ n ∈ Finset.Ico 1 8, (fun x : ℕ => (5 * x + 2) % 16)^[n] 7 ≠ 7 := by decide
+example : (fun x : ℕ => (3 * x + 3) % 16)^[8] 7 = 7 ∧
+    ∀ n ∈ Finset.Ico 1 8, (fun x : ℕ => (3 * x + 3) % 16)^[n] 7 ≠ 7 := by decide
+-- Brute force for m = 16: for every pair a, c from 0 to 15, 0 first comes back at step 16
+-- exactly when the rule holds, and the rule picks out 32 of the 256 pairs.
+example : ∀ a ∈ Finset.range 16, ∀ c ∈ Finset.range 16,
+    (((fun x : ℕ => (a * x + c) % 16)^[16] 0 = 0 ∧
+        ∀ n ∈ Finset.Ico 1 16, (fun x : ℕ => (a * x + c) % 16)^[n] 0 ≠ 0) ↔
+      (c % 2 = 1 ∧ a % 4 = 1)) := by decide
+example : ((Finset.range 16 ×ˢ Finset.range 16).filter
+      (fun p : ℕ × ℕ => p.2 % 2 = 1 ∧ p.1 % 4 = 1)).card = 32 := by decide
+-- A full loop is not randomness: a = 1, c = 1 counts 8, 9, 10, 11, 12, 13.
+example : (List.range 6).map (fun n => (fun x : ℕ => (x + 1) % 16)^[n] 8) =
+    [8, 9, 10, 11, 12, 13] := by decide
+-- The toy's consecutive pairs (x, y) lie on four lines: x + 3y is 9, 25, 41 or 57.
+example : ∀ x ∈ Finset.range 16, (x + 3 * ((5 * x + 3) % 16)) % 16 = 9 ∧
+    x + 3 * ((5 * x + 3) % 16) ∈ ({9, 25, 41, 57} : Finset ℕ) := by decide
+-- Its last bit alternates 0, 1, 0, 1 along the stream 6, 1, 8, 11, ...
+example : (List.range 12).map (fun n => (fun x : ℕ => (5 * x + 3) % 16)^[n + 1] 7 % 2) =
+    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1] := by decide
+-- RANDU: 65539 = 2^16 + 3, and a² leaves the same remainder as 6a − 9 on division by 2^31.
+example : 65539 = 2 ^ 16 + 3 ∧ 65539 ^ 2 % 2 ^ 31 = (6 * 65539 - 9) % 2 ^ 31 := by norm_num
+-- minstd, a = 16807, m = 2^31 − 1, seed 1: the 10,000th state is 1043618065, by stepping
+-- 10,000 times and by jumping straight there with a^10000 × 1 mod m.
+example : (fun x : ℕ => 16807 * x % (2 ^ 31 - 1))^[10000] 1 = 1043618065 := by decide +kernel
+example : 16807 ^ 10000 * 1 % (2 ^ 31 - 1) = 1043618065 := by decide +kernel
+
+#print axioms lcg_full_cycle_iff_c_odd_and_a_one_mod_four
+#print axioms lcg_no_increment_jump_ahead
+#print axioms randu_three_outputs_satisfy_nine_minus_six_plus_one
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'prn_sum_double' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prn_sum_one_mod_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prn_sum_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prn_sum_three_mod_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prn_iter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prn_iter_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prn_two_pow_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prn_two_pow_eq_zero' depends on axioms: [propext, Quot.sound]
+'lcg_full_cycle_iff_c_odd_and_a_one_mod_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lcg_no_increment_jump_ahead' depends on axioms: [propext, Quot.sound]
+'randu_three_outputs_satisfy_nine_minus_six_plus_one' depends on axioms: [propext, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -594,10 +922,10 @@ The two outputs match line for line, and that match is the replay test: each pro
 
 ## Where you meet it in real life
 
-- **Published research.** A simulation study that states its generator and seed can be re-run by a referee to the last digit; more on seeds and parallel streams: Seeds.
+- **Published research.** A simulation study that states its generator and seed can be re-run by a referee to the last digit; more on seeds and parallel streams: [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md).
 - **Monte Carlo estimates.** Every estimate on [Monte Carlo](04-monte-carlo-estimates-and-error.md), and every simulated option price in the finance wing, is only as good as the uniform draws underneath it.
 - **Games.** A video game that builds its world from a seed builds the same world for every player who types that seed, because the terrain is a generator's stream.
-- **Shuffling and sampling.** Dealing a card game or picking a random sample of records draws from a generator; Fair choices from a list you cannot hold shows how to do it fairly.
+- **Shuffling and sampling.** Dealing a card game or picking a random sample of records draws from a generator; [Fair choices from a list you cannot hold](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/03-shuffling-and-reservoir-sampling.md) shows how to do it fairly.
 - **Software testing.** Random-input tests print their seed on failure, so the failing case replays exactly.
 
 > **Say it back**

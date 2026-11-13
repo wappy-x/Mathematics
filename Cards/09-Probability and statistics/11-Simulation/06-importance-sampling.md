@@ -8,9 +8,13 @@
 
 A machine cuts steel bolts meant to be 10.000 mm across. Real bolts vary. Their diameters follow a bell curve centred on 10.000 mm with a standard deviation (the typical distance from the centre) of 0.010 mm. A bolt wider than 10.0475 mm jams in the fitting: 4.75 standard deviations above target. The chance of that is 1.017 in a million.
 
-Here the bell curve gives the exact answer, so the answer is known. In a real plant the diameter comes out of a simulation of tool wear and heat, with no formula, and the only way to get the chance is to simulate bolts and count jams. Simulate 10,000 bolts and the expected number of jams is 0.0102. In about 99 runs out of 100 not one bolt jams, and the estimate is zero. The rare region is exactly where the answer lives, and ordinary draws almost never go there.
+Here the bell curve gives the exact answer, so the answer is known. In a real plant the diameter comes out of a simulation of tool wear and heat, with no formula. The only way to get the chance is to simulate bolts and count jams.
 
-The fix is to simulate from a deliberately mis-set machine, one centred on the jam line, so that about half its bolts jam. Each jam is then counted at a discount: by how much less often the real machine would have made that bolt. A pollster does the same when oversampling a small town and counting each answer from there at a matching discount. The drawing law is called the **proposal**, the discount is the **weight**, and the method is **importance sampling**. With 10,000 draws it gives the one-in-a-million chance with a standard error of about 2.3 percent of the answer, or, with a better proposal, 0.08 percent.
+Simulate 10,000 bolts and the expected number of jams is 0.0102. In about 99 runs out of 100 not one bolt jams, and the estimate is zero. The rare region is exactly where the answer lives, and ordinary draws almost never go there.
+
+The fix is to simulate from a deliberately mis-set machine, one centred on the jam line, so that about half its bolts jam. Each jam is then counted at a discount: by how much less often the real machine would have made that bolt. A pollster does the same when oversampling a small town and counting each answer from there at a matching discount.
+
+The drawing law is called the **proposal**, the discount is the **weight**, and the method is **importance sampling**. With 10,000 draws it gives the one-in-a-million chance with a standard error (its typical miss) of about 2.3 percent of the answer, or, with a better proposal, 0.08 percent.
 
 **Draw from a law that visits the rare region often, multiply each outcome by the true density divided by the drawing density, and the average still aims at exactly the right answer; a proposal shaped like the answer makes its error bar small.**
 
@@ -34,7 +38,7 @@ Orange: the real machine, a bell curve centred on target. Green: the mis-set mac
 
 ## The formula
 
-Notation first. The real diameter, measured in standard deviations above target, is a random variable $X$ (a number settled by chance) with density $f$, the bell curve ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The proposal is a second density $g$, and its draws are called $Y_1, Y_2, \dots$ to keep them apart from the real ones. $E_f[\cdot]$ reads "the long-run average when the draw comes from $f$", the expectation of shelf 02 with the drawing law written underneath. A hat marks an estimate.
+Notation first. The real diameter, measured in standard deviations above target, is a random variable $X$ (a number settled by chance) with density $f$ (chance per standard deviation of diameter), the bell curve ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The proposal is a second density $g$, and its draws are called $Y_1, Y_2, \dots$ to keep them apart from the real ones. $E_f[\cdot]$ reads "the long-run average when the draw comes from $f$", the expectation ([Expectation](../02-Random%20Variables/02-expectation.md)) with the drawing law written underneath. A hat marks an estimate.
 
 The quantity averaged is $h$: here $h(x) = 1$ if $x$ is past the line $c$ and 0 if not, so its average is the chance of a jam. The answer is
 
@@ -64,7 +68,7 @@ The second proposal starts at the line and falls away like an exponential with r
 | $w$ | the weight $f/g$: how much less (or more) often the real machine makes this bolt | 12.6071 per million at the line | — |
 | $I$ | the answer, $P(X > c)$ | 1.017083243 per million | — |
 | $n$ | number of draws | 10,000 | standard error falls like $1/\sqrt{n}$ |
-| $\hat I_n$ | the estimate from $n$ weighted draws | 0.973097 per million, se 0.023024 | — |
+| $\hat I_n$ | the estimate from $n$ weighted draws | 0.973097 per million, standard error (se) 0.023024 | — |
 | $M_2$ | second moment: the average squared weighted outcome | 6.602853 per $10^{12}$ | a bigger second moment means a wider error bar |
 | $\theta$, $\lambda$, $s$ | the proposal's settings: centre, exponential rate, spread | 4.75; 4.75; 1 | best centre 4.852; a spread with $s^2 < 1/2$ makes $M_2$ infinite |
 | $E_f$, $E_g$ | long-run average with draws from $f$, or from $g$ | — | — |
@@ -82,7 +86,9 @@ The second proposal starts at the line and falls away like an exponential with r
 
 ### Step 0: count each draw by how often it should have happened
 
-Plain simulation fails on the bolts for one reason: every draw costs the same, and almost every draw lands where $h$ is zero. Importance sampling spends the draws where $h$ is not zero and pays for the choice with a correction. If the mis-set machine makes a given diameter far more often than the real one, that bolt counts for correspondingly less: exactly the ratio of the two densities at that diameter. The correction is exact, not approximate, so nothing is lost except the need to know both densities.
+Plain simulation fails on the bolts for one reason: every draw costs the same, and almost every draw lands where $h$ is zero. Importance sampling spends the draws where $h$ is not zero and pays for the choice with a correction.
+
+If the mis-set machine makes a given diameter far more often than the real one, that bolt counts for correspondingly less. The discount is exactly the ratio of the two densities at that diameter. The correction is exact, not approximate, so nothing is lost except the need to know both densities.
 
 ### Step 1: multiply and divide by the proposal
 
@@ -94,7 +100,7 @@ The right side is an average under $g$: the integral of something times $g$. So 
 
 ### Step 2: the estimate is unbiased, and its error has a formula
 
-Each term $h(Y_i)\,w(Y_i)$ has average $I$ by Step 1, so the average of $n$ of them has average $I$ as well: the estimate is **unbiased** (it aims at the right number). The terms are independent, so the variance of their average is the variance of one term divided by $n$, as on [Monte Carlo](04-monte-carlo-estimates-and-error.md). The variance of one term is its average square minus its squared average, $M_2 - I^2$. So the standard error is $\sqrt{(M_2 - I^2)/n}$.
+Each term $h(Y_i)\,w(Y_i)$ has average $I$ by Step 1, so the average of $n$ of them has average $I$ as well. So the estimate is **unbiased** (it aims at the right number). The terms are independent, so the variance of their average is the variance of one term divided by $n$, as on [Monte Carlo](04-monte-carlo-estimates-and-error.md). The variance of one term is its average square minus its squared average, $M_2 - I^2$. So the standard error is $\sqrt{(M_2 - I^2)/n}$.
 
 Unbiasedness holds for any proposal that covers the answer. The error bar depends entirely on $M_2$, and $M_2$ depends on the choice of $g$. That choice is the whole craft.
 
@@ -119,7 +125,7 @@ So $f(x)^2/g(x) = e^{\theta^2} f(x + \theta)$, and integrating from $c$ to infin
 
 </details>
 
-This moving of a bell curve is called **exponential tilting**: $g(y) = f(y)\,e^{\theta y - \theta^2/2}$, the real density multiplied by an exponential and rescaled to area 1. The same exponential factor $e^{\theta y}$ drives the Chernoff bound on [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
+This moving of a bell curve is called **exponential tilting**: $g(y) = f(y)\,e^{\theta y - \theta^2/2}$, the real density multiplied by an exponential and rescaled to area 1. The same exponential factor $e^{\theta y}$ drives the Chernoff bound (an exponential upper limit on a tail chance) on [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
 
 ### Step 4: choosing the proposal
 
@@ -140,7 +146,7 @@ xychart-beta
 
 Orange: the ideal $g^* = f/I$ past the line. Green: the exponential proposal, rate 4.75, lying almost on it. Dark blue: the bell curve moved to the line, which spreads its draws far too wide and puts half of them before the line, where $h$ is zero. That gap is why the exponential proposal's error is 0.0776 percent and the moved bell curve's is 2.32 percent.
 
-**Tuning the centre.** Within the moved bell curves, $M_2(\theta)$ has a formula, so the best centre can be found by minimising it. A golden-section search (repeatedly narrowing an interval around the lowest point) gives $\theta = 4.852$, just past the line, with a relative standard error of 2.31 percent. Too little shift and the draws rarely jam; too much and most draws land far out with negligible weights, so the few that land near the line carry large weights and dominate the estimate.
+**Tuning the centre.** Within the moved bell curves, $M_2(\theta)$ has a formula, so the best centre can be found by minimising it. A golden-section search (repeatedly narrowing an interval around the lowest point) gives $\theta = 4.852$, just past the line, with a relative standard error of 2.31 percent. Too little shift and the draws rarely jam. Too much and most draws land far out with negligible weights, so the few that land near the line carry large weights and dominate the estimate.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -157,7 +163,9 @@ Orange: the relative standard error, $\sqrt{M_2(\theta) - I^2}\,/\,(I\sqrt{n})$,
 
 **Missing ground.** If $g$ is zero on part of the region where $h f$ is not, Step 1 drops that part. The estimate is then unbiased for the wrong number, and its error bar shrinks around it with confidence.
 
-**Tails that are too thin.** $M_2$ divides by $g$. Where $g$ is much smaller than $f$, the weight is huge, and its square larger still. A bell-curve proposal on the line with spread $s$ gives $f^2/g$ the exponent $-x^2 + (x-c)^2/(2s^2)$. For $s^2 < 1/2$ the $x^2$ term wins with a plus sign, the integrand grows without bound, and $M_2$ is infinite. With $s = 0.5$, the second moment integrated out to 10, 20, 25 and 30 is $10^{-11.5}$, $10^{26.3}$, $10^{82.6}$ and $10^{160.6}$. The mean is still right: the weights are integrable, so the average still settles on $I$. What is lost is the error bar.
+**Tails that are too thin.** $M_2$ divides by $g$. Where $g$ is much smaller than $f$, the weight is huge, and its square larger still. A bell-curve proposal on the line with spread $s$ gives $f^2/g$ the exponent $-x^2 + (x-c)^2/(2s^2)$. For $s^2 < 1/2$ the $x^2$ term wins with a plus sign, the integrand grows without bound, and $M_2$ is infinite.
+
+With $s = 0.5$, the second moment integrated out to 10, 20, 25 and 30 is $10^{-11.5}$, $10^{26.3}$, $10^{82.6}$ and $10^{160.6}$. The mean is still right: the weights are integrable, so the average still settles on $I$. What is lost is the error bar.
 
 <details>
 <summary>Detailed proof</summary>
@@ -211,7 +219,9 @@ The moved bell curve's run is 1.91 standard errors below the true 1.017 per mill
 
 ## Code, from first principles, and it actually runs
 
-Five roads to one number. The exact tail by Laplace's continued fraction, $P(X > x) = f(x) / (x + 1/(x + 2/(x + 3/(x + \dots))))$, evaluated from the bottom up. The same tail by Simpson's rule, an integrator written into the script. Plain simulation with 10,000 draws. Importance sampling from the moved bell curve and from the exponential tail, 10,000 draws each. Random numbers come from a SplitMix64 generator with seed 2026 ([Random numbers from a computer](01-pseudo-random-numbers.md)), bell-curve draws from Box-Muller ([Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md)), exponential draws from the inverse transform $y = c - \ln(U)/\lambda$, with $U$ a uniform draw between 0 and 1 ([Inverse transform](02-inverse-transform-sampling.md)). The second moment is reached three ways: the completed square, Simpson's rule on $f^2/g$, and the run's own squares. Simulated numbers are asserted within four standard errors of the exact answer, never to an exact match.
+Five roads to one number. The exact tail by Laplace's continued fraction, $P(X > x) = f(x) / (x + 1/(x + 2/(x + 3/(x + \dots))))$, evaluated from the bottom up. The same tail by Simpson's rule, an integrator written into the script. Plain simulation with 10,000 draws. Importance sampling from the moved bell curve and from the exponential tail, 10,000 draws each.
+
+Random numbers come from a SplitMix64 generator with seed 2026 ([Random numbers from a computer](01-pseudo-random-numbers.md)). Bell-curve draws come from Box-Muller ([Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md)). Exponential draws come from the inverse transform $y = c - \ln(U)/\lambda$, with $U$ a uniform draw between 0 and 1 ([Inverse transform](02-inverse-transform-sampling.md)). The second moment is reached three ways: the completed square, Simpson's rule on $f^2/g$, and the run's own squares. Simulated numbers are asserted within four standard errors of the exact answer, never to an exact match.
 
 ### Python
 
@@ -562,6 +572,259 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the reweighting identity, that the estimate is unbiased, and the error formula, for every proposal that covers the answer.
+
+- Suppose $g$ is never negative, covers the answer, and the integral of $|h\,f|$ is finite. Then a draw $Y$ from $g$ gives $E_g[h(Y)\,w(Y)] = \int h f\,dx$.
+- Take the same $g$ and $n$ draws $Y_i$ from it, at least one. Then the estimate $\hat I_n$ averages to exactly $I$, even when the draws are not independent.
+- Take the same $g$, $n$ independent draws, and a finite second moment $M_2$. Then the variance of $\hat I_n$ is $(M_2 - I^2)/n$, the square of the standard error.
+- Take $c = 4.75$. Then $c^2/2 = 11.28125$ and $c^2 = 22.5625$ exactly.
+- Take the bell curve moved to $\theta$. Then the $y^2$ terms cancel in the weight, and completing the square for $M_2$ works as Step 3 shows.
+- Take a point $y = c + t$ past the line. Then $y^2/2 = c^2/2 + ct + t^2/2$.
+- Suppose the weight drops its $e^{\theta^2/2}$, with $\theta = c$. Then the weight on the line shrinks by a factor $e^{11.28125}$.
+- Take a bell-curve proposal on the line with spread $s$. Then the $x^2$ coefficient $-1 + 1/(2s^2)$ is 1 at $s = 0.5$, and 0 at $s^2 = 1/2$.
+
+The tail chances, the simulations, the best centre, the infinite second moment and the charts are left to the Python and Rust checks.
+
+```lean
+-- Importance sampling: drawing from a proposal density g that is positive wherever h f is not zero, and weighting each outcome h(Y) by f(Y)/g(Y), gives an average equal to the integral of h f, so the n-draw estimate is unbiased, and with independent draws and a finite second moment M₂ its variance is (M₂ − I²)/n.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.MeasureTheory.Measure.WithDensity
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open MeasureTheory ProbabilityTheory Finset
+
+lemma is_density_eq (g : ℝ → ℝ) :
+    volume.withDensity (fun x => ENNReal.ofReal (g x))
+      = volume.withDensity (fun x => (((g x).toNNReal : NNReal) : ENNReal)) := rfl
+
+lemma is_aesm (f g h : ℝ → ℝ) (hg_meas : Measurable g)
+    (hhf : Integrable (fun x => h x * f x)) :
+    AEStronglyMeasurable (fun x => h x * (f x / g x))
+      (volume.withDensity (fun x => ENNReal.ofReal (g x))) := by
+  have h1 : AEStronglyMeasurable (fun x => h x * f x)
+      (volume.withDensity (fun x => ENNReal.ofReal (g x))) :=
+    hhf.aestronglyMeasurable.mono_ac (withDensity_absolutelyContinuous _ _)
+  have h2 := (h1.aemeasurable.div hg_meas.aemeasurable).aestronglyMeasurable
+  refine h2.congr (Filter.Eventually.of_forall fun x => ?_)
+  simp only [Pi.div_apply]
+  ring
+
+lemma is_weight_mul (f g h : ℝ → ℝ) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x) (x : ℝ) :
+    (g x).toNNReal • (h x * (f x / g x)) = h x * f x := by
+  rw [NNReal.smul_def, Real.coe_toNNReal _ (hg_nonneg x), smul_eq_mul]
+  by_cases hz : h x * f x = 0
+  · rw [← mul_div_assoc, hz]; simp
+  · have := hcover x hz
+    field_simp
+
+lemma is_weight_sq (f g h : ℝ → ℝ) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x) (x : ℝ) :
+    (g x).toNNReal • (h x * (f x / g x)) ^ 2 = h x ^ 2 * f x ^ 2 / g x := by
+  rw [NNReal.smul_def, Real.coe_toNNReal _ (hg_nonneg x), smul_eq_mul]
+  by_cases hz : h x * f x = 0
+  · have : h x ^ 2 * f x ^ 2 = 0 := by rw [← mul_pow, hz]; simp
+    rw [this, ← mul_div_assoc, hz]; simp
+  · have := hcover x hz
+    field_simp
+
+lemma is_integral (f g h : ℝ → ℝ) (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x) :
+    ∫ x, h x * (f x / g x) ∂(volume.withDensity (fun x => ENNReal.ofReal (g x)))
+      = ∫ x, h x * f x := by
+  rw [is_density_eq, integral_withDensity_eq_integral_smul hg_meas.real_toNNReal]
+  simp_rw [is_weight_mul f g h hg_nonneg hcover]
+
+lemma is_integrable (f g h : ℝ → ℝ) (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hhf : Integrable (fun x => h x * f x))
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x) :
+    Integrable (fun x => h x * (f x / g x))
+      (volume.withDensity (fun x => ENNReal.ofReal (g x))) := by
+  rw [is_density_eq, integrable_withDensity_iff_integrable_smul hg_meas.real_toNNReal]
+  simp_rw [is_weight_mul f g h hg_nonneg hcover]
+  exact hhf
+
+lemma is_integral_sq (f g h : ℝ → ℝ) (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x) :
+    ∫ x, (h x * (f x / g x)) ^ 2 ∂(volume.withDensity (fun x => ENNReal.ofReal (g x)))
+      = ∫ x, h x ^ 2 * f x ^ 2 / g x := by
+  rw [is_density_eq, integral_withDensity_eq_integral_smul hg_meas.real_toNNReal]
+  simp_rw [is_weight_sq f g h hg_nonneg hcover]
+
+lemma is_integrable_sq (f g h : ℝ → ℝ) (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x)
+    (hM₂ : Integrable (fun x => h x ^ 2 * f x ^ 2 / g x)) :
+    Integrable (fun x => (h x * (f x / g x)) ^ 2)
+      (volume.withDensity (fun x => ENNReal.ofReal (g x))) := by
+  rw [is_density_eq, integrable_withDensity_iff_integrable_smul hg_meas.real_toNNReal]
+  simp_rw [is_weight_sq f g h hg_nonneg hcover]
+  exact hM₂
+
+#print axioms is_density_eq
+#print axioms is_aesm
+#print axioms is_weight_mul
+#print axioms is_weight_sq
+#print axioms is_integral
+#print axioms is_integrable
+#print axioms is_integral_sq
+#print axioms is_integrable_sq
+
+/-- The reweighting identity. Let `f` be the real density and `h` the quantity averaged, with
+`h f` integrable, so the answer is `I = ∫ h(x) f(x) dx`. Let `g` be a proposal density (measurable,
+never negative) that covers the answer: `g(x) > 0` wherever `h(x) f(x) ≠ 0`. If a draw `Y` has
+density `g`, then the average of the weighted outcome `h(Y) w(Y)`, with weight `w = f / g`, is
+exactly `I`: `E_g[h(Y) w(Y)] = ∫ h f`. -/
+theorem importance_sampling_reweighting_identity
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (f g h : ℝ → ℝ) (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hhf : Integrable (fun x => h x * f x))
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x)
+    (Y : Ω → ℝ) (hY : Measurable Y)
+    (hY_law : P.map Y = volume.withDensity (fun x => ENNReal.ofReal (g x))) :
+    P[fun ω => h (Y ω) * (f (Y ω) / g (Y ω))] = ∫ x, h x * f x := by
+  have haesm := is_aesm f g h hg_meas hhf
+  rw [← hY_law] at haesm
+  have hmap := integral_map hY.aemeasurable haesm
+  rw [hY_law, is_integral f g h hg_meas hg_nonneg hcover] at hmap
+  exact hmap.symm
+
+/-- The estimate is unbiased. Under the same assumptions, let `Y₁, …, Yₙ` (with `n ≥ 1`) each
+have density `g`. The estimate `Îₙ = (1/n) ∑ h(Yᵢ) w(Yᵢ)` has average exactly `I = ∫ h f`, for
+any proposal that covers the answer. -/
+theorem importance_sampling_estimate_unbiased
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (f g h : ℝ → ℝ) (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hhf : Integrable (fun x => h x * f x))
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x)
+    (n : ℕ) (hn : 0 < n) (Y : Fin n → Ω → ℝ) (hY : ∀ i, Measurable (Y i))
+    (hY_law : ∀ i, P.map (Y i) = volume.withDensity (fun x => ENNReal.ofReal (g x))) :
+    P[fun ω => (1 / (n : ℝ)) * ∑ i, h (Y i ω) * (f (Y i ω) / g (Y i ω))] = ∫ x, h x * f x := by
+  have hint : ∀ i, Integrable (fun ω => h (Y i ω) * (f (Y i ω) / g (Y i ω))) P := fun i => by
+    have := is_integrable f g h hg_meas hg_nonneg hhf hcover
+    rw [← hY_law i] at this
+    exact this.comp_measurable (hY i)
+  have hE : ∀ i, P[fun ω => h (Y i ω) * (f (Y i ω) / g (Y i ω))] = ∫ x, h x * f x :=
+    fun i => importance_sampling_reweighting_identity f g h hg_meas hg_nonneg hhf hcover (Y i) (hY i) (hY_law i)
+  rw [integral_const_mul, integral_finsetSum _ (fun i _ => hint i)]
+  simp_rw [hE]
+  simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+  have : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  field_simp
+
+/-- The error formula. Under the same assumptions, let `Y₁, …, Yₙ` be independent draws, each
+with density `g`, and let the second moment `M₂ = ∫ h(x)² f(x)² / g(x) dx` be finite. Then the
+estimate `Îₙ = (1/n) ∑ h(Yᵢ) w(Yᵢ)` has variance `(M₂ − I²) / n`, so its standard error is
+`√((M₂ − I²) / n)`. -/
+theorem importance_sampling_variance
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (f g h : ℝ → ℝ) (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hhf : Integrable (fun x => h x * f x))
+    (hcover : ∀ x, h x * f x ≠ 0 → 0 < g x)
+    (hM₂ : Integrable (fun x => h x ^ 2 * f x ^ 2 / g x))
+    (n : ℕ) (Y : Fin n → Ω → ℝ) (hY : ∀ i, Measurable (Y i))
+    (hY_law : ∀ i, P.map (Y i) = volume.withDensity (fun x => ENNReal.ofReal (g x)))
+    (hindep : iIndepFun Y P) :
+    Var[fun ω => (1 / (n : ℝ)) * ∑ i, h (Y i ω) * (f (Y i ω) / g (Y i ω)); P] =
+      ((∫ x, h x ^ 2 * f x ^ 2 / g x) - (∫ x, h x * f x) ^ 2) / n := by
+  set ν := volume.withDensity (fun x => ENNReal.ofReal (g x)) with hν
+  have haesm : AEStronglyMeasurable (fun x => h x * (f x / g x)) ν :=
+    is_aesm f g h hg_meas hhf
+  set ψ := haesm.mk _ with hψdef
+  have hψm : Measurable ψ := haesm.stronglyMeasurable_mk.measurable
+  have hψae : (fun x => h x * (f x / g x)) =ᵐ[ν] ψ := haesm.ae_eq_mk
+  -- pull back the a.e. equality along each draw
+  have hpull : ∀ i, ∀ᵐ ω ∂P, h (Y i ω) * (f (Y i ω) / g (Y i ω)) = ψ (Y i ω) := fun i => by
+    have : ∀ᵐ x ∂(P.map (Y i)), h x * (f x / g x) = ψ x := by rw [hY_law i]; exact hψae
+    exact ae_of_ae_map (hY i).aemeasurable this
+  have hsum : (fun ω => (1 / (n : ℝ)) * ∑ i, h (Y i ω) * (f (Y i ω) / g (Y i ω)))
+      =ᵐ[P] (fun ω => (1 / (n : ℝ)) * ∑ i, ψ (Y i ω)) := by
+    filter_upwards [ae_all_iff.2 hpull] with ω hω
+    simp_rw [hω]
+  rw [variance_congr hsum, variance_const_mul]
+  -- moments of ψ under ν
+  have hI : ∫ x, ψ x ∂ν = ∫ x, h x * f x := by
+    rw [← integral_congr_ae hψae]; exact is_integral f g h hg_meas hg_nonneg hcover
+  have hsq : (fun x => (h x * (f x / g x)) ^ 2) =ᵐ[ν] (fun x => ψ x ^ 2) :=
+    hψae.mono fun x hx => by
+      have hx' : h x * (f x / g x) = ψ x := hx
+      simp only [hx']
+  have hI2 : ∫ x, ψ x ^ 2 ∂ν = ∫ x, h x ^ 2 * f x ^ 2 / g x := by
+    rw [← integral_congr_ae hsq]
+    exact is_integral_sq f g h hg_meas hg_nonneg hcover
+  have hint2 : Integrable (fun x => ψ x ^ 2) ν :=
+    (is_integrable_sq f g h hg_meas hg_nonneg hcover hM₂).congr hsq
+  have hmem : ∀ i, MemLp (fun ω => ψ (Y i ω)) 2 P := fun i => by
+    have hm : AEStronglyMeasurable (fun ω => ψ (Y i ω)) P :=
+      (hψm.comp (hY i)).aestronglyMeasurable
+    rw [memLp_two_iff_integrable_sq hm]
+    have : Integrable (fun x => ψ x ^ 2) (P.map (Y i)) := by rw [hY_law i]; exact hint2
+    exact this.comp_measurable (hY i)
+  have hvar : ∀ i, Var[fun ω => ψ (Y i ω); P]
+      = (∫ x, h x ^ 2 * f x ^ 2 / g x) - (∫ x, h x * f x) ^ 2 := fun i => by
+    rw [variance_eq_sub (hmem i)]
+    have e1 : P[(fun ω => ψ (Y i ω)) ^ 2] = ∫ x, ψ x ^ 2 ∂ν := by
+      rw [← hY_law i, integral_map (hY i).aemeasurable
+        ((hψm.pow_const 2).aestronglyMeasurable)]
+      rfl
+    have e2 : P[fun ω => ψ (Y i ω)] = ∫ x, ψ x ∂ν := by
+      rw [← hY_law i, integral_map (hY i).aemeasurable hψm.aestronglyMeasurable]
+    rw [e1, e2, hI, hI2]
+  have hind : iIndepFun (fun i ω => ψ (Y i ω)) P :=
+    hindep.comp (fun _ => ψ) (fun _ => hψm)
+  have hfun : (fun ω => ∑ i, ψ (Y i ω)) = ∑ i ∈ (univ : Finset (Fin n)), (fun ω => ψ (Y i ω)) := by
+    ext ω; simp
+  rw [hfun, IndepFun.variance_sum (fun i _ => hmem i)
+    (fun i _ j _ hij => hind.indepFun hij)]
+  simp_rw [hvar]
+  simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · simp
+  · have : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+    field_simp
+
+-- The bolts' line c = 4.75 = 19/4: c²/2 = 11.28125 and c² = 22.5625, exactly.
+example : ((19 : ℚ) / 4) ^ 2 / 2 = 11 + 9 / 32 := by norm_num
+example : ((19 : ℚ) / 4) ^ 2 = 22 + 9 / 16 := by norm_num
+-- Step 3: the ratio of two bell curves. The exponent of f(y)/g(y), with g centred on θ, is
+-- −y²/2 + (y − θ)²/2 = −θy + θ²/2: the y² terms cancel.
+example (y θ : ℝ) : -y ^ 2 / 2 + (y - θ) ^ 2 / 2 = -θ * y + θ ^ 2 / 2 := by ring
+-- Completing the square for M₂: −x² + (x − θ)²/2 = −(x + θ)²/2 + θ².
+example (x θ : ℝ) : -x ^ 2 + (x - θ) ^ 2 / 2 = -(x + θ) ^ 2 / 2 + θ ^ 2 := by ring
+-- Step 4: past the line, y = c + t gives y²/2 = c²/2 + ct + t²/2.
+example (c t : ℝ) : (c + t) ^ 2 / 2 = c ^ 2 / 2 + c * t + t ^ 2 / 2 := by ring
+-- Drop the e^(θ²/2) and the weight on the line becomes e^(−c²) instead of e^(−c²/2):
+-- the missing factor's exponent is c²/2 = 11.28125.
+example : ((19 : ℚ) / 4) ^ 2 - ((19 : ℚ) / 4) ^ 2 / 2 = 361 / 32 := by norm_num
+-- Thin tails: spread s = 1/2 gives the x² coefficient −1 + 1/(2s²) = 1 > 0, since s² = 1/4 < 1/2;
+-- at s² = 1/2 the coefficient is exactly 0.
+example : (-1 : ℚ) + 1 / (2 * (1 / 2) ^ 2) = 1 ∧ ((1 : ℚ) / 2) ^ 2 < 1 / 2 := by norm_num
+example : (-1 : ℚ) + 1 / (2 * (1 / 2)) = 0 := by norm_num
+
+#print axioms importance_sampling_reweighting_identity
+#print axioms importance_sampling_estimate_unbiased
+#print axioms importance_sampling_variance
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'is_density_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'is_aesm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'is_weight_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'is_weight_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'is_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'is_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'is_integral_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'is_integrable_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'importance_sampling_reweighting_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'importance_sampling_estimate_unbiased' depends on axioms: [propext, Classical.choice, Quot.sound]
+'importance_sampling_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -575,7 +838,7 @@ The two outputs agree line for line.
 ## The usual mistake
 
 > [!warning]
-> **Trusting the printed error bar.** Importance sampling estimates its own error from the same weights it averages. When the proposal's tails are too thin (for a bell curve on the line, a spread with $s^2 < 1/2$), the second moment is infinite, the rare huge weights have not turned up yet, and the error bar printed from the run is too small by an unknown amount. The spread-0.5 proposal printed 0.015209 per million for an error that has no finite size. Check with algebra that $M_2$ is finite before believing any run; a safe rule is a proposal whose tails are at least as heavy as those of $h f$.
+> **Trusting the printed error bar.** Importance sampling estimates its own error from the same weights it averages. When the proposal's tails are too thin (for a bell curve on the line, a spread with $s^2 < 1/2$), the second moment is infinite. The rare huge weights have not turned up yet, and the error bar printed from the run is too small by an unknown amount. The spread-0.5 proposal printed 0.015209 per million for an error that has no finite size. Check with algebra that $M_2$ is finite before believing any run; a safe rule is a proposal whose tails are at least as heavy as those of $h f$.
 >
 > A second trap: **more shift is not better.** Centring at 7 gives 8.01 percent, worse than centring at 3.5 (3.87 percent). The best centre sits just past the line, at 4.852.
 
@@ -608,7 +871,7 @@ The two outputs agree line for line.
 - [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the same reweighting for whole random paths, where moving the centre becomes changing the drift.
 - [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): simulated tail losses, where plain simulation is short of draws in exactly the way the bolts were.
 
-The weight here was a ratio of two densities on a line; what that ratio means when the thing drawn is a whole path through time, with no density to divide, is the question the Radon-Nikodym and Girsanov cards answer.
+The weight here was a ratio of two densities on a line. What that ratio means when the thing drawn is a whole path through time, with no density to divide, is the question the Radon-Nikodym and Girsanov cards answer.
 
 ---
 

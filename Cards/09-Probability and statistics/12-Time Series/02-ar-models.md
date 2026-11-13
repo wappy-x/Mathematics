@@ -8,13 +8,17 @@
 
 A weather station logs each day's temperature anomaly: that day's mean temperature minus the long-run average for the same calendar date. A reading of +3 °C means three degrees warmer than usual for the date, whatever the season. Warm days tend to follow warm days. A heat wave does not stop overnight; it fades.
 
-Autoregression turns the fading into a rule. Tomorrow's anomaly is a fixed fraction of today's, plus a small constant, plus a fresh random surprise. On this card the fraction is 0.8, the constant 0.1 °C, and the surprise is a normal draw with standard deviation 1.2 °C. "Auto" because the series is regressed on itself: yesterday plays the explanatory variable, today the response.
+Autoregression (AR) turns the fading into a rule. Tomorrow's anomaly is a fixed fraction of today's, plus a small constant, plus a fresh random surprise. On this card the fraction is 0.8, the constant 0.1 °C, and the surprise is a normal draw with standard deviation 1.2 °C. "Auto" because the series is regressed on itself: yesterday plays the explanatory variable, today the response.
 
-The station is a model, not a real record: a year of its readings is generated from those three numbers with a stated seed, so every fit can be graded against the truth. Three jobs follow. **Fit:** a year of readings gives back 0.823, standard error 0.030. **Condition:** the fraction must lie strictly between −1 and 1, or the readings wander off with no average to return to. **Forecast:** after a +4.5 °C day, tomorrow's forecast is +3.7 °C, and 95 tomorrows in 100 land between +1.35 and +6.05 °C.
+The station is a model, not a real record. A year of its readings is generated from those three numbers with a stated seed, the starting value of the random-number generator. So every fit can be graded against the truth. Three jobs follow.
+
+- **Fit:** a year of readings gives back 0.823, standard error 0.030.
+- **Condition:** the fraction must lie strictly between −1 and 1, or the readings wander off with no average to return to.
+- **Forecast:** after a +4.5 °C day, tomorrow's forecast is +3.7 °C, and 95 tomorrows in 100 land between +1.35 and +6.05 °C.
 
 **An AR(1) model says each value is a constant, plus a fixed fraction of the last value, plus a fresh independent shock; when the fraction lies strictly between −1 and 1 the series settles around a fixed mean, its memory fades geometrically, and forecasts glide back to that mean inside bands that widen to a fixed width.**
 
-**What kind of fact this is:** a model: an assumption about how anomalies evolve, to be checked against data, not a law. Inside the model, the stationarity condition and the forecast formulas are theorems, proved on this card in Why it works.
+**What kind of fact this is:** a model: an assumption about how anomalies evolve, to be checked against data, not a law. Inside the model, the stationarity condition and the forecast formulas are theorems, proved on this card in Why it works. The stationarity condition is the limit on the fraction that gives the series a fixed mean and spread, as in [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md).
 
 ### The picture: thirty days with memory and without
 
@@ -56,7 +60,7 @@ With $p$ days of memory the model is AR($p$):
 
 $$X_t = c + \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + \varepsilon_t$$
 
-It is stationary exactly when every solution $\lambda$ of $\lambda^p = \phi_1\lambda^{p-1} + \phi_2\lambda^{p-2} + \dots + \phi_p$ has size below 1, complex solutions measured by their modulus. For $p$ = 1 the one solution is $\phi$ itself, which gives back $-1 < \phi < 1$. For $p$ = 2 the condition is a triangle: $\phi_1 + \phi_2 < 1$, $\phi_2 - \phi_1 < 1$ and $-1 < \phi_2 < 1$.
+It is stationary exactly when every solution $\lambda$ of $\lambda^p = \phi_1\lambda^{p-1} + \phi_2\lambda^{p-2} + \dots + \phi_p$ has size below 1, complex solutions measured by their modulus, their distance from 0. For $p$ = 1 the one solution is $\phi$ itself, which gives back $-1 < \phi < 1$. For $p$ = 2 the condition is a triangle: $\phi_1 + \phi_2 < 1$, $\phi_2 - \phi_1 < 1$ and $-1 < \phi_2 < 1$.
 
 Fitting has two standard roads, given here for AR(1) and in Why it works, Step 6, for AR($p$). Least squares fits the line through the points (yesterday, today), exactly as in [Least squares](../09-Regression/01-least-squares-regression.md), and its slope is the estimate $\hat\phi$. Yule–Walker sets $\hat\phi = r(1)$, the record's own autocorrelation at lag 1. Either way, for a record of $n$ days,
 
@@ -84,8 +88,8 @@ $$\operatorname{se}(\hat\phi) \approx \sqrt{\frac{1-\phi^2}{n}}$$
 ### When it holds
 
 - **The carry-over strictly between −1 and 1** (for AR($p$), every root size below 1). At $\phi$ = 1 the model is a random walk: fed the same shocks, its spread after a year is 23.26 °C, against the station's 2.00.
-- **Shocks independent of the past, with the same spread every day.** If calm and stormy spells alternate, the band is right on average and wrong on the day; [GARCH](06-garch-and-volatility-clustering.md) models that.
-- **Normal shocks, for the 1.96.** The forecast itself needs only mean-zero shocks. With fat-tailed shocks the share outside the band is no longer 5%, and the misses that do happen are larger.
+- **Shocks independent of the past, with the same spread every day.** If calm and stormy spells alternate, the band is right on average and wrong on the day; [GARCH](06-garch-and-volatility-clustering.md) models that, by letting the shock's spread follow its own autoregression.
+- **Normal shocks, for the 1.96.** The forecast itself needs only mean-zero shocks. With fat-tailed shocks, where large shocks come more often than the normal allows, the share outside the band is no longer 5%, and the misses that do happen are larger.
 - **Known parameters.** The formulas use the true 0.8. A band built from the fitted 0.823 ignores that estimate's own error and comes out slightly too narrow; with a year of data the effect is small.
 - **Memory that fades geometrically.** A seasonal cycle left in the data gives autocorrelations that rise again at a year's lag, which no AR(1) can produce. That is why the station records anomalies, not raw temperatures.
 
@@ -105,7 +109,9 @@ If the series has a fixed mean $\mu$, averaging both sides of the rule gives $\m
 
 Unrolled from a starting day 0, the gap from the mean on day $t$ is the starting gap times $\phi^t$, plus $t$ shocks weighted 1, $\phi$, $\phi^2$ and so on. The pieces are independent, so their variances add: the starting variance times $\phi^{2t}$, plus $\sigma^2$ times $1 + \phi^2 + \phi^4 + \dots + \phi^{2(t-1)}$.
 
-That is a geometric series with ratio $\phi^2$. When $-1 < \phi < 1$ the starting term dies away and the sum approaches $\sigma^2/(1-\phi^2)$ = 1.44/0.36 = 4, standard deviation 2 °C, whatever the start. A series started with variance 4 keeps it exactly on every day. When the size of $\phi$ is 1 or more, the sum grows without limit: at $\phi$ = 1 it is $t$ times $\sigma^2$, and no fixed spread exists. That is the stationarity condition, and why it takes exactly this form.
+That is a geometric series with ratio $\phi^2$. When $-1 < \phi < 1$ the starting term dies away and the sum approaches $\sigma^2/(1-\phi^2)$ = 1.44/0.36 = 4, standard deviation 2 °C, whatever the start. A series started with variance 4 keeps it exactly on every day.
+
+When the size of $\phi$ is 1 or more, the sum grows without limit: at $\phi$ = 1 it is $t$ times $\sigma^2$, and no fixed spread exists. That is the stationarity condition, and why it takes exactly this form.
 
 <details>
 <summary>Detailed proof: unrolling, the variance and the autocorrelation</summary>
@@ -150,13 +156,21 @@ The code runs 20,000 futures from +4.5 °C. At 1, 2, 3, 5 and 10 days ahead the 
 
 ### Step 6: AR(p), and why the condition is on the roots
 
-Follow one shock of size 1 through an AR(2). Its echo obeys the model's own rule with no new shocks: each day's echo is $\phi_1$ times the echo the day before, plus $\phi_2$ times the echo two days before. Try an echo that is a power of one number, $\lambda^j$ on day j: the rule holds exactly when $\lambda^2 = \phi_1\lambda + \phi_2$. Every echo is a mix of the two solutions' powers (with a repeated solution, $j\lambda^j$ joins $\lambda^j$), so it dies away exactly when both have size below 1, and the variance, $\sigma^2$ times the sum of squared echoes, is finite exactly then. The same holds for any $p$. Stacking the last $p$ days into a vector turns AR($p$) into a one-step matrix rule, and the $\lambda$ are that matrix's eigenvalues.
+Follow one shock of size 1 through an AR(2). Its echo obeys the model's own rule with no new shocks: each day's echo is $\phi_1$ times the echo the day before, plus $\phi_2$ times the echo two days before. Try an echo that is a power of one number, $\lambda^j$ on day j: the rule holds exactly when $\lambda^2 = \phi_1\lambda + \phi_2$.
+
+Every echo is a mix of the two solutions' powers (with a repeated solution, $j\lambda^j$ joins $\lambda^j$), so it dies away exactly when both have size below 1. The variance, $\sigma^2$ times the sum of squared echoes, is finite exactly then. The same holds for any $p$.
+
+Stacking the last $p$ days into a vector turns AR($p$) into a one-step matrix rule, and the $\lambda$ are that matrix's eigenvalues: its stretch factors, as in [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md).
 
 Both fitting roads carry over to $p$ lags. Least squares regresses today on the last $p$ days together, the multiple regression of [Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md). Yule–Walker multiplies the rule by each of the last $p$ days' gaps in turn and averages, as in Step 4. That gives $p$ equations, one for each lag $k = 1, \dots, p$: $r(k) = \phi_1 r(k-1) + \phi_2 r(k-2) + \dots + \phi_p r(k-p)$, where $r(0) = 1$ and a negative lag reads as the positive one, solved for the $p$ fractions. For $p$ = 2 the solution is
 
 $$\hat\phi_1 = \frac{r(1)\,(1 - r(2))}{1 - r(1)^2}, \qquad \hat\phi_2 = \frac{r(2) - r(1)^2}{1 - r(1)^2}.$$
 
-The code fits an AR(2) to the same year. Least squares gives 0.7562 and 0.0808, with standard error 0.0527 on the second; Yule–Walker gives 0.7572 and 0.0800. By hand, Step 3's three-place values 0.823 and 0.703 give 0.7575 and 0.0796: the denominator $1 - r(1)^2$ is only about 0.32, so rounding the inputs moves the fourth decimal. The largest root size is 0.8512, inside the triangle. The second coefficient sits under two standard errors from zero, so the extra lag earns nothing and AR(1) stays. Choosing the order properly uses the partial correlogram of [Moving average and ARMA](03-ma-and-arma.md) or an information criterion, treated in the sources below.
+The code fits an AR(2) to the same year. Least squares gives 0.7562 and 0.0808, with standard error 0.0527 on the second; Yule–Walker gives 0.7572 and 0.0800. By hand, Step 3's three-place values 0.823 and 0.703 give 0.7575 and 0.0796: the denominator $1 - r(1)^2$ is only about 0.32, so rounding the inputs moves the fourth decimal.
+
+The largest root size is 0.8512, inside the triangle. The second coefficient sits under two standard errors from zero, so the extra lag earns nothing and AR(1) stays.
+
+Choosing the order properly uses the partial correlogram of [Moving average and ARMA](03-ma-and-arma.md) or an information criterion, treated in the sources below. The partial correlogram shows the correlation at each lag that is left after the shorter lags are accounted for. An information criterion is a score that rewards a close fit and charges for each extra coefficient.
 
 Shrink the day to an instant and AR(1) becomes the Ornstein–Uhlenbeck process of [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).
 
@@ -620,6 +634,310 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulations included, since both languages draw the same numbers from the same seed.
 
+### Lean
+
+Lean proves the mean, the spread, the memory and the forecast error of AR(1), for every carry-over strictly between −1 and 1.
+
+- Take shocks independent of each other and of the starting reading, with mean 0 and standard deviation $\sigma$. Then the mean of $X_t$ tends to $\mu = c/(1-\phi)$, whatever the start.
+- Take the same model. Then $\operatorname{Var}(X_t)$ tends to $\sigma^2/(1-\phi^2)$, whatever the starting spread.
+- Take any day $t$. Then $\operatorname{Var}(X_t)$ is the starting variance times $\phi^{2t}$, plus $\sigma^2(1-\phi^{2t})/(1-\phi^2)$.
+- Take any day $t$ and any lag $h$. Then the covariance of $X_{t+h}$ and $X_t$ is $\phi^h$ times $\operatorname{Var}(X_t)$, so the memory fades geometrically.
+- Stand on day $T$ and forecast $h$ days ahead by $\mu + \phi^h(x_T - \mu)$. Then the error is exactly the weighted sum of the $h$ shocks still to come.
+- Take the same forecast. Then its error averages zero, and its variance is $\sigma_h^2 = \sigma^2(1-\phi^{2h})/(1-\phi^2)$.
+- The hand arithmetic holds exactly: mean 0.5 °C, variance 4, and tomorrow's forecast 3.7 °C with band 1.348 to 6.052 °C.
+- Also exact: two days ahead 3.06 °C with error variance 2.3616, the far band ± 3.92, and autocorrelations 0.8 and 0.64.
+
+The 95% coverage of the band, the fits, the AR(2) roots and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Autoregression: in the model X(t+1) = c + φ·X(t) + shock with independent mean-zero shocks of variance σ² and −1 < φ < 1, the mean settles at c/(1 − φ), the variance settles at σ²/(1 − φ²), readings h days apart have covariance φ^h times the variance, and the h-day forecast c/(1 − φ) + φ^h·(today − c/(1 − φ)) has mean-zero error with variance σ²(1 − φ^(2h))/(1 − φ²).
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Analysis.SpecificLimits.Basic
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+lemma ar1h_cov_affine {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    {Y Z W : Ω → ℝ} (a b : ℝ) (hY : MemLp Y 2 P) (hZ : MemLp Z 2 P) (hW : MemLp W 2 P) :
+    covariance (fun ω => a + b * Y ω + Z ω) W P = b * covariance Y W P + covariance Z W P := by
+  have h1 : (fun ω => a + b * Y ω + Z ω) = (fun ω => a + b * Y ω) + Z := rfl
+  have hA : MemLp (fun ω => a + b * Y ω) 2 P := (memLp_const a).add (hY.const_mul b)
+  rw [h1, covariance_add_left hA hZ hW,
+    covariance_const_add_left ((hY.const_mul b).integrable one_le_two),
+    covariance_const_mul_left]
+
+lemma ar1h_int_affine {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    {Y Z : Ω → ℝ} (a b : ℝ) (hY : Integrable Y P) (hZ : Integrable Z P) :
+    ∫ ω, (a + b * Y ω + Z ω) ∂P = a + b * ∫ ω, Y ω ∂P + ∫ ω, Z ω ∂P := by
+  have hA : Integrable (fun ω => a + b * Y ω) P := (integrable_const a).add (hY.const_mul b)
+  have hB : Integrable (fun ω => b * Y ω) P := hY.const_mul b
+  rw [integral_add hA hZ, integral_add (integrable_const a) hB, integral_const,
+    integral_const_mul]
+  simp
+
+lemma ar1h_step {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (ξ Y : ℕ → Ω → ℝ) (a φ σ : ℝ) (s : ℕ)
+    (hind : iIndepFun ξ P) (hL2 : ∀ n, MemLp (ξ n) 2 P)
+    (hvar : ∀ t, variance (ξ (t + 1)) P = σ ^ 2)
+    (hY0 : MemLp (Y 0) 2 P) (hY0c : ∀ k, s < k → covariance (Y 0) (ξ k) P = 0)
+    (hrec : ∀ n ω, Y (n + 1) ω = a + φ * Y n ω + ξ (s + n + 1) ω) :
+    (∀ n, MemLp (Y n) 2 P) ∧ (∀ n k, s + n < k → covariance (Y n) (ξ k) P = 0) ∧
+      (∀ n, variance (Y (n + 1)) P = φ ^ 2 * variance (Y n) P + σ ^ 2) := by
+  have hYfun : ∀ n, Y (n + 1) = fun ω => a + φ * Y n ω + ξ (s + n + 1) ω :=
+    fun n => funext (hrec n)
+  have hM : ∀ n, MemLp (Y n) 2 P := by
+    intro n
+    induction n with
+    | zero => exact hY0
+    | succ n ih =>
+      rw [hYfun n]
+      exact ((memLp_const a).add (ih.const_mul φ)).add (hL2 _)
+  have hC : ∀ n k, s + n < k → covariance (Y n) (ξ k) P = 0 := by
+    intro n
+    induction n with
+    | zero => intro k hk; exact hY0c k (by omega)
+    | succ n ih =>
+      intro k hk
+      rw [hYfun n, ar1h_cov_affine a φ (hM n) (hL2 _) (hL2 k), ih k (by omega),
+        (hind.indepFun (show s + n + 1 ≠ k by omega)).covariance_eq_zero (hL2 _) (hL2 _)]
+      ring
+  refine ⟨hM, hC, fun n => ?_⟩
+  have hf : MemLp (fun ω => a + φ * Y n ω + ξ (s + n + 1) ω) 2 P := hYfun n ▸ hM (n + 1)
+  have e2 : covariance (Y n) (fun ω => a + φ * Y n ω + ξ (s + n + 1) ω) P =
+      φ * covariance (Y n) (Y n) P + covariance (ξ (s + n + 1)) (Y n) P := by
+    rw [covariance_comm]; exact ar1h_cov_affine a φ (hM n) (hL2 _) (hM n)
+  have e3 : covariance (ξ (s + n + 1)) (fun ω => a + φ * Y n ω + ξ (s + n + 1) ω) P =
+      φ * covariance (Y n) (ξ (s + n + 1)) P + covariance (ξ (s + n + 1)) (ξ (s + n + 1)) P := by
+    rw [covariance_comm]; exact ar1h_cov_affine a φ (hM n) (hL2 _) (hL2 _)
+  have e4 : covariance (ξ (s + n + 1)) (Y n) P = 0 := by
+    rw [covariance_comm]; exact hC n _ (by omega)
+  have e5 : covariance (Y n) (ξ (s + n + 1)) P = 0 := hC n _ (by omega)
+  have e6 : covariance (ξ (s + n + 1)) (ξ (s + n + 1)) P = σ ^ 2 := by
+    rw [covariance_self (hL2 _).aemeasurable]; exact hvar _
+  rw [← covariance_self (hM (n + 1)).aemeasurable, ← covariance_self (hM n).aemeasurable,
+    hYfun n, ar1h_cov_affine a φ (hM n) (hL2 _) hf, e2, e3, e4, e5, e6]
+  ring
+
+lemma ar1h_geom (v : ℕ → ℝ) (φ σ : ℝ) (hφ : φ ^ 2 ≠ 1)
+    (hv : ∀ n, v (n + 1) = φ ^ 2 * v n + σ ^ 2) (n : ℕ) :
+    v n = φ ^ (2 * n) * v 0 + σ ^ 2 * (1 - φ ^ (2 * n)) / (1 - φ ^ 2) := by
+  have hne : 1 - φ ^ 2 ≠ 0 := sub_ne_zero.mpr (Ne.symm hφ)
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [hv, ih, show 2 * (n + 1) = 2 * n + 2 by ring, pow_add]
+    field_simp
+    ring
+
+#print axioms ar1h_cov_affine
+#print axioms ar1h_int_affine
+#print axioms ar1h_step
+#print axioms ar1h_geom
+
+
+/-- **AR(1) settles: fixed mean, fixed spread, geometric memory.** On a probability space,
+let `ξ 0, ξ 1, ξ 2, …` be independent random variables with finite variance. `ξ 0` is the
+starting reading `X 0`; for each day `t + 1`, `ξ (t + 1)` is that day's shock, with mean 0
+and variance `σ²`. The series follows the AR(1) rule `X (t + 1) = c + φ · X t + ξ (t + 1)`.
+If the carry-over `φ` lies strictly between −1 and 1, then, whatever the start:
+the mean of `X t` tends to `c / (1 − φ)`; the variance of `X t` tends to `σ² / (1 − φ²)`;
+and readings `h` days apart have covariance `φ^h` times the variance of the earlier one,
+so the autocorrelation fades geometrically. -/
+theorem ar1_settles_to_mean_and_spread {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (ξ X : ℕ → Ω → ℝ) (c φ σ : ℝ)
+    (hind : iIndepFun ξ P)
+    (hL2 : ∀ n, MemLp (ξ n) 2 P)
+    (hmean : ∀ t, ∫ ω, ξ (t + 1) ω ∂P = 0)
+    (hvar : ∀ t, variance (ξ (t + 1)) P = σ ^ 2)
+    (h0 : X 0 = ξ 0)
+    (hrule : ∀ t ω, X (t + 1) ω = c + φ * X t ω + ξ (t + 1) ω)
+    (hφ : -1 < φ ∧ φ < 1) :
+    Tendsto (fun t => ∫ ω, X t ω ∂P) atTop (𝓝 (c / (1 - φ))) ∧
+      Tendsto (fun t => variance (X t) P) atTop (𝓝 (σ ^ 2 / (1 - φ ^ 2))) ∧
+      ∀ t h, covariance (X (t + h)) (X t) P = φ ^ h * variance (X t) P := by
+  have hφ2 : φ ^ 2 ≠ 1 := by nlinarith [hφ.1, hφ.2]
+  have hne : 1 - φ ≠ 0 := by linarith [hφ.2]
+  have habs : |φ| < 1 := abs_lt.mpr hφ
+  obtain ⟨hM, hC, hV⟩ := ar1h_step ξ X c φ σ 0 hind hL2 hvar (h0 ▸ hL2 0)
+    (fun k hk => by
+      rw [h0]; exact (hind.indepFun (show 0 ≠ k by omega)).covariance_eq_zero (hL2 0) (hL2 k))
+    (fun n ω => by rw [hrule, zero_add])
+  refine ⟨?_, ?_, ?_⟩
+  · have hm : ∀ t, ∫ ω, X t ω ∂P =
+        c / (1 - φ) + φ ^ t * (∫ ω, X 0 ω ∂P - c / (1 - φ)) := by
+      intro t
+      induction t with
+      | zero => simp
+      | succ t ih =>
+        have hX : X (t + 1) = fun ω => c + φ * X t ω + ξ (t + 1) ω := funext (hrule t)
+        rw [hX, ar1h_int_affine c φ ((hM t).integrable one_le_two)
+          ((hL2 _).integrable one_le_two), ih, hmean, pow_succ]
+        field_simp
+        ring
+    rw [show (fun t => ∫ ω, X t ω ∂P) = fun t =>
+        c / (1 - φ) + φ ^ t * (∫ ω, X 0 ω ∂P - c / (1 - φ)) from funext hm]
+    have := ((tendsto_pow_atTop_nhds_zero_of_abs_lt_one habs).mul_const
+      (∫ ω, X 0 ω ∂P - c / (1 - φ))).const_add (c / (1 - φ))
+    simpa using this
+  · have hne2 : 1 - φ ^ 2 ≠ 0 := sub_ne_zero.mpr (Ne.symm hφ2)
+    have key : ∀ t, variance (X t) P =
+        σ ^ 2 / (1 - φ ^ 2) + (φ ^ 2) ^ t * (variance (X 0) P - σ ^ 2 / (1 - φ ^ 2)) := by
+      intro t
+      rw [ar1h_geom (fun n => variance (X n) P) φ σ hφ2 hV t, ← pow_mul]
+      field_simp
+      ring
+    rw [show (fun t => variance (X t) P) = fun t =>
+        σ ^ 2 / (1 - φ ^ 2) + (φ ^ 2) ^ t * (variance (X 0) P - σ ^ 2 / (1 - φ ^ 2))
+        from funext key]
+    have habs2 : |φ ^ 2| < 1 := by
+      rw [abs_of_nonneg (sq_nonneg φ)]; nlinarith [hφ.1, hφ.2]
+    have := ((tendsto_pow_atTop_nhds_zero_of_abs_lt_one habs2).mul_const
+      (variance (X 0) P - σ ^ 2 / (1 - φ ^ 2))).const_add (σ ^ 2 / (1 - φ ^ 2))
+    simpa using this
+  · intro t h
+    induction h with
+    | zero => simp [covariance_self (hM t).aemeasurable]
+    | succ h ih =>
+      have hX : X (t + h + 1) = fun ω => c + φ * X (t + h) ω + ξ (t + h + 1) ω :=
+        funext (hrule (t + h))
+      rw [← add_assoc, hX, ar1h_cov_affine c φ (hM _) (hL2 _) (hM t), ih, covariance_comm,
+        hC t (t + h + 1) (by omega)]
+      ring
+
+/-- **The variance on every day (Step 2).** Under the same model, the variance of the
+reading on day `t` is the starting variance times `φ^(2t)`, plus `σ²(1 − φ^(2t))/(1 − φ²)`.
+In particular a series started with variance `σ²/(1 − φ²)` keeps exactly that variance
+on every day. -/
+theorem ar1_variance_eq {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (ξ X : ℕ → Ω → ℝ) (c φ σ : ℝ)
+    (hind : iIndepFun ξ P)
+    (hL2 : ∀ n, MemLp (ξ n) 2 P)
+    (hmean : ∀ t, ∫ ω, ξ (t + 1) ω ∂P = 0)
+    (hvar : ∀ t, variance (ξ (t + 1)) P = σ ^ 2)
+    (h0 : X 0 = ξ 0)
+    (hrule : ∀ t ω, X (t + 1) ω = c + φ * X t ω + ξ (t + 1) ω)
+    (hφ : -1 < φ ∧ φ < 1) (t : ℕ) :
+    variance (X t) P =
+      φ ^ (2 * t) * variance (X 0) P + σ ^ 2 * (1 - φ ^ (2 * t)) / (1 - φ ^ 2) := by
+  have hφ2 : φ ^ 2 ≠ 1 := by nlinarith [hφ.1, hφ.2]
+  obtain ⟨_, _, hV⟩ := ar1h_step ξ X c φ σ 0 hind hL2 hvar (h0 ▸ hL2 0)
+    (fun k hk => by
+      rw [h0]; exact (hind.indepFun (show 0 ≠ k by omega)).covariance_eq_zero (hL2 0) (hL2 k))
+    (fun n ω => by rw [hrule, zero_add])
+  exact ar1h_geom (fun n => variance (X n) P) φ σ hφ2 hV t
+
+/-- **The forecast and its error (Step 5).** Under the same model, stand on day `T` and
+forecast `h` days ahead by the long-run mean plus the shrunk gap,
+`c/(1 − φ) + φ^h · (X T − c/(1 − φ))`. The forecast error is
+`ξ (T + h) + φ · ξ (T + h − 1) + … + φ^(h − 1) · ξ (T + 1)`, the shocks still to come;
+it averages zero, and its variance is `σ_h² = σ²(1 − φ^(2h))/(1 − φ²)`. -/
+theorem ar1_forecast_error {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (ξ X : ℕ → Ω → ℝ) (c φ σ : ℝ)
+    (hind : iIndepFun ξ P)
+    (hL2 : ∀ n, MemLp (ξ n) 2 P)
+    (hmean : ∀ t, ∫ ω, ξ (t + 1) ω ∂P = 0)
+    (hvar : ∀ t, variance (ξ (t + 1)) P = σ ^ 2)
+    (h0 : X 0 = ξ 0)
+    (hrule : ∀ t ω, X (t + 1) ω = c + φ * X t ω + ξ (t + 1) ω)
+    (hφ : -1 < φ ∧ φ < 1) (T h : ℕ) :
+    (∀ ω, X (T + h) ω - (c / (1 - φ) + φ ^ h * (X T ω - c / (1 - φ))) =
+        ∑ j ∈ Finset.range h, φ ^ j * ξ (T + h - j) ω) ∧
+      ∫ ω, (X (T + h) ω - (c / (1 - φ) + φ ^ h * (X T ω - c / (1 - φ)))) ∂P = 0 ∧
+      variance (fun ω => X (T + h) ω - (c / (1 - φ) + φ ^ h * (X T ω - c / (1 - φ)))) P =
+        σ ^ 2 * (1 - φ ^ (2 * h)) / (1 - φ ^ 2) := by
+  have hφ2 : φ ^ 2 ≠ 1 := by nlinarith [hφ.1, hφ.2]
+  have hne : 1 - φ ≠ 0 := by linarith [hφ.2]
+  set E : ℕ → Ω → ℝ := fun n ω => X (T + n) ω - (c / (1 - φ) + φ ^ n * (X T ω - c / (1 - φ)))
+    with hEdef
+  have hE0 : E 0 = fun _ => 0 := by funext ω; simp [hEdef]
+  have hErec : ∀ n ω, E (n + 1) ω = 0 + φ * E n ω + ξ (T + n + 1) ω := by
+    intro n ω
+    simp only [hEdef]
+    rw [← add_assoc, hrule, pow_succ]
+    field_simp
+    ring
+  have hsum : ∀ n ω, E n ω = ∑ j ∈ Finset.range n, φ ^ j * ξ (T + n - j) ω := by
+    intro n
+    induction n with
+    | zero => intro ω; rw [hE0]; simp
+    | succ n ih =>
+      intro ω
+      rw [hErec, ih, Finset.sum_range_succ', Finset.mul_sum]
+      have h1 : ∀ j ∈ Finset.range n, φ * (φ ^ j * ξ (T + n - j) ω) =
+          φ ^ (j + 1) * ξ (T + (n + 1) - (j + 1)) ω := by
+        intro j _
+        rw [show T + (n + 1) - (j + 1) = T + n - j by omega, pow_succ]
+        ring
+      rw [Finset.sum_congr rfl h1, show T + (n + 1) - 0 = T + n + 1 by omega]
+      simp
+  obtain ⟨hM, _, hV⟩ := ar1h_step ξ E 0 φ σ T hind hL2 hvar
+    (by rw [hE0]; exact memLp_const 0)
+    (fun k _ => by rw [hE0]; exact covariance_const_left 0)
+    hErec
+  refine ⟨fun ω => hsum h ω, ?_, ?_⟩
+  · show ∫ ω, E h ω ∂P = 0
+    induction h with
+    | zero => rw [hE0]; simp
+    | succ n ih =>
+      rw [show E (n + 1) = fun ω => 0 + φ * E n ω + ξ (T + n + 1) ω from funext (hErec n),
+        ar1h_int_affine 0 φ ((hM n).integrable one_le_two) ((hL2 _).integrable one_le_two),
+        ih, hmean]
+      ring
+  · show variance (E h) P = σ ^ 2 * (1 - φ ^ (2 * h)) / (1 - φ ^ 2)
+    rw [ar1h_geom (fun n => variance (E n) P) φ σ hφ2 hV h]
+    simp only [hE0]
+    rw [show (fun _ : Ω => (0 : ℝ)) = 0 from rfl, variance_zero]
+    ring
+
+-- The card's station: φ = 4/5 (0.8), c = 1/10 (0.1 °C), σ = 6/5 (1.2 °C), today 9/2 (4.5 °C).
+-- Long-run mean: 0.1 / (1 − 0.8) = 0.5 °C.
+example : ((1 : ℚ) / 10) / (1 - 4 / 5) = 1 / 2 := by norm_num
+-- Stationary variance: 1.44 / (1 − 0.64) = 4, standard deviation 2 °C.
+example : ((6 : ℚ) / 5) ^ 2 / (1 - (4 / 5) ^ 2) = 4 := by norm_num
+example : (2 : ℚ) ^ 2 = 4 := by norm_num
+-- Today's gap from the mean: 4.5 − 0.5 = 4 °C.
+example : (9 : ℚ) / 2 - 1 / 2 = 4 := by norm_num
+-- Tomorrow's forecast: 0.5 + 0.8 × 4 = 3.7 °C.
+example : (1 : ℚ) / 2 + 4 / 5 * 4 = 37 / 10 := by norm_num
+-- Tomorrow's error variance is one shock's: σ²(1 − φ²)/(1 − φ²) = 1.44.
+example : ((6 : ℚ) / 5) ^ 2 * (1 - (4 / 5) ^ 2) / (1 - (4 / 5) ^ 2) = 36 / 25 := by norm_num
+-- Tomorrow's 95% band: 3.7 ± 1.96 × 1.2 = 3.7 ± 2.352, from 1.348 to 6.052 °C.
+example : (49 : ℚ) / 25 * (6 / 5) = 294 / 125 := by norm_num
+example : (37 : ℚ) / 10 - 294 / 125 = 337 / 250 := by norm_num
+example : (37 : ℚ) / 10 + 294 / 125 = 1513 / 250 := by norm_num
+-- Two days ahead: 0.5 + 0.64 × 4 = 3.06 °C.
+example : (1 : ℚ) / 2 + (4 / 5) ^ 2 * 4 = 153 / 50 := by norm_num
+-- Its error variance: 1.44 × (1 + 0.64) = 2.3616, matching σ²(1 − φ⁴)/(1 − φ²).
+example : ((6 : ℚ) / 5) ^ 2 * (1 + (4 / 5) ^ 2) = 1476 / 625 := by norm_num
+example : ((6 : ℚ) / 5) ^ 2 * (1 - (4 / 5) ^ 4) / (1 - (4 / 5) ^ 2) = 1476 / 625 := by norm_num
+-- Ten days ahead: 0.5 + 0.8^10 × 4, about 0.929 °C.
+example : ((4 : ℚ) / 5) ^ 10 = 1048576 / 9765625 := by norm_num
+example : (1 : ℚ) / 2 + (4 / 5) ^ 10 * 4 = 18154233 / 19531250 := by norm_num
+-- Far ahead: the mean ± 1.96 × 2 = 0.5 ± 3.92 °C.
+example : (49 : ℚ) / 25 * 2 = 98 / 25 := by norm_num
+-- Autocorrelations φ^h at lags 1 and 2: 0.8 and 0.64.
+example : ((4 : ℚ) / 5) ^ 1 = 4 / 5 ∧ ((4 : ℚ) / 5) ^ 2 = 16 / 25 := by norm_num
+-- Random walk (φ = 1) fed the same shocks: variance after 365 days is 365 × 1.44 = 525.6.
+example : (365 : ℚ) * (6 / 5) ^ 2 = 2628 / 5 := by norm_num
+
+#print axioms ar1_settles_to_mean_and_spread
+#print axioms ar1_variance_eq
+#print axioms ar1_forecast_error
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ar1h_cov_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ar1h_int_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ar1h_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ar1h_geom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ar1_settles_to_mean_and_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ar1_variance_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ar1_forecast_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -633,7 +951,7 @@ The two outputs match line for line, simulations included, since both languages 
 ## The usual mistake
 
 > [!warning]
-> **Fitting AR(1) to a series with no fixed mean.** On a random walk, least squares returns a carry-over close to 1, and the formulas then promise a mean to return to and a band that stops widening. Neither exists. Fed the same shocks as the station, a random walk's spread after a year is 23.26 °C, against the station's 2.00. Test for a unit root first: [Unit roots](04-differencing-and-unit-roots.md).
+> **Fitting AR(1) to a series with no fixed mean.** On a random walk, least squares returns a carry-over close to 1, and the formulas then promise a mean to return to and a band that stops widening. Neither exists. Fed the same shocks as the station, a random walk's spread after a year is 23.26 °C, against the station's 2.00. Test for a unit root (a carry-over of exactly 1) first: [Unit roots](04-differencing-and-unit-roots.md).
 >
 > - **The constant read as the mean.** Forecasts far ahead go to 0.5 °C, not 0.1; the 30-day forecast is 0.505.
 > - **Each coefficient below 1.** An AR(2) with 0.5 and 0.6 explodes: its largest root size is 1.0639, and a shock's echo after 50 days is 14.49 times the shock.
@@ -644,7 +962,7 @@ The two outputs match line for line, simulations included, since both languages 
 
 ## Where you meet it in real life
 
-- **Climate science.** AR(1) is the standard "red noise" benchmark: before a cycle in a temperature record is called real, it must stand out from what an AR(1) with the same lag-1 correlation produces by chance. The comparison is done in frequency, as in Spectral estimation.
+- **Climate science.** AR(1) is the standard "red noise" benchmark: before a cycle in a temperature record is called real, it must stand out from what an AR(1) with the same lag-1 correlation produces by chance. The comparison is done in frequency, as in [Spectral estimation](../../13-Engineering%20mathematics/05-Signals/06-spectral-estimation-and-periodograms.md).
 - **Weather forecasting.** Persistence shrunk towards normal, exactly the AR(1) forecast, is a baseline forecasters compare against.
 - **Economics.** AR models are the benchmark forecasts for series such as inflation; smoothing methods are compared with them in [Forecasting](05-forecasting-and-exponential-smoothing.md).
 - **Trading.** A spread between two related prices that reverts to its mean is modelled as AR(1) in discrete time and as Ornstein–Uhlenbeck in continuous time: [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).

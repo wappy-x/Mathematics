@@ -135,3 +135,4 @@ assert abs(ok[23] - true_e[23]) < 0.01 and abs(bad[23]) > 1e6
 c = [1.0, 1.1, 0.6, 0.15]                             # surprises sharing part of last month's: u = e + 0.5 e(-1)
 r3f, r3e = acov_formula(c, 3, 1) / acov_formula(c, 0, 1), acov_enum(c, 3, 1) / acov_enum(c, 0, 1); assert abs(r3f - r3e) < 1e-12 and r3f > 0.05
 print(f"correlated surprises: rho3 formula {r3f:.4f}, enumerated {r3e:.4f}, independent 0.0000")
+print("ALL CHECKS PASS")

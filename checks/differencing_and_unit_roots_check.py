@@ -132,3 +132,4 @@ assert abs(v250 - 250.0) < 4 * 250 * sqrt(2 / R), "random-walk variance is not t
 assert abs(ac1 + 0.5) < 4 * sqrt(0.5 / len(dr)), "over-differencing did not give -0.5"
 assert naive / R > Phi_left(-1.645) + 10 * se(naive / R, R), "normal cutoff was not too lenient"
 print("all checks passed")
+print("ALL CHECKS PASS")

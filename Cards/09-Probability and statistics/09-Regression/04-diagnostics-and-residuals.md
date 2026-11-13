@@ -61,12 +61,12 @@ $$e_{(i)} = y_i - \hat y_{(i)} = \frac{e_i}{1 - h_i}, \qquad D_i = \frac{\sum_{j
 | $r_i$, $t_i$ | studentized residual (scaled by its own estimated spread), using $s$; external version, using $s_{(i)}$ | mansion −2.44; −5.86 | beyond about ±2 the sale is flagged |
 | $\hat y_{(i)}$, $e_{(i)}$ | fitted price and miss, from a line that never saw sale i | mansion 1,816.7 and −416.7 | — |
 | $D_i$ | Cook's distance: the shift of all fitted prices when sale i goes | mansion 68.548; the rest below 0.15 | above 1 the sale is steering the fit |
-| $X$, $H$ | in the proofs: the table holding a 1 and the area for each sale; the hat matrix $X(X^{\top}X)^{-1}X^{\top}$, which turns prices into fitted prices | 9 rows by 2; 9 by 9, the leverages down its diagonal | — |
+| $X$, $H$ | in the proofs: the table holding a 1 and the area for each sale; the hat matrix $X(X^{\top}X)^{-1}X^{\top}$, which turns prices into fitted prices ($^{\top}$ swaps rows and columns; $^{-1}$ is the matrix inverse) | 9 rows by 2; 9 by 9, the leverages down its diagonal | — |
 | $\beta$, $\varepsilon$ | in the proofs: the true intercept and slope; the true errors, price minus the true line | unknown for the street; simulation: 120 and 2.8 | — |
 | $I$ | the identity matrix: 1s down its diagonal, 0s elsewhere | 9 by 9 | — |
 | $\Phi^{-1}$ | the normal quantile of shelf 04: the point on the bell curve with a given chance below it | the quantile plot's straight line | — |
 
-The external version $t_i$ swaps $s$ for $s_{(i)}$, so a wild sale cannot inflate the yardstick it is measured with. The house rules of thumb are conventions, not theorems: leverage above 2p/n, here 0.444; $\lvert t_i \rvert$ above 2 or 3; Cook's distance above 1.
+The external version $t_i$ swaps $s$ for $s_{(i)}$, so a wild sale cannot inflate the yardstick it is measured with. The usual cut-offs are conventions, not theorems: leverage above 2p/n, here 0.444; $\lvert t_i \rvert$ above 2 or 3; Cook's distance above 1.
 
 ### When it holds
 
@@ -103,9 +103,9 @@ The residual is the price minus a fitted price that already contains fraction $h
 
 Stack the prices into a column y. The fitted prices are $\hat y = Hy$, where $H = X(X^{\top}X)^{-1}X^{\top}$ is the **hat matrix** of [Multiple regression](03-multiple-regression-and-gauss-markov.md): it turns prices into fitted prices. X has a column of 1s and a column of areas. Its diagonal entries are the leverages: the i-th is the change in $\hat y_i$ per unit change in $y_i$, which is Step 1's $h_i$.
 
-H is symmetric, and $HH = H$, because fitting a line to prices already on the line changes nothing. The residuals are $e = (I - H)y$. Write $y = X\beta + \varepsilon$, with the errors ε independent, mean 0 and variance $\sigma^2$. Since $HX = X$, the line part cancels and $e = (I - H)\varepsilon$. So the variance matrix of e is $(I - H)\,\sigma^2 I\,(I - H)^{\top} = \sigma^2 (I - H)$, using symmetry and $HH = H$ once. Its diagonal entry is $\operatorname{Var}(e_i) = \sigma^2(1 - h_i)$.
+H is symmetric ($H^{\top} = H$), and $HH = H$, because fitting a line to prices already on the line changes nothing. The residuals are $e = (I - H)y$. Write $y = X\beta + \varepsilon$, with the errors ε independent, mean 0 and variance $\sigma^2$. Since $HX = X$, the line part cancels and $e = (I - H)\varepsilon$. So the variance matrix of e is $(I - H)\,\sigma^2 I\,(I - H)^{\top} = \sigma^2 (I - H)$, using symmetry and $HH = H$ once. Its diagonal entry is $\operatorname{Var}(e_i) = \sigma^2(1 - h_i)$.
 
-The leverages add to the trace of H. The trace of $X(X^{\top}X)^{-1}X^{\top}$ equals the trace of $(X^{\top}X)^{-1}X^{\top}X$, the p-by-p identity, which is p.
+The leverages add to the trace of H, the sum of its diagonal entries. The trace of $X(X^{\top}X)^{-1}X^{\top}$ equals the trace of $(X^{\top}X)^{-1}X^{\top}X$, the p-by-p identity, which is p.
 
 </details>
 
@@ -117,7 +117,7 @@ Replace the mansion's price with the deleted line's 1,816.7. That sale now sits 
 
 ### Step 4: Cook's distance is the shift of every fitted price, read off one fit
 
-Deleting sale i moves every fitted price, not just its own. Adding the squared moves and scaling by $p s^2$ gives Cook's distance, $D_i$. The same planting argument turns it into $D_i = (r_i^2/p) \cdot h_i/(1 - h_i)$: a sale steers the fit only if it both misses (large $r_i$) and has leverage (large $h_i$). Neither alone is enough. House 8 has the biggest raw residual, 43.5, and a Cook's distance of 0.110. The mansion has one of the smallest and a Cook's distance of 68.548.
+Deleting sale i moves every fitted price, not just its own. Adding the squared moves and scaling by $p s^2$ gives Cook's distance, $D_i$. The replacement argument of Step 3 turns it into $D_i = (r_i^2/p) \cdot h_i/(1 - h_i)$: a sale steers the fit only if it both misses (large $r_i$) and has leverage (large $h_i$). Neither alone is enough. House 8 has the biggest raw residual, 43.5, and a Cook's distance of 0.110. The mansion has one of the smallest and a Cook's distance of 68.548.
 
 The external studentized residual asks the same question as a test. It divides the deleted residual by its own standard error as a prediction from the eight-house line, whose spread is $s_{(i)} = 14.52$. The mansion gets −5.86: it sits nearly six standard errors from where the other eight houses put it.
 
@@ -134,11 +134,15 @@ The external version: the line without sale i misses each sale j, at its real pr
 
 ### Step 5: an uneven spread leaves the slope right and its error bar wrong
 
-The slope is a weighted sum of prices, $b = \sum_j (x_j - \bar x) y_j / S_{xx}$. With independent errors of spread $\sigma_j$ at sale j, its variance is $\sum_j (x_j - \bar x)^2 \sigma_j^2 / S_{xx}^2$: one over $S_{xx}$ times an average of the $\sigma_j^2$ that weights each sale by $(x_j - \bar x)^2$. The textbook formula replaces every $\sigma_j$ by one common $\sigma$, giving $\sigma^2/S_{xx}$, and its estimate $s^2$ averages the $\sigma_j^2$ almost evenly. So the textbook figure is too small when the largest spreads sit at the sales far from the average area, and too large when they sit near it; a spread that grows with area does not settle which. In the funnel below, the spread climbs fastest at the biggest houses, which carry the largest weights, and the textbook formula undercounts them.
+The slope is a weighted sum of prices, $b = \sum_j (x_j - \bar x) y_j / S_{xx}$. With independent errors of spread $\sigma_j$ at sale j, its variance is $\sum_j (x_j - \bar x)^2 \sigma_j^2 / S_{xx}^2$: one over $S_{xx}$ times an average of the $\sigma_j^2$ that weights each sale by $(x_j - \bar x)^2$. The textbook formula replaces every $\sigma_j$ by one common $\sigma$, giving $\sigma^2/S_{xx}$, and its estimate $s^2$ averages the $\sigma_j^2$ almost evenly.
 
-The code tests this on 50 simulated sales, 60 to 240 square metres, true price 120 + 2.8 × area, run 4,000 times. With an even spread of 40, the slope's true spread is 0.1022, the textbook standard error averages 0.1016, and "slope ± 2 standard errors" covers the true slope in 0.9490 of runs. With a funnel, spread $40 \times (\text{area}/150)^2$, the slope still averages 2.8018. But its true spread is 0.1637, the textbook standard error averages 0.1393, and the interval covers the truth in 0.9052 of runs. The residual plot shows it: residuals below 120 square metres average 13.0 in size, those at 180 and up average 62.1.
+So the textbook figure is too small when the largest spreads sit at the sales far from the average area, and too large when they sit near it; a spread that grows with area does not settle which. In the funnel below, the spread climbs fastest at the biggest houses, which carry the largest weights, and the textbook formula undercounts them.
 
-White's heteroskedasticity-consistent standard error (1980) estimates the weighted sum above from the squared residuals, and is the usual cure for a funnel. A line that resists a single sale, such as a least absolute deviations fit, is one cure for a steering outlier. White's paper is in the Sources.
+The code tests this on 50 simulated sales, 60 to 240 square metres, true price 120 + 2.8 × area, run 4,000 times. With an even spread of 40, the slope's true spread is 0.1022, the textbook standard error averages 0.1016, and "slope ± 2 standard errors" covers the true slope in 0.9490 of runs.
+
+With a funnel, spread $40 \times (\text{area}/150)^2$, the slope still averages 2.8018. But its true spread is 0.1637, the textbook standard error averages 0.1393, and the interval covers the truth in 0.9052 of runs. The residual plot shows it: residuals below 120 square metres average 13.0 in size, those at 180 and up average 62.1.
+
+Heteroskedasticity is the statisticians' word for an uneven spread. White's heteroskedasticity-consistent standard error (1980) estimates the weighted sum above from the squared residuals, and is the usual cure for a funnel. A line that resists a single sale, such as a least absolute deviations fit (the line with the smallest sum of absolute misses), is one cure for a steering outlier. White's paper is in the Sources.
 
 ---
 
@@ -165,7 +169,7 @@ The mansion is not a small miss; it is a sale the line bent to meet, and deletin
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Judging the mansion by its raw residual | 17.4, 7th largest of 9 | Leverage 0.958 lets it pull the line onto itself; external studentized residual −5.86 |
-| One straight line for small houses and the mansion | slope 1.9776 (SE 0.0772); 150 sq m house at 527.4 | Linearity dropped; the eight houses say 2.8272 (SE 0.1486) and 544.5 |
+| One straight line for small houses and the mansion | slope 1.9776 (standard error 0.0772); 150 sq m house at 527.4 | Linearity dropped; the eight houses say 2.8272 (standard error 0.1486) and 544.5 |
 | Deleting the mansion, then pricing a 600 sq m house | 1,816.7 against a sale at 1,400 | Extrapolation: no ordinary house is near 600 sq m |
 | Textbook standard error under a funnel | 0.1393 against a true 0.1637; covers in 0.9052 | Constant spread dropped |
 
@@ -183,7 +187,11 @@ The eight ordinary houses climb from −39.0 to +43.5 as their fitted price rise
 
 ## Code, from first principles, and it actually runs
 
-The checks reach every diagnostic by two roads that share no formula, and take a third for the funnel. Road 1 is the formulas above: leverage, studentized residuals, deleted residuals and Cook's distance, all from one fit. Road 2 is brute force: nudge each sale's price by one and refit to measure leverage, then delete each sale in turn and refit to get its deleted residual, its external studentized residual and the shift of every fitted price. Road 3 is a seeded simulation of fifty sales, with random numbers from SplitMix64 (a small, written-out generator, seed 20260928) turned into bell-shaped draws by the Box–Muller recipe. It compares the slope's exact spread, its simulated spread and its textbook standard error, with an even spread and with a funnel. Both programs draw the same numbers and print the same bytes.
+The checks reach every diagnostic by two roads that share no formula, and take a third for the funnel. Road 1 is the formulas above: leverage, studentized residuals, deleted residuals and Cook's distance, all from one fit.
+
+Road 2 is brute force: nudge each sale's price by one and refit to measure leverage, then delete each sale in turn and refit to get its deleted residual, its external studentized residual and the shift of every fitted price.
+
+Road 3 is a seeded simulation of fifty sales, with random numbers from SplitMix64 (a small, written-out generator, seed 20260928) turned into bell-shaped draws by the Box–Muller recipe. It compares the slope's exact spread, its simulated spread and its textbook standard error, with an even spread and with a funnel. Both programs draw the same numbers and print the same bytes.
 
 ### Python
 
@@ -571,6 +579,435 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line. The formula columns and the refit columns agree to every printed digit, and the asserts hold them to within 10^−9.
+
+### Lean
+
+Lean proves the three formulas for every set of sales that meets their conditions, and checks the mansion's numbers as exact fractions.
+
+- Suppose the sales other than sale i do not all have the same area. Then deleting sale i divides its residual by one minus its leverage: $e_{(i)} = e_i/(1 - h_i)$.
+- Take the same sales. Then Cook's distance $D_i$, found by deleting sale i, equals $(r_i^2/p) \cdot h_i/(1 - h_i)$ from one fit.
+- Suppose each price is the true line plus an independent error, with mean 0 and variance $\sigma^2$, and not all areas are equal. Then the residual's variance is $\sigma^2(1 - h_i)$, so a sale with high leverage has a residual with a small spread.
+- For the nine sales, the mansion's leverage is exactly 4395/4586, about 0.958, above the flag line 4/9.
+- The slopes are exactly 36277/18344 with the mansion and 540/191 without it, about 1.9776 and 2.8272.
+- The mansion's residual is exactly −79595/4586, about −17.4. Divided by one minus its leverage, it gives −79595/191, about −416.7.
+- The eight-house line prices the mansion at 346995/191, about 1,816.7, so its miss is −79595/191 as well.
+
+The leverages summing to p, the external studentized residual, the funnel simulation and the figures are left to the Python and Rust checks.
+
+```lean
+-- Diagnostics: for a least squares straight line, deleting one sale divides its residual by one minus its leverage, Cook's distance is read off one fit as (r²/2)·h/(1 − h), and with independent errors of spread σ a residual's variance is σ²(1 − h), with the card's mansion checked exactly.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Tactic.NormNum
+
+open Finset MeasureTheory ProbabilityTheory
+
+namespace Diagnostics
+
+/-! Sales are numbered by `Fin n`: sale `j` has floor area `x j` and price `y j`. Every fit below
+is taken over a set `s` of sales: `Finset.univ` is all of them, and `univ.erase i` is every sale
+except sale `i`. The formulas are the card's own: the line through the averages with slope
+`b = Σ (x_j − x̄) y_j / S_xx`, and the leverage `h_i = 1/n + (x_i − x̄)²/S_xx`. -/
+
+/-- The average of `v` over the sales in `s`. -/
+noncomputable def avg {n : ℕ} (s : Finset (Fin n)) (v : Fin n → ℝ) : ℝ :=
+  (∑ j ∈ s, v j) / s.card
+
+/-- `S_xx`: the total squared distance of the areas in `s` from their average. -/
+noncomputable def sxx {n : ℕ} (s : Finset (Fin n)) (x : Fin n → ℝ) : ℝ :=
+  ∑ j ∈ s, (x j - avg s x) ^ 2
+
+/-- The least squares slope through the sales in `s`: `Σ (x_j − x̄) y_j / S_xx`. -/
+noncomputable def slope {n : ℕ} (s : Finset (Fin n)) (x y : Fin n → ℝ) : ℝ :=
+  (∑ j ∈ s, (x j - avg s x) * y j) / sxx s x
+
+/-- The price the least squares line through the sales in `s` gives at area `t`:
+`ȳ + b (t − x̄)`. -/
+noncomputable def lineAt {n : ℕ} (s : Finset (Fin n)) (x y : Fin n → ℝ) (t : ℝ) : ℝ :=
+  avg s y + slope s x y * (t - avg s x)
+
+/-- The leverage of sale `i` in the fit to all `n` sales: `1/n + (x_i − x̄)²/S_xx`. -/
+noncomputable def leverage {n : ℕ} (x : Fin n → ℝ) (i : Fin n) : ℝ :=
+  1 / n + (x i - avg univ x) ^ 2 / sxx univ x
+
+/-! Helper lemmas for the proofs below. -/
+
+theorem sum_erase_univ {n : ℕ} (f : Fin n → ℝ) (i : Fin n) :
+    ∑ j ∈ univ.erase i, f j = ∑ j, f j - f i := by
+  rw [← Finset.sum_erase_add _ _ (mem_univ i)]; ring
+
+theorem card_erase_univ {n : ℕ} (i : Fin n) : (((univ : Finset (Fin n)).erase i).card : ℝ) = n - 1 := by
+  rw [card_erase_of_mem (mem_univ i), card_univ, Fintype.card_fin,
+    Nat.cast_sub (by have := i.pos; omega)]
+  simp
+
+theorem slope_num_eq {n : ℕ} (s : Finset (Fin n)) (x y : Fin n → ℝ) :
+    ∑ j ∈ s, (x j - avg s x) * y j = ∑ j ∈ s, x j * y j - avg s x * ∑ j ∈ s, y j := by
+  simp only [sub_mul, sum_sub_distrib, mul_sum]
+
+theorem sxx_eq {n : ℕ} (s : Finset (Fin n)) (x : Fin n → ℝ) :
+    sxx s x = ∑ j ∈ s, x j ^ 2 - (∑ j ∈ s, x j) ^ 2 / s.card := by
+  unfold sxx avg
+  rcases Nat.eq_zero_or_pos s.card with h | h
+  · rw [card_eq_zero.mp h]; simp
+  · have hc : (s.card : ℝ) ≠ 0 := by positivity
+    have e : ∀ j ∈ s, (x j - (∑ k ∈ s, x k) / s.card) ^ 2 =
+        x j ^ 2 - 2 * ((∑ k ∈ s, x k) / s.card) * x j + ((∑ k ∈ s, x k) / s.card) ^ 2 :=
+      fun j _ => by ring
+    rw [sum_congr rfl e, sum_add_distrib, sum_sub_distrib, ← mul_sum, sum_const, nsmul_eq_mul]
+    field_simp
+    ring
+
+theorem sxx_pos {n : ℕ} (s : Finset (Fin n)) (x : Fin n → ℝ) {j k : Fin n} (hj : j ∈ s)
+    (hk : k ∈ s) (h : x j ≠ x k) : 0 < sxx s x := by
+  unfold sxx
+  apply lt_of_le_of_ne (sum_nonneg fun _ _ => sq_nonneg _)
+  intro h0
+  have hz := (sum_eq_zero_iff_of_nonneg (fun _ _ => sq_nonneg _)).mp h0.symm
+  have e1 : x j - avg s x = 0 := pow_eq_zero_iff two_ne_zero |>.mp (hz j hj)
+  have e2 : x k - avg s x = 0 := pow_eq_zero_iff two_ne_zero |>.mp (hz k hk)
+  exact h (by linarith)
+
+theorem setup_facts {n : ℕ} (x : Fin n → ℝ) (i : Fin n)
+    (hx : ∃ j k, j ≠ i ∧ k ≠ i ∧ x j ≠ x k) :
+    (3 : ℝ) ≤ n ∧ 0 < sxx univ x ∧ 0 < sxx (univ.erase i) x := by
+  obtain ⟨j, k, hj, hk, hjk⟩ := hx
+  refine ⟨?_, sxx_pos univ x (mem_univ j) (mem_univ k) hjk,
+    sxx_pos (univ.erase i) x (mem_erase.mpr ⟨hj, mem_univ j⟩) (mem_erase.mpr ⟨hk, mem_univ k⟩) hjk⟩
+  have : ({i, j, k} : Finset (Fin n)).card = 3 := by
+    rw [card_insert_of_notMem, card_pair]
+    · intro h; exact hjk (h ▸ rfl)
+    · simp [hj.symm, hk.symm]
+  have := this ▸ card_le_univ ({i, j, k} : Finset (Fin n))
+  rw [Fintype.card_fin] at this
+  exact_mod_cast this
+
+theorem one_sub_leverage_eq {n : ℕ} (x : Fin n → ℝ) (i : Fin n)
+    (hx : ∃ j k, j ≠ i ∧ k ≠ i ∧ x j ≠ x k) :
+    1 - leverage x i = ((n : ℝ) - 1) * sxx (univ.erase i) x / (n * sxx univ x) := by
+  obtain ⟨hn, hS, hS'⟩ := setup_facts x i hx
+  unfold leverage
+  simp only [sxx_eq] at hS hS' ⊢
+  unfold avg
+  simp only [sum_erase_univ, card_erase_univ, card_univ, Fintype.card_fin] at hS' hS ⊢
+  generalize ∑ j, x j = A at *
+  generalize ∑ j, x j ^ 2 = C at *
+  generalize x i = a at *
+  generalize (n : ℝ) = N at *
+  have hN : N ≠ 0 := by intro h; rw [h] at hn; norm_num at hn
+  have hN1 : N - 1 ≠ 0 := by intro h; linarith
+  have hP0 : N * C - A ^ 2 ≠ 0 := by
+    have : N * C - A ^ 2 = N * (C - A ^ 2 / N) := by field_simp
+    rw [this]; positivity
+  field_simp
+  ring
+
+theorem one_sub_leverage_pos {n : ℕ} (x : Fin n → ℝ) (i : Fin n)
+    (hx : ∃ j k, j ≠ i ∧ k ≠ i ∧ x j ≠ x k) : 0 < 1 - leverage x i := by
+  obtain ⟨hn, hS, hS'⟩ := setup_facts x i hx
+  rw [one_sub_leverage_eq x i hx]
+  have : (0 : ℝ) < n - 1 := by linarith
+  positivity
+
+theorem lineAt_sub {n : ℕ} (s s' : Finset (Fin n)) (x y : Fin n → ℝ) (t : ℝ) :
+    lineAt s x y t - lineAt s' x y t =
+      (avg s y - slope s x y * avg s x - (avg s' y - slope s' x y * avg s' x)) +
+        (slope s x y - slope s' x y) * t := by
+  unfold lineAt; ring
+
+theorem sum_affine_sq {n : ℕ} (p q : ℝ) (x : Fin n → ℝ) :
+    ∑ j, (p + q * x j) ^ 2 = n * p ^ 2 + 2 * p * q * ∑ j, x j + q ^ 2 * ∑ j, x j ^ 2 := by
+  have e : ∀ j, (p + q * x j) ^ 2 = p ^ 2 + (2 * p * q) * x j + q ^ 2 * x j ^ 2 :=
+    fun j => by ring
+  rw [sum_congr rfl (fun j _ => e j), sum_add_distrib, sum_add_distrib, ← mul_sum, ← mul_sum,
+    sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+
+theorem cook_core {n : ℕ} (x y : Fin n → ℝ) (i : Fin n)
+    (hx : ∃ j k, j ≠ i ∧ k ≠ i ∧ x j ≠ x k) :
+    ∑ j, (lineAt univ x y (x j) - lineAt (univ.erase i) x y (x j)) ^ 2 =
+      (y i - lineAt univ x y (x i)) ^ 2 * leverage x i / (1 - leverage x i) ^ 2 := by
+  obtain ⟨hn, hS, hS'⟩ := setup_facts x i hx
+  have hlev : leverage x i = 1 - (1 - leverage x i) := by ring
+  rw [hlev, one_sub_leverage_eq x i hx]
+  simp only [lineAt_sub]
+  rw [sum_affine_sq]
+  unfold lineAt slope
+  rw [slope_num_eq, slope_num_eq, sxx_eq, sxx_eq]
+  rw [sxx_eq] at hS hS'
+  unfold avg
+  simp only [sum_erase_univ, card_erase_univ, card_univ, Fintype.card_fin] at hS' hS ⊢
+  generalize ∑ j, x j = A at *
+  generalize ∑ j, y j = B at *
+  generalize ∑ j, x j ^ 2 = C at *
+  generalize ∑ j, x j * y j = D at *
+  generalize x i = a at *
+  generalize y i = b at *
+  generalize (n : ℝ) = N at *
+  have hN : N ≠ 0 := by intro h; rw [h] at hn; norm_num at hn
+  have hN1 : N - 1 ≠ 0 := by intro h; linarith
+  generalize hS0 : C - A ^ 2 / N = S at *
+  generalize hS1 : C - a ^ 2 - (A - a) ^ 2 / (N - 1) = S' at *
+  have hSne : S ≠ 0 := hS.ne'
+  have hS'ne : S' ≠ 0 := hS'.ne'
+  field_simp
+  subst hS0 hS1
+  field_simp
+  ring
+
+theorem residual_coeffs {n : ℕ} (x : Fin n → ℝ) (hx : ∃ j k, x j ≠ x k) (β₀ β₁ : ℝ)
+    (v : Fin n → ℝ) (i : Fin n) :
+    (β₀ + β₁ * x i + v i) - lineAt univ x (fun j => β₀ + β₁ * x j + v j) (x i) =
+      ∑ j, ((if j = i then (1 : ℝ) else 0) -
+        ((1 / n - (x i - avg univ x) / sxx univ x * avg univ x) +
+          (x i - avg univ x) / sxx univ x * x j)) * v j := by
+  obtain ⟨j, k, hjk⟩ := hx
+  have hS := sxx_pos univ x (mem_univ j) (mem_univ k) hjk
+  have hn : (1 : ℝ) ≤ n := by
+    have := j.pos; exact_mod_cast this
+  have e1 : ∀ j', ((if j' = i then (1 : ℝ) else 0) -
+        ((1 / n - (x i - avg univ x) / sxx univ x * avg univ x) +
+          (x i - avg univ x) / sxx univ x * x j')) * v j' =
+      (if j' = i then v j' else 0) - (1 / n - (x i - avg univ x) / sxx univ x * avg univ x) * v j'
+        - (x i - avg univ x) / sxx univ x * (x j' * v j') := by
+    intro j'; split_ifs <;> ring
+  rw [sum_congr rfl (fun j' _ => e1 j'), sum_sub_distrib, sum_sub_distrib, sum_ite_eq', ← mul_sum,
+    ← mul_sum]
+  simp only [mem_univ, ite_true]
+  unfold lineAt slope
+  rw [slope_num_eq]
+  have e2 : ∑ j', x j' * (β₀ + β₁ * x j' + v j') =
+      β₀ * ∑ j', x j' + β₁ * ∑ j', x j' ^ 2 + ∑ j', x j' * v j' := by
+    have : ∀ j', x j' * (β₀ + β₁ * x j' + v j') = β₀ * x j' + β₁ * x j' ^ 2 + x j' * v j' :=
+      fun j' => by ring
+    rw [sum_congr rfl (fun j' _ => this j'), sum_add_distrib, sum_add_distrib, ← mul_sum, ← mul_sum]
+  rw [e2]
+  rw [sxx_eq] at hS ⊢
+  unfold avg
+  have e3 : ∑ j', (β₀ + β₁ * x j' + v j') = n * β₀ + β₁ * ∑ j', x j' + ∑ j', v j' := by
+    rw [sum_add_distrib, sum_add_distrib, ← mul_sum, sum_const, card_univ, Fintype.card_fin,
+      nsmul_eq_mul]
+  rw [e3]
+  simp only [card_univ, Fintype.card_fin] at hS ⊢
+  generalize ∑ j, x j = A at *
+  generalize ∑ j, x j ^ 2 = C at *
+  generalize ∑ j, x j * v j = F at *
+  generalize ∑ j, v j = E at *
+  generalize x i = a at *
+  generalize v i = c at *
+  generalize (n : ℝ) = N at *
+  have hN : N ≠ 0 := by intro h; rw [h] at hn; norm_num at hn
+  generalize hS0 : C - A ^ 2 / N = S at *
+  have hSne : S ≠ 0 := hS.ne'
+  field_simp
+  subst hS0
+  field_simp
+  ring
+
+theorem residual_coeffs_sq {n : ℕ} (x : Fin n → ℝ) (hx : ∃ j k, x j ≠ x k) (i : Fin n) :
+    ∑ j, ((if j = i then (1 : ℝ) else 0) -
+        ((1 / n - (x i - avg univ x) / sxx univ x * avg univ x) +
+          (x i - avg univ x) / sxx univ x * x j)) ^ 2 = 1 - leverage x i := by
+  obtain ⟨j, k, hjk⟩ := hx
+  have hS := sxx_pos univ x (mem_univ j) (mem_univ k) hjk
+  have hn : (1 : ℝ) ≤ n := by
+    have := j.pos; exact_mod_cast this
+  have e : ∀ (p q : ℝ) (j' : Fin n), ((if j' = i then (1 : ℝ) else 0) - (p + q * x j')) ^ 2 =
+      (if j' = i then 1 - 2 * (p + q * x j') else 0) + (p + q * x j') ^ 2 := by
+    intro p q j'; split_ifs <;> ring
+  rw [sum_congr rfl (fun j' _ => e _ _ j'), sum_add_distrib, sum_ite_eq', sum_affine_sq]
+  simp only [mem_univ, ite_true]
+  unfold leverage
+  rw [sxx_eq] at hS ⊢
+  unfold avg
+  simp only [card_univ, Fintype.card_fin] at hS ⊢
+  generalize ∑ j, x j = A at *
+  generalize ∑ j, x j ^ 2 = C at *
+  generalize x i = a at *
+  generalize (n : ℝ) = N at *
+  have hN : N ≠ 0 := by intro h; rw [h] at hn; norm_num at hn
+  generalize hS0 : C - A ^ 2 / N = S at *
+  have hSne : S ≠ 0 := hS.ne'
+  field_simp
+  subst hS0
+  field_simp
+  ring
+
+/-- **Deleting a sale divides its residual by one minus its leverage (Step 3).** Take any `n`
+sales with areas `x` and prices `y`, and any sale `i`, such that the other sales do not all have
+the same area (so the line without sale `i` exists). Then sale `i`'s miss from the line fitted
+without it, `y_i − ŷ_(i)`, equals its ordinary residual `e_i = y_i − ŷ_i` divided by `1 − h_i`.
+One fit gives every deleted residual, with no refitting. -/
+theorem deleted_residual_eq_residual_div_one_sub_leverage {n : ℕ} (x y : Fin n → ℝ)
+    (i : Fin n) (hx : ∃ j k, j ≠ i ∧ k ≠ i ∧ x j ≠ x k) :
+    y i - lineAt (univ.erase i) x y (x i) =
+      (y i - lineAt univ x y (x i)) / (1 - leverage x i) := by
+  obtain ⟨j, k, hj, hk, hjk⟩ := hx
+  have hS' := sxx_pos (univ.erase i) x (mem_erase.mpr ⟨hj, mem_univ j⟩)
+    (mem_erase.mpr ⟨hk, mem_univ k⟩) hjk
+  have hS := sxx_pos univ x (mem_univ j) (mem_univ k) hjk
+  have hn : (3 : ℝ) ≤ n := by
+    have : ({i, j, k} : Finset (Fin n)).card = 3 := by
+      rw [card_insert_of_notMem, card_pair]
+      · intro h; exact hjk (h ▸ rfl)
+      · simp [hj.symm, hk.symm]
+    have := this ▸ card_le_univ ({i, j, k} : Finset (Fin n))
+    rw [Fintype.card_fin] at this
+    exact_mod_cast this
+  rw [sxx_eq] at hS hS'
+  unfold lineAt slope leverage
+  rw [slope_num_eq, slope_num_eq, sxx_eq, sxx_eq]
+  unfold avg
+  simp only [sum_erase_univ, card_erase_univ, card_univ, Fintype.card_fin] at hS' hS ⊢
+  generalize ∑ j, x j = A at *
+  generalize ∑ j, y j = B at *
+  generalize ∑ j, x j ^ 2 = C at *
+  generalize ∑ j, x j * y j = D at *
+  generalize x i = a at *
+  generalize y i = b at *
+  generalize (n : ℝ) = N at *
+  have hN : N ≠ 0 := by intro h; rw [h] at hn; norm_num at hn
+  have hN1 : N - 1 ≠ 0 := by intro h; linarith
+  have hP0 : N * C - A ^ 2 ≠ 0 := by
+    have : N * C - A ^ 2 = N * (C - A ^ 2 / N) := by field_simp
+    rw [this]; positivity
+  have key : 1 - (1 / N + (a - A / N) ^ 2 / (C - A ^ 2 / N)) =
+      (N - 1) * (C - a ^ 2 - (A - a) ^ 2 / (N - 1)) / (N * (C - A ^ 2 / N)) := by
+    field_simp
+    ring
+  rw [key]
+  generalize hS0 : C - A ^ 2 / N = S at *
+  generalize hS1 : C - a ^ 2 - (A - a) ^ 2 / (N - 1) = S' at *
+  rw [eq_div_iff (by positivity)]
+  have h0 : N * S = N * C - A ^ 2 := by rw [← hS0]; field_simp
+  have h1 : (N - 1) * S' = (N - 1) * (C - a ^ 2) - (A - a) ^ 2 := by rw [← hS1]; field_simp
+  field_simp
+  linear_combination (N * (b * (N - 1) - (B - b))) * h1 - ((N - 1) * (b * N - B)) * h0
+
+/-- **Cook's distance from one fit (Step 4).** With the same `n` sales and the same condition
+on sale `i`, let `e_j` be the residuals of the fit to all sales, `s² = Σ e_j² / (n − 2)` with
+`p = 2` numbers estimated, and `r_i = e_i / (s √(1 − h_i))` the studentized residual. Then
+Cook's distance, the sum over all sales of the squared shift in fitted price when sale `i` is
+deleted, divided by `p s²`, equals `(r_i² / p) · h_i / (1 − h_i)`. -/
+theorem cooks_distance_eq_from_one_fit {n : ℕ} (x y : Fin n → ℝ) (i : Fin n)
+    (hx : ∃ j k, j ≠ i ∧ k ≠ i ∧ x j ≠ x k) :
+    let e : Fin n → ℝ := fun j => y j - lineAt univ x y (x j)
+    let s : ℝ := Real.sqrt ((∑ j, e j ^ 2) / ((n : ℝ) - 2))
+    let r : ℝ := e i / (s * Real.sqrt (1 - leverage x i))
+    (∑ j, (lineAt univ x y (x j) - lineAt (univ.erase i) x y (x j)) ^ 2) / (2 * s ^ 2) =
+      r ^ 2 / 2 * (leverage x i / (1 - leverage x i)) := by
+  intro e s r
+  have h1 := one_sub_leverage_pos x i hx
+  rw [cook_core x y i hx]
+  have hr : r ^ 2 = e i ^ 2 / (s ^ 2 * (1 - leverage x i)) := by
+    simp only [r, div_pow, mul_pow, Real.sq_sqrt h1.le]
+  rw [hr]
+  show (y i - lineAt univ x y (x i)) ^ 2 * leverage x i / (1 - leverage x i) ^ 2 / (2 * s ^ 2) =
+    (y i - lineAt univ x y (x i)) ^ 2 / (s ^ 2 * (1 - leverage x i)) / 2 *
+      (leverage x i / (1 - leverage x i))
+  by_cases hs : s ^ 2 = 0
+  · rw [hs]; simp
+  · field_simp
+
+/-- **A high-leverage residual has a small spread (Step 2).** Suppose the prices are a true
+straight line plus errors, `y_j = β₀ + β₁ x_j + ε_j`, where the areas are not all equal and the
+errors `ε_j` are independent random variables with finite variance, mean 0 and the same
+variance `σ²`. Then the residual of sale `i` from the least squares line through all `n` sales
+has variance `σ² (1 − h_i)`. -/
+theorem variance_residual_eq_mul_one_sub_leverage {Ω : Type*} [MeasurableSpace Ω]
+    {P : Measure Ω} [IsProbabilityMeasure P] {n : ℕ} (x : Fin n → ℝ)
+    (hx : ∃ j k, x j ≠ x k) (β₀ β₁ σ : ℝ) (ε : Fin n → Ω → ℝ)
+    (hind : iIndepFun ε P) (hL2 : ∀ j, MemLp (ε j) 2 P)
+    (hmean : ∀ j, ∫ ω, ε j ω ∂P = 0) (hvar : ∀ j, variance (ε j) P = σ ^ 2) (i : Fin n) :
+    variance (fun ω => (β₀ + β₁ * x i + ε i ω) -
+        lineAt univ x (fun j => β₀ + β₁ * x j + ε j ω) (x i)) P =
+      σ ^ 2 * (1 - leverage x i) := by
+  have hfun : (fun ω => (β₀ + β₁ * x i + ε i ω) -
+        lineAt univ x (fun j => β₀ + β₁ * x j + ε j ω) (x i)) =
+      ∑ j, (fun ω => ((if j = i then (1 : ℝ) else 0) -
+        ((1 / n - (x i - avg univ x) / sxx univ x * avg univ x) +
+          (x i - avg univ x) / sxx univ x * x j)) * ε j ω) := by
+    funext ω
+    rw [residual_coeffs x hx β₀ β₁ (fun j => ε j ω) i, Finset.sum_apply]
+  rw [hfun, IndepFun.variance_sum]
+  · simp only [variance_const_mul, hvar]
+    rw [← sum_mul, residual_coeffs_sq x hx i]
+    ring
+  · intro j _
+    exact (hL2 j).const_mul _
+  · intro j _ k _ hjk
+    exact (hind.indepFun hjk).comp (measurable_const_mul _) (measurable_const_mul _)
+
+end Diagnostics
+
+-- The card's nine sales: areas 80, 100, 110, 120, 140, 150, 170, 190, 600 square metres,
+-- prices 350, 390, 450, 440, 530, 540, 610, 650, 1400 thousand dollars.
+example : (80 + 100 + 110 + 120 + 140 + 150 + 170 + 190 + 600 : ℕ) = 1660 ∧
+    (350 + 390 + 450 + 440 + 530 + 540 + 610 + 650 + 1400 : ℕ) = 5360 := by decide
+-- Average area 1660/9 (the card's 184.44); S_xx = Σ x² − (Σ x)²/9 = 1834400/9 (203,822.22).
+example : (80 ^ 2 + 100 ^ 2 + 110 ^ 2 + 120 ^ 2 + 140 ^ 2 + 150 ^ 2 + 170 ^ 2 + 190 ^ 2 + 600 ^ 2 : ℕ)
+    = 510000 := by decide
+example : (510000 : ℚ) - 1660 ^ 2 / 9 = 1834400 / 9 := by norm_num
+-- The mansion's leverage: 1/9 + (600 − 1660/9)² / (1834400/9) = 4395/4586 (the card's 0.9584).
+example : (1 : ℚ) / 9 + (600 - 1660 / 9) ^ 2 / (1834400 / 9) = 4395 / 4586 := by norm_num
+-- Slope of the nine-sale line: (Σ xy − Σx Σy / 9) / S_xx = 36277/18344 (the card's 1.9776).
+example : (80 * 350 + 100 * 390 + 110 * 450 + 120 * 440 + 140 * 530 + 150 * 540 + 170 * 610 +
+    190 * 650 + 600 * 1400 : ℕ) = 1391700 := by decide
+example : ((1391700 : ℚ) - 1660 * 5360 / 9) / (1834400 / 9) = 36277 / 18344 := by norm_num
+-- The mansion's residual: 1400 − (5360/9 + slope × (600 − 1660/9)) = −79595/4586 (the card's −17.4).
+example : (1400 : ℚ) - (5360 / 9 + 36277 / 18344 * (600 - 1660 / 9)) = -79595 / 4586 := by norm_num
+-- The eight-house line: average area 1060/8, average price 3960/8, S_xx = 150000 − 1060²/8 = 9550,
+-- slope (551700 − 1060 × 3960/8) / 9550 = 540/191 (the card's 2.8272).
+example : (150000 : ℚ) - 1060 ^ 2 / 8 = 9550 := by norm_num
+example : ((551700 : ℚ) - 1060 * 3960 / 8) / 9550 = 540 / 191 := by norm_num
+-- It prices the mansion at 346995/191 (the card's 1,816.7).
+example : (3960 : ℚ) / 8 + 540 / 191 * (600 - 1060 / 8) = 346995 / 191 := by norm_num
+-- Step 3 on the mansion, exactly: 1400 − 346995/191 = (−79595/4586) / (1 − 4395/4586) = −79595/191
+-- (the card's −416.7 = −17.4 / 0.0416).
+example : (1400 : ℚ) - 346995 / 191 = (-79595 / 4586) / (1 - 4395 / 4586) ∧
+    (1400 : ℚ) - 346995 / 191 = -79595 / 191 := by norm_num
+-- Flag line for leverage, 2p/n = 4/9 (the card's 0.444); the mansion's 4395/4586 is above it.
+example : (4 : ℚ) / 9 < 4395 / 4586 := by norm_num
+
+open Diagnostics
+
+#print axioms deleted_residual_eq_residual_div_one_sub_leverage
+#print axioms cooks_distance_eq_from_one_fit
+#print axioms variance_residual_eq_mul_one_sub_leverage
+#print axioms sum_erase_univ
+#print axioms card_erase_univ
+#print axioms slope_num_eq
+#print axioms sxx_eq
+#print axioms sxx_pos
+#print axioms setup_facts
+#print axioms one_sub_leverage_eq
+#print axioms one_sub_leverage_pos
+#print axioms lineAt_sub
+#print axioms sum_affine_sq
+#print axioms cook_core
+#print axioms residual_coeffs
+#print axioms residual_coeffs_sq
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'Diagnostics.deleted_residual_eq_residual_div_one_sub_leverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.cooks_distance_eq_from_one_fit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.variance_residual_eq_mul_one_sub_leverage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.sum_erase_univ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.card_erase_univ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.slope_num_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.sxx_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.sxx_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.setup_facts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.one_sub_leverage_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.one_sub_leverage_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.lineAt_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.sum_affine_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.cook_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.residual_coeffs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Diagnostics.residual_coeffs_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -165,5 +165,5 @@ fn main() {
     assert!(mean12.abs() < 4.0 * sd_sim[M - 1] / (nn as f64).sqrt()); // simulated paths centre on f
     assert!((0..M).fold((l2 - lev).abs().max((t2 - tr).abs()), |m, i| m.max((s2[i] - sea[i]).abs())) < 1e-12); // two update forms agree
     assert!((ses_l - ses_w).abs() < 1e-9); // recursion = fading weights
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

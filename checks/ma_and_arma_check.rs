@@ -166,5 +166,5 @@ fn main() {
     assert!((ok[23] - true_e[23]).abs() < 0.01 && bad[23].abs() > 1e6);
     let c = [1.0, 1.1, 0.6, 0.15]; // surprises sharing part of last month's: u = e + 0.5 e(-1)
     let (r3f, r3e) = (acov_formula(&c, 3, 1.0) / acov_formula(&c, 0, 1.0), acov_enum(&c, 3, 1.0) / acov_enum(&c, 0, 1.0)); assert!((r3f - r3e).abs() < 1e-12 && r3f > 0.05);
-    println!("correlated surprises: rho3 formula {:.4}, enumerated {:.4}, independent 0.0000", r3f, r3e);
+    println!("correlated surprises: rho3 formula {:.4}, enumerated {:.4}, independent 0.0000", r3f, r3e); println!("ALL CHECKS PASS");
 }

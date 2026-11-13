@@ -8,7 +8,7 @@
 
 A bond desk watches government bond yields at ten maturities: 3 months, 6 months, 1, 2, 3, 5, 7, 10, 20 and 30 years. Each trading day every one of the ten yields moves, usually by a few basis points. A basis point (bp) is a hundredth of a percent: a yield going from 4.00% to 4.03% has moved 3 bp. That is ten numbers a day, for every one of 500 trading days, about two years.
 
-The ten numbers are not ten separate stories. On most days all ten go the same way by about the same amount. On some days the long end moves more than the short end, so the curve tilts. Now and then the middle moves against both ends, so the curve bends. Traders have names for the three: **level**, **slope** and **curvature**. A whole day's move is summed up in two or three words: "rates up 5, curve steeper."
+The ten numbers are not ten separate stories. Drawn against maturity, the ten yields form a line called the yield curve: its short end is the 3-month yield, its long end the 30-year. On most days all ten go the same way by about the same amount. On some days the long end moves more than the short end, so the curve tilts. Now and then the middle moves against both ends, so the curve bends. Traders have names for the three: **level**, **slope** and **curvature**. A whole day's move is summed up in two or three words: "rates up 5, curve steeper."
 
 The 500 days on this card are simulated from exactly those three hidden shapes plus a little noise, so the right answer is known in advance. The method below is handed only the 500 rows of ten numbers. It recovers the level move as the direction carrying 82.23% of all day-to-day variance, the slope move as the next, carrying 13.43%, and the curvature move as the third. Two numbers a day, a level score and a slope score, keep 95.66% of the variance of ten, with a standard error of 0.30 percentage points.
 
@@ -47,6 +47,8 @@ $$\hat\Sigma = \frac{1}{n-1}\sum_{t=1}^{n} (x_t - \bar x)(x_t - \bar x)^T$$
 
 **Read it aloud:** remove the average day from every day, and average the products of every pair of maturities' moves.
 
+An **eigenvector** of $\hat\Sigma$ is a direction that the matrix only stretches, never turns: $\hat\Sigma u_k$ points the same way as $u_k$. The stretch factor $\hat\lambda_k$ is its **eigenvalue** ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
+
 The variance of the data along a direction, and the rule for the best directions:
 
 $$\operatorname{Var}\big(u^T x\big) = u^T \hat\Sigma\, u, \qquad \hat\Sigma\, u_k = \hat\lambda_k\, u_k, \qquad \hat\lambda_1 \ge \hat\lambda_2 \ge \dots \ge \hat\lambda_d \ge 0$$
@@ -82,7 +84,7 @@ Each day's position along component k is its **score**, $z_{tk} = u_k^T (x_t - \
 
 - **All measurements in one unit.** Variance is measured in squared units, so a column quoted in bigger numbers wins. Quote the 30-year yield in percent while the rest stay in bp and the first component ignores it: its 30-year loading falls to 0.0031. With mixed units, standardise each column first, which means working from the correlation matrix.
 - **The average removed.** PCA describes spread about the centre. Run it on yield levels without subtracting the average curve and the "first component" is the average curve itself, claiming 99.961% of a quantity that is mostly the curve's height, not its moves.
-- **Separated eigenvalues.** A direction is pinned down only when its eigenvalue stands clear of its neighbours. Here the seven smallest are all 0.25 in the model: those directions are noise, and two samples of 500 days give fourth components at cosine 0.0327, nearly perpendicular.
+- **Separated eigenvalues.** A direction is pinned down only when its eigenvalue stands clear of its neighbours. Here the seven smallest are all 0.25 in the model: those directions are noise, and two samples of 500 days give fourth components at cosine 0.0327, nearly perpendicular. The cosine of two unit directions is the sum of their entry-by-entry products, ignoring sign: 1 means the same line, 0 means perpendicular.
 - **Enough days.** Every $\hat\lambda_k$ is an estimate. For normal data with separated eigenvalues its standard error is about $\lambda_k$ times the square root of 2/(n − 1): 5.714 on the first eigenvalue here.
 - **Flat structure.** PCA finds flat subspaces through the centre of the data. Data lying on a curved surface needs a different tool: Manifold learning.
 
@@ -144,7 +146,7 @@ In this card's model the three shapes were chosen perpendicular: level adds 1 at
 
 </details>
 
-The alternative road skips the covariance matrix. Stack the centred days as the rows of a 500-by-10 table and take its singular value decomposition ([The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)). Its right singular vectors are the principal components, and each squared singular value divided by n − 1 is an eigenvalue. Software does it this way because it avoids squaring the data's rounding errors: Singular value decomposition.
+The alternative road skips the covariance matrix. Stack the centred days as the rows of a 500-by-10 table and take its singular value decomposition ([The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)). Its right singular vectors are the principal components, and each squared singular value divided by n − 1 is an eigenvalue. Software does it this way because it avoids squaring the data's rounding errors: [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md).
 
 ---
 
@@ -599,6 +601,269 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. Both sum in the same order, so both land on the same digits.
 
+### Lean
+
+Lean proves the facts of Steps 2, 4 and 5 for every data set, with any number of days and measurements.
+
+- The covariance matrix is symmetric: entry (i, j) equals entry (j, i).
+- Take a unit eigenvector of the covariance matrix with the largest eigenvalue. Then the variance of the scores along it equals that eigenvalue.
+- No unit direction carries more variance than that top eigenvector.
+- Take r no larger than d, and any r perpendicular unit directions. Then together they keep at most $\hat\lambda_1 + \dots + \hat\lambda_r$.
+- The first r eigenvectors keep exactly that much, so no choice of r directions keeps more.
+- The trace of the covariance matrix equals the sum of its eigenvalues.
+- The shapes' squared lengths are 10, 330 and 132, and the three shapes are perpendicular.
+- The model's eigenvalues 90.25, 13.45 and 3.22, the total 108.67, and the shares 83.05%, 12.38% and 95.43% check out exactly.
+
+The simulated days, the estimates and their standard errors, the rebuild error and the what-breaks table are left to the Python and Rust checks.
+
+```lean
+-- Principal components: no unit direction carries more sample variance than the covariance matrix's top eigenvector, the top r eigenvalues bound the variance any r perpendicular directions keep, and the total variance equals the sum of the eigenvalues.
+import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Tactic.NormNum
+
+open Matrix
+
+namespace PrincipalComponents
+
+variable {n d : ℕ}
+
+/-- The average day: the mean of the `n` data vectors `x t`. -/
+noncomputable def mean (x : Fin n → Fin d → ℝ) : Fin d → ℝ :=
+  (1 / (n : ℝ)) • ∑ t, x t
+
+/-- The sample covariance matrix `(1/(n-1)) * Σ_t (x_t - x̄)(x_t - x̄)^T`. -/
+noncomputable def sampleCov (x : Fin n → Fin d → ℝ) : Matrix (Fin d) (Fin d) ℝ :=
+  (1 / ((n : ℝ) - 1)) • ∑ t, vecMulVec (x t - mean x) (x t - mean x)
+
+/-- The variance of the scores `z_t = u^T (x_t - x̄)` along a direction `u`,
+with the same `n - 1` divisor as the covariance matrix. -/
+noncomputable def scoreVar (x : Fin n → Fin d → ℝ) (u : Fin d → ℝ) : ℝ :=
+  (1 / ((n : ℝ) - 1)) * ∑ t, (u ⬝ᵥ (x t - mean x)) ^ 2
+
+lemma scoreVar_eq_dot (x : Fin n → Fin d → ℝ) (u : Fin d → ℝ) :
+    scoreVar x u = u ⬝ᵥ (sampleCov x *ᵥ u) := by
+  simp [scoreVar, sampleCov, Matrix.smul_mulVec, Matrix.sum_mulVec, vecMulVec_mulVec,
+    dotProduct_sum, dotProduct_comm, sq]
+
+lemma expand_eig {C : Matrix (Fin d) (Fin d) ℝ} (hC : C.IsHermitian) (u : Fin d → ℝ) :
+    u = ∑ i, (⇑(hC.eigenvectorBasis i) ⬝ᵥ u) • ⇑(hC.eigenvectorBasis i) := by
+  have h := (hC.eigenvectorBasis).sum_repr' (WithLp.toLp 2 u)
+  have h2 := congrArg (WithLp.ofLp) h
+  simp [EuclideanSpace.inner_eq_star_dotProduct] at h2
+  conv_lhs => rw [← h2]
+  simp_rw [dotProduct_comm u]
+
+lemma quad_eig {C : Matrix (Fin d) (Fin d) ℝ} (hC : C.IsHermitian) (u : Fin d → ℝ) :
+    u ⬝ᵥ (C *ᵥ u) = ∑ i, hC.eigenvalues i * (⇑(hC.eigenvectorBasis i) ⬝ᵥ u) ^ 2 := by
+  conv_lhs => arg 2; rw [expand_eig hC u]
+  simp only [mulVec_sum, mulVec_smul, hC.mulVec_eigenvectorBasis, dotProduct_sum,
+    dotProduct_smul, smul_eq_mul]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [dotProduct_comm u]
+  ring
+
+lemma norm_eig {C : Matrix (Fin d) (Fin d) ℝ} (hC : C.IsHermitian) (u : Fin d → ℝ) :
+    u ⬝ᵥ u = ∑ i, (⇑(hC.eigenvectorBasis i) ⬝ᵥ u) ^ 2 := by
+  conv_lhs => arg 2; rw [expand_eig hC u]
+  simp only [dotProduct_sum, dotProduct_smul, smul_eq_mul]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [dotProduct_comm u]
+  ring
+
+
+lemma kyfan_aux {m r : ℕ} (hr : r ≤ m) (μ : Fin m → ℝ) (hμ : Antitone μ) (w : Fin m → ℝ)
+    (h0 : ∀ k, 0 ≤ w k) (h1 : ∀ k, w k ≤ 1) (hs : ∑ k, w k = r) :
+    ∑ k, μ k * w k ≤ ∑ k : Fin r, μ (Fin.castLE hr k) := by
+  have key : ∀ g : Fin m → ℝ,
+      ∑ k : Fin r, g (Fin.castLE hr k) = ∑ k : Fin m, if (k : ℕ) < r then g k else 0 := by
+    intro g
+    rw [← Finset.sum_filter]
+    refine Finset.sum_bij (fun k _ => Fin.castLE hr k) ?_ ?_ ?_ ?_
+    · intro k _
+      simp [Finset.mem_filter, k.isLt]
+    · intro a _ b _ h
+      exact Fin.castLE_injective hr h
+    · intro b hb
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hb
+      exact ⟨⟨b, hb⟩, Finset.mem_univ _, rfl⟩
+    · intro k _
+      rfl
+  rcases Nat.eq_zero_or_pos r with rfl | hrpos
+  · have hw : ∀ k, w k = 0 := by
+      have := (Finset.sum_eq_zero_iff_of_nonneg (fun k _ => h0 k)).1 (by simpa using hs)
+      intro k
+      exact this k (Finset.mem_univ _)
+    simp [hw]
+  · set t := μ ⟨r - 1, by omega⟩ with ht
+    have hpt : ∀ k, μ k * w k ≤ (if (k : ℕ) < r then μ k else 0) +
+        t * (w k - if (k : ℕ) < r then 1 else 0) := by
+      intro k
+      split_ifs with hk
+      · have : t ≤ μ k := hμ (show k ≤ (⟨r - 1, by omega⟩ : Fin m) by
+          rw [Fin.le_def]; simp; omega)
+        nlinarith [h1 k]
+      · have : μ k ≤ t := hμ (show (⟨r - 1, by omega⟩ : Fin m) ≤ k by
+          rw [Fin.le_def]; simp; omega)
+        nlinarith [h0 k]
+    have hcard : ∑ k : Fin m, (if (k : ℕ) < r then (1 : ℝ) else 0) = r := by
+      rw [← key (fun _ => 1)]
+      simp
+    calc ∑ k, μ k * w k ≤ ∑ k : Fin m, ((if (k : ℕ) < r then μ k else 0) +
+          t * (w k - if (k : ℕ) < r then 1 else 0)) := Finset.sum_le_sum fun k _ => hpt k
+      _ = ∑ k : Fin r, μ (Fin.castLE hr k) := by
+        rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_sub_distrib, hs, hcard, key]
+        ring
+
+/-- The sample covariance matrix is symmetric. -/
+theorem sampleCov_isHermitian (x : Fin n → Fin d → ℝ) : (sampleCov x).IsHermitian := by
+  ext i j
+  simp [sampleCov, vecMulVec, Matrix.sum_apply, mul_comm]
+
+/-- The first principal component: if `u₁` is a unit eigenvector of the sample covariance
+matrix whose eigenvalue `lam₁` is the largest eigenvalue, then the variance of the data along
+`u₁` equals `lam₁`, and no unit direction `u` carries more variance than `u₁` does. -/
+theorem top_eigenvector_carries_most_variance (x : Fin n → Fin d → ℝ)
+    (lam₁ : ℝ) (u₁ : Fin d → ℝ) (hu₁ : u₁ ⬝ᵥ u₁ = 1)
+    (heig : sampleCov x *ᵥ u₁ = lam₁ • u₁)
+    (htop : ∀ μ ∈ spectrum ℝ (sampleCov x), μ ≤ lam₁) :
+    scoreVar x u₁ = lam₁ ∧ ∀ u : Fin d → ℝ, u ⬝ᵥ u = 1 → scoreVar x u ≤ scoreVar x u₁ := by
+  have hC := sampleCov_isHermitian x
+  have hle : ∀ i, hC.eigenvalues i ≤ lam₁ := fun i =>
+    htop _ (hC.eigenvalues_mem_spectrum_real i)
+  have h1 : scoreVar x u₁ = lam₁ := by
+    rw [scoreVar_eq_dot, heig, dotProduct_smul, hu₁, smul_eq_mul, mul_one]
+  refine ⟨h1, fun u hu => ?_⟩
+  rw [h1, scoreVar_eq_dot, quad_eig hC u]
+  have hn := norm_eig hC u
+  rw [hu] at hn
+  calc ∑ i, hC.eigenvalues i * (⇑(hC.eigenvectorBasis i) ⬝ᵥ u) ^ 2
+      ≤ ∑ i, lam₁ * (⇑(hC.eigenvectorBasis i) ⬝ᵥ u) ^ 2 :=
+        Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_right (hle i) (sq_nonneg _)
+    _ = lam₁ := by rw [← Finset.mul_sum, ← hn, mul_one]
+
+/-- Keeping the top `r` components: over all choices of `r` perpendicular unit directions,
+the largest total variance kept is the sum of the `r` largest eigenvalues of the sample
+covariance matrix (`eigenvalues₀` lists them in falling order). -/
+theorem top_r_components_keep_most_variance (x : Fin n → Fin d → ℝ) (r : ℕ)
+    (hr : r ≤ Fintype.card (Fin d)) :
+    IsGreatest
+      {s : ℝ | ∃ v : Fin r → Fin d → ℝ,
+        (∀ i j, v i ⬝ᵥ v j = if i = j then 1 else 0) ∧ s = ∑ j, scoreVar x (v j)}
+      (∑ k : Fin r, (sampleCov_isHermitian x).eigenvalues₀ (Fin.castLE hr k)) := by
+  have hC := sampleCov_isHermitian x
+  set b := hC.eigenvectorBasis with hb
+  set e := Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (Fin d))) with he
+  have hbb : ∀ i j, ⇑(b i) ⬝ᵥ ⇑(b j) = if i = j then 1 else 0 := by
+    intro i j
+    have := orthonormal_iff_ite.1 b.orthonormal j i
+    rw [EuclideanSpace.inner_eq_star_dotProduct] at this
+    simpa [eq_comm] using this
+  constructor
+  · refine ⟨fun j => ⇑(b (e (Fin.castLE hr j))), ?_, ?_⟩
+    · intro i j
+      rw [hbb]
+      simp
+    · refine Finset.sum_congr rfl fun j _ => ?_
+      rw [scoreVar_eq_dot, hC.mulVec_eigenvectorBasis, dotProduct_smul, smul_eq_mul, hbb]
+      simp [IsHermitian.eigenvalues, he]
+  · rintro s ⟨v, hv, rfl⟩
+    have hO : Orthonormal ℝ (fun j => WithLp.toLp 2 (v j)) := by
+      rw [orthonormal_iff_ite]
+      intro i j
+      rw [EuclideanSpace.inner_toLp_toLp]
+      simpa [eq_comm] using hv j i
+    have hbes : ∀ i, ∑ j, (⇑(b i) ⬝ᵥ v j) ^ 2 ≤ 1 := by
+      intro i
+      have := hO.sum_inner_products_le (x := b i) (s := Finset.univ)
+      rw [b.orthonormal.1 i] at this
+      simpa [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm, sq_abs] using this
+    have hev : ∀ k, hC.eigenvalues (e k) = hC.eigenvalues₀ k := by
+      intro k
+      simp [IsHermitian.eigenvalues, he]
+    simp_rw [scoreVar_eq_dot, quad_eig hC]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.mul_sum]
+    rw [← e.sum_comp]
+    simp_rw [hev]
+    refine kyfan_aux hr _ hC.eigenvalues₀_antitone (fun k => ∑ j, (⇑(b (e k)) ⬝ᵥ v j) ^ 2)
+      (fun k => by positivity) (fun k => hbes _) ?_
+    rw [e.sum_comp (fun i => ∑ j, (⇑(b i) ⬝ᵥ v j) ^ 2), Finset.sum_comm]
+    have hone : ∀ j, ∑ i, (⇑(b i) ⬝ᵥ v j) ^ 2 = 1 := fun j => by
+      have := hv j j
+      simp only [↓reduceIte] at this
+      rw [← this]
+      exact (norm_eig hC (v j)).symm
+    simp [hone]
+
+/-- Total variance is conserved: the trace of the sample covariance matrix (the sum of the
+variances of the individual measurements) equals the sum of its eigenvalues. -/
+theorem total_variance_eq_sum_eigenvalues (x : Fin n → Fin d → ℝ) :
+    (sampleCov x).trace = ∑ k, (sampleCov_isHermitian x).eigenvalues₀ k := by
+  have hC := sampleCov_isHermitian x
+  rw [hC.trace_eq_sum_eigenvalues]
+  simp only [IsHermitian.eigenvalues]
+  simp
+  exact Equiv.sum_comp _ (fun k => hC.eigenvalues₀ k)
+
+/-! ### The card's worked numbers (exact, as whole numbers and fractions) -/
+
+/-- The three hidden shapes of the card's model, over the ten maturities. -/
+def level : Fin 10 → ℤ := ![1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+def slope : Fin 10 → ℤ := ![-9, -7, -5, -3, -1, 1, 3, 5, 7, 9]
+def curvature : Fin 10 → ℤ := ![6, 2, -1, -3, -4, -4, -3, -1, 2, 6]
+
+-- Squared lengths of the shapes: 10, 330, 132.
+example : level ⬝ᵥ level = 10 := by decide
+example : slope ⬝ᵥ slope = 330 := by decide
+example : curvature ⬝ᵥ curvature = 132 := by decide
+
+-- The three shapes are perpendicular.
+example : level ⬝ᵥ slope = 0 := by decide
+example : level ⬝ᵥ curvature = 0 := by decide
+example : slope ⬝ᵥ curvature = 0 := by decide
+
+-- Model eigenvalues: 3^2 * 10 + 0.5^2 = 90.25, 0.2^2 * 330 + 0.5^2 = 13.45,
+-- 0.15^2 * 132 + 0.5^2 = 3.22, and total 108.67.
+example : (3 : ℚ) ^ 2 * 10 + (1 / 2) ^ 2 = 9025 / 100 := by norm_num
+example : (2 / 10 : ℚ) ^ 2 * 330 + (1 / 2) ^ 2 = 1345 / 100 := by norm_num
+example : (15 / 100 : ℚ) ^ 2 * 132 + (1 / 2) ^ 2 = 322 / 100 := by norm_num
+example : (9025 / 100 : ℚ) + 1345 / 100 + 322 / 100 + 7 * (1 / 4) = 10867 / 100 := by norm_num
+
+-- Shares, as stated to two decimals: level 83.05%, slope 12.38%, top two 95.43%.
+example : (16609 : ℚ) / 20000 ≤ (9025 / 100) / (10867 / 100) ∧
+    (9025 / 100 : ℚ) / (10867 / 100) < 16611 / 20000 := by norm_num
+example : (2475 : ℚ) / 20000 ≤ (1345 / 100) / (10867 / 100) ∧
+    (1345 / 100 : ℚ) / (10867 / 100) < 2477 / 20000 := by norm_num
+example : (19085 : ℚ) / 20000 ≤ (9025 / 100 + 1345 / 100) / (10867 / 100) ∧
+    (9025 / 100 + 1345 / 100 : ℚ) / (10867 / 100) < 19087 / 20000 := by norm_num
+
+#print axioms scoreVar_eq_dot
+#print axioms expand_eig
+#print axioms quad_eig
+#print axioms norm_eig
+#print axioms kyfan_aux
+#print axioms sampleCov_isHermitian
+#print axioms top_eigenvector_carries_most_variance
+#print axioms top_r_components_keep_most_variance
+#print axioms total_variance_eq_sum_eigenvalues
+
+end PrincipalComponents
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'PrincipalComponents.scoreVar_eq_dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.expand_eig' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.quad_eig' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.norm_eig' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.kyfan_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.sampleCov_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.top_eigenvector_carries_most_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.top_r_components_keep_most_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PrincipalComponents.total_variance_eq_sum_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -627,7 +892,7 @@ The two outputs agree line for line. Both sum in the same order, so both land on
 - **Regression with tangled predictors.** When predictors move together, regressing on the first few components instead is one repair, principal components regression: least squares on the predictors' first r scores keeps the fit along the r strongest directions whole and sets it to zero along every weaker one. Ridge works along the same directions but shrinks instead of cutting, multiplying the fit along each by a factor between 0 and 1, near 1 where the eigenvalue is large and near 0 where it is small ([Regularisation](06-ridge-and-lasso.md)). How many components to keep is then chosen on held-out data ([Overfitting](08-cross-validation-and-overfitting.md)).
 - **Genetics.** Plotting people's first two principal component scores, computed from many thousands of genetic markers, separates populations by ancestry; studies correct for that structure before testing a gene.
 - **Images and signals.** A face image of many thousands of pixels is stored as a short list of scores on components learned from other faces; the same compression shrinks sensor logs and survey batteries.
-- **Machine learning.** PCA is the first step of many pipelines, and its curved and kernel versions follow: Principal components.
+- **Machine learning.** PCA is the first step of many pipelines, and its curved and kernel versions follow: [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md).
 
 > **Say it back**
 > Centre the data and build its covariance matrix. The variance along any unit direction is that matrix sandwiched by the direction, and a weighted average of the eigenvalues, so the top eigenvector is the direction of most variance and each eigenvalue is the variance along its own eigenvector. The eigenvalues add up to the total variance, so each one's share says how much spread its direction holds. On ten yields, level and slope keep about 95% of the day-to-day variance, so two scores replace ten numbers. Shares depend on units and centring, and small tied components are noise.

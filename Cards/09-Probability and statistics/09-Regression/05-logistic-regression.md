@@ -6,7 +6,13 @@
 
 ## General Overview
 
-A lender keeps the records of 500 past personal loans. Each record holds three facts: the borrower's yearly income, between $25,000 and $125,000; the borrower's **debt ratio**, the share of monthly income already committed to debt payments, between 10% and 60%; and whether the loan **defaulted**, meaning the payments stopped. Of the 500 loans, 103 defaulted: a share of 0.2060, about 1 in 5.
+A lender keeps the records of 500 past personal loans. Each record holds three facts:
+
+- the borrower's yearly income, between $25,000 and $125,000;
+- the borrower's **debt ratio**, the share of monthly income already committed to debt payments, between 10% and 60%;
+- whether the loan **defaulted**, meaning the payments stopped.
+
+Of the 500 loans, 103 defaulted: a share of 0.2060, about 1 in 5.
 
 | Loan | Income | Debt ratio | Defaulted? |
 | --- | --- | --- | --- |
@@ -17,13 +23,15 @@ A lender keeps the records of 500 past personal loans. Each record holds three f
 
 A new applicant, call her A, earns $50,000 with a debt ratio of 45%. The lender wants her chance of default. The answer must be a number between 0 and 1, and it must rise with debt and fall with income.
 
-A straight line fitted by least squares cannot promise the first part: fitted to these 500 loans, it gives a borrower on $125,000 with a 10% debt ratio a chance of −0.2124. **Logistic regression** draws the straight line on a different scale, the log of the odds, where every number is allowed, and converts back to a chance at the end. Its answer for A is 0.4016, about 2 in 5, with a 95% interval of 0.3312 to 0.4764.
+A straight line fitted by least squares cannot promise the first part: fitted to these 500 loans, it gives a borrower on $125,000 with a 10% debt ratio a chance of −0.2124.
+
+**Logistic regression** draws the straight line on a different scale, the log of the odds, where every number is allowed, and converts back to a chance at the end. Its answer for A is 0.4016, about 2 in 5, with a 95% interval of 0.3312 to 0.4764.
 
 The loans on this card are simulated from a stated model with a fixed seed, so the fit can be graded against the true values.
 
 **Logistic regression models the log-odds of a yes as a straight line in the predictors and picks the line under which the observed yeses and noes were most likely; for these 500 loans, each extra 10 points of debt ratio multiplies the odds of default by 2.2909, with a 95% interval of 1.8657 to 2.8129.**
 
-**What kind of fact this is:** a model, since a straight line on the log-odds scale is an assumption about loans and not a law, fitted by a method, maximum likelihood; that the best fit is unique whenever it exists is a theorem proved on this card in Why it works, and the card shows a loan book where no best fit exists.
+**What kind of fact this is:** a model, fitted by a method. A straight line on the log-odds scale is an assumption about loans and not a law, and maximum likelihood is the method that fits it. That the best fit is unique whenever it exists is a theorem, proved on this card in Why it works. The card also shows a loan book where no best fit exists.
 
 ### The picture: the fitted chance of default at two incomes
 
@@ -43,7 +51,9 @@ First line (orange): a borrower earning $40,000. Second line (green): a borrower
 
 ## The formula
 
-Notation first, in words. A subscript i numbers the loans, from 1 to $n$ = 500. For loan i, $y_i$ is 1 if it defaulted and 0 if it was repaid; $x_{i1}$ is income in thousands of dollars and $x_{i2}$ is the debt ratio in percentage points. The **odds** of an event are its chance divided by the chance it fails: among the 297 loans with debt ratios under 40%, 27 defaulted, odds of 0.1000, one default for every ten loans repaid. The **log-odds** are the natural logarithm of the odds.
+Notation first, in words. A subscript i numbers the loans, from 1 to $n$ = 500. For loan i, $y_i$ is 1 if it defaulted and 0 if it was repaid; $x_{i1}$ is income in thousands of dollars and $x_{i2}$ is the debt ratio in percentage points.
+
+The **odds** of an event are its chance divided by the chance it fails: among the 297 loans with debt ratios under 40%, 27 defaulted, odds of 0.1000, one default for every ten loans repaid. The **log-odds** are the natural logarithm of the odds.
 
 $$\ln\frac{p_i}{1-p_i} \;=\; z_i \;=\; \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2}, \qquad p_i = \Lambda(z_i) = \frac{1}{1+e^{-z_i}}$$
 
@@ -79,8 +89,8 @@ $$\frac{\text{odds of default at debt ratio } x_{i2} + 10}{\text{odds of default
 | $y_i$ | loan i's outcome: 1 defaulted, 0 repaid | loan 2: 1 | — |
 | $x_{i1}$, $x_{i2}$ | income in thousands of dollars; debt ratio in percentage points | applicant A: 50 and 45 | income: falls; debt ratio: rises |
 | $\beta_0$ | the intercept: the score at zero income and zero debt | estimate −2.9213 | rises everywhere |
-| $\beta_1$ | change in log-odds per $1,000 of income | estimate −0.0242, SE 0.0047 | falls less steeply with income |
-| $\beta_2$ | change in log-odds per point of debt ratio | estimate 0.0829, SE 0.0105 | climbs faster with debt |
+| $\beta_1$ | change in log-odds per $1,000 of income | estimate −0.0242, standard error 0.0047 | falls less steeply with income |
+| $\beta_2$ | change in log-odds per point of debt ratio | estimate 0.0829, standard error 0.0105 | climbs faster with debt |
 | $z_i$ | the score: the log-odds of default | applicant A: −0.3987 | rises toward 1 |
 | $p_i$ | the chance of default | applicant A: 0.4016 | — |
 | $\Lambda$ | the logistic curve, which turns a score into a chance (some texts write σ; this wing keeps σ for the standard deviation) | Λ(−0.3987) = 0.4016 | — |
@@ -165,7 +175,7 @@ These are associations in past loans: borrowers with more debt defaulted more of
 
 A sharply bent peak pins the coefficients down; a flat one does not. Invert the information table at the peak and take square roots of its diagonal: 0.5091, 0.0047 and 0.0105. Why the inverse curvature measures the spread of an estimate is shown on [Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md). The check draws 400 fresh loan books from the fitted model, refits each, and measures the spread of the estimates: 0.5360, 0.0047 and 0.0106.
 
-A 95% interval is the estimate plus or minus 1.96 standard errors, 1.96 being the normal quantile $\Phi^{-1}(0.975)$ ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)). For the debt odds multiplier it runs from 1.8657 to 2.8129. The interval is a statement about the method: across the 400 simulated books, the interval built this way caught the debt coefficient the books were drawn from in 0.9500 of them. It is not a 95% chance that this particular interval holds the truth.
+A 95% interval is the estimate plus or minus 1.96 standard errors, 1.96 being the normal quantile $\Phi^{-1}(0.975)$, the point with 97.5% of the standard normal curve below it ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)). For the debt odds multiplier it runs from 1.8657 to 2.8129. The interval is a statement about the method: across the 400 simulated books, the interval built this way caught the debt coefficient the books were drawn from in 0.9500 of them. It is not a 95% chance that this particular interval holds the truth.
 
 ### Step 8: when the peak runs away
 
@@ -629,6 +639,293 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three facts behind Steps 4 and 8, for any number of loans and predictors.
+
+- Suppose no predictor is an exact combination of the others and the constant. Then the log-likelihood has at most one best fit.
+- Suppose some coefficients solve the likelihood equations. Then no other coefficients give a larger log-likelihood: they are the best fit.
+- Suppose a straight line in the predictors splits the defaults from the repayments. Some loans may lie on the line, but not all. Then no best fit exists.
+- The hand arithmetic holds exactly, as fractions: the share 0.2060 and the odds 0.1000. The eight-loan book of Step 8 meets the conditions of the third claim.
+
+The fitted numbers, the standard errors, Newton's climb, the intervals and the mistakes are left to the Python and Rust checks.
+
+```lean
+-- Logistic regression: the log-likelihood of a logistic regression has at most one best fit when no predictor is an exact combination of the others, any point where all its slopes are zero is that best fit, and a loan book split by a straight line has no best fit at all.
+import Mathlib.Analysis.SpecialFunctions.Sigmoid
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+
+open Real Finset
+
+/-! Setup. There are `n` loans and `d` predictors. Loan `i` has predictor values `x i j` and
+outcome `y i`, which is 1 if it defaulted and 0 if it was repaid. The coefficients are an
+intercept `b₀` and one slope `b j` per predictor. The logistic curve `Λ` is Mathlib's
+`Real.sigmoid`, `Λ z = 1 / (1 + e^(-z))`. -/
+
+/-- The score of loan `i`: `z i = b₀ + ∑ j, b j * x i j`, the log-odds of default. -/
+noncomputable def score {n d : ℕ} (x : Fin n → Fin d → ℝ) (b₀ : ℝ) (b : Fin d → ℝ)
+    (i : Fin n) : ℝ :=
+  b₀ + ∑ j, b j * x i j
+
+/-- The log-likelihood `ℓ = ∑ i, (y i * z i - ln (1 + e^(z i)))`. -/
+noncomputable def logLik {n d : ℕ} (x : Fin n → Fin d → ℝ) (y : Fin n → ℝ) (b₀ : ℝ)
+    (b : Fin d → ℝ) : ℝ :=
+  ∑ i, (y i * score x b₀ b i - Real.log (1 + Real.exp (score x b₀ b i)))
+
+/-- Helper: the curve `ln (1 + e^z)` lies above its tangent line, whose slope is `Λ z`. -/
+lemma logistic_aux_tangent (z w : ℝ) :
+    Real.log (1 + Real.exp z) + sigmoid z * (w - z) ≤ Real.log (1 + Real.exp w) := by
+  set p := sigmoid z with hpdef
+  have hp : p * (1 + Real.exp z) = Real.exp z := by
+    rw [hpdef, sigmoid_def, Real.exp_neg]
+    have := Real.exp_pos z
+    field_simp
+    ring
+  set t := w - z with htdef
+  have h1 := Real.add_one_le_exp (-(p * t))
+  have h2 := Real.add_one_le_exp ((1 - p) * t)
+  have h2' := mul_le_mul_of_nonneg_left h2 (Real.exp_pos z).le
+  have h3 : p * t * (1 + Real.exp z) = Real.exp z * t := by rw [mul_right_comm, hp]
+  have hsum : 1 + Real.exp z ≤ Real.exp (-(p * t)) + Real.exp z * Real.exp ((1 - p) * t) := by
+    nlinarith
+  have hw : Real.exp w = Real.exp z * Real.exp t := by
+    rw [← Real.exp_add]; congr 1; rw [htdef]; ring
+  have hmul : (1 + Real.exp z) * Real.exp (p * t) ≤ 1 + Real.exp w := by
+    calc (1 + Real.exp z) * Real.exp (p * t)
+        ≤ (Real.exp (-(p * t)) + Real.exp z * Real.exp ((1 - p) * t)) * Real.exp (p * t) :=
+          mul_le_mul_of_nonneg_right hsum (Real.exp_pos _).le
+      _ = Real.exp (-(p * t) + p * t) + Real.exp z * Real.exp ((1 - p) * t + p * t) := by
+          rw [Real.exp_add, Real.exp_add]; ring
+      _ = 1 + Real.exp w := by
+          rw [hw]; congr 1
+          · simp
+          · congr 2; ring
+  have hpos : 0 < 1 + Real.exp z := by positivity
+  calc Real.log (1 + Real.exp z) + p * t
+      = Real.log ((1 + Real.exp z) * Real.exp (p * t)) := by
+        rw [Real.log_mul hpos.ne' (Real.exp_pos _).ne', Real.log_exp]
+    _ ≤ Real.log (1 + Real.exp w) := Real.log_le_log (by positivity) hmul
+
+/-- Helper: `ln (1 + e^z)` is strictly convex: at the midpoint of two different scores it is
+below the average of its values. -/
+lemma logistic_aux_mid_lt {z w : ℝ} (h : z ≠ w) :
+    2 * Real.log (1 + Real.exp ((z + w) / 2)) <
+      Real.log (1 + Real.exp z) + Real.log (1 + Real.exp w) := by
+  have ha : Real.exp z = Real.exp (z / 2) ^ 2 := by rw [sq, ← Real.exp_add]; ring_nf
+  have hb : Real.exp w = Real.exp (w / 2) ^ 2 := by rw [sq, ← Real.exp_add]; ring_nf
+  have hm : Real.exp ((z + w) / 2) = Real.exp (z / 2) * Real.exp (w / 2) := by
+    rw [← Real.exp_add]; ring_nf
+  have hne : Real.exp (z / 2) - Real.exp (w / 2) ≠ 0 := by
+    intro e
+    apply h
+    have := Real.exp_injective (sub_eq_zero.mp e)
+    linarith
+  have hsq : 0 < (Real.exp (z / 2) - Real.exp (w / 2)) ^ 2 := by positivity
+  rw [← Real.log_mul (by positivity) (by positivity),
+    show (2 : ℝ) * Real.log (1 + Real.exp ((z + w) / 2))
+      = Real.log ((1 + Real.exp ((z + w) / 2)) ^ 2) by rw [Real.log_pow]; norm_num]
+  apply Real.log_lt_log (by positivity)
+  rw [ha, hb, hm]
+  nlinarith
+
+/-- Helper: the midpoint inequality, allowing equal scores. -/
+lemma logistic_aux_mid_le (z w : ℝ) :
+    2 * Real.log (1 + Real.exp ((z + w) / 2)) ≤
+      Real.log (1 + Real.exp z) + Real.log (1 + Real.exp w) := by
+  by_cases h : z = w
+  · subst h; ring_nf; rfl
+  · exact (logistic_aux_mid_lt h).le
+
+/-- Helper: moving a score in the direction of its outcome strictly raises its term. -/
+lemma logistic_aux_term_lt (y z s : ℝ) (hy : y = 0 ∨ y = 1) (hs1 : y = 1 → 0 ≤ s)
+    (hs0 : y = 0 → s ≤ 0) (hs : s ≠ 0) :
+    y * z - Real.log (1 + Real.exp z) < y * (z + s) - Real.log (1 + Real.exp (z + s)) := by
+  rcases hy with h | h
+  · have hs' : s < 0 := lt_of_le_of_ne (hs0 h) hs
+    subst h
+    have : Real.exp (z + s) < Real.exp z := Real.exp_lt_exp.mpr (by linarith)
+    have := Real.log_lt_log (by positivity) (show 1 + Real.exp (z + s) < 1 + Real.exp z by linarith)
+    linarith
+  · have hs' : 0 < s := lt_of_le_of_ne (hs1 h) (Ne.symm hs)
+    subst h
+    have he : 1 < Real.exp s := by
+      have := Real.exp_lt_exp.mpr hs'
+      rwa [Real.exp_zero] at this
+    have hez := Real.exp_pos z
+    have key : 1 + Real.exp (z + s) < Real.exp s * (1 + Real.exp z) := by
+      rw [Real.exp_add]; nlinarith
+    have := Real.log_lt_log (by positivity) key
+    rw [Real.log_mul (Real.exp_pos s).ne' (by positivity), Real.log_exp] at this
+    linarith
+
+/-- Helper: the same move never lowers the term. -/
+lemma logistic_aux_term_le (y z s : ℝ) (hy : y = 0 ∨ y = 1) (hs1 : y = 1 → 0 ≤ s)
+    (hs0 : y = 0 → s ≤ 0) :
+    y * z - Real.log (1 + Real.exp z) ≤ y * (z + s) - Real.log (1 + Real.exp (z + s)) := by
+  by_cases hs : s = 0
+  · subst hs; simp
+  · exact (logistic_aux_term_lt y z s hy hs1 hs0 hs).le
+
+/-- Helper: the score is linear in the coefficients. -/
+lemma logistic_aux_score_add {n d : ℕ} (x : Fin n → Fin d → ℝ) (b₀ v₀ : ℝ) (b v : Fin d → ℝ)
+    (i : Fin n) :
+    score x (b₀ + v₀) (b + v) i = score x b₀ b i + (v₀ + ∑ j, v j * x i j) := by
+  simp only [score, Pi.add_apply, add_mul, Finset.sum_add_distrib]
+  ring
+
+#print axioms logistic_aux_tangent
+#print axioms logistic_aux_mid_lt
+#print axioms logistic_aux_mid_le
+#print axioms logistic_aux_term_lt
+#print axioms logistic_aux_term_le
+#print axioms logistic_aux_score_add
+
+/-- One peak at most. If every outcome is 0 or 1 and no predictor is an exact combination of
+the others and the constant (the only direction that leaves every loan's score unchanged is
+zero), then two coefficient sets that both maximise the log-likelihood are the same. -/
+theorem logistic_best_fit_unique {n d : ℕ} (x : Fin n → Fin d → ℝ) (y : Fin n → ℝ)
+    (hy : ∀ i, y i = 0 ∨ y i = 1)
+    (hx : ∀ (v₀ : ℝ) (v : Fin d → ℝ), (∀ i, v₀ + ∑ j, v j * x i j = 0) → v₀ = 0 ∧ v = 0)
+    (b₀ c₀ : ℝ) (b c : Fin d → ℝ)
+    (hb : ∀ (a₀ : ℝ) (a : Fin d → ℝ), logLik x y a₀ a ≤ logLik x y b₀ b)
+    (hc : ∀ (a₀ : ℝ) (a : Fin d → ℝ), logLik x y a₀ a ≤ logLik x y c₀ c) :
+    b₀ = c₀ ∧ b = c := by
+  have hmid : ∀ i, score x ((b₀ + c₀) / 2) (fun j => (b j + c j) / 2) i
+      = (score x b₀ b i + score x c₀ c i) / 2 := by
+    intro i
+    simp only [score, add_div, add_mul, Finset.sum_add_distrib, div_mul_eq_mul_div,
+      ← Finset.sum_div]
+    ring
+  have heq : ∀ i, score x b₀ b i = score x c₀ c i := by
+    by_contra hne
+    push Not at hne
+    have hlt : logLik x y b₀ b + logLik x y c₀ c
+        < 2 * logLik x y ((b₀ + c₀) / 2) (fun j => (b j + c j) / 2) := by
+      unfold logLik
+      rw [← Finset.sum_add_distrib, Finset.mul_sum]
+      apply Finset.sum_lt_sum
+      · intro i _
+        rw [hmid i]
+        have := logistic_aux_mid_le (score x b₀ b i) (score x c₀ c i)
+        linarith
+      · obtain ⟨i, hi⟩ := hne
+        refine ⟨i, Finset.mem_univ _, ?_⟩
+        rw [hmid i]
+        have := logistic_aux_mid_lt hi
+        linarith
+    have h1 := hb ((b₀ + c₀) / 2) (fun j => (b j + c j) / 2)
+    have h2 := hc ((b₀ + c₀) / 2) (fun j => (b j + c j) / 2)
+    linarith
+  have hzero : ∀ i, (b₀ - c₀) + ∑ j, (b - c) j * x i j = 0 := by
+    intro i
+    have := heq i
+    simp only [score] at this
+    simp only [Pi.sub_apply, sub_mul, Finset.sum_sub_distrib]
+    linarith
+  obtain ⟨h0, hv⟩ := hx (b₀ - c₀) (b - c) hzero
+  exact ⟨sub_eq_zero.mp h0, sub_eq_zero.mp hv⟩
+
+/-- Zero slopes mean the top. If coefficients solve the likelihood equations (observed minus
+predicted, `y i - Λ (z i)`, adds to zero overall and again when weighted by each predictor),
+then no other coefficients give a larger log-likelihood. -/
+theorem logistic_likelihood_equations_give_max {n d : ℕ} (x : Fin n → Fin d → ℝ)
+    (y : Fin n → ℝ) (hy : ∀ i, y i = 0 ∨ y i = 1) (b₀ : ℝ) (b : Fin d → ℝ)
+    (h0 : ∑ i, (y i - sigmoid (score x b₀ b i)) = 0)
+    (hj : ∀ j, ∑ i, x i j * (y i - sigmoid (score x b₀ b i)) = 0) :
+    ∀ (a₀ : ℝ) (a : Fin d → ℝ), logLik x y a₀ a ≤ logLik x y b₀ b := by
+  intro a₀ a
+  have hdiff : ∀ i, score x a₀ a i - score x b₀ b i = (a₀ - b₀) + ∑ j, (a j - b j) * x i j := by
+    intro i
+    simp only [score, sub_mul, Finset.sum_sub_distrib]
+    ring
+  have hkey : ∑ i, (y i - sigmoid (score x b₀ b i)) * (score x a₀ a i - score x b₀ b i) = 0 := by
+    simp_rw [hdiff, mul_add, Finset.mul_sum]
+    rw [Finset.sum_add_distrib, Finset.sum_comm]
+    have e1 : ∑ i, (y i - sigmoid (score x b₀ b i)) * (a₀ - b₀) = 0 := by
+      rw [← Finset.sum_mul, h0, zero_mul]
+    have e2 : ∀ j, ∑ i, (y i - sigmoid (score x b₀ b i)) * ((a j - b j) * x i j) = 0 := by
+      intro j
+      have : ∑ i, (y i - sigmoid (score x b₀ b i)) * ((a j - b j) * x i j)
+          = (a j - b j) * ∑ i, x i j * (y i - sigmoid (score x b₀ b i)) := by
+        rw [Finset.mul_sum]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        ring
+      rw [this, hj j, mul_zero]
+    rw [e1, Finset.sum_congr rfl fun j _ => e2 j]
+    simp
+  have hle : logLik x y a₀ a ≤ logLik x y b₀ b
+      + ∑ i, (y i - sigmoid (score x b₀ b i)) * (score x a₀ a i - score x b₀ b i) := by
+    unfold logLik
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_le_sum
+    intro i _
+    have := logistic_aux_tangent (score x b₀ b i) (score x a₀ a i)
+    nlinarith
+  linarith
+
+/-- Separation leaves no best fit. If some straight line in the predictors splits the defaults
+from the repayments (a direction `v₀, v` whose score change `s i = v₀ + ∑ j, v j * x i j` is at
+least 0 on every defaulted loan and at most 0 on every repaid one, with some loans allowed to lie
+on the line but not all), then no coefficients maximise the log-likelihood. -/
+theorem logistic_no_best_fit_under_separation {n d : ℕ} (x : Fin n → Fin d → ℝ)
+    (y : Fin n → ℝ) (hy : ∀ i, y i = 0 ∨ y i = 1) (v₀ : ℝ) (v : Fin d → ℝ)
+    (hpos : ∀ i, y i = 1 → 0 ≤ v₀ + ∑ j, v j * x i j)
+    (hneg : ∀ i, y i = 0 → v₀ + ∑ j, v j * x i j ≤ 0)
+    (hoff : ∃ i, v₀ + ∑ j, v j * x i j ≠ 0) :
+    ¬ ∃ (b₀ : ℝ) (b : Fin d → ℝ), ∀ (a₀ : ℝ) (a : Fin d → ℝ), logLik x y a₀ a ≤ logLik x y b₀ b := by
+  rintro ⟨b₀, b, h⟩
+  have hge := h (b₀ + v₀) (b + v)
+  have hlt : logLik x y b₀ b < logLik x y (b₀ + v₀) (b + v) := by
+    unfold logLik
+    simp_rw [logistic_aux_score_add]
+    apply Finset.sum_lt_sum
+    · intro i _
+      exact logistic_aux_term_le _ _ _ (hy i) (hpos i) (hneg i)
+    · obtain ⟨i, hi⟩ := hoff
+      exact ⟨i, Finset.mem_univ _, logistic_aux_term_lt _ _ _ (hy i) (hpos i) (hneg i) hi⟩
+  linarith
+
+/-! The card's whole-number worked examples. -/
+
+-- 103 of the 500 loans defaulted: a share of 0.2060.
+example : (103 : ℚ) / 500 = 2060 / 10000 := by norm_num
+
+-- Of the 297 loans with debt ratio under 40%, 27 defaulted: odds 27 / 270 = 1/10, i.e. 0.1000.
+example : 297 - 27 = 270 ∧ (27 : ℚ) / (297 - 27) = 1 / 10 := by norm_num
+
+-- The separated book of eight loans: debt ratios 20, 25, 30, 35 repaid, 45, 50, 55, 60 defaulted.
+-- The score change `debt ratio - 40` is negative on every repaid loan and positive on every
+-- defaulted one, so the book meets the hypotheses of `logistic_no_best_fit_under_separation`.
+example :
+    let debt : Fin 8 → ℝ := ![20, 25, 30, 35, 45, 50, 55, 60]
+    let y : Fin 8 → ℝ := ![0, 0, 0, 0, 1, 1, 1, 1]
+    (∀ i, y i = 0 ∨ y i = 1) ∧
+      (∀ i, y i = 1 → 0 < -40 + debt i) ∧ (∀ i, y i = 0 → -40 + debt i < 0) := by
+  intro debt y
+  refine ⟨?_, ?_, ?_⟩ <;> intro i <;> fin_cases i <;> norm_num [debt, y]
+
+#print axioms logistic_best_fit_unique
+#print axioms logistic_likelihood_equations_give_max
+#print axioms logistic_no_best_fit_under_separation
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'logistic_aux_tangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_aux_mid_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_aux_mid_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_aux_term_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_aux_term_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_aux_score_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_best_fit_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_likelihood_equations_give_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_no_best_fit_under_separation' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -653,7 +950,7 @@ The two outputs match line for line.
 
 - **Credit scoring.** Many lenders' scorecards are logistic regressions, with the log-odds rescaled into points. A bank's estimated chance of default then feeds its capital calculation on [The Basel credit formula](../../12-Financial%20mathematics/48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md).
 - **Medicine.** Odds ratios for smoking, age or a gene in studies of disease risk are exponentials of logistic regression coefficients.
-- **Machine learning.** A single artificial neuron with a logistic output, trained on yes-or-no labels by minimising cross-entropy, is exactly this model fitted by maximum likelihood (The perceptron and its stack).
+- **Machine learning.** A single artificial neuron with a logistic output, trained on yes-or-no labels by minimising cross-entropy, which is minus the log-likelihood, is exactly this model fitted by maximum likelihood ([The perceptron and its stack](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/03-perceptron-and-neural-networks.md)).
 - **Checking predictions.** Whether a model predicts new loans as well as old ones is judged by holding some back, on [Overfitting](08-cross-validation-and-overfitting.md).
 
 > **Say it back**
@@ -674,7 +971,7 @@ The two outputs match line for line.
 - [Softmax and cross-entropy](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/05-softmax-and-cross-entropy-for-classification.md): more than two outcomes, one score each.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): a dividing line chosen for its margin rather than its likelihood, which welcomes the separation that breaks this fit.
 
-This card sorts each loan into two outcomes; when there are three or more, such as repaid, late and defaulted, the log-odds line becomes one score per outcome, and how those scores share out the chance is Softmax and cross-entropy.
+This card sorts each loan into two outcomes. When there are three or more, such as repaid, late and defaulted, the log-odds line becomes one score per outcome. How should those scores share out the chance? That is the question [Softmax and cross-entropy](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/05-softmax-and-cross-entropy-for-classification.md) answers.
 
 ---
 
