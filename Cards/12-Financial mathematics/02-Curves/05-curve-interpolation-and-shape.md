@@ -12,7 +12,9 @@ Six dates, six numbers. Written as **zero rates** — the one steady rate that g
 
 Then a client asks what a payment of 10,000,000.00 dollars due in three years is worth. Nobody quoted three years.
 
-So the desk fills in the curve between its pillars. Any filling must still hand back all six quotes exactly, and two rules that do exactly that still value that one payment at 8,907,720.98 dollars and 8,922,579.56 dollars — 14,858.58 apart, on a single trade. The rates they imply for borrowing at a future date part company further still: at two and a half years the three rules on this card disagree by 22.81 basis points, a basis point being one hundredth of one percent.
+So the desk fills in the curve between its pillars. Any filling must still hand back all six quotes exactly. Two rules that do exactly that still value that one payment at 8,907,720.98 dollars and 8,922,579.56 dollars — 14,858.58 apart, on a single trade.
+
+The rates they imply for borrowing at a future date part company further still. At two and a half years the three rules on this card disagree by 22.81 basis points, a basis point being one hundredth of one percent.
 
 That is the subject: not the quotes, but the room between them.
 
@@ -37,7 +39,9 @@ The line only joins the dots. The six corners are the data; the straight pieces 
 
 ## The formula
 
-Notation first, in words. A discount factor at time $t$ is written $D(t)$: the price today of one dollar due at $t$, so $D(0) = 1$ and a falling $D$ means a positive interest rate. The **instantaneous forward rate**, written $f(t)$, is the rate the curve implies for a loan starting at $t$ and lasting a moment. It is the rate per year that the curve is charging at that instant, and it is what every rule on this card really chooses.
+Notation first, in words. A discount factor at time $t$ is written $D(t)$: the price today of one dollar due at $t$, so $D(0) = 1$ and a falling $D$ means a positive interest rate.
+
+The **instantaneous forward rate**, written $f(t)$, is the rate the curve implies for a loan starting at $t$ and lasting a moment. It is the rate per year that the curve is charging at that instant, and it is what every rule on this card really chooses.
 
 $$D(t) = \exp\left(-\int_0^t f(u)\,du\right)$$
 
@@ -61,7 +65,7 @@ The middle rule starts from one formula on each gap, with $x$ the same fraction 
 
 $$f(t) = m_i + g_0\,(1 - 4x + 3x^2) + g_1\,(3x^2 - 2x)$$
 
-Both bracketed pieces average to zero across the gap, which is why the area — and so every quote — survives. Where that plain parabola would invent a hump, Hagan and West replace part of it with a flat piece, turning at a point $\eta$ chosen to keep the area right; Step 3 says when and why.
+Both bracketed pieces average to zero across the gap, which is why the area — and so every quote — survives. Where that plain parabola would invent a hump, Hagan and West replace part of it with a flat piece, turning at a point $\eta$ chosen to keep the area right. Step 3 says when and why.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -80,7 +84,7 @@ Both bracketed pieces average to zero across the gap, which is why the area — 
 
 ### When it holds
 
-- **The pillars are already exact.** The bootstrap that produced them used an interpolation rule inside itself, so it must be this same rule; change the rule afterwards and the pillars stop repricing the swaps they came from ([Bootstrapping](04-bootstrapping-the-discount-curve.md)).
+- **The pillars are already exact.** The bootstrap that produced them used an interpolation rule inside itself, so it must be this same rule. Change the rule afterwards and the pillars stop repricing the swaps they came from ([Bootstrapping](04-bootstrapping-the-discount-curve.md)).
 - **Dates sorted and distinct, discount factors positive.** Repeated dates divide by a zero gap length; a discount factor of zero or less has no logarithm.
 - **Inside the quoted range only.** The two exact rules say nothing past thirty years: extrapolation is a separate rule, and the usual one is to hold the last forward flat. Nelson-Siegel does run on, but only on the strength of its assumed shape.
 - **One curve, no spread.** These are one currency's risk-free discount factors, with no credit or collateral adjustment on top; a spread over this curve is measured separately ([Spreads over the curve](06-z-spread-and-asset-swap-spread.md)).
@@ -118,15 +122,19 @@ Picture the staircase's two steps either side of a pillar, each drawn at the mid
 
 $$f_i = \frac{h_{i+1}\,m_i + h_i\,m_{i+1}}{h_i + h_{i+1}},$$
 
-where the weight on each step is the *other* gap's length: a long gap next door pulls its own step's weight down, because the pillar is far from that gap's middle. At ten years, a five-year gap at 4.5000% beside a twenty-year gap at 4.6500% gives 4.5300%. The two ends of the curve have only one neighbour each, so their forwards are reflected: each is set half as far from its gap's average as the inner pillar's forward, and on the other side of it. At the short end, 4.2000% inside an average of 4.3000% gives 4.3500% at today's date.
+where the weight on each step is the *other* gap's length: a long gap next door pulls its own step's weight down, because the pillar is far from that gap's middle. At ten years, a five-year gap at 4.5000% beside a twenty-year gap at 4.6500% gives 4.5300%.
+
+The two ends of the curve have only one neighbour each, so their forwards are reflected. Each is set half as far from its gap's average as the inner pillar's forward, and on the other side of it. At the short end, 4.2000% inside an average of 4.3000% gives 4.3500% at today's date.
 
 Now fill each gap with the one quadratic that hits those two pillar forwards and keeps the area. Measure the ends from the gap's own average, $g_0 = f_{i-1} - m_i$ and $g_1 = f_i - m_i$, and the shape is the formula in the last section. Check it: at $x = 0$ it gives $m_i + g_0$, at $x = 1$ it gives $m_i + g_1$, and each bracket integrates to zero across the gap, so the area — the quote — is untouched.
 
 ### Step 3: a plain parabola invents humps, so it is amended
 
-A parabola through two end values can swing past both of them. On the gap from five to ten years the ends sit −0.3333% below and +0.0300% above an average of 4.5000%, and the plain parabola, forced to make up the deficit left by that low start, rises above *both* ends in the second half of the gap before dropping back to the far one. Nothing in the quotes asked for that hump; the algebra invented it.
+A parabola through two end values can swing past both of them. On the gap from five to ten years the ends sit −0.3333% below and +0.0300% above an average of 4.5000%. The plain parabola, forced to make up the deficit left by that low start, rises above *both* ends in the second half of the gap before dropping back to the far one. Nothing in the quotes asked for that hump; the algebra invented it.
 
-Hagan and West's fix is to spend part of the gap flat: curve between the two ends over part of it, hold one of them over the rest, and place the turning point $\eta$ so the area is still exactly right. From five to ten years that means curving up to 4.5300% a quarter of the way across, then flat. There are four cases, depending on where the two ends sit relative to each other; three of them occur in this morning's quotes, and the check prints which one each gap uses.
+Hagan and West's fix is to spend part of the gap flat: curve between the two ends over part of it, hold one of them over the rest. Then place the turning point $\eta$ so the area is still exactly right. From five to ten years that means curving up to 4.5300% a quarter of the way across, then flat.
+
+There are four cases, depending on where the two ends sit relative to each other; three of them occur in this morning's quotes, and the check prints which one each gap uses.
 
 <details>
 <summary>Detailed proof: the four shapes, and why each keeps the quote</summary>
@@ -139,7 +147,7 @@ Work in the gap's own units: $x$ runs from 0 to 1, and $g(x)$ is the forward mea
 
 **Region 3, curved then flat.** When $g_1$ sits between 0 and $-\tfrac12 g_0$, run $g = g_1 + (g_0 - g_1)\left(\frac{\eta - x}{\eta}\right)^2$ on $[0, \eta)$ and hold $g = g_1$ after it. The integral is $g_1 + (g_0 - g_1)\eta/3$, which vanishes at $\eta = 3g_1/(g_1 - g_0)$.
 
-**Region 4, both ends the same side.** When $g_0$ and $g_1$ share a sign the curve must cross to the other side in between, so it is built from two parabola halves meeting at a level $A$: $g = A + (g_0 - A)\left(\frac{\eta - x}{\eta}\right)^2$ before $\eta$ and $g = A + (g_1 - A)\left(\frac{x - \eta}{1 - \eta}\right)^2$ after it, with $\eta = g_1/(g_0 + g_1)$ and $A = -g_0g_1/(g_0 + g_1)$. Its integral is $A + (g_0 - A)\eta/3 + (g_1 - A)(1 - \eta)/3$; substituting $s = g_0 + g_1$ gives $A + g_0g_1/s = A - A = 0$.
+**Region 4, both ends the same side.** When $g_0$ and $g_1$ share a sign the curve must cross to the other side in between. So it is built from two parabola halves meeting at a level $A$: $g = A + (g_0 - A)\left(\frac{\eta - x}{\eta}\right)^2$ before $\eta$ and $g = A + (g_1 - A)\left(\frac{x - \eta}{1 - \eta}\right)^2$ after it. Here $\eta = g_1/(g_0 + g_1)$ and $A = -g_0g_1/(g_0 + g_1)$. Its integral is $A + (g_0 - A)\eta/3 + (g_1 - A)(1 - \eta)/3$; substituting $s = g_0 + g_1$ gives $A + g_0g_1/s = A - A = 0$.
 
 In every region the value at $x = 0$ is $g_0$ and at $x = 1$ is $g_1$, so neighbouring gaps agree at the pillar they share and the forward curve is continuous. The check integrates each gap numerically and compares the answer with the quote that fixed it, to fourteen decimal places.
 
@@ -149,9 +157,15 @@ One step is left out here: Hagan and West first clip each pillar forward into $[
 
 ### Step 4: Nelson-Siegel fits a shape instead of filling gaps
 
-The third rule stops interpolating altogether. It proposes that the whole forward curve, from today to thirty years, is three simple shapes added up: a flat level $\beta_0$; a piece $\beta_1 e^{-t/\tau}$ that starts at full size and fades; and a hump $\beta_2 \frac{t}{\tau}e^{-t/\tau}$ that is zero today, peaks at $\tau$ years and fades after. Integrating that from 0 to $t$ and dividing by $t$ gives the zero rate the curve implies, which is what the quotes are compared against.
+The third rule stops interpolating altogether. It proposes that the whole forward curve, from today to thirty years, is three simple shapes added up:
 
-Four numbers cannot pass through six quotes. So the numbers are fitted: with $\tau$ held fixed the zero rate is a plain weighted sum of the three levels, so the best three are the solution of a three-by-three linear system, and $\tau$ is then swept to find the best of those solutions. This morning it lands on $\tau$ = 1.67 years, with $\beta_0$ = 4.6580%, $\beta_1$ = −0.1885% and $\beta_2$ = −2.6184%.
+- a flat level $\beta_0$;
+- a piece $\beta_1 e^{-t/\tau}$ that starts at full size and fades;
+- a hump $\beta_2 \frac{t}{\tau}e^{-t/\tau}$ that is zero today, peaks at $\tau$ years and fades after.
+
+Integrating that from 0 to $t$ and dividing by $t$ gives the zero rate the curve implies, which is what the quotes are compared against.
+
+Four numbers cannot pass through six quotes. So the numbers are fitted: with $\tau$ held fixed the zero rate is a plain weighted sum of the three levels, so the best three are the solution of a three-by-three linear system. Then $\tau$ is swept to find the best of those solutions. This morning it lands on $\tau$ = 1.67 years, with $\beta_0$ = 4.6580%, $\beta_1$ = −0.1885% and $\beta_2$ = −2.6184%.
 
 The fit is close and it is not exact. Against the six quotes, in basis points:
 
@@ -165,7 +179,7 @@ one bar is 0.2 basis points; the fitted zero rate minus the quote
  30 years    █                              +0.18
 ```
 
-Missing a quote by 1.52 basis points sounds small and costs 1,456.86 dollars on a 10,000,000.00 dollar payment due in a year. A desk that has to reprice its own trades cannot use a curve that disagrees with the prices it was built from. What a fitted family buys instead is smoothness and a shape that survives noisy data — which is why many central banks publish a handful of fitted numbers rather than a list of pillars.
+Missing a quote by 1.52 basis points sounds small and costs 1,456.86 dollars on a 10,000,000.00 dollar payment due in a year. A desk that has to reprice its own trades cannot use a curve that disagrees with the prices it was built from. What a fitted family buys instead is smoothness and a shape that survives noisy data. That is why many central banks publish a handful of fitted numbers rather than a list of pillars.
 
 ### The three curves, side by side
 
@@ -180,9 +194,15 @@ xychart-beta
     line [3.94, 3.62, 3.74, 3.96, 4.17, 4.33, 4.45, 4.52, 4.57, 4.61]
 ```
 
-First line, log-linear: sampled once a year, it looks like a slope, but between samples it is flat and it moves only at a pillar. Second line, monotone convex: continuous, and flat at 4.5300% from about a quarter of the way into the five-to-ten-year gap onward, which is the amendment holding a hump down. Third line, Nelson-Siegel: smooth throughout, and free to sit away from the other two because it is not pinned to the quotes. The first two carry all six quotes exactly. The third misses them by up to 1.5162 basis points, which is why it sits away from the others in places.
+- First line, log-linear: sampled once a year, it looks like a slope, but between samples it is flat and it moves only at a pillar.
+- Second line, monotone convex: continuous, and flat at 4.5300% from about a quarter of the way into the five-to-ten-year gap onward, which is the amendment holding a hump down.
+- Third line, Nelson-Siegel: smooth throughout, and free to sit away from the other two because it is not pinned to the quotes.
 
-The fourth candidate is a cubic spline through the zero rates, which is what a drawing program would do. It looks best of all on a chart of the curve and worst of all here: a forward rate is a derivative of what the spline drew, and a spline's derivative swings well outside its data, so the forwards ripple. That was Hagan and West's argument for building the forward curve first and the discount curve from it. The spline machinery itself is a card of its own (Cubic splines), and the tension spline is the version that pulls those ripples flat.
+The first two carry all six quotes exactly. The third misses them by up to 1.5162 basis points, which is why it sits away from the others in places.
+
+The fourth candidate is a cubic spline through the zero rates, which is what a drawing program would do. It looks best of all on a chart of the curve and worst of all here. A forward rate is a derivative of what the spline drew, and a spline's derivative swings well outside its data, so the forwards ripple. That was Hagan and West's argument for building the forward curve first and the discount curve from it.
+
+The spline machinery itself is a card of its own ([Cubic splines](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/05-splines.md)), and the tension spline is the version that pulls those ripples flat.
 
 ---
 
@@ -222,7 +242,14 @@ Every number in that table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows an answer: the quadrature rule is a two-point Gauss rule written out, the least-squares fit is Gaussian elimination written out, and $\tau$ is found by sweeping a hundredth of a year at a time. Six roads cross-check each other. Each pillar forward is computed twice, once from the weights above and once by reading the line through the two step midpoints. Both exact rules are asked for every quoted discount factor back. The log-linear discount factor at three years is computed twice — once from the straight line between the logarithms, once by integrating the staircase forward from today. Every gap's area under the monotone convex forward is compared with the quote that fixed it. Nelson-Siegel's zero rate is compared with the integral of its own forward. And the fitted levels are nudged six ways to confirm they sit at a genuine low point of the total squared miss.
+Nothing is imported that already knows an answer: the quadrature rule (the numerical integration) is a two-point Gauss rule written out, the least-squares fit is Gaussian elimination written out, and $\tau$ is found by sweeping a hundredth of a year at a time. Six roads cross-check each other.
+
+- Each pillar forward is computed twice, once from the weights above and once by reading the line through the two step midpoints.
+- Both exact rules are asked for every quoted discount factor back.
+- The log-linear discount factor at three years is computed twice — once from the straight line between the logarithms, once by integrating the staircase forward from today.
+- Every gap's area under the monotone convex forward is compared with the quote that fixed it.
+- Nelson-Siegel's zero rate is compared with the integral of its own forward.
+- The fitted levels are nudged six ways to confirm they sit at a genuine low point of the total squared miss.
 
 ### Python
 
@@ -642,6 +669,164 @@ ALL CHECKS PASS
 
 The two outputs match line for line: different languages, the same six roads, the same numbers.
 
+### Lean
+
+Lean proves the card's three facts about filling a gap, for every value meeting the conditions below, and the worked numbers exactly.
+
+- Take pillar dates sorted and distinct, starting today, and two forward curves that can be integrated up to the last pillar. Then the two curves give the same discount factor at every pillar exactly when they have the same area on every gap.
+- Take a gap from $t_{i-1}$ to $t_i$, with positive discount factors $D_{i-1}$ and $D_i$. Then log-linear interpolation hands back both quotes, and its forward rate equals the segment forward $m_i$ at every point.
+- Take any gap and any end forwards $g_0$ and $g_1$. Then the plain parabola starts at $m_i + g_0$, ends at $m_i + g_1$, and keeps the area $m_i h_i$.
+- The worked numbers also hold exactly in fractions. That covers three segment forwards, two pillar forwards, the reflected short end, and $\eta$ on the 5-to-10-year gap.
+
+Hagan and West's four regions, the Nelson-Siegel fit, the discount factors and the money amounts are left to the Python and Rust checks.
+
+```lean
+-- Between the pillars: two forward curves reprice every quoted discount factor exactly when they have the same area on every gap, log-linear interpolation gives a flat forward equal to the segment forward, and the monotone convex parabola keeps that area while hitting its two end forwards.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+open MeasureTheory
+
+/-- Each quote fixes the area under the forward curve across one gap, and nothing else.
+Take pillar dates 0 = t₀ < t₁ < ⋯ < tₙ and two forward curves f and g, each giving discount
+factors D(t) = exp(−∫₀ᵗ forward). Then f and g hand back the same discount factor at every
+pillar exactly when, on every gap [tᵢ₋₁, tᵢ], the area under f equals the area under g.
+The shape inside a gap never enters. -/
+theorem quotes_fix_areas_not_shapes (n : ℕ) (t : Fin (n + 1) → ℝ) (ht : StrictMono t)
+    (h0 : t 0 = 0) (f g : ℝ → ℝ)
+    (hf : IntervalIntegrable f volume 0 (t (Fin.last n)))
+    (hg : IntervalIntegrable g volume 0 (t (Fin.last n))) :
+    (∀ i : Fin (n + 1),
+        Real.exp (-∫ u in (0 : ℝ)..t i, f u) = Real.exp (-∫ u in (0 : ℝ)..t i, g u)) ↔
+      ∀ i : Fin n,
+        ∫ u in t i.castSucc..t i.succ, f u = ∫ u in t i.castSucc..t i.succ, g u := by
+  have hsub : ∀ i : Fin (n + 1), Set.uIcc 0 (t i) ⊆ Set.uIcc 0 (t (Fin.last n)) := by
+    intro i
+    apply Set.uIcc_subset_uIcc Set.left_mem_uIcc
+    apply Set.mem_uIcc_of_le
+    · rw [← h0]; exact ht.monotone (Fin.zero_le _)
+    · exact ht.monotone (Fin.le_last _)
+  have hfi : ∀ i, IntervalIntegrable f volume 0 (t i) := fun i => hf.mono_set (hsub i)
+  have hgi : ∀ i, IntervalIntegrable g volume 0 (t i) := fun i => hg.mono_set (hsub i)
+  have gap : ∀ (h : ℝ → ℝ), (∀ i, IntervalIntegrable h volume 0 (t i)) → ∀ i : Fin n,
+      ∫ u in t i.castSucc..t i.succ, h u
+        = (∫ u in (0:ℝ)..t i.succ, h u) - ∫ u in (0:ℝ)..t i.castSucc, h u := by
+    intro h hh i
+    rw [intervalIntegral.integral_interval_sub_left (hh _) (hh _)]
+  have key : (∀ i : Fin (n + 1),
+        Real.exp (-∫ u in (0 : ℝ)..t i, f u) = Real.exp (-∫ u in (0 : ℝ)..t i, g u)) ↔
+      ∀ i : Fin (n + 1), ∫ u in (0 : ℝ)..t i, f u = ∫ u in (0 : ℝ)..t i, g u := by
+    simp only [Real.exp_eq_exp, neg_inj]
+  rw [key]
+  constructor
+  · intro H i
+    rw [gap f hfi, gap g hgi, H, H]
+  · intro H i
+    induction i using Fin.induction with
+    | zero => simp [h0]
+    | succ i ih =>
+      have := H i
+      rw [gap f hfi, gap g hgi, ih] at this
+      linarith
+
+/-- Log-linear interpolation: between pillars a < b with positive discount factors D₀ and D₁,
+set D(t) = D₀^(1−w) · D₁^w with w = (t − a)/(b − a). It hands back both quotes, and its
+instantaneous forward rate −d/dt ln D(t) is the same at every t: the segment forward
+m = (ln D₀ − ln D₁)/(b − a). -/
+theorem log_linear_forward_is_segment_forward (a b D₀ D₁ : ℝ) (hab : a < b)
+    (hD₀ : 0 < D₀) (hD₁ : 0 < D₁) :
+    let D : ℝ → ℝ := fun s => D₀ ^ (1 - (s - a) / (b - a)) * D₁ ^ ((s - a) / (b - a))
+    D a = D₀ ∧ D b = D₁ ∧
+      ∀ s : ℝ, HasDerivAt (fun r => -Real.log (D r))
+        ((Real.log D₀ - Real.log D₁) / (b - a)) s := by
+  intro D
+  have hba : b - a ≠ 0 := sub_ne_zero.mpr hab.ne'
+  refine ⟨?_, ?_, ?_⟩
+  · simp [D]
+  · simp [D, div_self hba]
+  · intro s
+    have hfun : (fun r => -Real.log (D r)) = fun r =>
+        ((Real.log D₀ - Real.log D₁) / (b - a)) * r
+          + (-Real.log D₀ - (Real.log D₀ - Real.log D₁) / (b - a) * a) := by
+      funext r
+      simp only [D]
+      rw [Real.log_mul (Real.rpow_pos_of_pos hD₀ _).ne' (Real.rpow_pos_of_pos hD₁ _).ne',
+        Real.log_rpow hD₀, Real.log_rpow hD₁]
+      field_simp
+      ring
+    rw [hfun]
+    simpa using ((hasDerivAt_id s).const_mul ((Real.log D₀ - Real.log D₁) / (b - a))).add_const
+      (-Real.log D₀ - (Real.log D₀ - Real.log D₁) / (b - a) * a)
+
+/-- The monotone convex parabola on one gap [a, b], with x = (t − a)/(b − a):
+f(t) = m + g₀(1 − 4x + 3x²) + g₁(3x² − 2x). It starts at m + g₀, ends at m + g₁, and its
+area over the gap is m(b − a), the same as the flat segment forward, so the quote survives. -/
+theorem monotone_convex_parabola_keeps_area (a b m g₀ g₁ : ℝ) (hab : a < b) :
+    let f : ℝ → ℝ := fun s =>
+      m + g₀ * (1 - 4 * ((s - a) / (b - a)) + 3 * ((s - a) / (b - a)) ^ 2)
+        + g₁ * (3 * ((s - a) / (b - a)) ^ 2 - 2 * ((s - a) / (b - a)))
+    f a = m + g₀ ∧ f b = m + g₁ ∧ ∫ s in a..b, f s = m * (b - a) := by
+  intro f
+  have hba : b - a ≠ 0 := sub_ne_zero.mpr hab.ne'
+  refine ⟨?_, ?_, ?_⟩
+  · simp [f]
+  · norm_num [f, div_self hba]
+  · let F : ℝ → ℝ := fun s =>
+      m * s + g₀ * (b - a) * ((s - a) / (b - a) - 2 * ((s - a) / (b - a)) ^ 2
+          + ((s - a) / (b - a)) ^ 3)
+        + g₁ * (b - a) * (((s - a) / (b - a)) ^ 3 - ((s - a) / (b - a)) ^ 2)
+    have hF : ∀ s ∈ Set.uIcc a b, HasDerivAt F (f s) s := by
+      intro s _
+      have hx : HasDerivAt (fun r : ℝ => (r - a) / (b - a)) (1 / (b - a)) s :=
+        ((hasDerivAt_id s).sub_const a).div_const (b - a)
+      have h := (((hasDerivAt_id s).const_mul m).add
+        (((hx.sub ((hx.pow 2).const_mul 2)).add (hx.pow 3)).const_mul (g₀ * (b - a)))).add
+        (((hx.pow 3).sub (hx.pow 2)).const_mul (g₁ * (b - a)))
+      refine h.congr_deriv ?_
+      simp only [f]
+      push_cast
+      generalize (s - a) / (b - a) = x
+      field_simp
+      ring
+    have hcont : Continuous f := by
+      simp only [f]; fun_prop
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hF (hcont.intervalIntegrable _ _)]
+    simp only [F, sub_self, div_self hba]
+    field_simp
+    ring
+
+-- Worked numbers in basis points a year (exact rationals). Zero rates 430, 400, 380, 390, 420, 450.
+-- Segment forwards (z_i t_i − z_{i−1} t_{i−1}) / h_i: 2 to 5 years, 5 to 10, 10 to 30.
+example : ((390 : ℚ) * 5 - 380 * 2) / 3 = 1190 / 3 := by norm_num
+example : ((420 : ℚ) * 10 - 390 * 5) / 5 = 450 := by norm_num
+example : ((450 : ℚ) * 30 - 420 * 10) / 20 = 465 := by norm_num
+-- Pillar forward at ten years: (h₁₁ m₁₀ + h₁₀ m₁₁)/(h₁₀ + h₁₁) = (20·450 + 5·465)/25 = 453.
+example : ((20 : ℚ) * 450 + 5 * 465) / 25 = 453 := by norm_num
+-- Pillar forward at five years: (5 · 1190/3 + 3 · 450)/8 = 1250/3, so g₀ = −100/3 and g₁ = 3 on 5 to 10.
+example : ((5 : ℚ) * (1190 / 3) + 3 * 450) / 8 = 1250 / 3 := by norm_num
+example : (1250 / 3 : ℚ) - 450 = -100 / 3 := by norm_num
+-- Region 3 turning point on 5 to 10: η = 3g₁/(g₁ − g₀) = 27/109, about 0.2477.
+example : (3 * 3 : ℚ) / (3 - (-100 / 3)) = 27 / 109 := by norm_num
+-- Short end reflected: 430 − (420 − 430)/2 = 435.
+example : (430 : ℚ) - (420 - 430) / 2 = 435 := by norm_num
+-- Both bracketed pieces of the parabola average to zero on [0, 1]: 1 − 2 + 1 = 0 and 1 − 1 = 0.
+example : (1 : ℚ) - 4 / 2 + 3 / 3 = 0 := by norm_num
+example : (3 : ℚ) / 3 - 2 / 2 = 0 := by norm_num
+
+#print axioms quotes_fix_areas_not_shapes
+#print axioms log_linear_forward_is_segment_forward
+#print axioms monotone_convex_parabola_keeps_area
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'quotes_fix_areas_not_shapes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_linear_forward_is_segment_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monotone_convex_parabola_keeps_area' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts test the rules rather than this morning's numbers, so some of these leave every one of them passing — which is itself the lesson.
@@ -669,7 +854,7 @@ The two outputs match line for line: different languages, the same six roads, th
 
 - **A curve build, every morning.** Every rates system asks which interpolation to use, and the answer is a setting saved in a file. Log-linear on discount factors and monotone convex on forwards are the two usual answers ([Bootstrapping](04-bootstrapping-the-discount-curve.md)).
 - **Pricing a forward rate agreement.** Its rate is read off the curve between two future dates that are rarely pillars, so the number quoted to the client is partly the rule's ([Forward rate agreements](02-forward-rate-agreements.md)).
-- **Published central bank curves.** Many central banks publish Nelson-Siegel or Svensson parameters rather than pillar-by-pillar discount factors; the BIS documentation below lists which country fits what.
+- **Published central bank curves.** Many central banks publish Nelson-Siegel or Svensson parameters (Svensson is Nelson-Siegel with a second hump) rather than pillar-by-pillar discount factors; the BIS documentation below lists which country fits what.
 - **Risk reports.** A bucketed sensitivity asks what the book is worth if the five-year quote moves one basis point. Under a local rule only the neighbouring gaps move; under a fitted family the whole curve moves, and the report reads differently for the same book.
 - **Spread measurement.** A bond's spread is quoted over this curve, so whatever the rule invented between the pillars is inside the spread ([Spreads over the curve](06-z-spread-and-asset-swap-spread.md)).
 
@@ -688,7 +873,7 @@ The two outputs match line for line: different languages, the same six roads, th
 - [Fitting a curve with four or six parameters](../33-Curves%20in%20Depth/03-nelson-siegel-and-svensson-fitting.md): the fitted family taken seriously — a second hump for the long end, weighting the quotes, and what the four numbers mean when they move day to day.
 - [Cubic splines](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/05-splines.md): the general machinery, including why a cubic spline's derivative ripples and what tension does about it.
 
-This card trusted six quotes completely and asked only what to do between them; the next question is what to do when eighty quotes arrive and disagree with each other, which is where fitting a shape stops being a compromise and starts being the point.
+This card trusted six quotes completely and asked only what to do between them. The next question is what to do when eighty quotes arrive and disagree with each other, which is where fitting a shape stops being a compromise and starts being the point.
 
 ---
 

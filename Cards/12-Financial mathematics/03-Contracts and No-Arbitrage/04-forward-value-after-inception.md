@@ -12,7 +12,9 @@ That figure was not a forecast. It was the one number that made the agreement wo
 
 A month has passed. Acme now trades at 103.12, and a brand-new contract for that same delivery day is being written at 106.00. The old paperwork still says 103.05, so the buying side holds a bargain: a duty to pay 103.05 for a share everyone else is contracting to pay 106.00 for. A dealer would buy that contract off them, and this card works out the price.
 
-It is not 2.95, the gap between 106.00 and 103.05. That gap is collected on delivery day, eleven months off, and money due later is worth less than money now. Shrink it by the eleven-month discount factor, 0.9552, and the answer is **2.82**. That is the contract's **mark**: what it fetches if sold this afternoon, and the profit the buying side has made since signing. Writing open contracts down at their marks, day after day, is marking to market.
+It is not 2.95, the gap between 106.00 and 103.05. That gap is collected on delivery day, eleven months off, and money due later is worth less than money now. Shrink it by the eleven-month discount factor, 0.9552, and the answer is **2.82**.
+
+That is the contract's **mark**: what it fetches if sold this afternoon, and the profit the buying side has made since signing. Writing open contracts down at their marks, day after day, is marking to market.
 
 **An existing forward is worth the gap between today's forward price and the price written on the paperwork, shrunk back to today's money.**
 
@@ -36,7 +38,13 @@ The sloping line is the mark with eleven months still to run; the flat line is z
 
 ## The formula
 
-Three prices sit on this card and the subject turns on keeping them apart. $S_t$ is the **spot price**: what one Acme share costs right now, for delivery right now. $F_t$ is today's **forward price**: the figure a brand-new contract for that same delivery day would name, signed this morning for nothing. $K$ is the **delivery price** on the old paperwork, fixed at signing and never moving again. A small $t$ means "read today"; $T$ is delivery day; the time still to run is $\tau = T - t$, said "tau", in years. Two rates work underneath: the bank rate $r$ and the dividend yield $q$, both continuously compounded.
+Three prices sit on this card and the subject turns on keeping them apart.
+
+- $S_t$ is the **spot price**: what one Acme share costs right now, for delivery right now.
+- $F_t$ is today's **forward price**: the figure a brand-new contract for that same delivery day would name, signed this morning for nothing.
+- $K$ is the **delivery price** on the old paperwork, fixed at signing and never moving again.
+
+A small $t$ means "read today"; $T$ is delivery day; the time still to run is $\tau = T - t$, said "tau", in years. Two rates work underneath: the bank rate $r$ and the dividend yield $q$, both continuously compounded. That means interest is added at every instant, so a dollar left at rate $r$ for $\tau$ years grows to $e^{r\tau}$.
 
 $$V_t = (F_t - K)\,e^{-r\tau}$$
 
@@ -51,7 +59,7 @@ In words: the shares that must be bought today to end up holding one on delivery
 | Symbol | Plain meaning | In our example | Push it up and the mark… |
 | --- | --- | --- | --- |
 | $V_t$ | the mark: what the old contract is worth today | 2.82 | — it is the answer |
-| $K$ | the delivery price on the paperwork, fixed at signing | 103.05 | falls by 0.96 a dollar |
+| $K$ | the delivery price on the paperwork, fixed at signing; traders also call it the strike | 103.05 | falls by 0.96 a dollar |
 | $F_t$ | today's forward price for that same delivery day | 106.00 | rises by 0.96 a dollar |
 | $S_t$ | the spot price: one share, for delivery right now | 103.12 | rises by 0.98 a dollar |
 | $S_T$ | Acme's price on delivery day, unknown until it arrives | never used | — it is not in the formula |
@@ -65,7 +73,7 @@ The second exponential is the **share fraction**, $e^{-q\tau} = 0.9818$: the pie
 
 ### When it holds
 
-- **The share can be bought, held and sold short, at one rate for borrowing and lending, with no fees.** The proof runs the same trade both ways, so it needs the same rate each way. Where borrowing costs more than lending pays, the mark is pinned only inside a band.
+- **The share can be bought, held and sold short (borrowed and sold, to be bought back later), at one rate for borrowing and lending, with no fees.** The proof runs the same trade both ways, so it needs the same rate each way. Where borrowing costs more than lending pays, the mark is pinned only inside a band.
 - **The rate and the dividend yield are known for the rest of the contract's life.** A rise of 1 percent in the bank rate adds 0.90 to this mark — a trader calls that rho — and a rise of 1 percent in the yield takes 0.93 off it.
 - **Nothing is settled before delivery day.** A contract that pays over the day's gain each evening and resets is a future, knocked back to zero nightly, so this is not its mark: [Futures](05-futures-margining-and-the-forward-futures-difference.md).
 - **Both sides deliver.** Where the other side might fail, the 2.82 stops being a price and becomes an exposure: the amount at risk, and the reason collateral is lodged against it.
@@ -79,6 +87,8 @@ The second exponential is the **share fraction**, $e^{-q\tau} = 0.9818$: the pie
 Nobody can say what Acme will fetch on delivery day, and the old contract's payoff depends on it. One move removes the obstacle.
 
 The holder signs a **new** forward for the same delivery day, in the opposite direction: a promise to sell one share at today's forward price of 106.00. Entering it costs nothing, because 106.00 is exactly the figure at which a fresh contract is free.
+
+Traders call the buying side of a forward long and the selling side short ([Payoffs](01-payoffs-and-positions.md)). The old contract is a long; the new one is a short.
 
 Now the unknown cancels. Whatever Acme does, the share is bought for 103.05 under the old contract and sold for 106.00 under the new: it passes straight through, leaving 2.95 in cash on delivery day.
 
@@ -102,9 +112,11 @@ Deposit 0.9552 today at 5 percent and it is exactly a dollar by delivery day, so
 <details>
 <summary>Detailed proof: why no other number can stand</summary>
 
-Suppose a contract on the old paperwork's terms changes hands above $V_t$. Take the short side at that price, sign a fresh long forward at $F_t$ for nothing, and bank the proceeds: nothing is paid today. On delivery day the two forward positions pay $-(S_T - K) + (S_T - F_t) = K - F_t$, and the banked cash has grown by the factor $1/D$, so the total is the sale price over $D$, less the gap $F_t - K$ — positive in every future, from a position that cost nothing. That is an arbitrage, and prices offering one do not last. Below $V_t$ the mirror trade does it: buy the contract, sign a fresh short at $F_t$, borrow the purchase price.
+Suppose a contract on the old paperwork's terms changes hands above $V_t$. Take the short side, the seller's, at that price, sign a fresh long forward at $F_t$ for nothing, and bank the proceeds: nothing is paid today. On delivery day the two forward positions pay $-(S_T - K) + (S_T - F_t) = K - F_t$. The banked cash has grown by the factor $1/D$, so the total is the sale price over $D$, less the gap $F_t - K$ — positive in every future, from a position that cost nothing.
 
-Neither trade needed an opinion about $S_T$: it cancels between the contracts before the bank is involved. Both are shut only at $V_t = (F_t - K)D$, and both lean on shorting, on one rate for deposit and loan, and on both contracts paying — the When it holds assumptions, doing real work.
+That is an arbitrage, and prices offering one do not last. Below $V_t$ the mirror trade does it: buy the contract, sign a fresh short at $F_t$, borrow the purchase price.
+
+Neither trade needed an opinion about $S_T$: it cancels between the contracts before the bank is involved. Both are shut only at $V_t = (F_t - K)D$. Both lean on shorting, on one rate for deposit and loan, and on both contracts paying — the When it holds assumptions, doing real work.
 
 </details>
 
@@ -118,17 +130,19 @@ That fraction of a share costs 101.25 today. On delivery day the package holds o
 
 $$101.25 \;-\; 98.43 \;=\; 2.82.$$
 
-The code steps that package hour by hour, adding interest to the loan and buying shares with each hour's dividend. It ends holding 1.000000 shares and owing 103.045440, a thousandth of a cent short of the paperwork's 103.045453, and its cash on delivery day matches the contract's payoff to within 0.000012 in all four scenarios.
+The code steps that package hour by hour, adding interest to the loan and buying shares with each hour's dividend. It ends holding 1.000000 shares and owing 103.045440, a thousandth of a cent short of the paperwork's 103.045453. Its cash on delivery day matches the contract's payoff to within 0.000012 in all four scenarios.
 
 ### Step 4: where volatility went
 
-Neither road asked how jumpy Acme is — not an oversight, and what separates this card from an option.
+Neither road asked how jumpy Acme is — not an oversight, and what separates this card from an option: a contract that gives the right, but not the duty, to trade at a fixed price, its strike.
 
-A forward's payoff is a straight line in the delivery-day price, and averaging a straight line over a spread of outcomes gives the line at the average outcome, however wide the spread: the two sides move out together and cancel. An option's payoff bends at the strike, so its sides do not cancel and a wider spread genuinely makes it worth more. Step 3 says the same thing: the copy is bought once and never touched, and a hedge that never needs adjusting cannot care how bumpy the road is.
+A forward's payoff is a straight line in the delivery-day price. Averaging a straight line over a spread of outcomes gives the line at the average outcome, however wide the spread: the two sides move out together and cancel. An option's payoff bends at the strike, so its sides do not cancel and a wider spread genuinely makes it worth more.
 
-The code tests it bluntly, averaging Acme's delivery-day price over the whole bell curve at 20 percent a year and again at 60 percent. Both times the average is 106.000000, today's forward price on the nose, and the mark 2.822186.
+Step 3 says the same thing: the copy is bought once and never touched, and a hedge that never needs adjusting cannot care how bumpy the road is.
 
-That average belongs to the pricing world where every asset earns the bank rate in total return, which has a card of its own: [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md). Taking that as read, the whole derivation is one line: the average payoff is $F_t - K$, discounted.
+The code tests it bluntly, averaging Acme's delivery-day price over the whole bell curve at 20 percent a year and again at 60 percent. Both times the average is 106.000000, exactly today's forward price, and the mark 2.822186.
+
+That average belongs to a pretend pricing world, where every asset earns the bank rate in total return, which has a card of its own: [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md). Taking that as read, the whole derivation is one line: the average payoff is $F_t - K$, discounted.
 
 ---
 
@@ -149,7 +163,7 @@ Acme at signing: spot 100.00, bank rate 5 percent, dividend yield 2 percent, one
 
 The contract that cost nothing a month ago would fetch **2.82** this afternoon, and the selling side has lost exactly that: the two marks are one number with opposite signs. Nobody has paid anything yet: the 2.82 stays on paper until the contract is sold or delivery day comes.
 
-*Conventions verified 14 Sep 2026:* rates continuously compounded, time in years, eleven months read as 11/12. A desk counts the contract's actual days on its own day-count basis instead, which moves this mark by about eight tenths of a cent for every day of difference.
+*Conventions verified 14 Sep 2026:* rates continuously compounded, time in years, eleven months read as 11/12. A desk counts the contract's actual days on its own day-count basis instead ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)), which moves this mark by about eight tenths of a cent for every day of difference.
 
 ### What breaks if you drop a piece
 
@@ -204,7 +218,9 @@ xychart-beta
 
 The wandering line is the mark, month by month, along the Acme path printed in the run below; the flat line is zero. It starts at zero because that is how the delivery price was chosen, and lands on the payoff at the right-hand edge. An account that read only the two ends would report −2.05 and miss the 4.20 the contract was worth in month nine.
 
-The mark is a straight line in the spot with slope $e^{-q\tau}$, a positive number, so it crosses zero exactly once — at the break-even $K e^{-(r-q)\tau}$ — and below that it runs negative without limit: no floor sits under a forward. That break-even moves as the clock runs, from 100.25 with eleven months left to 103.05 on delivery day, as the carry left to earn runs out. Hence month eleven, marked −0.29 with Acme at 102.50. On the last day discounting has nothing left to do, the forward price for delivery is the spot price of 101.00, and the mark is the raw payoff.
+The mark is a straight line in the spot with slope $e^{-q\tau}$, a positive number, so it crosses zero exactly once, at the break-even $K e^{-(r-q)\tau}$. Below that it runs negative without limit: no floor sits under a forward.
+
+That break-even moves as the clock runs, from 100.25 with eleven months left to 103.05 on delivery day, as the carry left to earn runs out. Hence month eleven, marked −0.29 with Acme at 102.50. On the last day discounting has nothing left to do, the forward price for delivery is the spot price of 101.00, and the mark is the raw payoff.
 
 ### How the mark answers a nudge
 
@@ -217,13 +233,13 @@ Each row moves one input and holds the rest still; the trading names are in brac
 | volatility up (vega) | nothing: it is not in the formula | 0.000000 |
 | a day gone, spot held still (theta) | falls by the interest earned on the delayed payment, less the dividends given up | −2.896431 a year, −0.007935 a day |
 
-A gamma of zero and a vega of zero are the card in miniature: whoever sells this contract can hedge it once, on day one, and go on holiday.
+A gamma of zero and a vega of zero are the card in miniature: whoever sells this contract can hedge it once, on day one, and never touch it again.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The mark is reached four independent ways — the gap form, the share form, the hour-by-hour copy, and the pretend world's average at two very different volatilities — and a bisection then hunts the spot that puts the mark back at zero, landing on the derived 100.250313. Nothing imported holds the answer already: the root finder and the bell-curve integrator are written out in the file.
+The mark is reached four independent ways: the gap form, the share form, the hour-by-hour copy, and the pretend world's average at two very different volatilities. A bisection, which keeps halving the search interval, then hunts the spot that puts the mark back at zero, landing on the derived 100.250313. Nothing imported holds the answer already: the root finder and the bell-curve integrator are written out in the file.
 
 ### Python
 
@@ -647,6 +663,132 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the card's formulas for every delivery price, bank rate and time still to run, inside the market model of When it holds.
+
+- The old contract's mark is the gap between today's forward price and the delivery price, times the discount factor.
+- Suppose the share fraction costs $S_t e^{-q\tau}$ today. Then the mark is that cost less the discounted delivery price, and today's forward price is $S_t e^{(r-q)\tau}$.
+- Any other price for the old contract leaves a sure profit, whatever Acme's delivery-day price turns out to be.
+- In all four rows of the cancelling ledger, the two contracts together pay 2.95.
+- With no time left to run, the mark is the raw payoff: Acme at 101.00 gives −2.045453.
+
+The decimal values, the hour-by-hour copy, the pretend world's average and the nudge table are left to the Python and Rust checks.
+
+```lean
+-- An old forward: under a pricing rule with one rate both ways and no fees, a forward signed earlier at delivery price K is worth today's forward price minus K, discounted to today, which equals the share fraction's cost minus the discounted delivery price, and any other price leaves a sure profit.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Algebra.Module.LinearMap.Defs
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Tactic.NormNum
+
+open Real
+
+/-! Setting, as on the card.
+
+* `Ω` is the set of ways delivery day can turn out, and `S_T ω` is Acme's price on delivery day
+  in outcome `ω`. Nothing is assumed about it: no forecast, no volatility.
+* A claim paid on delivery day is a function `Ω → ℝ`. `price` gives its value today.
+* The card's "When it holds": the share can be bought, held and sold short at one rate for
+  borrowing and lending with no fees, so holding two claims adds their prices and scaling a
+  claim (selling short is a negative scale) scales its price: `price` is a linear map. The rate
+  `r` is known, so a sure dollar on delivery day costs `e^(-rτ)` today, with `τ` the years still
+  to run. Nothing is settled before delivery and both sides deliver, so the old contract is
+  exactly the claim `S_T - K` on delivery day.
+* Today's forward price `F` is the delivery price at which a fresh contract, the claim
+  `S_T - F`, costs nothing. -/
+
+/-- The card's main claim. An existing forward with delivery price `K` is worth the gap between
+today's forward price `F` and `K`, shrunk back to today's money:
+`V_t = (F - K) e^(-rτ)`. -/
+theorem old_forward_value_eq_discounted_gap {Ω : Type*} (price : (Ω → ℝ) →ₗ[ℝ] ℝ)
+    (S_T : Ω → ℝ) (F K r τ : ℝ)
+    (h_bond : price (fun _ => 1) = exp (-(r * τ)))
+    (h_fresh : price (fun ω => S_T ω - F) = 0) :
+    price (fun ω => S_T ω - K) = (F - K) * exp (-(r * τ)) := by
+  have hsplit : (fun ω => S_T ω - K) = (fun ω => S_T ω - F) + (F - K) • (fun _ : Ω => (1 : ℝ)) := by
+    funext ω; simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
+  rw [hsplit, map_add, map_smul, h_fresh, h_bond, smul_eq_mul, zero_add]
+
+/-- The share form (Step 3). If `e^(-qτ)` of a share, dividends reinvested, grows into one whole
+share by delivery day and so costs `S e^(-qτ)` today, then the old contract is worth
+`S e^(-qτ) - K e^(-rτ)`, and today's forward price is the spot carried to delivery day,
+`F = S e^((r-q)τ)`, so the two forms of the mark say one thing. -/
+theorem old_forward_value_share_form {Ω : Type*} (price : (Ω → ℝ) →ₗ[ℝ] ℝ)
+    (S_T : Ω → ℝ) (S F K r q τ : ℝ)
+    (h_bond : price (fun _ => 1) = exp (-(r * τ)))
+    (h_share : price S_T = S * exp (-(q * τ)))
+    (h_fresh : price (fun ω => S_T ω - F) = 0) :
+    price (fun ω => S_T ω - K) = S * exp (-(q * τ)) - K * exp (-(r * τ)) ∧
+      F = S * exp ((r - q) * τ) := by
+  have hsub : ∀ c : ℝ, (fun ω => S_T ω - c) = S_T - c • (fun _ : Ω => (1 : ℝ)) := by
+    intro c; funext ω; simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, mul_one]
+  have hval : ∀ c : ℝ, price (fun ω => S_T ω - c) = S * exp (-(q * τ)) - c * exp (-(r * τ)) := by
+    intro c; rw [hsub, map_sub, map_smul, h_share, h_bond, smul_eq_mul]
+  refine ⟨hval K, ?_⟩
+  have h0 := hval F
+  rw [h_fresh] at h0
+  have hpos : 0 < exp (-(r * τ)) := exp_pos _
+  have hF : F * exp (-(r * τ)) = S * exp (-(q * τ)) := by linarith
+  have hexp : exp ((r - q) * τ) * exp (-(r * τ)) = exp (-(q * τ)) := by
+    rw [← exp_add]; congr 1; ring
+  apply mul_right_cancel₀ hpos.ne'
+  rw [hF, mul_assoc, hexp]
+
+/-- Why no other number can stand (the detailed proof). Hold the old contract on one side at
+price `p`, sign a fresh opposite forward at `F` for nothing, and bank or borrow `p` until
+delivery day, where it becomes `p / e^(-rτ)`. If `p` is not `(F - K) e^(-rτ)`, one of the two
+directions pays a strictly positive sum whatever Acme's delivery-day price `x` turns out to be:
+above the mark, sell the old contract; below it, buy it. -/
+theorem mispriced_old_forward_gives_sure_profit (F K r τ p : ℝ)
+    (h_mis : p ≠ (F - K) * exp (-(r * τ))) :
+    (∀ x : ℝ, 0 < -(x - K) + (x - F) + p / exp (-(r * τ))) ∨
+      (∀ x : ℝ, 0 < (x - K) + (F - x) - p / exp (-(r * τ))) := by
+  have hpos : 0 < exp (-(r * τ)) := exp_pos _
+  set d := exp (-(r * τ)) with hd
+  have hne : p / d ≠ F - K := by
+    intro h; apply h_mis; rw [← h, div_mul_cancel₀ _ hpos.ne']
+  rcases lt_or_gt_of_ne hne with h | h
+  · right; intro x; linarith
+  · left; intro x; linarith
+
+/-! The card's cancelling ledger (Step 1), in cents: the old contract at 103.05, the new short at
+106.00. Whatever Acme does on delivery day, the pair pays 2.95. -/
+
+-- Acme at 80.00: the old contract pays -23.05, the new one 26.00, the pair 2.95.
+example : (8000 : ℤ) - 10305 = -2305 ∧ (10600 : ℤ) - 8000 = 2600 ∧
+    ((8000 : ℤ) - 10305) + (10600 - 8000) = 295 := by norm_num
+
+-- Acme at 95.00: -8.05, 11.00, 2.95.
+example : (9500 : ℤ) - 10305 = -805 ∧ (10600 : ℤ) - 9500 = 1100 ∧
+    ((9500 : ℤ) - 10305) + (10600 - 9500) = 295 := by norm_num
+
+-- Acme at 110.00: 6.95, -4.00, 2.95.
+example : (11000 : ℤ) - 10305 = 695 ∧ (10600 : ℤ) - 11000 = -400 ∧
+    ((11000 : ℤ) - 10305) + (10600 - 11000) = 295 := by norm_num
+
+-- Acme at 130.00: 26.95, -24.00, 2.95.
+example : (13000 : ℤ) - 10305 = 2695 ∧ (10600 : ℤ) - 13000 = -2400 ∧
+    ((13000 : ℤ) - 10305) + (10600 - 13000) = 295 := by norm_num
+
+-- With no time left to run the discount factor is one, and the mark is the raw payoff:
+-- Acme at 101.00 against 103.045453 gives -2.045453 (month 12 on the card).
+example : ((101 : ℝ) - 103045453 / 1000000) * exp (-((5 / 100) * 0)) = -2045453 / 1000000 := by
+  norm_num
+
+#print axioms old_forward_value_eq_discounted_gap
+#print axioms old_forward_value_share_form
+#print axioms mispriced_old_forward_gives_sure_profit
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'old_forward_value_eq_discounted_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'old_forward_value_share_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mispriced_old_forward_gives_sure_profit' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -673,7 +815,7 @@ The two outputs agree line for line.
 - **Getting out early.** A firm that no longer wants the position rarely tears the contract up. It signs the offsetting forward of Step 0, or sells the contract for its mark.
 - **Corporate hedging.** An importer with a bill in euros locks the rate with a currency forward and marks it each quarter until the cash moves — the same formula, with the foreign interest rate in the dividend yield's job: [Valuing an old currency forward](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md).
 - **Swaps.** A commodity swap is a row of forwards at one shared delivery price, one per payment date, worth the sum of the marks: [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md).
-- **Options, underneath.** A call minus a put at one strike and date is a long forward at that strike, so put-call parity is this formula in another hat: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md).
+- **Options, underneath.** A call (the right to buy) minus a put (the right to sell) at one strike and date is a long forward at that strike, so put-call parity is this formula in another form: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md).
 
 > **Say it back**
 > A forward signed today is worth nothing: the delivery price is chosen to make it so. Once the market moves, a fresh contract for the same day names a different price, and the old one is worth that difference, discounted because it is not collected until delivery day. The proof is a cancelling pair, leaving a fixed sum on a known date. No forecast and no volatility enter: the payoff is a straight line, and the copy that builds it is never touched.

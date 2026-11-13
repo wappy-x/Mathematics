@@ -6,17 +6,23 @@
 
 ## General Overview
 
-A note for $3,600.00 pays 10 percent a year. It is bought on 15 January 2007, and its first coupon falls due on 1 March 2007. Three banks work out that coupon and three different cheques come back: $46.00, $45.00 and $44.38.
+A note for $3,600.00 pays 10 percent a year. It is bought on 15 January 2007, and its first coupon, the first interest payment, falls due on 1 March 2007. Three banks work out that coupon and three different cheques come back: $46.00, $45.00 and $44.38.
 
-None of them has made an error. The dates match, the rate matches, and the interest is simple: nothing compounds inside the period. What differs is the agreed rule for turning two dates into a slice of a year. From 15 January to 1 March is 45 days on a calendar. Is a year 360 days long, or 365, or however many days the calendar happens to hold that year? Does February have 28 days, or a flat 30? Each answer is chosen and written into the contract before anyone reaches for a calculator.
+After that first coupon the note pays on 1 September 2007 and 1 March 2008, and its last payment falls due on 31 May 2008. So it has three periods: a 45-day first period, a regular middle period and a short final period. A short first or last period is called a stub.
 
-The rule that does the turning is the **day count convention**, the term used from here on. It returns one number, the **year fraction**: how much of a year the period counts as. Interest is then the amount lent, times the yearly rate, times that fraction. Three conventions cover most of the market: Actual/360, Actual/Actual ISDA and 30E/360. A fourth decision, separate from all three, settles what happens when the payment date lands on a Saturday.
+None of the three banks has made an error. The dates match, the rate matches, and the interest is simple: nothing compounds inside the period. What differs is the agreed rule for turning two dates into a slice of a year.
+
+From 15 January to 1 March is 45 days on a calendar. Is a year 360 days long, or 365, or however many days the calendar happens to hold that year? Does February have 28 days, or a flat 30? Each answer is chosen and written into the contract before anyone reaches for a calculator.
+
+The rule that does the turning is the **day count convention**, the term used from here on. It returns one number, the **year fraction**: how much of a year the period counts as. Interest is then the amount lent, times the yearly rate, times that fraction.
+
+Three conventions cover most of the market: Actual/360, Actual/Actual ISDA and 30E/360. ISDA is the International Swaps and Derivatives Association, the trade body whose published definitions many contracts adopt. A fourth decision, separate from all three, settles what happens when the payment date lands on a Saturday.
 
 **A day count convention is an agreement about how to read a calendar, not a fact about one, so the same dates at the same rate can pay three different amounts and each of them is correct.**
 
 **What kind of fact this is:** a convention — a rule the two sides agree and write down. The arithmetic that follows from it is exact, and the only thing proved on this card is the counting, never the choice.
 
-**Conventions verified 14 September 2026** against section 4.16 of the 2006 ISDA Definitions for the three day count fractions and the FpML 5.10 schema for the rolling rule, both linked in Sources. Markets revise these choices: a convention is a dated fact, not a permanent one.
+**Conventions verified 14 September 2026** against section 4.16 of the 2006 ISDA Definitions for the three day count fractions and the FpML 5.10 schema for the rolling rule, both linked in Sources. The rolling rule is the fourth decision: where a payment moves when its date falls on a closed day. FpML, short for Financial products Markup Language, is the industry's standard format for recording a trade. Markets revise these choices: a convention is a dated fact, not a permanent one.
 
 ### The picture: one period, three answers
 
@@ -79,8 +85,8 @@ Read the top line as synthetic years of 360 days, plus synthetic months of 30 da
 
 - **Valid dates, in order.** Real Gregorian dates, end on or after start. Reversed, every fraction turns negative or zero, and the interest with it.
 - **Simple interest across the period.** The year fraction multiplies the rate exactly once; compounding inside the period is the separate calculation in [Discount factors](01-compounding-and-discount-factors.md). Two simple factors multiplied together do not equal one simple factor over the joined period.
-- **Unadjusted accrual endpoints.** This contract accrues between the scheduled dates and moves only the payment. A contract may instead say "adjusted" and accrue to the moved date, differing by whole days of interest.
-- **A named variant.** "Actual/Actual" alone is not a rule: the ISDA, ICMA and AFB versions share the name and answer differently, which is why the 1999 ISDA paper prints all three. "30/360" collides the same way: the 30E/360 ISDA of section 4.16(h) drags a February month-end to a 30th, which 4.16(g) here never does.
+- **Unadjusted accrual endpoints.** This contract accrues interest (builds it up day by day) between the scheduled dates and moves only the payment. A contract may instead say "adjusted" and accrue to the moved date, differing by whole days of interest.
+- **A named variant.** "Actual/Actual" alone is not a rule: the ISDA, ICMA and AFB versions share the name and answer differently, which is why the 1999 ISDA paper prints all three. ICMA is the International Capital Market Association, the bond market's trade body; AFB is the Association Française des Banques, the French bankers' association. "30/360" collides the same way: the 30E/360 ISDA of section 4.16(h) drags a February month-end to a 30th, which 4.16(g) here never does.
 - **30E/360 is not elapsed time.** It reads 46 days where the calendar reads 45, 89 where it reads 91, and 0 where it reads 1, from 30 to 31 January, both clipped to the 30th. Anything treating it as a measure of time is wrong by days.
 
 ---
@@ -91,7 +97,9 @@ Read the top line as synthetic years of 360 days, plus synthetic months of 30 da
 
 Ask how much time sits between 15 January and 1 March and the calendar answers cleanly: 45 days. Ask what fraction of a year that is and the calendar has no answer, because a year is not a fixed number of days. 2007 holds 365 of them; 2008 holds 366. Some denominator has to be chosen, and choosing it is an act of agreement.
 
-A convention can still be held to two forms of honesty. A period of no length must pay nothing. And splitting a period and adding the pieces must give the whole, or a lender could manufacture money by chopping a loan up. The code splits the first period at 1 February: 17 + 28 = 45 days under Actual/360, 16 + 30 = 46 under 30E/360, each matching the undivided period. Actual/Actual passes by construction, being already a sum over pieces.
+A convention can still be held to two forms of honesty. A period of no length must pay nothing. And splitting a period and adding the pieces must give the whole, or a lender could manufacture money by chopping a loan up.
+
+The code splits the first period at 1 February: 17 + 28 = 45 days under Actual/360, 16 + 30 = 46 under 30E/360, each matching the undivided period. Actual/Actual passes by construction, being already a sum over pieces.
 
 ### Step 1: count the days once, and count them right
 
@@ -101,7 +109,9 @@ That serial number is the date's **ordinal**, written $O$: how many days it sits
 
 $$O = 365(Y-1) + \left\lfloor \frac{Y-1}{4} \right\rfloor - \left\lfloor \frac{Y-1}{100} \right\rfloor + \left\lfloor \frac{Y-1}{400} \right\rfloor + C + d - 1$$
 
-The half-brackets mean "round down to a whole number". The first term counts 365 days for each completed year; the three rounded terms add a day for every fourth year, take one back for every hundredth and hand one over again for every four-hundredth — the Gregorian leap rule, which made 2000 a leap year and 1900 not. $C$ covers the completed months of $Y$, and the last two terms the days inside the current month.
+The half-brackets mean "round down to a whole number". The first term counts 365 days for each completed year. The three rounded terms add a day for every fourth year, take one back for every hundredth and hand one over again for every four-hundredth. That is the Gregorian leap rule, which made 2000 a leap year and 1900 not.
+
+$C$ covers the completed months of $Y$, and the last two terms the days inside the current month.
 
 Then $n$ is one subtraction, $O(e) - O(s)$, and the excluded end date takes care of itself.
 
@@ -116,7 +126,7 @@ The claim is that $O$ rises by exactly 1 when a date advances by one calendar da
 
 **Across a month boundary.** The last day of month $M$ carries the day number equal to that month's length. The next date is day 1 of month $M+1$. Completing one more month raises $C$ by that month's length, while the day term drops from it to 1 — a fall of one less. Net change: 1. February's length comes from the same leap test the year terms use, so a leap February counts as 29 in both places.
 
-**Across a year boundary.** From 31 December of year $Y$ to 1 January of year $Y+1$, $C$ falls from eleven months of days to 0 and the day term falls from 31 to 1, together giving up the whole of year $Y$ bar its last day. Meanwhile $Y-1$ rises by one, so the leading terms add 365, plus one more if the newly completed year was a leap year — exactly that year's length. Net change: 1 again.
+**Across a year boundary.** From 31 December of year $Y$ to 1 January of year $Y+1$, $C$ falls from eleven months of days to 0, and the day term falls from 31 to 1. Together they give up the whole of year $Y$ except its last day. Meanwhile $Y-1$ rises by one, so the leading terms add 365, plus one more if the newly completed year was a leap year — exactly that year's length. Net change: 1 again.
 
 Only the leap rule and the list of month lengths are special to the Gregorian calendar, and both are supplied, not derived. A calendar is data.
 
@@ -166,7 +176,7 @@ ISDA's 1999 paper names three versions. The ISDA version is the year split used 
 
 A year fraction says how much is owed. It says nothing about when the money moves. The coupon for the leap-year period is due on 1 March 2008, which is a Saturday. The banks are shut.
 
-**Modified following** is the usual answer, and the FpML schema states it in one sentence: move to the first following business day, unless that day falls in the next calendar month, in which case move to the first preceding business day instead.
+**Modified following** is the usual answer. The FpML schema states it in one sentence: move to the first following business day, unless that day falls in the next calendar month, in which case move to the first preceding business day instead.
 
 ```mermaid
 flowchart TB
@@ -178,11 +188,13 @@ flowchart TB
     Q2 -->|no| B["Discard it and step back instead, to the first business day before the scheduled date"]
 ```
 
-On the note's four payment dates: 1 March 2007 is a Thursday and stays put. 1 September 2007 and 1 March 2008 are Saturdays and move forward to the Monday. The final payment, due 31 May 2008, is also a Saturday, but stepping forward reaches Monday 2 June — a new month — so it steps back to Friday 30 May. That backward step is the point of the word "modified": it stops a run of month-end payments drifting into the following month and colliding with the next one.
+On the note's four payment dates: 1 March 2007 is a Thursday and stays put. 1 September 2007 and 1 March 2008 are Saturdays and move forward to the Monday.
+
+The final payment, due 31 May 2008, is also a Saturday, but stepping forward reaches Monday 2 June — a new month — so it steps back to Friday 30 May. That backward step is the point of the word "modified": it stops a run of month-end payments drifting into the following month and colliding with the next one.
 
 Holidays enter through the same door: any date the contract's calendar marks closed is not a business day, whatever the weekday. With 3 March 2008 named a holiday the March payment moves on to Tuesday 4 March; with 30 May named a holiday the May payment steps back further, to Thursday 29 May.
 
-Deciding whether a date is a Saturday is the one arithmetic step here, and the code does it twice: once by dividing the ordinal by 7 and reading the remainder, since 1 January of year 1 was a Monday, and once by Zeller's congruence, which never mentions ordinals ([Day of the week for any date](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md)). They agree on all four dates.
+Deciding whether a date is a Saturday is the one arithmetic step here, and the code does it twice. The first road divides the ordinal by 7 and reads the remainder, since 1 January of year 1 was a Monday. The second is Zeller's congruence, a weekday formula that never mentions ordinals ([Day of the week for any date](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md)). They agree on all four dates.
 
 One separation matters more than the rest. Rolling moves the cash, not the accrual. The final stub still accrues from 1 March to 31 May — 91 days, $91.00 under Actual/360 — and merely pays on 30 May. Accruing to the moved date instead counts 90 days and pays $90.00. Both are legal contracts; only one was signed.
 
@@ -223,7 +235,13 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported: no date library, no calendar, no weekday function. Three pairs of independent roads reach the answers. Day counts come from ordinal subtraction and, separately, from visiting every year, month and day number in range and testing each for membership of the period. The Actual/Actual fraction comes from the year split and, separately, from walking the period a day at a time adding 1/365 or 1/366. Weekdays come from the ordinal's remainder on division by 7 and from Zeller's congruence. Money is held in whole cents as integers while the fractions are decimals, so a rounding slip shows as a mismatch instead of hiding.
+Nothing is imported: no date library, no calendar, no weekday function. Three pairs of independent roads reach the answers:
+
+- Day counts come from ordinal subtraction and, separately, from visiting every year, month and day number in range and testing each for membership of the period.
+- The Actual/Actual fraction comes from the year split and, separately, from walking the period a day at a time adding 1/365 or 1/366.
+- Weekdays come from the ordinal's remainder on division by 7 and from Zeller's congruence.
+
+Money is held in whole cents as integers while the fractions are decimals, so a rounding slip shows as a mismatch instead of hiding.
 
 One piece of luck makes errors visible: $3,600.00 at 10 percent accrues $360.00 in a full year, so under Actual/360 the coupon in dollars is numerically the day count. A wrong count is a wrong dollar figure, in plain sight.
 
@@ -635,6 +653,460 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the day count, the one-day step and the split rule for every real Gregorian date, and the card's worked numbers.
+
+- Take real Gregorian dates $s$ and $e$, with $e$ on or after $s$. Then the days in $[s, e)$ number exactly $O(e) - O(s)$.
+- Take any real date. Then the next calendar day is a real date too, and its ordinal $O$ is exactly 1 higher.
+- That step holds inside a month, across a month end and across a year end, leap years included.
+- Take real dates $s$ and $e$ in order, and a third real date on or between them. Then the year fractions of the two pieces add to the year fraction of $[s, e)$.
+- That split rule holds under Actual/360, 30E/360 and Actual/Actual ISDA alike, for every such split.
+- The first period counts 45 days by ordinals: 17 before 1 February and 28 after.
+- Under 30E/360 the same two pieces read 16 and 30, which add to 46.
+- The three first coupons are exactly $46.00, $45.00 and 3240/73 dollars.
+- The second period counts 182 days, 122 in 2007 and 60 in 2008, and 30E/360 reads 180.
+- The final stub counts 91 days and 30E/360 reads 89. Accruing to the rolled date, 30 May, counts 90.
+- From 30 to 31 January, 30E/360 reads 0 where the calendar reads 1.
+- From 28 February to 31 March 2007, 30E/360 reads 32.
+- 2000 is a leap year and 1900 is not.
+- By the ordinal's remainder on division by 7, 1 March 2007 is a Thursday.
+- By the same remainder, the other three payment dates are Saturdays.
+
+Modified following, the holiday rolls, Zeller's congruence, the flat 365 coupon and the accrual table are left to the Python and Rust checks.
+
+```lean
+-- Day counts: the ordinal formula counts every calendar day between two dates exactly once, it rises by one each day, and all three year fractions add up when a period is split.
+import Mathlib.Data.Set.Card
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.Field.Rat
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Data.Set.Finite.Basic
+
+open Finset
+
+/-! ## The Gregorian calendar, written as data -/
+
+/-- A date: year `Y`, month `M` (1 to 12) and day number `d`. -/
+structure Date where
+  year : ℕ
+  month : ℕ
+  day : ℕ
+  deriving DecidableEq
+
+/-- The Gregorian leap rule: every fourth year, except every hundredth, except every
+four-hundredth (2000 leap, 1900 not). -/
+def leapYear (y : ℕ) : Bool := y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)
+
+/-- Days in year `y`: 366 in a leap year, 365 otherwise. -/
+def yearLen (y : ℕ) : ℕ := if leapYear y then 366 else 365
+
+/-- Days in month `m` of year `y`; February has 29 days in a leap year. -/
+def monthLen (y m : ℕ) : ℕ :=
+  match m with
+  | 1 => 31 | 2 => if leapYear y then 29 else 28 | 3 => 31 | 4 => 30
+  | 5 => 31 | 6 => 30 | 7 => 31 | 8 => 31 | 9 => 30 | 10 => 31 | 11 => 30 | 12 => 31
+  | _ => 0
+
+/-- A real Gregorian date from year 1 on: month 1 to 12, day 1 to the month's length. -/
+def Date.Valid (x : Date) : Prop :=
+  1 ≤ x.year ∧ 1 ≤ x.month ∧ x.month ≤ 12 ∧ 1 ≤ x.day ∧ x.day ≤ monthLen x.year x.month
+
+/-- Calendar order: `a` falls strictly before `b` (compare years, then months, then days). -/
+def Date.Before (a b : Date) : Prop :=
+  a.year < b.year ∨ (a.year = b.year ∧ (a.month < b.month ∨ (a.month = b.month ∧ a.day < b.day)))
+
+/-- `a` falls on or before `b`. -/
+def Date.OnOrBefore (a b : Date) : Prop := a = b ∨ a.Before b
+
+/-- The actual day count `n`: how many real dates lie in the half-open period `[s, e)`,
+start counted, end not. -/
+noncomputable def actualDays (s e : Date) : ℕ :=
+  Set.ncard {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before e}
+
+/-- The card's ordinal `O`: days after 1 January of year 1,
+`365(Y-1) + ⌊(Y-1)/4⌋ - ⌊(Y-1)/100⌋ + ⌊(Y-1)/400⌋ + C + d - 1`, where `C` is the days in
+the months of `Y` before month `M`. (Terms are reordered so no natural-number subtraction
+truncates on a valid date.) -/
+def ordinal (x : Date) : ℕ :=
+  365 * (x.year - 1) + (x.year - 1) / 4 + (x.year - 1) / 400 - (x.year - 1) / 100
+    + (∑ k ∈ Ico 1 x.month, monthLen x.year k) + x.day - 1
+
+/-- The next calendar day. -/
+def Date.next (x : Date) : Date :=
+  if x.day < monthLen x.year x.month then ⟨x.year, x.month, x.day + 1⟩
+  else if x.month < 12 then ⟨x.year, x.month + 1, 1⟩
+  else ⟨x.year + 1, 1, 1⟩
+
+/-- Actual/360 year fraction: actual days over 360. -/
+noncomputable def act360 (s e : Date) : ℚ := (actualDays s e : ℚ) / 360
+
+/-- 30E/360 numerator (ISDA 2006, 4.16(g)): `360(Y₂-Y₁) + 30(M₂-M₁) + D₂ - D₁`
+with `D = min(d, 30)`. -/
+def thirtyENumerator (s e : Date) : ℤ :=
+  360 * ((e.year : ℤ) - s.year) + 30 * ((e.month : ℤ) - s.month)
+    + (min e.day 30 : ℕ) - (min s.day 30 : ℕ)
+
+/-- 30E/360 year fraction. -/
+def thirtyE360 (s e : Date) : ℚ := (thirtyENumerator s e : ℚ) / 360
+
+/-- Days of `[s, e)` falling in calendar year `y`: the card's `n_y`. -/
+noncomputable def daysInYear (s e : Date) (y : ℕ) : ℕ :=
+  Set.ncard {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before e ∧ x.year = y}
+
+/-- Actual/Actual ISDA year fraction: cut at every 1 January, divide each piece by its own
+year's length, add: `Σ_y n_y / L_y`. -/
+noncomputable def actActISDA (s e : Date) : ℚ :=
+  ∑ y ∈ Icc s.year e.year, (daysInYear s e y : ℚ) / yearLen y
+
+/-! ## Helper lemmas for the proofs -/
+
+theorem monthLen_le (y m : ℕ) : monthLen y m ≤ 31 := by
+  unfold monthLen; split <;> (try split_ifs) <;> norm_num
+
+theorem monthLen_pos (y m : ℕ) (h1 : 1 ≤ m) (h2 : m ≤ 12) : 1 ≤ monthLen y m := by
+  interval_cases m <;> simp only [monthLen] <;> (try split_ifs) <;> norm_num
+
+theorem year_step (n : ℕ) :
+    365 * (n + 1) + (n + 1) / 4 + (n + 1) / 400 - (n + 1) / 100 =
+      365 * n + n / 4 + n / 400 - n / 100 + yearLen (n + 1) := by
+  have h1 : n / 100 ≤ n / 4 := Nat.div_le_div_left (by norm_num) (by norm_num)
+  have e4 := Nat.succ_div (a := n) (b := 4)
+  have e100 := Nat.succ_div (a := n) (b := 100)
+  have e400 := Nat.succ_div (a := n) (b := 400)
+  rw [e4, e100, e400]
+  simp only [yearLen, leapYear, Nat.dvd_iff_mod_eq_zero]
+  generalize n / 4 = A at *
+  generalize n / 100 = B at *
+  generalize n / 400 = C at *
+  split_ifs <;> simp_all <;> omega
+
+theorem Date.onOrBefore_iff (a b : Date) : a.OnOrBefore b ↔
+    (a.year < b.year ∨ (a.year = b.year ∧ (a.month < b.month ∨
+      (a.month = b.month ∧ a.day ≤ b.day)))) := by
+  obtain ⟨ay, am, ad⟩ := a
+  obtain ⟨by', bm, bd⟩ := b
+  simp only [Date.OnOrBefore, Date.Before, Date.mk.injEq]
+  omega
+
+theorem Date.before_next (x : Date) : x.Before x.next := by
+  unfold Date.next Date.Before
+  split_ifs <;> simp
+
+theorem Date.next_onOrBefore (x y : Date) (hy : y.Valid) (h : x.Before y) :
+    x.next.OnOrBefore y := by
+  obtain ⟨hy1, hy2, hy3, hy4, hy5⟩ := hy
+  rw [Date.onOrBefore_iff]
+  unfold Date.next
+  rcases h with h | ⟨h1, h | ⟨h2, h3⟩⟩
+  · split_ifs <;> simp <;> omega
+  · split_ifs <;> simp <;> omega
+  · rw [← h1, ← h2] at hy5
+    split_ifs <;> simp <;> omega
+
+/-- A numeric key that orders dates with month at most 12 and day at most 31. -/
+def Date.key (x : Date) : ℕ := x.year * 1000 + x.month * 40 + x.day
+
+theorem Date.key_lt (a b : Date) (ha : a.Valid) (h : a.Before b) : a.key < b.key := by
+  obtain ⟨_, _, ha3, _, ha5⟩ := ha
+  have := monthLen_le a.year a.month
+  unfold Date.key
+  rcases h with h | ⟨h1, h | ⟨h2, h3⟩⟩
+  · have : a.year * 1000 + 1000 ≤ b.year * 1000 := by nlinarith
+    omega
+  · rw [h1]; omega
+  · rw [h1, h2]; omega
+
+theorem Date.key_le (a b : Date) (ha : a.Valid) (h : a.OnOrBefore b) : a.key ≤ b.key := by
+  rcases h with rfl | h
+  · exact le_rfl
+  · exact (Date.key_lt a b ha h).le
+
+theorem finite_valid_le (N : ℕ) : {x : Date | x.Valid ∧ x.year ≤ N}.Finite := by
+  have hsub : {x : Date | x.Valid ∧ x.year ≤ N} ⊆
+      (fun t : ℕ × ℕ × ℕ => (⟨t.1, t.2.1, t.2.2⟩ : Date)) ''
+        (Set.Iic N ×ˢ Set.Iic 12 ×ˢ Set.Iic 31) := by
+    rintro ⟨y, m, d⟩ ⟨⟨h1, h2, h3, h4, h5⟩, hN⟩
+    refine ⟨(y, m, d), ?_, rfl⟩
+    have := monthLen_le y m
+    simp only [Set.mem_prod, Set.mem_Iic]
+    simp only at h1 h2 h3 h4 h5 hN this
+    omega
+  exact Set.Finite.subset
+    (((Set.finite_Iic N).prod ((Set.finite_Iic 12).prod (Set.finite_Iic 31))).image _) hsub
+
+theorem finite_period (s e : Date) :
+    {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before e}.Finite := by
+  refine (finite_valid_le e.year).subset ?_
+  rintro x ⟨hv, _, h⟩
+  refine ⟨hv, ?_⟩
+  unfold Date.Before at h
+  omega
+
+theorem ordinal_next_aux (x : Date) (hx : x.Valid) :
+    x.next.Valid ∧ ordinal x.next = ordinal x + 1 := by
+  obtain ⟨Y, M, d⟩ := x
+  obtain ⟨h1, h2, h3, h4, h5⟩ := hx
+  simp only at h1 h2 h3 h4 h5
+  unfold Date.next
+  simp only
+  split_ifs with ha hb
+  · refine ⟨?_, ?_⟩
+    · simp only [Date.Valid]; omega
+    · simp only [ordinal]; omega
+  · have hpos := monthLen_pos Y (M + 1) (by omega) (by omega)
+    have hd : d = monthLen Y M := by omega
+    refine ⟨?_, ?_⟩
+    · simp only [Date.Valid]; omega
+    · simp only [ordinal]
+      rw [Finset.sum_Ico_succ_top h2]
+      omega
+  · have hM : M = 12 := by omega
+    subst hM
+    have hd : d = 31 := by simp [monthLen] at h5 ha; omega
+    subst hd
+    refine ⟨?_, ?_⟩
+    · simp only [Date.Valid, monthLen]; omega
+    obtain ⟨n, rfl⟩ : ∃ n, Y = n + 1 := ⟨Y - 1, by omega⟩
+    have hstep := year_step n
+    simp only [ordinal]
+    simp only [Finset.sum_Ico_eq_sum_range, Finset.sum_range_succ, Finset.sum_range_zero,
+      monthLen, Nat.add_sub_cancel, Nat.reduceSub, 
+      Finset.Ico_self, Finset.sum_empty]
+    simp only [yearLen] at hstep
+    split_ifs at hstep ⊢ <;> omega
+
+theorem count_aux (e : Date) (he : e.Valid) : ∀ n : ℕ, ∀ s : Date, s.Valid → s.OnOrBefore e →
+    e.key - s.key = n →
+    (Set.ncard {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before e} : ℤ) =
+      (ordinal e : ℤ) - ordinal s := by
+  intro n
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+  intro s hs hse hn
+  rcases hse with rfl | hlt
+  · have hempty : {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before s} = ∅ := by
+      ext x
+      simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+      rintro ⟨_, h1, h2⟩
+      rw [Date.onOrBefore_iff] at h1
+      unfold Date.Before at h2
+      omega
+    simp [hempty]
+  · have hnv := ordinal_next_aux s hs
+    have hle := Date.next_onOrBefore s e he hlt
+    have hk1 := Date.key_lt s s.next hs (Date.before_next s)
+    have hk2 := Date.key_le s.next e hnv.1 hle
+    have ih' := ih (e.key - s.next.key) (by omega) s.next hnv.1 hle rfl
+    have hset : {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before e} =
+        insert s {x : Date | x.Valid ∧ s.next.OnOrBefore x ∧ x.Before e} := by
+      ext x
+      simp only [Set.mem_insert_iff, Set.mem_ofPred_eq]
+      constructor
+      · rintro ⟨hv, h1 | h1, h2⟩
+        · exact Or.inl h1.symm
+        · exact Or.inr ⟨hv, Date.next_onOrBefore s x hv h1, h2⟩
+      · rintro (rfl | ⟨hv, h1, h2⟩)
+        · exact ⟨hs, Or.inl rfl, hlt⟩
+        · refine ⟨hv, Or.inr ?_, h2⟩
+          have h0 := Date.before_next s
+          rw [Date.onOrBefore_iff] at h1
+          unfold Date.Before at h0 ⊢
+          omega
+    have hnot : s ∉ {x : Date | x.Valid ∧ s.next.OnOrBefore x ∧ x.Before e} := by
+      rintro ⟨_, h1, _⟩
+      have h0 := Date.before_next s
+      rw [Date.onOrBefore_iff] at h1
+      unfold Date.Before at h0
+      omega
+    rw [hset, Set.ncard_insert_of_notMem hnot (finite_period _ _)]
+    push_cast
+    rw [ih', hnv.2]
+    push_cast
+    ring
+
+
+theorem days_split (s m e : Date) (hsm : s.OnOrBefore m) (hme : m.OnOrBefore e) (y : ℕ) :
+    daysInYear s e y = daysInYear s m y + daysInYear m e y := by
+  unfold daysInYear
+  rw [Date.onOrBefore_iff] at hsm hme
+  have hset : {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before e ∧ x.year = y} =
+      {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before m ∧ x.year = y} ∪
+      {x : Date | x.Valid ∧ m.OnOrBefore x ∧ x.Before e ∧ x.year = y} := by
+    ext x
+    simp only [Set.mem_union, Set.mem_ofPred_eq, Date.onOrBefore_iff, Date.Before]
+    constructor
+    · rintro ⟨hv, h1, h2, hy⟩
+      by_cases hxm : x.year < m.year ∨ (x.year = m.year ∧ (x.month < m.month ∨
+          (x.month = m.month ∧ x.day < m.day)))
+      · exact Or.inl ⟨hv, h1, hxm, hy⟩
+      · exact Or.inr ⟨hv, by omega, h2, hy⟩
+    · rintro (⟨hv, h1, h2, hy⟩ | ⟨hv, h1, h2, hy⟩)
+      · exact ⟨hv, h1, by omega, hy⟩
+      · exact ⟨hv, by omega, h2, hy⟩
+  have hdisj : Disjoint {x : Date | x.Valid ∧ s.OnOrBefore x ∧ x.Before m ∧ x.year = y}
+      {x : Date | x.Valid ∧ m.OnOrBefore x ∧ x.Before e ∧ x.year = y} := by
+    refine Set.disjoint_left.mpr ?_
+    rintro x ⟨_, _, h1, _⟩ ⟨_, h2, _, _⟩
+    rw [Date.onOrBefore_iff] at h2
+    unfold Date.Before at h1
+    omega
+  rw [hset, Set.ncard_union_eq hdisj
+    ((finite_period s m).subset (fun x hx => ⟨hx.1, hx.2.1, hx.2.2.1⟩))
+    ((finite_period m e).subset (fun x hx => ⟨hx.1, hx.2.1, hx.2.2.1⟩))]
+
+theorem days_zero (a b : Date) (y : ℕ) (hy : y ∉ Icc a.year b.year) :
+    daysInYear a b y = 0 := by
+  rw [Finset.mem_Icc] at hy
+  unfold daysInYear
+  have hempty : {x : Date | x.Valid ∧ a.OnOrBefore x ∧ x.Before b ∧ x.year = y} = ∅ := by
+    ext x
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+    rintro ⟨_, h1, h2, rfl⟩
+    rw [Date.onOrBefore_iff] at h1
+    unfold Date.Before at h2
+    omega
+  rw [hempty, Set.ncard_empty]
+
+/-! ## The card's claims -/
+
+/-- The day count is one subtraction. For real Gregorian dates `s` and `e` with `e` on or after
+`s`, the number of calendar days in `[s, e)` (start counted, end not) is `O(e) - O(s)`. -/
+theorem actual_days_eq_ordinal_sub (s e : Date) (hs : s.Valid) (he : e.Valid)
+    (hse : s.OnOrBefore e) :
+    (actualDays s e : ℤ) = (ordinal e : ℤ) - ordinal s := by
+  exact count_aux e he _ s hs hse rfl
+
+/-- The ordinal formula counts each calendar day exactly once: moving any real date forward
+by one calendar day, inside a month, across a month end or across a year end, raises `O`
+by exactly 1 (and the next day is again a real date). -/
+theorem ordinal_next_day (x : Date) (hx : x.Valid) :
+    x.next.Valid ∧ ordinal x.next = ordinal x + 1 := by
+  exact ordinal_next_aux x hx
+
+/-- Splitting a period and adding the pieces gives the whole: for real dates `s`, `m`, `e` in
+order, Actual/360, 30E/360 and Actual/Actual ISDA each satisfy
+`α(s, m) + α(m, e) = α(s, e)`. -/
+theorem year_fractions_additive (s m e : Date) (hs : s.Valid) (hm : m.Valid) (he : e.Valid)
+    (hsm : s.OnOrBefore m) (hme : m.OnOrBefore e) :
+    act360 s m + act360 m e = act360 s e ∧
+    thirtyE360 s m + thirtyE360 m e = thirtyE360 s e ∧
+    actActISDA s m + actActISDA m e = actActISDA s e := by
+  have hse : s.OnOrBefore e := by
+    rw [Date.onOrBefore_iff] at hsm hme ⊢
+    omega
+  have h1 := actual_days_eq_ordinal_sub s m hs hm hsm
+  have h2 := actual_days_eq_ordinal_sub m e hm he hme
+  have h3 := actual_days_eq_ordinal_sub s e hs he hse
+  have hn : actualDays s m + actualDays m e = actualDays s e := by omega
+  refine ⟨?_, ?_, ?_⟩
+  · unfold act360
+    rw [← add_div, ← Nat.cast_add, hn]
+  · unfold thirtyE360 thirtyENumerator
+    rw [← add_div]
+    congr 1
+    push_cast
+    ring
+  · have hy1 : s.year ≤ m.year := by
+      rw [Date.onOrBefore_iff] at hsm
+      omega
+    have hy2 : m.year ≤ e.year := by
+      rw [Date.onOrBefore_iff] at hme
+      omega
+    unfold actActISDA
+    rw [Finset.sum_subset (Finset.Icc_subset_Icc le_rfl hy2)
+        (fun y _ hy => by rw [days_zero s m y hy]; simp),
+      Finset.sum_subset (Finset.Icc_subset_Icc hy1 le_rfl)
+        (fun y _ hy => by rw [days_zero m e y hy]; simp),
+      ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl (fun y _ => ?_)
+    rw [days_split s m e hsm hme y]
+    push_cast
+    ring
+
+/-! ## The card's worked numbers, exactly -/
+
+-- the note's first period, 15 January to 1 March 2007: 45 actual days by ordinals
+example : ordinal ⟨2007, 3, 1⟩ - ordinal ⟨2007, 1, 15⟩ = 45 := by decide
+-- split at 1 February: 17 + 28 actual days, 16 + 30 under 30E/360
+example : ordinal ⟨2007, 2, 1⟩ - ordinal ⟨2007, 1, 15⟩ = 17 ∧
+    ordinal ⟨2007, 3, 1⟩ - ordinal ⟨2007, 2, 1⟩ = 28 := by decide
+example : thirtyENumerator ⟨2007, 1, 15⟩ ⟨2007, 2, 1⟩ = 16 ∧
+    thirtyENumerator ⟨2007, 2, 1⟩ ⟨2007, 3, 1⟩ = 30 ∧
+    thirtyENumerator ⟨2007, 1, 15⟩ ⟨2007, 3, 1⟩ = 46 := by decide
+-- the three coupons on $3,600.00 at 10 percent (360 dollars a year): $46.00, $45.00, 3240/73
+example : (360 : ℚ) * (46 / 360) = 46 ∧ (360 : ℚ) * (45 / 360) = 45 ∧
+    (360 : ℚ) * (45 / 365) = 3240 / 73 := by norm_num
+-- second period, 1 September 2007 to 1 March 2008: 182 days, 122 in 2007 and 60 in 2008,
+-- 30E/360 reads 180
+example : ordinal ⟨2008, 3, 1⟩ - ordinal ⟨2007, 9, 1⟩ = 182 ∧
+    ordinal ⟨2008, 1, 1⟩ - ordinal ⟨2007, 9, 1⟩ = 122 ∧
+    ordinal ⟨2008, 3, 1⟩ - ordinal ⟨2008, 1, 1⟩ = 60 ∧
+    yearLen 2007 = 365 ∧ yearLen 2008 = 366 ∧
+    thirtyENumerator ⟨2007, 9, 1⟩ ⟨2008, 3, 1⟩ = 180 := by decide
+-- final stub, 1 March to 31 May 2008: 91 actual days, 30E/360 reads 89;
+-- accruing to the rolled date 30 May gives 90
+example : ordinal ⟨2008, 5, 31⟩ - ordinal ⟨2008, 3, 1⟩ = 91 ∧
+    thirtyENumerator ⟨2008, 3, 1⟩ ⟨2008, 5, 31⟩ = 89 ∧
+    ordinal ⟨2008, 5, 30⟩ - ordinal ⟨2008, 3, 1⟩ = 90 := by decide
+-- 30E/360 is not elapsed time: 30 to 31 January reads 0 where the calendar reads 1;
+-- 28 February to 31 March 2007 reads 32 clipped, 33 unclipped
+example : thirtyENumerator ⟨2007, 1, 30⟩ ⟨2007, 1, 31⟩ = 0 ∧
+    ordinal ⟨2007, 1, 31⟩ - ordinal ⟨2007, 1, 30⟩ = 1 ∧
+    thirtyENumerator ⟨2007, 2, 28⟩ ⟨2007, 3, 31⟩ = 32 := by decide
+-- the leap rule: 2000 leap, 1900 not
+example : leapYear 2000 = true ∧ leapYear 1900 = false := by decide
+-- weekdays from the ordinal (0 = Monday, since 1 January of year 1 was a Monday):
+-- 1 March 2007 a Thursday; 1 September 2007, 1 March 2008, 31 May 2008 Saturdays
+example : ordinal ⟨2007, 3, 1⟩ % 7 = 3 ∧ ordinal ⟨2007, 9, 1⟩ % 7 = 5 ∧
+    ordinal ⟨2008, 3, 1⟩ % 7 = 5 ∧ ordinal ⟨2008, 5, 31⟩ % 7 = 5 := by decide
+
+#print axioms monthLen_le
+#print axioms monthLen_pos
+#print axioms year_step
+#print axioms Date.onOrBefore_iff
+#print axioms Date.before_next
+#print axioms Date.next_onOrBefore
+#print axioms Date.key_lt
+#print axioms Date.key_le
+#print axioms finite_valid_le
+#print axioms finite_period
+#print axioms ordinal_next_aux
+#print axioms count_aux
+#print axioms days_split
+#print axioms days_zero
+#print axioms actual_days_eq_ordinal_sub
+#print axioms ordinal_next_day
+#print axioms year_fractions_additive
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'monthLen_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monthLen_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'year_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Date.onOrBefore_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Date.before_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Date.next_onOrBefore' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Date.key_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Date.key_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'finite_valid_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'finite_period' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ordinal_next_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'count_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'days_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'days_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'actual_days_eq_ordinal_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ordinal_next_day' depends on axioms: [propext, Classical.choice, Quot.sound]
+'year_fractions_additive' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the new number first, then run it. The asserts are pinned to this note's dates, so expect one to stop the program each time.
@@ -659,9 +1131,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Money-market deposits.** Dollar and euro deposits count Actual/360; sterling counts on a 365-day year. The same quoted rate hands over different cash, which is why a cross-currency comparison converts the basis first. The overnight benchmarks built on those deposits are in [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md).
+- **Money-market deposits.** Dollar and euro deposits count Actual/360; sterling counts on a 365-day year. The same quoted rate hands over different cash, which is why a cross-currency comparison converts the basis (the day count convention) first. The overnight benchmarks built on those deposits are in [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md).
 - **Accrued interest on a bond.** A buyer between coupon dates pays the seller the part of the coupon already earned: a year fraction under the bond's stated convention, and the first line of [Bond price and yield](05-bonds-price-and-yield.md).
-- **Interest rate swaps.** A fixed leg on 30E/360 against a floating leg on Actual/360 is ordinary, not sloppy; the mismatch is written into the confirmation and priced.
+- **Interest rate swaps.** In a swap, two sides exchange interest payments: one pays a fixed rate, the other a floating rate that resets, and each stream of payments is called a leg. A fixed leg on 30E/360 against a floating leg on Actual/360 is ordinary, not sloppy; the mismatch is written into the confirmation (the signed record of the trade) and priced.
 - **Loan schedules.** Whether a monthly instalment is a twelfth of a year or the actual days over 365 changes the payment, and changes it in February most of all — the level-payment machinery is in [Annuities](03-annuities-and-loans.md).
 
 > **Say it back**

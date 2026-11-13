@@ -8,11 +8,13 @@
 
 Acme shares trade at $100.00 today. A call written on them sits on the desk with no price on it: the right, not the duty, to buy one Acme share for $100.00 in a year's time ([Payoffs](01-payoffs-and-positions.md)). Nobody knows where Acme will be by then, and the price has to be found anyway.
 
-Two things can be bought today at prices already on the screen: Acme shares, and a bank account paying 5 percent. Buy a mixture of the two, and fix a rule for changing the mixture as Acme moves. The rule carries one clause: after the opening day, no money goes in and none comes out. Every share bought is paid for by a sale or by borrowing. A strategy carrying that clause is **self-financing**, the term used from here on.
+Two things can be bought today at prices already on the screen: Acme shares, and a bank account paying 5 percent. Buy a mixture of the two, and fix a rule for changing the mixture as Acme moves.
+
+The rule carries one clause: after the opening day, no money goes in and none comes out. Every share bought is paid for by a sale or by borrowing. A strategy carrying that clause is **self-financing**, the term used from here on.
 
 Suppose such a mixture ends the year holding exactly what the call pays, whatever Acme did. It is a copy of the call. Two things that pay the same in every state cost the same today, or free money is on the table ([No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md)), so the call's price is the cost of the copy.
 
-Cut the year into two six-month steps. Acme's 20 percent-a-year jumpiness makes each step multiply its price by 1.151910 or by 0.868123. The copy then costs **$9.54**: 0.6223 of a share, funded by that $9.54 and a loan of $52.69. Not a forecast. A bill.
+Cut the year into two six-month steps. Acme's jumpiness (its volatility: how widely its price typically swings in a year) is 20 percent a year. That makes each step multiply its price by 1.151910 or by 0.868123. The copy then costs **$9.54**: 0.6223 of a share, funded by that $9.54 and a loan of $52.69. Not a forecast. A bill.
 
 **A strategy that is never fed and never raided, and that ends holding exactly what a contract pays on every path, has one cost today, and that cost is the contract's price.**
 
@@ -38,7 +40,13 @@ An up move then a down lands where a down then an up lands, so the middle node a
 
 Trading happens on dates $0, 1, \dots, N$, one step apart. On each date two numbers are chosen and held until the next: how many Acme shares to hold, and how many dollars to leave in the bank. Both may be fractions and both may be negative — a negative share count is a borrowed share sold, a negative balance is a loan.
 
-Write $h_i$ for the share count and $b_i$ for the bank balance, both fixed just after trading on date $i$; $S_i$ for Acme's price then; and $g = e^{r\Delta t}$ for the factor the balance is multiplied by over one step, where $r$ is the riskless rate and $\Delta t$ the step's length in years. Wealth just after trading, and on arrival at the next date before anything is traded, are
+Write:
+
+- $h_i$ for the share count and $b_i$ for the bank balance, both fixed just after trading on date $i$;
+- $S_i$ for Acme's price then;
+- $g = e^{r\Delta t}$ for the factor the balance is multiplied by over one step, where $r$ is the riskless rate and $\Delta t$ the step's length in years.
+
+Wealth just after trading, and on arrival at the next date before anything is traded, are
 
 $$V_i = h_i S_i + b_i, \qquad V_{i+1}^- = h_i S_{i+1} + b_i\,g$$
 
@@ -77,7 +85,7 @@ $$V_N = X \text{ on every path, and the strategy self-financing} \implies \text{
 | $g$, $r$, $\Delta t$ | the bank's growth over a step, $e^{r\Delta t}$; the riskless rate a year; a step, in years | 1.025315; 5 percent; 0.5 | borrowing costs more |
 | $u$, $d$ | the factors one step multiplies the price by | 1.151910 and 0.868123 | a wider tree, a dearer call |
 | $N$, $i$ | steps in the year; which date | 2 by hand, 1024 in the checks | the tree fits a real share better |
-| $D_i$ | the discount factor back to today, $e^{-r t_i}$ | 0.975310 after one step | — |
+| $D_i$, $t_i$ | the discount factor back to today, $e^{-r t_i}$; date $i$'s time from today, in years | 0.975310 after one step; 0.5 | — |
 
 ### When it holds
 
@@ -101,7 +109,9 @@ A cost today is the copy's cost only if nothing else is ever spent on it: deposi
 
 ### Step 2: wealth can only move through prices
 
-Take the wealth just after trading on date $i$, and the wealth on arrival at date $i+1$, and subtract. The share count and the balance are the same at both ends of the step, since nothing was traded in between, so they factor out and the gains identity is left. Wealth moved because the shares moved and because the bank paid interest. That is the whole list. Summed over the steps, final wealth is the starting capital plus the gains, with no other term to hide a deposit in.
+Take the wealth just after trading on date $i$, and the wealth on arrival at date $i+1$, and subtract. The share count and the balance are the same at both ends of the step, since nothing was traded in between, so they factor out and the gains identity is left.
+
+Wealth moved because the shares moved and because the bank paid interest. That is the whole list. Summed over the steps, final wealth is the starting capital plus the gains, with no other term to hide a deposit in.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
@@ -114,7 +124,7 @@ Rearranged, the same equation is the trading rule in its plainest form: $(h_{i+1
 
 ### Step 3: discount, and the bank disappears
 
-Measure each date's figures in today's dollars by multiplying by $D_i = e^{-r t_i}$. One step of interest and one of discounting cancel, $D_{i+1}\,g = D_i$, so the identity loses its second term:
+Measure each date's figures in today's dollars by multiplying by $D_i = e^{-r t_i}$, where $t_i$ is date $i$'s time from today in years. One step of interest and one of discounting cancel, $D_{i+1}\,g = D_i$, so the identity loses its second term:
 
 $$D_{i+1} V_{i+1} - D_i V_i = h_i\,\bigl(D_{i+1} S_{i+1} - D_i S_i\bigr)$$
 
@@ -126,7 +136,7 @@ At the up node Acme is at $115.19 with six months to run. From there it reaches 
 
 $$h \times 132.69 + b\,g = 32.69, \qquad h \times 100.00 + b\,g = 0$$
 
-Subtract: $h \times 32.69 = 32.69$, so $h = 1$. One whole share. Put that back and $b\,g = -100.00$, so $b = -97.53$: borrow the strike, discounted. The copy there is one share against a debt that grows into exactly $100.00, which is a forward ([Forward price](03-forward-price-by-cash-and-carry.md)). It costs $115.19 − $97.53 = **$17.66**.
+Subtract: $h \times 32.69 = 32.69$, so $h = 1$. One whole share. Put that back and $b\,g = -100.00$, so $b = -97.53$: borrow the strike, discounted. The copy there is one share against a debt that grows into exactly $100.00, which is a forward, a deal to buy the share at a fixed price on a fixed date ([Forward price](03-forward-price-by-cash-and-carry.md)). It costs $115.19 − $97.53 = **$17.66**.
 
 The down node is quicker. From $86.81 Acme reaches $100.00 or $75.36, and the call pays nothing at either: no shares, nothing in the bank, worth zero.
 
@@ -175,7 +185,11 @@ Acme at $100.00, a call struck at $100.00, one year, the bank at 5 percent, jump
 | bank today | $(17.66 - 0.6223 \times 115.19) \div 1.025315$ | −52.69 |
 | **the copy's cost today** | $0.6223 \times 100.00 - 52.69$ | **9.54** |
 
-The call is worth $9.54 on this tree because that is the cheque a desk writes today to own something paying whatever the call pays. Two steps is a caricature of a year, allowing Acme three closing prices; cutting finer changes the fit, not the method. The checks run the same recipe with 4, 16, 64, 256 and 1024 steps: the cost climbs to $10.4486, heading for $10.4506, the Black–Scholes price of this call ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The wing's Acme also pays a 2 percent dividend, handled by letting a holding grow as its dividends go back in; with that on, 1024 steps give $9.2251 against the house price of $9.2270.
+The call is worth $9.54 on this tree because that is the cheque a desk writes today to own something paying whatever the call pays. Two steps is a caricature of a year, allowing Acme three closing prices; cutting finer changes the fit, not the method.
+
+The checks run the same recipe with 4, 16, 64, 256 and 1024 steps: the cost climbs to $10.4486, heading for $10.4506, the Black–Scholes price of this call ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+
+The wing's Acme also pays a 2 percent dividend, handled by letting a holding grow as its dividends go back in. With that on, 1024 steps give $9.2251 against the limit of $9.2270, the call price this wing uses throughout.
 
 ### What breaks if you drop a piece
 
@@ -229,7 +243,9 @@ The bent line is what the call owes. The straight line is what 0.6223 shares and
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows the answer: the tree, the hedge ledger and the binomial weights are written out, and the bell-curve area behind the Black–Scholes limit is built from the library's error function. The price is reached three ways — backwards through the tree, node by node; forwards along every path, checking that the ledger ends on the payoff and takes nothing from outside; and by weights that never mention hedging. The recipe then runs on finer trees, and the three mistakes above are priced.
+Nothing is imported that already knows the answer: the tree, the hedge ledger and the binomial weights are written out, and the bell-curve area behind the Black–Scholes limit is built from the library's error function.
+
+The price is reached three ways — backwards through the tree, node by node; forwards along every path, checking that the ledger ends on the payoff and takes nothing from outside; and by weights that never mention hedging. The recipe then runs on finer trees, and the three mistakes above are priced.
 
 ### Python
 
@@ -641,6 +657,212 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line, including the limit reached by two different bell-curve routines.
+
+### Lean
+
+Lean proves the replication theorem and both gains identities on every two-way tree, with any number of steps.
+
+- Take any two-way tree whose two next prices differ at every node before expiry. Then every payoff $X$ has a self-financing copy, and all such copies cost the same today.
+- The gains identity holds for every self-financing strategy, on every step and every path.
+- Take $D_i = e^{-r t_i}$, and a bank growing by $g = e^{r\Delta t}$ each step. Then a self-financing strategy's discounted wealth moves only by $h_i$ times the discounted share price's change.
+- At the up node, suppose $h$ shares and $b\,g$ dollars pay 32.69 at 132.69 and nothing at 100.00. Then $h = 1$ and $b\,g = -100.00$.
+- The copy at the up node is worth 115.19 − 97.53 = 17.66.
+- The call pays the gap above 100.00 or nothing: 32.69, 0.00 and 0.00 at expiry.
+
+The decimals, finer trees, dividends, the Black–Scholes limit and the mistakes table are left to the Python and Rust checks.
+
+```lean
+-- Replication: on a two-way tree whose two next prices always differ, every payoff is copied by a self-financing mix of shares and bank money, and every such copy costs the same today.
+import Mathlib.Analysis.Complex.Exponential
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.LinearCombination
+
+/-!
+Setting, as on the card.
+
+* A node of the tree is the list of moves taken so far, newest first: `true` is an up move,
+  `false` a down move. The root (today) is `[]`; date `i` is a list of length `i`; the two
+  children of node `p` are `true :: p` and `false :: p`. Paths need not recombine.
+* `S p` is the share price at node `p`.
+* A strategy is two functions of the node: `h p` shares and `b p` dollars in the bank, fixed
+  just after trading at `p`. Being functions of the node, they use only what is known there.
+* `g` is the bank's growth over one step. On the card `g = exp (r * Δt)`.
+* The payoff `X` is owed at the final date `N` and may depend on the whole path: `X p` for
+  each node `p` of length `N`.
+-/
+
+
+/-- Wealth just after trading at node `p`: `V = h S + b`. -/
+def wealth (S h b : List Bool → ℝ) (p : List Bool) : ℝ :=
+  h p * S p + b p
+
+/-- Wealth on arrival at the child `c :: p`, before anything is traded:
+`V⁻ = h S' + b g`, with the holdings chosen at `p`. -/
+def arrival (S h b : List Bool → ℝ) (g : ℝ) (p : List Bool) (c : Bool) : ℝ :=
+  h p * S (c :: p) + b p * g
+
+/-- Self-financing: at every date `1, …, N` and on every path, the new holdings cost exactly
+what the old ones are worth on arrival. No money goes in and none comes out. -/
+def SelfFinancing (N : ℕ) (S h b : List Bool → ℝ) (g : ℝ) : Prop :=
+  ∀ p : List Bool, p.length < N → ∀ c : Bool, wealth S h b (c :: p) = arrival S h b g p c
+
+/-- The strategy ends holding exactly the payoff: `V_N = X` on every path. -/
+def Replicates (N : ℕ) (S h b X : List Bool → ℝ) : Prop :=
+  ∀ p : List Bool, p.length = N → wealth S h b p = X p
+
+/-- Helper: the replicating value at node `p` with `k` steps left, built backwards from `X`. -/
+noncomputable def repVal (S X : List Bool → ℝ) (g : ℝ) : ℕ → List Bool → ℝ
+  | 0, p => X p
+  | k + 1, p =>
+      ((repVal S X g k (true :: p) - repVal S X g k (false :: p)) /
+          (S (true :: p) - S (false :: p))) * S p +
+        (repVal S X g k (true :: p) -
+            ((repVal S X g k (true :: p) - repVal S X g k (false :: p)) /
+              (S (true :: p) - S (false :: p))) * S (true :: p)) / g
+
+/-- Helper: shares held at `p` with `k` steps left. -/
+noncomputable def repDelta (S X : List Bool → ℝ) (g : ℝ) (k : ℕ) (p : List Bool) : ℝ :=
+  (repVal S X g k (true :: p) - repVal S X g k (false :: p)) / (S (true :: p) - S (false :: p))
+
+/-- Helper: bank money held at `p` with `k` steps left. -/
+noncomputable def repBank (S X : List Bool → ℝ) (g : ℝ) (k : ℕ) (p : List Bool) : ℝ :=
+  (repVal S X g k (true :: p) - repDelta S X g k p * S (true :: p)) / g
+
+/-- Helper: any self-financing replicating strategy has wealth `repVal` at every node. -/
+theorem rep_wealth_eq (N : ℕ) (S h b X : List Bool → ℝ) (g : ℝ) (hg : g ≠ 0)
+    (hS : ∀ p : List Bool, p.length < N → S (true :: p) ≠ S (false :: p))
+    (hsf : SelfFinancing N S h b g) (hrep : Replicates N S h b X) :
+    ∀ k : ℕ, ∀ p : List Bool, p.length + k = N → wealth S h b p = repVal S X g k p := by
+  intro k
+  induction k with
+  | zero => intro p hp; simpa [repVal] using hrep p (by simpa using hp)
+  | succ k ih =>
+    intro p hp
+    have hlt : p.length < N := by omega
+    have hu := ih (true :: p) (by simp; omega)
+    have hd := ih (false :: p) (by simp; omega)
+    rw [hsf p hlt true] at hu
+    rw [hsf p hlt false] at hd
+    unfold arrival at hu hd
+    have hne : S (true :: p) - S (false :: p) ≠ 0 := sub_ne_zero.mpr (hS p hlt)
+    have hh : h p = (repVal S X g k (true :: p) - repVal S X g k (false :: p)) /
+        (S (true :: p) - S (false :: p)) := by
+      rw [eq_div_iff hne]; linear_combination hu - hd
+    have hb : b p = (repVal S X g k (true :: p) - h p * S (true :: p)) / g := by
+      rw [eq_div_iff hg]; linear_combination hu
+    simp only [repVal, wealth]
+    rw [hb, ← hh]
+
+/-- Helper: the backward-built strategy is self-financing and replicates `X`. -/
+theorem rep_exists (N : ℕ) (S X : List Bool → ℝ) (g : ℝ) (hg : g ≠ 0)
+    (hS : ∀ p : List Bool, p.length < N → S (true :: p) ≠ S (false :: p)) :
+    ∃ h b : List Bool → ℝ, SelfFinancing N S h b g ∧ Replicates N S h b X ∧
+      wealth S h b [] = repVal S X g N [] := by
+  let h : List Bool → ℝ := fun p => if p.length < N then repDelta S X g (N - 1 - p.length) p else 0
+  let b : List Bool → ℝ := fun p => if p.length < N then repBank S X g (N - 1 - p.length) p else X p
+  have hw : ∀ p : List Bool, p.length ≤ N → wealth S h b p = repVal S X g (N - p.length) p := by
+    intro p hp
+    rcases Nat.lt_or_ge p.length N with hlt | hge
+    · obtain ⟨k, hk⟩ : ∃ k, N - p.length = k + 1 := ⟨N - 1 - p.length, by omega⟩
+      have hk' : N - 1 - p.length = k := by omega
+      simp only [wealth, h, b, if_pos hlt, hk, hk', repVal, repDelta, repBank]
+    · have : p.length = N := by omega
+      simp [wealth, h, b, this, repVal]
+  refine ⟨h, b, ?_, ?_, ?_⟩
+  · intro p hp c
+    have hne : S (true :: p) - S (false :: p) ≠ 0 := sub_ne_zero.mpr (hS p hp)
+    rw [hw (c :: p) (by simp; omega)]
+    have hk : N - (c :: p).length = N - 1 - p.length := by simp; omega
+    rw [hk]
+    simp only [arrival, h, b, if_pos hp, repBank, repDelta]
+    cases c <;> field_simp <;> ring
+  · intro p hp
+    rw [hw p hp.le, hp, Nat.sub_self]; rfl
+  · simpa using hw [] (by simp)
+
+/-- Replication on a two-way tree. If the bank grows by `g = exp (r Δt)` over each step and,
+at every node before the final date, the two next share prices differ, then every payoff `X`
+due at date `N` has a self-financing strategy of shares and bank money that ends holding `X`
+on every path, and all such strategies cost the same today: the cost `V_0` is one number,
+not a range. -/
+theorem replication_cost_exists_unique (N : ℕ) (S X : List Bool → ℝ) (r Δt : ℝ)
+    (hS : ∀ p : List Bool, p.length < N → S (true :: p) ≠ S (false :: p)) :
+    ∃! v : ℝ, ∃ h b : List Bool → ℝ,
+      SelfFinancing N S h b (Real.exp (r * Δt)) ∧ Replicates N S h b X ∧ wealth S h b [] = v := by
+  have hg : Real.exp (r * Δt) ≠ 0 := (Real.exp_pos _).ne'
+  refine ⟨repVal S X (Real.exp (r * Δt)) N [], rep_exists N S X _ hg hS, ?_⟩
+  rintro v ⟨h, b, hsf, hrep, hv⟩
+  rw [← hv]
+  exact rep_wealth_eq N S h b X _ hg hS hsf hrep N [] (by simp)
+
+/-- The gains identity. For a self-financing strategy, wealth moves over one step only
+because the shares held changed in price and the bank paid interest:
+`V_{i+1} - V_i = h_i (S_{i+1} - S_i) + b_i (g - 1)`. -/
+theorem gains_identity (N : ℕ) (S h b : List Bool → ℝ) (g : ℝ)
+    (hsf : SelfFinancing N S h b g) (p : List Bool) (hp : p.length < N) (c : Bool) :
+    wealth S h b (c :: p) - wealth S h b p = h p * (S (c :: p) - S p) + b p * (g - 1) := by
+  rw [hsf p hp c]
+  unfold arrival wealth
+  ring
+
+/-- The discounted gains identity. Measure date `i` in today's dollars with
+`D_i = exp (-r t_i)`, `t_i = i Δt`, and let the bank grow by `g = exp (r Δt)` a step. For a
+self-financing strategy the bank term disappears:
+`D_{i+1} V_{i+1} - D_i V_i = h_i (D_{i+1} S_{i+1} - D_i S_i)`. -/
+theorem discounted_gains_identity (N : ℕ) (S h b : List Bool → ℝ) (r Δt : ℝ)
+    (hsf : SelfFinancing N S h b (Real.exp (r * Δt))) (p : List Bool) (hp : p.length < N)
+    (c : Bool) :
+    Real.exp (-r * ((p.length + 1 : ℕ) * Δt)) * wealth S h b (c :: p)
+        - Real.exp (-r * (p.length * Δt)) * wealth S h b p
+      = h p * (Real.exp (-r * ((p.length + 1 : ℕ) * Δt)) * S (c :: p)
+        - Real.exp (-r * (p.length * Δt)) * S p) := by
+  rw [hsf p hp c]
+  unfold arrival wealth
+  have he : Real.exp (-r * ((p.length + 1 : ℕ) * Δt)) * Real.exp (r * Δt)
+      = Real.exp (-r * (p.length * Δt)) := by
+    rw [← Real.exp_add]; congr 1; push_cast; ring
+  linear_combination b p * he
+
+
+/-! Worked numbers from the card, in cents so that they are whole numbers. -/
+
+-- Step 4, the up node: holding `h` shares and `c = b g` dollars at expiry must pay
+-- 32.69 where Acme ends at 132.69 and 0 where it ends at 100.00. Subtracting gives one
+-- whole share, and the bank must owe the strike, 100.00, at expiry.
+example (h c : ℝ) (hu : h * 13269 + c = 3269) (hd : h * 10000 + c = 0) :
+    h = 1 ∧ c = -10000 := by
+  constructor <;> linarith
+
+-- The copy at the up node: 115.19 of share less 97.53 of loan is 17.66.
+example : (11519 : ℤ) - 9753 = 1766 := by norm_num
+
+-- The call's payoffs at expiry: the gap above the 100.00 strike, or nothing.
+example : max ((13269 : ℤ) - 10000) 0 = 3269 ∧ max ((10000 : ℤ) - 10000) 0 = 0 ∧
+    max ((7536 : ℤ) - 10000) 0 = 0 := by decide
+
+#print axioms repVal
+#print axioms repDelta
+#print axioms repBank
+#print axioms rep_wealth_eq
+#print axioms rep_exists
+#print axioms replication_cost_exists_unique
+#print axioms gains_identity
+#print axioms discounted_gains_identity
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'repVal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'repDelta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'repBank' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rep_wealth_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rep_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'replication_cost_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gains_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'discounted_gains_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

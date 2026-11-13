@@ -36,7 +36,14 @@ The upper line is a share paying nothing; the lower line is Acme, paying 2 perce
 
 ## The formula
 
-Four letters carry the card, named in words first. $S$ is the **spot price**: what one share costs right now, for delivery right now. $r$ is the **bank rate**: the interest a safe loan costs and a safe deposit earns, quoted continuously compounded — added at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). $q$ is the **dividend yield**: the income the share pays its holder each year as a fraction of its price, also continuous. $T$ is the wait until delivery, in years. The answer is $F$, the forward price.
+Four letters carry the card, named in words first.
+
+- $S$ is the **spot price**: what one share costs right now, for delivery right now.
+- $r$ is the **bank rate**: the interest a safe loan costs and a safe deposit earns, quoted continuously compounded — added at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
+- $q$ is the **dividend yield**: the income the share pays its holder each year as a fraction of its price, also continuous.
+- $T$ is the wait until delivery, in years.
+
+The answer is $F$, the forward price.
 
 $$F = S\,e^{(r-q)T}$$
 
@@ -52,7 +59,7 @@ Some assets pay a lump on a known date rather than a trickle: Acme might declare
 
 $$F = (S - I)\,e^{rT}, \qquad I = C\,e^{-rt}$$
 
-Take the known payment off the spot price at what it is worth today, and grow only what is left.
+Here $C$ is the cash payment, 2.00, and small $t$ is when it lands, 0.5 years from today. Take the known payment off the spot price at what it is worth today, and grow only what is left.
 
 | Symbol | Plain meaning | In our example | Push it up and the forward price… |
 | --- | --- | --- | --- |
@@ -79,7 +86,7 @@ Take the known payment off the spot price at what it is worth today, and grow on
 - **The asset can be bought, held and sold short.** Selling short means borrowing the asset, selling it, and buying one back later to return. Without it only one trade is possible, so the forward has an upper bound and no lower one — the ordinary case for a commodity somebody needs in the warehouse ([Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md)).
 - **The income is known in advance.** A dividend that might be cut is a different problem, and the formula run backwards on a quote then reports a belief, not a fact ([Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md)).
 - **The bank rate is known for the whole wait.** Then a daily-settled exchange contract prices the same as this private one; once rates move unpredictably the two part company ([Futures](05-futures-margining-and-the-forward-futures-difference.md)).
-- **Both sides actually deliver.** A counterparty that might fail turns a delivery price into a credit question, and the quote then carries a charge for it.
+- **Both sides actually deliver.** A counterparty (the other side of the contract) that might fail turns a delivery price into a credit question, and the quote then carries a charge for it.
 
 ---
 
@@ -128,7 +135,13 @@ This is the **cash-and-carry** trade, and the name is the recipe: raise cash, ca
 
 ### Step 4: quote it too low and the buyer mints money
 
-Now suppose the quote is 101.00. Run every line backwards. Borrow 0.980199 of a share from an owner, sell it for 98.019867 and lend that cash to the bank. Through the year, owe the share's lender its dividends, funded by shorting a sliver more, so the debt grows to exactly one share. On delivery day the deposit has become 103.045453; buy one share through the forward for 101.00 and return it. The net is **2.045453** on delivery day, or 1.95 brought back to today.
+Now suppose the quote is 101.00. Run every line backwards.
+
+1. Borrow 0.980199 of a share from an owner, sell it for 98.019867 and lend that cash to the bank.
+2. Through the year, owe the share's lender its dividends, funded by shorting a sliver more, so the debt grows to exactly one share.
+3. On delivery day the deposit has become 103.045453; buy one share through the forward for 101.00 and return it.
+
+The net is **2.045453** on delivery day, or 1.95 brought back to today.
 
 This is **reverse cash-and-carry**. Between the two trades, every delivery price above 103.045453 and every one below it is knocked out. One number survives, and that is the theorem.
 
@@ -154,7 +167,7 @@ Neither ledger holds a number describing how wildly Acme swings: the trade holds
 
 ### Another road: the average share price in a world priced at the bank rate
 
-A second route reaches the same number, and it runs the rest of this wing. Price every contract as though each asset were valued so that it grows on average at the bank rate, a device set out in [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md). A share's whole return there is $r$, but part is paid out as dividends at $q$ a year, so only $r - q$ shows as the price climbing. The average Acme price on delivery day is $S\,e^{(r-q)T}$, which is $F$ again.
+A second route reaches the same number, and it runs the rest of this wing. Price every contract as though each asset were valued so that it grows on average at the bank rate, a device set out in [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md) and called a risk-neutral valuation. A share's whole return there is $r$, but part is paid out as dividends at $q$ a year, so only $r - q$ shows as the price climbing. The average Acme price on delivery day is $S\,e^{(r-q)T}$, which is $F$ again.
 
 The check works that average out the long way, at 10, 20 and 50 percent a year of jumpiness. All three land on 103.045453: volatility cancels out, the ledgers' fact from the other side.
 
@@ -638,6 +651,124 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's pricing rules for any values of $S$, $r$, $q$, $T$, $C$, $t$ and $K$, with no conditions.
+
+- Take any delivery price $K$. Then $G$ equals $e^{-rT}$ times the gap between $F$ and $K$.
+- Take any delivery price $K$. Then the contract costs nothing today exactly when $K = S\,e^{(r-q)T}$.
+- Take any quote $K$. Then neither cash-and-carry nor its reverse nets a profit on delivery day exactly when $K$ is the forward price.
+- Take a cash payment $C$ landing at time $t$. Then the debt $I = C\,e^{-rt}$, grown at the bank rate to time $t$, is exactly $C$.
+- Take the same payment. Then the contract costs nothing today exactly when $K = (S - I)\,e^{rT}$.
+- The edge cases hold exactly: delivery today, or a yield equal to the rate, gives 100, and a worthless asset gives 0.
+- The simple-interest mistake from the table gives exactly 103.00.
+
+Decimals such as 103.05, the random price paths and the trade ledgers are left to the Python and Rust checks.
+
+```lean
+-- Forward price: the delivery price that makes a forward contract worth nothing today is exactly S e^((r-q)T), the only quote at which neither cash-and-carry nor its reverse makes a riskless profit, and with a known cash dividend it becomes (S - C e^(-rt)) e^(rT).
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+open Real
+
+/-! Notation, as on the card. `S` is the spot price, `r` the bank rate and `q` the dividend yield,
+both continuously compounded, `T` the wait to delivery in years and `K` any delivery price written
+into a contract. The card's model (one rate both ways, no fees, short selling allowed, known
+income, known rate, both sides deliver) is what turns the trades below into prices:
+
+* holding `e^(-qT)` of a share with the dividends reinvested ends as one whole share, and costs
+  `S e^(-qT)` today (the prepaid forward);
+* a bill of `K` on delivery day costs `K e^(-rT)` today;
+* so a contract paying the share minus `K` on delivery day is worth
+  `G = S e^(-qT) - K e^(-rT)` today. -/
+
+/-- The card's main claim. The value today of a forward at delivery price `K` is the gap between
+the forward price `S e^((r-q)T)` and `K`, discounted: `G = e^(-rT) (S e^((r-q)T) - K)`. So the
+contract costs nothing now exactly when `K` is the forward price `S e^((r-q)T)`: today's price of
+the share, grown at the bank rate and shrunk by the income it pays before delivery. -/
+theorem forward_price_makes_contract_free (S r q T K : ℝ) :
+    S * exp (-(q * T)) - K * exp (-(r * T)) = exp (-(r * T)) * (S * exp ((r - q) * T) - K) ∧
+    (S * exp (-(q * T)) - K * exp (-(r * T)) = 0 ↔ K = S * exp ((r - q) * T)) := by
+  have h : exp (-(q * T)) = exp (-(r * T)) * exp ((r - q) * T) := by
+    rw [← exp_add]; congr 1; ring
+  have hne : exp (-(r * T)) ≠ 0 := (exp_pos _).ne'
+  have key : S * exp (-(q * T)) - K * exp (-(r * T)) =
+      exp (-(r * T)) * (S * exp ((r - q) * T) - K) := by rw [h]; ring
+  refine ⟨key, ?_⟩
+  rw [key, mul_eq_zero, sub_eq_zero]
+  constructor
+  · rintro (h0 | h0)
+    · exact absurd h0 hne
+    · exact h0.symm
+  · intro h0; exact Or.inr h0.symm
+
+/-- Steps 3 and 4: one number survives. Cash-and-carry against a quote `K` (sell the forward,
+borrow `S e^(-qT)`, buy `e^(-qT)` of a share, repay `S e^(-qT) e^(rT)` on delivery day) nets
+`K - S e^(-qT) e^(rT)` on delivery day; the reverse trade nets the opposite. Neither trade makes a
+strictly positive riskless profit exactly when the quote is the forward price `S e^((r-q)T)`. -/
+theorem only_forward_price_survives_cash_and_carry (S r q T K : ℝ) :
+    (K - S * exp (-(q * T)) * exp (r * T) ≤ 0 ∧ S * exp (-(q * T)) * exp (r * T) - K ≤ 0) ↔
+      K = S * exp ((r - q) * T) := by
+  have h : S * exp (-(q * T)) * exp (r * T) = S * exp ((r - q) * T) := by
+    rw [mul_assoc, ← exp_add]; congr 2; ring
+  rw [h]
+  constructor
+  · rintro ⟨h1, h2⟩; linarith
+  · intro h0; constructor <;> linarith
+
+/-- A known cash payment instead of a yield. Buy one whole share for `S` and borrow
+`I = C e^(-rt)`: the payment `C` landing at time `t` clears that debt exactly, and the outlay
+`S - I` is all that is carried. A contract at delivery price `K` is then worth
+`S - C e^(-rt) - K e^(-rT)` today, which is zero exactly when `K = (S - C e^(-rt)) e^(rT)`. -/
+theorem forward_price_with_cash_income (S r T C t K : ℝ) :
+    C * exp (-(r * t)) * exp (r * t) = C ∧
+    (S - C * exp (-(r * t)) - K * exp (-(r * T)) = 0 ↔
+      K = (S - C * exp (-(r * t))) * exp (r * T)) := by
+  have h1 : exp (-(r * t)) * exp (r * t) = 1 := by
+    rw [← exp_add]; simp
+  have h2 : exp (-(r * T)) * exp (r * T) = 1 := by
+    rw [← exp_add]; simp
+  refine ⟨by rw [mul_assoc, h1, mul_one], ?_⟩
+  have hpos : 0 < exp (r * T) := exp_pos _
+  constructor
+  · intro h0
+    have : (S - C * exp (-(r * t)) - K * exp (-(r * T))) * exp (r * T) = 0 := by rw [h0, zero_mul]
+    have e : (S - C * exp (-(r * t)) - K * exp (-(r * T))) * exp (r * T) =
+        (S - C * exp (-(r * t))) * exp (r * T) - K * (exp (-(r * T)) * exp (r * T)) := by ring
+    rw [e, h2] at this; linarith
+  · intro h0
+    rw [h0]
+    have e : (S - C * exp (-(r * t))) * exp (r * T) * exp (-(r * T)) =
+        (S - C * exp (-(r * t))) * (exp (-(r * T)) * exp (r * T)) := by ring
+    rw [e, h2]; ring
+
+/-! The card's exact numbers. Acme trades at 100, the bank rate is 5 percent. -/
+
+-- Delivery today costs today's price: at T = 0 the forward is 100 (both chart lines start there).
+example : (100 : ℝ) * exp ((5 / 100 - 2 / 100) * 0) = 100 := by norm_num
+
+-- When the yield equals the rate, 5 percent against 5 percent, the forward is the spot, 100.
+example : (100 : ℝ) * exp ((5 / 100 - 5 / 100) * 1) = 100 := by norm_num
+
+-- A worthless asset costs nothing to carry: at S = 0 the forward is 0.
+example : (0 : ℝ) * exp ((5 / 100 - 2 / 100) * 1) = 0 := by norm_num
+
+-- The simple-interest mistake from the card's table: 100 × (1 + 0.05 - 0.02) = 103.00.
+example : (100 : ℚ) * (1 + 5 / 100 - 2 / 100) = 103 := by norm_num
+
+#print axioms forward_price_makes_contract_free
+#print axioms only_forward_price_survives_cash_and_carry
+#print axioms forward_price_with_cash_income
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'forward_price_makes_contract_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+'only_forward_price_survives_cash_and_carry' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forward_price_with_cash_income' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

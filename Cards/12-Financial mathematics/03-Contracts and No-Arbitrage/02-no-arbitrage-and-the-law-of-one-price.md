@@ -40,7 +40,7 @@ Three words first.
 
 A **scenario** is one complete way the year can turn out: Acme finishing high at 130.00, middle at 105.00 or low at 85.00. Write $\omega$, said "omega", for one of them.
 
-A **position** is anything held from today to expiry — a note, a share, a deposit or loan, any bundle of them, long or short ([Payoffs](01-payoffs-and-positions.md)). Write $p$ for what it costs today, negative if it pays to put on, and $X(\omega)$ for what it is worth at expiry in scenario $\omega$.
+A **position** is anything held from today to expiry — a note, a share, a deposit or loan, any bundle of them. It can be long (bought: you collect its payoff) or short (sold: you owe its payoff), as in [Payoffs](01-payoffs-and-positions.md). Write $p$ for what it costs today, negative if it pays to put on, and $X(\omega)$ for what it is worth at expiry in scenario $\omega$.
 
 An **arbitrage** is a position for which
 
@@ -60,11 +60,13 @@ $$X_A(\omega) \ge X_B(\omega) \;\text{ in every scenario} \quad\Longrightarrow\q
 
 **Read it aloud:** a payoff that is never worse cannot be cheaper. This is the **dominance rule**; if A also pays strictly more somewhere, its price is strictly higher.
 
-Two things trade on this card. One is the bank, at 5 percent continuously compounded, as this wing quotes rates: a dollar left in becomes $R$, a dollar due at expiry costs $D$ today, with $r$ the rate as a decimal and $T$ the term in years.
+Two things trade on this card. One is the bank, at 5 percent continuously compounded, as this wing quotes rates. A dollar left in becomes $R$, and a dollar due at expiry costs $D$ today. Here $r$ is the rate as a decimal and $T$ the term in years.
 
 $$R = e^{rT} = 1.051271, \qquad D = e^{-rT} = 0.951229$$
 
 The other is the note, price $P$ = 98.019867 — less than Acme's 100.00, because Acme pays its holders 2 percent a year and the note's holder collects none of it. That level is settled by [Forward price](03-forward-price-by-cash-and-carry.md); this card takes it as given and asks what it forces on everything else.
+
+Step 4 adds a third contract, a call on Acme: the right to buy one share for the strike $K$ = 100.00 on expiry day. A copy is any mix of notes and bank dollars. No copy pays exactly what the call pays, so the card finds limits on its price $C$ instead. A copy that never pays less than the call sets a ceiling, one that never pays more sets a floor, and the two make a band.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -118,9 +120,9 @@ The two desks are exactly this. Both notes pay Acme's closing price, so the payo
 
 ### Step 3: never pays less, never costs less
 
-Weaken it: A pays at least as much as B in every scenario, and nothing else is known. Suppose A is still cheaper. The payoff difference is no longer zero, but it is never negative, and the banked gap is still strictly positive; their sum is strictly positive, so the zero-cost trade pays everywhere. Arbitrage again, so A cannot be cheaper. That is the dominance rule, and the law of one price is its two-sided case.
+Weaken it: A pays at least as much as B in every scenario, and nothing else is known. Suppose A is still cheaper. The payoff difference is no longer zero, but it is never negative, and the banked gap is still strictly positive. Their sum is strictly positive, so the zero-cost trade pays everywhere. Arbitrage again, so A cannot be cheaper. That is the dominance rule, and the law of one price is its two-sided case.
 
-If A pays strictly more somewhere and the prices are equal, no banking is needed: hold A, reverse B, and that trade already costs nothing, never loses, and gains in that scenario. Arbitrage. So A is strictly the dearer.
+If A pays strictly more somewhere and the prices are equal, no banking is needed. Hold A, reverse B, and that trade already costs nothing, never loses, and gains in that scenario. Arbitrage. So A is strictly the dearer.
 
 <details>
 <summary>Detailed proof, with the cases written out</summary>
@@ -129,9 +131,9 @@ If A pays strictly more somewhere and the prices are equal, no banking is needed
 
 **Dominance, with one price as its two-sided case.** Suppose A's payoff is at least B's everywhere and A is cheaper. The difference trade — A, minus B, plus $p_B - p_A$ bank units — has price $p_A - p_B + (p_B - p_A) = 0$ and payoff
 $$[X_A(\omega) - X_B(\omega)] + (p_B - p_A)R > 0$$
-in every scenario: a bracket that is at least 0, plus a positive gap times a positive $R$. Zero cost, a gain everywhere — an arbitrage. None exists, so A is not cheaper. If the payoffs agree exactly the bracket vanishes, and swapping the letters forces the prices equal. If the prices are equal and A pays strictly more somewhere, A minus B costs 0 and gains there: excluded too, so A is strictly dearer.
+in every scenario. That payoff is a bracket that is at least 0, plus a positive gap times a positive $R$. Zero cost, a gain everywhere — an arbitrage. None exists, so A is not cheaper. If the payoffs agree exactly the bracket vanishes, and swapping the letters forces the prices equal. If the prices are equal and A pays strictly more somewhere, A minus B costs 0 and gains there: excluded too, so A is strictly dearer.
 
-**What each assumption did.** Combining and scaling made the difference trade holdable. The positive bank factor carries a credit today into a gain at expiry; with no bank, the bare difference A minus B still has a negative price and a zero payoff, which the definition already counts. Finiteness is used only where the scenarios are checked one by one, as the code does.
+**What each assumption did.** Combining and scaling made the difference trade holdable. The positive bank factor carries a credit today into a gain at expiry. With no bank, the bare difference A minus B still has a negative price and a zero payoff, which the definition already counts. Finiteness is used only where the scenarios are checked one by one, as the code does.
 
 </details>
 
@@ -148,9 +150,13 @@ Read the payoff backwards: the middle entry gives the bank holding, since the ba
 
 The desks' notes could be compared because their payoffs were identical. Most contracts have no exact twin; then the dominance rule bites from both sides at once.
 
-Take a **call** on Acme struck at $K$ = 100.00, expiring with the notes: the right to buy one share for 100.00 that day, paying 30.00, 5.00 or 0.00. Write $C$ for its price today, the unknown. Copies are built from the two things already priced: $a$ notes and $b$ dollars due from the bank at expiry, costing $aP + bD$ today and holding $a S_T + b$ at expiry. Two dials, three scenarios to hit: no copy matches the call everywhere, so $C$ is not pinned to a point.
+Take a **call** on Acme struck at $K$ = 100.00, expiring with the notes: the right to buy one share for 100.00 that day, paying 30.00, 5.00 or 0.00. Write $C$ for its price today, the unknown.
 
-A copy paying **at least** the call everywhere cannot cost less than the call: the cheapest such copy is a ceiling. A copy paying **at most** the call everywhere is a floor, the dearest of those the best. Neither end is a legal quote. The cheapest dominating copy pays strictly more in the middle scenario, so Step 3's last paragraph puts the call strictly under the ceiling, and the same argument strictly over the floor. Between them this card cannot go further; at either end, or outside, the quote is itself a trade, and the code builds two.
+Copies are built from the two things already priced: $a$ notes and $b$ dollars due from the bank at expiry, costing $aP + bD$ today and holding $a S_T + b$ at expiry. Two dials, three scenarios to hit: no copy matches the call everywhere, so $C$ is not pinned to a point.
+
+A copy paying **at least** the call everywhere cannot cost less than the call: the cheapest such copy is a ceiling. A copy paying **at most** the call everywhere is a floor, the dearest of those the best.
+
+Neither end is a legal quote. The cheapest dominating copy pays strictly more in the middle scenario. So Step 3's last paragraph puts the call strictly under the ceiling, and the same argument strictly over the floor. Between them this card cannot go further; at either end, or outside, the quote is itself a trade, and the code builds two.
 
 ### The other door
 
@@ -220,7 +226,7 @@ Every number there is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that knows an option price; only the exponential function, for the bank and for Acme's dividend. The band is reached by **two independent roads**: a narrowing search over copies holding −5 to 5 notes, and an exact solve matching the call two scenarios at a time. A third checks the desks' trade scenario by scenario against the one-line answer, a fourth builds the trades against quotes of 12.00 and 4.00, and a fifth sweeps the certificate market.
+Nothing is imported that knows an option price; only the exponential function, for the bank and for Acme's dividend. The band is reached by **two independent roads**: a narrowing search over copies holding −5 to 5 notes, and an exact solve matching the call two scenarios at a time. A third checks the desks' trade scenario by scenario against the one-line answer. A fourth builds the trades against quotes of 12.00 and 4.00, and a fifth sweeps the certificate market.
 
 ### Python
 
@@ -650,6 +656,138 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line. Search and two-scenario solve find the copy different ways, and all four runs landed on 11.443577 and 4.291342.
+
+### Lean
+
+Lean proves both rules for any market with finitely many scenarios, and checks the hand arithmetic.
+
+- Take a market where positions can be held together, scaled and reversed, with no arbitrage. Then same payoff in every scenario means same price: the law of one price.
+- In that market, a position that never pays less than another can never cost less. That is the dominance rule.
+- If it also pays strictly more in some scenario, it costs strictly more.
+- The hand arithmetic holds exactly: the call's payoffs, the two notes cancelling, what each copy holds, and the dominating copy's loss at 60.00.
+
+The bank, the band from 4.29 to 11.44, the outside-quote trades and the certificate market are left to the Python and Rust checks.
+
+```lean
+-- No arbitrage: in a market with no free money, two positions with the same payoff in every scenario cost the same, and a position that never pays less never costs less.
+import Mathlib.Algebra.Module.Submodule.Defs
+import Mathlib.Algebra.Module.Prod
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Basic.Real.Basic
+import Mathlib.Data.Fintype.Defs
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-!
+Setting, as on the card.
+
+* `Ω` is the finite list of scenarios: each complete way the year can end.
+* A position is a pair `x : ℝ × (Ω → ℝ)`: `x.1` is its price today (negative if it pays
+  to put on) and `x.2 ω` is what it is worth at expiry in scenario `ω`.
+* The market `M` is the set of positions that can be held. It is a submodule: holding two
+  positions at once adds prices and payoffs, and scaling by any real number (a negative
+  one is selling short, on the same terms) scales both. No fees, no bid-ask gap, no
+  default: that is what "linear" means here.
+-/
+
+
+variable {Ω : Type*}
+
+/-- An arbitrage: nothing to pay going in (`p ≤ 0`), nothing to lose coming out
+(`X ω ≥ 0` in every scenario), and money somewhere (`p < 0`, or `X ω > 0` in some
+scenario). -/
+def IsArbitrage (x : ℝ × (Ω → ℝ)) : Prop :=
+  x.1 ≤ 0 ∧ (∀ ω, 0 ≤ x.2 ω) ∧ (x.1 < 0 ∨ ∃ ω, 0 < x.2 ω)
+
+/-- No arbitrage: no position in the market is an arbitrage. -/
+def NoArbitrage (M : Submodule ℝ (ℝ × (Ω → ℝ))) : Prop :=
+  ∀ x ∈ M, ¬ IsArbitrage x
+
+/-- The law of one price. In a market with finitely many scenarios, where positions can be
+combined and scaled (short selling allowed) and no position is an arbitrage, two positions
+that pay the same in every scenario must cost the same today. -/
+theorem law_of_one_price [Fintype Ω] (M : Submodule ℝ (ℝ × (Ω → ℝ)))
+    (hNA : NoArbitrage M) {A B : ℝ × (Ω → ℝ)} (hA : A ∈ M) (hB : B ∈ M)
+    (hpay : ∀ ω, A.2 ω = B.2 ω) : A.1 = B.1 := by
+  by_contra hne
+  rcases lt_or_gt_of_ne hne with h | h
+  · apply hNA (A - B) (M.sub_mem hA hB)
+    refine ⟨?_, ?_, Or.inl ?_⟩
+    · simp only [Prod.fst_sub]; linarith
+    · intro ω; simp [hpay ω]
+    · simp only [Prod.fst_sub]; linarith
+  · apply hNA (B - A) (M.sub_mem hB hA)
+    refine ⟨?_, ?_, Or.inl ?_⟩
+    · simp only [Prod.fst_sub]; linarith
+    · intro ω; simp [hpay ω]
+    · simp only [Prod.fst_sub]; linarith
+
+/-- The dominance rule. Under the same assumptions, a position whose payoff is never less
+than another's in any scenario can never cost less today. -/
+theorem dominance_rule [Fintype Ω] (M : Submodule ℝ (ℝ × (Ω → ℝ)))
+    (hNA : NoArbitrage M) {A B : ℝ × (Ω → ℝ)} (hA : A ∈ M) (hB : B ∈ M)
+    (hpay : ∀ ω, B.2 ω ≤ A.2 ω) : B.1 ≤ A.1 := by
+  by_contra hlt
+  replace hlt := not_le.mp hlt
+  apply hNA (A - B) (M.sub_mem hA hB)
+  refine ⟨?_, ?_, Or.inl ?_⟩
+  · simp only [Prod.fst_sub]; linarith
+  · intro ω; simp only [Prod.snd_sub, Pi.sub_apply]; linarith [hpay ω]
+  · simp only [Prod.fst_sub]; linarith
+
+/-- The strict dominance rule. If A never pays less than B and pays strictly more in some
+scenario, then A is strictly dearer than B. -/
+theorem strict_dominance_rule [Fintype Ω] (M : Submodule ℝ (ℝ × (Ω → ℝ)))
+    (hNA : NoArbitrage M) {A B : ℝ × (Ω → ℝ)} (hA : A ∈ M) (hB : B ∈ M)
+    (hpay : ∀ ω, B.2 ω ≤ A.2 ω) (hstrict : ∃ ω, B.2 ω < A.2 ω) : B.1 < A.1 := by
+  by_contra hle
+  replace hle := not_lt.mp hle
+  apply hNA (A - B) (M.sub_mem hA hB)
+  obtain ⟨ω0, h0⟩ := hstrict
+  refine ⟨?_, ?_, Or.inr ⟨ω0, ?_⟩⟩
+  · simp only [Prod.fst_sub]; linarith
+  · intro ω; simp only [Prod.snd_sub, Pi.sub_apply]; linarith [hpay ω]
+  · simp only [Prod.snd_sub, Pi.sub_apply]; linarith
+
+
+/-! Worked numbers from the card, as exact fractions. Acme finishes at 130, 105 or 85;
+the call is struck at 100. -/
+
+-- The call's payoffs: 30, 5 and 0.
+example : max ((130 : ℤ) - 100) 0 = 30 ∧ max ((105 : ℤ) - 100) 0 = 5 ∧
+    max ((85 : ℤ) - 100) 0 = 0 := by decide
+
+-- The two desks' notes both pay Acme's closing price, so they cancel in every scenario.
+example : (130 : ℤ) - 130 = 0 ∧ (105 : ℤ) - 105 = 0 ∧ (85 : ℤ) - 85 = 0 := by decide
+
+-- The dominating copy: 2/3 of a note and -170/3 dollars due at expiry
+-- (0.666667 and -56.666667 on the card). It holds 30, 40/3 (13.33) and 0,
+-- never less than the call's 30, 5 and 0.
+example : (2 / 3 : ℚ) * 130 + (-170 / 3) = 30 ∧ (2 / 3 : ℚ) * 105 + (-170 / 3) = 40 / 3 ∧
+    (2 / 3 : ℚ) * 85 + (-170 / 3) = 0 ∧ (5 : ℚ) ≤ 40 / 3 := by norm_num
+
+-- The dominated copy: 1/4 of a note and -85/4 dollars due at expiry
+-- (0.250000 and -21.250000 on the card). It holds 45/4 (11.25), 5 and 0,
+-- never more than the call's 30, 5 and 0.
+example : (1 / 4 : ℚ) * 130 + (-85 / 4) = 45 / 4 ∧ (1 / 4 : ℚ) * 105 + (-85 / 4) = 5 ∧
+    (1 / 4 : ℚ) * 85 + (-85 / 4) = 0 ∧ (45 / 4 : ℚ) ≤ 30 := by norm_num
+
+-- Add a 60 scenario and the dominating copy holds -50/3 (-16.666667) against the
+-- call's 0, so it no longer dominates.
+example : (2 / 3 : ℚ) * 60 + (-170 / 3) = -50 / 3 ∧ (-50 / 3 : ℚ) < 0 := by norm_num
+
+#print axioms law_of_one_price
+#print axioms dominance_rule
+#print axioms strict_dominance_rule
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'law_of_one_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dominance_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'strict_dominance_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

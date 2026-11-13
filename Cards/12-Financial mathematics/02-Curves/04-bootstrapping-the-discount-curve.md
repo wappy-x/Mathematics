@@ -6,7 +6,9 @@
 
 ## General Overview
 
-At half past eight one morning a screen carries six quotes for lending to the same borrower. Money placed for six months comes back at 4.0000 percent a year. Money placed for twelve months comes back at 4.2000 percent. Then four swap quotes, at two, three, four and five years: 4.4000, 4.5500, 4.6200 and 4.6500 percent a year. Those last four are par swap rates — the fixed coupon that makes a brand-new swap worth nothing to either side on the day it is struck ([Spot, forward and par rates](01-spot-forward-and-par-rates.md)).
+At half past eight one morning a screen carries six quotes for lending to the same borrower. Money placed for six months comes back at 4.0000 percent a year. Money placed for twelve months comes back at 4.2000 percent.
+
+Then four swap quotes, at two, three, four and five years: 4.4000, 4.5500, 4.6200 and 4.6500 percent a year. A swap is a contract that trades fixed interest payments for payments that follow the market rate, on the same dates. Those last four are par swap rates — the fixed coupon that makes a brand-new swap worth nothing to either side on the day it is struck ([Spot, forward and par rates](01-spot-forward-and-par-rates.md)).
 
 A desk cannot value anything with rates in that form. What it needs is the price of a future dollar: what 100 dollars due in six months is worth this morning, and 100 dollars due in five years. Six quotes, six dates, six prices. That list is the **discount curve**, and every bond, loan and swap on the book is valued off it.
 
@@ -29,13 +31,19 @@ xychart-beta
     line [98.04, 95.97, 91.74, 87.48, 83.43, 79.62]
 ```
 
-The line falls because money arriving later is worth less this morning. Nothing is drawn between the marked dates: six quotes buy six prices and not one more.
+The line falls because money arriving later is worth less this morning. Nothing is drawn between the marked dates: six quotes buy six prices and not one more. The six marked dates are called the curve's pillars.
 
 ---
 
 ## The formula
 
-Notation first, in words. $D(T)$ is the discount factor for a date: what one dollar paid at time $T$, in years, costs this morning. Every swap here pays once a year, so its dates can be numbered by the year they fall in: $D_n$ is short for $D(n)$, the price of a dollar $n$ years out. A rate quoted for a period becomes money only after it is multiplied by the length of the period, and that length is the **accrual fraction** $\alpha$: half a year is $\alpha = 0.5$, a full year is $\alpha = 1$, and $\alpha_n$ is the fraction for the period ending at year $n$. A deposit's simple rate is $r$. A par swap rate is written $S_n$ — the same kind of number as the bond par rate on [Spot, forward and par rates](01-spot-forward-and-par-rates.md).
+Notation first, in words.
+
+- $D(T)$ is the discount factor for a date: what one dollar paid at time $T$, in years, costs this morning.
+- Every swap here pays once a year, so its dates can be numbered by the year they fall in: $D_n$ is short for $D(n)$, the price of a dollar $n$ years out.
+- A rate quoted for a period becomes money only after it is multiplied by the length of the period, and that length is the **accrual fraction** $\alpha$: half a year is $\alpha = 0.5$, a full year is $\alpha = 1$, and $\alpha_n$ is the fraction for the period ending at year $n$.
+- A deposit's simple rate is $r$.
+- A par swap rate is written $S_n$ — the same kind of number as the bond par rate on [Spot, forward and par rates](01-spot-forward-and-par-rates.md).
 
 A deposit pays once, at its own maturity $T$. One dollar lent grows to $1 + \alpha r$, so the price of a dollar on that date is:
 
@@ -73,7 +81,7 @@ Zero rates and forward rates are the same six prices read out loud; converting b
 - **Each quote pays on solved dates plus one new date.** This is a property of the quote list, not of the maths. Drop the four-year swap and the five-year quote has two unknowns in it: the code prints two curves that both reprice it exactly, and nothing chooses between them.
 - **The quote is in range.** The rung divides by $1 + \alpha_n S_n$, so a par rate at $-1/\alpha_n$ leaves no answer at all, and one at $1/B_n$ drives the price of a future dollar to zero. For the five-year rung that range runs from $-100.00$ percent to 27.88 percent; real quotes sit nowhere near either edge.
 - **One snapshot, one curve.** The six quotes must be readings from one instant. A curve built from a four-year rate seen at 08:30 and a five-year rate seen at 09:15 reprices neither.
-- **One curve doing two jobs.** This card discounts cash flows and projects floating payments off the same six prices. Since 2008 desks separate those jobs, discounting collateralised trades on an overnight-rate curve; the ladder is unchanged, but runs once per curve.
+- **One curve doing two jobs.** This card discounts cash flows and projects floating payments off the same six prices. Since 2008 desks separate those jobs, discounting collateralised trades (trades backed by posted cash or bonds) on an overnight-rate curve; the ladder is unchanged, but runs once per curve.
 - **The quotes are tradable.** A price nobody will deal at is not an equation. The curve inherits its quality from its inputs, never from the arithmetic.
 
 ---
@@ -113,7 +121,9 @@ A triangular system is the one case needing no elimination. The first row has on
 
 Solving the rung is one line: expand $A_n = B_n + \alpha_n D_n$ in $S_n A_n = 1 - D_n$, gather the terms in $D_n$, divide. What deserves a moment is whether the division is legitimate and the answer is a price.
 
-The denominator $1 + \alpha_n S_n$ is positive whenever $S_n$ exceeds $-1/\alpha_n$, and the answer is then positive exactly when $1 - S_n B_n$ is, which means $S_n$ below $1/B_n$. Inside that range there is one answer and only one, because a linear equation with a non-zero coefficient has one root. At the top edge the answer is zero — a dollar five years away costing nothing — and past it negative, which no price can be. At the bottom edge the equation reads 0 times $D_n$ = 4.586207, which no number satisfies. The check prints both edges: the five-year quote must lie between $-100.00$ percent and 27.88 percent.
+The denominator $1 + \alpha_n S_n$ is positive whenever $S_n$ exceeds $-1/\alpha_n$, and the answer is then positive exactly when $1 - S_n B_n$ is, which means $S_n$ below $1/B_n$. Inside that range there is one answer and only one, because a linear equation with a non-zero coefficient has one root.
+
+At the top edge the answer is zero — a dollar five years away costing nothing — and past it negative, which no price can be. At the bottom edge the equation reads 0 times $D_n$ = 4.586207, which no number satisfies. The check prints both edges: the five-year quote must lie between $-100.00$ percent and 27.88 percent.
 
 <details>
 <summary>Detailed proof: one positive answer, and only one</summary>
@@ -130,7 +140,7 @@ The argument uses only this shelf's model: certain cash flows, one currency, fre
 
 </details>
 
-Another road reaches the same six numbers without any ladder. Hand all six equations to Gaussian elimination with partial pivoting, rows in the wrong order on purpose, longest quote first. Pivoting shuffles them back into a staircase and back-substitution walks down it, agreeing with the ladder to twelve decimal places. That is the second road in the code.
+Another road reaches the same six numbers without any ladder. Hand all six equations to Gaussian elimination with partial pivoting, rows in the wrong order on purpose, longest quote first. Partial pivoting swaps rows so that each column is cleared using its largest entry. Pivoting shuffles them back into a staircase and back-substitution walks down it, agreeing with the ladder to twelve decimal places. That is the second road in the code.
 
 ---
 
@@ -160,7 +170,7 @@ The same six numbers, read as rates, are what a trading screen shows.
 | 4 | 0.83431725 | 4.5285 percent | 4.7369 percent |
 | 5 | 0.79621728 | 4.5577 percent | 4.6742 percent |
 
-Two things are worth reading off it. The six-month deposit was quoted at 4.0000 percent and its zero rate is 3.9605 percent: the same money, once as simple interest over half a year and once continuously compounded. And after the first period, which starts today and so just repeats the zero rate, every forward rate sits above the zero rate for its end date, which is what a rising curve looks like from the inside — later years are lent at more than the average so far.
+Two things are worth reading off it. The six-month deposit was quoted at 4.0000 percent and its zero rate is 3.9605 percent: the same money, once as simple interest over half a year and once continuously compounded. And after the first period, which starts today and so just repeats the zero rate, every forward rate sits above the zero rate for its end date, which is what a rising curve looks like from the inside. Later years are lent at more than the average so far.
 
 ### What breaks if you drop a piece
 
@@ -191,7 +201,7 @@ At 08:31 the three-year quote ticks up one basis point, from 4.5500 to 4.5600 pe
 | 4 years | 4.5285 percent | -0.0348 |
 | 5 years | 4.5577 percent | -0.0281 |
 
-Two facts, both consequences of the staircase. Nothing below three years moves: those rungs were solved before the three-year quote was read, and no later equation reaches back down. And the rungs above move the *wrong* way — down, when the quote went up. The four-year swap's own quote has not changed, so its equation must still hold; its three-year coupon is now worth slightly less, so the four-year price must rise to make up the difference, which is a small fall in the four-year zero rate.
+Two facts, both consequences of the staircase. Nothing below three years moves: those rungs were solved before the three-year quote was read, and no later equation reaches back down. And the rungs above move the *wrong* way — down, when the quote went up. The four-year swap's own quote has not changed, so its equation must still hold. Its three-year coupon is now worth slightly less, so the four-year price must rise to make up the difference, which is a small fall in the four-year zero rate.
 
 ```
 zero rate moves after a one basis point rise in the three-year quote, one bar per 0.025 basis points
@@ -214,13 +224,21 @@ xychart-beta
     bar [3.0090, -3.1483, -0.0011]
 ```
 
-Three bars, one per period whose forward rate changed. The third year's forward rate rises 3.0090 basis points, the fourth year's falls 3.1483, and the fifth barely stirs at -0.0011. A one basis point nudge to a par rate is a three basis point see-saw in the forward rates on either side of that date, because a par rate is an average over a schedule and an average moves only if the pieces move more. This is why desks hedge in forward rates, and why the shape of a curve between its pillars is a subject of its own: [Between the pillars](05-curve-interpolation-and-shape.md).
+Three bars, one per period whose forward rate changed. The third year's forward rate rises 3.0090 basis points, the fourth year's falls 3.1483, and the fifth barely stirs at -0.0011.
+
+A one basis point nudge to a par rate is a three basis point see-saw in the forward rates on either side of that date. A par rate is an average over a schedule, and an average moves only if the pieces move more. This is why desks hedge in forward rates, and why the shape of a curve between its pillars is a subject of its own: [Between the pillars](05-curve-interpolation-and-shape.md).
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows an answer: the bisection and the Gaussian elimination are both written out in the file. The six prices are reached three independent ways — the ladder, one rung at a time; the same six equations handed to elimination all at once, rows fed backwards so the pivoting has to find the staircase itself; and a numerical hunt that ignores the algebra and looks for the price at which a swap's two legs, built payment by payment from the forward rates, are worth the same. A fourth pass is the one that matters on a desk: value every quote on the finished curve out of the cash flows the contract actually pays. Then the edges of the five-year rung, the three wrong curves, the bump, and the two curves that both fit when a quote goes missing.
+Nothing is imported that already knows an answer: the bisection (a search that halves a range until it traps the answer) and the Gaussian elimination are both written out in the file. The six prices are reached three independent ways:
+
+1. the ladder, one rung at a time;
+2. the same six equations handed to elimination all at once, rows fed backwards so the pivoting has to find the staircase itself;
+3. a numerical hunt that ignores the algebra and looks for the price at which a swap's two legs (its fixed side and its floating side), built payment by payment from the forward rates, are worth the same.
+
+A fourth pass is the one that matters on a desk: value every quote on the finished curve out of the cash flows the contract actually pays. Then the edges of the five-year rung, the three wrong curves, the bump, and the two curves that both fit when a quote goes missing.
 
 ### Python
 
@@ -631,12 +649,159 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the ladder for any number of pillars, when each quote pays on every earlier pillar plus one new one.
+
+- Suppose every accrual fraction is positive and every quote sits above its bottom edge $-1/\alpha_n$. Then exactly one list of discount factors fits every quote.
+- Take one rung, with the earlier coupons already costing $B_n$ and the quote above its bottom edge. Then $S_n A_n = 1 - D_n$ holds exactly when $D_n = (1 - S_n B_n)/(1 + \alpha_n S_n)$.
+- Take the one curve that fits every quote, with every quote above its bottom edge. Then each price $D_n$ is positive exactly when $S_n B_n < 1$.
+- The hand arithmetic holds exactly: each of the six prices, written as a fraction, satisfies its own quote's equation.
+- The exact five-year price lies between 0.79621728 and 0.79621729, so the printed digits are right.
+
+Zero and forward rates, the wrong curves, the bump and the bottom edge itself are left to the Python and Rust checks.
+
+```lean
+-- Bootstrapping: par swap quotes taken shortest first fix exactly one discount curve, each rung solved by one division, and a rung's price is positive exactly when its quote is in range.
+import Mathlib.Basic.Real.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Order.Interval.Finset.Fin
+import Mathlib.Tactic.NormNum
+import Mathlib
+
+open Finset
+
+/-- The bootstrapped discount factors, defined on all of `ℕ` by strong recursion. -/
+noncomputable def bootD (α S : ℕ → ℝ) : ℕ → ℝ
+  | n => (1 - S n * ∑ j : Fin n, α j * bootD α S j) / (1 + α n * S n)
+decreasing_by exact j.isLt
+
+theorem bootD_eq (α S : ℕ → ℝ) (n : ℕ) :
+    bootD α S n = (1 - S n * ∑ j ∈ range n, α j * bootD α S j) / (1 + α n * S n) := by
+  rw [bootD, Fin.sum_univ_eq_sum_range (fun j => α j * bootD α S j) n]
+
+theorem fin_sum_Iio_eq_range {N : ℕ} (f : ℕ → ℝ) (n : Fin N) :
+    ∑ j ∈ Iio n, f j = ∑ j ∈ range n, f j := by
+  rw [← Nat.Iio_eq_range, ← Fin.map_valEmbedding_Iio, sum_map]
+  rfl
+
+theorem fin_sum_Iic_eq {N : ℕ} (f : Fin N → ℝ) (n : Fin N) :
+    ∑ j ∈ Iic n, f j = ∑ j ∈ Iio n, f j + f n := by
+  rw [← Iio_insert, sum_insert (by simp), add_comm]
+
+theorem rung_denom_pos (α S : ℝ) (hα : 0 < α) (hlow : -1 / α < S) : 0 < 1 + α * S := by
+  rw [div_lt_iff₀ hα] at hlow
+  linarith
+
+theorem rung_formula_aux (α S B D : ℝ) (hα : 0 < α) (hlow : -1 / α < S) :
+    S * (B + α * D) = 1 - D ↔ D = (1 - S * B) / (1 + α * S) := by
+  have h := rung_denom_pos α S hα hlow
+  rw [eq_div_iff h.ne']
+  constructor <;> intro e <;> linarith
+
+#print axioms bootD
+#print axioms bootD_eq
+#print axioms fin_sum_Iio_eq_range
+#print axioms fin_sum_Iic_eq
+#print axioms rung_denom_pos
+#print axioms rung_formula_aux
+
+/-- The ladder has exactly one solution. Number the pillars `0, 1, …, N-1` shortest first.
+Quote `n` is a par rate `S n` whose schedule pays on every pillar up to and including `n`,
+with accrual fractions `α j > 0`, so it reads `S n * (α 0 D 0 + ⋯ + α n D n) = 1 - D n`
+(a deposit is the first rung, where this reads `(1 + α 0 S 0) D 0 = 1`).
+If every quote sits above the bottom edge `-1 / α n`, there is exactly one list of discount
+factors that fits every quote. -/
+theorem bootstrap_unique_curve (N : ℕ) (α S : ℕ → ℝ) (hα : ∀ j, 0 < α j)
+    (hlow : ∀ n < N, -1 / α n < S n) :
+    ∃! D : Fin N → ℝ, ∀ n : Fin N, S n * ∑ j ∈ Iic n, α j * D j = 1 - D n := by
+  refine ⟨fun n => bootD α S n, ?_, ?_⟩
+  · intro n
+    simp only
+    rw [fin_sum_Iic_eq (fun j => α j * bootD α S j),
+      fin_sum_Iio_eq_range (fun j => α j * bootD α S j) n,
+      rung_formula_aux _ _ _ _ (hα n) (hlow n n.isLt)]
+    exact bootD_eq α S n
+  · intro D hD
+    funext n
+    induction n using WellFoundedLT.induction with
+    | _ n ih =>
+      have e := hD n
+      rw [fin_sum_Iic_eq (fun j => α j * D j),
+        rung_formula_aux _ _ _ _ (hα n) (hlow n n.isLt)] at e
+      rw [e, bootD_eq, ← fin_sum_Iio_eq_range (fun j => α j * bootD α S j) n]
+      congr 3
+      refine sum_congr rfl fun j hj => ?_
+      rw [ih j (mem_Iio.mp hj)]
+
+/-- One rung, one unknown: with the earlier coupons already costing `B`, the par swap equation
+`S (B + α D) = 1 - D` holds exactly when `D = (1 - S B) / (1 + α S)`, provided `α > 0` and the
+quote is above the bottom edge `-1 / α`. -/
+theorem bootstrap_rung_formula (α S B D : ℝ) (hα : 0 < α) (hlow : -1 / α < S) :
+    S * (B + α * D) = 1 - D ↔ D = (1 - S * B) / (1 + α * S) := by
+  have h := rung_denom_pos α S hα hlow
+  rw [eq_div_iff h.ne']
+  constructor <;> intro e <;> linarith
+
+/-- On the curve that fits every quote, each pillar's price is positive exactly when its quote
+is below the top edge: `S n * B n < 1`, where `B n` is the annuity of the pillars already solved
+(that is, `S n < 1 / B n` when `B n > 0`, and automatic at the first rung). -/
+theorem bootstrap_price_pos_iff (N : ℕ) (α S : ℕ → ℝ) (hα : ∀ j, 0 < α j)
+    (hlow : ∀ n < N, -1 / α n < S n) (D : Fin N → ℝ)
+    (hD : ∀ n : Fin N, S n * ∑ j ∈ Iic n, α j * D j = 1 - D n) (n : Fin N) :
+    0 < D n ↔ S n * ∑ j ∈ Iio n, α j * D j < 1 := by
+  have e := hD n
+  rw [fin_sum_Iic_eq (fun j => α j * D j),
+    rung_formula_aux _ _ _ _ (hα n) (hlow n n.isLt)] at e
+  rw [e, div_pos_iff_of_pos_right (rung_denom_pos _ _ (hα n) (hlow n n.isLt)), sub_pos]
+
+/-! The card's worked numbers, as exact fractions (rates 4.0000 % = 4/100 and so on). -/
+
+-- six-month deposit at 4.0000 %, accrual 1/2: D(0.5) = 50/51 = 0.98039216…
+example : (1 + (1 / 2 : ℚ) * (4 / 100)) * (50 / 51) = 1 := by norm_num
+-- one-year deposit at 4.2000 %, accrual 1: D(1) = 500/521 = 0.95969290…
+example : (1 + (1 : ℚ) * (42 / 1000)) * (500 / 521) = 1 := by norm_num
+-- two-year par swap at 4.4000 %: D(2) = 124750/135981 = 0.91740758…
+example : (44 / 1000 : ℚ) * (500 / 521 + 124750 / 135981) = 1 - 124750 / 135981 := by norm_num
+-- three-year par swap at 4.5500 %: D(3) = 248734250/284336271 = 0.87478903…
+example : (455 / 10000 : ℚ) * (500 / 521 + 124750 / 135981 + 248734250 / 284336271)
+    = 1 - 248734250 / 284336271 := by norm_num
+-- four-year par swap at 4.6200 %: D(4) = 413644211000/495787677867 = 0.83431725…
+example : (462 / 10000 : ℚ) * (500 / 521 + 124750 / 135981 + 248734250 / 284336271
+    + 413644211000 / 495787677867) = 1 - 413644211000 / 495787677867 := by norm_num
+-- five-year par swap at 4.6500 %: D(5) = 826221623729000/1037683609775631
+example : (465 / 10000 : ℚ) * (500 / 521 + 124750 / 135981 + 248734250 / 284336271
+    + 413644211000 / 495787677867 + 826221623729000 / 1037683609775631)
+    = 1 - 826221623729000 / 1037683609775631 := by norm_num
+-- the card prints D(5) as 0.79621728: the exact value lies between 0.79621728 and 0.79621729
+example : (79621728 / 10 ^ 8 : ℚ) < 826221623729000 / 1037683609775631 ∧
+    (826221623729000 / 1037683609775631 : ℚ) < 79621729 / 10 ^ 8 := by norm_num
+
+#print axioms bootstrap_unique_curve
+#print axioms bootstrap_rung_formula
+#print axioms bootstrap_price_pos_iff
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bootD' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bootD_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fin_sum_Iio_eq_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fin_sum_Iic_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rung_denom_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rung_formula_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bootstrap_unique_curve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bootstrap_rung_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bootstrap_price_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Two of these stop the program outright; the other two rebuild the curve and still pass every assert.
 > - **Feed the quotes longest first.** Reverse `SWAPS`. The five-year rung is solved first, asks for a two-year price nobody has solved yet, and the program stops on the missing key. Order is not a convenience here; it is the method.
 > - **Move the three-year quote.** Set the 3-year entry of `SWAPS` to `0.0456`. The three-year zero rate climbs 1.0030 basis points, the four-year falls 0.0348, and everything shorter is untouched.
-> - **Push the five-year quote to the edge.** Set the 5-year entry to `0.2788`. The five-year price collapses to 0.00012946, a hundredth of a cent per 100 dollars, and its zero rate jumps to 179.0423 percent. Every assert still passes: the edge is where the answer stops being a sane price, not where the arithmetic breaks.
+> - **Push the five-year quote to the edge.** Set the 5-year entry to `0.2788`. The five-year price collapses to 0.00012946, about a cent per 100 dollars, and its zero rate jumps to 179.0423 percent. Every assert still passes: the edge is where the answer stops being a sane price, not where the arithmetic breaks.
 > - **Drop the four-year quote.** Delete the `(4, 0.0462)` entry. The ladder cannot reach the five-year rung and the program stops. The last block of the run above shows what is left: 0.83431725 with 0.79621728, or 0.87478903 with 0.79441897, both repricing the five-year swap exactly.
 
 ---
@@ -648,7 +813,7 @@ The two outputs match line for line.
 >
 > - **Forgetting what the earlier coupons already cost.** The rung is $1 - S_n B_n$ over $1 + \alpha_n S_n$, not 1 over $1 + S_n$. Dropping $B_n$ gives 0.95556617 and a loan worth 11,780,888.45 dollars instead of face value. The deposit formula, which has no $B_n$, looks just similar enough to invite it.
 > - **Bootstrapping through a hole.** A missing maturity does not give a slightly worse curve; it gives no curve. Two pairs of four- and five-year prices fit the same quote exactly and disagree about the fifth year's forward rate by five percentage points: 4.6742 percent against 9.6372 percent.
-> - **Believing the curve between the pillars.** Six quotes buy six prices. A discount factor for two and a half years is a choice made by whoever wrote the interpolation, not a fact read off the market.
+> - **Believing the curve between the pillars.** Six quotes buy six prices. A discount factor for two and a half years is a choice made by whoever wrote the interpolation (the rule that fills in prices between the pillars), not a fact read off the market.
 > - **Quoting a curve without repricing its inputs.** A bootstrap that will not hand its own quotes back is broken, and the test costs one line. Desk systems run it on every build.
 
 ---

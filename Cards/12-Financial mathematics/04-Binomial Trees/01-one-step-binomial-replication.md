@@ -14,9 +14,9 @@ Coarse as it is, that model is enough to price the call, and the pricing needs n
 
 The move is this. Build those two payments out of two ordinary things: Acme shares, and a bank account. Shares pay more in the up future than in the down one; cash in the bank pays the same in both. Two instruments that respond differently, two payments to match, so two equations in two unknowns — and the solution is a pile of shares and cash that pays $22.14 up and $0.00 down. Not approximately: exactly.
 
-A pile that pays whatever the call pays, in every future, must cost whatever the call costs. Anything else is money for nothing; Step 5 collects it.
+A pile that pays whatever the call pays, in every future, must cost whatever the call costs. Any other price gives a certain gain out of nothing; Step 5 collects it.
 
-For Acme the copy is 0.5389 shares, costing $53.89, part-funded by borrowing $42.82. Net cost today: **$11.07**. That is the call's price. The share count is the second prize: a desk short one call buys 0.5389 shares today, which reinvested dividends carry to the 0.5498 it holds at delivery. Either number is the **hedge ratio**; the date has to be said.
+For Acme the copy is 0.5389 shares, costing $53.89, part-funded by borrowing $42.82. Net cost today: **$11.07**. That is the call's price. The share count is the second prize: a desk short one call (one that has sold it) buys 0.5389 shares today, which reinvested dividends carry to the 0.5498 it holds at delivery. Either number is the **hedge ratio**; the date has to be said.
 
 **Two states and two instruments that pay differently in them: solving two equations copies the contract exactly, and the copy's cost today is the contract's price.**
 
@@ -30,7 +30,9 @@ flowchart LR
     A -->|"down factor 0.818731"| D["81.873075<br/>the call pays 0.000000"]
 ```
 
-The two factors, 1.221403 up and 0.818731 down, are $e^{\sigma\sqrt{T}}$ and its reciprocal, where sigma ($\sigma$) is Acme's volatility, how jumpy the share is, 20 percent a year here, and $T$ is the years to delivery. Why that pair and not another is the business of [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md); here they are handed over, along with the rest of the house market: a riskless rate of 5 percent, a dividend yield of 2 percent, both continuously compounded, and one year to delivery.
+The two factors, 1.221403 up and 0.818731 down, are $e^{\sigma\sqrt{T}}$ and its reciprocal. Sigma ($\sigma$) is Acme's volatility, how jumpy the share is: 20 percent a year here. $T$ is the years to delivery.
+
+Why that pair and not another is the business of [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md); here they are handed over. So is the rest of the house market: a riskless rate of 5 percent, a dividend yield of 2 percent, and one year to delivery. Both rates are continuously compounded: a year at 5 percent grows a dollar to $e^{0.05}$, which is 1.051271.
 
 ---
 
@@ -71,7 +73,7 @@ $\Delta$ counts shares held **at delivery**, which is not the number to buy now.
 
 - **Exactly two delivery prices, both possible.** Two instruments pin down two numbers and no more: let a third price into the model and the copy is short in the state it never saw. What three states need is [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
 - **The two states differ, $u > d$.** With one price in both futures the two equations have identical left-hand sides: unequal payments then have no copy at all, and the division by $S(u-d)$ is a division by zero.
-- **The forward growth factor lands strictly between the two: $d < e^{(r-q)T} < u$.** Acme's is 1.030455, inside 0.818731 and 1.221403. Break it and the market itself is broken: the folded proof below builds a trade that costs nothing, never loses and sometimes wins. A copy's cost is a price only where such trades are absent.
+- **The forward growth factor lands strictly between the two: $d < e^{(r-q)T} < u$.** The forward growth factor $e^{(r-q)T}$ is the bank's growth with the dividend yield taken off. Acme's is 1.030455, inside 0.818731 and 1.221403. Break it and the market itself is broken: the folded proof below builds a trade that costs nothing, never loses and sometimes wins. Such a trade is an arbitrage ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). A copy's cost is a price only where such trades are absent.
 - **Trading is frictionless.** Fractional shares, borrowing and lending at the same 5 percent, no fees, no spread, no default, holdings untouched until delivery. Every friction widens the price from a point to a band: a bid-ask spread of 20 cents on Acme moves the copy's cost by 0.107789.
 - **The dividend yield is known and leaks out steadily.** That is what makes $e^{-qT}$ the right shrink on the share leg. A lump dividend on a known date needs its present value subtracted instead; charging the yield twice prices this call at 10.619190 rather than 11.073541.
 
@@ -133,7 +135,7 @@ Collecting the cost around the two payments instead of the two holdings gives on
 
 $$V = e^{-rT}\left[\frac{e^{(r-q)T} - d}{u - d}\,H_u \;+\; \frac{u - e^{(r-q)T}}{u - d}\,H_d\right].$$
 
-For Acme the two brackets are 0.525797 and 0.474203. They add to exactly 1, and both are positive exactly when the forward factor sits between $d$ and $u$ — the band from When it holds. The cost then reads a second way: weigh the two payments, add, discount once. Those weights are the one-period state prices ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)) in the tree's clothes. Why 0.525797 looks so much like a chance of an up move, and what follows from treating it as one, is the next card: [The risk-neutral probability](02-risk-neutral-probability.md). None of the algebra above needed it.
+For Acme the two brackets are 0.525797 and 0.474203. They add to exactly 1, and both are positive exactly when the forward factor sits between $d$ and $u$ — the band from When it holds. The cost then reads a second way: weigh the two payments, add, discount once. Multiplied by the discount 0.951229, those weights become the tree's one-period state prices ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). Why 0.525797 looks so much like a chance of an up move, and what follows from treating it as one, is the next card: [The risk-neutral probability](02-risk-neutral-probability.md). None of the algebra above needed it.
 
 <details>
 <summary>Detailed proof: a copy exists, only one exists, and the band is exactly right</summary>
@@ -168,7 +170,7 @@ Acme on the house tree: $S = 100.00$, $K = 100.00$, $u = 1.221403$, $d = 0.81873
 | the share leg's cost | $0.538947 \times 100.00$ | 53.894655 |
 | **the copy's cost** | $53.894655 - 42.821115$ | **11.073541** |
 
-Manufacturing that call out of Acme shares and a bank loan costs $11.07, so that is what the call is worth: about 11 percent of the share price for a year of upside with the downside cut off.
+Manufacturing that call out of Acme shares and a bank loan costs $11.07, so that is what the call is worth. That is about 11 percent of the share price, for a year of upside with the downside cut off.
 
 ### The hedge ratio moves with the strike
 
@@ -200,7 +202,14 @@ Every one of those five numbers is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows an option price. Road 1 eliminates and substitutes, the algebra of Steps 2 and 3. Road 2 never divides by $u - d$: it fixes the bank balance to match the down state, then hunts the share count that closes the up state by bisection, the root finder written out. Road 3 uses the regrouped weights of Step 6. Road 4 repeats the solve in whole-number fractions on a toy market where the share moves by a fifth and the bank multiplies cash by 21/20, so the exact answers — half a share, −800/21 of cash, 250/21 of cost — carry no rounding at all. The copy is then tested state by state, on this call and on one struck at 80 that pays in both; the weights are checked against the share's own price; the mispricing trade of Step 5 is run; and every wrong number above is reproduced.
+Nothing is imported that already knows an option price. The code takes four independent roads to the answer:
+
+- Road 1 eliminates and substitutes, the algebra of Steps 2 and 3.
+- Road 2 never divides by $u - d$. It fixes the bank balance to match the down state, then hunts the share count that closes the up state by bisection, the root finder written out: it halves the range of possible share counts 200 times.
+- Road 3 uses the regrouped weights of Step 6.
+- Road 4 repeats the solve in whole-number fractions on a toy market. There the share moves by a fifth and the bank multiplies cash by 21/20, so the exact answers — half a share, −800/21 of cash, 250/21 of cost — carry no rounding at all.
+
+The copy is then tested state by state, on this call and on one struck at 80 that pays in both. The weights are checked against the share's own price, the mispricing trade of Step 5 is run, and every wrong number above is reproduced.
 
 ### Python
 
@@ -618,6 +627,304 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the copy, the price and the band for every one-step market with $S > 0$ and $u > d$.
+
+- Suppose $S > 0$, $u > d$, and the forward growth factor lies strictly between $d$ and $u$. Then exactly one share holding and bank balance copy the contract: the $\Delta$ and $B$ of The formula.
+- Take that same market, with the contract also trading at a price $P$. Then no trade in shares, cash and the contract is an arbitrage exactly when $P$ equals the copy's cost $V$.
+- Suppose $S > 0$ and $u > d$. Then shares and the bank alone allow no arbitrage exactly when the forward growth factor lies strictly between $d$ and $u$.
+- Suppose $S > 0$ and $u > d$. Then the copy's cost $V$ equals the regrouped line of Step 6, for any two payments.
+- Take the toy market of Road 4, with a strike of 100. Then the call pays 20 or 0, and the copy, half a share and −800/21 of cash, costs 250/21.
+
+Acme's numbers, the bisection, the mispricing trade, the strike table and the wrong answers are left to the Python and Rust checks.
+
+```lean
+-- One step: in a market where the share ends at one of two prices, exactly one holding of shares and cash copies any contract, and once the forward factor sits strictly between the two moves, the only price that leaves no free money is that copy's cost.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Tactic
+
+namespace OneStepBinomial
+
+/-! The model. The share costs `S` today and ends at `S * u` (up) or `S * d` (down) after `T`
+years. The bank grows cash by `exp (r * T)`. The share pays a dividend yield `q`, reinvested in
+more shares, so holding `Δ` shares at delivery takes `Δ * exp (-q * T)` shares today. -/
+
+/-- What `Δ` shares at delivery and `B` in the bank today pay at delivery when the share ends at
+price `x`. -/
+noncomputable def payAt (r T Δ B x : ℝ) : ℝ :=
+  Δ * x + B * Real.exp (r * T)
+
+/-- The holding `(Δ, B)` copies the contract: it pays `Hu` in the up state and `Hd` in the
+down state. -/
+def Copies (S u d r T Hu Hd Δ B : ℝ) : Prop :=
+  payAt r T Δ B (S * u) = Hu ∧ payAt r T Δ B (S * d) = Hd
+
+/-- What the holding `(Δ, B)` costs today: the shares, made cheaper by the dividends they earn
+before delivery, plus the cash in the bank. -/
+noncomputable def copyCost (S q T Δ B : ℝ) : ℝ :=
+  Δ * S * Real.exp (-q * T) + B
+
+/-- The card's hedge ratio: shares held at delivery. -/
+noncomputable def hedgeRatio (S u d Hu Hd : ℝ) : ℝ :=
+  (Hu - Hd) / (S * (u - d))
+
+/-- The card's bank balance today. -/
+noncomputable def bankBalance (u d r T Hu Hd : ℝ) : ℝ :=
+  Real.exp (-r * T) * ((u * Hd - d * Hu) / (u - d))
+
+/-- A position of `a` shares at delivery, `b` in the bank today and `c` contracts, with the
+contract quoted at `P` today, is an arbitrage: it costs nothing (or less) to open, never pays
+less than zero at delivery, and pays more than zero in at least one state. -/
+def IsArbitrage (S u d r q T Hu Hd P a b c : ℝ) : Prop :=
+  copyCost S q T a b + c * P ≤ 0 ∧
+    0 ≤ payAt r T a b (S * u) + c * Hu ∧
+    0 ≤ payAt r T a b (S * d) + c * Hd ∧
+    (0 < payAt r T a b (S * u) + c * Hu ∨ 0 < payAt r T a b (S * d) + c * Hd)
+
+/-- With the contract quoted at `P`, no position in shares, cash and contracts is an arbitrage. -/
+def NoArbitrage (S u d r q T Hu Hd P : ℝ) : Prop :=
+  ∀ a b c, ¬ IsArbitrage S u d r q T Hu Hd P a b c
+
+/-- The market of the share and the bank alone has no arbitrage (no contracts held). -/
+def ShareBankNoArbitrage (S u d r q T : ℝ) : Prop :=
+  ∀ a b, ¬ IsArbitrage S u d r q T 0 0 0 a b 0
+
+lemma exp_fwd_eq (r q T : ℝ) :
+    Real.exp ((r - q) * T) = Real.exp (r * T) * Real.exp (-q * T) := by
+  rw [← Real.exp_add]; ring_nf
+
+#print axioms exp_fwd_eq
+
+lemma exp_neg_mul_exp (r T : ℝ) : Real.exp (-r * T) * Real.exp (r * T) = 1 := by
+  rw [← Real.exp_add]; simp
+
+#print axioms exp_neg_mul_exp
+
+/-- Core no-arbitrage fact for the share and the bank, under the band. -/
+lemma share_bank_core (S u d r q T a b : ℝ)
+    (hd : d < Real.exp ((r - q) * T)) (hu : Real.exp ((r - q) * T) < u)
+    (hcost : copyCost S q T a b ≤ 0)
+    (hX : 0 ≤ payAt r T a b (S * u)) (hY : 0 ≤ payAt r T a b (S * d))
+    (hpos : 0 < payAt r T a b (S * u) ∨ 0 < payAt r T a b (S * d)) : False := by
+  unfold copyCost at hcost
+  unfold payAt at hX hY hpos
+  have hE : 0 < Real.exp (r * T) := Real.exp_pos _
+  have hF := exp_fwd_eq r q T
+  set E := Real.exp (r * T)
+  set G := Real.exp (-q * T)
+  set F := Real.exp ((r - q) * T)
+  have hZ : a * S * F + b * E ≤ 0 := by
+    have := mul_nonpos_of_nonneg_of_nonpos hE.le hcost
+    rw [hF]; nlinarith
+  have hid : (F - d) * (a * (S * u) + b * E) + (u - F) * (a * (S * d) + b * E)
+      = (u - d) * (a * S * F + b * E) := by ring
+  have h1 : 0 ≤ (u - F) * (a * (S * d) + b * E) := mul_nonneg (by linarith) hY
+  have h2 : 0 ≤ (F - d) * (a * (S * u) + b * E) := mul_nonneg (by linarith) hX
+  have h3 : (u - d) * (a * S * F + b * E) ≤ 0 :=
+    mul_nonpos_of_nonneg_of_nonpos (by linarith) hZ
+  rcases hpos with h | h
+  · have := mul_pos (show (0:ℝ) < F - d by linarith) h
+    linarith
+  · have := mul_pos (show (0:ℝ) < u - F by linarith) h
+    linarith
+
+#print axioms share_bank_core
+
+lemma hedge_copies (S u d r T Hu Hd : ℝ) (hS : 0 < S) (hud : d < u) :
+    Copies S u d r T Hu Hd (hedgeRatio S u d Hu Hd) (bankBalance u d r T Hu Hd) := by
+  have h1 := exp_neg_mul_exp r T
+  have hne : u - d ≠ 0 := sub_ne_zero.mpr hud.ne'
+  have hS0 : S ≠ 0 := hS.ne'
+  unfold Copies payAt hedgeRatio bankBalance
+  constructor
+  · have : Real.exp (-r * T) * ((u * Hd - d * Hu) / (u - d)) * Real.exp (r * T)
+        = (u * Hd - d * Hu) / (u - d) := by
+      rw [mul_comm _ (Real.exp (r * T)), ← mul_assoc, mul_comm (Real.exp (r * T)), h1, one_mul]
+    rw [this]; field_simp; ring
+  · have : Real.exp (-r * T) * ((u * Hd - d * Hu) / (u - d)) * Real.exp (r * T)
+        = (u * Hd - d * Hu) / (u - d) := by
+      rw [mul_comm _ (Real.exp (r * T)), ← mul_assoc, mul_comm (Real.exp (r * T)), h1, one_mul]
+    rw [this]; field_simp; ring
+
+#print axioms hedge_copies
+
+/-- One step, two states, two instruments, one hedge. Take a share at `S > 0` that ends at
+`S * u` or `S * d` with `u > d`, a bank growing cash by `exp (r * T)`, a dividend yield `q`, and
+the forward factor strictly inside the band, `d < exp ((r - q) * T) < u`. Then for any payments
+`Hu` (up) and `Hd` (down):
+(1) a holding of shares and cash copies the contract exactly when the shares held at delivery are
+`(Hu - Hd) / (S * (u - d))` and the cash today is `exp (-r * T) * (u * Hd - d * Hu) / (u - d)`,
+so the copy exists and is the only one; and
+(2) with the contract also trading at `P`, there is no arbitrage exactly when `P` equals that
+copy's cost today. -/
+theorem one_step_replication_price
+    (S u d r q T Hu Hd P : ℝ) (hS : 0 < S) (hud : d < u)
+    (hd : d < Real.exp ((r - q) * T)) (hu : Real.exp ((r - q) * T) < u) :
+    (∀ Δ B, Copies S u d r T Hu Hd Δ B ↔
+        Δ = hedgeRatio S u d Hu Hd ∧ B = bankBalance u d r T Hu Hd) ∧
+      (NoArbitrage S u d r q T Hu Hd P ↔
+        P = copyCost S q T (hedgeRatio S u d Hu Hd) (bankBalance u d r T Hu Hd)) := by
+  have hne : u - d ≠ 0 := sub_ne_zero.mpr hud.ne'
+  have hS0 : S ≠ 0 := hS.ne'
+  have hE : 0 < Real.exp (r * T) := Real.exp_pos _
+  have h1 := exp_neg_mul_exp r T
+  have hcopy := hedge_copies S u d r T Hu Hd hS hud
+  refine ⟨fun Δ B => ?_, ?_⟩
+  · constructor
+    · rintro ⟨hup, hdn⟩
+      obtain ⟨hup0, hdn0⟩ := hcopy
+      unfold payAt at hup hdn hup0 hdn0
+      set Δ0 := hedgeRatio S u d Hu Hd
+      set B0 := bankBalance u d r T Hu Hd
+      have hΔ : (Δ - Δ0) * (S * (u - d)) = 0 := by linear_combination hup - hdn - hup0 + hdn0
+      have hSud : S * (u - d) ≠ 0 := mul_ne_zero hS0 hne
+      have hΔ' : Δ = Δ0 := by
+        have := (mul_eq_zero.mp hΔ).resolve_right hSud
+        linarith
+      refine ⟨hΔ', ?_⟩
+      have hB : (B - B0) * Real.exp (r * T) = 0 := by
+        rw [hΔ'] at hup; linear_combination hup - hup0
+      have := (mul_eq_zero.mp hB).resolve_right hE.ne'
+      linarith
+    · rintro ⟨rfl, rfl⟩; exact hcopy
+  · obtain ⟨hup0, hdn0⟩ := hcopy
+    set Δ0 := hedgeRatio S u d Hu Hd
+    set B0 := bankBalance u d r T Hu Hd
+    constructor
+    · intro hna
+      by_contra hP
+      rcases lt_or_gt_of_ne hP with hlt | hgt
+      · -- P below the copy's cost: buy the contract, sell the copy
+        apply hna (-Δ0) (-B0 + (copyCost S q T Δ0 B0 - P)) 1
+        unfold payAt at hup0 hdn0
+        have hε : 0 < copyCost S q T Δ0 B0 - P := by linarith
+        have hεE := mul_pos hε hE
+        refine ⟨?_, ?_, ?_, Or.inl ?_⟩
+        · unfold copyCost at *; linarith
+        · unfold payAt; nlinarith
+        · unfold payAt; nlinarith
+        · unfold payAt; nlinarith
+      · -- P above the copy's cost: sell the contract, buy the copy
+        apply hna Δ0 (B0 + (P - copyCost S q T Δ0 B0)) (-1)
+        unfold payAt at hup0 hdn0
+        have hε : 0 < P - copyCost S q T Δ0 B0 := by linarith
+        have hεE := mul_pos hε hE
+        refine ⟨?_, ?_, ?_, Or.inl ?_⟩
+        · unfold copyCost at *; linarith
+        · unfold payAt; nlinarith
+        · unfold payAt; nlinarith
+        · unfold payAt; nlinarith
+    · intro hP a b c harb
+      obtain ⟨hc, hX, hY, hpos⟩ := harb
+      apply share_bank_core S u d r q T (a + c * Δ0) (b + c * B0) hd hu
+      · have : copyCost S q T (a + c * Δ0) (b + c * B0) = copyCost S q T a b + c * P := by
+          rw [hP]; unfold copyCost; ring
+        linarith
+      · have : payAt r T (a + c * Δ0) (b + c * B0) (S * u) = payAt r T a b (S * u) + c * Hu := by
+          rw [← hup0]; unfold payAt; ring
+        linarith
+      · have : payAt r T (a + c * Δ0) (b + c * B0) (S * d) = payAt r T a b (S * d) + c * Hd := by
+          rw [← hdn0]; unfold payAt; ring
+        linarith
+      · have e1 : payAt r T (a + c * Δ0) (b + c * B0) (S * u) = payAt r T a b (S * u) + c * Hu := by
+          rw [← hup0]; unfold payAt; ring
+        have e2 : payAt r T (a + c * Δ0) (b + c * B0) (S * d) = payAt r T a b (S * d) + c * Hd := by
+          rw [← hdn0]; unfold payAt; ring
+        rw [e1, e2]; exact hpos
+
+/-- The band is exactly right: with `S > 0` and `u > d`, the share and the bank alone admit no
+arbitrage exactly when the forward factor lies strictly between the two moves,
+`d < exp ((r - q) * T) < u`. -/
+theorem share_bank_no_arbitrage_iff_band
+    (S u d r q T : ℝ) (hS : 0 < S) (hud : d < u) :
+    ShareBankNoArbitrage S u d r q T ↔
+      d < Real.exp ((r - q) * T) ∧ Real.exp ((r - q) * T) < u := by
+  have hE : 0 < Real.exp (r * T) := Real.exp_pos _
+  have hF := exp_fwd_eq r q T
+  constructor
+  · intro hna
+    by_contra hband
+    rw [not_and_or, not_lt, not_lt] at hband
+    rcases hband with h | h
+    · -- forward at or below d: buy one share with borrowed cash
+      apply hna 1 (-(S * Real.exp (-q * T)))
+      refine ⟨?_, ?_, ?_, Or.inl ?_⟩
+      · unfold copyCost; simp
+      · unfold payAt; rw [hF] at h; nlinarith
+      · unfold payAt; rw [hF] at h; nlinarith
+      · unfold payAt; rw [hF] at h; nlinarith
+    · -- forward at or above u: sell one share, bank the cash
+      apply hna (-1) (S * Real.exp (-q * T))
+      refine ⟨?_, ?_, ?_, Or.inr ?_⟩
+      · unfold copyCost; simp
+      · unfold payAt; rw [hF] at h; nlinarith
+      · unfold payAt; rw [hF] at h; nlinarith
+      · unfold payAt; rw [hF] at h; nlinarith
+  · rintro ⟨hd, hu⟩ a b ⟨hc, hX, hY, hpos⟩
+    simp only [mul_zero, add_zero] at hc hX hY hpos
+    exact share_bank_core S u d r q T a b hd hu hc hX hY hpos
+
+/-- The same number, regrouped: the copy's cost is the two payments weighed by
+`(exp ((r - q) * T) - d) / (u - d)` and `(u - exp ((r - q) * T)) / (u - d)`, added, and
+discounted once at the bank rate. -/
+theorem copy_cost_eq_weighted_payments
+    (S u d r q T Hu Hd : ℝ) (hS : 0 < S) (hud : d < u) :
+    copyCost S q T (hedgeRatio S u d Hu Hd) (bankBalance u d r T Hu Hd) =
+      Real.exp (-r * T) *
+        ((Real.exp ((r - q) * T) - d) / (u - d) * Hu +
+          (u - Real.exp ((r - q) * T)) / (u - d) * Hd) := by
+  have hne : u - d ≠ 0 := sub_ne_zero.mpr hud.ne'
+  have hS0 : S ≠ 0 := hS.ne'
+  have hF := exp_fwd_eq r q T
+  have h1 := exp_neg_mul_exp r T
+  have hE : Real.exp (r * T) ≠ 0 := (Real.exp_pos _).ne'
+  unfold copyCost hedgeRatio bankBalance
+  rw [hF, eq_inv_of_mul_eq_one_left h1]
+  field_simp
+  ring
+
+-- The card's toy market in exact fractions: S = 100, u = 6/5, d = 4/5, the bank multiplies cash
+-- by 21/20, no dividend, and the call is struck at 100.
+-- The call pays 20 up and 0 down.
+example : max ((100 : ℚ) * (6 / 5) - 100) 0 = 20 := by norm_num
+example : max ((100 : ℚ) * (4 / 5) - 100) 0 = 0 := by norm_num
+-- Half a share at delivery: (20 - 0) / (100 * (6/5 - 4/5)) = 1/2.
+example : ((20 : ℚ) - 0) / (100 * (6 / 5 - 4 / 5)) = 1 / 2 := by norm_num
+-- Cash today: (u * Hd - d * Hu) / (u - d), discounted by 20/21, is -800/21.
+example : (20 / 21 : ℚ) * ((6 / 5 * 0 - 4 / 5 * 20) / (6 / 5 - 4 / 5)) = -800 / 21 := by norm_num
+-- The copy pays 20 up and 0 down.
+example : (1 / 2 : ℚ) * 120 + (-800 / 21) * (21 / 20) = 20 := by norm_num
+example : (1 / 2 : ℚ) * 80 + (-800 / 21) * (21 / 20) = 0 := by norm_num
+-- The copy costs 250/21 today.
+example : (1 / 2 : ℚ) * 100 + (-800 / 21) = 250 / 21 := by norm_num
+-- The same toy market through the file's own definitions, with exp (r * T) = 21/20.
+example : hedgeRatio 100 (6 / 5) (4 / 5) 20 0 = 1 / 2 := by
+  norm_num [hedgeRatio]
+example : bankBalance (6 / 5) (4 / 5) (Real.log (21 / 20)) 1 20 0 = -800 / 21 := by
+  norm_num [bankBalance, Real.exp_neg, Real.exp_log]
+example : copyCost 100 0 1 (1 / 2) (-800 / 21) = 250 / 21 := by
+  norm_num [copyCost]
+
+#print axioms one_step_replication_price
+#print axioms share_bank_no_arbitrage_iff_band
+#print axioms copy_cost_eq_weighted_payments
+
+end OneStepBinomial
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'OneStepBinomial.exp_fwd_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OneStepBinomial.exp_neg_mul_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OneStepBinomial.share_bank_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OneStepBinomial.hedge_copies' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OneStepBinomial.one_step_replication_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OneStepBinomial.share_bank_no_arbitrage_iff_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OneStepBinomial.copy_cost_eq_weighted_payments' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to Acme's tree, so expect one to stop the program.
@@ -642,7 +949,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **An options desk, every day.** A market maker who sells that call buys 0.5389 shares against it, so Acme's move leaves the book flat. In a one-step world the hedge is set once; in the real one it is reset as the price and the clock move — the same solve at every node of [Many steps](03-multi-step-trees-and-backward-induction.md).
+- **An options desk, every day.** A market maker who sells that call buys 0.5389 shares against it, so Acme's move leaves the desk neither richer nor poorer. In a one-step world the hedge is set once; in the real one it is reset as the price and the clock move — the same solve at every node of [Many steps](03-multi-step-trees-and-backward-induction.md).
 - **Listed American options.** Exchange-traded options on shares are priced on trees, because the holder may exercise early and a formula has nowhere to ask whether they should. That question is asked node by node in [Early exercise](05-american-exercise-on-a-tree.md).
 - **Convertible bonds and structured notes.** A bond that converts into shares is a loan plus a call, and the call leg is priced and hedged exactly as above: shares plus borrowing, solved state by state.
 
@@ -654,7 +961,7 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Replication](../03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): what it means for shares and cash to copy a contract, and why a copy left untouched between two dates needs no cash injected. This card builds the smallest copy there is.
-- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the price of a dollar paid in one named state. The brackets of Step 6 are those prices, read off a tree.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the price of a dollar paid in one named state. The brackets of Step 6, multiplied by the discount $e^{-rT}$, are those prices, read off a tree.
 - [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): eliminate one unknown by subtraction, substitute back for the other, and know when the solution is the only one. The derivation is that method applied to money.
 
 ## Where this goes next

@@ -12,11 +12,13 @@ Now a strange little contract. It pays exactly $1.00 if Acme ends the year at $1
 
 The market has already answered: $0.476190. The matching ticket on the other ending, paying $1.00 if Acme finishes at $90.00, costs exactly the same, $0.476190 — even though one ending is a $20.00 rise and the other a $10.00 fall.
 
-A contract that pays one unit of money in a single future state and nothing in the others is an **elementary claim**; what it costs today is the **state price** of that state, the term from here on.
+A contract that pays one unit of money in a single future state and nothing in the others is an **elementary claim**. What it costs today is the **state price** of that state, the term from here on.
 
 Those two numbers run everything, because every contract here is a pile of the two tickets. A call paying whatever Acme is worth above $100.00 pays $20.00 up and nothing down, so it is twenty up tickets: twenty lots of $0.476190, which is $9.52.
 
-The two state prices add to 0.952381, which is what a dollar due in a year is worth today whatever happens — the discount factor. Divide each by that total and the pair becomes 0.500000 and 0.500000: two positive numbers adding to one. Numbers like that can be used exactly as probabilities are — weight each payment and add up — and when they come from state prices they are called **risk-neutral probabilities**. They forecast nothing. A sober forecast for this Acme might put the real chance of the up state at 0.70, and 0.70 never touches a price.
+The two state prices add to 0.952381, which is what a dollar due in a year is worth today whatever happens — the discount factor. Divide each by that total and the pair becomes 0.500000 and 0.500000: two positive numbers adding to one.
+
+Numbers like that can be used exactly as probabilities are — weight each payment and add up — and when they come from state prices they are called **risk-neutral probabilities**. They forecast nothing. A sober forecast for this Acme might put the real chance of the up state at 0.70, and 0.70 never touches a price.
 
 **Two traded prices fix what a dollar delivered in each future state costs today; every payoff is then priced by weighting its payments with those state prices, and rescaling the state prices to add to one turns that price into a discounted average that predicts nothing.**
 
@@ -35,7 +37,7 @@ flowchart LR
 
 ## The formula
 
-Notation first, in words. The two endings are called **states**: "up" is Acme at $120.00, "down" is Acme at $90.00, and a subscript u or d means "in that state", so $S_0$ is Acme's price today and $S_u$ and $S_d$ are its two endings. The Greek letter psi, written $\psi_u$ and $\psi_d$, is the standard letter for a state price; $D$ is today's price of a dollar due in a year whatever happens.
+Notation first, in words. The two endings are called **states**: "up" is Acme at $120.00, "down" is Acme at $90.00. A subscript u or d means "in that state", so $S_0$ is Acme's price today and $S_u$ and $S_d$ are its two endings. The Greek letter psi, written $\psi_u$ and $\psi_d$, is the standard letter for a state price; $D$ is today's price of a dollar due in a year whatever happens.
 
 The two traded things give two equations. The bank account, read as a contract, pays $1.00 in both states; Acme pays $S_u$ or $S_d$:
 
@@ -79,7 +81,7 @@ That last line is the sentence quoted everywhere in finance: a price is a discou
 
 - **Two states, and two traded assets that pay different amounts in them.** If Acme paid the same in both states it would be a second bank account, the two equations would collapse into one, and no ticket would have a price.
 - **A bank factor strictly inside the two returns:** $S_d < R\,S_0 < S_u$, here 90.00 < 105.00 < 120.00. Outside it a state price is zero or negative, which is free money rather than a market: the check sets the bank to 1.25 and prints −0.133333.
-- **One period, settling at the end of it.** Nothing trades in between, Acme pays no dividend first, there are no fees, borrowing and lending cost the same, and positions may be long or short in any size. A dividend before settlement joins Acme's equation, and both state prices shift.
+- **One period, settling at the end of it.** Nothing trades in between, Acme pays no dividend first, there are no fees, borrowing and lending cost the same, and positions may be long (owned) or short (sold without owning) in any size. A dividend before settlement joins Acme's equation, and both state prices shift.
 - **As many traded assets as states.** Three endings priced by two assets leaves an unknown too many: the equations allow a range of state prices, so a contract has a band of prices rather than one, until a third is quoted.
 
 ---
@@ -88,7 +90,12 @@ That last line is the sentence quoted everywhere in finance: a price is a discou
 
 ### Step 0: every contract in this market is a pile of two tickets
 
-A contract paying $H_u$ up and $H_d$ down is $H_u$ up tickets and $H_d$ down tickets, with nothing left over: the call is twenty up tickets, a put struck at 100.00 is ten down tickets, Acme itself is 120.00 up tickets plus 90.00 down tickets, and a sure dollar is one of each.
+A contract paying $H_u$ up and $H_d$ down is $H_u$ up tickets and $H_d$ down tickets, with nothing left over:
+
+- the call is twenty up tickets;
+- a put struck at 100.00, which pays whatever Acme ends below 100.00 (its strike), is ten down tickets;
+- Acme itself is 120.00 up tickets plus 90.00 down tickets;
+- a sure dollar is one of each.
 
 Price the two tickets and the market is priced. The step is legal because two contracts paying the same in every state cost the same today ([No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md)).
 
@@ -98,13 +105,13 @@ Acme and the bank are the two contracts the market does quote; read as piles of 
 
 $$\psi_u\,(S_u - S_d) = S_0 - D\,S_d$$
 
-Here the bank turns 20 into 21, so a sure dollar costs 20/21 exactly and working over 21 keeps every number whole: the numerator is 100.00 × 21 − 90.00 × 20 = 300, the gap between Acme's endings is 30.00, so 21 up tickets cost 300 ÷ 30.00 = 10 and one costs 10/21, which is 0.476190. The same subtraction the other way gives the down ticket, also 10/21.
+Here the bank turns 20 into 21, so a sure dollar costs 20/21 exactly and working over 21 keeps every number whole. The numerator is 100.00 × 21 − 90.00 × 20 = 300, and the gap between Acme's endings is 30.00. So 21 up tickets cost 300 ÷ 30.00 = 10 and one costs 10/21, which is 0.476190. The same subtraction the other way gives the down ticket, also 10/21.
 
 ### Step 2: no free money means both prices are positive
 
 A ticket never pays less than nothing and sometimes pays 1.00. If its price were zero or below, buying it would be free or would pay the buyer, and could only return money: free money, which no market allows for long.
 
-The reverse holds too, and matters more. If both state prices are positive then every price is a positive mix of payments, so a contract that never pays less than zero cannot cost less than zero: no free money anywhere in the market. That two-way link — **no arbitrage exactly when every state price is positive** — is the theorem this card exists for, and in the literature it is the first fundamental theorem of asset pricing ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+The reverse holds too, and matters more. If both state prices are positive then every price is a positive mix of payments, so a contract that never pays less than zero cannot cost less than zero: no free money anywhere in the market. Free money of this kind is called arbitrage. That two-way link — **no arbitrage exactly when every state price is positive** — is the theorem this card exists for. In the literature it is the first fundamental theorem of asset pricing ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
 
 <details>
 <summary>Detailed proof: positive state prices and free money are exact opposites</summary>
@@ -193,7 +200,14 @@ the call, priced four ways, in dollars
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The prices are reached by four roads that meet only at the answer: a two-by-two solve of the market's own equations; a copy of each payoff built from shares and cash, priced at what the copy costs; the risk-neutral weights, read off from where the banked 105.00 sits between the two endings; and whole numbers over 21, which cannot round. A coin the script builds itself is then flipped 200,000 times at those weights, and again at the real 0.70. The last block sweeps the bank factor across the band, checking that positive state prices and no free money hold and fail together.
+Nothing is imported. The prices are reached by four roads that meet only at the answer:
+
+1. a two-by-two solve of the market's own equations;
+2. a copy of each payoff built from shares and cash, priced at what the copy costs;
+3. the risk-neutral weights, read off from where the banked 105.00 sits between the two endings;
+4. whole numbers over 21, which cannot round.
+
+A coin the script builds itself is then flipped 200,000 times at those weights, and again at the real 0.70. The last block sweeps the bank factor across the band, checking that positive state prices and no free money hold and fail together. In the output, K is the strike: the fixed price each contract compares Acme against.
 
 ### Python
 
@@ -593,10 +607,253 @@ ALL CHECKS PASS
 
 The two outputs match line for line, flips included: the generator is written out in both languages, so both see the same 99679 heads.
 
+### Lean
+
+Lean proves the card's claims for every two-state market with a bank and one stock, and checks the worked numbers exactly.
+
+- Suppose the bank factor is not zero, and Acme pays different amounts in the two states. Then exactly one pair of state prices fits both, given by the formula above.
+- Take any payoff, $H_u$ up and $H_d$ down. Then shares and cash can copy it, and every copy costs $\psi_u H_u + \psi_d H_d$.
+- Take the two state prices, each divided by $D$. Then the weights $q_u$ and $q_d$ add to one.
+- Take the same market. Then $q_u = (R\,S_0 - S_d)/(S_u - S_d)$, with no state price needed.
+- Take any payoff. Then its price equals $D\,(q_u H_u + q_d H_d)$, the discounted average.
+- Take the weights $q_u$ and $q_d$. Then Acme averages $R\,S_0$ under them: its price grown at the bank.
+- In the same market, no portfolio of shares and cash is free money exactly when both state prices are above zero.
+- Suppose the bank factor is positive, and Acme pays more up than down. Then both state prices are positive exactly when $S_d < R\,S_0 < S_u$.
+- The hand arithmetic holds exactly, as fractions: tickets, call, put, forward, weights, the what-breaks table and the bank at 1.25.
+
+The coin flips, the printed decimals and the chart's sweep of bank factors are left to the Python and Rust checks.
+
+```lean
+-- State prices: in a one-period market with two endings, the stock and the bank fix one price for a dollar paid in each ending, those prices price every payoff, rescaled they become weights adding to one, and no free money exists exactly when both are positive.
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Positivity
+
+/-!
+Setting, as on the card.
+
+* `S0` is Acme's price today; `Su` and `Sd` are what Acme is worth in the up and down states.
+* `R` is what 1 in the bank becomes over the period, so `R⁻¹` is the discount factor `D`,
+  today's price of a dollar paid in both states.
+* A pair `(ψu, ψd)` is a pair of state prices when it prices the two traded things:
+  `ψu + ψd = D` (the bank) and `ψu * Su + ψd * Sd = S0` (Acme).
+* A portfolio is `Δ` shares of Acme and `c` dollars in the bank. It costs `Δ * S0 + c`
+  today and pays `Δ * Su + c * R` in the up state and `Δ * Sd + c * R` in the down state.
+  Any real `Δ` and `c` are allowed: long or short, any size, no fees.
+* The risk-neutral weights are `qu = ψu / D` and `qd = ψd / D`.
+-/
+
+/-- Free money: a portfolio of Acme and cash that costs nothing or less today, never pays
+less than nothing, and pays something in at least one state. -/
+def IsFreeMoney (S0 Su Sd R Δ c : ℝ) : Prop :=
+  Δ * S0 + c ≤ 0 ∧ 0 ≤ Δ * Su + c * R ∧ 0 ≤ Δ * Sd + c * R ∧
+    (0 < Δ * Su + c * R ∨ 0 < Δ * Sd + c * R)
+
+lemma sp_price_identity (S0 Su Sd R ψu ψd Δ c : ℝ) (hR : R ≠ 0)
+    (hbank : ψu + ψd = R⁻¹) (hacme : ψu * Su + ψd * Sd = S0) :
+    Δ * S0 + c = ψu * (Δ * Su + c * R) + ψd * (Δ * Sd + c * R) := by
+  have hRR : R * R⁻¹ = 1 := mul_inv_cancel₀ hR
+  linear_combination (-Δ) * hacme + (-c * R) * hbank - c * hRR
+
+lemma sp_psi_up (S0 Su Sd R ψu ψd : ℝ) (hR : R ≠ 0)
+    (hbank : ψu + ψd = R⁻¹) (hacme : ψu * Su + ψd * Sd = S0) :
+    R * ψu * (Su - Sd) = R * S0 - Sd := by
+  have hRR : R * R⁻¹ = 1 := mul_inv_cancel₀ hR
+  linear_combination R * hacme - R * Sd * hbank - Sd * hRR
+
+lemma sp_psi_down (S0 Su Sd R ψu ψd : ℝ) (hR : R ≠ 0)
+    (hbank : ψu + ψd = R⁻¹) (hacme : ψu * Su + ψd * Sd = S0) :
+    R * ψd * (Su - Sd) = Su - R * S0 := by
+  have hRR : R * R⁻¹ = 1 := mul_inv_cancel₀ hR
+  linear_combination -R * hacme + R * Su * hbank + Su * hRR
+
+#print axioms sp_price_identity
+#print axioms sp_psi_up
+#print axioms sp_psi_down
+
+/-- The card's main claim. With two states, a bank and a stock that pays different amounts
+in the two states, the two traded prices fix the state prices: exactly one pair solves
+`ψu + ψd = D` and `ψu * Su + ψd * Sd = S0`, namely `ψu = (S0 - D Sd)/(Su - Sd)` and
+`ψd = (D Su - S0)/(Su - Sd)`. Every payoff `(Hu, Hd)` can be copied with shares and cash,
+and any such copy costs `ψu Hu + ψd Hd`. Rescaled by `D`, the state prices become weights
+`qu`, `qd` adding to one, with `qu = (R S0 - Sd)/(Su - Sd)`; the price is the discounted
+average `D (qu Hu + qd Hd)`, and under those weights Acme averages `R S0`. -/
+theorem state_prices_price_every_payoff (S0 Su Sd R : ℝ) (hR : R ≠ 0) (hS : Su ≠ Sd) :
+    (∃! ψ : ℝ × ℝ, ψ.1 + ψ.2 = R⁻¹ ∧ ψ.1 * Su + ψ.2 * Sd = S0) ∧
+    ∀ ψu ψd : ℝ, ψu + ψd = R⁻¹ → ψu * Su + ψd * Sd = S0 →
+      ψu = (S0 - R⁻¹ * Sd) / (Su - Sd) ∧ ψd = (R⁻¹ * Su - S0) / (Su - Sd) ∧
+      (∀ Hu Hd : ℝ, ∃ Δ c : ℝ, Δ * Su + c * R = Hu ∧ Δ * Sd + c * R = Hd) ∧
+      (∀ Hu Hd Δ c : ℝ, Δ * Su + c * R = Hu → Δ * Sd + c * R = Hd →
+        Δ * S0 + c = ψu * Hu + ψd * Hd) ∧
+      ψu / R⁻¹ + ψd / R⁻¹ = 1 ∧
+      ψu / R⁻¹ = (R * S0 - Sd) / (Su - Sd) ∧
+      (∀ Hu Hd : ℝ, ψu * Hu + ψd * Hd = R⁻¹ * (ψu / R⁻¹ * Hu + ψd / R⁻¹ * Hd)) ∧
+      ψu / R⁻¹ * Su + ψd / R⁻¹ * Sd = R * S0 := by
+  have hd : Su - Sd ≠ 0 := sub_ne_zero.mpr hS
+  have key : ∀ ψu ψd : ℝ, ψu + ψd = R⁻¹ → ψu * Su + ψd * Sd = S0 →
+      ψu = (S0 - R⁻¹ * Sd) / (Su - Sd) ∧ ψd = (R⁻¹ * Su - S0) / (Su - Sd) := by
+    intro ψu ψd hb ha
+    constructor
+    · rw [eq_div_iff hd]; linear_combination ha - Sd * hb
+    · rw [eq_div_iff hd]; linear_combination -ha + Su * hb
+  refine ⟨⟨((S0 - R⁻¹ * Sd) / (Su - Sd), (R⁻¹ * Su - S0) / (Su - Sd)), ⟨?_, ?_⟩, ?_⟩, ?_⟩
+  · field_simp; ring
+  · field_simp; ring
+  · rintro ⟨a, b⟩ ⟨hb, ha⟩
+    obtain ⟨h1, h2⟩ := key a b hb ha
+    simp only [Prod.mk.injEq]; exact ⟨h1, h2⟩
+  · intro ψu ψd hb ha
+    obtain ⟨h1, h2⟩ := key ψu ψd hb ha
+    refine ⟨h1, h2, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · intro Hu Hd
+      refine ⟨(Hu - Hd) / (Su - Sd), (Hd * Su - Hu * Sd) / ((Su - Sd) * R), ?_, ?_⟩
+      · field_simp; ring
+      · field_simp; ring
+    · intro Hu Hd Δ c e1 e2
+      rw [← e1, ← e2]; exact sp_price_identity S0 Su Sd R ψu ψd Δ c hR hb ha
+    · rw [← add_div, hb, div_self (inv_ne_zero hR)]
+    · rw [div_inv_eq_mul, eq_div_iff hd]
+      linear_combination sp_psi_up S0 Su Sd R ψu ψd hR hb ha
+    · intro Hu Hd
+      field_simp
+    · rw [div_inv_eq_mul, div_inv_eq_mul]; linear_combination R * ha
+
+/-- No arbitrage exactly when every state price is positive (the first fundamental theorem
+of asset pricing, in one period with two states): in the same market, no portfolio of Acme
+and cash is free money if and only if both state prices are above zero. -/
+theorem no_free_money_iff_state_prices_positive (S0 Su Sd R ψu ψd : ℝ) (hR : R ≠ 0)
+    (hS : Su ≠ Sd) (hbank : ψu + ψd = R⁻¹) (hacme : ψu * Su + ψd * Sd = S0) :
+    (∀ Δ c : ℝ, ¬ IsFreeMoney S0 Su Sd R Δ c) ↔ (0 < ψu ∧ 0 < ψd) := by
+  have hd : Su - Sd ≠ 0 := sub_ne_zero.mpr hS
+  have P := fun Δ c => sp_price_identity S0 Su Sd R ψu ψd Δ c hR hbank hacme
+  constructor
+  · intro h
+    constructor
+    · by_contra hu
+      push Not at hu
+      apply h (1 / (Su - Sd)) (-Sd / ((Su - Sd) * R))
+      have e1 : 1 / (Su - Sd) * Su + -Sd / ((Su - Sd) * R) * R = 1 := by field_simp; ring
+      have e2 : 1 / (Su - Sd) * Sd + -Sd / ((Su - Sd) * R) * R = 0 := by field_simp; ring
+      unfold IsFreeMoney
+      rw [P, e1, e2]
+      refine ⟨by linarith, by norm_num, le_refl _, Or.inl one_pos⟩
+    · by_contra hu
+      push Not at hu
+      apply h (-1 / (Su - Sd)) (Su / ((Su - Sd) * R))
+      have e1 : -1 / (Su - Sd) * Su + Su / ((Su - Sd) * R) * R = 0 := by field_simp; ring
+      have e2 : -1 / (Su - Sd) * Sd + Su / ((Su - Sd) * R) * R = 1 := by field_simp; ring
+      unfold IsFreeMoney
+      rw [P, e1, e2]
+      refine ⟨by linarith, le_refl _, by norm_num, Or.inr one_pos⟩
+  · rintro ⟨hu, hdn⟩ Δ c ⟨hc, hpu, hpd, hpos⟩
+    rw [P] at hc
+    rcases hpos with h | h
+    · have := mul_pos hu h
+      have := mul_nonneg hdn.le hpd
+      linarith
+    · have := mul_nonneg hu.le hpu
+      have := mul_pos hdn h
+      linarith
+
+/-- The band for the bank. With a positive bank factor and Acme higher in the up state than
+in the down state, both state prices are positive exactly when the banked price sits strictly
+between Acme's two endings: `Sd < R S0 < Su`. -/
+theorem state_prices_positive_iff_bank_inside_band (S0 Su Sd R ψu ψd : ℝ) (hR : 0 < R)
+    (hS : Sd < Su) (hbank : ψu + ψd = R⁻¹) (hacme : ψu * Su + ψd * Sd = S0) :
+    (0 < ψu ∧ 0 < ψd) ↔ (Sd < R * S0 ∧ R * S0 < Su) := by
+  have e1 := sp_psi_up S0 Su Sd R ψu ψd hR.ne' hbank hacme
+  have e2 := sp_psi_down S0 Su Sd R ψu ψd hR.ne' hbank hacme
+  have hd : 0 < Su - Sd := sub_pos.mpr hS
+  constructor
+  · rintro ⟨hu, hdn⟩
+    have a := mul_pos (mul_pos hR hu) hd
+    have b := mul_pos (mul_pos hR hdn) hd
+    constructor <;> linarith
+  · rintro ⟨h1, h2⟩
+    have hRd := mul_pos hR hd
+    constructor
+    · have : 0 < R * ψu * (Su - Sd) := by linarith
+      have : R * ψu * (Su - Sd) = ψu * (R * (Su - Sd)) := by ring
+      exact pos_of_mul_pos_left (by linarith) hRd.le
+    · have : 0 < R * ψd * (Su - Sd) := by linarith
+      have : R * ψd * (Su - Sd) = ψd * (R * (Su - Sd)) := by ring
+      exact pos_of_mul_pos_left (by linarith) hRd.le
+
+
+/-! Worked numbers from the card, as exact fractions. Acme is 100 today and 120 or 90 in a
+year; the bank turns 20 into 21, so `R = 21/20` and a sure dollar costs `20/21`. -/
+
+-- The two tickets: 10/21 each (0.476190), adding to the sure dollar's 20/21 (0.952381).
+example : ((100 : ℚ) - 20 / 21 * 90) / (120 - 90) = 10 / 21 ∧
+    ((20 : ℚ) / 21 * 120 - 100) / (120 - 90) = 10 / 21 ∧
+    (10 / 21 : ℚ) + 10 / 21 = 20 / 21 ∧ (21 / 20 : ℚ)⁻¹ = 20 / 21 := by norm_num
+
+-- Acme priced as 120 up tickets and 90 down tickets: 100.
+example : (120 : ℚ) * (10 / 21) + 90 * (10 / 21) = 100 := by norm_num
+
+-- The call (20 up tickets) costs 200/21 (9.523810), the put (10 down tickets) 100/21
+-- (4.761905); call minus put equals Acme minus 100 sure dollars.
+example : (20 : ℚ) * (10 / 21) = 200 / 21 ∧ (10 : ℚ) * (10 / 21) = 100 / 21 ∧
+    (200 / 21 : ℚ) - 100 / 21 = 100 - 100 * (20 / 21) := by norm_num
+
+-- The forward at 105 pays 15 up and -15 down, and costs 0.
+example : (10 / 21 : ℚ) * 15 + (10 / 21) * (-15) = 0 := by norm_num
+
+-- The up ticket copied: 1/30 of a share (0.033333) and -20/7 in cash (-2.857143) pay 1 up,
+-- 0 down, and cost 10/21.
+example : (1 / 30 : ℚ) * 120 + (-20 / 7) * (21 / 20) = 1 ∧
+    (1 / 30 : ℚ) * 90 + (-20 / 7) * (21 / 20) = 0 ∧
+    (1 / 30 : ℚ) * 100 + (-20 / 7) = 10 / 21 := by norm_num
+
+-- The risk-neutral weights are 1/2 and 1/2; 105 sits halfway between 90 and 120; the call
+-- as a discounted average is 200/21; under the weights Acme averages 105 = 100 × 21/20.
+example : (10 / 21 : ℚ) / (20 / 21) = 1 / 2 ∧
+    ((21 / 20 : ℚ) * 100 - 90) / (120 - 90) = 1 / 2 ∧
+    (20 / 21 : ℚ) * (1 / 2 * 20 + 1 / 2 * 0) = 200 / 21 ∧
+    (1 / 2 : ℚ) * 120 + 1 / 2 * 90 = 105 ∧ (21 / 20 : ℚ) * 100 = 105 := by norm_num
+
+-- What breaks. Real odds 7/10 at the bank's rate give 40/3 (13.333333); at Acme's real
+-- average of 111 (11 percent) they give 1400/111 (12.612613); the weights without the
+-- discount give 10; the only rate that works is 147/100, i.e. 47 percent.
+example : (20 / 21 : ℚ) * (7 / 10 * 20 + 3 / 10 * 0) = 40 / 3 ∧
+    (7 / 10 : ℚ) * 120 + 3 / 10 * 90 = 111 ∧
+    (7 / 10 * 20 : ℚ) / (111 / 100) = 1400 / 111 ∧
+    (1 / 2 : ℚ) * 20 + 1 / 2 * 0 = 10 ∧
+    (7 / 10 * 20 : ℚ) / (200 / 21) = 147 / 100 := by norm_num
+
+-- A bank factor of 5/4 (1.25), outside the band: the down ticket costs -2/15 (-0.133333),
+-- and selling one share while lending 100 leaves 5 up and 35 down.
+example : ((5 / 4 : ℚ)⁻¹ * 120 - 100) / (120 - 90) = -2 / 15 ∧
+    (-1 : ℚ) * 120 + 100 * (5 / 4) = 5 ∧ (-1 : ℚ) * 90 + 100 * (5 / 4) = 35 ∧
+    (-1 : ℚ) * 100 + 100 = 0 := by norm_num
+
+-- The band for this market: 90 < 105 < 120.
+example : (90 : ℚ) < 21 / 20 * 100 ∧ (21 / 20 : ℚ) * 100 < 120 := by norm_num
+
+#print axioms state_prices_price_every_payoff
+#print axioms no_free_money_iff_state_prices_positive
+#print axioms state_prices_positive_iff_bank_inside_band
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sp_price_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sp_psi_up' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sp_psi_down' depends on axioms: [propext, Classical.choice, Quot.sound]
+'state_prices_price_every_payoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_free_money_iff_state_prices_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'state_prices_positive_iff_bank_inside_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this market, so expect one to stop the program.
-> - **Make the down state worse.** Set `SD` to `80.0`. The up ticket is dearer, the call rises well above 9.523810, and the whole-number road, still pinned to a down state of 90, stops the run at its first assert.
+> - **Make the down state worse.** Set `SD` to `80.0`. The up ticket is dearer, the call rises well above 9.523810, and the whole-number road, still pinned to a down state of 90, stops the run at its second assert.
 > - **Push the bank to 1.25.** Set `R` to `1.25`. The down ticket's price goes negative, −0.133333, as the what-breaks table says, and the whole-number road, pinned to a bank of 20 into 21, stops the run at its first assert.
 > - **Believe the forecast.** Set `P_UP` to `0.5`. The real-odds line stops differing from the right answer and the only rate that works falls to the bank's 5.00 — the one case where the wrong method looks right, and only because the forecast equals the weight.
 
@@ -619,7 +876,7 @@ The two outputs match line for line, flips included: the generator is written ou
 - **Digital options.** A cash-or-nothing digital pays a fixed amount above a strike and nothing below: a ticket sold on a desk. A strip of them across every level is how option prices imply a distribution, which is where [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) ends up.
 - **Credit.** A credit default swap quote is the market's price for a dollar paid in the state where a company fails. The gap between that and the odds counted from company histories is a standing feature, not a mistake: [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md).
 - **Two currencies at once.** State prices are quoted in a currency, so a contract settling in another needs that currency's tickets: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md) — and [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md) when the payoff is in one currency but the asset in another.
-- **Forwards on this shelf.** The contract paying 15.00 up and −15.00 down prices at 0.000000, so the forward price here is 105.00: Acme carried at this card's bank, with no dividend. [Forward price](03-forward-price-by-cash-and-carry.md) runs the same carry argument with the wing's continuous rate and a 2 percent dividend, and [An old forward](04-forward-value-after-inception.md) revalues it later.
+- **Forwards on this shelf.** A forward is an agreement today to buy Acme in a year at a fixed price. The one at 105.00 pays 15.00 up and −15.00 down, and prices at 0.000000, so the forward price here is 105.00: Acme carried at this card's bank, with no dividend. [Forward price](03-forward-price-by-cash-and-carry.md) runs the same carry argument with the wing's continuous rate and a 2 percent dividend, and [An old forward](04-forward-value-after-inception.md) revalues it later.
 
 > **Say it back**
 > A state price is what one dollar costs today if it is paid in one future state and nowhere else. Two endings, two traded prices, two state prices: here 0.476190 and 0.476190. Every contract is a pile of the two tickets, so its price is its payments weighted by those numbers. The state prices add to the price of a sure dollar, 0.952381; divide by that and they become weights adding to one, so the price reads as a discounted average. Those weights make Acme average the bank's return, which is why they are called risk-neutral — and no forecast enters any price here.
@@ -636,7 +893,7 @@ The two outputs match line for line, flips included: the generator is written ou
 ## Where this goes next
 
 - [One step](../04-Binomial%20Trees/01-one-step-binomial-replication.md): the same step written as the building block of a tree, ready to be stacked.
-- [The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): Step 2 in general — positive state prices in any finite market, and what changes when the market is incomplete.
+- [The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): Step 2 in general — positive state prices in any finite market, and what changes when the market is incomplete, with fewer traded assets than states.
 - [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the same average taken over a continuum of endings instead of two.
 - [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): two bank accounts, one in each currency, and the state prices that serve both.
 - [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): what happens to the weights when the payoff is paid in the wrong currency.

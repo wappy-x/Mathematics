@@ -8,7 +8,9 @@
 
 Acme shares trade at $100.00 today. Three tickets sit on a desk. Each names the same share, the same price of $100.00, and the same day, one year from today.
 
-The first ticket is a **forward**: an obligation to buy one Acme share for $100.00 on that day, whatever Acme is worth by then. Neither side may walk away, and no premium changes hands for it — though struck at $100.00 it is not worth nothing, as the worked numbers show. The second is a **call**: the right, not the duty, to buy one share for $100.00 that day. It costs $9.23. The third is a **put**: the right to sell one share for $100.00 that day. It costs $6.33.
+The first ticket is a **forward**: an obligation to buy one Acme share for $100.00 on that day, whatever Acme is worth by then. Neither side may walk away, and no **premium**, the up-front price of a ticket, changes hands for it. Though struck at $100.00, it is not worth nothing, as the worked numbers show.
+
+The second is a **call**: the right, not the duty, to buy one share for $100.00 that day. It costs $9.23. The third is a **put**: the right to sell one share for $100.00 that day. It costs $6.33.
 
 On expiry day one number settles all three: Acme's price that morning. Each ticket is a rule that turns that number into one cash amount. That rule is the contract's **payoff**, and for pricing it is the whole of the contract.
 
@@ -47,13 +49,13 @@ $$f(S_T) = S_T - K, \qquad c(S_T) = (S_T - K)^+, \qquad p(S_T) = (K - S_T)^+$$
 
 **Read it aloud:** the forward pays the gap between the closing price and the agreed price whichever way it runs; the call keeps that gap only when it is a gain; the put keeps the opposite gap only when it is a gain.
 
-Position and cost come next. Let $a$ be the signed size: $+1$ for one contract held, $-1$ for one written. Let $V_0$ be what one contract costs today, per share. Profit at expiry on a call position is
+Position and cost come next. Let $a$ be the signed size: $+1$ for one contract held, $-1$ for one written, that is, sold to someone else. Let $V_0$ be what one contract costs today, per share. Profit at expiry on a call position is
 
 $$\Pi(S_T) = a\,\bigl[\,c(S_T) - V_0\,\bigr]$$
 
 **Read it aloud:** take what the contract pays, subtract what was paid for it, then scale by the position — sign flipped if the position was sold rather than bought.
 
-Swap $c$ for $p$ or $f$ for the other two. All three tickets carry the same strike, so their diagrams lay over one another; a forward is normally written instead at the delivery price that makes $V_0$ zero, and which price that is, is [Forward price](03-forward-price-by-cash-and-carry.md).
+Swap $c$ for $p$ or $f$ for the other two. All three tickets carry the same strike, so their diagrams lay over one another. A forward is normally written instead at the delivery price that makes $V_0$ zero, and which price that is, is [Forward price](03-forward-price-by-cash-and-carry.md).
 
 Break-even is the price at which profit is zero. A long call bought for a positive premium has exactly one, and which number it is depends on where the premium is dated:
 
@@ -79,7 +81,7 @@ The left leaves the premium at today's date. The right carries it to expiry at t
 ### When it holds
 
 - **Exercise happens on expiry day only.** These are European contracts: one decision, one date. A contract usable earlier is a different promise, and this diagram is only its last day.
-- **The share can be bought or sold at that price at that moment.** The call payoff assumes exercising and selling straight away. Where dealing costs a spread, every line drops by it and break-even moves the same distance right.
+- **The share can be bought or sold at that price at that moment.** The call payoff assumes exercising and selling straight away. Where dealing costs a spread, the gap between the buying and the selling price, every line drops by it and break-even moves the same distance right.
 - **One share per contract, no fees, no tax, no default.** Each shifts a line down bodily rather than bending it, so the shape survives and the crossing moves.
 - **The premium and the payoff are dated a year apart.** Added as though same-dated they understate break-even: $109.23 against $109.70 once the premium is carried at 5%.
 - **Prices are not negative.** Quantities that can go below zero — a rate spread, a power price — need the same algebra restated on that range.
@@ -98,7 +100,7 @@ So a European contract collapses into a function of a single number, and such a 
 
 A call holder on expiry day faces two ledgers and no third option. Use the ticket: hand over $K$, take a share worth $S_T$, sell it, and the cash is $S_T - K$. Decline, and nothing moves. Above the strike the first ledger wins, below it the second, and at the strike both are zero. The payoff is the larger of the two, which is exactly $(S_T - K)^+$.
 
-No forecast and no preference enters. The code computes every payoff twice — from the positive-part formula, and by walking both ledgers and keeping the better one — and the two agree at all 801 prices tested, quarter-dollar steps that straddle the strike where the line bends.
+No forecast and no preference enters. The code computes every payoff twice — from the positive-part formula, and by walking both ledgers and keeping the better one. The two agree at all 801 prices tested, quarter-dollar steps that cross the strike where the line bends.
 
 The put runs the same way reversed: buy a share for $S_T$, hand it over for $K$, keep $K - S_T$ when that is positive. The forward has no second ledger at all. That is the difference between an obligation and a right, and why a right is never free.
 
@@ -165,7 +167,9 @@ xychart-beta
 
 The upper V is the straddle's payoff, the lower V its profit after the $15.56, the flat line zero. Profit turns positive below $84.44 and above $115.56. A straddle is a position on movement, not direction: it pays if Acme ends far enough from $100.00 either way, and loses most if Acme sits still.
 
-Stacking runs the other way too. The code takes the call apart into 100,000 thin bets — one per price level above the strike, each paying a sliver if Acme clears it — and adding the slivers back rebuilds the call's payoff to within a billionth of a dollar. Any payoff drawn as a line can be built from simple pieces, and what the pieces cost is how the line gets a price. The simplest piece has a card of its own, [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md).
+Stacking runs the other way too. The code takes the call apart into 100,000 thin bets — one per price level above the strike, each paying a sliver if Acme clears it — and adding the slivers back rebuilds the call's payoff to within a billionth of a dollar.
+
+Any payoff drawn as a line can be built from simple pieces, and what the pieces cost is how the line gets a price. The simplest piece has a card of its own, [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md).
 
 ### Step 5: where the profit line crosses zero
 
@@ -615,6 +619,97 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves three payoff facts for every expiry price and strike that are not negative, and every positive premium.
+
+- A call's payoff minus a put's payoff, at the same strike, equals the forward's payoff at every price.
+- Take a long call bought for a positive premium $V_0$. Then its profit is zero at exactly one price, $S_T = K + V_0$.
+- A straddle's payoff is the distance from the strike, either way.
+- Take a straddle bought for a positive total cost. Then its profit is zero only at the strike minus that cost, or the strike plus it.
+- The worked numbers' whole-dollar payoffs at strike 100 come out right: the call at 90, 110 and 140, and the put at 90.
+- Call minus put comes to −10.00 at 90.00 and 20.00 at 120.00, the forward's payoffs.
+
+The premiums themselves, the financed break-even, the short side, the thin bets and every decimal are left to the Python and Rust checks.
+
+```lean
+-- Payoffs: a call minus a put at the same strike pays exactly what a forward pays, a long call bought for a positive premium breaks even only at strike plus premium, and a straddle pays the distance from the strike.
+import Mathlib.Algebra.Order.Group.PosPart
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+
+/-- Call minus put is a forward: for any expiry price `S` and strike `K`, neither negative,
+the call payoff `(S - K)⁺` minus the put payoff `(K - S)⁺` equals the forward payoff `S - K`. -/
+theorem call_payoff_sub_put_payoff_eq_forward (S K : ℝ) (hS : 0 ≤ S) (hK : 0 ≤ K) :
+    (S - K)⁺ - (K - S)⁺ = S - K := by
+  rcases le_total S K with h | h
+  · rw [posPart_eq_zero.mpr (by linarith), posPart_eq_self.mpr (by linarith)]; ring
+  · rw [posPart_eq_self.mpr (by linarith), posPart_eq_zero.mpr (by linarith)]; ring
+
+/-- Break-even of a long call: if the call cost a positive premium `V₀`, its profit at expiry,
+`(S - K)⁺ - V₀`, is zero at exactly one price, `S = K + V₀`. -/
+theorem long_call_break_even_iff (S K V₀ : ℝ) (hS : 0 ≤ S) (hK : 0 ≤ K) (hV : 0 < V₀) :
+    (S - K)⁺ - V₀ = 0 ↔ S = K + V₀ := by
+  rcases le_total S K with h | h
+  · rw [posPart_eq_zero.mpr (by linarith)]
+    constructor
+    · intro h'; linarith
+    · intro h'; linarith
+  · rw [posPart_eq_self.mpr (by linarith)]
+    constructor
+    · intro h'; linarith
+    · intro h'; linarith
+
+/-- A straddle (one call and one put at the same strike) pays the distance from the strike,
+`|S - K|`, and if it cost a positive amount `C`, its profit is zero exactly at `K - C` and `K + C`. -/
+theorem straddle_payoff_and_break_evens (S K C : ℝ) (hS : 0 ≤ S) (hK : 0 ≤ K) (hC : 0 < C) :
+    (S - K)⁺ + (K - S)⁺ = |S - K| ∧
+      ((S - K)⁺ + (K - S)⁺ - C = 0 ↔ S = K - C ∨ S = K + C) := by
+  have key : (S - K)⁺ + (K - S)⁺ = |S - K| := by
+    rcases le_total S K with h | h
+    · rw [posPart_eq_zero.mpr (by linarith), posPart_eq_self.mpr (by linarith),
+        abs_of_nonpos (by linarith)]; ring
+    · rw [posPart_eq_self.mpr (by linarith), posPart_eq_zero.mpr (by linarith),
+        abs_of_nonneg (by linarith)]; ring
+  refine ⟨key, ?_⟩
+  rw [key]
+  rcases le_total S K with h | h
+  · rw [abs_of_nonpos (by linarith)]
+    constructor
+    · intro h'; left; linarith
+    · rintro (h' | h') <;> linarith
+  · rw [abs_of_nonneg (by linarith)]
+    constructor
+    · intro h'; right; linarith
+    · rintro (h' | h') <;> linarith
+
+-- The card's whole-dollar worked numbers, strike 100.
+-- Call payoff at 90, 110 and 140.
+example : ((90 : ℝ) - 100)⁺ = 0 := by norm_num [posPart]
+example : ((110 : ℝ) - 100)⁺ = 10 := by norm_num [posPart]
+example : ((140 : ℝ) - 100)⁺ = 40 := by norm_num [posPart]
+-- Put payoff at 90.
+example : ((100 : ℝ) - 90)⁺ = 10 := by norm_num [posPart]
+-- Call minus put at 90 is -10, the forward's payoff.
+example : ((90 : ℝ) - 100)⁺ - ((100 : ℝ) - 90)⁺ = -10 := by norm_num [posPart]
+-- Call minus put at 120 is 20.
+example : ((120 : ℝ) - 100)⁺ - ((100 : ℝ) - 120)⁺ = 20 := by norm_num [posPart]
+
+#print axioms call_payoff_sub_put_payoff_eq_forward
+#print axioms long_call_break_even_iff
+#print axioms straddle_payoff_and_break_evens
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'call_payoff_sub_put_payoff_eq_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'long_call_break_even_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'straddle_payoff_and_break_evens' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -12,9 +12,13 @@ This morning that bill is quoted at 4.90. The number is a discount rate: 4.90% a
 
 The quote is not the return. The discount was taken off the million; the gain was earned on the $987,613.89 that actually left the buyer's account. Measured against the cash and scaled to a 360-day year, the return is 4.9615% a year — six basis points above the quote. A basis point is a hundredth of a percentage point.
 
-The other half of the money market is overnight. A repo, short for repurchase agreement, lends cash for one night against collateral: sell a Treasury bond today, agree to buy it back tomorrow at a slightly higher price, and the difference is the interest. Those trades are counted every day to produce SOFR, the Secured Overnight Financing Rate — a volume-weighted median of real overnight repo, published each business day at about 8 a.m. New York time.
+The other half of the money market is overnight. A repo, short for repurchase agreement, lends cash for one night against collateral: sell a Treasury bond today, agree to buy it back tomorrow at a slightly higher price, and the difference is the interest.
 
-An overnight rate covers one night. A loan runs three months. Compounding is the bridge: each day's interest joins the balance, the balance earns the next day's rate, and the rate for the whole period can only be read off at the end. That is the compounded-in-arrears convention, and it is what replaced LIBOR, a rate that panel banks submitted as an answer to a question and that was known in advance.
+Those trades are counted every day to produce SOFR, the Secured Overnight Financing Rate — a volume-weighted median of real overnight repo, published each business day at about 8 a.m. New York time. A volume-weighted median is the middle rate when every trade counts by its size: half the dollars traded at or below it, half at or above.
+
+An overnight rate covers one night. A loan runs three months. Compounding is the bridge: each day's interest joins the balance, the balance earns the next day's rate, and the rate for the whole period can only be read off at the end.
+
+That is the compounded-in-arrears convention, and it is what replaced LIBOR, the London Interbank Offered Rate: a rate that panel banks submitted as an answer to a question and that was known in advance.
 
 **Every money-market number is a rate bolted to a base and a day count, so comparing two of them, or turning overnight rates into a three-month rate, means converting both to what the cash actually earns.**
 
@@ -67,14 +71,16 @@ $$G = \prod_{j=1}^{m}\left(1 + r_j\cdot\frac{n_j}{360}\right), \qquad R = (G - 1
 | $R$ | the compounded-in-arrears rate, simple, actual/360 | 4.9476% | — |
 | $J$ | a published index: the same product run from a fixed start date | 1.00000000 on day 0 | — |
 
-Two helpers. A bill of six months or less is also quoted on a 365-day year, the bond-equivalent yield $y = i\cdot 365/360$, which puts it beside a bond's yield instead of a deposit's. And because an index is one long product, the growth factor between any two of its dates is one level divided by the other: $G = J_{\text{end}}/J_{\text{start}}$. The published SOFR Index began at 1.00000000 on 2 April 2018 and is quoted to eight decimal places for exactly this purpose.
+Two helpers. A bill of six months or less is also quoted on a 365-day year, the bond-equivalent yield $y = i\cdot 365/360$, which puts it beside a bond's yield instead of a deposit's.
+
+And because an index is one long product, the growth factor between any two of its dates is one level divided by the other: $G = J_{\text{end}}/J_{\text{start}}$. The published SOFR Index began at 1.00000000 on 2 April 2018 and is quoted to eight decimal places for exactly this purpose.
 
 ### When it holds
 
 - **The day count is part of the quote, not decoration.** Dollar bills, repo and SOFR all accrue actual/360. Price the same bill on a 365-day year and it comes out $169.67 dearer per million, on identical cash flows.
 - **The price has to stay positive.** The discount rule needs $d\cdot n/360 < 1$. At 91 days that means a quote under 395.6% a year, so it never binds in practice; at very long maturities the discount basis breaks, which is one reason only short paper uses it.
 - **Overnight blocks come from a published calendar.** One rate covers one block. A Friday rate normally covers Saturday and Sunday as a single three-day block of simple interest, not three compounded days; compounding them adds $0.74 per million over this quarter.
-- **In arrears means the last rate is missing until the end.** The formula is exact arithmetic on a path, not a forecast. Before the period closes, any number quoted for it is an estimate from futures or swaps, not an observation.
+- **In arrears means the last rate is missing until the end.** The formula is exact arithmetic on a path, not a forecast. Before the period closes, any number quoted for it is an estimate from futures or swaps, not an observation. Futures and swaps are contracts traded today whose payments depend on the overnight rates the period will later set.
 - **Conventions verified 14 September 2026:** bills quoted as a discount on actual/360; SOFR published each business day at about 8 a.m. New York time; the SOFR Index set to 1.00000000 on 2 April 2018 and published to eight decimals, with rolling compounded averages over 30, 90 and 180 calendar days. Markets can change these rules. The algebra does not change with them.
 
 ---
@@ -83,7 +89,9 @@ Two helpers. A bill of six months or less is also quoted on a 365-day year, the 
 
 ### Step 0: a rate is a number bolted to a base
 
-Cash flows have no rate of their own. A rate appears only when three choices are made: what the percentage is taken of, over what length of year, and whether interest earned inside the period is carried forward. Change any one choice and the quoted number moves while the money does not. Every conversion on this card is bookkeeping between those choices, so the first question about any money-market number is never "is it high?" but "of what, over what year, compounded or not?"
+Cash flows have no rate of their own. A rate appears only when three choices are made: what the percentage is taken of, over what length of year, and whether interest earned inside the period is carried forward. Change any one choice and the quoted number moves while the money does not.
+
+Every conversion on this card is bookkeeping between those choices, so the first question about any money-market number is never "is it high?" but "of what, over what year, compounded or not?"
 
 ### Step 1: the discount is taken off the round number
 
@@ -106,7 +114,7 @@ The gap is a squared term, so it is small at small rates and grows quickly: at a
 
 Fix a face value and a day count, both positive. The price rule is a straight line in the quote with slope $-F\cdot n/360$, which is negative, so it is strictly decreasing: raising the quote always lowers the price, and no two quotes give the same price. The price is positive exactly when $d\cdot n/360 < 1$. On that range the line runs from arbitrarily large prices down towards zero, so every positive price is hit, and rearranging gives the one quote that produces it: $d = (1 - P/F)\cdot 360/n$.
 
-The return behaves the same way from the other side. The map $P \mapsto (F/P - 1)\cdot 360/n$ is strictly decreasing on positive prices, running from arbitrarily large returns down to $-360/n$, so each positive price names exactly one return and each return above that floor names exactly one price, $P = F/(1 + i\cdot n/360)$. Substituting $P/F = 1 - d\cdot n/360$ into it gives the boxed conversion above, and subtracting $d$ gives the squared gap, which is zero only when the quote is zero and positive otherwise. Boundary cases: a zero quote is a bill sold at face with no gain; a negative quote is a price above face, which the algebra allows and the auction rules may not.
+The return behaves the same way from the other side. The map $P \mapsto (F/P - 1)\cdot 360/n$ is strictly decreasing on positive prices, running from arbitrarily large returns down to $-360/n$, so each positive price names exactly one return and each return above that floor names exactly one price, $P = F/(1 + i\cdot n/360)$. Substituting $P/F = 1 - d\cdot n/360$ into it gives the displayed conversion above, and subtracting $d$ gives the squared gap, which is zero only when the quote is zero and positive otherwise. Boundary cases: a zero quote is a bill sold at face with no gain; a negative quote is a price above face, which the algebra allows and the auction rules may not.
 
 </details>
 
@@ -114,7 +122,9 @@ The return behaves the same way from the other side. The map $P \mapsto (F/P - 1
 
 A repo lends for one night. Lending for a quarter means rolling it: the next night's loan is of last night's principal *plus* last night's interest, because that is the cash now in hand. So the periods do not add — the growth factors multiply.
 
-One night at 5.05% multiplies the balance by $1 + 0.0505/360 = 1.0001402778$. A Friday rate that covers the weekend multiplies by $1 + 0.0505\times 3/360 = 1.0004208333$: three days of simple interest in one block, because the rate was only published once. Thirteen weeks of those blocks — 52 single days and 13 weekend blocks, 91 calendar days in all — multiply to 1.0125065396 along the path this card uses: 5.05%, cut to 4.80% from week seven, 5.00% on the last Thursday.
+One night at 5.05% multiplies the balance by $1 + 0.0505/360 = 1.0001402778$. A Friday rate that covers the weekend multiplies by $1 + 0.0505\times 3/360 = 1.0004208333$: three days of simple interest in one block, because the rate was only published once.
+
+Thirteen weeks of those blocks — 52 single days and 13 weekend blocks, 91 calendar days in all — multiply to 1.0125065396 along the path this card uses: 5.05%, cut to 4.80% from week seven, 5.00% on the last Thursday.
 
 Annualising that growth on a 360-day year gives the compounded-in-arrears rate for the quarter, 4.9476%, and on a million dollars, $12,506.54 of interest.
 
@@ -139,7 +149,9 @@ For this path that estimate is 1.0125062378 against the true 1.0125065396: right
 
 ### Step 5: why the rate is fixed in arrears, and why SOFR replaced LIBOR
 
-LIBOR was a survey. Each panel bank answered a question about the rate at which it could borrow unsecured funds for a term — three months, say — and the average of the middle answers was published as the rate. That design gave borrowers a term rate in advance, which is convenient, and it had two fatal weaknesses: the borrowing it described had largely stopped happening, and an answer to a question can be shaded. The Financial Conduct Authority confirmed the end date, and panel-bank US dollar LIBOR stopped immediately after 30 June 2023.
+LIBOR was a survey. Each panel bank answered a question about the rate at which it could borrow unsecured funds for a term — three months, say — and the average of the middle answers was published as the rate.
+
+That design gave borrowers a term rate in advance, which is convenient, and it had two fatal weaknesses: the borrowing it described had largely stopped happening, and an answer to a question can be shaded. The Financial Conduct Authority confirmed the end date, and panel-bank US dollar LIBOR stopped immediately after 30 June 2023.
 
 SOFR is measured instead of asked. It is a volume-weighted median of overnight repo backed by Treasury collateral, taken from transactions that happened. The price of that robustness is the missing term: those trades last one night, so there is no three-month SOFR to observe. A three-month rate has to be *built* from about sixty-five published overnight rates, and the last of them is published the morning after the period ends.
 
@@ -148,11 +160,11 @@ That is why the convention is compounded in arrears, and why floating coupons ne
 | Convention | What it does |
 | --- | --- |
 | Payment delay | The period keeps its own rates; the cash is paid some days after the period ends. |
-| Lookback | Each day of the period uses the rate published a fixed number of days earlier, with the period's own day weights. |
-| Observation shift | The whole observation window slides back, carrying the day weights of the observation dates with it. |
+| Lookback | Each day of the period uses the rate published a fixed number of days earlier, with the period's own day weights $n_j$. |
+| Observation shift | The whole observation window slides back, carrying the day weights $n_j$ of the observation dates with it. |
 | Lockout | The rate for the last few days is frozen at the last one published before them. |
 
-The four give different coupons from the same daily rates. A contract that fixes the period's weights before shifting the observations is not the same trade as one that shifts both, which is the small print that makes two "SOFR + 50" loans pay different amounts.
+The four give different coupons from the same daily rates. A contract that fixes the period's weights before shifting the observations is not the same trade as one that shifts both, which is the small print that makes two "SOFR + 50" loans (SOFR plus 0.50%) pay different amounts.
 
 There is another route to a term rate: infer it from what the futures and swaps market expects, rather than from what has happened. That is the forward-looking family, quoted in advance like LIBOR but derived from traded prices. Its machinery is the forward rate, built in [Spot, forward and par rates](01-spot-forward-and-par-rates.md) and traded in [Forward rate agreements](02-forward-rate-agreements.md).
 
@@ -248,7 +260,9 @@ xychart-beta
     line [5.05, 5.05, 5.06, 5.06, 5.06, 5.06, 5.03, 5.01, 4.99, 4.97, 4.96, 4.95, 4.95]
 ```
 
-The stepped line is the overnight rate in force each Thursday: flat, then cut, then the quarter-end spike. The smooth line is the rate the period has compounded to so far. It drifts up while rates hold, because compounding adds to the average; it sags after the cut; and it settles at 4.9476% only when the last rate is in. A lender who needs to know the coupon a week early cannot have it from this rate — hence lookbacks and payment delays.
+The stepped line is the overnight rate in force each Thursday: flat, then cut, then the quarter-end spike. The smooth line is the rate the period has compounded to so far. It drifts up while rates hold, because compounding adds to the average; it sags after the cut; and it settles at 4.9476% only when the last rate is in.
+
+A lender who needs to know the coupon a week early cannot have it from this rate — hence lookbacks and payment delays.
 
 The published index makes the arithmetic portable. Starting the same product at 1.00000000, the level reaches 1.00590828 on day 42 and 1.01250654 on day 91, and dividing the second by the first gives the factor for the second half, to the eight decimals the index publishes. Any two dates, one division, no path needed.
 
@@ -256,7 +270,7 @@ The published index makes the arithmetic portable. Starting the same product at 
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already holds an answer. The bill's return is found twice — in closed form, and by a bisection root finder written out here that solves for the rate which grows the price to the face value. The effective annual rate is found twice the same way. The compounded overnight factor is built three ways: block by block, by adding logarithms and undoing them, and by the two-term expansion of Step 4. Then the four mistake costs and every charted number are printed.
+Nothing is imported that already holds an answer. The bill's return is found twice — in closed form, and by a bisection root finder written out here (it halves an interval that holds the answer, over and over) that solves for the rate which grows the price to the face value. The effective annual rate is found twice the same way. The compounded overnight factor is built three ways: block by block, by adding logarithms and undoing them, and by the two-term expansion of Step 4. Then the four mistake costs and every charted number are printed.
 
 ### Python
 
@@ -681,6 +695,244 @@ ALL CHECKS PASS
 
 The two outputs match line for line, including the tenth decimal place of the growth factor.
 
+### Lean
+
+Lean proves the card's bill and compounding rules for every value that meets the conditions below, and the bill's worked numbers exactly.
+
+- Take a positive $F$ and $n$, and a quote with $d\cdot n/360 < 1$. Then $i = d/(1 - d\cdot n/360)$, and $i - d$ is the squared term of Step 2.
+- Under the same conditions, the return equals the quote when the quote is zero, and is strictly above it otherwise.
+- Take a positive $F$ and $n$. Then the price falls strictly as the quote rises, and is positive exactly when $d\cdot n/360 < 1$.
+- Take a positive $F$ and $n$, and any positive price $P$. Then exactly one quote gives that price, and it is $d = (1 - P/F)\cdot 360/n$.
+- Take a positive $F$ and $n$. Then the return falls strictly as the price rises, and always stays above $-360/n$.
+- Take a positive $F$ and $n$, and any return $i$ above $-360/n$. Then exactly one positive price gives that return, and it is $P = F/(1 + i\cdot n/360)$.
+- Take two or more blocks, each with a positive rate $r_j$ and positive $n_j$. Then the compounded-in-arrears rate $R$ is strictly above the weighted average of the daily rates.
+- The bill's worked numbers hold exactly in fractions: the discount, the 35,554,100 hand check and the 4.9615% return. So do the 395.6% limit on the quote and the 65 blocks covering 91 days.
+
+The 365-day yields, the overnight path, the two-term expansion, the index and the mistake costs are left to the Python and Rust checks.
+
+```lean
+-- Money markets: a bill's discount quote converts exactly to the return on its cash, price and quote and return each fix the others, and compounding positive overnight rates beats averaging them.
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.Monotone.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.BigOperators.Field
+
+open Finset
+
+/-- For nonnegative terms, `1 + ∑ a ≤ ∏ (1 + a)`. -/
+theorem mm_one_add_sum_le_prod (m : ℕ) (a : Fin m → ℝ) (ha : ∀ j, 0 ≤ a j) :
+    1 + ∑ j, a j ≤ ∏ j, (1 + a j) := by
+  induction m with
+  | zero => simp
+  | succ k ih =>
+    rw [Fin.sum_univ_succ, Fin.prod_univ_succ]
+    have h1 := ih (fun j => a j.succ) (fun j => ha _)
+    have h0 := ha 0
+    have hs : 0 ≤ ∑ j : Fin k, a j.succ := Finset.sum_nonneg (fun j _ => ha _)
+    nlinarith
+
+/-- For at least two positive terms, `1 + ∑ a < ∏ (1 + a)`. -/
+theorem mm_one_add_sum_lt_prod (m : ℕ) (hm : 2 ≤ m) (a : Fin m → ℝ) (ha : ∀ j, 0 < a j) :
+    1 + ∑ j, a j < ∏ j, (1 + a j) := by
+  obtain ⟨k, rfl⟩ : ∃ k, m = k + 2 := ⟨m - 2, by omega⟩
+  rw [Fin.sum_univ_succ, Fin.prod_univ_succ]
+  have h1 := mm_one_add_sum_le_prod (k + 1) (fun j => a j.succ) (fun j => (ha _).le)
+  have h0 := ha 0
+  have hs : 0 < ∑ j : Fin (k + 1), a j.succ :=
+    Finset.sum_pos (fun j _ => ha _) Finset.univ_nonempty
+  nlinarith
+
+/-- A bill with face value `F > 0`, `n > 0` days left and discount quote `d` with `d·n/360 < 1`
+is priced at `P = F(1 - d·n/360)`. Its return on the cash, `i = (F - P)/P · 360/n`, equals
+`d / (1 - d·n/360)`, and the gap over the quote is the squared term
+`i - d = d²·(n/360) / (1 - d·n/360)`: zero when the quote is zero, and the return is strictly
+above the quote otherwise. -/
+theorem money_market_yield_of_discount_quote (F d : ℝ) (n : ℕ) (hF : 0 < F) (hn : 0 < n)
+    (hd : d * n / 360 < 1) :
+    let P := F * (1 - d * n / 360)
+    let i := (F - P) / P * (360 / n)
+    i = d / (1 - d * n / 360) ∧
+    i - d = d ^ 2 * (n / 360) / (1 - d * n / 360) ∧
+    (d = 0 → i = d) ∧
+    (d ≠ 0 → d < i) := by
+  intro P i
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have hk : 0 < 1 - d * n / 360 := by linarith
+  have hP : P = F * (1 - d * n / 360) := rfl
+  have hi1 : i = d / (1 - d * n / 360) := by
+    show (F - F * (1 - d * n / 360)) / (F * (1 - d * n / 360)) * (360 / n) = _
+    field_simp
+    ring
+  have hi2 : i - d = d ^ 2 * (n / 360) / (1 - d * n / 360) := by
+    have hk0 : (1 - d * n / 360) ≠ 0 := hk.ne'
+    rw [hi1, eq_div_iff hk0, sub_mul, div_mul_cancel₀ _ hk0]
+    ring
+  refine ⟨hi1, hi2, ?_, ?_⟩
+  · intro h0; rw [hi1, h0]; simp
+  · intro h0
+    have : 0 < d ^ 2 * (n / 360) / (1 - d * n / 360) := by
+      have : 0 < d ^ 2 := by positivity
+      positivity
+    linarith
+
+/-- For a face value `F > 0` and `n > 0` days, the price and the quote determine each other
+exactly: the price `F(1 - d·n/360)` is strictly decreasing in the quote, it is positive exactly
+when `d·n/360 < 1`, every positive price comes from exactly one such quote, and that quote is
+`d = (1 - P/F)·360/n`. On the other side, the return `(F/P - 1)·360/n` is strictly decreasing on
+positive prices and stays above `-360/n`, each return above `-360/n` comes from exactly one
+positive price, and that price is `P = F / (1 + i·n/360)`. -/
+theorem price_quote_and_return_determine_each_other (F : ℝ) (n : ℕ) (hF : 0 < F) (hn : 0 < n) :
+    StrictAnti (fun d : ℝ => F * (1 - d * n / 360)) ∧
+    (∀ d : ℝ, 0 < F * (1 - d * n / 360) ↔ d * n / 360 < 1) ∧
+    (∀ P : ℝ, 0 < P → ∃! d : ℝ, d * n / 360 < 1 ∧ F * (1 - d * n / 360) = P) ∧
+    (∀ d P : ℝ, F * (1 - d * n / 360) = P ↔ d = (1 - P / F) * (360 / n)) ∧
+    StrictAntiOn (fun P : ℝ => (F / P - 1) * (360 / n)) (Set.Ioi 0) ∧
+    (∀ P : ℝ, 0 < P → -(360 / (n : ℝ)) < (F / P - 1) * (360 / n)) ∧
+    (∀ i : ℝ, -(360 / (n : ℝ)) < i → ∃! P : ℝ, 0 < P ∧ (F / P - 1) * (360 / n) = i) ∧
+    (∀ i P : ℝ, -(360 / (n : ℝ)) < i → 0 < P →
+      ((F / P - 1) * (360 / n) = i ↔ P = F / (1 + i * n / 360))) := by
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have hn0 : (n : ℝ) ≠ 0 := hn'.ne'
+  have hF0 : F ≠ 0 := hF.ne'
+  have hd : ∀ d P : ℝ, F * (1 - d * n / 360) = P ↔ d = (1 - P / F) * (360 / n) := by
+    intro d P
+    constructor
+    · intro h; subst h; field_simp; ring
+    · intro h; subst h; field_simp; ring
+  have hpos : ∀ d : ℝ, 0 < F * (1 - d * n / 360) ↔ d * n / 360 < 1 := by
+    intro d
+    constructor
+    · intro h
+      by_contra hc
+      push Not at hc
+      nlinarith
+    · intro h
+      have : 0 < 1 - d * n / 360 := by linarith
+      positivity
+  have hkpos : ∀ i : ℝ, -(360 / (n : ℝ)) < i → 0 < 1 + i * n / 360 := by
+    intro i hi
+    have h360 : (360 / (n : ℝ)) * n = 360 := div_mul_cancel₀ _ hn0
+    have : -(360 / (n : ℝ)) * n < i * n := mul_lt_mul_of_pos_right hi hn'
+    nlinarith
+  have hret : ∀ i P : ℝ, -(360 / (n : ℝ)) < i → 0 < P →
+      ((F / P - 1) * (360 / n) = i ↔ P = F / (1 + i * n / 360)) := by
+    intro i P hi hP
+    have hk := hkpos i hi
+    have hP0 : P ≠ 0 := hP.ne'
+    constructor
+    · intro h
+      subst h
+      have h1 : 1 + (F / P - 1) * (360 / n) * n / 360 = F / P := by
+        field_simp
+        ring
+      rw [h1]
+      field_simp
+    · intro h
+      subst h
+      field_simp
+      ring
+  refine ⟨?_, hpos, ?_, hd, ?_, ?_, ?_, hret⟩
+  · intro a b hab
+    have : a * n < b * n := mul_lt_mul_of_pos_right hab hn'
+    show F * (1 - b * n / 360) < F * (1 - a * n / 360)
+    nlinarith
+  · intro P hP
+    refine ⟨(1 - P / F) * (360 / n), ⟨?_, ?_⟩, ?_⟩
+    · rw [← hpos, (hd _ P).mpr rfl]; exact hP
+    · exact (hd _ P).mpr rfl
+    · rintro y ⟨_, hy⟩
+      exact (hd y P).mp hy
+  · intro a ha b hb hab
+    have ha' : (0 : ℝ) < a := ha
+    have hb' : (0 : ℝ) < b := hb
+    have h1 : F / b < F / a := div_lt_div_of_pos_left hF ha' hab
+    have h2 : 0 < 360 / (n : ℝ) := by positivity
+    show (F / b - 1) * (360 / n) < (F / a - 1) * (360 / n)
+    nlinarith
+  · intro P hP
+    have h1 : 0 < F / P := by positivity
+    have h2 : 0 < 360 / (n : ℝ) := by positivity
+    nlinarith
+  · intro i hi
+    have hk := hkpos i hi
+    refine ⟨F / (1 + i * n / 360), ⟨by positivity, ?_⟩, ?_⟩
+    · exact (hret i _ hi (by positivity)).mpr rfl
+    · rintro y ⟨hy0, hy⟩
+      exact (hret i y hi hy0).mp hy
+
+/-- Compounding is not averaging: for `m ≥ 2` blocks with positive overnight rates `r j` and
+positive day counts `n j`, the compounded-in-arrears rate `(G - 1)·360/n`, where
+`G = ∏ (1 + r j · n j / 360)` and `n = ∑ n j`, is strictly larger than the day-weighted average
+rate `(∑ r j · n j) / n`. -/
+theorem compounded_in_arrears_rate_exceeds_average_rate (m : ℕ) (hm : 2 ≤ m)
+    (r : Fin m → ℝ) (nb : Fin m → ℕ) (hr : ∀ j, 0 < r j) (hnb : ∀ j, 0 < nb j) :
+    let n : ℝ := ∑ j, (nb j : ℝ)
+    let G : ℝ := ∏ j, (1 + r j * nb j / 360)
+    (∑ j, r j * nb j) / n < (G - 1) * (360 / n) := by
+  intro n G
+  have hn : 0 < n := by
+    have : (0 : ℝ) < (nb ⟨0, by omega⟩ : ℝ) := by exact_mod_cast hnb _
+    exact Finset.sum_pos (fun j _ => by exact_mod_cast hnb j)
+      ⟨⟨0, by omega⟩, Finset.mem_univ _⟩
+  have hlt := mm_one_add_sum_lt_prod m hm (fun j => r j * nb j / 360)
+    (fun j => by
+      have := hr j
+      have : (0 : ℝ) < nb j := by exact_mod_cast hnb j
+      positivity)
+  have hsum : ∑ j, r j * (nb j : ℝ) / 360 = (∑ j, r j * nb j) / 360 := by
+    rw [Finset.sum_div]
+  rw [hsum] at hlt
+  have hG : (∑ j, r j * (nb j : ℝ)) / 360 < G - 1 := by
+    show _ < (∏ j, (1 + r j * nb j / 360)) - 1
+    linarith
+  have h2 : 0 < 360 / n := by positivity
+  calc (∑ j, r j * nb j) / n = (∑ j, r j * (nb j : ℝ)) / 360 * (360 / n) := by
+        field_simp
+    _ < (G - 1) * (360 / n) := mul_lt_mul_of_pos_right hG h2
+
+-- The card's bill: face 1,000,000, 91 days, quote 4.90% = 49/1000.
+-- The discount is 1,000,000 × 0.049 × 91/360 = 111475/9 dollars (12,386.11 to the cent).
+example : (1000000 : ℚ) * (49 / 1000) * (91 / 360) = 111475 / 9 := by norm_num
+
+-- The price before rounding, times 36, is the whole number 35,554,100.
+example : (1000000 : ℚ) * (1 - 49 / 1000 * 91 / 360) * 36 = 35554100 := by norm_num
+
+-- The return on the cash is exactly 17640/355541, which rounds to 4.9615%.
+example : ((1000000 : ℚ) - 1000000 * (1 - 49 / 1000 * 91 / 360)) /
+    (1000000 * (1 - 49 / 1000 * 91 / 360)) * (360 / 91) = 17640 / 355541 := by norm_num
+
+example : (496145 : ℚ) / 10000000 ≤ 17640 / 355541 ∧ (17640 : ℚ) / 355541 < 496155 / 10000000 := by
+  norm_num
+
+-- At 91 days the price stays positive for quotes under 360/91, about 395.6% a year.
+example : (3956 : ℚ) / 1000 < 360 / 91 ∧ (360 : ℚ) / 91 < 3957 / 1000 := by norm_num
+
+-- The overnight path: 52 one-day blocks and 13 three-day weekend blocks, 65 blocks, 91 days.
+example : 52 + 13 = 65 ∧ 52 * 1 + 13 * 3 = 91 := by decide
+
+#print axioms mm_one_add_sum_le_prod
+#print axioms mm_one_add_sum_lt_prod
+#print axioms money_market_yield_of_discount_quote
+#print axioms price_quote_and_return_determine_each_other
+#print axioms compounded_in_arrears_rate_exceeds_average_rate
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mm_one_add_sum_le_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mm_one_add_sum_lt_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'money_market_yield_of_discount_quote' depends on axioms: [propext, Classical.choice, Quot.sound]
+'price_quote_and_return_determine_each_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+'compounded_in_arrears_rate_exceeds_average_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -706,11 +958,11 @@ The two outputs match line for line, including the tenth decimal place of the gr
 
 ## Where you meet it in real life
 
-- **Treasury bill auctions.** Bids are made on the discount rate; the price follows from the rule on this card, and the Treasury publishes the resulting investment rate beside it.
+- **Treasury bill auctions.** Bids are made on the discount rate; the price follows from the rule on this card, and the Treasury publishes the resulting investment rate, its name for the bond-equivalent yield, beside it.
 - **Repo desks.** Overnight secured lending funds most of the bond market. The cash leg and the collateral leg are two halves of one loan, and the rate on it is the raw material SOFR is measured from.
 - **Floating-rate loans and notes.** A "SOFR + 150" coupon means the compounded-in-arrears rate for the period plus 1.50%, set by the arithmetic above under whichever lookback or payment-delay convention the contract names.
 - **The front of the curve.** The short end is built from exactly these instruments — deposits and bills at a week to a year, then futures — before longer swap quotes take over: [Bootstrapping](04-bootstrapping-the-discount-curve.md).
-- **Collateral and discounting.** Because cash posted as collateral earns the overnight rate, the overnight curve is the one that discounts collateralised trades, which is where the multi-curve world starts.
+- **Collateral and discounting.** Because cash posted as collateral earns the overnight rate, the overnight curve is the one that discounts collateralised trades, which is where the multi-curve world starts: [Collateral discounting](../28-Swaps/05-ois-discounting-and-collateral.md).
 
 > **Say it back**
 > A bill is quoted as a discount off the round face amount, so the quote is not the return: 4.90 on a 91-day million is a price of $987,613.89 and a return of 4.9615% on the cash. Overnight money is different again — one night at a time, each day's interest joining the balance — so a three-month rate is the product of sixty-five daily factors, 4.9476% here, three basis points above the plain average of the same rates. SOFR is measured from real overnight repo rather than submitted like LIBOR, which is why it is robust and why it has no term of its own. Building the term by compounding means the rate is only known at the end, and the lookback, shift, lockout and payment-delay conventions exist to give the payer notice.

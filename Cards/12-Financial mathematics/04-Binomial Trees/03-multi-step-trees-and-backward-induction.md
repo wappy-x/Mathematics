@@ -10,9 +10,11 @@ Acme trades at $100. A call option on it — the right, but not the duty, to buy
 
 Two ending prices is a thin picture of a year. Cut the year into four quarters instead. Each quarter Acme multiplies by 1.105171 or by 0.904837, the up and down factors that carry its 20 percent yearly jumpiness over a three-month step. Now there are sixteen histories and five ending prices, from $67.03 to $149.18. The same option comes out at **$8.76**.
 
+Each point on the tree, one possible price at one date, is a node. The nodes at one date form a column.
+
 The middle of that tree cannot be priced directly. The end can. On expiry day the option's worth is not a matter of opinion: it is the payoff, $22.14 at an ending price of $122.14, zero at $100. So fill in the last column from the payoff, treat every node in the column before it as a one-step problem whose two answers are now written down, and replace it by its one-step price. Keep going leftwards until only today is left. That walk is **backward induction**, and it is the whole method.
 
-One walk, two results. The number at the root is the price. The numbers along the way are the trading plan: at every node the tree says how many Acme shares to hold and how much to borrow, so the copy funds itself to expiry without another dollar going in.
+One walk, two results. The number at the root, today's node, is the price. The numbers along the way are the trading plan: at every node the tree says how many Acme shares to hold and how much to borrow. That holding of shares and loan is a copy of the option, and it funds itself to expiry without another dollar going in.
 
 **Fill the last column with the payoff, then replace every node by the one-step price of the two nodes it leads to, and keep going until only today is left.**
 
@@ -193,6 +195,8 @@ Acme at $S = 100$, strike $K = 100$, riskless rate $r = 5\%$, dividend yield $q 
 | **today** | $0.987578 \times (0.512599 \times 14.57 + 0.487401 \times 2.87)$ | **$\$8.76$** |
 
 So the four-step tree charges $8.76 for a one-year call on Acme struck at today's price. Three readings confirm it is doing arithmetic and not wishful thinking: rolling back a payoff of "one Acme share" gives $98.019867, which is $S e^{-qT}$ to the last digit; the put on the same tree, $5.863402, sits exactly a forward apart from the call, $8.760327 - 5.863402 = 2.896925$; and the hedge carried forward hits the payoff on all sixteen histories.
+
+A put is the right to sell one share for $100 in a year. The forward, $S e^{-qT} - K e^{-rT} = 2.896925$, is today's value of a binding deal to buy one share for $100 in a year.
 
 Four steps is still coarse. The continuous formula on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) gives $9.227006 for the same option; one step gave $11.073541; five hundred steps give $9.223118. The tree overshoots and undershoots by turns as steps are added, and why that wobble happens is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
 
@@ -738,7 +742,8 @@ The two outputs match line for line, from two programs that share no code.
 
 ## What this builds on
 
-- [The risk-neutral probability](02-risk-neutral-probability.md): where the weight 0.512599 comes from, and why it is a price rather than a forecast. This card uses it once per node.
+- [One step](01-one-step-binomial-replication.md): the copy of an option with shares and cash over a single step. This card repeats that solve at every node.
+- [The risk-neutral probability](02-risk-neutral-probability.md): where the weight 0.512599 comes from, and why it is a price rather than a forecast. This card uses it once per node. That card writes the weight as $q$; here the weight is $p$ and $q$ is the dividend yield.
 - [Lattice paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the count of routes to a point on a grid, 1, 4, 6, 4, 1 across four steps, which is why five endings are not five equal futures.
 
 ## Where this goes next

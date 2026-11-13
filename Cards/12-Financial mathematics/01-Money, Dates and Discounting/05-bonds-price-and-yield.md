@@ -40,7 +40,7 @@ Two pieces of shorthand first, both in words.
 
 A **discount factor** is what one dollar due later is worth today. Written $D(t)$, read "D of t", where $t$ counts the years until the dollar lands. With one payment a year at a yield $y$, waiting $t$ years divides the value by $(1+y)$ once per year: $D(t) = 1/(1+y)^t$. A dollar due in five years at five percent is worth $0.783526 today. Where that comes from is [Discount factors](01-compounding-and-discount-factors.md).
 
-The second is the **annuity factor**, written $a_N(y)$: the value today of one dollar a year for $N$ years, which is just the discount factors added up. The count of payments sits low and to the right, the rate goes in brackets, and $a$ on its own is the short form where only one is in play. It is the closed form proved on [Annuities](03-annuities-and-loans.md).
+The second is the **annuity factor**, written $a_N(y)$: the value today of one dollar a year for $N$ years, which is just the discount factors added up. The count of payments sits low and to the right, the rate goes in brackets, and $a$ on its own is the short form where only one is in play. It is the closed form proved on [Annuities](03-annuities-and-loans.md): one short formula in place of adding the factors one by one.
 
 The price, payment by payment:
 
@@ -70,7 +70,7 @@ The closed form divides by $y$, so it needs a yield that is not zero. At $y = 0$
 
 ### When it holds
 
-- **Every payment arrives in full and on time.** A borrower who can miss one is worth less than this; a chance of default has to be priced with a survival curve, and that is [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
+- **Every payment arrives in full and on time.** A borrower who can miss one is worth less than this; a chance of default has to be priced with a survival curve (the chance that the borrower is still paying at each date), and that is [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
 - **The same rate does for every date.** Real markets charge a different rate for one-year money than for five-year money. The single $y$ is a summary of the whole set, fitted to this contract; borrow it to price a different bond and the answer is wrong.
 - **The rate is quoted for the period the coupons arrive in.** Annual coupons want an annual yield. The same 6% paid twice a year, discounted at 2.5% a half-year, prices at $1,043.76, not $1,043.29: half of every coupon lands six months early, and 2.5% twice over compounds to 5.0625% a year, which takes part of that back.
 - **Nothing can end the contract early.** An issuer with the right to repay early will use it when rates fall, which caps the price: [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md).
@@ -232,7 +232,16 @@ The reason for the split is readability. The dirty price sawtooths: it climbs al
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The price is built four ways that share no arithmetic: discounting the five payments one at a time; the annuity closed form; rolling back from maturity a year at a time with no powers anywhere; and the face-plus-premium split. Then a fifth road tests the answer from the other end — a savings account is loaded with the price, the coupons are paid out of it, and the balance left at maturity is compared against the face. The day count between 15 March and 15 September is computed from the calendar, not typed in, and the accrued interest is built twice: one multiplication, and one day's worth of coupon added 184 times.
+Nothing is imported. The price is built four ways that share no arithmetic:
+
+- discounting the five payments one at a time;
+- the annuity closed form;
+- rolling back from maturity a year at a time, with no powers anywhere;
+- the face-plus-premium split.
+
+Then a fifth road tests the answer from the other end. A savings account is loaded with the price, the coupons are paid out of it, and the balance left at maturity is compared against the face.
+
+The day count between 15 March and 15 September is computed from the calendar, not typed in. The accrued interest is built twice: one multiplication, and one day's worth of coupon added 184 times.
 
 ### Python
 
@@ -613,6 +622,180 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the closed form and the premium, par and discount rule for any bond, then checks the house bond in exact fractions.
+
+- Suppose the yield is not zero and not $-1$. Then the price equals the coupon times the annuity factor, plus the face times $D(N)$.
+- Take the same yield. Then the price also equals the face plus $c - yF$ times the annuity factor.
+- Suppose the yield is above $-1$ and at least one payment remains. Then the price is above, equal to or below face exactly when $c$ is above, equal to or below $yF$.
+- The house bond prices at exactly $1,000 at a 6% yield, and at exactly $1,300 with no discounting.
+- At 5% it prices within half a cent of $1,043.29, and equals $1,000 plus $10 times the annuity factor exactly.
+- Spending that price at 5%, paying out $60 a year, leaves exactly $1,000 after five years.
+- The yield typed as 5 gives $12.13, and the accrued interest is $30.25, each to within half a cent.
+
+The decimals, the falling price curve, the pull to par and the clean and dirty prices are left to the Python and Rust checks.
+
+```lean
+-- Bond price and yield: discounting every coupon and the face at one yield collapses to coupon times the annuity factor plus the discounted face, equals the face plus the excess coupon times that factor, and so the bond sells at a premium, at par or at a discount exactly as the coupon is above, equal to or below the yield times the face.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Linarith
+import Mathlib.Algebra.BigOperators.Ring.Finset
+
+open Finset
+
+/-- Helper: the coupons alone, summed in closed form with an ordinary power. -/
+theorem bond_coupon_sum_closed (c y : ℝ) (N : ℕ) (h1 : 1 + y ≠ 0) (hy : y ≠ 0) :
+    ∑ t ∈ Icc 1 N, c / (1 + y) ^ t = c * ((1 - ((1 + y) ^ N)⁻¹) / y) := by
+  induction N with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), ih]
+    field_simp
+    ring
+
+/-- Helper: price minus face is the excess coupon `c - (q - 1) * F`, discounted and summed. -/
+theorem bond_price_sub_face (c F q : ℝ) (N : ℕ) (hq : q ≠ 0) :
+    ∑ t ∈ Icc 1 N, c / q ^ t + F / q ^ N =
+      F + ∑ t ∈ Icc 1 N, (c - (q - 1) * F) / q ^ t := by
+  induction N with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), Finset.sum_Icc_succ_top (by omega)]
+    have key : F / q ^ n = F * q / q ^ (n + 1) := by
+      rw [pow_succ]; field_simp
+    have e1 : (c - (q - 1) * F) / q ^ (n + 1) = c / q ^ (n + 1) - F * q / q ^ (n + 1)
+        + F / q ^ (n + 1) := by ring
+    rw [e1]
+    linarith [ih, key]
+
+#print axioms bond_coupon_sum_closed
+#print axioms bond_price_sub_face
+
+/-! A bond with face `F`, a coupon `c` paid at the end of each of `N` periods, and the face
+handed back with the last coupon. At a yield `y` per period, the payment due after `t` periods
+is divided by `(1 + y) ^ t`. The price is
+`P = ∑ t ∈ Icc 1 N, c / (1 + y) ^ t + F / (1 + y) ^ N`, and the annuity factor is
+`a_N(y) = (1 - (1 + y) ^ (-N)) / y`. -/
+
+/-- The bond price in closed form: every coupon and the face, each divided by `1 + y` once per
+period of waiting and added up, equals the coupon times the annuity factor
+`(1 - (1 + y) ^ (-N)) / y` plus the face discounted once over the whole `N` periods. The
+closed form divides by `y`, so the yield is not zero (and `1 + y ≠ 0`, so that every discount
+factor is defined). -/
+theorem bond_price_closed_form (c F y : ℝ) (N : ℕ) (h1 : 1 + y ≠ 0) (hy : y ≠ 0) :
+    ∑ t ∈ Icc 1 N, c / (1 + y) ^ t + F / (1 + y) ^ N =
+      c * ((1 - (1 + y) ^ (-(N : ℤ))) / y) + F * (1 + y) ^ (-(N : ℤ)) := by
+  rw [bond_coupon_sum_closed c y N h1 hy, zpow_neg, zpow_natCast, div_eq_mul_inv F]
+
+/-- Face plus excess coupon: split the coupon into the interest the market demands on the
+face, `y * F`, and what is left over; the first part prices to exactly the face, so the price
+is the face plus the leftover coupon `c - y * F` times the annuity factor (yield not zero,
+`1 + y ≠ 0`). -/
+theorem bond_price_eq_face_add_excess_coupon (c F y : ℝ) (N : ℕ) (h1 : 1 + y ≠ 0)
+    (hy : y ≠ 0) :
+    ∑ t ∈ Icc 1 N, c / (1 + y) ^ t + F / (1 + y) ^ N =
+      F + (c - y * F) * ((1 - (1 + y) ^ (-(N : ℤ))) / y) := by
+  rw [bond_price_closed_form c F y N h1 hy]
+  field_simp
+  ring
+
+/-- Premium, par and discount: for a yield above `-1` (every discount factor positive) and at
+least one payment still to come, the bond sells above face exactly when the coupon is above
+`y * F`, at face exactly when they are equal, and below face exactly when the coupon is below
+`y * F`. -/
+theorem bond_premium_par_discount (c F y : ℝ) (N : ℕ) (hy : -1 < y) (hN : 0 < N) :
+    (F < ∑ t ∈ Icc 1 N, c / (1 + y) ^ t + F / (1 + y) ^ N ↔ y * F < c) ∧
+    (∑ t ∈ Icc 1 N, c / (1 + y) ^ t + F / (1 + y) ^ N = F ↔ c = y * F) ∧
+    (∑ t ∈ Icc 1 N, c / (1 + y) ^ t + F / (1 + y) ^ N < F ↔ c < y * F) := by
+  have hq : 0 < 1 + y := by linarith
+  have hA : 0 < ∑ t ∈ Icc 1 N, 1 / (1 + y) ^ t := by
+    apply Finset.sum_pos
+    · intro t _; positivity
+    · exact ⟨1, Finset.mem_Icc.mpr ⟨le_rfl, hN⟩⟩
+  have hP : ∑ t ∈ Icc 1 N, c / (1 + y) ^ t + F / (1 + y) ^ N =
+      F + (c - y * F) * ∑ t ∈ Icc 1 N, 1 / (1 + y) ^ t := by
+    rw [bond_price_sub_face c F (1 + y) N hq.ne', Finset.mul_sum]
+    congr 1
+    refine Finset.sum_congr rfl fun t _ => ?_
+    ring
+  rw [hP]
+  set A := ∑ t ∈ Icc 1 N, 1 / (1 + y) ^ t
+  refine ⟨⟨fun h => ?_, fun h => ?_⟩, ⟨fun h => ?_, fun h => ?_⟩, ⟨fun h => ?_, fun h => ?_⟩⟩
+  · by_contra hc; push Not at hc; nlinarith
+  · nlinarith
+  · have : (c - y * F) * A = 0 := by linarith
+    rcases mul_eq_zero.mp this with h' | h'
+    · linarith
+    · linarith
+  · rw [h]; ring
+  · by_contra hc; push Not at hc; nlinarith
+  · nlinarith
+
+/-! The card's house bond, in exact fractions: face 1000, coupon 60, five annual payments.
+A yield of 5% is `1/20`, so `1 + y = 21/20`. -/
+
+-- At the 6% coupon rate the price is the face exactly: par, 1,000.
+example : ∑ t ∈ Icc 1 5, (60 : ℚ) / (1 + 6 / 100) ^ t + 1000 / (1 + 6 / 100) ^ 5 = 1000 := by
+  simp [Finset.sum_Icc_succ_top]
+  norm_num
+
+-- With no discounting at all (yield 0) the payments just add up: 1,300.
+example : ∑ t ∈ Icc 1 5, (60 : ℚ) / (1 + 0) ^ t + 1000 / (1 + 0) ^ 5 = 1300 := by
+  simp [Finset.sum_Icc_succ_top]
+  norm_num
+
+-- At 5% the price is within half a cent of $1,043.29.
+example : (208657 / 200 : ℚ) ≤ ∑ t ∈ Icc 1 5, (60 : ℚ) / (21 / 20) ^ t + 1000 / (21 / 20) ^ 5 ∧
+    ∑ t ∈ Icc 1 5, (60 : ℚ) / (21 / 20) ^ t + 1000 / (21 / 20) ^ 5 < 208659 / 200 := by
+  simp [Finset.sum_Icc_succ_top]
+  norm_num
+
+-- The premium: the price is the face plus 10 a year times the five-year annuity factor.
+example : ∑ t ∈ Icc 1 5, (60 : ℚ) / (21 / 20) ^ t + 1000 / (21 / 20) ^ 5 =
+    1000 + 10 * ((1 - (21 / 20 : ℚ) ^ (-(5 : ℤ))) / (1 / 20)) := by
+  simp [Finset.sum_Icc_succ_top]
+  norm_num
+
+-- Spend it: the 5% price banked at 5%, with 60 paid out each year, leaves exactly 1,000.
+example :
+    let P : ℚ := ∑ t ∈ Icc 1 5, (60 : ℚ) / (21 / 20) ^ t + 1000 / (21 / 20) ^ 5
+    ((((P * (21 / 20) - 60) * (21 / 20) - 60) * (21 / 20) - 60) * (21 / 20) - 60) * (21 / 20)
+      - 60 = 1000 := by
+  simp [Finset.sum_Icc_succ_top]
+  norm_num
+
+-- The yield typed as 5 instead of 0.05: within half a cent of $12.13.
+example : (2425 / 200 : ℚ) ≤ ∑ t ∈ Icc 1 5, (60 : ℚ) / (1 + 5) ^ t + 1000 / (1 + 5) ^ 5 ∧
+    ∑ t ∈ Icc 1 5, (60 : ℚ) / (1 + 5) ^ t + 1000 / (1 + 5) ^ 5 < 2427 / 200 := by
+  simp [Finset.sum_Icc_succ_top]
+  norm_num
+
+-- Accrued interest for 184 days of a 365-day coupon year: within half a cent of $30.25.
+example : (6049 / 200 : ℚ) ≤ 60 * (184 / 365) ∧ (60 : ℚ) * (184 / 365) < 6051 / 200 := by
+  norm_num
+
+#print axioms bond_price_closed_form
+#print axioms bond_price_eq_face_add_excess_coupon
+#print axioms bond_premium_par_discount
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bond_coupon_sum_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bond_price_sub_face' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bond_price_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bond_price_eq_face_add_excess_coupon' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bond_premium_par_discount' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Every answer below is also a row in the output above. The first two mean editing the inputs at the top, and the asserts are pinned to the house bond, so an edited run prints its numbers and then stops — on purpose.
@@ -651,6 +834,7 @@ The two outputs match line for line.
 
 ## What this builds on
 
+- [Discount factors](01-compounding-and-discount-factors.md): the price today of one dollar due later, $D(5) = 0.783526$ here, which every payment on this card is multiplied by.
 - [Annuities](03-annuities-and-loans.md): the annuity factor, 4.329477 here, which is the only reason five coupons can be priced with one multiplication.
 - [Day counts](02-day-counts-and-dates.md): what 184 days out of 365 means, and why a market has to agree on the count before it can agree on a price.
 
