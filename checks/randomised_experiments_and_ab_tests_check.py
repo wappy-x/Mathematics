@@ -137,4 +137,4 @@ assert abs(pf - pe) < 0.01                                              # formul
 assert power(n_need(0.05, 0.058), 0.05, 0.058) >= 0.80 > power(n_need(0.05, 0.058) - 1, 0.05, 0.058)
 assert abs(za - 1.959963984540054) < 1e-9                               # published 97.5% point
 assert cover / R > 0.93                                                 # coverage by lottery
-print("all checks passed")
+print("ALL CHECKS PASS")

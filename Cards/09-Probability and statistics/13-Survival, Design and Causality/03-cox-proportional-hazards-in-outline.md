@@ -105,7 +105,7 @@ Take two men alive at time $t$: a smoker and a non-smoker. In the next short int
 
 $$\frac{2\,h_0(t)\,dt}{2\,h_0(t)\,dt + h_0(t)\,dt} \;=\; \frac{2}{3}.$$
 
-The baseline, and the interval length, cancel. The answer is 2/3 whether $h_0$ rises with age, falls, or jumps about. The checks confirm it: Simpson's rule on a rising baseline gives 0.6667, and 200,000 simulated races on a falling baseline give 0.6667 with a standard error of 0.0011.
+The baseline, and the interval length, cancel. The answer is 2/3 whether $h_0$ rises with age, falls, or jumps about. The checks confirm it: Simpson's rule, a numerical way to compute an integral, gives 0.6667 on a rising baseline, and 200,000 simulated races on a falling baseline give 0.6667 with a standard error of 0.0011.
 
 ### Step 2: a whole risk set
 
@@ -124,7 +124,9 @@ Add this over all men $i$ and the first death happens in that interval with chan
 
 Each death contributes its "which one" chance, and the partial likelihood $L(\beta)$ multiplies them. A censored man never appears on top of a fraction. He appears in the denominators of every death that happened while he was still in the study, then drops out. So the three men who left alive still count: they were at risk, and they did not die.
 
-What the product leaves out is the timing of the deaths: how long the gaps between them were. The gaps carry information about $h_0$, which the model never needed, and almost none about $\beta$. Cox argued in 1975 that $L(\beta)$ can be treated like an ordinary likelihood: its peak settles on the true $\beta$ as the study grows, and its curvature gives the standard error. The full proof uses martingales, sums of surprises whose average is zero ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md) has the idea), run in continuous time, and belongs to wing 11. This card checks it by simulation instead: 400 cohorts of 200 men with a true ratio of 2 give an average $\hat\beta$ of 0.6981, standard error 0.0145, against ln 2 = 0.6931. The 400 estimates spread by 0.2898; the curvature reported 0.2934 on average.
+What the product leaves out is the timing of the deaths: how long the gaps between them were. The gaps carry information about $h_0$, which the model never needed, and almost none about $\beta$. Cox argued in 1975 that $L(\beta)$ can be treated like an ordinary likelihood: its peak settles on the true $\beta$ as the study grows, and its curvature gives the standard error. The full proof uses martingales, sums of surprises whose average is zero ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md) has the idea), run in continuous time, and belongs to the wing [Stochastic processes and calculus](../../11-Stochastic%20processes%20and%20calculus/README.md).
+
+This card checks it by simulation instead: 400 cohorts of 200 men with a true ratio of 2 give an average $\hat\beta$ of 0.6981, standard error 0.0145, against ln 2 = 0.6931. The 400 estimates spread by 0.2898; the curvature reported 0.2934 on average.
 
 ### Step 4: slope and curvature
 
@@ -620,6 +622,129 @@ try: code non-smokers as 1, beta, HR            -0.6931     0.5000
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves that the baseline cancels, for any risk set and any baseline hazard, plus the survival rule and the hand numbers.
+
+- Take a risk set alive at time 0, and a baseline hazard whose cumulative hazard starts at 0 and grows without bound. Then man $i$ dies first with chance $c_i / C$, whatever the baseline.
+- Suppose the first death in the risk set comes at a time $t$ where $h_0(t) > 0$. Then it is man $i$'s death with chance $c_i / C$: $h_0(t)$ and $t$ divide out.
+- Take survival as $e^{-H}$, with a cumulative hazard $e^{\beta x} H_0(t)$. Then $S(t \mid x) = S_0(t)^{e^{\beta x}}$.
+- In the race of two, the smoker dies first with chance 2/3. At year 4, the smokers hold weight 6 of a total 10.
+- At HR 2, the seven expected smoker shares add to exactly 4, the observed smoker deaths.
+- At HR 2, the information is exactly 247/150, about 1.6467.
+- For the doctors, 1 − 0.76 squared is exactly 0.4224, not 0.48.
+
+Newton's fit, the interval, the simulated cohorts, the charts and the "try" rows are left to the Python and Rust checks.
+
+```lean
+-- Cox regression in outline: under proportional hazards the chance that a given man is the first in a risk set to die is his weight e^(beta x) over the total weight, whatever the baseline hazard, and survival becomes the baseline survival raised to the hazard ratio.
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.BigOperators.Field
+
+open MeasureTheory Filter Real
+
+/-- The baseline cancels. Men in a risk set `s`, man `k` with covariate `x k`, all alive at
+time 0. Man `k` has hazard `e^(β x k) · h₀(t)`, where the baseline hazard `h₀ ≥ 0` is any
+curve whose cumulative hazard `H₀` starts at 0 and grows without bound. Man `i` is the first
+to die, at time `t`, with density `e^(β x i) h₀(t) ∏ₖ e^(-e^(β x k) H₀(t))`; adding this over
+all `t` gives exactly his weight over the total weight, `e^(β x i) / ∑ₖ e^(β x k)`, which does
+not depend on `h₀`. -/
+theorem cox_first_death_prob_eq_weight_share {ι : Type*} (s : Finset ι) (x : ι → ℝ) (β : ℝ)
+    (h₀ H₀ : ℝ → ℝ) (hH₀_zero : H₀ 0 = 0)
+    (hH₀_cont : ContinuousWithinAt H₀ (Set.Ici 0) 0)
+    (hH₀_deriv : ∀ t > 0, HasDerivAt H₀ (h₀ t) t)
+    (hh₀_nonneg : ∀ t > 0, 0 ≤ h₀ t)
+    (hH₀_top : Tendsto H₀ atTop atTop)
+    {i : ι} (hi : i ∈ s) :
+    ∫ t in Set.Ioi (0 : ℝ), exp (β * x i) * h₀ t * ∏ k ∈ s, exp (-(exp (β * x k)) * H₀ t)
+      = exp (β * x i) / ∑ k ∈ s, exp (β * x k) := by
+  have hprod : ∀ t, ∏ k ∈ s, exp (-(exp (β * x k)) * H₀ t)
+      = exp (-(∑ k ∈ s, exp (β * x k)) * H₀ t) := by
+    intro t
+    rw [← Real.exp_sum, neg_mul, Finset.sum_mul, ← Finset.sum_neg_distrib]
+    simp only [neg_mul]
+  set W := ∑ k ∈ s, exp (β * x k) with hWdef
+  have hW : 0 < W := Finset.sum_pos (fun k _ => exp_pos _) ⟨i, hi⟩
+  set w := exp (β * x i) with hwdef
+  have hfun : (fun t => w * h₀ t * ∏ k ∈ s, exp (-(exp (β * x k)) * H₀ t))
+      = fun t => w * h₀ t * exp (-W * H₀ t) := by
+    funext t; rw [hprod t]
+  rw [hfun]
+  let g : ℝ → ℝ := fun t => -(w / W) * exp (-W * H₀ t)
+  have hcont : ContinuousWithinAt g (Set.Ici 0) 0 := by
+    have : ContinuousWithinAt (fun t => -W * H₀ t) (Set.Ici 0) 0 :=
+      continuousWithinAt_const.mul hH₀_cont
+    exact continuousWithinAt_const.mul (continuous_exp.continuousAt.comp_continuousWithinAt this)
+  have hderiv : ∀ t ∈ Set.Ioi (0 : ℝ), HasDerivAt g (w * h₀ t * exp (-W * H₀ t)) t := by
+    intro t ht
+    have h1 := ((hH₀_deriv t ht).const_mul (-W)).exp.const_mul (-(w / W))
+    convert h1 using 1
+    field_simp
+  have hpos : ∀ t ∈ Set.Ioi (0 : ℝ), 0 ≤ w * h₀ t * exp (-W * H₀ t) := by
+    intro t ht
+    exact mul_nonneg (mul_nonneg (exp_pos _).le (hh₀_nonneg t ht)) (exp_pos _).le
+  have hlim : Tendsto g atTop (nhds 0) := by
+    have h1 : Tendsto (fun t => -W * H₀ t) atTop atBot :=
+      tendsto_neg_atTop_atBot.comp (hH₀_top.const_mul_atTop hW) |>.congr (fun t => by simp)
+    have h2 := (Real.tendsto_exp_atBot.comp h1).const_mul (-(w / W))
+    simpa [g] using h2
+  rw [integral_Ioi_of_hasDerivAt_of_nonneg hcont hderiv hpos hlim]
+  simp [g, hH₀_zero]
+
+/-- Given that the first death in the risk set happens at time `t` (where the baseline
+hazard is positive), it is man `i`'s with chance `e^(β x i) / ∑ₖ e^(β x k)`: the baseline
+`h₀(t)` and the time `t` divide out. -/
+theorem cox_conditional_first_death_eq_weight_share {ι : Type*} (s : Finset ι) (x : ι → ℝ)
+    (β : ℝ) (h₀ H₀ : ℝ → ℝ) (t : ℝ) (ht : 0 < h₀ t) (i : ι) :
+    (exp (β * x i) * h₀ t * ∏ k ∈ s, exp (-(exp (β * x k)) * H₀ t)) /
+      (∑ j ∈ s, exp (β * x j) * h₀ t * ∏ k ∈ s, exp (-(exp (β * x k)) * H₀ t))
+      = exp (β * x i) / ∑ k ∈ s, exp (β * x k) := by
+  have hP : 0 < ∏ k ∈ s, exp (-(exp (β * x k)) * H₀ t) :=
+    Finset.prod_pos (fun k _ => exp_pos _)
+  rw [← Finset.sum_mul, ← Finset.sum_mul, mul_assoc, mul_assoc]
+  exact mul_div_mul_right _ _ (mul_pos ht hP).ne'
+
+/-- Hazard to survival: if the cumulative hazard for covariate `x` is `e^(β x)` times the
+baseline's, `H(t | x) = e^(β x) H₀(t)`, then survival `S(t | x) = e^(-H(t | x))` equals the
+baseline survival `S₀(t) = e^(-H₀(t))` raised to the power `e^(β x)`. -/
+theorem cox_survival_eq_baseline_rpow (β x H₀t : ℝ) :
+    exp (-(exp (β * x) * H₀t)) = (exp (-H₀t)) ^ (exp (β * x)) := by
+  rw [Real.rpow_def_of_pos (exp_pos _), Real.log_exp]
+  ring_nf
+
+-- Step 1, the race of two: a smoker of weight 2 against a non-smoker of weight 1.
+example : (2 : ℚ) / (2 + 1) = 2 / 3 := by norm_num
+
+-- Step 2: at year 4, three smokers (weight 2 each) and four non-smokers (weight 1).
+example : ((2 + 2 + 2 : ℚ) / (2 * 3 + 4)) = 6 / 10 := by norm_num
+
+-- Worked numbers: the seven expected smoker shares at hazard ratio 2 add to 4,
+-- the observed number of smoker deaths (A, C, D, I), so the score is 0 at HR 2.
+example : (2 * 5 / (2 * 5 + 5) + 2 * 4 / (2 * 4 + 4) + 2 * 3 / (2 * 3 + 4) + 2 * 2 / (2 * 2 + 4)
+    + 2 * 1 / (2 * 1 + 3) + 2 * 1 / (2 * 1 + 2) + 2 * 1 / (2 * 1 + 1) : ℚ) = 4 := by norm_num
+
+-- The information at HR 2: the sum of share × (1 − share) is exactly 247/150 (about 1.6467).
+example : ((2 / 3) * (1 / 3) + (2 / 3) * (1 / 3) + (3 / 5) * (2 / 5) + (1 / 2) * (1 / 2)
+    + (2 / 5) * (3 / 5) + (1 / 2) * (1 / 2) + (2 / 3) * (1 / 3) : ℚ) = 247 / 150 := by norm_num
+
+-- The doctors: survival 76/100 squared gives a death chance of 264/625 (42.24%), not 48/100.
+example : (1 - (76 / 100 : ℚ) ^ 2) = 264 / 625 := by norm_num
+example : (1 - (76 / 100 : ℚ) ^ 2) ≠ 2 * (24 / 100) := by norm_num
+
+#print axioms cox_first_death_prob_eq_weight_share
+#print axioms cox_conditional_first_death_eq_weight_share
+#print axioms cox_survival_eq_baseline_rpow
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cox_first_death_prob_eq_weight_share' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cox_conditional_first_death_eq_weight_share' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cox_survival_eq_baseline_rpow' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **F dies in year 6 instead of leaving.** Guess first: does the ratio rise or fall? One more smoker death, when smokers are only 2 of the 5 at risk, pushes it up, to 2.5198.
@@ -656,6 +781,7 @@ ALL CHECKS PASS
 
 ## What this builds on
 
+- [Survival](01-survival-functions-and-hazards.md): the hazard, the cumulative hazard, censoring, and survival as e to the minus cumulative hazard, which Step 5 uses.
 - [Kaplan-Meier](02-kaplan-meier.md): risk sets, and how a man who leaves alive still counts until he leaves.
 - [Logistic regression](../09-Regression/05-logistic-regression.md): a covariate acting on a log scale, a ratio read as e to the beta, and a fit by Newton's method with curvature standard errors.
 

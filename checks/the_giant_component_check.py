@@ -131,3 +131,4 @@ assert abs(zs - z1) < 4 * zse               # simulated family lines against the
 assert abs(m6 - z1) < 4 * s6                # networks of 1,000 against the formula
 assert own < 1 / (1 - 0.5) + 3 * own_se     # the proven mean-size bound below the switch
 assert big < k                              # the proven largest-island bound below the switch
+print("ALL CHECKS PASS")

@@ -166,5 +166,5 @@ fn main() {
     assert!(power(need as f64, 0.05, 0.058, za) >= 0.80 && 0.80 > power((need - 1) as f64, 0.05, 0.058, za));
     assert!((za - 1.959963984540054).abs() < 1e-9);                         // published 97.5% point
     assert!(cover as f64 / rf > 0.93);                                      // coverage by lottery
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

@@ -153,4 +153,5 @@ fn main() {
     assert!((m6 - z1).abs() < 4.0 * s6);    // networks of 1,000 against the formula
     assert!(own < 1.0 / (1.0 - 0.5) + 3.0 * own_se); // the proven mean-size bound below the switch
     assert!(big < k);                       // the proven largest-island bound below the switch
+    println!("ALL CHECKS PASS");
 }
