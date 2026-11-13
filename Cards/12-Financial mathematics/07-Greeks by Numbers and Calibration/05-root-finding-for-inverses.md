@@ -12,7 +12,9 @@ Every pricer on this shelf runs one way. Feed it a volatility — a number for h
 
 It cannot be rearranged. In the Black–Scholes call price the volatility sits inside two bell-curve areas and inside a division, and no algebra pulls it out ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). There is no formula for the answer. There is only a search.
 
-Guess a volatility, price it, compare with the screen, guess again. The craft is all in "guess again". Three ways to do it. Halve a range known to hold the answer: **bisection**. Use the slope of the price curve to aim: **Newton's method**. Do both, and let the range referee the aim: **Brent's method**. Given the exact quote 9.227005508154, Newton returns 20.000 percent in five trips through the pricer. Bisection needs 41, Brent 8. One step here means one trip through the pricer, the honest unit of cost.
+Guess a volatility, price it, compare with the screen, guess again. The craft is all in "guess again".
+
+Three ways to do it. Halve a range known to hold the answer: **bisection**. Use the slope of the price curve to aim: **Newton's method**. Do both, and let the range referee the aim: **Brent's method**. Given the exact quote 9.227005508154, Newton returns 20.000 percent in five trips through the pricer. Bisection needs 41, Brent 8. One step here means one trip through the pricer, the honest unit of cost.
 
 **Subtract the quote, and every inverse problem becomes the same problem: find where one curve crosses zero, inside a range known to contain the crossing.**
 
@@ -60,7 +62,9 @@ Last, the rule that turns a leftover residual into an accuracy. It is the formul
 
 $$|x_n - x_*| \;\le\; \frac{|f(x_n)|}{\min |f'|}$$
 
-Here $x_*$ is the true answer. In words: **the distance from it is at most the leftover residual divided by the flattest the slope gets in between.** Dollars on top, dollars per unit of input underneath, input units out. A solver can stop in either unit — bisection and Brent on a bracket narrower than a width $\delta$ in the input's own units, Newton on a residual under so many dollars — and this inequality is the only bridge between the two.
+Here $x_*$ is the true answer. In words: **the distance from it is at most the leftover residual divided by the flattest the slope gets in between.** Dollars on top, dollars per unit of input underneath, input units out.
+
+A solver can stop in either unit. Bisection and Brent stop on a bracket narrower than a width $\delta$ in the input's own units; Newton stops on a residual under so many dollars. This inequality is the only bridge between the two.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -79,8 +83,8 @@ Here $x_*$ is the true answer. In words: **the distance from it is at most the l
 
 ### When it holds
 
-- **The output moves continuously with the input.** A sign change then guarantees a crossing between the ends ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). Where the output jumps — a barrier that knocks out — a sign change can straddle the jump instead of a root, and the solver converges neatly onto a cliff.
-- **The output moves one way only.** The Acme call's price strictly rises with volatility, so at most one volatility fits a price. Where a model is not one-way, two inputs can fit one quote and the solver returns whichever its bracket held; base correlation is the standing example ([Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md)).
+- **The output moves continuously with the input.** A sign change then guarantees a crossing between the ends ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). Where the output jumps — a barrier option, which dies when the share touches a set level — a sign change can straddle the jump instead of a root, and the solver converges neatly onto a cliff.
+- **The output moves one way only.** The Acme call's price strictly rises with volatility, so at most one volatility fits a price. Where a model is not one-way, two inputs can fit one quote and the solver returns whichever its bracket held; base correlation, the one correlation number that reprices a credit tranche, is the standing example ([Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md)).
 - **A bracket whose ends straddle the quote.** Check both signs first. Without opposite signs nothing is trapped: the run below shows bisection walking to the end of a bad bracket and reporting 0.100000000000 with a straight face.
 - **A quote inside the model's range.** The Acme call runs from $2.896924880604 at zero volatility up towards $98.019867330676 as the volatility runs away. A quote of $2.50 has no volatility behind it, and the honest answer is to reject the quote.
 - **A slope that has not gone flat where you stop.** Newton divides by it, and every solver's accuracy is read through it. Flat slope, worthless residual — Step 6 puts a number on that.
@@ -107,7 +111,9 @@ Bisection needs no slope and no luck, only the bracket, and it cannot overshoot,
 
 ### Step 3: the slope says how far to move
 
-Newton's step is a unit conversion, nothing cleverer. At a guess of 0.140197963021 the residual is −$2.258761723900: the price is that much too cheap. The slope there is $37.557771754090 per 1.00 of volatility. Dollars divided by dollars-per-unit gives units: 2.258761723900 / 37.557771754090 is 0.060140993952 of volatility to add, landing at 0.200338956973. The pump gives 37.56 litres a minute and the tank is 2.26 litres short, so run it 0.06 of a minute.
+Newton's step is a unit conversion, nothing cleverer. At a guess of 0.140197963021 the residual is −$2.258761723900: the price is that much too cheap. The slope there is $37.557771754090 per 1.00 of volatility. Dollars divided by dollars-per-unit gives units: 2.258761723900 / 37.557771754090 is 0.060140993952 of volatility to add, landing at 0.200338956973.
+
+The pump gives 37.56 litres a minute and the tank is 2.26 litres short, so run it 0.06 of a minute.
 
 Then the reason to bother. The error squares at every step. The guesses run 1.00, then 0.140197963021, then 0.200338956973, then 0.200000003565, then 0.200000000000: no correct digits, then three, then eight, then all of them. The tangent misses the true curve only by the curve's bend, and that miss grows with the *square* of the distance, so each step roughly doubles the digits.
 
@@ -118,23 +124,23 @@ Then the reason to bother. The error squares at every step. The guesses run 1.00
 
 **Uniqueness, for this problem.** Vega is $S e^{-qT}\varphi(d_1)\sqrt{T}$: the share price, shrunk for the dividend yield, times the bell curve's height at the usual distance-to-strike, times the square root of the years left. A height is strictly positive at every finite argument, so the call price strictly increases with volatility and meets each attainable price once.
 
-**The halving bound.** Each test replaces the bracket by a half that still straddles zero, so the width after several tests is the starting width divided by two once per test:
+**The halving bound.** Each test replaces the bracket by a half that still straddles zero, so the width $w_t$ after $t$ tests is the starting width $w_0$ divided by two once per test:
 $$w_t = \frac{w_0}{2^{\,t}}, \qquad w_t \le \delta \iff t \ge \log_2\!\left(\frac{w_0}{\delta}\right).$$
 Width 0.99 and stopping width 0.000000000001 give 40 tests, a count that does not depend on the function at all.
 
-**Newton's squaring.** Suppose the residual has two derivatives near the answer. Taylor's theorem with remainder, expanded at the guess and evaluated at the answer, gives
+**Newton's squaring.** Suppose the residual has two derivatives near the answer. Taylor's theorem with remainder ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)), expanded at the guess and evaluated at the answer, gives
 $$0 = f(x_n) + f'(x_n)\,(x_* - x_n) + \tfrac12 f''(\xi)\,(x_* - x_n)^2$$
-for some point between the two. Divide by the slope at the guess and substitute the Newton update:
+for some point between the two. Divide by the slope at the guess and substitute the Newton update. Write $e_n$ for the size of the error after step $n$, $|x_n - x_*|$:
 $$x_{n+1} - x_* = \frac{f''(\xi)}{2 f'(x_n)}\,(x_n - x_*)^2 ,\qquad\text{hence}\qquad e_{n+1} \le \frac{\max |f''|}{2 \min |f'|}\; e_n^2 .$$
 The next error is the old one squared, times the bend over twice the slope. Near the answer that collapses the error and the digits double. Far away, or wherever the slope's lower bound is near zero, the inequality says nothing at all — and Step 4 shows what nothing looks like.
 
-**Residual to answer.** The mean value theorem gives $f(x_n) - f(x_*) = f'(\xi)(x_n - x_*)$ for some point in between, and the residual at the answer is zero. Divide by that intermediate slope, then replace it with the flattest slope on the bracket, and the inequality in The formula falls out. Where the slope can be zero, there is no bound at all.
+**Residual to answer.** The mean value theorem ([Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) gives $f(x_n) - f(x_*) = f'(\xi)(x_n - x_*)$ for some point in between, and the residual at the answer is zero. Divide by that intermediate slope, then replace it with the flattest slope on the bracket, and the inequality in The formula falls out. Where the slope can be zero, there is no bound at all.
 
 </details>
 
 ### Step 4: the slope is also how Newton dies
 
-Start Newton at a volatility of 1 percent. The call there is worth $2.90, so the residual is about minus six and a third dollars — and the slope is only $0.43 per 1.00 of volatility, about a ninetieth of its size at the answer, because at 1 percent the option's fate is already settled and more jumpiness barely moves the price. Newton divides the one by the other and takes a huge stride: the first step lands at 14.801246082628, a volatility of 1,480 percent.
+Start Newton at a volatility of 1 percent. The call there is worth $2.90, so the residual is about minus six and a third dollars. The slope is only $0.43 per 1.00 of volatility, about a ninetieth of its size at the answer. That is because at 1 percent the option's fate is already settled and more jumpiness barely moves the price. Newton divides the one by the other and takes a huge stride: the first step lands at 14.801246082628, a volatility of 1,480 percent.
 
 Out there it is worse. Vega is $0.000000000049 per 1.00 of volatility. Dividing the leftover residual by that throws the next guess to a negative number of order 10^12. A negative volatility is not a poorer answer; it is not an answer.
 
@@ -146,7 +152,9 @@ Brent's method holds a bracket at all times and proposes its fast step inside it
 
 The proposal comes from **inverse quadratic interpolation**: fit a curve through the three most recent points, reading the *input as a function of the residual* rather than the usual way round, and ask where that curve reads zero. Reading it backwards is the trick: the thing solved for is an input. With two usable points the same idea flattens into the secant.
 
-Then the guards. The proposal is accepted only if it lands in the three-quarters of the bracket nearest the better of the two ends, and only if its stride is at least halving the previous one. Fail either test and the midpoint is taken, which halves the bracket. So the usual case is secant-fast, the bracket never widens, and the worst case cannot run away: Brent's paper bounds the pathological case at roughly the square of bisection's count of halvings.
+Then the guards. The proposal is accepted only if it lands in the three-quarters of the bracket nearest the better of the two ends, and only if its stride is at least halving the previous one. Fail either test and the midpoint is taken, which halves the bracket.
+
+So the usual case is secant-fast, the bracket never widens, and the worst case cannot run away: Brent's paper bounds the pathological case at roughly the square of bisection's count of halvings.
 
 On the Acme quote Brent takes 8 trips and never falls back to the midpoint. On the flat $K = 200$ wing the same routine falls back 5 times: the net earns its keep exactly where unguarded Newton dies.
 
@@ -176,7 +184,9 @@ One more comparison settles how many digits are worth printing. The screen shows
 
 ### The other door
 
-The search can sometimes be shortened rather than run. Transform the price first — divide out the discounting, reshape the strike into log-moneyness, take the starting guess from a rational function fitted to that shape — and two steps of a higher-order relative of Newton reach the limit of double-precision arithmetic. That is Jäckel's route, cited below, and it is what fast libraries do. Still a residual and still a slope; only the guess and the step order change.
+The search can sometimes be shortened rather than run. Transform the price first: divide out the discounting, reshape the strike into log-moneyness (the logarithm of the share's forward price, its fair price for delivery at expiry, over the strike), and take the starting guess from a rational function fitted to that shape. Then two steps of a higher-order relative of Newton reach the limit of double-precision arithmetic, the roughly 16 significant digits a computer number holds.
+
+That is Jäckel's route, cited below, and it is what fast libraries do. Still a residual and still a slope; only the guess and the step order change.
 
 ---
 
@@ -197,7 +207,7 @@ The shelf's market: Acme at $100, strike $100, 5 percent cash rate, 2 percent di
 
 The market's $9.23 is the price of 20.000 percent volatility. That number, not the dollar price, is what a desk quotes and compares across strikes; the dollars are its packaging.
 
-The last row is the shelf's house number, delta 0.5869, reproduced by this card's pricer: the thing being inverted is the thing the neighbouring cards differentiate ([Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md)).
+The last row is the shelf's house number, delta 0.5869, reproduced by this card's pricer: the thing being inverted is the thing the neighbouring cards differentiate ([Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md)). Delta is the dollars the call gains per dollar on the share. In its formula, $e^{-qT}$ is the shrink for the 2 percent dividend yield $q$ over the one year $T$, and $N(d_1)$ is a bell-curve area the pricer already computes.
 
 ### The cost of each route
 
@@ -225,7 +235,9 @@ Every number in that table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows an answer: the bell-curve area is built from thin slices under the curve, Simpson's rule written out, and the three solvers are written out too. The volatility behind 9.227005508154 is reached **three independent ways** — halving, the slope, and the guarded hybrid — and the asserts compare each against 0.20, the volatility that made the quote, which no solver sees. The slope is checked a second way, by nudging the volatility. Then the same routines are pointed at a bond's yield, whose price is computed payment by payment and again by the annuity formula. A slip anywhere trips one of the twelve asserts.
+Nothing is imported that already knows an answer: the bell-curve area is built from thin slices under the curve, Simpson's rule written out, and the three solvers are written out too. The volatility behind 9.227005508154 is reached **three independent ways** — halving, the slope, and the guarded hybrid — and the asserts compare each against 0.20, the volatility that made the quote, which no solver sees. The slope is checked a second way, by nudging the volatility.
+
+Then the same routines are pointed at a bond's yield, whose price is computed payment by payment and again by the annuity formula. A slip anywhere trips one of the twelve asserts.
 
 ### Python
 
@@ -661,6 +673,192 @@ ALL CHECKS PASS
 
 The two outputs match line for line, Newton's trace included: the point of running both is that a transcription slip shows up as a difference.
 
+### Lean
+
+Lean proves the general rules behind bracketing and the residual bound, for every model meeting their conditions, plus the card's halving count.
+
+- Take a model $g$ that moves continuously and one way only from $\ell$ to $u$, with end residuals of opposite signs or a zero. Then exactly one input between them reproduces the quote $y_*$.
+- Take a residual $f$ that moves continuously from $\ell$ to $u$, with opposite signs at the ends or a zero. Then after $t$ tests the bracket stays inside, has width $w_0/2^t$, and still holds a zero.
+- Take the same residual after $t$ tests. Then the bracket's midpoint $m$ lies within $w_0/2^{t+1}$ of that zero.
+- Suppose $f$ moves continuously on the bracket, and its slope exists and never drops below a positive floor inside it. Then $|x_n - x_*|$ is at most $|f(x_n)|$ divided by that floor, for any guess $x_n$ in the bracket.
+- From the bracket 0.01 to 1.00, forty halvings bring the width under 0.000000000001, and thirty-nine do not.
+- Counting the first end, that makes 41 trips through the pricer.
+
+Newton's and Brent's runs, the Acme call's numbers and the bond yield are left to the Python and Rust checks.
+
+```lean
+-- Solving backwards: a continuous one-way model whose bracket straddles the quote hits that quote exactly once, bisection traps a root in a bracket that halves every step, and the leftover residual divided by the flattest slope bounds the distance to the answer.
+import Mathlib.Topology.Order.IntermediateValue
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Order.Monotone.Basic
+import Mathlib.Tactic.NormNum
+
+open Set
+
+/-- A continuous function with a sign change on a bracket has a zero there. -/
+theorem root_of_sign_change {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
+    (hcont : ContinuousOn f (Icc a b)) (hsign : f a * f b ≤ 0) :
+    ∃ x ∈ Icc a b, f x = 0 := by
+  by_cases ha0 : f a = 0
+  · exact ⟨a, ⟨le_rfl, hab⟩, ha0⟩
+  rcases lt_or_gt_of_ne ha0 with ha | ha
+  · have hb : 0 ≤ f b := by
+      by_contra hb
+      rw [not_le] at hb
+      nlinarith [mul_pos_of_neg_of_neg ha hb]
+    obtain ⟨x, hx, hfx⟩ := intermediate_value_Icc hab hcont ⟨ha.le, hb⟩
+    exact ⟨x, hx, hfx⟩
+  · have hb : f b ≤ 0 :=
+      nonpos_of_mul_nonpos_left (by linarith [mul_comm (f a) (f b)]) ha
+    obtain ⟨x, hx, hfx⟩ := intermediate_value_Icc' hab hcont ⟨hb, ha.le⟩
+    exact ⟨x, hx, hfx⟩
+
+#print axioms root_of_sign_change
+
+/-- Subtract the quote and every inverse problem is one problem. If the model `g` moves
+continuously with the input on the bracket from `l` to `u`, moves one way only there, and the
+residuals `g l - y` and `g u - y` at the two ends have opposite signs (or one is zero), then
+exactly one input in the bracket reproduces the quoted number `y`. -/
+theorem exists_unique_inverse_in_bracket {g : ℝ → ℝ} {l u y : ℝ} (hlu : l ≤ u)
+    (hcont : ContinuousOn g (Icc l u))
+    (hone_way : StrictMonoOn g (Icc l u) ∨ StrictAntiOn g (Icc l u))
+    (hbracket : (g l - y) * (g u - y) ≤ 0) :
+    ∃! x, x ∈ Icc l u ∧ g x = y := by
+  have hsurj : ∃ x ∈ Icc l u, g x = y := by
+    have hc : ContinuousOn (fun z => g z - y) (Icc l u) := hcont.sub continuousOn_const
+    obtain ⟨x, hx, hfx⟩ := root_of_sign_change hlu hc hbracket
+    exact ⟨x, hx, by linarith⟩
+  obtain ⟨x, hx, hgx⟩ := hsurj
+  have hinj : InjOn g (Icc l u) := by
+    rcases hone_way with h | h
+    · exact h.injOn
+    · exact h.injOn
+  exact ⟨x, ⟨hx, hgx⟩, fun z ⟨hz, hgz⟩ => hinj hz hx (hgz.trans hgx.symm)⟩
+
+/-- One bisection test: price the midpoint and keep the half whose ends still straddle zero. -/
+noncomputable def bisectStep (f : ℝ → ℝ) (p : ℝ × ℝ) : ℝ × ℝ :=
+  if f p.1 * f ((p.1 + p.2) / 2) ≤ 0 then (p.1, (p.1 + p.2) / 2)
+  else ((p.1 + p.2) / 2, p.2)
+
+/-- The bracket left after `t` bisection tests, starting from `(l, u)`. -/
+noncomputable def bisectBracket (f : ℝ → ℝ) (l u : ℝ) (t : ℕ) : ℝ × ℝ :=
+  (bisectStep f)^[t] (l, u)
+
+
+/-- The bisection invariant after `t` steps. -/
+theorem bisect_invariant {f : ℝ → ℝ} {l u : ℝ} (hlu : l ≤ u) (hsign : f l * f u ≤ 0) (t : ℕ) :
+    l ≤ (bisectBracket f l u t).1 ∧ (bisectBracket f l u t).2 ≤ u ∧
+    (bisectBracket f l u t).2 - (bisectBracket f l u t).1 = (u - l) / 2 ^ t ∧
+    f (bisectBracket f l u t).1 * f (bisectBracket f l u t).2 ≤ 0 := by
+  induction t with
+  | zero => simp [bisectBracket, hsign]
+  | succ n ih =>
+    have hstep : bisectBracket f l u (n + 1) = bisectStep f (bisectBracket f l u n) := by
+      simp only [bisectBracket]
+      rw [Function.iterate_succ_apply']
+    rw [hstep]
+    obtain ⟨h1, h2, h3, h4⟩ := ih
+    set a := (bisectBracket f l u n).1
+    set b := (bisectBracket f l u n).2
+    have hw : 0 ≤ (u - l) / 2 ^ n := by positivity
+    have hpow : (2 : ℝ) ^ (n + 1) = 2 ^ n * 2 := pow_succ 2 n
+    have hab : a ≤ b := by linarith
+    unfold bisectStep
+    split_ifs with hc
+    · refine ⟨h1, by linarith, ?_, hc⟩
+      rw [hpow, ← div_div]
+      linarith
+    · refine ⟨by linarith, h2, ?_, ?_⟩
+      · rw [hpow, ← div_div]
+        linarith
+      · rw [not_le] at hc
+        change 0 < f a * f ((a + b) / 2) at hc
+        have key : (f a * f ((a + b) / 2)) * (f ((a + b) / 2) * f b)
+            = f ((a + b) / 2) ^ 2 * (f a * f b) := by ring
+        have : (f a * f ((a + b) / 2)) * (f ((a + b) / 2) * f b) ≤ 0 := by
+          rw [key]
+          exact mul_nonpos_of_nonneg_of_nonpos (sq_nonneg _) h4
+        rw [mul_comm] at this
+        exact nonpos_of_mul_nonpos_left this hc
+
+#print axioms bisect_invariant
+
+/-- Halving cannot fail and cannot hurry. If the residual `f` is continuous on the bracket from
+`l` to `u` and has opposite signs at the ends, then after `t` tests the bracket `(a, b)` still
+lies inside the starting one, its width is exactly the starting width divided by `2 ^ t`, and it
+still contains a zero of `f`. So its midpoint is within half that width of a zero. -/
+theorem bisection_halves_and_traps_root {f : ℝ → ℝ} {l u : ℝ} (hlu : l ≤ u)
+    (hcont : ContinuousOn f (Icc l u)) (hsign : f l * f u ≤ 0) (t : ℕ) :
+    l ≤ (bisectBracket f l u t).1 ∧ (bisectBracket f l u t).2 ≤ u ∧
+    (bisectBracket f l u t).2 - (bisectBracket f l u t).1 = (u - l) / 2 ^ t ∧
+    ∃ x ∈ Icc (bisectBracket f l u t).1 (bisectBracket f l u t).2, f x = 0 ∧
+      |((bisectBracket f l u t).1 + (bisectBracket f l u t).2) / 2 - x| ≤ (u - l) / 2 ^ (t + 1) := by
+  obtain ⟨h1, h2, h3, h4⟩ := bisect_invariant hlu hsign t
+  set a := (bisectBracket f l u t).1
+  set b := (bisectBracket f l u t).2
+  have hw : 0 ≤ (u - l) / 2 ^ t := by positivity
+  have hab : a ≤ b := by linarith
+  obtain ⟨x, hx, hfx⟩ := root_of_sign_change hab (hcont.mono (Icc_subset_Icc h1 h2)) h4
+  refine ⟨h1, h2, h3, x, hx, hfx, ?_⟩
+  have hpow : (2 : ℝ) ^ (t + 1) = 2 ^ t * 2 := pow_succ 2 t
+  rw [hpow, ← div_div, abs_le]
+  obtain ⟨hx1, hx2⟩ := hx
+  constructor <;> linarith
+
+/-- Residual to answer: the distance from a guess `x` to the true answer `xs` is at most the
+leftover residual `|f x|` divided by the flattest the slope gets on the bracket, provided that
+slope `m` has not gone flat (`0 < m`). -/
+theorem dist_to_root_le_residual_div_min_slope {f : ℝ → ℝ} {l u x xs m : ℝ}
+    (hcont : ContinuousOn f (Icc l u)) (hdiff : DifferentiableOn ℝ f (Ioo l u))
+    (hm : 0 < m) (hslope : ∀ z ∈ Ioo l u, m ≤ |deriv f z|)
+    (hx : x ∈ Icc l u) (hxs : xs ∈ Icc l u) (hroot : f xs = 0) :
+    |x - xs| ≤ |f x| / m := by
+  have key : ∀ p q : ℝ, p < q → p ∈ Icc l u → q ∈ Icc l u →
+      m * (q - p) ≤ |f q - f p| := by
+    intro p q hpq hp hq
+    obtain ⟨c, hc, hderiv⟩ := exists_deriv_eq_slope f hpq
+      (hcont.mono (Icc_subset_Icc hp.1 hq.2))
+      (hdiff.mono (Ioo_subset_Ioo hp.1 hq.2))
+    have hcm : m ≤ |deriv f c| := hslope c ⟨by linarith [hp.1, hc.1], by linarith [hq.2, hc.2]⟩
+    have hqp : 0 < q - p := by linarith
+    have : f q - f p = deriv f c * (q - p) := by
+      rw [hderiv]; field_simp
+    rw [this, abs_mul, abs_of_pos hqp]
+    exact mul_le_mul_of_nonneg_right hcm hqp.le
+  rw [le_div_iff₀ hm]
+  rcases lt_trichotomy x xs with h | h | h
+  · have := key x xs h hx hxs
+    rw [hroot, zero_sub, abs_neg] at this
+    rw [abs_of_neg (by linarith : x - xs < 0)]
+    linarith
+  · subst h; simp
+  · have := key xs x h hxs hx
+    rw [hroot, sub_zero] at this
+    rw [abs_of_pos (by linarith : 0 < x - xs)]
+    linarith
+
+-- The card's halving count: from the bracket 0.01 to 1.00 (width 99/100), forty halvings bring the
+-- width under 0.000000000001, and thirty-nine do not.
+example : (99 / 100 : ℚ) / 2 ^ 40 ≤ 1 / 10 ^ 12 := by norm_num
+example : (1 / 10 ^ 12 : ℚ) < (99 / 100) / 2 ^ 39 := by norm_num
+-- Counting the first end, that is 41 trips through the pricer.
+example : 1 + 40 = 41 := by norm_num
+
+#print axioms exists_unique_inverse_in_bracket
+#print axioms bisection_halves_and_traps_root
+#print axioms dist_to_root_le_residual_div_min_slope
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'root_of_sign_change' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bisect_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exists_unique_inverse_in_bracket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bisection_halves_and_traps_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dist_to_root_le_residual_div_min_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. The asserts are pinned to this market's numbers, so most of these stop the program on purpose.
@@ -694,7 +892,7 @@ The two outputs match line for line, Newton's trace included: the point of runni
 - **Outside finance.** A burn time from a target orbit, a dose from a target blood concentration. The residual does not care what it measures.
 
 > **Say it back**
-> A model that runs forwards can be run backwards by subtracting the quote and hunting the zero of what is left. A pair of guesses whose residuals have opposite signs traps that zero, and halving the pair always finds it, slowly: 41 trips for twelve decimals. The slope finds it in five, by turning leftover dollars into units of the answer — and dies where the slope goes flat. Brent proposes the fast step and takes the midpoint whenever the proposal looks unsafe, keeping both. The number to report is never the residual: it is the residual divided by the flattest slope, which is why one cent means three hundredths of a volatility point at the money and nearly two and a half points out on the wing.
+> A model that runs forwards can be run backwards by subtracting the quote and hunting the zero of what is left. A pair of guesses whose residuals have opposite signs traps that zero, and halving the pair always finds it, slowly: 41 trips for twelve decimals. The slope finds it in five, by turning leftover dollars into units of the answer — and dies where the slope goes flat. Brent proposes the fast step and takes the midpoint whenever the proposal looks unsafe, keeping both. The number to report is never the residual. It is the residual divided by the flattest slope. That is why one cent means three hundredths of a volatility point at the money and nearly two and a half points out on the wing.
 
 ---
 
@@ -715,7 +913,7 @@ The two outputs match line for line, Newton's trace included: the point of runni
 - [Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): a default intensity backed out of a spread, with a flat-slope problem of its own.
 - [Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md): the inverse that breaks uniqueness, where two inputs can fit one quote.
 
-This card inverted one price for one unknown, and the slope said exactly how much to believe. A surface of forty quotes and a model with five dials has no exact answer and no single slope to divide by: what "as close as possible" means there, and how to know when a fit is finished, is [Calibration](06-calibration-as-least-squares.md).
+This card inverted one price for one unknown, and the slope said exactly how much to believe. A surface of forty quotes and a model with five dials has no exact answer and no single slope to divide by. What "as close as possible" means there, and how to know when a fit is finished, is [Calibration](06-calibration-as-least-squares.md).
 
 ---
 

@@ -12,7 +12,9 @@ Half of that comparison is in plain sight. With Acme at $88.00, selling at $100.
 
 Simulation used to be helpless here. Drawing a hundred thousand futures for Acme is easy ([Monte Carlo pricing](01-monte-carlo-pricing.md)), but on any one of them the only thing to consult — what that future went on to do — is tomorrow's newspaper. That is not a strategy, and it prices this put at $11.97 instead of $6.66.
 
-Longstaff and Schwartz published the way round it in 2001. Nobody owns one future; the machine holds a hundred thousand. Gather every future that stood near $88.00 on that date, see what those went on to collect, and average. Fitting a curve through the cloud of points does the gathering and the averaging at once — that is **regression**, the curve with the smallest total squared miss ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That curve is the **hold value**: what keeping the option is worth at a given price. On Acme it returns **$6.62**, against **$6.66** from a binomial tree, which knows nothing of simulation or curves ([Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md)).
+Longstaff and Schwartz published the way round it in 2001. Nobody owns one future; the machine holds a hundred thousand. Gather every future that stood near $88.00 on that date, see what those went on to collect, and average.
+
+Fitting a curve through the cloud of points does the gathering and the averaging at once — that is **regression**, the curve with the smallest total squared miss ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That curve is the **hold value**: what keeping the option is worth at a given price. On Acme it returns **$6.62**, against **$6.66** from a binomial tree, which knows nothing of simulation or curves ([Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md)).
 
 **The value of waiting cannot be read off one simulated future, but it can be fitted across many — so a regression run backwards from expiry turns a simulation into a machine that knows when to quit.**
 
@@ -52,13 +54,13 @@ The hold value is the part nobody can see:
 
 $$C(S) \;=\; \mathbb{E}\Big[\,e^{-r\delta}\;V(\text{next date's price})\;\Big|\;\text{Acme at } S \text{ now}\Big]$$
 
-Here $\delta$ is the gap between exercise dates in years, and $e^{-r\delta}$ shrinks one date's money to the date before. The bar means *given*: average only over futures passing through $S$ now. That bar is the difficulty, since one simulated future passes through $S$ exactly once.
+Here $\delta$ is the gap between exercise dates in years, and $e^{-r\delta}$ shrinks one date's money to the date before. $\mathbb{E}$ means the average over futures. The bar means *given*: average only over futures passing through $S$ now. That bar is the difficulty, since one simulated future passes through $S$ exactly once.
 
 So replace $C$ with a curve fitted from the simulation itself. Measure the price in strikes, $x = S/K$, so the numbers fed to the fit sit near 1:
 
 $$h(x) \;=\; b_0 + b_1 x + b_2 x^2$$
 
-A parabola stands in for the hold value, its three weights rebuilt at every date. The weights chosen miss the observed cash by as little as possible, squared and summed over the futures in the money there:
+A parabola stands in for the hold value, its three weights rebuilt at every date. The weights chosen miss the observed cash by as little as possible, squared and summed over the futures **in the money** there, those where cash now, $g$, is above zero:
 
 $$(b_0, b_1, b_2) \;=\; \arg\min_{b} \sum_{i \,\in\, \text{in the money}} \big(Y_i - h(x_i)\big)^2$$
 
@@ -101,7 +103,7 @@ But the machine has 100,000 futures, 48,603 of them in the money at that date. S
 
 ### Step 1: a least-squares fit is exactly an average-given-what-is-known
 
-This is the fact the whole method rests on, and it is not an analogy. Among all curves through the cloud, the one with the smallest average squared miss is the conditional average $\mathbb{E}[Y \mid S]$ itself — the very quantity the hold value is defined to be. So fitting by least squares is not an approximation of the right answer; it is a way of computing the right answer, narrowed to whatever family of curves is allowed. Widen the family and the fit closes in. That is why the method is least-squares Monte Carlo and not curve-fitting Monte Carlo.
+This is the fact the whole method rests on, and it is not an analogy. Among all curves through the cloud, the one with the smallest average squared miss is the conditional average $\mathbb{E}[Y \mid S]$ itself — the very quantity the hold value is defined to be. So fitting by least squares is not an approximation of the right answer; it is a way of computing the right answer, narrowed to whatever family of curves is allowed. Widen the family and the fit closes in. That is why the method is least-squares Monte Carlo (LSM) and not curve-fitting Monte Carlo.
 
 <details>
 <summary>Detailed proof: the conditional average is the least-squares predictor</summary>
@@ -123,7 +125,7 @@ Three terms are not chosen for beauty. Cash now, $K - S$, is a straight line of 
 | 3 | a parabola | 6.622563 |
 | 4 | a cubic | 6.652135 |
 
-One term is worse than never exercising at all: 6.005504 against 6.330081 for the European put.
+One term is worse than never exercising at all: 6.005504 against 6.330081 for the European put, which may be used only on the last date.
 
 ### Step 2: fit only where a choice is actually made
 
@@ -239,7 +241,7 @@ Both checks below print every number above.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows an answer: the random numbers come from a congruential generator written by hand, the bell curve from its own formula, the fit from the normal equations solved by elimination, the tree from a loop. The price is reached **four independent ways** — the fitted rule over 100,000 futures, a 2,000-step tree on the same fifty dates, that tree exercising at every step, and the European put as a floor, itself priced twice.
+Nothing imported knows an answer: the random numbers come from a congruential generator written by hand (each new number is the last one multiplied, added to and cut to a remainder), the bell curve from its own formula, the fit from the normal equations solved by elimination, the tree from a loop. The price is reached **four independent ways** — the fitted rule over 100,000 futures, a 2,000-step tree on the same fifty dates, that tree exercising at every step, and the European put as a floor, itself priced twice.
 
 ### Python
 
@@ -669,6 +671,178 @@ ALL CHECKS PASS
 ```
 
 The two outputs are byte-identical: both languages run the same integer generator and the same arithmetic in the same order.
+
+### Lean
+
+Lean proves Step 1's least-squares fact whenever the cash has a finite average square, and redoes the eight futures' whole-number steps.
+
+- Suppose $Y$ is the cash collected and $F$ any curve in the price, both with a finite average square. Then $F(S)$ never has a smaller average squared miss than $M(S) = \mathbb{E}[Y \mid S]$.
+- Take the same $Y$ and $F$. Then the miss of $F$ splits exactly in two: the part no curve in the price can explain, plus the curve's own error.
+- Take the same $Y$ and $F$. Then $F(S)$ reaches the smallest miss exactly when it equals $M(S)$, except on futures of zero chance.
+- On the eight made-up futures, the cash at month 12 is 0, 9, 0, 3, 4, 11, 1, 0.
+- Futures 2, 3, 5, 6 and 7 are in the money at month 8, with cash now 6, 1, 10, 4 and 7.
+- Futures 2, 4, 5 and 7 are in the money at month 4, with cash now 2, 5, 12 and 3.
+- The normal equations' sums are 4.7200 and 4.4602 at month 8, and 3.7800 and 3.5782 at month 4.
+
+The weights, the decisions, the 100,000-future prices and the trees are left to the Python and Rust checks.
+
+```lean
+-- Longstaff-Schwartz: the conditional average of the cash collected given the share price is the least-squares predictor among all curves in the price, plus whole-number checks of the card's eight-future example.
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
+import Mathlib.Probability.ConditionalExpectation
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
+
+open MeasureTheory
+
+theorem ls_split_helper
+    {Ω : Type*} [mΩ : MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    (S Y : Ω → ℝ) (F : ℝ → ℝ)
+    (hS : Measurable S) (hF : Measurable F)
+    (hY : MemLp Y 2 μ) (hFS : MemLp (fun ω => F (S ω)) 2 μ) :
+    ∫ ω, (Y ω - F (S ω)) ^ 2 ∂μ
+      = ∫ ω, (Y ω - μ[Y | MeasurableSpace.comap S inferInstance] ω) ^ 2 ∂μ
+        + ∫ ω, (μ[Y | MeasurableSpace.comap S inferInstance] ω - F (S ω)) ^ 2 ∂μ := by
+  set m : MeasurableSpace Ω := MeasurableSpace.comap S inferInstance with hm_def
+  have hm : m ≤ mΩ := hS.comap_le
+  set M := μ[Y | m] with hM
+  have hMLp : MemLp M 2 μ := hY.condExp (by norm_num)
+  have hGm : StronglyMeasurable[m] (fun ω => F (S ω)) :=
+    (hF.comp (comap_measurable S)).stronglyMeasurable
+  have hMm : StronglyMeasurable[m] M := stronglyMeasurable_condExp
+  set D : Ω → ℝ := fun ω => M ω - F (S ω) with hD
+  have hDm : StronglyMeasurable[m] D := hMm.sub hGm
+  have hDLp : MemLp D 2 μ := hMLp.sub hFS
+  have hDY : Integrable (D * Y) μ := hDLp.integrable_mul hY
+  have hDM : Integrable (D * M) μ := hDLp.integrable_mul hMLp
+  have horth : ∫ ω, D ω * Y ω ∂μ = ∫ ω, D ω * M ω ∂μ := by
+    have h1 : ∫ ω, (μ[D * Y | m]) ω ∂μ = ∫ ω, (D * Y) ω ∂μ := integral_condExp hm
+    have h2 : μ[D * Y | m] =ᵐ[μ] D * M :=
+      condExp_mul_of_stronglyMeasurable_left hDm hDY (hY.integrable one_le_two)
+    rw [integral_congr_ae h2] at h1
+    simpa using h1.symm
+  have hYM : MemLp (fun ω => Y ω - M ω) 2 μ := hY.sub hMLp
+  have i1 : Integrable (fun ω => (Y ω - M ω) ^ 2) μ := hYM.integrable_sq
+  have i2 : Integrable (fun ω => D ω ^ 2) μ := hDLp.integrable_sq
+  have key : (fun ω => (Y ω - F (S ω)) ^ 2) =
+      fun ω => ((Y ω - M ω) ^ 2 + D ω ^ 2) + 2 * (D ω * Y ω - D ω * M ω) := by
+    funext ω; simp only [hD]; ring
+  have i3 : Integrable (fun ω => 2 * (D ω * Y ω - D ω * M ω)) μ :=
+    (hDY.sub hDM).const_mul 2
+  have i12 : Integrable (fun ω => (Y ω - M ω) ^ 2 + D ω ^ 2) μ := i1.add i2
+  rw [key, integral_add i12 i3, integral_add i1 i2, integral_const_mul,
+    integral_sub (f := fun ω => D ω * Y ω) (g := fun ω => D ω * M ω) hDY hDM, horth]
+  simp [hD]
+
+#print axioms ls_split_helper
+
+/-- The conditional average is the least-squares predictor: for a square-integrable cash
+amount `Y` and a share price `S`, no curve `F` in the price misses `Y` by less, in mean
+square, than the conditional average `M(S) = E[Y | S]`. -/
+theorem conditional_average_minimises_mean_square_miss
+    {Ω : Type*} [mΩ : MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    (S Y : Ω → ℝ) (F : ℝ → ℝ)
+    (hS : Measurable S) (hF : Measurable F)
+    (hY : MemLp Y 2 μ) (hFS : MemLp (fun ω => F (S ω)) 2 μ) :
+    ∫ ω, (Y ω - μ[Y | MeasurableSpace.comap S inferInstance] ω) ^ 2 ∂μ
+      ≤ ∫ ω, (Y ω - F (S ω)) ^ 2 ∂μ := by
+  rw [ls_split_helper S Y F hS hF hY hFS]
+  have : 0 ≤ ∫ ω, (μ[Y | MeasurableSpace.comap S inferInstance] ω - F (S ω)) ^ 2 ∂μ :=
+    integral_nonneg fun ω => sq_nonneg _
+  linarith
+
+/-- The split of the miss used in the card's proof: the mean-square miss of any curve `F`
+in the price equals the part no curve can explain, `E[(Y - M(S))^2]`, plus the curve's own
+error, `E[(M(S) - F(S))^2]`. -/
+theorem mean_square_miss_eq_unexplained_add_fit_error
+    {Ω : Type*} [mΩ : MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    (S Y : Ω → ℝ) (F : ℝ → ℝ)
+    (hS : Measurable S) (hF : Measurable F)
+    (hY : MemLp Y 2 μ) (hFS : MemLp (fun ω => F (S ω)) 2 μ) :
+    ∫ ω, (Y ω - F (S ω)) ^ 2 ∂μ
+      = ∫ ω, (Y ω - μ[Y | MeasurableSpace.comap S inferInstance] ω) ^ 2 ∂μ
+        + ∫ ω, (μ[Y | MeasurableSpace.comap S inferInstance] ω - F (S ω)) ^ 2 ∂μ := by
+  exact ls_split_helper S Y F hS hF hY hFS
+
+/-- Equality holds only where the two curves agree: a curve `F` in the price attains the
+smallest mean-square miss exactly when `F(S)` equals the conditional average almost surely. -/
+theorem mean_square_miss_eq_min_iff
+    {Ω : Type*} [mΩ : MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    (S Y : Ω → ℝ) (F : ℝ → ℝ)
+    (hS : Measurable S) (hF : Measurable F)
+    (hY : MemLp Y 2 μ) (hFS : MemLp (fun ω => F (S ω)) 2 μ) :
+    ∫ ω, (Y ω - F (S ω)) ^ 2 ∂μ
+        = ∫ ω, (Y ω - μ[Y | MeasurableSpace.comap S inferInstance] ω) ^ 2 ∂μ
+      ↔ (fun ω => F (S ω)) =ᵐ[μ] μ[Y | MeasurableSpace.comap S inferInstance] := by
+  rw [ls_split_helper S Y F hS hF hY hFS]
+  have hMLp : MemLp (μ[Y | MeasurableSpace.comap S inferInstance]) 2 μ :=
+    hY.condExp (by norm_num)
+  have hint : Integrable
+      (fun ω => (μ[Y | MeasurableSpace.comap S inferInstance] ω - F (S ω)) ^ 2) μ :=
+    (hMLp.sub hFS).integrable_sq
+  constructor
+  · intro h
+    have h0 : ∫ ω, (μ[Y | MeasurableSpace.comap S inferInstance] ω - F (S ω)) ^ 2 ∂μ = 0 := by
+      linarith
+    rw [integral_eq_zero_iff_of_nonneg (fun ω => sq_nonneg _) hint] at h0
+    filter_upwards [h0] with ω hω
+    have : (μ[Y | MeasurableSpace.comap S inferInstance] ω - F (S ω)) ^ 2 = 0 := hω
+    have := pow_eq_zero_iff (n := 2) (by norm_num) |>.mp this
+    linarith
+  · intro h
+    have h0 : ∫ ω, (μ[Y | MeasurableSpace.comap S inferInstance] ω - F (S ω)) ^ 2 ∂μ = 0 := by
+      rw [integral_eq_zero_iff_of_nonneg (fun ω => sq_nonneg _) hint]
+      filter_upwards [h] with ω hω
+      simp [← hω]
+    linarith
+
+/-! Whole-number checks of the card's eight made-up futures (strike 100). -/
+
+-- Cash at month 12, `max(100 - S, 0)` (truncated subtraction on ℕ), for the eight futures.
+example : [118, 91, 101, 97, 96, 89, 99, 107].map (fun s : ℕ => 100 - s)
+    = [0, 9, 0, 3, 4, 11, 1, 0] := by decide
+
+-- Month 8: five futures are in the money (Acme below 100): futures 2, 3, 5, 6 and 7.
+example : ([112, 94, 99, 101, 90, 96, 93, 104].filter (fun s : ℕ => s < 100))
+    = [94, 99, 90, 96, 93] := by decide
+
+-- Month 8: cash now for those five futures is 6, 1, 10, 4 and 7.
+example : [94, 99, 90, 96, 93].map (fun s : ℕ => 100 - s) = [6, 1, 10, 4, 7] := by decide
+
+-- Month 8 normal equations: with x = S / 100, the sums are 5, 4.7200 and 4.4602.
+example : (([94, 99, 90, 96, 93] : List ℚ).map (fun s => s / 100)).sum = 472 / 100 := by
+  norm_num
+example : (([94, 99, 90, 96, 93] : List ℚ).map (fun s => (s / 100) ^ 2)).sum
+    = 44602 / 10000 := by
+  norm_num
+
+-- Month 4: four futures are in the money: futures 2, 4, 5 and 7.
+example : ([106, 98, 103, 95, 88, 100, 97, 109].filter (fun s : ℕ => s < 100))
+    = [98, 95, 88, 97] := by decide
+
+-- Month 4: cash now for those four futures is 2, 5, 12 and 3.
+example : [98, 95, 88, 97].map (fun s : ℕ => 100 - s) = [2, 5, 12, 3] := by decide
+
+-- Month 4 normal equations: the sums are 4, 3.7800 and 3.5782.
+example : (([98, 95, 88, 97] : List ℚ).map (fun s => s / 100)).sum = 378 / 100 := by
+  norm_num
+example : (([98, 95, 88, 97] : List ℚ).map (fun s => (s / 100) ^ 2)).sum
+    = 35782 / 10000 := by
+  norm_num
+
+#print axioms conditional_average_minimises_mean_square_miss
+#print axioms mean_square_miss_eq_unexplained_add_fit_error
+#print axioms mean_square_miss_eq_min_iff
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ls_split_helper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'conditional_average_minimises_mean_square_miss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mean_square_miss_eq_unexplained_add_fit_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mean_square_miss_eq_min_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

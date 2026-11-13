@@ -8,13 +8,19 @@
 
 Acme shares trade at $100. A desk quotes one-year Acme calls at forty strikes, from 60 up to 160, and requotes the row whenever the shares move. Under Black–Scholes each quote is one line of arithmetic.
 
-The hard part is that a single volatility cannot reproduce what options actually cost: low strikes trade dearer than high ones. Models that do reproduce that — Heston, where the volatility itself wanders, or models that let the price jump — share an awkward property. Nobody knows a formula for the **density** of the future share price under them, the curve saying how likely each ending price is. Averaging a payoff needs the density. No density, no price.
+The hard part is that a single volatility cannot reproduce what options actually cost: low strikes trade dearer than high ones.
+
+Models that do reproduce that — Heston ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)), where the volatility itself wanders, or models that let the price jump — share an awkward property. Nobody knows a formula for the **density** of the future share price under them, the curve saying how likely each ending price is. Averaging a payoff needs the density.
 
 What they do hand over, in a few lines of algebra, is the density's **Fourier transform**: how much of each wave frequency the distribution is built from. For a probability distribution that transform has its own name, the **characteristic function**, and it is the only thing about a model either method here asks for.
 
-Two machines turn it into money. Peter Carr and Dilip Madan, in 1999, damped the call price with an exponential so that it has a transform at all, wrote that transform in one line, and inverted it; sampling frequencies and strikes on locked grids then lets one fast Fourier transform return a whole row of strikes for the price of one. Fang and Oosterlee, in 2008, expanded the distribution on a window into cosine waves, each weight coming straight from the characteristic function.
+Two machines turn it into money. Peter Carr and Dilip Madan, in 1999, damped the call price with an exponential so that it has a transform at all, wrote that transform in one line, and inverted it. Sampling frequencies and strikes on locked grids then lets one fast Fourier transform (FFT) return a whole row of strikes for the price of one.
 
-Both run below on Acme at 5% interest, a 2% dividend yield, 20% volatility and one year. The lognormal law goes first, because there Black–Scholes is an outside referee: the FFT returns **9.227006** at strike 100 from a 4,096-point grid, and the cosine series agrees with it to eleven decimals. Then the same code, one function swapped, prices Heston, where no referee exists and the machines check each other. They agree to nine decimals on **9.059507**.
+Fang and Oosterlee, in 2008, expanded the distribution on a window into cosine waves, each weight coming straight from the characteristic function: the COS method.
+
+Both run below on Acme at 5% interest, a 2% dividend yield, 20% volatility and one year. The lognormal law goes first, because there Black–Scholes is an outside referee: the FFT returns **9.227006** at strike 100 from a 4,096-point grid, and the cosine series agrees with it to eleven decimals.
+
+Then the same code, one function swapped, prices Heston, where no referee exists and the machines check each other. They agree to nine decimals on **9.059507**.
 
 **One transform of a distribution prices every European option written on it: damp the call curve until it has a Fourier transform, invert once, and read a whole strip of strikes off a single FFT — or expand the same distribution in cosine modes and sum them.**
 
@@ -83,11 +89,11 @@ Flip the sign of every other sample, multiply by $i$, run one FFT, twist each ou
 
 ### COS: cosine modes on a window
 
-The second machine confines the log price to a window $[a, b]$ of width $L = b - a$ and expands what lies inside in cosine waves of frequency $\omega_n = n\pi/L$. It prices the **put**, not the call: a put never pays more than its strike, so nothing large hides in the tails that get cut off. With $M$ modes,
+The second machine confines the log price to a window $[a, b]$ of width $L = b - a$ and expands what lies inside in cosine waves of frequency $\omega_n = n\pi/L$. It prices the **put**, not the call, for a reason given in Step 5. With $M$ modes,
 
 $$P_M = e^{-rT}\,\frac{L}{2}\left[\frac{F_0V_0}{2} + \sum_{n=1}^{M-1} F_nV_n\right], \qquad F_n = \frac{2}{L}\,\mathrm{Re}\!\left(e^{-i\omega_n a}\,\Phi(i\omega_n)\right)$$
 
-At each mode, multiply what the distribution puts into that wave by what the payoff takes out of it, and add. $F_n$ is the distribution's weight, straight from the characteristic function; $V_n$ is the payoff's, given in closed form in Why it works. Both carry the $2/L$. The constant mode counts half, a property of cosine series rather than a fudge. The call comes free from put–call parity, an exact identity: $C = P + S\,e^{-qT} - K\,e^{-rT}$, with $q$ the dividend yield.
+At each mode, multiply what the distribution puts into that wave by what the payoff takes out of it, and add. $F_n$ is the distribution's weight, straight from the characteristic function; $V_n$ is the payoff's, given in closed form in Why it works. Both carry the $2/L$. The constant mode counts half, a property of cosine series rather than a fudge. The call comes free from put–call parity ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), an exact identity: $C = P + S\,e^{-qT} - K\,e^{-rT}$, with $q$ the dividend yield.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -119,9 +125,9 @@ At each mode, multiply what the distribution puts into that wave by what the pay
 
 ### Step 0: a transform survives where a density does not
 
-Pricing needs an average of the payoff against the density of the ending price. Under Heston that density exists but has no formula; its Fourier transform has one, from two ordinary differential equations solvable by hand.
+Pricing needs an average of the payoff against the density of the ending price. Under Heston that density exists but has no formula; its Fourier transform has one, from two ordinary differential equations solvable by hand ([Pricing Heston exactly](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md)).
 
-So move the calculation into frequency space. The payoff's transform is worked out once, on paper, and never changes; the model's is looked up. A model with a known transform can therefore be priced whether or not its density can be written down.
+So move the calculation into frequency space. The payoff's transform is worked out once, on paper, and never changes; the model's is looked up.
 
 ### Step 1: the call curve has no transform until it is damped
 
@@ -217,11 +223,11 @@ Each cell up multiplies the strike by $e^{\lambda}$, so the ladder is geometric 
 
 The first three columns agree to nine decimals: column two is the identical sum evaluated the slow way, column three a formula that knows nothing about Fourier transforms. On the window from −3 to 3 the cosine series reaches the same put, 6.330081, and the same call by 128 modes, then stops moving.
 
-The last column is the payoff. Heston, with starting and long-run variance both 0.04, mean reversion 2, volatility of volatility 0.30 and correlation −0.70, prices the same five rungs with one function changed. Its at-the-money call is 9.059507 both ways, the roads differing by 0.000000000070, and no formula exists anywhere to compare against.
+The last column is the payoff. Heston, with starting and long-run variance both 0.04, mean reversion 2, volatility of volatility 0.30 and correlation −0.70, prices the same five rungs with one function changed. Its call at strike 100 is 9.059507 both ways, the roads differing by 0.000000000070.
 
 ### The picture: what the extra machinery buys
 
-Run each price backwards through Black–Scholes for the volatility that reproduces it: the **implied volatility**, the market's usual way of quoting an option.
+Run each price backwards through Black–Scholes for the volatility that reproduces it: the **implied volatility** ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)), the market's usual way of quoting an option.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -245,8 +251,6 @@ Same Acme option, correct answers 9.227006 for the call and 6.330081 for the put
 | Nearest rung read for strike 100.30, rung at 100.00 | 9.227006, not 9.079483 | Fifteen cents, from thirty cents of strike |
 | Window cut to $-0.3$ to $0.3$, the put | 5.604335, not 6.330081 | One and a half standard deviations is not enough; 73 cents thrown away |
 | Constant cosine mode counted in full, the put | 38.827044, not 6.330081 | That term of a cosine series carries half weight |
-
-Every number in both tables is printed by the code below.
 
 ---
 
@@ -445,7 +449,7 @@ ALL CHECKS PASS
 
 ### Rust
 
-Same numbers, same labels, built with `rustc --edition 2021 -O`. Rust has no complex type and no `erf`, so a complex number is a pair of doubles with hand-written arithmetic and the bell-curve area is a sum of four thousand thin slices. The two outputs agree line for line.
+Same numbers, same labels, built with `rustc --edition 2021 -O`. The two outputs agree line for line.
 
 ```rust
 // Transform pricing -- the same check as the Python, in Rust.  No crates.  Acme:
@@ -662,10 +666,278 @@ what breaks:
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the three exact identities of Why it works for every model and grid, and checks the grid arithmetic.
+
+- Suppose $\alpha > 0$ and $E[S_T^{p}]$ is finite. Then the damped call curve $c(k)$ is integrable over every log strike.
+- Take the same conditions and any real frequency $u$. Then $\psi(u) = S\,e^{-rT}\,\Phi(p + iu)/\big((\alpha + iu)(p + iu)\big)$.
+- Take any transform $\psi$, and put $u_j$ and $k_\ell$ on the locked grids with $\lambda\eta = 2\pi/N$. Then the sum of $e^{-iu_jk_\ell}\psi(u_j)$ over $j$ equals the bracket inside $\widehat{C}_\ell$.
+- Take a cosine frequency $\omega_n$ that is not zero. Then the put's two payoff integrals over $[a, d]$ have the closed forms in Step 5.
+- Take $N = 4096$ and $\eta = 0.25$. Then the cutoff $N\eta$ is 1024, and $\log_2 N = 12$.
+- Damping $\alpha = 1.5$ gives $p = 2.5$.
+- In whole numbers $N^2/(N\log_2 N)$ is 341, the "some 340 times less work" of Step 4.
+- The middle grid cell is $N/2 = 2048$, and the cells 32 either side are 2016 and 2080.
+
+The inversion formula, the cosine weights $F_n$, and every printed price are left to the Python and Rust checks.
+
+```lean
+-- Transform pricing: the damped call curve's Fourier transform is one line of the log price's characteristic function, the locked grids turn the inversion sum into one discrete Fourier transform, and the COS put coefficients have the stated closed forms.
+import Mathlib.Probability.Moments.ComplexMGF
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Data.Nat.Log
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+
+open MeasureTheory ProbabilityTheory Complex
+
+lemma cm_inner_real (α : ℝ) (hα : 0 < α) (y : ℝ) :
+    Integrable (fun k : ℝ => Real.exp (α * k) * max (Real.exp y - Real.exp k) 0) ∧
+    ∫ k : ℝ, Real.exp (α * k) * max (Real.exp y - Real.exp k) 0 =
+      Real.exp ((α + 1) * y) / (α * (α + 1)) := by
+  have hfun : (fun k : ℝ => Real.exp (α * k) * max (Real.exp y - Real.exp k) 0) =
+      Set.indicator (Set.Iic y)
+        (fun k : ℝ => Real.exp y * Real.exp (α * k) - Real.exp ((α + 1) * k)) := by
+    funext k
+    by_cases hk : k ≤ y
+    · rw [Set.indicator_of_mem (by simpa using hk),
+        max_eq_left (by simpa using Real.exp_le_exp.mpr hk)]
+      rw [add_mul, one_mul, Real.exp_add]; ring
+    · rw [Set.indicator_of_notMem (by simpa using hk),
+        max_eq_right (by simpa using (not_le.mp hk).le), mul_zero]
+  have h1 := integrableOn_exp_mul_Iic hα y
+  have h2 := integrableOn_exp_mul_Iic (by linarith : 0 < α + 1) y
+  refine ⟨?_, ?_⟩
+  · rw [hfun, integrable_indicator_iff measurableSet_Iic]
+    exact (h1.const_mul _).sub h2
+  · rw [hfun, integral_indicator measurableSet_Iic, integral_sub (h1.const_mul _) h2,
+      integral_const_mul, integral_exp_mul_Iic hα, integral_exp_mul_Iic (by linarith)]
+    have : Real.exp ((α + 1) * y) = Real.exp y * Real.exp (α * y) := by
+      rw [add_mul, one_mul, Real.exp_add]; ring
+    rw [this]
+    field_simp
+    ring
+
+lemma cm_inner_complex (α : ℝ) (hα : 0 < α) (u y : ℝ) :
+    Integrable (fun k : ℝ =>
+      cexp (I * u * k) * ((Real.exp (α * k) * max (Real.exp y - Real.exp k) 0 : ℝ) : ℂ)) ∧
+    ∫ k : ℝ, cexp (I * u * k) * ((Real.exp (α * k) * max (Real.exp y - Real.exp k) 0 : ℝ) : ℂ) =
+      cexp (((α + 1 : ℝ) + I * u) * y) / (((α : ℂ) + I * u) * (((α + 1 : ℝ) : ℂ) + I * u)) := by
+  have hc1 : 0 < ((α : ℂ) + I * u).re := by simp [hα]
+  have hc2 : 0 < (((α + 1 : ℝ) : ℂ) + I * u).re := by simp; linarith
+  have hfun : (fun k : ℝ =>
+      cexp (I * u * k) * ((Real.exp (α * k) * max (Real.exp y - Real.exp k) 0 : ℝ) : ℂ)) =
+      Set.indicator (Set.Iic y)
+        (fun k : ℝ => (Real.exp y : ℂ) * cexp (((α : ℂ) + I * u) * k) -
+          cexp ((((α + 1 : ℝ) : ℂ) + I * u) * k)) := by
+    funext k
+    by_cases hk : k ≤ y
+    · rw [Set.indicator_of_mem (by simpa using hk),
+        max_eq_left (by simpa using Real.exp_le_exp.mpr hk)]
+      push_cast
+      simp only [add_mul, exp_add, one_mul]
+      ring
+    · rw [Set.indicator_of_notMem (by simpa using hk),
+        max_eq_right (by simpa using (not_le.mp hk).le), mul_zero]
+      simp
+  have h1 := integrableOn_exp_mul_complex_Iic hc1 y
+  have h2 := integrableOn_exp_mul_complex_Iic hc2 y
+  refine ⟨?_, ?_⟩
+  · rw [hfun, integrable_indicator_iff measurableSet_Iic]
+    exact (h1.const_mul _).sub h2
+  · rw [hfun, integral_indicator measurableSet_Iic, integral_sub (h1.const_mul _) h2,
+      integral_const_mul, integral_exp_mul_complex_Iic hc1, integral_exp_mul_complex_Iic hc2]
+    have hne1 : ((α : ℂ) + I * u) ≠ 0 := fun h => by simp [h] at hc1
+    have hne2 : (((α + 1 : ℝ) : ℂ) + I * u) ≠ 0 := fun h => by rw [h] at hc2; simp at hc2
+    have hsplit : cexp ((((α + 1 : ℝ) : ℂ) + I * u) * y) =
+        (Real.exp y : ℂ) * cexp (((α : ℂ) + I * u) * y) := by
+      push_cast
+      simp only [add_mul, exp_add, one_mul]
+      ring
+    have hdiff : (((α + 1 : ℝ) : ℂ) + I * u) = ((α : ℂ) + I * u) + 1 := by push_cast; ring
+    rw [hsplit]
+    field_simp
+    rw [hdiff]
+    ring
+
+#print axioms cm_inner_real
+#print axioms cm_inner_complex
+
+/-- The call price at log strike `k`, in the card's coordinates:
+`C(k) = S e^{-rT} E[(e^Y - e^k)^+]`, with `Y` the log share price at expiry against today's price. -/
+noncomputable def callPrice {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (Y : Ω → ℝ)
+    (S r T k : ℝ) : ℝ :=
+  S * Real.exp (-r * T) * ∫ ω, max (Real.exp (Y ω) - Real.exp k) 0 ∂P
+
+/-- Carr–Madan. Pick a damping exponent `α > 0` and set `p = α + 1`. If the share price has a
+finite moment of order `p`, that is `E[e^{pY}] < ∞`, then the damped call curve
+`c(k) = e^{αk} C(k)` is integrable over all log strikes, and its Fourier transform is one line of
+the characteristic function `Φ(z) = E[e^{zY}]`:
+`∫ e^{iuk} c(k) dk = S e^{-rT} Φ(p + iu) / ((α + iu)(p + iu))` for every real frequency `u`. -/
+theorem carr_madan_damped_call_transform {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P] (Y : Ω → ℝ) (S r T α : ℝ) (hα : 0 < α)
+    (hmoment : Integrable (fun ω => Real.exp ((α + 1) * Y ω)) P) (u : ℝ) :
+    Integrable (fun k : ℝ => Real.exp (α * k) * callPrice P Y S r T k) ∧
+    ∫ k : ℝ, cexp (I * u * k) * ((Real.exp (α * k) * callPrice P Y S r T k : ℝ) : ℂ) =
+      (S : ℂ) * (Real.exp (-r * T) : ℂ) * complexMGF Y P ((α + 1 : ℝ) + I * u) /
+        (((α : ℂ) + I * u) * (((α + 1 : ℝ) : ℂ) + I * u)) := by
+  have hp : (α + 1) ≠ 0 := by linarith
+  have hY : AEMeasurable Y P := by
+    have h := (Real.measurable_log.comp_aemeasurable hmoment.aemeasurable).div_const (α + 1)
+    convert h using 1
+    funext ω
+    simp [Function.comp, Real.log_exp]
+    field_simp
+  let F : Ω × ℝ → ℝ := fun z => Real.exp (α * z.2) * max (Real.exp (Y z.1) - Real.exp z.2) 0
+  have hFnn : ∀ z, 0 ≤ F z := fun z => mul_nonneg (Real.exp_pos _).le (le_max_right _ _)
+  have hpair : AEMeasurable (fun z : Ω × ℝ => (Y z.1, z.2)) (P.prod volume) :=
+    hY.comp_fst.prodMk measurable_snd.aemeasurable
+  have hFm : AEStronglyMeasurable F (P.prod volume) := by
+    have hg : Continuous (fun q : ℝ × ℝ =>
+        Real.exp (α * q.2) * max (Real.exp q.1 - Real.exp q.2) 0) := by fun_prop
+    exact (hg.measurable.comp_aemeasurable hpair).aestronglyMeasurable
+  have hF : Integrable F (P.prod volume) := by
+    rw [integrable_prod_iff hFm]
+    refine ⟨Filter.Eventually.of_forall fun ω => (cm_inner_real α hα (Y ω)).1, ?_⟩
+    have : (fun ω => ∫ k, ‖F (ω, k)‖) =
+        fun ω => Real.exp ((α + 1) * Y ω) / (α * (α + 1)) := by
+      funext ω
+      simp_rw [Real.norm_of_nonneg (hFnn _)]
+      exact (cm_inner_real α hα (Y ω)).2
+    rw [this]
+    exact hmoment.div_const _
+  let H : Ω × ℝ → ℂ := fun z => cexp (I * u * z.2) * (F z : ℂ)
+  have hHm : AEStronglyMeasurable H (P.prod volume) := by
+    have hg : Continuous (fun q : ℝ × ℝ => cexp (I * u * q.2) *
+        ((Real.exp (α * q.2) * max (Real.exp q.1 - Real.exp q.2) 0 : ℝ) : ℂ)) := by fun_prop
+    exact (hg.measurable.comp_aemeasurable hpair).aestronglyMeasurable
+  have hH : Integrable H (P.prod volume) := by
+    refine hF.mono' hHm (Filter.Eventually.of_forall fun z => ?_)
+    have : ‖cexp (I * u * z.2)‖ = 1 := by
+      rw [norm_exp]; simp
+    simp only [H, norm_mul, this, one_mul, norm_real, Real.norm_of_nonneg (hFnn z)]
+    rfl
+  constructor
+  · have := (hF.integral_prod_right).const_mul (S * Real.exp (-r * T))
+    convert this using 1
+    funext k
+    simp only [callPrice, F]
+    rw [integral_const_mul]
+    ring
+  · have h1 : ∀ k : ℝ, cexp (I * u * k) * ((Real.exp (α * k) * callPrice P Y S r T k : ℝ) : ℂ) =
+        ((S : ℂ) * (Real.exp (-r * T) : ℂ)) * ∫ ω, H (ω, k) ∂P := by
+      intro k
+      simp only [H, F, callPrice]
+      rw [integral_const_mul, integral_complex_ofReal, integral_const_mul]
+      push_cast
+      ring
+    simp_rw [h1]
+    rw [integral_const_mul,
+      ← integral_integral_swap (f := fun ω k => H (ω, k)) hH]
+    have h2 : ∀ ω, ∫ k, H (ω, k) = cexp (((α + 1 : ℝ) + I * u) * Y ω) /
+        (((α : ℂ) + I * u) * (((α + 1 : ℝ) : ℂ) + I * u)) :=
+      fun ω => (cm_inner_complex α hα u (Y ω)).2
+    simp_rw [h2]
+    rw [integral_div, complexMGF]
+    ring
+
+/-- The grid lock. With frequencies `u_j = (j + 1/2) η`, log strikes `k_ℓ = -π/η + ℓλ` and
+`λη = 2π/N`, the midpoint sum for log strike `k_ℓ` is a discrete Fourier transform:
+`Σ_j e^{-i u_j k_ℓ} ψ(u_j) = e^{-iπℓ/N} Σ_j i(-1)^j ψ(u_j) e^{-2πijℓ/N}`, for any transform `ψ`. -/
+theorem carr_madan_grid_sum_is_dft (N : ℕ) (η lam : ℝ) (hη : η ≠ 0)
+    (hlock : lam * η = 2 * Real.pi / N) (ψ : ℝ → ℂ) (ℓ : ℕ) :
+    ∑ j ∈ Finset.range N,
+        cexp (-I * (((j + 1 / 2) * η : ℝ) : ℂ) * ((-Real.pi / η + ℓ * lam : ℝ) : ℂ)) *
+          ψ ((j + 1 / 2) * η) =
+      cexp (-I * Real.pi * ℓ / N) *
+        ∑ j ∈ Finset.range N,
+          I * (-1) ^ j * ψ ((j + 1 / 2) * η) * cexp (-2 * Real.pi * I * j * ℓ / N) := by
+  rcases Nat.eq_zero_or_pos N with rfl | hN
+  · simp
+  have hN' : (N : ℝ) ≠ 0 := by positivity
+  have hNc : (N : ℂ) ≠ 0 := by exact_mod_cast hN.ne'
+  rw [Finset.mul_sum]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  have key : ((j + 1 / 2) * η * (-Real.pi / η + ℓ * lam) : ℝ) =
+      -((j + 1 / 2) * Real.pi) + (j + 1 / 2) * ℓ * (2 * Real.pi / N) := by
+    rw [← hlock]; field_simp
+  have hexp : -I * (((j + 1 / 2) * η : ℝ) : ℂ) * ((-Real.pi / η + ℓ * lam : ℝ) : ℂ) =
+      (j : ℂ) * (Real.pi * I) + Real.pi / 2 * I + (-I * Real.pi * ℓ / N) +
+        (-2 * Real.pi * I * j * ℓ / N) := by
+    rw [mul_assoc, ← ofReal_mul, key]
+    push_cast
+    field_simp
+    ring_nf
+  rw [hexp, exp_add, exp_add, exp_add, exp_nat_mul, exp_pi_mul_I, exp_pi_div_two_mul_I]
+  ring
+
+/-- COS payoff coefficients. For a nonzero cosine frequency `ω`, integrating over `[a, d]`:
+`∫ cos(ω(y - a)) dy = sin(ω(d - a))/ω` and
+`∫ e^y cos(ω(y - a)) dy = (e^d [cos(ω(d - a)) + ω sin(ω(d - a))] - e^a) / (1 + ω²)`. -/
+theorem cos_put_payoff_coefficients (a d ω : ℝ) (hω : ω ≠ 0) :
+    (∫ y in a..d, Real.cos (ω * (y - a))) = Real.sin (ω * (d - a)) / ω ∧
+    (∫ y in a..d, Real.exp y * Real.cos (ω * (y - a))) =
+      (Real.exp d * (Real.cos (ω * (d - a)) + ω * Real.sin (ω * (d - a))) - Real.exp a) /
+        (1 + ω ^ 2) := by
+  have hpos : (1 + ω ^ 2) ≠ 0 := by positivity
+  constructor
+  · rw [intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (f := fun y => Real.sin (ω * (y - a)) / ω)]
+    · simp
+    · intro x _
+      have h1 : HasDerivAt (fun y => ω * (y - a)) ω x := by
+        simpa using ((hasDerivAt_id x).sub_const a).const_mul ω
+      have := (h1.sin).div_const ω
+      convert this using 1
+      field_simp
+    · exact (by fun_prop : Continuous fun y => Real.cos (ω * (y - a))).intervalIntegrable _ _
+  · rw [intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (f := fun y => Real.exp y * (Real.cos (ω * (y - a)) + ω * Real.sin (ω * (y - a))) /
+        (1 + ω ^ 2))]
+    · simp; ring
+    · intro x _
+      have h1 : HasDerivAt (fun y => ω * (y - a)) ω x := by
+        simpa using ((hasDerivAt_id x).sub_const a).const_mul ω
+      have := (((Real.hasDerivAt_exp x).mul
+        ((h1.cos).add ((h1.sin).const_mul ω)))).div_const (1 + ω ^ 2)
+      convert this using 1
+      simp only [Pi.add_apply]
+      field_simp
+      ring
+    · exact (by fun_prop : Continuous fun y => Real.exp y * Real.cos (ω * (y - a))).intervalIntegrable _ _
+
+-- The card's grid: N = 4096 points at frequency step η = 1/4 give a cutoff of 1024.
+example : (4096 : ℚ) * (1 / 4) = 1024 := by norm_num
+-- Damping α = 3/2 gives p = α + 1 = 5/2.
+example : (3 / 2 : ℚ) + 1 = 5 / 2 := by norm_num
+-- 4096 is a power of two, 2^12, so log₂ N = 12.
+example : (4096 : ℕ) = 2 ^ 12 := by norm_num
+example : Nat.log 2 4096 = 12 := by
+  rw [show (4096 : ℕ) = 2 ^ 12 by norm_num, Nat.log_pow (by norm_num)]
+-- N² against N log₂ N at 4,096 points: "some 340 times less work" (341 in whole numbers).
+example : 4096 ^ 2 / (4096 * 12) = 341 := by norm_num
+-- The middle grid cell, where K = 100, is cell N/2 = 2048; 16 and 32 cells either side.
+example : 4096 / 2 = 2048 ∧ 2048 - 32 = 2016 ∧ 2048 + 32 = 2080 := by norm_num
+
+#print axioms carr_madan_damped_call_transform
+#print axioms carr_madan_grid_sum_is_dft
+#print axioms cos_put_payoff_coefficients
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cm_inner_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cm_inner_complex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'carr_madan_damped_call_transform' depends on axioms: [propext, Classical.choice, Quot.sound]
+'carr_madan_grid_sum_is_dft' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cos_put_payoff_coefficients' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. Several asserts are pinned to this grid, so expect one to stop the program.
-> - **Shorten the frequency run.** Set `ETA` to `0.03125`. The cutoff falls from 1024 to 128, still far past where either transform matters, so the at-the-money price does not move in any printed digit — but $\lambda$ grows eightfold with it, so the other four reported strikes fly out to a fifth and nearly five times the share price, where a call carries no recoverable implied volatility, and an assert stops the run. The grid lock in one experiment.
+> - **Shorten the frequency run.** Set `ETA` to `0.03125`. The cutoff falls from 1024 to 128, still far past where either transform matters, so the price at strike 100 does not move in any printed digit — but $\lambda$ grows eightfold with it, so the other four reported strikes fly out to a fifth and nearly five times the share price, where a call carries no recoverable implied volatility, and an assert stops the run.
 > - **Push the damping up, then down.** Set `ALPHA` to `5.0` and every printed price stays, though the $\psi$ lines above them change: any positive damping is legitimate for a lognormal law. Set it to `0.25` and all five calls come out eighteen cents too cheap: the fold-back named in When it holds, made visible.
 > - **Move the cosine window.** In the `OFFSETS, LOW, HIGH` line set the window to `-1.0, 1.0`: the put stalls half a millionth from the house number and no number of modes closes the gap, because the tail left outside is gone for good. Set it to `-8.0, 8.0` and 128 modes are no longer enough, though 256 are.
 
@@ -674,13 +946,13 @@ ALL CHECKS PASS
 ## The usual mistake
 
 > [!warning]
-> **Thinking the FFT is the method.** It is not. The method is the damped inversion identity, which is exact; the FFT only evaluates the resulting finite sums at once, changing no number. Both approximations happen before it: the frequency integral is cut off, and what is left is sampled. And the speed comes with a chain, $\lambda\eta = 2\pi/N$: finer strikes buy a shorter frequency run. Refining "the grid" without deciding which half usually improves one number and spoils another.
+> **Thinking the FFT is the method.** It is not. The method is the damped inversion identity, which is exact; the FFT only evaluates the resulting finite sums at once, changing no number. And the speed comes with a chain, $\lambda\eta = 2\pi/N$: finer strikes buy a shorter frequency run. Refining "the grid" without deciding which half usually improves one number and spoils another.
 >
 > - **Dropping the damping.** With $\alpha = 0$ the transform has a pole at zero frequency and the price is not integrable in log strike. The sum does not complain: it returns −39.782928 for a call worth 9.227006.
-> - **Reading the nearest rung.** The FFT prices a geometric ladder and nothing between the rungs: asking for 100.30 and taking the 100.00 rung costs fifteen cents. Interpolate across three or four rungs, or choose a grid whose rungs include the strikes that matter.
-> - **Trusting the cosine window to be generous.** Whatever lies outside it is discarded and more modes never bring it back: at one and a half standard deviations the put reads 5.604335 instead of 6.330081. Size the window from the law's spread, not from habit.
+> - **Reading the nearest rung.** Asking for 100.30 and taking the 100.00 rung costs fifteen cents. Interpolate across three or four rungs, or choose a grid whose rungs include the strikes that matter.
+> - **Trusting the cosine window to be generous.** At one and a half standard deviations the put reads 5.604335 instead of 6.330081. Size the window from the law's spread, not from habit.
 > - **Forgetting that the constant cosine mode counts half.** Give it full weight and the put reads 38.827044. The half comes from the even reflection that makes the series work at all.
-> - **Taking the wrong branch of Heston's square root.** Its characteristic function holds a complex square root and a complex logarithm, and the obvious grouping can jump branches as maturity grows, pricing a different model with no warning. The grouping below stays on the principal branch, checked against the growth of the average share price.
+> - **Taking the wrong branch of Heston's square root.** Its characteristic function holds a complex square root and a complex logarithm, and the obvious grouping can jump branches as maturity grows, pricing a different model with no warning. The grouping in the code stays on the principal branch.
 
 ---
 
@@ -700,7 +972,7 @@ ALL CHECKS PASS
 
 - [Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): the price as a discounted average of the payoff — the average this card computes without ever seeing the density.
 - [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): what a transform is, and the inversion formula Step 3 folds onto half the line.
-- [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the finite sum the grid lock produces, and the radix-two algorithm that evaluates it in $N\log_2 N$ steps.
+- [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the finite sum the grid lock produces, and the radix-two algorithm ([The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md)) that evaluates it in $N\log_2 N$ steps.
 - [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): why a distribution's transform determines it, which licenses reading a price off $\Phi$ alone.
 
 ## Where this goes next
@@ -708,7 +980,7 @@ ALL CHECKS PASS
 - [Spectral methods](../../16-Numerical%20analysis/07-PDE%20Solvers/10-spectral-methods-and-the-fft.md): the same transform used to solve differential equations, where a cosine expansion becomes a way of differentiating.
 - Pricing by transform: the same identity as harmonic analysis, with the integrability conditions proved rather than assumed.
 
-Both machines were handed a model whose parameters were already chosen. Turning that around — starting from quoted prices and searching for the parameters that reproduce them — is calibration, and it is why anyone needs prices this fast.
+Both machines were handed a model whose parameters were already chosen. Turning that around — starting from quoted prices and searching for the parameters that reproduce them — is calibration ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)), and it is why anyone needs prices this fast.
 
 ---
 

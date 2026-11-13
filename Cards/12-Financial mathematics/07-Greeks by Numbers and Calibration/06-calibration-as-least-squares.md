@@ -36,7 +36,9 @@ The sloping line is each quote inverted on its own: five strikes, five volatilit
 
 ## The formula
 
-Notation first, in words. The two knobs travel as one pair, written $\theta$ and read "theta": it holds the volatility $\sigma$ ("sigma") and the dividend yield $q$. The quotes are numbered 1 to 5, low strike to high, and a small i below a symbol picks one out, so $y_i$ is quote number i's market price. Each quote also carries a scale $s_i$: a number of dollars, fixed before the fit starts, saying how many dollars of miss on that quote count as one unit of error.
+Notation first, in words. The two knobs travel as one pair, written $\theta$ and read "theta": it holds the volatility $\sigma$ ("sigma") and the dividend yield $q$.
+
+The quotes are numbered 1 to 5, low strike to high, and a small i below a symbol picks one out, so $y_i$ is quote number i's market price. Each quote also carries a scale $s_i$: a number of dollars, fixed before the fit starts, saying how many dollars of miss on that quote count as one unit of error.
 
 $$e_i(\theta) = \frac{C_i(\theta) - y_i}{s_i}, \qquad L(\theta) = \frac12 \sum_{i=1}^{5} e_i(\theta)^2$$
 
@@ -62,7 +64,9 @@ The slope table has one row per quote and one column per knob, each entry divide
 
 $$J_{i1} = \frac{1}{s_i}\frac{\partial C_i}{\partial \sigma}, \qquad J_{i2} = \frac{1}{s_i}\frac{\partial C_i}{\partial q}$$
 
-The first derivative in each row is that quote's vega, the dollars it gains per one unit of volatility. At 20% volatility and a 2% payout the five vegas are $15.39, $28.92, $37.90, $38.11 and $31.42, and those same five numbers serve as the vega scales below. The second derivative is dollars per one unit of dividend yield, negative everywhere, a bigger payout draining the share before the option can be used. Both are Black-Scholes derivatives, written out in the checks and derived on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+The first derivative in each row is that quote's vega, the dollars it gains per one unit of volatility. At 20% volatility and a 2% payout the five vegas are $15.39, $28.92, $37.90, $38.11 and $31.42, and those same five numbers serve as the vega scales below.
+
+The second derivative is dollars per one unit of dividend yield, negative everywhere, a bigger payout draining the share before the option can be used. Both are Black-Scholes derivatives, written out in the checks and derived on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 One step of the fit then solves a two-by-two system:
 
@@ -70,7 +74,7 @@ $$\left(J^{\mathsf T}J + \lambda\,\operatorname{diag}(J^{\mathsf T}J)\right) d =
 
 **Read it aloud:** ask the slopes for the step that would wipe out the misses if the model were a straight line, then shorten it by as much as the damping insists.
 
-$J^{\mathsf T}J$ is the two-by-two table of column dot products, and $J^{\mathsf T}e$, with the five misses stacked into one column, is the loss's gradient. At $\lambda$ zero this is the Gauss-Newton step, at $\lambda$ positive Levenberg's damped step, and taking the damping from the diagonal rather than from a plain 1 is Marquardt's change.
+$J^{\mathsf T}J$ is the two-by-two table of column dot products, and $J^{\mathsf T}e$, with the five misses stacked into one column, is the loss's gradient. At $\lambda$ zero this is the Gauss-Newton step, at $\lambda$ positive Levenberg's damped step, and taking the damping from the diagonal rather than from a plain 1 is Marquardt's change. Here $\operatorname{diag}(J^{\mathsf T}J)$ keeps that table's two diagonal entries, one per knob, and sets the other two to zero.
 
 ### When it holds
 
@@ -119,9 +123,9 @@ Kenneth Levenberg's 1944 fix charges the step for its own length: add half of $\
 
 $$\left(J^{\mathsf T}J + \lambda I\right) d = -\,J^{\mathsf T}e$$
 
-Large $\lambda$ gives a short step pointing straight downhill; small $\lambda$ gives Step 1 back. The damping is a leash on this step, not a penalty on the knobs.
+Here $I$ is the two-by-two identity table, 1 on the diagonal and 0 elsewhere, so both knobs pay the same charge. Large $\lambda$ gives a short step pointing straight downhill; small $\lambda$ gives Step 1 back. The damping is a leash on this step, not a penalty on the knobs.
 
-Donald Marquardt's 1963 change is the one in the formula above: charge each knob by its own column, $\lambda\operatorname{diag}(J^{\mathsf T}J)$, rather than both the same. It matters because "the step's length" means nothing until units are fixed — quote volatility in basis points instead of percent and the same move looks a hundred times longer, which a plain $\lambda I$ would punish a hundred times harder. Each column's own size settles the question.
+Donald Marquardt's 1963 change is the one in the formula above: charge each knob by its own column, $\lambda\operatorname{diag}(J^{\mathsf T}J)$, rather than both the same. It matters because "the step's length" means nothing until units are fixed — quote volatility in basis points (hundredths of a percent) instead of percent and the same move looks a hundred times longer, which a plain $\lambda I$ would punish a hundred times harder. Each column's own size settles the question.
 
 ### Step 3: trust the loss, not the model of the loss
 
@@ -150,9 +154,17 @@ so for every small enough fraction the loss falls, and tripling the damping shri
 
 ### Step 4: ask whether the quotes can tell the knobs apart
 
-A small loss is no evidence that the knobs are pinned down. The evidence lives in the slope table: do its two columns point in genuinely different directions, which is to ask whether $\det(J^{\mathsf T}J)$ is zero. The checks print three cases. Five strikes: 36,105,559.7. One quote alone: zero, since one row makes the columns multiples of each other. Five tickets struck at zero, each delivering one share: zero again, and worse — a share's price does not depend on volatility at all, so that whole column vanishes. The size of the first number says nothing on its own, since it carries the slopes' units raised to the fourth power; what is scale-free is zero against not-zero.
+A small loss is no evidence that the knobs are pinned down. The evidence lives in the slope table: do its two columns point in genuinely different directions, which is to ask whether the determinant $\det(J^{\mathsf T}J)$ is zero. The checks print three cases.
 
-The single quote shows the failure plainest. The $100-strike call is quoted at $9.23, and the pairs producing it run 18% volatility with a 0.75% payout, 19% with 1.36%, 20% with 2.00%, 21% with 2.66%, 22% with 3.33%. Every pair reprices it perfectly, so the loss is zero along a whole curve, and where the fit lands depends only on where it began: from 16% volatility it stops at 16.3611% with a payout of $-0.2044\%$, from 26% at 25.1813% with 5.5871%. Two runs, two answers, both flawless by their own score.
+- **Five strikes:** 36,105,559.7.
+- **One quote alone:** zero, since one row makes the columns multiples of each other.
+- **Five tickets struck at zero, each delivering one share:** zero again, and worse — a share's price does not depend on volatility at all, so that whole column vanishes.
+
+The size of the first number says nothing on its own, since it carries the slopes' units raised to the fourth power; what is scale-free is zero against not-zero.
+
+The single quote shows the failure plainest. The $100-strike call is quoted at $9.23, and the pairs producing it run 18% volatility with a 0.75% payout, 19% with 1.36%, 20% with 2.00%, 21% with 2.66%, 22% with 3.33%.
+
+Every pair reprices it perfectly, so the loss is zero along a whole curve, and where the fit lands depends only on where it began: from 16% volatility it stops at 16.3611% with a payout of $-0.2044\%$, from 26% at 25.1813% with 5.5871%. Two runs, two answers, both flawless by their own score.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -168,7 +180,7 @@ The rising line is the curve of perfect fits; the flat line is the payout that a
 
 Damping cannot supply what the quotes withhold. On the five zero-strike tickets Levenberg's $\lambda I$ still returns one well-defined step, and that step moves volatility by exactly 0.000000: nothing in the data points either way. Marquardt's diagonal damping returns no step at all: its determinant is 0.000000, since scaling a zero column leaves it zero. A unique step and an unidentified parameter sit together happily, which is why a converged optimiser is never on its own a reason to believe a number.
 
-A second road reaches the same fitted pair with none of this machinery: cover the knobs with a grid, keep the best corner, shrink the grid around it, repeat. No slopes, no damping, far slower, and it agrees to six decimals. Derivative-free and global searches belong to Nonlinear least squares.
+A second road reaches the same fitted pair with none of this machinery: cover the knobs with a grid, keep the best corner, shrink the grid around it, repeat. No slopes, no damping, far slower, and it agrees to six decimals. Derivative-free and global searches belong to [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md).
 
 ---
 
@@ -190,9 +202,11 @@ Two sets of five quotes on the same Acme market: spot $100, bank rate 5%, one ye
 | set B fitted, vega scales | the same quotes, scored in volatility | **volatility 0.185767, payout 0.013608** |
 | its misses, in volatility | the worst one is smaller | +0.31, −0.67, −0.42, +0.25, +0.55 |
 
-Read the two fits together. Scored in dollars, the misses come out level in dollars, eight to fifteen cents, leaving the cheap wing quote nearly a full volatility point out and the middle four tenths. Scored in volatility, the wing's miss falls to 0.31 points and the worst miss anywhere drops from 0.95 to 0.67. Same model, same quotes, same algorithm; one different declared scale, and a volatility 0.19 points higher.
+Read the two fits together. Scored in dollars, the misses come out level in dollars, eight to fifteen cents, leaving the $80 wing quote, at the low end of the strikes, nearly a full volatility point out and the middle four tenths. Scored in volatility, the wing's miss falls to 0.31 points and the worst miss anywhere drops from 0.95 to 0.67. Same model, same quotes, same algorithm; one different declared scale, and a volatility 0.19 points higher.
 
-That the fitted volatility sits below every volatility on the screen looks like an error and is not. The payout knob moved too, down to 1.23% from the 2% that made the quotes, and a smaller payout lifts every model price, so volatility has to come down to put them back. The knobs traded against each other — the trade that drew the single-quote curve in Step 4, now happening inside a five-quote fit. A calibrated volatility is not an average of implied volatilities; it is whichever number, alongside the other knob, minimises the declared loss.
+That the fitted volatility sits below every volatility on the screen looks like an error and is not. The payout knob moved too, down to 1.23% from the 2% that made the quotes, and a smaller payout lifts every model price, so volatility has to come down to put them back.
+
+The knobs traded against each other — the trade that drew the single-quote curve in Step 4, now happening inside a five-quote fit. A calibrated volatility is not an average of implied volatilities; it is whichever number, alongside the other knob, minimises the declared loss.
 
 The scale that turned dollars into volatility points is each quote's vega. Each block is $1.25 of vega.
 
@@ -616,6 +630,140 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line, from two different bell curves and two different languages.
+
+### Lean
+
+Lean proves the damped step is unique and downhill for any number of quotes and knobs, and the one-quote determinant.
+
+- Take a positive $\lambda$ and Levenberg's damping $\lambda I$. Then the damped matrix is invertible, and the step equations have exactly one solution.
+- Under the same damping, suppose the loss's slope $g = J^{\mathsf T}e$ is not zero. Then the step goes downhill: $g\cdot d < 0$.
+- Take a positive $\lambda$, Marquardt's damping, and every diagonal entry of $J^{\mathsf T}J$ positive. Then the same three facts hold: invertible, one solution, downhill.
+- Take a slope table with one row and two columns. Then $\det(J^{\mathsf T}J) = 0$, so one quote cannot tell the two knobs apart.
+
+The fits, the misses, the five-strike and ticket determinants and the retry loop are left to the Python and Rust checks.
+
+```lean
+-- Calibration: the damped least-squares step of a calibration exists, is unique and points downhill, and one quote alone cannot tell two knobs apart.
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+
+open Matrix
+
+theorem calib_quad_JtJ {m n : ℕ} (J : Matrix (Fin m) (Fin n) ℝ) (d : Fin n → ℝ) :
+    0 ≤ d ⬝ᵥ ((Jᵀ * J) *ᵥ d) := by
+  rw [← mulVec_mulVec, dotProduct_mulVec, vecMul_transpose]
+  simp only [dotProduct]
+  exact Finset.sum_nonneg (fun i _ => mul_self_nonneg _)
+
+theorem calib_quad_diag {n : ℕ} (c : Fin n → ℝ) (hc : ∀ k, 0 < c k) (lam : ℝ) (hlam : 0 < lam)
+    (d : Fin n → ℝ) (hd : d ≠ 0) :
+    0 < d ⬝ᵥ ((lam • diagonal c) *ᵥ d) := by
+  obtain ⟨k, hk⟩ := Function.ne_iff.mp hd
+  rw [smul_mulVec, dotProduct_smul, smul_eq_mul]
+  apply mul_pos hlam
+  simp only [dotProduct, mulVec_diagonal]
+  apply Finset.sum_pos'
+  · intro i _
+    have := hc i
+    nlinarith [mul_self_nonneg (d i)]
+  · refine ⟨k, Finset.mem_univ _, ?_⟩
+    have := hc k
+    have : 0 < d k * d k := mul_self_pos.mpr hk
+    nlinarith
+
+theorem calib_posdef_step {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
+    (hA : ∀ d : Fin n → ℝ, d ≠ 0 → 0 < d ⬝ᵥ (A *ᵥ d)) (g : Fin n → ℝ) :
+    A.det ≠ 0 ∧ (∃! d : Fin n → ℝ, A *ᵥ d = -g) ∧
+    (g ≠ 0 → ∀ d : Fin n → ℝ, A *ᵥ d = -g → g ⬝ᵥ d < 0) := by
+  have hdet : A.det ≠ 0 := by
+    intro h
+    obtain ⟨v, hv, hAv⟩ := (Matrix.exists_mulVec_eq_zero_iff).mpr h
+    have := hA v hv
+    rw [hAv, dotProduct_zero] at this
+    exact lt_irrefl _ this
+  refine ⟨hdet, ?_, ?_⟩
+  · have hu : IsUnit A.det := isUnit_iff_ne_zero.mpr hdet
+    refine ⟨A⁻¹ *ᵥ (-g), ?_, ?_⟩
+    · simp only [mulVec_mulVec, mul_nonsing_inv A hu, one_mulVec]
+    · intro y hy
+      rw [← hy, mulVec_mulVec, nonsing_inv_mul A hu, one_mulVec]
+  · intro hg d hd
+    have hd0 : d ≠ 0 := by
+      rintro rfl
+      apply hg
+      rw [mulVec_zero] at hd
+      exact neg_eq_zero.mp hd.symm
+    have := hA d hd0
+    have hg' : g = -(A *ᵥ d) := by rw [hd, neg_neg]
+    rw [hg', neg_dotProduct, dotProduct_comm]
+    linarith
+
+#print axioms calib_quad_JtJ
+#print axioms calib_quad_diag
+#print axioms calib_posdef_step
+
+/-- Marquardt's damped step, the card's formula. Take any slope table `J` (one row per quote,
+one column per knob), any column of scaled misses `e`, a positive damping `lam`, and suppose every
+diagonal entry of `Jᵀ J` is positive. Then the damped matrix `Jᵀ J + lam · diag(Jᵀ J)` is
+invertible, the step equations `(Jᵀ J + lam · diag(Jᵀ J)) d = -Jᵀ e` have exactly one solution,
+and when the loss's slope `g = Jᵀ e` is not zero that step points downhill: `g · d < 0`. -/
+theorem marquardt_step_unique_and_downhill {m n : ℕ}
+    (J : Matrix (Fin m) (Fin n) ℝ) (e : Fin m → ℝ) (lam : ℝ) (hlam : 0 < lam)
+    (hdiag : ∀ k, 0 < (Jᵀ * J) k k) :
+    (Jᵀ * J + lam • diagonal (fun k => (Jᵀ * J) k k)).det ≠ 0 ∧
+    (∃! d : Fin n → ℝ, (Jᵀ * J + lam • diagonal (fun k => (Jᵀ * J) k k)) *ᵥ d = -(Jᵀ *ᵥ e)) ∧
+    (Jᵀ *ᵥ e ≠ 0 → ∀ d : Fin n → ℝ,
+      (Jᵀ * J + lam • diagonal (fun k => (Jᵀ * J) k k)) *ᵥ d = -(Jᵀ *ᵥ e) →
+      (Jᵀ *ᵥ e) ⬝ᵥ d < 0) := by
+  apply calib_posdef_step
+  intro d hd
+  rw [add_mulVec, dotProduct_add]
+  have h1 := calib_quad_JtJ J d
+  have h2 := calib_quad_diag (fun k => (Jᵀ * J) k k) hdiag lam hlam d hd
+  linarith
+
+/-- Levenberg's damped step. For any slope table `J`, any misses `e` and any positive damping
+`lam`, the matrix `Jᵀ J + lam · I` is invertible, the step equations `(Jᵀ J + lam · I) d = -Jᵀ e`
+have exactly one solution, and when the slope `g = Jᵀ e` is not zero the step goes downhill:
+`g · d < 0`. -/
+theorem levenberg_step_unique_and_downhill {m n : ℕ}
+    (J : Matrix (Fin m) (Fin n) ℝ) (e : Fin m → ℝ) (lam : ℝ) (hlam : 0 < lam) :
+    (Jᵀ * J + lam • (1 : Matrix (Fin n) (Fin n) ℝ)).det ≠ 0 ∧
+    (∃! d : Fin n → ℝ, (Jᵀ * J + lam • (1 : Matrix (Fin n) (Fin n) ℝ)) *ᵥ d = -(Jᵀ *ᵥ e)) ∧
+    (Jᵀ *ᵥ e ≠ 0 → ∀ d : Fin n → ℝ,
+      (Jᵀ * J + lam • (1 : Matrix (Fin n) (Fin n) ℝ)) *ᵥ d = -(Jᵀ *ᵥ e) →
+      (Jᵀ *ᵥ e) ⬝ᵥ d < 0) := by
+  apply calib_posdef_step
+  intro d hd
+  rw [add_mulVec, dotProduct_add, ← diagonal_one]
+  have h1 := calib_quad_JtJ J d
+  have h2 := calib_quad_diag (fun _ => (1 : ℝ)) (fun _ => one_pos) lam hlam d hd
+  linarith
+
+/-- One quote cannot tell two knobs apart: when the slope table has a single row and two columns,
+`det(Jᵀ J) = 0`. -/
+theorem one_quote_cannot_separate_two_knobs (J : Matrix (Fin 1) (Fin 2) ℝ) :
+    (Jᵀ * J).det = 0 := by
+  simp [det_fin_two, Matrix.mul_apply, transpose_apply]
+  ring
+
+#print axioms marquardt_step_unique_and_downhill
+#print axioms levenberg_step_unique_and_downhill
+#print axioms one_quote_cannot_separate_two_knobs
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'calib_quad_JtJ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'calib_quad_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+'calib_posdef_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'marquardt_step_unique_and_downhill' depends on axioms: [propext, Classical.choice, Quot.sound]
+'levenberg_step_unique_and_downhill' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_quote_cannot_separate_two_knobs' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

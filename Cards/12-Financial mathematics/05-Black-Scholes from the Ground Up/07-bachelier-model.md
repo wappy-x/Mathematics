@@ -8,13 +8,17 @@
 
 A bank quotes an interest rate this morning for a year-long stretch starting a year from now: **0.50 percent a year**. That figure is a forward rate, agreed today and settled later.
 
-A contract written on it pays, on expiry day one year from today, whatever the rate exceeds **0.75 percent** by, and nothing if it falls short: at 1.00 percent on the day it pays 25 basis points, a basis point being one hundredth of one percent. Rates desks call it a caplet. Every figure below is for one unit of notional and one year of accrual; a real contract scales by both. A safe deposit earns 0.50 percent a year, the rate is expected to wander by about **60 basis points** over the year, and the contract is worth **13.42 basis points** today.
+A contract written on it pays, on expiry day one year from today, whatever the rate exceeds **0.75 percent** by, and nothing if it falls short: at 1.00 percent on the day it pays 25 basis points, a basis point being one hundredth of one percent. Rates desks call it a caplet.
+
+Every figure below is for one unit of notional (the sum the rate is paid on) and one year of accrual (the time it is paid for); a real contract scales by both. A safe deposit earns 0.50 percent a year, the rate is expected to wander by about **60 basis points** over the year, and the contract is worth **13.42 basis points** today.
 
 Everything difficult about that number sits in the word "wander". The Black-Scholes family measures wander as a percentage of the level ([Black-76](06-black-76-and-forward-level-pricing.md)): 20 percent volatility moves a level of 0.50 percent by ten basis points a year, and a level of 5 percent by a hundred. A level that only ever gets multiplied can approach zero but never reach or cross it, and the machinery makes that literal: it runs on the logarithm of the level divided by the strike, which has no value at zero or below.
 
 Rates crossed zero anyway. The European Central Bank's deposit rate went below zero in June 2014, Swiss rates followed, and a barrel of oil for May delivery settled below zero on 20 April 2020. On those days the percentage models did not return a bad price; they returned no price.
 
-Louis Bachelier had made the other choice already, in a thesis from 1900 — five years before Einstein on Brownian motion, seventy-three before Black and Scholes. His level moves by absolute amounts: so many basis points a year, wherever it sits. Zero is not a wall there, just a number the level passes through. The size of the wander is called **normal volatility**, measured in the level's own units: 60 basis points, not 60 percent of anything.
+Louis Bachelier had made the other choice already, in a thesis from 1900 — five years before Einstein on Brownian motion, seventy-three before Black and Scholes. His level moves by absolute amounts: so many basis points a year, wherever it sits. Zero is not a wall there, just a number the level passes through.
+
+The size of the wander is called **normal volatility**, measured in the level's own units: 60 basis points, not 60 percent of anything.
 
 **The premium is how far ahead the holder already is, weighted by the chance of still being ahead on expiry day, plus a payment for the wander that could yet put them ahead, both shrunk to today's money.**
 
@@ -32,13 +36,22 @@ xychart-beta
     line [-13.48, -13.48, -13.48, -13.48, -13.48, -13.48, 11.52, 36.52, 61.52]
 ```
 
-The upper kinked line is the settlement: nothing up to the strike of 75 basis points, then a basis point for every basis point above it. The lower line is the buyer's profit once the premium is paid and carried to expiry day, which turns 13.42 basis points into 13.48. The two sit 13.48 apart everywhere, and the lower crosses zero at 88.48 basis points, the breakeven rate. The axis runs to the left of zero, where the contract still makes sense.
+The upper kinked line is the settlement: nothing up to the strike of 75 basis points, then a basis point for every basis point above it. The lower line is the buyer's profit once the premium is paid and carried to expiry day, which turns 13.42 basis points into 13.48.
+
+The two sit 13.48 apart everywhere, and the lower crosses zero at 88.48 basis points, the breakeven rate. The axis runs to the left of zero, where the contract still makes sense.
 
 ---
 
 ## The formula
 
-Four helper quantities, each named before it is used. The **head start** $m = F - K$ is how far the level sits above the strike, negative here. One **standard deviation** of the ending level is $s = \sigma_N\sqrt{T}$, the volatility stretched over the wait: 60 basis points for one year. The **standardised head start** is $d = m/s$. The **discount factor** $D = e^{-rT}$ moves expiry-day money to today at the bank rate $r$. Two readings of the bell curve appear: $N(x)$, the area to the left of $x$, a chance between 0 and 1, and $\varphi(x)$ (say "phi"), the height at $x$.
+Four helper quantities, each named before it is used.
+
+- The **head start** $m = F - K$ is how far the level $F$ sits above the strike $K$, negative here.
+- One **standard deviation** of the ending level is $s = \sigma_N\sqrt{T}$, the volatility $\sigma_N$ stretched over the wait $T$: 60 basis points for one year.
+- The **standardised head start** is $d = m/s$.
+- The **discount factor** $D = e^{-rT}$ moves expiry-day money to today at the bank rate $r$.
+
+Two readings of the bell curve appear: $N(x)$, the area to the left of $x$, a chance between 0 and 1, and $\varphi(x)$ (say "phi"), the height at $x$.
 
 $$\text{call} = D\bigl[\,m\,N(d) + s\,\varphi(d)\,\bigr], \qquad \text{put} = D\bigl[\,-m\,N(-d) + s\,\varphi(d)\,\bigr]$$
 
@@ -70,14 +83,16 @@ Two facts come free. Subtract the put from the call: the area terms add to one, 
 
 $$\text{call} - \text{put} = D\,(F - K)$$
 
-Here that is −24.875312 basis points, with no volatility in it anywhere. And the put formula is the call formula with $F$ and $K$ exchanged: a put on 0.50 percent struck at 0.75 is worth what a call on 0.75 struck at 0.50 is worth, 38.292870 basis points. The bell curve is symmetric, so the two problems are one. The percentage model swaps the same way, but only while the level and the strike stay above zero, where its logarithm exists; here the swap holds wherever they sit.
+Here that is −24.875312 basis points, with no volatility in it anywhere.
+
+And the put formula is the call formula with $F$ and $K$ exchanged: a put on 0.50 percent struck at 0.75 is worth what a call on 0.75 struck at 0.50 is worth, 38.292870 basis points. The bell curve is symmetric, so the two problems are one. The percentage model swaps the same way, but only while the level and the strike stay above zero, where its logarithm exists; here the swap holds wherever they sit.
 
 ### When it holds
 
 - **The wander is the same absolute size wherever the level sits, and constant for the whole life.** Real rates wander a little less when very low; the repair is a floor put somewhere other than zero: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 - **A bell curve has no floor, so the model gives real weight to negative levels.** Here 20.2 percent of its weight sits below zero: honest for a rate at 0.50 percent, not for a share price.
 - **One volatility for one strike.** Matched on today's level, this model prices the 75 basis point strike at 13.42 where the percentage model says 17.02. Neither is wrong.
-- **One known bank rate, and one date.** Volatility runs to expiry, the discount to the day the cash arrives; here they are the same day, but a caplet usually fixes its rate months before it pays. The underlying of a rate option is itself a rate, so discounting and payment move together: the honest discount is the market's own zero-coupon bond price, a change of yardstick handled in [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
+- **One known bank rate, and one date.** Volatility runs to expiry, the discount to the day the cash arrives; here they are the same day, but a caplet usually fixes its rate months before it pays. The underlying of a rate option is itself a rate, so discounting and payment move together: the honest discount is the market's own zero-coupon bond price (the price today of one unit paid on that day), a change of yardstick handled in [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
 
 **Conventions verified 19 Sep 2026:** normal volatility is quoted in basis points per square root of a year, and the rate here is continuously compounded with $T$ in calendar years. Live quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
 
@@ -99,7 +114,9 @@ The payment on expiry day is the ending head start $m + sZ$ when that is positiv
 
 $$\mathbb{E}\bigl[\max(m + sZ,\, 0)\bigr] = m\,N(d) + s\,\varphi(d), \qquad d = \frac{m}{s}$$
 
-In words: the payment is positive exactly when the draw lands above $-d$, so the average splits in two over that stretch. The first piece is the head start times the chance of landing there, which by symmetry is $N(d)$. The second adds up the draw itself across the same stretch, weighted by the curve's height. Here the bell curve helps: its slope at any point is minus that point times its height, so adding up the draw across the tail returns the curve's *height* at the edge, $\varphi(d)$. An area for one piece, a height for the other: that is why the two terms look so unlike.
+In words: the payment is positive exactly when the draw lands above $-d$, so the average splits in two over that stretch. The first piece is the head start times the chance of landing there, which by symmetry is $N(d)$.
+
+The second adds up the draw itself across the same stretch, weighted by the curve's height. Here the bell curve helps: its slope at any point is minus that point times its height, so adding up the draw across the tail returns the curve's *height* at the edge, $\varphi(d)$. An area for one piece, a height for the other: that is why the two terms look so unlike.
 
 <details>
 <summary>Detailed proof: the one lemma, both integrals</summary>
@@ -132,7 +149,7 @@ Differentiate the call formula with respect to the level. Three terms appear: th
 
 $$\frac{\partial\,\text{call}}{\partial F} = D\,N(d)$$
 
-That slope is the hedge in futures settled every day: 0.336773 contracts per option. A forward's mark moves by the discount factor, not by one, so a forward hedge takes $N(d) = 0.338461$ instead. The same cancellation tidies the other sensitivities too.
+That slope is the hedge in futures settled every day: 0.336773 contracts per option. A forward's mark (its value today) moves by the discount factor, not by one, so a forward hedge takes $N(d) = 0.338461$ instead. The same cancellation tidies the other sensitivities too.
 
 | Sensitivity | What it answers | Call | Put | In this example |
 | --- | --- | --- | --- | --- |
@@ -162,7 +179,9 @@ A desk raised on the percentage models thinks in a volatility of 20 percent, not
 
 $$\sigma_N \approx \sigma \, F$$
 
-where $\sigma$ is the percentage volatility. A percentage move applied to a level is an absolute move of that size times the level, the only quantity either formula measures at the money. Matched that way, the normal price sits above the percentage one by a *fraction* — not an amount of money — of about the percentage volatility squared times the years, divided by 24. The next section measures it; the next card converts properly, in both directions and away from the money: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
+where $\sigma$ is the percentage volatility. A percentage move applied to a level is an absolute move of that size times the level, the only quantity either formula measures at the money.
+
+Matched that way, the normal price sits above the percentage one by a *fraction* — not an amount of money — of about the percentage volatility squared times the years, divided by 24. The next section measures it; the next card converts properly, in both directions and away from the money: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 
 ### The other door: the hedge, written as an equation
 
@@ -170,7 +189,9 @@ The other route is the one Black and Scholes took: hold the contract, sell enoug
 
 $$\frac{\partial V}{\partial t} + \tfrac12\sigma_N^2\,\frac{\partial^2 V}{\partial F^2} - rV = 0$$
 
-where the premium is written V and t is today's clock time. The lognormal version carries the level squared in front of the second derivative, which is what makes moves proportional to the level; here it is absent. Write the premium as the discount factor times something else and the discounting drops out, leaving the heat equation. Black and Scholes had to transform theirs to reach it; Bachelier's was already there in 1900, which is why he could solve it with the mathematics of his day.
+where the premium is written V and t is today's clock time. The lognormal version carries the level squared in front of the second derivative, which is what makes moves proportional to the level; here it is absent.
+
+Write the premium as the discount factor times something else and the discounting drops out, leaving the heat equation, the equation for heat spreading along a metal bar. Black and Scholes had to transform theirs to reach it; Bachelier's was already there in 1900, which is why he could solve it with the mathematics of his day.
 
 ---
 
@@ -212,7 +233,9 @@ The steeper line is this card's model at 60 basis points of normal volatility. T
 
 The shelf prices one market throughout: Acme shares at 100.00 dollars, a 5 percent bank rate, a 2 percent dividend yield, 20 percent volatility, one year, a call struck at 100.00 worth 9.227005508154 dollars. That is a forward of 103.045453 dollars, on which the percentage model returns **9.227006** — the shelf's number.
 
-Feed this card's model the matched normal volatility, 20 percent of 103.045453, or 20.609091 dollars per root year. It returns 9.354552, dearer by 1.4 percent: the option is in the money, where the two are entitled to disagree. Move the strike to the forward and the rule does its job — 7.820854 against 7.807839, a gap of 0.1667 percent, matching what volatility-squared-over-24 predicts. Run the model backwards on the house call and the normal implied volatility is 20.269235, 1.6 percent under 20 percent of the forward.
+Feed this card's model the matched normal volatility, 20 percent of 103.045453, or 20.609091 dollars per root year. It returns 9.354552, dearer by 1.4 percent: the option is in the money, where the two are entitled to disagree. Move the strike to the forward and the rule does its job — 7.820854 against 7.807839, a gap of 0.1667 percent, matching what volatility-squared-over-24 predicts.
+
+Run the model backwards on the house call and the normal implied volatility is 20.269235, 1.6 percent under 20 percent of the forward.
 
 ### The picture: a floor at zero percent, as the rate crosses it
 
@@ -669,6 +692,245 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves both premium formulas and put-call parity in this model, for any level and strike, negative ones included.
+
+- Take any $F$ and $K$, any bank rate $r$, $\sigma_N > 0$ and $T > 0$. Then the call, the discounted average of $\max(F_T - K, 0)$, is $D[m\,N(d) + s\,\varphi(d)]$.
+- Take the same $F$, $K$, $r$, $\sigma_N$ and $T$. Then the put, the discounted average of $\max(K - F_T, 0)$, is $D[-m\,N(-d) + s\,\varphi(d)]$.
+- Take any level $F$ and strike $K$, negative ones included. Then call minus put is $D(F - K)$, whatever the volatility.
+- The worked steps check out: $m = -25$, $s = 60$, and $d = -25/60 = -5/12$.
+- Over four years $s$ is 120, not 240: wander adds up in the square root of time.
+
+The decimals, the swap, the sensitivities and the backwards solve are left to the Python and Rust checks.
+
+```lean
+-- Bachelier: if the level on expiry day is today's forward plus a normal draw of width σN√T, the discounted call and put premiums are given by the Bachelier formula, and call minus put is the discounted head start.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+
+open MeasureTheory ProbabilityTheory
+
+/-! The model: `Z` is a standard bell-curve draw, the measure `gaussianReal 0 1`.
+The level on expiry day is `F_T = F + σN * √T * Z`, with no floor and no logarithm.
+`N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`, the area to the left of `x`.
+`φ(x)` is Mathlib's `gaussianPDFReal 0 1 x`, the height at `x`.
+The head start is `m = F - K`, one standard deviation is `s = σN * √T`, `d = m / s`,
+and the discount factor is `D = exp (-(r * T))`.
+`F` and `K` are any real numbers, negative ones included. -/
+
+section BachelierHelpers
+open Filter Topology Set
+
+theorem bach_pdf_eq (z : ℝ) :
+    gaussianPDFReal 0 1 z = (Real.sqrt (2 * Real.pi))⁻¹ * Real.exp (-(1/2) * z ^ 2) := by
+  simp only [gaussianPDFReal, NNReal.coe_one, mul_one, sub_zero]
+  congr 2
+  ring
+
+theorem bach_pdf_neg (z : ℝ) : gaussianPDFReal 0 1 (-z) = gaussianPDFReal 0 1 z := by
+  rw [bach_pdf_eq, bach_pdf_eq, neg_sq]
+
+theorem bach_cdf_neg (d : ℝ) :
+    cdf (gaussianReal 0 1) (-d) = 1 - cdf (gaussianReal 0 1) d := by
+  have hmap : (gaussianReal 0 1).map (fun x : ℝ ↦ -x) = gaussianReal 0 1 := by
+    rw [gaussianReal_map_neg, neg_zero]
+  rw [cdf_eq_real, cdf_eq_real]
+  have h1 : (gaussianReal 0 1).real (Iic (-d)) = (gaussianReal 0 1).real (Ici d) := by
+    conv_lhs => rw [← hmap]
+    rw [map_measureReal_apply (by fun_prop) measurableSet_Iic]
+    congr 1
+    ext x; simp
+  rw [h1]
+  have h2 : (gaussianReal 0 1).real (Ici d) = (gaussianReal 0 1).real (Ioi d) := by
+    have := nullSingletonClass_gaussianReal (μ := 0) (v := 1) one_ne_zero
+    rw [measureReal_def, measureReal_def,
+      measure_congr (Ioi_ae_eq_Ici (μ := gaussianReal 0 1) (a := d))]
+  rw [h2, ← compl_Iic, measureReal_compl measurableSet_Iic, probReal_univ]
+
+theorem bach_integrableOn_mul_pdf (a : ℝ) :
+    IntegrableOn (fun z ↦ z * gaussianPDFReal 0 1 z) (Ioi a) := by
+  have h := (integrable_mul_exp_neg_mul_sq (b := 1/2) (by norm_num)).const_mul
+    (Real.sqrt (2 * Real.pi))⁻¹
+  refine (h.congr (ae_of_all _ fun z ↦ ?_)).integrableOn
+  simp only [bach_pdf_eq]
+  ring
+
+theorem bach_integral_Ioi_pdf (a : ℝ) :
+    ∫ z in Ioi a, gaussianPDFReal 0 1 z = cdf (gaussianReal 0 1) (-a) := by
+  have h := gaussianReal_apply_eq_integral 0 (v := 1) one_ne_zero (Ioi a)
+  have hnn : 0 ≤ ∫ z in Ioi a, gaussianPDFReal 0 1 z :=
+    setIntegral_nonneg measurableSet_Ioi fun z _ ↦ gaussianPDFReal_nonneg _ _ _
+  have h2 : (gaussianReal 0 1).real (Ioi a) = ∫ z in Ioi a, gaussianPDFReal 0 1 z := by
+    rw [measureReal_def, h, ENNReal.toReal_ofReal hnn]
+  rw [← h2, ← compl_Iic, measureReal_compl measurableSet_Iic, probReal_univ, ← cdf_eq_real,
+    bach_cdf_neg]
+
+theorem bach_integral_Ioi_mul_pdf (a : ℝ) :
+    ∫ z in Ioi a, z * gaussianPDFReal 0 1 z = gaussianPDFReal 0 1 a := by
+  have hf : (fun z ↦ -gaussianPDFReal 0 1 z) =
+      fun z ↦ -((Real.sqrt (2 * Real.pi))⁻¹ * Real.exp (-(1/2) * z ^ 2)) := by
+    funext z; rw [bach_pdf_eq]
+  have key := integral_Ioi_of_hasDerivAt_of_tendsto (a := a) (m := 0)
+    (f := fun z ↦ -gaussianPDFReal 0 1 z) (f' := fun z ↦ z * gaussianPDFReal 0 1 z)
+    ?_ ?_ (bach_integrableOn_mul_pdf a) ?_
+  · rw [key]; ring
+  · rw [hf]; exact (by fun_prop : Continuous _).continuousWithinAt
+  · intro z _
+    rw [hf, bach_pdf_eq]
+    have h1 := (((hasDerivAt_pow 2 z).const_mul (-(1/2 : ℝ))).exp).const_mul
+      (Real.sqrt (2 * Real.pi))⁻¹
+    convert h1.neg using 1
+    push_cast
+    ring
+  · rw [hf]
+    have h0 : Tendsto (fun z : ℝ ↦ -(1/2) * z ^ 2) atTop atBot := by
+      apply Tendsto.const_mul_atTop_of_neg (by norm_num)
+      exact tendsto_pow_atTop two_ne_zero
+    have h1 := (Real.tendsto_exp_atBot.comp h0).const_mul (Real.sqrt (2 * Real.pi))⁻¹
+    have h2 := h1.neg
+    simpa using h2
+
+theorem bach_call_core (m s : ℝ) (hs : 0 < s) :
+    ∫ z, max (m + s * z) 0 ∂(gaussianReal 0 1) =
+      m * cdf (gaussianReal 0 1) (m / s) + s * gaussianPDFReal 0 1 (m / s) := by
+  rw [integral_gaussianReal_eq_integral_smul one_ne_zero]
+  have hind : (fun z ↦ gaussianPDFReal 0 1 z • max (m + s * z) 0) =
+      (Ioi (-(m / s))).indicator
+        (fun z ↦ m * gaussianPDFReal 0 1 z + s * (z * gaussianPDFReal 0 1 z)) := by
+    funext z
+    have hms : m + s * z = s * (m / s + z) := by field_simp
+    simp only [smul_eq_mul, indicator, mem_Ioi]
+    split_ifs with h
+    · rw [max_eq_left]
+      · ring
+      · rw [hms]; exact mul_nonneg hs.le (by linarith)
+    · rw [max_eq_right, mul_zero]
+      rw [hms]; exact mul_nonpos_of_nonneg_of_nonpos hs.le (by linarith)
+  rw [hind, integral_indicator measurableSet_Ioi, integral_add, integral_const_mul,
+    integral_const_mul, bach_integral_Ioi_pdf, bach_integral_Ioi_mul_pdf, neg_neg, bach_pdf_neg]
+  · exact ((integrable_gaussianPDFReal 0 1).integrableOn).const_mul m
+  · exact (bach_integrableOn_mul_pdf _).const_mul s
+
+#print axioms bach_pdf_eq
+#print axioms bach_pdf_neg
+#print axioms bach_cdf_neg
+#print axioms bach_integrableOn_mul_pdf
+#print axioms bach_integral_Ioi_pdf
+#print axioms bach_integral_Ioi_mul_pdf
+#print axioms bach_call_core
+
+theorem bach_parity_core (F K c : ℝ) :
+    ∫ z, max (F + c * z - K) 0 ∂(gaussianReal 0 1) -
+      ∫ z, max (K - (F + c * z)) 0 ∂(gaussianReal 0 1) = F - K := by
+  have hid : Integrable (fun z : ℝ ↦ z) (gaussianReal 0 1) :=
+    (memLp_id_gaussianReal (μ := 0) (v := 1) 1).integrable le_rfl
+  have hlin : Integrable (fun z ↦ F + c * z) (gaussianReal 0 1) :=
+    (integrable_const F).add (hid.const_mul _)
+  have hint : Integrable (fun z ↦ F + c * z - K) (gaussianReal 0 1) :=
+    hlin.sub (integrable_const K)
+  have h2 : Integrable (fun z ↦ max (K - (F + c * z)) 0) (gaussianReal 0 1) := by
+    refine hint.neg.pos_part.congr (ae_of_all _ fun z ↦ ?_)
+    simp only [Pi.neg_apply, neg_sub]
+  rw [← integral_sub hint.pos_part h2]
+  have h3 : (fun z ↦ max (F + c * z - K) 0 - max (K - (F + c * z)) 0)
+      = fun z ↦ (F + c * z) - K := by
+    funext z
+    rw [← neg_sub (F + c * z) K, max_zero_sub_max_neg_zero_eq_self]
+  have h4 : ∫ z, (F + c * z) ∂(gaussianReal 0 1) = F := by
+    rw [integral_add (integrable_const F) (hid.const_mul _), integral_const_mul,
+      integral_id_gaussianReal]
+    simp
+  rw [h3, integral_sub hlin (integrable_const K), h4]
+  simp
+
+#print axioms bach_parity_core
+
+end BachelierHelpers
+
+/-- Bachelier's call formula: with the level on expiry day equal to `F + σN √T Z`
+for a standard bell-curve draw `Z`, positive normal volatility `σN` and a positive wait `T`,
+the discounted average of `max (F_T - K) 0` is `D * (m * N(d) + s * φ(d))`. -/
+theorem bachelier_call_formula (F K r σN T : ℝ) (hσ : 0 < σN) (hT : 0 < T) :
+    Real.exp (-(r * T)) *
+        ∫ z, max (F + σN * Real.sqrt T * z - K) 0 ∂(gaussianReal 0 1) =
+      Real.exp (-(r * T)) *
+        ((F - K) * cdf (gaussianReal 0 1) ((F - K) / (σN * Real.sqrt T)) +
+          σN * Real.sqrt T * gaussianPDFReal 0 1 ((F - K) / (σN * Real.sqrt T))) := by
+  have hs : 0 < σN * Real.sqrt T := mul_pos hσ (Real.sqrt_pos.mpr hT)
+  congr 1
+  rw [← bach_call_core (F - K) (σN * Real.sqrt T) hs]
+  congr 1
+  funext z
+  congr 1
+  ring
+
+/-- Bachelier's put formula: under the same model, the discounted average of
+`max (K - F_T) 0` is `D * (-m * N(-d) + s * φ(d))`. -/
+theorem bachelier_put_formula (F K r σN T : ℝ) (hσ : 0 < σN) (hT : 0 < T) :
+    Real.exp (-(r * T)) *
+        ∫ z, max (K - (F + σN * Real.sqrt T * z)) 0 ∂(gaussianReal 0 1) =
+      Real.exp (-(r * T)) *
+        (-(F - K) * cdf (gaussianReal 0 1) (-((F - K) / (σN * Real.sqrt T))) +
+          σN * Real.sqrt T * gaussianPDFReal 0 1 ((F - K) / (σN * Real.sqrt T))) := by
+  have hs : 0 < σN * Real.sqrt T := mul_pos hσ (Real.sqrt_pos.mpr hT)
+  have hdiff := bach_parity_core F K (σN * Real.sqrt T)
+  have hcall : ∫ z, max (F + σN * Real.sqrt T * z - K) 0 ∂(gaussianReal 0 1) =
+      (F - K) * cdf (gaussianReal 0 1) ((F - K) / (σN * Real.sqrt T)) +
+        σN * Real.sqrt T * gaussianPDFReal 0 1 ((F - K) / (σN * Real.sqrt T)) := by
+    rw [← bach_call_core (F - K) (σN * Real.sqrt T) hs]
+    congr 1
+    funext z
+    congr 1
+    ring
+  congr 1
+  rw [bach_cdf_neg]
+  linarith
+
+/-- Put-call parity in the normal model: call minus put is the discounted head start
+`D * (F - K)`, with no volatility in it, for any level and strike, negative ones included. -/
+theorem bachelier_put_call_parity (F K r σN T : ℝ) :
+    Real.exp (-(r * T)) *
+        ∫ z, max (F + σN * Real.sqrt T * z - K) 0 ∂(gaussianReal 0 1) -
+      Real.exp (-(r * T)) *
+        ∫ z, max (K - (F + σN * Real.sqrt T * z)) 0 ∂(gaussianReal 0 1) =
+      Real.exp (-(r * T)) * (F - K) := by
+  rw [← mul_sub, bach_parity_core]
+
+/-! The card's whole-number worked steps, in basis points:
+F = 50, K = 75, σN = 60, T = 1. -/
+
+-- The head start m = F - K.
+example : (50 : ℚ) - 75 = -25 := by norm_num
+-- One standard deviation s = σN * √T, with √1 = 1.
+example : (60 : ℚ) * 1 = 60 := by norm_num
+-- The standardised head start d = m / s = -25 / 60 = -5/12 (the card's -0.416667).
+example : ((50 : ℚ) - 75) / 60 = -5 / 12 := by norm_num
+-- Wander adds up in the square root of time: over four years s is 60 * 2 = 120, not 60 * 4 = 240.
+example : (60 : ℚ) * 2 = 120 ∧ (60 : ℚ) * 4 = 240 ∧ (2 : ℚ) ^ 2 = 4 := by norm_num
+
+#print axioms bachelier_call_formula
+#print axioms bachelier_put_formula
+#print axioms bachelier_put_call_parity
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bach_pdf_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bach_pdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bach_cdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bach_integrableOn_mul_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bach_integral_Ioi_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bach_integral_Ioi_mul_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bach_call_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bach_parity_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bachelier_call_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bachelier_put_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bachelier_put_call_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. The asserts are pinned to this contract's numbers, so expect one to stop the program.
@@ -691,7 +953,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Caps, floors and swaptions.** When euro and Swiss rates fell through zero from 2014, percentage volatility stopped being quotable: there is no percentage volatility of a negative number. The interbank market moved to normal volatility and has quoted rate options that way since. Every floor struck at zero is a Bachelier put, and two desks agreeing on 60 basis points have agreed the price.
+- **Caps, floors and swaptions.** A cap is a string of caplets, a floor the matching string of puts, and a swaption an option to start paying a fixed rate against a floating one. When euro and Swiss rates fell through zero from 2014, percentage volatility stopped being quotable: there is no percentage volatility of a negative number. The interbank market moved to normal volatility and has quoted rate options that way since. Every floor struck at zero is a Bachelier put, and two desks agreeing on 60 basis points have agreed the price.
 - **Negative oil.** On 20 April 2020 the expiring West Texas Intermediate contract settled below zero. Exchanges switched the affected energy options to this model within days: nothing else standard would return a number.
 - **Spread options.** A difference between two prices — a refinery margin, a location basis, a calendar spread — is often negative, so a normal model is the honest default: [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
 - **The middle ground.** A share needs a floor and a rate does not, so most desks keep a floor but move it below zero by a chosen amount: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).

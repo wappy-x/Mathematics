@@ -8,7 +8,7 @@
 
 Acme shares trade at 100 dollars today. A one-year option to buy one share for 100 dollars costs 9.23 dollars in the house market: bank rate 5 percent, dividend yield 2 percent, volatility 20 percent ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
-A desk that has sold that option needs one number above all: how much its price moves when Acme moves a dollar. That is **delta**, dollars of option per dollar of share, and also the number of Acme shares that cancels the option's risk. Here delta is 0.5869.
+A trading desk that has sold that option needs one number above all: how much its price moves when Acme moves a dollar. That is **delta**, dollars of option per dollar of share, and also the number of Acme shares that cancels the option's risk. Here delta is 0.5869.
 
 Sometimes a formula for delta exists. Very often it does not: the pricer is a simulation, a tree, or fifty thousand lines of somebody else's code. So do the obvious thing. Price it. Shift one input a little. Price it again. Divide the change in price by the shift.
 
@@ -149,11 +149,13 @@ A one-sided bump balances the bump against one over the bump, so its best goes a
 
 ### Step 5: a simulation's noise swamps the bump, unless both runs share their draws
 
-Everything above assumed the pricer's error is the machine's rounding. The 200000-path run below prices this option at 9.220900 dollars, standard error 0.030879 — more than ten million million times worse than the scrap.
+Everything above assumed the pricer's error is the machine's rounding. The 200000-path run below prices this option at 9.220900 dollars, standard error 0.030879 (the typical distance between a simulated price and the true one) — more than ten million million times worse than the scrap.
 
 Reprice with **fresh** random numbers and the difference carries the noise of both legs, which dividing by $2h$ magnifies by one over the bump. At a one-cent bump that is a standard error of 2.187948 on a true value of 0.586851, and the run returns −2.866855. No reasonable number of extra paths rescues it.
 
-**Use the same draws for both legs and the problem disappears.** Each simulated path is then the same path, started a little higher and a little lower, so the difference of its two payoffs is not the difference of two independent random things: it is the change in one thing. In the run the standard error barely moves as the bump falls from 5 dollars to one cent — 0.001223, 0.001271, 0.001282, 0.001283 — and at the smallest bump it is 1705.6 times tighter than fresh draws, for the cost of resetting the generator. It cannot run away, either: one path's two payoffs differ by at most the gap between its two starting prices times how far that path multiplied the share, so dividing by $2h$ has nothing left to magnify. That caps the standard error here at one over the square root of the path count, 0.002236, and the run comes in under it.
+**Use the same draws for both legs and the problem disappears.** Each simulated path is then the same path, started a little higher and a little lower, so the difference of its two payoffs is not the difference of two independent random things: it is the change in one thing. In the run the standard error barely moves as the bump falls from 5 dollars to one cent — 0.001223, 0.001271, 0.001282, 0.001283 — and at the smallest bump it is 1705.6 times tighter than fresh draws, for the cost of resetting the generator.
+
+It cannot run away, either: one path's two payoffs differ by at most the gap between its two starting prices times how far that path multiplied the share, so dividing by $2h$ has nothing left to magnify. That caps the standard error here at one over the square root of the path count, 0.002236, and the run comes in under it.
 
 That trick is **common random numbers**, the phrase used from here on, and one line about spread explains it: the spread of a difference is the spread of one leg, plus the spread of the other, minus twice the amount the two move together. Independent draws make that last quantity zero; shared draws make it large and positive, so the subtraction cancels most of the wobble before the division can magnify it.
 
@@ -233,7 +235,7 @@ Nine digits, seven, six, five, four: the same staircase downhill, one step per d
 
 ## Code, from first principles, and it actually runs
 
-Nothing below imports anything that already holds an answer: the bell-curve area is a series written out in full, and the random numbers come from an arithmetic generator written out in full. Delta is reached **four independent ways** — the closed form, a bumped reprice swept across eleven bump sizes, a 2000-step binomial tree that reads the slope off its own first two nodes with no bump at all, and a 200000-path simulation with shared draws. Neither the tree nor the simulation looks at the closed form. Gamma is swept too, and every wrong number above is reproduced.
+Nothing below imports anything that already holds an answer: the bell-curve area is a series written out in full, and the random numbers come from an arithmetic generator written out in full. Delta is reached **four independent ways** — the closed form, a bumped reprice swept across eleven bump sizes, a 2000-step binomial tree that reads the slope off its own first two nodes with no bump at all, and a 200000-path simulation with shared draws. A binomial tree is a pricer that moves the share up or down by a fixed factor at each step. Neither the tree nor the simulation looks at the closed form. Gamma is swept too, and every wrong number above is reproduced.
 
 ### Python
 
@@ -671,6 +673,181 @@ ALL CHECKS PASS
 ```
 
 Four roads, one delta: the tree lands 0.000006 from the closed form having never taken a difference of prices, and the simulation 0.000303 away, inside its own standard error of 0.001283. The two outputs agree digit for digit, including the ragged right-hand arm where the numbers are almost pure rounding — both programs use the machine's own exponential and logarithm, and add their sums in the same order.
+
+### Lean
+
+Lean proves the three bounds behind the bump for every smooth pricer, every bump $h > 0$, and every shared path.
+
+- Suppose the pricer has delta, gamma and speed from $S-h$ to $S+h$, with speed never above $M$ in size. Then the central difference misses the true delta by at most $h^2 M/6$.
+- Suppose the same holds from $S$ to $S+h$ only. Then the forward difference equals delta plus $h\Gamma/2$, to within $h^2 M/6$.
+- Take one shared path that multiplies the share by $a \ge 0$, and a call payoff scaled by $D \ge 0$. Then the path's two payoffs, differenced and divided by $2h$, are at most $Da$ in size, however small $h$ is.
+
+The rounding error, the cube-root best bump, gamma's bump size, and every number in the runs are left to the Python and Rust checks.
+
+```lean
+-- Bump and revalue: a central bump is off from the true slope by at most a sixth of the bump squared times the third-slope bound, a one-sided bump carries an extra half bump of the second slope, and with shared draws a call's paired difference over the full gap never exceeds the path's discounted growth factor.
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Analysis.Calculus.Taylor
+
+/-- Fencing step: a function starting inside its bound, with slope bounded by the bound's slope,
+stays inside its bound on the interval. -/
+lemma bump_bound_step (k k' B B' : ℝ → ℝ) (a b : ℝ)
+    (hk : ∀ y ∈ Set.Icc a b, HasDerivAt k (k' y) y)
+    (hB : ∀ y, HasDerivAt B (B' y) y)
+    (h0 : |k a| ≤ B a) (hb : ∀ y ∈ Set.Icc a b, |k' y| ≤ B' y) :
+    ∀ y ∈ Set.Icc a b, |k y| ≤ B y := by
+  intro y hy
+  have := image_norm_le_of_norm_deriv_right_le_deriv_boundary (f := k) (f' := k') (a := a) (b := b)
+    (fun z hz => (hk z hz).continuousAt.continuousWithinAt)
+    (fun z hz => (hk z (Set.Ico_subset_Icc_self hz)).hasDerivWithinAt)
+    (B := B) (B' := B') (by simpa using h0) hB
+    (fun z hz => by simpa using hb z (Set.Ico_subset_Icc_self hz)) hy
+  simpa using this
+
+/-- Third-order Taylor bound on the right of `x`. -/
+lemma bump_taylor3_right (f f' f'' f''' : ℝ → ℝ) (x h M : ℝ) (hh : 0 ≤ h)
+    (hf : ∀ y ∈ Set.Icc x (x + h), HasDerivAt f (f' y) y)
+    (hf' : ∀ y ∈ Set.Icc x (x + h), HasDerivAt f' (f'' y) y)
+    (hf'' : ∀ y ∈ Set.Icc x (x + h), HasDerivAt f'' (f''' y) y)
+    (hM : ∀ y ∈ Set.Icc x (x + h), |f''' y| ≤ M) :
+    |f (x + h) - f x - h * f' x - h ^ 2 / 2 * f'' x| ≤ M * h ^ 3 / 6 := by
+  have hx : x ∈ Set.Icc x (x + h) := ⟨le_rfl, by linarith⟩
+  -- step A
+  have hA : ∀ y ∈ Set.Icc x (x + h), |f'' y - f'' x| ≤ M * (y - x) := by
+    apply bump_bound_step (fun y => f'' y - f'' x) f''' (fun y => M * (y - x)) (fun _ => M)
+    · intro y hy; simpa using (hf'' y hy).sub_const (f'' x)
+    · intro y; simpa using ((hasDerivAt_id' y).sub_const x).const_mul M
+    · simp
+    · exact hM
+  -- step B
+  have hB : ∀ y ∈ Set.Icc x (x + h),
+      |f' y - f' x - (y - x) * f'' x| ≤ M * (y - x) ^ 2 / 2 := by
+    apply bump_bound_step (fun y => f' y - f' x - (y - x) * f'' x) (fun y => f'' y - f'' x)
+      (fun y => M * (y - x) ^ 2 / 2) (fun y => M * (y - x))
+    · intro y hy
+      have := ((hf' y hy).sub_const (f' x)).sub (((hasDerivAt_id' y).sub_const x).mul_const (f'' x))
+      convert this using 1; simp
+    · intro y
+      have := ((((hasDerivAt_id' y).sub_const x).pow 2).const_mul M).div_const 2
+      convert this using 1; simp; ring
+    · simp
+    · exact hA
+  -- step C
+  have hC : ∀ y ∈ Set.Icc x (x + h),
+      |f y - f x - (y - x) * f' x - (y - x) ^ 2 / 2 * f'' x| ≤ M * (y - x) ^ 3 / 6 := by
+    apply bump_bound_step (fun y => f y - f x - (y - x) * f' x - (y - x) ^ 2 / 2 * f'' x)
+      (fun y => f' y - f' x - (y - x) * f'' x)
+      (fun y => M * (y - x) ^ 3 / 6) (fun y => M * (y - x) ^ 2 / 2)
+    · intro y hy
+      have := (((hf y hy).sub_const (f x)).sub
+        (((hasDerivAt_id' y).sub_const x).mul_const (f' x))).sub
+        (((((hasDerivAt_id' y).sub_const x).pow 2).div_const 2).mul_const (f'' x))
+      convert this using 1; simp
+    · intro y
+      have := ((((hasDerivAt_id' y).sub_const x).pow 3).const_mul M).div_const 6
+      convert this using 1; simp; ring
+    · simp
+    · exact hB
+  have := hC (x + h) ⟨by linarith, le_rfl⟩
+  simpa using this
+
+#print axioms bump_bound_step
+#print axioms bump_taylor3_right
+
+/-- Central difference error: if the pricer `f` has a first, second and third slope
+(`f'`, `f''`, `f'''`) everywhere between the bumped inputs `x - h` and `x + h`, and the
+third slope stays within `M` in size there, then pricing above and below and dividing by
+the full gap `2h` misses the true slope `f' x` by at most one sixth of the bump squared
+times `M`. The second slope (gamma) has cancelled. -/
+theorem central_difference_error_le (f f' f'' f''' : ℝ → ℝ) (x h M : ℝ) (hh : 0 < h)
+    (hf : ∀ y ∈ Set.Icc (x - h) (x + h), HasDerivAt f (f' y) y)
+    (hf' : ∀ y ∈ Set.Icc (x - h) (x + h), HasDerivAt f' (f'' y) y)
+    (hf'' : ∀ y ∈ Set.Icc (x - h) (x + h), HasDerivAt f'' (f''' y) y)
+    (hM : ∀ y ∈ Set.Icc (x - h) (x + h), |f''' y| ≤ M) :
+    |(f (x + h) - f (x - h)) / (2 * h) - f' x| ≤ h ^ 2 / 6 * M := by
+  have sub_r : Set.Icc x (x + h) ⊆ Set.Icc (x - h) (x + h) :=
+    Set.Icc_subset_Icc (by linarith) le_rfl
+  have hR := bump_taylor3_right f f' f'' f''' x h M hh.le
+    (fun y hy => hf y (sub_r hy)) (fun y hy => hf' y (sub_r hy))
+    (fun y hy => hf'' y (sub_r hy)) (fun y hy => hM y (sub_r hy))
+  -- reflected function
+  have mem : ∀ y ∈ Set.Icc (-x) (-x + h), -y ∈ Set.Icc (x - h) (x + h) := by
+    intro y hy; constructor <;> linarith [hy.1, hy.2]
+  have hL := bump_taylor3_right (fun y => f (-y)) (fun y => -f' (-y)) (fun y => f'' (-y))
+    (fun y => -f''' (-y)) (-x) h M hh.le
+    (fun y hy => by
+      have := (hf (-y) (mem y hy)).comp y (hasDerivAt_neg y)
+      convert this using 1 <;> first | rfl | ring)
+    (fun y hy => by
+      have := ((hf' (-y) (mem y hy)).comp y (hasDerivAt_neg y)).neg
+      convert this using 1 <;> first | rfl | ring)
+    (fun y hy => by
+      have := (hf'' (-y) (mem y hy)).comp y (hasDerivAt_neg y)
+      convert this using 1 <;> first | rfl | ring)
+    (fun y hy => by simpa [abs_neg] using hM (-y) (mem y hy))
+  simp only [neg_neg, neg_add_rev] at hL
+  have e1 : -h + x = x - h := by ring
+  rw [e1] at hL
+  have h2 : (0:ℝ) < 2 * h := by linarith
+  rw [div_sub' (ne_of_gt h2), abs_div, abs_of_pos h2, div_le_iff₀ h2]
+  have key : f (x + h) - f (x - h) - 2 * h * f' x =
+      (f (x + h) - f x - h * f' x - h ^ 2 / 2 * f'' x) -
+      (f (x - h) - f x - h * -f' x - h ^ 2 / 2 * f'' x) := by ring
+  have : |f (x + h) - f (x - h) - 2 * h * f' x| ≤ M * h ^ 3 / 6 + M * h ^ 3 / 6 := by
+    rw [key]; exact (abs_sub _ _).trans (add_le_add hR hL)
+  calc |f (x + h) - f (x - h) - 2 * h * f' x| ≤ M * h ^ 3 / 6 + M * h ^ 3 / 6 := this
+    _ = h ^ 2 / 6 * M * (2 * h) := by ring
+
+/-- One-sided bump: under the same smoothness between `x` and `x + h`, the forward
+difference equals the true slope plus half a bump of the second slope (gamma),
+up to at most one sixth of the bump squared times the bound `M` on the third slope.
+So a one-sided bump is biased by about `h * f'' x / 2`, first order in the bump. -/
+theorem forward_difference_bias_le (f f' f'' f''' : ℝ → ℝ) (x h M : ℝ) (hh : 0 < h)
+    (hf : ∀ y ∈ Set.Icc x (x + h), HasDerivAt f (f' y) y)
+    (hf' : ∀ y ∈ Set.Icc x (x + h), HasDerivAt f' (f'' y) y)
+    (hf'' : ∀ y ∈ Set.Icc x (x + h), HasDerivAt f'' (f''' y) y)
+    (hM : ∀ y ∈ Set.Icc x (x + h), |f''' y| ≤ M) :
+    |(f (x + h) - f x) / h - f' x - h / 2 * f'' x| ≤ h ^ 2 / 6 * M := by
+  have hR := bump_taylor3_right f f' f'' f''' x h M hh.le hf hf' hf'' hM
+  have e : (f (x + h) - f x) / h - f' x - h / 2 * f'' x =
+      (f (x + h) - f x - h * f' x - h ^ 2 / 2 * f'' x) / h := by
+    field_simp
+  rw [e, abs_div, abs_of_pos hh, div_le_iff₀ hh]
+  calc _ ≤ M * h ^ 3 / 6 := hR
+    _ = h ^ 2 / 6 * M * h := by ring
+
+/-- Common random numbers cannot run away: on one simulated path that multiplies the
+share by `a ≥ 0`, the discounted call payoffs `D * max (s * a - K) 0` started at `S + h`
+and `S - h` differ by at most the gap `2h` times `D * a`, so the paired difference divided
+by `2h` is at most `D * a` in size, however small the bump `h > 0` is. -/
+theorem common_random_numbers_paired_difference_le (D a K S h : ℝ)
+    (hD : 0 ≤ D) (ha : 0 ≤ a) (hh : 0 < h) :
+    |(D * max ((S + h) * a - K) 0 - D * max ((S - h) * a - K) 0) / (2 * h)| ≤ D * a := by
+  have h2 : (0:ℝ) < 2 * h := by linarith
+  rw [abs_div, abs_of_pos h2, div_le_iff₀ h2, ← mul_sub, abs_mul, abs_of_nonneg hD]
+  have hlip : |max ((S + h) * a - K) 0 - max ((S - h) * a - K) 0| ≤
+      |((S + h) * a - K) - ((S - h) * a - K)| := abs_max_sub_max_le_abs _ _ _
+  have e : ((S + h) * a - K) - ((S - h) * a - K) = 2 * h * a := by ring
+  rw [e, abs_of_nonneg (a := 2 * h * a) (mul_nonneg h2.le ha)] at hlip
+  calc D * |max ((S + h) * a - K) 0 - max ((S - h) * a - K) 0| ≤ D * (2 * h * a) :=
+        mul_le_mul_of_nonneg_left hlip hD
+    _ = D * a * (2 * h) := by ring
+
+#print axioms central_difference_error_le
+#print axioms forward_difference_bias_le
+#print axioms common_random_numbers_paired_difference_le
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bump_bound_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bump_taylor3_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'central_difference_error_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forward_difference_bias_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'common_random_numbers_paired_difference_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

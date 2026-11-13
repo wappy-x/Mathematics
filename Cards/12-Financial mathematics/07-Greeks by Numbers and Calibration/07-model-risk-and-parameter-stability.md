@@ -6,11 +6,13 @@
 
 ## General Overview
 
-Acme shares trade at $100. Five one-year calls on Acme are quoted in the market — the right to buy one share at a fixed price on one day next year — struck at $90, $95, $100, $105 and $110, at $15.12, $11.94, $9.23, $6.99 and $5.19, to the cent here and at full precision in the check.
+Acme shares trade at $100. Five one-year calls on Acme are quoted in the market. A call is the right to buy one share at a fixed price, the strike, on one day next year. The strikes are $90, $95, $100, $105 and $110, and the quotes are $15.12, $11.94, $9.23, $6.99 and $5.19: to the cent here, and at full precision in the check.
 
-Two desks fit a model to those five prices. Desk A's model gives Acme one volatility, one number for how hard the share swings, for the whole year; the fit picks 20%. Desk B's model lets that number change at mid-year; its solver stops at 10% for the first six months, and 26.4575% for the second follows from the first. Both reproduce all five quotes to the last printed digit. Neither fit is a compromise: the leftover error is zero for both, and the fitting score that [Calibration](06-calibration-as-least-squares.md) minimises reads 0.000000 either way.
+Two desks fit a model to those five prices. Desk A's model gives Acme one volatility, one number for how hard the share swings, for the whole year; the fit picks 20%. Desk B's model lets that number change at mid-year; its solver stops at 10% for the first six months, and 26.4575% for the second follows from the first.
 
-A client then asks for a different ticket: the same call struck at $100, cancelled outright the moment Acme touches $120. That contract is an **up-and-out call**, the name used from here on. Desk A prices it at $1.13, desk B at $1.08: a gap of 5.02% of desk B's price. Nothing quoted in this market says which desk is right.
+Both reproduce all five quotes to the last printed digit. Neither fit is a compromise: the leftover error is zero for both, and the fitting score that [Calibration](06-calibration-as-least-squares.md) minimises reads 0.000000 either way.
+
+A client then asks for a different contract: the same call struck at $100, cancelled outright the moment Acme touches $120. That contract is an **up-and-out call** ([Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), called the ticket from here on. Desk A prices it at $1.13, desk B at $1.08: a gap of 5.02% of desk B's price. Nothing quoted in this market says which desk is right.
 
 That surviving disagreement is **model risk**: the price differences left over after every quoted instrument has been matched. The money a bank holds back against it is a **model reserve**.
 
@@ -63,7 +65,7 @@ $$R \;=\; \max V \;-\; \min V \quad\text{over every model whose prices match the
 | $s$, $\mu$, $k$ | one stretch's spread $\sigma\sqrt{\tau}$, the centre of a bell curve, and the climb to the strike $\ln(K/S)$ | — | — |
 | $G$, $N$, $p$ | the bell curve's height, the area under it to the left of a point, and the density left after the cancelled paths are removed | — | — |
 
-One helper formula does the barrier work. Over a stretch of the year at one volatility, Acme's log-move — the change in the logarithm of its price — lands with the ordinary bell-curve density $G$, whose spread is $\sigma$ times the square root of the stretch, except that the paths which touched the barrier are gone. What is left is
+One helper formula does the barrier work. Take a stretch of the year at one volatility. Acme's log-move, the change in the logarithm of its price, then lands with the ordinary bell-curve density $G$. Its spread is $\sigma$ times the square root of the stretch. The paths that touched the barrier are removed, and what is left is
 
 $$p(y) \;=\; G(y - \nu\tau) \;-\; e^{2\nu a/\sigma^{2}}\,G(y - 2a - \nu\tau),$$
 
@@ -72,9 +74,9 @@ the bell curve minus its own mirror image about the barrier, the mirror weighted
 ### When it holds
 
 - **The volatility path is fixed in advance.** Both models settle the whole path on day one. If volatility is itself random, the one-year law stops being one bell curve and the five quotes stop fitting exactly, and the disagreement widens rather than closes.
-- **The barrier is watched at every instant.** These prices cancel the ticket the moment Acme touches $120. A contract that checks only at the daily close is cancelled less often and is worth more, so the monitoring clause is part of the model, not paperwork.
+- **The barrier is watched at every instant.** These prices cancel the ticket the moment Acme touches $120. A contract that checks only at the daily close is cancelled less often and is worth more ([Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md)), so the monitoring clause is part of the model, not paperwork.
 - **One expiry is quoted.** The counterexample works because all five quotes share one expiry date. A quote at a second date pins a second piece of the variance, which is what the week below does.
-- **This shelf's pricing world.** Prices are discounted averages under the risk-neutral measure, $r$ and $q$ flat, no bid-offer inside the model. These five quotes also carry no smile, which is why both fits land exactly; against real quotes, with a bid-offer as the fitting tolerance, more models fit and the reserve is wider.
+- **This shelf's pricing world.** Prices are discounted averages under the risk-neutral measure: the pricing world in which Acme grows on average at $r - q$. The rates $r$ and $q$ are flat, and the model has no bid-offer (the gap between a dealer's buying and selling prices). These five quotes also carry no smile: every strike inverts to the same volatility ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). That is why both fits land exactly. Against real quotes, with a bid-offer as the fitting tolerance, more models fit and the reserve is wider.
 
 Conventions verified 19 September 2026: quotes are dollar prices of European calls, volatility a percent a year, $r$ and $q$ continuously compounded, and the barrier watched continuously rather than at a daily close.
 
@@ -94,7 +96,7 @@ A one-year call pays whatever Acme's price on the expiry day exceeds the strike,
 
 With the volatility path fixed in advance, the logarithm of Acme's finishing price is a bell curve whose spread squared is the variance totalled over the year. Desk A totals $0.20^2 \times 1 = 0.04$. Desk B totals $0.10^2 \times 0.5 + 0.264575^2 \times 0.5 = 0.005 + 0.035 = 0.04$. Same total, same bell curve, same five prices.
 
-That is why the fitting score is zero twice over, and zero at every point on the curve drawn above. The score has no valley bottom to find, it has a flat floor: a solver returns whichever point on the floor it started nearest. The fit is not badly conditioned, it is **not identified** — the quotes carry no information about the split at all.
+That is why the fitting score is zero twice over, and zero at every point on the curve drawn above. The score has no valley bottom to find, it has a flat floor: a solver returns whichever point on the floor it started nearest. The fit is not badly conditioned (an answer that swings with tiny changes in the quotes); it is **not identified** — the quotes carry no information about the split at all.
 
 ### Step 3: the up-and-out call watches the whole path
 
@@ -185,7 +187,9 @@ second-half volatility the quotes leave, percent
   day 5  no fit
 ```
 
-Friday's quote leaves nothing. Six months at 28.81% is more variance than the whole year at 20%, and a volatility path fixed in advance can never lose variance as time passes, so the second half would need a negative one. The wall sits at 28.2843%, which is 20% times the square root of two. Beyond it these two quotes belong to no model of this kind, and a solver told to fit them anyway returns a boundary value with a straight face. Either a quote is stale, or the market is pricing something no fixed volatility path contains.
+Friday's quote leaves nothing. Six months at 28.81% is more variance than the whole year at 20%. A volatility path fixed in advance can never lose variance as time passes, so the second half would need a negative one. The wall sits at 28.2843%, which is 20% times the square root of two.
+
+Beyond it these two quotes belong to no model of this kind, and a solver told to fit them anyway returns a boundary value with a straight face. Either a quote is stale, or the market is pricing something no fixed volatility path contains.
 
 ---
 
@@ -631,6 +635,108 @@ ALL CHECKS PASS
 
 The two outputs match line for line, from different code taking different routes to the bell-curve area.
 
+### Lean
+
+Lean proves the card's three exact variance claims for every choice of rates, strike and volatilities, plus the worked numbers.
+
+- Suppose $\sigma_1^2\,\frac{T}{2} + \sigma_2^2\,\frac{T}{2} = \sigma_A^2\,T$. Then both desks give the same one-year bell curve, and the same discounted call price at every strike.
+- Take two equal half-years, with the year's variance fixed at desk A's. Then a second-half volatility exists exactly when $\sigma_1 \le \sigma_A\sqrt{2}$, the wall.
+- Suppose $\sigma_1 + \sigma_2 = 2\sigma_A$ and $\sigma_1 \ne \sigma_A$. Then the two halves hold strictly more variance than $\sigma_A^2\,T$, so the one-year quotes no longer fit.
+- The by-hand variances add up: 0.005 plus 0.035 is desk A's 0.04, and the 26% split also totals 0.04.
+- Thursday's 28.01% first half sits under the wall, and Friday's 28.81% sits past it.
+
+The up-and-out call prices, the reserve and the week's fitted volatilities are left to the Python and Rust checks.
+
+```lean
+-- Model risk: two volatility paths with the same total variance give the same one-year price law and so the same call at every strike, and a mid-year split exists only while the first half stays under the sqrt 2 wall.
+import Mathlib.Probability.Distributions.Gaussian.Real
+
+open MeasureTheory ProbabilityTheory
+
+/-- A one-year call sees only where Acme finishes. Desk B runs volatility `σ₁` for the first
+half-year and `σ₂` for the second; desk A runs one volatility `σA` for the whole year. In the
+pricing world each half's log-move is an independent bell curve with drift `(r - q - σ²/2)`
+per year and variance `σ²` per year, so desk B's one-year log-move has the law of the
+convolution of the two halves. If the two halves' variances add up to desk A's year,
+`σ₁² T/2 + σ₂² T/2 = σA² T`, then both desks give the same discounted call price
+`e^{-rT} E[(S e^Y - K)⁺]` at every strike `K`: the fit to one-expiry quotes cannot tell them apart. -/
+theorem equal_total_variance_gives_equal_call_prices
+    (S K r q σ₁ σ₂ σA T : ℝ) (hT : 0 ≤ T)
+    (hvar : σ₁ ^ 2 * (T / 2) + σ₂ ^ 2 * (T / 2) = σA ^ 2 * T) :
+    Real.exp (-r * T) * ∫ y, max (S * Real.exp y - K) 0 ∂
+        ((gaussianReal ((r - q - σ₁ ^ 2 / 2) * (T / 2)) (σ₁ ^ 2 * (T / 2)).toNNReal) ∗
+          (gaussianReal ((r - q - σ₂ ^ 2 / 2) * (T / 2)) (σ₂ ^ 2 * (T / 2)).toNNReal))
+      = Real.exp (-r * T) * ∫ y, max (S * Real.exp y - K) 0 ∂
+        (gaussianReal ((r - q - σA ^ 2 / 2) * T) (σA ^ 2 * T).toNNReal) := by
+  rw [gaussianReal_conv_gaussianReal]
+  have hm : (r - q - σ₁ ^ 2 / 2) * (T / 2) + (r - q - σ₂ ^ 2 / 2) * (T / 2)
+      = (r - q - σA ^ 2 / 2) * T := by linarith
+  have hv : (σ₁ ^ 2 * (T / 2)).toNNReal + (σ₂ ^ 2 * (T / 2)).toNNReal = (σA ^ 2 * T).toNNReal := by
+    rw [← Real.toNNReal_add (by positivity) (by positivity), hvar]
+  rw [hm, hv]
+
+/-- The calendar wall. With both half-years of length `τ` and the year's variance fixed at
+`σA² · 2τ`, a second-half volatility that completes the year exists exactly when the first
+half's volatility is at most `σA · √2`; past that the second half would need negative variance. -/
+theorem second_half_exists_iff_below_wall
+    (σ₁ σA τ : ℝ) (hτ : 0 < τ) (h₁ : 0 ≤ σ₁) (hA : 0 ≤ σA) :
+    (∃ σ₂ : ℝ, σ₁ ^ 2 * τ + σ₂ ^ 2 * τ = σA ^ 2 * (2 * τ)) ↔ σ₁ ≤ σA * Real.sqrt 2 := by
+  constructor
+  · rintro ⟨σ₂, h⟩
+    have h2 : σ₁ ^ 2 ≤ σA ^ 2 * 2 := by nlinarith [sq_nonneg σ₂]
+    have hs : (σA * Real.sqrt 2) ^ 2 = σA ^ 2 * 2 := by
+      rw [mul_pow, Real.sq_sqrt (by norm_num)]
+    have hnn : 0 ≤ σA * Real.sqrt 2 := by positivity
+    nlinarith [hs, hnn]
+  · intro h
+    refine ⟨Real.sqrt (σA ^ 2 * 2 - σ₁ ^ 2), ?_⟩
+    have hs : (σA * Real.sqrt 2) ^ 2 = σA ^ 2 * 2 := by
+      rw [mul_pow, Real.sq_sqrt (by norm_num)]
+    have h2 : σ₁ ^ 2 ≤ σA ^ 2 * 2 := by
+      rw [← hs]; exact pow_le_pow_left₀ h₁ h 2
+    rw [Real.sq_sqrt (by linarith)]
+    ring
+
+/-- Volatilities do not add over time. Splitting a year at `σA` into halves whose volatilities
+average to `σA` (`σ₁ + σ₂ = 2 σA`) with `σ₁ ≠ σA` puts strictly more variance into the year than
+`σA² T`, so it cannot reproduce the one-year quotes. -/
+theorem subtracting_volatilities_overshoots_variance
+    (σ₁ σ₂ σA T : ℝ) (hT : 0 < T) (hsum : σ₁ + σ₂ = 2 * σA) (hne : σ₁ ≠ σA) :
+    σA ^ 2 * T < σ₁ ^ 2 * (T / 2) + σ₂ ^ 2 * (T / 2) := by
+  have hd : σ₁ - σA ≠ 0 := sub_ne_zero.mpr hne
+  have hpos : 0 < (σ₁ - σA) ^ 2 := by positivity
+  have h2 : σ₂ = 2 * σA - σ₁ := by linarith
+  subst h2
+  nlinarith [mul_pos hpos hT]
+
+-- Worked numbers: desk A's year of variance at 20%.
+example : ((1 : ℚ) / 5) ^ 2 * 1 = 1 / 25 := by norm_num
+-- Desk B's first half at 10%.
+example : ((1 : ℚ) / 10) ^ 2 * (1 / 2) = 1 / 200 := by norm_num
+-- What the second half must supply.
+example : (1 : ℚ) / 25 - 1 / 200 = 7 / 200 := by norm_num
+-- Desk B's split: 10%, then √(7/100) (26.4575%), totals desk A's year exactly.
+example : ((1 : ℝ) / 10) ^ 2 * (1 / 2) + (Real.sqrt (7 / 100)) ^ 2 * (1 / 2) = ((1 : ℝ) / 5) ^ 2 * 1 := by
+  rw [Real.sq_sqrt (by norm_num)]; norm_num
+-- Family's last point: 26% first half leaves √(31/2500) (11.1355%) for the second.
+example : ((26 : ℚ) / 100) ^ 2 * (1 / 2) + (31 / 2500) * (1 / 2) = ((1 : ℚ) / 5) ^ 2 * 1 := by norm_num
+-- Thursday's 28.01% is under the wall 20% · √2; Friday's 28.81% is past it.
+example : ((2801 : ℚ) / 10000) ^ 2 < 2 * ((1 : ℚ) / 5) ^ 2 := by norm_num
+example : 2 * ((1 : ℚ) / 5) ^ 2 < ((2881 : ℚ) / 10000) ^ 2 := by norm_num
+
+#print axioms equal_total_variance_gives_equal_call_prices
+#print axioms second_half_exists_iff_below_wall
+#print axioms subtracting_volatilities_overshoots_variance
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'equal_total_variance_gives_equal_call_prices' depends on axioms: [propext, Classical.choice, Quot.sound]
+'second_half_exists_iff_below_wall' depends on axioms: [propext, Classical.choice, Quot.sound]
+'subtracting_volatilities_overshoots_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -655,8 +761,8 @@ The two outputs match line for line, from different code taking different routes
 
 ## Where you meet it in real life
 
-- **Model reserves on a bank's books.** A barrier or callable book is marked with one model and carries a reserve for the others, sized as the reserve is sized here: a real line in the accounts, released when a quote narrows the range. Part of the bid-offer a dealer shows on an up-and-out call is that same spread.
-- **Choosing what to quote, not only what to price.** When an exotic's value hangs on the path, the fix is a traded instrument that sees the path: a second expiry, a forward-starting option, a variance contract. Model risk is measured in prices and cured with market data.
+- **Model reserves on a bank's books.** A book of barrier or callable contracts (callable: the issuer may end it early) is valued with one model and carries a reserve for the others, sized as the reserve is sized here: a real line in the accounts, released when a quote narrows the range. Part of the bid-offer a dealer shows on an up-and-out call is that same spread.
+- **Choosing what to quote, not only what to price.** When the value of an exotic option, meaning any option beyond the plain call and put, depends on the path, the fix is a traded instrument that sees the path: a second expiry, a forward-starting option, a variance contract. Model risk is measured in prices and cured with market data.
 - **Calibration monitors.** Desks track fitted parameters day by day as the table above does, and alarm on a jump: a parameter jumping in a still market means the model is absorbing something it cannot represent.
 - **Recomputing the reserve overnight.** The ticket's sensitivity to the split is a bump-and-revalue on a calibrated parameter, run as in [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md); on a lattice with the barrier on a node it is [Greeks from a tree or grid](04-greeks-from-a-tree-or-grid.md) instead.
 
@@ -667,6 +773,8 @@ The two outputs match line for line, from different code taking different routes
 
 ## What this builds on
 
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the closed-form price of the plain call, which gives the five quotes and which the code calls `call`.
+- [Solving backwards](05-root-finding-for-inverses.md): the bisection that turns each quoted price into a volatility.
 - [Calibration](06-calibration-as-least-squares.md): the fit itself, and the score being minimised. This card supplies the score's flat floor, where the minimum is reached by infinitely many parameter sets and the solver's answer is its starting point.
 
 ## Where this goes next

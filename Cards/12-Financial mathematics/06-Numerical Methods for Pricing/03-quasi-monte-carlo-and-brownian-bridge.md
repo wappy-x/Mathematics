@@ -80,7 +80,7 @@ That helper $f$ runs each coordinate through the inverse bell curve to get a kic
 
 - **The budget is a power of two.** At $N$ = 4,096 every coordinate visits all 4,096 cells of its own grid exactly once. Stop at 3,000 points instead and that even cover is gone, and nothing warns of it.
 - **The payoff's variation concentrates in the early coordinates.** This is what the bridge arranges. When it fails — a payoff that leans on all 16 dates equally — the error drifts back towards the date-by-date column, -0.164125 at 4,096 points.
-- **The payoff has no jumps.** Kinks are fine: the call's kink at the strike costs nothing measurable here. A digital's cliff is a different matter, and the even cover buys much less.
+- **The payoff has no jumps.** Kinks are fine: the call's kink at the strike costs nothing measurable here. A digital's cliff is a different matter (a digital pays a fixed sum or nothing: [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md)), and the even cover buys much less.
 - **There is no error bar.** A deterministic rule has no sampling spread, so the usual scatter over root $N$ means nothing: it claims 0.216036 where the true error is 0.000856.
 - **The dimension count stays modest, or hides.** 4,096 points cannot cover a 16-dimensional cube evenly in any strong sense. What saves the method is that the payoff does not really live in 16 dimensions.
 
@@ -98,11 +98,17 @@ Random sampling is one way to do an integral, and for a well-behaved integrand a
 
 Evenness has a measure. Take any box in the cube with one corner at the origin. Compare the share of points inside it with the share of the cube's volume it occupies. The worst gap over all such boxes is the **discrepancy** of the point set.
 
-Random points have a discrepancy of about one over the square root of the count: luck leaves clumps and gaps. Sobol's points are built so that theirs falls almost like one over the count. The Koksma-Hlawka inequality then bounds the error of the average by the discrepancy times a measure of how much the payoff wiggles. That bound is the reason to hope for an error like one over the count, and the rate measured here is a halving per doubling, -1.0064. It is no use as a guarantee: nobody can compute the wiggle measure for a real payoff, and for this one, which climbs without limit near the cube's edge, that measure is infinite, so the bound says nothing at all.
+Random points have a discrepancy of about one over the square root of the count: luck leaves clumps and gaps. Sobol's points are built so that theirs falls almost like one over the count.
+
+The Koksma-Hlawka inequality then bounds the error of the average by the discrepancy times a measure of how much the payoff wiggles. That bound is the reason to hope for an error like one over the count, and the rate measured here is a halving per doubling, -1.0064.
+
+It is no use as a guarantee: nobody can compute the wiggle measure for a real payoff, and for this one, which climbs without limit near the cube's edge, that measure is infinite, so the bound says nothing at all.
 
 ### Step 2: building the points from bit patterns
 
-Each coordinate gets its own ladder of direction numbers: fractions $v_{k,j}$ whose $k$-th binary digit is 1 and whose later digits are anything. Coordinate 1 is the plainest ladder, a half, a quarter, an eighth. Every other coordinate takes its ladder from a **primitive polynomial** in the two-element arithmetic where 1 + 1 = 0: one whose root generates every nonzero element, which is what makes the ladder's digits fill up instead of repeating early. The code tests that rather than trusting it, by counting multiplications by $x$ before the answer returns to 1: for degree 5 the count must be 31, and all 15 polynomials pass.
+Each coordinate gets its own ladder of direction numbers: fractions $v_{k,j}$ whose $k$-th binary digit is 1 and whose later digits are anything. Coordinate 1 is the plainest ladder, a half, a quarter, an eighth.
+
+Every other coordinate takes its ladder from a **primitive polynomial** in the two-element arithmetic where 1 + 1 = 0: one whose root generates every nonzero element, which is what makes the ladder's digits fill up instead of repeating early. The code tests that rather than trusting it, by counting multiplications by $x$ before the answer returns to 1: for degree 5 the count must be 31, and all 15 polynomials pass.
 
 The recurrence that grows a ladder from that polynomial shifts the earlier whole numbers and XORs them together. For coordinate 2, whose polynomial is $x + 1$, it reads $m_k = 2m_{k-1} \oplus m_{k-1}$, so the ladder is 1, 3, 5, 15, 17; coordinate 3 gives 1, 1, 7, 11, 13.
 
@@ -139,7 +145,9 @@ The mechanical version of the same claim is the covariance test. Write the build
 
 Both build rules draw the same process, so a *random* simulation cannot tell them apart: it prices the same, to within luck, either way. An even point set is not so indifferent, because its coordinates are not equally good. The early ones cover the cube far better in combination than the late ones, and a sum of 16 coordinates asks for exactly the joint evenness the set cannot deliver.
 
-So the question is how much of the payoff's variation can be pushed into the first few coordinates. For the end of the path the bridge's answer is all of it: the code reads the year end's dependence on draw 1 as 1.000000 and on every later draw as 0.000000, where date by date all 16 draws carry it equally. Since the call looks only at the year end, the 16-dimensional integral collapses into a one-dimensional one in coordinate 1, where an even set is just 4,096 equally spaced cell middles. That is why the error is small and its rate clean.
+So the question is how much of the payoff's variation can be pushed into the first few coordinates. For the end of the path the bridge's answer is all of it: the code reads the year end's dependence on draw 1 as 1.000000 and on every later draw as 0.000000, where date by date all 16 draws carry it equally.
+
+Since the call looks only at the year end, the 16-dimensional integral collapses into a one-dimensional one in coordinate 1, where an even set is just 4,096 equally spaced cell middles. That is why the error is small and its rate clean.
 
 For a payoff that watches the whole path, the collapse is partial rather than total, and the honest measure is how much of the path's total wiggle the first draws carry:
 
@@ -178,7 +186,7 @@ Top line: the random road's error bar. Middle: the same Sobol points in date-by-
 
 One note on that bottom line. A midpoint rule on a smooth function of one variable does better than this: one over the count squared. This integrand is not that smooth, because the payoff climbs without limit as the coordinate approaches 1, and the end cell holds the error. One halving per doubling is what that cell allows.
 
-A different route to the same gain gives the error bar back: shift every point by one random amount, wrap round the edges, repeat a handful of times and use the scatter of the answers. That is randomised quasi-Monte Carlo, the honest way to quote an uncertainty here (Quasi-Monte Carlo and sparse grids).
+A different route to the same gain gives the error bar back: shift every point by one random amount, wrap round the edges, repeat a handful of times and use the scatter of the answers. That is randomised quasi-Monte Carlo, the honest way to quote an uncertainty here ([Quasi-Monte Carlo and sparse grids](../../16-Numerical%20analysis/05-Quadrature/07-quasi-monte-carlo-and-sparse-grids.md)).
 
 ---
 
@@ -216,7 +224,7 @@ Every number in that table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that knows an answer. The bell-curve area is a series written out; its inverse is a coarse table of that series plus two Newton steps; the direction numbers are grown from polynomials the code tests for primitivity; the random stream is a recurrence written out. The price is reached by four roads — the closed formula, the Sobol points in bridge order, the same points in date order, and pseudorandom paths — behind which stand three exact structural checks: every polynomial's primitivity, every coordinate's grid cover, and both build tables against the covariance of the process they claim to draw.
+Nothing is imported that knows an answer. The bell-curve area is a series written out; its inverse is a coarse table of that series plus two Newton steps (each corrects the guess by its error divided by the curve's slope); the direction numbers are grown from polynomials the code tests for primitivity; the random stream is a recurrence written out. The price is reached by four roads — the closed formula, the Sobol points in bridge order, the same points in date order, and pseudorandom paths — behind which stand three exact structural checks: every polynomial's primitivity, every coordinate's grid cover, and both build tables against the covariance of the process they claim to draw.
 
 ### Python
 
@@ -621,6 +629,298 @@ ALL CHECKS PASS
 
 The two outputs match line for line: two languages, one series for the bell-curve area, one recurrence for the points, the same 36 lines.
 
+### Lean
+
+Lean proves the even cover for every power-of-two budget, proves the bridge step for every gap, and checks the worked numbers.
+
+- Suppose $N = 2^w$, and each direction number $m_{k,j}$ for $k$ = 1 to $w$ is odd and below $2^k$. Then coordinate $j$ of points 0 to $N - 1$ hits each grid value 0 to $N - 1$ exactly once.
+- Suppose every pair of dates filled so far shares the earlier date's time as wiggle, and the new kick is independent of them. Then the gap's middle date, filled by the bridge formula, keeps that rule with itself and every filled date.
+- The budget 4,096 is $2^{12}$, so $w$ = 12.
+- The 15 polynomial degrees are 1, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6 and 6.
+- All 15 polynomials are primitive. For degree 5, $x$ returns to 1 after exactly 31 multiplications.
+- The polynomial $x^2 + 1$ is not primitive: $x$ returns to 1 after 2 multiplications.
+- Coordinate 2's $m_1$ to $m_5$ are 1, 3, 5, 15, 17; coordinate 3's are 1, 1, 7, 11, 13. Each is odd and below $2^k$.
+- On a budget of 4, coordinate 1 gives 0, 2, 1 and 3 quarters. The nudge turns them into 0.125, 0.625, 0.375 and 0.875.
+- On 32 points, coordinates 2 and 3 each visit all 32 cells exactly once.
+- The drift inside the exponent, $r - q - \tfrac12\sigma^2$, is 0.01.
+- In bridge order, draw 1 carries 68.75 per cent of the path's wiggle.
+- In date order, draws 1, 1 to 2, 1 to 4 and 1 to 8 carry 16, 31, 58 and 100 parts of 136.
+
+The prices, error rates, inverse bell curve, full covariance tables and other bridge shares are left to the Python and Rust checks.
+
+```lean
+-- Quasi-Monte Carlo: on a budget of 2^w points every Sobol coordinate visits each of the 2^w grid cells exactly once, each Brownian-bridge midpoint step keeps the path's covariance equal to the earlier date's time, and the card's direction numbers, four-point table and wiggle shares check out exactly.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Algebra.Order.Field.Rat
+import Mathlib.Tactic.NormNum
+import Mathlib.Data.Set.Finite.Basic
+
+namespace QuasiMonteCarloAndBrownianBridge
+
+open Matrix
+
+/-- One coordinate of Sobol point `i` on a budget of `2 ^ w` points, counted in whole grid steps:
+XOR together the direction numbers `m k * 2 ^ (w - k)` picked out by the binary digits of `i`,
+digit `k` (counting the lowest digit as digit 1) picking rung `k`. This is the card's
+`a_{i,j} = ⊕_{k : digit k of i is 1} m_{k,j} 2^(w-k)` for one coordinate `j`. -/
+def sobolCoord (w : ℕ) (m : ℕ → ℕ) (i : ℕ) : ℕ :=
+  (List.range w).foldl
+    (fun a k => if i.testBit k then a ^^^ m (k + 1) * 2 ^ (w - (k + 1)) else a) 0
+
+theorem two_mul_xor_aux (x y : ℕ) : 2 * (x ^^^ y) = 2 * x ^^^ 2 * y := by
+  have h := @Nat.shiftLeft_xor_distrib 1 x y
+  simp only [Nat.shiftLeft_eq, pow_one] at h
+  rw [mul_comm 2, h, mul_comm x, mul_comm y]
+
+theorem xorFold_succ_aux (n : ℕ) (g : ℕ → ℕ) (i : ℕ) :
+    (List.range (n + 1)).foldl (fun a k => if i.testBit k then a ^^^ g k else a) 0 =
+      (List.range n).foldl (fun a k => if i.testBit k then a ^^^ g k else a) 0 ^^^
+        (if i.testBit n then g n else 0) := by
+  rw [List.range_succ, List.foldl_append]
+  simp only [List.foldl_cons, List.foldl_nil]
+  split <;> simp
+
+theorem xorFold_congr_aux (n : ℕ) (g g' : ℕ → ℕ) (i j : ℕ)
+    (hg : ∀ k < n, g k = g' k) (hij : ∀ k < n, i.testBit k = j.testBit k) :
+    (List.range n).foldl (fun a k => if i.testBit k then a ^^^ g k else a) 0 =
+      (List.range n).foldl (fun a k => if j.testBit k then a ^^^ g' k else a) 0 := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [xorFold_succ_aux, xorFold_succ_aux,
+      ih (fun k hk => hg k (by omega)) (fun k hk => hij k (by omega)),
+      hg n (by omega), hij n (by omega)]
+
+theorem xorFold_double_aux (n : ℕ) (g : ℕ → ℕ) (i : ℕ) :
+    (List.range n).foldl (fun a k => if i.testBit k then a ^^^ 2 * g k else a) 0 =
+      2 * (List.range n).foldl (fun a k => if i.testBit k then a ^^^ g k else a) 0 := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [xorFold_succ_aux, xorFold_succ_aux (g := g), ih, two_mul_xor_aux]
+    split <;> simp
+
+theorem sobolCoord_succ_aux (w : ℕ) (m : ℕ → ℕ) (i : ℕ) :
+    sobolCoord (w + 1) m i =
+      2 * sobolCoord w m i ^^^ (if i.testBit w then m (w + 1) else 0) := by
+  unfold sobolCoord
+  rw [xorFold_succ_aux, ← xorFold_double_aux]
+  congr 1
+  · apply xorFold_congr_aux
+    · intro k hk
+      have : w + 1 - (k + 1) = (w - (k + 1)) + 1 := by omega
+      rw [this, pow_succ]; ring
+    · intro k _; rfl
+  · simp
+
+theorem sobolCoord_lt_aux (w : ℕ) (m : ℕ → ℕ)
+    (hm : ∀ k, 1 ≤ k → k ≤ w → Odd (m k) ∧ m k < 2 ^ k) (i : ℕ) :
+    sobolCoord w m i < 2 ^ w := by
+  induction w with
+  | zero => simp [sobolCoord]
+  | succ w ih =>
+    rw [sobolCoord_succ_aux]
+    have h1 := ih (fun k hk1 hk2 => hm k hk1 (by omega))
+    apply Nat.xor_lt_two_pow
+    · rw [pow_succ]; omega
+    · split
+      · exact (hm (w + 1) (by omega) le_rfl).2
+      · positivity
+
+theorem sobolCoord_mod_aux (w : ℕ) (m : ℕ → ℕ) (i : ℕ) :
+    sobolCoord w m (i % 2 ^ w) = sobolCoord w m i := by
+  unfold sobolCoord
+  apply xorFold_congr_aux
+  · intro k _; rfl
+  · intro k hk; simp [Nat.testBit_mod_two_pow, hk]
+
+theorem sobolCoord_injOn_aux (w : ℕ) (m : ℕ → ℕ)
+    (hm : ∀ k, 1 ≤ k → k ≤ w → Odd (m k) ∧ m k < 2 ^ k) :
+    Set.InjOn (sobolCoord w m) (Set.Iio (2 ^ w)) := by
+  induction w with
+  | zero =>
+    intro i hi j hj _
+    simp at hi hj; omega
+  | succ w ih =>
+    intro i hi j hj hij
+    simp only [Set.mem_Iio] at hi hj
+    rw [sobolCoord_succ_aux, sobolCoord_succ_aux] at hij
+    have hodd := (hm (w + 1) (by omega) le_rfl).1
+    have hb : i.testBit w = j.testBit w := by
+      have := congrArg (fun x => x.testBit 0) hij
+      simp only [Nat.testBit_xor] at this
+      have h2 : ∀ x : ℕ, (2 * x).testBit 0 = false := by
+        intro x; simp [Nat.testBit_zero]
+      rw [h2, h2] at this
+      have hm1 : (m (w + 1)).testBit 0 = true := by
+        rw [Nat.testBit_zero]; simpa [Nat.odd_iff] using hodd
+      cases hi' : i.testBit w <;> cases hj' : j.testBit w <;> simp_all
+    rw [hb] at hij
+    have hX : sobolCoord w m i = sobolCoord w m j := by
+      have := congrArg (· ^^^ (if j.testBit w = true then m (w + 1) else 0)) hij
+      simp only [Nat.xor_assoc, Nat.xor_self, Nat.xor_zero] at this
+      omega
+    rw [← sobolCoord_mod_aux w m i, ← sobolCoord_mod_aux w m j] at hX
+    have hmod := ih (fun k hk1 hk2 => hm k hk1 (by omega))
+      (Set.mem_Iio.mpr (Nat.mod_lt _ (by positivity)))
+      (Set.mem_Iio.mpr (Nat.mod_lt _ (by positivity))) hX
+    apply Nat.eq_of_testBit_eq
+    intro k
+    rcases lt_trichotomy k w with hk | hk | hk
+    · have := congrArg (fun x => x.testBit k) hmod
+      simpa [Nat.testBit_mod_two_pow, hk] using this
+    · subst hk; exact hb
+    · have h2 : 2 ^ (w + 1) ≤ 2 ^ k := Nat.pow_le_pow_right (by norm_num) hk
+      rw [Nat.testBit_lt_two_pow (by omega), Nat.testBit_lt_two_pow (by omega)]
+
+/-- The card's even-cover claim. Take a budget that is a power of two, `N = 2 ^ w`, and a ladder
+of direction numbers `v_k = m_k / 2 ^ k` whose `k`-th binary digit is 1 (so `m_k` is odd and
+less than `2 ^ k`). Then as the point number `i` runs over `0, 1, ..., N - 1`, the coordinate
+`a_i` hits every grid value `0, 1, ..., N - 1` exactly once. -/
+theorem sobol_coordinate_covers_grid_once (w : ℕ) (m : ℕ → ℕ)
+    (hm : ∀ k, 1 ≤ k → k ≤ w → Odd (m k) ∧ m k < 2 ^ k) :
+    Set.BijOn (sobolCoord w m) (Set.Iio (2 ^ w)) (Set.Iio (2 ^ w)) := by
+  have hmaps : Set.MapsTo (sobolCoord w m) (Set.Iio (2 ^ w)) (Set.Iio (2 ^ w)) :=
+    fun i _ => sobolCoord_lt_aux w m hm i
+  exact ((Set.finite_Iio _).injOn_iff_bijOn_of_mapsTo hmaps).mp (sobolCoord_injOn_aux w m hm)
+
+/-- The bridge's step draws the right process. Write each date's value of the path as a fixed
+combination of the independent unit kicks, so a date is a vector of coefficients and the wiggle
+two dates share is the dot product of their vectors. Suppose the path is already correct at the
+two ends of a gap, times `tl` and `tr` (shared wiggle `a ⬝ a = tl`, `a ⬝ b = tl`, `b ⬝ b = tr`),
+and a fresh kick `e` of unit spread is independent of everything drawn so far. Fill the middle
+with `c = (a + b) / 2 + (√(tr - tl) / 2) e`. Then the middle has spread equal to its own time
+`(tl + tr) / 2`, and it shares with every already-filled date `x` outside the gap, at time `tx`,
+exactly the earlier of the two times: `x ⬝ c = min tx ((tl + tr) / 2)`. -/
+theorem bridge_midpoint_keeps_brownian_covariance {n : ℕ} (tl tr : ℝ) (a b e : Fin n → ℝ)
+    (haa : a ⬝ᵥ a = tl) (hab : a ⬝ᵥ b = tl) (hbb : b ⬝ᵥ b = tr)
+    (hee : e ⬝ᵥ e = 1) (hea : e ⬝ᵥ a = 0) (heb : e ⬝ᵥ b = 0) :
+    let c := (1 / 2 : ℝ) • (a + b) + (Real.sqrt (tr - tl) / 2) • e
+    c ⬝ᵥ c = (tl + tr) / 2 ∧
+      ∀ (x : Fin n → ℝ) (tx : ℝ), e ⬝ᵥ x = 0 → x ⬝ᵥ a = min tx tl → x ⬝ᵥ b = min tx tr →
+        (tx ≤ tl ∨ tr ≤ tx) → x ⬝ᵥ c = min tx ((tl + tr) / 2) := by
+  intro c
+  have hba : b ⬝ᵥ a = tl := by rw [dotProduct_comm]; exact hab
+  have hae : a ⬝ᵥ e = 0 := by rw [dotProduct_comm]; exact hea
+  have hbe : b ⬝ᵥ e = 0 := by rw [dotProduct_comm]; exact heb
+  have hle : tl ≤ tr := by
+    have h : 0 ≤ (b - a) ⬝ᵥ (b - a) :=
+      Finset.sum_nonneg (fun i _ => mul_self_nonneg ((b - a) i))
+    simp only [sub_dotProduct, dotProduct_sub, haa, hab, hbb, hba] at h
+    linarith
+  have hs : Real.sqrt (tr - tl) ^ 2 = tr - tl := Real.sq_sqrt (by linarith)
+  refine ⟨?_, ?_⟩
+  · simp only [c, add_dotProduct, dotProduct_add, smul_dotProduct, dotProduct_smul, smul_eq_mul,
+      haa, hab, hbb, hba, hee, hea, heb, hae, hbe]
+    nlinarith [hs]
+  · intro x tx hex hxa hxb htx
+    have hxe : x ⬝ᵥ e = 0 := by rw [dotProduct_comm]; exact hex
+    simp only [c, dotProduct_add, dotProduct_smul, smul_eq_mul, hxa, hxb, hxe]
+    rcases htx with h | h
+    · rw [min_eq_left h, min_eq_left (by linarith), min_eq_left (by linarith)]; ring
+    · rw [min_eq_right (by linarith), min_eq_right h, min_eq_right (by linarith)]; ring
+
+/-! The card's worked numbers. -/
+
+/-- Coordinate 2's ladder, polynomial `x + 1`: `m_1 = 1`, then `m_k = 2 m_{k-1} ⊕ m_{k-1}`.
+`ladder2 k` is rung `k + 1`. -/
+def ladder2 : ℕ → ℕ
+  | 0 => 1
+  | k + 1 => 2 * ladder2 k ^^^ ladder2 k
+
+/-- Coordinate 3's ladder, polynomial `x ^ 2 + x + 1`: `m_1 = m_2 = 1`, then
+`m_k = 2 m_{k-1} ⊕ 4 m_{k-2} ⊕ m_{k-2}`. `ladder3 k` is rung `k + 1`. -/
+def ladder3 : ℕ → ℕ
+  | 0 => 1
+  | 1 => 1
+  | k + 2 => 2 * ladder3 (k + 1) ^^^ 4 * ladder3 k ^^^ ladder3 k
+
+/-- `x ^ k` reduced modulo the polynomial `p` over the two-element field, polynomials written as
+bit patterns (`x + 1` is `3`, `x ^ 2 + x + 1` is `7`): multiply by `x`, and when the top digit
+appears, XOR `p` away. -/
+def xPowMod (p : ℕ) : ℕ → ℕ
+  | 0 => 1
+  | k + 1 =>
+    let y := xPowMod p k <<< 1
+    if y.testBit (Nat.log2 p) then y ^^^ p else y
+
+/-- The fifteen polynomials for coordinates 2 to 16. -/
+def polys : List ℕ := [3, 7, 11, 13, 19, 25, 37, 41, 47, 55, 59, 61, 67, 91, 97]
+
+-- The budget: 4,096 = 2 ^ 12, so w = 12.
+example : (4096 : ℕ) = 2 ^ 12 := by norm_num
+-- Their degrees: 1, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6.
+example : polys.map Nat.log2 = [1, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6] := by decide
+-- Every one is primitive: x returns to 1 after exactly 2 ^ degree - 1 multiplications
+-- (31 for degree 5), and not before.
+example : polys.all (fun p => xPowMod p (2 ^ Nat.log2 p - 1) == 1 &&
+    (List.range' 1 (2 ^ Nat.log2 p - 2)).all (fun k => xPowMod p k != 1)) = true := by
+  decide +kernel
+example : xPowMod 37 31 = 1 ∧ ∀ k ∈ Finset.Icc 1 30, xPowMod 37 k ≠ 1 := by decide +kernel
+-- The polynomial 5 = x ^ 2 + 1 the card warns about is not primitive: x returns to 1 after 2 steps.
+example : xPowMod 5 2 = 1 := by decide
+-- Direction numbers m_1 to m_5: coordinate 2 is 1, 3, 5, 15, 17; coordinate 3 is 1, 1, 7, 11, 13.
+example : (List.range 5).map ladder2 = [1, 3, 5, 15, 17] := by decide
+example : (List.range 5).map ladder3 = [1, 1, 7, 11, 13] := by decide
+-- Each rung is odd and below 2 ^ k, as the main theorem asks.
+example : (List.range 5).all (fun k => ladder2 k % 2 == 1 && decide (ladder2 k < 2 ^ (k + 1))) = true := by
+  decide
+example : (List.range 5).all (fun k => ladder3 k % 2 == 1 && decide (ladder3 k < 2 ^ (k + 1))) = true := by
+  decide
+-- The four points of coordinate 1 (every rung 1: a half, a quarter) are 0, 2, 1, 3 quarters.
+example : (List.range 4).map (sobolCoord 2 (fun _ => 1)) = [0, 2, 1, 3] := by decide
+-- On 32 points, coordinates 2 and 3 each visit all 32 cells once: no value repeats, and every
+-- value is one of the 32 cells.
+example : ((List.range 32).map (sobolCoord 5 (fun k => ladder2 (k - 1)))).Nodup ∧
+    ∀ i ∈ List.range 32, sobolCoord 5 (fun k => ladder2 (k - 1)) i < 32 := by decide +kernel
+example : ((List.range 32).map (sobolCoord 5 (fun k => ladder3 (k - 1)))).Nodup ∧
+    ∀ i ∈ List.range 32, sobolCoord 5 (fun k => ladder3 (k - 1)) i < 32 := by decide +kernel
+-- The half-cell nudge on a budget of 4 turns 0, 2, 1, 3 quarters into 1/8, 5/8, 3/8, 7/8.
+example : ([0, 2, 1, 3] : List ℚ).map (fun a => (a + 1 / 2) / 4) = [1 / 8, 5 / 8, 3 / 8, 7 / 8] := by
+  norm_num
+-- The drift inside the exponent: r - q - σ^2 / 2 = 5% - 2% - (20%)^2 / 2 = 1%.
+example : (5 / 100 : ℚ) - 2 / 100 - (20 / 100) ^ 2 / 2 = 1 / 100 := by norm_num
+-- Wiggle shares on 16 dates of 1/16 year. The path's whole wiggle is the sum of the dates' times,
+-- 136/16. Bridge order: draw 1 moves date k by k/16, so it carries 68.75 per cent = 11/16.
+example : (∑ k ∈ Finset.range 16, ((k + 1 : ℚ) / 16) ^ 2) /
+    (∑ k ∈ Finset.range 16, ((k + 1 : ℚ) / 16)) = 6875 / 10000 := by
+  norm_num [Finset.sum_range_succ]
+-- Date-by-date order: draw j moves dates j to 16 by √(1/16), so it carries (17 - j)/16; draws
+-- 1, 1 to 2, 1 to 4 and 1 to 8 carry 16, 31, 58 and 100 parts of 136 (11.76, 22.79, 42.65, 73.53).
+example : (List.map (fun d => ∑ j ∈ Finset.range d, ((16 - j : ℚ) / 16)) [1, 2, 4, 8]).map
+    (· / (∑ k ∈ Finset.range 16, ((k + 1 : ℚ) / 16))) = [16 / 136, 31 / 136, 58 / 136, 100 / 136] := by
+  norm_num [Finset.sum_range_succ]
+
+#print axioms two_mul_xor_aux
+#print axioms xorFold_succ_aux
+#print axioms xorFold_congr_aux
+#print axioms xorFold_double_aux
+#print axioms sobolCoord_succ_aux
+#print axioms sobolCoord_lt_aux
+#print axioms sobolCoord_mod_aux
+#print axioms sobolCoord_injOn_aux
+#print axioms sobol_coordinate_covers_grid_once
+#print axioms bridge_midpoint_keeps_brownian_covariance
+
+end QuasiMonteCarloAndBrownianBridge
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'QuasiMonteCarloAndBrownianBridge.two_mul_xor_aux' depends on axioms: [propext, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.xorFold_succ_aux' depends on axioms: [propext, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.xorFold_congr_aux' depends on axioms: [propext, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.xorFold_double_aux' depends on axioms: [propext, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.sobolCoord_succ_aux' depends on axioms: [propext, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.sobolCoord_lt_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.sobolCoord_mod_aux' depends on axioms: [propext, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.sobolCoord_injOn_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.sobol_coordinate_covers_grid_once' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiMonteCarloAndBrownianBridge.bridge_midpoint_keeps_brownian_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. The asserts are pinned to 16 dates and the 4,096-point budget, so expect one to stop the program.
@@ -640,14 +940,14 @@ The two outputs match line for line: two languages, one series for the bell-curv
 > - **Using even points with a date-by-date build.** Same points, same payoff, and the error goes from 0.000856 to 0.164125. The build rule is not a detail. It is the method.
 > - **Believing the rate is what the theory promises.** The bound behind Sobol's points carries a logarithm raised to the power of the dimension, and at 16 dimensions with 4,096 points that factor is astronomical: the bound says nothing useful. The rates here, -1.0064 in bridge order and -0.6475 in date order, are facts about this payoff, not guarantees.
 > - **Forgetting that the point set depends on the budget.** The half-cell nudge is half a cell of *this* budget, so the 4,096 points are not the first 4,096 of the 65,536. Merging runs of different sizes averages two different rules.
-> - **Reading the two-decimal shares as the promise.** Under the bridge draw 1 carries 68.75 per cent of the path's wiggle, not 100 per cent. The full collapse into one coordinate happens only because this card's payoff looks at the last date alone. An Asian option keeps a real tail of coordinates, and the gain shrinks accordingly.
+> - **Reading the two-decimal shares as the promise.** Under the bridge draw 1 carries 68.75 per cent of the path's wiggle, not 100 per cent. The full collapse into one coordinate happens only because this card's payoff looks at the last date alone. An Asian option, which pays on the average price over the dates ([The Asian option desks trade](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md)), keeps a real tail of coordinates, and the gain shrinks accordingly.
 
 ---
 
 ## Where you meet it in real life
 
 - **Mortgage-backed securities.** The case that made the method's reputation: 360 monthly dates, and quasi-Monte Carlo working far better than 360 dimensions had any right to, because the cashflows lean on the early, bridge-ordered coordinates.
-- **Exotic desks.** Asians, barriers and baskets are priced on tens or hundreds of dates, which is where the even points pay for themselves; correlated underlyings add a second build rule on top of this one ([Correlated paths](04-correlated-paths-and-cholesky.md)).
+- **Exotic desks.** Asians, barriers (contracts that switch on or off when the share touches a level: [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)) and baskets (contracts on several shares at once) are priced on tens or hundreds of dates, which is where the even points pay for themselves; correlated underlyings add a second build rule on top of this one ([Correlated paths](04-correlated-paths-and-cholesky.md)).
 - **Overnight risk runs and sensitivities.** A fixed point set makes yesterday's number reproducible to the last digit, which matters more to a risk controller than to a mathematician; and bumping an input, then re-pricing on *the same* points, cancels most of the error in the difference.
 - **Where it does not go.** Exercise decisions need paths in time order for the regression, so the bridge sits awkwardly with least-squares Monte Carlo ([Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md)), and a one-dimensional European call is better priced on a grid ([Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md)) or by transform ([Transform pricing](09-carr-madan-fft-and-cos-methods.md)).
 

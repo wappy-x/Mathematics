@@ -16,6 +16,8 @@ There is a second lever, and it is free. The bar depends on how widely the numbe
 
 The middle one is the star here. Swap the ordinary average for the **geometric** average — multiply the two prices, take the square root — and the contract does have a formula. The two are nearly the same contract. So price both on the same paths, see how far the geometric one's simulated price missed its known answer, and correct the arithmetic one by that miss.
 
+Every method also runs on a plain call: the right to buy one Acme share for the $100.00 strike in one year. It has a formula, the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), so it serves as a ruler.
+
 **Each path's payoff can be repackaged before it is averaged: keep what the sampler is aiming at, and shrink how far it scatters.**
 
 **What kind of fact this is:** a method — three ways of rebuilding a sampler, each leaving the price it estimates where it was and narrowing only the error bar; how much each one buys is a theorem, proved on this card in Why it works.
@@ -38,7 +40,12 @@ The upper line is the arithmetic ticket, the lower the geometric. Below the stri
 
 ## The formula
 
-Notation first, in words. A bar over a letter is the average of that quantity across the paths drawn, so $\bar X$ is the average payoff. A capital E with square brackets holds a quantity's *true* average, so $E[Y]$ is what the companion is really worth, known before a path is drawn. Two words carried over from probability: $\operatorname{var}$ is how widely a quantity scatters about its own average, $\operatorname{cov}$ how two of them scatter together ([Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md)). The house writes $N(x)$ for the bell-curve area to the left of $x$; $N^{-1}(u)$ runs it backwards, returning the point with area $u$ to its left. That area climbs strictly from 0 to 1, so each $u$ between them has exactly one such point and the two ends have none — which is why the code's draws never reach them.
+Notation first, in words.
+
+- A bar over a letter is the average of that quantity across the paths drawn, so $\bar X$ is the average payoff.
+- A capital E with square brackets holds a quantity's *true* average, so $E[Y]$ is what the companion is really worth, known before a path is drawn.
+- Two words carried over from probability: $\operatorname{var}$ is how widely a quantity scatters about its own average, $\operatorname{cov}$ how two of them scatter together ([Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md)).
+- The house writes $N(x)$ for the bell-curve area to the left of $x$; $N^{-1}(u)$ runs it backwards, returning the point with area $u$ to its left. That area climbs strictly from 0 to 1, so each $u$ between them has exactly one such point and the two ends have none — which is why the code's draws never reach them.
 
 **Mirrors.** One bell-curve shock $Z$, used twice:
 
@@ -55,6 +62,8 @@ $$\text{estimate} \;=\; \bar X \;-\; \beta\left(\bar Y - E[Y]\right), \qquad \be
 And what the slope buys, where $\rho$ is the correlation between payoff and companion:
 
 $$\operatorname{var}\left(X - \beta\,Y\right) \;=\; \left(1 - \rho^{2}\right)\operatorname{var}(X)$$
+
+**Read it aloud:** with the best slope, what is left scatters only one minus the correlation squared as widely as the plain payoff.
 
 **Stratification.** Cut the bell curve into $m$ slices of equal chance and draw inside each one:
 
@@ -77,12 +86,12 @@ $$Z_j \;=\; N^{-1}\!\left(\frac{\,j - 1 + U_j\,}{m}\right), \qquad j = 1, 2, \ld
 | $\sigma$ | volatility, how jumpy Acme is. Say "sigma". | 20% | every bar widens |
 | $N^{-1}(u)$ | the shock with $u$ of the bell curve below it | — | — |
 
-The companion's closed form is the one piece this card borrows rather than derives: a geometric average of a wiggling price is itself lognormal, which is what makes it tractable.
+The companion's closed form is the one piece this card borrows rather than derives: a geometric average of a wiggling price is itself lognormal — its logarithm follows the bell curve — which is what makes it tractable.
 
 <details>
 <summary>The companion's own formula, in full</summary>
 
-The logarithm of a geometric average is the average of the logarithms, so it is a bell-curve quantity: log spread 0.158114, smaller than one price's because the first leg's wiggle is shared by both. The price is then the usual two-term subtraction, with the geometric average's own average standing in for the share price:
+The logarithm of a geometric average is the average of the logarithms, so it is a bell-curve quantity: log spread 0.158114, smaller than one price's because the first leg's wiggle is shared by both. The price is then the usual two-term subtraction of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), with the geometric average's own average standing in for the share price, and $e^{-rT}$ discounting one year at the 5% rate:
 $$e^{-rT}\Bigl(102.020134 \times 0.581428 \;-\; 100 \times 0.518916\Bigr) \;=\; 7.063568$$
 The grid road in the code reaches 7.063562 using none of this, which is how the card knows the formula is right.
 
@@ -90,7 +99,7 @@ The grid road in the code reaches 7.063562 using none of this, which is how the 
 
 ### When it holds
 
-- **Mirrors need a payoff that moves one way.** The ticket pays more whenever a shock is larger, so a path and its mirror err in opposite directions and the pair is at most half as noisy as one path: measured pairing −0.464432 on the ticket, −0.440678 on a plain call. A payoff that rises at *both* ends fails the test, and the trick then costs accuracy.
+- **Mirrors need a payoff that moves one way.** The ticket pays more whenever a shock is larger, so a path and its mirror err in opposite directions and the pair is at most half as noisy as one path: measured mirror correlation −0.464432 on the ticket, −0.440678 on a plain call. A payoff that rises at *both* ends fails the test, and the trick then costs accuracy.
 - **A control's value must be known exactly; correlation is all it otherwise needs.** An error there biases the answer by slope times error. The bar falls by the factor $1 - \rho^{2}$ and nothing else about the companion matters, so a badly fitted slope wastes the gain without bending the answer.
 - **Slicing pays only in the direction it is done.** Slices in several directions multiply, so one direction is affordable and twelve are not — Step 4 measures the collapse from one shock to two.
 - **None of the three moves the target.** Each changes only the spread of what is averaged, and the run measures all four against prices computed with no sampling at all.
@@ -101,7 +110,7 @@ The grid road in the code reaches 7.063562 using none of this, which is how the 
 
 ### Step 0: many samplers, one target
 
-A price in this model is an average: the contract's payment across every future Acme could have, taken in the pricing world and discounted to today. *Any* procedure whose numbers have that average estimates the price — they need not be independent of each other, identically scattered, or even random.
+A price in this model is an average: the contract's payment across every future Acme could have, taken in the pricing world and discounted to today. The pricing world is the model's own, where Acme grows at the 5% rate less the 2% dividend yield, never at anyone's forecast. *Any* procedure whose numbers have that average estimates the price — they need not be independent of each other, identically scattered, or even random.
 
 That freedom is the whole subject: hold the target, attack the scatter. The three methods below compose, and a desk usually runs all three at once.
 
@@ -113,7 +122,7 @@ $$\operatorname{var}\!\left(\tfrac{1}{2}\left[X(Z) + X(-Z)\right]\right) \;=\; \
 
 If the payoff never falls as the shock rises, a path and its mirror move in opposite directions, so that covariance cannot be positive: one pair is at most half as noisy as one path. Since a pair costs two payoff evaluations, the worst case is breaking even.
 
-The measured pairing is −0.464432 on the ticket: the bar goes from 8.33 cents to 6.16, worth 0.029 million plain paths against 0.016. The call behaves the same way at −0.440678, 8.28 cents against 10.97. Modest, because below the strike a path and its mirror can both pay nothing, and two zeros are perfectly *positively* related, which drags the pairing back toward zero.
+The measured mirror correlation is −0.464432 on the ticket: the bar goes from 8.33 cents to 6.16, worth 0.029 million plain paths against 0.016. "Worth" means how many plain paths would reach the same bar. The call behaves the same way at −0.440678, 8.28 cents against 10.97. Modest, because below the strike a path and its mirror can both pay nothing, and two zeros are perfectly *positively* related, which drags the mirror correlation back toward zero.
 
 ### Step 2: a control deletes the noise it can predict
 
@@ -141,7 +150,7 @@ Formally, any spread splits into the spread of the slice averages plus the avera
 
 On the call, one shock and 8,000 slices give 0.13 cents, worth 114.603 million plain paths. On the ticket, whose payoff reads two shocks, the same budget gives 2.96 cents, worth 0.127 million. Slicing one direction of two recovers a fraction of what slicing the only direction does, and that fraction collapses as directions multiply.
 
-Which direction, then? The code slices where the path *ends*, leaving how it got there to chance; slicing the first leg instead gives 4.38 cents against 2.96, worse from the same work. Choosing the direction properly is the Brownian bridge, the business of [Quasi-Monte Carlo](03-quasi-monte-carlo-and-brownian-bridge.md).
+Which direction, then? The code slices where the path *ends*, leaving how it got there to chance; slicing the first leg instead gives 4.38 cents against 2.96, worse from the same work. Choosing the direction properly is the Brownian bridge — building a path from its end point first, then filling in the middle — the business of [Quasi-Monte Carlo](03-quasi-monte-carlo-and-brownian-bridge.md).
 
 <details>
 <summary>Detailed proof: the two variance results</summary>
@@ -207,9 +216,15 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows an answer. The fractions come from the recurrence the Monte Carlo pricing card prints; the bell-curve area and every reference price from Simpson's rule written out in the file, in one dimension and in two; the area's inverse, needed to place a draw inside a slice, is a rational fit the run checks against the area itself — worst slip 0.437 in a billion over nineteen points.
+Nothing is imported that already knows an answer:
+
+- The fractions come from the recurrence the [Monte Carlo pricing](01-monte-carlo-pricing.md) card prints.
+- The bell-curve area and every reference price come from Simpson's rule, written out in the file in one dimension and in two. Simpson's rule adds up thin slices of the area under a curve.
+- The area's inverse, needed to place a draw inside a slice, is a rational fit: one polynomial divided by another. The run checks it against the area itself — worst slip 0.437 in a billion over nineteen points.
 
 Prices arrive by roads that share no pricing formula. The plain call comes out of the formula and out of a one-shock integral, both 9.227006; the companion out of its closed form and out of a grid over the two shocks, 7.063568 against 7.063562. Because that grid reproduces the one ticket price that has a formula, its answer for the arithmetic ticket, 7.212942, is the reference the four samplers are measured against.
+
+In the output, "se" is the error bar (the standard error) and "c" means cents.
 
 ### Python
 
@@ -633,6 +648,244 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, to every printed digit. They have to: the draws come out of integer arithmetic both languages do exactly, and every later step is the same arithmetic in the same order.
 
+### Lean
+
+Lean proves the control, mirror and twin results for every payoff and price meeting their conditions.
+
+- Take a payoff $X$ and a companion $Y$ on the same path, each with a finite $\operatorname{var}$. Then $\operatorname{var}(X - \beta Y) = (1 - \rho^2)\operatorname{var}(X)$.
+- Take the same $X$ and $Y$, and any slope $c$. Then $\operatorname{var}(X - c\,Y)$ is never below $\operatorname{var}(X - \beta Y)$.
+- Take the same $X$ and $Y$, and any slope. Then subtracting that slope times the companion's slip from $E[Y]$ leaves the true average of $X$ unchanged.
+- Take a shock $Z$ whose law survives a sign flip, and a payoff $X$ with finite $\operatorname{var}$ that never falls as $Z$ rises. Then the mirrored pair's $\operatorname{var}$ is $\tfrac{1}{2}\operatorname{var}(X) + \tfrac{1}{2}\operatorname{cov}(X(Z), X(-Z))$.
+- Under those conditions, that covariance is never positive, so one pair is at most half as noisy as one path.
+- Take two prices $a, b \ge 0$, any strike $K$ and a discount $D \ge 0$. Then the ticket pays at least the geometric companion.
+
+Slicing, the ticket's two-shock mirror, and every measured price, correlation and error bar are left to the Python and Rust checks.
+
+```lean
+-- Cheaper Monte Carlo: with the best slope a control variate cuts the variance to (1 - ρ²) times the plain one without moving the target, a mirrored pair of a one-way payoff is at most half as noisy as one path, and the arithmetic-average ticket pays at least the geometric one on every path.
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.IdentDistrib
+
+open MeasureTheory ProbabilityTheory
+
+/-! A path is a point `ω` of a probability space `(Ω, P)`. A payoff is a real random
+variable with finite variance (`MemLp _ 2 P`). `Var[X; P]` is Mathlib's variance,
+`cov[X, Y; P]` its covariance, and `∫ ω, X ω ∂P` the true average `E[X]`.
+The slope is `β = cov(X, Y) / var(Y)` and the correlation is
+`ρ = cov(X, Y) / (√var(X) · √var(Y))`. -/
+
+variable {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+
+lemma cv_var_sub_mul (X Y : Ω → ℝ) (hX : MemLp X 2 P) (hY : MemLp Y 2 P) (c : ℝ) :
+    Var[fun ω => X ω - c * Y ω; P] = Var[X; P] - 2 * c * cov[X, Y; P] + c ^ 2 * Var[Y; P] := by
+  rw [variance_fun_sub hX (hY.const_mul c), variance_const_mul, covariance_const_mul_right]
+  ring
+
+#print axioms cv_var_sub_mul
+
+lemma cv_cov_sq_le (X Y : Ω → ℝ) (hX : MemLp X 2 P) (hY : MemLp Y 2 P) :
+    cov[X, Y; P] ^ 2 ≤ Var[X; P] * Var[Y; P] := by
+  have key := cv_var_sub_mul X Y hX hY
+  have hnn : ∀ c : ℝ, 0 ≤ Var[X; P] - 2 * c * cov[X, Y; P] + c ^ 2 * Var[Y; P] := by
+    intro c; rw [← key c]; exact variance_nonneg _ _
+  have hvX := variance_nonneg X P
+  rcases (variance_nonneg Y P).eq_or_lt with hv | hv
+  · rw [← hv]
+    by_contra hc
+    have hc0 : cov[X, Y; P] ≠ 0 := by
+      intro h; apply hc; rw [h]; simp
+    have h := hnn ((Var[X; P] + 1) / (2 * cov[X, Y; P]))
+    rw [← hv] at h
+    have e : 2 * ((Var[X; P] + 1) / (2 * cov[X, Y; P])) * cov[X, Y; P] = Var[X; P] + 1 := by
+      field_simp
+    linarith
+  · have := hnn (cov[X, Y; P] / Var[Y; P])
+    have h2 : Var[X; P] - 2 * (cov[X, Y; P] / Var[Y; P]) * cov[X, Y; P] +
+        (cov[X, Y; P] / Var[Y; P]) ^ 2 * Var[Y; P]
+        = (Var[X; P] * Var[Y; P] - cov[X, Y; P] ^ 2) / Var[Y; P] := by
+      field_simp; ring
+    rw [h2] at this
+    have := (div_nonneg_iff.mp this)
+    rcases this with ⟨h, _⟩ | ⟨_, h⟩
+    · linarith
+    · linarith
+
+#print axioms cv_cov_sq_le
+
+lemma av_cov_nonpos (Z : Ω → ℝ) (f g : ℝ → ℝ) (hf : Monotone f) (hg : Antitone g)
+    (hA : MemLp (fun ω => f (Z ω)) 2 P) (hB : MemLp (fun ω => g (Z ω)) 2 P) :
+    cov[fun ω => f (Z ω), fun ω => g (Z ω); P] ≤ 0 := by
+  set b := ∫ ω, g (Z ω) ∂P with hb
+  have hBi : Integrable (fun ω => g (Z ω)) P := hB.integrable one_le_two
+  have hB0 : ∫ ω, (g (Z ω) - b) ∂P = 0 := by
+    rw [integral_sub hBi (integrable_const _)]; simp [hb]
+  have hcov : ∀ a : ℝ, cov[fun ω => f (Z ω), fun ω => g (Z ω); P]
+      = ∫ ω, (f (Z ω) - a) * (g (Z ω) - b) ∂P := by
+    intro a
+    rw [← covariance_sub_const_left (hA.integrable one_le_two) a,
+      ← covariance_sub_const_right hBi b,
+      covariance_eq_sub (X := fun ω => f (Z ω) - a) (Y := fun ω => g (Z ω) - b)
+        (hA.sub (memLp_const a)) (hB.sub (memLp_const b))]
+    simp only [hB0, mul_zero, sub_zero]
+    rfl
+  by_cases h1 : ∃ z1, g z1 < b
+  · by_cases h2 : ∃ z2, b < g z2
+    · obtain ⟨z1, hz1⟩ := h1
+      obtain ⟨z2, hz2⟩ := h2
+      set S := {z | b < g z} with hS
+      have hlt : ∀ w ∈ S, ∀ z, g z < b → w < z := by
+        intro w hw z hz
+        by_contra h
+        push Not at h
+        have := hg h
+        simp only [hS, Set.mem_ofPred_eq] at hw
+        linarith
+      have hbdd : BddAbove (f '' S) := ⟨f z1, by
+        rintro _ ⟨w, hw, rfl⟩; exact hf (hlt w hw z1 hz1).le⟩
+      have hne : (f '' S).Nonempty := ⟨f z2, z2, hz2, rfl⟩
+      rw [hcov (sSup (f '' S))]
+      apply integral_nonpos
+      intro ω
+      simp only [Pi.zero_apply]
+      rcases lt_trichotomy (g (Z ω)) b with h | h | h
+      · have : sSup (f '' S) ≤ f (Z ω) := by
+          apply csSup_le hne
+          rintro _ ⟨w, hw, rfl⟩
+          exact hf (hlt w hw _ h).le
+        exact mul_nonpos_of_nonneg_of_nonpos (by linarith) (by linarith)
+      · rw [h]; simp
+      · have : f (Z ω) ≤ sSup (f '' S) := le_csSup hbdd ⟨Z ω, h, rfl⟩
+        exact mul_nonpos_of_nonpos_of_nonneg (by linarith) (by linarith)
+    · push Not at h2
+      have hnn : 0 ≤ fun ω => b - g (Z ω) := fun ω => by simp [h2 (Z ω)]
+      have hz : ∫ ω, (b - g (Z ω)) ∂P = 0 := by
+        rw [integral_sub (integrable_const _) hBi]; simp [hb]
+      have hae := (integral_eq_zero_iff_of_nonneg hnn
+        ((integrable_const _).sub hBi)).mp hz
+      rw [hcov 0]
+      apply integral_nonpos_of_ae
+      filter_upwards [hae] with ω hω
+      simp only [Pi.zero_apply] at hω ⊢
+      have : g (Z ω) - b = 0 := by linarith
+      rw [this]; simp
+  · push Not at h1
+    have hnn : 0 ≤ fun ω => g (Z ω) - b := fun ω => by simp [h1 (Z ω)]
+    have hae := (integral_eq_zero_iff_of_nonneg hnn
+      (hBi.sub (integrable_const _))).mp hB0
+    rw [hcov 0]
+    apply integral_nonpos_of_ae
+    filter_upwards [hae] with ω hω
+    simp only [Pi.zero_apply] at hω ⊢
+    rw [hω]; simp
+
+#print axioms av_cov_nonpos
+
+/-- A control variate. Let `X` be the payoff and `Y` a companion payoff on the same path,
+both with finite variance. With the slope `β = cov(X, Y) / var(Y)` and the correlation `ρ`:
+what is left, `X - β Y`, scatters `(1 - ρ²)` times as widely as `X`;
+no other slope `c` leaves less scatter; and subtracting any slope `c` times the companion's
+slip from its true value `E[Y]` leaves the true average unchanged. -/
+theorem control_variate_shrinks_variance_by_one_minus_rho_sq (X Y : Ω → ℝ)
+    (hX : MemLp X 2 P) (hY : MemLp Y 2 P) :
+    Var[fun ω => X ω - cov[X, Y; P] / Var[Y; P] * Y ω; P] =
+        (1 - (cov[X, Y; P] / (Real.sqrt Var[X; P] * Real.sqrt Var[Y; P])) ^ 2) * Var[X; P] ∧
+    (∀ c : ℝ, Var[fun ω => X ω - cov[X, Y; P] / Var[Y; P] * Y ω; P] ≤
+        Var[fun ω => X ω - c * Y ω; P]) ∧
+    (∀ c : ℝ, ∫ ω, (X ω - c * (Y ω - ∫ ω', Y ω' ∂P)) ∂P = ∫ ω, X ω ∂P) := by
+  have key := cv_var_sub_mul X Y hX hY
+  have cs := cv_cov_sq_le X Y hX hY
+  have hvX := variance_nonneg X P
+  refine ⟨?_, ?_, ?_⟩
+  · rw [key]
+    rcases (variance_nonneg Y P).eq_or_lt with hv | hv
+    · rw [← hv] at cs ⊢
+      have : cov[X, Y; P] = 0 := by nlinarith
+      simp [this]
+    · rcases hvX.eq_or_lt with hx | hx
+      · rw [← hx] at cs ⊢
+        have : cov[X, Y; P] = 0 := by nlinarith
+        simp [this]
+      · rw [show (cov[X, Y; P] / (Real.sqrt Var[X; P] * Real.sqrt Var[Y; P])) ^ 2
+            = cov[X, Y; P] ^ 2 / (Var[X; P] * Var[Y; P]) by
+          rw [div_pow, mul_pow, Real.sq_sqrt hvX, Real.sq_sqrt hv.le]]
+        field_simp
+        ring
+  · intro c
+    rw [key, key]
+    rcases (variance_nonneg Y P).eq_or_lt with hv | hv
+    · rw [← hv] at cs ⊢
+      have : cov[X, Y; P] = 0 := by nlinarith
+      simp [this]
+    · have h2 : (Var[X; P] - 2 * c * cov[X, Y; P] + c ^ 2 * Var[Y; P]) -
+          (Var[X; P] - 2 * (cov[X, Y; P] / Var[Y; P]) * cov[X, Y; P] +
+            (cov[X, Y; P] / Var[Y; P]) ^ 2 * Var[Y; P])
+          = (c * Var[Y; P] - cov[X, Y; P]) ^ 2 / Var[Y; P] := by
+        field_simp; ring
+      have : 0 ≤ (c * Var[Y; P] - cov[X, Y; P]) ^ 2 / Var[Y; P] := by positivity
+      linarith
+  · intro c
+    have hXi : Integrable X P := hX.integrable one_le_two
+    have hYi : Integrable Y P := hY.integrable one_le_two
+    have h1 : Integrable (fun ω => Y ω - ∫ ω', Y ω' ∂P) P := hYi.sub (integrable_const _)
+    have h2 : Integrable (fun ω => c * (Y ω - ∫ ω', Y ω' ∂P)) P := h1.const_mul c
+    rw [integral_sub hXi h2, integral_const_mul, integral_sub hYi (integrable_const _)]
+    simp
+
+/-- Mirrors. Let `Z` be a shock whose law is unchanged by flipping its sign (as for a
+bell-curve shock), and let the payoff `f` move one way (never fall as the shock rises),
+with finite variance. Then the pair average `½[f(Z) + f(-Z)]` has variance
+`½ var f(Z) + ½ cov(f(Z), f(-Z))`, that covariance is never positive, and so the pair is at
+most half as noisy as one path. -/
+theorem antithetic_pair_at_most_half_as_noisy (Z : Ω → ℝ)
+    (hsym : IdentDistrib Z (fun ω => -Z ω) P P) (f : ℝ → ℝ) (hf : Monotone f)
+    (hL2 : MemLp (fun ω => f (Z ω)) 2 P) :
+    Var[fun ω => (f (Z ω) + f (-Z ω)) / 2; P] =
+        Var[fun ω => f (Z ω); P] / 2 + cov[fun ω => f (Z ω), fun ω => f (-Z ω); P] / 2 ∧
+    cov[fun ω => f (Z ω), fun ω => f (-Z ω); P] ≤ 0 ∧
+    Var[fun ω => (f (Z ω) + f (-Z ω)) / 2; P] ≤ Var[fun ω => f (Z ω); P] / 2 := by
+  have hid : IdentDistrib (fun ω => f (Z ω)) (fun ω => f (-Z ω)) P P :=
+    hsym.comp hf.measurable
+  have hB : MemLp (fun ω => f (-Z ω)) 2 P := hid.memLp_snd hL2
+  have hvar : Var[fun ω => (f (Z ω) + f (-Z ω)) / 2; P] =
+      Var[fun ω => f (Z ω); P] / 2 + cov[fun ω => f (Z ω), fun ω => f (-Z ω); P] / 2 := by
+    have : (fun ω => (f (Z ω) + f (-Z ω)) / 2) = fun ω => (1 / 2 : ℝ) * (f (Z ω) + f (-Z ω)) := by
+      ext; ring
+    rw [this, variance_const_mul, variance_fun_add hL2 hB, ← hid.variance_eq]
+    ring
+  have hcov : cov[fun ω => f (Z ω), fun ω => f (-Z ω); P] ≤ 0 :=
+    av_cov_nonpos Z f (fun z => f (-z)) hf (fun x y h => hf (neg_le_neg h)) hL2 hB
+  refine ⟨hvar, hcov, ?_⟩
+  rw [hvar]; linarith
+
+/-- The twin. On every path, with the two observed prices `a, b ≥ 0`, strike `K` and
+discount factor `D ≥ 0`, the arithmetic-average ticket pays at least the geometric-average
+companion, because the ordinary average `(a + b) / 2` is never below `√(a b)`. -/
+theorem arithmetic_ticket_pays_at_least_geometric (a b K D : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
+    (hD : 0 ≤ D) :
+    D * max (Real.sqrt (a * b) - K) 0 ≤ D * max ((a + b) / 2 - K) 0 := by
+  have hs := Real.sq_sqrt (mul_nonneg ha hb)
+  have hs0 := Real.sqrt_nonneg (a * b)
+  have h : Real.sqrt (a * b) ≤ (a + b) / 2 := by
+    nlinarith [sq_nonneg (a - b), sq_nonneg (Real.sqrt (a * b) - (a + b) / 2)]
+  apply mul_le_mul_of_nonneg_left _ hD
+  exact max_le_max (by linarith) le_rfl
+
+#print axioms control_variate_shrinks_variance_by_one_minus_rho_sq
+#print axioms antithetic_pair_at_most_half_as_noisy
+#print axioms arithmetic_ticket_pays_at_least_geometric
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cv_var_sub_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cv_cov_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'av_cov_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'control_variate_shrinks_variance_by_one_minus_rho_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'antithetic_pair_at_most_half_as_noisy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arithmetic_ticket_pays_at_least_geometric' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -659,7 +912,7 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 ## Where you meet it in real life
 
 - **The Asian option desk.** Pricing an arithmetic average with its geometric twin as the control is the standard method, and it is why the geometric version — a contract almost nobody trades — sits in every library. The contracts: [Arithmetic Asian options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md) and, in commodity form, [The Asian option desks trade](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md).
-- **Any exotic with a vanilla cousin.** A barrier option controlled by the plain call it would be without the barrier; a basket controlled by an option on the basket's geometric average, which is lognormal and so has a formula. The pattern never changes: find the nearest thing with a formula.
+- **Any exotic with a vanilla cousin.** An exotic is a non-standard contract; vanilla means a standard one, like the plain call. A barrier option, which dies if the price touches a set level, is controlled by the plain call it would be without the barrier. A basket option, paid on several shares together, is controlled by an option on the basket's geometric average, which is lognormal and so has a formula. The pattern never changes: find the nearest thing with a formula.
 - **Overnight risk batches, and early exercise.** The work is dominated by paths, so a hundredfold in path efficiency is a hundredfold more pricing inside the same overnight window — and least-squares Monte Carlo, which spends paths on a regression, is short of them by construction: [Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md).
 - **Several shares, or a whole path.** More random inputs means more directions, where slicing fades and controls keep working: [Correlated paths](04-correlated-paths-and-cholesky.md) and [Stepping an SDE](05-discretisation-schemes-for-sdes.md).
 - **The other answer entirely.** Where a contract's shape suits a grid, the grid answers with no error bar to shrink: [American options on a grid](08-american-options-by-psor-and-lcp.md). Outside finance, all three came from numerical integration and physics, and any simulation with a tractable approximation nearby can use them.

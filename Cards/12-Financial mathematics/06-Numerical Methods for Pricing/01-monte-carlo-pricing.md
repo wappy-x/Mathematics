@@ -6,13 +6,15 @@
 
 ## General Overview
 
-Acme shares trade at $100.00 today. A call option on one share, struck at $100.00 and expiring in a year, is the right to buy that share for $100.00 on expiry day. If Acme ends above the strike the right is worth the difference; if it ends below, the right is thrown away and pays nothing. Black and Scholes have a formula for what that right should cost, and it answers $9.23.
+Acme shares trade at $100.00 today. A call option on one share, struck at $100.00 and expiring in a year, is the right to buy that share for $100.00 on expiry day. If Acme ends above the strike the right is worth the difference; if it ends below, the right is thrown away and pays nothing. Black and Scholes have a formula for what that right should cost ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)), and it answers $9.23.
 
 This card prices the same contract with no formula at all. Invent 100,000 futures for Acme, each ending at a price the model finds plausible. In each, read off what the call pays: the ending price minus the strike, or nothing. Shrink each payment back to today's dollars. Average the 100,000 numbers.
 
 The run below answers $9.19, and does something a formula never does: it states how sure it is. One standard error — the typical distance between an average like this and the number it estimates — is $0.04. Two standard errors either side runs from $9.10 to $9.27, and the formula's $9.23 sits inside that band.
 
-Why simulate, when a formula is available and exact? Because it is available for this contract and almost no other. Change the payoff to the average price over the year, or to nothing-if-it-ever-touched-a-lower-barrier, or to the best of four shares, and the calculus behind the formula stops working. Simulation never needed it: it plays each future out and reads the payment off whatever contract is written. The plain call is here only because its true price is known, which makes it a ruler for the method.
+Why simulate, when a formula is available and exact? Because it is available for this contract and almost no other. Change the payoff to the average price over the year, or to nothing-if-it-ever-touched-a-lower-barrier, or to the best of four shares, and the calculus behind the formula stops working.
+
+Simulation never needed it: it plays each future out and reads the payment off whatever contract is written. The plain call is here only because its true price is known, which makes it a ruler for the method.
 
 **Average what the contract pays across many invented futures, discount the average to today, and report the spread of that average alongside it.**
 
@@ -30,7 +32,9 @@ xychart-beta
     line [9.23, 9.23, 9.23, 9.23, 9.23, 9.23, 9.23]
 ```
 
-The wandering line is the running average of the discounted payments; the flat line is the formula's $9.23. At 1,000 paths the average is worth little: it says $9.36, and by 5,000 paths it has slid to $8.78. And it never quite lands on the flat line — at 100,000 paths it is still four cents below. The seven marks are the path counts the code prints, not an even scale: the first gap is 4,000 paths, the last is 25,000.
+The wandering line is the running average of the discounted payments; the flat line is the formula's $9.23. At 1,000 paths the average is worth little: it says $9.36, and by 5,000 paths it has slid to $8.78. And it never quite lands on the flat line — at 100,000 paths it is still four cents below.
+
+The seven marks are the path counts the code prints, not an even scale: the first gap is 4,000 paths, the last is 25,000.
 
 ---
 
@@ -46,7 +50,7 @@ The invented ending price in one future is the geometric Brownian motion model e
 
 $$S_T^{(i)} \;=\; S\,\exp\!\left(\left(r - q - \tfrac12\sigma^2\right)T + \sigma\sqrt{T}\,Z_i\right)$$
 
-In words: today's price, grown at the pricing world's rate for a year, then shoved sideways by one draw's worth of wiggle.
+In words: today's price, grown at the pricing world's rate for a year, then shoved sideways by one draw's worth of wiggle. The pricing world is the pretend world used for pricing, in which every asset earns the riskless rate $r$ in total, dividends included (Step 0 below).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -73,7 +77,7 @@ In words: see how far the payments scatter, then divide that scatter by the squa
 
 ### When it holds
 
-- **The draws come from the pricing world, not the real one.** The growth inside the exponent is $r - q$ less the volatility drag, never anybody's forecast. Feed the same code a 10% expected return and it answers 12.433725 for a contract worth 9.227006.
+- **The draws come from the pricing world, not the real one.** The growth inside the exponent is $r - q$ less the volatility drag $\tfrac12\sigma^2$, never anybody's forecast. Feed the same code a 10% expected return and it answers 12.433725 for a contract worth 9.227006.
 - **The draws are independent of each other.** Each future is drawn fresh. If the number generator repeats or leans, the average may still look fine while the error bar becomes fiction.
 - **The payments have a finite spread.** The model guarantees one, and this sample measures it at 13.763943 dollars; the standard error formula needs that number to exist. Some heavy-tailed models produce payoffs with no finite spread, and then no honest error bar can be built this way.
 - **The error bar covers sampling only.** It answers "how much would this number move if the futures were drawn again", and nothing else. A wrong volatility shifts the price by more than any number of paths can recover.
@@ -85,7 +89,7 @@ In words: see how far the payments scatter, then divide that scatter by the squa
 
 ### Step 0: a price is an average, so it can be sampled
 
-In this model the price is not a matter of opinion. It is a definite quantity: the average of the option's payoff across all possible endings, taken in the pretend world where every asset earns the bank rate in total, dividends included, then discounted to today. That is the pricing rule the whole wing rests on, and the Black–Scholes formula is what happens when a person does that average with calculus.
+In this model the price is not a matter of opinion. It is a definite quantity: the average of the option's payoff across all possible endings, taken in the pretend world where every asset earns the bank rate in total, dividends included, then discounted to today. That is the pricing rule the whole wing rests on ([Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md)), and the Black–Scholes formula is what happens when a person does that average with calculus.
 
 Anything that is an average can be estimated by drawing samples and averaging them. That is the whole idea here. Formula and simulation evaluate the same expression: one exact and available for one contract, one approximate and available for every contract.
 
@@ -97,13 +101,17 @@ For Acme the exponent has two pieces. The predictable piece is 0.010000: the rat
 
 ### Step 2: whole numbers in, bell curve out
 
-The draws have to come from somewhere, and nothing may be imported that already knows the answer. Two steps build them out of integer arithmetic. First, a recurrence grinds out whole numbers, each from the last:
+The draws have to come from somewhere, and nothing may be imported that already knows the answer. Two steps build them out of integer arithmetic. First, a recurrence grinds out whole numbers, each from the last ([Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md)):
 
 $$a_{j+1} = \left(1664525\,a_j + 1013904223\right) \bmod 2^{32}, \qquad u_j = \frac{a_j + \tfrac12}{2^{32}}$$
 
-Every number in that chain sits below $2^{32}$, and dividing by $2^{32}$ after nudging by a half turns it into a fraction strictly between 0 and 1 — strictly, because the next step takes a logarithm, and the logarithm of zero would stop the program. These fractions are spread evenly. Evenness is not the whole requirement: the next step treats two of them as unrelated, and a recurrence this short only imitates that. Two hundred thousand draws sit well inside where the imitation holds; a desk uses a longer-period generator.
+Here $a_j$ is the $j$-th whole number in the chain, and mod $2^{32}$ means keep only the remainder after dividing by $2^{32}$. Every number in that chain sits below $2^{32}$, and dividing by $2^{32}$ after nudging by a half turns it into a fraction $u_j$ strictly between 0 and 1. It must be strictly inside, because the next step takes a logarithm, and the logarithm of zero would stop the program.
 
-Second, the Box–Muller transform bends two even fractions into two bell-curve draws. Read the first fraction as a distance from the centre, $\sqrt{-2\ln u}$, and the second as an angle, $2\pi v$. Step that far out in that direction: the two coordinates landed on are two independent bell-curve draws. It works because a pair of independent bell curves, seen in the plane, has a density depending only on distance from the origin, and that distance's law is exactly what the logarithm produces.
+These fractions are spread evenly. Evenness is not the whole requirement: the next step treats two of them as unrelated, and a recurrence this short only imitates that. Two hundred thousand draws sit well inside where the imitation holds; a desk uses a longer-period generator.
+
+Second, the Box–Muller transform ([Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)) bends two even fractions into two bell-curve draws. Read the first fraction as a distance from the centre, $\sqrt{-2\ln u}$, and the second as an angle, $2\pi v$. Step that far out in that direction: the two coordinates landed on are two independent bell-curve draws.
+
+It works because a pair of independent bell curves, seen in the plane, has a density depending only on distance from the origin, and that distance's law is exactly what the logarithm produces.
 
 ```mermaid
 flowchart LR
@@ -137,7 +145,7 @@ Each payment $X_i$ is a draw from one fixed law, whose average value is the true
 
 **The square-root law.** For independent draws the squared spread of a sum is the sum of the squared spreads, so $n$ payments added have $n$ times one payment's squared spread. Dividing a quantity by $n$ divides its squared spread by $n$ twice over, leaving one payment's squared spread over $n$. Take square roots: the estimate's spread is one payment's spread divided by the root of $n$. Independence is essential in this step, and it is exactly what the number generator is asked to imitate.
 
-**Measuring that spread from the same sample.** The sample spread $s_n^2$ divides by $n-1$ rather than $n$ because the payments are measured against their own average rather than against the unknown true price, and that shrinks their apparent scatter by exactly one draw's worth. With the correction, $s_n^2$ has one payment's true squared spread as its average value.
+**Measuring that spread from the same sample.** The sample spread $s_n^2$ divides by $n-1$ rather than $n$ because the payments are measured against their own average rather than against the unknown true price. That shrinks their apparent scatter by exactly one draw's worth. With the correction, $s_n^2$ has one payment's true squared spread as its average value.
 
 **Why a band at all.** A sum of many independent draws with finite spread follows a bell curve ever more closely as the count grows, whatever shape one draw has. So for large $n$ the estimate lands within two standard errors of the true price about 95 times in 100. That is a claim about the procedure repeated, not a guarantee about one run: the band printed below either holds 9.227006 or it does not, and this one does.
 
@@ -151,7 +159,7 @@ That self-measuring habit is why a simulated price is quoted as a band. A formul
 
 ### The other doors
 
-The same average can be reached without sampling. Slicing the bell curve finely and adding up payment times height — Simpson's rule, road 3 in the code — gives 9.227006, matching the formula to six decimals. That trick dies as soon as the payoff depends on more than one or two random inputs, which is where simulation takes over.
+The same average can be reached without sampling. Slicing the bell curve finely and adding up payment times height — Simpson's rule ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)), road 3 in the code — gives 9.227006, matching the formula to six decimals. That trick dies as soon as the payoff depends on more than one or two random inputs, which is where simulation takes over.
 
 Two further doors get their own cards on this shelf: stepping the pricing equation across a grid of prices and dates ([Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md)) and inverting a transform ([Transform pricing](09-carr-madan-fft-and-cos-methods.md)). The grid and the transform reach 9.227 too, as the slices do; simulation only brackets it, inside its band. Four roads to one price is how the shelf keeps itself honest.
 
@@ -192,14 +200,14 @@ A hundredfold in paths, from 1,000 to 100,000, shrank the error by 10.001. Four 
 
 ### What breaks if you drop a piece
 
-Same Acme call, right answer 9.227006. The first three mistakes run through the same 100,000 draws; the last needs no draws, because averaging the endings first replaces them with the forward.
+Same Acme call, right answer 9.227006. The first three mistakes run through the same 100,000 draws; the last needs no draws, because averaging the endings first replaces them with the forward, $S e^{(r-q)T}$: the pricing world's average ending price ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)).
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Simulating a 10% real-world return instead of $r - q$ | 12.433725 | A price is an average in the pricing world. Simulating a forecast prices the forecast. |
 | Dropping the $-\tfrac12\sigma^2$ drag from the growth | 10.410803 | Wiggling costs money; without the drag the average ending price overshoots the forward. |
 | Forgetting the discount $e^{-rT}$ | 9.658669 | Payments arrive in a year and were counted as today's dollars. |
-| Averaging the futures first, then paying once | 2.896925 | That prices a forward's intrinsic value, not an option. The option's upside lives in the spread that averaging destroyed. |
+| Averaging the futures first, then paying once | 2.896925 | That prices a forward's intrinsic value (what the call pays if Acme ends exactly at the forward), not an option. The option's upside lives in the spread that averaging destroyed. |
 
 The last row is the deepest.
 
@@ -207,7 +215,9 @@ The last row is the deepest.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows the answer. The even fractions come from the recurrence above, the draws from Box–Muller, and the bell-curve area and the reference integral from Simpson's rule written out in the file. The price is reached **three independent ways**: 100,000 simulated futures, the closed formula over the hand-built bell-curve area, and the same average by fine slices. A fourth check points the sampler at a quantity the market already prices — the average discounted ending price must land near $S e^{-qT}$, which is 98.019867 — and the square-root law is measured on prefixes of the same draws.
+Nothing is imported that already knows the answer. The even fractions come from the recurrence above, the draws from Box–Muller, and the bell-curve area and the reference integral from Simpson's rule written out in the file.
+
+The price is reached **three independent ways**: 100,000 simulated futures, the closed formula over the hand-built bell-curve area, and the same average by fine slices. A fourth check points the sampler at a quantity the market already prices — the average discounted ending price must land near $S e^{-qT}$, which is 98.019867 — and the square-root law is measured on prefixes of the same draws.
 
 ### Python
 
@@ -632,9 +642,9 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 ## Where you meet it in real life
 
 - **Exotic desks.** Any payoff that watches a path, or several shares at once, is priced this way: averages ([The Asian option desks trade](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md)), barriers ([Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), baskets.
-- **Risk reporting.** The same machinery under real-world growth gives value-at-risk numbers; kept in the pricing world it gives the exposure profiles a bank owes its regulator ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)).
+- **Risk reporting.** The same machinery under real-world growth gives value-at-risk numbers ([Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md)): the loss a bank exceeds only on rare days. Kept in the pricing world it gives the exposure profiles a bank owes its regulator ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)).
 - **Model validation.** A new closed-form price is checked by simulating the same contract and seeing whether the formula lands inside the band. When it does not, one of the two is wrong.
-- **Anything with many dimensions.** The square-root law ignores whether a problem has one random input or five hundred, which is why simulation wins where slicing and grids collapse (Monte Carlo integration).
+- **Anything with many dimensions.** The square-root law ignores whether a problem has one random input or five hundred, which is why simulation wins where slicing and grids collapse ([Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md)).
 - **Overnight batches.** A desk's whole book of exotics is repriced while nobody watches, because this method's cost is processor hours, and those are cheapest at 3am.
 
 > **Say it back**
@@ -673,7 +683,7 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 - [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why the square-root law ignores the count of dimensions.
 - [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): keeping a run repeatable, and what a seed does not prove.
 
-A four-cent error bar cost a hundred thousand futures, and the square-root law prices a one-cent bar at sixteen times as many; the next card shrinks the bar without paying that bill, by making each draw carry more information ([Cheaper Monte Carlo](02-variance-reduction-for-pricing.md)).
+A four-cent error bar cost a hundred thousand futures, and the square-root law prices a one-cent bar at sixteen times as many. The next card shrinks the bar without paying that bill, by making each draw carry more information ([Cheaper Monte Carlo](02-variance-reduction-for-pricing.md)).
 
 ---
 

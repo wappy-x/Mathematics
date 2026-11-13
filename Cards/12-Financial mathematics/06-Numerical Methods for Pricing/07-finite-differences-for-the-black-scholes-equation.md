@@ -8,7 +8,7 @@
 
 Acme shares trade at $100.00. A call option on one share, struck at $100.00, runs for one year: the right to buy a share for $100.00 on that one day. Cash earns 5% a year, compounded continuously, Acme pays a 2% dividend yield, and the market prices its jumpiness — its **volatility** — at 20% a year. That contract has a formula, and the formula says 9.227006 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
-Most of what a desk holds has no formula: not an American put, exercisable on any day, not an option that dies if the price touches a barrier, not one whose volatility changes with price and date. Each shares one thing with the plain call: a law of motion. Its value, a number attached to every price and every date, must change in one particular way from instant to instant, or somebody can hedge it and take free money.
+Most of what a bank's trading desk holds has no formula: not an American put, exercisable on any day, not an option that dies if the price touches a barrier, not one whose volatility changes with price and date. Each shares one thing with the plain call: a law of motion. Its value, a number attached to every price and every date, must change in one particular way from instant to instant, or somebody can hedge it and take free money.
 
 A law of motion can be stepped. Rule a chart: 201 price levels across, 201 dates up. The bottom row is expiry day, where the value needs no theory — it is the payoff, 0.00 below the strike and the price minus the strike above it. One row up is 0.005 years earlier, found from the row below in one sweep of arithmetic. Two hundred rows later the top row is today, holding the option's value at every Acme price at once. Its middle node, Acme at 100.00, reads **9.2271**.
 
@@ -34,13 +34,15 @@ Nothing in that chart knows the Black-Scholes formula. It appears only as a refe
 
 ## The formula
 
-Notation first, in words. Prices are measured in logs: $x$ is the natural log of the price divided by the strike, 0 at the strike, negative below and positive above. Time runs backwards, as time still to go: $\tau$, read "tau", the years remaining, 0 on expiry day and 1 today. A value at one grid point is $V$, its price node $i$ written below and its time row $n$ above. Between nodes the steps are $h$ across and $k$ up.
+Notation first, in words. Prices are measured in logs: $x$ is the natural log of the price divided by the strike, 0 at the strike, negative below and positive above. Time runs backwards, as time still to go: $\tau$, read "tau", the years remaining, 0 on expiry day and 1 today.
+
+A value at one grid point is $V$, its price node $i$ written below and its time row $n$ above. Between nodes the steps are $h$ across and $k$ up. The bank rate is $r$, the dividend yield $q$, and the volatility $\sigma$, read "sigma".
 
 In those coordinates the Black-Scholes equation reads
 
 $$\frac{\partial V}{\partial \tau} \;=\; a\,\frac{\partial^2 V}{\partial x^2} \;+\; b\,\frac{\partial V}{\partial x} \;-\; r\,V, \qquad a = \tfrac12\sigma^2, \quad b = r - q - \tfrac12\sigma^2 .$$
 
-The curly-d symbols are partial derivatives: $\partial V/\partial \tau$ is how fast the value changes as the time to go grows, holding the price still, and $\partial^2 V/\partial x^2$ is its curvature across prices ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
+The curly-d symbols are partial derivatives: $\partial V/\partial \tau$ is how fast the value changes as the time to go grows, holding the price still, $\partial V/\partial x$ is its slope across prices, and $\partial^2 V/\partial x^2$ is its curvature across prices ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
 
 **Read it aloud:** give the option one more instant of life and its value gains three things — curvature spread by volatility, a sideways slide from the drift, a steady drain at the bank rate.
 
@@ -71,7 +73,7 @@ Three settings have names. At 0 the scheme is **explicit**: the left side is the
 | $a$, $b$ | spreading and sliding coefficients | 0.020000 and 0.010000 | — |
 | $r$, $q$, $\sigma$, $T$ | bank rate, dividend yield, volatility, the option's life | 5%, 2%, 20%, 1 year | — |
 
-Two edges finish the setup, because at the outermost live node the difference formula reaches for a neighbour that is not there. Far below its strike a call is worthless; far above it is worth a share, dividend-shrunk, minus the discounted strike.
+Two edges finish the setup, because at the outermost live node the difference formula reaches for a neighbour that is not there. Far below its strike a call is worthless; far above it is worth a share, dividend-shrunk, minus the discounted strike. Here $x_{\min} = -1$ and $x_{\max} = +1$ are the grid's lowest and highest log prices.
 
 $$V(x_{\min}, \tau) = 0, \qquad V(x_{\max}, \tau) = K e^{x_{\max}} e^{-q\tau} - K e^{-r\tau}.$$
 
@@ -146,7 +148,9 @@ Far above the strike exercise is near certain: the holder effectively owns a sha
 
 ### Step 5: solving a row, cheaply
 
-For any dial setting above 0, each row is 199 equations in 199 unknowns. Every equation mentions a node and its two neighbours only, so the matrix has three non-zero bands and nothing else: it is **tridiagonal**. That needs no general elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). One sweep down removes each equation's lower neighbour, one sweep back up reads the answers off: the **Thomas algorithm**, a fixed few operations per node instead of the cube of the node count. The diagonal entry $1 + \theta(2\nu + r k)$ always beats the two off-diagonal ones in size, so the sweep never divides by anything near zero.
+For any dial setting above 0, each row is 199 equations in 199 unknowns. Every equation mentions a node and its two neighbours only, so the matrix has three non-zero bands and nothing else: it is **tridiagonal**.
+
+That needs no general elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). One sweep down removes each equation's lower neighbour, one sweep back up reads the answers off: the **Thomas algorithm**, a fixed few operations per node instead of the cube of the node count. The diagonal entry $1 + \theta(2\nu + r k)$ always beats the two off-diagonal ones in size, so the sweep never divides by anything near zero.
 
 ### Step 6: why one of the three explodes
 
@@ -154,12 +158,14 @@ A scheme is stable when the small errors always present in it shrink as it runs.
 
 $$\frac{1 - (1-\theta)(4\nu + r k)}{1 + \theta\,(4\nu + r k)}.$$
 
-At dial 0 that is $1 - 4\nu - r k$, about −3 at a spreading ratio of 1.000000: the checkerboard triples and flips sign every step, and the run below does exactly that. Holding the multiplier's size at or below 1 needs a spreading ratio of one half, so at least 400 time steps here instead of 200. At dial 1 the numerator is 1 and the denominator exceeds 1 for every ratio, so the checkerboard always shrinks whatever the step: **unconditionally stable**. At one half the multiplier is about −1/3 here — shrinking, but changing sign each step.
+At dial 0 that is $1 - 4\nu - r k$, about −3 at a spreading ratio of 1.000000: the checkerboard triples and flips sign every step, and the run below does exactly that.
+
+Holding the multiplier's size at or below 1 needs a spreading ratio of one half, so at least 400 time steps here instead of 200. At dial 1 the numerator is 1 and the denominator exceeds 1 for every ratio, so the checkerboard always shrinks whatever the step: **unconditionally stable**. At one half the multiplier is about −1/3 here — shrinking, but changing sign each step.
 
 <details>
 <summary>Detailed proof: every wiggle, not just the checkerboard</summary>
 
-Take any wiggle across the grid: its value at node `j` is `w^j`, where `w = exp(i*phi)` has size 1 and the angle `phi` runs from zero to half a turn, half a turn being the checkerboard. The second difference multiplies that wiggle by the real number `-4 sin(phi/2)^2 / h^2`; the centred first difference multiplies it by `i sin(phi)/h`, purely sideways.
+Take any wiggle across the grid: its value at node `j` is `w^j`, where `w = exp(i*phi)` has size 1 (`i` here is the square root of −1, not a node number) and the angle `phi` runs from zero to half a turn, half a turn being the checkerboard. The second difference multiplies that wiggle by the real number `-4 sin(phi/2)^2 / h^2`; the centred first difference multiplies it by `i sin(phi)/h`, purely sideways.
 
 Collect the right-hand side times the time step into `p = nu*s + r*k - 2i*eta*sin(phi)`, with `s = 4 sin(phi/2)^2`. The two sides read `1 + theta*p` on the new row and `1 - (1-theta)*p` on the old, so one step multiplies the wiggle by their ratio. The real part of `p` runs from `r*k` up to `4*nu + r*k`, largest at the checkerboard, where the sideways part vanishes.
 
@@ -175,7 +181,7 @@ The repair is standard practice. The strike's own cell runs half a step either s
 
 $$\frac{1}{h}\int_{-h/2}^{h/2} K\left(e^{u}-1\right)^{+}du \;=\; \frac{K\left(e^{h/2} - 1 - h/2\right)}{h} \;=\; 0.125209 .$$
 
-Giving that one node 0.125209 instead of 0 leaves every other node alone and moves the 200-by-200 answer from 9.224711 to 9.227084: from a quarter of a cent wrong to eight thousandths. Desks add a second repair, **Rannacher startup**: the first two steps taken fully implicit, damping the ringing a kink sets off.
+Giving that one node 0.125209 instead of 0 leaves every other node alone and moves the 200-by-200 answer from 9.224711 to 9.227084: from a quarter of a cent wrong to eight thousandths. Desks add a second repair, **Rannacher startup**: the first two steps taken fully implicit, damping the ringing, the sign-flipping wobble, that a kink sets off.
 
 ### The other doors into the same room
 
@@ -682,13 +688,284 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, including the 94-digit nonsense the unstable scheme produces.
 
+### Lean
+
+Lean proves Step 6's stability facts and the worked ratios, on a row with no edges, for positive steps and $r \ge 0$.
+
+- Suppose the dial $\theta$ is at least one half. Then one step multiplies every wiggle by $(1 - (1-\theta)p)/(1 + \theta p)$, with $p$ from Step 6.
+- At those dials that factor never has size above 1, whatever the steps: the scheme is unconditionally stable.
+- Take any dial at 0 or above. Then one step multiplies the checkerboard by Step 6's multiplier, and the sliding ratio $\eta$ drops out.
+- Suppose the dial is 0 and the spreading ratio $\nu$ is above one half. Then one step multiplies the checkerboard by $1 - 4\nu - rk$, which has size above 1.
+- Take the 200-by-200 grid. Then $\nu = 1$, $\eta = 0.0025$ and $rk = 0.00025$, exactly as the worked numbers say.
+- The Crank-Nicolson row −0.498750, 2.000125, −0.501250 is exact, and so are the 500-step explicit weights 0.399000, 0.199900, 0.401000.
+- On this grid the checkerboard multipliers are exactly −12001/4000 for explicit steps, about −3, and −8001/24001 for Crank-Nicolson, about −1/3.
+
+The grid's prices, its edges, the averaged strike cell and the shrinking error are left to the Python and Rust checks.
+
+```lean
+-- Pricing on a grid: one theta step of the log-price Black-Scholes scheme multiplies every grid wiggle e^(iφj) by (1 - (1-θ)p)/(1 + θp), which has size at most 1 for every dial θ ≥ 1/2, and the explicit step (θ = 0) blows the checkerboard up by more than 1 each step once the spreading ratio passes 1/2.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.SpecialFunctions.Complex.Log
+import Mathlib.Tactic.NormNum
+
+open Real
+
+namespace BlackScholesGrid
+
+/-- The spreading ratio ν = a k / h², with a = σ²/2, step h across and step k up. -/
+noncomputable def spreadRatio (σ h k : ℝ) : ℝ := σ ^ 2 / 2 * k / h ^ 2
+
+/-- The sliding ratio η = b k / (2h), with b = r - q - σ²/2. -/
+noncomputable def slideRatio (σ r q h k : ℝ) : ℝ := (r - q - σ ^ 2 / 2) * k / (2 * h)
+
+/-- One theta step of the card's scheme, at every node i of an endless row:
+-θ(ν-η)V_{i-1}^{n+1} + (1 + θ(2ν + rk))V_i^{n+1} - θ(ν+η)V_{i+1}^{n+1}
+  = V_i^n + (1-θ)[(ν-η)V_{i-1}^n - (2ν + rk)V_i^n + (ν+η)V_{i+1}^n].
+`old` is row n, `new` is row n+1. Rows are complex so that wiggles e^(iφj) can be stepped. -/
+def ThetaStep (θ ν η rk : ℝ) (old new : ℤ → ℂ) : Prop :=
+  ∀ i : ℤ,
+    -(θ * (ν - η) : ℝ) * new (i - 1) + ((1 + θ * (2 * ν + rk) : ℝ) : ℂ) * new i
+        - (θ * (ν + η) : ℝ) * new (i + 1)
+      = old i + ((1 - θ : ℝ) : ℂ) *
+          ((ν - η : ℝ) * old (i - 1) - ((2 * ν + rk : ℝ) : ℂ) * old i + (ν + η : ℝ) * old (i + 1))
+
+/-- The wiggle of angle φ and size c across the grid: c · e^(iφj) at node j.
+At φ = π it is the checkerboard c, -c, c, -c, ... -/
+noncomputable def wiggle (c : ℂ) (φ : ℝ) : ℤ → ℂ :=
+  fun j => c * Complex.exp (Complex.I * (φ * j : ℝ))
+
+/-- The checkerboard: plus, minus, plus, minus on consecutive nodes. -/
+noncomputable def checkerboard (c : ℂ) : ℤ → ℂ :=
+  fun j => c * (-1 : ℂ) ^ j
+
+/-- The right-hand side of the equation times the time step, read on a wiggle of angle φ:
+p = ν s + r k - 2iη sin φ, with s = 4 sin²(φ/2). -/
+noncomputable def wiggleLoad (ν η rk φ : ℝ) : ℂ :=
+  ((ν * (4 * Real.sin (φ / 2) ^ 2) + rk : ℝ) : ℂ) - 2 * Complex.I * ((η * Real.sin φ : ℝ) : ℂ)
+
+/-- The factor one theta step multiplies a wiggle by: (1 - (1-θ)p)/(1 + θp). -/
+noncomputable def thetaFactor (θ ν η rk φ : ℝ) : ℂ :=
+  (1 - ((1 - θ : ℝ) : ℂ) * wiggleLoad ν η rk φ) / (1 + (θ : ℂ) * wiggleLoad ν η rk φ)
+
+lemma cos_eq_half (φ : ℝ) : Real.cos φ = 1 - 2 * Real.sin (φ / 2) ^ 2 := by
+  have h := Real.cos_sq (φ / 2)
+  have h2 := Real.sin_sq_add_cos_sq (φ / 2)
+  rw [show 2 * (φ / 2) = φ by ring] at h
+  linarith
+
+#print axioms cos_eq_half
+
+lemma exp_shift (φ : ℝ) (i : ℤ) (s : ℤ) :
+    Complex.exp (Complex.I * ((φ * ((i + s : ℤ) : ℝ) : ℝ) : ℂ))
+      = Complex.exp (Complex.I * ((φ * (i : ℝ) : ℝ) : ℂ)) * Complex.exp (((φ * s : ℝ) : ℂ) * Complex.I) := by
+  rw [← Complex.exp_add]
+  congr 1
+  push_cast
+  ring
+
+#print axioms exp_shift
+
+lemma wiggle_step (θ ν η rk φ : ℝ) (c : ℂ) (hden : 1 + (θ : ℂ) * wiggleLoad ν η rk φ ≠ 0) :
+    ThetaStep θ ν η rk (wiggle c φ) (fun j => thetaFactor θ ν η rk φ * wiggle c φ j) := by
+  intro i
+  have hG : thetaFactor θ ν η rk φ * (1 + (θ : ℂ) * wiggleLoad ν η rk φ)
+      = 1 - ((1 - θ : ℝ) : ℂ) * wiggleLoad ν η rk φ := by
+    unfold thetaFactor; exact div_mul_cancel₀ _ hden
+  have hm := exp_shift φ i (-1)
+  have hp := exp_shift φ i 1
+  simp only [Int.cast_neg, Int.cast_one, mul_neg, mul_one, Complex.exp_mul_I] at hm hp
+  rw [show i - 1 = i + -1 by ring] 
+  simp only [wiggle]
+  rw [hm, hp]
+  set E := Complex.exp (Complex.I * ((φ * (i : ℝ) : ℝ) : ℂ))
+  set G := thetaFactor θ ν η rk φ
+  have hc := cos_eq_half φ
+  unfold wiggleLoad at hG
+  push_cast at hG ⊢
+  rw [Complex.cos_neg, Complex.sin_neg]
+  have hc' : Complex.cos (φ : ℂ) = 1 - 2 * Complex.sin ((φ : ℂ) / 2) ^ 2 := by
+    exact_mod_cast hc
+  rw [hc']
+  linear_combination (c * E) * hG
+
+#print axioms wiggle_step
+
+lemma neg_one_zpow_sub_one (i : ℤ) : (-1 : ℂ) ^ (i - 1) = -(-1 : ℂ) ^ i := by
+  rw [zpow_sub₀ (by norm_num), zpow_one]; ring
+
+#print axioms neg_one_zpow_sub_one
+
+lemma neg_one_zpow_add_one (i : ℤ) : (-1 : ℂ) ^ (i + 1) = -(-1 : ℂ) ^ i := by
+  rw [zpow_add₀ (by norm_num), zpow_one]; ring
+
+#print axioms neg_one_zpow_add_one
+
+lemma wiggleLoad_re (ν η rk φ : ℝ) :
+    (wiggleLoad ν η rk φ).re = ν * (4 * Real.sin (φ / 2) ^ 2) + rk := by
+  simp only [wiggleLoad, Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
+    Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.re_ofNat,
+    Complex.im_ofNat]
+  ring
+
+#print axioms wiggleLoad_re
+
+lemma wiggleLoad_im (ν η rk φ : ℝ) :
+    (wiggleLoad ν η rk φ).im = -(2 * (η * Real.sin φ)) := by
+  simp only [wiggleLoad, Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
+    Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.re_ofNat,
+    Complex.im_ofNat]
+  ring
+
+#print axioms wiggleLoad_im
+
+/-- **No wiggle grows at a dial of one half or above.** Take the Black-Scholes equation in log
+price with constant volatility σ, bank rate r ≥ 0 and dividend yield q, a grid with step h > 0
+across and k > 0 up, spreading ratio ν = (σ²/2)k/h² and sliding ratio η = (r-q-σ²/2)k/(2h).
+For any dial θ ≥ 1/2 (Crank-Nicolson at 1/2, implicit at 1), one theta step carries every wiggle
+c·e^(iφj) to G·c·e^(iφj), with G = (1 - (1-θ)p)/(1 + θp) and p = νs + rk - 2iη sin φ, and
+|G| ≤ 1: the scheme is unconditionally stable, whatever the size of the steps. -/
+theorem theta_scheme_unconditionally_stable_from_one_half
+    (σ r q h k θ : ℝ) (hh : 0 < h) (hk : 0 < k) (hr : 0 ≤ r) (hθ : 1 / 2 ≤ θ) :
+    ∀ (c : ℂ) (φ : ℝ),
+      ThetaStep θ (spreadRatio σ h k) (slideRatio σ r q h k) (r * k) (wiggle c φ)
+        (fun j => thetaFactor θ (spreadRatio σ h k) (slideRatio σ r q h k) (r * k) φ
+          * wiggle c φ j) ∧
+      ‖thetaFactor θ (spreadRatio σ h k) (slideRatio σ r q h k) (r * k) φ‖ ≤ 1 := by
+  intro c φ
+  have hν : 0 ≤ spreadRatio σ h k := by unfold spreadRatio; positivity
+  have hrk : 0 ≤ r * k := by positivity
+  set ν := spreadRatio σ h k
+  set η := slideRatio σ r q h k
+  set x := ν * (4 * Real.sin (φ / 2) ^ 2) + r * k with hxdef
+  have hx : 0 ≤ x := by positivity
+  set y := -(2 * (η * Real.sin φ))
+  have hre := wiggleLoad_re ν η (r * k) φ
+  have him := wiggleLoad_im ν η (r * k) φ
+  set W := wiggleLoad ν η (r * k) φ
+  have hden_re : (1 + (θ : ℂ) * W).re = 1 + θ * x := by
+    rw [Complex.add_re, Complex.one_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      hre, him]
+    ring
+  have hden : 1 + (θ : ℂ) * W ≠ 0 := by
+    intro h0
+    rw [h0, Complex.zero_re] at hden_re
+    nlinarith
+  refine ⟨wiggle_step θ ν η (r * k) φ c hden, ?_⟩
+  unfold thetaFactor
+  rw [norm_div, div_le_one (norm_pos_iff.mpr hden)]
+  have hsq : ‖1 - ((1 - θ : ℝ) : ℂ) * W‖ ^ 2 ≤ ‖1 + (θ : ℂ) * W‖ ^ 2 := by
+    rw [Complex.sq_norm, Complex.sq_norm, Complex.normSq_apply, Complex.normSq_apply]
+    simp only [Complex.sub_re, Complex.add_re, Complex.one_re, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.sub_im, Complex.add_im, Complex.one_im,
+      Complex.mul_im, hre, him]
+    have h1 : 0 ≤ 2 * θ - 1 := by linarith
+    nlinarith [mul_nonneg hx h1, mul_nonneg (mul_nonneg hx h1) hx, mul_nonneg h1 (sq_nonneg y)]
+  nlinarith [norm_nonneg (1 - ((1 - θ : ℝ) : ℂ) * W), norm_nonneg (1 + (θ : ℂ) * W)]
+
+/-- **The checkerboard multiplier (Step 6).** For any dial θ ≥ 0, with the same grid and
+r ≥ 0, one theta step carries the checkerboard c, -c, c, ... to itself times
+(1 - (1-θ)(4ν + rk))/(1 + θ(4ν + rk)): the drift η drops out. -/
+theorem theta_step_checkerboard_multiplier
+    (σ r q h k θ : ℝ) (hh : 0 < h) (hk : 0 < k) (hr : 0 ≤ r) (hθ0 : 0 ≤ θ)
+    (c : ℂ) :
+    ThetaStep θ (spreadRatio σ h k) (slideRatio σ r q h k) (r * k) (checkerboard c)
+      (fun j => (((1 - (1 - θ) * (4 * spreadRatio σ h k + r * k))
+          / (1 + θ * (4 * spreadRatio σ h k + r * k)) : ℝ) : ℂ) * checkerboard c j) := by
+  have hν : 0 ≤ spreadRatio σ h k := by unfold spreadRatio; positivity
+  have hrk : 0 ≤ r * k := by positivity
+  set ν := spreadRatio σ h k
+  set η := slideRatio σ r q h k
+  have hD : (1 + θ * (4 * ν + r * k)) ≠ 0 := by positivity
+  have hMr : (1 - (1 - θ) * (4 * ν + r * k)) / (1 + θ * (4 * ν + r * k))
+      * (1 + θ * (4 * ν + r * k)) = 1 - (1 - θ) * (4 * ν + r * k) := div_mul_cancel₀ _ hD
+  set M := (1 - (1 - θ) * (4 * ν + r * k)) / (1 + θ * (4 * ν + r * k))
+  have hM : (M : ℂ) * (1 + θ * (4 * ν + r * k)) = 1 - (1 - θ) * (4 * ν + r * k) := by
+    exact_mod_cast hMr
+  intro i
+  simp only [checkerboard]
+  rw [neg_one_zpow_sub_one, neg_one_zpow_add_one]
+  push_cast
+  linear_combination (c * (-1 : ℂ) ^ i) * hM
+
+/-- **The explicit scheme detonates past a spreading ratio of one half.** At dial 0 each new
+value is fixed by the old row. If ν = (σ²/2)k/h² > 1/2 (with h, k > 0 and r ≥ 0), then the
+explicit step turns the checkerboard into (1 - 4ν - rk) times itself, and that multiplier has
+size greater than 1, so the checkerboard grows and flips sign every step. -/
+theorem explicit_scheme_checkerboard_grows
+    (σ r q h k : ℝ) (hh : 0 < h) (hk : 0 < k) (hr : 0 ≤ r)
+    (hν : 1 / 2 < spreadRatio σ h k) (c : ℂ) (new : ℤ → ℂ)
+    (hstep : ThetaStep 0 (spreadRatio σ h k) (slideRatio σ r q h k) (r * k)
+      (checkerboard c) new) :
+    (∀ j : ℤ, new j = ((1 - 4 * spreadRatio σ h k - r * k : ℝ) : ℂ) * checkerboard c j) ∧
+    1 < |1 - 4 * spreadRatio σ h k - r * k| := by
+  have hrk : 0 ≤ r * k := by positivity
+  refine ⟨fun j => ?_, ?_⟩
+  · have hj := hstep j
+    simp only [checkerboard] at hj ⊢
+    rw [neg_one_zpow_sub_one, neg_one_zpow_add_one] at hj
+    push_cast at hj ⊢
+    linear_combination hj
+  · rw [abs_of_neg (by linarith)]
+    linarith
+
+-- The card's worked numbers, as exact fractions: σ = 1/5, r = 1/20, q = 1/50,
+-- h = 2/200 = 1/100, k = 1/200 on the 200-by-200 grid.
+-- Spreading ratio ν = 1.
+example : spreadRatio (1 / 5) (1 / 100) (1 / 200) = 1 := by norm_num [spreadRatio]
+-- Sliding ratio η = 0.0025 = 1/400.
+example : slideRatio (1 / 5) (1 / 20) (1 / 50) (1 / 100) (1 / 200) = 1 / 400 := by
+  norm_num [slideRatio]
+-- The drain per step r k = 0.00025 = 1/4000.
+example : (1 / 20 : ℝ) * (1 / 200) = 1 / 4000 := by norm_num
+-- The Crank-Nicolson row: -0.498750, 2.000125, -0.501250.
+example : -(1 / 2 : ℚ) * (1 - 1 / 400) = -399 / 800 := by norm_num
+example : (1 : ℚ) + 1 + (1 / 4000) / 2 = 16001 / 8000 := by norm_num
+example : -(1 / 2 : ℚ) * (1 + 1 / 400) = -401 / 800 := by norm_num
+-- With 500 steps instead of 200 (k = 1/500): ν = 0.4, η = 0.001, r k = 0.0001.
+example : spreadRatio (1 / 5) (1 / 100) (1 / 500) = 2 / 5 := by norm_num [spreadRatio]
+example : slideRatio (1 / 5) (1 / 20) (1 / 50) (1 / 100) (1 / 500) = 1 / 1000 := by
+  norm_num [slideRatio]
+-- Its explicit weights ν - η, 1 - 2ν - rk, ν + η: 0.399000, 0.199900, 0.401000.
+example : (2 / 5 : ℚ) - 1 / 1000 = 399 / 1000 := by norm_num
+example : (1 : ℚ) - 2 * (2 / 5) - 1 / 10000 = 1999 / 10000 := by norm_num
+example : (2 / 5 : ℚ) + 1 / 1000 = 401 / 1000 := by norm_num
+-- The checkerboard multiplier on the 200-by-200 grid: explicit 1 - 4ν - rk, about -3 ...
+example : (1 : ℚ) - 4 * 1 - 1 / 4000 = -12001 / 4000 := by norm_num
+-- ... and Crank-Nicolson, about -1/3.
+example : ((1 : ℚ) - (1 / 2) * (4 * 1 + 1 / 4000)) / (1 + (1 / 2) * (4 * 1 + 1 / 4000))
+    = -8001 / 24001 := by norm_num
+
+end BlackScholesGrid
+
+open BlackScholesGrid
+
+#print axioms theta_scheme_unconditionally_stable_from_one_half
+#print axioms theta_step_checkerboard_multiplier
+#print axioms explicit_scheme_checkerboard_grows
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'BlackScholesGrid.cos_eq_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.exp_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.wiggle_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.neg_one_zpow_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.neg_one_zpow_add_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.wiggleLoad_re' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.wiggleLoad_im' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.theta_scheme_unconditionally_stable_from_one_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.theta_step_checkerboard_multiplier' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesGrid.explicit_scheme_checkerboard_grows' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
 > - **Turn off the averaged cell.** Pass `smooth=False` on the main run: **9.224711**, and the first assert stops the program. One node on one row, worth a quarter of a cent.
 > - **Take explicit steps on the headline grid.** Set that `run`'s first argument to `0.0`. The answer comes back as **−1.17e+93**.
 > - **Use the implicit scheme.** Set it to `1.0`. **9.221488**: never explodes, seventy times less accurate than the average of the two.
-> - **Halve the grid.** Set `M0 = N0 = 100`: **9.227333**, the error up about fourfold from 0.000079 to 0.000327, which is what second order means.
+> - **Halve the grid.** Set `M0 = N0 = 100`: **9.227333**, the error up about fourfold from 0.000079 to 0.000327, which is what second order means. The labels still say 200, and the program then stops with an IndexError at the price table, which is built for 200 cells.
 
 ---
 
@@ -711,7 +988,7 @@ The two outputs agree line for line, including the 94-digit nonsense the unstabl
 - **Barriers and touches.** A knock-out is this grid with an edge at the barrier, pinned to zero. Two barriers, two edges ([Two walls](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md)).
 - **Volatility that varies with price and date.** Local volatility makes the two ratios node-by-node numbers, leaving the sweep unchanged ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
 - **Hedge ratios for free.** The top row already holds the price at neighbouring prices, so the option's slope and curvature come out by subtraction ([Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md)).
-- **Anything else that steps a partial differential equation.** Heat in a bar, pollution in a river: the same three schemes and stability rule, other names on the axes (Crank-Nicolson and the theta family).
+- **Anything else that steps a partial differential equation.** Heat in a bar, pollution in a river: the same three schemes and stability rule, other names on the axes ([Crank-Nicolson and the theta family](../../16-Numerical%20analysis/07-PDE%20Solvers/04-crank-nicolson-and-theta-methods.md)).
 
 > **Say it back**
 > The option's value obeys a local law of motion, so it can be found on a grid instead of from a formula. Measure prices in logs and time in years still to go, put the payoff on the bottom row, replace the derivatives by differences. A dial decides whether a step is charged to the old row, the new row, or half each: the old row alone needs no solving but explodes unless the spreading ratio stays at or under one half; the other two need one tridiagonal solve per step, a sweep down and a sweep back. Average the payoff across the strike's own cell, or the kink spoils the answer. On a 200-by-200 grid the Acme call comes out at 9.227084 against the formula's 9.227006, and the same run hands back the price on every date and at every price along the way.

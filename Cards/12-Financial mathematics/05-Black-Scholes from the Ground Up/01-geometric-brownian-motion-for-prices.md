@@ -10,7 +10,7 @@ Acme shares trade at $100.00 today. Every pricing formula on this shelf needs to
 
 A share moves in percentages, not dollars. A one-dollar move is a day's news for a ten-dollar share and a rounding error for a thousand-dollar one. So a year is not a sum of dollar moves but a product of multipliers: up 0.7% today, down 1.2% tomorrow, two hundred and fifty more of them.
 
-Geometric Brownian motion is that product, with the multipliers made very many and very small. Two dials set it: the **drift**, the steady part of the growth, 5% a year for Acme, and the **volatility**, the size of the random part, 20% a year. Both are supplied to the model, not produced by it.
+Geometric Brownian motion is that product, with the multipliers made very many and very small. Two dials set it: the **drift**, the steady part of the growth, 5% a year for Acme, and the **volatility**, the size of the random part, 20% a year. Both are supplied to the model, not produced by it. The volatility's square is the **variance**.
 
 The weights hold a surprise. A year out the middle outcome — half the years end above it, half below — is **$103.05**. The average outcome is **$105.13**. Every formula that prices anything has to know which of the two it is using.
 
@@ -35,7 +35,9 @@ One draw, not a forecast. This year dipped to $89.46 by month four and finished 
 
 ## The formula
 
-Notation first, in words. A letter with a small $d$ in front means the tiny change in that quantity over the next instant, and a subscript is the date. The noise is standard Brownian motion, written $W_t$: it starts at zero, and its change over a stretch of time is a bell-curve draw centred on zero whose spread is the square root of the stretch's length. That change over the next instant is $dW_t$, and the square root is why a volatility is quoted per square root of a year.
+Notation first, in words. A letter with a small $d$ in front means the tiny change in that quantity over the next instant, and a subscript is the date.
+
+The noise is standard Brownian motion, written $W_t$. It starts at zero, and its change over a stretch of time is a bell-curve draw centred on zero. That draw's spread is the square root of the stretch's length. That change over the next instant is $dW_t$, and the square root is why a volatility is quoted per square root of a year.
 
 The model is one line:
 
@@ -84,7 +86,7 @@ The middle outcome is the **median**, the price with half the weight below it. I
 
 - **Moves are percentages of the price standing now.** That keeps the price positive, and it is why the model fits shares. A quantity that can cross zero — a profit, the gap between two rates — needs [Bachelier](07-bachelier-model.md) instead.
 - **The drift and the volatility hold still.** Real volatility clusters. Let it move and the year's law is no longer lognormal, so one volatility stops fitting every strike — the mismatch handled in [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
-- **The kicks are independent and the path never jumps.** With no overnight gap the tails come out too thin: a one-day fall of a fifth is a move the model prices at essentially never, and days like that have happened.
+- **The kicks are independent and the path never jumps.** With no overnight gap the tails, the extreme outcomes, come out too thin. A one-day fall of a fifth is a move the model prices at essentially never, and days like that have happened.
 - **The start is positive and the horizon is finite.** From $100.00 the price can crawl arbitrarily close to zero without touching it; a company that goes to nothing is outside the model.
 - **The drift is an opinion.** A volatility can be pinned down from a few months of daily moves. A drift cannot: its error shrinks only with the square root of the *span* of the data, so ten years of Acme's history leaves a range wider than the 5% itself. Pricing cards never use $\mu$.
 
@@ -132,7 +134,7 @@ That lift exactly cancels the $-\tfrac12\sigma^2T$ sitting in the centre:
 
 $$\text{average}(S_T) = S_0\,e^{(\mu - \frac12\sigma^2)T}\,e^{\sigma^2T/2} = S_0\,e^{\mu T} = 100 \times e^{0.05} = \$105.13 .$$
 
-So the drift is the growth rate of the average and nothing else. The average sits above the middle by that same lift factor $e^{\sigma^2T/2}$: a few runaway years pull it up while most years sit lower. A third summary, the peak of the density, sits lower still at $99.00, below today's price.
+So the drift is the growth rate of the average and nothing else. The average sits above the middle by that same lift factor $e^{\sigma^2T/2}$: a few runaway years pull it up while most years sit lower. A third summary, the peak of the density, sits lower still at $99.00, below today's price. The density is the weight per dollar of price, drawn in the picture below.
 
 <details>
 <summary>Detailed proof: the solved formula, the lift, and both summaries</summary>
@@ -184,7 +186,9 @@ Acme: $S_0 = \$100.00$, drift 5% a year, volatility 20% a year, horizon one year
 
 A positive 5% drift, and still 44% of years end below where they started: the drift moves the average, and the average is held up by the long right tail.
 
-**Cross-check against the shelf's market.** The shelf prices Acme at $100.00 with a $100.00 strike, a 5% bank rate, a 2% dividend yield, 20% volatility and one year; its call is worth 9.227005508154. Those cards use this law with one change: the drift becomes the bank rate less the dividend yield, 3% a year. Integrating the call's payoff against the law with that drift, discounted at 5%, gives 9.227006 — the shelf's number, out of this card's law. Under that drift the average price is 103.045453, the forward price, which is the same figure as this card's middle outcome: half of Acme's variance happens to equal its dividend yield. Two different quantities, one number, in this market only.
+**Cross-check against the shelf's market.** The shelf prices Acme at $100.00 with a $100.00 strike, a 5% bank rate, a 2% dividend yield, 20% volatility and one year; its call is worth 9.227005508154. A call is the right to buy one share at the strike price at the end of the year. Those cards use this law with one change: the drift becomes the bank rate less the dividend yield, 3% a year. Integrating the call's payoff against the law with that drift, discounted at 5%, gives 9.227006 — the shelf's number, out of this card's law.
+
+Under that drift the average price is 103.045453, the forward price. That is the same figure as this card's middle outcome: half of Acme's variance happens to equal its dividend yield. Two different quantities, one number, in this market only.
 
 ### What breaks if you drop a piece
 
@@ -688,6 +692,184 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line, simulated years included, because the generator is the same arithmetic in both languages.
+
+### Lean
+
+Lean starts from the solved formula and proves its laws for every positive start and horizon, plus the worked arithmetic exactly.
+
+- Take a positive $S_0$, a horizon $T$ of zero or more, and $Z$ a standard bell-curve draw. Then $S_T$ is always positive.
+- Take the same $S_0$, $T$ and $Z$. Then $\ln(S_T/S_0)$ is a bell curve centred on the log drift times $T$, with variance $\sigma^2T$.
+- Take the same $S_0$, $T$ and $Z$. Then the average of $S_T$ is $S_0 e^{\mu T}$.
+- Now take a positive volatility and a positive horizon as well. Then half the weight lies at or below $S_0 e^{(\mu - \sigma^2/2)T}$, and half at or above.
+- The worked arithmetic holds exactly: half the variance, the log drift, the rise and fall of 20%, the peak's exponent and both log spreads.
+
+The spread, the chances, the percentiles, the simulated years and every decimal are left to the Python and Rust checks.
+
+```lean
+-- Prices as geometric Brownian motion: the solved price S_T = S_0 exp((mu - sigma^2/2) T + sigma sqrt(T) Z), with Z a standard bell-curve draw, stays positive, has a log-growth that is a bell curve centred on (mu - sigma^2/2) T with variance sigma^2 T, averages S_0 e^(mu T), and has its middle at S_0 e^((mu - sigma^2/2) T).
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.HasLaw
+import Mathlib.Tactic.NormNum.RealSqrt
+
+open MeasureTheory ProbabilityTheory Real
+
+/-! The card's model line dS/S = mu dt + sigma dW needs Ito calculus, which Mathlib does not have.
+This file starts from the card's solved formula
+`S_T = S_0 * exp ((mu - sigma^2/2) * T + sigma * sqrt T * Z)`, with `Z` a standard bell-curve draw
+(law `gaussianReal 0 1`), and states the facts the card proves about it. -/
+
+/-- A standard bell curve puts half its weight at or below zero. -/
+lemma gaussianReal_std_Iic_zero : (gaussianReal 0 1).real (Set.Iic (0 : ℝ)) = 1 / 2 := by
+  have := nullSingletonClass_gaussianReal (μ := (0 : ℝ)) (v := 1) one_ne_zero
+  have h0 : (gaussianReal 0 1).real {(0 : ℝ)} = 0 := by simp [Measure.real]
+  have hsym : (gaussianReal 0 1).real (Set.Iic (0 : ℝ)) = (gaussianReal 0 1).real (Set.Ici 0) := by
+    have h := gaussianReal_map_neg (μ := (0 : ℝ)) (v := 1)
+    rw [neg_zero] at h
+    conv_lhs => rw [← h]
+    rw [map_measureReal_apply (by fun_prop) measurableSet_Iic]
+    congr 1
+    ext x; simp
+  have hu := measureReal_union_add_inter (μ := gaussianReal 0 1) (s := Set.Iic (0 : ℝ))
+    (measurableSet_Ici (a := (0 : ℝ)))
+  rw [Set.Iic_union_Ici, Set.Iic_inter_Ici, Set.Icc_self, h0,
+    probReal_univ] at hu
+  linarith
+
+/-- The same fact for the weight at or above zero. -/
+lemma gaussianReal_std_Ici_zero : (gaussianReal 0 1).real (Set.Ici (0 : ℝ)) = 1 / 2 := by
+  have hsym : (gaussianReal 0 1).real (Set.Iic (0 : ℝ)) = (gaussianReal 0 1).real (Set.Ici 0) := by
+    have h := gaussianReal_map_neg (μ := (0 : ℝ)) (v := 1)
+    rw [neg_zero] at h
+    conv_lhs => rw [← h]
+    rw [map_measureReal_apply (by fun_prop) measurableSet_Iic]
+    congr 1
+    ext x; simp
+  rw [← hsym, gaussianReal_std_Iic_zero]
+
+#print axioms gaussianReal_std_Iic_zero
+#print axioms gaussianReal_std_Ici_zero
+
+/-- The card's main claim: a price under the model is today's price times a random multiplier.
+The price is always positive, and the logarithm of the multiplier is a bell curve centred on the
+log drift `(mu - sigma^2/2) * T`, with variance `sigma^2 * T`. -/
+theorem log_growth_is_normal {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (Z : Ω → ℝ) (hZ : HasLaw Z (gaussianReal 0 1) P)
+    (S₀ μ σ T : ℝ) (hS₀ : 0 < S₀) (hT : 0 ≤ T) :
+    (∀ ω, 0 < S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω)) ∧
+      HasLaw (fun ω => log (S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω) / S₀))
+        (gaussianReal ((μ - σ ^ 2 / 2) * T) (σ ^ 2 * T).toNNReal) P := by
+  refine ⟨fun ω => by positivity, ?_⟩
+  have h1 := gaussianReal_const_add (gaussianReal_const_mul hZ (σ * √T)) ((μ - σ ^ 2 / 2) * T)
+  have hfun : (fun ω => log (S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω) / S₀))
+      = fun ω => (μ - σ ^ 2 / 2) * T + σ * √T * Z ω := by
+    funext ω
+    rw [mul_div_cancel_left₀ _ hS₀.ne', log_exp]
+  have hlaw : gaussianReal (σ * √T * 0 + (μ - σ ^ 2 / 2) * T)
+      (⟨(σ * √T) ^ 2, sq_nonneg _⟩ * 1) = gaussianReal ((μ - σ ^ 2 / 2) * T) (σ ^ 2 * T).toNNReal := by
+    congr 1
+    · ring
+    · apply NNReal.eq
+      rw [Real.coe_toNNReal _ (mul_nonneg (sq_nonneg σ) hT)]
+      show (σ * √T) ^ 2 * 1 = σ ^ 2 * T
+      rw [mul_one, mul_pow, sq_sqrt hT]
+  rw [hfun, ← hlaw]
+  exact h1
+
+/-- The average outcome: the price's average is `S_0 * e^(mu T)`. The drift is the growth rate of
+the average, because the lift `e^(sigma^2 T / 2)` cancels the half-variance in the centre. -/
+theorem average_price_eq {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (Z : Ω → ℝ) (hZ : HasLaw Z (gaussianReal 0 1) P)
+    (S₀ μ σ T : ℝ) (hS₀ : 0 < S₀) (hT : 0 ≤ T) :
+    ∫ ω, S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω) ∂P = S₀ * exp (μ * T) := by
+  have hm := mgf_gaussianReal hZ (σ * √T)
+  simp only [mgf] at hm
+  have hsplit : (fun ω => S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω))
+      = fun ω => (S₀ * exp ((μ - σ ^ 2 / 2) * T)) * exp (σ * √T * Z ω) := by
+    funext ω
+    rw [exp_add]; ring
+  rw [hsplit, integral_const_mul, hm, mul_assoc, ← exp_add]
+  congr 2
+  rw [mul_pow, sq_sqrt hT]
+  push_cast
+  ring
+
+/-- The middle outcome: half the weight ends at or below `S_0 * e^((mu - sigma^2/2) T)` and half at
+or above it. This needs a real random kick, so the volatility and the horizon are positive
+(with no volatility the price is a fixed number and all the weight sits on it). -/
+theorem middle_price_splits_weight {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (Z : Ω → ℝ) (hZ : HasLaw Z (gaussianReal 0 1) P)
+    (S₀ μ σ T : ℝ) (hS₀ : 0 < S₀) (hσ : 0 < σ) (hT : 0 < T) :
+    P.real {ω | S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω) ≤ S₀ * exp ((μ - σ ^ 2 / 2) * T)}
+        = 1 / 2 ∧
+      P.real {ω | S₀ * exp ((μ - σ ^ 2 / 2) * T) ≤ S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω)}
+        = 1 / 2 := by
+  have hc : 0 < σ * √T := mul_pos hσ (sqrt_pos.mpr hT)
+  constructor
+  · have hset : {ω | S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω) ≤ S₀ * exp ((μ - σ ^ 2 / 2) * T)}
+        = {ω | Z ω ≤ 0} := by
+      ext ω
+      simp only [Set.mem_ofPred_eq]
+      rw [mul_le_mul_iff_right₀ hS₀, exp_le_exp]
+      constructor
+      · intro h; nlinarith
+      · intro h; nlinarith
+    rw [hset, hZ.measureReal_eq (p := fun x => x ≤ 0) measurableSet_Iic]
+    exact gaussianReal_std_Iic_zero
+  · have hset : {ω | S₀ * exp ((μ - σ ^ 2 / 2) * T) ≤ S₀ * exp ((μ - σ ^ 2 / 2) * T + σ * √T * Z ω)}
+        = {ω | 0 ≤ Z ω} := by
+      ext ω
+      simp only [Set.mem_ofPred_eq]
+      rw [mul_le_mul_iff_right₀ hS₀, exp_le_exp]
+      constructor
+      · intro h; nlinarith
+      · intro h; nlinarith
+    rw [hset, hZ.measureReal_eq (p := fun x => 0 ≤ x) measurableSet_Ici]
+    exact gaussianReal_std_Ici_zero
+
+/-! The card's exact worked arithmetic for Acme: drift 5% = 1/20, volatility 20% = 1/5, one year. -/
+
+-- A rise of 20% then a fall of 20% on 100 dollars leaves 96 dollars.
+example : (100 : ℚ) * (1 + 1 / 5) * (1 - 1 / 5) = 96 := by norm_num
+
+-- For any x, (1 + x)(1 - x) = 1 - x^2: the pair of moves loses the square of the move.
+example : ∀ x : ℚ, (1 + x) * (1 - x) = 1 - x ^ 2 := by intro x; ring
+
+-- Half the variance: 1/2 * (1/5)^2 = 1/50, that is 2% a year.
+example : (1 / 2 : ℚ) * (1 / 5) ^ 2 = 1 / 50 := by norm_num
+
+-- The log drift: 5% less half the variance is 3% a year.
+example : (1 / 20 : ℚ) - (1 / 5) ^ 2 / 2 = 3 / 100 := by norm_num
+
+-- Average over middle is e^(sigma^2 T / 2): the exponents differ by 2% a year.
+example : (1 / 20 : ℚ) - ((1 / 20) - (1 / 5) ^ 2 / 2) = 1 / 50 := by norm_num
+
+-- The peak of the density sits at exponent mu - 3 sigma^2 / 2 = 5% - 6% = -1% a year.
+example : (1 / 20 : ℚ) - 3 * (1 / 5) ^ 2 / 2 = -1 / 100 := by norm_num
+
+-- The log spread at one year: sigma * sqrt 1 = 1/5.
+example : (1 / 5 : ℝ) * √1 = 1 / 5 := by norm_num
+
+-- Four years has twice the spread of one year: sqrt 4 = 2 * sqrt 1.
+example : √(4 : ℝ) = 2 * √1 := by norm_num
+
+-- The shelf's market: the pricing drift r - q = 5% - 2% is 3%, the same as this card's log drift,
+-- because half of Acme's variance equals its 2% dividend yield.
+example : (1 / 20 : ℚ) - 1 / 50 = (1 / 20) - (1 / 5) ^ 2 / 2 := by norm_num
+
+#print axioms log_growth_is_normal
+#print axioms average_price_eq
+#print axioms middle_price_splits_weight
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gaussianReal_std_Iic_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gaussianReal_std_Ici_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_growth_is_normal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'average_price_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'middle_price_splits_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

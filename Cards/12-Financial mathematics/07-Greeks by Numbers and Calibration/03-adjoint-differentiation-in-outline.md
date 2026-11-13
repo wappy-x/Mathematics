@@ -6,15 +6,21 @@
 
 ## General Overview
 
-Acme's shares trade at $100 today. A one-year option to buy one share for $100 costs $9.23 in this market: a risk-free rate of 5% a year, a dividend yield of 2%, volatility of 20%. That price comes from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+Acme's shares trade at $100 today. A one-year option to buy one share for $100 (the strike) costs $9.23 in this market: a risk-free rate of 5% a year, a dividend yield of 2%, volatility of 20%. That price comes from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
-A desk holding the option wants the slopes, not the price: what the option gains if Acme rises a dollar, if volatility rises a point, if a day passes. Six inputs went into $9.23, and the desk wants the derivative with respect to every one.
+A trading desk holding the option wants the slopes, not the price: what the option gains if Acme rises a dollar, if volatility rises a point, if a day passes. Six inputs went into $9.23, and the desk wants the derivative with respect to every one. Traders call these slopes the Greeks, since most are named after Greek letters.
 
-The plain way is to nudge one input, price again, and divide by the nudge — [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md). That costs a fresh pricing per nudge, two per input if the nudge goes each way: thirteen pricings for the price and all six slopes. Affordable here, ruinous on a book whose inputs are every point of a yield curve and a volatility surface.
+The plain way is to nudge one input, price again, and divide by the nudge — [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md). That costs a fresh pricing per nudge, two per input if the nudge goes each way: thirteen pricings for the price and all six slopes. Affordable here, ruinous on a book whose inputs are every point of a yield curve and a volatility surface. A book is a bank's whole set of trades. A yield curve gives one interest rate for each loan length; a volatility surface gives one volatility for each strike and expiry.
 
 Adjoint differentiation replaces that per-input bill with a flat surcharge. Price the option once, keeping a record of every arithmetic step, then read the record backwards once. Every input's derivative falls out of that single walk — exactly, with no nudge to choose.
 
-Three words carry the rest of the card. The record of the steps is a **tape**: a numbered list, one operation to a line. The number carried backwards through each step is its **adjoint**: how much the final price moves per unit change in that step's value. Walking the tape from the answer towards the inputs is **reverse mode**. On the Acme tape the forward pass is 26 operations and the sweep 42 multiply-and-adds, so the price with all six derivatives costs 2.62 forward passes — and a seventh slope would not move that number.
+Three words carry the rest of the card.
+
+- The record of the steps is a **tape**: a numbered list, one operation to a line.
+- The number carried backwards through each step is its **adjoint**: how much the final price moves per unit change in that step's value.
+- Walking the tape from the answer towards the inputs is **reverse mode**. One such walk is a sweep.
+
+On the Acme tape the forward pass is 26 operations and the sweep 42 multiply-and-adds. So the price with all six derivatives costs 2.62 forward passes — and a seventh slope would not move that number.
 
 **Record the arithmetic that produced the price, then walk the record backwards, multiplying by each step's local slope and adding up wherever a value was used more than once: the inputs' adjoints are every derivative at once, at a cost that does not depend on how many inputs there are.**
 
@@ -89,7 +95,7 @@ One slope per kind of step, nine kinds in all. Here `c` is a fixed number, `phi`
 - **Every step has a known slope.** A kink has none: `max(S - K, 0)` has no slope at the strike, and a payoff that either pays or does not has none anywhere useful — those want [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md).
 - **The tape has to be kept.** Memory grows with the number of steps: a simulated path of a million steps wants a million stored values.
 - **One sweep, first derivatives only.** Gamma is a derivative of a derivative and needs a second pass.
-- **One answer at a time.** A sweep hands back the derivatives of one output. A routine returning a price and a hedge ratio wants a sweep each, so many answers and few inputs is forward mode's case, not this one.
+- **One answer at a time.** A sweep hands back the derivatives of one output. A routine returning a price and a hedge ratio wants a sweep each, so many answers and few inputs is forward mode's case, not this one. Forward mode carries the slopes top to bottom, one input per pass ([Forward-mode automatic differentiation](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/06-forward-mode-automatic-differentiation.md)).
 - **Exact, up to rounding.** No step size, no truncation error — and so also the faithful derivative of a buggy price.
 
 ---
@@ -157,7 +163,9 @@ Zero. Not rounding — exactly zero, because $S e^{-qT}\phi(d_1) = K e^{-rT}\phi
 
 Count work the crudest honest way. The forward pass does one operation per line: 26. The sweep does one multiply-and-add per arrow into a line: 42. So the sweep costs 42/26 = 1.62 forward passes. Counted that way it looks dearer than it is: its 42 steps are all multiply-and-add, while the 26 forward ones include two bell-curve areas, two exponentials, a logarithm and a square root.
 
-That ratio is not luck. No step has more than two inputs, so arrows can never exceed twice the lines, and a sweep can never cost much more than twice its forward pass — whatever the program, however many inputs. Nothing in that argument counts inputs, which is the result the field rests on: a gradient costs a small constant times the function, four or less for the usual operations, and that constant does not grow with the derivatives wanted. What grows instead is memory: every forward value must survive until the sweep needs it.
+That ratio is not luck. No step has more than two inputs, so arrows can never exceed twice the lines, and a sweep can never cost much more than twice its forward pass — whatever the program, however many inputs.
+
+Nothing in that argument counts inputs. That is the result the field rests on: a gradient (all the first derivatives at once) costs a small constant times the function, four or less for the usual operations, and that constant does not grow with the derivatives wanted. What grows instead is memory: every forward value must survive until the sweep needs it.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -191,7 +199,7 @@ At the input lines the claim reads: slot `k` holds the derivative of the answer 
 <details>
 <summary>Forward mode, and when it is the better buy</summary>
 
-The same slopes can be accumulated the other way. Give one input a companion number 1 and every other input 0, then walk the tape top to bottom: each line's companion is the sum of its slopes times its inputs' companions, and the answer's companion at the bottom is its derivative with respect to that one input. One pass, one input, all answers — the mirror of a sweep.
+The same slopes can be accumulated the other way. Give one input a companion number 1 and every other input 0, then walk the tape top to bottom. Each line's companion is the sum of its slopes times its inputs' companions, and the answer's companion at the bottom is its derivative with respect to that one input. One pass, one input, all answers — the mirror of a sweep.
 
 So the choice is a question of shape: many inputs and one answer, sweep; one input and many answers, walk forward. A price is the first shape. The code runs both and they agree to twelve decimals.
 
@@ -203,7 +211,7 @@ Two other routes reach the same six numbers. Differentiating the formula on pape
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, so $d_1 = 0.25$, $d_2 = 0.05$. The forward pass gives 9.227006, the house price. Then the sweep, lines in reverse:
+Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, so $d_1 = 0.25$, $d_2 = 0.05$. The forward pass gives 9.227006, the option price from the General Overview. Then the sweep, lines in reverse:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -216,7 +224,7 @@ Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year,
 | **slope on $r$**, then **$q$** | through the two discounts; the drift route dies too | **$49.458109$**, **$-58.685115$** |
 | **slope on $T$** | three live uses of $T$: the wiggle unit and the two discounts | **$5.089319$** |
 
-Six derivatives from one walk down 42 arrows. Delta is 0.5869, the shelf's house number, and what the nudging and forward-mode roads give too. Desks rescale them, since nobody moves a rate by a whole 100%:
+Six derivatives from one walk down 42 arrows. Delta is 0.5869, the delta this shelf uses throughout, and what the nudging and forward-mode roads give too. Desks rescale them, since nobody moves a rate by a whole 100%:
 
 | Greek | What it answers | From the sweep | As a desk quotes it |
 | --- | --- | --- | --- |
@@ -233,7 +241,7 @@ Two identities test the six together rather than one at a time. Doubling $S$ and
 
 $$\frac{\partial C}{\partial t} + (r-q)\,S\,\frac{\partial C}{\partial S} + \tfrac{1}{2}\sigma^2 S^2\,\Gamma - rC = 0,$$
 
-with theta $-5.089319$ for the first term and $\Gamma$ = 0.018951 from two sweeps a bump apart. The four terms cancel to zero at six decimals, and neither identity built the sweep, so neither holds by accident.
+with $t$ the calendar date, so theta $-5.089319$ is the first term, and $\Gamma$ = 0.018951 from two sweeps a bump apart. The four terms cancel to zero at six decimals, and neither identity built the sweep, so neither holds by accident.
 
 ### What breaks if you drop a piece
 
@@ -250,7 +258,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows a derivative. A tape is a plain list of steps; the forward pass fills in values and records one local slope per arrow; the sweep walks the list backwards. The six numbers are reached **four independent ways** — the sweep, closed forms differentiated by hand, central differences, and forward mode — with both identities checked on top and the wrong ways above run too. Rust has no error function, so its bell-curve area comes from adding thin slices; the Python uses `erf`.
+Nothing imported knows a derivative. A tape is a plain list of steps; the forward pass fills in values and records one local slope per arrow; the sweep walks the list backwards. The six numbers are reached **four independent ways** — the sweep, closed forms differentiated by hand, central differences (nudging each way), and forward mode — with both identities checked on top and the wrong ways above run too. Rust has no error function, so its bell-curve area comes from adding thin slices; the Python uses `erf`.
 
 ### Python
 
@@ -689,6 +697,379 @@ ALL CHECKS PASS
 
 The two outputs match line for line at six decimals, from different bell-curve areas: `erf` against thin slices under the curve.
 
+### Lean
+
+Lean proves the sweep's claim for every tape whose steps have slopes, the cost count, and the zero at $d_1$.
+
+- Suppose every step of a tape has a slope at the values the forward pass found. Then one backward sweep, adding wherever a value is reused, leaves each input's adjoint equal to its derivative.
+- Suppose no step has more than two inputs. Then the arrows into the steps number at most twice the steps.
+- Take $S$, $K$, $\sigma$ and $T$ positive, with $d_1$ and $d_2$ from the call formula. Then $S e^{-qT}\phi(d_1) - K e^{-rT}\phi(d_2)$, the adjoint of $d_1$, is exactly zero.
+- The toy tape's steps take 2, 2, 1 and 2 inputs: 4 steps and 7 arrows.
+- The Black-Scholes tape's 26 steps carry 42 arrows, within the bound of 52.
+- Nudging each way costs 13 pricings for the price and six slopes.
+
+The Acme numbers, gamma and the four mistakes are left to the Python and Rust checks.
+
+```lean
+-- Adjoint differentiation: one backward sweep over a tape of differentiable steps returns the derivative of the answer with respect to every input.
+import Mathlib.Analysis.Calculus.FDeriv.Prod
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Probability.Distributions.Gaussian.Real
+
+open ProbabilityTheory
+
+/-- A tape with `n` inputs and `N` lines. Lines `0, …, n-1` hold the inputs. Every later
+line `k` is one step `op k`, a function of the values on lines before it: changing a
+value on line `k` or later never changes `op k`. -/
+structure Tape (n N : ℕ) where
+  op : Fin N → (Fin N → ℝ) → ℝ
+  uses_earlier : ∀ (k : Fin N) (v w : Fin N → ℝ), (∀ j, j < k → v j = w j) → op k v = op k w
+
+namespace Tape
+
+variable {n N : ℕ}
+
+/-- The starting record: the inputs on their lines, zero on every other line. -/
+def start (x : Fin n → ℝ) : Fin N → ℝ :=
+  fun j => if h : j.val < n then x ⟨j.val, h⟩ else 0
+
+/-- The forward pass after lines `0, …, j-1`: each step line writes its value on its own line. -/
+def run (t : Tape n N) (x : Fin n → ℝ) : ℕ → (Fin N → ℝ)
+  | 0 => start x
+  | j + 1 =>
+    if h : n ≤ j ∧ j < N then
+      Function.update (t.run x j) ⟨j, h.2⟩ (t.op ⟨j, h.2⟩ (t.run x j))
+    else t.run x j
+
+/-- The whole forward pass: every line's value. -/
+def forward (t : Tape n N) (x : Fin n → ℝ) : Fin N → ℝ := t.run x N
+
+/-- The local slope of step `k` with respect to line `j`, at the forward values. -/
+noncomputable def slope (t : Tape n N) (x : Fin n → ℝ) (k j : Fin N) : ℝ :=
+  fderiv ℝ (t.op k) (t.forward x) (Pi.single j 1)
+
+/-- The backward sweep after `c` step lines, taken from the last line down. It starts with
+adjoint 1 on the answer (the last line) and 0 elsewhere; processing step line `k` adds
+`adjoint k × slope k j` into the adjoint of every earlier line `j`. Input lines are not
+processed. -/
+noncomputable def back (t : Tape n (m + 1)) (x : Fin n → ℝ) : ℕ → (Fin (m + 1) → ℝ)
+  | 0 => Pi.single (Fin.last m) 1
+  | c + 1 =>
+    if h : c ≤ m ∧ n ≤ m - c then
+      fun j =>
+        if j < ⟨m - c, by omega⟩ then
+          t.back x c j + t.back x c ⟨m - c, by omega⟩ * t.slope x ⟨m - c, by omega⟩ j
+        else t.back x c j
+    else t.back x c
+
+/-- The adjoints after the full sweep over all `m + 1` lines. -/
+noncomputable def adjoint (t : Tape n (m + 1)) (x : Fin n → ℝ) : Fin (m + 1) → ℝ :=
+  t.back x (m + 1)
+
+end Tape
+
+namespace TapeHelp
+
+open Tape
+
+variable {n N : ℕ}
+
+lemma run_add (t : Tape n N) (y : Fin n → ℝ) (s : ℕ) (j : Fin N) (hj : j.val < s) :
+    ∀ d, t.run y (s + d) j = t.run y s j
+  | 0 => rfl
+  | d + 1 => by
+    rw [show s + (d + 1) = (s + d) + 1 by omega, Tape.run]
+    split_ifs with h
+    · rw [Function.update_of_ne (Fin.ne_of_val_ne (by simp; omega))]
+      exact run_add t y s j hj d
+    · exact run_add t y s j hj d
+
+lemma run_eq_forward (t : Tape n N) (y : Fin n → ℝ) (s : ℕ) (hs : s ≤ N) (j : Fin N)
+    (hj : j.val < s) : t.run y s j = t.forward y j := by
+  unfold Tape.forward
+  obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le hs
+  rw [run_add t y s j hj d]
+
+lemma run_input (t : Tape n N) (y : Fin n → ℝ) (s : ℕ) (j : Fin N) (hj : j.val < n) :
+    t.run y s j = y ⟨j.val, hj⟩ := by
+  induction s with
+  | zero => simp [Tape.run, Tape.start, hj]
+  | succ s ih =>
+    rw [Tape.run]
+    split_ifs with h
+    · rw [Function.update_of_ne (Fin.ne_of_val_ne (by simp; omega))]
+      exact ih
+    · exact ih
+
+lemma forward_input (t : Tape n N) (y : Fin n → ℝ) (j : Fin N) (hj : j.val < n) :
+    t.forward y j = y ⟨j.val, hj⟩ := run_input t y N j hj
+
+lemma forward_step (t : Tape n N) (y : Fin n → ℝ) (k : Fin N) (hk : n ≤ k.val) :
+    t.forward y k = t.op k (t.forward y) := by
+  rw [← run_eq_forward t y (k.val + 1) (by omega) k (by omega), Tape.run, dif_pos ⟨hk, k.2⟩]
+  rw [Function.update_self]
+  apply t.uses_earlier
+  intro j hj
+  exact run_eq_forward t y k.val (by omega) j hj
+
+lemma linear_expand (L : (Fin N → ℝ) →L[ℝ] ℝ) (w : Fin N → ℝ) :
+    L w = ∑ j, w j * L (Pi.single j 1) := by
+  have := LinearMap.pi_apply_eq_sum_univ L.toLinearMap w
+  simp only [ContinuousLinearMap.coe_coe, smul_eq_mul] at this
+  rw [this]
+  refine Finset.sum_congr rfl (fun j _ => ?_)
+  congr 2
+  funext i
+  simp [Pi.single_apply, eq_comm]
+
+lemma fderiv_input (t : Tape n N) (x w : Fin n → ℝ) (j : Fin N) (hj : j.val < n) :
+    fderiv ℝ (fun y => t.forward y j) x w = w ⟨j.val, hj⟩ := by
+  have hf : (fun y => t.forward y j) = fun y : Fin n → ℝ => y ⟨j.val, hj⟩ :=
+    funext fun y => forward_input t y j hj
+  rw [hf, (hasFDerivAt_apply (𝕜 := ℝ) (⟨j.val, hj⟩ : Fin n) x).fderiv]
+  rfl
+
+lemma deriv_step (t : Tape n N) (x : Fin n → ℝ)
+    (hdiff : ∀ k : Fin N, n ≤ k.val → DifferentiableAt ℝ (t.op k) (t.forward x)) :
+    ∀ s, ∀ k : Fin N, k.val = s → DifferentiableAt ℝ (fun y => t.forward y k) x ∧
+      (n ≤ k.val → ∀ v, fderiv ℝ (fun y => t.forward y k) x v =
+        ∑ j, (if j < k then t.slope x k j * fderiv ℝ (fun y => t.forward y j) x v else 0)) := by
+  intro s
+  induction s using Nat.strong_induction_on with
+  | _ s ih =>
+  intro k hks
+  by_cases hk : k.val < n
+  · refine ⟨?_, fun h => absurd h (by omega)⟩
+    have hf : (fun y => t.forward y k) = fun y : Fin n → ℝ => y ⟨k.val, hk⟩ :=
+      funext fun y => forward_input t y k hk
+    rw [hf]
+    exact (hasFDerivAt_apply (𝕜 := ℝ) (⟨k.val, hk⟩ : Fin n) x).differentiableAt
+  · have hk : n ≤ k.val := by omega
+    let G : (Fin n → ℝ) → (Fin N → ℝ) := fun y j => if j < k then t.forward y j else t.forward x j
+    have hGj : ∀ j : Fin N, j < k → DifferentiableAt ℝ (fun y => t.forward y j) x :=
+      fun j hj => (ih j.val (by rw [← hks]; exact hj) j rfl).1
+    have hG : DifferentiableAt ℝ G x := by
+      rw [differentiableAt_pi]
+      intro j
+      by_cases hj : j < k
+      · simp only [G, hj, if_true]
+        exact hGj j hj
+      · simp only [G, hj, if_false]
+        exact differentiableAt_const _
+    have hF : (fun y => t.forward y k) = fun y => t.op k (G y) := by
+      funext y
+      rw [forward_step t y k hk]
+      apply t.uses_earlier
+      intro j hj
+      simp [G, hj]
+    have hGx : G x = t.forward x := by
+      funext j
+      by_cases hj : j < k <;> simp [G, hj]
+    have hd : DifferentiableAt ℝ (t.op k) (G x) := by rw [hGx]; exact hdiff k hk
+    refine ⟨?_, fun _ v => ?_⟩
+    · rw [hF]; exact hd.comp x hG
+    · rw [hF]
+      show fderiv ℝ (t.op k ∘ G) x v = _
+      rw [fderiv_comp x hd hG, ContinuousLinearMap.comp_apply, hGx, linear_expand]
+      refine Finset.sum_congr rfl (fun j _ => ?_)
+      have hcomp : fderiv ℝ G x v j = fderiv ℝ (fun y => G y j) x v := by
+        rw [fderiv_apply hG j]; rfl
+      rw [hcomp]
+      unfold Tape.slope
+      by_cases hj : j < k
+      · simp only [G, hj, if_true]
+        ring
+      · simp only [G, hj, if_false, fderiv_const_apply]
+        simp
+
+#print axioms run_add
+#print axioms run_eq_forward
+#print axioms run_input
+#print axioms forward_input
+#print axioms forward_step
+#print axioms linear_expand
+#print axioms fderiv_input
+#print axioms deriv_step
+
+end TapeHelp
+
+namespace TapeHelp
+
+open Tape
+
+lemma back_inv {n m : ℕ} (t : Tape n (m + 1)) (x : Fin n → ℝ)
+    (hD : ∀ k : Fin (m + 1), n ≤ k.val → ∀ v, fderiv ℝ (fun y => t.forward y k) x v =
+      ∑ j, (if j < k then t.slope x k j * fderiv ℝ (fun y => t.forward y j) x v else 0))
+    (v : Fin n → ℝ) :
+    ∀ c, c + n ≤ m + 1 → fderiv ℝ (fun y => t.forward y (Fin.last m)) x v =
+      ∑ j : Fin (m + 1), (if j.val + c ≤ m then
+        t.back x c j * fderiv ℝ (fun y => t.forward y j) x v else 0) := by
+  intro c
+  induction c with
+  | zero =>
+    intro _
+    have hj : ∀ j : Fin (m + 1), j.val + 0 ≤ m := fun j => by have := j.2; omega
+    simp only [hj, if_true, Tape.back]
+    simp [Pi.single_apply]
+  | succ c ih =>
+    intro hc
+    rw [ih (by omega)]
+    have hcond : c ≤ m ∧ n ≤ m - c := ⟨by omega, by omega⟩
+    set k : Fin (m + 1) := ⟨m - c, by omega⟩ with hkdef
+    have hback : t.back x (c + 1) = fun j =>
+        if j < k then t.back x c j + t.back x c k * t.slope x k j else t.back x c j := by
+      rw [Tape.back, dif_pos hcond]
+    have e1 : ∀ j : Fin (m + 1), (if j.val + c ≤ m then
+        t.back x c j * fderiv ℝ (fun y => t.forward y j) x v else 0) =
+        (if j < k then t.back x c j * fderiv ℝ (fun y => t.forward y j) x v else 0) +
+        (if j = k then t.back x c j * fderiv ℝ (fun y => t.forward y j) x v else 0) := by
+      intro j
+      have hkv : k.val = m - c := rfl
+      by_cases h1 : j < k
+      · have h2 : j ≠ k := ne_of_lt h1
+        have h3 : j.val + c ≤ m := by rw [Fin.lt_def] at h1; omega
+        rw [if_pos h1, if_neg h2, if_pos h3, add_zero]
+      · by_cases h2 : j = k
+        · have h3 : j.val + c ≤ m := by rw [h2]; omega
+          rw [if_neg h1, if_pos h2, if_pos h3, zero_add]
+        · have h2' : j.val ≠ m - c := fun h => h2 (Fin.ext (by rw [h, hkv]))
+          have h3 : ¬ j.val + c ≤ m := by rw [Fin.lt_def] at h1; omega
+          rw [if_neg h1, if_neg h2, if_neg h3, add_zero]
+    rw [Finset.sum_congr rfl (fun j _ => e1 j), Finset.sum_add_distrib]
+    simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    rw [hD k (by simp [k]; omega) v, Finset.mul_sum, ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl (fun j _ => ?_)
+    rw [hback]
+    by_cases h1 : j < k
+    · have h3 : j.val + (c + 1) ≤ m := by rw [Fin.lt_def] at h1; simp [k] at h1; omega
+      simp only [h1, h3, if_true]
+      ring
+    · have h3 : ¬ j.val + (c + 1) ≤ m := by rw [Fin.lt_def] at h1; simp [k] at h1; omega
+      simp [h1, h3]
+
+lemma back_stable {n m : ℕ} (t : Tape n (m + 1)) (x : Fin n → ℝ) (hn1 : 1 ≤ n) (hn : n ≤ m + 1) :
+    ∀ d, t.back x (m + 1 - n + d) = t.back x (m + 1 - n)
+  | 0 => rfl
+  | d + 1 => by
+    rw [← add_assoc, Tape.back, dif_neg (by omega)]
+    exact back_stable t x hn1 hn d
+
+#print axioms back_inv
+#print axioms back_stable
+
+end TapeHelp
+
+/-- The card's main claim. Record the steps that produce the answer (the last line), then
+sweep the tape backwards once, multiplying by each step's local slope and adding the
+contributions wherever a value was used more than once. If every step has a slope at the
+point (it is differentiable there), the adjoint left on each input line is exactly the
+derivative of the answer with respect to that input. -/
+theorem reverse_sweep_gives_every_derivative {n m : ℕ} (hn : n ≤ m + 1)
+    (t : Tape n (m + 1)) (x : Fin n → ℝ)
+    (hdiff : ∀ k : Fin (m + 1), n ≤ k.val → DifferentiableAt ℝ (t.op k) (t.forward x))
+    (i : Fin n) :
+    t.adjoint x (Fin.castLE hn i) =
+      fderiv ℝ (fun y => t.forward y (Fin.last m)) x (Pi.single i 1) := by
+  have hn1 : 1 ≤ n := by have := i.2; omega
+  have hD : ∀ k : Fin (m + 1), n ≤ k.val → ∀ v, fderiv ℝ (fun y => t.forward y k) x v =
+      ∑ j, (if j < k then t.slope x k j * fderiv ℝ (fun y => t.forward y j) x v else 0) :=
+    fun k hk => (TapeHelp.deriv_step t x hdiff k.val k rfl).2 hk
+  rw [TapeHelp.back_inv t x hD (Pi.single i 1) (m + 1 - n) (by omega)]
+  unfold Tape.adjoint
+  have hb : t.back x (m + 1) = t.back x (m + 1 - n) := by
+    have := TapeHelp.back_stable t x hn1 hn n
+    rwa [show m + 1 - n + n = m + 1 by omega] at this
+  rw [hb]
+  rw [Finset.sum_eq_single (Fin.castLE hn i)]
+  · have hc : (Fin.castLE hn i).val + (m + 1 - n) ≤ m := by simp; omega
+    rw [if_pos hc, TapeHelp.fderiv_input t x _ _ (by simp)]
+    simp
+  · intro b _ hb
+    split_ifs with hc
+    · have hbn : b.val < n := by omega
+      rw [TapeHelp.fderiv_input t x _ _ hbn]
+      have : (⟨b.val, hbn⟩ : Fin n) ≠ i := by
+        intro h; apply hb; ext; simp [← h]
+      simp [Pi.single_apply, this]
+    · rfl
+  · intro h; exact absurd (Finset.mem_univ _) h
+
+/-- The cost claim. If no step has more than two inputs, the arrows into the step lines
+(one multiply-and-add each in the sweep) number at most twice the step lines, so a
+sweep costs at most about two forward passes however many inputs there are. -/
+theorem sweep_arrows_at_most_twice_steps (m : ℕ) (arity : Fin m → ℕ)
+    (h : ∀ k, arity k ≤ 2) : ∑ k, arity k ≤ 2 * m := by
+  calc ∑ k, arity k ≤ ∑ _k : Fin m, 2 := Finset.sum_le_sum (fun k _ => h k)
+    _ = 2 * m := by simp [mul_comm]
+
+/-- The zero hiding in the Black–Scholes tape. With `d₁` and `d₂ = d₁ - σ√T` as in the
+call formula and `φ` the standard bell-curve height, the adjoint reaching `d₁`,
+`S e^{-qT} φ(d₁) - K e^{-rT} φ(d₂)`, is exactly zero. -/
+theorem black_scholes_adjoint_of_d1_is_zero (S K r q σ T d₁ d₂ : ℝ)
+    (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T)
+    (hd₁ : d₁ = (Real.log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * Real.sqrt T))
+    (hd₂ : d₂ = d₁ - σ * Real.sqrt T) :
+    S * Real.exp (-q * T) * gaussianPDFReal 0 1 d₁
+      - K * Real.exp (-r * T) * gaussianPDFReal 0 1 d₂ = 0 := by
+  have hsT : 0 < Real.sqrt T := Real.sqrt_pos.mpr hT
+  have hsT2 : Real.sqrt T ^ 2 = T := Real.sq_sqrt hT.le
+  have hσs : σ * Real.sqrt T ≠ 0 := by positivity
+  have key : d₁ * (σ * Real.sqrt T) = Real.log (S / K) + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd₁]; field_simp
+  have hexp : -(d₂ - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)) =
+      -(d₁ - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)) + Real.log (S / K) + (r - q) * T := by
+    rw [hd₂]
+    have : (d₁ - σ * Real.sqrt T) ^ 2 = d₁ ^ 2 - 2 * (d₁ * (σ * Real.sqrt T)) + σ ^ 2 * Real.sqrt T ^ 2 := by ring
+    simp only [sub_zero, NNReal.coe_one, mul_one]
+    rw [this, key, hsT2]
+    ring
+  have hSK : 0 < S / K := div_pos hS hK
+  simp only [gaussianPDFReal]
+  rw [hexp, Real.exp_add, Real.exp_add, Real.exp_log hSK]
+  have e1 : Real.exp (-q * T) = Real.exp (-r * T) * Real.exp ((r - q) * T) := by
+    rw [← Real.exp_add]; ring_nf
+  rw [e1]
+  field_simp
+  ring
+
+-- The toy forward-price tape: steps r - q, (r - q)·T, e^(that), S·(that).
+-- 4 step lines, 7 arrows.
+example : [2, 2, 1, 2].length = 4 ∧ [2, 2, 1, 2].sum = 7 := by decide
+
+-- The Black–Scholes tape: the number of inputs of each of its step lines, in tape order.
+-- 26 step lines, 42 arrows, within the bound of 2 × 26 = 52.
+example :
+    [1, 2, 2, 1, 2, 2, 1, 2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 2, 2, 2, 1, 2].length = 26 ∧
+    [1, 2, 2, 1, 2, 2, 1, 2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 2, 2, 2, 1, 2].sum = 42 ∧
+    42 ≤ 2 * 26 := by decide
+
+-- Nudging each way costs 2 pricings per slope plus the price: 13 pricings for six slopes.
+example : 1 + 2 * 6 = 13 := by norm_num
+
+#print axioms reverse_sweep_gives_every_derivative
+#print axioms sweep_arrows_at_most_twice_steps
+#print axioms black_scholes_adjoint_of_d1_is_zero
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'TapeHelp.run_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.run_eq_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.run_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.forward_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.forward_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.linear_expand' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.fderiv_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.deriv_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.back_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TapeHelp.back_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reverse_sweep_gives_every_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sweep_arrows_at_most_twice_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'black_scholes_adjoint_of_d1_is_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. The asserts are pinned to the Acme numbers, so expect one to stop the program.
@@ -713,7 +1094,7 @@ The two outputs match line for line at six decimals, from different bell-curve a
 ## Where you meet it in real life
 
 - **Overnight risk runs.** A bank's book depends on thousands of market inputs; nudging each is impossible in a night, one sweep per trade is routine. Giles and Glasserman's 2006 note put this in front of trading desks.
-- **Machine learning.** Backpropagation is this sweep on a network's tape, the loss in place of the price and the weights in place of the inputs: millions of inputs, one answer.
+- **Machine learning.** [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md) is this sweep on a network's tape, the loss (the error being minimised) in place of the price and the weights in place of the inputs: millions of inputs, one answer.
 - **Calibration.** Fitting a model to market prices minimises a mismatch over many parameters, and every search step wants the gradient: [Calibration](06-calibration-as-least-squares.md).
 - **Solving backwards.** Newton's method needs a derivative at every guess, and a sweep supplies it for the cost of the guess: [Solving backwards](05-root-finding-for-inverses.md).
 - **Lattices, and the model underneath.** A tree or a grid is arithmetic too, so it has a tape and can be swept ([Greeks from a tree or grid](04-greeks-from-a-tree-or-grid.md)) — though exact derivatives of a wrong model are exactly wrong ([Model risk](07-model-risk-and-parameter-stability.md)).
@@ -730,9 +1111,9 @@ The two outputs match line for line at six decimals, from different bell-curve a
 
 ## Where this goes next
 
-- [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md): the same sweep as a general tool rather than a finance trick — how memory is traded against recomputation, and how second derivatives arrive.
+- [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md): the same sweep as a general tool rather than a finance trick — how a program records its own tape as it runs, and how memory is traded against recomputation.
 
-This card's tape was typed out by hand, which nobody does for a real pricer; how a program records its own tape as it runs is what a later card builds.
+The question this card leaves open: this card's tape was typed out by hand, which nobody does for a real pricer, so how does a program record its own tape as it runs?
 
 ---
 

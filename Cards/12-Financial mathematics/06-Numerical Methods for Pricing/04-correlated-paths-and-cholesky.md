@@ -6,11 +6,13 @@
 
 ## General Overview
 
-Three shares, watched together for a year: Borex at $80.00, Acme at $100.00, Cobalt at $120.00. One contract pays on what all three do at once — a basket, a spread, a best-of. Each share on its own is 20% volatile: a year's worth of wiggle is about a fifth of its price.
+Three shares, watched together for a year: Borex at $80.00, Acme at $100.00, Cobalt at $120.00. One contract pays on what all three do at once — a basket (their weighted sum), a spread (the gap between two of them), a best-of (whichever does best). Each share on its own is 20% volatile: a year's worth of wiggle is about a fifth of its price.
 
 Simulate the three separately and the answer is wrong before the first path finishes. A bad week for Borex is usually the same news that hit Acme, and shares that slide together do not cushion each other. A simulation that lets them slide independently prices the contract as though they did.
 
-So the shares need shared shocks: random kicks that keep each share's own size of wiggle while any two agree as much as the market says. They come from one table of numbers, computed once and used on every step of every path. Call it the mixing table; its real name is the **Cholesky factor**, written L, and building it is **factoring the correlation matrix**.
+So the shares need shared shocks: random kicks that keep each share's own size of wiggle while any two agree as much as the market says. That amount of agreement is the correlation: a number from −1 to 1 that says how closely two shares' moves line up.
+
+The shocks come from one table of numbers, computed once and used on every step of every path. Call it the mixing table; its real name is the **Cholesky factor**, written L, and building it is **factoring the correlation matrix**.
 
 With every pair asked to agree at 0.500000, the second row of that table is 0.500000 and 0.866025: Acme takes half of Borex's draw, then adds a fresh draw of its own. Every row has length 1.000000 — square the entries, add, take the root — which is what keeps each share at its own 20% volatility while the agreement is installed.
 
@@ -37,7 +39,13 @@ The draws on the left carry no agreement; the three rows are the whole method. R
 
 ## The formula
 
-Notation first, in words. A **matrix** is a table of numbers with rows and columns. Multiplying one by a column of numbers means taking each row in turn, multiplying it entry by entry against the column and adding the products — a **dot product** per row. Writing a matrix's rows out as its columns is **transposing** it, marked by a raised T. The **correlation matrix** R holds each pair's correlation in the row of one share and the column of the other, and ones down its diagonal, since every share agrees perfectly with itself. Those asked-for correlations are the **dial**, the name used for them from here on.
+Notation first, in words.
+
+- A **matrix** is a table of numbers with rows and columns.
+- Multiplying a matrix by a column of numbers means taking each row in turn, multiplying it entry by entry against the column and adding the products — a **dot product** per row.
+- Writing a matrix's rows out as its columns is **transposing** it, marked by a raised T.
+- The **correlation matrix** R holds each pair's correlation in the row of one share and the column of the other, and ones down its diagonal, since every share agrees perfectly with itself. Those asked-for correlations are the **dial**, the name used for them from here on.
+- A share's spread is its standard deviation: the typical size of its wiggle. Its variance is the spread squared.
 
 $$R = L\,L^{T}$$
 
@@ -93,7 +101,9 @@ $$S_i(t_k) = s_i\exp\!\left[\left(r - q_i - \tfrac{1}{2}\sigma_i^{2}\right)t_k +
 
 ### Step 0: correlation is lengths and angles
 
-Independent standard draws have spread one and no agreement. Add them up with weights and two facts settle everything. Independent variances add, so a weighted sum's variance is the sum of the squared weights: a row of length one gives a shock of spread one. And the covariance of two such sums — the average of their product, since both average zero — is the dot product of the two rows, because every cross term between different draws averages to nothing.
+Independent standard draws have spread one and no agreement. Add them up with weights and two facts settle everything. Independent variances add, so a weighted sum's variance is the sum of the squared weights: a row of length one gives a shock of spread one.
+
+And the covariance of two such sums — the average of their product, since both average zero — is the dot product of the two rows, because every cross term between different draws averages to nothing.
 
 So the job is geometry, not probability: find rows of length one whose dot products are the correlations asked for. In one line, that is $R = L\,L^{T}$.
 
@@ -151,7 +161,9 @@ Prices are exponentials of shocks, so what "correlation" means depends on which 
 
 $$\text{correlation of percent returns} = \frac{e^{\rho\sigma^{2}h} - 1}{e^{\sigma^{2}h} - 1}$$
 
-At 20% volatility over a year that is 0.495000 against a dial of 0.500000; at 60% volatility, 0.455121. The bend grows with volatility and with the horizon, and always pulls toward zero, because the exponential stretches the good outcomes more than the bad. In the sample the three pairs of percent returns come out at 0.501178, 0.508628 and 0.495999, the furthest 0.014 from the model value. At 20% volatility the bend itself is only 0.005, well under what six thousand paths can resolve: the algebra pins it, not the sample.
+At 20% volatility over a year that is 0.495000 against a dial of 0.500000; at 60% volatility, 0.455121. The bend grows with volatility and with the horizon, and always pulls toward zero, because the exponential stretches the good outcomes more than the bad.
+
+In the sample the three pairs of percent returns come out at 0.501178, 0.508628 and 0.495999, the furthest 0.014 from the model value. At 20% volatility the bend itself is only 0.005, well under what six thousand paths can resolve: the algebra pins it, not the sample.
 
 <details>
 <summary>Where that ratio comes from</summary>
@@ -164,7 +176,11 @@ At a dial of one half the top exponent is half the bottom one, so the bottom fac
 
 </details>
 
-**Another route to the same shocks.** Nothing above needed the table to be triangular; it needed row lengths of one and the right dot products. When every pair shares one non-negative correlation there is a shorter recipe: give each share the same slice of one market-wide draw, $\sqrt{\rho}$, plus a private draw of its own, $\sqrt{1-\rho}$. At a dial of 0.500000 both weights are 0.707107, and this four-column mixer rebuilds R exactly, worst entry off by 0.000000000000, while sitting 0.866025 away from the triangular factor in one entry. Two tables, one correlation matrix: the triangular one with a positive diagonal is the only one of its kind, and it is what a general dial and a fast program want. Mending a table no factor will accept belongs to numerical linear algebra (Cholesky).
+**Another route to the same shocks.** Nothing above needed the table to be triangular; it needed row lengths of one and the right dot products. When every pair shares one non-negative correlation there is a shorter recipe: give each share the same slice of one market-wide draw, $\sqrt{\rho}$, plus a private draw of its own, $\sqrt{1-\rho}$.
+
+At a dial of 0.500000 both weights are 0.707107, and this four-column mixer rebuilds R exactly, worst entry off by 0.000000000000, while sitting 0.866025 away from the triangular factor in one entry. Two tables, one correlation matrix: the triangular one with a positive diagonal is the only one of its kind, and it is what a general dial and a fast program want.
+
+Mending a table no factor will accept belongs to numerical linear algebra ([Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md)).
 
 ---
 
@@ -632,6 +648,273 @@ ALL CHECKS PASS
 
 The two outputs match line for line: the counter-based draws and the mixing are the same arithmetic in both languages.
 
+### Lean
+
+Lean proves the card's main theorem, its converse and the clock rule for any number of shares, and the worked numbers exactly.
+
+- Take a correlation table R: symmetric, ones down the diagonal, every non-zero holding given a positive variance. Then exactly one lower-triangular L with a positive diagonal has $R = L\,L^{T}$.
+- Take that same table R and any L with $R = L\,L^{T}$. Then every row of L has length one.
+- Take a lower-triangular L with a positive diagonal. Then $L\,L^{T}$ gives every non-zero holding a positive variance, so the dial is possible.
+- Take steps of non-negative length, each step's mix scaled by the square root of its length, and $R = L\,L^{T}$. Then shares i and j at dates $t_a$ and $t_b$ have covariance $R_{ij}\min(t_a, t_b)$.
+- The worked numbers also hold exactly in fractions. That covers the table used as the mixer, the impossible dial's holding and third pivot, the −0.6 pivot and the chart.
+
+The square roots, the normal draws, the sampled paths, the prices and the percent-return correlations are left to the Python and Rust checks.
+
+```lean
+-- Correlated paths: every possible correlation table has exactly one lower-triangular factor with a positive diagonal, its rows have length one, any such factor proves the table possible, and the accumulated path shocks have covariance the correlation times the earlier date.
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.LinearAlgebra.Matrix.Block
+import Mathlib.LinearAlgebra.Matrix.Symmetric
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+import Mathlib.Analysis.Matrix.LDL
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Algebra.Order.Star.Real
+
+open Matrix
+
+/-! Matrices are real and square, indexed by `Fin n` (one row per share). `R.IsSymm` means
+`Rᵀ = R`. Mathlib's `R.PosDef` means `R` is symmetric and every non-zero holding `x` has
+positive variance `xᵀ R x > 0`. `L.IsLowerTriangular` means every entry above the diagonal is
+zero. Row `i` of `L` dotted with row `j` is `∑ k, L i k * L j k`, which is entry `(i, j)` of
+`L * Lᵀ`. -/
+
+lemma cholesky_lower_mul_diag {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℝ)
+    (hA : A.IsLowerTriangular) (hB : B.IsLowerTriangular) (i : Fin n) :
+    (A * B) i i = A i i * B i i := by
+  rw [Matrix.mul_apply, Finset.sum_eq_single i]
+  · intro k _ hk
+    rcases lt_or_gt_of_ne hk with h | h
+    · rw [hB (show OrderDual.toDual i < OrderDual.toDual k from h), mul_zero]
+    · rw [hA (show OrderDual.toDual k < OrderDual.toDual i from h), zero_mul]
+  · simp
+
+lemma cholesky_det_pos_of_lower {n : ℕ} (L : Matrix (Fin n) (Fin n) ℝ)
+    (hL : L.IsLowerTriangular) (hpos : ∀ i, 0 < L i i) : 0 < L.det := by
+  rw [Matrix.det_of_isLowerTriangular L hL]
+  exact Finset.prod_pos fun i _ => hpos i
+
+#print axioms cholesky_lower_mul_diag
+#print axioms cholesky_det_pos_of_lower
+
+/-- The card's main claim. A correlation table `R` (symmetric, ones down the diagonal, every
+non-zero holding of the shares given a positive variance) has exactly one mixing table `L`
+that is lower triangular, has a positive diagonal and satisfies `R = L Lᵀ`: the Cholesky
+factor. Any table `L` with `R = L Lᵀ` has every row of length one, which is what keeps each
+share at its own volatility. -/
+theorem correlation_matrix_has_unique_cholesky_factor {n : ℕ}
+    (R : Matrix (Fin n) (Fin n) ℝ) (hsymm : R.IsSymm) (hdiag : ∀ i, R i i = 1)
+    (hR : R.PosDef) :
+    (∃! L : Matrix (Fin n) (Fin n) ℝ,
+        L.IsLowerTriangular ∧ (∀ i, 0 < L i i) ∧ R = L * Lᵀ) ∧
+      ∀ L : Matrix (Fin n) (Fin n) ℝ, R = L * Lᵀ → ∀ i, ∑ k, L i k ^ 2 = 1 := by
+  have hsq : ∀ L : Matrix (Fin n) (Fin n) ℝ, R = L * Lᵀ → ∀ i, ∑ k, L i k ^ 2 = 1 := by
+    intro L hL i
+    rw [← hdiag i, hL, Matrix.mul_apply]
+    simp [sq]
+  refine ⟨?_, hsq⟩
+  obtain ⟨L, hLt, hLp, hLR⟩ : ∃ L : Matrix (Fin n) (Fin n) ℝ,
+      L.IsLowerTriangular ∧ (∀ i, 0 < L i i) ∧ R = L * Lᵀ := by
+    set A := LDL.lower hR with hAdef
+    have hAt : A.IsLowerTriangular := LDL.isLowerTriangular_lower hR
+    have hD : (LDL.diag hR).PosDef := by
+      rw [LDL.diag_eq_lowerInv_conj]
+      exact hR.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_invertible _)
+    have hd : ∀ i, 0 < LDL.diagEntries hR i := fun i => by
+      have := hD.diag_pos (i := i)
+      simpa [LDL.diag] using this
+    have hAdet : A.det ≠ 0 := by
+      have h1 : A * LDL.lowerInv hR = 1 := by
+        rw [hAdef, LDL.lower]; exact Matrix.inv_mul_of_invertible _
+      intro h0
+      have := congrArg Matrix.det h1
+      rw [Matrix.det_mul, h0, zero_mul, Matrix.det_one] at this
+      exact zero_ne_one this
+    have hAii : ∀ i, A i i ≠ 0 := by
+      rw [Matrix.det_of_isLowerTriangular A hAt] at hAdet
+      exact fun i => (Finset.prod_ne_zero_iff.1 hAdet) i (Finset.mem_univ i)
+    let v : Fin n → ℝ := fun i =>
+      (if 0 < A i i then (1 : ℝ) else -1) * Real.sqrt (LDL.diagEntries hR i)
+    refine ⟨A * Matrix.diagonal v, ?_, ?_, ?_⟩
+    · intro i j h
+      rw [Matrix.mul_diagonal, hAt h, zero_mul]
+    · intro i
+      rw [Matrix.mul_diagonal]
+      have hs := Real.sqrt_pos.2 (hd i)
+      simp only [v]
+      split_ifs with hA
+      · nlinarith
+      · have : A i i < 0 := lt_of_le_of_ne (not_lt.1 hA) (hAii i)
+        nlinarith
+    · have h1 := LDL.lower_conj_diag hR
+      rw [Matrix.conjTranspose_eq_transpose_of_trivial] at h1
+      have hvv : Matrix.diagonal v * (Matrix.diagonal v)ᵀ = LDL.diag hR := by
+        rw [Matrix.diagonal_transpose, Matrix.diagonal_mul_diagonal, LDL.diag]
+        congr 1
+        funext i
+        simp only [v]
+        split_ifs <;> linear_combination Real.mul_self_sqrt (hd i).le
+      calc R = A * LDL.diag hR * Aᵀ := h1.symm
+        _ = A * (Matrix.diagonal v * (Matrix.diagonal v)ᵀ) * Aᵀ := by rw [hvv]
+        _ = A * Matrix.diagonal v * (A * Matrix.diagonal v)ᵀ := by
+          rw [Matrix.transpose_mul]; simp only [Matrix.mul_assoc]
+  refine ⟨L, ⟨hLt, hLp, hLR⟩, ?_⟩
+  rintro L' ⟨hL't, hL'p, hL'R⟩
+  have hdetL := cholesky_det_pos_of_lower L hLt hLp
+  let _ : Invertible L := Matrix.invertibleOfIsUnitDet L hdetL.ne'.isUnit
+  set M := L⁻¹ * L' with hM
+  have hLinv : (L⁻¹).IsLowerTriangular := blockTriangular_inv_of_blockTriangular hLt
+  have hMt : M.IsLowerTriangular := hLinv.mul hL't
+  have hMM : M * Mᵀ = 1 := by
+    rw [hM, Matrix.transpose_mul, Matrix.transpose_nonsing_inv]
+    calc L⁻¹ * L' * (L'ᵀ * Lᵀ⁻¹) = L⁻¹ * (L' * L'ᵀ) * Lᵀ⁻¹ := by simp only [Matrix.mul_assoc]
+      _ = L⁻¹ * (L * Lᵀ) * Lᵀ⁻¹ := by rw [← hL'R, hLR]
+      _ = 1 := by
+        rw [← Matrix.mul_assoc, Matrix.inv_mul_of_invertible, Matrix.one_mul,
+          Matrix.mul_inv_of_invertible]
+  let _ : Invertible M := invertibleOfRightInverse M Mᵀ hMM
+  have hMinvT : M⁻¹ = Mᵀ := Matrix.inv_eq_right_inv hMM
+  have hMinv : (M⁻¹).IsLowerTriangular := blockTriangular_inv_of_blockTriangular hMt
+  have hoff : ∀ i j, i ≠ j → M i j = 0 := by
+    intro i j hij
+    rcases lt_or_gt_of_ne hij with h | h
+    · exact hMt (show OrderDual.toDual j < OrderDual.toDual i from h)
+    · have := hMinv (show OrderDual.toDual i < OrderDual.toDual j from h)
+      rw [hMinvT, Matrix.transpose_apply] at this
+      exact this
+  have hMpos : ∀ i, 0 < M i i := by
+    intro i
+    rw [hM, cholesky_lower_mul_diag _ _ hLinv hL't]
+    have h1 : L⁻¹ i i * L i i = 1 := by
+      rw [← cholesky_lower_mul_diag _ _ hLinv hLt, Matrix.inv_mul_of_invertible,
+        Matrix.one_apply_eq]
+    have h2 : 0 < L⁻¹ i i := by
+      by_contra hc
+      push Not at hc
+      nlinarith [hLp i]
+    exact mul_pos h2 (hL'p i)
+  have hMone : M = 1 := by
+    ext i j
+    by_cases hij : i = j
+    · subst hij
+      have h := congrFun (congrFun hMM i) i
+      rw [Matrix.mul_apply, Finset.sum_eq_single i, Matrix.one_apply_eq,
+        Matrix.transpose_apply] at h
+      · rw [Matrix.one_apply_eq]
+        nlinarith [hMpos i]
+      · intro k _ hk
+        rw [Matrix.transpose_apply, hoff i k (Ne.symm hk), zero_mul]
+      · simp
+    · rw [hoff i j hij, Matrix.one_apply_ne hij]
+  have : L' = L * M := by
+    rw [hM, ← Matrix.mul_assoc, Matrix.mul_inv_of_invertible, Matrix.one_mul]
+  rw [this, hMone, Matrix.mul_one]
+
+/-- The converse the program relies on. If `R = L Lᵀ` for a lower-triangular `L` with a
+positive diagonal, then every non-zero holding has positive variance under `R`: a run that
+finishes with every pivot positive has proved the dial possible. -/
+theorem posDef_of_lower_triangular_positive_diagonal_factor {n : ℕ}
+    (L : Matrix (Fin n) (Fin n) ℝ) (hL : L.IsLowerTriangular) (hpos : ∀ i, 0 < L i i) :
+    (L * Lᵀ).PosDef := by
+  have hu : IsUnit L :=
+    (Matrix.isUnit_iff_isUnit_det L).2 (cholesky_det_pos_of_lower L hL hpos).ne'.isUnit
+  have h := Matrix.PosDef.mul_conjTranspose_self L (Matrix.vecMul_injective_iff_isUnit.2 hu)
+  rwa [Matrix.conjTranspose_eq_transpose_of_trivial] at h
+
+/-- The clock (Step 3). Fix grid steps of lengths `dt 0, …, dt (m-1)` years, so date `a` is
+`t a = dt 0 + ⋯ + dt a`. Share `i`'s accumulated shock at date `a` puts weight
+`√(dt k) · L i l` on step `k`'s draw `l` for every step `k ≤ a`, and nothing on later steps.
+If `R = L Lᵀ`, the covariance of share `i` at date `a` with share `j` at date `b` (the dot
+product of their weights) is `R i j · min (t a) (t b)`. -/
+theorem grid_covariance_eq_correlation_mul_earlier_date {n m : ℕ}
+    (R L : Matrix (Fin n) (Fin n) ℝ) (hRL : R = L * Lᵀ)
+    (dt : Fin m → ℝ) (hdt : ∀ k, 0 ≤ dt k) (a b : Fin m) (i j : Fin n) :
+    ∑ k : Fin m, ∑ l : Fin n,
+        (if k ≤ a then Real.sqrt (dt k) * L i l else 0) *
+          (if k ≤ b then Real.sqrt (dt k) * L j l else 0) =
+      R i j * min (∑ k ∈ Finset.univ.filter (· ≤ a), dt k)
+                  (∑ k ∈ Finset.univ.filter (· ≤ b), dt k) := by
+  have hR : R i j = ∑ l, L i l * L j l := by
+    rw [hRL, Matrix.mul_apply]; rfl
+  have hterm : ∀ k : Fin m, ∑ l : Fin n,
+      (if k ≤ a then Real.sqrt (dt k) * L i l else 0) *
+        (if k ≤ b then Real.sqrt (dt k) * L j l else 0) =
+      if k ≤ min a b then dt k * R i j else 0 := by
+    intro k
+    rw [hR]
+    by_cases ha : k ≤ a <;> by_cases hb : k ≤ b <;> simp [ha, hb]
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl fun l _ => ?_
+    linear_combination (L i l * L j l) * Real.mul_self_sqrt (hdt k)
+  have hmin : min (∑ k ∈ Finset.univ.filter (· ≤ a), dt k)
+      (∑ k ∈ Finset.univ.filter (· ≤ b), dt k) =
+      ∑ k ∈ Finset.univ.filter (· ≤ min a b), dt k := by
+    rcases le_total a b with h | h
+    · rw [min_eq_left h, min_eq_left]
+      apply Finset.sum_le_sum_of_subset_of_nonneg
+      · intro k
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        exact fun hk => hk.trans h
+      · intro k _ _; exact hdt k
+    · rw [min_eq_right h, min_eq_right]
+      apply Finset.sum_le_sum_of_subset_of_nonneg
+      · intro k
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        exact fun hk => hk.trans h
+      · intro k _ _; exact hdt k
+  rw [Finset.sum_congr rfl (fun k _ => hterm k), hmin, Finset.sum_filter, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  split_ifs <;> ring
+
+/-! The card's exact worked numbers (rational, no decimals). -/
+
+-- Every pair at one half, the correlation table used as the mixer by mistake: its rows have
+-- squared length 3/2 (length 1.224745) and the pair agrees (5/4)/(3/2) = 5/6 = 0.833333.
+example : (!![1, 1/2, 1/2; 1/2, 1, 1/2; 1/2, 1/2, 1] : Matrix (Fin 3) (Fin 3) ℚ) *
+    (!![1, 1/2, 1/2; 1/2, 1, 1/2; 1/2, 1/2, 1] : Matrix (Fin 3) (Fin 3) ℚ)ᵀ =
+    !![3/2, 5/4, 5/4; 5/4, 3/2, 5/4; 5/4, 5/4, 3/2] := by
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_three]
+example : ((5 : ℚ) / 4) / (3 / 2) = 5 / 6 := by norm_num
+
+-- The impossible dial 0.9, 0.9, −0.9: the holding (1, −1, −1) has variance −2.4 = −12/5.
+example : (let R : Matrix (Fin 3) (Fin 3) ℚ :=
+      !![1, 9/10, 9/10; 9/10, 1, -9/10; 9/10, -9/10, 1]
+    let x : Fin 3 → ℚ := ![1, -1, -1]
+    ∑ i, ∑ j, x i * R i j * x j) = -12 / 5 := by
+  simp [Fin.sum_univ_three]; norm_num
+
+-- Its third pivot: second pivot 1 − 0.81 = 19/100, third-row second entry
+-- (−0.9 − 0.81)/√(19/100), so the third pivot is 1 − 0.81 − (171/100)²/(19/100) = −15.2.
+example : (1 : ℚ) - (9/10)^2 - (-9/10 - (9/10) * (9/10))^2 / (1 - (9/10)^2) = -76 / 5 := by
+  norm_num
+
+-- Try changing: every pair at −0.6 has third pivot 1 − 0.36 − 1.44 = −0.8.
+example : (1 : ℚ) - (-3/5)^2 - (-3/5 - (-3/5) * (-3/5))^2 / (1 - (-3/5)^2) = -4 / 5 := by
+  norm_num
+
+-- The chart: the three-share average has variance σ²(1 + 2ρ)/3 in shock units; the factor
+-- (1 + 2ρ)/3 is 0 at ρ = −1/2, 1/3 at ρ = 0, 2/3 at ρ = 1/2 and 1 at ρ = 1.
+example : ((1 : ℚ) + 2 * (-1/2)) / 3 = 0 ∧ ((1 : ℚ) + 2 * 0) / 3 = 1 / 3 ∧
+    ((1 : ℚ) + 2 * (1/2)) / 3 = 2 / 3 ∧ ((1 : ℚ) + 2 * 1) / 3 = 1 := by
+  norm_num
+
+#print axioms correlation_matrix_has_unique_cholesky_factor
+#print axioms posDef_of_lower_triangular_positive_diagonal_factor
+#print axioms grid_covariance_eq_correlation_mul_earlier_date
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cholesky_lower_mul_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cholesky_det_pos_of_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'correlation_matrix_has_unique_cholesky_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'posDef_of_lower_triangular_positive_diagonal_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'grid_covariance_eq_correlation_mul_earlier_date' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. Several asserts are pinned to this dial, so expect one to stop the program.
@@ -656,7 +939,7 @@ The two outputs match line for line: the counter-based draws and the mixing are 
 
 ## Where you meet it in real life
 
-- **Multi-asset option desks.** Anything paying on two or more underlyings is priced on paths built this way: baskets ([Basket options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md)), spreads ([Spread options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md)), best-of and worst-of.
+- **Multi-asset option desks.** Anything paying on two or more underlyings is priced on paths built this way: baskets ([Basket options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md)), spreads ([Spread options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md)), best-of and worst-of ([Rainbow options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/04-rainbow-best-of-and-worst-of.md)).
 - **Risk engines.** A bank's daily value-at-risk run shocks thousands of positions together, and the factor of their correlation table is what the run is built on.
 - **Interest-rate and commodity curves.** Neighbouring maturities agree almost perfectly, distant ones much less. A whole curve is this card with dozens of rows, which is where a near-impossible dial stops being a curiosity.
 - **Credit portfolios.** The one-factor mixer above is the shape of the models that priced mortgage tranches before 2008: one common shock plus a private one per borrower, the correlation assumed rather than measured.
@@ -679,7 +962,7 @@ The two outputs match line for line: the counter-based draws and the mixing are 
 - [Basket options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md): the weighted sum, with the chart above as its price sensitivity.
 - [Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md): the same factoring as numerical linear algebra, with its cost, its stability, and tables only almost possible.
 
-This card takes the dial as given, the one input no market quotes outright: where its numbers come from, and how to mend a table no factor will accept, is what later cards pick up.
+This card takes the dial as given, the one input no market quotes outright: where its numbers come from ([Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md)), and how to mend a table no factor will accept, is what later cards pick up.
 
 ---
 

@@ -8,9 +8,15 @@
 
 A dealer buys one Acme call this morning and pays $9.23 for it. Acme trades at $100. The contract lets the dealer, one year from today, hand over $100 and take one share — and the dealer has no view at all on where Acme is heading.
 
-So the dealer sells shares short against the option: borrows them and sells them. Not one share: 0.586851 of one. That fraction is picked so that when Acme ticks up a penny, the extra the option gains and the extra the borrowed shares cost match to the penny. The book stops caring which way Acme moves.
+So the dealer sells shares short against the option: borrows them and sells them. Not one share: 0.586851 of one. That fraction is picked so that when Acme ticks up a penny, the extra the option gains and the extra the borrowed shares cost match to the penny. The book — the dealer's whole position, option and shares together — stops caring which way Acme moves.
 
-What is left over is not nothing. Three things still move the book, and none of them is a view on where Acme is going. The clock runs, and a promise nobody has used yet is worth less tomorrow than today: that costs $5.09 a year. The short sale raised cash, which earns interest, less the dividends owed on borrowed stock: that brings in $1.76 a year. And Acme does move, both ways, while the option's value curves and a share position is a straight line, so each re-adjustment quietly buys low and sells high: that pays $3.79 a year. Add the three and the answer is $0.46 a year — exactly the interest on the $9.23 the option cost.
+What is left over is not nothing. Three things still move the book, and none of them is a view on where Acme is going.
+
+- The clock runs, and a promise nobody has used yet is worth less tomorrow than today: that costs $5.09 a year.
+- The short sale raised cash, which earns interest, less the dividends owed on borrowed stock: that brings in $1.76 a year.
+- And Acme does move, both ways. The option's value curves and a share position is a straight line, so each re-adjustment quietly buys low and sells high: that pays $3.79 a year.
+
+Add the three and the answer is $0.46 a year — exactly the interest on the $9.23 the option cost.
 
 The hedged option pays for its own funding and not a cent more. That is the whole card. Do better and somebody would borrow at the bank rate and run the book for free money; do worse and they would run it backwards. Write that requirement down in symbols and one equation falls out: Fischer Black and Myron Scholes, 1973, extended the same year by Robert Merton.
 
@@ -36,7 +42,13 @@ The bending line is the option. The straight line is the hedge: 0.586851 shares,
 
 ## The formula
 
-Notation first, in words. The option's worth depends on two things at once: where Acme is and what the date is. A slope taken while the other thing is held still is written as a subscript. The **clock slope** $V_t$ is how the worth changes as the calendar advances with Acme's price nailed down; the **price slope** $V_S$ is how it changes as Acme moves with the calendar nailed down; and $V_{SS}$, the **bend**, is the slope of that slope. A relation among slopes like these is a *partial differential equation*, or PDE — partial because each slope holds the other variable still ([A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md)).
+Notation first, in words. The option's worth depends on two things at once: where Acme is and what the date is. A slope taken while the other thing is held still is written as a subscript.
+
+- The **clock slope** $V_t$ is how the worth changes as the calendar advances with Acme's price nailed down.
+- The **price slope** $V_S$ is how it changes as Acme moves with the calendar nailed down.
+- $V_{SS}$, the **bend**, is the slope of that slope.
+
+A relation among slopes like these is a *partial differential equation*, or PDE — partial because each slope holds the other variable still ([A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md)).
 
 $$V_t \;+\; (r-q)\,S\,V_S \;+\; \tfrac12\,\sigma^2 S^2\,V_{SS} \;=\; r\,V$$
 
@@ -55,6 +67,7 @@ $$\Theta \;+\; (r-q)\,S\,\Delta \;+\; \tfrac12\,\sigma^2 S^2\,\Gamma \;=\; r\,V.
 | $q$ | the **dividend yield**: cash the company pays out each year | 2% | the shares in the hedge carry less |
 | $\sigma$ | **volatility**, how jumpy Acme is. Say "sigma". | 20% | the bend pays far more |
 | $\mu$ | Acme's **real expected return** — absent from the equation | never used | nothing happens: that is the point |
+| $dt$, $dW$ | a tiny slice of time; the random kick over it, of typical size $\sqrt{dt}$ | — | — |
 | $V_t$, $\Theta$ | the clock slope, in dollars a year. Say "theta". | −$5.09 a year | — |
 | $V_S$, $\Delta$ | the price slope: shares of Acme to hold per option. Say "delta". | 0.586851 | — |
 | $V_{SS}$, $\Gamma$ | the bend: how fast the price slope itself moves. Say "gamma". | 0.018951 | the bend's income rises |
@@ -88,7 +101,7 @@ The payoff at expiry is given and the equation runs it *backwards* to today. Tha
 
 ### Step 0: the hedge deletes the disagreement
 
-A bull and a bear will never agree on where Acme is going. They do not have to. Hold one option and sell short the right number of shares, and for the next instant the two legs move by equal and opposite amounts whatever Acme does. Whatever the two disagree about has been hedged away; only Acme's jumpiness survives, and a position with nothing riding on Acme must earn the bank rate. That is the entire input. Everything below is bookkeeping.
+A bull expects Acme to rise and a bear expects it to fall. They will never agree on where Acme is going. They do not have to. Hold one option and sell short the right number of shares, and for the next instant the two legs move by equal and opposite amounts whatever Acme does. Whatever the two disagree about has been hedged away; only Acme's jumpiness survives, and a position with nothing riding on Acme must earn the bank rate. That is the entire input. Everything below is bookkeeping.
 
 ### Step 1: write the worth as a surface
 
@@ -241,7 +254,13 @@ Upper line: what the clock takes. Lower line: what the bend pays. Both run away 
 
 ## Code, from first principles, and it actually runs
 
-Nothing below imports anything that already knows the answer; the bell-curve area is built from its own series. Three independent roads test the equation. **One:** the call's three slopes, each from its own separate formula, added up and compared with the interest — the balance holds to better than a ten-billionth of a dollar a year, and holds for the put and the prepaid forward too. **Two:** the same three slopes from *prices alone*, by nudging Acme's price and the date and watching the price move, with no slope formula anywhere; two step sizes combined reproduce all three to nine decimals, and the balance still holds. **Three:** the equation solved from scratch — start at the payoff, march backwards on a grid of Acme prices, never look at the closed formula — landing on $9.23. Last, four ways of getting it wrong, each costing dollars a year.
+Nothing below imports anything that already knows the answer; the bell-curve area is built from its own series. Three independent roads test the equation.
+
+1. **One:** the call's three slopes, each from its own separate formula, added up and compared with the interest — the balance holds to better than a ten-billionth of a dollar a year, and holds for the put and the prepaid forward too.
+2. **Two:** the same three slopes from *prices alone*, by nudging Acme's price and the date and watching the price move, with no slope formula anywhere; two step sizes combined reproduce all three to nine decimals, and the balance still holds.
+3. **Three:** the equation solved from scratch — start at the payoff, march backwards on a grid of Acme prices, never look at the closed formula — landing on $9.23.
+
+Last, four ways of getting it wrong, each costing dollars a year.
 
 ### Python
 
@@ -661,6 +680,137 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves Steps 3 and 4, and the cash and forward claims, for every value meeting the conditions below.
+
+- Take the hedged book's change as Itô's lemma gives it, with $S$ and $\sigma$ positive. Then the book has no shock and earns $r$ on its worth $\Pi$ exactly when $\Delta = V_S$ and the equation holds.
+- The real expected return $\mu$ can be any number: it drops out, as Step 3 says.
+- Take cash in the bank, worth $K e^{-r(T-t)}$. Then it obeys the equation at every price $S$ and date $t$.
+- Take the prepaid forward, worth $S e^{-q(T-t)} - K e^{-r(T-t)}$. Then it obeys the equation at every price $S$ and date $t$.
+- The worked numbers' $d_1$ and $d_2$ hold exactly in fractions. So do the 3 and 200 in the carry and bend rows, and Step 4's collecting of terms.
+
+The call, the put, the slopes from prices alone, the grid road and the mistake costs are left to the Python and Rust checks.
+
+```lean
+-- Black-Scholes by hedging: one option short Δ shares is riskless and earns the bank rate exactly when Δ is the option's price slope and its worth obeys V_t + (r - q) S V_S + ½ σ² S² V_SS = r V, whatever the stock's real drift μ; cash and the prepaid forward obey that equation.
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+
+open Real
+
+/-- Helper: the time slope of a discount factor, `d/du e^(-a (T - u)) = a e^(-a (T - u))`. -/
+lemma hasDerivAt_discount (a T t : ℝ) :
+    HasDerivAt (fun u : ℝ => exp (-a * (T - u))) (exp (-a * (T - t)) * a) t := by
+  have h : HasDerivAt (fun u : ℝ => -a * (T - u)) a t := by
+    have := ((hasDerivAt_id t).const_sub T).const_mul (-a)
+    simpa using this
+  exact h.exp
+
+/-- Helper: the price slope of `x e^c - d` is `e^c`, at every price. -/
+lemma deriv_linear_price (c d : ℝ) :
+    (fun x : ℝ => deriv (fun y : ℝ => y * exp c - d) x) = fun _ => exp c := by
+  funext x
+  simp
+
+/-- The hedging argument (Steps 3 and 4). Let the option's worth `V(S, t)` be smooth near
+today's price `S > 0` and date `t`, and let the stock follow geometric Brownian motion with real
+drift `μ` and volatility `σ > 0`, paying a steady dividend yield `q`. Hold one option and short
+`Δ` shares. By Itô's lemma the book `Π = V - Δ S` changes by `drift · dt + shock · dW`, where
+the shock is the option's `σ S V_S` minus the shares' `Δ σ S`, and the drift is the option's
+`V_t + μ S V_S + ½ σ² S² V_SS`, minus the shares' `Δ μ S`, minus the dividends owed `q S Δ`.
+Then, for every value of `μ`: the book is riskless and earns the bank rate `r` on its value
+exactly when `Δ = V_S` and `V` obeys the Black–Scholes–Merton equation
+`V_t + (r - q) S V_S + ½ σ² S² V_SS = r V`. The real drift `μ` drops out. -/
+theorem hedged_book_riskless_at_bank_rate_iff_black_scholes
+    (V : ℝ → ℝ → ℝ) (S t r q σ μ Δ : ℝ) (hS : 0 < S) (hσ : 0 < σ)
+    (hV : ContDiffAt ℝ 2 (fun p : ℝ × ℝ => V p.1 p.2) (S, t)) :
+    let Vt := deriv (fun u => V S u) t
+    let VS := deriv (fun x => V x t) S
+    let VSS := deriv (fun x => deriv (fun y => V y t) x) S
+    let shock := σ * S * VS - Δ * (σ * S)
+    let drift := (Vt + μ * S * VS + 1 / 2 * σ ^ 2 * S ^ 2 * VSS) - Δ * (μ * S) - q * S * Δ
+    (shock = 0 ∧ drift = r * (V S t - Δ * S)) ↔
+      (Δ = VS ∧ Vt + (r - q) * S * VS + 1 / 2 * σ ^ 2 * S ^ 2 * VSS = r * V S t) := by
+  intro Vt VS VSS shock drift
+  have hσS : σ * S ≠ 0 := mul_ne_zero hσ.ne' hS.ne'
+  constructor
+  · rintro ⟨h1, h2⟩
+    have hΔ : Δ = VS := by
+      have : (VS - Δ) * (σ * S) = 0 := by simp only [shock] at h1; linarith
+      rcases mul_eq_zero.mp this with h | h
+      · linarith
+      · exact absurd h hσS
+    refine ⟨hΔ, ?_⟩
+    simp only [drift] at h2
+    subst hΔ
+    linarith
+  · rintro ⟨hΔ, h⟩
+    subst hΔ
+    refine ⟨by simp only [shock]; ring, ?_⟩
+    simp only [drift]
+    linarith
+
+/-- The equation does not know which contract it describes. Cash in the bank,
+`V(S, t) = K e^(-r (T - t))`, and the prepaid forward, one funded share minus the funded strike,
+`V(S, t) = S e^(-q (T - t)) - K e^(-r (T - t))`, both obey
+`V_t + (r - q) S V_S + ½ σ² S² V_SS = r V` at every price `S` and date `t`. -/
+theorem cash_and_prepaid_forward_obey_black_scholes (r q σ K T : ℝ) :
+    (∀ S t : ℝ,
+      deriv (fun u => K * exp (-r * (T - u))) t
+        + (r - q) * S * deriv (fun _ : ℝ => K * exp (-r * (T - t))) S
+        + 1 / 2 * σ ^ 2 * S ^ 2 * deriv (fun x => deriv (fun _ : ℝ => K * exp (-r * (T - t))) x) S
+        = r * (K * exp (-r * (T - t)))) ∧
+    (∀ S t : ℝ,
+      deriv (fun u => S * exp (-q * (T - u)) - K * exp (-r * (T - u))) t
+        + (r - q) * S * deriv (fun x => x * exp (-q * (T - t)) - K * exp (-r * (T - t))) S
+        + 1 / 2 * σ ^ 2 * S ^ 2 *
+            deriv (fun x => deriv (fun y => y * exp (-q * (T - t)) - K * exp (-r * (T - t))) x) S
+        = r * (S * exp (-q * (T - t)) - K * exp (-r * (T - t)))) := by
+  refine ⟨fun S t => ?_, fun S t => ?_⟩
+  · have h1 := ((hasDerivAt_discount r T t).const_mul K).deriv
+    rw [h1]
+    simp only [deriv_const]
+    ring
+  · have h1 : HasDerivAt (fun u => S * exp (-q * (T - u)) - K * exp (-r * (T - u)))
+        (S * (exp (-q * (T - t)) * q) - K * (exp (-r * (T - t)) * r)) t :=
+      ((hasDerivAt_discount q T t).const_mul S).sub ((hasDerivAt_discount r T t).const_mul K)
+    rw [h1.deriv, deriv_linear_price, deriv_const]
+    have h2 := (((hasDerivAt_id S).mul_const (exp (-q * (T - t)))).sub_const
+      (K * exp (-r * (T - t)))).deriv
+    simp only [id] at h2
+    rw [h2]
+    ring
+
+-- Acme: S = K = 100, r = 5/100, q = 2/100, σ = 1/5, one year.
+-- Half the variance, ½ σ² = 0.02.
+example : (1 / 2 : ℚ) * (1 / 5) ^ 2 = 2 / 100 := by norm_num
+-- d₁ = (ln 1 + (r - q + ½ σ²) · 1) / (σ · 1) = 0.25.
+example : ((0 : ℚ) + (5 / 100 - 2 / 100 + 2 / 100) * 1) / (1 / 5 * 1) = 1 / 4 := by norm_num
+-- d₂ = d₁ - σ √1 = 0.25 - 0.20 = 0.05.
+example : (1 / 4 : ℚ) - 1 / 5 = 5 / 100 := by norm_num
+-- What the shares carry is (r - q) S Δ = 3 Δ: (0.05 - 0.02) × 100 = 3.
+example : (5 / 100 - 2 / 100 : ℚ) * 100 = 3 := by norm_num
+-- What the bend pays is ½ σ² S² Γ = 200 Γ: ½ × 0.2² × 100² = 200.
+example : (1 / 2 : ℚ) * (1 / 5) ^ 2 * 100 ^ 2 = 200 := by norm_num
+-- Step 4: the two share-slope terms collect, -q S V_S + r S V_S = (r - q) S V_S.
+example (r q S VS : ℚ) : -q * S * VS + r * S * VS = (r - q) * S * VS := by ring
+
+#print axioms hasDerivAt_discount
+#print axioms deriv_linear_price
+#print axioms hedged_book_riskless_at_bank_rate_iff_black_scholes
+#print axioms cash_and_prepaid_forward_obey_black_scholes
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'hasDerivAt_discount' depends on axioms: [propext, Classical.choice, Quot.sound]
+'deriv_linear_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hedged_book_riskless_at_bank_rate_iff_black_scholes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cash_and_prepaid_forward_obey_black_scholes' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
