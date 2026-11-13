@@ -123,3 +123,4 @@ for _ in range(20000):
 assert worst <= 1 + 1e-12
 print("random,20000 pairs p in 1.1 to 8 largest sum/bound," + f6(worst))
 print("All checks passed.")
+print("ALL CHECKS PASS")

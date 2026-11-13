@@ -130,4 +130,5 @@ fn main() {
     assert!(wins == vec![w - 4, 2 * w - 4] && mk && sp_all.iter().all(|&x| x == (1, 1)));
     let hw_formula: Vec<_> = [1i64, 2, 4, 8, 16, 32].iter().map(|&n| ((1, 1), (1, 1), if n == 1 { (1, 1) } else { (0, 1) }, (1, 1))).collect();
     assert_eq!(hw, hw_formula); // bump, spread
+    println!("ALL CHECKS PASS");
 }

@@ -82,7 +82,7 @@ On the spam example, $\Omega$ is the counts and $\mu$ is counting measure. With 
 - **One dominating function for the whole sequence.** A separate bound for each n does not count. The tall spike (n+1)x^n on [0, 1] is bounded by n + 1 at stage n, a different constant each time, and keeps integral 1 while its limit has integral 0.
 - **The dominating function is integrable.** The constant 1 dominates the sliding mass too, but on infinitely many counts its total is infinite, and the theorem says nothing.
 - **It bounds the size, both signs.** A bound on one side only lets mass escape on the other: the negated spike −(n+1)x^n lies below 0 everywhere on [0, 1], and its integrals do not follow its limit.
-- **Convergence almost everywhere.** A null set of bad points is harmless. Convergence only in a weaker sense, such as in probability, needs another route: a dominated family is uniformly integrable, and Vitali's theorem on [Uniform integrability](05-uniform-integrability.md) then gives the same conclusion.
+- **Convergence almost everywhere.** A null set of bad points is harmless. Convergence only in a weaker sense, such as in probability (the chance that f_n is far from f shrinks to 0), needs another route. A dominated family is uniformly integrable: the part of each integral carried by values above a cutoff shrinks to zero, for every member at once, as the cutoff rises. Vitali's theorem on [Uniform integrability](05-uniform-integrability.md) then gives the same conclusion.
 - **Measurable functions.** Without measurability the integrals are not defined.
 
 ---
@@ -110,7 +110,7 @@ Apply Steps 1 and 2 to the errors $|f_n-f|$. They converge to 0 a.e., and $|f_n-
 
 **Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space; $f_n$, $f$ are measurable and real-valued; $g$ is measurable with values in [0, ∞]; $f_n\to f$ a.e.; for each n, $|f_n|\le g$ a.e.; $\int g\,d\mu<\infty$.
 
-**1. Clearing the null sets.** Let $N_0$ be the set where $f_n(x)$ does not converge to $f(x)$, and $N_n$ the set where $|f_n|>g$. Each is measurable and has measure 0 by hypothesis. The set $\{g=\infty\}$ has measure 0 too: for every whole number m, $m\,\mathbf 1_{\{g=\infty\}}\le g$, so $m\,\mu(g=\infty)\le\int g\,d\mu<\infty$ for every m. Let $N$ be the union of all these sets; it is a countable union of null sets, so $\mu(N)=0$ by countable subadditivity ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Replace $f_n$, $f$ and $g$ by 0 on $N$. The new functions are measurable, and no integral changes, since functions equal a.e. have equal integrals ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). From here on convergence and domination hold at every point, and $g$ is finite.
+**1. Clearing the null sets.** Let $N_0$ be the set where $f_n(x)$ does not converge to $f(x)$, and $N_n$ the set where $|f_n|>g$. Each is measurable and has measure 0 by hypothesis. The set $\{g=\infty\}$ has measure 0 too. Write $\mathbf 1_{\{g=\infty\}}$ for its indicator, the function that is 1 where g is infinite and 0 elsewhere. For every whole number m, $m\,\mathbf 1_{\{g=\infty\}}\le g$, so $m\,\mu(g=\infty)\le\int g\,d\mu<\infty$ for every m. Let $N$ be the union of all these sets; it is a countable union of null sets, so $\mu(N)=0$ by countable subadditivity ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Replace $f_n$, $f$ and $g$ by 0 on $N$. The new functions are measurable, and no integral changes, since functions equal a.e. have equal integrals ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). From here on convergence and domination hold at every point, and $g$ is finite.
 
 **2. Everything is integrable.** Letting n → ∞ in $|f_n(x)|\le g(x)$ gives $|f(x)|\le g(x)$. Monotonicity of the integral gives $\int|f_n|\,d\mu\le\int g\,d\mu<\infty$ and $\int|f|\,d\mu\le\int g\,d\mu$, so every $f_n$ and $f$ is in $L^1$, and linearity of the integral holds for them ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
 
@@ -593,6 +593,216 @@ breaks, the limit as roof: p_10(2) = 0.3020 > q(2) = 0.2707
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the theorem, bounded convergence and Scheffé's lemma in general, and checks the 10-slot hand numbers in exact fractions.
+
+- Suppose measurable $f_n$ converge a.e. to a measurable $f$, under one dominating function $g$. Then the total error goes to zero, and $\int f_n\,d\mu\to\int f\,d\mu$.
+- Suppose $\mu(\Omega)<\infty$, and measurable $f_n$ converge a.e. to a measurable $f$, with $|f_n|\le M$ a.e. Then the same two conclusions hold.
+- Suppose integrable $f_n$ and $f$ are never negative, $f_n\to f$ a.e., and each $f_n$ has the same total as $f$. Then the total error goes to zero.
+- In that case, on every measurable set $A$, the error is at most half the total error.
+- With 10 slots, the first factor at count 2 is 10 × 9/100 = 9/10.
+- So p_10(2) = 9/10 × 2 × 0.8^8, which lies under the roof 2^2/2! = 2.
+- With 10 slots, every chance p_10(k) lies under the roof 2^k/k!, for k = 0 to 10.
+- The 10-slot chances total 1, with mean 2 and average square 28/5 = 5.6000.
+- The 10-slot variance is 28/5 − 4 = 2(1 − 2/10) = 1.6000. The Poisson average square is 2 + 2^2 = 6.
+
+Decimal values, the 100- and 1,000-slot runs, the Poisson limits, x^n and the What breaks rows are left to Python and Rust.
+
+```lean
+-- Dominated convergence: if measurable functions converge almost everywhere under one integrable roof, their total error goes to zero and their integrals converge to the integral of the limit, with bounded convergence and Scheffé's lemma as corollaries.
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
+
+open MeasureTheory Filter Topology Finset
+
+/-- Dominated convergence (Lebesgue): on any measure space, let `f n` and `f` be measurable
+real functions and `g` a non-negative measurable function with finite integral. If
+`f n → f` almost everywhere and `|f n| ≤ g` almost everywhere for every `n`, then the total
+error `∫ |f n - f|` goes to 0 and `∫ f n → ∫ f`: the limit may be taken inside the integral. -/
+theorem dominated_convergence_total_error_and_integral_tendsto
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) {f : ℕ → Ω → ℝ} {F g : Ω → ℝ}
+    (hf_meas : ∀ n, Measurable (f n)) (hF_meas : Measurable F)
+    (hg_meas : Measurable g) (hg_nonneg : ∀ x, 0 ≤ g x)
+    (hlim : ∀ᵐ x ∂μ, Tendsto (fun n => f n x) atTop (𝓝 (F x)))
+    (hbound : ∀ n, ∀ᵐ x ∂μ, |f n x| ≤ g x)
+    (hg_fin : ∫⁻ x, ENNReal.ofReal (g x) ∂μ < ⊤) :
+    Tendsto (fun n => ∫ x, |f n x - F x| ∂μ) atTop (𝓝 0) ∧
+    Tendsto (fun n => ∫ x, f n x ∂μ) atTop (𝓝 (∫ x, F x ∂μ)) := by
+  have hg_int : Integrable g μ :=
+    ⟨hg_meas.aestronglyMeasurable,
+      (hasFiniteIntegral_iff_ofReal (Eventually.of_forall hg_nonneg)).2 hg_fin⟩
+  have hFb : ∀ᵐ x ∂μ, |F x| ≤ g x := by
+    rw [← ae_all_iff] at hbound
+    filter_upwards [hlim, hbound] with x hx hb
+    exact le_of_tendsto' ((continuous_abs.tendsto _).comp hx) hb
+  refine ⟨?_, ?_⟩
+  · have h := tendsto_integral_of_dominated_convergence (μ := μ)
+      (F := fun n x => |f n x - F x|) (f := fun _ => (0 : ℝ)) (fun x => 2 * g x)
+      (fun n => (continuous_abs.measurable.comp ((hf_meas n).sub hF_meas)).aestronglyMeasurable) (hg_int.const_mul 2)
+      (fun n => by
+        filter_upwards [hbound n, hFb] with x h1 h2
+        rw [Real.norm_eq_abs, abs_abs]
+        linarith [abs_sub (f n x) (F x)])
+      (by
+        filter_upwards [hlim] with x hx
+        simpa using (hx.sub_const (F x)).abs)
+    simpa using h
+  · exact tendsto_integral_of_dominated_convergence g (fun n => (hf_meas n).aestronglyMeasurable)
+      hg_int (fun n => by simpa [Real.norm_eq_abs] using hbound n) hlim
+
+/-- Bounded convergence: on a space of finite measure, if measurable `f n → f` almost
+everywhere and `|f n| ≤ M` almost everywhere for one number `M` and every `n`, then the total
+error `∫ |f n - f|` goes to 0 and `∫ f n → ∫ f`. -/
+theorem bounded_convergence_total_error_and_integral_tendsto
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsFiniteMeasure μ]
+    {f : ℕ → Ω → ℝ} {F : Ω → ℝ} (M : ℝ)
+    (hf_meas : ∀ n, Measurable (f n)) (hF_meas : Measurable F)
+    (hlim : ∀ᵐ x ∂μ, Tendsto (fun n => f n x) atTop (𝓝 (F x)))
+    (hbound : ∀ n, ∀ᵐ x ∂μ, |f n x| ≤ M) :
+    Tendsto (fun n => ∫ x, |f n x - F x| ∂μ) atTop (𝓝 0) ∧
+    Tendsto (fun n => ∫ x, f n x ∂μ) atTop (𝓝 (∫ x, F x ∂μ)) := by
+  have hFb : ∀ᵐ x ∂μ, |F x| ≤ M := by
+    rw [← ae_all_iff] at hbound
+    filter_upwards [hlim, hbound] with x hx hb
+    exact le_of_tendsto' ((continuous_abs.tendsto _).comp hx) hb
+  refine ⟨?_, ?_⟩
+  · have h := tendsto_integral_of_dominated_convergence (μ := μ)
+      (F := fun n x => |f n x - F x|) (f := fun _ => (0 : ℝ)) (fun _ => 2 * M)
+      (fun n => (continuous_abs.measurable.comp ((hf_meas n).sub hF_meas)).aestronglyMeasurable) (integrable_const _)
+      (fun n => by
+        filter_upwards [hbound n, hFb] with x h1 h2
+        rw [Real.norm_eq_abs, abs_abs]
+        linarith [abs_sub (f n x) (F x)])
+      (by
+        filter_upwards [hlim] with x hx
+        simpa using (hx.sub_const (F x)).abs)
+    simpa using h
+  · exact tendsto_integral_of_dominated_convergence (fun _ => M)
+      (fun n => (hf_meas n).aestronglyMeasurable)
+      (integrable_const _) (fun n => by simpa [Real.norm_eq_abs] using hbound n) hlim
+
+/-- Scheffé's lemma: if `f n ≥ 0` and `f ≥ 0`, `f n → f` almost everywhere, and every `f n`
+has the same finite total as `f`, then the total error `∫ |f n - f|` goes to 0, and for every
+measurable set `A` the error on `A` is at most half the total error:
+`|∫_A f n - ∫_A f| ≤ ½ ∫ |f n - f|`. -/
+theorem scheffe_total_error_tendsto_zero_and_half_bound
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) {f : ℕ → Ω → ℝ} {F : Ω → ℝ}
+    (hf_int : ∀ n, Integrable (f n) μ) (hF_int : Integrable F μ)
+    (hf_nonneg : ∀ n x, 0 ≤ f n x) (hF_nonneg : ∀ x, 0 ≤ F x)
+    (hlim : ∀ᵐ x ∂μ, Tendsto (fun n => f n x) atTop (𝓝 (F x)))
+    (htot : ∀ n, ∫ x, f n x ∂μ = ∫ x, F x ∂μ) :
+    Tendsto (fun n => ∫ x, |f n x - F x| ∂μ) atTop (𝓝 0) ∧
+    ∀ n, ∀ A : Set Ω, MeasurableSet A →
+      |∫ x in A, f n x ∂μ - ∫ x in A, F x ∂μ| ≤ (1 / 2) * ∫ x, |f n x - F x| ∂μ := by
+  -- positive parts of `F - f n` and `f n - F`
+  have hp_int : ∀ n, Integrable (fun x => max (F x - f n x) 0) μ :=
+    fun n => (hF_int.sub (hf_int n)).pos_part
+  have hq_int : ∀ n, Integrable (fun x => max (f n x - F x) 0) μ :=
+    fun n => ((hf_int n).sub hF_int).pos_part
+  have habs_int : ∀ n, Integrable (fun x => |f n x - F x|) μ :=
+    fun n => ((hf_int n).sub hF_int).abs
+  have hd_int : ∀ n, Integrable (fun x => f n x - F x) μ := fun n => (hf_int n).sub hF_int
+  have hdiff : ∀ n, ∫ x, (f n x - F x) ∂μ = 0 := fun n => by
+    rw [integral_sub (hf_int n) hF_int, htot n, sub_self]
+  -- `∫ |f n - F| = 2 ∫ (F - f n)⁺`
+  have hp_eq : ∀ n, ∫ x, |f n x - F x| ∂μ = 2 * ∫ x, max (F x - f n x) 0 ∂μ := fun n => by
+    have hpt : (fun x => |f n x - F x|)
+        = fun x => 2 * max (F x - f n x) 0 + (f n x - F x) := by
+      funext x
+      rcases le_total (f n x) (F x) with h | h
+      · rw [abs_of_nonpos (by linarith), max_eq_left (by linarith)]; ring
+      · rw [abs_of_nonneg (by linarith), max_eq_right (by linarith)]; ring
+    rw [hpt, integral_add ((hp_int n).const_mul 2) (hd_int n), hdiff n,
+      integral_const_mul, add_zero]
+  -- `∫ |f n - F| = 2 ∫ (f n - F)⁺`
+  have hq_eq : ∀ n, ∫ x, |f n x - F x| ∂μ = 2 * ∫ x, max (f n x - F x) 0 ∂μ := fun n => by
+    have hpt : (fun x => |f n x - F x|)
+        = fun x => 2 * max (f n x - F x) 0 - (f n x - F x) := by
+      funext x
+      rcases le_total (f n x) (F x) with h | h
+      · rw [abs_of_nonpos (by linarith), max_eq_right (by linarith)]; ring
+      · rw [abs_of_nonneg (by linarith), max_eq_left (by linarith)]; ring
+    rw [hpt, integral_sub ((hq_int n).const_mul 2) (hd_int n), hdiff n,
+      integral_const_mul, sub_zero]
+  refine ⟨?_, ?_⟩
+  · have h := tendsto_integral_of_dominated_convergence (μ := μ)
+      (F := fun n x => max (F x - f n x) 0) (f := fun _ => (0 : ℝ)) F
+      (fun n => (hp_int n).aestronglyMeasurable) hF_int
+      (fun n => Eventually.of_forall fun x => by
+        rw [Real.norm_eq_abs, abs_of_nonneg (le_max_right _ _)]
+        exact max_le (by linarith [hf_nonneg n x]) (hF_nonneg x))
+      (by
+        filter_upwards [hlim] with x hx
+        have := (((tendsto_const_nhds (x := F x)).sub hx).max (tendsto_const_nhds (x := (0 : ℝ))))
+        simpa using this)
+    simp only [integral_zero] at h
+    have := h.const_mul 2
+    rw [mul_zero] at this
+    simpa [hp_eq] using this
+  · intro n A hA
+    rw [← integral_sub (hf_int n).integrableOn hF_int.integrableOn, abs_le]
+    constructor
+    · have h1 : ∫ x in A, (F x - f n x) ∂μ ≤ ∫ x in A, max (F x - f n x) 0 ∂μ :=
+        setIntegral_mono (hF_int.sub (hf_int n)).integrableOn (hp_int n).integrableOn
+          (fun x => le_max_left _ _)
+      have h2 : ∫ x in A, max (F x - f n x) 0 ∂μ ≤ ∫ x, max (F x - f n x) 0 ∂μ :=
+        setIntegral_le_integral (hp_int n) (Eventually.of_forall fun x => le_max_right _ _)
+      have h3 : ∫ x in A, (F x - f n x) ∂μ = - ∫ x in A, (f n x - F x) ∂μ := by
+        rw [← integral_neg]; congr 1; funext x; ring
+      rw [hp_eq n]
+      linarith
+    · have h1 : ∫ x in A, (f n x - F x) ∂μ ≤ ∫ x in A, max (f n x - F x) 0 ∂μ :=
+        setIntegral_mono ((hf_int n).sub hF_int).integrableOn (hq_int n).integrableOn
+          (fun x => le_max_left _ _)
+      have h2 : ∫ x in A, max (f n x - F x) 0 ∂μ ≤ ∫ x, max (f n x - F x) 0 ∂μ :=
+        setIntegral_le_integral (hq_int n) (Eventually.of_forall fun x => le_max_right _ _)
+      rw [hq_eq n]
+      linarith
+
+/-! The card's hand computation with 10 slots, chance `2/10 = 1/5` each, done in exact
+fractions: `p₁₀(k) = C(10,k) (1/5)^k (4/5)^(10-k)`. -/
+
+-- first factor 10 × 9 / 100 = 9/10; roof 2^2/2! = 2; p₁₀(2) = 9/10 × 2 × (4/5)^8
+example : (10 * 9 / 100 : ℚ) = 9 / 10 ∧ (2 ^ 2 / Nat.factorial 2 : ℚ) = 2 ∧
+    (Nat.choose 10 2 : ℚ) * (1 / 5) ^ 2 * (4 / 5) ^ 8 = 9 / 10 * 2 * (4 / 5) ^ 8 := by
+  norm_num [Nat.choose, Nat.factorial]
+
+-- under the roof: p₁₀(2) ≤ 2^2/2! = 2
+example : (Nat.choose 10 2 : ℚ) * (1 / 5) ^ 2 * (4 / 5) ^ 8 ≤ 2 ^ 2 / Nat.factorial 2 := by
+  norm_num [Nat.choose, Nat.factorial]
+
+-- the roof holds at every count for 10 slots: p₁₀(k) ≤ 2^k/k! for k = 0, …, 10
+example : ∀ k ∈ range 11,
+    (Nat.choose 10 k : ℚ) * (1 / 5) ^ k * (4 / 5) ^ (10 - k) ≤ 2 ^ k / Nat.factorial k := by
+  intro k hk
+  rw [mem_range] at hk
+  interval_cases k <;> norm_num [Nat.choose, Nat.factorial]
+
+-- the 10-slot chances total 1, their mean is 2, and their average square is 6 - 4/10 = 28/5
+example : ∑ k ∈ range 11, (Nat.choose 10 k : ℚ) * (1 / 5) ^ k * (4 / 5) ^ (10 - k) = 1 ∧
+    ∑ k ∈ range 11, (k : ℚ) * (Nat.choose 10 k) * (1 / 5) ^ k * (4 / 5) ^ (10 - k) = 2 ∧
+    ∑ k ∈ range 11, (k : ℚ) ^ 2 * (Nat.choose 10 k) * (1 / 5) ^ k * (4 / 5) ^ (10 - k) = 28 / 5 := by
+  norm_num [sum_range_succ, Nat.choose]
+
+-- variance at 10 slots: 28/5 - 2^2 = 2 (1 - 2/10) = 8/5; Poisson average square 2 + 2^2 = 6
+example : (28 / 5 : ℚ) - 2 ^ 2 = 2 * (1 - 2 / 10) ∧ (28 / 5 : ℚ) - 2 ^ 2 = 8 / 5 ∧
+    (2 : ℚ) + 2 ^ 2 = 6 := by
+  norm_num
+
+#print axioms dominated_convergence_total_error_and_integral_tendsto
+#print axioms bounded_convergence_total_error_and_integral_tendsto
+#print axioms scheffe_total_error_tendsto_zero_and_half_bound
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'dominated_convergence_total_error_and_integral_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bounded_convergence_total_error_and_integral_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'scheffe_total_error_tendsto_zero_and_half_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first:** change both `[:5]` to `[:3]`, so the burst is 3 or more. Answer: binomial 0.3222 against Poisson 0.3233 at 10 slots, gap 0.0011; at 100 and 1,000 slots the gap prints as 0.0000. Every gap stays under the same half error, because Scheffé's bound covers every event.
@@ -638,6 +848,8 @@ ALL CHECKS PASS
 - [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the conditional version of dominated convergence.
 - The Fourier transform of an absolutely integrable signal, and why it fades at infinity: continuity of the transform, one dominating function for all frequencies.
 - Approximate identities: smoothing kernels that shrink to a point, whose limits are justified by domination.
+
+This card asks for one integrable roof over the whole sequence; what weaker promise about the tails is exactly enough is the question [Uniform integrability](05-uniform-integrability.md) answers.
 
 ---
 

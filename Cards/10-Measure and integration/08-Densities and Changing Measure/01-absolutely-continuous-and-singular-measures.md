@@ -56,7 +56,7 @@ $$\nu \ll \mu \iff \text{for every } \varepsilon > 0 \text{ there is a } \delta 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$ | the outcomes; the sets we measure | faces 1 to 6 and all 64 sets of faces; or the line and its Borel sets | more sets, more tests |
+| $\Omega$, $\mathcal{F}$ | the outcomes; the sets we measure | faces 1 to 6 and all 64 sets of faces; or the line and its Borel sets, the sets built from intervals | more sets, more tests |
 | $\mu$, $\nu$, $\rho$ | measures on the same sets; $\mu$ is the reference | $\mu$ = the fair die, $\nu$ = the no-six die | more $\mu$-null sets make $\nu \ll \mu$ easier to break |
 | $P$, $Q$ | the fair die; the loaded die | 0.1667 each; 0.1, 0.1, 0.1, 0.1, 0.2, 0.4 | — |
 | $R$, $T$, $D$, $M$ | dice that never show 6, never show 1, always show 6; $M$ is half $D$ plus half $U$ | 0.2 on five faces; 1 on face 6 | — |
@@ -77,7 +77,7 @@ The three relations are definitions, so they need no hypotheses; the theorems ab
 - **The same sets on both sides.** With different collections, "every set $\mu$ calls null" names different sets.
 - **The reference matters.** On the die $D \ll P$, since $P$ gives face 6 the chance 0.1667; on the line $D \perp \lambda$, since the point 6 has length zero.
 - **The epsilon-delta form needs $\nu$ finite.** Counting measure on 1, 2, 3, … is absolutely continuous with respect to the weights $2^{-n}$, yet the point 20 has weight 1/1048576 and count 1. No $\delta$ keeps the count below 1.
-- **The density theorem needs only $f \ge 0$ and measurable.** The converse, that an absolutely continuous $\nu$ always has a density, needs more: [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md) proves it when both measures are sigma-finite.
+- **The density theorem needs only $f \ge 0$ and measurable.** The converse, that an absolutely continuous $\nu$ always has a density, needs more: [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md) proves it when both measures are sigma-finite: each a countable union of pieces of finite size.
 - **The finite-space shortcut needs every single point measurable.** With a coarser $\mathcal{F}$, compare the smallest measurable blocks instead of points.
 
 ---
@@ -131,14 +131,14 @@ Orange: the bound 2d. Green: $E_2$, the chance $1 - e^{-2d}$. Dark blue: $E_1$, 
 
 Without a bounded density the promise still holds when $\nu$ is finite. The proof runs by contradiction. Suppose some $\varepsilon$ has no $\delta$. Then for each $n$ there is a set $A_n$ of $\mu$-size under $2^{-n}$ and $\nu$-size at least $\varepsilon$. Collect the outcomes that lie in infinitely many of the $A_n$. Their $\mu$-size is under every tail sum $2^{-n} + 2^{-n-1} + \cdots$, so it is zero. Their $\nu$-size is at least $\varepsilon$, because $\nu$ is finite and so is continuous along shrinking sets. A $\mu$-null set with positive $\nu$-size contradicts $\nu \ll \mu$.
 
-A countable example: on 1, 2, 3, …, let $\mu$ give $n$ the weight $2^{-n}$ and $\nu$ the weight $1/(n(n+1))$. Take $\varepsilon = 0.1$ and $\delta = 1/1024$. A set of $\mu$-size under 1/1024 contains none of 1 to 10, so its $\nu$-size is at most the weight of 11, 12, 13, …, which telescopes to 1/11 = 0.0909. No set reaches 1/11, since the whole tail has $\mu$-size exactly 1/1024; 1/11 is the supremum. The code finds 0.0909 again by searching all 65536 sets drawn from 1 to 16 and adding the weight beyond 16, 1/17.
+A countable example: on 1, 2, 3, …, let $\mu$ give $n$ the weight $2^{-n}$ and $\nu$ the weight $1/(n(n+1))$. Take $\varepsilon = 0.1$ and $\delta = 1/1024$. A set of $\mu$-size under 1/1024 contains none of 1 to 10, so its $\nu$-size is at most the weight of 11, 12, 13, …, which telescopes to 1/11 = 0.0909. No set reaches 1/11, since the whole tail has $\mu$-size exactly 1/1024; 1/11 is the supremum, the least upper bound. The code finds 0.0909 again by searching all 65536 sets drawn from 1 to 16 and adding the weight beyond 16, 1/17.
 
 <details>
 <summary>Detailed proof</summary>
 
 **Theorem 1 (a density gives absolute continuity).** Let $f \ge 0$ be measurable with respect to $\mathcal{F}$ and set $\nu(A) = \int f 1_A \, d\mu$. Then $\nu$ is a measure and $\nu \ll \mu$.
 
-*Proof.* $\nu(\emptyset) = 0$, since $f 1_\emptyset$ is the zero function. For disjoint $A_1, A_2, \ldots$ with union $A$, the functions $f(1_{A_1} + \cdots + 1_{A_k})$ rise with $k$ to $f 1_A$, so the monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $\nu(A) = \sum_k \nu(A_k)$. If $\mu(A) = 0$, then $f 1_A$ is zero off $A$, so zero $\mu$-a.e., and a nonnegative function zero a.e. has integral 0 ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). So $\nu(A) = 0$.
+*Proof.* $\nu(\emptyset) = 0$, since $f 1_\emptyset$ is the zero function. For disjoint $A_1, A_2, \ldots$ with union $A$, the functions $f(1_{A_1} + \cdots + 1_{A_k})$ rise with $k$ to $f 1_A$, so the monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $\nu(A) = \sum_k \nu(A_k)$. If $\mu(A) = 0$, then $f 1_A$ is zero off $A$, so zero $\mu$-almost everywhere (a.e.), and a nonnegative function zero a.e. has integral 0 ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). So $\nu(A) = 0$.
 
 **Theorem 2 (epsilon-delta).** Let $\nu$ be a finite measure on $\mathcal{F}$. Then $\nu \ll \mu$ exactly when for every $\varepsilon > 0$ there is $\delta > 0$ such that $\mu(A) < \delta$ implies $\nu(A) < \varepsilon$ for every $A \in \mathcal{F}$.
 
@@ -329,9 +329,10 @@ assert f == [Fr(3, 5)] * 4 + [Fr(6, 5), Fr(12, 5)]        # density against the 
 assert dens_ok and best == Fr(1, 11)                       # density; search against telescoping
 assert best < eps                                          # delta 1/1024 meets eps 0.1
 assert gap < 1e-9 and below and cantor_ok                  # two integrals; stages
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 face weights, faces 1 to 6; faces with weight; count of null sets out of 64
@@ -378,6 +379,7 @@ Cantor stages: n, intervals, total length by list, (2/3)^n, kappa per interval
 5, 32, 0.1317, 0.1317, 1/32
 10, 1024, 0.0173, 0.0173, 1/1024
 figure, bars 100 px per unit on baselines y=70,140,210; x=110+40(k-1), width 24; P 16.67 px, Q 10,10,10,10,20,40 px, R 20 px and none at face 6
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -506,10 +508,11 @@ fn main() {
     assert!(dens_ok && best * 11 == l);                              // density; search against telescoping
     assert!(best * 10 < l);                                          // delta 1/1024 meets eps 0.1
     assert!(gap < 1e-9 && below && cantor_ok);                       // two integrals; stages
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 face weights, faces 1 to 6; faces with weight; count of null sets out of 64
@@ -556,9 +559,153 @@ Cantor stages: n, intervals, total length by list, (2/3)^n, kappa per interval
 5, 32, 0.1317, 0.1317, 1/32
 10, 1024, 0.0173, 0.0173, 1/1024
 figure, bars 100 px per unit on baselines y=70,140,210; x=110+40(k-1), width 24; P 16.67 px, Q 10,10,10,10,20,40 px, R 20 px and none at face 6
+ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
+
+### Lean
+
+Lean proves three of the card's four theorems for every measure space, and checks the hand arithmetic as exact fractions.
+
+- Take a nonnegative measurable density $f$. Then weighing each set by the integral of $f$ over it gives a measure. Every measure with those sizes is absolutely continuous with respect to $\mu$.
+- Suppose $\nu$ is a finite measure. Then $\nu \ll \mu$ exactly when, for every $\varepsilon > 0$, some $\delta > 0$ makes $\mu(A) < \delta$ force $\nu(A) < \varepsilon$.
+- Suppose $\nu \ll \mu$ and the two are mutually singular. Then $\nu$ is the zero measure: it gives every set size zero.
+- The die counts hold exactly: $Q$, $R$ and $D$ have 1, 2 and 32 null sets out of 64.
+- The set $S$ = {1, 2, 3, 4, 5} separates $R$ from $D$, and the density of $Q$ against $P$ is 0.6, 1.2 and 2.4.
+- In the countable example, the $\mu$-weights of 1 to 10 total 1 − 1/1024. The $\nu$-weights from 11 on total 1/11, below $\varepsilon$ = 0.1.
+- At Cantor stage 10, the kept length is $(2/3)^{10}$, and the 1024 intervals of weight 1/1024 make up all of $\kappa$.
+
+The ten die verdicts, the finite-space theorem, the examples on the line and the 65536-set search are left to the Python and Rust checks.
+
+```lean
+-- Absolutely continuous and singular measures: a measure given by a nonnegative density is absolutely continuous, for a finite measure absolute continuity is the epsilon-delta condition, and a measure both absolutely continuous and singular with respect to another is zero.
+import Mathlib.MeasureTheory.Measure.WithDensity
+import Mathlib.MeasureTheory.Measure.MutuallySingular
+import Mathlib.MeasureTheory.OuterMeasure.BorelCantelli
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.BigOperators.Intervals
+
+open MeasureTheory
+
+/-- A density always gives absolute continuity. Let f be a nonnegative measurable function.
+Weighing every set A by the integral of f over A against mu gives a measure, and every measure
+nu built this way (nu(A) is the integral of f over A, for every measurable A) is absolutely
+continuous with respect to mu: whatever mu calls size zero, nu calls size zero too. -/
+theorem density_gives_absolute_continuity {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (f : Ω → ℝ) (hf : Measurable f) (hf0 : ∀ x, 0 ≤ f x) :
+    (∃ ν : Measure Ω, ∀ A, MeasurableSet A → ν A = ∫⁻ x in A, ENNReal.ofReal (f x) ∂μ) ∧
+    ∀ ν : Measure Ω, (∀ A, MeasurableSet A → ν A = ∫⁻ x in A, ENNReal.ofReal (f x) ∂μ) →
+      ν ≪ μ := by
+  refine ⟨⟨μ.withDensity (fun x => ENNReal.ofReal (f x)), fun A hA => withDensity_apply _ hA⟩, ?_⟩
+  intro ν hν
+  have : ν = μ.withDensity (fun x => ENNReal.ofReal (f x)) :=
+    Measure.ext fun A hA => by rw [hν A hA, withDensity_apply _ hA]
+  rw [this]
+  exact withDensity_absolutelyContinuous _ _
+
+/-- For a finite measure nu, absolute continuity is a quantitative promise: nu is absolutely
+continuous with respect to mu exactly when for every epsilon > 0 there is a delta > 0 such that
+every measurable set of mu-size under delta has nu-size under epsilon. -/
+theorem absolutely_continuous_iff_epsilon_delta {Ω : Type*} [MeasurableSpace Ω]
+    (μ ν : Measure Ω) [IsFiniteMeasure ν] :
+    ν ≪ μ ↔ ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧
+      ∀ A, MeasurableSet A → μ A < ENNReal.ofReal δ → ν A < ENNReal.ofReal ε := by
+  constructor
+  · intro hac
+    by_contra hcon
+    push Not at hcon
+    obtain ⟨ε, hε, h⟩ := hcon
+    have hex : ∀ n : ℕ, ∃ A, MeasurableSet A ∧ μ A < ENNReal.ofReal ((1 / 2 : ℝ) ^ n) ∧
+        ENNReal.ofReal ε ≤ ν A := fun n => h _ (by positivity)
+    choose A hAm hAμ hAν using hex
+    have hsum : ∑' i, μ (A i) ≠ ⊤ := by
+      refine ne_top_of_le_ne_top (b := ∑' i : ℕ, (2⁻¹ : ENNReal) ^ i) ?_ ?_
+      · rw [ENNReal.tsum_geometric]
+        simp [ENNReal.one_sub_inv_two]
+      · refine tsum_le_tsum fun i => (hAμ i).le.trans_eq ?_
+        rw [ENNReal.ofReal_pow (by norm_num)]
+        congr 1
+        rw [one_div, ENNReal.ofReal_inv_of_pos (by norm_num)]
+        simp
+    have h0 : μ (Filter.limsup A Filter.atTop) = 0 := measure_limsup_atTop_eq_zero hsum
+    have h1 : ν (Filter.limsup A Filter.atTop) = 0 := hac h0
+    rw [Filter.limsup_eq_iInf_iSup_of_nat] at h1
+    simp only [Set.iSup_eq_iUnion, Set.iInf_eq_iInter] at h1
+    have hanti : Antitone (fun n : ℕ => ⋃ i ≥ n, A i) := by
+      intro m n hmn x hx
+      simp only [Set.mem_iUnion] at hx ⊢
+      obtain ⟨i, hi, hx⟩ := hx
+      exact ⟨i, le_trans hmn hi, hx⟩
+    rw [hanti.measure_iInter (fun n => (MeasurableSet.biUnion (Set.to_countable _)
+      fun i _ => hAm i).nullMeasurableSet) ⟨0, measure_ne_top _ _⟩] at h1
+    have : ENNReal.ofReal ε ≤ ⨅ n, ν (⋃ i ≥ n, A i) :=
+      le_iInf fun n => (hAν n).trans (measure_mono fun x hx => by
+        simp only [Set.mem_iUnion]; exact ⟨n, le_refl n, hx⟩)
+    rw [h1] at this
+    exact (ENNReal.ofReal_pos.mpr hε).ne' (le_antisymm this (zero_le))
+  · intro h
+    refine Measure.AbsolutelyContinuous.mk fun A hA hμA => ?_
+    by_contra hne
+    have hpos : 0 < (ν A).toReal := ENNReal.toReal_pos hne (measure_ne_top _ _)
+    obtain ⟨δ, hδ, hδA⟩ := h _ hpos
+    have := hδA A hA (by rw [hμA]; exact ENNReal.ofReal_pos.mpr hδ)
+    rw [ENNReal.ofReal_toReal (measure_ne_top _ _)] at this
+    exact lt_irrefl _ this
+
+/-- Both at once means zero: if nu is absolutely continuous with respect to mu and the two are
+mutually singular, then nu gives every set size zero. -/
+theorem absolutely_continuous_and_singular_is_zero {Ω : Type*} [MeasurableSpace Ω]
+    (μ ν : Measure Ω) (hac : ν ≪ μ) (hsing : ν ⟂ₘ μ) : ν = 0 := by
+  exact Measure.eq_zero_of_absolutelyContinuous_of_mutuallySingular hac hsing
+
+-- The dice. Faces 1 to 6 are 0 to 5 here; weights in tenths: P is 1/6 per face (not whole
+-- tenths, so it charges every face), Q = 1,1,1,1,2,4; R = 2,2,2,2,2,0; D = 0,0,0,0,0,10.
+-- Null sets out of the 64 sets of faces: R has 2 (the empty set and {6}), D has 32.
+example : (Finset.univ.powerset.filter
+    (fun s : Finset (Fin 6) => ∑ k ∈ s, ![2, 2, 2, 2, 2, 0] k = (0 : ℕ))).card = 2 := by decide
+example : (Finset.univ.powerset.filter
+    (fun s : Finset (Fin 6) => ∑ k ∈ s, ![0, 0, 0, 0, 0, 10] k = (0 : ℕ))).card = 32 := by decide
+example : (Finset.univ.powerset.filter
+    (fun s : Finset (Fin 6) => ∑ k ∈ s, ![1, 1, 1, 1, 2, 4] k = (0 : ℕ))).card = 1 := by decide
+example : (Finset.univ : Finset (Finset (Fin 6))).card = 64 := by decide
+-- R and D are mutually singular, S = faces 1 to 5: R gives face 6 nothing, D gives faces 1 to 5 nothing.
+example : ![2, 2, 2, 2, 2, (0 : ℕ)] 5 = 0 ∧
+    ∑ k ∈ ({0, 1, 2, 3, 4} : Finset (Fin 6)), ![0, 0, 0, 0, 0, (10 : ℕ)] k = 0 := by decide
+-- Density of Q against P: 0.1 / (1/6) = 3/5, 0.2 / (1/6) = 6/5, 0.4 / (1/6) = 12/5.
+example : (1 / 10 : ℚ) / (1 / 6) = 3 / 5 ∧ (2 / 10 : ℚ) / (1 / 6) = 6 / 5 ∧
+    (4 / 10 : ℚ) / (1 / 6) = 12 / 5 := by norm_num
+-- Q(5 or 6) through the density: (6/5 + 12/5) times 1/6 = 3/5 = 2/10 + 4/10.
+example : ((6 / 5 : ℚ) + 12 / 5) * (1 / 6) = 2 / 10 + 4 / 10 := by norm_num
+-- R is P reweighted by 6/5 on faces 1 to 5 and 0 on face 6.
+example : (6 / 5 : ℚ) * (1 / 6) = 2 / 10 ∧ (0 : ℚ) * (1 / 6) = 0 := by norm_num
+-- Epsilon-delta example: mu(n) = 2^-n, nu(n) = 1/(n(n+1)). The numbers 1 to 10 have mu-weight
+-- 1 - 1/1024, so a set of mu-size under 1/1024 misses them all; the weights 11 to 16 plus the
+-- weight beyond 16 (1/17) telescope to 1/11, which is below epsilon = 1/10.
+example : ∑ n ∈ Finset.Icc (1 : ℕ) 10, (1 / 2 : ℚ) ^ n = 1 - 1 / 1024 := by
+  simp [Finset.sum_Icc_succ_top]; norm_num
+example : ∑ n ∈ Finset.Icc (11 : ℕ) 16, (1 : ℚ) / ((n : ℚ) * (n + 1)) + 1 / 17 = 1 / 11 := by
+  simp [Finset.sum_Icc_succ_top]; norm_num
+example : (1 : ℚ) / 11 < 1 / 10 := by norm_num
+-- Counting measure against 2^-n: the point 20 has weight 1/1048576 and count 1.
+example : (2 : ℕ) ^ 10 = 1024 ∧ (2 : ℕ) ^ 20 = 1048576 := by norm_num
+-- Cantor stages: stage 10 keeps 2^10 = 1024 intervals, each of kappa-weight 1/1024,
+-- with total length (2/3)^10 = 1024/59049.
+example : (2 / 3 : ℚ) ^ 10 = 1024 / 59049 ∧ (1024 : ℚ) * (1 / 1024) = 1 := by norm_num
+
+#print axioms density_gives_absolute_continuity
+#print axioms absolutely_continuous_iff_epsilon_delta
+#print axioms absolutely_continuous_and_singular_is_zero
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'density_gives_absolute_continuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'absolutely_continuous_iff_epsilon_delta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'absolutely_continuous_and_singular_is_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

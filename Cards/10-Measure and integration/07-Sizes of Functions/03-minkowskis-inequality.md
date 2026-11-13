@@ -8,7 +8,9 @@
 
 Turbine A logs one daily mean wind speed for a week: 3, 5, 8, 2, 6, 4 and 7 m/s. Turbine B stands 3 km away and logs 5, 2, 4, 6, 1, 3 and 2 m/s. Add them day by day and the pair's combined reading is 8, 7, 12, 8, 7, 7 and 9 m/s.
 
-Each week is a list of seven numbers, so it is a point, or an arrow from the origin, in a space with one direction per day. The usual length of that arrow is the square root of the sum of squares: √203 = 14.2478 for A, √95 = 9.7468 for B, and √500 = 22.3607 for the combined week. The two lengths added make 23.9946. The combined week is shorter than that by 1.6339. Two arrows laid end to end reach no further than the lengths added: this is the triangle inequality of school geometry, now in seven directions.
+Each week is a list of seven numbers, so it is a point, or an arrow from the origin, in a space with one direction per day. The usual length of that arrow is the square root of the sum of squares: √203 = 14.2478 for A, √95 = 9.7468 for B, and √500 = 22.3607 for the combined week.
+
+The two lengths added make 23.9946. The combined week is shorter than that by 1.6339. Two arrows laid end to end reach no further than the lengths added: this is the triangle inequality of school geometry, now in seven directions.
 
 The [Lp spaces](01-lp-spaces.md) card measures a function with a whole family of sizes, one for each exponent p. The square-root-of-squares length is the case p = 2. This card proves that every size in the family with p at least 1 obeys the same rule, on any measure space, and that this makes each such size a genuine length: a **norm**. Hermann Minkowski used the inequality for sums in his 1896 book on the geometry of numbers.
 
@@ -28,7 +30,9 @@ Caption: the solid arrow from the origin to (3, 5) is A, of length 5.831; the da
 
 ## The formula
 
-Notation first, in words, as a reminder from [Lp spaces](01-lp-spaces.md). A measure space $(\Omega,\mathcal F,\mu)$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size. Here $\Omega$ is the seven days, and $\mu$ is either **counting measure**, which gives each day weight 1, or the **uniform probability**, which gives each day weight 1/7. For a measurable function $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm**, which this card also calls the p-size, is
+Notation first, in words, as a reminder from [Lp spaces](01-lp-spaces.md). A measure space $(\Omega,\mathcal F,\mu)$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size.
+
+Here $\Omega$ is the seven days, and $\mu$ is either **counting measure**, which gives each day weight 1, or the **uniform probability**, which gives each day weight 1/7. For a measurable function $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm**, which this card also calls the p-size, is
 
 $$\|f\|_p = \Big(\int_\Omega |f|^p \, d\mu\Big)^{1/p}.$$
 
@@ -82,7 +86,9 @@ In words: only the zero function has size zero, once functions that agree almost
 
 ### Step 0: add the sizes point by point, then repair the exponent
 
-At every day, the triangle inequality for numbers says |A + B| ≤ |A| + |B|. Integrating that is already the whole story at p = 1. For larger p the trouble is the p-th power: it is not additive. The trick is to split the p-th power of the sum into two pieces, one carrying A and one carrying B, and bound each piece with Hölder. The bound comes out with one factor of the sum's size too many, and dividing it away leaves the inequality.
+At every day, the triangle inequality for numbers says |A + B| ≤ |A| + |B|. Integrating that is already the whole story at p = 1. For larger p the trouble is the p-th power: it is not additive.
+
+The trick is to split the p-th power of the sum into two pieces, one carrying A and one carrying B, and bound each piece with Hölder. The bound comes out with one factor of the sum's size too many, and dividing it away leaves the inequality.
 
 ### Step 1: p = 1, the triangle inequality integrated
 
@@ -522,6 +528,96 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Minkowski's inequality and the norm axioms on any measure space, for every p from 1 to ∞, and checks the turbine numbers.
+
+- Suppose $f$ and $g$ are measurable, with sizes possibly infinite, and $1 \le p \le \infty$. Then $\|f+g\|_p \le \|f\|_p + \|g\|_p$.
+- Take a measurable $f$ and $1 \le p \le \infty$. Then $\|f\|_p = 0$ exactly when $f = 0$ almost everywhere.
+- Take a measurable $f$ and a number $c$. Then $\|c f\|_p = |c|\,\|f\|_p$.
+- Take $L^p$, with functions equal almost everywhere counted as one. Then its p-norm has all three norm properties, so it is a normed space.
+- Adding the turbines day by day gives 8, 7, 12, 8, 7, 7 and 9.
+- The sums of squares are 203 for A, 95 for B and 500 for the sum.
+- Take the cross term, 101. Then 203 + 2 × 101 + 95 = 500.
+- Take p = 2. Then $\sqrt{500} \le \sqrt{203} + \sqrt{95}$, checked by squaring until only whole numbers remain.
+- Take p = 1. Then the sizes 35 and 23 add to 58, the size of the sum.
+- Take p = ∞. Then the largest values 8 and 6 add to 14, and the sum's largest value is 12.
+- Dropping the root at p = 2 gives 500, more than 203 + 95 = 298.
+
+Decimal sizes, the Hölder split, p = 1/2, equality and the random pairs are left to the Python and Rust checks.
+
+```lean
+-- Minkowski's inequality: for every exponent p from 1 to infinity, on any measure space, the p-size of a sum of two measurable functions is at most the sum of their p-sizes, and with it the p-size is a norm, so Lp is a normed space.
+import Mathlib.MeasureTheory.Function.LpSpace.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ENNReal
+
+/-- Minkowski's inequality. For measurable real functions f and g on any measure space and any
+exponent p with 1 ≤ p ≤ ∞, the p-size of the sum is at most the p-size of the first plus the
+p-size of the second: ‖f + g‖_p ≤ ‖f‖_p + ‖g‖_p. Sizes may be infinite; then the inequality holds
+with ∞ on the right. -/
+theorem minkowski_inequality {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (p : ℝ≥0∞) (hp : 1 ≤ p) (f g : Ω → ℝ) (hf : Measurable f) (hg : Measurable g) :
+    eLpNorm (f + g) p μ ≤ eLpNorm f p μ + eLpNorm g p μ := by
+  exact eLpNorm_add_le hp
+
+/-- The other two norm axioms for the p-size of a measurable function, 1 ≤ p ≤ ∞: size zero
+means zero almost everywhere (not everywhere), and scaling a function by a number c scales its
+size by |c|. -/
+theorem p_size_zero_iff_ae_zero_and_scales {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (p : ℝ≥0∞) (hp : 1 ≤ p) (f : Ω → ℝ) (hf : Measurable f) :
+    (eLpNorm f p μ = 0 ↔ f =ᵐ[μ] 0) ∧
+      ∀ c : ℝ, eLpNorm (c • f) p μ = ENNReal.ofReal |c| * eLpNorm f p μ := by
+  refine ⟨eLpNorm_eq_zero_iff (by
+    intro h; rw [h] at hp; exact absurd hp (by norm_num)), fun c => ?_⟩
+  rw [eLpNorm_const_smul, Real.enorm_eq_ofReal_abs]
+
+/-- Lp is a normed space. For 1 ≤ p ≤ ∞, on the space of functions of finite p-size, with
+functions that agree almost everywhere counted as one, the p-norm has all three norm properties:
+only the zero element has size zero, ‖c f‖_p = |c| ‖f‖_p, and the triangle inequality. -/
+theorem lp_is_normed_space {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (p : ℝ≥0∞) [Fact (1 ≤ p)] (f g : Lp ℝ p μ) (c : ℝ) :
+    (‖f‖ = 0 ↔ f = 0) ∧ ‖c • f‖ = |c| * ‖f‖ ∧ ‖f + g‖ ≤ ‖f‖ + ‖g‖ := by
+  exact ⟨norm_eq_zero, by rw [norm_smul, Real.norm_eq_abs], norm_add_le f g⟩
+
+-- The card's worked numbers: turbine A = [3, 5, 8, 2, 6, 4, 7], turbine B = [5, 2, 4, 6, 1, 3, 2] (m/s).
+-- A + B day by day.
+example : List.zipWith (· + ·) [3, 5, 8, 2, 6, 4, 7] [5, 2, 4, 6, 1, 3, 2]
+    = ([8, 7, 12, 8, 7, 7, 9] : List ℕ) := by decide
+-- Sums of squares: A gives 203, B gives 95, A + B gives 500.
+example : (([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (· ^ 2)).sum = 203 := by decide
+example : (([5, 2, 4, 6, 1, 3, 2] : List ℕ).map (· ^ 2)).sum = 95 := by decide
+example : (([8, 7, 12, 8, 7, 7, 9] : List ℕ).map (· ^ 2)).sum = 500 := by decide
+-- The cross term is 101, and the expansion checks: 203 + 2 × 101 + 95 = 500.
+example : (List.zipWith (· * ·) [3, 5, 8, 2, 6, 4, 7] [5, 2, 4, 6, 1, 3, 2] : List ℕ).sum = 101 := by
+  decide
+example : (203 : ℕ) + 2 * 101 + 95 = 500 := by decide
+-- Minkowski at p = 2 for the turbines, squared out in whole numbers:
+-- √500 ≤ √203 + √95 ⇔ 500 - 298 ≤ 2√(203·95) ⇔ 202² ≤ 4·203·95.
+example : (500 - (203 + 95) : ℕ) ^ 2 ≤ 4 * 203 * 95 := by decide
+-- p = 1: sizes 35 and 23 add to 58, the size of the sum (all values positive).
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℕ).sum = 35 ∧ ([5, 2, 4, 6, 1, 3, 2] : List ℕ).sum = 23 ∧
+    ([8, 7, 12, 8, 7, 7, 9] : List ℕ).sum = 58 := by decide
+-- p = ∞: largest values 8 and 6 add to 14; the sum's largest value is 12.
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℕ).max? = some 8 ∧ ([5, 2, 4, 6, 1, 3, 2] : List ℕ).max? = some 6 ∧
+    ([8, 7, 12, 8, 7, 7, 9] : List ℕ).max? = some 12 ∧ 12 ≤ 8 + 6 := by decide
+-- The usual mistake, no root at p = 2: 500 > 203 + 95 = 298.
+example : (203 : ℕ) + 95 = 298 ∧ 298 < 500 := by decide
+
+#print axioms minkowski_inequality
+#print axioms p_size_zero_iff_ae_zero_and_scales
+#print axioms lp_is_normed_space
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'minkowski_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'p_size_zero_iff_ae_zero_and_scales' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lp_is_normed_space' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -557,12 +653,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
+- [Lp spaces](01-lp-spaces.md): the p-sizes, the sup-norm and the rule that functions equal almost everywhere count as one, which this card turns into a norm.
 - [Holder's inequality](02-holders-inequality.md): the cap on each piece of the split in Step 3.
 
 ## Where this goes next
 
 - [Riesz-Fischer](05-completeness-of-lp.md): with a norm in hand, distance between functions makes sense, and the Riesz-Fischer theorem shows no Cauchy sequence escapes the space.
-- Convolution: an integral of shifted copies, bounded by Minkowski applied under the integral sign.
+- [Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md): an integral of shifted copies, bounded by Minkowski applied under the integral sign.
 
 Also on this shelf: [Jensen's inequality](04-jensens-inequality.md) compares sizes at different exponents under a probability.
 
@@ -572,7 +669,7 @@ L^p now has a distance, $\|f-g\|_p$; whether a sequence whose members crowd toge
 
 ## Sources
 
-Verified 2026-09-29: each link opens a page naming the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Axler, Sheldon. *Measure, Integration & Real Analysis*. Springer, 2020. [Author's page with the free edition](https://measure.axler.net/). Chapter 7 proves Hölder and Minkowski and builds the L^p spaces as normed spaces.
 - Folland, Gerald B. *Real Analysis: Modern Techniques and Their Applications*, 2nd ed. Wiley, 1999. [Publisher page](https://www.wiley.com/en-us/Real+Analysis%3A+Modern+Techniques+and+Their+Applications%2C+2nd+Edition-p-9780471317166). Chapter 6 gives the Hölder-then-divide proof used here, with the p = ∞ case.

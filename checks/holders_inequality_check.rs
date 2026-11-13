@@ -163,4 +163,5 @@ fn main() {
     assert!(worst <= 1.0 + 1e-12);
     println!("random,20000 pairs p in 1.1 to 8 largest sum/bound,{:.6}", worst);
     println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

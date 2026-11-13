@@ -12,7 +12,11 @@ That 4.4 can be reached without ever rolling the loaded die. Give each face a we
 
 Think of an exchange rate. A price list in one currency becomes a price list in another when each price is multiplied by the rate. Here the "currency" is probability: the weight at each face converts fair-die probability into loaded-die probability. From here on that weight has its proper name, the **Radon-Nikodym derivative** of the loaded die against the fair one, also called the **density** of one measure against the other.
 
-The [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md) says such a weight exists whenever one measure never gives weight where the other gives none. This card proves what the weight does. It moves any integral from one measure to the other. It chains through a third measure by multiplying. It turns round by taking the reciprocal. In probability, it turns an average under one set of odds into an average under another. Converting through a third die gives the same 4.4; converting back gives the fair 3.5.
+[The Radon-Nikodym theorem](03-radon-nikodym-theorem.md) says such a weight exists whenever one measure never gives weight where the other gives none.
+
+This card proves what the weight does. It moves any integral from one measure to the other. It chains through a third measure by multiplying. It turns round by taking the reciprocal.
+
+In probability, it turns an average under one set of odds into an average under another. Converting through a third die gives the same 4.4; converting back gives the fair 3.5.
 
 **The Radon-Nikodym derivative is an exchange rate between two measures: multiply by it inside an integral to switch measures, multiply two of them to pass through a third, and invert it to go back.**
 
@@ -36,9 +40,16 @@ The bars are the exchange rate at each face. The flat line at 1 is the fair die 
 
 ## The formula
 
-Notation first, in words. $\Omega$ (omega) is the space of outcomes, here the six faces. $\mathcal F$ is the collection of sets we allow ourselves to measure; on a die it is all 64 sets of faces. A **measure** gives each such set a size; $\mu$ (mu), $\nu$ (nu) and $\rho$ (rho) name three of them. $P$ is the fair die, $Q$ the loaded die and $R$ a third die, loaded towards the low faces: 0.25, 0.25, 0.2, 0.1, 0.1, 0.1. $\int g\,d\mu$ is the integral of a function $g$ against $\mu$. $\nu \ll \mu$, read "$\nu$ is absolutely continuous with respect to $\mu$", means every set of $\mu$-size zero also has $\nu$-size zero. Two measures that are each absolutely continuous with respect to the other are **equivalent**.
+Notation first, in words.
 
-The derivative itself, from the [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md), read "the density of $\nu$ against $\mu$": the measurable function $f = \frac{d\nu}{d\mu} \ge 0$ with
+- $\Omega$ (omega) is the space of outcomes, here the six faces.
+- $\mathcal F$ is the collection of sets we allow ourselves to measure; on a die it is all 64 sets of faces.
+- A **measure** gives each such set a size; $\mu$ (mu), $\nu$ (nu) and $\rho$ (rho) name three of them.
+- $P$ is the fair die, $Q$ the loaded die and $R$ a third die, loaded towards the low faces: 0.25, 0.25, 0.2, 0.1, 0.1, 0.1.
+- $\int g\,d\mu$ is the integral of a function $g$ against $\mu$.
+- $\nu \ll \mu$, read "$\nu$ is absolutely continuous with respect to $\mu$", means every set of $\mu$-size zero also has $\nu$-size zero. Two measures that are each absolutely continuous with respect to the other are **equivalent**.
+
+The derivative itself, from [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md), read "the density of $\nu$ against $\mu$": the measurable function $f = \frac{d\nu}{d\mu} \ge 0$ with
 
 $$\nu(A) = \int_A \frac{d\nu}{d\mu}\,d\mu \quad\text{for every } A \in \mathcal F .$$
 
@@ -101,7 +112,9 @@ On the die, $Z$ at a face is the loaded probability divided by 0.1667: 0.60 on f
 
 ### Step 0: the definition is the rule for indicators
 
-Take $g = \mathbf 1_A$, one on A and zero off it. Then $\int \mathbf 1_A\,d\nu = \nu(A)$, and $\int \mathbf 1_A \frac{d\nu}{d\mu}\,d\mu = \int_A \frac{d\nu}{d\mu}\,d\mu$. The definition of the derivative says these are equal. So the change-of-measure rule already holds for indicators. The integral is built from indicators in three climbs: simple functions, then non-negative functions as rising limits, then signed functions as a difference. The rule climbs with it. The chain and reciprocal rules then follow from one more fact: two densities that give the same measure agree a.e.
+Take $g = \mathbf 1_A$, one on A and zero off it. Then $\int \mathbf 1_A\,d\nu = \nu(A)$, and $\int \mathbf 1_A \frac{d\nu}{d\mu}\,d\mu = \int_A \frac{d\nu}{d\mu}\,d\mu$. The definition of the derivative says these are equal. So the change-of-measure rule already holds for indicators.
+
+The integral is built from indicators in three climbs: simple functions, then non-negative functions as rising limits, then signed functions as a difference. The rule climbs with it. The chain and reciprocal rules then follow from one more fact: two densities that give the same measure agree a.e.
 
 ### Step 1: simple functions, by adding up
 
@@ -144,7 +157,7 @@ The same holds with a density on the line. Bus waits T, in minutes, are exponent
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal F)$ a measurable space; $\mu$, $\nu$, $\rho$ measures on it, all σ-finite; $\nu \ll \mu$, and $f = \frac{d\nu}{d\mu}$ a non-negative measurable function with $\nu(A) = \int_A f\,d\mu$ for all $A \in \mathcal F$. Existence and uniqueness a.e. of such $f$ are the [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md).
+**Setting.** $(\Omega, \mathcal F)$ a measurable space; $\mu$, $\nu$, $\rho$ measures on it, all σ-finite; $\nu \ll \mu$, and $f = \frac{d\nu}{d\mu}$ a non-negative measurable function with $\nu(A) = \int_A f\,d\mu$ for all $A \in \mathcal F$. Existence and uniqueness a.e. of such $f$ are [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md).
 
 **Rule 1, indicators.** For $A \in \mathcal F$: $\int \mathbf 1_A\,d\nu = \nu(A) = \int_A f\,d\mu = \int \mathbf 1_A f\,d\mu$. The first equality is the integral of an indicator; the second is the definition of $f$; the third is what an integral over A means.
 
@@ -186,7 +199,7 @@ On a finite space all four rules have a shorter road: every measure is a list of
 
 The loaded die averages 4.4 per roll, and the fair die's rolls, reweighted by the exchange rate, say the same; turning the rate round recovers the fair die's 3.5.
 
-The bus waits give the same shape of answer: $E_P[T\,Z]$ with $Z(t) = 2e^{-t}$ is 0.5, the mean wait at rate 2. The code reaches 0.5 by Simpson's rule and by 200000 weighted draws.
+The bus waits give the same shape of answer: $E_P[T\,Z]$ with $Z(t) = 2e^{-t}$ is 0.5, the mean wait at rate 2. The code reaches 0.5 by Simpson's rule (a numerical integral from parabolas fitted through evenly spaced points) and by 200000 weighted draws.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -214,7 +227,11 @@ The first line is the rate-1 density under P, the second the rate-2 density unde
 
 ## Code, from first principles, and it actually runs
 
-Python works in exact fractions from the standard library; Rust writes its own fractions on small integers. Four roads reach the loaded die's 4.4: the direct sum under Q, the exchange rate under P, the chain through the third die R, and 200000 fair rolls reweighted by Z, set beside 200000 loaded rolls averaged plainly. On a die the rate, chain and reciprocal roads are the direct sum again once each ratio cancels against its weight, so their asserts pass for any dice: they check the wiring, not the numbers. The independent checks are the direct sum against 22/5, each face's rate and rate back against the hand values of the worked numbers, the draws, and Simpson's rule. The rolls come from SplitMix64, a short random-number generator written out in both languages with seed 2026, so both print the same draws. The bus waits take three roads to 0.5: Simpson's rule on the rate-2 density, Simpson's rule on the reweighted rate-1 density, and weighted rate-1 draws. The code checks instances on one die and one pair of bus laws; only the proof covers every σ-finite measure space.
+Python works in exact fractions from the standard library; Rust writes its own fractions on small integers. Four roads reach the loaded die's 4.4: the direct sum under Q, the exchange rate under P, the chain through the third die R, and 200000 fair rolls reweighted by Z, set beside 200000 loaded rolls averaged plainly.
+
+On a die the rate, chain and reciprocal roads are the direct sum again once each ratio cancels against its weight, so their asserts pass for any dice: they check the wiring, not the numbers. The independent checks are the direct sum against 22/5, each face's rate and rate back against the hand values of the worked numbers, the draws, and Simpson's rule.
+
+The rolls come from SplitMix64, a short random-number generator written out in both languages with seed 2026, so both print the same draws. The bus waits take three roads to 0.5: Simpson's rule on the rate-2 density, Simpson's rule on the reweighted rate-1 density, and weighted rate-1 draws. The code checks instances on one die and one pair of bus laws; only the proof covers every σ-finite measure space.
 
 ### Python
 
@@ -584,6 +601,121 @@ ALL CHECKS PASS
 
 The two outputs match line for line, the random draws included.
 
+### Lean
+
+Lean proves rules 1, 2 and 3 for all σ-finite measures, and checks the card's dice fractions exactly.
+
+- Take σ-finite measures μ and ν with ν ≪ μ, and a measurable $g \ge 0$. Then $\int g\,d\nu = \int g\,\frac{d\nu}{d\mu}\,d\mu$, both sides possibly +∞.
+- Take the same μ and ν, and a $g$ integrable against ν. Then $g\,\frac{d\nu}{d\mu}$ is integrable against μ, and the two integrals are equal.
+- Suppose ρ ≪ ν ≪ μ, all three σ-finite. Then $\frac{d\rho}{d\mu} = \frac{d\rho}{d\nu}\,\frac{d\nu}{d\mu}$ μ-a.e.
+- Suppose μ and ν are σ-finite and equivalent. Then $\frac{d\nu}{d\mu} > 0$ μ-a.e.
+- Suppose μ and ν are σ-finite and equivalent. Then $\frac{d\mu}{d\nu} = 1 \big/ \frac{d\nu}{d\mu}$, both μ-a.e. and ν-a.e.
+- On the dice, Z is 3/5 on faces 1 to 4, 6/5 on face 5 and 12/5 on face 6. Its average under P is 1.
+- E_Q of the face is 22/5, both directly and as E_P of face × Z.
+- dQ/dR × dR/dP equals Z on every face.
+- dP/dQ × Z is 1 on every face, and E_Q of face × dP/dQ is the fair die's 7/2.
+
+Rule 4 as a separate statement, the draws, the bus waits and the four mistakes are left to the Python and Rust checks.
+
+```lean
+-- The Radon-Nikodym derivative: multiplying by dν/dμ inside an integral switches the measure from ν to μ, two derivatives multiply through a middle measure, and for equivalent measures the derivative back is the reciprocal.
+import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory
+open scoped ENNReal
+
+variable {Ω : Type*} [MeasurableSpace Ω]
+
+/-- Change of measure (rule 1). Let μ and ν be σ-finite measures with ν ≪ μ, and let
+dν/dμ be the Radon-Nikodym derivative. For every measurable g ≥ 0,
+∫ g dν = ∫ g · (dν/dμ) dμ (both sides may be +∞). For every g integrable against ν,
+g · (dν/dμ) is integrable against μ and the same equality holds. -/
+theorem change_of_measure (μ ν : Measure Ω) [SigmaFinite μ] [SigmaFinite ν]
+    (hνμ : ν ≪ μ) :
+    (∀ g : Ω → ℝ≥0∞, Measurable g →
+        ∫⁻ x, g x ∂ν = ∫⁻ x, g x * ν.rnDeriv μ x ∂μ) ∧
+    (∀ g : Ω → ℝ, Integrable g ν →
+        Integrable (fun x => g x * (ν.rnDeriv μ x).toReal) μ ∧
+        ∫ x, g x ∂ν = ∫ x, g x * (ν.rnDeriv μ x).toReal ∂μ) := by
+  refine ⟨fun g hg => ?_, fun g hg => ?_⟩
+  · rw [← lintegral_rnDeriv_mul hνμ hg.aemeasurable]
+    congr 1
+    ext x
+    exact mul_comm _ _
+  · have hint : Integrable (fun x => g x * (ν.rnDeriv μ x).toReal) μ := by
+      have h := (integrable_toReal_rnDeriv_mul_iff hνμ (f := g)).2 hg
+      simpa only [mul_comm] using h
+    refine ⟨hint, ?_⟩
+    rw [← integral_toReal_rnDeriv_mul hνμ]
+    congr 1
+    ext x
+    exact mul_comm _ _
+
+/-- Chain rule (rule 2). For σ-finite measures with ρ ≪ ν ≪ μ,
+dρ/dμ = (dρ/dν) · (dν/dμ) μ-almost everywhere. -/
+theorem radon_nikodym_chain_rule (μ ν ρ : Measure Ω) [SigmaFinite μ] [SigmaFinite ν] [SigmaFinite ρ]
+    (hρν : ρ ≪ ν) (hνμ : ν ≪ μ) :
+    ρ.rnDeriv μ =ᵐ[μ] fun x => ρ.rnDeriv ν x * ν.rnDeriv μ x := by
+  filter_upwards [Measure.rnDeriv_mul_rnDeriv (κ := μ) hρν] with x hx
+  exact hx.symm
+
+/-- Reciprocal rule (rule 3). If the σ-finite measures μ and ν are equivalent (μ ≪ ν and ν ≪ μ),
+then dν/dμ > 0 almost everywhere, and dμ/dν = 1 / (dν/dμ) almost everywhere, both μ-a.e.
+and ν-a.e. -/
+theorem radon_nikodym_reciprocal_rule (μ ν : Measure Ω) [SigmaFinite μ] [SigmaFinite ν]
+    (hμν : μ ≪ ν) (hνμ : ν ≪ μ) :
+    (∀ᵐ x ∂μ, 0 < ν.rnDeriv μ x) ∧
+    (μ.rnDeriv ν =ᵐ[μ] fun x => (ν.rnDeriv μ x)⁻¹) ∧
+    (μ.rnDeriv ν =ᵐ[ν] fun x => (ν.rnDeriv μ x)⁻¹) := by
+  refine ⟨Measure.rnDeriv_pos' hμν, ?_, ?_⟩
+  · filter_upwards [Measure.inv_rnDeriv' hμν] with x hx
+    exact hx.symm
+  · filter_upwards [Measure.inv_rnDeriv hνμ] with x hx
+    exact hx.symm
+
+/-! The card's dice, in exact fractions: fair die P = 1/6 each, loaded die
+Q = 1/10, 1/10, 1/10, 1/10, 1/5, 2/5, third die R = 1/4, 1/4, 1/5, 1/10, 1/10, 1/10. -/
+
+-- Z = dQ/dP on faces 1 to 4, face 5 and face 6: 3/5, 6/5, 12/5.
+example : ((1 : ℚ) / 10) / (1 / 6) = 3 / 5 ∧ ((1 : ℚ) / 5) / (1 / 6) = 6 / 5 ∧
+    ((2 : ℚ) / 5) / (1 / 6) = 12 / 5 := by norm_num
+
+-- E_P[Z] = 1.
+example : (1 : ℚ) / 6 * (4 * (3 / 5) + 6 / 5 + 12 / 5) = 1 := by norm_num
+
+-- E_Q of the face, directly: 22/5.
+example : (1 : ℚ) / 10 * (1 + 2 + 3 + 4) + 1 / 5 * 5 + 2 / 5 * 6 = 22 / 5 := by norm_num
+
+-- E_P of face × Z, by the change of measure: 22/5 again.
+example : (1 : ℚ) / 6 * (3 / 5 * (1 + 2 + 3 + 4) + 6 / 5 * 5 + 12 / 5 * 6) = 22 / 5 := by
+  norm_num
+
+-- Chain rule on the dice: dQ/dR × dR/dP = Z on every face.
+example : ((2 : ℚ) / 5) * (3 / 2) = 3 / 5 ∧ ((1 : ℚ) / 2) * (6 / 5) = 3 / 5 ∧
+    (1 : ℚ) * (3 / 5) = 3 / 5 ∧ (2 : ℚ) * (3 / 5) = 6 / 5 ∧ (4 : ℚ) * (3 / 5) = 12 / 5 := by
+  norm_num
+
+-- Reciprocal rule on the dice: dP/dQ = 5/3, 5/6, 5/12, each times Z is 1,
+-- and E_Q of face × dP/dQ is the fair die's 7/2.
+example : (5 : ℚ) / 3 * (3 / 5) = 1 ∧ (5 : ℚ) / 6 * (6 / 5) = 1 ∧ (5 : ℚ) / 12 * (12 / 5) = 1 ∧
+    (1 : ℚ) / 10 * (5 / 3) * (1 + 2 + 3 + 4) + 1 / 5 * (5 / 6) * 5 + 2 / 5 * (5 / 12) * 6
+      = 7 / 2 := by
+  norm_num
+
+#print axioms change_of_measure
+#print axioms radon_nikodym_chain_rule
+#print axioms radon_nikodym_reciprocal_rule
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'change_of_measure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'radon_nikodym_chain_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'radon_nikodym_reciprocal_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -626,7 +758,7 @@ The two outputs match line for line, the random draws included.
 
 - [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md): densities against length, and the ratio of two as a likelihood ratio.
 - [Conditioning on a random variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): abstract Bayes, a conditional average under new odds as the old conditional average of X times Z, divided by that of Z.
-- [Filtrations and martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md): the exchange rate restricted to growing information, a martingale.
+- [Filtrations and martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md): the exchange rate restricted to growing information, a martingale: a process whose expected next value, given what is known now, is its value now.
 - [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md): exchange rates that evolve in continuous time.
 
 Every rule here assumes one measure gives no weight where the other gives none; what can be said of a measure that breaks that, split into a part with a density and a part with none, is [Lebesgue decomposition](05-lebesgue-decomposition.md).

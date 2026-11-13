@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A turbine logs one daily mean wind speed for a week, Monday to Sunday: 3, 5, 8, 2, 6, 4 and 7 m/s. A planner wants the week summed up by one steady speed, the constant that sits closest to the seven readings. Closest in which sense? Measure the miss by squaring each day's error and adding. The best constant is then 5 m/s, the mean, and the smallest possible total of squared misses is 28. Its square root, 5.2915, is the length of what the constant cannot explain.
+A turbine logs one daily mean wind speed for a week, Monday to Sunday: 3, 5, 8, 2, 6, 4 and 7 m/s. A planner wants the week summed up by one steady speed, the constant that sits closest to the seven readings.
+
+Closest in which sense? Measure the miss by squaring each day's error and adding. The best constant is then 5 m/s, the mean, and the smallest possible total of squared misses is 28. Its square root, 5.2915, is the length of what the constant cannot explain.
 
 Now let the planner use two numbers: one speed for weekdays, one for the weekend. The best pair is 4.80 and 5.50, the two separate means, and the total of squared misses falls to 273/10.
 
-Both answers are drops. Treat the week as an arrow with one direction per day. The constant weeks form a line through the origin, the two-level weeks a plane, and the best fit is the foot of the perpendicular from the arrow's tip, as in [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md). The same geometry works for functions on any measure space when size is the square-root-of-squares size. That space of functions is **L2**, and its geometry makes it a **Hilbert space**: a space with lengths and angles in which every sequence that settles down has a limit inside it.
+Both answers are drops. Treat the week as an arrow with one direction per day. The constant weeks form a line through the origin, the two-level weeks a plane, and the best fit is the foot of the perpendicular from the arrow's tip, as in [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md).
+
+The same geometry works for functions on any measure space when size is the square-root-of-squares size. That space of functions is **L2**, and its geometry makes it a **Hilbert space**: a space with lengths and angles in which every sequence that settles down has a limit inside it.
 
 Two theorems follow. The **projection theorem**: for every closed family of functions that is closed under adding and scaling, there is exactly one closest member, and the miss is perpendicular to the whole family. The **Riesz representation theorem**: every linear rule that turns a function into a number, and does not jump when the function moves slightly, is an inner product with one fixed function.
 
@@ -37,7 +41,9 @@ Caption: the bars are the seven readings. The first line is the best constant, 5
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Lp spaces](01-lp-spaces.md) has the reminder). Here $\Omega$ is the seven days and $\mu$ is **counting measure**, weight 1 per day; a second run uses the uniform probability $P$, weight 1/7 per day. **L2** is the space of measurable functions whose square has a finite integral, with two functions counted as one when they agree almost everywhere, that is, except on a set of measure zero.
+Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Lp spaces](01-lp-spaces.md) has the reminder).
+
+Here $\Omega$ is the seven days and $\mu$ is **counting measure**, weight 1 per day; a second run uses the uniform probability $P$, weight 1/7 per day. **L2** is the space of measurable functions whose square has a finite integral, with two functions counted as one when they agree almost everywhere, that is, except on a set of measure zero.
 
 The **inner product** of two functions in L2 multiplies them point by point and integrates:
 
@@ -45,7 +51,9 @@ $$\langle f, g\rangle = \int_\Omega f\,g \; d\mu, \qquad \|f\|_2 = \sqrt{\langle
 
 **Read it aloud:** the inner product of f and g is the integral of their product; the length of f is the square root of its inner product with itself.
 
-On the seven days under counting measure the integral is a plain sum: the dot product of two lists. Hölder's inequality at p = 2 ([Holder's inequality](02-holders-inequality.md)), here called the **Cauchy–Schwarz inequality**, keeps it finite: $|\langle f,g\rangle| \le \|f\|_2\,\|g\|_2$. Two functions are **orthogonal**, or perpendicular, when their inner product is 0.
+On the seven days under counting measure the integral is a plain sum: the dot product of two lists. Hölder's inequality at p = 2 ([Holder's inequality](02-holders-inequality.md)), here called the **Cauchy–Schwarz inequality**, keeps it finite: $|\langle f,g\rangle| \le \|f\|_2\,\|g\|_2$. Here p is the exponent of the Lp size: the p-th root of the integral of the p-th power.
+
+Two functions are **orthogonal**, or perpendicular, when their inner product is 0.
 
 A **subspace** $M$ is a family of functions closed under adding and scaling. It is **closed** when the limit, in L2 length, of any sequence of members is again a member. The **projection theorem**:
 
@@ -133,7 +141,9 @@ Take the rule "weekend mean minus weekday mean". On the week it gives 11/2 − 2
 
 Two roads find its representer g. The quick road applies the rule to each day's indicator: Monday alone gives −1/5, Saturday alone 1/2, and under counting measure those seven values are g. It works because each day has positive measure. Under Lebesgue measure on [0, 1] a single point has measure zero, its indicator is 0 in L2, and this road has nothing to apply the rule to.
 
-The proof's road does generalise. The **kernel** N of the rule, the functions it sends to 0, is a closed subspace: closed because the rule is continuous. A rule that is not identically 0 leaves some function u outside N. Drop u onto N by the projection theorem; the miss z is perpendicular to N and not zero. Every function f splits as a member of N plus a multiple of z, the multiple being φ(f)/φ(z). Taking the inner product with z kills the N part and leaves
+The proof's road does generalise. The **kernel** N of the rule, the functions it sends to 0, is a closed subspace: closed because the rule is continuous.
+
+A rule that is not identically 0 leaves some function u outside N. Drop u onto N by the projection theorem; the miss z is perpendicular to N and not zero. Every function f splits as a member of N plus a multiple of z, the multiple being φ(f)/φ(z). Taking the inner product with z kills the N part and leaves
 
 $$\varphi(f) = \Big\langle f,\ \tfrac{\varphi(z)}{\|z\|_2^2}\, z\Big\rangle .$$
 
@@ -148,11 +158,11 @@ The representer depends on the measure. Under the uniform probability, each day'
 
 **Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space and L2 is the space of real measurable functions with $\int f^2\,d\mu < \infty$, functions equal almost everywhere counted as one.
 
-**L2 is an inner product space.** For f, g in L2, $|fg| \le \tfrac12(f^2 + g^2)$ at each point, so the inner product is finite. It is symmetric, linear in each slot, and $\langle f,f\rangle = 0$ exactly when $f = 0$ almost everywhere, since a function of zero or more with integral zero vanishes almost everywhere. Cauchy–Schwarz is Hölder at p = q = 2 ([Holder's inequality](02-holders-inequality.md)). The length $\|f\|_2$ is the p = 2 norm, which obeys the triangle inequality by [Minkowski's inequality](03-minkowskis-inequality.md). By [Riesz-Fischer](05-completeness-of-lp.md), every Cauchy sequence in L2 converges in L2. An inner product space complete in its length is a **Hilbert space**, so L2 is one.
+**L2 is an inner product space.** For f, g in L2, $|fg| \le \tfrac12(f^2 + g^2)$ at each point, so the inner product is finite. It is symmetric, linear in each slot, and $\langle f,f\rangle = 0$ exactly when $f = 0$ almost everywhere, since a function of zero or more with integral zero vanishes almost everywhere. Cauchy–Schwarz is Hölder at p = q = 2 ([Holder's inequality](02-holders-inequality.md)). The length $\|f\|_2$ is the p = 2 norm, which obeys the triangle inequality by [Minkowski's inequality](03-minkowskis-inequality.md). By [Riesz-Fischer](05-completeness-of-lp.md), every Cauchy sequence in L2 (one whose members get as close to each other as you like) converges in L2. An inner product space complete in its length is a **Hilbert space**, so L2 is one.
 
 **Expansion and parallelogram law.** By linearity and symmetry, $\|u \pm v\|_2^2 = \|u\|_2^2 \pm 2\langle u,v\rangle + \|v\|_2^2$. Adding the two signs gives the parallelogram law.
 
-**Projection theorem.** Let M be a closed subspace, f in L2, and $d = \inf_{h\in M}\|f-h\|_2$, finite since 0 is in M.
+**Projection theorem.** Let M be a closed subspace, f in L2, and $d = \inf_{h\in M}\|f-h\|_2$, the infimum (greatest lower bound) of the distances from f to members of M, finite since 0 is in M.
 1. *A minimising sequence.* For each n choose $m_n$ in M with $\|f-m_n\|_2^2 < d^2 + 1/n$, possible by the definition of an infimum.
 2. *It is Cauchy.* Apply the parallelogram law to $u = f - m_n$, $v = f - m_k$: $\|m_k - m_n\|_2^2 = 2\|f-m_n\|_2^2 + 2\|f-m_k\|_2^2 - 4\|f - \tfrac12(m_n+m_k)\|_2^2$. The midpoint $\tfrac12(m_n+m_k)$ is in M, a subspace, so the last norm is at least d. Hence $\|m_k-m_n\|_2^2 < 2(d^2+1/n) + 2(d^2+1/k) - 4d^2 = 2/n + 2/k$.
 3. *The limit exists and is in M.* L2 is complete, so $m_n \to \hat f$ in L2. M is closed, so $\hat f \in M$.
@@ -615,6 +625,191 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three facts for real L2 on every measure space, and the wind week's hand arithmetic exactly.
+
+- The inner product of two functions in L2 is the integral of their product. The length of a function is the square root of its inner product with itself.
+- Take a closed subspace M and any f in L2. Then some member of M is closest to f, and its miss is perpendicular to every member of M.
+- No other member of M is that close. The squared lengths add up like the sides of a right triangle.
+- Take a continuous linear rule: some constant C bounds it by C times the length. Then it is the inner product with one function g.
+- That rule's size is the length of g, and no other function reproduces the rule.
+- The worked numbers hold exactly: both fits, their misses, both Pythagoras checks, the representer under both measures, and the p = 1 distances.
+
+The ramps, the 2000 random weeks, the parallelogram law for other p, the grid search and every square root are left to Python and Rust.
+
+```lean
+-- L2 as a Hilbert space: on the real L2 space of any measure space, the closest point in a closed subspace exists, is unique and is a perpendicular drop, every continuous linear rule is the inner product with one function, and the inner product is the integral of the product.
+import Mathlib.MeasureTheory.Function.L2Space
+import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
+import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+import Mathlib.Analysis.InnerProductSpace.Dual
+
+open MeasureTheory
+open scoped InnerProductSpace
+
+/-- The projection theorem on L2: for any measure space and any closed subspace `M` of the
+real L2 space, every `f` in L2 has a member `fhat` of `M` that is closest to `f`, the miss
+`f - fhat` is perpendicular to every member of `M`, no other member of `M` is that close, and
+the length splits like a right triangle: `‖f‖² = ‖fhat‖² + ‖f - fhat‖²`. -/
+theorem closest_point_in_closed_subspace_is_perpendicular_drop
+    {α : Type*} [MeasurableSpace α] (μ : Measure α)
+    (M : Submodule ℝ (Lp ℝ 2 μ)) (hM : IsClosed (M : Set (Lp ℝ 2 μ)))
+    (f : Lp ℝ 2 μ) :
+    ∃ fhat ∈ M,
+      (∀ h ∈ M, ‖f - fhat‖ ≤ ‖f - h‖) ∧
+      (∀ h ∈ M, ⟪f - fhat, h⟫_ℝ = 0) ∧
+      (∀ g ∈ M, (∀ h ∈ M, ‖f - g‖ ≤ ‖f - h‖) → g = fhat) ∧
+      ‖f‖ ^ 2 = ‖fhat‖ ^ 2 + ‖f - fhat‖ ^ 2 := by
+  obtain ⟨v, hvM, hv⟩ := M.exists_norm_eq_iInf_of_complete_subspace hM.isComplete f
+  have hbdd : BddBelow (Set.range fun w : (M : Set (Lp ℝ 2 μ)) => ‖f - w‖) :=
+    ⟨0, by rintro _ ⟨w, rfl⟩; exact norm_nonneg _⟩
+  have hmin : ∀ h ∈ M, ‖f - v‖ ≤ ‖f - h‖ := by
+    intro h hh
+    rw [hv]
+    exact ciInf_le hbdd (⟨h, hh⟩ : (M : Set (Lp ℝ 2 μ)))
+  have horth : ∀ h ∈ M, ⟪f - v, h⟫_ℝ = 0 :=
+    (Submodule.norm_eq_iInf_iff_real_inner_eq_zero M hvM).1 hv
+  refine ⟨v, hvM, hmin, horth, ?_, ?_⟩
+  · intro g hgM hg
+    have hgeq : ‖f - g‖ = ⨅ w : (M : Set (Lp ℝ 2 μ)), ‖f - w‖ := by
+      apply le_antisymm
+      · have : Nonempty (M : Set (Lp ℝ 2 μ)) := ⟨⟨0, M.zero_mem⟩⟩
+        exact le_ciInf fun w => hg w w.2
+      · exact ciInf_le hbdd (⟨g, hgM⟩ : (M : Set (Lp ℝ 2 μ)))
+    have horth' : ∀ h ∈ M, ⟪f - g, h⟫_ℝ = 0 :=
+      (Submodule.norm_eq_iInf_iff_real_inner_eq_zero M hgM).1 hgeq
+    have hd : g - v ∈ M := M.sub_mem hgM hvM
+    have h1 := horth (g - v) hd
+    have h2 := horth' (g - v) hd
+    have h3 : ⟪g - v, g - v⟫_ℝ = 0 := by
+      have : g - v = (f - v) - (f - g) := by abel
+      calc ⟪g - v, g - v⟫_ℝ = ⟪(f - v) - (f - g), g - v⟫_ℝ := by rw [← this]
+        _ = 0 := by rw [inner_sub_left, h1, h2, sub_zero]
+    rw [real_inner_self_eq_norm_sq] at h3
+    have : ‖g - v‖ = 0 := by simpa using h3
+    exact sub_eq_zero.1 (norm_eq_zero.1 this)
+  · have hperp : ⟪v, f - v⟫_ℝ = 0 := by rw [real_inner_comm]; exact horth v hvM
+    have := norm_add_sq_eq_norm_sq_add_norm_sq_real hperp
+    rw [add_sub_cancel] at this
+    nlinarith [this]
+
+/-- The Riesz representation theorem on L2: for any measure space, every linear rule `φ` on
+the real L2 space that is continuous (some constant `C` has `|φ f| ≤ C ‖f‖` for every `f`) is
+the inner product with one function `g`; the rule's size, the least such `C ≥ 0`, is the length of
+`g`; and `g` is the only function that reproduces the rule. -/
+theorem continuous_linear_rule_is_inner_product
+    {α : Type*} [MeasurableSpace α] (μ : Measure α)
+    (φ : Lp ℝ 2 μ →ₗ[ℝ] ℝ) (hφ : ∃ C : ℝ, ∀ f : Lp ℝ 2 μ, |φ f| ≤ C * ‖f‖) :
+    ∃ g : Lp ℝ 2 μ,
+      (∀ f : Lp ℝ 2 μ, φ f = ⟪f, g⟫_ℝ) ∧
+      (∀ f : Lp ℝ 2 μ, |φ f| ≤ ‖g‖ * ‖f‖) ∧
+      (∀ C : ℝ, 0 ≤ C → (∀ f : Lp ℝ 2 μ, |φ f| ≤ C * ‖f‖) → ‖g‖ ≤ C) ∧
+      (∀ g' : Lp ℝ 2 μ, (∀ f : Lp ℝ 2 μ, φ f = ⟪f, g'⟫_ℝ) → g' = g) := by
+  obtain ⟨C₀, hC₀⟩ := hφ
+  let ψ : StrongDual ℝ (Lp ℝ 2 μ) := φ.mkContinuous C₀ (fun f => by
+    simpa [Real.norm_eq_abs] using hC₀ f)
+  let g : Lp ℝ 2 μ := (InnerProductSpace.toDual ℝ (Lp ℝ 2 μ)).symm ψ
+  have hg : ∀ f, φ f = ⟪f, g⟫_ℝ := by
+    intro f
+    have : ⟪g, f⟫_ℝ = ψ f := by
+      rw [← InnerProductSpace.toDual_apply_apply, LinearIsometryEquiv.apply_symm_apply]
+    rw [real_inner_comm, this]
+    rfl
+  have hnorm : ‖g‖ = ‖ψ‖ := by
+    simp [g]
+  refine ⟨g, hg, ?_, ?_, ?_⟩
+  · intro f
+    rw [hg, ← Real.norm_eq_abs]
+    calc ‖⟪f, g⟫_ℝ‖ ≤ ‖f‖ * ‖g‖ := norm_inner_le_norm f g
+      _ = ‖g‖ * ‖f‖ := mul_comm _ _
+  · intro C hC hCf
+    rw [hnorm]
+    refine ContinuousLinearMap.opNorm_le_bound _ hC fun f => ?_
+    simpa [ψ, Real.norm_eq_abs] using hCf f
+  · intro g' hg'
+    have h0 : ∀ f, ⟪f, g' - g⟫_ℝ = 0 := by
+      intro f; rw [inner_sub_right, ← hg, ← hg', sub_self]
+    have := h0 (g' - g)
+    rw [real_inner_self_eq_norm_sq] at this
+    have : ‖g' - g‖ = 0 := by simpa using this
+    exact sub_eq_zero.1 (norm_eq_zero.1 this)
+
+/-- Functions in L2 have lengths and angles: the inner product of two functions in L2 is the
+integral of their product, and the length of a function is the square root of its inner
+product with itself. -/
+theorem l2_inner_is_integral_of_product
+    {α : Type*} [MeasurableSpace α] (μ : Measure α) (f g : Lp ℝ 2 μ) :
+    ⟪f, g⟫_ℝ = ∫ a, f a * g a ∂μ ∧ ‖f‖ = Real.sqrt ⟪f, f⟫_ℝ := by
+  refine ⟨?_, ?_⟩
+  · rw [L2.inner_def]
+    congr 1
+    funext a
+    simp [mul_comm]
+  · rw [real_inner_self_eq_norm_sq, Real.sqrt_sq (norm_nonneg f)]
+
+/-! ### The card's worked numbers: the wind week 3, 5, 8, 2, 6, 4, 7 under counting measure -/
+
+-- squared length of the week
+example : (3 : ℚ)^2 + 5^2 + 8^2 + 2^2 + 6^2 + 4^2 + 7^2 = 203 := by norm_num
+-- best constant: ⟨f, 1⟩ / ⟨1, 1⟩ = 35/7 = 5
+example : ((3 : ℚ) + 5 + 8 + 2 + 6 + 4 + 7) / 7 = 5 := by norm_num
+-- the miss -2, 0, 3, -3, 1, -1, 2 is perpendicular to the constant 1
+example : (-2 : ℚ) + 0 + 3 + (-3) + 1 + (-1) + 2 = 0 := by norm_num
+-- squared miss of the constant fit
+example : (3 - 5 : ℚ)^2 + (5 - 5)^2 + (8 - 5)^2 + (2 - 5)^2 + (6 - 5)^2 + (4 - 5)^2
+    + (7 - 5)^2 = 28 := by norm_num
+-- Pythagoras for the constant fit: 7 × 5² + 28 = 203
+example : (7 : ℚ) * 5^2 + 28 = 203 := by norm_num
+-- the constant 4 is farther: 35 = 28 + 7 × 1²
+example : (3 - 4 : ℚ)^2 + (5 - 4)^2 + (8 - 4)^2 + (2 - 4)^2 + (6 - 4)^2 + (4 - 4)^2
+    + (7 - 4)^2 = 35 ∧ (35 : ℚ) = 28 + 7 * 1^2 := by norm_num
+-- weekday level 24/5 and weekend level 11/2
+example : ((3 : ℚ) + 5 + 8 + 2 + 6) / 5 = 24/5 ∧ ((4 : ℚ) + 7) / 2 = 11/2 := by norm_num
+-- squared miss of the two-level fit
+example : (203 : ℚ) - (5 * (24/5)^2 + 2 * (11/2)^2) = 273/10 := by norm_num
+example : (3 - 24/5 : ℚ)^2 + (5 - 24/5)^2 + (8 - 24/5)^2 + (2 - 24/5)^2 + (6 - 24/5)^2
+    + (4 - 11/2)^2 + (7 - 11/2)^2 = 273/10 := by norm_num
+-- Pythagoras for the two-level fit: 203 = 1757/10 + 273/10
+example : (5 : ℚ) * (24/5)^2 + 2 * (11/2)^2 = 1757/10 ∧ (203 : ℚ) = 1757/10 + 273/10 := by
+  norm_num
+-- the two-level miss is perpendicular to 1 and to the weekend indicator
+example : (3 - 24/5 : ℚ) + (5 - 24/5) + (8 - 24/5) + (2 - 24/5) + (6 - 24/5)
+    + (4 - 11/2) + (7 - 11/2) = 0 ∧ (4 - 11/2 : ℚ) + (7 - 11/2) = 0 := by norm_num
+-- gain from the second level: 5 × (1/5)² + 2 × (1/2)² = 7/10 = 28 − 273/10
+example : (5 : ℚ) * (1/5)^2 + 2 * (1/2)^2 = 7/10 ∧ (28 : ℚ) - 273/10 = 7/10 := by norm_num
+-- the rule "weekend mean minus weekday mean" gives 7/10 on the week
+example : (11/2 : ℚ) - 24/5 = 7/10 := by norm_num
+-- its representer g (-1/5 on weekdays, 1/2 at the weekend) reproduces 7/10, and ‖g‖² = 7/10
+example : (-1/5 : ℚ) * (3 + 5 + 8 + 2 + 6) + 1/2 * (4 + 7) = 7/10 := by norm_num
+example : (5 : ℚ) * (-1/5)^2 + 2 * (1/2)^2 = 7/10 := by norm_num
+-- under the uniform probability the representer is -7/5 and 7/2, and still gives 7/10
+example : (1/7 : ℚ) * ((-7/5) * (3 + 5 + 8 + 2 + 6) + 7/2 * (4 + 7)) = 7/10 := by norm_num
+-- using the counting-measure representer under the uniform probability gives 1/10
+example : (1/7 : ℚ) * ((-1/5) * (3 + 5 + 8 + 2 + 6) + 1/2 * (4 + 7)) = 1/10 := by norm_num
+-- the two-level fit is exactly 5 + g
+example : (5 : ℚ) + (-1/5) = 24/5 ∧ (5 : ℚ) + 1/2 = 11/2 := by norm_num
+-- at p = 1 the constants 4, 5, 11/2, 6, 7 all sit at distance 3 from the weekend readings 4, 7
+example : ∀ c ∈ ({4, 5, 11/2, 6, 7} : Finset ℚ), |4 - c| + |7 - c| = 3 := by
+  intro c hc
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hc
+  rcases hc with rfl | rfl | rfl | rfl | rfl <;> norm_num [abs_of_nonneg, abs_of_nonpos]
+-- adding the separate projections onto 1 and the weekend indicator: 5 + 11/2 = 21/2
+example : (5 : ℚ) + 11/2 = 21/2 := by norm_num
+
+#print axioms closest_point_in_closed_subspace_is_perpendicular_drop
+#print axioms continuous_linear_rule_is_inner_product
+#print axioms l2_inner_is_integral_of_product
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'closest_point_in_closed_subspace_is_perpendicular_drop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_linear_rule_is_inner_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'l2_inner_is_integral_of_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -640,7 +835,7 @@ The two outputs match line for line.
 - **Regression and forecasting.** Every least-squares fit, from a trend line to a weather model's calibration, is a projection onto the span of its predictors ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)).
 - **Best prediction from partial information.** The best guess of a random quantity from what is known, under squared error, is its projection onto the functions of what is known: [Conditional expectation as a projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md). The two-level fit here is that projection for the information "weekday or weekend".
 - **Fourier series and signal compression.** Keeping the first few sine and cosine terms of a signal is projecting onto their span; the coefficients are inner products (Fourier coefficients).
-- **Engineering simulation.** The finite-element method finds the member of a space of piecewise-linear functions whose error is perpendicular to that space in the energy inner product, the integral of the product of slopes, not this card's (Finite elements).
+- **Engineering simulation.** The finite-element method finds the member of a space of piecewise-linear functions whose error is perpendicular to that space in the energy inner product, the integral of the product of slopes, not this card's ([Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md)).
 
 > **Say it back**
 > On L2 the length of a function comes from an inner product, the integral of a product. The parallelogram law forces fits approaching the best distance to settle down, and completeness supplies their limit. On a closed subspace the best fit exists, is unique, and leaves a miss perpendicular to the subspace. A continuous linear rule is the inner product with the direction perpendicular to its kernel. For the wind week the best constant is 5 with miss 5.2915, and the rule "weekend mean minus weekday mean" is the inner product with −1/5 on weekdays and 1/2 at the weekend.
@@ -658,12 +853,14 @@ The two outputs match line for line.
 
 - [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): von Neumann's proof applies Riesz representation on an L2 space to produce a density.
 - [Conditional expectation as a projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): conditional expectation defined as the projection onto the functions of the known information.
-- [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): projection onto hat functions to solve differential equations.
+- [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): projection onto hat functions, tent-shaped pieces that are linear between grid points, to solve differential equations.
 - Inner products: the same geometry on any complete inner product space.
 - Riesz representation: the representation theorem for every Hilbert space and its consequences.
 - The Fredholm alternative: solvability of equations read off from perpendicular complements.
 - Fourier coefficients: sines and cosines as a perpendicular family in L2.
 - Partial sums are the best fit: the projection theorem applied to trigonometric polynomials.
+
+Left open: in Lp for finite p above 1 other than 2, a closest point in a closed subspace still exists and is unique, but with no inner product there is no right angle, so what describes it?
 
 ---
 

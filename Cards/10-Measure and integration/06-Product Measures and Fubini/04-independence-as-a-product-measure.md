@@ -14,6 +14,8 @@ Now pair x with the sum x + y. The chance that x + y is at most 0.5 is a corner 
 
 The product rule for every pair of ranges is **independence**, the term used from here on. This card defines it for whole families of events, shows that the ranges "at most s" and "at most t" suffice to check it, and proves that it makes the pair's joint probability a product measure.
 
+In the summary below, the law of a random quantity is its probabilities, as a measure on the line, and the joint law is the pair's, on the plane. A product measure gives every rectangle the product of its side sizes, and Fubini's theorem integrates against it one coordinate at a time ([Tonelli and Fubini](03-tonelli-and-fubini.md)).
+
 **Two random quantities are independent exactly when their joint law is the product measure of their separate laws; then, by Fubini, the average of their product is the product of their averages, and the variance of their sum is the sum of their variances.**
 
 **What kind of fact this is:** a definition (independence of sigma-algebras and of random variables) and three theorems built on it, all proved on this card in Why it works.
@@ -30,7 +32,13 @@ On the right, learning that x + y is small forces x to be small too.
 
 ## The formula
 
-Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a probability on them: here the board, its Borel sets, and area, Lebesgue measure $\lambda$. $\sigma(X)$ is the sigma-algebra a random variable X generates, every event "X lands in B" for a Borel set B: what learning X can tell ([Random variables as measurable maps](../03-Measurable%20Functions/04-random-variables-and-their-information.md)). $\mu_X$ is the law of X, $P(X \in B)$ as a measure on the line ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). $\mu_{(X,Y)}$ is the joint law, $P((X, Y) \in C)$ for Borel sets C of the plane. $\mu \otimes \nu$ is the product measure, giving every rectangle A × B the size $\mu(A)\,\nu(B)$ ([Product measure](02-product-measure.md)).
+Notation first, in words.
+
+- A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a probability on them: here the board, its Borel sets, and area, Lebesgue measure $\lambda$. $\mathcal{F}$ is a sigma-algebra, a family of sets closed under complements and countable unions; the Borel sets are the smallest such family holding every rectangle ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
+- $\sigma(X)$ is the sigma-algebra a random variable X generates, every event "X lands in B" for a Borel set B: what learning X can tell ([Random variables as measurable maps](../03-Measurable%20Functions/04-random-variables-and-their-information.md)).
+- $\mu_X$ is the law of X, $P(X \in B)$ as a measure on the line ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
+- $\mu_{(X,Y)}$ is the joint law, $P((X, Y) \in C)$ for Borel sets C of the plane.
+- $\mu \otimes \nu$ is the product measure, giving every rectangle A × B the size $\mu(A)\,\nu(B)$ ([Product measure](02-product-measure.md)).
 
 **Definition.** Two sigma-algebras $\mathcal{G}$ and $\mathcal{H}$ inside $\mathcal{F}$ are independent when every event of one and every event of the other multiply:
 
@@ -83,7 +91,7 @@ $$\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).$$
 
 - **The product rule on every pair of events, not on a few.** One cell that multiplies proves nothing: on a 4 by 4 grid of the pair (x, x + y), 10 ray pairs out of 28 multiply, and each of those 10 has a ray that is the whole board.
 - **The generators are pi-systems.** Drop closure under overlap and Theorem 1 fails: the events L and B each multiply with C, yet their overlap does not (Step 1).
-- **Finite averages.** For quantities never negative, E[XY] = E[X]E[Y] holds outright, infinite values allowed, since Tonelli needs no integrability; signed quantities need finite averages, or a side can be infinity minus infinity. The variance rule needs finite average squares.
+- **Finite averages.** For quantities never negative, E[XY] = E[X]E[Y] holds outright, infinite values allowed, since Tonelli's theorem, the version of Fubini for never-negative functions, needs no integrability; signed quantities need finite averages, or a side can be infinity minus infinity. The variance rule needs finite average squares.
 - **All at once, not two at a time.** For three or more variables every finite subfamily must multiply (C in Step 1).
 
 ---
@@ -98,7 +106,9 @@ Rectangles overlap in rectangles, so they form a pi-system, and they generate th
 
 ### Step 1: the definition, on examples small enough to list
 
-Quarter the board. Let L be the left half and B the bottom half. The sigma-algebra L generates has four events: nothing, L, its complement, the whole board; likewise for B. All 16 pairs multiply, P(L ∩ B) = 0.25 = 0.5 × 0.5 among them: independent. Now let C be "bottom-left or top-right quarter". C multiplies with L and with B, yet P(L ∩ B ∩ C) = 1/4, not 1/8. So C is not independent of the sigma-algebra L and B generate together. The family {L, B} is not closed under overlap: its member L ∩ B was never tested, and Theorem 1 needs it.
+Quarter the board. Let L be the left half and B the bottom half. The sigma-algebra L generates has four events: nothing, L, its complement, the whole board; likewise for B. All 16 pairs multiply, P(L ∩ B) = 0.25 = 0.5 × 0.5 among them: independent.
+
+Now let C be "bottom-left or top-right quarter". C multiplies with L and with B, yet P(L ∩ B ∩ C) = 1/4, not 1/8. So C is not independent of the sigma-algebra L and B generate together. The family {L, B} is not closed under overlap: its member L ∩ B was never tested, and Theorem 1 needs it.
 
 Cut a 4 by 4 grid and record the dart's column and row, each 0 to 3. Each generates 16 events, one per set of values, and all 256 pairs multiply: the definition met.
 
@@ -220,7 +230,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Three roads that share no arithmetic. Exact fractions give averages, variances and rectangle chances, the (x, x + y) triangle integrated by hand. Finite grids are listed in full: 4 by 4 cells test every pair of sets and of rays, and n by n grids give lower sums (integrals of step functions under xy) climbing to 1/4 within 1/n. Two hundred thousand darts from SplitMix64, a small generator written out in both languages, seed 20260929, check chances and averages within about four standard errors. Rust carries its own fraction type.
+Three roads that share no arithmetic. Exact fractions give averages, variances and rectangle chances, the (x, x + y) triangle integrated by hand. Finite grids are listed in full: 4 by 4 cells test every pair of sets and of rays, and n by n grids give lower sums (integrals of step functions under xy) climbing to 1/4 within 1/n. Two hundred thousand darts from SplitMix64, a small generator written out in both languages, seed 20260929, check chances and averages within about four standard errors, the typical size of a simulation's random error. Rust carries its own fraction type.
 
 ### Python
 
@@ -558,6 +568,141 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line: the same generator, the same order of floating-point sums, and the same correctly rounded printing.
+
+### Lean
+
+Lean proves Theorems 2 and 3 on every probability space, and checks the card's worked arithmetic and grid counts exactly.
+
+- Take two real random variables X and Y. Then they are independent exactly when their joint law is the product measure of their laws.
+- Suppose X and Y are independent, and each has a finite average of its absolute value. Then XY has a finite average, and E[XY] = E[X]E[Y].
+- Suppose X and Y are independent, and each has a finite average square. Then Var(X + Y) = Var(X) + Var(Y).
+- On the dart, the integrals from 0 to 1 give E[x] = 1/2 and E[x^2] = 1/3.
+- The worked arithmetic gives Var(x) = 1/12, Var(x + y) = 1/6 and E[xy] = 1/4.
+- For the pair (x, x + y), the triangle's 1/8 is not the product 1/16. Also E[x(x + y)] = 7/12, not 1/2, a gap of 1/12.
+- Adding the variances of x and x gives 1/6, but Var(2x) = 1/3.
+- On the board's quarters, L ∩ C, B ∩ C and L ∩ B ∩ C each hold one quarter. So the last has chance 1/4, not 1/8.
+- On the 4 by 4 grid, all 256 pairs of events for (column, row) multiply. For (column, column plus row), 696 of 2048 pairs multiply.
+- For (column, column plus row), 10 of the 28 ray pairs multiply. The pair "column 0" and "sum 0" gives 1/16, not 4/256.
+- For u and w, the chance 0 is not the product 1/4 × 1/2 = 1/8.
+
+Theorem 1, the simulated darts, the lower sums and the figure are left to the Python and Rust checks and the proofs above.
+
+```lean
+-- Independence as a product: two real random variables on a probability space are independent exactly when the law of the pair is the product of their two laws, and then the average of their product is the product of their averages and the variance of their sum is the sum of their variances.
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Independence.Integration
+import Mathlib.Probability.Moments.Variance
+import Mathlib.MeasureTheory.Measure.Prod
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+
+/-- Theorem 2, the joint law is a product. On a probability space `(Ω, F, P)`, two real
+random variables `X` and `Y` (measurable maps to the line) are independent, meaning
+`P(X ∈ A, Y ∈ B) = P(X ∈ A) P(Y ∈ B)` for all Borel sets `A` and `B`, exactly when the
+joint law of the pair `(X, Y)` on the plane equals the product measure `μ_X ⊗ μ_Y` of
+their separate laws. -/
+theorem indep_iff_joint_law_eq_product_of_laws
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    {X Y : Ω → ℝ} (hX : Measurable X) (hY : Measurable Y) :
+    IndepFun X Y P ↔ P.map (fun ω => (X ω, Y ω)) = (P.map X).prod (P.map Y) := by
+  exact indepFun_iff_map_prod_eq_prod_map_map hX.aemeasurable hY.aemeasurable
+
+/-- Theorem 3, products. If `X` and `Y` are independent real random variables and each has
+a finite average of its absolute value, then their product `XY` also has a finite average,
+and `E[XY] = E[X] E[Y]`. -/
+theorem integral_mul_eq_mul_integral_of_indep
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    {X Y : Ω → ℝ} (hXY : IndepFun X Y P) (hX : Integrable X P) (hY : Integrable Y P) :
+    Integrable (X * Y) P ∧ ∫ ω, (X * Y) ω ∂P = (∫ ω, X ω ∂P) * (∫ ω, Y ω ∂P) := by
+  exact ⟨hXY.integrable_mul hX hY,
+    hXY.integral_mul_eq_mul_integral hX.aestronglyMeasurable hY.aestronglyMeasurable⟩
+
+/-- Theorem 3, sums. If `X` and `Y` are independent real random variables and each has a
+finite average square, then `Var(X + Y) = Var(X) + Var(Y)`. -/
+theorem variance_add_of_indep
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    {X Y : Ω → ℝ} (hXY : IndepFun X Y P) (hX : MemLp X 2 P) (hY : MemLp Y 2 P) :
+    variance (X + Y) P = variance X P + variance Y P := by
+  exact hXY.variance_add hX hY
+
+/-! The card's worked numbers, exactly. -/
+
+-- The dart: E[x] = ∫₀¹ x dx = 1/2 and E[x^2] = ∫₀¹ x^2 dx = 1/3.
+example : ∫ x in (0 : ℝ)..1, x = 1 / 2 := by norm_num [integral_id]
+example : ∫ x in (0 : ℝ)..1, x ^ 2 = 1 / 3 := by norm_num [integral_pow]
+
+-- Var(x) = 1/3 - (1/2)^2 = 1/12; Var(x + y) = 1/12 + 1/12 = 1/6; E[xy] = 1/2 × 1/2 = 1/4.
+example : (1 : ℚ) / 3 - (1 / 2) ^ 2 = 1 / 12 ∧ (1 : ℚ) / 12 + 1 / 12 = 1 / 6 ∧
+    (1 / 2 : ℚ) * (1 / 2) = 1 / 4 := by norm_num
+
+-- The pair (x, x + y): the triangle x + y ≤ 1/2 has area 1/2 × 1/2 / 2 = 1/8, against the
+-- product 1/2 × 1/8 = 1/16; E[x(x + y)] = 1/3 + 1/4 = 7/12, not 1/2 × 1 = 1/2; gap 1/12.
+example : (1 / 2 : ℚ) * (1 / 2) / 2 = 1 / 8 ∧ (1 / 2 : ℚ) * (1 / 8) = 1 / 16 ∧
+    (1 / 8 : ℚ) ≠ 1 / 16 ∧ (1 : ℚ) / 3 + 1 / 4 = 7 / 12 ∧ (7 / 12 : ℚ) ≠ 1 / 2 * 1 ∧
+    (7 : ℚ) / 12 - 1 / 2 = 1 / 12 := by norm_num
+
+-- Var(x + x) read as Var(x) + Var(x) gives 1/6; the true Var(2x) = 4 × 1/12 = 1/3.
+example : (4 : ℚ) * (1 / 12) = 1 / 3 ∧ (1 / 6 : ℚ) ≠ 1 / 3 := by norm_num
+
+-- Step 1, quarters of the board (column, row in {0, 1}, chance 1/4 each). L = left half,
+-- B = bottom half, C = bottom-left or top-right. L ∩ C and B ∩ C each hold 1 quarter
+-- (1/4 = 1/2 × 1/2), but L ∩ B ∩ C holds 1 quarter (1/4), not 1/8 = 1/4 × 1/2.
+example :
+    ((Finset.range 2 ×ˢ Finset.range 2).filter (fun c => c.1 = 0 ∧ c.1 = c.2)).card = 1 ∧
+    ((Finset.range 2 ×ˢ Finset.range 2).filter (fun c => c.2 = 0 ∧ c.1 = c.2)).card = 1 ∧
+    ((Finset.range 2 ×ˢ Finset.range 2).filter
+      (fun c => c.1 = 0 ∧ c.2 = 0 ∧ c.1 = c.2)).card = 1 := by decide
+example : (1 : ℚ) / 4 = (1 / 2) * (1 / 2) ∧ (1 : ℚ) / 4 ≠ (1 / 4) * (1 / 2) := by norm_num
+
+-- Step 1, the 4 by 4 grid, recorded as (column, row): all 16 × 16 = 256 pairs of events
+-- multiply. An event is a set of values, coded as a bit mask; 16 × (cells in both) must
+-- equal (cells in the first) × (cells in the second).
+example : ((Finset.range 16 ×ˢ Finset.range 16).filter (fun p =>
+    16 * ((Finset.range 4 ×ˢ Finset.range 4).filter
+      (fun c => p.1.testBit c.1 ∧ p.2.testBit c.2)).card =
+    ((Finset.range 4 ×ˢ Finset.range 4).filter (fun c => p.1.testBit c.1)).card *
+    ((Finset.range 4 ×ˢ Finset.range 4).filter (fun c => p.2.testBit c.2)).card)).card
+    = 256 := by decide +kernel
+
+-- Step 1, the grid recorded as (column, column + row): of the 16 × 128 = 2048 pairs of
+-- events, 696 multiply.
+example : ((Finset.range 16 ×ˢ Finset.range 128).filter (fun p =>
+    16 * ((Finset.range 4 ×ˢ Finset.range 4).filter
+      (fun c => p.1.testBit c.1 ∧ p.2.testBit (c.1 + c.2))).card =
+    ((Finset.range 4 ×ˢ Finset.range 4).filter (fun c => p.1.testBit c.1)).card *
+    ((Finset.range 4 ×ˢ Finset.range 4).filter (fun c => p.2.testBit (c.1 + c.2))).card)).card
+    = 696 := by decide +kernel
+
+-- When it holds: on that grid, the rays "column ≤ s" (s = 0..3) and "column + row ≤ t"
+-- (t = 0..6) give 28 ray pairs, of which 10 multiply.
+example : ((Finset.range 4 ×ˢ Finset.range 7).filter (fun p =>
+    16 * ((Finset.range 4 ×ˢ Finset.range 4).filter
+      (fun c => c.1 ≤ p.1 ∧ c.1 + c.2 ≤ p.2)).card =
+    ((Finset.range 4 ×ˢ Finset.range 4).filter (fun c => c.1 ≤ p.1)).card *
+    ((Finset.range 4 ×ˢ Finset.range 4).filter (fun c => c.1 + c.2 ≤ p.2)).card)).card
+    = 10 := by decide
+
+-- One failing pair: column 0 has 4 of 16 cells, sum 0 has 1, both have 1, not 4/256.
+example : (1 : ℚ) / 16 ≠ (4 / 16) * (1 / 16) := by norm_num
+
+-- Zero covariance is not independence: u = x - 1/2 ≤ -1/4 and w = u^2 ≤ 1/16 cannot
+-- both hold (chance 0), while the product of chances is 1/4 × 1/2 = 1/8.
+example : (1 / 4 : ℚ) * (1 / 2) = 1 / 8 ∧ (0 : ℚ) ≠ 1 / 8 := by norm_num
+
+#print axioms indep_iff_joint_law_eq_product_of_laws
+#print axioms integral_mul_eq_mul_integral_of_indep
+#print axioms variance_add_of_indep
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'indep_iff_joint_law_eq_product_of_laws' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_mul_eq_mul_integral_of_indep' depends on axioms: [propext, Classical.choice, Quot.sound]
+'variance_add_of_indep' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

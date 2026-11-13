@@ -10,7 +10,11 @@ A rider times the wait at a busy city stop: 0.30 minutes. Two models compete, bo
 
 Which model does 0.30 minutes favour, and by how much? Under both models a wait of exactly 0.30 minutes has probability zero: a single point has no length. A ratio of two zeros says nothing. Yet statisticians answer at once: Q favours this wait by a factor of 1.4816. A wait of 2 minutes goes the other way: Q's weight is 0.2707 of P's.
 
-That factor is a **likelihood ratio**: how much more weight one model puts at a wait than the other. The everyday density of a waiting time ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)) is an exchange rate between probability and length. A ratio of two densities is the exchange rate between the two models, with length cancelled: multiply P by it and Q comes out. The average logarithm of the ratio, the **Kullback-Leibler divergence**, measures how far apart the models sit, and is never negative. An exponential ratio leans a fair die, by a controlled amount, towards sixes.
+That factor is a **likelihood ratio**: how much more weight one model puts at a wait than the other.
+
+The everyday density of a waiting time ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)) is an exchange rate between probability and length. A ratio of two densities is the exchange rate between the two models, with length cancelled: multiply P by it and Q comes out.
+
+The average logarithm of the ratio, the **Kullback-Leibler divergence**, measures how far apart the models sit, and is never negative. An exponential ratio, called a tilt, leans a fair die, by a controlled amount, towards sixes.
 
 **A density is a Radon-Nikodym derivative against length, the ratio of two densities is the Radon-Nikodym derivative of one model against the other, and its average logarithm is a distance-like number that is zero only when the models agree.**
 
@@ -35,7 +39,7 @@ Orange is model P's density, $e^{-x}$. Green is model Q's, $2e^{-2x}$. Dark blue
 
 ## The formula
 
-Notation first, in words. As on [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md), $dQ/dP$ is read "the density of Q against P": the function that turns P into Q under an integral. Here the space $\Omega$ is the waits `[0, ∞)` and $\mathcal{F}$, the collection of sets we allow ourselves to measure, is its Borel sets. P and Q are probability measures on them, and $\lambda$ is length.
+Notation first, in words. As on [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md), $dQ/dP$ is read "the density of Q against P": the function that turns P into Q under an integral. Here the space $\Omega$ is the waits `[0, ∞)` and $\mathcal{F}$, the collection of sets we allow ourselves to measure, is its Borel sets: every set built from intervals by countable unions, intersections and complements ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). P and Q are probability measures on them, and $\lambda$ is length.
 
 **Density.** A probability measure P has density $p$ against a reference measure $\nu$ when, for every set A in $\mathcal{F}$,
 
@@ -94,7 +98,9 @@ A density says how much probability sits per unit of the reference measure: agai
 
 In wing 09 a density is a curve whose area over an interval is that interval's probability. Measure theory asks for area over every Borel set A, not only intervals: $P(A) = \int_A p \, d\lambda$. That is the definition of the Radon-Nikodym derivative $dP/d\lambda$.
 
-Two consequences follow. First, a density exists exactly when P gives zero to every set of length zero. The bus passes; the die fails, since the point 6 has length 0 and probability 1/6. Against counting measure the die does have a density: 1/6 at each face. Second, a density is fixed only almost everywhere: change it on a set of length zero and no integral moves. "The density at 0.3" means the continuous version, which is the slope of F. At 0.5, 1 and 2 minutes the slope of $1 - e^{-x}$ and the formula $e^{-x}$ agree: 0.606531, 0.367879, 0.135335.
+Two consequences follow. First, a density exists exactly when P gives zero to every set of length zero. The bus passes; the die fails, since the point 6 has length 0 and probability 1/6. Against counting measure the die does have a density: 1/6 at each face.
+
+Second, a density is fixed only almost everywhere: change it on a set of length zero and no integral moves. "The density at 0.3" means the continuous version, which is the slope of F. At 0.5, 1 and 2 minutes the slope of $1 - e^{-x}$ and the formula $e^{-x}$ agree: 0.606531, 0.367879, 0.135335.
 
 ### Step 2: the ratio of densities is dQ/dP
 
@@ -124,7 +130,7 @@ For the bus: $\ln L(x) = \ln 2 - x$, and Q's average wait is 1/2, so $D(Q\,\|\,P
 
 ### Step 4: an exponential tilt, and why it is the closest model with a given mean
 
-Set $Z = e^{\theta X}/M(\theta)$, with $X$ the outcome. It is positive with P-average 1, so $Q_\theta(A) = \int_A Z \, dP$ is a probability measure with the same null sets as P. Its mean $m(\theta) = M'(\theta)/M(\theta)$ has derivative equal to the variance under $Q_\theta$, which is positive, so each reachable target mean is hit by exactly one $\theta$.
+Set $Z = e^{\theta X}/M(\theta)$, with $X$ the outcome. It is positive with P-average 1, so $Q_\theta(A) = \int_A Z \, dP$ is a probability measure with the same null sets (sets of probability zero) as P. Its mean $m(\theta) = M'(\theta)/M(\theta)$ has derivative equal to the variance under $Q_\theta$, which is positive, so each reachable target mean is hit by exactly one $\theta$.
 
 The bus model Q is itself a tilt of P. With $\theta = -1$, $M(-1) = 1/2$ and $Z = 2e^{-x}$: the likelihood ratio of Step 2. The tilt formula gives the divergence a third time: $D(Q_\theta\,\|\,P) = \int (\theta x - \ln M)\,dQ_\theta = \theta\,m - \ln M(\theta)$, here $-1/2 + \ln 2 = 0.193147$.
 
@@ -154,7 +160,7 @@ Orange is the fair die. Green is the tilt: each step up a face multiplies the we
 
 **Setting.** $(\Omega, \mathcal{F})$ is a measurable space, $\nu$ a σ-finite measure on it, and P, Q probability measures with $P = p\,\nu$ and $Q = q\,\nu$, meaning $P(A) = \int_A p\,d\nu$ and $Q(A) = \int_A q\,d\nu$, with $p, q \ge 0$ measurable with respect to $\mathcal{F}$.
 
-**1. Densities against length.** A probability measure P on the Borel sets of the line has a density against $\lambda$ if and only if $P(A) = 0$ whenever $\lambda(A) = 0$: this is the Radon-Nikodym theorem for the σ-finite $\lambda$ ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)), and two densities agree $\lambda$-a.e. If F is continuous and has a continuous derivative f except at finitely many points, the fundamental theorem of calculus, applied piece by piece, gives $\int_{(-\infty, x]} f\,d\lambda = F(x)$, so the measures $A \mapsto \int_A f\,d\lambda$ and P agree on half-lines. Half-lines are closed under intersection and generate the Borel sets, so the two measures agree everywhere (shelf 01). Hence $f = dP/d\lambda$.
+**1. Densities against length.** A probability measure P on the Borel sets of the line has a density against $\lambda$ if and only if $P(A) = 0$ whenever $\lambda(A) = 0$: this is the Radon-Nikodym theorem for the σ-finite $\lambda$ ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)), and two densities agree $\lambda$-a.e. If F is continuous and has a continuous derivative f except at finitely many points, the fundamental theorem of calculus, applied piece by piece, gives $\int_{(-\infty, x]} f\,d\lambda = F(x)$, so the measures $A \mapsto \int_A f\,d\lambda$ and P agree on half-lines. Half-lines are closed under intersection and generate the Borel sets, so the two measures agree everywhere ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Hence $f = dP/d\lambda$.
 
 **2. P ignores $\{p = 0\}$, and so does Q.** Let $N = \{p = 0\}$. Then $P(N) = \int_N p\,d\nu = \int_N 0\,d\nu = 0$. Since $Q \ll P$, $Q(N) = 0$.
 
@@ -213,7 +219,14 @@ In the world: one wait of 0.30 minutes shifts the odds by a factor of 1.4816 tow
 
 ## Code, from first principles, and it actually runs
 
-Four roads. Road one: the density is the slope of F, and its area over `[0, 1]` is F(1). Road two: Q(wait > 1) by the closed form, by a Simpson's-rule integral of $L$ against P, and by 200000 waits drawn from P with a SplitMix64 generator (seed 20260929) weighted by $L$. Road three: $D(Q\,\|\,P)$ by closed form, integral, draws from Q and the tilt formula, with $M(-1)$ and the tilt's mean integrated against P. Road four: the die's tilt to mean 4.4 by bisection, by Newton's method (the mean's slope is the tilted variance), and by golden-section search on $\ln M(\theta) - 4.4\,\theta$, good to about seven digits; then the split of the divergence. The failures print beside them. The code shows one pair of models and one die; that the ratio is dQ/dP and the divergence non-negative for every pair is what the proof shows.
+Four roads:
+
+- **Road one:** the density is the slope of F, and its area over `[0, 1]` is F(1).
+- **Road two:** Q(wait > 1) by the closed form, by a Simpson's-rule integral of $L$ against P, and by 200000 waits drawn from P with a SplitMix64 generator (seed 20260929) weighted by $L$.
+- **Road three:** $D(Q\,\|\,P)$ by closed form, integral, draws from Q and the tilt formula, with $M(-1)$ and the tilt's mean integrated against P.
+- **Road four:** the die's tilt to mean 4.4 by bisection, by Newton's method (the mean's slope is the tilted variance), and by golden-section search on $\ln M(\theta) - 4.4\,\theta$, good to about seven digits; then the split of the divergence.
+
+The failures print beside them. The code shows one pair of models and one die; that the ratio is dQ/dP and the divergence non-negative for every pair is what the proof shows.
 
 ### Python
 
@@ -601,12 +614,198 @@ ALL CHECKS PASS
 
 The two outputs match line for line. Python's `sum` adds floats with a compensated method and Rust's fold does not; the difference shows only in the golden-section search, which is why that line prints seven digits.
 
+### Lean
+
+Lean proves the likelihood ratio and divergence claims for every pair of models, and checks the exact die and bus arithmetic.
+
+- Suppose P and Q have densities $p$ and $q$ against one σ-finite reference measure $\nu$, and $Q \ll P$. Then $dQ/dP = q/p$ at P-almost every point.
+- Take the same conditions, and set $L = q/p$ where $p > 0$ and $L = 0$ elsewhere. Then $\int g\,dQ = \int g\,L\,dP$ for every non-negative measurable $g$.
+- Take probability measures P and Q with $Q \ll P$. Then $D(Q\,\|\,P) \ge 0$, and it is 0 exactly when $Q = P$.
+- The loaded die totals 1 and has mean 4.4; the fair die has mean 3.5.
+- The die's probability per unit length near 6 is exactly 5/6, 25/3 and 250/3 as the window shrinks.
+- Take the bus under P and $\theta = -1$. Then $M(\theta) = 1/2$.
+- For Q uniform on `[0, 2]` and P uniform on `[0, 1]`, the ratio integrates to exactly 1/2.
+
+The tilt, the split of the divergence, and the decimals from integrals, sampling and root-finding are left to the Python and Rust checks.
+
+```lean
+-- Densities and likelihood ratios: if two probability laws have densities p and q against one σ-finite reference measure and Q ≪ P, then dQ/dP is q/p almost everywhere, averages under Q are averages under P weighted by q/p, and the Kullback-Leibler divergence is never negative and is zero only when Q = P.
+import Mathlib.MeasureTheory.Measure.LogLikelihoodRatio
+import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+import Mathlib.Tactic.NormNum
+import Mathlib.InformationTheory.KullbackLeibler.Basic
+
+open MeasureTheory
+open scoped ENNReal
+
+/-- Pointwise splitting of the extended norm of a real number into positive and negative parts. -/
+theorem enorm_eq_ofReal_add_ofReal_neg (x : ℝ) :
+    ‖x‖ₑ = ENNReal.ofReal x + ENNReal.ofReal (-x) := by
+  rw [Real.enorm_eq_ofReal_abs]
+  rcases le_total 0 x with h | h
+  · rw [abs_of_nonneg h, ENNReal.ofReal_of_nonpos (p := -x) (by linarith), add_zero]
+  · rw [abs_of_nonpos h, ENNReal.ofReal_of_nonpos (p := x) h, zero_add]
+
+/-- For `t ≥ 0`, `t * (-log t) ≤ 1`. -/
+theorem mul_neg_log_le_one (t : ℝ) (ht : 0 ≤ t) : t * (-Real.log t) ≤ 1 := by
+  rcases ht.eq_or_lt with h | h
+  · subst h; simp
+  · have h1 := Real.one_sub_inv_le_log_of_pos h
+    have h2 : t * (1 - t⁻¹) = t - 1 := by field_simp
+    nlinarith [mul_le_mul_of_nonneg_left h1 h.le]
+
+/-- The negative part of the log-likelihood ratio has finite integral. -/
+theorem neg_part_llr_ne_top {Ω : Type*} [MeasurableSpace Ω]
+    (P Q : Measure Ω) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hQP : Q ≪ P) :
+    ∫⁻ x, ENNReal.ofReal (-llr Q P x) ∂Q ≠ ∞ := by
+  rw [← lintegral_rnDeriv_mul hQP (f := fun x => ENNReal.ofReal (-llr Q P x))
+    ((measurable_llr Q P).neg.ennreal_ofReal).aemeasurable]
+  refine (lt_of_le_of_lt (lintegral_mono (g := fun _ => (1 : ℝ≥0∞)) ?_) ?_).ne
+  · intro x
+    simp only [llr_def]
+    by_cases hx : Q.rnDeriv P x = ∞
+    · simp [hx]
+    · rw [← ENNReal.ofReal_toReal hx, ← ENNReal.ofReal_mul ENNReal.toReal_nonneg,
+        ENNReal.ofReal_toReal hx]
+      calc ENNReal.ofReal ((Q.rnDeriv P x).toReal * -Real.log (Q.rnDeriv P x).toReal)
+          ≤ ENNReal.ofReal 1 := ENNReal.ofReal_le_ofReal (mul_neg_log_le_one _ ENNReal.toReal_nonneg)
+        _ = 1 := ENNReal.ofReal_one
+  · simp
+
+
+/-- The likelihood ratio is a Radon-Nikodym derivative: if probability measures P and Q
+have measurable densities p and q against the same σ-finite reference measure ν, and Q puts
+no mass where P puts none (Q ≪ P), then dQ/dP equals q/p at P-almost every point. -/
+theorem rnDeriv_eq_ratio_of_densities {Ω : Type*} [MeasurableSpace Ω]
+    (ν : Measure Ω) [SigmaFinite ν] (p q : Ω → ℝ≥0∞) (hp : Measurable p) (hq : Measurable q)
+    (P Q : Measure Ω) [IsProbabilityMeasure P] [IsProbabilityMeasure Q]
+    (hP : P = ν.withDensity p) (hQ : Q = ν.withDensity q) (hQP : Q ≪ P) :
+    ∀ᵐ x ∂P, Q.rnDeriv P x = q x / p x := by
+  subst hP hQ
+  have hPν : ν.withDensity p ≪ ν := withDensity_absolutelyContinuous ν p
+  have hQν : ν.withDensity q ≪ ν := withDensity_absolutelyContinuous ν q
+  filter_upwards [Measure.rnDeriv_eq_div (ξ := ν) hQν hPν,
+    hPν (Measure.rnDeriv_withDensity ν hp), hPν (Measure.rnDeriv_withDensity ν hq)]
+    with x h1 h2 h3
+  rw [h1, h2, h3]
+
+/-- The reweighting rule: under the same hypotheses, with L = q/p where p > 0 and L = 0
+elsewhere, the average of any non-negative measurable g under Q equals the average of g · L
+under P. Taking g to be the indicator of a set A gives Q(A) = ∫_A L dP. -/
+theorem reweighting_rule {Ω : Type*} [MeasurableSpace Ω]
+    (ν : Measure Ω) [SigmaFinite ν] (p q : Ω → ℝ≥0∞) (hp : Measurable p) (hq : Measurable q)
+    (P Q : Measure Ω) [IsProbabilityMeasure P] [IsProbabilityMeasure Q]
+    (hP : P = ν.withDensity p) (hQ : Q = ν.withDensity q) (hQP : Q ≪ P)
+    (g : Ω → ℝ≥0∞) (hg : Measurable g) :
+    ∫⁻ x, g x ∂Q = ∫⁻ x, g x * (if p x = 0 then 0 else q x / p x) ∂P := by
+  have hpos : ∀ᵐ x ∂P, p x ≠ 0 := by
+    rw [hP, ae_withDensity_iff hp]
+    exact ae_of_all _ (fun x hx => hx)
+  have hr := rnDeriv_eq_ratio_of_densities ν p q hp hq P Q hP hQ hQP
+  rw [← lintegral_rnDeriv_mul hQP hg.aemeasurable]
+  refine lintegral_congr_ae ?_
+  filter_upwards [hpos, hr] with x h1 h2
+  simp only [h2, h1, ite_false, mul_comm]
+
+/-- Gibbs' inequality: for probability measures with Q ≪ P, the Kullback-Leibler divergence
+D(Q ‖ P) = ∫ ln (dQ/dP) dQ is never negative, and it is zero only when Q = P.
+The divergence is written as (positive part) minus (negative part) of the log-ratio,
+each integrated against Q, so that it may be +∞: "never negative" says the negative part is
+at most the positive part, and "zero only when Q = P" says the two parts are equal exactly
+when Q = P. -/
+theorem kl_divergence_nonneg_and_zero_iff {Ω : Type*} [MeasurableSpace Ω]
+    (P Q : Measure Ω) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hQP : Q ≪ P) :
+    (∫⁻ x, ENNReal.ofReal (-llr Q P x) ∂Q ≤ ∫⁻ x, ENNReal.ofReal (llr Q P x) ∂Q) ∧
+    (∫⁻ x, ENNReal.ofReal (llr Q P x) ∂Q = ∫⁻ x, ENNReal.ofReal (-llr Q P x) ∂Q ↔ Q = P) := by
+  set A := ∫⁻ x, ENNReal.ofReal (llr Q P x) ∂Q with hA
+  set B := ∫⁻ x, ENNReal.ofReal (-llr Q P x) ∂Q with hB
+  have hBfin : B ≠ ∞ := neg_part_llr_ne_top P Q hQP
+  have hsplit : ∫⁻ x, ‖llr Q P x‖ₑ ∂Q = A + B := by
+    rw [hA, hB, ← lintegral_add_left]
+    · exact lintegral_congr (fun x => enorm_eq_ofReal_add_ofReal_neg _)
+    · exact ENNReal.measurable_ofReal.comp (measurable_llr Q P)
+  by_cases hint : Integrable (llr Q P) Q
+  · have hAfin : A ≠ ∞ := by
+      have h := (hasFiniteIntegral_iff_enorm.mp hint.hasFiniteIntegral)
+      rw [hsplit] at h
+      exact (ENNReal.add_lt_top.mp h).1.ne
+    have hint_eq : ∫ x, llr Q P x ∂Q = A.toReal - B.toReal :=
+      integral_eq_lintegral_pos_part_sub_lintegral_neg_part hint
+    have hnn : 0 ≤ ∫ x, llr Q P x ∂Q := by
+      have := InformationTheory.integral_llr_add_sub_measure_univ_nonneg hQP hint
+      simpa using this
+    have hkl : (InformationTheory.klDiv Q P).toReal = ∫ x, llr Q P x ∂Q :=
+      InformationTheory.toReal_klDiv_of_measure_eq hQP (by simp)
+    have hklfin : InformationTheory.klDiv Q P ≠ ∞ := InformationTheory.klDiv_ne_top hQP hint
+    refine ⟨?_, ?_⟩
+    · rw [← ENNReal.toReal_le_toReal hBfin hAfin]
+      linarith
+    · have hz : InformationTheory.klDiv Q P = 0 ↔ (InformationTheory.klDiv Q P).toReal = 0 := by
+        rw [ENNReal.toReal_eq_zero_iff]; simp [hklfin]
+      rw [← InformationTheory.klDiv_eq_zero_iff, ← ENNReal.toReal_eq_toReal_iff' hAfin hBfin,
+        hz, hkl, hint_eq, sub_eq_zero]
+  · have hAinf : A = ∞ := by
+      have h : ¬ HasFiniteIntegral (llr Q P) Q := fun h =>
+        hint ⟨(measurable_llr Q P).aestronglyMeasurable, h⟩
+      rw [hasFiniteIntegral_iff_enorm, hsplit, not_lt, top_le_iff] at h
+      by_contra hne
+      exact (ENNReal.add_ne_top.mpr ⟨hne, hBfin⟩) h
+    refine ⟨by rw [hAinf]; exact le_top, ?_⟩
+    constructor
+    · intro h
+      rw [hAinf] at h
+      exact absurd h.symm hBfin
+    · intro h
+      subst h
+      exact absurd ((integrable_zero Ω ℝ Q).congr (llr_self Q).symm) hint
+
+-- The loaded die (1/10, 1/10, 1/10, 1/10, 2/10, 4/10) is a probability law with mean 22/5 = 4.4.
+example : (1/10 + 1/10 + 1/10 + 1/10 + 2/10 + 4/10 : ℚ) = 1 := by norm_num
+example : (1 * (1/10) + 2 * (1/10) + 3 * (1/10) + 4 * (1/10) + 5 * (2/10) + 6 * (4/10) : ℚ)
+    = 22/5 := by norm_num
+
+-- The fair die has mean 7/2 = 3.5.
+example : ((1 + 2 + 3 + 4 + 5 + 6) * (1/6) : ℚ) = 7/2 := by norm_num
+
+-- The bus tilt: M(θ) = 1/(1 - θ) at θ = -1 is 1/2.
+example : (1 / (1 - (-1)) : ℚ) = 1/2 := by norm_num
+
+-- The die has no density against length: probability 1/6 over a window of length 2h
+-- gives 5/6, 25/3, 250/3 (0.8333, 8.3333, 83.3333) for h = 1/10, 1/100, 1/1000.
+example : ((1/6) / (2 * (1/10)) : ℚ) = 5/6 := by norm_num
+example : ((1/6) / (2 * (1/100)) : ℚ) = 25/3 := by norm_num
+example : ((1/6) / (2 * (1/1000)) : ℚ) = 250/3 := by norm_num
+
+-- Q uniform on [0, 2] against P uniform on [0, 1]: q/p = (1/2)/1 on [0, 1], which has
+-- P-mass 1, so the ratio integrates to 1/2, and Q puts the other 1/2 where p = 0.
+example : ((1/2) / 1 * 1 : ℚ) = 1/2 := by norm_num
+example : ((1/2) * (2 - 1) : ℚ) = 1/2 := by norm_num
+
+#print axioms enorm_eq_ofReal_add_ofReal_neg
+#print axioms mul_neg_log_le_one
+#print axioms neg_part_llr_ne_top
+#print axioms rnDeriv_eq_ratio_of_densities
+#print axioms reweighting_rule
+#print axioms kl_divergence_nonneg_and_zero_iff
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'enorm_eq_ofReal_add_ofReal_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mul_neg_log_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'neg_part_llr_ne_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rnDeriv_eq_ratio_of_densities' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reweighting_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'kl_divergence_nonneg_and_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
 > - **Another seed.** Set `SplitMix64(1)`. The reweighted estimate of Q(wait > 1) moves to 0.135057 and the sampled divergence to 0.193383. Both stay within four standard errors; the integrals do not move at all.
 > - **A target the fair die already meets.** Set the target to 3.5. Guess $\theta$. It is 0: the tilt is the fair die, its divergence is 0.000000, and D(loaded ‖ tilt) is D(loaded ‖ fair), 0.182322.
-> - **A target the loaded die does not share.** Set the target to 5.5 and raise Newton's steps from 5 to 9. $\theta$ becomes 1.086963747 and the tilt puts 0.6637 on face 6. The Pythagoras assert now fails: 0.539573 + 0.838409 is not 0.182322, because the split holds only for models with the tilt's mean.
+> - **A target the loaded die does not share.** Set the target to 5.5 and raise Newton's steps from 5 to 9. $\theta$ becomes 1.086963747 and the tilt puts 0.6637 on face 6. The assert on the split (marked `Pythagoras for the tilt` in the code) now fails: 0.539573 + 0.838409 is not 0.182322, because the split holds only for models with the tilt's mean.
 > - **The ratio from the densities.** Replace the body of `lr` with `q(x) / p(x)`. Guess what changes. Nothing: every line of output is the same, because $2e^{-x}$ is the ratio of the two densities.
 
 ---

@@ -112,3 +112,4 @@ assert f == [Fr(3, 5)] * 4 + [Fr(6, 5), Fr(12, 5)]        # density against the 
 assert dens_ok and best == Fr(1, 11)                       # density; search against telescoping
 assert best < eps                                          # delta 1/1024 meets eps 0.1
 assert gap < 1e-9 and below and cantor_ok                  # two integrals; stages
+print("ALL CHECKS PASS")

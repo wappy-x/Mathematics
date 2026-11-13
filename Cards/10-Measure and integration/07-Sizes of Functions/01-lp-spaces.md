@@ -38,7 +38,11 @@ The bars are the seven days. With each day weighing 1/7, the lowest line is the 
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). For the week, $\Omega$ is the seven days, $\mathcal F$ is every set of days, and two measures are in play: **counting measure**, each day weighing 1, and the **uniform probability**, each day weighing 1/7. The integral $\int f\,d\mu$, read "the integral of f against mu", is here the weighted sum of the seven values. A property holds **almost everywhere**, written a.e., when it fails only on a set of measure zero, a **null set** ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Double bars $\lVert f\rVert$ denote a size.
+Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
+
+For the week, $\Omega$ is the seven days, $\mathcal F$ is every set of days, and two measures are in play: **counting measure**, each day weighing 1, and the **uniform probability**, each day weighing 1/7. The integral $\int f\,d\mu$, read "the integral of f against mu", is here the weighted sum of the seven values.
+
+A property holds **almost everywhere**, written a.e., when it fails only on a set of measure zero, a **null set** ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Double bars $\lVert f\rVert$ denote a size.
 
 For a measurable $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm** is
 
@@ -128,7 +132,11 @@ The falling line is counting measure, the rising line the uniform probability. B
 
 Now move to a continuous record: a gust whose speed climbs steadily from 0 to 8 m/s over one hour, $u(t) = 8t$ for t in [0, 1], with length $\lambda$ as the measure. Its norms are $8/(p+1)^{1/p}$: 4 at p = 1, 4.6188 at p = 2, 5.0397 at p = 3, and 7.9449 at p = 1000, climbing to 8.
 
-Add the logger's glitch: 40 m/s at the instant t = 0.5. The plain supremum, the largest value taken, jumps to 40. No p-norm moves, since a set of length 0 carries no integral, so their limit stays 8. The essential supremum agrees: the speed exceeds 7 on a set of length 0.125 and exceeds 8 on a set of length 0, so the least ceiling broken only on a null set is 8. On any finite measure $\lVert f\rVert_p \to \lVert f\rVert_\infty$ (Detailed proof, part 8). Under counting measure no nonempty set is null, so the essential supremum is the maximum.
+Add the logger's glitch: 40 m/s at the instant t = 0.5. The plain supremum, the largest value taken, jumps to 40. No p-norm moves, since a set of length 0 carries no integral, so their limit stays 8.
+
+The essential supremum agrees: the speed exceeds 7 on a set of length 0.125 and exceeds 8 on a set of length 0, so the least ceiling broken only on a null set is 8.
+
+On any finite measure $\lVert f\rVert_p \to \lVert f\rVert_\infty$ (Detailed proof, part 8). Under counting measure no nonempty set is null, so the essential supremum is the maximum.
 
 ### Step 4: L^p is closed under sums
 
@@ -158,7 +166,9 @@ A pairing bound, the integral of $\lvert fg\rvert$ at most a constant times $\lV
 
 $$c^{\,1 - 1/p - 1/q}.$$
 
-Unless the exponent is 0, sending c toward 0 or infinity makes the ratio as large as anyone likes, and no constant can serve. Take the week and g the constant 1. For p = 2 and q = 2 the ratio is 0.9285 at weights 1/7, 1, 7 and 49. For p = 3 and q = 3/2 it is 0.8775 at all four. For p = 2 and q = 3, not conjugate, it runs 0.9285, 1.2842, 1.7761, 2.4565, growing as $c^{1/6}$. The best constant for conjugate pairs is 1, which is [Holder's inequality](02-holders-inequality.md).
+Unless the exponent is 0, sending c toward 0 or infinity makes the ratio as large as anyone likes, and no constant can serve.
+
+Take the week and g the constant 1. For p = 2 and q = 2 the ratio is 0.9285 at weights 1/7, 1, 7 and 49. For p = 3 and q = 3/2 it is 0.8775 at all four. For p = 2 and q = 3, not conjugate, it runs 0.9285, 1.2842, 1.7761, 2.4565, growing as $c^{1/6}$. The best constant for conjugate pairs is 1, which is [Holder's inequality](02-holders-inequality.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -223,7 +233,11 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows a norm. The week's power sums take two roads: point by point, and by slicing at each height level, adding the rise in the p-th power times the number of days at or above that level. The uniform norms come directly, with a scaling check against $7^{-1/p}$ times the counting norms; the split 29 = 25 + 4 is exact. The gust's norms come from the formula and from a midpoint sum on 100000 cells; the glitched gust is stored as straight pieces, the glitch one of length 0, and its plain supremum and essential supremum are both computed from those pieces; the spike is summed over 60 halvings; the a.e. classes are listed in full with all 256 representative sums. The code checks these functions and finite stages; that the definitions work on every measure is the proof's job. Rust keeps fractions by hand.
+Nothing imported knows a norm. The week's power sums take two roads: point by point, and by slicing at each height level, adding the rise in the p-th power times the number of days at or above that level. The uniform norms come directly, with a scaling check against $7^{-1/p}$ times the counting norms; the split 29 = 25 + 4 is exact.
+
+The gust's norms come from the formula and from a midpoint sum on 100000 cells; the glitched gust is stored as straight pieces, the glitch one of length 0, and its plain supremum and essential supremum are both computed from those pieces; the spike is summed over 60 halvings; the a.e. classes are listed in full with all 256 representative sums.
+
+The code checks these functions and finite stages; that the definitions work on every measure is the proof's job. Rust keeps fractions by hand.
 
 ### Python
 
@@ -599,6 +613,96 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three facts behind the p-norm on any measure, for every exponent from 1 to ∞, and checks the week's numbers.
+
+- Two measurable functions equal almost everywhere have the same p-norm.
+- A measurable function has p-norm zero exactly when it is zero almost everywhere.
+- Suppose $f$ and $g$ have finite p-norm, and $a$, $b$ are real. Then $af + bg$ has finite p-norm.
+- Take a measurable $f$ and a real $a$. Then $\lVert af\rVert_p = \lvert a\rvert\,\lVert f\rVert_p$.
+- The week's sums of speeds, squares and cubes are 35, 203 and 1295. Divided by 7 they give 5, 29 and 185.
+- The week's largest speed, its ∞-norm, is 8.
+- The deviations from the mean 5 have squares summing to 28, and 29 = 25 + 4.
+- Doubling the week turns the sum of squares 203 into 812, four times as much.
+- At exponent 1/2, Monday plus Tuesday has size 4, more than 1 + 1.
+- The pairs 3/2 with 3, and 2 with 2, are conjugate.
+- Take p = 2 and q = 3. Then 1 − 1/2 − 1/3 = 1/6, the rate at which their ratio grows.
+
+The limit as p grows, the gust, the spike, the pairing ratios and the listed classes are left to the Python and Rust checks.
+
+```lean
+-- Lp spaces: on any measure space with exponent p at least 1, the p-norm of a measurable real function ignores changes on null sets and is zero exactly when the function is zero almost everywhere, functions of finite p-norm are closed under adding and scaling, and scaling a function by a scales its p-norm by the size of a.
+import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+import Mathlib.MeasureTheory.Function.LpSeminorm.SMul
+import Mathlib.MeasureTheory.Function.LpSeminorm.TriangleInequality
+
+open MeasureTheory
+open scoped ENNReal
+
+/-- Treat almost-everywhere-equal functions as one: on any measure space, for an exponent
+`1 ≤ p ≤ ∞` and measurable real functions `f` and `g`, two functions that agree except on a
+null set have the same p-norm, and the p-norm of `f` is zero exactly when `f` is zero
+almost everywhere. So the p-norm is well defined on classes and is zero only at the zero class. -/
+theorem lp_norm_ignores_null_sets_and_vanishes_only_at_zero
+    {α : Type*} [MeasurableSpace α] (μ : Measure α) {p : ℝ≥0∞} (hp : 1 ≤ p)
+    {f g : α → ℝ} (hf : Measurable f) (hg : Measurable g) :
+    (f =ᵐ[μ] g → eLpNorm f p μ = eLpNorm g p μ) ∧
+      (eLpNorm f p μ = 0 ↔ f =ᵐ[μ] 0) := by
+  have hp0 : p ≠ 0 := (lt_of_lt_of_le one_pos hp).ne'
+  exact ⟨fun h => eLpNorm_congr_ae h, eLpNorm_eq_zero_iff hp0⟩
+
+/-- L^p is a vector space: on any measure space, for an exponent `1 ≤ p ≤ ∞`, if `f` and `g`
+have finite p-norm then so does every combination `a • f + b • g` with real scalars `a`, `b`. -/
+theorem lp_closed_under_sums_and_scaling
+    {α : Type*} [MeasurableSpace α] (μ : Measure α) {p : ℝ≥0∞} (hp : 1 ≤ p)
+    {f g : α → ℝ} (hf : MemLp f p μ) (hg : MemLp g p μ) (a b : ℝ) :
+    MemLp (a • f + b • g) p μ := by
+  exact (hf.const_smul a).add (hg.const_smul b)
+
+/-- The root makes the size scale: on any measure space, for an exponent `1 ≤ p ≤ ∞`, a measurable
+real function `f` and a real number `a`, the p-norm of `a • f` is `|a|` times the p-norm of `f`. -/
+theorem lp_norm_scales_by_abs
+    {α : Type*} [MeasurableSpace α] (μ : Measure α) {p : ℝ≥0∞} (hp : 1 ≤ p)
+    {f : α → ℝ} (hf : Measurable f) (a : ℝ) :
+    eLpNorm (a • f) p μ = ENNReal.ofReal |a| * eLpNorm f p μ := by
+  rw [eLpNorm_const_smul, Real.enorm_eq_ofReal_abs]
+
+-- The card's worked numbers for the week 3, 5, 8, 2, 6, 4, 7.
+-- Sum of speeds, of squares, of cubes.
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℕ).sum = 35 := by decide
+example : (([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (· ^ 2)).sum = 203 := by decide
+example : (([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (· ^ 3)).sum = 1295 := by decide
+-- Uniform weights 1/7: the sums divided by 7.
+example : (35 : ℕ) = 7 * 5 ∧ (203 : ℕ) = 7 * 29 ∧ (1295 : ℕ) = 7 * 185 := by norm_num
+-- The worst day: the infinity-norm is 8.
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℕ).max? = some 8 := by decide
+-- Deviations from the mean 5: squares sum to 28 = 7 * 4, and 29 = 25 + 4.
+example : (([-2, 0, 3, -3, 1, -1, 2] : List ℤ).map (· ^ 2)).sum = 28 := by decide
+example : (28 : ℕ) = 7 * 4 ∧ (29 : ℕ) = 5 ^ 2 + 2 ^ 2 := by norm_num
+-- Doubling the week: the sum of squares grows from 203 to 812, four times.
+example : ((([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (fun x => (2 * x) ^ 2)).sum = 812)
+    ∧ (812 : ℕ) = 4 * 203 := by decide
+-- Exponent 1/2 on Monday plus Tuesday: size (1 + 1)^2 = 4 beats 1 + 1 = 2.
+example : ((1 : ℕ) + 1) ^ 2 = 4 ∧ (1 + 1 : ℕ) < 4 := by norm_num
+-- Conjugate exponents: 1/p + 1/q = 1 for p = 3/2, q = 3 and p = 2, q = 2.
+example : (1 : ℚ) / (3 / 2) + 1 / 3 = 1 ∧ (1 : ℚ) / 2 + 1 / 2 = 1 := by norm_num
+-- Non-conjugate p = 2, q = 3: the ratio scales as c^(1 - 1/2 - 1/3) = c^(1/6).
+example : (1 : ℚ) - 1 / 2 - 1 / 3 = 1 / 6 := by norm_num
+
+#print axioms lp_norm_ignores_null_sets_and_vanishes_only_at_zero
+#print axioms lp_closed_under_sums_and_scaling
+#print axioms lp_norm_scales_by_abs
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lp_norm_ignores_null_sets_and_vanishes_only_at_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lp_closed_under_sums_and_scaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lp_norm_scales_by_abs' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -663,7 +767,7 @@ The p-norm is a size, but a size is not yet a distance one can take limits in: w
 
 ## Sources
 
-Verified 29 Sep 2026: every link below opens a publisher or author page naming the cited book.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Axler, Sheldon. *Measure, Integration & Real Analysis*. Springer Graduate Texts in Mathematics, 2020, open access. [Author's page with the free edition](https://measure.axler.net/). Chapter 7: the p-norm, the essential supremum, and L^p as a quotient by a.e. equality.
 - Folland, Gerald B. *Real Analysis: Modern Techniques and Their Applications*, 2nd ed. Wiley, 1999. [Publisher page](https://www.wiley.com/en-us/Real+Analysis%3A+Modern+Techniques+and+Their+Applications%2C+2nd+Edition-p-9780471317166). Chapter 6: L^p spaces, conjugate exponents, and the limit of p-norms.

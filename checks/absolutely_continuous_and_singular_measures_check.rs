@@ -121,4 +121,5 @@ fn main() {
     assert!(dens_ok && best * 11 == l);                              // density; search against telescoping
     assert!(best * 10 < l);                                          // delta 1/1024 meets eps 0.1
     assert!(gap < 1e-9 && below && cantor_ok);                       // two integrals; stages
+    println!("ALL CHECKS PASS");
 }

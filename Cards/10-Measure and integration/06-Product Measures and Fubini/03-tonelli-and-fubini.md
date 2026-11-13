@@ -10,11 +10,15 @@ A dart lands on a square board 1 m on a side, every spot equally likely. How far
 
 Slicing is not always safe. Take the function (x^2 − y^2)/(x^2 + y^2)^2 on the same square, x across and y up. Vertical lines first, its total is π/4 = 0.7854. Horizontal lines first, it is −0.7854. Same function, same square, two answers. The Riemann version of slicing ([Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)) needs a function that is continuous on a closed rectangle. This one blows up at the corner (0, 0), so that theorem says nothing either way.
 
-Measure theory says exactly when slicing is safe. Integrating in one variable, then the other, is called **iterated integration**, the term used from here on. Leonida Tonelli's theorem (1909): for a function that is never negative, both iterated integrals equal the integral over the square, always, even when that integral is infinite. Guido Fubini's theorem (1907): for a function of either sign, the same holds once the integral of its absolute value is finite. The corner function fails that test. On the numbers 1, 2, 3, …, where an integral is a sum, the same pair of theorems says when a double series may be summed rows first or columns first.
+Measure theory says exactly when slicing is safe. Integrating in one variable, then the other, is called **iterated integration**, the term used from here on.
+
+Leonida Tonelli's theorem (1909): for a function that is never negative, both iterated integrals equal the integral over the square, always, even when that integral is infinite. Guido Fubini's theorem (1907): for a function of either sign, the same holds once the integral of its absolute value is finite. The corner function fails that test.
+
+On the numbers 1, 2, 3, …, where an integral is a sum, the same pair of theorems says when a double series may be summed rows first or columns first.
 
 **A double integral may be computed one variable at a time, in either order: without conditions when the function is never negative, and for a signed function whenever the integral of its absolute value is finite.**
 
-**What kind of fact this is:** two theorems, proved on this card in Why it works from the construction of the product measure; the double-series version is the same theorems on counting measure.
+**What kind of fact this is:** two theorems, proved on this card in Why it works from the construction of the product measure; the double-series version is the same theorems on counting measure, which gives each set its number of points.
 
 ### The picture: the board, one dart and two slices
 
@@ -58,7 +62,7 @@ and for signed entries the same holds once $\sum_{i,j}|a_{ij}|<\infty$.
 | --- | --- | --- | --- |
 | $X$, $Y$, $\mu$, $\nu$ | the two spaces and their measures | [0, 1] with length each; or 1, 2, 3, … with counting | — |
 | $\lambda$ | Lebesgue measure: length on the line | length on [0, 1] | — |
-| $\mathcal F$, $\mathcal G$ | the sigma-algebras of measurable sets on each side | Borel sets of [0, 1]; all sets of counts | — |
+| $\mathcal F$, $\mathcal G$ | the sigma-algebras of measurable sets on each side | Borel sets of [0, 1], those built from intervals; all sets of counts | — |
 | $\mathcal F\otimes\mathcal G$, $\mu\otimes\nu$ | product sigma-algebra and product measure | area on the board, λ ⊗ λ | — |
 | $f$ | the function integrated; $\lvert f\rvert$ is its absolute value | D; (x^2 − y^2)/(x^2 + y^2)^2 | — |
 | $f^+$, $f^-$ | positive and negative parts: f = f+ − f−, each ≥ 0 | for the corner function, f+ lives below the diagonal y = x | both infinite for the corner function |
@@ -73,7 +77,7 @@ and for signed entries the same holds once $\sum_{i,j}|a_{ij}|<\infty$.
 ### When it holds
 
 - **Sigma-finite measures.** With length on x and counting measure on y, the diagonal y = x gets 1 slicing one way and 0 the other ([Product measure](02-product-measure.md) works it).
-- **Measurable with respect to the product sigma-algebra.** Measurable sections alone are not enough; Sierpiński's set on the same card, built assuming the continuum hypothesis, has two iterated integrals that differ.
+- **Measurable with respect to the product sigma-algebra.** Measurable sections alone are not enough; Sierpiński's set on the same card, built assuming the continuum hypothesis (no set size lies strictly between the whole numbers and the real line), has two iterated integrals that differ.
 - **Never negative, for Tonelli.** Nothing else is needed, and the common value may be ∞.
 - **Absolute integral finite, for Fubini.** Two finite iterated integrals do not certify it: the corner function has iterated integrals 0.7854 and −0.7854, both finite, while ∫|f| is infinite.
 - **Almost every x, not every x.** In Fubini a section may fail to be integrable on a null set of x; the slice integral is set to 0 there, which changes no integral. Lebesgue measure on the square adds to λ ⊗ λ every subset of a null set; for a function measurable only in that larger sense the theorems still hold, but a section is guaranteed measurable only for almost every x.
@@ -84,7 +88,9 @@ and for signed entries the same holds once $\sum_{i,j}|a_{ij}|<\infty$.
 
 ### Step 0: the product measure was built by slicing
 
-The product-measure card finds the size of a set E of pairs by slicing: measure each section $E_x$ with ν, integrate those sizes with μ; the other order gives the same number. That is Tonelli for the indicator of E, one on E and zero off it. The rest is the standard ladder of the Lebesgue integral: indicators, then simple functions by adding, then every non-negative function by monotone convergence, then signed functions by splitting into positive and negative parts. Only the last rung can fail: when the positive and negative parts are both infinite.
+The product-measure card finds the size of a set E of pairs by slicing: measure each section $E_x$ with ν, integrate those sizes with μ; the other order gives the same number. That is Tonelli for the indicator of E, one on E and zero off it.
+
+The rest is the standard ladder of the Lebesgue integral: indicators, then simple functions by adding, then every non-negative function by monotone convergence, then signed functions by splitting into positive and negative parts. Only the last rung can fail: when the positive and negative parts are both infinite.
 
 ### Step 1: indicators
 
@@ -133,11 +139,11 @@ The distance $D(x,y)=\sqrt{(x-0.5)^2+(y-0.5)^2}$ is continuous, so measurable, a
 
 $$h(x)=\int_0^1 D(x,y)\,dy=\tfrac12\sqrt{a^2+\tfrac14}\;+\;a^2\ln\frac{\tfrac12+\sqrt{a^2+\tfrac14}}{a},\qquad a=|x-0.5|,$$
 
-with h = 0.25 on the centre line itself. Averaging h over x gives the expected distance:
+with h = 0.25 on the centre line itself. Averaging h over x gives the expected distance $\mathbb E[D]$, the average of D over the whole board:
 
 $$\mathbb E[D]=\int_0^1 h(x)\,dx=\frac{\sqrt2+\ln(1+\sqrt2)}{6}=0.382598\ \text{m}.$$
 
-The code confirms it by four more roads: h integrated numerically and slices in x first with every inner integral numerical, both 0.382598; a 600 × 600 grid of small squares added row by row and column by column, 0.382597 both ways; and 100,000 thrown darts, 0.3820 with standard error 0.0004.
+The code confirms it by four more roads: h integrated numerically and slices in x first with every inner integral numerical, both 0.382598; a 600 × 600 grid of small squares added row by row and column by column, 0.382597 both ways; and 100,000 thrown darts, 0.3820 with standard error 0.0004, the typical size of the random error in that mean.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -173,17 +179,25 @@ xychart-beta
 
 Caption: orange is the vertical-slice integral 1/(1 + x^2), with area π/4 = 0.7854 under it; green is the horizontal-slice integral −1/(1 + y^2), with area −0.7854. Every single slice integral is finite; the disagreement is in the whole.
 
-Fubini is not contradicted: its hypothesis fails. Integrate |f| over [ε, 1] × [ε, 1], the square with its corner cut off. The slice integrals of |f| have a closed form, and the total is ln(1/ε) − arctan(1/ε) + arctan ε: 0.9311 at ε = 0.1, 3.0544 at 0.01, 5.3390 at 0.001, growing like ln(1/ε) without bound. So ∫|f| = ∞. The function is antisymmetric, f(y, x) = −f(x, y), so reflecting in the diagonal swaps its positive and negative parts: they have equal integrals, each infinite. The integral of f over the square is ∞ − ∞, undefined.
+Fubini is not contradicted: its hypothesis fails. Integrate |f| over [ε, 1] × [ε, 1], the square with its corner cut off. The slice integrals of |f| have a closed form, and the total is ln(1/ε) − arctan(1/ε) + arctan ε: 0.9311 at ε = 0.1, 3.0544 at 0.01, 5.3390 at 0.001, growing like ln(1/ε) without bound. So ∫|f| = ∞.
+
+The function is antisymmetric, f(y, x) = −f(x, y), so reflecting in the diagonal swaps its positive and negative parts: they have equal integrals, each infinite. The integral of f over the square is ∞ − ∞, undefined.
 
 Different ways of approaching the corner pick different values. Every square [ε, 1]^2 gives total 0, by antisymmetry. On [0, 1] × [0, 2] the orders give arctan(1/2) = 0.4636 and −arctan 2 = −1.1071, again a gap of π/2 = 1.5708: the disagreement sits at the corner, where f is unbounded.
 
 ### Step 7: double series, both theorems on counting measure
 
-**Tonelli on counting measure.** Let $a_{nk}=k^{-n}$ for n ≥ 2 and k ≥ 2, all positive. Summing each row over k gives ζ(n) − 1, where ζ(n) = 1 + 2^(−n) + 3^(−n) + … is the zeta function: ζ(2) − 1 = 0.644934 = π^2/6 − 1, ζ(3) − 1 = 0.202057. Adding those row totals for n = 2 to 60 gives 1.000000000. Summing each column over n first is a geometric series, 1/k^2 + 1/k^3 + … = 1/(k(k − 1)) = 1/(k − 1) − 1/k, and those telescope: columns 2 to 1000 give 1 − 1/1000 = 0.999000, with limit 1. Tonelli guarantees the agreement with no convergence check: the ζ(n) − 1 add up to exactly 1.
+**Tonelli on counting measure.** Let $a_{nk}=k^{-n}$ for n ≥ 2 and k ≥ 2, all positive. Summing each row over k gives ζ(n) − 1, where ζ(n) = 1 + 2^(−n) + 3^(−n) + … is the zeta function: ζ(2) − 1 = 0.644934 = π^2/6 − 1, ζ(3) − 1 = 0.202057. Adding those row totals for n = 2 to 60 gives 1.000000000.
 
-**Fubini's failure on counting measure.** Let $b_{ij}$ be +1 when j = i, −1 when j = i + 1, and 0 elsewhere. Each row holds one +1 and one −1, so every row sums to 0, and rows first gives 0. Column 1 holds only a +1; every later column holds one of each. Columns first gives 1. The first 10 rows alone carry 20 entries of size 1, and the whole table infinitely many, so Σ|b| = ∞ and Fubini is silent. Every corner with at least as many rows as columns, such as the 10 × 10 one, sums to 1; one with more columns than rows, such as 10 × 11, sums to 0. The cut-off shape picks the answer; the trouble lives only in the infinite table.
+Summing each column over n first is a geometric series, 1/k^2 + 1/k^3 + … = 1/(k(k − 1)) = 1/(k − 1) − 1/k, and those telescope: columns 2 to 1000 give 1 − 1/1000 = 0.999000, with limit 1. Tonelli guarantees the agreement with no convergence check: the ζ(n) − 1 add up to exactly 1.
 
-An alternative route proves the set case with the monotone class lemma in place of Dynkin's theorem; Folland takes it, then climbs the same ladder of simple functions and monotone convergence. For continuous functions on a closed rectangle, the Riemann route is [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md).
+**Fubini's failure on counting measure.** Let $b_{ij}$ be +1 when j = i, −1 when j = i + 1, and 0 elsewhere. Each row holds one +1 and one −1, so every row sums to 0, and rows first gives 0. Column 1 holds only a +1; every later column holds one of each. Columns first gives 1.
+
+The first 10 rows alone carry 20 entries of size 1, and the whole table infinitely many, so Σ|b| = ∞ and Fubini is silent.
+
+Every corner with at least as many rows as columns, such as the 10 × 10 one, sums to 1; one with more columns than rows, such as 10 × 11, sums to 0. The cut-off shape picks the answer; the trouble lives only in the infinite table.
+
+An alternative route proves the set case with the monotone class lemma in place of Dynkin's theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Both extend a fact from rectangles to every set in the product sigma-algebra. Folland takes the monotone class route, then climbs the same ladder of simple functions and monotone convergence. For continuous functions on a closed rectangle, the Riemann route is [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md).
 
 ---
 
@@ -215,7 +229,9 @@ A dart thrown at random lands 0.3826 m from the centre on average, about half as
 
 ## Code, from first principles, and it actually runs
 
-The code computes the dart's expected distance by five roads: the closed form; y first with the exact slice average and Simpson's rule outside; x first with Simpson's rule inside and out; a 600 × 600 grid summed by rows and by columns; and 100,000 darts from a SplitMix64 generator written out in both languages, seed 2026. For the corner function it checks one slice integral of each order numerically against its antiderivative, integrates both orders against π/4 from Machin's series, repeats on [0, 1] × [0, 2], and integrates |f| over [ε, 1]^2 numerically against its closed form. On counting measure it sums ζ(n) − 1 by rows against the telescoped columns, and the ±1 table both ways and on two finite corners; the not-sigma-finite diagonal is sampled at 1,000 points.
+The code computes the dart's expected distance by five roads: the closed form; y first with the exact slice average and Simpson's rule outside (a weighted sum of values at evenly spaced points); x first with Simpson's rule inside and out; a 600 × 600 grid summed by rows and by columns; and 100,000 darts from a SplitMix64 random-number generator written out in both languages, seed 2026.
+
+For the corner function it checks one slice integral of each order numerically against its antiderivative, integrates both orders against π/4 from Machin's series (π = 16 arctan(1/5) − 4 arctan(1/239), each arctan summed as a power series), repeats on [0, 1] × [0, 2], and integrates |f| over [ε, 1]^2 numerically against its closed form. On counting measure it sums ζ(n) − 1 by rows against the telescoped columns, and the ±1 table both ways and on two finite corners; the not-sigma-finite diagonal is sampled at 1,000 points.
 
 The code shows instances and finite approximations. That every non-negative measurable function on every pair of sigma-finite spaces can be sliced in either order is what only the Detailed proof shows.
 
@@ -594,6 +610,108 @@ rows first, sum over n = 2..60 of zeta(n) - 1: 1.000000000
 columns first, column k totals 1/(k(k - 1)); column 2 by its series 0.500000; columns 2..1000: 0.999000 = 1 - 1/1000
 breaks, not sigma-finite: diagonal of [0, 1]^2 at 1000 points, length on x and counting on y; the orders give 1 and 0
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves Tonelli, Fubini and the double-series version for all sigma-finite measure spaces, and checks the ±1 table's finite sums exactly.
+
+- Take sigma-finite μ and ν, and f from the product to [0, ∞], measurable for the product sigma-algebra. Then both slice integrals are measurable, and both iterated integrals equal the product integral, ∞ allowed.
+- Take the same μ and ν, and f real-valued and product-measurable, with finite integral of |f|. Then for almost every x the section $f_x$ is ν-integrable.
+- For that f, the slice integral, set to 0 where a section is not integrable, is μ-integrable. The same holds with x and y swapped.
+- For that f, the integral over the product is finite. It equals both iterated integrals.
+- Take entries $a_{ij}$ in [0, ∞], with i and j running over 1, 2, 3, …. Then rows first and columns first give the same sum, possibly ∞.
+- Take real entries $a_{ij}$ with $\sum_{i,j}|a_{ij}|<\infty$. Then every row and every column converges, and rows first equals columns first.
+- In the ±1 table, each of the first 10 rows sums to 0. Column 1 sums to 1, and columns 2 to 10 sum to 0.
+- The table's 10 × 10 corner sums to 1 and its 10 × 11 corner to 0. The first 10 rows hold absolute values totalling 20.
+
+The dartboard, the corner function, the ζ sums and the not-sigma-finite diagonal are left to the Python and Rust checks.
+
+```lean
+-- Tonelli and Fubini: on two sigma-finite measure spaces a measurable function on the product may be integrated one variable at a time in either order, with no condition when it is never negative and once the integral of its absolute value is finite when it is signed, and the same holds for double series on 1, 2, 3, ...
+import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+open MeasureTheory
+open scoped ENNReal
+
+/-- Tonelli: on sigma-finite measure spaces, for a function from the product to [0, ∞] that is
+measurable for the product sigma-algebra, both slice integrals are measurable, and the integral over
+the product equals the iterated integral in either order (the value ∞ is allowed throughout). -/
+theorem tonelli_iterated_integrals_either_order
+    {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
+    (μ : Measure X) (ν : Measure Y) [SigmaFinite μ] [SigmaFinite ν]
+    (f : X × Y → ℝ≥0∞) (hf : Measurable f) :
+    Measurable (fun x => ∫⁻ y, f (x, y) ∂ν) ∧
+    Measurable (fun y => ∫⁻ x, f (x, y) ∂μ) ∧
+    ∫⁻ z, f z ∂(μ.prod ν) = ∫⁻ x, ∫⁻ y, f (x, y) ∂ν ∂μ ∧
+    ∫⁻ z, f z ∂(μ.prod ν) = ∫⁻ y, ∫⁻ x, f (x, y) ∂μ ∂ν := by
+  exact ⟨hf.lintegral_prod_right', hf.lintegral_prod_left', lintegral_prod f hf.aemeasurable,
+    lintegral_prod_symm f hf.aemeasurable⟩
+
+/-- Fubini: on sigma-finite measure spaces, let f be real-valued and measurable for the product
+sigma-algebra, with finite integral of |f| over the product. Then for almost every x the section
+y ↦ f (x, y) is integrable, the slice integral (Lean's integral is 0 where a section is not
+integrable) is integrable in x, the same holds with the roles of x and y swapped, f is integrable
+on the product, and the integral over the product equals both iterated integrals. -/
+theorem fubini_iterated_integrals_either_order
+    {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
+    (μ : Measure X) (ν : Measure Y) [SigmaFinite μ] [SigmaFinite ν]
+    (f : X × Y → ℝ) (hf : Measurable f)
+    (habs : ∫⁻ z, ENNReal.ofReal |f z| ∂(μ.prod ν) < ∞) :
+    (∀ᵐ x ∂μ, Integrable (fun y => f (x, y)) ν) ∧
+    Integrable (fun x => ∫ y, f (x, y) ∂ν) μ ∧
+    (∀ᵐ y ∂ν, Integrable (fun x => f (x, y)) μ) ∧
+    Integrable (fun y => ∫ x, f (x, y) ∂μ) ν ∧
+    Integrable f (μ.prod ν) ∧
+    ∫ z, f z ∂(μ.prod ν) = ∫ x, ∫ y, f (x, y) ∂ν ∂μ ∧
+    ∫ z, f z ∂(μ.prod ν) = ∫ y, ∫ x, f (x, y) ∂μ ∂ν := by
+  have hint : Integrable f (μ.prod ν) := by
+    refine ⟨hf.aestronglyMeasurable, ?_⟩
+    simpa [HasFiniteIntegral, Real.enorm_eq_ofReal_abs] using habs
+  exact ⟨hint.prod_right_ae, hint.integral_prod_left, hint.prod_left_ae, hint.integral_prod_right,
+    hint, integral_prod f hint, integral_prod_symm f hint⟩
+
+/-- Double series, indexed by 1, 2, 3, ...: a double series with entries in [0, ∞] has the same
+sum rows first or columns first (possibly ∞); and a real double series whose absolute values have
+a finite total has every row and every column summable and the same sum rows first or columns
+first. -/
+theorem double_series_either_order :
+    (∀ a : ℕ+ → ℕ+ → ℝ≥0∞, ∑' i, ∑' j, a i j = ∑' j, ∑' i, a i j) ∧
+    (∀ a : ℕ+ → ℕ+ → ℝ, Summable (fun p : ℕ+ × ℕ+ => |a p.1 p.2|) →
+      (∀ i, Summable (fun j => a i j)) ∧ (∀ j, Summable (fun i => a i j)) ∧
+      ∑' i, ∑' j, a i j = ∑' j, ∑' i, a i j) := by
+  refine ⟨fun a => tsum_comm, fun a ha => ?_⟩
+  have hs : Summable (Function.uncurry a) := by
+    refine Summable.of_norm ?_
+    simpa [Real.norm_eq_abs, Function.uncurry] using ha
+  exact ⟨hs.prod_factor, hs.prod_symm.prod_factor, (hs.tsum_comm).symm⟩
+
+/-- The card's table: +1 when j = i, -1 when j = i + 1, 0 elsewhere. -/
+def pmTable (i j : ℕ) : ℤ := if j = i then 1 else if j = i + 1 then -1 else 0
+
+-- every row sums to 0 (rows 1 to 10, all of whose entries lie in columns 1 to 11)
+example : ∀ i ∈ Finset.Icc 1 10, ∑ j ∈ Finset.Icc 1 11, pmTable i j = 0 := by decide
+-- column 1 holds only a +1; columns 2 to 10 each sum to 0
+example : ∑ i ∈ Finset.Icc 1 10, pmTable i 1 = 1 := by decide
+example : ∀ j ∈ Finset.Icc 2 10, ∑ i ∈ Finset.Icc 1 10, pmTable i j = 0 := by decide
+-- the 10 × 10 corner sums to 1, the 10 × 11 corner to 0
+example : ∑ i ∈ Finset.Icc 1 10, ∑ j ∈ Finset.Icc 1 10, pmTable i j = 1 := by decide
+example : ∑ i ∈ Finset.Icc 1 10, ∑ j ∈ Finset.Icc 1 11, pmTable i j = 0 := by decide
+-- the first 10 rows carry absolute values totalling 20
+example : ∑ i ∈ Finset.Icc 1 10, ∑ j ∈ Finset.Icc 1 11, |pmTable i j| = 20 := by decide
+
+#print axioms tonelli_iterated_integrals_either_order
+#print axioms fubini_iterated_integrals_either_order
+#print axioms double_series_either_order
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'tonelli_iterated_integrals_either_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fubini_iterated_integrals_either_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'double_series_either_order' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

@@ -8,9 +8,11 @@
 
 A bakery sells sourdough at £3 a loaf. Each loaf costs £1 to make. How many sell depends on the day. On some days customers shrug at the price; on others they walk out at every extra penny. Averaged over many days, the bakery makes **£160 a day**. The owner wants the marginal profit: how fast that average moves if the price moves.
 
-There are two ways to get it. One: work out the average profit as a formula in the price, then differentiate. Two: on each kind of day, work out how fast that day's profit moves with the price, then average those rates. The second is often far easier, and it works unchanged when the average has no formula and must be simulated. Both give **£16 a day per £1 of price** here. They do not always agree. In a shop where each customer buys one loaf only if the price is at most a personal limit, the second road gives £0.60 per customer per £1 of price; the right answer, from the first, is £0.20.
+There are two ways to get it. One: work out the average profit as a formula in the price, then differentiate. Two: on each kind of day, work out how fast that day's profit moves with the price, then average those rates. The second is often far easier, and it works unchanged when the average has no formula and must be simulated.
 
-The swap works when one fixed function, with a finite integral, caps every day's rate for all prices near £3. Then [Dominated convergence](02-dominated-convergence-theorem.md) does all the work. The calculus wing proves a Riemann version with continuous integrands on a closed rectangle ([Differentiating under the integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md)). This card gives the dominated-convergence version: any measure, infinite ranges, rates that exist only almost everywhere in the averaging variable.
+Both give **£16 a day per £1 of price** here. They do not always agree. In a shop where each customer buys one loaf only if the price is at most a personal limit, the second road gives £0.60 per customer per £1 of price; the right answer, from the first, is £0.20.
+
+The swap, taking the rate inside the average, works when one fixed function, with a finite integral, caps every day's rate for all prices near £3. Then [Dominated convergence](02-dominated-convergence-theorem.md) does all the work. The calculus wing proves a Riemann version, for the ordinary integral of calculus, with continuous integrands on a closed rectangle ([Differentiating under the integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md)). This card gives the dominated-convergence version: any measure, infinite ranges, rates that exist only almost everywhere in the averaging variable.
 
 **If each integrand is differentiable in the parameter and one integrable function bounds every one of those rates on an interval of parameters, then the integral is differentiable there and its derivative is the integral of the rates.**
 
@@ -34,13 +36,20 @@ Orange: average daily profit, £ per day. Teal: marginal profit, £ per day for 
 
 ## The formula
 
-Notation first. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size. The integral $\int f\,d\mu$ is read "the integral of f against mu" ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). "For almost every x", written a.e., means "except on a set of size zero". The curly $\partial f/\partial t$ is a partial derivative: the rate of change in $t$ with $x$ held still.
+Notation first.
+
+- A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size.
+- The integral $\int f\,d\mu$ is read "the integral of f against mu" ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+- A function on $\Omega$ is measurable when, for every number, the set of points where its value is below that number lies in $\mathcal F$; these are the functions the integral can handle ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
+- "For almost every x", written a.e., means "except on a set of size zero". Such a set is a null set ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
+- The curly $\partial f/\partial t$ is a partial derivative: the rate of change in $t$ with $x$ held still.
 
 Now the setting. A function $f(t,x)$ has two inputs: a **parameter** $t$, a dial that ranges over an open interval $I$, and a point $x$ of $\Omega$ that the integral averages over. The integral depends on the parameter alone:
 
 $$F(t)=\int_\Omega f(t,x)\,d\mu(x).$$
 
 **The theorem**, known as Leibniz's rule. Suppose
+
 1. for each $t$ in $I$, the function $x\mapsto f(t,x)$ is measurable and has a finite integral;
 2. there is one set of size zero outside which, for every $x$, the function $t\mapsto f(t,x)$ is differentiable at every $t$ in $I$;
 3. there is one function $g$ with $\int g\,d\mu<\infty$ and one set of size zero outside which, for every $x$, $|\partial f/\partial t\,(t,x)|\le g(x)$ at every $t$ in $I$.
@@ -116,7 +125,7 @@ The quotients converge almost everywhere and are all capped by the integrable $g
 **1. The quotients are measurable and integrable.** Let $h_n\to0$, $h_n\ne0$, $t+h_n\in I$. Then $q_n=(f(t+h_n,\cdot)-f(t,\cdot))/h_n$ is a difference of two measurable functions with finite integrals, scaled by a constant, so it is measurable with finite integral, and by linearity of the integral ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md))
 $$\int q_n\,d\mu=\frac{F(t+h_n)-F(t)}{h_n}.$$
 
-**2. Pointwise limit.** For $x\notin B$, the function $f(\cdot,x)$ is differentiable at $t$, so by the definition of the derivative along the sequence $h_n$, $q_n(x)\to\partial f/\partial t\,(t,x)$. Define $D(x)=\limsup_n q_n(x)$ for all $x$; a lim sup of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)), and $D=\partial f/\partial t\,(t,\cdot)$ off B. So the rate agrees a.e. with a measurable function, which is all an integral needs.
+**2. Pointwise limit.** For $x\notin B$, the function $f(\cdot,x)$ is differentiable at $t$, so by the definition of the derivative along the sequence $h_n$, $q_n(x)\to\partial f/\partial t\,(t,x)$. Define $D(x)=\limsup_n q_n(x)$ for all $x$. The lim sup is the eventual ceiling of a sequence, and it equals the limit wherever the limit exists. A lim sup of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)), and $D=\partial f/\partial t\,(t,\cdot)$ off B. So the rate agrees a.e. with a measurable function, which is all an integral needs.
 
 **3. Domination.** For $x\notin B$, $f(\cdot,x)$ is differentiable, hence continuous, on the closed segment between $t$ and $t+h_n$, which lies inside $I$ because $I$ is an interval. The mean value theorem gives $s_n(x)$ strictly between them with $q_n(x)=\partial f/\partial t\,(s_n(x),x)$. Since $s_n(x)\in I$ and $x\notin B$, hypothesis 3 gives $|q_n(x)|\le g(x)$. So $|q_n|\le g$ a.e., for every n.
 
@@ -138,7 +147,7 @@ Its average against the sensitivity law is 312.5: finite. The code checks the ca
 
 ### Step 5: the Gaussian moment trick
 
-The Gaussian integral is $G(t)=\int_{-\infty}^{\infty}e^{-tx^2}\,d\lambda(x)=\sqrt{\pi/t}$, where $\lambda$ is length on the line ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). At $t=1$ it is $\sqrt\pi=1.772454$. The rate of the integrand in $t$ is $-x^2e^{-tx^2}$. For all $t$ above a fixed $t_0>0$ it is capped by $x^2e^{-t_0x^2}$, which has a finite integral. So the theorem applies:
+A moment is the integral of a power of x against a curve; here the curve is $e^{-x^2}$. The Gaussian integral is $G(t)=\int_{-\infty}^{\infty}e^{-tx^2}\,d\lambda(x)=\sqrt{\pi/t}$, where $\lambda$ is length on the line ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). At $t=1$ it is $\sqrt\pi=1.772454$. The rate of the integrand in $t$ is $-x^2e^{-tx^2}$. For all $t$ above a fixed $t_0>0$ it is capped by $x^2e^{-t_0x^2}$, which has a finite integral. So the theorem applies:
 
 $$\int_{-\infty}^{\infty}x^2e^{-x^2}\,dx=-G'(1)=\tfrac12\sqrt\pi=0.886227 .$$
 
@@ -179,7 +188,14 @@ At £3 a small price rise still pays, at £16 a day for each pound, and rises ke
 
 ## Code, from first principles, and it actually runs
 
-The code finds the marginal profit at £3 by four independent roads: the hand formula, a central difference of the average (each average by the card's own Simpson rule), the average of each day's rate, and a simulation of 200,000 days drawn by a SplitMix64 generator written out in both languages. Then it checks the cap, finds the best price by bisection, prints the chart, runs the Gaussian moment trick against $\sqrt\pi/2$ and $3\sqrt\pi/4$, and prints both failures.
+The code finds the marginal profit at £3 by four independent roads:
+
+1. the hand formula;
+2. a central difference of the average, (Π(3 + h) − Π(3 − h))/2h, with each average by the card's own Simpson rule, which fits small parabolas to the integrand and adds their areas;
+3. the average of each day's rate;
+4. a simulation of 200,000 days drawn by SplitMix64, a short random-number generator written out in both languages.
+
+Then it checks the cap, finds the best price by bisection (halving an interval until it traps the zero), prints the chart, runs the Gaussian moment trick against $\sqrt\pi/2$ and $3\sqrt\pi/4$, and prints both failures.
 
 The code checks one bakery, one Gaussian and two counterexamples to the printed precision. That the swap holds for every integrand on every measure space satisfying the three hypotheses is what the Detailed proof shows.
 
@@ -546,6 +562,324 @@ breaks, spreading: 1/(e x) integrated from 1 to 1000000 = 5.0824
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves Leibniz's rule on every measure space. It also checks the bakery at £3, the two Gaussian moments and the hand arithmetic exactly.
+
+- Suppose hypotheses 1 to 3 of The formula hold on an open interval $I$. Then at every $t$ in $I$, the rate has a finite integral and $F'(t)$ equals its integral.
+- Take the bakery at £3. Then the average profit $\Pi(3)$ is £160, and the average of the day's rates is 16.
+- Take the average profit $\Pi(p)$ as a function of price. Then $\Pi'(3)=16$: both roads give £16 a day per £1 of price.
+- Take integrals over the whole line. Then $\int x^2e^{-x^2}\,dx=\sqrt\pi/2$ and $\int x^4e^{-x^2}\,dx=3\sqrt\pi/4$.
+- Take the day's sensitivity Z at £3. Then E[e^(−3Z)] = 4/25 = 0.16 and E[Z e^(−3Z)] = 8/125 = 0.064.
+- Take those two averages. Then Π(3) = 2 × 500 × 0.16 = 160, and the average of the rates is 500 × 0.032 = 16.
+- Take the formula 2000 (p − 1)/(2 + p)^2 at p = 3. Then it gives 160, and its derivative 2000 (4 − p)/(2 + p)^3 gives 16.
+- Take the best price, p = 4. Then the profit is 2000 × 3/36 = 500/3, about £166.67.
+- Take the cap g on (2, 4). Then its value at z = 0 is 500, and its average is 312.5.
+
+The Simpson averages, the simulation, the cap's grid, the bisection, the chart and both failures are left to the Python and Rust checks.
+
+```lean
+-- Differentiating under the integral sign: if each integrand is differentiable in the parameter off one null set and one function with finite integral caps every rate on an open interval, then the integral is differentiable there with derivative the integral of the rates, as on the bakery (marginal profit £16 at £3) and the Gaussian moments.
+import Mathlib.Analysis.Calculus.ParametricIntegral
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.MeasureTheory.Integral.Gamma
+
+open MeasureTheory Set Real
+
+open Filter Topology in
+/-- A real function continuous at `s` that is at most `C` at every rational point of a
+neighborhood of `s` is at most `C` at `s`. -/
+theorem le_of_rat_le_of_continuousAt (h : ℝ → ℝ) (s C : ℝ) (U : Set ℝ) (hU : U ∈ 𝓝 s)
+    (hc : ContinuousAt h s) (hq : ∀ q : ℚ, (q : ℝ) ∈ U → h q ≤ C) : h s ≤ C := by
+  by_contra hlt
+  replace hlt := not_le.1 hlt
+  have hV : U ∩ {y | C < h y} ∈ 𝓝 s := Filter.inter_mem hU (hc.eventually (lt_mem_nhds hlt))
+  obtain ⟨V, hVsub, hVo, hsV⟩ := mem_nhds_iff.1 hV
+  obtain ⟨q, hq'⟩ := Rat.denseRange_cast.exists_mem_open hVo ⟨s, hsV⟩
+  have := hVsub hq'
+  exact absurd (hq q this.1) (not_le.2 this.2)
+
+#print axioms le_of_rat_le_of_continuousAt
+
+theorem integral_Ioi_mul_exp_neg_mul (b : ℝ) (hb : 0 < b) :
+    ∫ z in Ioi (0 : ℝ), z * exp (-(b * z)) = 1 / b ^ 2 := by
+  have h := integral_rpow_mul_exp_neg_mul_Ioi (a := 2) two_pos hb
+  norm_num at h
+  rw [h]
+  field_simp
+
+#print axioms integral_Ioi_mul_exp_neg_mul
+
+theorem integral_Ioi_sq_mul_exp_neg_mul (b : ℝ) (hb : 0 < b) :
+    ∫ z in Ioi (0 : ℝ), z ^ 2 * exp (-(b * z)) = 2 / b ^ 3 := by
+  have h := integral_rpow_mul_exp_neg_mul_Ioi (a := 3) (by norm_num) hb
+  have hG : Gamma 3 = 2 := by
+    rw [show (3 : ℝ) = (2 : ℕ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
+    norm_num [Nat.factorial]
+  norm_num [hG] at h
+  rw [h]
+  field_simp
+
+#print axioms integral_Ioi_sq_mul_exp_neg_mul
+
+theorem gauss_Ioi_moment (q : ℕ) :
+    ∫ x in Ioi (0 : ℝ), x ^ q * exp (-x ^ 2) =
+      (1 / 2) * Gamma (((q : ℝ) + 1) / 2) := by
+  have h := integral_rpow_mul_exp_neg_mul_rpow (p := 2) (q := q) (b := 1) two_pos
+    (by have := (Nat.cast_nonneg q : (0 : ℝ) ≤ q); linarith) one_pos
+  have e : ∫ x in Ioi (0 : ℝ), x ^ (q : ℝ) * exp (-1 * x ^ (2 : ℝ)) =
+      ∫ x in Ioi (0 : ℝ), x ^ q * exp (-x ^ 2) := by
+    refine setIntegral_congr_fun measurableSet_Ioi fun x _ => ?_
+    simp only [Real.rpow_natCast, Real.rpow_two, neg_mul, one_mul]
+  rw [← e, h]
+  simp
+
+#print axioms gauss_Ioi_moment
+
+/-- Leibniz's rule, dominated-convergence version. Let `(Ω, μ)` be any measure space, `I` an
+open interval of parameters (any open, interval-shaped set of reals), and `f t x` a real
+function of a parameter `t` and a point `x`. Suppose
+1. for each `t` in `I`, `x ↦ f t x` is measurable and has a finite integral;
+2. off one null set of points `x`, `t ↦ f t x` is differentiable at every `t` in `I`;
+3. one function `g` with `∫ g dμ < ∞` caps every rate: off one null set of `x`,
+   `|∂f/∂t (t, x)| ≤ g x` at every `t` in `I`.
+Then at every `t` in `I` the rate `x ↦ ∂f/∂t (t, x)` has a finite integral, and
+`F(t) = ∫ f t x dμ` is differentiable at `t` with `F'(t) = ∫ ∂f/∂t (t, x) dμ`. -/
+theorem deriv_integral_eq_integral_deriv_of_dominated
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (I : Set ℝ) (hI_open : IsOpen I) (hI_interval : I.OrdConnected)
+    (f : ℝ → Ω → ℝ) (g : Ω → ENNReal)
+    (hf_meas : ∀ t ∈ I, Measurable (f t))
+    (hf_fin : ∀ t ∈ I, HasFiniteIntegral (f t) μ)
+    (hf_diff : ∀ᵐ x ∂μ, ∀ t ∈ I, DifferentiableAt ℝ (fun s => f s x) t)
+    (hg_fin : ∫⁻ x, g x ∂μ < ⊤)
+    (hbound : ∀ᵐ x ∂μ, ∀ t ∈ I, ENNReal.ofReal |deriv (fun s => f s x) t| ≤ g x) :
+    ∀ t ∈ I,
+      Integrable (fun x => deriv (fun s => f s x) t) μ ∧
+      HasDerivAt (fun s => ∫ x, f s x ∂μ) (∫ x, deriv (fun s => f s x) t ∂μ) t := by
+  classical
+  intro t ht
+  -- measurable majorant built from rational difference quotients
+  set G : Ω → ENNReal := fun x => ⨆ p : ℚ × ℚ,
+    if ((p.1 : ℝ) ∈ I ∧ (p.2 : ℝ) ∈ I) then
+      ENNReal.ofReal (|f p.1 x - f p.2 x| / |(p.1 : ℝ) - p.2|) else 0 with hG
+  have hGm : Measurable G := by
+    refine Measurable.iSup fun p => ?_
+    split_ifs with h
+    · exact ENNReal.measurable_ofReal.comp
+        ((continuous_abs.measurable.comp ((hf_meas _ h.1).sub (hf_meas _ h.2))).div_const _)
+    · exact measurable_const
+  have hconv : Convex ℝ I := hI_interval.convex
+  have hGg : ∀ᵐ x ∂μ, G x ≤ g x := by
+    filter_upwards [hf_diff, hbound] with x hd hb
+    by_cases hgt : g x = ⊤
+    · simp [hgt]
+    refine iSup_le fun p => ?_
+    split_ifs with h
+    · apply ENNReal.ofReal_le_of_le_toReal
+      have key := hconv.norm_image_sub_le_of_norm_deriv_le (f := fun s => f s x)
+        (C := (g x).toReal) hd
+        (fun s hs => (ENNReal.ofReal_le_iff_le_toReal hgt).1 (hb s hs)) h.2 h.1
+      simp only [Real.norm_eq_abs] at key
+      rcases eq_or_ne (p.1 : ℝ) p.2 with he | he
+      · simp [he]
+      · rw [div_le_iff₀ (abs_pos.2 (sub_ne_zero.2 he))]
+        exact key
+    · exact bot_le
+  have hGfin : ∫⁻ x, G x ∂μ < ⊤ := lt_of_le_of_lt (lintegral_mono_ae hGg) hg_fin
+  have hGlt : ∀ᵐ x ∂μ, G x < ⊤ := ae_lt_top hGm hGfin.ne
+  have hlip : ∀ᵐ x ∂μ, LipschitzOnWith (Real.nnabs (G x).toReal) (fun s => f s x) I := by
+    filter_upwards [hf_diff, hGlt] with x hd hlt
+    set C := (G x).toReal
+    have hrat : ∀ a b : ℚ, (a : ℝ) ∈ I → (b : ℝ) ∈ I → |f a x - f b x| ≤ C * |(a : ℝ) - b| := by
+      intro a b ha hb
+      have h1 : ENNReal.ofReal (|f a x - f b x| / |(a : ℝ) - b|) ≤ G x := by
+        refine le_trans ?_ (le_iSup _ (a, b))
+        simp [ha, hb]
+      have h2 := (ENNReal.ofReal_le_iff_le_toReal hlt.ne).1 h1
+      rcases eq_or_ne (a : ℝ) b with he | he
+      · simp [he]
+      · rwa [div_le_iff₀ (abs_pos.2 (sub_ne_zero.2 he))] at h2
+    have hcont : ∀ s ∈ I, ContinuousAt (fun s => f s x) s := fun s hs => (hd s hs).continuousAt
+    have hrat2 : ∀ a : ℚ, ∀ b : ℝ, (a : ℝ) ∈ I → b ∈ I → |f a x - f b x| ≤ C * |(a : ℝ) - b| := by
+      intro a b ha hb
+      have := le_of_rat_le_of_continuousAt
+        (fun y => |f a x - f y x| - C * |(a : ℝ) - y|) b 0 I (hI_open.mem_nhds hb)
+        (by
+          apply ContinuousAt.sub
+          · exact (continuousAt_const.sub (hcont b hb)).abs
+          · exact continuousAt_const.mul (continuousAt_const.sub continuousAt_id).abs)
+        (fun q hq => by simpa using hrat a q ha hq)
+      simpa using this
+    have hreal : ∀ a b : ℝ, a ∈ I → b ∈ I → |f a x - f b x| ≤ C * |a - b| := by
+      intro a b ha hb
+      have := le_of_rat_le_of_continuousAt
+        (fun y => |f y x - f b x| - C * |y - b|) a 0 I (hI_open.mem_nhds ha)
+        (by
+          apply ContinuousAt.sub
+          · exact ((hcont a ha).sub continuousAt_const).abs
+          · exact continuousAt_const.mul (continuousAt_id.sub continuousAt_const).abs)
+        (fun q hq => by simpa using hrat2 q b hq hb)
+      simpa using this
+    apply LipschitzOnWith.of_dist_le_mul
+    intro a ha b hb
+    simp only [Real.dist_eq]
+    have hC : (0 : ℝ) ≤ C := ENNReal.toReal_nonneg
+    rw [Real.coe_nnabs, abs_of_nonneg hC]
+    exact hreal a b ha hb
+  have hderiv_meas : AEStronglyMeasurable (fun x => deriv (fun s => f s x) t) μ := by
+    refine aestronglyMeasurable_of_tendsto_ae (nhdsWithin t {t}ᶜ)
+      (f := fun r x => if r ∈ I then slope (fun s => f s x) t r else 0) (fun r => ?_) ?_
+    · split_ifs with hr
+      · simp only [slope_def_field]
+        exact (((hf_meas r hr).sub (hf_meas t ht)).div_const _).aestronglyMeasurable
+      · exact aestronglyMeasurable_const
+    · filter_upwards [hf_diff] with x hd
+      have := (hd t ht).hasDerivAt.tendsto_slope
+      refine this.congr' ?_
+      filter_upwards [nhdsWithin_le_nhds (hI_open.mem_nhds ht)] with r hr
+      simp [hr]
+  have hint : Integrable (f t) μ := ⟨(hf_meas t ht).aestronglyMeasurable, hf_fin t ht⟩
+  have hmeas_ev : ∀ᶠ s in nhds t, AEStronglyMeasurable (f s) μ := by
+    filter_upwards [hI_open.mem_nhds ht] with s hs
+    exact (hf_meas s hs).aestronglyMeasurable
+  have hbint : Integrable (fun x => (G x).toReal) μ :=
+    integrable_toReal_of_lintegral_ne_top hGm.aemeasurable hGfin.ne
+  have hdiff' : ∀ᵐ x ∂μ, HasDerivAt (fun s => f s x) (deriv (fun s => f s x) t) t := by
+    filter_upwards [hf_diff] with x hd
+    exact (hd t ht).hasDerivAt
+  exact hasDerivAt_integral_of_dominated_loc_of_lip (hI_open.mem_nhds ht) hmeas_ev hint
+    hderiv_meas hlip hbint hdiff'
+
+/-- The bakery. A day with price sensitivity `z` sells `500 e^(-z p)` loaves at price `p`, each
+costing £1, and `z` has density `4 z e^(-2z)` on `z > 0`. The average daily profit
+`Π(p) = ∫ (p - 1) 500 e^(-z p) 4 z e^(-2z) dz` is £160 at `p = 3`; the average of each day's
+rate `500 e^(-z p) (1 - (p - 1) z)` at `p = 3` is 16; and `Π` has derivative 16 at `p = 3`:
+both roads give £16 a day per £1 of price. -/
+theorem bakery_marginal_profit_at_three :
+    (∫ z in Ioi (0 : ℝ), (3 - 1) * 500 * exp (-z * 3) * (4 * z * exp (-2 * z))) = 160 ∧
+    (∫ z in Ioi (0 : ℝ), 500 * exp (-z * 3) * (1 - (3 - 1) * z) * (4 * z * exp (-2 * z))) = 16 ∧
+    HasDerivAt
+      (fun p : ℝ => ∫ z in Ioi (0 : ℝ), (p - 1) * 500 * exp (-z * p) * (4 * z * exp (-2 * z)))
+      16 3 := by
+  have hexp : ∀ z p : ℝ, exp (-z * p) * exp (-2 * z) = exp (-((p + 2) * z)) := by
+    intro z p; rw [← exp_add]; ring_nf
+  refine ⟨?_, ?_, ?_⟩
+  · have e : (fun z : ℝ => (3 - 1) * 500 * exp (-z * 3) * (4 * z * exp (-2 * z))) =
+        fun z => 4000 * (z * exp (-((3 + 2) * z))) := by
+      funext z; linear_combination (4000 * z) * hexp z 3
+    rw [e, integral_const_mul, integral_Ioi_mul_exp_neg_mul _ (by norm_num)]
+    norm_num
+  · have e : (fun z : ℝ => 500 * exp (-z * 3) * (1 - (3 - 1) * z) * (4 * z * exp (-2 * z))) =
+        fun z => 2000 * (z * exp (-((3 + 2) * z))) - 4000 * (z ^ 2 * exp (-((3 + 2) * z))) := by
+      funext z; linear_combination (2000 * z * (1 - 2 * z)) * hexp z 3
+    have i1 : Integrable (fun z : ℝ => z * exp (-((3 + 2) * z))) (volume.restrict (Ioi 0)) :=
+      Integrable.of_integral_ne_zero (by rw [integral_Ioi_mul_exp_neg_mul _ (by norm_num)]; norm_num)
+    have i2 : Integrable (fun z : ℝ => z ^ 2 * exp (-((3 + 2) * z))) (volume.restrict (Ioi 0)) :=
+      Integrable.of_integral_ne_zero
+        (by rw [integral_Ioi_sq_mul_exp_neg_mul _ (by norm_num)]; norm_num)
+    rw [e, integral_sub (i1.const_mul _) (i2.const_mul _), integral_const_mul, integral_const_mul,
+      integral_Ioi_mul_exp_neg_mul _ (by norm_num), integral_Ioi_sq_mul_exp_neg_mul _ (by norm_num)]
+    norm_num
+  · have hform : (fun p : ℝ => ∫ z in Ioi (0 : ℝ), (p - 1) * 500 * exp (-z * p) * (4 * z * exp (-2 * z)))
+        =ᶠ[nhds 3] fun p => 2000 * (p - 1) / (p + 2) ^ 2 := by
+      filter_upwards [Ioi_mem_nhds (by norm_num : (-2 : ℝ) < 3)] with p hp
+      have hp' : 0 < p + 2 := by simp at hp; linarith
+      have e : (fun z : ℝ => (p - 1) * 500 * exp (-z * p) * (4 * z * exp (-2 * z))) =
+          fun z => (2000 * (p - 1)) * (z * exp (-((p + 2) * z))) := by
+        funext z; linear_combination (2000 * (p - 1) * z) * hexp z p
+      rw [e, integral_const_mul, integral_Ioi_mul_exp_neg_mul _ hp']
+      field_simp
+    have hd : HasDerivAt (fun p : ℝ => 2000 * (p - 1) / (p + 2) ^ 2) 16 3 := by
+      have h1 : HasDerivAt (fun p : ℝ => 2000 * (p - 1)) 2000 3 := by
+        simpa using ((hasDerivAt_id (3 : ℝ)).sub_const 1).const_mul 2000
+      have h2 : HasDerivAt (fun p : ℝ => (p + 2) ^ 2) 10 3 := by
+        have := ((hasDerivAt_id (3 : ℝ)).add_const 2).pow 2
+        convert this using 1
+        · funext p; simp
+        · norm_num
+      convert h1.div h2 (by norm_num) using 1
+      norm_num
+    exact hd.congr_of_eventuallyEq hform
+
+/-- The Gaussian moment trick: differentiating `G(t) = ∫ e^(-t x²) dx = √(π/t)` under the
+integral sign at `t = 1` gives `∫ x² e^(-x²) dx = √π / 2` and `∫ x⁴ e^(-x²) dx = 3√π / 4`. -/
+theorem gaussian_second_and_fourth_moments :
+    (∫ x : ℝ, x ^ 2 * exp (-x ^ 2)) = √π / 2 ∧
+    (∫ x : ℝ, x ^ 4 * exp (-x ^ 2)) = 3 * √π / 4 := by
+  have hG32 : Gamma (3 / 2) = √π / 2 := by
+    have := Real.Gamma_add_one (s := 1 / 2) (by norm_num)
+    rw [Real.Gamma_one_half_eq] at this
+    norm_num at this
+    rw [this]; ring
+  have hG52 : Gamma (5 / 2) = 3 * √π / 4 := by
+    have := Real.Gamma_add_one (s := 3 / 2) (by norm_num)
+    norm_num [hG32] at this
+    rw [this]; ring
+  constructor
+  · have := integral_comp_abs (f := fun y : ℝ => y ^ 2 * exp (-y ^ 2))
+    simp only [sq_abs] at this
+    rw [this, gauss_Ioi_moment 2]
+    norm_num [hG32]
+    ring
+  · have := integral_comp_abs (f := fun y : ℝ => y ^ 4 * exp (-y ^ 2))
+    have h4 : ∀ y : ℝ, |y| ^ 4 = y ^ 4 := fun y => by
+      rw [pow_abs, abs_of_nonneg (by positivity)]
+    simp only [sq_abs, h4] at this
+    rw [this, gauss_Ioi_moment 4]
+    norm_num [hG52]
+    ring
+
+/-! The card's worked numbers, by hand, in exact fractions (0.16 = 4/25, 0.064 = 8/125). -/
+
+-- E[e^(-3Z)] = 4 × 1!/5^2 = 4/25, and Π(3) = (3 - 1) × 500 × 4/25 = 160
+example : (4 * Nat.factorial 1 / 5 ^ 2 : ℚ) = 4 / 25 ∧ ((3 - 1) * 500 * (4 / 25) : ℚ) = 160 := by
+  norm_num [Nat.factorial]
+
+-- E[Z e^(-3Z)] = 4 × 2!/5^3 = 8/125, and the average of the rates 500 × (4/25 - 2 × 8/125) = 16
+example : (4 * Nat.factorial 2 / 5 ^ 3 : ℚ) = 8 / 125 ∧
+    (500 * (4 / 25 - 2 * (8 / 125)) : ℚ) = 500 * (4 / 125) ∧
+    (500 * (4 / 125) : ℚ) = 16 := by
+  norm_num [Nat.factorial]
+
+-- Π as a formula: 500 (p - 1) × 4/(2 + p)^2 = 2000 (p - 1)/(2 + p)^2; at p = 3 it is 160
+example : (500 * (3 - 1) * (4 / (2 + 3) ^ 2) : ℚ) = 2000 * (3 - 1) / (2 + 3) ^ 2 ∧
+    (2000 * (3 - 1) / (2 + 3) ^ 2 : ℚ) = 160 := by
+  norm_num
+
+-- the derivative of the formula at p = 3: 2000 (4 - 3)/(2 + 3)^3 = 2000 × 1/125 = 16
+example : (2000 * ((2 + 3) - 2 * (3 - 1)) / (2 + 3) ^ 3 : ℚ) = 2000 * (4 - 3) / (2 + 3) ^ 3 ∧
+    (2000 * (4 - 3) / (2 + 3) ^ 3 : ℚ) = 16 := by
+  norm_num
+
+-- best price: 4 - p = 0 at p = 4, profit 2000 × 3/36 = 500/3 (£166.67)
+example : (4 - 4 : ℚ) = 0 ∧ (2000 * (4 - 1) / (2 + 4) ^ 2 : ℚ) = 2000 * 3 / 36 ∧
+    (2000 * 3 / 36 : ℚ) = 500 / 3 := by
+  norm_num
+
+-- the cap on (2, 4) at z = 0 is 500, and its average 500 × (1 × 4 × 1!/4^2 + 3 × 4 × 2!/4^3) = 312.5
+example : (500 * (1 + 3 * 0) : ℚ) = 500 ∧
+    (500 * (4 * Nat.factorial 1 / 4 ^ 2 + 3 * (4 * Nat.factorial 2 / 4 ^ 3)) : ℚ) = 625 / 2 := by
+  norm_num [Nat.factorial]
+
+#print axioms deriv_integral_eq_integral_deriv_of_dominated
+#print axioms bakery_marginal_profit_at_three
+#print axioms gaussian_second_and_fourth_moments
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'le_of_rat_le_of_continuousAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_Ioi_mul_exp_neg_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_Ioi_sq_mul_exp_neg_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gauss_Ioi_moment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'deriv_integral_eq_integral_deriv_of_dominated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bakery_marginal_profit_at_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gaussian_second_and_fourth_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first:** set `P0 = 4.0`. Answer: every road prints a marginal profit of about 0, since £4 is the best price; the simulation's figure sits within a few standard errors of 0.
@@ -571,8 +905,8 @@ ALL CHECKS PASS
 
 - **Pricing and revenue management.** Marginal revenue under uncertain demand is computed as the average of per-scenario rates, often over simulated scenarios, as road four does for the bakery.
 - **Moments from generating functions.** Differentiating $E[e^{sX}]$ at $s=0$ under the integral gives the mean, then the second moment ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)); the Gaussian trick above is the same move.
-- **Statistics: the score has mean zero.** Differentiating $\int p_\theta\,dx=1$ in the parameter under the integral gives the facts behind Fisher information ([Fisher information](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)).
-- **Option sensitivities by simulation.** A pathwise estimate of an option's delta averages each path's rate of payoff in the spot price; the theorem says when that is right, and a digital option's jump is the threshold buyer again ([Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
+- **Statistics: the score has mean zero.** The score is the rate of change of the log-density $\log p_\theta$ in the parameter θ. Differentiating $\int p_\theta\,dx=1$ in the parameter under the integral gives the facts behind Fisher information ([Fisher information](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)).
+- **Option sensitivities by simulation.** A pathwise estimate of an option's delta averages each path's rate of payoff in the spot price. Delta is how fast the option's value moves with the spot price, today's price of the stock. The theorem says when that is right, and the jump of a digital option, which pays a fixed sum or nothing, is the threshold buyer again ([Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
 
 > **Say it back**
 > A derivative is a limit of difference quotients, and the quotient of an average is the average of the quotients. So differentiating an average is a limit passing through an integral. The mean value theorem turns one integrable cap on the rates into a cap on every quotient, and dominated convergence then lets the limit through. The bakery's marginal profit at £3 is £16 a day per pound both ways. When the integrand jumps, or no integrable cap exists, the swap fails: 0.6 against 0.2, and 0 against 1.

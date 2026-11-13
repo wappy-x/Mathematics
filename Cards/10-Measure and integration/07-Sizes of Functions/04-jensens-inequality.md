@@ -8,7 +8,9 @@
 
 A wind turbine logs one mean speed per day for a week: 3, 5, 8, 2, 6, 4 and 7 metres per second. The average speed is 5 m/s. The power carried by wind through each square metre of rotor grows with the cube of the speed: half the air density times the speed cubed.
 
-Feed the average speed into the cube and a steady 5 m/s wind gives 5 × 5 × 5 = 125. Cube each day's speed first and average the seven cubes, and the week gives 185. With air at 1.225 kg per cubic metre, that is 76.56 watts per square metre from the steady wind against 113.31 watts from the real week. A forecast built on the average speed misses 60 of every 185 units. The calm days cannot pay back what the windy days add, because the cube bends upward.
+Feed the average speed into the cube and a steady 5 m/s wind gives 5 × 5 × 5 = 125. Cube each day's speed first and average the seven cubes, and the week gives 185.
+
+With air at 1.225 kg per cubic metre, that is 76.56 watts per square metre from the steady wind against 113.31 watts from the real week. A forecast built on the average speed misses 60 of every 185 units. The calm days cannot pay back what the windy days add, because the cube bends upward.
 
 The probability wing proves this for random variables with a list of values or a density ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). This card proves it for any integrable function on any space of total size 1, reads off three consequences, and shows it failing on a space of total size 7 or of infinite size.
 
@@ -29,13 +31,22 @@ xychart-beta
     line [185, 185, 185, 185, 185, 185, 185]
 ```
 
-Orange is the cube. Green is the straight line touching it at the mean speed 5, where both read 125; it lies under the cube at every other speed of 0 or more. Dark blue is the week's mean cube, 185. Averaging a straight line over the week lands on the line at the mean, 125. The cube sits on or above the line on every day, and strictly above on six of them, so its average sits above 125.
+Orange is the cube. Green is the straight line touching it at the mean speed 5, where both read 125; it lies under the cube at every other speed of 0 or more. Dark blue is the week's mean cube, 185.
+
+Averaging a straight line over the week lands on the line at the mean, 125. The cube sits on or above the line on every day, and strictly above on six of them, so its average sits above 125.
 
 ---
 
 ## The formula
 
-Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size. A probability measure $P$ has total size $P(\Omega) = 1$. The integral $\int f \, dP$, read "the integral of f against P", is also written $E[f]$, the mean of f ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). $L^1(P)$ is the set of measurable functions with $\int \lvert f \rvert \, dP$ finite. A function $\varphi$ on an interval is **convex** when each chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **strictly convex** when the chord lies strictly above except at its ends. $\varphi \circ f$, read "phi after f", is the function that sends a point $\omega$ to $\varphi(f(\omega))$.
+Notation, as a reminder:
+
+- A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size.
+- A probability measure $P$ has total size $P(\Omega) = 1$.
+- The integral $\int f \, dP$, read "the integral of f against P", is also written $E[f]$, the mean of f ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)).
+- $L^1(P)$ is the set of measurable functions with $\int \lvert f \rvert \, dP$ finite.
+- A function $\varphi$ on an interval is **convex** when each chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **strictly convex** when the chord lies strictly above except at its ends.
+- $\varphi \circ f$, read "phi after f", is the function that sends a point $\omega$ to $\varphi(f(\omega))$.
 
 On the turbine, $\Omega$ is the seven days, $\mathcal{F}$ is every subset of them, $P$ gives each day 1/7, and $f$ is the day's speed; its integral is a weighted sum of seven values.
 
@@ -84,13 +95,17 @@ The p-norm, from [Lp spaces](01-lp-spaces.md), is $\lVert f \rVert_p = \big(\int
 
 ### Step 0: a straight line passes through an integral unchanged
 
-For a line $\ell(x) = \alpha + \beta x$, with height $\alpha$ at 0 and slope $\beta$, integrating against $P$ gives $\int (\alpha + \beta f) \, dP = \alpha\,P(\Omega) + \beta \int f \, dP$ by linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). When $P(\Omega) = 1$, that is $\ell$ of the mean. Only bending breaks the swap. So slide a straight line under the convex curve, touching it at the mean, and let the line do the integrating.
+For a line $\ell(x) = \alpha + \beta x$, with height $\alpha$ at 0 and slope $\beta$, integrating against $P$ gives $\int (\alpha + \beta f) \, dP = \alpha\,P(\Omega) + \beta \int f \, dP$ by linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). When $P(\Omega) = 1$, that is $\ell$ of the mean.
+
+Only bending breaks the swap. So slide a straight line under the convex curve, touching it at the mean, and let the line do the integrating.
 
 ### Step 1: a convex curve has a line under it at the mean
 
-A **supporting line** at $m$ meets the graph of $\varphi$ at $m$ and lies on or below it everywhere on $I$. For the cube at $m = 5$ the tangent does it: slope $3 \times 5^2 = 75$, so $\ell(x) = 125 + 75(x - 5)$. The gap $x^3 - \ell(x)$ factorises as $(x - 5)^2 (x + 10)$, never negative for $x \ge 0$. Day by day it is 52, 0, 162, 108, 16, 14 and 68.
+A **supporting line** at $m$ meets the graph of $\varphi$ at $m$ and lies on or below it everywhere on $I$. For the cube at $m = 5$ the tangent does it: slope $3 \times 5^2 = 75$, so $\ell(x) = 125 + 75(x - 5)$.
 
-A curve with a corner, like $\lvert x \rvert$ at 0, has no tangent there, but a supporting line still exists at every point inside the interval: every slope from the left is at most every slope to the right, and any number between them works. The wing-09 card proves this in full; part 3 of the Detailed proof below repeats it.
+The gap $x^3 - \ell(x)$ factorises as $(x - 5)^2 (x + 10)$, never negative for $x \ge 0$. Day by day it is 52, 0, 162, 108, 16, 14 and 68.
+
+A curve with a corner, like $\lvert x \rvert$ at 0, has no tangent there, but a supporting line still exists at every point inside the interval: every slope from the left is at most every slope to the right, and any number between them works. The probability wing's [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) proves this in full; part 3 of the Detailed proof below repeats it.
 
 ### Step 2: integrate the line, and watch where total size 1 enters
 
@@ -104,7 +119,9 @@ On the week: the line averages to 125, the gaps average to 60, and 125 + 60 = 18
 
 ### Step 3: equality forces the function to sit still
 
-The gap $g = \varphi \circ f - \ell \circ f$ is never negative, and its integral is $\int \varphi \circ f \, dP - \varphi(m)$. If Jensen is an equality with a finite right side, $g$ has integral zero, so $g = 0$ almost surely ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). A strictly convex curve meets a supporting line only at $m$, so $f = m$ almost surely. For the cube, the week's gaps are zero only on the day that blew exactly 5 m/s.
+The gap $g = \varphi \circ f - \ell \circ f$ is never negative, and its integral is $\int \varphi \circ f \, dP - \varphi(m)$. If Jensen is an equality with a finite right side, $g$ has integral zero, so $g = 0$ almost surely ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+
+A strictly convex curve meets a supporting line only at $m$, so $f = m$ almost surely. For the cube, the week's gaps are zero only on the day that blew exactly 5 m/s.
 
 ### Step 4: three corollaries, three choices of curve
 
@@ -124,7 +141,9 @@ xychart-beta
     line [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
 ```
 
-Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is the limit of the p-norm as p falls to 0, and the first step, from 4.55 to 5.00, is the arithmetic-geometric mean inequality. Green is the largest speed, 8 m/s, which the norm approaches as p grows ([Lp spaces](01-lp-spaces.md)). Every later step up is Lyapunov's inequality. The axis spaces the powers evenly although they are not (after 4 they jump to 6, 8, 12, 16, 24, 32), so the curve looks straighter than it is against p.
+Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is the limit of the p-norm as p falls to 0, and the first step, from 4.55 to 5.00, is the arithmetic-geometric mean inequality. Green is the largest speed, 8 m/s, which the norm approaches as p grows ([Lp spaces](01-lp-spaces.md)). Every later step up is Lyapunov's inequality.
+
+The axis spaces the powers evenly although they are not (after 4 they jump to 6, 8, 12, 16, 24, 32), so the curve looks straighter than it is against p.
 
 <details>
 <summary>Detailed proof</summary>
@@ -147,7 +166,9 @@ Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is 
 
 </details>
 
-A second road to Lyapunov goes through Hölder's inequality with the exponents $q/p$ and $q/(q - p)$, applied to $\lvert f \rvert^p$ times the constant 1: $\int \lvert f \rvert^p \, dP \le \big(\int \lvert f \rvert^q \, dP\big)^{p/q} P(\Omega)^{(q - p)/q}$, and the last factor is 1. Take the p-th root of both sides. It uses $P(\Omega) = 1$ in the same place, through the integral of the constant. The case p = 1 is worked on [Holder's inequality](02-holders-inequality.md).
+A second road to Lyapunov goes through Hölder's inequality with the exponents $q/p$ and $q/(q - p)$, applied to $\lvert f \rvert^p$ times the constant 1: $\int \lvert f \rvert^p \, dP \le \big(\int \lvert f \rvert^q \, dP\big)^{p/q} P(\Omega)^{(q - p)/q}$, and the last factor is 1. Take the p-th root of both sides.
+
+It uses $P(\Omega) = 1$ in the same place, through the integral of the constant. The case p = 1 is worked on [Holder's inequality](02-holders-inequality.md).
 
 ---
 
@@ -187,7 +208,15 @@ On a space of finite total size $c$, Jensen survives for the rescaled measure $\
 
 ## Code, from first principles, and it actually runs
 
-The code does the week three ways. Road one sums both sides of Jensen in exact fractions. Road two builds the supporting line at the mean and integrates it against $P$, which gives back the cube of the mean only because $P(\Omega) = 1$. It then averages the factorised gaps, never cubing a day's speed, and must land on the same 185. Road three draws 70000 days from $P$ with a SplitMix64 generator written out in both languages, seed 20260929, and checks the sampled mean cube against 185 within four standard errors; the sample lands low, inside that tolerance. The geometric mean comes by logarithms and by bisection; Lyapunov in floating point and in exact integers. The failures print beside the working cases, with $1/x$ integrated by a hand-written midpoint rule against the closed forms ln N and 1 − 1/N. What the code shows is one week and a few cut-offs; that Jensen holds for every probability space, every convex curve and every integrable function is what the proof shows.
+The code does the week three ways:
+
+- Road one sums both sides of Jensen in exact fractions.
+- Road two builds the supporting line at the mean and integrates it against $P$, which gives back the cube of the mean only because $P(\Omega) = 1$. It then averages the factorised gaps, never cubing a day's speed, and must land on the same 185.
+- Road three draws 70000 days from $P$ with SplitMix64, a short random-number generator written out in both languages, seed 20260929. It checks the sampled mean cube against 185 within four standard errors, where a standard error is the typical size of a sampling error; the sample lands low, inside that tolerance.
+
+The geometric mean comes by logarithms and by bisection; Lyapunov in floating point and in exact integers. The failures print beside the working cases, with $1/x$ integrated by a hand-written midpoint rule against the closed forms ln N and 1 − 1/N.
+
+What the code shows is one week and a few cut-offs; that Jensen holds for every probability space, every convex curve and every integrable function is what the proof shows.
 
 ### Python
 
@@ -520,6 +549,334 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Jensen's inequality, its equality case and Lyapunov's inequality, for every probability space, interval, convex curve and integrable function.
+
+- Take a probability space, a curve $\varphi$ convex on an interval $I$, and $f$ in $L^1(P)$ with every value in $I$. Then the integral of $\varphi \circ f$ exists, possibly $+\infty$, and is at least $\varphi$ of the mean.
+- Suppose $\varphi$ is strictly convex on $I$ and the integral of $\varphi \circ f$ is finite. Then equality holds exactly when $f$ equals its mean almost surely.
+- Take powers $0 < p < q$ and any measurable $f$ on a probability space. Then the p-norm of $f$ is at most its q-norm.
+- The week's sums hold exactly: mean 5, mean cube 185, gaps 52, 0, 162, 108, 16, 14, 68, and mean gap 60.
+- The square side holds exactly: 29 against 25, with the variance 4.
+- The product of the speeds, 40320, is below $5^7$, so the geometric mean is below 5.
+- The square and geometric-mean corollaries are checked only on the week's numbers.
+- Lyapunov's exact checks hold: 25 ≤ 29, 125 ≤ 185 and 841 ≤ 1253.
+- Under counting measure the integral of the speed is 35, and its cube 42875 far exceeds 1295, the integral of the cubes.
+
+The decimals, the sampling, the square root and the infinite-size break are left to the Python and Rust checks.
+
+```lean
+-- Jensen's inequality: on a probability space a convex function of the integral is at most the integral of the convex function, equality for a strictly convex function forces the function to be constant almost surely, and p-norms rise with p.
+import Mathlib.Analysis.Convex.Integral
+import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
+import Mathlib.Data.EReal.Operations
+import Mathlib.Analysis.Convex.Continuous
+import Mathlib.Analysis.Convex.Deriv
+
+open MeasureTheory
+open scoped ENNReal
+
+variable {Ω : Type*} [MeasurableSpace Ω]
+
+lemma jensen_aux_not_interior {I : Set ℝ} (hI : I.OrdConnected) {x : ℝ} (_hx : x ∈ I)
+    (hxi : x ∉ interior I) : (∀ y ∈ I, x ≤ y) ∨ (∀ y ∈ I, y ≤ x) := by
+  by_contra h
+  push Not at h
+  obtain ⟨⟨y, hyI, hy⟩, ⟨z, hzI, hz⟩⟩ := h
+  exact hxi (mem_interior_iff_mem_nhds.2 (Filter.mem_of_superset (Ioo_mem_nhds hy hz)
+    (Set.Ioo_subset_Icc_self.trans (hI.out hyI hzI))))
+
+lemma jensen_aux_countable {I : Set ℝ} (hI : I.OrdConnected) : (I \ interior I).Countable := by
+  have h1 : ({x | x ∈ I ∧ ∀ y ∈ I, x ≤ y} : Set ℝ).Subsingleton := by
+    intro a ha b hb
+    exact le_antisymm (ha.2 b hb.1) (hb.2 a ha.1)
+  have h2 : ({x | x ∈ I ∧ ∀ y ∈ I, y ≤ x} : Set ℝ).Subsingleton := by
+    intro a ha b hb
+    exact le_antisymm (hb.2 a ha.1) (ha.2 b hb.1)
+  refine (h1.countable.union h2.countable).mono ?_
+  rintro x ⟨hx, hxi⟩
+  rcases jensen_aux_not_interior hI hx hxi with h | h
+  · exact Or.inl ⟨hx, h⟩
+  · exact Or.inr ⟨hx, h⟩
+
+lemma jensen_aux_measurable {I : Set ℝ} (hI : I.OrdConnected) {φ : ℝ → ℝ}
+    (hφ : ConvexOn ℝ I φ) : Measurable (I.indicator φ) := by
+  refine measurable_of_restrict_of_restrict_compl (isOpen_interior (s := I)).measurableSet ?_ ?_
+  · have hc : ContinuousOn (I.indicator φ) (interior I) := by
+      refine hφ.continuousOn_interior.congr ?_
+      intro x hx
+      exact Set.indicator_of_mem (interior_subset hx) φ
+    exact (continuousOn_iff_continuous_domRestrict.1 hc).measurable
+  · have hE : Measurable ((I \ interior I).indicator φ) := by
+      refine measurable_of_measurable_on_compl_countable _ (jensen_aux_countable hI) ?_
+      have : (I \ interior I)ᶜ.domRestrict ((I \ interior I).indicator φ) = fun _ => 0 := by
+        funext x
+        exact Set.indicator_of_notMem x.2 φ
+      rw [this]
+      exact measurable_const
+    have : (interior I)ᶜ.domRestrict (I.indicator φ) =
+        (fun x : ↥((interior I)ᶜ) => (I \ interior I).indicator φ x) := by
+      funext x
+      by_cases hx : (x : ℝ) ∈ I
+      · simp [Set.indicator_of_mem hx, Set.indicator_of_mem (show (x : ℝ) ∈ I \ interior I
+          from ⟨hx, x.2⟩)]
+      · simp [Set.indicator_of_notMem hx, Set.indicator_of_notMem
+          (show (x : ℝ) ∉ I \ interior I from fun h => hx h.1)]
+    rw [this]
+    exact hE.comp measurable_subtype_coe
+
+lemma jensen_aux_lt_integral (P : Measure Ω) [IsProbabilityMeasure P] {g : Ω → ℝ}
+    (hg : Integrable g P) (a : ℝ) (h : ∀ ω, a < g ω) : a < ∫ ω, g ω ∂P := by
+  have hsupp : Function.support (fun ω => g ω - a) = Set.univ :=
+    Set.eq_univ_of_forall fun ω => (sub_pos.2 (h ω)).ne'
+  have hpos : 0 < ∫ ω, (g ω - a) ∂P := by
+    rw [integral_pos_iff_support_of_nonneg (fun ω => (sub_pos.2 (h ω)).le)
+      (hg.sub (integrable_const a)), hsupp, measure_univ]
+    exact one_pos
+  rw [integral_sub hg (integrable_const a), integral_const] at hpos
+  simp at hpos
+  linarith
+
+lemma jensen_aux_mean_mem (P : Measure Ω) [IsProbabilityMeasure P]
+    {I : Set ℝ} (hI : I.OrdConnected) {f : Ω → ℝ} (hf : Integrable f P) (hfI : ∀ ω, f ω ∈ I) :
+    ∫ ω, f ω ∂P ∈ I := by
+  obtain ⟨y, hyI, hy⟩ : ∃ y ∈ I, y ≤ ∫ ω, f ω ∂P := by
+    by_contra h
+    push Not at h
+    exact lt_irrefl _ (jensen_aux_lt_integral P hf _ fun ω => h _ (hfI ω))
+  obtain ⟨z, hzI, hz⟩ : ∃ z ∈ I, ∫ ω, f ω ∂P ≤ z := by
+    by_contra h
+    push Not at h
+    have := jensen_aux_lt_integral P hf.neg (-∫ ω, f ω ∂P) fun ω => neg_lt_neg (h _ (hfI ω))
+    simp only [Pi.neg_apply, integral_neg] at this
+    exact lt_irrefl _ this
+  exact hI.out hyI hzI ⟨hy, hz⟩
+
+lemma jensen_aux_ae_eq_of_not_interior (P : Measure Ω) [IsProbabilityMeasure P]
+    {I : Set ℝ} (hI : I.OrdConnected) {f : Ω → ℝ} (hf : Integrable f P) (hfI : ∀ ω, f ω ∈ I)
+    (hmi : ∫ ω, f ω ∂P ∉ interior I) : f =ᵐ[P] fun _ => ∫ ω, f ω ∂P := by
+  set m := ∫ ω, f ω ∂P with hm_def
+  have hm : m ∈ I := jensen_aux_mean_mem P hI hf hfI
+  have hint : ∫ ω, (f ω - m) ∂P = 0 := by
+    rw [integral_sub hf (integrable_const m), integral_const]
+    simp [← hm_def]
+  rcases jensen_aux_not_interior hI hm hmi with h | h
+  · have h0 : 0 ≤ fun ω => f ω - m := fun ω => sub_nonneg.2 (h _ (hfI ω))
+    have := (integral_eq_zero_iff_of_nonneg h0 (hf.sub (integrable_const m))).1 hint
+    filter_upwards [this] with ω hω
+    simp only [Pi.zero_apply, sub_eq_zero] at hω
+    exact hω
+  · have h0 : 0 ≤ fun ω => m - f ω := fun ω => sub_nonneg.2 (h _ (hfI ω))
+    have hint' : ∫ ω, (m - f ω) ∂P = 0 := by
+      rw [integral_sub (integrable_const m) hf, integral_const]
+      simp [← hm_def]
+    have := (integral_eq_zero_iff_of_nonneg h0 ((integrable_const m).sub hf)).1 hint'
+    filter_upwards [this] with ω hω
+    simp only [Pi.zero_apply, sub_eq_zero] at hω
+    exact hω.symm
+
+lemma jensen_aux_support_line {I : Set ℝ} {φ : ℝ → ℝ} (hφ : ConvexOn ℝ I φ) {m : ℝ}
+    (hm : m ∈ interior I) : ∃ c : ℝ, ∀ x ∈ I, φ m + c * (x - m) ≤ φ x := by
+  refine ⟨derivWithin φ (Set.Ioi m) m, fun x hx => ?_⟩
+  rcases lt_trichotomy x m with hxm | rfl | hxm
+  · have h1 := hφ.slope_le_leftDeriv_of_mem_interior hx hm hxm
+    have h2 := hφ.leftDeriv_le_rightDeriv_of_mem_interior hm
+    rw [slope_def_field, div_le_iff₀ (sub_pos.2 hxm)] at h1
+    have h3 : φ m - φ x ≤ derivWithin φ (Set.Ioi m) m * (m - x) :=
+      h1.trans (mul_le_mul_of_nonneg_right h2 (sub_pos.2 hxm).le)
+    nlinarith
+  · simp
+  · have h1 := hφ.rightDeriv_le_slope_of_mem_interior hm hx hxm
+    rw [slope_def_field, le_div_iff₀ (sub_pos.2 hxm)] at h1
+    linarith
+
+lemma jensen_aux_integral_affine (P : Measure Ω) [IsProbabilityMeasure P] {f : Ω → ℝ}
+    (hf : Integrable f P) (a c : ℝ) :
+    ∫ ω, (a + c * (f ω - ∫ ω, f ω ∂P)) ∂P = a := by
+  have h1 : Integrable (fun ω => c * (f ω - ∫ ω, f ω ∂P)) P :=
+    (hf.sub (integrable_const _)).const_mul c
+  rw [integral_add (integrable_const a) h1, integral_const_mul,
+    integral_sub hf (integrable_const _)]
+  simp
+
+lemma jensen_aux_exists_ae_line (P : Measure Ω) [IsProbabilityMeasure P]
+    {I : Set ℝ} (hI : I.OrdConnected) {φ : ℝ → ℝ} (hφ : ConvexOn ℝ I φ)
+    {f : Ω → ℝ} (hf : Integrable f P) (hfI : ∀ ω, f ω ∈ I) :
+    ∃ c : ℝ, ∀ᵐ ω ∂P, φ (∫ ω, f ω ∂P) + c * (f ω - ∫ ω, f ω ∂P) ≤ φ (f ω) := by
+  by_cases hmi : ∫ ω, f ω ∂P ∈ interior I
+  · obtain ⟨c, hc⟩ := jensen_aux_support_line hφ hmi
+    exact ⟨c, Filter.Eventually.of_forall fun ω => hc _ (hfI ω)⟩
+  · refine ⟨0, ?_⟩
+    filter_upwards [jensen_aux_ae_eq_of_not_interior P hI hf hfI hmi] with ω hω
+    rw [hω]
+    simp
+
+/-- Jensen's inequality. Let P be a probability measure, I an interval, φ convex on I, and f
+an integrable function (f in L¹(P)) with every value in I. Then φ ∘ f is measurable, the
+negative part of φ ∘ f has finite integral, so the integral of φ ∘ f exists as a number or
++∞, and φ(∫ f dP) ≤ ∫ φ ∘ f dP. The integral of φ ∘ f is written as the integral of its
+positive part minus the integral of its negative part, in the extended reals, so the
+case ∫ φ ∘ f dP = +∞ is covered. -/
+theorem convex_of_integral_le_integral_of_convex (P : Measure Ω) [IsProbabilityMeasure P]
+    (I : Set ℝ) (hI : I.OrdConnected) (φ : ℝ → ℝ) (hφ : ConvexOn ℝ I φ)
+    (f : Ω → ℝ) (hf : Integrable f P) (hfI : ∀ ω, f ω ∈ I) :
+    AEStronglyMeasurable (fun ω => φ (f ω)) P ∧
+      (∫⁻ ω, ENNReal.ofReal (-φ (f ω)) ∂P) < ∞ ∧
+      ((φ (∫ ω, f ω ∂P) : ℝ) : EReal) ≤
+        ((∫⁻ ω, ENNReal.ofReal (φ (f ω)) ∂P : ℝ≥0∞) : EReal) -
+          ((∫⁻ ω, ENNReal.ofReal (-φ (f ω)) ∂P : ℝ≥0∞) : EReal) := by
+  set m := ∫ ω, f ω ∂P with hm_def
+  obtain ⟨c, hc⟩ := jensen_aux_exists_ae_line P hI hφ hf hfI
+  have hLi : Integrable (fun ω => φ m + c * (f ω - m)) P :=
+    (integrable_const _).add ((hf.sub (integrable_const _)).const_mul c)
+  have hLint : ∫ ω, (φ m + c * (f ω - m)) ∂P = φ m := jensen_aux_integral_affine P hf _ _
+  have hmeas : AEStronglyMeasurable (fun ω => φ (f ω)) P := by
+    have h := ((jensen_aux_measurable hI hφ).comp_aemeasurable
+      hf.aemeasurable).aestronglyMeasurable
+    have heq : (I.indicator φ ∘ f) = fun ω => φ (f ω) := by
+      funext ω
+      exact Set.indicator_of_mem (hfI ω) φ
+    rwa [heq] at h
+  have hneg_le : ∫⁻ ω, ENNReal.ofReal (-φ (f ω)) ∂P ≤
+      ∫⁻ ω, ENNReal.ofReal (-(φ m + c * (f ω - m))) ∂P := by
+    apply lintegral_mono_ae
+    filter_upwards [hc] with ω hω
+    exact ENNReal.ofReal_le_ofReal (neg_le_neg hω)
+  have hpos_le : ∫⁻ ω, ENNReal.ofReal (φ m + c * (f ω - m)) ∂P ≤
+      ∫⁻ ω, ENNReal.ofReal (φ (f ω)) ∂P := by
+    apply lintegral_mono_ae
+    filter_upwards [hc] with ω hω
+    exact ENNReal.ofReal_le_ofReal hω
+  have hLneg_fin : ∫⁻ ω, ENNReal.ofReal (-(φ m + c * (f ω - m))) ∂P < ∞ :=
+    hLi.neg.lintegral_lt_top
+  have hLpos_fin : ∫⁻ ω, ENNReal.ofReal (φ m + c * (f ω - m)) ∂P < ∞ := hLi.lintegral_lt_top
+  refine ⟨hmeas, hneg_le.trans_lt hLneg_fin, ?_⟩
+  have key : ((φ m : ℝ) : EReal) =
+      ((∫⁻ ω, ENNReal.ofReal (φ m + c * (f ω - m)) ∂P : ℝ≥0∞) : EReal) -
+        ((∫⁻ ω, ENNReal.ofReal (-(φ m + c * (f ω - m))) ∂P : ℝ≥0∞) : EReal) := by
+    have h := integral_eq_lintegral_pos_part_sub_lintegral_neg_part hLi
+    rw [hLint] at h
+    refine (congrArg (fun x : ℝ => (x : EReal)) h).trans ?_
+    rw [EReal.coe_sub,
+      EReal.coe_ennreal_toReal hLpos_fin.ne, EReal.coe_ennreal_toReal hLneg_fin.ne]
+  rw [key]
+  exact EReal.sub_le_sub (EReal.coe_ennreal_le_coe_ennreal_iff.2 hpos_le)
+    (EReal.coe_ennreal_le_coe_ennreal_iff.2 hneg_le)
+
+/-- The equality case. With the same setting and φ strictly convex on I, if the integral of
+φ ∘ f is finite, then φ(∫ f dP) = ∫ φ ∘ f dP exactly when f equals its mean almost surely. -/
+theorem jensen_equality_iff_ae_const (P : Measure Ω) [IsProbabilityMeasure P]
+    (I : Set ℝ) (hI : I.OrdConnected) (φ : ℝ → ℝ) (hφ : StrictConvexOn ℝ I φ)
+    (f : Ω → ℝ) (hf : Integrable f P) (hfI : ∀ ω, f ω ∈ I)
+    (hφf : Integrable (fun ω => φ (f ω)) P) :
+    φ (∫ ω, f ω ∂P) = ∫ ω, φ (f ω) ∂P ↔ f =ᵐ[P] fun _ => ∫ ω, f ω ∂P := by
+  set m := ∫ ω, f ω ∂P with hm_def
+  have hm : m ∈ I := jensen_aux_mean_mem P hI hf hfI
+  constructor
+  · intro heq
+    by_cases hmi : m ∈ interior I
+    swap
+    · exact jensen_aux_ae_eq_of_not_interior P hI hf hfI hmi
+    obtain ⟨c, hc⟩ := jensen_aux_support_line hφ.convexOn hmi
+    have hLi : Integrable (fun ω => φ m + c * (f ω - m)) P :=
+      (integrable_const _).add ((hf.sub (integrable_const _)).const_mul c)
+    have hLint : ∫ ω, (φ m + c * (f ω - m)) ∂P = φ m := jensen_aux_integral_affine P hf _ _
+    have h0 : 0 ≤ fun ω => φ (f ω) - (φ m + c * (f ω - m)) :=
+      fun ω => sub_nonneg.2 (hc _ (hfI ω))
+    have hint : ∫ ω, (φ (f ω) - (φ m + c * (f ω - m))) ∂P = 0 := by
+      rw [integral_sub hφf hLi, hLint, ← heq, sub_self]
+    have hae := (integral_eq_zero_iff_of_nonneg h0 (hφf.sub hLi)).1 hint
+    filter_upwards [hae] with ω hω
+    simp only [Pi.zero_apply, sub_eq_zero] at hω
+    show f ω = m
+    by_contra hne
+    have hz : (1 / 2 : ℝ) • f ω + (1 / 2 : ℝ) • m ∈ I :=
+      hφ.1 (hfI ω) hm (by norm_num) (by norm_num) (by norm_num)
+    have hlt := hφ.2 (hfI ω) hm hne (by norm_num : (0 : ℝ) < 1 / 2)
+      (by norm_num : (0 : ℝ) < 1 / 2) (by norm_num)
+    have hle := hc _ hz
+    simp only [smul_eq_mul] at hlt hle
+    nlinarith
+  · intro h
+    have : ∫ ω, φ (f ω) ∂P = ∫ _ω, φ m ∂P :=
+      integral_congr_ae (by filter_upwards [h] with ω hω; rw [hω])
+    rw [this, integral_const]
+    simp
+
+/-- Lyapunov's inequality: moments nest. On a probability space, for powers 0 < p < q and a
+measurable f, the p-norm (∫ |f|^p dP)^(1/p) is at most the q-norm (∫ |f|^q dP)^(1/q). -/
+theorem lyapunov_p_norm_le_q_norm (P : Measure Ω) [IsProbabilityMeasure P]
+    (p q : ℝ) (hp : 0 < p) (hpq : p < q) (f : Ω → ℝ) (hf : AEStronglyMeasurable f P) :
+    eLpNorm' f p P ≤ eLpNorm' f q P := by
+  exact eLpNorm'_le_eLpNorm'_of_exponent_le hp hpq.le P hf
+
+-- The wind week 3, 5, 8, 2, 6, 4, 7: the speeds sum to 35, so the mean is 35 / 7 = 5.
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℕ).sum = 35 ∧ 35 / 7 = 5 := by decide
+
+-- The cubes sum to 1295, so the mean cube is 1295 / 7 = 185, above the cube of the mean, 125.
+example : (([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (fun x => x ^ 3)).sum = 1295 ∧
+    1295 = 7 * 185 ∧ 5 ^ 3 = 125 ∧ 125 ≤ 185 := by decide
+
+-- The gaps (x - 5)^2 (x + 10) to the supporting line 125 + 75 (x - 5), day by day.
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℤ).map (fun x => (x - 5) ^ 2 * (x + 10)) =
+    [52, 0, 162, 108, 16, 14, 68] := by decide
+
+-- Each gap is the cube minus the line.
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℤ).all
+    (fun x => x ^ 3 - (125 + 75 * (x - 5)) = (x - 5) ^ 2 * (x + 10)) = true := by decide
+
+-- The gaps sum to 420, a mean gap of 60, and 125 + 60 = 185.
+example : [52, 0, 162, 108, 16, 14, 68].sum = 420 ∧ 420 = 7 * 60 ∧ 125 + 60 = 185 := by decide
+
+-- The square: the squares sum to 203 = 7 × 29, and 29 - 25 = 4, the variance.
+example : (([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (fun x => x ^ 2)).sum = 203 ∧
+    203 = 7 * 29 ∧ 29 - 5 ^ 2 = 4 ∧
+    (([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (fun x => (x - 5 : ℤ) ^ 2)).sum = 7 * 4 := by decide
+
+-- The geometric mean: the product of the speeds is 40320, and 40320 < 5 ^ 7, so its
+-- seventh root is below the mean 5.
+example : ([3, 5, 8, 2, 6, 4, 7] : List ℕ).prod = 40320 ∧ 40320 < 5 ^ 7 := by decide
+
+-- Lyapunov in exact integers: the fourth powers sum to 8771 = 7 × 1253, and
+-- 25 ≤ 29, 125 ≤ 185, 841 ≤ 1253.
+example : (([3, 5, 8, 2, 6, 4, 7] : List ℕ).map (fun x => x ^ 4)).sum = 8771 ∧
+    8771 = 7 * 1253 ∧ 5 ^ 2 ≤ 29 ∧ 5 ^ 3 ≤ 185 ∧ 29 ^ 2 = 841 ∧ 841 ≤ 1253 := by decide
+
+-- Counting measure, total size 7: the integral of the speed is 35, its cube 42875,
+-- far above the integral of the cubes, 1295.
+example : (35 : ℕ) ^ 3 = 42875 ∧ 1295 < 42875 := by decide
+
+#print axioms jensen_aux_not_interior
+#print axioms jensen_aux_countable
+#print axioms jensen_aux_measurable
+#print axioms jensen_aux_lt_integral
+#print axioms jensen_aux_mean_mem
+#print axioms jensen_aux_ae_eq_of_not_interior
+#print axioms jensen_aux_support_line
+#print axioms jensen_aux_integral_affine
+#print axioms jensen_aux_exists_ae_line
+#print axioms convex_of_integral_le_integral_of_convex
+#print axioms jensen_equality_iff_ae_const
+#print axioms lyapunov_p_norm_le_q_norm
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'jensen_aux_not_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_countable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_lt_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_mean_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_ae_eq_of_not_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_support_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_integral_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_aux_exists_ae_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+'convex_of_integral_le_integral_of_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_equality_iff_ae_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lyapunov_p_norm_le_q_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -565,6 +922,8 @@ The two outputs match line for line.
 
 - [Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): a likelihood ratio has mean 1 under its base measure, so by Jensen its logarithm has mean at most 0.
 - [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the same inequality with the mean replaced by a conditional mean given partial information.
+
+Jensen compares a convex curve at the plain mean with the mean of the curve; whether the same holds when the plain mean is replaced by a mean given partial information is the question [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md) answers.
 
 ---
 

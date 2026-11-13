@@ -99,3 +99,4 @@ assert riesz == [2 ** j for j in range(1, 5)] and tails == [Q(1, 2 ** J) for J i
 assert EN == [Q(1, N) for N in (1, 2, 4, 8)] and egorov == [10, 100] and sup9 == 9
 assert wins == [W - 4, 2 * W - 4] and all(a <= 2 * b for a, b in markov) and sp_all == [1] * 11
 assert hw == [(1, 1, Q(1 if n == 1 else 0), 1) for n in (1, 2, 4, 8, 16, 32)]  # bump, spread
+print("ALL CHECKS PASS")

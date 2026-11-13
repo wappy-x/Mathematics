@@ -547,6 +547,81 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the theorem, its corollary and the result on simple functions, for every p from 1 up, finite, and any measure space.
+
+- Suppose a sequence in $L^p$ is Cauchy. Then it has a limit in $L^p$ under the $p$-norm.
+- Suppose $\|f_n - f\|_p \to 0$. Then some subsequence $f_{n_k}$ converges to $f$ at almost every point.
+- Take $f$ in $L^p$ and $\varepsilon > 0$. Then some simple function $\varphi$, zero outside a set of finite size, has $\|f - \varphi\|_p < \varepsilon$.
+- Take the wind week under counting measure. Then $\|w\|_2^2 = 203$ and $\|w - w_3\|_2^2 = 105$.
+- Take the uniform probability 1/7 per day instead. Then $\|w\|_2^2 = 203/7 = 29$.
+- Take the staircase at k = 8. Then it uses 32 values.
+
+The decimal distances, the fast subsequence and the ramps are left to the Python and Rust checks.
+
+```lean
+-- Riesz-Fischer: for 1 ≤ p < ∞ on any measure space, every Cauchy sequence in Lp has a limit in Lp, a norm-convergent sequence has a subsequence converging almost everywhere, and simple functions with finite-measure support come arbitrarily close to every Lp function.
+import Mathlib.MeasureTheory.Function.LpSpace.Complete
+import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
+import Mathlib.MeasureTheory.Function.SimpleFuncDenseLp
+
+open MeasureTheory Filter Topology
+open scoped ENNReal
+
+variable {α : Type*} [MeasurableSpace α]
+
+/-- Riesz-Fischer. For a power p with 1 ≤ p < ∞ and any measure space, a sequence in Lp
+(functions with finite p-norm, two functions equal almost everywhere counted as one) whose
+terms crowd together (a Cauchy sequence) converges in the p-norm to a member of Lp. -/
+theorem lp_cauchy_seq_has_limit_in_lp (μ : Measure α) (p : ℝ≥0∞) [Fact (1 ≤ p)] (hp : p ≠ ∞)
+    (f : ℕ → Lp ℝ p μ) (hf : CauchySeq f) :
+    ∃ g : Lp ℝ p μ, Tendsto f atTop (𝓝 g) := by
+  exact cauchySeq_tendsto_of_complete hf
+
+/-- The subsequence corollary. For 1 ≤ p < ∞ and any measure space, if f n converges to f
+in the p-norm, some subsequence f (n k) converges to f at almost every point. -/
+theorem lp_limit_has_ae_convergent_subsequence (μ : Measure α) (p : ℝ≥0∞) [Fact (1 ≤ p)]
+    (hp : p ≠ ∞) (f : ℕ → Lp ℝ p μ) (g : Lp ℝ p μ) (hfg : Tendsto f atTop (𝓝 g)) :
+    ∃ n : ℕ → ℕ, StrictMono n ∧ ∀ᵐ x ∂μ, Tendsto (fun k => f (n k) x) atTop (𝓝 (g x)) := by
+  exact (tendstoInMeasure_of_tendsto_Lp hfg).exists_seq_tendsto_ae
+
+/-- Simple functions are dense. For 1 ≤ p < ∞ and any measure space, for every function f
+with finite p-norm and every ε > 0 there is a simple function φ, zero outside a set of
+finite measure, with ‖f - φ‖_p < ε. -/
+theorem simple_functions_dense_in_lp (μ : Measure α) (p : ℝ≥0∞) (hp1 : 1 ≤ p) (hp : p ≠ ∞)
+    (f : α → ℝ) (hf : MemLp f p μ) (ε : ℝ) (hε : 0 < ε) :
+    ∃ φ : SimpleFunc α ℝ, μ (Function.support φ) < ∞ ∧ eLpNorm (f - ⇑φ) p μ < ENNReal.ofReal ε := by
+  obtain ⟨φ, hφ, hφmem⟩ := hf.exists_simpleFunc_eLpNorm_sub_lt hp
+    (ε := ENNReal.ofReal ε) (by simpa using hε)
+  exact ⟨φ, φ.measure_support_lt_top_of_memLp hφmem
+    (zero_lt_one.trans_le hp1).ne' hp, hφ⟩
+
+-- The wind week (3, 5, 8, 2, 6, 4, 7): its squared 2-norm under counting measure is 203.
+example : ([3, 5, 8, 2, 6, 4, 7].map (fun x : ℕ => x ^ 2)).sum = 203 := by decide
+
+-- Its squared distance to the week cut after three days is 4 + 36 + 16 + 49 = 105.
+example : ([2, 6, 4, 7].map (fun x : ℕ => x ^ 2)).sum = 105 := by decide
+
+-- Under the uniform probability 1/7 per day the squared 2-norm is 203 / 7 = 29.
+example : (203 : ℕ) = 7 * 29 := by norm_num
+
+-- The staircase at k = 8 takes 32 values: the numbers ⌊256 / n⌋ for n = 1, ..., 257.
+example : ((Finset.Icc 1 257).image (fun n : ℕ => 256 / n)).card = 32 := by decide +kernel
+
+#print axioms lp_cauchy_seq_has_limit_in_lp
+#print axioms lp_limit_has_ae_convergent_subsequence
+#print axioms simple_functions_dense_in_lp
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lp_cauchy_seq_has_limit_in_lp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lp_limit_has_ae_convergent_subsequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'simple_functions_dense_in_lp' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -599,9 +674,8 @@ Completeness guarantees limits exist, but says nothing about the nearest point o
 
 ## Sources
 
-Verified 2026-09-29: every link below opens a page naming the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Folland, Gerald B. *Real Analysis: Modern Techniques and Their Applications*, 2nd ed. Wiley, 1999. [Publisher page](https://www.wiley.com/en-us/Real+Analysis%3A+Modern+Techniques+and+Their+Applications%2C+2nd+Edition-p-9780471317166). Chapter 6 proves completeness of $L^p$ and the density of simple functions.
-- Axler, Sheldon. *Measure, Integration & Real Analysis*. Springer, 2020. [Author's page with the free edition](https://measure.axler.net/). Chapter 7 proves that $L^p(\mu)$ is a Banach space.
+- Axler, Sheldon. *Measure, Integration & Real Analysis*. Springer, 2020. [Publisher page, open access](https://doi.org/10.1007/978-3-030-33143-6). Chapter 7 proves that $L^p(\mu)$ is a Banach space.
 - Stein, Elias M., and Rami Shakarchi. *Real Analysis: Measure Theory, Integration, and Hilbert Spaces*. Princeton University Press, 2005. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113869/real-analysis). The Riesz-Fischer theorem for $L^1$ and $L^2$, and approximation by continuous functions.
-- "Riesz–Fischer theorem." Wikipedia. [Article](https://en.wikipedia.org/wiki/Riesz%E2%80%93Fischer_theorem). Dates the independent 1907 proofs by Riesz and Fischer.

@@ -6,7 +6,11 @@
 
 ## General Overview
 
-A stage is 1 m wide, measured from the left wing. A spotlight runs a sequence of frames. In frame 1 it lights the whole stage at 1 watt per metre. In frame 2 it lights only the right half, from 0.5 m, at 2 W/m. In frame 4 it lights from 0.75 m at 4 W/m; in frame 1000, the last thousandth of a metre at 1000 W/m. Frame n lights a strip 1/n m wide, ending at the right wing, at brightness n W/m. Width times brightness is 1 W in every frame.
+A stage is 1 m wide, measured from the left wing. A spotlight runs a sequence of frames.
+
+In frame 1 it lights the whole stage at 1 watt per metre. In frame 2 it lights only the right half, from 0.5 m, at 2 W/m. In frame 4 it lights from 0.75 m at 4 W/m; in frame 1000, the last thousandth of a metre at 1000 W/m.
+
+Frame n lights a strip 1/n m wide, ending at the right wing, at brightness n W/m. Width times brightness is 1 W in every frame.
 
 Now sit in one seat and watch. A seat at 0.9 m is lit in frames 1 to 10, brighter each time, then dark in frame 11 and every frame after. Every seat short of the right edge has the same fate: lit for a while, then dark for good. So frame by frame the brightness at each seat tends to 0. The limit of the frames is a dark stage, with total light 0 W.
 
@@ -28,7 +32,11 @@ Caption: frame 1 covers the stage at height 1, frame 2 the right half at height 
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the stage, $\Omega$ is [0, 1] in metres and the measure is length, $\lambda$. The integral $\int f\,d\mu$ is read "the integral of f against mu"; on the stage it is total light in watts ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). The indicator $\mathbf 1_A$ is one on A, zero off it, so frame n is $f_n = n\,\mathbf 1_{[1-1/n,\,1)}$.
+Notation first, in words.
+
+- A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the stage, $\Omega$ is [0, 1] in metres and the measure is length, $\lambda$.
+- The integral $\int f\,d\mu$ is read "the integral of f against mu"; on the stage it is total light in watts ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+- The indicator $\mathbf 1_A$ is one on A, zero off it, so frame n is $f_n = n\,\mathbf 1_{[1-1/n,\,1)}$.
 
 A reminder from [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): the **lower limit** of a sequence of numbers, written lim inf, is its eventual floor: take the smallest value from position k onward, then let k grow. The **upper limit**, lim sup, is the eventual ceiling. A sequence converges exactly when the two agree. For functions, both are taken seat by seat, and both are measurable.
 
@@ -60,7 +68,7 @@ $$\limsup_{n\to\infty} \int f_n\,d\mu \;\le\; \int \limsup_{n\to\infty} f_n\,d\m
 | $N$ | the last frame that lights a seat x | N = 10 at 0.9 m | grows without bound near the edge |
 | $j$, $J$ | strip number: strip j runs from 1 − 1/j to 1 − 1/(j + 1) m, and frame j is the last one lighting it; J the last strip counted | strip 10 runs from 0.9 to 0.909091 m; J = 10, 100, 1000, 1000000 in the roof rows | more strips reach nearer the edge |
 | $m$ | a counting number in the sum of 1/m^2 | m = 4, 5, 6, … for k = 3 | — |
-| $\Omega$, $\mathcal F$, $\mu$, $Z_n$, $Z$ | the space, its measurable sets, a measure; $Z_n$ a set of measure zero where a hypothesis fails, $Z$ the union of the $Z_n$ | [0, 1], its Borel sets, length; no such set is needed on the stage | — |
+| $\Omega$, $\mathcal F$, $\mu$, $Z_n$, $Z$ | the space, its measurable sets, a measure; $Z_n$ a set of measure zero where a hypothesis fails, $Z$ the union of the $Z_n$ | [0, 1], its Borel sets (the standard measurable sets on the line, built from intervals; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), length; no such set is needed on the stage | — |
 | $\lambda$ | length on the line (Lebesgue measure) | strip of frame 4 has length 0.25 | — |
 | $\mathbf 1_A$ | indicator: one on A, zero off it | one on [0.75, 1) in frame 4 | — |
 | $\int f\,d\mu$, $b_k$ | integral of f against μ: total light; $b_k$ the smallest total from frame k on | 1 W in every frame; 1.3333 W at k = 3 with house lights | — |
@@ -72,7 +80,7 @@ $$\limsup_{n\to\infty} \int f_n\,d\mu \;\le\; \int \limsup_{n\to\infty} f_n\,d\m
 ### When it holds
 
 - **Values of zero or more.** A shadow of depth n on the same strip, $-f_n$, has total −1 W in every frame and limit 0; Fatou would read 0 ≤ −1, which is false. Functions bounded below by one integrable function, $f_n \ge -G$, are fine: apply the lemma to $f_n + G$.
-- **Measurable functions.** Nothing else is asked: no finite total, no convergence, no bound above.
+- **Measurable functions.** A function is measurable when every set "where the value is below a" is one of the sets we may measure ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)). Nothing else is asked: no finite total, no convergence, no bound above.
 - **Any measure space.** Infinite totals are allowed on either side, and $\mu(\Omega)$ may be infinite. A hypothesis that holds only almost everywhere, except on a set of size zero, is enough ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 - **The reverse form needs a roof.** Without one the spotlight gives lim sup of totals 1 W against a total of 0 W for the lim sup, and 1 ≤ 0 is false.
 - **An inequality, not an equality.** Equality is guaranteed by rising frames (monotone convergence) or by one roof and a genuine limit (dominated convergence).
@@ -108,7 +116,7 @@ The left side rises to $\int \liminf_n f_n\,d\mu$, by monotone convergence on th
 
 **1. The floors are measurable and rise.** Put $g_k=\inf_{n\ge k}f_n$. For a number a, $\{g_k<a\}=\bigcup_{n\ge k}\{f_n<a\}$: an infimum is below a exactly when some term is below a. A countable union of sets in $\mathcal F$ is in $\mathcal F$, so $g_k$ is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)). The set $\{n\ge k+1\}$ is inside $\{n\ge k\}$, and an infimum over fewer numbers is at least as large, so $g_k\le g_{k+1}$. Each $g_k\ge0$.
 
-**2. Their limit is the lower limit.** By definition, $\liminf_n f_n(x)=\sup_k \inf_{n\ge k}f_n(x)=\lim_k g_k(x)$, the limit of a rising sequence in $[0,\infty]$.
+**2. Their limit is the lower limit.** By definition, $\liminf_n f_n(x)=\sup_k \inf_{n\ge k}f_n(x)=\lim_k g_k(x)$, the limit of a rising sequence in $[0,\infty]$. Here sup, the supremum, is the least number that no term exceeds, possibly $\infty$.
 
 **3. Monotone convergence.** The $g_k$ are measurable, at least 0 and rising to $\liminf_n f_n$. By [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md), $\int \liminf_n f_n\,d\mu=\lim_k\int g_k\,d\mu$.
 
@@ -128,7 +136,9 @@ Subtract the finite number $\int G\,d\mu$ from both sides and change signs: $\li
 
 The bare spotlight's floors are all 0, which hides the machinery. Add house lights that fade up: in frame n they give $h_n = 0.5(1 - 1/n)$ W/m at every seat, on top of the spotlight. Frame n now carries $h_n + 1$ W.
 
-At a seat left of $1 - 1/k$, every frame from k on is dark except for the house lights, which are dimmest at frame k: the floor is $h_k$. At a seat on the strip where frame j is the last lit one, with j ≥ k, the floor is the first dark frame's house lights, $h_{j+1}$. For k = 3 that is 0.3333 W/m on the first 0.6667 m, area 0.2222 W, plus 0.1419 W from the strips near the edge: 0.3641 W. That sits below every later total, the smallest being 1.3333 W at frame 3.
+At a seat left of $1 - 1/k$, every frame from k on is dark except for the house lights, which are dimmest at frame k: the floor is $h_k$. At a seat on the strip where frame j is the last lit one, with j ≥ k, the floor is the first dark frame's house lights, $h_{j+1}$.
+
+For k = 3 that is 0.3333 W/m on the first 0.6667 m, area 0.2222 W, plus 0.1419 W from the strips near the edge: 0.3641 W. That sits below every later total, the smallest being 1.3333 W at frame 3.
 
 As k grows the floors rise: 0.3225, 0.3641, 0.3919, 0.4107, … W, reaching 0.4950 at k = 100 and 0.5000 at k = 10000. The limit is 0.5000 W: the house lights at full, 0.5 W/m over 1 m. The totals' floors rise to 1.5000 W. Fatou reads 0.5 ≤ 1.5. The gap, 1 W, is the spotlight, lost exactly as before.
 
@@ -142,7 +152,9 @@ xychart-beta
     line [1.00, 1.25, 1.33, 1.38, 1.40, 1.42, 1.43, 1.44]
 ```
 
-Caption, values to 2 places: the lower line is $\int g_k$, the total of the floor from frame k on, rising toward 0.5 W. The upper line is the smallest frame total from frame k on, rising toward 1.5 W. The lower line never crosses the upper one; that is Step 2. The first two values of the lower line agree because frame 1 has no house light but a spotlight of 1 W/m over the whole stage, so it never sets the floor.
+Caption, values to 2 places: the lower line is $\int g_k$, the total of the floor from frame k on, rising toward 0.5 W. The upper line is the smallest frame total from frame k on, rising toward 1.5 W. The lower line never crosses the upper one; that is Step 2.
+
+The first two values of the lower line agree because frame 1 has no house light but a spotlight of 1 W/m over the whole stage, so it never sets the floor.
 
 ### Step 5: two ways to lose total
 
@@ -154,7 +166,9 @@ A finite stage can lose total without anything escaping. Let the lights **flicke
 
 The flicker has a roof: $G = 2$ W/m everywhere, total 2 W, above every frame. Each seat's ceiling is 2, so the lim sup has total 2 W. Reverse Fatou reads 1 ≤ 2, and the full chain is 0 ≤ 1 ≤ 1 ≤ 2: total of the floor, floor of the totals, ceiling of the totals, total of the ceiling.
 
-The spotlight has no roof. The smallest function above every frame is, on the strip where frame j is the last lit one, the brightness j of that frame. Its total over strips 1 to J is $1/2 + 1/3 + \cdots + 1/(J+1)$, a harmonic sum: 2.0199 W up to 0.909091 m, 4.1973 W up to 0.990099 m, 6.4865 W up to 0.999001 m, 13.3927 W up to 0.999999 m, growing without bound. With no finite roof, reverse Fatou has nothing to stand on, and indeed it fails: 1 W against 0 W.
+The spotlight has no roof. The smallest function above every frame is, on the strip where frame j is the last lit one, the brightness j of that frame.
+
+Its total over strips 1 to J is $1/2 + 1/3 + \cdots + 1/(J+1)$, a harmonic sum: 2.0199 W up to 0.909091 m, 4.1973 W up to 0.990099 m, 6.4865 W up to 0.999001 m, 13.3927 W up to 0.999999 m, growing without bound. With no finite roof, reverse Fatou has nothing to stand on, and indeed it fails: 1 W against 0 W.
 
 Another route to the same inequality is to prove dominated convergence first and read Fatou off it, but that runs backwards: [Dominated convergence](02-dominated-convergence-theorem.md) proves dominated convergence by applying Fatou to roof plus and minus each frame.
 
@@ -191,7 +205,15 @@ The dark stage has less light than any frame: a watt went missing in the limit, 
 
 ## Code, from first principles, and it actually runs
 
-The code takes each claim by two roads. The total light of each frame is counted on a grid of 10000 cells in whole-number arithmetic and compared with width times brightness. The last frame lighting a seat is found by scanning 100000 frames and compared with the formula n ≤ 1/(1 − x). The integral of each running floor under the house lights is computed by a closed-form series and by brute force, taking the minimum over frames strip by strip with no formula for the floor; the brute force brackets the series. The smallest roof's total is summed strip by strip and compared with the harmonic sum. The flicker chain and the shadow are counted on the grid. The limit's total is the grid's total in frame 20001, past the last lit frame of every grid seat.
+The code takes each claim by two roads:
+
+- The total light of each frame is counted on a grid of 10000 cells in whole-number arithmetic and compared with width times brightness.
+- The last frame lighting a seat is found by scanning 100000 frames and compared with the formula n ≤ 1/(1 − x).
+- The integral of each running floor under the house lights is computed by a closed-form series and by brute force, taking the minimum over frames strip by strip with no formula for the floor; the brute force brackets the series.
+- The smallest roof's total is summed strip by strip and compared with the harmonic sum.
+- The flicker chain and the shadow are counted on the grid.
+
+The limit's total is the grid's total in frame 20001, past the last lit frame of every grid seat.
 
 What the code shows: these frames, these seats, these floors, to the printed precision. What only the proof shows: that the inequality holds for every sequence of measurable functions of zero or more on every measure space.
 
@@ -512,6 +534,141 @@ figure, x = 40 + 280 x, y = 200 - 40 brightness; frame 1: 40.0 to 320.0, top 160
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves Fatou's lemma and its reverse form on every measure space, and the spotlight's lost watt exactly.
+
+- Take measurable functions of zero or more, infinite values allowed, on any measure space. Then the total of the eventual floor is at most the eventual floor of the totals.
+- Suppose measurable functions of zero or more all sit under one roof of finite total. Then the eventual ceiling of the totals is at most the total of the eventual ceiling.
+- On the 1 m stage measured by length, every spotlight frame carries 1 W. Yet every seat's lower limit is 0, so the dark stage has 0 W.
+- The hand arithmetic holds exactly: strip starts, the seat at 0.9 m, house lights at k = 3, the flicker and the first roof total.
+
+The grid counts, the house-light floors for every k, the frame searches and the roof's growth are left to the Python and Rust checks.
+
+```lean
+-- Fatou's lemma: for measurable functions with values in [0, ∞] on any measure space, the integral of the lower limit is at most the lower limit of the integrals, the reverse inequality holds for upper limits under one roof of finite integral, and the card's spotlight shows the inequality can be strict.
+import Mathlib.MeasureTheory.Integral.Lebesgue.Add
+import Mathlib.MeasureTheory.Integral.Lebesgue.DominatedConvergence
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+
+open MeasureTheory Filter Set
+open scoped ENNReal
+
+/-- Fatou's lemma. On any measure space, if every `f n` is measurable with values in
+[0, ∞], then the integral of the eventual floor (the lower limit taken point by point)
+is at most the eventual floor of the integrals: in a limit, total can leak away but
+never appear from nowhere. Infinite values are allowed on both sides. -/
+theorem integral_liminf_le_liminf_integral {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (f : ℕ → Ω → ℝ≥0∞) (hf : ∀ n, Measurable (f n)) :
+    ∫⁻ x, liminf (fun n => f n x) atTop ∂μ ≤ liminf (fun n => ∫⁻ x, f n x ∂μ) atTop := by
+  exact lintegral_liminf_le hf
+
+/-- Reverse Fatou. If every `f n` is measurable and lies between 0 and one roof `G`
+whose integral is finite, then the eventual ceiling of the integrals is at most the
+integral of the eventual ceiling (the upper limit taken point by point). -/
+theorem limsup_integral_le_integral_limsup_of_roof {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (f : ℕ → Ω → ℝ≥0∞) (G : Ω → ℝ≥0∞) (hf : ∀ n, Measurable (f n))
+    (hroof : ∀ n x, f n x ≤ G x) (hG : ∫⁻ x, G x ∂μ < ∞) :
+    limsup (fun n => ∫⁻ x, f n x ∂μ) atTop ≤ ∫⁻ x, limsup (fun n => f n x) atTop ∂μ := by
+  exact limsup_lintegral_le G hf (fun n => Filter.Eventually.of_forall (hroof n)) hG.ne
+
+/-- The spotlight on a stage [0, 1] measured by length: frame n lights the strip
+[1 - 1/n, 1) at brightness n. Every frame from frame 1 on carries total 1, yet the
+lower limit at every seat is 0, so the integral of the lower limit is 0 while the
+lower limit of the integrals is 1. The watt leaks away, and Fatou's inequality is strict.
+(Frame 0 lights the empty strip [1, 1).) -/
+theorem spotlight_loses_its_watt :
+    let f : ℕ → ℝ → ℝ≥0∞ := fun n x => (Ico (1 - 1 / (n : ℝ)) 1).indicator (fun _ => (n : ℝ≥0∞)) x
+    (∀ n : ℕ, 1 ≤ n → ∫⁻ x in Icc (0 : ℝ) 1, f n x = 1) ∧
+      ∫⁻ x in Icc (0 : ℝ) 1, liminf (fun n => f n x) atTop = 0 ∧
+      liminf (fun n => ∫⁻ x in Icc (0 : ℝ) 1, f n x) atTop = 1 := by
+  intro f
+  have h1 : ∀ n : ℕ, 1 ≤ n → ∫⁻ x in Icc (0 : ℝ) 1, f n x = 1 := by
+    intro n hn
+    have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
+    simp only [f]
+    rw [lintegral_indicator_const measurableSet_Ico, Measure.restrict_apply measurableSet_Ico]
+    have hsub : Ico (1 - 1 / (n : ℝ)) 1 ∩ Icc 0 1 = Ico (1 - 1 / (n : ℝ)) 1 := by
+      apply inter_eq_left.mpr
+      intro x hx
+      have : 1 / (n : ℝ) ≤ 1 := by
+        rw [div_le_one hnpos]; exact_mod_cast hn
+      exact ⟨by linarith [hx.1], hx.2.le⟩
+    rw [hsub, Real.volume_Ico]
+    have : (1 : ℝ) - (1 - 1 / (n : ℝ)) = (n : ℝ)⁻¹ := by ring
+    rw [this, ENNReal.ofReal_inv_of_pos hnpos, ENNReal.ofReal_natCast]
+    exact ENNReal.mul_inv_cancel (by exact_mod_cast (by omega : n ≠ 0)) (ENNReal.natCast_ne_top n)
+  have h0 : ∀ x : ℝ, liminf (fun n => f n x) atTop = 0 := by
+    intro x
+    have hev : (fun n => f n x) =ᶠ[atTop] fun _ => 0 := by
+      by_cases hx : x < 1
+      · obtain ⟨N, hN⟩ := exists_nat_gt (1 / (1 - x))
+        filter_upwards [eventually_ge_atTop (N + 1)] with n hn
+        simp only [f]
+        apply indicator_of_notMem
+        intro hmem
+        have hx1 : 0 < 1 - x := by linarith
+        have hnpos : (0 : ℝ) < n := by
+          have : (1 : ℝ) ≤ n := by exact_mod_cast (by omega : 1 ≤ n)
+          linarith
+        have hNn : (N : ℝ) < n := by exact_mod_cast (by omega : N < n)
+        have : 1 / (1 - x) < n := lt_trans hN hNn
+        rw [div_lt_iff₀ hx1] at this
+        have h2 : 1 - 1 / (n : ℝ) ≤ x := hmem.1
+        have h3 : 1 / (n : ℝ) * n = 1 := by field_simp
+        nlinarith
+      · filter_upwards with n
+        simp only [f]
+        apply indicator_of_notMem
+        intro hmem
+        exact hx hmem.2
+    rw [liminf_congr hev, liminf_const]
+  refine ⟨h1, ?_, ?_⟩
+  · simp [h0]
+  · have hev : (fun n => ∫⁻ x in Icc (0 : ℝ) 1, f n x) =ᶠ[atTop] fun _ => 1 := by
+      filter_upwards [eventually_ge_atTop 1] with n hn
+      exact h1 n hn
+    rw [liminf_congr hev, liminf_const]
+
+-- Frame n's strip starts at 1 - 1/n: frames 2, 4 and 1000.
+example : (1 : ℚ) - 1 / 2 = 1 / 2 := by norm_num
+example : (1 : ℚ) - 1 / 4 = 3 / 4 := by norm_num
+example : (1 : ℚ) - 1 / 1000 = 999 / 1000 := by norm_num
+-- Frame n's total: width 1/n times brightness n is 1, here for frame 1000.
+example : (1 : ℚ) / 1000 * 1000 = 1 := by norm_num
+-- Light on [0, 9/10] in frame 4: 4 × (9/10 − 3/4) = 3/5 (0.6000 W).
+example : (4 : ℚ) * (9 / 10 - 3 / 4) = 3 / 5 := by norm_num
+-- Frame 10's strip starts at 9/10, so it puts 0 W on [0, 9/10].
+example : (1 : ℚ) - 1 / 10 = 9 / 10 := by norm_num
+-- The seat at 9/10 m is lit in frame 10 and dark in frame 11: N = 10.
+example : (1 : ℚ) - 1 / 10 ≤ 9 / 10 ∧ ¬ ((1 : ℚ) - 1 / 11 ≤ 9 / 10) := by norm_num
+-- House lights at k = 3: h_3 = (1/2)(1 − 1/3) = 1/3 W/m, over [0, 2/3) m gives 2/9 W.
+example : (1 / 2 : ℚ) * (1 - 1 / 3) = 1 / 3 := by norm_num
+example : (1 / 3 : ℚ) * (1 - 1 / 3) = 2 / 9 := by norm_num
+-- With house lights, frame 3 carries h_3 + 1 = 4/3 W (1.3333 W).
+example : (1 / 2 : ℚ) * (1 - 1 / 3) + 1 = 4 / 3 := by norm_num
+-- Flicker: 2 W/m on half the stage is 1 W; the roof of 2 W/m over 1 m is 2 W.
+example : (2 : ℚ) * (1 / 2) = 1 := by norm_num
+example : (0 : ℚ) ≤ 1 ∧ (1 : ℚ) ≤ 1 ∧ (1 : ℚ) ≤ 2 := by norm_num
+-- Smallest roof over the spotlight, strips 1 to 10: 1/2 + 1/3 + ... + 1/11 = 55991/27720 (2.0199 W).
+example : (∑ i ∈ Finset.range 10, (1 : ℚ) / (i + 2)) = 55991 / 27720 := by
+  norm_num [Finset.sum_range_succ]
+-- The shadow breaks the sign rule: Fatou would read 0 ≤ −1, which is false.
+example : ¬ ((0 : ℤ) ≤ -1) := by decide
+
+#print axioms integral_liminf_le_liminf_integral
+#print axioms limsup_integral_le_integral_limsup_of_roof
+#print axioms spotlight_loses_its_watt
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_liminf_le_liminf_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'limsup_integral_le_integral_limsup_of_roof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'spotlight_loses_its_watt' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -536,7 +693,7 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Probability.** For random quantities of zero or more, the average of the eventual floor is at most the eventual floor of the averages ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). A lottery paying n dollars with probability 1/n averages 1 dollar forever while the chance of any prize shrinks to 0: the same kind of leak, which [Uniform integrability](05-uniform-integrability.md) rules out.
-- **Limits keep their size bounds.** If functions converge almost everywhere, the limit's total size is at most the eventual floor of theirs. That is how the proof that $L^p$ spaces are complete shows a limit stays in the space ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)).
+- **Limits keep their size bounds.** If functions converge almost everywhere, the limit's total size is at most the eventual floor of theirs. That is how the proof that $L^p$ spaces are complete shows a limit stays in the space ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). An $L^p$ space holds the functions whose p-th power has a finite integral; complete means a sequence whose members draw ever closer together has a limit inside the space.
 - **Martingales.** A fair game whose value is zero or more keeps a constant average in time. Once the game's value is known to settle to a limit, Fatou bounds the average of that limit by the constant ([Filtrations and martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md)).
 - **Which convergence loses mass.** The spotlight converges at every seat yet not in total; sorting out which kinds of convergence carry totals with them is [Modes of convergence](04-modes-of-convergence.md). The Riemann version of the same trap, tents of area 1 on [0, 1], is [Swapping limits](../../06-Calculus%20and%20analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives.md).
 
