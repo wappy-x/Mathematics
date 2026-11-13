@@ -133,5 +133,5 @@ fn main() {
     assert!((end.0 + end.1 - by_integral(SIG, 10, F, T)).abs() < 1e-7); // replication holds when the sign flips
     assert!(by_integral(SIG, 10, F, T) < 0.0); // paying late flips the sign
     assert!(by_integral(SIG, 0, F, T) > a2); // paying early makes it bigger
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

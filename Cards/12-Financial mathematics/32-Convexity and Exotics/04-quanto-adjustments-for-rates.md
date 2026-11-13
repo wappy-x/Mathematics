@@ -8,7 +8,7 @@
 
 A dollar fund wants exposure to Japanese interest rates, but not to the yen. A bank offers a coupon. In one year the 3-month yen rate is fixed. Three months after that, the bank pays the fund that rate on 100 million yen, converted to dollars at a rate written into the contract today: 100 yen to the dollar, whatever the yen trades at by then. The fund pays a fixed rate in return. A rate set in one currency and paid in another at a frozen conversion is a **quanto rate** (short for "quantity-adjusting"), the term used from here on.
 
-Which fixed rate makes the swap fair? The obvious answer is the yen forward rate, 3.00 percent: the rate at which a Japanese bank would agree today to lend yen for those three months. That answer is wrong by a small, stubborn amount. With the yen rate and the yen's value moving together, the fair dollar rate is **2.9642 percent**, 3.58 basis points lower (a basis point is a hundredth of a percent). Struck at 3.00 percent instead, the fund's side is worth minus $87.67 today.
+Which fixed rate makes the swap fair? The obvious answer is the yen forward rate, 3.00 percent: the rate at which a Japanese bank would agree today to lend yen for those three months. That answer is wrong by a small, stubborn amount. With the yen rate and the yen's value moving together, the fair dollar rate is **2.9642 percent**, 3.58 basis points lower (a basis point, bp, is a hundredth of a percent). Struck at 3.00 percent instead, the fund's side is worth minus $87.67 today.
 
 The gap has one source. The yen forward rate is an average of possible future yen rates, each weighted by what a yen payment is worth in that future. The fund is paid in dollars, so each future must be weighted by what a dollar payment is worth there. Where the yen is strong, a dollar buys fewer yen, so those futures count for less. If the yen tends to be strong when yen rates are high, the high rates lose weight and the average falls.
 
@@ -35,7 +35,15 @@ One line: the dollar payment for each yen fixing. It is straight, with slope $2,
 
 ## The formula
 
-Notation first, in words. $T$ is the fixing date and $U$ the payment date. $L$ is the yen rate fixed at $T$; $F$ is its yen forward today. $G_T$ is the forward exchange rate at $T$, in dollars per yen, for delivery at $U$. A subscript d marks dollars (domestic) and f marks yen (foreign). $D_d(t,U)$ is the price at a date t of one dollar paid at date $U$; $D_f(t,U)$ is the same for one yen. An average written $\mathbb{E}^{f,U}[\cdot]$ is taken with the probabilities that make every yen price, counted in yen bonds maturing at $U$, driftless: the **yen forward measure**, the device of [Timing adjustments](03-timing-and-in-arrears-adjustments.md) set in yen. $\mathbb{E}^{d,U}$ is the dollar forward measure, and $\mathbb{E}^{f,A}$ counts in a yen annuity: the **annuity measure** of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
+Notation first, in words.
+
+- $T$ is the fixing date and $U$ the payment date.
+- $L$ is the yen rate fixed at $T$; $F$ is its yen forward today.
+- $G_T$ is the forward exchange rate at $T$, in dollars per yen, for delivery at $U$.
+- A subscript d marks dollars (domestic) and f marks yen (foreign).
+- $D_d(t,U)$ is the price at a date t of one dollar paid at date $U$; $D_f(t,U)$ is the same for one yen.
+- An average written $\mathbb{E}^{f,U}[\cdot]$ is taken with the probabilities that make every yen price, counted in yen bonds maturing at $U$, driftless: the **yen forward measure**, the device of [Timing adjustments](03-timing-and-in-arrears-adjustments.md) set in yen.
+- $\mathbb{E}^{d,U}$ is the dollar forward measure, and $\mathbb{E}^{f,A}$ counts in a yen annuity: the **annuity measure** of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
 
 The exact statement, for any joint behaviour of rates and currency:
 
@@ -117,7 +125,7 @@ Now take $\ln F_T$ and $\ln G_T$ jointly normal under $Q^{f,U}$, with volatiliti
 
 $$K_q = F\,e^{-\rho\sigma_F\sigma_G T}.$$
 
-Read through Girsanov's theorem, the density $G_0/G_T$ shifts the driver $W^F$ by $-\rho\sigma_G\,dt$, which is the drift $\mu = -\rho\sigma_F\sigma_G$ on the formula line. For the example, $\rho\sigma_F\sigma_G T = 0.40 \times 0.30 \times 0.10 \times 1 = 0.012$.
+Read through Girsanov's theorem (a change of weights shows up as a drift on a random driver; see [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)), the density $G_0/G_T$ shifts the driver $W^F$ by $-\rho\sigma_G\,dt$, which is the drift $\mu = -\rho\sigma_F\sigma_G$ on the formula line. For the example, $\rho\sigma_F\sigma_G T = 0.40 \times 0.30 \times 0.10 \times 1 = 0.012$.
 
 ### Step 4: the same answer from the dollar side
 
@@ -133,7 +141,11 @@ A yen 10-year swap rate $S$ is driftless when counted in the swap's yen annuity 
 
 $$\frac{D_d(T,U)}{X_T\,A_T} = \frac{1}{G_T}\cdot\frac{D_f(T,U)}{A_T} = \frac{m(S_T)}{G_T}.$$
 
-The weight splits into a currency factor and a payment-date factor $m$. Taking $\ln S_T$ and $\ln G_T$ jointly normal under the annuity measure, the currency factor again shifts the swap rate's driver, so the quanto CMS rate is the plain yen CMS rate computed on the shifted forward $S_0 e^{-\rho\sigma_S\sigma_G T}$. That is exact in the model. Multiplying the yen CMS rate by $e^{-\rho\sigma_S\sigma_G T}$ instead is close but not exact, because the CMS convexity grows with the level of the forward it is computed on. A single-period swap has $A_T = \delta D_f(T,U)$, $m$ constant, and Step 5 collapses back to Step 2: the forward measure is the annuity measure of a one-payment swap.
+The weight splits into a currency factor and a payment-date factor $m$. Taking $\ln S_T$ and $\ln G_T$ jointly normal under the annuity measure, the currency factor again shifts the swap rate's driver, so the quanto CMS rate is the plain yen CMS rate computed on the shifted forward $S_0 e^{-\rho\sigma_S\sigma_G T}$. That is exact in the model.
+
+Multiplying the yen CMS rate by $e^{-\rho\sigma_S\sigma_G T}$ instead is close but not exact, because the CMS convexity grows with the level of the forward it is computed on.
+
+A single-period swap has $A_T = \delta D_f(T,U)$, $m$ constant, and Step 5 collapses back to Step 2: the forward measure is the annuity measure of a one-payment swap.
 
 <details>
 <summary>Why a flat curve for $m$?</summary>
@@ -613,6 +625,186 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
+
+### Lean
+
+Lean proves the exact formula and its covariance form for any positive $G_T$, and the closed form in the lognormal model.
+
+- Suppose $G_T$ is always positive, $1/G_T$ has a finite yen average, and that average is $1/G_0$. Then weighting each future by $G_0/G_T$ gives probabilities that add up to one.
+- Suppose also that $L/G_T$ has a finite yen average. Then the average of $L$ under those weights equals $\mathbb{E}^{f,U}[L/G_T] / \mathbb{E}^{f,U}[1/G_T]$.
+- Suppose $G_T$ is always positive, and $L$, $1/G_T$ and $L/G_T$ have finite yen averages. Then the ratio equals the yen average of $L$, plus the covariance of $L$ with $1/G_T$ divided by the average weight.
+- Take the model of Step 3: $\ln F_T$ and $\ln G_T$ jointly normal, $F$ driftless, any time $T \ge 0$. Then $K_q = F e^{-\rho\sigma_F\sigma_G T}$.
+- The worked numbers check exactly as fractions, including the three-state world's 137/49 percent and its −$500 value.
+
+Steps 4 and 5, the Greeks and every decimal figure are left to the Python and Rust checks.
+
+```lean
+-- Quanto rates: the fair strike of a foreign rate paid in domestic currency at a frozen conversion is the foreign forward average reweighted by one over the forward exchange rate, and in the lognormal model it equals F times exp(-rho sigma_F sigma_G T).
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+import Mathlib.MeasureTheory.Measure.Prod
+
+open MeasureTheory ProbabilityTheory Real
+
+lemma gauss_exp_integral (t : ℝ) :
+    ∫ x, exp (t * x) ∂(gaussianReal 0 1) = exp (t ^ 2 / 2) := by
+  have h := congrFun (mgf_fun_id_gaussianReal (μ := 0) (v := 1)) t
+  simp only [mgf] at h
+  rw [h]; congr 1; simp
+
+#print axioms gauss_exp_integral
+
+/-- The exact quanto strike, in any model without free money. Let `μ` be the yen forward measure
+and `G` the forward exchange rate at fixing (dollars per yen, always positive), with the no-free-money
+pin `E^{f,U}[1/G_T] = 1/G₀`. The dollar forward measure is `μ` reweighted by the density `G₀ / G_T`.
+Then that reweighting is a probability measure, and the dollar average of the yen rate `L`, which is
+the fair dollar strike `K_q`, equals `E^{f,U}[L / G_T] / E^{f,U}[1 / G_T]`. The only integrability
+needed is that `1/G_T` and `L/G_T` have finite averages. -/
+theorem quanto_strike_eq_forward_reweighted_by_inverse_fx
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (L G : Ω → ℝ) (G₀ : ℝ) (hG : Measurable G) (hGpos : ∀ ω, 0 < G ω) (hG₀ : 0 < G₀)
+    (hw : Integrable (fun ω => 1 / G ω) μ) (hLw : Integrable (fun ω => L ω / G ω) μ)
+    (hpin : ∫ ω, 1 / G ω ∂μ = 1 / G₀) :
+    IsProbabilityMeasure (μ.withDensity (fun ω => ENNReal.ofReal (G₀ / G ω))) ∧
+      ∫ ω, L ω ∂(μ.withDensity (fun ω => ENNReal.ofReal (G₀ / G ω))) =
+        (∫ ω, L ω / G ω ∂μ) / (∫ ω, 1 / G ω ∂μ) := by
+  have hmeas : Measurable (fun ω => ENNReal.ofReal (G₀ / G ω)) :=
+    ENNReal.measurable_ofReal.comp (measurable_const.div hG)
+  have hint : Integrable (fun ω => G₀ / G ω) μ := by
+    have := hw.const_mul G₀
+    refine this.congr (Filter.Eventually.of_forall fun ω => ?_)
+    simp [div_eq_mul_inv]
+  refine ⟨⟨?_⟩, ?_⟩
+  · rw [withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ,
+      ← ofReal_integral_eq_lintegral_ofReal hint
+        (Filter.Eventually.of_forall fun ω => (div_pos hG₀ (hGpos ω)).le)]
+    have : ∫ ω, G₀ / G ω ∂μ = G₀ * ∫ ω, 1 / G ω ∂μ := by
+      rw [← integral_const_mul]; congr 1; ext ω; simp [div_eq_mul_inv]
+    rw [this, hpin, mul_one_div_cancel hG₀.ne', ENNReal.ofReal_one]
+  · rw [integral_withDensity_eq_integral_toReal_smul hmeas
+      (Filter.Eventually.of_forall fun _ => ENNReal.ofReal_lt_top), hpin]
+    have : ∀ ω, (ENNReal.ofReal (G₀ / G ω)).toReal • L ω = G₀ * (L ω / G ω) := by
+      intro ω
+      rw [ENNReal.toReal_ofReal (div_pos hG₀ (hGpos ω)).le, smul_eq_mul]; ring
+    simp_rw [this]
+    rw [integral_const_mul]; field_simp
+
+/-- The covariance form: the quanto strike is the yen forward `E^{f,U}[L]` plus the covariance of
+the rate with the weight `1/G_T`, divided by the average weight. -/
+theorem quanto_strike_eq_forward_add_covariance
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (L G : Ω → ℝ) (hGpos : ∀ ω, 0 < G ω) (hL : Integrable L μ)
+    (hw : Integrable (fun ω => 1 / G ω) μ) (hLw : Integrable (fun ω => L ω / G ω) μ) :
+    (∫ ω, L ω / G ω ∂μ) / (∫ ω, 1 / G ω ∂μ) =
+      (∫ ω, L ω ∂μ) + cov[L, fun ω => 1 / G ω; μ] / (∫ ω, 1 / G ω ∂μ) := by
+  have hpos : 0 < ∫ ω, 1 / G ω ∂μ := by
+    rw [integral_pos_iff_support_of_nonneg (fun ω => (one_div_pos.mpr (hGpos ω)).le) hw]
+    have : Function.support (fun ω => 1 / G ω) = Set.univ := by
+      ext ω; simp [(hGpos ω).ne']
+    rw [this]; simp
+  set a := ∫ ω, L ω ∂μ
+  set b := ∫ ω, 1 / G ω ∂μ
+  have hcov : cov[L, fun ω => 1 / G ω; μ] = (∫ ω, L ω / G ω ∂μ) - a * b := by
+    rw [covariance]
+    have : ∀ ω, (L ω - μ[L]) * (1 / G ω - μ[fun ω => 1 / G ω])
+        = (L ω / G ω - b * L ω) - (a * (1 / G ω) - a * b) := by
+      intro ω; simp only [a, b]; ring
+    simp_rw [this]
+    rw [integral_sub (f := fun ω => L ω / G ω - b * L ω) (g := fun ω => a * (1 / G ω) - a * b)
+        (hLw.sub (hL.const_mul b)) ((hw.const_mul a).sub (integrable_const _)),
+      integral_sub (f := fun ω => L ω / G ω) (g := fun ω => b * L ω) hLw (hL.const_mul b),
+      integral_sub (f := fun ω => a * (1 / G ω)) (g := fun ω => a * b) (hw.const_mul a)
+        (integrable_const _),
+      integral_const_mul, integral_const_mul, integral_const, probReal_univ, one_smul]
+    simp only [a, b]; ring
+  rw [hcov]; field_simp; ring
+
+/-- The lognormal model. Under the yen forward measure the yen forward rate is driftless lognormal,
+`F_T = F exp(σ_F √T Z₁ - σ_F² T / 2)`, and the forward exchange rate is lognormal with volatility
+`σ_G` and correlation `ρ` to the rate, `G_T = exp(g + σ_G √T (ρ Z₁ + √(1 - ρ²) Z₂))`, where
+`Z₁, Z₂` are independent standard normals and `g` is any constant. Then the fair quanto strike
+`E[F_T / G_T] / E[1 / G_T]` equals `F exp(-ρ σ_F σ_G T)`. -/
+theorem quanto_strike_lognormal
+    (F σF σG ρ T g : ℝ) (hT : 0 ≤ T) (hρ : ρ ∈ Set.Icc (-1 : ℝ) 1) :
+    (∫ p : ℝ × ℝ, (F * exp (σF * √T * p.1 - σF ^ 2 * T / 2)) /
+          exp (g + σG * √T * (ρ * p.1 + √(1 - ρ ^ 2) * p.2))
+          ∂((gaussianReal 0 1).prod (gaussianReal 0 1))) /
+      (∫ p : ℝ × ℝ, 1 / exp (g + σG * √T * (ρ * p.1 + √(1 - ρ ^ 2) * p.2))
+          ∂((gaussianReal 0 1).prod (gaussianReal 0 1))) =
+      F * exp (-(ρ * σF * σG * T)) := by
+  set s := √T
+  set r := √(1 - ρ ^ 2)
+  have hs : s ^ 2 = T := Real.sq_sqrt hT
+  have hnum : ∀ p : ℝ × ℝ, (F * exp (σF * s * p.1 - σF ^ 2 * T / 2)) /
+          exp (g + σG * s * (ρ * p.1 + r * p.2)) =
+      (F * exp (-(σF ^ 2 * T / 2) - g) * exp ((σF * s - σG * s * ρ) * p.1)) *
+        exp ((-(σG * s * r)) * p.2) := by
+    intro p
+    rw [mul_div_assoc, ← Real.exp_sub]
+    simp only [mul_assoc, ← Real.exp_add]
+    congr 2; ring
+  have hden : ∀ p : ℝ × ℝ, 1 / exp (g + σG * s * (ρ * p.1 + r * p.2)) =
+      (exp (-g) * exp ((-(σG * s * ρ)) * p.1)) * exp ((-(σG * s * r)) * p.2) := by
+    intro p
+    rw [one_div, ← Real.exp_neg, ← Real.exp_add, ← Real.exp_add]
+    congr 1; ring
+  simp_rw [hnum, hden]
+  rw [integral_prod_mul (fun x : ℝ => F * exp (-(σF ^ 2 * T / 2) - g) * exp ((σF * s - σG * s * ρ) * x))
+      (fun y : ℝ => exp ((-(σG * s * r)) * y)),
+    integral_prod_mul (fun x : ℝ => exp (-g) * exp ((-(σG * s * ρ)) * x))
+      (fun y : ℝ => exp ((-(σG * s * r)) * y))]
+  rw [integral_const_mul, integral_const_mul, gauss_exp_integral, gauss_exp_integral,
+    gauss_exp_integral]
+  have h1 : 0 < exp ((-(σG * s * r)) ^ 2 / 2) := exp_pos _
+  have h2 : 0 < exp (-g) := exp_pos _
+  have h3 : 0 < exp ((-(σG * s * ρ)) ^ 2 / 2) := exp_pos _
+  rw [mul_div_mul_right _ _ h1.ne']
+  rw [div_eq_iff (mul_pos h2 h3).ne']
+  rw [mul_assoc, mul_assoc, mul_assoc]
+  congr 1
+  simp only [← Real.exp_add]
+  congr 1
+  rw [← hs]; ring
+
+-- Worked numbers: rho * sigma_F * sigma_G * T = 0.40 * 0.30 * 0.10 * 1 = 0.012.
+example : (2 / 5 : ℚ) * (3 / 10) * (1 / 10) * 1 = 3 / 250 := by norm_num
+-- Dollars at U per unit of rate: 0.01 * 100,000,000 * 0.25 = 250,000; today: 250,000 * 0.98 = 245,000.
+example : (1 / 100 : ℚ) * 100000000 * (1 / 4) = 250000 := by norm_num
+example : (250000 : ℚ) * (98 / 100) = 245000 := by norm_num
+
+-- Three-state world: weights 1/X_T are 125, 100, 250/3.
+example : (1 : ℚ) / (8 / 1000) = 125 ∧ (1 : ℚ) / (10 / 1000) = 100 ∧
+    (1 : ℚ) / (12 / 1000) = 250 / 3 := by norm_num
+-- Average weight 1225/12 (about 102.08), and the implied dollar bond 0.01 * 0.96 * 1225/12 = 0.98.
+example : (1 / 4 : ℚ) * 125 + 1 / 2 * 100 + 1 / 4 * (250 / 3) = 1225 / 12 := by norm_num
+example : (1 / 100 : ℚ) * (96 / 100) * (1225 / 12) = 98 / 100 := by norm_num
+-- Dollar probabilities 15/49, 24/49, 10/49.
+example : (1 / 4 : ℚ) * 125 / (1225 / 12) = 15 / 49 ∧ (1 / 2 : ℚ) * 100 / (1225 / 12) = 24 / 49 ∧
+    (1 / 4 : ℚ) * (250 / 3) / (1225 / 12) = 10 / 49 := by norm_num
+-- Fair quanto rate (15 * 1% + 24 * 3% + 10 * 5%) / 49 = 137/49 percent (about 2.7959%).
+example : ((15 : ℚ) * 1 + 24 * 3 + 10 * 5) / 49 = 137 / 49 := by norm_num
+-- Covariance route: the covariance of the rate with the weight is -5/24 (about -0.2083),
+-- and 3% + (-5/24) / (1225/12) gives the same 137/49 percent.
+example : (1 / 4 : ℚ) * (1 / 100) * 125 + 1 / 2 * (3 / 100) * 100 + 1 / 4 * (5 / 100) * (250 / 3)
+    - (3 / 100) * (1225 / 12) = -5 / 24 := by norm_num
+example : (3 / 100 : ℚ) + (-5 / 24) / (1225 / 12) = 137 / 4900 := by norm_num
+-- Value struck at 3%: 245,000 * (137/4900 - 3/100) = -500.
+example : (245000 : ℚ) * (137 / 4900 - 3 / 100) = -500 := by norm_num
+
+#print axioms quanto_strike_eq_forward_reweighted_by_inverse_fx
+#print axioms quanto_strike_eq_forward_add_covariance
+#print axioms quanto_strike_lognormal
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gauss_exp_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_strike_eq_forward_reweighted_by_inverse_fx' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_strike_eq_forward_add_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_strike_lognormal' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

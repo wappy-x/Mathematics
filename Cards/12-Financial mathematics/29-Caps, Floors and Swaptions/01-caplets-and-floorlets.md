@@ -8,9 +8,13 @@
 
 A company has borrowed \$10 million at a floating rate. Every three months the loan looks up the market's 3-month interest rate and charges it for the coming quarter. One quarter worries the treasurer: the one that starts two and a half years from now. Its rate will be looked up on that day and the interest paid three months later, at 2.75 years. Nobody knows what the rate will be.
 
-So the company buys insurance on that one quarter. If the rate is fixed above 5 percent, the insurer pays the excess on \$10 million for a quarter of a year. Fixed at 7 percent, the policy pays \$50,000. Fixed at 4 percent, it pays nothing. From here on the policy has its market name: a **caplet**, one period of an interest-rate cap, with **strike** 5 percent (the level above which it pays). The mirror policy, paying when the rate fixes *below* the strike, is a **floorlet**; a lender buys it.
+So the company buys insurance on that one quarter. If the rate is fixed above 5 percent, the insurer pays the excess on \$10 million for a quarter of a year. Fixed at 7 percent, the policy pays \$50,000. Fixed at 4 percent, it pays nothing.
 
-The caplet costs **\$20,831.65 today, 0.21 percent of the notional** (the loan size the payment is measured on, never itself exchanged). The number comes from Black's 1976 formula for options on forwards, applied to the forward interest rate for that quarter. Two things make that legitimate. First, the forward rate is read off today's bond prices, not forecast. Second, when the caplet is priced in units of the bond that pays on the payment date, the forward rate is a fair bet: its average is itself. The payment date then does double duty. Volatility runs to the day the rate is fixed; discounting runs to the day the money moves.
+From here on the policy has its market name: a **caplet**, one period of an interest-rate cap, with **strike** 5 percent (the level above which it pays). The mirror policy, paying when the rate fixes *below* the strike, is a **floorlet**; a lender buys it.
+
+The caplet costs **\$20,831.65 today, 0.21 percent of the notional** (the loan size the payment is measured on, never itself exchanged). The number comes from Black's 1976 formula for options on forwards, applied to the forward interest rate for that quarter.
+
+Two things make that legitimate. First, the forward rate is read off today's bond prices, not forecast. Second, when the caplet is priced in units of the bond that pays on the payment date, the forward rate is a fair bet: its average is itself. The payment date then does double duty. Volatility runs to the day the rate is fixed; discounting runs to the day the money moves.
 
 **A caplet is a call option on one forward interest rate, paid at the end of its period; priced in units of the bond maturing on that payment date, the forward rate averages to itself, so Black's formula applies with volatility clocked to the fixing date and discounting to the payment date.**
 
@@ -63,7 +67,7 @@ $d_1$ and $d_2$ are the distance from the forward to the strike, in standard dev
 
 - **The rate is lognormal around its forward, with one volatility.** The market quotes each strike with its own volatility (a smile). With a single $\sigma$ the price is right at the quoted strike and off elsewhere, by roughly vega (the price change per point of volatility, in The Greeks below) times the volatility gap.
 - **The rate is positive.** $\ln(F/K)$ needs a positive forward and strike. With rates near or below zero the market prices caplets with a shifted or a normal model instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
-- **The rate is fixed at the start of the period and paid at the end.** That is the term-rate convention of LIBOR, the London interbank rate retired in 2023. Rates compounded from overnight fixings (SOFR, SONIA) are only known at the period's end, so the uncertainty runs past $T_1$ into the period; Lyashenko and Mercurio extend the formula for that case.
+- **The rate is fixed at the start of the period and paid at the end.** That is the term-rate convention of LIBOR, the London interbank rate retired in 2023. Rates compounded from overnight fixings (SOFR in dollars, SONIA in sterling) are only known at the period's end, so the uncertainty runs past $T_1$ into the period; Lyashenko and Mercurio extend the formula for that case.
 - **One curve gives both the forward and the discount.** Since 2008 the forward comes from a projection curve for the index and the discount factor from the overnight curve. The formula survives with each input read from its own curve; reading both from one curve misprices by the spread between them.
 - **The seller pays.** No allowance is made for the insurer defaulting.
 
@@ -75,7 +79,7 @@ $d_1$ and $d_2$ are the distance from the forward to the strike, in standard dev
 
 ### Step 0: price the caplet in units of the bond that pays when the caplet pays
 
-A caplet's payoff lands on the payment date. Count its value not in dollars but in units of the bond that pays \$1 on that same date. In those units the payment needs no discounting at all: a dollar on the payment date *is* one unit. What is left is an average of the payoff, and the one fact that makes Black's formula usable is that, under the weights these units impose, the forward rate averages to itself. That is the **forward measure**: the set of odds the payment-date bond defines ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)).
+A caplet's payoff lands on the payment date. Count its value not in dollars but in units of the bond that pays \$1 on that same date. In those units the payment needs no discounting at all: a dollar on the payment date *is* one unit. What is left is an average of the payoff. The one fact that makes Black's formula usable is that, under the weights these units impose, the forward rate averages to itself. That is the **forward measure**: the set of odds the payment-date bond defines ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)).
 
 ### Step 1: the forward rate is a ratio of two bond prices
 
@@ -83,7 +87,7 @@ Buy a bond paying \$1 at 2.5 years, for $D(T_1)$ = 0.882497. On that date, lend 
 
 $$F = \frac{1}{0.25}\left(\frac{0.882497}{0.871534} - 1\right) = 5.031381\%.$$
 
-That contract, a **forward rate agreement** (FRA), is worth nothing today. The forward is not a forecast; it is arithmetic on two prices. It is also not the curve's 5 percent: the curve compounds continuously, and the forward is simple interest over one quarter.
+That contract, a **forward rate agreement** (FRA), is worth nothing today ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). The forward is not a forecast; it is arithmetic on two prices. It is also not the curve's 5 percent: the curve compounds continuously, and the forward is simple interest over one quarter.
 
 ### Step 2: two dates, two jobs
 
@@ -161,7 +165,7 @@ Notional \$10,000,000; quarter from 2.5 to 2.75 years; strike 5%; volatility 30%
 | floorlet, same inputs | $2{,}178{,}835.87 \times [0.05\,N(0.223981) - 0.05031381\,N(-0.250361)]$ | \$20,147.92 |
 | breakeven fixing | $5\% + 20{,}831.65 / 2{,}178{,}835.87$ | 5.9561% |
 
-About \$21,000 insures one quarter on \$10 million against rates above 5 percent, two and a half years out. The forward sits a hair above the strike, and 30 percent volatility over two and a half years spreads the fixing widely, so the Black value, 0.00956091, is close to one percentage point of annual interest, charged for one quarter and paid up front.
+About \$21,000 insures one quarter on \$10 million against rates above 5 percent, two and a half years out. The forward sits just above the strike, and 30 percent volatility over two and a half years spreads the fixing widely. So the Black value, 0.00956091, is close to one percentage point of annual interest, charged for one quarter and paid up front.
 
 ### The Greeks
 
@@ -378,7 +382,7 @@ chart, profit    -23902 -23902 -23902 -23902 -23902 -11402 1098 13598 26098
 ALL CHECKS PASS
 ```
 
-Four roads, one price. Simpson and the bond-put route land on the formula to the cent. The Monte Carlo is \$20,709.30 with a standard error of \$91.06, inside the three-standard-error band the assert demands. The average fixing under the payment-date odds comes out at the forward, 0.05031381, and the reweighting to reset-date odds averages to 1, as any change of units must; asserts hold both, and the vega bump, to tight tolerances. The last line checks the shelf: caplet 7 of the two-year cap on [Caps and floors](02-caps-floors-and-parity.md) reproduces its \$14,793.71.
+Four roads, one price. Simpson and the bond-put route land on the formula to the cent. The Monte Carlo is \$20,709.30 with a standard error of \$91.06, inside the three-standard-error band the assert demands. The average fixing under the payment-date odds comes out at the forward, 0.05031381. The reweighting to reset-date odds averages to 1, as any change of units must. Asserts hold both of these, and the delta and vega bumps, to tight tolerances. The last line checks the shelf: caplet 7 of the two-year cap on [Caps and floors](02-caps-floors-and-parity.md) reproduces its \$14,793.71.
 
 ### Rust
 
@@ -580,6 +584,159 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, although the bell-curve area was built two different ways.
 
+### Lean
+
+Lean proves three exact facts from Why it works, for any finite set of outcomes with positive state prices and positive rates.
+
+- Take the payment-date bond's odds, each state price times $X$ over $D(T_2)$. Then they are positive, add to 1, and average the fixed rate to $F$.
+- Take a caplet bought and a floorlet sold, on notional $M$ and positive strike $K$. Then together they are worth $M\,\tau\,D(T_2)\,(F - K)$ today.
+- Take a positive fixed rate $L$ and strike $K$. Then the caplet's payment on the reset date equals $1 + \tau K$ puts on the payment-date bond, struck at $1/(1 + \tau K)$.
+- At 7 percent the caplet pays \$50,000, and at 4 percent nothing.
+- Each half point above 5 percent adds \$12,500, and the bond strike is exactly 80/81.
+
+Black's lognormal formula, its dollar prices and the Greeks are left to the Python and Rust checks.
+
+```lean
+-- Caplets and floorlets: under the odds set by the payment-date bond the fixed rate averages to the forward rate, so caplet minus floorlet is a forward rate agreement, and a caplet is a put on that bond.
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
+
+open Finset
+
+/-! A model with finitely many outcomes at the reset date, numbered by `s : ι`.
+`π s > 0` is the state price (today's cost of `$1` at the reset date in outcome `s` only),
+`L s` is the rate fixed in outcome `s`, and `τ > 0` is the length of the interest period in years.
+`X s = 1 / (1 + τ * L s)` is the reset-date price of `$1` paid at the payment date.
+Today's discount factors are `D(T₁) = ∑ π s` and `D(T₂) = ∑ π s * X s`, and the forward rate is
+`F = (D(T₁) / D(T₂) - 1) / τ`. The payment-date bond's odds are `q s = π s * X s / D(T₂)`.
+The positive part `(x)⁺` is written `max x 0`. -/
+
+/-- The forward measure makes the forward rate a fair bet: in any model with positive state prices
+and positive rates, the weights `q s = π s * X s / D(T₂)` set by the payment-date bond are positive
+and add to 1, and under them the average of the fixed rate is exactly the forward rate
+`F = (D(T₁) / D(T₂) - 1) / τ`. Nothing is assumed about how rates move. -/
+theorem forward_rate_is_fair_bet_under_payment_bond_odds {ι : Type*} [Fintype ι] [Nonempty ι]
+    (π L : ι → ℝ) (τ : ℝ) (hτ : 0 < τ) (hπ : ∀ s, 0 < π s) (hL : ∀ s, 0 < L s) :
+    let X : ι → ℝ := fun s => 1 / (1 + τ * L s)
+    let D₁ : ℝ := ∑ s, π s
+    let D₂ : ℝ := ∑ s, π s * X s
+    let q : ι → ℝ := fun s => π s * X s / D₂
+    (∀ s, 0 < q s) ∧ ∑ s, q s = 1 ∧ ∑ s, q s * L s = (D₁ / D₂ - 1) / τ := by
+  intro X D₁ D₂ q
+  have hX : ∀ s, 0 < X s := fun s => by
+    simp only [X]; have := hL s; positivity
+  have hXL : ∀ s, π s * X s * L s = (π s - π s * X s) / τ := fun s => by
+    simp only [X]
+    have h1 : (0:ℝ) < 1 + τ * L s := by have := hL s; positivity
+    field_simp
+    ring
+  have hD₂ : 0 < D₂ := Finset.sum_pos (fun s _ => mul_pos (hπ s) (hX s)) Finset.univ_nonempty
+  refine ⟨fun s => div_pos (mul_pos (hπ s) (hX s)) hD₂, ?_, ?_⟩
+  · simp only [q, ← Finset.sum_div]
+    exact div_self hD₂.ne'
+  · have e : ∑ s, q s * L s = (∑ s, π s * X s * L s) / D₂ := by
+      simp only [q, Finset.sum_div]
+      refine Finset.sum_congr rfl (fun s _ => ?_)
+      ring
+    rw [e]
+    simp only [hXL, ← Finset.sum_div, Finset.sum_sub_distrib]
+    show (D₁ - D₂) / τ / D₂ = (D₁ / D₂ - 1) / τ
+    field_simp
+
+/-- Caplet minus floorlet is a forward rate agreement: a caplet bought and a floorlet sold, on
+notional `M` and strike `K`, each paying at the payment date, are together worth
+`M * τ * D(T₂) * (F - K)` today, whatever the volatility or the model. -/
+theorem caplet_sub_floorlet_eq_fra {ι : Type*} [Fintype ι] [Nonempty ι]
+    (π L : ι → ℝ) (τ M K : ℝ) (hτ : 0 < τ) (hπ : ∀ s, 0 < π s) (hL : ∀ s, 0 < L s)
+    (hK : 0 < K) :
+    let X : ι → ℝ := fun s => 1 / (1 + τ * L s)
+    let D₁ : ℝ := ∑ s, π s
+    let D₂ : ℝ := ∑ s, π s * X s
+    let F : ℝ := (D₁ / D₂ - 1) / τ
+    (∑ s, π s * X s * (M * τ * max (L s - K) 0)) - (∑ s, π s * X s * (M * τ * max (K - L s) 0))
+      = M * τ * D₂ * (F - K) := by
+  intro X D₁ D₂ F
+  have hX : ∀ s, 0 < X s := fun s => by
+    simp only [X]; have := hL s; positivity
+  have hXL : ∀ s, π s * X s * L s = (π s - π s * X s) / τ := fun s => by
+    simp only [X]
+    have h1 : (0:ℝ) < 1 + τ * L s := by have := hL s; positivity
+    field_simp
+    ring
+  have hD₂ : 0 < D₂ := Finset.sum_pos (fun s _ => mul_pos (hπ s) (hX s)) Finset.univ_nonempty
+  have hm : ∀ a : ℝ, max a 0 - max (-a) 0 = a := fun a => by
+    rcases le_total a 0 with h | h
+    · rw [max_eq_right h, max_eq_left (by linarith)]; ring
+    · rw [max_eq_left h, max_eq_right (by linarith)]; ring
+  rw [← Finset.sum_sub_distrib]
+  have e : ∀ s, π s * X s * (M * τ * max (L s - K) 0) - π s * X s * (M * τ * max (K - L s) 0)
+      = M * τ * (π s * X s * L s) - M * τ * K * (π s * X s) := fun s => by
+    have := hm (L s - K)
+    rw [show K - L s = -(L s - K) by ring]
+    linear_combination (π s * X s * (M * τ)) * this
+  simp only [e, hXL, Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.sum_div]
+  show M * τ * ((D₁ - D₂) / τ) - M * τ * K * D₂ = M * τ * D₂ * ((D₁ / D₂ - 1) / τ - K)
+  field_simp
+
+/-- A caplet is a put on the payment-date bond: on the reset date, the caplet's payment
+`X * τ * (L - K)⁺` (per dollar of notional, with `X = 1 / (1 + τ * L)`) equals `1 + τ * K` puts on
+the bond struck at `1 / (1 + τ * K)`, that is `(1 + τ * K) * (1 / (1 + τ * K) - X)⁺`. -/
+theorem caplet_eq_put_on_payment_bond (τ L K : ℝ) (hτ : 0 < τ) (hL : 0 < L) (hK : 0 < K) :
+    1 / (1 + τ * L) * τ * max (L - K) 0
+      = (1 + τ * K) * max (1 / (1 + τ * K) - 1 / (1 + τ * L)) 0 := by
+  have h1 : 0 < 1 + τ * L := by positivity
+  have h2 : 0 < 1 + τ * K := by positivity
+  have e : 1 / (1 + τ * K) - 1 / (1 + τ * L) = τ * (L - K) / ((1 + τ * K) * (1 + τ * L)) := by
+    field_simp; ring
+  rw [e]
+  rcases le_total L K with h | h
+  · rw [max_eq_right (by linarith), max_eq_right]
+    · ring
+    · apply div_nonpos_of_nonpos_of_nonneg
+      · nlinarith
+      · positivity
+  · rw [max_eq_left (by linarith), max_eq_left]
+    · field_simp
+    · apply div_nonneg
+      · nlinarith
+      · positivity
+
+/-! The card's exact worked numbers: notional `$10,000,000`, a quarter (`τ = 1/4`), strike 5%. -/
+
+-- Fixed at 7 percent, the caplet pays $50,000.
+example : (10000000 : ℚ) * (1 / 4) * max (7 / 100 - 5 / 100) 0 = 50000 := by norm_num
+
+-- Fixed at 4 percent, it pays nothing.
+example : (10000000 : ℚ) * (1 / 4) * max (4 / 100 - 5 / 100) 0 = 0 := by norm_num
+
+-- The chart: $12,500 for every half point above 5 percent (5.5, 6, 6.5 percent).
+example : (10000000 : ℚ) * (1 / 4) * max (55 / 1000 - 5 / 100) 0 = 12500 := by norm_num
+example : (10000000 : ℚ) * (1 / 4) * max (6 / 100 - 5 / 100) 0 = 25000 := by norm_num
+example : (10000000 : ℚ) * (1 / 4) * max (65 / 1000 - 5 / 100) 0 = 37500 := by norm_num
+
+-- The bond strike of the put: 1 / (1 + τ K) = 80/81 = 0.98765432...
+example : (1 : ℚ) / (1 + 1 / 4 * (5 / 100)) = 80 / 81 := by norm_num
+
+#print axioms forward_rate_is_fair_bet_under_payment_bond_odds
+#print axioms caplet_sub_floorlet_eq_fra
+#print axioms caplet_eq_put_on_payment_bond
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'forward_rate_is_fair_bet_under_payment_bond_odds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'caplet_sub_floorlet_eq_fra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'caplet_eq_put_on_payment_bond' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -620,6 +777,7 @@ The two outputs agree line for line, although the bell-curve area was built two 
 
 - [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the call on a forward, with no carry inside and one discount at the end. This card applies it with a forward rate as the forward.
 - [Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md): pricing in units of any traded asset, with the odds reweighted. Here the unit is the payment-date bond.
+- [Forward rate agreements](../02-Curves/02-forward-rate-agreements.md): the forward rate read from two discount factors, and the contract that locks it. This card uses both in Steps 1 and 5.
 
 ## Where this goes next
 

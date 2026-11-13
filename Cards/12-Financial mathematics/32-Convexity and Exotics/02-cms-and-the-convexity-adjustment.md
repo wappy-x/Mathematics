@@ -106,7 +106,7 @@ $$K_{\text{CMS}} = \frac{\mathbb{E}^A[\,S_T\, W_T\,]}{\mathbb{E}^A[\,W_T\,]}.$$
 
 This is exact. It uses nothing but the absence of free money.
 
-If $W_T$ were a constant, it would cancel and $K_{\text{CMS}}$ would be $F$. It is not constant, and it rises with the rate: at 4.5 percent the ratio is 0.120937, and its slope is 3.959847 times its own size per unit of rate. So futures with high rates count extra, and the average moves above $F$. This is the same mechanism as the gap between futures and forwards on [Futures against forwards](01-futures-forward-convexity.md): a payment made in the wrong unit, averaged under the wrong weights.
+If $W_T$ were a constant, it would cancel and $K_{\text{CMS}}$ would be $F$. It is not constant, and it rises with the rate: at 4.5 percent the ratio is 0.120937, and its slope is 3.959847 times its own size per unit of rate. So scenarios with high rates count extra, and the average moves above $F$. This is the same mechanism as the gap between futures and forwards on [Futures against forwards](01-futures-forward-convexity.md): a payment made in the wrong unit, averaged under the wrong weights.
 
 <details>
 <summary>Detailed proof: the change of unit</summary>
@@ -335,10 +335,10 @@ assert abs(w(F) - DU / A0) < 1e-12         # flat-curve weight matches today's c
 assert abs(end - by_integral(d=10)) < 1e-7  # replication still holds when the sign flips
 assert by_integral(d=10) < 0                # paying late flips the sign
 assert by_integral(d=0) > a2                # paying early makes it bigger
-print("all checks passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 inputs: forward, vol, expiry           0.045  0.20  5.0
@@ -381,7 +381,7 @@ wrong: paid at swap's end, bp          -19.5525
 try: vol 30%, bp                       46.4845
 try: vol 10%, bp                       4.1237
 try: strip, paid at swap's end, bp     -19.5525
-all checks passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -522,11 +522,11 @@ fn main() {
     assert!((end.0 + end.1 - by_integral(SIG, 10, F, T)).abs() < 1e-7); // replication holds when the sign flips
     assert!(by_integral(SIG, 10, F, T) < 0.0); // paying late flips the sign
     assert!(by_integral(SIG, 0, F, T) > a2); // paying early makes it bigger
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 inputs: forward, vol, expiry           0.045  0.20  5.0
@@ -569,7 +569,198 @@ wrong: paid at swap's end, bp          -19.5525
 try: vol 30%, bp                       46.4845
 try: vol 10%, bp                       4.1237
 try: strip, paid at swap's end, bp     -19.5525
-all checks passed
+ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the replication's algebra and calculus, for every payoff, weight and forward, plus the flat-curve check for this example.
+
+- Take any payoff $f$ with a continuous second derivative, a forward $F > 0$ and a rate $s > 0$. Then $f(s)$ is the straight line $f(F) + f'(F)(s-F)$ plus the receiver and payer integrals of Step 3.
+- Suppose $\mathbb{E}^A[S_T] = F$, $\mathbb{E}^A[w(S_T)]$ is not zero, and every average is finite. Then $K_{\text{CMS}} = F + \mathbb{E}^A[h(S_T)]/\mathbb{E}^A[w(S_T)]$.
+- Take $w$ with a continuous second derivative. Then the strip's weights are $h''(k) = 2w'(k) + (k-F)\,w''(k)$ at every strike $k$.
+- Take the flat 4.5 percent curve of the example. Then $w(F)$ and $D(U)/A_0$ are equal as exact fractions, not just to six decimal places.
+
+The change of unit in Step 1, Black's swaption prices and every basis-point figure are left to the Python and Rust checks.
+
+```lean
+-- Constant-maturity swaps: any twice continuously differentiable payoff equals a straight line plus a strip of receiver and payer payoffs weighted by its second derivative, the CMS rate splits into the forward plus a replicable adjustment, and the strip weights have the stated formula.
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+
+open MeasureTheory
+
+/-- The static replication (strip identity): for any payoff `f` with a continuous second
+derivative, any forward `F > 0` and any rate `s > 0`,
+`f(s) = f(F) + f'(F)(s - F) + ∫₀^F f''(k) (k - s)⁺ dk + ∫_F^∞ f''(k) (s - k)⁺ dk`.
+A curved payoff is a straight line plus receivers below the forward and payers above it,
+each sized by how sharply the payoff bends at its strike. -/
+theorem static_replication_strip (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f) (F s : ℝ)
+    (hF : 0 < F) (hs : 0 < s) :
+    f s = f F + deriv f F * (s - F)
+      + (∫ k in (0 : ℝ)..F, deriv (deriv f) k * max (k - s) 0)
+      + ∫ k in Set.Ioi F, deriv (deriv f) k * max (s - k) 0 := by
+  have h1 : ContDiff ℝ (1 + 1) f := by rw [one_add_one_eq_two]; exact hf
+  obtain ⟨hfd, -, hf1⟩ := contDiff_succ_iff_deriv.mp h1
+  have hf'd : Differentiable ℝ (deriv f) := hf1.differentiable (by norm_num)
+  have hf''c : Continuous (deriv (deriv f)) := hf1.continuous_deriv (by norm_num)
+  rcases le_or_gt s F with hsF | hsF
+  · have hint : ∀ a b : ℝ,
+        IntervalIntegrable (fun k => deriv (deriv f) k * max (k - s) 0) volume a b :=
+      fun a b => (hf''c.mul (by fun_prop)).intervalIntegrable a b
+    have h2 : ∫ k in Set.Ioi F, deriv (deriv f) k * max (s - k) 0 = 0 := by
+      apply setIntegral_eq_zero_of_forall_eq_zero
+      intro k hk
+      have hk' : F < k := hk
+      rw [max_eq_right (by linarith)]
+      simp
+    have h3 : ∫ k in (0 : ℝ)..s, deriv (deriv f) k * max (k - s) 0 = 0 := by
+      have : ∫ k in (0 : ℝ)..s, deriv (deriv f) k * max (k - s) 0
+          = ∫ _ in (0 : ℝ)..s, (0 : ℝ) := by
+        apply intervalIntegral.integral_congr
+        intro k hk
+        rw [Set.uIcc_of_le hs.le] at hk
+        simp only
+        rw [max_eq_right (by linarith [hk.2])]
+        simp
+      rw [this]
+      simp
+    have h4 : ∫ k in s..F, deriv (deriv f) k * max (k - s) 0
+        = (deriv f F * (F - s) - f F) - (deriv f s * (s - s) - f s) := by
+      have : ∫ k in s..F, deriv (deriv f) k * max (k - s) 0
+          = ∫ k in s..F, deriv (deriv f) k * (k - s) := by
+        apply intervalIntegral.integral_congr
+        intro k hk
+        rw [Set.uIcc_of_le hsF] at hk
+        simp only
+        rw [max_eq_left (by linarith [hk.1])]
+      rw [this]
+      apply intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (f := fun k => deriv f k * (k - s) - f k)
+      · intro k _
+        have h : HasDerivAt (fun k => deriv f k * (k - s) - f k)
+            (deriv (deriv f) k * (k - s) + deriv f k * 1 - deriv f k) k :=
+          ((hf'd k).hasDerivAt.mul ((hasDerivAt_id k).sub_const s)).sub (hfd k).hasDerivAt
+        convert h using 1
+        ring
+      · exact (hf''c.mul (by fun_prop)).intervalIntegrable _ _
+    rw [h2, ← intervalIntegral.integral_add_adjacent_intervals (hint 0 s) (hint s F), h3, h4]
+    ring
+  · have h1' : ∫ k in (0 : ℝ)..F, deriv (deriv f) k * max (k - s) 0 = 0 := by
+      have : ∫ k in (0 : ℝ)..F, deriv (deriv f) k * max (k - s) 0
+          = ∫ _ in (0 : ℝ)..F, (0 : ℝ) := by
+        apply intervalIntegral.integral_congr
+        intro k hk
+        rw [Set.uIcc_of_le hF.le] at hk
+        simp only
+        rw [max_eq_right (by linarith [hk.2])]
+        simp
+      rw [this]
+      simp
+    have h2 : ∫ k in Set.Ioi F, deriv (deriv f) k * max (s - k) 0
+        = ∫ k in Set.Ioc F s, deriv (deriv f) k * max (s - k) 0 := by
+      apply setIntegral_eq_of_subset_of_forall_sdiff_eq_zero measurableSet_Ioi
+        Set.Ioc_subset_Ioi_self
+      intro k hk
+      have hks : s < k := by
+        rcases hk with ⟨hk1, hk2⟩
+        simp only [Set.mem_Ioc, not_and, not_le] at hk2
+        exact hk2 hk1
+      rw [max_eq_right (by linarith)]
+      simp
+    have h4 : ∫ k in F..s, deriv (deriv f) k * max (s - k) 0
+        = (deriv f s * (s - s) + f s) - (deriv f F * (s - F) + f F) := by
+      have : ∫ k in F..s, deriv (deriv f) k * max (s - k) 0
+          = ∫ k in F..s, deriv (deriv f) k * (s - k) := by
+        apply intervalIntegral.integral_congr
+        intro k hk
+        rw [Set.uIcc_of_le hsF.le] at hk
+        simp only
+        rw [max_eq_left (by linarith [hk.2])]
+      rw [this]
+      apply intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (f := fun k => deriv f k * (s - k) + f k)
+      · intro k _
+        have h : HasDerivAt (fun k => deriv f k * (s - k) + f k)
+            (deriv (deriv f) k * (s - k) + deriv f k * (-1) + deriv f k) k :=
+          ((hf'd k).hasDerivAt.mul ((hasDerivAt_id k).const_sub s)).add (hfd k).hasDerivAt
+        convert h using 1
+        ring
+      · exact (hf''c.mul (by fun_prop)).intervalIntegrable _ _
+    rw [h2, ← intervalIntegral.integral_of_le hsF.le, h1', h4]
+    ring
+
+/-- The CMS rate is the forward plus a replicable adjustment: if the rate `S` has law `μ`
+under the annuity measure with mean `F` (no drift), and `w` is the weight (payment bond over
+annuity) with nonzero average, then
+`E[S w(S)] / E[w(S)] = F + E[h(S)] / E[w(S)]` where `h(s) = (s - F)(w(s) - w(F))`. -/
+theorem cms_rate_eq_forward_add_adjustment (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (w : ℝ → ℝ) (F : ℝ)
+    (hS : Integrable (fun s : ℝ => s) μ) (hw : Integrable w μ)
+    (hSw : Integrable (fun s => s * w s) μ)
+    (hmean : ∫ s, s ∂μ = F) (hw0 : ∫ s, w s ∂μ ≠ 0) :
+    (∫ s, s * w s ∂μ) / (∫ s, w s ∂μ)
+      = F + (∫ s, (s - F) * (w s - w F) ∂μ) / (∫ s, w s ∂μ) := by
+  have hexp : ∫ s, (s - F) * (w s - w F) ∂μ = ∫ s, s * w s ∂μ - F * ∫ s, w s ∂μ := by
+    have e : (fun s => (s - F) * (w s - w F))
+        = fun s => (s * w s - F * w s) - (w F * s - F * w F) := by
+      funext s; ring
+    rw [e, integral_sub (f := fun s => s * w s - F * w s) (g := fun s => w F * s - F * w F)
+        (hSw.sub (hw.const_mul F)) ((hS.const_mul (w F)).sub (integrable_const _)),
+      integral_sub (f := fun s => s * w s) (g := fun s => F * w s) hSw (hw.const_mul F),
+      integral_sub (f := fun s => w F * s) (g := fun _ => F * w F)
+        (hS.const_mul (w F)) (integrable_const _),
+      integral_const_mul, integral_const_mul, hmean, integral_const]
+    simp
+    ring
+  rw [hexp]
+  field_simp
+  ring
+
+/-- The strip's weights: for `h(s) = (s - F)(w(s) - w(F))` with `w` twice continuously
+differentiable, `h''(k) = 2 w'(k) + (k - F) w''(k)`. -/
+theorem strip_weight_second_deriv (w : ℝ → ℝ) (hw : ContDiff ℝ 2 w) (F k : ℝ) :
+    deriv (deriv (fun s => (s - F) * (w s - w F))) k
+      = 2 * deriv w k + (k - F) * deriv (deriv w) k := by
+  have h1 : ContDiff ℝ (1 + 1) w := by rw [one_add_one_eq_two]; exact hw
+  obtain ⟨hwd, -, hw1⟩ := contDiff_succ_iff_deriv.mp h1
+  have hw'd : Differentiable ℝ (deriv w) := hw1.differentiable (by norm_num)
+  have hd : deriv (fun s => (s - F) * (w s - w F))
+      = fun s => (w s - w F) + (s - F) * deriv w s := by
+    funext s
+    have : HasDerivAt (fun s => (s - F) * (w s - w F))
+        (1 * (w s - w F) + (s - F) * deriv w s) s :=
+      ((hasDerivAt_id s).sub_const F).mul ((hwd s).hasDerivAt.sub_const (w F))
+    rw [this.deriv]
+    ring
+  rw [hd]
+  have : HasDerivAt (fun s => w s - w F + (s - F) * deriv w s)
+      (deriv w k + (1 * deriv w k + (k - F) * deriv (deriv w) k)) k :=
+    ((hwd k).hasDerivAt.sub_const (w F)).add
+      (((hasDerivAt_id k).sub_const F).mul (hw'd k).hasDerivAt)
+  rw [this.deriv]
+  ring
+
+/- The card's check that the flat-curve weight agrees with today's curve: at a flat 4.5%
+(= 9/200), `D(U)/A₀ = (1.045)^-6 / Σ_{i=6}^{15} (1.045)^-i` equals
+`w(F) = (1.045)^-1 / Σ_{i=1}^{10} (1.045)^-i`. -/
+example :
+    ((1 + (9 / 200 : ℚ))⁻¹ ^ 6) / (∑ i ∈ Finset.range 10, (1 + (9 / 200 : ℚ))⁻¹ ^ (i + 6))
+      = (1 + (9 / 200 : ℚ))⁻¹ / (∑ i ∈ Finset.range 10, (1 + (9 / 200 : ℚ))⁻¹ ^ (i + 1)) := by
+  norm_num [Finset.sum_range_succ]
+
+#print axioms static_replication_strip
+#print axioms cms_rate_eq_forward_add_adjustment
+#print axioms strip_weight_second_deriv
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'static_replication_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cms_rate_eq_forward_add_adjustment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'strip_weight_second_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]
@@ -615,6 +806,8 @@ all checks passed
 
 - [Timing adjustments](03-timing-and-in-arrears-adjustments.md): a rate paid on a date other than its natural one, for the simpler case of a single floating rate; the payment lag that set the sign here becomes the whole subject.
 - [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md): swaps with an option to walk away, priced from the same swaptions with the exercise decision added.
+
+The question this card leaves open: when the curve twists instead of moving with the 10-year rate, how much of a CMS price can a strip of swaptions on one rate still capture?
 
 ---
 

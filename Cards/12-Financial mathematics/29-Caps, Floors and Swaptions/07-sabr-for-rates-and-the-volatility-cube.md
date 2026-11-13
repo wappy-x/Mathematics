@@ -8,9 +8,13 @@
 
 A company has $1 million of floating-rate debt and wants the right, one year from today, to lock in a fixed rate for five years. It looks at a **1-into-5 payer swaption**: an option expiring in one year to enter a five-year swap paying a fixed rate ([Swaptions](04-swaptions-payer-and-receiver.md)). Today's forward swap rate for that swap is 2.50 percent. The dealer quotes three strikes, 50 basis points apart (a basis point, bp, is a hundredth of one percent): 2.00, 2.50 and 3.00 percent.
 
-Each strike comes with its own volatility, quoted in the shifted-lognormal language with a 2 percent shift ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)): 22.625 percent, 22 percent and 22.375 percent. Two numbers summarise the shape. The **risk reversal** is the high-strike volatility minus the low-strike one: −25 vol bp, where a vol bp is a hundredth of a volatility point. The **butterfly** is the average of the two wings minus the middle: +50 vol bp. A negative risk reversal tilts the smile down to the right; a positive butterfly curls both ends up.
+Each strike comes with its own volatility, quoted in the shifted-lognormal language with a 2 percent shift ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)): 22.625 percent, 22 percent and 22.375 percent. Two numbers summarise the shape. The **risk reversal** is the high-strike volatility minus the low-strike one: −25 vol bp, where a vol bp is a hundredth of a volatility point. The **butterfly** is the average of the two wings (the low and high strikes) minus the middle: +50 vol bp. A negative risk reversal tilts the smile down to the right; a positive butterfly curls both ends up.
 
-A desk needs a volatility at every strike, not three. It also needs one for every expiry and every swap length, because it trades them all. SABR, the model in which the rate and its volatility both move at random ([SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md)), turns the three quotes into four dials. The **backbone exponent** beta is fixed in advance. The **level** alpha comes from the middle quote. The **correlation** rho comes mainly from the risk reversal, and the **vol of vol** nu mainly from the butterfly. For this smile: alpha 0.044702, rho 0.1353, nu 0.7114. The at-the-money payer costs $17,342.94.
+A desk needs a volatility at every strike, not three. It also needs one for every expiry and every swap length, because it trades them all.
+
+SABR, the model in which the rate and its volatility both move at random ([SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md)), turns the three quotes into four dials.
+
+The **backbone exponent** beta is fixed in advance. The **level** alpha comes from the middle quote. The **correlation** rho comes mainly from the risk reversal, and the **vol of vol** nu mainly from the butterfly. For this smile: alpha 0.044702, rho 0.1353, nu 0.7114. The at-the-money payer, struck at today's forward of 2.50 percent, costs $17,342.94.
 
 **SABR for rates is fitted one node at a time: shift the rate so it is positive, fix beta from how the at-the-money volatility moves with the rate, solve alpha from the at-the-money quote, and read rho off the risk reversal and nu off the butterfly; one set of dials for each expiry and swap length, stacked, is the volatility cube.**
 
@@ -94,7 +98,11 @@ A smile has three things the eye picks out: how high it sits, which way it tilts
 
 ### Step 1: shift first, so the logarithm exists
 
-Hagan's formula takes the logarithm of forward over strike and raises both to fractional powers. Both must be positive. Swap rates were negative in euros and Swiss francs for years after 2014. The fix is to model $f = F + \delta$ instead of $F$. The payoff does not change: $f - k = F - K$, so the payer still pays the rate minus the strike. Only the language of the volatility changes. The 22% quote at the money means 22% of 4.50%, not of 2.50%. In the normal language, basis points a year with no percentage of anything, the same premium is 98.80 bp ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
+Hagan's formula takes the logarithm of forward over strike and raises both to fractional powers. Both must be positive. Swap rates were negative in euros and Swiss francs for years after 2014.
+
+The fix is to model $f = F + \delta$ instead of $F$. The payoff does not change: $f - k = F - K$, so the payer still pays the rate minus the strike.
+
+Only the language of the volatility changes. The 22% quote at the money means 22% of 4.50%, not of 2.50%. In the normal language, basis points a year with no percentage of anything, the same premium is 98.80 bp ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 
 ### Step 2: the reading, and why rho's sign is not the risk reversal's
 
@@ -131,13 +139,17 @@ The reading is a first guess. The exact fit solves the full formula. For any tri
 
 **Road 1** is Newton's method on both equations at once, started from the reading. **Road 2** uses the two features separately. At a fixed nu the risk reversal rises steadily with rho, so an inner bisection finds the rho that matches −25 vol bp. The butterfly then rises with nu, so an outer bisection finds the nu that matches +50. Both land on rho 0.135320 and nu 0.711387, agreeing to eight decimals, and alpha is 0.044702.
 
-**Existence and uniqueness.** The bisections rely on the risk reversal rising with rho, across −0.99 to 0.99, and the butterfly rising with nu, across 0.05 to 2. Where that holds and each target lies between the values at its bracket's ends, each bracket holds exactly one root: the fit exists and is unique there. On these quotes Newton's method, started from the reading, lands on the same point. In general it can fail. A butterfly smaller than the backbone's own curl cannot be met by any nu; a risk reversal steeper than the model can tilt drives rho to ±1. A fit that lands on the edge of the bracket signals quotes the model cannot hold.
+**Existence and uniqueness.** The bisections rely on the risk reversal rising with rho, across −0.99 to 0.99, and the butterfly rising with nu, across 0.05 to 2. Where that holds and each target lies between the values at its bracket's ends, each bracket holds exactly one root: the fit exists and is unique there.
+
+On these quotes Newton's method, started from the reading, lands on the same point. In general it can fail. A butterfly smaller than the backbone's own curl cannot be met by any nu; a risk reversal steeper than the model can tilt drives rho to ±1. A fit that lands on the edge of the bracket signals quotes the model cannot hold.
 
 ### Step 4: beta is read from the backbone, not from the smile
 
 The three lines in the picture are three complete fits. Beta 0 needs rho 0.2811; beta 1 needs rho −0.0184. Nu barely moves, 0.7336 to 0.7094, because the curl is the vol of vol's job at every beta. Rho soaks up whatever tilt the backbone does not supply.
 
-The betas differ in what happens when the forward moves. At the money, Hagan's formula is roughly $\alpha/f^{1-\beta}$. Hold the dials and move the rate: with beta 1 the at-the-money volatility stays at 22% whatever the rate does; with beta 0 it falls as the rate rises, so that the normal volatility, the percentage times the rate, stays nearly still. That path is the **backbone**. A desk picks beta by looking at history: when rates rose, did the at-the-money percentage volatility fall (beta near 0) or hold (beta near 1)? Rate desks have often landed at one half, or at 0 on a shifted rate. How the smile moves when rates move, below, traces the difference in dollars.
+The betas differ in what happens when the forward moves. At the money, Hagan's formula is roughly $\alpha/f^{1-\beta}$. Hold the dials and move the rate: with beta 1 the at-the-money volatility stays at 22% whatever the rate does; with beta 0 it falls as the rate rises, so that the normal volatility, the percentage times the rate, stays nearly still. That path is the **backbone**.
+
+A desk picks beta by looking at history: when rates rose, did the at-the-money percentage volatility fall (beta near 0) or hold (beta near 1)? Rate desks have often landed at one half, or at 0 on a shifted rate. How the smile moves when rates move, below, traces the difference in dollars.
 
 ### Step 5: the cube is a grid of fits
 
@@ -623,6 +635,110 @@ cube node     F %   ATM %  RR bp  BF bp    alpha      rho       nu   miss bp
 2y into 2y  -0.50   24.00 -500.0  100.0  0.02906  -0.0616   0.2590  0.000000
 2y into 5y   1.00   21.00 -550.0   75.0  0.03543  -0.4091   0.5454  0.000000
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the reading's algebra and the butterfly payoff for all values, and checks the card's quote and shift arithmetic.
+
+- Take $f > 0$, $\alpha > 0$, $\nu > 0$, and the slope $s$ and curvature $c$ of Step 2. Then Step 2's formulas for $\rho\lambda$ and $\lambda^2$ hold exactly.
+- Take the same conditions, with $\lambda$ the positive square root of Step 2's formula. Then $\rho = (2s + 1 - \beta)/\lambda$ and $\nu = \lambda\alpha/f^{1-\beta}$, exactly.
+- Take the Detailed proof's three pieces: the level seen from the strike, the divisor's share and the bend. Then their product is the reading, up to terms in $y^3$.
+- A butterfly never pays less than zero, whatever the rate at expiry.
+- The risk reversal is −25 vol bp and the butterfly is +50 vol bp.
+- The 2% shift moves the forward to 4.50% and the low strike to 4.00%. The payoff is unchanged: $f - k = F - K$.
+- The 2y-into-2y forward of −0.50% shifts to 1.50%, which is positive.
+
+Hagan's formula itself, its accuracy, the exact fit and every price are left to the Python and Rust checks.
+
+```lean
+-- SABR for rates: the near-money slope and curvature of the smile give back rho and nu exactly, the reading is the y-squared product of Hagan's pieces, and a butterfly never pays less than zero.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Algebra.Polynomial.Div
+import Mathlib.Algebra.Polynomial.Roots
+
+open Polynomial
+
+/-- Running the reading backwards. Take a positive shifted forward `f` (the shift is larger than any
+rate the node sees), a positive level `α`, a positive vol of vol `ν`, a fixed beta `β` and any
+correlation `ρ`, and put `λ = ν f^(1-β) / α`. If the smile's slope and curvature against log-strike are
+`s = -(1/2)(1 - β - ρλ)` and `c = (1/12)[(1-β)^2 + (2 - 3ρ^2)λ^2]`, then `ρλ = 2s + (1-β)`,
+`λ^2 = (1/2)[12c - (1-β)^2 + 3(ρλ)^2]`, and dividing gives back rho and nu exactly:
+`ρ = (2s + (1-β)) / λ` and `ν = λ α / f^(1-β)` with `λ` the square root above. -/
+theorem sabr_reading_recovers_rho_and_nu (f α β ρ ν lam s c : ℝ)
+    (hf : 0 < f) (hα : 0 < α) (hν : 0 < ν)
+    (hlam : lam = ν * f ^ (1 - β) / α)
+    (hs : s = -(1 / 2) * (1 - β - ρ * lam))
+    (hc : c = (1 / 12) * ((1 - β) ^ 2 + (2 - 3 * ρ ^ 2) * lam ^ 2)) :
+    ρ * lam = 2 * s + (1 - β) ∧
+    lam ^ 2 = (1 / 2) * (12 * c - (1 - β) ^ 2 + 3 * (ρ * lam) ^ 2) ∧
+    ρ = (2 * s + (1 - β)) / Real.sqrt ((1 / 2) * (12 * c - (1 - β) ^ 2 + 3 * (2 * s + (1 - β)) ^ 2)) ∧
+    ν = Real.sqrt ((1 / 2) * (12 * c - (1 - β) ^ 2 + 3 * (2 * s + (1 - β)) ^ 2)) * α / f ^ (1 - β) := by
+  have hfp : 0 < f ^ (1 - β) := Real.rpow_pos_of_pos hf _
+  have hlpos : 0 < lam := by rw [hlam]; positivity
+  have h1 : ρ * lam = 2 * s + (1 - β) := by rw [hs]; ring
+  have h2 : lam ^ 2 = (1 / 2) * (12 * c - (1 - β) ^ 2 + 3 * (ρ * lam) ^ 2) := by rw [hc]; ring
+  have hsq : Real.sqrt ((1 / 2) * (12 * c - (1 - β) ^ 2 + 3 * (2 * s + (1 - β)) ^ 2)) = lam := by
+    rw [← h1, ← h2]; exact Real.sqrt_sq hlpos.le
+  refine ⟨h1, h2, ?_, ?_⟩
+  · rw [hsq, ← h1]; field_simp
+  · rw [hsq, hlam]; field_simp
+
+/-- The reading, "Multiply" step of the detailed proof. With `e = 1 - β`, the level seen from the strike
+`1 - (e/2) y + (e^2/8) y^2`, the divisor's share `1 - (e^2/24) y^2`, and the bend
+`1 + (ρλ/2) y (1 + (e/2) y) + ((2 - 3ρ^2)λ^2/12) y^2` multiply to
+`1 - (1/2)(e - ρλ) y + (1/12)[e^2 + (2 - 3ρ^2)λ^2] y^2` up to terms in `y^3` and higher:
+the difference is a polynomial in `y` divisible by `y^3`. -/
+theorem sabr_reading_product_to_second_order (β ρ lam : ℝ) :
+    (X : ℝ[X]) ^ 3 ∣
+      (1 - C ((1 - β) / 2) * X + C ((1 - β) ^ 2 / 8) * X ^ 2) *
+        (1 - C ((1 - β) ^ 2 / 24) * X ^ 2) *
+        (1 + C (ρ * lam / 2) * X * (1 + C ((1 - β) / 2) * X) + C ((2 - 3 * ρ ^ 2) * lam ^ 2 / 12) * X ^ 2)
+      - (1 + C (-(1 / 2) * ((1 - β) - ρ * lam)) * X
+           + C ((1 / 12) * ((1 - β) ^ 2 + (2 - 3 * ρ ^ 2) * lam ^ 2)) * X ^ 2) := by
+  refine ⟨C ((1 - β) ^ 3 / 48 + (1 - β) ^ 2 / 12 * (ρ * lam / 2)
+        + (-((1 - β) / 2)) * (ρ * lam * (1 - β) / 4 + (2 - 3 * ρ ^ 2) * lam ^ 2 / 12))
+      + C (-((1 - β) ^ 4 / 192) + (1 - β) ^ 3 / 48 * (ρ * lam / 2)
+        + (1 - β) ^ 2 / 12 * (ρ * lam * (1 - β) / 4 + (2 - 3 * ρ ^ 2) * lam ^ 2 / 12)) * X
+      + C (-((1 - β) ^ 4 / 192) * (ρ * lam / 2)
+        + (1 - β) ^ 3 / 48 * (ρ * lam * (1 - β) / 4 + (2 - 3 * ρ ^ 2) * lam ^ 2 / 12)) * X ^ 2
+      + C (-((1 - β) ^ 4 / 192) * (ρ * lam * (1 - β) / 4 + (2 - 3 * ρ ^ 2) * lam ^ 2 / 12)) * X ^ 3, ?_⟩
+  apply Polynomial.funext
+  intro y
+  simp only [eval_sub, eval_add, eval_mul, eval_one, eval_C, eval_X, eval_pow]
+  ring
+
+/-- A butterfly (long one call at the low strike `K - h` and one at the high strike `K + h`, short two at
+the middle strike `K`) never pays less than zero, whatever the rate `x` at expiry. -/
+theorem butterfly_payoff_nonneg (K h x : ℝ) :
+    0 ≤ max (x - (K - h)) 0 - 2 * max (x - K) 0 + max (x - (K + h)) 0 := by
+  simp only [max_def]
+  split_ifs <;> linarith
+
+-- Quotes in thousandths of a volatility point: 22.625, 22 and 22.375 percent. A vol bp is 10 of them.
+-- Risk reversal: high wing minus low wing is -25 vol bp.
+example : ((22375 : ℚ) - 22625) / 10 = -25 := by norm_num
+-- Butterfly: mean of the wings minus the middle is +50 vol bp.
+example : (((22625 : ℚ) + 22375) / 2 - 22000) / 10 = 50 := by norm_num
+-- Rates in bp, shift 200 bp: the shifted forward is 450 and the shifted low strike 400.
+example : (250 : ℤ) + 200 = 450 ∧ (200 : ℤ) + 200 = 400 := by norm_num
+-- Shifting does not change the payoff: f - k = F - K at the low strike.
+example : ((250 : ℤ) + 200) - (200 + 200) = 250 - 200 := by norm_num
+-- The 2y-into-2y node: a forward of -50 bp shifts to 150 bp, which is positive.
+example : (-50 : ℤ) + 200 = 150 ∧ (0 : ℤ) < -50 + 200 := by norm_num
+
+#print axioms sabr_reading_recovers_rho_and_nu
+#print axioms sabr_reading_product_to_second_order
+#print axioms butterfly_payoff_nonneg
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sabr_reading_recovers_rho_and_nu' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sabr_reading_product_to_second_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'butterfly_payoff_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

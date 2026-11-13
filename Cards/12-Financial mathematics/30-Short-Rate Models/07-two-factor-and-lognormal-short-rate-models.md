@@ -6,19 +6,25 @@
 
 ## General Overview
 
-A rates desk has sold a 10-year zero-coupon bond (a bond that pays one lump sum at maturity and nothing before) and hedges it by buying 2-year bonds. On most days the whole yield curve (the line of interest rates across maturities) moves up or down together, and the hedge holds. Then a day comes when the 2-year yield rises 10 basis points (a basis point is one hundredth of a percent) and the 10-year yield falls 5. Traders call that a twist. The 2-year bonds it owns fall in price, the 10-year bond it owes rises, and the desk loses on both legs.
+A rates desk has sold a 10-year zero-coupon bond (a bond that pays one lump sum at maturity and nothing before) and hedges it by buying 2-year bonds. On most days the whole yield curve (the line of interest rates across maturities) moves up or down together, and the hedge holds.
 
-The Hull-White model ([Hull-White](04-hull-white-model.md)) cannot produce that day. It drives every rate from one random number: the short rate, the interest rate on overnight money. On the shelf's house curve (Vasicek, pulled toward 5% at speed 0.3 a year, volatility 1%, starting at 4%), ask Hull-White for a 10 basis point rise at 2 years. It answers with a rise at every maturity: 11.49 at 1 year, 4.21 at 10 years. Every move points the same way, in the same fixed proportions, every day.
+Then a day comes when the 2-year yield rises 10 basis points (a basis point, bp, is one hundredth of a percent) and the 10-year yield falls 5. Traders call that a twist. The 2-year bonds it owns fall in price, the 10-year bond it owes rises, and the desk loses on both legs.
+
+The Hull-White model ([Hull-White](04-hull-white-model.md)) cannot produce that day. It drives every rate from one random number: the short rate, the interest rate on overnight money.
+
+On the shelf's house curve ([Vasicek](02-vasicek-model.md), pulled toward 5% at speed 0.3 a year, volatility 1%, starting at 4%), ask Hull-White for a 10 basis point rise at 2 years. It answers with a rise at every maturity: 11.49 at 1 year, 4.21 at 10 years. Every move points the same way, in the same fixed proportions, every day.
 
 The number of independent random shocks driving a model is its number of **factors**, the word used from here on. One factor bends the curve one way only.
 
 Three models go further, and they fix different things.
 
 - **G2++** adds a second factor. Two shocks that fade at different speeds can push the short end up while the long end falls.
-- **Black-Karasinski** keeps one factor but models the logarithm of the short rate, so the rate itself can never go below zero.
+- **Black-Karasinski** keeps one factor but models the logarithm of the short rate, so the rate itself can never go below zero. A rate whose logarithm is Normal is called lognormal.
 - **Black-Derman-Toy** is the tree that came first: a one-factor lognormal lattice (a grid of possible future rates) fitted node by node to today's curve.
 
-A **swaption** is an option to enter a swap (an exchange of fixed for floating interest payments) on a future date ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). Take two swaptions that both expire in one year: one on a 2-year swap, one on a 9-year swap. Anything that pays on both, or lets its holder choose between them, depends on how the two swap rates move together. Every one-factor model says: in perfect lockstep, correlation 1. G2++ with the parameters below says 0.979.
+A **swaption** is an option to enter a swap (an exchange of fixed for floating interest payments) on a future date ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)).
+
+Take two swaptions that both expire in one year: one on a 2-year swap, one on a 9-year swap. Anything that pays on both, or lets its holder choose between them, depends on how the two swap rates move together. Every one-factor model says: in perfect lockstep, correlation 1. G2++ with the parameters below says 0.979.
 
 **One random shock moves every rate on the curve the same way in fixed proportions, so a one-factor model makes all rates perfectly correlated; G2++ adds a second shock so the curve can twist, while Black-Karasinski and Black-Derman-Toy keep one shock and reshape it so the short rate stays positive.**
 
@@ -44,7 +50,7 @@ The orange line is Hull-White: one shock, 13.2982 basis points on the short rate
 
 Notation first, in words. A small random step is written $dW_t$: the step of a **Brownian motion**, a random walk whose steps are independent and Normal with variance equal to the time elapsed. Two Brownian motions can be correlated: $dW^1_t\,dW^2_t = \rho\,dt$ says their steps move together with correlation $\rho$. The symbol $d$ in front of anything means its change over a short time $dt$.
 
-**G2++**, the two-factor Gaussian model:
+**G2++**, the two-factor Gaussian model (Gaussian: its factors are Normal):
 
 $$r_t = x_t + y_t + \varphi(t),\qquad dx_t = -a\,x_t\,dt + \sigma\,dW^1_t,\qquad dy_t = -b\,y_t\,dt + \eta\,dW^2_t,\qquad dW^1_t\,dW^2_t = \rho\,dt$$
 
@@ -78,7 +84,7 @@ $$S_n = \frac{P(1) - P(1+n)}{P(2) + P(3) + \dots + P(1+n)}$$
 | --- | --- | --- | --- |
 | $r_t$ | the short rate: the overnight interest rate at time t | 4% today on the house curve | every bond cheaper |
 | $x_t$, $y_t$ | the two G2++ factors, fast and slow; both start at 0 | the twist needs x = +56.0659 bp, y = −15.4086 bp | x lifts the short end most; y lifts the whole curve |
-| $\varphi(t)$, $\theta(t)$ | fixed functions of time, chosen so today's curve comes out exactly | whatever the house curve demands | the forward curve shifts |
+| $\varphi(t)$, $\theta(t)$ | fixed functions of time, chosen so today's curve comes out exactly | whatever the house curve demands | the forward curve (the rates fixed today for borrowing over future periods) shifts |
 | $a$, $b$ | reversion speeds, per year: how fast each factor fades back to 0 | G2++: 1 and 0.08; Hull-White: 0.3 | that shock dies sooner; long yields feel it less |
 | $\sigma$, $\eta$ | size of each shock; $\sigma$ in rate units per root-year for Gaussian models, a log-volatility for lognormal ones | G2++: 0.012 and 0.007; Hull-White 0.01; Black-Derman-Toy 0.20 | more of that shock |
 | $\rho$ | correlation between the two G2++ shocks | −0.2 | maturities move more alike |
@@ -95,7 +101,7 @@ A u-year yield is the rate y with price $e^{-yu}$, so a yield move is minus the 
 
 - **Gaussian factors (Hull-White, G2++):** shocks are Normal, so rates can go negative. In a 1% world with 1% volatility, Hull-White gives a 21.90% chance of a negative short rate in 10 years. Where negative rates are impossible or forbidden by the product, the Gaussian price is off; where they happened (the euro area, Japan, Switzerland in the 2010s), they are a feature.
 - **Lognormal (Black-Karasinski, Black-Derman-Toy):** the short rate's log is Normal, so rates stay positive but can never fit a curve with negative forward rates, and there is no closed-form bond price: every price comes from a tree or a numerical integral.
-- **Constant parameters:** a, b, σ, η and ρ are fixed numbers here. Real calibrations let volatilities vary with time; the correlations then change with the calendar.
+- **Constant parameters:** a, b, σ, η and ρ are fixed numbers here. Real calibrations (fits of the parameters to market prices) let volatilities vary with time; the correlations then change with the calendar.
 - **Local correlation:** the correlations on this card are instantaneous, for one small step. Over a year the two factors fade by different amounts and swap rates are nonlinear in them, so the correlation of yearly changes differs from the instantaneous figure.
 
 ---
@@ -131,13 +137,18 @@ The determinant (the number that says whether two equations pin two unknowns) is
 <details>
 <summary>Detailed proof: the G2++ bond price and when two maturities really have two directions</summary>
 
-Solve each factor from time $t$: $x_s = x_t e^{-a(s-t)} + \sigma\int_t^s e^{-a(s-w)}dW^1_w$, and the same for $y_t$ with $b$ and $\eta$. Integrate the short rate from $t$ to $T$ and swap the order of integration: the random part of $\int_t^T r_s\,ds$ is $B_a(T-t)x_t + B_b(T-t)y_t + \sigma\int_t^T B_a(T-w)dW^1_w + \eta\int_t^T B_b(T-w)dW^2_w$. The last two terms are Normal with mean 0 and variance $V = \int_0^{T-t}[\sigma^2B_a^2 + \eta^2B_b^2 + 2\rho\sigma\eta B_aB_b]$, the cross term coming from $dW^1\,dW^2 = \rho\,dt$. For a Normal $Z$ with mean 0 and variance $V$, the average of $e^{-Z}$ is $e^{V/2}$, so the bond price is the exponential of minus the fixed part, minus $B_a x_t + B_b y_t$, plus $V/2$. Choosing $\varphi$ as today's forward rate plus half the derivative of $V$ makes the price at time 0 equal today's market price.
+Solve each factor from time $t$: $x_s = x_t e^{-a(s-t)} + \sigma\int_t^s e^{-a(s-w)}dW^1_w$, and the same for $y_t$ with $b$ and $\eta$. Integrate the short rate from $t$ to $T$ and swap the order of integration: the random part of $\int_t^T r_s\,ds$ is $B_a(T-t)x_t + B_b(T-t)y_t + \sigma\int_t^T B_a(T-w)dW^1_w + \eta\int_t^T B_b(T-w)dW^2_w$. The last two terms are Normal with mean 0 and variance $V = \int_0^{T-t}[\sigma^2B_a^2 + \eta^2B_b^2 + 2\rho\sigma\eta B_aB_b]$, the cross term coming from $dW^1\,dW^2 = \rho\,dt$.
+
+For a Normal $Z$ with mean 0 and variance $V$, the average of $e^{-Z}$ is $e^{V/2}$, so the bond price is the exponential of minus the fixed part, minus $B_a x_t + B_b y_t$, plus $V/2$. Choosing $\varphi$ as today's forward rate plus half the derivative of $V$ makes the price at time 0 equal today's market price.
 
 Only the state terms are random, so over a short step the log price of the u-year bond moves by $-\sigma B_a(u)\,dW^1 - \eta B_b(u)\,dW^2$. Multiply two such moves and keep the $dt$ terms: that is $C(u,v)\,dt$. For maturities u and v, stack the two shock loadings into a 2 by 2 array; the determinant of their covariance is
 $$C(u,u)C(v,v) - C(u,v)^2 = \sigma^2\eta^2(1-\rho^2)\,\big[B_a(u)B_b(v) - B_a(v)B_b(u)\big]^2.$$
 
 For yields, divide both sides by $u^2v^2$; the sign is unchanged.
-The bracket is $\int_0^u\!\int_u^v\big(e^{-as}e^{-bw} - e^{-bs}e^{-aw}\big)\,dw\,ds$. For $s < w$ the integrand is $e^{-as-bw}(1 - e^{(a-b)(s-w)})$, which has one strict sign when $a \ne b$, so the bracket is not zero when $0 < u < v$. Hence with $\sigma, \eta > 0$, $|\rho| < 1$ and $a \ne b$, the determinant is positive and $|\mathrm{corr}(u,v)| < 1$. Set $\rho = \pm1$, $a = b$, or either volatility to 0 and the determinant is 0: correlation ±1 again.
+
+The bracket is $\int_0^u\!\int_u^v\big(e^{-as}e^{-bw} - e^{-bs}e^{-aw}\big)\,dw\,ds$. For $s < w$ the integrand is $e^{-as-bw}(1 - e^{(a-b)(s-w)})$, which has one strict sign when $a \ne b$, so the bracket is not zero when $0 < u < v$.
+
+Hence with $\sigma, \eta > 0$, $|\rho| < 1$ and $a \ne b$, the determinant is positive and $|\mathrm{corr}(u,v)| < 1$. Set $\rho = \pm1$, $a = b$, or either volatility to 0 and the determinant is 0: correlation ±1 again.
 
 </details>
 
@@ -161,7 +172,9 @@ The orange line is Hull-White, Black-Karasinski and Black-Derman-Toy: all one-fa
 
 ### Step 4: from yields to swaption correlations
 
-A swaption's value hangs on its swap rate, not on one yield. The swap rate $S_n$ is a ratio of bond prices, so its move is found by the quotient rule (the derivative of a ratio), using the fact from Step 2 that a unit rise in a factor lowers each bond's price by its loading times its price. On the house curve the swap from year 1 to year 3 has par rate 4.5293% and the swap from year 1 to year 10 has 4.8029%. The 2-year swap rate moves 0.167886 per unit of the fast factor, and a bump-and-reprice gives the same 0.167886.
+A swaption's value hangs on its swap rate, not on one yield. The swap rate $S_n$ is a ratio of bond prices, so its move is found by the quotient rule (the derivative of a ratio). The rule uses the fact from Step 2 that a unit rise in a factor lowers each bond's price by its loading times its price.
+
+On the house curve the swap from year 1 to year 3 has par rate 4.5293% and the swap from year 1 to year 10 has 4.8029%. Traders call these the 1y-into-2y and 1y-into-9y swaps: they start in 1 year and run 2 and 9 years. The 2-year swap rate moves 0.167886 per unit of the fast factor, and a bump-and-reprice gives the same 0.167886.
 
 Weight each factor's sensitivity by its shock size and feed the two pairs into the correlation formula: 0.979129. Simulating 100,000 one-day shocks and repricing both swaps in full gives 0.979.
 
@@ -171,7 +184,11 @@ That is higher than the 2-year against 10-year yield correlation of 0.877. Both 
 
 A Gaussian short rate is Normal, so some of its paths go negative. Pull a Hull-White rate toward 1% at speed 0.3 with 1% volatility, starting at 1%: after 10 years it is Normal with mean 1%, and the chance it sits below zero is 21.90%. A simulation of 100,000 paths finds 21.77%.
 
-Black-Karasinski makes $\ln r_t$ the Gaussian process instead. The exponential of any finite number is positive, so $r_t > 0$ on every path. The price is paid elsewhere: the integral of a lognormal rate has no known distribution, so there is no closed-form bond price and every bond is priced on a tree ([The Hull-White tree](06-hull-white-trinomial-tree.md) builds the lattice for the Gaussian case; Black-Karasinski runs the same lattice in log-rate). And the volatility now scales with the level: a fixed log-volatility means large moves when rates are high and small ones when they are low.
+Black-Karasinski makes $\ln r_t$ the Gaussian process instead. The exponential of any finite number is positive, so $r_t > 0$ on every path.
+
+The price is paid elsewhere: the integral of a lognormal rate has no known distribution, so there is no closed-form bond price and every bond is priced on a tree ([The Hull-White tree](06-hull-white-trinomial-tree.md) builds the lattice for the Gaussian case; Black-Karasinski runs the same lattice in log-rate).
+
+And the volatility now scales with the level: a fixed log-volatility means large moves when rates are high and small ones when they are low.
 
 ### Step 6: Black-Derman-Toy, the tree that came first
 
@@ -216,13 +233,22 @@ A desk running Hull-White reads a 2-year hedge of a 10-year bond as perfect. G2+
 | set ρ = −1 | correlation 1.000000 | the two shocks become one; G2++ is a one-factor model again |
 | give both factors speed 0.08 | correlation 1.000000 | equal speeds give every maturity the same mix |
 | drop ρ, treat the shocks as independent | 0.908174 instead of 0.877124 | the cross term in C(u,v) is gone |
-| quote the yield correlation for swaptions | 0.877124 instead of 0.979129 | swap rates share their start and annuity; their correlation is higher |
+| quote the yield correlation for swaptions | 0.877124 instead of 0.979129 | swap rates share their start and their annuity (the bond-price sum under $S_n$); their correlation is higher |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the house curve, then takes five roads. It solves the twist and checks it by substitution. It gets the G2++ loadings in closed form and by Simpson's rule (adding up thin slices of an integral). It gets the covariance determinant directly and by its identity. It gets the swap-rate correlation by formula and by a 100,000-day simulation with full repricing, with the swap sensitivity checked by bumping. It fits a four-year Black-Derman-Toy tree by bisection (halving an interval until the root is pinned) and prices every bond back by rolling through the tree. It gets Hull-White's chance of a negative rate by integrating the Normal curve and by simulation. The random numbers come from its own generator; nothing imported knows the answer.
+The code builds the house curve, then checks six results, each by two independent roads.
+
+- It solves the twist and checks it by substitution.
+- It gets the G2++ loadings in closed form and by Simpson's rule (adding up thin slices of an integral).
+- It gets the covariance determinant directly and by its identity.
+- It gets the swap-rate correlation by formula and by a 100,000-day simulation with full repricing, with the swap sensitivity checked by bumping.
+- It fits a four-year Black-Derman-Toy tree by bisection (halving an interval until the root is pinned) and prices every bond back by rolling through the tree.
+- It gets Hull-White's chance of a negative rate by integrating the Normal curve and by simulation.
+
+The random numbers come from its own generator; nothing imported knows the answer.
 
 ### Python
 
@@ -621,6 +647,198 @@ ALL CHECKS PASS
 
 The two outputs agree line for line: both programs use the same generator, the same seeds and the same order of sums.
 
+### Lean
+
+Lean proves the card's three correlation facts for bond log prices, for every parameter value the card allows.
+
+- Suppose $a, b > 0$ with $a \ne b$, $\sigma, \eta > 0$, $|\rho| < 1$ and $0 < u < v$. Then $|\mathrm{corr}(u,v)| < 1$: the two maturities never move in perfect step.
+- Take any speeds, shock sizes, shock correlation and maturities $u$ and $v$. Then the covariance determinant equals $\sigma^2\eta^2(1-\rho^2)$ times the bracket squared.
+- Take Hull-White with $a > 0$, $\sigma > 0$ and maturities $u, v > 0$. Then $\mathrm{corr}(u,v) = 1$ exactly.
+
+The bond price formula, the worked numbers, swap rate correlations, the trees and negative rates are left to the Python and Rust checks.
+
+```lean
+-- Beyond one factor: in G2++ with two shocks that fade at different speeds, any two different maturities have correlation strictly between -1 and 1, by an exact determinant identity, while a one-factor Hull-White model gives every pair of maturities correlation exactly 1.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.Convex.SpecificFunctions.Pow
+import Mathlib.Analysis.Convex.Slope
+
+namespace TwoFactorShortRate
+
+open Real
+
+/-! Setting. The card works with the instantaneous covariance of bond log prices, not with the
+paths themselves: over a short step the `u`-year bond's log price moves by
+`-σ B_a(u) dW¹ - η B_b(u) dW²`, with `dW¹ dW² = ρ dt`. Multiplying two such moves and keeping the
+`dt` terms gives the card's `C(u, v)`, and the correlation is `C(u,v)/√(C(u,u) C(v,v))`.
+Dividing by `u` and `v` to pass from bonds to yields changes no correlation. -/
+
+/-- The loading `B_c(u) = (1 - e^(-c u))/c`: how far a `u`-year bond's log price falls per unit
+rise in a factor that fades at speed `c`. -/
+noncomputable def loading (c u : ℝ) : ℝ := (1 - exp (-c * u)) / c
+
+/-- G2++: the rate `C(u, v)` at which the `u`-year and `v`-year bonds' log prices co-vary,
+`σ² B_a(u)B_a(v) + η² B_b(u)B_b(v) + ρ σ η [B_a(u)B_b(v) + B_b(u)B_a(v)]`. -/
+noncomputable def g2Cov (a b σ η ρ u v : ℝ) : ℝ :=
+  σ ^ 2 * loading a u * loading a v + η ^ 2 * loading b u * loading b v
+    + ρ * σ * η * (loading a u * loading b v + loading b u * loading a v)
+
+/-- G2++: the instantaneous correlation `C(u,v)/√(C(u,u) C(v,v))` of the `u`-year and `v`-year
+bonds (and so of their yields). -/
+noncomputable def g2Corr (a b σ η ρ u v : ℝ) : ℝ :=
+  g2Cov a b σ η ρ u v / sqrt (g2Cov a b σ η ρ u u * g2Cov a b σ η ρ v v)
+
+/-- Hull-White, one factor: the covariance `σ² B(u) B(v)` of the `u`-year and `v`-year bonds'
+log prices, with `B = B_a` the loading at reversion speed `a`. -/
+noncomputable def hwCov (a σ u v : ℝ) : ℝ := σ ^ 2 * loading a u * loading a v
+
+/-- Hull-White: the instantaneous correlation `C(u,v)/√(C(u,u) C(v,v))`. -/
+noncomputable def hwCorr (a σ u v : ℝ) : ℝ :=
+  hwCov a σ u v / sqrt (hwCov a σ u u * hwCov a σ v v)
+
+/-- Helper: for `0 < a < b` and `0 < u < v`, the cross products of `1 - e^(-c t)` are strictly
+ordered (strict concavity of `x ↦ x^(a/b)`). -/
+lemma cross_lt {a b u v : ℝ} (ha : 0 < a) (hab : a < b) (hu : 0 < u) (huv : u < v) :
+    (1 - exp (-a * u)) * (1 - exp (-b * v)) < (1 - exp (-a * v)) * (1 - exp (-b * u)) := by
+  have hb : 0 < b := ha.trans hab
+  have hv : 0 < v := hu.trans huv
+  have hr0 : 0 < a / b := div_pos ha hb
+  have hr1 : a / b < 1 := (div_lt_one hb).2 hab
+  have hconc := Real.strictConcaveOn_rpow hr0 hr1
+  set x := exp (-b * v) with hxdef
+  set y := exp (-b * u) with hydef
+  have hx0 : 0 < x := exp_pos _
+  have hy0 : 0 < y := exp_pos _
+  have hxy : x < y := by
+    rw [hxdef, hydef]; apply exp_lt_exp.2; nlinarith
+  have hy1 : y < 1 := by
+    rw [hydef]; apply Real.exp_lt_one_iff.2
+    nlinarith
+  have hx1 : x < 1 := hxy.trans hy1
+  have key := hconc.secant_strict_mono (a := 1) (x := x) (y := y)
+    (by simp) (Set.mem_Ici.2 hx0.le) (Set.mem_Ici.2 hy0.le) hx1.ne hy1.ne hxy
+  have ex : x ^ (a / b) = exp (-a * v) := by
+    rw [hxdef, ← Real.exp_mul]; congr 1; field_simp
+  have ey : y ^ (a / b) = exp (-a * u) := by
+    rw [hydef, ← Real.exp_mul]; congr 1; field_simp
+  simp only [Real.one_rpow] at key
+  rw [ex, ey] at key
+  have h1 : 0 < 1 - x := by linarith
+  have h2 : 0 < 1 - y := by linarith
+  have key' : (1 - exp (-a * u)) / (1 - y) < (1 - exp (-a * v)) / (1 - x) := by
+    have e1 : (exp (-a * u) - 1) / (y - 1) = (1 - exp (-a * u)) / (1 - y) := by
+      rw [← neg_div_neg_eq]; ring_nf
+    have e2 : (exp (-a * v) - 1) / (x - 1) = (1 - exp (-a * v)) / (1 - x) := by
+      rw [← neg_div_neg_eq]; ring_nf
+    rw [← e1, ← e2]; exact key
+  rw [div_lt_div_iff₀ h2 h1] at key'
+  linarith
+
+#print axioms cross_lt
+
+/-- Helper: the loadings are positive for positive speed and maturity. -/
+lemma loading_pos {c u : ℝ} (hc : 0 < c) (hu : 0 < u) : 0 < loading c u := by
+  unfold loading
+  apply div_pos _ hc
+  have : exp (-c * u) < 1 := Real.exp_lt_one_iff.2 (by nlinarith)
+  linarith
+
+#print axioms loading_pos
+
+/-- Helper: distinct speeds give a nonzero loading determinant. -/
+lemma loading_det_ne {a b u v : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ≠ b) (hu : 0 < u)
+    (huv : u < v) : loading a u * loading b v - loading a v * loading b u ≠ 0 := by
+  have e : loading a u * loading b v - loading a v * loading b u
+      = ((1 - exp (-a * u)) * (1 - exp (-b * v)) - (1 - exp (-a * v)) * (1 - exp (-b * u)))
+        / (a * b) := by
+    unfold loading; field_simp
+  rw [e]
+  apply div_ne_zero _ (mul_pos ha hb).ne'
+  rcases lt_or_gt_of_ne hab with h | h
+  · have := cross_lt ha h hu huv; linarith
+  · have := cross_lt hb h hu huv; linarith
+
+#print axioms loading_det_ne
+
+/-- Helper: the covariance determinant identity (same as the theorem below, needed earlier). -/
+lemma cov_det_aux (a b σ η ρ u v : ℝ) :
+    g2Cov a b σ η ρ u u * g2Cov a b σ η ρ v v - g2Cov a b σ η ρ u v ^ 2
+      = σ ^ 2 * η ^ 2 * (1 - ρ ^ 2)
+          * (loading a u * loading b v - loading a v * loading b u) ^ 2 := by
+  unfold g2Cov
+  ring
+
+#print axioms cov_det_aux
+
+/-- **G2++ correlations are below one** (the card's main claim). Take reversion speeds `a, b > 0`
+that differ, shock sizes `σ, η > 0`, a shock correlation `ρ` with `|ρ| < 1`, and two maturities
+`0 < u < v`. Then the correlation of the `u`-year and `v`-year bonds (equally, yields) satisfies
+`|corr(u, v)| < 1`: the two maturities do not move in perfect step, so the curve can twist. -/
+theorem g2_correlation_lt_one {a b σ η ρ u v : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ≠ b)
+    (hσ : 0 < σ) (hη : 0 < η) (hρ : |ρ| < 1) (hu : 0 < u) (huv : u < v) :
+    |g2Corr a b σ η ρ u v| < 1 := by
+  have hdet := cov_det_aux a b σ η ρ u v
+  have hD := loading_det_ne ha hb hab hu huv
+  have hρ2 : 0 < 1 - ρ ^ 2 := by
+    have : ρ ^ 2 < 1 := by
+      rw [← sq_abs]; nlinarith [abs_nonneg ρ]
+    linarith
+  have hpos : 0 < σ ^ 2 * η ^ 2 * (1 - ρ ^ 2)
+      * (loading a u * loading b v - loading a v * loading b u) ^ 2 := by
+    have := pow_pos (abs_pos.2 hD) 2
+    rw [sq_abs] at this
+    positivity
+  have hlt : g2Cov a b σ η ρ u v ^ 2 < g2Cov a b σ η ρ u u * g2Cov a b σ η ρ v v := by
+    linarith
+  have hPQ : 0 < g2Cov a b σ η ρ u u * g2Cov a b σ η ρ v v :=
+    lt_of_le_of_lt (sq_nonneg _) hlt
+  unfold g2Corr
+  rw [abs_div, abs_of_pos (Real.sqrt_pos.2 hPQ), div_lt_one (Real.sqrt_pos.2 hPQ)]
+  exact (Real.lt_sqrt (abs_nonneg _)).2 (by rw [sq_abs]; exact hlt)
+
+/-- **The covariance determinant identity** (the card's detailed proof). For any shock sizes
+`σ, η`, shock correlation `ρ`, speeds `a, b` and maturities `u, v`,
+`C(u,u) C(v,v) - C(u,v)² = σ² η² (1 - ρ²) [B_a(u) B_b(v) - B_a(v) B_b(u)]²`. -/
+theorem g2_covariance_determinant (a b σ η ρ u v : ℝ) :
+    g2Cov a b σ η ρ u u * g2Cov a b σ η ρ v v - g2Cov a b σ η ρ u v ^ 2
+      = σ ^ 2 * η ^ 2 * (1 - ρ ^ 2)
+          * (loading a u * loading b v - loading a v * loading b u) ^ 2 := by
+  unfold g2Cov
+  ring
+
+/-- **One factor forces correlation one** (the card's Step 1). In Hull-White with reversion speed
+`a > 0` and shock size `σ > 0`, any two maturities `u, v > 0` have correlation exactly 1: every
+bond moves by a fixed positive multiple of the same single shock. -/
+theorem hull_white_correlation_eq_one {a σ u v : ℝ} (ha : 0 < a) (hσ : 0 < σ)
+    (hu : 0 < u) (hv : 0 < v) :
+    hwCorr a σ u v = 1 := by
+  have hu' := loading_pos ha hu
+  have hv' := loading_pos ha hv
+  have hc : 0 < hwCov a σ u v := by unfold hwCov; positivity
+  have e : hwCov a σ u u * hwCov a σ v v = hwCov a σ u v ^ 2 := by unfold hwCov; ring
+  unfold hwCorr
+  rw [e, Real.sqrt_sq hc.le, div_self hc.ne']
+
+#print axioms g2_correlation_lt_one
+#print axioms g2_covariance_determinant
+#print axioms hull_white_correlation_eq_one
+
+end TwoFactorShortRate
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'TwoFactorShortRate.cross_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoFactorShortRate.loading_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoFactorShortRate.loading_det_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoFactorShortRate.cov_det_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoFactorShortRate.g2_correlation_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoFactorShortRate.g2_covariance_determinant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoFactorShortRate.hull_white_correlation_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Make the shocks move together.** Guess first: does positive ρ raise or lower the 2-year against 10-year correlation? Set ρ = +0.5: it rises to 0.963568. At ρ = −0.8 it falls to 0.734291. Negative ρ lets the slow factor partly cancel the fast one at the short end, and that is how G2++ fits markets where short and long rates decouple.
@@ -646,7 +864,7 @@ The two outputs agree line for line: both programs use the same generator, the s
 
 - **Bermudan swaption desks.** A Bermudan lets the holder enter a swap on any of several dates, so its value depends on how swap rates of different lengths move together. Banks price them in two-factor models for that reason.
 - **Curve-spread options.** Options on the difference between the 10-year and 2-year swap rate pay when the curve steepens or flattens; a one-factor model ties that spread to the level of rates, so it cannot let the spread move on its own.
-- **Positive-rate markets and old systems.** Black-Derman-Toy and Black-Karasinski trees still run in callable bond and mortgage systems written when negative rates were thought impossible. Since the 2010s many desks shifted to Gaussian or shifted-lognormal models ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
+- **Positive-rate markets and old systems.** Black-Derman-Toy and Black-Karasinski trees still run in callable bond and mortgage systems written when negative rates were thought impossible. Since the 2010s many desks shifted to Gaussian or shifted-lognormal models (lognormal after a fixed amount is added to the rate, so it can go a little below zero; [Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
 - **Calibration.** Fitting G2++ to single swaptions pins its volatilities; fitting its correlation needs products that depend on two rates ([Calibrating Hull-White](08-calibrating-a-short-rate-model.md)).
 
 > **Say it back**
@@ -665,7 +883,7 @@ The two outputs agree line for line: both programs use the same generator, the s
 - [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): which market prices pin which parameters, starting with Hull-White.
 - [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): model the whole forward curve instead of one short rate, with as many factors as needed.
 
-This card shows that a model's factor count sets its correlations and its lognormality sets its sign; the open question is which market prices can tell a model's parameters apart, and that is what calibrating-a-short-rate-model answers.
+This card shows that a model's factor count sets its correlations and its lognormality sets its sign; the open question is which market prices can tell a model's parameters apart, and that is what [Calibrating Hull-White](08-calibrating-a-short-rate-model.md) answers.
 
 ---
 

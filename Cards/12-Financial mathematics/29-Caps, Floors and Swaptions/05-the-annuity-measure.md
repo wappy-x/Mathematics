@@ -8,15 +8,15 @@
 
 A company plans to borrow 10 million dollars in one year, for five years, at a floating rate. It buys a **payer swaption**: the right, in one year, to enter a five-year swap in which it pays a fixed rate of 4.1937 percent and receives the floating rate ([Swaptions](04-swaptions-payer-and-receiver.md)). Today's curve says the fair fixed rate for that future swap is 4.1937 percent. That rate is the **forward swap rate**.
 
-Black's formula prices the swaption as if the forward swap rate were a stock with no drift: its average future value is today's value, and it wanders around that value. At 30 percent volatility the premium comes out at **$210,237.41**, about 2.10 percent of the notional.
+Black's formula prices the swaption as if the forward swap rate were a stock with no drift: its average future value is today's value, and it wanders around that value. At 30 percent volatility the premium comes out at **$210,237.41**, about 2.10 percent of the notional, the 10 million dollars that interest is worked on.
 
-That "no drift" is the doubtful part. Rates are not stocks. On a model of the curve checked on this card, the swap rate in one year averages 4.2377 percent when outcomes are counted in dollars paid at expiry: 4.40 basis points above today's forward (a basis point is a hundredth of a percent). So on what basis does Black treat it as driftless?
+That "no drift" is the doubtful part. Rates are not stocks. On a model of the curve checked on this card, the swap rate in one year averages 4.2377 percent when outcomes are counted in dollars paid at expiry. That is 4.40 basis points above today's forward (a basis point is a hundredth of a percent). So on what basis does Black treat it as driftless?
 
 The answer is a change of unit. Count every price in **annuities**, where one annuity is a strip of five bonds paying one dollar on each of the swap's payment dates. In that unit the same swap rate averages exactly 4.1937 percent, and the swaption's awkward random multiplier cancels out. The probabilities that go with pricing in annuities are called the **annuity measure** (a measure here is a rule assigning weights to the possible futures), and the term carries the rest of the card.
 
 **The forward swap rate is one traded price divided by another, the annuity; counted in annuities it has no drift, so a swaption is today's annuity times an average of a plain call payoff on that rate, and Black's formula is that average under one extra assumption.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works: the driftlessness is exact in any curve model without free money. Black's lognormal shape on top of it is a model: an assumption that fits markets well enough, not a law.
+**What kind of fact this is:** a theorem, proved on this card in Why it works: the driftlessness is exact in any curve model without free money. Black's lognormal shape on top of it (the logarithm of the rate follows a bell curve) is a model: an assumption that fits markets well enough, not a law.
 
 ### The picture: how counting in annuities re-weights the futures
 
@@ -71,7 +71,7 @@ The first equals sign is exact. The second assumes the rate is lognormal under t
 | $w$ | the tilt from expiry dollars to annuities; averages to 1 | 0.9322 to 1.0724 | — |
 | $V_0$, $V_t$, $X$ | price today, and at date $t$; payoff at expiry | $210,237.41 for the Black payer | — |
 
-The two cut-offs, as on the pilot card with the carry term gone:
+The two cut-offs, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card with its interest-rate term gone:
 
 $$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -90,7 +90,9 @@ In words: how many standard deviations of the log-rate separate the forward from
 
 ### Step 0: a price divided by the unit's price has no drift
 
-Pick any traded asset with a positive price as the unit of account, and count every other price in it. There are then weights on the futures under which every such ratio is a fair game: its average future value is its value today. A process with that property is a **martingale**. Such weights exist exactly when the market offers no free money, meaning no strategy that costs nothing, can never lose and sometimes wins; this is the fundamental theorem of asset pricing, restated for a new unit. This is the change-of-numeraire theorem ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)), where **numeraire** is the technical word for the unit. Counting in bank-account dollars gives the risk-neutral measure. Counting in the annuity gives the annuity measure.
+Pick any traded asset with a positive price as the unit of account, and count every other price in it. There are then weights on the futures under which every such ratio is a fair game: its average future value is its value today. A process with that property is a **martingale**. Such weights exist exactly when the market offers no free money, meaning no strategy that costs nothing, can never lose and sometimes wins. This is the fundamental theorem of asset pricing, restated for a new unit.
+
+This is the change-of-numeraire theorem ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)), where **numeraire** is the technical word for the unit. Counting in bank-account dollars gives the risk-neutral measure. Counting in the annuity gives the annuity measure.
 
 ### Step 1: the annuity qualifies as a unit
 
@@ -189,7 +191,7 @@ Every number in that table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-The script builds today's curve, then a one-factor model of the curve in one year: one bell-curve draw $z$ shifts every rate together by 1.20 percent per standard deviation, and every bond's price, counted in expiry dollars, averages to today's forward price. It reaches the annuity-unit average of the swap rate by three roads: today's curve alone, a Simpson integral over $z$ (adding thin slices under a curve) with the tilt $w$, and a Monte Carlo average over 100,000 home-made random draws, each used with its mirror image. It prices the swaption in both units, checks Black's formula against a lognormal simulation, and solves for the model's Black volatility by bisection. The normal CDF, the integrator, the random numbers and the root finder are all written out.
+The script builds today's curve, then a one-factor model of the curve in one year: one bell-curve draw $z$ shifts every rate together by 1.20 percent per standard deviation, and every bond's price, counted in expiry dollars, averages to today's forward price. It reaches the annuity-unit average of the swap rate by three roads: today's curve alone, a Simpson integral over $z$ (adding thin slices under a curve) with the tilt $w$, and a Monte Carlo average over 100,000 home-made random draws, each used with its mirror image. It prices the swaption in both units, checks Black's formula against a lognormal simulation, and solves for the model's Black volatility by bisection (halving a search interval until it closes on the answer). The normal CDF (the bell-curve area $N$), the integrator, the random numbers and the root finder are all written out.
 
 ### Python
 
@@ -580,6 +582,234 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the card's three exact facts for any curve model without free money, and checks the curve's numbers.
+
+- Take positive accruals, positive bond prices, and each bond's expiry price averaging to today's forward price in expiry dollars. Then $\mathbb{E}^{A}[S_T] = F$.
+- Take the same conditions. Then the tilt $w$ averages to 1 in expiry dollars, so the annuity measure's weights are true probabilities.
+- Take the same conditions, a notional $L$ and a strike $K$. Then $D(T_0)$ times the payer's average payoff in expiry dollars equals $L\,A_0\,\mathbb{E}^{A}[(S_T - K)^+]$.
+- Take the card's curve. Then $D(1) = 20/21$, which prints as 0.952381.
+- Take the card's curve. Then $A_0$ rounds to 4.204423 and $F$ to 4.1937 percent.
+- Take $K = F$, $\sigma$ = 30 percent and one year. Then $d_1 = 0.15$ and $d_2 = -0.15$.
+
+Black's lognormal formula, the dates before expiry, the simulations and the other decimals are left to the Python and Rust checks.
+
+```lean
+-- The annuity measure: in any one-period curve model without free money, reweighting expiry-date dollars by the annuity makes the swap rate at expiry average exactly today's forward swap rate, the reweighting is a true probability measure, and a payer swaption costs the notional times today's annuity times the annuity-weighted average of a plain call payoff on the swap rate.
+import Mathlib.MeasureTheory.Measure.WithDensity
+import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+
+open MeasureTheory
+
+/-! Setting. `P` is the measure that counts outcomes in dollars paid at the expiry `T₀`.
+The swap pays fixed on `n + 1` dates `T₁, …, Tₙ₊₁` (indexed by `Fin (n + 1)`; the last one is
+`Fin.last n`). `τ i` is the accrual fraction of period `i`. `D₀ = D(T₀)` and `D i = D(Tᵢ)` are
+today's discount factors. `B i ω = D(T₀, Tᵢ)` is the price at expiry, in the future `ω`, of the
+bond paying one dollar at `Tᵢ`. -/
+
+/-- The annuity at expiry: `A_T = ∑ τᵢ D(T₀, Tᵢ)`. -/
+noncomputable def annuityAtExpiry {Ω : Type*} {n : ℕ} (τ : Fin (n + 1) → ℝ)
+    (B : Fin (n + 1) → Ω → ℝ) (ω : Ω) : ℝ :=
+  ∑ i, τ i * B i ω
+
+/-- The annuity today: `A₀ = ∑ τᵢ D(Tᵢ)`. -/
+noncomputable def annuityToday {n : ℕ} (τ : Fin (n + 1) → ℝ) (D : Fin (n + 1) → ℝ) : ℝ :=
+  ∑ i, τ i * D i
+
+/-- The swap rate at expiry: `S_T = (1 - D(T₀, Tₙ)) / A_T` (the floating leg over the annuity;
+the bond maturing at `T₀` is worth exactly 1 at `T₀`). -/
+noncomputable def swapRateAtExpiry {Ω : Type*} {n : ℕ} (τ : Fin (n + 1) → ℝ)
+    (B : Fin (n + 1) → Ω → ℝ) (ω : Ω) : ℝ :=
+  (1 - B (Fin.last n) ω) / annuityAtExpiry τ B ω
+
+/-- The annuity measure: expiry-date dollars tilted by `w = D(T₀) A_T / A₀`. -/
+noncomputable def annuityMeasure {Ω : Type*} [MeasurableSpace Ω] {n : ℕ} (P : Measure Ω)
+    (τ : Fin (n + 1) → ℝ) (D₀ : ℝ) (D : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ) :
+    Measure Ω :=
+  P.withDensity (fun ω => ENNReal.ofReal (D₀ * annuityAtExpiry τ B ω / annuityToday τ D))
+
+
+lemma annuityAtExpiry_pos {Ω : Type*} {n : ℕ} (τ : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ)
+    (hτ : ∀ i, 0 < τ i) (hB : ∀ i ω, 0 < B i ω) (ω : Ω) : 0 < annuityAtExpiry τ B ω := by
+  unfold annuityAtExpiry
+  exact Finset.sum_pos (fun i _ => mul_pos (hτ i) (hB i ω)) Finset.univ_nonempty
+
+lemma annuityAtExpiry_integrable {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) {n : ℕ}
+    (τ : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ) (hB_int : ∀ i, Integrable (B i) P) :
+    Integrable (annuityAtExpiry τ B) P := by
+  unfold annuityAtExpiry
+  exact integrable_finsetSum _ (fun i _ => (hB_int i).const_mul (τ i))
+
+lemma annuityAtExpiry_integral {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) {n : ℕ}
+    (τ : Fin (n + 1) → ℝ) (D₀ : ℝ) (D : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ)
+    (hB_int : ∀ i, Integrable (B i) P) (h_fair : ∀ i, ∫ ω, B i ω ∂P = D i / D₀) :
+    ∫ ω, annuityAtExpiry τ B ω ∂P = annuityToday τ D / D₀ := by
+  unfold annuityAtExpiry annuityToday
+  rw [integral_finsetSum _ (fun i _ => (hB_int i).const_mul (τ i)), Finset.sum_div]
+  refine Finset.sum_congr rfl (fun i _ => ?_)
+  rw [integral_const_mul, h_fair, mul_div_assoc]
+
+lemma annuityToday_pos {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    {n : ℕ} (τ : Fin (n + 1) → ℝ) (D₀ : ℝ) (D : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ)
+    (hτ : ∀ i, 0 < τ i) (hD₀ : 0 < D₀) (hB : ∀ i ω, 0 < B i ω)
+    (hB_int : ∀ i, Integrable (B i) P) (h_fair : ∀ i, ∫ ω, B i ω ∂P = D i / D₀) :
+    0 < annuityToday τ D := by
+  have hint := annuityAtExpiry_integrable P τ B hB_int
+  have hpos : 0 < ∫ ω, annuityAtExpiry τ B ω ∂P := by
+    rw [integral_pos_iff_support_of_nonneg
+      (fun ω => (annuityAtExpiry_pos τ B hτ hB ω).le) hint]
+    have : Function.support (annuityAtExpiry τ B) = Set.univ :=
+      Set.eq_univ_of_forall (fun ω => (annuityAtExpiry_pos τ B hτ hB ω).ne')
+    rw [this, measure_univ]
+    exact one_pos
+  rw [annuityAtExpiry_integral P τ D₀ D B hB_int h_fair] at hpos
+  have := mul_pos hpos hD₀
+  rwa [div_mul_cancel₀ _ hD₀.ne'] at this
+
+lemma annuityMeasure_integral {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    {n : ℕ} (τ : Fin (n + 1) → ℝ) (D₀ : ℝ) (D : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ)
+    (hτ : ∀ i, 0 < τ i) (hD₀ : 0 < D₀) (hB : ∀ i ω, 0 < B i ω)
+    (hB_int : ∀ i, Integrable (B i) P) (h_fair : ∀ i, ∫ ω, B i ω ∂P = D i / D₀) (g : Ω → ℝ) :
+    ∫ ω, g ω ∂(annuityMeasure P τ D₀ D B)
+      = ∫ ω, (D₀ * annuityAtExpiry τ B ω / annuityToday τ D) * g ω ∂P := by
+  have hA₀ := annuityToday_pos P τ D₀ D B hτ hD₀ hB hB_int h_fair
+  unfold annuityMeasure
+  have hmeas : AEMeasurable
+      (fun ω => ENNReal.ofReal (D₀ * annuityAtExpiry τ B ω / annuityToday τ D)) P :=
+    (((annuityAtExpiry_integrable P τ B hB_int).aemeasurable.const_mul D₀).div_const _).ennreal_ofReal
+  rw [integral_withDensity_eq_integral_toReal_smul₀ hmeas
+    (Filter.Eventually.of_forall (fun _ => ENNReal.ofReal_lt_top))]
+  refine integral_congr_ae (Filter.Eventually.of_forall (fun ω => ?_))
+  simp only [smul_eq_mul]
+  rw [ENNReal.toReal_ofReal]
+  exact (div_pos (mul_pos hD₀ (annuityAtExpiry_pos τ B hτ hB ω)) hA₀).le
+
+/-- **The forward swap rate has no drift in annuity units.** Take a curve model without free
+money: every bond's price at expiry, averaged in expiry-date dollars, equals today's forward
+price `D(Tᵢ) / D(T₀)`. The annuity is a positive traded portfolio: positive accruals, positive
+bond prices. Then, averaged with the annuity measure's weights, the swap rate at expiry equals
+today's forward swap rate: `E^A[S_T] = F = (D(T₀) - D(Tₙ)) / A₀`. -/
+theorem forward_swap_rate_driftless_under_annuity_measure {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P] (n : ℕ)
+    (τ : Fin (n + 1) → ℝ) (D₀ : ℝ) (D : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ)
+    (hτ : ∀ i, 0 < τ i) (hD₀ : 0 < D₀) (hB : ∀ i ω, 0 < B i ω)
+    (hB_int : ∀ i, Integrable (B i) P)
+    (h_fair : ∀ i, ∫ ω, B i ω ∂P = D i / D₀) :
+    ∫ ω, swapRateAtExpiry τ B ω ∂(annuityMeasure P τ D₀ D B)
+      = (D₀ - D (Fin.last n)) / annuityToday τ D := by
+  have hA₀ := annuityToday_pos P τ D₀ D B hτ hD₀ hB hB_int h_fair
+  rw [annuityMeasure_integral P τ D₀ D B hτ hD₀ hB hB_int h_fair]
+  have hcongr : (fun ω => D₀ * annuityAtExpiry τ B ω / annuityToday τ D * swapRateAtExpiry τ B ω)
+      = fun ω => (D₀ / annuityToday τ D) * (1 - B (Fin.last n) ω) := by
+    funext ω
+    have hA := (annuityAtExpiry_pos τ B hτ hB ω).ne'
+    unfold swapRateAtExpiry
+    field_simp
+  rw [hcongr, integral_const_mul, integral_sub (integrable_const 1) (hB_int _), h_fair]
+  simp only [integral_const, probReal_univ, smul_eq_mul, one_mul]
+  field_simp
+
+/-- **The annuity weights are genuine probabilities.** Under the same conditions, the tilt
+`w = D(T₀) A_T / A₀` averages to 1 in expiry-date dollars, so the annuity measure is a
+probability measure. -/
+theorem annuity_measure_is_probability {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P] (n : ℕ)
+    (τ : Fin (n + 1) → ℝ) (D₀ : ℝ) (D : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ)
+    (hτ : ∀ i, 0 < τ i) (hD₀ : 0 < D₀) (hB : ∀ i ω, 0 < B i ω)
+    (hB_int : ∀ i, Integrable (B i) P)
+    (h_fair : ∀ i, ∫ ω, B i ω ∂P = D i / D₀) :
+    IsProbabilityMeasure (annuityMeasure P τ D₀ D B) := by
+  have hA₀ := annuityToday_pos P τ D₀ D B hτ hD₀ hB hB_int h_fair
+  constructor
+  unfold annuityMeasure
+  rw [withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ]
+  have hint : Integrable (fun ω => D₀ * annuityAtExpiry τ B ω / annuityToday τ D) P :=
+    ((annuityAtExpiry_integrable P τ B hB_int).const_mul D₀).div_const _
+  rw [← ofReal_integral_eq_lintegral_ofReal hint
+    (Filter.Eventually.of_forall (fun ω =>
+      (div_pos (mul_pos hD₀ (annuityAtExpiry_pos τ B hτ hB ω)) hA₀).le))]
+  rw [integral_div, integral_const_mul, annuityAtExpiry_integral P τ D₀ D B hB_int h_fair]
+  rw [mul_div_cancel₀ _ hD₀.ne', div_self hA₀.ne', ENNReal.ofReal_one]
+
+/-- **A payer swaption is today's annuity times a plain call on the swap rate.** A physically
+settled payer swaption with notional `L` and strike `K` pays `L A_T (S_T - K)⁺` at expiry. Its
+price today, `D(T₀)` times its average in expiry-date dollars, equals
+`L A₀ E^A[(S_T - K)⁺]`: the random annuity cancels exactly. -/
+theorem payer_swaption_price_in_annuity_units {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P] (n : ℕ)
+    (τ : Fin (n + 1) → ℝ) (D₀ : ℝ) (D : Fin (n + 1) → ℝ) (B : Fin (n + 1) → Ω → ℝ)
+    (hτ : ∀ i, 0 < τ i) (hD₀ : 0 < D₀) (hB : ∀ i ω, 0 < B i ω)
+    (hB_int : ∀ i, Integrable (B i) P)
+    (h_fair : ∀ i, ∫ ω, B i ω ∂P = D i / D₀) (L K : ℝ) :
+    D₀ * ∫ ω, L * annuityAtExpiry τ B ω * max (swapRateAtExpiry τ B ω - K) 0 ∂P
+      = L * annuityToday τ D *
+          ∫ ω, max (swapRateAtExpiry τ B ω - K) 0 ∂(annuityMeasure P τ D₀ D B) := by
+  have hA₀ := annuityToday_pos P τ D₀ D B hτ hD₀ hB hB_int h_fair
+  rw [annuityMeasure_integral P τ D₀ D B hτ hD₀ hB hB_int h_fair]
+  have h1 : (fun ω => L * annuityAtExpiry τ B ω * max (swapRateAtExpiry τ B ω - K) 0)
+      = fun ω => L * (annuityAtExpiry τ B ω * max (swapRateAtExpiry τ B ω - K) 0) := by
+    funext ω; ring
+  have h2 : (fun ω => D₀ * annuityAtExpiry τ B ω / annuityToday τ D *
+        max (swapRateAtExpiry τ B ω - K) 0)
+      = fun ω => (D₀ / annuityToday τ D) *
+          (annuityAtExpiry τ B ω * max (swapRateAtExpiry τ B ω - K) 0) := by
+    funext ω; ring
+  rw [h1, h2, integral_const_mul, integral_const_mul]
+  field_simp
+
+-- The card's curve: forward rates 5.00, 4.60, 4.30, 4.10, 4.00, 3.90 percent, annual compounding.
+-- D(1) = 1 / 1.05 = 20/21, which the card prints as 0.952381.
+example : (1 : ℚ) / (105 / 100) = 20 / 21 := by norm_num
+example : (952380 : ℚ) / 10 ^ 6 < 20 / 21 ∧ (20 : ℚ) / 21 < 952382 / 10 ^ 6 := by norm_num
+-- The annuity A₀ = D(2) + ... + D(6) rounds to 4.204423.
+example :
+    let d1 : ℚ := 1 / (105 / 100)
+    let d2 := d1 / (1046 / 1000)
+    let d3 := d2 / (1043 / 1000)
+    let d4 := d3 / (1041 / 1000)
+    let d5 := d4 / (1040 / 1000)
+    let d6 := d5 / (1039 / 1000)
+    (42044225 : ℚ) / 10 ^ 7 < d2 + d3 + d4 + d5 + d6 ∧ d2 + d3 + d4 + d5 + d6 < 42044235 / 10 ^ 7 := by
+  norm_num
+-- The forward swap rate F = (D(1) - D(6)) / A₀ rounds to 4.1937 percent.
+example :
+    let d1 : ℚ := 1 / (105 / 100)
+    let d2 := d1 / (1046 / 1000)
+    let d3 := d2 / (1043 / 1000)
+    let d4 := d3 / (1041 / 1000)
+    let d5 := d4 / (1040 / 1000)
+    let d6 := d5 / (1039 / 1000)
+    (419365 : ℚ) / 10 ^ 7 < (d1 - d6) / (d2 + d3 + d4 + d5 + d6) ∧
+      (d1 - d6) / (d2 + d3 + d4 + d5 + d6) < 419375 / 10 ^ 7 := by
+  norm_num
+-- At the money ln(F/K) = 0, so d₁ = (1/2)σ²T / (σ√T) = 15/100 and d₂ = -15/100 at σ = 30/100, T = 1.
+example : ((1 : ℚ) / 2 * (30 / 100) ^ 2 * 1) / ((30 / 100) * 1) = 15 / 100 := by norm_num
+example : (15 : ℚ) / 100 - 30 / 100 = -15 / 100 := by norm_num
+
+#print axioms annuityAtExpiry_pos
+#print axioms annuityAtExpiry_integrable
+#print axioms annuityAtExpiry_integral
+#print axioms annuityToday_pos
+#print axioms annuityMeasure_integral
+#print axioms forward_swap_rate_driftless_under_annuity_measure
+#print axioms annuity_measure_is_probability
+#print axioms payer_swaption_price_in_annuity_units
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'annuityAtExpiry_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuityAtExpiry_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuityAtExpiry_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuityToday_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuityMeasure_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forward_swap_rate_driftless_under_annuity_measure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuity_measure_is_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'payer_swaption_price_in_annuity_units' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -606,7 +836,7 @@ The two outputs agree line for line.
 
 - **Swaption screens.** Every European swaption volatility quoted in Black terms is the $\sigma$ that makes $L\,A_0[F N(d_1) - K N(d_2)]$ match a traded price. The annuity measure is what makes that quote mean something.
 - **Premium in basis points.** Dividing the premium by dollars-per-basis-point, $4,204.42 here, turns $210,237.41 into 50.00 basis points of rate: the swaption's price in annuity units, the natural currency of this measure.
-- **The swap market model.** Jamshidian's framework models each forward swap rate as lognormal under its own annuity measure, giving Black's formula for a whole family of swaptions at once, such as all those ending on the same date; the price is that caplets are no longer exactly Black.
+- **The swap market model.** Jamshidian's framework models each forward swap rate as lognormal under its own annuity measure, giving Black's formula for a whole family of swaptions at once, such as all those ending on the same date. The cost: caplets then no longer follow Black's formula exactly.
 - **Constant-maturity swaps.** Coupons fixed on a swap rate but paid once need the Step 5 adjustment; desks compute it from a swaption smile across strikes ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
 - **Options on credit default swaps.** The same trick with a risky annuity, one that stops paying on default, as the unit: [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md).
 

@@ -119,4 +119,4 @@ assert abs(w(F) - DU / A0) < 1e-12         # flat-curve weight matches today's c
 assert abs(end - by_integral(d=10)) < 1e-7  # replication still holds when the sign flips
 assert by_integral(d=10) < 0                # paying late flips the sign
 assert by_integral(d=0) > a2                # paying early makes it bigger
-print("all checks passed")
+print("ALL CHECKS PASS")

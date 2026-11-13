@@ -12,7 +12,9 @@ A **caplet** (a contract that pays when one of those rates ends above a strike) 
 
 A **market model** gives each forward rate its own lognormal law: each rate moves in proportion to its own level, with its own volatility, so it can never fall below zero. Measured in the right unit, each rate has no drift at all. That is why the model reproduces the market's own caplet formula (Black's 1976 formula, **Black-76**) exactly, and why dealers adopted it in the late 1990s.
 
-The trouble starts with the swaption. Ten rates, each driftless in its own unit, cannot all be driftless in one shared unit. Simulate them together in the unit of the bond that pays at year 6 (the **terminal bond**) and nine of the ten rates pick up a drift. The drift is not a choice: no-arbitrage fixes it from the curve and the volatilities. For the first rate it is −0.6571% of its level a year, about −1.97 basis points a year (a basis point is 0.01%). Leave it out and the swaption on $1,000,000 comes out $289.62 too dear.
+The trouble starts with the swaption. Ten rates, each driftless in its own unit, cannot all be driftless in one shared unit. Simulate them together in the unit of the bond that pays at year 6 (the **terminal bond**) and nine of the ten rates pick up a drift. The drift is not a choice: no-arbitrage (the rule that no trade in the bonds may lock in money for free) fixes it from the curve and the volatilities.
+
+For the first rate it is −0.6571% of its level a year, about −1.97 basis points a year (a basis point is 0.01%). Leave it out and the swaption on $1,000,000 comes out $289.62 too dear.
 
 The drift depends on the rates themselves, so it changes along every simulated path. A **predictor-corrector step** handles that: take a trial step with the drift frozen, recompute the drift on the trial curve, then redo the step with the average of the two drifts.
 
@@ -80,7 +82,7 @@ In words: step once with today's drift; recompute every drift on that trial curv
 - **Rates stay positive.** A lognormal rate cannot cross zero. Euro and yen rates sat below zero for much of 2014 to 2022; there a desk shifts every rate by a constant first (a displaced market model), or the model cannot price the book at all.
 - **Volatilities are fixed in advance.** Each $\sigma_i$ is a known number, so each caplet has one Black-76 volatility at every strike. Real caplet prices show a smile (different volatilities at different strikes); fitting it needs a random volatility on top, and this card's prices away from the money are then off.
 - **One curve.** The same bonds set the forward rates and discount the cash. Since 2008 desks project and discount on separate curves; the drift weights then come from the discount curve, and a one-curve drift misprices multi-rate payoffs.
-- **The rate is known when its period starts.** That was LIBOR: fixed at $T_i$, paid at $T_{i+1}$. A SOFR coupon compounds a daily overnight rate through the period and is known only at its end. Before the period starts, the expected compounded rate still satisfies the bond identity above, so the model carries over; inside the period it needs the extension of Lyashenko and Mercurio (see Sources).
+- **The rate is known when its period starts.** That was LIBOR (the London Interbank Offered Rate, the old benchmark): fixed at $T_i$, paid at $T_{i+1}$. A SOFR (Secured Overnight Financing Rate) coupon compounds a daily overnight rate through the period and is known only at its end. Before the period starts, the expected compounded rate still satisfies the bond identity above, so the model carries over; inside the period it needs the extension of Lyashenko and Mercurio (see Sources).
 - **The step is an approximation.** The corrector cuts the average error; it does not make the discrete step exact, and a step that crosses a reset date must stop there and freeze the rate that fixed.
 
 Conventions verified 28 Sep 2026: the UK regulator's announcement of 5 March 2021 ended the sterling, euro, Swiss franc, yen and some dollar LIBOR panels after 31 December 2021 and the remaining US dollar panels after 30 June 2023.
@@ -91,7 +93,9 @@ Conventions verified 28 Sep 2026: the UK regulator's announcement of 5 March 202
 
 ### Step 0: a forward rate is a price measured in another bond's unit
 
-$1 + \delta L_i$ is the $T_i$ bond's price divided by the $T_{i+1}$ bond's price. So it is the price of a traded thing, counted in units of another traded thing. The sibling card [Forward measures](02-forward-measures-for-rates.md) proves that any traded price, counted in units of the $T_{i+1}$ bond, is a **fair bet** under $Q^{T_{i+1}}$: its expected future value equals its value today. A fair bet has no drift. That is the whole reason a market model exists: each rate has a unit in which it is driftless, and in that unit a lognormal law gives the market's Black-76 caplet formula.
+$1 + \delta L_i$ is the $T_i$ bond's price divided by the $T_{i+1}$ bond's price. So it is the price of a traded thing, counted in units of another traded thing. The sibling card [Forward measures](02-forward-measures-for-rates.md) proves that any traded price, counted in units of the $T_{i+1}$ bond, is a **fair bet** under $Q^{T_{i+1}}$: its expected future value equals its value today. A fair bet has no drift.
+
+That is the whole reason a market model exists: each rate has a unit in which it is driftless, and in that unit a lognormal law gives the market's Black-76 caplet formula.
 
 ### Step 1: the model is a choice; the caplet is its reward
 
@@ -115,7 +119,7 @@ Take logarithms: $\ln D_i$ is a sum of $\ln(1 + \delta L_j)$. A 1% relative move
 
 ### Step 4: changing units shifts the shock by that covariance
 
-Girsanov's theorem (a change of pricing rule tilts the odds of every path, and the tilt shows up as a drift equal to a covariance) says: moving from the $T_{i+1}$ unit to the terminal unit shifts the shock by minus the exchange rate's volatility. Rate $i$ picks up the drift
+Girsanov's theorem (a change of pricing rule tilts the odds of every path, and the tilt shows up as a drift equal to a covariance; see [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says: moving from the $T_{i+1}$ unit to the terminal unit shifts the shock by minus the exchange rate's volatility. Rate $i$ picks up the drift
 
 $$\mu_i = -\,\sigma_i\cdot\sum_{j=i+1}^{9} a_j\,\sigma_j.$$
 
@@ -126,7 +130,7 @@ Why minus. The terminal rule keeps score in year-6 bonds. On paths where the lat
 
 Work on $[0, T_0]$, before any rate resets, with the natural history of the two-shock Brownian motion $W^{10}$ under $Q^{T_{10}}$ and fixed, bounded volatilities.
 
-*Existence.* Build the rates backward. $L_9$ is a driftless lognormal. Given $L_{i+1}, \dots, L_9$, the drift $\mu_i$ is a known bounded process (each $a_j$ lies between 0 and 1), so $L_i(t) = L_i(0)\exp\big(\int_0^t (\mu_i - \frac12 \sigma_i\cdot\sigma_i)\,ds + \int_0^t \sigma_i\cdot dW^{10}\big)$ is positive and satisfies the boxed equation by Itô's lemma.
+*Existence.* Build the rates backward. $L_9$ is a driftless lognormal. Given $L_{i+1}, \dots, L_9$, the drift $\mu_i$ is a known bounded process (each $a_j$ lies between 0 and 1), so $L_i(t) = L_i(0)\exp\big(\int_0^t (\mu_i - \frac12 \sigma_i\cdot\sigma_i)\,ds + \int_0^t \sigma_i\cdot dW^{10}\big)$ is positive and satisfies the boxed equation by Itô's lemma (the chain rule for random paths).
 
 *The exchange rate is a fair bet.* Itô on $\ln(1+\delta L_j)$ gives shock $a_j\sigma_j\cdot dW^{10}$ and drift $a_j\mu_j - \frac12 a_j^2\,\sigma_j\cdot\sigma_j$. Sum over $j > i$ and insert $\mu_j = -\sum_{k>j} a_k\,\sigma_j\cdot\sigma_k$. The cross terms $-\sum_{j<k} a_j a_k\,\sigma_j\cdot\sigma_k$ and the squares $-\frac12\sum_j a_j^2\,\sigma_j\cdot\sigma_j$ add to exactly $-\frac12\,\theta_i\cdot\theta_i$ with $\theta_i = \sum_{j>i} a_j\sigma_j$. So $D_i(t)/D_i(0) = \exp\big(\int \theta_i\cdot dW^{10} - \frac12\int \theta_i\cdot\theta_i\,ds\big)$: a stochastic exponential with bounded loading, hence a true fair bet with average 1. That is exactly what no-arbitrage demands of the $T_{i+1}$ bond counted in year-6 bonds, so the drift is the right one.
 
@@ -136,11 +140,17 @@ Work on $[0, T_0]$, before any rate resets, with the natural history of the two-
 
 ### Step 5: the step, and why it is taken in logarithms
 
-By Itô's lemma, $\ln L_i$ moves by $(\mu_i - \frac12\sigma_i\cdot\sigma_i)\,dt + \sigma_i\cdot dW$. Over a step of length $h$ with fixed volatilities, the shock part is exactly $\sigma_i\cdot\Delta W$ and the half-variance part is exactly $\frac12\sigma_i\cdot\sigma_i\,h$. Only the drift part is unknown, because $\mu_i$ depends on where the whole curve wanders during the step. Plain Euler, in log form, uses the drift at the start. The trapezoid rule would average the drift at both ends, but the end is not known yet. The predictor supplies a trial end; the corrector averages. Because every update multiplies $L_i$ by an exponential, no step can make a rate negative. [Stepping an SDE](../06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md) explains why any time step is an approximation and how its error is measured.
+By Itô's lemma (the chain rule for random paths, with an extra second-derivative term; see [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)), $\ln L_i$ moves by $(\mu_i - \frac12\sigma_i\cdot\sigma_i)\,dt + \sigma_i\cdot dW$. Over a step of length $h$ with fixed volatilities, the shock part is exactly $\sigma_i\cdot\Delta W$ and the half-variance part is exactly $\frac12\sigma_i\cdot\sigma_i\,h$. Only the drift part is unknown, because $\mu_i$ depends on where the whole curve wanders during the step.
+
+Plain Euler, in log form, uses the drift at the start. The trapezoid rule would average the drift at both ends, but the end is not known yet. The predictor supplies a trial end; the corrector averages.
+
+Because every update multiplies $L_i$ by an exponential, no step can make a rate negative. [Stepping an SDE](../06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md) explains why any time step is an approximation and how its error is measured.
 
 ### The other door: the first bond's unit
 
-Count everything in the bond paying at $T_0$ instead. The exchange rate becomes $\prod_{j=0}^{i}(1+\delta L_j)^{-1}$, which involves the earlier rates and the rate itself, and the drift flips sign: $\mu_i = +\,\sigma_i\cdot\sum_{j=0}^{i} a_j\sigma_j$ (the green line in the chart). Different paths, different weights, same prices: the code prices the caplet and the swaption both ways and they agree within the noise. Modelling the swap rate itself as the lognormal quantity, instead of the forward rates, is [Swap market model](05-swap-market-model-in-outline.md); the continuous-maturity parent of this whole construction is [Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md).
+Count everything in the bond paying at $T_0$ instead. The exchange rate becomes $\prod_{j=0}^{i}(1+\delta L_j)^{-1}$, which involves the earlier rates and the rate itself, and the drift flips sign: $\mu_i = +\,\sigma_i\cdot\sum_{j=0}^{i} a_j\sigma_j$ (the green line in the chart). Different paths, different weights, same prices: the code prices the caplet and the swaption both ways and they agree within the noise.
+
+Modelling the swap rate itself as the lognormal quantity, instead of the forward rates, is [Swap market model](05-swap-market-model-in-outline.md); the continuous-maturity parent of this whole construction is [Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md).
 
 ---
 
@@ -188,7 +198,9 @@ Each row reuses the correct price's random numbers, so the differences are measu
 
 ## Code, from first principles, and it actually runs
 
-The code builds the strip, computes all ten drifts from the formula, and derives them a second way: it nudges each shock by a tiny amount, reads how far the log of the bond ratio $D_i$ moves, and takes minus the covariance, with no $a_j$ formula in sight. It prices the caplet three ways (Black-76 with a Simpson's-rule bell-curve area, and simulation in the terminal and first-bond units) and the swaption two ways, then reprices with each mistake from the table. It tests the bond ratio for being a fair bet, and it measures the stepping error against a 64-step reference on the same shocks. Random numbers come from a hand-written xorshift generator and the Box-Muller recipe; each draw is also used with its sign flipped (antithetic pairs) to cut the noise.
+The code builds the strip, computes all ten drifts from the formula, and derives them a second way: it nudges each shock by a tiny amount, reads how far the log of the bond ratio $D_i$ moves, and takes minus the covariance, with no $a_j$ formula in sight. It prices the caplet three ways (Black-76 with a Simpson's-rule bell-curve area, and simulation in the terminal and first-bond units) and the swaption two ways, then reprices with each mistake from the table.
+
+It tests the bond ratio for being a fair bet, and it measures the stepping error against a 64-step reference on the same shocks. Random numbers come from a hand-written xorshift generator and the Box-Muller recipe; each draw is also used with its sign flipped (antithetic pairs) to cut the noise.
 
 ### Python
 
@@ -626,6 +638,178 @@ steps  scheme      one block = 0.2
 
 Euler's bias roughly halves each time the step halves. The corrector's is already at the level of the simulation noise at one step.
 
+### Lean
+
+Lean proves the algebra behind the terminal-bond drift, for any number of rates, any period length and any volatilities.
+
+- Give every rate the terminal-bond drift $\mu_i$ from the boxed formula. Then the drift of $\ln D_i$ is exactly minus half its variance per year, the mark of a fair bet.
+- Take any rates, volatilities and period length. Then $\mu_i = -\sigma_i\cdot\sum_{j>i} a_j\sigma_j$, the form Step 4 needs.
+- Suppose every bond price is positive and every rate obeys the bond identity. Then $D_i$ is the product of $1 + \delta L_j$ over the later rates.
+- For the last rate that product is empty, so $D_9 = 1$.
+- Suppose $L_j > 0$ and $\delta > 0$. Then a 1% relative move in $L_j$ moves $\ln(1+\delta L_j)$ by $a_j$ percent. Also $0 < a_j < 1$.
+- The hand step's shock, 0.004000, and its half-variance, 0.005800, are exact.
+
+The Itô and Girsanov steps, the simulation and every price are left to the Python and Rust checks.
+
+```lean
+-- Market models: with the terminal-bond drift, each bond exchange rate is a product of later forward factors whose log drift is exactly minus half its squared volatility, so it is a fair bet.
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Algebra.BigOperators.Intervals
+
+open Finset
+
+
+/-- The weight `a = δ L / (1 + δ L)` of a forward rate `L` over a period of length `δ`:
+how far a 1% relative move in `L` moves `log (1 + δ L)`. -/
+noncomputable def marketWeight (δ L : ℝ) : ℝ := δ * L / (1 + δ * L)
+
+/-- The drift of forward rate `i` (as a fraction of its level per year) in the unit of the
+terminal bond, for rates numbered `0, …, n-1`:
+`μ_i = - ∑_{j = i+1}^{n-1} a_j σ_i · σ_j`. -/
+noncomputable def marketTerminalDrift {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (n : ℕ) (δ : ℝ) (L : ℕ → ℝ) (σ : ℕ → E) (i : ℕ) : ℝ :=
+  -∑ j ∈ Ioo i n, marketWeight δ (L j) * inner ℝ (σ i) (σ j)
+
+lemma market_Ioo_succ_insert (i n : ℕ) (h : i + 1 < n) :
+    Ioo i n = insert (i + 1) (Ioo (i + 1) n) := by
+  ext x; simp only [mem_Ioo, mem_insert]; omega
+
+lemma market_Ioo_empty (i n : ℕ) (h : n ≤ i + 1) : Ioo i n = ∅ := by
+  ext x; simp only [mem_Ioo, Finset.notMem_empty, iff_false]; omega
+
+lemma market_drift_eq_inner {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (n : ℕ) (δ : ℝ) (L : ℕ → ℝ) (σ : ℕ → E) (i : ℕ) :
+    marketTerminalDrift n δ L σ i
+      = -inner ℝ (σ i) (∑ j ∈ Ioo i n, marketWeight δ (L j) • σ j) := by
+  unfold marketTerminalDrift
+  rw [inner_sum]
+  simp only [inner_smul_right]
+
+lemma market_drift_sum_aux {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (n : ℕ) (δ : ℝ) (L : ℕ → ℝ) (σ : ℕ → E) :
+    ∀ m i : ℕ, n - i = m →
+    (∑ j ∈ Ioo i n, (marketWeight δ (L j) * marketTerminalDrift n δ L σ j
+        - (1 / 2) * marketWeight δ (L j) ^ 2 * inner ℝ (σ j) (σ j)))
+      = -(1 / 2) * ‖∑ j ∈ Ioo i n, marketWeight δ (L j) • σ j‖ ^ 2 := by
+  intro m
+  induction m with
+  | zero =>
+    intro i hi
+    rw [market_Ioo_empty i n (by omega)]
+    simp
+  | succ m ih =>
+    intro i hi
+    by_cases h : i + 1 < n
+    · rw [market_Ioo_succ_insert i n h, sum_insert (by simp), sum_insert (by simp),
+        ih (i + 1) (by omega), market_drift_eq_inner, norm_add_sq_real, inner_smul_left,
+        norm_smul, real_inner_self_eq_norm_sq]
+      simp only [Real.norm_eq_abs, conj_trivial]
+      rw [mul_pow, sq_abs]
+      ring
+    · rw [market_Ioo_empty i n (by omega)]
+      simp
+
+lemma market_telescope_aux (n : ℕ) (δ : ℝ) (L P : ℕ → ℝ)
+    (hP : ∀ j ≤ n, 0 < P j) (hbond : ∀ j < n, 1 + δ * L j = P j / P (j + 1)) :
+    ∀ m i : ℕ, i < n → n - i = m → P (i + 1) / P n = ∏ j ∈ Ioo i n, (1 + δ * L j) := by
+  intro m
+  induction m with
+  | zero => intro i hi hm; omega
+  | succ m ih =>
+    intro i hi hm
+    by_cases h : i + 1 < n
+    · rw [market_Ioo_succ_insert i n h, prod_insert (by simp), ← ih (i + 1) h (by omega),
+        hbond (i + 1) h]
+      have h1 := hP (i + 2) (by omega)
+      have h2 := hP n le_rfl
+      field_simp
+    · have : i + 1 = n := by omega
+      rw [market_Ioo_empty i n (by omega), prod_empty, this]
+      exact div_self (hP n le_rfl).ne'
+
+#print axioms market_Ioo_succ_insert
+#print axioms market_Ioo_empty
+#print axioms market_drift_eq_inner
+#print axioms market_drift_sum_aux
+#print axioms market_telescope_aux
+
+/-- **The terminal-measure drift is the right one.** Take forward rates `L_0, …, L_{n-1}`, a
+period length `δ`, volatility vectors `σ_j` (one entry per shock), weights
+`a_j = δ L_j / (1 + δ L_j)`, and give each rate the terminal-bond drift
+`μ_j = - ∑_{k > j} a_k σ_j · σ_k`. Let `θ_i = ∑_{j > i} a_j σ_j` be the volatility of the
+exchange rate `D_i = ∏_{j > i} (1 + δ L_j)`. Then
+(1) the drift of `log D_i`, which by Itô's lemma is `∑_{j > i} (a_j μ_j - ½ a_j² σ_j · σ_j)`,
+equals exactly `-½ |θ_i|²`, so `D_i` is a stochastic exponential (a fair bet); and
+(2) `μ_i = - σ_i · θ_i`, so shifting the shock by `θ_i` (Girsanov) leaves rate `i` driftless
+in its own payment bond's unit. -/
+theorem terminal_drift_makes_exchange_rate_fair_bet
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (n i : ℕ) (δ : ℝ) (L : ℕ → ℝ) (σ : ℕ → E) :
+    (∑ j ∈ Ioo i n, (marketWeight δ (L j) * marketTerminalDrift n δ L σ j
+        - (1 / 2) * marketWeight δ (L j) ^ 2 * inner ℝ (σ j) (σ j)))
+      = -(1 / 2) * ‖∑ j ∈ Ioo i n, marketWeight δ (L j) • σ j‖ ^ 2
+    ∧ marketTerminalDrift n δ L σ i = -inner ℝ (σ i) (∑ j ∈ Ioo i n, marketWeight δ (L j) • σ j) := by
+  exact ⟨market_drift_sum_aux n δ L σ (n - i) i rfl, market_drift_eq_inner n δ L σ i⟩
+
+/-- **The exchange rate telescopes.** If bond prices `P_0, …, P_n` are positive and each forward
+rate satisfies the bond identity `1 + δ L_j = P_j / P_{j+1}`, then the `T_{i+1}` bond counted in
+terminal bonds is the product of the later forward factors:
+`P_{i+1} / P_n = ∏_{j = i+1}^{n-1} (1 + δ L_j)` (an empty product, 1, for the last rate). -/
+theorem exchange_rate_telescopes (n i : ℕ) (hi : i < n) (δ : ℝ) (L P : ℕ → ℝ)
+    (hP : ∀ j ≤ n, 0 < P j) (hbond : ∀ j < n, 1 + δ * L j = P j / P (j + 1)) :
+    P (i + 1) / P n = ∏ j ∈ Ioo i n, (1 + δ * L j) := by
+  exact market_telescope_aux n δ L P hP hbond (n - i) i hi rfl
+
+/-- **The weight is the log sensitivity, and lies between 0 and 1.** For a positive rate `L` and
+a positive period length `δ`, a relative bump `L ↦ L eˣ` moves `log (1 + δ L)` at rate
+`a = δ L / (1 + δ L)` at `x = 0`, and `0 < a < 1`. -/
+theorem weight_is_log_sensitivity (δ L : ℝ) (hδ : 0 < δ) (hL : 0 < L) :
+    HasDerivAt (fun x : ℝ => Real.log (1 + δ * (L * Real.exp x))) (marketWeight δ L) 0
+      ∧ 0 < marketWeight δ L ∧ marketWeight δ L < 1 := by
+  have hpos : 0 < 1 + δ * L := by positivity
+  refine ⟨?_, ?_, ?_⟩
+  · have hd : HasDerivAt (fun x : ℝ => 1 + δ * (L * Real.exp x)) (δ * (L * Real.exp 0)) 0 :=
+      (((Real.hasDerivAt_exp 0).const_mul L).const_mul δ).const_add 1
+    have := hd.log (by simp; exact hpos.ne')
+    convert this using 1
+    simp [marketWeight]
+  · unfold marketWeight; positivity
+  · unfold marketWeight
+    rw [div_lt_one hpos]
+    linarith
+
+/-! The card's exact hand arithmetic for one step of `L_0` with `σ_0 = (0.20, 0.08)`,
+`h = 1/4` and `ΔW = (0.1, -0.2)`. -/
+
+-- shock: 0.20 × 0.1 + 0.08 × (−0.2) = 0.004
+example : (20 / 100 : ℚ) * (1 / 10) + (8 / 100) * (-2 / 10) = 4 / 1000 := by norm_num
+
+-- half-variance: ½ × (0.20² + 0.08²) × 0.25 = 0.0058
+example : (1 / 2 : ℚ) * ((20 / 100) ^ 2 + (8 / 100) ^ 2) * (1 / 4) = 58 / 10000 := by norm_num
+
+-- the last of ten rates (i = 9) has no later rates, so its sum and product are empty
+example : Ioo 9 10 = (∅ : Finset ℕ) := by decide
+
+
+#print axioms terminal_drift_makes_exchange_rate_fair_bet
+#print axioms exchange_rate_telescopes
+#print axioms weight_is_log_sensitivity
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'market_Ioo_succ_insert' depends on axioms: [propext, Classical.choice, Quot.sound]
+'market_Ioo_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'market_drift_eq_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'market_drift_sum_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'market_telescope_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'terminal_drift_makes_exchange_rate_fair_bet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exchange_rate_telescopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'weight_is_log_sensitivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Double every rate.** Guess first: does the drift of $L_0$ double? Set every $L_i(0)$ to twice its value. The drift goes from −0.6571% to −1.2920% a year, almost exactly double, because each weight $a_j$ is close to $\delta L_j$. Halving the rates gives −0.3314%.
@@ -668,6 +852,8 @@ Euler's bias roughly halves each time the step halves. The corrector's is alread
 
 - [Calibrating a market model](04-calibrating-a-market-model.md): choosing the volatility lists and correlations so the simulated strip reprices quoted caplets and swaptions.
 - [Bermudan swaptions](06-bermudan-swaptions-by-regression.md): the simulated strip, run past several reset dates, with an exercise decision at each one.
+
+This card leaves one question open: the swaption here has no Black-76 formula of its own, so can any one model give exact Black-76 prices to both caplets and swaptions?
 
 ---
 

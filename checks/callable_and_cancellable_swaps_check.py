@@ -126,3 +126,4 @@ assert path_greedy < holder, "greedy exercise must lose value"
 assert abs(direct(Rk, k_hold, +1)) < 1e-2, "holder break-even is a root"
 assert abs(direct(Rk, k_bank, -1)) < 1e-2, "bank break-even is a root"
 print("all checks passed")
+print("ALL CHECKS PASS")

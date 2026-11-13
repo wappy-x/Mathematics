@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A rates desk's screen shows twenty numbers. Ten are caplet volatilities, one for each of the next ten yearly interest periods. A caplet is insurance on one future year's rate: it pays if that rate fixes above a strike. Its volatility is the market's price for how much that one rate will wander before it fixes. The other ten are swaption volatilities. A swaption is the right to enter a swap, a trade of fixed rate for floating, on a future date, so it bets on a block of years at once.
+A rates desk's screen shows twenty numbers. Ten are caplet volatilities, one for each of the next ten yearly interest periods. A caplet is insurance on one future year's rate: it pays if that rate fixes above a strike. Its volatility is the market's price for how much that one rate will wander before it fixes.
 
-The desk wants one model that reprices all twenty: the forward market model of [Market models](03-libor-and-sofr-market-models.md), one random rate per year, each with its own wobble, all moving together to some degree. Before it prices anything untraded, such as a Bermudan swaption, its wobbles and their togetherness must be set. That setting is calibration.
+The other ten are swaption volatilities. A swaption is the right to enter a swap, a trade of fixed rate for floating, on a future date, so it bets on a block of years at once.
 
-A caplet watches one rate alone, so it pins down that rate's total wobble and nothing else: ten caplets, ten multipliers, ten exact matches. A swaption watches several rates, so it also feels *when* each wobbles and *how closely* they move together. Four numbers carry that: three shape the wobble over time, one sets how fast togetherness fades. Ten quotes, four numbers: the fit settles for the smallest misses, pricing each swaption with a fast approximate formula, Rebonato's.
+The desk wants one model that reprices all twenty: the forward market model of [Market models](03-libor-and-sofr-market-models.md), one random rate per year, each with its own wobble, all moving together to some degree. Before it prices anything untraded, such as a Bermudan swaption (a swaption that can be exercised on any of several dates), its wobbles and their togetherness must be set. That setting is calibration.
+
+A caplet watches one rate alone, so it pins down that rate's total wobble and nothing else: ten caplets, ten multipliers, ten exact matches.
+
+A swaption watches several rates, so it also feels *when* each wobbles and *how closely* they move together. Four numbers carry that: three shape the wobble over time, one sets how fast togetherness fades. Ten quotes, four numbers: the fit settles for the smallest misses, pricing each swaption with a fast approximate formula, Rebonato's.
 
 **The whole idea in one sentence: give each forward rate a multiplier that reprices its caplet exactly, then choose four shape-and-correlation numbers that bring ten swaptions as close as they will go, using a formula that treats the swap rate as a frozen blend of forward rates.**
 
@@ -69,7 +73,7 @@ $$\mathcal{L}(a,b,c,\beta) = \tfrac12\sum_{m=1}^{10}\big(100\,[\hat u_m - u_m]\b
 | $A$, $w_i$, $w_1$, $w_2$, $S$, $K$ | the annuity (value of 1 a year paid on each payment date), each forward's weight, the swap rate, the strike ($S$ at the money) | 1x2 swaption: 1.850604, 0.508358 and 0.491642, 3.298328% | — |
 | $T_p$, $p$, $n$ | swaption expiry; its first forward; the swap's number of yearly periods | 1x2: $p$ = 1, $n$ = 2 | more time to wobble |
 | $u$, $\hat u$ | swaption Black volatility: quoted, and from Rebonato's formula | 1x2: 22.19% and 22.18% | — |
-| $\mathcal{L}$, $N(x)$, $\sum$ | half the sum of squared misses in volatility points; the normal CDF in Black's formula; the sum sign | $\mathcal{L}$ = 0.020388 at the fit | worse fit |
+| $\mathcal{L}$, $N(x)$, $\sum$ | half the sum of squared misses in volatility points; the normal CDF (cumulative distribution function: the bell-curve area left of $x$) in Black's formula; the sum sign | $\mathcal{L}$ = 0.020388 at the fit | worse fit |
 
 The shape $g$ is the "abcd" curve. At fixing it equals $a + d$; far from fixing it sinks to $d$; in between, $b$ lifts it into a hump. Rates are calmest when their fixing is far off and wobble most about a year before it.
 
@@ -87,7 +91,11 @@ Conventions verified 28 September 2026: at-the-money lognormal (Black) volatilit
 
 **Caplets.** For every positive quote $v_i$ and positive shape $g$, the integral under $k_i$ is positive, so $k_i$ exists, is positive and is unique. Edges: a zero quote gives a multiplier of zero, a forward that never moves; a fixed caplet has no quote to match.
 
-**Swaptions.** The loss is continuous in the knobs, so on any closed, bounded box of knobs it has a smallest value. The checks keep $c$ between 0.05 and 5, $\beta$ between 0 and 3 and $a$ above $-d$, but leave $a$ and $b$ unbounded, so there existence is observed, not proved. Nothing makes the smallest value unique. The checks reach it twice, by two unrelated searches from different starts, and agree to six decimals. For every $\beta \ge 0$ the matrix $e^{-\beta|T_i - T_j|}$ is a genuine correlation matrix, so every trial is a real model. Edges: $\beta = 0$ makes all forwards move as one; $c \to 0$ flattens the hump into a line, and the closed-form integrals divide by $c$; a one-period swaption carries no information about correlation.
+**Swaptions.** The loss is continuous in the knobs, so on any closed, bounded box of knobs it has a smallest value. The checks keep $c$ between 0.05 and 5, $\beta$ between 0 and 3 and $a$ above $-d$, but leave $a$ and $b$ unbounded, so there existence is observed, not proved.
+
+Nothing makes the smallest value unique. The checks reach it twice, by two unrelated searches from different starts, and agree to six decimals. For every $\beta \ge 0$ the matrix $e^{-\beta|T_i - T_j|}$ is a genuine correlation matrix, so every trial is a real model.
+
+Edges: $\beta = 0$ makes all forwards move as one; $c \to 0$ flattens the hump into a line, and the closed-form integrals divide by $c$; a one-period swaption carries no information about correlation.
 
 **Identification.** The fourth abcd number, $d$, is not a knob; Step 2 shows why.
 
@@ -183,7 +191,9 @@ $$-\,\sigma_i(t)\sum_{j=i+1}^{10}\frac{L_j\,\rho_{ij}\,\sigma_j(t)}{1 + L_j}$$
 
 the cost of measuring every forward against the same far bond ([Forward measures](02-forward-measures-for-rates.md)). Twenty quarterly steps; each step's random moves carry exactly the covariance the closed-form integrals give, through a Cholesky factor (a lower-triangular matrix whose product with its own transpose is that covariance); 20,000 pairs of paths with opposite signs.
 
-The five-year caplet comes out at 0.005675 per 1 of notional, standard error 0.000052, against Black's 0.005653 at the quote: within one standard error, as Step 1 promised. The five-into-five swaption comes out at 0.022660, standard error 0.000036, against 0.022752 from Rebonato's volatility. The error is small thanks to a control: the forward swap, worth exactly zero today, is simulated alongside and its sampling error subtracted. In volatility the model says 15.58%, give or take 0.03, and the formula 15.64%: the formula overstates this swaption by 0.06 points, about the size of the fit's own misses.
+The five-year caplet comes out at 0.005675 per 1 of notional, standard error 0.000052, against Black's 0.005653 at the quote: within one standard error, as Step 1 promised.
+
+The five-into-five swaption comes out at 0.022660, standard error 0.000036, against 0.022752 from Rebonato's volatility. The error is small thanks to a control: the forward swap, worth exactly zero today, is simulated alongside and its sampling error subtracted. In volatility the model says 15.58%, give or take 0.03, and the formula 15.64%: the formula overstates this swaption by 0.06 points, about the size of the fit's own misses.
 
 ### The other door
 
@@ -615,6 +625,179 @@ chart, 10y forward made     12.44 12.65 12.99 13.52 14.33 15.54 17.26 19.47 21.8
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves three facts the method rests on, for every input that meets each fact's conditions.
+
+- Suppose the quote $v_i$, the date $T_i$ and the shape $g$ up to fixing are all positive. Then $k_i$ is positive, reprices its caplet exactly, and is the only positive number that does.
+- Suppose $a$, $b$ and $d$ are all multiplied by the same positive number. Then every $\sigma_i(t)$ stays the same at every time.
+- Take any $\beta \ge 0$ and any dates $T_i$. Then the matrix $\rho_{ij}$ has ones on its diagonal, and no weighted basket of forwards gets a negative variance.
+
+Rebonato's swaption formula, the fitted knobs, the simulation and every number are left to the Python and Rust checks.
+
+```lean
+-- Calibrating a market model: the caplet multiplier exists, is positive, is unique and reprices its caplet exactly; scaling a, b and d leaves every volatility unchanged; and exp(-β|Tᵢ - Tⱼ|) is a genuine correlation matrix for every β ≥ 0.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.LinearAlgebra.Matrix.PosDef
+
+open Real
+
+/-- The card's "abcd" shape in time-to-fixing `τ`: `g(τ) = (a + b τ) e^{-c τ} + d`. -/
+noncomputable def abcd (a b c d : ℝ) (τ : ℝ) : ℝ :=
+  (a + b * τ) * Real.exp (-c * τ) + d
+
+/-- The card's caplet multiplier `k = v √(T / ∫₀ᵀ g(T - t)² dt)`. -/
+noncomputable def capletMultiplier (g : ℝ → ℝ) (v T : ℝ) : ℝ :=
+  v * Real.sqrt (T / ∫ t in (0 : ℝ)..T, g (T - t) ^ 2)
+
+lemma integral_const_mul_sq (g : ℝ → ℝ) (k T : ℝ) :
+    (∫ t in (0 : ℝ)..T, (k * g (T - t)) ^ 2) = k ^ 2 * ∫ t in (0 : ℝ)..T, g (T - t) ^ 2 := by
+  simp_rw [mul_pow]
+  exact intervalIntegral.integral_const_mul _ _
+
+/-- Caplets are matched exactly: for every positive caplet quote `v`, every fixing date
+`T > 0` and every abcd shape `g` that is positive up to fixing, the multiplier
+`k = v √(T / ∫₀ᵀ g(T - t)² dt)` is positive, makes the forward's total variance
+`∫₀ᵀ (k g(T - t))² dt` equal the Black variance `v² T`, and is the only positive number
+that does so. -/
+theorem caplet_multiplier_exists_unique_and_exact (a b c d v T : ℝ) (hT : 0 < T) (hv : 0 < v)
+    (hg : ∀ τ ∈ Set.Icc (0 : ℝ) T, 0 < abcd a b c d τ) :
+    0 < capletMultiplier (abcd a b c d) v T ∧
+    (∫ t in (0 : ℝ)..T, (capletMultiplier (abcd a b c d) v T * abcd a b c d (T - t)) ^ 2)
+        = v ^ 2 * T ∧
+    ∀ k : ℝ, 0 < k → (∫ t in (0 : ℝ)..T, (k * abcd a b c d (T - t)) ^ 2) = v ^ 2 * T →
+        k = capletMultiplier (abcd a b c d) v T := by
+  have hcont : Continuous (fun t => abcd a b c d (T - t) ^ 2) := by
+    unfold abcd; fun_prop
+  have hI : 0 < ∫ t in (0 : ℝ)..T, abcd a b c d (T - t) ^ 2 := by
+    refine intervalIntegral.intervalIntegral_pos_of_pos_on
+      (hcont.intervalIntegrable _ _) (fun t ht => ?_) hT
+    have := hg (T - t) ⟨by linarith [ht.2], by linarith [ht.1]⟩
+    positivity
+  set I := ∫ t in (0 : ℝ)..T, abcd a b c d (T - t) ^ 2 with hIdef
+  have hcm : 0 < capletMultiplier (abcd a b c d) v T := by
+    unfold capletMultiplier
+    rw [← hIdef]
+    have : 0 < T / I := div_pos hT hI
+    positivity
+  have hsq : capletMultiplier (abcd a b c d) v T ^ 2 * I = v ^ 2 * T := by
+    unfold capletMultiplier
+    rw [← hIdef, mul_pow, Real.sq_sqrt (div_pos hT hI).le]
+    field_simp
+  refine ⟨hcm, ?_, ?_⟩
+  · rw [integral_const_mul_sq, ← hIdef, hsq]
+  · intro k hk hkI
+    rw [integral_const_mul_sq, ← hIdef, ← hsq] at hkI
+    have h2 : k ^ 2 = capletMultiplier (abcd a b c d) v T ^ 2 :=
+      mul_right_cancel₀ hI.ne' hkI
+    exact (pow_left_inj₀ hk.le hcm.le two_ne_zero).mp h2
+
+/-- The overall size of the shape cancels: multiplying `a`, `b` and `d` by the same
+positive number `λ` leaves the forward's actual volatility `σ(t) = k g(T - t)` unchanged
+at every time `t`, because the multiplier shrinks by exactly `λ`. -/
+theorem scaling_abcd_leaves_volatility_unchanged (a b c d v T lam : ℝ) (hlam : 0 < lam)
+    (t : ℝ) :
+    capletMultiplier (abcd (lam * a) (lam * b) c (lam * d)) v T
+        * abcd (lam * a) (lam * b) c (lam * d) (T - t)
+      = capletMultiplier (abcd a b c d) v T * abcd a b c d (T - t) := by
+  have hscale : ∀ τ, abcd (lam * a) (lam * b) c (lam * d) τ = lam * abcd a b c d τ := by
+    intro τ; unfold abcd; ring
+  unfold capletMultiplier
+  simp_rw [hscale]
+  rw [integral_const_mul_sq, div_mul_eq_div_div_swap, Real.sqrt_div' _ (sq_nonneg lam),
+    Real.sqrt_sq hlam.le]
+  field_simp
+
+lemma minKernel_quadForm_nonneg {ι : Type*} [DecidableEq ι] (T : ι → ℝ) (s : Finset ι) :
+    ∀ f : ℝ → ℝ, Monotone f → (∀ i ∈ s, 0 ≤ f (T i)) → ∀ x : ι → ℝ,
+      0 ≤ ∑ i ∈ s, ∑ j ∈ s, x i * x j * f (min (T i) (T j)) := by
+  induction s using Finset.induction_on_min_value T with
+  | empty => intro f _ _ x; simp
+  | insert a s ha hmin ih =>
+    intro f hf hpos x
+    have hfa : 0 ≤ f (T a) := hpos a (Finset.mem_insert_self a s)
+    set g : ℝ → ℝ := fun u => f u - f (T a) with hg
+    have hgm : Monotone g := fun u w huw => by simp only [hg]; linarith [hf huw]
+    have hgpos : ∀ i ∈ s, 0 ≤ g (T i) := fun i hi => by
+      simp only [hg]; linarith [hf (hmin i hi)]
+    have IH := ih g hgm hgpos x
+    have h1 : ∀ j ∈ s, min (T a) (T j) = T a := fun j hj => min_eq_left (hmin j hj)
+    have h2 : ∀ j ∈ s, min (T j) (T a) = T a := fun j hj => min_eq_right (hmin j hj)
+    have key : ∑ i ∈ insert a s, ∑ j ∈ insert a s, x i * x j * f (min (T i) (T j))
+        = f (T a) * (x a + ∑ j ∈ s, x j) ^ 2
+          + ∑ i ∈ s, ∑ j ∈ s, x i * x j * g (min (T i) (T j)) := by
+      have A : ∑ j ∈ s, x a * x j * f (min (T a) (T j)) = x a * f (T a) * ∑ j ∈ s, x j := by
+        rw [Finset.mul_sum]
+        exact Finset.sum_congr rfl fun j hj => by rw [h1 j hj]; ring
+      have B : ∑ i ∈ s, x i * x a * f (min (T i) (T a)) = x a * f (T a) * ∑ j ∈ s, x j := by
+        rw [Finset.mul_sum]
+        exact Finset.sum_congr rfl fun j hj => by rw [h2 j hj]; ring
+      have C : ∑ i ∈ s, ∑ j ∈ s, x i * x j * f (min (T i) (T j))
+          = ∑ i ∈ s, ∑ j ∈ s, x i * x j * g (min (T i) (T j))
+            + f (T a) * (∑ j ∈ s, x j) ^ 2 := by
+        rw [sq, Finset.sum_mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        rw [Finset.mul_sum, ← Finset.sum_add_distrib]
+        refine Finset.sum_congr rfl fun j _ => ?_
+        simp only [hg]; ring
+      rw [Finset.sum_insert ha, Finset.sum_insert ha]
+      simp only [Finset.sum_insert ha]
+      rw [Finset.sum_add_distrib, A, B, C, min_self]
+      ring
+    rw [key]
+    positivity
+
+lemma exp_neg_abs_split (β a b : ℝ) :
+    Real.exp (-β * |a - b|) = Real.exp (-β * a) * Real.exp (-β * b) * Real.exp (2 * β * min a b) := by
+  rw [← Real.exp_add, ← Real.exp_add]
+  congr 1
+  rcases le_total a b with h | h
+  · rw [abs_of_nonpos (by linarith), min_eq_left h]; ring
+  · rw [abs_of_nonneg (by linarith), min_eq_right h]; ring
+
+/-- For every `β ≥ 0` and any reset dates `T₀, …, Tₙ₋₁`, the matrix
+`ρᵢⱼ = e^{-β |Tᵢ - Tⱼ|}` is a genuine correlation matrix: positive semidefinite with
+ones on the diagonal, so every trial `β` gives a real model. -/
+theorem exp_abs_decay_is_correlation_matrix (n : ℕ) (T : Fin n → ℝ) (β : ℝ) (hβ : 0 ≤ β) :
+    (Matrix.of fun i j => Real.exp (-β * |T i - T j|)).PosSemidef ∧
+    ∀ i, (Matrix.of fun i j => Real.exp (-β * |T i - T j|)) i i = 1 := by
+  refine ⟨Matrix.PosSemidef.of_dotProduct_mulVec_nonneg ?_ ?_, ?_⟩
+  · ext i j
+    simp [Matrix.conjTranspose_apply, abs_sub_comm]
+  · intro x
+    have hf : Monotone (fun u : ℝ => Real.exp (2 * β * u)) := fun u w h => by
+      apply Real.exp_le_exp.mpr
+      nlinarith
+    have H := minKernel_quadForm_nonneg T Finset.univ (fun u => Real.exp (2 * β * u)) hf
+      (fun i _ => (Real.exp_pos _).le) (fun i => x i * Real.exp (-β * T i))
+    convert H using 1
+    simp only [dotProduct, Matrix.mulVec, Matrix.of_apply, star_trivial, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+    rw [exp_neg_abs_split]
+    ring
+  · intro i; simp
+
+#print axioms caplet_multiplier_exists_unique_and_exact
+#print axioms scaling_abcd_leaves_volatility_unchanged
+#print axioms exp_abs_decay_is_correlation_matrix
+#print axioms integral_const_mul_sq
+#print axioms minKernel_quadForm_nonneg
+#print axioms exp_neg_abs_split
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'caplet_multiplier_exists_unique_and_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'scaling_abcd_leaves_volatility_unchanged' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_abs_decay_is_correlation_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_const_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'minKernel_quadForm_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_neg_abs_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first: faster-fading correlation.** Set $\beta$ to 0.30 in the one-into-ten line. Answer: 11.85%, down from 14.39%: the basket cancels more.
@@ -641,7 +824,7 @@ ALL CHECKS PASS
 - **Bermudan swaptions.** Exercisable on several dates, they depend on how forwards move together over time, exactly what the four knobs set: [Bermudan swaptions](06-bermudan-swaptions-by-regression.md).
 - **The morning screen.** Caplet volatilities come from stripping cap quotes: [Caplet stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md). Swaption volatilities come from the at-the-money column of the volatility cube: [SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md).
 - **Model validation.** Validators refit on successive days, watch the knobs, and reprice swaptions the fit never saw: [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
-- **After LIBOR.** The forward rates were once LIBOR fixings. Since USD LIBOR panels ended in June 2023, the same machinery runs on compounded SOFR periods, with the caplet's rate known only at the end of its period: [Market models](03-libor-and-sofr-market-models.md).
+- **After LIBOR.** The forward rates were once LIBOR fixings. LIBOR was a rate banks submitted for unsecured loans. SOFR, its US dollar replacement, is an overnight rate on loans backed by US Treasury bonds. Since the US dollar LIBOR panels ended in June 2023, the same machinery runs on compounded SOFR periods, with the caplet's rate known only at the end of its period: [Market models](03-libor-and-sofr-market-models.md).
 
 > **Say it back**
 > A caplet watches one forward, so it fixes that forward's total wobble; a swaption watches a basket, so it also sees when forwards wobble and how closely they move together. Calibration gives each forward a multiplier that reprices its caplet exactly, then fits a hump-shaped time profile and one correlation decay to the swaptions, priced by Rebonato's frozen-weight formula. Here four knobs bring ten swaptions to within about 0.12 points, and simulating the model shows the formula itself off by 0.06 points on the five-into-five. The fit is exact where it was built to be, approximate elsewhere, and silent on whether its knobs are real.

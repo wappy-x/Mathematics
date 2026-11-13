@@ -126,3 +126,4 @@ assert abs(adj_closed() - adj_mc) < 0.05 / BP                      # closed form
 assert abs(pv_via_adj - pv_rolled) < 1e-6                          # two money routes agree
 assert abs(sweep[6] - sweep_mc[6]) < 0.05                          # late payment: integral = simulation
 print("all checks passed")
+print("ALL CHECKS PASS")

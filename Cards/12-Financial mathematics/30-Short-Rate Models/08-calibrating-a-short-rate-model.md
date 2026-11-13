@@ -10,7 +10,9 @@ A rates desk opens its screen to six option prices. Each is a **receiver swaptio
 
 The desk prices everything else with the Hull-White model ([Hull-White](04-hull-white-model.md)). There the short rate, the interest earned on cash lent for an instant, is pulled toward a moving target chosen so today's bond prices come out exactly right, and knocked about by normal shocks. Two numbers are left free: the **reversion speed**, how hard the pull is, and the **volatility**, how big the shocks are. Today's bond prices say nothing about either. Option prices do, because an option is worth more when rates move more.
 
-Calibrating means choosing those two numbers so the model's six premiums land as close to the six quotes as possible. Here the quotes were generated from a reversion speed of 0.05 a year and a volatility of 0.9 percent a year, then rounded, so the right answer is known and each road to it can be checked. Three roads find it. The more useful result is *how*: the six quotes do not share the work evenly. The overall level of the premiums fixes the volatility. The way premiums grow from short swaps to long ones, and from near expiries to far ones, fixes the reversion speed, and fixes it far less firmly.
+Calibrating means choosing those two numbers so the model's six premiums land as close to the six quotes as possible. Here the quotes were generated from a reversion speed of 0.05 a year and a volatility of 0.9 percent a year, then rounded, so the right answer is known and each road to it can be checked. Three roads find it.
+
+The more useful result is *how*: the six quotes do not share the work evenly. The overall level of the premiums fixes the volatility. The way premiums grow from short swaps to long ones, and from near expiries to far ones, fixes the reversion speed, and fixes it far less firmly.
 
 **Calibrating Hull-White chooses reversion and volatility by least squares on swaption premiums: volatility scales every premium alike, reversion shrinks long and late ones more than short and early ones, so the level of the quotes pins volatility and their tilt pins reversion.**
 
@@ -71,13 +73,13 @@ In words: the value of the floating leg divided by the value of one unit of fixe
 
 ### When it holds
 
-- **One factor.** Every rate moves with the short rate. If long and short rates move partly apart, no pair fits a wide strip, and the leftover misses are a second factor showing through ([Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md)).
+- **One factor.** Every rate moves with the short rate. If long and short rates move partly apart, no pair fits a wide **strip** (a set of quotes across expiries and swap lengths), and the leftover misses are a second factor showing through ([Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md)).
 - **Constant parameters.** If the market's volatility changes with expiry, a constant σ spreads the error over all six quotes; a σ per date absorbs it, at the cost of more knobs.
 - **Premiums, not volatilities.** Markets quote swaptions as normal or shifted volatilities ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); turn them into premiums on the same curve first.
-- **European exercise, positive coupons.** The split into bond options needs one exercise date and a fixed leg of positive cash flows. A Bermudan needs the tree.
+- **European exercise, positive coupons.** The split into bond options needs one exercise date and a fixed leg of positive cash flows. A Bermudan, which can be exercised on any of several dates, needs the tree.
 - **Quotes inside their bounds.** An at-the-money receiver premium must lie strictly between 0 and $D_0(E)$, the cost today of $1 paid at expiry; outside that range no volatility reprices it.
 
-Conventions verified 2026-09-28: swaptions are quoted as normal volatilities in basis points a year, and USD SOFR and EUR swaps pay fixed annually. This card pays fixed yearly and ignores day counts.
+Conventions verified 2026-09-28: swaptions are quoted as normal volatilities in basis points a year, and USD swaps on SOFR (the Secured Overnight Financing Rate) and EUR swaps pay fixed annually. This card pays fixed yearly and ignores day counts.
 
 ---
 
@@ -99,7 +101,7 @@ In Hull-White every zero-coupon bond at expiry falls as the short rate then rise
 
 In the width formula σ is a plain multiplier. Double it and every $w_j$ doubles.
 
-An at-the-money option is worth nearly its width times a constant. The call on a bond whose forward equals its strike is $D_0(T)\,[N(w/2)-N(-w/2)]$, and for a small width that is $D_0(T)\,w/\sqrt{2\pi}$: a straight line through zero. So a 1% rise in σ raises each premium by very nearly 1% of itself.
+An at-the-money option is worth nearly its width times a constant. The call on a bond whose forward price (its price agreed today for delivery at expiry) equals its strike is $D_0(T)\,[N(w/2)-N(-w/2)]$, where $N$ is the area under the standard normal curve to the left of a point, and for a small width that is $D_0(T)\,w/\sqrt{2\pi}$: a straight line through zero. So a 1% rise in σ raises each premium by very nearly 1% of itself.
 
 The sensitivity table in the code shows it. The 0.5y into 2y premium is 46.178 bp and gains 0.4618 bp per 1% of σ. The 2.0y into 5y premium is 182.751 bp and gains 1.8271 bp. In the language of economics, the **elasticity**, the percentage change of the output per percentage change of the input, is almost exactly 1 for every quote. Volatility cannot tell the six apart. It sets their level.
 
@@ -149,7 +151,9 @@ That is the whole answer to "which quote pins which". **The height of the line p
 
 With real quotes no κ makes the line perfectly flat, so the fit minimises L instead. The solver is Levenberg-Marquardt, the damped Gauss-Newton step from [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md), run on the logs of κ and σ so both stay positive.
 
-Near the answer, L is a bowl whose steepness in each direction comes from the sensitivity table. Measured in 1% moves of each parameter, its two principal curvatures, the **eigenvalues** of that bowl, differ by a factor of 1235.4. One direction, mostly σ, is steep. The other, mostly κ, is a long flat valley. Fixing κ and fitting σ alone traces that valley. At κ = 0.03 the best σ is 0.851% and the six quotes miss by 1.31 bp on average, measured as a **root mean square**, the square root of the average squared miss.
+Near the answer, L is a bowl whose steepness in each direction comes from the sensitivity table. Measured in 1% moves of each parameter, its two principal curvatures, the **eigenvalues** of that bowl, differ by a factor of 1235.4. One direction, mostly σ, is steep. The other, mostly κ, is a long flat valley.
+
+Fixing κ and fitting σ alone traces that valley. At κ = 0.03 the best σ is 0.851% and the six quotes miss by 1.31 bp on average, measured as a **root mean square**, the square root of the average squared miss.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -160,18 +164,18 @@ xychart-beta
     line [2.64, 1.31, 0.00, 1.30, 2.58, 3.85]
 ```
 
-The single line is the smallest average miss for each fixed reversion speed, with σ refitted each time: 0.803%, 0.851%, 0.900%, 0.951%, 1.003%, 1.057% from left to right. Moving κ by 0.02 either side costs only 1.31 bp or 1.30 bp, less than a typical bid-offer spread.
+The single line is the smallest average miss for each fixed reversion speed, with σ refitted each time: 0.803%, 0.851%, 0.900%, 0.951%, 1.003%, 1.057% from left to right. Moving κ by 0.02 either side costs only 1.31 bp or 1.30 bp, less than a typical bid-offer spread, the gap between the prices a dealer buys and sells at.
 
 ### Existence, uniqueness and the edges
 
 - **Each quote has one implied σ at a given κ** when it lies strictly between 0 and $D_0(E)$. At σ → 0 the at-the-money premium falls to zero. As σ grows it climbs toward $D_0(E)$, since at par the fixed leg's value is $D_0(E)$. Each bond call rises strictly with its width, so the answer is unique.
-- **The pair needs at least two quotes with different n + E.** With one quote there is a whole curve of exact fits: the 1.0y into 5y quote alone is repriced by σ of 80.32 bp at κ = 0.01 and by 103.24 bp at κ = 0.10. Two quotes with different shapes, 0.5y into 2y and 2.0y into 5y, recover both exactly. That the least-squares minimum is the only one is not proved in general; here the 441-pair grid, the solver from a far start and road C all land on the same pair.
+- **The pair needs at least two quotes with different n + E.** With one quote there is a whole curve of exact fits: the 1.0y into 5y quote alone is repriced by σ of 80.32 bp at κ = 0.01 and by 103.24 bp at κ = 0.10. Two quotes with different shapes, 0.5y into 2y and 2.0y into 5y, recover both exactly. That the least-squares minimum is the only one is not proved in general; here the 441-pair grid, the solver from a far start and the equal-implied-σ road (road C in the code) all land on the same pair.
 - **κ near 0** is safe: the load tends to u and the clock to E, which is the model without reversion (Ho-Lee). **κ below 0** makes shocks grow instead of fading; the formulas still compute, but the fit here works in logs and never goes there.
 
 <details>
 <summary>Detailed proof: the rate's law at expiry, and the second road</summary>
 
-Write the short rate as $r_t=x_t+\alpha(t)$, where $x$ starts at 0 and follows $dx=-\kappa x\,dt+\sigma\,dW$, and $\alpha(t)=f_0(t)+\tfrac12\sigma^2 b_\kappa(t)^2$ is the part that fits today's curve ([Hull-White](04-hull-white-model.md)).
+Write the short rate as $r_t=x_t+\alpha(t)$, where $x$ starts at 0 and follows $dx=-\kappa x\,dt+\sigma\,dW$, with $W$ a Brownian motion (the running total of the normal shocks), and $\alpha(t)=f_0(t)+\tfrac12\sigma^2 b_\kappa(t)^2$ is the part that fits today's curve ([Hull-White](04-hull-white-model.md)).
 
 Price in units of the zero-coupon bond maturing at E, the **E-forward measure** ([Forward measures](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md)). The change of unit adds a drift $-\sigma^2 b_\kappa(E-t)$ to $x$. Solving the linear equation, $x$ at time E is normal with variance $\sigma^2\int_0^E e^{-2\kappa(E-s)}ds=\sigma^2 v_\kappa(E)$ and mean
 $$-\sigma^2\int_0^E e^{-\kappa(E-s)}\,b_\kappa(E-s)\,ds=-\frac{\sigma^2}{\kappa^2}\Big[(1-e^{-\kappa E})-\tfrac12(1-e^{-2\kappa E})\Big]=-\tfrac12\sigma^2 b_\kappa(E)^2.$$
@@ -220,7 +224,15 @@ The right fit is κ = 0.05, σ = 0.900%, missing by nothing.
 
 ## Code, from first principles, and it actually runs
 
-The code builds its own normal curve area, bisection root finder, Simpson integrator and Levenberg-Marquardt solver. It prices each swaption by **two independent roads**: the Jamshidian sum of bond calls, and a direct average of the exercise value over the rate's normal law at expiry, which uses neither the threshold split nor the bond-option formula. A payer swaption is priced separately and receiver minus payer is checked against the forward swap's value, which must be zero at the par strike. The load and the clock are checked against the integrals that define them. Then it finds the pair by **three roads**: an exhaustive grid of 441 pairs, Levenberg-Marquardt from a far start of κ = 0.20 and σ = 0.5%, and the κ at which the shortest and longest quotes imply the same σ. It prints the sensitivities, the valley, the noise experiments and every number on this card.
+The code builds its own normal curve area, bisection root finder, Simpson integrator and Levenberg-Marquardt solver. It prices each swaption by **two independent roads**: the Jamshidian sum of bond calls, and a direct average of the exercise value over the rate's normal law at expiry, which uses neither the threshold split nor the bond-option formula. A payer swaption, the right to pay fixed instead, is priced separately and receiver minus payer is checked against the forward swap's value, which must be zero at the par strike. The load and the clock are checked against the integrals that define them.
+
+Then it finds the pair by **three roads**:
+
+- road A, an exhaustive grid of 441 pairs;
+- road B, Levenberg-Marquardt from a far start of κ = 0.20 and σ = 0.5%;
+- road C, the κ at which the shortest and longest quotes imply the same σ.
+
+It prints the sensitivities, the valley, the noise experiments and every number on this card.
 
 ### Python
 
@@ -649,6 +661,188 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. Levenberg-Marquardt settles σ first and κ last: by step 2 σ is already 0.899756% while κ has swung from 0.20 to 0.024827 and back to 0.060196. That order is the steep and flat directions of Step 5 seen from inside the solver.
 
+### Lean
+
+Lean proves the width facts of Steps 2 and 3, and three integrals, for every positive reversion speed, volatility, payment time and expiry.
+
+- Multiply σ by any number c. Then every width $w_j$ is multiplied by c.
+- Take κ > 0, σ > 0, and a bond paid u > 0 years after expiry E > 0. Then its width is strictly below its no-pull width $\sigma u\sqrt{E}$.
+- Take a second bond paid u′ years after expiry E′, with u′ ≥ u and E′ ≥ E, one strictly larger. Then its ratio of width to no-pull width is strictly smaller.
+- Take κ > 0. Then the load $b_\kappa(u)$ equals $\int_0^u e^{-\kappa s}\,ds$. The variance clock $v_\kappa(E)$ equals $\int_0^E e^{-2\kappa s}\,ds$.
+- Take κ > 0. Then the forward-measure mean integral in the detailed proof equals $-\tfrac12\sigma^2 b_\kappa(E)^2$.
+- Road A's grid has 21 × 21 = 441 pairs, and the strip has 3 × 2 = 6 quotes.
+
+Premiums, the fitted pair and how firmly each parameter is pinned are left to the Python and Rust checks.
+
+```lean
+-- Calibrating Hull-White: volatility multiplies every option width alike while reversion shrinks long and late widths more than short and early ones, and the load, the variance clock and the forward-measure drift are the integrals the card says they are.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+import Mathlib.Data.Finset.Prod
+
+open Real
+
+/-- The load `b_κ(u) = (1 - e^{-κu}) / κ`: how much a `u`-year zero-coupon bond's log price
+moves per unit move of the short rate. -/
+noncomputable def hwLoad (κ u : ℝ) : ℝ := (1 - exp (-κ * u)) / κ
+
+/-- The variance clock `v_κ(E) = (1 - e^{-2κE}) / (2κ)`: the short rate's spread at expiry `E`
+is `σ² v_κ(E)`. -/
+noncomputable def hwClock (κ E : ℝ) : ℝ := (1 - exp (-2 * κ * E)) / (2 * κ)
+
+/-- The width `w = σ b_κ(u) √(v_κ(E))` of the option on a bond paid `u` years after expiry `E`. -/
+noncomputable def hwWidth (κ σ u E : ℝ) : ℝ := σ * hwLoad κ u * sqrt (hwClock κ E)
+
+lemma hw_ratio_pos {x : ℝ} (hx : 0 < x) : 0 < (1 - exp (-x)) / x := by
+  have : exp (-x) < 1 := exp_lt_one_iff.mpr (by linarith)
+  exact div_pos (by linarith) hx
+
+lemma hw_ratio_lt_one {x : ℝ} (hx : 0 < x) : (1 - exp (-x)) / x < 1 := by
+  have := add_one_lt_exp (show -x ≠ 0 by linarith)
+  rw [div_lt_one hx]; linarith
+
+lemma hw_ratio_strictAnti {p q : ℝ} (hp : 0 < p) (hpq : p < q) :
+    (1 - exp (-q)) / q < (1 - exp (-p)) / p := by
+  have h := strictConvexOn_exp.secant_strict_mono (a := 0) (x := -q) (y := -p)
+    (Set.mem_univ _) (Set.mem_univ _) (Set.mem_univ _) (by linarith) (by linarith) (by linarith)
+  simp only [exp_zero, sub_zero] at h
+  have e1 : (exp (-q) - 1) / -q = (1 - exp (-q)) / q := by rw [← neg_div_neg_eq]; ring_nf
+  have e2 : (exp (-p) - 1) / -p = (1 - exp (-p)) / p := by rw [← neg_div_neg_eq]; ring_nf
+  rw [e1, e2] at h; exact h
+
+lemma hw_width_ratio (κ σ u E : ℝ) (hκ : 0 < κ) (hσ : 0 < σ) (hu : 0 < u) (hE : 0 < E) :
+    hwWidth κ σ u E / (σ * u * sqrt E) =
+      (1 - exp (-(κ * u))) / (κ * u) * sqrt ((1 - exp (-(2 * κ * E))) / (2 * κ * E)) := by
+  unfold hwWidth hwLoad hwClock
+  have hsE : 0 < sqrt E := sqrt_pos.mpr hE
+  have h1 : sqrt ((1 - exp (-(2 * κ * E))) / (2 * κ * E)) =
+      sqrt ((1 - exp (-2 * κ * E)) / (2 * κ)) / sqrt E := by
+    rw [← sqrt_div' _ hE.le]; congr 1; rw [neg_mul, neg_mul, div_div]
+  rw [h1, neg_mul]
+  field_simp
+
+#print axioms hw_ratio_pos
+#print axioms hw_ratio_lt_one
+#print axioms hw_ratio_strictAnti
+#print axioms hw_width_ratio
+
+/-- Volatility scales every width alike, and reversion shrinks long and late widths more than
+short and early ones: for reversion `κ > 0` and volatility `σ > 0`, multiplying `σ` by `c`
+multiplies every width by `c`; every width is strictly below its no-pull value `σ u √E`; and the
+ratio of width to no-pull width is strictly smaller for a later payment `u' ≥ u` and a later
+expiry `E' ≥ E` when at least one of them is strictly later. -/
+theorem reversion_shrinks_long_late_widths_more (κ σ : ℝ) (hκ : 0 < κ) (hσ : 0 < σ)
+    {u u' E E' : ℝ} (hu : 0 < u) (hE : 0 < E) (huu : u ≤ u') (hEE : E ≤ E')
+    (hlater : u < u' ∨ E < E') :
+    (∀ c : ℝ, hwWidth κ (c * σ) u E = c * hwWidth κ σ u E) ∧
+    hwWidth κ σ u E / (σ * u * sqrt E) < 1 ∧
+    hwWidth κ σ u' E' / (σ * u' * sqrt E') < hwWidth κ σ u E / (σ * u * sqrt E) := by
+  refine ⟨fun c => by unfold hwWidth; ring, ?_, ?_⟩
+  · rw [hw_width_ratio κ σ u E hκ hσ hu hE]
+    have a1 := hw_ratio_lt_one (mul_pos hκ hu)
+    have a0 := hw_ratio_pos (mul_pos hκ hu)
+    have b1 := hw_ratio_lt_one (show 0 < 2 * κ * E by positivity)
+    have b0 := hw_ratio_pos (show 0 < 2 * κ * E by positivity)
+    have s1 : sqrt ((1 - exp (-(2 * κ * E))) / (2 * κ * E)) < 1 := by
+      rw [sqrt_lt' one_pos]; simpa using b1
+    have s0 : 0 ≤ sqrt ((1 - exp (-(2 * κ * E))) / (2 * κ * E)) := sqrt_nonneg _
+    nlinarith
+  · have hu' : 0 < u' := by linarith
+    have hE' : 0 < E' := by linarith
+    rw [hw_width_ratio κ σ u E hκ hσ hu hE, hw_width_ratio κ σ u' E' hκ hσ hu' hE']
+    set A := (1 - exp (-(κ * u))) / (κ * u)
+    set A' := (1 - exp (-(κ * u'))) / (κ * u')
+    set B := (1 - exp (-(2 * κ * E))) / (2 * κ * E)
+    set B' := (1 - exp (-(2 * κ * E'))) / (2 * κ * E')
+    have hA' : 0 < A' := hw_ratio_pos (mul_pos hκ hu')
+    have hB : 0 < B := hw_ratio_pos (by positivity)
+    have hB' : 0 < B' := hw_ratio_pos (by positivity)
+    have hAA : A' ≤ A := by
+      rcases huu.lt_or_eq with h | h
+      · exact (hw_ratio_strictAnti (mul_pos hκ hu) (by nlinarith)).le
+      · simp only [A, A', h]; rfl
+    have hBB : B' ≤ B := by
+      rcases hEE.lt_or_eq with h | h
+      · exact (hw_ratio_strictAnti (by positivity) (by nlinarith)).le
+      · simp only [B, B', h]; rfl
+    have sB : 0 < sqrt B := sqrt_pos.mpr hB
+    have sB' : 0 < sqrt B' := sqrt_pos.mpr hB'
+    have sBB : sqrt B' ≤ sqrt B := sqrt_le_sqrt hBB
+    rcases hlater with h | h
+    · have : A' < A := hw_ratio_strictAnti (mul_pos hκ hu) (by nlinarith)
+      nlinarith
+    · have : B' < B := hw_ratio_strictAnti (by positivity) (by nlinarith)
+      have : sqrt B' < sqrt B := sqrt_lt_sqrt hB'.le this
+      nlinarith
+
+lemma hw_integral_exp (a x : ℝ) (ha : a ≠ 0) :
+    ∫ s in (0 : ℝ)..x, exp (-a * s) = (1 - exp (-a * x)) / a := by
+  rw [intervalIntegral.integral_comp_mul_left (fun t => exp t) (neg_ne_zero.mpr ha), integral_exp]
+  simp only [mul_zero, exp_zero, smul_eq_mul]
+  field_simp
+  ring
+
+#print axioms hw_integral_exp
+
+/-- The load and the variance clock equal the integrals that define them:
+`b_κ(u) = ∫₀ᵘ e^{-κs} ds` and `v_κ(E) = ∫₀ᴱ e^{-2κs} ds`, for reversion `κ > 0`. -/
+theorem load_and_clock_are_integrals (κ u E : ℝ) (hκ : 0 < κ) :
+    hwLoad κ u = ∫ s in (0 : ℝ)..u, exp (-κ * s) ∧
+    hwClock κ E = ∫ s in (0 : ℝ)..E, exp (-2 * κ * s) := by
+  refine ⟨?_, ?_⟩
+  · rw [hw_integral_exp κ u hκ.ne']; rfl
+  · have := hw_integral_exp (2 * κ) E (by positivity)
+    simp only [neg_mul] at this ⊢
+    rw [this]; unfold hwClock; rw [neg_mul, neg_mul]
+
+/-- Under the `E`-forward measure the rate's random part at expiry has mean
+`-σ² ∫₀ᴱ e^{-κ(E-s)} b_κ(E-s) ds = -½ σ² b_κ(E)²`, which cancels the `½ σ² b_κ(E)²` in the
+curve-fitting target, so the short rate at expiry is centred on today's forward rate. -/
+theorem forward_drift_cancels_target_term (κ σ E : ℝ) (hκ : 0 < κ) :
+    -σ ^ 2 * ∫ s in (0 : ℝ)..E, exp (-κ * (E - s)) * hwLoad κ (E - s) =
+      -(1 / 2) * σ ^ 2 * hwLoad κ E ^ 2 := by
+  have hsub := intervalIntegral.integral_comp_sub_left
+    (fun t => exp (-κ * t) * hwLoad κ t) (a := 0) (b := E) E
+  simp only [sub_self, sub_zero] at hsub
+  rw [hsub]
+  have hfun : (fun t => exp (-κ * t) * hwLoad κ t) =
+      fun t => exp (-κ * t) / κ - exp (-(2 * κ) * t) / κ := by
+    funext t; unfold hwLoad
+    have : exp (-(2 * κ) * t) = exp (-κ * t) * exp (-κ * t) := by rw [← exp_add]; ring_nf
+    rw [this]; field_simp
+  rw [hfun, intervalIntegral.integral_sub, intervalIntegral.integral_div, intervalIntegral.integral_div,
+    hw_integral_exp κ E hκ.ne', hw_integral_exp (2 * κ) E (by positivity)]
+  · unfold hwLoad
+    have : exp (-(2 * κ) * E) = exp (-κ * E) * exp (-κ * E) := by rw [← exp_add]; ring_nf
+    rw [this]; field_simp; ring
+  · exact (by fun_prop : Continuous fun t => exp (-κ * t) / κ).intervalIntegrable _ _
+  · exact (by fun_prop : Continuous fun t => exp (-(2 * κ) * t) / κ).intervalIntegrable _ _
+
+/-- Road A searches an exhaustive grid of 21 reversion speeds by 21 volatilities: 441 pairs. -/
+example : (Finset.range 21 ×ˢ Finset.range 21).card = 441 := by norm_num
+
+/-- Three expiries, each with two swap lengths: six quotes. -/
+example : (Finset.range 3 ×ˢ Finset.range 2).card = 6 := by norm_num
+
+#print axioms reversion_shrinks_long_late_widths_more
+#print axioms load_and_clock_are_integrals
+#print axioms forward_drift_cancels_target_term
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'hw_ratio_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hw_ratio_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hw_ratio_strictAnti' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hw_width_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hw_integral_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reversion_shrinks_long_late_widths_more' depends on axioms: [propext, Classical.choice, Quot.sound]
+'load_and_clock_are_integrals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forward_drift_cancels_target_term' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Raise σ to 1.2%.** Guess first: what does the 2.0y into 5y premium become? It goes from 182.75 bp to 243.64 bp, a third more, as elasticity 1 says.
@@ -695,7 +889,7 @@ The two outputs agree line for line. Levenberg-Marquardt settles σ first and κ
 - [Calibrating a market model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): the same job for a model of forward rates, with a volatility and a correlation for every forward instead of two numbers for all.
 - [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the solver in general, with its convergence proof.
 
-Two numbers can match six prices today and still disagree with tomorrow's; how much a loosely pinned reversion speed is worth in dollars is the question model-risk-and-parameter-stability answers.
+Two numbers can match six prices today and still disagree with tomorrow's; how much a loosely pinned reversion speed is worth in dollars is the question [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md) answers.
 
 ---
 

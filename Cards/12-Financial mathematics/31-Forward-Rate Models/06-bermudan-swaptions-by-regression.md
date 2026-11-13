@@ -6,13 +6,15 @@
 
 ## General Overview
 
-A company will borrow from year 1 to year 6 at a floating rate. Fearing that rates will climb, it buys a right: on any one anniversary, in year 1, 2, 3, 4 or 5, it may switch the rest of the loan to a fixed 5% until year 6. Switching is entering an **interest-rate swap**: the company pays a fixed 5% a year and receives the floating rate, which cancels the floating loan's payments. A right to enter a swap is a **swaption**. A swaption with several permitted dates is a **Bermudan swaption**, named because Bermuda sits between Europe (one date) and America (any date). This one is a **1-into-5**: first chance in one year, into a swap that ends five years later, with each later chance entering the shorter swap that is left.
+A company will borrow from year 1 to year 6 at a floating rate. Fearing that rates will climb, it buys a right: on any one anniversary, in year 1, 2, 3, 4 or 5, it may switch the rest of the loan to a fixed 5% until year 6. Switching is entering an **interest-rate swap**: the company pays a fixed 5% a year and receives the floating rate, which cancels the floating loan's payments.
+
+A right to enter a swap is a **swaption**. A swaption with several permitted dates is a **Bermudan swaption**, named because Bermuda sits between Europe (one date) and America (any date). This one is a **1-into-5**: first chance in one year, into a swap that ends five years later, with each later chance entering the shorter swap that is left.
 
 Today every annual forward rate (the rate that can be locked in now for one future year of borrowing) is 5%, and each moves by about 20% of its level in a year. The right costs about **2.35% of the loan's size**: between $23,454.57 and $23,484.99 on a $1,000,000 loan.
 
 Two things make that number hard. Each anniversary poses a choice: switch now, or keep the right and ask again next year. And what moves is a whole curve of rates, not one price. A tree over a whole curve is too large; simulation handles the curve, but one simulated future cannot say what waiting is worth.
 
-The method: simulate thousands of curves and learn a switching rule by regression (fitting a curve through a cloud of points). Run the frozen rule on fresh curves; its average payout is a **lower bound**, since no rule beats the best one. Then subtract from the switching values a fair game (a process whose average change is zero) built from the rule's own values, and average the best that remains on each path: an **upper bound**. Here the two land within 0.003% of each other, and a tree sits beside them.
+The method: simulate thousands of curves and learn a switching rule by regression (fitting a curve through a cloud of points). Run the frozen rule on fresh curves; its average payout is a **lower bound**, since no rule beats the best one. Then build a fair game (a process whose average change is zero) from the rule's own values, and subtract it from the switching values. Average the best that remains on each path: an **upper bound**. Here the two land within 0.003% of each other, and a tree sits beside them.
 
 **A rule learned by regression on simulated curves prices the Bermudan from below; a fair-game correction built from that same rule prices it from above; a narrow gap between the two is the evidence that the rule is close to the best.**
 
@@ -152,13 +154,17 @@ So $E[\max_e(h_e - M^*_e)] \le Y_0$. The dual inequality gives the reverse, so t
 
 Andersen and Broadie built $M_e$ from the frozen rule. Let $C_e$ be the value at year $e$ of following the rule from year $e+1$ on. Let the rule's value at $e$ be $h_e$ if it switches, and $C_e$ if it holds. Then $E_{e-1}$ of the rule's value at $e$ is exactly $C_{e-1}$. So the increments "rule's value at $e$ minus $C_{e-1}$" average to zero: a fair game.
 
-The $C_e$ are not known. On each of 500 outer paths, at each year, 400 inner paths are simulated from that curve, run under the rule, and averaged. The fair game starts at year 1 as the rule's value there minus that value's average. That average is the lower bound itself. So the upper bound splits into the lower bound plus a **duality gap**: the average over outer paths of the largest $h_e$ minus the running total of increments, with the rule's year-1 value as the starting point. The gap is 0.003043%, standard error 0.000842. The upper bound is 2.348499%.
+The $C_e$ are not known. On each of 500 outer paths, at each year, 400 inner paths are simulated from that curve, run under the rule, and averaged.
+
+The fair game starts at year 1 as the rule's value there minus that value's average. That average is the lower bound itself. So the upper bound splits into the lower bound plus a **duality gap**. The gap is the average over outer paths of the largest $h_e$ minus the running total of increments, with the rule's year-1 value as the starting point. The gap is 0.003043%, standard error 0.000842%. The upper bound is 2.348499%.
 
 The gap is small because the rule is good: where the rule is close to the best, its value process is close to $Y_e$, and Step 6's proof then says the cheater's advantage nearly vanishes.
 
 ### Step 8: a third road, the tree
 
-With one shock, every forward at year $e$ depends on the path only through the drift. Freeze the drifts at today's values and every forward becomes a function of the total shock $W$ so far: $L_i = L_i(0)\exp\big((\mu_i - \tfrac12\sigma^2)e + \sigma W\big)$, with $\mu_i$ the frozen drift. $W$ lives on a recombining binomial tree: 200 up-or-down steps a year, each of size $1/\sqrt{200}$. At each exercise year, the value at a node is the larger of $h_e$ and the average of its two children, rolled back step by step. This is the backward induction of [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), run on the market model's own shock instead of a short rate. No regression and no simulation enter.
+With one shock, every forward at year $e$ depends on the path only through the drift. Freeze the drifts at today's values and every forward becomes a function of the total shock $W$ so far: $L_i = L_i(0)\exp\big((\mu_i - \tfrac12\sigma^2)e + \sigma W\big)$, with $\mu_i$ the frozen drift. $W$ lives on a recombining binomial tree: 200 up-or-down steps a year, each of size $1/\sqrt{200}$.
+
+At each exercise year, the value at a node is the larger of $h_e$ and the average of its two children, rolled back step by step. This is the backward induction of [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), run on the market model's own shock instead of a short rate. No regression and no simulation enter.
 
 The tree gives 2.350191%, inside the simulated bracket's noise. Its European is 1.646175% against Black's 1.642226%. That small excess is the price of freezing the drift, and the size of the tree's own bias.
 
@@ -643,6 +649,225 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line: same random numbers, same order of additions, so even the regression coefficients match.
 
+### Lean
+
+Lean proves both bounds, the exact bound from the true value, and the floating side's value, for any number of exercise years.
+
+- Take any legal rule $\hat\tau$ and switching values with finite averages. Then $P(0,6)\,E[h_{\hat\tau}] \le V_0$.
+- Suppose also $M_e$ is a fair game with $M_0 = 0$. Then $V_0 \le P(0,6)\,E[\max_{1\le e\le 5}(h_e - M_e)]$.
+- Let $Y_e$ be the true value and $M^*_e$ the fair game built from it, as in Step 6. Then $h_e - M^*_e \le Y_0$ on every path, at every exercise year.
+- Take positive forward rates $L_i$. Then the floating side of a swap from year $e$ to year $n$ is worth $1 - P(e,n)$ at year $e$.
+- Take today's flat 5% curve. Then the forward swap rate is exactly 5%, and the year-1 swap's floating side is worth $1.05^{-1} - 1.05^{-6}$.
+- The frozen rule's exercise counts by year add up to 400,000 paths.
+
+The model, the simulation, the regression rule, the bounds' numbers, the tree and the Greeks are left to the Python and Rust checks.
+
+```lean
+-- Bermudan swaptions: every legal exercise rule prices the option from below and every fair game with zero start prices it from above, the fair game built from the true value makes the upper bound exact, and the floating leg of a swap is worth one minus the final bond.
+import Mathlib.Probability.Martingale.Basic
+import Mathlib.Probability.Process.Stopping
+import Mathlib.Probability.Martingale.OptionalStopping
+
+open MeasureTheory
+
+variable {Ω : Type*} {m0 : MeasurableSpace Ω}
+
+
+theorem bermudan_stoppedValue_le_dual
+    {μ : Measure Ω} [IsProbabilityMeasure μ] {ℱ : Filtration ℕ m0} {h M : ℕ → Ω → ℝ} {N : ℕ}
+    (hN : 1 ≤ N) (hint : ∀ e, 1 ≤ e → e ≤ N → Integrable (h e) μ)
+    (hM : Martingale M ℱ μ) (hM0 : M 0 = 0)
+    (τ : Ω → WithTop ℕ) (hτ : IsStoppingTime ℱ τ) (hτb : ∀ ω, 1 ≤ τ ω ∧ τ ω ≤ N) :
+    ∫ ω, stoppedValue h τ ω ∂μ ≤ ∫ ω, (Finset.Icc 1 N).sup' (Finset.nonempty_Icc.mpr hN)
+        (fun e => h e ω - M e ω) ∂μ := by
+  -- every path stops at a finite year in `[1, N]`
+  have hval : ∀ ω, ∃ n : ℕ, τ ω = n ∧ 1 ≤ n ∧ n ≤ N := by
+    intro ω
+    obtain ⟨h1, h2⟩ := hτb ω
+    cases hτω : τ ω with
+    | top => rw [hτω] at h2; simp at h2
+    | coe n =>
+      rw [hτω] at h1 h2
+      exact ⟨n, rfl, WithTop.coe_le_coe.mp h1, WithTop.coe_le_coe.mp h2⟩
+  -- integrability of the stopped payoff
+  set h' : ℕ → Ω → ℝ := fun e => if 1 ≤ e ∧ e ≤ N then h e else 0 with hh'
+  have hh'int : ∀ e, Integrable (h' e) μ := by
+    intro e
+    by_cases he : 1 ≤ e ∧ e ≤ N
+    · simp only [hh', he, and_self, ite_true]; exact hint e he.1 he.2
+    · simp only [hh', he, ite_false]; exact integrable_zero _ _ _
+  have hsv : stoppedValue h τ = stoppedValue h' τ := by
+    funext ω
+    obtain ⟨n, hn, h1, h2⟩ := hval ω
+    simp only [stoppedValue, hn]
+    show h n ω = h' n ω
+    simp [hh', h1, h2]
+  have hτN : ∀ ω, τ ω ≤ N := fun ω => (hτb ω).2
+  have hint_h : Integrable (stoppedValue h τ) μ := by
+    rw [hsv]; exact integrable_stoppedValue ℕ hτ hh'int hτN
+  have hint_M : Integrable (stoppedValue M τ) μ :=
+    hM.submartingale.integrable_stoppedValue hτ hτN
+  -- the stopped fair game has mean zero
+  have h0 : IsStoppingTime ℱ (fun _ => ((0 : ℕ) : WithTop ℕ)) := isStoppingTime_const ℱ 0
+  have hle0 : (fun _ => ((0 : ℕ) : WithTop ℕ)) ≤ τ := fun ω => bot_le
+  have hA := hM.submartingale.expected_stoppedValue_mono h0 hτ hle0 hτN
+  have hB := hM.neg.submartingale.expected_stoppedValue_mono h0 hτ hle0 hτN
+  have hneg : stoppedValue (-M) τ = -stoppedValue M τ := rfl
+  have hneg0 : stoppedValue (-M) (fun _ => ((0 : ℕ) : WithTop ℕ)) = -M 0 := rfl
+  have hc0 : stoppedValue M (fun _ => ((0 : ℕ) : WithTop ℕ)) = M 0 := rfl
+  rw [hc0] at hA
+  rw [hneg, hneg0] at hB
+  simp only [Pi.neg_apply, integral_neg] at hB
+  have hMτ : ∫ ω, stoppedValue M τ ω ∂μ = 0 := by
+    rw [hM0] at hA hB; simp at hA hB; linarith
+  -- integrability of the dual payoff
+  have hsupint : Integrable (fun ω => (Finset.Icc 1 N).sup' (Finset.nonempty_Icc.mpr hN)
+        (fun e => h e ω - M e ω)) μ := by
+    have : (fun ω => (Finset.Icc 1 N).sup' (Finset.nonempty_Icc.mpr hN)
+        (fun e => h e ω - M e ω)) = (Finset.Icc 1 N).sup' (Finset.nonempty_Icc.mpr hN)
+        (fun e => h e - M e) := by
+      funext ω; rw [Finset.sup'_apply]; rfl
+    rw [this]
+    refine Finset.sup'_induction _ _ (p := fun f => Integrable f μ) ?_ ?_
+    · intro a ha b hb; exact ha.sup hb
+    · intro e he
+      rw [Finset.mem_Icc] at he
+      exact (hint e he.1 he.2).sub (hM.integrable e)
+  -- pathwise bound
+  have hpath : ∀ ω, stoppedValue h τ ω - stoppedValue M τ ω ≤
+      (Finset.Icc 1 N).sup' (Finset.nonempty_Icc.mpr hN) (fun e => h e ω - M e ω) := by
+    intro ω
+    obtain ⟨n, hn, h1, h2⟩ := hval ω
+    have : stoppedValue h τ ω - stoppedValue M τ ω = h n ω - M n ω := by
+      simp only [stoppedValue, hn]; rfl
+    rw [this]
+    exact Finset.le_sup' (fun e => h e ω - M e ω) (Finset.mem_Icc.mpr ⟨h1, h2⟩)
+  calc ∫ ω, stoppedValue h τ ω ∂μ
+      = ∫ ω, (stoppedValue h τ ω - stoppedValue M τ ω) ∂μ + ∫ ω, stoppedValue M τ ω ∂μ := by
+        rw [integral_sub hint_h hint_M]; ring
+    _ = ∫ ω, (stoppedValue h τ ω - stoppedValue M τ ω) ∂μ := by rw [hMτ, add_zero]
+    _ ≤ _ := integral_mono (hint_h.sub hint_M) hsupint hpath
+
+#print axioms bermudan_stoppedValue_le_dual
+
+/-- **The primal-dual bracket.** Count switching values `h e` (exercise years `1 ≤ e ≤ N`) in
+final-bond units, and let `V` be the best average `E[h τ]` over all legal rules: stopping times
+`τ` with `1 ≤ τ ≤ N` that decide only from what has been seen so far. Then, times today's bond
+price `p = P(0,6) ≥ 0`, any legal rule `τ̂` (such as the frozen regression rule) gives a lower bound
+`p E[h τ̂] ≤ p V`, and any martingale (fair game) `M` with `M 0 = 0` gives an upper bound
+`p V ≤ p E[max_{1 ≤ e ≤ N} (h e - M e)]`. -/
+theorem bermudan_price_between_rule_and_dual_bound
+    {μ : Measure Ω} [IsProbabilityMeasure μ] {ℱ : Filtration ℕ m0} {h M : ℕ → Ω → ℝ} {N : ℕ}
+    (hN : 1 ≤ N) (hint : ∀ e, 1 ≤ e → e ≤ N → Integrable (h e) μ)
+    (hM : Martingale M ℱ μ) (hM0 : M 0 = 0) (p : ℝ) (hp : 0 ≤ p)
+    (τhat : Ω → WithTop ℕ) (hτhat : IsStoppingTime ℱ τhat) (hτhat_b : ∀ ω, 1 ≤ τhat ω ∧ τhat ω ≤ N) :
+    let V : ℝ := sSup {x : ℝ | ∃ τ : Ω → WithTop ℕ, IsStoppingTime ℱ τ ∧
+      (∀ ω, 1 ≤ τ ω ∧ τ ω ≤ N) ∧ x = ∫ ω, stoppedValue h τ ω ∂μ}
+    p * ∫ ω, stoppedValue h τhat ω ∂μ ≤ p * V ∧
+      p * V ≤ p * ∫ ω, (Finset.Icc 1 N).sup' (Finset.nonempty_Icc.mpr hN)
+        (fun e => h e ω - M e ω) ∂μ := by
+  intro V
+  have hkey := fun τ hτ hb => bermudan_stoppedValue_le_dual (μ := μ) hN hint hM hM0 τ hτ hb
+  have hmem : ∫ ω, stoppedValue h τhat ω ∂μ ∈ {x : ℝ | ∃ τ : Ω → WithTop ℕ, IsStoppingTime ℱ τ ∧
+      (∀ ω, 1 ≤ τ ω ∧ τ ω ≤ N) ∧ x = ∫ ω, stoppedValue h τ ω ∂μ} := ⟨τhat, hτhat, hτhat_b, rfl⟩
+  have hub : ∀ x ∈ {x : ℝ | ∃ τ : Ω → WithTop ℕ, IsStoppingTime ℱ τ ∧
+      (∀ ω, 1 ≤ τ ω ∧ τ ω ≤ N) ∧ x = ∫ ω, stoppedValue h τ ω ∂μ},
+      x ≤ ∫ ω, (Finset.Icc 1 N).sup' (Finset.nonempty_Icc.mpr hN) (fun e => h e ω - M e ω) ∂μ := by
+    rintro x ⟨τ, hτ, hb, rfl⟩
+    exact hkey τ hτ hb
+  refine ⟨mul_le_mul_of_nonneg_left ?_ hp, mul_le_mul_of_nonneg_left ?_ hp⟩
+  · exact le_csSup ⟨_, hub⟩ hmem
+  · exact csSup_le ⟨_, hmem⟩ hub
+
+/-- **The bound is exact for the best martingale.** Let `Y` be the true value in final-bond units:
+`Y N = h N`, `Y e = max (h e) (E_e[Y (e+1)])` for `1 ≤ e < N`, and `Y 0 = E_0[Y 1]`. Build the
+martingale from its increments, `M* e = ∑_{k=1}^{e} (Y k - E_{k-1}[Y k])`, so `M* 0 = 0`. Then on
+every path and at every exercise year `1 ≤ e ≤ N`, `h e - M* e ≤ Y 0`. -/
+theorem dual_bound_exact_for_value_martingale
+    {μ : Measure Ω} {ℱ : Filtration ℕ m0} {h Y Mstar : ℕ → Ω → ℝ} {N : ℕ}
+    (hYN : Y N = h N)
+    (hY : ∀ e, 1 ≤ e → e < N → ∀ ω, Y e ω = max (h e ω) (μ[Y (e + 1) | ℱ e] ω))
+    (hY0 : Y 0 = μ[Y 1 | ℱ 0])
+    (hMstar : ∀ e ω, Mstar e ω = ∑ k ∈ Finset.Icc 1 e, (Y k ω - μ[Y k | ℱ (k - 1)] ω)) :
+    ∀ ω, ∀ e ∈ Finset.Icc 1 N, h e ω - Mstar e ω ≤ Y 0 ω := by
+  intro ω
+  -- the value minus the fair game never rises above today's value
+  have hstep : ∀ e, 1 ≤ e → e ≤ N → Y e ω - Mstar e ω ≤ Y 0 ω := by
+    intro e
+    induction e with
+    | zero => intro h0; omega
+    | succ e ih =>
+      intro _ hle
+      rcases Nat.eq_zero_or_pos e with rfl | hpos
+      · rw [hMstar, hY0]
+        simp
+      · have hrec : Mstar (e + 1) ω = Mstar e ω + (Y (e + 1) ω - μ[Y (e + 1) | ℱ e] ω) := by
+          rw [hMstar, hMstar, Finset.sum_Icc_succ_top (by omega)]
+          simp
+        have hYe := hY e hpos (by omega) ω
+        have hce : μ[Y (e + 1) | ℱ e] ω ≤ Y e ω := by rw [hYe]; exact le_max_right _ _
+        have := ih hpos (by omega)
+        rw [hrec]
+        linarith
+  intro e he
+  rw [Finset.mem_Icc] at he
+  have hhY : h e ω ≤ Y e ω := by
+    rcases lt_or_eq_of_le he.2 with hlt | rfl
+    · rw [hY e he.1 hlt ω]; exact le_max_left _ _
+    · rw [hYN]
+  have := hstep e he.1 he.2
+  linarith
+
+/-- **The floating leg is worth one minus the final bond.** With positive annual forward rates
+`L j`, and the bond price `P(e,m) = 1 / ((1 + L e) ⋯ (1 + L (m-1)))`, the floating payments `L m`
+for the years from `e` to `n`, each paid at `m + 1`, are worth `1 - P(e,n)` at year `e`. -/
+theorem floating_leg_worth_one_minus_bond (L : ℕ → ℝ) (hL : ∀ j, 0 < L j) (e n : ℕ) :
+    ∑ m ∈ Finset.Ico e n, L m * ∏ j ∈ Finset.Ico e (m + 1), (1 + L j)⁻¹
+      = 1 - ∏ j ∈ Finset.Ico e n, (1 + L j)⁻¹ := by
+  rcases le_or_gt n e with hne | hen
+  · rw [Finset.Ico_eq_empty_of_le hne]
+    simp
+  have hen2 : e ≤ n := hen.le
+  clear hen
+  induction n, hen2 using Nat.le_induction with
+  | base => simp
+  | succ n hen' ih =>
+    rw [Finset.sum_Ico_succ_top hen', Finset.prod_Ico_succ_top hen', ih]
+    have h1 : (1 + L n) ≠ 0 := by have := hL n; positivity
+    field_simp
+    ring
+
+-- The card's forward swap rate on the flat 5% curve: (1.05⁻¹ - 1.05⁻⁶) / A(0) is exactly 5%,
+-- with A(0) = 1.05⁻² + ⋯ + 1.05⁻⁶ and 1.05⁻¹ = 20/21.
+example :
+    ((20 : ℚ) / 21 - (20 / 21) ^ 6) /
+        ((20 / 21) ^ 2 + (20 / 21) ^ 3 + (20 / 21) ^ 4 + (20 / 21) ^ 5 + (20 / 21) ^ 6)
+      = 1 / 20 := by
+  norm_num
+
+-- The floating leg on the flat 5% curve, years 1 to 6: 5% paid in years 2..6 is worth P(0,1) - P(0,6).
+example :
+    (1 / 20 : ℚ) * ((20 / 21) ^ 2 + (20 / 21) ^ 3 + (20 / 21) ^ 4 + (20 / 21) ^ 5 + (20 / 21) ^ 6)
+      = 20 / 21 - (20 / 21) ^ 6 := by
+  norm_num
+
+-- The frozen rule's exercise years on 400,000 fresh curves: years 1 to 5, then never.
+example : 73696 + 55043 + 39622 + 30795 + 23489 + 177355 = 400000 := by norm_num
+
+#print axioms bermudan_price_between_rule_and_dual_bound
+#print axioms dual_bound_exact_for_value_martingale
+#print axioms floating_leg_worth_one_minus_bond
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bermudan_stoppedValue_le_dual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_price_between_rule_and_dual_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dual_bound_exact_for_value_martingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'floating_leg_worth_one_minus_bond' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -670,7 +895,7 @@ The two outputs are identical line for line: same random numbers, same order of 
 
 - **Callable bonds and loans.** A borrower's right to repay a fixed-rate bond at par on coupon dates is a Bermudan receiver swaption (a right to receive fixed and pay floating) held by the borrower. The issuer's funding desk prices that right this way ([Callable and cancellable swaps](../32-Convexity%20and%20Exotics/05-callable-and-cancellable-swaps.md)).
 - **Mortgage hedging.** Home-loan borrowers can refinance on many dates. Banks that hold mortgages hedge that prepayment right with Bermudan swaptions, and value both with simulated curves.
-- **Model validation.** A validation team checks a desk's Bermudan price by the width of its primal-dual bracket. A wide gap means the exercise rule, not the model, needs work.
+- **Model validation.** A validation team checks a desk's Bermudan price by the width of its primal-dual bracket: the gap between the rule's lower bound and the dual upper bound. A wide gap means the exercise rule, not the model, needs work.
 - **Whole-curve models.** In the Heath-Jarrow-Morton framework ([Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md)) with several shocks, no small tree exists. Regression plus the dual is how such models price anything with early exercise.
 
 > **Say it back**
@@ -694,7 +919,7 @@ This card prices a right to enter a swap; the question it leaves open is how tha
 
 ## Sources
 
-Verified 28 Sep 2026: every DOI below matches its title and first author on Crossref and resolves to the publisher.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Longstaff, Francis A., and Eduardo S. Schwartz. "Valuing American Options by Simulation: A Simple Least-Squares Approach." *Review of Financial Studies* 14, no. 1 (2001): 113–147. [doi:10.1093/rfs/14.1.113](https://doi.org/10.1093/rfs/14.1.113). The backward regression of Step 4.
 - Andersen, Leif, and Mark Broadie. "Primal-Dual Simulation Algorithm for Pricing Multidimensional American Options." *Management Science* 50, no. 9 (2004): 1222–1234. [doi:10.1287/mnsc.1040.0258](https://doi.org/10.1287/mnsc.1040.0258). The fair game built from the rule's values, with inner simulations; applied there to Bermudan swaptions in a market model.

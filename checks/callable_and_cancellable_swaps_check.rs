@@ -155,4 +155,5 @@ fn main() {
     assert!(direct(&rk, k_hold, 1.0).abs() < 1e-2, "holder break-even is a root");
     assert!(direct(&rk, k_bank, -1.0).abs() < 1e-2, "bank break-even is a root");
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

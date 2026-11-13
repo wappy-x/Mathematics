@@ -10,7 +10,9 @@ Acme has borrowed $1,000,000 at a floating rate for six years; each year the rat
 
 That right is a **payer Bermudan swaption**: an option to enter a swap paying fixed, exercisable on a fixed list of dates ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md), [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)). The market calls it a "1-into-5": first exercise in one year, into a five-year swap, every later swap ending at year 6 too.
 
-One exercise date has a closed-form price ([Bond options](05-bond-options-and-jamshidians-trick.md)). Five dates do not: each year the holder compares switching now with keeping the right, and keeping it has no formula. The answer is a **lattice**, a grid of possible interest rates at each date, built so the rates wander as the Hull-White model says ([Hull-White](04-hull-white-model.md)) and so every bond on today's curve comes out at its market price. John Hull and Alan White published the construction in 1994; from here on it is the Hull-White tree.
+One exercise date has a closed-form price ([Bond options](05-bond-options-and-jamshidians-trick.md)). Five dates do not: each year the holder compares switching now with keeping the right, and keeping it has no formula.
+
+The answer is a **lattice**, a grid of possible interest rates at each date, built so the rates wander as the Hull-White model says ([Hull-White](04-hull-white-model.md)) and so every bond on today's curve comes out at its market price. John Hull and Alan White published the construction in 1994; from here on it is the Hull-White tree.
 
 On a 60-step tree the right is worth **$14,432.09**; with the tree's step error removed, and on an independent grid, it is about $14,238. The best single date alone, year 2, is worth $9,741.96 by a closed formula. The extra, about $4,500, is what the choice of date buys.
 
@@ -20,7 +22,7 @@ On a 60-step tree the right is worth **$14,432.09**; with the tree's step error 
 
 ### The picture: how far the tree reaches
 
-The tree has 60 steps of 0.1 year. At each step it holds a fan of possible short rates; the chart shows the highest rung, the centre and the lowest rung at each year.
+The tree has 60 steps of 0.1 year. At each step it holds a fan of possible short rates: rates for borrowing over the next 0.1 year, on evenly spaced levels called rungs. The chart shows the highest rung, the centre and the lowest rung at each year.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -39,7 +41,9 @@ Top line: the highest rung. Middle line: the fitted centre. Bottom line: the low
 
 ## The formula
 
-Notation first, in words. Time runs in steps of length $\Delta t$; step number $i$ is the date $i\,\Delta t$ years from today. The possible rates at each step sit on rungs a fixed distance $\Delta x$ apart, and the rung number $j$ counts up or down from the centre. A node is one rung at one step, written (i, j); a double subscript such as $r_{i,j}$ means "at step i, rung j". $D(t)$ is today's price of $1 paid at year t, read off the discount curve. Every other symbol is in the table below the formula.
+Notation first, in words. Time runs in steps of length $\Delta t$; step number $i$ is the date $i\,\Delta t$ years from today. The possible rates at each step sit on rungs a fixed distance $\Delta x$ apart, and the rung number $j$ counts up or down from the centre.
+
+A node is one rung at one step, written (i, j); a double subscript such as $r_{i,j}$ means "at step i, rung j". $D(t)$ is today's price of $1 paid at year t, read off the discount curve. Every other symbol is in the table below the formula.
 
 The rate at node (i, j), applying for the next step, and the contract's value there are
 
@@ -68,7 +72,7 @@ The helper formulas:
 
 $$\Delta x = \sqrt{3\,\sigma^2\,\frac{1 - e^{-2a\Delta t}}{2a}}, \qquad j_{max} = \text{the smallest whole number above } \frac{0.184}{-M}.$$
 
-The spacing is the square root of three times one step's variance, the stretch the trinomial card calls root 3; the edge rung is where the ladder stops widening. Step 3 derives the 0.184.
+The spacing is the square root of three times one step's variance, the stretch [Trinomial trees](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md) calls root 3; the edge rung is where the ladder stops widening. Step 3 derives the 0.184.
 
 $$p_u = \tfrac16 + \tfrac12\big(j^2M^2 + jM\big), \qquad p_m = \tfrac23 - j^2M^2, \qquad p_d = \tfrac16 + \tfrac12\big(j^2M^2 - jM\big).$$
 
@@ -84,7 +88,7 @@ at exercise year e. One minus the six-year bond is the floating side: a loan tha
 
 ### When it holds
 
-- **One Gaussian factor, constant $a$ and $\sigma$.** Every rate on the curve moves together. A Bermudan's value depends on how short and long swap rates move against each other; where they do not move in lockstep, the price is off, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a factor.
+- **One Gaussian (normally distributed) factor, constant $a$ and $\sigma$.** Every rate on the curve moves together. A Bermudan's value depends on how short and long swap rates move against each other; where they do not move in lockstep, the price is off, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a factor.
 - **Rates may go below zero.** Here the lowest rung stays above zero, at 0.49 percent by year 1; on a low curve the tree has negative rungs, which a market floored at zero would reject.
 - **Short steps.** The error is first order: $139.60 short on the one-date contract at 60 steps, $67.30 at 120. On the Bermudan the 60-step tree is $194.46 above the grid.
 - **Exercise dates on tree layers.** A date between layers needs an extra step or interpolation.
@@ -116,7 +120,9 @@ A move of +1 or −1 has square 1 and staying has square 0. So the up and down w
 
 The middle weight $\tfrac23 - j^2M^2$ falls as j grows, and once $|jM|$ passes $\sqrt{2/3}$ = 0.816497 it is negative: from rung 28 on Acme's tree. A negative weight is not a probability; it amplifies errors instead of averaging them. Without a fix the 60-step tree carries a weight of −2.373870.
 
-The fix changes the branching. Far above the centre the pull is strong, so the branches go to rungs j, j−1 and j−2. Solving the same three conditions gives the edge weights in the callout; all are positive while $|jM|$ lies between $1 - \sqrt{2/3}$, which is 0.184, and $1 + \sqrt{2/3}$. Hull and White take the smallest rung past 0.184: for Acme, 0.184 divided by 0.029554 is 6.23, so $j_{max}$ = 7. That is the flat top and bottom of the fan chart.
+The fix changes the branching. Far above the centre the pull is strong, so the branches go to rungs j, j−1 and j−2. Solving the same three conditions gives the edge weights in the callout; all are positive while $|jM|$ lies between $1 - \sqrt{2/3}$, which is 0.184, and $1 + \sqrt{2/3}$.
+
+Hull and White take the smallest rung past 0.184: for Acme, 0.184 divided by 0.029554 is 6.23, so $j_{max}$ = 7. That is the flat top and bottom of the fan chart.
 
 ```mermaid
 flowchart LR
@@ -174,7 +180,7 @@ For one exercise date, Jamshidian's formula is exact, because Hull-White fitted 
 
 ## Worked numbers, by hand
 
-Acme's contract: $1,000,000 face, fixed 4.7 percent, exercise at years 1 to 5 into a swap ending at year 6, annual payments. The curve is the shelf's house Vasicek curve: reversion 0.3 towards 5 percent, volatility 1 percent, starting at 4 percent; the tree uses the same $a$ = 0.3 and $\sigma$ = 1 percent. The 1-into-5 forward swap rate is 4.6909 percent, so 4.7 percent is almost exactly at the money.
+Acme's contract: $1,000,000 face, fixed 4.7 percent, exercise at years 1 to 5 into a swap ending at year 6, annual payments. The curve is the shelf's house Vasicek curve: reversion 0.3 towards 5 percent, volatility 1 percent, starting at 4 percent; the tree uses the same $a$ = 0.3 and $\sigma$ = 1 percent. The 1-into-5 forward swap rate, the fixed rate that makes that swap worth zero today, is 4.6909 percent. So 4.7 percent is almost exactly at the money: almost equal to that rate.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -208,7 +214,7 @@ At year 1, rung +1, four more dates of choice outweigh a modest gain now. At yea
 
 ### One date against five
 
-Each single date priced alone by the closed form, and all five together on the independent grid. One block is $500, value today on $1,000,000 face.
+Each single date priced alone by the closed form (a European swaption: one exercise date only), and all five together on the independent grid. One block is $500, value today on $1,000,000 face.
 
 ```
 European 1-into-5   ████████████████              $7,877.63
@@ -236,7 +242,13 @@ Same contract, 60 steps, $14,432.09 when built right:
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads. **Road 1**, the Hull-White tree at 30, 60 and 120 steps; twice the 120-step price minus the 60-step price cancels the first-order error. **Road 2**, Jamshidian's closed form for each single date, with its own bisection and a normal CDF from its power series. **Road 3**, an implicit finite-difference grid for the term-structure equation, 401 rates by 500 time steps a year, which knows nothing of trees or fitting. Six asserts set the roads against each other and test every rung's weights against the step's mean and variance. Reversing the pull in the weights, swapping the edge weights, dropping the root 3 from the spacing, dropping the rung term from the discount, or loosening the exercise test each makes one fail.
+Three independent roads:
+
+- **Road 1**, the Hull-White tree at 30, 60 and 120 steps; twice the 120-step price minus the 60-step price cancels the first-order error.
+- **Road 2**, Jamshidian's closed form for each single date, with its own bisection and a normal CDF from its power series.
+- **Road 3**, an implicit finite-difference grid for the term-structure equation, 401 rates by 500 time steps a year, which knows nothing of trees or fitting.
+
+Six asserts set the roads against each other and test every rung's weights against the step's mean and variance. Reversing the pull in the weights, swapping the edge weights, dropping the root 3 from the spacing, dropping the rung term from the discount, or loosening the exercise test each makes one fail.
 
 ### Python
 
@@ -675,6 +687,171 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
+
+### Lean
+
+Lean proves the matched weights, the curve fit and the rollback rule for every rung and layer, and checks three worked numbers.
+
+- Take any tree that starts from the single root rung 0. Then rolling a payoff paid at layer m back to the root gives $\sum_k Q_{m,k} H_k$.
+- Suppose the weights out of each parent add to one, and $\Delta t$, $D$ and Step 4's sum are positive. Then the next layer's state prices sum to the curve's next bond price exactly when $\alpha_i$ equals the display formula. So the shift always exists and is unique.
+- Take the middle-rung weights $p_u$, $p_m$, $p_d$, or the top edge weights. Then each set adds to one, with average move $jM$ and average squared move $\tfrac13 + j^2M^2$.
+- Take a middle rung. Then its middle weight is positive exactly when $\lvert jM\rvert < \sqrt{2/3}$.
+- Take the top edge and write y for $-jM$. Then the middle weight is positive exactly when y lies between $1 - \sqrt{2/3}$ and $1 + \sqrt{2/3}$. On that range all three edge weights are positive.
+- The step length is 6 years ÷ 60 steps = 0.1 year. Rung 0 has weights 1/6, 2/3, 1/6, and rungs −7 to +7 give 15 nodes per full layer.
+
+Exercise choices, every dollar price and the step error are left to the Python and Rust checks.
+
+```lean
+-- The Hull-White tree: rolling a payoff back through any trinomial lattice gives the sum of state price times payoff, each layer's shift is fixed uniquely by the curve, and the branch weights match one step's mean and variance and stay positive at the turned edge.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Data.Int.Interval
+
+open Finset
+
+namespace HullWhiteTree
+
+/-- State prices, built forward one layer at a time. `S i` is the set of rungs on layer `i`,
+`p i j k` the weight on the branch from rung `j` of layer `i` to rung `k` of layer `i+1`
+(zero if there is no such branch), and the node rate is `α i + j * Δx`.
+`Q 0` is `1` at the root rung `0`; `Q (i+1) k = ∑ j, Q i j * p(j → k) * exp(-(α i + j Δx) Δt)`. -/
+noncomputable def stateQ (S : ℕ → Finset ℤ) (p : ℕ → ℤ → ℤ → ℝ) (α : ℕ → ℝ) (Δx Δt : ℝ) :
+    ℕ → ℤ → ℝ
+  | 0, j => if j = 0 then 1 else 0
+  | i + 1, k => ∑ j ∈ S i, stateQ S p α Δx Δt i j * p i j k * Real.exp (-((α i + j * Δx) * Δt))
+
+/-- One step of backward induction from layer `i+1` to layer `i`: the discounted average of the
+children, discounted at the node's own rate `α i + j * Δx`. -/
+noncomputable def backStep (S : ℕ → Finset ℤ) (p : ℕ → ℤ → ℤ → ℝ) (α : ℕ → ℝ) (Δx Δt : ℝ)
+    (i : ℕ) (v : ℤ → ℝ) : ℤ → ℝ :=
+  fun j => Real.exp (-((α i + j * Δx) * Δt)) * ∑ k ∈ S (i + 1), p i j k * v k
+
+/-- Roll a payoff `H` paid at layer `m` all the way back to layer `0`. -/
+noncomputable def rollback (S : ℕ → Finset ℤ) (p : ℕ → ℤ → ℤ → ℝ) (α : ℕ → ℝ) (Δx Δt : ℝ) :
+    ℕ → (ℤ → ℝ) → ℤ → ℝ
+  | 0, H => H
+  | m + 1, H => rollback S p α Δx Δt m (backStep S p α Δx Δt m H)
+
+/-- The tree's prices agree with its fit. On a trinomial lattice that starts from the single
+root rung `0`, rolling any payoff `H` paid at layer `m` back to the root gives
+`∑ k, Q m k * H k`: the sum over that layer's nodes of state price times payoff.
+In particular, with `H = 1` the root value is the layer's state-price sum, so a tree fitted to the
+curve reprices every zero-coupon bond on the grid by rollback as well. -/
+theorem rollback_eq_state_price_sum (S : ℕ → Finset ℤ) (p : ℕ → ℤ → ℤ → ℝ) (α : ℕ → ℝ)
+    (Δx Δt : ℝ) (hroot : S 0 = {0}) (m : ℕ) (H : ℤ → ℝ) :
+    rollback S p α Δx Δt m H 0 = ∑ k ∈ S m, stateQ S p α Δx Δt m k * H k := by
+  induction m generalizing H with
+  | zero =>
+    rw [hroot, Finset.sum_singleton]
+    simp [rollback, stateQ]
+  | succ n ih =>
+    show rollback S p α Δx Δt n (backStep S p α Δx Δt n H) 0 = _
+    rw [ih]
+    simp only [backStep, stateQ, Finset.mul_sum, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
+    ring
+
+/-- Fitting one layer. If the weights out of every parent add to one, the curve's next bond price
+`D` is positive, `Δt > 0`, and the sum `∑ j, Q j * exp(-j Δx Δt)` is positive, then the next
+layer's state prices add up to `D` exactly when the shift is
+`α = (1/Δt) * ln((∑ j, Q j * exp(-j Δx Δt)) / D)`: the shift always exists and is unique. -/
+theorem layer_shift_fits_curve_iff (Si Snext : Finset ℤ) (Q : ℤ → ℝ) (p : ℤ → ℤ → ℝ)
+    (Δx Δt D : ℝ) (hΔt : 0 < Δt) (hD : 0 < D)
+    (hp : ∀ j ∈ Si, ∑ k ∈ Snext, p j k = 1)
+    (hsum : 0 < ∑ j ∈ Si, Q j * Real.exp (-((j : ℝ) * Δx * Δt))) (α : ℝ) :
+    ∑ k ∈ Snext, ∑ j ∈ Si, Q j * p j k * Real.exp (-((α + j * Δx) * Δt)) = D ↔
+      α = (1 / Δt) * Real.log ((∑ j ∈ Si, Q j * Real.exp (-((j : ℝ) * Δx * Δt))) / D) := by
+  set A := ∑ j ∈ Si, Q j * Real.exp (-((j : ℝ) * Δx * Δt)) with hA
+  have hL : ∑ k ∈ Snext, ∑ j ∈ Si, Q j * p j k * Real.exp (-((α + j * Δx) * Δt))
+      = Real.exp (-(α * Δt)) * A := by
+    rw [Finset.sum_comm, hA, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j hj => ?_
+    have h1 : ∀ k, Q j * p j k * Real.exp (-((α + j * Δx) * Δt))
+        = (Real.exp (-(α * Δt)) * (Q j * Real.exp (-((j : ℝ) * Δx * Δt)))) * p j k := by
+      intro k
+      have : -((α + j * Δx) * Δt) = -(α * Δt) + -((j : ℝ) * Δx * Δt) := by ring
+      rw [this, Real.exp_add]; ring
+    simp only [h1]
+    rw [← Finset.mul_sum, hp j hj, mul_one]
+  rw [hL]
+  have hE : 0 < Real.exp (-(α * Δt)) := Real.exp_pos _
+  have hAD : 0 < A / D := div_pos hsum hD
+  constructor
+  · intro h
+    have h2 : A / D = Real.exp (α * Δt) := by
+      rw [← h, Real.exp_neg]; field_simp
+    rw [h2, Real.log_exp]; field_simp
+  · intro h
+    have h2 : α * Δt = Real.log (A / D) := by rw [h]; field_simp
+    rw [h2, Real.exp_neg, Real.exp_log hAD]; field_simp
+
+/-- The branch weights. Write `m = j * M` for the average move from rung `j`, in rungs.
+Middle rungs (moves +1, 0, -1) with `p_u = 1/6 + (m² + m)/2`, `p_m = 2/3 - m²`,
+`p_d = 1/6 + (m² - m)/2`, and the top edge (moves 0, -1, -2) with weights
+`7/6 + (m² + 3m)/2`, `-1/3 - m² - 2m`, `1/6 + (m² + m)/2`, both add to one, have average move `m`
+and average squared move `1/3 + m²`. The middle rung's centre weight is positive exactly when
+`|m| < √(2/3)`. At the top edge, with `y = -m`, the middle weight is positive exactly when
+`1 - √(2/3) < y < 1 + √(2/3)`, and on that range all three edge weights are positive. -/
+theorem branch_weights_match_step_and_edge_weights_positive (m : ℝ) :
+    -- middle rung: sum, mean, second moment
+    ((1/6 + (m^2 + m)/2) + (2/3 - m^2) + (1/6 + (m^2 - m)/2) = 1 ∧
+      (1/6 + (m^2 + m)/2) * 1 + (2/3 - m^2) * 0 + (1/6 + (m^2 - m)/2) * (-1) = m ∧
+      (1/6 + (m^2 + m)/2) * 1 + (2/3 - m^2) * 0 + (1/6 + (m^2 - m)/2) * 1 = 1/3 + m^2) ∧
+    -- top edge: sum, mean, second moment
+    ((7/6 + (m^2 + 3*m)/2) + (-1/3 - m^2 - 2*m) + (1/6 + (m^2 + m)/2) = 1 ∧
+      (7/6 + (m^2 + 3*m)/2) * 0 + (-1/3 - m^2 - 2*m) * (-1) + (1/6 + (m^2 + m)/2) * (-2) = m ∧
+      (7/6 + (m^2 + 3*m)/2) * 0 + (-1/3 - m^2 - 2*m) * 1 + (1/6 + (m^2 + m)/2) * 4
+        = 1/3 + m^2) ∧
+    -- the middle rung's centre weight turns negative past √(2/3)
+    (0 < 2/3 - m^2 ↔ |m| < Real.sqrt (2/3)) ∧
+    -- the top edge's middle weight is positive exactly on (1 - √(2/3), 1 + √(2/3))
+    (0 < -1/3 - m^2 - 2*m ↔ 1 - Real.sqrt (2/3) < -m ∧ -m < 1 + Real.sqrt (2/3)) ∧
+    -- and on that range all three edge weights are positive
+    (1 - Real.sqrt (2/3) < -m → -m < 1 + Real.sqrt (2/3) →
+      0 < 7/6 + (m^2 + 3*m)/2 ∧ 0 < -1/3 - m^2 - 2*m ∧ 0 < 1/6 + (m^2 + m)/2) := by
+  have hs0 : 0 ≤ Real.sqrt (2/3) := Real.sqrt_nonneg _
+  have hs2 : Real.sqrt (2/3) ^ 2 = 2/3 := Real.sq_sqrt (by norm_num)
+  have hmid : 0 < -1/3 - m^2 - 2*m ↔ 1 - Real.sqrt (2/3) < -m ∧ -m < 1 + Real.sqrt (2/3) := by
+    constructor
+    · intro h
+      have hlt : (m + 1) ^ 2 < Real.sqrt (2/3) ^ 2 := by nlinarith
+      have := abs_lt_of_sq_lt_sq' hlt hs0
+      constructor <;> linarith [this.1, this.2]
+    · rintro ⟨h1, h2⟩
+      nlinarith [mul_pos (by linarith : (0:ℝ) < Real.sqrt (2/3) - (m + 1))
+        (by linarith : (0:ℝ) < Real.sqrt (2/3) + (m + 1))]
+  refine ⟨⟨by ring, by ring, by ring⟩, ⟨by ring, by ring, by ring⟩, ?_, hmid, ?_⟩
+  · rw [Real.lt_sqrt (abs_nonneg m), sq_abs]
+    constructor <;> intro h <;> linarith
+  · intro h1 h2
+    refine ⟨by nlinarith [sq_nonneg (m + 3/2)], hmid.2 ⟨h1, h2⟩, by nlinarith [sq_nonneg (m + 1/2)]⟩
+
+/-- Card: the step length is 6 years ÷ 60 steps = 0.1 year. -/
+example : (6 : ℚ) / 60 = 1 / 10 := by norm_num
+
+/-- Card: the weights at rung 0 are 1/6, 2/3, 1/6 (here `m = 0 * M = 0`). -/
+example : ((1 : ℚ)/6 + (0^2 + 0)/2, (2 : ℚ)/3 - 0^2, (1 : ℚ)/6 + (0^2 - 0)/2) = (1/6, 2/3, 1/6) := by
+  norm_num
+
+/-- Card: rungs -7 to +7 give 15 nodes on each full layer. -/
+example : (Finset.Icc (-7 : ℤ) 7).card = 15 := by decide
+
+#print axioms rollback_eq_state_price_sum
+#print axioms layer_shift_fits_curve_iff
+#print axioms branch_weights_match_step_and_edge_weights_positive
+
+end HullWhiteTree
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'HullWhiteTree.rollback_eq_state_price_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HullWhiteTree.layer_shift_fits_curve_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HullWhiteTree.branch_weights_match_step_and_edge_weights_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

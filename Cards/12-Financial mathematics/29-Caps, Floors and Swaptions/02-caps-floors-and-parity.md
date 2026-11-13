@@ -10,11 +10,13 @@ A company borrows \$10 million for two years. The interest rate is not fixed. Ev
 
 The company's board says: whatever happens, we will not pay more than 5 percent. So the company buys insurance. Each quarter, if the rate fixes above 5 percent, the insurer pays the excess on \$10 million for that quarter. If the rate fixes below 5 percent, nothing happens. The policy covers the seven quarters whose rate is still unknown. From here on the policy is called by its market name: an **interest-rate cap**, strike 5 percent (the strike is the ceiling rate).
 
-Each quarter's promise is one small option on one future rate, a **caplet** ([Caplets and floorlets](01-caplets-and-floorlets.md)). The cap is the seven caplets held together. Its price is their prices added: **\$62,648.73, or 0.63 percent of the notional** (the notional is the loan size the payments are measured on, never itself exchanged). The mirror contract, a **floor**, pays when the rate falls below its strike; a lender buys it. Hold a cap and sell a floor at the same strike, and every quarter the two net to one fixed rule: receive the floating rate, pay 5 percent. That is an interest-rate swap, and its value comes from today's discount factors alone, with no model of how rates move.
+Each quarter's promise is one small option on one future rate, a **caplet** ([Caplets and floorlets](01-caplets-and-floorlets.md)). The cap is the seven caplets held together. Its price is their prices added: **\$62,648.73, or 0.63 percent of the notional** (the notional is the loan size the payments are measured on, never itself exchanged).
+
+The mirror contract, a **floor**, pays when the rate falls below its strike; a lender buys it. Hold a cap and sell a floor at the same strike, and every quarter the two net to one fixed rule: receive the floating rate, pay 5 percent. That is an interest-rate swap, and its value comes from today's discount factors alone, with no model of how rates move.
 
 **A cap is a strip of caplets priced one by one and added, a floor is a strip of floorlets, and cap minus floor at the same strike equals a swap that pays that strike and receives the floating rate, in every model.**
 
-**What kind of fact this is:** the cap's price is a model price (each caplet is valued with Black's lognormal model, an assumption about how rates wander); the parity is a theorem, true in every model, proved on this card in Why it works.
+**What kind of fact this is:** the cap's price is a model price (each caplet is valued with Black's lognormal model, an assumption about how rates wander: the log of each future rate follows a bell curve); the parity is a theorem, true in every model, proved on this card in Why it works.
 
 ### The picture: what one quarter pays
 
@@ -36,7 +38,9 @@ The orange line is the caplet's payment: flat at zero up to 5 percent, then \$12
 
 ## The formula
 
-Notation first, in words. The quarters are numbered $i$ = 0 to 7. Quarter $i$ runs from its reset date $T_i$ to the next date, and its rate is fixed at the start and paid at the end. A symbol like $D_{i+1}$ means "the discount factor for the end of quarter $i$". A big sigma, Σ, means "add the terms for every $i$ in the range shown". $\tau$ = 0.25 is one quarter in years, $F_i$ is quarter $i$'s forward rate, $K$ is the strike, and $N$ is the normal CDF; the table below gives each one. Values are per \$1 of notional; multiply by \$10 million for dollars.
+Notation first, in words. The quarters are numbered $i$ = 0 to 7. Quarter $i$ runs from its reset date $T_i$ to the next date, and its rate is fixed at the start and paid at the end. A symbol like $D_{i+1}$ means "the discount factor for the end of quarter $i$". A big sigma, Σ, means "add the terms for every $i$ in the range shown".
+
+$\tau$ = 0.25 is one quarter in years, $F_i$ is quarter $i$'s forward rate, $K$ is the strike, and $N$ is the normal CDF (cumulative distribution function); the table below gives each one. Values are per \$1 of notional; multiply by \$10 million for dollars.
 
 $$\text{Cap} = \sum_{i=1}^{7} \tau\, D_{i+1}\,\Big[F_i\,N(d_{1,i}) - K\,N(d_{2,i})\Big], \qquad \text{Floor} = \sum_{i=1}^{7} \tau\, D_{i+1}\,\Big[K\,N(-d_{2,i}) - F_i\,N(-d_{1,i})\Big]$$
 
@@ -94,7 +98,9 @@ Each caplet is a call option on one forward rate, fixed at $T_i$, paid at $T_{i+
 
 ### Step 3: the floating payments are worth a difference of discount factors
 
-Now value the swap from Step 0 without any model. Pay $D_i$ today for a bond that pays one dollar at $T_i$. Roll that dollar for one quarter at the rate then fixed, $L_i$. At $T_{i+1}$ it has become $(1 + \tau L_i)$ dollars. Now subtract the dollar of principal, whose value today is $D_{i+1}$. What is left is exactly $\tau L_i$ paid at $T_{i+1}$, and it cost $D_i - D_{i+1}$ today. So receiving quarter $i$'s floating interest is worth $D_i - D_{i+1}$, whatever $L_i$ turns out to be. Paying the fixed 5 percent for the quarter is worth $K \tau D_{i+1}$.
+Now value the swap from Step 0 without any model. Pay $D_i$ today for a bond that pays one dollar at $T_i$. Roll that dollar for one quarter at the rate then fixed, $L_i$. At $T_{i+1}$ it has become $(1 + \tau L_i)$ dollars. Now subtract the dollar of principal, whose value today is $D_{i+1}$.
+
+What is left is exactly $\tau L_i$ paid at $T_{i+1}$, and it cost $D_i - D_{i+1}$ today. So receiving quarter $i$'s floating interest is worth $D_i - D_{i+1}$, whatever $L_i$ turns out to be. Paying the fixed 5 percent for the quarter is worth $K \tau D_{i+1}$.
 
 ### Step 4: add the quarters; the floating side telescopes
 
@@ -102,7 +108,11 @@ Add $(D_i - D_{i+1})$ for $i$ = 1 to 7. Each middle factor appears once with a p
 
 $$\text{Cap} - \text{Floor} = D_1 - D_8 - K A = A(S - K).$$
 
-The second form defines $S$: the one fixed rate at which the swap costs nothing to enter. Here $S$ = 4.597701%, below the 5 percent strike, so the swap that pays 5 percent is worth −\$66,573.49 on \$10 million, and the floor (\$129,222.22) is dearer than the cap (\$62,648.73) by exactly that amount.
+The second form defines $S$: the one fixed rate at which the swap costs nothing to enter.
+
+A swap that pays the fixed rate and receives the floating rate is a payer swap; the reverse is a receiver swap. Long means holding a contract and short means having sold it, so long cap, short floor is the payer swap.
+
+Here $S$ = 4.597701%, below the 5 percent strike, so the swap that pays 5 percent is worth −\$66,573.49 on \$10 million, and the floor (\$129,222.22) is dearer than the cap (\$62,648.73) by exactly that amount.
 
 <details>
 <summary>Detailed proof: cap minus floor equals the payer swap, in any model</summary>
@@ -615,6 +625,116 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves cap-floor parity in every model and for any number of quarters, plus the one-quarter rules from Steps 0 and 6.
+
+- Suppose prices add over separate payments, bonds trade at the discount factors, and a one-quarter deposit earns the fixing. Then cap minus floor equals $D_1 - D_8 - K A$, for seven quarters or any other number.
+- Take any fixing $L_i$ and strike $K$. Then $\max(L_i - K, 0) - \max(K - L_i, 0) = L_i - K$: caplet minus floorlet pays the swap.
+- Take a borrower who pays the fixing $L_i$ and receives the caplet's payment. Then the net rate paid is the smaller of $L_i$ and the strike $K$.
+- At 5.5, 6 and 7 percent the caplet pays \$12,500, \$25,000 and \$50,000; at 4 percent the floorlet pays \$25,000.
+
+Black's prices, the Greeks and every dollar figure for the cap and floor are left to the Python and Rust checks.
+
+```lean
+-- Caps and floors: in any linear pricing model where bonds trade at the discount factors and a one-quarter deposit earns the fixing rate, a cap minus a floor at the same strike equals the payer swap's value from discount factors alone.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Algebra.Module.LinearMap.Defs
+import Mathlib.Algebra.Order.Group.MinMax
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.BigOperators.Ring.Finset
+
+open Finset
+
+/-- Cap-floor parity, in every model. A model is any set of states `Ω` and, for each
+payment date `j`, a linear price `V j` for a payoff paid at date `j` (linearity is the
+no-arbitrage sum rule: a bundle of separate payments costs the sum of their prices).
+Quarter `i` (for `i = 1, …, n`) fixes at rate `L i` on its reset date `T_i` and pays at
+`T_{i+1}`; the cap pays `τ · max(L_i − K, 0)` and the floor pays `τ · max(K − L_i, 0)`.
+If a bond paying 1 at date `j` costs `D j`, and a dollar deposited for one quarter at
+`T_i` returns `1 + τ · L_i` at `T_{i+1}`, then
+Cap − Floor = D₁ − D_{n+1} − K · A, where A = Σ τ · D_{i+1} is the annuity:
+the value of the payer swap that receives the floating rate and pays the strike. -/
+theorem cap_minus_floor_eq_payer_swap {Ω : Type*} (n : ℕ) (τ K : ℝ)
+    (L : ℕ → Ω → ℝ) (D : ℕ → ℝ) (V : ℕ → (Ω → ℝ) →ₗ[ℝ] ℝ)
+    (hbond : ∀ j ∈ Icc 1 (n + 1), V j (fun _ => 1) = D j)
+    (hdeposit : ∀ i ∈ Icc 1 n, V (i + 1) (fun ω => 1 + τ * L i ω) = D i) :
+    (∑ i ∈ Icc 1 n, V (i + 1) (fun ω => τ * max (L i ω - K) 0))
+      - (∑ i ∈ Icc 1 n, V (i + 1) (fun ω => τ * max (K - L i ω) 0))
+      = D 1 - D (n + 1) - K * ∑ i ∈ Icc 1 n, τ * D (i + 1) := by
+  have hpay : ∀ a b : ℝ, max (a - b) 0 - max (b - a) 0 = a - b := by
+    intro a b
+    rcases le_total a b with h | h
+    · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+    · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+  have key : ∀ i ∈ Icc 1 n, V (i + 1) (fun ω => τ * max (L i ω - K) 0)
+      - V (i + 1) (fun ω => τ * max (K - L i ω) 0) = D i - D (i + 1) - K * (τ * D (i + 1)) := by
+    intro i hi
+    have hi' : i + 1 ∈ Icc 1 (n + 1) := by
+      simp only [mem_Icc] at hi ⊢; omega
+    rw [← map_sub]
+    have hfun : ((fun ω => τ * max (L i ω - K) 0) - (fun ω => τ * max (K - L i ω) 0))
+        = (fun ω => 1 + τ * L i ω) - (1 + τ * K) • (fun _ : Ω => (1 : ℝ)) := by
+      funext ω
+      simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
+      rw [← mul_sub, hpay]; ring
+    rw [hfun, map_sub, map_smul, hdeposit i hi, hbond (i + 1) hi', smul_eq_mul]
+    ring
+  have tele : ∀ m : ℕ, ∑ i ∈ Icc 1 m, (D i - D (i + 1)) = D 1 - D (m + 1) := by
+    intro m
+    induction m with
+    | zero => simp
+    | succ k ih =>
+      rw [sum_Icc_succ_top (by omega), ih]; ring
+  rw [← sum_sub_distrib, sum_congr rfl key, sum_sub_distrib, ← Finset.mul_sum, tele]
+
+/-- Step 0: for any fixing `L` and strike `K`, one quarter's caplet payoff minus its
+floorlet payoff is the swap payoff: max(L − K, 0) − max(K − L, 0) = L − K.
+No probabilities enter. -/
+theorem caplet_sub_floorlet_payoff (L K : ℝ) :
+    max (L - K) 0 - max (K - L) 0 = L - K := by
+  rcases le_total L K with h | h
+  · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+  · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+
+/-- Step 6, the cap as insurance: a borrower who pays the fixing `L` and receives the
+caplet payoff max(L − K, 0) pays, net, the smaller of `L` and the strike `K`. -/
+theorem capped_borrowing_rate (L K : ℝ) :
+    L - max (L - K) 0 = min L K := by
+  rcases le_total L K with h | h
+  · rw [max_eq_right (by linarith), min_eq_left h]; ring
+  · rw [max_eq_left (by linarith), min_eq_right h]; ring
+
+-- The chart: one quarter on $10,000,000 at strike 5 percent, rates as fractions.
+-- A fixing of 5.5 percent: the caplet pays $12,500, the floorlet pays nothing.
+example : (10000000 : ℚ) * (1 / 4) * max (55 / 1000 - 5 / 100) 0 = 12500 := by norm_num
+example : (10000000 : ℚ) * (1 / 4) * max (5 / 100 - 55 / 1000) 0 = 0 := by norm_num
+-- A fixing of 6 percent: the caplet pays $25,000.
+example : (10000000 : ℚ) * (1 / 4) * max (6 / 100 - 5 / 100) 0 = 25000 := by norm_num
+-- A fixing of 4 percent: the floorlet pays $25,000, so caplet minus floorlet is −$25,000.
+example : (10000000 : ℚ) * (1 / 4) * max (5 / 100 - 4 / 100) 0 = 25000 := by norm_num
+example : (10000000 : ℚ) * (1 / 4) * (max (4 / 100 - 5 / 100) 0 - max (5 / 100 - 4 / 100) 0)
+    = -25000 := by norm_num
+-- A fixing of 7 percent: the caplet pays $50,000.
+example : (10000000 : ℚ) * (1 / 4) * max (7 / 100 - 5 / 100) 0 = 50000 := by norm_num
+
+#print axioms cap_minus_floor_eq_payer_swap
+#print axioms caplet_sub_floorlet_payoff
+#print axioms capped_borrowing_rate
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cap_minus_floor_eq_payer_swap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'caplet_sub_floorlet_payoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'capped_borrowing_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Volatility down to 20 percent.** Guess first: does the cap fall by a third? Set `SIG = 0.20`. Answer: \$34,899.68, a fall of almost half, since every caplet here is out of the money (forward below strike) and option value shrinks faster than volatility there.
@@ -660,6 +780,8 @@ The two outputs agree line for line.
 
 - [Caplet stripping](03-caplet-stripping.md): the market quotes one flat volatility for the whole cap; that card turns a set of cap quotes into one volatility per caplet and shows when the answer is unique.
 - [Swaptions](04-swaptions-payer-and-receiver.md): the single option on the whole swap, priced with the annuity as its unit, and its own parity with a forward swap.
+
+This card prices every caplet with one volatility, but the market quotes a single flat volatility for the whole cap, and the question left open is which volatility belongs to each caplet.
 
 ---
 

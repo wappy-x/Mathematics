@@ -76,10 +76,17 @@ The inverse first: when a caplet volatility exists, when it is unique, and what 
 - **Existence.** Caplet *k*'s price must lie strictly between its **floor**, the value at zero volatility, $L\tau D(T_k+\tau)\max(F_k-K,0)$, and its **ceiling**, the value as volatility grows without limit, $L\tau D(T_k+\tau)F_k$. For caplet 8 that window is $2,611.19 to $13,749.78, and the quotes put it at $3,427.96. A difference below the floor has no volatility; exactly at the floor the answer is zero volatility; at or above the ceiling there is none.
 - **Uniqueness.** Each caplet's price rises strictly with its volatility, because vega is positive. A strictly rising curve crosses a level once at most. Cap *k* depends only on caplets 1 to *k*, so the eight equations are solved in order and each has one answer.
 - **Enough quotes.** One cap per caplet date. With quotes only at 1 year and 2 years, eight unknowns face two equations, and an interpolation rule (a choice, not a consequence) fills the gap. Different rules give different caplet volatilities.
-- **One strike across the strip.** All eight caps here are struck at 5%. Market cap quotes are often at-the-money, each struck at its own swap rate; then neighbouring caps hold caplets at different strikes and the difference is no longer one caplet. The strike dimension needs a smile model ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **One strike across the strip.** All eight caps here are struck at 5%. Market cap quotes are often at-the-money, each struck at its own swap rate (the fair fixed rate over that cap's life); then neighbouring caps hold caplets at different strikes and the difference is no longer one caplet. The strike dimension needs a smile model, one that lets volatility vary with strike ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
 - **Lognormal quoting.** Black's formula needs positive forwards and strikes. Where rates sit near or below zero, quotes are in normal or shifted volatility ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)). The stripping logic is unchanged; only $c_i$ is swapped.
 
-**Conventions, as of 28 Sep 2026.** This card takes each accrual as exactly 0.25 years and uses one curve for forwards and discounting. Market caps count days on the contract's basis, leave out the first period because its rate is already fixed, project forwards and discount on separate curves, and in US dollars now reference SOFR compounded over the period rather than a rate fixed at its start. None of these changes the stripping; each changes the inputs to $c_i$.
+**Conventions, as of 28 Sep 2026.** This card takes each accrual as exactly 0.25 years and uses one curve for forwards and discounting. Market caps differ in four ways:
+
+- They count days on the contract's basis.
+- They leave out the first period, because its rate is already fixed.
+- They project forwards and discount on separate curves.
+- In US dollars they now reference SOFR (the Secured Overnight Financing Rate, the US overnight benchmark), compounded over the period rather than fixed at its start.
+
+None of these changes the stripping; each changes the inputs to $c_i$.
 
 ---
 
@@ -87,7 +94,7 @@ The inverse first: when a caplet volatility exists, when it is unique, and what 
 
 ### Step 0: prices add, volatilities do not
 
-A cap pays the sum of its caplets' payments, so its price is the sum of their prices. That is no-arbitrage bookkeeping, true in any model ([Caps and floors](02-caps-floors-and-parity.md)). Volatilities have no such rule: a caplet's price is a curved function of its volatility, so no average of volatilities is guaranteed to give the right sum of prices. The method therefore works in prices and converts to volatilities only at the last moment.
+A cap pays the sum of its caplets' payments, so its price is the sum of their prices. That is no-arbitrage bookkeeping (no trade makes a riskless profit), true in any model ([Caps and floors](02-caps-floors-and-parity.md)). Volatilities have no such rule: a caplet's price is a curved function of its volatility, so no average of volatilities is guaranteed to give the right sum of prices. The method therefore works in prices and converts to volatilities only at the last moment.
 
 ### Step 1: turn every quote into a price
 
@@ -154,7 +161,7 @@ If flat volatility were a plain average, $8\Sigma_8 - 7\Sigma_7$ would be caplet
 
 </details>
 
-A second road reaches the same eight numbers without differencing: solve each whole cap directly for its last caplet's volatility, holding the earlier ones fixed, pricing every caplet by adding up its payoff over the bell curve instead of by Black's formula. When quotes are missing or noisy, the exact staircase gives way to fitting a smooth curve of caplet volatilities by least squares ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
+A second road reaches the same eight numbers without differencing. It solves each whole cap directly for its last caplet's volatility, holding the earlier ones fixed. It prices every caplet by adding up its payoff over the bell curve instead of by Black's formula. When quotes are missing or noisy, the exact staircase gives way to fitting a smooth curve of caplet volatilities by least squares ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
 
 ---
 
@@ -189,13 +196,19 @@ The other seven rows run the same way: the table in the code output lists each c
 | Quote cap 8 at 20% with cap 7 left at 30% | caplet 8 must be worth $148.99, below its floor of $2,611.19 | No volatility, even zero, gives that price. The two quotes contradict each other. |
 | Quote cap 8 below 27.1140% | no caplet 8 volatility exists | 27.1140% is the lowest cap 8 quote that the cap 7 quote allows; there caplet 8's volatility is exactly zero. |
 
-The last two rows are the boundary case in numbers. A term structure of flat volatilities may fall, but not too fast: a falling flat line forces the newest caplet's volatility down harder still, and there is a floor under it.
+The last two rows are the boundary case in numbers. A term structure of flat volatilities (the quotes lined up by cap length) may fall, but not too fast: a falling flat line forces the newest caplet's volatility down harder still, and there is a floor under it.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code strips all eight caplets by two independent roads. Road 1 converts each quote to a cap price with Black's formula, differences neighbouring caps, and inverts each caplet by bisection. Road 2 never uses Black's formula or differences: it prices each caplet by integrating its payoff over the bell curve with Simpson's rule, and solves each whole cap for its last caplet's volatility by the secant method. Both write their own bell-curve area and root finders. The checks then test the staircase (a bumped quote moves only its own caplet and the next), the monotone price curve, the empty-window boundary, a rebuild of cap 8 from the road 1 volatilities through the road 2 pricer, and the vega-weighted reading of a flat volatility.
+The code strips all eight caplets by two independent roads. Road 1 converts each quote to a cap price with Black's formula, differences neighbouring caps, and inverts each caplet by bisection. Road 2 never uses Black's formula or differences: it prices each caplet by integrating its payoff over the bell curve with Simpson's rule, and solves each whole cap for its last caplet's volatility by the secant method. Both write their own bell-curve area and root finders. The checks then test:
+
+- the staircase: a bumped quote moves only its own caplet and the next;
+- the monotone price curve;
+- the empty-window boundary;
+- a rebuild of cap 8 from the road 1 volatilities through the road 2 pricer;
+- the vega-weighted reading of a flat volatility.
 
 ### Python
 
@@ -474,6 +487,461 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the card's existence and uniqueness claims for any number of caplets at one strike, with every input positive.
+
+- Take one caplet. Then at every positive volatility its price lies strictly between its floor and its ceiling.
+- Take the same caplet. Then its price rises strictly with volatility. It tends to the floor as volatility shrinks to zero, and to the ceiling as volatility grows without limit.
+- Take a price strictly between one caplet's floor and ceiling. Then exactly one positive volatility gives that caplet that price.
+- Suppose every neighbouring cap price difference, $C_k - C_{k-1}$, lies strictly between caplet *k*'s floor and ceiling. Then exactly one list of positive caplet volatilities reproduces every cap price.
+- Suppose one neighbouring price difference sits at or below its caplet's floor, or at or above its ceiling. Then no list of positive caplet volatilities reproduces every cap price.
+- Take cap 8 at $14,908.96 and cap 7 at $11,481.00. Then caplet 8 is worth $3,427.96, inside its window of $2,611.19 to $13,749.78.
+- Take the wrong road, subtracting volatilities. Then $8 \times 29.4 - 7 \times 30.0 = 25.2$.
+
+The cap prices themselves, the eight stripped volatilities and the bumped-quote sawtooth are left to the Python and Rust checks.
+
+```lean
+-- Caplet stripping: when each neighbouring cap price difference lies strictly between that caplet's zero-volatility floor and infinite-volatility ceiling, exactly one list of positive caplet volatilities reproduces every cap price under Black's formula, and when some difference lies outside that window no list does.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open Real MeasureTheory ProbabilityTheory Set Filter Topology
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- Black's formula for one caplet (The formula): notional `L`, accrual `τ`, discount factor `D`
+to the payment date, forward `F`, strike `K`, fixing date `T`, volatility `σ`:
+`c(σ) = L τ D [F N(d₁) - K N(d₂)]`, `d₁ = (ln(F/K) + σ²T/2)/(σ√T)`, `d₂ = d₁ - σ√T`. -/
+noncomputable def capletPrice (L τ D F K T σ : ℝ) : ℝ :=
+  let d1 := (log (F / K) + σ ^ 2 * T / 2) / (σ * √T)
+  L * τ * D * (F * stdNormalCDF d1 - K * stdNormalCDF (d1 - σ * √T))
+
+/-- The caplet's floor, its value at zero volatility: `L τ D max(F - K, 0)`. -/
+noncomputable def capletFloor (L τ D F K : ℝ) : ℝ := L * τ * D * max (F - K) 0
+
+/-- The caplet's ceiling, its value as volatility grows without limit: `L τ D F`. -/
+noncomputable def capletCeiling (L τ D F : ℝ) : ℝ := L * τ * D * F
+
+/-- The price of cap `k` (caplets `0, …, k-1`, numbered from 0 here) from its flat quote `s`:
+every caplet in the cap is priced at the same volatility, `C_k = ∑_{i<k} c_i(s)`.
+Caplet `i` fixes at `T i`, has forward `F i`, and is discounted from its payment date by `D i`. -/
+noncomputable def capPrice (L τ K : ℝ) (T F D : ℕ → ℝ) (k : ℕ) (s : ℝ) : ℝ :=
+  ∑ i ∈ Finset.range k, capletPrice L τ (D i) (F i) K (T i) s
+
+lemma stdNormalCDF_eq_integral (x : ℝ) :
+    stdNormalCDF x = ∫ t in Iic x, gaussianPDFReal 0 1 t := by
+  unfold stdNormalCDF
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral 0 one_ne_zero,
+    ENNReal.toReal_ofReal]
+  exact setIntegral_nonneg measurableSet_Iic (fun t _ => gaussianPDFReal_nonneg 0 1 t)
+
+lemma continuous_stdPDF : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma hasDerivAt_stdNormalCDF (x : ℝ) :
+    HasDerivAt stdNormalCDF (gaussianPDFReal 0 1 x) x := by
+  have hint : ∀ y, IntegrableOn (gaussianPDFReal 0 1) (Iic y) :=
+    fun y => (integrable_gaussianPDFReal 0 1).integrableOn
+  have h : stdNormalCDF = fun y => stdNormalCDF 0 + ∫ t in (0:ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y
+    rw [stdNormalCDF_eq_integral, stdNormalCDF_eq_integral,
+      ← intervalIntegral.integral_Iic_sub_Iic (hint 0) (hint y)]
+    ring
+  rw [h]
+  exact ((continuous_stdPDF.integral_hasStrictDerivAt 0 x).hasDerivAt).const_add _
+
+lemma stdNormalCDF_strictMono : StrictMono stdNormalCDF :=
+  strictMono_of_hasDerivAt_pos hasDerivAt_stdNormalCDF
+    (fun x => gaussianPDFReal_pos 0 1 x one_ne_zero)
+
+lemma continuous_stdNormalCDF : Continuous stdNormalCDF :=
+  continuous_iff_continuousAt.2 fun x => (hasDerivAt_stdNormalCDF x).continuousAt
+
+lemma tendsto_stdNormalCDF_atTop : Tendsto stdNormalCDF atTop (𝓝 1) := tendsto_cdf_atTop _
+lemma tendsto_stdNormalCDF_atBot : Tendsto stdNormalCDF atBot (𝓝 0) := tendsto_cdf_atBot _
+
+/-- `K φ(d - s) = F φ(d)` when `d s - s²/2 = log (F/K)`. -/
+lemma pdf_identity (F K s : ℝ) (hF : 0 < F) (hK : 0 < K) (hs : s ≠ 0) :
+    F * gaussianPDFReal 0 1 (log (F / K) * s⁻¹ + s / 2) =
+      K * gaussianPDFReal 0 1 (log (F / K) * s⁻¹ + s / 2 - s) := by
+  simp only [gaussianPDFReal_def, NNReal.coe_one, mul_one, sub_zero]
+  have key : -(log (F / K) * s⁻¹ + s / 2 - s) ^ 2 / 2 =
+      -(log (F / K) * s⁻¹ + s / 2) ^ 2 / 2 + log (F / K) := by
+    field_simp
+    ring
+  rw [key, exp_add, exp_log (div_pos hF hK)]
+  field_simp
+
+lemma core_hasDerivAt (F K a σ : ℝ) (hF : 0 < F) (hK : 0 < K) (ha : 0 < a) (hσ : σ ≠ 0) :
+    HasDerivAt (fun σ => F * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a))
+      (K * gaussianPDFReal 0 1 (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a) * a) σ := by
+  have hs : σ * a ≠ 0 := mul_ne_zero hσ ha.ne'
+  have hlin : HasDerivAt (fun σ => σ * a) a σ := by simpa using (hasDerivAt_id σ).mul_const a
+  obtain ⟨d, he⟩ : ∃ d, HasDerivAt (fun σ => log (F / K) * (σ * a)⁻¹ + σ * a / 2) d σ :=
+    ⟨_, ((hlin.inv hs).const_mul _).add (hlin.div_const 2)⟩
+  have h1 : HasDerivAt (fun σ => stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2))
+      (gaussianPDFReal 0 1 (log (F / K) * (σ * a)⁻¹ + σ * a / 2) * d) σ :=
+    (hasDerivAt_stdNormalCDF _).comp σ he
+  have h2 : HasDerivAt (fun σ => stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a))
+      (gaussianPDFReal 0 1 (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a) * (d - a)) σ :=
+    (hasDerivAt_stdNormalCDF _).comp σ (he.sub hlin)
+  have hid := pdf_identity F K (σ * a) hF hK hs
+  convert (h1.const_mul F).sub (h2.const_mul K) using 1
+  linear_combination (-d) * hid
+
+lemma core_strictMonoOn (F K a : ℝ) (hF : 0 < F) (hK : 0 < K) (ha : 0 < a) :
+    StrictMonoOn (fun σ => F * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a)) (Ioi 0) ∧
+    ContinuousOn (fun σ => F * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a)) (Ioi 0) := by
+  have hc : ContinuousOn (fun σ => F * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a)) (Ioi 0) :=
+    fun σ hσ => (core_hasDerivAt F K a σ hF hK ha (ne_of_gt hσ)).continuousAt.continuousWithinAt
+  refine ⟨strictMonoOn_of_deriv_pos (convex_Ioi 0) hc ?_, hc⟩
+  intro σ hσ
+  rw [interior_Ioi] at hσ
+  rw [(core_hasDerivAt F K a σ hF hK ha (ne_of_gt hσ)).deriv]
+  exact mul_pos (mul_pos hK (gaussianPDFReal_pos 0 1 _ one_ne_zero)) ha
+
+lemma core_tendsto_atTop (F K a : ℝ) (ha : 0 < a) :
+    Tendsto (fun σ => F * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a)) atTop (𝓝 F) := by
+  have hs : Tendsto (fun σ : ℝ => σ * a) atTop atTop := tendsto_id.atTop_mul_const ha
+  have hu : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹) atTop (𝓝 0) := by
+    simpa using (tendsto_inv_atTop_zero.comp hs).const_mul (log (F / K))
+  have hv : Tendsto (fun σ : ℝ => σ * a / 2) atTop atTop := hs.atTop_div_const two_pos
+  have h1 : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹ + σ * a / 2) atTop atTop :=
+    hu.add_atTop hv
+  have h2 : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a) atTop atBot := by
+    have := hu.add_atBot (tendsto_neg_atTop_atBot.comp hv)
+    refine this.congr (fun σ => ?_)
+    simp only [Function.comp]; ring
+  have := ((tendsto_stdNormalCDF_atTop.comp h1).const_mul F).sub
+    ((tendsto_stdNormalCDF_atBot.comp h2).const_mul K)
+  simpa using this
+
+lemma core_tendsto_zero (F K a : ℝ) (hF : 0 < F) (hK : 0 < K) (ha : 0 < a) :
+    Tendsto (fun σ => F * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a)) (𝓝[>] 0)
+        (𝓝 (max (F - K) 0)) := by
+  have hv : Tendsto (fun σ : ℝ => σ * a / 2) (𝓝[>] 0) (𝓝 0) := by
+    have := ((continuous_id.mul continuous_const).div_const 2 :
+      Continuous (fun σ : ℝ => σ * a / 2)).tendsto 0
+    simpa using this.mono_left nhdsWithin_le_nhds
+  have hw : Tendsto (fun σ : ℝ => -(σ * a / 2)) (𝓝[>] 0) (𝓝 0) := by
+    simpa using hv.neg
+  have hinv : Tendsto (fun σ : ℝ => σ⁻¹) (𝓝[>] 0) atTop := tendsto_inv_nhdsGT_zero
+  have hu_eq : ∀ σ : ℝ, log (F / K) * (σ * a)⁻¹ = (log (F / K) * a⁻¹) * σ⁻¹ := by
+    intro σ; rw [mul_inv]; ring
+  have e1 : ∀ σ : ℝ, log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a =
+      log (F / K) * (σ * a)⁻¹ + -(σ * a / 2) := by intro σ; ring
+  rcases lt_trichotomy (log (F / K)) 0 with hm | hm | hm
+  · -- F < K: both arguments go to -∞, price to 0
+    have hFK : F < K := by
+      have := (log_neg_iff (div_pos hF hK)).1 hm
+      rwa [div_lt_one hK] at this
+    have hu : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹) (𝓝[>] 0) atBot := by
+      simp only [hu_eq]
+      exact hinv.const_mul_atTop_of_neg (mul_neg_of_neg_of_pos hm (inv_pos.2 ha))
+    have h1 := hu.atBot_add hv
+    have h2 : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a) (𝓝[>] 0)
+        atBot := by simp only [e1]; exact hu.atBot_add hw
+    have := ((tendsto_stdNormalCDF_atBot.comp h1).const_mul F).sub
+      ((tendsto_stdNormalCDF_atBot.comp h2).const_mul K)
+    rw [max_eq_right (by linarith)]
+    simpa using this
+  · -- F = K
+    have hFK : F = K := by
+      rcases log_eq_zero.1 hm with h | h | h
+      · exact absurd h (div_pos hF hK).ne'
+      · exact (div_eq_one_iff_eq hK.ne').1 h
+      · linarith [div_pos hF hK]
+    have h1 : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹ + σ * a / 2) (𝓝[>] 0) (𝓝 0) := by
+      simpa [hm] using hv
+    have h2 : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a) (𝓝[>] 0)
+        (𝓝 0) := by simp only [e1]; simpa [hm] using hw
+    have := (((continuous_stdNormalCDF.tendsto 0).comp h1).const_mul F).sub
+      (((continuous_stdNormalCDF.tendsto 0).comp h2).const_mul K)
+    rw [hFK] at this ⊢
+    simpa using this
+  · -- F > K
+    have hFK : K < F := by
+      have := (log_pos_iff (div_pos hF hK).le).1 hm
+      rwa [one_lt_div hK] at this
+    have hu : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹) (𝓝[>] 0) atTop := by
+      simp only [hu_eq]
+      exact hinv.const_mul_atTop (mul_pos hm (inv_pos.2 ha))
+    have h1 := hu.atTop_add hv
+    have h2 : Tendsto (fun σ : ℝ => log (F / K) * (σ * a)⁻¹ + σ * a / 2 - σ * a) (𝓝[>] 0)
+        atTop := by simp only [e1]; exact hu.atTop_add hw
+    have := ((tendsto_stdNormalCDF_atTop.comp h1).const_mul F).sub
+      ((tendsto_stdNormalCDF_atTop.comp h2).const_mul K)
+    rw [max_eq_left (by linarith)]
+    simpa using this
+
+lemma window_of_strictMonoOn (f : ℝ → ℝ) (lo hi : ℝ) (hmono : StrictMonoOn f (Ioi 0))
+    (hcont : ContinuousOn f (Ioi 0)) (h0 : Tendsto f (𝓝[>] 0) (𝓝 lo))
+    (hinf : Tendsto f atTop (𝓝 hi)) :
+    (∀ σ, 0 < σ → lo < f σ ∧ f σ < hi) ∧ ∀ c, lo < c → c < hi → ∃! σ, 0 < σ ∧ f σ = c := by
+  refine ⟨fun σ hσ => ⟨?_, ?_⟩, fun c hlo hhi => ?_⟩
+  · have hσ2 : 0 < σ / 2 := by positivity
+    have hle : lo ≤ f (σ / 2) := by
+      refine le_of_tendsto h0 ?_
+      filter_upwards [Ioo_mem_nhdsGT hσ2] with x hx
+      exact (hmono.lt_iff_lt hx.1 hσ2).2 hx.2 |>.le
+    exact hle.trans_lt (hmono hσ2 hσ (by linarith))
+  · have h2 : 0 < 2 * σ := by positivity
+    have hle : f (2 * σ) ≤ hi := by
+      refine ge_of_tendsto hinf ?_
+      filter_upwards [eventually_ge_atTop (2 * σ)] with x hx
+      exact hmono.monotoneOn h2 (lt_of_lt_of_le h2 hx) hx
+    exact (hmono hσ h2 (by linarith)).trans_le hle
+  · obtain ⟨x1, hx1c, hx1⟩ :=
+      ((h0.eventually_lt_const hlo).and self_mem_nhdsWithin).exists
+    obtain ⟨x2, hx2c, hx2⟩ :=
+      ((hinf.eventually_const_lt hhi).and (eventually_gt_atTop 0)).exists
+    have hx12 : x1 ≤ x2 := by
+      by_contra h
+      have := hmono hx2 hx1 (not_le.1 h)
+      linarith
+    obtain ⟨σ, hσI, hσc⟩ : c ∈ f '' Icc x1 x2 :=
+      intermediate_value_Icc hx12 (hcont.mono fun y hy => lt_of_lt_of_le hx1 hy.1)
+        ⟨hx1c.le, hx2c.le⟩
+    have hσ : 0 < σ := lt_of_lt_of_le hx1 hσI.1
+    refine ⟨σ, ⟨hσ, hσc⟩, fun y hy => ?_⟩
+    exact hmono.injOn hy.1 hσ (hy.2.trans hσc.symm)
+
+lemma d1_eq (m σ a : ℝ) : (m + σ ^ 2 * a ^ 2 / 2) / (σ * a) = m * (σ * a)⁻¹ + σ * a / 2 := by
+  by_cases h : σ * a = 0
+  · rcases mul_eq_zero.1 h with h | h <;> simp [h]
+  · field_simp
+
+lemma capletPrice_eq (L τ D F K T σ : ℝ) (hT : 0 ≤ T) :
+    capletPrice L τ D F K T σ = L * τ * D *
+      (F * stdNormalCDF (log (F / K) * (σ * √T)⁻¹ + σ * √T / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * √T)⁻¹ + σ * √T / 2 - σ * √T)) := by
+  unfold capletPrice
+  have h := sq_sqrt hT
+  simp only
+  rw [← d1_eq, h]
+
+lemma caplet_price_window_aux (L τ D F K T : ℝ)
+    (hL : 0 < L) (hτ : 0 < τ) (hD : 0 < D) (hF : 0 < F) (hK : 0 < K) (hT : 0 < T) :
+    (∀ σ : ℝ, 0 < σ →
+        capletFloor L τ D F K < capletPrice L τ D F K T σ ∧
+          capletPrice L τ D F K T σ < capletCeiling L τ D F) ∧
+      StrictMonoOn (fun σ ↦ capletPrice L τ D F K T σ) (Ioi 0) ∧
+      Tendsto (fun σ ↦ capletPrice L τ D F K T σ) (𝓝[>] 0) (𝓝 (capletFloor L τ D F K)) ∧
+      Tendsto (fun σ ↦ capletPrice L τ D F K T σ) atTop (𝓝 (capletCeiling L τ D F)) ∧
+      ∀ c : ℝ, capletFloor L τ D F K < c → c < capletCeiling L τ D F →
+        ∃! σ : ℝ, 0 < σ ∧ capletPrice L τ D F K T σ = c := by
+  have ha : 0 < √T := sqrt_pos.2 hT
+  have hc : 0 < L * τ * D := by positivity
+  have hfun : (fun σ ↦ capletPrice L τ D F K T σ) = fun σ => L * τ * D *
+      (F * stdNormalCDF (log (F / K) * (σ * √T)⁻¹ + σ * √T / 2)
+        - K * stdNormalCDF (log (F / K) * (σ * √T)⁻¹ + σ * √T / 2 - σ * √T)) := by
+    funext σ; exact capletPrice_eq L τ D F K T σ hT.le
+  obtain ⟨hmono, hcont⟩ := core_strictMonoOn F K (√T) hF hK ha
+  have hmono' : StrictMonoOn (fun σ ↦ capletPrice L τ D F K T σ) (Ioi 0) := by
+    rw [hfun]
+    intro x hx y hy hxy
+    exact mul_lt_mul_of_pos_left (hmono hx hy hxy) hc
+  have hcont' : ContinuousOn (fun σ ↦ capletPrice L τ D F K T σ) (Ioi 0) := by
+    rw [hfun]; exact hcont.const_smul (L * τ * D)
+  have h0 : Tendsto (fun σ ↦ capletPrice L τ D F K T σ) (𝓝[>] 0)
+      (𝓝 (capletFloor L τ D F K)) := by
+    rw [hfun]; exact (core_tendsto_zero F K (√T) hF hK ha).const_mul (L * τ * D)
+  have hinf : Tendsto (fun σ ↦ capletPrice L τ D F K T σ) atTop
+      (𝓝 (capletCeiling L τ D F)) := by
+    rw [hfun]; exact (core_tendsto_atTop F K (√T) ha).const_mul (L * τ * D)
+  obtain ⟨hb, hu⟩ := window_of_strictMonoOn _ _ _ hmono' hcont' h0 hinf
+  exact ⟨hb, hmono', h0, hinf, hu⟩
+
+lemma sum_Iic_fin_eq (n : ℕ) (g : Fin n → ℝ) (k : Fin n) :
+    ∑ i ∈ Finset.Iic k, g i =
+      ∑ j ∈ Finset.range ((k : ℕ) + 1), (if h : j < n then g ⟨j, h⟩ else 0) := by
+  rw [Nat.range_succ_eq_Iic, ← Fin.map_valEmbedding_Iic, Finset.sum_map]
+  simp
+
+lemma sum_Iic_fin_iff (n : ℕ) (g : Fin n → ℝ) (C : ℕ → ℝ) (hC : C 0 = 0) :
+    (∀ k : Fin n, ∑ i ∈ Finset.Iic k, g i = C (k + 1)) ↔
+      ∀ k : Fin n, g k = C (k + 1) - C k := by
+  set g' : ℕ → ℝ := fun j => if h : j < n then g ⟨j, h⟩ else 0 with hg'
+  have hgk : ∀ k : Fin n, g k = g' k := fun k => by simp [hg']
+  simp only [sum_Iic_fin_eq]
+  constructor
+  · intro h k
+    have h1 := h k
+    rw [Finset.sum_range_succ] at h1
+    have h0 : ∑ j ∈ Finset.range (k : ℕ), g' j = C k := by
+      rcases Nat.eq_zero_or_eq_succ_pred (k : ℕ) with hk | hk
+      · rw [hk, Finset.sum_range_zero, hC]
+      · have := h ⟨(k : ℕ) - 1, by omega⟩
+        simp only at this
+        rw [show (k : ℕ) - 1 + 1 = k by omega] at this
+        exact this
+    rw [hgk]
+    linarith
+  · intro h
+    have key : ∀ m, m < n → ∑ j ∈ Finset.range (m + 1), g' j = C (m + 1) := by
+      intro m
+      induction m with
+      | zero =>
+        intro hm
+        have := h ⟨0, hm⟩
+        rw [hgk] at this
+        simp only at this
+        simp [this, hC]
+      | succ m ih =>
+        intro hm
+        have := h ⟨m + 1, hm⟩
+        rw [hgk] at this
+        simp only at this
+        rw [Finset.sum_range_succ, ih (by omega), this]
+        ring
+    exact fun k => key k k.2
+
+/-- **Caplet stripping has exactly one answer** (Why it works, Steps 2 to 4, and the detailed
+proof). Take `n` caplets with one notional `L > 0`, one accrual `τ > 0` and one strike `K > 0`
+across the strip; caplet `i` fixes at `T i > 0`, has a positive forward `F i` and a positive
+discount factor `D i` to its payment date. Quote one flat volatility `flat k` for each cap
+`k = 1, …, n`, turn each quote into the cap price `C_k = ∑_{i<k} c_i(flat k)` (with `C_0 = 0`).
+If every neighbouring difference `C_{k+1} - C_k` lies strictly between caplet `k`'s floor and
+ceiling, then exactly one list of positive caplet volatilities `σ` reproduces every cap price:
+`∑_{i ≤ k} c_i(σ_i) = C_{k+1}` for every `k`. -/
+theorem caplet_volatilities_exist_and_are_unique (n : ℕ) (L τ K : ℝ) (T F D flat : ℕ → ℝ)
+    (hL : 0 < L) (hτ : 0 < τ) (hK : 0 < K)
+    (hT : ∀ i < n, 0 < T i) (hF : ∀ i < n, 0 < F i) (hD : ∀ i < n, 0 < D i)
+    (hwindow : ∀ k < n,
+      capletFloor L τ (D k) (F k) K <
+          capPrice L τ K T F D (k + 1) (flat (k + 1)) - capPrice L τ K T F D k (flat k) ∧
+        capPrice L τ K T F D (k + 1) (flat (k + 1)) - capPrice L τ K T F D k (flat k) <
+          capletCeiling L τ (D k) (F k)) :
+    ∃! σ : Fin n → ℝ, (∀ i, 0 < σ i) ∧
+      ∀ k : Fin n, ∑ i ∈ Finset.Iic k, capletPrice L τ (D i) (F i) K (T i) (σ i) =
+        capPrice L τ K T F D (k + 1) (flat (k + 1)) := by
+  have hC : capPrice L τ K T F D 0 (flat 0) = 0 := by simp [capPrice]
+  have hex : ∀ k : Fin n, ∃! s : ℝ, 0 < s ∧ capletPrice L τ (D k) (F k) K (T k) s =
+      capPrice L τ K T F D (k + 1) (flat (k + 1)) - capPrice L τ K T F D k (flat k) :=
+    fun k => (caplet_price_window_aux L τ (D k) (F k) K (T k) hL hτ (hD k k.2) (hF k k.2) hK
+      (hT k k.2)).2.2.2.2 _ (hwindow k k.2).1 (hwindow k k.2).2
+  choose σ hσ hσu using hex
+  refine ⟨σ, ⟨fun i => (hσ i).1, ?_⟩, ?_⟩
+  · exact (sum_Iic_fin_iff n (fun i => capletPrice L τ (D i) (F i) K (T i) (σ i))
+      (fun j => capPrice L τ K T F D j (flat j)) hC).2 (fun k => (hσ k).2)
+  · rintro σ' ⟨hpos', hsum'⟩
+    have h := (sum_Iic_fin_iff n (fun i => capletPrice L τ (D i) (F i) K (T i) (σ' i))
+      (fun j => capPrice L τ K T F D j (flat j)) hC).1 hsum'
+    funext k
+    exact hσu k (σ' k) ⟨hpos' k, h k⟩
+
+/-- **One caplet's price curve** (Why it works, Step 3, and the detailed proof). For a notional
+`L > 0`, accrual `τ > 0`, discount factor `D > 0`, forward `F > 0`, strike `K > 0` and fixing
+date `T > 0`, the caplet price at every positive volatility lies strictly between the floor
+`L τ D max(F - K, 0)` and the ceiling `L τ D F`; it rises strictly with volatility; it tends to
+the floor as volatility shrinks to zero and to the ceiling as volatility grows without limit;
+so every price strictly inside the window comes from exactly one positive volatility. -/
+theorem caplet_price_rises_strictly_from_floor_to_ceiling (L τ D F K T : ℝ)
+    (hL : 0 < L) (hτ : 0 < τ) (hD : 0 < D) (hF : 0 < F) (hK : 0 < K) (hT : 0 < T) :
+    (∀ σ : ℝ, 0 < σ →
+        capletFloor L τ D F K < capletPrice L τ D F K T σ ∧
+          capletPrice L τ D F K T σ < capletCeiling L τ D F) ∧
+      StrictMonoOn (fun σ ↦ capletPrice L τ D F K T σ) (Ioi 0) ∧
+      Tendsto (fun σ ↦ capletPrice L τ D F K T σ) (𝓝[>] 0) (𝓝 (capletFloor L τ D F K)) ∧
+      Tendsto (fun σ ↦ capletPrice L τ D F K T σ) atTop (𝓝 (capletCeiling L τ D F)) ∧
+      ∀ c : ℝ, capletFloor L τ D F K < c → c < capletCeiling L τ D F →
+        ∃! σ : ℝ, 0 < σ ∧ capletPrice L τ D F K T σ = c := by
+  exact caplet_price_window_aux L τ D F K T hL hτ hD hF hK hT
+
+/-- **Quotes that allow no answer** (When it holds, Existence; the detailed proof, "Existence
+fails at the edges"). With the same setup, if for some caplet `k` the cap price difference
+`C_{k+1} - C_k` is at or below that caplet's floor, or at or above its ceiling, then no list of
+positive caplet volatilities reproduces every cap price. -/
+theorem no_caplet_volatilities_outside_the_window (n : ℕ) (L τ K : ℝ) (T F D flat : ℕ → ℝ)
+    (hL : 0 < L) (hτ : 0 < τ) (hK : 0 < K)
+    (hT : ∀ i < n, 0 < T i) (hF : ∀ i < n, 0 < F i) (hD : ∀ i < n, 0 < D i)
+    (k : ℕ) (hk : k < n)
+    (hout : capPrice L τ K T F D (k + 1) (flat (k + 1)) - capPrice L τ K T F D k (flat k) ≤
+          capletFloor L τ (D k) (F k) K ∨
+        capletCeiling L τ (D k) (F k) ≤
+          capPrice L τ K T F D (k + 1) (flat (k + 1)) - capPrice L τ K T F D k (flat k)) :
+    ¬ ∃ σ : Fin n → ℝ, (∀ i, 0 < σ i) ∧
+      ∀ j : Fin n, ∑ i ∈ Finset.Iic j, capletPrice L τ (D i) (F i) K (T i) (σ i) =
+        capPrice L τ K T F D (j + 1) (flat (j + 1)) := by
+  rintro ⟨σ, hpos, hsum⟩
+  have hC : capPrice L τ K T F D 0 (flat 0) = 0 := by simp [capPrice]
+  have h := (sum_Iic_fin_iff n (fun i => capletPrice L τ (D i) (F i) K (T i) (σ i))
+      (fun j => capPrice L τ K T F D j (flat j)) hC).1 hsum ⟨k, hk⟩
+  have hb := (caplet_price_window_aux L τ (D k) (F k) K (T k) hL hτ (hD k hk) (hF k hk) hK
+      (hT k hk)).1 (σ ⟨k, hk⟩) (hpos _)
+  simp only at h
+  rw [h] at hb
+  rcases hout with hout | hout
+  · linarith [hb.1]
+  · linarith [hb.2]
+
+-- Step 2 in cents: cap 8 minus cap 7 is caplet 8's price, 14,908.96 - 11,481.00 = 3,427.96.
+example : (1490896 : ℤ) - 1148100 = 342796 := by norm_num
+-- Worked numbers: caplet 8's price sits inside its window, 2,611.19 < 3,427.96 < 13,749.78.
+example : (261119 : ℕ) < 342796 ∧ (342796 : ℕ) < 1374978 := by decide
+-- The wrong road, in tenths of a percent: 8 × 29.4 - 7 × 30.0 = 25.2.
+example : (8 : ℤ) * 294 - 7 * 300 = 252 := by norm_num
+-- The 2-year cap is cap 7: its last caplet fixes at 7 quarters = 1.75 years and pays at 2 years.
+example : (7 : ℚ) * (1 / 4) = 7 / 4 ∧ (7 : ℚ) / 4 + 1 / 4 = 2 := by norm_num
+
+#print axioms caplet_volatilities_exist_and_are_unique
+#print axioms caplet_price_rises_strictly_from_floor_to_ceiling
+#print axioms no_caplet_volatilities_outside_the_window
+#print axioms stdNormalCDF_eq_integral
+#print axioms continuous_stdPDF
+#print axioms hasDerivAt_stdNormalCDF
+#print axioms stdNormalCDF_strictMono
+#print axioms continuous_stdNormalCDF
+#print axioms tendsto_stdNormalCDF_atTop
+#print axioms tendsto_stdNormalCDF_atBot
+#print axioms pdf_identity
+#print axioms core_hasDerivAt
+#print axioms core_strictMonoOn
+#print axioms core_tendsto_atTop
+#print axioms core_tendsto_zero
+#print axioms window_of_strictMonoOn
+#print axioms d1_eq
+#print axioms capletPrice_eq
+#print axioms caplet_price_window_aux
+#print axioms sum_Iic_fin_eq
+#print axioms sum_Iic_fin_iff
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'caplet_volatilities_exist_and_are_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'caplet_price_rises_strictly_from_floor_to_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_caplet_volatilities_outside_the_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_stdNormalCDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_stdNormalCDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tendsto_stdNormalCDF_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tendsto_stdNormalCDF_atBot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pdf_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'core_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'core_strictMonoOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'core_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'core_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'window_of_strictMonoOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'d1_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'capletPrice_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'caplet_price_window_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_Iic_fin_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_Iic_fin_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -502,7 +970,7 @@ The two outputs agree line for line.
 - **Rates desks, every morning.** Broker screens show flat cap volatilities. Pricing systems strip them into caplet volatilities before valuing any cap, floor or single caplet that does not match a quoted contract exactly.
 - **Odd-dated and amortizing caps.** A 1.6-year cap, or a cap on a loan whose notional shrinks each quarter, is a different bag of caplets. Only caplet volatilities price it; no flat quote exists for it.
 - **Volatility risk by bucket.** The sawtooth in Step 4 is how a book's exposure is split by expiry: one quote moves two caplets in opposite directions. Hedging a single caplet needs two neighbouring caps. See [Swaption Greeks](08-swaption-greeks-and-hedging.md) for the swaption side of the same bookkeeping.
-- **Calibrating rate models.** Models of the whole curve, such as the LIBOR market model, take caplet volatilities as inputs: one per forward rate. Swaption volatilities add information about how forward rates move together ([Swaptions](04-swaptions-payer-and-receiver.md)).
+- **Calibrating rate models.** Models of the whole curve, such as the LIBOR market model (named after LIBOR, the London interbank rate it was built for), take caplet volatilities as inputs: one per forward rate. Swaption volatilities add information about how forward rates move together ([Swaptions](04-swaptions-payer-and-receiver.md)).
 - **The strike dimension.** Stripping at each strike on the screen gives a grid of caplet volatilities by date and strike, which a smile model then smooths ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
 - **Quote checks.** A falling flat volatility term structure that leaves a caplet window empty is a stale or mistyped quote. Stripping is the test.
 
@@ -518,7 +986,7 @@ The two outputs agree line for line.
 
 ## Where this goes next
 
-- [Swaptions](04-swaptions-payer-and-receiver.md): the other vanilla rates option, one option on a whole swap rather than a strip of small options, so no stripping by subtraction is possible.
+- [Swaptions](04-swaptions-payer-and-receiver.md): the other standard rates option, one option on a whole swap rather than a strip of small options, so no stripping by subtraction is possible.
 - [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md): the same stripping with the caplet formula swapped for a normal or shifted one, as markets quote today.
 - [SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md): caplet volatilities at many strikes, smoothed by one model per expiry.
 - [Solving rate options backwards](09-rate-option-inverses.md): the full catalogue of solving rate options backwards, with their existence and boundary cases.

@@ -150,4 +150,5 @@ fn main() {
     assert!((pv_via_adj - pv_rolled).abs() < 1e-6);                       // two money routes agree
     assert!((sweep[6] - sweep_mc[6]).abs() < 0.05);                       // late payment: integral = simulation
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

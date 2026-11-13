@@ -20,7 +20,7 @@ The card's example is the simplest honest one: one random shock moves the whole 
 
 ### The picture: one shock moves every maturity
 
-A year from now, one random draw of the single shock sets the whole new curve. The chart shows today's curve and the curve one year later after a shock one standard deviation up and one standard deviation down. Each point is the forward rate for a loan starting at that calendar date.
+A year from now, one random draw of the single shock sets the whole new curve. The chart shows today's curve and the curve one year later after a shock one standard deviation (sd) up and one standard deviation down. Each point is the forward rate for a loan starting at that calendar date.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -89,7 +89,7 @@ The single line is $\alpha(0,T)$. It is zero at the front, where there is no vol
 - **The shocks are continuous.** Brownian kicks, no jumps. A curve that can jump by 25 bp on a central-bank day needs extra drift terms for the jumps.
 - **The volatility is well behaved.** Here it is fixed in advance, so every rate is a bell curve and the discounted bond is a genuine fair bet. A bell curve has no floor: rates can go negative, here with small probability. Make volatility proportional to the rate itself and the forced drift grows like the rate squared: HJM proved such rates blow up in finite time.
 - **One curve prices everything.** Bonds, the bank account and the forwards all come from one curve. Since 2008 desks discount on one curve and project coupons on another; each extra curve carries its own drift condition.
-- **Today's curve is smooth.** The drift needs integrals and the Hull-White link needs a slope of $f(0,T)$. Quoted rates exist only at pillars, so an interpolated curve comes first.
+- **Today's curve is smooth.** The drift needs integrals and the Hull-White link needs a slope of $f(0,T)$. Quoted rates exist only at a few maturities, called pillars, so an interpolated curve comes first.
 
 ---
 
@@ -152,7 +152,7 @@ Third, the converse. If the discounted bond is a fair bet, its drift must be zer
 
 With $\sigma(t,T) = \sigma e^{-a(T-t)}$, every forward rate is driven by the same single random number: the shocks so far, each faded by $e^{-a(t-u)}$. Call their sum the state. The whole curve at time $t$ is today's curve, plus the drift piled up, plus $\sigma e^{-a(T-t)}$ times the state. At $T = t$ that gives the short rate, so the state is $r(t)$ minus known pieces, and **the whole curve is a function of $r(t)$ alone.** Most volatility choices make the curve depend on the whole path of past shocks; this fading shape is what lets one number carry the state.
 
-The drift piled up at the front is a convexity term:
+The drift piled up at the front is a convexity term, the amount by which the average short rate sits above today's forward for the same date:
 
 $$\int_0^t \alpha(u,t)\,du = \frac{\sigma^2}{2a^2}\left(1 - e^{-at}\right)^2.$$
 
@@ -184,7 +184,7 @@ The five-year forward today, and the five-year bond held for one year.
 | forced drift, $\alpha(0,5)$ | $0.0022313 \times 0.0258957$ | $0.0000577810$ a year, 0.58 bp |
 | peak drift, at $T = 2.31$ | $\sigma^2/(4a) = 0.0001/1.2$ | $0.0000833333$ |
 | today's bond, $P(0,5)$ | $e^{-(0.05 \times 5 - 0.01 \times 2.58957)} = e^{-0.224104}$ | $0.799231739$ |
-| drift piled up over the year, $M$ | double integral of $\alpha$, by quadrature | $0.000304328$ |
+| drift piled up over the year, $M$ | double integral of $\alpha$, by quadrature (numerical integration) | $0.000304328$ |
 | half the variance of the log, $V/2$ | $\tfrac12\int_0^1 A(v,5)^2\,dv$, by quadrature | $0.000304328$ |
 | **expected discounted bond after a year** | $0.799231739 \times e^{-M + V/2}$ | **$0.799231739$** |
 
@@ -208,7 +208,7 @@ zero drift           |██████████                $243.27
 sign flipped         |███████████████████▌      $486.61
 ```
 
-A few hundred dollars on a million sounds small. It is free, it scales with the book, and a Monte Carlo pricer with the wrong drift misprices every rate option it touches by the same mechanism.
+A few hundred dollars on a million sounds small. It is free, it scales with the book, and a Monte Carlo pricer (one that averages over simulated curves) with the wrong drift misprices every rate option it touches by the same mechanism.
 
 ---
 
@@ -618,6 +618,184 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The Monte Carlo lines agree too, because both programs carry the same hand-written generator; the libraries' exponential and logarithm can differ in the last bit, which does not reach six printed decimals here.
 
+### Lean
+
+Lean proves Step 5 in both directions, the drift for this card's fading volatility, and the Hull-White link of Step 6.
+
+- Suppose $\alpha(t,u)$ and $\sigma(t,u)$ are continuous in the maturity $u$, for a fixed $t$. Then Step 4's identity holds at every $T \ge t$ exactly when the boxed drift formula does.
+- Take $\sigma(t,T) = \sigma e^{-a(T-t)}$ with $a > 0$. Then the forced drift is $\frac{\sigma^2}{a}e^{-a(T-t)}\left(1 - e^{-a(T-t)}\right)$.
+- Take the same volatility. Then the drift never exceeds $\sigma^2/(4a)$, and it reaches that peak when $T - t = \ln 2/a$.
+- Take the same volatility. Then the convexity term of Step 6 equals $\frac{\sigma^2}{2a^2}(1 - e^{-at})^2$.
+- Write $c(t)$ for that convexity term and $c'(t)$ for its slope. Then $c'(t) + a\,c(t) = \frac{\sigma^2}{2a}(1 - e^{-2at})$, the last term of $\theta(t)$.
+- Take $\sigma = 0.01$ and $a = 0.3$. Then the peak drift $\sigma^2/(4a)$ is exactly $1/12000$.
+
+Steps 0 to 3, the bond prices and the simulated curves are left to the Python and Rust checks.
+
+```lean
+-- Heath-Jarrow-Morton: the drift condition in its exact calculus form, its closed form for an exponentially fading volatility, and the Hull-White drift it produces.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.Calculus.Deriv.Pow
+
+open intervalIntegral Real
+
+/-- Helper: the area under the exponential volatility. -/
+theorem hjm_helper_exp_integral (σ a t T : ℝ) (ha : a ≠ 0) :
+    ∫ u in t..T, σ * exp (-a * (u - t)) = σ / a * (1 - exp (-a * (T - t))) := by
+  have hd : ∀ x ∈ Set.uIcc t T,
+      HasDerivAt (fun u => -(σ / a) * exp (-a * (u - t))) (σ * exp (-a * (x - t))) x := by
+    intro x _
+    have h1 : HasDerivAt (fun u => -a * (u - t)) (-a * 1) x :=
+      ((hasDerivAt_id x).sub_const t).const_mul (-a)
+    have h2 := (h1.exp).const_mul (-(σ / a))
+    convert h2 using 1
+    field_simp
+  rw [integral_eq_sub_of_hasDerivAt hd
+    ((by fun_prop : Continuous fun x => σ * exp (-a * (x - t))).intervalIntegrable _ _)]
+  simp only [sub_self, mul_zero, exp_zero]
+  ring
+
+#print axioms hjm_helper_exp_integral
+
+/-- The HJM drift condition (Steps 4 and 5 of the card). Fix the current time `t`. With the
+volatility `σ t u` and the drift `α t u` continuous in the maturity `u`, the total drift piled up
+between now and every maturity `T ≥ t` pays exactly for half the squared volatility area,
+`∫ₜᵀ α(t,u) du = ½ (∫ₜᵀ σ(t,u) du)²`, if and only if every drift equals its own volatility
+times the volatility area: `α(t,T) = σ(t,T) ∫ₜᵀ σ(t,u) du`. -/
+theorem hjm_drift_condition (α σ : ℝ → ℝ → ℝ) (t : ℝ)
+    (hα : Continuous (α t)) (hσ : Continuous (σ t)) :
+    (∀ T, t ≤ T → ∫ u in t..T, α t u = (1 / 2) * (∫ u in t..T, σ t u) ^ 2) ↔
+      (∀ T, t ≤ T → α t T = σ t T * ∫ u in t..T, σ t u) := by
+  set S : ℝ → ℝ := fun T => ∫ u in t..T, σ t u with hS
+  have hSd : ∀ x, HasDerivAt S (σ t x) x := fun x =>
+    (hσ.integral_hasStrictDerivAt t x).hasDerivAt
+  have hSc : Continuous S := continuous_iff_continuousAt.2 fun x => (hSd x).continuousAt
+  have hGd : ∀ x, HasDerivAt (fun T => (1 / 2) * S T ^ 2) (σ t x * S x) x := by
+    intro x
+    have := ((hSd x).pow 2).const_mul (1 / 2 : ℝ)
+    convert this using 1
+    push_cast
+    ring
+  constructor
+  · intro h
+    have hopen : ∀ T, t < T → α t T = σ t T * S T := by
+      intro T hT
+      have hF : HasDerivAt (fun T => ∫ u in t..T, α t u) (α t T) T :=
+        (hα.integral_hasStrictDerivAt t T).hasDerivAt
+      have heq : (fun T => ∫ u in t..T, α t u) =ᶠ[nhds T] (fun T => (1 / 2) * S T ^ 2) := by
+        filter_upwards [Ioi_mem_nhds hT] with x hx
+        exact h x (le_of_lt hx)
+      exact (hF.congr_of_eventuallyEq heq.symm).unique (hGd T)
+    have hcl : Set.EqOn (α t) (fun T => σ t T * S T) (closure (Set.Ioi t)) :=
+      Set.EqOn.closure (fun T hT => hopen T hT) hα (hσ.mul hSc)
+    rw [closure_Ioi] at hcl
+    intro T hT
+    exact hcl hT
+  · intro h T hT
+    have hcongr : ∫ u in t..T, α t u = ∫ u in t..T, σ t u * S u := by
+      apply integral_congr
+      intro u hu
+      rw [Set.uIcc_of_le hT] at hu
+      exact h u hu.1
+    rw [hcongr, integral_eq_sub_of_hasDerivAt (fun x _ => hGd x)
+      ((hσ.mul hSc).intervalIntegrable _ _)]
+    simp [hS]
+
+/-- The card's exponential volatility `σ(t,T) = σ e^{-a(T-t)}` with fading speed `a > 0`. The
+forced drift `σ(t,T) ∫ₜᵀ σ(t,u) du` has the closed form `(σ²/a) e^{-a(T-t)} (1 - e^{-a(T-t)})`;
+it never exceeds `σ²/(4a)`, and it reaches that peak when `T - t = ln 2 / a`. -/
+theorem hjm_exponential_volatility_drift (σ a t T : ℝ) (ha : 0 < a) :
+    (σ * exp (-a * (T - t))) * (∫ u in t..T, σ * exp (-a * (u - t)))
+        = σ ^ 2 / a * exp (-a * (T - t)) * (1 - exp (-a * (T - t))) ∧
+      σ ^ 2 / a * exp (-a * (T - t)) * (1 - exp (-a * (T - t))) ≤ σ ^ 2 / (4 * a) ∧
+      (T - t = log 2 / a →
+        σ ^ 2 / a * exp (-a * (T - t)) * (1 - exp (-a * (T - t))) = σ ^ 2 / (4 * a)) := by
+  have hint := hjm_helper_exp_integral σ a t T ha.ne'
+  set E := exp (-a * (T - t)) with hE
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hint]
+    field_simp
+  · have hk : 0 ≤ σ ^ 2 / a := div_nonneg (sq_nonneg σ) ha.le
+    have hq : E * (1 - E) ≤ 1 / 4 := by nlinarith [sq_nonneg (E - 1 / 2)]
+    calc σ ^ 2 / a * E * (1 - E) = σ ^ 2 / a * (E * (1 - E)) := by ring
+      _ ≤ σ ^ 2 / a * (1 / 4) := mul_le_mul_of_nonneg_left hq hk
+      _ = σ ^ 2 / (4 * a) := by field_simp
+  · intro hT
+    have hE2 : E = 1 / 2 := by
+      rw [hE, hT, show -a * (log 2 / a) = -log 2 by field_simp, exp_neg,
+        exp_log (by norm_num : (0 : ℝ) < 2)]
+      norm_num
+    rw [hE2]
+    field_simp
+    ring
+
+/-- The exponential volatility is Hull-White (Step 6 of the card). The drift piled up at the
+front, `c(t) = ∫₀ᵗ α(u,t) du` with `α(u,t) = σ e^{-a(t-u)} ∫ᵤᵗ σ e^{-a(v-u)} dv`, is the
+convexity term `σ²/(2a²) (1 - e^{-at})²`, and `c'(t) + a c(t) = σ²/(2a) (1 - e^{-2at})`, the
+volatility part of the Hull-White target drift `θ(t)`. -/
+theorem hjm_exponential_volatility_is_hull_white (σ a t : ℝ) (ha : 0 < a) :
+    let c : ℝ → ℝ := fun s =>
+      ∫ u in (0 : ℝ)..s, (σ * exp (-a * (s - u))) * ∫ v in u..s, σ * exp (-a * (v - u))
+    c t = σ ^ 2 / (2 * a ^ 2) * (1 - exp (-a * t)) ^ 2 ∧
+      deriv c t + a * c t = σ ^ 2 / (2 * a) * (1 - exp (-2 * a * t)) := by
+  intro c
+  have hc : ∀ s, c s = σ ^ 2 / (2 * a ^ 2) * (1 - exp (-a * s)) ^ 2 := by
+    intro s
+    have hin : ∀ u, ∫ v in u..s, σ * exp (-a * (v - u)) = σ / a * (1 - exp (-a * (s - u))) :=
+      fun u => hjm_helper_exp_integral σ a u s ha.ne'
+    show (∫ u in (0 : ℝ)..s, (σ * exp (-a * (s - u))) * ∫ v in u..s, σ * exp (-a * (v - u)))
+      = _
+    simp_rw [hin]
+    have hd : ∀ x ∈ Set.uIcc (0 : ℝ) s,
+        HasDerivAt (fun u => σ ^ 2 / a * (exp (-a * (s - u)) / a - exp (-a * (s - u)) ^ 2 / (2 * a)))
+          ((σ * exp (-a * (s - x))) * (σ / a * (1 - exp (-a * (s - x))))) x := by
+      intro x _
+      have h1 : HasDerivAt (fun u => -a * (s - u)) (-a * (0 - 1)) x :=
+        ((hasDerivAt_const x s).sub (hasDerivAt_id x)).const_mul (-a)
+      have h2 := h1.exp
+      have h3 := ((h2.div_const a).sub ((h2.pow 2).div_const (2 * a))).const_mul (σ ^ 2 / a)
+      convert h3 using 1
+      field_simp
+      push_cast
+      ring
+    rw [integral_eq_sub_of_hasDerivAt hd (by
+      apply Continuous.intervalIntegrable
+      fun_prop)]
+    simp only [sub_self, mul_zero, exp_zero, sub_zero]
+    field_simp
+    ring
+  have hcf : c = fun s => σ ^ 2 / (2 * a ^ 2) * (1 - exp (-a * s)) ^ 2 := funext hc
+  refine ⟨hc t, ?_⟩
+  have hd : HasDerivAt c (σ ^ 2 / (2 * a ^ 2) * (2 * (1 - exp (-a * t)) * (-(exp (-a * t) * (-a * 1))))) t := by
+    rw [hcf]
+    have h1 : HasDerivAt (fun s => -a * s) (-a * 1) t := (hasDerivAt_id t).const_mul (-a)
+    have h2 := ((h1.exp).const_sub 1).pow 2
+    have h3 := h2.const_mul (σ ^ 2 / (2 * a ^ 2))
+    convert h3 using 1
+    push_cast
+    ring
+  rw [hd.deriv, hc t, show exp (-2 * a * t) = exp (-a * t) ^ 2 by rw [sq, ← exp_add]; ring_nf]
+  field_simp
+  ring
+
+/-- The card's peak drift: with `σ = 0.01` and `a = 0.3`, `σ²/(4a) = 1/12000 = 0.0000833333…`. -/
+example : ((1 : ℝ) / 100) ^ 2 / (4 * (3 / 10)) = 1 / 12000 := by norm_num
+
+#print axioms hjm_drift_condition
+#print axioms hjm_exponential_volatility_drift
+#print axioms hjm_exponential_volatility_is_hull_white
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'hjm_helper_exp_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hjm_drift_condition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hjm_exponential_volatility_drift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hjm_exponential_volatility_is_hull_white' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -643,7 +821,7 @@ The two outputs agree line for line. The Monte Carlo lines agree too, because bo
 
 ## Where you meet it in real life
 
-- **Every Gaussian rates model on a desk.** Hull-White, and its two-factor cousin G2++, are HJM models with exponential volatilities. Desks calibrate $a$ and $\sigma$, and the drift comes from this card's formula. See [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md).
+- **Every Gaussian (bell-curve) rates model on a desk.** Hull-White, and its two-factor cousin G2++ ([Beyond one factor](../30-Short-Rate%20Models/07-two-factor-and-lognormal-short-rate-models.md)), are HJM models with exponential volatilities. Desks calibrate $a$ and $\sigma$, and the drift comes from this card's formula. See [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md).
 - **Simulating curves for risk.** Counterparty-exposure engines simulate whole forward curves thousands of times. A missing or wrong drift puts a slow leak of value into every simulated swap, and the leak compounds over thirty-year trades.
 - **Market models.** The LIBOR and SOFR market models are HJM on a grid of accrual periods: pick the volatilities of the quoted forward rates and no-arbitrage sets their drifts. See [Market models](03-libor-and-sofr-market-models.md) and [Swap market model](05-swap-market-model-in-outline.md).
 - **Calibration.** Because the drift is not a free parameter, fitting a forward-rate model to caps and swaptions means fitting volatilities only: [Calibrating a market model](04-calibrating-a-market-model.md).
