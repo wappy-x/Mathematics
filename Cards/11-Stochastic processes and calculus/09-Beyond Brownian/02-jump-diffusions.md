@@ -8,7 +8,9 @@
 
 A wholesale electricity price stands at $50 a megawatt-hour. On most days it wobbles a few percent. A few times a month something breaks: a power station trips, a cold snap arrives, the wind drops. Within minutes the price leaps, here by about a third. Spikes come at random, at an average of one every ten days, so a 30-day month brings 3 on average.
 
-Two kinds of motion share one path. The wobble is Brownian: many small kicks, no gaps. The spikes are a Poisson stream: rare, sudden, each one multiplying the price by a random factor. A rule that combines the two is a **jump diffusion**. Merton wrote down the standard one in 1976. In this example the price drifts down 3.6 percent a day between spikes, which keeps its average at $50 over the month. Its typical month-end price, the price whose log is the average log, is lower: $41.62.
+Two kinds of motion share one path. The wobble is Brownian: many small kicks, no gaps. The spikes are a Poisson stream: rare, sudden, each one multiplying the price by a random factor. A rule that combines the two is a **jump diffusion**. Merton wrote down the standard one in 1976.
+
+In this example the price drifts down 3.6 percent a day between spikes, which keeps its average at $50 over the month. Its typical month-end price, the price whose log is the average log, is lower: $41.62.
 
 Ito's lemma, the chain rule for random paths, needs one new term to handle this. Between spikes the old rule stands: slope times the step, plus half the curvature times the squared wobble. At a spike the function moves from its value before to its value after. Apply the slope to the spike instead, as for an ordinary small step, and the average log comes out at −0.0135 instead of −0.1834.
 
@@ -78,7 +80,7 @@ $$E\big[\log(S_T/S_0)\big] = cT + \lambda T \mu_J, \qquad \mathrm{Var}\,\log(S_T
 
 ### When it holds
 
-- **Finitely many jumps in any finite time.** A Poisson stream has that. A Lévy process with infinitely many tiny jumps ([Levy processes](01-levy-processes.md)) can make the sum of jump terms diverge, as it does for the measure in that card's Step 6, and then the small jumps must be compensated first; the general statement is on [Semimartingales](05-semimartingales-in-outline.md).
+- **Finitely many jumps in any finite time.** A Poisson stream has that. A Lévy process with infinitely many tiny jumps ([Levy processes](01-levy-processes.md)) can make the sum of jump terms diverge, as it does for the measure in that card's Step 6, and then the small jumps must be compensated first (their average subtracted, as the compensator of Step 6 does for the spikes); the general statement is on [Semimartingales](05-semimartingales-in-outline.md).
 - **The coefficients use the price just before.** The drift, kick and spike all multiply $S_{t-}$. A spike sized by the price after itself would be defined in a circle.
 - **$f$ has a continuous curvature.** At a kink, such as a payoff $\max(x - 60, 0)$, the wobble part needs local time, as on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The jump term needs no smoothness at all: it is a plain difference.
 - **Spike sizes independent of the arrivals and the wobble.** If bigger spikes came in clusters, the averaged formulas fail; the path-by-path formula still holds.
@@ -114,7 +116,11 @@ The pieces telescope: each ends where the next jump starts, and each jump ends w
 
 ### Step 5: why Taylor fails at a jump
 
-The quadratic variation of the log price makes the point. Its squared steps add up to $\sigma^2 T$ from the wobble plus $J_i^2$ for each spike. On path 1 the grid sum is 0.36831 against $\sigma^2 T + \sum J_i^2$ = 0.37537. The jumps' squares do not shrink to $dt$; they stay the size of a jump squared. Ito's half-curvature term turns squared Brownian steps into time, but a squared jump is a single big number. A second-order Taylor term on it is still an approximation, and higher terms do not vanish. For the log, the slope rule credits each spike with $Y - 1$ instead of $J$, an average error of 0.056625 a spike. Adding half the curvature gives $Y - 1 - \tfrac12(Y-1)^2$, which errs the other way. Only the exact difference is right.
+The quadratic variation of the log price makes the point. Its squared steps add up to $\sigma^2 T$ from the wobble plus $J_i^2$ for each spike. On path 1 the grid sum is 0.36831 against $\sigma^2 T + \sum J_i^2$ = 0.37537.
+
+The jumps' squares do not shrink to $dt$; they stay the size of a jump squared. Ito's half-curvature term turns squared Brownian steps into time, but a squared jump is a single big number. A second-order Taylor term on it is still an approximation, and higher terms do not vanish.
+
+For the log, the slope rule credits each spike with $Y - 1$ instead of $J$, an average error of 0.056625 a spike. Adding half the curvature gives $Y - 1 - \tfrac12(Y-1)^2$, which errs the other way. Only the exact difference is right.
 
 <details>
 <summary>Detailed proof, for finitely many jumps</summary>
@@ -141,7 +147,7 @@ Average the jump term. A spike arrives in a slice $dt$ with chance $\lambda\,dt$
 
 $$\mu x f'(x) + \tfrac12\sigma^2 x^2 f''(x) + \lambda\big(E[f(xY)] - f(x)\big), \quad x = S_{t-}.$$
 
-This is the generator $L f(x)$ of shelf 08, with a jump part added.
+This is the generator $L f(x)$, the average rate of change of $f$ per day from the point $x$ ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)), with a jump part added.
 
 For $f(x) = x$ this is $(\mu + \lambda k)\,x$, so $E[S_T] = S_0\,e^{(\mu + \lambda k)T}$. The spikes add $\lambda k$ to the average growth. To keep the average price flat at $50, the drift must cancel it: $\mu = -\lambda k$ = −0.035663 a day. That cancelling term is the **compensator**. The slide between spikes in the picture is the compensator at work.
 
@@ -153,7 +159,9 @@ with $E[Y^2] = e^{2\mu_J + 2\delta^2}$. Ordinary Ito would supply the $\sigma^2$
 
 ### Step 7: a second road, conditioning on the spike count
 
-Condition on the number of spikes, $n$. Given $n$, $\log(S_T/S_0)$ is a sum of independent normals: $cT + \sigma W_T$ plus $n$ spike logs. So it is normal with mean $m_n = cT + n\mu_J$ and variance $v_n = \sigma^2 T + n\delta^2$. Weight each case by its Poisson chance $p_n = e^{-\lambda T}(\lambda T)^n/n!$ and add. The code does this for n from 0 to 39 and matches every average above to the printed digits. It also gives the chance the month ends above $50: $\sum p_n\,\Phi(m_n/\sqrt{v_n})$ = 0.3433, where $\Phi$ is the bell-curve area to the left. The Merton option price on [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) is this same split, applied to a payoff.
+Condition on the number of spikes, $n$. Given $n$, $\log(S_T/S_0)$ is a sum of independent normals: $cT + \sigma W_T$ plus $n$ spike logs. So it is normal with mean $m_n = cT + n\mu_J$ and variance $v_n = \sigma^2 T + n\delta^2$. Weight each case by its Poisson chance $p_n = e^{-\lambda T}(\lambda T)^n/n!$ and add.
+
+The code does this for n from 0 to 39 and matches every average above to the printed digits. It also gives the chance the month ends above $50: $\sum p_n\,\Phi(m_n/\sqrt{v_n})$ = 0.3433, where $\Phi$ is the bell-curve area to the left. The Merton option price on [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) is this same split, applied to a payoff.
 
 This road is not free of Ito. It uses the log formula above, and $c$ carries Ito's $-\tfrac12\sigma^2$. What it never uses is the jump term's average, the rate of Step 6. So its agreement with Step 6 on $E[S_T]$ and $E[S_T^2]$ is a real test. Its agreement on the log's mean and variance only checks the Poisson averaging. The test of the formula itself, path by path, is the simulation in the code.
 
@@ -188,13 +196,19 @@ The average month ends at $50.00, but the typical month ends at $41.62 and only 
 | Slope times the jump: each spike adds $Y - 1$ to the log | average log −0.013500 | a spike is not small: $Y - 1$ overstates its log by 0.056625 on average |
 | Taylor to second order on each spike | average log −0.232017 | a squared jump is not $dt$; the series does not stop |
 | No compensator, $\mu = 0$ | average price $145.75 instead of $50.00 | the spikes' average lift of $\lambda k$ a day is never paid back |
-| Drop "finitely many jumps": the Lévy measure $x^{-2.5}\,dx$ on sizes 0 to 1, no compensator | average jump sum a day 18.0, 198.0, 1998.0, 19998.0 as the smallest size counted falls from 1e-2 to 1e-8 | the sum of jump terms has no limit; the small jumps must be compensated before summing |
+| Drop "finitely many jumps": the Lévy measure (the rate of jumps of each size) $x^{-2.5}\,dx$ on sizes 0 to 1, no compensator | average jump sum a day 18.0, 198.0, 1998.0, 19998.0 as the smallest size counted falls from 1e-2 to 1e-8 | the sum of jump terms has no limit; the small jumps must be compensated before summing |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code takes three roads. Road 1 is Ito's formula with jumps, giving the averages of the log, the price and its square. Road 2 conditions on the spike count and adds Poisson-weighted normal cases; it uses the log formula but not the jump term's average, so its match with road 1 on the average price and its square is the test of Step 6. Road 3 runs 4000 seeded months (SplitMix64; normals by Box-Muller; spike gaps exponential, drawn as minus the log of a uniform over $\lambda$). Each month is stepped by Euler's rule on grids of 1, 4 and 16 steps a day, with each spike applied exactly in the step it falls in, and compared path by path with the closed form for the log and with the slope rule: that comparison is the test of Ito's formula with jumps itself. Every simulated average is printed with its standard error.
+The code takes three roads.
+
+- **Road 1** is Ito's formula with jumps, giving the averages of the log, the price and its square.
+- **Road 2** conditions on the spike count and adds Poisson-weighted normal cases; it uses the log formula but not the jump term's average, so its match with road 1 on the average price and its square is the test of Step 6.
+- **Road 3** runs 4000 seeded months (SplitMix64; normals by Box-Muller; spike gaps exponential, drawn as minus the log of a uniform over $\lambda$).
+
+Each month is stepped by Euler's rule (add the drift times the step and the kick times the Brownian step, as on [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)) on grids of 1, 4 and 16 steps a day, with each spike applied exactly in the step it falls in, and compared path by path with the closed form for the log and with the slope rule: that comparison is the test of Ito's formula with jumps itself. Every simulated average is printed with its standard error.
 
 ### Python
 
@@ -606,7 +620,259 @@ xychart-beta
     line [20.42, 5.02, 1.31]
 ```
 
-The upper line is the slope rule, $\log S_0 + cT + \sigma W_T + \sum(Y_i - 1)$: it settles near 170 thousandths, a spike count times 0.0566, however fine the grid. The lower line is Ito's formula with jumps, $\log S_0 + cT + \sigma W_T + \sum J_i$: its gap is only Euler's step error, and it falls about fourfold each time the steps are cut by four, from 20.42 thousandths at one step a day to 1.31 at sixteen. Each point is an average over the same 4000 sampled months, with a standard error of at most 0.12 thousandths on the lower line and 1.84 on the upper.
+The upper line is the slope rule, $\log S_0 + cT + \sigma W_T + \sum(Y_i - 1)$: it settles near 170 thousandths, a spike count times 0.0566, however fine the grid.
+
+The lower line is Ito's formula with jumps, $\log S_0 + cT + \sigma W_T + \sum J_i$: its gap is only Euler's step error, and it falls about fourfold each time the steps are cut by four, from 20.42 thousandths at one step a day to 1.31 at sixteen. Each point is an average over the same 4000 sampled months, with a standard error of at most 0.12 thousandths on the lower line and 1.84 on the upper.
+
+### Lean
+
+Lean proves Ito's formula with jumps on every path without wobble, plus the spike averages and the worked numbers.
+
+- Suppose a path has drift $\alpha$, no wobble, and finitely many jumps up to day $T$, and $f$ has a continuous curvature. Then $f$ changes by its slope times the drift, integrated up to day $T$, plus its exact before-and-after difference at each jump.
+- Take a spike log $J$, normal with mean $\mu_J$ and standard deviation $\delta$, and $Y = e^J$. Then $E[Y] = e^{\mu_J + \delta^2/2}$ and $E[Y^2] = e^{2\mu_J + 2\delta^2}$.
+- Take the Lévy measure $x^{-2.5}\,dx$ on jump sizes 0 to 1, with no compensator. Then the average jump sum a day, from the smallest size counted $\epsilon$ up to 1, is $2(\epsilon^{-1/2} - 1)$. It grows without bound as $\epsilon$ falls to 0.
+- Take $\lambda$ = 0.1, $T$ = 30, $\mu_J$ = 0.30, $\delta$ = 0.10 and $\sigma$ = 0.03. Then $\lambda T$ = 3 spikes are expected, the spikes' share of the average log is 0.9, and the log's variance is 0.327.
+- Take $\epsilon$ = 1e-2, 1e-4, 1e-6 and 1e-8. Then $\epsilon^{-1/2}$ is 10, 100, 1000 and 10000, and the jump sum a day 18, 198, 1998 and 19998.
+
+Lean has no Ito integral, so the wobble term, Steps 6 and 7 and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Jump diffusions: along a path that drifts and jumps finitely often, a smooth function changes by the slope term between jumps plus its exact before-and-after difference at each jump.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.LebesgueDifferentiationThm
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+/-! Mathlib has no Ito integral against Brownian motion, so the main theorem below is the
+card's formula path by path with the wobble switched off (`β = 0`): the path is
+`X t = x₀ + ∫₀ᵗ α + (sum of the jumps Δ i at the times τ i ≤ t)`,
+as in the card's Detailed proof. The value just before jump `i` is `X (τ i) - Δ i`.
+Drift `α` only needs `∫₀ᵀ |α| < ∞`, and `f` has a continuous curvature, as the card asks.
+The averaged formulas and the simulation rest on a model and decimals and are not stated. -/
+
+theorem chain_ac (f : ℝ → ℝ) (hf : ContDiff ℝ 1 f) (α : ℝ → ℝ) {a b : ℝ} (hab : a ≤ b)
+    (hα : IntervalIntegrable α volume a b) (c : ℝ) (Y : ℝ → ℝ)
+    (hY : ∀ s ∈ Set.Icc a b, Y s = c + ∫ u in a..s, α u) :
+    IntervalIntegrable (fun s => deriv f (Y s) * α s) volume a b ∧
+      f (Y b) = f (Y a) + ∫ s in a..b, deriv f (Y s) * α s := by
+  set G : ℝ → ℝ := fun t => c + ∫ u in a..t, α u with hGdef
+  have hYG : Set.EqOn Y G (Set.uIcc a b) := by
+    intro s hs; rw [Set.uIcc_of_le hab] at hs; exact hY s hs
+  have hI : AbsolutelyContinuousOnInterval (fun t => ∫ u in a..t, α u) a b :=
+    hα.absolutelyContinuousOnInterval_intervalIntegral Set.left_mem_uIcc
+  have hc : AbsolutelyContinuousOnInterval (fun _ : ℝ => c) a b :=
+    (LipschitzWith.const c).lipschitzOnWith.absolutelyContinuousOnInterval
+  have hGac : AbsolutelyContinuousOnInterval G a b := hc.add hI
+  have hGcont : ContinuousOn G (Set.uIcc a b) := hGac.continuousOn
+  have hK : IsCompact (G '' Set.uIcc a b) := isCompact_uIcc.image_of_continuousOn hGcont
+  obtain ⟨M, hM⟩ := (Metric.isBounded_iff_subset_closedBall (0 : ℝ)).1 hK.isBounded
+  obtain ⟨K, hKL⟩ := (hf.contDiffOn (s := Metric.closedBall (0 : ℝ) M)).exists_lipschitzOnWith
+    (by decide) (convex_closedBall _ _) (isCompact_closedBall _ _)
+  have hFG : AbsolutelyContinuousOnInterval (f ∘ G) a b :=
+    hKL.comp_absolutelyContinuousOnInterval (fun x hx => hM ⟨x, hx, rfl⟩) hGac
+  have hFTC := hFG.integral_deriv_eq_sub
+  have hcd : Continuous (deriv f) := hf.continuous_deriv le_rfl
+  have hint : IntervalIntegrable (fun s => deriv f (G s) * α s) volume a b :=
+    hα.continuousOn_mul (hcd.comp_continuousOn hGcont)
+  have hae : ∫ s in a..b, deriv (f ∘ G) s = ∫ s in a..b, deriv f (G s) * α s := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [hα.ae_hasDerivAt_integral] with x hx hxI
+    have hxI' : x ∈ Set.uIcc a b := Set.uIoc_subset_uIcc hxI
+    have hG : HasDerivAt G (α x) x := (hx hxI' a Set.left_mem_uIcc).const_add c
+    exact ((hf.differentiable one_ne_zero (G x)).hasDerivAt.comp x hG).deriv
+  have hYb := hYG (Set.right_mem_uIcc)
+  have hYa := hYG (Set.left_mem_uIcc)
+  have hcong : ∫ s in a..b, deriv f (Y s) * α s = ∫ s in a..b, deriv f (G s) * α s :=
+    intervalIntegral.integral_congr (fun s hs => by simp only [hYG hs])
+  refine ⟨hint.congr ?_, ?_⟩
+  · intro s hs; simp only [hYG (Set.uIoc_subset_uIcc hs)]
+  · rw [hcong, ← hae, hFTC, hYb, hYa]
+    simp [G]
+
+#print axioms chain_ac
+
+theorem jumps_general (f : ℝ → ℝ) (hf : ContDiff ℝ 1 f) (x₀ a : ℝ) (α : ℝ → ℝ) :
+    ∀ (n : ℕ) (b : ℝ) (τ : Fin n → ℝ), a ≤ b → IntervalIntegrable α volume a b →
+      StrictMono τ → (∀ i, a < τ i) → (∀ i, τ i ≤ b) → ∀ (Δ : Fin n → ℝ) (X : ℝ → ℝ),
+      (∀ t, X t = x₀ + (∫ s in a..t, α s) +
+        ∑ i ∈ Finset.univ.filter (fun i => τ i ≤ t), Δ i) →
+      IntervalIntegrable (fun s => deriv f (X s) * α s) volume a b ∧
+      f (X b) = f (X a) + (∫ s in a..b, deriv f (X s) * α s) +
+        ∑ i, (f (X (τ i)) - f (X (τ i) - Δ i)) := by
+  intro n
+  induction n with
+  | zero =>
+    intro b τ hab hα _ _ _ Δ X hX
+    have hY : ∀ s, X s = x₀ + ∫ u in a..s, α u := by intro s; rw [hX]; simp
+    obtain ⟨h1, h2⟩ := chain_ac f hf α hab hα x₀ X (fun s _ => hY s)
+    exact ⟨h1, by simp [h2]⟩
+  | succ n ih =>
+    intro b τ hab hα hτ hτa hτb Δ X hX
+    set L := τ (Fin.last n) with hLdef
+    set τ' : Fin n → ℝ := fun i => τ i.castSucc with hτ'def
+    set Δ' : Fin n → ℝ := fun i => Δ i.castSucc with hΔ'def
+    set X' : ℝ → ℝ := fun t => x₀ + (∫ s in a..t, α s) +
+        ∑ i ∈ Finset.univ.filter (fun i => τ' i ≤ t), Δ' i with hX'def
+    have hXX' : ∀ t, X t = X' t + if L ≤ t then Δ (Fin.last n) else 0 := by
+      intro t
+      rw [hX]
+      simp only [X', Finset.sum_filter, Fin.sum_univ_castSucc, τ', Δ', L]
+      ring
+    have haL : a < L := hτa _
+    have hLb : L ≤ b := hτb _
+    have hτ'L : ∀ i, τ' i < L := fun i => hτ (Fin.castSucc_lt_last i)
+    have hτ'mono : StrictMono τ' := hτ.comp Fin.strictMono_castSucc
+    have hαL : IntervalIntegrable α volume a L :=
+      hα.mono_set (Set.uIcc_subset_uIcc Set.left_mem_uIcc (by
+        rw [Set.uIcc_of_le hab]; exact ⟨haL.le, hLb⟩))
+    obtain ⟨hI1, hE1⟩ := ih L τ' haL.le hαL hτ'mono (fun i => hτa _) (fun i => (hτ'L i).le)
+      Δ' X' (fun t => rfl)
+    have hXτ' : ∀ i, X (τ' i) = X' (τ' i) := by
+      intro i; rw [hXX']; simp [not_le.2 (hτ'L i)]
+    have hXL : X L = X' L + Δ (Fin.last n) := by rw [hXX']; simp
+    have hXa : X a = X' a := by rw [hXX']; simp [not_le.2 haL]
+    have hae : ∀ᵐ s ∂volume, s ∈ Set.uIoc a L →
+        deriv f (X' s) * α s = deriv f (X s) * α s := by
+      have hne : ∀ᵐ s ∂(volume : Measure ℝ), s ≠ L := by
+        simp [ae_iff, measure_singleton]
+      filter_upwards [hne] with s hs hsI
+      rw [Set.uIoc_of_le haL.le] at hsI
+      have : s < L := lt_of_le_of_ne hsI.2 hs
+      rw [hXX' s]; simp [not_le.2 this]
+    have hI1' : IntervalIntegrable (fun s => deriv f (X s) * α s) volume a L :=
+      hI1.congr_ae ((ae_restrict_iff' measurableSet_uIoc).2 hae)
+    have hint1 : ∫ s in a..L, deriv f (X' s) * α s = ∫ s in a..L, deriv f (X s) * α s :=
+      intervalIntegral.integral_congr_ae hae
+    have hαLb : IntervalIntegrable α volume L b :=
+      hα.mono_set (Set.uIcc_subset_uIcc (by
+        rw [Set.uIcc_of_le hab]; exact ⟨haL.le, hLb⟩) Set.right_mem_uIcc)
+    have hY : ∀ s ∈ Set.Icc L b, X s = X L + ∫ u in L..s, α u := by
+      intro s hs
+      have hall : ∀ t, L ≤ t →
+          Finset.univ.filter (fun i => τ i ≤ t) = Finset.univ := by
+        intro t ht
+        apply Finset.filter_true_of_mem
+        intro i _
+        exact le_trans (hτ.monotone (Fin.le_last i)) ht
+      rw [hX s, hX L, hall s hs.1, hall L le_rfl]
+      have hαs : IntervalIntegrable α volume a s :=
+        hα.mono_set (Set.uIcc_subset_uIcc Set.left_mem_uIcc (by
+          rw [Set.uIcc_of_le hab]; exact ⟨haL.le.trans hs.1, hs.2⟩))
+      rw [← intervalIntegral.integral_interval_sub_left hαs hαL]
+      ring
+    obtain ⟨hI2, hE2⟩ := chain_ac f hf α hLb hαLb (X L) X hY
+    refine ⟨hI1'.trans hI2, ?_⟩
+    rw [← intervalIntegral.integral_add_adjacent_intervals hI1' hI2, Fin.sum_univ_castSucc]
+    have hsum : ∑ i : Fin n, (f (X (τ i.castSucc)) - f (X (τ i.castSucc) - Δ i.castSucc)) =
+        ∑ i : Fin n, (f (X' (τ' i)) - f (X' (τ' i) - Δ' i)) := by
+      apply Finset.sum_congr rfl; intro i _; rw [← hXτ' i]
+    rw [hsum, hE2]
+    have hXL' : X L - Δ (Fin.last n) = X' L := by rw [hXL]; ring
+    rw [hXL', hE1, hint1, ← hXa]
+    ring
+
+#print axioms jumps_general
+
+/-- Ito's formula with jumps, path by path, for finitely many jumps: if the path drifts at
+rate `α` (integrable on `[0, T]`) and jumps by `Δ i` at distinct times `0 < τ i ≤ T`, and `f`
+has a continuous curvature, then `f (X T)` is `f (X 0)` plus the slope term
+`∫₀ᵀ f'(X s) α s ds` plus, at each jump, the exact difference `f(after) - f(before)`. -/
+theorem ito_formula_with_jumps (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f)
+    (x₀ T : ℝ) (hT : 0 ≤ T) (α : ℝ → ℝ) (hα : IntervalIntegrable α volume 0 T)
+    {n : ℕ} (τ : Fin n → ℝ) (hτ : StrictMono τ) (hτpos : ∀ i, 0 < τ i) (hτT : ∀ i, τ i ≤ T)
+    (Δ : Fin n → ℝ) (X : ℝ → ℝ)
+    (hX : ∀ t, X t = x₀ + (∫ s in (0 : ℝ)..t, α s) +
+      ∑ i ∈ Finset.univ.filter (fun i => τ i ≤ t), Δ i) :
+    f (X T) = f (X 0) + (∫ s in (0 : ℝ)..T, deriv f (X s) * α s) +
+      ∑ i, (f (X (τ i)) - f (X (τ i) - Δ i)) := by
+  exact (jumps_general f (hf.of_le (by norm_num)) x₀ 0 α n T τ hT hα hτ hτpos hτT Δ X hX).2
+
+/-- The spike factor `Y = e^J`, with `J` normal of mean `μJ` and standard deviation `δ`:
+its average is `e^(μJ + δ²/2)`, so `k = E[Y] - 1 = e^(μJ + δ²/2) - 1`, and the average of
+`Y²` is `e^(2 μJ + 2 δ²)`. -/
+theorem lognormal_spike_moments (μJ δ : ℝ) :
+    (∫ j, Real.exp j ∂(gaussianReal μJ ⟨δ ^ 2, sq_nonneg δ⟩)) = Real.exp (μJ + δ ^ 2 / 2) ∧
+    (∫ j, Real.exp j ^ 2 ∂(gaussianReal μJ ⟨δ ^ 2, sq_nonneg δ⟩)) =
+      Real.exp (2 * μJ + 2 * δ ^ 2) := by
+  have h := fun t => congrFun (mgf_fun_id_gaussianReal (μ := μJ) (v := ⟨δ ^ 2, sq_nonneg δ⟩)) t
+  simp only [mgf] at h
+  constructor
+  · have := h 1
+    simp only [one_mul] at this
+    rw [this]; show Real.exp (μJ * 1 + δ ^ 2 * 1 ^ 2 / 2) = _; congr 1; ring
+  · have := h 2
+    have e : ∀ j : ℝ, Real.exp j ^ 2 = Real.exp (2 * j) := by
+      intro j; rw [← Real.exp_nat_mul]; norm_num
+    simp_rw [e]
+    rw [this]; show Real.exp (μJ * 2 + δ ^ 2 * 2 ^ 2 / 2) = _; congr 1; ring
+
+/-- Drop "finitely many jumps": for the Lévy measure `x^(-2.5) dx` on jump sizes `(0, 1)`,
+the average jump sum per day counting sizes from `ε` to `1` is `2 (ε^(-1/2) - 1)`,
+and it grows without bound as the smallest size `ε` falls to `0`, so it has no limit. -/
+theorem uncompensated_small_jumps_diverge :
+    (∀ ε : ℝ, 0 < ε → ε ≤ 1 →
+      ∫ x in ε..1, x * x ^ (-(5 / 2 : ℝ)) = 2 * (ε ^ (-(1 / 2 : ℝ)) - 1)) ∧
+    Tendsto (fun ε : ℝ => ∫ x in ε..1, x * x ^ (-(5 / 2 : ℝ))) (𝓝[>] 0) atTop := by
+  have key : ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
+      ∫ x in ε..1, x * x ^ (-(5 / 2 : ℝ)) = 2 * (ε ^ (-(1 / 2 : ℝ)) - 1) := by
+    intro ε hε hε1
+    have hcong : ∫ x in ε..1, x * x ^ (-(5 / 2 : ℝ)) = ∫ x in ε..1, x ^ (-(3 / 2 : ℝ)) := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [Set.uIcc_of_le hε1] at hx
+      have hx0 : 0 < x := hε.trans_le hx.1
+      simp only
+      rw [show (-(3 / 2 : ℝ)) = 1 + (-(5 / 2 : ℝ)) by norm_num, Real.rpow_add hx0,
+        Real.rpow_one]
+    rw [hcong, integral_rpow (Or.inr ⟨by norm_num, by
+      rw [Set.uIcc_of_le hε1]; exact fun h => (not_le.2 hε) h.1⟩)]
+    rw [show (-(3 / 2 : ℝ)) + 1 = -(1 / 2) by norm_num, Real.one_rpow]
+    ring
+  refine ⟨key, ?_⟩
+  have hlim : Tendsto (fun ε : ℝ => 2 * (ε ^ (-(1 / 2 : ℝ)) - 1)) (𝓝[>] 0) atTop := by
+    have := tendsto_rpow_neg_nhdsGT_zero (y := -(1 / 2 : ℝ)) (by norm_num)
+    exact Tendsto.const_mul_atTop (by norm_num) (tendsto_atTop_add_const_right _ (-1) this)
+  refine hlim.congr' ?_
+  have h1 : ∀ᶠ ε in 𝓝[>] (0 : ℝ), ε < 1 := nhdsWithin_le_nhds (gt_mem_nhds one_pos)
+  filter_upwards [h1, self_mem_nhdsWithin] with ε hε1 hε0
+  exact (key ε hε0 hε1.le).symm
+
+/-! The card's exact worked numbers. Rates written as fractions: λ = 1/10 a day,
+T = 30 days, μJ = 3/10, δ = 1/10, σ = 3/100. -/
+
+-- Expected spikes in a month: λ T = 3.
+example : (1 / 10 : ℚ) * 30 = 3 := by norm_num
+-- The spikes' share of the average log: λ T μJ = 0.9.
+example : (1 / 10 : ℚ) * 30 * (3 / 10) = 9 / 10 := by norm_num
+-- Variance of the log: σ² T + λ T (μJ² + δ²) = 0.027 + 3 × 0.1 = 0.327.
+example : (3 / 100 : ℚ) ^ 2 * 30 + 3 * ((3 / 10) ^ 2 + (1 / 10) ^ 2) = 327 / 1000 := by norm_num
+-- Uncompensated jump sum a day, 2 (ε^(-1/2) - 1), at ε = 1e-2, 1e-4, 1e-6, 1e-8:
+-- ε^(-1/2) = 10, 100, 1000, 10000, giving 18, 198, 1998, 19998.
+example : (10 : ℚ) ^ 2 = 100 ∧ 2 * ((10 : ℚ) - 1) = 18 := by norm_num
+example : (100 : ℚ) ^ 2 = 10 ^ 4 ∧ 2 * ((100 : ℚ) - 1) = 198 := by norm_num
+example : (1000 : ℚ) ^ 2 = 10 ^ 6 ∧ 2 * ((1000 : ℚ) - 1) = 1998 := by norm_num
+example : (10000 : ℚ) ^ 2 = 10 ^ 8 ∧ 2 * ((10000 : ℚ) - 1) = 19998 := by norm_num
+
+#print axioms ito_formula_with_jumps
+#print axioms lognormal_spike_moments
+#print axioms uncompensated_small_jumps_diverge
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'chain_ac' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jumps_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ito_formula_with_jumps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lognormal_spike_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+'uncompensated_small_jumps_diverge' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

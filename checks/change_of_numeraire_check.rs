@@ -159,4 +159,5 @@ fn main() {
     row("try: sig = 0.40, N(d1)", ncdf(dd(S0, K, 0.4))); row("try: sig = 0.40, N(d2)", ncdf(dd(S0, K, 0.4) - 0.4 * T.sqrt()));
     row("try: K = 120, N(d1)", ncdf(dd(S0, 120.0, SIG))); row("try: K = 120, N(d2)", ncdf(dd(S0, 120.0, SIG) - vt));
     row("curves cross at forward S0 e^rT", S0 * grow);
+    println!("ALL CHECKS PASS");
 }

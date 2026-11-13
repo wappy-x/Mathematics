@@ -132,3 +132,4 @@ assert abs(scan_res) < 1e-5                         # and V makes the HJB equati
 assert abs(mc[0.4][0] - ce_star) < 4 * mc[0.4][1] # simulation agrees with the formula
 assert ce_fb + 3 * se_fb < ce_star                # a rule that reacts differently does worse
 print("all checks passed")
+print("ALL CHECKS PASS")

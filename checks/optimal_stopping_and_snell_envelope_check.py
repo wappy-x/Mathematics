@@ -124,3 +124,4 @@ print("no deadline, no cost, bids 430000 - 30000/n: " + " ".join(f"n={n}:{430000
 fy = lambda x: 210 - (x - 370000) / 400
 print("figure, node x " + " ".join(str(80 + 100 * (n - 1)) for n in (1, 2, 3)) + "; node y " + " ".join(f"{fy(x):.1f}" for x in X)
       + f"; bar y {fy(VK[1]):.2f} {fy(VK[0]):.2f}")
+print("ALL CHECKS PASS")

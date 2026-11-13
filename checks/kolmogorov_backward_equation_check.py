@@ -117,3 +117,4 @@ assert abs(u_tau - 0.5 * SIG * SIG * u_xx) < 1e-5 and abs(lhs - rhs) < 1e-9  # t
 assert abs(ud - ud_s) < 1e-9 and abs(ud_t - ud) < 0.005 and abs(ub2 - ub) < 0.005
 assert abs(m1[0] - e_r) < 4 * m1[1] and abs(m2[0] - ou2(T, R0)) < 4 * m2[1]
 print("all checks passed")
+print("ALL CHECKS PASS")

@@ -157,4 +157,5 @@ fn main() {
     assert!((mc[1].0 - ce_star).abs() < 4.0 * mc[1].1); // simulation agrees with the formula
     assert!(ce_fb + 3.0 * se_fb < ce_star);       // a rule that reacts differently does worse
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

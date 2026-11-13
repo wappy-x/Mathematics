@@ -115,7 +115,6 @@ fn main() {
     assert!(price == 1000 * u[&root] + COST * etau); // price = net value + costs paid
     println!("Snell rule sells in month 1/2/3 with chance {:.2} / {:.2} / {:.2}; E[tau] {:.2} months; E[price] {}",
         when[0] as f64 / 1000.0, when[1] as f64 / 1000.0, when[2] as f64 / 1000.0, etau as f64 / 1000.0, price / 1000);
-
     let zs: Vec<String> = (1..=3i64).map(|n| (0..3).map(|i| (X[i] - COST * n).to_string()).collect::<Vec<_>>().join(" ")).collect();
     println!("rewards Z_n = offer - {} n, months 1/2/3: {}", COST, zs.join("; "));
     println!("gaps: waiting on 400000 in month 1 beats selling by {}; prophet minus Snell {}; average costs paid {}",
@@ -167,4 +166,5 @@ fn main() {
     let fy = |x: f64| 210.0 - (x - 370000.0) / 400.0;
     let ny: Vec<String> = X.iter().map(|&x| format!("{:.1}", fy(x as f64))).collect();
     println!("figure, node x 80 180 280; node y {}; bar y {:.2} {:.2}", ny.join(" "), fy(vks[1]), fy(vks[0]));
+    println!("ALL CHECKS PASS");
 }

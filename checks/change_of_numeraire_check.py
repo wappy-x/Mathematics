@@ -124,3 +124,4 @@ for name, v in (("try: sig = 0.40, d1", dd(S0, K, 0.4)), ("try: sig = 0.40, d2",
                 ("try: K = 120, N(d1)", Ncdf(dd(S0, 120.0, sig))), ("try: K = 120, N(d2)", Ncdf(dd(S0, 120.0, sig) - vt))):
     print(f"{name:<34} {v:>12.6f}")
 print(f"{'curves cross at forward S0 e^rT':<34} {S0 * grow:>12.6f}")
+print("ALL CHECKS PASS")

@@ -119,7 +119,7 @@ The Ito integral is defined because $\sigma S_s$ is adapted and $E\int_0^t S_s^2
 
 **2. It is the only one.** $S$ is positive, so $R_t = 1/S_t = S_0^{-1}\exp(-at - \sigma W_t)$ is defined, and Ito's formula gives $dR = (-a + \tfrac12\sigma^2)R\,dt - \sigma R\,dW = (-\mu + \sigma^2)R\,dt - \sigma R\,dW$. Let $X$ be any solution. By the product rule ([Ito's product rule](03-ito-product-rule.md)), $d(XR) = X\,dR + R\,dX + d[X, R]$, where the cross term is $d[X,R] = (\sigma X)(-\sigma R)\,dt$. Collecting,
 $d(XR) = XR\big[(-\mu + \sigma^2)\,dt - \sigma\,dW + \mu\,dt + \sigma\,dW - \sigma^2\,dt\big] = 0.$
-So $X_t R_t = X_0 R_0 = 1$ for all $t$, almost surely, and $X_t = S_t$. The Lipschitz theorem of [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) gives the same conclusion for every SDE with well-behaved coefficients, by Picard iteration.
+So $X_t R_t = X_0 R_0 = 1$ for all $t$, almost surely, and $X_t = S_t$. The Lipschitz theorem of [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) gives the same conclusion for every SDE with well-behaved coefficients, by Picard iteration: put a guess into the right side of the integral equation, and repeat with each result until it settles.
 
 </details>
 
@@ -150,7 +150,9 @@ xychart-beta
 
 One line: the average of |Euler − exact| at year end, $1.1638, $0.5995, $0.3038 and $0.1486, each with a standard error below 2 cents. Each fourfold refinement halves the gap. From 4 to 256 steps, 64 times as many, the gap falls by a factor of 7.83, close to the square root of 64. An error that falls like the square root of the step is called strong order one half; [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) proves it.
 
-The same 4000 years check the solution's law. The exact formula gives a mean of $105.1271 and a variance of 451.03. The simulation gives $105.6213 ± 0.3363 and 452.33 ± 12.52, both inside the 4 standard errors the asserts allow. The mean of $\ln(S_1/S_0)$ comes out at 0.0350 ± 0.0031, against 0.03. The share of years ending below $100 is 0.4308 ± 0.0078, against 0.4404 from the formula. That sample is too small to rule out 0.4013, the chance the ordinary-calculus guess gives, so the code also draws 20000 one-step years of the exact solution: 0.4394 ± 0.0035, 11 standard errors from 0.4013.
+The same 4000 years check the solution's law. The exact formula gives a mean of $105.1271 and a variance of 451.03. The simulation gives $105.6213 ± 0.3363 and 452.33 ± 12.52, both inside the 4 standard errors the asserts allow. The mean of $\ln(S_1/S_0)$ comes out at 0.0350 ± 0.0031, against 0.03.
+
+The share of years ending below $100 is 0.4308 ± 0.0078, against 0.4404 from the formula. That sample is too small to rule out 0.4013, the chance the ordinary-calculus guess gives, so the code also draws 20000 one-step years of the exact solution: 0.4394 ± 0.0035, 11 standard errors from 0.4013.
 
 **Another road.** Steps 2 and 3 can be run in the opposite order for any SDE whose coefficients become constant after a change of variable. Taking logarithms turned the share into Brownian motion with drift; the mean-reverting equations of [Mean reversion](05-ornstein-uhlenbeck-and-cir-processes.md) are solved by multiplying by an exponential instead, the stochastic version of an integrating factor.
 
@@ -191,7 +193,9 @@ The code prints every row. The first is the common one: quoting a share's 5 perc
 
 ## Code, from first principles, and it actually runs
 
-Five roads: the formula, with the normal chance by Simpson's rule on the bell curve; Ito's lemma by finite differences; both candidates plugged into the integral equation on one path of 65536 Brownian steps, with left and midpoint sums; Euler–Maruyama against the exact solution on the same Brownian steps at four step sizes; and 4000 simulated years, each estimate with its standard error. Random draws come from SplitMix64 with seed 20260930 (plus 1, 2 and 3 for the pictured year, the 4000 years, and 20000 one-step years for the long Euler step and the chance of ending below $100), with normals by Box–Muller written out. The asserts compare the finite-difference drift with $\mu$, the residuals with zero and with the separately computed missing term, the error ratio with its expected range, and every simulated number with the formula within 4 standard errors; the 20000-year chance of ending below $100 must also sit more than 4 standard errors from the ordinary-calculus 0.4013.
+Five roads: the formula, with the normal chance by Simpson's rule on the bell curve; Ito's lemma by finite differences; both candidates plugged into the integral equation on one path of 65536 Brownian steps, with left and midpoint sums; Euler–Maruyama against the exact solution on the same Brownian steps at four step sizes; and 4000 simulated years, each estimate with its standard error. Random draws come from SplitMix64 with seed 20260930 (plus 1, 2 and 3 for the pictured year, the 4000 years, and 20000 one-step years for the long Euler step and the chance of ending below $100), with normals by Box–Muller written out.
+
+The asserts compare the finite-difference drift with $\mu$, the residuals with zero and with the separately computed missing term, the error ratio with its expected range, and every simulated number with the formula within 4 standard errors; the 20000-year chance of ending below $100 must also sit more than 4 standard errors from the ordinary-calculus 0.4013.
 
 ### Python
 
@@ -579,6 +583,128 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Steps 2 and 3 of Why it works, and the usual mistake, for any constant $\mu$ and $\sigma$.
+
+- Take $f(t, w) = S_0 e^{at + \sigma w}$ with $a = \mu - \tfrac12\sigma^2$. Then $f(0, 0) = S_0$: the formula starts at today's price.
+- Take the same $f$ at any time and any Brownian position. Then its drift $f_t + \tfrac12 f_{ww}$ equals $\mu f$, and its noise size $f_w$ equals $\sigma f$.
+- Suppose a positive price follows $dS = \mu S\,dt + \sigma S\,dW$, and take $g = \ln$. Then Ito's lemma gives the logarithm the constant drift $\mu - \tfrac12\sigma^2$ and the constant noise size $\sigma$.
+- Take the ordinary-calculus guess $S_0 e^{\mu t + \sigma w}$. Then its noise size is $\sigma$ times it, but its drift is $(\mu + \tfrac12\sigma^2)$ times it, not $\mu$ times it.
+- Take the share, with $\mu$ = 0.05 and $\sigma$ = 0.20. Then the log drift is 0.03, the guess's drift is 0.07, and $\sigma^2/\mu^2$ = 16 years.
+- Take $W_1$ = 0.5. Then the solution's exponent is 0.13 and the guess's is 0.15.
+- The cut-off −0.03/0.2 for ending below $100 equals −0.15.
+
+Lean has no Ito integral yet, so the integral equation on a path and the simulations by Euler's scheme are left to the Python and Rust checks.
+
+```lean
+-- Stochastic differential equations: the formula S₀ e^((μ - σ²/2)t + σw) starts at S₀ and its Ito's-lemma drift and noise size are exactly μ times it and σ times it, the logarithm of the price has the constant drift μ - σ²/2, and the ordinary-calculus guess S₀ e^(μt + σw) gets the drift μ + σ²/2 instead.
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Tactic.NormNum
+
+theorem sde_deriv_exp_left (c k b x : ℝ) :
+    deriv (fun s => c * Real.exp (k * s + b)) x = k * (c * Real.exp (k * x + b)) := by
+  have h : HasDerivAt (fun s => c * Real.exp (k * s + b)) (c * (Real.exp (k * x + b) * (k * 1))) x :=
+    ((((hasDerivAt_id x).const_mul k).add_const b).exp).const_mul c
+  rw [h.deriv]; ring
+
+theorem sde_deriv_exp_right (c k b x : ℝ) :
+    deriv (fun s => c * Real.exp (b + k * s)) x = k * (c * Real.exp (b + k * x)) := by
+  have h : HasDerivAt (fun s => c * Real.exp (b + k * s)) (c * (Real.exp (b + k * x) * (k * 1))) x :=
+    ((((hasDerivAt_id x).const_mul k).const_add b).exp).const_mul c
+  rw [h.deriv]; ring
+
+#print axioms sde_deriv_exp_left
+#print axioms sde_deriv_exp_right
+
+/-- The card's Step 3, the check that the formula solves the share's SDE dS = μS dt + σS dW.
+Write the candidate as a function of time t and Brownian position w,
+f(t, w) = S₀ e^((μ - σ²/2)t + σw), with constant μ and σ. It starts at S₀, and Ito's lemma reads off
+its drift f_t + ½ f_ww and its noise size f_w: the drift is exactly μ times f and the noise size is
+exactly σ times f, at every time and every Brownian position. That is the share's SDE, term for term.
+(Mathlib has no Ito integral yet, so this states the calculus identity that Ito's lemma turns into
+the SDE, not the almost-sure integral equation itself.) -/
+theorem exp_formula_has_share_sde_drift_and_noise (S₀ μ σ : ℝ) (f : ℝ → ℝ → ℝ)
+    (hf : f = fun t w => S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * w)) :
+    f 0 0 = S₀ ∧
+    ∀ t w : ℝ,
+      deriv (fun s => f s w) t + 1 / 2 * deriv (fun v => deriv (fun u => f t u) v) w
+          = μ * f t w ∧
+        deriv (fun u => f t u) w = σ * f t w := by
+  subst hf
+  refine ⟨by simp, fun t w => ?_⟩
+  have h1 : (fun v => deriv (fun u => S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * u)) v)
+      = fun v => σ * S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * v) := by
+    funext v; rw [sde_deriv_exp_right]; ring
+  simp only []
+  rw [h1]
+  constructor
+  · rw [sde_deriv_exp_left, sde_deriv_exp_right (σ * S₀)]
+    ring
+  · rw [sde_deriv_exp_right]
+
+/-- The card's Step 2, how the candidate is found. Apply Ito's lemma to the logarithm g = ln of a
+positive price S following dS = μS dt + σS dW: the drift g'(S)·μS + ½ g''(S)·σ²S² is the constant
+μ - σ²/2, and the noise size g'(S)·σS is the constant σ, whatever the price. -/
+theorem log_price_has_constant_drift_and_noise (μ σ S : ℝ) (hS : 0 < S) :
+    deriv Real.log S * (μ * S) + 1 / 2 * deriv (deriv Real.log) S * (σ * S) ^ 2 = μ - σ ^ 2 / 2 ∧
+      deriv Real.log S * (σ * S) = σ := by
+  have hS' : S ≠ 0 := hS.ne'
+  rw [Real.deriv_log', deriv_inv]
+  constructor
+  · field_simp; ring
+  · field_simp
+
+/-- The common mistake. The ordinary-chain-rule guess h(t, w) = S₀ e^(μt + σw) has Ito drift
+h_t + ½ h_ww equal to (μ + σ²/2) times h, not μ times h: it solves the SDE with drift μ + σ²/2,
+not the share's SDE. Its noise size h_w is σ times h, as before. -/
+theorem ordinary_chain_rule_guess_has_wrong_drift (S₀ μ σ : ℝ) (h : ℝ → ℝ → ℝ)
+    (hh : h = fun t w => S₀ * Real.exp (μ * t + σ * w)) :
+    ∀ t w : ℝ,
+      deriv (fun s => h s w) t + 1 / 2 * deriv (fun v => deriv (fun u => h t u) v) w
+          = (μ + σ ^ 2 / 2) * h t w ∧
+        deriv (fun u => h t u) w = σ * h t w := by
+  subst hh
+  intro t w
+  have h1 : (fun v => deriv (fun u => S₀ * Real.exp (μ * t + σ * u)) v)
+      = fun v => σ * S₀ * Real.exp (μ * t + σ * v) := by
+    funext v; rw [sde_deriv_exp_right]; ring
+  simp only []
+  rw [h1]
+  constructor
+  · rw [sde_deriv_exp_left, sde_deriv_exp_right (σ * S₀)]
+    ring
+  · rw [sde_deriv_exp_right]
+
+-- The share: μ = 0.05 = 1/20 and σ = 0.20 = 1/5 a year.
+-- The log drift μ - σ²/2 is 0.03.
+example : (1 / 20 : ℚ) - 1 / 2 * (1 / 5) ^ 2 = 3 / 100 := by norm_num
+-- The ordinary-calculus guess's drift μ + σ²/2 is 0.07.
+example : (1 / 20 : ℚ) + 1 / 2 * (1 / 5) ^ 2 = 7 / 100 := by norm_num
+-- Drift total μt equals noise spread σ√t when t = σ²/μ², at 16 years.
+example : ((1 / 5 : ℚ) ^ 2) / (1 / 20) ^ 2 = 16 := by norm_num
+-- The solution at W₁ = 0.5 has exponent 0.03 + 0.2 × 0.5 = 0.13; the guess has 0.05 + 0.1 = 0.15.
+example : (3 / 100 : ℚ) + 1 / 5 * (1 / 2) = 13 / 100 ∧ (1 / 20 : ℚ) + 1 / 5 * (1 / 2) = 15 / 100 := by
+  norm_num
+-- The chance of ending below $100 is the normal chance below -0.03/0.2 = -0.15.
+example : -(3 / 100 : ℚ) / (1 / 5) = -15 / 100 := by norm_num
+
+#print axioms exp_formula_has_share_sde_drift_and_noise
+#print axioms log_price_has_constant_drift_and_noise
+#print axioms ordinary_chain_rule_guess_has_wrong_drift
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sde_deriv_exp_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sde_deriv_exp_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exp_formula_has_share_sde_drift_and_noise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_price_has_constant_drift_and_noise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ordinary_chain_rule_guess_has_wrong_drift' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -632,7 +758,7 @@ The share's SDE had one solution because its coefficients were tame; which SDEs 
 
 ## Sources
 
-Verified 6 Oct 2026: every DOI below matches its title and first author in Crossref.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Itô, Kiyosi. "On Stochastic Differential Equations." *Memoirs of the American Mathematical Society*, no. 4 (1951). [DOI](https://doi.org/10.1090/memo/0004). The founding paper: SDEs as integral equations, solved by successive approximation.
 - Øksendal, Bernt. *Stochastic Differential Equations: An Introduction with Applications*, 6th ed. Springer, 2003. [DOI](https://doi.org/10.1007/978-3-642-14394-6). What a solution is, the share's equation solved by Ito's formula, and uniqueness.

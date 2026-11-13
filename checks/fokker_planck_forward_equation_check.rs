@@ -166,4 +166,5 @@ fn main() {
         assert!((fr - ex).abs() < 4.0 * se + 1e-9, "histogram off the forward-equation density");
     }
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

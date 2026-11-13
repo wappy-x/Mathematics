@@ -10,7 +10,7 @@ A share trades at \$100. On most days it wobbles by a percent or so. About twice
 
 The share needs both. In this card's model the logarithm of the price drifts up at 0.25 a year, wobbles with volatility 0.20 (the standard deviation the wobble alone gives over a year), and jumps 2 times a year on average. Each jump moves the log price 0.20 down (chance 0.75) or 0.20 up (chance 0.25). Over one year the log price changes by 0.05 on average, with variance 0.12, and the average price after a year is \$111.49.
 
-One structural fact makes the model tractable. The change over any week has the same law as the change over any other week, and the weeks do not influence each other. A process with that property, and no jumps at fixed times, is a **Lévy process**, after Paul Lévy. Brownian motion and the Poisson process are the family's two extremes: all wobble, or all jumps. The **Lévy–Khintchine formula** lists every member.
+One structural fact makes the model tractable. The change over any week has the same law (probability distribution) as the change over any other week, and the weeks do not influence each other. A process with that property, and no jumps at fixed times, is a **Lévy process**, after Paul Lévy. Brownian motion and the Poisson process are the family's two extremes: all wobble, or all jumps. The **Lévy–Khintchine formula** lists every member.
 
 **A Lévy process is a running total of independent, identically distributed pieces over every split of time; its characteristic function at time t is e raised to t times one fixed exponent, and that exponent is always a drift, plus a Brownian part, plus an integral over the sizes and rates of the jumps.**
 
@@ -33,7 +33,9 @@ One line: the price along one sample path (one run of the process drawn against 
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. The process $X_t$, read "the value at time t", is the change in the log price, $X_t = \ln(S_t / 100)$, where $S_t$ is the price. An **increment** is a change over a window, $X_{t+h} - X_t$. The letter $i$ is the imaginary unit and $u$ a frequency dial, per unit of log price. The characteristic function $\varphi_t(u) = E[e^{iuX_t}]$ is the average point on the unit circle turned by $u$ times $X_t$ ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md); that card calls the dial $t$, here $t$ is time). It identifies the law of $X_t$ completely.
+Notation first, in words. Time $t$ is in years. The process $X_t$, read "the value at time t", is the change in the log price, $X_t = \ln(S_t / 100)$, where $S_t$ is the price. An **increment** is a change over a window, $X_{t+h} - X_t$.
+
+The letter $i$ is the imaginary unit and $u$ a frequency dial, per unit of log price. The characteristic function $\varphi_t(u) = E[e^{iuX_t}]$ is the average point on the unit circle turned by $u$ times $X_t$ ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md); that card calls the dial $t$, here $t$ is time). It identifies the law of $X_t$ completely.
 
 **The definition.** A process $X_t$ is a Lévy process when:
 
@@ -52,7 +54,7 @@ $$\psi(u) = i\,b\,u \;-\; \tfrac12 \sigma^2 u^2 \;+\; \int_{x \ne 0} \Big(e^{iux
 
 **Read it aloud:** the characteristic function at time t is e raised to t times the exponent, and the exponent is a drift term, minus a Brownian term, plus, over every jump size, the rate of such jumps times what one does to the rotating point, with small jumps' average pull taken out.
 
-The ingredients $(b, \sigma^2, \nu)$ are the **Lévy triplet**. The integral is against a measure, as in wing 10: $\nu(A)$, the **Lévy measure** of a set A of sizes, is the expected number of jumps per year with size in A. It must satisfy $\int \min(1, x^2)\,\nu(dx) < \infty$ and may have infinite total mass. The indicator $\mathbf{1}_{\{|x|<1\}}$ is 1 for jumps smaller than 1, else 0.
+The ingredients $(b, \sigma^2, \nu)$ are the **Lévy triplet**. The integral is against a measure, as in [Measures](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/04-measures.md): $\nu(A)$, the **Lévy measure** of a set A of sizes, is the expected number of jumps per year with size in A. It must satisfy $\int \min(1, x^2)\,\nu(dx) < \infty$ and may have infinite total mass. The indicator $\mathbf{1}_{\{|x|<1\}}$ is 1 for jumps smaller than 1, else 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -174,7 +176,11 @@ Orange bars: the exact law of $X_1$. Green line: the share of 40000 simulated ye
 
 The share's Lévy measure is finite, and Step 4's simple form works. Some useful processes have infinitely many small jumps. Take $\nu(dx) = x^{-2.5}\,dx$ on sizes between 0 and 1, the tail power $x^{-1-\alpha}$ with $\alpha$ = 1.5. Its total mass is infinite, but $\int_0^1 x^2 \cdot x^{-2.5}\,dx = 2$, so the condition on $\nu$ holds.
 
-Cut the measure at size $\varepsilon$ and compute the jump integral at $u$ = 3. The real part settles: −6.951792 at $\varepsilon$ = 1e-02, −7.850879 at 1e-08, limit −7.851779. The imaginary part without the compensator, $\int \sin(ux)\,x^{-2.5}\,dx$, grows without bound: 51.509, 591.506, 5991.506, 59991.506, tenfold each time $\varepsilon$ falls a hundredfold. The small jumps, all upward, add up to an infinite drift. With the compensator, $\int(\sin(ux) - ux)\,x^{-2.5}\,dx$ converges to −2.493538. Subtracting each small jump's average contribution leaves a fluctuation with finite variance. That is the indicator term's job.
+Cut the measure at size $\varepsilon$ and compute the jump integral at $u$ = 3. The real part settles: −6.951792 at $\varepsilon$ = 1e-02, −7.850879 at 1e-08, limit −7.851779.
+
+The imaginary part without the compensator, $\int \sin(ux)\,x^{-2.5}\,dx$, grows without bound: 51.509, 591.506, 5991.506, 59991.506, tenfold each time $\varepsilon$ falls a hundredfold. The small jumps, all upward, add up to an infinite drift.
+
+With the compensator, $\int(\sin(ux) - ux)\,x^{-2.5}\,dx$ converges to −2.493538. Subtracting each small jump's average contribution leaves a fluctuation with finite variance. That is the indicator term's job.
 
 ### Step 7: the general theorem, stated
 
@@ -183,7 +189,13 @@ The **Lévy–Khintchine theorem** says the shape built in Steps 1 to 5 is unive
 - every Lévy process has an exponent of the form in The formula, with exactly one triplet $(b, \sigma^2, \nu)$;
 - every triplet with $\sigma^2 \ge 0$ and $\int \min(1, x^2)\,\nu(dx) < \infty$ comes from a Lévy process.
 
-The key steps, not carried out in full here. By Step 0, $\varphi_1 = (\varphi_{1/n})^n$, so $\psi(u) = \lim_n n\big(\varphi_{1/n}(u) - 1\big) = \lim_n \int (e^{iux} - 1)\, n\,P(X_{1/n} \in dx)$. Away from 0, the measures $n\,P(X_{1/n} \in dx)$ converge to $\nu$: in a window of length $1/n$ a jump of size near $x$ has chance about $\nu(dx)/n$. Near 0, weighted by $x^2$, they leave a remainder that becomes $\sigma^2$. The converse builds the process from its triplet: a Brownian motion, a compound Poisson process for jumps of size at least 1, and a limit of compensated compound Poisson processes for the small ones, the **Lévy–Itô decomposition**. Both directions are proved in Applebaum, chapters 1 and 2, and Kyprianou, chapter 2; the analytic side is on Infinitely divisible laws. The share is the finite-jump case, with every piece visible.
+The key steps, not carried out in full here. By Step 0, $\varphi_1 = (\varphi_{1/n})^n$, so $\psi(u) = \lim_n n\big(\varphi_{1/n}(u) - 1\big) = \lim_n \int (e^{iux} - 1)\, n\,P(X_{1/n} \in dx)$.
+
+Away from 0, the measures $n\,P(X_{1/n} \in dx)$ converge to $\nu$: in a window of length $1/n$ a jump of size near $x$ has chance about $\nu(dx)/n$. Near 0, weighted by $x^2$, they leave a remainder that becomes $\sigma^2$.
+
+The converse builds the process from its triplet: a Brownian motion, a compound Poisson process for jumps of size at least 1, and a limit of compensated compound Poisson processes for the small ones, the **Lévy–Itô decomposition**.
+
+Both directions are proved in Applebaum, chapters 1 and 2, and Kyprianou, chapter 2; the analytic side is on Infinitely divisible laws. The share is the finite-jump case, with every piece visible.
 
 ---
 
@@ -621,6 +633,347 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves Step 1's exponential form for every Lévy process, the exponents of both extremes, and the share's numbers.
+
+- Suppose $X_t$ has the four properties of a Lévy process. Then for every dial $u$ there is one $\psi(u)$ with $\varphi_t(u) = e^{t\psi(u)}$ at every time $t$.
+- Take the Poisson law with mean $\lambda t$, the law of the count $N(t)$. Then its characteristic function is $e^{t\lambda(e^{iu} - 1)}$.
+- Take the normal law with mean $\gamma t$ and variance $\sigma^2 t$. Then its characteristic function is $e^{t(i\gamma u - \frac12\sigma^2u^2)}$.
+- The share's numbers are exact: $\nu$ = 1.5 at −0.20 and 0.5 at +0.20, $b$ = 0.05, and variance 0.12, two thirds from jumps.
+- So are two rows of What breaks: half-year mean −0.0250, not 0.0250, and $\operatorname{Var} X_2$ 0.4800, not 0.2400.
+
+The Lévy–Khintchine shape, the exact law, the slots and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Levy processes: for a process with stationary independent increments that starts at zero and is continuous in probability, the characteristic function at time t is e raised to t times one fixed exponent, and the Brownian and Poisson extremes have the exponents the card gives.
+import Mathlib.Probability.IdentDistrib
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Independence.Integration
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Probability.Distributions.Poisson.Basic
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory Filter Topology Complex
+open scoped NNReal
+
+lemma levy_small_of_tendsto (f : ℝ≥0 → ℂ) (h0 : f 0 = 1) (hc : Tendsto f (𝓝[>] 0) (𝓝 1))
+    (ε : ℝ) (hε : 0 < ε) : ∃ η : ℝ≥0, 0 < η ∧ ∀ s : ℝ≥0, s < η → ‖f s - 1‖ < ε := by
+  rw [Metric.tendsto_nhdsWithin_nhds] at hc
+  obtain ⟨η, hη, h⟩ := hc ε hε
+  refine ⟨η.toNNReal, Real.toNNReal_pos.mpr hη, fun s hs => ?_⟩
+  rcases eq_or_ne s 0 with rfl | hs0
+  · simp [h0, hε]
+  · have hs' : (s : ℝ) < η := (Real.lt_toNNReal_iff_coe_lt).mp hs
+    have := h (x := s) (pos_iff_ne_zero.mpr hs0) (by rw [NNReal.dist_eq]; simpa using hs')
+    rwa [dist_eq_norm] at this
+
+lemma levy_arg_small {z : ℂ} (hz : ‖z - 1‖ < 1) : z ≠ 0 ∧ |arg z| < Real.pi / 2 := by
+  have hre : 0 < z.re := by
+    have h1 := Complex.abs_re_le_norm (z - 1)
+    have h2 := neg_abs_le (z - 1).re
+    simp only [sub_re, one_re] at h1 h2
+    linarith
+  exact ⟨fun h => by simp [h] at hre, abs_arg_lt_pi_div_two_iff.mpr (Or.inl hre)⟩
+
+lemma levy_cauchy_exp (f : ℝ≥0 → ℂ) (h0 : f 0 = 1) (hmul : ∀ s t, f (s + t) = f s * f t)
+    (hc : Tendsto f (𝓝[>] 0) (𝓝 1)) : ∃ c : ℂ, ∀ t : ℝ≥0, f t = cexp ((t : ℂ) * c) := by
+  obtain ⟨η, hη, hη1⟩ := levy_small_of_tendsto f h0 hc 1 one_pos
+  set δ : ℝ≥0 := η / 2 with hδ
+  have hδpos : 0 < δ := by positivity
+  have hδη : δ < η := NNReal.half_lt_self hη.ne'
+  have hsmall : ∀ s, s ≤ δ → f s ≠ 0 ∧ |arg (f s)| < Real.pi / 2 :=
+    fun s hs => levy_arg_small (hη1 s (hs.trans_lt hδη))
+  have hlogadd : ∀ s t, s + t ≤ δ → log (f (s + t)) = log (f s) + log (f t) := by
+    intro s t hst
+    have hs := hsmall s (le_trans le_self_add hst)
+    have ht := hsmall t (le_trans le_add_self hst)
+    have e : f s * f t = cexp (log (f s) + log (f t)) := by
+      rw [Complex.exp_add, exp_log hs.1, exp_log ht.1]
+    have a1 := abs_lt.mp hs.2
+    have a2 := abs_lt.mp ht.2
+    rw [hmul, e, log_exp]
+    · simp only [add_im, log_im]; linarith [Real.pi_pos]
+    · simp only [add_im, log_im]; linarith [Real.pi_pos]
+  have hk : ∀ n : ℕ, 0 < n → ∀ k : ℕ, k ≤ n →
+      log (f (k * (δ / n))) = k * log (f (δ / n)) := by
+    intro n hn k
+    induction k with
+    | zero => intro _; simp [h0]
+    | succ k ih =>
+      intro hkn
+      have hn' : (n : ℝ≥0) ≠ 0 := by exact_mod_cast hn.ne'
+      have hle : (k : ℝ≥0) * (δ / n) + δ / n ≤ δ := by
+        have : ((k + 1 : ℕ) : ℝ≥0) ≤ n := by exact_mod_cast hkn
+        calc (k : ℝ≥0) * (δ / n) + δ / n = ((k + 1 : ℕ) : ℝ≥0) * (δ / n) := by push_cast; ring
+          _ ≤ n * (δ / n) := by gcongr
+          _ = δ := mul_div_cancel₀ δ hn'
+      rw [show ((k + 1 : ℕ) : ℝ≥0) * (δ / n) = k * (δ / n) + δ / n by push_cast; ring,
+        hlogadd _ _ hle, ih (by omega)]
+      push_cast; ring
+  set c : ℂ := log (f δ) / (δ : ℂ) with hc_def
+  have hδc : (δ : ℂ) ≠ 0 := by exact_mod_cast hδpos.ne'
+  have hd : ∀ n : ℕ, 0 < n → f (δ / n) = cexp (((δ / n : ℝ≥0) : ℂ) * c) := by
+    intro n hn
+    have hn' : (n : ℝ≥0) ≠ 0 := by exact_mod_cast hn.ne'
+    have hnc : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+    have h1 := hk n hn n le_rfl
+    rw [mul_div_cancel₀ δ hn'] at h1
+    have hne := (hsmall (δ / n) (div_le_self (by positivity) (by exact_mod_cast hn))).1
+    rw [← exp_log hne]
+    congr 1
+    rw [hc_def, h1]
+    push_cast
+    field_simp
+  have hgrid : ∀ n : ℕ, 0 < n → ∀ k : ℕ,
+      f (k * (δ / n)) = cexp (((k * (δ / n) : ℝ≥0) : ℂ) * c) := by
+    intro n hn k
+    induction k with
+    | zero => simp [h0]
+    | succ k ih =>
+      rw [show ((k + 1 : ℕ) : ℝ≥0) * (δ / n) = k * (δ / n) + δ / n by push_cast; ring,
+        hmul, ih, hd n hn, ← Complex.exp_add]
+      congr 1; push_cast; ring
+  set g : ℝ≥0 → ℂ := fun s => f s * cexp (-((s : ℂ) * c)) with hg_def
+  have hg : ∀ s t, g (s + t) = g s * g t := by
+    intro s t
+    simp only [hg_def, hmul]
+    push_cast
+    rw [show -(((s : ℂ) + t) * c) = -(s * c) + -(t * c) by ring, Complex.exp_add]
+    ring
+  have hg0 : g 0 = 1 := by simp [hg_def, h0]
+  have hgc : Tendsto g (𝓝[>] 0) (𝓝 1) := by
+    have hcont : Continuous (fun s : ℝ≥0 => cexp (-((s : ℂ) * c))) := by fun_prop
+    have := (hcont.tendsto 0).mono_left (nhdsWithin_le_nhds (s := Set.Ioi 0))
+    simpa using hc.mul this
+  have hggrid : ∀ n : ℕ, 0 < n → ∀ k : ℕ, g (k * (δ / n)) = 1 := by
+    intro n hn k
+    simp only [hg_def, hgrid n hn k, ← Complex.exp_add, add_neg_cancel, Complex.exp_zero]
+  refine ⟨c, fun t => ?_⟩
+  have hgt : g t = 1 := by
+    apply eq_of_forall_dist_le
+    intro ε hε
+    obtain ⟨η', hη'pos, hη'⟩ := levy_small_of_tendsto g hg0 hgc ε hε
+    obtain ⟨n, hn⟩ := exists_nat_gt (δ / η')
+    have hnpos : 0 < n := by
+      have : (0 : ℝ≥0) < n := lt_of_le_of_lt (by positivity) hn
+      exact_mod_cast this
+    have hn' : (n : ℝ≥0) ≠ 0 := by exact_mod_cast hnpos.ne'
+    set d : ℝ≥0 := δ / n with hd_def
+    have hdpos : 0 < d := by positivity
+    have hdη : d < η' := by
+      rw [hd_def, div_lt_iff₀ (by positivity)]
+      rw [div_lt_iff₀ hη'pos] at hn
+      calc δ < n * η' := hn
+        _ = η' * n := mul_comm _ _
+    set k := ⌊t / d⌋₊ with hk_def
+    have hq : (k : ℝ≥0) * d ≤ t := by
+      calc (k : ℝ≥0) * d ≤ t / d * d := by gcongr; exact Nat.floor_le (by positivity)
+        _ = t := div_mul_cancel₀ t hdpos.ne'
+    have hq2 : t < (k : ℝ≥0) * d + d := by
+      have := Nat.lt_floor_add_one (t / d)
+      rw [div_lt_iff₀ hdpos] at this
+      calc t < (k + 1) * d := this
+        _ = k * d + d := by ring
+    have hr : t - k * d < d := (tsub_lt_iff_left hq).mpr hq2
+    have ht : t = k * d + (t - k * d) := (add_tsub_cancel_of_le hq).symm
+    rw [ht, hg, hggrid n hnpos k, one_mul, dist_eq_norm]
+    exact (hη' _ (hr.trans hdη)).le
+  have : f t * cexp (-((t : ℂ) * c)) = 1 := hgt
+  calc f t = f t * cexp (-((t : ℂ) * c)) * cexp ((t : ℂ) * c) := by
+        rw [mul_assoc, ← Complex.exp_add, neg_add_cancel, Complex.exp_zero, mul_one]
+    _ = cexp ((t : ℂ) * c) := by rw [this, one_mul]
+
+#print axioms levy_small_of_tendsto
+#print axioms levy_arg_small
+#print axioms levy_cauchy_exp
+
+/-- The characteristic function of a Levy process is an exponential in time. Let X be a
+real-valued process indexed by times t ≥ 0 on a probability space with the four Levy
+properties: it starts at zero; its increments over windows that do not overlap are
+independent; the law of an increment X (t + h) - X t depends on the length h only, not on the
+start t; and it is continuous in probability (for every size ε > 0 the chance that
+|X (t + h) - X t| > ε goes to 0 as h goes to 0). Then there is one function ψ, the Levy
+exponent, with E[exp(i u X t)] = exp(t ψ(u)) for every dial u and every time t. -/
+theorem levy_char_fun_exponential_in_time {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P] (X : ℝ≥0 → Ω → ℝ)
+    (h_start : ∀ᵐ ω ∂P, X 0 ω = 0)
+    (h_indep : ∀ (n : ℕ) (τ : Fin (n + 1) → ℝ≥0), Monotone τ →
+      iIndepFun (fun (k : Fin n) (ω : Ω) => X (τ k.succ) ω - X (τ k.castSucc) ω) P)
+    (h_stat : ∀ s t h : ℝ≥0,
+      IdentDistrib (fun ω => X (s + h) ω - X s ω) (fun ω => X (t + h) ω - X t ω) P P)
+    (h_cont : ∀ (t : ℝ≥0) (ε : ℝ), 0 < ε →
+      Tendsto (fun h : ℝ≥0 => P {ω | ε < |X (t + h) ω - X t ω|}) (𝓝[>] 0) (𝓝 0)) :
+    ∃ ψ : ℝ → ℂ, ∀ (u : ℝ) (t : ℝ≥0),
+      ∫ ω, cexp (I * u * X t ω) ∂P = cexp ((t : ℂ) * ψ u) := by
+  have hXae : ∀ t, X t =ᵐ[P] fun ω => X t ω - X 0 ω := fun t => by
+    filter_upwards [h_start] with ω hω
+    simp [hω]
+  have hXm : ∀ t, AEMeasurable (X t) P := fun t => by
+    have := (h_stat 0 0 t).aemeasurable_fst
+    simp only [zero_add] at this
+    exact this.congr (hXae t).symm
+  have key : ∀ u : ℝ, ∃ c : ℂ, ∀ t : ℝ≥0,
+      ∫ ω, cexp (I * u * X t ω) ∂P = cexp ((t : ℂ) * c) := by
+    intro u
+    have hec : Continuous (fun x : ℝ => cexp (I * u * x)) := by fun_prop
+    apply levy_cauchy_exp (fun t => ∫ ω, cexp (I * u * X t ω) ∂P)
+    · rw [integral_congr_ae (g := fun _ => (1 : ℂ))]
+      · simp
+      · filter_upwards [h_start] with ω hω
+        simp [hω]
+    · intro s t
+      have hmono : Monotone (![0, s, s + t] : Fin 3 → ℝ≥0) := by
+        rw [Fin.monotone_iff_le_succ]
+        intro i
+        fin_cases i <;> simp
+      have hind : IndepFun (fun ω => X s ω - X 0 ω) (fun ω => X (s + t) ω - X s ω) P := by
+        have := (h_indep 2 _ hmono).indepFun (show (0 : Fin 2) ≠ 1 by decide)
+        simpa using this
+      have hBm : AEMeasurable (fun ω => X s ω - X 0 ω) P := (hXm s).sub (hXm 0)
+      have hAm : AEMeasurable (fun ω => X (s + t) ω - X s ω) P := (hXm (s + t)).sub (hXm s)
+      have h1 : ∫ ω, cexp (I * u * X (s + t) ω) ∂P
+          = ∫ ω, cexp (I * u * ↑(X s ω - X 0 ω)) * cexp (I * u * ↑(X (s + t) ω - X s ω)) ∂P := by
+        apply integral_congr_ae
+        filter_upwards [h_start] with ω hω
+        simp only [hω]
+        rw [← Complex.exp_add]
+        congr 1
+        push_cast
+        ring
+      rw [h1, hind.integral_fun_comp_mul_comp (f := fun x : ℝ => cexp (I * u * x))
+        (g := fun x : ℝ => cexp (I * u * x)) hBm hAm hec.aestronglyMeasurable
+        hec.aestronglyMeasurable]
+      congr 1
+      · apply integral_congr_ae
+        filter_upwards [h_start] with ω hω
+        simp [hω]
+      · have hid := ((h_stat s 0 t).comp hec.measurable).integral_eq
+        simp only [Function.comp_def, zero_add] at hid
+        rw [hid]
+        apply integral_congr_ae
+        filter_upwards [h_start] with ω hω
+        simp [hω]
+    · rw [Metric.tendsto_nhds]
+      intro ε hε
+      set κ : ℝ := ε / (4 * (|u| + 1)) with hκ
+      have hu1 : 0 < |u| + 1 := by positivity
+      have hκpos : 0 < κ := by positivity
+      have hκu : |u| * κ ≤ ε / 4 := by
+        have : (|u| + 1) * κ = ε / 4 := by rw [hκ]; field_simp
+        nlinarith [abs_nonneg u]
+      have hpr := h_cont 0 κ hκpos
+      simp only [zero_add] at hpr
+      have hpr' := (ENNReal.tendsto_toReal ENNReal.zero_ne_top).comp hpr
+      simp only [ENNReal.toReal_zero] at hpr'
+      filter_upwards [hpr'.eventually (gt_mem_nhds (show (0 : ℝ) < ε / 4 by positivity))]
+        with h hh
+      simp only [Function.comp_apply] at hh
+      set S := {ω | κ < |X h ω - X 0 ω|} with hS
+      set T := toMeasurable P S with hT
+      have hTm : MeasurableSet T := measurableSet_toMeasurable P S
+      have hPT : (P T).toReal = (P S).toReal := by rw [hT, measure_toMeasurable]
+      have hint : Integrable (fun ω => cexp (I * u * X h ω)) P := by
+        refine Integrable.of_bound (hec.measurable.comp_aemeasurable (hXm h)).aestronglyMeasurable
+          1 (ae_of_all _ fun ω => ?_)
+        rw [show I * (u : ℂ) * (X h ω : ℂ) = I * ((u * X h ω : ℝ) : ℂ) by push_cast; ring,
+          norm_exp_I_mul_ofReal]
+      have hsub : (∫ ω, cexp (I * u * X h ω) ∂P) - 1
+          = ∫ ω, (cexp (I * u * X h ω) - 1) ∂P := by
+        rw [integral_sub hint (integrable_const 1)]
+        simp
+      have hbint : Integrable (fun ω => |u| * κ + T.indicator (fun _ => (2 : ℝ)) ω) P :=
+        (integrable_const _).add ((integrable_const _).indicator hTm)
+      have hbound : ‖∫ ω, (cexp (I * u * X h ω) - 1) ∂P‖
+          ≤ ∫ ω, (|u| * κ + T.indicator (fun _ => (2 : ℝ)) ω) ∂P := by
+        apply norm_integral_le_of_norm_le hbint
+        filter_upwards [h_start] with ω hω
+        have hind0 : 0 ≤ T.indicator (fun _ => (2 : ℝ)) ω :=
+          Set.indicator_nonneg (fun _ _ => by norm_num) ω
+        rw [show I * (u : ℂ) * (X h ω : ℂ) = I * ((u * X h ω : ℝ) : ℂ) by push_cast; ring]
+        by_cases hω' : κ < |X h ω - X 0 ω|
+        · have hmem : ω ∈ T := subset_toMeasurable P S hω'
+          rw [Set.indicator_of_mem hmem]
+          calc ‖cexp (I * ((u * X h ω : ℝ) : ℂ)) - 1‖
+              ≤ ‖cexp (I * ((u * X h ω : ℝ) : ℂ))‖ + ‖(1 : ℂ)‖ := norm_sub_le _ _
+            _ = 2 := by rw [norm_exp_I_mul_ofReal]; norm_num
+            _ ≤ |u| * κ + 2 := by have := mul_nonneg (abs_nonneg u) hκpos.le; linarith
+        · push Not at hω'
+          rw [hω, sub_zero] at hω'
+          calc ‖cexp (I * ((u * X h ω : ℝ) : ℂ)) - 1‖ ≤ ‖u * X h ω‖ :=
+                Real.norm_exp_I_mul_ofReal_sub_one_le
+            _ = |u| * |X h ω| := by rw [Real.norm_eq_abs, abs_mul]
+            _ ≤ |u| * κ := by gcongr
+            _ ≤ |u| * κ + T.indicator (fun _ => (2 : ℝ)) ω := by linarith
+      have hval : ∫ ω, (|u| * κ + T.indicator (fun _ => (2 : ℝ)) ω) ∂P
+          = |u| * κ + 2 * (P S).toReal := by
+        rw [integral_add (integrable_const _) ((integrable_const _).indicator hTm),
+          integral_indicator_const _ hTm]
+        simp [measureReal_def, hPT, mul_comm]
+      rw [dist_eq_norm, hsub]
+      calc _ ≤ |u| * κ + 2 * (P S).toReal := hbound.trans hval.le
+        _ < ε := by linarith
+  choose ψ hψ using key
+  exact ⟨ψ, hψ⟩
+
+/-- The Poisson extreme. A Poisson count at rate λ has, at time t, the Poisson law with mean
+λ t, and its characteristic function is exp(t ψ(u)) with exponent ψ(u) = λ (e^{iu} - 1). -/
+theorem poisson_levy_exponent (lam t : ℝ≥0) (u : ℝ) :
+    charFun ((poissonMeasure (lam * t)).map (Nat.cast : ℕ → ℝ)) u
+      = cexp ((t : ℂ) * ((lam : ℂ) * (cexp (u * I) - 1))) := by
+  rw [charFun_map_cast_poissonMeasure]
+  congr 1
+  push_cast
+  ring
+
+/-- The Brownian extreme, with a steady drift. γ t + σ W t is normal with mean γ t and variance
+σ² t, and its characteristic function is exp(t ψ(u)) with exponent ψ(u) = i γ u - σ² u² / 2:
+the drift adds i γ u, the Brownian part adds -σ² u² / 2. -/
+theorem brownian_drift_levy_exponent (γ : ℝ) (σ t : ℝ≥0) (u : ℝ) :
+    charFun (gaussianReal (γ * t) (σ ^ 2 * t)) u
+      = cexp ((t : ℂ) * (I * γ * u - (σ : ℂ) ^ 2 * (u : ℂ) ^ 2 / 2)) := by
+  rw [charFun_gaussianReal]
+  congr 1
+  push_cast
+  ring
+
+-- The share, in exact fractions: γ = 1/4, σ = 1/5, rate 2, jumps of size -1/5 (chance 3/4)
+-- and +1/5 (chance 1/4).
+-- The Levy measure: 3/2 at -1/5 and 1/2 at +1/5.
+example : (2 : ℚ) * (3 / 4) = 3 / 2 ∧ (2 : ℚ) * (1 / 4) = 1 / 2 := by norm_num
+-- The triplet's drift b = γ + (small jumps' pull) = 1/4 - 1/5 = 1/20 (the card's 0.05).
+example : (1 / 4 : ℚ) + ((3 / 2) * (-1 / 5) + (1 / 2) * (1 / 5)) = 1 / 20 := by norm_num
+-- Variance of X_1: σ² + ∫ x² ν = 1/25 + 2/25 = 3/25 (the card's 0.12), two thirds from jumps.
+example : (1 / 5 : ℚ) ^ 2 + ((3 / 2) * (-1 / 5) ^ 2 + (1 / 2) * (1 / 5) ^ 2) = 3 / 25 := by
+  norm_num
+example : ((3 / 2 : ℚ) * (-1 / 5) ^ 2 + (1 / 2) * (1 / 5) ^ 2) / (3 / 25) = 2 / 3 := by norm_num
+-- Rate 3 then rate 1 for half a year each: the first half-year's mean is -1/40, the Levy
+-- half-year's mean is +1/40 (the card's -0.0250 against 0.0250); one jump averages -1/10.
+example : (3 / 4 : ℚ) * (-1 / 5) + (1 / 4) * (1 / 5) = -1 / 10 := by norm_num
+example : (1 / 4 : ℚ) * (1 / 2) + 3 * (1 / 2) * (-1 / 10) = -1 / 40 := by norm_num
+example : (1 / 4 : ℚ) * (1 / 2) + 2 * (1 / 2) * (-1 / 10) = 1 / 40 := by norm_num
+-- Same one-year law: 3 * 1/2 + 1 * 1/2 = 2 jumps a year on average.
+example : (3 : ℚ) * (1 / 2) + 1 * (1 / 2) = 2 := by norm_num
+-- Random slope with Var X_t = (3/25) t²: Var X_2 = 12/25 (0.48), not 2 * 3/25 = 6/25 (0.24).
+example : (3 / 25 : ℚ) * 2 ^ 2 = 12 / 25 ∧ (2 : ℚ) * (3 / 25) = 6 / 25 := by norm_num
+
+#print axioms levy_char_fun_exponential_in_time
+#print axioms poisson_levy_exponent
+#print axioms brownian_drift_levy_exponent
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'levy_small_of_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'levy_arg_small' depends on axioms: [propext, Classical.choice, Quot.sound]
+'levy_cauchy_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'levy_char_fun_exponential_in_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+'poisson_levy_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'brownian_drift_levy_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Make the jumps symmetric.** Guess first: what happens to $b$? Set both chances to 0.5. Then $\int x\,\nu(dx)$ is 0, $b$ equals $\gamma$, the imaginary jump term of $\psi$ vanishes, and the law of $X_1$ becomes symmetric about its mean.
@@ -664,11 +1017,13 @@ The two outputs agree line for line.
 - [Jump diffusions](02-jump-diffusions.md): a stochastic differential equation with a jump term.
 - Infinitely divisible laws: the complete proof that every infinitely divisible law has a Lévy–Khintchine exponent.
 
+A Lévy process moves the same way wherever it is, so this card leaves open how to model a price whose drift and jumps depend on its current level, as a spiking electricity price needs.
+
 ---
 
 ## Sources
 
-Verified 2026-10-06: every DOI below resolves, and its Crossref record names the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Applebaum, David. *Lévy Processes and Stochastic Calculus*, 2nd ed. Cambridge University Press, 2009. [doi:10.1017/CBO9780511809781](https://doi.org/10.1017/CBO9780511809781). Chapter 1: the definition, infinite divisibility and the Lévy–Khintchine formula, proved; chapter 2: the Lévy–Itô decomposition.
 - Kyprianou, Andreas E. *Fluctuations of Lévy Processes with Applications*, 2nd ed. Springer, 2014. [doi:10.1007/978-3-642-37632-0](https://doi.org/10.1007/978-3-642-37632-0). Chapter 2 builds a Lévy process from any triplet: the Lévy–Itô decomposition and the path structure it gives.

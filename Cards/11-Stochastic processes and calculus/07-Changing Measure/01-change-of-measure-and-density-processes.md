@@ -10,7 +10,9 @@ A coin lands heads 6 times in 10. A game is played on it for ten tosses: each he
 
 That can be done by reweighting. Take one run of ten tosses, say tail, four heads, tail, three heads, tail. The loaded coin gives that run a chance of 0.00179159. A fair coin gives every run the same chance, 1 in 1,024, which is 0.00097656. The fair chance over the loaded chance, 0.545081, is the run's **weight**. Average anything over loaded-coin runs, each counted with its own weight, and the answer is the fair-coin average. The game's weighted average is $0, not $2.
 
-The weight is built one toss at a time. A head multiplies it by 5/6, the fair chance 0.5 over the loaded chance 0.6. A tail multiplies it by 5/4, which is 0.5 over 0.4. The running product after each toss is the **density process**, the subject of this card. On average each factor is exactly 1, so the running product is a fair game under the loaded coin: a martingale. Wing 10 changed measure with one density on one sigma-algebra ([The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). Here the density becomes a process in time, and that brings in conditional averages, Bayes' rule and a failure over an infinite horizon.
+The weight is built one toss at a time. A head multiplies it by 5/6, the fair chance 0.5 over the loaded chance 0.6. A tail multiplies it by 5/4, which is 0.5 over 0.4. The running product after each toss is the **density process**, the subject of this card. On average each factor is exactly 1, so the running product is a fair game under the loaded coin: a martingale.
+
+Wing 10 changed measure with one density on one sigma-algebra, a fixed family of events that get chances ([Sigma-algebras](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/02-sigma-algebras.md); [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). Here the density becomes a process in time, and that brings in conditional averages, Bayes' rule and a failure over an infinite horizon.
 
 **A positive martingale with mean 1 reweights every path of a process into a second, equivalent probability, and every average under the new probability is the old average of the quantity times the density.**
 
@@ -28,13 +30,13 @@ xychart-beta
     line [0.0010, 0.0098, 0.0439, 0.1172, 0.2051, 0.2461, 0.2051, 0.1172, 0.0439, 0.0098, 0.0010]
 ```
 
-The line peaking at 6 heads is the loaded coin. The symmetric line peaking at 5 is the fair coin. Both are computed exactly by the code. The runs are the same 1,024 sequences in both; only the chance placed on each one differs. A run with k heads has weight (5/6)^k (5/4)^(10 − k): 9.3132 for no heads, 0.8176 for six, 0.1615 for ten. Weights above 1 lift the runs the loaded coin under-rates; weights below 1 shrink the ones it over-rates.
+The line peaking at 6 heads is the loaded coin. The symmetric line peaking at 5 is the fair coin. Both are computed exactly by the code. A run with k heads has weight (5/6)^k (5/4)^(10 − k): 9.3132 for no heads, 0.8176 for six, 0.1615 for ten. Weights above 1 lift the runs the loaded coin under-rates; weights below 1 shrink the ones it over-rates.
 
 ---
 
 ## The formula
 
-Notation first. The loaded coin's probability, the chance it puts on every run, is $P$, as in wing 09. A second probability on the same runs is written $Q$, read "the measure Q"; here it is the fair coin. An average taken with $Q$'s chances is written $E^Q$, read "the average under Q"; $E^P$ is the average under the loaded coin. The filtration $\mathcal{F}_n$ is what is known after $n$ tosses: the first $n$ results ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $H_n$ counts heads in the first $n$ tosses and $S_n = 2H_n - n$ is the money won so far.
+Notation first. $P$ is the loaded coin's probability and $Q$, read "the measure Q", is the fair coin's, on the same runs. $E^Q$, read "the average under Q", averages with $Q$'s chances; $E^P$ with $P$'s. The filtration $\mathcal{F}_n$ is what is known after $n$ tosses: the first $n$ results ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $H_n$ counts heads in the first $n$ tosses and $S_n = 2H_n - n$ is the money won so far.
 
 The density process, after $n$ tosses:
 
@@ -66,7 +68,7 @@ $$E^Q[X \mid \mathcal{F}_n] = \frac{E^P[X Z_N \mid \mathcal{F}_n]}{Z_n}.$$
 | $S_n$, $S_{10}$ | winnings in dollars after $n$ tosses, $2H_n - n$ | 4 after the traced run | — |
 | $Z_n$, $Z_N$, $Z_4$ | the density process: the running weight; at the horizon; after four tosses | 0.545081 after the traced run | — |
 | $X$, $Y_n$, $V$, $A$, $\mathbf{1}_A$ | a quantity fixed by the ten tosses; a process known at each toss; a forecast built in the proof; an event; its indicator, 1 when $A$ happens and 0 otherwise | winnings; 7 or more heads | — |
-| $h$, $\mu$, $\theta$ | Step 6 only: rounds between tosses; the coin's lean per round; the fixed number in the exponential martingale $\exp(\theta W_t - \tfrac12\theta^2 t)$ | $h$ from 1 down to 1/1024; $\mu$ = 0.2; $\theta = -\mu$ = −0.2 | smaller $h$: closer to Brownian motion |
+| $h$, $\mu$, $\theta$ | Step 6 only: rounds between tosses; the coin's lean per round; the fixed number $\theta$ of the exponential martingale | $h$ from 1 down to 1/1024; $\mu$ = 0.2; $\theta = -\mu$ = −0.2 | smaller $h$: closer to Brownian motion |
 | $W_t$, $t$, $T$, $x$ | Step 6 only: Brownian motion; time in rounds; the horizon in rounds of the continuous-time statement; the winnings after time $t$ | $t$ = 10 rounds, $x$ = 2 | — |
 
 The heads factor is $q/p = 5/6$ and the tails factor is $(1-q)/(1-p) = 5/4$. Under $P$ they average $0.6 \times 5/6 + 0.4 \times 5/4 = 0.5 + 0.5 = 1$, and that one line is why everything else works.
@@ -82,7 +84,7 @@ The heads factor is $q/p = 5/6$ and the tails factor is $(1-q)/(1-p) = 5/4$. Und
 
 ## Why it works
 
-Every step below is a finite sum over 1,024 runs. The folded proof at the end does the same steps for any probability space, using wing 10's tools by name.
+Every step below is a finite sum over 1,024 runs. The folded proof after Step 5 does the same steps for any probability space, using wing 10's tools by name.
 
 ### Step 0: reweight the runs, do not edit them
 
@@ -106,7 +108,7 @@ After four tosses the last six are still unknown. Average the final weight over 
 
 $$E^P[Z_N \mid \mathcal{F}_n] = Z_n.$$
 
-The code checks this exactly, in fractions, after every one of the 2,047 possible beginnings of zero to ten tosses. Two consequences follow. First, $Z_n$ is a martingale under $P$ ([Martingales](../02-Martingales/01-martingales.md)), by the tower property: $E^P[Z_{n+1} \mid \mathcal{F}_n] = E^P[E^P[Z_N \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = Z_n$. Second, $Z_n$ is itself the Radon-Nikodym derivative of $Q$ against $P$ on events decided by the first $n$ tosses. For such an event $A$, $Q(A) = E^P[Z_N \mathbf{1}_A] = E^P[E^P[Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[Z_n \mathbf{1}_A]$.
+The code checks this exactly, in fractions, after every one of the 2,047 possible beginnings of zero to ten tosses. Two consequences follow. First, $Z_n$ is a martingale under $P$ ([Martingales](../02-Martingales/01-martingales.md)), by the tower property, which says that averaging in two stages equals averaging once ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)): $E^P[Z_{n+1} \mid \mathcal{F}_n] = E^P[E^P[Z_N \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = Z_n$. Second, $Z_n$ is itself the Radon-Nikodym derivative of $Q$ against $P$ on events decided by the first $n$ tosses. For such an event $A$, $Q(A) = E^P[Z_N \mathbf{1}_A] = E^P[E^P[Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[Z_n \mathbf{1}_A]$.
 
 The converse is the definition this shelf runs on. Start from any positive $P$-martingale $Z_n$ with $Z_0 = 1$. Define $Q_N(A) = E^P[Z_N \mathbf{1}_A]$ for each horizon $N$. The martingale property makes these agree: an event decided by toss 4 gets the same chance whichever later horizon builds the measure. **A density process is a positive martingale with mean 1, and it defines one measure that is consistent across every finite horizon.**
 
@@ -120,7 +122,7 @@ After four heads, $Z_4 = (5/6)^4 = 0.482253$. The code averages winnings times w
 
 ### Step 5: a fair game under Q is a P-martingale after multiplying by Z
 
-Take any process $Y_n$ decided by the first $n$ tosses. By Step 4 with $X = Y_{n+1}$, and Step 3 to put $Z_{n+1}$ in place of $Z_N$, the forecast $E^Q[Y_{n+1} \mid \mathcal{F}_n]$ equals $E^P[Y_{n+1} Z_{n+1} \mid \mathcal{F}_n] / Z_n$. So $Y_n$ is a martingale under $Q$ exactly when $Y_n Z_n$ is a martingale under $P$. The winnings $S_n$ are fair under the fair coin, so $S_n Z_n$ must be a fair game under the loaded coin. The code confirms it exactly on all 2,047 beginnings. Meanwhile $S_n$ alone is not fair under $P$: after four heads its forecast for toss 10 exceeds today's 4 dollars by 1.200000, six tosses times the loaded coin's average win of $0.2 per toss.
+Take any process $Y_n$ decided by the first $n$ tosses. By Step 4 with $X = Y_{n+1}$, and Step 3 to put $Z_{n+1}$ in place of $Z_N$, the forecast $E^Q[Y_{n+1} \mid \mathcal{F}_n]$ equals $E^P[Y_{n+1} Z_{n+1} \mid \mathcal{F}_n] / Z_n$. So $Y_n$ is a martingale under $Q$ exactly when $Y_n Z_n$ is a martingale under $P$. The winnings $S_n$ are fair under the fair coin, so $S_n Z_n$ must be a fair game under the loaded coin. Meanwhile $S_n$ alone is not fair under $P$: after four heads its forecast for toss 10 exceeds today's 4 dollars by 1.200000, six tosses times the loaded coin's average win of $0.2 per toss.
 
 <details>
 <summary>Detailed proof: the five facts on any probability space</summary>
@@ -131,13 +133,13 @@ Let $(\Omega, \mathcal{F}, P)$ be a probability space with a filtration $\mathca
 
 **$E^Q[X] = E^P[X Z_N]$ for every $X \ge 0$, and for every $X$ with $E^Q|X|$ finite.** For an indicator this is the definition. Both sides are linear, so it holds for simple functions. A nonnegative $X$ is the increasing limit of simple functions; apply monotone convergence on both sides. A general $X$ is its positive part minus its negative part.
 
-**$Z_n = E^P[Z_N \mid \mathcal{F}_n]$ is the density of $Q$ on $\mathcal{F}_n$, and a martingale.** For $A$ in $\mathcal{F}_n$, the defining property of conditional expectation gives $E^P[Z_n \mathbf{1}_A] = E^P[Z_N \mathbf{1}_A] = Q(A)$. By uniqueness of the Radon-Nikodym derivative, $Z_n$ is $dQ/dP$ on $\mathcal{F}_n$. The tower property gives $E^P[Z_{n+1} \mid \mathcal{F}_n] = Z_n$. Positivity of $Z_N$ makes $Z_n$ positive almost surely.
+**$Z_n = E^P[Z_N \mid \mathcal{F}_n]$ is the density of $Q$ on $\mathcal{F}_n$, and a martingale.** Step 3's two lines use only the defining property of conditional expectation and the tower property, so they hold here. By uniqueness of the Radon-Nikodym derivative, $Z_n$ is $dQ/dP$ on $\mathcal{F}_n$. Positivity of $Z_N$ makes $Z_n$ positive almost surely.
 
 **Bayes' rule.** Let $X$ be integrable under $Q$, and let $A$ be in $\mathcal{F}_n$. Put $V = E^P[X Z_N \mid \mathcal{F}_n] / Z_n$, which is $\mathcal{F}_n$-measurable. Then $E^Q[V \mathbf{1}_A] = E^P[V Z_n \mathbf{1}_A]$, by the density on $\mathcal{F}_n$, which equals $E^P[E^P[X Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[X Z_N \mathbf{1}_A] = E^Q[X \mathbf{1}_A]$. So $V$ has the defining property of $E^Q[X \mid \mathcal{F}_n]$, and by uniqueness they are equal almost surely.
 
-**Martingales.** For an adapted $Y_n$ with $Y_{n+1}$ integrable under $Q$, Bayes' rule with the density $Z_{n+1}$ on $\mathcal{F}_{n+1}$ gives $E^Q[Y_{n+1} \mid \mathcal{F}_n] = E^P[Y_{n+1} Z_{n+1} \mid \mathcal{F}_n] / Z_n$. This equals $Y_n$ exactly when $E^P[Y_{n+1} Z_{n+1} \mid \mathcal{F}_n] = Y_n Z_n$.
+**Martingales.** Step 5's argument holds as written for an adapted $Y_n$ with $Y_{n+1}$ integrable under $Q$, using Bayes' rule with the density $Z_{n+1}$ on $\mathcal{F}_{n+1}$.
 
-**The converse.** If $Z$ is a positive $P$-martingale with $Z_0 = 1$, then $E^P[Z_N] = 1$ for each $N$ and the measures $Q_N$ agree on $\mathcal{F}_M$ for $M \le N$, since $E^P[Z_N \mathbf{1}_A] = E^P[Z_M \mathbf{1}_A]$ for $A$ in $\mathcal{F}_M$. Whether one measure exists on all of $\mathcal{F}_\infty$ with these restrictions and a density is a separate question, settled for this coin in What breaks.
+**The converse.** For Step 3's positive martingale $Z$, $E^P[Z_N] = 1$ for each $N$ and the measures $Q_N$ agree on $\mathcal{F}_M$ for $M \le N$, since $E^P[Z_N \mathbf{1}_A] = E^P[Z_M \mathbf{1}_A]$ for $A$ in $\mathcal{F}_M$. Whether one measure exists on all of $\mathcal{F}_\infty$ with these restrictions and a density is a separate question, settled for this coin in What breaks.
 
 </details>
 
@@ -151,7 +153,7 @@ $$Z_t = \exp\big(-\mu x + \tfrac12\mu^2 t\big) = \exp\big(-\mu W_t - \tfrac12\mu
 
 That is the exponential martingale of [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md), which writes it $\exp(\theta W_t - \tfrac12\theta^2 t)$ for a fixed number $\theta$; here $\theta = -\mu$. The code compares the coin's exact density with this limit at $x = 2$ and $t = 10$ rounds for six step sizes. The error falls from 0.0011087 at $h = 1$ to 0.0000011 at $h = 1/1024$, about four-fold each time $h$ is quartered.
 
-This card proves the change of measure for the coins and shows the limit numerically. It does not prove the continuous-time statement. That statement, with $W_t$ a $P$-Brownian motion and $Z_T = \exp(-\mu W_T - \tfrac12\mu^2 T)$ defining $Q$ at a horizon of $T$ rounds, is that $W_t + \mu t$ is a $Q$-Brownian motion on $[0, T]$. It is Girsanov's theorem, proved in [Girsanov](02-girsanov-theorem.md) and in Karatzas and Shreve, section 3.5. No Ito calculus was used here: the step above is ordinary Taylor expansion of a logarithm, toss by toss.
+This card shows the limit only numerically. The continuous-time statement, with $W_t$ a $P$-Brownian motion and $Z_T = \exp(-\mu W_T - \tfrac12\mu^2 T)$ defining $Q$ at a horizon of $T$ rounds, is that $W_t + \mu t$ is a $Q$-Brownian motion on $[0, T]$. It is Girsanov's theorem, proved in [Girsanov](02-girsanov-theorem.md) and in Karatzas and Shreve, section 3.5.
 
 ---
 
@@ -218,7 +220,7 @@ xychart-beta
     line [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ```
 
-The falling line is one sample run, a single draw, plotted to two decimals from the code's `figure,` line. The flat line at 1 is the average of $Z_n$ over all runs, exactly 1 at every toss, computed by enumeration on the code's `figure, E^P[Z_n]` line. Heads come more often than the fair coin expects, and each head shrinks the weight.
+The falling line is one sample run, plotted to two decimals from the code's `figure,` line. The flat line is the average of $Z_n$ over all runs, computed by enumeration on the code's `figure, E^P[Z_n]` line. Heads come more often than the fair coin expects, and each head shrinks the weight.
 
 The mean stays at 1 because rare runs carry huge weights: a run of ten tails has weight 9.3132. Per toss, the logarithm of the weight changes by $\ln(5/6)$ or $\ln(5/4)$, and under $P$ that averages $0.6 \ln(5/6) + 0.4 \ln(5/4) = -0.020136$ per toss. By the law of large numbers the logarithm drifts down without limit, and the weight goes to 0 along almost every loaded run. The chart below shows the chance that the weight has fallen to 0.01 or less, computed exactly from the binomial law.
 
@@ -232,7 +234,9 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
 ```
 
-Both lines are plotted to two decimals from the code's `figure,` lines. The rising line is the loaded coin's chance; by 500 tosses it is 0.8908. The line along zero is the fair coin's chance of the same event, at most 0.0014 at any plotted point and never above 0.01 times the loaded chance, since $Q(A) = E^P[Z_n \mathbf{1}_A] \le 0.01\, P(A)$ when $Z_n \le 0.01$ on $A$. The weight is a martingale with mean 1 at every finite time, but its limit is 0. Over infinitely many tosses the loaded coin is sure the heads frequency tends to 0.6; the fair coin is sure it tends to 0.5. Each measure gives probability 1 to an event the other gives probability 0: they are **singular**, the opposite of equivalent. This is Kakutani's theorem for infinite products of coins. The density process exists on every finite horizon and fails only at the end of time.
+Both lines are plotted to two decimals from the code's `figure,` lines. The rising line is the loaded coin's chance; by 500 tosses it is 0.8908. The line along zero is the fair coin's chance of the same event, at most 0.0014 at any plotted point and never above 0.01 times the loaded chance, since $Q(A) = E^P[Z_n \mathbf{1}_A] \le 0.01\, P(A)$ when $Z_n \le 0.01$ on $A$.
+
+Over infinitely many tosses the loaded coin is sure the heads frequency tends to 0.6; the fair coin is sure it tends to 0.5. Each measure gives probability 1 to an event the other gives probability 0: they are **singular**, the opposite of equivalent. This is Kakutani's theorem for infinite products of coins. The density process exists on every finite horizon and fails only at the end of time.
 
 ---
 
@@ -661,7 +665,258 @@ figure, Q(<=.01) 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line. The simulated weighted winnings, −0.0059 with standard error 0.0102, sit within one standard error of the exact 0; the simulated fair chance of 7 or more heads, 0.1713 with standard error 0.0005, sits about one standard error from the exact 0.171875.
+The simulated weighted winnings, −0.0059 with standard error 0.0102, sit within one standard error of the exact 0; the simulated fair chance of 7 or more heads, 0.1713 with standard error 0.0005, sits about one standard error from the exact 0.171875.
+
+### Lean
+
+Lean proves the general theorems for any positive martingale with mean 1, and checks the coin's numbers exactly.
+
+- Suppose $Z_n$ is a positive $P$-martingale with mean 1, and $Q(A) = E^P[Z_N \mathbf{1}_A]$. Then $Q$ is a probability equivalent to $P$, and $E^Q[X] = E^P[X Z_N]$.
+- Take an event $A$ decided by the first $M$ tosses, with $M \le N$. Then $Q(A) = E^P[Z_M \mathbf{1}_A]$, so every horizon builds the same measure on it.
+- Take $n \le N$ and any $X$ with a finite average under $Q$. Then $E^Q[X \mid \mathcal{F}_n]$ is $E^P[X Z_N \mid \mathcal{F}_n]$ divided by $Z_n$: Bayes' rule.
+- Take a process $Y_n$ known at each toss, with finite averages under $Q$ up to $N$. Then, up to $N$, $Y_n$ is a martingale under $Q$ exactly when $Y_n Z_n$ is one under $P$.
+- The coin's numbers are exact: each factor averages 1, and the traced run's chance times its weight is 1/1024.
+- So is $E^P[Z_{10}] = 1$, and the winnings average 2 without the weights and 0 with them.
+- So are 176/1024 for seven or more heads, $(26/25)^{10}$ for the upside-down ratio, and Bayes' answer of 4 after four heads.
+
+The Brownian limit in Step 6, the infinite-horizon failure and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Changing the measure: a positive martingale with mean 1 reweights a probability into an equivalent one whose averages are the old averages times the density, with Bayes' rule for conditional averages and the martingale transfer rule.
+import Mathlib.Probability.Martingale.Basic
+import Mathlib.MeasureTheory.Measure.WithDensity
+import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory
+
+lemma com_integral_withDensity {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω)
+    {f : Ω → ℝ} (hf : Measurable f) (hpos : ∀ᵐ ω ∂P, 0 < f ω) (X : Ω → ℝ) :
+    ∫ ω, X ω ∂(P.withDensity fun ω => ENNReal.ofReal (f ω)) = ∫ ω, X ω * f ω ∂P := by
+  have h := integral_withDensity_eq_integral_smul (μ := P) hf.real_toNNReal X
+  rw [show (fun ω => ENNReal.ofReal (f ω)) = fun ω => ((f ω).toNNReal : ENNReal) from rfl, h]
+  apply integral_congr_ae
+  filter_upwards [hpos] with ω h
+  simp [NNReal.smul_def, Real.coe_toNNReal _ h.le, mul_comm]
+
+lemma com_integrable_withDensity_iff {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω)
+    {f : Ω → ℝ} (hf : Measurable f) (hpos : ∀ᵐ ω ∂P, 0 < f ω) (X : Ω → ℝ) :
+    Integrable X (P.withDensity fun ω => ENNReal.ofReal (f ω)) ↔
+      Integrable (fun ω => X ω * f ω) P := by
+  rw [show (fun ω => ENNReal.ofReal (f ω)) = fun ω => ((f ω).toNNReal : ENNReal) from rfl,
+    integrable_withDensity_iff_integrable_smul hf.real_toNNReal]
+  apply integrable_congr
+  filter_upwards [hpos] with ω h
+  simp [NNReal.smul_def, Real.coe_toNNReal _ h.le, mul_comm]
+
+lemma com_trim_eq {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω) [IsProbabilityMeasure P]
+    (ℱ : Filtration ℕ m0) (Z : ℕ → Ω → ℝ) (hZ : Martingale Z ℱ P)
+    (hpos : ∀ n, ∀ᵐ ω ∂P, 0 < Z n ω) {k N : ℕ} (hkN : k ≤ N) :
+    (P.withDensity fun ω => ENNReal.ofReal (Z N ω)).trim (ℱ.le k) =
+      (P.withDensity fun ω => ENNReal.ofReal (Z k ω)).trim (ℱ.le k) := by
+  refine @Measure.ext _ (ℱ k) _ _ fun s hs => ?_
+  rw [trim_measurableSet_eq _ hs, trim_measurableSet_eq _ hs,
+    withDensity_apply _ (ℱ.le k s hs), withDensity_apply _ (ℱ.le k s hs),
+    ← ofReal_integral_eq_lintegral_ofReal (hZ.integrable N).integrableOn
+      (ae_restrict_of_ae ((hpos N).mono fun ω h => h.le)),
+    ← ofReal_integral_eq_lintegral_ofReal (hZ.integrable k).integrableOn
+      (ae_restrict_of_ae ((hpos k).mono fun ω h => h.le)),
+    hZ.setIntegral_eq hkN hs]
+
+lemma com_Z_measurable {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω)
+    (ℱ : Filtration ℕ m0) (Z : ℕ → Ω → ℝ) (hZ : Martingale Z ℱ P) (k : ℕ) :
+    Measurable (Z k) :=
+  ((hZ.1 k).mono (ℱ.le k)).measurable
+
+lemma com_transfer {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω) [IsProbabilityMeasure P]
+    (ℱ : Filtration ℕ m0) (Z : ℕ → Ω → ℝ) (hZ : Martingale Z ℱ P)
+    (hpos : ∀ n, ∀ᵐ ω ∂P, 0 < Z n ω) {k N : ℕ} (hkN : k ≤ N) {f : Ω → ℝ}
+    (hf : StronglyMeasurable[ℱ k] f) :
+    (Integrable f (P.withDensity fun ω => ENNReal.ofReal (Z N ω)) ↔
+      Integrable (fun ω => f ω * Z k ω) P) ∧
+    ∫ ω, f ω ∂(P.withDensity fun ω => ENNReal.ofReal (Z N ω)) = ∫ ω, f ω * Z k ω ∂P := by
+  have htrim := com_trim_eq P ℱ Z hZ hpos hkN
+  refine ⟨?_, ?_⟩
+  · rw [← com_integrable_withDensity_iff P (com_Z_measurable P ℱ Z hZ k) (hpos k)]
+    constructor
+    · intro h
+      exact integrable_of_integrable_trim (ℱ.le k) (htrim ▸ h.trim (ℱ.le k) hf)
+    · intro h
+      exact integrable_of_integrable_trim (ℱ.le k) (htrim.symm ▸ h.trim (ℱ.le k) hf)
+  · rw [integral_trim (ℱ.le k) hf, htrim, ← integral_trim (ℱ.le k) hf,
+      com_integral_withDensity P (com_Z_measurable P ℱ Z hZ k) (hpos k)]
+
+#print axioms com_integral_withDensity
+#print axioms com_integrable_withDensity_iff
+#print axioms com_trim_eq
+#print axioms com_Z_measurable
+#print axioms com_transfer
+
+/-- Changing the measure with a density process. Let Z be a martingale under the probability P,
+positive almost surely at every time, with mean 1. Fix a finite horizon N and define the new
+measure Q by Q(A) = E^P[Z_N; A]. Then Q is a probability, Q and P are equivalent (each one's
+null sets are the other's), every average under Q is the P-average of the quantity times Z_N,
+and on events decided by time M ≤ N the density of Q against P is Z_M, so the measures built
+from different horizons agree. -/
+theorem change_of_measure_by_positive_martingale
+    {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω) [IsProbabilityMeasure P]
+    (ℱ : Filtration ℕ m0) (Z : ℕ → Ω → ℝ) (hZ : Martingale Z ℱ P)
+    (hpos : ∀ n, ∀ᵐ ω ∂P, 0 < Z n ω) (hmean : ∫ ω, Z 0 ω ∂P = 1) (N : ℕ) :
+    IsProbabilityMeasure (P.withDensity fun ω => ENNReal.ofReal (Z N ω)) ∧
+    P.withDensity (fun ω => ENNReal.ofReal (Z N ω)) ≪ P ∧
+    P ≪ P.withDensity (fun ω => ENNReal.ofReal (Z N ω)) ∧
+    (∀ X : Ω → ℝ, ∫ ω, X ω ∂(P.withDensity fun ω => ENNReal.ofReal (Z N ω)) =
+      ∫ ω, X ω * Z N ω ∂P) ∧
+    (∀ M ≤ N, ∀ A, MeasurableSet[ℱ M] A →
+      P.withDensity (fun ω => ENNReal.ofReal (Z N ω)) A =
+        ∫⁻ ω in A, ENNReal.ofReal (Z M ω) ∂P) := by
+  have hmeas := com_Z_measurable P ℱ Z hZ N
+  have h5 : ∀ M ≤ N, ∀ A, MeasurableSet[ℱ M] A →
+      P.withDensity (fun ω => ENNReal.ofReal (Z N ω)) A =
+        ∫⁻ ω in A, ENNReal.ofReal (Z M ω) ∂P := by
+    intro M hM A hA
+    rw [← trim_measurableSet_eq (ℱ.le M) hA, com_trim_eq P ℱ Z hZ hpos hM,
+      trim_measurableSet_eq (ℱ.le M) hA, withDensity_apply _ (ℱ.le M A hA)]
+  refine ⟨⟨?_⟩, withDensity_absolutelyContinuous _ _, ?_, ?_, h5⟩
+  · rw [h5 0 (Nat.zero_le N) Set.univ MeasurableSet.univ, Measure.restrict_univ,
+      ← ofReal_integral_eq_lintegral_ofReal (hZ.integrable 0)
+        ((hpos 0).mono fun ω h => h.le), hmean, ENNReal.ofReal_one]
+  · refine withDensity_absolutelyContinuous' hmeas.ennreal_ofReal.aemeasurable ?_
+    filter_upwards [hpos N] with ω h
+    simpa using h
+  · exact com_integral_withDensity P hmeas (hpos N)
+
+/-- Bayes' rule under a changed measure. With Z and Q as above, for n ≤ N and any X integrable
+under Q, the conditional average of X under Q given the first n steps is the conditional
+P-average of X times Z_N, divided by the weight already earned, Z_n. -/
+theorem bayes_rule_for_changed_measure
+    {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω) [IsProbabilityMeasure P]
+    (ℱ : Filtration ℕ m0) (Z : ℕ → Ω → ℝ) (hZ : Martingale Z ℱ P)
+    (hpos : ∀ n, ∀ᵐ ω ∂P, 0 < Z n ω) (hmean : ∫ ω, Z 0 ω ∂P = 1)
+    {n N : ℕ} (hnN : n ≤ N) (X : Ω → ℝ)
+    (hX : Integrable X (P.withDensity fun ω => ENNReal.ofReal (Z N ω))) :
+    (P.withDensity fun ω => ENNReal.ofReal (Z N ω))[X | ℱ n] =ᵐ[P]
+      fun ω => P[fun ω => X ω * Z N ω | ℱ n] ω / Z n ω := by
+  have hprob := (change_of_measure_by_positive_martingale P ℱ Z hZ hpos hmean N).1
+  have hPQ := (change_of_measure_by_positive_martingale P ℱ Z hZ hpos hmean N).2.2.1
+  have hZNm := com_Z_measurable P ℱ Z hZ N
+  have hXZ : Integrable (fun ω => X ω * Z N ω) P :=
+    (com_integrable_withDensity_iff P hZNm (hpos N) X).1 hX
+  set g : Ω → ℝ := fun ω => P[fun ω => X ω * Z N ω | ℱ n] ω / Z n ω with hg_def
+  have hgm : StronglyMeasurable[ℱ n] g :=
+    (Measurable.div (stronglyMeasurable_condExp.measurable) (hZ.1 n).measurable).stronglyMeasurable
+  have hgZ : (fun ω => g ω * Z n ω) =ᵐ[P] P[fun ω => X ω * Z N ω | ℱ n] := by
+    filter_upwards [hpos n] with ω h
+    simp only [hg_def]
+    field_simp
+  have hgint : Integrable g (P.withDensity fun ω => ENNReal.ofReal (Z N ω)) :=
+    (com_transfer P ℱ Z hZ hpos hnN hgm).1.2 (integrable_condExp.congr hgZ.symm)
+  apply hPQ.ae_eq
+  refine (ae_eq_condExp_of_forall_setIntegral_eq (ℱ.le n) hX
+    (fun s _ _ => hgint.integrableOn) ?_ hgm.aestronglyMeasurable).symm
+  intro s hs _
+  have hs0 : MeasurableSet s := ℱ.le n s hs
+  rw [← integral_indicator hs0,
+    (com_transfer P ℱ Z hZ hpos hnN (hgm.indicator hs)).2]
+  have hind : (fun ω => s.indicator g ω * Z n ω) = s.indicator (fun ω => g ω * Z n ω) := by
+    funext ω
+    by_cases h : ω ∈ s <;> simp [h]
+  rw [hind, integral_indicator hs0, setIntegral_congr_ae hs0 (hgZ.mono fun ω h _ => h),
+    setIntegral_condExp (ℱ.le n) hXZ hs, restrict_withDensity hs0,
+    com_integral_withDensity (P.restrict s) hZNm (ae_restrict_of_ae (hpos N))]
+
+/-- A fair game under Q is a P-fair game after multiplying by Z. With Z and Q as above, let Y be
+adapted, with Y_n integrable under Q for n ≤ N. Then Y is a Q-martingale up to time N exactly
+when Y_n Z_n is a P-martingale up to time N. -/
+theorem q_martingale_iff_density_times_p_martingale
+    {Ω : Type*} {m0 : MeasurableSpace Ω} (P : Measure Ω) [IsProbabilityMeasure P]
+    (ℱ : Filtration ℕ m0) (Z : ℕ → Ω → ℝ) (hZ : Martingale Z ℱ P)
+    (hpos : ∀ n, ∀ᵐ ω ∂P, 0 < Z n ω) (hmean : ∫ ω, Z 0 ω ∂P = 1) (N : ℕ)
+    (Y : ℕ → Ω → ℝ) (hY : Adapted ℱ Y)
+    (hYint : ∀ n ≤ N, Integrable (Y n) (P.withDensity fun ω => ENNReal.ofReal (Z N ω))) :
+    (∀ n < N, (P.withDensity fun ω => ENNReal.ofReal (Z N ω))[Y (n + 1) | ℱ n] =ᵐ[P] Y n) ↔
+    (∀ n < N, P[fun ω => Y (n + 1) ω * Z (n + 1) ω | ℱ n] =ᵐ[P] fun ω => Y n ω * Z n ω) := by
+  have hB : ∀ n < N, (P.withDensity fun ω => ENNReal.ofReal (Z N ω))[Y (n + 1) | ℱ n] =ᵐ[P]
+      fun ω => P[fun ω => Y (n + 1) ω * Z (n + 1) ω | ℱ n] ω / Z n ω := by
+    intro n hn
+    have hYZ : Integrable (fun ω => Y (n + 1) ω * Z N ω) P :=
+      (com_integrable_withDensity_iff P (com_Z_measurable P ℱ Z hZ N) (hpos N) _).1
+        (hYint (n + 1) hn)
+    have hpull : P[fun ω => Y (n + 1) ω * Z N ω | ℱ (n + 1)] =ᵐ[P]
+        fun ω => Y (n + 1) ω * Z (n + 1) ω := by
+      have h1 := condExp_mul_of_stronglyMeasurable_left (m := ℱ (n + 1)) (μ := P)
+        (f := Y (n + 1)) (g := Z N) (hY (n + 1)).stronglyMeasurable hYZ (hZ.integrable N)
+      filter_upwards [h1, hZ.condExp_ae_eq (Nat.succ_le_of_lt hn)] with ω h1 h2
+      simp only [Pi.mul_apply] at h1
+      rw [show (fun ω => Y (n + 1) ω * Z N ω) = Y (n + 1) * Z N from rfl, h1, h2]
+    have htower : P[fun ω => Y (n + 1) ω * Z N ω | ℱ n] =ᵐ[P]
+        P[fun ω => Y (n + 1) ω * Z (n + 1) ω | ℱ n] :=
+      (condExp_condExp_of_le (ℱ.mono (Nat.le_succ n)) (ℱ.le (n + 1))).symm.trans
+        (condExp_congr_ae hpull)
+    refine (bayes_rule_for_changed_measure P ℱ Z hZ hpos hmean hn.le (Y (n + 1))
+      (hYint (n + 1) hn)).trans ?_
+    filter_upwards [htower] with ω h
+    rw [h]
+  constructor
+  · intro h n hn
+    filter_upwards [h n hn, hB n hn, hpos n] with ω h1 h2 h3
+    rw [h2, div_eq_iff h3.ne'] at h1
+    exact h1
+  · intro h n hn
+    filter_upwards [h n hn, hB n hn, hpos n] with ω h1 h2 h3
+    rw [h2, h1]
+    field_simp
+
+-- The card's coin: P has heads 3/5, Q (fair) has heads 1/2, ten tosses.
+-- Each factor averages 1 under P: 3/5 * 5/6 + 2/5 * 5/4 = 1.
+example : (3 / 5 : ℚ) * (5 / 6) + (2 / 5) * (5 / 4) = 1 := by norm_num
+-- The traced run THHHHTHHHT (7 heads, 3 tails): loaded chance times weight is the fair 1/1024.
+example : (3 / 5 : ℚ) ^ 7 * (2 / 5) ^ 3 * ((5 / 6) ^ 7 * (5 / 4) ^ 3) = 1 / 1024 ∧
+    (1 / 2 : ℚ) ^ 10 = 1 / 1024 := by norm_num
+-- E^P[Z_10] = 1, summing over the heads count k.
+example : ∑ k ∈ Finset.range 11, (Nat.choose 10 k : ℚ) * (3 / 5) ^ k * (2 / 5) ^ (10 - k) *
+    ((5 / 6) ^ k * (5 / 4) ^ (10 - k)) = 1 := by
+  simp [Finset.sum_range_succ, Nat.choose]; norm_num
+-- Winnings S_10 = 2k - 10: unweighted P-average 2, weighted P-average 0 (the fair average).
+example : ∑ k ∈ Finset.range 11, (Nat.choose 10 k : ℚ) * (3 / 5) ^ k * (2 / 5) ^ (10 - k) *
+    (2 * k - 10) = 2 := by
+  simp [Finset.sum_range_succ, Nat.choose]; norm_num
+example : ∑ k ∈ Finset.range 11, (Nat.choose 10 k : ℚ) * (3 / 5) ^ k * (2 / 5) ^ (10 - k) *
+    ((5 / 6) ^ k * (5 / 4) ^ (10 - k)) * (2 * k - 10) = 0 := by
+  simp [Finset.sum_range_succ, Nat.choose]; norm_num
+-- Seven or more heads: 176 of the 1,024 runs, and E^P[Z_10; 7+] = 176/1024.
+example : ∑ k ∈ Finset.Icc 7 10, Nat.choose 10 k = 176 := by decide
+example : ∑ k ∈ Finset.Icc 7 10, (Nat.choose 10 k : ℚ) * (3 / 5) ^ k * (2 / 5) ^ (10 - k) *
+    ((5 / 6) ^ k * (5 / 4) ^ (10 - k)) = 176 / 1024 := by
+  simp [Finset.sum_Icc_succ_top, Nat.choose]; norm_num
+-- The ratio upside down (6/5 on heads, 4/5 on tails) averages (26/25)^10, not 1.
+example : ∑ k ∈ Finset.range 11, (Nat.choose 10 k : ℚ) * (3 / 5) ^ k * (2 / 5) ^ (10 - k) *
+    ((6 / 5) ^ k * (4 / 5) ^ (10 - k)) = (26 / 25) ^ 10 := by
+  simp [Finset.sum_range_succ, Nat.choose]; norm_num
+-- Bayes after four heads: E^P[S_10 Z_10 | HHHH] divided by Z_4 = (5/6)^4 is 4.
+example : (∑ k ∈ Finset.range 7, (Nat.choose 6 k : ℚ) * (3 / 5) ^ k * (2 / 5) ^ (6 - k) *
+    ((5 / 6) ^ (4 + k) * (5 / 4) ^ (6 - k)) * (2 * (4 + k) - 10)) / (5 / 6) ^ 4 = 4 := by
+  simp [Finset.sum_range_succ, Nat.choose]; norm_num
+
+#print axioms change_of_measure_by_positive_martingale
+#print axioms bayes_rule_for_changed_measure
+#print axioms q_martingale_iff_density_times_p_martingale
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'com_integral_withDensity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'com_integrable_withDensity_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'com_trim_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'com_Z_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'com_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'change_of_measure_by_positive_martingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bayes_rule_for_changed_measure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'q_martingale_iff_density_times_p_martingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -675,7 +930,7 @@ The two outputs match line for line. The simulated weighted winnings, −0.0059 
 ## The usual mistake
 
 > [!warning]
-> **Thinking the change of measure changes the runs.** Nothing about any run moves: the same tosses, the same winnings on each. Only the chances attached to the runs change. That is why a quantity's value on each run, and which runs are possible, carry over untouched, while every average and every forecast changes. Under the fair coin the game is fair; the real coin still wins $2 on average, and "fair under Q" never meant it cannot win.
+> **Thinking the change of measure changes the runs.** Nothing about any run moves: the same tosses, the same winnings on each. Only the chances attached to the runs change, so every average and every forecast changes. Under the fair coin the game is fair; the real coin still wins $2 on average, and "fair under Q" never meant it cannot win.
 >
 > - **Averaging without the weights.** Simulating the loaded coin and taking a plain average gives winnings of 2, not 0.
 > - **The ratio upside down.** $P$ over $Q$ is the density of $P$ against $Q$; used with $P$'s chances its weights average 1.480244 and give no probability.
@@ -707,7 +962,7 @@ The two outputs match line for line. The simulated weighted winnings, −0.0059 
 - [Girsanov](02-girsanov-theorem.md): the continuous-time density $\exp(-\mu W_t - \tfrac12\mu^2 t)$ turns Brownian motion with drift into Brownian motion without it, and leaves the wiggle untouched.
 - [Novikov](03-novikov-condition.md): when an exponential density is a true martingale with mean 1, and not one that leaks mass.
 
-This card shows that a positive mean-1 martingale reweights the coin into a fair one; what the reweighting does to a Brownian path's drift, and why its volatility cannot move, is what [Girsanov](02-girsanov-theorem.md) answers.
+The question this card leaves open: what does the reweighting do to a Brownian path's drift, and why can its volatility not move? [Girsanov](02-girsanov-theorem.md) answers it.
 
 ---
 

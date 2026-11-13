@@ -37,13 +37,15 @@ The one line is the certainty-equivalent growth rate for each fraction held cons
 
 Notation first, in words. The fortune at time $t$ (in years) is $X_t$, and $x$ is a particular value of it. The control is $u$; for the fortune it is $\pi$, the fraction in shares (here $\pi$ is a fraction, not 3.14159). $W_t$ is Brownian motion, the shares' accumulated surprise, and $dW_t$ is shorthand for an Ito integral, never a derivative, since the path has none ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Subscripts on $V$ are partial derivatives, as on the noiseless card.
 
-A **controlled diffusion** is an SDE whose drift and noise depend on the control:
+A **controlled diffusion** is a stochastic differential equation (SDE) whose drift and noise depend on the control:
 
 $$dX_t = b(X_t, u_t)\,dt + s(X_t, u_t)\,dW_t, \qquad X_0 = x_0 .$$
 
 The holder scores the final fortune with a utility $U$ and wants the largest average score. The **value function** is the best average still reachable from fortune $x$ at time $t$:
 
 $$V(t, x) = \sup_{\text{policies}} E\big[\,U(X_T) \mid X_t = x\,\big].$$
+
+Here $E[\,\cdot \mid X_t = x\,]$ is the average over the noise, given fortune $x$ at time $t$, and $\sup$ is the best over all policies.
 
 The HJB equation for it is
 
@@ -365,9 +367,10 @@ assert abs(scan_res) < 1e-5                         # and V makes the HJB equati
 assert abs(mc[0.4][0] - ce_star) < 4 * mc[0.4][1] # simulation agrees with the formula
 assert ce_fb + 3 * se_fb < ce_star                # a rule that reacts differently does worse
 print("all checks passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 setting: fortune 200000, 5 years, bank 0.03, shares drift 0.08, volatility 0.25, risk aversion 2
@@ -404,6 +407,7 @@ path, years:                 0.0    0.5    1.0    1.5    2.0    2.5    3.0    3.
 path, fortune ($000):     200.00 208.98 207.53 196.10 228.05 218.99 220.74 210.87 228.73 245.87 260.43
 path, in shares ($000):    80.00  83.59  83.01  78.44  91.22  87.60  88.30  84.35  91.49  98.35 104.17
 all checks passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -568,10 +572,11 @@ fn main() {
     assert!((mc[1].0 - ce_star).abs() < 4.0 * mc[1].1); // simulation agrees with the formula
     assert!(ce_fb + 3.0 * se_fb < ce_star);       // a rule that reacts differently does worse
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 setting: fortune 200000, 5 years, bank 0.03, shares drift 0.08, volatility 0.25, risk aversion 2
@@ -608,6 +613,283 @@ path, years:                 0.0    0.5    1.0    1.5    2.0    2.5    3.0    3.
 path, fortune ($000):     200.00 208.98 207.53 196.10 228.05 218.99 220.74 210.87 228.73 245.87 260.43
 path, in shares ($000):    80.00  83.59  83.01  78.44  91.22  87.60  88.30  84.35  91.49  98.35 104.17
 all checks passed
+ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves that Merton's $V$ solves the HJB equation, for every input that meets the conditions below, and checks the card's exact numbers.
+
+- Suppose $\sigma > 0$, $\gamma > 0$, $\gamma \ne 1$ and the fortune $x > 0$. Then, for Merton's $V$, $V_t$ plus the bracket is at most 0 for every fraction $\pi$.
+- Take the same conditions. Then $V_t$ plus the bracket is exactly 0 at $\pi^*$, and at no other fraction.
+- Take Merton's $V$ at the horizon. Then $V(T, x) = U(x)$.
+- Suppose $\sigma > 0$ and $\gamma > 0$. Then $g(\pi) \le g^*$ for every fraction, with equality only at $\pi^*$: the hill has one top.
+- Suppose $\mu > r$, $\gamma \ne 1$, $x > 0$, and the ordinary chain rule drops the noise term. Then $V_t$ plus what is left keeps rising as $\pi$ grows, so no fraction is best.
+- Take the card's inputs: $r = 0.03$, $\mu = 0.08$, $\sigma = 0.25$, $\gamma = 2$. Then $\pi^* = 0.4$, \$80,000 sits in shares today, and $g^* = 0.04$.
+- Take the hill at fractions 0, 0.2, 0.4, 0.6, 0.8, 1.0 and 1.2. Then the CE growth is 3.00, 3.75, 4.00, 3.75, 3.00, 1.75 and 0.00 percent a year.
+- Take the two wrong inputs: $\sigma$ for $\sigma^2$, and risk aversion 1 for 2. Then the fraction comes out at 0.1 and 0.8.
+- Take the ordinary chain rule at fractions 0.4, 1, 10 and 100. Then the HJB residual is 0.25, 1, 12.25 and 124.75. With the Ito term kept, it is −0.5625 at 1 and −144 at 10.
+
+The Bellman steps, the simulations, the sample path and the dollar sums that need $e$ are left to the Python and Rust checks.
+
+```lean
+-- Stochastic control: Merton's value function solves the HJB equation, with the best fraction in shares at the unique top of a concave hill, while dropping the noise term leaves a ramp with no top.
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Tactic
+
+/-- Certainty-equivalent growth per year of keeping the fixed fraction `p` (the card's `π`) in shares:
+bank rate, plus the shares' extra return, minus half of risk aversion times variance times `p²`. -/
+noncomputable def ceGrowth (r μ σ γ p : ℝ) : ℝ :=
+  r + p * (μ - r) - 1 / 2 * γ * σ ^ 2 * p ^ 2
+
+/-- Merton's best fraction in shares, `(μ - r) / (γ σ²)`. -/
+noncomputable def mertonFraction (r μ σ γ : ℝ) : ℝ :=
+  (μ - r) / (γ * σ ^ 2)
+
+/-- Merton's best certainty-equivalent growth, `r + (μ - r)² / (2 γ σ²)`. -/
+noncomputable def mertonGrowth (r μ σ γ : ℝ) : ℝ :=
+  r + (μ - r) ^ 2 / (2 * γ * σ ^ 2)
+
+/-- Merton's value function `V(t, x) = U(x) · exp((1 - γ) g* (T - t))`
+with power utility `U(x) = x^(1-γ) / (1-γ)`. -/
+noncomputable def mertonV (r μ σ γ T t x : ℝ) : ℝ :=
+  x ^ (1 - γ) / (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t))
+
+/-- The HJB expression `V_t + b V_x + ½ s² V_xx` for the fortune, with drift
+`b = x (r + π (μ - r))` and noise size `s = x π σ`, at time `t`, fortune `x`, fraction `p` (the card's `π`).
+The derivatives are Mathlib's `deriv`, taken of Merton's `V`. -/
+noncomputable def hjbExpr (r μ σ γ T t x p : ℝ) : ℝ :=
+  deriv (fun s => mertonV r μ σ γ T s x) t
+    + x * (r + p * (μ - r)) * deriv (fun y => mertonV r μ σ γ T t y) x
+    + 1 / 2 * (x * p * σ) ^ 2 * deriv (deriv (fun y => mertonV r μ σ γ T t y)) x
+
+/-- The same expression done with the ordinary chain rule: the noise term `½ s² V_xx` dropped. -/
+noncomputable def noiselessExpr (r μ σ γ T t x p : ℝ) : ℝ :=
+  deriv (fun s => mertonV r μ σ γ T s x) t
+    + x * (r + p * (μ - r)) * deriv (fun y => mertonV r μ σ γ T t y) x
+
+lemma powScaled_hasDerivAt (a c x : ℝ) (ha : a ≠ 0) (hx : 0 < x) :
+    HasDerivAt (fun y : ℝ => y ^ a / a * c) (x ^ (a - 1) * c) x := by
+  have h := ((Real.hasDerivAt_rpow_const (p := a) (Or.inl hx.ne')).div_const a).mul_const c
+  convert h using 1
+  field_simp
+
+lemma powScaled_deriv2 (a c x : ℝ) (ha : a ≠ 0) (hx : 0 < x) :
+    deriv (deriv (fun y : ℝ => y ^ a / a * c)) x = (a - 1) * x ^ (a - 2) * c := by
+  have heq : deriv (fun y : ℝ => y ^ a / a * c) =ᶠ[nhds x] fun y => y ^ (a - 1) * c := by
+    filter_upwards [lt_mem_nhds hx] with y hy
+    exact (powScaled_hasDerivAt a c y ha hy).deriv
+  rw [heq.deriv_eq]
+  have h := (Real.hasDerivAt_rpow_const (p := a - 1) (Or.inl hx.ne')).mul_const c
+  rw [h.deriv]
+  ring_nf
+
+lemma timeExp_hasDerivAt (k T t : ℝ) :
+    HasDerivAt (fun s : ℝ => Real.exp (k * (T - s))) (Real.exp (k * (T - t)) * (-k)) t := by
+  have h1 : HasDerivAt (fun s : ℝ => k * (T - s)) (-k) t := by
+    have := ((hasDerivAt_id t).const_sub T).const_mul k
+    convert this using 1 <;> first | rfl | ring
+  exact h1.exp
+
+lemma mertonV_deriv_t (r μ σ γ T t x : ℝ) (hγ1 : γ ≠ 1) :
+    deriv (fun s => mertonV r μ σ γ T s x) t
+      = -mertonGrowth r μ σ γ * x ^ (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t)) := by
+  have ha : (1 - γ) ≠ 0 := sub_ne_zero.mpr (Ne.symm hγ1)
+  have h := (timeExp_hasDerivAt ((1 - γ) * mertonGrowth r μ σ γ) T t).const_mul (x ^ (1 - γ) / (1 - γ))
+  unfold mertonV
+  rw [h.deriv]
+  field_simp
+
+lemma mertonV_deriv_x (r μ σ γ T t x : ℝ) (hγ1 : γ ≠ 1) (hx : 0 < x) :
+    x * deriv (fun y => mertonV r μ σ γ T t y) x
+      = x ^ (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t)) := by
+  have ha : (1 - γ) ≠ 0 := sub_ne_zero.mpr (Ne.symm hγ1)
+  unfold mertonV
+  rw [(powScaled_hasDerivAt (1 - γ) _ x ha hx).deriv, Real.rpow_sub hx, Real.rpow_one]
+  field_simp
+
+lemma mertonV_deriv_xx (r μ σ γ T t x : ℝ) (hγ1 : γ ≠ 1) (hx : 0 < x) :
+    x ^ 2 * deriv (deriv (fun y => mertonV r μ σ γ T t y)) x
+      = -γ * x ^ (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t)) := by
+  have ha : (1 - γ) ≠ 0 := sub_ne_zero.mpr (Ne.symm hγ1)
+  unfold mertonV
+  rw [powScaled_deriv2 (1 - γ) _ x ha hx, Real.rpow_sub hx, Real.rpow_two]
+  field_simp
+  ring
+
+lemma hjbExpr_eq (r μ σ γ T t x p : ℝ) (hγ1 : γ ≠ 1) (hx : 0 < x) :
+    hjbExpr r μ σ γ T t x p
+      = x ^ (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t))
+        * (ceGrowth r μ σ γ p - mertonGrowth r μ σ γ) := by
+  have h1 := mertonV_deriv_t r μ σ γ T t x hγ1
+  have h2 := mertonV_deriv_x r μ σ γ T t x hγ1 hx
+  have h3 := mertonV_deriv_xx r μ σ γ T t x hγ1 hx
+  unfold hjbExpr ceGrowth
+  have e2 : x * (r + p * (μ - r)) * deriv (fun y => mertonV r μ σ γ T t y) x
+      = (r + p * (μ - r)) * (x * deriv (fun y => mertonV r μ σ γ T t y) x) := by ring
+  have e3 : 1 / 2 * (x * p * σ) ^ 2 * deriv (deriv (fun y => mertonV r μ σ γ T t y)) x
+      = 1 / 2 * p ^ 2 * σ ^ 2 * (x ^ 2 * deriv (deriv (fun y => mertonV r μ σ γ T t y)) x) := by ring
+  rw [e2, e3, h1, h2, h3]
+  ring
+
+lemma noiselessExpr_eq (r μ σ γ T t x p : ℝ) (hγ1 : γ ≠ 1) (hx : 0 < x) :
+    noiselessExpr r μ σ γ T t x p
+      = x ^ (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t))
+        * (r + p * (μ - r) - mertonGrowth r μ σ γ) := by
+  have h1 := mertonV_deriv_t r μ σ γ T t x hγ1
+  have h2 := mertonV_deriv_x r μ σ γ T t x hγ1 hx
+  unfold noiselessExpr
+  have e2 : x * (r + p * (μ - r)) * deriv (fun y => mertonV r μ σ γ T t y) x
+      = (r + p * (μ - r)) * (x * deriv (fun y => mertonV r μ σ γ T t y) x) := by ring
+  rw [e2, h1, h2]
+  ring
+
+lemma ceGrowth_gap (r μ σ γ p : ℝ) (hσ : 0 < σ) (hγ : 0 < γ) :
+    mertonGrowth r μ σ γ - ceGrowth r μ σ γ p
+      = 1 / 2 * γ * σ ^ 2 * (p - mertonFraction r μ σ γ) ^ 2 := by
+  unfold mertonGrowth ceGrowth mertonFraction
+  have : γ * σ ^ 2 ≠ 0 := by positivity
+  field_simp
+  ring
+
+lemma ce_growth_hill_aux (r μ σ γ : ℝ) (hσ : 0 < σ) (hγ : 0 < γ) :
+    (∀ p : ℝ, ceGrowth r μ σ γ p ≤ mertonGrowth r μ σ γ) ∧
+    (∀ p : ℝ, ceGrowth r μ σ γ p = mertonGrowth r μ σ γ ↔ p = mertonFraction r μ σ γ) := by
+  have hc : 0 < 1 / 2 * γ * σ ^ 2 := by positivity
+  refine ⟨fun p => ?_, fun p => ?_⟩
+  · have := ceGrowth_gap r μ σ γ p hσ hγ
+    nlinarith [sq_nonneg (p - mertonFraction r μ σ γ)]
+  · have := ceGrowth_gap r μ σ γ p hσ hγ
+    constructor
+    · intro h
+      have h0 : 1 / 2 * γ * σ ^ 2 * (p - mertonFraction r μ σ γ) ^ 2 = 0 := by linarith
+      rcases mul_eq_zero.mp h0 with h0 | h0
+      · linarith
+      · exact sub_eq_zero.mp (pow_eq_zero_iff (n := 2) (by norm_num) |>.mp h0)
+    · intro h
+      subst h
+      have h0 : (0:ℝ) ^ 2 = 0 := by norm_num
+      rw [sub_self, h0, mul_zero] at this
+      linarith
+
+#print axioms powScaled_hasDerivAt
+#print axioms powScaled_deriv2
+#print axioms timeExp_hasDerivAt
+#print axioms mertonV_deriv_t
+#print axioms mertonV_deriv_x
+#print axioms mertonV_deriv_xx
+#print axioms hjbExpr_eq
+#print axioms noiselessExpr_eq
+#print axioms ceGrowth_gap
+#print axioms ce_growth_hill_aux
+
+/-- Merton's problem solved by HJB. For power utility with risk aversion `γ > 0`, `γ ≠ 1`, shares
+with volatility `σ > 0`, and any positive fortune `x` at any time `t`, Merton's value function
+satisfies the HJB equation: no fraction `π` makes `V_t + b V_x + ½ s² V_xx` positive, the
+fraction `π* = (μ - r)/(γ σ²)` makes it exactly zero and is the only one that does, and at the
+horizon `V(T, x) = U(x)`. -/
+theorem merton_value_solves_hjb (r μ σ γ T t x : ℝ) (hσ : 0 < σ) (hγ : 0 < γ) (hγ1 : γ ≠ 1)
+    (hx : 0 < x) :
+    (∀ p : ℝ, hjbExpr r μ σ γ T t x p ≤ 0) ∧
+    (∀ p : ℝ, hjbExpr r μ σ γ T t x p = 0 ↔ p = mertonFraction r μ σ γ) ∧
+    mertonV r μ σ γ T T x = x ^ (1 - γ) / (1 - γ) := by
+  have hpos : 0 < x ^ (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t)) := by
+    have := Real.rpow_pos_of_pos hx (1 - γ)
+    positivity
+  obtain ⟨hle, hiff⟩ := ce_growth_hill_aux r μ σ γ hσ hγ
+  refine ⟨fun p => ?_, fun p => ?_, ?_⟩
+  · rw [hjbExpr_eq r μ σ γ T t x p hγ1 hx]
+    exact mul_nonpos_of_nonneg_of_nonpos hpos.le (by linarith [hle p])
+  · rw [hjbExpr_eq r μ σ γ T t x p hγ1 hx, ← hiff p, mul_eq_zero, sub_eq_zero]
+    constructor
+    · rintro (h | h)
+      · exact absurd h hpos.ne'
+      · exact h
+    · exact Or.inr
+  · unfold mertonV
+    simp
+
+/-- The hill: for `γ > 0` and `σ > 0`, the certainty-equivalent growth of a fixed fraction is
+at most `g* = r + (μ - r)²/(2 γ σ²)`, and it reaches `g*` only at `π* = (μ - r)/(γ σ²)`. -/
+theorem ce_growth_hill_top (r μ σ γ : ℝ) (hσ : 0 < σ) (hγ : 0 < γ) :
+    (∀ p : ℝ, ceGrowth r μ σ γ p ≤ mertonGrowth r μ σ γ) ∧
+    (∀ p : ℝ, ceGrowth r μ σ γ p = mertonGrowth r μ σ γ ↔ p = mertonFraction r μ σ γ) := by
+  exact ce_growth_hill_aux r μ σ γ hσ hγ
+
+/-- The usual mistake: with the ordinary chain rule (the noise term dropped) and shares that beat
+the bank (`μ > r`), the HJB expression strictly increases with the fraction in shares, so more
+shares always look better and no fraction is best. -/
+theorem noiseless_hjb_has_no_best_fraction (r μ σ γ T t x : ℝ)
+    (hγ1 : γ ≠ 1) (hx : 0 < x) (hμ : r < μ) :
+    StrictMono (fun p => noiselessExpr r μ σ γ T t x p) ∧
+    ¬ ∃ p₀ : ℝ, ∀ p : ℝ, noiselessExpr r μ σ γ T t x p ≤ noiselessExpr r μ σ γ T t x p₀ := by
+  have hpos : 0 < x ^ (1 - γ) * Real.exp ((1 - γ) * mertonGrowth r μ σ γ * (T - t)) := by
+    have := Real.rpow_pos_of_pos hx (1 - γ)
+    positivity
+  have hmono : StrictMono (fun p => noiselessExpr r μ σ γ T t x p) := by
+    intro a b hab
+    simp only [noiselessExpr_eq r μ σ γ T t x _ hγ1 hx]
+    apply mul_lt_mul_of_pos_left _ hpos
+    nlinarith
+  refine ⟨hmono, ?_⟩
+  rintro ⟨p₀, hp₀⟩
+  have h1 := hmono (lt_add_one p₀)
+  have h2 := hp₀ (p₀ + 1)
+  simp only at h1
+  linarith
+
+-- The card's numbers, exactly, as fractions: r = 3/100, μ = 8/100, σ = 25/100, γ = 2.
+-- Best fraction: 0.05 / 0.125 = 0.4.
+example : ((8 : ℚ) / 100 - 3 / 100) / (2 * (25 / 100) ^ 2) = 2 / 5 := by norm_num
+-- Dollars in shares today: 0.4 × 200,000 = 80,000.
+example : (2 : ℚ) / 5 * 200000 = 80000 := by norm_num
+-- Best CE growth: 0.03 + 0.05² / (2 × 2 × 0.0625) = 0.04.
+example : (3 : ℚ) / 100 + (5 / 100) ^ 2 / (2 * 2 * (25 / 100) ^ 2) = 4 / 100 := by norm_num
+-- The hill, g(π) = 0.03 + 0.05 π − 0.0625 π², at π = 0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2:
+-- 3.00, 3.75, 4.00, 3.75, 3.00, 1.75, 0.00 percent a year.
+example : (fun p : ℚ => 3 / 100 + p * (5 / 100) - 1 / 2 * 2 * (25 / 100) ^ 2 * p ^ 2) 0 = 300 / 10000 := by norm_num
+example : (fun p : ℚ => 3 / 100 + p * (5 / 100) - 1 / 2 * 2 * (25 / 100) ^ 2 * p ^ 2) (1 / 5) = 375 / 10000 := by norm_num
+example : (fun p : ℚ => 3 / 100 + p * (5 / 100) - 1 / 2 * 2 * (25 / 100) ^ 2 * p ^ 2) (2 / 5) = 400 / 10000 := by norm_num
+example : (fun p : ℚ => 3 / 100 + p * (5 / 100) - 1 / 2 * 2 * (25 / 100) ^ 2 * p ^ 2) (3 / 5) = 375 / 10000 := by norm_num
+example : (fun p : ℚ => 3 / 100 + p * (5 / 100) - 1 / 2 * 2 * (25 / 100) ^ 2 * p ^ 2) (4 / 5) = 300 / 10000 := by norm_num
+example : (fun p : ℚ => 3 / 100 + p * (5 / 100) - 1 / 2 * 2 * (25 / 100) ^ 2 * p ^ 2) 1 = 175 / 10000 := by norm_num
+example : (fun p : ℚ => 3 / 100 + p * (5 / 100) - 1 / 2 * 2 * (25 / 100) ^ 2 * p ^ 2) (6 / 5) = 0 := by norm_num
+-- Mistakes: σ for σ² gives 0.05 / (2 × 0.25) = 0.1; risk aversion 1 gives 0.05 / 0.0625 = 0.8.
+example : ((5 : ℚ) / 100) / (2 * (25 / 100)) = 1 / 10 := by norm_num
+example : ((5 : ℚ) / 100) / (1 * (25 / 100) ^ 2) = 4 / 5 := by norm_num
+-- HJB residual (g(π) − g*)/g*: ordinary chain rule at π = 0.4, 1, 10, 100 gives 0.25, 1, 12.25, 124.75;
+-- with the Ito term at π = 1 and 10 it gives −0.5625 and −144.
+example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - 4 / 100) / (4 / 100)) (2 / 5) = 1 / 4 := by norm_num
+example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - 4 / 100) / (4 / 100)) 1 = 1 := by norm_num
+example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - 4 / 100) / (4 / 100)) 10 = 1225 / 100 := by norm_num
+example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - 4 / 100) / (4 / 100)) 100 = 12475 / 100 := by norm_num
+example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - (25 / 100) ^ 2 * p ^ 2 - 4 / 100) / (4 / 100)) 1
+    = -5625 / 10000 := by norm_num
+example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - (25 / 100) ^ 2 * p ^ 2 - 4 / 100) / (4 / 100)) 10
+    = -144 := by norm_num
+
+#print axioms merton_value_solves_hjb
+#print axioms ce_growth_hill_top
+#print axioms noiseless_hjb_has_no_best_fraction
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'powScaled_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'powScaled_deriv2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'timeExp_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mertonV_deriv_t' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mertonV_deriv_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mertonV_deriv_xx' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hjbExpr_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'noiselessExpr_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ceGrowth_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ce_growth_hill_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'merton_value_solves_hjb' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ce_growth_hill_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'noiseless_hjb_has_no_best_fraction' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]
@@ -659,9 +941,9 @@ all checks passed
 
 - [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input.
 - [Market making](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/05-market-making-avellaneda-stoikov.md): an HJB equation whose state is an inventory and whose controls are prices, solved for a dealer's quotes.
-- [The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md): the half this card states without proof: when the value function is smooth, and what HJB means when it is not.
+- Viscosity solutions (planned, in the partial differential equations wing): the half this card states without proof: when the value function is smooth, and what HJB means when it is not.
 
-This card assumed the value function is smooth enough to differentiate twice; what happens to HJB at a corner, where a cap on the control or a kinked payoff makes that false, is the open question the partial-differential-equations card answers.
+This card assumed the value function is smooth enough to differentiate twice; what happens to HJB at a corner, where a cap on the control or a kinked payoff makes that false, is the open question the Viscosity solutions card answers.
 
 ---
 

@@ -12,7 +12,7 @@ The rule for the share says only what happens over the next moment. So the compu
 
 That loop is the **Euler-Maruyama scheme**, published by Gisiro Maruyama in 1955. This share also has an exact formula, so the loop's error can be measured on the very same random path. Halving the step does not halve the error, as it does for Euler's method on a rate equation. At fine steps it divides the error by 1.415: four times the work buys half the error. The reason is one term the loop leaves out, as large as the step, that averages to zero and so adds up like a random walk.
 
-**Euler-Maruyama steps an SDE by freezing its drift and noise size at the start of each step and adding a Gaussian increment of variance equal to the step; its error on a given path shrinks like the square root of the step, half the rate of Euler's method for ordinary equations.**
+**Euler-Maruyama steps a stochastic differential equation (SDE) by freezing its drift and noise size at the start of each step and adding a Gaussian increment of variance equal to the step; its error on a given path shrinks like the square root of the step, half the rate of Euler's method for ordinary equations.**
 
 **What kind of fact this is:** a method. That its path-by-path error shrinks like the square root of the step is a theorem, proved for Lipschitz coefficients in the Detailed proof under Why it works; for the share the leading constant is derived, to leading order, in Step 4.
 
@@ -29,7 +29,7 @@ xychart-beta
     line [50.00, 48.94, 49.18, 52.39, 55.28, 55.26, 56.30, 57.64, 67.42, 68.20, 71.67, 68.73, 74.19, 80.25]
 ```
 
-Orange: Euler-Maruyama with 13 steps of 4 weeks. Green: Euler-Maruyama with 52 weekly steps. Dark blue: the exact solution. All three are read every 4 weeks from one Brownian path, drawn on a grid of 208 steps (4 a week) from seed 80430. The year ends at $84.71, $81.93 and $80.25. This is one sample; another seed draws another year.
+Orange: Euler-Maruyama with 13 steps of 4 weeks. Green: Euler-Maruyama with 52 weekly steps. Dark blue: the exact solution. All three are read every 4 weeks from one Brownian path, drawn on a grid of 208 steps (4 a week) from seed 80430. The year ends at $84.71, $81.93 and $80.25.
 
 ---
 
@@ -83,7 +83,7 @@ $$\varepsilon(\Delta t) = E\,\big|Y_n - S_T\big| \;\le\; C\sqrt{\Delta t}, \qqua
 
 ### Step 0: a zero-average error per step adds up like a random walk
 
-Euler's method for a rate equation makes an error of order $\Delta t^2$ in each step, all pushing the same way ([Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md)). There are $T/\Delta t$ steps, so the errors add to order $\Delta t$. Euler-Maruyama makes an error of order $\Delta t$ in each step, one power of $\Delta t$ larger, but each averages to zero and they are independent. Independent zero-average errors add like a random walk: $n$ of them, each of size $\Delta t$, total about $\sqrt{n}\,\Delta t = \sqrt{T\Delta t}$. That square root is the whole story. The steps below find the dropped term, measure it, and add it up.
+Euler's method for a rate equation makes an error of order $\Delta t^2$ in each step, all pushing the same way ([Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md)). There are $T/\Delta t$ steps, so the errors add to order $\Delta t$. Euler-Maruyama makes an error of order $\Delta t$ in each step, one power of $\Delta t$ larger, but each averages to zero and they are independent. Independent zero-average errors add like a random walk: $n$ of them, each of size $\Delta t$, total about $\sqrt{n}\,\Delta t = \sqrt{T\Delta t}$. The steps below find the dropped term, measure it, and add it up.
 
 ### Step 1: where the scheme comes from
 
@@ -119,7 +119,7 @@ The scheme multiplies the price by one factor per step. Each factor is short by 
 
 $$Y_n - S_T \approx -\tfrac12\sigma^2\,S_T\,R, \qquad R = \sum_{k=0}^{n-1}\big(\Delta W_k^2 - \Delta t\big).$$
 
-$R$ is a sum of $n$ independent terms, each of mean 0 and variance $2\Delta t^2$. Its variance is $2n\Delta t^2 = 2T\Delta t$. Its size is $\sqrt{2T\Delta t}$, the square root of the step. This is the random-walk addition of Step 0, now with the constant.
+$R$ is a sum of $n$ independent terms, each of mean 0 and variance $2\Delta t^2$. Its variance is $2n\Delta t^2 = 2T\Delta t$. Its size is $\sqrt{2T\Delta t}$, the square root of the step.
 
 To turn this into the average gap: $R$ is nearly independent of $W_T$, because each $\Delta W_k$ and $\Delta W_k^2 - \Delta t$ are uncorrelated (an odd power of a symmetric draw averages to zero). For many steps $R$ is close to normal, and the average size of a normal draw is $\sqrt{2/\pi}$ times its standard deviation. Then
 
@@ -145,7 +145,7 @@ Put the dropped term back: add $\tfrac12\sigma^2 S_T R$ to each path's gap at 25
 
 ### Step 5: the general theorem
 
-The bound holds for every SDE whose drift and noise size are Lipschitz (they change at most $L$ times as fast as x): $E|Y_n - X_T| \le C\sqrt{\Delta t}$, with $C$ set by $L$, $T$ and the start. In words: the solution moves only about $\sqrt{\Delta t}$ within a step, so freezing the coefficients costs about $\Delta t$ in mean square; Ito's isometry and Gronwall's lemma carry that to the horizon. The complete argument is in the callout.
+The bound holds for every SDE whose drift and noise size are Lipschitz (they change at most $L$ times as fast as x): $E|Y_n - X_T| \le C\sqrt{\Delta t}$, with $C$ set by $L$, $T$ and the start. In words: the solution moves only about $\sqrt{\Delta t}$ within a step, so freezing the coefficients costs about $\Delta t$ in mean square; Ito's isometry and Gronwall's lemma carry that to the horizon.
 
 <details>
 <summary>Detailed proof</summary>
@@ -164,7 +164,7 @@ $e(t) \le 2tL^2\int_0^t E|X_s - \bar Y_s|^2\,ds + 2L^2\int_0^t E|X_s - \bar Y_s|
 
 **4. Gronwall.** Let $m(t) = \sup_{u \le t} e(u)$, finite by step 0. Steps 2 and 3 give $m(t) \le A\,\Delta t + B\int_0^t m(s)\,ds$ with $A = 4(T+1)L^2 c_1 T$ and $B = 4(T+1)L^2$. Gronwall's lemma: a bounded function with $m(t) \le A\Delta t + B\int_0^t m$ satisfies $m(t) \le A\Delta t\,e^{Bt}$ (substitute the inequality into itself repeatedly; the k-th term is $A\Delta t\,(Bt)^k/k!$, and the remainder tends to 0 because $m$ is bounded).
 
-**5. Conclude.** $E|Y_n - X_T| \le \sqrt{E|Y_n - X_T|^2} = \sqrt{e(T)} \le \sqrt{A e^{BT}}\,\sqrt{\Delta t}$, by Cauchy-Schwarz. Take $C = \sqrt{A e^{BT}}$. The share has $\mu(x) = 0.08x$, $\sigma(x) = 0.40x$, Lipschitz with $L = \mu + \sigma$, so the theorem covers it.
+**5. Conclude.** $E|Y_n - X_T| \le \sqrt{E|Y_n - X_T|^2} = \sqrt{e(T)} \le \sqrt{A e^{BT}}\,\sqrt{\Delta t}$, by Cauchy-Schwarz. Take $C = \sqrt{A e^{BT}}$. The share is Lipschitz with $L = \mu + \sigma$, so the theorem covers it.
 
 **Why the rate is not better.** For the share the error is $\tfrac12\sigma^2 S_T R$ to leading order (Step 4), and $R$ has standard deviation exactly $\sqrt{2T\Delta t}$, so the square root is the true rate. Kloeden and Platen (1992, chapter 10) give the general statement.
 
@@ -191,7 +191,7 @@ The share: $S_0$ = $50, $\mu$ = 0.08, $\sigma$ = 0.40 a year, one quarter-year s
 | mean price at the year end | 50 × e^0.08 | $54.1644 |
 | predicted strong error, 256 steps | 0.16 × √(1/(256π)) × 54.1644 | **$0.3056** |
 
-A grid of 256 steps, about one a trading day, puts the simulated year-end price about 31 cents from the exact one on a typical path. Halving that gap takes 1024 steps, not 512.
+A grid of 256 steps, about one a trading day, puts the simulated year-end price about 31 cents from the exact one on a typical path.
 
 ### What breaks if you drop a piece
 
@@ -199,7 +199,7 @@ A grid of 256 steps, about one a trading day, puts the simulated year-end price 
 | --- | --- | --- |
 | Noise scaled by $\Delta t$ instead of its square root, 256 steps | sd of ln(price ratio) 0.0251 ± 0.0003 (right: 0.4018 ± 0.0040 simulated, 0.4000 exact) | the noise all but vanishes as the grid refines; Brownian size grows like the square root of time |
 | Scheme and exact price on different paths, 256 steps | average gap $24.2785 ± 0.2940, not $0.3059 | that gap is the spread between two independent years; strong error needs a shared path |
-| One step for the whole year | price below 0 with chance 0.0032 ± 0.0002 (formula Φ(−2.70) = 0.0035) | the step is long against the noise; the exact price is never negative |
+| One step for the whole year | price below 0 with chance 0.0032 ± 0.0002 (formula Φ(−2.70) = 0.0035) | the step is long against the noise |
 
 ---
 
@@ -380,8 +380,6 @@ ALL CHECKS PASS
 ```
 
 ### Rust
-
-Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
 // Euler-Maruyama scheme -- the same check as the Python, in Rust.  No crates.
@@ -583,6 +581,378 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The weak line shows the other kind of error in passing: the scheme's own mean, $S_0(1 + \mu\Delta t)^n$ = $54.1637, against the true $54.1644, is off by an amount proportional to the step; the simulated $54.5351 ± 0.3183 is too noisy to see it.
 
+### Lean
+
+Lean proves the dropped-term facts of Steps 3 and 4 and the order of Euler's method, for any step, and checks the worked numbers.
+
+- Take a step $\Delta t > 0$ and $\Delta W = \sqrt{\Delta t}\,Z$, with $Z$ a standard normal draw. Then $\Delta W^2 - \Delta t$ has mean 0 and variance $2\Delta t^2$.
+- Take $n$ steps of length $\Delta t = T/n$, with independent standard normal draws $Z_k$. Then $R$ has mean 0 and variance $2T\Delta t$.
+- Take Euler's method on the noise-free share $dx/dt = \mu x$, with $n$ steps up to time $T$. Then $n$ times its error at $T$ tends to $S_0 e^{\mu T}\mu^2T^2/2$.
+- The quarter-year step from \$50 with $Z$ = 2 has drift \$1, noise \$20, scheme value \$71 and dropped term \$3.
+- The log drift of the share is 0. With $Z$ = 1 the dropped term is \$0.
+
+Lean has no Ito integral, so Step 5's bound, Step 4's approximations and every simulation are left to the Python and Rust checks.
+
+```lean
+-- Euler-Maruyama: the term the scheme drops each step averages to zero with spread √2·Δt, so over n steps it sums to a zero-mean error R of variance 2TΔt, while Euler's method on the noise-free share has n times its error tending to S₀e^(μT)μ²T²/2.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Probability.Moments.MGFAnalytic
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+/-! The card's main theorem, that the strong error `E|Y_n - X_T|` of Euler-Maruyama is at most
+`C √Δt` for every SDE with Lipschitz coefficients, needs Ito integrals and SDE solutions, which
+Mathlib does not have. Its simulated numbers come from random draws. What Lean can state exactly is
+the engine of the square-root rate: the term the scheme drops.
+
+The model: `Z k` are independent standard bell-curve draws, each with law `gaussianReal 0 1`.
+The horizon `T` is split into `n` steps of length `Δt = T / n`, and the Brownian step over step `k`
+is `ΔW_k = √Δt * Z k`. The dropped term of step `k` is proportional to `ΔW_k ^ 2 - Δt`,
+and `R` is the sum of these over the `n` steps. -/
+
+lemma em_gauss_mgf : mgf id (gaussianReal 0 1) = fun t => Real.exp (t ^ 2 / 2) := by
+  rw [mgf_id_gaussianReal]; funext t; simp
+
+lemma em_deriv1 : deriv (fun t : ℝ => Real.exp (t ^ 2 / 2)) = fun t => t * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have h := ((hasDerivAt_pow 2 t).div_const 2).exp
+  convert h.deriv using 1
+  push_cast; ring
+
+lemma em_hexp (t : ℝ) : HasDerivAt (fun t : ℝ => Real.exp (t ^ 2 / 2)) (t * Real.exp (t ^ 2 / 2)) t := by
+  have h := ((hasDerivAt_pow 2 t).div_const 2).exp
+  convert h using 1
+  push_cast; ring
+
+lemma em_deriv2 : deriv (fun t : ℝ => t * Real.exp (t ^ 2 / 2)) =
+    fun t => (1 + t ^ 2) * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have h : HasDerivAt (fun t : ℝ => t * Real.exp (t ^ 2 / 2))
+      (1 * Real.exp (t ^ 2 / 2) + t * (t * Real.exp (t ^ 2 / 2))) t :=
+    (hasDerivAt_id' t).mul (em_hexp t)
+  rw [h.deriv]; ring
+
+lemma em_deriv3 : deriv (fun t : ℝ => (1 + t ^ 2) * Real.exp (t ^ 2 / 2)) =
+    fun t => (3 * t + t ^ 3) * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have h1 : HasDerivAt (fun t : ℝ => 1 + t ^ 2) (2 * t) t := by
+    convert (hasDerivAt_pow 2 t).const_add 1 using 1; push_cast; ring
+  have h : HasDerivAt (fun t : ℝ => (1 + t ^ 2) * Real.exp (t ^ 2 / 2))
+      (2 * t * Real.exp (t ^ 2 / 2) + (1 + t ^ 2) * (t * Real.exp (t ^ 2 / 2))) t :=
+    h1.mul (em_hexp t)
+  rw [h.deriv]; ring
+
+lemma em_deriv4 : deriv (fun t : ℝ => (3 * t + t ^ 3) * Real.exp (t ^ 2 / 2)) =
+    fun t => (3 + 6 * t ^ 2 + t ^ 4) * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have h1 : HasDerivAt (fun t : ℝ => 3 * t + t ^ 3) (3 + 3 * t ^ 2) t := by
+    convert ((hasDerivAt_id' t).const_mul 3).add (hasDerivAt_pow 3 t) using 1; push_cast; ring
+  have h : HasDerivAt (fun t : ℝ => (3 * t + t ^ 3) * Real.exp (t ^ 2 / 2))
+      ((3 + 3 * t ^ 2) * Real.exp (t ^ 2 / 2) + (3 * t + t ^ 3) * (t * Real.exp (t ^ 2 / 2))) t :=
+    h1.mul (em_hexp t)
+  rw [h.deriv]; ring
+
+lemma em_zero_mem : (0 : ℝ) ∈ interior (integrableExpSet id (gaussianReal 0 1)) := by
+  rw [integrableExpSet_id_gaussianReal]; simp
+
+lemma em_moment2 : ∫ x, x ^ 2 ∂(gaussianReal 0 1) = 1 := by
+  have h := iteratedDeriv_mgf_zero em_zero_mem 2
+  rw [em_gauss_mgf, iteratedDeriv_succ', iteratedDeriv_succ', em_deriv1, em_deriv2] at h
+  simp at h
+  rw [← h]
+
+lemma em_moment4 : ∫ x, x ^ 4 ∂(gaussianReal 0 1) = 3 := by
+  have h := iteratedDeriv_mgf_zero em_zero_mem 4
+  rw [em_gauss_mgf, iteratedDeriv_succ', iteratedDeriv_succ', iteratedDeriv_succ',
+    iteratedDeriv_succ', em_deriv1, em_deriv2, em_deriv3, em_deriv4] at h
+  simp at h
+  rw [← h]
+
+lemma em_integrable_pow (k : ℕ) : Integrable (fun x : ℝ => x ^ k) (gaussianReal 0 1) := by
+  have h := (memLp_id_gaussianReal (μ := 0) (v := 1) (k : NNReal)).integrable_norm_pow'
+  refine h.mono' (by fun_prop) (Eventually.of_forall fun x => ?_)
+  simp [norm_pow]
+
+lemma em_poly (a b c : ℝ) :
+    ∫ x, (a * x ^ 4 + b * x ^ 2 + c) ∂(gaussianReal 0 1) = 3 * a + b + c := by
+  rw [integral_add, integral_add, integral_const_mul, integral_const_mul, em_moment4, em_moment2]
+  · simp; ring
+  · exact (em_integrable_pow 4).const_mul a
+  · exact (em_integrable_pow 2).const_mul b
+  · exact ((em_integrable_pow 4).const_mul a).add ((em_integrable_pow 2).const_mul b)
+  · exact integrable_const c
+
+lemma em_poly_integrable (a b c : ℝ) :
+    Integrable (fun x : ℝ => a * x ^ 4 + b * x ^ 2 + c) (gaussianReal 0 1) :=
+  (((em_integrable_pow 4).const_mul a).add ((em_integrable_pow 2).const_mul b)).add
+    (integrable_const c)
+
+/-- The step's dropped term as a function of the draw. -/
+lemma em_dropped_eq (Δt : ℝ) (hΔt : 0 < Δt) (x : ℝ) :
+    (Real.sqrt Δt * x) ^ 2 - Δt = 0 * x ^ 4 + Δt * x ^ 2 + (-Δt) := by
+  rw [mul_pow, Real.sq_sqrt hΔt.le]; ring
+
+lemma em_dropped_sq_eq (Δt : ℝ) (hΔt : 0 < Δt) (x : ℝ) :
+    ((Real.sqrt Δt * x) ^ 2 - Δt) ^ 2 = Δt ^ 2 * x ^ 4 + (-2 * Δt ^ 2) * x ^ 2 + Δt ^ 2 := by
+  rw [mul_pow, Real.sq_sqrt hΔt.le]; ring
+
+lemma em_memLp (Δt : ℝ) (hΔt : 0 < Δt) :
+    MemLp (fun x : ℝ => (Real.sqrt Δt * x) ^ 2 - Δt) 2 (gaussianReal 0 1) := by
+  rw [memLp_two_iff_integrable_sq (by fun_prop)]
+  simp_rw [em_dropped_sq_eq Δt hΔt]
+  exact em_poly_integrable _ _ _
+
+/-- One step's dropped term: mean 0, variance `2 Δt ^ 2` (helper copy of the theorem below). -/
+lemma em_dropped_term
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (Δt : ℝ) (hΔt : 0 < Δt) (Z : Ω → ℝ) (hZ : HasLaw Z (gaussianReal 0 1) P) :
+    P[fun ω => (Real.sqrt Δt * Z ω) ^ 2 - Δt] = 0 ∧
+      Var[fun ω => (Real.sqrt Δt * Z ω) ^ 2 - Δt; P] = 2 * Δt ^ 2 := by
+  set f : ℝ → ℝ := fun x => (Real.sqrt Δt * x) ^ 2 - Δt with hf
+  have hmeanν : ∫ x, f x ∂(gaussianReal 0 1) = 0 := by
+    simp_rw [hf, em_dropped_eq Δt hΔt, em_poly]; ring
+  have hmean : P[fun ω => f (Z ω)] = 0 := by
+    rw [← hmeanν]
+    exact hZ.integral_comp (f := f) (by fun_prop)
+  refine ⟨hmean, ?_⟩
+  have hvar : Var[fun ω => f (Z ω); P] = Var[f; gaussianReal 0 1] := by
+    rw [← hZ.map_eq, variance_map (by rw [hZ.map_eq]; fun_prop) hZ.aemeasurable]
+    rfl
+  show Var[fun ω => f (Z ω); P] = 2 * Δt ^ 2
+  rw [hvar, variance_eq_integral (by fun_prop), hmeanν]
+  simp_rw [sub_zero, hf, em_dropped_sq_eq Δt hΔt, em_poly]; ring
+
+lemma em_log_bound (x : ℝ) : ∀ᶠ n : ℕ in atTop,
+    |(n : ℝ) * ((n : ℝ) * Real.log (1 + x / n) - x) + x ^ 2 / 2| ≤ 2 * |x| ^ 3 / n := by
+  obtain ⟨N, hN⟩ := exists_nat_gt (2 * |x|)
+  filter_upwards [eventually_ge_atTop (N + 1)] with n hn
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast (show 1 ≤ n by omega)
+  have hnpos : (0 : ℝ) < n := by linarith
+  have hNn : (N : ℝ) + 1 ≤ n := by exact_mod_cast hn
+  set h := x / n with hh
+  have hxh : x = n * h := by rw [hh]; field_simp
+  have habs : |h| ≤ 1 / 2 := by
+    rw [hh, abs_div, abs_of_pos hnpos, div_le_iff₀ hnpos]; linarith
+  have hlt : |-h| < 1 := by rw [abs_neg]; linarith
+  have key := Real.abs_log_sub_add_sum_range_le hlt 2
+  have hden : 1 / 2 ≤ 1 - |h| := by linarith
+  have key2 : |Real.log (1 + h) - h + h ^ 2 / 2| ≤ 2 * |h| ^ 3 := by
+    have e : Real.log (1 + h) - h + h ^ 2 / 2 =
+        ∑ i ∈ Finset.range 2, (-h) ^ (i + 1) / (i + 1) + Real.log (1 - -h) := by
+      simp [Finset.sum_range_succ]; ring
+    have e' : |-h| ^ (2 + 1) / (1 - |-h|) = |h| ^ 3 / (1 - |h|) := by
+      rw [abs_neg]
+    rw [e]
+    refine (key.trans_eq e').trans ?_
+    rw [div_le_iff₀ (by linarith)]
+    have : 0 ≤ |h| ^ 3 := by positivity
+    nlinarith
+  have e2 : (n : ℝ) * ((n : ℝ) * Real.log (1 + h) - x) + x ^ 2 / 2 =
+      (n : ℝ) ^ 2 * (Real.log (1 + h) - h + h ^ 2 / 2) := by
+    rw [hxh]; ring
+  rw [e2, abs_mul, abs_of_nonneg (by positivity)]
+  calc (n : ℝ) ^ 2 * |Real.log (1 + h) - h + h ^ 2 / 2| ≤ (n : ℝ) ^ 2 * (2 * |h| ^ 3) :=
+        mul_le_mul_of_nonneg_left key2 (by positivity)
+    _ = 2 * |x| ^ 3 / n := by
+        rw [hxh, abs_mul, abs_of_pos hnpos]; field_simp
+
+lemma em_nL (x : ℝ) : Tendsto (fun n : ℕ => (n : ℝ) * ((n : ℝ) * Real.log (1 + x / n) - x))
+    atTop (𝓝 (-x ^ 2 / 2)) := by
+  have h0 : Tendsto (fun n : ℕ => (n : ℝ) * ((n : ℝ) * Real.log (1 + x / n) - x) + x ^ 2 / 2)
+      atTop (𝓝 0) := by
+    refine squeeze_zero_norm' ?_ (tendsto_const_div_atTop_nhds_zero_nat (2 * |x| ^ 3))
+    filter_upwards [em_log_bound x] with n hn
+    rwa [Real.norm_eq_abs]
+  have := h0.sub_const (x ^ 2 / 2)
+  simp only [add_sub_cancel_right, zero_sub] at this
+  convert this using 2; ring
+
+lemma em_L (x : ℝ) : Tendsto (fun n : ℕ => (n : ℝ) * Real.log (1 + x / n) - x)
+    atTop (𝓝 0) := by
+  have := (em_nL x).mul tendsto_one_div_atTop_nhds_zero_nat
+  rw [mul_zero] at this
+  refine this.congr' ?_
+  filter_upwards [eventually_ge_atTop 1] with n hn
+  have : (n : ℝ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
+  field_simp
+
+lemma em_n_expm1 (x : ℝ) : Tendsto
+    (fun n : ℕ => (n : ℝ) * (Real.exp ((n : ℝ) * Real.log (1 + x / n) - x) - 1))
+    atTop (𝓝 (-x ^ 2 / 2)) := by
+  set L : ℕ → ℝ := fun n => (n : ℝ) * Real.log (1 + x / n) - x with hL
+  have hrem : Tendsto (fun n : ℕ => (n : ℝ) * (Real.exp (L n) - 1 - L n)) atTop (𝓝 0) := by
+    have hb : Tendsto (fun n : ℕ => |(n : ℝ) * L n| * |L n|) atTop (𝓝 0) := by
+      have := ((em_nL x).abs).mul ((em_L x).abs)
+      simpa using this
+    refine squeeze_zero_norm' ?_ hb
+    have hsmall : ∀ᶠ n : ℕ in atTop, |L n| ≤ 1 := by
+      have := (em_L x).abs
+      rw [abs_zero] at this
+      exact this.eventually (ge_mem_nhds one_pos) |>.mono fun n hn => hn
+    filter_upwards [hsmall] with n hn
+    rw [Real.norm_eq_abs, abs_mul, abs_mul, Nat.abs_cast, mul_assoc]
+    refine mul_le_mul_of_nonneg_left ?_ (by positivity)
+    exact (Real.abs_exp_sub_one_sub_id_le hn).trans (le_of_eq (by rw [← sq, sq_abs]))
+  have := (em_nL x).add hrem
+  rw [add_zero] at this
+  convert this using 2 with n
+  ring
+
+lemma em_key (x : ℝ) : Tendsto (fun n : ℕ => (n : ℝ) * (Real.exp x - (1 + x / n) ^ n))
+    atTop (𝓝 (Real.exp x * x ^ 2 / 2)) := by
+  have := (em_n_expm1 x).const_mul (-Real.exp x)
+  rw [show -Real.exp x * (-x ^ 2 / 2) = Real.exp x * x ^ 2 / 2 by ring] at this
+  refine this.congr' ?_
+  obtain ⟨N, hN⟩ := exists_nat_gt (2 * |x|)
+  filter_upwards [eventually_ge_atTop (N + 1)] with n hn
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast (show 1 ≤ n by omega)
+  have hnpos : (0 : ℝ) < n := by linarith
+  have hNn : (N : ℝ) + 1 ≤ n := by exact_mod_cast hn
+  have hpos : 0 < 1 + x / n := by
+    have : |x / n| < 1 := by
+      rw [abs_div, abs_of_pos hnpos, div_lt_one hnpos]; linarith
+    linarith [neg_abs_le (x / n)]
+  have hpow : (1 + x / n) ^ n = Real.exp ((n : ℝ) * Real.log (1 + x / n)) := by
+    rw [Real.exp_nat_mul, Real.exp_log hpos]
+  rw [hpow, Real.exp_sub]
+  field_simp
+  ring
+
+#print axioms em_gauss_mgf
+#print axioms em_deriv1
+#print axioms em_hexp
+#print axioms em_deriv2
+#print axioms em_deriv3
+#print axioms em_deriv4
+#print axioms em_zero_mem
+#print axioms em_moment2
+#print axioms em_moment4
+#print axioms em_integrable_pow
+#print axioms em_poly
+#print axioms em_poly_integrable
+#print axioms em_dropped_eq
+#print axioms em_dropped_sq_eq
+#print axioms em_memLp
+#print axioms em_dropped_term
+#print axioms em_log_bound
+#print axioms em_nL
+#print axioms em_L
+#print axioms em_n_expm1
+#print axioms em_key
+
+/-- The dropped terms add up like a random walk: with `n` steps of length `Δt = T / n` and
+Brownian steps `ΔW_k = √Δt Z_k` from independent standard normal draws `Z_k`, the sum
+`R = ∑ (ΔW_k ^ 2 - Δt)` has mean 0 and variance `2 T Δt`, so its size is the square root of the step. -/
+theorem dropped_terms_sum_mean_zero_variance_two_T_dt
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (T : ℝ) (hT : 0 < T) (n : ℕ) (hn : 0 < n)
+    (Z : ℕ → Ω → ℝ) (hZ : ∀ k, HasLaw (Z k) (gaussianReal 0 1) P) (hind : iIndepFun Z P) :
+    P[fun ω => ∑ k ∈ Finset.range n, ((Real.sqrt (T / n) * Z k ω) ^ 2 - T / n)] = 0 ∧
+      Var[fun ω => ∑ k ∈ Finset.range n, ((Real.sqrt (T / n) * Z k ω) ^ 2 - T / n); P] =
+        2 * T * (T / n) := by
+  have hnr : (0 : ℝ) < n := by exact_mod_cast hn
+  have hΔt : 0 < T / n := div_pos hT hnr
+  set f : ℝ → ℝ := fun x => (Real.sqrt (T / n) * x) ^ 2 - T / n with hf
+  set Y : ℕ → Ω → ℝ := fun k => f ∘ Z k with hY
+  have hfm : Measurable f := by fun_prop
+  have hmem : ∀ k, MemLp (Y k) 2 P := fun k => (hZ k).memLp_comp (em_memLp _ hΔt)
+  have hsum : (fun ω => ∑ k ∈ Finset.range n, ((Real.sqrt (T / n) * Z k ω) ^ 2 - T / n)) =
+      ∑ k ∈ Finset.range n, Y k := by
+    funext ω; simp [hY, hf, Finset.sum_apply]
+  constructor
+  · refine (integral_finsetSum (f := fun k ω => (Real.sqrt (T / n) * Z k ω) ^ 2 - T / n) _
+      (fun k _ => (hmem k).integrable one_le_two)).trans ?_
+    refine Finset.sum_eq_zero fun k _ => ?_
+    exact (em_dropped_term P _ hΔt (Z k) (hZ k)).1
+  · rw [hsum]
+    have hind' : iIndepFun Y P := hind.comp (fun _ => f) (fun _ => hfm)
+    rw [IndepFun.variance_sum (fun k _ => hmem k)
+      (fun i _ j _ hij => hind'.indepFun hij)]
+    have : ∀ k ∈ Finset.range n, Var[Y k; P] = 2 * (T / n) ^ 2 := fun k _ =>
+      (em_dropped_term P _ hΔt (Z k) (hZ k)).2
+    rw [Finset.sum_congr rfl this, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    field_simp
+
+/-- One step's dropped term is the size of the step and zero on average: for a step `Δt` and a
+Brownian step `ΔW = √Δt Z` with `Z` a standard normal draw, `ΔW ^ 2 - Δt` has mean 0 and
+variance `2 Δt ^ 2`, that is, standard deviation `√2 Δt`. -/
+theorem dropped_term_mean_zero_variance_two_dt_sq
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (Δt : ℝ) (hΔt : 0 < Δt) (Z : Ω → ℝ) (hZ : HasLaw Z (gaussianReal 0 1) P) :
+    P[fun ω => (Real.sqrt Δt * Z ω) ^ 2 - Δt] = 0 ∧
+      Var[fun ω => (Real.sqrt Δt * Z ω) ^ 2 - Δt; P] = 2 * Δt ^ 2 := by
+  exact em_dropped_term P Δt hΔt Z hZ
+
+/-- Euler's method on the noise-free share `dx/dt = μ x` is order one: with `n` steps over `[0, T]`
+it ends at `S₀ (1 + μ T / n) ^ n`, and `n` times its error at `T` tends to the leading term
+`S₀ e^(μT) μ² T² / 2`. -/
+theorem euler_ode_error_times_n_tendsto (S₀ μ T : ℝ) :
+    Tendsto (fun n : ℕ => (n : ℝ) * (S₀ * Real.exp (μ * T) - S₀ * (1 + μ * T / n) ^ n))
+      atTop (𝓝 (S₀ * Real.exp (μ * T) * μ ^ 2 * T ^ 2 / 2)) := by
+  have := (em_key (μ * T)).const_mul S₀
+  convert this using 1
+  · funext n; ring
+  · congr 1; ring
+
+/-! The card's worked numbers, exactly, as fractions: `S₀ = 50`, `μ = 8/100`, `σ = 40/100`,
+one quarter-year step `Δt = 1/4`. -/
+
+-- The log drift μ - σ²/2 is 0 for this share.
+example : (8 / 100 : ℚ) - 1 / 2 * (40 / 100) ^ 2 = 0 := by norm_num
+-- With Z = 2 the Brownian step is ΔW = 2 * √(1/4) = 1, since (1/2)^2 = 1/4.
+example : ((1 : ℚ) / 2) ^ 2 = 1 / 4 ∧ (2 : ℚ) * (1 / 2) = 1 := by norm_num
+-- Drift over the step: 0.08 × 50 × 0.25 = 1.
+example : (8 / 100 : ℚ) * 50 * (1 / 4) = 1 := by norm_num
+-- Noise over the step: 0.40 × 50 × 1.0 = 20.
+example : (40 / 100 : ℚ) * 50 * 1 = 20 := by norm_num
+-- Euler-Maruyama lands at 50 + 1 + 20 = 71.
+example : (50 : ℚ) + 8 / 100 * 50 * (1 / 4) + 40 / 100 * 50 * 1 = 71 := by norm_num
+-- The dropped term ½σ²S(ΔW² - Δt) = 0.08 × 50 × (1 - 0.25) = 3.
+example : (1 / 2 : ℚ) * (40 / 100) ^ 2 * 50 * (1 ^ 2 - 1 / 4) = 3 := by norm_num
+-- With Z = 1, ΔW = 1/2 and ΔW² = Δt exactly, so the dropped term is 0.
+example : (1 / 2 : ℚ) * (40 / 100) ^ 2 * 50 * ((1 / 2) ^ 2 - 1 / 4) = 0 := by norm_num
+-- R has variance 2TΔt: for T = 1 and 256 steps that is 2 × 1 × 1/256 = 1/128.
+example : (2 : ℚ) * 256 * (1 / 256) ^ 2 = 2 * 1 * (1 / 256) ∧ (2 : ℚ) * 1 * (1 / 256) = 1 / 128 := by
+  norm_num
+
+#print axioms dropped_terms_sum_mean_zero_variance_two_T_dt
+#print axioms dropped_term_mean_zero_variance_two_dt_sq
+#print axioms euler_ode_error_times_n_tendsto
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'em_gauss_mgf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_deriv1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_hexp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_deriv2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_deriv3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_deriv4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_zero_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_moment2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_moment4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_integrable_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_poly' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_poly_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_dropped_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_dropped_sq_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_memLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_dropped_term' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_log_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_nL' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_L' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_n_expm1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dropped_terms_sum_mean_zero_variance_two_T_dt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dropped_term_mean_zero_variance_two_dt_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'euler_ode_error_times_n_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -601,14 +971,14 @@ The two outputs agree line for line. The weak line shows the other kind of error
 > - **Scaling the Brownian step by $\Delta t$.** The spread of the log price comes out at 0.0251 instead of 0.40.
 > - **Measuring strong error on two different paths.** The gap is then the share's own spread, $24.28, and never shrinks.
 > - **Trusting long steps on a positive quantity.** With one step for the year the share goes negative about 1 time in 300 (0.32 percent). Prices, interest rates under some models and variances need short steps or a scheme that respects the sign.
-> - **Confusing the two errors.** The error in averages, such as an option's price, falls like the step; quoting the strong order for a pricing run overstates the steps needed; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) separates them.
+> - **Confusing the two errors.** The error in averages, such as an option's price, falls like the step; quoting the strong order for a pricing run overstates the steps needed.
 
 ---
 
 ## Where you meet it in real life
 
 - **Pricing under models with no formula.** Volatility that moves has no closed form; banks simulate it by this scheme or a refinement: [Pricing with local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md), [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md), [SABR and Hagan's formula](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md).
-- **Interest-rate paths.** The shelf's house example, a short rate pulled back to its long-run level and simulated with 1,000 steps, is run by exactly this loop; for that model an exact step also exists ([Exact simulation](06-exact-simulation-of-gbm-and-ou.md)).
+- **Interest-rate paths.** The shelf's house example, a short rate pulled back to its long-run level and simulated with 1,000 steps, is run by exactly this loop.
 - **Image-generating models.** Diffusion models generate an image by running a reverse-time SDE from noise; the simplest sampler is an Euler-Maruyama loop.
 - **Checking densities.** A histogram of simulated endpoints roughly pictures the density that [Fokker-Planck](03-fokker-planck-forward-equation.md) computes exactly.
 
@@ -634,7 +1004,7 @@ The two outputs agree line for line. The weak line shows the other kind of error
 - [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a variance that must stay positive, where the long-step trap bites.
 - [SABR and Hagan's formula](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): an approximate formula checked against simulated paths.
 
-This card found the dropped term $\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)$ and put it back only after the run; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) builds it into every step, and asks whether a price, which is an average, needs the path error small at all.
+This card found the dropped term and put it back only after the run; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) builds it into every step, and asks whether a price, which is an average, needs the path error small at all.
 
 ---
 

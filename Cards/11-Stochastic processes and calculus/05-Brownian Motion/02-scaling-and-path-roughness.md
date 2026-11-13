@@ -12,7 +12,12 @@ Now film faster: every quarter second, every sixteenth, down to every 1/4096 of 
 
 Two facts sit behind that. **Scaling**: distances grow like the square root of time, so 4 times as long means about 2 times as far. **Roughness**: the average speed read off the film depends on the film. With frames 1 second apart it reads 0.76 micrometres per second; with frames 1/4096 s apart, 51.18. Halve the gap and the reading grows by the square root of 2, forever. The path has no slope at any time.
 
-The model is Brownian motion $W_t$, read "the position at time $t$" ([Brownian motion](01-brownian-motion.md)): it starts at 0, its moves over separate stretches of time are independent, the move over a stretch of length $h$ is normal with mean 0 and variance $h$, and its path is continuous.
+The model is Brownian motion $W_t$, read "the position at time $t$" ([Brownian motion](01-brownian-motion.md)). It has four properties:
+
+- it starts at 0;
+- its moves over separate stretches of time are independent;
+- the move over a stretch of length $h$ is normal with mean 0 and variance $h$;
+- its path is continuous.
 
 **Stretch time by a factor c-squared and position by c, and Brownian motion turns into Brownian motion again; so typical distances grow like root t, every zoom looks as rough as the whole, and with probability one the path has a slope at no time at all.**
 
@@ -93,7 +98,9 @@ $$P\big(\text{the path } t \mapsto W_t \text{ has a finite slope at some time } 
 
 ### Step 0: no built-in scale except space-squared over time
 
-A smooth curve has a slope, micrometres per second. Zoom both axes by the same factor and the slope stays put, so the curve flattens into its tangent line. Brownian motion carries no such number. Its only fixed ratio is variance per unit time, 1 square micrometre per second here. A zoom that keeps that ratio, c in space and c-squared in time, leaves every defining property untouched. So the zoomed path has the same law at every magnification and never settles into a line, and a line is what a slope is. That is a picture, since equal laws say nothing about one fixed path; Steps 3 to 5 make it a proof.
+A smooth curve has a slope, micrometres per second. Zoom both axes by the same factor and the slope stays put, so the curve flattens into its tangent line. Brownian motion carries no such number. Its only fixed ratio is variance per unit time, 1 square micrometre per second here. A zoom that keeps that ratio, c in space and c-squared in time, leaves every defining property untouched.
+
+So the zoomed path has the same law at every magnification and never settles into a line, and a line is what a slope is. That is a picture, since equal laws say nothing about one fixed path; Steps 3 to 5 make it a proof.
 
 ### Step 1: the scaling law, proved
 
@@ -118,7 +125,9 @@ Fix a time t, say 8 seconds. The chord's slope over a step h is $(W_{t+h} - W_t)
 
 Now fix a speed limit K. The chance that a chord breaks it is $P(\lvert Z\rvert > K\sqrt{h}) = 2(1 - \Phi(K\sqrt{h}))$. As h shrinks, $K\sqrt{h}$ falls to 0 and the chance climbs to 1.
 
-That gives a proof. Take the steps 1/4, 1/16, 1/64 and so on, and call event j "the chord over step 4 to the power −j breaks the limit K". The chance of event j tends to 1. The chance that infinitely many of the events happen is the limit, as m grows, of the chance that at least one from event m on happens ([Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from above). Each of those chances is at least the chance of event m alone, which tends to 1. So with probability one, chords break the limit K at arbitrarily small steps.
+That gives a proof. Take the steps 1/4, 1/16, 1/64 and so on, and call event j "the chord over step 4 to the power −j breaks the limit K". The chance of event j tends to 1.
+
+The chance that infinitely many of the events happen is the limit, as m grows, of the chance that at least one from event m on happens ([Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from above). Each of those chances is at least the chance of event m alone, which tends to 1. So with probability one, chords break the limit K at arbitrarily small steps.
 
 Do that for K = 1, 2, 3 and so on. Countably many events of probability one happen together with probability one. So with probability one the chords at time t are unbounded as h shrinks. A slope $D$ would force them to settle near D. There is none.
 
@@ -132,7 +141,9 @@ That is not yet the theorem. A set of no length can still hold points, and those
 
 Raymond Paley, Norbert Wiener and Antoni Zygmund proved the full statement in 1933. A shorter argument, due to Dvoretzky, Erdős and Kakutani, needs only the normal law.
 
-The shape in words. Suppose the path had a slope at some time $s$ within the first second. Then near s it moves no faster than some whole number K of micrometres per second. Cut the second into n equal frames. Just after s sit three consecutive frames, each within 4/n of s. On each, the path moves at most 7K/n. Each move is normal with variance 1/n, so each lands that close to 0 with chance at most $7K/\sqrt{n}$. The three moves are independent, so all three do with chance at most $(7K/\sqrt{n})^3$. There are n places the trio could sit. Adding over them gives at most $343K^3/\sqrt{n}$, which tends to 0 as the frames shrink.
+The shape in words. Suppose the path had a slope at some time $s$ within the first second. Then near s it moves no faster than some whole number K of micrometres per second. Cut the second into n equal frames. Just after s sit three consecutive frames, each within 4/n of s. On each, the path moves at most 7K/n.
+
+Each move is normal with variance 1/n, so each lands that close to 0 with chance at most $7K/\sqrt{n}$. The three moves are independent, so all three do with chance at most $(7K/\sqrt{n})^3$. There are n places the trio could sit. Adding over them gives at most $343K^3/\sqrt{n}$, which tends to 0 as the frames shrink.
 
 For K = 1 micrometre per second the bound is 5.3594 at 4096 frames a second and 0.0837 at 16,777,216. The exact three-frame chance, summed over places, is about half: 2.7061 and 0.0425. Both halve each time n is multiplied by 4.
 
@@ -153,7 +164,9 @@ The argument never uses the left side of s and needs only a speed limit near s, 
 
 ### Step 6: continuity is the other half, and it comes with a rate
 
-On this film the largest move between neighbouring frames is 1.4057 micrometres at 1-second frames and 0.0723 at 1/4096 s. It falls a little slower than root h, because the largest of many moves picks the luckiest one; Paul Lévy found the exact rate, proved in Mörters and Peres (Sources). A move over a frame of length h is about root h in size, never about h. Root h shrinks to 0, matching the continuity the definition asks for. Root h divided by h grows without bound, so there is no slope. Continuous everywhere and smooth nowhere are one fact seen from two sides.
+On this film the largest move between neighbouring frames is 1.4057 micrometres at 1-second frames and 0.0723 at 1/4096 s. It falls a little slower than root h, because the largest of many moves picks the luckiest one; Paul Lévy found the exact rate, proved in Mörters and Peres (Sources).
+
+A move over a frame of length h is about root h in size, never about h. Root h shrinks to 0, matching the continuity the definition asks for. Root h divided by h grows without bound, so there is no slope. Continuous everywhere and smooth nowhere are one fact seen from two sides.
 
 A second road to the missing slope adds up squared moves instead of chords. The total stays at the elapsed time however fine the frames, which forces infinite length on every interval and rules out a slope on any interval: [Quadratic variation](03-quadratic-variation.md) does it properly.
 
@@ -188,7 +201,13 @@ The code prints every one of them.
 
 ## Code, from first principles, and it actually runs
 
-Random numbers come from SplitMix64, seed 20260930, made normal by Box-Muller, both written out. Three roads. **Formulas:** the root-t laws, the normal cumulative chance written twice (Simpson's rule and a Taylor series), and the proof's bound. **Exact enumeration:** a coin-flip walk's mean distance, summed over every path, closing on $\sqrt{2/\pi}$ ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)). **Simulation:** one 16-second path by Lévy's midpoint refinement, from 1-second frames to 1/4096 s; each new midpoint is its neighbours' average plus a normal move with a quarter of the old frame's variance. Earlier points never move, so each level is the same path filmed faster. Then 20,000 paths on a 1/8 s grid over 4 seconds test the scaling law; a sum of normal moves is exactly normal at every grid time, so the grid adds no bias. Simulated numbers carry standard errors, and asserts on them allow four.
+Random numbers come from SplitMix64, seed 20260930, made normal by Box-Muller, both written out. Three roads:
+
+- **Formulas:** the root-t laws, the normal cumulative chance written twice (Simpson's rule and a Taylor series), and the proof's bound.
+- **Exact enumeration:** a coin-flip walk's mean distance, summed over every path, closing on $\sqrt{2/\pi}$ ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)).
+- **Simulation:** one 16-second path by Lévy's midpoint refinement, from 1-second frames to 1/4096 s; each new midpoint is its neighbours' average plus a normal move with a quarter of the old frame's variance. Earlier points never move, so each level is the same path filmed faster. Then 20,000 paths on a 1/8 s grid over 4 seconds test the scaling law; a sum of normal moves is exactly normal at every grid time, so the grid adds no bias.
+
+Simulated numbers carry standard errors, and asserts on them allow four.
 
 ### Python
 
@@ -621,6 +640,365 @@ xychart-beta
 
 Orange: the simulated path, one sample. Green: the formula $\sqrt{2/(\pi h)}$. Dark: the smooth curve $g$, flat at 0.50. Each step right divides the frame by 4 and doubles the Brownian readings.
 
+### Lean
+
+Lean proves the card's three theorems for every Brownian motion, and checks the worked arithmetic.
+
+- Take any zoom factor $c > 0$. Then $V_t = W_{c^2 t}/c$ is again a Brownian motion.
+- Take any time $t$. Then $W_t \overset{d}{=} \sqrt{t}\,Z$ and $E\,\lvert W_t\rvert = \sqrt{2t/\pi}$.
+- With probability one, the path has a slope at no time at all. That holds even for a slope read only from the right of each time.
+- Take the worked numbers. Then $\sqrt{4} = 2$, $\sqrt{4096} = 64$, $10\sqrt{1/4096} = 0.15625$ and $7^3 = 343$.
+
+The simulations, the coin-flip walk and the values of $\Phi$ are left to the Python and Rust checks.
+
+```lean
+-- Brownian paths: stretching time by c squared and position by c turns a Brownian motion into a Brownian motion again, its position at time t is root t times a standard normal number with mean distance root (2t/pi), and with probability one its path has a slope at no time at all.
+import Mathlib.Probability.BrownianMotion.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+
+open MeasureTheory ProbabilityTheory Real
+open scoped NNReal
+
+/-! Brownian motion is Mathlib's `IsBrownianReal W P`: a process `W : ℝ≥0 → Ω → ℝ` whose
+finite-dimensional laws are those of Brownian motion (it starts at 0, its moves over separate
+stretches are independent, the move over a stretch of length h is normal with mean 0 and
+variance h) and whose paths are continuous with probability one. These are the card's four
+defining properties. -/
+
+/-! Helper lemmas for the proofs below. -/
+
+lemma integral_Ioi_mul_exp (v : ℝ) (hv : 0 < v) :
+    ∫ x in Set.Ioi (0:ℝ), x * rexp (-x ^ 2 / (2 * v)) = v := by
+  have A : ∀ x ∈ Set.Ici (0:ℝ), HasDerivAt (fun x => -v * rexp (-x ^ 2 / (2 * v)))
+      (x * rexp (-x ^ 2 / (2 * v))) x := by
+    intro x _
+    have h1 : HasDerivAt (fun y : ℝ => -y ^ 2 / (2 * v)) (-(2 * x) / (2 * v)) x := by
+      have := ((hasDerivAt_pow 2 x).const_mul (-1 : ℝ)).div_const (2 * v)
+      convert this using 1
+      · ext y; ring
+      · simp
+    have := h1.exp.const_mul (-v)
+    convert this using 1
+    field_simp
+  have B : Filter.Tendsto (fun x : ℝ => -v * rexp (-x ^ 2 / (2 * v))) Filter.atTop
+      (nhds (-v * 0)) := by
+    refine Filter.Tendsto.const_mul _ (tendsto_exp_atBot.comp ?_)
+    have : Filter.Tendsto (fun x : ℝ => x ^ 2) Filter.atTop Filter.atTop :=
+      Filter.tendsto_pow_atTop two_ne_zero
+    have h2 := this.atTop_div_const (r := 2 * v) (by positivity)
+    simpa [neg_div] using h2
+  have hint : IntegrableOn (fun x : ℝ => x * rexp (-x ^ 2 / (2 * v))) (Set.Ioi 0) := by
+    have := integrable_mul_exp_neg_mul_sq (b := (2 * v)⁻¹) (by positivity)
+    refine (this.congr ?_).integrableOn
+    refine Filter.Eventually.of_forall fun x => ?_
+    simp only
+    congr 2
+    field_simp
+  rw [integral_Ioi_of_hasDerivAt_of_tendsto' A hint B]
+  simp
+
+lemma gaussianReal_abs_le_bound (v : ℝ≥0) (hv : v ≠ 0) (a : ℝ) :
+    gaussianReal 0 v {x | |x| ≤ a} ≤ ENNReal.ofReal (2 * a / √(2 * π * v)) := by
+  rw [gaussianReal_apply _ hv]
+  have hset : {x : ℝ | |x| ≤ a} = Set.Icc (-a) a := by ext x; simp [abs_le]
+  rw [hset]
+  calc ∫⁻ x in Set.Icc (-a) a, gaussianPDF 0 v x
+      ≤ ∫⁻ x in Set.Icc (-a) a, ENNReal.ofReal (√(2 * π * v))⁻¹ := by
+        refine lintegral_mono fun x => ?_
+        rw [gaussianPDF]
+        refine ENNReal.ofReal_le_ofReal ?_
+        rw [gaussianPDFReal]
+        have h1 : rexp (-(x - 0) ^ 2 / (2 * v)) ≤ 1 := by
+          refine Real.exp_le_one_iff.2 ?_
+          have : 0 ≤ (x - 0) ^ 2 / (2 * v) := by positivity
+          rw [neg_div]; linarith
+        have h0 : 0 ≤ (√(2 * π * v))⁻¹ := by positivity
+        exact mul_le_of_le_one_right h0 h1
+    _ = ENNReal.ofReal (√(2 * π * v))⁻¹ * volume (Set.Icc (-a) a) := setLIntegral_const _ _
+    _ = ENNReal.ofReal (2 * a / √(2 * π * v)) := by
+        rw [Real.volume_Icc, ← ENNReal.ofReal_mul (by positivity)]
+        congr 1; ring
+
+lemma brownian_three_small_moves_prob {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} (hW : IsBrownianReal W P) (M N n : ℕ) (hn : 1 ≤ n) :
+    P (⋃ k ∈ Finset.range ((N + 1) * n + 1), ⋂ j ∈ Finset.range 3,
+        {ω | |W (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω - W (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω|
+          ≤ 7 * M / n})
+      ≤ ENNReal.ofReal (2 * (N + 1) * (14 * M) ^ 3 / √n) := by
+  have hP : IsProbabilityMeasure P := hW.isGaussianProcess.isProbabilityMeasure
+  have hnr : (0:ℝ) < n := by exact_mod_cast hn
+  have hr : 0 < √(n:ℝ) := Real.sqrt_pos.2 hnr
+  have hrr : √(n:ℝ) * √(n:ℝ) = n := Real.mul_self_sqrt hnr.le
+  have hstep : ∀ k j : ℕ,
+      P {ω | |W (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω - W (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω|
+          ≤ 7 * M / n} ≤ ENNReal.ofReal (14 * M / √n) := by
+    intro k j
+    have hl := hW.hasLaw_sub (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0))
+    have hv : nndist ((((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0) : ℝ≥0) : ℝ)
+        ((((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0) : ℝ≥0) : ℝ) = (n : ℝ≥0)⁻¹ := by
+      apply NNReal.eq
+      rw [coe_nndist, Real.dist_eq]
+      push_cast
+      rw [show ((k:ℝ) + (j + 1)) / n - (k + j) / n = (n:ℝ)⁻¹ by field_simp; ring]
+      exact abs_of_pos (by positivity)
+    replace hl : HasLaw (W (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) - W (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0)))
+        (gaussianReal 0 (n : ℝ≥0)⁻¹) P := by
+      convert hl using 2
+      exact hv.symm
+    have hm := hl.measure_eq (p := fun x => |x| ≤ 7 * M / n)
+      (measurableSet_le (by fun_prop) measurable_const)
+    simp only [Pi.sub_apply] at hm
+    rw [hm]
+    refine (gaussianReal_abs_le_bound _ (by simp; omega) _).trans (ENNReal.ofReal_le_ofReal ?_)
+    have hs : √(2 * π * (((n : ℝ≥0)⁻¹ : ℝ≥0) : ℝ)) = √(2 * π) / √n := by
+      push_cast
+      rw [Real.sqrt_mul (by positivity), Real.sqrt_inv]
+      ring
+    have h1 : 1 ≤ √(2 * π) := by
+      rw [Real.one_le_sqrt]; linarith [Real.two_le_pi]
+    rw [hs, div_le_div_iff₀ (by positivity) hr]
+    have hM : (0:ℝ) ≤ M := by positivity
+    rw [show 2 * (7 * (M:ℝ) / n) * √n = 14 * M / √n by
+      field_simp
+      nlinarith [hrr]]
+    rw [← mul_div_assoc]
+    exact div_le_div_of_nonneg_right (le_mul_of_one_le_right (by positivity) h1) hr.le
+  calc _ ≤ ∑ k ∈ Finset.range ((N + 1) * n + 1), P (⋂ j ∈ Finset.range 3,
+        {ω | |W (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω - W (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω|
+          ≤ 7 * M / n}) := measure_biUnion_finset_le _ _
+    _ ≤ ∑ k ∈ Finset.range ((N + 1) * n + 1), ENNReal.ofReal (14 * M / √n) ^ 3 := by
+        refine Finset.sum_le_sum fun k _ => ?_
+        have hmono : Monotone (fun i : ℕ => ((k + i : ℕ) : ℝ≥0) / (n : ℝ≥0)) := by
+          intro i i' hii
+          simp only
+          gcongr
+        have hind := hW.hasIndepIncrements.nat hmono
+        rw [hind.meas_biInter (S := Finset.range 3) (s := fun j => {ω |
+            |W (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω - W (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω|
+              ≤ 7 * M / n}) (fun j _ => ⟨{x | |x| ≤ 7 * M / n},
+              measurableSet_le (by fun_prop) measurable_const, rfl⟩)]
+        calc _ ≤ ENNReal.ofReal (14 * M / √n) ^ (Finset.range 3).card :=
+              Finset.prod_le_pow_card _ _ _ fun j _ => hstep k j
+          _ = _ := by simp
+    _ = ENNReal.ofReal (((N + 1) * n + 1 : ℕ) * (14 * M / √n) ^ 3) := by
+        rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul, ENNReal.ofReal_mul (by positivity),
+          ENNReal.ofReal_pow (by positivity), ENNReal.ofReal_natCast]
+    _ ≤ _ := by
+        refine ENNReal.ofReal_le_ofReal ?_
+        have hn1 : (1:ℝ) ≤ n := by exact_mod_cast hn
+        have hX : (0:ℝ) ≤ (14 * M) ^ 3 := by positivity
+        rw [div_pow, mul_div_assoc', div_le_div_iff₀ (by positivity) hr]
+        push_cast
+        have h3 : √(n:ℝ) ^ 3 = n * √n := by rw [pow_succ, sq, hrr]
+        rw [h3]
+        have : ((N:ℝ) + 1) * n + 1 ≤ 2 * (N + 1) * n := by nlinarith
+        have := mul_le_mul_of_nonneg_right this (mul_nonneg hX hr.le)
+        nlinarith
+
+lemma slope_gives_three_small_moves {Ω : Type*} {W : ℝ≥0 → Ω → ℝ} (ω : Ω) (s : ℝ≥0) (D : ℝ)
+    (h : HasDerivWithinAt (fun u : ℝ => W u.toNNReal ω) D (Set.Ici (s : ℝ)) s) :
+    ∃ M N n0 : ℕ, ∀ n, n0 ≤ n → ω ∈ ⋃ k ∈ Finset.range ((N + 1) * n + 1), ⋂ j ∈ Finset.range 3,
+        {ω | |W (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω - W (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω|
+          ≤ 7 * M / n} := by
+  set f := fun u : ℝ => W u.toNNReal ω with hf
+  have hev := (hasDerivWithinAt_iff_isLittleO.1 h).def one_pos
+  obtain ⟨u, hu, hsub⟩ := mem_nhdsGE_iff_exists_Ico_subset.1 hev
+  have hbound : ∀ t ∈ Set.Ico (s : ℝ) u, |f t - f s| ≤ (|D| + 1) * (t - s) := by
+    intro t ht
+    have h1 := hsub ht
+    simp only [Set.mem_ofPred_eq, Real.norm_eq_abs, smul_eq_mul, one_mul] at h1
+    have hts : 0 ≤ t - s := sub_nonneg.2 ht.1
+    rw [abs_of_nonneg hts] at h1
+    have h2 := abs_le.1 h1
+    have h3 : (t - s) * D ≤ (t - s) * |D| := mul_le_mul_of_nonneg_left (le_abs_self D) hts
+    have h4 : (t - s) * -|D| ≤ (t - s) * D := mul_le_mul_of_nonneg_left (neg_abs_le D) hts
+    rw [abs_le]; constructor <;> nlinarith
+  refine ⟨⌈|D| + 1⌉₊, ⌈(s : ℝ)⌉₊, ⌈4 / (u - s)⌉₊ + 1, fun n hn => ?_⟩
+  have hus : 0 < u - s := sub_pos.2 hu
+  have hn' : (⌈4 / (u - s)⌉₊ : ℝ) + 1 ≤ n := by exact_mod_cast hn
+  have hceil : 4 / (u - s) ≤ (⌈4 / (u - s)⌉₊ : ℝ) := Nat.le_ceil _
+  have hdiv : 0 ≤ 4 / (u - s) := by positivity
+  have hnpos : (0 : ℝ) < n := by linarith
+  have hn4 : 4 < (u - s) * n := by
+    have : 4 / (u - s) < n := by linarith
+    rw [div_lt_iff₀ hus] at this; linarith
+  have hs0 : (0 : ℝ) ≤ s := s.2
+  set k := ⌈(s : ℝ) * n⌉₊ with hkdef
+  have hk1 : (s : ℝ) * n ≤ k := Nat.le_ceil _
+  have hk2 : (k : ℝ) < s * n + 1 := Nat.ceil_lt_add_one (by positivity)
+  have hM : |D| + 1 ≤ (⌈|D| + 1⌉₊ : ℝ) := Nat.le_ceil _
+  have hN : (s : ℝ) ≤ ⌈(s : ℝ)⌉₊ := Nat.le_ceil _
+  simp only [Set.mem_iUnion, Set.mem_iInter, Finset.mem_range, Set.mem_ofPred_eq]
+  refine ⟨k, ?_, fun j hj => ?_⟩
+  · have : (k : ℝ) < ((⌈(s : ℝ)⌉₊ + 1) * n + 1 : ℕ) := by
+      push_cast; nlinarith
+    exact_mod_cast this
+  · have hval : ∀ i : ℕ, W ((i : ℝ≥0) / (n : ℝ≥0)) ω = f ((i : ℝ) / n) := by
+      intro i
+      have : ((i : ℝ) / n) = (((i : ℝ≥0) / (n : ℝ≥0) : ℝ≥0) : ℝ) := by push_cast; rfl
+      simp only [hf, this, Real.toNNReal_coe]
+    rw [hval, hval]
+    have hj' : (j : ℝ) ≤ 2 := by exact_mod_cast (Nat.lt_succ_iff.1 hj)
+    have hj0 : (0 : ℝ) ≤ j := by positivity
+    set p : ℝ := ((k + j : ℕ) : ℝ) / n with hp
+    set q : ℝ := ((k + (j + 1) : ℕ) : ℝ) / n with hq
+    have hpn : p * n = k + j := by rw [hp]; push_cast; field_simp
+    have hqn : q * n = k + j + 1 := by rw [hq]; push_cast; field_simp; ring
+    have hpI : p ∈ Set.Ico (s : ℝ) u := by
+      constructor
+      · rw [hp, le_div_iff₀ hnpos]; push_cast; linarith
+      · rw [hp, div_lt_iff₀ hnpos]; push_cast; nlinarith
+    have hqI : q ∈ Set.Ico (s : ℝ) u := by
+      constructor
+      · rw [hq, le_div_iff₀ hnpos]; push_cast; linarith
+      · rw [hq, div_lt_iff₀ hnpos]; push_cast; nlinarith
+    have hp3 : p - s ≤ 3 / n := by
+      rw [le_div_iff₀ hnpos, sub_mul, hpn]; linarith
+    have hq4 : q - s ≤ 4 / n := by
+      rw [le_div_iff₀ hnpos, sub_mul, hqn]; linarith
+    have e1 := hbound p hpI
+    have e2 := hbound q hqI
+    have hps : 0 ≤ p - s := sub_nonneg.2 hpI.1
+    have hqs : 0 ≤ q - s := sub_nonneg.2 hqI.1
+    set Mr : ℝ := (⌈|D| + 1⌉₊ : ℝ)
+    calc |f q - f p| ≤ |f q - f s| + |f p - f s| :=
+          (abs_sub_le _ _ _).trans_eq (by rw [abs_sub_comm (f s)])
+      _ ≤ (|D| + 1) * (q - s) + (|D| + 1) * (p - s) := add_le_add e2 e1
+      _ ≤ Mr * (q - s) + Mr * (p - s) := by gcongr
+      _ ≤ Mr * (4 / n) + Mr * (3 / n) := by gcongr
+      _ = 7 * Mr / n := by ring
+
+/-- **The scaling law.** If `W` is a Brownian motion and `c > 0`, then the zoomed process
+`V t = (1/c) W (c² t)`, the clock run c-squared times as fast and every distance shrunk by c,
+is again a Brownian motion. -/
+theorem scaled_brownian_motion_is_brownian {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} (hW : IsBrownianReal W P) (c : ℝ≥0) (hc : 0 < c) :
+    IsBrownianReal (fun t ω => (c : ℝ)⁻¹ * W (c ^ 2 * t) ω) P := by
+  have h := hW.smul (c := c ^ 2) (pow_ne_zero 2 hc.ne')
+  have e : √((c ^ 2 : ℝ≥0) : ℝ) = (c : ℝ) := by
+    rw [NNReal.coe_pow]; exact Real.sqrt_sq c.2
+  simpa only [e] using h
+
+/-- **The root-t rule.** The position of a Brownian motion at time t has the law of root t
+times a standard normal number Z, and its mean distance from the start is `√(2t/π)`. -/
+theorem brownian_position_scales_by_root_t {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} (hW : IsBrownianReal W P) (t : ℝ≥0) :
+    HasLaw (W t) ((gaussianReal 0 1).map (fun z => √(t : ℝ) * z)) P ∧
+      ∫ ω, |W t ω| ∂P = √(2 * (t : ℝ) / π) := by
+  have hl := hW.hasLaw_eval t
+  refine ⟨?_, ?_⟩
+  · rw [gaussianReal_map_const_mul]
+    convert hl using 2
+    · simp
+    · ext
+      simp
+  · have hc := hl.integral_comp (f := fun x => |x|) (by fun_prop)
+    simp only [Function.comp_def] at hc
+    rw [hc]
+    rcases eq_or_ne t 0 with rfl | ht
+    · simp
+    rw [integral_gaussianReal_eq_integral_smul ht]
+    have : (fun x : ℝ => gaussianPDFReal 0 t x • |x|) =
+        fun x => (fun y : ℝ => (√(2 * π * t))⁻¹ * (y * rexp (-y ^ 2 / (2 * t)))) |x| := by
+      ext x
+      simp [gaussianPDFReal, smul_eq_mul, sq_abs]
+      ring
+    rw [this, integral_comp_abs (f := fun y : ℝ => (√(2 * π * t))⁻¹ * (y * rexp (-y ^ 2 / (2 * t)))),
+      integral_const_mul,
+      integral_Ioi_mul_exp _ (by positivity)]
+    have htp : (0:ℝ) < t := by positivity
+    rw [show 2 * (t:ℝ) / π = (2 * t) ^ 2 / (2 * π * t) by field_simp,
+      Real.sqrt_div' _ (by positivity), Real.sqrt_sq (by positivity)]
+    field_simp
+
+/-- **Smooth nowhere.** With probability one, the path `t ↦ W t` of a Brownian motion has a
+finite slope at no time s at all. The slope is read from the right of s (the path is defined
+for times from 0 on), so this rules out a two-sided slope at every s > 0 and a right-hand
+slope at s = 0, as the card's three-move proof shows. -/
+theorem brownian_path_has_slope_nowhere {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} (hW : IsBrownianReal W P) :
+    ∀ᵐ ω ∂P, ∀ s : ℝ≥0, ∀ D : ℝ,
+      ¬ HasDerivWithinAt (fun u : ℝ => W u.toNNReal ω) D (Set.Ici (s : ℝ)) s := by
+  rw [ae_iff]
+  simp only [not_forall, not_not]
+  refine measure_mono_null (t := ⋃ M : ℕ, ⋃ N : ℕ, ⋃ n0 : ℕ, ⋂ n : ℕ, ⋂ (_ : n0 ≤ n),
+      ⋃ k ∈ Finset.range ((N + 1) * n + 1), ⋂ j ∈ Finset.range 3,
+        {ω | |W (((k + (j + 1) : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω - W (((k + j : ℕ) : ℝ≥0) / (n : ℝ≥0)) ω|
+          ≤ 7 * M / n}) ?_ ?_
+  · intro ω hω
+    obtain ⟨s, D, h⟩ := hω
+    obtain ⟨M, N, n0, H⟩ := slope_gives_three_small_moves ω s D h
+    exact Set.mem_iUnion.2 ⟨M, Set.mem_iUnion.2 ⟨N, Set.mem_iUnion.2 ⟨n0, Set.mem_iInter₂.2 H⟩⟩⟩
+  · refine measure_iUnion_null fun M => measure_iUnion_null fun N =>
+      measure_iUnion_null fun n0 => ?_
+    rw [← nonpos_iff_eq_zero]
+    have hT : Filter.Tendsto (fun n : ℕ => ENNReal.ofReal (2 * (N + 1) * (14 * M) ^ 3 / √n))
+        Filter.atTop (nhds 0) := by
+      rw [← ENNReal.ofReal_zero]
+      refine ENNReal.tendsto_ofReal ?_
+      exact tendsto_const_nhds.div_atTop
+        (Real.tendsto_sqrt_atTop.comp tendsto_natCast_atTop_atTop)
+    refine ge_of_tendsto hT ?_
+    filter_upwards [Filter.eventually_ge_atTop (max n0 1)] with n hn
+    refine (measure_mono (Set.iInter₂_subset n (le_of_max_le_left hn))).trans ?_
+    exact brownian_three_small_moves_prob hW M N n (le_of_max_le_right hn)
+
+/-! The card's exact worked arithmetic. -/
+
+-- Variance after 4 s is 4; zooming with c = 2 divides it by 2² = 4, back to 1.
+example : (4 : ℚ) / 2 ^ 2 = 1 := by norm_num
+
+-- Four times as long means 2 times as far: √4 = 2.
+example : √(4 : ℝ) = 2 := by norm_num
+
+-- The blow-up of seconds 8 to 9 uses c = 1/4: time stretched by 16, moves by 4 = √16.
+example : ((1 : ℚ) / 4)⁻¹ ^ 2 = 16 ∧ ((1 : ℚ) / 4)⁻¹ = 4 := by norm_num
+example : √(16 : ℝ) = 4 := by norm_num
+
+-- Frames 1/4096 s apart: √4096 = 64, so the mean chord speed is 64 times the 1-second value.
+example : √(4096 : ℝ) = 64 := by norm_num
+example : (64 : ℕ) ^ 2 = 4096 := by norm_num
+
+-- K √h for K = 10 and h = 1/4096 is 10/64 = 0.15625 = 5/32.
+example : (10 : ℝ) * √(1 / 4096) = 5 / 32 := by norm_num
+
+-- The three-move bound: each move is at most 4K/n + 3K/n = 7K/n.
+example : ∀ K n : ℚ, K * 4 / n + K * 3 / n = 7 * K / n := by intro K n; ring
+
+-- Interval width 2 · 7 = 14, and three moves give 7³ = 343.
+example : 2 * 7 = 14 ∧ 7 ^ 3 = 343 := by decide
+
+-- n runs from 4096 = 2¹² to 16,777,216 = 2²⁴ = 4096², and √16777216 = 4096.
+example : (2 : ℕ) ^ 12 = 4096 ∧ (2 : ℕ) ^ 24 = 16777216 ∧ (4096 : ℕ) ^ 2 = 16777216 := by norm_num
+example : √(16777216 : ℝ) = 4096 := by norm_num
+
+-- Multiplying n by 4 halves 343/√n, since √4 = 2.
+example : √((4 : ℝ) * 4096) = 2 * √4096 := by norm_num
+
+#print axioms integral_Ioi_mul_exp
+#print axioms gaussianReal_abs_le_bound
+#print axioms brownian_three_small_moves_prob
+#print axioms slope_gives_three_small_moves
+#print axioms scaled_brownian_motion_is_brownian
+#print axioms brownian_position_scales_by_root_t
+#print axioms brownian_path_has_slope_nowhere
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_Ioi_mul_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gaussianReal_abs_le_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'brownian_three_small_moves_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'slope_gives_three_small_moves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'scaled_brownian_motion_is_brownian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'brownian_position_scales_by_root_t' depends on axioms: [propext, Classical.choice, Quot.sound]
+'brownian_path_has_slope_nowhere' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -647,7 +1025,7 @@ Orange: the simulated path, one sample. Green: the formula $\sqrt{2/(\pi h)}$. D
 
 - **Particle tracking.** Labs follow beads and proteins under a microscope and estimate their spread from the mean squared move against time, a straight line. Frame-to-frame speeds depend on the frame rate.
 - **Volatility over horizons.** A share price's random part spreads like root time, so a daily spread becomes yearly by the square root of the trading days. This root-t rule sits inside [Geometric Brownian motion](07-geometric-brownian-motion.md) and the volatility-times-root-time term of [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
-- **Why stochastic calculus needs its own rules.** A path with no slope cannot be fed to ordinary calculus. The Ito integral, written with dW_t, uses dW_t as shorthand for an integral, never a derivative, for exactly this reason; its foundation is [Quadratic variation](03-quadratic-variation.md).
+- **Why stochastic calculus needs its own rules.** A path with no slope cannot be fed to ordinary calculus. [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md), which integrates a strategy against Brownian motion and is written with dW_t, uses dW_t as shorthand for an integral, never a derivative, for exactly this reason; its foundation is [Quadratic variation](03-quadratic-variation.md).
 - **Simulating paths.** Lévy's midpoint refinement fills in a coarse path without moving its points; its pinned pieces are [Brownian bridge](05-brownian-bridge.md).
 - **Rough signals.** Some measured signals look rough at every zoom with exponents other than one half: [Rougher than Brownian](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md).
 
@@ -671,9 +1049,9 @@ The chord's slope runs away like one over root h, but its square, divided back b
 
 ## Sources
 
-Verified 6 Oct 2026: every DOI below resolves, and Crossref gives the cited title and first author.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Mörters, Peter, and Yuval Peres. *Brownian Motion*. Cambridge University Press, 2010. [doi:10.1017/CBO9780511750489](https://doi.org/10.1017/CBO9780511750489). Chapter 1: the scaling invariance, Lévy's midpoint construction, Lévy's modulus of continuity, and nowhere differentiability.
-- Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [doi:10.1017/9781108591034](https://doi.org/10.1017/9781108591034). The Brownian motion chapter proves the scaling relation and that the paths are nowhere Lipschitz by the three-move argument of Dvoretzky, Erdős and Kakutani.
+- Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [doi:10.1017/9781108591034](https://doi.org/10.1017/9781108591034). The Brownian motion chapter proves the scaling relation and that the paths are nowhere Lipschitz (held to a finite speed limit near no time) by the three-move argument of Dvoretzky, Erdős and Kakutani.
 - Paley, R. E. A. C., Norbert Wiener, and Antoni Zygmund. "Notes on Random Functions." *Mathematische Zeitschrift* 37 (1933): 647–668. [doi:10.1007/BF01474606](https://doi.org/10.1007/BF01474606). The first proof that the paths have a slope nowhere.
 - Li, Tongcang, Simon Kheifets, David Medellin, and Mark G. Raizen. "Measurement of the Instantaneous Velocity of a Brownian Particle." *Science* 328 (2010): 1673–1675. [doi:10.1126/science.1189403](https://doi.org/10.1126/science.1189403). Where the model and a real particle part: at very short times the particle has a speed.

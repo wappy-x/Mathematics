@@ -8,7 +8,11 @@
 
 A stock index has a volatility: how widely its price swings, quoted as a percentage per year. Say it sits at 20% today. Volatility is never seen directly; it is estimated each day from the many small price moves inside that day. Plot the daily estimates over a few years and the line is jagged. Zoom into one quarter and it is just as jagged. Zoom into one week of intraday estimates and it is jagged again.
 
-That alone sounds like Brownian motion, which also looks the same at every zoom ([Brownian paths](../05-Brownian%20Motion/02-scaling-and-path-roughness.md)). The numbers say otherwise. In the example on this card, the log of volatility moves about 0.3 in a day (0.3 is its standard deviation, called the spread from here on): 20% becomes 27.00% or 14.82%. If those daily moves were independent, as Brownian moves are, the typical move over 1,024 trading days, about four years, would be 0.3 times the square root of 1,024: 9.6, a factor of about 15,000. In fact it is 0.6: from 20% a one-spread move reaches only 36.44%. Volatility is wild over a day and tame over years. Its moves are not independent. A rise tends to be followed by a fall.
+That alone sounds like Brownian motion, which also looks the same at every zoom ([Brownian paths](../05-Brownian%20Motion/02-scaling-and-path-roughness.md)). The numbers say otherwise.
+
+In the example on this card, the log of volatility moves about 0.3 in a day (0.3 is its standard deviation, called the spread from here on): 20% becomes 27.00% or 14.82%. If those daily moves were independent, as Brownian moves are, the typical move over 1,024 trading days, about four years, would be 0.3 times the square root of 1,024: 9.6, a factor of about 15,000.
+
+In fact it is 0.6: from 20% a one-spread move reaches only 36.44%. Volatility is wild over a day and tame over years. Its moves are not independent. A rise tends to be followed by a fall.
 
 Jim Gatheral, Thibault Jaisson and Mathieu Rosenbaum measured this across many stock indices in 2018. The log of volatility scales with an exponent of about 0.1 where Brownian motion has 0.5. The model with an exponent other than one half is **fractional Brownian motion**. Its exponent is the **Hurst exponent**, named after Harold Hurst, who found exponents other than one half in the floods of the Nile.
 
@@ -36,7 +40,7 @@ Orange: rough volatility, H = 0.1. Green: Brownian, H = 0.5, its daily size 5.27
 
 ## The formula
 
-Notation first, in words. Fractional Brownian motion is written $B^H_t$, read "the value at time t, with exponent H". The Hurst exponent $H$ is a fixed number strictly between 0 and 1. Brownian motion $W_t$ is the case H = ½. The correlation between two unit increments n steps apart is written $\rho(n)$.
+Notation first, in words. Fractional Brownian motion is written $B^H_t$, read "the value at time t, with exponent H". The Hurst exponent $H$ is a fixed number strictly between 0 and 1. Brownian motion $W_t$ is the case H = ½. The correlation between two unit increments n steps apart is written $\rho(n)$. $E$ is the mean over all paths. The sign $\sim$ reads "is distributed as", and $\overset{d}{=}$ reads "has the same probability law as".
 
 Fractional Brownian motion is the process that starts at 0, has jointly normal values with mean 0, continuous paths, and this covariance:
 
@@ -117,7 +121,9 @@ Expanding the covariance of two unit moves n steps apart with Step 1 gives half 
 | H = 0.5 | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
 | H = 0.7 | 0.3195 | 0.1888 | 0.1225 | 0.0531 |
 
-At H = 0.1 a rise tends to be followed by a fall. The best forecast of tomorrow's move from today's captures ρ(1) squared, 0.1812 of its variance, about 18%. So the process is not a martingale (a fair game: the best forecast of the next move is zero) in its own past. Nor is it Markov: the whole past, not only today's value, sharpens the forecast. Far correlations decay like a power of the gap. Adding all the correlations among 64 consecutive unit moves, every pair counted, gives the variance of their total, 64 to the power 0.2. The code computes both sides separately: 2.2973967100 each.
+At H = 0.1 a rise tends to be followed by a fall. The best forecast of tomorrow's move from today's captures ρ(1) squared, 0.1812 of its variance, about 18%. So the process is not a martingale (a fair game: the best forecast of the next move is zero) in its own past. Nor is it Markov: the whole past, not only today's value, sharpens the forecast.
+
+Far correlations decay like a power of the gap. Adding all the correlations among 64 consecutive unit moves, every pair counted, gives the variance of their total, 64 to the power 0.2. The code computes both sides separately: 2.2973967100 each.
 
 ### Step 4: rougher paths, and squared moves that do not settle
 
@@ -150,7 +156,7 @@ $$\sum X_{\text{left}}\,\Delta X = \tfrac12\Big(X_T^2 - \sum (\Delta X)^2\Big), 
 
 For rough volatility over 64 days on a 1/16-day grid, the left sum averages −26.32 and the right +26.52, while X at 64 days, squared, averages only 0.2068. The gap is the sum of squared moves, which grows without limit as the grid is refined. The left-point rule has no limit; neither has the right. The Ito integral against fractional Brownian motion with H < ½ does not exist as a limit of these sums.
 
-The general theory of stochastic integrals covers exactly the processes called semimartingales: a local martingale plus a path of finite total movement ([Semimartingales](05-semimartingales-in-outline.md)). Fractional Brownian motion with H ≠ ½ is not one.
+The general theory of stochastic integrals covers exactly the processes called semimartingales: a local martingale (a process that becomes a fair game once stopped at suitable times running off to infinity) plus a path of finite total movement ([Semimartingales](05-semimartingales-in-outline.md)). Fractional Brownian motion with H ≠ ½ is not one.
 
 <details>
 <summary>Detailed proof: for H ≠ ½, fractional Brownian motion is not a semimartingale</summary>
@@ -171,7 +177,9 @@ This is Rogers's 1997 result; the argument here follows its shape.
 
 Above ½ the trouble is mild. Two paths with Hölder powers adding to more than 1 can be integrated one against the other by plain Riemann sums, and the limit ignores where in each step the integrand is read: Young integration. Fractional Brownian motion with H > ½ qualifies against itself, and ordinary calculus, chain rule included, works path by path.
 
-Below ½, Terry Lyons's theory of rough paths (1998) adds data. Alongside the path, record its iterated integrals over each step: in one dimension half the squared move, in several also the signed area swept between two coordinates. Added to the Riemann sum as a correction, they make the sums converge, and differential equations driven by the path get solutions that depend continuously on the path plus that data. For H above 1/3 one extra level suffices; rougher paths need more. In one dimension the data is fixed by the path: the corrected left sum here is exactly half of X at 64 days squared. With two noises, a price and its volatility, it is new information. Friz and Hairer give the theory in full (Sources).
+Below ½, Terry Lyons's theory of rough paths (1998) adds data. Alongside the path, record its iterated integrals over each step: in one dimension half the squared move, in several also the signed area swept between two coordinates. Added to the Riemann sum as a correction, they make the sums converge, and differential equations driven by the path get solutions that depend continuously on the path plus that data. For H above 1/3 one extra level suffices; rougher paths need more.
+
+In one dimension the data is fixed by the path: the corrected left sum here is exactly half of X at 64 days squared. With two noises, a price and its volatility, it is new information. Friz and Hairer give the theory in full (Sources).
 
 Rough volatility takes a gentler route. The price is still an Ito integral against Brownian motion, $dS = \sigma_t S\,dW_t$, valid because volatility is known at each moment. What breaks is the Markov property: volatility's future depends on its whole history, so pricing does not reduce to an equation in today's state, and simulation must carry the history, as the Fourier road in the code does.
 
@@ -207,7 +215,13 @@ Volatility moves by a third in a day yet by less than a factor of two over four 
 
 ## Code, from first principles, and it actually runs
 
-Random numbers come from SplitMix64, seed 20260930, made normal by Box-Muller; the Fourier transform is written out. Three roads. **Formulas:** the covariance, the correlations, the spreads, the mean sums. **Exact sums:** the double sum of correlations over 64 steps against 64 to the power 2H, and the smallest eigenvalue of the circular embedding. **Simulation:** 1,000 paths of log-volatility over 64 days on a 1/16-day grid by the Davies-Harte method, which builds a sample with exactly the right covariance on the grid. Each simulated number carries its standard error, and each assert allows four. The fitted H regresses, on each path, the log of the mean squared move against the log of the lag, for lags from 1/16 day to 1 day, and halves the slope. That regression has a small known bias from taking logs, so its assert allows 0.005 on top of four standard errors.
+Random numbers come from SplitMix64, seed 20260930, made normal by Box-Muller; the Fourier transform is written out. Three roads:
+
+- **Formulas:** the covariance, the correlations, the spreads, the mean sums.
+- **Exact sums:** the double sum of correlations over 64 steps against 64 to the power 2H, and the smallest eigenvalue of the circular embedding.
+- **Simulation:** 1,000 paths of log-volatility over 64 days on a 1/16-day grid by the Davies-Harte method, which builds a sample with exactly the right covariance on the grid.
+
+Each simulated number carries its standard error, and each assert allows four. The fitted H regresses, on each path, the log of the mean squared move against the log of the lag, for lags from 1/16 day to 1 day, and halves the slope. That regression has a small known bias from taking logs, so its assert allows 0.005 on top of four standard errors.
 
 ### Python
 
@@ -601,6 +615,152 @@ ALL CHECKS PASS
 The two outputs match line for line; both add sums left to right in the same order.
 
 The simulated neighbouring correlation, −0.4245 ± 0.0012, sits one standard error from −0.4257. The summed squared moves track the formula at all three grids, tripling with each refinement. Left and right sums straddle zero by half that sum each. The fitted H comes out at 0.0997 ± 0.0004: the regression of Gatheral, Jaisson and Rosenbaum, run on paths whose H is known, recovers it.
+
+### Lean
+
+Lean proves Steps 1, 3 and 5 of Why it works, for every $H$ strictly between 0 and 1, and checks the worked numbers.
+
+- Suppose $B$ starts at 0 and the squared move over any gap $g$ has mean $g^{2H}$. Then $E[B_s B_t]$ is the covariance formula above, Gaussian or not.
+- Take $H$ strictly between 0 and 1 and $n \ge 1$. Then $\rho(n)$ is negative for $H$ below ½, zero at ½, and positive above ½.
+- Take any path $X$ on a grid, starting at 0. Then the left-point sum is $\tfrac12(X_T^2 - \sum (\Delta X)^2)$; the right-point sum has a plus there.
+- Take 1,024 trading days. Then $\sqrt{1024} = 32$ and $2^{10} = 1024$, so the spreads are 9.6 if Brownian and 0.6 rough.
+- Take the 1-day grid over 64 days. Then the mean sum of squared moves is $0.3^2 \times 64 = 5.76$.
+
+Lean has no fractional Brownian motion, so its existence, scaling, growing squared-move sums and simulations are left to the Python and Rust checks.
+
+```lean
+-- Rougher than Brownian: moves whose second moment is the gap to the power 2H force the fractional Brownian covariance, neighbouring unit moves are negatively correlated below H = 1/2 and positively above, and left- and right-point sums of a path against its own moves differ from half its final square by half the summed squared moves.
+import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Data.Nat.Sqrt
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Function.L2Space
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+import Mathlib.Analysis.Convex.SpecificFunctions.Pow
+
+open MeasureTheory Finset
+
+/-- The covariance is forced (Step 1). Let H lie strictly between 0 and 1. Let B be a process
+on a probability space that starts at 0, has square-integrable values at every time t at least
+0, and whose move over any gap has mean square equal to the gap to the power 2H. Then for all
+times s, t at least 0 the mean of B at s times B at t is half of: s to the power 2H, plus t to the
+power 2H, minus the gap between them to the power 2H. (The card assumes B is Gaussian; the
+computation does not use it, so it is not assumed here.) -/
+theorem fbm_covariance_forced_by_stationary_moves {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (H : ℝ) (hH0 : 0 < H) (hH1 : H < 1)
+    (B : ℝ → Ω → ℝ) (hB0 : ∀ ω, B 0 ω = 0)
+    (hL2 : ∀ t : ℝ, 0 ≤ t → MemLp (B t) 2 μ)
+    (hmove : ∀ s t : ℝ, 0 ≤ s → 0 ≤ t →
+      ∫ ω, (B t ω - B s ω) ^ 2 ∂μ = |t - s| ^ (2 * H)) :
+    ∀ s t : ℝ, 0 ≤ s → 0 ≤ t →
+      ∫ ω, B s ω * B t ω ∂μ = 1 / 2 * (s ^ (2 * H) + t ^ (2 * H) - |t - s| ^ (2 * H)) := by
+  intro s t hs ht
+  have hBs : MemLp (B s) 2 μ := hL2 s hs
+  have hBt : MemLp (B t) 2 μ := hL2 t ht
+  have hd : MemLp (fun ω => B t ω - B s ω) 2 μ := hBt.sub hBs
+  have is := MemLp.integrable_sq hBs
+  have it := MemLp.integrable_sq hBt
+  have ist : Integrable (fun ω => B s ω ^ 2 + B t ω ^ 2) μ := is.add it
+  have id := MemLp.integrable_sq hd
+  have hs2 : ∫ ω, B s ω ^ 2 ∂μ = s ^ (2 * H) := by
+    have := hmove 0 s le_rfl hs
+    simpa [hB0, abs_of_nonneg hs] using this
+  have ht2 : ∫ ω, B t ω ^ 2 ∂μ = t ^ (2 * H) := by
+    have := hmove 0 t le_rfl ht
+    simpa [hB0, abs_of_nonneg ht] using this
+  have hst := hmove s t hs ht
+  have key : (fun ω => B s ω * B t ω) =
+      fun ω => 1 / 2 * ((B s ω ^ 2 + B t ω ^ 2) - (B t ω - B s ω) ^ 2) := by
+    funext ω; ring
+  rw [key, integral_const_mul, integral_sub ist id, integral_add is it, hs2, ht2, hst]
+
+/-- The sign of the increment correlation follows H (Step 3). For H strictly between 0 and 1
+and every whole number n at least 1, the correlation of two unit moves n steps apart,
+rho(n) = 1/2 ((n+1)^(2H) - 2 n^(2H) + (n-1)^(2H)), is negative when H is below 1/2, zero when
+H is 1/2, and positive when H is above 1/2. -/
+theorem fbm_increment_correlation_sign (H : ℝ) (hH0 : 0 < H) (hH1 : H < 1)
+    (n : ℕ) (hn : 1 ≤ n) :
+    let ρ : ℝ := 1 / 2 * (((n : ℝ) + 1) ^ (2 * H) - 2 * (n : ℝ) ^ (2 * H)
+      + ((n : ℝ) - 1) ^ (2 * H))
+    (H < 1 / 2 → ρ < 0) ∧ (H = 1 / 2 → ρ = 0) ∧ (1 / 2 < H → 0 < ρ) := by
+  intro ρ
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have hx : (0 : ℝ) ≤ (n : ℝ) - 1 := by linarith
+  have hy : (0 : ℝ) ≤ (n : ℝ) + 1 := by linarith
+  have hxy : (n : ℝ) - 1 ≠ (n : ℝ) + 1 := by intro h; linarith
+  have hmid : (1 / 2 : ℝ) • ((n : ℝ) - 1) + (1 / 2 : ℝ) • ((n : ℝ) + 1) = n := by
+    simp only [smul_eq_mul]; ring
+  refine ⟨fun hH => ?_, fun hH => ?_, fun hH => ?_⟩
+  · have hc := (Real.strictConcaveOn_rpow (p := 2 * H) (by linarith) (by linarith)).2
+      (Set.mem_Ici.2 hx) (Set.mem_Ici.2 hy) hxy (by norm_num : (0 : ℝ) < 1 / 2)
+      (by norm_num : (0 : ℝ) < 1 / 2) (by norm_num)
+    simp only [smul_eq_mul] at hc hmid
+    rw [hmid] at hc
+    show 1 / 2 * (((n : ℝ) + 1) ^ (2 * H) - 2 * (n : ℝ) ^ (2 * H)
+      + ((n : ℝ) - 1) ^ (2 * H)) < 0
+    linarith
+  · have h2 : 2 * H = 1 := by linarith
+    show 1 / 2 * (((n : ℝ) + 1) ^ (2 * H) - 2 * (n : ℝ) ^ (2 * H)
+      + ((n : ℝ) - 1) ^ (2 * H)) = 0
+    rw [h2]; simp only [Real.rpow_one]; ring
+  · have hc := (strictConvexOn_rpow (p := 2 * H) (by linarith)).2
+      (Set.mem_Ici.2 hx) (Set.mem_Ici.2 hy) hxy (by norm_num : (0 : ℝ) < 1 / 2)
+      (by norm_num : (0 : ℝ) < 1 / 2) (by norm_num)
+    simp only [smul_eq_mul] at hc hmid
+    rw [hmid] at hc
+    show 0 < 1 / 2 * (((n : ℝ) + 1) ^ (2 * H) - 2 * (n : ℝ) ^ (2 * H)
+      + ((n : ℝ) - 1) ^ (2 * H))
+    linarith
+
+/-- Left- and right-point sums part company (Step 5). For any path x on a grid of m steps
+that starts at 0, path by path, the left-point sum of x against its own moves is half of: x at
+the end squared, minus the sum of squared moves; the right-point sum is half of: x at the end
+squared, plus the sum of squared moves. -/
+theorem left_right_point_sums_differ_by_squared_moves (x : ℕ → ℝ) (hx0 : x 0 = 0) (m : ℕ) :
+    (∑ i ∈ range m, x i * (x (i + 1) - x i)
+        = 1 / 2 * (x m ^ 2 - ∑ i ∈ range m, (x (i + 1) - x i) ^ 2)) ∧
+    (∑ i ∈ range m, x (i + 1) * (x (i + 1) - x i)
+        = 1 / 2 * (x m ^ 2 + ∑ i ∈ range m, (x (i + 1) - x i) ^ 2)) := by
+  have h1 : ∀ m : ℕ, ∑ i ∈ range m, x i * (x (i + 1) - x i)
+      = 1 / 2 * (x m ^ 2 - ∑ i ∈ range m, (x (i + 1) - x i) ^ 2) := by
+    intro m
+    induction m with
+    | zero => simp [hx0]
+    | succ k ih => rw [sum_range_succ, sum_range_succ, ih]; ring
+  have h2 : ∀ m : ℕ, ∑ i ∈ range m, x (i + 1) * (x (i + 1) - x i)
+      = 1 / 2 * (x m ^ 2 + ∑ i ∈ range m, (x (i + 1) - x i) ^ 2) := by
+    intro m
+    induction m with
+    | zero => simp [hx0]
+    | succ k ih => rw [sum_range_succ, sum_range_succ, ih]; ring
+  exact ⟨h1 m, h2 m⟩
+
+-- Worked numbers. The square root of 1,024 trading days is 32.
+example : Nat.sqrt 1024 = 32 := by rw [show (1024 : ℕ) = 32 ^ 2 by norm_num, Nat.sqrt_eq']
+-- 1,024 to the power 1/10 is 2, because 2 to the power 10 is 1,024.
+example : (2 : ℕ) ^ 10 = 1024 := by norm_num
+-- Brownian spread over 1,024 days: 3/10 times 32 is 48/5, that is 9.6.
+example : (3 / 10 : ℚ) * 32 = 48 / 5 := by norm_num
+-- Rough spread over 1,024 days: 3/10 times 2 is 3/5, that is 0.6.
+example : (3 / 10 : ℚ) * 2 = 3 / 5 := by norm_num
+-- Sum of squared moves on the 1-day grid: (3/10)^2 times 64 is 144/25, that is 5.76.
+example : (3 / 10 : ℚ) ^ 2 * 64 = 144 / 25 := by norm_num
+
+#print axioms fbm_covariance_forced_by_stationary_moves
+#print axioms fbm_increment_correlation_sign
+#print axioms left_right_point_sums_differ_by_squared_moves
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'fbm_covariance_forced_by_stationary_moves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fbm_increment_correlation_sign' depends on axioms: [propext, Classical.choice, Quot.sound]
+'left_right_point_sums_differ_by_squared_moves' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

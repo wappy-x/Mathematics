@@ -80,7 +80,7 @@ Integrating gives the share's price in closed form: $S_T = S_0 \exp\big((\mu - \
 
 - **$f$ has a continuous curvature in $x$ and a continuous time slope.** At a kink the curvature is a spike: for $f(x) = |x|$ the formula needs an extra term, local time, which measures how long the path lingers at the kink.
 - **The path is continuous.** A jump's square arrives in one instant, not spread over $dt$, so the dW-times-dW rule fails. Jump paths need their own version: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
-- **The integral is Ito's, built from left-end sums.** From right ends, the sum for $\int W\,dW$ averages +0.9993 (standard error 0.0111) instead of zero (code below). Midpoints (Stratonovich's integral) keep the ordinary chain rule but lose the fair-game property.
+- **The integral is Ito's, built from left-end sums.** From right ends, the sum for $\int W\,dW$ averages +0.9993 (standard error 0.0111) instead of zero (code below). A standard error (se) is the typical size of the chance error in a simulated average. Midpoints (Stratonovich's integral) keep the ordinary chain rule but lose the fair-game property.
 - **The drift and kick sizes use only the past.** They may depend on time and the path so far, with $\int|a|\,dt$ and $\int b^2\,dt$ finite. A coefficient that peeks at the future breaks the left-end construction.
 - **One Brownian motion.** Several correlated ones bring cross terms: [Several Brownian motions](06-multidimensional-ito-and-correlation.md).
 
@@ -132,7 +132,7 @@ Together: $f(W_T) = f(W_0) + \int_0^T f'(W_t)\,dW_t + \tfrac12\int_0^T f''(W_t)\
 Fix $T$ and $n$; write $\Delta t = T/n$, $W_k = W_{k\Delta t}$ and $\Delta W_k = W_{k+1} - W_k$. Let $M$ bound $\lvert f'\rvert$, $\lvert f''\rvert$ and $\lvert f'''\rvert$. Taylor's theorem with the Lagrange remainder gives, for each $k$,
 $f(W_{k+1}) - f(W_k) = f'(W_k)\Delta W_k + \tfrac12 f''(W_k)(\Delta W_k)^2 + R_k$ with $\lvert R_k\rvert \le \tfrac16 M \lvert\Delta W_k\rvert^3$. Sum over $k$ from 0 to $n-1$; the left side telescopes to $f(W_T) - f(W_0)$.
 
-**Slope sum.** $I_n = \sum f'(W_k)\Delta W_k$. The integrand $f'(W_t)$ is continuous, adapted (fixed by what is known at time $t$) and bounded, so by the construction on the ito-integral card $I_n \to \int_0^T f'(W_t)\,dW_t$ in mean square.
+**Slope sum.** $I_n = \sum f'(W_k)\Delta W_k$. The integrand $f'(W_t)$ is continuous, adapted (fixed by what is known at time $t$) and bounded, so by the construction on [The Ito integral](01-ito-integral.md) $I_n \to \int_0^T f'(W_t)\,dW_t$ in mean square.
 
 **Curvature sum.** Write $\tfrac12\sum f''(W_k)(\Delta W_k)^2 = \tfrac12\sum f''(W_k)\Delta t + \tfrac12 A_n$ with $A_n = \sum f''(W_k)\big((\Delta W_k)^2 - \Delta t\big)$. The first part is a Riemann sum of the continuous function $t \mapsto f''(W_t)$, so it tends to $\tfrac12\int_0^T f''(W_t)\,dt$ for every path. For $A_n$, let $Y_k = f''(W_k)((\Delta W_k)^2 - \Delta t)$. For $j < k$, $Y_j$ and $f''(W_k)$ are known at step $k$ while $\Delta W_k$ is independent of that knowledge with $E[(\Delta W_k)^2 - \Delta t] = 0$, so $E[Y_j Y_k] = 0$. Hence $E[A_n^2] = \sum E[f''(W_k)^2]\,E[((\Delta W_k)^2 - \Delta t)^2] \le M^2 \cdot n \cdot 2\Delta t^2 = 2M^2 T\Delta t \to 0$, using $E[Z^4] = 3$ for a standard normal $Z$, so that $\mathrm{Var}((\Delta W_k)^2) = 2\Delta t^2$.
 
@@ -608,12 +608,144 @@ xychart-beta
 
 The flat upper line is the ordinary chain rule's formula, $\log S_0 + 0.10 + 0.40\,W_T$: it stays 0.08 off however fine the grid. The falling lower line is Ito's, $\log S_0 + 0.02 + 0.40\,W_T$: the gap is only Euler's step error, and it halves each time the steps are cut by four. Each point is an average over the same 4000 sampled paths, not a single path.
 
+### Lean
+
+Lean proves Steps 1, 2 and 7 of Why it works, on every grid and every path, and checks the worked numbers.
+
+- Take a function $f$ with a continuous $f'''$ of size at most $M$ everywhere, and one step $\Delta W_k$. Then its Taylor remainder $R_k$ has size at most $\tfrac16 M \lvert\Delta W_k\rvert^3$.
+- Take the same $f$ and any path cut into $n$ steps. Then the change in $f$ is the slope sum plus the curvature sum, within $M/6$ times the summed cubed step sizes.
+- Take any path cut into $n$ steps. Then $W_n^2 - W_0^2$ is exactly $2\sum W_k\,\Delta W_k + \sum (\Delta W_k)^2$.
+- Suppose a positive price $S$ has drift size $a = \mu S$ and kick size $b = \sigma S$, and take $f = \log$. Then the $dt$ part, $a f' + \tfrac12 b^2 f''$, equals $\mu - \tfrac12\sigma^2$.
+- Take $\mu$ = 0.10 and $\sigma$ = 0.40. Then the kick size squared is 0.16, the Ito term −0.08, and the log drift 0.02.
+- The same numbers put \$100 at −0.05 spreads from the middle, and the plus-sign mistake at a log drift of 0.18.
+- Take 1024 steps in one year. Then the wobbles' total variance, $n \cdot 2\Delta t^2$, equals $2T\Delta t$.
+
+Lean has no Ito integral yet, so the limits in Steps 3 to 6 and every simulation are left to the Python and Rust checks.
+
+```lean
+-- Ito's lemma: on any grid of steps a smooth function changes by its slopes times the steps plus half its curvatures times the squared steps, up to a cubed-step remainder, with x squared splitting exactly into a left-end sum plus squared steps, and the log of a share drifting at mu minus half sigma squared.
+import Mathlib.Analysis.Calculus.Taylor
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+open Finset
+
+/-! Mathlib has Brownian motion (`ProbabilityTheory.IsBrownianReal`) but no Ito integral,
+so the card's formula for a general Ito process cannot be stated here. This file states the
+exact, path-by-path pieces the card proves it from.
+
+A grid path is a sequence `w : ℕ → ℝ`: `w k` is the path at the end of step `k`,
+and `w (k + 1) - w k` is step `k`. Nothing about randomness is assumed: the facts below
+hold on every grid and every path. -/
+
+/-- One step of the grid: second-order Taylor expansion with a cubed-step remainder. -/
+theorem ito_step_taylor_bound (f : ℝ → ℝ) (hf : ContDiff ℝ 3 f) (M : ℝ)
+    (hM : ∀ x, |iteratedDeriv 3 f x| ≤ M) (a b : ℝ) :
+    |f b - f a - (deriv f a * (b - a) + (1 / 2) * iteratedDeriv 2 f a * (b - a) ^ 2)|
+      ≤ M / 6 * |b - a| ^ 3 := by
+  rcases eq_or_ne a b with rfl | hab
+  · simp
+  have hcd : ContDiffOn ℝ ((2 : ℕ) + 1) f (Set.uIcc a b) := by
+    norm_num; exact hf.contDiffOn
+  obtain ⟨c, -, hc⟩ := taylor_mean_remainder_lagrange_iteratedDeriv hab hcd
+  have hu : UniqueDiffOn ℝ (Set.uIcc a b) := uniqueDiffOn_uIcc hab
+  have ha : a ∈ Set.uIcc a b := Set.left_mem_uIcc
+  have hk : ∀ k : ℕ, k ≤ 3 → iteratedDerivWithin k f (Set.uIcc a b) a = iteratedDeriv k f a := by
+    intro k hk
+    exact iteratedDerivWithin_eq_iteratedDeriv hu
+      ((hf.of_le (by exact_mod_cast hk)).contDiffAt) ha
+  rw [taylor_within_apply] at hc
+  simp only [Finset.sum_range_succ, Finset.sum_range_zero, smul_eq_mul] at hc
+  rw [hk 0 (by norm_num), hk 1 (by norm_num), hk 2 (by norm_num), iteratedDeriv_zero,
+    iteratedDeriv_one] at hc
+  have key : f b - f a - (deriv f a * (b - a) + (1 / 2) * iteratedDeriv 2 f a * (b - a) ^ 2)
+      = iteratedDeriv 3 f c * (b - a) ^ 3 / 6 := by
+    norm_num [Nat.factorial] at hc
+    linear_combination hc
+  rw [key, abs_div, abs_mul, abs_pow]
+  have h3 := hM c
+  have : 0 ≤ |b - a| ^ 3 := by positivity
+  rw [abs_of_pos (by norm_num : (0:ℝ) < 6)]
+  nlinarith
+
+#print axioms ito_step_taylor_bound
+
+/-- Steps 1 and 2 of the card: cut the path into `n` steps. Then the change in `f`
+is the sum of its slopes times the steps, plus half its curvatures times the squared
+steps, with a total remainder at most `M / 6` times the sum of the cubed step sizes,
+where `M` bounds the size of the third derivative of `f`. -/
+theorem ito_taylor_expansion_on_grid (f : ℝ → ℝ) (hf : ContDiff ℝ 3 f) (M : ℝ)
+    (hM : ∀ x, |iteratedDeriv 3 f x| ≤ M) (w : ℕ → ℝ) (n : ℕ) :
+    |f (w n) - f (w 0)
+        - ∑ k ∈ range n, (deriv f (w k) * (w (k + 1) - w k)
+            + (1 / 2) * iteratedDeriv 2 f (w k) * (w (k + 1) - w k) ^ 2)|
+      ≤ M / 6 * ∑ k ∈ range n, |w (k + 1) - w k| ^ 3 := by
+  have htel : f (w n) - f (w 0) = ∑ k ∈ range n, (f (w (k + 1)) - f (w k)) :=
+    (Finset.sum_range_sub (fun k => f (w k)) n).symm
+  rw [htel, ← Finset.sum_sub_distrib, Finset.mul_sum]
+  refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun k _ => ?_)
+  have := ito_step_taylor_bound f hf M hM (w k) (w (k + 1))
+  convert this using 2
+
+/-- Step 7 of the card, `W` squared: on every grid and every path, the final square
+minus the starting square is exactly twice the left-end sum `∑ W_k ΔW_k` plus the sum
+of the squared steps, with no remainder. -/
+theorem sq_eq_two_left_end_sum_add_sum_sq_steps (w : ℕ → ℝ) (n : ℕ) :
+    w n ^ 2 - w 0 ^ 2
+      = 2 * ∑ k ∈ range n, w k * (w (k + 1) - w k) + ∑ k ∈ range n, (w (k + 1) - w k) ^ 2 := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_range_succ, Finset.sum_range_succ]
+    linear_combination ih
+
+/-- The share's log: for `f = log` with drift size `a = μ S` and kick size `b = σ S`,
+the `dt` part of Ito's formula, `a f' + ½ b² f''`, is `μ - σ² / 2` at every positive price `S`. -/
+theorem log_share_ito_drift (μ σ S : ℝ) (hS : 0 < S) :
+    (μ * S) * deriv Real.log S + (1 / 2) * (σ * S) ^ 2 * iteratedDeriv 2 Real.log S
+      = μ - σ ^ 2 / 2 := by
+  have h2 : iteratedDeriv 2 Real.log S = -(S ^ 2)⁻¹ := by
+    rw [iteratedDeriv_succ', iteratedDeriv_one, Real.deriv_log']
+    simp
+  rw [h2, Real.deriv_log]
+  field_simp
+  ring
+
+/-! The card's worked numbers, as exact fractions: `σ = 0.40 = 2/5`, `μ = 0.10 = 1/10`. -/
+
+-- kick size squared: 0.40 × 0.40 = 0.16
+example : ((2 : ℚ) / 5) ^ 2 = 4 / 25 := by norm_num
+-- Ito term for the log: half of 0.16 with the log's negative curvature, −0.08
+example : -((1 : ℚ) / 2) * ((2 : ℚ) / 5) ^ 2 = -2 / 25 := by norm_num
+-- log drift: 0.10 − 0.08 = 0.02
+example : (1 : ℚ) / 10 - (1 / 2) * ((2 : ℚ) / 5) ^ 2 = 1 / 50 := by norm_num
+-- where $100 sits, in spreads from the middle: −0.02 ÷ 0.40 = −0.05
+example : -((1 : ℚ) / 50) / (2 / 5) = -1 / 20 := by norm_num
+-- plus sign on the correction: 0.10 + 0.08 = 0.18
+example : (1 : ℚ) / 10 + (1 / 2) * ((2 : ℚ) / 5) ^ 2 = 9 / 50 := by norm_num
+-- wobble variance: n · 2Δt² = 2TΔt, here with T = 1 and n = 1024
+example : (1024 : ℚ) * (2 * (1 / 1024) ^ 2) = 2 * 1 * (1 / 1024) := by norm_num
+
+#print axioms ito_taylor_expansion_on_grid
+#print axioms sq_eq_two_left_end_sum_add_sum_sq_steps
+#print axioms log_share_ito_drift
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ito_step_taylor_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ito_taylor_expansion_on_grid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sq_eq_two_left_end_sum_add_sum_sq_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_share_ito_drift' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first: halve the kicks.** Set `SIG = 0.20`. The correction shrinks fourfold, since it goes with sigma squared, and the assert "the ordinary chain rule is measurably wrong" fails: the gap between the two drifts shrinks to 0.02, about 6 standard errors at 4000 paths, under the assert's bar of 8.
 > - **Guess first: does the left end matter?** Change `lsum += w * step` to `lsum += (w + step) * step`. The Ito sum's average jumps to about +1, the right-end value printed above, and the assert "the Ito sum has mean zero" fails.
 > - **Guess first: will Euler close on the ordinary drift?** Set `ito` to `MU`. The first assert fails at once: Euler's exactly averaged log drift stays near 0.02 on every grid.
 > - **Guess first: four times the paths.** Set `PATHS = 16000`. Every standard error roughly halves; the exact roads do not move.
+
 ---
 
 ## The usual mistake

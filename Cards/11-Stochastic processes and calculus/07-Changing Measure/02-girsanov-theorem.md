@@ -10,7 +10,9 @@ A share trades at $100. Over a year its price wanders: it drifts up at 8 percent
 
 A pricing desk wants the same share to drift at 5 percent, the bank's rate, so that after discounting at the bank's rate it is a fair game: its average future value, pulled back to today, is today's $100. The desk is not allowed to invent new price paths. Every path the share can take stays exactly as it is. What the desk may change is how much each path counts when it averages.
 
-Girsanov's theorem says how. Weight each path by a factor that depends on where its random part went: paths that ran high count a little less, paths that ran low a little more. With the right factor the share drifts at 5 percent under the new odds, its kicks are still 20 percent, and the leftover randomness is again a genuine Brownian motion. Igor Girsanov proved the general version in 1960; Robert Cameron and William Martin had the fixed-shift case in 1944.
+Girsanov's theorem says how. Weight each path by a factor that depends on where its random part went: paths that ran high count a little less, paths that ran low a little more. With the right factor the share drifts at 5 percent under the new odds, its kicks are still 20 percent, and the leftover randomness is again a genuine Brownian motion: pure random wandering with no drift ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)).
+
+Igor Girsanov proved the general version in 1960; Robert Cameron and William Martin had the fixed-shift case in 1944.
 
 **Reweighting the paths of a Brownian motion by one exponential factor removes a drift and leaves a Brownian motion: same paths, same kicks, new odds.**
 
@@ -33,7 +35,9 @@ One line. $W_T$ is the random part of a path at the one-year horizon $T$; $Z_T$ 
 
 ## The formula
 
-Notation first, with one-line reminders. $W_t$ is Brownian motion, read "the random walk seen from far away", with time $t$ in years. $P$ is the real-world probability measure and $E$ its average. A second probability measure on the same paths is written $Q$, with $E^Q$ for averages under it ([Changing the measure](01-change-of-measure-and-density-processes.md)). The rule $dS_t = \mu S_t\,dt + \sigma S_t\,dW_t$ says the share drifts by $\mu S_t$ per unit time and is kicked by $\sigma S_t$ times the Brownian step; $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none. $\mathbf 1_A$ is 1 on the paths in the event $A$ and 0 elsewhere.
+Notation first, with one-line reminders. $W_t$ is Brownian motion, read "the random walk seen from far away", with time $t$ in years. $P$ is the real-world probability measure and $E$ its average. A second probability measure on the same paths is written $Q$, with $E^Q$ for averages under it ([Changing the measure](01-change-of-measure-and-density-processes.md)).
+
+The rule $dS_t = \mu S_t\,dt + \sigma S_t\,dW_t$ says the share drifts by $\mu S_t$ per unit time and is kicked by $\sigma S_t$ times the Brownian step; $dW_t$ is shorthand for an Ito integral ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), never a derivative, because the path has none. $\mathbf 1_A$ is 1 on the paths in the event $A$ and 0 elsewhere.
 
 For a constant tilt $\theta$ and a horizon $T$:
 
@@ -75,7 +79,7 @@ $$Z_t = \exp\!\Big(-\int_0^t \theta_s\,dW_s - \tfrac12\int_0^t \theta_s^2\,ds\Bi
 ### When it holds
 
 - **A finite horizon.** Over 10,000 years the real-world odds put almost all (1.0000 to four places) of their mass on paths with weight below 0.01, and the new odds 0.0000. In the limit the two measures live on different paths (singular, in [Absolutely continuous and singular measures](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)), and no density connects them.
-- **The weights average exactly 1.** The weight process must be a true martingale, not only a local one (fair only when stopped before it grows too large); a bounded $\theta_t$ guarantees it (proved below). Without the $-\tfrac12\theta^2 T$ the weights average 1.011314. For unbounded tilts the test is [Novikov](03-novikov-condition.md).
+- **The weights average exactly 1.** The weight process must be a true martingale (a fair game: its best forecast is its current value, [Martingales](../02-Martingales/01-martingales.md)), not only a local one (fair only when stopped before it grows too large); a bounded $\theta_t$ guarantees it (proved below). Without the $-\tfrac12\theta^2 T$ the weights average 1.011314. For unbounded tilts the test is [Novikov](03-novikov-condition.md).
 - **The tilt uses only the past.** The proof conditions on $\mathcal F_s$ and needs $\theta_s$ fixed before the step it multiplies, as the Ito integral does.
 - **It moves the drift, never the kick size.** A path's squared log-price steps add up to $\sigma^2 T$ on almost every path ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)), and no reweighting changes a fact true of every path.
 - **Continuous Brownian noise.** With jumps, the weight may also change how often jumps arrive and how big they are: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
@@ -86,11 +90,13 @@ $$Z_t = \exp\!\Big(-\int_0^t \theta_s\,dW_s - \tfrac12\int_0^t \theta_s^2\,ds\Bi
 
 ### Step 0: reweighting moves averages, not paths
 
-Take 4000 simulated one-year paths of the share. Their plain average, discounted at 5 percent, sits near $103.00 (exact $103.05). Count the paths whose random part ran high a little less, and the weighted average falls; with the right tilt it lands on $100. No path was edited, so every fact about a single path (it is continuous, its squared steps add up to the clock) holds under both counts. Only averages and probabilities change. The proof shows the right tilt does more than fix one average: it makes the leftover randomness a Brownian motion in every respect.
+Take 4000 simulated one-year paths of the share. Their plain average, discounted at 5 percent, sits near $103.00 (exact $103.05). Count the paths whose random part ran high a little less, and the weighted average falls; with the right tilt it lands on $100.
+
+No path was edited, so every fact about a single path (it is continuous, its squared steps add up to the clock) holds under both counts. Only averages and probabilities change. The proof shows the right tilt does more than fix one average: it makes the leftover randomness a Brownian motion in every respect.
 
 ### Step 1: the weights average 1
 
-$Z_T$ is positive, so $Q$ gives no event a negative probability. Under $P$, $W_T$ is bell-shaped with mean 0 and variance $T$. Its moment generating function is $E[e^{aW_T}] = e^{a^2 T/2}$ (wing 09), so with $a = -\theta$,
+$Z_T$ is positive, so $Q$ gives no event a negative probability. Under $P$, $W_T$ is bell-shaped with mean 0 and variance $T$. Its moment generating function is $E[e^{aW_T}] = e^{a^2 T/2}$ ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)), so with $a = -\theta$,
 
 $$E[Z_T] = e^{-\theta^2 T/2}\,E\big[e^{-\theta W_T}\big] = e^{-\theta^2 T/2}\,e^{\theta^2 T/2} = 1 .$$
 
@@ -124,7 +130,7 @@ Now let the tilt change: say the share's real drift is 8 percent below $110 and 
 
 $$dZ_t = -\theta_t\,Z_t\,dW_t, \qquad Z_0 = 1 .$$
 
-No $dt$ term: $Z$ is a fair game in the making, a local martingale. The half-square in the formula is the Ito correction, the same one that lowers a share's log drift on the itos-lemma card. The code builds $Z$ from this rule on grids of 16 to 1024 steps a year and watches it close on the closed form, mean gap 0.003126 falling to 0.000388.
+No $dt$ term: $Z$ is a fair game in the making, a local martingale. The half-square in the formula is the Ito correction, the same one that lowers a share's log drift on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The code builds $Z$ from this rule on grids of 16 to 1024 steps a year and watches it close on the closed form, mean gap 0.003126 falling to 0.000388.
 
 ### Step 6: test with exponentials, and let Bayes' rule do the rest
 
@@ -132,14 +138,14 @@ Two facts remain: a bounded tilt makes $Z$ a true martingale, so $E[Z_T] = 1$; a
 
 $$e^{\lambda \widetilde W_t - \frac12 \lambda^2 t}\, Z_t = \exp\!\Big(\int_0^t (\lambda - \theta_s)\,dW_s - \tfrac12\int_0^t (\lambda - \theta_s)^2\,ds\Big),$$
 
-the same kind of weight with the bounded tilt $\theta_s - \lambda$, so a $P$-martingale. Bayes' rule, $E^Q[X \mid \mathcal F_s] = E[Z_t X \mid \mathcal F_s]/Z_s$ for $X$ known at time $t$ (from the density-process card), makes $e^{\lambda \widetilde W_t - \lambda^2 t/2}$ a $Q$-martingale. That holds for every $\lambda$ only if each step of $\widetilde W$ is bell-shaped, with variance its length, and independent of the past.
+the same kind of weight with the bounded tilt $\theta_s - \lambda$, so a $P$-martingale. Bayes' rule, $E^Q[X \mid \mathcal F_s] = E[Z_t X \mid \mathcal F_s]/Z_s$ for $X$ known at time $t$ (from [Changing the measure](01-change-of-measure-and-density-processes.md)), makes $e^{\lambda \widetilde W_t - \lambda^2 t/2}$ a $Q$-martingale. That holds for every $\lambda$ only if each step of $\widetilde W$ is bell-shaped, with variance its length, and independent of the past.
 
 <details>
 <summary>Detailed proof, for a bounded tilt that uses only the past</summary>
 
 **Setting.** $W$ is a Brownian motion under $P$ with its filtration $\mathcal F_t$. The tilt $\theta_t$ is known at time $t$ and satisfies $\lvert\theta_t\rvert \le K$. For any such bounded tilt $u_s$ write $\mathcal E(u)_t = \exp\big(\int_0^t u_s\,dW_s - \tfrac12\int_0^t u_s^2\,ds\big)$, so $Z = \mathcal E(-\theta)$.
 
-**(a) $\mathcal E(u)$ is a true martingale with mean 1.** By Ito's lemma, $d\mathcal E(u)_t = u_t\,\mathcal E(u)_t\,dW_t$. Stop it at $\tau_m$, the first time it reaches $m$; the stopped process is a bounded Ito integral, hence a martingale. It is positive, so conditional Fatou as $m \to \infty$ gives $E[\mathcal E(u)_t \mid \mathcal F_s] \le \mathcal E(u)_s$: a supermartingale, with $E[\mathcal E(u)_t] \le 1$. Squaring, $\mathcal E(u)_t^2 = \mathcal E(2u)_t \exp\big(\int_0^t u_s^2\,ds\big) \le \mathcal E(2u)_t\,e^{K^2 t}$, and $2u$ is bounded too, so $E[\mathcal E(u)_t^2] \le e^{K^2 t}$. Then $E\int_0^T u_t^2\,\mathcal E(u)_t^2\,dt \le K^2 T e^{K^2 T} < \infty$, so $\int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a square-integrable martingale ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), and $\mathcal E(u)_t = 1 + \int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a martingale with mean 1.
+**(a) $\mathcal E(u)$ is a true martingale with mean 1.** By Ito's lemma, $d\mathcal E(u)_t = u_t\,\mathcal E(u)_t\,dW_t$. Stop it at $\tau_m$, the first time it reaches $m$; the stopped process is a bounded Ito integral, hence a martingale. It is positive, so conditional Fatou (for positive quantities, the average of a limit is at most the limit of the averages) as $m \to \infty$ gives $E[\mathcal E(u)_t \mid \mathcal F_s] \le \mathcal E(u)_s$: a supermartingale (its best forecast is at most its current value), with $E[\mathcal E(u)_t] \le 1$. Squaring, $\mathcal E(u)_t^2 = \mathcal E(2u)_t \exp\big(\int_0^t u_s^2\,ds\big) \le \mathcal E(2u)_t\,e^{K^2 t}$, and $2u$ is bounded too, so $E[\mathcal E(u)_t^2] \le e^{K^2 t}$. Then $E\int_0^T u_t^2\,\mathcal E(u)_t^2\,dt \le K^2 T e^{K^2 T} < \infty$, so $\int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a square-integrable martingale ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), and $\mathcal E(u)_t = 1 + \int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a martingale with mean 1.
 
 **(b) $Q$ is a probability equivalent to $P$.** Define $Q(A) = E[Z_T \mathbf 1_A]$ for $A$ in $\mathcal F_T$. By (a), $Q$ of everything is 1. $Z_T > 0$, so $Q(A) = 0$ exactly when $P(A) = 0$. For $A$ in $\mathcal F_t$, the martingale property gives $Q(A) = E[Z_t \mathbf 1_A]$: $Z_t$ is the density on what is known by time $t$.
 
@@ -147,7 +153,7 @@ the same kind of weight with the bounded tilt $\theta_s - \lambda$, so a $P$-mar
 
 **(d) Conditional law of a step.** Fix $s < t \le T$, $A$ in $\mathcal F_s$ and real $\lambda$. Write $D = \widetilde W_t - \widetilde W_s$. Using (b), then conditioning on $\mathcal F_s$ and (c):
 $E^Q[\mathbf 1_A e^{\lambda D}] = E[\mathbf 1_A Z_t e^{\lambda D}] = E\big[\mathbf 1_A e^{-\lambda \widetilde W_s + \lambda^2 t/2}\,\mathcal E(\lambda - \theta)_t\big] = E\big[\mathbf 1_A e^{-\lambda \widetilde W_s + \lambda^2 t/2}\,\mathcal E(\lambda - \theta)_s\big] = E[\mathbf 1_A Z_s]\,e^{\lambda^2 (t - s)/2} = Q(A)\,e^{\lambda^2 (t-s)/2}$.
-For $Q(A) > 0$, divide by $Q(A)$: under $Q$ given $A$, $D$ has the moment generating function of a bell curve with mean 0 and variance $t - s$, for every real $\lambda$. A moment generating function finite near 0 fixes the law (wing 09), so $Q(A \cap \{D \le x\}) = Q(A)\,N(x/\sqrt{t-s})$ for every $x$. That says $D$ is independent of $\mathcal F_s$ under $Q$ and bell-shaped with variance $t - s$.
+For $Q(A) > 0$, divide by $Q(A)$: under $Q$ given $A$, $D$ has the moment generating function of a bell curve with mean 0 and variance $t - s$, for every real $\lambda$. A moment generating function finite near 0 fixes the law ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)), so $Q(A \cap \{D \le x\}) = Q(A)\,N(x/\sqrt{t-s})$ for every $x$. That says $D$ is independent of $\mathcal F_s$ under $Q$ and bell-shaped with variance $t - s$.
 
 **(e) Conclusion.** Applying (d) at successive times shows the steps of $\widetilde W$ over any partition are independent under $Q$, each bell-shaped with variance equal to its length. $\widetilde W_0 = 0$, and its paths are continuous $P$-almost surely, hence $Q$-almost surely by (b). So $\widetilde W$ is a Brownian motion under $Q$ on $[0, T]$. For a constant tilt this repeats Steps 1 to 4.
 
@@ -195,7 +201,13 @@ The last row is a density process that is a martingale for every finite time but
 
 ## Code, from first principles, and it actually runs
 
-The code takes three roads. Road 1 is the closed forms. Road 2 averages over the bell curve exactly by Simpson's rule: the mean weight, the slid centre, the variance, and the law of $\widetilde W_T$ under $Q$ against the bell-curve area $N(x)$, itself computed by integrating the bell curve's height. Road 3 runs 4000 seeded one-year paths (SplitMix64, normals by Box-Muller) on a grid of 1024 steps a year, weights each path, and prints every mean with its standard error. It also builds the weight from $dZ = -\theta Z\,dW$ on grids of 16 to 1024 steps, and repeats the test with the bounded tilt of 0.15 below $110 and 0.30 above. The paths are samples on a grid; with the tilt held fixed over each step the grid version of the theorem is exact, so only sampling error remains.
+The code takes three roads.
+
+- Road 1 is the closed forms.
+- Road 2 averages over the bell curve exactly by Simpson's rule: the mean weight, the slid centre, the variance, and the law of $\widetilde W_T$ under $Q$ against the bell-curve area $N(x)$, itself computed by integrating the bell curve's height.
+- Road 3 runs 4000 seeded one-year paths (SplitMix64, normals by Box-Muller) on a grid of 1024 steps a year, weights each path, and prints every mean with its standard error.
+
+It also builds the weight from $dZ = -\theta Z\,dW$ on grids of 16 to 1024 steps, and repeats the test with the bounded tilt of 0.15 below $110 and 0.30 above. The paths are samples on a grid; with the tilt held fixed over each step the grid version of the theorem is exact, so only sampling error remains.
 
 ### Python
 
@@ -618,6 +630,265 @@ xychart-beta
 ```
 
 First line (orange): the plain average of the simulated paths, rising at about 3 percent a year. Second line (green): the same paths, each counted with its weight $Z_t$ at that time, flat at $100. Third line (dark): the exact real-world average, $100\,e^{0.03t}$. The plain line is one sample of 4000 paths; its standard error at one year is 0.33.
+
+### Lean
+
+Lean proves Steps 1 to 4 and the fair share price for any constant tilt and finite horizon, and checks the worked numbers.
+
+- Take a Brownian motion $W$ under $P$, a constant tilt $\theta$ and a horizon $T$. Then the weights $Z_T$ average exactly 1, and $Q$ and $P$ agree on which events are impossible.
+- Take the same $W$, $\theta$ and $T$. Then under $Q$, the values of $\widetilde W$ at any finitely many times up to $T$ have a Brownian motion's odds.
+- Take the same $W$, $\theta$ and $T$. Then under $Q$, the paths of $\widetilde W$ are continuous on $[0, T]$, apart from paths of probability zero. So $\widetilde W$ is a Brownian motion under $Q$ on $[0, T]$.
+- Take the bell-curve density $\varphi_t$ and multiply it by the weight $e^{-\theta x - \theta^2 t/2}$. Then the result is the bell curve slid left by $\theta t$, with mean $-\theta t$ and variance still $t$.
+- Take the share's drift $\mu$, the bank's rate $r$, a kick size $\sigma \neq 0$ and the tilt $\theta = (\mu - r)/\sigma$. Then $E^Q[e^{-rT} S_T] = S_0$: the discounted share is a fair game under $Q$.
+- Take the card's share, with $\mu$ = 0.08, $r$ = 0.05 and $\sigma$ = 0.20. Then the tilt is 0.15, the correction 0.01125, and the log drift 0.06 under $P$ and 0.03 under $Q$.
+- With the wrong sign on the tilt, the drift comes out at 0.11.
+
+The tilt that moves along the path, Steps 5 and 6, and every simulation are left to the Python and Rust checks.
+
+```lean
+-- Girsanov: weighting a Brownian motion's paths by exp(-θ W_T - θ² T / 2) gives a probability measure under which W_t + θ t is a Brownian motion on [0, T].
+import Mathlib.Probability.BrownianMotion.Basic
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.MeasureTheory.Measure.WithDensity
+
+open MeasureTheory ProbabilityTheory ProbabilityTheory.BrownianReal
+open scoped NNReal ENNReal
+
+lemma gaussianReal_withDensity_tilt (m θ : ℝ) (v : ℝ≥0) :
+    (gaussianReal m v).withDensity
+        (fun x ↦ ENNReal.ofReal (Real.exp (-θ * (x - m) - θ ^ 2 * v / 2)))
+      = gaussianReal (m - θ * v) v := by
+  by_cases hv : v = 0
+  · subst hv
+    ext s hs
+    rw [withDensity_apply _ hs]
+    classical
+    simp only [gaussianReal_zero_var, NNReal.coe_zero, mul_zero, sub_zero, zero_div,
+      MeasureTheory.restrict_dirac' hs]
+    split_ifs with h <;> simp [h]
+  · have hv' : (v : ℝ) ≠ 0 := by exact_mod_cast hv
+    rw [gaussianReal_of_var_ne_zero _ hv, gaussianReal_of_var_ne_zero _ hv,
+      ← withDensity_mul _ (measurable_gaussianPDF _ _) (by fun_prop)]
+    congr 1
+    ext x
+    simp only [Pi.mul_apply, gaussianPDF, gaussianPDFReal]
+    rw [← ENNReal.ofReal_mul (by positivity)]
+    congr 1
+    rw [mul_assoc, ← Real.exp_add]
+    congr 2
+    field_simp
+    ring
+
+lemma map_withDensity_comp {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    (μ : Measure Ω) {f : Ω → α} (hf : AEMeasurable f μ) {g : α → ℝ≥0∞} (hg : Measurable g) :
+    (μ.withDensity (fun ω ↦ g (f ω))).map f = (μ.map f).withDensity g := by
+  ext s hs
+  rw [Measure.map_apply_of_aemeasurable (hf.mono_ac (withDensity_absolutelyContinuous _ _)) hs,
+    withDensity_apply _ hs, withDensity_apply₀ _ (hf.nullMeasurable hs),
+    ← lintegral_indicator hs, lintegral_map' ((hg.indicator hs).aemeasurable) hf,
+    ← lintegral_indicator₀ (hf.nullMeasurable hs)]
+  rfl
+
+lemma tilt_map_eval {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    (W : ℝ≥0 → Ω → ℝ) (hW : IsBrownianReal W P) (θ : ℝ) (T : ℝ≥0) :
+    (P.withDensity (fun ω ↦ ENNReal.ofReal (Real.exp (-θ * W T ω - θ ^ 2 * T / 2)))).map (W T)
+      = gaussianReal (-θ * T) T := by
+  have := map_withDensity_comp P (hW.aemeasurable T)
+    (g := fun x ↦ ENNReal.ofReal (Real.exp (-θ * x - θ ^ 2 * T / 2))) (by fun_prop)
+  have h0 := gaussianReal_withDensity_tilt 0 θ T
+  simp only [sub_zero, zero_sub] at h0
+  rw [this, (hW.hasLaw_eval T).map_eq, h0, neg_mul]
+
+#print axioms gaussianReal_withDensity_tilt
+#print axioms map_withDensity_comp
+#print axioms tilt_map_eval
+
+/-- **Girsanov's theorem, constant tilt (Cameron-Martin).** Let `W` be a Brownian motion under
+the probability measure `P`, let `θ` be a constant tilt and `T` a finite horizon. Weight every
+path by `Z_T = exp(-θ W_T - θ² T / 2)`, that is, `Q(A) = E[Z_T 1_A]`. Then `Q` is a probability
+measure with the same impossible events as `P`, and under `Q` the process `W_t + θ t` is a
+Brownian motion for `0 ≤ t ≤ T`: its finite-dimensional laws at times up to `T` are those of
+Brownian motion, and its paths are continuous on `[0, T]`. -/
+theorem girsanov_constant_tilt_brownian
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (W : ℝ≥0 → Ω → ℝ) (hW : IsBrownianReal W P) (θ : ℝ) (T : ℝ≥0) :
+    let Q := P.withDensity (fun ω ↦ ENNReal.ofReal (Real.exp (-θ * W T ω - θ ^ 2 * T / 2)))
+    IsProbabilityMeasure Q ∧ Q ≪ P ∧ P ≪ Q ∧
+      (∀ I : Finset ℝ≥0, (∀ t ∈ I, t ≤ T) →
+        HasLaw (fun ω ↦ I.restrict (fun t ↦ W t ω + θ * t)) (projectiveFamily I) Q) ∧
+      ∀ᵐ ω ∂Q, ContinuousOn (fun t ↦ W t ω + θ * t) (Set.Iic T) := by
+  intro Q
+  have hQP : Q ≪ P := withDensity_absolutelyContinuous _ _
+  have hmap : Q.map (W T) = gaussianReal (-θ * T) T := tilt_map_eval P W hW θ T
+  have hVQ : AEMeasurable (W T) Q := (hW.aemeasurable T).mono_ac hQP
+  have hprob : IsProbabilityMeasure Q := by
+    constructor
+    have : Q.map (W T) Set.univ = gaussianReal (-θ * T) T Set.univ := by rw [hmap]
+    rw [Measure.map_apply_of_aemeasurable hVQ MeasurableSet.univ, Set.preimage_univ] at this
+    rw [this, measure_univ]
+  refine ⟨hprob, hQP, ?_, ?_, ?_⟩
+  · refine withDensity_absolutelyContinuous' ?_ (Filter.Eventually.of_forall fun ω ↦ ?_)
+    · exact Measurable.comp_aemeasurable (g := fun x ↦ ENNReal.ofReal
+        (Real.exp (-θ * x - θ ^ 2 * T / 2))) (by fun_prop) (hW.aemeasurable T)
+    · simp [Real.exp_pos]
+  · intro I hI
+    let X : I → Ω → ℝ := fun i ω ↦ W i ω - ((i : ℝ) / T) * W T ω
+    let Y : Unit → Ω → ℝ := fun _ ω ↦ W T ω
+    have mX : ∀ i, AEMeasurable (X i) P :=
+      fun i ↦ (hW.aemeasurable i).sub ((hW.aemeasurable T).const_mul _)
+    have mY : ∀ u, AEMeasurable (Y u) P := fun _ ↦ hW.aemeasurable T
+    have hgauss : IsGaussianProcess (Sum.elim X Y) P := by
+      classical
+      apply hW.isGaussianProcess.of_isGaussianProcess
+      rintro (i | u)
+      · exact ⟨{(i : ℝ≥0), T},
+          { toFun x := x ⟨i, by simp⟩ - ((i : ℝ) / T) * x ⟨T, by simp⟩
+            map_add' x y := by simp; ring
+            map_smul' c x := by simp; ring }, by simp [X]⟩
+      · exact ⟨{T},
+          { toFun x := x ⟨T, by simp⟩
+            map_add' x y := by simp
+            map_smul' c x := by simp }, by simp [Y]⟩
+    have hcov : ∀ i u, cov[X i, Y u; P] = 0 := by
+      intro i u
+      have hi : (i : ℝ≥0) ≤ T := hI i i.2
+      simp only [X, Y]
+      rw [covariance_fun_sub_left, covariance_const_mul_left, hW.covariance_eval,
+        hW.covariance_eval, min_eq_left hi, min_self]
+      · rcases eq_or_ne T 0 with hT | hT
+        · have : (i : ℝ≥0) = 0 := le_antisymm (hT ▸ hi) bot_le
+          simp [this, hT]
+        · have : (T : ℝ) ≠ 0 := by exact_mod_cast hT
+          field_simp
+          ring
+      · exact (hW.isGaussianProcess.hasGaussianLaw_eval _).memLp_two
+      · exact (hW.isGaussianProcess.hasGaussianLaw_eval _).memLp_two.const_mul _
+      · exact (hW.isGaussianProcess.hasGaussianLaw_eval _).memLp_two
+    have hind : IndepFun (fun ω (i : I) ↦ X i ω) (fun ω (u : Unit) ↦ Y u ω) P :=
+      hgauss.indepFun_of_covariance_eq_zero mX mY hcov
+    let Yv : Ω → (I → ℝ) := fun ω i ↦ X i ω
+    have hind2 : IndepFun Yv (fun ω ↦ W T ω + θ * T) P :=
+      hind.comp (φ := id) (ψ := fun x : Unit → ℝ ↦ x () + θ * T) measurable_id (by fun_prop)
+    have hind3 : IndepFun Yv (W T) P :=
+      hind.comp (φ := id) (ψ := fun x : Unit → ℝ ↦ x ()) measurable_id (by fun_prop)
+    have mYv : AEMeasurable Yv P := AEMeasurable.of_eval mX
+    have hm1 : P.map (fun ω ↦ (Yv ω, W T ω + θ * T)) =
+        (P.map Yv).prod (gaussianReal (θ * T) T) := by
+      rw [(indepFun_iff_map_prod_eq_prod_map_map mYv ((hW.aemeasurable T).add_const _)).1 hind2]
+      congr 1
+      simpa using (gaussianReal_add_const (hW.hasLaw_eval T) (θ * T)).map_eq
+    have hm2 : P.map (fun ω ↦ (Yv ω, W T ω)) = (P.map Yv).prod (gaussianReal 0 T) := by
+      rw [(indepFun_iff_map_prod_eq_prod_map_map mYv (hW.aemeasurable T)).1 hind3,
+        (hW.hasLaw_eval T).map_eq]
+    let h : ℝ → ℝ≥0∞ := fun x ↦ ENNReal.ofReal (Real.exp (-θ * (x - θ * T) - θ ^ 2 * T / 2))
+    have hh : Measurable h := by fun_prop
+    have hQ' : Q = P.withDensity (fun ω ↦ (fun p : (I → ℝ) × ℝ ↦ h p.2) (Yv ω, W T ω + θ * T)) := by
+      simp only [Q, h]
+      congr
+      funext ω
+      ring_nf
+    have hQmap : Q.map (fun ω ↦ (Yv ω, W T ω + θ * T)) = P.map (fun ω ↦ (Yv ω, W T ω)) := by
+      rw [hQ', map_withDensity_comp P (mYv.prodMk ((hW.aemeasurable T).add_const _))
+        (g := fun p : (I → ℝ) × ℝ ↦ h p.2) (hh.comp measurable_snd), hm1, hm2, ← prod_withDensity_right hh]
+      congr 1
+      simp only [h]
+      rw [gaussianReal_withDensity_tilt, sub_self]
+    let F : (I → ℝ) × ℝ → (I → ℝ) := fun p i ↦ p.1 i + ((i : ℝ) / T) * p.2
+    have hF : Measurable F := by fun_prop
+    have e1 : (fun ω ↦ I.restrict (fun t ↦ W t ω + θ * t)) =
+        F ∘ (fun ω ↦ (Yv ω, W T ω + θ * T)) := by
+      funext ω i
+      have hi : (i : ℝ≥0) ≤ T := hI i i.2
+      simp only [Finset.restrict, Function.comp, F, Yv, X]
+      rcases eq_or_ne T 0 with hT | hT
+      · have : (i : ℝ≥0) = 0 := le_antisymm (hT ▸ hi) bot_le
+        simp [this, hT]
+      · have : (T : ℝ) ≠ 0 := by exact_mod_cast hT
+        field_simp
+        ring
+    have e2 : (fun ω ↦ I.restrict (W · ω)) = F ∘ (fun ω ↦ (Yv ω, W T ω)) := by
+      funext ω i
+      simp [F, Yv, X]
+    have hP := hW.hasLaw I
+    rw [e2] at hP
+    have mQ : AEMeasurable (fun ω ↦ (Yv ω, W T ω + θ * T)) Q :=
+      (mYv.prodMk ((hW.aemeasurable T).add_const _)).mono_ac hQP
+    rw [e1]
+    refine ⟨hF.comp_aemeasurable mQ, ?_⟩
+    rw [← AEMeasurable.map_map_of_aemeasurable hF.aemeasurable mQ, hQmap,
+      AEMeasurable.map_map_of_aemeasurable hF.aemeasurable (mYv.prodMk (hW.aemeasurable T))]
+    exact hP.map_eq
+  · filter_upwards [hQP.ae_le hW.cont] with ω hc
+    exact (hc.add (continuous_const.mul NNReal.continuous_coe)).continuousOn
+
+/-- **The weight slides the bell curve (Step 2).** Multiplying the bell curve with mean 0 and
+variance `v` by the weight `exp(-θ x - θ² v / 2)` gives the bell curve with the same variance
+`v`, slid to mean `-θ v`. -/
+theorem gaussian_weighted_is_shifted (θ : ℝ) (v : ℝ≥0) :
+    (gaussianReal 0 v).withDensity (fun x ↦ ENNReal.ofReal (Real.exp (-θ * x - θ ^ 2 * v / 2)))
+      = gaussianReal (-θ * v) v := by
+  have := gaussianReal_withDensity_tilt 0 θ v
+  simp only [sub_zero, zero_sub] at this
+  rw [this, neg_mul]
+
+
+/-- **The discounted share is a fair game under `Q`.** A share with price
+`S_T = S₀ exp((μ - σ²/2) T + σ W_T)` (drift `μ`, kick size `σ ≠ 0`), weighted by
+`Z_T = exp(-θ W_T - θ² T / 2)` with tilt `θ = (μ - r) / σ`, has discounted average
+`E^Q[e^(-r T) S_T] = S₀`: under the new odds it grows at the bank's rate `r`. -/
+theorem girsanov_discounted_share_fair
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (W : ℝ≥0 → Ω → ℝ) (hW : IsBrownianReal W P) (S₀ μ r σ : ℝ) (hσ : σ ≠ 0) (T : ℝ≥0) :
+    let θ := (μ - r) / σ
+    let Q := P.withDensity (fun ω ↦ ENNReal.ofReal (Real.exp (-θ * W T ω - θ ^ 2 * T / 2)))
+    ∫ ω, Real.exp (-r * T) * (S₀ * Real.exp ((μ - σ ^ 2 / 2) * T + σ * W T ω)) ∂Q = S₀ := by
+  intro θ Q
+  have hQP : Q ≪ P := withDensity_absolutelyContinuous _ _
+  have hmap : Q.map (W T) = gaussianReal (-θ * T) T := tilt_map_eval P W hW θ T
+  have hVQ : AEMeasurable (W T) Q := (hW.aemeasurable T).mono_ac hQP
+  rw [← integral_map (f := fun x ↦ Real.exp (-r * T) * (S₀ * Real.exp ((μ - σ ^ 2 / 2) * T + σ * x)))
+    hVQ (by fun_prop), hmap]
+  have hm := congrFun (mgf_id_gaussianReal (μ := -θ * T) (v := T)) σ
+  simp only [mgf, id] at hm
+  simp_rw [Real.exp_add, ← mul_assoc]
+  rw [integral_const_mul, hm, mul_assoc, mul_assoc, ← Real.exp_add, mul_left_comm,
+    ← Real.exp_add]
+  conv_rhs => rw [← mul_one S₀]
+  congr 1
+  rw [← Real.exp_zero]
+  congr 1
+  simp only [θ]
+  field_simp
+  ring
+
+-- The card's worked numbers, as exact fractions: μ = 0.08, r = 0.05, σ = 0.20, T = 1.
+-- Tilt θ = (μ - r) / σ = 0.15.
+example : ((8 : ℚ) / 100 - 5 / 100) / (20 / 100) = 15 / 100 := by norm_num
+-- Correction θ² T / 2 = 0.01125.
+example : ((15 : ℚ) / 100) ^ 2 * 1 / 2 = 1125 / 100000 := by norm_num
+-- Log drift under P: μ - σ²/2 = 0.06.
+example : (8 : ℚ) / 100 - (20 / 100) ^ 2 / 2 = 6 / 100 := by norm_num
+-- Log drift under Q: 0.06 - σ θ = 0.03, which is r - σ²/2.
+example : (6 : ℚ) / 100 - 20 / 100 * (15 / 100) = 3 / 100 := by norm_num
+example : (5 : ℚ) / 100 - (20 / 100) ^ 2 / 2 = 3 / 100 := by norm_num
+-- Wrong sign on the tilt: drift μ + σ θ = 0.11.
+example : (8 : ℚ) / 100 + 20 / 100 * (15 / 100) = 11 / 100 := by norm_num
+
+#print axioms girsanov_constant_tilt_brownian
+#print axioms gaussian_weighted_is_shifted
+#print axioms girsanov_discounted_share_fair
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gaussianReal_withDensity_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'map_withDensity_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tilt_map_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'girsanov_constant_tilt_brownian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gaussian_weighted_is_shifted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'girsanov_discounted_share_fair' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

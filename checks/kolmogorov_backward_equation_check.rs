@@ -130,4 +130,5 @@ fn main() {
     assert!((ud - ud_s).abs() < 1e-9 && (ud_t - ud).abs() < 0.005 && (ub2 - ub).abs() < 0.005);
     assert!((m1.0 - e_r).abs() < 4.0 * m1.1 && (m2.0 - ou2(T, R0)).abs() < 4.0 * m2.1);
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

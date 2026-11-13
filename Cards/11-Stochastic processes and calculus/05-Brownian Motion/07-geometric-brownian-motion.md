@@ -10,7 +10,9 @@ A share trades at $100 today. Each trading day its price is multiplied by a numb
 
 A Brownian path, the random walk seen from far away ([Brownian motion](01-brownian-motion.md)), moves by adding. A price moves by multiplying. Taking logarithms turns the multiplying into adding, so the natural model makes the log of the price a Brownian motion with a straight-line trend. That model is **geometric Brownian motion**, GBM from here on.
 
-Follow every way the year can go and two answers to "where does the share end up" come apart. The average ending price is $105.13: 5 percent growth, as the drift promises. The middle ending price, with half the years above it and half below, is $103.05: only 3 percent. About 54 years in 100 end below the average. Stretch the horizon to 30 years and the average is $448.17 while the middle is $245.96; 71 years in 100 then end below the average.
+Follow every way the year can go and two answers to "where does the share end up" come apart. The average ending price is $105.13: 5 percent growth, as the drift promises. The middle ending price, with half the years above it and half below, is $103.05: only 3 percent. About 54 years in 100 end below the average.
+
+Stretch the horizon to 30 years and the average is $448.17 while the middle is $245.96; 71 years in 100 then end below the average.
 
 **Under GBM the price is today's price times e raised to a Brownian motion with a straight-line trend; the average grows at the drift, but the middle grows slower by half the volatility squared, because a few very good paths carry the average.**
 
@@ -28,7 +30,7 @@ xychart-beta
     line [0.33, 2.32, 7.62, 14.65, 19.11, 18.76, 14.89, 10.05, 5.99, 3.25, 1.63, 0.77]
 ```
 
-Bars: 20,000 simulated years, each built from 252 daily multipliers (one sample, seed 20260930); each bar's standard error, printed by the code, is at most 0.28 percentage points. Line: the exact chances from the formula below. The hump sits between $90 and $110 and the right tail runs further than the left: a fall is capped at $100 of loss, a rise is not. That lopsided tail is what pulls the average above the middle.
+Bars: 20,000 simulated years, each built from 252 daily multipliers (one sample, seed 20260930); each bar's standard error (the typical size of its sampling error), printed by the code, is at most 0.28 percentage points. Line: the exact chances from the formula below. The hump sits between $90 and $110 and the right tail runs further than the left: a fall is capped at $100 of loss, a rise is not. That lopsided tail is what pulls the average above the middle.
 
 ---
 
@@ -63,7 +65,7 @@ $$E[S_t] = S_0\, e^{\mu t}, \qquad \operatorname{median}(S_t) = S_0\, e^{(\mu - 
 
 The term $\frac12\sigma^2$ is 0.02 here. It is called the **volatility drag**. It is not charged to the average; it is the gap between the average's growth rate and the middle's.
 
-The spread of the price itself comes from the lognormal variance ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)): its standard deviation is $E[S_t]\sqrt{e^{\sigma^2 t} - 1}$, $21.24 after one year.
+The spread of the price itself comes from the variance of the lognormal law, the law of e raised to a normal ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)): its standard deviation is $E[S_t]\sqrt{e^{\sigma^2 t} - 1}$, $21.24 after one year.
 
 ### When it holds
 
@@ -78,7 +80,9 @@ The spread of the price itself comes from the lognormal variance ([Lognormal](..
 
 ### Step 0: logs turn multiplying into adding, and the squares of the steps do not vanish
 
-A price is a product of many small multipliers. Its log is a sum, which is where Brownian motion lives. The surprise is in the log of one multiplier: $\ln(1 + x)$ is $x - x^2/2$ plus a much smaller remainder. Over a year the $x$ terms add up to the trend plus the noise. The $x^2/2$ terms add up to something that does not shrink as the steps get smaller: the squared Brownian steps add up to the elapsed time, [Quadratic variation](03-quadratic-variation.md). That leftover is the $-\frac12\sigma^2 t$.
+A price is a product of many small multipliers. Its log is a sum, which is where Brownian motion lives. The surprise is in the log of one multiplier: $\ln(1 + x)$ is $x - x^2/2$ plus a much smaller remainder.
+
+Over a year the $x$ terms add up to the trend plus the noise. The $x^2/2$ terms add up to something that does not shrink as the steps get smaller: the squared Brownian steps add up to the elapsed time, [Quadratic variation](03-quadratic-variation.md). That leftover is the $-\frac12\sigma^2 t$.
 
 ### Step 1: the model on a grid
 
@@ -100,7 +104,9 @@ Take the three pieces in turn.
 
 Exponentiate: the grid price tends to $S_0 e^{\mu t - \frac12\sigma^2 t + \sigma W_t}$. That is the formula.
 
-The code checks this path by path. For each of the 20,000 simulated years it builds the grid product and the formula from the same Brownian increments and averages the gap. With one step a year the gap is $2.05; with 12, $0.68; with 63, $0.30; with 252, $0.15. The gap falls like $\sqrt{\Delta t}$, the rate the proof's error terms promise: the fourfold cut from 63 to 252 steps halves it. On the first simulated path the squared daily steps add to 1.083, close to the year's length of 1.
+The code checks this path by path. For each of the 20,000 simulated years it builds the grid product and the formula from the same Brownian increments and averages the gap.
+
+With one step a year the gap is $2.05; with 12, $0.68; with 63, $0.30; with 252, $0.15. The gap falls like $\sqrt{\Delta t}$, the rate the proof's error terms promise: the fourfold cut from 63 to 252 steps halves it. On the first simulated path the squared daily steps add to 1.083, close to the year's length of 1.
 
 <details>
 <summary>Detailed proof: the grid product converges in probability</summary>
@@ -132,11 +138,17 @@ The exponential only rises, so it keeps order: the middle of $S_t$ is $S_0$ time
 
 For the share: $100 \times e^{0.03} = \$103.05$.
 
-A coin-flip version of the grid shows the drag at work in one pair of steps. Replace each normal $\Delta W$ by $+\sqrt{\Delta t}$ or $-\sqrt{\Delta t}$, with chance one half each: the same mean and variance, and the model the code counts exactly. One step up and one step down multiply the price by $(1 + a + b)(1 + a - b) = (1 + a)^2 - b^2$, where $a = \mu\Delta t$ and $b = \sigma\sqrt{\Delta t}$. The $b^2 = \sigma^2\Delta t$ is lost on every up-down pair, whatever the order. The middle path has as many ups as downs, so it holds $n/2$ such pairs and loses about $\frac{n}{2}\sigma^2\Delta t = \frac12\sigma^2 t$ of log growth.
+A coin-flip version of the grid shows the drag at work in one pair of steps. Replace each normal $\Delta W$ by $+\sqrt{\Delta t}$ or $-\sqrt{\Delta t}$, with chance one half each: the same mean and variance, and the model the code counts exactly.
+
+One step up and one step down multiply the price by $(1 + a + b)(1 + a - b) = (1 + a)^2 - b^2$, where $a = \mu\Delta t$ and $b = \sigma\sqrt{\Delta t}$. The $b^2 = \sigma^2\Delta t$ is lost on every up-down pair, whatever the order.
+
+The middle path has as many ups as downs, so it holds $n/2$ such pairs and loses about $\frac{n}{2}\sigma^2\Delta t = \frac12\sigma^2 t$ of log growth.
 
 ### Step 5: the average is carried by a shrinking minority
 
-$S_t$ ends below its mean exactly when $(\mu - \frac12\sigma^2)t + \sigma W_t < \mu t$, that is when $W_t < \frac12\sigma t$. Writing $W_t = \sqrt{t}\,Z$ with $Z$ standard normal, that is $Z < \frac12\sigma\sqrt{t}$, with chance $\Phi(\frac12\sigma\sqrt{t})$. At one year this is $\Phi(0.1) = 0.5398$. At 100 years it is $\Phi(1) = 0.8413$. The chance rises towards 1 with the horizon, while the mean keeps growing at 5 percent: a smaller and smaller share of very lucky paths holds the average up.
+$S_t$ ends below its mean exactly when $(\mu - \frac12\sigma^2)t + \sigma W_t < \mu t$, that is when $W_t < \frac12\sigma t$. Writing $W_t = \sqrt{t}\,Z$ with $Z$ standard normal, that is $Z < \frac12\sigma\sqrt{t}$, with chance $\Phi(\frac12\sigma\sqrt{t})$.
+
+At one year this is $\Phi(0.1) = 0.5398$. At 100 years it is $\Phi(1) = 0.8413$. The chance rises towards 1 with the horizon, while the mean keeps growing at 5 percent: a smaller and smaller share of very lucky paths holds the average up.
 
 Almost every single path settles at the median's rate. Divide the log price by $t$:
 
@@ -147,11 +159,11 @@ The last term tends to 0 with probability one, so each path's long-run growth ra
 <details>
 <summary>Detailed proof: $W_t/t \to 0$ with probability one</summary>
 
-At whole years, $W_n$ is the sum of $n$ independent standard normal increments, so $W_n/n \to 0$ with probability one by the strong law of large numbers (wing 10). Between whole years, let $M_n$ be the largest value of $\lvert W_s - W_n\rvert$ over times s in $[n, n+1]$. By the reflection principle, [Reflection principle](04-reflection-principle-and-running-maximum.md), applied to each sign, $P(M_n > \varepsilon n) \le 4\,P(W_1 > \varepsilon n)$ for any $\varepsilon > 0$. These chances fall faster than any power of $n$, so their sum is finite, and by Borel–Cantelli only finitely many $M_n$ exceed $\varepsilon n$. Hence $M_n/n \to 0$, and for $t$ in $[n, n+1]$, $\lvert W_t\rvert/t \le (\lvert W_n\rvert + M_n)/n \to 0$.
+At whole years, $W_n$ is the sum of $n$ independent standard normal increments, so $W_n/n \to 0$ with probability one by [The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md). Between whole years, let $M_n$ be the largest value of $\lvert W_s - W_n\rvert$ over times s in $[n, n+1]$. By the reflection principle, [Reflection principle](04-reflection-principle-and-running-maximum.md), applied to each sign, $P(M_n > \varepsilon n) \le 4\,P(W_1 > \varepsilon n)$ for any $\varepsilon > 0$. These chances fall faster than any power of $n$, so their sum is finite, and by Borel–Cantelli only finitely many $M_n$ exceed $\varepsilon n$. Hence $M_n/n \to 0$, and for $t$ in $[n, n+1]$, $\lvert W_t\rvert/t \le (\lvert W_n\rvert + M_n)/n \to 0$.
 
 </details>
 
-The other road to the median is the lognormal card's: $S_t/S_0$ is lognormal with log-centre $(\mu - \frac12\sigma^2)t$ and log-variance $\sigma^2 t$, and its median, mean and mode are read off there.
+The other road to the median is the lognormal card's: $S_t/S_0$ is lognormal with log-centre $(\mu - \frac12\sigma^2)t$ and log-variance $\sigma^2 t$, and its median, mean and mode (most likely value) are read off there.
 
 ---
 
@@ -214,7 +226,13 @@ Orange, the steeper smooth curve: the mean, growing 5 percent a year. Green, the
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the mean and the median by three independent roads. First, the formulas. Second, an exact coin-flip model: each of $n$ steps a year multiplies the price by $1 + a + b$ or $1 + a - b$ with chance one half each, and every one of the $n + 1$ possible end prices is weighted by its exact binomial chance. Third, a simulation of 20,000 years of 252 daily Brownian steps, with SplitMix64 random numbers and Box–Muller normals written out. The bell-curve area is Simpson's rule, also written out. The simulation also measures the gap between the grid product and the formula at four step sizes, and its share of years ending below the mean is asserted against $\Phi(0.1)$; separate draws of the exact lognormal law check that chance at four horizons. Every simulated number carries its standard error, the median's from the sorted years lying half the square root of 20,000 places either side of the middle, and the asserts allow four of them.
+The scripts reach the mean and the median by three independent roads.
+
+- First, the formulas.
+- Second, an exact coin-flip model: each of $n$ steps a year multiplies the price by $1 + a + b$ or $1 + a - b$ with chance one half each, and every one of the $n + 1$ possible end prices is weighted by its exact binomial chance.
+- Third, a simulation of 20,000 years of 252 daily Brownian steps, with SplitMix64 random numbers (a small, fixed-seed generator) and Box–Muller normals (two uniform numbers turned into two normal ones) written out.
+
+The bell-curve area is Simpson's rule, also written out. The simulation also measures the gap between the grid product and the formula at four step sizes, and its share of years ending below the mean is asserted against $\Phi(0.1)$; separate draws of the exact lognormal law check that chance at four horizons. Every simulated number carries its standard error, the median's from the sorted years lying half the square root of 20,000 places either side of the middle, and the asserts allow four of them.
 
 ### Python
 
@@ -641,6 +659,308 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree byte for byte: the same generator, the same seed, and the same order of arithmetic.
+
+### Lean
+
+Lean proves Steps 3 to 5 of Why it works, for the card's formula and any price above zero.
+
+- Suppose $S_0 > 0$, and take any time $t$. Then $E[S_t] = S_0 e^{\mu t}$: the average grows at the drift.
+- Take the same price and time. Then at least half the paths end at or below the formula's median, and at least half end at or above it.
+- Suppose also $\sigma > 0$ and $t > 0$. Then $P(S_t < E[S_t]) = \Phi(\tfrac12\sigma\sqrt{t})$. At $\sigma = 0$ or $t = 0$ the price is not random, and that chance is 0.
+- Suppose $S_0 > 0$. Then, with probability one, $\frac{1}{t}\ln\frac{S_t}{S_0}$ tends to $\mu - \tfrac12\sigma^2$ as $t$ grows.
+- Take the share, with $\mu$ = 0.05 and $\sigma$ = 0.20. Then the volatility drag is 0.02, the median's growth rate is 0.03, and the chance of a loss is $\Phi(-0.15)$.
+- Take the point inside $\Phi$ for ending below the mean. Then it is 0.1 at one year and 1 at 100 years.
+- Take one up step and one down step. Then they multiply the price by $(1 + a + b)(1 + a - b) = (1 + a)^2 - b^2$.
+
+The grid product's convergence to the formula, the coin-flip model and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Geometric Brownian motion: for the price S_t = S₀ e^((μ - σ²/2) t + σ W_t) driven by a Brownian motion W, the average price is S₀ e^(μ t), the middle price is S₀ e^((μ - σ²/2) t), the chance of ending below the average is Φ(σ √t / 2), and every path's long-run growth rate is μ - σ²/2.
+import Mathlib.Probability.BrownianMotion.Basic
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+open MeasureTheory ProbabilityTheory Filter Topology
+open scoped NNReal
+
+/-! The model. `W : ℝ≥0 → Ω → ℝ` is Mathlib's `IsBrownianReal W P`: it starts at 0, its moves
+over separate stretches are independent, `W t` is normal with mean 0 and variance t, and its
+paths are continuous with probability one (the card's "Paths are continuous").
+The price at time `t` (in years) is `S₀ * exp ((μ - σ ^ 2 / 2) * t + σ * W t ω)`, with
+today's price `S₀ > 0` (the card's "The price starts above zero"), and one fixed drift `μ`
+and one fixed volatility `σ` (the card's "Drift and volatility are constants" and
+"Percentage moves with one fixed spread"). The average over all paths is the integral `∫ … ∂P`.
+`Φ(x)` is Mathlib's `cdf (gaussianReal 0 1) x`. -/
+
+/-- Two pre-Brownian motions, sampled at countably many times, have the same joint law. -/
+lemma preBrownian_map_countable_eq {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {X Y : ℝ≥0 → Ω → ℝ} (hX : IsPreBrownianReal X P) (hY : IsPreBrownianReal Y P)
+    {ι : Type*} [Countable ι] (ψ : ι → ℝ≥0) :
+    P.map (fun ω i => X (ψ i) ω) = P.map (fun ω i => Y (ψ i) ω) := by
+  classical
+  have hP : IsProbabilityMeasure P := hX.isGaussianProcess.isProbabilityMeasure
+  have key : ∀ (Z : ℝ≥0 → Ω → ℝ), IsPreBrownianReal Z P → ∀ I : Finset ι,
+      P.map (fun ω (j : I) => Z (ψ j) ω) =
+        (BrownianReal.projectiveFamily (I.image ψ)).map
+          (fun (f : (I.image ψ) → ℝ) (j : I) => f ⟨ψ j, Finset.mem_image_of_mem ψ j.2⟩) := by
+    intro Z hZ I
+    have hg : HasLaw (fun (f : (I.image ψ) → ℝ) (j : I) => f ⟨ψ j, Finset.mem_image_of_mem ψ j.2⟩)
+        ((BrownianReal.projectiveFamily (I.image ψ)).map
+          (fun (f : (I.image ψ) → ℝ) (j : I) => f ⟨ψ j, Finset.mem_image_of_mem ψ j.2⟩))
+        (BrownianReal.projectiveFamily (I.image ψ)) :=
+      hasLaw_map (Measurable.aemeasurable (by fun_prop))
+    exact (hg.comp (hZ.hasLaw (I.image ψ))).map_eq
+  have haeX : AEMeasurable (fun ω i => X (ψ i) ω) P :=
+    AEMeasurable.of_eval (fun i => hX.aemeasurable (ψ i))
+  have haeY : AEMeasurable (fun ω i => Y (ψ i) ω) P :=
+    AEMeasurable.of_eval (fun i => hY.aemeasurable (ψ i))
+  have hlimX : IsProjectiveLimit (P.map (fun ω i => X (ψ i) ω))
+      (fun I => P.map (fun ω (j : I) => X (ψ j) ω)) := by
+    intro I
+    rw [AEMeasurable.map_map_of_aemeasurable (by fun_prop) haeX]
+    rfl
+  have hlimY : IsProjectiveLimit (P.map (fun ω i => Y (ψ i) ω))
+      (fun I => P.map (fun ω (j : I) => X (ψ j) ω)) := by
+    intro I
+    rw [AEMeasurable.map_map_of_aemeasurable (by fun_prop) haeY]
+    change P.map (fun ω (j : I) => Y (ψ j) ω) = P.map (fun ω (j : I) => X (ψ j) ω)
+    rw [key X hX, key Y hY]
+  exact hlimX.unique hlimY
+
+/-- **Mean and median of geometric Brownian motion.** If `W` is a Brownian motion and the price
+is `S_t = S₀ e^((μ - σ²/2) t + σ W_t)` with `S₀ > 0`, then at every time `t` the average price
+is `S₀ e^(μ t)`, growing at the drift, while `S₀ e^((μ - σ²/2) t)` is a median: at least half
+the paths end at or below it and at least half end at or above it. The middle grows slower than
+the average by half the volatility squared. -/
+theorem gbm_mean_and_median {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} (hW : IsBrownianReal W P) (S₀ μ σ : ℝ) (hS₀ : 0 < S₀) (t : ℝ≥0) :
+    ∫ ω, S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω) ∂P = S₀ * Real.exp (μ * t) ∧
+      1 / 2 ≤ P.real {ω | S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω)
+                            ≤ S₀ * Real.exp ((μ - σ ^ 2 / 2) * t)} ∧
+      1 / 2 ≤ P.real {ω | S₀ * Real.exp ((μ - σ ^ 2 / 2) * t)
+                            ≤ S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω)} := by
+  have hL := hW.hasLaw_eval t
+  have hP : IsProbabilityMeasure P := hL.isProbabilityMeasure
+  have hZ := gaussianReal_const_mul hL σ
+  rw [mul_zero] at hZ
+  have hZn := gaussianReal_neg hZ
+  rw [neg_zero] at hZn
+  set ν := gaussianReal 0 (⟨σ ^ 2, sq_nonneg _⟩ * t)
+  have e1 : {ω | S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω)
+                            ≤ S₀ * Real.exp ((μ - σ ^ 2 / 2) * t)} = {ω | σ * W t ω ≤ 0} := by
+    ext ω; simp [mul_le_mul_iff_right₀ hS₀]
+  have e2 : {ω | S₀ * Real.exp ((μ - σ ^ 2 / 2) * t)
+                            ≤ S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω)} = {ω | 0 ≤ σ * W t ω} := by
+    ext ω; simp [mul_le_mul_iff_right₀ hS₀]
+  have m1 : P.real {ω | σ * W t ω ≤ 0} = ν.real {x | x ≤ 0} :=
+    hZ.measureReal_eq (p := fun x => x ≤ 0) measurableSet_Iic
+  have m2 : P.real {ω | 0 ≤ σ * W t ω} = ν.real {x | x ≤ 0} := by
+    have := hZn.measureReal_eq (p := fun x => x ≤ 0) measurableSet_Iic
+    simp only [Pi.neg_apply, neg_nonpos] at this
+    exact this
+  have hsum : 1 ≤ P.real {ω | σ * W t ω ≤ 0} + P.real {ω | 0 ≤ σ * W t ω} := by
+    have h := measureReal_union_le (μ := P) {ω | σ * W t ω ≤ 0} {ω | 0 ≤ σ * W t ω}
+    have hu : {ω | σ * W t ω ≤ 0} ∪ {ω | 0 ≤ σ * W t ω} = Set.univ := by
+      ext ω; simp [le_total]
+    rw [hu, probReal_univ] at h
+    exact h
+  refine ⟨?_, ?_, ?_⟩
+  · have hm := mgf_gaussianReal hL σ
+    rw [mgf] at hm
+    simp_rw [Real.exp_add]
+    rw [integral_const_mul, integral_const_mul]
+    rw [show (∫ ω, Real.exp (σ * W t ω) ∂P) = Real.exp (0 * σ + ↑t * σ ^ 2 / 2) from hm]
+    rw [← Real.exp_add]
+    congr 2
+    ring
+  · rw [e1]; linarith
+  · rw [e2]; linarith
+
+/-- **Most paths end below the average.** With a positive volatility and a positive horizon
+`t`, the chance that the price ends strictly below its average `S₀ e^(μ t)` is `Φ(σ √t / 2)`,
+which is above one half and rises towards 1 as the horizon grows. (At `t = 0` or `σ = 0` the
+price is not random and the chance is 0, so the card's formula needs a real spread and a real
+wait.) -/
+theorem gbm_prob_below_mean {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} (hW : IsBrownianReal W P) (S₀ μ σ : ℝ) (hS₀ : 0 < S₀) (hσ : 0 < σ)
+    (t : ℝ≥0) (ht : 0 < t) :
+    P.real {ω | S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω) < S₀ * Real.exp (μ * t)} =
+      cdf (gaussianReal 0 1) (σ * Real.sqrt t / 2) := by
+  have hL := hW.hasLaw_eval t
+  have htR : (0 : ℝ) < t := ht
+  have hs : 0 < Real.sqrt t := Real.sqrt_pos.mpr htR
+  have hZ := gaussianReal_const_mul hL (Real.sqrt t)⁻¹
+  rw [mul_zero] at hZ
+  have hv : NNReal.mk ((Real.sqrt t)⁻¹ ^ 2) (sq_nonneg _) * t = 1 := by
+    ext
+    simp only [NNReal.coe_mul, NNReal.coe_mk, NNReal.coe_one, inv_pow,
+      Real.sq_sqrt htR.le]
+    field_simp
+  rw [hv] at hZ
+  have e : {ω | S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω) < S₀ * Real.exp (μ * t)}
+      = {ω | (Real.sqrt t)⁻¹ * W t ω < σ * Real.sqrt t / 2} := by
+    ext ω
+    simp only [Set.mem_ofPred_eq, mul_lt_mul_iff_right₀ hS₀, Real.exp_lt_exp]
+    rw [inv_mul_lt_iff₀ hs]
+    have h1 : Real.sqrt t * (σ * Real.sqrt t / 2) = σ * t / 2 := by
+      rw [show Real.sqrt t * (σ * Real.sqrt t / 2) = σ * (Real.sqrt t * Real.sqrt t) / 2 by ring,
+        Real.mul_self_sqrt htR.le]
+    rw [h1]
+    constructor
+    · intro h; nlinarith
+    · intro h; nlinarith
+  rw [e, hZ.measureReal_eq (p := fun x => x < σ * Real.sqrt t / 2) measurableSet_Iio,
+    cdf_eq_real]
+  have : NullSingletonClass (gaussianReal 0 1) := nullSingletonClass_gaussianReal one_ne_zero
+  exact measureReal_congr (Iio_ae_eq_Iic' (measure_singleton _))
+
+/-- **Each path grows at the median's rate.** With probability one, the long-run growth rate
+`(1/t) ln(S_t / S₀)` of the price tends to `μ - σ²/2` as `t` grows, not to the drift `μ`. -/
+theorem gbm_long_run_growth_rate {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} (hW : IsBrownianReal W P) (S₀ μ σ : ℝ) (hS₀ : 0 < S₀) :
+    ∀ᵐ ω ∂P, Tendsto
+      (fun t : ℝ≥0 => (1 / (t : ℝ)) *
+        Real.log (S₀ * Real.exp ((μ - σ ^ 2 / 2) * t + σ * W t ω) / S₀))
+      atTop (𝓝 (μ - σ ^ 2 / 2)) := by
+  -- sample times: `ψ q = 1 / q` for positive rationals `q`
+  set ψ : ℚ → ℝ≥0 := fun q => (Real.toNNReal q)⁻¹ with hψ
+  set A : Set (ℚ → ℝ) := {f | ∀ m : ℕ, ∃ n : ℕ, ∀ q : ℚ,
+    ψ q < 1 / ((n : ℝ≥0) + 1) → |f q| ≤ 1 / ((m : ℝ) + 1)} with hA_def
+  have hA : MeasurableSet A := by
+    have hA' : A = ⋂ m : ℕ, ⋃ n : ℕ, ⋂ q : ℚ, {f : ℚ → ℝ |
+        ψ q < 1 / ((n : ℝ≥0) + 1) → |f q| ≤ 1 / ((m : ℝ) + 1)} := by
+      ext f
+      simp only [hA_def, Set.mem_iInter, Set.mem_iUnion, Set.mem_ofPred_eq]
+    rw [hA']
+    refine MeasurableSet.iInter fun m => MeasurableSet.iUnion fun n =>
+      MeasurableSet.iInter fun q => ?_
+    have hs : {f : ℚ → ℝ | ψ q < 1 / ((n : ℝ≥0) + 1) → |f q| ≤ 1 / ((m : ℝ) + 1)} =
+        {f : ℚ → ℝ | ¬ ψ q < 1 / ((n : ℝ≥0) + 1)} ∪ {f : ℚ → ℝ | |f q| ≤ 1 / ((m : ℝ) + 1)} := by
+      ext f
+      simp only [Set.mem_union, Set.mem_ofPred_eq]
+      tauto
+    rw [hs]
+    exact (MeasurableSet.const _).union
+      (measurableSet_le (continuous_abs.measurable.comp (measurable_pi_apply q)) measurable_const)
+  -- the Brownian motion itself satisfies the event
+  have hEW : ∀ᵐ ω ∂P, (fun q => W (ψ q) ω) ∈ A := by
+    filter_upwards [hW.tendsto_nhds_zero] with ω hω
+    intro m
+    rw [Metric.tendsto_nhds_nhds] at hω
+    obtain ⟨δ, hδ, hδ'⟩ := hω (1 / ((m : ℝ) + 1)) (by positivity)
+    obtain ⟨n, hn⟩ := exists_nat_one_div_lt hδ
+    refine ⟨n, fun q hq => ?_⟩
+    have h1 : dist (ψ q) 0 < δ := by
+      rw [NNReal.dist_eq, NNReal.coe_zero, sub_zero, NNReal.abs_eq]
+      refine lt_trans ?_ hn
+      exact_mod_cast hq
+    have := hδ' h1
+    rw [Real.dist_eq, sub_zero] at this
+    exact this.le
+  -- time inversion transfers the event
+  have hinv := hW.toIsPreBrownianReal.inv
+  have hEX : ∀ᵐ ω ∂P, (fun q => (ψ q : ℝ) * W (1 / ψ q) ω) ∈ A := by
+    have heq := preBrownian_map_countable_eq hinv hW.toIsPreBrownianReal ψ
+    have haeX : AEMeasurable (fun ω q => (ψ q : ℝ) * W (1 / ψ q) ω) P :=
+      AEMeasurable.of_eval (fun i => hinv.aemeasurable (ψ i))
+    have haeW : AEMeasurable (fun ω q => W (ψ q) ω) P :=
+      AEMeasurable.of_eval (fun i => hW.aemeasurable (ψ i))
+    rw [ae_iff] at hEW ⊢
+    have h1 := Measure.map_apply_of_aemeasurable haeX hA.compl
+    have h2 := Measure.map_apply_of_aemeasurable haeW hA.compl
+    rw [heq, h2] at h1
+    exact h1.symm.trans hEW
+  filter_upwards [hEX, hW.cont] with ω hE hc
+  -- the path grows slower than linearly
+  have hlin : Tendsto (fun t : ℝ≥0 => W t ω / t) atTop (𝓝 0) := by
+    rw [Metric.tendsto_atTop]
+    intro ε hε
+    obtain ⟨m, hm⟩ := exists_nat_one_div_lt hε
+    obtain ⟨n, hn⟩ := hE m
+    set e : ℝ := 1 / ((m : ℝ) + 1)
+    have he : 0 < e := by positivity
+    refine ⟨(n : ℝ≥0) + 2, fun t ht => ?_⟩
+    have htn : ((n : ℝ) + 1) < t := by
+      have : ((n : ℝ≥0) + 2 : ℝ≥0) ≤ t := ht
+      have : ((n : ℝ) + 2) ≤ (t : ℝ) := by exact_mod_cast this
+      linarith
+    have htpos : (0 : ℝ) < t := by linarith [(n.cast_nonneg : (0 : ℝ) ≤ n)]
+    -- the bound at rational times
+    have hrat : ∀ q : ℚ, ((n : ℝ) + 1) < q → |W (Real.toNNReal q) ω| - e * q ≤ 0 := by
+      intro q hq
+      have hqpos : (0 : ℝ) < q := by linarith [(n.cast_nonneg : (0 : ℝ) ≤ n)]
+      have hψq : ψ q < 1 / ((n : ℝ≥0) + 1) := by
+        rw [hψ]
+        simp only
+        rw [← NNReal.coe_lt_coe, NNReal.coe_inv, Real.coe_toNNReal _ hqpos.le]
+        push_cast
+        rw [one_div]
+        exact inv_strictAnti₀ (by positivity) hq
+      have hb := hn q hψq
+      simp only at hb
+      have hψv : (ψ q : ℝ) = 1 / q := by
+        rw [hψ]; simp only
+        rw [NNReal.coe_inv, Real.coe_toNNReal _ hqpos.le, one_div]
+      have hψi : 1 / ψ q = Real.toNNReal q := by
+        rw [hψ]; simp only
+        rw [one_div, inv_inv]
+      rw [hψi, hψv, abs_mul, abs_of_pos (by positivity : (0 : ℝ) < 1 / q)] at hb
+      rw [div_mul_eq_mul_div, one_mul, div_le_iff₀ hqpos] at hb
+      linarith
+    have hcl : IsClosed {x : ℝ | |W (Real.toNNReal x) ω| - e * x ≤ 0} :=
+      isClosed_le (by fun_prop) continuous_const
+    have hsub : Set.Ioi ((n : ℝ) + 1) ⊆ {x : ℝ | |W (Real.toNNReal x) ω| - e * x ≤ 0} := by
+      refine (Rat.denseRange_cast.open_subset_closure_inter isOpen_Ioi).trans ?_
+      refine closure_minimal ?_ hcl
+      rintro x ⟨hx, q, rfl⟩
+      exact hrat q hx
+    have hb := hsub (Set.mem_Ioi.mpr htn)
+    simp only [Set.mem_ofPred_eq, Real.toNNReal_coe] at hb
+    rw [Real.dist_eq, sub_zero, abs_div, abs_of_pos htpos, div_lt_iff₀ htpos]
+    calc |W t ω| ≤ e * t := by linarith
+      _ < ε * t := by gcongr
+  have hlim : Tendsto (fun t : ℝ≥0 => (μ - σ ^ 2 / 2) + σ * (W t ω / t)) atTop
+      (𝓝 (μ - σ ^ 2 / 2)) := by
+    simpa using (hlin.const_mul σ).const_add (μ - σ ^ 2 / 2)
+  refine hlim.congr' ?_
+  filter_upwards [eventually_gt_atTop (0 : ℝ≥0)] with t ht
+  have htR : (0 : ℝ) < t := ht
+  rw [mul_div_cancel_left₀ _ hS₀.ne', Real.log_exp]
+  field_simp
+
+/-! The card's exact worked steps, with 0.05 = 1/20 and 0.20 = 1/5. -/
+
+-- Variance per year: 0.20 × 0.20 = 0.04.
+example : (1 / 5 : ℚ) * (1 / 5) = 1 / 25 := by norm_num
+-- Volatility drag: 0.04 / 2 = 0.02.
+example : (1 / 25 : ℚ) / 2 = 1 / 50 := by norm_num
+-- The median's growth rate: 0.05 - 0.02 = 0.03.
+example : (1 / 20 : ℚ) - 1 / 50 = 3 / 100 := by norm_num
+-- The point inside Φ for the chance of ending below the mean: σ √t / 2 is 0.1 at one year
+-- and 1 at 100 years (√100 = 10).
+example : (1 / 5 : ℚ) * 1 / 2 = 1 / 10 ∧ (1 / 5 : ℚ) * 10 / 2 = 1 ∧ (10 : ℚ) ^ 2 = 100 := by
+  norm_num
+-- The chance of a loss is Φ(-0.03 / 0.20) = Φ(-0.15).
+example : -(3 / 100 : ℚ) / (1 / 5) = -3 / 20 := by norm_num
+-- Steps a year: a fourfold cut from 63 to 252 steps halves the gap, since √4 = 2.
+example : 63 * 4 = 252 ∧ 2 ^ 2 = 4 := by decide
+-- One up step and one down step: (1 + a + b)(1 + a - b) = (1 + a)² - b², losing b² = σ² Δt.
+example (a b : ℚ) : (1 + a + b) * (1 + a - b) = (1 + a) ^ 2 - b ^ 2 := by ring
+
+#print axioms preBrownian_map_countable_eq
+#print axioms gbm_mean_and_median
+#print axioms gbm_prob_below_mean
+#print axioms gbm_long_run_growth_rate
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'preBrownian_map_countable_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gbm_mean_and_median' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gbm_prob_below_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gbm_long_run_growth_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

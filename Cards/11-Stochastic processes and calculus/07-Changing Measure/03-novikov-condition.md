@@ -8,7 +8,11 @@
 
 A share drifts up 8 percent a year with volatility 20 percent. A trader prices it as if it drifted 5 percent. Girsanov's theorem ([Girsanov](02-girsanov-theorem.md)) builds the trader's world by giving every possible path of the share a weight, a positive number, and averaging with the weights. Paths that rose a lot get light weights; paths that fell get heavy ones. The real-world drift of 8 percent becomes 5 percent under the weighted average, and the volatility stays 20 percent.
 
-That only works if the weights average exactly 1. Weights are chances in disguise: a weighted world whose chances add up to 0.68 is not a world. For the share, the weights do average 1, and the check is one line. Now let the tilt that sets the weights grow as the path goes. Grow it slowly and nothing goes wrong. Grow it fast enough, so that the extra drift it adds feeds on itself, and the weights average 0.682689 after one year. About 32 percent of the probability has leaked away. The leak rides on ever rarer paths whose weights climb ever higher, and vanishes with them.
+That only works if the weights average exactly 1. Weights are chances in disguise: a weighted world whose chances add up to 0.68 is not a world. For the share, the weights do average 1, and the check is one line.
+
+Now let the tilt that sets the weights grow as the path goes. Grow it slowly and nothing goes wrong. Grow it fast enough, so that the extra drift it adds feeds on itself, and the weights average 0.682689 after one year.
+
+About 32 percent of the probability has leaked away. The leak rides on ever rarer paths whose weights climb ever higher, and vanishes with them.
 
 Novikov's condition is the standard test that rules the leak out. Take half the accumulated squared tilt, raise e to that power, and average over all paths. If that average is finite, the weights average 1 and Girsanov applies. It is a sufficient test, not a necessary one: a tilt can fail it and still be safe.
 
@@ -34,11 +38,13 @@ The falling line is tilt C below, the tilt that feeds on the weight: its weights
 
 ## The formula
 
-Notation first, with one-line reminders. Time $t$ is in years and runs to a horizon $T$. $W_t$ is Brownian motion under the real-world measure $P$, and $E$ averages under $P$. A second measure $Q$, with averages $E^Q$, is the reweighted world of [Changing the measure](01-change-of-measure-and-density-processes.md). The filtration $\mathcal{F}_t$ is what is known by time t. The tilt $\theta_t$ is any amount chosen using only what is known by time t. Its weight process is
+Notation first, with one-line reminders. Time $t$ is in years and runs to a horizon $T$. A measure is a rule that gives each set of paths its chance. $W_t$ is Brownian motion under the real-world measure $P$, and $E$ averages under $P$. Brownian motion is a continuous random path whose move over any h years is normal with mean 0 and variance h ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). A second measure $Q$, with averages $E^Q$, is the reweighted world of [Changing the measure](01-change-of-measure-and-density-processes.md).
+
+The filtration $\mathcal{F}_t$ is what is known by time t. A martingale is a process whose average later value, given what is known now, equals its present value: a fair game ([Martingales](../02-Martingales/01-martingales.md)). The tilt $\theta_t$ is any amount chosen using only what is known by time t. Its weight process is
 
 $$Z_t = \exp\!\Big(-\int_0^t \theta_s\,dW_s - \tfrac12\int_0^t \theta_s^2\,ds\Big), \qquad dZ_t = -\theta_t Z_t\,dW_t, \qquad Z_0 = 1.$$
 
-Here $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none. Girsanov sets $Q(A) = E[Z_T\,1_A]$ for each event A, where $1_A$ is 1 on the paths in A and 0 elsewhere. Under Q, $\widetilde W_t = W_t + \int_0^t \theta_s\,ds$ is a Brownian motion. **Novikov's condition:**
+Here $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none. An Ito integral is the limit of sums of the path's small moves, each times an amount fixed before the move ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Girsanov sets $Q(A) = E[Z_T\,1_A]$ for each event A, where $1_A$ is 1 on the paths in A and 0 elsewhere. Under Q, $\widetilde W_t = W_t + \int_0^t \theta_s\,ds$ is a Brownian motion. **Novikov's condition:**
 
 $$E\Big[\exp\!\Big(\tfrac12\int_0^T \theta_t^2\,dt\Big)\Big] < \infty \quad\Longrightarrow\quad E[Z_T] = 1, \text{ and } (Z_t) \text{ is a martingale on } [0, T].$$
 
@@ -84,7 +90,7 @@ The weight has no dt term: over each short step its average change is zero. A fa
 
 ### Step 1: the weight is fair up to any cap
 
-For each n let $\tau_n$ be the first time the running total $\int_0^t \theta_s^2 Z_s^2\,ds$ reaches n (or T if it never does). Stopped there, the Ito integral $Z_{t \wedge \tau_n} - 1 = -\int_0^{t\wedge\tau_n}\theta_s Z_s\,dW_s$ has a finite second moment, so it is a true martingale ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Here $t \wedge \tau_n$ means whichever comes first. So $E[Z_{t\wedge\tau_n}] = 1$ for every n. A process that is a martingale once stopped at such a sequence of times, rising to the end, is called a **local martingale**.
+For each n let $\tau_n$ be the first time the running total $\int_0^t \theta_s^2 Z_s^2\,ds$ reaches n (or T if it never does). Stopped there, the Ito integral $Z_{t \wedge \tau_n} - 1 = -\int_0^{t\wedge\tau_n}\theta_s Z_s\,dW_s$ has a finite second moment (its square has a finite average), so it is a true martingale ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Here $t \wedge \tau_n$ means whichever comes first. So $E[Z_{t\wedge\tau_n}] = 1$ for every n. A process that is a martingale once stopped at such a sequence of times, rising to the end, is called a **local martingale**.
 
 ### Step 2: the weights average at most 1
 
@@ -92,15 +98,17 @@ $Z$ is positive. As n grows, $Z_{t\wedge\tau_n}$ tends to $Z_t$ on every path. F
 
 $$E[Z_t \mid \mathcal{F}_s] \le \liminf_{n} E[Z_{t\wedge\tau_n} \mid \mathcal{F}_s] = Z_s.$$
 
+Here $E[Z_t \mid \mathcal{F}_s]$ is the average of $Z_t$ given what is known by time s, and $\liminf_n$ is the smallest value the sequence approaches as n grows.
+
 So Z is a **supermartingale**: its forecast never exceeds its present value. In particular $E[Z_T] \le 1$. Equality forces the full martingale property: $Z_s - E[Z_T \mid \mathcal{F}_s]$ is never negative and averages $E[Z_s] - 1 \le 0$, so it is zero. The whole question is whether Fatou's inequality is strict.
 
 ### Step 3: Girsanov needs the equality
 
-$Q(\text{all paths}) = E[Z_T]$. If that is 0.68, Q is not a probability. Rescaling by 1/0.68 restores a total of 1, but Girsanov's proof uses $E[Z_t \mid \mathcal{F}_s] = Z_s$ to compute every conditional Q-average, and that identity is now false; under the rescaled measure $\widetilde W$ is not a Brownian motion. A price computed under such a Q is not a price.
+$Q(\text{all paths}) = E[Z_T]$. If that is 0.68, Q is not a probability. Rescaling by 1/0.68 restores a total of 1, but Girsanov's proof uses $E[Z_t \mid \mathcal{F}_s] = Z_s$ to compute every conditional Q-average, and that identity is now false. Under the rescaled measure $\widetilde W$ is not a Brownian motion. A price computed under such a Q is not a price.
 
 ### Step 4: Novikov's test closes the escape route
 
-Write $M_t = -\int_0^t \theta_s\,dW_s$, so $Z_t = e^{M_t - \frac12\int_0^t\theta_s^2 ds}$. The proof splits $e^{M/2}$ into the square root of the weight times $e^{\frac14\int\theta^2}$. Cauchy-Schwarz then bounds the average of $e^{M/2}$ at every stopping time by the square root of Novikov's average. That bound makes slightly smaller exponential martingales, with the tilt scaled by a number $\lambda$ below 1, uniformly integrable (wing 10: no average can escape to large values), hence true martingales. Hölder's inequality transfers their average of 1 back to $Z$ as $\lambda$ rises to 1.
+Write $M_t = -\int_0^t \theta_s\,dW_s$, so $Z_t = e^{M_t - \frac12\int_0^t\theta_s^2 ds}$. The proof splits $e^{M/2}$ into the square root of the weight times $e^{\frac14\int\theta^2}$. Cauchy-Schwarz then bounds the average of $e^{M/2}$ at every stopping time (a random time decided by the path so far, as in [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)) by the square root of Novikov's average. That bound makes slightly smaller exponential martingales, with the tilt scaled by a number $\lambda$ below 1, uniformly integrable (wing 10: no average can escape to large values), hence true martingales. Hölder's inequality transfers their average of 1 back to $Z$ as $\lambda$ rises to 1.
 
 <details>
 <summary>Detailed proof</summary>
@@ -133,9 +141,13 @@ Under Q, $R_t = 1/Z_t$ is a Brownian motion started at 1. Brownian motion from 1
 2. **Under the capped measure, R is Brownian.** By Girsanov under $Q_n$, $\widetilde W$ is Brownian until $\tau_n$, so R is a Brownian motion from 1 until it reaches $1/n$.
 3. **Reflection.** By [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md), a Brownian motion from 1 stays above $1/n$ through T with chance $2\Phi((1 - 1/n)/\sqrt{T}) - 1$.
 4. **Split the average of 1.** $1 = E[Z_{T\wedge\tau_n}] = E[Z_T\,1_{\{\tau_n > T\}}] + n\,P(\tau_n \le T)$. The first term is $Q_n(\tau_n > T)$, the chance in point 3.
-5. **Let the cap rise.** The second term tends to $2 - 2\Phi(1/\sqrt{T})$, which stays positive, so $P(\tau_n \le T)$ falls like $1/n$: under P the weight never blows up. Monotone convergence (wing 10) gives $E[Z_T] = 2\Phi(1/\sqrt{T}) - 1$.
+5. **Let the cap rise.** The second term tends to $2 - 2\Phi(1/\sqrt{T})$, which stays positive, so $P(\tau_n \le T)$ falls like $1/n$: under P the weight never blows up. Monotone convergence (wing 10: when positive variables rise to a limit, their averages rise to the limit's average) gives $E[Z_T] = 2\Phi(1/\sqrt{T}) - 1$.
 
-At one year: $2\Phi(1) - 1 = 0.682689$, and 0.317311 has leaked. Point 4 shows where it went. With a cap of 100, mass 0.322174 rides on paths that hit the cap, and those paths have chance only 0.003222. With a cap of 1000 the mass is 0.317795 on a chance of 0.000318. The mass stays near 0.32 while the paths carrying it thin out to nothing. In the limit the paths are gone and the mass with them. By Novikov's own theorem, read backwards, $E[\exp(\tfrac12\int_0^1 Z_t^2\,dt)]$ must be infinite.
+At one year: $2\Phi(1) - 1 = 0.682689$, and 0.317311 has leaked.
+
+Point 4 shows where it went. With a cap of 100, mass 0.322174 rides on paths that hit the cap, and those paths have chance only 0.003222. With a cap of 1000 the mass is 0.317795 on a chance of 0.000318.
+
+The mass stays near 0.32 while the paths carrying it thin out to nothing. In the limit the paths are gone and the mass with them. By Novikov's own theorem, read backwards, $E[\exp(\tfrac12\int_0^1 Z_t^2\,dt)]$ must be infinite.
 
 <details>
 <summary>Another way to see the same weight</summary>
@@ -146,11 +158,13 @@ Under P, R has $dR_t = -dW_t + dt/R_t$: a Brownian motion pushed away from 0 by 
 
 ### Step 6: a tilt that grows with the wander fails the test and stays safe
 
-Take $\theta_t = c\,W_t$ with $c = 1$ per year. Under Q, $dW_t = -cW_t\,dt + d\widetilde W_t$: W is pulled back toward 0, an Ornstein-Uhlenbeck process, which never blows up. Ito's lemma gives $\int_0^T W_t\,dW_t = \tfrac12(W_T^2 - T)$, so
+Take $\theta_t = c\,W_t$ with $c = 1$ per year. Under Q, $dW_t = -cW_t\,dt + d\widetilde W_t$: W is pulled back toward 0, an Ornstein-Uhlenbeck process ([Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)), which never blows up. Ito's lemma gives $\int_0^T W_t\,dW_t = \tfrac12(W_T^2 - T)$, so
 
 $$Z_T = \exp\!\Big(\tfrac{c}{2}T - \tfrac{c}{2}W_T^2 - \tfrac{c^2}{2}\int_0^T W_t^2\,dt\Big).$$
 
-A classical formula of Cameron and Martin gives $E[e^{-aW_T^2 - b\int_0^T W_t^2dt}] = (\cosh\kappa T + \tfrac{2a}{\kappa}\sinh\kappa T)^{-1/2}$ with $\kappa = \sqrt{2b}$. With $a = c/2$, $b = c^2/2$, the bracket is $e^{cT}$, and $E[Z_T] = e^{cT/2}e^{-cT/2} = 1$ for every T. With $a = 0$ and $b = -c^2/2$ the same formula, with cosh turned into cos, gives Novikov's average $1/\sqrt{\cos cT}$, finite only while $cT < \pi/2$. This card states the formula with its source and checks it by an exact Gaussian computation on a grid, which the code prints converging.
+A classical formula of Cameron and Martin gives $E[e^{-aW_T^2 - b\int_0^T W_t^2dt}] = (\cosh\kappa T + \tfrac{2a}{\kappa}\sinh\kappa T)^{-1/2}$ with $\kappa = \sqrt{2b}$. Here cosh and sinh are the hyperbolic cosine and sine, $(e^x + e^{-x})/2$ and $(e^x - e^{-x})/2$.
+
+With $a = c/2$, $b = c^2/2$, the bracket is $e^{cT}$, and $E[Z_T] = e^{cT/2}e^{-cT/2} = 1$ for every T. With $a = 0$ and $b = -c^2/2$ the same formula, with cosh turned into cos, gives Novikov's average $1/\sqrt{\cos cT}$, finite only while $cT < \pi/2$. This card states the formula with its source and checks it by an exact Gaussian computation on a grid, which the code prints converging.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -162,7 +176,7 @@ xychart-beta
     line [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]
 ```
 
-The rising line is Novikov's average $1/\sqrt{\cos T}$, which is infinite from $T = \pi/2 = 1.570796$ years. The flat line is $E[Z_T] = 1$, from the Cameron-Martin formula on the code's `chart, B E[Z_T]` row. The test is a sufficient condition with room to spare. A different sufficient test, Beneš's condition (Karatzas and Shreve, section 3.5), accepts any tilt read off the path of W itself that grows at most in proportion to the path's size; tilt B passes it at every horizon. Neither test implies the other.
+The rising line is Novikov's average $1/\sqrt{\cos T}$, which is infinite from $T = \pi/2 = 1.570796$ years. The flat line is $E[Z_T] = 1$, from the Cameron-Martin formula on the code's `chart, B E[Z_T]` row. The test is a sufficient condition with room to spare. A different sufficient test, Beneš's condition (Karatzas and Shreve, section 3.5), accepts any tilt read off the path of W itself that grows at most in proportion to the path's size. Tilt B passes it at every horizon. Neither test implies the other.
 
 ### The other door
 
@@ -202,7 +216,13 @@ Under tilt C, a market built on these weights would price a sure dollar at one y
 
 ## Code, from first principles, and it actually runs
 
-The code takes three roads for tilts B and C, and two for the share. Road 1 is the closed forms, with the normal distribution built from its Taylor series. Road 2 is exact arithmetic on a grid: for tilt B, the averages of Gaussian exponentials as determinants of a tridiagonal matrix (the grid path's inverse covariance) at four step counts, and a scan of T in steps of 0.01 for where Novikov's average first turns infinite; for tilt C, a lattice walk of steps h every $h^2$ years from 1, absorbed at 0, solved exactly by stepping its probabilities forward at three step sizes. Road 3 is a seeded simulation with SplitMix64 and Box-Muller written out, seed 20260930, each average printed with its standard error. Tilt B's simulation runs on a grid of 200 steps over 2 years and is compared with the exact mean on that same grid. Tilt C's simulation needs no grid: it uses the three-dimensional fact in the tip above, which is independent of the reflection argument it checks.
+The code takes three roads for tilts B and C, and two for the share.
+
+- **Road 1** is the closed forms, with the normal distribution built from its Taylor series.
+- **Road 2** is exact arithmetic on a grid. For tilt B, it computes the averages of Gaussian exponentials as determinants of a tridiagonal matrix (the grid path's inverse covariance) at four step counts, and scans T in steps of 0.01 for where Novikov's average first turns infinite. For tilt C, a lattice walk of steps h every $h^2$ years from 1, absorbed at 0, is solved exactly by stepping its probabilities forward at three step sizes.
+- **Road 3** is a seeded simulation with SplitMix64 (a simple random number generator) and Box-Muller (a recipe that turns uniform draws into normal ones) written out, seed 20260930, each average printed with its standard error.
+
+Tilt B's simulation runs on a grid of 200 steps over 2 years and is compared with the exact mean on that same grid. Tilt C's simulation needs no grid: it uses the three-dimensional fact in the fold under Step 5, which is independent of the reflection argument it checks.
 
 ### Python
 
@@ -593,8 +613,8 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Black-Scholes pricing.** The share's constant tilt passes in one line, which is why [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) can switch from 8 percent to 5 percent without a second thought.
-- **Stochastic volatility and short-rate models.** The market price of risk depends on the state, Novikov's average is often infinite, and modellers prove the weights are a martingale by the direct route of Step 6 instead.
-- **Price bubbles.** The process $dZ_t = Z_t^2\,dW_t$ is the standard example of a strict local martingale. Used as a price under a risk-neutral measure, it is a price that is fair over each instant yet expected to fall: the textbook model of a bubble.
+- **Stochastic volatility and short-rate models.** The market price of risk, the tilt $\theta_t$, depends on the state, Novikov's average is often infinite, and modellers prove the weights are a martingale by the direct route of Step 6 instead.
+- **Price bubbles.** The process $dZ_t = Z_t^2\,dW_t$ is the standard example of a strict local martingale: a local martingale that is not a true martingale. Used as a price under a risk-neutral measure (a pricing world Q like the trader's), it is a price that is fair over each instant yet expected to fall: the textbook model of a bubble.
 - **Importance sampling.** Simulating under a tilted measure and multiplying by the weight is unbiased only if the weights average 1; a leaking tilt biases every estimate low.
 
 > **Say it back**
@@ -627,4 +647,4 @@ Verified 2026-10-06: every link below resolves to the publisher's page naming th
 - Novikov, A. A. "On an Identity for Stochastic Integrals." *Theory of Probability and Its Applications* 17, no. 4 (1972; English edition issued 1973): 717–720. [doi:10.1137/1117088](https://doi.org/10.1137/1117088). The condition, in the original.
 - Karatzas, I., and S. E. Shreve. *Brownian Motion and Stochastic Calculus*, 2nd ed. Springer, Graduate Texts in Mathematics 113. [Springer](https://link.springer.com/book/10.1007/978-1-4612-0949-2). Section 3.5: Girsanov, Novikov's condition and Beneš's linear-growth condition.
 - Revuz, D., and M. Yor. *Continuous Martingales and Brownian Motion*, 3rd ed. Springer, Grundlehren 293. [Springer](https://link.springer.com/book/10.1007/978-3-662-06400-9). Chapter VIII: the Hölder proof of Novikov's criterion via Kazamaki's; chapter XI: Bessel processes.
-- Cameron, R. H., and W. T. Martin. "Transformations of Wiener Integrals under a General Class of Linear Transformations." *Transactions of the American Mathematical Society* 58 (1945): 184–219. [doi:10.1090/S0002-9947-1945-0013240-1](https://doi.org/10.1090/S0002-9947-1945-0013240-1). The Gaussian average of $\exp(\lambda\int W^2)$ used for tilt B.
+- Cameron, R. H., and W. T. Martin. "Transformations of Wiener Integrals under a General Class of Linear Transformations." *Transactions of the American Mathematical Society* 58 (1945): 184–219. [doi:10.1090/S0002-9947-1945-0013240-1](https://doi.org/10.1090/S0002-9947-1945-0013240-1). The Gaussian average of $\exp(-b\int W^2)$ used for tilt B.

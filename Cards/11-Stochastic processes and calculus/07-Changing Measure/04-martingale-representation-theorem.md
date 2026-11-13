@@ -8,15 +8,19 @@
 
 A share trades at $100. Over the next year it wanders with no drift: a year from now its price is spread around $100 with a standard deviation of $20. The bank pays no interest, so a borrowed dollar is still one dollar at the end of the year.
 
-A dealer sells a ticket that pays $100 if the share ends the year above $100, and nothing otherwise. A one-off, all-or-nothing payment like this is called a **digital**. Today the share is as likely to finish above $100 as below, so the ticket's fair value is $50. The dealer takes $50 and now owes either $100 or nothing. Can the dealer trade the share, through the year, so that the trading account ends at exactly what the ticket pays, whatever path the share takes?
+A dealer sells a ticket that pays $100 if the share ends the year above $100, and nothing otherwise. A one-off, all-or-nothing payment like this is called a **digital**.
 
-On a coin-toss tree the answer is yes: [Representing a martingale](../02-Martingales/07-martingale-representation-in-discrete-time.md) proved that on each day's fork every fair move is a multiple of the share's move. This card proves it for a share driven by Brownian motion, which moves at every instant. For the digital: start with $50, hold about 2 shares, borrow the rest, and keep resetting the holding to the slope of the ticket's fair value. The account tracks that value along every path and lands on the payment.
+Today the share is as likely to finish above $100 as below, so the ticket's fair value is $50. The dealer takes $50 and now owes either $100 or nothing. Can the dealer trade the share, through the year, so that the trading account ends at exactly what the ticket pays, whatever path the share takes?
+
+On a coin-toss tree the answer is yes: [Representing a martingale](../02-Martingales/07-martingale-representation-in-discrete-time.md) proved that on each day's fork every fair move is a multiple of the share's move. This card proves it for a share driven by Brownian motion, which moves at every instant.
+
+For the digital: start with $50, hold about 2 shares, borrow the rest, and keep resetting the holding to the slope of the ticket's fair value. The account tracks that value along every path and lands on the payment.
 
 Every payment fixed by the share's path, with a finite average square, has such a strategy, and only one. The theorem is called **martingale representation**; in a market it says **every claim can be hedged**.
 
 **When Brownian motion is the only source of news, every fair game with a finite average square is its starting value plus the gain of one trading strategy in the Brownian motion; so every payoff equals its average plus an Ito integral, and the average is what the hedge costs.**
 
-**What kind of fact this is:** a theorem. The digital case is proved on this card in Why it works, by Ito's lemma; the general case is proved in a folded Detailed proof, which quotes the uniqueness of Fourier transforms and the completeness of square-integrable variables from wing 10.
+**What kind of fact this is:** a theorem. The digital case is proved on this card in Why it works, by Ito's lemma. The general case is proved in a folded Detailed proof. It quotes the uniqueness of Fourier transforms and the completeness of square-integrable variables ([Riesz-Fischer](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/05-completeness-of-lp.md)).
 
 ### The picture: one year, the ticket's value and the hedge account
 
@@ -37,7 +41,9 @@ One sample path on a grid of 1,280 steps (path 7 of the seeded run). Orange: the
 
 ## The formula
 
-Notation first, in words. Brownian motion $W_t$, read "the random walk seen from far away", is the share's wandering part, with $t$ in years. What is known by time $t$, the path of $W$ up to then and nothing else, is written $\mathcal F_t$. The Ito integral $\int_0^T \varphi_t \, dW_t$ is the gain from holding $\varphi_t$ units of $W$ at each moment, with each holding fixed before the move it bets on ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)); $dW_t$ is shorthand for that sum and its limit, never a derivative, because the path has no slope.
+Notation first, in words. Brownian motion $W_t$, read "the random walk seen from far away", is the share's wandering part, with $t$ in years. What is known by time $t$, the path of $W$ up to then and nothing else, is written $\mathcal F_t$.
+
+The Ito integral $\int_0^T \varphi_t \, dW_t$ is the gain from holding $\varphi_t$ units of $W$ at each moment, with each holding fixed before the move it bets on ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). $dW_t$ is shorthand for that sum and its limit, never a derivative, because the path has no slope.
 
 The theorem. Let $V$ be any payoff fixed by $\mathcal F_T$, with $E[V^2]$ finite. Then there is exactly one strategy $\varphi_t$, fixed by $\mathcal F_t$ at each $t$, with $E\left[\int_0^T \varphi_t^2\,dt\right]$ finite, such that
 
@@ -51,7 +57,7 @@ $$M_t = M_0 + \int_0^t \varphi_s \, dW_s ,$$
 
 where $M_t = E[V \mid \mathcal F_t]$ is the payoff's fair value once the path up to $t$ is known.
 
-For the digital, with share price $S_t = 100 + \sigma W_t$, $\sigma = 20$ and strike $K = 100$, both pieces have closed forms (in this arithmetic model the price could in principle go negative, but $0 is five standard deviations away):
+For the digital, with share price $S_t = 100 + \sigma W_t$, $\sigma = 20$ and strike $K = 100$, both pieces have closed forms. In this arithmetic model the price could in principle go negative, but $0 is five standard deviations away. The closed forms are
 
 $$M_t = 100\,N\!\left(\frac{S_t - K}{\sigma\sqrt{T-t}}\right), \qquad H_t = \frac{\varphi_t}{\sigma} = \frac{100\,N'\!\left(\frac{S_t - K}{\sigma\sqrt{T-t}}\right)}{\sigma\sqrt{T-t}} .$$
 
@@ -108,7 +114,11 @@ $M$ is a martingale, so the $dt$ part, a drift, must be zero. It is: this $u$ so
 
 $$dM_t = \frac{\partial u}{\partial s}\,dS_t = \sigma\,\frac{\partial u}{\partial s}\,dW_t .$$
 
-So $H_t = \partial u / \partial s$, the slope of the ticket's value in the share's price, and $\varphi_t = \sigma H_t$. Differentiating $u$ gives the closed form in The formula; the bumped slope at $t = 0.5$, $S = 110$ is 2.196956 shares, matching it to six decimals. Ito's lemma needs $u$ smooth, and at the strike on the expiry date it is not (the stake grows without bound there), so it is applied only up to times $t < T$, giving $M_t = 50 + \int_0^t \varphi_s\,dW_s$. As $t$ rises to $T$, $M_t$ tends to $V$ in mean square (it is bounded by $100), and by the isometry the integrals tend to $\int_0^T \varphi_s\,dW_s$. This proves the theorem for the digital and for any payoff of the final price alone, with $u(t, s)$ the payoff's average given $S_t = s$: the link between averages and equations is [Feynman-Kac](06-feynman-kac-formula.md) (Feynman-Kac).
+So $H_t = \partial u / \partial s$, the slope of the ticket's value in the share's price, and $\varphi_t = \sigma H_t$. Differentiating $u$ gives the closed form in The formula; the bumped slope at $t = 0.5$, $S = 110$ is 2.196956 shares, matching it to six decimals.
+
+Ito's lemma needs $u$ smooth, and at the strike on the expiry date it is not (the stake grows without bound there). So it is applied only up to times $t < T$, giving $M_t = 50 + \int_0^t \varphi_s\,dW_s$. As $t$ rises to $T$, $M_t$ tends to $V$ in mean square (it is bounded by $100). The isometry, the rule that an Ito integral's average square equals $E\int \varphi_s^2\,ds$, then makes the integrals tend to $\int_0^T \varphi_s\,dW_s$.
+
+This proves the theorem for the digital and for any payoff of the final price alone, with $u(t, s)$ the payoff's average given $S_t = s$. The link between averages and equations is [Feynman-Kac](06-feynman-kac-formula.md).
 
 ### Step 3: the tree's stake becomes the slope
 
@@ -134,13 +144,15 @@ A payoff can depend on the whole path: the year's average price, or its maximum.
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $\mathcal F_t$ is the information generated by $W_s$ for $s \le t$, completed by the events of probability zero. $L^2$ is the space of payoffs fixed by $\mathcal F_T$ with finite average square; wing 10 proved it complete. A strategy is admissible when it is predictable and $E\int_0^T \varphi_t^2\,dt < \infty$. The payoffs $V = E[V] + \int_0^T \varphi_t\,dW_t$ with admissible $\varphi$ form a linear space $R$.
+**Setting.** $\mathcal F_t$ is the information generated by $W_s$ for $s \le t$, completed by the events of probability zero. $L^2$ is the space of payoffs fixed by $\mathcal F_T$ with finite average square; wing 10 proved it complete. A strategy is admissible when it is predictable (each holding fixed just before the move it bets on) and $E\int_0^T \varphi_t^2\,dt < \infty$. The payoffs $V = E[V] + \int_0^T \varphi_t\,dW_t$ with admissible $\varphi$ form a linear space $R$.
 
 **1. Exponentials.** Let $h$ be a non-random step function and $\mathcal E^h_t = \exp\!\left(\int_0^t h\,dW - \tfrac12\int_0^t h^2\,ds\right)$. Ito's lemma gives $d\mathcal E^h_t = h_t\,\mathcal E^h_t\,dW_t$, so $\mathcal E^h_T = 1 + \int_0^T h_t\,\mathcal E^h_t\,dW_t$. As the exponential of a bell-curve variable, $\mathcal E^h_t$ has all moments finite, so the integrand is admissible and $\mathcal E^h_T \in R$.
 
 **2. $R$ is closed.** Let $V_k \in R$ with integrands $\varphi_k$ and $V_k \to V$ in $L^2$. By the isometry $E\int_0^T (\varphi_k - \varphi_j)^2\,dt = \mathrm{Var}(V_k - V_j) \to 0$. Square-integrable predictable processes are complete too, so $\varphi_k \to \varphi$, admissible, and by the isometry again $V = E[V] + \int_0^T \varphi\,dW$.
 
-**3. Nothing is orthogonal to the exponentials.** Suppose $G \in L^2$ has $E[G\,\mathcal E^h_T] = 0$ for every $h$. Fix times $0 = t_0 < \dots < t_m = T$, let $h = \lambda_i$ on $(t_{i-1}, t_i]$, and write $\Delta_i = W_{t_i} - W_{t_{i-1}}$. Then $\mathcal E^h_T$ is a positive constant times $\exp(\sum_i \lambda_i \Delta_i)$, so $E[G \exp(\sum_i \lambda_i \Delta_i)] = 0$ for all real $\lambda_i$. That function of the $\lambda_i$ extends to complex values and is analytic, so it vanishes at imaginary values too: the Fourier transform of the signed measure $E[G\,\mathbf 1_A]$ on events of the $\Delta_i$ is zero, so the measure is zero, and $E[G \mid W_{t_1}, \dots, W_{t_m}] = 0$. Refining the times by halving, the information grows to $\mathcal F_T$, and martingale convergence ([Martingale convergence](../02-Martingales/04-martingale-convergence.md)) gives $G = 0$.
+**3. Nothing is orthogonal to the exponentials.** Suppose $G \in L^2$ has $E[G\,\mathcal E^h_T] = 0$ for every $h$. Fix times $0 = t_0 < \dots < t_m = T$, let $h = \lambda_i$ on $(t_{i-1}, t_i]$, and write $\Delta_i = W_{t_i} - W_{t_{i-1}}$. Then $\mathcal E^h_T$ is a positive constant times $\exp(\sum_i \lambda_i \Delta_i)$, so $E[G \exp(\sum_i \lambda_i \Delta_i)] = 0$ for all real $\lambda_i$.
+
+That function of the $\lambda_i$ extends to complex values and is analytic, so it vanishes at imaginary values too. So the Fourier transform of the signed measure $E[G\,\mathbf 1_A]$ on events of the $\Delta_i$ is zero, so the measure is zero, and $E[G \mid W_{t_1}, \dots, W_{t_m}] = 0$. Refining the times by halving, the information grows to $\mathcal F_T$, and martingale convergence ([Martingale convergence](../02-Martingales/04-martingale-convergence.md)) gives $G = 0$.
 
 **4. Every payoff is representable.** $R$ is a closed subspace of $L^2$ holding every $\mathcal E^h_T$. If it missed some $V$, the part of $V$ orthogonal to $R$ would be a nonzero $G$ orthogonal to every $\mathcal E^h_T$, contradicting part 3.
 
@@ -152,13 +164,19 @@ Quoted, not proved here: completeness of $L^2$, uniqueness of Fourier transforms
 
 ### Step 5: uniqueness, and the size of the bet
 
-Two strategies giving $V$ differ by one whose gain is zero, so by the isometry its average squared holding is zero. The isometry also checks the digital's strategy: the variance of its gain, $\mathrm{Var}(V) = 100^2 \times 0.25 = 2500$, must equal $E\int_0^T \varphi_t^2\,dt$. Here $\varphi_t^2 = 100^2 \exp\!\big(-W_t^2/(T-t)\big)/\big(2\pi(T-t)\big)$, and since $W_t$ has variance $t$, $E\big[\exp\!\big(-W_t^2/(T-t)\big)\big] = \sqrt{(T-t)/(T+t)}$, so $E[\varphi_t^2] = 100^2/(2\pi\sqrt{T^2 - t^2})$. Adding it up over the year gives $100^2/(2\pi) \times \pi/2 = 2500$. On the code's 1,280-step grid the same sum is 2454.6839, short of 2500 because the integrand rises without bound at expiry and the grid sum, which takes each step's left end, undercounts that spike; the simulated paths give 2452.2850, plus or minus 29.2122.
+Two strategies giving $V$ differ by one whose gain is zero, so by the isometry its average squared holding is zero.
+
+The isometry also checks the digital's strategy: the variance of its gain, $\mathrm{Var}(V) = 100^2 \times 0.25 = 2500$, must equal $E\int_0^T \varphi_t^2\,dt$. Here $\varphi_t^2 = 100^2 \exp\!\big(-W_t^2/(T-t)\big)/\big(2\pi(T-t)\big)$, and since $W_t$ has variance $t$, $E\big[\exp\!\big(-W_t^2/(T-t)\big)\big] = \sqrt{(T-t)/(T+t)}$, so $E[\varphi_t^2] = 100^2/(2\pi\sqrt{T^2 - t^2})$. Adding it up over the year gives $100^2/(2\pi) \times \pi/2 = 2500$.
+
+On the code's 1,280-step grid the same sum is 2454.6839, short of 2500 because the integrand rises without bound at expiry and the grid sum, which takes each step's left end, undercounts that spike. The simulated paths give 2452.2850, plus or minus 29.2122.
 
 ### Step 6: read it as a hedge
 
-The dealer starts with $M_0 = 50$ dollars, buys $H_0 = 1.9947$ shares, and borrows the difference: $149.47. From then on, at each moment, the holding is reset to $H_t$, the purchases paid from the cash, the sales paid into it. No money enters or leaves; such a strategy is called **self-financing**. The account's value is $50 + \int_0^t H_s\,dS_s = M_t$ at every time, so at $T$ it is the payment. A market in which every payoff can be built this way is called **complete**; martingale representation is what makes this one complete.
+The dealer starts with $M_0 = 50$ dollars, buys $H_0 = 1.9947$ shares, and borrows the difference: $149.47. From then on, at each moment, the holding is reset to $H_t$, the purchases paid from the cash, the sales paid into it. No money enters or leaves; such a strategy is called **self-financing**.
 
-Real shares drift. A share with drift 8 percent is not a fair game, but [Girsanov](02-girsanov-theorem.md) (Girsanov) builds a measure $Q$ under which it is, changing the odds on paths but not the information. The theorem applies under $Q$, and the hedge costs $E^Q[V]$.
+The account's value is $50 + \int_0^t H_s\,dS_s = M_t$ at every time, so at $T$ it is the payment. A market in which every payoff can be built this way is called **complete**; martingale representation is what makes this one complete.
+
+Real shares drift. A share with drift 8 percent is not a fair game, but [Girsanov](02-girsanov-theorem.md) builds a measure $Q$ under which it is, changing the odds on paths but not the information. The theorem applies under $Q$, and the hedge costs $E^Q[V]$.
 
 An alternative route, the Clark-Ocone formula, gives the integrand for path-dependent payoffs directly: the average, given $\mathcal F_t$, of how much the payoff changes when the path is nudged at $t$. Clark's 1970 paper in Sources is its first form.
 
@@ -207,7 +225,7 @@ xychart-beta
     line [24.20, 18.18, 13.25, 8.93, 6.22]
 ```
 
-The root-mean-square gap between account and payment, same 4,000 paths at five frequencies. Each fourfold increase in trading multiplies the miss by about 0.7, close to $4^{-1/4} = 0.707$, so halving it takes sixteen times as many trades. The mean miss stays within two standard errors of zero: a coarse hedge is still fair. The error comes from paths ending near $100, where the stake is largest.
+The root-mean-square gap between account and payment, same 4,000 paths at five frequencies. Each fourfold increase in trading multiplies the miss by about 0.7, close to $4^{-1/4} = 0.707$, so halving it takes sixteen times as many trades. The mean miss stays within two standard errors (the uncertainty of a 4,000-path average) of zero: a coarse hedge is still fair. The error comes from paths ending near $100, where the stake is largest.
 
 ---
 
@@ -637,18 +655,18 @@ The two outputs agree line for line, though the bell-curve area comes from `erf`
 >
 > Three smaller traps:
 > - **Confusing units of $W_t$ with shares.** The integrand in $W_t$ is $\varphi_0 = 39.89$; the shares to hold are $H_0 = \varphi_0/\sigma = 1.9947$. Hold 39.89 shares and the hedge is twenty times too large.
-> - **Expecting a gentle strategy.** Existence says nothing about size. The digital's stake reaches 31.67 shares a day before expiry with the share on $100, and grows without bound closer in; real desks blur the digital into a narrow call spread to cap it.
+> - **Expecting a gentle strategy.** Existence says nothing about size. The digital's stake reaches 31.67 shares a day before expiry with the share on $100, and grows without bound closer in; real desks blur the digital into a narrow call spread (a call bought just below the strike, one sold just above) to cap it: [A digital from a call spread](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md).
 > - **Using the real-world average as the cost.** The representation exists under the real-world measure too, in terms of that measure's Brownian motion, but then $dS$ carries a drift and $\int H\,dS$ is not a fair game. The cost of the hedge is the average under $Q$, where the share is fair.
 
 ---
 
 ## Where you meet it in real life
 
-- **The Black-Scholes market is complete.** Every European payoff on one share following geometric Brownian motion can be replicated, so it has one arbitrage-free price. That statement is martingale representation under the risk-neutral measure: [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
+- **The Black-Scholes market is complete.** Every European payoff (one fixed by the price on the expiry date) on one share following geometric Brownian motion can be replicated, so it has one arbitrage-free price: one price that offers no free money. That statement is martingale representation under the risk-neutral measure, the measure $Q$ that makes the share fair: [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
 - **Delta hedging.** The integrand $H_t$ is the delta that option desks rebalance to, and the hedge error shrinking with trading frequency is a daily concern: [Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md).
 - **Digitals and pin risk.** The stake blowing up near the strike at expiry is what traders call pin risk: [Cash-or-nothing digital](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md) and [Digital Greeks and pin risk](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md).
 - **Incomplete markets.** Stochastic volatility models add a second Brownian motion, exactly the unseen noise above. Hedging there needs a second traded instrument, often another option.
-- **Measuring with a different unit.** Pricing in units of the share instead of dollars changes the measure again: [Change of numeraire](05-change-of-numeraire.md) (Change of numeraire). The representation carries over, in the new measure's Brownian motion.
+- **Measuring with a different unit.** Pricing in units of the share instead of dollars changes the measure again: [Change of numeraire](05-change-of-numeraire.md). The representation carries over, in the new measure's Brownian motion.
 
 > **Say it back**
 > When Brownian motion is the only news, every fair game is its start plus an Ito integral in that Brownian motion, and the integral is unique. For a payoff, the start is its average and the integrand is the hedge. The $100 digital costs $50 and is hedged by holding the slope of its fair value, about 2 shares at the start. A second noise leaves a gap no trading closes, and dropping the integrability condition lets a doubling stake make money from nothing. On the coin-toss tree the stake is a ratio of spreads; on Brownian motion it is a slope.

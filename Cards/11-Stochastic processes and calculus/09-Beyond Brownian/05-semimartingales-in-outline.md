@@ -10,7 +10,9 @@ A share trades at \$100 today. Time is measured in years. Most days the price wo
 
 A trader's gain over the year is holding times price change, added over short stretches of time. As the stretches shrink, the sum becomes an integral against the price. The Ito integral was built for Brownian motion, which never jumps. This price jumps. Which prices can be integrated against? What replaces Ito's extra term at a jump? And does the answer survive adding prices, multiplying them, applying a smooth function, or changing to a second probability measure?
 
-One class answers all three. A **semimartingale** is a process that splits into a fair-game part and a part whose path has finite total travel. Every such process can be integrated against. Ito's formula holds for it, with one extra sum over the jumps. Every operation in the list keeps a semimartingale a semimartingale. And a theorem of Bichteler and of Dellacherie says no larger class of processes supports an integral with the basic continuity a trading gain needs.
+One class answers all three. A **semimartingale** is a process that splits into a fair-game part and a part whose path has finite total travel. Every such process can be integrated against.
+
+Ito's formula holds for it, with one extra sum over the jumps. Every operation in the list keeps a semimartingale a semimartingale. And a theorem of Bichteler and of Dellacherie says no larger class of processes supports an integral with the basic continuity a trading gain needs.
 
 **A semimartingale is a fair game plus a path of finite travel; its quadratic variation counts the wobble and the squared jumps, and Ito's formula for it adds one correction per jump.**
 
@@ -33,7 +35,14 @@ One sample path, simulated on a grid of 4,096 steps a year with seed 20260930 an
 
 ## The formula
 
-Notation first, in words. A process is written $X_t$, read "the value at time t". Its paths are **càdlàg**: right-continuous with left limits, so at each time the path has a value just before, written $X_{t-}$, and a value at, $X_t$. The **jump** at time t is $\Delta X_t = X_t - X_{t-}$, zero except at the crash instants. A **local martingale** is a process that becomes a fair game (a martingale: best forecast of later is now, [Martingales](../02-Martingales/01-martingales.md)) once it is stopped at each of a sequence of stopping times running off to infinity. A path of **finite variation** has finite total up-and-down travel over every bounded stretch of time, like the path of a function with a continuous slope.
+Notation first, in words.
+
+- A process is written $X_t$, read "the value at time t".
+- Its paths are **càdlàg**: right-continuous with left limits, so at each time the path has a value just before, written $X_{t-}$, and a value at, $X_t$.
+- The **jump** at time t is $\Delta X_t = X_t - X_{t-}$, zero except at the crash instants.
+- A **stopping time** is a random time whose arrival can be recognized using only the past ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)).
+- A **local martingale** is a process that becomes a fair game (a martingale: best forecast of later is now, [Martingales](../02-Martingales/01-martingales.md)) once it is stopped at each of a sequence of stopping times running off to infinity.
+- A path of **finite variation** has finite total up-and-down travel over every bounded stretch of time, like the path of a function with a continuous slope.
 
 **Definition.** A càdlàg process, adapted (its value at t is known by time t), is a semimartingale when it can be written
 
@@ -82,7 +91,9 @@ The share's own equation, written as a semimartingale:
 
 $$dS_t = S_{t-}\big(\mu\,dt + \sigma\,dW_t + j\,(dN_t - \lambda\,dt)\big).$$
 
-As on [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md), $dW_t$ is shorthand for an integral, never a derivative. The finite-variation part is $dA_t = \mu S_{t-}\,dt$. The local martingale part is everything else: the Brownian wobble, and the crash count minus its average, $N_t - \lambda t$, which is a fair game ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). Between crashes the price climbs at $\mu - \lambda j = 0.25$ a year; the crashes take that back down to 0.05 on average. Solved, the path is
+As on [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md), $dW_t$ is shorthand for an integral, never a derivative. The finite-variation part is $dA_t = \mu S_{t-}\,dt$. The local martingale part is everything else: the Brownian wobble, and the crash count minus its average, $N_t - \lambda t$, which is a fair game ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)).
+
+Between crashes the price climbs at $\mu - \lambda j = 0.25$ a year; the crashes take that back down to 0.05 on average. Solved, the path is
 
 $$S_t = 100\, e^{G t + \sigma W_t}\,(1 + j)^{N_t}, \qquad G = \mu - \lambda j - \tfrac12\sigma^2 = 0.23.$$
 
@@ -98,22 +109,28 @@ $$S_t = 100\, e^{G t + \sigma W_t}\,(1 + j)^{N_t}, \qquad G = \mu - \lambda j - 
 
 ### Step 0: an integrator must make trading gains behave
 
-Gains on a grid are holding times price change, added up. Write a **simple** holding: hold $h_k$ shares from grid time $t_k$ to $t_{k+1}$, with $h_k$ decided at $t_k$. The gain is $\sum_k h_k\,(X_{t_{k+1}} - X_{t_k})$. To pass from these sums to an integral, small holdings must give small gains: if the holdings shrink to zero uniformly, the gains must shrink to zero in probability. A process with that property is a **good integrator**. Everything else on this card is built for this one property.
+Gains on a grid are holding times price change, added up. Write a **simple** holding: hold $h_k$ shares from grid time $t_k$ to $t_{k+1}$, with $h_k$ decided at $t_k$. The gain is $\sum_k h_k\,(X_{t_{k+1}} - X_{t_k})$.
+
+To pass from these sums to an integral, small holdings must give small gains: if the holdings shrink to zero uniformly, the gains must shrink to zero in probability. A process with that property is a **good integrator**. Everything else on this card is built for this one property.
 
 ### Step 1: the two easy kinds of integrator
 
 A path of finite variation is a good integrator path by path. The gain is at most the largest holding times the total travel of the path, so shrinking holdings shrink the gain. This is the ordinary integral against an increasing or decreasing function, done for each path.
 
-A square-integrable martingale is a good integrator on average. Its changes over different steps are uncorrelated, so the mean square of the gain is the sum of the mean squares of its pieces. That is bounded by the largest holding squared times the mean square of the martingale at the end. The proof is complete in discrete time and is in the callout.
+A square-integrable martingale is a good integrator on average. Its changes over different steps are uncorrelated, so the mean square of the gain is the sum of the mean squares of its pieces. That is bounded by the largest holding squared times the mean square of the martingale at the end. The proof is complete in discrete time and is in the fold below.
 
-A local martingale needs one more step. Stopped, it is a martingale, but not always one with a finite mean square: a single jump can be too large. A theorem of Doléans-Dade and Meyer splits it into a martingale that has a finite mean square after stopping, plus a finite-variation part (Protter, chapter III, stated here without proof). Both pieces are covered, and stopping changes nothing before the stopping time. The sum of two good integrators is a good integrator. So every semimartingale is a good integrator. The integral $\int H\,dX$ for a predictable, locally bounded $H_t$ (bounded once stopped at suitable stopping times) is then the limit of the simple gains, and it splits as $\int H\,dM + \int H\,dA$.
+A local martingale needs one more step. Stopped, it is a martingale, but not always one with a finite mean square: a single jump can be too large. A theorem of Doléans-Dade and Meyer splits it into a martingale that has a finite mean square after stopping, plus a finite-variation part (Protter, chapter III, stated here without proof).
+
+Both pieces are covered, and stopping changes nothing before the stopping time. The sum of two good integrators is a good integrator. So every semimartingale is a good integrator.
+
+The integral $\int H\,dX$ for a predictable, locally bounded $H_t$ (bounded once stopped at suitable stopping times) is then the limit of the simple gains, and it splits as $\int H\,dM + \int H\,dA$.
 
 <details>
 <summary>Detailed proof: a martingale is a good integrator for simple holdings</summary>
 
 Let $M$ be a martingale with $E[M_t^2]$ finite, grid times $0 = t_0 < \dots < t_n = t$, and holdings $h_k$ known at $t_k$ with $|h_k| \le b$. Write $D_k = M_{t_{k+1}} - M_{t_k}$ and $I = \sum_k h_k D_k$.
 
-Expand $E[I^2] = \sum_k E[h_k^2 D_k^2] + 2\sum_{k < l} E[h_k D_k h_l D_l]$. In a cross term with k before l, every factor except the later change is known at the start of step l. Conditioning on what is known then (the tower rule from wing 10) gives $E\big[h_k D_k h_l\,E[D_l \mid F_{t_l}]\big] = 0$, because the martingale's best forecast of its own change is zero. So $E[I^2] = \sum_k E[h_k^2 D_k^2] \le b^2 \sum_k E[D_k^2]$.
+Expand $E[I^2] = \sum_k E[h_k^2 D_k^2] + 2\sum_{k < l} E[h_k D_k h_l D_l]$. In a cross term with k before l, every factor except the later change is known at the start of step l. Conditioning on what is known then (the tower rule: averaging in two stages gives the same as averaging once, [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)) gives $E\big[h_k D_k h_l\,E[D_l \mid F_{t_l}]\big] = 0$, because the martingale's best forecast of its own change is zero. So $E[I^2] = \sum_k E[h_k^2 D_k^2] \le b^2 \sum_k E[D_k^2]$.
 
 The same orthogonality with every $h_k = 1$ gives $\sum_k E[D_k^2] = E[(M_t - M_0)^2]$. So $E[I^2] \le b^2\,E[(M_t - M_0)^2]$. By Chebyshev's inequality, $P(|I| > \epsilon) \le b^2\,E[(M_t - M_0)^2]/\epsilon^2$, which goes to zero as the bound b on the holdings does. That is the good-integrator property.
 
@@ -137,9 +154,13 @@ On the plotted path the jump part is 1,097.46 and the total is 1,842.28. From 64
 
 Write $f(X_1) - f(X_0)$ as the sum of its changes over the grid steps. On a step with no jump, Taylor's theorem gives slope times change plus half the curvature times change squared, with an error smaller than the change squared. The slope terms build $\int f'(X_{s-})\,dX_s$. The curvature terms build $\tfrac12\int f''\,d[X]^c$, by the same convergence as Brownian quadratic variation. The errors vanish.
 
-On a step that contains a jump, the change does not shrink, and a second-order Taylor expansion is not accurate. The formula uses the exact change $f(X_s) - f(X_{s-})$ there. The slope term $f'(X_{s-})\,\Delta X_s$ is already inside the integral, so it is subtracted. That gives the jump sum. It converges because each term is at most a constant times $(\Delta X_s)^2$, and those add to a finite total: over any bounded time the squared jumps of a semimartingale add to at most $[X]_t$, automatically from the definition.
+On a step that contains a jump, the change does not shrink, and a second-order Taylor expansion is not accurate. The formula uses the exact change $f(X_s) - f(X_{s-})$ there. The slope term $f'(X_{s-})\,\Delta X_s$ is already inside the integral, so it is subtracted. That gives the jump sum.
 
-The same bound covers infinitely many jumps. Over a bounded time a càdlàg path has only finitely many jumps larger than any fixed size, but it may have infinitely many small ones, as many Lévy processes do ([Levy processes](01-levy-processes.md)). Then the jumps themselves need not add up to anything finite, and neither need the exact changes $f(X_s) - f(X_{s-})$. The bracketed differences still do, which is why the slope term is subtracted inside the sum. The integral $\int f'(X_{s-})\,dX_s$ still exists, because the small jumps can be placed, with their average taken out, inside the fair-game part $M$. The proof treats the finitely many large jumps exactly, as above, and lets the size cut-off shrink to zero.
+It converges because each term is at most a constant times $(\Delta X_s)^2$, and those add to a finite total: over any bounded time the squared jumps of a semimartingale add to at most $[X]_t$, automatically from the definition.
+
+The same bound covers infinitely many jumps. Over a bounded time a càdlàg path has only finitely many jumps larger than any fixed size, but it may have infinitely many small ones, as many Lévy processes do ([Levy processes](01-levy-processes.md)). Then the jumps themselves need not add up to anything finite, and neither need the exact changes $f(X_s) - f(X_{s-})$. The bracketed differences still do, which is why the slope term is subtracted inside the sum.
+
+The integral $\int f'(X_{s-})\,dX_s$ still exists, because the small jumps can be placed, with their average taken out, inside the fair-game part $M$. The proof treats the finitely many large jumps exactly, as above, and lets the size cut-off shrink to zero.
 
 That is the shape of the proof; the full argument is in Protter, chapter II.
 
@@ -195,7 +216,14 @@ Every number in this table is printed by both checks below.
 
 ## Code, from first principles, and it actually runs
 
-The checks take four roads. Road A evaluates the formulas. It prints $E[\int S_{t-}\,dS_t]$ both as $\mu$ times the integral of $E[S_t^2]$ and by integration by parts, and $E[\ln S_1]$ both from the solved path and from Ito's formula with its jump sum; each pair agrees by algebra alone, so neither pair is a check. The asserts test Road A against Roads C and D, and Road B's grid sums against the path's exact values. Road B simulates the plotted path on 4,096 steps a year, with crash times drawn exactly and placed on the grid, and computes grid sums at five step sizes: the sum of squared changes, the left-point sum of $S\,dS$, and the exact grid identity $S_1^2 - S_0^2 = 2\sum S_k\,\Delta S_k + \sum (\Delta S_k)^2$. Road D repeats the grid on 400 paths, printing the shrinking error and the path averages with standard errors. Road C draws 20,000 values of $S_1$ exactly, without a grid, and compares their averages with Road A. Random numbers come from SplitMix64 with seed 20260930, normals from Box-Muller, crash gaps from the exponential law written out.
+The checks take four roads.
+
+- Road A evaluates the formulas. It prints $E[\int S_{t-}\,dS_t]$ both as $\mu$ times the integral of $E[S_t^2]$ and by integration by parts, and $E[\ln S_1]$ both from the solved path and from Ito's formula with its jump sum; each pair agrees by algebra alone, so neither pair is a check.
+- Road B simulates the plotted path on 4,096 steps a year, with crash times drawn exactly and placed on the grid, and computes grid sums at five step sizes: the sum of squared changes, the left-point sum of $S\,dS$, and the exact grid identity $S_1^2 - S_0^2 = 2\sum S_k\,\Delta S_k + \sum (\Delta S_k)^2$.
+- Road D repeats the grid on 400 paths, printing the shrinking error and the path averages with standard errors.
+- Road C draws 20,000 values of $S_1$ exactly, without a grid, and compares their averages with Road A.
+
+The asserts test Road A against Roads C and D, and Road B's grid sums against the path's exact values. Random numbers come from SplitMix64 with seed 20260930, normals from Box-Muller, crash gaps from the exponential law written out.
 
 ### Python
 
@@ -619,6 +647,277 @@ ALL CHECKS PASS
 
 The two outputs are identical, line for line.
 
+### Lean
+
+Lean proves the card's grid steps and its jump-term bound, for any grid, and checks the worked numbers.
+
+- Take a martingale $M$ with $E[M_t^2]$ finite, and holdings with $|h_k| \le b$, each known at its grid time. Then the simple gain $I$ has $E[I^2] \le b^2 E[(M_t - M_0)^2]$.
+- With the same martingale and holdings, take $\epsilon > 0$. Then $P(|I| > \epsilon) \le b^2 E[(M_t - M_0)^2] / \epsilon^2$.
+- Take any two paths $x$ and $y$ on a grid of $n$ steps. Then $x_n y_n$ is the start product, plus both left-point sums, plus the sum of matched products of changes.
+- With $x = y = S$, that is Road B's exact grid identity.
+- Take a function $f$ with two continuous derivatives, and a jump from $x$ to $y$ with $|x| \le K$ and $|y| \le K$. Then $|f(y) - f(x) - f'(x)(y - x)| \le C (y - x)^2$, with one constant $C$ for all such jumps.
+- Lean checks the worked numbers: the average rate of $[S]$ is 0.08, and $\sigma^2$ and $\lambda j^2$ are both 0.04.
+- It also checks $c = 0.18$, the climb of 0.25 a year between crashes, and $G = 0.23$.
+- Four crashes of 10% give the same $\lambda j^2$ as one crash of 20%, as in Try changing.
+
+Lean has no stochastic integral, so the grid limits, Ito's formula and every simulation are left to the Python and Rust checks.
+
+```lean
+-- Semimartingales: a martingale is a good integrator for bounded predictable holdings, grid gains obey discrete integration by parts, and each jump term of Ito's formula is at most a constant times the squared jump.
+import Mathlib.Probability.Martingale.Basic
+import Mathlib.Analysis.Calculus.ContDiff.Defs
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Analysis.Calculus.ContDiff.RCLike
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
+import Mathlib.Analysis.Calculus.MeanValue
+
+open MeasureTheory Finset
+
+/-- Orthogonality of a martingale increment: if `X` is known at grid time `k` and
+`X * (M (k+1) - M k)` is integrable, its mean is zero. -/
+theorem integral_mul_martingale_increment_eq_zero {Ω : Type*} {m0 : MeasurableSpace Ω}
+    {μ : Measure Ω} [IsFiniteMeasure μ] {ℱ : Filtration ℕ m0} {M : ℕ → Ω → ℝ}
+    (hM : Martingale M ℱ μ) {X : Ω → ℝ} {k : ℕ} (hX : StronglyMeasurable[ℱ k] X)
+    (hXg : Integrable (fun ω => X ω * (M (k + 1) ω - M k ω)) μ) :
+    ∫ ω, X ω * (M (k + 1) ω - M k ω) ∂μ = 0 := by
+  have hm := ℱ.le k
+  have hg : Integrable (M (k + 1) - M k) μ := (hM.integrable _).sub (hM.integrable _)
+  have h1 : μ[M (k + 1) - M k | ℱ k] =ᵐ[μ] 0 := by
+    filter_upwards [condExp_sub (hM.integrable (k + 1)) (hM.integrable k) (ℱ k),
+      hM.condExp_ae_eq (Nat.le_succ k)] with ω h1 h2
+    rw [h1, Pi.sub_apply, h2,
+      condExp_of_stronglyMeasurable hm (hM.stronglyAdapted k) (hM.integrable k)]
+    simp
+  have hXg' : Integrable (X * (M (k + 1) - M k)) μ := hXg
+  have h2 := condExp_mul_of_stronglyMeasurable_left hX hXg' hg
+  calc ∫ ω, X ω * (M (k + 1) ω - M k ω) ∂μ
+      = ∫ ω, (μ[X * (M (k + 1) - M k) | ℱ k]) ω ∂μ := (integral_condExp hm).symm
+    _ = ∫ ω, (X * μ[M (k + 1) - M k | ℱ k]) ω ∂μ := integral_congr_ae h2
+    _ = 0 := by
+      have h3 : (X * μ[M (k + 1) - M k | ℱ k]) =ᵐ[μ] (0 : Ω → ℝ) := by
+        filter_upwards [h1] with ω hω
+        simp [hω]
+      rw [integral_congr_ae h3]
+      simp
+
+#print axioms integral_mul_martingale_increment_eq_zero
+
+/-- A martingale is a good integrator for simple holdings. Take a martingale `M` on grid times
+`0, 1, ..., n` whose value at the end has a finite mean square, and holdings `h k` decided at grid
+time `k` (known from the information at time `k`) with `|h k| ≤ b`. Then the gain
+`I = ∑ h k * (M (k+1) - M k)` has mean square at most `b ^ 2 * E[(M n - M 0) ^ 2]`, and so, by
+Chebyshev's inequality, `P(|I| > ε) ≤ b ^ 2 * E[(M n - M 0) ^ 2] / ε ^ 2` for every `ε > 0`.
+Shrinking the bound `b` on the holdings shrinks the gain in probability. -/
+theorem martingale_is_good_integrator {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω}
+    [IsProbabilityMeasure μ] {ℱ : Filtration ℕ m0} {M : ℕ → Ω → ℝ} {h : ℕ → Ω → ℝ}
+    {b : ℝ} {n : ℕ}
+    (hM : Martingale M ℱ μ) (hM2 : MemLp (M n) 2 μ)
+    (hpred : Adapted ℱ h) (hb : ∀ k ω, |h k ω| ≤ b) :
+    (∫ ω, (∑ k ∈ range n, h k ω * (M (k + 1) ω - M k ω)) ^ 2 ∂μ
+        ≤ b ^ 2 * ∫ ω, (M n ω - M 0 ω) ^ 2 ∂μ) ∧
+    ∀ ε : ℝ, 0 < ε →
+      μ {ω | ε < |∑ k ∈ range n, h k ω * (M (k + 1) ω - M k ω)|}
+        ≤ ENNReal.ofReal (b ^ 2 * (∫ ω, (M n ω - M 0 ω) ^ 2 ∂μ) / ε ^ 2) := by
+  have hhs : ∀ k, StronglyMeasurable[ℱ k] (h k) := fun k => (hpred k).stronglyMeasurable
+  have hMs : ∀ k, StronglyMeasurable[ℱ k] (M k) := hM.stronglyAdapted
+  have hML : ∀ k ≤ n, MemLp (M k) 2 μ := fun k hk =>
+    (hM2.condExp (m := ℱ k) (by norm_num)).ae_eq (hM.condExp_ae_eq hk)
+  have hDL : ∀ k < n, MemLp (fun ω => M (k + 1) ω - M k ω) 2 μ := fun k hk =>
+    (hML (k + 1) hk).sub (hML k hk.le)
+  have hTL : ∀ k < n, MemLp (fun ω => h k ω * (M (k + 1) ω - M k ω)) 2 μ := by
+    intro k hk
+    refine (hDL k hk).of_le_mul (c := b)
+      (((hhs k).mono (ℱ.le k)).aestronglyMeasurable.mul (hDL k hk).aestronglyMeasurable)
+      (ae_of_all _ fun ω => ?_)
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_mul]
+    exact mul_le_mul_of_nonneg_right (hb k ω) (abs_nonneg _)
+  have hIL : ∀ m ≤ n, MemLp (fun ω => ∑ k ∈ range m, h k ω * (M (k + 1) ω - M k ω)) 2 μ :=
+    fun m hm => memLp_finsetSum (ε' := ℝ) (μ := μ) (p := 2) (range m)
+      (f := fun k ω => h k ω * (M (k + 1) ω - M k ω)) fun k hk =>
+      hTL k (lt_of_lt_of_le (Finset.mem_range.1 hk) hm)
+  have hIs : ∀ m, StronglyMeasurable[ℱ m]
+      (fun ω => ∑ k ∈ range m, h k ω * (M (k + 1) ω - M k ω)) := by
+    intro m
+    refine Finset.stronglyMeasurable_fun_sum (f := fun k ω => h k ω * (M (k + 1) ω - M k ω))
+      _ fun k hk => ?_
+    rw [Finset.mem_range] at hk
+    exact ((hhs k).mono (ℱ.mono hk.le)).mul
+      (((hMs (k + 1)).mono (ℱ.mono (Nat.succ_le_of_lt hk))).sub ((hMs k).mono (ℱ.mono hk.le)))
+  -- the main estimate, by induction on the number of grid steps
+  have main : ∀ m ≤ n, ∫ ω, (∑ k ∈ range m, h k ω * (M (k + 1) ω - M k ω)) ^ 2 ∂μ
+      ≤ b ^ 2 * ∫ ω, (M m ω - M 0 ω) ^ 2 ∂μ := by
+    intro m
+    induction m with
+    | zero => intro _; simp
+    | succ m ih =>
+      intro hm
+      have hmn : m < n := hm
+      have ih' := ih hmn.le
+      set I : Ω → ℝ := fun ω => ∑ k ∈ range m, h k ω * (M (k + 1) ω - M k ω) with hI
+      set D : Ω → ℝ := fun ω => M (m + 1) ω - M m ω with hD
+      have hIL' : MemLp I 2 μ := hIL m hmn.le
+      have hDL' : MemLp D 2 μ := hDL m hmn
+      have hTL' : MemLp (fun ω => h m ω * D ω) 2 μ := hTL m hmn
+      have hYL : MemLp (fun ω => M m ω - M 0 ω) 2 μ := (hML m hmn.le).sub (hML 0 (Nat.zero_le _))
+      have hIhL : MemLp (fun ω => I ω * h m ω) 2 μ := by
+        refine hIL'.of_le_mul (c := b)
+          (hIL'.aestronglyMeasurable.mul ((hhs m).mono (ℱ.le m)).aestronglyMeasurable)
+          (ae_of_all _ fun ω => ?_)
+        rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_mul, mul_comm b]
+        exact mul_le_mul_of_nonneg_left (hb m ω) (abs_nonneg _)
+      -- cross terms vanish
+      have hc1 : ∫ ω, (I ω * h m ω) * D ω ∂μ = 0 :=
+        integral_mul_martingale_increment_eq_zero hM ((hIs m).mul (hhs m))
+          (hIhL.integrable_mul hDL')
+      have hc2 : ∫ ω, (M m ω - M 0 ω) * D ω ∂μ = 0 :=
+        integral_mul_martingale_increment_eq_zero hM
+          ((hMs m).sub ((hMs 0).mono (ℱ.mono (Nat.zero_le _)))) (hYL.integrable_mul hDL')
+      have e1 : ∫ ω, (∑ k ∈ range (m + 1), h k ω * (M (k + 1) ω - M k ω)) ^ 2 ∂μ
+          = ∫ ω, I ω ^ 2 ∂μ + 2 * ∫ ω, (I ω * h m ω) * D ω ∂μ + ∫ ω, (h m ω * D ω) ^ 2 ∂μ := by
+        have hA : Integrable (fun ω => I ω ^ 2) μ := hIL'.integrable_sq
+        have hB : Integrable (fun ω => 2 * (I ω * h m ω * D ω)) μ :=
+          (hIhL.integrable_mul hDL').const_mul 2
+        have hC : Integrable (fun ω => (h m ω * D ω) ^ 2) μ := hTL'.integrable_sq
+        have hE : ∫ ω, (∑ k ∈ range (m + 1), h k ω * (M (k + 1) ω - M k ω)) ^ 2 ∂μ
+            = ∫ ω, (I ω ^ 2 + 2 * (I ω * h m ω * D ω) + (h m ω * D ω) ^ 2) ∂μ := by
+          refine integral_congr_ae (ae_of_all _ fun ω => ?_)
+          simp only [hI, hD, sum_range_succ]
+          ring
+        have hAB : Integrable (fun ω => I ω ^ 2 + 2 * (I ω * h m ω * D ω)) μ := hA.add hB
+        rw [hE, integral_add hAB hC, integral_add hA hB, integral_const_mul]
+      have e2 : ∫ ω, (M (m + 1) ω - M 0 ω) ^ 2 ∂μ
+          = ∫ ω, (M m ω - M 0 ω) ^ 2 ∂μ + 2 * ∫ ω, (M m ω - M 0 ω) * D ω ∂μ
+            + ∫ ω, D ω ^ 2 ∂μ := by
+        have hA : Integrable (fun ω => (M m ω - M 0 ω) ^ 2) μ := hYL.integrable_sq
+        have hB : Integrable (fun ω => 2 * ((M m ω - M 0 ω) * D ω)) μ :=
+          (hYL.integrable_mul hDL').const_mul 2
+        have hC : Integrable (fun ω => D ω ^ 2) μ := hDL'.integrable_sq
+        have hE : ∫ ω, (M (m + 1) ω - M 0 ω) ^ 2 ∂μ
+            = ∫ ω, ((M m ω - M 0 ω) ^ 2 + 2 * ((M m ω - M 0 ω) * D ω) + D ω ^ 2) ∂μ := by
+          refine integral_congr_ae (ae_of_all _ fun ω => ?_)
+          simp only [hD]
+          ring
+        have hAB : Integrable
+            (fun ω => (M m ω - M 0 ω) ^ 2 + 2 * ((M m ω - M 0 ω) * D ω)) μ := hA.add hB
+        rw [hE, integral_add hAB hC, integral_add hA hB, integral_const_mul]
+      have e3 : ∫ ω, (h m ω * D ω) ^ 2 ∂μ ≤ b ^ 2 * ∫ ω, D ω ^ 2 ∂μ := by
+        rw [← integral_const_mul]
+        refine integral_mono hTL'.integrable_sq (hDL'.integrable_sq.const_mul _) fun ω => ?_
+        have : h m ω ^ 2 ≤ b ^ 2 := by
+          rw [← sq_abs]; exact pow_le_pow_left₀ (abs_nonneg _) (hb m ω) 2
+        simp only
+        rw [mul_pow]
+        exact mul_le_mul_of_nonneg_right this (sq_nonneg _)
+      rw [e1, e2, hc1, hc2]
+      nlinarith [ih', e3]
+  refine ⟨main n le_rfl, fun ε hε => ?_⟩
+  set I : Ω → ℝ := fun ω => ∑ k ∈ range n, h k ω * (M (k + 1) ω - M k ω) with hI
+  have hInt : Integrable (fun ω => I ω ^ 2) μ := (hIL n le_rfl).integrable_sq
+  have hmk := mul_meas_ge_le_integral_of_nonneg (μ := μ)
+    (ae_of_all _ fun ω => sq_nonneg (I ω)) hInt (ε ^ 2)
+  have hsub : {ω | ε < |I ω|} ⊆ {ω | ε ^ 2 ≤ I ω ^ 2} := by
+    intro ω hω
+    simp only [Set.mem_ofPred_eq] at hω ⊢
+    rw [← sq_abs (I ω)]
+    exact pow_le_pow_left₀ hε.le hω.le 2
+  have hε2 : 0 < ε ^ 2 := by positivity
+  have hreal : μ.real {ω | ε ^ 2 ≤ I ω ^ 2}
+      ≤ b ^ 2 * (∫ ω, (M n ω - M 0 ω) ^ 2 ∂μ) / ε ^ 2 := by
+    rw [le_div_iff₀ hε2, mul_comm]
+    exact hmk.trans (main n le_rfl)
+  calc μ {ω | ε < |I ω|} ≤ μ {ω | ε ^ 2 ≤ I ω ^ 2} := measure_mono hsub
+    _ = ENNReal.ofReal (μ.real {ω | ε ^ 2 ≤ I ω ^ 2}) := by
+      rw [measureReal_def, ENNReal.ofReal_toReal (measure_ne_top _ _)]
+    _ ≤ _ := ENNReal.ofReal_le_ofReal hreal
+
+/-- Integration by parts on a grid. For any two paths sampled at grid times `0, 1, ..., n`, the
+product at the end equals the product at the start, plus the left-point sum of `x` against `y`,
+plus the left-point sum of `y` against `x`, plus the sum of matched products of changes (the grid
+covariation). With `x = y` this is the card's exact grid identity
+`S_1 ^ 2 - S_0 ^ 2 = 2 ∑ S_k ΔS_k + ∑ (ΔS_k) ^ 2`. -/
+theorem grid_integration_by_parts (x y : ℕ → ℝ) (n : ℕ) :
+    x n * y n = x 0 * y 0 + ∑ k ∈ range n, x k * (y (k + 1) - y k)
+      + ∑ k ∈ range n, y k * (x (k + 1) - x k)
+      + ∑ k ∈ range n, (x (k + 1) - x k) * (y (k + 1) - y k) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [sum_range_succ, sum_range_succ, sum_range_succ]
+    linear_combination ih
+
+/-- The jump term of Ito's formula is at most a constant times the squared jump. For a function
+`f` with two continuous derivatives and a path that stays within `[-K, K]`, there is one constant
+`C` such that every jump from `x` to `y` has `|f y - f x - f' x * (y - x)| ≤ C * (y - x) ^ 2`.
+This is why the jump sum converges whenever the squared jumps add to a finite total. -/
+theorem ito_jump_term_le_const_mul_sq (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f) (K : ℝ) :
+    ∃ C : ℝ, ∀ x y : ℝ, |x| ≤ K → |y| ≤ K →
+      |f y - f x - deriv f x * (y - x)| ≤ C * (y - x) ^ 2 := by
+  have hd : ContDiff ℝ 1 (deriv f) := by
+    have := (contDiff_succ_iff_deriv (n := 1) (f := f)).1 (by exact_mod_cast hf)
+    exact this.2.2
+  obtain ⟨L, hL⟩ := (hd.contDiffOn (s := Set.Icc (-K) K)).exists_lipschitzOnWith
+    (by norm_num) (convex_Icc _ _) isCompact_Icc
+  have hdiff : Differentiable ℝ f := hf.differentiable (by norm_num)
+  refine ⟨L, fun x y hx hy => ?_⟩
+  have hxI : x ∈ Set.Icc (-K) K := abs_le.1 hx
+  have hyI : y ∈ Set.Icc (-K) K := abs_le.1 hy
+  have hsub : Set.uIcc x y ⊆ Set.Icc (-K) K := Set.uIcc_subset_Icc hxI hyI
+  set g : ℝ → ℝ := fun t => f t - deriv f x * (t - x) with hg
+  have hgd : ∀ t, HasDerivAt g (deriv f t - deriv f x) t := by
+    intro t
+    have h1 := (hdiff t).hasDerivAt
+    have h2 : HasDerivAt (fun t => deriv f x * (t - x)) (deriv f x * 1) t :=
+      ((hasDerivAt_id t).sub_const x).const_mul _
+    have h3 := h1.sub h2
+    rw [mul_one] at h3
+    exact h3
+  have key := Convex.norm_image_sub_le_of_norm_deriv_le (f := g) (s := Set.uIcc x y)
+    (C := L * |y - x|) (fun t _ => (hgd t).differentiableAt)
+    (fun t ht => by
+      rw [(hgd t).deriv]
+      have h1 := hL.dist_le_mul t (hsub ht) x (hsub Set.left_mem_uIcc)
+      rw [Real.dist_eq] at h1
+      rw [Real.norm_eq_abs]
+      calc |deriv f t - deriv f x| ≤ L * |t - x| := h1
+        _ ≤ L * |y - x| := by
+          have hL0 : (0:ℝ) ≤ L := L.2
+          exact mul_le_mul_of_nonneg_left (Set.abs_sub_left_of_mem_uIcc ht) hL0)
+    (convex_uIcc x y) Set.left_mem_uIcc Set.right_mem_uIcc
+  simp only [hg, Real.norm_eq_abs] at key
+  have : f y - deriv f x * (y - x) - (f x - deriv f x * (x - x)) = f y - f x - deriv f x * (y - x) := by ring
+  rw [this] at key
+  calc _ ≤ _ := key
+    _ = (L : ℝ) * (y - x) ^ 2 := by rw [mul_assoc, ← sq, sq_abs]
+
+-- The worked numbers: mu = 1/20, sigma = 1/5, lambda = 1, j = -1/5, all exact fractions.
+-- Rate of [S] per unit S^2: sigma^2 + lambda * j^2 = 0.08.
+example : ((1 : ℚ) / 5) ^ 2 + 1 * (-1 / 5) ^ 2 = 2 / 25 := by norm_num
+-- The wobble and the crashes contribute equally: sigma^2 = lambda * j^2 = 0.04.
+example : ((1 : ℚ) / 5) ^ 2 = 1 * (-1 / 5) ^ 2 := by norm_num
+-- Growth rate of E[S_t^2]: c = 2 mu + sigma^2 + lambda * j^2 = 0.18.
+example : 2 * ((1 : ℚ) / 20) + (1 / 5) ^ 2 + 1 * (-1 / 5) ^ 2 = 9 / 50 := by norm_num
+-- Climb between crashes: mu - lambda * j = 0.25.
+example : (1 : ℚ) / 20 - 1 * (-1 / 5) = 1 / 4 := by norm_num
+-- Log-drift between crashes: G = mu - lambda * j - sigma^2 / 2 = 0.23.
+example : (1 : ℚ) / 20 - 1 * (-1 / 5) - (1 / 5) ^ 2 / 2 = 23 / 100 := by norm_num
+-- Try-changing: four crashes of 10% give the same lambda * j^2 as one crash of 20%.
+example : (4 : ℚ) * (-1 / 10) ^ 2 = 1 * (-1 / 5) ^ 2 := by norm_num
+
+#print axioms martingale_is_good_integrator
+#print axioms grid_integration_by_parts
+#print axioms ito_jump_term_le_const_mul_sq
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_mul_martingale_increment_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'martingale_is_good_integrator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'grid_integration_by_parts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ito_jump_term_le_const_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Four crashes a year of 10% each**, `LAM = 4.0` and `J = -0.10`. Guess first: more crashes, more variance? The answer: $E[S_1^2]$ is unchanged at 11,972.17, the `try` row, because $\lambda j^2$ is 0.04 either way. Quadratic variation sees rate times squared size, nothing else.
@@ -644,8 +943,8 @@ The two outputs are identical, line for line.
 
 - **Jump models of share prices.** Merton's model is the price on this card with random crash sizes; its pricing rests on the semimartingale Ito formula ([Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
 - **Variance swaps.** Realised variance is a grid sum of squared log returns, and it converges to the quadratic variation, jumps included. The hedged log contract collects each crash too, but as $-2\big(\ln(1+j) - j\big)$, minus twice Step 4's jump term, where realised variance collects $\big(\ln(1+j)\big)^2$; the gap between the two, led by $-\tfrac13\big(\ln(1+j)\big)^3$, is the jump bias ([The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
-- **No-arbitrage theory.** Delbaen and Schachermayer showed that a locally bounded price process admitting no free lunch with simple trades must be a semimartingale. Prices are modelled as semimartingales because the alternative allows a free lunch with vanishing risk.
-- **Insurance surplus.** Premiums flow in steadily and claims arrive as jumps: a finite-variation drift plus a compensated compound Poisson martingale ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
+- **No-arbitrage theory.** Delbaen and Schachermayer showed that a locally bounded price process admitting no free lunch with simple trades must be a semimartingale. Prices are modelled as semimartingales because the alternative allows a free lunch with vanishing risk: a run of trades whose possible loss shrinks to zero while a fixed gain stays possible.
+- **Insurance surplus.** Premiums flow in steadily and claims arrive as jumps: a finite-variation drift plus a compensated compound Poisson martingale, meaning total claims minus their average, a fair game ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
 - **Electricity prices with spikes, and filtering.** Spiking prices ([Jump diffusions](02-jump-diffusions.md)), every Lévy process ([Levy processes](01-levy-processes.md)) and the observation process of a filter ([Filtering](04-filtering-and-the-kalman-bucy-filter.md)) are all semimartingales.
 
 > **Say it back**

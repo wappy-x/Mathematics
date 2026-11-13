@@ -123,3 +123,4 @@ for a in range(1, 10):
     print(f"  [{a},{a + 1}) simulated {100 * fr:.2f} (se {100 * se:.2f}) formula {100 * ex:.2f}")
     assert abs(fr - ex) < 4 * se + 1e-9, "histogram off the forward-equation density"
 print("all checks passed")
+print("ALL CHECKS PASS")

@@ -8,7 +8,7 @@
 
 A short-term interest rate stands at 1 percent. A common model pulls it toward 4 percent at a speed of 0.5 a year and shakes it with a random shove whose size is proportional to the square root of the rate. Near zero the shoves shrink, which is meant to keep the rate at or above zero. This is the Cox–Ingersoll–Ross model, CIR for short.
 
-The model is a rule for the next small change. Before trusting any number from it, one question comes first: given one run of the noise, does the rule fix exactly one path for the rate? With none, the model describes nothing; with two, its probabilities are not defined.
+The model is a stochastic differential equation, an SDE: a rule for the next small change. Before trusting any number from it, one question comes first: given one run of the noise, does the rule fix exactly one path for the rate? With none, the model describes nothing; with two, its probabilities are not defined.
 
 The standard answer is Ito's existence and uniqueness theorem. It asks that the rule's parts change no faster than a fixed multiple of the change in the rate, a **Lipschitz condition**, and grow no faster than a straight line, a **growth condition**. The square root fails the first exactly at zero, where this model lives: the noise size divided by the rate is 2.5 at a rate of 1 percent, 25 at 0.01 percent and 250 at 0.0001 percent. There the theorem is silent, and a sharper theorem has to finish the job.
 
@@ -38,17 +38,17 @@ Time $t$ is in years. $W_t$ is Brownian motion, the random walk seen from far aw
 
 $$X_t = X_0 + \int_0^t \mu(X_s, s)\,ds + \int_0^t \sigma(X_s, s)\,dW_s .$$
 
-A **solution** is a continuous process that satisfies this equation for every $t$, almost surely, and is *adapted*: at time $t$ it is built from the start and the noise path up to $t$, the information $F_t$, and nothing later.
+A **solution** is a continuous process that satisfies this equation for every $t$, almost surely (with probability 1), and is *adapted*: at time $t$ it is built from the start and the noise path up to $t$, the information $F_t$, and nothing later.
 
 **The theorem (Ito, 1951).** Fix a horizon $T$. Suppose one constant $K$ does both jobs below, for all states $x$ and $y$ and all times $t$ up to $T$:
 
 $$\lvert\mu(x,t)-\mu(y,t)\rvert + \lvert\sigma(x,t)-\sigma(y,t)\rvert \le K\,\lvert x-y\rvert, \qquad \lvert\mu(x,t)\rvert + \lvert\sigma(x,t)\rvert \le K\,(1+\lvert x\rvert).$$
 
-Let the start $X_0$ be independent of the noise, with $E[X_0^2]$ finite. Then the integral equation has a solution $X$ on $[0, T]$ with $E[\sup_{t \le T} X_t^2]$ finite, and any two solutions agree at every $t \le T$, almost surely.
+Let the start $X_0$ be independent of the noise, with $E[X_0^2]$, the average of its square, finite. Then the integral equation has a solution $X$ on $[0, T]$ with $E[\sup_{t \le T} X_t^2]$, the average of its largest square up to $T$, finite, and any two solutions agree at every $t \le T$, almost surely.
 
 **Read it aloud:** if the drift and noise size never react to the state more sharply than K times the change, and never grow faster than a straight line, then each start and each run of the noise fix one path.
 
-The proof builds the solution by **Picard iteration**, the loop that proves the ODE theorem: start from a flat guess and feed each guess back into the right-hand side.
+The proof builds the solution by **Picard iteration** ([Picard iteration](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md)), the loop that proves the same theorem for an ordinary differential equation (ODE), one with no noise: start from a flat guess and feed each guess back into the right-hand side.
 
 $$X^{(0)}_t = X_0, \qquad X^{(k+1)}_t = X_0 + \int_0^t \mu\big(X^{(k)}_s, s\big)\,ds + \int_0^t \sigma\big(X^{(k)}_s, s\big)\,dW_s .$$
 
@@ -72,7 +72,7 @@ $$dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\sqrt{r_t}\;dW_t .$$
 | $\sigma$ | the CIR noise scale | 0.25 | the rate reaches zero more often |
 | $X^{(k)}$, $k$, $D_k$, $e(t)$, $M$, $C$ | the Picard guess after $k$ rounds; the mean square of the largest gap between guesses $k$ and $k+1$, or between two solutions; the constant $2K^2(T+4)$; a bound on the first gap | 12 guesses on a 64-step grid | a larger $M$ makes the factorial win later |
 | $n$, $\Delta t$ | grid steps in a year; the step length $1/n$ | 16 to 1024 | the simulation's errors shrink |
-| $\tau$, $f$, $w$, $\Phi$, $\tau_N$, $N$ | the explosion time; the function $f(w) = 1/(1-w)$ that solves the exploding SDE; $w$, a number standing for $W_t$; the standard normal CDF; in the proof, the first time a solution reaches size $N$ | $\tau$ = the first time $W$ reaches 1; $\Phi(1)$ = 0.8413 | — |
+| $\tau$, $f$, $w$, $\Phi$, $\tau_N$, $N$ | the explosion time; the function $f(w) = 1/(1-w)$ that solves the exploding SDE; $w$, a number standing for $W_t$; the standard normal CDF, the chance a standard normal draw falls below a value; in the proof, the first time a solution reaches size $N$ | $\tau$ = the first time $W$ reaches 1; $\Phi(1)$ = 0.8413 | — |
 | $\delta$, $h$, $y$, $a$, $b$ | a change in the rate; a second state beside $x$; a bound $h(\delta)$ on how far the noise size moves for that change; any two numbers, in Step 1's bound | $h(u) = 0.25\sqrt{u}$ for CIR | a larger $h$ near 0 can lose uniqueness |
 
 ### When it holds
@@ -94,7 +94,7 @@ For an ODE, Picard's map takes a guessed curve to the start plus the integral of
 Write $\Delta\mu$ and $\Delta\sigma$ for the change in each coefficient between two guesses at the same moment; the Lipschitz condition bounds each by $K$ times their gap. The next guesses differ by a time integral of $\Delta\mu$ plus an Ito integral of $\Delta\sigma$. Square, using $(a + b)^2 \le 2a^2 + 2b^2$, and take the average of the largest value up to time $t$.
 
 - **The drift part.** An ordinary integral over $[0, t]$, squared, is at most $t$ times the integral of the square: the Cauchy–Schwarz inequality, which says the square of an average is at most the average of the square. With $t \le T$ that gives at most $T K^2$ times the time integral of the squared gap.
-- **The noise part.** The largest value of an Ito integral is controlled by Doob's maximal inequality, a martingale's largest square averages at most 4 times its final square ([Doob's inequalities](../02-Martingales/05-doob-inequalities.md)). The final square averages exactly the time integral of $\Delta\sigma^2$, by the Ito isometry ([The Ito integral](01-ito-integral.md)). That gives at most $4K^2$ times the same integral.
+- **The noise part.** An Ito integral is a martingale, a fair-game process whose average future value is its present value. Its largest value is controlled by Doob's maximal inequality: a martingale's largest square averages at most 4 times its final square ([Doob's inequalities](../02-Martingales/05-doob-inequalities.md)). The final square averages exactly the time integral of $\Delta\sigma^2$, by the Ito isometry ([The Ito integral](01-ito-integral.md)). That gives at most $4K^2$ times the same integral.
 
 Together, with $D_k(t)$ the mean square of the largest gap between guesses $k$ and $k+1$ up to time $t$:
 
@@ -128,7 +128,9 @@ A second road reaches the cousin's limit: Euler's forward loop solves the same g
 
 ### Step 3: why the square root stalls the iteration
 
-Near zero, two guesses a gap $\delta$ apart get noise sizes up to $0.25\sqrt{\delta}$ apart, not $K\delta$. Squared, that is of order $\delta$, not $\delta^2$. So the next squared gap is of the order of the previous gap, not of its square, and once the gaps are small a round need not shrink them. This happens on paths that come close to zero, and from $r_0$ = 0.01 many do. On the 64-step grid both iterations still reach Euler's path by round 64, because each round fixes one more step; what the square root removes is the factorial speed, and in continuous time the proof.
+Near zero, two guesses a gap $\delta$ apart get noise sizes up to $0.25\sqrt{\delta}$ apart, not $K\delta$. Squared, that is of order $\delta$, not $\delta^2$. So the next squared gap is of the order of the previous gap, not of its square, and once the gaps are small a round need not shrink them.
+
+This happens on paths that come close to zero, and from $r_0$ = 0.01 many do. On the 64-step grid both iterations still reach Euler's path by round 64, because each round fixes one more step; what the square root removes is the factorial speed, and in continuous time the proof.
 
 ### Step 4: uniqueness by Gronwall
 
@@ -156,7 +158,11 @@ $E\sup_{s\le t}\lvert PY - PZ\rvert^2 \le 2TK^2\int_0^t E\lvert Y_s - Z_s\rvert^
 
 The CIR drift is Lipschitz with constant 0.5. Its noise grows at most linearly, since $\sqrt{x} \le (1 + x)/2$; the code finds the ratio of the two never above 1.0000 on rates from 0 to 1. Only the Lipschitz condition fails, and only at zero. In its place the square root has a weaker property, $\lvert\sqrt{x} - \sqrt{y}\rvert \le \sqrt{\lvert x - y\rvert}$, with a largest ratio of exactly 1.0000 on rates from 0 to 4 percent: a change $\delta$ moves the noise by at most a constant times $\sqrt{\delta}$.
 
-The theorem of Toshio Yamada and Shinzo Watanabe (1971) uses exactly that. In one dimension, if the drift is Lipschitz and the noise size changes by at most $h(\delta)$ for a change $\delta$, where $h$ is so small near 0 that $\int_0 h(u)^{-2}\,du$ is infinite, then two solutions driven by the same noise agree. With $h(u) = 0.25\sqrt{u}$, the integral is $\int_0 du/(0.0625\,u)$, which is infinite: uniqueness holds. With $h(u) = u^{0.4}$ it is finite, and for $dX = \lvert X\rvert^{0.4}\,dW$ from zero, both $X \equiv 0$ and a process that leaves zero are solutions (Karatzas and Shreve, Chapter 5). The square root sits exactly on the boundary that still works. Existence follows: continuous coefficients with linear growth give a solution driven by some Brownian motion (Skorokhod's theorem), and the same paper shows that this plus uniqueness gives one built from the given noise. This card states the Yamada–Watanabe theorem; it does not prove it.
+The theorem of Toshio Yamada and Shinzo Watanabe (1971) uses exactly that. In one dimension, if the drift is Lipschitz and the noise size changes by at most $h(\delta)$ for a change $\delta$, where $h$ is so small near 0 that $\int_0 h(u)^{-2}\,du$ is infinite, then two solutions driven by the same noise agree.
+
+With $h(u) = 0.25\sqrt{u}$, the integral is $\int_0 du/(0.0625\,u)$, which is infinite: uniqueness holds. With $h(u) = u^{0.4}$ it is finite, and for $dX = \lvert X\rvert^{0.4}\,dW$ from zero, both $X \equiv 0$ and a process that leaves zero are solutions (Karatzas and Shreve, Chapter 5). The square root sits exactly on the boundary that still works.
+
+Existence follows: continuous coefficients with linear growth give a solution driven by some Brownian motion (Skorokhod's theorem), and the same paper shows that this plus uniqueness gives one built from the given noise. This card states the Yamada–Watanabe theorem; it does not prove it.
 
 The code tests this with two repairs of Euler's scheme on the same Brownian steps: **full truncation**, which reads a negative value as 0 inside both coefficients, and **reflection**, which flips a negative value to positive after each step. With two solutions, the repairs could settle on different ones. Over 2000 simulated years their average gap at year end falls from 0.00210 at 16 steps to 0.00011 at 1024, a ratio of 19.1. That is consistent with one solution; Yamada–Watanabe proves it, and a simulation cannot.
 
@@ -170,7 +176,9 @@ Drop the growth condition and existence can fail for all time. Take
 
 $$dX_t = X_t^3\,dt + X_t^2\,dW_t, \qquad X_0 = 1 .$$
 
-The coefficients are smooth, so Lipschitz on every bounded range of states, and the solution is unique while it stays finite. But $x^3$ is not below $K(1 + \lvert x\rvert)$ for any $K$. The candidate $X_t = f(W_t)$ with $f(w) = 1/(1-w)$ solves it: by Ito's lemma ([Ito's lemma](02-itos-lemma.md)), $f'(w) = f^2$ gives the noise $X^2$, and $\tfrac12 f''(w) = f^3$ gives the drift $X^3$. By finite differences at $w$ = 0.3, where $X$ = 1.428571, the code finds a drift of 2.915452 and a noise of 2.040816, equal to $X^3$ and $X^2$.
+The coefficients are smooth, so Lipschitz on every bounded range of states, and the solution is unique while it stays finite. But $x^3$ is not below $K(1 + \lvert x\rvert)$ for any $K$.
+
+The candidate $X_t = f(W_t)$ with $f(w) = 1/(1-w)$ solves it: by Ito's lemma ([Ito's lemma](02-itos-lemma.md)), $f'(w) = f^2$ gives the noise $X^2$, and $\tfrac12 f''(w) = f^3$ gives the drift $X^3$. By finite differences at $w$ = 0.3, where $X$ = 1.428571, the code finds a drift of 2.915452 and a noise of 2.040816, equal to $X^3$ and $X^2$.
 
 The solution reaches infinity at $\tau$, the first time the Brownian path reaches 1. The chance that happens within a year is, by the reflection principle (the walk version is [Reflection principle](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)), twice the chance that $W_1$ ends above 1:
 
@@ -639,6 +647,302 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the parts of Steps 2, 4, 5 and 6 that need no Ito integral, and checks the worked numbers.
+
+- Suppose every round obeys Step 1's estimate, and the first gap $D_0$ is at most $C$. Then $D_k(t) \le C(Mt)^k/k!$ for every round $k$ and time $t \le T$.
+- The Chebyshev bounds in the Detailed proof add to a finite total. Their sum $\sum_k 4^k C(MT)^k/k!$ is exactly $Ce^{4MT}$.
+- Suppose $e(t) \ge 0$ and $e(t) \le M \int_0^t e(s)\,ds$ for $t \le T$. Then $e(t) = 0$ at every $t \le T$, as Step 4 needs.
+- The CIR drift is Lipschitz with constant 0.5, and the noise size $0.25\sqrt{x}$ has no Lipschitz constant on rates $x \ge 0$.
+- Take any rates $x, y \ge 0$. Then $\sqrt{x} \le (1+x)/2$ and $\lvert\sqrt{x} - \sqrt{y}\rvert \le \sqrt{\lvert x - y\rvert}$.
+- Take $h(u) = 0.25\sqrt{u}$. Then $\int_0^1 h(u)^{-2}\,du$ is infinite; for $h(u) = u^{0.4}$ it is finite.
+- Take $f(w) = 1/(1-w)$. Then $f(0) = 1$, $f' = f^2$, and the derivative of $f^2$ is $2f^3$, at every $w \ne 1$.
+- No $K$ makes $\lvert x^3\rvert + \lvert x^2\rvert \le K(1 + \lvert x\rvert)$ for every $x$, so the growth condition fails.
+- As $w$ rises to 1, $f(w)$ grows without bound.
+- The worked numbers check exactly: the ratios 2.5, 25 and 250, the Feller test, and one Euler step's mean 0.01125.
+
+Lean has no Ito integral yet, so Step 1 and the limits rest on the cited proofs, and every simulation on the Python and Rust checks.
+
+```lean
+-- When an SDE has one solution: once Step 1's mean-square estimate holds, the Picard gaps fall like C (Mt)^k / k! with a finite Borel–Cantelli total C e^(4MT) and two solutions' gap is zero, while the CIR noise 0.25 √r meets the growth and square-root conditions but has no Lipschitz constant at zero, and X = 1/(1 - W) solves dX = X³ dt + X² dW and runs off to infinity.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
+import Mathlib.Data.Nat.Factorial.Basic
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Topology.Algebra.Order.Floor
+
+open Set Filter Topology MeasureTheory
+
+/-! Mathlib has no Ito integral, so the card's theorem itself (an almost-sure integral equation
+driven by Brownian motion) cannot be written here. This file states the exact parts of the card's
+argument and its examples. The main theorem is the deterministic engine of the proof: Step 1
+(Cauchy–Schwarz, Doob's inequality and the Ito isometry) gives each Picard gap
+`D_k(t) ≤ M ∫₀ᵗ D_{k-1}(s) ds` with `M = 2K²(T + 4)`; from that alone, Steps 2 and 3 get the
+factorial bound and a finite Borel–Cantelli total, and Step 4 gets uniqueness by Gronwall. -/
+
+/-- Helper: integral of the factorial bound. -/
+lemma sde_integral_bound (M C t : ℝ) (k : ℕ) :
+    M * ∫ s in (0)..t, C * (M * s) ^ k / (k.factorial : ℝ) =
+      C * (M * t) ^ (k + 1) / ((k + 1).factorial : ℝ) := by
+  have h : (fun s : ℝ => C * (M * s) ^ k / (k.factorial : ℝ)) =
+      fun s => (C * M ^ k / (k.factorial : ℝ)) * s ^ k := by
+    funext s; rw [mul_pow]; ring
+  rw [h, intervalIntegral.integral_const_mul, integral_pow, Nat.factorial_succ]
+  push_cast
+  have hk : (k.factorial : ℝ) ≠ 0 := by positivity
+  field_simp
+  ring
+
+/-- Helper: the factorial bound from the Picard recursion, for any `M ≥ 0`. -/
+lemma sde_picard_bound (M T C : ℝ) (hM : 0 ≤ M) (hT : 0 ≤ T) (D : ℕ → ℝ → ℝ)
+    (hD0 : ∀ k, ∀ t ∈ Icc 0 T, 0 ≤ D k t) (hC : ∀ t ∈ Icc 0 T, D 0 t ≤ C)
+    (hstep : ∀ k, ∀ t ∈ Icc 0 T, D (k + 1) t ≤ M * ∫ s in (0)..t, D k s) :
+    ∀ k : ℕ, ∀ t ∈ Icc 0 T, D k t ≤ C * (M * t) ^ k / (k.factorial : ℝ) := by
+  have hC0 : 0 ≤ C := (hD0 0 0 ⟨le_rfl, hT⟩).trans (hC 0 ⟨le_rfl, hT⟩)
+  intro k
+  induction k with
+  | zero => intro t ht; simpa using hC t ht
+  | succ k ih =>
+    intro t ht
+    refine (hstep k t ht).trans ?_
+    rw [← sde_integral_bound]
+    apply mul_le_mul_of_nonneg_left _ hM
+    rw [intervalIntegral.integral_of_le ht.1, intervalIntegral.integral_of_le ht.1]
+    apply integral_mono_of_nonneg
+    · refine ae_restrict_of_forall_mem measurableSet_Ioc ?_
+      intro s hs
+      exact hD0 k s ⟨hs.1.le, hs.2.trans ht.2⟩
+    · have : Continuous (fun s : ℝ => C * (M * s) ^ k / (k.factorial : ℝ)) := by fun_prop
+      exact (this.integrableOn_Icc).mono_set Ioc_subset_Icc_self
+    · refine ae_restrict_of_forall_mem measurableSet_Ioc ?_
+      intro s hs
+      exact ih s ⟨hs.1.le, hs.2.trans ht.2⟩
+
+#print axioms sde_integral_bound
+#print axioms sde_picard_bound
+
+/-- Picard iteration in mean square converges, and two solutions agree. Fix a horizon `T ≥ 0` and
+the constant `K`, and put `M = 2K²(T + 4)`.
+(1) Existence, Steps 2 and 3. Let `D k t ≥ 0` be the mean square of the largest gap between Picard
+guesses `k` and `k + 1` up to time `t`. If the first gap is at most `C` and each round obeys Step 1's
+estimate `D_(k+1)(t) ≤ M ∫₀ᵗ D_k(s) ds`, then `D_k(t) ≤ C (Mt)^k / k!` for every round `k` and every
+time `t` up to `T`.
+(2) The Chebyshev bounds of the Detailed proof add to a finite total:
+`∑ₖ 4^k · C (MT)^k / k! = C e^(4MT)`, so Borel–Cantelli applies.
+(3) Uniqueness, Step 4. If `e(t) ≥ 0`, the mean square of the largest gap between two solutions,
+obeys `e(t) ≤ M ∫₀ᵗ e(s) ds` up to `T`, then `e(t) = 0` at every time up to `T`. -/
+theorem picard_gaps_fall_factorially_and_solutions_agree (K T C : ℝ) (hT : 0 ≤ T) :
+    (∀ D : ℕ → ℝ → ℝ,
+      (∀ k, ∀ t ∈ Icc 0 T, 0 ≤ D k t) →
+      (∀ t ∈ Icc 0 T, D 0 t ≤ C) →
+      (∀ k, ∀ t ∈ Icc 0 T, D (k + 1) t ≤ 2 * K ^ 2 * (T + 4) * ∫ s in (0)..t, D k s) →
+      ∀ k : ℕ, ∀ t ∈ Icc 0 T,
+        D k t ≤ C * (2 * K ^ 2 * (T + 4) * t) ^ k / (k.factorial : ℝ)) ∧
+    HasSum (fun k : ℕ => (4 : ℝ) ^ k * (C * (2 * K ^ 2 * (T + 4) * T) ^ k / (k.factorial : ℝ)))
+      (C * Real.exp (4 * (2 * K ^ 2 * (T + 4)) * T)) ∧
+    (∀ e : ℝ → ℝ,
+      (∀ t ∈ Icc 0 T, 0 ≤ e t) →
+      (∀ t ∈ Icc 0 T, e t ≤ 2 * K ^ 2 * (T + 4) * ∫ s in (0)..t, e s) →
+      ∀ t ∈ Icc 0 T, e t = 0) := by
+  set M : ℝ := 2 * K ^ 2 * (T + 4) with hMdef
+  have hM : 0 ≤ M := by positivity
+  clear_value M
+  refine ⟨?_, ?_, ?_⟩
+  · intro D hD0 hC hstep
+    exact sde_picard_bound M T C hM hT D hD0 hC hstep
+  · have h := (NormedSpace.expSeries_div_hasSum_exp (4 * M * T : ℝ)).mul_left C
+    rw [← Real.exp_eq_exp_ℝ] at h
+    convert h using 1
+    funext k
+    simp only [mul_pow]
+    ring
+  · intro e he hstep t ht
+    have hzero : e t ≤ 0 := by
+      by_cases hint : IntervalIntegrable e volume 0 t
+      · set B : ℝ := M * ∫ s in (0)..t, e s
+        have hbd := sde_picard_bound M t B hM ht.1 (fun _ => e)
+          (fun _ s hs => he s ⟨hs.1, hs.2.trans ht.2⟩)
+          (by
+            intro s hs
+            refine (hstep s ⟨hs.1, hs.2.trans ht.2⟩).trans ?_
+            apply mul_le_mul_of_nonneg_left _ hM
+            apply intervalIntegral.integral_mono_interval le_rfl hs.1 hs.2
+            · refine ae_restrict_of_forall_mem measurableSet_Ioc ?_
+              intro u hu
+              exact he u ⟨hu.1.le, hu.2.trans ht.2⟩
+            · exact hint)
+          (fun _ s hs => hstep s ⟨hs.1, hs.2.trans ht.2⟩)
+        have hlim : Tendsto (fun k : ℕ => B * (M * t) ^ k / (k.factorial : ℝ)) atTop (𝓝 0) := by
+          have := (FloorSemiring.tendsto_pow_div_factorial_atTop (M * t)).const_mul B
+          simp only [mul_zero] at this
+          convert this using 2 with k
+          ring
+        exact ge_of_tendsto' hlim (fun k => hbd k t ⟨ht.1, le_rfl⟩)
+      · have := hstep t ht
+        rwa [intervalIntegral.integral_undef hint, mul_zero] at this
+    exact le_antisymm hzero (he t ht)
+
+/-- Step 5, the CIR coefficients: drift `0.5 (0.04 - r)` and noise size `0.25 √r` on rates `r ≥ 0`.
+The drift is Lipschitz with constant `0.5`. The noise has no Lipschitz constant: for no `K` is
+`|0.25 √x - 0.25 √y| ≤ K |x - y|` for all rates. It still grows at most linearly, `√x ≤ (1 + x)/2`,
+and it obeys the square-root bound `|√x - √y| ≤ √|x - y|`. For Yamada–Watanabe, `h(u) = 0.25 √u`
+makes `∫ du / h(u)²` infinite near `0` (not integrable on `(0, 1]`), while `h(u) = u^0.4` keeps it
+finite (integrable on `(0, 1]`). -/
+theorem cir_noise_not_lipschitz_but_grows_linearly_and_is_sqrt_holder :
+    (∀ x y : ℝ, |(1 / 2) * ((1 / 25) - x) - (1 / 2) * ((1 / 25) - y)| ≤ (1 / 2) * |x - y|) ∧
+    (¬ ∃ K : ℝ, ∀ x y : ℝ, 0 ≤ x → 0 ≤ y →
+        |(1 / 4) * Real.sqrt x - (1 / 4) * Real.sqrt y| ≤ K * |x - y|) ∧
+    (∀ x : ℝ, 0 ≤ x → Real.sqrt x ≤ (1 + x) / 2) ∧
+    (∀ x y : ℝ, 0 ≤ x → 0 ≤ y → |Real.sqrt x - Real.sqrt y| ≤ Real.sqrt |x - y|) ∧
+    (¬ IntegrableOn (fun u : ℝ => 1 / ((1 / 4) * Real.sqrt u) ^ 2) (Ioc 0 1)) ∧
+    IntegrableOn (fun u : ℝ => 1 / (u ^ (2 / 5 : ℝ)) ^ 2) (Ioc 0 1) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro x y
+    rw [show (1 / 2 : ℝ) * ((1 / 25) - x) - (1 / 2) * ((1 / 25) - y) = (1 / 2) * (y - x) by ring,
+      abs_mul, abs_sub_comm]
+    norm_num
+  · rintro ⟨K, hK⟩
+    set a : ℝ := |K| + 1 with ha
+    have ha0 : 0 < a := by positivity
+    set ε : ℝ := 1 / (8 * a) with hε
+    have hε0 : 0 < ε := by positivity
+    have h := hK (ε ^ 2) 0 (by positivity) le_rfl
+    simp only [Real.sqrt_sq hε0.le, Real.sqrt_zero, mul_zero, sub_zero] at h
+    rw [abs_of_nonneg (by positivity), abs_of_nonneg (by positivity)] at h
+    have h1 : (1 / 4 : ℝ) ≤ K * ε := by nlinarith
+    have h2 : K * ε ≤ |K| * ε := mul_le_mul_of_nonneg_right (le_abs_self K) hε0.le
+    have h3 : |K| * ε < 1 / 8 := by
+      rw [hε, mul_one_div, div_lt_div_iff₀ (by positivity) (by norm_num)]
+      linarith [abs_nonneg K]
+    linarith
+  · intro x hx
+    nlinarith [Real.sq_sqrt hx, sq_nonneg (Real.sqrt x - 1)]
+  · intro x y hx hy
+    rw [Real.le_sqrt (abs_nonneg _) (abs_nonneg _), sq_abs]
+    have hsx := Real.sq_sqrt hx
+    have hsy := Real.sq_sqrt hy
+    have h0x := Real.sqrt_nonneg x
+    have h0y := Real.sqrt_nonneg y
+    rcases le_total x y with hxy | hxy
+    · have hm := Real.sqrt_le_sqrt hxy
+      rw [abs_of_nonpos (by linarith)]
+      nlinarith
+    · have hm := Real.sqrt_le_sqrt hxy
+      rw [abs_of_nonneg (by linarith)]
+      nlinarith
+  · intro h
+    have heq : EqOn (fun u : ℝ => 1 / ((1 / 4) * Real.sqrt u) ^ 2) (fun u => 16 * u ^ (-1 : ℝ))
+        (Ioc 0 1) := by
+      intro u hu
+      simp only
+      rw [mul_pow, Real.sq_sqrt hu.1.le, Real.rpow_neg_one]
+      field_simp
+      norm_num
+    have h2 : IntegrableOn (fun u : ℝ => 1 / 16 * (16 * u ^ (-1 : ℝ))) (Ioc 0 1) :=
+      (IntegrableOn.congr_fun h heq measurableSet_Ioc).const_mul (1 / 16)
+    have h3 : IntegrableOn (fun u : ℝ => u ^ (-1 : ℝ)) (Ioc 0 1) := by
+      refine IntegrableOn.congr_fun h2 ?_ measurableSet_Ioc
+      intro u _
+      simp only
+      ring
+    rw [integrableOn_Ioc_iff_integrableOn_Ioo, intervalIntegral.integrableOn_Ioo_rpow_iff one_pos] at h3
+    linarith
+  · have heq : EqOn (fun u : ℝ => u ^ (-(4 / 5) : ℝ)) (fun u : ℝ => 1 / (u ^ (2 / 5 : ℝ)) ^ 2)
+        (Ioc 0 1) := by
+      intro u hu
+      simp only
+      rw [← Real.rpow_natCast, ← Real.rpow_mul hu.1.le, one_div, ← Real.rpow_neg hu.1.le]
+      norm_num
+    refine IntegrableOn.congr_fun ?_ heq measurableSet_Ioc
+    rw [integrableOn_Ioc_iff_integrableOn_Ioo, intervalIntegral.integrableOn_Ioo_rpow_iff one_pos]
+    norm_num
+
+/-- Step 6, the SDE that explodes. With `f(w) = 1/(1 - w)`, at every `w ≠ 1` the derivative of `f`
+is `f²` (the noise `X²`) and the derivative of `f²` is `2 f³`, so half the second derivative is `f³`
+(the drift `X³`): by Ito's lemma `X = f(W)` solves `dX = X³ dt + X² dW` from `X₀ = f(0) = 1`. Its
+coefficients break the growth condition: no `K` gives `|x³| + |x²| ≤ K (1 + |x|)` for every `x`. And
+`f(w)` grows without bound as `w` rises to `1`, so `X` reaches infinity when `W` first reaches 1. -/
+theorem cubic_sde_solution_explodes :
+    (fun w : ℝ => 1 / (1 - w)) 0 = 1 ∧
+    (∀ w : ℝ, w ≠ 1 →
+      HasDerivAt (fun v : ℝ => 1 / (1 - v)) ((1 / (1 - w)) ^ 2) w ∧
+      HasDerivAt (fun v : ℝ => (1 / (1 - v)) ^ 2) (2 * (1 / (1 - w)) ^ 3) w) ∧
+    (¬ ∃ K : ℝ, ∀ x : ℝ, |x ^ 3| + |x ^ 2| ≤ K * (1 + |x|)) ∧
+    Tendsto (fun w : ℝ => 1 / (1 - w)) (𝓝[<] 1) atTop := by
+  refine ⟨by norm_num, ?_, ?_, ?_⟩
+  · intro w hw
+    have hw' : (1 : ℝ) - w ≠ 0 := sub_ne_zero.mpr (Ne.symm hw)
+    have h1 : HasDerivAt (fun v : ℝ => 1 / (1 - v)) ((1 / (1 - w)) ^ 2) w := by
+      have h := ((hasDerivAt_id w).const_sub 1).inv hw'
+      convert h using 1
+      · funext v; simp [one_div]
+      · simp [id]
+    refine ⟨h1, ?_⟩
+    convert h1.pow 2 using 1
+    rw [show (2 : ℕ) - 1 = 1 from rfl, pow_one]
+    push_cast
+    ring
+  · rintro ⟨K, hK⟩
+    set x : ℝ := |K| + 1 with hx
+    have hx1 : 1 ≤ x := by rw [hx]; linarith [abs_nonneg K]
+    have h := hK x
+    rw [abs_of_nonneg (by positivity), abs_of_nonneg (by positivity),
+      abs_of_nonneg (by positivity)] at h
+    have h2 : K * (1 + x) ≤ |K| * (1 + x) :=
+      mul_le_mul_of_nonneg_right (le_abs_self K) (by positivity)
+    have h3 : |K| = x - 1 := by rw [hx]; ring
+    rw [h3] at h2
+    nlinarith
+  · have h1 : Tendsto (fun w : ℝ => 1 - w) (𝓝[<] 1) (𝓝[>] 0) := by
+      apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
+      · have : Tendsto (fun w : ℝ => 1 - w) (𝓝 1) (𝓝 (1 - 1)) :=
+          (continuous_const.sub continuous_id).tendsto 1
+        rw [sub_self] at this
+        exact this.mono_left nhdsWithin_le_nhds
+      · filter_upwards [self_mem_nhdsWithin] with w hw
+        simp only [mem_Ioi, sub_pos]
+        exact hw
+    exact (tendsto_inv_nhdsGT_zero.comp h1).congr (fun w => by simp [one_div])
+
+/-! The card's worked numbers, as exact fractions: r₀ = 1/100, κ = 1/2, θ = 1/25, σ = 1/4. -/
+
+-- Noise per unit of rate, σ √r / r: 2.5 at 1 percent, 25 at 0.01 percent, 250 at 0.0001 percent.
+example : (1 / 4 : ℝ) * Real.sqrt (1 / 100) / (1 / 100) = 5 / 2 := by norm_num
+example : (1 / 4 : ℝ) * Real.sqrt (1 / 10000) / (1 / 10000) = 25 := by norm_num
+example : (1 / 4 : ℝ) * Real.sqrt (1 / 1000000) / (1 / 1000000) = 250 := by norm_num
+-- Feller test: 2κθ = 0.04 against σ² = 0.0625, ratio 0.64, so 2κθ < σ² and the rate touches zero.
+example : 2 * (1 / 2 : ℚ) * (1 / 25) = 1 / 25 ∧ (1 / 4 : ℚ) ^ 2 = 1 / 16 ∧
+    (1 / 25 : ℚ) < 1 / 16 ∧ (1 / 25 : ℚ) / (1 / 16) = 16 / 25 := by norm_num
+-- One monthly Euler step from 1 percent: mean 0.01 + 0.5 × (0.04 − 0.01)/12 = 0.01125 = 9/800.
+example : (1 / 100 : ℚ) + (1 / 2) * ((1 / 25) - (1 / 100)) / 12 = 9 / 800 := by norm_num
+-- The Lipschitz cousin 1.25 r matches the CIR noise 0.25 √r at 4 percent: both are 0.05.
+example : (5 / 4 : ℝ) * (1 / 25) = 1 / 20 ∧ (1 / 4 : ℝ) * Real.sqrt (1 / 25) = 1 / 20 := by norm_num
+-- The growth test's largest ratio is exactly 1, at x = 1: √1 = (1 + 1)/2.
+example : Real.sqrt 1 = (1 + 1) / 2 := by norm_num
+-- The exploding SDE at w = 0.3: X = 1/(1 − 0.3) = 10/7, drift X³ = 1000/343, noise X² = 100/49.
+example : (1 : ℚ) / (1 - 3 / 10) = 10 / 7 ∧ (10 / 7 : ℚ) ^ 3 = 1000 / 343 ∧
+    (10 / 7 : ℚ) ^ 2 = 100 / 49 := by norm_num
+
+#print axioms picard_gaps_fall_factorially_and_solutions_agree
+#print axioms cir_noise_not_lipschitz_but_grows_linearly_and_is_sqrt_holder
+#print axioms cubic_sde_solution_explodes
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sde_integral_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sde_picard_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'picard_gaps_fall_factorially_and_solutions_agree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cir_noise_not_lipschitz_but_grows_linearly_and_is_sqrt_holder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cubic_sde_solution_explodes' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
