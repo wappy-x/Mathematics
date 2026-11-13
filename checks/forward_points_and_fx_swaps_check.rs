@@ -118,5 +118,5 @@ fn main() {
     assert!((points_leg - two_loans).abs() < 1e-4, "points leg = dollar interest minus euro interest");
     assert!(lender_value(s).abs() < 1e-4, "a swap at market is worth nothing at inception");
     assert!((swap_move - N * (1.20 - s) * (1.0 - (-rf * t).exp())).abs() < 1e-4, "swap feels spot only through euro interest");
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

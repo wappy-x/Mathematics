@@ -103,4 +103,4 @@ assert abs(rf_bump - drf_bp) < 1e-3, "euro-rate nudge must match its slope"
 assert abs(eur_bump - eur_dS) < 1e-3, "euro-count nudge must match its slope"
 assert abs(hi - F_flat) < 1e-12, "bisection must find the weighted delivery rate"
 assert abs(round(F_house, 4) - F) < 1e-12, "the quote is the house forward rounded to the pip"
-print("PASS")
+print("ALL CHECKS PASS")

@@ -6,13 +6,19 @@
 
 ## General Overview
 
-A bank has sold a client a one-year option on EUR 10 million. The option gives the client the right to buy those euros in a year at 1.1000 dollars each. Today one euro costs 1.1000 dollars. Dollar cash earns 5 percent a year, euro cash earns 3 percent, and the market prices the exchange rate's volatility (the yearly spread of its swings) at 10 percent. The premium is USD 535,558.
+A bank has sold a client a one-year option on EUR 10 million, the option's notional (its contract size). The option gives the client the right to buy those euros in a year at 1.1000 dollars each. Today one euro costs 1.1000 dollars. Dollar cash earns 5 percent a year, euro cash earns 3 percent, and the market prices the exchange rate's volatility (the yearly spread of its swings) at 10 percent. The premium, the price paid today, is USD 535,558.
 
 Five things can move under this option: the exchange rate, its volatility, the calendar, the dollar rate and the euro rate. The price change per unit move in one of them, the rest frozen, is a **Greek**; gamma, the change in delta, is the one second-order Greek here. The equity versions are on the Greeks shelf ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) onward). A currency option adds two twists.
 
 First, two interest rates pull in opposite directions: a higher dollar rate makes this option dearer, a higher euro rate cheaper. So there are two rhos, one per currency, with opposite signs. Second, each Greek comes out in its own currency. Delta is a number of euros. Vega and theta are dollars. And a bank that counts profit in euros sees one of them change in a way no exchange-rate conversion captures.
 
-Per EUR 10 million, the option's Greeks read as follows, and the bank's own position is the opposite of each: delta EUR 5,810,119 (the euros the holder would sell to hedge); delta moves by 0.037524 for each 1 percent move in the exchange rate; USD 41,276 per point of volatility; USD −842 a day from the calendar; USD +585.56 per basis point on the dollar rate and USD −639.11 per basis point on the euro rate.
+Per EUR 10 million, the option's Greeks read as follows. The bank's own position is the opposite of each.
+
+- **Delta:** EUR 5,810,119 (the euros the holder would sell to hedge).
+- **Gamma:** delta moves by EUR 375,240 for each 1 percent move in the exchange rate.
+- **Vega:** USD 41,276 per point of volatility.
+- **Theta:** USD −842 a day from the calendar.
+- **The two rhos:** USD +585.56 per basis point on the dollar rate and USD −639.11 per basis point on the euro rate.
 
 **Each Greek of a currency option is one partial derivative of the Garman-Kohlhagen price; the dollar rate reaches the price only through the discounted strike and the euro rate only through the discounted euros, so the two rhos have opposite signs, and a bank counting in euros hedges the same option with fewer euros, by exactly the premium.**
 
@@ -75,14 +81,21 @@ $$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qqua
 
 In words: $d_2$ is how many spreads of room the rate has to end above the strike, in the world where dollars are the unit of account; $d_1$ is one spread more.
 
-**Desk units, dated 2026-09-27.** Raw Greeks are per unit of each input, and a unit of volatility or of rate is 100 percentage points, which never happens. Desks rescale: vega per vol point (divide by 100), rho per basis point (divide by 10,000; a basis point is a hundredth of a percentage point), theta per calendar day (divide by 365), gamma as the change in delta for a 1 percent move in spot (multiply by $S$ and by 0.01). Then everything is multiplied by the notional. These are habits, not laws; a risk report states its own units, and the number means nothing without them.
+**Desk units, dated 2026-09-27.** Raw Greeks are per unit of each input, and a unit of volatility or of rate is 100 percentage points, which never happens. Desks rescale:
+
+- vega per vol point: divide by 100;
+- rho per basis point (bp): divide by 10,000; a basis point is a hundredth of a percentage point;
+- theta per calendar day: divide by 365;
+- gamma as the change in delta for a 1 percent move in spot: multiply by $S$ and by 0.01.
+
+Then everything is multiplied by the notional. These are habits, not laws; a risk report states its own units, and the number means nothing without them.
 
 ### When it holds
 
 - **Constant volatility.** The model uses one $\sigma$ for every strike. Real currency markets price a smile (a different volatility for each strike), so vega here is the slope for a parallel lift of the whole smile, and it misses the risk that the smile tilts; that is [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md).
 - **Flat, constant interest rates.** One $r_d$ and one $r_f$ for the whole year. With a real yield curve, rho spreads across maturities; a single number per currency is the total of those buckets.
 - **Small moves, one at a time.** Each Greek is a slope. A 1 percent move in spot is small; a 5 percent move needs gamma too, and a big move needs a full reprice.
-- **European exercise.** The option pays only at expiry. Barriers break the smooth shape: [Greeks at the wall](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md).
+- **European exercise.** The option pays only at expiry. Barriers (options that switch on or off at a set rate) break the smooth shape: [Greeks at the wall](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md).
 
 ---
 
@@ -98,7 +111,7 @@ Every input except the strike sits inside $d_1$ and $d_2$, so every derivative p
 
 $$S\,e^{-r_f T}\varphi(d_1) = K\,e^{-r_d T}\varphi(d_2).$$
 
-On the house numbers both sides are 1.1 × 0.970446 × 0.386668 and 1.1 × 0.951229 × $\varphi(0.15)$, and both equal 0.412764, which is also vega.
+On the example's numbers both sides are 1.1 × 0.970446 × 0.386668 and 1.1 × 0.951229 × $\varphi(0.15)$, and both equal 0.412764, which is also vega.
 
 <details>
 <summary>The algebra behind the identity</summary>
@@ -111,13 +124,13 @@ $\varphi(d_2)/\varphi(d_1) = e^{(d_1^2 - d_2^2)/2} = e^{(d_1 - d_2)(d_1 + d_2)/2
 
 Differentiate $C$ in $S$. The first term gives $e^{-r_f T}N(d_1)$ plus $S e^{-r_f T}\varphi(d_1)\,\partial d_1/\partial S$. The second term gives $-K e^{-r_d T}\varphi(d_2)\,\partial d_2/\partial S$. Since $d_1 - d_2$ does not depend on $S$, the two partial derivatives of $d$ are equal, and by Step 1 the two $\varphi$ terms cancel. What is left is $\Delta = e^{-r_f T}N(d_1)$ = 0.970446 × 0.598706 = 0.581012.
 
-Its unit: $C$ is dollars per euro of notional and $S$ is dollars per euro, so their ratio is euros per euro of notional. Delta is a count of euros. On EUR 10 million the desk that sold this call buys EUR 5,810,119 against it (the client, long the call, would sell that many). The discount $e^{-r_f T}$ is there because the hedge is done in spot euros, which earn euro interest until expiry: 0.97 of a euro today grows into one euro at 3 percent.
+Its unit: $C$ is dollars per euro of notional and $S$ is dollars per euro, so their ratio is euros per euro of notional. On EUR 10 million the desk that sold this call buys EUR 5,810,119 against it (the client, who holds the call, would sell that many). The discount $e^{-r_f T}$ is there because the hedge is done in spot euros, which earn euro interest until expiry: 0.97 of a euro today grows into one euro at 3 percent.
 
 Differentiate delta once more in $S$. Only $N(d_1)$ moves, and $\partial d_1/\partial S = 1/(S\sigma\sqrt{T})$. So $\Gamma = e^{-r_f T}\varphi(d_1)/(S\sigma\sqrt{T})$ = 3.411276. Its unit is euros of hedge per euro of notional, per one-dollar change in the price of a euro. A full dollar move in EURUSD is absurd, so desks quote the change in delta for a 1 percent spot move: 3.411276 × 1.10 × 0.01 = 0.037524, or EUR 375,240 of extra hedge on the 10 million.
 
 ### Step 3: vega
 
-Differentiate in $\sigma$. Both $d$'s move, by different amounts this time, since $d_1 - d_2 = \sigma\sqrt{T}$ grows with $\sigma$. The identity turns the two $\varphi$ terms into $S e^{-r_f T}\varphi(d_1)$ times $\partial(d_1 - d_2)/\partial\sigma = \sqrt{T}$. So $\mathcal{V} = S e^{-r_f T}\varphi(d_1)\sqrt{T}$ = 0.412764 dollars per euro per unit of volatility. Per vol point, 0.004128; on the 10 million, USD 41,276. Vega is a dollar amount because the price is.
+Differentiate in $\sigma$. Both $d$'s move, by different amounts this time, since $d_1 - d_2 = \sigma\sqrt{T}$ grows with $\sigma$. The identity turns the two $\varphi$ terms into $S e^{-r_f T}\varphi(d_1)$ times $\partial(d_1 - d_2)/\partial\sigma = \sqrt{T}$. So $\mathcal{V} = S e^{-r_f T}\varphi(d_1)\sqrt{T}$ = 0.412764 dollars per euro per unit of volatility. Per vol point, 0.004128; on the 10 million, USD 41,276.
 
 ### Step 4: the two rhos, and why their signs differ
 
@@ -125,9 +138,9 @@ Differentiate in $r_d$. The dollar rate enters $d_1$ and $d_2$ equally, so by St
 
 Differentiate in $r_f$. Again only the explicit discount survives, this time on the euros: $\rho_f = -S T e^{-r_f T}N(d_1)$ = −0.639113. The call holder may receive a euro a year from now. A higher euro rate makes that future euro worth less today, so the call loses.
 
-So a currency option has one rho for each currency, and each rho belongs to one leg of the formula. Per basis point on the 10 million: USD +585.56 and USD −639.11.
+Each rho belongs to one leg of the formula. Per basis point on the 10 million: USD +585.56 and USD −639.11.
 
-Add them. $\rho_d + \rho_f = T\,(K e^{-r_d T}N(d_2) - S e^{-r_f T}N(d_1)) = -T C$ = −0.053556. When both rates rise together, the forward $S e^{(r_d - r_f)T}$ does not move, and the only effect left is heavier dollar discounting of the whole premium. That is the number a desk sees when the two central banks move in step: USD −53.56 per basis point, not the +585.56 of the dollar rho alone.
+Add them. $\rho_d + \rho_f = T\,(K e^{-r_d T}N(d_2) - S e^{-r_f T}N(d_1)) = -T C$ = −0.053556. When both rates rise together, the forward $S e^{(r_d - r_f)T}$ (the rate agreed today for exchange at expiry) does not move, and the only effect left is heavier dollar discounting of the whole premium. That is the number a desk sees when the two central banks move in step: USD −53.56 per basis point, not the +585.56 of the dollar rho alone.
 
 ### Step 5: theta
 
@@ -154,9 +167,13 @@ A bank in Frankfurt holds the same contract. For it, the contract is a put on do
 
 Now differentiate. Two different things happen.
 
-**Greeks that hold spot still convert at spot.** Vega, theta and both rhos move one input other than $S$, and $S$ is a fixed number while they are taken. So the euro figure is the dollar figure divided by 1.10: vega 0.375240, theta −0.027948, euro-rate rho −0.581012, dollar-rate rho 0.532325. The checks get each three ways: put formula, dollar figure over spot, and bumps of an independent euro-side price. The labels swap (for Frankfurt the euro rate is domestic), but the directions do not: a higher dollar rate still helps the holder and a higher euro rate still hurts, in whichever currency the loss is counted.
+**Greeks that hold spot still convert at spot.** Vega, theta and both rhos move one input other than $S$, and $S$ is a fixed number while they are taken. So the euro figure is the dollar figure divided by 1.10: vega 0.375240, theta −0.027948, euro-rate rho −0.581012, dollar-rate rho 0.532325.
 
-**Delta does not convert at spot.** Spot is the thing being moved, and the euro value $C/S$ contains spot twice: once inside $C$ and once in the division. By the quotient rule, $\partial(C/S)/\partial S = \Delta/S - C/S^2$. Setting the Frankfurt bank's total exposure to zero gives a hedge of $\Delta - C/S$ euros per euro of notional: 0.581012 − 0.048687 = 0.532325, or EUR 5,323,248 on the 10 million, against EUR 5,810,119 for the New York bank. The gap is the premium itself, counted in euros: the option's value is a sum of dollars, and a bank counting in euros must hedge that sum too. The same number falls out of the put formula's own delta, $e^{-r_d T}N(d_2)$ scaled by $K/S$. This is the **premium-adjusted delta**, and when each convention is used is [Four deltas for one option](04-fx-delta-conventions.md).
+The labels swap (for Frankfurt the euro rate is domestic), but the directions do not: a higher dollar rate still helps the holder and a higher euro rate still hurts, in whichever currency the loss is counted.
+
+**Delta does not convert at spot.** Spot is the thing being moved, and the euro value $C/S$ contains spot twice: once inside $C$ and once in the division. By the quotient rule, $\partial(C/S)/\partial S = \Delta/S - C/S^2$. Setting the Frankfurt bank's total exposure to zero gives a hedge of $\Delta - C/S$ euros per euro of notional: 0.581012 − 0.048687 = 0.532325, or EUR 5,323,248 on the 10 million, against EUR 5,810,119 for the New York bank.
+
+The gap is the premium itself, counted in euros: the option's value is a sum of dollars, and a bank counting in euros must hedge that sum too. The same number falls out of the put formula's own delta, $e^{-r_d T}N(d_2)$ scaled by $K/S$. This is the **premium-adjusted delta**, and when each convention is used is [Four deltas for one option](04-fx-delta-conventions.md).
 
 Gamma changes the same way, for the same reason; this card stops at delta.
 
@@ -183,7 +200,7 @@ House market: EURUSD spot 1.1000, strike 1.1000, USD rate 5%, EUR rate 3%, volat
 | both rates up 1 bp | $-T \times 0.053556$ per unit | USD −53.56 |
 | **hedge counted in euros** | $0.581012 - 0.053556/1.1$ | **0.532325 → EUR 5,323,248** |
 
-In the world: a New York bank short this option buys EUR 5,810,119 today, loses USD 41,276 if implied volatility rises one point, earns USD 842 a day if nothing moves, and gains USD 53.56 per basis point if both central banks hike together.
+In the world: a New York bank that sold this option buys EUR 5,810,119 today, loses USD 41,276 if implied volatility rises one point, earns USD 842 a day if nothing moves, and gains USD 53.56 per basis point if both central banks hike together.
 
 ### What breaks if you drop a piece
 
@@ -232,7 +249,7 @@ maturity, rate      rho per bp, USD, EUR 10m (one block = USD 100)
 5.00 yr, euro       ██████████████████████████████████ -3,370
 ```
 
-Each rho carries a factor $T$, so both grow with maturity. The euro rho grows faster here because the at-the-money call's delta rises with maturity when the dollar rate is the higher one: more euros at stake, more euro rate risk. On a three-month option rates barely register; on a five-year option they are among the largest risks on the sheet.
+Each rho carries a factor $T$, so both grow with maturity. The euro rho grows faster here because the at-the-money call's delta (strike equal to spot) rises with maturity when the dollar rate is the higher one: more euros at stake, more euro rate risk. On a three-month option rates barely register; on a five-year option they are among the largest risks on the sheet.
 
 ---
 
@@ -614,7 +631,391 @@ bars: rho per bp on EUR 10m, USD, by maturity, spot and strike 1.10
 ALL CHECKS PASS
 ```
 
-The two outputs are identical to the printed precision.
+### Lean
+
+Lean proves every slope formula, the bell-curve identity and the euro hedge, for positive spot, strike, volatility and time, and any rates.
+
+- Take $S$, $K$, $\sigma$ and $T$ all positive, and any rates $r_d$ and $r_f$. Then delta, the slope of $C$ in spot, is $e^{-r_f T}N(d_1)$.
+- Take the same inputs. Then the dollar rho is $K\,T\,e^{-r_d T}N(d_2)$, and it is positive.
+- Take the same inputs. Then the euro rho is $-\,S\,T\,e^{-r_f T}N(d_1)$, and it is negative.
+- Take the same inputs. Then gamma, the slope of delta in spot, is $e^{-r_f T}\varphi(d_1)/(S\sigma\sqrt{T})$.
+- Take the same inputs. Then vega, the slope of $C$ in $\sigma$, is $S\,e^{-r_f T}\varphi(d_1)\sqrt{T}$.
+- Take the same inputs. Then the slope of $C$ in $T$ is minus $\Theta$, with $\Theta$ as in The formula.
+- Take the same inputs. Then $S\,e^{-r_f T}\varphi(d_1) = K\,e^{-r_d T}\varphi(d_2)$, the identity of Step 1.
+- Take the same inputs. Then the euro value $C/S$ has slope $\Delta/S - C/S^2$ in spot.
+- Take the same inputs. Then $\Delta - C/S$, the hedge counted in euros, equals $(K/S)\,e^{-r_d T}N(d_2)$.
+- Take the same inputs. Then the premium in euros, $C/S$, is positive, so that hedge is smaller than $\Delta$.
+- Take the same inputs. Then raising both rates by the same step moves $C$ at the slope $-T C$.
+- Take the house market. Then $d_1$ is exactly 0.25 and $d_2$ exactly 0.15.
+- The printed sums are exact: 0.585557 − 0.639113 = −0.053556 and 0.581012 − 0.048687 = 0.532325.
+
+Decimal values of $N$ and $\varphi$, theta from the pricing equation, the euro-side Greeks and the charts are left to Python and Rust.
+
+```lean
+-- The Greeks of a currency option: in the Garman-Kohlhagen model the call's slopes in spot, the dollar rate and the euro rate are e^(-r_f T) N(d₁), +T K e^(-r_d T) N(d₂) and -T S e^(-r_f T) N(d₁), a bank counting in euros hedges with Δ - C/S euros, gamma and vega are the bell-curve height at d₁ scaled, and moving both rates together changes the price at -T C.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open Real MeasureTheory ProbabilityTheory
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- `φ(x)`: the bell curve's height at `x`, the standard normal density. -/
+noncomputable def stdNormalPDF (x : ℝ) : ℝ := gaussianPDFReal 0 1 x
+
+/-- The card's `d₁ = (ln(S/K) + (r_d - r_f + σ²/2) T) / (σ√T)`; then `d₂ = d₁ - σ√T`.
+Spot `S` and strike `K` in dollars per euro, dollar rate `rd`, euro rate `rf`, volatility `σ`,
+years to expiry `T`. -/
+noncomputable def gkD1 (S K rd rf σ T : ℝ) : ℝ :=
+  (log (S / K) + (rd - rf + σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- The Garman-Kohlhagen EUR call / USD put, in dollars per euro of notional:
+`C = S e^(-r_f T) N(d₁) - K e^(-r_d T) N(d₂)`. -/
+noncomputable def gkCall (S K rd rf σ T : ℝ) : ℝ :=
+  S * exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T)
+    - K * exp (-rd * T) * stdNormalCDF (gkD1 S K rd rf σ T - σ * √T)
+
+lemma stdNormalPDF_eq (x : ℝ) : stdNormalPDF x = (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := by
+  simp [stdNormalPDF, gaussianPDFReal]
+
+lemma stdNormalPDF_pos (x : ℝ) : 0 < stdNormalPDF x :=
+  gaussianPDFReal_pos 0 1 x one_ne_zero
+
+lemma continuous_stdNormalPDF : Continuous stdNormalPDF := by
+  have : stdNormalPDF = fun x => (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := funext stdNormalPDF_eq
+  rw [this]; fun_prop
+
+lemma stdNormalCDF_eq_integral (x : ℝ) : stdNormalCDF x = ∫ t in Set.Iic x, stdNormalPDF t := by
+  unfold stdNormalCDF stdNormalPDF
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (integral_nonneg fun _ => gaussianPDFReal_nonneg _ _ _)]
+
+lemma stdNormalCDF_eq_add (x : ℝ) :
+    stdNormalCDF x = stdNormalCDF 0 + ∫ t in (0 : ℝ)..x, stdNormalPDF t := by
+  have hi := intervalIntegral.integral_Iic_sub_Iic (f := stdNormalPDF) (a := 0) (b := x)
+    (μ := volume) (integrable_gaussianPDFReal 0 1).integrableOn
+    (integrable_gaussianPDFReal 0 1).integrableOn
+  rw [stdNormalCDF_eq_integral, stdNormalCDF_eq_integral]
+  linarith
+
+lemma hasDerivAt_stdNormalCDF (x : ℝ) : HasDerivAt stdNormalCDF (stdNormalPDF x) x := by
+  have h := intervalIntegral.integral_hasDerivAt_right
+    (continuous_stdNormalPDF.intervalIntegrable 0 x)
+    continuous_stdNormalPDF.aestronglyMeasurable.stronglyMeasurableAtFilter
+    continuous_stdNormalPDF.continuousAt
+  have h2 := h.const_add (stdNormalCDF 0)
+  have : stdNormalCDF = fun x => stdNormalCDF 0 + ∫ t in (0 : ℝ)..x, stdNormalPDF t :=
+    funext stdNormalCDF_eq_add
+  rw [this]; exact h2
+
+lemma stdNormalCDF_strictMono : StrictMono stdNormalCDF :=
+  strictMono_of_hasDerivAt_pos hasDerivAt_stdNormalCDF stdNormalPDF_pos
+
+lemma stdNormalCDF_pos (x : ℝ) : 0 < stdNormalCDF x :=
+  lt_of_le_of_lt (cdf_nonneg _ (x - 1)) (stdNormalCDF_strictMono (by linarith))
+
+lemma stdNormalPDF_shift (x u : ℝ) :
+    exp (u * x + u ^ 2 / 2) * stdNormalPDF (x + u) = stdNormalPDF x := by
+  rw [stdNormalPDF_eq, stdNormalPDF_eq, mul_left_comm, ← exp_add]
+  congr 2; ring
+
+/-- The call-price positivity core: `e^(u x + u²/2) N(x + u) > N(x)` for `u > 0`. -/
+lemma shifted_cdf_gap_pos (u : ℝ) (hu : 0 < u) (x : ℝ) :
+    0 < exp (u * x + u ^ 2 / 2) * stdNormalCDF (x + u) - stdNormalCDF x := by
+  set G : ℝ → ℝ := fun y => exp (u * y + u ^ 2 / 2) * stdNormalCDF (y + u) - stdNormalCDF y
+    with hG
+  have hderiv : ∀ y, HasDerivAt G (u * exp (u * y + u ^ 2 / 2) * stdNormalCDF (y + u)) y := by
+    intro y
+    have h1 : HasDerivAt (fun y => exp (u * y + u ^ 2 / 2)) (exp (u * y + u ^ 2 / 2) * u) y := by
+      have := (((hasDerivAt_id y).const_mul u).add_const (u ^ 2 / 2)).exp
+      simpa using this
+    have h2 : HasDerivAt (fun y => stdNormalCDF (y + u)) (stdNormalPDF (y + u)) y := by
+      convert (hasDerivAt_stdNormalCDF (y + u)).comp y ((hasDerivAt_id y).add_const u) using 1
+      · rfl
+      · simp
+    have h3 := (h1.mul h2).sub (hasDerivAt_stdNormalCDF y)
+    refine h3.congr_deriv ?_
+    have := stdNormalPDF_shift y u
+    linear_combination this
+  have hmono : StrictMono G :=
+    strictMono_of_hasDerivAt_pos hderiv fun y => by
+      have := stdNormalCDF_pos (y + u); positivity
+  have hlim : Filter.Tendsto G Filter.atBot (nhds 0) := by
+    have he : Filter.Tendsto (fun y => exp (u * y + u ^ 2 / 2)) Filter.atBot (nhds 0) := by
+      refine tendsto_exp_atBot.comp ?_
+      exact Filter.tendsto_atBot_add_const_right _ _
+        (Filter.Tendsto.const_mul_atBot hu Filter.tendsto_id)
+    have hp : Filter.Tendsto (fun y => exp (u * y + u ^ 2 / 2) * stdNormalCDF (y + u))
+        Filter.atBot (nhds 0) := by
+      refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds he ?_ ?_
+      · intro y; have := stdNormalCDF_pos (y + u); positivity
+      · intro y
+        have h1 : stdNormalCDF (y + u) ≤ 1 := cdf_le_one _ _
+        have h2 := exp_pos (u * y + u ^ 2 / 2)
+        simpa using mul_le_mul_of_nonneg_left h1 h2.le
+    have hN : Filter.Tendsto stdNormalCDF Filter.atBot (nhds 0) := tendsto_cdf_atBot _
+    simpa using hp.sub hN
+  have h0 : 0 ≤ G (x - 1) := hmono.monotone.le_of_tendsto hlim (x - 1)
+  have := hmono (show x - 1 < x by linarith)
+  exact lt_of_le_of_lt h0 this
+
+/-- The identity behind the Greeks: `S e^(-r_f T) φ(d₁) = K e^(-r_d T) φ(d₂)`. -/
+lemma gk_pdf_identity (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    S * exp (-rf * T) * stdNormalPDF (gkD1 S K rd rf σ T)
+      = K * exp (-rd * T) * stdNormalPDF (gkD1 S K rd rf σ T - σ * √T) := by
+  set d := gkD1 S K rd rf σ T with hd
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hu : σ * √T ≠ 0 := by positivity
+  have hdu : d * (σ * √T) = log (S / K) + (rd - rf + σ ^ 2 / 2) * T := by
+    rw [hd, gkD1]; field_simp
+  have hexp : -(d - σ * √T) ^ 2 / 2 = -d ^ 2 / 2 + (log (S / K) + (rd - rf) * T) := by
+    linear_combination hdu - (σ ^ 2 / 2) * hsq
+  have hlog : exp (log (S / K)) = S / K := exp_log (by positivity)
+  have hrt : exp (-rd * T) * exp ((rd - rf) * T) = exp (-rf * T) := by
+    rw [← exp_add]; ring_nf
+  rw [stdNormalPDF_eq, stdNormalPDF_eq, hexp, exp_add, exp_add, hlog, ← hrt]
+  field_simp
+
+/-- Product and chain rule for `a N(d) - b N(d - u)` when `a φ(d) = b φ(d - u)`: the terms in the
+slope of `d` cancel, leaving `a' N(d) - b' N(d - u) + a φ(d) u'`. -/
+lemma gk_hasDerivAt_generic {a b d u : ℝ → ℝ} {p a' b' u' : ℝ} (ha : HasDerivAt a a' p)
+    (hb : HasDerivAt b b' p) (hd : DifferentiableAt ℝ d p) (hu : HasDerivAt u u' p)
+    (hid : a p * stdNormalPDF (d p) = b p * stdNormalPDF (d p - u p)) :
+    HasDerivAt (fun q => a q * stdNormalCDF (d q) - b q * stdNormalCDF (d q - u q))
+      (a' * stdNormalCDF (d p) - b' * stdNormalCDF (d p - u p) + a p * stdNormalPDF (d p) * u')
+      p := by
+  obtain ⟨D, hD⟩ : ∃ D, HasDerivAt d D p := ⟨_, hd.hasDerivAt⟩
+  have h1 := ha.mul ((hasDerivAt_stdNormalCDF (d p)).comp p hD)
+  have h2 := hb.mul ((hasDerivAt_stdNormalCDF (d p - u p)).comp p (hD.sub hu))
+  convert h1.sub h2 using 1
+  · rfl
+  · simp only [Function.comp_apply, Pi.sub_apply]
+    linear_combination (u' - D) * hid
+
+lemma gkCall_pos (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    0 < gkCall S K rd rf σ T := by
+  set d := gkD1 S K rd rf σ T with hd
+  set u := σ * √T with hu
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hupos : 0 < u := by positivity
+  have hid := gk_pdf_identity S K rd rf σ T hS hK hσ hT
+  rw [← hd, ← hu] at hid
+  -- `S e^(-r_f T) = K e^(-r_d T) e^(u d₂ + u²/2)`
+  have hshift := stdNormalPDF_shift (d - u) u
+  rw [sub_add_cancel] at hshift
+  have hA : S * exp (-rf * T) = K * exp (-rd * T) * exp (u * (d - u) + u ^ 2 / 2) := by
+    have hp := stdNormalPDF_pos d
+    apply mul_right_cancel₀ hp.ne'
+    rw [hid, ← hshift]; ring
+  have hgap := shifted_cdf_gap_pos u hupos (d - u)
+  rw [sub_add_cancel] at hgap
+  have : gkCall S K rd rf σ T
+      = K * exp (-rd * T) * (exp (u * (d - u) + u ^ 2 / 2) * stdNormalCDF d - stdNormalCDF (d - u)) := by
+    rw [gkCall, ← hd, ← hu, hA]; ring
+  rw [this]; positivity
+
+lemma gkD1_hasDerivAt_spot (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ)
+    (hT : 0 < T) :
+    HasDerivAt (fun x => gkD1 x K rd rf σ T) (1 / (S * σ * √T)) S := by
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have h := ((((hasDerivAt_id S).div_const K).log (by simp only [id]; positivity)).add_const
+    ((rd - rf + σ ^ 2 / 2) * T)).div_const (σ * √T)
+  refine h.congr_deriv ?_
+  simp only [id]
+  field_simp
+
+lemma gk_delta (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => gkCall x K rd rf σ T)
+      (exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T)) S := by
+  have h := gk_hasDerivAt_generic (a := fun x => x * exp (-rf * T))
+    (b := fun _ => K * exp (-rd * T)) (d := fun x => gkD1 x K rd rf σ T)
+    (u := fun _ => σ * √T) (u' := 0) ((hasDerivAt_id S).mul_const _) (hasDerivAt_const _ _)
+    (gkD1_hasDerivAt_spot S K rd rf σ T hS hK hσ hT).differentiableAt (hasDerivAt_const _ _)
+    (gk_pdf_identity S K rd rf σ T hS hK hσ hT)
+  refine h.congr_deriv ?_
+  simp
+
+#print axioms stdNormalPDF_eq
+#print axioms stdNormalPDF_pos
+#print axioms continuous_stdNormalPDF
+#print axioms stdNormalCDF_eq_integral
+#print axioms stdNormalCDF_eq_add
+#print axioms hasDerivAt_stdNormalCDF
+#print axioms stdNormalCDF_strictMono
+#print axioms stdNormalCDF_pos
+#print axioms stdNormalPDF_shift
+#print axioms shifted_cdf_gap_pos
+#print axioms gk_pdf_identity
+#print axioms gk_hasDerivAt_generic
+#print axioms gkCall_pos
+#print axioms gkD1_hasDerivAt_spot
+#print axioms gk_delta
+
+/-- **Delta in euros, two rhos of opposite sign, and the euro-counted hedge** (the card's main
+claim; Why it works, Steps 2, 4 and 6). In the Garman-Kohlhagen model (one constant volatility
+`σ > 0`, flat constant rates `rd` and `rf`, European exercise), with spot `S > 0`, strike `K > 0`
+and `T > 0` years left, each input moved alone:
+* the call's slope in spot is `Δ = e^(-r_f T) N(d₁)`;
+* its slope in the dollar rate is `ρ_d = T K e^(-r_d T) N(d₂)`, which is positive;
+* its slope in the euro rate is `ρ_f = -T S e^(-r_f T) N(d₁)`, which is negative;
+* the same option valued in euros, `C/S`, has slope `Δ/S - C/S²` in spot, so a bank counting in
+  euros hedges with `Δ - C/S` euros per euro of notional, which equals `(K/S) e^(-r_d T) N(d₂)`
+  and is fewer than `Δ` by exactly the premium in euros, `C/S > 0`. -/
+theorem gk_delta_two_rhos_opposite_signs_and_euro_counted_hedge
+    (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => gkCall x K rd rf σ T)
+        (exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T)) S ∧
+      HasDerivAt (fun x => gkCall S K x rf σ T)
+        (T * K * exp (-rd * T) * stdNormalCDF (gkD1 S K rd rf σ T - σ * √T)) rd ∧
+      HasDerivAt (fun y => gkCall S K rd y σ T)
+        (-(T * S * exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T))) rf ∧
+      0 < T * K * exp (-rd * T) * stdNormalCDF (gkD1 S K rd rf σ T - σ * √T) ∧
+      -(T * S * exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T)) < 0 ∧
+      HasDerivAt (fun x => gkCall x K rd rf σ T / x)
+        (exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T) / S
+          - gkCall S K rd rf σ T / S ^ 2) S ∧
+      exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T) - gkCall S K rd rf σ T / S
+        = K / S * exp (-rd * T) * stdNormalCDF (gkD1 S K rd rf σ T - σ * √T) ∧
+      0 < gkCall S K rd rf σ T / S := by
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hid := gk_pdf_identity S K rd rf σ T hS hK hσ hT
+  have hΔ := gk_delta S K rd rf σ T hS hK hσ hT
+  have hN1 := stdNormalCDF_pos (gkD1 S K rd rf σ T)
+  have hN2 := stdNormalCDF_pos (gkD1 S K rd rf σ T - σ * √T)
+  refine ⟨hΔ, ?_, ?_, by positivity, ?_, ?_, ?_, div_pos (gkCall_pos S K rd rf σ T hS hK hσ hT) hS⟩
+  · have h := gk_hasDerivAt_generic (a := fun _ => S * exp (-rf * T))
+      (b := fun x => K * exp (-x * T)) (d := fun x => gkD1 S K x rf σ T)
+      (u := fun _ => σ * √T) (u' := 0) (hasDerivAt_const _ _)
+      ((((hasDerivAt_id rd).neg.mul_const T).exp).const_mul K)
+      (by unfold gkD1; fun_prop (disch := positivity)) (hasDerivAt_const _ _) hid
+    refine h.congr_deriv ?_
+    simp only [Pi.neg_apply, id]; ring
+  · have h := gk_hasDerivAt_generic (a := fun y => S * exp (-y * T))
+      (b := fun _ => K * exp (-rd * T)) (d := fun y => gkD1 S K rd y σ T)
+      (u := fun _ => σ * √T) (u' := 0)
+      ((((hasDerivAt_id rf).neg.mul_const T).exp).const_mul S) (hasDerivAt_const _ _)
+      (by unfold gkD1; fun_prop (disch := positivity)) (hasDerivAt_const _ _) hid
+    refine h.congr_deriv ?_
+    simp only [Pi.neg_apply, id]; ring
+  · have : 0 < T * S * exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T) := by positivity
+    linarith
+  · refine (hΔ.div (hasDerivAt_id S) hS.ne').congr_deriv ?_
+    simp only [id]
+    field_simp
+  · unfold gkCall
+    field_simp
+    ring
+
+/-- **Gamma, vega and theta** (The formula; Why it works, Steps 1, 2, 3 and 5). Under the same
+terms: the slope of delta in spot is `Γ = e^(-r_f T) φ(d₁) / (S σ √T)`; the call's slope in the
+volatility is `𝒱 = S e^(-r_f T) φ(d₁) √T`; its slope in the years to expiry is minus theta,
+where `Θ = -S e^(-r_f T) φ(d₁) σ / (2√T) + r_f S e^(-r_f T) N(d₁) - r_d K e^(-r_d T) N(d₂)`;
+and the identity behind all three, `S e^(-r_f T) φ(d₁) = K e^(-r_d T) φ(d₂)`, holds. -/
+theorem gk_gamma_vega_theta
+    (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (deriv fun x => gkCall x K rd rf σ T)
+        (exp (-rf * T) * stdNormalPDF (gkD1 S K rd rf σ T) / (S * σ * √T)) S ∧
+      HasDerivAt (fun v => gkCall S K rd rf v T)
+        (S * exp (-rf * T) * stdNormalPDF (gkD1 S K rd rf σ T) * √T) σ ∧
+      HasDerivAt (fun t => gkCall S K rd rf σ t)
+        (-(-(S * exp (-rf * T) * stdNormalPDF (gkD1 S K rd rf σ T) * σ / (2 * √T))
+            + rf * S * exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T)
+            - rd * K * exp (-rd * T) * stdNormalCDF (gkD1 S K rd rf σ T - σ * √T))) T ∧
+      S * exp (-rf * T) * stdNormalPDF (gkD1 S K rd rf σ T)
+        = K * exp (-rd * T) * stdNormalPDF (gkD1 S K rd rf σ T - σ * √T) := by
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hid := gk_pdf_identity S K rd rf σ T hS hK hσ hT
+  refine ⟨?_, ?_, ?_, hid⟩
+  · have hev : (deriv fun x => gkCall x K rd rf σ T)
+        =ᶠ[nhds S] fun x => exp (-rf * T) * stdNormalCDF (gkD1 x K rd rf σ T) :=
+      (eventually_gt_nhds hS).mono fun x hx => (gk_delta x K rd rf σ T hx hK hσ hT).deriv
+    have h := ((hasDerivAt_stdNormalCDF (gkD1 S K rd rf σ T)).comp S
+      (gkD1_hasDerivAt_spot S K rd rf σ T hS hK hσ hT)).const_mul (exp (-rf * T))
+    refine (h.congr_of_eventuallyEq hev).congr_deriv ?_
+    field_simp
+  · have h := gk_hasDerivAt_generic (a := fun _ => S * exp (-rf * T))
+      (b := fun _ => K * exp (-rd * T)) (d := fun v => gkD1 S K rd rf v T)
+      (u := fun v => v * √T) (hasDerivAt_const _ _) (hasDerivAt_const _ _)
+      (by unfold gkD1; fun_prop (disch := positivity)) ((hasDerivAt_id σ).mul_const _) hid
+    refine h.congr_deriv ?_
+    ring
+  · have h := gk_hasDerivAt_generic (a := fun t => S * exp (-rf * t))
+      (b := fun t => K * exp (-rd * t)) (d := fun t => gkD1 S K rd rf σ t)
+      (u := fun t => σ * √t)
+      ((((hasDerivAt_id T).const_mul (-rf)).exp).const_mul S)
+      ((((hasDerivAt_id T).const_mul (-rd)).exp).const_mul K)
+      (by unfold gkD1; fun_prop (disch := positivity))
+      ((Real.hasDerivAt_sqrt hT.ne').const_mul σ) hid
+    refine h.congr_deriv ?_
+    simp only [id]
+    field_simp
+    ring
+
+/-- **Both rates up together** (Why it works, Step 4, last paragraph). Under the same terms,
+raising the dollar rate and the euro rate by the same step `h` moves the call at the slope
+`ρ_d + ρ_f = -T C`: minus the years to expiry times the call's own price. -/
+theorem gk_parallel_rate_move_slope_eq_neg_time_mul_price
+    (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun h => gkCall S K (rd + h) (rf + h) σ T)
+      (-(T * gkCall S K rd rf σ T)) 0 := by
+  have hid := gk_pdf_identity S K rd rf σ T hS hK hσ hT
+  have h := gk_hasDerivAt_generic (a := fun h => S * exp (-(rf + h) * T))
+    (b := fun h => K * exp (-(rd + h) * T)) (d := fun h => gkD1 S K (rd + h) (rf + h) σ T)
+    (u := fun _ => σ * √T) (u' := 0)
+    (((((hasDerivAt_id (0 : ℝ)).const_add rf).neg.mul_const T).exp).const_mul S)
+    (((((hasDerivAt_id (0 : ℝ)).const_add rd).neg.mul_const T).exp).const_mul K)
+    (by unfold gkD1; fun_prop (disch := positivity)) (hasDerivAt_const _ _)
+    (by simpa only [add_zero] using hid)
+  refine h.congr_deriv ?_
+  simp only [add_zero, id, Pi.neg_apply, gkCall]
+  ring
+
+-- House market: S = K = 1.10, r_d = 5%, r_f = 3%, σ = 10%, T = 1 year.
+-- d₁ = (0 + (0.05 - 0.03 + 0.005) · 1) / 0.10 = 0.25.
+example : gkD1 (11 / 10) (11 / 10) (5 / 100) (3 / 100) (1 / 10) 1 = 1 / 4 := by
+  unfold gkD1; norm_num
+-- d₂ = 0.25 - 0.10 = 0.15.
+example : gkD1 (11 / 10) (11 / 10) (5 / 100) (3 / 100) (1 / 10) 1 - 1 / 10 * √1 = 3 / 20 := by
+  unfold gkD1; norm_num
+-- The printed rhos add to minus the printed premium (T = 1): 0.585557 - 0.639113 = -0.053556.
+example : (585557 : ℤ) - 639113 = -53556 := by decide
+-- The euro-counted hedge: 0.581012 - 0.048687 = 0.532325.
+example : (581012 : ℕ) - 48687 = 532325 := by decide
+
+#print axioms gk_delta_two_rhos_opposite_signs_and_euro_counted_hedge
+#print axioms gk_gamma_vega_theta
+#print axioms gk_parallel_rate_move_slope_eq_neg_time_mul_price
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stdNormalPDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalPDF_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_stdNormalPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_eq_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_stdNormalCDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalPDF_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shifted_cdf_gap_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gk_pdf_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gk_hasDerivAt_generic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gkCall_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gkD1_hasDerivAt_spot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gk_delta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gk_delta_two_rhos_opposite_signs_and_euro_counted_hedge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gk_gamma_vega_theta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gk_parallel_rate_move_slope_eq_neg_time_mul_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -638,7 +1039,7 @@ The two outputs are identical to the printed precision.
 
 ## Where you meet it in real life
 
-- **An FX options desk's risk sheet.** Every morning each position is summarised as delta in the foreign currency, gamma per 1 percent, vega per vol point, theta per day and a rho per currency, then summed across the book. A pair's two rhos are listed separately because two central banks set them.
+- **An FX options desk's risk sheet.** Every morning each position is summarized as delta in the foreign currency, gamma per 1 percent, vega per vol point, theta per day and a rho per currency, then summed across the book. A pair's two rhos are listed separately because two central banks set them.
 - **Corporate hedging.** A European exporter buying a dollar put to protect its dollar receipts counts in euros. Its bank's quote uses the premium-adjusted delta for exactly the reason of Step 6: [Four deltas for one option](04-fx-delta-conventions.md).
 - **Volatility trading.** Vega in dollars per point is how a trader sizes a view on implied volatility; turning a price back into a volatility is [Implied vol for a currency option](07-fx-implied-volatility.md).
 
@@ -664,7 +1065,7 @@ The two outputs are identical to the printed precision.
 - [Four deltas for one option](04-fx-delta-conventions.md): spot, forward and premium-adjusted deltas, and which one a quote means.
 - [Implied vol for a currency option](07-fx-implied-volatility.md): solving for volatility, with vega as the step size.
 - [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md): the second-order Greeks that price the smile.
-- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): an option whose price is close to a delta, and whose Greeks are sharper.
+- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): a fixed payout above the strike; an option whose price is close to a delta, and whose Greeks are sharper.
 - [Greeks at the wall](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md): Greeks that jump at a barrier.
 - [Hedging a quanto](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): Greeks when the payoff is paid in a third currency.
 

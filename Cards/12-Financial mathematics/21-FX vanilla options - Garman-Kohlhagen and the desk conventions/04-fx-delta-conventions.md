@@ -6,9 +6,9 @@
 
 ## General Overview
 
-A dealer sells a one-year option on EUR 10,000,000. It gives the buyer the right to buy those euros at 1.1000 dollars each. Today one euro costs 1.1000 dollars. Dollar interest is 5 percent a year, euro interest 3 percent, and the market prices the euro's jumpiness (its volatility) at 10 percent a year. This is the shelf's house market, priced on [Garman-Kohlhagen](01-garman-kohlhagen.md) at 0.053556 dollars per euro of notional (the amount the contract covers): USD 535,558 in all.
+A dealer sells a one-year option on EUR 10,000,000. It gives the buyer the right to buy those euros at 1.1000 dollars each. Today one euro costs 1.1000 dollars. Dollar interest is 5 percent a year, euro interest 3 percent, and the market prices the euro's jumpiness (its volatility) at 10 percent a year. This is the shelf's house market, EURUSD (the euro priced in dollars), priced on [Garman-Kohlhagen](01-garman-kohlhagen.md) at 0.053556 dollars per euro of notional (the amount the contract covers): USD 535,558 in all.
 
-Having sold it, the dealer buys euros so that a small move in the exchange rate leaves the book flat. How many? Four answers are all correct, each for a different question:
+Having sold it, the dealer buys euros so that a small move in the exchange rate leaves the book flat (the dealer's positions, taken together, keep their value). How many? Four answers are all correct, each for a different question:
 
 ```
 Euros to buy against the sold EUR call, EUR 10,000,000 notional (one █ = EUR 200,000)
@@ -18,7 +18,7 @@ premium-adj. spot   ████████████████████
 premium-adj. fwd    ███████████████████████████        5,485,365
 ```
 
-The top two differ in *what the dealer hedges with*: euros bought today, or euros bought for delivery in a year (a forward contract). The bottom two differ in *what currency the premium arrived in*: if the buyer paid in euros, the dealer already holds EUR 486,871 of them, and the hedge shrinks by exactly that much.
+The top two differ in *what the dealer hedges with*: euros bought today, or euros bought for delivery in a year (a forward contract). The bottom two differ in *what currency the premium arrived in*: if the buyer paid in euros, the dealer already holds EUR 486,871 of them, and the spot hedge shrinks by exactly that much.
 
 The number matters beyond hedging. Currency dealers quote options by delta, not by strike: "25-delta call at such-and-such volatility." The label "25 delta" picks a strike. For this market the four conventions put that strike at 1.20368, 1.20654, 1.19782 and 1.20082. Measured from the spot-delta reading, the others sit 28.6 pips higher, 58.6 pips lower and 28.6 pips lower (a pip is 0.0001 in the exchange rate), for the same two words.
 
@@ -39,6 +39,8 @@ $$\Delta_S^{\text{pa}} = \Delta_S - \frac{C}{S} = \frac{K}{S}\,e^{-r_d T}N(d_2),
 **Read it aloud:** the spot delta is $N(d_1)$ euros, shrunk by a year of euro interest; the forward delta drops the shrinking; the premium-adjusted delta takes away the premium, counted in euros, and what remains is the cash leg of the option measured in euros.
 
 For a put (the right to sell euros at the strike) replace $N(d_1)$ by $-N(-d_1)$ and $N(d_2)$ by $-N(-d_2)$. The formulas are otherwise unchanged.
+
+A call is *out of the money* when its strike is above today's rate, so exercising now would lose money; a put is out of the money when its strike is below. The opposite is *in the money*.
 
 | Symbol | Plain meaning | In our example | Push it up and the deltas… |
 | --- | --- | --- | --- |
@@ -164,7 +166,7 @@ The quote is where the label bites. Ask each convention for the 25-delta call st
 | premium-adjusted spot | 1.19782 | -58.6 | 1.05179 | -50.0 |
 | premium-adjusted forward | 1.20082 | -28.6 | 1.04941 | -73.9 |
 
-Every strike in the table was found by bisection and then checked by repricing: nudge the spot, reprice by numerical integration, and the measured delta comes back as 0.250000 in that convention (printed for the calls; the puts pass the same test inside the asserts).
+Every strike in the table was found by bisection (halving a range known to hold the strike until it is tiny) and then checked by repricing: nudge the spot, reprice by numerical integration, and the measured delta comes back as 0.250000 in that convention (printed for the calls; the puts pass the same test inside the asserts).
 
 The adjustment always pulls strikes down. A call's adjusted delta is smaller, so reaching 25 needs a less out-of-the-money call. A put's adjusted delta is larger in size, so reaching 25 needs a more out-of-the-money put. Both move left.
 
@@ -193,7 +195,13 @@ At one month the four sit between 0.4930 and 0.5058. At five years the spot and 
 
 ## Code, from first principles, and it actually runs
 
-The code prices the house call, then reaches every delta by three independent roads. Road 1 is the closed forms, with a bell-curve area the code builds itself (Python sums its series; Rust integrates the bell-curve height by Simpson's rule). Road 2 never uses a delta formula: it prices the option by Simpson's rule over the payoff, nudges the spot one hundred-thousandth each way, and reads each delta off the change, dividing by the forward contract's own nudged value for the forward versions. Road 3 is a Monte Carlo of 400,000 paths from a hand-written random number generator, averaging "euro received if exercised" and "dollars paid if exercised, in euros", which are the spot and adjusted deltas by Step 4. Strikes come by bisection, closed forms where they exist, and a repricing check. The peak of the adjusted delta comes from its equation and from a direct search.
+The code prices the house call, then reaches every delta by three independent roads.
+
+- Road 1 is the closed forms, with a bell-curve area the code builds itself (Python sums its series; Rust integrates the bell-curve height by Simpson's rule).
+- Road 2 never uses a delta formula: it prices the option by Simpson's rule over the payoff, nudges the spot one hundred-thousandth each way, and reads each delta off the change, dividing by the forward contract's own nudged value for the forward versions.
+- Road 3 is a Monte Carlo of 400,000 paths from a hand-written random number generator, averaging "euro received if exercised" and "dollars paid if exercised, in euros", which are the spot and adjusted deltas by Step 4.
+
+Strikes come by bisection, closed forms where they exist, and a repricing check. The peak of the adjusted delta comes from its equation and from a direct search.
 
 ### Python
 
@@ -579,6 +587,162 @@ xychart-beta
 
 Orange: spot delta. Green: forward delta, which starts at 1.00 for deep in-the-money strikes. Dark blue: premium-adjusted spot delta, which peaks near strike 0.95 at 0.78 and falls away to the left. The premium-adjusted forward delta, left off for clarity, is the dark blue line divided by 0.970446. On the right, where the 25-delta strikes live, the three lines are close; the few hundredths between them are the 28.6 to 58.6 pips of the strike table.
 
+### Lean
+
+Lean proves the four delta formulas and the rules of Steps 2 and 3, for every positive spot, strike, volatility and time.
+
+- Suppose $S$, $K$, $\sigma$ and $T$ are all positive, and $r_d$, $r_f$ are any fixed rates. Then $\Delta_F = \Delta_S / e^{-r_f T} = N(d_1)$, the spot delta counted in forward contracts.
+- Take the same conditions. Then the premium-adjusted spot delta, $\Delta_S - C/S$, equals $\frac{K}{S}e^{-r_d T}N(d_2)$.
+- Take the same conditions. Then dividing by $e^{-r_f T}$ gives the premium-adjusted forward delta, $\frac{K}{F}N(d_2)$.
+- Take the same conditions, for a put. Then its spot delta less $P/S$ equals $-\frac{K}{S}e^{-r_d T}N(-d_2)$.
+- Take any $d_1$. Then $N(d_1) - (-N(-d_1)) = 1$: a call's and a put's forward deltas add to one in size.
+- Take any premium $C$ that has a slope in the spot at $S$, with $S$ not zero. Then $S\,\frac{\partial}{\partial S}(C/S) = \frac{\partial C}{\partial S} - \frac{C}{S}$.
+- At the house inputs, exact arithmetic gives $d_1 = 0.25$ and $d_2 = 0.15$.
+- Step 3's subtraction checks: $0.581012 - 0.048687 = 0.532325$.
+- The hedge gaps check: 486,871 euros of premium, and 176,944 euros too many with the forward delta.
+- The pip gaps of the 25-delta call strikes check, and those of the first two put strikes.
+
+Decimal values, strikes, the Step 5 peak, and the spot delta as the price's slope are left to the Python and Rust checks.
+
+```lean
+-- Four deltas for one option: in the Garman-Kohlhagen model the premium-adjusted delta (spot delta less the premium in euros) equals the cash leg (K/S) e^(-r_d T) N(d₂), its forward version is (K/F) N(d₂), the forward delta is N(d₁), a call's and a put's forward deltas add to one in size, and the premium-adjusted delta is S times the slope of the option's euro value C/S.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.Calculus.Deriv.Inv
+
+open Real MeasureTheory ProbabilityTheory
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- The card's `d₁ = (ln(S/K) + (r_d - r_f + σ²/2) T) / (σ√T)`; then `d₂ = d₁ - σ√T`. -/
+noncomputable def gkD1 (S K rd rf σ T : ℝ) : ℝ :=
+  (log (S / K) + (rd - rf + σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- The Garman-Kohlhagen call premium in dollars per euro of notional:
+`C = S e^(-r_f T) N(d₁) - K e^(-r_d T) N(d₂)`. -/
+noncomputable def gkCall (S K rd rf σ T : ℝ) : ℝ :=
+  S * exp (-rf * T) * stdNormalCDF (gkD1 S K rd rf σ T)
+    - K * exp (-rd * T) * stdNormalCDF (gkD1 S K rd rf σ T - σ * √T)
+
+/-- The Garman-Kohlhagen put premium in dollars per euro of notional:
+`P = K e^(-r_d T) N(-d₂) - S e^(-r_f T) N(-d₁)`. -/
+noncomputable def gkPut (S K rd rf σ T : ℝ) : ℝ :=
+  K * exp (-rd * T) * stdNormalCDF (-(gkD1 S K rd rf σ T - σ * √T))
+    - S * exp (-rf * T) * stdNormalCDF (-(gkD1 S K rd rf σ T))
+
+lemma stdNormalCDF_add_neg (d : ℝ) : stdNormalCDF d + stdNormalCDF (-d) = 1 := by
+  unfold stdNormalCDF
+  rw [cdf_eq_real, cdf_eq_real]
+  have hmap : (gaussianReal 0 1).map (fun x : ℝ ↦ -x) = gaussianReal 0 1 := by
+    rw [gaussianReal_map_neg, neg_zero]
+  have h1 : (gaussianReal 0 1).real (Set.Iic (-d)) = (gaussianReal 0 1).real (Set.Ici d) := by
+    conv_lhs => rw [← hmap]
+    rw [map_measureReal_apply (by fun_prop) measurableSet_Iic]
+    congr 1
+    ext x; simp
+  have hpt : (gaussianReal 0 1) {d} = 0 :=
+    gaussianReal_absolutelyContinuous 0 one_ne_zero (Real.volume_singleton)
+  have h2 : (gaussianReal 0 1).real (Set.Ici d) = (gaussianReal 0 1).real (Set.Ioi d) := by
+    rw [← Set.Ioi_insert, Set.insert_eq,
+      measureReal_union (by simp) measurableSet_Ioi]
+    simp [Measure.real, hpt]
+  rw [h1, h2, ← Set.compl_Iic, measureReal_compl measurableSet_Iic, probReal_univ]
+  ring
+
+#print axioms stdNormalCDF_add_neg
+
+/-- **Four deltas for one option** (The formula; Why it works, Steps 1 to 4). In the
+Garman-Kohlhagen model with spot `S > 0`, strike `K > 0`, volatility `σ > 0`, time `T > 0` and
+constant rates `r_d`, `r_f`, write `F = S e^((r_d - r_f) T)` for the forward rate and
+`Δ_S = e^(-r_f T) N(d₁)` for the call's spot delta. Then:
+the forward delta, the spot delta counted in forward contracts (each worth `e^(-r_f T)` euros
+today), is `Δ_F = Δ_S / e^(-r_f T) = N(d₁)`;
+the premium-adjusted spot delta, the spot delta less the premium in euros, is
+`Δ_S^pa = Δ_S - C/S = (K/S) e^(-r_d T) N(d₂)`, the cash leg in euros;
+the premium-adjusted forward delta is `Δ_F^pa = Δ_S^pa / e^(-r_f T) = (K/F) N(d₂)`;
+and for a put, with `-N(-d₁)` and `-N(-d₂)` in place of `N(d₁)` and `N(d₂)`, the same
+subtraction gives `-e^(-r_f T) N(-d₁) - P/S = -(K/S) e^(-r_d T) N(-d₂)`. -/
+theorem four_fx_deltas_premium_adjusted_is_cash_leg
+    (S K rd rf σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    let d₁ := gkD1 S K rd rf σ T
+    let d₂ := d₁ - σ * √T
+    let F := S * exp ((rd - rf) * T)
+    let ΔS := exp (-rf * T) * stdNormalCDF d₁
+    ΔS / exp (-rf * T) = stdNormalCDF d₁ ∧
+      ΔS - gkCall S K rd rf σ T / S = K / S * exp (-rd * T) * stdNormalCDF d₂ ∧
+      (ΔS - gkCall S K rd rf σ T / S) / exp (-rf * T) = K / F * stdNormalCDF d₂ ∧
+      -(exp (-rf * T) * stdNormalCDF (-d₁)) - gkPut S K rd rf σ T / S
+        = -(K / S * exp (-rd * T) * stdNormalCDF (-d₂)) := by
+  intro d₁ d₂ F ΔS
+  have hf : exp (-rf * T) ≠ 0 := (exp_pos _).ne'
+  have hS' : S ≠ 0 := hS.ne'
+  have hsplit : exp (-rf * T) = exp ((rd - rf) * T) * exp (-rd * T) := by
+    rw [← exp_add]; ring_nf
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp only [ΔS]; field_simp
+  · simp only [ΔS, gkCall, d₂, d₁]; field_simp; ring
+  · simp only [ΔS, gkCall, d₂, d₁, F]
+    rw [hsplit]
+    have he : exp ((rd - rf) * T) ≠ 0 := (exp_pos _).ne'
+    have he' : exp (-rd * T) ≠ 0 := (exp_pos _).ne'
+    field_simp; ring
+  · simp only [gkPut, d₂, d₁]; field_simp; ring
+
+/-- **Call and put forward deltas add to one in size** (Step 2). For every `d₁`, the call's
+forward delta `N(d₁)` minus the put's forward delta `-N(-d₁)` is exactly `1`; so a 25-delta call
+and a 75-delta put in forward delta share one strike. -/
+theorem forward_delta_call_minus_put_eq_one (d₁ : ℝ) :
+    stdNormalCDF d₁ - (-stdNormalCDF (-d₁)) = 1 := by
+  rw [sub_neg_eq_add]
+  exact stdNormalCDF_add_neg d₁
+
+/-- **The premium-adjusted delta keeps the euro account flat** (Step 3). For any premium
+function `C` of the spot that has a slope at `S ≠ 0`, `S` times the slope of the option's euro
+value `C/S` equals the dollar slope less the premium in euros:
+`S · d/dS (C(S)/S) = C'(S) - C(S)/S`. -/
+theorem premium_adjusted_delta_is_slope_of_euro_value
+    (C : ℝ → ℝ) (S : ℝ) (hS : S ≠ 0) (hC : DifferentiableAt ℝ C S) :
+    S * deriv (fun s => C s / s) S = deriv C S - C S / S := by
+  rw [deriv_fun_div (d := fun s : ℝ => s) hC differentiableAt_id hS, deriv_id'']
+  field_simp
+
+-- House market: S = K = 1.1, r_d = 5/100, r_f = 3/100, σ = 1/10, T = 1.
+-- d₁ = (ln(1.1/1.1) + (0.05 - 0.03 + 0.005) · 1) / (0.10 · √1) = 0.25.
+example : (log ((11 / 10) / (11 / 10)) + ((5 / 100 : ℝ) - 3 / 100 + (1 / 10) ^ 2 / 2) * 1)
+    / (1 / 10 * √1) = 1 / 4 := by norm_num
+-- d₂ = d₁ - σ√T = 0.25 - 0.10 = 0.15.
+example : (1 / 4 : ℚ) - 1 / 10 * 1 = 3 / 20 := by norm_num
+-- Step 3: Δ_S^pa = 0.581012 - 0.048687 = 0.532325.
+example : (581012 : ℚ) / 1000000 - 48687 / 1000000 = 532325 / 1000000 := by norm_num
+-- On EUR 10,000,000: the spot hedge shrinks by the premium in euros, 5,810,119 - 5,323,248 = 486,871.
+example : (5810119 : ℤ) - 5323248 = 486871 := by decide
+-- What breaks: the forward delta used as a spot hedge buys 5,987,063 - 5,810,119 = 176,944 too many.
+example : (5987063 : ℤ) - 5810119 = 176944 := by decide
+-- 25-delta call strikes, in units of 0.00001 (tenths of a pip), measured from the spot-delta strike
+-- 1.20368: forward 1.20654 is 28.6 pips higher, pa spot 1.19782 is 58.6 lower, pa forward 1.20082
+-- is 28.6 lower.
+example : (120654 : ℤ) - 120368 = 286 ∧ (119782 : ℤ) - 120368 = -586 ∧
+    (120082 : ℤ) - 120368 = -286 := by decide
+-- 25-delta put strikes from the spot-delta strike 1.05679: forward 1.05428 is 25.1 pips lower,
+-- pa spot 1.05179 is 50.0 lower.
+example : (105428 : ℤ) - 105679 = -251 ∧ (105179 : ℤ) - 105679 = -500 := by decide
+
+#print axioms four_fx_deltas_premium_adjusted_is_cash_leg
+#print axioms forward_delta_call_minus_put_eq_one
+#print axioms premium_adjusted_delta_is_slope_of_euro_value
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stdNormalCDF_add_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'four_fx_deltas_premium_adjusted_is_cash_leg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forward_delta_call_minus_put_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'premium_adjusted_delta_is_slope_of_euro_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first.
@@ -605,9 +769,9 @@ Orange: spot delta. Green: forward delta, which starts at 1.00 for deep in-the-m
 ## Where you meet it in real life
 
 - **The interbank volatility screen.** Currency smiles are quoted at the 10-delta and 25-delta points plus at the money. Before any of those can be priced, the screen's delta convention turns each label into a strike.
-- **Which convention, by pair.** The published defaults: the delta is premium-adjusted when the premium is paid in the pair's foreign currency (the one being bought or sold). EURUSD, GBPUSD and AUDUSD pay in dollars and use regular deltas. USDJPY, USDCHF, USDCAD, EURJPY, EURCHF, EURGBP and AUDJPY pay in the foreign currency and use adjusted deltas. The premium usually goes in the more traded currency, in the order USD, EUR, GBP, AUD, NZD, CAD, CHF, then NOK, SEK and DKK, with the yen last. Which currency pays is the subject of [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md).
+- **Which convention, by pair.** The published defaults: the delta is premium-adjusted when the premium is paid in the pair's foreign currency (the one being bought or sold, named first in the pair's code). EURUSD, GBPUSD and AUDUSD pay in dollars and use regular deltas. USDJPY, USDCHF, USDCAD, EURJPY, EURCHF, EURGBP and AUDJPY pay in the foreign currency and use adjusted deltas. The premium usually goes in the more traded currency, in the order USD, EUR, GBP, AUD, NZD, CAD, CHF, then NOK, SEK and DKK, with the yen last. Which currency pays is the subject of [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md).
 - **Which convention, by maturity.** Pairs made only of the currencies USD, EUR, JPY, GBP, AUD, NZD, CAD, CHF, NOK, SEK and DKK use spot deltas up to and including one year and forward deltas beyond. A pair with an emerging-market currency, such as USDMXN or USDZAR, uses forward deltas at every maturity. The house EURUSD one-year option is therefore quoted in unadjusted spot delta: 0.5810.
-- **Risk reversals and butterflies.** The 25-delta risk reversal is the volatility of the 25-delta call minus that of the 25-delta put. With forward deltas the call and put deltas pair up to one (Step 2), one reason long-dated smiles use them.
+- **Risk reversals and butterflies.** The 25-delta risk reversal is the volatility of the 25-delta call minus that of the 25-delta put. The 25-delta butterfly is the average of those two volatilities minus the at-the-money one: how much the smile bows, as [Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md) shows. With forward deltas the call and put deltas pair up to one (Step 2), one reason long-dated smiles use them.
 - **Trade confirmations.** A delta-quoted trade books a strike. The confirmation states the strike and premium currency; the convention only matters until that strike is agreed.
 
 Conventions verified 2026-09-27 against the tables in Reiswich and Wystup, which take them from Clark; these are interbank defaults, and a trade's own terms override them.
@@ -648,5 +812,5 @@ Verified 2026-09-27: every link below resolves to the publisher's page or the au
 
 - Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). The price whose slope is the spot delta.
 - Reiswich, Dimitri, and Uwe Wystup. "A Guide to FX Options Quoting Conventions." *Journal of Derivatives* 18, no. 2 (2010): 58–68. [doi:10.3905/jod.2010.18.2.058](https://doi.org/10.3905/jod.2010.18.2.058). The four deltas, the premium-currency rule and the maturity rule.
-- Reiswich, Dimitri, and Uwe Wystup. "FX Volatility Smile Construction." *Wilmott* 2012, no. 60: 58–69. [doi:10.1002/wilm.10132](https://doi.org/10.1002/wilm.10132); working-paper version, Frankfurt School CPQF no. 20: [PDF](https://www.mathfinance.com/wp-content/uploads/2025/04/FXVolatility-Smile-Construction_CPQF_Arbeits20_neu2.pdf). The table of pairs by premium currency, the OECD-and-one-year rule, and the peak condition of Step 5.
+- Reiswich, Dimitri, and Uwe Wystup. "FX Volatility Smile Construction." *Wilmott* 2012, no. 60: 58–69. [doi:10.1002/wilm.10132](https://doi.org/10.1002/wilm.10132); working-paper version, Frankfurt School CPQF no. 20: [PDF](https://www.mathfinance.com/wp-content/uploads/2025/04/FXVolatility-Smile-Construction_CPQF_Arbeits20_neu2.pdf). The table of pairs by premium currency, the one-year rule for the major currencies, and the peak condition of Step 5.
 - Clark, Iain J. *Foreign Exchange Option Pricing: A Practitioner's Guide*. Wiley, 2011. [Publisher page](https://www.wiley.com/en-us/Foreign+Exchange+Option+Pricing%3A+A+Practitioner%27s+Guide-p-9780470683682). The source of the market-default tables, and the premium-currency order.

@@ -10,7 +10,7 @@ One euro costs 1.10 dollars today. A dollar deposit pays 5 percent a year. A ban
 
 Covered interest parity turned two deposit rates into that forward. This card runs the machine the other way. Feed in the spot rate, the forward and the dollar rate, and out comes the euro rate the forward is charging: **3.000 percent**, the house euro rate, to the quote's precision. The forward already contains an interest rate. Solving for it is called reading the **implied yield**.
 
-Now a different screen. The forward shows **+195 pips**, not +222.21. Run the same machine: the euro rate built into that forward is **3.24 percent**, while a euro deposit pays 3 percent. Or the forward shows **+249 pips**: the implied euro rate is **2.76 percent**. Either way the forward and the deposit disagree about what euros earn. The gap between the rate a forward implies and the rate a deposit pays has a name: the **cross-currency basis**. Before 2008 it was close to zero for the big currencies. Since 2008 it has sat tens of basis points (hundredths of a percent) away from zero for years at a time, with the sign of the +249 screen: borrowing dollars through the FX market costs more than borrowing them directly.
+Now a different screen. The forward shows **+195 pips**, not +222.21. Run the same machine: the euro rate built into that forward is **3.24 percent**, while a euro deposit pays 3 percent. Or the forward shows **+249 pips**: the implied euro rate is **2.76 percent**. Either way the forward and the deposit disagree about what euros earn. The gap between the rate a forward implies and the rate a deposit pays has a name: the **cross-currency basis**. Before 2008 it was close to zero for the big currencies. Since 2008 it has sat tens of basis points (hundredths of a percent) away from zero for years at a time, with the sign of the +249 screen: borrowing dollars through the FX (foreign exchange) market costs more than borrowing them directly.
 
 **A forward is an interest rate in disguise: solve parity for the rate it hides, compare that rate with what a deposit pays, and the gap, the cross-currency basis, is the price the market puts on getting one currency by swapping for it instead of borrowing it.**
 
@@ -40,7 +40,7 @@ Parity says $F = S\,e^{(r_d - r_f)T}$. Solved for the euro rate:
 
 $$y_f = r_d - \frac{\ln(F/S)}{T}$$
 
-**Read it aloud: the euro rate a forward implies is the dollar rate, minus the forward's premium over spot, turned into a rate per year.**
+**Read it aloud:** the euro rate a forward implies is the dollar rate, minus the forward's premium over spot, turned into a rate per year.
 
 Solved for the dollar rate instead, with the euro rate known:
 
@@ -138,7 +138,7 @@ Reading the sign:
 
 Step 3 is also an arbitrage: a trade that locks in profit with no risk. On the +249 screen a bank that can borrow dollars at 5 percent borrows 1.10 of them, buys one euro spot, deposits it at 3 percent, and sells the 1.030455 euros forward at 1.1249. In a year it receives 1.159158 dollars and repays 1.156398. Profit: 0.002760 dollars per euro, or 27,600.99 dollars on 10 million euros, whatever the euro does.
 
-Before 2008 such profits were competed away; Frenkel and Levich found apparent ones vanished once transaction costs were counted. Since 2008 they persist. The trade is riskless but not free: it puts both a loan and a deposit on the bank's balance sheet, and capital rules charge for balance-sheet size whether the assets are risky or not. Borio and co-authors at the BIS and Du, Tepper and Verdelhan trace the basis to that cost, plus heavy one-way demand for dollars from non-US banks, insurers and borrowers hedging dollar assets. The basis is the price of scarce balance sheet, and it jumps around quarter ends, when many banks report their balance sheets.
+Before 2008 such profits were competed away; Frenkel and Levich found apparent ones vanished once transaction costs were counted. Since 2008 they persist. The trade is riskless but not free: it puts both a loan and a deposit on the bank's balance sheet, and capital rules charge for balance-sheet size whether the assets are risky or not. Borio and co-authors at the BIS (Bank for International Settlements) and Du, Tepper and Verdelhan trace the basis to that cost, plus heavy one-way demand for dollars from non-US banks, insurers and borrowers hedging dollar assets. The basis is the price of scarce balance sheet, and it jumps around quarter ends, when many banks report their balance sheets.
 
 The other road to an implied rate uses money-market quotes instead of continuous rates: solve $F = S\,(1 + R_d\tau)/(1 + R_f\tau)$ for the euro money-market rate, where $R_d\tau$ is simple interest over the deposit's day-count fraction. It gives the same rate in a different unit. Desks quote it that way; the conversion is on [Covered interest parity](02-covered-interest-parity.md).
 
@@ -546,6 +546,95 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves the three exact facts behind the solve, for every positive spot, forward and term.
+
+- Take $S$, $F$ and $T$ all positive. Then a euro rate makes parity hold exactly when it equals $r_d - \ln(F/S)/T$. So the implied rate exists and is unique.
+- Take $y_f$ and $y_d$ from their two closed forms. Then $y_f - r_f = r_d - y_d$ always: both readings of the basis are one number.
+- Take $S$, $F$ and $T$ all positive. Then the basis is negative exactly when $F$ is above $S\,e^{(r_d - r_f)T}$, the forward parity predicts.
+- Spot 1.10 plus 195, 222.21 and 249 pips gives forwards of 1.1195, 1.122221 and 1.1249.
+- Take $F = S = 1.10$ over one year, with dollars at 5 percent. Then the implied euro rate is 5 percent.
+
+The logarithms of real quotes, the basis in basis points and the arbitrage ledger are left to the Python and Rust checks.
+
+```lean
+-- The interest rate a forward implies: for any positive spot, forward and term, exactly one foreign rate makes covered interest parity hold, it is r_d - ln(F/S)/T, the basis read from the euro side equals the basis read from the dollar side, and the basis is negative exactly when the forward sits above the parity forward.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+open Real
+
+/-- Parity run backwards. For any positive spot `S`, any positive forward `F`, any
+positive term `T` and any dollar rate `r_d`, a euro rate `y` makes covered interest
+parity `F = S e^((r_d - y)T)` hold if and only if `y = r_d - ln(F/S)/T`. So the
+implied euro rate exists, it is the only one, and it is given by the closed form. -/
+theorem implied_yield_exists_unique
+    (S F T rd : ℝ) (hS : 0 < S) (hF : 0 < F) (hT : 0 < T) :
+    ∀ y : ℝ, F = S * exp ((rd - y) * T) ↔ y = rd - log (F / S) / T := by
+  intro y
+  have key : F = S * exp ((rd - y) * T) ↔ (rd - y) * T = log (F / S) := by
+    constructor
+    · intro h
+      rw [h, mul_div_cancel_left₀ _ hS.ne', log_exp]
+    · intro h
+      rw [h, exp_log (div_pos hF hS)]
+      field_simp
+  rw [key]
+  constructor
+  · intro h
+    rw [← h]
+    field_simp
+    ring
+  · intro h
+    rw [h]
+    field_simp
+    ring
+
+/-- The two readings of the basis are one number. With the implied euro rate
+`y_f = r_d - ln(F/S)/T` and the implied dollar rate `y_d = r_f + ln(F/S)/T`, the
+basis from the euro side, `y_f - r_f`, equals the basis from the dollar side,
+`r_d - y_d`, always. -/
+theorem basis_euro_side_eq_dollar_side (S F T rd rf : ℝ) :
+    (rd - log (F / S) / T) - rf = rd - (rf + log (F / S) / T) := by
+  ring
+
+/-- The sign of the basis. For positive spot, forward and term, the basis
+`b = y_f - r_f` is negative (dollars dear through the FX market) exactly when the
+quoted forward is above the parity forward `S e^((r_d - r_f)T)`, that is, when it
+carries more points than fair. -/
+theorem basis_neg_iff_forward_above_parity
+    (S F T rd rf : ℝ) (hS : 0 < S) (hF : 0 < F) (hT : 0 < T) :
+    (rd - log (F / S) / T) - rf < 0 ↔ S * exp ((rd - rf) * T) < F := by
+  have h1 : (rd - log (F / S) / T) - rf < 0 ↔ (rd - rf) * T < log (F / S) := by
+    rw [← lt_div_iff₀ hT]
+    constructor <;> intro h <;> linarith
+  rw [h1, ← exp_lt_exp, exp_log (div_pos hF hS), lt_div_iff₀ hS, mul_comm (exp _)]
+
+-- The +249 pip screen: spot 1.10 plus 249 pips of 0.0001 is a forward of 1.1249.
+example : (11 / 10 : ℚ) + 249 * (1 / 10000) = 11249 / 10000 := by norm_num
+
+-- The house forward: spot 1.10 plus 222.21 pips is 1.122221.
+example : (11 / 10 : ℚ) + (22221 / 100) * (1 / 10000) = 1122221 / 1000000 := by norm_num
+
+-- The +195 pip screen: spot 1.10 plus 195 pips is 1.1195.
+example : (11 / 10 : ℚ) + 195 * (1 / 10000) = 11195 / 10000 := by norm_num
+
+-- No points at all, F = S = 1.10, one year, dollars at 5%: the implied euro rate is 5%.
+example : (5 / 100 : ℝ) - log ((11 / 10) / (11 / 10)) / 1 = 5 / 100 := by norm_num
+
+#print axioms implied_yield_exists_unique
+#print axioms basis_euro_side_eq_dollar_side
+#print axioms basis_neg_iff_forward_above_parity
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'implied_yield_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'basis_euro_side_eq_dollar_side' depends on axioms: [propext, Classical.choice, Quot.sound]
+'basis_neg_iff_forward_above_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

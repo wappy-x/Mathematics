@@ -40,7 +40,7 @@ Notation first, in words. A small letter after a symbol, written low, labels whi
 
 $$F = S\,e^{(r_d - r_f)\,T}$$
 
-**Read it aloud: the forward rate is today's rate, grown for the life of the contract at the dollar rate minus the euro rate.**
+**Read it aloud:** the forward rate is today's rate, grown for the life of the contract at the dollar rate minus the euro rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the forward… |
 | --- | --- | --- | --- |
@@ -164,7 +164,7 @@ Replace each continuous deposit by a simple-interest deposit with its day count.
 
 ## Worked numbers, by hand
 
-EURUSD spot $S$ = 1.10, $r_d$ = 5%, $r_f$ = 3%, one year and three months.
+EURUSD spot $S$ = 1.10, $r_d$ = 5%, $r_f$ = 3%, for delivery in one year and, separately, in three months.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -524,6 +524,99 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line. Four roads land on 1.122221 to the printed digit, and the ledgers match $e^{r_f T}(F_q - F)$ to twelve decimals.
+
+### Lean
+
+Lean proves the formula and both ledgers for every spot rate, interest rate, term and quote.
+
+- Take any spot $S$, rates $r_d$ and $r_f$, term $T$ and quote $F_q$. Then neither ledger shows a profit if $F_q = S\,e^{(r_d - r_f)T}$, and one of them does otherwise.
+- Take the same numbers, with $F = S\,e^{(r_d - r_f)T}$. Then the seller's profit is $e^{r_f T}(F_q - F)$ and the buyer's is $e^{r_f T}(F - F_q)$.
+- Take money-market rates $R_d$ and $R_f$ and a day-count fraction $\tau$, with $1 + R_f\tau$ not zero. Then neither ledger shows a profit if $F_q = S(1 + R_d\tau)/(1 + R_f\tau)$, and one does otherwise.
+- Take $S$ = 1.10 and $r_d = r_f$ = 0.04 for one year. Then the forward is 1.10, spot exactly.
+
+The decimal values such as 1.122221, the four roads, and the wrong-answer table are left to the Python and Rust checks.
+
+```lean
+-- Covered interest parity: a quoted forward rate leaves neither the seller's nor the buyer's cash-and-carry trade a riskless profit exactly when it equals S e^((r_d - r_f) T), and the same holds for money-market rates.
+import Mathlib.Analysis.Complex.Exponential
+
+/-- Covered interest parity. One continuously compounded rate to borrow and lend in each
+currency (`r_d` on dollars, `r_f` on euros), no fees, both sides deliver. Spot is `S` dollars
+per euro and the market quotes a forward `F_q` for delivery in `T` years.
+The seller's trade (borrow `S` dollars, buy one euro, deposit it, sell the grown euros forward)
+nets `F_q e^(r_f T) - S e^(r_d T)` dollars on delivery day; the buyer's trade (borrow one euro,
+sell it spot, deposit the dollars, buy the euros back forward) nets `S e^(r_d T) - F_q e^(r_f T)`.
+Both trades cost nothing today. Neither pays a positive amount for certain exactly when the
+quote is the forward rate `F = S e^((r_d - r_f) T)`. -/
+theorem covered_interest_parity (S r_d r_f T F_q : ℝ) :
+    (¬ 0 < F_q * Real.exp (r_f * T) - S * Real.exp (r_d * T) ∧
+      ¬ 0 < S * Real.exp (r_d * T) - F_q * Real.exp (r_f * T)) ↔
+    F_q = S * Real.exp ((r_d - r_f) * T) := by
+  have key : S * Real.exp (r_d * T) = Real.exp (r_f * T) * (S * Real.exp ((r_d - r_f) * T)) := by
+    rw [mul_left_comm, ← Real.exp_add]; ring_nf
+  have hE : 0 < Real.exp (r_f * T) := Real.exp_pos _
+  rw [key]
+  set E := Real.exp (r_f * T)
+  set G := S * Real.exp ((r_d - r_f) * T)
+  constructor
+  · rintro ⟨h1, h2⟩
+    rw [not_lt] at h1 h2
+    have a : E * (F_q - G) ≤ 0 := by linarith
+    have b : E * (G - F_q) ≤ 0 := by linarith
+    have a' : F_q - G ≤ 0 := by
+      by_contra hc; rw [not_le] at hc; linarith [mul_pos hE hc]
+    have b' : G - F_q ≤ 0 := by
+      by_contra hc; rw [not_le] at hc; linarith [mul_pos hE hc]
+    linarith
+  · intro h
+    rw [h]
+    constructor <;> simp [mul_comm]
+
+/-- The two ledgers in closed form: the seller's profit is `e^(r_f T) (F_q - F)` and the
+buyer's is `e^(r_f T) (F - F_q)`, where `F = S e^((r_d - r_f) T)`. Since `e^(r_f T) > 0`,
+the sign of the profit is the sign of the gap between the quote and `F`. -/
+theorem cash_and_carry_ledgers_closed_form (S r_d r_f T F_q : ℝ) :
+    F_q * Real.exp (r_f * T) - S * Real.exp (r_d * T) =
+        Real.exp (r_f * T) * (F_q - S * Real.exp ((r_d - r_f) * T)) ∧
+      S * Real.exp (r_d * T) - F_q * Real.exp (r_f * T) =
+        Real.exp (r_f * T) * (S * Real.exp ((r_d - r_f) * T) - F_q) := by
+  have key : S * Real.exp (r_d * T) = Real.exp (r_f * T) * (S * Real.exp ((r_d - r_f) * T)) := by
+    rw [mul_left_comm, ← Real.exp_add]; ring_nf
+  rw [key]
+  constructor <;> ring
+
+/-- The money-market form. With simple interest over a day-count fraction `τ`, a deposit of 1
+grows to `1 + R τ`. The seller's trade nets `F_q (1 + R_f τ) - S (1 + R_d τ)` and the buyer's
+nets the negative of that. Neither pays a positive amount exactly when
+`F_q = S (1 + R_d τ) / (1 + R_f τ)`. -/
+theorem covered_interest_parity_money_market (S R_d R_f τ F_q : ℝ) (h : 1 + R_f * τ ≠ 0) :
+    (¬ 0 < F_q * (1 + R_f * τ) - S * (1 + R_d * τ) ∧
+      ¬ 0 < S * (1 + R_d * τ) - F_q * (1 + R_f * τ)) ↔
+    F_q = S * (1 + R_d * τ) / (1 + R_f * τ) := by
+  rw [eq_div_iff h]
+  constructor
+  · rintro ⟨h1, h2⟩
+    rw [not_lt] at h1 h2
+    linarith
+  · intro h'
+    constructor <;> linarith
+
+-- The card's "try: rd = rf = 0.04" row: with equal rates the one-year forward is spot, 1.10.
+example : (11 / 10 : ℝ) * Real.exp ((4 / 100 - 4 / 100) * 1) = 11 / 10 := by
+  norm_num
+
+#print axioms covered_interest_parity
+#print axioms cash_and_carry_ledgers_closed_form
+#print axioms covered_interest_parity_money_market
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'covered_interest_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cash_and_carry_ledgers_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'covered_interest_parity_money_market' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

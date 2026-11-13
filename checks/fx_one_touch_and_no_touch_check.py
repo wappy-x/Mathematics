@@ -128,3 +128,4 @@ assert abs(nt_usd - nt_usd3) < 1e-7                                   # compleme
 assert abs(p_mc - p_d) < 3.0 * se                                     # simulation agrees with the formula
 assert abs(exp(-rd * T) * p_daily - ot_bgk) < 0.004                   # shifted wall matches daily checks
 print("all checks passed")
+print("ALL CHECKS PASS")

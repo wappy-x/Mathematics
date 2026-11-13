@@ -154,4 +154,5 @@ fn main() {
     assert!((p_mc - p_d).abs() < 3.0 * se);
     assert!(((-RD * T).exp() * p_daily - ot_bgk).abs() < 0.004);
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

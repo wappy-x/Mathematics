@@ -6,7 +6,9 @@
 
 ## General Overview
 
-The euro trades at 1.10 dollars. A one-year dollar rate is 5%, a one-year euro rate 3%, so the one-year forward rate, the rate a bank locks in today for exchange in a year, is 1.122221. A currency dealer's screen quotes three one-year volatilities for EURUSD: 10.00% at the money, a risk reversal of −1.00% and a butterfly of +0.25%. Unpacked ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md)), that is 10.75% for the 25-delta put and 9.75% for the 25-delta call: the options whose value moves a quarter as much as the exchange rate. Turned into strikes ([Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md)), the three quotes sit at 1.052466, 1.127847 and 1.201425. These three points are the **pillars**.
+The euro trades at 1.10 dollars. A one-year dollar rate is 5%, a one-year euro rate 3%, so the one-year forward rate, the rate a bank locks in today for exchange in a year, is 1.122221. A currency dealer's screen quotes three one-year volatilities for EURUSD: 10.00% at the money, a risk reversal of −1.00% and a butterfly of +0.25%. Unpacked ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md)), that is 10.75% for the 25-delta put and 9.75% for the 25-delta call: the options whose value moves a quarter as much as the exchange rate.
+
+Turned into strikes ([Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md)), the three quotes sit at 1.052466, 1.127847 and 1.201425. These three points are the **pillars**.
 
 A client asks for a call struck at 1.15. No quote exists there. It sits between the at-the-money pillar and the 25-delta call pillar, so its volatility should land between 10.00% and 9.75%. It does: 9.8780%. The same recipe gives a number at 1.40, far past the last pillar. There it says 10.77%, higher than at the money, although every quote on this side of the smile says volatility falls as the strike rises.
 
@@ -47,7 +49,7 @@ The second-order reading, the one to use, corrects it:
 
 $$\sigma(K) = \sigma_2 + \frac{-\sigma_2 + \sqrt{\sigma_2^2 + d_1(K)\,d_2(K)\,\big(2\sigma_2 D_1(K) + D_2(K)\big)}}{d_1(K)\,d_2(K)}$$
 
-**Read it aloud: "Start from the at-the-money vol. Average the three pillar vols with log-strike weights to get the first-order shift. Then bend that shift slightly for the curvature of each option's value in volatility, which is the square root."**
+**Read it aloud:** "Start from the at-the-money vol. Average the three pillar vols with log-strike weights to get the first-order shift. Then bend that shift slightly for the curvature of each option's value in volatility, which is the square root."
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -71,9 +73,9 @@ Conventions verified 27 Sep 2026 against the house cards: pillars on spot delta 
 ### When it holds
 
 - **The three quotes are clean and come from one expiry.** The curve reproduces them exactly, errors included. A mistyped 25-delta vol moves every strike's reading, most near its own pillar.
-- **The strike sits between the outer pillars, or not far past them.** At 1.15 the curve and the full vanna-volga price agree to six decimals. Past 1.20 it follows a parabola in log-strike that no quote pins down; at 1.40 the call it implies is worth roughly double the flat-extrapolated one.
+- **The strike sits between the outer pillars, or not far past them.** Past 1.20 it follows a parabola in log-strike that no quote pins down; at 1.40 the call it implies is worth roughly double the flat-extrapolated one.
 - **The skew is moderate.** With the risk reversal steepened to −3%, the number under the square root turns negative at 1.286412 and the formula returns no vol at all.
-- **Nobody needs a guarantee of no arbitrage.** The formula never looks at the density across strikes or at other expiries. It can pass the butterfly test, as the house curve does on 0.80 to 1.60, or fail it; and nothing ties one expiry's curve to the next. It has to be tested, every time.
+- **Nobody needs a guarantee of no arbitrage.** The formula never looks at the density across strikes or at other expiries. It can pass the butterfly test, as the house curve does on 0.80 to 1.60, or fail it; and nothing ties one expiry's curve to the next.
 
 ---
 
@@ -81,7 +83,7 @@ Conventions verified 27 Sep 2026 against the house cards: pillars on spot delta 
 
 ### Step 0: the idea — price a plain call with vanna-volga, then read the price back as a vol
 
-The vanna-volga price ([Vanna-volga pricing](04-vanna-volga-pricing.md)) values any option as its flat-vol price plus the market cost of a hedge. The hedge is three pillar options, in amounts chosen so the hedge carries the same vega, vanna and volga as the target ([Vanna and volga](03-vanna-and-volga-on-the-smile.md)). Vega is the change in value per unit of volatility; vanna is how vega changes with the exchange rate; volga is how vega changes with volatility.
+The vanna-volga price ([Vanna-volga pricing](04-vanna-volga-pricing.md)) values any option as its flat-vol price plus the market cost of a hedge. The hedge is three pillar options, in amounts chosen so the hedge carries the same vega, vanna and volga as the target ([Vanna and volga](03-vanna-and-volga-on-the-smile.md)). Vanna is how vega changes with the exchange rate; volga is how vega changes with volatility.
 
 Apply that price to a plain call at strike $K$. The answer is a dollar price. Every dollar price of a call inside its no-arbitrage bounds has exactly one Black-Scholes volatility that reproduces it (for a currency the formula is Garman-Kohlhagen: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). Do that at every strike and a smile appears. Castagna and Mercurio's contribution is to skip the price and the root finder: the weights have a closed form, and expanding the price in small vol gaps gives the vol directly.
 
@@ -124,7 +126,7 @@ The call at its own smile vol is, to the same order, $C_{BS}(K,\sigma_2) + \nu(K
 
 $$\sigma(K) \approx \sigma_2 + D_1(K) = y_1\sigma_1 + y_2\sigma_2 + y_3\sigma_3.$$
 
-The first-order vanna-volga smile is the parabola in log-strike through the three quotes. Nothing more.
+The first-order vanna-volga smile is the parabola in log-strike through the three quotes.
 
 ### Step 3: second order — keep the curvature, solve a quadratic
 
@@ -134,11 +136,19 @@ $$\frac{d_1d_2(K)}{2\sigma_2}\,e^2 + e - \Big(D_1 + \frac{D_2}{2\sigma_2}\Big) =
 
 Its roots are $e = \big(-\sigma_2 \pm \sqrt{\sigma_2^2 + d_1d_2(K)(2\sigma_2D_1 + D_2)}\big)/d_1d_2(K)$. That is the formula.
 
-**Existence, uniqueness, boundary cases.** A real root exists exactly when the number under the square root is not negative. Of the two roots, only the plus sign shrinks to the first-order answer $D_1$ as the smile flattens; the minus root runs off to about $-2\sigma_2/(d_1d_2)$, a nonsense vol, so the plus root is the unique sensible one. When $d_1d_2(K) = 0$ the formula reads 0/0. That happens at the at-the-money pillar and at the strike where $d_2 = 0$, just below the forward. There the quadratic is linear and the answer is its limit, $\sigma_2 + D_1 + D_2/(2\sigma_2)$. The checks take that branch at the pillar and read back 10.00% exactly.
+**Existence, uniqueness, boundary cases.** A real root exists exactly when the number under the square root is not negative. Of the two roots, only the plus sign shrinks to the first-order answer $D_1$ as the smile flattens; the minus root runs off to about $-2\sigma_2/(d_1d_2)$, a nonsense vol, so the plus root is the unique sensible one.
+
+When $d_1d_2(K) = 0$ the formula reads 0/0. That happens at the at-the-money pillar and at the strike where $d_2 = 0$, just below the forward. There the quadratic is linear and the answer is its limit, $\sigma_2 + D_1 + D_2/(2\sigma_2)$. The checks take that branch at the pillar and read back 10.00% exactly.
 
 ### Step 4: why it breaks past the pillars
 
-Between the pillars the weights are modest and the vol gaps small, so the expansions of Steps 2 and 3 are accurate. Outside, two things fail. The weights stop being an average: past $K_3$, $y_2$ turns negative while $y_1$ and $y_3$ grow like the square of the log-distance, so the first-order curve is a parabola in $\ln K$, with one lowest point and a climb after it, and the second-order curve follows it, slightly bent. And $d_1(K)\,d_2(K)$ grows without bound, so if $2\sigma_2D_1 + D_2$ is negative enough the square root's argument crosses zero and the quadratic of Step 3 has no real root. Neither step ever asks whether call prices are convex in strike or whether total variance grows with expiry, the two no-arbitrage tests of [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md). The worked numbers below show all three failures.
+Between the pillars the weights are modest and the vol gaps small, so the expansions of Steps 2 and 3 are accurate. Outside, two things fail.
+
+The weights stop being an average: past $K_3$, $y_2$ turns negative while $y_1$ and $y_3$ grow like the square of the log-distance, so the first-order curve is a parabola in $\ln K$, with one lowest point and a climb after it, and the second-order curve follows it, slightly bent.
+
+And $d_1(K)\,d_2(K)$ grows without bound, so if $2\sigma_2D_1 + D_2$ is negative enough the square root's argument crosses zero and the quadratic of Step 3 has no real root.
+
+Neither step ever asks whether call prices are convex in strike or whether total variance grows with expiry, the two no-arbitrage tests of [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md). The worked numbers below show all three failures.
 
 <details>
 <summary>Why log-strikes and not strikes?</summary>
@@ -146,8 +156,6 @@ Between the pillars the weights are modest and the vol gaps small, so the expans
 Three reasons. The Black-Scholes distances $d_1$ and $d_2$ are straight lines in $\ln K$, not in $K$, so the matching equations of Step 1 are polynomial only in $\ln K$. Exchange rates move by percentages, so a log-strike treats 1.10 to 1.21 the same as 1.00 to 1.10. And flipping the quote, euros per dollar instead of dollars per euro, turns $\ln K$ into $-\ln K$; a parabola in $\ln K$ stays a parabola, so the curve survives the flip.
 
 </details>
-
-An alternative route to a full smile from quotes is to fit a parametric curve, such as SVI, that is built to pass the butterfly test: [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md). It needs more quotes and a fitter; vanna-volga needs three quotes and a calculator.
 
 ---
 
@@ -171,7 +179,7 @@ House market: spot 1.10, dollar rate 5%, euro rate 3%, one year. Pillars 1.05246
 | its square root | unrounded 0.09993009 | 0.099930 |
 | **second order** | $0.10 + (-0.00006991)/0.057289 = 0.10 - 0.001220$ | **9.8780%** |
 
-The vol at 1.15 is 9.8780%, between 10.00% and 9.75% as it should be. The square root moved the first-order answer by less than a thousandth of a vol point. Between the pillars the first-order average is already the answer.
+The vol at 1.15 is 9.8780%, between 10.00% and 9.75% as it should be. The square root moved the first-order answer by less than a thousandth of a vol point.
 
 The full vanna-volga price of the 1.15 call, from the 3×3 hedge, is 0.030655 dollars per euro. Its implied vol is 9.8780%. The closed form and the full price agree to the six printed decimals.
 
@@ -182,11 +190,10 @@ The full vanna-volga price of the 1.15 call, from the 3×3 hedge, is 0.030655 do
 | Build all three pillar strikes at the 10% vol | 9.8721% at 1.15 (right: 9.8780%) | Each 25-delta strike depends on its own vol. At 10% the pillars sit at the wrong strikes, and the parabola runs through the right vols at the wrong places. |
 | Use the first order in the far put wing | 18.6244% at 0.80 (second order: 13.1466%) | The parabola in log-strike climbs fast; the square root is what tames it out there. |
 | Drop $D_2$ | 10.7335% at 1.40 (right: 10.7717%) | Small inside the pillars, the curvature term is worth four hundredths of a point in the wing. |
-| Trust the curve at 1.40 | call 0.000943 dollars per euro (flat at 9.75%: 0.000466) | Nothing quoted supports the upturn; the price roughly doubles on the parabola's say-so. |
 
 ### Past the last pillar: the wing bends the wrong way
 
-The call-side quotes say volatility falls as the strike rises, from 10.00% at 1.127847 to 9.75% at 1.201425. A sane extrapolation carries that on: hold 9.75% flat, or drift gently lower. The vanna-volga curve bottoms at 9.7483% at 1.208205, barely past the pillar, and climbs. At 1.40 the second-order formula says 10.7717%, the full vanna-volga price 10.7654%, the first-order average 10.8650%. All three sit above the at-the-money vol: the cheap side of the smile has become dearer than the middle.
+The call-side quotes say volatility falls as the strike rises, from 10.00% at 1.127847 to 9.75% at 1.201425. A sane extrapolation carries that on: hold 9.75% flat, or drift gently lower. The vanna-volga curve bottoms at 9.7483% at 1.208205, barely past the pillar, and climbs. At 1.40 the second-order formula says 10.7717%, the full vanna-volga price 10.7654%, the first-order average 10.8650%.
 
 In money, the 1.40 call is worth 0.000943 dollars per euro on the curve and 0.000466 held flat at 9.75%. Neither is "right". The factor of about two between them is decided by a parabola, not by the market.
 
@@ -194,7 +201,9 @@ In money, the 1.40 call is worth 0.000943 dollars per euro on the curve and 0.00
 
 A smile is free of butterfly arbitrage when call prices bend upward in strike. The measure is the density: the dollar rate compounded forward, $e^{r_dT}$, times the second derivative of the call price in strike. It is the market's probability density for the rate at expiry, and it must never be negative.
 
-On the house quotes the density stays positive on the whole range 0.80 to 1.60; its lowest value there is 0.013168. That is luck of the quotes, not a property of the method. Steepen the risk reversal to −3% (vols 11.75%, 10.00%, 8.75%; the call pillar moves to 1.192529). The curve now plunges past the call pillar: 7.4722% at 1.25, then 5.5001% at 0.002 short of the end, where the density is −0.959924. A negative density means a butterfly of calls with a negative price: a buyer is paid to take a position that never loses. At 1.286412 the number under the square root reaches zero, and past it the formula returns no vol at all.
+On the house quotes the density stays positive on the whole range 0.80 to 1.60; its lowest value there is 0.013168. That is luck of the quotes, not a property of the method.
+
+Steepen the risk reversal to −3% (vols 11.75%, 10.00%, 8.75%; the call pillar moves to 1.192529). The curve now plunges past the call pillar: 7.4722% at 1.25, then 5.5001% at 0.002 short of the end, where the density is −0.959924. A negative density means a butterfly of calls with a negative price: a buyer is paid to take a position that never loses. At 1.286412 the number under the square root reaches zero, and past it the formula returns no vol at all.
 
 ### The calendar test: nothing links two expiries
 
@@ -210,13 +219,13 @@ xychart-beta
     line [1.69, 1.55, 1.15, 0.72, 0.93, 1.36, 1.55, 1.63]
 ```
 
-Orange: one year. Green: six months. At the money the six-month line sits well below, 0.723730 against 1.007593 (times 100), as it must. Between $k$ = 0.10 and 0.20 the green line crosses above: at $k$ = 0.3 it is 1.549041 against 1.320809. The shorter option carries more variance than the longer one at the same moneyness. Selling the six-month and buying the one-year there is a calendar spread with a negative price. Each smile is built correctly from its own quotes. The failure lives between them.
+Orange: one year. Green: six months. At the money the six-month line sits well below, 0.723730 against 1.007593 (times 100), as it must. Between $k$ = 0.10 and 0.20 the green line crosses above: at $k$ = 0.3 it is 1.549041 against 1.320809. Selling the six-month and buying the one-year there is a calendar spread with a negative price.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the house pillars from the quotes, then read the vol at 1.15 and 1.40 by two independent roads. Road 1 is the closed form of this card. Road 2 is the full vanna-volga price: the 3×3 hedge solved by Cramer's rule with no closed form for the weights, the pillars' market-minus-model gaps added, and the price inverted to a vol by halving. The 3×3 weights are also checked against the closed-form weights $\nu(K)y_i/\nu(K_i)$. Then the scripts push the curve into the wings, run the butterfly test by second differences, run the calendar test against a six-month market, and print every number and chart point on this card. The bell-curve area comes from an all-positive series for the error function in Python and from Simpson slices in Rust.
+The scripts build the house pillars from the quotes, then read the vol at 1.15 and 1.40 by two independent roads. Road 1 is the closed form of this card. Road 2 is the full vanna-volga price: the 3×3 hedge solved by Cramer's rule (each weight a ratio of two 3×3 determinants) with no closed form for the weights, the pillars' market-minus-model gaps added, and the price inverted to a vol by halving. The 3×3 weights are also checked against the closed-form weights $\nu(K)y_i/\nu(K_i)$. Then the scripts push the curve into the wings, run the butterfly test by second differences, run the calendar test against a six-month market, and print every number and chart point on this card. The bell-curve area comes from an all-positive series for the error function in Python and from Simpson slices in Rust.
 
 ### Python
 
@@ -640,13 +649,347 @@ chart, 6m total var x100     1.69  1.55  1.15  0.72  0.93  1.36  1.55  1.63
 ALL CHECKS PASS
 ```
 
-The two outputs agree line for line. They reach the bell-curve area by different routes, which is the point.
+The two outputs agree line for line.
+
+### Lean
+
+Lean proves three exact facts behind the curve, for any positive spot, vol and expiry and any three distinct positive pillar strikes.
+
+- Take any positive strike $K$ and amounts $x_1$, $x_2$, $x_3$ of the three pillar calls, all at one flat vol. Then they match a call's vega, vanna and volga at $K$ exactly when $x_i = \nu(K)y_i(K)/\nu(K_i)$.
+- Take any positive strike $K$. Then the log-strike weights add up to 1: $y_1(K) + y_2(K) + y_3(K) = 1$.
+- Suppose the skew is moderate: $\sigma_2 + d_1d_2(\sigma_i - \sigma_2) \ge 0$ at both outer pillars. Then the second-order curve reads $\sigma_1$, $\sigma_2$, $\sigma_3$ exactly at $K_1$, $K_2$, $K_3$.
+
+Every number, the approximation's accuracy, the wings and both arbitrage tests are left to the Python and Rust checks.
+
+```lean
+-- The vanna-volga smile: the vanna-volga hedge weights for a call are the log-strike weights, those weights add up to one, and the second-order smile passes through all three pillar quotes.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+
+namespace VannaVolgaSmile
+
+/-! The model, as on the card. Spot `S` (dollars per euro), dollar rate `rd`, euro rate `rf`,
+years to expiry `T`, forward `F = S e^{(rd - rf) T}`. Every Black-Scholes distance is taken at
+one flat vol `σ` (the at-the-money vol `σ₂`):
+`d₁(x) = (ln(F/x) + σ²T/2) / (σ√T)`, `d₂(x) = d₁(x) - σ√T`.
+Vega `ν(x) = S e^{-rf T} φ(d₁(x)) √T`, vanna `= -ν d₂ / (S σ √T)`, volga `= ν d₁ d₂ / σ`. -/
+
+/-- The forward rate `F = S e^{(rd - rf) T}`. -/
+noncomputable def fwd (S rd rf T : ℝ) : ℝ := S * Real.exp ((rd - rf) * T)
+
+/-- Black-Scholes distance `d₁(x) = (ln(F/x) + σ²T/2) / (σ√T)` at the flat vol `σ`. -/
+noncomputable def d1 (S rd rf σ T x : ℝ) : ℝ :=
+  (Real.log (fwd S rd rf T / x) + σ ^ 2 * T / 2) / (σ * Real.sqrt T)
+
+/-- Black-Scholes distance `d₂(x) = d₁(x) - σ√T`. -/
+noncomputable def d2 (S rd rf σ T x : ℝ) : ℝ :=
+  d1 S rd rf σ T x - σ * Real.sqrt T
+
+/-- Height of the standard bell curve, `φ(u) = e^{-u²/2} / √(2π)`. -/
+noncomputable def φ (u : ℝ) : ℝ :=
+  Real.exp (-(u ^ 2) / 2) / Real.sqrt (2 * Real.pi)
+
+/-- Vega of a call at strike `x`: `S e^{-rf T} φ(d₁) √T`. -/
+noncomputable def vega (S rd rf σ T x : ℝ) : ℝ :=
+  S * Real.exp (-(rf * T)) * φ (d1 S rd rf σ T x) * Real.sqrt T
+
+/-- Vanna of a call at strike `x`: `-ν d₂ / (S σ √T)`. -/
+noncomputable def vanna (S rd rf σ T x : ℝ) : ℝ :=
+  -(vega S rd rf σ T x * d2 S rd rf σ T x) / (S * σ * Real.sqrt T)
+
+/-- Volga of a call at strike `x`: `ν d₁ d₂ / σ`. -/
+noncomputable def volga (S rd rf σ T x : ℝ) : ℝ :=
+  vega S rd rf σ T x * d1 S rd rf σ T x * d2 S rd rf σ T x / σ
+
+/-- The log-strike weight `y₁(K) = ln(K₂/K) ln(K₃/K) / (ln(K₂/K₁) ln(K₃/K₁))`. -/
+noncomputable def y1 (K₁ K₂ K₃ K : ℝ) : ℝ :=
+  Real.log (K₂ / K) * Real.log (K₃ / K) / (Real.log (K₂ / K₁) * Real.log (K₃ / K₁))
+
+/-- The log-strike weight `y₂(K) = ln(K/K₁) ln(K₃/K) / (ln(K₂/K₁) ln(K₃/K₂))`. -/
+noncomputable def y2 (K₁ K₂ K₃ K : ℝ) : ℝ :=
+  Real.log (K / K₁) * Real.log (K₃ / K) / (Real.log (K₂ / K₁) * Real.log (K₃ / K₂))
+
+/-- The log-strike weight `y₃(K) = ln(K/K₁) ln(K/K₂) / (ln(K₃/K₁) ln(K₃/K₂))`. -/
+noncomputable def y3 (K₁ K₂ K₃ K : ℝ) : ℝ :=
+  Real.log (K / K₁) * Real.log (K / K₂) / (Real.log (K₃ / K₁) * Real.log (K₃ / K₂))
+
+/-- The second-order vanna-volga smile `σ(K)` of the card. With `D₁ = y₁σ₁ + y₂σ₂ + y₃σ₃ - σ₂`,
+`D₂ = y₁ d₁d₂(K₁)(σ₁-σ₂)² + y₃ d₁d₂(K₃)(σ₃-σ₂)²` and `P = d₁d₂(K)`, all `d`'s at `σ₂`:
+`σ(K) = σ₂ + (-σ₂ + √(σ₂² + P(2σ₂D₁ + D₂))) / P`, and where `P = 0` (the 0/0 point) its limit
+`σ₂ + D₁ + D₂/(2σ₂)`. -/
+noncomputable def smile (S rd rf T K₁ K₂ K₃ σ₁ σ₂ σ₃ K : ℝ) : ℝ :=
+  let dd : ℝ → ℝ := fun x => d1 S rd rf σ₂ T x * d2 S rd rf σ₂ T x
+  let D1 := y1 K₁ K₂ K₃ K * σ₁ + y2 K₁ K₂ K₃ K * σ₂ + y3 K₁ K₂ K₃ K * σ₃ - σ₂
+  let D2 := y1 K₁ K₂ K₃ K * dd K₁ * (σ₁ - σ₂) ^ 2 + y3 K₁ K₂ K₃ K * dd K₃ * (σ₃ - σ₂) ^ 2
+  let P := dd K
+  if P = 0 then σ₂ + D1 + D2 / (2 * σ₂)
+  else σ₂ + (-σ₂ + Real.sqrt (σ₂ ^ 2 + P * (2 * σ₂ * D1 + D2))) / P
+
+/-- Three-point interpolation: a weighted sum reproduces `1`, `e` and `e²` exactly when the
+weights are the Lagrange weights at the distinct nodes `e₁, e₂, e₃`. -/
+theorem lagrange_three_weights (w₁ w₂ w₃ e₁ e₂ e₃ e ν : ℝ)
+    (h12 : e₁ ≠ e₂) (h13 : e₁ ≠ e₃) (h23 : e₂ ≠ e₃) :
+    (w₁ + w₂ + w₃ = ν ∧ w₁ * e₁ + w₂ * e₂ + w₃ * e₃ = ν * e ∧
+        w₁ * e₁ ^ 2 + w₂ * e₂ ^ 2 + w₃ * e₃ ^ 2 = ν * e ^ 2) ↔
+      (w₁ = ν * ((e - e₂) * (e - e₃) / ((e₁ - e₂) * (e₁ - e₃))) ∧
+        w₂ = ν * ((e - e₁) * (e - e₃) / ((e₂ - e₁) * (e₂ - e₃))) ∧
+        w₃ = ν * ((e - e₁) * (e - e₂) / ((e₃ - e₁) * (e₃ - e₂)))) := by
+  have d12 : e₁ - e₂ ≠ 0 := sub_ne_zero.mpr h12
+  have d13 : e₁ - e₃ ≠ 0 := sub_ne_zero.mpr h13
+  have d23 : e₂ - e₃ ≠ 0 := sub_ne_zero.mpr h23
+  have d21 : e₂ - e₁ ≠ 0 := sub_ne_zero.mpr h12.symm
+  have d31 : e₃ - e₁ ≠ 0 := sub_ne_zero.mpr h13.symm
+  have d32 : e₃ - e₂ ≠ 0 := sub_ne_zero.mpr h23.symm
+  constructor
+  · rintro ⟨h1, h2, h3⟩
+    refine ⟨?_, ?_, ?_⟩
+    · rw [mul_div_assoc', eq_div_iff (mul_ne_zero d12 d13)]
+      linear_combination h3 - (e₂ + e₃) * h2 + e₂ * e₃ * h1
+    · rw [mul_div_assoc', eq_div_iff (mul_ne_zero d21 d23)]
+      linear_combination h3 - (e₁ + e₃) * h2 + e₁ * e₃ * h1
+    · rw [mul_div_assoc', eq_div_iff (mul_ne_zero d31 d32)]
+      linear_combination h3 - (e₁ + e₂) * h2 + e₁ * e₂ * h1
+  · rintro ⟨rfl, rfl, rfl⟩
+    refine ⟨?_, ?_, ?_⟩
+    · field_simp
+      ring
+    · field_simp
+      ring
+    · field_simp
+      ring
+
+/-- The difference of two `d₂` values is a log-strike difference over `σ√T`. -/
+theorem d2_sub_d2 (S rd rf σ T x y : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T)
+    (hx : 0 < x) (hy : 0 < y) :
+    d2 S rd rf σ T x - d2 S rd rf σ T y = (Real.log y - Real.log x) / (σ * Real.sqrt T) := by
+  have hF : 0 < fwd S rd rf T := by unfold fwd; positivity
+  have hr : 0 < Real.sqrt T := Real.sqrt_pos.mpr hT
+  unfold d2 d1
+  rw [Real.log_div hF.ne' hx.ne', Real.log_div hF.ne' hy.ne']
+  field_simp
+  ring
+
+/-- Logs of distinct positive numbers are distinct. -/
+theorem log_ne_log_of_ne {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (h : a ≠ b) :
+    Real.log a ≠ Real.log b := fun e => h (Real.log_injOn_pos ha hb e)
+
+#print axioms lagrange_three_weights
+#print axioms d2_sub_d2
+#print axioms log_ne_log_of_ne
+
+/-- **The hedge weights are log-strike weights** (Step 1). With a positive spot, flat vol and
+time, and three distinct positive pillar strikes `K₁, K₂, K₃`, amounts `x₁, x₂, x₃` of the three
+pillar calls match the vega, vanna and volga of a call at any positive strike `K` (all at the
+flat vol) exactly when `xᵢ = ν(K)/ν(Kᵢ) · yᵢ(K)`: the log-strike weights scaled by vegas, and
+no other amounts do. -/
+theorem vanna_volga_hedge_weights_are_log_strike_weights
+    (S rd rf σ T K₁ K₂ K₃ K x₁ x₂ x₃ : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T)
+    (hK₁ : 0 < K₁) (hK₂ : 0 < K₂) (hK₃ : 0 < K₃) (hK : 0 < K)
+    (h₁₂ : K₁ ≠ K₂) (h₁₃ : K₁ ≠ K₃) (h₂₃ : K₂ ≠ K₃) :
+    (x₁ * vega S rd rf σ T K₁ + x₂ * vega S rd rf σ T K₂ + x₃ * vega S rd rf σ T K₃
+          = vega S rd rf σ T K ∧
+        x₁ * vanna S rd rf σ T K₁ + x₂ * vanna S rd rf σ T K₂ + x₃ * vanna S rd rf σ T K₃
+          = vanna S rd rf σ T K ∧
+        x₁ * volga S rd rf σ T K₁ + x₂ * volga S rd rf σ T K₂ + x₃ * volga S rd rf σ T K₃
+          = volga S rd rf σ T K) ↔
+      (x₁ = vega S rd rf σ T K / vega S rd rf σ T K₁ * y1 K₁ K₂ K₃ K ∧
+        x₂ = vega S rd rf σ T K / vega S rd rf σ T K₂ * y2 K₁ K₂ K₃ K ∧
+        x₃ = vega S rd rf σ T K / vega S rd rf σ T K₃ * y3 K₁ K₂ K₃ K) := by
+  have hr : 0 < Real.sqrt T := Real.sqrt_pos.mpr hT
+  have hs : 0 < σ * Real.sqrt T := mul_pos hσ hr
+  have hvpos : ∀ x, 0 < vega S rd rf σ T x := by
+    intro x; unfold vega φ; positivity
+  set κ : ℝ := -1 / (S * σ * Real.sqrt T) with hκdef
+  have hκ : κ ≠ 0 := by rw [hκdef]; exact div_ne_zero (by norm_num) (by positivity)
+  set μ : ℝ := 1 / σ with hμdef
+  have hμ : μ ≠ 0 := by rw [hμdef]; exact div_ne_zero one_ne_zero hσ.ne'
+  have hvanna : ∀ x, vanna S rd rf σ T x = κ * (vega S rd rf σ T x * d2 S rd rf σ T x) := by
+    intro x; unfold vanna; rw [hκdef]; ring
+  have hvolga : ∀ x, volga S rd rf σ T x = μ * (vega S rd rf σ T x *
+      (d2 S rd rf σ T x ^ 2 + σ * Real.sqrt T * d2 S rd rf σ T x)) := by
+    intro x
+    have : d1 S rd rf σ T x = d2 S rd rf σ T x + σ * Real.sqrt T := by unfold d2; ring
+    unfold volga; rw [this, hμdef]; ring
+  have hl : ∀ {a b : ℝ}, 0 < a → 0 < b → a ≠ b →
+      d2 S rd rf σ T a ≠ d2 S rd rf σ T b := by
+    intro a b ha hb hab h
+    have h0 := d2_sub_d2 S rd rf σ T a b hS hσ hT ha hb
+    rw [h, sub_self, eq_comm, div_eq_zero_iff] at h0
+    rcases h0 with h0 | h0
+    · exact log_ne_log_of_ne ha hb hab (sub_eq_zero.mp h0).symm
+    · exact hs.ne' h0
+  have e12 := hl hK₁ hK₂ h₁₂
+  have e13 := hl hK₁ hK₃ h₁₃
+  have e23 := hl hK₂ hK₃ h₂₃
+  have a12 := sub_ne_zero.mpr (log_ne_log_of_ne hK₁ hK₂ h₁₂)
+  have a13 := sub_ne_zero.mpr (log_ne_log_of_ne hK₁ hK₃ h₁₃)
+  have a23 := sub_ne_zero.mpr (log_ne_log_of_ne hK₂ hK₃ h₂₃)
+  have a21 := sub_ne_zero.mpr (log_ne_log_of_ne hK₂ hK₁ h₁₂.symm)
+  have a31 := sub_ne_zero.mpr (log_ne_log_of_ne hK₃ hK₁ h₁₃.symm)
+  have a32 := sub_ne_zero.mpr (log_ne_log_of_ne hK₃ hK₂ h₂₃.symm)
+  have l : ∀ x y : ℝ, 0 < x → 0 < y → Real.log (x / y) = Real.log x - Real.log y :=
+    fun x y hx hy => Real.log_div hx.ne' hy.ne'
+  have dd : ∀ x y : ℝ, 0 < x → 0 < y →
+      d2 S rd rf σ T x - d2 S rd rf σ T y = (Real.log y - Real.log x) / (σ * Real.sqrt T) :=
+    fun x y hx hy => d2_sub_d2 S rd rf σ T x y hS hσ hT hx hy
+  have L1 : y1 K₁ K₂ K₃ K = (d2 S rd rf σ T K - d2 S rd rf σ T K₂) *
+      (d2 S rd rf σ T K - d2 S rd rf σ T K₃) /
+      ((d2 S rd rf σ T K₁ - d2 S rd rf σ T K₂) * (d2 S rd rf σ T K₁ - d2 S rd rf σ T K₃)) := by
+    unfold y1
+    rw [dd K K₂ hK hK₂, dd K K₃ hK hK₃, dd K₁ K₂ hK₁ hK₂, dd K₁ K₃ hK₁ hK₃,
+      l K₂ K hK₂ hK, l K₃ K hK₃ hK, l K₂ K₁ hK₂ hK₁, l K₃ K₁ hK₃ hK₁]
+    field_simp
+  have L2 : y2 K₁ K₂ K₃ K = (d2 S rd rf σ T K - d2 S rd rf σ T K₁) *
+      (d2 S rd rf σ T K - d2 S rd rf σ T K₃) /
+      ((d2 S rd rf σ T K₂ - d2 S rd rf σ T K₁) * (d2 S rd rf σ T K₂ - d2 S rd rf σ T K₃)) := by
+    unfold y2
+    rw [dd K K₁ hK hK₁, dd K K₃ hK hK₃, dd K₂ K₁ hK₂ hK₁, dd K₂ K₃ hK₂ hK₃,
+      l K K₁ hK hK₁, l K₃ K hK₃ hK, l K₂ K₁ hK₂ hK₁, l K₃ K₂ hK₃ hK₂]
+    field_simp
+    ring
+  have L3 : y3 K₁ K₂ K₃ K = (d2 S rd rf σ T K - d2 S rd rf σ T K₁) *
+      (d2 S rd rf σ T K - d2 S rd rf σ T K₂) /
+      ((d2 S rd rf σ T K₃ - d2 S rd rf σ T K₁) * (d2 S rd rf σ T K₃ - d2 S rd rf σ T K₂)) := by
+    unfold y3
+    rw [dd K K₁ hK hK₁, dd K K₂ hK hK₂, dd K₃ K₁ hK₃ hK₁, dd K₃ K₂ hK₃ hK₂,
+      l K K₁ hK hK₁, l K K₂ hK hK₂, l K₃ K₁ hK₃ hK₁, l K₃ K₂ hK₃ hK₂]
+    field_simp
+    ring
+  rw [L1, L2, L3]
+  simp only [hvanna, hvolga]
+  have hv₁ := (hvpos K₁).ne'
+  have hv₂ := (hvpos K₂).ne'
+  have hv₃ := (hvpos K₃).ne'
+  generalize vega S rd rf σ T K₁ = ν₁ at *
+  generalize vega S rd rf σ T K₂ = ν₂ at *
+  generalize vega S rd rf σ T K₃ = ν₃ at *
+  generalize vega S rd rf σ T K = ν at *
+  generalize d2 S rd rf σ T K₁ = f₁ at *
+  generalize d2 S rd rf σ T K₂ = f₂ at *
+  generalize d2 S rd rf σ T K₃ = f₃ at *
+  generalize d2 S rd rf σ T K = f at *
+  generalize σ * Real.sqrt T = s at *
+  have key := lagrange_three_weights (x₁ * ν₁) (x₂ * ν₂) (x₃ * ν₃) f₁ f₂ f₃ f ν e12 e13 e23
+  constructor
+  · rintro ⟨h1, h2, h3⟩
+    have h2' : x₁ * ν₁ * f₁ + x₂ * ν₂ * f₂ + x₃ * ν₃ * f₃ = ν * f :=
+      mul_left_cancel₀ hκ (by linear_combination h2)
+    have h3'' : μ * (x₁ * ν₁ * (f₁ ^ 2 + s * f₁) + x₂ * ν₂ * (f₂ ^ 2 + s * f₂) +
+        x₃ * ν₃ * (f₃ ^ 2 + s * f₃)) = μ * (ν * (f ^ 2 + s * f)) := by
+      linear_combination h3
+    have h3' : x₁ * ν₁ * f₁ ^ 2 + x₂ * ν₂ * f₂ ^ 2 + x₃ * ν₃ * f₃ ^ 2 = ν * f ^ 2 := by
+      linear_combination mul_left_cancel₀ hμ h3'' - s * h2'
+    obtain ⟨b1, b2, b3⟩ := key.mp ⟨by linear_combination h1, h2', h3'⟩
+    refine ⟨?_, ?_, ?_⟩
+    · rw [div_mul_eq_mul_div, eq_div_iff hv₁]; linear_combination b1
+    · rw [div_mul_eq_mul_div, eq_div_iff hv₂]; linear_combination b2
+    · rw [div_mul_eq_mul_div, eq_div_iff hv₃]; linear_combination b3
+  · rintro ⟨rfl, rfl, rfl⟩
+    obtain ⟨b1, b2, b3⟩ := key.mpr ⟨by field_simp, by field_simp, by field_simp⟩
+    refine ⟨?_, ?_, ?_⟩
+    · linear_combination b1
+    · linear_combination κ * b2
+    · linear_combination μ * (b3 + s * b2)
+
+/-- **The weights always add up to 1.** For three distinct positive pillar strikes and any
+positive strike `K`, `y₁(K) + y₂(K) + y₃(K) = 1`; so the first-order reading
+`y₁σ₁ + y₂σ₂ + y₃σ₃` is a weighted average of the three pillar vols. -/
+theorem log_strike_weights_sum_to_one (K₁ K₂ K₃ K : ℝ)
+    (hK₁ : 0 < K₁) (hK₂ : 0 < K₂) (hK₃ : 0 < K₃) (hK : 0 < K)
+    (h₁₂ : K₁ ≠ K₂) (h₁₃ : K₁ ≠ K₃) (h₂₃ : K₂ ≠ K₃) :
+    y1 K₁ K₂ K₃ K + y2 K₁ K₂ K₃ K + y3 K₁ K₂ K₃ K = 1 := by
+  have l : ∀ x y : ℝ, 0 < x → 0 < y → Real.log (x / y) = Real.log x - Real.log y :=
+    fun x y hx hy => Real.log_div hx.ne' hy.ne'
+  have a12 := sub_ne_zero.mpr (log_ne_log_of_ne hK₁ hK₂ h₁₂)
+  have a13 := sub_ne_zero.mpr (log_ne_log_of_ne hK₁ hK₃ h₁₃)
+  have a23 := sub_ne_zero.mpr (log_ne_log_of_ne hK₂ hK₃ h₂₃)
+  have a21 := sub_ne_zero.mpr (log_ne_log_of_ne hK₂ hK₁ h₁₂.symm)
+  have a31 := sub_ne_zero.mpr (log_ne_log_of_ne hK₃ hK₁ h₁₃.symm)
+  have a32 := sub_ne_zero.mpr (log_ne_log_of_ne hK₃ hK₂ h₂₃.symm)
+  unfold y1 y2 y3
+  rw [l K₂ K hK₂ hK, l K₃ K hK₃ hK, l K₂ K₁ hK₂ hK₁, l K₃ K₁ hK₃ hK₁, l K K₁ hK hK₁,
+    l K₃ K₂ hK₃ hK₂, l K K₂ hK hK₂]
+  field_simp
+  ring
+
+/-- **The curve passes through all three quotes exactly.** With a positive at-the-money vol
+`σ₂`, three distinct positive pillar strikes, and a moderate skew in the sense that the plus
+root is the sensible root at the outer pillars (`σ₂ + d₁d₂(Kᵢ)(σᵢ - σ₂) ≥ 0` for `i = 1, 3`),
+the second-order vanna-volga smile reads `σ₁` at `K₁`, `σ₂` at `K₂` and `σ₃` at `K₃`. -/
+theorem vanna_volga_smile_passes_through_pillars
+    (S rd rf T K₁ K₂ K₃ σ₁ σ₂ σ₃ : ℝ) (hσ₂ : 0 < σ₂)
+    (hK₁ : 0 < K₁) (hK₂ : 0 < K₂) (hK₃ : 0 < K₃)
+    (h₁₂ : K₁ ≠ K₂) (h₁₃ : K₁ ≠ K₃) (h₂₃ : K₂ ≠ K₃)
+    (hm₁ : 0 ≤ σ₂ + d1 S rd rf σ₂ T K₁ * d2 S rd rf σ₂ T K₁ * (σ₁ - σ₂))
+    (hm₃ : 0 ≤ σ₂ + d1 S rd rf σ₂ T K₃ * d2 S rd rf σ₂ T K₃ * (σ₃ - σ₂)) :
+    smile S rd rf T K₁ K₂ K₃ σ₁ σ₂ σ₃ K₁ = σ₁ ∧
+      smile S rd rf T K₁ K₂ K₃ σ₁ σ₂ σ₃ K₂ = σ₂ ∧
+      smile S rd rf T K₁ K₂ K₃ σ₁ σ₂ σ₃ K₃ = σ₃ := by
+  have lnz : ∀ {a b : ℝ}, 0 < a → 0 < b → a ≠ b → Real.log (a / b) ≠ 0 := by
+    intro a b ha hb hab h
+    rw [Real.log_div ha.ne' hb.ne', sub_eq_zero] at h
+    exact log_ne_log_of_ne ha hb hab h
+  have y1₁ : y1 K₁ K₂ K₃ K₁ = 1 := by
+    unfold y1; exact div_self (mul_ne_zero (lnz hK₂ hK₁ h₁₂.symm) (lnz hK₃ hK₁ h₁₃.symm))
+  have y2₁ : y2 K₁ K₂ K₃ K₁ = 0 := by unfold y2; simp [div_self hK₁.ne']
+  have y3₁ : y3 K₁ K₂ K₃ K₁ = 0 := by unfold y3; simp [div_self hK₁.ne']
+  have y1₂ : y1 K₁ K₂ K₃ K₂ = 0 := by unfold y1; simp [div_self hK₂.ne']
+  have y2₂ : y2 K₁ K₂ K₃ K₂ = 1 := by
+    unfold y2; exact div_self (mul_ne_zero (lnz hK₂ hK₁ h₁₂.symm) (lnz hK₃ hK₂ h₂₃.symm))
+  have y3₂ : y3 K₁ K₂ K₃ K₂ = 0 := by unfold y3; simp [div_self hK₂.ne']
+  have y1₃ : y1 K₁ K₂ K₃ K₃ = 0 := by unfold y1; simp [div_self hK₃.ne']
+  have y2₃ : y2 K₁ K₂ K₃ K₃ = 0 := by unfold y2; simp [div_self hK₃.ne']
+  have y3₃ : y3 K₁ K₂ K₃ K₃ = 1 := by
+    unfold y3; exact div_self (mul_ne_zero (lnz hK₃ hK₁ h₁₃.symm) (lnz hK₃ hK₂ h₂₃.symm))
+  unfold smile
+  simp only [y1₁, y2₁, y3₁, y1₂, y2₂, y3₂, y1₃, y2₃, y3₃]
+  generalize d1 S rd rf σ₂ T K₁ * d2 S rd rf σ₂ T K₁ = p₁ at *
+  generalize d1 S rd rf σ₂ T K₂ * d2 S rd rf σ₂ T K₂ = p₂ at *
+  generalize d1 S rd rf σ₂ T K₃ * d2 S rd rf σ₂ T K₃ = p₃ at *
+  have hσ₂' := hσ₂.ne'
+  refine ⟨?_, ?_, ?_⟩
+  · split_ifs with hP
+    · subst hP; field_simp; ring
+    · rw [show σ₂ ^ 2 + p₁ * (2 * σ₂ * (1 * σ₁ + 0 * σ₂ + 0 * σ₃ - σ₂) +
+          (1 * p₁ * (σ₁ - σ₂) ^ 2 + 0 * p₃ * (σ₃ - σ₂) ^ 2)) =
+          (σ₂ + p₁ * (σ₁ - σ₂)) ^ 2 by ring, Real.sqrt_sq hm₁]
+      field_simp; ring
+  · split_ifs with hP
+    · ring
+    · rw [show σ₂ ^ 2 + p₂ * (2 * σ₂ * (0 * σ₁ + 1 * σ₂ + 0 * σ₃ - σ₂) +
+          (0 * p₁ * (σ₁ - σ₂) ^ 2 + 0 * p₃ * (σ₃ - σ₂) ^ 2)) = σ₂ ^ 2 by ring,
+        Real.sqrt_sq hσ₂.le]
+      ring
+  · split_ifs with hP
+    · subst hP; field_simp; ring
+    · rw [show σ₂ ^ 2 + p₃ * (2 * σ₂ * (0 * σ₁ + 0 * σ₂ + 1 * σ₃ - σ₂) +
+          (0 * p₁ * (σ₁ - σ₂) ^ 2 + 1 * p₃ * (σ₃ - σ₂) ^ 2)) =
+          (σ₂ + p₃ * (σ₃ - σ₂)) ^ 2 by ring, Real.sqrt_sq hm₃]
+      field_simp; ring
+
+#print axioms vanna_volga_hedge_weights_are_log_strike_weights
+#print axioms log_strike_weights_sum_to_one
+#print axioms vanna_volga_smile_passes_through_pillars
+
+end VannaVolgaSmile
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'VannaVolgaSmile.lagrange_three_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VannaVolgaSmile.d2_sub_d2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VannaVolgaSmile.log_ne_log_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VannaVolgaSmile.vanna_volga_hedge_weights_are_log_strike_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VannaVolgaSmile.log_strike_weights_sum_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VannaVolgaSmile.vanna_volga_smile_passes_through_pillars' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
 > - **Flatten the smile.** Set the house risk reversal and butterfly to 0 in `market(1.0, 0.10, -0.01, 0.0025)`. Every weight still exists, but every vol gap is zero, so the curve reads 10.00% at every strike. The first assert fails: with the vols changed, the 25-delta strikes move off 1.052466 and 1.201425.
-> - **Make the risk reversal −3%.** Already in the code as the steep skew: the curve ends at 1.286412 and the density just before the end is −0.959924.
 > - **Drop the butterfly on the six-month market to +0.25%.** Guess: less curvature, less wing. The calendar assert fails; the two expiries no longer cross at $k$ = 0.3.
 > - **Replace log-strikes with strikes in `ys`.** The curve still passes through the three quotes, but at 1.15 it no longer agrees with the full vanna-volga price and the road 1 against road 2 assert fails: the theorem of Step 1 is a statement about log-strikes.
 

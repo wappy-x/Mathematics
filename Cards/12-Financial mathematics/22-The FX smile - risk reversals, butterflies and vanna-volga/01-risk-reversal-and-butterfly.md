@@ -16,7 +16,7 @@ Picture a plank resting on three posts. Three numbers pin it down: how high it s
 
 **Three quotes are three vols in other coordinates: level, tilt and bow; add and subtract to get the vols back, then price each leg at its own vol.**
 
-**What kind of fact this is:** a convention: the market chose to quote this way, and the recovery of the three vols is algebra proved on this card. The prices of the two trades then follow from the Garman-Kohlhagen model (Black-Scholes for a currency, with the euro rate in the dividend's place), which is an assumption about how the rate moves, not a law.
+**What kind of fact this is:** a convention: the market chose to quote this way, and the recovery of the three vols is algebra proved on this card. The prices of the two trades then follow from the [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md) model (Black-Scholes for a currency, with the euro rate in the dividend's place), which is an assumption about how the rate moves, not a law.
 
 ### The picture: the smile the three quotes describe
 
@@ -42,7 +42,7 @@ and, solved the other way,
 
 $$\sigma_{25c} = \sigma_{\text{ATM}} + \text{BF} + \tfrac12\text{RR}, \qquad \sigma_{25p} = \sigma_{\text{ATM}} + \text{BF} - \tfrac12\text{RR}$$
 
-**Read it aloud: the risk reversal is the call wing's vol minus the put wing's vol; the butterfly is how far the wings' average sits above the middle; so each wing is the middle, plus the bow, plus or minus half the tilt.**
+**Read it aloud:** the risk reversal is the call wing's vol minus the put wing's vol; the butterfly is how far the wings' average sits above the middle; so each wing is the middle, plus the bow, plus or minus half the tilt.
 
 The two trades that carry the same names, each leg priced by Garman-Kohlhagen at its own vol:
 
@@ -77,7 +77,7 @@ In words: a 25-delta strike is the forward moved by the $d_1$ that makes the hed
 
 The two quote definitions are conventions: they hold because the market uses them. What can break is how they are read and priced.
 
-- **The right delta.** For EURUSD up to one year, the 25-delta strikes are set on spot delta with the premium not adjusted. A different delta convention lands the same "25" on strikes tens of pips away (a pip is 0.0001 dollars per euro), and every price moves with it.
+- **The right delta.** For EURUSD up to one year, the 25-delta strikes are set on spot delta with the premium not adjusted ([Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md) sets out the choices). A different delta convention lands the same "25" on strikes tens of pips away (a pip is 0.0001 dollars per euro), and every price moves with it.
 - **The butterfly as a smile strangle.** This card reads BF as the bow of the smile itself. Brokers quote a *market* strangle, priced at one vol, $\sigma_{\text{ATM}} + \text{BF}$, for both wings; its smile bow differs by a fraction of a vol point, as [The broker butterfly](02-market-strangle-and-smile-strangle.md) shows.
 - **Positive wings.** Both recovered vols must be positive: $\sigma_{\text{ATM}} + \text{BF} > \tfrac12|\text{RR}|$. A quote that breaks this has no smile behind it.
 - **Three points, not a curve.** The quotes fix the smile at three strikes only. A vol for any other strike needs an interpolation rule, and each rule gives a different answer.
@@ -145,7 +145,7 @@ A negative risk reversal says the put wing is dearer than the call wing. Buyers 
 
 ### The other door
 
-A dealer can start from option prices instead: price the three pillar options on a broker's run, back out each one's implied vol with a root finder, and form RR and BF from the vols. The check does exactly that from the brute-force prices and gets −1.000000 and 0.250000 back. Backing out the vols is [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
+A dealer can start from option prices instead: price the three pillar options (the three options the quotes pin down: 25-delta put, ATM, 25-delta call) on a broker's run, back out each one's implied vol with a root finder, and form RR and BF from the vols. The check does exactly that from the brute-force prices and gets −1.000000 and 0.250000 back. Backing out the vols is [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
 
 ---
 
@@ -186,7 +186,7 @@ Every number in that table is printed by the checks below.
 
 ## Code, from first principles, and it actually runs
 
-The script unpacks the three quotes into three vols, finds the three strikes, and prices both trades. It takes **three independent roads**: the Garman-Kohlhagen formula for each leg; a brute-force average of each payoff over the bell curve, by Simpson's rule, which uses no $d_1$ at all; and a round trip that backs each leg's vol out of the brute-force price by bisection and rebuilds RR and BF from them. Strikes are found twice, by the closed form and by searching on delta. The bell-curve area is itself Simpson's rule written out, so nothing imported knows an answer. It also prints the Greeks, the vega estimates of Steps 3 and 4, every "what breaks" number and the chart points.
+The script unpacks the three quotes into three vols, finds the three strikes, and prices both trades. It takes **three independent roads**: the Garman-Kohlhagen formula for each leg; a brute-force average of each payoff over the bell curve, by Simpson's rule (adding up an area in many thin slices), which uses no $d_1$ at all; and a round trip that backs each leg's vol out of the brute-force price by bisection (halving the search range until the price matches) and rebuilds RR and BF from them. Strikes are found twice, by the closed form and by searching on delta. The bell-curve area is itself Simpson's rule written out, so nothing imported knows an answer. It also prints the Greeks, the vega estimates of Steps 3 and 4, every "what breaks" number and the chart points.
 
 ### Python
 
@@ -580,6 +580,87 @@ xychart-beta
 
 The first line is the risk reversal: a loss below the put strike 1.052466, flat between the strikes, a gain above the call strike 1.201425. It is half a forward with a hole in the middle. The second line is the butterfly trade: zero at the ATM strike 1.127847, falling to its floor at each wing strike, flat beyond. The 512.45 pips received up front pay for it. Its owner keeps most of that if EURUSD ends near the ATM strike, and pays out at most 753.81 pips if it ends in the tails.
 
+### Lean
+
+Lean proves that the three quotes give back exactly one set of three vols, and when both wings are positive, for any real numbers.
+
+- Take any ATM vol, risk reversal and butterfly, and any two wing vols. Then those wings give that RR and BF exactly when each wing follows the formulas above.
+- The matrix that turns the vols (put, ATM, call) into the quotes (ATM, RR, BF) has determinant 1. So the map can always be undone.
+- Take any ATM vol, RR and BF. Then both recovered wing vols are positive exactly when $\sigma_{\text{ATM}} + \text{BF} > \tfrac12|\text{RR}|$.
+- On the house quotes, ATM 10.00, RR −1.00 and BF +0.25 give a call vol of 9.75 and a put vol of 10.75.
+- Those two vols rebuild RR −1.00 and BF +0.25, and both house wings pass the positive-wings test.
+- Putting the whole RR on each wing leaves the wings 2.00 vol points apart, twice the quote.
+
+The strikes, the Garman-Kohlhagen prices of both trades, their deltas and vegas, and the payoff chart are left to the Python and Rust checks.
+
+```lean
+-- Risk reversal and butterfly: the ATM, risk reversal and butterfly quotes determine the two wing vols uniquely by the add-and-subtract formulas, the quote map has determinant 1, and both wings are positive exactly when ATM plus butterfly exceeds half the absolute risk reversal.
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.Order.Group.Abs
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-- Turning the quotes back into vols: for any ATM vol, risk reversal and butterfly, the wing vols
+satisfy `RR = σ_25c - σ_25p` and `BF = (σ_25c + σ_25p)/2 - σ_ATM` exactly when
+`σ_25c = σ_ATM + BF + RR/2` and `σ_25p = σ_ATM + BF - RR/2`. So every quote triple comes from
+exactly one vol triple, given by these formulas. -/
+theorem wing_vols_from_quotes (atm rr bf c p : ℝ) :
+    (rr = c - p ∧ bf = (c + p) / 2 - atm) ↔
+      (c = atm + bf + rr / 2 ∧ p = atm + bf - rr / 2) := by
+  constructor
+  · rintro ⟨h1, h2⟩
+    constructor <;> linarith
+  · rintro ⟨h1, h2⟩
+    constructor <;> linarith
+
+/-- The map from the vols (put, ATM, call) to the quotes (ATM, RR, BF) is multiplication by a
+fixed matrix whose determinant is 1, so the map can always be undone. -/
+theorem quote_matrix_det_eq_one :
+    (!![0, 1, 0; -1, 0, 1; 1 / 2, -1, 1 / 2] : Matrix (Fin 3) (Fin 3) ℝ).det = 1 := by
+  rw [Matrix.det_fin_three]
+  simp
+  norm_num
+
+/-- Positive wings: both recovered wing vols `σ_ATM + BF ± RR/2` are positive exactly when
+`σ_ATM + BF > |RR| / 2`. -/
+theorem wing_vols_pos_iff (atm rr bf : ℝ) :
+    (0 < atm + bf + rr / 2 ∧ 0 < atm + bf - rr / 2) ↔ |rr| / 2 < atm + bf := by
+  constructor
+  · rintro ⟨h1, h2⟩
+    rcases abs_cases rr with ⟨h, _⟩ | ⟨h, _⟩ <;> rw [h] <;> linarith
+  · intro h
+    have h1 := le_abs_self rr
+    have h2 := neg_abs_le rr
+    constructor <;> linarith
+
+-- The card's house quotes, in hundredths of a vol point: ATM 10.00 = 1000, RR -1.00 = -100,
+-- BF +0.25 = 25. The call vol 9.75 = 975 and the put vol 10.75 = 1075.
+example : (1000 : ℝ) + 25 + (-100) / 2 = 975 := by norm_num
+example : (1000 : ℝ) + 25 - (-100) / 2 = 1075 := by norm_num
+-- Back-out: the recovered vols rebuild RR -1.00 and BF +0.25.
+example : (975 : ℝ) - 1075 = -100 := by norm_num
+example : ((975 : ℝ) + 1075) / 2 - 1000 = 25 := by norm_num
+-- Positive wings on the house quotes: 1000 + 25 > |-100| / 2.
+example : |(-100 : ℝ)| / 2 < 1000 + 25 := by norm_num [abs_of_neg]
+-- Mistake row "put the whole RR on each wing": the wings end up 200 apart, twice the quote.
+example : ((1000 : ℝ) + 25 + (-100)) - (1000 + 25 - (-100)) = 2 * (-100) := by norm_num
+
+#print axioms wing_vols_from_quotes
+#print axioms quote_matrix_det_eq_one
+#print axioms wing_vols_pos_iff
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'wing_vols_from_quotes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quote_matrix_det_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wing_vols_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -624,7 +705,7 @@ The first line is the risk reversal: a loss below the put strike 1.052466, flat 
 ## Where this goes next
 
 - [The broker butterfly](02-market-strangle-and-smile-strangle.md): the broker's butterfly is a market strangle priced at one vol; solving for the smile bow that reprices it.
-- [Vanna and volga](03-vanna-and-volga-on-the-smile.md): why the risk reversal is the trade that carries vanna and the butterfly the one that carries volga.
+- [Vanna and volga](03-vanna-and-volga-on-the-smile.md): why the risk reversal is the trade that carries vanna (how fast vega changes when spot moves) and the butterfly the one that carries volga (how fast vega changes when vol moves).
 
 The quotes fix the smile at three strikes, and the broker's butterfly is not quite the bow used here; how far apart the two readings sit is what [The broker butterfly](02-market-strangle-and-smile-strangle.md) settles.
 

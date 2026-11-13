@@ -10,7 +10,9 @@ A trading screen shows three lines. EURUSD 1.1000. USDJPY 150.00. EURJPY 165.50.
 
 The first line says one euro costs 1.1000 US dollars. The second says one dollar costs 150.00 Japanese yen. The third comes from a broker and says one euro costs 165.50 yen.
 
-Those three numbers cannot all be right. Turn one euro into dollars and get 1.1000 dollars. Turn those dollars into yen and get 1.1000 × 150.00 = 165.00 yen. So the euro costs 165.00 yen by the long road and 165.50 yen at the broker. The broker is 0.50 yen too high: 50 pips, in the market's unit of a hundredth of a yen. A trader who sells euros to the broker for yen, buys dollars with the yen, and buys euros back with the dollars ends where they started, plus 0.30 percent. No forecast was needed. Only the three quotes, read the right way round.
+Those three numbers cannot all be right. Turn one euro into dollars and get 1.1000 dollars. Turn those dollars into yen and get 1.1000 × 150.00 = 165.00 yen. So the euro costs 165.00 yen by the long road and 165.50 yen at the broker. The broker is 0.50 yen too high: 50 pips, in the market's unit of a hundredth of a yen.
+
+A trader who sells euros to the broker for yen, buys dollars with the yen, and buys euros back with the dollars ends where they started, plus 0.30 percent. No forecast was needed. Only the three quotes, read the right way round.
 
 Every quote on a currency screen is a price tag. The first currency in the name is the thing being priced. The second is the money the price is counted in. Read that way, a quote can be flipped (the price of a dollar in euros), chained (the price of a euro in yen, via dollars), and checked for a loop that pays.
 
@@ -107,7 +109,9 @@ Step 0 then says the directly quoted EURJPY must equal the chained 165.00. Step 
 
 Go round the triangle. Start with 16,500,000 yen. Buy dollars at 150.00: 110,000 dollars. Buy euros at 1.1000: 100,000 euros. Sell the euros to the broker at 165.50: 16,550,000 yen. The trader holds 50,000 yen more than at the start, 0.3030% of it, and no currency is left over.
 
-The loop's growth factor is the product of the three rates, each read in the direction travelled: (1/150.00) × (1/1.1000) × 165.50 = 165.50/165.00 = 1.003030. A product above 1 pays. The reverse loop multiplies the flipped rates, so its product is one over the first: 1/1.003030, a loss of 0.3021%. Exactly one direction wins, and it wins from any starting currency: the code tries all six loops and finds three winners, the same loop from three starting points.
+The loop's growth factor is the product of the three rates, each read in the direction travelled: (1/150.00) × (1/1.1000) × 165.50 = 165.50/165.00 = 1.003030. A product above 1 pays.
+
+The reverse loop multiplies the flipped rates, so its product is one over the first: 1/1.003030, a loss of 0.3021%. Exactly one direction wins, and it wins from any starting currency: the code tries all six loops and finds three winners, the same loop from three starting points.
 
 So without free money, the product round the triangle is exactly 1, which is the third formula. Rearranged, the direct cross equals the product of the legs.
 
@@ -180,7 +184,9 @@ A second case, the division shape: EURUSD 1.1000 and GBPUSD 1.2500 give EURGBP =
 
 ## Code, from first principles, and it actually runs
 
-The code reaches every number by three independent roads. Road 1 writes the formulas by hand: flip, multiply, divide. Road 2 is a ledger: a single function that sells an amount of one currency for another, looks up whichever way round the pair is quoted, and multiplies or divides accordingly; every cross and every loop is walked through it trade by trade. Road 3 tries all six loops through the three currencies and picks the best. The asserts check that the ledger lands on the formulas, that the search finds the formula's edge, that the reverse loop loses exactly 1/(1 + e) − 1, and that pips times pip size times euros equals the ledger's yen profit. The same is done with bid and ask.
+The code reaches every number by three independent roads. Road 1 writes the formulas by hand: flip, multiply, divide. Road 2 is a ledger: a single function that sells an amount of one currency for another, looks up whichever way round the pair is quoted, and multiplies or divides accordingly; every cross and every loop is walked through it trade by trade. Road 3 tries all six loops through the three currencies and picks the best.
+
+The asserts check that the ledger lands on the formulas, that the search finds the formula's edge, that the reverse loop loses exactly 1/(1 + e) − 1, and that pips times pip size times euros equals the ledger's yen profit. The same is done with bid and ask.
 
 ### Python
 
@@ -545,6 +551,135 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the three loop rules of Why it works for any positive quotes, and checks the worked numbers.
+
+- Take positive quotes $S_{AB}$ and $S_{BC}$, and a cross $q$ dealt both ways. Then no loop round the triangle pays exactly when $q = S_{AB}\,S_{BC}$.
+- Take legs with positive bids and asks, and a cross $q$ dealt both ways. Then no loop pays exactly when $b_{AB}\,b_{BC} \le q \le a_{AB}\,a_{BC}$.
+- Take the same positive quotes, with $q \ne S_{AB}\,S_{BC}$. Then exactly one of the two loop directions pays.
+- The worked numbers come out exactly: USDEUR 10/11, EURJPY 165.00, EURGBP 0.8800, 50 pips, and an edge of 1/330.
+- The loop keeps 50,000 yen. The band runs from 164.974001 to 165.026001, and 165.50 sits above it.
+- A 165.00/166.00 broker leaves no loop that pays, and the multiply mistake gives 1.3750.
+
+The ledger, the six-loop search, the flipped bid and ask, and the chart are left to the Python and Rust checks.
+
+```lean
+-- Reading a currency quote: with positive quotes dealt both ways, no loop round a triangle of currencies pays exactly when the direct cross equals the product of the two legs, with bid and ask no loop pays exactly when the cross sits inside the band from bid times bid to ask times ask, and away from the product exactly one direction of the loop pays.
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Basic.Logic.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+
+/-! A pair `AB` quoted at price `S_AB` means one unit of `A` (the base, the thing) costs `S_AB`
+units of `B` (the quote currency, the money). Selling the first-named currency multiplies by the
+price; buying it divides. Below, `sAB` is EURUSD-style (B per A), `sBC` is USDJPY-style (C per B),
+and `q` is a directly quoted cross AC (C per A), dealt both ways at that one price. -/
+
+/-- **Without free money, a cross rate equals the product of the two quotes it is built from.**
+Start with one unit of `A`. The loop `A → B → C → A` sells `A` at `sAB`, sells `B` at `sBC`, and
+buys `A` back from the cross dealer at `q`, ending with `sAB * sBC / q` units of `A`. The reverse
+loop `A → C → B → A` sells `A` to the cross dealer at `q`, buys `B` with `C` at `sBC`, and buys `A`
+with `B` at `sAB`, ending with `q / sBC / sAB` units of `A`. Neither loop brings back more than
+the one unit it started with exactly when `q = sAB * sBC`. -/
+theorem no_free_loop_iff_cross_eq_product (sAB sBC q : ℝ)
+    (hAB : 0 < sAB) (hBC : 0 < sBC) (hq : 0 < q) :
+    (sAB * sBC / q ≤ 1 ∧ q / sBC / sAB ≤ 1) ↔ q = sAB * sBC := by
+  have e : q / sBC / sAB = q / (sAB * sBC) := by rw [div_div, mul_comm sBC sAB]
+  rw [e, div_le_one hq, div_le_one (mul_pos hAB hBC)]
+  constructor
+  · rintro ⟨h1, h2⟩; linarith
+  · intro h; exact ⟨h.ge, h.le⟩
+
+/-- **With bid and ask, no loop pays exactly when the quoted cross lies in the band
+`b_AB * b_BC ≤ q ≤ a_AB * a_BC`.** Each leg has a bid (where the dealer buys the base currency)
+and an ask (where the dealer sells it); a cross dealer quotes the single price `q`, dealt both
+ways. Starting from any amount `X` of `C`: buying `B` at the ask `aBC`, then `A` at the ask `aAB`,
+then selling `A` to the cross dealer gives `X / aBC / aAB * q`; buying `A` from the cross dealer,
+then selling it for `B` at the bid `bAB` and the `B` for `C` at the bid `bBC`, gives
+`X / q * bAB * bBC`. Neither loop ends above its start, for every starting amount, exactly when
+the cross sits inside the band. -/
+theorem no_free_loop_iff_cross_in_band (bAB aAB bBC aBC q : ℝ)
+    (hbAB : 0 < bAB) (haAB : 0 < aAB) (hbBC : 0 < bBC) (haBC : 0 < aBC) (hq : 0 < q) :
+    (∀ X : ℝ, 0 < X → X / aBC / aAB * q ≤ X ∧ X / q * bAB * bBC ≤ X) ↔
+      (bAB * bBC ≤ q ∧ q ≤ aAB * aBC) := by
+  have hP : 0 < aAB * aBC := mul_pos haAB haBC
+  have e1 : ∀ X : ℝ, X / aBC / aAB * q = X * (q / (aAB * aBC)) := by
+    intro X; field_simp
+  have e2 : ∀ X : ℝ, X / q * bAB * bBC = X * (bAB * bBC / q) := by
+    intro X; field_simp
+  constructor
+  · intro h
+    obtain ⟨h1, h2⟩ := h 1 one_pos
+    rw [e1, one_mul, div_le_one hP] at h1
+    rw [e2, one_mul, div_le_one hq] at h2
+    exact ⟨h2, h1⟩
+  · rintro ⟨h1, h2⟩ X hX
+    rw [e1, e2]
+    have k1 : q / (aAB * aBC) ≤ 1 := (div_le_one hP).2 h2
+    have k2 : bAB * bBC / q ≤ 1 := (div_le_one hq).2 h1
+    exact ⟨by nlinarith, by nlinarith⟩
+
+/-- **Exactly one direction wins.** When the quoted cross `q` differs from the product of the
+legs, exactly one of the two loops round the triangle (forward growth `sAB * sBC / q`, reverse
+growth `q / sBC / sAB`) brings back more than the one unit it started with. -/
+theorem exactly_one_direction_pays (sAB sBC q : ℝ)
+    (hAB : 0 < sAB) (hBC : 0 < sBC) (hq : 0 < q) (hne : q ≠ sAB * sBC) :
+    Xor (1 < sAB * sBC / q) (1 < q / sBC / sAB) := by
+  have e : q / sBC / sAB = q / (sAB * sBC) := by rw [div_div, mul_comm sBC sAB]
+  have hP : 0 < sAB * sBC := mul_pos hAB hBC
+  rw [e, one_lt_div hq, one_lt_div hP]
+  rcases lt_or_gt_of_ne hne with h | h
+  · exact Or.inl ⟨h, not_lt.2 h.le⟩
+  · exact Or.inr ⟨h, not_lt.2 h.le⟩
+
+/-! The card's worked numbers, as exact fractions: EURUSD 1.1000 = 11/10, USDJPY 150,
+GBPUSD 1.2500 = 5/4, broker EURJPY 165.50 = 331/2. -/
+
+-- Flip: USDEUR = 1 / 1.1000 = 10/11 (0.909091 rounded).
+example : (1 : ℚ) / (11 / 10) = 10 / 11 := by norm_num
+-- Cross: EURJPY = 1.1000 × 150.00 = 165.00.
+example : (11 / 10 : ℚ) * 150 = 165 := by norm_num
+-- Division shape: EURGBP = 1.1000 / 1.2500 = 0.8800.
+example : (11 / 10 : ℚ) / (5 / 4) = 22 / 25 := by norm_num
+-- Broker's excess: 165.50 − 165.00 = 0.50 yen = 50 pips of 0.01.
+example : ((331 / 2 : ℚ) - 165) / (1 / 100) = 50 := by norm_num
+-- The edge: 165.50 / 165.00 − 1 = 1/330 (0.3030%).
+example : (331 / 2 : ℚ) / 165 - 1 = 1 / 330 := by norm_num
+-- The loop: 16,500,000 JPY → 110,000 USD → 100,000 EUR → 16,550,000 JPY, keeping 50,000 JPY.
+example : (16500000 : ℚ) / 150 = 110000 := by norm_num
+example : (110000 : ℚ) / (11 / 10) = 100000 := by norm_num
+example : (100000 : ℚ) * (331 / 2) = 16550000 := by norm_num
+example : (16550000 : ℚ) - 16500000 = 50000 := by norm_num
+-- Same profit counted in pips: 50 pips × 0.01 × 100,000 euros = 50,000 JPY.
+example : (50 : ℚ) * (1 / 100) * 100000 = 50000 := by norm_num
+-- The band from the two-pip legs: 1.0999 × 149.99 = 164.974001 and 1.1001 × 150.01 = 165.026001.
+example : (10999 / 10000 : ℚ) * (14999 / 100) = 164974001 / 1000000 := by norm_num
+example : (11001 / 10000 : ℚ) * (15001 / 100) = 165026001 / 1000000 := by norm_num
+-- Broker at 165.50 sits above the band; a 165.00/166.00 broker's bid is below the band's top
+-- and its ask above the band's bottom, so no loop pays.
+example : (165026001 / 1000000 : ℚ) < 331 / 2 := by norm_num
+example : (165 : ℚ) < 165026001 / 1000000 ∧ (164974001 / 1000000 : ℚ) < 166 := by norm_num
+-- Mistake: multiplying EURUSD by GBPUSD gives 1.3750, not 0.8800.
+example : (11 / 10 : ℚ) * (5 / 4) = 11 / 8 := by norm_num
+
+#print axioms no_free_loop_iff_cross_eq_product
+#print axioms no_free_loop_iff_cross_in_band
+#print axioms exactly_one_direction_pays
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'no_free_loop_iff_cross_eq_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_free_loop_iff_cross_in_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exactly_one_direction_pays' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -572,7 +707,7 @@ The two outputs agree line for line.
 - **Bank and airport exchange boards.** A board that lists "we buy" and "we sell" is a bid and an ask. The gap between them is the booth's fee, and a loop through two booths almost never pays because each booth's gap is wide.
 - **Card payments abroad.** A purchase in a currency the card is not billed in is converted at a quote read exactly as on this card, usually with a spread added; when no direct market exists between the two currencies, the rate is a cross through a third.
 - **Central bank reference rates.** The European Central Bank publishes daily reference rates as units of each currency per one euro, so every ECB rate has the euro as base. The Federal Reserve's H.10 release lists most currencies per dollar, with the euro, pound, Australian and New Zealand dollars the other way round.
-- **Why the dollar sits in the middle.** Most currency trading has the dollar on one side, as the BIS survey of currency markets documents every three years. Pairs without the dollar are often priced as crosses through it, which is why EURJPY is built from EURUSD and USDJPY and not the other way round.
+- **Why the dollar sits in the middle.** Most currency trading has the dollar on one side, as the survey of currency markets by the Bank for International Settlements (BIS) documents every three years. Pairs without the dollar are often priced as crosses through it, which is why EURJPY is built from EURUSD and USDJPY and not the other way round.
 - **Arbitrage programs.** Banks run code that watches every triangle of pairs and trades the instant a product round a loop leaves the bid–ask band. Their speed is why a quote like 165.50 against a built 165.00 would last milliseconds on a real screen.
 - **Forwards and options on currencies.** Every later card on this shelf reads a forward or an option through the quote's direction: the forward in [Covered interest parity](02-covered-interest-parity.md), its points in [Forward points and the FX swap](03-forward-points-and-fx-swaps.md), its value later in [Valuing an old currency forward](04-fx-forward-value-after-inception.md), and the rate it implies in [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md).
 

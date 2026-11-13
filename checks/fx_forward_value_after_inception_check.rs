@@ -126,5 +126,5 @@ fn main() {
     assert!((eur_bump - eur_ds).abs() < 1e-3, "euro-count nudge must match its slope");
     assert!((hi - f_flat).abs() < 1e-12, "bisection must find the weighted delivery rate");
     assert!(((f_house * 1e4).round() / 1e4 - F).abs() < 1e-12, "the quote is the house forward rounded to the pip");
-    println!("PASS");
+    println!("ALL CHECKS PASS");
 }

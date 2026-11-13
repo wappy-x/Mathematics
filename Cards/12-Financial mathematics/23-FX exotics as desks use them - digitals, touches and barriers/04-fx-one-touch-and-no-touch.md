@@ -46,7 +46,7 @@ with $b = \ln(H/S)$, $\nu = r_d - r_f - \tfrac12\sigma^2$ and $\lambda = \nu/\si
 
 $$V_{OT} = e^{-r_d T}\,P(\tau \le T), \qquad V_{NT} = e^{-r_d T} - V_{OT}.$$
 
-**Read it aloud: the one-touch is the chance the rate ever reaches the wall, discounted at the dollar rate; that chance is the chance of finishing beyond the wall plus a weighted mirror term for the paths that touched and came back; the no-touch is what is left of one discounted dollar.**
+**Read it aloud:** the one-touch is the chance the rate ever reaches the wall, discounted at the dollar rate; that chance is the chance of finishing beyond the wall plus a weighted mirror term for the paths that touched and came back; the no-touch is what is left of one discounted dollar.
 
 Paying at the touch, or paying in euros, needs one change each:
 
@@ -56,7 +56,7 @@ $$V_{OT}^{EUR} = e^{-r_f T}\,P_{\nu_f}(\tau \le T), \qquad V_{OT}^{EUR,hit} = \f
 
 Here $P_{\hat\nu}$ means the same touch formula with the drift $\nu$ replaced by $\hat\nu$, and likewise for $\nu_f$.
 
-**Read it aloud: paying at the touch is the same touch chance with the drift raised to absorb the discounting; paying in euros is the touch chance counted in euros and discounted at the euro rate; and a euro paid at the touch is worth exactly $H$ dollars at that moment.**
+**Read it aloud:** paying at the touch is the same touch chance with the drift raised to absorb the discounting; paying in euros is the touch chance counted in euros and discounted at the euro rate; and a euro paid at the touch is worth exactly $H$ dollars at that moment.
 
 | Symbol | Plain meaning | In our example | Push it up and the one-touch… |
 | --- | --- | --- | --- |
@@ -159,7 +159,7 @@ Hold a one-touch and a no-touch on the same wall, both paid at expiry. On every 
 
 $$V_{NT} = e^{-r_d T} - V_{OT} = 0.951229 - 0.414213 = 0.537017.$$
 
-No model entered: the identity holds with any smile, jumps, or monitoring rule, as long as both contracts use the same rule. The code confirms it by pricing the no-touch directly, from the chance that the path ends below the wall and the Brownian bridge between now and expiry never crosses it.
+No model entered: the identity holds with any smile, jumps, or monitoring rule, as long as both contracts use the same rule. The code confirms it by pricing the no-touch directly, from the chance that the path ends below the wall and the Brownian bridge between now and expiry never crosses it. A Brownian bridge is the random path between two points whose values are both known: [Brownian bridge](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/05-brownian-bridge.md).
 
 ### Step 8: daily monitoring, and the shift
 
@@ -380,9 +380,10 @@ assert abs(nt_usd - nt_usd3) < 1e-7                                   # compleme
 assert abs(p_mc - p_d) < 3.0 * se                                     # simulation agrees with the formula
 assert abs(exp(-rd * T) * p_daily - ot_bgk) < 0.004                   # shifted wall matches daily checks
 print("all checks passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-27 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 ln(H/S)                                      0.087011
@@ -438,6 +439,7 @@ ladder: EURUSD today, one-touch USD, no-touch USD
   1.18   0.84   0.11
   1.20   0.95   0.00
 all checks passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -599,10 +601,11 @@ fn main() {
     assert!((p_mc - p_d).abs() < 3.0 * se);
     assert!(((-RD * T).exp() * p_daily - ot_bgk).abs() < 0.004);
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 ln(H/S)                                      0.087011
@@ -658,6 +661,7 @@ ladder: EURUSD today, one-touch USD, no-touch USD
   1.18   0.84   0.11
   1.20   0.95   0.00
 all checks passed
+ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.

@@ -8,9 +8,13 @@
 
 A euro costs 1.1000 dollars today. Dollar deposits pay 5 percent a year, euro deposits 3 percent. The fair price for euros delivered in one year is 1.122221 dollars, and for euros delivered in three months, 1.105514 ([Covered interest parity](02-covered-interest-parity.md)).
 
-A dealer does not quote those numbers. The dealer quotes the gap. One year is "plus 222.21", three months "plus 55.14". The unit is the **pip**, one ten-thousandth of a dollar per euro, 0.0001. The gap in pips is the **forward points**. Add the points to today's rate and the result is the **outright**: the full forward rate. The reason for quoting the gap is practical. Today's rate, the **spot rate**, changes several times a second. The gap is set by two interest rates, which change a few times a year.
+A dealer does not quote those numbers. The dealer quotes the gap. One year is "plus 222.21", three months "plus 55.14". The unit is the **pip**, one ten-thousandth of a dollar per euro, 0.0001. The gap in pips is the **forward points**. Add the points to today's rate and the result is the **outright**: the full forward rate.
 
-The points are also the price of a trade. A European bank holds 10 million euros and needs dollars for three months. It sells the euros today at 1.1000 and receives 11,000,000 dollars. In the same ticket it agrees to buy the euros back in three months at 1.105514, paying 11,055,137.73 dollars. That two-legged ticket is an **FX swap**, the most traded instrument in the currency market. It is a dollar loan with the euros held as security. The extra 55,137.73 dollars on the way back is the 55.14 points, and it pays the dollar lender the 2-percentage-point gap between the two interest rates for a quarter.
+The reason for quoting the gap is practical. Today's rate, the **spot rate**, changes several times a second. The gap is set by two interest rates, which change a few times a year.
+
+The points are also the price of a trade. A European bank holds 10 million euros and needs dollars for three months. It sells the euros today at 1.1000 and receives 11,000,000 dollars. In the same ticket it agrees to buy the euros back in three months at 1.105514, paying 11,055,137.73 dollars.
+
+That two-legged ticket is an **FX swap**, the most traded instrument in the currency market. It is a dollar loan with the euros held as security. The extra 55,137.73 dollars on the way back is the 55.14 points, and it pays the dollar lender the 2-percentage-point gap between the two interest rates for a quarter.
 
 **Forward points are the forward rate minus the spot rate, counted in pips; they are the interest-rate gap turned into exchange-rate units, and an FX swap is a loan that pays exactly that gap.**
 
@@ -37,11 +41,11 @@ The euros go out and come back unchanged. The dollars go out as 11,000,000 and c
 
 ## The formula
 
-Notation first, in words. A small letter written low after a symbol labels its currency: $r_d$ is the **domestic** rate, on the currency prices are counted in (dollars); $r_f$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded: a deposit of 1 grows to $e^{rT}$ in $T$ years.
+Notation first, in words. A small letter written low after a symbol labels its currency: $r_d$ is the **domestic** rate, on the currency prices are counted in (dollars); $r_f$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded: a deposit of 1 grows to $e^{rT}$ in $T$ years. Dates are written in desk shorthand: 3M is three months, 6M six months, 1Y one year.
 
 $$P = \frac{F - S}{p} = \frac{S\,\bigl(e^{(r_d - r_f)T} - 1\bigr)}{p}, \qquad F = S + P\,p$$
 
-**Read it aloud: the points are the forward minus spot, counted in pips; and they come from spot times the carry factor minus one, where the carry factor grows spot by the gap between the two rates.**
+**Read it aloud:** the points are the forward minus spot, counted in pips; and they come from spot times the carry factor minus one, where the carry factor grows spot by the gap between the two rates.
 
 | Symbol | Plain meaning | In our example | Push it up and the points… |
 | --- | --- | --- | --- |
@@ -71,7 +75,14 @@ In words: spot times the gap in the two deposits' interest, shrunk by the euro d
 
 **The swap.** On the near date one side hands over $N$ euros for $N S$ dollars. On the far date the euros come back for $N F$ dollars. The dollar lender's gain on the dollars is $N(F - S) = N P p$: points times pip size times the euro amount.
 
-**Conventions verified 27 Sep 2026:** EURUSD is quoted in dollars per euro and a pip is 0.0001; dollar and euro deposits count days as actual days over 360; spot settles two business days after the trade, and forward dates are counted from the spot date; points are quoted two-way, a bid and an ask, and are added to spot when the first number is smaller, subtracted when it is larger. Markets could change these conventions; the formula does not depend on them.
+**Conventions verified 27 Sep 2026:**
+
+- EURUSD is quoted in dollars per euro and a pip is 0.0001.
+- Dollar and euro deposits count days as actual days over 360.
+- Spot settles two business days after the trade, and forward dates are counted from the spot date.
+- Points are quoted two-way, a bid and an ask, and are added to spot when the first number is smaller, subtracted when it is larger.
+
+Markets could change these conventions; the formula does not depend on them.
 
 ### When it holds
 
@@ -126,9 +137,13 @@ Swap the two rates, euros at 5 and dollars at 3, and the three-month points are 
 
 **Two-way quotes.** A dealer quotes points as a bid and an ask, like spot. Spot 1.0999 bid, 1.1001 ask, and three-month points "55.0/55.3". The first number is smaller, so add: the outright bid is 1.0999 plus 55.0 pips, 1.105400, and the ask is 1.1001 plus 55.3 pips, 1.105630.
 
-If the points were "55.3/55.0", the first number is larger, and the convention is to subtract: bid 1.0999 minus 55.3 pips, 1.094370; ask 1.1001 minus 55.0 pips, 1.094600. The rule keeps the outright spread wider than the spot spread, since a dealer quoting forward carries interest-rate risk as well. Add a high/low quote by mistake and the outright comes out at 1.105430 bid and 1.105600 ask, a spread narrower than spot's, which no dealer would quote. A narrow outright spread is the tell of a misread quote.
+If the points were "55.3/55.0", the first number is larger, and the convention is to subtract: bid 1.0999 minus 55.3 pips, 1.094370; ask 1.1001 minus 55.0 pips, 1.094600. The rule keeps the outright spread wider than the spot spread, since a dealer quoting forward carries interest-rate risk as well.
 
-**Dates between the quoted ones.** Dealers quote standard dates: one week, one, two, three, six and twelve months. A payment due on any other date, a **broken date**, needs points of its own. The usual shortcut draws a straight line between the neighbouring quotes. Between three months at 55.14 and one year at 222.21, the straight line reads 110.83 at six months. The formula gives 110.55. The line is always a little high, because the points curve bends upward between any two dates, as the chart shows. For short dates the difference is a fraction of a pip; desks that care interpolate the rates rather than the points.
+Add a high/low quote by mistake and the outright comes out at 1.105430 bid and 1.105600 ask, a spread narrower than spot's, which no dealer would quote. A narrow outright spread is the tell of a misread quote.
+
+**Dates between the quoted ones.** Dealers quote standard dates: one week, one, two, three, six and twelve months. A payment due on any other date, a **broken date**, needs points of its own. The usual shortcut draws a straight line between the neighbouring quotes. Between three months at 55.14 and one year at 222.21, the straight line reads 110.83 at six months. The formula gives 110.55.
+
+The line is always a little high, because the points curve bends upward between any two dates, as the chart shows. For short dates the difference is a fraction of a pip; desks that care interpolate the rates rather than the points.
 
 **Chaining dates.** With the same rates at every date, the carry factor multiplies across time: growing for three months and then nine is growing for twelve. So the one-year outright is the three-month carry applied four times over. Spot times 1.105514 over 1.1000, raised to the fourth power, gives 222.21 points again. Points do not add across periods; carry factors multiply.
 
@@ -142,7 +157,9 @@ Follow the dollar lender through the three-month swap on 10 million euros.
 | Meanwhile | | 75,281.95 euros of interest, by depositing the euros at 3% |
 | Three months on | 10,000,000 euros | 11,055,137.73 dollars |
 
-Compare lending the 11,000,000 dollars without security at 5 percent for the quarter: that earns 138,362.97 dollars. The swap earns two things instead. The points leg pays 55,137.73. The euro interest, sold forward at 1.105514, is worth 83,225.24 dollars. Together they make 138,362.97: the full 5 percent. So the swap lender earns the dollar rate, collected in two pieces, and the points piece is exactly the gap between the two rates:
+Compare lending the 11,000,000 dollars without security at 5 percent for the quarter: that earns 138,362.97 dollars.
+
+The swap earns two things instead. The points leg pays 55,137.73. The euro interest, sold forward at 1.105514, is worth 83,225.24 dollars. Together they make 138,362.97: the full 5 percent. So the swap lender earns the dollar rate, collected in two pieces, and the points piece is exactly the gap between the two rates:
 
 $$N\,(F - S) = N S\,\bigl(e^{r_d T} - 1\bigr) - N\,\bigl(e^{r_f T} - 1\bigr)\,F.$$
 
@@ -334,10 +351,10 @@ assert all(outright(b, a)[1] - outright(b, a)[0] > sa - sb for b, a in grid), "t
 assert abs(points_leg - two_loans) < 1e-4, "points leg = dollar interest minus euro interest"
 assert abs(lender_value(S)) < 1e-4, "a swap at market is worth nothing at inception"
 assert abs(swap_move - N * (1.20 - S) * (1 - exp(-rf * T))) < 1e-4, "swap feels spot only through euro interest"
-print("all checks passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-27 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 1Y points, formula                         222.214740
@@ -389,7 +406,7 @@ NDF paid on a 1.1200 fixing             144862.270547
 chart, years              0.25     0.50     1.00     2.00     3.00     5.00
 chart, points exact      55.14   110.55   222.21   448.92   680.20  1156.88
 chart, rule of thumb     55.00   110.00   220.00   440.00   660.00  1100.00
-all checks passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -515,11 +532,11 @@ fn main() {
     assert!((points_leg - two_loans).abs() < 1e-4, "points leg = dollar interest minus euro interest");
     assert!(lender_value(s).abs() < 1e-4, "a swap at market is worth nothing at inception");
     assert!((swap_move - N * (1.20 - s) * (1.0 - (-rf * t).exp())).abs() < 1e-4, "swap feels spot only through euro interest");
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 1Y points, formula                         222.214740
@@ -571,14 +588,128 @@ NDF paid on a 1.1200 fixing             144862.270547
 chart, years              0.25     0.50     1.00     2.00     3.00     5.00
 chart, points exact      55.14   110.55   222.21   448.92   680.20  1156.88
 chart, rule of thumb     55.00   110.00   220.00   440.00   660.00  1100.00
-all checks passed
+ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the points formula, the swap ledger and the sign rule for every spot rate, pip size, interest rate and term.
+
+- Take a fair forward $F = S\,e^{(r_d - r_f)T}$ and a nonzero pip size $p$. Then $(F - S)/p = S\,(e^{(r_d - r_f)T} - 1)/p$, and $F = S + P\,p$.
+- Take the same fair forward and any swap amount $N$ in euros. Then the far leg plus the euro interest sold forward, $N F e^{r_f T}$, equals $N S e^{r_d T}$.
+- Take the same numbers. Then the points leg $N(F - S)$ is the dollar interest minus the euro interest valued at $F$.
+- Take the same numbers. Then the swap is worth nothing at inception: $N F e^{-r_d T} - N S e^{-r_f T} = 0$.
+- Take $S > 0$, $p > 0$ and $T > 0$, with the fair forward. Then the points are a premium exactly when $r_d > r_f$, and a discount exactly when $r_d < r_f$.
+- Take spot 1.1000, dollars at 5% and euros at 3%. Then the rule of thumb gives 55.00 pips at 3M and 220.00 at 1Y.
+- At 1Y the square term is 2.20 pips.
+- One pip on the 10 million euro swap is 1,000 dollars, and the near leg is 11,000,000 dollars.
+- Take spot 1.0999/1.1001. Then "55.0/55.3" added gives 1.105400/1.105630, and "55.3/55.0" subtracted gives 1.094370/1.094600.
+- Adding "55.3/55.0" by mistake gives an outright spread narrower than spot's 0.0002.
+
+Exact decimals such as 55.14 and 222.21, the four roads, and the spot-jump test are left to the Python and Rust checks.
+
+```lean
+-- Forward points and the FX swap: at the parity forward F = S e^((r_d - r_f) T) the points (F - S)/p equal S (e^((r_d - r_f) T) - 1)/p and rebuild the outright, their sign is the sign of r_d - r_f, and the swap's points leg is the dollar interest minus the euro interest at the forward rate.
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+/-- Forward points. Spot is `S` dollars per euro, the pip size is `p`, and the forward for
+delivery in `T` years is fair (covered interest parity): `F = S e^((r_d - r_f) T)`, with `r_d`
+the dollar rate and `r_f` the euro rate, both continuously compounded. Then the points, the
+forward minus spot counted in pips, are `P = (F - S)/p = S (e^((r_d - r_f) T) - 1)/p`, and
+adding the points back to spot gives the outright: `F = S + P p`. -/
+theorem forward_points_eq_carry (S F p r_d r_f T : ℝ) (hp : p ≠ 0)
+    (hF : F = S * Real.exp ((r_d - r_f) * T)) :
+    (F - S) / p = S * (Real.exp ((r_d - r_f) * T) - 1) / p ∧
+      F = S + (F - S) / p * p := by
+  subst hF
+  refine ⟨by ring, ?_⟩
+  rw [div_mul_cancel₀ _ hp]; ring
+
+/-- The FX swap is a secured dollar loan paying the rate gap. On `N` euros, at the fair
+forward `F = S e^((r_d - r_f) T)`: the dollar lender's far leg plus the euro interest sold
+forward, `N F e^(r_f T)`, equals `N S e^(r_d T)`, a dollar deposit at `r_d`; the points leg is
+the dollar interest minus the euro interest valued at the forward,
+`N (F - S) = N S (e^(r_d T) - 1) - N (e^(r_f T) - 1) F`; and the swap is worth nothing at
+inception, `N F e^(-r_d T) - N S e^(-r_f T) = 0`. -/
+theorem fx_swap_points_leg_eq_rate_gap (N S F r_d r_f T : ℝ)
+    (hF : F = S * Real.exp ((r_d - r_f) * T)) :
+    N * F * Real.exp (r_f * T) = N * S * Real.exp (r_d * T) ∧
+      N * (F - S) = N * S * (Real.exp (r_d * T) - 1) - N * (Real.exp (r_f * T) - 1) * F ∧
+      N * F * Real.exp (-(r_d * T)) - N * S * Real.exp (-(r_f * T)) = 0 := by
+  have h1 : Real.exp ((r_d - r_f) * T) * Real.exp (r_f * T) = Real.exp (r_d * T) := by
+    rw [← Real.exp_add]; ring_nf
+  have h2 : Real.exp ((r_d - r_f) * T) * Real.exp (-(r_d * T)) = Real.exp (-(r_f * T)) := by
+    rw [← Real.exp_add]; ring_nf
+  have hA : N * F * Real.exp (r_f * T) = N * S * Real.exp (r_d * T) := by
+    subst hF; linear_combination N * S * h1
+  refine ⟨hA, by linear_combination hA, ?_⟩
+  subst hF; linear_combination N * S * h2
+
+/-- The sign says which currency pays more. With a positive spot rate, a positive pip size,
+a forward date `T > 0` years out and the fair forward `F = S e^((r_d - r_f) T)`, the points are
+positive (a forward premium) exactly when the dollar rate is above the euro rate, and negative
+(a forward discount) exactly when it is below. -/
+theorem forward_points_sign (S F p r_d r_f T : ℝ) (hS : 0 < S) (hp : 0 < p) (hT : 0 < T)
+    (hF : F = S * Real.exp ((r_d - r_f) * T)) :
+    (0 < (F - S) / p ↔ r_f < r_d) ∧ ((F - S) / p < 0 ↔ r_d < r_f) := by
+  have key : ∀ x : ℝ, (0 < x ↔ 0 < Real.exp x - 1) ∧ (x < 0 ↔ Real.exp x - 1 < 0) := by
+    intro x
+    constructor
+    · rw [sub_pos, Real.one_lt_exp_iff]
+    · rw [sub_neg, Real.exp_lt_one_iff]
+  have hP : (F - S) / p = S * (Real.exp ((r_d - r_f) * T) - 1) / p := by subst hF; ring
+  obtain ⟨k1, k2⟩ := key ((r_d - r_f) * T)
+  rw [hP]
+  constructor
+  · rw [div_pos_iff_of_pos_right hp, mul_pos_iff_of_pos_left hS, ← k1,
+      mul_pos_iff_of_pos_right hT, sub_pos]
+  · have e1 : ∀ y : ℝ, S * y < 0 ↔ y < 0 := fun y => by
+      constructor <;> intro h <;> nlinarith
+    have e2 : ∀ y : ℝ, y * T < 0 ↔ y < 0 := fun y => by
+      constructor <;> intro h <;> nlinarith
+    rw [div_lt_iff₀ hp, zero_mul, e1, ← k2, e2, sub_neg]
+
+-- One pip on the EUR 10,000,000 swap is 1,000 dollars, and the near leg at spot 1.1000 is 11,000,000 dollars.
+example : (10000000 : ℚ) * (1 / 10000) = 1000 := by norm_num
+example : (10000000 : ℚ) * (11 / 10) = 11000000 := by norm_num
+
+-- Rule of thumb S (r_d - r_f) T / p at spot 1.1000, dollars 5%, euros 3%: 55.00 pips at 3M, 220.00 at 1Y.
+example : (11 / 10 : ℚ) * (5 / 100 - 3 / 100) * (1 / 4) / (1 / 10000) = 55 := by norm_num
+example : (11 / 10 : ℚ) * (5 / 100 - 3 / 100) * 1 / (1 / 10000) = 220 := by norm_num
+
+-- The 1Y square term S ((r_d - r_f) T)^2 / (2 p) is 2.20 pips.
+example : (11 / 10 : ℚ) * (2 / 100) ^ 2 / 2 / (1 / 10000) = 11 / 5 := by norm_num
+
+-- Two-way quote: spot 1.0999/1.1001 with points "55.0/55.3" (low/high, add) gives 1.105400/1.105630.
+example : (10999 / 10000 : ℚ) + 550 / 10 * (1 / 10000) = 110540 / 100000 ∧
+    (11001 / 10000 : ℚ) + 553 / 10 * (1 / 10000) = 110563 / 100000 := by norm_num
+
+-- Points "55.3/55.0" (high/low, subtract) give 1.094370/1.094600.
+example : (10999 / 10000 : ℚ) - 553 / 10 * (1 / 10000) = 109437 / 100000 ∧
+    (11001 / 10000 : ℚ) - 550 / 10 * (1 / 10000) = 109460 / 100000 := by norm_num
+
+-- Adding the high/low quote by mistake gives 1.105430/1.105600, a spread narrower than spot's 0.0002.
+example : (11001 / 10000 : ℚ) + 550 / 10 * (1 / 10000) - ((10999 / 10000) + 553 / 10 * (1 / 10000))
+    < 11001 / 10000 - 10999 / 10000 := by norm_num
+
+#print axioms forward_points_eq_carry
+#print axioms fx_swap_points_leg_eq_rate_gap
+#print axioms forward_points_sign
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'forward_points_eq_carry' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fx_swap_points_leg_eq_rate_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forward_points_sign' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
-> - **Spot up a big figure.** Guess first: do the one-year points move? Call `pts(1.11, rd, rf, 1.0)`. They go from 222.21 to 224.23: proportional to spot, but only by about two pips for a hundred-pip move.
+> - **Spot up a big figure (100 pips).** Guess first: do the one-year points move? Call `pts(1.11, rd, rf, 1.0)`. They go from 222.21 to 224.23: proportional to spot, but only by about two pips for a hundred-pip move.
 > - **Swap the rates.** Guess first: is the three-month discount 55.14? Call `pts(S, rf, rd, 0.25)`. It is −54.86, and the one-year is −217.81, not −222.21.
 > - **Five years.** Guess first: how far is the rule of thumb off? Call `pts(S, rd, rf, 5)` against `S * (rd - rf) * 5 / PIP`. 1156.88 against 1100.00.
 > - **A spot jump after the swap.** Guess first: what does a ten-cent jump to 1.20 do to the dollar lender? The swap moves 7,471.95 dollars; an outright forward on the same 10 million euros moves 992,528.05.

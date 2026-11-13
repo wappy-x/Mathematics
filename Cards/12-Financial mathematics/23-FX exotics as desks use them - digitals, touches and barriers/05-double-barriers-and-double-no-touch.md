@@ -46,7 +46,7 @@ In words: the discounted chance of finishing above $L$, minus the discounted cha
 
 $$V_{DNT} = \sum_{n=-\infty}^{\infty} \left(\frac{U}{L}\right)^{2n\lambda}\left[\,G\!\left(S\left(\frac{U}{L}\right)^{2n}\right) - \left(\frac{U}{S}\right)^{2\lambda} G\!\left(\frac{U^2}{S}\left(\frac{U}{L}\right)^{2n}\right)\right]$$
 
-**Read it aloud: the double no-touch is the plain bet on ending between the walls, minus that bet started from today's rate mirrored in the upper wall, with each of those two repeated from rates shifted by whole round trips between the walls; every copy is weighted for drift.**
+**Read it aloud:** the double no-touch is the plain bet on ending between the walls, minus that bet started from today's rate mirrored in the upper wall, with each of those two repeated from rates shifted by whole round trips between the walls; every copy is weighted for drift.
 
 At $n = 0$: the plain bet $G(S)$ and its mirror in the upper wall, from $U^2/S$. The mirror in the lower wall, from $L^2/S$, is the second group's $n = -1$ member. Every further $n$ is an image of an image.
 
@@ -243,7 +243,14 @@ Negative vega and positive theta are the signature of selling volatility. The do
 
 ## Code, from first principles, and it actually runs
 
-The script reaches both prices by four independent roads. Road 1 is the image series. Road 2 is the sine-wave series, which shares no formula with road 1. Road 3 is a Crank–Nicolson grid (a finite-difference scheme averaging the old and new time steps) on the log scale, 400 space points by 400 time steps, zero on both walls. Road 4 is a simulation of 400,000 one-year paths in weekly steps with its own random-number generator, and between steps it multiplies in the chance that a Brownian bridge (the walk pinned at both ends of the week) did not touch either wall; this is the correction of Beaglehole, Dybvig and Zhou. Then the series is pushed to the one-wall limits, where it must reproduce the sibling cards' numbers: the down-and-out call 0.041661 and the one-touch 0.414213. The normal CDF is a written-out series. The two outputs agree digit for digit, because both languages run the same random-number generator from the same seed.
+The script reaches both prices by four independent roads.
+
+- Road 1 is the image series.
+- Road 2 is the sine-wave series, which shares no formula with road 1.
+- Road 3 is a Crank–Nicolson grid (a finite-difference scheme averaging the old and new time steps) on the log scale, 400 space points by 400 time steps, zero on both walls.
+- Road 4 is a simulation of 400,000 one-year paths in weekly steps with its own random-number generator, and between steps it multiplies in the chance that a Brownian bridge (the walk pinned at both ends of the week) did not touch either wall; this is the correction of Beaglehole, Dybvig and Zhou.
+
+Then the series is pushed to the one-wall limits, where it must reproduce the sibling cards' numbers: the down-and-out call 0.041661 and the one-touch 0.414213. The normal CDF is a written-out series. The two outputs agree digit for digit, because both languages run the same random-number generator from the same seed.
 
 ### Python
 
@@ -668,6 +675,227 @@ ALL CHECKS PASS
 ```
 
 Series and waves agree to ten decimals. The grid lands at 0.068978. The simulation gives the knock-out call 0.001992 against 0.001989, three hundredths of a pip apart with a standard error of 0.14 pips; the double no-touch 0.068829 against 0.068977, under half a standard error (0.000353) away. Moving the upper wall to 100 turns the formula into the down-and-out call of [Knock-out and knock-in](02-barrier-options-by-reflection.md), 0.041661, and the single no-touch at 1.05, 0.383822; moving the lower wall to 0.01 gives the no-touch at 1.20, 0.537017, whose complement is the house one-touch 0.414213.
+
+### Lean
+
+Lean proves three steps of Why it works, for every corridor, drift and positive variance, and checks the worked numbers exactly.
+
+- Take walls $a < 0 < b$ and a positive variance $v$. Then Step 2's alternating sum of bell curves converges at every end point, and is zero on both walls.
+- Take any $\lambda$, image centre $c$, window from $lo$ to $hi$, and positive variance $v$. Then the "One image" formula in the Detailed proof holds, with $\lambda v$ for $\nu T$.
+- Take any model, any payoff with a finite price, and any discount $D$. Then knock-in plus knock-out is the plain option, and the double one-touch costs $D - V_{DNT}$.
+- Exact fractions confirm $\nu = 0.015$, $\lambda = 1.5$, $w = 0.133531$, 0.021919 after one reflection, and the double knock-in 0.051567.
+
+Why the sum is the survival density, the dollar prices and the sine-wave series are left to the Python and Rust checks.
+
+```lean
+-- Two walls: the image sum of bell curves for a driftless walk between walls a < 0 < b converges and is zero on both walls, reweighting one image for drift gives the range bet from a shifted rate times e^{λc}, and knock-in plus knock-out is the plain option (with the double one-touch D minus the double no-touch) under any pricing measure.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.Topology.Algebra.InfiniteSum.Basic
+import Mathlib.NumberTheory.ModularForms.JacobiTheta.TwoVariable
+
+open Real ProbabilityTheory MeasureTheory
+open scoped NNReal
+
+namespace DoubleBarrier
+
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- Image `n` of the driftless walk between the walls `a` and `b` on the log scale, with
+corridor width `w = b - a` and the year's variance `v = σ²T`: a plus bell curve centred at
+`2nw` minus a minus bell curve centred at `2b + 2nw`, read at the end point `x`. -/
+noncomputable def imageTerm (a b : ℝ) (v : ℝ≥0) (x : ℝ) (n : ℤ) : ℝ :=
+  gaussianPDFReal (2 * n * (b - a)) v x - gaussianPDFReal (2 * b + 2 * n * (b - a)) v x
+
+/-- The card's driftless survival density by images,
+`p₀(x) = Σₙ [φ_v(x - 2nw) - φ_v(x - 2b - 2nw)]`, summed over every whole number `n`. -/
+noncomputable def imageDensity (a b : ℝ) (v : ℝ≥0) (x : ℝ) : ℝ :=
+  ∑' n : ℤ, imageTerm a b v x n
+
+/-- Bell curves at an evenly spaced lattice of centres `c + 2nw` are summable over `n : ℤ`. -/
+theorem summable_gaussian_lattice (c w x : ℝ) (v : ℝ≥0) (hw : w ≠ 0) (hv : v ≠ 0) :
+    Summable (fun n : ℤ => gaussianPDFReal (c + 2 * n * w) v x) := by
+  have hv' : (0 : ℝ) < v := by positivity
+  set y := x - c
+  set T : ℝ := 2 * w ^ 2 / (π * v)
+  set S : ℝ := |w| * |y| / (π * v)
+  have hT : 0 < T := by positivity
+  have hsum := (summable_pow_mul_jacobiTheta₂_term_bound S hT 0).mul_left (√(2 * π * v))⁻¹
+  refine Summable.of_nonneg_of_le (fun n => gaussianPDFReal_nonneg _ _ _) (fun n => ?_) hsum
+  simp only [gaussianPDFReal, pow_zero, one_mul]
+  gcongr
+  have key : -π * (T * (n : ℝ) ^ 2 - 2 * S * |(n : ℝ)|) =
+      -(4 * w ^ 2 * (n : ℝ) ^ 2 - 4 * |w| * |y| * |(n : ℝ)|) / (2 * v) := by
+    simp only [T, S]; field_simp; ring
+  rw [Int.cast_abs, key]
+  apply div_le_div_of_nonneg_right _ (by positivity)
+  have h1 : y * (n : ℝ) * w ≤ |y| * |(n : ℝ)| * |w| := by
+    rw [← abs_mul, ← abs_mul]; exact le_abs_self _
+  have h2 : (x - (c + 2 * n * w)) = y - 2 * n * w := by simp only [y]; ring
+  rw [h2]
+  nlinarith [h1, sq_nonneg y]
+
+#print axioms summable_gaussian_lattice
+
+/-- Completing the square: tilting a bell curve by `e^{λx - λ²v/2}` shifts its centre by `λv`
+and multiplies it by `e^{λc}`. -/
+theorem exp_tilt_gaussianPDFReal (lam c : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (x : ℝ) :
+    exp (lam * x - lam ^ 2 * v / 2) * gaussianPDFReal c v x =
+      exp (lam * c) * gaussianPDFReal (c + lam * v) v x := by
+  have hv' : (v : ℝ) ≠ 0 := by exact_mod_cast hv
+  simp only [gaussianPDFReal]
+  rw [mul_left_comm, mul_left_comm (exp (lam * c)), ← exp_add, ← exp_add]
+  congr 2
+  field_simp
+  ring
+
+#print axioms exp_tilt_gaussianPDFReal
+
+/-- The standard normal CDF as an integral of the standard bell curve. -/
+theorem stdNormalCDF_eq_integral (y : ℝ) :
+    stdNormalCDF y = ∫ t in Set.Iic y, gaussianPDFReal 0 1 t := by
+  rw [stdNormalCDF, cdf_eq_real, measureReal_def,
+    gaussianReal_apply_eq_integral _ one_ne_zero, ENNReal.toReal_ofReal]
+  exact setIntegral_nonneg measurableSet_Iic (fun t _ => gaussianPDFReal_nonneg _ _ _)
+
+#print axioms stdNormalCDF_eq_integral
+
+/-- Area under any bell curve over a window, in terms of the standard normal CDF. -/
+theorem intervalIntegral_gaussianPDFReal (μ lo hi : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :
+    ∫ x in lo..hi, gaussianPDFReal μ v x =
+      stdNormalCDF ((hi - μ) / √(v : ℝ)) - stdNormalCDF ((lo - μ) / √(v : ℝ)) := by
+  have hv' : (0 : ℝ) < v := by positivity
+  set s := √(v : ℝ) with hs_def
+  have hs : 0 < s := Real.sqrt_pos.mpr hv'
+  have hs2 : s ^ 2 = v := Real.sq_sqrt hv'.le
+  have hpt : ∀ x, gaussianPDFReal μ v x = s⁻¹ * gaussianPDFReal 0 1 (x / s - μ / s) := by
+    intro x
+    simp only [gaussianPDFReal, NNReal.coe_one, mul_one, sub_zero]
+    rw [← mul_assoc, ← mul_inv, hs_def, ← Real.sqrt_mul (by positivity) (2 * π),
+      mul_comm (v : ℝ)]
+    congr 2
+    rw [show x / s - μ / s = (x - μ) / s by ring, div_pow, hs2]
+    field_simp
+  simp_rw [hpt]
+  rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_comp_div_sub (fun t => gaussianPDFReal 0 1 t) hs.ne' (μ / s),
+    stdNormalCDF_eq_integral, stdNormalCDF_eq_integral,
+    intervalIntegral.integral_Iic_sub_Iic (integrable_gaussianPDFReal _ _).integrableOn
+      (integrable_gaussianPDFReal _ _).integrableOn, smul_eq_mul, ← mul_assoc,
+    inv_mul_cancel₀ hs.ne', one_mul]
+  congr 1 <;> ring
+
+#print axioms intervalIntegral_gaussianPDFReal
+
+/-- **Two mirrors make a hall of mirrors that settles** (Steps 2 and 4, Detailed proof). Put
+today's rate at 0 on the log scale with the walls strictly on either side, `a < 0 < b`, and take
+a positive variance `v = σ²T`. Then the alternating sum of bell curves, plus terms at `2nw` and
+minus terms at `2b + 2nw` for every whole number `n`, converges at every end point `x`, and it is
+exactly zero on the upper wall `b` and on the lower wall `a`: every touched path is cancelled. -/
+theorem image_sum_converges_and_vanishes_on_both_walls (a b : ℝ) (v : ℝ≥0)
+    (ha : a < 0) (hb : 0 < b) (hv : v ≠ 0) :
+    (∀ x : ℝ, Summable (imageTerm a b v x)) ∧
+      imageDensity a b v b = 0 ∧ imageDensity a b v a = 0 := by
+  have hw : b - a ≠ 0 := by linarith
+  have hsum : ∀ c x : ℝ, Summable (fun n : ℤ => gaussianPDFReal (c + 2 * n * (b - a)) v x) :=
+    fun c x => summable_gaussian_lattice c (b - a) x v hw hv
+  have hsum0 : ∀ x : ℝ, Summable (fun n : ℤ => gaussianPDFReal (2 * n * (b - a)) v x) := by
+    intro x; simpa using hsum 0 x
+  refine ⟨fun x => (hsum0 x).sub (hsum (2 * b) x), ?_, ?_⟩
+  · -- on the upper wall the minus image at `n` is the plus image at `-n`
+    let e : ℤ ≃ ℤ := Equiv.neg ℤ
+    have he : ∀ n : ℤ, gaussianPDFReal (2 * b + 2 * n * (b - a)) v b =
+        gaussianPDFReal (2 * ((e n : ℤ) : ℝ) * (b - a)) v b := by
+      intro n
+      simp only [gaussianPDFReal, e, Equiv.neg_apply, Int.cast_neg]
+      congr 2
+      ring
+    unfold imageDensity imageTerm
+    simp_rw [he]
+    have hs2 : Summable (fun n : ℤ => gaussianPDFReal (2 * ((e n : ℤ) : ℝ) * (b - a)) v b) :=
+      (e.summable_iff (f := fun n : ℤ => gaussianPDFReal (2 * (n : ℝ) * (b - a)) v b)).mpr
+        (hsum0 b)
+    rw [Summable.tsum_sub (hsum0 b) hs2,
+      e.tsum_eq (fun n : ℤ => gaussianPDFReal (2 * (n : ℝ) * (b - a)) v b), sub_self]
+  · -- on the lower wall the minus image at `n` is the plus image at `-n - 1`
+    let e : ℤ ≃ ℤ := (Equiv.neg ℤ).trans (Equiv.subRight 1)
+    have he : ∀ n : ℤ, gaussianPDFReal (2 * b + 2 * n * (b - a)) v a =
+        gaussianPDFReal (2 * ((e n : ℤ) : ℝ) * (b - a)) v a := by
+      intro n
+      simp only [gaussianPDFReal, e, Equiv.trans_apply, Equiv.neg_apply, Equiv.subRight_apply,
+        Int.cast_sub, Int.cast_neg, Int.cast_one]
+      congr 2
+      ring
+    unfold imageDensity imageTerm
+    simp_rw [he]
+    have hs2 : Summable (fun n : ℤ => gaussianPDFReal (2 * ((e n : ℤ) : ℝ) * (b - a)) v a) :=
+      (e.summable_iff (f := fun n : ℤ => gaussianPDFReal (2 * (n : ℝ) * (b - a)) v a)).mpr
+        (hsum0 a)
+    rw [Summable.tsum_sub (hsum0 a) hs2,
+      e.tsum_eq (fun n : ℤ => gaussianPDFReal (2 * (n : ℝ) * (b - a)) v a), sub_self]
+
+/-- **One image, reweighted for drift, is a range bet from a shifted rate** (Detailed proof,
+"One image"). For any drift-per-variance `λ` (here `lam`), any image centre `c`, any window
+`(lo, hi)` and any positive variance `v`, complete the square:
+`∫_{lo}^{hi} e^{λx - λ²v/2} φ_v(x - c) dx = e^{λc} [N((hi - c - λv)/√v) - N((lo - c - λv)/√v)]`. -/
+theorem drift_weighted_image_eq_shifted_range_bet (lam c lo hi : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :
+    ∫ x in lo..hi, exp (lam * x - lam ^ 2 * v / 2) * gaussianPDFReal c v x =
+      exp (lam * c) *
+        (stdNormalCDF ((hi - c - lam * v) / √(v : ℝ)) -
+          stdNormalCDF ((lo - c - lam * v) / √(v : ℝ))) := by
+  simp_rw [exp_tilt_gaussianPDFReal lam c v hv]
+  rw [intervalIntegral.integral_const_mul, intervalIntegral_gaussianPDFReal _ _ _ v hv]
+  rw [show hi - (c + lam * (v : ℝ)) = hi - c - lam * v by ring,
+    show lo - (c + lam * (v : ℝ)) = lo - c - lam * v by ring]
+
+/-- **In plus out, with no model** (Step 6). Under any pricing measure `P` (a probability
+measure on paths), for any integrable payoff `f` at expiry, any measurable event `A` ("some wall
+was touched") and any discount `D`: the knock-in (pays `f` only on `A`) plus the knock-out (pays
+`f` only off `A`) is the plain option, and the double one-touch (one dollar on `A`) costs `D`
+minus the double no-touch (one dollar off `A`). -/
+theorem knock_in_plus_knock_out_and_double_one_touch {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P] (f : Ω → ℝ) (hf : Integrable f P)
+    (A : Set Ω) (hA : MeasurableSet A) (D : ℝ) :
+    D * ∫ ω, A.indicator f ω ∂P + D * ∫ ω, Aᶜ.indicator f ω ∂P = D * ∫ ω, f ω ∂P ∧
+      D * P.real A = D - D * P.real Aᶜ := by
+  constructor
+  · rw [← mul_add, integral_indicator hA, integral_indicator hA.compl, integral_add_compl hA hf]
+  · rw [probReal_compl_eq_one_sub hA]; ring
+
+/-! Worked numbers from the card, as exact fractions of its six-decimal figures. -/
+
+-- Drift of log EURUSD: ν = 0.05 - 0.03 - ½(0.10)² = 0.015, and λ = ν/σ² = 0.015/0.01 = 1.5.
+example : (5 / 100 : ℚ) - 3 / 100 - 1 / 2 * (1 / 10) ^ 2 = 15 / 1000 ∧
+    (15 / 1000 : ℚ) / (1 / 10) ^ 2 = 3 / 2 := by norm_num
+-- Corridor width on the log scale: w = 0.087011 + 0.046520 = 0.133531.
+example : (87011 : ℚ) / 10 ^ 6 + 46520 / 10 ^ 6 = 133531 / 10 ^ 6 := by norm_num
+-- After one reflection: 0.470917 - 0.178558 - 0.270440 = 0.021919.
+example : (470917 : ℚ) / 10 ^ 6 - 178558 / 10 ^ 6 - 270440 / 10 ^ 6 = 21919 / 10 ^ 6 := by
+  norm_num
+-- Double knock-in = plain call - double knock-out: 0.053556 - 0.001989 = 0.051567.
+example : (53556 : ℚ) / 10 ^ 6 - 1989 / 10 ^ 6 = 51567 / 10 ^ 6 := by norm_num
+
+#print axioms image_sum_converges_and_vanishes_on_both_walls
+#print axioms drift_weighted_image_eq_shifted_range_bet
+#print axioms knock_in_plus_knock_out_and_double_one_touch
+
+end DoubleBarrier
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'DoubleBarrier.summable_gaussian_lattice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DoubleBarrier.exp_tilt_gaussianPDFReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DoubleBarrier.stdNormalCDF_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DoubleBarrier.intervalIntegral_gaussianPDFReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DoubleBarrier.image_sum_converges_and_vanishes_on_both_walls' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DoubleBarrier.drift_weighted_image_eq_shifted_range_bet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DoubleBarrier.knock_in_plus_knock_out_and_double_one_touch' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -6,7 +6,9 @@
 
 ## General Overview
 
-The broker's screen for one-year EURUSD options (dollars per euro, spot 1.1000) reads **ATM 10.00, 25-delta risk reversal −1.00, 25-delta butterfly +0.25**, all in vol points (a vol point is one percentage point of volatility). The previous card on this shelf, [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md), read the 0.25 as the smile's own bow: the two wing vols average a quarter point above the middle. That reading is tidy. It is not what the broker means.
+The broker's screen for one-year EURUSD options (dollars per euro, spot 1.1000) reads **ATM 10.00, 25-delta risk reversal −1.00, 25-delta butterfly +0.25**, all in vol points (a vol point is one percentage point of volatility). ATM is the at-the-money vol, the smile's height in the middle. The risk reversal is the call wing's vol minus the put wing's, the smile's tilt. A 25-delta option is one whose delta, its hedge in euros per euro, is 0.25.
+
+The previous card on this shelf, [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md), read the 0.25 as the smile's own bow: the two wing vols average a quarter point above the middle. That reading is tidy. It is not what the broker means.
 
 The broker means a price. The butterfly quote describes one trade, the **market strangle**: buy a 25-delta euro call and a 25-delta euro put, find both strikes at one single vol, 10.00 + 0.25 = 10.25 percent, and price both legs at that same vol. The answer is 0.034040 dollars per euro, 340.40 pips (a pip is 0.0001 dollars per euro). No smile appears anywhere in that calculation.
 
@@ -47,7 +49,7 @@ $$g(b) = C\big(K^{\text{ms}}_c;\,\sigma(K^{\text{ms}}_c;b)\big) + P\big(K^{\text
 
 Its root is the smile strangle, $\text{BF}_{\text{ss}}$.
 
-**Read it aloud: price the broker's strangle with both legs at ATM plus the quote; then find the bow that, drawn into the smile, makes the same two strikes cost the same total at the smile's own vols.**
+**Read it aloud:** price the broker's strangle with both legs at ATM plus the quote; then find the bow that, drawn into the smile, makes the same two strikes cost the same total at the smile's own vols.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -74,13 +76,13 @@ The smile between its three pillars (the three strikes where the smile's vol is 
 
 $$\sigma(K;b) = \sum_{i}\sigma_i\prod_{j\ne i}\frac{x - x_j}{x_i - x_j},$$
 
-with the pillars $(x_p, \sigma_{25p}(b))$, $(x_a, \sigma_{\text{ATM}})$, $(x_c, \sigma_{25c}(b))$. The ATM pillar is the strike where a straddle's delta is zero, $x_a = \tfrac12\sigma_{\text{ATM}}^2T$, strike 1.127847. Each wing's $x$ is found at that wing's own vol, so moving $b$ moves the wing strikes too.
+with the pillars $(x_p, \sigma_{25p}(b))$, $(x_a, \sigma_{\text{ATM}})$, $(x_c, \sigma_{25c}(b))$. The ATM pillar is the strike where a straddle's delta is zero (a straddle is a call and a put at the same strike), $x_a = \tfrac12\sigma_{\text{ATM}}^2T$, strike 1.127847. Each wing's $x$ is found at that wing's own vol, so moving $b$ moves the wing strikes too.
 
 ### When it holds
 
 - **The broker means a market strangle.** EURUSD brokers quote the butterfly this way. Some screens quote the smile strangle directly; reading one as the other costs 1.59 basis points of vol here, and more when the tilt is large.
 - **The delta convention is the one the strikes assume.** Spot delta without premium adjustment for EURUSD up to one year. A pair quoted with premium-adjusted delta places all four strikes differently, and the whole solve shifts.
-- **The smile rule is named.** The answer depends on how the smile is drawn between pillars. A parabola in log-strike gives 0.265924; a vanna-volga smile ([The vanna-volga smile](05-vanna-volga-smile-curve.md)) gives a slightly different bow. A smile strangle quoted without its rule is half a number.
+- **The smile rule is named.** The answer depends on how the smile is drawn between pillars. A parabola in log-strike gives 0.265924; a vanna-volga smile (drawn through the three pillars by hedging cost: [The vanna-volga smile](05-vanna-volga-smile-curve.md)) gives a slightly different bow. A smile strangle quoted without its rule is half a number.
 - **The tilt is modest.** At a risk reversal of −12.00 no bow from −3 to +9 percent works: every positive smile among them prices the strangle too dear. Step 4 shows it.
 
 Conventions verified 27 Sep 2026, as set out in Reiswich and Wystup (2010, 2012) and Clark (2011): EURUSD butterflies quoted as a market strangle priced at ATM plus BF, the delta-neutral straddle as at the money, spot delta without premium adjustment up to one year.
@@ -103,7 +105,7 @@ Buy a euro call struck at 1.205943 and a euro put struck at 1.055342, both found
 | long 25-delta put at 10.25% | −0.25 | 0.003446 |
 | **market strangle** | **0.000000** | **both legs' vegas, equal** |
 
-The deltas cancel because each leg was chosen to have a hedge of 0.25 euros, with opposite signs. The vegas are equal because both legs sit the same number of standard deviations from the forward, on opposite sides, and the bell curve is symmetric.
+The deltas cancel because each leg was chosen to have a hedge of 0.25 euros, with opposite signs. The vegas (each leg's price change per vol point) are equal because both legs sit the same number of standard deviations from the forward, on opposite sides, and the bell curve is symmetric.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -651,6 +653,341 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves three facts from Why it works, for every market and quote that meets each fact's conditions.
+
+- Take an interval of bows on which the wing vols, and the smile at both market strikes, are positive, with the pillars in order. Suppose the gap is negative at one bow there and positive at another. Then some bow between them gives $g(b) = 0$.
+- Take a risk reversal of zero, with the three pillars at distinct strikes. Then a bow equal to the broker's butterfly makes the gap zero, so the smile strangle equals the market strangle.
+- Take any vol above zero, and find both strikes as 25-delta strikes at that vol. Then the call's delta is 0.25, the put's is −0.25, and the two vegas are equal.
+
+Uniqueness, the gap's growth with the tilt, the root 0.265924 percent, the failure at −12.00 and every price are left to the Python and Rust checks.
+
+```lean
+-- The broker butterfly: in the Garman-Kohlhagen market with a parabola-in-log-strike smile, a sign change of the strangle gap g(b) on an interval where the smile is defined gives a smile strangle with g(b) = 0, with no tilt the smile strangle equals the broker's butterfly, and the market strangle's legs have deltas +1/4 and -1/4 and equal vegas.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Order.Interval.Set.UnorderedInterval
+
+open Real MeasureTheory ProbabilityTheory Set
+
+namespace BrokerButterfly
+
+/-- The FX market: spot `S` (dollars per euro), dollar rate `rd`, euro rate `rf`, both
+continuously compounded, and years to expiry `T`. -/
+structure FXMarket where
+  S : ℝ
+  rd : ℝ
+  rf : ℝ
+  T : ℝ
+
+/-- `N(x)`: the bell-curve area left of `x`. -/
+noncomputable def N (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- The forward `F = S e^((rd - rf) T)`. -/
+noncomputable def fwd (m : FXMarket) : ℝ := m.S * exp ((m.rd - m.rf) * m.T)
+
+/-- Garman-Kohlhagen `d₁ = (ln(S/K) + (rd - rf + σ²/2) T) / (σ√T)`. -/
+noncomputable def d1 (m : FXMarket) (K σ : ℝ) : ℝ :=
+  (log (m.S / K) + (m.rd - m.rf + σ ^ 2 / 2) * m.T) / (σ * √m.T)
+
+/-- Garman-Kohlhagen price of a euro call, dollars per euro. -/
+noncomputable def gkCall (m : FXMarket) (K σ : ℝ) : ℝ :=
+  m.S * exp (-m.rf * m.T) * N (d1 m K σ) - K * exp (-m.rd * m.T) * N (d1 m K σ - σ * √m.T)
+
+/-- Garman-Kohlhagen price of a euro put, dollars per euro. -/
+noncomputable def gkPut (m : FXMarket) (K σ : ℝ) : ℝ :=
+  K * exp (-m.rd * m.T) * N (-(d1 m K σ - σ * √m.T)) - m.S * exp (-m.rf * m.T) * N (-(d1 m K σ))
+
+/-- Spot delta of a euro call, premium not adjusted: `e^(-rf T) N(d₁)`. -/
+noncomputable def callDelta (m : FXMarket) (K σ : ℝ) : ℝ := exp (-m.rf * m.T) * N (d1 m K σ)
+
+/-- Spot delta of a euro put, premium not adjusted: `-e^(-rf T) N(-d₁)`. -/
+noncomputable def putDelta (m : FXMarket) (K σ : ℝ) : ℝ := -(exp (-m.rf * m.T) * N (-(d1 m K σ)))
+
+/-- Vega of a call or a put at strike `K`: `S e^(-rf T) φ(d₁) √T`, with `φ` the bell-curve height. -/
+noncomputable def vega (m : FXMarket) (K σ : ℝ) : ℝ :=
+  m.S * exp (-m.rf * m.T) * gaussianPDFReal 0 1 (d1 m K σ) * √m.T
+
+/-- The 25-delta strike at vol `σ`: `K = F exp(-w d σ√T + σ² T/2)`, with `w = 1` for the call and
+`w = -1` for the put, where `d` solves `e^(-rf T) N(d) = 1/4`. -/
+noncomputable def strike25 (m : FXMarket) (d σ w : ℝ) : ℝ :=
+  fwd m * exp (-w * d * σ * √m.T + σ ^ 2 * m.T / 2)
+
+/-- The parabola through the three points `(x₀, y₀)`, `(x₁, y₁)`, `(x₂, y₂)`, by Lagrange's formula. -/
+noncomputable def lagrange3 (x₀ x₁ x₂ y₀ y₁ y₂ x : ℝ) : ℝ :=
+  y₀ * ((x - x₁) * (x - x₂)) / ((x₀ - x₁) * (x₀ - x₂)) +
+    y₁ * ((x - x₀) * (x - x₂)) / ((x₁ - x₀) * (x₁ - x₂)) +
+    y₂ * ((x - x₀) * (x - x₁)) / ((x₂ - x₀) * (x₂ - x₁))
+
+/-- The smile's put-wing vol with bow `b`: `σ_ATM + b - RR/2`. -/
+noncomputable def wingPut (atm rr b : ℝ) : ℝ := atm + b - rr / 2
+
+/-- The smile's call-wing vol with bow `b`: `σ_ATM + b + RR/2`. -/
+noncomputable def wingCall (atm rr b : ℝ) : ℝ := atm + b + rr / 2
+
+/-- The put pillar's log-strike `x_p = ln(K_25p / F)`, found at the put wing's own vol. -/
+noncomputable def xPut (m : FXMarket) (d atm rr b : ℝ) : ℝ :=
+  log (strike25 m d (wingPut atm rr b) (-1) / fwd m)
+
+/-- The ATM pillar's log-strike, the delta-neutral straddle: `x_a = σ_ATM² T / 2`. -/
+noncomputable def xAtm (m : FXMarket) (atm : ℝ) : ℝ := atm ^ 2 * m.T / 2
+
+/-- The call pillar's log-strike `x_c = ln(K_25c / F)`, found at the call wing's own vol. -/
+noncomputable def xCall (m : FXMarket) (d atm rr b : ℝ) : ℝ :=
+  log (strike25 m d (wingCall atm rr b) 1 / fwd m)
+
+/-- The smile `σ(K; b)`: the parabola in `x = ln(K/F)` through the three pillars. -/
+noncomputable def smileVol (m : FXMarket) (d atm rr b K : ℝ) : ℝ :=
+  lagrange3 (xPut m d atm rr b) (xAtm m atm) (xCall m d atm rr b)
+    (wingPut atm rr b) atm (wingCall atm rr b) (log (K / fwd m))
+
+/-- The market strangle's call strike: 25 delta at the one vol `σ_ATM + BF_ms`. -/
+noncomputable def msCallStrike (m : FXMarket) (d atm bf : ℝ) : ℝ := strike25 m d (atm + bf) 1
+
+/-- The market strangle's put strike: 25 delta at the one vol `σ_ATM + BF_ms`. -/
+noncomputable def msPutStrike (m : FXMarket) (d atm bf : ℝ) : ℝ := strike25 m d (atm + bf) (-1)
+
+/-- The broker's price `V_ms`: both legs priced at the one vol `σ_ATM + BF_ms`. -/
+noncomputable def marketStrangle (m : FXMarket) (d atm bf : ℝ) : ℝ :=
+  gkCall m (msCallStrike m d atm bf) (atm + bf) + gkPut m (msPutStrike m d atm bf) (atm + bf)
+
+/-- The gap `g(b)`: the smile's price of the market strangle minus the broker's price. -/
+noncomputable def gap (m : FXMarket) (d atm rr bf b : ℝ) : ℝ :=
+  gkCall m (msCallStrike m d atm bf) (smileVol m d atm rr b (msCallStrike m d atm bf)) +
+    gkPut m (msPutStrike m d atm bf) (smileVol m d atm rr b (msPutStrike m d atm bf)) -
+    marketStrangle m d atm bf
+
+/-- `N` is continuous: the standard bell curve puts no mass on single points. -/
+lemma N_continuous : Continuous N := by
+  rw [continuous_iff_continuousAt]
+  intro x
+  have hmono := monotone_cdf (gaussianReal 0 1)
+  have := nullSingletonClass_gaussianReal (μ := 0) (v := 1) one_ne_zero
+  have hsing : (cdf (gaussianReal 0 1)).measure {x} = 0 := by
+    rw [measure_cdf]; exact measure_singleton x
+  rw [StieltjesFunction.measure_singleton, ENNReal.ofReal_eq_zero] at hsing
+  have hle := hmono.leftLim_le (le_refl x)
+  have hleft : ContinuousWithinAt (cdf (gaussianReal 0 1)) (Iio x) x :=
+    hmono.continuousWithinAt_Iio_iff_leftLim_eq.2 (le_antisymm hle (by linarith))
+  have hright : ContinuousWithinAt (cdf (gaussianReal 0 1)) (Ici x) x :=
+    (cdf (gaussianReal 0 1)).right_continuous x
+  exact continuousAt_iff_continuous_left'_right'.2 ⟨hleft, hright.mono Ioi_subset_Ici_self⟩
+
+lemma gaussianPDFReal_std_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal]
+
+lemma fwd_pos (m : FXMarket) (hS : 0 < m.S) : 0 < fwd m := by
+  unfold fwd; positivity
+
+lemma log_strike25_div_fwd (m : FXMarket) (hS : 0 < m.S) (d σ w : ℝ) :
+    log (strike25 m d σ w / fwd m) = -w * d * σ * √m.T + σ ^ 2 * m.T / 2 := by
+  have hF := (fwd_pos m hS).ne'
+  unfold strike25
+  rw [mul_div_right_comm, div_self hF, one_mul, log_exp]
+
+lemma d1_strike25 (m : FXMarket) (hS : 0 < m.S) (hT : 0 < m.T) (d σ w : ℝ) (hσ : σ ≠ 0) :
+    d1 m (strike25 m d σ w) σ = w * d := by
+  have hF := fwd_pos m hS
+  have hsT : 0 < √m.T := sqrt_pos.2 hT
+  have hK : m.S / strike25 m d σ w = exp (-((m.rd - m.rf) * m.T) + (w * d * σ * √m.T - σ ^ 2 * m.T / 2)) := by
+    have hK' : strike25 m d σ w =
+        m.S * exp ((m.rd - m.rf) * m.T + (-w * d * σ * √m.T + σ ^ 2 * m.T / 2)) := by
+      unfold strike25 fwd; simp only [exp_add]; ring
+    rw [hK', div_mul_cancel_left₀ hS.ne', ← exp_neg]
+    congr 1; ring
+  unfold d1
+  rw [hK, log_exp]
+  field_simp
+  ring
+
+lemma lagrange3_at_x0 {x₀ x₁ x₂ y₀ y₁ y₂ : ℝ} (h01 : x₀ ≠ x₁) (h02 : x₀ ≠ x₂) :
+    lagrange3 x₀ x₁ x₂ y₀ y₁ y₂ x₀ = y₀ := by
+  have a : x₀ - x₁ ≠ 0 := sub_ne_zero.2 h01
+  have b : x₀ - x₂ ≠ 0 := sub_ne_zero.2 h02
+  unfold lagrange3
+  simp [a, b]
+
+lemma lagrange3_at_x2 {x₀ x₁ x₂ y₀ y₁ y₂ : ℝ} (h02 : x₀ ≠ x₂) (h12 : x₁ ≠ x₂) :
+    lagrange3 x₀ x₁ x₂ y₀ y₁ y₂ x₂ = y₂ := by
+  have a : x₂ - x₀ ≠ 0 := sub_ne_zero.2 h02.symm
+  have b : x₂ - x₁ ≠ 0 := sub_ne_zero.2 h12.symm
+  unfold lagrange3
+  simp [a, b]
+
+
+lemma gkCall_continuousOn (m : FXMarket) (hT : 0 < m.T) (K : ℝ) {s : Set ℝ} {f : ℝ → ℝ}
+    (hf : ContinuousOn f s) (hne : ∀ b ∈ s, f b ≠ 0) :
+    ContinuousOn (fun b => gkCall m K (f b)) s := by
+  have hsT : 0 < √m.T := sqrt_pos.2 hT
+  have hd1 : ContinuousOn (fun b => d1 m K (f b)) s := by
+    unfold d1
+    exact ContinuousOn.div (by fun_prop) (by fun_prop)
+      (fun b hb => mul_ne_zero (hne b hb) hsT.ne')
+  have h1 : ContinuousOn (fun b => N (d1 m K (f b))) s := N_continuous.comp_continuousOn hd1
+  have h2 : ContinuousOn (fun b => N (d1 m K (f b) - f b * √m.T)) s :=
+    N_continuous.comp_continuousOn (hd1.sub (hf.mul continuousOn_const))
+  unfold gkCall
+  exact (continuousOn_const.mul h1).sub (continuousOn_const.mul h2)
+
+lemma gkPut_continuousOn (m : FXMarket) (hT : 0 < m.T) (K : ℝ) {s : Set ℝ} {f : ℝ → ℝ}
+    (hf : ContinuousOn f s) (hne : ∀ b ∈ s, f b ≠ 0) :
+    ContinuousOn (fun b => gkPut m K (f b)) s := by
+  have hsT : 0 < √m.T := sqrt_pos.2 hT
+  have hd1 : ContinuousOn (fun b => d1 m K (f b)) s := by
+    unfold d1
+    exact ContinuousOn.div (by fun_prop) (by fun_prop)
+      (fun b hb => mul_ne_zero (hne b hb) hsT.ne')
+  have h1 : ContinuousOn (fun b => N (-(d1 m K (f b)))) s := N_continuous.comp_continuousOn hd1.neg
+  have h2 : ContinuousOn (fun b => N (-(d1 m K (f b) - f b * √m.T))) s :=
+    N_continuous.comp_continuousOn (hd1.sub (hf.mul continuousOn_const)).neg
+  unfold gkPut
+  exact (continuousOn_const.mul h2).sub (continuousOn_const.mul h1)
+
+lemma smileVol_continuousOn (m : FXMarket) (hS : 0 < m.S) (d atm rr K : ℝ) {s : Set ℝ}
+    (h01 : ∀ b ∈ s, xPut m d atm rr b ≠ xAtm m atm)
+    (h12 : ∀ b ∈ s, xAtm m atm ≠ xCall m d atm rr b)
+    (h02 : ∀ b ∈ s, xPut m d atm rr b ≠ xCall m d atm rr b) :
+    ContinuousOn (fun b => smileVol m d atm rr b K) s := by
+  have hP : Continuous (fun b => xPut m d atm rr b) := by
+    have : (fun b => xPut m d atm rr b) = fun b =>
+        -(-1) * d * wingPut atm rr b * √m.T + wingPut atm rr b ^ 2 * m.T / 2 := by
+      funext b; exact log_strike25_div_fwd m hS _ _ _
+    rw [this]; unfold wingPut; fun_prop
+  have hC : Continuous (fun b => xCall m d atm rr b) := by
+    have : (fun b => xCall m d atm rr b) = fun b =>
+        -1 * d * wingCall atm rr b * √m.T + wingCall atm rr b ^ 2 * m.T / 2 := by
+      funext b; exact log_strike25_div_fwd m hS _ _ _
+    rw [this]; unfold wingCall; fun_prop
+  have hwP : Continuous (fun b => wingPut atm rr b) := by unfold wingPut; fun_prop
+  have hwC : Continuous (fun b => wingCall atm rr b) := by unfold wingCall; fun_prop
+  unfold smileVol lagrange3
+  refine ContinuousOn.add (ContinuousOn.add ?_ ?_) ?_
+  · refine ContinuousOn.div (by fun_prop) (by fun_prop) ?_
+    intro b hb
+    exact mul_ne_zero (sub_ne_zero.2 (h01 b hb)) (sub_ne_zero.2 (h02 b hb))
+  · refine ContinuousOn.div (by fun_prop) (by fun_prop) ?_
+    intro b hb
+    exact mul_ne_zero (sub_ne_zero.2 (h01 b hb).symm) (sub_ne_zero.2 (h12 b hb))
+  · refine ContinuousOn.div (by fun_prop) (by fun_prop) ?_
+    intro b hb
+    exact mul_ne_zero (sub_ne_zero.2 (h02 b hb).symm) (sub_ne_zero.2 (h12 b hb).symm)
+
+/-- **The smile strangle exists when the gap changes sign** (Step 3, Claim 2). Take an interval of
+bows on which both pillar wing vols are positive, the three pillar log-strikes are in order, and the
+parabola smile is positive at both market strikes. If one bow in it gives a negative gap and another
+a positive one, some bow between them makes the smile reprice the market strangle exactly:
+`g(b) = 0`. -/
+theorem smile_strangle_exists_of_sign_change (m : FXMarket) (d atm rr bf lo hi b₁ b₂ : ℝ)
+    (hS : 0 < m.S) (hT : 0 < m.T) (hd : exp (-m.rf * m.T) * N d = 1 / 4)
+    (hdom : ∀ b ∈ Icc lo hi,
+      0 < wingCall atm rr b ∧ 0 < wingPut atm rr b ∧
+      xPut m d atm rr b < xAtm m atm ∧ xAtm m atm < xCall m d atm rr b ∧
+      0 < smileVol m d atm rr b (msCallStrike m d atm bf) ∧
+      0 < smileVol m d atm rr b (msPutStrike m d atm bf))
+    (hb₁ : b₁ ∈ Icc lo hi) (hb₂ : b₂ ∈ Icc lo hi)
+    (hneg : gap m d atm rr bf b₁ < 0) (hpos : 0 < gap m d atm rr bf b₂) :
+    ∃ b ∈ uIcc b₁ b₂, gap m d atm rr bf b = 0 := by
+  have hsub : uIcc b₁ b₂ ⊆ Icc lo hi := uIcc_subset_Icc hb₁ hb₂
+  have h01 : ∀ b ∈ uIcc b₁ b₂, xPut m d atm rr b ≠ xAtm m atm :=
+    fun b hb => (hdom b (hsub hb)).2.2.1.ne
+  have h12 : ∀ b ∈ uIcc b₁ b₂, xAtm m atm ≠ xCall m d atm rr b :=
+    fun b hb => (hdom b (hsub hb)).2.2.2.1.ne
+  have h02 : ∀ b ∈ uIcc b₁ b₂, xPut m d atm rr b ≠ xCall m d atm rr b :=
+    fun b hb => ((hdom b (hsub hb)).2.2.1.trans (hdom b (hsub hb)).2.2.2.1).ne
+  have hsv1 := smileVol_continuousOn m hS d atm rr (msCallStrike m d atm bf) h01 h12 h02
+  have hsv2 := smileVol_continuousOn m hS d atm rr (msPutStrike m d atm bf) h01 h12 h02
+  have hcont : ContinuousOn (fun b => gap m d atm rr bf b) (uIcc b₁ b₂) := by
+    unfold gap
+    exact ((gkCall_continuousOn m hT _ hsv1 (fun b hb => (hdom b (hsub hb)).2.2.2.2.1.ne')).add
+      (gkPut_continuousOn m hT _ hsv2 (fun b hb => (hdom b (hsub hb)).2.2.2.2.2.ne'))).sub
+      continuousOn_const
+  have h0 : (0 : ℝ) ∈ uIcc (gap m d atm rr bf b₁) (gap m d atm rr bf b₂) := by
+    rw [mem_uIcc]; left; exact ⟨hneg.le, hpos.le⟩
+  obtain ⟨b, hb, hgb⟩ := intermediate_value_uIcc hcont h0
+  exact ⟨b, hb, hgb⟩
+
+/-- **No tilt means no gap** (Claim 1). With risk reversal 0 and the smile a parabola through three
+distinct pillars, the bow equal to the broker's butterfly reprices the market strangle exactly:
+`g(BF_ms) = 0`, so the smile strangle equals the market strangle. -/
+theorem no_tilt_smile_strangle_eq_market (m : FXMarket) (d atm bf : ℝ)
+    (hS : 0 < m.S) (hT : 0 < m.T) (hd : exp (-m.rf * m.T) * N d = 1 / 4)
+    (hpa : xPut m d atm 0 bf ≠ xAtm m atm) (hac : xAtm m atm ≠ xCall m d atm 0 bf)
+    (hpc : xPut m d atm 0 bf ≠ xCall m d atm 0 bf) :
+    gap m d atm 0 bf bf = 0 := by
+  have hc : log (msCallStrike m d atm bf / fwd m) = xCall m d atm 0 bf := by
+    simp [xCall, msCallStrike, wingCall]
+  have hp : log (msPutStrike m d atm bf / fwd m) = xPut m d atm 0 bf := by
+    simp [xPut, msPutStrike, wingPut]
+  unfold gap smileVol
+  rw [hc, hp, lagrange3_at_x2 hpc hac, lagrange3_at_x0 hpa hpc]
+  unfold marketStrangle
+  simp [wingCall, wingPut]
+
+/-- **The market strangle is delta-neutral with equal vegas** (Step 1). At any vol `σ > 0`, the call
+struck at the 25-delta call strike found at `σ` has spot delta `1/4`, the put struck at the 25-delta
+put strike found at `σ` has spot delta `-1/4`, so the deltas cancel, and the two legs' vegas are
+equal. -/
+theorem market_strangle_delta_neutral_equal_vega (m : FXMarket) (d σ : ℝ)
+    (hS : 0 < m.S) (hT : 0 < m.T) (hσ : 0 < σ) (hd : exp (-m.rf * m.T) * N d = 1 / 4) :
+    callDelta m (strike25 m d σ 1) σ = 1 / 4 ∧
+      putDelta m (strike25 m d σ (-1)) σ = -(1 / 4) ∧
+      vega m (strike25 m d σ 1) σ = vega m (strike25 m d σ (-1)) σ := by
+  have hs := hσ.ne'
+  refine ⟨?_, ?_, ?_⟩
+  · unfold callDelta
+    rw [d1_strike25 m hS hT d σ 1 hs, one_mul]
+    exact hd
+  · unfold putDelta
+    rw [d1_strike25 m hS hT d σ (-1) hs, neg_one_mul, neg_neg, hd]
+  · unfold vega
+    rw [d1_strike25 m hS hT d σ 1 hs, d1_strike25 m hS hT d σ (-1) hs, one_mul,
+      neg_one_mul, gaussianPDFReal_std_neg]
+
+-- The card's house quotes, in hundredths of a vol point: ATM 10.00 = 1000, RR -1.00 = -100,
+-- broker BF +0.25 = 25. The market strangle's one vol is 10.25 = 1025.
+example : (1000 : ℤ) + 25 = 1025 := by norm_num
+-- The naive smile (bow = 25): wings 9.75 = 975 (call) and 10.75 = 1075 (put).
+example : (1000 : ℤ) + 25 + (-100) / 2 = 975 ∧ (1000 : ℤ) + 25 - (-100) / 2 = 1075 := by norm_num
+-- No tilt (RR = 0): both naive wings equal the market strangle's vol 1025.
+example : (1000 : ℤ) + 25 + 0 / 2 = 1025 ∧ (1000 : ℤ) + 25 - 0 / 2 = 1025 := by norm_num
+
+#print axioms N_continuous
+#print axioms gaussianPDFReal_std_neg
+#print axioms fwd_pos
+#print axioms log_strike25_div_fwd
+#print axioms d1_strike25
+#print axioms lagrange3_at_x0
+#print axioms lagrange3_at_x2
+#print axioms gkCall_continuousOn
+#print axioms gkPut_continuousOn
+#print axioms smileVol_continuousOn
+#print axioms smile_strangle_exists_of_sign_change
+#print axioms no_tilt_smile_strangle_eq_market
+#print axioms market_strangle_delta_neutral_equal_vega
+
+end BrokerButterfly
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'BrokerButterfly.N_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.gaussianPDFReal_std_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.fwd_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.log_strike25_div_fwd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.d1_strike25' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.lagrange3_at_x0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.lagrange3_at_x2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.gkCall_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.gkPut_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.smileVol_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.smile_strangle_exists_of_sign_change' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.no_tilt_smile_strangle_eq_market' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BrokerButterfly.market_strangle_delta_neutral_equal_vega' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

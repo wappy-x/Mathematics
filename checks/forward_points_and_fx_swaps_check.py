@@ -114,4 +114,4 @@ assert all(outright(b, a)[1] - outright(b, a)[0] > sa - sb for b, a in grid), "t
 assert abs(points_leg - two_loans) < 1e-4, "points leg = dollar interest minus euro interest"
 assert abs(lender_value(S)) < 1e-4, "a swap at market is worth nothing at inception"
 assert abs(swap_move - N * (1.20 - S) * (1 - exp(-rf * T))) < 1e-4, "swap feels spot only through euro interest"
-print("all checks passed")
+print("ALL CHECKS PASS")
