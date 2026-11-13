@@ -162,5 +162,5 @@ fn main() {
     assert!((fs_house - 6.244873).abs() < 1e-6, "forward-start must match the shelf's house number");
     assert!((atm1y[0] - atm1y[1]).abs() < 0.3, "local vol must reprice Heston's 1-year ATM call");
     assert!(gap > 5.0 * gap_se, "Heston and local vol must disagree on the cliquet");
-    println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

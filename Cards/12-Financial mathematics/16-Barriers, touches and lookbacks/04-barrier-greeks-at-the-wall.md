@@ -10,7 +10,7 @@ Acme shares trade at $100. A bank sells a one-year call on Acme with strike $100
 
 The bank does not keep the risk. It hedges: it holds shares so that the option and the shares move against each other. The number of shares is the option's **delta**, the change in its price per $1 move in Acme. With the plain call the hedge is calm. Near $80 the knock-out's hedge is not. Acme at $80.10: the option is worth 4 cents, yet its hedge is 0.39 shares, about $31 of stock. One more dime down and the option is gone, so those shares must be sold in the same instant, at whatever price the market gives.
 
-Three things change beside the barrier, and this card derives each from the price formula. The delta does not fade as it does for the plain call; it stays near 0.39 and then drops to zero in one step. The **gamma**, the change in delta per $1 move, turns negative. And the **vega**, the change in price per unit change in volatility, shrinks to zero; for a knock-out deep in the money beside its barrier, vega turns negative. Hence the desk practices at the end: shifting the barrier, and hedging with other options instead of shares.
+Three things change beside the barrier, and this card derives each from the price formula. The delta does not fade as it does for the plain call; it stays near 0.39 and then drops to zero in one step. The **gamma**, the change in delta per $1 move, turns negative. And the **vega**, the change in price per unit change in volatility, shrinks to zero; for a knock-out deep in the money (already far past its strike) beside its barrier, vega turns negative. Hence the desk practices at the end: shifting the barrier, and hedging with other options instead of shares.
 
 **Near a knock-out barrier the Greeks are still smooth derivatives of a formula, but the hedge they describe must jump to zero at the wall, and the wall is where volatility stops helping the holder.**
 
@@ -67,12 +67,12 @@ $$V'(B) = 2\,\Delta(B) + \frac{a\,C(B)}{B}, \qquad V''(B) = -\,\frac{1+a}{B}\,V'
 | $C$ | the plain Black-Scholes call's price at a given spot | $9.23 at 100 | — |
 | $\Delta$, $\Gamma$, $\nu$ | the plain call's delta, gamma and vega at a given spot | 0.587, 0.019, 37.9 at 100 | — |
 
-The plain call's Greeks come from the [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) shelf: delta $e^{-qT}N(d_1)$, gamma $e^{-qT}\varphi(d_1)/(S\sigma\sqrt T)$ and vega $S e^{-qT}\varphi(d_1)\sqrt T$, where N is the bell-curve area to the left and φ its height. Vega here is per unit of $\sigma$: 37.9 means $0.379 per volatility point.
+The plain call's Greeks come from the [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) shelf: delta $e^{-qT}N(d_1)$, gamma $e^{-qT}\varphi(d_1)/(S\sigma\sqrt T)$ and vega $S e^{-qT}\varphi(d_1)\sqrt T$, where $d_1 = [\ln(S/K) + (r - q + \tfrac12\sigma^2)T]/(\sigma\sqrt T)$, N is the bell-curve area to the left and φ its height. Vega here is per unit of $\sigma$: 37.9 means $0.379 per volatility point.
 
 ### When it holds
 
 - **The barrier is watched continuously.** Real contracts check it once a day; the effective wall then sits slightly further away ([Daily monitoring](03-discrete-monitoring-correction.md)), and every Greek near the wall moves with it.
-- **Volatility is one constant number.** With a volatility smile the vega near the wall depends on which part of the smile is bumped; the numbers here are for a parallel bump.
+- **Volatility is one constant number.** Real markets show a volatility smile: a different volatility for each strike. Then the vega near the wall depends on which part of the smile is raised; the numbers here raise every volatility by the same amount.
 - **Acme moves without gaps.** The formula assumes the hedge can be sold at exactly $80. A gap through the wall turns the delta jump into a loss of shares times the gap.
 - **Strike at or above the barrier, no rebate.** A strike below the barrier, or a cash rebate paid on touch, uses a different one of the eight formulas and different wall values.
 
@@ -104,7 +104,7 @@ Differentiate the delta once more. At $S = B$ the terms regroup into
 
 $$V''(B) = -\,\frac{1+a}{B}\,V'(B).$$
 
-The wall delta is positive, and $1 + a$ is positive whenever $a > -1$, that is whenever the bank rate beats the dividend yield, as 5% beats 2% here. So the gamma at the wall is negative: $-0.0073$ for the house option. Negative gamma means the delta rises as Acme falls. The hedge that bottomed near 38 shares at $82 climbs back to 39 at the wall. A bank that sold this option is therefore long gamma near the wall, which sounds like a gift, until the wall is touched and the whole hedge must be dumped.
+The wall delta is positive, and $1 + a$ is positive whenever $a > -1$, that is whenever the bank rate beats the dividend yield, as 5% beats 2% here. So the gamma at the wall is negative: $-0.0073$ for the house option. Negative gamma means the delta rises as Acme falls. The hedge that bottomed near 38 shares at $82 climbs back to 39 at the wall. A bank that sold this option therefore holds positive gamma near the wall (it is long gamma), which sounds like a gift, until the wall is touched and the whole hedge must be dumped.
 
 ### Step 4: vega is zero at the wall
 
@@ -112,7 +112,7 @@ At $S = B$ the price is zero for every volatility, so its derivative in $\sigma$
 
 ### Step 5: the reverse knock-out, where both effects are violent
 
-Take instead an **up-and-out call**: strike $100, barrier $120 above. Just below $120 it is deep in the money: about $20 of payoff if it ended now. One touch wipes it out, so its price must fall to zero over the last few dollars; with a month left it is worth $5.88 at $115 and nothing at $120. Its delta there is large and negative. As expiry nears the drop gets steeper:
+Take instead an **up-and-out call** (UO in the code and the chart below): strike $100, barrier $120 above. Just below $120 it is deep in the money: about $20 of payoff if it ended now. One touch wipes it out, so its price must fall to zero over the last few dollars; with a month left it is worth $5.88 at $115 and nothing at $120. Its delta there is large and negative. As expiry nears the drop gets steeper:
 
 ```
 UO call, delta just below the wall at 119.9 (shares per option, sign dropped)
@@ -150,7 +150,7 @@ At $S = B$ the logarithm is zero and $p = 1$, $x = B$, so $\partial M/\partial\s
 
 **Barrier shift.** The seller prices and hedges the contract as if the wall were further away: for the reverse knock-out, at $122 instead of $120. With a month left that costs the buyer a little: $2.41 instead of $2.39. The payoff comes at the real wall. When Acme touches $120 the real contract dies, but the shifted one on the seller's books is still worth $2.99. The seller holds a hedge of 1.45 shares against it, so that reserve covers buying the shares back at up to $2.06 each above the wall. The delta jump is still there. It has been moved to a price the contract never reaches, and paid for in advance. The daily-monitoring shift on [Daily monitoring](03-discrete-monitoring-correction.md) is the same device used for a different reason.
 
-**Static replication, in outline.** Replace the share hedge with options that are worth the same as the knock-out on the wall. In the special market where $r = q$, the mirror term is exactly $K/B$ puts struck at $B^2/K$: for the house option, 1.25 puts struck at $64. The package "one call at $100 minus 1.25 puts at $64" pays the call if the wall is never touched, since the puts expire worthless above $80. At the wall the call alone and the 1.25 puts together are both worth $1.16, so the package can be closed for nothing. No shares to dump. With $r \neq q$ the mirror weight is not constant and the replication needs a strip of puts or options of several maturities, which is what Derman, Ergener and Kani and Carr, Ellis and Gupta work out.
+**Static replication, in outline.** Replace the share hedge with options that are worth the same as the knock-out on the wall. In the special market where $r = q$, the mirror term is exactly $K/B$ puts struck at $B^2/K$ (a put is the right to sell Acme at its strike): for the house option, 1.25 puts struck at $64. The package "one call at $100 minus 1.25 puts at $64" pays the call if the wall is never touched, since the puts expire worthless above $80. At the wall the call alone and the 1.25 puts together are both worth $1.16, so the package can be closed for nothing. No shares to dump. With $r \neq q$ the mirror weight is not constant and the replication needs a strip of puts or options of several maturities, which is what Derman, Ergener and Kani and Carr, Ellis and Gupta work out.
 
 <details>
 <summary>Why 1.25 puts at $64 match the mirror call when r = q</summary>
@@ -626,6 +626,162 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line, from two different normal CDFs and two separately written grids.
+
+### Lean
+
+Lean proves the delta, gamma and vega formulas of Steps 1 to 4, for any smooth plain-call price $C$ and any $a$.
+
+- Take any share price $S$ above zero. Then the knock-out's delta is exactly the $V'(S)$ formula above: the plain delta plus the mirror extra.
+- Take $S = B$. Then the price is zero, and the delta is $V'(B) = 2\,\Delta(B) + a\,C(B)/B$.
+- Take $S = B$ again. Then the gamma is $V''(B) = -\frac{1+a}{B}\,V'(B)$: the plain gamma cancels exactly.
+- Take $S = B$, with $a = 2(r-q)/\sigma^2 - 1$ moving with $\sigma$. Then the vega is zero, at every volatility.
+- Take the house market. Then $a$ = 0.5, the mirror price at $100 is 64, and $(1+a)/B$ = 3/160.
+- Take $r = q$ = 2%. Then $a = -1$, $K/B$ = 1.25 and $B^2/K$ = 64, as the static hedge needs.
+
+The Black-Scholes call itself, the Greeks' values, the grid, the reverse knock-out and the barrier shift are left to the Python and Rust checks.
+
+```lean
+-- Barrier Greeks: for a down-and-out call priced as a call minus its mirror image, the price is zero at the barrier, the delta there is twice the call's delta plus a C(B)/B, the gamma there is -(1 + a)/B times that delta, and the vega there is zero.
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
+
+lemma bgw_div_hasDerivAt (k S : ℝ) (hS : 0 < S) :
+    HasDerivAt (fun S : ℝ => k / S) (-(k / S) / S) S := by
+  have h := (hasDerivAt_inv hS.ne').const_mul k
+  simp only [← div_eq_mul_inv] at h
+  convert h using 1
+  field_simp
+
+lemma bgw_pow_hasDerivAt (B a S : ℝ) (hB : 0 < B) (hS : 0 < S) :
+    HasDerivAt (fun S : ℝ => (B / S) ^ a) (-(a / S) * (B / S) ^ a) S := by
+  have hpos : 0 < B / S := div_pos hB hS
+  have h := (bgw_div_hasDerivAt B S hS).rpow_const (p := a) (Or.inl hpos.ne')
+  convert h using 1
+  rw [Real.rpow_sub_one hpos.ne']
+  field_simp
+
+lemma bgw_V_hasDerivAt (C : ℝ → ℝ) (B a S c1 c2 : ℝ) (hB : 0 < B) (hS : 0 < S)
+    (h1 : HasDerivAt C c1 S) (h2 : HasDerivAt C c2 (B ^ 2 / S)) :
+    HasDerivAt (fun S : ℝ => C S - (B / S) ^ a * C (B ^ 2 / S))
+      (c1 + (B / S) ^ a * (a / S * C (B ^ 2 / S) + (B ^ 2 / S) / S * c2)) S := by
+  have hx := bgw_div_hasDerivAt (B ^ 2) S hS
+  have hcomp : HasDerivAt (fun S : ℝ => C (B ^ 2 / S)) (c2 * (-(B ^ 2 / S) / S)) S :=
+    h2.comp S hx
+  have := h1.sub ((bgw_pow_hasDerivAt B a S hB hS).mul hcomp)
+  convert this using 1
+  ring
+
+#print axioms bgw_div_hasDerivAt
+#print axioms bgw_pow_hasDerivAt
+#print axioms bgw_V_hasDerivAt
+
+/-- The card's wall formulas. Let `C` be the plain call's price as a function of the share
+price, smooth (twice continuously differentiable) for positive prices, and let the down-and-out
+call be `V(S) = C(S) - (B/S)^a C(B^2/S)` with barrier `B > 0`. At the wall `S = B` the price is
+zero, the delta is `V'(B) = 2 Δ(B) + a C(B)/B` (twice the plain delta plus a drift piece), and the
+gamma is `V''(B) = -((1 + a)/B) V'(B)`: the plain gamma cancels exactly. -/
+theorem down_out_wall_delta_and_gamma (C : ℝ → ℝ) (B a : ℝ) (hB : 0 < B)
+    (hC : ContDiffOn ℝ 2 C (Set.Ioi 0)) :
+    let V : ℝ → ℝ := fun S => C S - (B / S) ^ a * C (B ^ 2 / S)
+    V B = 0 ∧
+    HasDerivAt V (2 * deriv C B + a * C B / B) B ∧
+    HasDerivAt (deriv V) (-((1 + a) / B) * (2 * deriv C B + a * C B / B)) B := by
+  intro V
+  have hBB : B ^ 2 / B = B := by field_simp
+  have hopen : IsOpen (Set.Ioi (0 : ℝ)) := isOpen_Ioi
+  have h2 : ContDiffOn ℝ ((1 : WithTop ℕ∞) + 1) C (Set.Ioi 0) := by
+    simpa [one_add_one_eq_two] using hC
+  obtain ⟨hd, -, hdd⟩ := (contDiffOn_succ_iff_deriv_of_isOpen hopen).1 h2
+  have hdd' : DifferentiableOn ℝ (deriv C) (Set.Ioi 0) := hdd.differentiableOn one_ne_zero
+  have hCd : ∀ x : ℝ, 0 < x → HasDerivAt C (deriv C x) x := fun x hx =>
+    ((hd x hx).differentiableAt (hopen.mem_nhds hx)).hasDerivAt
+  have hCdd : ∀ x : ℝ, 0 < x → HasDerivAt (deriv C) (deriv (deriv C) x) x := fun x hx =>
+    ((hdd' x hx).differentiableAt (hopen.mem_nhds hx)).hasDerivAt
+  have hpos : ∀ S : ℝ, 0 < S → 0 < B ^ 2 / S := fun S hS => div_pos (by positivity) hS
+  have hVd : ∀ S : ℝ, 0 < S → HasDerivAt V
+      (deriv C S + (B / S) ^ a * (a / S * C (B ^ 2 / S) + (B ^ 2 / S) / S * deriv C (B ^ 2 / S))) S :=
+    fun S hS => bgw_V_hasDerivAt C B a S _ _ hB hS (hCd S hS) (hCd _ (hpos S hS))
+  have hBa : (B / B) ^ a = 1 := by rw [div_self hB.ne', Real.one_rpow]
+  refine ⟨?_, ?_, ?_⟩
+  · simp only [V, hBB, hBa]; ring
+  · convert hVd B hB using 1
+    rw [hBB, hBa]; field_simp; ring
+  · have heq : deriv V =ᶠ[nhds B] fun S =>
+        deriv C S + (B / S) ^ a * (a / S * C (B ^ 2 / S) + (B ^ 2 / S) / S * deriv C (B ^ 2 / S)) := by
+      filter_upwards [hopen.mem_nhds hB] with S hS
+      exact (hVd S hS).deriv
+    have hx := bgw_div_hasDerivAt (B ^ 2) B hB
+    have hC1 : HasDerivAt C (deriv C B) (B ^ 2 / B) := by rw [hBB]; exact hCd B hB
+    have hC2 : HasDerivAt (deriv C) (deriv (deriv C) B) (B ^ 2 / B) := by
+      rw [hBB]; exact hCdd B hB
+    have hCx : HasDerivAt (fun S : ℝ => C (B ^ 2 / S)) (deriv C B * (-(B ^ 2 / B) / B)) B :=
+      hC1.comp B hx
+    have hCdx : HasDerivAt (fun S : ℝ => deriv C (B ^ 2 / S))
+        (deriv (deriv C) B * (-(B ^ 2 / B) / B)) B := hC2.comp B hx
+    have hxS : HasDerivAt (fun S : ℝ => (B ^ 2 / S) / S)
+        (((-(B ^ 2 / B) / B) * B - (B ^ 2 / B) * 1) / B ^ 2) B :=
+      hx.div (hasDerivAt_id' B) hB.ne'
+    have hall := (hCdd B hB).add ((bgw_pow_hasDerivAt B a B hB hB).mul
+      (((bgw_div_hasDerivAt a B hB).mul hCx).add (hxS.mul hCdx)))
+    refine HasDerivAt.congr_of_eventuallyEq ?_ heq
+    convert hall using 1
+    simp only [Pi.mul_apply, Pi.add_apply, hBB, hBa]; field_simp; ring
+
+/-- The knock-out's delta at any share price `S > 0` is the plain delta plus an extra:
+`V'(S) = Δ(S) + (B/S)^a [ (a/S) C(x) + (x/S) Δ(x) ]` with mirror price `x = B^2/S`. -/
+theorem down_out_delta_formula (C : ℝ → ℝ) (B a S : ℝ) (hB : 0 < B) (hS : 0 < S)
+    (hC : DifferentiableOn ℝ C (Set.Ioi 0)) :
+    let V : ℝ → ℝ := fun S => C S - (B / S) ^ a * C (B ^ 2 / S)
+    HasDerivAt V
+      (deriv C S + (B / S) ^ a * (a / S * C (B ^ 2 / S) + (B ^ 2 / S) / S * deriv C (B ^ 2 / S))) S := by
+  intro V
+  have hopen : IsOpen (Set.Ioi (0 : ℝ)) := isOpen_Ioi
+  have hCd : ∀ x : ℝ, 0 < x → HasDerivAt C (deriv C x) x := fun x hx =>
+    ((hC x hx).differentiableAt (hopen.mem_nhds hx)).hasDerivAt
+  exact bgw_V_hasDerivAt C B a S _ _ hB hS (hCd S hS) (hCd _ (div_pos (by positivity) hS))
+
+/-- Vega is zero at the wall. Let `C S σ` be the plain call's price at share price `S` and
+volatility `σ`, and let the drift exponent `a = 2(r - q)/σ^2 - 1` move with `σ`. Then the
+down-and-out price `V(S, σ) = C(S, σ) - (B/S)^a C(B^2/S, σ)` at `S = B` has derivative zero in
+`σ`, at every volatility. -/
+theorem down_out_vega_zero_at_wall (C : ℝ → ℝ → ℝ) (B r q σ₀ : ℝ) (hB : 0 < B) :
+    let V : ℝ → ℝ → ℝ := fun S σ =>
+      C S σ - (B / S) ^ (2 * (r - q) / σ ^ 2 - 1) * C (B ^ 2 / S) σ
+    HasDerivAt (fun σ => V B σ) 0 σ₀ := by
+  intro V
+  have hBB : B ^ 2 / B = B := by field_simp
+  have h : (fun σ => V B σ) = fun _ => (0 : ℝ) := by
+    funext σ
+    simp only [V, hBB, div_self hB.ne', Real.one_rpow]; ring
+  rw [h]
+  exact hasDerivAt_const _ _
+
+-- House market: r = 5%, q = 2%, σ = 20% give drift exponent a = 1/2.
+example : 2 * ((5 : ℝ) / 100 - 2 / 100) / (20 / 100) ^ 2 - 1 = 1 / 2 := by norm_num
+-- Mirror price at S = 100 with B = 80: x = 80^2/100 = 64.
+example : (80 : ℝ) ^ 2 / 100 = 64 := by norm_num
+-- Wall gamma factor (1 + a)/B with a = 1/2, B = 80: 1.5/80 = 3/160.
+example : (1 + (1 : ℝ) / 2) / 80 = 3 / 160 := by norm_num
+-- Static replication with r = q: a = -1, and K/B = 100/80 = 1.25 puts struck at B^2/K = 64.
+example : 2 * ((2 : ℝ) / 100 - 2 / 100) / (20 / 100) ^ 2 - 1 = -1 := by norm_num
+example : (100 : ℝ) / 80 = 5 / 4 ∧ (80 : ℝ) ^ 2 / 100 = 64 := by norm_num
+
+#print axioms down_out_wall_delta_and_gamma
+#print axioms down_out_delta_formula
+#print axioms down_out_vega_zero_at_wall
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bgw_div_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bgw_pow_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bgw_V_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'down_out_wall_delta_and_gamma' depends on axioms: [propext, Classical.choice, Quot.sound]
+'down_out_delta_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'down_out_vega_zero_at_wall' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

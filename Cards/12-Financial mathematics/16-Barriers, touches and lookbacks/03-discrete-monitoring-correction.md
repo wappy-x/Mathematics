@@ -89,7 +89,7 @@ $$\Pr(\text{dip to } H \text{ between closes}) = e^{-2ab/(\sigma^2\Delta t)}$$
 
 Two closes at $81 give a dip chance of 0.143070. Two closes at $82 give 0.000461. Missed touches live within a day's move of the barrier. Only paths that close near $80 can have an unseen dip.
 
-This is also why the continuous contract touches more often. Under the pricing measure, the chance of ever touching $80 over the year, watched every instant, is 0.250014. The simulation below counts touches at daily closes only: 0.235765. The gap is the touches nobody saw.
+This is also why the continuous contract touches more often. Prices use the pricing measure: the probabilities under which Acme grows on average at the riskless rate minus the dividend yield ([Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md)). Under it, the chance of ever touching $80 over the year, watched every instant, is 0.250014. The simulation below counts touches at daily closes only: 0.235765. The gap is the touches nobody saw.
 
 ### Step 2: a daily walk crosses the barrier with an overshoot
 
@@ -103,7 +103,7 @@ For a walk with normal steps, heading for a level many steps away, the average o
 
 $$\beta = -\frac{\zeta(1/2)}{\sqrt{2\pi}} = 0.582597$$
 
-The **Riemann zeta function** $\zeta$ appears because the overshoot is built from sums over all step counts n of terms in $1/\sqrt{n}$, and $\sum 1/n^{s}$ is what $\zeta(s)$ means; at $s = 1/2$ that sum diverges, and the zeta function is its standard finite continuation. The checks build $\zeta(1/2) = -1.460355$ from the alternating sum $1 - 1/\sqrt2 + 1/\sqrt3 - \dots$, and reach the same 0.582597 by a second road, an integral from Siegmund's work.
+The **Riemann zeta function** $\zeta$ appears because the overshoot is built from sums over all step counts n of terms in $1/\sqrt{n}$, and $\sum 1/n^{s}$ is what $\zeta(s)$ means. At $s = 1/2$ that sum diverges, and the zeta function is its standard finite continuation. The checks build $\zeta(1/2) = -1.460355$ from the alternating sum $1 - 1/\sqrt2 + 1/\sqrt3 - \dots$, and reach the same 0.582597 by a second road, an integral from Siegmund's work.
 
 In log price, one day's wiggle is $\sigma\sqrt{\Delta t} = 0.012599$. The shift is 0.5826 of that, 0.007340. The barrier moves from $\ln 80$ to $\ln 80 - 0.007340$, which is $80\,e^{-0.007340} = 79.414944$.
 
@@ -112,9 +112,10 @@ In log price, one day's wiggle is $\sigma\sqrt{\Delta t} = 0.012599$. The shift 
 The payoff at expiry depends only on the final price, not on the check schedule. Only the survival event changes, and Step 3 says it matches continuous survival above the shifted barrier. So the continuous formula, fed the shifted barrier, prices the daily contract.
 
 <details>
-<summary>Detailed proof</summary>
+<summary>Detailed proof: from the walk's overshoot to the shifted barrier in the price</summary>
 
 Work in log price: $x_t = \ln(S_t/S)$, barrier $b = \ln(H/S) < 0$. Under the pricing measure, $x$ is Brownian motion with drift $r - q - \tfrac12\sigma^2$ and volatility $\sigma$. The closes $x_{k\Delta t}$ form a random walk with normal steps.
+
 1. **Rescale.** Divide by $\sigma\sqrt{\Delta t}$. The walk now has steps of size about 1 plus a drift that vanishes as the checks multiply, and the barrier sits at $b/(\sigma\sqrt{\Delta t})$ steps, which runs off to minus infinity as $\Delta t \to 0$.
 2. **Corrected diffusion approximation** (Siegmund and Yuh, 1982). For such a walk, the chance of crossing a far level c within m steps equals the chance that Brownian motion with the same drift crosses c plus ρ, where ρ is the walk's limiting mean overshoot, up to an error smaller than $1/\sqrt m$.
 3. **The constant.** Renewal theory gives the limiting mean overshoot as $\rho = \mathbb{E}[L^2] / (2\,\mathbb{E}[L])$, where L is a ladder height: the amount by which the walk beats its previous record each time it sets a new one. Spitzer's identity evaluates these moments for normal steps, and the result is $\rho = -\zeta(1/2)/\sqrt{2\pi}$, equal to Siegmund's integral $-\frac1\pi\int_0^\infty x^{-2}\ln\!\big(2(1-e^{-x^2/2})/x^2\big)\,dx$. Both roads are computed in the checks.
@@ -162,7 +163,9 @@ The daily contract is worth $9.15. The continuous formula at $80 says $9.13; the
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the daily price three independent ways. **Road 1** is the shifted formula. **Road 2** is a trinomial tree with 3,276 steps (13 a day), checking the barrier only on the 252 layers that fall on a close. **Road 3** is a simulation: 100,000 pairs of mirror-image paths (200,000 paths), each walked close by close with random numbers from a home-made generator (a 64-bit linear congruential generator, turned into normal draws by the Box–Muller formula). The simulation uses a **control variate**: on each path it records the knock-out payoff minus the plain call's payoff, averages that difference, and adds back the known call price 9.227006. The difference is zero on most paths, so the average settles fast: a standard error of 0.002162 instead of 0.023282 for the raw average. Without it, the simulation's noise would be larger than the 1.81-cent effect it is meant to measure.
+The scripts reach the daily price three independent ways. **Road 1** is the shifted formula. **Road 2** is a trinomial tree with 3,276 steps (13 a day), checking the barrier only on the 252 layers that fall on a close. **Road 3** is a simulation: 100,000 pairs of mirror-image paths (200,000 paths), each walked close by close with random numbers from a home-made generator (a 64-bit linear congruential generator, turned into normal draws by the Box–Muller formula).
+
+The simulation uses a **control variate**: on each path it records the knock-out payoff minus the plain call's payoff, averages that difference, and adds back the known call price 9.227006. The difference is zero on most paths, so the average settles fast: a standard error of 0.002162 instead of 0.023282 for the raw average. Without it, the simulation's noise would be larger than the 1.81-cent effect it is meant to measure.
 
 Two more checks keep the roads honest. The same tree, checked at every step with the barrier on a node layer, must land on the continuous formula. And β is built twice, from the zeta series and from Siegmund's integral.
 

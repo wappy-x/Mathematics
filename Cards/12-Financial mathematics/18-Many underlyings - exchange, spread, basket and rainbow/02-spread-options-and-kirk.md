@@ -93,7 +93,9 @@ Everything on this card tries to keep that trick alive once the strike is not ze
 
 ### Step 1: why the strike breaks it
 
-The call pays when $S_1 > S_2 + K$. Count in units of share 2 and the condition becomes $S_1/S_2 > 1 + K/S_2$: the hurdle now moves with share 2 itself. In logarithms, the line separating "pays" from "does not pay" is $\ln S_1 = \ln(S_2 + K)$. With $K = 0$ that is a straight line, and the chance of landing on one side of a straight line under a two-dimensional bell curve is a single $N(\cdot)$. With $K = 5$ the line bends, because $\ln(S_2 + 5)$ is not a straight function of $\ln S_2$. A bell curve cut by a curve has no single-$N$ answer.
+The call pays when $S_1 > S_2 + K$. Count in units of share 2 and the condition becomes $S_1/S_2 > 1 + K/S_2$: the hurdle now moves with share 2 itself.
+
+In logarithms, the line separating "pays" from "does not pay" is $\ln S_1 = \ln(S_2 + K)$. With $K = 0$ that is a straight line, and the chance of landing on one side of a straight line under a two-dimensional bell curve is a single $N(\cdot)$. With $K = 5$ the line bends, because $\ln(S_2 + 5)$ is not a straight function of $\ln S_2$. A bell curve cut by a curve has no single-$N$ answer.
 
 A second way to see it: $S_2 + K$ is a lognormal share plus a fixed $5. A sum of a lognormal and a constant is not lognormal, so "share 2 plus strike" is not a Black-Scholes asset. No closed form is known for the spread call in general.
 
@@ -108,15 +110,17 @@ The error comes from the freezing. As share 2 moves over the year, the true weig
 <details>
 <summary>Detailed proof: Kirk's volatility and where the approximation enters</summary>
 
-In the risk-neutral world each forward is a martingale (a quantity whose expected future value is its value today): $dF_i = \sigma_i F_i\, dW_i$, the two Brownian increments (random shocks) having correlation $\rho$. Set $Y = F_2 + K$. Since $K$ is a constant, $dY = dF_2 = \sigma_2 F_2\, dW_2$, so $dY / Y = \sigma_2 \,\frac{F_2}{F_2 + K}\, dW_2 = \sigma_2\, w_t\, dW_2$. This is exact, with a weight $w_t$ that changes over time.
+In the risk-neutral world (the pricing world, where a share is expected to grow at the bank rate less its dividend) each forward is a martingale (a quantity whose expected future value is its value today): $dF_i = \sigma_i F_i\, dW_i$, the two Brownian increments (random shocks) having correlation $\rho$. Set $Y = F_2 + K$. Since $K$ is a constant, $dY = dF_2 = \sigma_2 F_2\, dW_2$, so $dY / Y = \sigma_2 \,\frac{F_2}{F_2 + K}\, dW_2 = \sigma_2\, w_t\, dW_2$. This is exact, with a weight $w_t$ that changes over time.
 
-The one approximation: replace $w_t$ by today's weight $w$. Then $Y$ is a geometric Brownian motion with volatility $\sigma_2 w$. By Itô's lemma the ratio $F_1 / Y$ has log-increments with variance rate $\sigma_1^2 - 2\rho\sigma_1(\sigma_2 w) + (\sigma_2 w)^2 = \sigma_K^2$. Measuring in units of $Y$ (Step 0 with $Y$ as the unit), the call on $F_1 - Y$ is a Black-Scholes call on the ratio with strike 1, giving $e^{-rT}[F_1 N(d_1) - Y N(d_2)]$ with $d_1, d_2$ as stated. Every step after the freeze is exact; the whole error lives in $w_t \neq w$.
+The one approximation: replace $w_t$ by today's weight $w$. Then $Y$ is a geometric Brownian motion with volatility $\sigma_2 w$. By Itô's lemma (the chain rule for random processes) the ratio $F_1 / Y$ has log-increments with variance rate $\sigma_1^2 - 2\rho\sigma_1(\sigma_2 w) + (\sigma_2 w)^2 = \sigma_K^2$. Measuring in units of $Y$ (Step 0 with $Y$ as the unit), the call on $F_1 - Y$ is a Black-Scholes call on the ratio with strike 1, giving $e^{-rT}[F_1 N(d_1) - Y N(d_2)]$ with $d_1, d_2$ as stated. Every step after the freeze is exact; the whole error lives in $w_t \neq w$.
 
 </details>
 
 ### Step 3: the exact price, by one integral
 
-There is an exact route that needs one numerical integral instead of a formula. Fix the random draw $z$ that sets share 2's final price. Given $z$, share 2 at expiry is known, so the hurdle $X(z) = S_2 + K$ is just a number. Share 1, given $z$, is still lognormal: its correlated part is now fixed, and only its own leftover randomness remains, with log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. So given $z$ the spread call is an ordinary Black-Scholes call on share 1 with strike $X(z)$. Average that over the bell curve in $z$:
+There is an exact route that needs one numerical integral instead of a formula. Fix the random draw $z$ that sets share 2's final price. Given $z$, share 2 at expiry is known, so the hurdle $X(z) = S_2 + K$ is just a number.
+
+Share 1, given $z$, is still lognormal: its correlated part is now fixed, and only its own leftover randomness remains, with log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. So given $z$ the spread call is an ordinary Black-Scholes call on share 1 with strike $X(z)$. Average that over the bell curve in $z$:
 
 $$C = e^{-rT}\int_{-\infty}^{\infty} \frac{e^{-z^2/2}}{\sqrt{2\pi}}\ \mathrm{BS}\big(G(z),\, X(z)\big)\, dz$$
 
@@ -125,13 +129,15 @@ Here $G(z)$ is share 1's forward given $z$ and $\mathrm{BS}$ is the undiscounted
 <details>
 <summary>The algebra behind the conditional step</summary>
 
-Write share 1's draw as $Z_1 = \rho z + \sqrt{1-\rho^2}\,W$, the draw in the last term independent of $z$ (the Cholesky step of [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)). Then $S_1(T) = F_1 \exp(-\tfrac12\sigma_1^2 T + \sigma_1\sqrt{T}\rho z)\cdot\exp(-\tfrac12\sigma_1^2(1-\rho^2)T + \sigma_1\sqrt{T}\sqrt{1-\rho^2}\,W)$. The second factor has mean 1, so the first factor, $G(z) = F_1\exp(\sigma_1\sqrt{T}\rho z - \tfrac12\sigma_1^2\rho^2 T)$, is share 1's forward given $z$. Share 2 at expiry is $F_2\exp(-\tfrac12\sigma_2^2 T + \sigma_2\sqrt{T} z)$. The call given $z$ is Black's formula with forward $G(z)$, strike $X(z)$ and log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. The same step with the put payoff gives the put independently, which is how the code tests parity.
+Write share 1's draw as $Z_1 = \rho z + \sqrt{1-\rho^2}\,W$, the draw in the last term independent of $z$ (the Cholesky step of [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)). Then $S_1(T) = F_1 \exp(-\tfrac12\sigma_1^2 T + \sigma_1\sqrt{T}\rho z)\cdot\exp(-\tfrac12\sigma_1^2(1-\rho^2)T + \sigma_1\sqrt{T}\sqrt{1-\rho^2}\,W)$. The second factor has mean 1, so the first factor, $G(z) = F_1\exp(\sigma_1\sqrt{T}\rho z - \tfrac12\sigma_1^2\rho^2 T)$, is share 1's forward given $z$. Share 2 at expiry is $F_2\exp(-\tfrac12\sigma_2^2 T + \sigma_2\sqrt{T} z)$. The call given $z$ is Black's formula (the Black-Scholes call written with a forward price) with forward $G(z)$, strike $X(z)$ and log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. The same step with the put payoff gives the put independently, which is how the code tests parity.
 
 </details>
 
 ### Step 4: simulation keeps both honest
 
-The third road trusts no formula. Draw two independent bell-curve numbers, mix them by the Cholesky step so they have correlation 0.5, turn them into two share prices at expiry, and record the discounted payoff. Repeat a million times and average. The average is $5.69 with an error bar (one standard error, the typical miss of such an average) of one cent. The exact integral's $5.67 lies within two error bars. The simulation cannot see Kirk's fifth of a cent; its job is to confirm the integral, and the integral then measures Kirk to many decimals.
+The third road trusts no formula. Draw two independent bell-curve numbers, mix them by the Cholesky step so they have correlation 0.5, turn them into two share prices at expiry, and record the discounted payoff. Repeat a million times and average.
+
+The average is $5.69 with an error bar (one standard error, the typical miss of such an average) of one cent. The exact integral's $5.67 lies within two error bars. The simulation cannot see Kirk's fifth of a cent; its job is to confirm the integral, and the integral then measures Kirk to many decimals.
 
 A parity identity closes the loop. The call minus the put on the same spread pays $S_1 - S_2 - K$ in every outcome, so today $C - P = e^{-rT}(F_1 - F_2 - K)$. The put priced by its own integral, $10.42, satisfies this to every printed decimal.
 
@@ -193,7 +199,9 @@ xychart-beta
     line [0.00, 0.22, 0.57, 0.82, 0.90, 0.82, 0.65]
 ```
 
-Top line: correlation −0.5. Middle: correlation 0. Bottom: correlation 0.5. All three start at zero, where Kirk is Margrabe. At correlation 0.5 and below, Kirk overprices, and its percent error grows with every step in the strike. In cents, lower correlation always means a bigger error. At correlation 0.5 the cents error peaks near $K = 20$ and then falls, only because the price itself is shrinking; the percent error keeps climbing. At correlation 0.9 the error changes sign and stays under a tenth of a cent, but on a one-cent price that is 6.42 percent.
+Top line: correlation −0.5. Middle: correlation 0. Bottom: correlation 0.5. All three start at zero, where Kirk is Margrabe. At correlation 0.5 and below, Kirk overprices, and its percent error grows with every step in the strike.
+
+In cents, lower correlation always means a bigger error. At correlation 0.5 the cents error peaks near $K = 20$ and then falls, only because the price itself is shrinking; the percent error keeps climbing. At correlation 0.9 the error changes sign and stays under a tenth of a cent, but on a one-cent price that is 6.42 percent.
 
 At correlation −0.5 and $K = 20$, Kirk says $6.13 against the exact $6.09. The million-year simulation there gives $6.11, error bar 1.4 cents. It sits between the two and cannot tell them apart; only the integral can.
 
@@ -224,7 +232,9 @@ Same contract, right answer $5.67:
 
 ## Code, from first principles, and it actually runs
 
-Both programs take three independent roads to the $K = 5$ price: Kirk's formula, the exact conditional integral by Simpson's rule, and a million simulated years. They also price the put by its own integral and test parity, bump both prices for the Greeks, fill the strike-by-correlation grids, and reproduce every "what breaks" number. The bell-curve area is Marsaglia's series written out; the random numbers come from a splitmix64 generator written out, turned into bell-curve draws by the Box-Muller recipe (two uniform numbers become two independent normal draws through a logarithm, a cosine and a sine). Both programs make the same draws in the same order, so their outputs match line for line.
+Both programs take three independent roads to the $K = 5$ price: Kirk's formula, the exact conditional integral by Simpson's rule, and a million simulated years. They also price the put by its own integral and test parity, bump both prices for the Greeks, fill the strike-by-correlation grids, and reproduce every "what breaks" number.
+
+The bell-curve area is Marsaglia's series written out; the random numbers come from a splitmix64 generator written out, turned into bell-curve draws by the Box-Muller recipe (two uniform numbers become two independent normal draws through a logarithm, a cosine and a sine). Both programs make the same draws in the same order, so their outputs match line for line.
 
 ### Python
 
@@ -623,6 +633,137 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree to every printed digit: the same series, the same slices and the same random draws, in two languages.
+
+### Lean
+
+Lean proves parity and both price bounds in any model where each final price has an average, plus Kirk equals Margrabe at zero strike.
+
+- Suppose each final price has a pricing-world average, $F_1$ and $F_2$. Then $C - P = e^{-rT}(F_1 - F_2 - K)$, with no model needed beyond that.
+- Take a strike $K \ge 0$ and the same two shares. Then the call costs between the exchange option's price minus $e^{-rT}K$ and the exchange option's price itself.
+- Take a zero strike and $F_2$ above zero. Then $w = 1$, and Kirk's formula is Margrabe's formula exactly.
+- On the payoff chart, with a $5 strike, spreads of −$10, $5 and $25 at expiry pay $0, $0 and $20.
+- At spreads of $25 and −$10, call payoff minus put payoff equals the spread minus the strike.
+
+Kirk's price, the exact integral, the simulation, the error grids and the Greeks are left to the Python and Rust checks.
+
+```lean
+-- Spread options: a spread call minus a spread put is worth the discounted forward gap minus the strike, the strike can take off at most its present value, and Kirk's formula at a zero strike is exactly Margrabe's.
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+
+open MeasureTheory ProbabilityTheory
+
+/-- Margrabe's price of the exchange option (spread call with strike zero), written with
+forwards: `e^{-rT} [F₁ N(d₁) - F₂ N(d₂)]` with ratio volatility
+`σ = √(σ₁² - 2ρσ₁σ₂ + σ₂²)`, `d₁ = (ln(F₁/F₂) + σ²T/2)/(σ√T)` and `d₂ = d₁ - σ√T`.
+`N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`. -/
+noncomputable def margrabePrice (r T F₁ F₂ σ₁ σ₂ ρ : ℝ) : ℝ :=
+  let σ := Real.sqrt (σ₁ ^ 2 - 2 * ρ * σ₁ * σ₂ + σ₂ ^ 2)
+  let d₁ := (Real.log (F₁ / F₂) + σ ^ 2 * T / 2) / (σ * Real.sqrt T)
+  let d₂ := d₁ - σ * Real.sqrt T
+  Real.exp (-r * T) * (F₁ * cdf (gaussianReal 0 1) d₁ - F₂ * cdf (gaussianReal 0 1) d₂)
+
+/-- Kirk's approximation to the spread call with strike `K`, as on the card:
+`e^{-rT} [F₁ N(d₁) - (F₂ + K) N(d₂)]` with weight `w = F₂/(F₂ + K)`, Kirk volatility
+`σ_K = √(σ₁² - 2ρσ₁σ₂w + σ₂²w²)`, `d₁ = (ln(F₁/(F₂+K)) + σ_K²T/2)/(σ_K√T)` and
+`d₂ = d₁ - σ_K√T`. -/
+noncomputable def kirkPrice (r T F₁ F₂ σ₁ σ₂ ρ K : ℝ) : ℝ :=
+  let w := F₂ / (F₂ + K)
+  let σK := Real.sqrt (σ₁ ^ 2 - 2 * ρ * σ₁ * σ₂ * w + σ₂ ^ 2 * w ^ 2)
+  let d₁ := (Real.log (F₁ / (F₂ + K)) + σK ^ 2 * T / 2) / (σK * Real.sqrt T)
+  let d₂ := d₁ - σK * Real.sqrt T
+  Real.exp (-r * T) * (F₁ * cdf (gaussianReal 0 1) d₁ - (F₂ + K) * cdf (gaussianReal 0 1) d₂)
+
+/-- Spread put-call parity: the spread call minus the spread put on the same strike pays
+`S₁ - S₂ - K` in every outcome, so today `C - P = e^{-rT}(F₁ - F₂ - K)`, where each forward
+`Fᵢ` is the pricing-world average of share `i`'s final price. Here `μ` is the pricing-world
+joint law of the two final prices `(S₁, S₂)`, `r` the bank rate and `T` the time to expiry;
+no model for the joint law is needed beyond both prices having an average. -/
+theorem spread_call_sub_spread_put_eq_discounted_forward_gap
+    (μ : Measure (ℝ × ℝ)) [IsProbabilityMeasure μ] (r T K F₁ F₂ : ℝ)
+    (h₁ : Integrable (fun p : ℝ × ℝ => p.1) μ) (h₂ : Integrable (fun p : ℝ × ℝ => p.2) μ)
+    (hF₁ : ∫ p, p.1 ∂μ = F₁) (hF₂ : ∫ p, p.2 ∂μ = F₂) :
+    Real.exp (-r * T) * ∫ p, max (p.1 - p.2 - K) 0 ∂μ -
+        Real.exp (-r * T) * ∫ p, max (K - (p.1 - p.2)) 0 ∂μ =
+      Real.exp (-r * T) * (F₁ - F₂ - K) := by
+  have hd : Integrable (fun p : ℝ × ℝ => p.1 - p.2) μ := h₁.sub h₂
+  have hdK : Integrable (fun p : ℝ × ℝ => p.1 - p.2 - K) μ := hd.sub (integrable_const K)
+  have hKd : Integrable (fun p : ℝ × ℝ => K - (p.1 - p.2)) μ := (integrable_const K).sub hd
+  have hc : Integrable (fun p : ℝ × ℝ => max (p.1 - p.2 - K) 0) μ := hdK.pos_part
+  have hp : Integrable (fun p : ℝ × ℝ => max (K - (p.1 - p.2)) 0) μ := hKd.pos_part
+  rw [← mul_sub, ← integral_sub hc hp]
+  have hpt : (fun p : ℝ × ℝ => max (p.1 - p.2 - K) 0 - max (K - (p.1 - p.2)) 0) =
+      fun p => p.1 - p.2 - K := by
+    funext p
+    rcases le_total 0 (p.1 - p.2 - K) with h | h
+    · rw [max_eq_left h, max_eq_right (by linarith)]; ring
+    · rw [max_eq_right h, max_eq_left (by linarith)]; ring
+  rw [hpt, integral_sub hd (integrable_const K), integral_sub h₁ h₂, hF₁, hF₂,
+    integral_const]
+  simp
+
+/-- A strike `K ≥ 0` lowers the spread call's price, but by no more than the strike's present
+value: Margrabe's price (strike zero) minus `e^{-rT} K` is a floor on the spread call, and
+Margrabe's price is a ceiling. Here `μ` is the pricing-world joint law of the two final
+prices `(S₁, S₂)`. -/
+theorem exchange_sub_pv_strike_le_spread_call_le_exchange
+    (μ : Measure (ℝ × ℝ)) [IsProbabilityMeasure μ] (r T K : ℝ) (hK : 0 ≤ K)
+    (h₁ : Integrable (fun p : ℝ × ℝ => p.1) μ) (h₂ : Integrable (fun p : ℝ × ℝ => p.2) μ) :
+    Real.exp (-r * T) * ∫ p, max (p.1 - p.2) 0 ∂μ - Real.exp (-r * T) * K ≤
+        Real.exp (-r * T) * ∫ p, max (p.1 - p.2 - K) 0 ∂μ ∧
+      Real.exp (-r * T) * ∫ p, max (p.1 - p.2 - K) 0 ∂μ ≤
+        Real.exp (-r * T) * ∫ p, max (p.1 - p.2) 0 ∂μ := by
+  have he : 0 ≤ Real.exp (-r * T) := (Real.exp_pos _).le
+  have hd : Integrable (fun p : ℝ × ℝ => p.1 - p.2) μ := h₁.sub h₂
+  have hdK : Integrable (fun p : ℝ × ℝ => p.1 - p.2 - K) μ := hd.sub (integrable_const K)
+  have hc : Integrable (fun p : ℝ × ℝ => max (p.1 - p.2 - K) 0) μ := hdK.pos_part
+  have hx : Integrable (fun p : ℝ × ℝ => max (p.1 - p.2) 0) μ := hd.pos_part
+  have hxK : Integrable (fun p : ℝ × ℝ => max (p.1 - p.2) 0 - K) μ :=
+    hx.sub (integrable_const K)
+  constructor
+  · rw [← mul_sub]
+    apply mul_le_mul_of_nonneg_left _ he
+    have hK' : ∫ p, max (p.1 - p.2) 0 ∂μ - K = ∫ p, (max (p.1 - p.2) 0 - K) ∂μ := by
+      rw [integral_sub hx (integrable_const K), integral_const]; simp
+    rw [hK']
+    apply integral_mono hxK hc
+    intro p
+    show max (p.1 - p.2) 0 - K ≤ max (p.1 - p.2 - K) 0
+    rcases le_total 0 (p.1 - p.2) with h | h
+    · rw [max_eq_left h]; exact le_max_left _ _
+    · rw [max_eq_right h]; linarith [le_max_right (p.1 - p.2 - K) 0]
+  · apply mul_le_mul_of_nonneg_left _ he
+    apply integral_mono hc hx
+    intro p
+    exact max_le_max (by linarith) le_rfl
+
+/-- At a zero strike the weight is `w = 1`, and Kirk's approximation is Margrabe's formula
+exactly. The folded asset `F₂ + K = F₂` must be above zero. -/
+theorem kirk_price_zero_strike_eq_margrabe (r T F₁ F₂ σ₁ σ₂ ρ : ℝ) (hF₂ : 0 < F₂) :
+    kirkPrice r T F₁ F₂ σ₁ σ₂ ρ 0 = margrabePrice r T F₁ F₂ σ₁ σ₂ ρ := by
+  simp only [kirkPrice, margrabePrice, add_zero, div_self hF₂.ne', mul_one, one_pow]
+
+-- The card's payoff chart, strike $5: spreads of -$10, $5 and $25 at expiry pay $0, $0 and $20.
+example : max ((-10 : ℤ) - 5) 0 = 0 := by decide
+example : max ((5 : ℤ) - 5) 0 = 0 := by decide
+example : max ((25 : ℤ) - 5) 0 = 20 := by decide
+-- Call payoff minus put payoff is the spread minus the strike, in every outcome shown.
+example : max ((25 : ℤ) - 5) 0 - max (5 - 25) 0 = 25 - 5 := by decide
+example : max ((-10 : ℤ) - 5) 0 - max (5 - (-10)) 0 = -10 - 5 := by decide
+
+#print axioms spread_call_sub_spread_put_eq_discounted_forward_gap
+#print axioms exchange_sub_pv_strike_le_spread_call_le_exchange
+#print axioms kirk_price_zero_strike_eq_margrabe
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'spread_call_sub_spread_put_eq_discounted_forward_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exchange_sub_pv_strike_le_spread_call_le_exchange' depends on axioms: [propext, Classical.choice, Quot.sound]
+'kirk_price_zero_strike_eq_margrabe' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

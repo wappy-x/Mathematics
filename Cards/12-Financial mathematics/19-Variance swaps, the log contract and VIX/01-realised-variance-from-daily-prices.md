@@ -6,17 +6,31 @@
 
 ## General Overview
 
-Acme shares, the house stock, start a month at $100. For 21 trading days a computer moves the price minute by minute with a volatility of exactly 20 percent a year. Volatility is how jumpy a price is: the typical size of its moves, scaled to a year. Every trade happens at the bid or the ask, 10 cents either side of the true price. At the end of the month the close is $98.43.
+Acme shares, the house stock, start a month at $100. For 21 trading days a computer moves the price minute by minute with a volatility of exactly 20 percent a year. Volatility is how jumpy a price is: the typical size of its moves, scaled to a year.
 
-Now forget how the path was made. Only the 22 closing prices are left: the one before day 1 and the 21 closes after it. How jumpy was Acme this month? The recipe the market uses is short. Take each day's move as a log return, the natural log of today's close over yesterday's. Square each one, so that up and down both count. Add the 21 squares. Multiply by 252 over 21, to scale a month to a year of trading days. That number is **realised variance**. Its square root is **realised volatility**. For this month it reads 19.05 percent against the 20 percent that generated the path.
+Every trade happens at the bid or the ask, 10 cents either side of the true price. The bid is the best price a buyer offers, the ask the best price a seller accepts, and the gap between them is the bid-ask spread. At the end of the month the close is $98.43.
+
+Now forget how the path was made. Only the 22 closing prices are left: the one before day 1 and the 21 closes after it. How jumpy was Acme this month? The recipe the market uses is short.
+
+1. Take each day's move as a log return, the natural log of today's close over yesterday's.
+2. Square each one, so that up and down both count.
+3. Add the 21 squares.
+4. Multiply by 252 over 21, to scale a month to a year of trading days.
+
+That number is **realised variance**. Its square root is **realised volatility**. For this month it reads 19.05 percent against the 20 percent that generated the path.
 
 The same month, sampled every five minutes instead of once a day, gives 1,638 returns instead of 21. More data should mean a better answer. On the true prices it does: 19.75 percent. On the prices people actually traded at, it reads 28.04 percent. The extra eight points are not Acme. They are the price hopping between bid and ask.
 
-This card defines the number, shows what it converges to, shows two estimators that use each day's high and low to squeeze more out of the same 21 days, and shows why sampling too finely measures the market's plumbing instead of the share.
+This card does four things:
+
+- It defines the number.
+- It shows what the number converges to.
+- It shows two estimators that use each day's high and low to get more out of the same 21 days.
+- It shows why sampling too finely measures the bid-ask spread instead of the share.
 
 **Realised variance is the sum of squared log returns, scaled to a year; for a share whose price wanders smoothly it estimates the variance the share actually delivered, more precisely the more returns it adds up, until the bid-ask spread starts adding its own squares.**
 
-**What kind of fact this is:** a definition, with a market convention for the 252; that it converges to the variance actually delivered is a theorem, proved on this card in Why it works for a share with steady volatility, and the noise bias is exact for the simple bid-ask model and only roughly true of real markets.
+**What kind of fact this is:** a definition, with a market convention for the 252. That it converges to the variance actually delivered is a theorem, proved on this card in Why it works for a share with steady volatility. The noise bias is exact for the simple bid-ask model and only roughly true of real markets.
 
 ### The picture: the month of closes
 
@@ -60,7 +74,7 @@ Two range estimators use more of each day. Each is annualised the same way, 252 
 
 $$\hat\sigma^2_{\text{P}} = \frac{252}{N}\sum_{i=1}^{N}\frac{\big(\ln(H_i/L_i)\big)^2}{4\ln 2}$$
 
-Parkinson's estimator: the square of each day's log range, the distance from low to high, divided by $4\ln 2$ = 2.7726, the average squared range of a random walk with unit variance per day.
+Parkinson's estimator: the square of each day's log range, the distance from low to high, divided by $4\ln 2$ = 2.7726. That constant is the average squared range of a random walk with unit variance per day.
 
 $$\hat\sigma^2_{\text{GK}} = \frac{252}{N}\sum_{i=1}^{N}\Big[\tfrac12\big(\ln(H_i/L_i)\big)^2 - (2\ln 2 - 1)\big(\ln(C_i/O_i)\big)^2\Big]$$
 
@@ -75,7 +89,7 @@ $$\text{expected measured variance per year} = \sigma^2 + \frac{2nh^2}{T}$$
 - **Steady volatility and no jumps.** Realised variance then centres on $\sigma^2$. If volatility changes during the month it centres on the month's average variance instead, which is exactly what a variance swap pays on. A jump adds its own square in full, however rare it was meant to be. The jump bias gets its own card: [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
 - **Enough returns.** With $N$ = 21 the estimate's spread is about 31 percent of its size. A single month reading 19.05 percent against a true 20 is inside the normal wobble, not evidence of anything.
 - **Prices that are the share's price.** Every traded price carries bid-ask noise. At daily sampling it barely matters; at five-minute sampling it adds 0.039312 a year. The rule of thumb in practice is to sample no faster than every five to thirty minutes, or to use a noise-corrected estimator.
-- **Trading through the day, and a true high and low.** The range estimators assume the price is watched continuously. Read from minute prices they miss the true extremes by a little and read low: across 400 simulated months, 19.43 percent for Parkinson and 19.12 percent for Garman-Klass against the true 20. They also assume the open equals yesterday's close: real overnight gaps need an extra term.
+- **Trading through the day, and a true high and low.** The range estimators assume the price is watched continuously. Read from minute prices they miss the true extremes by a little and read low. Across 400 simulated months, 19.43 percent for Parkinson and 19.12 percent for Garman-Klass against the true 20. They also assume the open equals yesterday's close: real overnight gaps need an extra term.
 
 ---
 
@@ -110,7 +124,7 @@ On the true Acme prices, 1,638 five-minute returns give 19.75 percent, within it
 <details>
 <summary>Detailed proof: mean and variance of the realised sum</summary>
 
-Write $a = (\mu - \tfrac12\sigma^2)\Delta t$ and $b = \sigma\sqrt{\Delta t}$, so $r_i = a + bZ_i$ with the draws independent and standard normal.
+Here $E[\cdot]$ means the average of a random quantity and $\text{Var}$ its variance. Write $a = (\mu - \tfrac12\sigma^2)\Delta t$ and $b = \sigma\sqrt{\Delta t}$, so $r_i = a + bZ_i$ with the draws independent and standard normal.
 
 Mean: $E[r_i^2] = a^2 + 2ab\,E[Z_i] + b^2E[Z_i^2] = a^2 + b^2$.
 
@@ -164,7 +178,7 @@ Efficiency: 4.99 for Parkinson, 7.22 for Garman-Klass, near the theoretical 4.9 
 
 ### The other road: the delta-hedger's profit
 
-A dealer who sells an option at 20 percent volatility and hedges daily earns, each day, half the gamma times the squared price times the gap between 0.04/252 and that day's squared return ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)). Added up over the month, the dealer's profit is a gamma-weighted realised variance compared with the implied one. Realised variance is the quantity the hedging book already settles on; a variance swap removes the gamma weighting and pays it directly.
+A dealer sells an option at 20 percent volatility and hedges it daily by trading the share. Gamma is how fast the option's sensitivity to the share price changes as the price moves. Each day the dealer earns half the gamma times the squared price times the gap between 0.04/252 and that day's squared return ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)). Added up over the month, the dealer's profit is a gamma-weighted realised variance compared with the implied one. Realised variance is the quantity the hedging book already settles on. A variance swap removes the gamma weighting and pays it directly.
 
 ---
 
@@ -207,7 +221,13 @@ Same 21 closes, correct answer 19.05 percent:
 
 ## Code, from first principles, and it actually runs
 
-The scripts build Acme's month minute by minute from their own random numbers (splitmix64 integers turned into bell-curve draws by the Box-Muller formula), put every five-minute print at the bid or the ask, and compute every number on the card. Three independent roads meet: the closed-form mean and wobble of Why it works ($\sigma^2$, $\sqrt{2/N}$, $\sigma^2 + 2nh^2/T$); a 400-month simulation that measures the same things; and the range estimators, which reach $\sigma$ from highs and lows instead of closes. Both languages draw the same random numbers, so the two outputs agree to the digit.
+The scripts build Acme's month minute by minute from their own random numbers: splitmix64 integers, turned into bell-curve draws by the Box-Muller formula. They put every five-minute print at the bid or the ask and compute every number on the card. Three independent roads meet:
+
+- the closed-form mean and wobble of Why it works ($\sigma^2$, $\sqrt{2/N}$, $\sigma^2 + 2nh^2/T$);
+- a 400-month simulation that measures the same things;
+- the range estimators, which reach $\sigma$ from highs and lows instead of closes.
+
+Both languages draw the same random numbers, so the two outputs agree to the digit.
 
 ### Python
 
@@ -543,7 +563,368 @@ try: 252 days, spread/mean        0.0891
 ALL CHECKS PASS
 ```
 
-The two outputs are identical line for line. The asserts compare simulation with theory: the 400-month average of close-to-close variance against 0.04, its measured wobble against $\sqrt{2/21}$, the five-minute traded average against the noise formula, the one month's five-minute true-price reading against 20 percent, and the range estimators' averages against a band just under 0.04. Breaking the annualisation, the factor 2 in the noise term, the step size or the constant $4\ln 2$ each makes an assert fail.
+The two outputs are identical line for line. The asserts compare simulation with theory:
+
+- the 400-month average of close-to-close variance against 0.04;
+- its measured wobble against $\sqrt{2/21}$;
+- the five-minute traded average against the noise formula;
+- the one month's five-minute true-price reading against 20 percent;
+- the range estimators' averages against a band just under 0.04.
+
+Breaking the annualisation, the factor 2 in the noise term, the step size or the constant $4\ln 2$ each makes an assert fail.
+
+### Lean
+
+Lean proves Steps 1 to 3 of Why it works, for any drift, any volatility and any window length above zero.
+
+- Suppose the $n$ log returns follow Step 1, with $\Delta t = T/n$ and standard bell-curve draws. Then their sum averages $\sigma^2 T + (\mu - \tfrac12\sigma^2)^2 T\Delta t$.
+- Suppose also the draws are independent. Then the sum's variance is $2\sigma^4 T\Delta t + 4(\mu - \tfrac12\sigma^2)^2\sigma^2 T\Delta t^2$.
+- Take $T$ fixed and let $n$ grow, with independent draws at each $n$. Then the average squared distance between the sum and $\sigma^2 T$ tends to zero.
+- Take the month: 21 days, 78 five-minute returns a day, and $\sigma^2$ = 0.04. Then $252/21 = 12$, $n$ = 1,638, and $\sigma^2 T = 1/300$, the 0.003333 above.
+- Take $n$ = 1,638, $h$ = 0.001 and $T$ = 21/252. Then the noise term $2nh^2/T$ is 0.039312, and the expected total is 0.079312.
+
+The noise bias itself, the range estimators and every simulated reading are left to the Python and Rust checks.
+
+```lean
+-- Realised variance: under steady-volatility geometric Brownian motion the sum of squared log returns has mean σ²T plus a drift term of size Δt, variance 2σ⁴TΔt plus a smaller term, and so converges in mean square to the quadratic variation σ²T as the sampling gets finer.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.HasLaw
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+lemma rv_gauss_integrable_pow (k : ℕ) :
+    Integrable (fun x : ℝ => x ^ k) (gaussianReal 0 1) :=
+  integrable_pow_of_mem_interior_integrableExpSet (X := fun x : ℝ => x) (by simp) k
+
+lemma rv_gauss_moment_eq (k : ℕ) :
+    ∫ x, x ^ k ∂(gaussianReal 0 1) = iteratedDeriv k (fun t : ℝ => Real.exp (t ^ 2 / 2)) 0 := by
+  have h := iteratedDeriv_mgf_zero (X := fun x : ℝ => x) (μ := gaussianReal 0 1) (by simp) k
+  rw [mgf_fun_id_gaussianReal] at h
+  simp only [zero_mul, zero_add, NNReal.coe_one, one_mul] at h
+  rw [h]
+  simp [Pi.pow_apply]
+
+lemma rv_deriv1 : deriv (fun t : ℝ => Real.exp (t ^ 2 / 2)) = fun t => t * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have := ((hasDerivAt_pow 2 t).div_const 2).exp
+  rw [this.deriv]
+  push_cast
+  ring
+
+lemma rv_deriv2 : deriv (fun t : ℝ => t * Real.exp (t ^ 2 / 2))
+    = fun t => (1 + t ^ 2) * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have : HasDerivAt (fun t : ℝ => t * Real.exp (t ^ 2 / 2)) _ t :=
+    (hasDerivAt_id t).mul ((hasDerivAt_pow 2 t).div_const 2).exp
+  rw [this.deriv]
+  push_cast
+  simp
+  ring
+
+lemma rv_deriv3 : deriv (fun t : ℝ => (1 + t ^ 2) * Real.exp (t ^ 2 / 2))
+    = fun t => (3 * t + t ^ 3) * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have : HasDerivAt (fun t : ℝ => (1 + t ^ 2) * Real.exp (t ^ 2 / 2)) _ t :=
+    (((hasDerivAt_pow 2 t).const_add 1)).mul ((hasDerivAt_pow 2 t).div_const 2).exp
+  rw [this.deriv]
+  push_cast
+  ring
+
+lemma rv_deriv4 : deriv (fun t : ℝ => (3 * t + t ^ 3) * Real.exp (t ^ 2 / 2))
+    = fun t => (3 + 6 * t ^ 2 + t ^ 4) * Real.exp (t ^ 2 / 2) := by
+  funext t
+  have : HasDerivAt (fun t : ℝ => (3 * t + t ^ 3) * Real.exp (t ^ 2 / 2)) _ t :=
+    ((((hasDerivAt_id t).const_mul 3).add (hasDerivAt_pow 3 t))).mul
+    ((hasDerivAt_pow 2 t).div_const 2).exp
+  rw [this.deriv]
+  push_cast
+  simp
+  ring
+
+lemma rv_moment1 : ∫ x, x ^ 1 ∂(gaussianReal 0 1) = 0 := by
+  rw [rv_gauss_moment_eq]; simp [rv_deriv1]
+
+lemma rv_moment2 : ∫ x, x ^ 2 ∂(gaussianReal 0 1) = 1 := by
+  rw [rv_gauss_moment_eq]; simp [iteratedDeriv_succ, rv_deriv1, rv_deriv2]
+
+lemma rv_moment3 : ∫ x, x ^ 3 ∂(gaussianReal 0 1) = 0 := by
+  rw [rv_gauss_moment_eq]; simp [iteratedDeriv_succ, rv_deriv1, rv_deriv2, rv_deriv3]
+
+lemma rv_moment4 : ∫ x, x ^ 4 ∂(gaussianReal 0 1) = 3 := by
+  rw [rv_gauss_moment_eq]; simp [iteratedDeriv_succ, rv_deriv1, rv_deriv2, rv_deriv3, rv_deriv4]
+
+lemma rv_integrable_sq (a b : ℝ) :
+    Integrable (fun x : ℝ => (a + b * x) ^ 2) (gaussianReal 0 1) := by
+  have h : (fun x : ℝ => (a + b * x) ^ 2)
+      = fun x => a ^ 2 + ((2 * a * b) * x ^ 1 + b ^ 2 * x ^ 2) := by funext x; ring
+  rw [h]
+  exact (integrable_const _).add
+    (((rv_gauss_integrable_pow 1).const_mul _).add ((rv_gauss_integrable_pow 2).const_mul _))
+
+lemma rv_integral_sq (a b : ℝ) :
+    ∫ x, (a + b * x) ^ 2 ∂(gaussianReal 0 1) = a ^ 2 + b ^ 2 := by
+  have h : (fun x : ℝ => (a + b * x) ^ 2)
+      = fun x => a ^ 2 + ((2 * a * b) * x ^ 1 + b ^ 2 * x ^ 2) := by funext x; ring
+  have i1 := (rv_gauss_integrable_pow 1).const_mul (2 * a * b)
+  have i2 := (rv_gauss_integrable_pow 2).const_mul (b ^ 2)
+  have i12 : Integrable (fun x : ℝ => 2 * a * b * x ^ 1 + b ^ 2 * x ^ 2) (gaussianReal 0 1) :=
+    i1.add i2
+  rw [h, integral_add (integrable_const _) i12, integral_add i1 i2,
+    integral_const, integral_const_mul, integral_const_mul, rv_moment1, rv_moment2]
+  simp
+
+lemma rv_four_expand (a b : ℝ) : (fun x : ℝ => (a + b * x) ^ 4)
+    = fun x => a ^ 4 + ((4 * a ^ 3 * b) * x ^ 1 + ((6 * a ^ 2 * b ^ 2) * x ^ 2
+      + ((4 * a * b ^ 3) * x ^ 3 + b ^ 4 * x ^ 4))) := by
+  funext x; ring
+
+lemma rv_integrable_four (a b : ℝ) :
+    Integrable (fun x : ℝ => (a + b * x) ^ 4) (gaussianReal 0 1) := by
+  rw [rv_four_expand]
+  exact (integrable_const _).add (((rv_gauss_integrable_pow 1).const_mul _).add
+    (((rv_gauss_integrable_pow 2).const_mul _).add
+    (((rv_gauss_integrable_pow 3).const_mul _).add ((rv_gauss_integrable_pow 4).const_mul _))))
+
+lemma rv_integral_four (a b : ℝ) :
+    ∫ x, (a + b * x) ^ 4 ∂(gaussianReal 0 1) = a ^ 4 + 6 * a ^ 2 * b ^ 2 + 3 * b ^ 4 := by
+  rw [rv_four_expand]
+  have i1 := (rv_gauss_integrable_pow 1).const_mul (4 * a ^ 3 * b)
+  have i2 := (rv_gauss_integrable_pow 2).const_mul (6 * a ^ 2 * b ^ 2)
+  have i3 := (rv_gauss_integrable_pow 3).const_mul (4 * a * b ^ 3)
+  have i4 := (rv_gauss_integrable_pow 4).const_mul (b ^ 4)
+  have i34 : Integrable (fun x : ℝ => 4 * a * b ^ 3 * x ^ 3 + b ^ 4 * x ^ 4)
+    (gaussianReal 0 1) := i3.add i4
+  have i234 : Integrable (fun x : ℝ => 6 * a ^ 2 * b ^ 2 * x ^ 2
+    + (4 * a * b ^ 3 * x ^ 3 + b ^ 4 * x ^ 4)) (gaussianReal 0 1) := i2.add i34
+  have i1234 : Integrable (fun x : ℝ => 4 * a ^ 3 * b * x ^ 1 + (6 * a ^ 2 * b ^ 2 * x ^ 2
+    + (4 * a * b ^ 3 * x ^ 3 + b ^ 4 * x ^ 4))) (gaussianReal 0 1) := i1.add i234
+  rw [integral_add (integrable_const _) i1234,
+    integral_add i1 i234, integral_add i2 i34, integral_add i3 i4,
+    integral_const, integral_const_mul, integral_const_mul, integral_const_mul,
+    integral_const_mul, rv_moment1, rv_moment2, rv_moment3, rv_moment4]
+  simp
+  ring
+
+section
+variable {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+
+lemma rv_measurable_sq (a b : ℝ) : Measurable (fun x : ℝ => (a + b * x) ^ 2) := by fun_prop
+
+lemma rv_omega_integrable (a b : ℝ) {Z : Ω → ℝ} (hZ : HasLaw Z (gaussianReal 0 1) P) :
+    Integrable (fun ω => (a + b * Z ω) ^ 2) P :=
+  hZ.integrable_comp (f := fun x : ℝ => (a + b * x) ^ 2) (rv_integrable_sq a b)
+
+lemma rv_omega_integral (a b : ℝ) {Z : Ω → ℝ} (hZ : HasLaw Z (gaussianReal 0 1) P) :
+    ∫ ω, (a + b * Z ω) ^ 2 ∂P = a ^ 2 + b ^ 2 := by
+  have h := hZ.integral_comp (f := fun x : ℝ => (a + b * x) ^ 2)
+    (rv_measurable_sq a b).aestronglyMeasurable
+  rw [← rv_integral_sq a b, ← h]
+  rfl
+
+lemma rv_omega_memLp (a b : ℝ) {Z : Ω → ℝ} (hZ : HasLaw Z (gaussianReal 0 1) P) :
+    MemLp (fun ω => (a + b * Z ω) ^ 2) 2 P := by
+  have hm : MemLp (fun x : ℝ => (a + b * x) ^ 2) 2 (gaussianReal 0 1) := by
+    rw [memLp_two_iff_integrable_sq (rv_measurable_sq a b).aestronglyMeasurable]
+    have : (fun x : ℝ => ((a + b * x) ^ 2) ^ 2) = fun x => (a + b * x) ^ 4 := by
+      funext x; ring
+    rw [this]; exact rv_integrable_four a b
+  exact hZ.memLp_comp hm
+
+lemma rv_omega_variance [IsProbabilityMeasure P] (a b : ℝ) {Z : Ω → ℝ} (hZ : HasLaw Z (gaussianReal 0 1) P) :
+    Var[fun ω => (a + b * Z ω) ^ 2; P] = 4 * a ^ 2 * b ^ 2 + 2 * (b ^ 2) ^ 2 := by
+  rw [variance_eq_sub (rv_omega_memLp a b hZ)]
+  have h4 := hZ.integral_comp (f := fun x : ℝ => (a + b * x) ^ 4) (by fun_prop)
+  rw [rv_integral_four] at h4
+  have e : ((fun ω => (a + b * Z ω) ^ 2) ^ 2) = (fun x : ℝ => (a + b * x) ^ 4) ∘ Z := by
+    funext ω; simp only [Pi.pow_apply, Function.comp_apply]; ring
+  rw [e, h4, rv_omega_integral a b hZ]
+  ring
+
+end
+
+lemma rv_sq_dev {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    {S : Ω → ℝ} (hS : MemLp S 2 P) (c : ℝ) :
+    ∫ ω, (S ω - c) ^ 2 ∂P = Var[S; P] + (∫ ω, S ω ∂P - c) ^ 2 := by
+  have h1 : MemLp (fun ω => S ω - c) 2 P := hS.sub (memLp_const c)
+  have h2 := variance_eq_sub h1
+  rw [variance_sub_const hS.aestronglyMeasurable] at h2
+  have h3 : ∫ ω, (S ω - c) ^ 2 ∂P = ∫ x, ((fun ω => S ω - c) ^ 2) x ∂P := rfl
+  rw [h3, h2, integral_sub (hS.integrable one_le_two) (integrable_const c), integral_const]
+  simp only [probReal_univ, smul_eq_mul, one_mul]
+  ring
+
+lemma rv_mean
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (μ σ T : ℝ) (hT : 0 < T) (n : ℕ) (hn : 0 < n) (Z : Fin n → Ω → ℝ)
+    (hlaw : ∀ i, HasLaw (Z i) (gaussianReal 0 1) P) :
+    ∫ ω, ∑ i, ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z i ω) ^ 2 ∂P
+      = σ ^ 2 * T + (μ - σ ^ 2 / 2) ^ 2 * T * (T / n) := by
+  rw [integral_finsetSum _ (fun i _ => rv_omega_integrable _ _ (hlaw i))]
+  simp_rw [rv_omega_integral _ _ (hlaw _)]
+  rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+    mul_pow σ, Real.sq_sqrt (by positivity)]
+  have : (n : ℝ) ≠ 0 := by positivity
+  field_simp
+  ring
+
+lemma rv_var
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (μ σ T : ℝ) (hT : 0 < T) (n : ℕ) (Z : Fin n → Ω → ℝ)
+    (hind : iIndepFun Z P)
+    (hlaw : ∀ i, HasLaw (Z i) (gaussianReal 0 1) P) :
+    Var[fun ω => ∑ i, ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z i ω) ^ 2; P]
+      = 2 * σ ^ 4 * T * (T / n) + 4 * (μ - σ ^ 2 / 2) ^ 2 * σ ^ 2 * T * (T / n) ^ 2 := by
+  have hY : (fun ω => ∑ i, ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z i ω) ^ 2)
+      = ∑ i, (fun ω => ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z i ω) ^ 2) := by
+    funext ω; simp [Finset.sum_apply]
+  rw [hY, IndepFun.variance_sum (fun i _ => rv_omega_memLp _ _ (hlaw i))]
+  · simp_rw [rv_omega_variance _ _ (hlaw _)]
+    rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+      mul_pow σ, Real.sq_sqrt (by positivity)]
+    rcases Nat.eq_zero_or_pos n with rfl | hn
+    · simp
+    · have : (n : ℝ) ≠ 0 := by positivity
+      field_simp
+      ring
+  · intro i _ j _ hij
+    exact (hind.indepFun hij).comp (rv_measurable_sq _ _) (rv_measurable_sq _ _)
+
+
+/-- The card's main theorem (Why it works, Step 3): keep the window `T` fixed and cut it into `n`
+steps of length `Δt = T / n`. Under geometric Brownian motion with steady volatility `σ` and drift
+`μ` and no jumps, each log return is `(μ - σ²/2) Δt + σ √Δt Z_i` with `Z_1, …, Z_n` independent
+standard bell-curve draws. Then the sum of squared log returns converges in mean square to the
+quadratic variation `σ² T`: the average squared distance between them tends to zero as `n` grows. -/
+theorem sum_squared_log_returns_tendsto_quadratic_variation
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (μ σ T : ℝ) (hT : 0 < T) (Z : (n : ℕ) → Fin n → Ω → ℝ)
+    (hind : ∀ n, iIndepFun (Z n) P)
+    (hlaw : ∀ n i, HasLaw (Z n i) (gaussianReal 0 1) P) :
+    Tendsto
+      (fun n : ℕ => ∫ ω, (∑ i, ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z n i ω) ^ 2
+        - σ ^ 2 * T) ^ 2 ∂P)
+      atTop (𝓝 0) := by
+  have key : ∀ n : ℕ, 0 < n →
+      ∫ ω, (∑ i, ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z n i ω) ^ 2
+        - σ ^ 2 * T) ^ 2 ∂P
+      = (fun d : ℝ => 2 * σ ^ 4 * T * d + 4 * (μ - σ ^ 2 / 2) ^ 2 * σ ^ 2 * T * d ^ 2
+          + ((μ - σ ^ 2 / 2) ^ 2 * T * d) ^ 2) (T / n) := by
+    intro n hn
+    have hS : MemLp (fun ω => ∑ i, ((μ - σ ^ 2 / 2) * (T / n)
+        + σ * Real.sqrt (T / n) * Z n i ω) ^ 2) 2 P :=
+      memLp_finsetSum _ (fun i _ => rv_omega_memLp _ _ (hlaw n i))
+    rw [rv_sq_dev hS, rv_var μ σ T hT n (Z n) (hind n) (hlaw n),
+      rv_mean μ σ T hT n hn (Z n) (hlaw n)]
+    ring
+  have hlim : Tendsto (fun n : ℕ => (fun d : ℝ => 2 * σ ^ 4 * T * d
+      + 4 * (μ - σ ^ 2 / 2) ^ 2 * σ ^ 2 * T * d ^ 2
+      + ((μ - σ ^ 2 / 2) ^ 2 * T * d) ^ 2) (T / n)) atTop (𝓝 0) := by
+    have hc : Continuous (fun d : ℝ => 2 * σ ^ 4 * T * d
+        + 4 * (μ - σ ^ 2 / 2) ^ 2 * σ ^ 2 * T * d ^ 2
+        + ((μ - σ ^ 2 / 2) ^ 2 * T * d) ^ 2) := by fun_prop
+    have h0 := (hc.tendsto 0).comp (tendsto_const_div_atTop_nhds_zero_nat T)
+    convert h0 using 2 <;> simp
+  refine hlim.congr' ?_
+  filter_upwards [eventually_gt_atTop 0] with n hn using (key n hn).symm
+
+/-- Mean of the realised sum (Detailed proof): with `n ≥ 1` steps of length `Δt = T / n` and each
+log return `(μ - σ²/2) Δt + σ √Δt Z_i` for standard bell-curve draws `Z_i`, the sum of squared log
+returns averages `σ² T + (μ - σ²/2)² T Δt`. So realised variance centres on `σ²`, up to a drift
+term carrying a factor `Δt`. -/
+theorem integral_sum_squared_log_returns
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (μ σ T : ℝ) (hT : 0 < T) (n : ℕ) (hn : 0 < n) (Z : Fin n → Ω → ℝ)
+    (hlaw : ∀ i, HasLaw (Z i) (gaussianReal 0 1) P) :
+    ∫ ω, ∑ i, ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z i ω) ^ 2 ∂P
+      = σ ^ 2 * T + (μ - σ ^ 2 / 2) ^ 2 * T * (T / n) := by
+  exact rv_mean μ σ T hT n hn Z hlaw
+
+/-- Variance of the realised sum (Detailed proof, and Step 2's wobble): with the draws `Z_i`
+independent and standard normal, the sum of squared log returns has variance
+`2 σ⁴ T Δt + 4 (μ - σ²/2)² σ² T Δt²`, where `Δt = T / n`. Its leading part, relative to the mean
+`σ² T`, is the `√(2/n)` wobble. -/
+theorem variance_sum_squared_log_returns
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (μ σ T : ℝ) (hT : 0 < T) (n : ℕ) (Z : Fin n → Ω → ℝ)
+    (hind : iIndepFun Z P)
+    (hlaw : ∀ i, HasLaw (Z i) (gaussianReal 0 1) P) :
+    Var[fun ω => ∑ i, ((μ - σ ^ 2 / 2) * (T / n) + σ * Real.sqrt (T / n) * Z i ω) ^ 2; P]
+      = 2 * σ ^ 4 * T * (T / n) + 4 * (μ - σ ^ 2 / 2) ^ 2 * σ ^ 2 * T * (T / n) ^ 2 := by
+  exact rv_var μ σ T hT n Z hind hlaw
+
+-- The card's exact worked numbers.
+-- Annualising 21 daily returns: 252 / 21 = 12.
+example : (252 : ℚ) / 21 = 12 := by norm_num
+-- 78 five-minute prints a day for 21 days: 1,638 returns.
+example : 21 * 78 = 1638 := by decide
+-- Quadratic variation the path delivered: 0.04 × 21/252 = 1/300 (the card's 0.003333).
+example : (4 / 100 : ℚ) * (21 / 252) = 1 / 300 := by norm_num
+-- Bounce term 2 n h² / T at n = 1638, h = 0.001, T = 21/252: 0.039312.
+example : (2 * 1638 * (1 / 1000) ^ 2 / (21 / 252) : ℚ) = 39312 / 1000000 := by norm_num
+-- Expected five-minute total: 0.04 + 0.039312 = 0.079312.
+example : (4 / 100 + 39312 / 1000000 : ℚ) = 79312 / 1000000 := by norm_num
+
+#print axioms sum_squared_log_returns_tendsto_quadratic_variation
+#print axioms integral_sum_squared_log_returns
+#print axioms variance_sum_squared_log_returns
+#print axioms rv_gauss_integrable_pow
+#print axioms rv_gauss_moment_eq
+#print axioms rv_deriv1
+#print axioms rv_deriv2
+#print axioms rv_deriv3
+#print axioms rv_deriv4
+#print axioms rv_moment1
+#print axioms rv_moment2
+#print axioms rv_moment3
+#print axioms rv_moment4
+#print axioms rv_integrable_sq
+#print axioms rv_integral_sq
+#print axioms rv_four_expand
+#print axioms rv_integrable_four
+#print axioms rv_integral_four
+#print axioms rv_measurable_sq
+#print axioms rv_omega_integrable
+#print axioms rv_omega_integral
+#print axioms rv_omega_memLp
+#print axioms rv_omega_variance
+#print axioms rv_sq_dev
+#print axioms rv_mean
+#print axioms rv_var
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_squared_log_returns_tendsto_quadratic_variation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_sum_squared_log_returns' depends on axioms: [propext, Classical.choice, Quot.sound]
+'variance_sum_squared_log_returns' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_gauss_integrable_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_gauss_moment_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_deriv1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_deriv2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_deriv3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_deriv4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_moment1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_moment2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_moment3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_moment4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_integrable_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_integral_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_four_expand' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_integrable_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_integral_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_measurable_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_omega_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_omega_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_omega_memLp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_omega_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_sq_dev' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rv_var' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -557,7 +938,7 @@ The two outputs are identical line for line. The asserts compare simulation with
 ## The usual mistake
 
 > [!warning]
-> **Treating a month's realised volatility as the share's volatility.** It is one draw from a noisy estimate. With 21 daily returns its spread is about 31 percent of its size, so a share that truly runs at 20 percent will often print several points away from 20 in an ordinary month. Comparing one month's 19.05 with an implied 20 and calling the option dear is reading noise.
+> **Treating a month's realised volatility as the share's volatility.** It is one draw from a noisy estimate. With 21 daily returns its spread is about 31 percent of its size. So a share that truly runs at 20 percent will often print several points away from 20 in an ordinary month. Comparing one month's 19.05 with an implied 20 and calling the option dear is reading noise.
 >
 > - **Assuming more data always helps.** On traded prices, five-minute sampling reads 28.04 percent; one-minute sampling would read about 48.64. Past a point, finer sampling measures the spread.
 > - **Mixing variance and volatility.** Variance is the square: 0.036304 a year. Volatility is its root: 19.05 percent. Variances add across days; volatilities do not.
@@ -568,10 +949,10 @@ The two outputs are identical line for line. The asserts compare simulation with
 
 ## Where you meet it in real life
 
-- **Variance swap settlement.** A variance swap pays the difference between realised variance over its life and a strike fixed on day one, times a notional. The exchange-traded version, Cboe's S&P 500 variance futures, uses exactly this card's formula: daily log returns, mean taken as zero, 252 days a year, times 10,000 to quote in percent squared. Conventions verified 2026-09-27 against the Cboe contract specification in Sources. Pricing the strike is [The variance swap](03-variance-swap-fair-strike.md); marking one halfway through, with realised and implied pieces added, is [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md).
-- **Option desks.** Traders compare implied volatility, the number the option price implies, with realised volatility, the number the share delivered. The gap is what a delta-hedged book earns or loses.
+- **Variance swap settlement.** A variance swap pays the difference between realised variance over its life and a strike fixed on day one, times a notional, the agreed money amount per unit of variance. The exchange-traded version, Cboe's S&P 500 variance futures, uses exactly this card's formula: daily log returns, mean taken as zero, 252 days a year, times 10,000 to quote in percent squared. Conventions verified 2026-09-27 against the Cboe contract specification in Sources. Pricing the strike is [The variance swap](03-variance-swap-fair-strike.md). Marking one halfway through, with realised and implied pieces added, is [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md).
+- **Option desks.** Traders compare implied volatility, the number the option price implies, with realised volatility, the number the share delivered. The gap is what a delta-hedged book earns or loses: a book of options whose exposure to small price moves is cancelled by trading the share.
 - **The VIX against realised.** The VIX is a 30-day implied variance read off option prices ([The VIX](06-vix-index.md)). Realised variance over the following 30 days is what it is compared with after the fact.
-- **Risk systems.** Position limits and value-at-risk models scale by recent realised volatility; forecasting models build tomorrow's variance out of today's squared returns.
+- **Risk systems.** Position limits and value-at-risk models scale by recent realised volatility. Value-at-risk is a loss level exceeded only on a small share of days. Forecasting models build tomorrow's variance out of today's squared returns ([Tomorrow's volatility](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md)).
 - **High-frequency econometrics.** Research on intraday data uses realised variance from five-minute returns, a compromise between wobble and bid-ask noise, or two-scale estimators that subtract the noise term measured at the fastest sampling.
 
 > **Say it back**
@@ -590,7 +971,7 @@ The two outputs are identical line for line. The asserts compare simulation with
 - [The variance swap](03-variance-swap-fair-strike.md): a contract that pays realised variance, and the price of that promise today, from a strip of options through [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md).
 - Persistence in practice: another way to summarise the shape of a price history from sliding windows of returns, used alongside realised variance to flag turbulent stretches.
 
-Realised variance says what a month delivered; what the market charges today for the variance the next month will deliver, and how options replicate that payment, is the question variance-swap-fair-strike answers.
+Realised variance says what a month delivered. The question it leaves open: what does the market charge today for the variance next month will deliver, and how do options replicate that payment? [The variance swap](03-variance-swap-fair-strike.md) answers it.
 
 ---
 
@@ -601,5 +982,5 @@ Verified 2026-09-27: every link below resolves to the publisher's page.
 - Parkinson, Michael. "The Extreme Value Method for Estimating the Variance of the Rate of Return." *Journal of Business* 53, no. 1 (1980): 61–65. [doi:10.1086/296071](https://doi.org/10.1086/296071). The range estimator and its $4\ln 2$.
 - Garman, Mark B., and Michael J. Klass. "On the Estimation of Security Price Volatilities from Historical Data." *Journal of Business* 53, no. 1 (1980): 67–78. [doi:10.1086/296072](https://doi.org/10.1086/296072). Open, high, low and close combined with minimum-variance weights.
 - Barndorff-Nielsen, Ole E., and Neil Shephard. "Econometric Analysis of Realized Volatility and Its Use in Estimating Stochastic Volatility Models." *Journal of the Royal Statistical Society Series B* 64, no. 2 (2002): 253–280. [doi:10.1111/1467-9868.00336](https://doi.org/10.1111/1467-9868.00336). Realised variance as an estimate of quadratic variation, with its error.
-- Zhang, Lan, Per A. Mykland, and Yacine Aït-Sahalia. "A Tale of Two Time Scales." *Journal of the American Statistical Association* 100, no. 472 (2005): 1394–1411. [doi:10.1198/016214505000000169](https://doi.org/10.1198/016214505000000169). The noise bias $2nE[\varepsilon^2]$ and an estimator that removes it.
+- Zhang, Lan, Per A. Mykland, and Yacine Aït-Sahalia. "A Tale of Two Time Scales." *Journal of the American Statistical Association* 100, no. 472 (2005): 1394–1411. [doi:10.1198/016214505000000169](https://doi.org/10.1198/016214505000000169). The noise bias $2nE[\varepsilon^2]$, where $\varepsilon$ is the error in each print, and an estimator that removes it.
 - Cboe Futures Exchange. *S&P 500 Variance Futures: Summary Product Specifications*. [Contract specification (PDF)](https://cdn.cboe.com/resources/futures/sp_500_variance_futures_contract.pdf). The settlement formula: daily log returns, zero mean, 252 business days a year.

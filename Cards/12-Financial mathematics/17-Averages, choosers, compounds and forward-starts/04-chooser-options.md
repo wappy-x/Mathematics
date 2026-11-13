@@ -6,7 +6,7 @@
 
 ## General Overview
 
-Acme shares trade at $100 today. A one-year call on Acme struck at $100 costs $9.23 in the house market. The matching put costs $6.33. A call pays if Acme rises; a put pays if it falls. Buying one means taking a side today.
+Acme shares trade at $100 today. A one-year call on Acme struck at $100 costs $9.23 in the house market, the shelf's shared example: 5% interest, 2% dividends and 20% volatility. The matching put costs $6.33. A call pays if Acme rises; a put pays if it falls. Buying one means taking a side today.
 
 Now suppose a big event lands in six months: a court ruling, an election, a drug trial. Acme will move hard after it, and nobody can say which way. A **chooser option** fits that view. It is bought today. In six months, on a fixed day called the **choice date**, its holder declares it a call or a put. From then on it is that ordinary option, with strike $100 and the same one-year expiry.
 
@@ -43,13 +43,13 @@ A little notation first. $C(S, K, T)$ means the Black-Scholes price of a call on
 
 $$V = C(S,\,K,\,T) \;+\; e^{-q(T-\tau)}\,P\!\left(S,\,K',\,\tau\right), \qquad K' = K\,e^{-(r-q)(T-\tau)}$$
 
-**Read it aloud:** a simple chooser is the full-life call, plus a slightly smaller amount of a put that expires on the choice date, struck at the strike pulled back by the carry over the remaining life.
+**Read it aloud:** a simple chooser is the full-life call, plus a slightly smaller amount of a put that expires on the choice date, struck at the strike pulled back by the carry (the bank rate minus the dividend yield) over the remaining life.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $V$ | price today of the simple chooser | $13.34 | is the answer |
 | $S$, $S_\tau$ | Acme's price today; its price on the choice date | $100 | rises: the call leg gains more than the put leg loses |
-| $K$ | the strike shared by the call and the put | $100 | falls slightly: the call leg loses more than the put leg gains |
+| $K$ | the strike: the price at which the call buys, or the put sells, one share; shared by both legs | $100 | falls slightly: the call leg loses more than the put leg gains |
 | $T$ | years until both legs expire | 1 | rises: the call leg gains time; the put leg shrinks a little |
 | $\tau$ | years until the choice date | 0.5 | rises: more is known before choosing, so the price rises |
 | $r$, $q$ | bank rate and dividend yield, continuously compounded | 5% and 2% | $r$ up: rises; $q$ up: falls. Together they set the carry, and so $K'$ |
@@ -71,7 +71,7 @@ In words: $d_2$ counts how far Acme must travel to reach $K'$ by the choice date
 - **Both legs are European.** Parity is an exact equation only for options used on the expiry day. If either leg can be used early, parity becomes a pair of inequalities and the split into a call plus a put fails.
 - **One strike and one expiry for both legs.** With different strikes or dates the cash in the parity equation no longer matches, and the chooser becomes the complex chooser below, with no two-option split.
 - **A known, continuous dividend yield and a known bank rate over the life.** With cash dividends paid after the choice date, the $e^{-q(T-\tau)}$ drag and the strike $K'$ are replaced by the present value of those dividends; using the yield version then misprices the put leg.
-- **The Black-Scholes model prices the two pieces.** The split itself is model-free. With a volatility smile, price the call at the volatility for strike $K$ and one year, and the put leg at the volatility for strike $K'$ and six months; one flat $\sigma$ is off by roughly each leg's vega times its volatility error.
+- **The Black-Scholes model prices the two pieces.** The split itself is model-free. With a volatility smile (market volatility that differs by strike and expiry), price the call at the volatility for strike $K$ and one year, and the put leg at the volatility for strike $K'$ and six months; one flat $\sigma$ is off by roughly each leg's vega (price change per point of volatility) times its volatility error.
 - **The holder picks the dearer option.** A holder who picks by forecast rather than by value gets a payoff worth less than $V$.
 
 ---
@@ -148,7 +148,13 @@ One line: the chooser's price today for each choice date, from the $9.23 call at
 
 ### The complex chooser: different strikes or dates
 
-A **complex chooser** lets the two legs differ. Take a call struck at $105 and a put struck at $95, both expiring in one year, with the choice at six months. On the choice date it is still worth $\max(C_\tau, P_\tau)$, but parity no longer applies: parity links a call and a put on the *same* strike, so there is no call-plus-put split. The critical price must be found by solving $C_\tau = P_\tau$ numerically. A root exists and is unique: as the choice-date price rises the call leg rises and the put leg falls, and the gap runs from negative near zero to positive for large prices. For this contract it is $98.15. Pricing then means averaging the dearer leg over every choice-date price, which the code does two ways: $10.03 by integration over the bell curve, $10.08 by simulation with a standard error of $0.04. The price sits between the better of the two plain options, $6.99, and both together, $11.27. Rubinstein gave a closed form for it; it needs the bell curve in two variables (the bivariate normal), because the answer depends jointly on the price at the choice date and at expiry.
+A **complex chooser** lets the two legs differ. Take a call struck at $105 and a put struck at $95, both expiring in one year, with the choice at six months. On the choice date it is still worth $\max(C_\tau, P_\tau)$, but parity no longer applies: parity links a call and a put on the *same* strike, so there is no call-plus-put split.
+
+The critical price must be found by solving $C_\tau = P_\tau$ numerically. A root exists and is unique: as the choice-date price rises the call leg rises and the put leg falls, and the gap runs from negative near zero to positive for large prices. For this contract it is $98.15.
+
+Pricing then means averaging the dearer leg over every choice-date price, which the code does two ways: $10.03 by integration over the bell curve, $10.08 by simulation with a standard error (the typical size of the simulation's random error) of $0.04. The price sits between the better of the two plain options, $6.99, and both together, $11.27.
+
+Rubinstein gave a closed form, a ready-made formula, for it; it needs the bell curve in two variables (the bivariate normal), because the answer depends jointly on the price at the choice date and at expiry.
 
 A second road to the simple chooser needs no parity at all: simulate Acme to the choice date, let each path pick the dearer leg by pricing both, simulate on to expiry, and pay the chosen option's payoff. That is [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) applied to a payoff with a decision in it. A coin-flip tree does the same by working backward from expiry and taking the larger leg at the choice-date step. The code takes both roads.
 
@@ -204,7 +210,14 @@ Small delta, large vega: near the money the chooser barely cares which way Acme 
 
 ## Code, from first principles, and it actually runs
 
-Both programs price the simple chooser four independent ways. Road 1 is the parity formula. Road 2 never uses parity: it prices both legs by Black-Scholes at every choice-date price, takes the larger, and averages over the bell curve by Simpson's rule, split at the kink, which a bisection root finder locates without being told where it is. Road 3 is a 2,000-step coin-flip tree that works back from expiry and takes the larger leg at step 1,000. Road 4 simulates 100,000 paths to the choice date, lets each path pick by pricing both legs, simulates on to expiry, and pays the chosen payoff. The same paths and the same integral price the complex chooser. The normal CDF is Marsaglia's series written out; the random numbers come from a written-out splitmix64 generator with the Box-Muller transform.
+Both programs price the simple chooser four independent ways:
+
+1. Road 1 is the parity formula.
+2. Road 2 never uses parity: it prices both legs by Black-Scholes at every choice-date price, takes the larger, and averages over the bell curve by Simpson's rule, split at the kink, which a bisection root finder locates without being told where it is.
+3. Road 3 is a 2,000-step coin-flip tree that works back from expiry and takes the larger leg at step 1,000.
+4. Road 4 simulates 100,000 paths to the choice date, lets each path pick by pricing both legs, simulates on to expiry, and pays the chosen payoff.
+
+The same paths and the same integral price the complex chooser. The normal CDF (cumulative distribution function: the bell-curve area to the left of a point) is Marsaglia's series written out. The random numbers come from a written-out splitmix64 generator; the Box-Muller transform turns pairs of them into bell-curve draws.
 
 ### Python
 
@@ -630,6 +643,96 @@ chart, call at tau   0.39   0.98   2.08   3.84   6.31   9.46  13.19  17.36  21.8
 chart, put at tau   18.71  14.36  10.51   7.31   4.83   3.03   1.81   1.03   0.56
 chart, chooser      18.71  14.36  10.51   7.31   6.31   9.46  13.19  17.36  21.84
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the split, the critical price and the averaging step, for any inputs where parity holds on the choice date.
+
+- Suppose put-call parity holds on the choice date. Then $\max(C_\tau, P_\tau) = C_\tau + e^{-q(T-\tau)}\max(K' - S_\tau, 0)$.
+- Suppose the same parity holds. Then the put is the dearer leg exactly when $S_\tau < K'$.
+- Suppose parity holds on every path in the pretend world, and $C_\tau$ and $P_\tau$ have finite averages. Then the chooser's price is the discounted average of $C_\tau$, plus $e^{-q(T-\tau)}$ times the put leg's price.
+
+Step 4's tower rule, the Black-Scholes prices and every dollar figure are left to the Python and Rust checks.
+
+```lean
+-- Chooser options: when put-call parity holds on the choice date, the better of the call and the put equals the call plus e^(-q(T-τ)) puts struck at K' = K e^(-(r-q)(T-τ)), the put is picked exactly when the share is below K', and so the chooser's price today is the call's price plus that many puts expiring on the choice date.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Probability.Notation
+
+open Real MeasureTheory
+
+/-- The chooser split. On the choice date, τ years from today, the call and the put (same strike K,
+same expiry T) are worth C and P, and Acme trades at S. If put-call parity holds on that date,
+C - P = S e^(-q(T-τ)) - K e^(-r(T-τ)), then the dearer of the two legs is the call plus
+e^(-q(T-τ)) units of a put payoff struck at K' = K e^(-(r-q)(T-τ)) that pays on the choice date:
+max(C, P) = C + e^(-q(T-τ)) max(K' - S, 0). -/
+theorem chooser_payoff_eq_call_add_put (C P S K r q T τ : ℝ)
+    (hparity : C - P = S * exp (-q * (T - τ)) - K * exp (-r * (T - τ))) :
+    max C P = C + exp (-q * (T - τ)) * max (K * exp (-(r - q) * (T - τ)) - S) 0 := by
+  have he : 0 < exp (-q * (T - τ)) := exp_pos _
+  have hk : K * exp (-(r - q) * (T - τ)) * exp (-q * (T - τ)) = K * exp (-r * (T - τ)) := by
+    rw [mul_assoc, ← exp_add]; ring_nf
+  have hPC : P - C = exp (-q * (T - τ)) * (K * exp (-(r - q) * (T - τ)) - S) := by
+    linear_combination -hparity - hk
+  rcases le_total (K * exp (-(r - q) * (T - τ)) - S) 0 with h | h
+  · rw [max_eq_right h, mul_zero, add_zero]
+    have : exp (-q * (T - τ)) * (K * exp (-(r - q) * (T - τ)) - S) ≤ 0 :=
+      mul_nonpos_of_nonneg_of_nonpos he.le h
+    exact max_eq_left (by linarith)
+  · rw [max_eq_left h]
+    have : 0 ≤ exp (-q * (T - τ)) * (K * exp (-(r - q) * (T - τ)) - S) := mul_nonneg he.le h
+    rw [max_eq_right (by linarith)]
+    linarith
+
+/-- The critical price. Under the same parity, the put is the dearer leg on the choice date exactly
+when the share is below K' = K e^(-(r-q)(T-τ)), not below the strike K. -/
+theorem chooser_put_picked_iff_below_critical_price (C P S K r q T τ : ℝ)
+    (hparity : C - P = S * exp (-q * (T - τ)) - K * exp (-r * (T - τ))) :
+    C < P ↔ S < K * exp (-(r - q) * (T - τ)) := by
+  have he : 0 < exp (-q * (T - τ)) := exp_pos _
+  have hk : K * exp (-(r - q) * (T - τ)) * exp (-q * (T - τ)) = K * exp (-r * (T - τ)) := by
+    rw [mul_assoc, ← exp_add]; ring_nf
+  have hPC : P - C = exp (-q * (T - τ)) * (K * exp (-(r - q) * (T - τ)) - S) := by
+    linear_combination -hparity - hk
+  rw [← sub_pos, hPC, mul_pos_iff_of_pos_left he, sub_pos]
+
+/-- Pricing today. In the pretend (risk-neutral) world μ, let the call, the put and the share on the
+choice date be random amounts C, P and S, with the call and put prices finite (integrable) and parity
+holding on every path. Then the chooser's price today, the discounted average e^(-rτ) E[max(C, P)],
+equals the discounted average of the call plus e^(-q(T-τ)) times the price today of a put struck at
+K' that expires on the choice date, e^(-rτ) E[max(K' - S, 0)]. -/
+theorem chooser_price_eq_call_price_add_put_price
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (C P S : Ω → ℝ) (K r q T τ : ℝ)
+    (hC : Integrable C μ) (hP : Integrable P μ)
+    (hparity : ∀ ω, C ω - P ω = S ω * exp (-q * (T - τ)) - K * exp (-r * (T - τ))) :
+    exp (-r * τ) * ∫ ω, max (C ω) (P ω) ∂μ
+      = exp (-r * τ) * ∫ ω, C ω ∂μ
+        + exp (-q * (T - τ)) * (exp (-r * τ) * ∫ ω, max (K * exp (-(r - q) * (T - τ)) - S ω) 0 ∂μ) := by
+  have hpt : ∀ ω, max (C ω) (P ω)
+      = C ω + exp (-q * (T - τ)) * max (K * exp (-(r - q) * (T - τ)) - S ω) 0 :=
+    fun ω => chooser_payoff_eq_call_add_put (C ω) (P ω) (S ω) K r q T τ (hparity ω)
+  have hint : Integrable (fun ω => exp (-q * (T - τ)) * max (K * exp (-(r - q) * (T - τ)) - S ω) 0) μ := by
+    have h1 : Integrable (fun ω => max (C ω) (P ω) - C ω) μ := (hC.sup hP).sub hC
+    refine h1.congr (Filter.Eventually.of_forall fun ω => ?_)
+    simp only [hpt ω]; ring
+  simp_rw [hpt]
+  rw [integral_add hC hint, integral_const_mul]
+  ring
+
+#print axioms chooser_payoff_eq_call_add_put
+#print axioms chooser_put_picked_iff_below_critical_price
+#print axioms chooser_price_eq_call_price_add_put_price
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'chooser_payoff_eq_call_add_put' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chooser_put_picked_iff_below_critical_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chooser_price_eq_call_price_add_put_price' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

@@ -26,7 +26,7 @@ UIP 120   █                                       $0.23
 
 The up-and-out call costs $1.13, an eighth of the plain call: a call earns most when Acme climbs, and every climb past $120 kills it. The paths that would pay are the paths that die. And each out-and-in pair adds back to the plain option, $9.13 + $0.09 = $9.23, because every path either touches the line or does not.
 
-The formulas come from one idea, the **reflection principle**: a path that touches the barrier is paired with its mirror image across it, so touching paths can be counted with a second, reflected bell curve. Each price is then a signed sum of at most four Black-Scholes-shaped blocks, A to D, plus a rebate block, E or F.
+The formulas come from one idea, the **reflection principle**: a path that touches the barrier is paired with its mirror image across it, so touching paths can be counted with a second, reflected bell curve. Each price is then a signed sum of at most four Black-Scholes-shaped blocks, A to D, plus a rebate block, E or F. A **rebate** is fixed cash paid when the option fails to deliver.
 
 **Every single-barrier price is read off two bell curves, the plain one and its mirror image across the barrier; four Reiner-Rubinstein blocks are those two readings cut at the strike and at the barrier, and two more price the rebate.**
 
@@ -51,7 +51,16 @@ Orange: the down-and-out call. Green: the down-and-in call. Dark: the plain call
 
 ## The formula
 
-Notation first, in words. Two switches carry the eight cases. $\phi$ (phi) is +1 for a call and −1 for a put. $\eta$ (eta) is +1 for a down barrier and −1 for an up barrier. Multiplying by a switch either leaves a term alone or flips its sign. The bell-curve area $N(x)$ is the chance that a standard bell-curve draw lands below $x$, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card. $S$ is Acme's price today, $K$ the strike, $H$ the barrier; $r$, $q$, $\sigma$ and $T$ are the bank rate, dividend yield, volatility and years to expiry. The helpers $\mu$, $\lambda$, $x_1$, $x_2$, $y_1$, $y_2$ and $z$ are distances defined just below the blocks.
+Notation first, in words. Two switches carry the eight cases:
+
+- $\phi$ (phi) is +1 for a call and −1 for a put.
+- $\eta$ (eta) is +1 for a down barrier and −1 for an up barrier.
+
+Multiplying by a switch either leaves a term alone or flips its sign.
+
+The bell-curve area $N(x)$ is the chance that a standard bell-curve draw lands below $x$, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card.
+
+$S$ is Acme's price today, $K$ the strike, $H$ the barrier; $r$, $q$, $\sigma$ and $T$ are the bank rate, dividend yield, volatility and years to expiry. The helpers $\mu$, $\lambda$, $x_1$, $x_2$, $y_1$, $y_2$ and $z$ are distances defined just below the blocks.
 
 The four price blocks:
 
@@ -109,13 +118,15 @@ $$x_1 = \frac{\ln(S/K)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad x_2 = \fra
 
 $$y_1 = \frac{\ln\!\big(H^2/(SK)\big)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad y_2 = \frac{\ln(H/S)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad z = \frac{\ln(H/S)}{\sigma\sqrt T} + \lambda\sigma\sqrt T$$
 
-In words: $x_1$ is the Black-Scholes $d_1$, since $(1+\mu)\sigma^2 = r - q + \tfrac12\sigma^2$; that is why $A$ is the plain option. $x_2$ measures to the barrier instead of the strike. $y_1$ and $y_2$ measure the same two distances from the mirror image of today's price, $H^2/S$, which sits as far beyond the barrier as $S$ sits before it. $\mu$ is the pretend-world drift of the log price over $\sigma^2$; $\lambda$ folds in the bank rate, needed only when money arrives on a random day.
+In words: $x_1$ is the Black-Scholes $d_1$, since $(1+\mu)\sigma^2 = r - q + \tfrac12\sigma^2$; that is why $A$ is the plain option. $x_2$ measures to the barrier instead of the strike. $y_1$ and $y_2$ measure the same two distances from the mirror image of today's price, $H^2/S$, which sits as far beyond the barrier as $S$ sits before it.
+
+$\mu$ is the pretend-world drift of the log price over $\sigma^2$. The pretend world is the Black-Scholes pricing world, where Acme grows at the bank rate less the dividend yield. $\lambda$ folds in the bank rate, needed only when money arrives on a random day.
 
 ### When it holds
 
 - **Continuous monitoring.** A touch at any instant counts. A contract that checks one price a day is hit less often than the formula assumes; [Daily monitoring](03-discrete-monitoring-correction.md) fixes that.
 - **Continuous paths.** The mirror needs a path that cannot skip over the line. A price that jumps crosses without touching, and the hit chance is wrong.
-- **Constant volatility, rate and dividend yield.** Barrier prices lean on volatility near the barrier. With a volatility smile the flat-volatility price errs by more than a plain option's would.
+- **Constant volatility, rate and dividend yield.** Barrier prices lean on volatility near the barrier. A volatility smile is a market volatility that changes with the strike. With a smile, the flat-volatility price errs by more than a plain option's would.
 - **The barrier not yet touched.** A down barrier needs $S > H$ today, an up barrier $S < H$. Otherwise the out-option is worth its rebate paid now and the in-option is the plain option.
 - **Stated rebate timing.** $E$ pays at expiry, $F$ at the touch. An out-rebate paid at expiry needs a different block.
 
@@ -202,7 +213,7 @@ House market: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$. Fir
 | --- | --- | --- |
 | drift in volatility units, $\mu$ | $(0.05 - 0.02 - 0.02)/0.04$ | $0.25$ |
 | rebate exponent, $\lambda$ | $\sqrt{0.0625 + 2.5}$ | $1.600781$ |
-| $x_1$ | $0 + 1.25 \times 0.20$, the pilot's $d_1$ | $0.25$ |
+| $x_1$ | $0 + 1.25 \times 0.20$, the Black-Scholes $d_1$ | $0.25$ |
 | block $A$ | the plain call | $\$9.227006$ |
 | $y_1$ | $\ln(0.64)/0.20 + 0.25$ | $-1.981436$ |
 | $N(y_1)$, $N(y_1 - 0.20)$ | bell-curve table | $0.023771$, $0.014576$ |
@@ -245,7 +256,14 @@ Each is printed by the code.
 
 ## Code, from first principles, and it actually runs
 
-Four roads. Road 1 assembles the prices from blocks A to F through the table. Road 2 never sees a block: Simpson's rule integrates the payoff against Step 1's surviving or touched density, and the rebates against the first-touch-time density. Road 3 simulates 200,000 paths in twelve monthly steps; between steps it applies the Brownian-bridge chance of a touch, $\exp(-2\,g_0 g_1/(\sigma^2\Delta t))$, where the two gaps are the step's end points' log-distances from the barrier and $\Delta t$ is one month, so it prices continuous monitoring. Road 4 is parity against plain options. Strikes $60 under the floor and $140 over the ceiling reach the table's other column. The bell-curve area is built from Simpson slices, the random numbers from a 64-bit linear congruential generator, a multiply-and-add recipe that repeats exactly from its seed.
+Four roads:
+
+- **Road 1** assembles the prices from blocks A to F through the table.
+- **Road 2** never sees a block: Simpson's rule (an area rule that fits small parabolas under a curve) integrates the payoff against Step 1's surviving or touched density, and the rebates against the first-touch-time density.
+- **Road 3** simulates 200,000 paths in twelve monthly steps. Between steps it applies the Brownian-bridge chance of a touch, $\exp(-2\,g_0 g_1/(\sigma^2\Delta t))$: the chance that a path pinned at both ends of a step touched the barrier in between. The two gaps $g_0$, $g_1$ are the step's end points' log-distances from the barrier and $\Delta t$ is one month, so it prices continuous monitoring.
+- **Road 4** is parity against plain options.
+
+Strikes $60 under the floor and $140 over the ceiling reach the table's other column. The bell-curve area is built from Simpson slices, the random numbers from a 64-bit linear congruential generator, a multiply-and-add recipe that repeats exactly from its seed.
 
 ### Python
 
@@ -673,6 +691,399 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulation included, since both run the same generator and the same arithmetic.
 
+### Lean
+
+Lean proves the block formulas from the bell curves, for calls, puts, up and down barriers, and any positive $S$, $K$, $H$, $\sigma$, $T$.
+
+- Take the plain bell curve of the log price. Then block A is the discounted average payoff over it, on the side of the strike where the option pays.
+- Take the same reading, cut at the barrier instead of the strike. Then it is block B.
+- Take the mirror curve, weighted by the mirror's tilt $(H/S)^{2\mu}$. Then blocks C and D are its readings, cut at the strike and at the barrier. Each runs above the cut for a down barrier, below it for an up one.
+- Take the plain curve minus the mirror curve, over the live side of the barrier. Then block E is $R e^{-rT}$ times its area.
+- Take the driftless bell curve at the mirror point $2b - u$, reweighted for drift. Then it is the tilt $(H/S)^{2\mu}$ times the plain curve at $u - 2b$.
+- Take the house market. Then $\mu = 0.25$, $\lambda = \sqrt{41}/4$, about 1.600781, and $x_1 = 0.25$.
+- Take the house market. Then $(1+\mu)\sigma^2$ and $r - q + \tfrac12\sigma^2$ are both 0.05.
+- Take the floor at 80. Then $H^2/(SK) = 0.64$, and the tilt exponents $2\mu + 2$ and $2\mu$ are 2.5 and 0.5.
+- Take any values for the blocks. Then each in-row plus its out-row in the table adds to $A + E + F$.
+
+The Python and Rust checks cover the rest: the reflection principle itself, block F, the choice of column, and every dollar price.
+
+```lean
+-- The eight barrier formulas: in the Black-Scholes model the four Reiner-Rubinstein price blocks A, B, C, D are the plain and the mirror bell curves read over half-lines cut at the strike and at the barrier, the rebate block E is the discounted rebate times the chance of never touching, and the mirror's tilt is the constant (H/S)^(2μ).
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open Real MeasureTheory ProbabilityTheory Set
+
+namespace ReinerRubinstein
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def N (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- `μ = (r - q - σ²/2) / σ²`: the pretend-world drift in volatility units. -/
+noncomputable def mu (r q σ : ℝ) : ℝ := (r - q - σ ^ 2 / 2) / σ ^ 2
+
+/-- `λ = √(μ² + 2r/σ²)`: the rebate cousin of `μ`. -/
+noncomputable def lam (r q σ : ℝ) : ℝ := √(mu r q σ ^ 2 + 2 * r / σ ^ 2)
+
+/-- `x₁ = ln(S/K)/(σ√T) + (1 + μ)σ√T`, the Black-Scholes `d₁`. -/
+noncomputable def x1 (S K r q σ T : ℝ) : ℝ :=
+  log (S / K) / (σ * √T) + (1 + mu r q σ) * σ * √T
+
+/-- `x₂ = ln(S/H)/(σ√T) + (1 + μ)σ√T`: the distance to the barrier. -/
+noncomputable def x2 (S H r q σ T : ℝ) : ℝ :=
+  log (S / H) / (σ * √T) + (1 + mu r q σ) * σ * √T
+
+/-- `y₁ = ln(H²/(SK))/(σ√T) + (1 + μ)σ√T`: the distance to the strike from the mirror spot. -/
+noncomputable def y1 (S K H r q σ T : ℝ) : ℝ :=
+  log (H ^ 2 / (S * K)) / (σ * √T) + (1 + mu r q σ) * σ * √T
+
+/-- `y₂ = ln(H/S)/(σ√T) + (1 + μ)σ√T`: the distance to the barrier from the mirror spot. -/
+noncomputable def y2 (S H r q σ T : ℝ) : ℝ :=
+  log (H / S) / (σ * √T) + (1 + mu r q σ) * σ * √T
+
+/-- `z = ln(H/S)/(σ√T) + λσ√T`. -/
+noncomputable def zz (S H r q σ T : ℝ) : ℝ :=
+  log (H / S) / (σ * √T) + lam r q σ * σ * √T
+
+/-- Block `A = φ S e^{-qT} N(φx₁) - φ K e^{-rT} N(φx₁ - φσ√T)`. -/
+noncomputable def blockA (φ S K r q σ T : ℝ) : ℝ :=
+  φ * S * exp (-(q * T)) * N (φ * x1 S K r q σ T)
+    - φ * K * exp (-(r * T)) * N (φ * x1 S K r q σ T - φ * σ * √T)
+
+/-- Block `B = φ S e^{-qT} N(φx₂) - φ K e^{-rT} N(φx₂ - φσ√T)`. -/
+noncomputable def blockB (φ S K H r q σ T : ℝ) : ℝ :=
+  φ * S * exp (-(q * T)) * N (φ * x2 S H r q σ T)
+    - φ * K * exp (-(r * T)) * N (φ * x2 S H r q σ T - φ * σ * √T)
+
+/-- Block `C = φ S e^{-qT} (H/S)^{2μ+2} N(ηy₁) - φ K e^{-rT} (H/S)^{2μ} N(ηy₁ - ησ√T)`. -/
+noncomputable def blockC (φ η S K H r q σ T : ℝ) : ℝ :=
+  φ * S * exp (-(q * T)) * (H / S) ^ (2 * mu r q σ + 2) * N (η * y1 S K H r q σ T)
+    - φ * K * exp (-(r * T)) * (H / S) ^ (2 * mu r q σ)
+        * N (η * y1 S K H r q σ T - η * σ * √T)
+
+/-- Block `D = φ S e^{-qT} (H/S)^{2μ+2} N(ηy₂) - φ K e^{-rT} (H/S)^{2μ} N(ηy₂ - ησ√T)`. -/
+noncomputable def blockD (φ η S K H r q σ T : ℝ) : ℝ :=
+  φ * S * exp (-(q * T)) * (H / S) ^ (2 * mu r q σ + 2) * N (η * y2 S H r q σ T)
+    - φ * K * exp (-(r * T)) * (H / S) ^ (2 * mu r q σ)
+        * N (η * y2 S H r q σ T - η * σ * √T)
+
+/-- Rebate block `E = R e^{-rT} [N(ηx₂ - ησ√T) - (H/S)^{2μ} N(ηy₂ - ησ√T)]`. -/
+noncomputable def blockE (η R S H r q σ T : ℝ) : ℝ :=
+  R * exp (-(r * T)) * (N (η * x2 S H r q σ T - η * σ * √T)
+    - (H / S) ^ (2 * mu r q σ) * N (η * y2 S H r q σ T - η * σ * √T))
+
+/-- Rebate block `F = R [(H/S)^{μ+λ} N(ηz) + (H/S)^{μ-λ} N(ηz - 2ηλσ√T)]`. -/
+noncomputable def blockF (η R S H r q σ T : ℝ) : ℝ :=
+  R * ((H / S) ^ (mu r q σ + lam r q σ) * N (η * zz S H r q σ T)
+    + (H / S) ^ (mu r q σ - lam r q σ)
+        * N (η * zz S H r q σ T - 2 * η * lam r q σ * σ * √T))
+
+/-- The plain bell curve `f(u)`: the pretend-world density of the log price `u = ln(S_T/S)`,
+centre `(r - q - σ²/2)T`, spread `σ√T`. -/
+noncomputable def f (r q σ T u : ℝ) : ℝ :=
+  gaussianPDFReal ((r - q - σ ^ 2 / 2) * T) (σ ^ 2 * T).toNNReal u
+
+lemma gauss_set_eq (m c : ℝ) (v : NNReal) (hv : (v : ℝ) = c ^ 2) (hc : c ≠ 0) {A : Set ℝ}
+    (hA : MeasurableSet A) :
+    ∫ u in A, gaussianPDFReal m v u = (gaussianReal 0 1).real ((fun x => c * x + m) ⁻¹' A) := by
+  have hv0 : v ≠ 0 := by
+    intro h; rw [h] at hv; simp at hv; exact hc (pow_eq_zero_iff two_ne_zero |>.1 hv.symm)
+  have hmap : (gaussianReal 0 1).map (fun x => c * x + m) = gaussianReal m v := by
+    have : (fun x : ℝ => c * x + m) = (· + m) ∘ (c * ·) := rfl
+    rw [this, ← Measure.map_map (measurable_add_const m) (measurable_const_mul c),
+      gaussianReal_map_const_mul, gaussianReal_map_add_const]
+    congr 1
+    · simp
+    · ext; simp [hv]
+  have h1 : (gaussianReal m v).real A = ∫ u in A, gaussianPDFReal m v u := by
+    rw [measureReal_def, gaussianReal_apply_eq_integral _ hv0, ENNReal.toReal_ofReal
+      (setIntegral_nonneg hA (fun x _ => gaussianPDFReal_nonneg _ _ _))]
+  rw [← h1, ← hmap, measureReal_def, measureReal_def, Measure.map_apply (by fun_prop) hA]
+
+lemma half_int (η a m s : ℝ) (v : NNReal) (hv : (v : ℝ) = s ^ 2) (hs : 0 < s)
+    (hη : η = 1 ∨ η = -1) :
+    ∫ u in {u : ℝ | η * a < η * u}, gaussianPDFReal m v u = N (η * ((m - a) / s)) := by
+  have := nullSingletonClass_gaussianReal (μ := (0 : ℝ)) (v := 1) one_ne_zero
+  have hmeas : MeasurableSet {u : ℝ | η * a < η * u} := measurableSet_lt (by fun_prop) (by fun_prop)
+  rcases hη with rfl | rfl
+  · rw [gauss_set_eq m (-s) v (by rw [hv]; ring) (neg_ne_zero.2 hs.ne') hmeas]
+    have : (fun x => -s * x + m) ⁻¹' {u : ℝ | 1 * a < 1 * u} = Iio ((m - a) / s) := by
+      ext x
+      simp only [mem_preimage, mem_ofPred_eq, mem_Iio, one_mul]
+      rw [lt_div_iff₀ hs]
+      constructor <;> intro h <;> linarith
+    rw [this, N, cdf_eq_real, one_mul]
+    exact measureReal_congr Iio_ae_eq_Iic
+  · rw [gauss_set_eq m s v hv hs.ne' hmeas]
+    have : (fun x => s * x + m) ⁻¹' {u : ℝ | -1 * a < -1 * u} = Iio ((a - m) / s) := by
+      ext x
+      simp only [mem_preimage, mem_ofPred_eq, mem_Iio]
+      rw [lt_div_iff₀ hs]
+      constructor <;> intro h <;> linarith
+    rw [this, N, cdf_eq_real, show -1 * ((m - a) / s) = (a - m) / s by ring]
+    exact measureReal_congr Iio_ae_eq_Iic
+
+lemma exp_mul_pdf (m u s : ℝ) (v : NNReal) (hv : (v : ℝ) = s ^ 2) (hs : 0 < s) :
+    exp u * gaussianPDFReal m v u = exp (m + s ^ 2 / 2) * gaussianPDFReal (m + s ^ 2) v u := by
+  simp only [gaussianPDFReal, hv]
+  rw [mul_left_comm, ← exp_add, mul_left_comm (exp _), ← exp_add]
+  congr 2
+  field_simp
+  ring
+
+lemma payoff_int (φ η a m c S K s : ℝ) (v : NNReal) (hv : (v : ℝ) = s ^ 2) (hs : 0 < s)
+    (hη : η = 1 ∨ η = -1) :
+    ∫ u in {u : ℝ | η * a < η * u}, φ * (S * exp u - K) * (c * gaussianPDFReal m v u)
+      = c * (φ * S * exp (m + s ^ 2 / 2) * N (η * ((m + s ^ 2 - a) / s))
+          - φ * K * N (η * ((m - a) / s))) := by
+  have hfun : (fun u => φ * (S * exp u - K) * (c * gaussianPDFReal m v u))
+      = fun u => (c * φ * S * exp (m + s ^ 2 / 2)) * gaussianPDFReal (m + s ^ 2) v u
+          - (c * φ * K) * gaussianPDFReal m v u := by
+    funext u
+    rw [mul_assoc (c * φ * S), ← exp_mul_pdf m u s v hv hs]
+    ring
+  rw [hfun, integral_sub ((integrable_gaussianPDFReal _ _).restrict.const_mul _)
+      ((integrable_gaussianPDFReal _ _).restrict.const_mul _),
+    integral_const_mul, integral_const_mul, half_int η a _ s v hv hs hη,
+    half_int η a _ s v hv hs hη]
+  ring
+
+lemma payoff_int1 (φ η a m S K s : ℝ) (v : NNReal) (hv : (v : ℝ) = s ^ 2) (hs : 0 < s)
+    (hη : η = 1 ∨ η = -1) :
+    ∫ u in {u : ℝ | η * a < η * u}, φ * (S * exp u - K) * gaussianPDFReal m v u
+      = φ * S * exp (m + s ^ 2 / 2) * N (η * ((m + s ^ 2 - a) / s))
+          - φ * K * N (η * ((m - a) / s)) := by
+  simpa only [one_mul] using payoff_int φ η a m 1 S K s v hv hs hη
+
+#print axioms gauss_set_eq
+#print axioms half_int
+#print axioms exp_mul_pdf
+#print axioms payoff_int
+#print axioms payoff_int1
+
+/-- **Every block is one half-line of one bell curve** (the boxed claim; Why it works, Step 2).
+Take the switches `φ` (call `+1`, put `-1`) and `η` (down `+1`, up `-1`), today's price `S > 0`,
+strike `K > 0`, barrier `H > 0`, any bank rate `r` and dividend yield `q`, volatility `σ > 0` and
+`T > 0` years. Write `f` for the plain bell curve of the log price, `b = ln(H/S)` for the barrier
+in log units, and `(H/S)^{2μ} f(u - 2b)` for the mirror curve. The payoff of the option is
+`φ(S e^u - K)`. Then, discounting by `e^{-rT}`:
+* `A` is the plain curve over the side of the strike where the option pays, `φu > φ ln(K/S)`;
+* `B` is the plain curve over the same side of the barrier instead, `φu > φ ln(H/S)`;
+* `C` is the mirror curve over the `η`-side of the strike, `ηu > η ln(K/S)`;
+* `D` is the mirror curve over the `η`-side of the barrier, `ηu > η ln(H/S)`. -/
+theorem blocks_are_half_line_readings_of_two_bell_curves
+    (φ η S K H r q σ T : ℝ) (hφ : φ = 1 ∨ φ = -1) (hη : η = 1 ∨ η = -1)
+    (hS : 0 < S) (hK : 0 < K) (hH : 0 < H) (hσ : 0 < σ) (hT : 0 < T) :
+    let b : ℝ := log (H / S)
+    let tilt : ℝ := (H / S) ^ (2 * mu r q σ)
+    blockA φ S K r q σ T
+        = exp (-(r * T)) * ∫ u in {u : ℝ | φ * log (K / S) < φ * u},
+            φ * (S * exp u - K) * f r q σ T u ∧
+    blockB φ S K H r q σ T
+        = exp (-(r * T)) * ∫ u in {u : ℝ | φ * b < φ * u},
+            φ * (S * exp u - K) * f r q σ T u ∧
+    blockC φ η S K H r q σ T
+        = exp (-(r * T)) * ∫ u in {u : ℝ | η * log (K / S) < η * u},
+            φ * (S * exp u - K) * (tilt * f r q σ T (u - 2 * b)) ∧
+    blockD φ η S K H r q σ T
+        = exp (-(r * T)) * ∫ u in {u : ℝ | η * b < η * u},
+            φ * (S * exp u - K) * (tilt * f r q σ T (u - 2 * b)) := by
+  dsimp only
+  obtain ⟨t, ht0, rfl⟩ : ∃ t, 0 < t ∧ T = t ^ 2 :=
+    ⟨√T, Real.sqrt_pos.2 hT, (Real.sq_sqrt hT.le).symm⟩
+  have hsq : √(t ^ 2) = t := Real.sqrt_sq ht0.le
+  have hs : 0 < σ * t := mul_pos hσ ht0
+  have hv : ((σ ^ 2 * t ^ 2).toNNReal : ℝ) = (σ * t) ^ 2 := by
+    rw [Real.coe_toNNReal _ (by positivity)]; ring
+  have hHS : 0 < H / S := div_pos hH hS
+  have lKS : log (K / S) = log K - log S := Real.log_div hK.ne' hS.ne'
+  have lSK : log (S / K) = log S - log K := Real.log_div hS.ne' hK.ne'
+  have lHS : log (H / S) = log H - log S := Real.log_div hH.ne' hS.ne'
+  have lSH : log (S / H) = log S - log H := Real.log_div hS.ne' hH.ne'
+  have lHH : log (H ^ 2 / (S * K)) = 2 * log H - log S - log K := by
+    rw [Real.log_div (by positivity) (by positivity), Real.log_mul hS.ne' hK.ne', Real.log_pow]
+    push_cast; ring
+  have hσ0 : σ ≠ 0 := hσ.ne'
+  have ht00 : t ≠ 0 := ht0.ne'
+  simp only [f, gaussianPDFReal_sub]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [payoff_int1 φ φ (log (K / S)) ((r - q - σ ^ 2 / 2) * t ^ 2) S K (σ * t) _ hv hs hφ]
+    unfold blockA
+    have hx' : x1 S K r q σ (t ^ 2)
+        = ((r - q - σ ^ 2 / 2) * t ^ 2 + (σ * t) ^ 2 - log (K / S)) / (σ * t) := by
+      unfold x1 mu; rw [hsq, lSK, lKS]; field_simp; ring
+    have hy : φ * x1 S K r q σ (t ^ 2) - φ * σ * √(t ^ 2)
+        = φ * (((r - q - σ ^ 2 / 2) * t ^ 2 - log (K / S)) / (σ * t)) := by
+      rw [hsq, hx']; field_simp; ring
+    have he : exp (-(r * t ^ 2)) * exp ((r - q - σ ^ 2 / 2) * t ^ 2 + (σ * t) ^ 2 / 2)
+        = exp (-(q * t ^ 2)) := by rw [← exp_add]; congr 1; ring
+    rw [hy, hx', ← he]; ring
+  · rw [payoff_int1 φ φ (log (H / S)) ((r - q - σ ^ 2 / 2) * t ^ 2) S K (σ * t) _ hv hs hφ]
+    unfold blockB
+    have hx' : x2 S H r q σ (t ^ 2)
+        = ((r - q - σ ^ 2 / 2) * t ^ 2 + (σ * t) ^ 2 - log (H / S)) / (σ * t) := by
+      unfold x2 mu; rw [hsq, lSH, lHS]; field_simp; ring
+    have hy : φ * x2 S H r q σ (t ^ 2) - φ * σ * √(t ^ 2)
+        = φ * (((r - q - σ ^ 2 / 2) * t ^ 2 - log (H / S)) / (σ * t)) := by
+      rw [hsq, hx']; field_simp; ring
+    have he : exp (-(r * t ^ 2)) * exp ((r - q - σ ^ 2 / 2) * t ^ 2 + (σ * t) ^ 2 / 2)
+        = exp (-(q * t ^ 2)) := by rw [← exp_add]; congr 1; ring
+    rw [hy, hx', ← he]; ring
+  · rw [payoff_int φ η (log (K / S)) ((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S))
+      ((H / S) ^ (2 * mu r q σ)) S K (σ * t) _ hv hs hη]
+    unfold blockC
+    have hx' : y1 S K H r q σ (t ^ 2)
+        = ((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S) + (σ * t) ^ 2 - log (K / S))
+          / (σ * t) := by
+      unfold y1 mu; rw [hsq, lHH, lHS, lKS]; field_simp; ring
+    have hy : η * y1 S K H r q σ (t ^ 2) - η * σ * √(t ^ 2)
+        = η * (((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S) - log (K / S)) / (σ * t)) := by
+      rw [hsq, hx']; field_simp; ring
+    have he : exp (-(r * t ^ 2)) * (H / S) ^ (2 * mu r q σ)
+          * exp ((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S) + (σ * t) ^ 2 / 2)
+        = exp (-(q * t ^ 2)) * (H / S) ^ (2 * mu r q σ + 2) := by
+      simp only [rpow_def_of_pos hHS]
+      rw [← exp_add, ← exp_add, ← exp_add]; congr 1; ring
+    rw [hy, hx']
+    linear_combination (-(φ * S * N (η * (((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S)
+      + (σ * t) ^ 2 - log (K / S)) / (σ * t))))) * he
+  · rw [payoff_int φ η (log (H / S)) ((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S))
+      ((H / S) ^ (2 * mu r q σ)) S K (σ * t) _ hv hs hη]
+    unfold blockD
+    have hx' : y2 S H r q σ (t ^ 2)
+        = ((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S) + (σ * t) ^ 2 - log (H / S))
+          / (σ * t) := by
+      unfold y2 mu; rw [hsq]; field_simp; ring
+    have hy : η * y2 S H r q σ (t ^ 2) - η * σ * √(t ^ 2)
+        = η * (((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S) - log (H / S)) / (σ * t)) := by
+      rw [hsq, hx']; field_simp; ring
+    have he : exp (-(r * t ^ 2)) * (H / S) ^ (2 * mu r q σ)
+          * exp ((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S) + (σ * t) ^ 2 / 2)
+        = exp (-(q * t ^ 2)) * (H / S) ^ (2 * mu r q σ + 2) := by
+      simp only [rpow_def_of_pos hHS]
+      rw [← exp_add, ← exp_add, ← exp_add]; congr 1; ring
+    rw [hy, hx']
+    linear_combination (-(φ * S * N (η * (((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S)
+      + (σ * t) ^ 2 - log (H / S)) / (σ * t))))) * he
+
+/-- **The rebate paid at expiry is the discounted chance of never touching** (Step 4). With
+`η = ±1`, `S, H > 0`, `σ > 0`, `T > 0` and any cash rebate `R`: the never-touched weight on the
+live side `ηu > ηb` of the barrier `b = ln(H/S)` is the plain curve minus the mirror curve,
+`f(u) - (H/S)^{2μ} f(u - 2b)` (Step 1), and `R e^{-rT}` times its total is block `E`. -/
+theorem blockE_eq_discounted_survival_chance
+    (η R S H r q σ T : ℝ) (hη : η = 1 ∨ η = -1)
+    (hS : 0 < S) (hH : 0 < H) (hσ : 0 < σ) (hT : 0 < T) :
+    let b : ℝ := log (H / S)
+    blockE η R S H r q σ T
+      = R * exp (-(r * T)) * ∫ u in {u : ℝ | η * b < η * u},
+          (f r q σ T u - (H / S) ^ (2 * mu r q σ) * f r q σ T (u - 2 * b)) := by
+  dsimp only
+  obtain ⟨t, ht0, rfl⟩ : ∃ t, 0 < t ∧ T = t ^ 2 :=
+    ⟨√T, Real.sqrt_pos.2 hT, (Real.sq_sqrt hT.le).symm⟩
+  have hsq : √(t ^ 2) = t := Real.sqrt_sq ht0.le
+  have hs : 0 < σ * t := mul_pos hσ ht0
+  have hv : ((σ ^ 2 * t ^ 2).toNNReal : ℝ) = (σ * t) ^ 2 := by
+    rw [Real.coe_toNNReal _ (by positivity)]; ring
+  have lHS : log (H / S) = log H - log S := Real.log_div hH.ne' hS.ne'
+  have lSH : log (S / H) = log S - log H := Real.log_div hS.ne' hH.ne'
+  have hσ0 : σ ≠ 0 := hσ.ne'
+  have ht00 : t ≠ 0 := ht0.ne'
+  simp only [f, gaussianPDFReal_sub]
+  rw [integral_sub (integrable_gaussianPDFReal _ _).restrict
+      ((integrable_gaussianPDFReal _ _).restrict.const_mul _), integral_const_mul,
+    half_int η (log (H / S)) ((r - q - σ ^ 2 / 2) * t ^ 2) (σ * t) _ hv hs hη,
+    half_int η (log (H / S)) ((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S)) (σ * t) _ hv hs hη]
+  unfold blockE
+  have hx : η * x2 S H r q σ (t ^ 2) - η * σ * √(t ^ 2)
+      = η * (((r - q - σ ^ 2 / 2) * t ^ 2 - log (H / S)) / (σ * t)) := by
+    unfold x2 mu; rw [hsq, lSH, lHS]; field_simp; ring
+  have hy : η * y2 S H r q σ (t ^ 2) - η * σ * √(t ^ 2)
+      = η * (((r - q - σ ^ 2 / 2) * t ^ 2 + 2 * log (H / S) - log (H / S)) / (σ * t)) := by
+    unfold y2 mu; rw [hsq]; field_simp; ring
+  rw [hx, hy]
+
+/-- **The mirror's tilt** (Step 1, Detailed proof). Let the log price drift at
+`ν = r - q - σ²/2` with volatility `σ > 0` over `T > 0` years, and let `b = ln(H/S)` with
+`S, H > 0`. Take a driftless path that touched `b` and ended at `u`: by the reflection principle
+its weight is the driftless bell curve at the mirror point `2b - u`. Reweight it for drift by
+`exp(νu/σ² - ν²T/(2σ²))`. The result is one constant factor `(H/S)^{2μ}` times the drifted bell
+curve at `u - 2b`: every `u` cancels. -/
+theorem mirror_tilt_is_constant
+    (S H r q σ T u : ℝ) (hS : 0 < S) (hH : 0 < H) (hσ : 0 < σ) (hT : 0 < T) :
+    let ν : ℝ := r - q - σ ^ 2 / 2
+    let b : ℝ := log (H / S)
+    gaussianPDFReal 0 (σ ^ 2 * T).toNNReal (2 * b - u)
+        * exp (ν * u / σ ^ 2 - ν ^ 2 * T / (2 * σ ^ 2))
+      = (H / S) ^ (2 * mu r q σ) * f r q σ T (u - 2 * b) := by
+  dsimp only
+  have hv : ((σ ^ 2 * T).toNNReal : ℝ) = σ ^ 2 * T := Real.coe_toNNReal _ (by positivity)
+  have hσ0 : σ ≠ 0 := hσ.ne'
+  have hT0 : T ≠ 0 := hT.ne'
+  simp only [f, gaussianPDFReal, hv, rpow_def_of_pos (div_pos hH hS)]
+  rw [mul_assoc, ← exp_add, mul_left_comm (rexp _), ← exp_add]
+  congr 2
+  unfold mu
+  field_simp
+  ring
+
+-- House market: r = 5%, q = 2%, σ = 20%, T = 1, S = K = 100.
+-- μ = (0.05 - 0.02 - 0.02) / 0.04 = 0.25.
+example : mu (5 / 100) (2 / 100) (20 / 100) = 1 / 4 := by
+  unfold mu; norm_num
+example : ((5 : ℚ) / 100 - 2 / 100 - (20 / 100) ^ 2 / 2) / (20 / 100) ^ 2 = 1 / 4 := by
+  norm_num
+-- λ = √(0.0625 + 2.5) = √41 / 4 ≈ 1.600781.
+example : lam (5 / 100) (2 / 100) (20 / 100) = √41 / 4 := by
+  unfold lam mu
+  rw [eq_div_iff (by norm_num), ← Real.sqrt_sq (show (0 : ℝ) ≤ 4 by norm_num),
+    ← Real.sqrt_mul (by norm_num)]
+  norm_num
+example : ((1 : ℚ) / 4) ^ 2 + 2 * (5 / 100) / (20 / 100) ^ 2 = 41 / 16 := by norm_num
+-- x₁ = 0 + 1.25 × 0.20 = 0.25, the Black-Scholes d₁, at S = K = 100.
+example : x1 100 100 (5 / 100) (2 / 100) (20 / 100) 1 = 1 / 4 := by
+  simp [x1, mu]; norm_num
+-- (1 + μ)σ² = r - q + σ²/2: 1.25 × 0.04 = 0.05 = 0.05 - 0.02 + 0.02.
+example : (1 + (1 : ℚ) / 4) * (20 / 100) ^ 2 = 5 / 100 - 2 / 100 + (20 / 100) ^ 2 / 2 := by
+  norm_num
+-- At the $80 floor: H/S = 0.8, H²/(SK) = 0.64, tilt exponents 2μ + 2 = 2.5 and 2μ = 0.5.
+example : (80 : ℚ) ^ 2 / (100 * 100) = 64 / 100 := by norm_num
+example : 2 * ((1 : ℚ) / 4) + 2 = 5 / 2 ∧ 2 * ((1 : ℚ) / 4) = 1 / 2 := by norm_num
+-- In-out parity is built into the table: in each column, every in-row plus its out-row is A,
+-- rebates aside (E on the in-row, F on the out-row).
+example (A B C D E F : ℝ) :
+    -- strike above the barrier, K > H
+    ((C + E) + (A - C + F) = A + E + F) ∧            -- DIC + DOC
+    ((A + E) + F = A + E + F) ∧                      -- UIC + UOC
+    ((B - C + D + E) + (A - B + C - D + F) = A + E + F) ∧  -- DIP + DOP
+    ((A - B + D + E) + (B - D + F) = A + E + F) ∧    -- UIP + UOP
+    -- strike below the barrier, K < H
+    ((A - B + D + E) + (B - D + F) = A + E + F) ∧    -- DIC + DOC
+    ((B - C + D + E) + (A - B + C - D + F) = A + E + F) ∧  -- UIC + UOC
+    ((A + E) + F = A + E + F) ∧                      -- DIP + DOP
+    ((C + E) + (A - C + F) = A + E + F) := by        -- UIP + UOP
+  refine ⟨by ring, by ring, by ring, by ring, by ring, by ring, by ring, by ring⟩
+
+#print axioms blocks_are_half_line_readings_of_two_bell_curves
+#print axioms blockE_eq_discounted_survival_chance
+#print axioms mirror_tilt_is_constant
+
+end ReinerRubinstein
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ReinerRubinstein.gauss_set_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReinerRubinstein.half_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReinerRubinstein.exp_mul_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReinerRubinstein.payoff_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReinerRubinstein.payoff_int1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReinerRubinstein.blocks_are_half_line_readings_of_two_bell_curves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReinerRubinstein.blockE_eq_discounted_survival_chance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReinerRubinstein.mirror_tilt_is_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -714,6 +1125,9 @@ The two outputs match line for line, simulation included, since both run the sam
 ## Where this goes next
 
 - [Daily monitoring](03-discrete-monitoring-correction.md): real barriers are checked once a day, not every instant, and a shifted barrier repairs these formulas for that.
+- [Two walls](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): a floor and a ceiling on one contract, priced by the repeated mirror that Step 5 only names.
+
+This card prices one line at a time; what it leaves open is a contract with two lines, where one mirror is no longer enough.
 
 ---
 

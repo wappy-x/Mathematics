@@ -6,11 +6,17 @@
 
 ## General Overview
 
-A bank sells an airline a one-year call on Acme shares that settles on the average of 52 weekly closing prices. Acme trades at $100, the strike is $100, and the house market holds: 5 percent interest, 2 percent dividends, 20 percent volatility. This **arithmetic Asian call** is priced on [Arithmetic Asian options](02-arithmetic-asian-options.md): $5.26 simulated here, against $9.23 for the ordinary call that looks only at the last day.
+A bank sells an airline a one-year call on Acme shares that settles on the average of 52 weekly closing prices. Acme trades at $100, the strike is $100, and the house market holds: 5 percent interest, 2 percent dividends, 20 percent volatility. This **arithmetic Asian call** is priced on [Arithmetic Asian options](02-arithmetic-asian-options.md): $5.26 simulated here, against $9.23 for the ordinary call that looks only at the last day (the **vanilla** call).
 
-The bank now has to hedge it. Hedging runs on the **Greeks**: the rates at which the price moves when one input moves. **Delta** is the dollars gained per dollar on Acme's price. **Gamma** is how fast delta itself changes. **Vega** is the dollars gained per unit of volatility, where one unit means volatility rising by 1.00 (from 20 percent to 120 percent). The ordinary call has delta 0.59 and vega $37.90. The Asian has delta 0.55 and vega $22.19. Averaging acts as a sedative: one wild week barely moves an average of 52.
+The bank now has to hedge it. Hedging runs on the **Greeks**: the rates at which the price moves when one input moves.
 
-Six months later, 26 fixings are in and they averaged $105. Those prices can no longer move: they are a fixed amount of money inside the payoff, and only the 26 fixings to come carry risk. With Acme back at $100 the vega is $6.21, under a quarter of the $27.50 on an ordinary six-month call.
+- **Delta** is the dollars gained per dollar on Acme's price.
+- **Gamma** is how fast delta itself changes.
+- **Vega** is the dollars gained per unit of volatility, where one unit means volatility rising by 1.00 (from 20 percent to 120 percent).
+
+The ordinary call has delta 0.59 and vega $37.90. The Asian has delta 0.55 and vega $22.19. Averaging acts as a sedative: one wild week barely moves an average of 52.
+
+Six months later, 26 fixings (the weekly prices that enter the average) are in and they averaged $105. A contract with some fixings already in is called **seasoned**. Those prices can no longer move: they are a fixed amount of money inside the payoff, and only the 26 fixings to come carry risk. With Acme back at $100 the vega is $6.21, under a quarter of the $27.50 on an ordinary six-month call.
 
 The third job runs the other way: a broker quotes $5.26 and asks what volatility that implies. The price rises with volatility, so exactly one answer exists, and bisection (halving an interval that must contain it) returns 20 percent.
 
@@ -36,7 +42,9 @@ Top line: the ordinary call with the same time left, its vega shrinking roughly 
 
 ## The formula
 
-Notation first. A **fixing** is one of the dates whose closing price enters the average. There are $n$ fixings in all, one per week; $k$ are already in and $m = n - k$ are still to come. The fixings already in averaged $\bar a$. The fixings still to come will average $A_{\text{rest}}$, a random quantity today. The weight of the open part is $w = m/n$. $\mathbb{E}$ averages over Acme's paths in the risk-neutral world, where every asset earns the bank rate; Acme's price itself grows at $r - q$, since dividends leave it ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bold $\mathbf{1}\{\cdot\}$ is a switch: 1 when the statement inside is true, 0 when not.
+Notation first. A **fixing** is one of the dates whose closing price enters the average. There are $n$ fixings in all, one per week; $k$ are already in and $m = n - k$ are still to come. The fixings already in averaged $\bar a$. The fixings still to come will average $A_{\text{rest}}$, a random quantity today. The weight of the open part is $w = m/n$.
+
+$\mathbb{E}$ averages over Acme's paths in the risk-neutral world, where every asset earns the bank rate; Acme's price itself grows at $r - q$, since dividends leave it ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bold $\mathbf{1}\{\cdot\}$ is a switch: 1 when the statement inside is true, 0 when not.
 
 The whole average splits into a fixed part and an open part:
 
@@ -73,7 +81,7 @@ Here $M_1$ is the expected open average, $M_1 = \frac{S}{m}\sum_j e^{(r-q)t_j}$.
 | $n$, $m$, $k$ | fixings in all, still to come, already in | 52; 26 and 26 when seasoned | more k: less risk left |
 | $\bar a$, $w$ | average of the fixings already in; weight m/n of the open part | $105; 0.5 | ā up: V and delta rise |
 | $r$, $q$, $\tau$ | bank rate, dividend yield, time left in years; $e^{-r\tau}$ discounts | 5%, 2%, 1 then 0.5 | τ down: vega shrinks |
-| $\sigma$, $W$, $W_j$, $t_j$, $\eta$, $B$ | volatility; the Brownian path, its value at the j-th open fixing, and that fixing's time from today; in the proof, extra volatility and a second path | 20% | σ up: V rises, always |
+| $\sigma$, $W$, $W_j$, $t_j$, $\eta$, $B$ | volatility; the Brownian path (the random walk that drives Acme), its value at the j-th open fixing, and that fixing's time from today; in the proof, extra volatility and a second path | 20% | σ up: V rises, always |
 | $\Delta$, $\Gamma$, $h$ | delta, dollars per dollar on Acme; gamma, change in delta per dollar; the bump size | 0.55; 0.032; $1 | — |
 | $\mathcal{V}$ | vega, dollars per unit of volatility (divide by 100 for a volatility point) | $22.19 fresh, $6.21 seasoned | — |
 | $M_1$, $M_2$, $v$, $c$ | expected open average and expected square; spread of its log in the moment road; share of log-variance an average keeps | $101.54 fresh; c 0.343 | — |
@@ -87,7 +95,7 @@ In words: price the open average as a share with the right mean and spread. This
 
 ### When it holds
 
-- **Constant volatility, rates and dividends.** Under a smile each fixing sees its own volatility; the error is roughly vega times the gap between the flat number and the blend the average sees.
+- **Constant volatility, rates and dividends.** Under a smile (implied volatility that varies with strike and date) each fixing sees its own volatility; the error is roughly vega times the gap between the flat number and the blend the average sees.
 - **Draws held fixed.** Pathwise and bumped Greeks need the same random numbers at every input; fresh draws per bump turn a delta into the difference of two noisy prices.
 - **A kink, not a jump.** Pathwise needs a payoff continuous in the average; for a digital Asian, paying a fixed sum above the strike, it returns zero.
 - **A quote inside the band.** Outside it a solver returns the edge of its search interval, which means nothing.
@@ -119,7 +127,9 @@ $$\frac{\partial S_j}{\partial\sigma} = S_j\,\big(W_j - \sigma t_j\big).$$
 
 $W_j$ is the direct push: volatility stretches every random move. $-\sigma t_j$ is the drag from the drift's $-\tfrac12\sigma^2$, which keeps the expected price fixed. Average over the open fixings, switch on paying paths: the vega formula.
 
-Why is it smaller than 37.90? The log of a weekly geometric average carries only a share $c = (n+1)(2n+1)/(6n^2) = 0.343$ of the last price's log-variance, as [The geometric Asian call](01-geometric-asian-kemna-vorst.md) proves; the arithmetic average behaves almost the same. An at-the-money price is close to proportional to the spread, so vega scales with $\sqrt{c}$ = 0.586. The vanilla's $37.90 times 0.586 is $22.20. The simulation gives $22.19.
+Why is it smaller than 37.90? The log of a weekly geometric average carries only a share $c = (n+1)(2n+1)/(6n^2) = 0.343$ of the last price's log-variance, as [The geometric Asian call](01-geometric-asian-kemna-vorst.md) proves; the arithmetic average behaves almost the same.
+
+An at-the-money price (strike equal to today's price) is close to proportional to the spread, so vega scales with $\sqrt{c}$ = 0.586. The vanilla's $37.90 times 0.586 is $22.20. The simulation gives $22.19.
 
 ### Step 3: gamma is where pathwise fails
 
@@ -135,7 +145,9 @@ After 26 weekly fixings averaging $105, half the final average is already decide
 
 $$A = \tfrac{26}{52}\times 105 + \tfrac{26}{52}\,A_{\text{rest}} = 52.50 + 0.5\,A_{\text{rest}}.$$
 
-The payoff $(A - 100)^+$ becomes $0.5\,(A_{\text{rest}} - 95)^+$: half a fresh six-month Asian on the 26 fixings to come, struck at $95. Every seasoned Greek is 0.5 times that contract's Greek. Three things shrink vega at once: the weight halves it, the time left is half a year, and the $95 strike puts the option in the money, where spread matters less. Vega falls to $6.21.
+The payoff $(A - 100)^+$ becomes $0.5\,(A_{\text{rest}} - 95)^+$: half a fresh six-month Asian on the 26 fixings to come, struck at $95. Every seasoned Greek is 0.5 times that contract's Greek.
+
+Three things shrink vega at once: the weight halves it, the time left is half a year, and the $95 strike puts the option in the money, where spread matters less. Vega falls to $6.21.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -234,7 +246,12 @@ Acme can sit still all year and the Asian's risk still drains away: each Friday 
 | 39 | 13 weeks | 3.01 | 3.01 | 19.69 |
 | 48 | 4 weeks | 0.58 | 0.58 | 11.02 |
 
-Two forces act. **Time:** less room to wander; the vanilla feels only this, and its vega falls roughly as the square root of the time left. **Weight:** each fixing removes one fifty-second of the average from risk, and the open weight $w$ multiplies every Greek. The Asian feels both, so its vega falls roughly as the time left to the power one and a half. With four weeks to go the vanilla still has $11.02 of vega; the Asian has 58 cents.
+Two forces act:
+
+- **Time:** less room to wander; the vanilla feels only this, and its vega falls roughly as the square root of the time left.
+- **Weight:** each fixing removes one fifty-second of the average from risk, and the open weight $w$ multiplies every Greek.
+
+The Asian feels both, so its vega falls roughly as the time left to the power one and a half. With four weeks to go the vanilla still has $11.02 of vega; the Asian has 58 cents.
 
 The seasoned example differs on purpose: an average so far of $105 drops the open strike to $95, and vega is $6.21 rather than $8.16.
 
@@ -635,6 +652,179 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the seasoned payoff split, the strict gain from spreading the average, and the unique implied volatility, for any prices and strike.
+
+- Suppose $k$ fixings are in and $m$, at least one, are still to come. Then $A = \tfrac{k}{n}\bar a + w\,A_{\text{rest}}$ and $(A-K)^+ = w\,(A_{\text{rest}}-K^*)^+$.
+- Take a spread of finitely many outcomes centred on an average, with some below and some above the strike, each with positive probability. Then the expected call payoff is strictly above the payoff at the centre.
+- Suppose the price is continuous, rises strictly with volatility, and runs from the floor to the ceiling. Then each quote strictly between them has exactly one implied volatility.
+- The share of log-variance kept by 52 weekly fixings is exactly 1855/5408, which is 0.343.
+- After 26 fixings at $105, the fixed part is $52.50, the open weight 0.5 and the open strike $95.
+- The seven points of the seasoned payoff chart are exact, and each equals half a call struck at $95.
+
+The model price itself, its continuity and limits, the Greeks and every simulated number are left to the Python and Rust checks.
+
+```lean
+-- Asian Greeks and implied volatility: the fixings already in turn an Asian call into a smaller Asian on the fixings to come with a shifted strike, spreading the average around its centre strictly raises a call's payoff, and a continuous price that rises strictly with volatility between a floor and a ceiling gives each quote in the band exactly one implied volatility.
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Topology.Order.IntermediateValue
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+
+open Filter Topology Finset
+
+/-- The fixings already in are a fixed amount. Take `k` fixings already in (prices `past`)
+and `m ≥ 1` fixings still to come (prices `future`), `n = k + m` in all. Write `ā` for the
+average of the fixings in, `A_rest` for the average of those to come, and `w = m / n` for
+the open weight. Then the call on the whole average, `(A - K)⁺`, equals `w` times a call on
+the open average with the shifted strike `K* = (K - (k/n) ā) / w`. -/
+theorem asian_call_seasoned_payoff_split (k m : ℕ) (hm : 0 < m)
+    (past : Fin k → ℝ) (future : Fin m → ℝ) (K : ℝ) :
+    let n : ℝ := (k : ℝ) + m
+    let A : ℝ := ((∑ i, past i) + ∑ j, future j) / n
+    let abar : ℝ := (∑ i, past i) / k
+    let Arest : ℝ := (∑ j, future j) / m
+    let w : ℝ := (m : ℝ) / n
+    let Kstar : ℝ := (K - (k : ℝ) / n * abar) / w
+    A = (k : ℝ) / n * abar + w * Arest ∧
+      max (A - K) 0 = w * max (Arest - Kstar) 0 := by
+  intro n A abar Arest w Kstar
+  set P := ∑ i, past i with hP
+  set F := ∑ j, future j with hF
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast hm
+  have hn : (0 : ℝ) < n := by
+    show (0 : ℝ) < (k : ℝ) + m
+    positivity
+  have hw : 0 < w := div_pos hmpos hn
+  have hkab : (k : ℝ) / n * abar = P / n := by
+    rcases Nat.eq_zero_or_pos k with hk | hk
+    · subst hk
+      have : P = 0 := by simp [hP]
+      simp [abar, this]
+    · have hkpos : (0 : ℝ) < k := by exact_mod_cast hk
+      simp only [abar]
+      field_simp
+      rw [hP]
+  have hwA : w * Arest = F / n := by
+    simp only [w, Arest]
+    field_simp
+    rw [hF]
+  have hA : A = (k : ℝ) / n * abar + w * Arest := by
+    rw [hkab, hwA]
+    simp only [A]
+    ring
+  refine ⟨hA, ?_⟩
+  rw [mul_max_of_nonneg _ _ hw.le, mul_zero, mul_sub]
+  have hwK : w * Kstar = K - (k : ℝ) / n * abar := by
+    simp only [Kstar]
+    field_simp
+  rw [hwK, hA]
+  ring_nf
+
+/-- Spreading the average strictly raises the call. If an average `x` is replaced by a
+spread of outcomes `y i` with probabilities `p i` centred on it (mean exactly `x`), the
+expected call payoff is at least the payoff at the centre, and strictly larger when the
+spread straddles the strike: some outcome with positive probability is below `K` and some
+is above it. -/
+theorem call_payoff_spread_strictly_raises {ι : Type*} (s : Finset ι) (p y : ι → ℝ)
+    (x K : ℝ) (hp : ∀ i ∈ s, 0 ≤ p i) (hsum : ∑ i ∈ s, p i = 1)
+    (hmean : ∑ i ∈ s, p i * y i = x)
+    (hlo : ∃ i ∈ s, 0 < p i ∧ y i < K) (hhi : ∃ j ∈ s, 0 < p j ∧ K < y j) :
+    max (x - K) 0 < ∑ i ∈ s, p i * max (y i - K) 0 := by
+  have key : ∀ i ∈ s, p i * max (y i - K) 0 = p i * (y i - K) + p i * max (K - y i) 0 := by
+    intro i _
+    rw [← mul_add]
+    congr 1
+    rcases le_total (y i) K with h | h
+    · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+    · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+  have hsplit : ∑ i ∈ s, p i * max (y i - K) 0
+      = (x - K) + ∑ i ∈ s, p i * max (K - y i) 0 := by
+    rw [Finset.sum_congr rfl key, Finset.sum_add_distrib]
+    congr 1
+    simp_rw [mul_sub]
+    rw [Finset.sum_sub_distrib, hmean, ← Finset.sum_mul, hsum, one_mul]
+  obtain ⟨i, hi, hpi, hyi⟩ := hlo
+  obtain ⟨j, hj, hpj, hyj⟩ := hhi
+  have hnn1 : ∀ l ∈ s, 0 ≤ p l * max (K - y l) 0 :=
+    fun l hl => mul_nonneg (hp l hl) (le_max_right _ _)
+  have hnn2 : ∀ l ∈ s, 0 ≤ p l * max (y l - K) 0 :=
+    fun l hl => mul_nonneg (hp l hl) (le_max_right _ _)
+  rcases le_total K x with hx | hx
+  · rw [max_eq_left (by linarith), hsplit]
+    have h1 : p i * max (K - y i) 0 ≤ ∑ l ∈ s, p l * max (K - y l) 0 :=
+      Finset.single_le_sum hnn1 hi
+    have h2 : 0 < p i * max (K - y i) 0 :=
+      mul_pos hpi (lt_max_of_lt_left (by linarith))
+    linarith
+  · rw [max_eq_right (by linarith)]
+    have h1 : p j * max (y j - K) 0 ≤ ∑ l ∈ s, p l * max (y l - K) 0 :=
+      Finset.single_le_sum hnn2 hj
+    have h2 : 0 < p j * max (y j - K) 0 :=
+      mul_pos hpj (lt_max_of_lt_left (by linarith))
+    linarith
+
+/-- Exactly one implied volatility for each quote in the band. If the price `V σ` is
+continuous for volatility `σ > 0`, rises strictly with volatility, tends to the floor `L`
+as volatility falls to 0 and to the ceiling `U` as volatility grows without bound, then
+every quote `Q` strictly between the floor and the ceiling is matched by exactly one
+volatility `σ > 0`. -/
+theorem implied_volatility_exists_unique (V : ℝ → ℝ) (L U Q : ℝ)
+    (hcont : ContinuousOn V (Set.Ioi 0)) (hmono : StrictMonoOn V (Set.Ioi 0))
+    (hfloor : Tendsto V (𝓝[>] 0) (𝓝 L)) (hceil : Tendsto V atTop (𝓝 U))
+    (hQ : Q ∈ Set.Ioo L U) :
+    ∃! σ : ℝ, 0 < σ ∧ V σ = Q := by
+  obtain ⟨hLQ, hQU⟩ := hQ
+  have ev1 : ∀ᶠ σ in 𝓝[>] (0 : ℝ), V σ < Q ∧ 0 < σ :=
+    (hfloor.eventually (gt_mem_nhds hLQ)).and self_mem_nhdsWithin
+  obtain ⟨a, ha, ha0⟩ := ev1.exists
+  have ev2 : ∀ᶠ σ in (atTop : Filter ℝ), Q < V σ ∧ 0 < σ :=
+    (hceil.eventually (lt_mem_nhds hQU)).and (eventually_gt_atTop 0)
+  obtain ⟨b, hb, hb0⟩ := ev2.exists
+  have hab : a ≤ b := by
+    by_contra h
+    rw [not_le] at h
+    have := hmono hb0 ha0 h
+    linarith
+  have hsub : Set.Icc a b ⊆ Set.Ioi 0 := fun t ht => lt_of_lt_of_le ha0 ht.1
+  obtain ⟨c, hc, hVc⟩ := intermediate_value_Icc hab (hcont.mono hsub) ⟨ha.le, hb.le⟩
+  refine ⟨c, ⟨hsub hc, hVc⟩, ?_⟩
+  rintro d ⟨hd0, hVd⟩
+  exact hmono.injOn hd0 (hsub hc) (hVd.trans hVc.symm)
+
+-- The share of log-variance kept by 52 weekly fixings: (n+1)(2n+1)/(6n²) = 53·105/(6·52²).
+example : ((52 + 1) * (2 * 52 + 1) : ℚ) / (6 * 52 ^ 2) = 53 * 105 / (6 * 52 ^ 2) := by norm_num
+example : ((52 + 1) * (2 * 52 + 1) : ℚ) / (6 * 52 ^ 2) = 1855 / 5408 := by norm_num
+
+-- Seasoned example: 26 of 52 fixings in at $105. Fixed part 26/52 × 105 = 52.50,
+-- open weight 26/52 = 1/2, and the open average must beat (100 - 52.50)/(1/2) = 95.
+example : (26 / 52 : ℚ) * 105 = 105 / 2 := by norm_num
+example : (26 / 52 : ℚ) = 1 / 2 := by norm_num
+example : ((100 : ℚ) - 26 / 52 * 105) / (26 / 52) = 95 := by norm_num
+
+-- Seasoned payoff chart: (52.50 + 0.5 x - 100)⁺ at x = 85, 90, ..., 115 is
+-- 0, 0, 0, 2.50, 5, 7.50, 10, and it equals 0.5 (x - 95)⁺ at every point.
+example : [85, 90, 95, 100, 105, 110, 115].map
+    (fun x : ℚ => max (105 / 2 + x / 2 - 100) 0) = [0, 0, 0, 5 / 2, 5, 15 / 2, 10] := by
+  norm_num
+example : [85, 90, 95, 100, 105, 110, 115].map
+    (fun x : ℚ => (1 / 2 : ℚ) * max (x - 95) 0) = [0, 0, 0, 5 / 2, 5, 15 / 2, 10] := by
+  norm_num
+
+#print axioms asian_call_seasoned_payoff_split
+#print axioms call_payoff_spread_strictly_raises
+#print axioms implied_volatility_exists_unique
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'asian_call_seasoned_payoff_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_payoff_spread_strictly_raises' depends on axioms: [propext, Classical.choice, Quot.sound]
+'implied_volatility_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -653,7 +843,7 @@ The two outputs are identical line for line.
 > Smaller traps:
 > - **Repricing the fixings already in.** Once a fixing is in, it is money, not risk. Ignoring them and pricing the rest as a fresh Asian at the old strike gives vega $16.32 instead of $6.21, and a hedge more than two and a half times too large.
 > - **Assuming every Greek shrinks.** At the money on day one gamma grows: 0.0324 against the vanilla's 0.0190.
-> - **Taking gamma pathwise.** It comes out at exactly zero on every path. Use a bump on shared draws, or the likelihood-ratio method.
+> - **Taking gamma pathwise.** It comes out at exactly zero on every path. Use a bump on shared draws, or the likelihood-ratio method, which differentiates the paths' probabilities instead of the payoff.
 > - **Trusting an implied volatility across pricers.** The same quote returns 20.00 percent by simulation and 19.93 percent by the moment road. A volatility quoted for an Asian is only meaningful alongside the pricer that produced it.
 
 ---
@@ -679,6 +869,11 @@ The two outputs are identical line for line.
 ## Where this goes next
 
 The shelf moves on to other path-dependent contracts: [Chooser options](04-chooser-options.md) next, where the holder's choice at a set date plays the role the fixings play here.
+
+The same Greeks and inverse return for commodities:
+
+- [Asian Greeks and the average already banked](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md): the fresh and seasoned Greeks on a futures curve instead of one share.
+- [Implied vol from an Asian quote](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/05-asian-implied-volatility.md): a dealer's commodity Asian quote turned back into one volatility, fresh and half-fixed.
 
 This card leaves one question open: when volatility itself varies by strike and date, which single number should an Asian's vega be measured against? That belongs to smile models, beyond this shelf.
 

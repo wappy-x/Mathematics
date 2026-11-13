@@ -8,7 +8,7 @@
 
 Acme shares trade at $100. A plain one-year call on them, struck at $100, costs $9.23 in the house market. A **down-and-out call** is the same call with one extra clause: it dies, worthless, the first time Acme trades at or below a fixed price called the **barrier** ([Knock-out and knock-in options](01-knock-out-and-knock-in-options.md)). With the barrier at $80 it costs $9.13.
 
-A buyer wants to pay exactly $8.00. Where should the barrier go? Raising it kills the option in more futures, so the price falls, and it falls at every step. One level does it: $88.73. Asking a pricing formula for its input, given its output, is called **inverting** it, and this inversion always has one answer when the target sits between zero and the plain call's price.
+A buyer wants to pay exactly $8.00. Where should the barrier go? Raising it kills the option on more of the paths Acme might take, so the price falls, and it falls at every step. One level does it: $88.73. Asking a pricing formula for its input, given its output, is called **inverting** it, and this inversion always has one answer when the target sits between zero and the plain call's price.
 
 Now a different contract: an **up-and-out call**, which dies the first time Acme trades at or above $120. A dealer shows it at $3.50 and a risk system asks which volatility (the yearly size of Acme's swings) that price implies. There are two answers, 4.35 percent and 9.50 percent. At $4.00 there is none. More volatility widens the payoff, but it also drives Acme into the $120 wall more often, so the price rises, peaks at $3.92 and falls away.
 
@@ -38,7 +38,7 @@ Five inputs are the house market: Acme's price $S$, the strike $K$, the bank rat
 
 $$C_{do}(H) = C \;-\; \Big[\, S e^{-qT}\,(H/S)^{2\lambda}\, N(y) \;-\; K e^{-rT}\,(H/S)^{2\lambda-2}\, N(y - \sigma\sqrt{T}) \,\Big]$$
 
-**Read it aloud:** the down-and-out call is the plain call minus the part of it that lives in futures where Acme touched the barrier; that part is priced as a call seen in a mirror at the barrier.
+**Read it aloud:** the down-and-out call is the plain call minus the part of it that lives on paths where Acme touched the barrier; that part is priced as a call seen in a mirror at the barrier.
 
 The two inverse statements are the card's content. For the level:
 
@@ -62,7 +62,7 @@ $$U(\sigma) = P \;\text{ has }\; \begin{cases} \text{two roots } \sigma_{lo} < \
 | $C_{do}$, $U$ | the down-and-out call's price as a function of the barrier; the up-and-out call's price, barrier 120, as a function of volatility | $9.13 at 80; $1.13 at 20% | — |
 | $m$ | the lowest price Acme reaches before expiry | depends on the path | — |
 | $P$ | the premium or quote being inverted | $8.00; $3.50 | level falls; vol roots close in |
-| $\lambda$, $y$, $d_1$ | helpers: $\lambda = (r - q + \tfrac12\sigma^2)/\sigma^2$; $y$ the mirrored call's distance to the strike in units of $\sigma\sqrt{T}$; $d_1$ the plain call's distance, as on the black-scholes-call card | 1.25; −1.981 at 80 | — |
+| $\lambda$, $y$, $d_1$ | helpers: $\lambda = (r - q + \tfrac12\sigma^2)/\sigma^2$; $y$ the mirrored call's distance to the strike in units of $\sigma\sqrt{T}$; $d_1$ the plain call's distance, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card | 1.25; −1.981 at 80 | — |
 | $N$, $e^{-rT}$ | the normal CDF, area under the bell curve left of a point ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)); the discount factor $D(T)$ | $e^{-0.05}$ | — |
 
 The helper $y$ in full, in words the log-distance from the mirrored start $H^2/S$ to the strike, in swing units, plus $\lambda$ swing units:
@@ -73,7 +73,7 @@ $$y = \frac{\ln\!\big(H^2/(SK)\big)}{\sigma\sqrt{T}} + \lambda\,\sigma\sqrt{T}$$
 
 - **Continuous monitoring.** The formula watches every instant. A contract that checks only daily closes is touched less often; a daily down barrier at $H$ behaves like a continuous one at $H e^{-0.5826\,\sigma\sqrt{1/252}}$, slightly lower ([Daily monitoring](03-discrete-monitoring-correction.md)). Solve in one convention and trade in the other, and the level is wrong: $88.73 against $89.38 here.
 - **No rebate.** A rebate is cash paid when the barrier is touched. It is worth more as the barrier rises, which can offset the falling option value, and the level can stop being unique.
-- **One volatility for the whole path.** A barrier's price depends on how Acme moves near the barrier, not just at the strike. With a smile ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)) no single number is the barrier's volatility, which is one more reason not to invert for one.
+- **One volatility for the whole path.** A barrier's price depends on how Acme moves near the barrier, not just at the strike. With a smile, where plain options at different strikes imply different volatilities ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)) no single number is the barrier's volatility, which is one more reason not to invert for one.
 - **Barrier on the right side of Acme.** A down barrier sits under $100, an up barrier over it. On the wrong side the option is dead at birth and both inverses are meaningless.
 
 ---
@@ -134,7 +134,9 @@ Humped curve: the up-and-out call's price. Middle flat line: the $3.50 quote, cr
 
 **Endless volatility.** The payoff needs Acme to end above $100 without touching $120. With huge swings, almost every path either touches $120 or ends far below $100, so the price falls to zero. At 60 percent it is already $0.06.
 
-**In between** the price reaches $3.917677 at 6.82 percent, above the floor. Apply the intermediate value theorem twice. On the rising stretch the price runs from $2.90 to $3.92, so a quote between them is hit once there. On the falling stretch it runs from $3.92 down to zero, so any quote under the peak is hit once there. A quote of $3.50 is hit on both: 4.35 percent and 9.50 percent. A quote of $2.00 is under the floor, so only the falling stretch reaches it: 14.98 percent. A quote of $4.00 is over the peak and nothing reaches it.
+**In between** the price reaches $3.917677 at 6.82 percent, above the floor. Apply the intermediate value theorem twice. On the rising stretch the price runs from $2.90 to $3.92, so a quote between them is hit once there. On the falling stretch it runs from $3.92 down to zero, so any quote under the peak is hit once there.
+
+A quote of $3.50 is hit on both: 4.35 percent and 9.50 percent. A quote of $2.00 is under the floor, so only the falling stretch reaches it: 14.98 percent. A quote of $4.00 is over the peak and nothing reaches it.
 
 "Exactly two" also needs the curve to turn only once. On this contract it does: vega, the price's slope against volatility, is positive below 6.82 percent and negative above, as the sweep and the vega at each root show. Without that shape the theorem gives "at least two".
 
@@ -153,7 +155,7 @@ So the safe practice keeps the barrier out of the inversion. Read the volatility
 
 The down-and-out call from Step 2 shows the contrast. At the $88.73 level its price rises with volatility at every point the checks tried: $5.44 at 10 percent, $8.00 at 20, $9.21 at 30, $9.83 at 40. Its barrier sits under the strike, where the option is worth little, so the kill effect never wins. The level inverse is safe for any knock-out without a rebate; the volatility inverse is safe only when the contract's vega keeps one sign.
 
-A third road reaches the level differently: price by the Brownian bridge integral in the code and solve by the secant method. It lands on the same $88.727307.
+A third road reaches the level differently: price by the Brownian bridge integral in the code and solve by the secant method, a root finder that steps along the straight line through its last two guesses. It lands on the same $88.727307.
 
 ---
 
@@ -187,13 +189,19 @@ Same Acme up-and-out call, barrier $120, quote $3.50, whose true answers are 4.3
 | Taking the low root to hedge | vega +28.18 | the high root's vega is −26.22; the hedge is the wrong way round |
 | Solving the level for continuous watching, trading daily | $88.73 instead of $89.38 | the daily contract is touched less, so it is dearer at the same level |
 
-The slope −12.4 is the bumped vega at 20 percent, printed by both checks as −12.42; every number in the table is.
+Newton's method moves from a guess along the tangent line, using the vega as its slope, to where that line reaches the quote. The slope −12.4 is the bumped vega at 20 percent, printed by both checks as −12.42; every number in the table is.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code prices barrier options three independent ways. Road 1 is the closed form. Road 2 averages the payoff over where Acme ends, weighting each end point by the Brownian-bridge chance that a path to it never touched the barrier, $1 - e^{-2\ln(S/H)\ln(S_T/H)/(\sigma^2 T)}$ with $S_T$ the final price, and integrates by Simpson's rule. Road 3 is an explicit finite-difference grid (a table of prices on a mesh of log prices and times, stepped back from expiry) with the barrier as a zero-value edge. The level is found by bisection on road 1 and by the secant method on road 2; the two volatilities likewise. The normal CDF is summed from its series; nothing imported knows the answer.
+The code prices barrier options three independent ways:
+
+- Road 1 is the closed form.
+- Road 2 averages the payoff over where Acme ends, weighting each end point by the Brownian-bridge chance that a path to it never touched the barrier, $1 - e^{-2\ln(S/H)\ln(S_T/H)/(\sigma^2 T)}$ with $S_T$ the final price, and integrates by Simpson's rule.
+- Road 3 is an explicit finite-difference grid (a table of prices on a mesh of log prices and times, stepped back from expiry) with the barrier as a zero-value edge.
+
+The level is found by bisection on road 1 and by the secant method on road 2; the two volatilities likewise. The normal CDF is summed from its series; nothing imported knows the answer.
 
 ### Python
 
@@ -617,6 +625,170 @@ ALL CHECKS PASS
 
 The two outputs agree byte for byte.
 
+### Lean
+
+Lean proves the two inverse statements from the shapes in Steps 1 and 4, plus the high-volatility limit and the bisection arithmetic.
+
+- **The level.** Suppose $C_{do}$ is continuous and strictly decreasing on $(0, S)$, with limit $C$ at 0 and limit 0 at $S$. Then each premium $P$ strictly between zero and $C$ has exactly one barrier level in $(0, S)$, and any other $P$ has none.
+- **Two volatilities.** Suppose $U$ is continuous, tends to the zero-volatility floor as $\sigma$ sinks to 0, tends to 0 as $\sigma$ grows, and peaks. Then a positive quote above the floor and under the peak is hit at least twice, once below the peak and once above.
+- **No volatility.** A quote above the peak is hit by no volatility at all.
+- **The high-volatility limit.** Take the bound on $U$ from the high-volatility proof: $H - K$, discounted, times the chance Acme ends above $K$. Then that bound tends to zero as $\sigma$ grows without limit.
+- **The arithmetic.** The seven bisection midpoints for the $8.00 level are exact, and seven halvings leave an interval 25/64 wide. The helper $\lambda$ is 1.25 at 20 percent volatility.
+
+Left to the Python and Rust checks: that the house prices have these shapes, the exact root counts, and every price and root.
+
+```lean
+-- Barrier inverses: a continuous price that falls strictly as the barrier rises, from the plain call's price to zero, hits every premium strictly between them at exactly one barrier level and no other premium at all, while a continuous price that starts at a floor, peaks and dies away hits every quote between the floor and the peak at two volatilities at least and no quote above the peak.
+import Mathlib.Topology.Order.IntermediateValue
+import Mathlib.Topology.Algebra.Order.LiminfLimsup
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open Real Filter Topology ProbabilityTheory
+
+/-- The level inverse. Let `C_do(H)` be the down-and-out call's price as a function of the barrier
+`H` on `(0, S)`, with `S > 0` today's share price. Step 1 of the card shows it is continuous,
+strictly decreasing, tends to the plain call's price `C` as the barrier sinks to zero, and tends
+to zero as the barrier climbs to `S`. Then for every target premium `P` with `0 < P < C` there is
+exactly one barrier level `H` in `(0, S)` with `C_do(H) = P`, and for any other `P` there is none. -/
+theorem barrier_level_from_premium_unique (Cdo : ℝ → ℝ) (S C : ℝ) (hS : 0 < S)
+    (hcont : ContinuousOn Cdo (Set.Ioo 0 S))
+    (hanti : StrictAntiOn Cdo (Set.Ioo 0 S))
+    (hlow : Tendsto Cdo (𝓝[>] 0) (𝓝 C))
+    (hhigh : Tendsto Cdo (𝓝[<] S) (𝓝 0)) (P : ℝ) :
+    ((0 < P ∧ P < C) → ∃! H, H ∈ Set.Ioo 0 S ∧ Cdo H = P) ∧
+    (¬ (0 < P ∧ P < C) → ∀ H ∈ Set.Ioo 0 S, Cdo H ≠ P) := by
+  have hbound : ∀ H ∈ Set.Ioo 0 S, 0 < Cdo H ∧ Cdo H < C := by
+    intro H hH
+    obtain ⟨h0, hHS⟩ := hH
+    constructor
+    · have hH' : (H + S) / 2 ∈ Set.Ioo 0 S := ⟨by linarith, by linarith⟩
+      have h1 : Cdo ((H + S) / 2) < Cdo H := hanti ⟨h0, hHS⟩ hH' (by linarith)
+      have h2 : 0 ≤ Cdo ((H + S) / 2) := by
+        apply le_of_tendsto hhigh
+        filter_upwards [Ioo_mem_nhdsLT (show (H + S) / 2 < S by linarith)] with x hx
+        exact (hanti hH' ⟨by linarith [hx.1], hx.2⟩ hx.1).le
+      linarith
+    · have hH' : H / 2 ∈ Set.Ioo 0 S := ⟨by linarith, by linarith⟩
+      have h1 : Cdo H < Cdo (H / 2) := hanti hH' ⟨h0, hHS⟩ (by linarith)
+      have h2 : Cdo (H / 2) ≤ C := by
+        apply ge_of_tendsto hlow
+        filter_upwards [Ioo_mem_nhdsGT (show (0:ℝ) < H / 2 by linarith)] with x hx
+        exact (hanti ⟨hx.1, by linarith [hx.2]⟩ hH' hx.2).le
+      linarith
+  refine ⟨?_, ?_⟩
+  · rintro ⟨hP0, hPC⟩
+    obtain ⟨a, ha, haS⟩ := ((hlow.eventually (lt_mem_nhds hPC)).and
+      (Ioo_mem_nhdsGT hS)).exists
+    obtain ⟨b, hb, hbS⟩ := ((hhigh.eventually (gt_mem_nhds hP0)).and
+      (Ioo_mem_nhdsLT hS)).exists
+    have hab : a ≤ b := by
+      by_contra h
+      rw [not_le] at h
+      have := hanti hbS haS h
+      linarith
+    have hsub : Set.Icc a b ⊆ Set.Ioo 0 S := fun x hx => ⟨by linarith [haS.1, hx.1],
+      by linarith [hbS.2, hx.2]⟩
+    obtain ⟨H, hH, hHP⟩ := intermediate_value_Icc' hab (hcont.mono hsub) ⟨hb.le, ha.le⟩
+    refine ⟨H, ⟨hsub hH, hHP⟩, ?_⟩
+    rintro y ⟨hy, hyP⟩
+    exact hanti.injOn hy (hsub hH) (hyP.trans hHP.symm)
+  · intro hP H hH hHP
+    exact hP ⟨hHP ▸ (hbound H hH).1, hHP ▸ (hbound H hH).2⟩
+
+/-- The volatility inverse can fail both ways. Let `U(σ)` be the up-and-out call's price as a
+function of the volatility `σ > 0`: continuous, tending to the zero-volatility floor `F` as
+`σ → 0`, tending to zero as `σ → ∞`, and reaching its largest value at the peak volatility `σₚ`.
+Then a positive quote `P` above the floor and under the peak is hit at least twice, once below
+the peak and once above it; and a quote above the peak is hit by no volatility. -/
+theorem knockout_implied_vol_two_roots_or_none (U : ℝ → ℝ) (F σₚ : ℝ) (hσₚ : 0 < σₚ)
+    (hcont : ContinuousOn U (Set.Ioi 0))
+    (hfloor : Tendsto U (𝓝[>] 0) (𝓝 F))
+    (hinf : Tendsto U atTop (𝓝 0))
+    (hpeak : IsMaxOn U (Set.Ioi 0) σₚ) (P : ℝ) :
+    ((F < P ∧ 0 < P ∧ P < U σₚ) →
+      ∃ σ₁ σ₂, 0 < σ₁ ∧ σ₁ < σₚ ∧ σₚ < σ₂ ∧ U σ₁ = P ∧ U σ₂ = P) ∧
+    (U σₚ < P → ∀ σ ∈ Set.Ioi 0, U σ ≠ P) := by
+  refine ⟨?_, ?_⟩
+  · rintro ⟨hFP, hP0, hPp⟩
+    obtain ⟨a, ha, haS⟩ := ((hfloor.eventually (gt_mem_nhds hFP)).and
+      (Ioo_mem_nhdsGT hσₚ)).exists
+    obtain ⟨b, hb, hbS⟩ := ((hinf.eventually (gt_mem_nhds hP0)).and
+      (eventually_gt_atTop σₚ)).exists
+    have hsub1 : Set.Icc a σₚ ⊆ Set.Ioi 0 := fun x hx => lt_of_lt_of_le haS.1 hx.1
+    have hsub2 : Set.Icc σₚ b ⊆ Set.Ioi 0 := fun x hx => lt_of_lt_of_le hσₚ hx.1
+    obtain ⟨s1, hs1, hU1⟩ := intermediate_value_Icc haS.2.le (hcont.mono hsub1)
+      ⟨ha.le, hPp.le⟩
+    obtain ⟨s2, hs2, hU2⟩ := intermediate_value_Icc' hbS.le (hcont.mono hsub2)
+      ⟨hb.le, hPp.le⟩
+    refine ⟨s1, s2, lt_of_lt_of_le haS.1 hs1.1, ?_, ?_, hU1, hU2⟩
+    · rcases hs1.2.lt_or_eq with h | h
+      · exact h
+      · subst h; linarith
+    · rcases hs2.1.lt_or_eq with h | h
+      · exact h
+      · subst h; linarith
+  · intro hP σ hσ hUσ
+    have := hpeak hσ
+    change U σ ≤ U σₚ at this
+    linarith
+
+/-- The high-volatility limit. The up-and-out call (barrier `H` over strike `K`) pays at most
+`H - K`, and only when the share ends above `K`, so its price is at most
+`(H - K) e^(-rT) N((ln(S/K) + (r - q - σ²/2) T) / (σ√T))`, with `N` the standard normal CDF.
+That bound tends to zero as the volatility `σ` grows without limit. -/
+theorem up_out_bound_tends_to_zero_high_vol (S K H r q T : ℝ) (hS : 0 < S) (hK : 0 < K)
+    (hT : 0 < T) :
+    Tendsto (fun σ : ℝ => (H - K) * exp (-r * T) *
+      cdf (gaussianReal 0 1) ((log (S / K) + (r - q - σ ^ 2 / 2) * T) / (σ * √T)))
+      atTop (𝓝 0) := by
+  have hc : 0 < √T := Real.sqrt_pos.mpr hT
+  set A := log (S / K) + (r - q) * T with hA
+  have harg : Tendsto (fun σ : ℝ => (log (S / K) + (r - q - σ ^ 2 / 2) * T) / (σ * √T))
+      atTop atBot := by
+    have h1 : Tendsto (fun σ : ℝ => A / √T * σ⁻¹ + -((T / (2 * √T)) * σ)) atTop atBot := by
+      apply Tendsto.add_atBot (C := A / √T * 0)
+      · exact tendsto_inv_atTop_zero.const_mul _
+      · apply tendsto_neg_atTop_atBot.comp
+        exact Tendsto.const_mul_atTop (by positivity) tendsto_id
+    apply h1.congr'
+    filter_upwards [eventually_gt_atTop (0:ℝ)] with σ hσ
+    rw [hA]
+    field_simp
+    ring
+  have h2 := (tendsto_cdf_atBot (μ := gaussianReal 0 1)).comp harg
+  have h3 := h2.const_mul ((H - K) * exp (-r * T))
+  simpa using h3
+
+-- The card's bisection for the $8.00 level, from the interval 50 to 100: the seven midpoints
+-- 75, 87.5, 93.75, 90.625, 89.0625, 88.28125, 88.671875, written as fractions.
+example : ((50 : ℚ) + 100) / 2 = 75 := by norm_num
+example : ((75 : ℚ) + 100) / 2 = 175 / 2 := by norm_num
+example : ((175 / 2 : ℚ) + 100) / 2 = 375 / 4 := by norm_num
+example : ((175 / 2 : ℚ) + 375 / 4) / 2 = 725 / 8 := by norm_num
+example : ((175 / 2 : ℚ) + 725 / 8) / 2 = 1425 / 16 := by norm_num
+example : ((175 / 2 : ℚ) + 1425 / 16) / 2 = 2825 / 32 := by norm_num
+example : ((2825 / 32 : ℚ) + 1425 / 16) / 2 = 5675 / 64 := by norm_num
+-- After seven halvings the interval 50 to 100 has width 50/2^7 = 25/64.
+example : (50 : ℚ) / 2 ^ 7 = 25 / 64 := by norm_num
+-- The helper λ = (r - q + σ²/2)/σ² at r = 5%, q = 2%, σ = 20% is 1.25 = 5/4.
+example : ((5 / 100 : ℚ) - 2 / 100 + (20 / 100) ^ 2 / 2) / (20 / 100) ^ 2 = 5 / 4 := by norm_num
+
+#print axioms barrier_level_from_premium_unique
+#print axioms knockout_implied_vol_two_roots_or_none
+#print axioms up_out_bound_tends_to_zero_high_vol
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'barrier_level_from_premium_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'knockout_implied_vol_two_roots_or_none' depends on axioms: [propext, Classical.choice, Quot.sound]
+'up_out_bound_tends_to_zero_high_vol' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **A cheaper target.** Guess first: to pay $5.00 instead of $8.00, does the barrier move a little or a lot? Solve for 5.00. Answer: $94.84, well above $88.73, because near Acme's price the curve is steep.
@@ -644,7 +816,7 @@ The two outputs agree byte for byte.
 - **Structured notes.** A bank building a note with a fixed budget for the option solves for the barrier that makes the option cost exactly that budget. Step 2 guarantees the answer is one number.
 - **Currency desks.** Barrier options are common in currency markets, and dealers commonly quote them against their theoretical value at the plain options' volatility, with the difference negotiated in money, the practice of Step 5.
 - **Risk systems.** A system that backs out one volatility per trade must choose a root for reverse knock-outs, or fail. The safer design stores the vanilla volatility and the dollar spread.
-- **The barrier's own Greeks.** Vega changing sign across the hump is the same wall effect that makes delta and gamma jump near the barrier ([Barrier Greeks](04-barrier-greeks-at-the-wall.md)).
+- **The barrier's own Greeks.** Vega changing sign across the hump is the same wall effect that makes delta (the price's slope against Acme's price; [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)) and gamma (how fast delta changes; [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)) jump near the barrier ([Barrier Greeks](04-barrier-greeks-at-the-wall.md)).
 - **Touch bets.** A no-touch pays when the barrier is never hit; its price also falls as volatility rises, but without the call part it never rises first ([One-touch and no-touch](05-one-touch-and-no-touch.md)).
 
 > **Say it back**
@@ -660,7 +832,12 @@ The two outputs agree byte for byte.
 
 ## Where this goes next
 
-Its siblings price the contracts it inverts: [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md) for all eight cases, [Daily monitoring](03-discrete-monitoring-correction.md) for daily watching, and [Lookback options](06-lookback-options.md) for the payoff that remembers the extreme instead of dying at it.
+Its siblings price the contracts it inverts:
+
+- [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md) for all eight cases.
+- [Daily monitoring](03-discrete-monitoring-correction.md) for daily watching.
+- [Lookback options](06-lookback-options.md) for the payoff that remembers the extreme instead of dying at it.
+- [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md) for one volatility per price and date, read off the smile.
 
 The question left open is which single volatility a barrier should carry when the smile says each price level has its own; that is the smile's and local volatility's job.
 

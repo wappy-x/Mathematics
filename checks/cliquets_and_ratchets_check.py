@@ -137,4 +137,4 @@ assert abs(fl - cv) < 3 * fl_se, "capped, flat: simulation must match convolutio
 assert abs(fs_house - 6.244873) < 1e-6, "forward-start must match the shelf's house number"
 assert abs(ivs["Heston 1y"][2] - ivs["local vol 1y"][2]) < 0.3, "local vol must reprice Heston's 1-year ATM call"
 assert gap > 5 * gap_se, "Heston and local vol must disagree on the cliquet"
-print("All checks passed.")
+print("ALL CHECKS PASS")

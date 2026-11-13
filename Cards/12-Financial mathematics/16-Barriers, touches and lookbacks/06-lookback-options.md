@@ -36,7 +36,9 @@ First line: Acme's month-end price. Second line: the lowest price so far, which 
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today and $m$ is the lowest price recorded so far; a fresh contract starts with $m = S$. $m_T$ is the lowest price over the whole life, recorded minimum included, and $M_T$ the highest. $E[\,\cdot\,]$ is an average in the pretend world where every asset grows at the bank rate (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The payoff is $S_T - m_T$, with no "if positive": the final price can never sit below the lowest price.
+Notation first, in words. $S$ is Acme's price today and $m$ is the lowest price recorded so far; a fresh contract starts with $m = S$. $m_T$ is the lowest price over the whole life, recorded minimum included, and $M_T$ the highest.
+
+$E[\,\cdot\,]$ is an average in the pretend world where every asset grows at the bank rate (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The payoff is $S_T - m_T$, with no "if positive": the final price can never sit below the lowest price.
 
 $$C_{LB} = S e^{-qT} N(a_1) - m\, e^{-rT} N(a_2) + S e^{-rT}\frac{\sigma^2}{2b}\left[\left(\frac{S}{m}\right)^{-2b/\sigma^2} N(-a_3) - e^{bT} N(-a_1)\right]$$
 
@@ -70,7 +72,7 @@ When $r = q$ the carry $b$ is zero and $\sigma^2/(2b)$ divides by zero. The pric
 ### When it holds
 
 - **Watching is continuous.** The formula reads the true lowest price. A contract that reads one closing price a day misses dips between closes and is worth less: about $15.38 against $15.98 here. The Broadie-Glasserman-Kou shift in Step 5 repairs most of the gap.
-- **Acme follows geometric Brownian motion with constant volatility.** With a volatility smile, deep lows are priced by higher volatilities than 20%, and the formula's extra is off by roughly its vega times the volatility error.
+- **Acme follows geometric Brownian motion with constant volatility.** Its log price is a random walk with a steady drift and spread ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). With a volatility smile, where the market quotes different volatilities at different price levels, deep lows are priced by higher volatilities than 20%. The formula's extra is then off by roughly its vega (dollars per point of volatility) times the volatility error.
 - **Rates and dividend yield are constant and continuous.** A cash dividend drops the share price on a known day; that drop can set the minimum, and the yield version misses it.
 - **The recorded minimum is carried over.** A contract already running must be priced with its true $m$. Resetting $m$ to today's price throws away a banked gain.
 
@@ -88,7 +90,9 @@ The first term is the share paid for today and delivered at expiry, less the div
 
 ### Step 1: the chance that the low stays above a level
 
-Pick a level $h$ below today's price, say $90. The low stays above $90 exactly when the path never touches $90. That is a no-touch event, priced on [One-touch and no-touch](05-one-touch-and-no-touch.md). Its probability comes from the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): every path that touches the level and ends above it is matched with a mirror-image path that ends below it. Subtracting the mirror paths leaves only the paths that never touched. In log terms, with drift $\nu = b - \tfrac12\sigma^2$:
+Pick a level $h$ below today's price, say $90. The low stays above $90 exactly when the path never touches $90. That is a no-touch event, priced on [One-touch and no-touch](05-one-touch-and-no-touch.md).
+
+Its probability comes from the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): every path that touches the level and ends above it is matched with a mirror-image path that ends below it. Subtracting the mirror paths leaves only the paths that never touched. In log terms, with drift $\nu = b - \tfrac12\sigma^2$:
 
 $$Q(h) = N\!\left(\frac{\ln(S/h) + \nu T}{\sigma\sqrt{T}}\right) - \left(\frac{h}{S}\right)^{2\nu/\sigma^2} N\!\left(\frac{\nu T - \ln(S/h)}{\sigma\sqrt{T}}\right).$$
 
@@ -100,7 +104,7 @@ A positive number equals the length of the stretch of levels below it. The lowes
 
 $$E[m_T] = \int_0^{m} Q(h)\, dh.$$
 
-This is the **layer-cake rule**: slice the minimum into thin horizontal layers and count each layer with the probability that the minimum reaches past it. The upper limit is $m$, not infinity, because the recorded minimum caps $m_T$ from above. The code evaluates this integral by Simpson's rule, as road 2, and gets $86.250441, matching the closed form to six decimals.
+This is the **layer-cake rule**: slice the minimum into thin horizontal layers and count each layer with the probability that the minimum reaches past it. The upper limit is $m$, not infinity, because the recorded minimum caps $m_T$ from above. The code evaluates this integral by Simpson's rule, as road 2, and gets $86.250441, matching the closed form to six decimals. Simpson's rule adds up the area in thin slices, each topped by a parabola ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
 
 ### Step 3: two integrals of bell curves give the closed form
 
@@ -125,7 +129,9 @@ which is the formula, since $1/\lambda = \sigma^2/(2b)$. When $b = 0$, $\lambda 
 
 Every path has $m_T \le m$, so the lookback pays at least $S_T - m$, and at least the vanilla payoff struck at $m$. The first two terms of the formula are that vanilla. The bracket is what the chance of a new, lower low adds. For a fresh Acme contract the vanilla is $9.23 and the extra is $6.75.
 
-The same comparison ranks the shelf. On every path, the lookback pays at least the vanilla, and the vanilla pays at least the down-and-out call, which is the vanilla cancelled on paths that touch $80. So $15.98 ≥ $9.23 ≥ $9.13 is forced by the payoffs, before any model. The fixed-strike lookback call pays the highest price minus $100, which is at least the vanilla too. It is dearer still. At $K = S$ the high is never below $100, so "if positive" drops, and its payoff is the floating put's payoff plus $S_T - 100$:
+The same comparison ranks the shelf. On every path, the lookback pays at least the vanilla, and the vanilla pays at least the down-and-out call, which is the vanilla cancelled on paths that touch $80. So $15.98 ≥ $9.23 ≥ $9.13 is forced by the payoffs, before any model.
+
+The fixed-strike lookback call pays the highest price minus $100, which is at least the vanilla too. It is dearer still. At $K = S$ the high is never below $100, so "if positive" drops, and its payoff is the floating put's payoff plus $S_T - 100$:
 
 $$(M_T - 100) = (M_T - S_T) + (S_T - 100),$$
 
@@ -149,7 +155,9 @@ A minimum over 252 closing prices is never below the minimum over every instant,
 
 Broadie, Glasserman and Kou showed that, to first order in $\sqrt{\Delta t}$, the daily low behaves like the continuous low raised by the factor $e^{0.5826\,\sigma\sqrt{\Delta t}}$, with $\Delta t = 1/252$ a trading day. Applied to $E[m_T]$ this gives $15.37, against a simulated $15.38.
 
-The other door is the hedging equation. The Black-Scholes equation holds with the recorded minimum as a second variable; on the line where today's price equals the minimum, the price must not change when the minimum moves by a hair, because the minimum is only just being set. Solving that equation gives the same formula. The simulation road is [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) with one addition: the exact continuous low of each path is drawn from its known law, not read off a grid.
+A second route to the formula is the hedging equation. The Black-Scholes equation holds with the recorded minimum as a second variable. On the line where today's price equals the minimum, the price must not change when the minimum moves by a tiny amount, because the minimum is only just being set. Solving that equation gives the same formula.
+
+The simulation road is [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) with one addition: the exact continuous low of each path is drawn from its known law, not read off a grid.
 
 ---
 
@@ -199,13 +207,21 @@ Conventions verified 2026-09-24: daily watching means 252 closing prices a year;
 | rho | dollars per one point of the bank rate | 0.4419 |
 | theta | change in price when one calendar day passes | −0.0213 |
 
-Delta is small, not near 1. The bump gives 0.159760, and the price divided by the share price gives 0.159759. They agree because of two facts. Scaling Acme's price and the recorded minimum by the same factor scales the price by that factor. And at the moment the minimum is being set, a tiny change in it does not change the price. Together these say delta at issue equals price over spot. In words: the strike floats with Acme, so most of a move in Acme is cancelled by the same move in the low. Vega is large: the lookback is a position on how far Acme swings.
+Delta is small, not near 1. The bump gives 0.159760, and the price divided by the share price gives 0.159759.
+
+They agree because of two facts. Scaling Acme's price and the recorded minimum by the same factor scales the price by that factor. And at the moment the minimum is being set, a tiny change in it does not change the price. Together these say delta at issue equals the price divided by the share price.
+
+In words: the strike floats with Acme, so most of a move in Acme is cancelled by the same move in the low. Vega is large: the lookback is a position on how far Acme swings.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs price the fresh lookback call four independent ways. Road 1 is the closed form. Road 2 never uses it: it integrates the no-touch probability of Step 1 over every level from 0 to $100 by Simpson's rule and applies Step 0. Road 3 simulates 200,000 year-end prices and, for each, draws the exact continuous low of the path in between, and separately its high, from the Brownian bridge law, so no dip is missed. Road 4 simulates 20,000 paths day by day and records both the daily low and, on the same paths, the continuous low between each pair of closes; the paired difference measures the daily discount with a tiny standard error. The same runs price the floating put and the fixed-strike call, check the shelf's down-and-out number, and print every Greek, wrong answer and chart point. The bell-curve area is Marsaglia's series written out; the random numbers come from a written-out splitmix64 generator and the Box-Muller transform.
+Both programs price the fresh lookback call four independent ways. Road 1 is the closed form. Road 2 never uses it: it integrates the no-touch probability of Step 1 over every level from 0 to $100 by Simpson's rule and applies Step 0.
+
+Road 3 simulates 200,000 year-end prices. For each, it draws the exact continuous low of the path in between, and separately its high, so no dip is missed. The draws use the law of a [Brownian bridge](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/05-brownian-bridge.md), a random path pinned at both ends. Road 4 simulates 20,000 paths day by day and records both the daily low and, on the same paths, the continuous low between each pair of closes; the paired difference measures the daily discount with a tiny standard error.
+
+The same runs price the floating put and the fixed-strike call, check the shelf's down-and-out number, and print every Greek, wrong answer and chart point. The bell-curve area is Marsaglia's series written out; the random numbers come from a written-out splitmix64 generator and the Box-Muller transform.
 
 ### Python
 
@@ -616,6 +632,205 @@ path pays: lookback 20, vanilla 8, fixed-strike 10
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the card's price split and layer-cake rule for any continuous, positive price paths, and the payoff comparisons on every path.
+
+- The floating-strike lookback call never pays a negative amount, because the final price is never below the lowest price.
+- Suppose prices are continuous and positive, $0 < m \le S$, and the pretend-world average of $S_T$ is $S e^{bT}$. Then $C_{LB} = S e^{-qT} - e^{-rT}E[m_T]$, as in Step 0.
+- Take the same setting. Then $E[m_T] = \int_0^{m} Q(h)\, dh$, the layer-cake rule of Step 2.
+- On every path, the lookback call pays at least the vanilla call struck at the recorded minimum $m$.
+- On every path, a contract that reads the price at finitely many times, such as daily closes, pays no more than continuous watching.
+- On the illustrative year, the lowest price so far steps down to $88. The lookback pays $20, the vanilla $8 and the fixed-strike call $10.
+
+The reflection formula for $Q(h)$, the closed form, the daily price and the Greeks are left to the Python and Rust checks.
+
+```lean
+-- Lookback options: a floating-strike lookback call never pays a negative amount, it is worth the prepaid share minus today's value of the expected lowest price (that expectation being the layer-cake integral of the chance the low stays above each level), it pays at least the vanilla call struck at the recorded minimum, and daily watching pays no more than continuous watching.
+import Mathlib.MeasureTheory.Integral.Layercake
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Order.CompleteLattice.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory
+
+/-- The lowest price over the contract's life `[0, T]` along one price path `f`, with the
+minimum `m` already recorded before today carried over. -/
+noncomputable def lifeLow (f : ℝ → ℝ) (m T : ℝ) : ℝ :=
+  min m (⨅ t : Set.Icc (0 : ℝ) T, f t)
+
+/-- On a closed interval where `f` is continuous, the infimum of `f` sits at or below each value. -/
+theorem lookback_iInf_le_of_mem (f : ℝ → ℝ) (T : ℝ) (hf : ContinuousOn f (Set.Icc 0 T))
+    (t : ℝ) (ht : t ∈ Set.Icc (0 : ℝ) T) :
+    (⨅ s : Set.Icc (0 : ℝ) T, f s) ≤ f t := by
+  have hb : BddBelow (Set.range fun s : Set.Icc (0 : ℝ) T => f s) := by
+    rw [← Set.image_eq_range]
+    exact isCompact_Icc.bddBelow_image hf
+  exact ciInf_le hb ⟨t, ht⟩
+
+/-- For a continuous path on `[0, T]` with `T > 0`, the infimum over the interval equals the
+infimum over the rational times in it. -/
+theorem lookback_iInf_eq_rat (g : ℝ → ℝ) (T : ℝ) (hT : 0 < T) (hg : ContinuousOn g (Set.Icc 0 T)) :
+    (⨅ t : Set.Icc (0 : ℝ) T, g t) = ⨅ q : {q : ℚ // (q : ℝ) ∈ Set.Icc (0 : ℝ) T}, g q := by
+  have hb : BddBelow (Set.range fun s : Set.Icc (0 : ℝ) T => g s) := by
+    rw [← Set.image_eq_range]
+    exact isCompact_Icc.bddBelow_image hg
+  have bddQ : BddBelow (Set.range fun q : {q : ℚ // (q : ℝ) ∈ Set.Icc (0 : ℝ) T} => g q) := by
+    obtain ⟨b, hb'⟩ := hb
+    refine ⟨b, ?_⟩
+    rintro _ ⟨q, rfl⟩
+    exact hb' ⟨⟨q, q.2⟩, rfl⟩
+  have : Nonempty {q : ℚ // (q : ℝ) ∈ Set.Icc (0 : ℝ) T} :=
+    ⟨⟨0, by simp only [Rat.cast_zero, Set.mem_Icc, le_refl, true_and]; exact hT.le⟩⟩
+  have : Nonempty (Set.Icc (0 : ℝ) T) := ⟨⟨0, le_refl _, hT.le⟩⟩
+  apply le_antisymm
+  · exact le_ciInf fun q => ciInf_le hb ⟨q, q.2⟩
+  · refine le_ciInf fun t => ?_
+    refine le_of_forall_pos_lt_add fun ε hε => ?_
+    obtain ⟨δ, hδ, hball⟩ := Metric.continuousWithinAt_iff.mp (hg t t.2) ε hε
+    have ht0 : (0 : ℝ) ≤ t := t.2.1
+    have htT : (t : ℝ) ≤ T := t.2.2
+    obtain ⟨q, hq1, hq2⟩ := exists_rat_btwn
+      (show max 0 ((t : ℝ) - δ) < min T ((t : ℝ) + δ) from
+        max_lt (lt_min hT (by linarith)) (lt_min (by linarith) (by linarith)))
+    have hm1 := le_max_left (0 : ℝ) ((t : ℝ) - δ)
+    have hm2 := le_max_right (0 : ℝ) ((t : ℝ) - δ)
+    have hn1 := min_le_left T ((t : ℝ) + δ)
+    have hn2 := min_le_right T ((t : ℝ) + δ)
+    have hqI : (q : ℝ) ∈ Set.Icc (0 : ℝ) T := ⟨by linarith, by linarith⟩
+    have hd : dist (q : ℝ) t < δ := by
+      rw [Real.dist_eq, abs_lt]; constructor <;> linarith
+    have h := hball hqI hd
+    rw [Real.dist_eq, abs_lt] at h
+    calc (⨅ q : {q : ℚ // (q : ℝ) ∈ Set.Icc (0 : ℝ) T}, g q) ≤ g q := ciInf_le bddQ ⟨q, hqI⟩
+      _ < g t + ε := by linarith [h.2]
+
+#print axioms lookback_iInf_le_of_mem
+#print axioms lookback_iInf_eq_rat
+
+/-- The card's main claim (Steps 0 and 2). The floating-strike lookback call pays the final price
+minus the lowest price, and that payment is never negative. So, with the price paths continuous
+(continuous watching) and positive, the recorded minimum `m` carried over, and the pretend-world
+average of the final price equal to `S₀ e^{(r-q)T}` (constant bank rate `r` and dividend yield `q`),
+its price `e^{-rT} E[S_T - m_T]` is the prepaid share `S₀ e^{-qT}` minus `e^{-rT}` times the
+expected lowest price, and that expected lowest price is the sum over levels `h` from 0 up to `m`
+of the chance that the low stays above `h` (the layer-cake rule). -/
+theorem floating_lookback_call_eq_prepaid_share_sub_discounted_expected_low
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (S : ℝ → Ω → ℝ) (S₀ m r q T : ℝ)
+    (hT : 0 < T) (hm : 0 < m) (hmS : m ≤ S₀)
+    (h_today : ∀ ω, S 0 ω = S₀)
+    (h_pos : ∀ t ω, 0 < S t ω)
+    (h_cont : ∀ ω, ContinuousOn (fun t => S t ω) (Set.Icc 0 T))
+    (h_meas : ∀ t, Measurable (S t))
+    (h_int : Integrable (S T) P)
+    (h_mean : ∫ ω, S T ω ∂P = S₀ * Real.exp ((r - q) * T)) :
+    (∀ ω, 0 ≤ S T ω - lifeLow (fun t => S t ω) m T) ∧
+    Real.exp (-r * T) * ∫ ω, (S T ω - lifeLow (fun t => S t ω) m T) ∂P =
+      S₀ * Real.exp (-q * T) -
+        Real.exp (-r * T) * ∫ h in (0 : ℝ)..m, P.real {ω | h < lifeLow (fun t => S t ω) m T} := by
+  constructor
+  · intro ω
+    have h1 := lookback_iInf_le_of_mem (fun t => S t ω) T (h_cont ω) T ⟨hT.le, le_refl T⟩
+    have h2 := min_le_right m (⨅ t : Set.Icc (0 : ℝ) T, S t ω)
+    simp only [lifeLow]
+    linarith
+  · set L : Ω → ℝ := fun ω => lifeLow (fun t => S t ω) m T with hLdef
+    have : Nonempty (Set.Icc (0 : ℝ) T) := ⟨⟨0, le_refl _, hT.le⟩⟩
+    have hL_nn : ∀ ω, 0 ≤ L ω := fun ω =>
+      le_min hm.le (le_ciInf fun t => (h_pos _ _).le)
+    have hL_le : ∀ ω, L ω ≤ m := fun ω => min_le_left _ _
+    have hinf_meas : Measurable fun ω => ⨅ t : Set.Icc (0 : ℝ) T, S t ω := by
+      have : (fun ω => ⨅ t : Set.Icc (0 : ℝ) T, S t ω) =
+          fun ω => ⨅ q : {q : ℚ // (q : ℝ) ∈ Set.Icc (0 : ℝ) T}, S q ω :=
+        funext fun ω => lookback_iInf_eq_rat (fun t => S t ω) T hT (h_cont ω)
+      rw [this]
+      exact Measurable.iInf fun q => h_meas _
+    have hL_meas : Measurable L := measurable_const.min hinf_meas
+    have hL_int : Integrable L P := by
+      refine Integrable.of_bound hL_meas.aestronglyMeasurable m (ae_of_all _ fun ω => ?_)
+      rw [Real.norm_eq_abs, abs_of_nonneg (hL_nn ω)]
+      exact hL_le ω
+    have hsub : ∫ ω, (S T ω - lifeLow (fun t => S t ω) m T) ∂P = ∫ ω, S T ω ∂P - ∫ ω, L ω ∂P :=
+      integral_sub h_int hL_int
+    have hcake : ∫ ω, L ω ∂P = ∫ h in (0 : ℝ)..m, P.real {ω | h < L ω} := by
+      rw [hL_int.integral_eq_integral_meas_lt (ae_of_all _ hL_nn),
+        intervalIntegral.integral_of_le hm.le]
+      apply setIntegral_eq_of_subset_of_ae_sdiff_eq_zero nullMeasurableSet_Ioi Set.Ioc_subset_Ioi_self
+      refine ae_of_all _ fun x hx => ?_
+      have hxm : m < x := by
+        simp only [Set.mem_sdiff, Set.mem_Ioi, Set.mem_Ioc, not_and, not_le] at hx
+        exact hx.2 hx.1
+      have hempty : {a | x < L a} = ∅ := by
+        ext a
+        simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_lt]
+        linarith [hL_le a]
+      rw [hempty, measureReal_empty]
+    rw [hsub, hcake, h_mean, mul_sub, ← mul_assoc, mul_comm (Real.exp (-r * T)) S₀, mul_assoc,
+      ← Real.exp_add]
+    congr 3
+    ring
+
+/-- Step 4: on every path the lookback call pays at least the vanilla call struck at the minimum
+recorded so far, because the life's low can only be at or below that minimum. -/
+theorem lookback_call_pays_at_least_vanilla
+    (f : ℝ → ℝ) (m T : ℝ) (hT : 0 ≤ T) (hf : ContinuousOn f (Set.Icc 0 T)) :
+    max (f T - m) 0 ≤ f T - lifeLow f m T := by
+  have h1 := lookback_iInf_le_of_mem f T hf T ⟨hT, le_refl T⟩
+  have h2 := min_le_right m (⨅ t : Set.Icc (0 : ℝ) T, f t)
+  have h3 := min_le_left m (⨅ t : Set.Icc (0 : ℝ) T, f t)
+  simp only [lifeLow]
+  exact max_le (by linarith) (by linarith)
+
+/-- Step 5: a contract that reads the price only at finitely many times (say one close a day)
+records a low no lower than the true continuous low, so on every path it pays no more than the
+continuously watched lookback call. -/
+theorem daily_lookback_pays_at_most_continuous
+    (f : ℝ → ℝ) (m T : ℝ) (hf : ContinuousOn f (Set.Icc 0 T))
+    (D : Finset ℝ) (hD : D.Nonempty) (hDT : ∀ t ∈ D, t ∈ Set.Icc 0 T) :
+    f T - min m (D.inf' hD f) ≤ f T - lifeLow f m T := by
+  obtain ⟨t, ht, heq⟩ := D.exists_mem_eq_inf' hD f
+  have h1 := lookback_iInf_le_of_mem f T hf t (hDT t ht)
+  have h2 : lifeLow f m T ≤ min m (D.inf' hD f) := by
+    rw [heq]
+    exact min_le_min_left m h1
+  linarith
+
+-- The card's illustrative year: Acme's month-end prices, months 0 to 12.
+-- The lowest price so far, month by month, is the card's second line.
+example :
+    (List.range 13).map
+        (fun i => ([100, 96, 91, 88, 93, 97, 94, 99, 104, 101, 107, 110, 108].take (i + 1)).foldl
+          min (100 : ℤ)) =
+      [100, 96, 91, 88, 88, 88, 88, 88, 88, 88, 88, 88, 88] := by decide
+-- The floating lookback call pays $108 - $88 = $20.
+example : (108 : ℤ) - [100, 96, 91, 88, 93, 97, 94, 99, 104, 101, 107, 110, 108].foldl min 100 = 20 := by
+  decide
+-- The vanilla call struck at $100 pays $8.
+example : max ((108 : ℤ) - 100) 0 = 8 := by decide
+-- The fixed-strike lookback call, strike $100, pays the high $110 minus $100 = $10.
+example :
+    max ([100, 96, 91, 88, 93, 97, 94, 99, 104, 101, 107, 110, 108].foldl max (100 : ℤ) - 100) 0 = 10 := by
+  decide
+-- Fixed-strike call payoff splits into the floating put's payoff plus S_T - K on this path.
+example : (110 : ℤ) - 100 = (110 - 108) + (108 - 100) := by decide
+
+#print axioms floating_lookback_call_eq_prepaid_share_sub_discounted_expected_low
+#print axioms lookback_call_pays_at_least_vanilla
+#print axioms daily_lookback_pays_at_most_continuous
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lookback_iInf_le_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lookback_iInf_eq_rat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'floating_lookback_call_eq_prepaid_share_sub_discounted_expected_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lookback_call_pays_at_least_vanilla' depends on axioms: [propext, Classical.choice, Quot.sound]
+'daily_lookback_pays_at_most_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -665,6 +880,7 @@ Top line: the fixed-strike lookback call, strike $100. Middle: the floating-stri
 ## What this builds on
 
 - [One-touch and no-touch](05-one-touch-and-no-touch.md): the chance that Acme never touches a level. Integrated over every level, it becomes the expected low.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the pretend-world pricing and the vanilla call with its distances d1 and d2. The formula's first two terms are that call, struck at the lowest price so far.
 - [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the law of the running minimum, from mirror-image paths.
 - [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation roads, here with the exact continuous low drawn between points.
 

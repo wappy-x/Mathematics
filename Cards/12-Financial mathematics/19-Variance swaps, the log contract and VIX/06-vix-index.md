@@ -10,7 +10,7 @@ An index stands at 100. Two sets of options on it are listed: one set expires in
 
 The Cboe Volatility Index, the VIX, is the exchange's answer. It is a recipe, published and followed to the letter: take the out-of-the-money options at each expiry (puts below the forward price, calls above it; the forward is the price agreed today for delivery at expiry), weight each price by one over its strike squared, add them up, and blend the two expiries to exactly 30 days. The answer is quoted in volatility points. On the S&P 500 it is the number the news calls "the fear gauge".
 
-The recipe needs no model. It never asks what volatility is; it reads the price of the strip of options that replicates a variance swap ([The variance swap](03-variance-swap-fair-strike.md)), then takes the square root. On an index whose options all price at 20% volatility, the recipe prints **20.00**. On an index whose options show a skew (puts below the money priced at higher volatility than calls above it), with the at-the-money volatility (the implied vol of the option struck at the forward) still exactly 20%, it prints **21.18**. The VIX is not the at-the-money volatility; it is a weighted average across every strike, and the weights lean toward the puts.
+The recipe needs no model. It never asks what volatility is; it reads the price of the strip of options that replicates a variance swap ([The variance swap](03-variance-swap-fair-strike.md)), then takes the square root. An option's implied volatility, or implied vol, is the one volatility that makes the Black-Scholes formula match its price ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)). On an index whose options all price at 20% volatility, the recipe prints **20.00**. On an index whose options show a skew (puts below the money priced at higher volatility than calls above it), with the at-the-money volatility (the implied vol of the option struck at the forward) still exactly 20%, it prints **21.18**. The VIX is not the at-the-money volatility; it is a weighted average across every strike, and the weights lean toward the puts.
 
 **The VIX is the square root of the price of thirty days of variance, read off a discrete strip of listed options by a fixed recipe, then multiplied by 100.**
 
@@ -67,7 +67,16 @@ $$\sigma(k)^2 = 0.0325 + 0.15\left(-0.7\,k + \sqrt{k^2 + 0.0025}\right)$$
 
 In words: at the forward ($k$ = 0) it gives 0.0325 + 0.15 × 0.05 = 0.04, a 20% vol; to the left it rises, to the right it dips and then lifts. The shape is the raw SVI curve ([The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)), applied here to annual variance rather than total variance, and used at both expiries.
 
-**Conventions verified 27 Sep 2026** against Cboe's VIX Index Methodology (version 6.0) and Volatility Index Mathematics Methodology (version 5.0), both last revised 26 Feb 2026: time counted in minutes over 525,600; the near expiry is the last one on or before 30 days out and the next expiry the first after (the "bracket method"); the forward read from the strike where call and put mid prices are closest; $K_0$ the strike at or just below it; strikes walked outward from $K_0$ until two consecutive zero bids (or zero asks); separate Treasury-spline rates per expiry. The exchange could change any of these; the maths below does not depend on which.
+**Conventions verified 27 Sep 2026** against Cboe's VIX Index Methodology (version 6.0) and Volatility Index Mathematics Methodology (version 5.0), both last revised 26 Feb 2026:
+
+- time counted in minutes over 525,600;
+- the near expiry is the last one on or before 30 days out and the next expiry the first after (the "bracket method");
+- the forward read from the strike where call and put mid prices are closest;
+- $K_0$ the strike at or just below it;
+- strikes walked outward from $K_0$ until two consecutive zero bids (or zero asks);
+- separate Treasury-spline rates per expiry (rates read off a smooth curve fitted to US Treasury yields).
+
+The exchange could change any of these; the maths below does not depend on which.
 
 ### When it holds
 
@@ -81,7 +90,11 @@ The VIX is a definition, so it always equals its recipe. What can fail is readin
 
 ### Existence, uniqueness, edge cases
 
-The VIX is an inverse: prices in, a volatility out. Existence: every out-of-the-money price is at least zero, so the strip term is at least zero; the correction is at most a hair (at most one strike gap squared over $K_0^2 T$), so the variance is positive whenever any option carries value. Uniqueness: the recipe is explicit arithmetic, one input set, one output; there is no equation to solve and no second root. Edge cases: if the forward lands exactly on a listed strike, $K_0 = F$ and the correction is zero; if the near expiry sits exactly 30 days out, $w_1$ = 1 and the second expiry drops out; if every out-of-the-money put, or every call, is excluded, the index cannot be calculated and the last valid value is republished.
+The VIX is an inverse: prices in, a volatility out.
+
+- **Existence.** Every out-of-the-money price is at least zero, so the strip term is at least zero. The correction is very small (at most one strike gap squared over $K_0^2 T$), so the variance is positive whenever any option carries value.
+- **Uniqueness.** The recipe is explicit arithmetic, one input set, one output. There is no equation to solve and no second root.
+- **Edge cases.** If the forward lands exactly on a listed strike, $K_0 = F$ and the correction is zero. If the near expiry sits exactly 30 days out, $w_1$ = 1 and the second expiry drops out. If every out-of-the-money put, or every call, is excluded, the index cannot be calculated and the last valid value is republished.
 
 ---
 
@@ -113,7 +126,7 @@ The orange line is the skewed surface, the green line the flat one: each point i
 
 ### Step 2: switching at a listed strike costs a correction term
 
-The integral switches from puts to calls at the forward $F$. The recipe switches at $K_0$, the listed strike at or just below $F$. So on the band from $K_0$ to $F$ it uses calls where the integral wants puts. Put-call parity says how much too much that is: at every strike $C - P = e^{-rT}(F - K)$. The extra amount, carried through the formula, is
+The integral switches from puts to calls at the forward $F$. The recipe switches at $K_0$, the listed strike at or just below $F$. So on the band from $K_0$ to $F$ it uses calls where the integral wants puts. [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) says how much too much that is: at every strike $C - P = e^{-rT}(F - K)$. The extra amount, carried through the formula, is
 
 $$\frac{2e^{rT}}{T}\int_{K_0}^{F}\frac{e^{-rT}(F-K)}{K^2}\,dK \;\approx\; \frac{2}{T}\cdot\frac{(F-K_0)^2}{2K_0^2} \;=\; \frac{1}{T}\left(\frac{F}{K_0}-1\right)^2.$$
 
@@ -140,7 +153,7 @@ Every term in the strip is positive, and each one grows with its option's price.
 
 ### The other door: read the density, then average the log payoff
 
-The same variance can be reached without the strip. Call prices, differentiated twice in the strike, give the market's risk-neutral density of the index at expiry ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The fair variance is then $\tfrac{2}{T}$ times the average of $S_T/F - 1 - \ln(S_T/F)$ under that density, where $S_T$ is the index at expiry. Integrating by parts twice turns this into the strip formula, which is how the two roads meet. The code takes both, numerically, and they agree to six decimals.
+The same variance can be reached without the strip. Call prices, differentiated twice in the strike, give the market's risk-neutral density of the index at expiry: the spread of index levels at expiry that today's option prices imply ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The fair variance is then $\tfrac{2}{T}$ times the average of $S_T/F - 1 - \ln(S_T/F)$ under that density, where $S_T$ is the index at expiry. Integrating by parts twice turns this into the strip formula, which is how the two roads meet. The code takes both, numerically, and they agree to six decimals.
 
 ---
 
@@ -183,7 +196,7 @@ A flat 20% market reads 20.00 on the recipe to two decimals: the recipe returns 
 
 ## Code, from first principles, and it actually runs
 
-The code prices every listed option on both surfaces with its own normal CDF (Marsaglia's series), then reaches each expiry's variance three independent ways: **1** the exchange's recipe, with the forward from parity, $K_0$, the zero-bid walk, the strike gaps and the correction; **2** a fine Simpson integral of the continuous strip, switched at the exact forward; **3** the density read off call prices by second differences, averaged against the log payoff. It checks that no butterfly on a $0.50 grid has a negative price (the skewed surface is free of arbitrage), blends to 30 days, and reproduces every mistake in the table and every point in both charts.
+The code prices every listed option on both surfaces with its own normal CDF (Marsaglia's series), then reaches each expiry's variance three independent ways: **1** the exchange's recipe, with the forward from parity, $K_0$, the zero-bid walk, the strike gaps and the correction; **2** a fine Simpson integral (Simpson's rule, a standard numerical integration method) of the continuous strip, switched at the exact forward; **3** the density read off call prices by second differences, averaged against the log payoff. It checks that no butterfly on a $0.50 grid has a negative price (a butterfly buys a call $0.50 below a strike and a call $0.50 above it, and sells two calls at the strike; none costing less than zero means the skewed surface is free of arbitrage), blends to 30 days, and reproduces every mistake in the table and every point in both charts.
 
 ### Python
 
@@ -585,6 +598,231 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the recipe's two corrections, the forward switch and the blend, for any rate, strikes and expiry days.
+
+- Suppose put-call parity holds at every strike, $T > 0$, $0 < K_0 \le F$ and $x = F/K_0 - 1$. Then the excess on the band from $K_0$ to $F$ is exactly $\tfrac{2}{T}(x - \ln(1 + x))$.
+- Take the same setting. Then the subtracted term $x^2/T$ is at least that excess, and over-subtracts by at most $2x^3/(3T)$.
+- Suppose $N_1 < N_2$. Then $w_1 N_1 + (1 - w_1) N_2 = N_{30}$: the blend lands at exactly 30 days.
+- Suppose both expiries carry the same per-year variance $v$. Then the VIX formula returns $100\sqrt{v}$.
+- Suppose $N_1 < N_2$. Then $0 \le w_1 \le 1$ exactly when the two expiries bracket 30 days.
+- Take expiries 23 and 37 days out. Then $w_1 = 1/2$, and a flat 20% surface, variance 1/25, prints 20.
+
+The strip sums, the forward read from parity and the printed values 20.00 and 21.18 are left to the Python and Rust checks.
+
+```lean
+-- The VIX: the recipe's (F/K₀ - 1)²/T term removes the cost of switching from puts to calls at the listed strike K₀ instead of at the forward F, leaving an over-subtraction between 0 and (2/(3T))(F/K₀ - 1)³, and the 30-day weight w₁ = (N₂ - N₃₀)/(N₂ - N₁) blends total variance so that it lands exactly at 30 days.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Tactic.NormNum
+
+open Real intervalIntegral
+
+lemma vix_log_lower_bound (u : ℝ) (hu : 1 ≤ u) : (u - 1) - (u - 1) ^ 2 / 2 ≤ log u := by
+  have hmono : MonotoneOn (fun t => log t - ((t - 1) - (t - 1) ^ 2 / 2)) (Set.Ici 1) := by
+    refine monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ici 1)
+      (f' := fun t => t⁻¹ - (1 - (t - 1))) ?_ ?_ ?_
+    · intro t ht
+      have ht0 : t ≠ 0 := by have : (1:ℝ) ≤ t := ht; positivity
+      exact ((continuousAt_log ht0).sub (by fun_prop)).continuousWithinAt
+    · intro t ht
+      rw [interior_Ici] at ht
+      have ht0 : t ≠ 0 := by have : (1:ℝ) < t := ht; positivity
+      refine HasDerivAt.hasDerivWithinAt ?_
+      have h1 := ((hasDerivAt_id t).sub_const 1)
+      have h2 := (h1.pow 2).div_const 2
+      exact ((hasDerivAt_log ht0).sub (h1.sub h2)).congr_deriv (by simp)
+    · intro t ht
+      rw [interior_Ici] at ht
+      have ht1 : (1:ℝ) < t := ht
+      have htpos : 0 < t := by linarith
+      have : t⁻¹ - (1 - (t - 1)) = (t - 1) ^ 2 / t := by field_simp; ring
+      rw [this]; positivity
+  have := hmono (Set.mem_Ici.mpr le_rfl) hu hu
+  simp at this
+  linarith
+
+lemma vix_log_upper_bound (u : ℝ) (hu : 1 ≤ u) :
+    log u ≤ (u - 1) - (u - 1) ^ 2 / 2 + (u - 1) ^ 3 / 3 := by
+  have hmono : MonotoneOn (fun t => ((t - 1) - (t - 1) ^ 2 / 2 + (t - 1) ^ 3 / 3) - log t)
+      (Set.Ici 1) := by
+    refine monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ici 1)
+      (f' := fun t => (1 - (t - 1) + (t - 1) ^ 2) - t⁻¹) ?_ ?_ ?_
+    · intro t ht
+      have ht0 : t ≠ 0 := by have : (1:ℝ) ≤ t := ht; positivity
+      exact ((by fun_prop : ContinuousAt (fun t : ℝ => (t - 1) - (t - 1) ^ 2 / 2 + (t - 1) ^ 3 / 3) t).sub
+        (continuousAt_log ht0)).continuousWithinAt
+    · intro t ht
+      rw [interior_Ici] at ht
+      have ht0 : t ≠ 0 := by have : (1:ℝ) < t := ht; positivity
+      refine HasDerivAt.hasDerivWithinAt ?_
+      have h1 := ((hasDerivAt_id t).sub_const 1)
+      have h2 := (h1.pow 2).div_const 2
+      have h3 := (h1.pow 3).div_const 3
+      exact (((h1.sub h2).add h3).sub (hasDerivAt_log ht0)).congr_deriv (by simp)
+    · intro t ht
+      rw [interior_Ici] at ht
+      have ht1 : (1:ℝ) < t := ht
+      have htpos : 0 < t := by linarith
+      have : (1 - (t - 1) + (t - 1) ^ 2) - t⁻¹ = (t - 1) ^ 3 / t := by field_simp; ring
+      rw [this]
+      have : 0 < t - 1 := by linarith
+      positivity
+  have := hmono (Set.mem_Ici.mpr le_rfl) hu hu
+  simp at this
+  linarith
+
+lemma vix_excess_integral (T r F K₀ : ℝ) (hK₀ : 0 < K₀) (hK₀F : K₀ ≤ F)
+    (C P : ℝ → ℝ) (hparity : ∀ K, C K - P K = exp (-r * T) * (F - K)) :
+    ∫ K in K₀..F, (C K - P K) / K ^ 2 = exp (-r * T) * (F / K₀ - 1 - log (F / K₀)) := by
+  have hfun : (fun K => (C K - P K) / K ^ 2) = fun K => exp (-r * T) * ((F - K) / K ^ 2) := by
+    funext K; rw [hparity]; ring
+  rw [hfun, intervalIntegral.integral_const_mul]
+  congr 1
+  have hpos : ∀ x ∈ Set.uIcc K₀ F, 0 < x := by
+    intro x hx
+    rw [Set.uIcc_of_le hK₀F] at hx
+    exact lt_of_lt_of_le hK₀ hx.1
+  have hF : 0 < F := lt_of_lt_of_le hK₀ hK₀F
+  rw [integral_eq_sub_of_hasDerivAt (f := fun K => -F / K - log K)]
+  · rw [log_div hF.ne' hK₀.ne']
+    field_simp
+    ring
+  · intro x hx
+    have hx0 : x ≠ 0 := (hpos x hx).ne'
+    have h := ((hasDerivAt_inv hx0).const_mul (-F)).sub (hasDerivAt_log hx0)
+    refine (h.congr_deriv ?_).congr_of_eventuallyEq ?_
+    · field_simp
+    · filter_upwards with y; simp [div_eq_mul_inv]
+  · apply ContinuousOn.intervalIntegrable
+    apply ContinuousOn.div (by fun_prop) (by fun_prop)
+    intro x hx; exact pow_ne_zero 2 (hpos x hx).ne'
+
+lemma vix_excess_closed_form_aux
+    (T r F K₀ : ℝ) (_hT : 0 < T) (hK₀ : 0 < K₀) (hK₀F : K₀ ≤ F)
+    (C P : ℝ → ℝ) (hparity : ∀ K, C K - P K = exp (-r * T) * (F - K)) :
+    2 * exp (r * T) / T * ∫ K in K₀..F, (C K - P K) / K ^ 2
+      = 2 / T * (F / K₀ - 1 - log (F / K₀)) := by
+  rw [vix_excess_integral T r F K₀ hK₀ hK₀F C P hparity]
+  have he : exp (r * T) * exp (-r * T) = 1 := by rw [← exp_add]; simp
+  calc 2 * exp (r * T) / T * (exp (-r * T) * (F / K₀ - 1 - log (F / K₀)))
+      = 2 * (exp (r * T) * exp (-r * T)) / T * (F / K₀ - 1 - log (F / K₀)) := by ring
+    _ = _ := by rw [he]; ring
+
+#print axioms vix_log_lower_bound
+#print axioms vix_log_upper_bound
+#print axioms vix_excess_integral
+#print axioms vix_excess_closed_form_aux
+
+/-- **The forward-switch correction is right to third order** (Why it works, Step 2 and its
+detailed proof). Take one expiry `T > 0` years away, a riskless rate `r`, the forward `F`, and
+`K₀` the listed strike at or just below it (`0 < K₀ ≤ F`). Let call and put prices `C K`,
+`P K` obey put-call parity at every strike, `C K - P K = e^(-rT) (F - K)`. On the band from
+`K₀` to `F` the recipe uses calls where the strip integral uses puts; grown by `e^(rT)` and
+weighted by `2/(T K²)`, that excess is `E = (2 e^(rT)/T) ∫_{K₀}^{F} (C K - P K)/K² dK`.
+With `x = F/K₀ - 1`, the term the recipe subtracts, `x²/T`, is never smaller than `E` and
+over-subtracts by at most `(2/(3T)) x³`, third order in `x`. -/
+theorem vix_forward_switch_correction_error_third_order
+    (T r F K₀ : ℝ) (hT : 0 < T) (hK₀ : 0 < K₀) (hK₀F : K₀ ≤ F)
+    (C P : ℝ → ℝ) (hparity : ∀ K, C K - P K = exp (-r * T) * (F - K)) :
+    0 ≤ (F / K₀ - 1) ^ 2 / T - 2 * exp (r * T) / T * ∫ K in K₀..F, (C K - P K) / K ^ 2 ∧
+      (F / K₀ - 1) ^ 2 / T - 2 * exp (r * T) / T * ∫ K in K₀..F, (C K - P K) / K ^ 2
+        ≤ 2 / (3 * T) * (F / K₀ - 1) ^ 3 := by
+  rw [vix_excess_closed_form_aux T r F K₀ hT hK₀ hK₀F C P hparity]
+  have hu : 1 ≤ F / K₀ := (one_le_div hK₀).mpr hK₀F
+  have h1 := vix_log_lower_bound _ hu
+  have h2 := vix_log_upper_bound _ hu
+  set u := F / K₀
+  have hrw : (u - 1) ^ 2 / T - 2 / T * (u - 1 - log u) = ((u - 1) ^ 2 - 2 * (u - 1 - log u)) / T := by
+    ring
+  rw [hrw]
+  constructor
+  · apply div_nonneg _ hT.le
+    linarith
+  · rw [show 2 / (3 * T) * (u - 1) ^ 3 = (2 / 3 * (u - 1) ^ 3) / T by ring]
+    apply (div_le_div_iff_of_pos_right hT).mpr
+    linarith
+
+/-- **The excess in closed form** (Why it works, Step 2, detailed proof). Under put-call parity
+`C K - P K = e^(-rT) (F - K)`, with `0 < K₀ ≤ F` and `T > 0`, the recipe's excess from using
+calls on the band `[K₀, F]` is exactly
+`(2 e^(rT)/T) ∫_{K₀}^{F} (C K - P K)/K² dK = (2/T)(F/K₀ - 1 - ln(F/K₀))`. -/
+theorem vix_forward_switch_excess_closed_form
+    (T r F K₀ : ℝ) (hT : 0 < T) (hK₀ : 0 < K₀) (hK₀F : K₀ ≤ F)
+    (C P : ℝ → ℝ) (hparity : ∀ K, C K - P K = exp (-r * T) * (F - K)) :
+    2 * exp (r * T) / T * ∫ K in K₀..F, (C K - P K) / K ^ 2
+      = 2 / T * (F / K₀ - 1 - log (F / K₀)) := by
+  exact vix_excess_closed_form_aux T r F K₀ hT hK₀ hK₀F C P hparity
+
+/-- **The blend lands at exactly 30 days** (The formula; Why it works, Step 3). With the near
+expiry `N₁` days out, the next `N₂ > N₁` days out, the target `N₃₀ > 0` days and `N₃₆₅ > 0`
+days in a year, the weight `w₁ = (N₂ - N₃₀)/(N₂ - N₁)` blends the two times to exactly the
+target, `w₁ N₁ + (1 - w₁) N₂ = N₃₀`. So when both expiries carry the same per-year variance
+`v`, the VIX formula `100 √((T₁ v w₁ + T₂ v (1 - w₁)) N₃₆₅/N₃₀)`, with `T_j = N_j/N₃₆₅`,
+returns `100 √v`. And the blend interpolates (`0 ≤ w₁ ≤ 1`) exactly when the two expiries
+bracket the target, `N₁ ≤ N₃₀ ≤ N₂`. -/
+theorem vix_blend_lands_at_thirty_days
+    (N₁ N₂ N₃₀ N₃₆₅ v : ℝ) (h12 : N₁ < N₂) (h30 : 0 < N₃₀) (h365 : 0 < N₃₆₅) :
+    let w₁ := (N₂ - N₃₀) / (N₂ - N₁)
+    w₁ * N₁ + (1 - w₁) * N₂ = N₃₀ ∧
+      100 * √((N₁ / N₃₆₅ * v * w₁ + N₂ / N₃₆₅ * v * (1 - w₁)) * (N₃₆₅ / N₃₀)) = 100 * √v ∧
+      ((N₁ ≤ N₃₀ ∧ N₃₀ ≤ N₂) ↔ (0 ≤ w₁ ∧ w₁ ≤ 1)) := by
+  intro w₁
+  have hd : 0 < N₂ - N₁ := by linarith
+  have hblend : w₁ * N₁ + (1 - w₁) * N₂ = N₃₀ := by
+    simp only [w₁]
+    field_simp
+    ring
+  refine ⟨hblend, ?_, ?_⟩
+  · have hin : (N₁ / N₃₆₅ * v * w₁ + N₂ / N₃₆₅ * v * (1 - w₁)) * (N₃₆₅ / N₃₀) = v := by
+      rw [show (N₁ / N₃₆₅ * v * w₁ + N₂ / N₃₆₅ * v * (1 - w₁)) * (N₃₆₅ / N₃₀)
+          = v * (w₁ * N₁ + (1 - w₁) * N₂) / N₃₀ by field_simp, hblend]
+      field_simp
+    rw [hin]
+  · have h0 : 0 ≤ w₁ ↔ N₃₀ ≤ N₂ := by
+      simp only [w₁]
+      rw [le_div_iff₀ hd]
+      constructor <;> intro h <;> linarith
+    have h1 : w₁ ≤ 1 ↔ N₁ ≤ N₃₀ := by
+      simp only [w₁]
+      rw [div_le_one hd]
+      constructor <;> intro h <;> linarith
+    rw [h0, h1]
+    tauto
+
+-- The card's expiries: 23 and 37 days, target 30. Weight on the near expiry (37 - 30)/(37 - 23) = 1/2.
+example : ((37 : ℚ) - 30) / (37 - 23) = 1 / 2 := by norm_num
+-- The blend of 23 and 37 days at weights 1/2 and 1/2 is 30 days.
+example : (1 / 2 : ℚ) * 23 + (1 - 1 / 2) * 37 = 30 := by norm_num
+-- Total-variance weights in years: 23/365 × 1/2 + 37/365 × 1/2 = 30/365, and × 365/30 gives 1.
+example : ((23 : ℚ) / 365 * (1 / 2) + 37 / 365 * (1 / 2)) * (365 / 30) = 1 := by norm_num
+-- Edge case: the near expiry sits exactly 30 days out, so w₁ = 1 and the next expiry drops out.
+example : ((37 : ℚ) - 30) / (37 - 30) = 1 := by norm_num
+-- A flat 20% surface: per-year variance 1/25, and 100 √(1/25) = 20.
+example : 100 * √((1 : ℝ) / 25) = 20 := by
+  rw [show (1 : ℝ) / 25 = (1 / 5) ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]; norm_num
+
+#print axioms vix_forward_switch_correction_error_third_order
+#print axioms vix_forward_switch_excess_closed_form
+#print axioms vix_blend_lands_at_thirty_days
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'vix_log_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vix_log_upper_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vix_excess_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vix_excess_closed_form_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vix_forward_switch_correction_error_third_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vix_forward_switch_excess_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vix_blend_lands_at_thirty_days' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Keep the options the zero-bid rule throws away.** Guess first: does the skewed VIX move in the second decimal? Set `cut=0.0`. It moves from 21.1750 to 21.1791, the fourth decimal; the discarded tails are worth almost nothing on this surface.
@@ -609,7 +847,7 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **The S&P 500.** The VIX runs on SPX and SPXW options, the weekly expiries included so that two expiries bracket 30 days almost every day.
+- **The S&P 500.** The VIX runs on SPX and SPXW options (the exchange's codes for S&P 500 index options: the standard monthly series and the weekly series), the weekly expiries included so that two expiries bracket 30 days almost every day.
 - **VIX futures and their term structure.** Futures on the VIX for each coming month trace a curve, usually rising (contango) in calm markets and falling in stress; the curve is the market's forecast of future VIX levels plus a premium.
 - **Other volatility indices.** The same recipe, with a different underlying or target length, produces shorter and longer VIX horizons, and volatility indices on other stock indices, gold and single stocks. The exchange's mathematics methodology is written once for all of them.
 - **Variance swaps.** Dealers mark 30-day index variance off the same strip. The VIX squared, turned from points back into a decimal, is close to a 30-day variance swap strike, differing by strike spacing and by the tails cut off by the zero-bid rule.

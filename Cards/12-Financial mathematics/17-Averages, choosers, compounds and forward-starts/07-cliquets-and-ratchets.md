@@ -6,13 +6,21 @@
 
 ## General Overview
 
-Acme shares trade at $100 today, in the house market: riskless rate 5%, dividend yield 2%, volatility 20%. A bank sells a one-year note on Acme with $100 of notional, the sum the coupons are measured against. The year is cut into four quarters. At the end of each quarter the bank reads Acme's return over that quarter and books a coupon equal to it, but never more than +5% and never less than −5%. At the end of the year the four coupons are added up. If the total is positive, the holder is paid that percentage of $100. If it is negative, the holder is paid nothing.
+Acme shares trade at $100 today, in the house market: riskless rate 5%, dividend yield 2%, volatility 20%. A bank sells a one-year note on Acme with $100 of notional, the sum the coupons are measured against.
+
+The year is cut into four quarters. At the end of each quarter the bank reads Acme's return over that quarter and books a coupon equal to it, but never more than +5% and never less than −5%.
+
+At the end of the year the four coupons are added up. If the total is positive, the holder is paid that percentage of $100. If it is negative, the holder is paid nothing.
 
 Say Acme rises 8%, falls 3%, rises 2%, then falls 7%. The coupons are +5%, −3%, +2% and −5%. They add to −1%, so the holder gets $0. Without the caps and floors, counting only the gains, the same year would have paid 8% + 2% = 10%, or $10.
 
 A contract like this is a **cliquet**, French for the click of a ratchet. Each quarter restarts from wherever Acme stands, the way a ratchet holds its position between clicks. The per-quarter limits are the **local cap** and **local floor**. The zero under the total is the **global floor**. From here on, these are the names.
 
-Take away the caps and floors and the note is four forward-start calls end to end. Each is a call whose strike is set at the start of its quarter, at Acme's price that day ([Forward-start options](06-forward-start-options-and-forward-volatility.md)). That uncapped strip has a closed form: $16.71. The capped note does not. Priced by simulation it is worth $3.50 in the flat Black-Scholes model (one volatility for everything), $4.07 under local volatility (one volatility per price and date) and $4.40 under Heston (a volatility that wanders at random). The last two agree on every one-year option price. They disagree on the cliquet because they disagree about the **smile**, the curve of implied volatilities across strikes, that options will show at the start of each future quarter.
+Take away the caps and floors and the note is four forward-start calls end to end. Each is a call whose strike is set at the start of its quarter, at Acme's price that day ([Forward-start options](06-forward-start-options-and-forward-volatility.md)). That uncapped strip has a closed form: $16.71.
+
+The capped note does not. Priced by simulation it is worth $3.50 in the flat Black-Scholes model (one volatility for everything), $4.07 under local volatility (one volatility per price and date) and $4.40 under Heston (a volatility that wanders at random).
+
+The last two agree on every one-year option price. They disagree on the cliquet because they disagree about the **smile**, the curve of implied volatilities across strikes, that options will show at the start of each future quarter.
 
 **A cliquet is a sum of forward-start options on quarterly returns, clipped quarter by quarter and floored as a whole; the clipping makes it a bet on the shape of future smiles, so two models that price every vanilla alike can price the same cliquet 33 cents apart.**
 
@@ -88,7 +96,9 @@ Every coupon is a ratio of two Acme prices. Double Acme's price on every date an
 
 The payout $100\sum_i \max(R_i, 0)$ is a sum. The average of a sum is the sum of the averages, in any model. So the uncapped note is worth four legs, one per quarter.
 
-Take one leg. At the start of its quarter, Acme stands at $S_{t_{i-1}}$ and the leg pays $100\max(S_{t_i}/S_{t_{i-1}} - 1, 0)$ at year end. Divide Acme's price by its level at the reset: the leg is 100 calls on a share worth $1, struck at $1, running one quarter. In the flat model that is worth $100\,C_1(1,\tau)$ at the reset, if paid at the quarter's end. Paying at year end instead costs interest from $t_i$ to $T$. The reset value is a fixed number, the same on every path, so taking it back to today costs interest from $0$ to $t_{i-1}$. The two gaps always add to three quarters, so the discount is $e^{-r(T-\tau)}$: 0.963194.
+Take one leg. At the start of its quarter, Acme stands at $S_{t_{i-1}}$ and the leg pays $100\max(S_{t_i}/S_{t_{i-1}} - 1, 0)$ at year end. Divide Acme's price by its level at the reset: the leg is 100 calls on a share worth $1, struck at $1, running one quarter.
+
+In the flat model that is worth $100\,C_1(1,\tau)$ at the reset, if paid at the quarter's end. Paying at year end instead costs interest from $t_i$ to $T$. The reset value is a fixed number, the same on every path, so taking it back to today costs interest from $0$ to $t_{i-1}$. The two gaps always add to three quarters, so the discount is $e^{-r(T-\tau)}$: 0.963194.
 
 One leg is $100 \times 0.963194 \times 0.043359 = \$4.18$, the same for every quarter. Four legs: $16.71.
 
@@ -97,7 +107,7 @@ The sibling card's forward-start call is struck on a share, not on $100 of cash,
 <details>
 <summary>Detailed proof: the uncapped identity, and why each leg is the same</summary>
 
-Call one leg's value the price today of $100\max(R_i, 0)$ paid at $T$. In the pretend world a payment $x$ at $T$ is worth $e^{-rT}\mathbb{E}[x]$, and averages add, so $V_{\text{uncapped}}$ is the sum of the four leg values. That holds in every model.
+Call one leg's value the price today of $100\max(R_i, 0)$ paid at $T$. In the risk-neutral world a payment $x$ at $T$ is worth $e^{-rT}\mathbb{E}[x]$, and averages add, so $V_{\text{uncapped}}$ is the sum of the four leg values. That holds in every model.
 
 In the flat model, $S_{t_i}/S_{t_{i-1}} = \exp\big((r - q - \tfrac12\sigma^2)\tau + \sigma\sqrt{\tau}\,Z_i\big)$ with $Z$ a standard bell-curve draw, a fresh one each quarter, independent of everything before the reset. So $\mathbb{E}[\max(R_i, 0)]$ is the same number for every quarter: the undiscounted average payoff of a call on a $1 share struck at $1 over one quarter, which is $e^{r\tau}C_1(1,\tau)$ by the Black-Scholes formula. Then
 $$\text{one leg} = 100\,e^{-rT}\,e^{r\tau}\,C_1(1,\tau) = 100\,e^{-r(T-\tau)}\,C_1(1,\tau).$$
@@ -117,9 +127,15 @@ So holding one quarter's coupon is holding the quarter's return, **short** a for
 
 ### Step 3: the global floor is a put on the sum of the coupons
 
-For any total $x$, $\max(x, 0) = x + \max(-x, 0)$. The global floor adds a put, struck at zero, on the sum of four coupons. This put is not linear in the quarters. Its value depends on how the four coupons move together, so no quarter can be priced alone. It is also most of the price: $0.42 of the flat $3.50 is the coupons, the rest is the floor. Since $\max(\sum c_i, 0)$ lies between $\sum c_i$ and $\sum \max(c_i, 0)$ on every path, the price must lie between $0.42 and $7.87, the what-breaks rows below; $3.50 does.
+For any total $x$, $\max(x, 0) = x + \max(-x, 0)$. The global floor adds a put, struck at zero, on the sum of four coupons. This put is not linear in the quarters. Its value depends on how the four coupons move together, so no quarter can be priced alone.
 
-In the flat model the four quarters are independent and identical. A single quarter's coupon has a known distribution: 29.58% of the time it sits on the floor, 32.21% of the time on the cap, and 38.21% of the time in between. The distribution of the sum of four comes from combining that distribution with itself four times, a **convolution**: the chance of each total is the sum, over all ways of reaching it, of the product of the pieces' chances. The check does it on a grid of steps of 0.025 percentage points and gets $3.502734. A simulation of 100,000 flat paths gets $3.497501 ± 0.015427. Two roads, one price.
+It is also most of the price: $0.42 of the flat $3.50 is the coupons, the rest is the floor. Since $\max(\sum c_i, 0)$ lies between $\sum c_i$ and $\sum \max(c_i, 0)$ on every path, the price must lie between $0.42 and $7.87, the what-breaks rows below; $3.50 does.
+
+In the flat model the four quarters are independent and identical. A single quarter's coupon has a known distribution: 29.58% of the time it sits on the floor, 32.21% of the time on the cap, and 38.21% of the time in between.
+
+The distribution of the sum of four comes from combining that distribution with itself four times, a **convolution**: the chance of each total is the sum, over all ways of reaching it, of the product of the pieces' chances.
+
+The check does it on a grid of steps of 0.025 percentage points and gets $3.502734. A simulation of 100,000 flat paths gets $3.497501 ± 0.015427. Two roads, one price.
 
 ### Step 4: the forward smile decides the coupons
 
@@ -361,10 +377,10 @@ assert abs(fl - cv) < 3 * fl_se, "capped, flat: simulation must match convolutio
 assert abs(fs_house - 6.244873) < 1e-6, "forward-start must match the shelf's house number"
 assert abs(ivs["Heston 1y"][2] - ivs["local vol 1y"][2]) < 0.3, "local vol must reprice Heston's 1-year ATM call"
 assert gap > 5 * gap_se, "Heston and local vol must disagree on the cliquet"
-print("All checks passed.")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-24 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 d1, d2, N(d1), N(d2) (one quarter)             0.125000   0.025000   0.549738   0.509973
@@ -400,7 +416,7 @@ try: cap 10%, floor -10%                       6.055651
 coupon (%) at return -10..10 by 2.5               -5.00      -5.00      -5.00      -2.50       0.00       2.50       5.00       5.00       5.00
 uncapped coupon (%), same returns                  0.00       0.00       0.00       0.00       0.00       2.50       5.00       7.50      10.00
 path +8,-3,+2,-7%: sum, paid, uncapped        -1.000000   0.000000  10.000000
-All checks passed.
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -570,11 +586,11 @@ fn main() {
     assert!((fs_house - 6.244873).abs() < 1e-6, "forward-start must match the shelf's house number");
     assert!((atm1y[0] - atm1y[1]).abs() < 0.3, "local vol must reprice Heston's 1-year ATM call");
     assert!(gap > 5.0 * gap_se, "Heston and local vol must disagree on the cliquet");
-    println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-24 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 d1, d2, N(d1), N(d2) (one quarter)             0.125000   0.025000   0.549738   0.509973
@@ -610,7 +626,148 @@ try: cap 10%, floor -10%                       6.055651
 coupon (%) at return -10..10 by 2.5               -5.00      -5.00      -5.00      -2.50       0.00       2.50       5.00       5.00       5.00
 uncapped coupon (%), same returns                  0.00       0.00       0.00       0.00       0.00       2.50       5.00       7.50      10.00
 path +8,-3,+2,-7%: sum, paid, uncapped        -1.000000   0.000000  10.000000
-All checks passed.
+ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the facts on this card that hold in every model, for any number of quarters.
+
+- The uncapped cliquet's price is the sum of its forward-start legs' prices, when each leg's payout has a finite average.
+- Take a quarter's return $R$, a local floor $f$ and a local cap $c$, with $f \le c$. Then $\min(\max(R, f), c) = R - \max(R - c, 0) + \max(f - R, 0)$.
+- The cliquet's price lies between the price of its coupons alone and the price with each quarter floored at zero.
+- On the sample path the coupons are +5%, −3%, +2% and −5%. They add to −1%, so the holder is paid nothing.
+- Step 2's three checks, at +8%, −7% and +2%, come out as the card says.
+
+The closed form, the flat, local-volatility and Heston prices, and the forward smiles are left to the Python and Rust checks.
+
+```lean
+-- Cliquets: in any pricing model the uncapped cliquet is worth the sum of its forward-start legs, each clipped coupon is the return minus a call above the cap plus a put below the floor, and the globally floored cliquet's price lies between the price of its coupons alone and the price with each quarter floored at zero.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Probability.Notation
+
+open Real MeasureTheory
+
+/-- The uncapped identity, in every model. Acme's price on the reset dates t₀, t₁, …, tₙ is S 0, S 1,
+…, S n (random amounts on the pretend, risk-neutral world μ). The uncapped cliquet pays at year end T
+the sum over the n periods of 100 · max(S(i+1)/S(i) − 1, 0). If each leg's payout has a finite average
+(is integrable), then the cliquet's price today, e^(−rT) times the average payout, equals the sum of
+the n forward-start legs' prices, each e^(−rT) times the average of its own payout: averages add. -/
+theorem uncapped_cliquet_price_eq_sum_of_forward_start_legs
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (S : ℕ → Ω → ℝ) (n : ℕ) (r T : ℝ)
+    (hleg : ∀ i ∈ Finset.range n, Integrable (fun ω => 100 * max (S (i + 1) ω / S i ω - 1) 0) μ) :
+    exp (-r * T) * ∫ ω, ∑ i ∈ Finset.range n, 100 * max (S (i + 1) ω / S i ω - 1) 0 ∂μ
+      = ∑ i ∈ Finset.range n, exp (-r * T) * ∫ ω, 100 * max (S (i + 1) ω / S i ω - 1) 0 ∂μ := by
+  rw [integral_finsetSum _ hleg, Finset.mul_sum]
+
+/-- Each clipped coupon is a forward plus a put minus a call. With a local floor f no higher than the
+local cap c, the return R clipped to between f and c equals R, minus a call on R struck at c, plus a
+put on R struck at f: min(max(R, f), c) = R − max(R − c, 0) + max(f − R, 0). -/
+theorem clipped_coupon_eq_return_sub_call_add_put (R f c : ℝ) (hfc : f ≤ c) :
+    min (max R f) c = R - max (R - c) 0 + max (f - R) 0 := by
+  rcases le_total R f with h1 | h1
+  · rw [max_eq_right h1, min_eq_left hfc, max_eq_right (by linarith : R - c ≤ 0),
+      max_eq_left (by linarith : 0 ≤ f - R)]
+    ring
+  · rw [max_eq_left h1, max_eq_right (by linarith : f - R ≤ 0)]
+    rcases le_total R c with h2 | h2
+    · rw [min_eq_left h2, max_eq_right (by linarith : R - c ≤ 0)]
+      ring
+    · rw [min_eq_right h2, max_eq_left (by linarith : 0 ≤ R - c)]
+      ring
+
+/-- The global floor's price bounds. On every path the floored total max(Σ cᵢ, 0) lies between the sum
+of the clipped coupons Σ cᵢ and the sum of the coupons each floored at zero Σ max(cᵢ, 0). So, for
+prices S 0, …, S n that are random amounts on the risk-neutral world μ, the globally floored cliquet's
+price lies between the price of its coupons alone (no global floor) and the price of the same strip
+with each quarter floored at zero instead of at f. -/
+theorem cliquet_price_between_coupons_alone_and_local_floor_zero
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (S : ℕ → Ω → ℝ) (n : ℕ) (r T f c : ℝ) (hS : ∀ i, Measurable (S i)) :
+    exp (-r * T) * ∫ ω, 100 * ∑ i ∈ Finset.range n, min (max (S (i + 1) ω / S i ω - 1) f) c ∂μ
+      ≤ exp (-r * T) * ∫ ω, 100 * max (∑ i ∈ Finset.range n, min (max (S (i + 1) ω / S i ω - 1) f) c) 0 ∂μ
+    ∧ exp (-r * T) * ∫ ω, 100 * max (∑ i ∈ Finset.range n, min (max (S (i + 1) ω / S i ω - 1) f) c) 0 ∂μ
+      ≤ exp (-r * T) * ∫ ω, 100 * ∑ i ∈ Finset.range n, max (min (max (S (i + 1) ω / S i ω - 1) f) c) 0 ∂μ := by
+  set g : ℕ → Ω → ℝ := fun i ω => min (max (S (i + 1) ω / S i ω - 1) f) c with hg
+  have hgm : ∀ i, Measurable (g i) := fun i =>
+    ((((hS (i + 1)).div (hS i)).sub_const 1).max measurable_const).min measurable_const
+  have hgb : ∀ i ω, |g i ω| ≤ |f| + |c| := by
+    intro i ω
+    simp only [hg]
+    rw [abs_le]
+    constructor
+    · rcases le_total (max (S (i + 1) ω / S i ω - 1) f) c with h | h
+      · rw [min_eq_left h]
+        have := le_max_right (S (i + 1) ω / S i ω - 1) f
+        have := neg_abs_le f
+        have := abs_nonneg c
+        linarith
+      · rw [min_eq_right h]
+        have := neg_abs_le c
+        have := abs_nonneg f
+        linarith
+    · have := min_le_right (max (S (i + 1) ω / S i ω - 1) f) c
+      have := le_abs_self c
+      have := abs_nonneg f
+      linarith
+  have hgi : ∀ i, Integrable (g i) μ := fun i =>
+    Integrable.of_bound (hgm i).aestronglyMeasurable (|f| + |c|)
+      (Filter.Eventually.of_forall (fun ω => by simpa [Real.norm_eq_abs] using hgb i ω))
+  have hsum : Integrable (fun ω => ∑ i ∈ Finset.range n, g i ω) μ :=
+    integrable_finsetSum _ (fun i _ => hgi i)
+  have h1 : Integrable (fun ω => 100 * ∑ i ∈ Finset.range n, g i ω) μ := hsum.const_mul 100
+  have h2 : Integrable (fun ω => 100 * max (∑ i ∈ Finset.range n, g i ω) 0) μ :=
+    (hsum.sup (integrable_const (0 : ℝ))).const_mul 100
+  have h3 : Integrable (fun ω => 100 * ∑ i ∈ Finset.range n, max (g i ω) 0) μ :=
+    (integrable_finsetSum _ (fun i _ => (hgi i).sup (integrable_const (0 : ℝ)))).const_mul 100
+  have hexp : 0 ≤ exp (-r * T) := (exp_pos _).le
+  constructor
+  · apply mul_le_mul_of_nonneg_left _ hexp
+    apply integral_mono h1 h2
+    intro ω
+    have := le_max_left (∑ i ∈ Finset.range n, g i ω) 0
+    simp only
+    linarith
+  · apply mul_le_mul_of_nonneg_left _ hexp
+    apply integral_mono h2 h3
+    intro ω
+    simp only
+    have hA : ∑ i ∈ Finset.range n, g i ω ≤ ∑ i ∈ Finset.range n, max (g i ω) 0 :=
+      Finset.sum_le_sum (fun i _ => le_max_left _ _)
+    have hB : 0 ≤ ∑ i ∈ Finset.range n, max (g i ω) 0 :=
+      Finset.sum_nonneg (fun i _ => le_max_right _ _)
+    have := max_le hA hB
+    linarith
+
+-- The card's sample path, in whole percent: returns +8, −3, +2, −7 clip to +5, −3, +2, −5.
+example : [(8 : ℤ), -3, 2, -7].map (fun x => min (max x (-5)) 5) = [5, -3, 2, -5] := by decide
+-- The coupons add to −1%, so the holder is paid max(−1, 0) = 0.
+example : ([(8 : ℤ), -3, 2, -7].map (fun x => min (max x (-5)) 5)).sum = -1 := by decide
+example : max (-1 : ℤ) 0 = 0 := by decide
+-- Without caps and floors, counting only the gains: 8% + 2% = 10%.
+example : ([(8 : ℤ), -3, 2, -7].map (fun x => max x 0)).sum = 10 := by decide
+-- Step 2's three checks: at +8%: 8 − 3 + 0 = 5; at −7%: −7 − 0 + 2 = −5; at +2%: 2 − 0 + 0 = 2.
+example : (8 : ℤ) - max (8 - 5) 0 + max (-5 - 8) 0 = 5 := by decide
+example : (-7 : ℤ) - max (-7 - 5) 0 + max (-5 - (-7)) 0 = -5 := by decide
+example : (2 : ℤ) - max (2 - 5) 0 + max (-5 - 2) 0 = 2 := by decide
+-- Step 3's global floor as a put, on the sample total −1%: max(−1, 0) = −1 + max(1, 0).
+example : max (-1 : ℤ) 0 = -1 + max (-(-1)) 0 := by decide
+-- Step 1's discount: for every quarter i of 4, the wait after it plus the wait before it is 3 quarters.
+example : ∀ i ∈ Finset.Icc 1 4, (4 - i) + (i - 1) = 3 := by decide
+
+#print axioms uncapped_cliquet_price_eq_sum_of_forward_start_legs
+#print axioms clipped_coupon_eq_return_sub_call_add_put
+#print axioms cliquet_price_between_coupons_alone_and_local_floor_zero
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'uncapped_cliquet_price_eq_sum_of_forward_start_legs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'clipped_coupon_eq_return_sub_call_add_put' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cliquet_price_between_coupons_alone_and_local_floor_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]
@@ -658,6 +815,7 @@ All checks passed.
 ## Where this goes next
 
 - [Marking a variance swap](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md): forward variance traded outright, the quantity a cliquet's forward-starting options lean on.
+
 It leaves the model open: once vanilla prices stop settling a value, how future smiles behave must be defended with market prices of forward-starts and cliquets themselves.
 
 ---

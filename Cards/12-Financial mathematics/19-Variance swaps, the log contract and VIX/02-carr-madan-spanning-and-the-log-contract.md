@@ -6,15 +6,23 @@
 
 ## General Overview
 
-Acme shares trade at $100. A client wants a contract that no exchange lists: in one year it pays $100 times the natural log of Acme's price divided by 100. If Acme ends at $110 it pays $9.53. At $90 it costs the holder $10.54. At $100 it pays nothing. This is the **log contract**, and the job is to build it from things that do trade: cash, a forward on Acme, and ordinary one-year puts and calls.
+Acme shares trade at $100. A client wants a contract that no exchange lists: in one year it pays $100 times the natural log of Acme's price divided by 100. If Acme ends at $110 it pays $9.53. At $90 it costs the holder $10.54. At $100 it pays nothing.
 
-The listed book has a 90-put at $2.71 and a 120-call at $2.71. A straight line through the forward price, $103.05, gets close to the log near the middle and badly wrong at the ends, because the log curves and a line does not. Each option is a single kink: flat on one side of its strike, sloped on the other. Kinks can bend a line. Sell a little of the 90-put and a little of the 120-call and the line bends down at both ends, toward the log.
+This is the **log contract**, and the job is to build it from things that do trade: cash, a forward on Acme, and ordinary one-year puts and calls.
 
-Two kinks make a crude bend. Many kinks at many strikes make any bend at all. The right amount of each option is the payoff's **curvature** (its second derivative: how fast its slope changes) at that strike. For the log, the curvature is minus 100 divided by the strike squared. That weight, one over strike squared, is why the log contract matters: a strip weighted that way earns the same amount from every percent move, wherever the price sits, so it is a pure bet on how much Acme moves. Anthony Neuberger proposed the log contract in 1994; Peter Carr and Dilip Madan set out the general identity a few years later.
+The listed book has a 90-put at $2.71 and a 120-call at $2.71. A straight line through the forward price, $103.05, gets close to the log near the middle and badly wrong at the ends, because the log curves and a line does not.
+
+Each option is a single kink: flat on one side of its strike, sloped on the other. Kinks can bend a line. Sell a little of the 90-put and a little of the 120-call and the line bends down at both ends, toward the log.
+
+Two kinks make a crude bend. Many kinks at many strikes make any bend at all. The right amount of each option is the payoff's **curvature** (its second derivative: how fast its slope changes) at that strike.
+
+For the log, the curvature is minus 100 divided by the strike squared. That weight, one over strike squared, is why the log contract matters. A strip weighted that way earns the same amount from every percent move, wherever the price sits. So it is a pure bet on how much Acme moves.
+
+Anthony Neuberger proposed the log contract in 1994; Peter Carr and Dilip Madan set out the general identity a few years later.
 
 **Any smooth payoff at one expiry equals cash, plus a forward, plus puts below the forward and calls above it, each option held in proportion to the payoff's curvature at its strike; for the log payoff the weights are one over strike squared, and the options leg prices variance.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works. The identity is pathwise: it holds for every finishing price, in any model. Only the dollar value of the log contract, $0.95 here, uses the house lognormal model.
+**What kind of fact this is:** a theorem, proved on this card in Why it works. The identity is pathwise: it holds for every finishing price, in any model. Only the dollar value of the log contract, $0.95 here, uses the house lognormal model (the shelf's shared model, in which the log of Acme's finishing price follows a bell curve).
 
 ### The picture: a line, two kinks, and the curve they chase
 
@@ -29,7 +37,9 @@ xychart-beta
     line [-49.88, -36.48, -23.07, -9.66, 0.04, 9.75, 19.45, 27.07, 34.70, 42.32]
 ```
 
-Orange: the log payoff, $100 times ln(price/100). Green: the straight line through the forward, cash plus a forward. Dark: the two-strike book, the green line with 0.37 of a 90-put and 0.21 of a 120-call sold. The dark line bends toward the orange outside $90 and $120 and sits on the green line between them, where neither option pays. Between the strikes the log still curves and the book does not: that is the error a fine strip removes.
+Orange: the log payoff, $100 times ln(price/100). Green: the straight line through the forward, cash plus a forward. Dark: the two-strike book, the green line with 0.37 of a 90-put and 0.21 of a 120-call sold.
+
+The dark line bends toward the orange outside $90 and $120 and sits on the green line between them, where neither option pays. Between the strikes the log still curves and the book does not: that is the error a fine strip removes.
 
 ---
 
@@ -76,10 +86,10 @@ Compare it with the strip formula: the options leg is worth exactly $100\,D\cdot
 
 ### When it holds
 
-- **The payoff has a curvature at every strike.** A payoff with a kink, like a call itself, has all its curvature at one point: the recipe then says "one option at that strike", which is correct. A payoff that jumps, like a digital, has no curvature to read at the jump; it is built from a tight call spread instead ([A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md)).
+- **The payoff has a curvature at every strike.** A payoff with a kink, like a call itself, has all its curvature at one point: the recipe then says "one option at that strike", which is correct. A payoff that jumps, like a digital (a fixed sum paid if the price ends above a strike), has no curvature to read at the jump. It is built from a tight call spread instead ([A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md)).
 - **European options at every strike, all at the payoff's expiry.** Listed strikes are discrete and stop somewhere. The two-strike book misses the log by $0.33; a book stopping at $50 and $200 still misses by 0.008251.
-- **Prices, not a model, for the strip.** The pathwise identity and the strip price use only market prices of options. The closed form, $0.95, is the house lognormal model; on a real smile the same strip gives a different number, and that number is the market's.
-- **Static, not dynamic.** Nothing is rebalanced before expiry. The log contract's link to realised variance, in Step 5, does need a daily hedge and continuous price paths; a jump breaks that link while leaving the strip identity intact.
+- **Prices, not a model, for the strip.** The pathwise identity and the strip price use only market prices of options. The closed form, $0.95, is the house lognormal model; on a real smile (implied volatility that changes with strike) the same strip gives a different number, and that number is the market's.
+- **Static, not dynamic.** Nothing is rebalanced before expiry. The log contract's link to realised variance (the sum of squared daily log returns, scaled to a year), in Step 5, does need a daily hedge and continuous price paths; a jump breaks that link while leaving the strip identity intact.
 
 ---
 
@@ -87,7 +97,9 @@ Compare it with the strip formula: the options leg is worth exactly $100\,D\cdot
 
 ### Step 0: a curve is a line plus kinks
 
-A put or call has no curvature anywhere except at its strike, where its slope jumps by exactly 1. Hold a small amount of an option at each strike and the slope of the book changes by that amount at each strike. So to copy a curve: start with the straight line that matches its height and slope at one point, then at every strike add an option in the amount the curve's slope changes there. Over a strike gap of width $\Delta K$, the slope changes by about $g''(K)\,\Delta K$. That is the weight.
+A put or call has no curvature anywhere except at its strike, where its slope jumps by exactly 1. Hold a small amount of an option at each strike and the slope of the book changes by that amount at each strike.
+
+So to copy a curve, start with the straight line that matches its height and slope at one point. Then, at every strike, add an option in the amount the curve's slope changes there. Over a strike gap of width $\Delta K$, the slope changes by about $g''(K)\,\Delta K$. That is the weight.
 
 The anchor point is the forward, for two reasons. A forward struck at the forward costs nothing, so the line costs only its cash. And on each side of the forward the out-of-the-money option is the cheap one, so the strip carries no large cash pieces that cancel.
 
@@ -142,7 +154,9 @@ The same recipe rebuilds any other payoff. For $(S_T - 100)^2$ the curvature is 
 
 Look at today's price of the log contract as a function of today's share price $S$, with the house model: $100\,D\,(\ln(S/100) + (r - q - \tfrac12\sigma^2)T)$. Its **delta** (slope in $S$) is $100\,D/S$. Its **gamma** (curvature in $S$) is $-100\,D/S^2$. Multiply gamma by $S^2$ and the answer, $-95.12$, does not depend on $S$ at all.
 
-That product, dollar gamma, sets what a delta-hedged position earns or pays per move: about $\tfrac12 S^2\Gamma$ times the squared percent move ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)). A call's dollar gamma peaks near its strike and fades away from it, so a hedged call earns from moves only while the price is nearby. The log contract's is flat, so a hedged short log contract collects the same amount from a 1% move at $60 or at $160. Summed over the year, its gains from moves add up to half the realised variance, times $100\,D$.
+That product, dollar gamma, sets what a delta-hedged position earns or pays per move: about $\tfrac12 S^2\Gamma$ times the squared percent move ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)).
+
+A call's dollar gamma peaks near its strike and fades away from it, so a hedged call earns from moves only while the price is nearby. The log contract's is flat, so a hedged short log contract collects the same amount from a 1% move at $60 or at $160. Summed over the year, its gains from moves add up to half the realised variance, times $100\,D$.
 
 So the options leg of the strip, worth 1.902459, is $100\,D \times \tfrac12\sigma^2 T$. Solve for the variance: $2 \times 1.902459 / 95.1229 = 0.040000$, which is 20% squared. Reading the options leg as variance is what [The variance swap](03-variance-swap-fair-strike.md) does with market prices.
 
@@ -203,7 +217,13 @@ The finest book, 2,361 strikes, correct price 0.951229:
 
 ## Code, from first principles, and it actually runs
 
-The script builds its own normal CDF from a series, prices the two listed options by Black–Scholes, and reaches the log contract's price by three independent roads: the closed form from the lognormal's average, a brute-force average of the payoff over the bell curve with no options in it (Simpson's rule), and the continuum strip of option prices integrated over strike. It then prices five discrete books for both the log and the square payoff, checks the spanning identity pathwise at four finishing prices for both payoffs, bumps the bell-curve price to recover delta, vega and a flat dollar gamma, and prints every chart point and every "what breaks" number.
+The script builds its own normal CDF from a series and prices the two listed options by Black–Scholes. It reaches the log contract's price by three independent roads:
+
+- the closed form from the lognormal's average;
+- a brute-force average of the payoff over the bell curve with no options in it (Simpson's rule);
+- the continuum strip of option prices integrated over strike.
+
+It then prices five discrete books for both the log and the square payoff, and checks the spanning identity pathwise at four finishing prices for both payoffs. Last, it bumps the bell-curve price to recover delta, vega and a flat dollar gamma, and prints every chart point and every "what breaks" number.
 
 ### Python
 
@@ -539,6 +559,218 @@ mistake, bond piece dropped        -1.902464 (right 0.951229)
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the spanning identity, the log contract's weights and its flat dollar gamma, at every positive finishing price.
+
+- Suppose a payoff $g$ has a continuous curvature on the positive prices, and $F$ and $S_T$ are positive. Then $g(S_T)$ is $g(F)$ cash, plus $g'(F)$ forwards, plus puts below $F$ and calls above, held $g''(K)$.
+- Take the log contract, paying $100\ln(S_T/100)$, with $F$ and $S_T$ positive. Then the same holds with $100/F$ forwards, and the options are sold, $100/K^2$ at each strike $K$.
+- Take the house-model price $100\,D\,(\ln(S/100) + (r - q - \tfrac12\sigma^2)T)$ at a price $S > 0$. Then its dollar gamma, $S^2\Gamma$, is $-100\,D$, whatever $S$ is.
+- The hand weights check exactly: 10/27 of the 90-put and 5/24 of the 120-call. With curvature 2, the square payoff holds 60 of each.
+
+Option prices, the strip's dollar value, the discrete books and the link to realised variance are left to the Python and Rust checks.
+
+```lean
+-- Any payoff from a strip of options: every payoff with a continuous curvature on positive prices equals, at every finishing price, its value at the forward plus its slope times a forward plus puts below and calls above weighted by its curvature, the log payoff takes weights minus 100 over strike squared, and the log contract's dollar gamma is flat.
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory
+
+/-- Helper: `a (ln(y/100) + c)` has slope `a / x` at a positive price `x`. -/
+lemma log_div_hundred_hasDerivAt (a c : ℝ) {x : ℝ} (hx : 0 < x) :
+    HasDerivAt (fun y : ℝ => a * (Real.log (y / 100) + c)) (a / x) x := by
+  have h := ((((hasDerivAt_id' (x := x)).div_const 100).log
+    (by positivity)).add_const c).const_mul a
+  convert h using 1
+  field_simp
+
+/-- Helper: the slope of `a (ln(y/100) + c)` at a positive price `x` is `a / x`. -/
+lemma log_div_hundred_deriv (a c : ℝ) {x : ℝ} (hx : 0 < x) :
+    deriv (fun y : ℝ => a * (Real.log (y / 100) + c)) x = a / x :=
+  (log_div_hundred_hasDerivAt a c hx).deriv
+
+/-- Helper: the curvature of `a (ln(y/100) + c)` at a positive price `x` is `-a / x^2`. -/
+lemma log_div_hundred_deriv_deriv (a c : ℝ) {x : ℝ} (hx : 0 < x) :
+    deriv (deriv (fun y : ℝ => a * (Real.log (y / 100) + c))) x = -a / x ^ 2 := by
+  have heq : deriv (fun y : ℝ => a * (Real.log (y / 100) + c)) =ᶠ[nhds x]
+      fun y => a * y⁻¹ := by
+    filter_upwards [Ioi_mem_nhds hx] with y hy
+    rw [log_div_hundred_deriv a c hy, div_eq_mul_inv]
+  rw [heq.deriv_eq, ((hasDerivAt_inv hx.ne').const_mul a).deriv]
+  field_simp
+
+/-- The card's main claim, the spanning identity (Steps 1 and 2, pathwise). Let the payoff `g`
+have a continuous curvature on the positive prices, and let the forward `F` and the finishing
+price `S` be positive. Then `g S` equals cash `g F`, plus the slope `g' F` times a forward
+position `S - F`, plus puts at every strike `K` from 0 to `F` held in the amount `g'' K`, plus
+calls at every strike from `F` to infinity held in the amount `g'' K`. -/
+theorem payoff_eq_cash_add_forward_add_curvature_weighted_strip
+    (g : ℝ → ℝ) (hg : ContDiffOn ℝ 2 g (Set.Ioi 0)) (F S : ℝ) (hF : 0 < F) (hS : 0 < S) :
+    g S = g F + deriv g F * (S - F)
+      + (∫ K in (0 : ℝ)..F, deriv (deriv g) K * max (K - S) 0)
+      + ∫ K in Set.Ioi F, deriv (deriv g) K * max (S - K) 0 := by
+  have hopen : IsOpen (Set.Ioi (0 : ℝ)) := isOpen_Ioi
+  have hd1 : ∀ x : ℝ, 0 < x → HasDerivAt g (deriv g x) x := fun x hx =>
+    ((hg.differentiableOn (by norm_num)).differentiableAt (Ioi_mem_nhds hx)).hasDerivAt
+  have hg1 : ContDiffOn ℝ 1 (deriv g) (Set.Ioi 0) := hg.deriv_of_isOpen hopen (by norm_num)
+  have hd2 : ∀ x : ℝ, 0 < x → HasDerivAt (deriv g) (deriv (deriv g) x) x := fun x hx =>
+    ((hg1.differentiableOn (by norm_num)).differentiableAt (Ioi_mem_nhds hx)).hasDerivAt
+  have hc2 : ContinuousOn (deriv (deriv g)) (Set.Ioi 0) :=
+    hg1.continuousOn_deriv_of_isOpen hopen (by norm_num)
+  rcases le_or_gt S F with hSF | hFS
+  · have hcall : (∫ K in Set.Ioi F, deriv (deriv g) K * max (S - K) 0) = 0 := by
+      rw [setIntegral_congr_fun measurableSet_Ioi (g := fun _ => (0 : ℝ))]
+      · simp
+      · intro K hK
+        simp only [Set.mem_Ioi] at hK
+        simp [max_eq_right (by linarith : S - K ≤ 0)]
+    have hput : (∫ K in (0 : ℝ)..F, deriv (deriv g) K * max (K - S) 0)
+        = ∫ K in S..F, deriv (deriv g) K * (K - S) := by
+      rw [intervalIntegral.integral_of_le hF.le, intervalIntegral.integral_of_le hSF]
+      rw [setIntegral_congr_fun measurableSet_Ioc
+        (g := (Set.Ioi S).indicator (fun K => deriv (deriv g) K * (K - S)))]
+      · rw [setIntegral_indicator measurableSet_Ioi, Set.Ioc_inter_Ioi, max_eq_right hS.le]
+      · intro K _
+        by_cases h : S < K
+        · simp [Set.indicator, h, max_eq_left (by linarith : 0 ≤ K - S)]
+        · simp [Set.indicator, h, max_eq_right (by linarith : K - S ≤ 0)]
+    have hftc : ∫ K in S..F, deriv (deriv g) K * (K - S)
+        = (deriv g F * (F - S) - g F) - (deriv g S * (S - S) - g S) := by
+      refine intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (f := fun x => deriv g x * (x - S) - g x) ?_ ?_
+      · intro x hx
+        rw [Set.uIcc_of_le hSF] at hx
+        have hx0 : 0 < x := lt_of_lt_of_le hS hx.1
+        have := ((hd2 x hx0).mul ((hasDerivAt_id x).sub_const S)).sub (hd1 x hx0)
+        convert this using 1
+        · rfl
+        · simp only [id]
+          ring
+      · apply ContinuousOn.intervalIntegrable
+        rw [Set.uIcc_of_le hSF]
+        apply ContinuousOn.mul
+        · exact hc2.mono (fun x hx => lt_of_lt_of_le hS hx.1)
+        · exact (continuous_id.sub continuous_const).continuousOn
+    rw [hcall, hput, hftc]
+    ring
+  · have hput : (∫ K in (0 : ℝ)..F, deriv (deriv g) K * max (K - S) 0) = 0 := by
+      rw [intervalIntegral.integral_congr (g := fun _ => (0 : ℝ))]
+      · simp
+      · intro K hK
+        rw [Set.uIcc_of_le hF.le] at hK
+        simp [max_eq_right (by linarith [hK.2] : K - S ≤ 0)]
+    have hcall : (∫ K in Set.Ioi F, deriv (deriv g) K * max (S - K) 0)
+        = ∫ K in F..S, deriv (deriv g) K * (S - K) := by
+      rw [intervalIntegral.integral_of_le hFS.le]
+      rw [setIntegral_congr_fun measurableSet_Ioi
+        (g := (Set.Iic S).indicator (fun K => deriv (deriv g) K * (S - K)))]
+      · rw [setIntegral_indicator measurableSet_Iic, Set.Ioi_inter_Iic]
+      · intro K _
+        by_cases h : K ≤ S
+        · simp [Set.indicator, h]
+        · simp [Set.indicator, h, max_eq_right (by linarith : S - K ≤ 0)]
+    have hftc : ∫ K in F..S, deriv (deriv g) K * (S - K)
+        = (deriv g S * (S - S) + g S) - (deriv g F * (S - F) + g F) := by
+      refine intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (f := fun x => deriv g x * (S - x) + g x) ?_ ?_
+      · intro x hx
+        rw [Set.uIcc_of_le hFS.le] at hx
+        have hx0 : 0 < x := lt_of_lt_of_le hF hx.1
+        have := ((hd2 x hx0).mul ((hasDerivAt_id x).const_sub S)).add (hd1 x hx0)
+        convert this using 1
+        · rfl
+        · simp only [id]
+          ring
+      · apply ContinuousOn.intervalIntegrable
+        rw [Set.uIcc_of_le hFS.le]
+        apply ContinuousOn.mul
+        · exact hc2.mono (fun x hx => lt_of_lt_of_le hF hx.1)
+        · exact (continuous_const.sub continuous_id).continuousOn
+    rw [hcall, hput, hftc]
+    ring
+
+/-- Step 4: the log contract, paying `100 ln(S/100)`, is the case with curvature `-100/K^2`.
+At every positive finishing price `S` it equals cash `100 ln(F/100)`, plus `100/F` forwards,
+minus `100/K^2` of the put at each strike `K` below the forward, minus `100/K^2` of the call at
+each strike above it: the options are sold, with weight one over strike squared. -/
+theorem log_contract_eq_cash_add_forward_sub_inverse_square_strip
+    (F S : ℝ) (hF : 0 < F) (hS : 0 < S) :
+    100 * Real.log (S / 100) = 100 * Real.log (F / 100) + 100 / F * (S - F)
+      - (∫ K in (0 : ℝ)..F, 100 / K ^ 2 * max (K - S) 0)
+      - ∫ K in Set.Ioi F, 100 / K ^ 2 * max (S - K) 0 := by
+  have hcd : ContDiffOn ℝ 2 (fun y : ℝ => 100 * (Real.log (y / 100) + 0)) (Set.Ioi 0) := by
+    apply ContDiffOn.mul contDiffOn_const
+    apply ContDiffOn.add _ contDiffOn_const
+    apply ContDiffOn.log (contDiffOn_id.div_const 100)
+    intro x hx
+    simp only [Set.mem_Ioi] at hx
+    simp only [id]
+    positivity
+  have key := payoff_eq_cash_add_forward_add_curvature_weighted_strip _ hcd F S hF hS
+  have h1 : (∫ K in (0 : ℝ)..F,
+      deriv (deriv (fun y : ℝ => 100 * (Real.log (y / 100) + 0))) K * max (K - S) 0)
+      = -∫ K in (0 : ℝ)..F, 100 / K ^ 2 * max (K - S) 0 := by
+    rw [← intervalIntegral.integral_neg]
+    apply intervalIntegral.integral_congr_ae
+    refine Filter.Eventually.of_forall (fun K hK => ?_)
+    rw [Set.uIoc_of_le hF.le] at hK
+    rw [log_div_hundred_deriv_deriv 100 0 hK.1]
+    ring
+  have h2 : (∫ K in Set.Ioi F,
+      deriv (deriv (fun y : ℝ => 100 * (Real.log (y / 100) + 0))) K * max (S - K) 0)
+      = -∫ K in Set.Ioi F, 100 / K ^ 2 * max (S - K) 0 := by
+    rw [← integral_neg]
+    apply setIntegral_congr_fun measurableSet_Ioi
+    intro K hK
+    simp only [Set.mem_Ioi] at hK
+    dsimp only
+    rw [log_div_hundred_deriv_deriv 100 0 (hF.trans hK)]
+    ring
+  rw [h1, h2, log_div_hundred_deriv 100 0 hF] at key
+  rw [show 100 * Real.log (S / 100) = 100 * (Real.log (S / 100) + 0) by ring, key]
+  ring
+
+/-- Step 5: today's price of the log contract in the house model is
+`100 D (ln(S/100) + c)` with `c = (r - q - σ²/2) T`. Its gamma times `S^2`, the dollar gamma,
+is `-100 D` at every positive share price `S`: it does not depend on `S`. -/
+theorem log_contract_dollar_gamma_is_flat (D c S : ℝ) (hS : 0 < S) :
+    S ^ 2 * deriv (deriv (fun x : ℝ => 100 * D * (Real.log (x / 100) + c))) S = -100 * D := by
+  rw [log_div_hundred_deriv_deriv (100 * D) c hS]
+  field_simp
+
+-- Step 4, strikes 30 apart: the book sells 100 × 30 / 90² = 10/27 (0.370370) of the 90-put
+example : (100 * 30 : ℚ) / 90 ^ 2 = 10 / 27 := by norm_num
+-- and 100 × 30 / 120² = 5/24 (0.208333) of the 120-call.
+example : (100 * 30 : ℚ) / 120 ^ 2 = 5 / 24 := by norm_num
+-- The put counts nearly twice as much as the call: (10/27) / (5/24) = 16/9, about 1.78.
+example : ((10 : ℚ) / 27) / (5 / 24) = 16 / 9 := by norm_num
+-- The square payoff (S_T - 100)² has curvature 2, so with strikes 30 apart it holds 60 of each.
+example : (2 : ℤ) * 30 = 60 := by decide
+
+#print axioms log_div_hundred_hasDerivAt
+#print axioms log_div_hundred_deriv
+#print axioms log_div_hundred_deriv_deriv
+#print axioms payoff_eq_cash_add_forward_add_curvature_weighted_strip
+#print axioms log_contract_eq_cash_add_forward_sub_inverse_square_strip
+#print axioms log_contract_dollar_gamma_is_flat
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'log_div_hundred_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_div_hundred_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_div_hundred_deriv_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'payoff_eq_cash_add_forward_add_curvature_weighted_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_contract_eq_cash_add_forward_sub_inverse_square_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_contract_dollar_gamma_is_flat' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ### Greeks of the log contract
 
 | Greek | Closed form | At S = 100 | Bumped bell-curve price |
@@ -602,6 +834,8 @@ Orange: the log contract's dollar gamma, in size, the same at every price. Green
 ## Where this goes next
 
 - [The variance swap](03-variance-swap-fair-strike.md): the log strip scaled by 2/T, plus a daily hedge, becomes a contract that pays realised variance.
+
+The strip prices the log contract with no model, but its link to realised variance needs a daily hedge and smooth paths: what does that hedge really collect, and what happens when the price jumps?
 
 ---
 

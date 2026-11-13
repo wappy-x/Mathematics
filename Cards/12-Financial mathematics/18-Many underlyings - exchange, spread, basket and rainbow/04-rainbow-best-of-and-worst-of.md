@@ -85,7 +85,7 @@ These are the correlations between "this share clears the strike" and "this shar
 
 ### When it holds
 
-- **Both log prices bell-curved, with constant volatilities.** With a volatility smile on either share, each share's strike-clearing chance is off, and the error is roughly each share's vega times its volatility error.
+- **Both log prices bell-curved, with constant volatilities.** A volatility smile means the market quotes a different volatility at each strike: [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md). With a smile on either share, each share's strike-clearing chance is off. The error is roughly each share's vega (the price change per point of volatility) times its volatility error.
 - **One fixed correlation for the whole year.** Real correlations move, and tend to rise in sell-offs. A worst-of call priced at 0.5 is worth $7.14 at 0.9, so its seller has lost the difference; near 0.5 each 0.01 of correlation moves it about 4.6 cents.
 - **European exercise, one look at the end.** A contract that checks the best share along the way, or that can be exercised early, is a different payoff.
 - **Both prices in the same currency.** A best-of across currencies needs the exchange rate's own volatility and its correlation with each share, the quanto adjustment.
@@ -130,7 +130,7 @@ So the chance of both is $M(d_1^+, d_{12}; \rho_1)$, and the Acme piece is $S_1 
 
 Write the pretend-world logs as $\ln S_{i,T} = \ln S_i + (r - q_i - \tfrac12\sigma_i^2)T + \sigma_i\sqrt{T}\,Z_i$, with $Z_1, Z_2$ standard normal and correlation $\rho$.
 
-**Counting in Acme.** The value of the claim "receive Acme on event A" is $e^{-rT}E[S_{1,T}\,1_A]$. Since $S_{1,T} = S_1 e^{(r-q_1)T} e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2 T}$, this is $S_1 e^{-q_1T}\,E[e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2T}\,1_A]$. The factor inside is a likelihood ratio: under the weighted measure, $Z_1$ has mean $\sigma_1\sqrt{T}$, and any variable correlated with $Z_1$ has its mean moved by (its covariance with $Z_1$) times $\sigma_1\sqrt{T}$. Variances and correlations do not change. So the value is $S_1 e^{-q_1T}\,P^{(1)}(A)$, the chance of A in the Acme-counted world.
+**Counting in Acme.** Write $E[\cdot]$ for the pretend-world average and $1_A$ for the light switch of event A: 1 when A happens, 0 when not. The value of the claim "receive Acme on event A" is $e^{-rT}E[S_{1,T}\,1_A]$. Since $S_{1,T} = S_1 e^{(r-q_1)T} e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2 T}$, this is $S_1 e^{-q_1T}\,E[e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2T}\,1_A]$. The factor inside is a likelihood ratio: under the weighted measure, $Z_1$ has mean $\sigma_1\sqrt{T}$, and any variable correlated with $Z_1$ has its mean moved by (its covariance with $Z_1$) times $\sigma_1\sqrt{T}$. Variances and correlations do not change. So the value is $S_1 e^{-q_1T}\,P^{(1)}(A)$, the chance of A in the Acme-counted world.
 
 **Acme above K.** $\ln S_{1,T} > \ln K$ becomes, with the shifted mean, $Z_1' > -d_1^+$, where $Z_1'$ is standard normal in the new world. Chance $N(d_1^+)$.
 
@@ -649,6 +649,110 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line, simulation included: both languages run the same generator from the same seed.
+
+### Lean
+
+Lean proves the add-up rule of Step 4 and the opposite moves, for any two final prices with finite averages.
+
+- On every ending, the best-of payoff plus the worst-of payoff equals a vanilla call payoff on Acme plus one on Bolt.
+- Suppose both final prices have finite averages in the pretend world. Then the best-of price plus the worst-of price equals two vanilla call prices, whatever the correlation.
+- Take two pretend worlds where each share on its own behaves the same, such as two different correlations. Then whatever the best-of price gains between them, the worst-of price loses.
+- The card's payoffs match. Acme at $120 and Bolt at $90 give $20 on the best-of and nothing on the worst-of.
+- Bolt at $130 and Acme at $105 give $30 on the best-of.
+- With Bolt at $110, the payoff chart's points at Acme $80, $105 and $130 match too.
+
+Stulz's two formulas, the M values, every price and every Greek are left to the Python and Rust checks.
+
+```lean
+-- Rainbow options: a best-of call and a worst-of call on two shares always add up to two vanilla calls, so whatever one gains when the correlation changes the other loses.
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+
+open MeasureTheory
+
+/-- On every ending, the best-of call payoff plus the worst-of call payoff equals the
+payoff of a vanilla call on the first share plus a vanilla call on the second share:
+`max(max(S₁,S₂) - K, 0) + max(min(S₁,S₂) - K, 0) = max(S₁ - K, 0) + max(S₂ - K, 0)`. -/
+theorem best_of_payoff_add_worst_of_payoff (s₁ s₂ K : ℝ) :
+    max (max s₁ s₂ - K) 0 + max (min s₁ s₂ - K) 0 =
+      max (s₁ - K) 0 + max (s₂ - K) 0 := by
+  rcases le_total s₁ s₂ with h | h
+  · rw [max_eq_right h, min_eq_left h, add_comm]
+  · rw [max_eq_left h, min_eq_right h]
+
+/-- Prices are discounted averages of payoffs, so the price of the best-of call plus the
+price of the worst-of call equals the price of two vanilla calls, one on each share,
+whatever the joint law of the two final prices (in particular, whatever the correlation).
+Here `μ` is the pricing-world joint law of the two final prices `(S₁_T, S₂_T)`, `K` the
+strike, `r` the bank rate and `T` the life of the contract. -/
+theorem best_of_price_add_worst_of_price_eq_two_calls
+    (μ : Measure (ℝ × ℝ)) [IsProbabilityMeasure μ] (K r T : ℝ)
+    (h₁ : Integrable (fun p : ℝ × ℝ => p.1) μ) (h₂ : Integrable (fun p : ℝ × ℝ => p.2) μ) :
+    Real.exp (-r * T) * ∫ p, max (max p.1 p.2 - K) 0 ∂μ +
+        Real.exp (-r * T) * ∫ p, max (min p.1 p.2 - K) 0 ∂μ =
+      Real.exp (-r * T) * ∫ p, max (p.1 - K) 0 ∂μ +
+        Real.exp (-r * T) * ∫ p, max (p.2 - K) 0 ∂μ := by
+  have hK : Integrable (fun _ : ℝ × ℝ => K) μ := integrable_const K
+  have i1 : Integrable (fun p : ℝ × ℝ => max (max p.1 p.2 - K) 0) μ :=
+    ((h₁.sup h₂).sub hK).pos_part
+  have i2 : Integrable (fun p : ℝ × ℝ => max (min p.1 p.2 - K) 0) μ :=
+    ((h₁.inf h₂).sub hK).pos_part
+  have i3 : Integrable (fun p : ℝ × ℝ => max (p.1 - K) 0) μ := (h₁.sub hK).pos_part
+  have i4 : Integrable (fun p : ℝ × ℝ => max (p.2 - K) 0) μ := (h₂.sub hK).pos_part
+  rw [← mul_add, ← mul_add, ← integral_add i1 i2, ← integral_add i3 i4]
+  congr 1
+  refine integral_congr_ae (Filter.Eventually.of_forall fun p => ?_)
+  exact best_of_payoff_add_worst_of_payoff p.1 p.2 K
+
+/-- The correlation sign flip: take two joint laws `μ` and `ν` of the two final prices
+with the same law for each share on its own (for instance the same two lognormal shares
+at two different correlations). Then whatever the best-of call gains in moving from `ν`
+to `μ`, the worst-of call loses exactly that amount. -/
+theorem best_of_change_eq_neg_worst_of_change
+    (μ ν : Measure (ℝ × ℝ)) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (K r T : ℝ)
+    (hμ₁ : Integrable (fun p : ℝ × ℝ => p.1) μ) (hμ₂ : Integrable (fun p : ℝ × ℝ => p.2) μ)
+    (hν₁ : Integrable (fun p : ℝ × ℝ => p.1) ν) (hν₂ : Integrable (fun p : ℝ × ℝ => p.2) ν)
+    (hfst : μ.map Prod.fst = ν.map Prod.fst) (hsnd : μ.map Prod.snd = ν.map Prod.snd) :
+    Real.exp (-r * T) * ∫ p, max (max p.1 p.2 - K) 0 ∂μ -
+        Real.exp (-r * T) * ∫ p, max (max p.1 p.2 - K) 0 ∂ν =
+      -(Real.exp (-r * T) * ∫ p, max (min p.1 p.2 - K) 0 ∂μ -
+        Real.exp (-r * T) * ∫ p, max (min p.1 p.2 - K) 0 ∂ν) := by
+  have hμ := best_of_price_add_worst_of_price_eq_two_calls μ K r T hμ₁ hμ₂
+  have hν := best_of_price_add_worst_of_price_eq_two_calls ν K r T hν₁ hν₂
+  have g : Continuous (fun x : ℝ => max (x - K) 0) := by fun_prop
+  have e1 : ∫ p, max (p.1 - K) 0 ∂μ = ∫ p, max (p.1 - K) 0 ∂ν := by
+    have a := integral_map (μ := μ) measurable_fst.aemeasurable g.aestronglyMeasurable
+    have b := integral_map (μ := ν) measurable_fst.aemeasurable g.aestronglyMeasurable
+    rw [← a, ← b, hfst]
+  have e2 : ∫ p, max (p.2 - K) 0 ∂μ = ∫ p, max (p.2 - K) 0 ∂ν := by
+    have a := integral_map (μ := μ) measurable_snd.aemeasurable g.aestronglyMeasurable
+    have b := integral_map (μ := ν) measurable_snd.aemeasurable g.aestronglyMeasurable
+    rw [← a, ← b, hsnd]
+  rw [e1, e2] at hμ
+  linarith
+
+-- The card's payoff examples, strike $100.
+-- Acme ends at $120, Bolt at $90: the best-of pays $20, the worst-of pays nothing.
+example : max (max (120 : ℤ) 90 - 100) 0 = 20 := by decide
+example : max (min (120 : ℤ) 90 - 100) 0 = 0 := by decide
+-- Bolt ends at $130, Acme at $105: the best-of pays $30.
+example : max (max (105 : ℤ) 130 - 100) 0 = 30 := by decide
+-- The payoff chart with Bolt at $110: Acme at $80, $105, $130.
+example : max (max (80 : ℤ) 110 - 100) 0 = 10 ∧ max (min (80 : ℤ) 110 - 100) 0 = 0 := by decide
+example : max (max (105 : ℤ) 110 - 100) 0 = 10 ∧ max (min (105 : ℤ) 110 - 100) 0 = 5 := by decide
+example : max (max (130 : ℤ) 110 - 100) 0 = 30 ∧ max (min (130 : ℤ) 110 - 100) 0 = 10 := by decide
+
+#print axioms best_of_payoff_add_worst_of_payoff
+#print axioms best_of_price_add_worst_of_price_eq_two_calls
+#print axioms best_of_change_eq_neg_worst_of_change
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'best_of_payoff_add_worst_of_payoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'best_of_price_add_worst_of_price_eq_two_calls' depends on axioms: [propext, Classical.choice, Quot.sound]
+'best_of_change_eq_neg_worst_of_change' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

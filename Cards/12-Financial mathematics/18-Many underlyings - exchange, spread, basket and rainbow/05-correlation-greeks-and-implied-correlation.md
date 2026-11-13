@@ -10,7 +10,9 @@ Two house shares each trade at 100 dollars. Each has volatility 20 percent a yea
 
 Hold equal amounts of money in each and call the pair an **index**. The index wobbles less than either share, because on some days one share's rise cancels the other's fall. At correlation 0.5 the index's volatility is 17.32 percent, not 20.
 
-Correlation is no share's price. Nobody sells it on a screen. Yet the three options this shelf prices all depend on it. A call on the 50/50 basket is worth 8.22 dollars at correlation 0.5. A call on the better of the two shares is worth 13.88 dollars; a call on the worse, 4.57. Move correlation from 0.5 to 0.51 and the basket gains about 2 cents, the best-of loses about 5, and the worst-of gains about 5. Those amounts are **correlation Greeks**: how much a price moves per step in correlation.
+Correlation is no share's price. Nobody sells it on a screen. Yet the three options this shelf prices all depend on it. A call on the 50/50 basket is worth 8.22 dollars at correlation 0.5. A call on the better of the two shares is worth 13.88 dollars; a call on the worse, 4.57.
+
+Move correlation from 0.5 to 0.51 and the basket gains about 2 cents, the best-of loses about 5, and the worst-of gains about 5. Those amounts are **correlation Greeks**: how much a price moves per step in correlation.
 
 A desk that holds these options holds correlation risk. Buying or selling shares does not remove it, since shares have no correlation to sell. The one traded thing whose price leans on correlation is an option on the index. So the market's view of correlation is read backwards out of index option prices. If the index option is quoted at 18 percent volatility, the correlation that produces 18 percent is 0.62. That number is **implied correlation**.
 
@@ -73,7 +75,7 @@ $$\frac{\partial V}{\partial\rho} \;=\; \sigma_1\sigma_2\,T\,S_1S_2\,\Gamma_{12}
 | $\rho_{\text{impl}}$ | the correlation a quoted index volatility implies | 0.62 at an 18 percent quote | rises with the quote |
 | $\sigma_I$, $I$ | the index's volatility; $I$ is the index level | 17.32 percent at correlation 0.5 | index option dearer |
 | $V$ | an option's price, as a function of its inputs | 8.22 dollars, basket call | — |
-| $\Gamma_{12}$ | cross-gamma: how share 1's delta moves when share 2 moves a dollar | 0.005398, basket | the correlation Greek grows with it |
+| $\Gamma_{12}$ | cross-gamma: how share 1's delta (the option's slope in share 1) moves when share 2 moves a dollar | 0.005398, basket | the correlation Greek grows with it |
 | $\delta$, $h$ | bump sizes: in correlation, and in each share price | 0.01 and 1 dollar | smaller is sharper until noise wins |
 | $K$, $T$ | the strike, the level the payoff is measured from; years to expiry | 100 dollars; 1 | a higher strike makes every call here cheaper |
 | $r$, $q$ | bank rate; dividend yield of each share | 5 percent; 2 percent | calls dearer; calls cheaper |
@@ -83,7 +85,7 @@ The **correlation Greek** has no Greek letter of its own; desks say "correlation
 
 ### When it holds
 
-- **Weights measured in value, and only for an instant.** The identity holds for the index's next small move. As the shares drift apart, the weights drift too, so over a year the basket is not exactly one lognormal share: the index quoted at 17.32 percent costs 8.21 dollars, the exact basket 8.22.
+- **Weights measured in value, and only for an instant.** The identity holds for the index's next small move. As the shares drift apart, the weights drift too, so over a year the basket is not exactly one lognormal share (a price whose log is bell-shaped): the index quoted at 17.32 percent costs 8.21 dollars, the exact basket 8.22.
 - **One volatility per share.** The identity uses each share's own quoted volatility. If each share's volatility depends on its strike (a smile), the result depends on which strikes are used.
 - **One correlation for every pair.** With fifty names the implied number is an average. Two indices with the same average can hide very different pairs.
 - **Constant correlation over the option's life.** Bumping correlation assumes it is a fixed input. If correlation rises in a sell-off, and it tends to, the Greek measures only the first-order effect.
@@ -117,7 +119,9 @@ The index variance is a straight line in correlation, with slope $2w_1w_2\sigma_
 
 Existence needs the quoted variance inside the line's range. Correlation runs from −1 to 1, so the index variance runs from $(w_1\sigma_1 - w_2\sigma_2)^2$ up to $(w_1\sigma_1 + w_2\sigma_2)^2$. For the house pair that is 0 up to 20 percent squared. At the top, correlation 1, the index is one share scaled: 20 percent. A quote above the top has no root. At 25 percent the index call costs 11.12 dollars, and at correlation 1 it costs only 9.23. No correlation reaches it.
 
-The floor matters more with many names. With $n$ shares, equal weights, equal volatility $\sigma$ and one average correlation, the index variance is $\sigma^2(1/n + (1 - 1/n)\bar\rho)$. Variance cannot be negative, so the average correlation cannot fall below $-1/(n-1)$. For two names that is −1. For fifty it is −0.020408: all but zero. So a broad index has an implied correlation only when its volatility lies between the zero-correlation level and the full-correlation level. The two-name house pair allows the whole range from 0 to 20 percent: below the zero-correlation level of 14.14 percent the implied number goes negative, and a 14 percent quote implies −0.02.
+The floor matters more with many names. With $n$ shares, equal weights, equal volatility $\sigma$ and one average correlation, the index variance is $\sigma^2(1/n + (1 - 1/n)\bar\rho)$. Variance cannot be negative, so the average correlation cannot fall below $-1/(n-1)$. For two names that is −1. For fifty it is −0.020408: all but zero.
+
+So a broad index has an implied correlation only when its volatility lies between the zero-correlation level and the full-correlation level. The two-name house pair allows the whole range from 0 to 20 percent: below the zero-correlation level of 14.14 percent the implied number goes negative, and a 14 percent quote implies −0.02.
 
 Boundary cases: a quote of exactly 20 percent implies correlation 1; exactly 14.14 percent implies 0. The quote arrives as a dollar price, not a volatility. The step from dollars to volatility is unique, because a call's Black-Scholes price rises with volatility. It exists when the price lies strictly between the zero-volatility value, $\max(S e^{-qT} - K e^{-rT}, 0) = 2.90$ dollars, and the infinite-volatility value $S e^{-qT} = 98.02$ dollars.
 
@@ -127,7 +131,7 @@ The correlation Greek is a slope in an input that has no market price, so bump a
 
 ### Step 4: the bridge from correlation to cross-gamma
 
-Why should a slope in correlation equal a second slope in the two share prices? Look at expiry. The logs of the two share prices end up bell-shaped, and the only place correlation enters is their covariance, $\rho\sigma_1\sigma_2T$. The pretend-world drifts, $r - q - \tfrac12\sigma^2$, do not involve correlation at all.
+Why should a slope in correlation equal a second slope in the two share prices? Look at expiry. The logs of the two share prices end up bell-shaped, and the only place correlation enters is their covariance, $\rho\sigma_1\sigma_2T$. The pretend-world drifts (the growth rates of the pricing world, where every share grows at the bank rate less its dividend), $r - q - \tfrac12\sigma^2$, do not involve correlation at all.
 
 A bell curve in two dimensions has a property the heat equation also has: raising the covariance between two coordinates changes the average of any payoff by the average of that payoff's **mixed second slope**, its bend when both coordinates move together. That mixed bend, measured in log prices, is $S_1S_2\Gamma_{12}$. Multiply by the covariance's rate of change in correlation, $\sigma_1\sigma_2T$, and the bridge follows.
 
@@ -148,11 +152,15 @@ The bridge explains the signs. The basket call bends upward when both shares ris
 
 ### Step 5: best-of and worst-of cancel
 
-For any two finishing prices, the larger plus the smaller is the sum. The payoffs obey the same rule: $\max(\text{best} - K, 0) + \max(\text{worst} - K, 0) = \max(S_1 - K, 0) + \max(S_2 - K, 0)$. Check it on 120 and 90: 20 + 0 on the left, 20 + 0 on the right. So best-of plus worst-of is two ordinary calls, 2 × 9.23, and ordinary calls do not depend on correlation. Their correlation Greeks are equal and opposite, −0.046018 and +0.046018, to every printed digit.
+For any two finishing prices, the larger plus the smaller is the sum. The payoffs obey the same rule: $\max(\text{best} - K, 0) + \max(\text{worst} - K, 0) = \max(S_1 - K, 0) + \max(S_2 - K, 0)$. Check it on 120 and 90: 20 + 0 on the left, 20 + 0 on the right.
+
+So best-of plus worst-of is two ordinary calls, 2 × 9.23, and ordinary calls do not depend on correlation. Their correlation Greeks are equal and opposite, −0.046018 and +0.046018, to every printed digit.
 
 ### Step 6: the basket seen as an index
 
-A third road to the basket's Greek treats the basket as a single share with volatility $\sigma_I$. Then the correlation Greek is the index option's vega (its slope in volatility), 37.81, times the slope of $\sigma_I$ in correlation, $w_1w_2\sigma_1\sigma_2/\sigma_I = 0.057735$. That gives 0.021828 per 0.01, against the exact 0.021598. The gap, 1 percent, is the price of pretending the basket is lognormal (its log bell-shaped), the approximation the sibling card on [Basket options](03-basket-options.md) studies. It is also why implied correlation read against the exact basket is 0.618564, not 0.62: the market convention prices the index as one lognormal share.
+A third road to the basket's Greek treats the basket as a single share with volatility $\sigma_I$. Then the correlation Greek is the index option's vega (its slope in volatility), 37.81, times the slope of $\sigma_I$ in correlation, $w_1w_2\sigma_1\sigma_2/\sigma_I = 0.057735$. That gives 0.021828 per 0.01, against the exact 0.021598.
+
+The gap, 1 percent, is the price of pretending the basket is lognormal (its log bell-shaped), the approximation the sibling card on [Basket options](03-basket-options.md) studies. It is also why implied correlation read against the exact basket is 0.618564, not 0.62: the market convention prices the index as one lognormal share.
 
 For the rainbow options a closed form exists, Stulz's two-dimensional bell-curve formula, done on [Rainbow options](04-rainbow-best-of-and-worst-of.md). This card needs only prices it can bump, and reaches them by integration and by simulation.
 
@@ -230,7 +238,12 @@ The basket's slope is the smallest, because in a basket correlation only thins t
 
 ## Code, from first principles, and it actually runs
 
-The scripts price the basket, best-of and worst-of calls two ways. **Road 1** fixes share 1's random draw, prices share 2's contribution in closed form given that draw (share 2 is still lognormal, with its spread cut to $\sigma\sqrt{T}\sqrt{1-\rho^2}$), and adds up over share 1's draw by Simpson's rule, split at the strike so no kink falls inside a slice. **Road 2** simulates 200,000 correlated pairs from a written-out random number generator. The correlation Greek is then reached three ways: bumping correlation on road 1, bumping it on road 2 with the same draws, and the cross-gamma bridge; the basket gets a fourth, the index-vega road. Implied correlation is reached by the closed form after inverting the price to a volatility, by bisection on correlation directly, and by bisection against the exact basket. The bell-curve area is a series written out; nothing imported knows an answer. Python and Rust print identical output.
+The scripts price the basket, best-of and worst-of calls two ways.
+
+- **Road 1** fixes share 1's random draw, prices share 2's contribution in closed form given that draw (share 2 is still lognormal, with its spread cut to $\sigma\sqrt{T}\sqrt{1-\rho^2}$), and adds up over share 1's draw by Simpson's rule, split at the strike so no kink falls inside a slice.
+- **Road 2** simulates 200,000 correlated pairs from a written-out random number generator.
+
+The correlation Greek is then reached three ways: bumping correlation on road 1, bumping it on road 2 with the same draws, and the cross-gamma bridge; the basket gets a fourth, the index-vega road. Implied correlation is reached by the closed form after inverting the price to a volatility, by bisection on correlation directly, and by bisection against the exact basket. The bell-curve area is a series written out; nothing imported knows an answer. Python and Rust print identical output.
 
 ### Python
 
@@ -627,6 +640,140 @@ chart2, worst-of  1.25   1.93   2.68   3.54   4.57   5.93   9.23
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves Steps 1, 2 and 5 exactly, for any number of shares in Step 1 and two shares in Step 2.
+
+- Suppose each share's return has a finite variance $\sigma_i^2$, and every pair's covariance is $\bar\rho\,\sigma_i\sigma_j$. Then the index's variance is the weighted own variances plus a cross term that grows in step with $\bar\rho$.
+- Take two shares with positive weights and positive volatilities. Then a quoted index variance has exactly one implied correlation when it lies between its levels at correlation −1 and 1.
+- Take a quote outside those two levels. Then no correlation from −1 to 1 produces it.
+- Suppose a correlation produces the quoted index variance. Then it equals the $\rho_{\text{impl}}$ formula, so it is the only one.
+- Take any two finishing prices and any strike. Then the best-of call payoff plus the worst-of call payoff equals the two ordinary call payoffs.
+- The house pair's numbers match: own terms 0.01 each, cross term 0.01, index variance 0.03.
+- Its index variance is 0.02 at correlation 0 and 0.04 at correlation 1.
+- An 18 percent quote implies 0.62, and 16 and 14 percent imply 0.28 and −0.02.
+- A 25 percent quote lies above the 20 percent ceiling.
+- With fifty equal names, an average correlation of −1/49 makes the index variance exactly zero.
+- The bridge factor is 400, and finishing prices 120 and 90 at strike 100 give 20 on each side.
+
+The option prices, the correlation Greeks, the cross-gamma bridge and the volatility from a dollar price are left to the Python and Rust checks.
+
+```lean
+-- Correlation Greeks and implied correlation: an index's variance is its members' weighted variances plus a cross term linear in correlation, a quoted index variance implies exactly one correlation in [-1, 1] precisely when it lies between the full-anticorrelation and full-correlation levels, and best-of plus worst-of call payoffs equal two ordinary call payoffs.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Moments.Covariance
+
+open MeasureTheory ProbabilityTheory
+
+/-- The variance of a weighted sum (the index's variance). If shares numbered by a finite set
+have returns `X i` with finite variance, each share's variance is `σ i ^ 2`, and every pair of
+different shares has the same correlation `ρ`, so that their covariance is `ρ * σ i * σ j`, then
+the variance of the index return `∑ i, w i * X i` is the shares' own variances scaled by their
+weights squared, plus `ρ` times the cross sum `∑_{i ≠ j} w i * w j * σ i * σ j`.
+With two shares this is `w₁²σ₁² + w₂²σ₂² + 2 w₁ w₂ ρ σ₁ σ₂`. -/
+theorem index_variance_eq_own_terms_add_correlation_cross_term
+    {Ω ι : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    [Fintype ι] [DecidableEq ι]
+    (X : ι → Ω → ℝ) (hX : ∀ i, MemLp (X i) 2 μ) (w σ : ι → ℝ) (ρ : ℝ)
+    (hvar : ∀ i, Var[X i; μ] = σ i ^ 2)
+    (hcov : ∀ i j, i ≠ j → cov[X i, X j; μ] = ρ * σ i * σ j) :
+    Var[fun ω => ∑ i, w i * X i ω; μ] =
+      ∑ i, w i ^ 2 * σ i ^ 2 + ρ * ∑ i, ∑ j ∈ Finset.univ.erase i, w i * w j * σ i * σ j := by
+  have hY : ∀ i, MemLp (fun ω => w i * X i ω) 2 μ := fun i => (hX i).const_mul (w i)
+  rw [variance_fun_sum (X := fun i ω => w i * X i ω) hY]
+  simp only [covariance_const_mul_left, covariance_const_mul_right]
+  rw [Finset.mul_sum, ← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i), Finset.mul_sum]
+  rw [covariance_self (hX i).aemeasurable, hvar i]
+  congr 1
+  · ring
+  · refine Finset.sum_congr rfl fun j hj => ?_
+    rw [hcov i j (Finset.ne_of_mem_erase hj).symm]
+    ring
+
+/-- Implied correlation exists and is unique inside the bounds. With positive weights and
+positive volatilities for two shares, a quoted index variance `v` is produced by exactly one
+correlation `ρ` between −1 and 1 if and only if `v` lies between `(w₁σ₁ − w₂σ₂)²` and
+`(w₁σ₁ + w₂σ₂)²`; and any correlation that produces `v` is
+`ρ_impl = (v − w₁²σ₁² − w₂²σ₂²) / (2 w₁ w₂ σ₁ σ₂)`. -/
+theorem implied_correlation_exists_unique_iff_between_bounds
+    (w₁ w₂ σ₁ σ₂ v : ℝ) (hw₁ : 0 < w₁) (hw₂ : 0 < w₂) (hσ₁ : 0 < σ₁) (hσ₂ : 0 < σ₂) :
+    ((∃! ρ : ℝ, ρ ∈ Set.Icc (-1 : ℝ) 1 ∧
+        v = w₁ ^ 2 * σ₁ ^ 2 + w₂ ^ 2 * σ₂ ^ 2 + 2 * w₁ * w₂ * ρ * σ₁ * σ₂) ↔
+      v ∈ Set.Icc ((w₁ * σ₁ - w₂ * σ₂) ^ 2) ((w₁ * σ₁ + w₂ * σ₂) ^ 2)) ∧
+    ∀ ρ : ℝ, v = w₁ ^ 2 * σ₁ ^ 2 + w₂ ^ 2 * σ₂ ^ 2 + 2 * w₁ * w₂ * ρ * σ₁ * σ₂ →
+      ρ = (v - w₁ ^ 2 * σ₁ ^ 2 - w₂ ^ 2 * σ₂ ^ 2) / (2 * w₁ * w₂ * σ₁ * σ₂) := by
+  have hc : 0 < 2 * w₁ * w₂ * σ₁ * σ₂ := by positivity
+  have key : ∀ ρ : ℝ, v = w₁ ^ 2 * σ₁ ^ 2 + w₂ ^ 2 * σ₂ ^ 2 + 2 * w₁ * w₂ * ρ * σ₁ * σ₂ →
+      ρ = (v - w₁ ^ 2 * σ₁ ^ 2 - w₂ ^ 2 * σ₂ ^ 2) / (2 * w₁ * w₂ * σ₁ * σ₂) := by
+    intro ρ h
+    rw [eq_div_iff hc.ne', h]
+    ring
+  refine ⟨⟨fun ⟨ρ, ⟨⟨h1, h2⟩, hv⟩, _⟩ => ?_, fun ⟨h1, h2⟩ => ?_⟩, key⟩
+  · have a : 0 ≤ (ρ + 1) * (2 * w₁ * w₂ * σ₁ * σ₂) := mul_nonneg (by linarith) hc.le
+    have b : 0 ≤ (1 - ρ) * (2 * w₁ * w₂ * σ₁ * σ₂) := mul_nonneg (by linarith) hc.le
+    constructor <;> nlinarith
+  · set ρ := (v - w₁ ^ 2 * σ₁ ^ 2 - w₂ ^ 2 * σ₂ ^ 2) / (2 * w₁ * w₂ * σ₁ * σ₂) with hρ
+    have hv : v = w₁ ^ 2 * σ₁ ^ 2 + w₂ ^ 2 * σ₂ ^ 2 + 2 * w₁ * w₂ * ρ * σ₁ * σ₂ := by
+      rw [hρ]; field_simp; ring
+    refine ⟨ρ, ⟨⟨?_, ?_⟩, hv⟩, fun r ⟨_, hr⟩ => key r hr⟩
+    · rw [hρ, le_div_iff₀ hc]; nlinarith
+    · rw [hρ, div_le_iff₀ hc]; nlinarith
+
+/-- Best-of and worst-of cancel. For any two finishing prices and any strike, the best-of call
+payoff plus the worst-of call payoff equals the sum of the two ordinary call payoffs, so
+best-of plus worst-of is two ordinary calls, which do not depend on correlation. -/
+theorem best_of_call_add_worst_of_call_eq_two_calls (a b K : ℝ) :
+    max (max a b - K) 0 + max (min a b - K) 0 = max (a - K) 0 + max (b - K) 0 := by
+  rcases le_total a b with h | h
+  · rw [max_eq_right h, min_eq_left h]; ring
+  · rw [max_eq_left h, min_eq_right h]
+
+-- House pair: weights 1/2, volatilities 1/5, correlation 1/2.
+-- Own terms 1/100 each, cross term 1/100, index variance 3/100.
+example : ((1 : ℚ) / 2) ^ 2 * (1 / 5) ^ 2 = 1 / 100 := by norm_num
+example : 2 * ((1 : ℚ) / 2) * (1 / 2) * (1 / 2) * (1 / 5) * (1 / 5) = 1 / 100 := by norm_num
+example : ((1 : ℚ) / 2) ^ 2 * (1 / 5) ^ 2 + (1 / 2) ^ 2 * (1 / 5) ^ 2
+    + 2 * (1 / 2) * (1 / 2) * (1 / 2) * (1 / 5) * (1 / 5) = 3 / 100 := by norm_num
+-- Bounds: variance 2/100 at correlation 0, and (1/5)^2 at correlation 1 (index volatility 20 percent).
+example : ((1 : ℚ) / 2) ^ 2 * (1 / 5) ^ 2 + (1 / 2) ^ 2 * (1 / 5) ^ 2 = 2 / 100 := by norm_num
+example : ((1 : ℚ) / 2 * (1 / 5) + 1 / 2 * (1 / 5)) ^ 2 = (1 / 5) ^ 2 := by norm_num
+-- An 18 percent quote: variance 324/10000, less own terms 124/10000, over the cross term
+-- at correlation 1 (2/100), gives implied correlation 62/100.
+example : ((18 : ℚ) / 100) ^ 2 = 324 / 10000 := by norm_num
+example : ((18 : ℚ) / 100) ^ 2 - 2 / 100 = 124 / 10000 := by norm_num
+example : 2 * ((1 : ℚ) / 2) * (1 / 2) * (1 / 5) * (1 / 5) = 2 / 100 := by norm_num
+example : (((18 : ℚ) / 100) ^ 2 - (1 / 2) ^ 2 * (1 / 5) ^ 2 - (1 / 2) ^ 2 * (1 / 5) ^ 2)
+    / (2 * (1 / 2) * (1 / 2) * (1 / 5) * (1 / 5)) = 62 / 100 := by norm_num
+-- A 25 percent quote lies above the 20 percent ceiling: no implied correlation.
+example : ((1 : ℚ) / 2 * (1 / 5) + 1 / 2 * (1 / 5)) ^ 2 < ((25 : ℚ) / 100) ^ 2 := by norm_num
+-- Quotes of 16 and 14 percent imply correlations 28/100 and -2/100.
+example : (((16 : ℚ) / 100) ^ 2 - 2 / 100) / (2 / 100) = 28 / 100 := by norm_num
+example : (((14 : ℚ) / 100) ^ 2 - 2 / 100) / (2 / 100) = -2 / 100 := by norm_num
+-- Fifty equal names: at average correlation -1/(50-1) the index variance factor
+-- 1/n + (1 - 1/n) * ρ is exactly zero, the floor.
+example : (1 : ℚ) / 50 + (1 - 1 / 50) * (-1 / (50 - 1)) = 0 := by norm_num
+-- Bridge factor σ₁ σ₂ T S₁ S₂ for the house pair.
+example : ((1 : ℚ) / 5) * (1 / 5) * 1 * 100 * 100 = 400 := by norm_num
+-- Best-of plus worst-of on finishing prices 120 and 90, strike 100: 20 + 0 on each side.
+example : max (max (120 : ℤ) 90 - 100) 0 + max (min (120 : ℤ) 90 - 100) 0
+    = max ((120 : ℤ) - 100) 0 + max ((90 : ℤ) - 100) 0 := by decide
+example : max (max (120 : ℤ) 90 - 100) 0 + max (min (120 : ℤ) 90 - 100) 0 = 20 := by decide
+
+#print axioms index_variance_eq_own_terms_add_correlation_cross_term
+#print axioms implied_correlation_exists_unique_iff_between_bounds
+#print axioms best_of_call_add_worst_of_call_eq_two_calls
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'index_variance_eq_own_terms_add_correlation_cross_term' depends on axioms: [propext, Classical.choice, Quot.sound]
+'implied_correlation_exists_unique_iff_between_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'best_of_call_add_worst_of_call_eq_two_calls' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -664,12 +811,15 @@ ALL CHECKS PASS
 
 - [Rainbow options](04-rainbow-best-of-and-worst-of.md): the best-of and worst-of calls whose correlation Greeks this card measures, and their closed-form prices.
 - [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping an input, choosing the bump size, and reusing random draws so the noise cancels.
+- [Basket options](03-basket-options.md): builds the basket price this card bumps.
+- [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): drawing pairs of shares with a chosen correlation, which the simulation road here uses.
 
 ---
 
 ## Where this goes next
 
-The shelf's other cards price the options: [Basket options](03-basket-options.md) builds the basket price this card bumps.
+- [Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md): the same backing-out for credit tranches, where a quote can imply two correlations or none.
+- [Stencils to order](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/02-stencils-for-higher-and-mixed-derivatives.md): derives the four-corner cross-gamma rule used here, over $4h^2$, and gives its error.
 
 The question it leaves open is what correlation will actually be: implied correlation is a price, and whether it is worth paying is a trading question about how correlations behave in calm and in crashes.
 
