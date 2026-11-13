@@ -10,11 +10,13 @@ A gas-fired power plant sits on a North American grid. On 1 January 2027 its own
 
 So one MWh of July power costs 7.5 × $3.00 = **$22.50** of gas to make. Power sells for $50. The gap, **$27.50**, is the **spark spread**: the gross margin of turning gas into electricity. Staff, water and wear add a **variable cost** of $5 per MWh. What is the plant's July worth?
 
-Three facts make electricity unlike every other commodity on this shelf. It cannot be stored in bulk, so the July price is not today's price plus a storage bill. Its price has a shape inside each day and week, so "July power" is really an average of 744 hourly prices. And some of those hours spike to four or ten times normal. The plant owner runs the plant only when power pays more than gas plus cost. That right, without the obligation, is an option. From here on it is called the **spark spread option**, and a plant is a string of them.
+Three facts make electricity unlike every other commodity on this shelf. It cannot be stored in bulk, so the July price is not today's price plus a storage bill. Its price has a shape inside each day and week, so "July power" is really an average of 744 hourly prices. And some of those hours spike to four or ten times normal.
+
+The plant owner runs the plant only when power pays more than gas plus cost. That right, without the obligation, is an option. From here on it is called the **spark spread option**, and a plant is a string of them.
 
 **A power forward is the average of future spot power under the pricing weights (Step 1), not spot plus carry; a gas plant's month is a call on power minus heat rate times gas, struck at the variable cost; and the plant is the sum of those calls across its months.**
 
-**What kind of fact this is:** a model. Lognormal forwards for power and gas are an assumption that fits monthly contracts well enough, not a law. Inside it, Kirk's formula is an approximation, with its error against the exact integral stated below, and "the forward is an expectation" is a theorem, proved in Why it works.
+**What kind of fact this is:** a model. Lognormal forwards for power and gas (prices whose logarithm follows a bell curve, so they never go below zero) are an assumption that fits monthly contracts well enough, not a law. Inside it, Kirk's formula is an approximation, with its error against the exact integral stated below, and "the forward is an expectation" is a theorem, proved in Why it works.
 
 ### The picture: what the July option pays, and what it is worth today
 
@@ -109,13 +111,17 @@ Let a forward agreed today at price $F_P$ pay $S_T - F_P$ at time $T$. Entering 
 
 ### Step 2: reading a baseload and peak shape
 
-Power is quoted in **blocks** of hours. The common North American **peak** block is 5x16: sixteen hours a day, five weekdays a week. The code takes hours ending 7 to 22, local time; each exchange contract names its own hours. **Off-peak** is every other hour. **Baseload** is all hours. July 2027 has 31 days and starts on a Thursday, so it holds 22 weekdays: 352 peak hours and 392 off-peak hours out of 744. Exchanges set their own holiday rules per hub, and those move a day or two between blocks. *Conventions dated 2026-09-28:* the block hours, the weekday start and the no-holiday count are this card's stated assumptions; each contract's own specification governs.
+Power is quoted in **blocks** of hours. The common North American **peak** block is 5x16: sixteen hours a day, five weekdays a week. The code takes hours ending 7 to 22, local time; each exchange contract names its own hours. **Off-peak** is every other hour. **Baseload** is all hours.
+
+July 2027 has 31 days and starts on a Thursday, so it holds 22 weekdays: 352 peak hours and 392 off-peak hours out of 744.
+
+Exchanges set their own holiday rules per hub, and those move a day or two between blocks. *Conventions dated 2026-09-28:* the block hours, the weekday start and the no-holiday count are this card's stated assumptions; each contract's own specification governs.
 
 A baseload forward is the hour-weighted average of the two blocks. With peak at $60 and baseload at $50:
 
 $$50 \times 744 = 60 \times 352 + \text{off-peak} \times 392 \;\Rightarrow\; \text{off-peak} = \$41.02.$$
 
-The code finds the weekday of 1 July 2027 by Sakamoto's rule and counts the peak hours from it. The same weighting runs through a day: an hourly shape is a set of weights that average back to the block price.
+The code finds the weekday of 1 July 2027 by Sakamoto's rule (a short formula for the day of the week of any date) and counts the peak hours from it. The same weighting runs through a day: an hourly shape is a set of weights that average back to the block price.
 
 ### Step 3: spikes, drawn as jumps
 
@@ -146,7 +152,7 @@ With a zero strike, Margrabe's exchange formula is exact: measure power in units
 
 ### Step 5: the exact road, by fixing gas first
 
-Kirk is an approximation, so the card checks it against an exact price. Fix July gas at one outcome. Given that outcome, power is still lognormal: its forward shifts by the part of its move that follows gas, and its leftover volatility is $\sigma_P\sqrt{1-\rho^2}$. Fuel plus cost is now a fixed number, so Black-76 prices the call on power exactly. Average those prices across every gas outcome, weighted by the bell curve, and discount. The average is a one-dimensional integral, done by Simpson's rule on 600 slices. That is **$21.9723** against Kirk's **$21.9721**.
+Kirk is an approximation, so the card checks it against an exact price. Fix July gas at one outcome. Given that outcome, power is still lognormal: its forward shifts by the part of its move that follows gas, and its leftover volatility is $\sigma_P\sqrt{1-\rho^2}$. Fuel plus cost is now a fixed number, so Black-76 prices the call on power exactly. Average those prices across every gas outcome, weighted by the bell curve, and discount. The average is a one-dimensional integral, done by Simpson's rule (adding up the area under a curve from evenly spaced slices) on 600 slices. That is **$21.9723** against Kirk's **$21.9721**.
 
 A third road, simulation, draws 100,000 correlated pairs of July prices, each with its mirror image, and averages the payoff: $21.9752, within one standard error of 0.0126 of the integral.
 
@@ -208,7 +214,7 @@ Bars: Kirk value of each month, times its hours, times 400 MW. The strip's forwa
 | --- | --- | --- |
 | July power priced from January spot plus carry ($30.76) | $4.72, not $21.97 | Power cannot be carried; the forward is its own average |
 | Correlation set to 0 | $22.48, not $21.97 | Independent legs make the gap too jumpy |
-| Only the locked-in margin counted | $21.94 here; 0 for a peaker worth $4.90 | Throws away the right to stay off |
+| Only the locked-in margin counted | $21.94 here; 0 for a peaker (an old plant with heat rate 15) worth $4.90 | Throws away the right to stay off |
 | One baseload decision for the month | $21.97, not $22.05 for peak and off-peak apart | Coarser choices are worth less |
 
 The code prints every one.
@@ -649,9 +655,165 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulations included: both languages use the same random-number recipe from the same seed.
 
+### Lean
+
+Lean proves three facts for any prices, not just lognormal ones, and checks the card's calendar and fuel arithmetic.
+
+- A forward costs nothing to enter, so its price is the average July spot price under the pricing weights. No storage or carry enters.
+- The spark spread option is worth at least the discounted margin the forwards lock in. The difference is the value of being allowed to stay off.
+- Splitting a month into blocks can only add value. Suppose the baseload price is the hour-weighted average of the block prices. Then one baseload decision is worth no more than the hour-weighted average of the block options.
+- July 2027 starts on a Thursday and has 744 hours: 352 peak and 392 off-peak. With peak at $60 and baseload at $50, off-peak is 2010/49, about $41.02.
+- Fuel costs $22.50 per MWh, and the spark spread and fuel plus cost are both $27.50. The July payoff is $2.50 at power $30 and nothing at $20.
+- For the old peaker, power exactly covers fuel plus cost, so the locked-in margin is zero.
+
+Kirk's formula, the exact integral, the simulation, the spike model and the strip values are left to the Python and Rust checks.
+
+```lean
+-- Power that cannot be stored: a zero-cost power forward equals the average future spot price under the pricing weights, a plant's option is worth at least its locked-in margin, and splitting a month into blocks never lowers its value.
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+open MeasureTheory
+
+/-- A forward agreed today at price `F` pays `S_T - F` at time `T` and costs nothing to enter.
+If every payoff's price today is `e^{-rT}` times its average under the pricing weights `Q`,
+then the forward price is the average future spot price: `F = E^Q[S_T]`.
+No storage or carry enters the argument. -/
+theorem forward_price_eq_expected_spot {Ω : Type*} [MeasurableSpace Ω]
+    (Q : Measure Ω) [IsProbabilityMeasure Q] (S : Ω → ℝ) (hS : Integrable S Q)
+    (r T F : ℝ) (hzero : Real.exp (-r * T) * ∫ ω, (S ω - F) ∂Q = 0) :
+    F = ∫ ω, S ω ∂Q := by
+  have hpos : 0 < Real.exp (-r * T) := Real.exp_pos _
+  have h0 : ∫ ω, (S ω - F) ∂Q = 0 := by
+    rcases mul_eq_zero.mp hzero with h | h
+    · exact absurd h hpos.ne'
+    · exact h
+  rw [integral_sub hS (integrable_const F)] at h0
+  simp at h0
+  linarith
+
+/-- The spark spread option, which pays `max(S_T - H G_T - K, 0)`, is worth at least the
+discounted margin the forwards lock in, `e^{-rT} max(F_P - H F_G - K, 0)`, where the forwards
+are the averages `F_P = E^Q[S_T]` and `F_G = E^Q[G_T]`. The difference is the value of being
+allowed to stay off. -/
+theorem spark_spread_option_ge_locked_in_margin {Ω : Type*} [MeasurableSpace Ω]
+    (Q : Measure Ω) [IsProbabilityMeasure Q] (S G : Ω → ℝ)
+    (hS : Integrable S Q) (hG : Integrable G Q) (r T H K : ℝ) :
+    Real.exp (-r * T) * max ((∫ ω, S ω ∂Q) - H * (∫ ω, G ω ∂Q) - K) 0 ≤
+      Real.exp (-r * T) * ∫ ω, max (S ω - H * G ω - K) 0 ∂Q := by
+  apply mul_le_mul_of_nonneg_left _ (Real.exp_pos _).le
+  have hSG : Integrable (fun ω => S ω - H * G ω) Q := hS.sub (hG.const_mul H)
+  have hf : Integrable (fun ω => S ω - H * G ω - K) Q := hSG.sub (integrable_const K)
+  have hm : Integrable (fun ω => max (S ω - H * G ω - K) 0) Q := hf.pos_part
+  refine max_le ?_ ?_
+  · have h1 : ∫ ω, (S ω - H * G ω - K) ∂Q = (∫ ω, S ω ∂Q) - H * (∫ ω, G ω ∂Q) - K := by
+      rw [integral_sub hSG (integrable_const K),
+        integral_sub hS (hG.const_mul H), integral_const_mul]
+      simp
+    rw [← h1]
+    exact integral_mono hf hm (fun ω => le_max_left _ _)
+  · exact integral_nonneg (fun ω => le_max_right _ _)
+
+/-- Splitting a month into blocks can only add value. The month is split into blocks `i`
+with `h i ≥ 0` hours each (at least one hour in all) and block power prices `P i`; the
+baseload price is their hour-weighted average. One baseload decision for the month is worth
+no more than the hour-weighted average of separate decisions, one per block. -/
+theorem block_options_ge_baseload_option {Ω ι : Type*} [MeasurableSpace Ω]
+    (Q : Measure Ω) [IsProbabilityMeasure Q] (s : Finset ι) (h : ι → ℝ)
+    (hh : ∀ i ∈ s, 0 ≤ h i) (hpos : 0 < ∑ i ∈ s, h i)
+    (P : ι → Ω → ℝ) (hP : ∀ i ∈ s, Integrable (P i) Q) (G : Ω → ℝ) (hG : Integrable G Q)
+    (r T H K : ℝ) :
+    Real.exp (-r * T) *
+        ∫ ω, max ((∑ i ∈ s, h i * P i ω) / (∑ i ∈ s, h i) - H * G ω - K) 0 ∂Q ≤
+      (∑ i ∈ s, h i * (Real.exp (-r * T) * ∫ ω, max (P i ω - H * G ω - K) 0 ∂Q)) /
+        (∑ i ∈ s, h i) := by
+  set W := ∑ i ∈ s, h i with hW
+  set E := Real.exp (-r * T) with hE
+  have hEpos : 0 < E := Real.exp_pos _
+  have hmi : ∀ i ∈ s, Integrable (fun ω => h i * max (P i ω - H * G ω - K) 0) Q := by
+    intro i hi
+    exact ((((hP i hi).sub (hG.const_mul H)).sub (integrable_const K)).pos_part).const_mul _
+  have hsum : Integrable (fun ω => ∑ i ∈ s, h i * max (P i ω - H * G ω - K) 0) Q :=
+    integrable_finsetSum s hmi
+  have hpt : ∀ ω, max ((∑ i ∈ s, h i * P i ω) / W - H * G ω - K) 0 ≤
+      (∑ i ∈ s, h i * max (P i ω - H * G ω - K) 0) / W := by
+    intro ω
+    have hnn : 0 ≤ ∑ i ∈ s, h i * max (P i ω - H * G ω - K) 0 :=
+      Finset.sum_nonneg (fun i hi => mul_nonneg (hh i hi) (le_max_right _ _))
+    refine max_le ?_ (div_nonneg hnn hpos.le)
+    have heq : (∑ i ∈ s, h i * P i ω) / W - H * G ω - K =
+        (∑ i ∈ s, h i * (P i ω - H * G ω - K)) / W := by
+      field_simp
+      simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul]
+      rw [hW]
+      ring
+    rw [heq]
+    apply div_le_div_of_nonneg_right _ hpos.le
+    exact Finset.sum_le_sum (fun i hi => mul_le_mul_of_nonneg_left (le_max_left _ _) (hh i hi))
+  have hint : ∫ ω, max ((∑ i ∈ s, h i * P i ω) / W - H * G ω - K) 0 ∂Q ≤
+      ∫ ω, (∑ i ∈ s, h i * max (P i ω - H * G ω - K) 0) / W ∂Q :=
+    integral_mono_of_nonneg (Filter.Eventually.of_forall (fun ω => le_max_right _ _))
+      (hsum.div_const W) (Filter.Eventually.of_forall hpt)
+  have hrhs : ∫ ω, (∑ i ∈ s, h i * max (P i ω - H * G ω - K) 0) / W ∂Q =
+      (∑ i ∈ s, h i * ∫ ω, max (P i ω - H * G ω - K) 0 ∂Q) / W := by
+    rw [integral_div, integral_finsetSum s hmi]
+    congr 1
+    refine Finset.sum_congr rfl (fun i _ => ?_)
+    exact integral_const_mul _ _
+  calc E * ∫ ω, max ((∑ i ∈ s, h i * P i ω) / W - H * G ω - K) 0 ∂Q
+      ≤ E * ((∑ i ∈ s, h i * ∫ ω, max (P i ω - H * G ω - K) 0 ∂Q) / W) := by
+        rw [← hrhs]; exact mul_le_mul_of_nonneg_left hint hEpos.le
+    _ = (∑ i ∈ s, h i * (E * ∫ ω, max (P i ω - H * G ω - K) 0 ∂Q)) / W := by
+        rw [mul_div_assoc', Finset.mul_sum]
+        congr 1
+        refine Finset.sum_congr rfl (fun i _ => ?_)
+        ring
+
+-- July 2027 has 31 days of 24 hours.
+example : 31 * 24 = 744 := by norm_num
+
+-- 1 July 2027 is a Thursday (Monday = 0, so weekday 3), by Sakamoto's rule as the card's code writes it.
+example : (2027 + 2027 / 4 - 2027 / 100 + 2027 / 400 + 5 + 1 + 6) % 7 = 3 := by decide
+
+-- Starting on a Thursday, July 2027 has 22 weekdays, so 22 × 16 = 352 peak hours.
+example : ((Finset.range 31).filter (fun d => (3 + d) % 7 < 5)).card = 22 := by decide
+example : ((Finset.range 31).filter (fun d => (3 + d) % 7 < 5)).card * 16 = 352 := by decide
+
+-- Off-peak hours: 744 - 352 = 392.
+example : 744 - 352 = 392 := by norm_num
+
+-- Peak $60, baseload $50: 50 × 744 = 60 × 352 + off-peak × 392 gives off-peak = 2010/49 (about $41.02).
+example : (50 : ℚ) * 744 = 60 * 352 + (2010 / 49) * 392 := by norm_num
+
+-- Fuel per MWh: heat rate 15/2 times gas $3 is $45/2; the spark spread is 50 - 45/2 = 55/2;
+-- fuel plus the $5 cost is 55/2 as well.
+example : (15 / 2 : ℚ) * 3 = 45 / 2 := by norm_num
+example : (50 : ℚ) - 15 / 2 * 3 = 55 / 2 := by norm_num
+example : (15 / 2 : ℚ) * 3 + 5 = 55 / 2 := by norm_num
+
+-- The payoff at expiry, power minus 55/2 or nothing, at power $30 and $20 (chart points).
+example : max ((30 : ℚ) - 55 / 2) 0 = 5 / 2 := by norm_num
+example : max ((20 : ℚ) - 55 / 2) 0 = 0 := by norm_num
+
+-- The peaker: heat rate 15 at gas $3 burns $45, so $50 power exactly covers fuel plus $5 cost.
+example : max ((50 : ℚ) - 15 * 3 - 5) 0 = 0 := by norm_num
+
+#print axioms forward_price_eq_expected_spot
+#print axioms spark_spread_option_ge_locked_in_margin
+#print axioms block_options_ge_baseload_option
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'forward_price_eq_expected_spot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'spark_spread_option_ge_locked_in_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'block_options_ge_baseload_option' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ### Greeks of the July option
 
-Each Greek is bumped on both roads; they agree to the third decimal. [Greeks of a spread option](05-spread-option-greeks.md) derives them.
+A Greek is the change in the option's value for a small change in one input. Each Greek is bumped on both roads; they agree to the third decimal. [Greeks of a spread option](05-spread-option-greeks.md) derives them.
 
 | Greek, per MWh of capacity | Kirk | Exact | Meaning for the owner |
 | --- | --- | --- | --- |
@@ -712,7 +874,7 @@ A monthly strip prices a plant that decides once a month; the open question is w
 
 ## Sources
 
-Verified 2026-09-28: each link opens the cited work; DOIs checked against Crossref for title and first author.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Alexander Eydeland and Krzysztof Wolyniec, *Energy and Power Risk Management: New Developments in Modeling, Pricing, and Hedging*, Wiley, 2003. [Publisher page](https://www.wiley.com/en-us/Energy+and+Power+Risk+Management%3A+New+Developments+in+Modeling%2C+Pricing%2C+and+Hedging-p-9780471104001). Why power has no carry, block shapes, spikes, and plants as spark spread options.
 - Shi-Jie Deng, Blake Johnson and Aram Sogomonian, "Exotic electricity options and the valuation of electricity generation and transmission assets", *Decision Support Systems* 30 (2001), 383–392. [doi:10.1016/S0167-9236(00)00112-3](https://doi.org/10.1016/S0167-9236(00)00112-3). A plant valued as a strip of spark spread options.

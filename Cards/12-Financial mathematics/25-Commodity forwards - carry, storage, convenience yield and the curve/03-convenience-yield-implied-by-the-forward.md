@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A barrel of crude oil costs $80 today. Money borrowed or lent for a year costs 5%. Keeping the barrel in a tank for a year costs 2% of its value. A trader who buys the barrel now with borrowed money, stores it, and delivers it in a year has spent $85.80 by delivery day. That is the ceiling on the one-year forward price (the price agreed today for delivery in a year): quote more, and anyone can buy, store and sell forward for a sure profit.
+A barrel of crude oil costs $80 today. Money borrowed or lent for a year costs 5%. Keeping the barrel in a tank for a year costs 2% of its value.
+
+A trader who buys the barrel now with borrowed money, stores it, and delivers it in a year has spent $85.80 by delivery day. That is the ceiling on the one-year forward price (the price agreed today for delivery in a year): quote more, and anyone can buy, store and sell forward for a sure profit.
 
 The market quotes $84. That is $1.80 under the ceiling, and no outsider can collect that $1.80. The trade that would collect it runs the other way: sell a barrel today, bank the cash, skip the storage, and buy it back forward. It needs someone holding barrels who is willing to part with them. The people holding barrels are refiners, traders and airlines, and they hold them because they need them.
 
@@ -35,7 +37,7 @@ $$y \;=\; r + u - \frac{\ln(F/S)}{T}$$
 
 **Read it aloud:** the convenience yield is interest plus storage, minus the growth the market forward actually shows over spot, measured per year.
 
-It is the carry formula from [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), $F = S\,e^{(r+u-y)T}$, solved for the one letter nobody quotes.
+It is the carry formula from [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), $F = S\,e^{(r+u-y)T}$, solved for the one letter nobody quotes. Here $e^{z}$ is the growth factor of continuous compounding at rate $z$, and $\ln$, the natural log, undoes it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -66,7 +68,9 @@ Two helper facts, each one line. The forward in terms of the ceiling: $F = C\,e^
 
 ### Step 0: the carry trade is one-sided
 
-Two trades police a forward price. The first, **cash-and-carry**, buys spot, stores it and sells forward. Anyone with cash and a tank can run it, so it caps the forward at the ceiling $C$. The second, **reverse cash-and-carry**, sells spot, banks the money and buys forward. Only someone holding the commodity can run it, and holders have reasons not to. So there is a ceiling and no matching floor. The convenience yield is the name for how far below the ceiling the market chooses to sit.
+Two trades police a forward price. The first, **cash-and-carry**, buys spot, stores it and sells forward. Anyone with cash and a tank can run it, so it caps the forward at the ceiling $C$.
+
+The second, **reverse cash-and-carry**, sells spot, banks the money and buys forward. Only someone holding the commodity can run it, and holders have reasons not to. So there is a ceiling and no matching floor. The convenience yield is the name for how far below the ceiling the market chooses to sit.
 
 ### Step 1: the ceiling
 
@@ -118,11 +122,15 @@ Together: $f$ is a one-to-one match between all real yields and all positive for
 
 Take a holder with one barrel. The reverse trade is open to them: sell it for $80, bank it at 5% to get $84.10 in a year, save the storage (worth $1.70 in delivery-day dollars on the storage card's convention), and buy a barrel forward for $84. In a year they have a barrel again and $84.10 + $1.70 − $84 = $1.80 more than if they had just kept it. In today's money that is $1.71.
 
-Holders who keep their barrel are turning that down. So to the holder at the margin (the one just on the edge of selling), a barrel on hand for the year is worth at least $1.80 more than a barrel on paper. That value comes from being able to run a refinery through a supply cut, fill an order without waiting, or avoid shutting a plant down. Nicholas Kaldor named it the convenience yield in 1939. Written as a continuously compounded rate off the ceiling, as in Step 2, the $1.80 becomes 2.12% a year.
+Holders who keep their barrel are turning that down. So to the holder at the margin (the one just on the edge of selling), a barrel on hand for the year is worth at least $1.80 more than a barrel on paper.
+
+That value comes from being able to run a refinery through a supply cut, fill an order without waiting, or avoid shutting a plant down. Nicholas Kaldor named it the convenience yield in 1939. Written as a continuously compounded rate off the ceiling, as in Step 2, the $1.80 becomes 2.12% a year.
 
 ### Step 6: why it is not a cash flow
 
-Interest is paid by a borrower. Storage is paid to a tank owner. Nobody pays the convenience yield. It is an **implied** number: inferred from a price, the way a car's value to its owner is inferred from the offers they refuse. A holder who has no use for the oil collects nothing by holding it; for them the right move is the reverse trade and the $1.80. The number belongs to the market, read off the forward, and it changes whenever the forward does.
+Interest is paid by a borrower. Storage is paid to a tank owner. Nobody pays the convenience yield. It is an **implied** number: inferred from a price, the way a car's value to its owner is inferred from the offers they refuse.
+
+A holder who has no use for the oil collects nothing by holding it; for them the right move is the reverse trade and the $1.80. The number belongs to the market, read off the forward, and it changes whenever the forward does.
 
 A second route to the same number goes through the gap alone. With $x = G/C = 0.020986$, the series $-\ln(1-x) = x + x^2/2 + x^3/3 + \dots$ adds up to 0.021210. The code takes that road without calling a log, and a third that never takes a log at all.
 
@@ -179,7 +187,9 @@ tight         ██████████████████████
 squeeze       ██████████████████████████████████████     9.53
 ```
 
-The ordering is the theory of storage. Holbrook Working and Michael Brennan argued in the 1940s and 1950s that with plenty in storage one more barrel is worth little to its holder, and with little in storage one more barrel is worth a lot. So the convenience yield falls as inventories rise: steeply when stocks are low, and flattening out once tanks are comfortable. Eugene Fama and Kenneth French tested this on futures prices in 1987 and found the spread between futures and spot moving with seasonal swings in inventories as the theory predicts.
+The ordering is the theory of storage. Holbrook Working and Michael Brennan argued in the 1940s and 1950s that with plenty in storage one more barrel is worth little to its holder, and with little in storage one more barrel is worth a lot.
+
+So the convenience yield falls as inventories rise: steeply when stocks are low, and flattening out once tanks are comfortable. Eugene Fama and Kenneth French tested this on futures prices in 1987 and found the spread between futures and spot moving with seasonal swings in inventories as the theory predicts.
 
 The whole map from forward to yield, spot and carry held fixed:
 
@@ -193,13 +203,17 @@ xychart-beta
     line [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-The falling line is the implied yield; the flat line is zero. The falling line crosses 7.00% at a forward of $80, where the forward equals spot, and crosses zero just below $86, at the ceiling of $85.80. Everything left of $80 is a forward below spot: backwardation (a curve that slopes down), the subject of [Contango and backwardation](04-contango-backwardation-and-roll-yield.md). The line bends slightly upward: each dollar off the forward adds a little more yield than the last, because $dy/dF = -1/(FT)$ grows as $F$ shrinks.
+The falling line is the implied yield; the flat line is zero. The falling line crosses 7.00% at a forward of $80, where the forward equals spot, and crosses zero just below $86, at the ceiling of $85.80.
+
+Everything left of $80 is a forward below spot: backwardation (a curve that slopes down), the subject of [Contango and backwardation](04-contango-backwardation-and-roll-yield.md). The line bends slightly upward: each dollar off the forward adds a little more yield than the last, because $dy/dF = -1/(FT)$ grows as $F$ shrinks.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach the implied yield by three roads that share no step. Road 1 is the closed form, one logarithm. Road 2 is bisection: guess a yield, run the carry formula forwards, and halve the interval until the forward lands on $84; it never takes a log. Road 3 turns the dollar gap into a share of the ceiling and sums the series for $-\ln(1-x)$ by hand. Then the code checks the slope by bumping the forward a cent, confirms that the yield falls strictly across the chart's forwards (the uniqueness claim, on the page's own numbers), and prints every boundary case, every wrong answer, the inventory states and the chart points.
+Both programs reach the implied yield by three roads that share no step. Road 1 is the closed form, one logarithm. Road 2 is bisection: guess a yield, run the carry formula forwards, and halve the interval until the forward lands on $84; it never takes a log. Road 3 turns the dollar gap into a share of the ceiling and sums the series for $-\ln(1-x)$ by hand.
+
+Then the code checks the slope by bumping the forward a cent, confirms that the yield falls strictly across the chart's forwards (the uniqueness claim, on the page's own numbers), and prints every boundary case, every wrong answer, the inventory states and the chart points.
 
 ### Python
 
@@ -491,6 +505,96 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree byte for byte.
+
+### Lean
+
+Lean proves the card's main claims for every positive spot, positive forward and positive delivery time, not just the crude example.
+
+- Suppose $S > 0$, $F > 0$ and $T > 0$. Then a yield $y$ makes the carry formula hit $F$ exactly when $y = r + u - \ln(F/S)/T$.
+- Take $S > 0$ and $T > 0$, and let $f(y) = S\,e^{(r+u-y)T}$. Then $f$ strictly falls and takes every positive value, so each positive forward comes from exactly one yield.
+- Take the same $S$, $F$ and $T$. Then a forward at the carry ceiling $C$ gives $y = 0$, and a forward at spot gives $y = r + u$.
+- Take the same $S$, $F$ and $T$. Then $F > C$ exactly when $y < 0$: only a forward above the carry ceiling gives a negative yield.
+- Take $S = F = 80$, $r = 5\%$, $u = 2\%$ and $T = 1$. Then $y = 7\%$.
+- Take $F = 84$ and use $F/S - 1$ in place of $\ln(F/S)$. Then the wrong answer comes out at 2.00%.
+
+The decimals, such as the 2.12% yield, the slope and the chart points, are left to the Python and Rust checks.
+
+```lean
+-- Convenience yield: for positive spot, positive forward and positive time, exactly one yield makes the carry formula hit the forward, it is r + u - ln(F/S)/T, and it is zero at the ceiling and negative above it.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+open Real
+
+/-- The convenience yield implied by the forward exists and is unique, and the
+card's formula gives it: with spot `S > 0`, market forward `F > 0` and time to
+delivery `T > 0`, a yield `y` makes the carry formula `F = S e^{(r+u-y)T}` land
+exactly on the market forward if and only if `y = r + u - ln(F/S)/T`. -/
+theorem convenience_yield_unique_and_formula (S F T r u : ℝ)
+    (hS : 0 < S) (hF : 0 < F) (hT : 0 < T) (y : ℝ) :
+    F = S * exp ((r + u - y) * T) ↔ y = r + u - log (F / S) / T := by
+  constructor
+  · intro h
+    have hl : log (F / S) = (r + u - y) * T := by
+      rw [h, mul_div_cancel_left₀ _ hS.ne', log_exp]
+    rw [hl]; field_simp; ring
+  · intro h
+    have hl : (r + u - y) * T = log (F / S) := by
+      rw [h]; field_simp; ring
+    rw [hl, exp_log (div_pos hF hS)]; field_simp
+
+/-- Every yield is hit by exactly one forward: for `S > 0` and `T > 0`, the map
+`f(y) = S e^{(r+u-y)T}` is strictly falling, and its values are exactly the
+positive numbers. -/
+theorem implied_forward_strictAnti_and_onto_positives (S T r u : ℝ)
+    (hS : 0 < S) (hT : 0 < T) :
+    StrictAnti (fun y : ℝ => S * exp ((r + u - y) * T)) ∧
+      Set.range (fun y : ℝ => S * exp ((r + u - y) * T)) = Set.Ioi 0 := by
+  refine ⟨?_, ?_⟩
+  · intro a b hab
+    exact mul_lt_mul_of_pos_left (exp_lt_exp.mpr (by nlinarith)) hS
+  · ext x
+    constructor
+    · rintro ⟨y, rfl⟩
+      exact mul_pos hS (exp_pos _)
+    · intro hx
+      exact ⟨r + u - log (x / S) / T,
+        ((convenience_yield_unique_and_formula S x T r u hS hx hT _).mpr rfl).symm⟩
+
+/-- The boundary cases: with `S > 0`, `F > 0`, `T > 0` and ceiling
+`C = S e^{(r+u)T}`, a forward at the ceiling gives yield zero, a forward above
+the ceiling gives a negative yield, and a forward at spot gives `y = r + u`. -/
+theorem convenience_yield_boundary_cases (S F T r u : ℝ)
+    (hS : 0 < S) (hF : 0 < F) (hT : 0 < T) :
+    (r + u - log (S * exp ((r + u) * T) / S) / T = 0) ∧
+      (S * exp ((r + u) * T) < F ↔ r + u - log (F / S) / T < 0) ∧
+      (r + u - log (S / S) / T = r + u) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [mul_div_cancel_left₀ _ hS.ne', log_exp]; field_simp; ring
+  · rw [log_div hF.ne' hS.ne', sub_neg, lt_div_iff₀ hT]
+    rw [← log_lt_log_iff (mul_pos hS (exp_pos _)) hF, log_mul hS.ne' (exp_pos _).ne', log_exp]
+    constructor <;> intro h <;> linarith
+  · rw [div_self hS.ne', log_one]; simp
+
+-- Card, Step 4: at spot, F = S = 80, with r = 5%, u = 2%, T = 1, the yield is 7%.
+example : (1 / 20 : ℝ) + 1 / 50 - log (80 / 80) / 1 = 7 / 100 := by
+  norm_num
+
+-- Card, "What breaks": using F/S - 1 in place of ln(F/S) gives 2.00%.
+example : (1 / 20 : ℚ) + 1 / 50 - (84 / 80 - 1) / 1 = 1 / 50 := by
+  norm_num
+
+#print axioms convenience_yield_unique_and_formula
+#print axioms implied_forward_strictAnti_and_onto_positives
+#print axioms convenience_yield_boundary_cases
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'convenience_yield_unique_and_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'implied_forward_strictAnti_and_onto_positives' depends on axioms: [propext, Classical.choice, Quot.sound]
+'convenience_yield_boundary_cases' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -6,11 +6,15 @@
 
 ## General Overview
 
-In 2021 a bank agreed a five-year interest rate swap on 10,000,000 dollars. It pays a fixed 1.00 percent a year. In return it receives a floating rate, reset each year to the one-year lending rate. Rates have since climbed: this morning the one-year rate is 4.20 percent and the five-year par swap rate (the fixed rate that makes a new swap worth zero) is 4.65 percent. Five annual coupons are left, and every one of them now runs in the bank's favour. Priced the old way, the swap is worth 1,599,584.77 dollars to the bank.
+In 2021 a bank agreed a five-year interest rate swap on 10,000,000 dollars. It pays a fixed 1.00 percent a year. In return it receives a floating rate, reset each year to the one-year lending rate.
 
-That value is a debt owed by the other side. The two banks have signed a collateral agreement: whoever is behind posts cash equal to the swap's value, and the receiver pays interest on that cash at the **overnight rate** (the rate for lending cash for one day against good security, rolled every day). So the other bank has handed over about 1.6 million dollars in cash, and it earns the overnight rate on it.
+Rates have since climbed: this morning the one-year rate is 4.20 percent and the five-year par swap rate (the fixed rate that makes a new swap worth zero) is 4.65 percent. Five annual coupons are left, and every one of them now runs in the bank's favour. Priced the old way, the swap is worth 1,599,584.77 dollars to the bank.
 
-That one contract term moves the price. Discount the same five coupons with the overnight curve instead of the term lending curve, and the swap is worth 1,611,259.86 dollars. The value moves by 11,675.09 dollars, about 12,000, with no change in any forecast rate or any quote on the screen. Vladimir Piterbarg set out the reason in 2010: collateral is a loan, and the loan's interest rate becomes the discount rate.
+That value is a debt owed by the other side. The two banks have signed a collateral agreement. Whoever is behind posts cash equal to the swap's value. The receiver pays interest on that cash at the **overnight rate** (the rate for lending cash for one day against good security, rolled every day). So the other bank has handed over about 1.6 million dollars in cash, and it earns the overnight rate on it.
+
+That one contract term moves the price. Discount the same five coupons with the overnight curve instead of the term lending curve (the single curve built from today's one-year rate and swap quotes, used the old way), and the swap is worth 1,611,259.86 dollars. The value moves by 11,675.09 dollars, about 12,000, with no change in any forecast rate or any quote on the screen.
+
+Vladimir Piterbarg set out the reason in 2010: collateral is a loan, and the loan's interest rate becomes the discount rate. The bank's funding rate, the rate it pays to borrow money for itself, no longer enters the price.
 
 **When a trade is fully covered by cash collateral that earns the overnight rate, the funding rate cancels out of the price, and the trade's cash flows are discounted at the overnight rate.**
 
@@ -37,7 +41,9 @@ Nothing is borrowed from the bank's own funding desk at any point. That is why t
 
 ## The formula
 
-Notation first, in words. A **growth factor** is what one dollar grows to over one period: at 4.2 percent simple interest for a year it is 1.042. The pricing average $E_Q[X]$ is the average payoff under the market's **pricing probabilities** $Q$ (the weights that price every traded payoff, set out on [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). The summation sign in the formulas below, a capital sigma, means "add up over the listed years".
+Notation first, in words. A **growth factor** is what one dollar grows to over one period: at 4.2 percent simple interest for a year it is 1.042. The pricing average $E_Q[X]$ is the average payoff under the market's **pricing probabilities** $Q$ (the weights that price every traded payoff, set out on [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)).
+
+The summation sign in the formulas below, a capital sigma, means "add up over the listed years".
 
 One period, any collateral amount $C$:
 
@@ -49,7 +55,7 @@ $$\boxed{\;V \;=\; \frac{E_Q[X]}{g_c}\;}$$
 
 **Read it aloud:** the money tied up after collateral, grown at the funding rate, must equal the average payoff less the collateral handed back with interest; when the collateral is the whole value, nothing is tied up and the payoff is discounted at the collateral rate.
 
-Over five annual periods the collateral growth factors multiply into the collateral account's growth $B_j$; its reciprocal is the overnight discount factor $D_j = 1/B_j$, and the swap that receives floating and pays fixed is worth
+Over five annual periods the collateral growth factors multiply into the collateral account's growth $B_j$. Its reciprocal is the overnight discount factor $D_j = 1/B_j$. The swap that receives floating and pays fixed is worth
 
 $$V \;=\; N\sum_{j=1}^{5} D_j\,(F_j - K) \;=\; N\,(S_5 - K)\,A, \qquad A = \sum_{j=1}^{5} D_j .$$
 
@@ -70,12 +76,14 @@ $$V \;=\; N\sum_{j=1}^{5} D_j\,(F_j - K) \;=\; N\,(S_5 - K)\,A, \qquad A = \sum_
 
 In this card the overnight curve is built from the term curve: $D_j = L_j\,e^{s j}$, the overnight zero rate sitting 0.25 percent below the term zero rate at every date. The shortcut $N(S_5 - K)A$ holds because a new five-year swap at the par rate $S_5$ is worth zero; Step 5 shows why.
 
-**Conventions verified 28 Sep 2026.** Every accrual is set to exactly one year and the floating rate is a stylised one-year term rate, known at the start of its year and paid at the end, so the arithmetic stays visible. In the dollar market the overnight rate is now SOFR, new swaps reference it compounded, and collateral agreements and clearing houses pay interest on dollar cash at a rate tied to it ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)).
+**Conventions verified 28 Sep 2026.** Every accrual is set to exactly one year. The floating rate is a stylised one-year term rate, known at the start of its year and paid at the end. Both choices keep the arithmetic visible.
+
+In the dollar market the overnight rate is now SOFR (the Secured Overnight Financing Rate). New swaps reference it compounded. Collateral agreements and clearing houses pay interest on dollar cash at a rate tied to it ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)).
 
 ### When it holds
 
 - **Cash collateral, reusable, returned with interest at a known rate each period.** If the collateral is a bond, or sits segregated with a custodian, the holder cannot spend it and the ledger in Why it works gains entries the formula does not have.
-- **Full collateral, reset on every date the value is measured.** A threshold (a first slice of exposure left uncovered) or a margin lag leaves part of the value funded at $g_f$; the partial formula $V = E_Q[X]/((1-\theta)g_f + \theta g_c)$ then applies, and the uncovered part belongs to [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
+- **Full collateral, reset on every date the value is measured.** A threshold (a first slice of exposure left uncovered) or a margin lag (a delay before the collateral is updated) leaves part of the value funded at $g_f$; the partial formula $V = E_Q[X]/((1-\theta)g_f + \theta g_c)$ then applies, and the uncovered part belongs to [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
 - **One funding rate for borrowing and lending.** If a desk borrows dearer than it lends, the funding rate stops cancelling on the uncollateralised side.
 - **No default.** The loss if the other side fails is a separate adjustment.
 - **Each collateral factor known at the start of its period.** The tree proof needs this; the continuous limit covers a rate that moves daily. With random rates each $F_j$ is an average weighted by the overnight curve, and the rebuild in Step 5 finds exactly that average.
@@ -86,11 +94,13 @@ In this card the overnight curve is built from the term curve: $D_j = L_j\,e^{s 
 
 ### Step 0: collateral is a loan with its own interest rate
 
-A bank that holds a claim worth $V$ and receives cash collateral $V$ has, in effect, borrowed $V$ from its counterparty. It must repay that loan, with interest at the collateral rate, when the claim settles. Buying the claim costs $V$; the loan brings in $V$. Nothing is left to fund. The bank's own borrowing rate never touches the trade. The only rate that does is the rate on the collateral loan, so that is the rate the payoff is discounted at.
+A bank that holds a claim worth $V$ and receives cash collateral $V$ has, in effect, borrowed $V$ from its counterparty. It must repay that loan, with interest at the collateral rate, when the claim settles.
+
+Buying the claim costs $V$; the loan brings in $V$. Nothing is left to fund. The bank's own borrowing rate never touches the trade. The only rate that does is the rate on the collateral loan, so that is the rate the payoff is discounted at.
 
 ### Step 1: in the funded market, every payoff has a price
 
-Take one period, a year here. The bank can borrow or lend at growth factor $g_f$. The market prices every year-end payoff $Y$ at $E_Q[Y]/g_f$: its pricing average, discounted at the funding rate. This is the one-period pricing rule of the state-prices card, with $g_f$ as the bank account.
+Take one period, a year here. The bank can borrow or lend at growth factor $g_f$. The market prices every year-end payoff $Y$ at $E_Q[Y]/g_f$: its pricing average, discounted at the funding rate. This is the one-period pricing rule of [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md), with $g_f$ as the bank account.
 
 ### Step 2: write the collateralised position as one payoff
 
@@ -112,11 +122,15 @@ Let $V_i$ be the swap's value just after year $i$'s coupon. Across year $i+1$ th
 
 $$V_i = \frac{E_Q[X_{i+1}] + V_{i+1}}{g_{c,i+1}} .$$
 
-Start from $V_5 = 0$ and roll back. Each coupon ends up divided by the product of the collateral factors up to its date. That product's reciprocal is the discount factor of the overnight curve, $D_j$. So each coupon is discounted on the overnight curve. This is where the name comes from: an **overnight index swap** (OIS) is a swap whose floating side pays the overnight rate compounded, and its quotes give the curve $D_j$ ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)).
+Start from $V_5 = 0$ and roll back. Each coupon ends up divided by the product of the collateral factors up to its date. That product's reciprocal is the discount factor of the overnight curve, $D_j$. So each coupon is discounted on the overnight curve.
+
+This is where the name comes from: an **overnight index swap** (OIS) is a swap whose floating side pays the overnight rate compounded. Its quotes give the curve $D_j$ ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)).
 
 ### Step 5: rebuild the forecasts, then the annuity does the rest
 
-The quotes on the screen are for collateralised swaps, and each is worth zero on the day it is struck. Once discounting moves to $D_j$, the forecasts $F_j$ must be solved again, shortest quote first, so that every quote still prices at zero. This is the same climb as [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md), with the unknown now the forecast instead of the discount factor. Here the forecasts move by about a tenth of a basis point at most (a basis point is 0.01 percent): 4.8719 percent becomes 4.8707 percent in year 3.
+The quotes on the screen are for collateralised swaps, and each is worth zero on the day it is struck. Once discounting moves to $D_j$, the forecasts $F_j$ must be solved again, shortest quote first, so that every quote still prices at zero. This is the same climb as [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md), with the unknown now the forecast instead of the discount factor.
+
+Here the forecasts move by about a tenth of a basis point at most (a basis point is 0.01 percent): 4.8719 percent becomes 4.8707 percent in year 3.
 
 A shortcut then gives the value without the forecasts at all. The new five-year par swap receives the same floating coupons and pays $S_5$; it is worth zero. Subtract it from the old swap. The floating sides cancel coupon by coupon, and what is left is $N(S_5 - K)$ each year, discounted: $N(S_5 - K)A$. Switching curves changes one thing, the annuity, from 4.38242404 to 4.41441058.
 
@@ -129,7 +143,7 @@ A shortcut then gives the value without the forecasts at all. The new five-year 
 
 **Step 3, uniqueness.** With $C = \theta V$ and $0 \le \theta \le 1$, the coefficient of $V$ is $(1-\theta)g_f + \theta g_c$, positive because both factors are positive. One linear equation with a non-zero coefficient has exactly one root. At $\theta = 1$ it is $E_Q[X]/g_c$.
 
-**Step 4, backward induction.** On a tree of years with known next-year factors at every node, Step 3 applies at each node with the payoff $X_{i+1} + V_{i+1}$. Starting from $V_5 = 0$, induction gives a value and a hedge at every node. Writing $B_j$ for the product of the first $j$ collateral factors, the tower rule of averages turns the recursion into $V_0 = E_Q[\sum_j X_j / B_j]$; with factors known today, $1/B_j = D_j$.
+**Step 4, backward induction.** On a tree of years with known next-year factors at every node, Step 3 applies at each node with the payoff $X_{i+1} + V_{i+1}$. Starting from $V_5 = 0$, induction gives a value and a hedge at every node. Writing $B_j$ for the product of the first $j$ collateral factors, the tower rule of averages (averaging in two stages gives the same answer as averaging once) turns the recursion into $V_0 = E_Q[\sum_j X_j / B_j]$; with factors known today, $1/B_j = D_j$.
 
 **The continuous limit.** Let a period last $\Delta t$ years, with $g_f = 1 + r_F\,\Delta t$ and $g_c = 1 + r_C\,\Delta t$. Step 2 then says the value's expected growth over the period is $r_F V - (r_F - r_C)\,C$ per unit of time. With $C = V$ that is $r_C V$: the value grows, on average under $Q$, at the overnight rate, so $V_0 = E_Q[e^{-\int_0^T r_C(u)\,du}\,V_T]$. This is Piterbarg's formula in its fully collateralised case.
 
@@ -139,7 +153,9 @@ A shortcut then gives the value without the forecasts at all. The new five-year 
 
 ### The other door
 
-Piterbarg worked in continuous time: the value is a stochastic process, collateral enters as a cash account that drifts at the collateral rate, and Itô's lemma turns the hedge into a pricing equation whose discount rate is the collateral rate. The finite ledger above reaches the same place with growth factors and one line of algebra per year. The case where collateral is missing or partial, and the funding rate stays in, is taken up properly on [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
+Piterbarg worked in continuous time. There the value is a stochastic process (a quantity that moves randomly through time). Collateral enters as a cash account that grows at the collateral rate. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md), the chain rule for such random quantities, turns the hedge into a pricing equation whose discount rate is the collateral rate.
+
+The finite ledger above reaches the same place with growth factors and one line of algebra per year. The case where collateral is missing or partial, and the funding rate stays in, is taken up properly on [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
 
 ---
 
@@ -189,7 +205,7 @@ Correct value: 1,611,259.86.
 
 ## Code, from first principles, and it actually runs
 
-The code rebuilds the term curve from the six quotes, builds the overnight curve 0.25 percent below it, and values the swap three independent ways: rebuilt forecasts discounted on the overnight curve; par minus fixed times the annuity, which uses no forecasts at all; and the collateral account rolled back one year at a time. It solves the half-collateral case with its own bisection root finder, prints the year-by-year collateral ledger from directly summed values, and reproduces every wrong number above. Mutation tests were run: shortening the annuity in the forecast rebuild, rolling back with the funding factor, and bisecting with the wrong collateral factor each make an assert fail.
+The code rebuilds the term curve from the five quotes and builds the overnight curve 0.25 percent below it. It then values the swap three independent ways: rebuilt forecasts discounted on the overnight curve; par minus fixed times the annuity, which uses no forecasts at all; and the collateral account rolled back one year at a time. It solves the half-collateral case with its own bisection root finder, prints the year-by-year collateral ledger from directly summed values, and reproduces every wrong number above. Mutation tests were run: shortening the annuity in the forecast rebuild, rolling back with the funding factor, and bisecting with the wrong collateral factor each make an assert fail.
 
 ### Python
 
@@ -526,6 +542,138 @@ xychart-beta
 
 The one line is the move, new value minus old, for the same five-year swap at different fixed rates. It is straight, because the move is $N(S_5 - K)$ times the change in annuity, and it crosses zero at the par rate, 4.65 percent. A swap struck near today's rates barely moves: at 4.50 percent, the shelf's house swap, the move is 479.80. Old swaps far from par move the most.
 
+### Lean
+
+Lean takes Step 2's equation as given and proves Steps 3 and 4, for any positive growth factors.
+
+- Suppose Step 2's equation holds and $C = V$. Then $V = E_Q[X]/g_c$, and $g_f$ drops out.
+- Suppose Step 2's equation holds and $C = \theta V$, with $0 \le \theta \le 1$. Then $V = E_Q[X]/((1-\theta)g_f + \theta g_c)$.
+- Suppose the value is zero after the last coupon, and each year rolls back as in Step 4. Then today's value is the sum of $D_j\,E_Q[X_j]$, for any number of years.
+- The first coupon is 320,000 dollars, and par minus fixed is 3.65 percent.
+
+The curves, the rebuilt forecasts, the annuity shortcut and the other dollar figures are left to the Python and Rust checks.
+
+```lean
+-- Collateral discounting: in the one-period state-price model a claim fully covered by cash collateral is worth its pricing average divided by the collateral growth factor, so the funding rate drops out; partial cover blends the two factors, and over many periods each payment is discounted by the product of the collateral factors.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib
+
+open Finset
+
+/-! The one-period model of the card. There are finitely many year-end states `Ω`. The pricing
+probabilities `Q ω` are positive and add to one, and the bank borrows and lends at one funding
+growth factor `g_f > 0`, so a year-end payoff `Y` costs `(∑ ω, Q ω * Y ω) / g_f` today
+(Step 1). The collateral is cash `C`, handed back at year-end as `g_c * C` with a collateral
+growth factor `g_c > 0` known today. Buying the claim (worth `V`) and receiving the collateral
+is a position costing `V - C` today that pays `X ω - g_c * C` at year-end (Step 2), so no
+arbitrage gives `V - C = (∑ ω, Q ω * (X ω - g_c * C)) / g_f`. -/
+
+/-- Collateral discounting. If a claim paying `X` at year-end is fully covered by cash
+collateral, `C = V`, returned with interest at the collateral growth factor `g_c`, then the
+claim is worth its pricing average divided by `g_c`: `V = E_Q[X] / g_c`. The funding growth
+factor `g_f` does not appear in the answer. -/
+theorem fully_collateralised_claim_discounts_at_collateral_rate
+    {Ω : Type*} [Fintype Ω] (Q : Ω → ℝ) (hQpos : ∀ ω, 0 < Q ω) (hQsum : ∑ ω, Q ω = 1)
+    (X : Ω → ℝ) (g_f g_c V C : ℝ) (hgf : 0 < g_f) (hgc : 0 < g_c)
+    (hprice : V - C = (∑ ω, Q ω * (X ω - g_c * C)) / g_f)
+    (hfull : C = V) :
+    V = (∑ ω, Q ω * X ω) / g_c := by
+  subst hfull
+  have hsum : ∑ ω, Q ω * (X ω - g_c * C) = ∑ ω, Q ω * X ω - g_c * C := by
+    simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, hQsum, one_mul]
+  rw [hsum, sub_self, eq_comm, div_eq_zero_iff] at hprice
+  rcases hprice with h | h
+  · field_simp
+    linarith
+  · exact absurd h hgf.ne'
+
+/-- Partial collateral. If only a fraction `θ` of the value is covered, `C = θ * V` with
+`0 ≤ θ ≤ 1`, then the claim is discounted at a blend of the two growth factors weighted by how
+much is covered: `V = E_Q[X] / ((1 - θ) * g_f + θ * g_c)`. -/
+theorem partially_collateralised_claim_blends_growth_factors
+    {Ω : Type*} [Fintype Ω] (Q : Ω → ℝ) (hQpos : ∀ ω, 0 < Q ω) (hQsum : ∑ ω, Q ω = 1)
+    (X : Ω → ℝ) (g_f g_c V C θ : ℝ) (hgf : 0 < g_f) (hgc : 0 < g_c)
+    (hθ0 : 0 ≤ θ) (hθ1 : θ ≤ 1)
+    (hprice : V - C = (∑ ω, Q ω * (X ω - g_c * C)) / g_f)
+    (hC : C = θ * V) :
+    V = (∑ ω, Q ω * X ω) / ((1 - θ) * g_f + θ * g_c) := by
+  subst hC
+  have hsum : ∑ ω, Q ω * (X ω - g_c * (θ * V)) = ∑ ω, Q ω * X ω - g_c * (θ * V) := by
+    simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, hQsum, one_mul]
+  rw [hsum] at hprice
+  have hden : 0 < (1 - θ) * g_f + θ * g_c := by
+    rcases eq_or_lt_of_le hθ1 with h | h
+    · subst h; simpa using hgc
+    · have : 0 < 1 - θ := by linarith
+      positivity
+  rw [eq_div_iff hden.ne']
+  rw [eq_div_iff hgf.ne'] at hprice
+  linarith
+
+lemma rollback_aux
+    (n : ℕ) (g x V : ℕ → ℝ) (hg : ∀ j, 0 < g j)
+    (hend : V n = 0)
+    (hstep : ∀ i < n, V i = (x (i + 1) + V (i + 1)) / g (i + 1)) :
+    ∀ d i, i + d = n →
+      V i / ∏ k ∈ Icc 1 i, g k = ∑ j ∈ Ioc i n, x j / ∏ k ∈ Icc 1 j, g k := by
+  intro d
+  induction d with
+  | zero =>
+    intro i hi
+    simp at hi
+    subst hi
+    simp [hend]
+  | succ d ih =>
+    intro i hi
+    have hlt : i < n := by omega
+    have IH := ih (i + 1) (by omega)
+    have hP : 0 < ∏ k ∈ Icc 1 i, g k := Finset.prod_pos (fun k _ => hg k)
+    have hg1 := hg (i + 1)
+    rw [← Finset.insert_Ioc_add_one_left_eq_Ioc hlt, Finset.sum_insert (by simp), ← IH,
+      Finset.prod_Icc_succ_top (by omega), hstep i hlt]
+    field_simp
+
+#print axioms rollback_aux
+
+/-- Many periods (Step 4). Over `n` years with collateral growth factors `g j > 0` known today,
+let `x j` be the pricing average of year `j`'s payment and `V i` the value just after year
+`i`'s payment. Full collateral rolls back one year at a time, `V i = (x (i + 1) + V (i + 1)) /
+g (i + 1)`, from `V n = 0`. Then today's value is every payment discounted on the collateral
+(overnight) curve, `D j = 1 / (g 1 * ⋯ * g j)`: `V 0 = ∑ j = 1..n, x j / (g 1 * ⋯ * g j)`. -/
+theorem collateral_rollback_discounts_on_overnight_curve
+    (n : ℕ) (g x V : ℕ → ℝ) (hg : ∀ j, 0 < g j)
+    (hend : V n = 0)
+    (hstep : ∀ i < n, V i = (x (i + 1) + V (i + 1)) / g (i + 1)) :
+    V 0 = ∑ j ∈ Icc 1 n, x j / ∏ k ∈ Icc 1 j, g k := by
+  have h := rollback_aux n g x V hg hend hstep n 0 (by simp)
+  have hI : Ioc 0 n = Icc 1 n := by ext j; simp; omega
+  simpa [hI] using h
+
+/-! The card's exact worked numbers. -/
+
+-- The first coupon: 10,000,000 times (4.20 percent minus 1.00 percent) is 320,000 dollars.
+example : (10000000 : ℚ) * (42 / 1000 - 1 / 100) = 320000 := by norm_num
+
+-- Par minus fixed: 4.65 percent minus 1.00 percent is 3.65 percent.
+example : (465 / 10000 : ℚ) - 1 / 100 = 365 / 10000 := by norm_num
+
+#print axioms fully_collateralised_claim_discounts_at_collateral_rate
+#print axioms partially_collateralised_claim_blends_growth_factors
+#print axioms collateral_rollback_discounts_on_overnight_curve
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rollback_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fully_collateralised_claim_discounts_at_collateral_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'partially_collateralised_claim_blends_growth_factors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'collateral_rollback_discounts_on_overnight_curve' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -567,6 +715,8 @@ The one line is the move, new value minus old, for the same five-year swap at di
 ## What this builds on
 
 - [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md): one curve to forecast, another to discount. This card supplies the reason the discount curve is the overnight one.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the one-period pricing rule, payoff averaged under the pricing probabilities and discounted, that Step 1 starts from.
+- [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md): solving a curve one maturity at a time, used here for the term curve and again in Step 5 for the forecasts.
 
 ## Where this goes next
 

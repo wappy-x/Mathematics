@@ -10,7 +10,9 @@ A share trades in Frankfurt at 100 euros. A euro costs 1.10 dollars today. So to
 
 The fund wants a one-year call on that dollar value. The contract takes the share's euro price on expiry day, converts it at that day's exchange rate, and pays whatever exceeds 110 dollars. Nothing is fixed in advance except the dollar strike. A call on a foreign share, measured in home money at the market rate, is a **composite option**.
 
-The fund now carries two risks in one number: the share can move, and the euro can move. They multiply. A share that climbs from 100 to 120 euros while the euro climbs to 1.30 dollars is worth 156.00 dollars. The option's price depends on how much that product wobbles. With the share's volatility (yearly spread of its percentage moves) at 20%, the euro's at 10%, and a correlation (a measure from −1 to +1 of how the two move together) of 0.30, the product wobbles at 24.9% a year. The call costs **12.85 dollars**.
+The fund now carries two risks in one number: the share can move, and the euro can move. They multiply. A share that climbs from 100 to 120 euros while the euro climbs to 1.30 dollars is worth 156.00 dollars.
+
+The option's price depends on how much that product wobbles. With the share's volatility (yearly spread of its percentage moves) at 20%, the euro's at 10%, and a correlation (a measure from −1 to +1 of how the two move together) of 0.30, the product wobbles at 24.9% a year. The call costs **12.85 dollars**.
 
 The same share has two cousins on this shelf. A **quanto** pays the euro gain at a rate fixed on day one, 1.10, and costs 9.15 dollars ([Quanto option](02-quanto-option.md)). A **plain euro call**, with its euro payoff converted when it arrives, costs 9.71 dollars. Three contracts, one share, three prices, three different bets.
 
@@ -41,13 +43,13 @@ Notation first. $V$ is the share's dollar value, the share's euro price times th
 
 $$C = V\,e^{-qT}\,N(d_1) \;-\; K\,e^{-r_d T}\,N(d_2), \qquad V = S\,X_0$$
 
-**Read it aloud: the dollar value of the share the holder might receive, minus the dollars the holder might hand over, each weighted by its own chance and discounted at the dollar rate, exactly as in Black-Scholes.**
+**Read it aloud:** the dollar value of the share the holder might receive, minus the dollars the holder might hand over, each weighted by its own chance and discounted at the dollar rate, exactly as in Black-Scholes.
 
 The one new ingredient is the volatility, written $\sigma_V$:
 
 $$\sigma_V = \sqrt{\sigma_S^2 + \sigma_X^2 + 2\rho\,\sigma_S\,\sigma_X}$$
 
-**Read it aloud: the spread of the product is the square root of the share's variance plus the currency's variance plus twice their co-movement.**
+**Read it aloud:** the spread of the product is the square root of the share's variance plus the currency's variance plus twice their co-movement.
 
 | Symbol | Plain meaning | In our example | Push it up and the call… |
 | --- | --- | --- | --- |
@@ -64,7 +66,7 @@ $$\sigma_V = \sqrt{\sigma_S^2 + \sigma_X^2 + 2\rho\,\sigma_S\,\sigma_X}$$
 | $T$ | years to expiry | 1 | raises it: more room to move |
 | $N(x)$, $d_1$, $d_2$ | bell-curve area left of $x$; the two cut-offs, in standard deviations | $d_1$ = 0.285143, $d_2$ = 0.036145 | — |
 
-The cut-offs are the pilot's, run on the dollar value with the composite volatility:
+The cut-offs are those of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), run on the dollar value with the composite volatility:
 
 $$d_1 = \frac{\ln(V/K) + (r_d - q + \tfrac12\sigma_V^2)\,T}{\sigma_V\sqrt{T}}, \qquad d_2 = d_1 - \sigma_V\sqrt{T}$$
 
@@ -123,7 +125,7 @@ In the dollar pricing world let $dS_t/S_t = \mu\,dt + \sigma_S\,dW^S_t$ and $dX_
 
 **Sum.** $d\ln V_t = \big(r_d - q - \rho\sigma_S\sigma_X - \tfrac12\sigma_S^2 - \tfrac12\sigma_X^2\big)dt + \sigma_S\,dW^S_t + \sigma_X\,dW^X_t$. The noise term $\sigma_S\,dW^S_t + \sigma_X\,dW^X_t$ has variance $(\sigma_S^2 + \sigma_X^2 + 2\rho\sigma_S\sigma_X)\,dt = \sigma_V^2\,dt$, so it equals $\sigma_V\,dW^V_t$ for a standard Brownian motion $W^V$. The drift is $r_d - q - \tfrac12\sigma_V^2$, because $\tfrac12\sigma_V^2 = \tfrac12\sigma_S^2 + \tfrac12\sigma_X^2 + \rho\sigma_S\sigma_X$.
 
-**Result.** $dV_t/V_t = (r_d - q)\,dt + \sigma_V\,dW^V_t$: the correlation that bent the share's drift is exactly absorbed into the product's variance, and the product grows at $r_d - q$, as Step 1 required. The payoff $\max(V_T - K, 0)$ is then priced by the pilot's argument with $S \to V$, $r \to r_d$, $\sigma \to \sigma_V$. $\blacksquare$
+**Result.** $dV_t/V_t = (r_d - q)\,dt + \sigma_V\,dW^V_t$: the correlation that bent the share's drift is exactly absorbed into the product's variance, and the product grows at $r_d - q$, as Step 1 required. The payoff $\max(V_T - K, 0)$ is then priced by the Black–Scholes argument with $S \to V$, $r \to r_d$, $\sigma \to \sigma_V$. $\blacksquare$
 
 </details>
 
@@ -142,7 +144,7 @@ The quanto pays $\bar{X}(S_T - K)$: the currency enters only through the pricing
 
 ### The other door: a relabelled Black-Scholes call
 
-The formula is the pilot's call with three substitutions: the share's dollar value $V$ for the share price, the dollar rate $r_d$ for the rate, the composite volatility $\sigma_V$ for the volatility. Any Black-Scholes routine prices a composite if fed those three numbers, and the pilot's proof of the call, [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), is the proof of this one.
+The formula is the Black–Scholes call with three substitutions: the share's dollar value $V$ for the share price, the dollar rate $r_d$ for the rate, the composite volatility $\sigma_V$ for the volatility. Any Black-Scholes routine prices a composite if fed those three numbers, and the proof of the call on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), is the proof of this one.
 
 ---
 
@@ -226,7 +228,7 @@ The Greeks (sensitivities of the price to each input) at the house point:
 | Delta in shares, $e^{-qT}N(d_1)$ | 0.606141 | shares a seller holds to hedge, bought in euros |
 | Price per euro of share price | 0.666755 USD | delta in shares times $X_0$ |
 | Price per 1.00 of exchange rate | 60.61 USD | delta in shares times $S$ |
-| Vega to $\sigma_V$ | 41.72 USD per unit | per percentage point, divide by 100 |
+| Vega (sensitivity to volatility), to $\sigma_V$ | 41.72 USD per unit | per percentage point, divide by 100 |
 | Sensitivity to $\sigma_S$ | 38.53 USD per unit | vega times $(\sigma_S + \rho\sigma_X)/\sigma_V$ |
 | Sensitivity to $\rho$ | 3.35 USD per unit | vega times $\sigma_S\sigma_X/\sigma_V$ |
 
@@ -620,6 +622,155 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves three facts behind the price, for every input that meets each fact's conditions, and checks the house arithmetic.
+
+- Suppose $S_T, X_T > 0$ and their logs are jointly bell-shaped, with the variances and covariance of Step 2. Then $\ln V_T$ is bell-shaped, with mean the sum of the two means and variance $\sigma_V^2 T$.
+- Take $\sigma_S, \sigma_X \ge 0$ and $\rho$ from −1 to +1. Then $\sigma_V$ lies between $|\sigma_S - \sigma_X|$ and $\sigma_S + \sigma_X$.
+- Suppose $V_T$ has an average, and in the dollar pricing world it grows on average at $r_d - q$ from $V$. Then $C - P = V e^{-qT} - K e^{-r_d T}$.
+- The house numbers check out exactly: cross term 0.012, composite variance 0.062, and dollar value 110.
+- The composite volatility is 10% at $\rho = -1$, 30% at $\rho = +1$, and exactly 20% at $\rho = -0.25$.
+- The four expiry-day payoffs in the table of three contracts check out exactly.
+
+The price formula, the Greeks, the integrals and every option price are left to the Python and Rust checks.
+
+```lean
+-- Composite option: if the share's and the currency's log returns are jointly normal, the log of the dollar value is normal with the variance of a product, the composite volatility lies between the difference and the sum of the two volatilities, and put-call parity holds on the dollar value.
+import Mathlib.Probability.Distributions.Gaussian.HasGaussianLaw.Basic
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open MeasureTheory ProbabilityTheory
+
+/-- Steps 2 and 3 of the card. Let the share's euro price `ST` and the exchange rate `XT`
+(dollars per euro) on expiry day be positive, with their logs jointly normal ("two linked
+lognormal walks"), the share's log having variance `σS² T`, the currency's `σX² T`, and their
+covariance `ρ σS σX T` (constant volatilities and correlation). Then the log of the dollar value
+`V_T = S_T X_T` is normal, with mean the sum of the two means and variance
+`(σS² + σX² + 2 ρ σS σX) T = σV² T`: the dollar value is lognormal with the volatility of a
+product. -/
+theorem log_dollar_value_gaussian_composite_variance
+    {Ω : Type*} {mΩ : MeasurableSpace Ω} {P : Measure Ω}
+    (ST XT : Ω → ℝ) (σS σX ρ T : ℝ)
+    (hS_pos : ∀ ω, 0 < ST ω) (hX_pos : ∀ ω, 0 < XT ω)
+    (hjoint : HasGaussianLaw (fun ω ↦ (Real.log (ST ω), Real.log (XT ω))) P)
+    (hvarS : Var[fun ω ↦ Real.log (ST ω); P] = σS ^ 2 * T)
+    (hvarX : Var[fun ω ↦ Real.log (XT ω); P] = σX ^ 2 * T)
+    (hcov : cov[fun ω ↦ Real.log (ST ω), fun ω ↦ Real.log (XT ω); P] = ρ * σS * σX * T) :
+    P.map (fun ω ↦ Real.log (ST ω * XT ω)) =
+      gaussianReal (P[fun ω ↦ Real.log (ST ω)] + P[fun ω ↦ Real.log (XT ω)])
+        ((σS ^ 2 + σX ^ 2 + 2 * ρ * σS * σX) * T).toNNReal := by
+  have hP : IsProbabilityMeasure P := hjoint.isProbabilityMeasure
+  have hsum : HasGaussianLaw (fun ω ↦ Real.log (ST ω) + Real.log (XT ω)) P := hjoint.fun_add
+  have hA := hjoint.fst.memLp_two
+  have hB := hjoint.snd.memLp_two
+  have heq : (fun ω ↦ Real.log (ST ω * XT ω)) =
+      (fun ω ↦ Real.log (ST ω) + Real.log (XT ω)) := by
+    funext ω
+    exact Real.log_mul (hS_pos ω).ne' (hX_pos ω).ne'
+  rw [heq, hsum.map_eq_gaussianReal, integral_add hjoint.fst.integrable hjoint.snd.integrable,
+    variance_fun_add hA hB, hvarS, hvarX, hcov]
+  congr 2
+  ring
+
+/-- The composite volatility is squeezed between the difference and the sum of the two
+volatilities: for any correlation `ρ` from −1 to +1, `|σS − σX| ≤ σV ≤ σS + σX`, so
+"volatilities added" is right only at `ρ = +1`. -/
+theorem composite_vol_between_difference_and_sum
+    (σS σX ρ : ℝ) (hσS : 0 ≤ σS) (hσX : 0 ≤ σX) (hρ₁ : -1 ≤ ρ) (hρ₂ : ρ ≤ 1) :
+    |σS - σX| ≤ Real.sqrt (σS ^ 2 + σX ^ 2 + 2 * ρ * σS * σX) ∧
+      Real.sqrt (σS ^ 2 + σX ^ 2 + 2 * ρ * σS * σX) ≤ σS + σX := by
+  have hprod : 0 ≤ σS * σX := mul_nonneg hσS hσX
+  constructor
+  · apply Real.abs_le_sqrt
+    nlinarith
+  · rw [Real.sqrt_le_iff]
+    constructor
+    · positivity
+    · nlinarith
+
+/-- Put-call parity on the dollar value. If the dollar value `V_T` on expiry day is integrable
+and, in the dollar pricing world, grows at `r_d − q` from today's value `V`
+(`E[V_T] = V e^{(r_d − q) T}`), then the composite call `C = e^{−r_d T} E[max(V_T − K, 0)]` and
+put `P = e^{−r_d T} E[max(K − V_T, 0)]` satisfy `C − P = V e^{−qT} − K e^{−r_d T}`. -/
+theorem composite_put_call_parity
+    {Ω : Type*} {mΩ : MeasurableSpace Ω} {Q : Measure Ω} [IsProbabilityMeasure Q]
+    (VT : Ω → ℝ) (V K rd q T : ℝ)
+    (hint : Integrable VT Q)
+    (hgrowth : Q[VT] = V * Real.exp ((rd - q) * T)) :
+    Real.exp (-rd * T) * Q[fun ω ↦ max (VT ω - K) 0] -
+        Real.exp (-rd * T) * Q[fun ω ↦ max (K - VT ω) 0] =
+      V * Real.exp (-q * T) - K * Real.exp (-rd * T) := by
+  have h1 : Integrable (fun ω ↦ max (VT ω - K) 0) Q :=
+    (hint.sub (integrable_const K)).sup (integrable_const 0)
+  have h2 : Integrable (fun ω ↦ max (K - VT ω) 0) Q :=
+    ((integrable_const K).sub hint).sup (integrable_const 0)
+  have hdiff : (fun ω ↦ max (VT ω - K) 0 - max (K - VT ω) 0) = fun ω ↦ VT ω - K := by
+    funext ω
+    rcases le_total (VT ω) K with h | h
+    · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+    · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+  have hI : Q[fun ω ↦ max (VT ω - K) 0] - Q[fun ω ↦ max (K - VT ω) 0] = Q[VT] - K := by
+    rw [← integral_sub h1 h2, hdiff, integral_sub hint (integrable_const K)]
+    simp
+  have hexp : V * Real.exp ((rd - q) * T) * Real.exp (-rd * T) = V * Real.exp (-q * T) := by
+    rw [mul_assoc, ← Real.exp_add]
+    congr 2
+    ring
+  rw [← mul_sub, hI, hgrowth, mul_sub, mul_comm (Real.exp (-rd * T)), hexp,
+    mul_comm (Real.exp (-rd * T))]
+
+-- The house example: σS = 20%, σX = 10%, ρ = 0.30. Cross term 0.012, composite variance 0.062.
+example : (2 : ℚ) * (3 / 10) * (1 / 5) * (1 / 10) = 12 / 1000 := by norm_num
+example : ((1 : ℚ) / 5) ^ 2 + (1 / 10) ^ 2 + 2 * (3 / 10) * (1 / 5) * (1 / 10) = 62 / 1000 := by
+  norm_num
+
+-- At ρ = −1 the composite vol is 10%, at ρ = +1 it is 30%, at ρ = −0.25 it is exactly 20%.
+example : Real.sqrt ((1 / 5 : ℝ) ^ 2 + (1 / 10) ^ 2 + 2 * (-1) * (1 / 5) * (1 / 10)) = 1 / 10 := by
+  rw [show (1 / 5 : ℝ) ^ 2 + (1 / 10) ^ 2 + 2 * (-1) * (1 / 5) * (1 / 10) = (1 / 10) ^ 2 by norm_num]
+  exact Real.sqrt_sq (by norm_num)
+example : Real.sqrt ((1 / 5 : ℝ) ^ 2 + (1 / 10) ^ 2 + 2 * 1 * (1 / 5) * (1 / 10)) = 3 / 10 := by
+  rw [show (1 / 5 : ℝ) ^ 2 + (1 / 10) ^ 2 + 2 * 1 * (1 / 5) * (1 / 10) = (3 / 10) ^ 2 by norm_num]
+  exact Real.sqrt_sq (by norm_num)
+example : Real.sqrt ((1 / 5 : ℝ) ^ 2 + (1 / 10) ^ 2 + 2 * (-1 / 4) * (1 / 5) * (1 / 10)) = 1 / 5 := by
+  rw [show (1 / 5 : ℝ) ^ 2 + (1 / 10) ^ 2 + 2 * (-1 / 4) * (1 / 5) * (1 / 10) = (1 / 5) ^ 2 by norm_num]
+  exact Real.sqrt_sq (by norm_num)
+
+-- Today's dollar value: 100 euros at 1.10 dollars per euro is 110 dollars.
+example : (100 : ℚ) * (11 / 10) = 110 := by norm_num
+
+-- The four expiry days (strike 110 dollars; quanto and plain strike 100 euros, quanto rate 1.10).
+-- Share 120, rate 1.30: dollar value 156, quanto 22, composite 46, plain 26.
+example : (120 : ℚ) * (13 / 10) = 156 := by norm_num
+example : (11 / 10 : ℚ) * max (120 - 100) 0 = 22 := by norm_num
+example : max ((120 : ℚ) * (13 / 10) - 110) 0 = 46 := by norm_num
+example : (13 / 10 : ℚ) * max (120 - 100) 0 = 26 := by norm_num
+-- Share 120, rate 0.90: dollar value 108, composite 0, plain 18.
+example : max ((120 : ℚ) * (9 / 10) - 110) 0 = 0 := by norm_num
+example : (9 / 10 : ℚ) * max (120 - 100) 0 = 18 := by norm_num
+-- Share 95, rate 1.30: dollar value 123.50, quanto 0, composite 13.50, plain 0.
+example : max ((95 : ℚ) * (13 / 10) - 110) 0 = 27 / 2 := by norm_num
+example : (11 / 10 : ℚ) * max (95 - 100) 0 = 0 := by norm_num
+-- Share 110, rate 1.10: dollar value 121, all three pay 11.
+example : max ((110 : ℚ) * (11 / 10) - 110) 0 = 11 := by norm_num
+example : (11 / 10 : ℚ) * max (110 - 100) 0 = 11 := by norm_num
+
+#print axioms log_dollar_value_gaussian_composite_variance
+#print axioms composite_vol_between_difference_and_sum
+#print axioms composite_put_call_parity
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'log_dollar_value_gaussian_composite_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'composite_vol_between_difference_and_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'composite_put_call_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first.
@@ -657,6 +808,7 @@ The two outputs agree line for line.
 
 ## What this builds on
 
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the call formula, its cut-offs and its proof. This card feeds it the dollar value, the dollar rate and the composite volatility.
 - [Quanto option](02-quanto-option.md): the fixed-rate contract on the same share, the price this card is measured against, and the dollar pricing world with two linked walks.
 - [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): the variance of a sum is each variance plus twice the covariance, the whole of Step 2.
 
@@ -664,6 +816,8 @@ The two outputs agree line for line.
 
 - [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md): every input here is quoted in a market except $\rho$. A quoted quanto price pins it, and that implied correlation then prices the composite.
 - [Hedging a quanto](03-quanto-greeks-and-hedging.md): the hedge that the composite gets for free, one euro share position, is two positions for the quanto.
+
+The question this card leaves open: every input except $\rho$ is quoted in a market, so where does the correlation come from?
 
 ---
 

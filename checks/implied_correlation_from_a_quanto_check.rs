@@ -161,4 +161,5 @@ fn main() {
     assert!((a - b).abs() < 1e-6);
     assert!((sd / formula - 1.0).abs() < 0.15);
     println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

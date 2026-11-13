@@ -130,3 +130,4 @@ assert abs(usd_eq_closed - usd_eq_bisect) < 1e-10
 assert abs((Y - RF) - log(1 + Q / (1 + FE[0]))) < 1e-12              # funding gap = ln((1+f+s)/(1+f))
 assert max(abs(a - b) for a, b in zip(bootstrap(0.0), PF)) < 1e-14   # zero basis gives back the euro curve
 print("all checks passed")
+print("ALL CHECKS PASS")

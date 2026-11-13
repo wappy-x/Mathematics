@@ -131,7 +131,7 @@ With one bill paid today this is $(S + U)e^{rT}$.
 
 **Proof.** Suppose instead $F$ exceeds the right side. At time 0, sell one forward, borrow $S$ and buy a unit. At each $t_i$ borrow $U_i$ and pay the warehouse. At $T$ deliver the unit, receive $F$, and repay every loan: the first costs $S e^{rT}$, the one taken at $t_i$ costs $U_i e^{r(T - t_i)}$. Net cash at every date before $T$ is zero; at $T$ it is $F$ minus the right side, which is positive by assumption. A position that costs nothing and pays a positive amount for sure is a riskless profit, a contradiction.
 
-**Why no lower bound follows.** The reverse argument must deliver, at time 0, a unit of the commodity the trader does not own. That requires borrowing the commodity and returning it at $T$. If such a loan exists at a known cost, the same algebra gives a matching floor, and for gold it does. If no lender exists, the argument cannot start. The only floor left is the lowest possible delivery-day price, since a long forward below it pays $S_T - F > 0$ for sure. When $S_T$ can fall close to zero, as in the simulation, any $F > 0$ up to the ceiling is consistent with no-arbitrage.
+**Why no lower bound follows.** The reverse argument must deliver, at time 0, a unit of the commodity the trader does not own. That requires borrowing the commodity and returning it at $T$. If such a loan exists at a known cost, the same algebra gives a matching floor, and for gold it does. If no lender exists, the argument cannot start. The only floor left is the lowest possible delivery-day price, since a long forward (the buyer's side) below it pays $S_T - F > 0$ for sure. When $S_T$ can fall close to zero, as in the simulation, any $F > 0$ up to the ceiling is consistent with no-arbitrage.
 
 **Storage as a rate.** If the warehouse keeps the fraction $u\,\Delta t$ in each spell of length $\Delta t$, $n$ spells leave $(1 - uT/n)^n$ of the pile, which tends to $e^{-uT}$ as $n$ grows. Starting with $e^{uT}$ units leaves one; financing them costs $S e^{uT} e^{rT}$.
 
@@ -174,7 +174,7 @@ Correct ceiling: $6.623008.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Leave storage out | $6.307627 | Forwards between $6.31 and $6.62 look rich; trading them loses money once the warehouse is paid. |
+| Leave storage out | $6.307627 | Forwards between $6.31 and $6.62 look overpriced; trading them loses money once the warehouse is paid. |
 | Add the bill without financing it | $6.607627 | The $0.30 is paid today and borrowed for a year. Correct only if the bill is due at delivery. |
 | Read $0.30 on $6.00 as $u = 5\%$ | $6.631026 | A 5% in-kind rate needs $e^{0.05} = 1.0513$ bushels bought per bushel delivered, 5.13% extra; the matching rate is 4.879%. |
 | Simple interest instead of continuous | $6.615000 | $6.30 \times 1.05$. The error hides at two decimals and grows with $T$ and $r$. |
@@ -183,7 +183,7 @@ Correct ceiling: $6.623008.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the ceiling by **three independent roads** and then test the trade on a fourth. Road 1 is the formula. Road 2 runs the cash-and-carry loan through 200,000 short spells of simple interest, with no exponential function. Road 3 charges storage in kind, a sliver of grain per spell, and finances the extra grain. Road 4 repays the loan from a home-made Taylor series for $e^x$ and draws 20,000 delivery-day wheat prices from a home-made random number generator (a linear congruential generator, turned into bell-curve draws by the Box–Muller formula) with 25% volatility, and records the cash-and-carry profit at $6.80 and a grain-less buyer's result at $6.00. The asserts check that each road lands on the ceiling, that the carry profit is the same on the worst and best path, and that the $6.00 forward can lose.
+The scripts reach the ceiling by **three independent roads** and then test the trade on a fourth. Road 1 is the formula. Road 2 runs the cash-and-carry loan through 200,000 short spells of simple interest, with no exponential function. Road 3 charges storage in kind, a sliver of grain per spell, and finances the extra grain. Road 4 repays the loan from a home-made Taylor series for $e^x$ and draws 20,000 delivery-day wheat prices from a home-made random number generator (a linear congruential generator, turned into bell-curve draws by the Box–Muller formula) with 25% volatility (a typical yearly price move of about 25%), and records the cash-and-carry profit at $6.80 and a grain-less buyer's result at $6.00. The asserts check that each road lands on the ceiling, that the carry profit is the same on the worst and best path, and that the $6.00 forward can lose.
 
 ### Python
 
@@ -461,6 +461,122 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the carry ceiling, the missing floor and the match with storage as a rate, for any prices, rates and times.
+
+- Suppose bills $U_i$ fall due at times $t_i$ between 0 and $T$, and cash-and-carry gives no riskless profit. Then $F \le S\,e^{rT} + \sum_i U_i\,e^{r(T - t_i)}$.
+- Take one bill $U \ge 0$ paid today, $S > 0$, and $0 < F \le (S + U)e^{rT}$. Then neither cash-and-carry nor buying the forward without grain is a riskless profit, when $S_T$ can be any positive price.
+- Suppose the warehouse keeps the fraction $uT/n$ of the pile in each of $n$ spells. Then the pile left tends to $e^{-uT}$, and financing $e^{uT}$ bushels costs $S\,e^{(r+u)T}$.
+- Take $S > 0$, $S + U > 0$ and $u = \ln\big((S+U)/S\big)$. Then the one-year ceilings agree: $S\,e^{r+u} = (S + U)\,e^{r}$.
+- With the wheat numbers, one bill paid today turns the general ceiling into $(S + U)\,e^{rT}$.
+- Cash needed today is $6.00 + 0.30 = 6.30$ a bushel.
+- The carry profit at a forward of $6.80$ is the same whatever wheat costs on delivery day.
+- The simple-interest wrong answer is $6.30 \times 1.05 = 6.615$.
+- Three months of the yearly bill is $0.30 \times 3/12 = 0.075$.
+
+Decimal values, the slice-by-slice runs and the 20,000 simulated wheat prices are left to the Python and Rust checks.
+
+```lean
+-- Storage and the carry ceiling: if the cash-and-carry trade offers no sure profit then a forward on a stored commodity is at most spot plus every storage bill, each financed at r until delivery; any positive forward up to that ceiling leaves no sure trade to the seller or to a buyer without grain, and storage charged in kind at rate u gives the same ceiling S e^((r+u)T).
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
+
+open Real Filter Topology
+
+/-- The carry ceiling. Spot is `S` per unit today, money is borrowed at the continuously
+compounded rate `r`, delivery is in `T` years, and the warehouse bills `U i` at the known times
+`t i`, each between 0 and `T`. `ST` is the commodity's unknown price on delivery day.
+
+Cash-and-carry: sell one forward at `F`, borrow `S` and buy one unit, and at each `t i` borrow
+`U i` and pay the warehouse, so net cash is zero at every date before `T`. At `T` sell the stored
+unit for `ST`, pay the forward's buyer `ST - F`, and repay the loans `S e^(rT)` and
+`U i e^(r (T - t i))`.
+
+If this position does not pay a positive amount whatever the delivery-day price turns out to be
+(no riskless profit), then `F ≤ S e^(rT) + ∑ U i e^(r (T - t i))`. With one bill `U` paid today
+this is `F ≤ (S + U) e^(rT)`. -/
+theorem forward_le_carry_ceiling {k : ℕ} (S r T F : ℝ) (U t : Fin k → ℝ)
+    (ht : ∀ i, 0 ≤ t i ∧ t i ≤ T)
+    (no_carry_arb : ¬ ∀ ST : ℝ, 0 < ST →
+      0 < ST - (ST - F) - (S * exp (r * T) + ∑ i, U i * exp (r * (T - t i)))) :
+    F ≤ S * exp (r * T) + ∑ i, U i * exp (r * (T - t i)) := by
+  by_contra h
+  have h := not_le.mp h
+  apply no_carry_arb
+  intro ST _
+  linarith
+
+/-- Storage sets no floor. Take one storage bill `U ≥ 0` paid today, spot `S > 0`, rate `r` and
+`T` years, and any forward price `F` with `0 < F ≤ (S + U) e^(rT)`. Then neither trade open to
+someone without grain is a sure profit when the delivery-day price `ST` can be any positive
+number: the cash-and-carry seller's result `ST - (ST - F) - (S + U) e^(rT)` is not positive for
+every `ST`, and the buyer of the forward, who ends with `ST - F`, is not positive for every
+`ST` either. -/
+theorem no_floor_below_carry_ceiling (S U r T F : ℝ) (hS : 0 < S) (hU : 0 ≤ U)
+    (hF : 0 < F) (hFle : F ≤ (S + U) * exp (r * T)) :
+    (¬ ∀ ST : ℝ, 0 < ST → 0 < ST - (ST - F) - (S + U) * exp (r * T)) ∧
+    (¬ ∀ ST : ℝ, 0 < ST → 0 < ST - F) := by
+  refine ⟨fun h => ?_, fun h => ?_⟩
+  · have := h 1 one_pos
+    linarith
+  · have := h (F / 2) (by positivity)
+    linarith
+
+/-- Storage as a rate gives the same ceiling. A warehouse that keeps the fraction `u T / n` of
+the pile in each of `n` equal spells leaves `(1 - u T / n)^n` of it, which tends to `e^(-uT)` as
+`n` grows; so `e^(uT)` units must be bought, and financing them costs `S e^(uT) e^(rT)`, which is
+`S e^((r + u) T)`. When the rate matches a bill `U` paid today on spot `S > 0`, that is
+`u = ln((S + U) / S)`, the one-year ceilings agree: `S e^(r + u) = (S + U) e^r`. -/
+theorem storage_rate_gives_same_ceiling (S U r u T : ℝ) :
+    Tendsto (fun n : ℕ => (1 - u * T / n) ^ n) atTop (𝓝 (exp (-(u * T)))) ∧
+    S * exp (u * T) * exp (r * T) = S * exp ((r + u) * T) ∧
+    (0 < S → 0 < S + U → u = log ((S + U) / S) →
+      S * exp ((r + u) * 1) = (S + U) * exp (r * 1)) := by
+  refine ⟨?_, ?_, ?_⟩
+  · have := Real.tendsto_one_add_div_pow_exp (-(u * T))
+    refine this.congr (fun n => ?_)
+    congr 1
+    ring
+  · rw [mul_assoc, ← Real.exp_add]
+    congr 2
+    ring
+  · intro hS hSU hu
+    rw [hu, mul_one, mul_one, Real.exp_add, Real.exp_log (div_pos hSU hS)]
+    field_simp
+
+-- Cash needed today: 6.00 for the bushel plus 0.30 for the warehouse is 6.30.
+example : (6 : ℚ) + 3 / 10 = 63 / 10 := by norm_num
+
+-- One bill paid today: S e^(rT) + U e^(r (T - 0)) is (S + U) e^(rT) for the wheat numbers.
+example : (6 : ℝ) * exp (5 / 100 * 1) + 3 / 10 * exp (5 / 100 * (1 - 0)) =
+    (6 + 3 / 10) * exp (5 / 100 * 1) := by
+  norm_num; ring
+
+-- The carry profit at a 6.80 forward is the same whatever wheat costs on delivery day.
+example (ST : ℝ) : ST - (ST - 68 / 10) - (6 + 3 / 10) * exp (5 / 100 * 1) =
+    68 / 10 - 63 / 10 * exp (5 / 100) := by
+  norm_num
+
+-- Wrong answer "simple interest": 6.30 x 1.05 = 6.615.
+example : (63 / 10 : ℚ) * (1 + 5 / 100 * 1) = 6615 / 1000 := by norm_num
+
+-- Pro rata storage on the chart: three months of a 0.30 yearly bill is 0.075.
+example : (3 / 10 : ℚ) * 3 / 12 = 75 / 1000 := by norm_num
+
+#print axioms forward_le_carry_ceiling
+#print axioms no_floor_below_carry_ceiling
+#print axioms storage_rate_gives_same_ceiling
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'forward_le_carry_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_floor_below_carry_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'storage_rate_gives_same_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -487,7 +603,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Grain elevators and calendar spreads.** Grain merchants quote the gap between two delivery months as a fraction of **full carry**, the ceiling's gap: storage plus interest. A spread near full carry says grain is plentiful and the bins are paid to hold it; a spread well under says grain is wanted now.
-- **Exchange storage rules.** Grain futures exchanges set the maximum fee warehouses may charge for delivered grain, and so set $U$ for the ceiling. The Chicago wheat contract adjusts that fee according to how close spreads trade to full carry (its variable storage rate, in force since 2010). Conventions dated 2026-09-27; the CME rulebook was not reachable that day to re-verify.
+- **Exchange storage rules.** Grain futures exchanges set the maximum fee warehouses may charge for delivered grain, and so set $U$ for the ceiling. The Chicago wheat contract adjusts that fee according to how close spreads trade to full carry (its variable storage rate, in force since 2010). Conventions dated 2026-09-27; the rulebook of CME Group (the Chicago Mercantile Exchange group, which runs the Chicago wheat contract) was not reachable that day to re-verify.
 - **Oil in tankers.** When crude for later delivery trades far above crude today, traders charter tankers and hold oil at sea: the cash-and-carry trade, run with ships. It stops when the forward falls back to the cost of the tanker plus interest.
 - **Gold, the contrast.** Gold is lent out at a lease rate, so the reverse trade is possible and the forward sits on its line: [Gold forward](01-gold-forward-and-the-lease-rate.md).
 - **Curve shapes.** Forwards sitting near the ceiling make an upward curve; forwards well under it can fall below spot. The names and the returns from rolling along each shape are on [Contango and backwardation](04-contango-backwardation-and-roll-yield.md).

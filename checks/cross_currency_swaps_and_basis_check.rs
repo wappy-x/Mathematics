@@ -164,4 +164,5 @@ fn main() {
     assert!(((y - RF) - (1.0 + Q / (1.0 + m.fe[0])).ln()).abs() < 1e-12); // funding gap = ln((1+f+s)/(1+f))
     assert!(m.bootstrap(0.0).iter().zip(&m.pf).all(|(a, b)| (a - b).abs() < 1e-14)); // zero basis gives back the euro curve
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

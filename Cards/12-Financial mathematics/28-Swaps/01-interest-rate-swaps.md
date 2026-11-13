@@ -8,7 +8,9 @@
 
 Linden Freight, a made-up haulage company, owes its bank 10,000,000.00 dollars for five more years. The loan charges a floating rate: each year the rate is read off a screen at the start of the year and the interest is paid at the end. A bad year for rates is a bad year for Linden, whatever its lorries earn.
 
-So Linden agreed a second contract with a dealer. Each year Linden pays 4.50 percent of 10,000,000.00 dollars, which is 450,000.00 dollars, and receives whatever the floating rate comes to on the same amount. The floating receipt cancels the floating interest on the loan. What is left is a fixed bill. That contract is an **interest rate swap**: two streams of interest on one amount, one fixed and one floating, with the amount itself never changing hands. The amount is the **notional**, and each stream is a **leg**.
+So Linden agreed a second contract with a dealer. Each year Linden pays 4.50 percent of 10,000,000.00 dollars, which is 450,000.00 dollars, and receives whatever the floating rate comes to on the same amount. The floating receipt cancels the floating interest on the loan. What is left is a fixed bill.
+
+That contract is an **interest rate swap**: two streams of interest on one amount, one fixed and one floating, with the amount itself never changing hands. The amount is the **notional**, and each stream is a **leg**.
 
 This morning is a reset date, the day the next floating rate is read, and five annual payments remain. Rates have risen since the swap was struck: a brand-new five-year swap now fixes at 4.65 percent, not 4.50. Linden is paying less than the market charges, so the swap is worth something to Linden. The question is how much, when four of the five floating payments depend on rates nobody knows yet.
 
@@ -36,7 +38,16 @@ The bending line is the forward rate for each year: the rate today's curve alrea
 
 ## The formula
 
-Notation first, in words. The payment years are counted by $i$, from 1 to $n$, and $n = 5$ here. Year $i$ ends on the date $T_i$; the start of the first year is today. Today's price of one dollar paid on $T_i$ is the **discount factor** $D_i$, short for $D(T_i)$, read off the bootstrapped curve ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). A dollar today costs a dollar, so $D_0 = 1$. The **year fraction** $\alpha_i$ is how much of a year period $i$ counts as; every period here is a full year, so each $\alpha_i$ is 1. The notional is $N$ and the fixed rate is $K$. The **forward rate** $F_i$ is the rate for year $i$ that the curve already contains. Every sign is for Linden's side, the side that pays fixed, called the **payer**.
+Notation first, in words.
+
+- The payment years are counted by $i$, from 1 to $n$, and $n = 5$ here.
+- Year $i$ ends on the date $T_i$; the start of the first year is today.
+- Today's price of one dollar paid on $T_i$ is the **discount factor** $D_i$, short for $D(T_i)$, read off the bootstrapped curve ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). A dollar today costs a dollar, so $D_0 = 1$.
+- The **year fraction** $\alpha_i$ is how much of a year period $i$ counts as; every period here is a full year, so each $\alpha_i$ is 1.
+- The notional is $N$ and the fixed rate is $K$.
+- The **forward rate** $F_i$ is the rate for year $i$ that the curve already contains.
+
+Every sign is for Linden's side, the side that pays fixed, called the **payer**.
 
 $$F_i \;=\; \frac{1}{\alpha_i}\left(\frac{D_{i-1}}{D_i} - 1\right)$$
 
@@ -52,7 +63,7 @@ The swap as two bonds:
 
 $$V \;=\; B_{\text{flt}} - B_{\text{fix}}, \qquad B_{\text{flt}} = N, \qquad B_{\text{fix}} = \sum_{i=1}^{n} N\,\alpha_i\,K\,D_i \;+\; N\,D_n$$
 
-**Read it aloud:** hold a floating-rate note worth its face, owe a bond paying the fixed coupon with the notional repaid at the end, and the swap is the difference.
+**Read it aloud:** hold a floating-rate note worth its face (its **par** value), owe a bond paying the fixed coupon with the notional repaid at the end, and the swap is the difference.
 
 The theorem is that these two formulas always give the same number. The bridge between them is one identity, the **telescoping** of the floating leg: a sum where each term cancels part of the next.
 
@@ -197,7 +208,7 @@ Every number in the table is printed by both checks.
 | --- | --- | --- |
 | Rates up (delta) | every curve quote up 1 basis point (0.01 percent), curve rebuilt | +4,362.89 |
 | Rates down | every quote down 1 basis point | −4,365.33 |
-| DV01 | half the up move less the down move | 4,364.11 per basis point |
+| DV01 (dollar value of one basis point) | half the up move less the down move | 4,364.11 per basis point |
 | Convexity (gamma) | the down move exceeds the up move by | 2.44, slightly against the payer |
 | Volatility (vega) | tree volatility from 1 to 2 percent | 0.00 |
 
@@ -568,6 +579,123 @@ ALL CHECKS PASS
 
 The two bond roads and the forward strip agree to the cent, as the algebra says they must. The tree reaches the same figure through every one of its random-rate nodes and a root finder, at either volatility. The note sits at 10,000,000.00 dollars on every year-two node while the fixed bond swings from 10,458,090.65 to 9,372,878.37 dollars across them.
 
+### Lean
+
+Lean proves the card's three main facts, for any number of payments and any rates that avoid dividing by zero.
+
+- Take any curve with $D_0 = 1$, so today is a reset date. Then the strip of forwards equals the floating-rate note at par less the fixed-coupon bond.
+- Take the same curve. Then the floating payments at their forward rates add up to $N(1 - D_n)$, the notional less its discounted repayment.
+- Suppose the note is worth $N$ at its end, and each period's payment is discounted at that period's rate $L_i$. Then the note is worth $N$ on every reset date, whatever path the rates take.
+
+The curve itself, the rate tree, the sensitivities and every dollar figure are left to the Python and Rust checks.
+
+```lean
+-- Interest rate swaps: on a reset date, with one curve for forwards and discounting, the payer's swap valued as a strip of forwards equals a par floating-rate note less a fixed-coupon bond.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Data.Real.Basic
+import Mathlib
+
+open Finset
+
+/-- The forward rate for period `i`, read off the discount curve `D` with year fractions `α`:
+`F_i = (1 / α_i) * (D_{i-1} / D_i - 1)`. -/
+noncomputable def forwardRate (α D : ℕ → ℝ) (i : ℕ) : ℝ :=
+  (1 / α i) * (D (i - 1) / D i - 1)
+
+/-- Telescoping helper: `∑_{i=1}^n (D_{i-1} - D_i) = D_0 - D_n`. -/
+theorem sum_Icc_telescope_aux (n : ℕ) (D : ℕ → ℝ) :
+    ∑ i ∈ Icc 1 n, (D (i - 1) - D i) = D 0 - D n := by
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), ih]
+    simp
+
+#print axioms sum_Icc_telescope_aux
+
+/-- Helper: the floating leg as a telescoping sum, `∑ N α_i F_i D_i = N (D_0 - D_n)`. -/
+theorem floating_leg_telescopes_aux (n : ℕ) (N : ℝ) (α D : ℕ → ℝ)
+    (hD : ∀ i ∈ Icc 1 n, D i ≠ 0) (hα : ∀ i ∈ Icc 1 n, α i ≠ 0) :
+    ∑ i ∈ Icc 1 n, N * α i * forwardRate α D i * D i = N * (D 0 - D n) := by
+  rw [← sum_Icc_telescope_aux n D, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun i hi => ?_
+  have h1 := hD i hi
+  have h2 := hα i hi
+  unfold forwardRate
+  field_simp
+
+#print axioms floating_leg_telescopes_aux
+
+/-- The card's main claim. On a reset date (`D 0 = 1`), with the floating rates projected from the
+same curve that discounts them, the payer's swap valued as a strip of forwards,
+`∑ N α_i (F_i - K) D_i`, equals the two-bond value: a floating-rate note worth its face `N`, less a
+fixed-coupon bond `∑ N α_i K D_i + N D_n`. -/
+theorem swap_strip_of_forwards_eq_note_less_fixed_bond (n : ℕ) (N K : ℝ) (α D : ℕ → ℝ)
+    (hD0 : D 0 = 1)
+    (hD : ∀ i ∈ Icc 1 n, D i ≠ 0) (hα : ∀ i ∈ Icc 1 n, α i ≠ 0) :
+    ∑ i ∈ Icc 1 n, N * α i * (forwardRate α D i - K) * D i
+      = N - (∑ i ∈ Icc 1 n, N * α i * K * D i + N * D n) := by
+  have hfl := floating_leg_telescopes_aux n N α D hD hα
+  rw [hD0] at hfl
+  have : ∑ i ∈ Icc 1 n, N * α i * (forwardRate α D i - K) * D i
+      = ∑ i ∈ Icc 1 n, N * α i * forwardRate α D i * D i - ∑ i ∈ Icc 1 n, N * α i * K * D i := by
+    rw [← Finset.sum_sub_distrib]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    ring
+  rw [this, hfl]
+  ring
+
+/-- The floating leg telescopes: the floating payments, each valued at its forward rate and
+discounted, add up to the notional less its discounted repayment, `N (1 - D_n)`. -/
+theorem floating_leg_telescopes (n : ℕ) (N : ℝ) (α D : ℕ → ℝ)
+    (hD0 : D 0 = 1)
+    (hD : ∀ i ∈ Icc 1 n, D i ≠ 0) (hα : ∀ i ∈ Icc 1 n, α i ≠ 0) :
+    ∑ i ∈ Icc 1 n, N * α i * forwardRate α D i * D i = N * (1 - D n) := by
+  rw [floating_leg_telescopes_aux n N α D hD hα, hD0]
+
+/-- A floating-rate note is worth its face on every reset date, whatever rates do. Let `L i` be the
+rate read at the start of period `i` (any path of rates), and roll the note back from its end:
+it is worth `N` at the last date, and at each earlier reset it is worth the coupon `N α_i L_i` plus
+the note's value at the next date, discounted over the period at that same rate. Then its value
+is `N` on every reset date. -/
+theorem floating_rate_note_par_at_every_reset (n : ℕ) (N : ℝ) (α L V : ℕ → ℝ)
+    (hL : ∀ i ∈ Icc 1 n, 1 + α i * L i ≠ 0)
+    (hVn : V n = N)
+    (hstep : ∀ i ∈ Icc 1 n, V (i - 1) = (N * α i * L i + V i) / (1 + α i * L i)) :
+    ∀ i ≤ n, V i = N := by
+  have key : ∀ k ≤ n, V (n - k) = N := by
+    intro k
+    induction k with
+    | zero => intro _; simpa using hVn
+    | succ k ih =>
+      intro hk
+      have hmem : n - k ∈ Icc 1 n := Finset.mem_Icc.mpr ⟨by omega, by omega⟩
+      have h1 := hstep (n - k) hmem
+      have h2 := hL (n - k) hmem
+      rw [ih (by omega)] at h1
+      have e : n - (k + 1) = n - k - 1 := by omega
+      rw [e, h1]
+      field_simp
+      ring
+  intro i hi
+  have := key (n - i) (by omega)
+  rwa [show n - (n - i) = i by omega] at this
+
+#print axioms swap_strip_of_forwards_eq_note_less_fixed_bond
+#print axioms floating_leg_telescopes
+#print axioms floating_rate_note_par_at_every_reset
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_Icc_telescope_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'floating_leg_telescopes_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'swap_strip_of_forwards_eq_note_less_fixed_bond' depends on axioms: [propext, Classical.choice, Quot.sound]
+'floating_leg_telescopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'floating_rate_note_par_at_every_reset' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -621,7 +749,7 @@ Linden's swap is worth something only because 4.50 percent is no longer the mark
 
 ## Sources
 
-Verified 28 Sep 2026: every link below names the cited work; both DOIs checked against Crossref.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The swaps chapter values a swap both as two bonds and as a portfolio of forward rate agreements.
 - Tuckman, Bruce, and Angel Serrat. *Fixed Income Securities: Tools for Today's Markets*, 4th ed. Wiley, 2022. [Publisher page](https://www.wiley.com/en-us/Fixed+Income+Securities%3A+Tools+for+Today%27s+Markets%2C+4th+Edition-p-9781119835554). Swaps priced off discount factors, and the floating-rate note at par.

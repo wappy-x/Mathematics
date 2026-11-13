@@ -6,15 +6,19 @@
 
 ## General Overview
 
-A European share trades in Frankfurt at 100 euros. A dollar investor wants its price moves but not the euro's. A bank offers a contract: in one year, the bank pays 1.10 dollars for every euro the share ends above an agreed level, and takes 1.10 dollars for every euro it ends below. The 1.10 is fixed today and never moves, whatever the euro does. A contract like this, where a foreign price is paid out in home money at a fixed rate, is a **quanto** (short for "quantity-adjusting"), the word used from here on.
+A European share trades in Frankfurt at 100 euros. A dollar investor wants its price moves but not the euro's.
 
-The agreed level is chosen so the contract costs nothing to enter. That level is the **quanto forward**. The obvious guess is the ordinary euro forward, the price at which a euro investor would agree to buy the share in a year: 102.02 euros, the share's 100 grown at the euro interest rate of 3 percent less its 1 percent dividend. The guess is wrong. The fair level is **EUR 101.41**, sixty-one cents lower.
+A bank offers a contract: in one year, the bank pays 1.10 dollars for every euro the share ends above an agreed level, and takes 1.10 dollars for every euro it ends below. The 1.10 is fixed today and never moves, whatever the euro does. A contract like this, where a foreign price is paid out in home money at a fixed rate, is a **quanto** (short for "quantity-adjusting"), the word used from here on.
 
-The gap is 0.6 percent a year (exactly 0.006 in logs), and it comes from how the share and the euro move together. Here they tend to rise together: the **correlation** (a number from −1 to 1 measuring how often two prices move the same way) is 0.30. The share's yearly wobble, its **volatility**, is 20 percent; the euro's is 10 percent. Multiply the three: 0.30 × 0.20 × 0.10 = 0.006. That is the whole gap. Flip the correlation to −0.30 and the quanto forward rises to 102.63, above the euro forward by the same 0.6 percent.
+The agreed level is chosen so the contract costs nothing to enter. That level is the **quanto forward**. The obvious guess is the ordinary euro forward, the price at which a euro investor would agree to buy the share in a year. That is 102.02 euros: the share's 100 grown at the euro interest rate of 3 percent, less its 1 percent dividend. The guess is wrong. The fair level is **EUR 101.41**, sixty-one cents lower.
+
+The gap is 0.6 percent a year (exactly 0.006 in logs), and it comes from how the share and the euro move together. Here they tend to rise together: the **correlation** (a number from −1 to 1 measuring how often two prices move the same way) is 0.30. The share's yearly wobble, its **volatility**, is 20 percent; the euro's is 10 percent.
+
+Multiply the three: 0.30 × 0.20 × 0.10 = 0.006. That is the whole gap. Flip the correlation to −0.30 and the quanto forward rises to 102.63, above the euro forward by the same 0.6 percent.
 
 **In the dollar investor's pricing world, a foreign share grows at the foreign rate, less its dividend, less correlation times the two volatilities; the quanto forward is today's price grown at that slower rate.**
 
-**What kind of fact this is:** a theorem inside a model. Given two prices that wobble in the usual lognormal way (geometric Brownian motion) with fixed volatilities and correlation, no-arbitrage forces the drift; it is proved on this card in Why it works.
+**What kind of fact this is:** a theorem inside a model. Given two prices that wobble in the usual lognormal way (geometric Brownian motion) with fixed volatilities and correlation, no-arbitrage forces the drift. No-arbitrage is the rule that no trade earns money from nothing; the drift is a price's expected growth rate. It is proved on this card in Why it works.
 
 ### The picture: the quanto forward against the correlation
 
@@ -74,7 +78,11 @@ It is how fast the share's euro price is expected to grow, averaged the way a do
 
 ### Step 0: the idea that makes it possible
 
-One share can be bought by a dollar investor. Its dollar price is the euro price times the exchange rate, $S_t X_t$. That product is a dollar asset, so the dollar investor's no-arbitrage rule applies to it directly: in the dollar pricing world (the **risk-neutral** world, where every asset is averaged as if it earned the riskless rate), its total return must be the dollar rate. The exchange rate is also pinned, by covered interest parity. Two of the three growth rates in the product are forced. The third, the share's own, is whatever is left. And a product of two prices that rise together grows by more than the sum of their growth rates, so the leftover is smaller than the naive guess.
+One share can be bought by a dollar investor. Its dollar price is the euro price times the exchange rate, $S_t X_t$. That product is a dollar asset, so the dollar investor's no-arbitrage rule applies to it directly.
+
+In the dollar pricing world (the **risk-neutral** world, where every asset is averaged as if it earned the riskless rate), its total return must be the dollar rate. The exchange rate is also pinned, by covered interest parity.
+
+Two of the three growth rates in the product are forced. The third, the share's own, is whatever is left. And a product of two prices that rise together grows by more than the sum of their growth rates, so the leftover is smaller than the naive guess.
 
 ### Step 1: the exchange rate must drift at the rate gap
 
@@ -112,7 +120,7 @@ The $r_d$ cancels. What remains is the quanto drift:
 
 $$\mu = r_f - q - \rho\,\sigma_S\sigma_X = 0.03 - 0.01 - 0.006 = 1.4\% \text{ a year.}$$
 
-Using the euro world's 2 percent instead would make the dollar share grow at 4.6 percent a year where no-arbitrage allows 4. A simulation in the code shows it: the average dollar value of one share lands on 115.23 dollars against a required 114.49, eleven standard errors off. With the adjusted drift it lands on 114.54, within one.
+Using the euro world's 2 percent instead would make the dollar share grow at 4.6 percent a year where no-arbitrage allows 4. A simulation in the code shows it: the average dollar value of one share lands on 115.23 dollars against a required 114.49, eleven standard errors off. (A standard error is the typical size of a simulation's random error.) With the adjusted drift it lands on 114.54, within one.
 
 ### Step 4: the forward is the average of the share in the dollar world
 
@@ -200,7 +208,14 @@ At ten years the euro forward is 122.14 and the quanto forward 115.03. Long-date
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the quanto forward four ways. Road 1 is the formula. Road 2 works entirely in the euro world, where nothing is adjusted: it averages the share times the dollar's euro value, and the dollar's euro value alone, on a 161 × 161 grid over two independent bell curves, weighted by Simpson's rule (a standard recipe for approximating an integral from sampled points), and divides. Road 3 does the same average by Monte Carlo (averaging over random draws), 200,000 pairs of correlated draws from a hand-written generator. Road 4 simulates the pair in the dollar world and tests Step 3: with the adjusted drift the dollar share is fairly priced, without it the simulation detects free money. The two-state story is recomputed and its sign compared with the formula's at correlation ±1.
+The scripts reach the quanto forward four ways.
+
+- Road 1 is the formula.
+- Road 2 works entirely in the euro world, where nothing is adjusted. It averages two things on a 161 × 161 grid over two independent bell curves: the share times the dollar's euro value, and the dollar's euro value alone. The grid is weighted by Simpson's rule (a standard recipe for approximating an integral from sampled points). Then it divides the first average by the second.
+- Road 3 does the same average by Monte Carlo (averaging over random draws), 200,000 pairs of correlated draws from a hand-written generator.
+- Road 4 simulates the pair in the dollar world and tests Step 3: with the adjusted drift the dollar share is fairly priced, without it the simulation detects free money.
+
+The two-state story is recomputed and its sign compared with the formula's at correlation ±1.
 
 ### Python
 
@@ -540,6 +555,329 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree byte for byte, the Monte Carlo lines included, because both programs draw the same splitmix64 stream.
+
+### Lean
+
+Lean proves Steps 3 and 4 exactly, for any rates, volatilities and correlation, and checks the worked numbers.
+
+- Suppose the share and $Y_T$ move as in the detailed proof, with correlation between −1 and 1. Then the dollar-world average of $S_T$ is exactly $F_Q$, whatever $r_d$ and $X_0$ are.
+- Take the same model and any fixed rate $\bar X > 0$. Then the contract costs nothing exactly when its agreed level is $F_Q$.
+- Take a positive share price, $T > 0$ and any share drift $\mu$ in the dollar world. Then the share's dollar value grows at $r_d - q$ on average exactly when $\mu$ is the quanto drift.
+- The adjustment is 0.006, the quanto drift 0.014 and the required growth 0.04.
+- At correlation 1 the quanto forward is exactly EUR 100.
+- The gap in logs between the two forwards is exactly 0.006.
+- The one-day products 1.0201 and 0.9999 are exact, and so are the two-state story's 0.45, 100.20 and 103.80.
+
+Step 2's Itô product rule, the decimals like 101.41 and every simulation are left to the Python and Rust checks.
+
+```lean
+-- The quanto adjustment: in the two-price lognormal model the dollar investor's average of a euro share's final price is exactly `S e^((r_f - q - ρσ_Sσ_X)T)`, so that is the zero-cost level, and no other share drift makes the dollar share fairly priced.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.HasLaw
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Tactic.NormNum
+
+open Real MeasureTheory ProbabilityTheory
+
+/-- The share's euro price at time `T` in the euro world: it drifts at `r_f - q` with
+volatility `σ_S`, driven by the bell-curve draw `z₁`:
+`S_T = S e^((r_f - q - σ_S²/2)T + σ_S √T z₁)`. -/
+noncomputable def shareEuroWorld (S rf q σS T z₁ : ℝ) : ℝ :=
+  S * exp ((rf - q - σS ^ 2 / 2) * T + σS * √T * z₁)
+
+/-- The exchange rate's draw, correlated at `ρ` with the share's draw `z₁`:
+`ρ z₁ + √(1 - ρ²) z₂`, where `z₂` is a fresh independent draw. -/
+noncomputable def fxDraw (ρ z₁ z₂ : ℝ) : ℝ :=
+  ρ * z₁ + √(1 - ρ ^ 2) * z₂
+
+/-- One dollar's euro value at time `T` in the euro world, `Y_T = 1/X_T`: it starts at `1/X₀`,
+drifts at `r_f - r_d` with volatility `σ_X`, and its driver is minus the exchange rate's draw `w`
+(a stronger euro is a weaker dollar): `Y_T = (1/X₀) e^((r_f - r_d - σ_X²/2)T - σ_X √T w)`. -/
+noncomputable def dollarInEuros (X₀ rd rf σX T w : ℝ) : ℝ :=
+  (1 / X₀) * exp ((rf - rd - σX ^ 2 / 2) * T - σX * √T * w)
+
+/-- The card's quanto forward `F_Q = S e^((r_f - q - ρσ_Sσ_X)T)`. -/
+noncomputable def quantoForward (S rf q ρ σS σX T : ℝ) : ℝ :=
+  S * exp ((rf - q - ρ * σS * σX) * T)
+
+/-- The card's euro forward `F = S e^((r_f - q)T)`. -/
+noncomputable def euroForward (S rf q T : ℝ) : ℝ :=
+  S * exp ((rf - q) * T)
+
+/-- The share's euro price at time `T` in the dollar world, grown at a drift `μ`:
+`S e^((μ - σ_S²/2)T + σ_S √T z₁)`. -/
+noncomputable def shareDollarWorld (S μ σS T z₁ : ℝ) : ℝ :=
+  S * exp ((μ - σS ^ 2 / 2) * T + σS * √T * z₁)
+
+/-- The exchange rate (dollars per euro) at time `T` in the dollar world, drifting at
+`r_d - r_f` (covered interest parity): `X_T = X₀ e^((r_d - r_f - σ_X²/2)T + σ_X √T w)`. -/
+noncomputable def fxDollarWorld (X₀ rd rf σX T w : ℝ) : ℝ :=
+  X₀ * exp ((rd - rf - σX ^ 2 / 2) * T + σX * √T * w)
+
+
+section QuantoHelpers
+
+variable {Ω : Type*} [MeasurableSpace Ω] {Q : Measure Ω} {Z₁ Z₂ : Ω → ℝ}
+
+lemma quanto_gauss2_integral
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q) (a b : ℝ) :
+    ∫ ω, exp (a * Z₁ ω + b * Z₂ ω) ∂Q = exp ((a ^ 2 + b ^ 2) / 2) := by
+  simp_rw [exp_add]
+  have h1 : AEStronglyMeasurable (fun ω => exp (a * Z₁ ω)) Q :=
+    (by fun_prop : Continuous fun x : ℝ => exp (a * x)).aestronglyMeasurable.comp_aemeasurable
+      hZ₁.aemeasurable
+  have h2 : AEStronglyMeasurable (fun ω => exp (b * Z₂ ω)) Q :=
+    (by fun_prop : Continuous fun x : ℝ => exp (b * x)).aestronglyMeasurable.comp_aemeasurable
+      hZ₂.aemeasurable
+  have hm := (hind.exp_mul a b).integral_mul_eq_mul_integral h1 h2
+  simp only [Pi.mul_apply] at hm
+  rw [hm]
+  have e1 := mgf_gaussianReal hZ₁ a
+  have e2 := mgf_gaussianReal hZ₂ b
+  simp only [mgf] at e1 e2
+  rw [e1, e2, ← exp_add]
+  congr 1
+  simp only [NNReal.coe_one]
+  ring
+
+lemma quanto_gauss2_integrable
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q) (a b : ℝ) :
+    Integrable (fun ω => exp (a * Z₁ ω + b * Z₂ ω)) Q :=
+  Integrable.of_integral_ne_zero (by rw [quanto_gauss2_integral hZ₁ hZ₂ hind]; positivity)
+
+lemma quanto_gauss2_affine_integral
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q) (c d a b : ℝ) :
+    ∫ ω, c * exp (d + (a * Z₁ ω + b * Z₂ ω)) ∂Q = c * exp (d + (a ^ 2 + b ^ 2) / 2) := by
+  simp_rw [Real.exp_add d, ← mul_assoc]
+  rw [integral_const_mul, quanto_gauss2_integral hZ₁ hZ₂ hind]
+
+lemma quanto_gauss2_affine_integrable
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q) (c d a b : ℝ) :
+    Integrable (fun ω => c * exp (d + (a * Z₁ ω + b * Z₂ ω))) Q := by
+  refine ((quanto_gauss2_integrable hZ₁ hZ₂ hind a b).const_mul (c * exp d)).congr
+    (ae_of_all _ fun ω => ?_)
+  simp only [Real.exp_add d]
+  ring
+
+lemma quanto_num_eq (S X₀ rd rf q σS σX ρ T : ℝ) (z₁ z₂ : ℝ) :
+    shareEuroWorld S rf q σS T z₁ * dollarInEuros X₀ rd rf σX T (fxDraw ρ z₁ z₂) =
+      S / X₀ * exp (((rf - q - σS ^ 2 / 2) * T + (rf - rd - σX ^ 2 / 2) * T) +
+        ((σS * √T - σX * √T * ρ) * z₁ + (-(σX * √T * √(1 - ρ ^ 2))) * z₂)) := by
+  simp only [shareEuroWorld, dollarInEuros, fxDraw]
+  calc _ = S / X₀ * (exp ((rf - q - σS ^ 2 / 2) * T + σS * √T * z₁) *
+        exp ((rf - rd - σX ^ 2 / 2) * T - σX * √T * (ρ * z₁ + √(1 - ρ ^ 2) * z₂))) := by ring
+    _ = _ := by rw [← exp_add]; congr 2; ring
+
+lemma quanto_den_eq (X₀ rd rf σX ρ T : ℝ) (z₁ z₂ : ℝ) :
+    dollarInEuros X₀ rd rf σX T (fxDraw ρ z₁ z₂) =
+      1 / X₀ * exp ((rf - rd - σX ^ 2 / 2) * T +
+        ((-(σX * √T * ρ)) * z₁ + (-(σX * √T * √(1 - ρ ^ 2))) * z₂)) := by
+  simp only [dollarInEuros, fxDraw]
+  congr 2
+  ring
+
+lemma quanto_num_integral
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q) (S X₀ rd rf q σS σX ρ T : ℝ) :
+    Integrable (fun ω => shareEuroWorld S rf q σS T (Z₁ ω) *
+        dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω))) Q ∧
+    ∫ ω, shareEuroWorld S rf q σS T (Z₁ ω) *
+        dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q =
+      S / X₀ * exp (((rf - q - σS ^ 2 / 2) * T + (rf - rd - σX ^ 2 / 2) * T) +
+        ((σS * √T - σX * √T * ρ) ^ 2 + (-(σX * √T * √(1 - ρ ^ 2))) ^ 2) / 2) := by
+  simp_rw [quanto_num_eq]
+  exact ⟨quanto_gauss2_affine_integrable hZ₁ hZ₂ hind _ _ _ _,
+    quanto_gauss2_affine_integral hZ₁ hZ₂ hind _ _ _ _⟩
+
+lemma quanto_den_integral
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q) (X₀ rd rf σX ρ T : ℝ) :
+    Integrable (fun ω => dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω))) Q ∧
+    ∫ ω, dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q =
+      1 / X₀ * exp ((rf - rd - σX ^ 2 / 2) * T +
+        ((-(σX * √T * ρ)) ^ 2 + (-(σX * √T * √(1 - ρ ^ 2))) ^ 2) / 2) := by
+  simp_rw [quanto_den_eq]
+  exact ⟨quanto_gauss2_affine_integrable hZ₁ hZ₂ hind _ _ _ _,
+    quanto_gauss2_affine_integral hZ₁ hZ₂ hind _ _ _ _⟩
+
+end QuantoHelpers
+
+#print axioms quanto_gauss2_integral
+#print axioms quanto_gauss2_integrable
+#print axioms quanto_gauss2_affine_integral
+#print axioms quanto_gauss2_affine_integrable
+#print axioms quanto_num_eq
+#print axioms quanto_den_eq
+#print axioms quanto_num_integral
+#print axioms quanto_den_integral
+
+/-- **The quanto forward is the share's average in the dollar world** (The formula; Why it
+works, Step 4 and the detailed proof). Work in the euro world `Q`, with two independent
+standard bell-curve draws `Z₁`, `Z₂`. The share drifts at `r_f - q` with fixed volatility `σ_S`;
+the dollar's euro value `Y_T` drifts at `r_f - r_d` with fixed volatility `σ_X`, its driver
+correlated with the share's at a fixed `ρ` between -1 and 1; today's rate `X₀` is positive and
+`T ≥ 0`. The dollar world reweights the euro world by the dollar's euro value, so its average of
+`S_T` is `E[S_T Y_T] / E[Y_T]`. That average is exactly `S e^((r_f - q - ρσ_Sσ_X)T)`: the share
+grows at the euro rate, less the dividend, less correlation times the two volatilities, and
+neither the dollar rate nor today's exchange rate enters. -/
+theorem quanto_forward_is_dollar_world_mean_of_share
+    {Ω : Type*} [MeasurableSpace Ω] {Q : Measure Ω} {Z₁ Z₂ : Ω → ℝ}
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q)
+    (S X₀ rd rf q σS σX ρ T : ℝ) (hX₀ : 0 < X₀) (hρ₁ : -1 ≤ ρ) (hρ₂ : ρ ≤ 1) (hT : 0 ≤ T) :
+    (∫ ω, shareEuroWorld S rf q σS T (Z₁ ω) *
+        dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q) /
+      (∫ ω, dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q) =
+      quantoForward S rf q ρ σS σX T := by
+  have hsT : √T ^ 2 = T := Real.sq_sqrt hT
+  rw [(quanto_num_integral hZ₁ hZ₂ hind S X₀ rd rf q σS σX ρ T).2,
+    (quanto_den_integral hZ₁ hZ₂ hind X₀ rd rf σX ρ T).2, quantoForward]
+  rw [show ((rf - q - σS ^ 2 / 2) * T + (rf - rd - σX ^ 2 / 2) * T) +
+        ((σS * √T - σX * √T * ρ) ^ 2 + (-(σX * √T * √(1 - ρ ^ 2))) ^ 2) / 2 =
+      (rf - q - ρ * σS * σX) * T + ((rf - rd - σX ^ 2 / 2) * T +
+        ((-(σX * √T * ρ)) ^ 2 + (-(σX * √T * √(1 - ρ ^ 2))) ^ 2) / 2) by
+    linear_combination (σS ^ 2 / 2 - σS * σX * ρ) * hsT, exp_add]
+  field_simp
+
+/-- **The zero-cost level is the quanto forward** (General Overview; Why it works, Step 4). In
+the same model, a contract that pays `X̄ (S_T - K)` dollars at `T`, for a fixed rate `X̄ > 0` (written `Xbar`),
+is worth today its dollar-world average discounted at the dollar rate,
+`X̄ e^(-r_d T) E[(S_T - K) Y_T] / E[Y_T]`. It costs nothing exactly when the agreed level is
+`K = S e^((r_f - q - ρσ_Sσ_X)T)`, whatever the fixed rate. -/
+theorem quanto_contract_costs_nothing_iff_level_is_quanto_forward
+    {Ω : Type*} [MeasurableSpace Ω] {Q : Measure Ω} {Z₁ Z₂ : Ω → ℝ}
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) Q) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) Q)
+    (hind : IndepFun Z₁ Z₂ Q)
+    (S X₀ Xbar K rd rf q σS σX ρ T : ℝ) (hX₀ : 0 < X₀) (hXbar : 0 < Xbar)
+    (hρ₁ : -1 ≤ ρ) (hρ₂ : ρ ≤ 1) (hT : 0 ≤ T) :
+    Xbar * exp (-(rd * T)) *
+        ((∫ ω, (shareEuroWorld S rf q σS T (Z₁ ω) - K) *
+            dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q) /
+          (∫ ω, dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q)) = 0 ↔
+      K = quantoForward S rf q ρ σS σX T := by
+  obtain ⟨hi1, he1⟩ := quanto_num_integral hZ₁ hZ₂ hind S X₀ rd rf q σS σX ρ T
+  obtain ⟨hi2, he2⟩ := quanto_den_integral hZ₁ hZ₂ hind X₀ rd rf σX ρ T
+  have h1 := quanto_forward_is_dollar_world_mean_of_share hZ₁ hZ₂ hind S X₀ rd rf q σS σX ρ T
+    hX₀ hρ₁ hρ₂ hT
+  have hden : (∫ ω, dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q) ≠ 0 := by
+    rw [he2]; positivity
+  have hsplit : (∫ ω, (shareEuroWorld S rf q σS T (Z₁ ω) - K) *
+        dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q) =
+      (∫ ω, shareEuroWorld S rf q σS T (Z₁ ω) *
+        dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q) -
+      K * ∫ ω, dollarInEuros X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂Q := by
+    rw [← integral_const_mul, ← integral_sub hi1 (hi2.const_mul K)]
+    congr 1
+    funext ω
+    ring
+  rw [hsplit, sub_div, mul_div_cancel_right₀ _ hden, h1]
+  have hc : Xbar * exp (-(rd * T)) ≠ 0 := by positivity
+  rw [mul_eq_zero, or_iff_right hc, sub_eq_zero, eq_comm]
+
+/-- **No-arbitrage forces the quanto drift** (Why it works, Steps 1 to 3). Work in the dollar
+world `P` with two independent standard bell-curve draws. The exchange rate drifts at
+`r_d - r_f` with fixed volatility `σ_X`; the share, priced in euros, has fixed volatility
+`σ_S`, a driver correlated with the rate's at a fixed `ρ` between -1 and 1, and some drift `μ`.
+Take a positive share price `S`, a positive rate `X₀` and `T > 0` years. The dollar value of one
+share averages to the required `S X₀ e^((r_d - q)T)` exactly when `μ = r_f - q - ρσ_Sσ_X`; any
+other drift, the euro world's `r_f - q` included, leaves the dollar share mispriced. -/
+theorem dollar_share_fair_iff_quanto_drift
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} {Z₁ Z₂ : Ω → ℝ}
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) P) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) P)
+    (hind : IndepFun Z₁ Z₂ P)
+    (S X₀ rd rf q σS σX ρ T μ : ℝ) (hS : 0 < S) (hX₀ : 0 < X₀)
+    (hρ₁ : -1 ≤ ρ) (hρ₂ : ρ ≤ 1) (hT : 0 < T) :
+    ∫ ω, shareDollarWorld S μ σS T (Z₁ ω) *
+        fxDollarWorld X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) ∂P =
+      S * X₀ * exp ((rd - q) * T) ↔
+      μ = rf - q - ρ * σS * σX := by
+  have hsT : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have hs : √(1 - ρ ^ 2) ^ 2 = 1 - ρ ^ 2 := Real.sq_sqrt (by nlinarith)
+  have heq : ∀ ω, shareDollarWorld S μ σS T (Z₁ ω) *
+      fxDollarWorld X₀ rd rf σX T (fxDraw ρ (Z₁ ω) (Z₂ ω)) =
+      S * X₀ * exp (((μ - σS ^ 2 / 2) * T + (rd - rf - σX ^ 2 / 2) * T) +
+        ((σS * √T + σX * √T * ρ) * Z₁ ω + (σX * √T * √(1 - ρ ^ 2)) * Z₂ ω)) := by
+    intro ω
+    simp only [shareDollarWorld, fxDollarWorld, fxDraw]
+    calc _ = S * X₀ * (exp ((μ - σS ^ 2 / 2) * T + σS * √T * Z₁ ω) *
+          exp ((rd - rf - σX ^ 2 / 2) * T + σX * √T * (ρ * Z₁ ω + √(1 - ρ ^ 2) * Z₂ ω))) := by
+          ring
+      _ = _ := by rw [← exp_add]; congr 2; ring
+  simp_rw [heq]
+  rw [quanto_gauss2_affine_integral hZ₁ hZ₂ hind]
+  rw [show ((μ - σS ^ 2 / 2) * T + (rd - rf - σX ^ 2 / 2) * T) +
+        ((σS * √T + σX * √T * ρ) ^ 2 + (σX * √T * √(1 - ρ ^ 2)) ^ 2) / 2 =
+      (μ - rf + rd + ρ * σS * σX) * T by
+    linear_combination (σS ^ 2 / 2 + σS * σX * ρ + σX ^ 2 * ρ ^ 2 / 2 +
+      σX ^ 2 * (1 - ρ ^ 2) / 2) * hsT + (σX ^ 2 * √T ^ 2 / 2) * hs]
+  rw [mul_right_inj' (by positivity : S * X₀ ≠ 0), exp_eq_exp]
+  constructor
+  · intro h
+    have := mul_right_cancel₀ hT.ne' h
+    linarith
+  · intro h
+    subst h
+    ring
+
+-- The house market's adjustment: 0.30 × 0.20 × 0.10 = 0.006.
+example : (3 / 10 : ℚ) * (2 / 10) * (1 / 10) = 6 / 1000 := by norm_num
+
+-- The quanto drift: 0.03 - 0.01 - 0.006 = 0.014.
+example : (3 / 100 : ℚ) - 1 / 100 - 6 / 1000 = 14 / 1000 := by norm_num
+
+-- The dollar share's required growth: r_d - q = 0.05 - 0.01 = 0.04.
+example : (5 / 100 : ℚ) - 1 / 100 = 4 / 100 := by norm_num
+
+-- At correlation 1 the quanto forward is exactly EUR 100: the 2 percent carry and the
+-- 2 percent adjustment cancel.
+example : quantoForward 100 (3 / 100) (1 / 100) 1 (2 / 10) (1 / 10) 1 = 100 := by
+  norm_num [quantoForward]
+
+-- The gap in logs between the euro forward and the quanto forward is exactly 0.006.
+example : log (euroForward 100 (3 / 100) (1 / 100) 1 /
+    quantoForward 100 (3 / 100) (1 / 100) (3 / 10) (2 / 10) (1 / 10) 1) = 6 / 1000 := by
+  rw [euroForward, quantoForward, mul_div_mul_left _ _ (by norm_num : (100 : ℝ) ≠ 0),
+    ← exp_sub, log_exp]
+  norm_num
+
+-- One day, one move each: 1.01 × 1.01 = 1.0201 and 1.01 × 0.99 = 0.9999.
+example : (101 / 100 : ℚ) * (101 / 100) = 10201 / 10000 := by norm_num
+example : (101 / 100 : ℚ) * (99 / 100) = 9999 / 10000 := by norm_num
+
+-- The two-state story: the strong-euro state gets dollar-world weight 0.45, and the
+-- dollar-world averages are 100.20 (moving together) and 103.80 (moving apart), against 102.
+example : ((1 / 2) / (121 / 100) : ℚ) / ((1 / 2) / (121 / 100) + (1 / 2) / (99 / 100)) =
+    45 / 100 := by norm_num
+example : (1 / 2 : ℚ) * 120 + (1 / 2) * 84 = 102 := by norm_num
+example : (45 / 100 : ℚ) * 120 + (55 / 100) * 84 = 1002 / 10 := by norm_num
+example : (55 / 100 : ℚ) * 120 + (45 / 100) * 84 = 1038 / 10 := by norm_num
+
+#print axioms quanto_forward_is_dollar_world_mean_of_share
+#print axioms quanto_contract_costs_nothing_iff_level_is_quanto_forward
+#print axioms dollar_share_fair_iff_quanto_drift
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'quanto_gauss2_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_gauss2_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_gauss2_affine_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_gauss2_affine_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_num_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_den_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_num_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_den_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_forward_is_dollar_world_mean_of_share' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quanto_contract_costs_nothing_iff_level_is_quanto_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dollar_share_fair_iff_quanto_drift' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

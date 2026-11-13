@@ -10,11 +10,15 @@ A Brent crude future for delivery in six months trades at 85 dollars a barrel. A
 
 The refiner's risk desk asks four questions. If the future rises a dollar, how much does the option gain, and how many futures must be sold to cancel that? If the market's volatility rises one point, what is that worth? What does one day of waiting cost? And if interest rates rise, does the option gain or lose?
 
-The answers are the option's **Greeks**: the rates at which its price moves when one input moves and the rest stay still. For this option the first answer is 0.5288 dollars per barrel for each dollar on the future. On 1,000 barrels that is $529 per dollar, and since one Brent future also covers 1,000 barrels, the hedge is to sell **0.53 of a futures contract**, not 529 contracts. A contract of this size is called a **lot**, the word used from here on. Vega is $0.2325 per barrel per volatility point, $232.55 per lot. And the rate sensitivity has a surprise: raising rates makes this call *cheaper*, by exactly the time left times the price, −3.50 dollars per barrel per unit of rate. A call on a share gains from higher rates. A call on a future loses.
+The answers are the option's **Greeks**: the rates at which its price moves when one input moves and the rest stay still.
+
+For this option the first answer is 0.5288 dollars per barrel for each dollar on the future. On 1,000 barrels that is $529 per dollar, and since one Brent future also covers 1,000 barrels, the hedge is to sell **0.53 of a futures contract**, not 529 contracts. A contract of this size is called a **lot**, the word used from here on.
+
+Vega is $0.2325 per barrel per volatility point, $232.55 per lot. And the rate sensitivity has a surprise: raising rates makes this call *cheaper*, by exactly the time left times the price, −3.50 dollars per barrel per unit of rate. A call on a share gains from higher rates. A call on a future loses.
 
 **The Greeks of a futures option are the Black–Scholes Greeks with the futures price in place of the share price and one discount factor over everything, so delta is a count of futures per barrel, and rho, with the futures price held still, is minus the time left times the premium.**
 
-**What kind of fact this is:** a theorem inside the Black-76 model, proved on this card in Why it works. The model is an assumption about how futures prices move, not a law; the conversion into lots, volatility points and days is a convention.
+**What kind of fact this is:** a theorem inside the Black-76 model (Black's 1976 model for options on futures), proved on this card in Why it works. The model is an assumption about how futures prices move, not a law; the conversion into lots, volatility points and days is a convention.
 
 ### The picture: the price, and the hedge as a straight line
 
@@ -28,7 +32,9 @@ xychart-beta
     line [-3.57, -0.93, 1.71, 4.36, 7.00, 9.65, 12.29, 14.94, 17.58]
 ```
 
-The first line (orange) is the option's price per barrel as the futures price varies, six months left. The second line (green) is the straight line through $7.00 at 85 with slope 0.5288: what the option would be worth if it moved exactly like 0.5288 barrels of futures. The slope is delta. The green line is the hedge. The orange curve bends away from it on both sides, always above: that bend is gamma, and it is why the hedge must be reset as the price moves.
+The first line (orange) is the option's price per barrel as the futures price varies, six months left. The second line (green) is the straight line through $7.00 at 85 with slope 0.5288: what the option would be worth if it moved exactly like 0.5288 barrels of futures. The slope is delta. The green line is the hedge.
+
+The orange curve bends away from it on both sides, always above: that bend is gamma, and it is why the hedge must be reset as the price moves.
 
 ---
 
@@ -80,7 +86,7 @@ A basis point is a hundredth of a percentage point. A volatility point is one pe
 
 ### When it holds
 
-- **The futures price is lognormal with one fixed volatility.** Real Brent options show a smile ([Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md)); if volatility moves with the price, the true hedge differs from $\Delta$ by vega times that co-movement.
+- **The futures price is lognormal with one fixed volatility.** Lognormal means the logarithm of the price follows a bell curve. Real Brent options show a smile, a volatility that changes with the strike ([Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md)); if volatility moves with the price, the true hedge differs from $\Delta$ by vega times that co-movement.
 - **The premium is paid today and financed at one fixed rate.** For a margined option, where nothing is paid up front, delta is $N(d_1)$ and rho is zero (Step 5). Using the paid formulas on a margined option under-hedges by $13.39 per dollar per lot.
 - **Rho holds the futures price still.** If a rate move also shifts the future, the total effect adds delta times that shift (Step 4).
 - **Hedging is continuous and fractional.** Only whole lots trade. A single option's 0.53 lot rounds to one lot or none, leaving half a lot unhedged; desks net many options before rounding.
@@ -92,7 +98,9 @@ A basis point is a hundredth of a percentage point. A volatility point is one pe
 
 ### Step 0: a future costs nothing, so the only money at stake today is the premium
 
-A share must be paid for. A future costs nothing to enter: its gains and losses are settled in cash every day, called **marking to market**. In the pricing world of [Options on a futures price](01-options-on-commodity-futures.md) the futures price therefore has no drift: it is expected to stay where it is. The option's premium, by contrast, is real money paid today for a payoff six months away. The whole card follows from those two facts. The futures price carries no interest; the premium does.
+A share must be paid for. A future costs nothing to enter: its gains and losses are settled in cash every day, called **marking to market**. In the pricing world of [Options on a futures price](01-options-on-commodity-futures.md) the futures price therefore has no drift: it is expected to stay where it is.
+
+The option's premium, by contrast, is real money paid today for a payoff six months away. The whole card follows from those two facts. The futures price carries no interest; the premium does.
 
 ### Step 1: delta is the discount times $N(d_1)$
 
@@ -119,11 +127,15 @@ For the house call, $N(d_1)$ is 0.5422 and the discount is 0.9753, so delta is 0
 
 ### Step 2: from barrels to lots, and why the discount stays in the hedge
 
-Delta is dollars of option value per dollar on the future, per barrel. The option covers $m$ = 1,000 barrels, so a $1 rise adds $529 to its value. One futures lot covers $M$ = 1,000 barrels and pays $1,000 per dollar of rise. Matching the two: sell $h = 1 \times 1{,}000 \times 0.5288 / 1{,}000 = 0.53$ lots. Delta is a number of lots only when the option and the future cover the same quantity; otherwise the ratio $m/M$ does the conversion.
+Delta is dollars of option value per dollar on the future, per barrel. The option covers $m$ = 1,000 barrels, so a $1 rise adds $529 to its value. One futures lot covers $M$ = 1,000 barrels and pays $1,000 per dollar of rise.
+
+Matching the two: sell $h = 1 \times 1{,}000 \times 0.5288 / 1{,}000 = 0.53$ lots. Delta is a number of lots only when the option and the future cover the same quantity; otherwise the ratio $m/M$ does the conversion.
 
 The discount inside delta has a plain reason. A future's gain is paid into the account today. The option's gain is a larger payoff at expiry, worth today only its discounted value. So the hedge holds $e^{-rT}N(d_1)$ futures, not $N(d_1)$. Traders call this **tailing** the hedge. Selling 0.5422 lots against a premium-paid option over-hedges by 13.39 barrels of exposure per lot.
 
-Compare a spot option. The house Acme call, on a share at $100 with dividend yield $q$ = 2 percent, is hedged with $e^{-qT}N(d_1)$ = 0.5869 shares bought with borrowed cash ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)). The same call can be priced by Black's formula on Acme's one-year future: it gives the same $9.23. Its delta there is 0.5695 futures: the spot delta divided by $e^{(r-q)T}$ = 1.0305, the dollars the future moves per dollar on the share. Two differences, then: the futures hedge needs no cash to buy the hedge, only margin; and it needs fewer contracts, because each future moves more than the share does.
+Compare a spot option. The house Acme call, on a share at $100 with dividend yield $q$ = 2 percent, is hedged with $e^{-qT}N(d_1)$ = 0.5869 shares bought with borrowed cash ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
+
+The same call can be priced by Black's formula on Acme's one-year future: it gives the same $9.23. Its delta there is 0.5695 futures: the spot delta divided by $e^{(r-q)T}$ = 1.0305, the dollars the future moves per dollar on the share. Two differences, then: the futures hedge needs no cash to buy the hedge, only margin, a cash deposit held by the exchange; and it needs fewer contracts, because each future moves more than the share does.
 
 ### Step 3: gamma, vega and theta share one piece
 
@@ -139,17 +151,21 @@ The three are tied by Black's equation, $\Theta + \tfrac12\sigma^2F^2\Gamma = r\
 
 Hold the future still and raise the rate. The chances $N(d_1)$ and $N(d_2)$ do not change, because $F$ already carries every effect of rates on the oil price. Only the discount changes, and it falls at rate $T$ per unit of rate. So $\rho = -T V$ = −0.5 × 7.00 = −3.50 per barrel. On a lot, −$3,501.34 per unit of rate, −$0.35 per basis point. A small number: rates barely touch a six-month futures option.
 
-For a share the story reverses. The Acme call's rho is $K T e^{-rT}N(d_2)$ = 49.46, positive ([Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md)). The difference is what is held still. Holding the share still lets the forward, $S e^{(r-q)T}$, rise with the rate. Holding the future still does not. The chain rule joins them: the stock rho equals the futures rho plus delta times the futures price's slope in the rate, $-TV + \Delta \cdot T F$. For Acme both roads give 49.46.
+For a share the story reverses. The Acme call's rho is $K T e^{-rT}N(d_2)$ = 49.46, positive ([Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md)).
+
+The difference is what is held still. Holding the share still lets Acme's futures price, $S e^{(r-q)T}$ with $S$ the share price, rise with the rate. Holding the future still does not. The chain rule joins them: the stock rho equals the futures rho plus delta times the futures price's slope in the rate, $-TV + \Delta \cdot T F$. For Acme both roads give 49.46.
 
 ### Step 5: a margined option has no premium to discount
 
-On some exchanges, Brent among them, the buyer of a futures option pays no premium up front. The option is marked to market daily like a future, and [Options on a futures price](01-options-on-commodity-futures.md) shows its fair quote is the paid premium without the discount, and that such an option is never worth exercising early. That card calls the paid premium C and the margined quote V; here $V$ is the paid premium, so that rho reads $-T\,V$, and $V_m$ is the margined quote:
+On some exchanges, Brent among them, the buyer of a futures option pays no premium up front. The option is marked to market daily like a future. [Options on a futures price](01-options-on-commodity-futures.md) shows its fair quote is the paid premium without the discount, and that such an option is never worth exercising early.
+
+That card calls the paid premium C and the margined quote V; here $V$ is the paid premium, so that rho reads $-T\,V$, and $V_m$ is the margined quote:
 
 $$V_m = F\,N(d_1) - K\,N(d_2) = e^{rT}V$$
 
 Its Greeks follow by the same differentiation with the discount removed. Nothing is financed, so nothing is discounted. For the house call, $V_m$ = 7.18. Its delta is $N(d_1)$ = 0.5422 lots: the untailed number is right here, because the option's own gains are now paid daily, like the future's. Its rho is zero with the future held still, and its theta is the decay term alone, −0.0196 per barrel per day.
 
-A second road to every Greek is bump-and-reprice: nudge one input, reprice, divide. The code does it for all five and lands on the formulas; [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) shows why the central difference is accurate.
+A second road to every Greek is bump-and-reprice: nudge one input, reprice, divide. The code does it for all five and lands on the formulas; [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) shows why the central difference, a nudge up and a nudge down divided by the gap, is accurate.
 
 ---
 
@@ -234,7 +250,7 @@ time left      hedge in lots, future at $90
   1 week     ██████████████████████████████████████████████  0.918
 ```
 
-An option that is in the money heads toward a full lot as expiry nears, because exercise becomes nearly certain. One out of the money heads toward none.
+An option that is in the money, with the future above the strike, heads toward a full lot as expiry nears, because exercise becomes nearly certain. One out of the money, with the future below the strike, heads toward none.
 
 ### Both together
 
@@ -255,7 +271,15 @@ Orange: six months left. Green: three months left. Dark blue: two weeks left. As
 
 ## Code, from first principles, and it actually runs
 
-The scripts price the house Brent call and compute its five Greeks by five independent roads: the closed forms; bump-and-reprice in each input; a Simpson integral over the lognormal futures price, for the price and for delta; the house Acme call priced both on its share and on its future, joined by the chain rule for rho; and a simulation that sells the call, hedges it daily with futures on 2,000 random paths, and reads the price back from the hedged book. The normal curve area, the integrator and the random numbers are written from scratch. The last road also shows the tail's effect: the tailed hedge gives the smallest error, and the simulated price with it lands within one standard error of the formula.
+The scripts price the house Brent call and compute its five Greeks by five independent roads:
+
+- the closed forms;
+- bump-and-reprice in each input;
+- a Simpson integral over the lognormal futures price, for the price and for delta;
+- the house Acme call priced both on its share and on its future, joined by the chain rule for rho;
+- a simulation that sells the call, hedges it daily with futures on 2,000 random paths, and reads the price back from the hedged book.
+
+The normal curve area, the integrator and the random numbers are written from scratch. The last road also shows the tail's effect: the tailed hedge gives the smallest error, and the simulated price with it lands within one standard error of the formula. A standard error is the typical size of the simulation's random error.
 
 ### Python
 
@@ -679,6 +703,235 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves all five Greek formulas at any bank rate, for any futures price, strike, volatility and time left above zero.
+
+- Take $F$, $K$, $\sigma$ and $T$ above zero, and any rate $r$. Then the price's slope in $F$ is $\Delta = e^{-rT}N(d_1)$.
+- Take the same inputs, with the futures price held still. Then the price's slope in $r$ is $\rho = -T V$.
+- Take the same inputs. Then delta's own slope in $F$ is $\Gamma = e^{-rT}\phi(d_1)/(F\sigma\sqrt{T})$.
+- Take the same inputs. Then the price's slope in $\sigma$ is $\nu = e^{-rT}F\phi(d_1)\sqrt{T}$.
+- Take the same inputs. Then minus the price's slope in $T$ is $\Theta = rV - e^{-rT}F\phi(d_1)\sigma/(2\sqrt{T})$.
+- Take the house Brent call, with $F = K = 85$, $\sigma$ = 30%, $T$ = 0.5 and $r$ = 5%. Then $\tfrac12\sigma^2T$ = 0.0225, $rT$ = 0.025 and $d_2 = -d_1$.
+- Take one option on 1,000 barrels and a lot of 1,000 barrels. Then the lots to sell, $h$, equal delta.
+
+The decimal values, Black's equation, the margined option, the Acme comparison and the hedging simulation are left to the Python and Rust checks.
+
+```lean
+-- Greeks of a futures option: in Black's 1976 model for a call on a futures price, the slope in the futures price is e^(-rT) N(d₁), the slope in the bank rate with the future held still is -T V, the slope in volatility is e^(-rT) F φ(d₁) √T, and the slope in time left gives theta = r V - e^(-rT) F φ(d₁) σ / (2√T).
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open Real MeasureTheory ProbabilityTheory
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def futN (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- `φ(x)`: the standard bell curve's height at `x`. -/
+noncomputable def futPhi (x : ℝ) : ℝ := gaussianPDFReal 0 1 x
+
+/-- Black-76 distance `d₁ = (ln(F/K) + σ²T/2) / (σ√T)`. It contains no bank rate. -/
+noncomputable def futD1 (F K σ T : ℝ) : ℝ :=
+  (log (F / K) + σ ^ 2 / 2 * T) / (σ * √T)
+
+/-- Black-76 distance `d₂ = d₁ - σ√T`. -/
+noncomputable def futD2 (F K σ T : ℝ) : ℝ :=
+  futD1 F K σ T - σ * √T
+
+/-- The premium-paid Black-76 call, dollars per barrel:
+`V = e^(-rT) [F N(d₁) - K N(d₂)]`. -/
+noncomputable def futCall (F K r σ T : ℝ) : ℝ :=
+  exp (-r * T) * (F * futN (futD1 F K σ T) - K * futN (futD2 F K σ T))
+
+lemma futPhi_eq (x : ℝ) : futPhi x = (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := by
+  simp [futPhi, gaussianPDFReal]
+
+lemma continuous_futPhi : Continuous futPhi := by
+  have : futPhi = fun x => (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := funext futPhi_eq
+  rw [this]; fun_prop
+
+lemma futN_eq_integral (x : ℝ) : futN x = ∫ t in Set.Iic x, futPhi t := by
+  unfold futN futPhi
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (integral_nonneg fun _ => gaussianPDFReal_nonneg _ _ _)]
+
+lemma futN_eq_add (x : ℝ) : futN x = futN 0 + ∫ t in (0 : ℝ)..x, futPhi t := by
+  have hi := intervalIntegral.integral_Iic_sub_Iic (f := futPhi) (a := 0) (b := x)
+    (μ := volume) (integrable_gaussianPDFReal 0 1).integrableOn
+    (integrable_gaussianPDFReal 0 1).integrableOn
+  rw [futN_eq_integral, futN_eq_integral]
+  linarith
+
+lemma hasDerivAt_futN (x : ℝ) : HasDerivAt futN (futPhi x) x := by
+  have h := intervalIntegral.integral_hasDerivAt_right
+    (continuous_futPhi.intervalIntegrable 0 x)
+    continuous_futPhi.aestronglyMeasurable.stronglyMeasurableAtFilter
+    continuous_futPhi.continuousAt
+  have h2 := h.const_add (futN 0)
+  have : futN = fun x => futN 0 + ∫ t in (0 : ℝ)..x, futPhi t := funext futN_eq_add
+  rw [this]; exact h2
+
+/-- `F φ(d₁) = K φ(d₂)`. -/
+lemma fut_pdf_identity (F K σ T : ℝ) (hF : 0 < F) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    F * futPhi (futD1 F K σ T) = K * futPhi (futD1 F K σ T - σ * √T) := by
+  set d := futD1 F K σ T with hd
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hu : σ * √T ≠ 0 := by positivity
+  have hdu : d * (σ * √T) = log (F / K) + σ ^ 2 / 2 * T := by
+    rw [hd, futD1]; field_simp
+  have hexp : -(d - σ * √T) ^ 2 / 2 = -d ^ 2 / 2 + log (F / K) := by
+    linear_combination hdu - (σ ^ 2 / 2) * hsq
+  have hlog : exp (log (F / K)) = F / K := exp_log (by positivity)
+  rw [futPhi_eq, futPhi_eq, hexp, exp_add, hlog]
+  field_simp
+
+/-- Product and chain rule for `a N(d) - b N(d - u)` when `a φ(d) = b φ(d - u)`. -/
+lemma fut_hasDerivAt_generic {a b d u : ℝ → ℝ} {p a' b' u' : ℝ} (ha : HasDerivAt a a' p)
+    (hb : HasDerivAt b b' p) (hd : DifferentiableAt ℝ d p) (hu : HasDerivAt u u' p)
+    (hid : a p * futPhi (d p) = b p * futPhi (d p - u p)) :
+    HasDerivAt (fun q => a q * futN (d q) - b q * futN (d q - u q))
+      (a' * futN (d p) - b' * futN (d p - u p) + a p * futPhi (d p) * u') p := by
+  obtain ⟨D, hD⟩ : ∃ D, HasDerivAt d D p := ⟨_, hd.hasDerivAt⟩
+  have h1 := ha.mul ((hasDerivAt_futN (d p)).comp p hD)
+  have h2 := hb.mul ((hasDerivAt_futN (d p - u p)).comp p (hD.sub hu))
+  convert h1.sub h2 using 1
+  · rfl
+  · simp only [Function.comp_apply, Pi.sub_apply]
+    linear_combination (u' - D) * hid
+
+lemma futD1_hasDerivAt_F (F K σ T : ℝ) (hF : 0 < F) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => futD1 x K σ T) (1 / (F * σ * √T)) F := by
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have h := ((((hasDerivAt_id F).div_const K).log (by simp only [id]; positivity)).add_const
+    (σ ^ 2 / 2 * T)).div_const (σ * √T)
+  refine h.congr_deriv ?_
+  simp only [id]
+  field_simp
+
+#print axioms futPhi_eq
+#print axioms continuous_futPhi
+#print axioms futN_eq_integral
+#print axioms futN_eq_add
+#print axioms hasDerivAt_futN
+#print axioms fut_pdf_identity
+#print axioms fut_hasDerivAt_generic
+#print axioms futD1_hasDerivAt_F
+
+/-- **Delta and rho of a futures option** (the card's main claim; Why it works, Steps 1 and 4).
+In Black's 1976 model, for a premium-paid European call on a future with futures price `F > 0`,
+strike `K > 0`, volatility `σ > 0` and time left `T > 0`, at any bank rate `r`:
+the call price's slope in the futures price, every other input frozen, is the discount times
+`N(d₁)`, `Δ = e^(-rT) N(d₁)` (a count of futures per barrel); and its slope in the bank rate,
+with the futures price held still, is minus the time left times the premium, `ρ = -T V`. -/
+theorem futures_call_delta_eq_discount_mul_N_d1_and_rho_eq_neg_time_mul_price
+    (F K r σ T : ℝ) (hF : 0 < F) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun f => futCall f K r σ T) (exp (-r * T) * futN (futD1 F K σ T)) F ∧
+      HasDerivAt (fun x => futCall F K x σ T) (-T * futCall F K r σ T) r := by
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hid := fut_pdf_identity F K σ T hF hK hσ hT
+  refine ⟨?_, ?_⟩
+  · have h := fut_hasDerivAt_generic (a := fun x => x) (b := fun _ => K)
+      (d := fun x => futD1 x K σ T) (u := fun _ => σ * √T) (u' := 0) (hasDerivAt_id' F)
+      (hasDerivAt_const _ _) (futD1_hasDerivAt_F F K σ T hF hK hσ hT).differentiableAt
+      (hasDerivAt_const _ _) hid
+    refine (h.const_mul (exp (-r * T))).congr_deriv ?_
+    simp
+  · have h := (((hasDerivAt_id r).neg.mul_const T).exp).mul_const
+      (F * futN (futD1 F K σ T) - K * futN (futD2 F K σ T))
+    refine h.congr_deriv ?_
+    simp only [Pi.neg_apply, id_eq, futCall]
+    ring
+
+/-- **Gamma and vega share one piece** (Why it works, Step 3). Under the same terms, delta's own
+slope in the futures price is `Γ = e^(-rT) φ(d₁) / (F σ √T)`, and the call price's slope in
+volatility is `ν = e^(-rT) F φ(d₁) √T`. -/
+theorem futures_call_gamma_and_vega
+    (F K r σ T : ℝ) (hF : 0 < F) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun f => exp (-r * T) * futN (futD1 f K σ T))
+        (exp (-r * T) * futPhi (futD1 F K σ T) / (F * σ * √T)) F ∧
+      HasDerivAt (fun s => futCall F K r s T)
+        (exp (-r * T) * F * futPhi (futD1 F K σ T) * √T) σ := by
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hid := fut_pdf_identity F K σ T hF hK hσ hT
+  refine ⟨?_, ?_⟩
+  · have h := ((hasDerivAt_futN (futD1 F K σ T)).comp F
+      (futD1_hasDerivAt_F F K σ T hF hK hσ hT)).const_mul (exp (-r * T))
+    refine h.congr_deriv ?_
+    field_simp
+  · have h := fut_hasDerivAt_generic (a := fun _ => F) (b := fun _ => K)
+      (d := fun s => futD1 F K s T) (u := fun s => s * √T) (hasDerivAt_const _ _)
+      (hasDerivAt_const _ _) (by unfold futD1; fun_prop (disch := positivity))
+      ((hasDerivAt_id σ).mul_const _) hid
+    refine (h.const_mul (exp (-r * T))).congr_deriv ?_
+    ring
+
+/-- **Theta adds back the interest on the premium** (Why it works, Step 3 and the detailed
+proof). Under the same terms, theta, minus the call price's slope in the time left, is
+`Θ = r V - e^(-rT) F φ(d₁) σ / (2√T)`. -/
+theorem futures_call_theta_eq_interest_minus_decay
+    (F K r σ T : ℝ) (hF : 0 < F) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun t => futCall F K r σ t)
+      (-(r * futCall F K r σ T - exp (-r * T) * F * futPhi (futD1 F K σ T) * σ / (2 * √T))) T := by
+  have hsT : 0 < √T := Real.sqrt_pos.mpr hT
+  have hid := fut_pdf_identity F K σ T hF hK hσ hT
+  have h := fut_hasDerivAt_generic (a := fun _ => F) (b := fun _ => K)
+    (d := fun t => futD1 F K σ t) (u := fun t => σ * √t) (hasDerivAt_const _ _)
+    (hasDerivAt_const _ _) (by unfold futD1; fun_prop (disch := positivity))
+    ((Real.hasDerivAt_sqrt hT.ne').const_mul σ) hid
+  have he := ((hasDerivAt_id T).const_mul (-r)).exp
+  refine (he.mul h).congr_deriv ?_
+  simp only [id, futCall, futD2]
+  field_simp
+  ring
+
+/-! The card's worked numbers that are exact fractions, for the house Brent call:
+F = 85, K = 85, σ = 3/10, T = 1/2, r = 5/100, one option on 1,000 barrels, lot 1,000 barrels. -/
+
+-- The drift term σ²T/2 = 0.5 × 0.09 × 0.5 = 0.0225.
+example : (1 / 2 : ℚ) * (3 / 10) ^ 2 * (1 / 2) = 9 / 400 := by norm_num
+
+-- The discount's exponent rT = 0.05 × 0.5 = 0.025.
+example : (5 / 100 : ℚ) * (1 / 2) = 1 / 40 := by norm_num
+
+-- At the money, d₂ = -d₁ (the card's 0.1061 and -0.1061).
+example : futD2 85 85 (3 / 10) (1 / 2) = -futD1 85 85 (3 / 10) (1 / 2) := by
+  have h : (0 : ℝ) < √(1 / 2) := Real.sqrt_pos.mpr (by norm_num)
+  have hsq : √(1 / 2 : ℝ) ^ 2 = 1 / 2 := Real.sq_sqrt (by norm_num)
+  unfold futD2 futD1
+  rw [div_self (by norm_num : (85 : ℝ) ≠ 0), log_one]
+  field_simp
+  linear_combination (-36 : ℝ) * hsq
+
+-- Hedge in lots, h = n m Δ / M with n = 1, m = M = 1,000: the lots equal delta.
+example (Δ : ℝ) : 1 * 1000 * Δ / 1000 = Δ := by
+  ring
+
+#print axioms futures_call_delta_eq_discount_mul_N_d1_and_rho_eq_neg_time_mul_price
+#print axioms futures_call_gamma_and_vega
+#print axioms futures_call_theta_eq_interest_minus_decay
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'futPhi_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_futPhi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'futN_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'futN_eq_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_futN' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fut_pdf_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fut_hasDerivAt_generic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'futD1_hasDerivAt_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'futures_call_delta_eq_discount_mul_N_d1_and_rho_eq_neg_time_mul_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'futures_call_gamma_and_vega' depends on axioms: [propext, Classical.choice, Quot.sound]
+'futures_call_theta_eq_interest_minus_decay' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Unhedged against hedged.** Guess first: how much does daily hedging shrink the simulation's error? Compare the rows `3 sim V, no hedge` and `3 sim V, e^-rT N(d1) lots`. Answer: the standard error falls from 0.2882 to 0.0120. The unhedged estimate, 7.4361, is far noisier than the hedged one, 7.0058, which sits within a standard error of the formula's 7.0027.
@@ -695,7 +948,7 @@ The two outputs are identical line for line.
 >
 > Four smaller traps:
 > - **Borrowing the share's rho.** A share call's rho is positive, $KTe^{-rT}N(d_2)$. On the Brent call that formula gives +18.97; the right answer with the future held still is −3.50.
-> - **Mixing paid and margined formulas.** ICE Brent options are margined: delta is $N(d_1)$, 0.5422, and rho is zero. Applying the paid delta, 0.5288, to them under-hedges by $13.39 per dollar per lot; the reverse over-hedges by the same amount.
+> - **Mixing paid and margined formulas.** ICE (Intercontinental Exchange) Brent options are margined: delta is $N(d_1)$, 0.5422, and rho is zero. Applying the paid delta, 0.5288, to them under-hedges by $13.39 per dollar per lot; the reverse over-hedges by the same amount.
 > - **Vega per unit and theta per year.** Vega per unit is 23.25 per barrel: the slope stretched over a move from 30 to 130 percent volatility. The desk number is 0.2325 per point. Theta per year, −$6,626.32 per lot, is not what one day costs; −$18.15 is.
 > - **Setting the hedge and walking away.** With gamma at 0.0215 lots per dollar, a move from 85 to 90 shifts the six-month hedge from 0.53 to 0.63 lots. Near the strike with two weeks left the hedge swings from 0.16 to 0.84 lots between 80 and 90.
 

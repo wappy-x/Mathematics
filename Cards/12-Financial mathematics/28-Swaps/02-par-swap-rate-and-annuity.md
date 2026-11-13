@@ -8,9 +8,13 @@
 
 A company has borrowed 10 million dollars for five years at a floating rate: each year it pays whatever the one-year rate turns out to be. It wants a fixed bill instead. A bank will swap: the company pays the bank a fixed rate on 10 million each year, and the bank pays the company the floating rate, which the company passes to its lender. The company's cost is now fixed.
 
-Nobody pays anything up front, so the fixed rate has to be fair on the day the swap is signed. On this card's curve, where rates are expected to fall, the fair rate is **4.42 percent**. (The shelf's other cards use a rising curve, on which the par rate is 4.65 percent: [Interest rate swaps](01-interest-rate-swaps.md).) At that rate the fixed payments and the floating payments are worth exactly the same today: 1,936,740.46 dollars each. The fair rate for a new swap is called the **par swap rate**, or simply the swap rate. It is the number quoted on every rates screen.
+Nobody pays anything up front, so the fixed rate has to be fair on the day the swap is signed. On this card's curve, where rates are expected to fall, the fair rate is **4.42 percent**. (The shelf's other cards use a rising curve, on which the par rate is 4.65 percent: [Interest rate swaps](01-interest-rate-swaps.md).)
 
-The par rate comes out of one division. The top is what the floating payments are worth. The bottom is what one unit of fixed rate, paid on every date of the swap, is worth: about 4.38 here (4.380745), called the **annuity**. Rewritten, the same division is an average of the market's forward rates (the rates fixed today for each future year), weighted by how much a dollar on each date is worth today.
+At 4.42 percent the fixed payments and the floating payments are worth exactly the same today: 1,936,740.46 dollars each. The fair rate for a new swap is called the **par swap rate**, or simply the swap rate. It is the number quoted on every rates screen.
+
+Each side's stream of payments is called a leg: the fixed leg and the floating leg. The par rate comes out of one division. The top is what the floating payments are worth. The bottom is what one unit of fixed rate, paid on every date of the swap, is worth: about 4.38 here (4.380745), called the **annuity**.
+
+Rewritten, the same division is an average of the market's forward rates (the rates fixed today for each future year), weighted by how much a dollar on each date is worth today (its discount factor).
 
 **The par swap rate is the value of the floating leg divided by the annuity, and that ratio is an average of the forward rates weighted by the discount factors.**
 
@@ -132,7 +136,9 @@ The weights fall because a dollar paid later is worth less today. The early forw
 
 A swap written last month at $K$ = 4.50 percent is no longer at par. Its fixed leg is $N K A$; its floating leg is still $N S A$, since that is what par means. The difference, to the fixed payer, is $V = N A (S - K)$.
 
-Take the house swap's terms: 4.50 percent fixed on 10 million. That is 7.8970 basis points above today's par. Each basis point of fixed rate is worth $N A$ times one basis point: 4,380.74 dollars. So the fixed payer is down 34,594.64 dollars. On the curve of [Interest rate swaps](01-interest-rate-swaps.md) the same contract is worth +65,736.36 dollars: there par is 4.65 percent and $A$ is 4.382424. Same terms, different curve, opposite sign. The annuity is the exchange rate between a rate gap and money, and it is also the slope of the swap's value against its fixed rate.
+Take the house swap, the example that runs through this shelf: 4.50 percent fixed on 10 million. That is 7.8970 basis points above today's par. Each basis point of fixed rate is worth $N A$ times one basis point: 4,380.74 dollars. So the fixed payer is down 34,594.64 dollars.
+
+On the curve of [Interest rate swaps](01-interest-rate-swaps.md) the same contract is worth +65,736.36 dollars: there par is 4.65 percent and $A$ is 4.382424. Same terms, different curve, opposite sign. The annuity is the exchange rate between a rate gap and money, and it is also the slope of the swap's value against its fixed rate.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -190,7 +196,7 @@ A company can swap its five-year floating loan into a fixed 4.42 percent at no c
 
 ## Code, from first principles, and it actually runs
 
-The code builds the discount factors from the five forwards, then reaches the par rate by three independent roads: the telescoped ratio $(1 - D(T_n))/A$; the weighted average of forwards; and a bisection search for the coupon of a par bond valued backwards year by year, which never forms $A$. It finds the annuity twice, as a sum of discount factors and as the slope of the swap's value when the fixed rate is bumped, and values the 4.50 percent house swap twice, by backward recursion and by $N A (S - K)$. It then prints the wrong answers, the chart points and the experiments below, and last values the same 4.50 percent swap on the curve of interest-rate-swaps, whose par quote of 4.65 percent it recovers.
+The code builds the discount factors from the five forwards. It then reaches the par rate by three independent roads: the telescoped ratio $(1 - D(T_n))/A$; the weighted average of forwards; and a bisection search (halving a range of rates until it pins the answer) for the coupon of a par bond valued backwards year by year, which never forms $A$. It finds the annuity twice: as a sum of discount factors, and as the slope of the swap's value when the fixed rate is bumped. It values the 4.50 percent house swap twice: by backward recursion and by $N A (S - K)$. It then prints the wrong answers, the chart points and the experiments below. Last, it values the same 4.50 percent swap on the curve of [Interest rate swaps](01-interest-rate-swaps.md) and recovers that card's par quote of 4.65 percent.
 
 ### Python
 
@@ -569,6 +575,201 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves the formulas for every swap with positive accruals and discount factors, and checks this card's numbers exactly.
+
+- Take a fixed rate $K$, with each floating payment valued at its forward rate. Then the two legs are worth the same exactly when $K = (D(T_0) - D(T_n))/A$.
+- Take the weights $w_i = \alpha_i D(T_i)/A$. Then $S = \sum w_i F_i$: the par rate is the weighted average of the forward rates.
+- The weights are positive and add to one. So the par rate lies between the smallest and the largest forward rate.
+- Take a swap already on the books at fixed rate $K$. Then its value to the fixed payer is $V = N A (S - K)$.
+- On this card's curve, the annuity is 4.380745 to six places, and the par rate lies between 4.421025 and 4.421035 percent.
+- That par rate sits above the plain average of 4.40 percent, and the house swap is worth −34,594.64 dollars to the cent.
+
+The Python and Rust checks cover the rest: the par bond road, the annuity as a slope, the wrong answers and the experiments below.
+
+```lean
+-- The par swap rate: with one curve that both forecasts and discounts, the only fixed rate that makes a new swap worth zero is one dollar at the start less one dollar at the end, divided by the annuity, and that ratio is the average of the forward rates weighted by each date's share of the annuity.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib
+
+open Finset
+
+/-! The swap pays on dates `T_1, …, T_n`; date `T_0` is its start. `D i` is the discount factor
+`D(T_i)`, today's price of one dollar paid at `T_i`, and `α i` is the accrual of period `i`, its
+length as a fraction of a year. One curve both forecasts and discounts: the forward rate of
+period `i` is read off the same `D` that discounts the payments. -/
+
+/-- The forward rate for period `i`, read off the discount curve:
+`F_i = (1 / α_i) * (D(T_{i-1}) / D(T_i) - 1)`. -/
+noncomputable def forwardRate (α D : ℕ → ℝ) (i : ℕ) : ℝ :=
+  (1 / α i) * (D (i - 1) / D i - 1)
+
+/-- The annuity: the value today of one unit of rate paid on every fixed date,
+`A = ∑_{i=1}^{n} α_i D(T_i)`. -/
+noncomputable def annuity (n : ℕ) (α D : ℕ → ℝ) : ℝ :=
+  ∑ i ∈ Icc 1 n, α i * D i
+
+/-- The sum of successive drops in `D` telescopes. -/
+theorem sum_Icc_drop_telescope (D : ℕ → ℝ) (n : ℕ) :
+    ∑ i ∈ Icc 1 n, (D (i - 1) - D i) = D 0 - D n := by
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), ih]
+    simp
+
+/-- Each floating payment, valued at its forward rate and discounted, is the drop in `D`. -/
+theorem sum_alpha_forward_disc (n : ℕ) (α D : ℕ → ℝ)
+    (hα : ∀ i ∈ Icc 1 n, 0 < α i) (hD : ∀ i ∈ Icc 1 n, 0 < D i) :
+    ∑ i ∈ Icc 1 n, α i * forwardRate α D i * D i = D 0 - D n := by
+  rw [← sum_Icc_drop_telescope D n]
+  refine Finset.sum_congr rfl (fun i hi => ?_)
+  have h1 := (hα i hi).ne'
+  have h2 := (hD i hi).ne'
+  unfold forwardRate
+  field_simp
+
+/-- The annuity is positive. -/
+theorem annuity_pos (n : ℕ) (α D : ℕ → ℝ) (hn : 1 ≤ n)
+    (hα : ∀ i ∈ Icc 1 n, 0 < α i) (hD : ∀ i ∈ Icc 1 n, 0 < D i) :
+    0 < annuity n α D := by
+  unfold annuity
+  apply Finset.sum_pos
+  · intro i hi; exact mul_pos (hα i hi) (hD i hi)
+  · exact ⟨1, by simp; omega⟩
+
+#print axioms sum_Icc_drop_telescope
+#print axioms sum_alpha_forward_disc
+#print axioms annuity_pos
+
+/-- The card's main claim. Take a swap with `n ≥ 1` payment dates, positive accruals and
+positive discount factors, and a notional `N > 0`. The fixed leg at rate `K` is worth
+`N K A`; the floating leg, each payment valued at its forward rate and discounted, is worth
+`∑ N α_i F_i D(T_i)`. Then the two legs are worth the same for exactly one fixed rate, the par
+swap rate `S = (D(T_0) - D(T_n)) / A`, and that rate is the average of the forward rates
+weighted by each date's share of the annuity, `w_i = α_i D(T_i) / A`. -/
+theorem par_swap_rate_eq_weighted_average_of_forwards (n : ℕ) (N : ℝ) (α D : ℕ → ℝ)
+    (hn : 1 ≤ n) (hN : 0 < N)
+    (hα : ∀ i ∈ Icc 1 n, 0 < α i) (hD : ∀ i ∈ Icc 1 n, 0 < D i) :
+    (∀ K : ℝ, N * K * annuity n α D = ∑ i ∈ Icc 1 n, N * α i * forwardRate α D i * D i ↔
+      K = (D 0 - D n) / annuity n α D) ∧
+    (D 0 - D n) / annuity n α D
+      = ∑ i ∈ Icc 1 n, (α i * D i / annuity n α D) * forwardRate α D i := by
+  have hA := annuity_pos n α D hn hα hD
+  have hS := sum_alpha_forward_disc n α D hα hD
+  have hsum : ∑ i ∈ Icc 1 n, N * α i * forwardRate α D i * D i = N * (D 0 - D n) := by
+    rw [← hS, Finset.mul_sum]
+    exact Finset.sum_congr rfl (fun i _ => by ring)
+  refine ⟨fun K => ?_, ?_⟩
+  · rw [hsum, eq_div_iff hA.ne']
+    constructor
+    · intro h
+      have := mul_left_cancel₀ hN.ne' (by linarith [h] : N * (K * annuity n α D) = N * (D 0 - D n))
+      exact this
+    · intro h; rw [← h]; ring
+  · rw [← hS, Finset.sum_div]
+    exact Finset.sum_congr rfl (fun i _ => by ring)
+
+/-- The weights `w_i = α_i D(T_i) / A` are positive and add to one, so the par swap rate lies
+between the smallest and the largest forward rate: any bounds `m ≤ F_i ≤ M` that hold for every
+period also hold for the par rate. -/
+theorem par_swap_rate_between_forwards (n : ℕ) (α D : ℕ → ℝ)
+    (hn : 1 ≤ n)
+    (hα : ∀ i ∈ Icc 1 n, 0 < α i) (hD : ∀ i ∈ Icc 1 n, 0 < D i) :
+    (∀ i ∈ Icc 1 n, 0 < α i * D i / annuity n α D) ∧
+    ∑ i ∈ Icc 1 n, α i * D i / annuity n α D = 1 ∧
+    ∀ m M : ℝ, (∀ i ∈ Icc 1 n, m ≤ forwardRate α D i ∧ forwardRate α D i ≤ M) →
+      m ≤ (D 0 - D n) / annuity n α D ∧ (D 0 - D n) / annuity n α D ≤ M := by
+  have hA := annuity_pos n α D hn hα hD
+  have hS := sum_alpha_forward_disc n α D hα hD
+  have hpar : (D 0 - D n) / annuity n α D
+      = ∑ i ∈ Icc 1 n, (α i * D i / annuity n α D) * forwardRate α D i := by
+    rw [← hS, Finset.sum_div]
+    exact Finset.sum_congr rfl (fun i _ => by ring)
+  have hw : ∀ i ∈ Icc 1 n, 0 < α i * D i / annuity n α D :=
+    fun i hi => div_pos (mul_pos (hα i hi) (hD i hi)) hA
+  have hone : ∑ i ∈ Icc 1 n, α i * D i / annuity n α D = 1 := by
+    rw [← Finset.sum_div]
+    exact div_self hA.ne'
+  refine ⟨hw, hone, fun m M hmM => ⟨?_, ?_⟩⟩
+  · rw [hpar]
+    calc m = ∑ i ∈ Icc 1 n, (α i * D i / annuity n α D) * m := by
+          rw [← Finset.sum_mul, hone, one_mul]
+      _ ≤ _ := Finset.sum_le_sum (fun i hi =>
+          mul_le_mul_of_nonneg_left (hmM i hi).1 (hw i hi).le)
+  · rw [hpar]
+    calc _ ≤ ∑ i ∈ Icc 1 n, (α i * D i / annuity n α D) * M :=
+          Finset.sum_le_sum (fun i hi =>
+            mul_le_mul_of_nonneg_left (hmM i hi).2 (hw i hi).le)
+      _ = M := by rw [← Finset.sum_mul, hone, one_mul]
+
+/-- The annuity turns a rate gap into money. A swap already on the books at fixed rate `K`, on
+notional `N`, is worth to the side paying fixed the floating leg less the fixed leg,
+`∑ N α_i (F_i - K) D(T_i)`, and this equals `N A (S - K)`, where `S` is the par swap rate. -/
+theorem swap_value_eq_notional_annuity_rate_gap (n : ℕ) (N K : ℝ) (α D : ℕ → ℝ)
+    (hn : 1 ≤ n)
+    (hα : ∀ i ∈ Icc 1 n, 0 < α i) (hD : ∀ i ∈ Icc 1 n, 0 < D i) :
+    ∑ i ∈ Icc 1 n, N * α i * (forwardRate α D i - K) * D i
+      = N * annuity n α D * ((D 0 - D n) / annuity n α D - K) := by
+  have hA := annuity_pos n α D hn hα hD
+  have hS := sum_alpha_forward_disc n α D hα hD
+  have h : ∑ i ∈ Icc 1 n, N * α i * (forwardRate α D i - K) * D i
+      = N * (∑ i ∈ Icc 1 n, α i * forwardRate α D i * D i)
+        - N * K * annuity n α D := by
+    unfold annuity
+    rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
+    exact Finset.sum_congr rfl (fun i _ => by ring)
+  rw [h, hS]
+  field_simp
+
+/-! The card's curve, exactly, in fractions. The one-year forwards are 5.00, 4.60, 4.30, 4.10
+and 4.00 percent, so the growth factors are 21/20, 523/500, 1043/1000, 1041/1000 and 26/25,
+and each discount factor is one over the product of the growth factors up to that year. -/
+
+-- The annuity is 4.380745 to six places: 75457915860 / 17224906153 exactly.
+example :
+    (1 / (21 / 20) + 1 / ((21 / 20) * (523 / 500)) + 1 / ((21 / 20) * (523 / 500) * (1043 / 1000))
+      + 1 / ((21 / 20) * (523 / 500) * (1043 / 1000) * (1041 / 1000))
+      + 1 / ((21 / 20) * (523 / 500) * (1043 / 1000) * (1041 / 1000) * (26 / 25)) : ℚ)
+      = 75457915860 / 17224906153 := by norm_num
+
+-- The par rate (1 - D(5)) / A is 4.421030 percent to six places, and it sits above the plain
+-- average of the five forwards, 4.40 percent.
+example :
+    let A : ℚ := 75457915860 / 17224906153
+    let D5 : ℚ := 1 / ((21 / 20) * (523 / 500) * (1043 / 1000) * (1041 / 1000) * (26 / 25))
+    4421025 / 100000000 < (1 - D5) / A ∧ (1 - D5) / A < 4421035 / 100000000 ∧
+      (50 / 1000 + 46 / 1000 + 43 / 1000 + 41 / 1000 + 40 / 1000) / 5 < (1 - D5) / A := by
+  norm_num
+
+-- The house swap, paying 4.50 percent fixed on 10 million, is worth N A (S - K) to the fixed
+-- payer: -34,594.64 dollars, to the cent.
+example :
+    let A : ℚ := 75457915860 / 17224906153
+    let D5 : ℚ := 1 / ((21 / 20) * (523 / 500) * (1043 / 1000) * (1041 / 1000) * (26 / 25))
+    (-3459465 / 100 : ℚ) < 10000000 * A * ((1 - D5) / A - 45 / 1000) ∧
+      10000000 * A * ((1 - D5) / A - 45 / 1000) < -3459464 / 100 := by
+  norm_num
+
+#print axioms par_swap_rate_eq_weighted_average_of_forwards
+#print axioms par_swap_rate_between_forwards
+#print axioms swap_value_eq_notional_annuity_rate_gap
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_Icc_drop_telescope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_alpha_forward_disc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuity_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'par_swap_rate_eq_weighted_average_of_forwards' depends on axioms: [propext, Classical.choice, Quot.sound]
+'par_swap_rate_between_forwards' depends on axioms: [propext, Classical.choice, Quot.sound]
+'swap_value_eq_notional_annuity_rate_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

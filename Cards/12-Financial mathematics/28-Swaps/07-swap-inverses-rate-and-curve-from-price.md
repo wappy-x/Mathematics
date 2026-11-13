@@ -33,7 +33,9 @@ One line: the fixed rate that makes the swap worth each value to whoever receive
 
 ## The formula
 
-Notation first, in words. The swap pays once a year, so its dates are numbered by year: $i$ runs from 1 to 5. $D_i$ is the discount factor for year $i$: what one dollar paid at the end of year $i$ costs today. Each period is one year long, so its accrual fraction $\alpha$, the share of a year a rate is paid for, is 1. The swap's size is its notional $N$, and its fixed rate is $K$. The value $V$ is always the value to whoever receives fixed.
+Notation first, in words. The swap pays once a year, so its dates are numbered by year: $i$ runs from 1 to 5. $D_i$ is the discount factor for year $i$: what one dollar paid at the end of year $i$ costs today.
+
+Each period is one year long, so its accrual fraction $\alpha$, the share of a year a rate is paid for, is 1. The swap's size is its notional $N$, and its fixed rate is $K$. The value $V$ is always the value to whoever receives fixed.
 
 The fixed side pays $N K$ each year. The floating side, discounted, is worth $N(1 - D_5)$ today, whatever the floating rates turn out to be ([Interest rate swaps](01-interest-rate-swaps.md)). So
 
@@ -87,7 +89,9 @@ Solving backwards is usually a search: guess, price, compare, guess again. Here 
 
 The fixed side pays $N K$ at the end of each year. Discount each payment and add: $N K (D_1 + \dots + D_5) = N K A$.
 
-The floating side pays the one-year rate that is fixed at the start of year $i$, unknown today. Its value today is that of a payment of $N f_i$, where $f_i = D_{i-1}/D_i - 1$ is the forward rate the curve locks in for that year ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). Discounted, that is worth $N f_i D_i = N(D_{i-1} - D_i)$. Added over five years, the middle terms cancel in pairs and $N(D_0 - D_5) = N(1 - D_5)$ survives. On this curve that is 2,037,827.18 dollars. The code builds all five floating payments one at a time from their forward rates and gets the same number, so the cancelling is checked, not assumed.
+The floating side pays the one-year rate that is fixed at the start of year $i$, unknown today. Its value today is that of a payment of $N f_i$, where $f_i = D_{i-1}/D_i - 1$ is the forward rate the curve locks in for that year ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). Discounted, that is worth $N f_i D_i = N(D_{i-1} - D_i)$. Added over five years, the middle terms cancel in pairs and $N(D_0 - D_5) = N(1 - D_5)$ survives.
+
+On this curve that is 2,037,827.18 dollars. The code builds all five floating payments one at a time from their forward rates and gets the same number, so the cancelling is checked, not assumed.
 
 The receiver's value is fixed side minus floating side: $V = N K A - N(1 - D_5)$.
 
@@ -109,7 +113,7 @@ The code does not trust the rearrangement. It also searches: bisection, which ha
 
 A secant step does it in one. From any two trial rates, 1 and 9 percent, draw the straight line through their two values and read off where it hits 100,000. For a curve that bends, that is only a better guess. For a line, it is the answer, exactly. One step landing where the rearranged formula lands confirms the value really is straight in $K$.
 
-The house swap on this shelf runs through the same machine: 10,000,000 dollars, paying fixed at 4.50 percent. Its value to the payer on this curve is 65,736.36 dollars. Feed that value into the payer's version of the line, $K = S_5 - V/(N A)$, and 4.50 percent comes back.
+The house swap, the example swap shared by the cards on this shelf, runs through the same machine: 10,000,000 dollars, paying fixed at 4.50 percent. Its value to the payer on this curve is 65,736.36 dollars. Feed that value into the payer's version of the line, $K = S_5 - V/(N A)$, and 4.50 percent comes back.
 
 ### Step 4: a par quote to one discount factor
 
@@ -147,7 +151,7 @@ Take $(1 + S_5) D_5 = 1 - S_5 B_5$ with $B_5 > 0$, the sum of four positive pric
 
 </details>
 
-Another road reaches all five points at once. Write the five quotes as five linear equations in five unknowns and solve them together; ordered shortest first the system is a staircase, and the single-rung formula here is its last step ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)).
+Another road reaches all five points at once. Write the five quotes as five linear equations in five unknowns and solve them together. Ordered shortest first, the system is a staircase: each rung solves one quote for one new discount factor, and the formula here is its last rung ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)).
 
 ---
 
@@ -541,6 +545,168 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves both backwards solutions for a swap of any length, and checks the card's two worked answers.
+
+- Take a positive notional and positive discount factors, with one curve both forecasting and discounting. Then every value $V$ is reached by exactly one fixed rate: the par rate plus $V/(N A)$.
+- Take the earlier discount factors as known, with sum $B_5$, and a quote $S_5$ above $-100$ percent. Then the par equation holds for exactly one $D_5$: $(1 - S_5 B_5)/(1 + S_5)$.
+- Suppose at least one earlier discount factor is known. Then a positive $D_5$ exists exactly when the quote lies strictly between $-100$ percent and $1/B_5$.
+- Built exactly from the card's quotes, the curve gives $D_5$ within 0.000000005 of 0.79621728. The fixed rate that 100,000 dollars buys rounds to 4.8782 percent.
+
+Bisection, the secant step, the house swap, the slope and the wrong answers are left to the Python and Rust checks.
+
+```lean
+-- Solving a swap backwards: a plain swap's value turns back into exactly one fixed rate, and a par quote with the earlier discount factors known turns back into exactly one discount factor, positive exactly when the quote lies between -100 percent and 1/B.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.LinearCombination
+
+open Finset
+
+/-- Value today, to whoever receives fixed, of an `n`-year swap with annual payments
+(accrual fraction 1), notional `N` and fixed rate `K`, priced payment by payment on the
+discount curve `D` (with `D 0 = 1`). Year `i + 1` pays fixed `N * K` and floating
+`N * f`, where `f = D i / D (i + 1) - 1` is the forward rate the same curve sets for
+that year; both payments are discounted by `D (i + 1)`. -/
+noncomputable def receiverValue (N K : ℝ) (D : ℕ → ℝ) (n : ℕ) : ℝ :=
+  ∑ i ∈ range n, (N * K * D (i + 1) - N * (D i / D (i + 1) - 1) * D (i + 1))
+
+/-- The annuity: what one dollar a year for `n` years costs today, `D 1 + ... + D n`. -/
+def annuity (D : ℕ → ℝ) (n : ℕ) : ℝ := ∑ i ∈ range n, D (i + 1)
+
+/-- The swap value telescopes: the floating leg collapses to `N (D 0 - D m)`. -/
+theorem receiverValue_telescope (N K : ℝ) (D : ℕ → ℝ) (n : ℕ)
+    (hD : ∀ i ∈ Icc 1 n, 0 < D i) :
+    ∀ m, m ≤ n → receiverValue N K D m = N * K * annuity D m - N * (D 0 - D m) := by
+  intro m
+  induction m with
+  | zero => intro _; simp [receiverValue, annuity]
+  | succ k ih =>
+    intro hk
+    have hpos : 0 < D (k + 1) := hD (k + 1) (by simp [mem_Icc]; omega)
+    have h := ih (by omega)
+    unfold receiverValue annuity at *
+    rw [sum_range_succ, sum_range_succ, h]
+    field_simp
+    ring
+
+/-- The fixed rate from a value. For a plain swap with positive notional and positive
+discount factors, one curve both forecasting and discounting the floating rates, every
+value `V` to the fixed receiver is reached by exactly one fixed rate, namely the par rate
+`(1 - D n) / A` plus the value spread across the annuity, `V / (N A)`. -/
+theorem fixed_rate_from_value (N : ℝ) (D : ℕ → ℝ) (n : ℕ) (hn : 1 ≤ n)
+    (hN : 0 < N) (hD0 : D 0 = 1) (hD : ∀ i ∈ Icc 1 n, 0 < D i) (V K : ℝ) :
+    receiverValue N K D n = V ↔
+      K = (1 - D n) / annuity D n + V / (N * annuity D n) := by
+  have hA : 0 < annuity D n := by
+    unfold annuity
+    apply sum_pos
+    · intro i hi
+      exact hD (i + 1) (by simp [mem_Icc] at hi ⊢; omega)
+    · exact ⟨0, by simp; omega⟩
+  rw [receiverValue_telescope N K D n hD n le_rfl, hD0]
+  have hNA : 0 < N * annuity D n := mul_pos hN hA
+  rw [div_add_div _ _ hA.ne' hNA.ne', eq_div_iff (mul_pos hA hNA).ne']
+  constructor
+  · intro h
+    rw [← h]; ring
+  · intro h
+    have h2 : N * annuity D n * (N * K * annuity D n - N * (1 - D n) - V) = 0 := by
+      linear_combination N * h
+    rcases mul_eq_zero.mp h2 with h3 | h3
+    · exact absurd h3 hNA.ne'
+    · linarith
+
+/-- A curve point from a par quote. With the earlier discount factors `D 1, ..., D (n-1)`
+known (their sum is `B`), a par quote `S` above -100 percent makes the par equation
+`S (B + d) = 1 - d` hold for exactly one new discount factor `d`, namely
+`(1 - S B) / (1 + S)`. -/
+theorem discount_factor_from_par_quote (D : ℕ → ℝ) (n : ℕ)
+    (hD : ∀ i ∈ Ico 1 n, 0 < D i) (S : ℝ) (hS : -1 < S) (d : ℝ) :
+    S * ((∑ i ∈ Ico 1 n, D i) + d) = 1 - d ↔
+      d = (1 - S * ∑ i ∈ Ico 1 n, D i) / (1 + S) := by
+  have h1 : (1 + S) ≠ 0 := by linarith
+  rw [eq_div_iff h1]
+  constructor <;> intro h <;> linarith
+
+/-- The edges of the curve inversion. When at least one earlier discount factor is known
+(so `B > 0`), the par equation `S (B + d) = 1 - d` has a positive solution `d`, a genuine
+price, exactly when the quote lies strictly between -100 percent and `1 / B`. -/
+theorem par_quote_positive_point_iff (D : ℕ → ℝ) (n : ℕ) (hn : 2 ≤ n)
+    (hD : ∀ i ∈ Ico 1 n, 0 < D i) (S : ℝ) :
+    (∃ d : ℝ, 0 < d ∧ S * ((∑ i ∈ Ico 1 n, D i) + d) = 1 - d) ↔
+      -1 < S ∧ S < 1 / ∑ i ∈ Ico 1 n, D i := by
+  set B := ∑ i ∈ Ico 1 n, D i with hBdef
+  have hB : 0 < B := by
+    apply sum_pos
+    · exact hD
+    · exact ⟨1, by simp [mem_Ico]; omega⟩
+  rw [lt_div_iff₀ hB]
+  constructor
+  · rintro ⟨d, hd, h⟩
+    refine ⟨?_, ?_⟩
+    · by_contra hc
+      push Not at hc
+      nlinarith [mul_nonpos_of_nonpos_of_nonneg (by linarith : S + 1 ≤ 0) (by linarith : 0 ≤ B + d)]
+    · nlinarith [mul_pos hd (by
+        by_contra hc
+        push Not at hc
+        nlinarith [mul_nonpos_of_nonpos_of_nonneg (by linarith : S + 1 ≤ 0) (by linarith : 0 ≤ B + d)] : (0:ℝ) < 1 + S)]
+  · rintro ⟨h1, h2⟩
+    have hS1 : (1 + S) ≠ 0 := by linarith
+    refine ⟨(1 - S * B) / (1 + S), div_pos (by linarith) (by linarith), ?_⟩
+    field_simp
+    ring
+
+/- The card's curve, built exactly from its quotes: a one-year deposit at 4.20 percent and
+par swaps at 4.40, 4.55, 4.62 and 4.65 percent, each rung `(1 - S B) / (1 + S)`.
+The five-year discount factor lies within 5e-9 of the card's 0.79621728. -/
+example :
+    let D1 : ℚ := 1 / (1 + 42 / 1000)
+    let D2 : ℚ := (1 - 44 / 1000 * D1) / (1 + 44 / 1000)
+    let D3 : ℚ := (1 - 455 / 10000 * (D1 + D2)) / (1 + 455 / 10000)
+    let D4 : ℚ := (1 - 462 / 10000 * (D1 + D2 + D3)) / (1 + 462 / 10000)
+    let D5 : ℚ := (1 - 465 / 10000 * (D1 + D2 + D3 + D4)) / (1 + 465 / 10000)
+    79621728 / 100000000 - 5 / 1000000000 < D5 ∧
+      D5 < 79621728 / 100000000 + 5 / 1000000000 := by
+  intro D1 D2 D3 D4 D5
+  norm_num [D1, D2, D3, D4, D5]
+
+/- On the same exact curve, the fixed rate that 100,000 dollars buys on 10,000,000
+dollars, `(1 - D5) / A + V / (N A)`, rounds to the card's 4.8782 percent. -/
+example :
+    let D1 : ℚ := 1 / (1 + 42 / 1000)
+    let D2 : ℚ := (1 - 44 / 1000 * D1) / (1 + 44 / 1000)
+    let D3 : ℚ := (1 - 455 / 10000 * (D1 + D2)) / (1 + 455 / 10000)
+    let D4 : ℚ := (1 - 462 / 10000 * (D1 + D2 + D3)) / (1 + 462 / 10000)
+    let D5 : ℚ := (1 - 465 / 10000 * (D1 + D2 + D3 + D4)) / (1 + 465 / 10000)
+    let A : ℚ := D1 + D2 + D3 + D4 + D5
+    let K : ℚ := (1 - D5) / A + 100000 / (10000000 * A)
+    487815 / 10000000 < K ∧ K < 487825 / 10000000 := by
+  intro D1 D2 D3 D4 D5 A K
+  norm_num [D1, D2, D3, D4, D5, A, K]
+
+#print axioms receiverValue_telescope
+#print axioms fixed_rate_from_value
+#print axioms discount_factor_from_par_quote
+#print axioms par_quote_positive_point_iff
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'receiverValue_telescope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fixed_rate_from_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+'discount_factor_from_par_quote' depends on axioms: [propext, Classical.choice, Quot.sound]
+'par_quote_positive_point_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

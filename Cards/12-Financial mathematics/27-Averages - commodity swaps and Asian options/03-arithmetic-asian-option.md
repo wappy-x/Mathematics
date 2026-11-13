@@ -10,7 +10,9 @@ An airline burns jet fuel every week. Jet fuel costs \$100 a barrel today. The a
 
 The average is the ordinary one, add and divide by 52: the **arithmetic** average, the one fuel contracts use. The plain one-year call on the last week's price costs \$10.45. The call on the average costs \$5.85, 56 percent of it, because an average of 52 readings wanders less than one reading.
 
-No formula gives the \$5.85. A cousin, the call on the **geometric** average (multiply the 52 fixings, take the 52nd root), has an exact price, \$5.64 ([Kemna-Vorst](02-kemna-vorst-geometric-asian.md)). The quick route computes the average's exact mean and mean square, pretends the average has the simplest shape with those two numbers, and prices that: \$5.87, the **Turnbull-Wakeman** approximation. The careful route simulates 50,000 possible years, prices the geometric twin on the same years, and uses the twin's known miss to correct the arithmetic price: \$5.854, with an error bar of a tenth of a cent, 36 times tighter than without the correction.
+No formula gives the \$5.85. A cousin, the call on the **geometric** average (multiply the 52 fixings, take the 52nd root), has an exact price, \$5.64 ([Kemna-Vorst](02-kemna-vorst-geometric-asian.md)). The quick route computes the average's exact mean and mean square, pretends the average has the simplest shape with those two numbers, and prices that: \$5.87, the **Turnbull-Wakeman** approximation.
+
+The careful route simulates 50,000 possible years, prices the geometric twin on the same years, and uses the twin's known miss to correct the arithmetic price: \$5.854, with an error bar of a tenth of a cent, 36 times tighter than without the correction.
 
 **The arithmetic Asian has no closed form: match its exact first two moments to a lognormal for a quick price, or simulate it with the exact geometric twin as a control, which cancels almost all the simulation's noise.**
 
@@ -34,7 +36,9 @@ First line: profit per barrel, flat at −\$5.85 until the average passes the \$
 
 ## The formula
 
-Notation first, in words. The fixings fall on dates $t_i = iT/n$ for $i$ = 1 to $n$, counted in years from today, the last one on the expiry date $T$. The futures price quoted today for delivery at date $t$ is $F(0,t)$; the list of them, date by date, is the **futures curve**. The fixing on date $t_i$ is $P_i$. A capital sigma adds up a list. $E[\;]$ is an average over all possible price paths in the risk-neutral world, the pricing world in which a futures price has no expected drift ([Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). $N(x)$ is the bell-curve area left of $x$.
+Notation first, in words. The fixings fall on dates $t_i = iT/n$ for $i$ = 1 to $n$, counted in years from today, the last one on the expiry date $T$. The futures price quoted today for delivery at date $t$ is $F(0,t)$; the list of them, date by date, is the **futures curve**. The fixing on date $t_i$ is $P_i$.
+
+A capital sigma adds up a list. $E[\;]$ is an average over all possible price paths in the risk-neutral world, the pricing world in which a futures price has no expected drift ([Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). $N(x)$ is the bell-curve area left of $x$.
 
 The contract and its price:
 
@@ -75,7 +79,7 @@ The helpers, each exact:
 
 $$P_i = F(0,t_i)\,e^{\sigma W_{t_i} - \frac12\sigma^2 t_i}$$
 
-In words: each fixing is lognormal around its own point on today's curve, and one random path drives them all.
+In words: each fixing is lognormal (its log follows a bell curve) around its own point on today's curve, and one random path drives them all.
 
 $$M_1 = \frac1n\sum_{i=1}^{n} F(0,t_i), \qquad M_2 = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} F(0,t_i)\,F(0,t_j)\,e^{\sigma^2\min(t_i,\,t_j)}$$
 
@@ -179,7 +183,9 @@ The one line is the quick price's overpricing in cents, each point measured agai
 Two more places it drifts:
 
 - **Long dates.** Stretch the same 52 fixings over five years at 20% volatility: \$15.42 quick against \$15.24 simulated, 18 cents dear.
-- **Averages already in progress.** Halfway through the year, 26 fixings are banked at an average of \$80, and the curve for the next half-year again reads $100e^{0.05t}$. The payoff is half of the remaining average's excess over $K^*$ = 2 × 100 − 80 = \$120. That option is far out of the money. The quick price is 3.76 cents against the simulated 4.11 cents: 91.7 percent of the true price, too cheap. If the banked fixings alone guarantee the average clears the strike, $K^*$ is zero or negative, the log in $e_1$ is undefined, and the option is sure to pay: it is worth half the discounted gap between the remaining average's forward and $K^*$. How price and hedge change as fixings bank is the subject of [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
+- **Averages already in progress.** Halfway through the year, 26 fixings are banked at an average of \$80, and the curve for the next half-year again reads $100e^{0.05t}$. The payoff is half of the remaining average's excess over $K^*$ = 2 × 100 − 80 = \$120. That option is far out of the money. The quick price is 3.76 cents against the simulated 4.11 cents: 91.7 percent of the true price, too cheap.
+
+  If the banked fixings alone guarantee the average clears the strike, $K^*$ is zero or negative, the log in $e_1$ is undefined, and the option is sure to pay: it is worth half the discounted gap between the remaining average's forward and $K^*$. How price and hedge change as fixings bank is the subject of [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
 
 Other routes exist: a lattice or a partial differential equation in two variables, the price and the running average; and quasi-random points, spread evenly on purpose, which cut the error bar further than the control alone ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
 
@@ -672,6 +678,213 @@ ALL CHECKS PASS
 
 The two outputs match line for line: the same generator, the same arithmetic in the same order.
 
+### Lean
+
+Lean proves the floor and ceiling and the control variate's promises, for any positive fixings, not only lognormal ones.
+
+- Suppose every fixing is positive and has a finite mean. Then $C_G \le C_A \le C_G + e^{-rT}(M_1 - F_G)$.
+- Take one path with positive fixings. Then the arithmetic payoff is at least the geometric one, and exceeds it by at most $A - G$.
+- Suppose $X$ and $Y$ have finite variances, $Y$ is not constant, and $C_G = E[Y]$. Then the corrected payoff $X - \beta(Y - C_G)$ has the same mean as $X$, for every $\beta$.
+- Take the same $X$ and $Y$, and any slope $\beta$. Then the corrected payoff's variance is at least $(1-\rho^2)$ times the variance of $X$.
+- Take the slope $\beta = \operatorname{cov}(X,Y)/\operatorname{var}(Y)$. Then that variance is exactly $(1-\rho^2)$ times the variance of $X$.
+- Take 26 fixings banked at \$80 against the \$100 strike. Then $K^*$ = 120, and the payoff is half the remaining average's excess over $K^*$.
+- The mean square $M_2$ sums over 52 × 52 = 2,704 ordered pairs of fixings.
+- Take an average of \$120 against the \$100 strike. Then the call pays \$20 a barrel, and an average of \$80 pays nothing.
+
+The Turnbull-Wakeman price, the exact moments, the twin's exact price and every simulated number are left to the Python and Rust checks.
+
+```lean
+-- The Asian option desks trade: the arithmetic Asian call is priced between its geometric twin and that twin plus the discounted gap between the two averages' forwards, and the geometric twin used as a control variate leaves the price unbiased and the variance at (1 - ρ²) of the plain variance.
+import Mathlib.Analysis.MeanInequalities
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Moments.Covariance
+
+open MeasureTheory ProbabilityTheory
+
+/-- AM-GM for positive fixings: the geometric average is at most the arithmetic one. -/
+theorem asian_helper_geom_le_arith (n : ℕ) (hn : n ≠ 0) (P : Fin n → ℝ) (hpos : ∀ i, 0 < P i) :
+    (∏ i, P i) ^ ((1 : ℝ) / n) ≤ (∑ i, P i) / n := by
+  have h := Real.geom_mean_le_arith_mean (Finset.univ : Finset (Fin n)) (fun _ => (1 : ℝ)) P
+    (fun _ _ => zero_le_one) (by simp [Nat.pos_of_ne_zero hn]) (fun i _ => (hpos i).le)
+  simpa [one_div] using h
+
+/-- The geometric average of positive fixings is nonnegative. -/
+theorem asian_helper_geom_nonneg (n : ℕ) (P : Fin n → ℝ) (hpos : ∀ i, 0 < P i) :
+    0 ≤ (∏ i, P i) ^ ((1 : ℝ) / n) :=
+  Real.rpow_nonneg (Finset.prod_nonneg fun i _ => (hpos i).le) _
+
+/-- Variance of the control-variate payoff, expanded. -/
+theorem asian_helper_cv_variance
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X Y : Ω → ℝ) (hX : MemLp X 2 μ) (hY : MemLp Y 2 μ) (C β : ℝ) :
+    Var[fun ω => X ω - β * (Y ω - C); μ]
+      = Var[X; μ] - 2 * β * cov[X, Y; μ] + β ^ 2 * Var[Y; μ] := by
+  have hZ : MemLp (fun ω => β * (Y ω - C)) 2 μ := (hY.sub (memLp_const C)).const_mul β
+  rw [variance_fun_sub hX hZ, covariance_const_mul_right,
+    covariance_sub_const_right (hY.integrable one_le_two), variance_const_mul,
+    variance_sub_const hY.aestronglyMeasurable]
+  ring
+
+
+/-- The card's floor and ceiling (Step 6). Take `n` fixings, each a positive price
+(lognormal fixings are positive) with a finite mean in the pricing world `μ`.
+Let `A` be their arithmetic average and `G` their geometric average (the `n`-th root of
+the product). Then the arithmetic Asian call `C_A = e^{-rT} E[max(A - K, 0)]` is never
+below the geometric twin `C_G = e^{-rT} E[max(G - K, 0)]`, and never above
+`C_G + e^{-rT} (M₁ - F_G)`, where `M₁ = E[A]` and `F_G = E[G]` are the two averages'
+forwards. -/
+theorem arithmetic_asian_between_geometric_floor_and_ceiling
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (n : ℕ) (hn : n ≠ 0) (P : Fin n → Ω → ℝ)
+    (hpos : ∀ i ω, 0 < P i ω) (hint : ∀ i, Integrable (P i) μ)
+    (K r T : ℝ) :
+    let A : Ω → ℝ := fun ω => (∑ i, P i ω) / n
+    let G : Ω → ℝ := fun ω => (∏ i, P i ω) ^ ((1 : ℝ) / n)
+    let C_A := Real.exp (-r * T) * ∫ ω, max (A ω - K) 0 ∂μ
+    let C_G := Real.exp (-r * T) * ∫ ω, max (G ω - K) 0 ∂μ
+    let M₁ := ∫ ω, A ω ∂μ
+    let F_G := ∫ ω, G ω ∂μ
+    C_G ≤ C_A ∧ C_A ≤ C_G + Real.exp (-r * T) * (M₁ - F_G) := by
+  intro A G C_A C_G M₁ F_G
+  have hGA : ∀ ω, G ω ≤ A ω := fun ω => asian_helper_geom_le_arith n hn (fun i => P i ω) (hpos · ω)
+  have hG0 : ∀ ω, 0 ≤ G ω := fun ω => asian_helper_geom_nonneg n (fun i => P i ω) (hpos · ω)
+  have hAint : Integrable A μ := by
+    have : Integrable (fun ω => ∑ i, P i ω) μ := integrable_finsetSum _ fun i _ => hint i
+    exact this.div_const _
+  have hGmeas : AEStronglyMeasurable G μ := by
+    have : AEMeasurable G μ :=
+      (Finset.univ.aemeasurable_fun_prod fun i _ => (hint i).aemeasurable).pow_const _
+    exact this.aestronglyMeasurable
+  have hGint : Integrable G μ := by
+    refine hAint.mono' hGmeas (Filter.Eventually.of_forall fun ω => ?_)
+    rw [Real.norm_eq_abs, abs_of_nonneg (hG0 ω)]
+    exact hGA ω
+  have hGK : Integrable (fun ω => max (G ω - K) 0) μ := (hGint.sub (integrable_const K)).pos_part
+  have hAK : Integrable (fun ω => max (A ω - K) 0) μ := (hAint.sub (integrable_const K)).pos_part
+  have he := (Real.exp_pos (-r * T)).le
+  constructor
+  · refine mul_le_mul_of_nonneg_left (integral_mono hGK hAK fun ω => ?_) he
+    exact max_le_max (by linarith [hGA ω]) le_rfl
+  · have hle : ∫ ω, max (A ω - K) 0 ∂μ ≤ ∫ ω, (max (G ω - K) 0 + (A ω - G ω)) ∂μ := by
+      refine integral_mono hAK (hGK.add (hAint.sub hGint)) fun ω => ?_
+      have := hGA ω
+      exact max_le (by linarith [le_max_left (G ω - K) 0]) (by linarith [le_max_right (G ω - K) 0])
+    have hsub : Integrable (fun ω => A ω - G ω) μ := hAint.sub hGint
+    rw [integral_add hGK hsub, integral_sub hAint hGint] at hle
+    have := mul_le_mul_of_nonneg_left hle he
+    show Real.exp (-r * T) * ∫ ω, max (A ω - K) 0 ∂μ ≤
+      Real.exp (-r * T) * ∫ ω, max (G ω - K) 0 ∂μ + Real.exp (-r * T) * ((∫ ω, A ω ∂μ) - ∫ ω, G ω ∂μ)
+    linarith
+
+/-- The same floor and ceiling on one simulated path: for positive fixings, the
+arithmetic payoff is never below the geometric payoff, and the gap between the two
+payoffs is never more than the gap between the two averages, `A - G`. -/
+theorem arithmetic_payoff_between_geometric_payoff_and_gap
+    (n : ℕ) (hn : n ≠ 0) (P : Fin n → ℝ) (hpos : ∀ i, 0 < P i) (K : ℝ) :
+    let A := (∑ i, P i) / n
+    let G := (∏ i, P i) ^ ((1 : ℝ) / n)
+    max (G - K) 0 ≤ max (A - K) 0 ∧ max (A - K) 0 ≤ max (G - K) 0 + (A - G) := by
+  intro A G
+  have hGA : G ≤ A := asian_helper_geom_le_arith n hn P hpos
+  constructor
+  · exact max_le_max (by linarith) le_rfl
+  · exact max_le (by linarith [le_max_left (G - K) 0]) (by linarith [le_max_right (G - K) 0])
+
+/-- The control variate (Step 5). Let `X` and `Y` be the discounted arithmetic and
+geometric payoffs on one path, with finite variances, `Y` not constant, and let
+`C_G = E[Y]` be the twin's exact price. Then the corrected payoff
+`X - β (Y - C_G)` has the same mean as `X` for every slope `β`; its variance is never
+below `(1 - ρ²) var X`, where `ρ` is the correlation of `X` and `Y`; and the slope
+`β = cov(X, Y) / var Y` reaches exactly `(1 - ρ²) var X`. -/
+theorem control_variate_unbiased_and_leaves_one_minus_rho_sq
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X Y : Ω → ℝ) (hX : MemLp X 2 μ) (hY : MemLp Y 2 μ) (hvY : 0 < Var[Y; μ])
+    (C_G : ℝ) (hCG : C_G = ∫ ω, Y ω ∂μ) :
+    let ρ := cov[X, Y; μ] / Real.sqrt (Var[X; μ] * Var[Y; μ])
+    let βstar := cov[X, Y; μ] / Var[Y; μ]
+    (∀ β : ℝ, ∫ ω, (X ω - β * (Y ω - C_G)) ∂μ = ∫ ω, X ω ∂μ) ∧
+    (∀ β : ℝ, (1 - ρ ^ 2) * Var[X; μ] ≤ Var[fun ω => X ω - β * (Y ω - C_G); μ]) ∧
+    Var[fun ω => X ω - βstar * (Y ω - C_G); μ] = (1 - ρ ^ 2) * Var[X; μ] := by
+  intro ρ βstar
+  simp only [ρ, βstar]
+  have hvar := asian_helper_cv_variance μ X Y hX hY C_G
+  have hVX0 : 0 ≤ Var[X; μ] := variance_nonneg _ _
+  have hint1 : ∀ β : ℝ, ∫ ω, (X ω - β * (Y ω - C_G)) ∂μ = ∫ ω, X ω ∂μ := by
+    intro β
+    have hYi := hY.integrable one_le_two
+    have hXi := hX.integrable one_le_two
+    have h1 : Integrable (fun ω => β * (Y ω - C_G)) μ := (hYi.sub (integrable_const C_G)).const_mul β
+    have h2 : Integrable (fun _ : Ω => C_G) μ := integrable_const C_G
+    rw [integral_sub hXi h1, integral_const_mul, integral_sub hYi h2, integral_const, ← hCG]
+    simp
+  clear ρ βstar
+  generalize Var[X; μ] = VX at *
+  generalize Var[Y; μ] = VY at *
+  generalize cov[X, Y; μ] = c at *
+  -- value at the best slope
+  have hstar : Var[fun ω => X ω - c / VY * (Y ω - C_G); μ] = VX - c ^ 2 / VY := by
+    rw [hvar]; field_simp; ring
+  -- Cauchy–Schwarz from nonnegativity of that variance
+  have hCS : c ^ 2 ≤ VX * VY := by
+    have h0 : 0 ≤ VX - c ^ 2 / VY := hstar ▸ variance_nonneg _ _
+    rw [sub_nonneg, div_le_iff₀ hvY] at h0
+    exact h0
+  have hrho : (1 - (c / Real.sqrt (VX * VY)) ^ 2) * VX = VX - c ^ 2 / VY := by
+    rw [div_pow, Real.sq_sqrt (mul_nonneg hVX0 hvY.le)]
+    rcases hVX0.eq_or_lt with h | h
+    · rw [← h] at hCS ⊢
+      have : c ^ 2 = 0 := le_antisymm (by simpa using hCS) (sq_nonneg _)
+      rw [this]; simp
+    · field_simp
+  refine ⟨fun β => ?_, fun β => ?_, ?_⟩
+  · exact hint1 β
+  · rw [hrho, hvar]
+    have key : VX - 2 * β * c + β ^ 2 * VY - (VX - c ^ 2 / VY) = (β * VY - c) ^ 2 / VY := by
+      field_simp; ring
+    have : 0 ≤ (β * VY - c) ^ 2 / VY := div_nonneg (sq_nonneg _) hvY.le
+    linarith
+  · rw [hstar, hrho]
+
+-- Step 7: half the year gone, 26 fixings banked at an average of $80 against a
+-- $100 strike on 52 fixings. The strike left for the rest is K* = 2 × 100 − 80 = 120.
+example : (2 * 100 - 80 : ℕ) = 120 := by decide
+
+-- The payoff is half of the remaining average's excess over K* = 120,
+-- whatever the remaining 26 fixings average to.
+example (R : ℝ) :
+    max ((26 * 80 + 26 * R) / 52 - 100) 0 = (1 / 2) * max (R - 120) 0 := by
+  rcases le_total R 120 with h | h
+  · rw [max_eq_right (by linarith), max_eq_right (by linarith)]; ring
+  · rw [max_eq_left (by linarith), max_eq_left (by linarith)]; ring
+
+-- The mean square M₂ sums over all 52 × 52 ordered pairs of fixings.
+example : 52 * 52 = 2704 := by norm_num
+
+-- The payoff chart: an average of $120 against the $100 strike pays $20 a barrel,
+-- and an average of $80 pays nothing.
+example : max ((120 : ℤ) - 100) 0 = 20 ∧ max ((80 : ℤ) - 100) 0 = 0 := by decide
+
+#print axioms asian_helper_geom_le_arith
+#print axioms asian_helper_geom_nonneg
+#print axioms asian_helper_cv_variance
+#print axioms arithmetic_asian_between_geometric_floor_and_ceiling
+#print axioms arithmetic_payoff_between_geometric_payoff_and_gap
+#print axioms control_variate_unbiased_and_leaves_one_minus_rho_sq
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'asian_helper_geom_le_arith' depends on axioms: [propext, Classical.choice, Quot.sound]
+'asian_helper_geom_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'asian_helper_cv_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arithmetic_asian_between_geometric_floor_and_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arithmetic_payoff_between_geometric_payoff_and_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'control_variate_unbiased_and_leaves_one_minus_rho_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -718,7 +931,7 @@ The two outputs match line for line: the same generator, the same arithmetic in 
 
 - [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md): the Asian's hedge ratios, and how price and hedge change as fixings bank and the strike on the rest shifts.
 
-This card prices a fresh average and shows the quick price going wrong once half of it is banked; what a desk holds on day 180, and how it hedges, is the question asian-greeks-and-the-running-average answers.
+This card prices a fresh average and shows the quick price going wrong once half of it is banked; what a desk holds on day 180, and how it hedges, is the question [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md) answers.
 
 ---
 

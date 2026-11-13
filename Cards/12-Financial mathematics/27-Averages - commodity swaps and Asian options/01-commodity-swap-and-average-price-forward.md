@@ -8,7 +8,11 @@
 
 An airline burns 10,000 barrels of jet fuel a month. Its supplier bills each month at that month's average price: the jet fuel price is published on each of the month's 22 pricing days, and the bill uses the plain average of the 22 readings. The airline wants next year's bill fixed now.
 
-A bank agrees to a deal. For each of the next twelve months, the airline pays a fixed price per barrel on 10,000 barrels, and the bank pays the month's average price on the same 10,000 barrels. Only the difference changes hands, at each month's end. If a month averages $104 and the fixed price is $101.98, the bank pays the airline $20.18 thousand, and the airline hands that on to its supplier: its fuel has cost $101.98 a barrel. If the month averages $96, the airline pays the bank $59.82 thousand, and again its fuel has cost $101.98. This deal is a **commodity swap**: a fixed price swapped for a floating one, month by month. Each month's floating leg pays an average, so each month on its own is an **average-price forward**: a promise to trade at a fixed price against an average of many days' prices.
+A bank agrees to a deal. For each of the next twelve months, the airline pays a fixed price per barrel on 10,000 barrels, and the bank pays the month's average price on the same 10,000 barrels. Only the difference changes hands, at each month's end.
+
+If a month averages $104 and the fixed price is $101.98, the bank pays the airline $20.18 thousand, and the airline hands that on to its supplier: its fuel has cost $101.98 a barrel. If the month averages $96, the airline pays the bank $59.82 thousand, and again its fuel has cost $101.98.
+
+This deal is a **commodity swap**: a fixed price swapped for a floating one, month by month. Each month's floating leg pays an average, so each month on its own is an **average-price forward**: a promise to trade at a fixed price against an average of many days' prices.
 
 The market already quotes a price today for each month's average. That row of twelve prices is the **strip**. On this morning's screen it runs from $100.00 for next month to $104.00 for the twelfth month. The fixed price that makes the swap worth nothing to either side is not the plain average of the strip, $102.00. It is **$101.98**, the strip averaged with each month weighted by how soon its money arrives.
 
@@ -102,7 +106,11 @@ Let pricing day $j$ of month $i$ fall at date $d$, in years, before the payment 
 
 Month $i$ pays $\bar S_i$, the average of $m$ daily prices. An average is a sum divided by $m$, a straight line again. So its value is the average of the $m$ pieces from Step 1: $D(t_i)$ times the average of the daily forward prices. That average of forwards is what the strip quotes as $F_i$. The month is worth $D(t_i)\,F_i$ per barrel.
 
-This is why the month is an **Asian forward** rather than a European one. A European forward settles on one date's price, and its value uses the forward for that date. An Asian forward settles on an average, and its value uses the average of the forwards for all its dates. When each pricing day reads the same monthly contract, as in this card's simulation, the two numbers coincide for the value; they part company in risk. A European forward on the month-end price keeps all 10,000 barrels exposed until the last day. The average fixes one twenty-second of the month with each pricing day, so the exposure runs off as the month goes. The mid-month mark below prices exactly that.
+This is why the month is an **Asian forward** rather than a European one. A European forward settles on one date's price, and its value uses the forward for that date. An Asian forward settles on an average, and its value uses the average of the forwards for all its dates.
+
+When each pricing day reads the same monthly contract, as in this card's simulation, the two numbers coincide for the value; they part company in risk.
+
+A European forward on the month-end price keeps all 10,000 barrels exposed until the last day. The average fixes one twenty-second of the month with each pricing day, so the exposure runs off as the month goes. The mid-month mark below prices exactly that.
 
 ### Step 3: add the months, and set the value to zero
 
@@ -112,13 +120,13 @@ The weights $D(t_i)/A$ are positive and add to 1, so $K^\ast$ is a true average 
 
 ### Step 4: after the strip moves, the mark
 
-The contract is written; $K$ is fixed. A later morning brings a new strip $F'_i$. Steps 1 to 3 still price each month, now with $F'_i$: the value is $Q \sum D(t_i)(F'_i - K)$, the discounted sum of the twelve gaps between the new strip and the old fixed price.
+The **mark** is the value of a contract already written, at today's prices. The contract is written; $K$ is fixed. A later morning brings a new strip $F'_i$. Steps 1 to 3 still price each month, now with $F'_i$: the value is $Q \sum D(t_i)(F'_i - K)$, the discounted sum of the twelve gaps between the new strip and the old fixed price.
 
 A second road gives the same number with no sum over gaps. Enter a new swap in the opposite direction at today's fair fixed price $K'$: it costs nothing. The two floating legs now cancel. What remains is receiving $K'$ and paying $K$ on $Q$ barrels every month, a fixed stream worth $Q\,(K' - K)\,A$. The two expressions agree because $K'$ was defined to make $\sum D(t_i)(F'_i - K') = 0$.
 
 ### Step 5: a month already under way
 
-Part-way through month 1, $k$ of its $m$ prices are published. Those are banked: they are numbers, not prices to hedge. The month's expected average becomes $(k \times \text{banked average} + (m - k) \times F'_1)/m$, and only the $(m - k)/m$ share still moves with the market. Everything else is Step 4 with discount factors counted from the new date.
+Part-way through month 1, $k$ of its $m$ prices are published. Each published daily price is a **fixing**. Those are banked: they are numbers, not prices to hedge. The month's expected average becomes $(k \times \text{banked average} + (m - k) \times F'_1)/m$, and only the $(m - k)/m$ share still moves with the market. Everything else is Step 4 with discount factors counted from the new date.
 
 The same weighted average appears on interest-rate curves: the fixed rate on a par swap is the discount-weighted average of the forward rates ([Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md)). A commodity swap is that construction with fuel prices where the forward rates were.
 
@@ -140,7 +148,7 @@ The jet fuel swap: $Q$ = 10,000 barrels, $n$ = 12 months, $r$ = 5%, strip $100.0
 
 Month by month at $K$ = $101.98. The last column is the month's **delta**: dollars gained per $1 rise in that month's strip price, $Q\,D(t_i)$.
 
-| Month | Strip $F_i$ | $D(t_i)$ | Gap $F_i - K$ | PV of the gap, $ | Delta, $ per $1 |
+| Month | Strip $F_i$ | $D(t_i)$ | Gap $F_i - K$ | Present value of the gap, $ | Delta, $ per $1 |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 100.00 | 0.99584 | −1.9819 | −19,736.94 | 9,958.42 |
 | 2 | 100.36 | 0.99170 | −1.6219 | −16,084.75 | 9,917.01 |
@@ -243,7 +251,11 @@ First line: the month's net cash to the airline, 10,000 barrels times the averag
 
 ## Code, from first principles, and it actually runs
 
-Three roads lead to the fair fixed price. Road 1 is the weighted strip. Road 2 is bisection: it halves an interval two hundred times to find the fixed price at which the swap is worth zero, never dividing by the annuity. Road 3 simulates every pricing day of the year, with each month's contract wandering around its strip price, all twelve driven by one random path. The random numbers come from a splitmix64 generator written out in both languages, and each path is paired with its mirror image to cut noise. At 20 and 40 percent volatility the fair price should not move and a cap on month 12 should. The marks are computed as gaps, as an offsetting swap, and mid-month by simulation too.
+Three roads lead to the fair fixed price. Road 1 is the weighted strip. Road 2 is bisection: it halves an interval two hundred times to find the fixed price at which the swap is worth zero, never dividing by the annuity.
+
+Road 3 simulates every pricing day of the year, with each month's contract wandering around its strip price, all twelve driven by one random path. The random numbers come from a splitmix64 generator written out in both languages, and each path is paired with its mirror image to cut noise.
+
+At 20 and 40 percent volatility the fair price should not move and a cap on month 12 should. The marks are computed as gaps, as an offsetting swap, and mid-month by simulation too.
 
 ### Python
 
@@ -635,6 +647,122 @@ ALL CHECKS PASS
 
 The two outputs match line for line. Bisection lands on the weighted strip to six decimals, and the annuity matches its geometric-series closed form; the simulated fair price sits within one standard error at both volatilities. The cap nearly doubles with volatility; the swap stays at zero within noise.
 
+### Lean
+
+Lean proves the card's three pricing facts, for every number of months, settlement dates and strip that meet each fact's conditions.
+
+- Suppose there is at least one month and $Q > 0$. Then $V = 0$ exactly when $K = K^\ast$, the strip averaged with discount factors as weights.
+- Take the contract's fixed price $K$ and a new strip $F'_i$. Then $Q\sum D(t_i)(F'_i - K)$ equals $Q\,(K' - K)\,A$, the offsetting swap's value.
+- Suppose the strip never falls from one month to the next, settlement dates come in order, and $r \ge 0$. Then $K^\ast$ is at most the plain average.
+- The card's strip, $100.00 to $104.00 in equal steps, has a plain average of exactly $102.00.
+- With 22, 11 or 0 fixings left of 22, month 1 has 10,000, 5,000 or 0 barrels still exposed.
+
+Every other dollar figure, the bisection, the simulation and the Greeks are left to the Python and Rust checks.
+
+```lean
+-- Commodity swap: the swap is worth nothing exactly at the discount-weighted average of the strip, after a move its mark equals the offsetting-swap value, and on a rising strip that fixed price sits at or below the plain average.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Algebra.Order.Chebyshev
+
+open Finset
+
+/-- The fair fixed price. A swap over `n ≥ 1` months on `Q > 0` barrels a month, month `i`
+settling at `t i` years with discount factor `D(t i) = e^{−r t i}` and strip price `F i`, is worth
+`V = Q · ∑ D(t i) (F i − K)` to the side paying fixed. That value is zero exactly when the fixed
+price `K` is the strip averaged with the discount factors as weights:
+`K* = (∑ D(t i) F i) / (∑ D(t i))`. No volatility enters. -/
+theorem swap_value_zero_iff_fixed_price_eq_discount_weighted_strip
+    (n : ℕ) (hn : 0 < n) (Q r : ℝ) (hQ : 0 < Q) (t F : Fin n → ℝ) (K : ℝ) :
+    Q * ∑ i, Real.exp (-r * t i) * (F i - K) = 0 ↔
+      K = (∑ i, Real.exp (-r * t i) * F i) / ∑ i, Real.exp (-r * t i) := by
+  have hA : 0 < ∑ i, Real.exp (-r * t i) := by
+    have : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+    exact Finset.sum_pos (fun i _ => Real.exp_pos _) Finset.univ_nonempty
+  have hS : ∑ i, Real.exp (-r * t i) * (F i - K) =
+      ∑ i, Real.exp (-r * t i) * F i - K * ∑ i, Real.exp (-r * t i) := by
+    simp only [mul_sub, Finset.sum_sub_distrib, Finset.mul_sum]
+    congr 1
+    exact Finset.sum_congr rfl (fun i _ => by ring)
+  rw [hS, mul_eq_zero, eq_div_iff hA.ne']
+  constructor
+  · rintro (h | h)
+    · exact absurd h hQ.ne'
+    · linarith
+  · intro h
+    right
+    linarith
+
+/-- The mark after the strip moves. With the contract's fixed price `K` and a new strip `F'`,
+the discounted sum of the gaps, `Q · ∑ D(t i) (F' i − K)`, equals the value of entering the
+offsetting swap at the new fair price `K' = (∑ D(t i) F' i) / A`: `Q · (K' − K) · A`, where
+`A = ∑ D(t i)` is the annuity. -/
+theorem swap_mark_eq_offsetting_swap
+    (n : ℕ) (Q r K : ℝ) (t F' : Fin n → ℝ) :
+    Q * ∑ i, Real.exp (-r * t i) * (F' i - K) =
+      Q * ((∑ i, Real.exp (-r * t i) * F' i) / (∑ i, Real.exp (-r * t i)) - K) *
+        ∑ i, Real.exp (-r * t i) := by
+  have hS : ∑ i, Real.exp (-r * t i) * (F' i - K) =
+      ∑ i, Real.exp (-r * t i) * F' i - K * ∑ i, Real.exp (-r * t i) := by
+    simp only [mul_sub, Finset.sum_sub_distrib, Finset.mul_sum]
+    congr 1
+    exact Finset.sum_congr rfl (fun i _ => by ring)
+  rw [hS]
+  rcases Nat.eq_zero_or_pos n with h0 | hn
+  · subst h0
+    simp
+  · have hA : 0 < ∑ i, Real.exp (-r * t i) := by
+      have : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+      exact Finset.sum_pos (fun i _ => Real.exp_pos _) Finset.univ_nonempty
+    have hc : (∑ i, Real.exp (-r * t i) * F' i) / (∑ i, Real.exp (-r * t i)) *
+        (∑ i, Real.exp (-r * t i)) = ∑ i, Real.exp (-r * t i) * F' i :=
+      div_mul_cancel₀ _ hA.ne'
+    linear_combination (-Q) * hc
+
+/-- Contango pulls the fixed price below the plain average. If the strip rises month by month,
+the settlement dates come later month by month and the rate is not negative, then the
+discount-weighted average of the strip is at most the plain average `(∑ F i) / n`. -/
+theorem fair_fixed_price_le_plain_average_of_rising_strip
+    (n : ℕ) (hn : 0 < n) (r : ℝ) (hr : 0 ≤ r) (t F : Fin n → ℝ)
+    (ht : Monotone t) (hF : Monotone F) :
+    (∑ i, Real.exp (-r * t i) * F i) / (∑ i, Real.exp (-r * t i)) ≤ (∑ i, F i) / n := by
+  have hA : 0 < ∑ i, Real.exp (-r * t i) := by
+    have : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+    exact Finset.sum_pos (fun i _ => Real.exp_pos _) Finset.univ_nonempty
+  have hw : Antitone (fun i => Real.exp (-r * t i)) := by
+    intro i j hij
+    apply Real.exp_le_exp.mpr
+    have := ht hij
+    nlinarith
+  have key := (hw.antivary hF).card_mul_sum_le_sum_mul_sum
+  simp only [Fintype.card_fin] at key
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  rw [div_le_div_iff₀ hA hnR]
+  linarith
+
+/-- The card's strip runs from $100 to $104 in eleven equal steps; its plain average is $102. -/
+example : (∑ i : Fin 12, ((100 : ℚ) + 4 * (i : ℕ) / 11)) / 12 = 102 := by
+  simp [Fin.sum_univ_succ]
+  norm_num
+
+/-- Half-way through month 1, 11 of its 22 fixings are left, so 10,000 · 11 / 22 = 5,000
+barrels are still exposed to the price; with 22 left all 10,000 are, with 0 left none. -/
+example : (10000 : ℚ) * 11 / 22 = 5000 ∧ (10000 : ℚ) * 22 / 22 = 10000 ∧
+    (10000 : ℚ) * 0 / 22 = 0 := by
+  norm_num
+
+#print axioms swap_value_zero_iff_fixed_price_eq_discount_weighted_strip
+#print axioms swap_mark_eq_offsetting_swap
+#print axioms fair_fixed_price_le_plain_average_of_rising_strip
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'swap_value_zero_iff_fixed_price_eq_discount_weighted_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+'swap_mark_eq_offsetting_swap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fair_fixed_price_le_plain_average_of_rising_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -690,7 +818,7 @@ The swap's price needed no volatility because its payoff is a straight line; ben
 
 ## Sources
 
-Verified 2026-09-28: each DOI's Crossref record names the cited title and first author; the Pearson page names Hull's 11th edition.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Schofield, Neil C. *Commodity Derivatives: Markets and Applications*, 2nd ed. Wiley, 2021. [doi:10.1002/9781119349242](https://doi.org/10.1002/9781119349242). Commodity swaps across energy and metals markets, with fixed legs set against average-priced floating legs.
 - Clewlow, Les, and Chris Strickland. "Valuing Energy Options in a One Factor Model Fitted to Forward Prices." 1999. [doi:10.2139/ssrn.160608](https://doi.org/10.2139/ssrn.160608). One random driver moving a whole forward curve, the model behind this card's simulation.

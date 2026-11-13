@@ -6,11 +6,17 @@
 
 ## General Overview
 
-Two banks agree to swap interest for five years on 10,000,000 dollars. One side pays a rate that resets every three months, the other a rate that resets every six months. Both rates are published indices: the average a panel of banks charges for unsecured loans of that length, Euribor being the live example. On a trading screen this morning the deal is quoted at **8 basis points**, a basis point being a hundredth of a percentage point. The side that receives the 3-month rate also receives 0.08 percent a year on top, and the deal is then fair.
+Two banks agree to swap interest for five years on 10,000,000 dollars. One side pays a rate that resets every three months, the other a rate that resets every six months. Both rates are published indices: the average a panel of banks charges for unsecured loans of that length, Euribor being the live example.
 
-Why should anyone need paying to swap three-month money for six-month money? Lend for six months, or lend for three and roll it over once: an old argument says the two must come to the same thing, and then the 3-month leg and the 6-month leg are worth exactly the same. That argument runs the whole of one curve through both jobs a coupon has. It sizes each coupon (the **forecast**) and it prices each payment back to today (the **discount**). An 8 basis point quote says the argument has failed. A lender for six months carries more risk that the borrowing bank fails, or that cash cannot be had, than a lender who can walk away after three.
+On a trading screen this morning the deal is quoted at **8 basis points** (bp), a basis point being a hundredth of a percentage point. The side that receives the 3-month rate also receives 0.08 percent a year on top, and the deal is then fair.
 
-The fix is to give each job its own curve. One **discount curve**, built from overnight rates, prices a dollar paid on any date. One **forecast curve** per index, a 3-month curve and a 6-month curve, sizes the coupons that index will pay. That arrangement is the **multi-curve framework**, and the fair spread that balances two floating legs on different indices is the **tenor basis**.
+Why should anyone need paying to swap three-month money for six-month money? Lend for six months, or lend for three and roll it over once: an old argument says the two must come to the same thing, and then the 3-month leg and the 6-month leg are worth exactly the same.
+
+That argument runs the whole of one curve through both jobs a coupon has. It sizes each coupon (the **forecast**) and it prices each payment back to today (the **discount**).
+
+An 8 basis point quote says the argument has failed. A lender for six months carries more risk that the borrowing bank fails, or that cash cannot be had, than a lender who can walk away after three.
+
+The fix is to give each job its own curve. One **discount curve**, built from overnight rates, prices a dollar paid on any date. One **forecast curve** per index, a 3-month curve and a 6-month curve, sizes the coupons that index will pay. That arrangement is the **multi-curve framework**, and the fair spread that balances two floating legs on different indices is the **tenor basis**, tenor being the length of loan an index measures.
 
 **Each coupon is forecast off the curve of its own index and discounted off one shared curve for cash, and the tenor basis is the difference between the two forecast legs, paid out as a spread.**
 
@@ -35,13 +41,15 @@ Bottom line, orange: the overnight curve's forward rate for the three months end
 
 ## The formula
 
-Notation first, in words. $D(t)$ is the **discount factor**: what one dollar paid at time $t$, in years, is worth today. $H_3(t)$ and $H_6(t)$ are the two **forecast curves**. They look like discount factors and fall like them, but nobody trades them as prices: they exist only to store forecasts, and a forecast is read off the ratio of two neighbouring points. A coupon period runs from a start date $t_{i-1}$ to an end date $t_i$, where it pays, and its length in years is the **accrual fraction** $\alpha$: 0.25 for a quarter, 0.5 for a half-year, 1 for a year.
+Notation first, in words. $D(t)$ is the **discount factor**: what one dollar paid at time $t$, in years, is worth today. $H_3(t)$ and $H_6(t)$ are the two **forecast curves**. They look like discount factors and fall like them, but nobody trades them as prices: they exist only to store forecasts, and a forecast is read off the ratio of two neighbouring points.
+
+A coupon period runs from a start date $t_{i-1}$ to an end date $t_i$, where it pays, and its length in years is the **accrual fraction** $\alpha$: 0.25 for a quarter, 0.5 for a half-year, 1 for a year.
 
 The forecast of the index rate for one period is the growth the forecast curve implies across it:
 
 $$F_i \;=\; \frac{1}{\alpha}\left(\frac{H(t_{i-1})}{H(t_i)} - 1\right)$$
 
-A floating leg is its coupons, each forecast off its own index's curve and discounted off the shared one. Per dollar of notional:
+A floating leg is its coupons, each forecast off its own index's curve and discounted off the shared one. Per dollar of **notional**, the amount the interest is calculated on:
 
 $$C \;=\; \sum_i \alpha \, F_i \, D(t_i)$$
 
@@ -79,13 +87,13 @@ $$H_3(t) = D(t)\,e^{-b_3 t}, \qquad H_6(t) = D(t)\,e^{-b_6 t}$$
 
 ### When it holds
 
-- **One discount curve for all cash in the deal.** Both legs pay dollars under one collateral agreement, so a dollar on a date has one price. If the legs were collateralised differently, or not at all, each would need its own discount curve; which curve is right is taken up in [Collateral discounting](05-ois-discounting-and-collateral.md).
+- **One discount curve for all cash in the deal.** Both legs pay dollars under one collateral agreement, a contract under which each side posts cash to cover what it owes the other, so a dollar on a date has one price. If the legs were collateralised differently, or not at all, each would need its own discount curve; which curve is right is taken up in [Collateral discounting](05-ois-discounting-and-collateral.md).
 - **Each coupon is fixed at the start of its period and paid at the end.** Then the market's forward is the right forecast and no correction is needed. A coupon paid late, or fixed at the end of its own period, needs a small timing adjustment the formula above leaves out.
 - **The curve between quotes is a choice.** One quote per curve buys one number, $b_3$ or $b_6$. The fair 1-year basis this curve set prints, 7.981845 bp, comes from the flat-spread shape, not from any market. More quotes buy more shape.
 - **Accruals in exact quarters and years.** Real contracts count days, so a real quarter is 0.25 only by coincidence; the error is a few dollars in a thousand on each coupon, not a change of method.
 - **Neither bank defaults.** A counterparty's failure is priced separately, as a valuation adjustment on top of this value.
 
-**Conventions verified 28 Sep 2026.** Euribor is published at one week and one, three, six and twelve months; dollar LIBOR panel fixings ended on 30 June 2023. Tenor basis swaps are commonly quoted as a spread on the shorter-tenor leg, as here; euro screens often show the 3s6s basis as the gap between the two par rates against annual fixed instead.
+**Conventions verified 28 Sep 2026.** Euribor is published at one week and one, three, six and twelve months; dollar LIBOR (the London panel index, Euribor's counterpart) panel fixings ended on 30 June 2023. Tenor basis swaps are commonly quoted as a spread on the shorter-tenor leg, as here; euro screens often show the 3s6s basis (3-month against 6-month) as the gap between the two par rates against annual fixed instead.
 
 ---
 
@@ -537,6 +545,184 @@ ALL CHECKS PASS
 
 The two outputs agree byte for byte.
 
+### Lean
+
+Lean proves the leg and basis formulas of Steps 1 and 3 for any discount curve, and checks four of the card's sums.
+
+- Suppose $D(0) = 1$, every discount factor is positive, and $n$ periods of length $\alpha > 0$ use $H(t) = D(t)e^{-bt}$. Then the leg is $C = (1 - D(T)) + (e^{b\alpha} - 1)\sum_i D(t_{i-1})$.
+- Suppose the index is forecast off the discount curve itself, so $H = D$, on any schedule starting today. Then the coupons telescope, and the leg is worth $1 - D(T)$ whatever the period lengths.
+- Take a second schedule with other period lengths, ending on the same date. Then the two legs are worth the same, and the tenor basis between them is zero.
+- Take the same curves, $n \ge 1$ periods and a leg quote $C$ with $(C - 1 + D(T))/\sum_i D(t_{i-1}) > -1$. Then exactly one spread gives that leg: $b = \frac{1}{\alpha}\ln(1 + (C - 1 + D(T))/\sum_i D(t_{i-1}))$.
+- Five years hold twenty quarterly coupons and ten half-yearly ones.
+- Paying 4.5 percent for a leg worth 4.75 percent gains 25 bp a year, which is 25,000 dollars a year on 10,000,000.
+- Reading the 8 bp as a gap between par rates gives the wrong 6-month par rate, 4.83 percent.
+- A basis swap struck at 10 bp against a fair 8 bp pays 2,000 dollars a year over fair, before discounting.
+
+The bootstrapped curves, the spreads $b_3$ and $b_6$, and every dollar value of the house swap are left to the Python and Rust checks.
+
+```lean
+-- Multi-curve: with a flat-spread forecast curve a floating leg is the overnight floater plus a spread annuity, with one curve the legs telescope so any two tenors are worth the same and the basis is zero, and one quote fixes exactly one spread.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum
+
+open Finset
+
+/-- The index forecast for the period from `a` to `b` read off a forecast curve `H`:
+`F = (1 / (b − a)) · (H a / H b − 1)`. -/
+noncomputable def fwdRate (H : ℝ → ℝ) (a b : ℝ) : ℝ :=
+  (1 / (b - a)) * (H a / H b - 1)
+
+/-- A floating leg per dollar of notional with payment dates `t 1, …, t n` (`t 0` is today):
+each coupon is the accrual `α = t (i+1) − t i` times the forecast off the index's curve `H`,
+discounted off the shared discount curve `D` at its payment date, `C = ∑ α F_i D(t_i)`. -/
+noncomputable def floatingLeg (D H : ℝ → ℝ) (t : ℕ → ℝ) (n : ℕ) : ℝ :=
+  ∑ i ∈ range n, (t (i + 1) - t i) * fwdRate H (t i) (t (i + 1)) * D (t (i + 1))
+
+/-- The annuity of a schedule: discount factors weighted by accrual, `A = ∑ α D(t_i)`. -/
+noncomputable def annuity (D : ℝ → ℝ) (t : ℕ → ℝ) (n : ℕ) : ℝ :=
+  ∑ i ∈ range n, (t (i + 1) - t i) * D (t (i + 1))
+
+/-- Helper: one flat-spread coupon over a period of length `α` starting at `x`. -/
+theorem flat_term_aux (D : ℝ → ℝ) (hD : ∀ t, 0 < D t) (α b x : ℝ) (hα : 0 < α) :
+    ((x + α) - x) * fwdRate (fun s => D s * Real.exp (-b * s)) x (x + α) * D (x + α) =
+      Real.exp (b * α) * D x - D (x + α) := by
+  unfold fwdRate
+  have h1 : Real.exp (-b * x) = Real.exp (b * α) * Real.exp (-b * (x + α)) := by
+    rw [← Real.exp_add]; congr 1; ring
+  have hDx := hD (x + α)
+  have he := Real.exp_pos (-b * (x + α))
+  simp only
+  rw [show x + α - x = α by ring, h1]
+  field_simp
+
+/-- Helper: the flat-spread leg in summed form. -/
+theorem flat_leg_aux (D : ℝ → ℝ) (hD0 : D 0 = 1) (hD : ∀ t, 0 < D t) (α b : ℝ) (hα : 0 < α)
+    (n : ℕ) :
+    floatingLeg D (fun s => D s * Real.exp (-b * s)) (fun i : ℕ => (i : ℝ) * α) n =
+      (1 - D (n * α)) + (Real.exp (b * α) - 1) * ∑ i ∈ range n, D (i * α) := by
+  unfold floatingLeg
+  rw [Finset.sum_congr rfl (g := fun i : ℕ => Real.exp (b * α) * D (i * α) - D (((i + 1 : ℕ) : ℝ) * α))]
+  · rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
+    have tel := Finset.sum_range_sub (fun i : ℕ => D ((i : ℝ) * α)) n
+    simp only [Nat.cast_zero, zero_mul, hD0] at tel
+    rw [Finset.sum_sub_distrib] at tel
+    linarith
+  · intro i _
+    have := flat_term_aux D hD α b ((i : ℝ) * α) hα
+    simp only
+    rw [show (((i + 1 : ℕ) : ℝ)) * α = (i : ℝ) * α + α by push_cast; ring]
+    exact this
+
+/-- Helper: with one curve every schedule telescopes. -/
+theorem single_curve_aux (D : ℝ → ℝ) (hD0 : D 0 = 1) (hD : ∀ t, 0 < D t)
+    (t : ℕ → ℝ) (ht0 : t 0 = 0) (ht : StrictMono t) (n : ℕ) :
+    floatingLeg D D t n = 1 - D (t n) := by
+  unfold floatingLeg
+  rw [Finset.sum_congr rfl (g := fun i : ℕ => D (t i) - D (t (i + 1)))]
+  · rw [Finset.sum_range_sub', ht0, hD0]
+  · intro i _
+    have hne : t (i + 1) - t i ≠ 0 := sub_ne_zero.mpr (ht (Nat.lt_succ_self i)).ne'
+    have hDp := hD (t (i + 1))
+    unfold fwdRate
+    field_simp
+
+/-- Step 3, the closed form. Take any discount curve `D` with `D 0 = 1` and every discount
+factor positive, an accrual fraction `α > 0`, `n` periods paying at `α, 2α, …, nα`, and the
+flat-spread forecast curve `H(t) = D(t) e^{−bt}` for any spread `b`. Then the floating leg is
+the overnight floater plus an extra coupon of `e^{bα} − 1` each period discounted from the
+period's start: `C = (1 − D(T)) + (e^{bα} − 1) ∑ D(t_{i−1})`, with `T = nα`. -/
+theorem flat_spread_leg_eq_floater_add_spread_annuity
+    (D : ℝ → ℝ) (hD0 : D 0 = 1) (hD : ∀ t, 0 < D t) (α b : ℝ) (hα : 0 < α) (n : ℕ) :
+    floatingLeg D (fun s => D s * Real.exp (-b * s)) (fun i : ℕ => (i : ℝ) * α) n =
+      (1 - D (n * α)) + (Real.exp (b * α) - 1) * ∑ i ∈ range n, D (i * α) := by
+  exact flat_leg_aux D hD0 hD α b hα n
+
+/-- Step 1, one curve forces the basis to zero. If the index is forecast off the discount
+curve itself (`H = D`), with `D 0 = 1` and every discount factor positive, then on any
+schedule of payment dates `0 = t 0 < t 1 < … < t n` the coupons telescope and the leg is worth
+`1 − D(t n)`, whatever the period lengths. So a second schedule `u` with `m` periods ending on
+the same date gives the same leg, and the fair spread `(C_u − C_t) / A_t` on the first leg is
+zero. -/
+theorem single_curve_leg_telescopes_and_basis_eq_zero
+    (D : ℝ → ℝ) (hD0 : D 0 = 1) (hD : ∀ t, 0 < D t)
+    (t u : ℕ → ℝ) (ht0 : t 0 = 0) (hu0 : u 0 = 0) (ht : StrictMono t) (hu : StrictMono u)
+    (n m : ℕ) (hT : u m = t n) :
+    floatingLeg D D t n = 1 - D (t n) ∧
+      (floatingLeg D D u m - floatingLeg D D t n) / annuity D t n = 0 := by
+  have h1 := single_curve_aux D hD0 hD t ht0 ht n
+  have h2 := single_curve_aux D hD0 hD u hu0 hu m
+  refine ⟨h1, ?_⟩
+  rw [h1, h2, hT, sub_self, zero_div]
+
+/-- One quote, one spread. With `D 0 = 1`, every discount factor positive, `α > 0`, `n ≥ 1`
+periods and the flat-spread forecast curve `H(t) = D(t) e^{−bt}`, let `C` be a quoted leg value
+with `(C − 1 + D(T)) / ∑ D(t_{i−1}) > −1`. Then the leg equals `C` for exactly one spread:
+`b = (1/α) ln(1 + (C − 1 + D(T)) / ∑ D(t_{i−1}))`. -/
+theorem one_quote_one_spread
+    (D : ℝ → ℝ) (hD0 : D 0 = 1) (hD : ∀ t, 0 < D t) (α : ℝ) (hα : 0 < α) (n : ℕ) (hn : 1 ≤ n)
+    (C : ℝ) (hC : -1 < (C - 1 + D (n * α)) / ∑ i ∈ range n, D (i * α)) (b : ℝ) :
+    floatingLeg D (fun s => D s * Real.exp (-b * s)) (fun i : ℕ => (i : ℝ) * α) n = C ↔
+      b = (1 / α) * Real.log (1 + (C - 1 + D (n * α)) / ∑ i ∈ range n, D (i * α)) := by
+  rw [flat_leg_aux D hD0 hD α b hα n]
+  have hS : 0 < ∑ i ∈ range n, D (i * α) :=
+    Finset.sum_pos (fun i _ => hD _) (Finset.nonempty_range_iff.mpr (by omega))
+  set S := ∑ i ∈ range n, D (i * α) with hSdef
+  set q := (C - 1 + D (n * α)) / S with hq
+  have hq1 : 0 < 1 + q := by linarith
+  have key : (1 - D (n * α)) + (Real.exp (b * α) - 1) * S = C ↔ Real.exp (b * α) = 1 + q := by
+    rw [hq]
+    constructor
+    · intro h
+      have h' : Real.exp (b * α) - 1 = (C - 1 + D (n * α)) / S := by
+        rw [eq_div_iff hS.ne']; linarith
+      linarith
+    · intro h
+      rw [h, add_sub_cancel_left, div_mul_cancel₀ _ hS.ne']
+      ring
+  rw [key]
+  constructor
+  · intro h
+    have := congrArg Real.log h
+    rw [Real.log_exp] at this
+    rw [← this]; field_simp
+  · intro h
+    rw [h, show 1 / α * Real.log (1 + q) * α = Real.log (1 + q) by field_simp]
+    exact Real.exp_log hq1
+
+-- Five years hold twenty quarterly coupons and ten half-yearly ones.
+example : (5 : ℚ) / (1 / 4) = 20 ∧ (5 : ℚ) / (1 / 2) = 10 := by norm_num
+
+-- The fixed payer pays 4.5% for a leg quoted at 4.75%: 25 bp a year on 10,000,000 dollars
+-- is 25,000 dollars a year.
+example : ((475 : ℚ) / 10000 - 45 / 1000) * 10000000 = 25000 := by norm_num
+
+-- The wrong 6-month par rate: 4.75% plus 8 bp read as a par-rate gap is 4.83%.
+example : (475 : ℚ) / 10000 + 8 / 10000 = 483 / 10000 := by norm_num
+
+-- A basis swap struck at 10 bp when the fair basis is 8 bp pays 2 bp a year over fair:
+-- on 10,000,000 dollars that is 2,000 dollars a year before discounting.
+example : ((10 : ℚ) - 8) / 10000 * 10000000 = 2000 := by norm_num
+
+#print axioms flat_term_aux
+#print axioms flat_leg_aux
+#print axioms single_curve_aux
+#print axioms flat_spread_leg_eq_floater_add_spread_annuity
+#print axioms single_curve_leg_telescopes_and_basis_eq_zero
+#print axioms one_quote_one_spread
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'flat_term_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flat_leg_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'single_curve_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flat_spread_leg_eq_floater_add_spread_annuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'single_curve_leg_telescopes_and_basis_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_quote_one_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -563,7 +749,7 @@ The two outputs agree byte for byte.
 ## Where you meet it in real life
 
 - **Euro swap desks.** Euribor is still published at 3-month and 6-month tenors, and basis swaps between them trade every day. The desk's curve set has one discount curve and one forecast curve per tenor, built exactly in the order of Step 4.
-- **Every swap's hedge.** A multi-curve swap has a sensitivity to each curve, not one DV01. Shift the discount curve and the forecast curve separately and the house swap moves by different amounts; the single-number hedge of [Swap DV01](03-swap-dv01-and-hedging.md) becomes one hedge per curve.
+- **Every swap's hedge.** A multi-curve swap has a sensitivity to each curve, not one DV01 (the change in value for a 1 bp move in rates). Shift the discount curve and the forecast curve separately and the house swap moves by different amounts; the single-number hedge of [Swap DV01](03-swap-dv01-and-hedging.md) becomes one hedge per curve.
 - **Plain swaps, valued properly.** The two-bond and forward-strip valuations of [Interest rate swaps](01-interest-rate-swaps.md) and the par rate of [The par swap rate](02-par-swap-rate-and-annuity.md) keep their shape; only the forecast inside each coupon changes curve.
 - **Swaps between currencies.** A dollar leg against a euro leg adds a second discount curve and a second kind of basis: [Cross-currency swaps](06-cross-currency-swaps-and-basis.md).
 - **SOFR swaps.** A dollar swap paying compounded SOFR, collateralised in cash that earns SOFR, forecasts and discounts off the same overnight curve. The telescope of Step 1 returns: the special case with no spread.
@@ -588,7 +774,7 @@ This card used the overnight curve to discount without proving it the right one;
 
 ## Sources
 
-Verified 28 Sep 2026: each DOI's title and first author checked on Crossref, the arXiv entry on arXiv.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Henrard, Marc. "The Irony in the Derivatives Discounting." *Wilmott Magazine* (2007). [doi:10.2139/ssrn.970509](https://doi.org/10.2139/ssrn.970509). An early statement that the curve used to forecast a swap's index and the curve used to discount its cash need not be the same.
 - Bianchetti, Marco. "Two Curves, One Price: Pricing & Hedging Interest Rate Derivatives Decoupling Forwarding and Discounting Yield Curves." 2009. [arXiv:0905.2770](https://arxiv.org/abs/0905.2770). The two-curve valuation of this card, with basis swaps and the no-arbitrage reading of the forecast curve.

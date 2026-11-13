@@ -130,3 +130,4 @@ assert implied(8.20) is None
 assert abs(implied(HOUSE, sx=0.05) * 0.05 - implied(HOUSE, sx=0.15) * 0.15) < 1e-6
 assert abs(sd / ((1 - 0.09) / sqrt(252)) - 1.0) < 0.15
 print("All checks passed.")
+print("ALL CHECKS PASS")
