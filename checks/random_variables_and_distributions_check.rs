@@ -120,4 +120,5 @@ fn main() {
     println!("break, three win chances added, {:.6}", 3.0 * one[&100] as f64 / 100.0);
     println!("break, one outcome's chance read as P(X=0), {:.6}", 1.0 / 100.0);
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

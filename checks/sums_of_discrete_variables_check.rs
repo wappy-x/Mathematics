@@ -152,4 +152,5 @@ fn main() {
     let row = |v: &[f64]| (0..25).map(|s| format!("{:.3}", v[s])).collect::<Vec<_>>().join(" ");
     println!("chart, s = 0..24, merged:  {}", row(&merged));
     println!("chart, s = 0..24, copied:  {}", row(&sh));
+    println!("ALL CHECKS PASS");
 }

@@ -98,7 +98,7 @@ By Step 2, the chance of H is 5! × 47! over 52!, the same for every hand. By St
 
 ### Step 4: count the flushes
 
-Build a flush in two moves. Choose its suit: 4 ways. Choose its five ranks from that suit's 13: $C(13, 5)$ = 1,287 ways. Every choice gives a different flush and every flush arises once, so the product rule gives 4 × 1,287 = 5,148. Divide by 2,598,960: 0.0019808.
+Build a flush in two moves. Choose its suit: 4 ways. Choose its five ranks from that suit's 13: $C(13, 5)$ = 1,287 ways. Every choice gives a different flush and every flush arises once, so the product rule gives 4 × 1,287 = 5,148. The product rule says that when choices come in stages, their counts multiply ([The rules of sum and product](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/01-rules-of-sum-and-product.md)). Divide by 2,598,960: 0.0019808.
 
 ### Step 5: order in both counts, or in neither
 
@@ -139,7 +139,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the flush chance by four roads that share no arithmetic. Road 1 is the formula with a hand-written C(n, k). Road 2 counts ordered deals and never divides. Road 3 lists all 2,598,960 hands one at a time and tallies their suit shapes. Road 4 deals a million hands from a seeded SplitMix64 generator (a short, well-known recipe for pseudo-random numbers), written out in both languages so Python and Rust deal the same cards; its estimate is printed with its standard error, the typical size of a simulation's miss. Every number on the card comes out of these runs, including the chart's bars and the mistakes.
+The scripts reach the flush chance by four roads that share no arithmetic. Road 1 is the formula with a hand-written C(n, k). Road 2 counts ordered deals and never divides. Road 3 lists all 2,598,960 hands one at a time and tallies their suit shapes.
+
+Road 4 deals a million hands from a seeded SplitMix64 generator (a short, well-known recipe for pseudo-random numbers), written out in both languages so Python and Rust deal the same cards; its estimate is printed with its standard error, the typical size of a simulation's miss. Every number on the card comes out of these runs, including the chart's bars and the mistakes.
 
 ### Python
 
@@ -429,6 +431,146 @@ ALL CHECKS PASS
 
 The two outputs match line for line. The simulation matches too, because both languages draw the same numbers from the same seed.
 
+### Lean
+
+Lean proves the counting rule on any finite sample space, and the flush count for any deck and hand size.
+
+- Suppose a finite sample space $S$ has every outcome equally likely. Then every event $A$ has $P(A) = \lvert A\rvert / \lvert S\rvert$.
+- Take a deck of $r$ ranks in each of $s$ suits, and hands of $k$ cards, with $k$ at least 1. Then $s \times C(r, k)$ of those hands are flushes, all $k$ cards in one suit.
+- The standard 52-card deck has 2,598,960 five-card hands, and 5,148 of them are flushes.
+- The hand-worked counts also check: ordered deals, the six suit shapes, the 56 suit patterns, and 6 of 36 dice pairs summing to 7.
+
+The decimal chances, the listing of every hand, and the million-deal simulation are left to the Python and Rust checks.
+
+```lean
+-- Counting chances: when every outcome of a finite sample space is equally likely, the chance of an event is its count over the count of all outcomes, and on a 52-card deck 5,148 of the 2,598,960 five-card hands are flushes.
+import Mathlib.Probability.UniformOn
+import Mathlib.Data.Fin.Tuple.NatAntidiagonal
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+
+/-- Favourable over possible: on a finite sample space `Ω`, if every single outcome has
+the same chance under the probability `P`, then the chance of any event `A` is the
+number of outcomes in `A` divided by the number of outcomes in `Ω`. -/
+theorem prob_eq_card_div_card_of_equally_likely {Ω : Type*} [Fintype Ω] [MeasurableSpace Ω]
+    [MeasurableSingletonClass Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (h : ∀ ω ω' : Ω, P {ω} = P {ω'}) (A : Finset Ω) :
+    P (A : Set Ω) = (A.card : ℝ≥0∞) / Fintype.card Ω := by
+  obtain ⟨ω₀⟩ := nonempty_of_isProbabilityMeasure P
+  have hA : P (A : Set Ω) = A.card * P {ω₀} := by
+    rw [← sum_measure_singleton]
+    simp [h _ ω₀]
+  have hU : (Fintype.card Ω : ℝ≥0∞) * P {ω₀} = 1 := by
+    rw [← measure_univ (μ := P), ← Finset.coe_univ, ← sum_measure_singleton]
+    simp [h _ ω₀]
+  have : Nonempty Ω := ⟨ω₀⟩
+  have hc : P {ω₀} = 1 / (Fintype.card Ω : ℝ≥0∞) :=
+    (ENNReal.eq_div_iff (Nat.cast_ne_zero.2 Fintype.card_ne_zero)
+      (ENNReal.natCast_ne_top _)).2 hU
+  rw [hA, hc, mul_one_div]
+
+/-- Counting flushes: in a deck of `r` ranks in each of `s` suits (a card is a rank and a
+suit), the hands of `k ≥ 1` cards that all share one suit number `s × C(r, k)`:
+pick the suit, then pick `k` of its `r` ranks. -/
+theorem card_flushes (r s k : ℕ) (hk : 1 ≤ k) :
+    ((Finset.univ.powersetCard k : Finset (Finset (Fin r × Fin s))).filter
+        (fun H => ∃ t : Fin s, ∀ c ∈ H, c.2 = t)).card = s * r.choose k := by
+  classical
+  have key : ((Finset.univ.powersetCard k : Finset (Finset (Fin r × Fin s))).filter
+        (fun H => ∃ t : Fin s, ∀ c ∈ H, c.2 = t)) =
+      (Finset.univ : Finset (Fin s)).biUnion
+        (fun t => (Finset.univ.filter (fun c : Fin r × Fin s => c.2 = t)).powersetCard k) := by
+    ext H
+    simp only [Finset.mem_filter, Finset.mem_powersetCard, Finset.mem_biUnion,
+      Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨⟨_, hc⟩, t, ht⟩
+      exact ⟨t, fun c hcH => Finset.mem_filter.2 ⟨Finset.mem_univ _, ht c hcH⟩, hc⟩
+    · rintro ⟨t, ht, hc⟩
+      exact ⟨⟨Finset.subset_univ _, hc⟩, t, fun c hcH => (Finset.mem_filter.1 (ht hcH)).2⟩
+  rw [key, Finset.card_biUnion]
+  · have hcard : ∀ t : Fin s,
+        (Finset.univ.filter (fun c : Fin r × Fin s => c.2 = t)).card = r := by
+      intro t
+      have : Finset.univ.filter (fun c : Fin r × Fin s => c.2 = t) =
+          (Finset.univ : Finset (Fin r)) ×ˢ {t} := by
+        ext c
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_product,
+          Finset.mem_singleton]
+      rw [this, Finset.card_product, Finset.card_univ, Fintype.card_fin,
+        Finset.card_singleton, mul_one]
+    simp [Finset.card_powersetCard, hcard]
+  · intro t _ t' _ htt'
+    rw [Function.onFun, Finset.disjoint_left]
+    intro H h1 h2
+    rw [Finset.mem_powersetCard] at h1 h2
+    have hne : H.Nonempty := by
+      rw [← Finset.card_pos, h1.2]; omega
+    obtain ⟨c, hc⟩ := hne
+    have e1 := (Finset.mem_filter.1 (h1.1 hc)).2
+    have e2 := (Finset.mem_filter.1 (h2.1 hc)).2
+    exact htt' (e1.symm.trans e2)
+
+/-- The standard deck, 13 ranks in each of 4 suits: there are 2,598,960 five-card hands,
+and 5,148 of them are flushes (all five cards of one suit). -/
+theorem standard_deck_hands_and_flushes :
+    (Finset.univ.powersetCard 5 : Finset (Finset (Fin 13 × Fin 4))).card = 2598960 ∧
+    ((Finset.univ.powersetCard 5 : Finset (Finset (Fin 13 × Fin 4))).filter
+        (fun H => ∃ t : Fin 4, ∀ c ∈ H, c.2 = t)).card = 5148 := by
+  refine ⟨?_, ?_⟩
+  · rw [Finset.card_powersetCard, Finset.card_univ, Fintype.card_prod, Fintype.card_fin,
+      Fintype.card_fin]
+    decide
+  · rw [card_flushes 13 4 5 (by norm_num)]
+    decide
+
+/-! The card's worked numbers. -/
+
+-- Hands of five, order ignored: C(52, 5) = 2,598,960.
+example : Nat.choose 52 5 = 2598960 := by decide
+-- Five ranks from one suit: 13 × 12 × 11 × 10 × 9 = 154,440, and 154,440 / 120 = 1,287 = C(13, 5).
+example : 13 * 12 * 11 * 10 * 9 = 154440 ∧ 154440 / 120 = 1287 ∧ Nat.choose 13 5 = 1287 := by decide
+-- Flushes: 4 suits × 1,287 = 5,148.
+example : 4 * Nat.choose 13 5 = 5148 := by decide
+-- Ordered deals: 52 × 51 × 50 × 49 × 48 = 311,875,200, and dividing by 5! = 120 gives 2,598,960.
+example : 52 * 51 * 50 * 49 * 48 = 311875200 ∧ Nat.factorial 5 = 120 ∧ 311875200 / 120 = 2598960 := by
+  decide
+-- Ordered flushes: 52 × 12 × 11 × 10 × 9 = 617,760, and 617,760 / 120 = 5,148.
+example : 52 * 12 * 11 * 10 * 9 = 617760 ∧ 617760 / 120 = 5148 := by decide
+-- The ordered ratio equals the unordered one: 617,760 / 311,875,200 = 5,148 / 2,598,960.
+example : 617760 * 2598960 = 5148 * 311875200 := by norm_num
+-- Poker's flush, the 40 straight flushes (10 in each suit) removed: 5,148 − 40 = 5,108.
+example : 4 * 10 = 40 ∧ 5148 - 40 = 5108 := by decide
+-- The suit shapes by formula, and their six counts add up to all 2,598,960 hands.
+example : 4 * Nat.choose 13 5 = 5148 ∧
+    4 * 3 * Nat.choose 13 4 * Nat.choose 13 1 = 111540 ∧
+    4 * 3 * Nat.choose 13 3 * Nat.choose 13 2 = 267696 ∧
+    4 * 3 * Nat.choose 13 3 * Nat.choose 13 1 ^ 2 = 580008 ∧
+    4 * 3 * Nat.choose 13 2 ^ 2 * Nat.choose 13 1 = 949104 ∧
+    4 * Nat.choose 13 2 * Nat.choose 13 1 ^ 3 = 685464 ∧
+    5148 + 111540 + 267696 + 580008 + 949104 + 685464 = 2598960 := by decide
+-- The suit patterns (cards in each of the 4 named suits, adding to 5) number 56.
+example : (Finset.Nat.antidiagonalTuple 4 5).card = 56 := by decide
+-- Two dice told apart: 36 pairs, and 6 of them sum to 7.
+example : (Finset.univ : Finset (Fin 6 × Fin 6)).card = 36 ∧
+    ((Finset.univ : Finset (Fin 6 × Fin 6)).filter
+      (fun p => p.1.val + 1 + (p.2.val + 1) = 7)).card = 6 := by decide
+
+#print axioms prob_eq_card_div_card_of_equally_likely
+#print axioms card_flushes
+#print axioms standard_deck_hands_and_flushes
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'prob_eq_card_div_card_of_equally_likely' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_flushes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'standard_deck_hands_and_flushes' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -442,7 +584,9 @@ The two outputs match line for line. The simulation matches too, because both la
 ## The usual mistake
 
 > [!warning]
-> **Dividing counts of outcomes that are not equally likely.** The formula is only as good as the list under it. Sort hands by suit pattern (how many cards of each suit, 56 patterns in all) and 4 of the 56 are flushes, which suggests 0.0714. That is far above the truth, because the four all-one-suit patterns hold only 5,148 hands between them, while the patterns of shape 2-2-1 hold 949,104. The test: can the outcomes be swapped for each other by relabelling cards, dice or people, without changing how they are produced? If yes, they are equally likely. If not, go back to the finest outcomes the mechanism treats alike, here the hands or the deck orders, and count those.
+> **Dividing counts of outcomes that are not equally likely.** The formula is only as good as the list under it. Sort hands by suit pattern (how many cards of each suit, 56 patterns in all) and 4 of the 56 are flushes, which suggests 0.0714. That is far above the truth, because the four all-one-suit patterns hold only 5,148 hands between them, while the patterns of shape 2-2-1 hold 949,104.
+>
+> The test: can the outcomes be swapped for each other by relabelling cards, dice or people, without changing how they are produced? If yes, they are equally likely. If not, go back to the finest outcomes the mechanism treats alike, here the hands or the deck orders, and count those.
 >
 > - **Order on top, not below.** 617,760 ordered flushes over 2,598,960 unordered hands gives 0.2377. Order in both or in neither.
 > - **Drawing as if the card went back.** Treating each later card as a fresh 1-in-4 chance to match gives 0.00390625, nearly twice the truth. Without replacement, the matching suit runs down: 12 of 51, then 11 of 50.
@@ -481,7 +625,7 @@ Counting works only when every outcome carries the same weight; the question lef
 
 ## Sources
 
-Verified 2026-09-28: every link below opens a page that names the cited work.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Blitzstein, Joseph K., and Jessica Hwang. *Introduction to Probability*, 2nd ed. Chapman and Hall/CRC, 2019. [Publisher page](https://www.routledge.com/Introduction-to-Probability/Blitzstein-Hwang/p/book/9781138369917). Chapter 1, "Probability and counting": the naive definition of probability, when it applies, and card-hand counts.
 - Feller, William. *An Introduction to Probability Theory and Its Applications*, Volume 1, 3rd ed. Wiley, 1968. [Publisher page](https://www.wiley.com/en-us/An+Introduction+to+Probability+Theory+and+Its+Applications%2C+Volume+1%2C+3rd+Edition-p-9780471257080). Chapter II, "Elements of combinatorial analysis": probabilities on finite spaces of equally likely outcomes, worked at length.

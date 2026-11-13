@@ -114,3 +114,4 @@ print("same 50/50 mix: X =", f4((xq + xd) / 2), " Y =", f4((yq + yd) / 2))
 print("squared 1 in 8543: 1 in", 8543 ** 2)
 x0, y0, side = 60, 20, 200                                            # the picture, drawn to scale
 print(f"figure, square x {x0}-{x0 + side}, A x {x0}-{x0 + round(side * pA)}, B y {y0}-{y0 + round(side * pB)}, overlap share {f4(pAB)}")
+print("ALL CHECKS PASS")

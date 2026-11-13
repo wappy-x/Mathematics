@@ -165,4 +165,5 @@ fn main() {
     assert!((tail(0.3) - simpson(&b28, 0.3, 1.0, 4000)).abs() < 1e-10);
     assert!((sm - kf / LAM).abs() < 4.0 * ssd / nf.sqrt() && (p20 - surv(20.0)).abs() < 4.0 * se(p20));
     assert!((vm - mean_b).abs() < 4.0 * (vvar / nf).sqrt() && (pv - tail(0.3)).abs() < 4.0 * se(pv));
+    println!("ALL CHECKS PASS");
 }

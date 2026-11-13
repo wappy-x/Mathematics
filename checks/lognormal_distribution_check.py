@@ -122,7 +122,6 @@ for lab, mu, sg in (("try: sigma = 0", MU, 0.0), ("try: sigma = 0.60", MU, 0.60)
 up, down = S0 * exp(MU + SIGMA), S0 * exp(MU - SIGMA)
 print(f"a pair of years, Z = +1 and -1: e^{MU + SIGMA:.2f} and e^{MU - SIGMA:.2f}, prices {up:.4f} and {down:.4f}")
 print(f"  gain over the median {up - median:.4f}, loss {median - down:.4f}, average price {(up + down) / 2:.4f}")
-
 # figure: the price density and a normal with the same mean and spread, percent per dollar
 xs = [10 * i for i in range(1, 13)]
 print("figure, price $: " + ", ".join(f"{x}" for x in xs))
@@ -138,3 +137,4 @@ assert abs(m_sim - mean) < 4 * se_mean and abs(med_sim - median) < 4 * se_med
 assert abs(fr_loss - p_loss) < 4 * se_loss and abs(fr_mean - p_below_mean) < 4 * se_fm
 assert abs(m_tree - mean) < 0.001
 assert abs(bare - mean) < 1e-6 and abs(bare_peak - median) < 0.001
+print("ALL CHECKS PASS")

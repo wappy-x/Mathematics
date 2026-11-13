@@ -128,3 +128,4 @@ sh2 = shock(1.0, 3.0, 4.0)[0]
 print(f"  copies Poisson(4), A 1, B 3: P(S=12) {sh2[12]:.6f}   variance {mean_var(sh2)[1]:.4f}")
 print("chart, s = 0..24, merged:  " + " ".join(f"{merged[s]:.3f}" for s in range(25)))
 print("chart, s = 0..24, copied:  " + " ".join(f"{sh[s]:.3f}" for s in range(25)))
+print("ALL CHECKS PASS")

@@ -166,4 +166,5 @@ fn main() {
     assert!((fr_loss - p_loss).abs() < 4.0 * se_loss && (fr_mean - p_below_mean).abs() < 4.0 * se_fm);
     assert!((m_tree - mean).abs() < 0.001);
     assert!((bare - mean).abs() < 1e-6 && (bare_peak - median).abs() < 0.001);
+    println!("ALL CHECKS PASS");
 }

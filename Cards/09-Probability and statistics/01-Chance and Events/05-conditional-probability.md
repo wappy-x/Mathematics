@@ -60,7 +60,7 @@ In the town, $D$ is "has the disease" and $T$ is "tests positive". The pieces ar
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $P$ | the chance of whatever is in the brackets | P(D) = 0.01 | — |
-| $A$, $B$, $A_1$, $A_2$ | events: the question, and what is known; numbered when there are several | A = sick, B = positive | — |
+| $A$, $B$, $C$, $A_1$, $A_2$ | events: the question, and what is known; numbered when there are several | A = sick, B = positive | — |
 | $D$ | the resident has the disease | 100 of 10,000 | a commoner disease raises the chance of disease given a positive |
 | $D^c$ | the resident does not: "not D" | 9,900 of 10,000 | more healthy people means more false alarms among the positives |
 | $T$ | the test comes back positive | 585 of 10,000 | — |
@@ -195,7 +195,9 @@ The one line is the chance of disease given a positive, in percent, by the formu
 
 ## Code, from first principles, and it actually runs
 
-The check reaches the chance of disease given a positive by **three independent roads**. The formula applies the multiplication rule and total probability. A count lists all 10,000 residents, keeps the positives, and counts the sick among them. A simulation draws 1,000,000 residents from a small random generator written out in both languages (SplitMix64, seed 20260928), so Python and Rust draw the same numbers. Its estimate carries a **standard error**, the typical size of its miss: the square root of p(1 − p) / m for a share p estimated from m trials. The asserts demand that formula and count agree and that the simulation land within four standard errors.
+The check reaches the chance of disease given a positive by **three independent roads**. The formula applies the multiplication rule and total probability. A count lists all 10,000 residents, keeps the positives, and counts the sick among them. A simulation draws 1,000,000 residents from a small random generator written out in both languages (SplitMix64, seed 20260928), so Python and Rust draw the same numbers.
+
+Its estimate carries a **standard error**, the typical size of its miss: the square root of p(1 − p) / m for a share p estimated from m trials. The asserts demand that formula and count agree and that the simulation land within four standard errors.
 
 ### Python
 
@@ -567,6 +569,105 @@ The two outputs match line for line, simulation included, because both languages
 
 The simulation found 58,399 positives, 9,056 of them sick: an estimate of 0.155071, standard error 0.001498, which misses the exact 0.153846 by 0.82 standard errors.
 
+### Lean
+
+Lean proves the three tools for every probability and all events that meet their conditions, plus the town's numbers.
+
+- Take events $A$ and $B$ with $P(B) > 0$. Then $P(A \mid B) = P(A \cap B) / P(B)$.
+- Take events $A$ and $B$ with $P(B) > 0$. Then $P(A \cap B) = P(B)\,P(A \mid B)$.
+- Take a partition $B_1, \dots, B_n$ with $P(B_i) > 0$ for every piece. Then $P(A)$ is the sum of $P(B_i)\,P(A \mid B_i)$ over all the pieces.
+- In the town, 90 sick positives plus 495 healthy positives make 585.
+- Sick given positive is 90 / 585 = 2 / 13. Healthy given positive is 495 / 585 = 1 − 2 / 13.
+- The multiplication rule gives 0.01 × 0.90 = 90 out of 10,000.
+- Total probability gives 0.01 × 0.90 + 0.99 × 0.05 = 585 out of 10,000.
+- The definition gives (90 / 10,000) / (585 / 10,000) = 2 / 13.
+- Counting the town one resident at a time also finds 585 positives.
+
+The decimals, the simulation, the mistake table, the prevalence chart and the "try" rows are left to the Python and Rust checks.
+
+```lean
+-- Conditional probability: the chance of A given B is P(A and B) / P(B), the chance of both is P(B) times P(A given B), and the chance of A is the sum over a partition of piece size times rate in the piece.
+import Mathlib.Probability.ConditionalProbability
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+
+/-- The definition, read as a formula: for any probability `P` and events `A`, `B`
+with `P(B) > 0`, the chance of `A` given `B` is the chance that both happen,
+divided by the chance of `B`. -/
+theorem cond_eq_inter_div {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {A B : Set Ω} (hA : MeasurableSet A) (hB : MeasurableSet B)
+    (hpos : 0 < P B) :
+    P[A | B] = P (A ∩ B) / P B := by
+  rw [cond_apply hB, div_eq_mul_inv, mul_comm, Set.inter_comm]
+
+/-- The multiplication rule: when `P(B) > 0`, the chance that both `A` and `B` happen
+is the chance of `B` times the chance of `A` given `B`. -/
+theorem inter_eq_mul_cond {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {A B : Set Ω} (hA : MeasurableSet A) (hB : MeasurableSet B)
+    (hpos : 0 < P B) :
+    P (A ∩ B) = P B * P[A | B] := by
+  rw [Set.inter_comm, ← cond_mul_eq_inter hB A P, mul_comm]
+
+/-- The law of total probability: if the pieces `B 0, ..., B (n-1)` do not overlap,
+together cover every outcome, and each has positive chance, then the chance of `A`
+is the sum of `P(B i) * P(A given B i)` over the pieces. -/
+theorem total_probability {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n : ℕ} {A : Set Ω} (B : Fin n → Set Ω)
+    (hA : MeasurableSet A) (hB : ∀ i, MeasurableSet (B i))
+    (hdisj : Pairwise fun i j => Disjoint (B i) (B j))
+    (hcover : (⋃ i, B i) = Set.univ)
+    (hpos : ∀ i, 0 < P (B i)) :
+    P A = ∑ i, P (B i) * P[A | B i] := by
+  have hdisj' : Pairwise (Function.onFun Disjoint fun i => A ∩ B i) := by
+    intro i j hij
+    exact (hdisj hij).mono Set.inter_subset_right Set.inter_subset_right
+  have hU : A = ⋃ i, A ∩ B i := by
+    rw [← Set.inter_iUnion, hcover, Set.inter_univ]
+  calc P A = P (⋃ i, A ∩ B i) := by rw [← hU]
+    _ = ∑' i, P (A ∩ B i) := measure_iUnion hdisj' (fun i => hA.inter (hB i))
+    _ = ∑ i, P (A ∩ B i) := tsum_fintype _
+    _ = ∑ i, P (B i) * P[A | B i] := by
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [Set.inter_comm, ← cond_mul_eq_inter (hB i) A P, mul_comm]
+
+/-! The town of 10,000: 100 sick, 90 of them positive; 9,900 healthy, 495 of them positive. -/
+
+-- The positives: 90 sick plus 495 healthy.
+example : 90 + 495 = 585 := by norm_num
+
+-- Counting: 90 sick out of 585 positives is 2 in 13.
+example : (90 : ℚ) / 585 = 2 / 13 := by norm_num
+
+-- Healthy given positive, by counting and by the complement rule.
+example : (495 : ℚ) / 585 = 1 - 2 / 13 := by norm_num
+
+-- Multiplication rule: P(D) P(T | D) = 1/100 * 9/10 = 90 out of 10,000.
+example : (1 / 100 : ℚ) * (9 / 10) = 90 / 10000 := by norm_num
+
+-- Total probability: P(T) = 1/100 * 9/10 + 99/100 * 1/20 = 585 out of 10,000.
+example : (1 / 100 : ℚ) * (9 / 10) + (99 / 100) * (1 / 20) = 585 / 10000 := by norm_num
+
+-- The definition: P(D | T) = (90 / 10000) / (585 / 10000) = 2 / 13.
+example : ((90 : ℚ) / 10000) / (585 / 10000) = 2 / 13 := by norm_num
+
+-- The same answer by counting the town one resident at a time.
+example : ((Finset.range 10000).filter (fun i => i < 90 ∨ (100 ≤ i ∧ i < 595))).card = 585 := by
+  decide +kernel
+
+#print axioms cond_eq_inter_div
+#print axioms inter_eq_mul_cond
+#print axioms total_probability
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cond_eq_inter_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'inter_eq_mul_cond' depends on axioms: [propext, Classical.choice, Quot.sound]
+'total_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -622,7 +723,7 @@ This card turns "positive given sick" into "sick given positive" only by a count
 
 ## Sources
 
-Verified 2026-09-28: every link below opens the cited work.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Blitzstein, Joseph K., and Jessica Hwang. *Introduction to Probability*, 2nd ed. Chapman and Hall/CRC, 2019. [Publisher page](https://www.routledge.com/Introduction-to-Probability-Second-Edition/Blitzstein-Hwang/p/book/9781138369917). Chapter 2 builds conditional probability, the multiplication rule and total probability, with a screening example of the same shape.
 - Gigerenzer, Gerd, and Ulrich Hoffrage. "How to Improve Bayesian Reasoning Without Instruction: Frequency Formats." *Psychological Review* 102, no. 4 (1995): 684–704. [doi:10.1037/0033-295X.102.4.684](https://doi.org/10.1037/0033-295X.102.4.684). Why counting a town of people, as this card does, makes the answer easy to see.

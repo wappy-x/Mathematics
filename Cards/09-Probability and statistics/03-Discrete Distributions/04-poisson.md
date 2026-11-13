@@ -10,7 +10,9 @@ A help desk receives emails at an average of 12 an hour. Nobody schedules them. 
 
 The answer is about 1.16% of hours: roughly one hour in 86.
 
-That number comes from one law. Cut the hour into 3600 one-second slots. In each slot an email either arrives or it does not, with a tiny chance, the same in every slot, and the slots do not influence each other. That is the binomial count ([Binomial](01-bernoulli-and-binomial.md)): many trials, each with a small chance. Now cut finer: tenths of a second, thousandths, while keeping the average at 12. The binomial settles onto a fixed shape that no longer mentions slots at all. Only the average survives. That shape is the **Poisson law**, named after Siméon Denis Poisson.
+That number comes from one law. Cut the hour into 3600 one-second slots. In each slot an email either arrives or it does not, with a tiny chance, the same in every slot, and the slots do not influence each other. That is the binomial count ([Binomial](01-bernoulli-and-binomial.md)): many trials, each with a small chance.
+
+Now cut finer: tenths of a second, thousandths, while keeping the average at 12. The binomial settles onto a fixed shape that no longer mentions slots at all. Only the average survives. That shape is the **Poisson law**, named after Siméon Denis Poisson.
 
 The same law counts typos on a page, calls to a switchboard and orders hitting an exchange: events individually rare, many in opportunity, independent of one another.
 
@@ -73,7 +75,7 @@ The ratio is above 1 while the count is below lambda, and below 1 after. So the 
 | $B_n$ | the slot-model count, binomial with n slots and chance p | tail 0.004826 at 60 slots | — |
 | $E[X]$, $\mathrm{Var}(X)$ | the long-run average of X, and its variance | 12 and 12 | — |
 
-$E[X]$ is read "the average value of X in the long run", and $\mathrm{Var}(X)$ is the average squared distance from that average; both are defined on the expectation cards of shelf 02. The standard deviation, the square root of the variance, is 3.4641 here.
+$E[X]$ is read "the average value of X in the long run", and $\mathrm{Var}(X)$ is the average squared distance from that average. [Expectation](../02-Random%20Variables/02-expectation.md) and [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md) define both. The standard deviation, the square root of the variance, is 3.4641 here.
 
 ### When it holds
 
@@ -144,7 +146,9 @@ Moments: the sums in Step 4 have non-negative terms, so reordering and shifting 
 
 ### Step 5: how close is close
 
-The limit does not say how fast. Lucien Le Cam proved a bound: for n independent slots each with chance p, the chance of any event, such as "more than 20", differs between the two laws by at most $n p^2 = \lambda^2/n$, here 144/n. At 3600 slots the bound is 0.0400 and the actual gap 1.29e-04. The gap times n settles near 0.465, so the error shrinks like 1/n, as the bound says, with a far smaller constant.
+The limit does not say how fast. Lucien Le Cam proved a bound for n independent slots, each with chance p. The chance of any event, such as "more than 20", differs between the two laws by at most $n p^2 = \lambda^2/n$, here 144/n.
+
+At 3600 slots the bound is 0.0400 and the actual gap 1.29e-04. The gap times n settles near 0.465, so the error shrinks like 1/n, as the bound says, with a far smaller constant.
 
 The limit is one road to the Poisson law. The other builds it from waiting times between arrivals, and proves that the count in any window of a steady random stream is Poisson: that is [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md).
 
@@ -173,7 +177,7 @@ In the world: the desk overflows in about one hour in 86. The cut-off, 20, is 2.
 | --- | --- | --- |
 | "More than 20" read as "20 or more" | 0.021280 | adds $p_{20}$ = 0.009682, nearly doubling the answer |
 | Cut the hour into 60 one-minute slots, at most one email each | 0.004826 | slots too coarse: the variance falls to 9.6 and the busy hours vanish |
-| Normal curve at mean 12, sd 3.4641, with the usual half-step | 0.007069 | the Poisson leans right; a symmetric curve thins the tail |
+| Normal curve at mean 12, standard deviation 3.4641, with the usual half-step | 0.007069 | the Poisson leans right; a symmetric curve thins the tail |
 | A coin flip picks rate 6 or 18 each hour | 0.134641 | the steady-rate hypothesis dropped: variance 48, not 12 |
 | Emails in pairs, 6 pairs an hour | 0.042621 | the one-at-a-time hypothesis dropped: variance 24, not 12 |
 
@@ -183,7 +187,15 @@ Every number in the table is printed by both programs below, and the two varianc
 
 ## Code, from first principles, and it actually runs
 
-The programs reach the tail by five roads. Road 1 sums the masses from 0 to 20 by the recurrence and subtracts from 1. Road 2 sums the tail upward from 21, building each mass from logarithms of factorials, never from its neighbour. Road 3 is the geometric bracket. Road 4 is the binomial with the hour cut into 60, 600, 3600 and 36000 slots, computed by its own recurrence, never by the Poisson formula. Road 5 simulates 200,000 hours with a seeded generator, SplitMix64, written out in both languages so both draw the same numbers. The simulation multiplies random numbers between 0 and 1 until the product falls below $e^{-12}$ and counts the multiplications before that; why that count is Poisson belongs to [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md), and it uses only $e^{-12}$, not the mass formula. Every simulated number is printed with its standard error. The normal-curve area is built from its own Taylor series.
+The programs reach the tail by five roads.
+
+- Road 1 sums the masses from 0 to 20 by the recurrence and subtracts from 1.
+- Road 2 sums the tail upward from 21, building each mass from logarithms of factorials, never from its neighbour.
+- Road 3 is the geometric bracket.
+- Road 4 is the binomial with the hour cut into 60, 600, 3600 and 36000 slots, computed by its own recurrence, never by the Poisson formula.
+- Road 5 simulates 200,000 hours with a seeded generator, SplitMix64, written out in both languages so both draw the same numbers.
+
+The simulation multiplies random numbers between 0 and 1 until the product falls below $e^{-12}$ and counts the multiplications before that. Why that count is Poisson belongs to [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md). The simulation uses only $e^{-12}$, not the mass formula. Every simulated number is printed with its standard error. The normal-curve area is built from its own Taylor series.
 
 ### Python
 
@@ -544,6 +556,144 @@ ALL CHECKS PASS
 
 The two outputs match line for line. The simulated tail, 0.01150 with standard error 0.00024, sits within half a standard error of the exact 0.011598; the simulated mean and variance land within a few standard errors of 12.
 
+### Lean
+
+Lean proves the binomial limit, the masses adding to 1, and mean equal to variance, for every lambda above 0.
+
+- Take lambda above 0, a fixed count k, and n slots, each with chance lambda/n. Then the binomial chance of exactly k events tends to $e^{-\lambda}\lambda^k/k!$ as n grows.
+- Take any lambda above 0. Then the masses $e^{-\lambda}\lambda^k/k!$, summed over every count k from 0 up, add to exactly 1.
+- Take a count X ~ Poisson($\lambda$) with lambda above 0. Then $E[X] = \lambda$ and $\mathrm{Var}(X) = \lambda$.
+- The hand arithmetic holds exactly: the equal peak at 11 and 12, the step from $p_{20}$ to $p_{21}$, and the bracket's 22/10.
+- The arithmetic behind the variances checks too: 24 for pairs, 48 for the coin flip, and 9.6 for 60 one-minute slots.
+
+The decimals, the tail 0.011598, Le Cam's bound itself, the simulation and the mistakes table are left to the Python and Rust checks.
+
+```lean
+-- Poisson: the binomial chance of k events in n slots, each with chance lambda/n, tends to e^(-lambda) lambda^k / k! as the slots multiply, these Poisson masses add to 1, and the Poisson law's mean and variance both equal lambda.
+import Mathlib.Probability.Distributions.Poisson.PoissonLimitThm
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Tactic.NormNum
+
+open Filter Topology MeasureTheory ProbabilityTheory
+open scoped NNReal
+
+/-- Helper: the Poisson masses times n add to r. -/
+lemma poisson_hasSum_mul_self (r : ℝ) :
+    HasSum (fun n : ℕ => Real.exp (-r) * r ^ n / n.factorial * n) r := by
+  have h0 : HasSum (fun n : ℕ => Real.exp (-r) * r ^ n / n.factorial) 1 := by
+    convert (NormedSpace.expSeries_div_hasSum_exp r).mul_left (Real.exp (-r)) using 1
+    · ext n; simp [mul_div_assoc]
+    · simp [← Real.exp_eq_exp_ℝ, ← Real.exp_add]
+  rw [← hasSum_nat_add_iff' 1]
+  simp only [Finset.range_one, Finset.sum_singleton, Nat.cast_zero, mul_zero, sub_zero]
+  convert h0.mul_left r using 1
+  · ext n
+    rw [Nat.factorial_succ]; push_cast
+    field_simp; ring
+  · ring
+
+/-- Helper: the Poisson masses times n^2 add to r^2 + r. -/
+lemma poisson_hasSum_mul_sq (r : ℝ) :
+    HasSum (fun n : ℕ => Real.exp (-r) * r ^ n / n.factorial * (n : ℝ) ^ 2) (r ^ 2 + r) := by
+  have h0 : HasSum (fun n : ℕ => Real.exp (-r) * r ^ n / n.factorial) 1 := by
+    convert (NormedSpace.expSeries_div_hasSum_exp r).mul_left (Real.exp (-r)) using 1
+    · ext n; simp [mul_div_assoc]
+    · simp [← Real.exp_eq_exp_ℝ, ← Real.exp_add]
+  have h1 := poisson_hasSum_mul_self r
+  rw [← hasSum_nat_add_iff' 1]
+  simp only [Finset.range_one, Finset.sum_singleton, Nat.cast_zero]
+  convert ((h1.add h0).mul_left r) using 1
+  · ext n
+    rw [Nat.factorial_succ]; push_cast
+    field_simp; ring
+  · ring
+
+#print axioms poisson_hasSum_mul_self
+#print axioms poisson_hasSum_mul_sq
+
+/-- The Poisson law is the limit of the binomial. Fix an average lambda > 0 and a count k.
+Cut the window into n slots, each holding an event with chance lambda / n. The binomial chance
+of exactly k events, C(n, k) (lambda/n)^k (1 - lambda/n)^(n - k), tends to the Poisson mass
+e^(-lambda) lambda^k / k! as n grows. The number of slots disappears; only the average survives. -/
+theorem binomial_tends_to_poisson (lam : ℝ) (hlam : 0 < lam) (k : ℕ) :
+    Tendsto (fun n : ℕ => (n.choose k : ℝ) * (lam / n) ^ k * (1 - lam / n) ^ (n - k)) atTop
+      (𝓝 (Real.exp (-lam) * lam ^ k / k.factorial)) := by
+  apply tendsto_choose_mul_pow_of_tendsto_mul_atTop k (p := fun n : ℕ => lam / n)
+  apply tendsto_const_nhds.congr'
+  filter_upwards [eventually_ge_atTop 1] with n hn
+  have : (n : ℝ) ≠ 0 := by positivity
+  field_simp
+
+/-- The Poisson masses account for every outcome: e^(-lambda) lambda^k / k!, summed over all
+counts k = 0, 1, 2, ..., adds to exactly 1. -/
+theorem poisson_masses_sum_to_one (lam : ℝ) (hlam : 0 < lam) :
+    HasSum (fun k : ℕ => Real.exp (-lam) * lam ^ k / k.factorial) 1 := by
+  exact hasSum_one_poissonMeasure ⟨lam, hlam.le⟩
+
+/-- Mean equals variance: a count X following the Poisson law with average lambda > 0
+has long-run average E[X] = lambda and variance Var(X) = lambda. -/
+theorem poisson_mean_eq_variance_eq_lambda (r : ℝ≥0) (hr : 0 < r) :
+    (∫ n, (n : ℝ) ∂(poissonMeasure r)) = r ∧
+      variance (fun n : ℕ => (n : ℝ)) (poissonMeasure r) = r := by
+  have hmean : (∫ n, (n : ℝ) ∂(poissonMeasure r)) = r := by
+    rw [integral_poissonMeasure]
+    simpa using (poisson_hasSum_mul_self r).tsum_eq
+  refine ⟨hmean, ?_⟩
+  have hsq : (∫ n, (n : ℝ) ^ 2 ∂(poissonMeasure r)) = (r : ℝ) ^ 2 + r := by
+    rw [integral_poissonMeasure]
+    simpa using (poisson_hasSum_mul_sq r).tsum_eq
+  have hint : Integrable (fun n : ℕ => (n : ℝ) ^ 2) (poissonMeasure r) := by
+    rw [integrable_poissonMeasure_iff]
+    simpa [abs_of_nonneg] using (poisson_hasSum_mul_sq r).summable
+  have hmem : MemLp (fun n : ℕ => (n : ℝ)) 2 (poissonMeasure r) :=
+    (memLp_two_iff_integrable_sq (by fun_prop)).2 hint
+  rw [variance_eq_sub hmem]
+  simp only [Pi.pow_apply]
+  rw [hsq, hmean]; ring
+
+-- The help desk: 12 emails an hour over 1 hour gives lambda = 12.
+example : (12 : ℕ) * 1 = 12 := by norm_num
+-- The peak: the step from p11 to p12 multiplies by 12/12 = 1, so the two masses are equal.
+example : (12 : ℚ) / 12 = 1 := by norm_num
+example : Real.exp (-12) * 12 ^ 11 / (Nat.factorial 11 : ℝ)
+    = Real.exp (-12) * 12 ^ 12 / (Nat.factorial 12 : ℝ) := by
+  rw [mul_div_assoc, mul_div_assoc]; norm_num [Nat.factorial]
+-- The check from above: p21 = p20 × 12/21.
+example : Real.exp (-12) * 12 ^ 21 / (Nat.factorial 21 : ℝ)
+    = Real.exp (-12) * 12 ^ 20 / (Nat.factorial 20 : ℝ) * (12 / 21) := by
+  rw [mul_div_assoc, mul_div_assoc, mul_assoc]; norm_num [Nat.factorial]
+-- The bracket: later ratios are at most 12/22, so the tail is at most p21 × 1/(1 - 12/22) = p21 × 22/10.
+example : (1 : ℚ) / (1 - 12 / 22) = 22 / 10 := by norm_num
+-- Mean equals variance at the help desk: E[X(X-1)] + E[X] - E[X]^2 = 144 + 12 - 144 = 12.
+example : (12 : ℤ) ^ 2 + 12 - 12 ^ 2 = 12 := by norm_num
+-- Coarse slots: 60 one-minute slots, chance 12/60 = 1/5 each; variance 60 × 1/5 × 4/5 = 48/5 (9.6).
+example : (12 : ℚ) / 60 = 1 / 5 ∧ (60 : ℚ) * (1 / 5) * (1 - 1 / 5) = 48 / 5 := by norm_num
+-- Le Cam's bound at 3600 slots: lambda^2 / n = 144/3600 = 1/25 (0.0400).
+example : (12 : ℚ) ^ 2 / 3600 = 1 / 25 := by norm_num
+-- Emails in pairs, 6 pairs an hour: mean 2 × 6 = 12, variance 2^2 × 6 = 24.
+example : 2 * 6 = 12 ∧ 2 ^ 2 * 6 = 24 := by norm_num
+-- A coin flip picks rate 6 or 18: mean (6 + 18)/2 = 12; variance = average variance 12
+-- plus the spread of the rate ((6 - 12)^2 + (18 - 12)^2)/2 = 36, total 48.
+example : ((6 : ℚ) + 18) / 2 = 12 ∧ ((6 : ℚ) + 18) / 2 + ((6 - 12) ^ 2 + (18 - 12) ^ 2) / 2 = 48 := by
+  norm_num
+-- Lambda matches the window: a two-hour window has lambda = 12 × 2 = 24.
+example : (12 : ℕ) * 2 = 24 := by norm_num
+
+#print axioms binomial_tends_to_poisson
+#print axioms poisson_masses_sum_to_one
+#print axioms poisson_mean_eq_variance_eq_lambda
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'poisson_hasSum_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'poisson_hasSum_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'binomial_tends_to_poisson' depends on axioms: [propext, Classical.choice, Quot.sound]
+'poisson_masses_sum_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'poisson_mean_eq_variance_eq_lambda' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -557,7 +707,9 @@ The two outputs match line for line. The simulated tail, 0.01150 with standard e
 ## The usual mistake
 
 > [!warning]
-> **Treating "rare events, steady average" as proof that counts are Poisson.** The law needs events that come one at a time, at a steady rate, independently. The mean alone cannot tell: a desk whose hours run at 6 or 18 on a coin flip has mean 12, yet more than 20 emails arrive in 0.134641 of its hours, not 0.011598. The quick test is the variance. A Poisson count has variance equal to its mean; counts whose variance runs well above the mean, called overdispersed, are something else, often the negative binomial of [Waiting for a success](02-geometric-and-negative-binomial.md). Mean equal to variance is necessary, not sufficient: other laws share it.
+> **Treating "rare events, steady average" as proof that counts are Poisson.** The law needs events that come one at a time, at a steady rate, independently. The mean alone cannot tell: a desk whose hours run at 6 or 18 on a coin flip has mean 12, yet more than 20 emails arrive in 0.134641 of its hours, not 0.011598.
+>
+> The quick test is the variance. A Poisson count has variance equal to its mean; counts whose variance runs well above the mean, called overdispersed, are something else, often the negative binomial of [Waiting for a success](02-geometric-and-negative-binomial.md). Mean equal to variance is necessary, not sufficient: other laws share it.
 >
 > A second trap: **the normal curve in the tail.** With mean 12 and standard deviation 3.4641, the normal area beyond 20 is 0.010461, and beyond 20.5 (the half-step that usually helps) it is 0.007069. The Poisson law leans right, so its far tail is heavier than a symmetric curve's, and here the half-step moves the answer further from 0.011598, not closer.
 
@@ -565,7 +717,7 @@ The two outputs match line for line. The simulated tail, 0.01150 with standard e
 
 ## Where you meet it in real life
 
-- **Staffing a help desk or call centre.** The tail beyond capacity sets how many people to roster; the waiting-line consequences are Queues.
+- **Staffing a help desk or call centre.** The tail beyond capacity sets how many people to roster; the waiting-line consequences are [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md).
 - **Insurance claims and defects.** Claims per month on a large book of policies, flaws per metre of cable, typos per page: many opportunities, each rarely taken.
 - **Market orders.** Orders arriving at an exchange are often modelled as Poisson counts in short windows ([The order book](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/01-the-limit-order-book.md)); sudden price jumps counted the same way drive [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md).
 - **Radioactive decay and biology.** Clicks of a Geiger counter in a second, mutations along a genome: counts of independent rare events.

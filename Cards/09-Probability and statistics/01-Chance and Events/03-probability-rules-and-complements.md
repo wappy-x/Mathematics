@@ -35,7 +35,15 @@ The orange curve is the true chance, one minus five sixths to the power n. The g
 
 ## The formula
 
-Notation first, in words. From [Sample spaces and events](02-sample-spaces-and-events.md): $\Omega$ is the sample space, the list of every possible outcome; an event is a set of outcomes; $P(A)$ is read "the chance of A". Union and intersection come from the sets wing: $A \cup B$ is "A or B or both", $A \cap B$ is "A and B together". The one new piece: $A^c$, read "not A", is the **complement** of A, every outcome in $\Omega$ that is not in A. The small c stands for complement.
+Notation first, in words. From [Sample spaces and events](02-sample-spaces-and-events.md):
+
+- $\Omega$ is the sample space, the list of every possible outcome.
+- An event is a set of outcomes.
+- $P(A)$ is read "the chance of A".
+
+Union and intersection come from [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): $A \cup B$ is "A or B or both", and $A \cap B$ is "A and B together".
+
+The one new piece: $A^c$, read "not A", is the **complement** of A, every outcome in $\Omega$ that is not in A. The small c stands for complement.
 
 Two events are **separate** (the textbook word is *disjoint*) when they share no outcome: $A \cap B = \varnothing$, the empty event.
 
@@ -102,7 +110,9 @@ On the dice, split "at least one six" by where the first six lands. First six on
 
 A and $A^c$ share no outcome, and together they are all of $\Omega$. Additivity then gives $P(A) + P(A^c) = P(\Omega) = 1$. Subtract $P(A)$ from both sides: $P(A^c) = 1 - P(A)$.
 
-Two by-products drop out. With $A = \Omega$, the complement is $\varnothing$, so $P(\varnothing) = 0$. And since $P(A^c)$ is at least 0, $P(A)$ is at most 1: the range 0 to 1 is a consequence, not an extra rule. The same split gives **monotonicity**: if every outcome of A is in B, then B is A plus the separate piece "B without A", so $P(A) \le P(B)$.
+Two by-products drop out. With $A = \Omega$, the complement is $\varnothing$, so $P(\varnothing) = 0$. And since $P(A^c)$ is at least 0, $P(A)$ is at most 1: the range 0 to 1 is a consequence, not an extra rule.
+
+The same split gives **monotonicity**: if every outcome of A is in B, then B is A plus the separate piece "B without A", so $P(A) \le P(B)$.
 
 The rule pays off when "at least one" is a union of overlapping events and "none" is one clean event: here, all four rolls from the faces one to five, 625 sequences. So the chance is 1 − 625/1296 = 671/1296.
 
@@ -139,7 +149,7 @@ Take any outcome in the union, and say it lies in exactly k of the three events,
 
 The net count is k − C(k, 2) + C(k, 3). For k = 1: 1 − 0 + 0 = 1. For k = 2: 2 − 1 + 0 = 1. For k = 3: 3 − 3 + 1 = 1. An outcome outside the union is counted zero times. So the right side adds each outcome's weight in the union exactly once, which is the left side.
 
-The same count works for any number of events: k − C(k, 2) + C(k, 3) − … ends at 1 for every k of at least 1, because the binomial expansion of (1 − 1) to the power k is 0. That is the general rule of [Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md), carried from counts to chances.
+The same count works for any number of events: k − C(k, 2) + C(k, 3) − … ends at 1 for every k of at least 1. The reason: the binomial expansion of (1 − 1) to the power k is 0. That is the general rule of [Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md), carried from counts to chances.
 
 </details>
 
@@ -481,6 +491,100 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line. The simulated 0.5187 sits within one standard error, 0.0011, of the exact 0.517747.
+
+### Lean
+
+Lean proves the rules for every probability on any sample space, and checks the card's dice counts exactly.
+
+- Take two separate events A and B. Then $P(A \cup B) = P(A) + P(B)$.
+- Take any event A and its complement $A^c$ inside $\Omega$. Then $P(A^c) = 1 - P(A)$.
+- Take any two events A and B, separate or overlapping. Then $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
+- Take any three events A, B and C. Then the chance of "A or B or C" is the single chances, minus every overlap of two, plus the overlap of all three.
+- None of these rules assumes independence.
+- The four-roll counts hold exactly: 1296 sequences, 625 with no six, and 671 with a six, by the complement, the first-six split and inclusion–exclusion.
+- Counting every outcome, a six shows in 11 of 36 for two dice and 91 of 216 for three rolls, matching both roads.
+
+The decimals, the simulation, the chart, the Venn regions and the mistakes table are left to the Python and Rust checks.
+
+```lean
+-- The rules: for any probability, chances of separate events add, "not A" has chance one minus the chance of A, and overlapping events follow inclusion-exclusion for two and three events.
+import Mathlib.MeasureTheory.Measure.Real
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory
+
+/-- Chances of separate events add, and "not A" has chance one minus the chance of A.
+Here `μ` is any probability (chances at least 0, total chance 1, separate events add),
+an event is a measurable set of outcomes, and `μ.real A` is the chance of A as a real number.
+No independence is assumed. -/
+theorem separate_events_add_and_complement_is_one_minus
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] :
+    (∀ A B : Set Ω, MeasurableSet A → MeasurableSet B → Disjoint A B →
+        μ.real (A ∪ B) = μ.real A + μ.real B) ∧
+    (∀ A : Set Ω, MeasurableSet A → μ.real Aᶜ = 1 - μ.real A) := by
+  refine ⟨fun A B _ hB hd => measureReal_union hd hB, fun A hA => ?_⟩
+  exact probReal_compl_eq_one_sub₀ hA.nullMeasurableSet
+
+/-- When two events overlap, adding their chances counts the overlap twice,
+so it is subtracted back: P(A ∪ B) = P(A) + P(B) - P(A ∩ B). -/
+theorem prob_union_eq_add_sub_inter
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (A B : Set Ω) (hA : MeasurableSet A) (hB : MeasurableSet B) :
+    μ.real (A ∪ B) = μ.real A + μ.real B - μ.real (A ∩ B) := by
+  have h := measureReal_union_add_inter (μ := μ) (s := A) hB
+  linarith
+
+/-- Inclusion-exclusion for three events: add the single chances, subtract every
+overlap of two, and add back the overlap of all three. -/
+theorem prob_union_three_inclusion_exclusion
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (A B C : Set Ω) (hA : MeasurableSet A) (hB : MeasurableSet B) (hC : MeasurableSet C) :
+    μ.real (A ∪ B ∪ C) =
+      μ.real A + μ.real B + μ.real C
+        - μ.real (A ∩ B) - μ.real (A ∩ C) - μ.real (B ∩ C)
+        + μ.real (A ∩ B ∩ C) := by
+  have h1 := measureReal_union_add_inter (μ := μ) (s := A ∪ B) hC
+  have h2 := measureReal_union_add_inter (μ := μ) (s := A) hB
+  have h3 := measureReal_union_add_inter (μ := μ) (s := A ∩ C) (hB.inter hC)
+  have e1 : (A ∪ B) ∩ C = A ∩ C ∪ B ∩ C := Set.union_inter_distrib_right A B C
+  have e2 : A ∩ C ∩ (B ∩ C) = A ∩ B ∩ C := by
+    ext x; simp only [Set.mem_inter_iff]; tauto
+  rw [e1] at h1
+  rw [e2] at h3
+  linarith
+
+-- The gambler's bet, four rolls of one die: 1296 sequences, 625 with no six, 671 with a six.
+example : (6 : ℕ) ^ 4 = 1296 ∧ (5 : ℕ) ^ 4 = 625 ∧ 1296 - 625 = 671 := by norm_num
+-- The complement rule on the bet: 1 - (5/6)^4 = 671/1296.
+example : (1 : ℚ) - (5 / 6) ^ 4 = 671 / 1296 := by norm_num
+-- Split by where the first six lands: 216 + 180 + 150 + 125 = 671.
+example : 6 ^ 3 + 5 * 6 ^ 2 + 5 ^ 2 * 6 + 5 ^ 3 = (671 : ℕ) := by norm_num
+-- Inclusion-exclusion on four rolls: 864 - 216 + 24 - 1 = 671.
+example : (4 * 216 - 6 * 36 + 4 * 6 - 1 : ℤ) = 671 := by norm_num
+-- House example, two dice: a six on the first or second die in 11 of 36 outcomes, counted directly.
+example : (Finset.univ.filter (fun s : Fin 6 × Fin 6 => s.1 = 5 ∨ s.2 = 5)).card = 11 := by decide
+-- The same by both roads: 6 + 6 - 1 = 11 and 36 - 25 = 11.
+example : (6 + 6 - 1 : ℕ) = 11 ∧ (36 - 25 : ℕ) = 11 := by norm_num
+-- Three rolls: 36 + 36 + 36 - 6 - 6 - 6 + 1 = 91, and 216 - 125 = 91.
+example : (36 + 36 + 36 - 6 - 6 - 6 + 1 : ℤ) = 91 ∧ (216 - 125 : ℤ) = 91 := by norm_num
+-- Three rolls counted directly: 91 of the 216 sequences contain a six.
+example : (Finset.univ.filter
+    (fun s : Fin 6 × Fin 6 × Fin 6 => s.1 = 5 ∨ s.2.1 = 5 ∨ s.2.2 = 5)).card = 91 := by decide
+
+#print axioms separate_events_add_and_complement_is_one_minus
+#print axioms prob_union_eq_add_sub_inter
+#print axioms prob_union_three_inclusion_exclusion
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'separate_events_add_and_complement_is_one_minus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prob_union_eq_add_sub_inter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prob_union_three_inclusion_exclusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

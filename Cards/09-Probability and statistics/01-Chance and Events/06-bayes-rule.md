@@ -12,7 +12,9 @@ The instinct says 99 percent. The answer is 50 percent: a coin toss.
 
 Count the people. About 100 of the 10,000 carry the condition, and the test flags 99 of them. The other 9,900 are clear, and the test wrongly flags 1 percent of those: another 99. So 198 people hold a positive result, and only 99 of them carry the condition. Half.
 
-The test knows how often a carrier tests positive. The person holding the result wants the reverse: how often a positive tester is a carrier. Those are different questions with different answers. The rule that turns one into the other is Bayes' rule, named after Thomas Bayes, whose essay on it was published in 1763, two years after his death. It needs one extra ingredient the test cannot supply: how common the condition is before anyone is tested, called the **base rate**.
+The test knows how often a carrier tests positive. The person holding the result wants the reverse: how often a positive tester is a carrier. Those are different questions with different answers.
+
+The rule that turns one into the other is Bayes' rule, named after Thomas Bayes, whose essay on it was published in 1763, two years after his death. It needs one extra ingredient the test cannot supply: how common the condition is before anyone is tested, called the **base rate**.
 
 **Bayes' rule turns the chance of the evidence given a cause into the chance of the cause given the evidence, and the base rate is the ingredient that cannot be left out.**
 
@@ -192,7 +194,9 @@ Both checks below print every number in these tables.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the answer by four roads. Road 1 is the formula. Road 2 counts: 100 equally likely status slots (one is a carrier) crossed with 100 equally likely test slots (one is the test's error) give 10,000 equally likely cases, and the script counts the positives and the carriers among them. Road 3 is the odds form. Road 4 draws 400,000 people from a small random-number generator written out in both languages (SplitMix64, seed 20260928), so Python and Rust draw the same numbers; the estimate is printed with its standard error, the typical size of the gap between a simulated share and the true one. The scripts then count all 1,000,000 cases of a two-test sequence, check the dice, and print every "what breaks", "try changing" and chart value on the card. Nothing imported knows the answer; there is no `random` or `statistics` module.
+The scripts reach the answer by four roads. Road 1 is the formula. Road 2 counts: 100 equally likely status slots (one is a carrier) crossed with 100 equally likely test slots (one is the test's error) give 10,000 equally likely cases, and the script counts the positives and the carriers among them. Road 3 is the odds form. Road 4 draws 400,000 people from a small random-number generator written out in both languages (SplitMix64, seed 20260928), so Python and Rust draw the same numbers; the estimate is printed with its standard error, the typical size of the gap between a simulated share and the true one.
+
+The scripts then count all 1,000,000 cases of a two-test sequence, check the dice, and print every "what breaks", "try changing" and chart value on the card. Nothing imported knows the answer; there is no `random` or `statistics` module.
 
 ### Python
 
@@ -329,9 +333,10 @@ assert abs(two_count - two_odds) < 1e-12            # two tests: count vs odds
 assert abs(repeat_car / repeat - two_odds) > 0.4    # a repeat is not a second test
 assert abs(dice_count - dice_formula) < 1e-12       # dice: count vs formula
 print("all checks passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 formula  carrier and positive 0.99*0.01          0.009900
@@ -375,6 +380,7 @@ sweep    base rate   20%  ->  P(H|E)  96.12%
 sweep    base rate   50%  ->  P(H|E)  99.00%
 figure, tree: 10000 -> 100 carriers (99 pos, 1 neg), 9900 not (99 pos, 9801 neg)
 all checks passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -543,10 +549,11 @@ fn main() {
     assert!((repeat_car as f64 / repeat as f64 - two_odds).abs() > 0.4); // a repeat is not a second test
     assert!((dice_count - dice_formula).abs() < 1e-12); // dice: count vs formula
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 formula  carrier and positive 0.99*0.01          0.009900
@@ -590,11 +597,159 @@ sweep    base rate   20%  ->  P(H|E)  96.12%
 sweep    base rate   50%  ->  P(H|E)  99.00%
 figure, tree: 10000 -> 100 carriers (99 pos, 1 neg), 9900 not (99 pos, 9801 neg)
 all checks passed
+ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
 
 The simulation found 8,011 positives among 400,000 people, 4,020 of them carriers: an estimate of 0.501810 with a standard error of 0.005586. The true 0.50 sits a third of a standard error away. The assert allows four.
+
+### Lean
+
+Lean proves Bayes' rule, its odds form and the second-result rule for all events that meet their conditions, plus the card's numbers.
+
+- Take claims $H_1, \dots, H_n$ that do not overlap, cover every case and have positive chances, with $P(E) > 0$. Then $P(H_i \mid E)$ is $P(E \mid H_i) P(H_i)$ divided by the sum of all such products.
+- Under the same conditions, the answers for all $n$ claims add up to 1.
+- Suppose $P(H)$, $P(H^c)$, $P(E)$ and $P(E \mid H^c)$ are all above 0. Then $O(H \mid E) = L \times O(H)$.
+- Suppose two results are independent given the true state, and the odds-form conditions hold for each result and for both together. Then the odds after both equal the second result's likelihood ratio times the odds after the first.
+- In the tree, 99 of the 100 carriers and 99 of the 9,900 clear people test positive: 198 in all.
+- $P(E) = 0.99 \times 0.01 + 0.01 \times 0.99 = 0.0198$.
+- $P(H \mid E) = 0.0099 / 0.0198 = 1/2$.
+- The likelihood ratio is 0.99 / 0.01 = 99, and odds of 1 to 99 times 99 are 1 to 1: a chance of 1/2.
+- At a 2 percent base rate the answer is 99/148, and at 10 percent it is 11/12.
+- Two independent positives give odds of 99 and a chance of 99/100, and 9,801 of 9,900 counted cases agree.
+- Of the 36 dice outcomes, 3 total 10, and 1 of those has a first-die 6.
+- On the dice, Bayes gives $(1/6)(1/6) / (3/36) = 1/3$.
+
+The decimals, the simulation, the mistake table, the chart, the court example and the "try" rows are left to the Python and Rust checks.
+
+```lean
+-- Bayes' rule: for causes that do not overlap and cover every case, the chance of a cause given the evidence is its share of the total chance of the evidence, and in odds form the evidence multiplies the odds by the likelihood ratio.
+import Mathlib.Probability.ConditionalProbability
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+
+/-- Helper: in `ℝ≥0∞`, `(a * c) / (b * d) = (a / b) * (c / d)` when `b` and `d` are nonzero. -/
+theorem ennreal_div_mul_div {a b c d : ENNReal} (hb : b ≠ 0) (hd : d ≠ 0) :
+    a * c / (b * d) = a / b * (c / d) := by
+  rw [div_eq_mul_inv, div_eq_mul_inv, div_eq_mul_inv, ENNReal.mul_inv (Or.inl hb) (Or.inr hd)]
+  ring
+
+#print axioms ennreal_div_mul_div
+
+/-- Bayes' rule, general form. Let `H 0, …, H (n-1)` be events that do not overlap, cover every
+case, and each have positive chance, and let `E` be evidence with positive chance. Then the chance
+of each `H i` given `E` is `P(E | H i) P(H i)` divided by the total `∑ j, P(E | H j) P(H j)`,
+and these answers add up to 1. -/
+theorem bayes_rule {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    {n : ℕ} (H : Fin n → Set Ω) (E : Set Ω)
+    (hH : ∀ i, MeasurableSet (H i)) (hE : MeasurableSet E)
+    (hdisj : Pairwise (Function.onFun Disjoint H)) (hcover : ⋃ i, H i = Set.univ)
+    (hHpos : ∀ i, μ (H i) ≠ 0) (hEpos : μ E ≠ 0) :
+    (∀ i, μ[H i | E] = μ[E | H i] * μ (H i) / ∑ j, μ[E | H j] * μ (H j)) ∧
+      ∑ i, μ[H i | E] = 1 := by
+  have key : ∀ j, μ[E | H j] * μ (H j) = μ (H j ∩ E) := fun j => cond_mul_eq_inter (hH j) E μ
+  have hsum : ∑ j, μ (H j ∩ E) = μ E := by
+    have h := measure_iUnion (μ := μ) (f := fun j => H j ∩ E)
+      (fun i j hij => (hdisj hij).mono Set.inter_subset_left Set.inter_subset_left)
+      (fun j => (hH j).inter hE)
+    rw [tsum_fintype] at h
+    rw [← h, ← Set.iUnion_inter, hcover, Set.univ_inter]
+  have hc : ∀ i, μ[H i | E] = (μ E)⁻¹ * μ (H i ∩ E) := by
+    intro i; rw [cond_apply hE, Set.inter_comm]
+  simp_rw [key, hsum]
+  refine ⟨fun i => ?_, ?_⟩
+  · rw [hc, div_eq_mul_inv, mul_comm]
+  · simp_rw [hc]
+    rw [← Finset.mul_sum, hsum, ENNReal.inv_mul_cancel hEpos (measure_ne_top _ _)]
+
+/-- Bayes' rule, odds form. If the claim `H` and its failure `Hᶜ` both have positive chance, the
+evidence `E` has positive chance, and `P(E | Hᶜ) > 0`, then the odds of `H` after the evidence
+equal the likelihood ratio `P(E | H) / P(E | Hᶜ)` times the odds of `H` before it. -/
+theorem bayes_rule_odds_form {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] (H E : Set Ω) (hH : MeasurableSet H) (hE : MeasurableSet E)
+    (hHpos : μ H ≠ 0) (hHcpos : μ Hᶜ ≠ 0) (hEpos : μ E ≠ 0) (hL : μ[E | Hᶜ] ≠ 0) :
+    μ[H | E] / μ[Hᶜ | E] = (μ[E | H] / μ[E | Hᶜ]) * (μ H / μ Hᶜ) := by
+  have h1 : μ[H | E] = (μ E)⁻¹ * μ (E ∩ H) := cond_apply hE μ H
+  have h2 : μ[Hᶜ | E] = (μ E)⁻¹ * μ (E ∩ Hᶜ) := cond_apply hE μ Hᶜ
+  have h3 : μ[E | H] * μ H = μ (H ∩ E) := cond_mul_eq_inter hH E μ
+  have h4 : μ[E | Hᶜ] * μ Hᶜ = μ (Hᶜ ∩ E) := cond_mul_eq_inter hH.compl E μ
+  rw [h1, h2, ENNReal.mul_div_mul_left _ _ (ENNReal.inv_ne_zero.2 (measure_ne_top _ _))
+    (ENNReal.inv_ne_top.2 hEpos), ← ennreal_div_mul_div hL hHcpos, h3, h4,
+    Set.inter_comm E H, Set.inter_comm E Hᶜ]
+
+/-- A second result multiplies the odds again, if it is fresh evidence. If two results `E₁` and
+`E₂` are independent given the true state (given `H` and given `Hᶜ`), then the odds of `H` after
+both equal the second likelihood ratio `P(E₂ | H) / P(E₂ | Hᶜ)` times the odds after the first. -/
+theorem bayes_rule_second_independent_result {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] (H E₁ E₂ : Set Ω) (hH : MeasurableSet H)
+    (hE₁ : MeasurableSet E₁) (hE₂ : MeasurableSet E₂)
+    (hHpos : μ H ≠ 0) (hHcpos : μ Hᶜ ≠ 0) (hEpos : μ (E₁ ∩ E₂) ≠ 0)
+    (hL₁ : μ[E₁ | Hᶜ] ≠ 0) (hL₂ : μ[E₂ | Hᶜ] ≠ 0)
+    (hind : μ[E₁ ∩ E₂ | H] = μ[E₁ | H] * μ[E₂ | H])
+    (hindc : μ[E₁ ∩ E₂ | Hᶜ] = μ[E₁ | Hᶜ] * μ[E₂ | Hᶜ]) :
+    μ[H | E₁ ∩ E₂] / μ[Hᶜ | E₁ ∩ E₂] =
+      (μ[E₂ | H] / μ[E₂ | Hᶜ]) * (μ[H | E₁] / μ[Hᶜ | E₁]) := by
+  have hE₁pos : μ E₁ ≠ 0 := fun h => hEpos (measure_mono_null Set.inter_subset_left h)
+  have hL : μ[E₁ ∩ E₂ | Hᶜ] ≠ 0 := by rw [hindc]; exact mul_ne_zero hL₁ hL₂
+  rw [bayes_rule_odds_form μ H (E₁ ∩ E₂) hH (hE₁.inter hE₂) hHpos hHcpos hEpos hL,
+    bayes_rule_odds_form μ H E₁ hH hE₁ hHpos hHcpos hE₁pos hL₁, hind, hindc,
+    ennreal_div_mul_div hL₁ hL₂]
+  ring
+
+/-! The card's worked numbers, as exact fractions. -/
+
+-- The tree: of 10,000 people, 100 carry it and 99 of them test positive;
+-- 9,900 are clear and 99 of them test positive; 99 of the 198 positives carry it.
+example : 10000 / 100 = 100 ∧ 100 * 99 / 100 = 99 ∧ (10000 - 100) / 100 = 99 ∧ 99 + 99 = 198 := by
+  decide
+
+-- P(E) = 0.99 × 0.01 + 0.01 × 0.99 = 0.0198.
+example : (99 / 100 : ℚ) * (1 / 100) + (1 / 100) * (99 / 100) = 198 / 10000 := by norm_num
+
+-- P(H | E) = 0.0099 / 0.0198 = 1/2.
+example : ((99 / 100 : ℚ) * (1 / 100)) / ((99 / 100) * (1 / 100) + (1 / 100) * (99 / 100))
+    = 1 / 2 := by norm_num
+
+-- Odds form: L = 99, odds before 1 to 99, odds after 1 to 1, chance 1 / (1 + 1) = 1/2.
+example : (99 / 100 : ℚ) / (1 / 100) = 99 ∧ (99 : ℚ) * (1 / 99) = 1 ∧ (1 : ℚ) / (1 + 1) = 1 / 2 := by
+  norm_num
+
+-- Base rate 2 percent: 99/148 (0.668919). Base rate 10 percent: 11/12 (91.67 percent).
+example : ((99 / 100 : ℚ) * (2 / 100)) / ((99 / 100) * (2 / 100) + (1 / 100) * (98 / 100))
+    = 99 / 148 := by norm_num
+example : ((99 / 100 : ℚ) * (10 / 100)) / ((99 / 100) * (10 / 100) + (1 / 100) * (90 / 100))
+    = 11 / 12 := by norm_num
+
+-- A second independent positive: odds 1 × 99 = 99, chance 99/100; the count gives 9,801 of 9,900.
+example : (99 : ℚ) / (1 + 99) = 99 / 100 ∧ (9801 : ℚ) / 9900 = 99 / 100 := by norm_num
+
+-- Two dice: three of the 36 outcomes total 10, and one of those has a first-die 6.
+example : (Finset.univ.filter (fun p : Fin 6 × Fin 6 => p.1.val + p.2.val + 2 = 10)).card = 3 := by
+  decide
+example : (Finset.univ.filter
+    (fun p : Fin 6 × Fin 6 => p.1.val + p.2.val + 2 = 10 ∧ p.1.val + 1 = 6)).card = 1 := by
+  decide
+
+-- Bayes on the dice: (1/6)(1/6) / (3/36) = 1/3.
+example : ((1 / 6 : ℚ) * (1 / 6)) / (3 / 36) = 1 / 3 := by norm_num
+
+#print axioms bayes_rule
+#print axioms bayes_rule_odds_form
+#print axioms bayes_rule_second_independent_result
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ennreal_div_mul_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bayes_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bayes_rule_odds_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bayes_rule_second_independent_result' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -36,7 +36,13 @@ The upper line is the average number of small cups, the lower line the average n
 
 ## The formula
 
-Notation first, in words. A **tally** is the list of counts, one per category, and its entries add to the number of customers. The counts are random variables written with capital letters, $N_1$ for small, $N_2$ for medium, $N_3$ for large; on this card they are also called S, M and L. Lower-case $k_1$, $k_2$, $k_3$ are particular values they might take. The multinomial coefficient $C(n; k_1, \ldots, k_r)$ counts the ways to split $n$ distinct things into named piles of sizes $k_1$ to $k_r$ ([Splitting into groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Writing $(N_1, N_2, N_3) \sim \text{Multinomial}(20;\ 0.3, 0.5, 0.2)$ is read "the three counts follow the multinomial law with 20 trials and chances 0.3, 0.5 and 0.2".
+Notation first, in words.
+
+- A **tally** is the list of counts, one per category, and its entries add to the number of customers.
+- The counts are random variables written with capital letters, $N_1$ for small, $N_2$ for medium, $N_3$ for large; on this card they are also called S, M and L.
+- Lower-case $k_1$, $k_2$, $k_3$ are particular values they might take.
+- The multinomial coefficient $C(n; k_1, \ldots, k_r)$ counts the ways to split $n$ distinct things into named piles of sizes $k_1$ to $k_r$ ([Splitting into groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)).
+- Writing $(N_1, N_2, N_3) \sim \text{Multinomial}(20;\ 0.3, 0.5, 0.2)$ is read "the three counts follow the multinomial law with 20 trials and chances 0.3, 0.5 and 0.2".
 
 The joint mass, the chance of one whole tally:
 
@@ -103,7 +109,7 @@ Multiply out $(p_1 + p_2 + p_3)^{20}$ by picking one term from each of the 20 br
 
 Look only at mediums. Each customer either takes a medium, with chance 0.5, or does not, with chance 0.5, independently of the rest. That is the setting of [Binomial](01-bernoulli-and-binomial.md) with "small or large" lumped into one "no". So $M \sim \text{Binomial}(20, 0.5)$, with mean 10 and variance 5. The same lumping gives $S \sim \text{Binomial}(20, 0.3)$ and $L \sim \text{Binomial}(20, 0.2)$.
 
-The code checks this the long way, summing the joint table over the other two counts, and the result matches the binomial law at every value to within 1e-12.
+The code checks this the long way, summing the joint table over the other two counts, and the result matches the binomial law at every value to within 1e-12 (0.000000000001).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -189,7 +195,7 @@ The code prints all four. The last one is the model breaking, not an arithmetic 
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads reach the same numbers. The formula builds the coefficient from factorials. An exact table adds one customer at a time, spreading each tally's chance over its three possible next steps; it covers all 3^20 arrival orders, grouped into 231 tallies, and never uses a factorial. A simulation draws 100,000 mornings from SplitMix64, a small random number generator written out in both languages with seed 20260928, so both programs draw the same customers; each simulated number carries its standard error. The binomial check builds its coefficients by Pascal's triangle, again with no factorial.
+Nothing is imported. Three roads reach the same numbers. The formula builds the coefficient from factorials. An exact table adds one customer at a time, spreading each tally's chance over its three possible next steps; it covers all 3^20 arrival orders, grouped into 231 tallies, and never uses a factorial. A simulation draws 100,000 mornings from SplitMix64, a small random number generator written out in both languages with seed 20260928, so both programs draw the same customers; each simulated number carries its standard error, the typical size of its random miss ([Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). The binomial check builds its coefficients by Pascal's triangle, again with no factorial.
 
 ### Python
 
@@ -567,6 +573,337 @@ ALL CHECKS PASS
 
 The two outputs match line for line, the simulation included, because both draw the same numbers from the same generator.
 
+### Lean
+
+Lean proves the formulas above for any $n$ customers choosing independently among any $r$ sizes, with the same chances each time.
+
+- Suppose the counts $k_1$ to $k_r$ add to $n$. Then the tally has chance $C(n; k_1, \ldots, k_r)$ times $p_1^{k_1} \cdots p_r^{k_r}$.
+- Suppose the counts do not add to $n$. Then that tally has chance zero.
+- Take any size $i$. Then $N_i \sim \text{Binomial}(n, p_i)$.
+- Take two different sizes $i$ and $j$. Then $\text{Cov}(N_i, N_j) = -n p_i p_j$.
+- The hand arithmetic holds exactly: 38,798,760 orders, the chance of 6, 10, 4, the 231 tallies, the means, variances and covariances.
+
+The exact table, the simulation, the correlation and Step 5's binomial given one count are left to the Python and Rust checks.
+
+```lean
+-- Multinomial: for n independent trials that each land in exactly one of r categories with the same chances p, the chance of a whole tally k is n!/(k_1!...k_r!) times p_1^k_1...p_r^k_r (and zero if the counts do not add to n), each count alone is Binomial(n, p_i), and two different counts have covariance -n p_i p_j.
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Algebra.MvPolynomial.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+
+/-- The count of category `i`: how many of the `n` trials landed in category `i`. -/
+def tallyCount {Ω : Type*} {n r : ℕ} (X : Fin n → Ω → Fin r) (i : Fin r) (ω : Ω) : ℕ :=
+  (Finset.univ.filter (fun t => X t ω = i)).card
+
+section
+open Finset
+
+lemma tally_ind_eq_iff {r : ℕ} (a b : Fin r → ℕ) :
+    Finsupp.indicator (Finset.univ : Finset (Fin r)) (fun i _ => a i) =
+      Finsupp.indicator univ (fun i _ => b i) ↔ a = b := by
+  constructor
+  · intro h; funext i
+    have := DFunLike.congr_fun h i
+    simpa [Finsupp.indicator_of_mem (mem_univ i)] using this
+  · rintro rfl; rfl
+
+lemma card_tally_eq (n r : ℕ) (k : Fin r → ℕ) :
+    (univ.filter (fun x : Fin n → Fin r =>
+        ∀ i, (univ.filter (fun t => x t = i)).card = k i)).card =
+      if ∑ i, k i = n then Nat.multinomial univ k else 0 := by
+  classical
+  set d : Fin r →₀ ℕ := Finsupp.indicator univ (fun i _ => k i) with hd
+  have hprod : ∀ x : Fin n → Fin r, (∏ t, (MvPolynomial.X (x t) : MvPolynomial (Fin r) ℕ)) =
+      ∏ i, MvPolynomial.X i ^ (univ.filter (fun t => x t = i)).card := by
+    intro x
+    rw [← Finset.prod_fiberwise univ x (fun t => (MvPolynomial.X (x t) : MvPolynomial (Fin r) ℕ))]
+    refine Finset.prod_congr rfl fun i _ => ?_
+    rw [Finset.prod_congr rfl (g := fun _ => MvPolynomial.X i) (fun t ht => by
+      rw [(Finset.mem_filter.1 ht).2]), Finset.prod_const]
+  have key : (∑ i, (MvPolynomial.X i : MvPolynomial (Fin r) ℕ)) ^ n =
+      ∑ x : Fin n → Fin r, ∏ i, MvPolynomial.X i ^ (univ.filter (fun t => x t = i)).card := by
+    rw [← Fin.prod_const, Finset.prod_univ_sum]
+    simp only [Fintype.piFinset_univ]
+    exact Finset.sum_congr rfl fun x _ => hprod x
+  have h1 := congrArg (fun p : MvPolynomial (Fin r) ℕ => p.coeff d) key
+  rw [Finset.sum_pow_eq_sum_piAntidiag] at h1
+  simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul, ← map_natCast (MvPolynomial.C),
+    MvPolynomial.coeff_prod_X_pow, hd, tally_ind_eq_iff, mul_ite, mul_one, mul_zero] at h1
+  rw [Finset.sum_ite_eq] at h1
+  simp only [mem_piAntidiag, mem_univ, implies_true, and_true, Nat.cast_id] at h1
+  rw [h1, Finset.sum_boole]
+  simp only [Nat.cast_id, funext_iff, eq_comm (a := k _)]
+
+end
+
+lemma tally_setOf_forall_eq {Ω : Type*} {n r : ℕ} (X : Fin n → Ω → Fin r)
+    (S : Fin n → Set (Fin r)) :
+    {ω | ∀ t, X t ω ∈ S t} = ⋂ t ∈ (Finset.univ : Finset (Fin n)), X t ⁻¹' S t := by
+  ext ω; simp
+
+lemma tally_measurableSet_forall {Ω : Type*} [MeasurableSpace Ω] {n r : ℕ}
+    (X : Fin n → Ω → Fin r) (hmeas : ∀ t, Measurable (X t)) (S : Fin n → Set (Fin r)) :
+    MeasurableSet {ω | ∀ t, X t ω ∈ S t} := by
+  rw [tally_setOf_forall_eq]
+  exact Finset.measurableSet_biInter _ fun t _ => hmeas t MeasurableSet.of_discrete
+
+lemma tally_prob_forall {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n r : ℕ} (X : Fin n → Ω → Fin r) (hindep : iIndepFun X P)
+    (S : Fin n → Set (Fin r)) :
+    P.real {ω | ∀ t, X t ω ∈ S t} = ∏ t, P.real (X t ⁻¹' S t) := by
+  rw [tally_setOf_forall_eq, measureReal_def,
+    hindep.measure_inter_preimage_eq_mul Finset.univ (fun t _ => MeasurableSet.of_discrete),
+    ENNReal.toReal_prod]
+  rfl
+
+#print axioms tally_ind_eq_iff
+#print axioms card_tally_eq
+#print axioms tally_setOf_forall_eq
+#print axioms tally_measurableSet_forall
+#print axioms tally_prob_forall
+
+/-- The joint mass. Take a fixed number `n` of trials `X 0, ..., X (n-1)`. Each trial lands in
+exactly one of `r` categories (its value is one of `0, ..., r-1`), every trial has the same
+chance `p i` of landing in category `i`, and the trials are independent. Then the chance that
+the counts come out as the tally `k` is the multinomial coefficient `n! / (k_1! ... k_r!)` times
+`p_1^k_1 ... p_r^k_r` when the `k_i` add to `n`, and zero when they do not. -/
+theorem multinomial_joint_mass {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n r : ℕ} (X : Fin n → Ω → Fin r) (p : Fin r → ℝ)
+    (hmeas : ∀ t, Measurable (X t)) (hindep : iIndepFun X P)
+    (hsame : ∀ t i, P.real (X t ⁻¹' {i}) = p i) (k : Fin r → ℕ) :
+    P.real {ω | ∀ i, tallyCount X i ω = k i} =
+      if ∑ i, k i = n then (Nat.multinomial Finset.univ k : ℝ) * ∏ i, p i ^ k i else 0 := by
+  classical
+  set S := Finset.univ.filter (fun x : Fin n → Fin r =>
+    ∀ i, (Finset.univ.filter (fun t => x t = i)).card = k i) with hS
+  have hev : {ω | ∀ i, tallyCount X i ω = k i} =
+      ⋃ x ∈ S, {ω | ∀ t, X t ω ∈ ({x t} : Set (Fin r))} := by
+    ext ω
+    simp only [Set.mem_ofPred_eq, Set.mem_iUnion, Set.mem_singleton_iff, hS, Finset.mem_filter,
+      Finset.mem_univ, true_and, exists_prop, tallyCount]
+    constructor
+    · intro h
+      exact ⟨_, h, fun t => rfl⟩
+    · rintro ⟨x, hx, hω⟩
+      have : (fun t => X t ω) = x := funext hω
+      subst this
+      exact hx
+  rw [hev, measureReal_biUnion_finset]
+  · rw [Finset.sum_congr rfl (g := fun _ => ∏ i, p i ^ k i)]
+    · rw [Finset.sum_const, hS, card_tally_eq, nsmul_eq_mul]
+      split_ifs <;> simp
+    · intro x hx
+      rw [hS, Finset.mem_filter] at hx
+      rw [tally_prob_forall P X hindep]
+      simp_rw [hsame]
+      rw [← Finset.prod_fiberwise Finset.univ x (fun t => p (x t))]
+      refine Finset.prod_congr rfl fun i _ => ?_
+      rw [Finset.prod_congr rfl (g := fun _ => p i) (fun t ht => by
+        rw [(Finset.mem_filter.1 ht).2]), Finset.prod_const, hx.2 i]
+  · intro x _ y _ hxy
+    refine Set.disjoint_left.2 fun ω h1 h2 => hxy ?_
+    funext t
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff] at h1 h2
+    rw [← h1 t, h2 t]
+  · intro x _
+    exact tally_measurableSet_forall X hmeas _
+
+/-- Each count alone is binomial: under the same conditions, the count of category `i`
+follows Binomial(n, p_i), so it equals `k` with chance `C(n, k) p_i^k (1 - p_i)^(n - k)`. -/
+theorem multinomial_count_binomial {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n r : ℕ} (X : Fin n → Ω → Fin r) (p : Fin r → ℝ)
+    (hmeas : ∀ t, Measurable (X t)) (hindep : iIndepFun X P)
+    (hsame : ∀ t i, P.real (X t ⁻¹' {i}) = p i) (i : Fin r) (k : ℕ) :
+    P.real {ω | tallyCount X i ω = k} = (n.choose k : ℝ) * p i ^ k * (1 - p i) ^ (n - k) := by
+  classical
+  have hev : {ω | tallyCount X i ω = k} =
+      ⋃ A ∈ Finset.powersetCard k (Finset.univ : Finset (Fin n)),
+        {ω | ∀ t, X t ω ∈ {a | a = i ↔ t ∈ A}} := by
+    ext ω
+    simp only [Set.mem_ofPred_eq, Set.mem_iUnion, Finset.mem_powersetCard, exists_prop,
+      tallyCount]
+    constructor
+    · intro h
+      exact ⟨_, ⟨Finset.subset_univ _, h⟩, fun t => by simp⟩
+    · rintro ⟨A, ⟨-, hA⟩, hω⟩
+      have : Finset.univ.filter (fun t => X t ω = i) = A := by
+        ext t; simp [hω t]
+      rw [this, hA]
+  have hpt : ∀ (A : Finset (Fin n)) t,
+      P.real (X t ⁻¹' {a | a = i ↔ t ∈ A}) = if t ∈ A then p i else 1 - p i := by
+    intro A t
+    by_cases ht : t ∈ A
+    · have : X t ⁻¹' {a | a = i ↔ t ∈ A} = X t ⁻¹' {i} := by ext; simp [ht]
+      rw [this, hsame]; simp [ht]
+    · have : X t ⁻¹' {a | a = i ↔ t ∈ A} = (X t ⁻¹' {i})ᶜ := by ext; simp [ht]
+      rw [this, probReal_compl_eq_one_sub (hmeas t (measurableSet_singleton _)), hsame]
+      simp [ht]
+  rw [hev, measureReal_biUnion_finset]
+  · rw [Finset.sum_congr rfl (g := fun _ => p i ^ k * (1 - p i) ^ (n - k))]
+    · rw [Finset.sum_const, Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin,
+        nsmul_eq_mul, mul_assoc]
+    · intro A hA
+      rw [Finset.mem_powersetCard] at hA
+      rw [tally_prob_forall P X hindep]
+      simp_rw [hpt A]
+      rw [Finset.prod_ite, Finset.prod_const, Finset.prod_const]
+      have hc : (Finset.univ.filter (fun t => t ∉ A)) = Aᶜ := by ext; simp
+      simp [hc, Finset.card_compl, hA.2]
+  · intro A _ B _ hAB
+    refine Set.disjoint_left.2 fun ω h1 h2 => hAB ?_
+    ext t
+    simp only [Set.mem_ofPred_eq] at h1 h2
+    rw [← h1 t, h2 t]
+  · intro A _
+    exact tally_measurableSet_forall X hmeas _
+
+/-- Two different counts pull against each other: under the same conditions, for two different
+categories `i ≠ j`, the covariance of their counts is exactly `-n p_i p_j`. -/
+theorem multinomial_covariance {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n r : ℕ} (X : Fin n → Ω → Fin r) (p : Fin r → ℝ)
+    (hmeas : ∀ t, Measurable (X t)) (hindep : iIndepFun X P)
+    (hsame : ∀ t i, P.real (X t ⁻¹' {i}) = p i) {i j : Fin r} (hij : i ≠ j) :
+    cov[fun ω => (tallyCount X i ω : ℝ), fun ω => (tallyCount X j ω : ℝ); P] =
+      -(n : ℝ) * p i * p j := by
+  classical
+  have hms : ∀ t c, MeasurableSet (X t ⁻¹' {c}) := fun t c => hmeas t (measurableSet_singleton c)
+  have hind : ∀ c, (fun ω => (tallyCount X c ω : ℝ)) =
+      fun ω => ∑ t, (X t ⁻¹' {c}).indicator (1 : Ω → ℝ) ω := by
+    intro c; funext ω
+    simp [tallyCount, Set.indicator_apply, Finset.sum_boole]
+  have hmem : ∀ c, MemLp (fun ω => (tallyCount X c ω : ℝ)) 2 P := by
+    intro c
+    refine MemLp.of_bound ?_ (n : ℝ) (ae_of_all _ fun ω => ?_)
+    · rw [hind c]
+      exact (Finset.measurable_sum _ fun t _ =>
+        (measurable_const.indicator (hms t c))).aestronglyMeasurable
+    · rw [Real.norm_natCast]
+      exact_mod_cast (Finset.card_filter_le _ _).trans (by simp)
+  have hint : ∀ t c, Integrable ((X t ⁻¹' {c}).indicator (1 : Ω → ℝ)) P :=
+    fun t c => (integrable_const (1 : ℝ)).indicator (hms t c)
+  have hE : ∀ c, ∫ ω, (tallyCount X c ω : ℝ) ∂P = n * p c := by
+    intro c
+    rw [show (∫ ω, (tallyCount X c ω : ℝ) ∂P) =
+      ∫ ω, ∑ t, (X t ⁻¹' {c}).indicator (1 : Ω → ℝ) ω ∂P from by rw [← hind c]]
+    rw [integral_finsetSum _ fun t _ => hint t c]
+    simp_rw [integral_indicator_one (hms _ c), hsame]
+    simp
+  have hpair : ∀ t s, P.real (X t ⁻¹' {i} ∩ X s ⁻¹' {j}) =
+      p i * p j - if t = s then p i * p j else 0 := by
+    intro t s
+    by_cases hts : t = s
+    · subst hts
+      have : X t ⁻¹' {i} ∩ X t ⁻¹' {j} = ∅ := by
+        ext ω
+        simp only [Set.mem_inter_iff, Set.mem_preimage, Set.mem_singleton_iff,
+          Set.mem_empty_iff_false, iff_false, not_and]
+        intro h1 h2
+        exact hij (h1.symm.trans h2)
+      simp [this]
+    · rw [measureReal_def, (hindep.indepFun hts).measure_inter_preimage_eq_mul _ _
+        (measurableSet_singleton i) (measurableSet_singleton j), ENNReal.toReal_mul,
+        ← measureReal_def, ← measureReal_def, hsame, hsame]
+      simp [hts]
+  have hEprod : ∫ ω, (tallyCount X i ω : ℝ) * (tallyCount X j ω : ℝ) ∂P =
+      (n : ℝ) * n * (p i * p j) - n * (p i * p j) := by
+    have : (fun ω => (tallyCount X i ω : ℝ) * (tallyCount X j ω : ℝ)) =
+        fun ω => ∑ t, ∑ s, (X t ⁻¹' {i} ∩ X s ⁻¹' {j}).indicator (1 : Ω → ℝ) ω := by
+      funext ω
+      rw [congrFun (hind i) ω, congrFun (hind j) ω, Finset.sum_mul_sum]
+      refine Finset.sum_congr rfl fun t _ => Finset.sum_congr rfl fun s _ => ?_
+      rw [Set.inter_indicator_one]
+      rfl
+    have hint2 : ∀ t s, Integrable ((X t ⁻¹' {i} ∩ X s ⁻¹' {j}).indicator (1 : Ω → ℝ)) P :=
+      fun t s => (integrable_const (1 : ℝ)).indicator ((hms t i).inter (hms s j))
+    rw [this, integral_finsetSum Finset.univ
+      (f := fun t ω => ∑ s, (X t ⁻¹' {i} ∩ X s ⁻¹' {j}).indicator (1 : Ω → ℝ) ω)
+      fun t _ => integrable_finsetSum Finset.univ fun s _ => hint2 t s]
+    have hin : ∀ t, ∫ ω, ∑ s, (X t ⁻¹' {i} ∩ X s ⁻¹' {j}).indicator (1 : Ω → ℝ) ω ∂P =
+        ∑ s, P.real (X t ⁻¹' {i} ∩ X s ⁻¹' {j}) := by
+      intro t
+      rw [integral_finsetSum Finset.univ
+        (f := fun s ω => (X t ⁻¹' {i} ∩ X s ⁻¹' {j}).indicator (1 : Ω → ℝ) ω)
+        fun s _ => hint2 t s]
+      exact Finset.sum_congr rfl fun s _ => integral_indicator_one ((hms t i).inter (hms s j))
+    simp_rw [hin, hpair]
+    simp [Finset.sum_sub_distrib]
+    ring
+  rw [covariance_eq_sub (hmem i) (hmem j)]
+  simp only [Pi.mul_apply]
+  rw [hEprod, hE i, hE j]
+  ring
+
+/-! The coffee cart: 20 customers, small 3/10, medium 1/2, large 1/5. -/
+
+-- The chances add to 1.
+example : (3 / 10 : ℚ) + 1 / 2 + 1 / 5 = 1 := by norm_num
+
+-- Orders with 6 small, 10 medium, 4 large: 20! / (6! 10! 4!) = 38,798,760.
+example : Nat.multinomial Finset.univ ![6, 10, 4] = 38798760 := by decide
+example : Nat.factorial 20 / (Nat.factorial 6 * Nat.factorial 10 * Nat.factorial 4) = 38798760 := by
+  decide
+
+-- The pieces of one order: 0.3^6 = 0.000729, 0.5^10 = 0.0009765625, 0.2^4 = 0.0016.
+example : (3 / 10 : ℚ) ^ 6 = 729 / 1000000 := by norm_num
+example : (1 / 2 : ℚ) ^ 10 = 9765625 / 10000000000 := by norm_num
+example : (1 / 5 : ℚ) ^ 4 = 16 / 10000 := by norm_num
+
+-- The tally 6, 10, 4 has chance exactly 707107401 / 16000000000 (0.044194...).
+example : (38798760 : ℚ) * (3 / 10) ^ 6 * (1 / 2) ^ 10 * (1 / 5) ^ 4 = 707107401 / 16000000000 := by
+  norm_num
+
+-- There are 231 possible tallies of 20 cups into 3 sizes.
+example : (Finset.Nat.antidiagonalTuple 3 20).card = 231 := by decide +kernel
+
+-- Means 20 × 0.3, 20 × 0.5, 20 × 0.2 = 6, 10, 4.
+example : (20 : ℚ) * (3 / 10) = 6 ∧ (20 : ℚ) * (1 / 2) = 10 ∧ (20 : ℚ) * (1 / 5) = 4 := by norm_num
+
+-- Variances 4.2, 5, 3.2.
+example : (20 : ℚ) * (3 / 10) * (7 / 10) = 21 / 5 ∧ (20 : ℚ) * (1 / 2) * (1 / 2) = 5 ∧
+    (20 : ℚ) * (1 / 5) * (4 / 5) = 16 / 5 := by norm_num
+
+-- Covariances: small with medium −3, small with large −1.2, medium with large −2.
+example : -(20 : ℚ) * (3 / 10) * (1 / 2) = -3 ∧ -(20 : ℚ) * (3 / 10) * (1 / 5) = -6 / 5 ∧
+    -(20 : ℚ) * (1 / 2) * (1 / 5) = -2 := by norm_num
+
+-- Step 4: Var(S + M) = Var(L): 3.2 = 4.2 + 5 + 2 × (−3).
+example : (21 / 5 : ℚ) + 5 + 2 * (-3) = 16 / 5 := by norm_num
+
+-- Each row of the covariance table adds to zero: 4.2 − 3 − 1.2 = 0.
+example : (21 / 5 : ℚ) - 3 - 6 / 5 = 0 := by norm_num
+
+-- Step 5: given 4 mediums the smalls average 0.6 × 16 = 9.60; given 16 mediums, 0.6 × 4 = 2.40.
+example : (3 / 10 : ℚ) / (3 / 10 + 1 / 5) = 3 / 5 := by norm_num
+example : (3 / 5 : ℚ) * (20 - 4) = 48 / 5 ∧ (3 / 5 : ℚ) * (20 - 16) = 12 / 5 := by norm_num
+
+-- Customers in 10 pairs ordering alike: C(10; 3, 5, 2) = 2520, and the tally 6, 10, 4 then has
+-- chance 2520 × 0.3^3 × 0.5^5 × 0.2^2 = 0.08505; the medium variance doubles to 4 × 10 × 0.25 = 10.
+example : Nat.multinomial Finset.univ ![3, 5, 2] = 2520 := by decide
+example : (2520 : ℚ) * (3 / 10) ^ 3 * (1 / 2) ^ 5 * (1 / 5) ^ 2 = 1701 / 20000 := by norm_num
+example : (4 : ℚ) * (10 * (1 / 2) * (1 / 2)) = 10 := by norm_num
+
+#print axioms multinomial_joint_mass
+#print axioms multinomial_count_binomial
+#print axioms multinomial_covariance
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'tally_ind_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_tally_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tally_setOf_forall_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tally_measurableSet_forall' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tally_prob_forall' depends on axioms: [propext, Classical.choice, Quot.sound]
+'multinomial_joint_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'multinomial_count_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'multinomial_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -613,7 +950,7 @@ The two outputs match line for line, the simulation included, because both draw 
 - [Two classics](07-birthday-and-coupon-collector.md): many categories and many trials, asking when every category has been seen at least once.
 - [Poisson](04-poisson.md): let the number of customers itself follow the Poisson law, and the three counts become independent.
 
-The multinomial says how counts behave when the chances are known; turning an observed tally back into estimates of the chances, with honest error bars that respect the covariance, is the work of the estimation shelf.
+The multinomial says how counts behave when the chances are known; turning an observed tally back into estimates of the chances, with honest error bars that respect the covariance, is the work of the estimation shelf, starting with [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md).
 
 ---
 

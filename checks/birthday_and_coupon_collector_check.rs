@@ -152,6 +152,7 @@ fn main() {
 
     println!("== a die, all six faces ==");
     println!("E[T] = 6 H_6 = {:.4}", 6.0 * harmonic(6));
+    println!("ALL CHECKS PASS");
 }
 
 fn sci(x: f64) -> String { // Python-style 1.234e-157

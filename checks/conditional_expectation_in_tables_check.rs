@@ -162,4 +162,5 @@ fn main() {
     assert!((storm - e_n * e_col).abs() > 1.0, "storm case should break the shortcut");
     println!("figure, bars North {:.2}, Inland {:.2}, Coast {:.2}, line {:.2}", g[0], g[1], g[2], e_col);
     println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

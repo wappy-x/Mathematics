@@ -161,4 +161,5 @@ fn main() {
     assert!((repeat_car as f64 / repeat as f64 - two_odds).abs() > 0.4); // a repeat is not a second test
     assert!((dice_count - dice_formula).abs() < 1e-12); // dice: count vs formula
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

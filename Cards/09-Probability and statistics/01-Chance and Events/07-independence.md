@@ -90,7 +90,7 @@ The conditional-probability card defines $P(A \mid B) = P(A \cap B) / P(B)$ when
 
 $$P(A \cap B) = P(A)\,P(B)$$
 
-The steps also run backwards, so the two forms agree whenever $P(B)$ is above zero. The product form is the definition for two reasons: it is symmetric, saying in one line that neither event informs the other, and it needs no division, so it still makes sense when $P(B) = 0$. For the coins: $P(A \cap B) = 0.25$ and $0.5 \times 0.5 = 0.25$, so the quarter and the dime are independent; given the dime shows heads, the quarter is heads with chance 0.25 / 0.5 = 0.5.
+The steps also run backwards, so the two forms agree whenever $P(B)$ is above zero. The product form is the definition for two reasons: it is symmetric, saying in one line that neither event informs the other, and it needs no division, so it still makes sense when $P(B) = 0$. For the coins: $P(A \cap B) = 0.25$ and $0.5 \times 0.5 = 0.25$, so the quarter and the dime are independent. Given the dime shows heads, the quarter is heads with chance 0.25 / 0.5 = 0.5.
 
 ### Step 2: complements come for free
 
@@ -133,7 +133,11 @@ Two mints, X and Y, strike quarters and dimes. A counting machine accepts each c
 | X | 90 of 100, rate 0.9000 | 250 of 400, rate 0.6250 | 340 of 500, rate 0.6800 |
 | Y | 340 of 400, rate 0.8500 | 60 of 100, rate 0.6000 | 400 of 500, rate 0.8000 |
 
-X beats Y on quarters and on dimes, yet Y beats X overall. Each pooled rate is a weighted average, and the weights differ: X struck mostly dimes, the harder coin, a quarter share of $w_X = 0.2$; Y mostly quarters, $w_Y = 0.8$. Coin type and mint are dependent, and without that dependence no reversal is possible. The pooled gap, −0.1200, splits into the gaps inside each coin type, worth +0.0300, and the different mix, worth −0.1500. Give both mints the same mix, say half quarters and half dimes, and X comes out ahead, 0.7625 against 0.7250. **If coin type were independent of mint, the reversal could not happen.** The proof is folded below.
+X beats Y on quarters and on dimes, yet Y beats X overall. Each pooled rate is a weighted average, and the weights differ: X struck mostly dimes, the harder coin, a quarter share of $w_X = 0.2$; Y mostly quarters, $w_Y = 0.8$. Coin type and mint are dependent, and without that dependence no reversal is possible.
+
+The pooled gap, −0.1200, splits into the gaps inside each coin type, worth +0.0300, and the different mix, worth −0.1500. Give both mints the same mix, say half quarters and half dimes, and X comes out ahead, 0.7625 against 0.7250.
+
+**If coin type were independent of mint, the reversal could not happen.** The proof is folded below.
 
 <details>
 <summary>Detailed proof</summary>
@@ -201,7 +205,7 @@ Orange, upper line: the true chance, drawing one coin and tossing it n times. Gr
 
 ## Code, from first principles, and it actually runs
 
-The checks reach each answer by **three independent roads**: the formula (the product rule, or adding over the coin drawn), a count over every outcome with its weight, and a seeded simulation of 100,000 trials printed with its standard error, the typical size of a simulation's chance error. Random numbers come from SplitMix64, a small generator written out in both languages with seed 20260928, so both print the same digits. The checks also count which product equations hold, rebuild the mint table two ways, and print every number on the card.
+The checks reach each answer by **three independent roads**: the formula (the product rule, or adding over the coin drawn), a count over every outcome with its weight, and a seeded simulation of 100,000 trials. The simulation prints its standard error, the typical size of a simulation's chance error. Random numbers come from SplitMix64, a small generator written out in both languages with seed 20260928, so both print the same digits. The checks also count which product equations hold, rebuild the mint table two ways, and print every number on the card.
 
 ### Python
 
@@ -322,9 +326,10 @@ print("same 50/50 mix: X =", f4((xq + xd) / 2), " Y =", f4((yq + yd) / 2))
 print("squared 1 in 8543: 1 in", 8543 ** 2)
 x0, y0, side = 60, 20, 200                                            # the picture, drawn to scale
 print(f"figure, square x {x0}-{x0 + side}, A x {x0}-{x0 + round(side * pA)}, B y {y0}-{y0 + round(side * pB)}, overlap share {f4(pAB)}")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 two coins: P(A) = 0.5000  P(B) = 0.5000  P(A and B) = 0.2500  product = 0.2500
@@ -359,6 +364,7 @@ gap X - Y: within types = 0.0300  mix = -0.1500  total = -0.1200
 same 50/50 mix: X = 0.7625  Y = 0.7250
 squared 1 in 8543: 1 in 72982849
 figure, square x 60-260, A x 60-160, B y 20-120, overlap share 0.2500
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -491,10 +497,11 @@ fn main() {
     println!("squared 1 in 8543: 1 in {}", 8543u64 * 8543);
     let (x0, y0, side) = (60.0, 20.0, 200.0); // the picture, drawn to scale
     println!("figure, square x {}-{}, A x {}-{}, B y {}-{}, overlap share {}", x0, x0 + side, x0, x0 + (side * pa).round(), y0, y0 + (side * pb).round(), f4(pab));
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 two coins: P(A) = 0.5000  P(B) = 0.5000  P(A and B) = 0.2500  product = 0.2500
@@ -529,9 +536,164 @@ gap X - Y: within types = 0.0300  mix = -0.1500  total = -0.1200
 same 50/50 mix: X = 0.7625  Y = 0.7250
 squared 1 in 8543: 1 in 72982849
 figure, square x 60-260, A x 60-160, B y 20-120, overlap share 0.2500
+ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
+
+### Lean
+
+Lean proves the two-event facts for any chances, and checks the card's coin and mint numbers exactly.
+
+- Suppose $P(B)$ is above zero. Then A and B are independent exactly when $P(A \mid B) = P(A)$.
+- If A and B are independent, so are A and "not B".
+- Suppose both mints have the same quarter share, and X beats Y on quarters and on dimes. Then X beats Y on the pooled rate.
+- The card's counts hold exactly: the two coins, the match event, "at least one head", the bag coin, the mint table and 8,543 squared.
+
+The seeded simulation and the chart's eight values are left to the Python and Rust checks.
+
+```lean
+-- Independence: the product rule for two events matches "learning B leaves the chance of A unchanged", it carries over to complements, equal group mixes cannot reverse a pooled comparison, and the card's coin counts check out.
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.ConditionalProbability
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+open MeasureTheory ProbabilityTheory
+
+/-- Two events A and B are independent (the chance that both happen equals the product of
+their chances) exactly when learning that B happened leaves the chance of A where it was,
+provided B has a chance above zero. -/
+theorem indepSet_iff_cond_eq {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] {A B : Set Ω} (hA : MeasurableSet A) (hB : MeasurableSet B)
+    (hB0 : μ B ≠ 0) :
+    IndepSet A B μ ↔ μ[A | B] = μ A := by
+  rw [indepSet_iff_measure_inter_eq_mul hA hB μ, cond_apply hB μ A, Set.inter_comm B A]
+  have hBt : μ B ≠ ⊤ := measure_ne_top μ B
+  constructor
+  · intro h
+    rw [h, mul_comm, mul_assoc, ENNReal.mul_inv_cancel hB0 hBt, mul_one]
+  · intro h
+    rw [← h, mul_comm _ (μ (A ∩ B)), mul_assoc, ENNReal.inv_mul_cancel hB0 hBt, mul_one]
+
+/-- Complements come for free: if A and B are independent, so are A and "not B". -/
+theorem indepSet_compl_right {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] {A B : Set Ω} (hA : MeasurableSet A) (hB : MeasurableSet B)
+    (h : IndepSet A B μ) :
+    IndepSet A Bᶜ μ := by
+  rw [indepSet_iff_measure_inter_eq_mul hA hB μ] at h
+  rw [indepSet_iff_measure_inter_eq_mul hA hB.compl μ, prob_compl_eq_one_sub hB]
+  have hsum := measure_inter_add_sdiff A hB (μ := μ)
+  rw [h] at hsum
+  rw [← Set.sdiff_eq, ENNReal.mul_sub (fun _ _ => measure_ne_top μ A), mul_one]
+  exact ENNReal.eq_sub_of_add_eq (ENNReal.mul_ne_top (measure_ne_top μ A) (measure_ne_top μ B))
+    (by rw [add_comm]; exact hsum)
+
+/-- No Simpson reversal under independence: if both mints have the same quarter share w
+(coin type independent of mint) and X beats Y on quarters and on dimes, then X beats Y
+on the pooled rate. -/
+theorem pooled_rate_no_reversal_of_equal_mix (w xQ xD yQ yD : ℝ)
+    (hw0 : 0 ≤ w) (hw1 : w ≤ 1) (hQ : yQ < xQ) (hD : yD < xD) :
+    w * yQ + (1 - w) * yD < w * xQ + (1 - w) * xD := by
+  have h1 : w * yQ ≤ w * xQ := mul_le_mul_of_nonneg_left hQ.le hw0
+  have h2 : (1 - w) * yD ≤ (1 - w) * xD := mul_le_mul_of_nonneg_left hD.le (by linarith)
+  rcases eq_or_lt_of_le hw0 with h | h
+  · subst h; nlinarith
+  · nlinarith [mul_lt_mul_of_pos_left hQ h]
+
+/-! ### The card's worked examples, as exact counts over the four coin outcomes
+An outcome is (quarter heads?, dime heads?); each of the 4 outcomes is equally likely,
+so "P(E) = P(F) P(G)" becomes "4 · #(E) = #(F) · #(G)" after clearing denominators. -/
+
+-- Quarter heads and dime heads: both heads is 1 outcome of 4, and 1/4 = 2/4 · 2/4.
+example :
+    let A := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = true)
+    let B := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.2 = true)
+    A.card = 2 ∧ B.card = 2 ∧ (A ∩ B).card = 1 ∧ 4 * (A ∩ B).card = A.card * B.card := by
+  decide
+
+-- Quarter heads with dime tails: joint 1/4 equals 2/4 · 2/4.
+example :
+    let A := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = true)
+    let Bc := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.2 = false)
+    4 * (A ∩ Bc).card = A.card * Bc.card := by
+  decide
+
+-- The quarter with itself: joint 2/4, product 1/4. With "quarter tails": joint 0, product 1/4.
+example :
+    let A := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = true)
+    let Ac := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = false)
+    4 * (A ∩ A).card ≠ A.card * A.card ∧ (A ∩ Ac).card = 0 ∧ 4 * (A ∩ Ac).card ≠ A.card * Ac.card := by
+  decide
+
+-- The match event C: every pair passes, the triple fails (1/4 against 1/8).
+example :
+    let A := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = true)
+    let B := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.2 = true)
+    let C := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = o.2)
+    C.card = 2 ∧
+    4 * (A ∩ B).card = A.card * B.card ∧ 4 * (A ∩ C).card = A.card * C.card ∧
+    4 * (B ∩ C).card = B.card * C.card ∧
+    (A ∩ B ∩ C).card = 1 ∧ 4 * 4 * (A ∩ B ∩ C).card ≠ A.card * B.card * C.card := by
+  decide
+
+-- Three separate coins pass all 4 equations (8 equally likely outcomes).
+example :
+    let A := (Finset.univ : Finset (Bool × Bool × Bool)).filter (fun o => o.1 = true)
+    let B := (Finset.univ : Finset (Bool × Bool × Bool)).filter (fun o => o.2.1 = true)
+    let C := (Finset.univ : Finset (Bool × Bool × Bool)).filter (fun o => o.2.2 = true)
+    8 * (A ∩ B).card = A.card * B.card ∧ 8 * (A ∩ C).card = A.card * C.card ∧
+    8 * (B ∩ C).card = B.card * C.card ∧
+    8 * 8 * (A ∩ B ∩ C).card = A.card * B.card * C.card := by
+  decide
+
+-- For k = 3 events, mutual independence is 2^3 - 3 - 1 = 4 equations.
+example : 2 ^ 3 - 3 - 1 = 4 := by norm_num
+
+-- Given M = "at least one head": P(A | M) = 2/3, P(B | M) = 2/3, P(A and B | M) = 1/3 ≠ 4/9.
+example :
+    let A := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = true)
+    let B := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.2 = true)
+    let M := (Finset.univ : Finset (Bool × Bool)).filter (fun o => o.1 = true ∨ o.2 = true)
+    M.card = 3 ∧ (A ∩ M).card = 2 ∧ (B ∩ M).card = 2 ∧ (A ∩ B ∩ M).card = 1 ∧
+    M.card * (A ∩ B ∩ M).card ≠ (A ∩ M).card * (B ∩ M).card := by
+  decide
+
+-- The bag coin, in exact fractions: P(H1) = 7/10, P(H1 and H2) = 53/100, product 49/100.
+example : (1/2 : ℚ) * (1/2) + (1/2) * (9/10) = 7/10 := by norm_num
+example : (1/2 : ℚ) * (1/2 * 1/2) + (1/2) * (9/10 * 9/10) = 53/100 := by norm_num
+example : (7/10 : ℚ) * (7/10) = 49/100 ∧ (49/100 : ℚ) ≠ 53/100 := by norm_num
+
+-- The mints: X wins on quarters (90/100 > 340/400) and dimes (250/400 > 60/100),
+-- yet loses overall (340/500 < 400/500); quarter shares 100/500 and 400/500.
+example : (340/400 : ℚ) < 90/100 ∧ (60/100 : ℚ) < 250/400 ∧ (340/500 : ℚ) < 400/500 := by
+  norm_num
+example : (90 + 250 : ℕ) = 340 ∧ (340 + 60 : ℕ) = 400 ∧ (100 + 400 : ℕ) = 500 := by norm_num
+-- Pooled gap -3/25 = within types 3/100 plus mix -3/20; equal half-and-half mix: X 61/80 > Y 29/40.
+example : (1/5 : ℚ) * (9/10 - 17/20) + (4/5) * (5/8 - 3/5) = 3/100 ∧
+    ((1/5 : ℚ) - 4/5) * (17/20 - 3/5) = -3/20 ∧ (17/25 : ℚ) - 4/5 = 3/100 + (-3/20) := by
+  norm_num
+example : ((9/10 : ℚ) + 5/8) / 2 = 61/80 ∧ ((17/20 : ℚ) + 3/5) / 2 = 29/40 ∧
+    (29/40 : ℚ) < 61/80 := by
+  norm_num
+
+-- Squaring one in 8,543: one in 72,982,849.
+example : 8543 ^ 2 = 72982849 := by norm_num
+
+#print axioms indepSet_iff_cond_eq
+#print axioms indepSet_compl_right
+#print axioms pooled_rate_no_reversal_of_equal_mix
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'indepSet_iff_cond_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'indepSet_compl_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pooled_rate_no_reversal_of_equal_mix' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -556,7 +718,7 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Courtrooms.** At Sally Clark's 1999 trial for the deaths of her two infant sons, the jury heard that one cot death in such a family had chance 1 in 8,543, and so two had 1 in 8,543 squared: 1 in 72,982,849, about 1 in 73 million. Squaring assumed the two deaths independent, ignoring genetic and household causes the brothers shared. The conviction was quashed in 2003; Hill's 2004 study of family data found a second death far more likely after a first than the squared figure allowed.
+- **Courtrooms.** At Sally Clark's 1999 trial for the deaths of her two infant sons, the jury heard that one cot death (a sudden, unexplained infant death) in such a family had chance 1 in 8,543. So two had 1 in 8,543 squared: 1 in 72,982,849, about 1 in 73 million. Squaring assumed the two deaths independent, ignoring genetic and household causes the brothers shared. The conviction was quashed in 2003; Hill's 2004 study of family data found a second death far more likely after a first than the squared figure allowed.
 - **Backup systems.** Two rarely failing pumps fail together far more rarely only if they fail independently. On one shared power supply that fails more often than either pump, a joint failure is about as common as a single one.
 - **University admissions.** In Berkeley's 1973 graduate admissions, men had the higher pooled rate, yet department by department the gap mostly vanished or reversed: women had applied more to departments that admitted few of anyone. That is the mint table with applicants for coins.
 - **Spam filters.** A simple filter treats an email's words as conditionally independent given "spam" or "not spam" and multiplies their chances through [Bayes' rule](06-bayes-rule.md). The assumption is false; the filter works because it only needs the ranking right.
@@ -574,6 +736,8 @@ The two outputs are identical line for line.
 
 - [Confounding](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md): when the group mix is itself caused by the thing compared, and which of the pooled or the within-group comparison answers a question about cause.
 - [Independence as a product](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product rule for chances spread over a continuum, the rectangle picture made exact.
+
+Left open: when the mix of groups is itself caused by the thing compared, which comparison answers a question about cause, the pooled one or the one inside each group?
 
 ---
 

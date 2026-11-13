@@ -137,3 +137,4 @@ assert abs(bmean_s - mean_b) < 1e-10 and abs(bvar_s - var_b) < 1e-10
 assert abs(btail(0.3) - simpson(bdens, 0.3, 1.0)) < 1e-10
 assert abs(sm - K / LAM) < 4 * ssd / sqrt(N) and abs(p20 - gsurv(20.0)) < 4 * sqrt(p20 * (1 - p20) / N)
 assert abs(vm - mean_b) < 4 * sqrt(vvar / N) and abs(pv - btail(0.3)) < 4 * sqrt(pv * (1 - pv) / N)
+print("ALL CHECKS PASS")

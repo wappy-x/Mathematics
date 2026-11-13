@@ -6,13 +6,13 @@
 
 ## General Overview
 
-A company runs two help desks. The billing desk receives 5 emails an hour on average. The technical desk receives 7. Each desk's hourly count follows the Poisson law, the law of rare events arriving independently at a steady rate ([Poisson](04-poisson.md)). Next month the two inboxes merge into one, staffed by one team.
+A company runs two help desks. The billing desk receives 5 emails an hour on average. The technical desk receives 7. Each desk's hourly count follows the Poisson law, the law of rare events arriving independently at a steady rate ([Poisson](04-poisson.md)). A count's law is its full table of chances, one for each possible value ([Random variables](../02-Random%20Variables/01-random-variables-and-distributions.md)). Next month the two inboxes merge into one, staffed by one team.
 
 The team lead needs two numbers. What is the chance the merged inbox gets exactly 12 emails in an hour? And what is the chance it gets 16 or more, the point where the team falls behind? Knowing each desk's law is not yet an answer. The merged count is a sum, and the chance of a sum has to be built from the chances of its parts.
 
 The build is mechanical. Twelve emails can arrive as 0 billing and 12 technical, or 1 and 11, or 2 and 10, and so on up to 12 and 0. These thirteen splits cannot happen together, so their chances add. When the desks do not influence each other, each split's chance is a product of two chances already known. Adding up those products over every split is called **convolution**, the word used from here on. It gives 0.114368: about 1 hour in 9 brings exactly 12 emails.
 
-Then something tidy happens. The merged count is itself Poisson, with rate 12 = 5 + 7. The same holds for the binomial law, the count of successes in a fixed number of independent tries, when both parts share one chance of success. These two families are closed under independent addition. Most families are not.
+Then something tidy happens. The merged count is itself Poisson, with rate 12 = 5 + 7. The same holds for the binomial law, the count of successes in a fixed number of independent tries ([Binomial](01-bernoulli-and-binomial.md)), when both parts share one chance of success. These two families are closed under independent addition. Most families are not.
 
 **The chance that two independent counts add to a total is the sum, over every way of splitting that total, of the product of the two chances; for two Poisson counts, or two binomial counts with the same chance of success, the result stays in the same family.**
 
@@ -174,6 +174,8 @@ The binomial version runs the same. Monday brings 20 replies and Tuesday 30, eac
 
 ### What breaks if you drop a piece
 
+Variance, used below, is the average squared distance of a count from its own average ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)).
+
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Count only the even split, 6 billing and 6 technical | 0.021788, not 0.114368 | Twelve other splits also make 12. The formula needs all of them. |
@@ -322,9 +324,10 @@ sh2 = shock(1.0, 3.0, 4.0)[0]
 print(f"  copies Poisson(4), A 1, B 3: P(S=12) {sh2[12]:.6f}   variance {mean_var(sh2)[1]:.4f}")
 print("chart, s = 0..24, merged:  " + " ".join(f"{merged[s]:.3f}" for s in range(25)))
 print("chart, s = 0..24, copied:  " + " ".join(f"{sh[s]:.3f}" for s in range(25)))
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 road 1, convolution: merged total s = 12, billing's share k
@@ -363,6 +366,7 @@ try changing
   copies Poisson(4), A 1, B 3: P(S=12) 0.088095   variance 20.0000
 chart, s = 0..24, merged:  0.000 0.000 0.000 0.002 0.005 0.013 0.025 0.044 0.066 0.087 0.105 0.114 0.114 0.106 0.090 0.072 0.054 0.038 0.026 0.016 0.010 0.006 0.003 0.002 0.001
 chart, s = 0..24, copied:  0.000 0.000 0.002 0.005 0.011 0.021 0.035 0.052 0.069 0.085 0.096 0.100 0.099 0.092 0.081 0.067 0.054 0.041 0.030 0.021 0.015 0.010 0.006 0.004 0.002
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -522,10 +526,11 @@ fn main() {
     let row = |v: &[f64]| (0..25).map(|s| format!("{:.3}", v[s])).collect::<Vec<_>>().join(" ");
     println!("chart, s = 0..24, merged:  {}", row(&merged));
     println!("chart, s = 0..24, copied:  {}", row(&sh));
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 road 1, convolution: merged total s = 12, billing's share k
@@ -564,9 +569,162 @@ try changing
   copies Poisson(4), A 1, B 3: P(S=12) 0.088095   variance 20.0000
 chart, s = 0..24, merged:  0.000 0.000 0.000 0.002 0.005 0.013 0.025 0.044 0.066 0.087 0.105 0.114 0.114 0.106 0.090 0.072 0.054 0.038 0.026 0.016 0.010 0.006 0.003 0.002 0.001
 chart, s = 0..24, copied:  0.000 0.000 0.002 0.005 0.011 0.021 0.035 0.052 0.069 0.085 0.096 0.100 0.099 0.092 0.081 0.067 0.054 0.041 0.030 0.021 0.015 0.010 0.006 0.004 0.002
+ALL CHECKS PASS
 ```
 
-The two outputs are identical line for line. The simulation's 0.113500, with standard error 0.000709, lies within 2 standard errors of the exact 0.114368; its 0.156220 for 16 or more, with standard error 0.000812, lies within one of the exact 0.155584.
+The two outputs are identical line for line. A standard error is the typical size of a simulation's random error. The simulation's 0.113500, with standard error 0.000709, lies within 2 standard errors of the exact 0.114368; its 0.156220 for 16 or more, with standard error 0.000812, lies within one of the exact 0.155584.
+
+### Lean
+
+Lean proves the convolution formula for any two independent counts, and both closure results for every average and chance.
+
+- Take two independent whole-number counts and any total $s$. Then the chance they add to $s$ is the convolution sum over every split.
+- Take independent Poisson counts with averages $\lambda$ and $\mu$. Then their sum is Poisson with average $\lambda + \mu$.
+- Take independent binomial counts with $n$ and $m$ tries and one shared chance $p$. Then their sum is binomial with $n + m$ tries and chance $p$.
+- The hand counts hold exactly: the help-desk binomial theorem sum, Vandermonde's count at 35, the copied-email variance 16, and the two-dice counts.
+
+The decimals, the moment generating functions, the simulation and the copied-email law are left to the Python and Rust checks.
+
+```lean
+-- Adding counts: the chance that two independent whole-number counts add to s is the sum over every split of the product of chances, and independent Poisson counts, or binomial counts with one shared chance of success, add to a count of the same family.
+import Mathlib.Probability.Distributions.Poisson.Basic
+import Mathlib.Probability.Distributions.Binomial
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Tactic.NormNum
+
+/-! A random count is a measurable function `X : Ω → ℕ` on a probability space `(Ω, P)`.
+`P {ω | X ω = k}` is the chance `P(X = k)`. "Independent" is Mathlib's `IndepFun X Y P`.
+"`X` follows the Poisson law with average `r`" is `HasLaw X (poissonMeasure r) P`, where
+`poissonMeasure r` gives `{k}` the mass `exp (-r) * r ^ k / k!`.
+"`X` follows the binomial law with `n` tries and chance `p`" is `HasLaw X (binomial n p) P`,
+where `binomial n p` gives `{k}` the mass `C(n, k) * p ^ k * (1 - p) ^ (n - k)`. -/
+
+open MeasureTheory ProbabilityTheory
+open scoped NNReal unitInterval
+
+theorem conv_singleton_nat (μ ν : Measure ℕ) [SFinite μ] [SFinite ν] (s : ℕ) :
+    (μ ∗ ν) {s} = ∑ k ∈ Finset.range (s + 1), μ {k} * ν {s - k} := by
+  rw [Measure.conv, Measure.map_apply measurable_add (measurableSet_singleton s)]
+  have hpre : (fun p : ℕ × ℕ => p.1 + p.2) ⁻¹' {s} =
+      ((Finset.antidiagonal s : Finset (ℕ × ℕ)) : Set (ℕ × ℕ)) := by
+    ext p; simp
+  rw [hpre, ← sum_measure_singleton]
+  rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun a b => μ {a} * ν {b})]
+  refine Finset.sum_congr rfl fun p _ => ?_
+  rw [← Set.singleton_prod_singleton, Measure.prod_prod]
+
+#print axioms conv_singleton_nat
+
+theorem binomial_real_identity (n m s : ℕ) (p : I) :
+    ∑ k ∈ Finset.range (s + 1),
+      ((n.choose k : ℝ) * (p : ℝ) ^ k * (1 - (p : ℝ)) ^ (n - k)) *
+        ((m.choose (s - k) : ℝ) * (p : ℝ) ^ (s - k) * (1 - (p : ℝ)) ^ (m - (s - k))) =
+      ((n + m).choose s : ℝ) * (p : ℝ) ^ s * (1 - (p : ℝ)) ^ (n + m - s) := by
+  have hterm : ∀ k ∈ Finset.range (s + 1),
+      ((n.choose k : ℝ) * (p : ℝ) ^ k * (1 - (p : ℝ)) ^ (n - k)) *
+        ((m.choose (s - k) : ℝ) * (p : ℝ) ^ (s - k) * (1 - (p : ℝ)) ^ (m - (s - k))) =
+      ((n.choose k * m.choose (s - k) : ℕ) : ℝ) * ((p : ℝ) ^ s * (1 - (p : ℝ)) ^ (n + m - s)) := by
+    intro k hk
+    rw [Finset.mem_range] at hk
+    by_cases h : k ≤ n ∧ s - k ≤ m
+    · have e1 : (p : ℝ) ^ s = (p : ℝ) ^ k * (p : ℝ) ^ (s - k) := by
+        rw [← pow_add]; congr 1; omega
+      have e2 : (1 - (p : ℝ)) ^ (n + m - s) =
+          (1 - (p : ℝ)) ^ (n - k) * (1 - (p : ℝ)) ^ (m - (s - k)) := by
+        rw [← pow_add]; congr 1; omega
+      rw [e1, e2]; push_cast; ring
+    · rcases not_and_or.mp h with h | h
+      · rw [Nat.choose_eq_zero_of_lt (by omega)]; simp
+      · rw [Nat.choose_eq_zero_of_lt (n := m) (by omega)]; simp
+  rw [Finset.sum_congr rfl hterm, ← Finset.sum_mul, ← Nat.cast_sum,
+    ← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun a b => n.choose a * m.choose b),
+    ← Nat.add_choose_eq]
+  ring
+
+#print axioms binomial_real_identity
+
+theorem binomial_conv_binomial (n m : ℕ) (p : I) :
+    binomial n p ∗ binomial m p = binomial (n + m) p := by
+  refine Measure.ext_of_singleton fun s => ?_
+  rw [conv_singleton_nat, binomial_singleton]
+  simp_rw [binomial_singleton]
+  rw [← binomial_real_identity, ENNReal.ofReal_sum_of_nonneg]
+  · refine Finset.sum_congr rfl fun k _ => ?_
+    rw [ENNReal.ofReal_mul binomial_nonneg]
+  · intro k _
+    exact mul_nonneg binomial_nonneg binomial_nonneg
+
+#print axioms binomial_conv_binomial
+
+/-- Convolution: for two independent whole-number counts `X` and `Y`, the chance that
+`X + Y = s` is the sum, over every split `k = 0, 1, …, s`, of `P(X = k) * P(Y = s - k)`. -/
+theorem prob_sum_eq_convolution {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X Y : Ω → ℕ) (hX : Measurable X) (hY : Measurable Y)
+    (hXY : IndepFun X Y P) (s : ℕ) :
+    P {ω | X ω + Y ω = s} =
+      ∑ k ∈ Finset.range (s + 1), P {ω | X ω = k} * P {ω | Y ω = s - k} := by
+  have h1 : P {ω | X ω + Y ω = s} = P.map (X + Y) {s} := by
+    rw [Measure.map_apply (hX.add hY) (measurableSet_singleton s)]; rfl
+  rw [h1, hXY.map_add_eq_map_conv_map hX hY, conv_singleton_nat]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [Measure.map_apply hX (measurableSet_singleton _),
+    Measure.map_apply hY (measurableSet_singleton _)]
+  rfl
+
+/-- Poisson closure: independent Poisson counts with averages `λ` and `μ` add to a
+Poisson count with average `λ + μ`. -/
+theorem poisson_add_poisson_is_poisson {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X Y : Ω → ℕ) (lam mu : ℝ≥0)
+    (hX : HasLaw X (poissonMeasure lam) P) (hY : HasLaw Y (poissonMeasure mu) P)
+    (hXY : IndepFun X Y P) :
+    HasLaw (fun ω => X ω + Y ω) (poissonMeasure (lam + mu)) P := by
+  exact hXY.hasLaw_add_poissonMeasure hX hY
+
+/-- Binomial closure: independent binomial counts with `n` and `m` tries and the same
+chance of success `p` add to a binomial count with `n + m` tries and chance `p`. -/
+theorem binomial_add_binomial_is_binomial {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X Y : Ω → ℕ) (n m : ℕ) (p : I)
+    (hX : HasLaw X (binomial n p) P) (hY : HasLaw Y (binomial m p) P)
+    (hXY : IndepFun X Y P) :
+    HasLaw (fun ω => X ω + Y ω) (binomial (n + m) p) P := by
+  rw [← binomial_conv_binomial]
+  exact hXY.hasLaw_add hX hY
+
+/-! The card's whole-number worked examples. -/
+
+-- The merged inbox: billing averages 5, technical 7, so the merged average is 12.
+example : (5 : ℕ) + 7 = 12 := by norm_num
+-- Step 2 at the help desks (s = 12, averages 5 and 7): the binomial theorem that turns the
+-- thirteen-split convolution into the Poisson mass with rate 12.
+example : ∑ k ∈ Finset.range 13, Nat.choose 12 k * 5 ^ k * 7 ^ (12 - k) = 12 ^ 12 := by decide
+-- Monday's 20 replies and Tuesday's 30: Vandermonde's count at s = 35 resolved,
+-- the count behind "0.122347 by convolution and from the binomial law with 50 tries".
+example : ∑ k ∈ Finset.range 36, Nat.choose 20 k * Nat.choose 30 (35 - k) = Nat.choose 50 35 := by
+  simp [Finset.sum_range_succ, Nat.choose_eq_descFactorial_div_factorial, Nat.descFactorial,
+    Nat.factorial]
+-- Copied emails: A, B, C average 3, 5, 2; the merged count A + B + 2C has variance 16, not 12.
+example : (3 : ℕ) + 5 + 4 * 2 = 16 ∧ (3 : ℕ) + 5 + 2 * 2 = 12 := by norm_num
+-- Two dice add to a triangle, not a die: 6 ways to make 7, only 1 way to make 2.
+example : ((Finset.Icc 1 6 ×ˢ Finset.Icc 1 6).filter (fun q : ℕ × ℕ => q.1 + q.2 = 7)).card = 6 := by
+  decide
+example : ((Finset.Icc 1 6 ×ˢ Finset.Icc 1 6).filter (fun q : ℕ × ℕ => q.1 + q.2 = 2)).card = 1 := by
+  decide
+
+#print axioms prob_sum_eq_convolution
+#print axioms poisson_add_poisson_is_poisson
+#print axioms binomial_add_binomial_is_binomial
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'conv_singleton_nat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'binomial_real_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'binomial_conv_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prob_sum_eq_convolution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'poisson_add_poisson_is_poisson' depends on axioms: [propext, Classical.choice, Quot.sound]
+'binomial_add_binomial_is_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -619,9 +777,9 @@ When the parts are many and belong to no closed family, the sum's law still sett
 
 ## Sources
 
-Verified 2026-09-28: every link below opens a page that names the cited work.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
-- Grinstead, Charles M., and J. Laurie Snell. *Introduction to Probability*, 2nd ed. American Mathematical Society, free edition hosted at Dartmouth. [PDF](https://math.dartmouth.edu/~prob/prob/prob.pdf). Chapter 7, "Sums of Independent Random Variables": the discrete convolution and its examples.
+- Grinstead, Charles M., and J. Laurie Snell. *Introduction to Probability*, 2nd ed. American Mathematical Society, free edition hosted at Dartmouth. [PDF](https://math.dartmouth.edu/~prob/prob/prob.pdf). Chapter 7, "Sums of Random Variables": the discrete convolution and its examples.
 - Siegrist, Kyle. "Transformations of Variables", in *Probability, Mathematical Statistics, and Stochastic Processes*. [Random Services](https://www.randomservices.org/random/dist/Transformations.html). The convolution formula, with the Poisson and binomial closure results.
 - Knuth, Donald E. *The Art of Computer Programming, Volume 2: Seminumerical Algorithms*, 3rd ed. Addison-Wesley. [Publisher page](https://www.informit.com/store/art-of-computer-programming-volume-2-seminumerical-algorithms-9780201896848). Section 3.4.1: the multiply-uniforms method for Poisson draws used in the simulation.
 - Steele, Guy L., Doug Lea, and Christine H. Flood. "Fast Splittable Pseudorandom Number Generators." OOPSLA 2014. [doi:10.1145/2660193.2660195](https://doi.org/10.1145/2660193.2660195). The SplitMix64 generator both programs write out.

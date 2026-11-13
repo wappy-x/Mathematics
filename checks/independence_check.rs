@@ -125,4 +125,5 @@ fn main() {
     println!("squared 1 in 8543: 1 in {}", 8543u64 * 8543);
     let (x0, y0, side) = (60.0, 20.0, 200.0); // the picture, drawn to scale
     println!("figure, square x {}-{}, A x {}-{}, B y {}-{}, overlap share {}", x0, x0 + side, x0, x0 + (side * pa).round(), y0, y0 + (side * pb).round(), f4(pab));
+    println!("ALL CHECKS PASS");
 }

@@ -123,4 +123,5 @@ fn main() {
     let xq = -5.0 * (1.0f64 - 0.7).ln();
     println!("figure,scale 15 per minute across,170 per unit of chance up,curve {}", pts.join(" "));
     println!("figure,u=0.70 at y {:.1},x {:.4} min at px {:.1}", py(0.7), xq, px(xq));
+    println!("ALL CHECKS PASS");
 }

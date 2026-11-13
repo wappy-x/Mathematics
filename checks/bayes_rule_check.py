@@ -130,3 +130,4 @@ assert abs(two_count - two_odds) < 1e-12            # two tests: count vs odds
 assert abs(repeat_car / repeat - two_odds) > 0.4    # a repeat is not a second test
 assert abs(dice_count - dice_formula) < 1e-12       # dice: count vs formula
 print("all checks passed")
+print("ALL CHECKS PASS")

@@ -108,3 +108,4 @@ assert abs(m - exact) < 4 * sem, "simulation disagrees with d H_d"
 
 print("== a die, all six faces ==")
 print(f"E[T] = 6 H_6 = {6 * harmonic(6):.4f}")
+print("ALL CHECKS PASS")

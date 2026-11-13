@@ -80,7 +80,7 @@ $$0 \le P(A) \le 1, \qquad P(\text{rain}) + P(\text{no rain}) = 1$$
 
 A probability is a definition, so it holds by fiat; what can fail is each reading's link to the world.
 
-- **Frequency needs many comparable cases.** A one-off event, such as one election, has nothing to count. With only 10 days the rainy share is typically 0.1449 off the chance. That typical gap is the **standard error**, $\sqrt{p(1-p)/n}$, derived on shelf 02.
+- **Frequency needs many comparable cases.** A one-off event, such as one election, has nothing to count. With only 10 days the rainy share is typically 0.1449 off the chance. That typical gap is the **standard error**, $\sqrt{p(1-p)/n}$, derived on shelf 02: [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md) gives the $p(1-p)$ part.
 - **Price needs a bet taken either way, at stakes that do not hurt.** A bookmaker's margin, or fear of losing the rent, moves the price off the chance.
 - **Belief needs coherence.** Beliefs that break the rules above can be turned into bets that lose whatever happens (Step 3).
 - **Belief meets frequency only if checked.** A coherent forecaster can still be wrong about the weather; only a calibration check against the record (Step 4) catches it.
@@ -99,7 +99,7 @@ Count days on which the chance of rain is really 0.30. After 10 days the simulat
 
 The share never has to hit 0.30 exactly. What shrinks is the typical gap. The standard error, $\sqrt{0.30 \times 0.70 / n}$, is 0.1449 at 10 days, 0.0145 at 1,000 and 0.0014 at 100,000. Ten times as many days buys about three times less wobble, because of the square root.
 
-That the share settles at all is the **law of large numbers**. It is stated here, checked by the simulation, and proved later in the wing with Chebyshev's inequality.
+That the share settles at all is the **law of large numbers**. It is stated here, checked by the simulation, and proved later in the wing, in [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md), with Chebyshev's inequality.
 
 ### Step 2: a fair price is the average payout
 
@@ -115,7 +115,9 @@ A fair bet gains nothing on average. The simulated days give −0.0201 dollars p
 
 Now let the chance be a belief rather than a count. A bookmaker believes in 30 percent rain and 60 percent dry: prices of 30 cents for the rain ticket and 60 cents for the no-rain ticket. Buy both, for 90 cents. Exactly one of them pays $1, whatever the weather. The buyer nets 10 cents if it rains and 10 cents if it does not.
 
-A set of bets that loses in every outcome is called a **Dutch book**. The bookmaker walked into one because the two beliefs summed to 0.90, not 1. Had they summed to more than 1, selling both tickets to the bookmaker would win for sure instead. Only prices that obey $P(\text{rain}) + P(\text{no rain}) = 1$, with each between 0 and 1, are safe. Frank Ramsey (1926) and Bruno de Finetti (1937) made this the foundation of the belief reading: a degree of belief is only worth the name if it could be used as a betting price without a sure loss.
+A set of bets that loses in every outcome is called a **Dutch book**. The bookmaker walked into one because the two beliefs summed to 0.90, not 1. Had they summed to more than 1, selling both tickets to the bookmaker would win for sure instead.
+
+Only prices that obey $P(\text{rain}) + P(\text{no rain}) = 1$, with each between 0 and 1, are safe. Frank Ramsey (1926) and Bruno de Finetti (1937) made this the foundation of the belief reading. A degree of belief is only worth the name if it could be used as a betting price without a sure loss.
 
 <details>
 <summary>Detailed proof: the prices must sum to 1, and then no book can be made</summary>
@@ -155,7 +157,11 @@ xychart-beta
 
 The one line is $B(q) = 0.21 + (q - 0.30)^2$: a bowl whose floor sits at the true chance. Over the simulated days the score at 0.30 comes out at 0.2092, against 0.21 expected.
 
-Here the readings meet. Under a proper score, the best announcement is the honest belief. Grouping days by the announced chance and counting the rainy share in each group is a **calibration** check; a forecaster is **calibrated** when it rains on about 30 percent of the days announced at 30 percent. Missing the frequency costs extra. Take the days a forecaster announced 0.90. Their average squared miss has the same form as $B(q)$, with the share of those days that were rainy in place of $p$. By the expansion above, it equals what announcing that share would have scored, plus the square of the gap between 0.90 and the share. So a miscalibrated forecaster can always lower its score by recalibrating: announcing, on each group of days, the share that came up rainy. The lowest average score needs every announcement to equal the true chance. Calibration is needed for that, but it is not enough, as the climate average below shows.
+Here the readings meet. Under a proper score, the best announcement is the honest belief. Grouping days by the announced chance and counting the rainy share in each group is a **calibration** check. A forecaster is **calibrated** when it rains on about 30 percent of the days announced at 30 percent.
+
+Missing the frequency costs extra. Take the days a forecaster announced 0.90. Their average squared miss has the same form as $B(q)$, with the share of those days that were rainy in place of $p$. By the expansion above, it equals what announcing that share would have scored, plus the square of the gap between 0.90 and the share.
+
+So a miscalibrated forecaster can always lower its score by recalibrating: announcing, on each group of days, the share that came up rainy. The lowest average score needs every announcement to equal the true chance. Calibration is needed for that, but it is not enough, as the climate average below shows.
 
 Two simulated forecasters, 2,000 days at each announced chance from 0.1 to 0.9. The honest one announces the true chance. The overconfident one exaggerates: it says 0.30 when the truth is 0.38, and 0.90 when the truth is 0.74.
 
@@ -219,7 +225,13 @@ The code prints every number in the table.
 
 ## Code, from first principles, and it actually runs
 
-Three readings, three roads, each checked against the formula. Road 1 counts rainy days among 100,000 simulated ones and compares the share with 0.30. Road 2 prices the ticket and the bet by weighing both outcomes, averages the same bets over the days, and enumerates both weathers for the incoherent bookmaker. It then searches every holding from 5 tickets sold to 5 bought of each kind, 121 in all: at each of 101 price pairs summing to 1 none wins in both weathers, and at the bookmaker's prices 6 do. Road 3 finds the best announcement by searching 1,001 forecasts, with no algebra, checks the Brier formula against the days, and runs two forecasters through a calibration check. Random numbers come from SplitMix64, a small generator written out in both languages with seed 20260928, so both programs see the same weather. A simulated number must land within four standard errors of its exact value, never on it.
+Three readings, three roads, each checked against the formula.
+
+- **Road 1** counts rainy days among 100,000 simulated ones and compares the share with 0.30.
+- **Road 2** prices the ticket and the bet by weighing both outcomes, averages the same bets over the days, and enumerates both weathers for the incoherent bookmaker. It then searches every holding from 5 tickets sold to 5 bought of each kind, 121 in all. At each of 101 price pairs summing to 1 none wins in both weathers, and at the bookmaker's prices 6 do.
+- **Road 3** finds the best announcement by searching 1,001 forecasts, with no algebra, checks the Brier formula against the days, and runs two forecasters through a calibration check.
+
+Random numbers come from SplitMix64, a small generator written out in both languages with seed 20260928 (its starting number), so both programs see the same weather. A simulated number must land within four standard errors of its exact value, never on it.
 
 ### Python
 
@@ -586,6 +598,131 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the card's two theorems for all prices and chances, the rules for every event, and the worked numbers exactly.
+
+- Take any prices $a$ and $b$ for the rain and no-rain tickets. Then some holding $h$, $k$ wins in both weathers exactly when a price is below 0 or $a + b \ne 1$.
+- Take any true chance $p$ and announced chance $q$. Then the Brier score splits as $B(q) = p(1-p) + (q-p)^2$.
+- So announcing the true chance $p$ scores strictly lower than announcing any other chance.
+- Take any event $A$. Then $0 \le P(A) \le 1$, and $P(A) + P(\text{not } A) = 1$.
+- The worked numbers: no rain 0.70, odds 7 to 3, a fair bet gains 0, and $3/(3 + 7) = 0.30$, not $3/7$.
+- At the bookmaker's prices of 30 and 60 cents, buying both tickets nets 10 cents in either weather.
+- With true chance 0.30, the Brier score is 0.21 for 0.30, 0.25 for 0.50, and 0.30 for 0.
+- The honest forecast's squared misses are 0.49 if it rains and 0.09 if dry.
+- The plain miss rewards exaggeration: announcing 0 averages 0.30, below the 0.42 that the honest 0.30 averages.
+
+The simulated days, standard errors, holding search, calibration check and charts are left to the Python and Rust checks.
+
+```lean
+-- Probability: ticket prices that are not chances summing to 1 can be beaten in every weather while coherent ones cannot, the Brier score is lowest exactly at the honest forecast, and every probability lies between 0 and 1 with the chances of an event and its opposite summing to 1.
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-! Two tickets each pay 1 dollar: the rain ticket costs `a`, the no-rain ticket costs `b`.
+A holding is `h` rain tickets and `k` no-rain tickets, whole numbers, negative meaning sold.
+It costs `h * a + k * b`, so it nets `h - (h * a + k * b)` if it rains and
+`k - (h * a + k * b)` if it stays dry.
+A Dutch book is a holding that nets more than 0 in both weathers.
+
+The Brier score of an announced chance `q`, when the true chance is `p`, is the average
+squared miss `p * (1 - q) ^ 2 + (1 - p) * q ^ 2`. -/
+
+/-- The Brier score: announcing the chance `q` when the true chance is `p`
+costs `(1 - q) ^ 2` on a rainy day and `q ^ 2` on a dry one, weighed by how often each happens. -/
+def brier (p q : ℝ) : ℝ := p * (1 - q) ^ 2 + (1 - p) * q ^ 2
+
+/-- Incoherent prices lose for sure, coherent ones cannot be beaten:
+some holding of rain and no-rain tickets wins in both weathers exactly when the prices
+are not chances, that is, unless both prices are at least 0 and they sum to 1. -/
+theorem dutch_book_iff_prices_not_coherent (a b : ℝ) :
+    (∃ h k : ℤ, 0 < (h : ℝ) - (h * a + k * b) ∧ 0 < (k : ℝ) - (h * a + k * b)) ↔
+      ¬ (0 ≤ a ∧ 0 ≤ b ∧ a + b = 1) := by
+  constructor
+  · rintro ⟨h, k, hr, hd⟩ ⟨ha, hb, hab⟩
+    set c : ℝ := (h : ℝ) * a + (k : ℝ) * b with hc
+    have key : a * ((h : ℝ) - c) + b * ((k : ℝ) - c) = 0 := by
+      have : a * ((h : ℝ) - c) + b * ((k : ℝ) - c) = c - c * (a + b) := by rw [hc]; ring
+      rw [this, hab]; ring
+    rcases lt_or_eq_of_le ha with ha' | ha'
+    · have h1 : 0 < a * ((h : ℝ) - c) := mul_pos ha' hr
+      have h2 : 0 ≤ b * ((k : ℝ) - c) := mul_nonneg hb hd.le
+      linarith
+    · have hb' : 0 < b := by linarith
+      have h1 : 0 ≤ a * ((h : ℝ) - c) := mul_nonneg ha hr.le
+      have h2 : 0 < b * ((k : ℝ) - c) := mul_pos hb' hd
+      linarith
+  · intro hn
+    by_cases ha : a < 0
+    · exact ⟨1, 0, by push_cast; linarith, by push_cast; linarith⟩
+    by_cases hb : b < 0
+    · exact ⟨0, 1, by push_cast; linarith, by push_cast; linarith⟩
+    push_neg at ha hb
+    rcases lt_trichotomy (a + b) 1 with h | h | h
+    · exact ⟨1, 1, by push_cast; linarith, by push_cast; linarith⟩
+    · exact absurd ⟨ha, hb, h⟩ hn
+    · exact ⟨-1, -1, by push_cast; linarith, by push_cast; linarith⟩
+
+/-- Honest forecasts score best: the Brier score splits as `p * (1 - p) + (q - p) ^ 2`,
+so announcing the true chance `p` scores strictly lower than announcing any other `q`. -/
+theorem brier_lowest_at_true_chance (p q : ℝ) :
+    brier p q = p * (1 - p) + (q - p) ^ 2 ∧ (q ≠ p → brier p p < brier p q) := by
+  have e : brier p q = p * (1 - p) + (q - p) ^ 2 := by unfold brier; ring
+  refine ⟨e, fun hq => ?_⟩
+  have e' : brier p p = p * (1 - p) := by unfold brier; ring
+  have hpos : 0 < (q - p) ^ 2 :=
+    lt_of_le_of_ne (sq_nonneg _) (Ne.symm (pow_ne_zero 2 (sub_ne_zero.mpr hq)))
+  rw [e, e']
+  linarith
+
+/-- The rules every reading obeys: for a probability measure `μ` and an event `A`,
+the chance of `A` lies between 0 and 1, and the chance of `A` plus the chance of
+not `A` is 1. -/
+theorem probability_rules {Ω : Type*} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+    [MeasureTheory.IsProbabilityMeasure μ] {A : Set Ω} (hA : MeasurableSet A) :
+    0 ≤ μ.real A ∧ μ.real A ≤ 1 ∧ μ.real A + μ.real Aᶜ = 1 := by
+  exact ⟨ENNReal.toReal_nonneg, MeasureTheory.measureReal_le_one,
+    MeasureTheory.probReal_add_probReal_compl hA⟩
+
+/-! The card's worked numbers, exactly, with the 30 percent chance written as 3/10. -/
+
+-- The chance of no rain: 1 - 3/10 = 7/10.
+example : (1 : ℚ) - 3 / 10 = 7 / 10 := by norm_num
+-- Odds against rain: (7/10) / (3/10) = 7/3, that is 7 to 3.
+example : ((7 : ℚ) / 10) / (3 / 10) = 7 / 3 := by norm_num
+-- Fair bet, stake 3 to win 7: 3/10 * 7 - 7/10 * 3 = 0.
+example : (3 : ℚ) / 10 * 7 - 7 / 10 * 3 = 0 := by norm_num
+-- Back from odds to a chance: 3 wins in 3 + 7 cases is 3/10, not 3/7.
+example : (3 : ℚ) / (3 + 7) = 3 / 10 ∧ (3 : ℚ) / 7 ≠ 3 / 10 := by norm_num
+-- The bookmaker's prices, 30 and 60 cents: buying both nets 10 cents in either weather.
+example : (1 : ℚ) - (3 / 10 + 6 / 10) = 1 / 10 := by norm_num
+example : (1 : ℝ) - (1 * (3 / 10) + 1 * (6 / 10)) = 1 / 10 := by norm_num
+-- Brier score with true chance 3/10: honest 21/100, announcing 1/2 gives 1/4, announcing 0 gives 3/10.
+example : brier (3 / 10) (3 / 10) = 21 / 100 := by norm_num [brier]
+example : brier (3 / 10) (1 / 2) = 1 / 4 := by norm_num [brier]
+example : brier (3 / 10) 0 = 3 / 10 := by norm_num [brier]
+-- Squared misses of the honest forecast: 49/100 if rain, 9/100 if dry.
+example : (1 - (3 : ℚ) / 10) ^ 2 = 49 / 100 ∧ ((3 : ℚ) / 10) ^ 2 = 9 / 100 := by norm_num
+-- The plain miss rewards exaggeration: with true chance 3/10, announcing 0 averages 3/10,
+-- below the 21/50 that the honest 3/10 averages.
+example : (3 : ℚ) / 10 * (1 - 0) + 7 / 10 * 0 = 3 / 10 ∧
+    (3 : ℚ) / 10 * (1 - 3 / 10) + 7 / 10 * (3 / 10) = 21 / 50 := by norm_num
+
+#print axioms dutch_book_iff_prices_not_coherent
+#print axioms brier_lowest_at_true_chance
+#print axioms probability_rules
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'dutch_book_iff_prices_not_coherent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'brier_lowest_at_true_chance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'probability_rules' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

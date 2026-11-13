@@ -10,7 +10,9 @@ A lottery machine holds 49 numbered balls. It draws 6, one after another, and ne
 
 The answer is a count between 0 and 6, and it is random. Most draws match none or one: 43.60 percent of draws match nothing and 41.30 percent match one number. Three matches, a small prize in most 6-from-49 games, happens about once in 56.7 draws. All six, the jackpot, happens once in 13,983,816.
 
-What makes this count its own law is the phrase "never puts one back". When the first ball drawn is on the ticket, only 5 ticket numbers are left among 48 balls, so the second ball is slightly less likely to match. Each draw changes the pool for the next. The draws are not independent trials, so the binomial law of [Binomial](01-bernoulli-and-binomial.md) does not apply exactly. Counting sets of balls does apply, and it gives the whole law in one line. The law it gives is called the **hypergeometric** law, and that name is used from here on.
+What makes this count its own law is the phrase "never puts one back". When the first ball drawn is on the ticket, only 5 ticket numbers are left among 48 balls, so the second ball is slightly less likely to match. Each draw changes the pool for the next.
+
+The draws are not independent trials, so the binomial law of [Binomial](01-bernoulli-and-binomial.md) does not apply exactly. Counting sets of balls does apply, and it gives the whole law in one line. The law it gives is called the **hypergeometric** law, and that name is used from here on.
 
 **When a fixed pool holds some marked items and a sample is taken without putting anything back, the chance of exactly k marked items is the number of ways to choose k marked and the rest unmarked, divided by the number of ways to choose the sample.**
 
@@ -42,7 +44,7 @@ $$P(X = k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$$
 
 The count can only take values that both pools can supply: at least n − (N − K), at least 0, at most K and at most n. In the lottery every value from 0 to 6 is possible.
 
-The long-run average and the spread follow. As a reminder, $E[X]$ is the average value of X in the long run and $Var(X)$ is the average squared distance from it (shelf 02).
+The long-run average and the spread follow. As a reminder, $E[X]$ is the average value of X in the long run and $Var(X)$ is the average squared distance from it, as on [Expectation](../02-Random%20Variables/02-expectation.md) and [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md).
 
 $$E[X] = n\,p, \qquad Var(X) = n\,p\,(1-p)\,\frac{N-n}{N-1}, \qquad p = \frac{K}{N}$$
 
@@ -83,7 +85,9 @@ Drawn in order, the first ball can be any of 49, the second any of the 48 left, 
 
 ### Step 2: split each favourable draw into two independent choices
 
-A draw with exactly k matches is k balls from the 6 on the ticket plus 6 − k balls from the 43 that are not. Any choice of the first part combined with any choice of the second gives such a draw. Every such draw splits back into one pair of choices. So the count is a product: $\binom{K}{k}\binom{N-K}{n-k}$. For three matches, 20 ways to pick which ticket numbers came up, times 12,341 ways to pick the other three balls from the 43, makes 246,820 draws.
+A draw with exactly k matches is k balls from the 6 on the ticket plus 6 − k balls from the 43 that are not. Any choice of the first part combined with any choice of the second gives such a draw. Every such draw splits back into one pair of choices. So the count is a product: $\binom{K}{k}\binom{N-K}{n-k}$.
+
+For three matches, 20 ways to pick which ticket numbers came up, times 12,341 ways to pick the other three balls from the 43, makes 246,820 draws.
 
 ### Step 3: divide
 
@@ -95,7 +99,9 @@ Write the count as a sum of switches, called **indicators**: $I_i$ is 1 if draw 
 
 ### Step 5: the spread is where dependence shows
 
-Two named draws both match with chance 6/49 × 5/48 = 0.012755. If the draws were independent it would be $p^2$ = 0.014994. The difference is the **covariance** of two indicators (shelf 02): −0.0022387. It is negative because a match on one draw leaves one fewer ticket number for the other. The variance of a sum is the sum of the separate variances plus every covariance between pairs. The 30 ordered pairs of draws, each with that negative covariance, pull the variance down from 0.644731 to 0.577572.
+Two named draws both match with chance 6/49 × 5/48 = 0.012755. If the draws were independent it would be $p^2$ = 0.014994. The difference is the **covariance** of two indicators, as on [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): −0.0022387. It is negative because a match on one draw leaves one fewer ticket number for the other.
+
+The variance of a sum is the sum of the separate variances plus every covariance between pairs. The 30 ordered pairs of draws, each with that negative covariance, pull the variance down from 0.644731 to 0.577572.
 
 <details>
 <summary>Detailed proof: the variance formula</summary>
@@ -114,7 +120,11 @@ With n = 1 there are no pairs and the factor is 1. With n = N the factor is 0: d
 
 ### Step 6: when the pool is large, the binomial returns
 
-Hold the shares fixed and grow the pool: 6 marked in 49, then 60 in 490, then 600 in 4,900. Removing a few balls from a huge pool barely changes the share left, so the draws are nearly independent. The chance of exactly three matches in six draws climbs from 0.017650 to 0.024155, then 0.024749, then 0.024808 with 49,000 balls, and the binomial gives 0.024815. The correction factor $\frac{N-n}{N-1}$ tends to 1 at the same time. So the binomial is a fair stand-in when the sample is a small share of the pool. Six balls from 49 is 12.24 percent of the pool, and the tail shows it.
+Hold the shares fixed and grow the pool: 6 marked in 49, then 60 in 490, then 600 in 4,900. Removing a few balls from a huge pool barely changes the share left, so the draws are nearly independent.
+
+The chance of exactly three matches in six draws climbs from 0.017650 to 0.024155, then 0.024749, then 0.024808 with 49,000 balls, and the binomial gives 0.024815.
+
+The correction factor $\frac{N-n}{N-1}$ tends to 1 at the same time. So the binomial is a fair stand-in when the sample is a small share of the pool. Six balls from 49 is 12.24 percent of the pool, and the tail shows it.
 
 A second road to the same law follows the machine ball by ball: the chance of a hit is the ticket numbers left over the balls left, and a path of hits and misses multiplies those chances. Summing the 64 paths by their number of hits gives exactly the counting answer, and the code checks it.
 
@@ -181,7 +191,7 @@ Lower curve, orange: without replacement, rising then falling to 0 at n = 49, wh
 
 ## Code, from first principles, and it actually runs
 
-Three roads that share no arithmetic reach the law: the counting formula, a walk through all 13,983,816 draws, and the ball-by-ball product over 64 hit-and-miss paths. A seeded simulation of 200,000 draws (SplitMix64, written out in both languages) checks the average, the variance and the chance of three or more matches within four standard errors, and shows the simulated variance clear of the binomial one. Each chart point is computed from the full table and checked against the correction formula.
+Three roads that share no arithmetic reach the law: the counting formula, a walk through all 13,983,816 draws, and the ball-by-ball product over 64 hit-and-miss paths. A seeded simulation of 200,000 draws (SplitMix64, written out in both languages) checks the average, the variance and the chance of three or more matches within four standard errors, and shows the simulated variance clear of the binomial one. A standard error is the typical size of the simulation's random error. Each chart point is computed from the full table and checked against the correction formula.
 
 ### Python
 
@@ -531,6 +541,323 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulation included, since both draw the same SplitMix64 numbers.
 
+### Lean
+
+Lean proves the counting formula, the average and the spread for every pool, and checks the card's lottery numbers.
+
+- Take a pool of N items, K marked, every set of n items equally likely, and k from 0 to n. Then the chance of exactly k marked items in the sample is $\frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$.
+- Take the same pool with n at most N. Then the average count is $E[X] = n\,p$, with $p = K/N$.
+- Take the same pool with n at most N and N at least 2. Then $Var(X) = n\,p\,(1-p)\,\frac{N-n}{N-1}$, the binomial variance times the finite-population correction.
+- Ordered draws: 10,068,347,520, divided by 720 orders, give $\binom{49}{6}$ = 13,983,816 sets.
+- The seven match counts, from 6,096,454 down to 1, add up to 13,983,816.
+- Three matches: 20 times 12,341 makes 246,820 draws; at least three matches makes 260,624.
+- The overcounting mistake, 3 matches then any 3 balls, counts 303,600 draws.
+- The average 36/49 and the variance from the full table both match the formulas, with correction 43/48.
+- Two named draws both match with chance 6/49 × 5/48, a covariance of $-p\,(1-p)/(N-1)$.
+- A 6-from-39 game has $\binom{39}{6}$ = 3,262,623 possible draws.
+
+Decimals, the binomial, the ball-by-ball road, large pools, the chart and the simulation are left to Python and Rust.
+
+```lean
+-- Hypergeometric: when every set of n items from a pool of N, K of them marked, is equally likely, the chance of exactly k marked items is C(K, k) C(N - K, n - k) / C(N, n), the average count is n K / N, the variance is n p (1 - p) (N - n)/(N - 1) with p = K/N, and the card's 6-from-49 lottery numbers check out.
+import Mathlib.Data.Fintype.Powerset
+import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Data.Nat.Choose.Cast
+
+namespace Hypergeometric
+
+open Finset
+
+/-- Counting samples by how many marked items they hold. -/
+theorem card_filter_inter_eq {α : Type*} [Fintype α] [DecidableEq α]
+    (M : Finset α) (n k : ℕ) (hk : k ≤ n) :
+    ((powersetCard n (univ : Finset α)).filter (fun s => (s ∩ M).card = k)).card
+      = M.card.choose k * (Fintype.card α - M.card).choose (n - k) := by
+  rw [← card_powersetCard, ← card_univ, ← card_sdiff_of_subset (subset_univ M),
+    ← card_powersetCard, ← card_product]
+  refine card_bij' (fun s _ => (s ∩ M, s \ M)) (fun p _ => p.1 ∪ p.2) ?_ ?_ ?_ ?_
+  · intro s hs
+    simp only [mem_filter, mem_powersetCard, subset_univ, true_and] at hs
+    have h := card_sdiff_add_card_inter s M
+    simp only [mem_product, mem_powersetCard]
+    refine ⟨⟨inter_subset_right, hs.2⟩, ⟨sdiff_subset_sdiff (subset_univ _) le_rfl, ?_⟩⟩
+    omega
+  · rintro ⟨a, b⟩ hp
+    simp only [mem_product, mem_powersetCard] at hp
+    obtain ⟨⟨haM, ha⟩, ⟨hbM, hb⟩⟩ := hp
+    have hdisj : Disjoint a b := by
+      rw [disjoint_left]
+      intro x hxa hxb
+      have := hbM hxb
+      simp only [mem_sdiff] at this
+      exact this.2 (haM hxa)
+    have hinter : (a ∪ b) ∩ M = a := by
+      ext x
+      have h1 := @haM x
+      have h2 := @hbM x
+      simp only [mem_sdiff, mem_univ, true_and] at h2
+      simp only [mem_inter, mem_union]
+      tauto
+    simp only [mem_filter, mem_powersetCard, subset_univ, true_and]
+    refine ⟨?_, ?_⟩
+    · rw [card_union_of_disjoint hdisj]; omega
+    · rw [hinter, ha]
+  · intro s _
+    ext x
+    simp only [mem_union, mem_inter, mem_sdiff]
+    tauto
+  · rintro ⟨a, b⟩ hp
+    simp only [mem_product, mem_powersetCard] at hp
+    obtain ⟨⟨haM, _⟩, ⟨hbM, _⟩⟩ := hp
+    have h1 := @haM
+    have h2 := @hbM
+    simp only [Prod.mk.injEq]
+    constructor
+    · ext x
+      have := @h1 x
+      have := @h2 x
+      simp only [mem_sdiff, mem_univ, true_and] at *
+      simp only [mem_inter, mem_union]
+      tauto
+    · ext x
+      have := @h1 x
+      have := @h2 x
+      simp only [mem_sdiff, mem_univ, true_and] at *
+      simp only [mem_union]
+      tauto
+
+/-- Samples that contain a given set `t` of `j` items. -/
+theorem card_filter_superset {α : Type*} [Fintype α] [DecidableEq α]
+    (t : Finset α) (n : ℕ) (hj : t.card ≤ n) :
+    ((powersetCard n (univ : Finset α)).filter (fun s => t ⊆ s)).card
+      = (Fintype.card α - t.card).choose (n - t.card) := by
+  have := card_filter_inter_eq t n t.card hj
+  rw [Nat.choose_self, one_mul] at this
+  rw [← this]
+  congr 1
+  apply filter_congr
+  intro s _
+  constructor
+  · intro h; rw [inter_eq_right.mpr h]
+  · intro h
+    have := eq_of_subset_of_card_le (inter_subset_right (s₁ := s) (s₂ := t)) (le_of_eq h.symm)
+    exact inter_eq_right.mp this
+
+/-- Sum over samples of C(count, j): pick the `j` marked items first. -/
+theorem sum_choose_card_inter {α : Type*} [Fintype α] [DecidableEq α]
+    (M : Finset α) (n j : ℕ) (hj : j ≤ n) :
+    ∑ s ∈ powersetCard n (univ : Finset α), (s ∩ M).card.choose j
+      = M.card.choose j * (Fintype.card α - j).choose (n - j) := by
+  have h1 : ∀ s : Finset α, (s ∩ M).card.choose j
+      = ∑ t ∈ powersetCard j M, if t ⊆ s then 1 else 0 := by
+    intro s
+    rw [← card_powersetCard, sum_boole, Nat.cast_id]
+    congr 1
+    ext t
+    simp only [mem_powersetCard, mem_filter, subset_inter_iff]
+    tauto
+  simp_rw [h1]
+  rw [sum_comm]
+  have h2 : ∀ t ∈ powersetCard j M,
+      (∑ s ∈ powersetCard n (univ : Finset α), if t ⊆ s then 1 else 0)
+        = (Fintype.card α - j).choose (n - j) := by
+    intro t ht
+    rw [mem_powersetCard] at ht
+    rw [sum_boole, Nat.cast_id, card_filter_superset t n (ht.2 ▸ hj), ht.2]
+  rw [sum_congr rfl h2, sum_const, card_powersetCard]
+  simp
+
+#print axioms card_filter_inter_eq
+#print axioms card_filter_superset
+#print axioms sum_choose_card_inter
+
+/-- The card's main result. A pool `α` holds `N` items, and a set `M` of `K` of them is marked.
+A sample is a set of `n` items taken without putting anything back, and every such set is equally
+likely, so the chance of an event is the number of samples in it divided by the number of all
+samples. Then the chance that the sample holds exactly `k` marked items is the number of ways to
+choose `k` marked items and `n - k` unmarked ones, divided by the number of ways to choose the
+sample: C(K, k) C(N - K, n - k) / C(N, n). Here `k` is one of the values the count can take,
+from 0 up to the sample size `n`. -/
+theorem hypergeometric_chance_of_k_marked {α : Type*} [Fintype α] [DecidableEq α]
+    (M : Finset α) (N K n k : ℕ) (hN : Fintype.card α = N) (hK : M.card = K) (hk : k ≤ n) :
+    (((powersetCard n (univ : Finset α)).filter (fun s => (s ∩ M).card = k)).card : ℚ)
+        / (powersetCard n (univ : Finset α)).card
+      = (K.choose k * (N - K).choose (n - k) : ℚ) / N.choose n := by
+  have hS : (powersetCard n (univ : Finset α)).card = N.choose n := by
+    rw [card_powersetCard, card_univ, hN]
+  rw [hS, card_filter_inter_eq M n k hk, hK, hN]
+  push_cast
+  rfl
+
+/-- The average count of marked items in the sample is the sample size times the marked share of
+the pool, n K / N: the same as when drawing with replacement. Here the average is the sum of the
+count over all equally likely samples, divided by the number of samples. -/
+theorem hypergeometric_mean {α : Type*} [Fintype α] [DecidableEq α]
+    (M : Finset α) (N K n : ℕ) (hN : Fintype.card α = N) (hK : M.card = K) (hn : n ≤ N) :
+    (∑ s ∈ powersetCard n (univ : Finset α), ((s ∩ M).card : ℚ))
+        / (powersetCard n (univ : Finset α)).card
+      = n * ((K : ℚ) / N) := by
+  have hS : (powersetCard n (univ : Finset α)).card = N.choose n := by
+    rw [card_powersetCard, card_univ, hN]
+  rw [hS]
+  rcases Nat.eq_zero_or_pos n with rfl | hn0
+  · simp [powersetCard_zero]
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  obtain ⟨L, rfl⟩ : ∃ L, N = L + 1 := ⟨N - 1, by omega⟩
+  have h1 := sum_choose_card_inter M (m + 1) 1 (by omega)
+  simp only [Nat.choose_one_right, hK, hN, Nat.add_sub_cancel] at h1
+  have hsum : (∑ s ∈ powersetCard (m + 1) (univ : Finset α), ((s ∩ M).card : ℚ))
+      = K * L.choose m := by
+    rw [← Nat.cast_sum, h1]; push_cast; ring
+  rw [hsum]
+  have hid : ((L + 1 : ℕ) : ℚ) * L.choose m = (L + 1).choose (m + 1) * (m + 1 : ℕ) := by
+    exact_mod_cast Nat.add_one_mul_choose_eq L m
+  have hpos : (0 : ℚ) < (L + 1).choose (m + 1) := by
+    exact_mod_cast Nat.choose_pos (by omega)
+  have hL : (0 : ℚ) < ((L + 1 : ℕ) : ℚ) := by positivity
+  have e : (L.choose m : ℚ) = (L + 1).choose (m + 1) * (m + 1 : ℕ) / (L + 1 : ℕ) := by
+    rw [eq_div_iff hL.ne']; linear_combination hid
+  rw [e]
+  push_cast
+  field_simp
+
+/-- The variance of the count (average of its square minus the square of its average, over all
+equally likely samples) is the binomial variance n p (1 - p), with p = K / N, times the
+finite-population correction (N - n) / (N - 1). The correction needs a pool of at least 2. -/
+theorem hypergeometric_variance {α : Type*} [Fintype α] [DecidableEq α]
+    (M : Finset α) (N K n : ℕ) (hN : Fintype.card α = N) (hK : M.card = K) (hn : n ≤ N)
+    (hN2 : 2 ≤ N) :
+    (∑ s ∈ powersetCard n (univ : Finset α), ((s ∩ M).card : ℚ) ^ 2)
+        / (powersetCard n (univ : Finset α)).card
+      - ((∑ s ∈ powersetCard n (univ : Finset α), ((s ∩ M).card : ℚ))
+        / (powersetCard n (univ : Finset α)).card) ^ 2
+      = n * ((K : ℚ) / N) * (1 - (K : ℚ) / N) * (((N : ℚ) - n) / ((N : ℚ) - 1)) := by
+  have hS : (powersetCard n (univ : Finset α)).card = N.choose n := by
+    rw [card_powersetCard, card_univ, hN]
+  have hsq : ∀ s : Finset α, ((s ∩ M).card : ℚ) ^ 2
+      = 2 * ((s ∩ M).card.choose 2 : ℚ) + (s ∩ M).card := by
+    intro s; rw [Nat.cast_choose_two]; ring
+  simp_rw [hsq]
+  rw [sum_add_distrib, ← mul_sum, hS]
+  rcases Nat.eq_zero_or_pos n with rfl | hn0
+  · simp [powersetCard_zero]
+  obtain ⟨L, rfl⟩ : ∃ L, N = L + 2 := ⟨N - 2, by omega⟩
+  have h1 := sum_choose_card_inter M n 1 (by omega)
+  simp only [Nat.choose_one_right, hK, hN] at h1
+  have hsum1 : (∑ s ∈ powersetCard n (univ : Finset α), ((s ∩ M).card : ℚ))
+      = K * (L + 1).choose (n - 1) := by
+    rw [← Nat.cast_sum, h1, show L + 2 - 1 = L + 1 by omega]; push_cast; ring
+  rw [hsum1]
+  have hid1 : ((L + 2 : ℕ) : ℚ) * (L + 1).choose (n - 1) = (L + 2).choose n * (n : ℚ) := by
+    have := Nat.add_one_mul_choose_eq (L + 1) (n - 1)
+    rw [Nat.sub_add_cancel hn0] at this
+    exact_mod_cast this
+  have hpos : (0 : ℚ) < (L + 2).choose n := by
+    exact_mod_cast Nat.choose_pos (by omega)
+  have hL2 : (0 : ℚ) < ((L + 2 : ℕ) : ℚ) := by positivity
+  have hL1 : ((L + 2 : ℕ) : ℚ) - 1 = (L + 1 : ℕ) := by push_cast; ring
+  rcases Nat.lt_or_ge n 2 with hn2 | hn2
+  · -- n = 1: no sample holds two marked items
+    have hn1 : n = 1 := by omega
+    subst hn1
+    have h0 : (∑ s ∈ powersetCard 1 (univ : Finset α), ((s ∩ M).card.choose 2 : ℚ)) = 0 := by
+      apply sum_eq_zero
+      intro s hs
+      rw [mem_powersetCard] at hs
+      have : (s ∩ M).card ≤ 1 := hs.2 ▸ card_le_card inter_subset_left
+      rw [Nat.choose_eq_zero_of_lt (by omega)]; simp
+    rw [h0, hL1]
+    simp only [Nat.sub_self, Nat.choose_zero_right, Nat.choose_one_right] at hid1 ⊢
+    have hL1' : (0 : ℚ) < ((L + 1 : ℕ) : ℚ) := by positivity
+    field_simp
+    push_cast
+    ring
+  · obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, by omega⟩
+    have h2 := sum_choose_card_inter M (m + 2) 2 (by omega)
+    simp only [hK, hN, Nat.add_sub_cancel] at h2
+    have hsum2 : (∑ s ∈ powersetCard (m + 2) (univ : Finset α), ((s ∩ M).card.choose 2 : ℚ))
+        = K * (K - 1) / 2 * L.choose m := by
+      rw [← Nat.cast_sum, h2]; push_cast; rw [Nat.cast_choose_two]
+    rw [hsum2]
+    have hid2 : ((L + 1 : ℕ) : ℚ) * L.choose m = (L + 1).choose (m + 1) * (m + 1 : ℕ) := by
+      exact_mod_cast Nat.add_one_mul_choose_eq L m
+    simp only [show m + 2 - 1 = m + 1 by omega] at hid1 ⊢
+    rw [hL1]
+    have hL1' : (0 : ℚ) < ((L + 1 : ℕ) : ℚ) := by positivity
+    set D : ℚ := ((L + 2).choose (m + 2) : ℚ) with hD
+    set C1 : ℚ := ((L + 1).choose (m + 1) : ℚ) with hC1
+    set C0 : ℚ := ((L).choose m : ℚ) with hC0
+    have eC1 : C1 = D * (m + 2 : ℕ) / (L + 2 : ℕ) := by
+      rw [eq_div_iff hL2.ne']; linear_combination hid1
+    have eC0 : C0 = C1 * (m + 1 : ℕ) / (L + 1 : ℕ) := by
+      rw [eq_div_iff hL1'.ne']; linear_combination hid2
+    rw [eC0, eC1]
+    push_cast
+    field_simp
+    ring
+
+/-! The card's lottery: 6 balls drawn from 49, a ticket holds 6 numbers. -/
+
+-- All possible draws: 49 × 48 × 47 × 46 × 45 × 44 = 10,068,347,520 ordered draws, / 720 = C(49, 6).
+example : 49 * 48 * 47 * 46 * 45 * 44 = 10068347520 := by norm_num
+example : Nat.factorial 6 = 720 := by decide
+example : 10068347520 / 720 = 13983816 := by norm_num
+example : Nat.choose 49 6 = 13983816 := by decide
+-- Three matches: C(6, 3) = 20, C(43, 3) = 43 × 42 × 41 / 6 = 12,341, product 246,820.
+example : Nat.choose 6 3 = 20 := by decide
+example : Nat.choose 43 3 = 12341 ∧ 43 * 42 * 41 / 6 = 12341 := by decide
+example : Nat.choose 6 3 * Nat.choose 43 3 = 246820 := by decide
+-- The full table of favourable draws for k = 0, ..., 6 matches.
+example : (List.range 7).map (fun k => Nat.choose 6 k * Nat.choose 43 (6 - k))
+    = [6096454, 5775588, 1851150, 246820, 13545, 258, 1] := by decide
+-- The seven counts add up to all 13,983,816 draws.
+example : 6096454 + 5775588 + 1851150 + 246820 + 13545 + 258 + 1 = Nat.choose 49 6 := by decide
+-- At least three matches: 246,820 + 13,545 + 258 + 1 = 260,624 draws.
+example : 246820 + 13545 + 258 + 1 = 260624 := by norm_num
+-- The overcounting mistake, "3 matches, then any 3 of the other 46": 20 × 15,180 = 303,600 draws.
+example : Nat.choose 6 3 * Nat.choose 46 3 = 303600 := by decide
+-- Average matches 6 × 6/49 = 36/49; correction (49 - 6)/(49 - 1) = 43/48.
+example : (6 : ℚ) * (6 / 49) = 36 / 49 := by norm_num
+example : ((49 : ℚ) - 6) / (49 - 1) = 43 / 48 := by norm_num
+-- Variance from the full table equals 6 × 6/49 × 43/49 × 43/48, the formula with the correction.
+example :
+    ((0 ^ 2 * 6096454 + 1 ^ 2 * 5775588 + 2 ^ 2 * 1851150 + 3 ^ 2 * 246820 + 4 ^ 2 * 13545
+        + 5 ^ 2 * 258 + 6 ^ 2 * 1 : ℚ) / 13983816)
+      - ((0 * 6096454 + 1 * 5775588 + 2 * 1851150 + 3 * 246820 + 4 * 13545 + 5 * 258 + 6 * 1 : ℚ)
+        / 13983816) ^ 2
+      = 6 * (6 / 49) * (1 - 6 / 49) * ((49 - 6) / (49 - 1)) := by norm_num
+-- Mean from the full table is 36/49.
+example : (0 * 6096454 + 1 * 5775588 + 2 * 1851150 + 3 * 246820 + 4 * 13545 + 5 * 258 + 6 * 1 : ℚ)
+    / 13983816 = 36 / 49 := by norm_num
+-- Two named draws both match with chance 6/49 × 5/48; covariance with p^2 is -p(1 - p)/(N - 1).
+example : (6 : ℚ) / 49 * (5 / 48) - (6 / 49) ^ 2 = -((6 / 49) * (1 - 6 / 49) / (49 - 1)) := by
+  norm_num
+-- A smaller game, 6 from 39: jackpot 1 in C(39, 6) = 3,262,623.
+example : Nat.choose 39 6 = 3262623 := by decide
+
+#print axioms hypergeometric_chance_of_k_marked
+#print axioms hypergeometric_mean
+#print axioms hypergeometric_variance
+
+end Hypergeometric
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'Hypergeometric.card_filter_inter_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hypergeometric.card_filter_superset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hypergeometric.sum_choose_card_inter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hypergeometric.hypergeometric_chance_of_k_marked' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hypergeometric.hypergeometric_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hypergeometric.hypergeometric_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -558,7 +885,7 @@ The two outputs match line for line, simulation included, since both draw the sa
 - **Card games.** The chance of being dealt k aces in a bridge hand is this law with the deck as the pool and the aces as the marked items.
 - **Acceptance sampling.** A factory inspects a sample from each batch and rejects the batch if too many are faulty. The chance of rejecting a good batch is a hypergeometric tail.
 - **Surveys of small populations.** Polling a sizeable share of a town's voters uses the finite-population correction to narrow the margin of error.
-- **Fisher's exact test.** The test for a two-by-two table of counts (treated or not, recovered or not) reads its p-value off a hypergeometric law.
+- **Fisher's exact test.** The test for a two-by-two table of counts (treated or not, recovered or not) reads its p-value off a hypergeometric law. The p-value is the chance of a table at least this lopsided if the treatment made no difference.
 - **Capture and recapture.** Tag K fish, later catch n, count the tagged ones: the count is hypergeometric in the unknown lake size N, which turns it into an estimate of N.
 
 > **Say it back**
@@ -570,6 +897,7 @@ The two outputs match line for line, simulation included, since both draw the sa
 
 - [Binomial](01-bernoulli-and-binomial.md): the with-replacement law this card compares against, and its variance n p (1 − p).
 - [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md): the count of unordered choices, and why dividing ordered draws by 6! gives it.
+- [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, and the rule that a sum's variance is the separate variances plus every covariance, used in Step 5.
 
 ## Where this goes next
 
@@ -577,6 +905,8 @@ The two outputs match line for line, simulation included, since both draw the sa
 - [Multinomial](05-multinomial.md): several kinds of outcome at once; with a fixed pool and no replacement it has a many-colour hypergeometric twin.
 - [Adding counts](06-sums-of-discrete-variables.md): the covariance bookkeeping of Step 5 as a general tool for sums of dependent counts.
 - [Two classics](07-birthday-and-coupon-collector.md): more questions about drawing from a fixed set, where repeats are the point.
+
+Left open: in capture and recapture the pool size N is the unknown, so how well can one tagged count estimate it?
 
 ---
 

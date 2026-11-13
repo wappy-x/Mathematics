@@ -10,7 +10,9 @@ A share closes today. Tomorrow's close is unknown, and so is tomorrow's return: 
 
 A die has six faces, each with its own chance. A return can land anywhere on a continuous scale, and between any two values lie infinitely many others. For a smooth spread like this one, each single value gets chance zero, yet "below −2 percent" has a real chance. A list of chances per value cannot describe it.
 
-The answer is a curve drawn so that **area under it is chance**. The chance of a return between two values is the area under the curve between them. The whole area is 1. Such a curve is a **density**. The running total of area from the far left, value by value, is a second curve, the **cumulative distribution function**, CDF for short. For this share, the area to the left of −2 percent is 0.0478: a fall of more than 2 percent comes about 1 trading day in 21, some 12 days in a 252-day trading year, if the bell is right.
+The answer is a curve drawn so that **area under it is chance**. The chance of a return between two values is the area under the curve between them. The whole area is 1. Such a curve is a **density**.
+
+The running total of area from the far left, value by value, is a second curve, the **cumulative distribution function**, CDF for short. For this share, the area to the left of −2 percent is 0.0478: a fall of more than 2 percent comes about 1 trading day in 21, some 12 days in a 252-day trading year, if the bell is right.
 
 **A density is a curve whose area over any stretch of values is the chance of landing in that stretch; the CDF is the running total of that area, and the density is the CDF's slope.**
 
@@ -26,7 +28,9 @@ The curve is drawn to scale from the `figure,` lines the code prints. The shaded
 
 ## The formula
 
-Notation first, in words. As on earlier cards, $X$ is a random variable, here tomorrow's return in percent, and $x$ is one value it might take; P(A) is the chance of the event A. A density is written f(x), read "the density at x". The CDF is written F(x), read "the chance that X is at most x". The long S of an integral, from the calculus wing, adds up area.
+Notation first, in words. As on earlier cards, $X$ is a random variable, here tomorrow's return in percent, and $x$ is one value it might take; P(A) is the chance of the event A.
+
+A density is written f(x), read "the density at x". The CDF is written F(x), read "the chance that X is at most x". The long S of an integral, from the calculus wing, adds up area.
 
 $$P(a \le X \le b) = \int_a^b f(x)\,dx$$
 
@@ -83,7 +87,7 @@ Take a long record of daily returns and sort them into bins half a percentage po
 
 Narrow the bins and lengthen the record, and the bar tops settle onto a smooth curve: the density. Dividing by width is why its height is chance **per percentage point**.
 
-The code runs this with 400,000 simulated days. In the bin from −2.25 to −1.75 the share of days, per point of width, is 0.0845 (standard error 0.0006). The exact area of that bin, per point of width, is 0.0840: the two agree within one standard error. The height at the bin's centre, f(−2), is 0.0829, a little lower, because the curve bends upward across the bin; a narrower bin closes that gap.
+The code runs this with 400,000 simulated days. In the bin from −2.25 to −1.75 the share of days, per point of width, is 0.0845 (standard error 0.0006: the typical size of the chance wobble in a share counted from random draws). The exact area of that bin, per point of width, is 0.0840: the two agree within one standard error. The height at the bin's centre, f(−2), is 0.0829, a little lower, because the curve bends upward across the bin; a narrower bin closes that gap.
 
 ### Step 2: the CDF is a running total, so windows are differences
 
@@ -168,7 +172,13 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads reach the chance of a fall of more than 2 percent. Road 1 adds 20,000 strips under the density by Simpson's rule (a strip sum that fits a parabola across each pair of strips). Road 2 sums the CDF's own power series, with no integrator. Road 3 draws 400,000 simulated days from a seeded generator, SplitMix64, shapes them into bell draws by the Box-Muller recipe, and counts, quoting a standard error. The code also checks that the CDF's slope is the density, that a histogram bar per unit width matches the exact bin area, and that the total area is 1. The generator, integrator and CDF are all written out.
+Three independent roads reach the chance of a fall of more than 2 percent.
+
+- Road 1 adds 20,000 strips under the density by Simpson's rule (a strip sum that fits a parabola across each pair of strips).
+- Road 2 sums the CDF's own power series, with no integrator.
+- Road 3 draws 400,000 simulated days from a seeded generator, SplitMix64, shapes them into bell draws by the Box-Muller recipe, and counts, quoting a standard error.
+
+The code also checks that the CDF's slope is the density, that a histogram bar per unit width matches the exact bin area, and that the total area is 1. The generator, integrator and CDF are all written out.
 
 ### Python
 
@@ -518,6 +528,175 @@ ALL CHECKS PASS
 
 The two outputs match line for line, including the simulated count of 19,203 days below −2: both languages draw the same numbers from the same seed.
 
+### Lean
+
+Lean proves the card's general facts for every density, not just the bell, and checks the hand table's sums exactly.
+
+- Suppose f is never negative, has total area 1, and gives every window's chance as its area. Then F(x) is all the area under f up to x.
+- Take such a density and two values a ≤ b. Then P(a < X ≤ b) = F(b) − F(a).
+- Take such a density that is continuous at x. Then the slope of F at x is f(x).
+- Take such a density and any value x. Then P(X = x) = 0, so "below x" and "at or below x" have the same chance.
+- The hand table's arithmetic holds exactly. The six strips sum to 0.0466, which falls 0.0012 short of 0.0478.
+
+The bell's own numbers, the 400,000 draws, the chart and the figure are left to the Python and Rust checks.
+
+```lean
+-- Densities: if a random variable's chance of landing in every window is the area under a nonnegative curve of total area 1, then its CDF is the running area under that curve, its slope is the curve wherever the curve is continuous, windows are differences of the CDF, and single values carry chance zero.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory Set
+
+theorem densities_cdf_eq_integral_Iic {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (f : ℝ → ℝ) (hf_int : Integrable f)
+    (hdens : ∀ a b, a ≤ b → (P {ω | a ≤ X ω ∧ X ω ≤ b}).toReal = ∫ x in a..b, f x)
+    (x : ℝ) : (P {ω | X ω ≤ x}).toReal = ∫ t in Iic x, f t := by
+  set s : ℕ → Set Ω := fun n => {ω | x - n ≤ X ω ∧ X ω ≤ x} with hs
+  have hmono : Monotone s := by
+    intro m n hmn ω hω
+    simp only [hs, mem_ofPred_eq] at hω ⊢
+    refine ⟨le_trans ?_ hω.1, hω.2⟩
+    have : (m : ℝ) ≤ n := by exact_mod_cast hmn
+    linarith
+  have hU : (⋃ n, s n) = {ω | X ω ≤ x} := by
+    ext ω
+    simp only [hs, mem_iUnion, mem_ofPred_eq]
+    constructor
+    · rintro ⟨n, -, h⟩; exact h
+    · intro h
+      obtain ⟨n, hn⟩ := exists_nat_ge (x - X ω)
+      exact ⟨n, by linarith, h⟩
+  have h1 := tendsto_measure_iUnion_atTop (μ := P) hmono
+  rw [hU] at h1
+  have h2 : Filter.Tendsto (fun n => (P (s n)).toReal) Filter.atTop
+      (nhds (P {ω | X ω ≤ x}).toReal) :=
+    (ENNReal.tendsto_toReal (measure_ne_top P _)).comp h1
+  have h3 : Filter.Tendsto (fun n : ℕ => ∫ t in (x - n)..x, f t) Filter.atTop
+      (nhds (∫ t in Iic x, f t)) := by
+    refine intervalIntegral_tendsto_integral_Iic x hf_int.integrableOn ?_
+    exact Filter.tendsto_atBot_add_const_left _ x
+      (Filter.tendsto_neg_atTop_atBot.comp tendsto_natCast_atTop_atTop) |>.congr
+        (fun n => by simp [sub_eq_add_neg])
+  have h4 : (fun n => (P (s n)).toReal) = fun n : ℕ => ∫ t in (x - n)..x, f t := by
+    funext n
+    exact hdens _ _ (by have : (0 : ℝ) ≤ n := n.cast_nonneg; linarith)
+  rw [h4] at h2
+  exact tendsto_nhds_unique h2 h3
+
+#print axioms densities_cdf_eq_integral_Iic
+
+/-- The density is the CDF's slope. Let `X` be a random variable with density `f`: `f` is never
+negative, its total area is 1, and for every window `a ≤ b` the chance `P(a ≤ X ≤ b)` is the area
+under `f` from `a` to `b`. Then wherever `f` is continuous, the CDF `F(y) = P(X ≤ y)` has slope
+`f(x)` at `x`, that is `F'(x) = f(x)`. -/
+theorem density_is_slope_of_cdf {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (hX : Measurable X) (f : ℝ → ℝ)
+    (hf_nonneg : ∀ x, 0 ≤ f x) (hf_int : Integrable f) (hf_one : ∫ x, f x = 1)
+    (hdens : ∀ a b, a ≤ b → (P {ω | a ≤ X ω ∧ X ω ≤ b}).toReal = ∫ x in a..b, f x)
+    (x : ℝ) (hfx : ContinuousAt f x) :
+    HasDerivAt (fun y => (P {ω | X ω ≤ y}).toReal) (f x) x := by
+  have hF : (fun y => (P {ω | X ω ≤ y}).toReal) =
+      fun y => (∫ t in Iic x, f t) + ∫ t in x..y, f t := by
+    funext y
+    rw [densities_cdf_eq_integral_Iic P X f hf_int hdens y,
+      ← intervalIntegral.integral_Iic_sub_Iic hf_int.integrableOn hf_int.integrableOn]
+    ring
+  rw [hF]
+  have := intervalIntegral.integral_hasDerivAt_right (a := x) (b := x)
+    (hf_int.intervalIntegrable) hf_int.aestronglyMeasurable.stronglyMeasurableAtFilter hfx
+  simpa using this.const_add (∫ t in Iic x, f t)
+
+/-- The CDF is the running total of area, and windows are differences. For `X` with density `f`
+as above, `F(x) = P(X ≤ x)` equals the area under `f` from the far left up to `x`, and for every
+window `a ≤ b` the chance `P(a < X ≤ b)` equals `F(b) - F(a)`. -/
+theorem cdf_is_running_area {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (hX : Measurable X) (f : ℝ → ℝ)
+    (hf_nonneg : ∀ x, 0 ≤ f x) (hf_int : Integrable f) (hf_one : ∫ x, f x = 1)
+    (hdens : ∀ a b, a ≤ b → (P {ω | a ≤ X ω ∧ X ω ≤ b}).toReal = ∫ x in a..b, f x) :
+    (∀ x, (P {ω | X ω ≤ x}).toReal = ∫ t in Iic x, f t) ∧
+      ∀ a b, a ≤ b →
+        (P {ω | a < X ω ∧ X ω ≤ b}).toReal =
+          (P {ω | X ω ≤ b}).toReal - (P {ω | X ω ≤ a}).toReal := by
+  refine ⟨densities_cdf_eq_integral_Iic P X f hf_int hdens, ?_⟩
+  intro a b hab
+  have hmeas : MeasurableSet {ω | a < X ω ∧ X ω ≤ b} :=
+    (measurableSet_lt measurable_const hX).inter (measurableSet_le hX measurable_const)
+  have hsplit : {ω | X ω ≤ b} = {ω | X ω ≤ a} ∪ {ω | a < X ω ∧ X ω ≤ b} := by
+    ext ω
+    simp only [mem_ofPred_eq, mem_union]
+    constructor
+    · intro h
+      by_cases h' : X ω ≤ a
+      · exact Or.inl h'
+      · exact Or.inr ⟨lt_of_not_ge h', h⟩
+    · rintro (h | h)
+      · linarith
+      · exact h.2
+  have hdisj : Disjoint {ω | X ω ≤ a} {ω | a < X ω ∧ X ω ≤ b} := by
+    rw [Set.disjoint_left]
+    intro ω h1 h2
+    simp only [mem_ofPred_eq] at h1 h2
+    linarith [h2.1]
+  rw [hsplit, measure_union hdisj hmeas,
+    ENNReal.toReal_add (measure_ne_top P _) (measure_ne_top P _)]
+  ring
+
+/-- A single value has chance zero. For `X` with density `f` as above, `P(X = x) = 0` for every
+`x`, so "below `x`" and "at or below `x`" have the same chance: `P(X < x) = P(X ≤ x)`. -/
+theorem single_value_has_chance_zero {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (hX : Measurable X) (f : ℝ → ℝ)
+    (hf_nonneg : ∀ x, 0 ≤ f x) (hf_int : Integrable f) (hf_one : ∫ x, f x = 1)
+    (hdens : ∀ a b, a ≤ b → (P {ω | a ≤ X ω ∧ X ω ≤ b}).toReal = ∫ x in a..b, f x)
+    (x : ℝ) :
+    P {ω | X ω = x} = 0 ∧ P {ω | X ω < x} = P {ω | X ω ≤ x} := by
+  have h0 : P {ω | X ω = x} = 0 := by
+    have h := hdens x x le_rfl
+    simp only [intervalIntegral.integral_same] at h
+    have hset : {ω | x ≤ X ω ∧ X ω ≤ x} = {ω | X ω = x} := by
+      ext ω
+      simp only [mem_ofPred_eq]
+      constructor
+      · rintro ⟨h1, h2⟩; linarith
+      · intro h; exact ⟨h.ge, h.le⟩
+    rw [hset, ENNReal.toReal_eq_zero_iff] at h
+    exact h.resolve_right (measure_ne_top P _)
+  refine ⟨h0, ?_⟩
+  have hsplit : {ω | X ω ≤ x} = {ω | X ω < x} ∪ {ω | X ω = x} := by
+    ext ω
+    simp only [mem_ofPred_eq, mem_union]
+    exact le_iff_lt_or_eq
+  apply le_antisymm
+  · exact measure_mono (fun ω (h : X ω < x) => le_of_lt h)
+  · rw [hsplit]
+    calc P ({ω | X ω < x} ∪ {ω | X ω = x}) ≤ P {ω | X ω < x} + P {ω | X ω = x} :=
+          measure_union_le _ _
+      _ = P {ω | X ω < x} := by rw [h0, add_zero]
+
+/-! The card's hand table, as exact fractions of its printed four-place figures. -/
+
+-- Sum of the six strip areas: 0.0287 + 0.0120 + 0.0042 + 0.0013 + 0.0003 + 0.0001 = 0.0466.
+example : (287 + 120 + 42 + 13 + 3 + 1 : ℚ) / 10000 = 466 / 10000 := by norm_num
+
+-- The hand sum falls short of F(-2) = 0.0478 by 0.0012.
+example : (478 : ℚ) / 10000 - 466 / 10000 = 12 / 10000 := by norm_num
+
+#print axioms density_is_slope_of_cdf
+#print axioms cdf_is_running_area
+#print axioms single_value_has_chance_zero
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'densities_cdf_eq_integral_Iic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'density_is_slope_of_cdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cdf_is_running_area' depends on axioms: [propext, Classical.choice, Quot.sound]
+'single_value_has_chance_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -542,7 +721,7 @@ The two outputs match line for line, including the simulated count of 19,203 day
 
 ## Where you meet it in real life
 
-- **Risk limits on a trading desk.** "What is the chance of losing more than X tomorrow?" is a CDF read at one point; the finance wing's value-at-risk turns the question round and asks for the point.
+- **Risk limits on a trading desk.** "What is the chance of losing more than X tomorrow?" is a CDF read at one point; the finance wing's [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md) turns the question round and asks for the point.
 - **Option prices.** Prices of options at neighbouring strikes reveal the market's own density for a share's future price: [The butterfly and the implied density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md).
 - **Waiting times.** The time until the next customer, call or failure has a density; the simplest is the [Exponential](03-exponential-distribution.md).
 - **Random numbers in simulations.** Running the CDF backwards turns uniform random numbers into draws from any density: [Inverse transform](../11-Simulation/02-inverse-transform-sampling.md).

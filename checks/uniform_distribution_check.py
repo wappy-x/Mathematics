@@ -101,3 +101,4 @@ pts = " ".join(f"{px(x):.1f},{py(1 - math.exp(-x / 5)):.1f}" for x in range(0, 2
 xq = -5 * math.log(1 - 0.7)
 print("figure,scale 15 per minute across,170 per unit of chance up,curve " + pts)
 print(f"figure,u=0.70 at y {py(0.7):.1f},x {xq:.4f} min at px {px(xq):.1f}")
+print("ALL CHECKS PASS")

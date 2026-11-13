@@ -145,7 +145,7 @@ The harmonic sum $1 + 1/2 + \cdots + 1/d$ is a staircase under and over the curv
 
 </details>
 
-The code takes a third road to the collector's average that uses neither stages nor harmonic numbers. It tracks the chance of having seen each possible number of distinct days after each arrival, steps it forward one person at a time, and adds up the chance of not yet being finished, since the average of a count equals the sum of its tail chances. That also gives the median, which a formula does not. For the number of matching pairs in a room, the [Poisson](04-poisson.md) law with mean 253/365 gives the same "about one half" by another route.
+The code takes a third road to the collector's average that uses neither stages nor harmonic numbers. It tracks the chance of having seen each possible number of distinct days after each arrival, and steps it forward one person at a time. It then adds up the chance of not yet being finished, since the average of a count equals the sum of its tail chances. That also gives the median, which a formula does not. For the number of matching pairs in a room, the [Poisson](04-poisson.md) law with mean 253/365 gives the same "about one half" by another route.
 
 ---
 
@@ -170,7 +170,7 @@ The collector's side, 365 days:
 | 1. Harmonic number | 1 + 1/2 + ⋯ + 1/365 | 6.478482 |
 | 2. Average wait | 365 × 6.478482 | **2364.6460** |
 | 3. Shortcut | 365 × (ln 365 + 0.5772156649) + 1/2 | 2364.6463 |
-| 4. Spread | standard deviation of the wait | 465.2066 |
+| 4. Spread | standard deviation of the wait (its typical distance from the average) | 465.2066 |
 | 5. Median | first count with at least a half chance of being done | 2287 |
 
 On average about 2365 people must gather before every day of the year is someone's birthday. The median, 2287, sits below the average because a few very unlucky collections drag the average up: the chance of being done by 2365 people is 0.572145, more than a half.
@@ -203,7 +203,7 @@ Each bar is the average number of arrivals spent filling 73 more days. The first
 
 ## Code, from first principles, and it actually runs
 
-Both programs take several independent roads. For the birthday chance: the product formula, a full count of all 20736 month-lists for 4 people, and 20,000 simulated rooms of 23. For the collector: the harmonic sum, a step-by-step count of the chance of having each number of distinct days after each arrival (which also gives the median), and 2,000 simulated collections. Random days come from SplitMix64, a small generator written out in both languages with the same seed, so both print the same simulated numbers. Asserts compare the formula against the count, the step-by-step sum, the simulations within four standard errors, and the threshold 23 against the square-root rule, and confirm that the uneven calendar raises the match chance.
+Both programs take several independent roads. For the birthday chance: the product formula, a full count of all 20736 month-lists for 4 people, and 20,000 simulated rooms of 23. For the collector: the harmonic sum, a step-by-step count of the chance of having each number of distinct days after each arrival (which also gives the median), and 2,000 simulated collections. Random days come from SplitMix64, a small generator written out in both languages with the same seed, so both print the same simulated numbers. Asserts compare the formula against the count, the step-by-step sum, the simulations within four standard errors (a standard error is the typical size of the random error in a simulated average), and the threshold 23 against the square-root rule, and confirm that the uneven calendar raises the match chance.
 
 ### Python
 
@@ -318,9 +318,10 @@ assert abs(m - exact) < 4 * sem, "simulation disagrees with d H_d"
 
 print("== a die, all six faces ==")
 print(f"E[T] = 6 H_6 = {6 * harmonic(6):.4f}")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 == birthdays: 365 equally likely days ==
@@ -349,6 +350,7 @@ chart2,81.32,104.80,147.58,251.75,1779.20
 simulated collectors: mean 2368.61  (standard error 10.36, 2000 runs)
 == a die, all six faces ==
 E[T] = 6 H_6 = 14.7000
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -508,6 +510,7 @@ fn main() {
 
     println!("== a die, all six faces ==");
     println!("E[T] = 6 H_6 = {:.4}", 6.0 * harmonic(6));
+    println!("ALL CHECKS PASS");
 }
 
 fn sci(x: f64) -> String { // Python-style 1.234e-157
@@ -518,7 +521,7 @@ fn sci(x: f64) -> String { // Python-style 1.234e-157
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-12 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 == birthdays: 365 equally likely days ==
@@ -547,13 +550,498 @@ chart2,81.32,104.80,147.58,251.75,1779.20
 simulated collectors: mean 2368.61  (standard error 10.36, 2000 runs)
 == a die, all six faces ==
 E[T] = 6 H_6 = 14.7000
+ALL CHECKS PASS
 ```
 
 The simulated rooms give 0.5042 with standard error 0.0035, against the exact 0.507297; the simulated collectors average 2368.61 with standard error 10.36, against 2364.6460. Both sit within one standard error.
 
+### Lean
+
+Lean proves both exact formulas and the approximation for every $n$ and $d$, and checks the card's small examples.
+
+- Suppose $n$ people each get one of $d$ equally likely days, independently. Then $P(\text{no shared day})$ is the product of $1 - i/d$ for $i < n$.
+- Suppose people arrive one by one, with days drawn the same way. Then the average wait $E[T]$ until every day is taken is $d\,H_d$.
+- Take any $n$ and $d$. Then $1 - e^{-n(n-1)/(2d)}$ is at most $P(\text{shared})$, so the approximation never overstates the match chance.
+- Twenty-three people make 253 pairs.
+- With 365 days, 22 people give a match chance below one half, and 23 people give one above it.
+- With 12 months, 4 people give a match chance of 41/96, which is 0.427083. Five is the first number of people past one half.
+- The naive wait of 365 people for each day gives 133225.
+- A die needs $6\,H_6 = 14.7$ rolls on average to show all six faces.
+
+The decimals, the $d(\ln d + \gamma)$ shortcut, the spread, the median and the square-root rule are left to the Python and Rust checks.
+
+```lean
+-- Two classics: with d equally likely days drawn independently, the chance that n people all have different days is the product of (1 - i/d) for i < n, and the average number of people needed until every day is taken is d times the harmonic number H_d.
+import Mathlib.Probability.Independence.Basic
+import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
+import Mathlib.MeasureTheory.MeasurableSpace.Instances
+import Mathlib.NumberTheory.Harmonic.Defs
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Data.ENat.Lattice
+import Mathlib.Tactic.NormNum
+import Mathlib
+
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+
+lemma bc_prob_vec_mem
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (d : ℕ) (X : ι → Ω → Fin d) (hmeas : ∀ i, Measurable (X i))
+    (hind : iIndepFun X μ)
+    (hunif : ∀ i (k : Fin d), μ.real {ω | X i ω = k} = 1 / d)
+    (s : Finset (ι → Fin d)) :
+    μ.real {ω | (fun i => X i ω) ∈ s} = s.card / (d : ℝ) ^ (Fintype.card ι) := by
+  have hpt : ∀ f : ι → Fin d, μ.real {ω | (fun i => X i ω) = f} = (1 / (d : ℝ)) ^ Fintype.card ι := by
+    intro f
+    have h1 : {ω | (fun i => X i ω) = f} = ⋂ i ∈ (Finset.univ : Finset ι), X i ⁻¹' {f i} := by
+      ext ω; simp [funext_iff]
+    rw [h1, measureReal_def, hind.measure_inter_preimage_eq_mul _ (fun i _ => measurableSet_singleton _),
+      ENNReal.toReal_prod]
+    have h2 : ∀ i, (μ (X i ⁻¹' {f i})).toReal = 1 / (d : ℝ) := fun i => hunif i (f i)
+    simp only [h2, Finset.prod_const, Finset.card_univ]
+  have h1 : {ω | (fun i => X i ω) ∈ s} = ⋃ f ∈ s, {ω | (fun i => X i ω) = f} := by
+    ext ω; simp
+  rw [h1, measureReal_biUnion_finset]
+  · simp only [hpt, Finset.sum_const, nsmul_eq_mul, one_div, inv_pow]
+    rw [div_eq_mul_inv]
+  · intro f _ g _ hfg
+    refine Set.disjoint_left.mpr ?_
+    intro ω h1 h2
+    exact hfg (h1.symm.trans h2)
+  · intro f _
+    have : {ω | (fun i => X i ω) = f} = ⋂ i, X i ⁻¹' {f i} := by ext ω; simp [funext_iff]
+    rw [this]
+    exact MeasurableSet.iInter (fun i => hmeas i (measurableSet_singleton _))
+
+#print axioms bc_prob_vec_mem
+
+lemma bc_descFactorial_div (d n : ℕ) (hd : 0 < d) :
+    (d.descFactorial n : ℝ) / (d : ℝ) ^ n = ∏ i ∈ Finset.range n, (1 - (i : ℝ) / d) := by
+  have hd' : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.prod_range_succ, ← ih, Nat.descFactorial_succ]
+    rcases le_or_gt n d with h | h
+    · push_cast [Nat.cast_sub h]
+      field_simp
+      ring
+    · have : d.descFactorial n = 0 := Nat.descFactorial_eq_zero_iff_lt.mpr h
+      simp [this]
+
+#print axioms bc_descFactorial_div
+
+/-- Potential: expected remaining wait from `j` covered days out of `d`. -/
+noncomputable def bcH (d j : ℕ) : ℝ := ∑ i ∈ Finset.Ico j d, (d : ℝ) / (d - i)
+
+#print axioms bcH
+
+lemma bcH_nonneg_term (d i : ℕ) (hi : i ∈ Finset.Ico 0 d) : 0 ≤ (d : ℝ) / (d - i) := by
+  have : i < d := (Finset.mem_Ico.mp hi).2
+  have : (i : ℝ) < d := by exact_mod_cast this
+  positivity
+
+#print axioms bcH_nonneg_term
+
+lemma bcH_le (d j : ℕ) : bcH d j ≤ bcH d 0 := by
+  unfold bcH
+  apply Finset.sum_le_sum_of_subset_of_nonneg
+  · intro i hi; simp only [Finset.mem_Ico] at hi ⊢; omega
+  · intro i hi _; exact bcH_nonneg_term d i hi
+
+#print axioms bcH_le
+
+lemma bcH_nonneg (d j : ℕ) : 0 ≤ bcH d j := by
+  unfold bcH
+  apply Finset.sum_nonneg
+  intro i hi
+  have : i < d := (Finset.mem_Ico.mp hi).2
+  have : (i : ℝ) < d := by exact_mod_cast this
+  positivity
+
+#print axioms bcH_nonneg
+
+lemma bcH_self (d : ℕ) : bcH d d = 0 := by simp [bcH]
+
+#print axioms bcH_self
+
+lemma bcH_step (d j : ℕ) (hj : j ≤ d) :
+    (j : ℝ) * bcH d j + ((d : ℝ) - j) * bcH d (j + 1)
+      = d * bcH d j - if j < d then (d : ℝ) else 0 := by
+  rcases hj.lt_or_eq with h | h
+  · have hs : bcH d j = d / (d - j) + bcH d (j + 1) := by
+      unfold bcH; rw [Finset.sum_eq_sum_Ico_succ_bot h]
+    have hpos : (0 : ℝ) < d - j := by
+      have : (j : ℝ) < d := by exact_mod_cast h
+      linarith
+    rw [ite_eq_left_iff.mpr (fun h' => absurd h h'), hs]
+    field_simp
+    ring
+  · subst h; simp [bcH_self]
+
+#print axioms bcH_step
+
+lemma bcH_zero (d : ℕ) : bcH d 0 = d * (harmonic d : ℝ) := by
+  unfold bcH
+  rw [← Finset.range_eq_Ico, harmonic]
+  push_cast
+  rw [Finset.mul_sum]
+  rw [← Finset.sum_range_reflect]
+  apply Finset.sum_congr rfl
+  intro i hi
+  have hi : i < d := Finset.mem_range.mp hi
+  rw [Nat.cast_sub (by omega), Nat.cast_sub (by omega)]
+  push_cast
+  rw [div_eq_mul_inv]
+  congr 2
+  ring
+
+#print axioms bcH_zero
+
+lemma bc_image_cons {d m : ℕ} (k : Fin d) (f : Fin m → Fin d) :
+    Finset.univ.image (Fin.cons k f : Fin (m + 1) → Fin d) = insert k (Finset.univ.image f) := by
+  ext x
+  simp [Fin.exists_fin_succ, eq_comm]
+
+#print axioms bc_image_cons
+
+lemma bc_sum_insert {d : ℕ} (S : Finset (Fin d)) (g : ℕ → ℝ) :
+    ∑ k : Fin d, g (insert k S).card = S.card * g S.card + ((d : ℝ) - S.card) * g (S.card + 1) := by
+  rw [← Finset.sum_add_sum_compl S]
+  have h1 : ∑ k ∈ S, g (insert k S).card = S.card * g S.card := by
+    rw [Finset.sum_congr rfl (fun k hk => by rw [Finset.insert_eq_of_mem hk])]
+    simp
+  have h2 : ∑ k ∈ Sᶜ, g (insert k S).card = ((d : ℝ) - S.card) * g (S.card + 1) := by
+    rw [Finset.sum_congr rfl (fun k hk => by
+      rw [Finset.card_insert_of_notMem (Finset.mem_compl.mp hk)])]
+    simp only [Finset.sum_const, nsmul_eq_mul, Finset.card_compl, Fintype.card_fin]
+    rw [Nat.cast_sub (by simpa using S.card_le_univ)]
+  rw [h1, h2]
+
+#print axioms bc_sum_insert
+
+/-- Probability, after `m` draws, that some day is still missing. -/
+noncomputable def bcR (d m : ℕ) : ℝ :=
+  ((Finset.univ.filter (fun f : Fin m → Fin d => ¬ Function.Surjective f)).card : ℝ) / (d : ℝ) ^ m
+
+#print axioms bcR
+
+noncomputable def bcG (d m : ℕ) : ℝ :=
+  (∑ f : Fin m → Fin d, bcH d (Finset.univ.image f).card) / (d : ℝ) ^ m
+
+#print axioms bcG
+
+lemma bc_card_lt_iff {d m : ℕ} (f : Fin m → Fin d) :
+    (Finset.univ.image f).card < d ↔ ¬ Function.Surjective f := by
+  have := Finset.card_lt_iff_ne_univ (Finset.univ.image f)
+  rw [Fintype.card_fin] at this
+  rw [this, Ne, Finset.eq_univ_iff_forall]
+  simp [Function.Surjective]
+
+#print axioms bc_card_lt_iff
+
+lemma bcG_succ (d m : ℕ) (hd : 0 < d) : bcG d (m + 1) = bcG d m - bcR d m := by
+  have hd' : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+  have key : ∑ f : Fin (m + 1) → Fin d, bcH d (Finset.univ.image f).card
+      = ∑ f : Fin m → Fin d, (d * bcH d (Finset.univ.image f).card
+          - if ¬ Function.Surjective f then (d : ℝ) else 0) := by
+    rw [← (Fin.consEquiv (fun _ : Fin (m + 1) => Fin d)).sum_comp, Fintype.sum_prod_type_right]
+    apply Finset.sum_congr rfl
+    intro f _
+    simp only [Fin.consEquiv_apply, bc_image_cons]
+    rw [bc_sum_insert, bcH_step d _ (by simpa using (Finset.univ.image f).card_le_univ)]
+    simp only [bc_card_lt_iff]
+  unfold bcG bcR
+  rw [key, Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_ite, Finset.sum_const_zero,
+    add_zero, Finset.sum_const, nsmul_eq_mul]
+  field_simp
+  ring
+
+#print axioms bcG_succ
+
+lemma bcG_le (d m : ℕ) : bcG d m ≤ bcH d 0 * bcR d m := by
+  unfold bcG bcR
+  rw [mul_div_assoc']
+  apply div_le_div_of_nonneg_right _ (by positivity)
+  rw [Finset.card_filter, Nat.cast_sum, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro f _
+  by_cases hf : Function.Surjective f
+  · have : (Finset.univ.image f).card = d := by
+      have := (bc_card_lt_iff f).not.mpr (not_not.mpr hf)
+      have h2 := (Finset.univ.image f).card_le_univ
+      simp at h2; omega
+    simp [hf, this, bcH_self]
+  · simp [hf, bcH_le]
+
+#print axioms bcG_le
+
+lemma bcG_nonneg (d m : ℕ) : 0 ≤ bcG d m := by
+  unfold bcG
+  apply div_nonneg (Finset.sum_nonneg (fun f _ => bcH_nonneg _ _)) (by positivity)
+
+#print axioms bcG_nonneg
+
+lemma bcR_nonneg (d m : ℕ) : 0 ≤ bcR d m := by unfold bcR; positivity
+
+#print axioms bcR_nonneg
+
+lemma bcG_zero (d : ℕ) : bcG d 0 = bcH d 0 := by
+  simp [bcG]
+
+#print axioms bcG_zero
+
+lemma bc_hasSum (d : ℕ) (hd : 0 < d) : HasSum (bcR d) (d * (harmonic d : ℝ)) := by
+  rw [← bcH_zero]
+  have hpart : ∀ M, ∑ m ∈ Finset.range M, bcR d m = bcH d 0 - bcG d M := by
+    intro M
+    induction M with
+    | zero => simp [bcG_zero]
+    | succ M ih => rw [Finset.sum_range_succ, ih, bcG_succ d M hd]; ring
+  have hsum : Summable (bcR d) :=
+    summable_of_sum_range_le (bcR_nonneg d) (fun M => by
+      rw [hpart]; linarith [bcG_nonneg d M])
+  have hR : Filter.Tendsto (bcR d) Filter.atTop (nhds 0) := hsum.tendsto_atTop_zero
+  have hG : Filter.Tendsto (bcG d) Filter.atTop (nhds 0) := by
+    have h2 : Filter.Tendsto (fun M => bcH d 0 * bcR d M) Filter.atTop (nhds 0) := by
+      simpa using hR.const_mul (bcH d 0)
+    exact squeeze_zero (bcG_nonneg d) (bcG_le d) h2
+  rw [hasSum_iff_tendsto_nat_of_nonneg (bcR_nonneg d)]
+  simp_rw [hpart]
+  simpa using (tendsto_const_nhds (x := bcH d 0)).sub hG
+
+#print axioms bc_hasSum
+
+lemma bc_enat_tsum (n : ℕ∞) :
+    ((n : ℕ∞) : ℝ≥0∞) = ∑' m : ℕ, if (m : ℕ∞) < n then (1 : ℝ≥0∞) else 0 := by
+  induction n using ENat.recTopCoe with
+  | top => simp
+  | coe k =>
+    rw [tsum_eq_sum (s := Finset.range k)]
+    · simp only [Nat.cast_lt]
+      rw [Finset.sum_ite_of_true (fun m hm => Finset.mem_range.mp hm)]
+      simp
+    · intro m hm
+      simp only [Finset.mem_range, not_lt] at hm
+      simp [Nat.cast_lt, not_lt.mpr hm]
+
+#print axioms bc_enat_tsum
+
+lemma bc_lt_iInf {d : ℕ} {Ω : Type*} (X : ℕ → Ω → Fin d) (ω : Ω) (m : ℕ) :
+    (m : ℕ∞) < ⨅ (m' : ℕ) (_ : ∀ k : Fin d, ∃ i < m', X i ω = k), (m' : ℕ∞)
+      ↔ ¬ ∀ k : Fin d, ∃ i < m, X i ω = k := by
+  constructor
+  · intro hlt hcov
+    exact absurd hlt (not_lt.mpr (iInf₂_le m hcov))
+  · intro hnc
+    have h : ((m + 1 : ℕ) : ℕ∞) ≤ ⨅ (m' : ℕ) (_ : ∀ k : Fin d, ∃ i < m', X i ω = k), (m' : ℕ∞) := by
+      refine le_iInf₂ (fun m' hm' => ?_)
+      rw [Nat.cast_le]
+      by_contra hle
+      apply hnc
+      intro k
+      obtain ⟨i, hi, hk⟩ := hm' k
+      exact ⟨i, by omega, hk⟩
+    exact lt_of_lt_of_le (Nat.cast_lt.mpr (Nat.lt_succ_self m)) h
+
+#print axioms bc_lt_iInf
+
+/-- The birthday problem. n people each get one of d days. Every day is equally likely for
+every person (chance 1/d), and the people are independent; days are drawn with replacement.
+Then the chance that no two people share a day is the product of shrinking fractions
+(d/d)((d-1)/d)⋯((d-n+1)/d), that is, the product of (1 - i/d) for i = 0, …, n-1. The chance of
+a shared day is one minus this. -/
+theorem birthday_no_shared_day_prob
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (n d : ℕ) (X : Fin n → Ω → Fin d) (hmeas : ∀ i, Measurable (X i))
+    (hind : iIndepFun X μ)
+    (hunif : ∀ i (k : Fin d), μ.real {ω | X i ω = k} = 1 / d) :
+    μ.real {ω | Function.Injective (fun i => X i ω)}
+      = ∏ i ∈ Finset.range n, (1 - (i : ℝ) / d) := by
+  rcases Nat.eq_zero_or_pos d with hd | hd
+  · subst hd
+    rcases Nat.eq_zero_or_pos n with hn | hn
+    · subst hn
+      have : {ω | Function.Injective (fun i : Fin 0 => X i ω)} = Set.univ := by
+        ext ω; simp [Function.Injective]
+      simp [this]
+    · obtain ⟨ω⟩ : Nonempty Ω := nonempty_of_isProbabilityMeasure μ
+      exact (X ⟨0, hn⟩ ω).elim0
+  have h1 : {ω | Function.Injective (fun i => X i ω)}
+      = {ω | (fun i => X i ω) ∈ (Finset.univ.filter (fun f : Fin n → Fin d => Function.Injective f))} := by
+    ext ω; simp
+  rw [h1, bc_prob_vec_mem μ d X hmeas hind hunif, Fintype.card_fin, ← bc_descFactorial_div d n hd]
+  congr 2
+  rw [← Fintype.card_subtype, Fintype.card_congr (Equiv.subtypeInjectiveEquivEmbedding _ _),
+    Fintype.card_embedding_eq]
+  simp
+
+/-- The coupon collector's problem. People arrive one by one; each gets one of d days, every day
+equally likely (chance 1/d), independently of everyone else, drawn with replacement. Let T be the
+number of people who arrive until every one of the d days has been taken. Then the average of T
+is d/d + d/(d-1) + ⋯ + d/1 = d H_d, where H_d = 1 + 1/2 + ⋯ + 1/d is the d-th harmonic number.
+(T is counted in ℕ∞, with value ∞ if the set is never completed.) -/
+theorem coupon_collector_expected_wait
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (d : ℕ) (X : ℕ → Ω → Fin d) (hmeas : ∀ i, Measurable (X i))
+    (hind : iIndepFun X μ)
+    (hunif : ∀ i (k : Fin d), μ.real {ω | X i ω = k} = 1 / d) :
+    let T : Ω → ℕ∞ := fun ω => ⨅ (m : ℕ) (_ : ∀ k : Fin d, ∃ i < m, X i ω = k), (m : ℕ∞)
+    ∫⁻ ω, ((T ω : ℕ∞) : ℝ≥0∞) ∂μ = ENNReal.ofReal ((d : ℝ) * (harmonic d : ℝ)) := by
+  intro T
+  rcases Nat.eq_zero_or_pos d with hd | hd
+  · subst hd
+    obtain ⟨ω⟩ : Nonempty Ω := nonempty_of_isProbabilityMeasure μ
+    exact (X 0 ω).elim0
+  let C : ℕ → Set Ω := fun m => {ω | ¬ ∀ k : Fin d, ∃ i < m, X i ω = k}
+  have hC : ∀ m, C m = {ω | (fun i : Fin m => X i ω) ∈
+      Finset.univ.filter (fun f : Fin m → Fin d => ¬ Function.Surjective f)} := by
+    intro m
+    ext ω
+    simp only [C, Set.mem_ofPred_eq, Finset.mem_filter, Finset.mem_univ, true_and]
+    unfold Function.Surjective
+    refine not_congr (forall_congr' (fun k => ?_))
+    exact ⟨fun ⟨i, hi, h⟩ => ⟨⟨i, hi⟩, h⟩, fun ⟨a, h⟩ => ⟨a, a.2, h⟩⟩
+  have hCmeas : ∀ m, MeasurableSet (C m) := by
+    intro m
+    rw [hC]
+    exact (measurable_pi_iff.mpr (fun i : Fin m => hmeas (i : ℕ))) (Finset.measurableSet _)
+  have hprob : ∀ m, μ.real (C m) = bcR d m := by
+    intro m
+    rw [hC, bc_prob_vec_mem μ d (fun i : Fin m => X i) (fun i => hmeas i)
+      (hind.precomp Fin.val_injective) (fun i k => hunif i k)]
+    simp [bcR]
+  have hTsum : ∀ ω, ((T ω : ℕ∞) : ℝ≥0∞) = ∑' m, (C m).indicator 1 ω := by
+    intro ω
+    rw [bc_enat_tsum]
+    congr 1
+    ext m
+    by_cases h : ¬ ∀ k : Fin d, ∃ i < m, X i ω = k
+    · have h' : (m : ℕ∞) < T ω := (bc_lt_iInf X ω m).mpr h
+      simp only [h', ↓reduceIte]
+      rw [Set.indicator_of_mem (show ω ∈ C m from h)]
+      rfl
+    · have h' : ¬ (m : ℕ∞) < T ω := fun hh => h ((bc_lt_iInf X ω m).mp hh)
+      simp only [h', ↓reduceIte]
+      rw [Set.indicator_of_notMem (show ω ∉ C m from h)]
+  calc ∫⁻ ω, ((T ω : ℕ∞) : ℝ≥0∞) ∂μ = ∫⁻ ω, ∑' m, (C m).indicator 1 ω ∂μ :=
+        lintegral_congr (fun ω => hTsum ω)
+    _ = ∑' m, ∫⁻ ω, (C m).indicator 1 ω ∂μ :=
+        lintegral_tsum (fun m => (measurable_const.indicator (hCmeas m)).aemeasurable)
+    _ = ∑' m, ENNReal.ofReal (bcR d m) := by
+        congr 1
+        ext m
+        rw [lintegral_indicator_one (hCmeas m), ← hprob, ofReal_measureReal]
+    _ = ENNReal.ofReal (∑' m, bcR d m) :=
+        (ENNReal.ofReal_tsum_of_nonneg (bcR_nonneg d) (bc_hasSum d hd).summable).symm
+    _ = _ := by rw [(bc_hasSum d hd).tsum_eq]
+
+/-- Why 23: each factor 1 - i/d is at most e^(-i/d), so the no-match chance is at most
+e^(-n(n-1)/(2d)), where n(n-1)/2 is the number of pairs. So the approximation
+1 - e^(-n(n-1)/(2d)) never overstates the chance of a shared day. -/
+theorem birthday_approx_understates_match
+    (n d : ℕ) :
+    1 - Real.exp (-((n : ℝ) * (n - 1)) / (2 * d))
+      ≤ 1 - ∏ i ∈ Finset.range n, (1 - (i : ℝ) / d) := by
+  rcases Nat.eq_zero_or_pos d with hd0 | hd0
+  · subst hd0; simp
+  rcases le_or_gt n d with h | h
+  · have hsum : ∑ i ∈ Finset.range n, (-(i : ℝ) / d) = -((n : ℝ) * (n - 1)) / (2 * d) := by
+      rw [← Finset.sum_div, Finset.sum_neg_distrib]
+      have := Finset.sum_range_id_mul_two n
+      have h2 : (∑ i ∈ Finset.range n, (i : ℝ)) * 2 = (n : ℝ) * (n - 1) := by
+        rcases Nat.eq_zero_or_pos n with hn | hn
+        · subst hn; simp
+        · have := congrArg (fun x : ℕ => (x : ℝ)) this
+          push_cast [Nat.cast_sub (show 1 ≤ n from hn)] at this
+          linarith
+      rcases Nat.eq_zero_or_pos d with hd | hd
+      · subst hd; simp
+      · field_simp
+        linarith
+    have : ∏ i ∈ Finset.range n, (1 - (i : ℝ) / d) ≤ Real.exp (-((n : ℝ) * (n - 1)) / (2 * d)) := by
+      rw [← hsum, Real.exp_sum]
+      apply Finset.prod_le_prod₀
+      · intro i hi
+        have hi' : i < n := Finset.mem_range.mp hi
+        rcases Nat.eq_zero_or_pos d with hd | hd
+        · subst hd; simp
+        · rw [sub_nonneg, div_le_one (by exact_mod_cast hd)]
+          exact_mod_cast (hi'.trans_le h).le
+      · intro i _
+        have := Real.add_one_le_exp (-(i : ℝ) / d)
+        linarith [show -(i : ℝ) / d + 1 = 1 - (i : ℝ) / d by ring]
+    linarith
+  · have hd : 0 < d := hd0
+    have h0 : ∏ i ∈ Finset.range n, (1 - (i : ℝ) / d) = 0 := by
+      apply Finset.prod_eq_zero (Finset.mem_range.mpr h)
+      have : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+      rw [div_self this, sub_self]
+    rw [h0]
+    linarith [Real.exp_pos (-((n : ℝ) * (n - 1)) / (2 * d))]
+
+-- Twenty-three people make 23 × 22 / 2 = 253 pairs.
+example : 23 * 22 / 2 = 253 := by norm_num
+-- With 365 days, 22 people fall just short of a one-half match chance and 23 people pass it.
+example : (1 / 2 : ℚ) < ∏ i ∈ Finset.range 22, (1 - (i : ℚ) / 365) := by
+  norm_num [Finset.prod_range_succ]
+example : ∏ i ∈ Finset.range 23, (1 - (i : ℚ) / 365) < 1 / 2 := by
+  norm_num [Finset.prod_range_succ]
+-- Birth months: 12 equally likely months and 4 people give 12^4 = 20736 lists,
+-- of which 12 × 11 × 10 × 9 = 11880 have no repeat.
+example : 12 ^ 4 = 20736 ∧ 12 * 11 * 10 * 9 = 11880 := by norm_num
+-- So the match chance for 4 people is 1 - 11880/20736 = 41/96.
+example : 1 - ∏ i ∈ Finset.range 4, (1 - (i : ℚ) / 12) = 41 / 96 := by
+  norm_num [Finset.prod_range_succ]
+-- With 12 months, 5 is the first number of people whose match chance passes one half.
+example : (1 / 2 : ℚ) < ∏ i ∈ Finset.range 4, (1 - (i : ℚ) / 12) ∧
+    ∏ i ∈ Finset.range 5, (1 - (i : ℚ) / 12) < 1 / 2 := by
+  norm_num [Finset.prod_range_succ]
+-- Naive mistake: waiting 365 for each of the 365 days gives 365 × 365 = 133225.
+example : 365 * 365 = 133225 := by norm_num
+-- A die, all six faces: E[T] = 6 H_6 = 147/10.
+example : (6 : ℚ) * harmonic 6 = 147 / 10 := by
+  norm_num [harmonic, Finset.sum_range_succ]
+
+#print axioms birthday_no_shared_day_prob
+#print axioms coupon_collector_expected_wait
+#print axioms birthday_approx_understates_match
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bc_prob_vec_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bc_descFactorial_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcH' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcH_nonneg_term' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcH_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcH_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcH_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcH_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcH_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bc_image_cons' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bc_sum_insert' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcR' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcG' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bc_card_lt_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcG_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcG_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcG_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcR_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bcG_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bc_hasSum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bc_enat_tsum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bc_lt_iInf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'birthday_no_shared_day_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coupon_collector_expected_wait' depends on axioms: [propext, Classical.choice, Quot.sound]
+'birthday_approx_understates_match' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
-> - **A die instead of a calendar.** Guess first: how many rolls to see all six faces? The last line of the output computes `6 * harmonic(6)`: 14.7000 rolls on average, not 6.
+> - **A die instead of a calendar.** Guess first: how many rolls to see all six faces? The `E[T] = 6 H_6` line of the output computes `6 * harmonic(6)`: 14.7000 rolls on average, not 6.
 > - **70 people.** Guess first, then read the `(40, 57, 70)` loop. The chance of a shared birthday is 0.999160: a 70-person room with no match is rarer than 1 in 1000.
 > - **Birth months.** Guess first: with 12 months, how many people for a better-than-even shared month? The months line answers it: 4 people give 0.427083, and the threshold is 5.
 > - **A bunched calendar.** Change the weights `1.2` and `0.8` to `1.0` and `1.0`. The uneven-calendar line falls back to 0.507297, the equal-days answer.
@@ -574,8 +1062,8 @@ The simulated rooms give 0.5042 with standard error 0.0035, against the exact 0.
 
 ## Where you meet it in real life
 
-- **Hash tables and checksums.** A hash assigns each item one of $d$ labels; two items with the same label collide. Collisions start near $\sqrt{d}$ items, not $d$, which is why hash tables resize early and why Hashing for size budgets for them.
-- **Cryptographic hashes.** A "birthday attack" finds two messages with the same fingerprint of $b$ bits after about $2^{b/2}$ tries, not $2^{b}$. That halving of the exponent sets fingerprint lengths in Hashes and MACs.
+- **Hash tables and checksums.** A hash assigns each item one of $d$ labels; two items with the same label collide. Collisions start near $\sqrt{d}$ items, not $d$, which is why hash tables resize early and why [Hashing for size](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/04-hashing-bloom-filters-and-sketches.md) budgets for them.
+- **Cryptographic hashes.** A "birthday attack" finds two messages with the same fingerprint of $b$ bits after about $2^{b/2}$ tries, not $2^{b}$. That halving of the exponent sets fingerprint lengths in [Hashes and MACs](../../14-Applied%20and%20computational/04-Cryptography/03-hash-functions-and-macs.md).
 - **Sticker albums and collectible toys.** Completing a set of $d$ random stickers costs about $d \ln d$ packets; the last few are the expensive ones, which is why swaps and direct orders exist.
 - **Testing by random inputs.** Random tests hit each of $d$ equally likely cases after about $d H_d$ tries; the last cases take most of the budget.
 - **Counts per day.** How many birthdays land on each day of the year is a [Multinomial](05-multinomial.md) count; the birthday problem asks whether any count reaches 2, the collector whether none stays at 0.
@@ -601,7 +1089,7 @@ This card counts collisions when labels are drawn at random; what a hash functio
 
 ## Sources
 
-Verified 2026-09-28: every link below opens a page naming the cited work.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Feller, William. *An Introduction to Probability Theory and Its Applications*, Volume 1, 3rd ed. Wiley, 1968. [Publisher page](https://www.wiley.com/en-us/An+Introduction+to+Probability+Theory+and+Its+Applications%2C+Volume+1%2C+3rd+Edition-p-9780471257080). The classic treatment of both problems as occupancy questions: balls dropped into cells.
 - Blitzstein, Joseph K., and Jessica Hwang. *Introduction to Probability*, 2nd ed. Chapman and Hall/CRC, 2019. [Publisher page](https://www.routledge.com/Introduction-to-Probability-Second-Edition/Blitzstein-Hwang/p/book/9781138369917). The birthday product by counting, and the collector's average by adding geometric waits.

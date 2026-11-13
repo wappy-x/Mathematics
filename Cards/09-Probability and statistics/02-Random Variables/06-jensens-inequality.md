@@ -12,7 +12,11 @@ The average year is good. Half of $1.50 plus half of $0.60 is $1.05, so the fund
 
 Now follow one investor. The most common count, five heads and five tails, ends at $59.05; that is also the median run. Of the 1,024 equally likely ten-year runs, 638 finish below the $100 start: 62.3% of them. The average balance climbs while most balances shrink.
 
-Nothing is wrong with the arithmetic. Growth is multiplied, not added, and multiplying bends the picture. Take logarithms and the multiplying becomes adding; the logarithm's graph bends downward. The average of the logarithm of the yearly growth is −0.0527: shrinking. The logarithm of the average growth is +0.0488: growing. Squaring bends the other way: the average of the squared growth, 1.305, beats the square of the average growth, 1.1025. The difference, 0.2025, is exactly the variance of one year's growth.
+Nothing is wrong with the arithmetic. Growth is multiplied, not added, and multiplying bends the picture.
+
+Take logarithms and the multiplying becomes adding; the logarithm's graph bends downward. The average of the logarithm of the yearly growth is −0.0527: shrinking. The logarithm of the average growth is +0.0488: growing.
+
+Squaring bends the other way: the average of the squared growth, 1.305, beats the square of the average growth, 1.1025. The difference, 0.2025, is exactly the variance of one year's growth.
 
 Apply a bent function before averaging and you get a different number from applying it after. Which one is larger depends only on which way the curve bends.
 
@@ -70,7 +74,7 @@ $$E[\ln X] \;\le\; \ln E[X] \qquad \text{for } X > 0$$
 | $k$ | the number of heads in a ten-year run | 5 on the median run | — |
 | $R$ | a return: growth factor minus 1 | +0.50 or −0.40 | — |
 
-For the logarithm, raising $\operatorname{Var}(X)$ with $m$ fixed lowers $E[\ln X]$: more spread, slower typical growth. A second-order Taylor expansion of $\ln$ around $m$ says by how much:
+For the logarithm, raising $\operatorname{Var}(X)$ with $m$ fixed lowers $E[\ln X]$: more spread, slower typical growth. A second-order Taylor expansion of $\ln$ around $m$ says by how much. It swaps the curve near $m$ for the parabola with the same height, slope and bend at $m$:
 
 $$E[\ln X] \;\approx\; \ln m - \frac{\operatorname{Var}(X)}{2m^2}$$
 
@@ -196,7 +200,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The scripts import only logarithm, exponential and square root. They reach each answer by three roads. First, exact sums over the two outcomes, with the variance computed twice: by the shortcut and by its definition. Second, all 1,024 ten-year runs enumerated one at a time, checked against the formula $1.05^{10}$ and against a count by $C(10, k)$, the number of ways to place $k$ heads among 10 years. Third, a seeded simulation of 200,000 runs with a small random-number generator, SplitMix64, written out in both languages, printed with standard errors. The calmer year, the cube counterexample and every charted point are printed too.
+The scripts import only logarithm, exponential and square root. They reach each answer by three roads. First, exact sums over the two outcomes, with the variance computed twice: by the shortcut and by its definition. Second, all 1,024 ten-year runs enumerated one at a time, checked against the formula $1.05^{10}$ and against a count by $C(10, k)$, the number of ways to place $k$ heads among 10 years. Third, a seeded simulation of 200,000 runs with a small random-number generator, SplitMix64, written out in both languages, printed with standard errors (the typical size of the simulation's miss). The calmer year, the cube counterexample and every charted point are printed too.
 
 ### Python
 
@@ -546,6 +550,173 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulation included, because both languages draw the same numbers from the same seed. The simulated mean wealth, 1.641021, sits 1.6 standard errors above the exact 1.628895: the mean is dragged about by rare runs of heads, so it settles slowly.
 
+### Lean
+
+Lean proves Jensen's inequality for every random variable whose averages exist, plus its square and logarithm cases.
+
+- **Jensen's inequality.** Suppose $\varphi$ is convex over every value $X$ can take, and both averages, $E[X]$ and $E[\varphi(X)]$, exist. Then $\varphi(E[X]) \le E[\varphi(X)]$.
+- **The square.** Suppose $E[X]$ and $E[X^2]$ both exist. Then $(E[X])^2 \le E[X^2]$, and the gap $E[X^2] - (E[X])^2$ equals $\operatorname{Var}(X)$.
+- **The logarithm.** Suppose $X > 0$, and $E[X]$ and $E[\ln X]$ both exist. Then $E[\ln X] \le \ln E[X]$.
+- **The worked numbers.** Average growth is 1.05, and the square gap and the variance are both 0.2025. Of the 1,024 ten-year runs, 638 end below the start.
+- **The cube.** On returns of −40% or +10%, the average cube lies below the cube of the average return.
+
+The logarithm decimals, the drag rule, the calmer second case and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Jensen's inequality: for a convex function on an interval holding a random variable's values, the function of the average is at most the average of the function, with the square and logarithm cases.
+import Mathlib.Analysis.Convex.Integral
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Algebra.BigOperators.Intervals
+
+open MeasureTheory ProbabilityTheory
+
+theorem jensen_support_line_aux {s : Set ℝ} {φ : ℝ → ℝ} (hφ : ConvexOn ℝ s φ) {m y z : ℝ}
+    (hy : y ∈ s) (hz : z ∈ s) (hym : y < m) (hmz : m < z) :
+    ∃ c : ℝ, ∀ x ∈ s, φ m + c * (x - m) ≤ φ x := by
+  have hm : m ∈ s := hφ.1.ordConnected.out hy hz ⟨hym.le, hmz.le⟩
+  set S := (fun w => (φ m - φ w) / (m - w)) '' {w | w ∈ s ∧ w < m} with hS
+  have hne : S.Nonempty := ⟨_, ⟨y, ⟨hy, hym⟩, rfl⟩⟩
+  have hbdd : BddAbove S := by
+    refine ⟨(φ z - φ m) / (z - m), ?_⟩
+    rintro _ ⟨w, ⟨hw, hwm⟩, rfl⟩
+    exact hφ.slope_mono_adjacent hw hz hwm hmz
+  refine ⟨sSup S, fun x hx => ?_⟩
+  rcases lt_trichotomy x m with hxm | rfl | hxm
+  · have h1 : (φ m - φ x) / (m - x) ≤ sSup S := le_csSup hbdd ⟨x, ⟨hx, hxm⟩, rfl⟩
+    have hpos : 0 < m - x := sub_pos.mpr hxm
+    rw [div_le_iff₀ hpos] at h1
+    nlinarith
+  · simp
+  · have h1 : sSup S ≤ (φ x - φ m) / (x - m) := by
+      apply csSup_le hne
+      rintro _ ⟨w, ⟨hw, hwm⟩, rfl⟩
+      exact hφ.slope_mono_adjacent hw hx hwm hxm
+    have hpos : 0 < x - m := sub_pos.mpr hxm
+    rw [le_div_iff₀ hpos] at h1
+    nlinarith
+
+#print axioms jensen_support_line_aux
+
+theorem jensen_ae_eq_of_le_aux {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] {X : Ω → ℝ} {m : ℝ} (hX : Integrable X μ)
+    (hle : ∀ᵐ ω ∂μ, m ≤ X ω) (hint : ∫ ω, X ω ∂μ = m) : ∀ᵐ ω ∂μ, X ω = m := by
+  have h0 : ∫ ω, (X ω - m) ∂μ = 0 := by
+    rw [integral_sub hX (integrable_const m), hint]; simp
+  have hnn : 0 ≤ᵐ[μ] fun ω => X ω - m := by
+    filter_upwards [hle] with ω h; simp [h]
+  have := (integral_eq_zero_iff_of_nonneg_ae hnn (hX.sub (integrable_const m))).1 h0
+  filter_upwards [this] with ω h
+  simpa [sub_eq_zero] using h
+
+#print axioms jensen_ae_eq_of_le_aux
+
+/-- Jensen's inequality. Let `X` be a random variable on a probability space and `φ` a function
+that bends upward (is convex) on an interval `s` holding every value of `X`. If the averages of
+`X` and of `φ(X)` both exist, then `φ` of the average is at most the average of `φ`:
+`φ(E[X]) ≤ E[φ(X)]`. -/
+theorem jensen_convex_map_expectation_le {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] {s : Set ℝ} {φ : ℝ → ℝ} {X : Ω → ℝ}
+    (hφ : ConvexOn ℝ s φ) (hXs : ∀ᵐ ω ∂μ, X ω ∈ s)
+    (hX : Integrable X μ) (hφX : Integrable (fun ω => φ (X ω)) μ) :
+    φ (∫ ω, X ω ∂μ) ≤ ∫ ω, φ (X ω) ∂μ := by
+  set m := ∫ ω, X ω ∂μ with hm
+  -- constant case helper
+  have hconst : (∀ᵐ ω ∂μ, X ω = m) → φ m ≤ ∫ ω, φ (X ω) ∂μ := by
+    intro hae
+    have : (fun ω => φ (X ω)) =ᵐ[μ] fun _ => φ m := by
+      filter_upwards [hae] with ω h; rw [h]
+    rw [integral_congr_ae this]; simp
+  by_cases hz : ∃ z ∈ s, m < z
+  · by_cases hy : ∃ y ∈ s, y < m
+    · obtain ⟨z, hzs, hmz⟩ := hz
+      obtain ⟨y, hys, hym⟩ := hy
+      obtain ⟨c, hc⟩ := jensen_support_line_aux hφ hys hzs hym hmz
+      have h1 : Integrable (fun ω => X ω - m) μ := hX.sub (integrable_const m)
+      have h2 : Integrable (fun ω => c * (X ω - m)) μ := h1.const_mul c
+      have hlin : Integrable (fun ω => φ m + c * (X ω - m)) μ := (integrable_const _).add h2
+      have hcalc : ∫ ω, (φ m + c * (X ω - m)) ∂μ = φ m := by
+        rw [integral_add (integrable_const _) h2,
+          integral_const_mul, integral_sub hX (integrable_const m)]
+        simp [← hm]
+      calc φ m = ∫ ω, (φ m + c * (X ω - m)) ∂μ := hcalc.symm
+        _ ≤ ∫ ω, φ (X ω) ∂μ := by
+          apply integral_mono_ae hlin hφX
+          filter_upwards [hXs] with ω h using hc _ h
+    · push Not at hy
+      apply hconst
+      exact jensen_ae_eq_of_le_aux hX (by filter_upwards [hXs] with ω h using hy _ h) hm.symm
+  · push Not at hz
+    apply hconst
+    have hneg := jensen_ae_eq_of_le_aux (m := -m) (X := fun ω => -X ω) hX.neg
+      (by filter_upwards [hXs] with ω h; simpa using hz _ h)
+      (by show ∫ ω, -X ω ∂μ = -m; rw [integral_neg])
+    filter_upwards [hneg] with ω h; simpa using h
+
+/-- The logarithm bends downward, so for a positive random variable whose average and average
+logarithm both exist, the average of the logarithms is at most the logarithm of the average:
+`E[ln X] ≤ ln E[X]`. -/
+theorem expectation_log_le_log_expectation {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] {X : Ω → ℝ}
+    (hpos : ∀ᵐ ω ∂μ, 0 < X ω) (hX : Integrable X μ)
+    (hlogX : Integrable (fun ω => Real.log (X ω)) μ) :
+    ∫ ω, Real.log (X ω) ∂μ ≤ Real.log (∫ ω, X ω ∂μ) := by
+  have h := jensen_convex_map_expectation_le (μ := μ) (s := Set.Ioi 0)
+    (φ := fun x => -Real.log x) (X := X) strictConcaveOn_log_Ioi.concaveOn.neg hpos hX hlogX.neg
+  simp only [integral_neg] at h
+  linarith
+
+/-- The square of the average never beats the average of the square, and the gap is exactly
+the variance: `(E[X])² ≤ E[X²]` and `E[X²] - (E[X])² = Var(X)`. -/
+theorem sq_expectation_le_expectation_sq_and_gap_eq_variance {Ω : Type*} [MeasurableSpace Ω]
+    {μ : Measure Ω} [IsProbabilityMeasure μ] {X : Ω → ℝ}
+    (hX : Integrable X μ) (hX2 : Integrable (fun ω => X ω ^ 2) μ) :
+    (∫ ω, X ω ∂μ) ^ 2 ≤ ∫ ω, X ω ^ 2 ∂μ ∧
+      ∫ ω, X ω ^ 2 ∂μ - (∫ ω, X ω ∂μ) ^ 2 = variance X μ := by
+  have hL2 : MemLp X 2 μ := (memLp_two_iff_integrable_sq hX.aestronglyMeasurable).2 hX2
+  have hv : ∫ ω, X ω ^ 2 ∂μ - (∫ ω, X ω ∂μ) ^ 2 = variance X μ := by
+    rw [variance_eq_sub hL2]; rfl
+  refine ⟨?_, hv⟩
+  have := variance_nonneg X μ
+  linarith
+
+-- The fund: growth 3/2 or 3/5, chance 1/2 each. Average growth is 21/20 (1.05).
+example : (1/2 : ℚ) * (3/2) + (1/2) * (3/5) = 21/20 := by norm_num
+-- Average of the squares is 261/200 (1.305); square of the average is 441/400 (1.1025).
+example : (1/2 : ℚ) * (3/2)^2 + (1/2) * (3/5)^2 = 261/200 := by norm_num
+example : (21/20 : ℚ)^2 = 441/400 := by norm_num
+-- The square gap, 81/400 (0.2025), equals the variance computed by its definition.
+example : (261/200 : ℚ) - (21/20)^2 = 81/400 := by norm_num
+example : (1/2 : ℚ) * (3/2 - 21/20)^2 + (1/2) * (3/5 - 21/20)^2 = 81/400 := by norm_num
+-- A head then a tail multiplies wealth by 9/10; the median ten-year run turns $100 into $59.049.
+example : (3/2 : ℚ) * (3/5) = 9/10 := by norm_num
+example : (100 : ℚ) * (9/10)^5 = 59049/1000 := by norm_num
+-- Of the 2^10 = 1024 ten-year runs, 638 end below the start: k heads end below exactly when
+-- (3/2)^k (3/5)^(10-k) < 1, that is 3^10 < 2^k 5^(10-k).
+example : 2 ^ 10 = 1024 := by norm_num
+example : ((Finset.range 11).filter (fun k => 3 ^ 10 < 2 ^ k * 5 ^ (10 - k))).sum
+    (fun k => Nat.choose 10 k) = 638 := by decide
+-- The cube on returns -2/5 or 1/10: average cube -63/2000 (-0.0315) lies below the cube of the
+-- average return, -27/8000 (-0.003375), so the inequality runs the wrong way.
+example : (1/2 : ℚ) * (-2/5)^3 + (1/2) * (1/10)^3 = -63/2000 := by norm_num
+example : ((1/2 : ℚ) * (-2/5) + (1/2) * (1/10))^3 = -27/8000 := by norm_num
+example : (-63/2000 : ℚ) < -27/8000 := by norm_num
+
+#print axioms jensen_convex_map_expectation_le
+#print axioms expectation_log_le_log_expectation
+#print axioms sq_expectation_le_expectation_sq_and_gap_eq_variance
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'jensen_support_line_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_ae_eq_of_le_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jensen_convex_map_expectation_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expectation_log_le_log_expectation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sq_expectation_le_expectation_sq_and_gap_eq_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -574,7 +745,7 @@ The two outputs match line for line, simulation included, because both languages
 - **Variance is never negative.** $E[X^2] \ge (E[X])^2$ is the square case of Jensen; [Variance](03-variance-and-standard-deviation.md) builds everything on that gap.
 - **Options have value at the money.** A call payoff is convex in the final price, so its average payoff exceeds the payoff at the average price. The volatility swap, whose payoff is a square root of variance, sits on the concave side ([The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
 - **Risk aversion.** A concave utility of money makes a sure $1.05 worth more than a coin toss between $1.50 and $0.60: [Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md).
-- **Information theory.** The logarithm's concavity makes the KL divergence, a measure of mismatch between two laws of chance, never negative: KL divergence.
+- **Information theory.** The logarithm's concavity makes the KL divergence, a measure of mismatch between two laws of chance, never negative: [KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md).
 
 > **Say it back**
 > Averaging passes through straight lines unchanged and through bent curves with a gap. For a curve that bends upward, the average of the curve's values is at least the curve at the average; a supporting line through the mean proves it in two steps. For the square the gap is exactly the variance. For the logarithm, which bends down, the average log is below the log of the average, so the typical path of a compounding investment grows more slowly than its average. The coin-toss fund averages 5% a year, and most runs still lose money.
@@ -600,9 +771,9 @@ Jensen says which side of the average a bent function lands on and, for the squa
 
 ## Sources
 
-Verified 2026-09-28: every link below was opened and names the cited work.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Jensen, J. L. W. V. "Sur les fonctions convexes et les inégalités entre les valeurs moyennes." *Acta Mathematica* 30 (1906), 175–193. [DOI](https://doi.org/10.1007/BF02418571). The inequality's origin.
-- Boyd, Stephen, and Lieven Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [Authors' page with the full text](https://web.stanford.edu/~boyd/cvxbook/). Section 3.1 gives the supporting-line view of convexity and Jensen's inequality for expectations.
+- Boyd, Stephen, and Lieven Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [Publisher's page](https://doi.org/10.1017/CBO9780511804441). Section 3.1 gives the supporting-line view of convexity and Jensen's inequality for expectations.
 - Kelly, J. L., Jr. "A New Interpretation of Information Rate." *Bell System Technical Journal* 35 (1956), 917–926. [DOI](https://doi.org/10.1002/j.1538-7305.1956.tb03809.x). Growth of wealth measured by the average logarithm.
 - Peters, Ole. "The ergodicity problem in economics." *Nature Physics* 15 (2019), 1216–1221. [DOI](https://doi.org/10.1038/s41567-019-0732-0). A multiplicative coin-toss gamble in which the average over many players grows while almost every single player's wealth shrinks.

@@ -127,7 +127,7 @@ For Markov, the shelf's house raffle does it. One ticket in 100 pays $100, the r
 $$\mu = \sum_{x < a} x \, P(X = x) + \sum_{x \ge a} x \, P(X = x) \ge 0 + \sum_{x \ge a} a \, P(X = x) = a \, P(X \ge a).$$
 The first sum is at least 0 because every $x$ is; the second has each $x$ at least $a$. Dividing by $a$ gives the result. Equality needs both steps tight: no chance on values strictly between 0 and $a$, and no chance above $a$.
 
-**Chebyshev.** Suppose $\sigma^2 = \sum_x (x - \mu)^2 P(X = x)$ is finite, and let $\varepsilon > 0$. Put $Y = (X - \mu)^2$, never negative, with $E[Y] = \sigma^2$. For every value, $\lvert x - \mu \rvert \ge \varepsilon$ holds exactly when $(x - \mu)^2 \ge \varepsilon^2$, so the two events have the same chance. Markov on $Y$ at $\varepsilon^2$ gives $P(\lvert X - \mu \rvert \ge \varepsilon) \le \sigma^2 / \varepsilon^2$. If $\sigma > 0$, setting $\varepsilon = k\sigma$ gives the $1/k^2$ form. If $\sigma = 0$, the variance card shows $X$ equals $\mu$ with chance 1, and both sides are 0 for every $\varepsilon > 0$.
+**Chebyshev.** Suppose $\sigma^2 = \sum_x (x - \mu)^2 P(X = x)$ is finite, and let $\varepsilon > 0$. Put $Y = (X - \mu)^2$, never negative, with $E[Y] = \sigma^2$. For every value, $\lvert x - \mu \rvert \ge \varepsilon$ holds exactly when $(x - \mu)^2 \ge \varepsilon^2$, so the two events have the same chance. Markov on $Y$ at $\varepsilon^2$ gives $P(\lvert X - \mu \rvert \ge \varepsilon) \le \sigma^2 / \varepsilon^2$. If $\sigma > 0$, setting $\varepsilon = k\sigma$ gives the $1/k^2$ form. If $\sigma = 0$, [Variance](03-variance-and-standard-deviation.md) shows $X$ equals $\mu$ with chance 1, and both sides are 0 for every $\varepsilon > 0$.
 
 **Equality in Chebyshev.** For any $\varepsilon > 0$ and $0 < v \le \varepsilon^2$, put chance $v/(2\varepsilon^2)$ at each of $\mu - \varepsilon$ and $\mu + \varepsilon$ and the rest at $\mu$. The mean is $\mu$, the variance is $2 \cdot \frac{v}{2\varepsilon^2} \cdot \varepsilon^2 = v$, and the two-sided tail is $v/\varepsilon^2$: the ceiling. The 8-ticket law is the case $\mu = 2$, $\varepsilon = 2$, $v = 1$.
 
@@ -193,7 +193,14 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the tail shares by four roads. They count over all 1,000 tickets. They compute Markov's and Chebyshev's ceilings from the mean and variance alone, and Chebyshev a second time as Markov on the squared distance. They draw a million tickets from SplitMix64 (a short, well-tested recipe for pseudo-random whole numbers, written out in both languages so both draw the same tickets) and report each share with its standard error, the typical size of a simulation's miss. And they search 100,000 random three-point laws for one that beats either ceiling. The sharp laws, the house raffle, the one-sided law, the heavy ticket and the poll are checked alongside. The normal tails come from the normal area's series, cross-checked by Simpson's rule, a standard way to add up area under a curve; the poll's normal quantile, the point with 97.5% of the area below it, is found by halving an interval.
+The scripts reach the tail shares by four roads:
+
+1. They count over all 1,000 tickets.
+2. They compute Markov's and Chebyshev's ceilings from the mean and variance alone, and Chebyshev a second time as Markov on the squared distance.
+3. They draw a million tickets from SplitMix64 (a short, well-tested recipe for pseudo-random whole numbers, written out in both languages so both draw the same tickets) and report each share with its standard error, the typical size of a simulation's miss.
+4. They search 100,000 random three-point laws for one that beats either ceiling.
+
+The sharp laws, the house raffle, the one-sided law, the heavy ticket and the poll are checked alongside. The normal tails come from the normal area's series, cross-checked by Simpson's rule, a standard way to add up area under a curve; the poll's normal quantile, the point with 97.5% of the area below it, is found by halving an interval.
 
 ### Python
 
@@ -623,6 +630,126 @@ ALL CHECKS PASS
 
 The two outputs match line for line. The simulated shares, 0.040111 and 0.090472, sit within two standard errors of the counted 0.04 and 0.09. The random search came within 0.0002 of Markov's ceiling of 0.5 and reached 0.242946 against Chebyshev's 0.25, never above either.
 
+### Lean
+
+Lean proves both inequalities, and the $1/k^2$ form, for every random variable. It also checks the hand arithmetic.
+
+- Suppose $X$ is never negative, has a finite mean, and $a > 0$. Then $P(X \ge a) \le E[X]/a$.
+- Suppose $X$ has a finite variance and $\varepsilon > 0$. Then $P\big(\lvert X - \mu \rvert \ge \varepsilon\big) \le \sigma^2/\varepsilon^2$.
+- Suppose $X$ has a finite variance, $\sigma > 0$ and $k > 0$. Then $P\big(\lvert X - \mu \rvert \ge k\sigma\big) \le 1/k^2$.
+- The fête's mean, variance, both ceilings and the 250 tickets hold exactly.
+- So do the laws that meet each ceiling, the house raffle, Cantelli's fifth, the net payout, the heavy ticket's sums and the poll.
+
+The simulation, the search of random laws, the normal tails, the chart and the figure are left to the Python and Rust checks.
+
+```lean
+-- Markov and Chebyshev: a never-negative random variable with a finite mean reaches a positive threshold a with chance at most its mean over a, and a random variable with a finite variance lands at least ε from its mean with chance at most its variance over ε², or at least k standard deviations away with chance at most 1/k².
+import Mathlib.Probability.Moments.Variance
+
+open MeasureTheory ProbabilityTheory
+
+/-- **Markov's inequality.** Let X be a random variable on a probability space that is never
+negative and has a finite mean E[X]. Then for every positive threshold a, the chance that X
+reaches at least a is at most the mean divided by a: P(X ≥ a) ≤ E[X] / a. -/
+theorem markov_inequality {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] (X : Ω → ℝ) (hX_nonneg : ∀ ω, 0 ≤ X ω) (hX_int : Integrable X μ)
+    (a : ℝ) (ha : 0 < a) :
+    μ.real {ω | a ≤ X ω} ≤ (∫ ω, X ω ∂μ) / a := by
+  rw [le_div_iff₀ ha, mul_comm]
+  exact mul_meas_ge_le_integral_of_nonneg (Filter.Eventually.of_forall hX_nonneg) hX_int a
+
+/-- **Chebyshev's inequality.** Let X be a random variable on a probability space with a finite
+variance σ² (that is, a finite average square), and mean μ = E[X]. Then for every positive
+distance ε, the chance that X lands at least ε from its mean, on either side, is at most the
+variance divided by ε squared: P(|X − μ| ≥ ε) ≤ σ² / ε². -/
+theorem chebyshev_inequality {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] (X : Ω → ℝ) (hX : MemLp X 2 μ) (ε : ℝ) (hε : 0 < ε) :
+    μ.real {ω | ε ≤ |X ω - ∫ ω', X ω' ∂μ|} ≤ variance X μ / ε ^ 2 := by
+  have h := meas_ge_le_variance_div_sq hX hε
+  exact ENNReal.toReal_le_of_le_ofReal
+    (div_nonneg (variance_nonneg X μ) (sq_nonneg ε)) h
+
+/-- **Chebyshev in standard deviations.** Let X have a finite variance σ² with σ > 0, so its
+standard deviation σ = √σ² is positive. Then for every positive number k, at most 1/k² of the
+probability lies k or more standard deviations from the mean: P(|X − μ| ≥ kσ) ≤ 1 / k².
+Two standard deviations: at most a quarter. Three: at most a ninth. -/
+theorem chebyshev_inequality_std_dev {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    [IsProbabilityMeasure μ] (X : Ω → ℝ) (hX : MemLp X 2 μ) (hσ : 0 < variance X μ)
+    (k : ℝ) (hk : 0 < k) :
+    μ.real {ω | k * Real.sqrt (variance X μ) ≤ |X ω - ∫ ω', X ω' ∂μ|} ≤ 1 / k ^ 2 := by
+  have hs : 0 < Real.sqrt (variance X μ) := Real.sqrt_pos.mpr hσ
+  have h := chebyshev_inequality μ X hX (k * Real.sqrt (variance X μ)) (mul_pos hk hs)
+  have e : variance X μ / (k * Real.sqrt (variance X μ)) ^ 2 = 1 / k ^ 2 := by
+    rw [mul_pow, Real.sq_sqrt hσ.le]
+    field_simp
+  rw [e] at h
+  exact h
+
+-- The fête's prize table: 50 tickets pay $0, 230 pay $1, 470 pay $2, 210 pay $3, 40 pay $5.
+-- There are 1,000 tickets.
+example : 50 + 230 + 470 + 210 + 40 = 1000 := by decide
+-- The prize fund is $2,000, so the mean is $2.
+example : 50 * 0 + 230 * 1 + 470 * 2 + 210 * 3 + 40 * 5 = 2000 := by decide
+example : (2000 : ℚ) / 1000 = 2 := by norm_num
+-- Squared distances from the $2 mean: 4, 1, 0, 1, 9.
+example : ((0 : ℤ) - 2) ^ 2 = 4 ∧ ((1 : ℤ) - 2) ^ 2 = 1 ∧ ((2 : ℤ) - 2) ^ 2 = 0 ∧
+    ((3 : ℤ) - 2) ^ 2 = 1 ∧ ((5 : ℤ) - 2) ^ 2 = 9 := by decide
+-- The variance: (50 × 4 + 230 × 1 + 470 × 0 + 210 × 1 + 40 × 9) / 1,000 = 1 square dollar.
+example : 50 * 4 + 230 * 1 + 470 * 0 + 210 * 1 + 40 * 9 = 1000 := by decide
+-- Markov at $4: 2 / 4 = 1/2, so at most 500 of the 1,000 tickets (4 × 500 = the $2,000 fund).
+example : (2 : ℚ) / 4 = 1 / 2 := by norm_num
+example : 4 * 500 = 2000 := by decide
+-- Chebyshev at $2 from the mean: 1 / 2² = 1/4, so at most 250 tickets.
+example : (1 : ℚ) / 2 ^ 2 = 1 / 4 := by norm_num
+example : (1 / 4 : ℚ) * 1000 = 250 := by norm_num
+-- Counted: the two-sided event holds 50 + 40 = 90 tickets, the one-sided event 40,
+-- both under the ceiling of 250.
+example : 50 + 40 = 90 ∧ 90 ≤ 250 ∧ 40 ≤ 250 := by decide
+-- The quoted form: at k = 2 at most a quarter, at k = 3 at most a ninth.
+example : (1 : ℚ) / 2 ^ 2 = 1 / 4 ∧ (1 : ℚ) / 3 ^ 2 = 1 / 9 := by norm_num
+-- Step 4, Chebyshev met exactly: 8 tickets, one $0, six $2, one $4.
+-- Mean 16 / 8 = 2, variance (4 + 0 + 4) / 8 = 1, two tickets of 8 at distance 2: a quarter.
+example : 1 * 0 + 6 * 2 + 1 * 4 = 2 * 8 := by decide
+example : 1 * 4 + 6 * 0 + 1 * 4 = 1 * 8 := by decide
+example : (2 : ℚ) / 8 = 1 / 2 ^ 2 := by norm_num
+-- Step 4, Markov met exactly: the house raffle, 99 tickets pay $0 and 1 pays $100; mean $1.
+example : 99 * 0 + 1 * 100 = 1 * 100 := by decide
+-- Markov at $100 allows 1/100, the true share; at $2 it allows 1/2.
+example : (1 : ℚ) / 100 = 1 / 100 ∧ (1 : ℚ) / 2 = 1 / 2 := by norm_num
+-- Cantelli at the fête: 1 / (1 + 2²) = 1/5. Five tickets meet it: four pay $3/2 and one pays $4,
+-- mean $2 and variance 1.
+example : (1 : ℚ) / (1 + 2 ^ 2) = 1 / 5 := by norm_num
+example : (4 * (3 / 2) + 4 : ℚ) / 5 = 2 := by norm_num
+example : (4 * (3 / 2 - 2) ^ 2 + (4 - 2) ^ 2 : ℚ) / 5 = 1 := by norm_num
+-- Markov on the net payout X − 2 fails: its mean is 0, yet (210 + 40) / 1,000 = 1/4 net $1 or more.
+example : (50 * (0 - 2) + 230 * (1 - 2) + 470 * (2 - 2) + 210 * (3 - 2) + 40 * (5 - 2) : ℤ) = 0 := by
+  decide
+example : ((210 + 40 : ℚ)) / 1000 = 1 / 4 := by norm_num
+-- The heavy ticket: $2^j with chance 3/4^j. The average squared payout over n prize levels is 3n:
+-- 30, 60 and 120 over 10, 20 and 40 levels.
+example : (∑ j ∈ Finset.range 10, ((2 : ℚ) ^ (j + 1)) ^ 2 * (3 / 4 ^ (j + 1))) = 30 := by
+  norm_num [Finset.sum_range_succ]
+example : (∑ j ∈ Finset.range 20, ((2 : ℚ) ^ (j + 1)) ^ 2 * (3 / 4 ^ (j + 1))) = 60 := by
+  norm_num [Finset.sum_range_succ]
+example : (∑ j ∈ Finset.range 40, ((2 : ℚ) ^ (j + 1)) ^ 2 * (3 / 4 ^ (j + 1))) = 120 := by
+  norm_num [Finset.sum_range_succ]
+-- The poll: variance at most 1/(4n); with n = 2,000 and a 5-point distance, Chebyshev gives
+-- 1 / (4 × 2000 × (1/20)²) = 1/20, a 5% risk.
+example : (1 : ℚ) / (4 * 2000) / (1 / 20) ^ 2 = 1 / 20 := by norm_num
+
+#print axioms markov_inequality
+#print axioms chebyshev_inequality
+#print axioms chebyshev_inequality_std_dev
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'markov_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chebyshev_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chebyshev_inequality_std_dev' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -648,9 +775,9 @@ The two outputs match line for line. The simulated shares, 0.040111 and 0.090472
 ## Where you meet it in real life
 
 - **Polls and the law of large numbers.** The share answering yes in a poll of $n$ people has variance at most $1/(4n)$. Chebyshev then says a poll of 2,000 lands within 5 points of the truth with chance at least 95%, for any population. The bell-curve approximation needs only about 384, because it assumes more. The first version is how [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) is proved.
-- **Randomised algorithms.** A program that is fast on average is rarely slow: Markov bounds how often a run takes more than a few times its mean, and repeating the run drives that down fast. Tail bounds.
+- **Randomised algorithms.** A program that is fast on average is rarely slow: Markov bounds how often a run takes more than a few times its mean, and repeating the run drives that down fast. [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md).
 - **Counting arguments.** If the average count of some structure is below 1, Markov shows it is often absent; if the variance is small next to the mean squared, Chebyshev shows it is usually present. [First and second moments](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md).
-- **Risk without a bell curve.** A loss known only by its mean and standard deviation still has a guaranteed ceiling on a 3-sigma event: 1/9. The finance wing's value-at-risk, the loss exceeded only on the worst few percent of days, usually assumes a shape and gets a much smaller number.
+- **Risk without a bell curve.** A loss known only by its mean and standard deviation still has a guaranteed ceiling on a 3-sigma event: 1/9. In the finance wing, [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md), the loss exceeded only on the worst few percent of days, usually assumes a shape and gets a much smaller number.
 
 > **Say it back**
 > A fête's scratch tickets average $2 with a standard deviation of $1, and nothing else is known. Markov's inequality uses only the average: a quantity that is never negative reaches $a$ with chance at most the mean over $a$, so at most half pay $4. Chebyshev's inequality applies Markov to the squared distance from the mean, whose average is the variance, so at most a quarter land $2 or more from the mean, and so at most a quarter pay $4. Some law meets each ceiling exactly, so neither can be lowered without more information; for the upper tail alone, Cantelli's inequality lowers the quarter to a fifth. The real table has 4% at $4 or more: the ceiling is a guarantee, not an estimate.
@@ -674,7 +801,7 @@ One ticket's tail is now capped by its mean and variance; what happens to the ca
 
 ## Sources
 
-Verified 2026-09-28: every link below opens a page naming the cited work.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Grinstead, Charles M., and J. Laurie Snell. *Introduction to Probability*, 2nd revised ed. American Mathematical Society, 1997. [Full text, Dartmouth](https://math.dartmouth.edu/~prob/prob/prob.pdf). Chapter 8 proves Chebyshev's inequality and uses it for the law of large numbers.
 - Blitzstein, Joseph K., and Jessica Hwang. *Introduction to Probability*, 2nd ed. CRC Press, 2019. [Publisher page](https://www.routledge.com/Introduction-to-Probability-Second-Edition/Blitzstein-Hwang/p/book/9781138369917). Chapter 10, "Inequalities and limit theorems", proves Markov and Chebyshev and compares them with the exact tails.

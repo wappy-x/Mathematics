@@ -16,7 +16,7 @@ No formula made of a finite number of logs, roots and powers is known for the ba
 
 **A normal quantile is the cutoff with a stated probability below it: find it once for the standard bell curve, then stretch by the spread and shift by the centre.**
 
-**What kind of fact this is:** a definition (the quantile) and a method (how to compute it); the quick rational formula used as a starting guess is an approximation, with its error stated.
+**What kind of fact this is:** a definition (the quantile) and a method (how to compute it); the quick rational formula (a ratio of two short polynomials) used as a starting guess is an approximation, with its error stated.
 
 ### The picture: the loss level climbs as the tail shrinks
 
@@ -35,7 +35,7 @@ One line: the loss that only the stated share of days stays under. It is $14,978
 
 ## The formula
 
-Notation first, in words. The normal card wrote $\Phi(z)$ for the area under the standard bell curve to the left of $z$, the chance that a standard normal value lands below $z$. This card writes $\Phi^{-1}(p)$, read "the normal quantile of $p$", for the reverse: the $z$ whose left area is exactly $p$. The finance wing writes the same area $N(z)$ and the quantile $N^{-1}(p)$.
+Notation first, in words. The normal card wrote $\Phi(z)$ for the area under the standard bell curve (centre 0, spread 1) to the left of $z$, the chance that a standard normal value lands below $z$. This card writes $\Phi^{-1}(p)$, read "the normal quantile of $p$", for the reverse: the $z$ whose left area is exactly $p$. The finance wing writes the same area $N(z)$ and the quantile $N^{-1}(p)$.
 
 $$\Phi(z_p) = p \quad\Longleftrightarrow\quad z_p = \Phi^{-1}(p)$$
 
@@ -94,7 +94,7 @@ $\Phi$ is continuous, climbs strictly (its slope $\phi$ is positive everywhere),
 
 ### Step 2: every normal is a stretched standard one
 
-Write the return as $X = \mu + \sigma Z$, where $Z$ is standard normal. For a positive spread, $X$ lands below $\mu + \sigma z$ exactly when $Z$ lands below $z$. So the two events have the same chance, and the cutoffs match:
+Write the return as $X = \mu + \sigma Z$, where $Z$ is standard normal. For a positive spread, $X$ lands below $\mu + \sigma z$ exactly when $Z$ lands below $z$. So the two events have the same chance, written $P(\cdot)$, and the cutoffs match:
 
 $$P(X \le \mu + \sigma z_p) = P(Z \le z_p) = p.$$
 
@@ -106,14 +106,16 @@ The bell curve is a mirror image about zero. The area left of $-z$ equals the ar
 
 ### Step 4: bisection, the search that cannot miss
 
-Start with the bracket from −6 to 6. At −6 the area is below 0.01; at 6 it is above. Test the midpoint. If its area is below 0.01, the answer is to the right, so the midpoint becomes the new left end; otherwise it becomes the new right end. Each test halves the bracket, and the answer never leaves it. Sixty halvings shrink the 12-wide bracket below the spacing of floating-point numbers near 2.3, so what limits the answer is the accuracy of the area, not the bracket. The midpoint agrees with the printed tables to about 14 digits: −2.3263478740.
+Start with the bracket from −6 to 6. At −6 the area is below 0.01; at 6 it is above. Test the midpoint. If its area is below 0.01, the answer is to the right, so the midpoint becomes the new left end; otherwise it becomes the new right end. Each test halves the bracket, and the answer never leaves it.
+
+Sixty halvings shrink the 12-wide bracket below the spacing of floating-point numbers near 2.3, so what limits the answer is the accuracy of the area, not the bracket. The midpoint agrees with the printed tables to about 14 digits: −2.3263478740.
 
 Bisection is slow, 60 area computations, but it needs only two facts: $\Phi$ climbs, and the bracket straddles $p$.
 
 <details>
 <summary>Where the series for the area comes from</summary>
 
-The code computes $\Phi(z) = \tfrac12 + \phi(z)\,\bigl(z + z^3/3 + z^5/(3\cdot 5) + z^7/(3\cdot5\cdot7) + \cdots\bigr)$. Call the bracket $G(z)$. The area from 0 to $z$ is $\phi(z) G(z)$, so $G(z) = e^{z^2/2}\int_0^z e^{-s^2/2}\,ds$. Differentiating the product gives $G'(z) = 1 + z\,G(z)$. Put $G = a_0 z + a_1 z^3 + a_2 z^5 + \cdots$ into that and match powers: $a_0 = 1$ and $(2k+1)a_k = a_{k-1}$, which gives the odd-number products in the denominators. The code checks the result against a Simpson integral at the answer: both give 0.010000000000.
+The code computes $\Phi(z) = \tfrac12 + \phi(z)\,\bigl(z + z^3/3 + z^5/(3\cdot 5) + z^7/(3\cdot5\cdot7) + \cdots\bigr)$. Call the bracket $G(z)$. The area from 0 to $z$ is $\phi(z) G(z)$, so $G(z) = e^{z^2/2}\int_0^z e^{-s^2/2}\,ds$. Differentiating the product gives $G'(z) = 1 + z\,G(z)$. Put $G = a_0 z + a_1 z^3 + a_2 z^5 + \cdots$ into that and match powers: $a_0 = 1$ and $(2k+1)a_k = a_{k-1}$, which gives the odd-number products in the denominators. The code checks the result against a Simpson integral (the area summed over thin strips, with a parabola fitted across each pair) at the answer: both give 0.010000000000.
 
 </details>
 
@@ -193,7 +195,9 @@ On 99 trading days in 100 the fund loses less than $27,516.17 (or gains). On abo
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the area $\Phi$ from its series and check it with a Simpson integral. Then they find the 1 percent point by four roads: the rational formula alone, the rational formula polished by Newton, bisection, and a seeded simulation of 200,000 days drawn with SplitMix64 (a small, fully written-out random generator, seed 20260928) and the Box–Muller transform (which turns two uniform draws into one normal draw with a log, a root and a cosine). The simulation also counts how many simulated days breach the formula's loss level. Asserts compare bisection with the printed tables' value, Newton with bisection, Simpson's area with 1 percent, the rational guess with its stated error bound, and both simulated numbers with the formula within four standard errors.
+The scripts build the area $\Phi$ from its series and check it with a Simpson integral, which sums the area over thin strips with a parabola fitted across each pair. Then they find the 1 percent point by four roads: the rational formula alone, the rational formula polished by Newton, bisection, and a seeded simulation of 200,000 days drawn with SplitMix64 (a small, fully written-out random generator, seed 20260928) and the Box–Muller transform (which turns two uniform draws into one normal draw with a log, a root and a cosine).
+
+The simulation also counts how many simulated days breach the formula's loss level. Asserts compare bisection with the printed tables' value, Newton with bisection, Simpson's area with 1 percent, the rational guess with its stated error bound, and both simulated numbers with the formula within four standard errors.
 
 ### Python
 
@@ -619,6 +623,143 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line. The simulated 1 percent point, −2.320568, lands within one standard error (0.008348) of the exact −2.3263478740. The 1965 breaching days, a fraction of 0.009825, land within one standard error (0.000222) of 1 percent. The two standard errors are linked by Step 7: the quantile's is the fraction's divided by the bell's height at the 1 percent point, 0.026652.
 
+### Lean
+
+Lean proves the facts behind Steps 1, 2, 3 and 5, for every tail chance, centre, positive spread and cutoff.
+
+- Take a tail chance $p$ strictly between 0 and 1. Then exactly one standard cutoff $z_p$ has $\Phi(z_p) = p$.
+- Take also a centre $\mu$ and a positive spread $\sigma$. Then, for that normal law, the only cutoff with chance $p$ below it is $\mu + \sigma z_p$.
+- Take any cutoff $z$. Then the area left of $-z$ equals the area right of $z$: $\Phi(-z) = 1 - \Phi(z)$.
+- Take any cutoff $z$. Then the slope of $\Phi$ at $z$ is the bell curve's height $\phi(z)$, the divisor in Newton's step.
+
+The numbers, the rational formula and its error bound, bisection, Newton's speed and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Normal quantiles: every tail chance strictly between 0 and 1 has exactly one standard normal cutoff, and stretching by the spread and shifting by the centre gives the cutoff for any normal law.
+import Mathlib.Probability.CDF
+import Mathlib.Probability.Distributions.Gaussian.Real
+
+open MeasureTheory ProbabilityTheory
+open scoped NNReal
+
+lemma nq_cdf_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun t _ => gaussianPDFReal_nonneg _ _ t))]
+
+lemma nq_continuous_pdf : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma nq_hasDerivAt (z : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (gaussianPDFReal 0 1 z) z := by
+  have hI : ∀ a, IntegrableOn (gaussianPDFReal 0 1) (Set.Iic a) :=
+    fun a => (integrable_gaussianPDFReal 0 1).integrableOn
+  have hfun : (cdf (gaussianReal 0 1) : ℝ → ℝ) =
+      fun x => cdf (gaussianReal 0 1) 0 + ∫ t in (0:ℝ)..x, gaussianPDFReal 0 1 t := by
+    funext x
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI x), nq_cdf_eq_integral,
+      nq_cdf_eq_integral]
+    ring
+  rw [hfun]
+  exact (intervalIntegral.integral_hasDerivAt_right
+    (nq_continuous_pdf.intervalIntegrable _ _)
+    (nq_continuous_pdf.stronglyMeasurableAtFilter _ _)
+    nq_continuous_pdf.continuousAt).const_add _
+
+lemma nq_strictMono : StrictMono (cdf (gaussianReal 0 1)) :=
+  strictMono_of_hasDerivAt_pos nq_hasDerivAt
+    (fun _ => gaussianPDFReal_pos _ _ _ one_ne_zero)
+
+lemma nq_continuous : Continuous (cdf (gaussianReal 0 1)) :=
+  continuous_iff_continuousAt.2 fun x => (nq_hasDerivAt x).continuousAt
+
+lemma nq_stretch (μ : ℝ) (σ : ℝ≥0) (hσ : 0 < σ) (x : ℝ) :
+    cdf (gaussianReal μ (σ ^ 2)) x = cdf (gaussianReal 0 1) ((x - μ) / σ) := by
+  have hσ' : (0 : ℝ) < σ := hσ
+  have hmap : (gaussianReal 0 1).map (fun t => (σ : ℝ) * t + μ) = gaussianReal μ (σ ^ 2) := by
+    have h1 : (fun t : ℝ => (σ : ℝ) * t + μ) = (· + μ) ∘ ((σ : ℝ) * ·) := rfl
+    rw [h1, ← Measure.map_map (by fun_prop) (by fun_prop), gaussianReal_map_const_mul,
+      gaussianReal_map_add_const]
+    congr 1
+    · simp
+    · ext; simp
+  rw [← hmap, cdf_eq_real, cdf_eq_real, map_measureReal_apply (by fun_prop) measurableSet_Iic]
+  congr 1
+  ext t
+  simp only [Set.mem_preimage, Set.mem_Iic]
+  rw [le_div_iff₀ hσ']
+  constructor <;> intro h <;> linarith
+
+#print axioms nq_cdf_eq_integral
+#print axioms nq_continuous_pdf
+#print axioms nq_hasDerivAt
+#print axioms nq_strictMono
+#print axioms nq_continuous
+#print axioms nq_stretch
+
+/-- For a tail chance `p` strictly between 0 and 1, there is exactly one standard cutoff `z`
+whose left area under the standard bell curve is `p` (the normal quantile). For a normal law with
+centre `μ` and positive spread `σ`, the only cutoff with chance `p` below it is `μ + σ z`:
+find the quantile once for the standard curve, then stretch by the spread and shift by the centre. -/
+theorem normal_quantile_stretch_shift (p μ : ℝ) (σ : ℝ≥0) (hp0 : 0 < p) (hp1 : p < 1)
+    (hσ : 0 < σ) :
+    ∃ z : ℝ, (∀ z' : ℝ, cdf (gaussianReal 0 1) z' = p ↔ z' = z) ∧
+      ∀ x : ℝ, cdf (gaussianReal μ (σ ^ 2)) x = p ↔ x = μ + σ * z := by
+  obtain ⟨a, ha⟩ := ((tendsto_cdf_atBot (gaussianReal 0 1)).eventually
+    (eventually_lt_nhds hp0)).exists
+  obtain ⟨b, hb⟩ := ((tendsto_cdf_atTop (gaussianReal 0 1)).eventually
+    (eventually_gt_nhds hp1)).exists
+  obtain ⟨z, hz⟩ : p ∈ Set.range (cdf (gaussianReal 0 1)) :=
+    intermediate_value_univ a b nq_continuous ⟨ha.le, hb.le⟩
+  have hσ' : (0 : ℝ) < σ := hσ
+  have key : ∀ z' : ℝ, cdf (gaussianReal 0 1) z' = p ↔ z' = z := by
+    intro z'
+    rw [← hz]
+    exact nq_strictMono.injective.eq_iff
+  refine ⟨z, key, fun x => ?_⟩
+  rw [nq_stretch μ σ hσ x, key, div_eq_iff hσ'.ne']
+  constructor <;> intro h <;> linarith
+
+/-- Symmetry: the area under the standard bell curve left of `-z` equals the area right of `z`,
+so the cutoff for tail chance `1 - p` is minus the cutoff for `p`. -/
+theorem normal_quantile_symmetry (z : ℝ) :
+    cdf (gaussianReal 0 1) (-z) = 1 - cdf (gaussianReal 0 1) z := by
+  have := nullSingletonClass_gaussianReal (μ := (0:ℝ)) (v := 1) one_ne_zero
+  have hmap : (gaussianReal 0 1).map (fun x => -x) = gaussianReal 0 1 := by
+    rw [gaussianReal_map_neg, neg_zero]
+  rw [← hmap, cdf_eq_real, cdf_eq_real, map_measureReal_apply (by fun_prop) measurableSet_Iic]
+  have hpre : (fun x : ℝ => -x) ⁻¹' Set.Iic (-z) = (Set.Iio z)ᶜ := by
+    ext t; simp
+  rw [hpre, probReal_compl_eq_one_sub measurableSet_Iio, measureReal_congr Iio_ae_eq_Iic, hmap]
+
+/-- The slope of the standard cumulative curve at `z` is the bell curve's height
+`e^(-z^2/2) / sqrt(2π)`; this is the divisor in Newton's step. -/
+theorem normal_cdf_slope_eq_density (z : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (Real.exp (-z ^ 2 / 2) / Real.sqrt (2 * Real.pi)) z := by
+  convert nq_hasDerivAt z using 1
+  simp [gaussianPDFReal]
+  ring
+
+#print axioms normal_quantile_stretch_shift
+#print axioms normal_quantile_symmetry
+#print axioms normal_cdf_slope_eq_density
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'nq_cdf_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nq_continuous_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nq_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nq_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nq_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nq_stretch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'normal_quantile_stretch_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'normal_quantile_symmetry' depends on axioms: [propext, Classical.choice, Quot.sound]
+'normal_cdf_slope_eq_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Double the spread.** Guess first: does the loss level exactly double? Set `SIGMA = 0.024`. It comes out at **$55,432.35**, slightly more than double $27,516.17, because the cushion from the centre does not double.
@@ -643,10 +784,10 @@ The two outputs are identical line for line. The simulated 1 percent point, −2
 
 ## Where you meet it in real life
 
-- **Bank risk reports.** Daily and ten-day value at risk at 99 percent is a normal quantile times a spread, whenever the desk assumes a bell curve: [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
-- **Option desks.** Traders quote strikes by delta, a normal area; turning a delta back into a strike is a normal quantile: [Strike from delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
-- **Bank capital for loans.** The Basel formula feeds a default probability through $\Phi^{-1}$, mixes it with a stress quantile, and feeds the result back through $\Phi$: [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
-- **Stocking a shop.** A newspaper seller facing normal demand orders up to the demand quantile at the critical ratio: the cost of one unit short divided by the cost of one unit short plus one unit left over: Stock.
+- **Bank risk reports.** Daily and ten-day value at risk at 99 percent, the banks' name for this card's loss level, is a normal quantile times a spread, whenever the desk assumes a bell curve: [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
+- **Option desks.** Traders quote strikes (the fixed price at which an option lets its owner buy or sell) by delta, a normal area; turning a delta back into a strike is a normal quantile: [Strike from delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
+- **Bank capital for loans.** The Basel formula, from the international rules on bank capital, feeds a default probability through $\Phi^{-1}$, mixes it with a stress quantile, and feeds the result back through $\Phi$: [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
+- **Stocking a shop.** A newspaper seller facing normal demand orders up to the demand quantile at the critical ratio: the cost of one unit short divided by the cost of one unit short plus one unit left over: [Stock](../../14-Applied%20and%20computational/05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md).
 - **Simulation engines.** Feeding a uniform random number through $\Phi^{-1}$ gives a normal draw, the forward version of this card's fourth road: [Uniform](02-uniform-distribution.md).
 - **Growth charts and exam scores.** A child "at the 3rd percentile" or a score "at the 90th" is a quantile, often read off a normal fit.
 

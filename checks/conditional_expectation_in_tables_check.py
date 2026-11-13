@@ -126,3 +126,4 @@ assert abs(storm - storm_tower) < 1e-6, "tower misses the storm enumeration"
 assert abs(storm - e_n * e_col) > 1, "storm case should break the shortcut"
 print(f"figure, bars North {g[0]:.2f}, Inland {g[1]:.2f}, Coast {g[2]:.2f}, line {e_col:.2f}")
 print("All checks passed.")
+print("ALL CHECKS PASS")

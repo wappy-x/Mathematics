@@ -6,15 +6,19 @@
 
 ## General Overview
 
-Toss a fair coin and score 1 for heads, 0 for tails. The score averages 0.5 in the long run ([Expectation](02-expectation.md)). The average of its square is also 0.5, since 1 squared is 1 and 0 squared is 0. So is the average of its cube, and of every higher power. These averages of powers are the score's **moments**. The first is the mean. The second, less the mean squared, is the variance ([Variance](03-variance-and-standard-deviation.md)). The third and fourth, taken about the mean, measure lean to one side and how heavy the tails are.
+Toss a fair coin and score 1 for heads, 0 for tails. The score averages 0.5 in the long run ([Expectation](02-expectation.md)). The average of its square is also 0.5, since 1 squared is 1 and 0 squared is 0. So is the average of its cube, and of every higher power.
+
+These averages of powers are the score's **moments**. The first is the mean. The second, less the mean squared, is the variance ([Variance](03-variance-and-standard-deviation.md)). The third and fourth, taken about the mean, measure lean to one side and how heavy the tails are.
 
 Now toss the coin ten times and count the heads. The count's moments are harder: its average cube means cubing the count on each of 1,024 equally likely sequences and averaging.
 
-One function does it. Picture a filing cabinet with a drawer for every moment, built as a single function of a dial setting; each drawer opens by differentiating at the dial's zero. From here on the cabinet has its real name, the **moment generating function**. For the coin it is 0.5 + 0.5 e^t, where e is Euler's number, about 2.718, and t is the dial: a free number with no meaning in the world. For ten independent tosses it is the same expression raised to the tenth power.
+One function does it. Picture a filing cabinet with a drawer for every moment, built as a single function of a dial setting; each drawer opens by differentiating at the dial's zero. From here on the cabinet has its real name, the **moment generating function**.
+
+For the coin it is 0.5 + 0.5 e^t, where e is Euler's number, about 2.718, and t is the dial: a free number with no meaning in the world. For ten independent tosses it is the same expression raised to the tenth power.
 
 **The moment generating function of a random variable is the long-run average of e raised to t times the variable; its k-th derivative at t = 0 is the k-th moment, and for independent variables the function of the sum is the product of their functions.**
 
-**What kind of fact this is:** a definition, with two theorems about it (moments by differentiation, and the product rule for independent sums), proved on this card in Why it works; a third theorem, that the function pins down the whole law, is stated here and proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
+**What kind of fact this is:** a definition, with two theorems about it (moments by differentiation, and the product rule for independent sums), proved on this card in Why it works; a third theorem, that the function pins down the whole law (every value and its chance), is stated here and proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
 
 ### The picture: the coin's function and the moments in its shape
 
@@ -49,7 +53,7 @@ $$M_X(t) = \sum_{k=0}^{\infty} \frac{E[X^k]}{k!}\,t^k$$
 
 **Read it aloud:** written as a power series in the dial, the function's k-th coefficient is the k-th moment divided by k factorial.
 
-That last line says the moment generating function is the exponential generating function of the moment sequence ([Exponential generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/04-exponential-generating-functions.md)): the moments are packed into a power series with k! under each term, exactly as the combinatorics wing packs a counting sequence.
+That last line says the moment generating function is the exponential generating function of the moment sequence ([Exponential generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/04-exponential-generating-functions.md)). The moments are packed into a power series with k! under each term, exactly as the combinatorics wing packs a counting sequence.
 
 $$M_{X+Y}(t) = M_X(t)\,M_Y(t) \qquad \text{for independent } X \text{ and } Y$$
 
@@ -77,7 +81,7 @@ For the coin, with chance of heads $p$ = 0.5, the definition gives $M_X(t) = (1 
 - **The function must be finite on an interval around $t$ = 0.** Every variable with finitely many values passes: the coin, the ten-toss count, any die. A count $L$ whose chance of the value $k$ is proportional to $e^{-\sqrt{k}}$ fails. Its moments are finite (average 4.47, average square 89.87), yet for any positive dial the sum defining $M_L(t)$ runs off to infinity, and no derivative at zero exists to read.
 - **Derivatives are read at zero, not elsewhere.** At $t$ = 1 the coin's slope is 0.5e = 1.359, which is no moment of anything.
 - **The product rule needs independence.** One toss copied ten times has function 0.5 + 0.5e^(10t), not (0.5 + 0.5e^t)^10: at $t$ = 0.1 it reads 1.859 against 1.669. What breaks, below, shows the gap.
-- **Uniqueness needs the interval, not just the moments.** Two variables whose functions agree on an interval around zero have the same law: same chances, value for value. The proof runs through the complex-valued cousin of this function and lives in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md). Without that interval, two different laws can share every moment. The standard example is the lognormal law (e raised to a normal variable): every moment is finite, yet its function is infinite for every positive dial.
+- **Uniqueness needs the interval, not just the moments.** Two variables whose functions agree on an interval around zero have the same law: same chances, value for value. The proof runs through the complex-valued cousin of this function and lives in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md). Without that interval, two different laws can share every moment. The standard example is the lognormal law (e raised to a normal variable): every moment is finite, and other laws share all of them, yet its function is infinite for every positive dial.
 
 ---
 
@@ -85,7 +89,9 @@ For the coin, with chance of heads $p$ = 0.5, the definition gives $M_X(t) = (1 
 
 ### Step 0: e^(tx) carries every power of x, each tagged by its own power of t
 
-The exponential is a power series: e^(tx) = 1 + tx + (tx)^2/2! + (tx)^3/3! + … ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Every power of $x$ appears once, and the matching power of $t$ labels it. Averaging over $X$ turns each $x^k$ into the moment $E[X^k]$ and leaves the labels alone. Differentiating at zero is the way to strip the labels off one at a time. Multiplying exponentials adds their exponents, e^(tx) e^(ty) = e^(t(x+y)), and that is why sums turn into products.
+The exponential is a power series: e^(tx) = 1 + tx + (tx)^2/2! + (tx)^3/3! + … ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Every power of $x$ appears once, and the matching power of $t$ labels it. Averaging over $X$ turns each $x^k$ into the moment $E[X^k]$ and leaves the labels alone. Differentiating at zero is the way to strip the labels off one at a time.
+
+Multiplying exponentials adds their exponents, e^(tx) e^(ty) = e^(t(x+y)), and that is why sums turn into products.
 
 ### Step 1: the k-th derivative at zero is the k-th moment
 
@@ -131,7 +137,9 @@ Take the natural logarithm: ln $M_S$ = 10 ln $M_X$. Its first derivative at zero
 
 </details>
 
-A second road packs the probabilities rather than the moments. The average of s^S, as a polynomial in a new variable s, is (0.5 + 0.5s)^10; its coefficients are the chances $P(S = k)$, so it is the ordinary generating function of the law ([Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md)). The coefficient of s^5 is 252/1,024, about 0.246, the chance of exactly five heads. Putting s = e^t turns it into the moment generating function. Counts built this way are the business of [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md).
+A second road packs the probabilities rather than the moments. The average of s^S, as a polynomial in a new variable s, is (0.5 + 0.5s)^10. Its coefficients are the chances $P(S = k)$, so it is the ordinary generating function of the law ([Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md)). The coefficient of s^5 is 252/1,024, about 0.246, the chance of exactly five heads.
+
+Putting s = e^t turns it into the moment generating function. Counts built this way are the business of [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md).
 
 ---
 
@@ -185,7 +193,14 @@ Orange: ten independent tosses, (0.5 + 0.5e^t)^10. Green: one toss copied ten ti
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach each moment of the ten-toss count by four roads. One multiplies the coin's power series by itself ten times, up to t^4, and multiplies each coefficient by k!. One averages the k-th power of the heads over all 1,024 sequences. One evaluates the average of e^(tS) near zero and differentiates numerically by central differences (differences of nearby values, divided by the step to the right power). One simulates 200,000 runs of ten tosses with SplitMix64 (a short pseudo-random recipe written out in both languages, so both draw the same tosses) and reports standard errors. The product rule is checked against the sequences at five dial settings; then come the two failures. Only math is imported, for e^x, logarithms and square roots.
+The scripts reach each moment of the ten-toss count by four roads.
+
+- One multiplies the coin's power series by itself ten times, up to t^4, and multiplies each coefficient by k!.
+- One averages the k-th power of the heads over all 1,024 sequences.
+- One evaluates the average of e^(tS) near zero and differentiates numerically by central differences (differences of nearby values, divided by the step to the right power).
+- One simulates 200,000 runs of ten tosses with SplitMix64 (a short pseudo-random recipe written out in both languages, so both draw the same tosses) and reports standard errors (the typical size of a simulation's miss).
+
+The product rule is checked against the sequences at five dial settings; then come the two failures. Only math is imported, for e^x, logarithms and square roots.
 
 ### Python
 
@@ -565,7 +580,159 @@ chart2, copies 10X:  0.52 0.57 0.68 1.00 1.86 4.19 10.54
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line. The simulated mean, 5.0041, sits about 1.2 standard errors (0.0035) above the exact 5; the simulated average square, 27.5514, about 1.4 standard errors (0.0363) above 27.5; the simulated value of the function at t = 0.1, 1.670225, about 1.3 standard errors (0.000595) above 1.669451. Misses of that size are what chance alone produces. The derivative road is off by 0.0074 at the fourth moment: a fourth difference divides by the step to the fourth power, which magnifies rounding and the step's own error; the assert allows one part in a thousand.
+The two outputs match line for line.
+
+The simulated mean, 5.0041, sits about 1.2 standard errors (0.0035) above the exact 5. The simulated average square, 27.5514, sits about 1.4 standard errors (0.0363) above 27.5. The simulated value of the function at t = 0.1, 1.670225, sits about 1.3 standard errors (0.000595) above 1.669451. Misses of that size are what chance alone produces.
+
+The derivative road is off by 0.0017 at the third moment: a third difference divides by the step cubed, which magnifies rounding and the step's own error; the assert allows one part in a thousand.
+
+### Lean
+
+Lean proves the three rules for any random variable that meets the card's conditions, and the card's exact coin numbers.
+
+- Suppose $M_X$ is finite on an interval around $t$ = 0. Then $M_X^{(k)}(0) = E[X^k]$ for every $k$.
+- Suppose $M_X$ is finite on an interval around $t$ = 0, and take $t$ in it. Then $\sum_{k=0}^{\infty} \frac{E[X^k]}{k!}\,t^k$ adds up exactly to $M_X(t)$.
+- Suppose $X$ and $Y$ are independent. Then $M_{X+Y}(t) = M_X(t)\,M_Y(t)$ at every dial setting $t$.
+- One coin toss has every moment equal to 0.5, and variance 0.25.
+- Of the 1,024 ten-toss sequences, 252 have exactly five heads.
+- Averaged over those sequences, the count of heads has moments 5, 27.5, 162.5 and 1,017.5.
+- The derivatives of $M_S$ at zero, worked by hand, give 5, 27.5 and 162.5.
+- The ten-toss variance is 2.5, ten times the coin's 0.25. The third moment about the mean is 0.
+- The $t^2$ coefficient of $M_S$ is 13.75, and 2! times that gives the second moment, 27.5.
+- One toss copied ten times has average square 50 and variance 25.
+- The cumulants add: 10 × 0.5 = 5 and 10 × 0.25 = 2.5.
+
+The decimals, the copied toss's 1.859, the heavy-tailed count $L$, the simulation and the charts are left to the Python and Rust checks.
+
+```lean
+-- Moment generating functions: when M_X(t) = E[e^(tX)] is finite on an interval around t = 0 its k-th derivative at 0 is the k-th moment and its power series has coefficients E[X^k]/k!, and for independent X and Y the function of X + Y is the product of their functions.
+import Mathlib.Probability.Moments.MGFAnalytic
+import Mathlib.Probability.Moments.Basic
+import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory Real Set Finset
+open scoped Nat
+
+/-! A random variable is a measurable function `X : Ω → ℝ` on a probability space `(Ω, μ)`.
+Mathlib's `mgf X μ t` is the card's `M_X(t) = E[e^(tX)]`, the average `∫ e^(t X ω) dμ`.
+"The function is finite at t" is `Integrable (fun ω => exp (t * X ω)) μ`.
+`μ[X ^ k]` is the k-th moment `E[X^k]`, and `iteratedDeriv k f 0` is the k-th derivative
+of `f` at 0. -/
+
+/-- Moments by differentiation: if the moment generating function of `X` is finite on an
+interval `(-a, a)` around the dial's zero, then for every `k` its k-th derivative at `t = 0`
+is the k-th moment `E[X^k]`. -/
+theorem iteratedDeriv_mgf_zero_eq_moment {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] (X : Ω → ℝ) (a : ℝ) (ha : 0 < a)
+    (hfin : ∀ t ∈ Ioo (-a) a, Integrable (fun ω => exp (t * X ω)) μ) (k : ℕ) :
+    iteratedDeriv k (mgf X μ) 0 = μ[X ^ k] := by
+  have h0 : (0:ℝ) ∈ interior (integrableExpSet X μ) := by
+    rw [mem_interior]
+    exact ⟨Ioo (-a) a, fun t ht => hfin t ht, isOpen_Ioo, ⟨by linarith, ha⟩⟩
+  exact iteratedDeriv_mgf_zero h0 k
+
+/-- The moment generating function is the exponential generating function of the moments:
+if it is finite on an interval `(-a, a)` around zero, then at every dial setting `t` in that
+interval `M_X(t) = Σ_k E[X^k] / k! · t^k`, the series converging to `M_X(t)`. -/
+theorem mgf_eq_sum_moments_div_factorial {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] (X : Ω → ℝ) (a : ℝ) (ha : 0 < a)
+    (hfin : ∀ t ∈ Ioo (-a) a, Integrable (fun ω => exp (t * X ω)) μ) :
+    ∀ t ∈ Ioo (-a) a, HasSum (fun k : ℕ => μ[X ^ k] / (k ! : ℝ) * t ^ k) (mgf X μ t) := by
+  intro t ht
+  have h0 : (0:ℝ) ∈ interior (integrableExpSet X μ) := by
+    rw [mem_interior]
+    exact ⟨Ioo (-a) a, fun t ht => hfin t ht, isOpen_Ioo, ⟨by linarith, ha⟩⟩
+  have hXm : AEMeasurable X μ := aemeasurable_of_mem_interior_integrableExpSet h0
+  have hnt : -t ∈ Ioo (-a) a := ⟨by linarith [ht.2], by linarith [ht.1]⟩
+  have hbig : Integrable (fun ω => exp (|t| * |X ω|)) μ :=
+    integrable_exp_abs_mul_abs (hfin t ht) (hfin (-t) hnt)
+  have key := hasSum_integral_of_dominated_convergence (μ := μ)
+    (F := fun (k : ℕ) ω => X ω ^ k / (k ! : ℝ) * t ^ k) (f := fun ω => exp (t * X ω))
+    (fun k ω => (|t| * |X ω|) ^ k / (k ! : ℝ))
+    (fun k => by
+      apply AEMeasurable.aestronglyMeasurable
+      fun_prop)
+    (fun k => Filter.Eventually.of_forall (fun ω => by
+      rw [Real.norm_eq_abs, abs_mul, abs_div, abs_pow, abs_pow, mul_pow,
+        abs_of_pos (by positivity : (0:ℝ) < (k ! : ℝ))]
+      apply le_of_eq
+      ring))
+    (Filter.Eventually.of_forall (fun ω =>
+      (NormedSpace.expSeries_div_hasSum_exp (|t| * |X ω|)).summable))
+    (by
+      refine hbig.congr (Filter.Eventually.of_forall (fun ω => ?_))
+      simp only
+      rw [(NormedSpace.expSeries_div_hasSum_exp (|t| * |X ω|)).tsum_eq, Real.exp_eq_exp_ℝ])
+    (Filter.Eventually.of_forall (fun ω => by
+      have := NormedSpace.expSeries_div_hasSum_exp (t * X ω)
+      rw [← Real.exp_eq_exp_ℝ] at this
+      convert this using 1
+      funext k
+      rw [mul_pow]
+      ring))
+  convert key using 1
+  · funext k
+    rw [integral_mul_const, integral_div]
+    rfl
+  · rfl
+
+/-- The product rule: for independent random variables `X` and `Y`, the moment generating
+function of the sum `X + Y` is the product of their two functions, at every dial setting `t`. -/
+theorem mgf_add_eq_mul_of_indep {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] (X Y : Ω → ℝ) (hX : Measurable X) (hY : Measurable Y)
+    (hindep : IndepFun X Y μ) (t : ℝ) :
+    mgf (X + Y) μ t = mgf X μ t * mgf Y μ t := by
+  exact hindep.mgf_add' hX.aestronglyMeasurable hY.aestronglyMeasurable
+
+/-! The card's exact worked numbers, as fractions (0.5 = 1/2, 27.5 = 55/2, and so on). -/
+
+-- One coin toss, X = 0 or 1 with chance 1/2 each: every moment E[X^k], k ≥ 1, is 1/2.
+example : ∀ k : ℕ, k ≠ 0 →
+    (0 : ℚ) ^ k * (1 / 2) + (1 : ℚ) ^ k * (1 / 2) = 1 / 2 := by
+  intro k hk
+  norm_num [zero_pow hk]
+-- The coin's variance: 1/2 - (1/2)^2 = 1/4.
+example : (1 / 2 : ℚ) - (1 / 2) ^ 2 = 1 / 4 := by norm_num
+-- Ten tosses: 2^10 = 1,024 equally likely sequences; 252 of them have exactly five heads.
+example : 2 ^ 10 = 1024 ∧ Nat.choose 10 5 = 252 := by decide
+-- Ten tosses, S = number of heads: E[S] = 5, E[S^2] = 27.5, E[S^3] = 162.5, E[S^4] = 1,017.5.
+example : (∑ j ∈ Finset.range 11, (Nat.choose 10 j : ℚ) * (j : ℚ) ^ 1) / 2 ^ 10 = 5 := by
+  norm_num [Finset.sum_range_succ, Nat.choose]
+example : (∑ j ∈ Finset.range 11, (Nat.choose 10 j : ℚ) * (j : ℚ) ^ 2) / 2 ^ 10 = 55 / 2 := by
+  norm_num [Finset.sum_range_succ, Nat.choose]
+example : (∑ j ∈ Finset.range 11, (Nat.choose 10 j : ℚ) * (j : ℚ) ^ 3) / 2 ^ 10 = 325 / 2 := by
+  norm_num [Finset.sum_range_succ, Nat.choose]
+example : (∑ j ∈ Finset.range 11, (Nat.choose 10 j : ℚ) * (j : ℚ) ^ 4) / 2 ^ 10 = 2035 / 2 := by
+  norm_num [Finset.sum_range_succ, Nat.choose]
+-- The derivatives of (1/2 + 1/2 e^t)^10 at zero, by hand: 10 × 1/2 = 5,
+-- 90 × (1/2)^2 + 10 × 1/2 = 27.5, and 720 × (1/2)^3 + 270 × (1/2)^2 + 10 × 1/2 = 162.5.
+example : (10 : ℚ) * (1 / 2) = 5 := by norm_num
+example : (90 : ℚ) * (1 / 2) ^ 2 + 10 * (1 / 2) = 55 / 2 := by norm_num
+example : (720 : ℚ) * (1 / 2) ^ 3 + 270 * (1 / 2) ^ 2 + 10 * (1 / 2) = 325 / 2 := by norm_num
+-- Ten tosses' variance 27.5 - 25 = 2.5, ten times the coin's 1/4.
+example : (55 / 2 : ℚ) - 5 ^ 2 = 5 / 2 ∧ (5 / 2 : ℚ) = 10 * (1 / 4) := by norm_num
+-- Third moment about the mean: 162.5 - 3 × 5 × 27.5 + 2 × 5^3 = 0.
+example : (325 / 2 : ℚ) - 3 * 5 * (55 / 2) + 2 * 5 ^ 3 = 0 := by norm_num
+-- The t^2 coefficient of M_S is 13.75; it takes 2! × 13.75 = 27.5 to get the second moment.
+example : (55 / 2 : ℚ) / 2 = 55 / 4 ∧ (2 : ℚ) * (55 / 4) = 55 / 2 := by norm_num
+-- One toss copied ten times (0 or 10): average square 50 and variance 25, not 27.5 and 2.5.
+example : (10 : ℚ) ^ 2 * (1 / 2) = 50 ∧ (50 : ℚ) - 5 ^ 2 = 25 := by norm_num
+-- Cumulants add: 10 × 1/2 = 5 and 10 × 1/4 = 2.5.
+example : (10 : ℚ) * (1 / 2) = 5 ∧ (10 : ℚ) * (1 / 4) = 5 / 2 := by norm_num
+
+#print axioms iteratedDeriv_mgf_zero_eq_moment
+#print axioms mgf_eq_sum_moments_div_factorial
+#print axioms mgf_add_eq_mul_of_indep
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'iteratedDeriv_mgf_zero_eq_moment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mgf_eq_sum_moments_div_factorial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mgf_add_eq_mul_of_indep' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -594,7 +761,7 @@ The two outputs match line for line. The simulated mean, 5.0041, sits about 1.2 
 - **Sums of independent counts.** Multiplying functions identifies the law of a sum without adding up every pair of outcomes: [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md) for counts, [Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md) for measurements.
 - **Tail bounds.** The chance that ten tosses give nine or more heads is at most e^(−9t) times $M_S(t)$ for every positive dial; choosing the best dial gives the Chernoff bound of [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
 - **Insurance totals.** A year's claims are a random number of random amounts; their total's function comes from composing two functions, as [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md) shows.
-- **Asset prices.** When a stock's log-return is normal, its average future price is today's price times the normal law's moment generating function at a dial of 1.
+- **Asset prices.** When a stock's log-return (the natural logarithm of the future price divided by today's price) is normal, its average future price is today's price times the normal law's moment generating function at a dial of 1.
 
 > **Say it back**
 > The moment generating function of a random variable is the average of e raised to the dial times the variable. At a dial of zero it equals 1, its slope there is the mean, and its k-th derivative there is the k-th moment. As a power series it is the exponential generating function of the moments, each divided by k!. For independent variables the function of the sum is the product of the functions, so ten fair tosses have (0.5 + 0.5e^t)^10, mean 5 and variance 2.5. It needs independence to multiply, and it must be finite around zero to hold anything at all.

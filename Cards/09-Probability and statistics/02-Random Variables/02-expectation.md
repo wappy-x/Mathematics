@@ -30,7 +30,7 @@ xychart-beta
     line [1, 1, 1, 1, 1, 1, 1, 1]
 ```
 
-The wandering line is a seeded simulation: one ticket bought in each of N separate raffles, the payouts averaged. The flat line is the expectation, $1. Early on, a few lucky wins pull the average around; by 200,000 tickets it sits at $0.99, and the code gives its standard error (the typical size of the simulation's own error) as $0.0221.
+The wandering line is a seeded simulation: one ticket bought in each of N separate raffles, the payouts averaged. The flat line is the expectation, $1. Early on, a few lucky wins pull the average around. By 200,000 tickets it sits at $0.99, and the code gives its standard error (the typical size of the simulation's own error) as $0.0221.
 
 ---
 
@@ -146,7 +146,7 @@ Another road reaches the same $1 for a payout that is never negative: add up, ov
 | check by counting | 5 of 100 draws pay $100 | $5 |
 | chance none of five wins | 95 of 100 draws | 0.95 |
 
-A ticket bought for $2 returns $1 on average, so a raffle player hands the organiser $1 per ticket in the long run; the prize is paid for by the tickets that lose.
+A ticket bought for $2 returns $1 on average, so a raffle player hands the organiser $1 per ticket in the long run. The prize is paid for by the tickets that lose.
 
 ### What breaks if you drop a piece
 
@@ -157,13 +157,13 @@ A ticket bought for $2 returns $1 on average, so a raffle player hands the organ
 | Square the mean for E[X^2] | 1.00, truly 100.00 | Squaring is not a straight-line combination |
 | Drop the finite-mean condition: St Petersburg | truncated means 10.00, 20.00, 40.00, and rising by 1.00 a level | The sum diverges, so there is no expectation to add |
 
-The last row is the theorem failing once a hypothesis goes. The St Petersburg ticket pays 2^j dollars with chance 2^−j for j = 1, 2, 3, …, so every level adds exactly $1 to the sum: ten levels give 10.00, forty give 40.00. Simulated, its running average is 12.67 after 1,000 tickets, 13.99 after 10,000, 27.76 after 100,000 and 53.57 after 1,000,000. It never settles, because there is nothing to settle on.
+The last row is the theorem failing once a hypothesis goes. The St Petersburg ticket pays 2^j dollars with chance 2^−j for j = 1, 2, 3, …, so every level adds exactly $1 to the sum. Ten levels give 10.00, forty give 40.00. Simulated, its running average is 12.67 after 1,000 tickets, 13.99 after 10,000, 27.76 after 100,000 and 53.57 after 1,000,000. It never settles, because there is nothing to settle on.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code reaches E[X] by three independent roads: the weighted sum over values, a count over all 100 equally likely draws, and a seeded simulation of 200,000 separate raffles, printed with its standard error; a fourth, the tail sum, agrees. It then checks linearity on five tickets bought two ways, by counting all 100 draws and all 32 win-or-lose patterns, and by a second simulation. It prints every "what breaks" number. The random numbers come from SplitMix64, a small generator written out in both languages with a stated seed, so Python and Rust draw the same sequence. The square root is Newton's method, so nothing imported holds an answer.
+The code reaches E[X] by three independent roads: the weighted sum over values, a count over all 100 equally likely draws, and a seeded simulation of 200,000 separate raffles, printed with its standard error. A fourth, the tail sum, agrees. It then checks linearity on five tickets bought two ways, by counting all 100 draws and all 32 win-or-lose patterns, and by a second simulation. It prints every "what breaks" number. The random numbers come from SplitMix64, a small generator written out in both languages with a stated seed, so Python and Rust draw the same sequence. The square root is Newton's method, so nothing imported holds an answer.
 
 ### Python
 
@@ -500,6 +500,122 @@ ALL CHECKS PASS
 
 The two outputs match line for line, including the simulated rows, because both languages draw the same numbers from the same seed.
 
+### Lean
+
+Lean proves linearity, the indicator rule, and the weighted-sum formula for finitely many values, on every chance experiment, plus the raffle's exact sums.
+
+- Take random variables X and Y on one experiment, each with a finite expectation, and fixed numbers a and b. Then $E[aX + bY] = a E[X] + b E[Y]$, with no independence assumed.
+- Suppose X takes only finitely many values. Then X has an expectation, and $E[X]$ is each value x times $P(X = x)$, added up.
+- Take an event W and its indicator $1_W$. Then $E[1_W] = P(W)$: an indicator's expectation is a chance.
+- One ticket's weighted sum is 1 dollar, and the 100 draws pay 100 dollars in total. Its net gain is −1 dollar, and the organiser keeps 100 dollars.
+- Five tickets in one draw: the 100 draws pay 500 dollars in total, 5 dollars on average. None of the five wins in 95 draws.
+- Take five tickets in five separate raffles. Then the sum over all 32 win/lose patterns gives $E[T] = 5$ dollars.
+- Take two tickets in one draw. Then both never win together, so $E[X_1 X_2] = 0$.
+- Take one ticket. Then the weighted sum of squares gives $E[X^2] = 100$.
+- The tail sum also gives 1 dollar: the payout exceeds each level from 0 to 99 with chance 0.01.
+- Each St Petersburg level adds exactly 1 to the sum. So 10, 20 and 40 levels give 10, 20 and 40.
+
+The simulations, standard errors, square roots, chart and figure are left to the Python and Rust checks.
+
+```lean
+-- Expectation: the expectation of a sum aX + bY is aE[X] + bE[Y] whenever X and Y have finite expectations, with no independence assumed, and for a random variable with finitely many values the expectation is each value times its chance, added up.
+import Mathlib.Probability.Notation
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+
+/-- Linearity of expectation: for any two random variables `X` and `Y` on the same
+chance experiment, each with a finite expectation, and any fixed numbers `a` and `b`,
+the expectation of `aX + bY` is `a E[X] + b E[Y]`. Nothing is assumed about how `X`
+and `Y` depend on each other. -/
+theorem expectation_linear {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {X Y : Ω → ℝ} (hX : Integrable X P) (hY : Integrable Y P)
+    (a b : ℝ) :
+    ∫ ω, (a * X ω + b * Y ω) ∂P = a * ∫ ω, X ω ∂P + b * ∫ ω, Y ω ∂P := by
+  rw [integral_add (hX.const_mul a) (hY.const_mul b), integral_const_mul, integral_const_mul]
+
+/-- The formula: a random variable `X` that takes only finitely many values always has
+an expectation, and it is each value `x` times its chance `P(X = x)`, added up. -/
+theorem expectation_eq_weighted_sum {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {X : Ω → ℝ} (hX : Measurable X) (hfin : (Set.range X).Finite) :
+    Integrable X P ∧ ∫ ω, X ω ∂P = ∑ x ∈ hfin.toFinset, x * P.real (X ⁻¹' {x}) := by
+  classical
+  let f : SimpleFunc Ω ℝ := ⟨X, fun x => hX (measurableSet_singleton x), hfin⟩
+  have hfi : Integrable X P := f.integrable_of_isFiniteMeasure
+  refine ⟨hfi, ?_⟩
+  have h1 : ∫ ω, X ω ∂P = f.integral P := (SimpleFunc.integral_eq_integral f hfi).symm
+  rw [h1, SimpleFunc.integral_eq_sum_of_subset (s := hfin.toFinset)]
+  · simp only [smul_eq_mul, mul_comm]; rfl
+  · intro x hx
+    simp only [Finset.mem_filter, SimpleFunc.mem_range] at hx
+    simpa [f] using hx.1
+
+/-- An indicator's expectation is a chance: the number that is 1 when the event `W`
+happens and 0 when it does not has expectation `P(W)`. -/
+theorem expectation_indicator_eq_prob {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {W : Set Ω} (hW : MeasurableSet W) :
+    ∫ ω, W.indicator 1 ω ∂P = P.real W := by
+  exact integral_indicator_one hW
+
+/-! The raffle: 100 tickets at $2, one drawn, the winner paid $100. Our ticket is
+number 0. Chances are written as fractions of 100, so no decimals appear. -/
+
+-- E[X] as a weighted sum: 0 × 99/100 + 100 × 1/100 = 1.
+example : (0 : ℚ) * (99 / 100) + 100 * (1 / 100) = 1 := by norm_num
+
+-- E[X] by counting all 100 draws: one draw pays 100, a total of 100 over 100 draws.
+example : (∑ w : Fin 100, (if w.val = 0 then 100 else 0) : ℕ) = 100 := by decide
+
+-- Net gain per ticket: E[X - 2] = 1 - 2 = -1.
+example : (0 - 2 : ℚ) * (99 / 100) + (100 - 2) * (1 / 100) = -1 := by norm_num
+
+-- The organiser takes 100 × $2, pays $100, keeps $100.
+example : 100 * 2 - 100 = 100 := by norm_num
+
+-- Five tickets in one draw: 5 × E[X] = 5, and counting the draws agrees (500 / 100).
+example : (∑ w : Fin 100, (if w.val < 5 then 100 else 0) : ℕ) = 500 := by decide
+example : (5 : ℚ) * 1 = 500 / 100 := by norm_num
+
+-- None of the five wins in 95 of the 100 draws.
+example : ((Finset.univ : Finset (Fin 100)).filter (fun w => 5 ≤ w.val)).card = 95 := by decide
+
+-- Five tickets in five separate raffles: E[T] = 100 × (expected number of wins) = 5,
+-- summed over all 32 win/lose patterns with chances (1/100)^k (99/100)^(5-k).
+example : (∑ k ∈ Finset.range 6, (100 : ℚ) * k * (Nat.choose 5 k) * (1 / 100) ^ k * (99 / 100) ^ (5 - k)) = 5 := by
+  norm_num [Finset.sum_range_succ, Nat.choose]
+
+-- Two tickets in one draw: both can never win, so E[X1 X2] = 0, not E[X1] E[X2] = 1.
+example : (∑ w : Fin 100, (if w.val = 0 then 100 else 0) * (if w.val = 1 then 100 else 0) : ℕ) = 0 := by
+  decide
+
+-- E[X^2] = 0^2 × 99/100 + 100^2 × 1/100 = 100, while E[X]^2 = 1.
+example : (0 : ℚ) ^ 2 * (99 / 100) + 100 ^ 2 * (1 / 100) = 100 := by norm_num
+
+-- Tail sum: the payout exceeds each level t = 0, ..., 99 with chance 1/100; adding gives 1.
+example : (∑ _t ∈ Finset.range 100, (1 : ℚ) / 100) = 1 := by norm_num
+
+-- St Petersburg: 2^j × (1/2)^j = 1 at every level, so 10, 20 and 40 levels give 10, 20, 40.
+example : (∑ j ∈ Finset.Icc 1 10, (2 : ℚ) ^ j * (1 / 2) ^ j) = 10 := by
+  simp
+example : (∑ j ∈ Finset.Icc 1 20, (2 : ℚ) ^ j * (1 / 2) ^ j) = 20 := by
+  simp
+example : (∑ j ∈ Finset.Icc 1 40, (2 : ℚ) ^ j * (1 / 2) ^ j) = 40 := by
+  simp
+
+#print axioms expectation_linear
+#print axioms expectation_eq_weighted_sum
+#print axioms expectation_indicator_eq_prob
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'expectation_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expectation_eq_weighted_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expectation_indicator_eq_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -527,7 +643,7 @@ The two outputs match line for line, including the simulated rows, because both 
 - **Raffles, lotteries and casinos.** Nearly every game on sale is set so that the player's expected net gain is negative; the organiser's margin is that negative number times the tickets sold.
 - **Insurance.** A premium starts from the expected claim: the claim size times its chance, summed over what can go wrong, plus a margin. A lender's version is [Default probability, recovery and expected loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md).
 - **Counting with indicators.** The expected number of anything (winning tickets, matched socks, collisions in a hash table) is a sum of chances, by linearity, however tangled the events are.
-- **Algorithms.** A randomised algorithm is judged by its expected running time (Randomised algorithms).
+- **Algorithms.** A randomised algorithm is judged by its expected running time ([Randomised algorithms](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md)).
 - **Pricing.** A one-period asset price is an expectation under specially chosen weights, then discounted ([State prices](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)).
 
 > **Say it back**
@@ -543,7 +659,7 @@ The two outputs match line for line, including the simulated rows, because both 
 
 - [Variance](03-variance-and-standard-deviation.md): the expectation of the squared distance from the mean, measuring the swing around $1.
 - [Jensen's inequality](06-jensens-inequality.md): which way E[g(X)] and g(E[X]) differ when g bends.
-- [Moment generating functions](07-moment-generating-functions.md): one expectation, E[e^(tX)], that holds every moment.
+- [Moment generating functions](07-moment-generating-functions.md): one expectation, E[e^(tX)], that holds every moment (the expectations E[X], E[X^2], E[X^3], …).
 - [The probabilistic method](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): if the average count is below 1, some case has count 0.
 - [State prices](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): prices as discounted expectations.
 - [Default probability, recovery and expected loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): expected loss as chance times loss.
