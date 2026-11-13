@@ -130,7 +130,6 @@ row("tail bound u=1: W_100 P(|W|>2) <= integral", f"{tail_w:.6f}", f"{bw:.6f}")
 row("tail bound u=1: T_400 P(|T|>2) <= integral", f"{tail_t:.6f}", f"{bt:.6f}")
 assert tail_w <= bw                                # the tail inequality, exact side <= integral
 assert tail_t <= bt
-
 # ---- the two charts ----
 print("figure, |phi(t)| at t = k pi/12:", " ".join(f"{abs(cf_die(k * pi / 12)):.2f}" for k in range(25)))
 print("figure, |phi(t)|^4:            ", " ".join(f"{abs(cf_die(k * pi / 12)) ** 4:.2f}" for k in range(25)))
@@ -138,3 +137,4 @@ print("figure, t labels:               ", " ".join(f"{k * pi / 12:.2f}" for k in
 for n in (1, 4):
     print(f"figure, phi_W{n}(t), t = 0..3:", " ".join(f"{cf_w(n, k / 4):.2f}" for k in range(13)))
 print("figure, normal e^(-t^2/2):", " ".join(f"{cf_normal_int(k / 4):.2f}" for k in range(13)))
+print("ALL CHECKS PASS")

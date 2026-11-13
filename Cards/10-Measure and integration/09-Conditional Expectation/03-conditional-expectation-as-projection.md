@@ -40,7 +40,7 @@ Notation first, in words. The **probability space** $(\Omega, \mathcal F, P)$ li
 
 The conditional expectation $M = E[X \mid \mathcal G]$ is the known quantity with $E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]$ for every event $A$ in $\mathcal G$ ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)); on a partition into seasons it is the average within each season ([Conditioning on a partition](01-conditioning-on-a-partition.md)). The probability wing computes the same thing from tables ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)); this card is the general statement as a projection.
 
-$L^2$ is every quantity with finite mean square, $E[X^2] < \infty$, with two quantities equal almost surely counted as one ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)). $L^2(\mathcal G)$ is the part of it that is known. Its **inner product**, the analogue of the dot product, is $\langle U, V\rangle = E[UV]$, and its length is $\lVert U\rVert_2 = \sqrt{E[U^2]}$, so the squared distance between two quantities is their mean squared difference. Two quantities are **orthogonal**, at right angles, when $E[UV] = 0$.
+$L^2$ is every quantity with finite mean square, $E[X^2] < \infty$, with two quantities equal almost surely, that is, except on an event of probability zero, counted as one ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)). $L^2(\mathcal G)$ is the part of it that is known. Its **inner product**, the analogue of the dot product, is $\langle U, V\rangle = E[UV]$, and its length is $\lVert U\rVert_2 = \sqrt{E[U^2]}$, so the squared distance between two quantities is their mean squared difference. Two quantities are **orthogonal**, at right angles, when $E[UV] = 0$.
 
 For $X$ in $L^2$ and every known $Z$ in $L^2(\mathcal G)$:
 
@@ -318,9 +318,10 @@ print(f"figure, scale {sc:.0f} per mm, O=(40,200) M=({40 + sc * float(between) *
       f"X=({40 + sc * float(between) ** 0.5:.2f},{200 - sc * float(within) ** 0.5:.2f}) "
       f"legs {float(between) ** 0.5:.2f} and {float(within) ** 0.5:.2f}, "
       f"hypotenuse {float(var_direct) ** 0.5:.2f}")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 1. the eight outcomes, each with probability 0.125
@@ -360,6 +361,7 @@ chart, M: 30 30 60 60 90 90 40 40
 chart, line: 27 27 51 51 83 83 59 59
 chart, mean: 55 55 55 55 55 55 55 55
 figure, scale 8 per mm, O=(40,200) M=(223.30,200) X=(223.30,120.00) legs 22.91 and 10.00, hypotenuse 25.00
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -534,10 +536,10 @@ fn main() {
     let (lb, lw, lv) = (between.f().sqrt(), within.f().sqrt(), var_direct.f().sqrt());
     println!("figure, scale {:.0} per mm, O=(40,200) M=({:.2},200) X=({:.2},{:.2}) legs {:.2} and {:.2}, hypotenuse {:.2}",
              sc, 40.0 + sc * lb, 40.0 + sc * lb, 200.0 - sc * lw, lb, lw, lv);
-}
+    println!("ALL CHECKS PASS"); }
 ```
 
-**Ran 2026-10-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 1. the eight outcomes, each with probability 0.125
@@ -577,9 +579,190 @@ chart, M: 30 30 60 60 90 90 40 40
 chart, line: 27 27 51 51 83 83 59 59
 chart, mean: 55 55 55 55 55 55 55 55
 figure, scale 8 per mm, O=(40,200) M=(223.30,200) X=(223.30,120.00) legs 22.91 and 10.00, hypotenuse 25.00
+ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves the card's three general claims for every probability space and sub-sigma-algebra, and checks the rainfall numbers exactly.
+
+- Take X with finite mean square and a known Z with finite mean square. Then $E[(X - M)Z] = 0$, and the Pythagoras formula above holds.
+- Take the same X and Z. Then $E[(X - M)^2] \le E[(X - Z)^2]$, with equality exactly when $Z = M$ almost surely.
+- Take X with finite mean square. Then the law of total variance holds: the variance of X is within plus between.
+- In the rainfall example the error averages 0 against each season and against T.
+- The example's averages hold: E[X] = 55, E[X^2] = 3650 and E[M^2] = 3550.
+- The flat forecast 55 scores 625 = 100 + 525, and the line 7 + 4T scores 225 = 100 + 125.
+- The between term splits as 525 = 400 + 125, explained by the line plus left over.
+- The peeking forecast Z = X gives E[(X − M)(M − Z)] = −100, not 0.
+- The desert month scores 300 against 400 on squared error, and 15 against 10 on absolute error.
+- The quantity 2^k with probability 3/4^k has mean square 15, 30 and 60 after 5, 10 and 20 terms.
+
+The 81 shifted forecasts, the two roads to M, the least-squares solving and the figure's lengths are left to the Python and Rust checks.
+
+```lean
+-- Conditional expectation as a projection: for a square-integrable X, the error X - E[X | G] is orthogonal to every square-integrable G-measurable Z, so E[(X - Z)^2] = E[(X - M)^2] + E[(M - Z)^2], M is the unique closest G-measurable forecast, and the law of total variance follows.
+import Mathlib.Probability.CondVar
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Intervals
+
+open MeasureTheory ProbabilityTheory
+
+theorem condExp_error_orthogonal_aux {Ω : Type*} {m m₀ : MeasurableSpace Ω}
+    (hm : m ≤ m₀) {μ : Measure[m₀] Ω} [IsProbabilityMeasure μ] {X Z : Ω → ℝ}
+    (hX : MemLp X 2 μ) (hZm : StronglyMeasurable[m] Z) (hZ : MemLp Z 2 μ) :
+    ∫ ω, (X ω - μ[X | m] ω) * Z ω ∂μ = 0 := by
+  have hXi : Integrable X μ := hX.integrable one_le_two
+  have hM : MemLp (μ[X | m]) 2 μ := hX.condExp one_le_two
+  have hXZ : Integrable (X * Z) μ := memLp_one_iff_integrable.1 (hX.mul hZ)
+  have hMZ : Integrable (μ[X | m] * Z) μ := memLp_one_iff_integrable.1 (hM.mul hZ)
+  have h1 : ∫ ω, (X * Z) ω ∂μ = ∫ ω, (μ[X | m] * Z) ω ∂μ := by
+    rw [← integral_condExp hm]
+    exact integral_congr_ae (condExp_mul_of_stronglyMeasurable_right hZm hXZ hXi)
+  have : (fun ω => (X ω - μ[X | m] ω) * Z ω) = fun ω => (X * Z) ω - (μ[X | m] * Z) ω := by
+    funext ω; simp only [Pi.mul_apply]; ring
+  rw [this, integral_sub hXZ hMZ, h1, sub_self]
+
+#print axioms condExp_error_orthogonal_aux
+
+/-- For a quantity X with finite mean square on a probability space and a sub-sigma-algebra G,
+the error X - E[X | G] has zero average product with every known (G-measurable) quantity Z of
+finite mean square, and the mean squared error of Z is the error of E[X | G] plus the mean
+squared distance between E[X | G] and Z (Pythagoras). -/
+theorem condExp_error_orthogonal_and_pythagoras {Ω : Type*} {m m₀ : MeasurableSpace Ω}
+    (hm : m ≤ m₀) {μ : Measure[m₀] Ω} [IsProbabilityMeasure μ] {X Z : Ω → ℝ}
+    (hX : MemLp X 2 μ) (hZm : Measurable[m] Z) (hZ : MemLp Z 2 μ) :
+    ∫ ω, (X ω - μ[X | m] ω) * Z ω ∂μ = 0 ∧
+    ∫ ω, (X ω - Z ω) ^ 2 ∂μ =
+      ∫ ω, (X ω - μ[X | m] ω) ^ 2 ∂μ + ∫ ω, (μ[X | m] ω - Z ω) ^ 2 ∂μ := by
+  refine ⟨condExp_error_orthogonal_aux hm hX hZm.stronglyMeasurable hZ, ?_⟩
+  have hM : MemLp (μ[X | m]) 2 μ := hX.condExp one_le_two
+  have hMZm : StronglyMeasurable[m] (μ[X | m] - Z) :=
+    stronglyMeasurable_condExp.sub hZm.stronglyMeasurable
+  have h0 := condExp_error_orthogonal_aux hm hX hMZm (hM.sub hZ)
+  have i1 : Integrable (fun ω => (X ω - μ[X | m] ω) ^ 2) μ := (hX.sub hM).integrable_sq
+  have i2 : Integrable (fun ω => (μ[X | m] ω - Z ω) ^ 2) μ := (hM.sub hZ).integrable_sq
+  have i3 : Integrable (fun ω => (X ω - μ[X | m] ω) * (μ[X | m] - Z) ω) μ :=
+    memLp_one_iff_integrable.1 ((hX.sub hM).mul (hM.sub hZ))
+  have : (fun ω => (X ω - Z ω) ^ 2) = fun ω => ((X ω - μ[X | m] ω) ^ 2
+      + (μ[X | m] ω - Z ω) ^ 2) + 2 * ((X ω - μ[X | m] ω) * (μ[X | m] - Z) ω) := by
+    funext ω; simp only [Pi.sub_apply]; ring
+  have i12 : Integrable (fun ω => (X ω - μ[X | m] ω) ^ 2 + (μ[X | m] ω - Z ω) ^ 2) μ :=
+    i1.add i2
+  have i3' : Integrable (fun ω => 2 * ((X ω - μ[X | m] ω) * (μ[X | m] - Z) ω)) μ :=
+    i3.const_mul 2
+  rw [this, integral_add i12 i3', integral_add i1 i2, integral_const_mul,
+    h0, mul_zero, add_zero]
+
+/-- The conditional expectation is the closest known quantity in mean square: no known Z of
+finite mean square has a smaller mean squared error, and a known Z ties it exactly when Z equals
+E[X | G] almost surely. -/
+theorem condExp_is_unique_closest_known {Ω : Type*} {m m₀ : MeasurableSpace Ω}
+    (hm : m ≤ m₀) {μ : Measure[m₀] Ω} [IsProbabilityMeasure μ] {X Z : Ω → ℝ}
+    (hX : MemLp X 2 μ) (hZm : Measurable[m] Z) (hZ : MemLp Z 2 μ) :
+    ∫ ω, (X ω - μ[X | m] ω) ^ 2 ∂μ ≤ ∫ ω, (X ω - Z ω) ^ 2 ∂μ ∧
+    (∫ ω, (X ω - Z ω) ^ 2 ∂μ = ∫ ω, (X ω - μ[X | m] ω) ^ 2 ∂μ ↔ Z =ᵐ[μ] μ[X | m]) := by
+  have hP := (condExp_error_orthogonal_and_pythagoras hm hX hZm hZ).2
+  have hM : MemLp (μ[X | m]) 2 μ := hX.condExp one_le_two
+  have i2 : Integrable (fun ω => (μ[X | m] ω - Z ω) ^ 2) μ := (hM.sub hZ).integrable_sq
+  have hnn : 0 ≤ ∫ ω, (μ[X | m] ω - Z ω) ^ 2 ∂μ := integral_nonneg fun ω => sq_nonneg _
+  refine ⟨by rw [hP]; linarith, ?_⟩
+  rw [hP]
+  constructor
+  · intro h
+    have h0 : ∫ ω, (μ[X | m] ω - Z ω) ^ 2 ∂μ = 0 := by linarith
+    rw [integral_eq_zero_iff_of_nonneg (fun ω => sq_nonneg _) i2] at h0
+    filter_upwards [h0] with ω hω
+    simp only [Pi.zero_apply] at hω
+    have := pow_eq_zero_iff (n := 2) (by norm_num) |>.1 hω
+    linarith
+  · intro h
+    have : (fun ω => (μ[X | m] ω - Z ω) ^ 2) =ᵐ[μ] fun _ => (0 : ℝ) := by
+      filter_upwards [h] with ω hω
+      rw [hω]; ring
+    rw [integral_congr_ae this, integral_zero, add_zero]
+
+/-- Law of total variance: for X with finite mean square, the variance of X is the average
+conditional variance (the spread inside the known groups) plus the variance of E[X | G]
+(the spread between them). -/
+theorem law_of_total_variance {Ω : Type*} {m m₀ : MeasurableSpace Ω}
+    (hm : m ≤ m₀) {μ : Measure[m₀] Ω} [IsProbabilityMeasure μ] {X : Ω → ℝ}
+    (hX : MemLp X 2 μ) :
+    Var[X; μ] = μ[Var[X; μ | m]] + Var[μ[X | m]; μ] := by
+  exact (integral_condVar_add_variance_condExp hm hX).symm
+
+/-! The card's rainfall example: eight equally likely cases, so every average is a sum over
+`Fin 8` divided by 8. The sums below are 8 times the card's averages. -/
+
+-- rainfall X, seasonal means M, temperature T, in the order winter dry/wet, spring, summer, autumn
+-- error X - M is orthogonal to the four season indicators and to T
+example : (∑ i : Fin 8, ((![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i
+    - (![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i)
+    * (![5, 5, 11, 11, 19, 19, 13, 13] : Fin 8 → ℤ) i) = 0 := by decide
+
+example : ∀ s : Fin 4, (∑ i : Fin 8, if i.val / 2 = s.val then
+    ((![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i
+      - (![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i) else 0) = 0 := by decide
+
+-- E[X] = 55, E[X^2] = 3650, E[M^2] = 3550
+example : (∑ i : Fin 8, (![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i) = 8 * 55 := by decide
+example : (∑ i : Fin 8, (![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i ^ 2) = 8 * 3650 := by
+  decide
+example : (∑ i : Fin 8, (![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i ^ 2) = 8 * 3550 := by
+  decide
+
+-- Pythagoras with Z = 55: 625 = 100 + 525
+example : (∑ i : Fin 8, ((![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i - 55) ^ 2) = 8 * 625 ∧
+    (∑ i : Fin 8, ((![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i
+      - (![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i) ^ 2) = 8 * 100 ∧
+    (∑ i : Fin 8, ((![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i - 55) ^ 2) = 8 * 525 := by
+  decide
+
+-- the line 7 + 4T: error 225 = 100 + 125
+example : (∑ i : Fin 8, ((![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i
+      - (7 + 4 * (![5, 5, 11, 11, 19, 19, 13, 13] : Fin 8 → ℤ) i)) ^ 2) = 8 * 225 ∧
+    (∑ i : Fin 8, ((![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i
+      - (7 + 4 * (![5, 5, 11, 11, 19, 19, 13, 13] : Fin 8 → ℤ) i)) ^ 2) = 8 * 125 := by
+  decide
+
+-- the hand table
+example : (30 + 60 + 90 + 40 : ℚ) / 4 = 55 := by norm_num
+example : ((25 : ℚ) ^ 2 + 5 ^ 2 + 35 ^ 2 + 15 ^ 2) / 4 = 525 := by norm_num
+example : (3650 : ℤ) - 55 ^ 2 = 625 ∧ (100 : ℤ) + 525 = 625 := by norm_num
+example : (100 : ℚ) + ((3 : ℚ) ^ 2 + 9 ^ 2 + 7 ^ 2 + 19 ^ 2) / 4 = 225 := by norm_num
+example : (400 : ℤ) + 125 = 525 := by norm_num
+
+-- the peeking forecast Z = X: E[(X - M)(M - X)] = -100, not 0
+example : (∑ i : Fin 8, ((![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i
+    - (![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i)
+    * ((![30, 30, 60, 60, 90, 90, 40, 40] : Fin 8 → ℤ) i
+      - (![20, 40, 50, 70, 80, 100, 30, 50] : Fin 8 → ℤ) i)) = 8 * (-100) := by decide
+
+-- desert month 0, 0, 0, 40: squared loss 300 vs 400, absolute loss 15 vs 10
+example : ((0 - 10 : ℚ) ^ 2 * 3 + (40 - 10) ^ 2) / 4 = 300 ∧ ((40 : ℚ) ^ 2) / 4 = 400 ∧
+    (|(0 - 10 : ℚ)| * 3 + |(40 - 10 : ℚ)|) / 4 = 15 ∧ (40 : ℚ) / 4 = 10 := by norm_num
+
+-- X = 2^k with probability 3/4^k: the mean-square partial sums are 15, 30, 60
+example : (∑ k ∈ Finset.Icc 1 5, (3 : ℚ) / 4 ^ k * (2 ^ k) ^ 2) = 15 ∧
+    (∑ k ∈ Finset.Icc 1 10, (3 : ℚ) / 4 ^ k * (2 ^ k) ^ 2) = 30 ∧
+    (∑ k ∈ Finset.Icc 1 20, (3 : ℚ) / 4 ^ k * (2 ^ k) ^ 2) = 60 := by
+  norm_num [Finset.sum_Icc_succ_top]
+
+#print axioms condExp_error_orthogonal_and_pythagoras
+#print axioms condExp_is_unique_closest_known
+#print axioms law_of_total_variance
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'condExp_error_orthogonal_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'condExp_error_orthogonal_and_pythagoras' depends on axioms: [propext, Classical.choice, Quot.sound]
+'condExp_is_unique_closest_known' depends on axioms: [propext, Classical.choice, Quot.sound]
+'law_of_total_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -624,7 +807,7 @@ The two outputs agree line for line.
 
 ## Where this goes next
 
-- [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): a closest point in any closed subspace of any Hilbert space, and the orthogonal complement.
+- Projection, a planned card in Functional analysis: a closest point in any closed subspace of any Hilbert space, and the orthogonal complement.
 - [The rules of conditional expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and conditional Jensen, several of them read off the projection.
 - [Conditioning on a random variable](05-conditioning-on-a-random-variable.md): the forecast as a function of an observed quantity, such as the season.
 - [Filtrations and martingales](06-filtrations-and-martingales.md): projections onto information that grows over time.

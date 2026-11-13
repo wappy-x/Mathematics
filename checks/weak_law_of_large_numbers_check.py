@@ -125,3 +125,4 @@ print(f"breaks: every roll a copy of the first: P(miss) {f6(cop)} at every n; va
 print(f"breaks: standard deviation for variance: n = {n_sd}, Chebyshev there {f6(c / n_sd)}")
 print(f"breaks: 1 - delta for delta: n = {n_1d}, Chebyshev there {f6(c / n_1d)}, exact P(miss) {f6(ex[295])}")
 assert cop == 1 and c / n_sd > delta and n_1d == 295 and ex[295] > delta
+print("ALL CHECKS PASS")

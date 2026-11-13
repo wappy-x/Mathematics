@@ -83,7 +83,7 @@ Take F right-continuous for now; the general case follows by a squeeze in the De
 
 ### Step 2: split the measure against length
 
-The Lebesgue decomposition splits $\mu_F$ in exactly one way into $\mu_{ac}$, which gives every length-zero set mass 0, and $\mu_s$, which lives on one length-zero set N. The Radon-Nikodym theorem gives $\mu_{ac}$ a density f: $\mu_{ac}(A) = \int_A f \, d\lambda$. Claim: f(x) = 0.7 e^(−x) for x > 0, $\mu_s$ is 0.3 on N = {0}. Staircase: f = 0, and $\mu_s$ is everything, on N the Cantor set.
+The Lebesgue decomposition splits $\mu_F$ in exactly one way into $\mu_{ac}$, which gives every length-zero set mass 0, and $\mu_s$, which lives on one length-zero set N. The Radon-Nikodym theorem ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)) gives $\mu_{ac}$ a density f: $\mu_{ac}(A) = \int_A f \, d\lambda$. Claim: f(x) = 0.7 e^(−x) for x > 0, $\mu_s$ is 0.3 on N = {0}. Staircase: f = 0, and $\mu_s$ is everything, on N the Cantor set.
 
 ### Step 3: every slope is two averages
 
@@ -99,7 +99,9 @@ That is the Lebesgue differentiation theorem ([The Lebesgue differentiation theo
 
 ### Step 5: the singular mass per unit length tends to 0, almost everywhere
 
-This is the heart of the proof. Fix a threshold ε and call x bad if arbitrarily short intervals around x hold singular mass above ε times their length. Most of $\mu_s$ sits on a closed piece K of N. Short intervals around bad points off K miss K, so their mass comes from the small leftover of N outside K. A covering lemma picks disjoint intervals among them whose tripled copies cover the bad points. Each has length below its mass over ε, so the bad points have length at most 3 × leftover / ε, which can be made as small as wanted. K itself has length 0.
+This is the heart of the proof. Fix a threshold ε and call x bad if arbitrarily short intervals around x hold singular mass above ε times their length. Most of $\mu_s$ sits on a closed piece K of N. Short intervals around bad points off K miss K, so their mass comes from the small leftover of N outside K.
+
+A covering lemma picks disjoint intervals among them whose tripled copies cover the bad points. Each has length below its mass over ε, so the bad points have length at most 3 × leftover / ε, which can be made as small as wanted. K itself has length 0.
 
 The staircase shows the numbers. Cut [0, 1] into cells of width 3^(−n). The Cantor measure puts mass 2^(−n) on each of 2^n cells and nothing on the rest. On the rising cells the mass per unit length is (3/2)^n, which grows; but the rising cells have total length (2/3)^n, which shrinks to 0. Every other point eventually sits in a flat cell, where the ratio is exactly 0.
 
@@ -135,13 +137,23 @@ Singular mass is never negative, which gives the inequality. Claim on (−1, 5]:
 
 *Density part.* By the Lebesgue differentiation theorem, λ-a.e. x is a Lebesgue point of f: $\frac{1}{2r}\int_{x-r}^{x+r} \lvert f - f(x) \rvert \, d\lambda \to 0$ as r → 0. For 0 < h, $\big\lvert \frac1h \int_x^{x+h} f \, d\lambda - f(x) \big\rvert \le \frac1h \int_{x-h}^{x+h} \lvert f - f(x) \rvert \, d\lambda \to 0$; the same bound serves (x + h, x] for h < 0.
 
-*Singular part.* Let $D(x) = \limsup_{r \to 0} \mu_s([x - r, x + r]) / (2r)$. D is Borel: by monotonicity in r the lim sup may run over rational r, and for fixed r the map x ↦ $\mu_s([x - r, x + r])$ is upper semicontinuous. Fix ε > 0, δ > 0 and a bounded open interval J. The restriction of $\mu_s$ to J is a finite Lebesgue-Stieltjes measure, hence regular, so there is a compact $K \subseteq N \cap J$ with $\mu_s((N \cap J) \setminus K) < \delta$. Let $A = \{x \in J \setminus K : D(x) > \varepsilon\}$ and let C be any compact subset of A. The set $J \setminus K$ is open. Each x in C is the centre of some $I_x = [x - r, x + r] \subseteq J \setminus K$ with $\mu_s(I_x) > 2\varepsilon r$. Finitely many interiors of these cover C. *Covering lemma:* list those intervals longest first; keep an interval if it misses every interval already kept. A discarded interval meets a kept one at least as long, so it lies inside that one's triple (same centre, three times the half-width). Hence C is covered by the triples of kept intervals $I_1, \dots, I_m$, which are disjoint. So $\lambda(C) \le \sum_i 3 \cdot 2 r_i < \frac{3}{\varepsilon} \sum_i \mu_s(I_i) \le \frac{3}{\varepsilon}\, \mu_s(J \setminus K) = \frac{3}{\varepsilon}\, \mu_s\big((N \cap J) \setminus K\big) < \frac{3\delta}{\varepsilon}$, the equality because $\mu_s$ gives nothing off N. By inner regularity of λ, $\lambda(A) \le 3\delta/\varepsilon$. Then $\{x \in J : D(x) > \varepsilon\} \subseteq A \cup K$ has length at most $3\delta/\varepsilon$, since $\lambda(K) \le \lambda(N) = 0$. That set does not depend on δ, and δ is arbitrary, so it is λ-null. Taking ε = 1/k and J = (−k, k) for k = 1, 2, 3, … gives D = 0 λ-a.e. Finally, for h > 0, $0 \le \mu_s((x, x + h]) / h \le 2 \cdot \mu_s([x - h, x + h]) / (2h) \to 0$ wherever D(x) = 0, and likewise for h < 0.
+*Singular part.* Let $D(x) = \limsup_{r \to 0} \mu_s([x - r, x + r]) / (2r)$. D is Borel: by monotonicity in r the lim sup may run over rational r, and for fixed r the map x ↦ $\mu_s([x - r, x + r])$ is upper semicontinuous.
+
+Fix ε > 0, δ > 0 and a bounded open interval J. The restriction of $\mu_s$ to J is a finite Lebesgue-Stieltjes measure, hence regular, so there is a compact $K \subseteq N \cap J$ with $\mu_s((N \cap J) \setminus K) < \delta$. Let $A = \{x \in J \setminus K : D(x) > \varepsilon\}$ and let E be any compact subset of A. The set $J \setminus K$ is open. Each x in E is the centre of some $I_x = [x - r, x + r] \subseteq J \setminus K$ with $\mu_s(I_x) > 2\varepsilon r$. Finitely many interiors of these cover E.
+
+*Covering lemma:* list those intervals longest first; keep an interval if it misses every interval already kept. A discarded interval meets a kept one at least as long, so it lies inside that one's triple (same centre, three times the half-width). Hence E is covered by the triples of kept intervals $I_1, \dots, I_m$, which are disjoint. So $\lambda(E) \le \sum_i 3 \cdot 2 r_i < \frac{3}{\varepsilon} \sum_i \mu_s(I_i) \le \frac{3}{\varepsilon}\, \mu_s(J \setminus K) = \frac{3}{\varepsilon}\, \mu_s\big((N \cap J) \setminus K\big) < \frac{3\delta}{\varepsilon}$, the equality because $\mu_s$ gives nothing off N.
+
+By inner regularity of λ, $\lambda(A) \le 3\delta/\varepsilon$. Then $\{x \in J : D(x) > \varepsilon\} \subseteq A \cup K$ has length at most $3\delta/\varepsilon$, since $\lambda(K) \le \lambda(N) = 0$. That set does not depend on δ, and δ is arbitrary, so it is λ-null. Taking ε = 1/k and J = (−k, k) for k = 1, 2, 3, … gives D = 0 λ-a.e. Finally, for h > 0, $0 \le \mu_s((x, x + h]) / h \le 2 \cdot \mu_s([x - h, x + h]) / (2h) \to 0$ wherever D(x) = 0, and likewise for h < 0.
 
 *Derivative.* For h > 0, $F(x + h) - F(x) = \mu_F((x, x + h]) = \int_x^{x+h} f \, d\lambda + \mu_s((x, x + h])$; for h < 0 the same with (x + h, x]. At every x where both limits above hold, the difference quotient tends to f(x), which is finite a.e. So $F' = f$ λ-a.e., which proves (i). $F'$ is the a.e. limit of the measurable functions $k(F(x + 1/k) - F(x))$, so it is measurable.
 
 *Integral.* Functions equal a.e. have equal integrals, so $\int_a^b F' \, d\lambda = \mu_{ac}((a, b]) = \mu_F((a, b]) - \mu_s((a, b]) = F(b) - F(a) - \mu_s((a, b])$. This is (iii), and (ii) follows since $\mu_s \ge 0$.
 
-*Any increasing F.* Let $G(x) = F(x+)$, the limit from the right; G is increasing and right-continuous. F jumps at countably many points only (each jump spans its own rational), and elsewhere F is continuous and F = G. Let x be a continuity point of F where G is differentiable; all but a null set of x qualify. For y < y′, $G(y) \le F(y') \le G(y')$. So for h > 0 and 0 < η < 1, $G(x + (1 - \eta)h) \le F(x + h) \le G(x + h)$, and F(x) = G(x). Dividing by h and letting h → 0, the right-hand slopes of F lie eventually between $(1 - \eta)G'(x) - \eta$ and $G'(x) + \eta$; letting η → 0 gives $G'(x)$. The same squeeze with $G(x + (1 + \eta)h) \le F(x + h) \le G(x + h)$ handles h < 0. So $F' = G'$ a.e. For a < b′ < b, (ii) for G gives $\int_a^{b'} G' \, d\lambda \le G(b') - G(a) \le F(b) - F(a)$, since $G(b') \le F(b)$ and $G(a) \ge F(a)$. Let b′ rise to b; by monotone convergence $\int_a^b F' \, d\lambda \le F(b) - F(a)$. ∎
+*Any increasing F.* Let $G(x) = F(x+)$, the limit from the right; G is increasing and right-continuous. F jumps at countably many points only (each jump spans its own rational), and elsewhere F is continuous and F = G. Let x be a continuity point of F where G is differentiable; all but a null set of x qualify.
+
+For y < y′, $G(y) \le F(y') \le G(y')$. So for h > 0 and 0 < η < 1, $G(x + (1 - \eta)h) \le F(x + h) \le G(x + h)$, and F(x) = G(x). Dividing by h and letting h → 0, the right-hand slopes of F lie eventually between $(1 - \eta)G'(x) - \eta$ and $G'(x) + \eta$; letting η → 0 gives $G'(x)$. The same squeeze with $G(x + (1 + \eta)h) \le F(x + h) \le G(x + h)$ handles h < 0. So $F' = G'$ a.e.
+
+For a < b′ < b, (ii) for G gives $\int_a^{b'} G' \, d\lambda \le G(b') - G(a) \le F(b) - F(a)$, since $G(b') \le F(b)$ and $G(a) \ge F(a)$. Let b′ rise to b; by monotone convergence $\int_a^b F' \, d\lambda \le F(b) - F(a)$. ∎
 
 </details>
 
@@ -187,18 +199,22 @@ Two lines. Upper (orange): F(x) − F(−1), the rise so far. Lower (green): the
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Integral of $F'$ taken as F(b) − F(a) | staircase 0.000000 vs 1; claim 0.695283 vs 0.995283 | that equation needs absolute continuity, which the staircase and the jump both lack |
+| Integral of $F'$ taken as F(b) − F(a) | staircase 0.000000 vs 1; claim 0.695283 vs 0.995283 | that equation needs absolute continuity (F moves little over any collection of short intervals of small total length), which the staircase and the jump both lack |
 | Limit and integral swapped on the stage slopes | 1.000000 at every stage; the a.e. limit integrates to 0.000000 | the slopes pile onto cells of vanishing length; nothing dominates them |
 | A slope expected at every point | at 0: staircase slope 11.390625 at h = 3^(−6); claim slope 300000.7 at h = 10^(−6) | "almost everywhere" allows a null set of bad points |
 | Monotonicity dropped: Takagi function | slopes across the cells holding 1/3: 1, 0, 1, 0, … | no limit, here or at any point that is not a dyadic fraction |
 
-The last row is a hypothesis failing. The **Takagi function** $T$ adds up $s(2^k x) / 2^k$ for k = 0, 1, 2, …, where $s$ is the distance to the nearest whole number; it is continuous and rises and falls on every interval. Across a cell of width 2^(−n) with ends at multiples of 2^(−n), the first n terms each have slope +1 or −1 and the rest vanish at both ends. So the slope across the cell is the count of 0s minus 1s among the first n binary digits of a point inside, and it changes by exactly 1 from each n to the next. A slope across a cell containing x is a weighted average of the slopes from x to the two ends, so if $T'(x)$ existed these would converge to it. So $T$ has no derivative off the dyadic fractions, a countable set.
+The last row is a hypothesis failing. The **Takagi function** $T$ adds up $s(2^k x) / 2^k$ for k = 0, 1, 2, …, where $s$ is the distance to the nearest whole number; it is continuous and rises and falls on every interval.
+
+Across a cell of width 2^(−n) with ends at multiples of 2^(−n), the first n terms each have slope +1 or −1 and the rest vanish at both ends. So the slope across the cell is the count of 0s minus 1s among the first n binary digits of a point inside, and it changes by exactly 1 from each n to the next. A slope across a cell containing x is a weighted average of the slopes from x to the two ends, so if $T'(x)$ existed these would converge to it. So $T$ has no derivative off the dyadic fractions, a countable set.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the integral of the slope. Road A uses the decomposition: exact stage counts for the staircase, whose digit rule is checked against its self-similarity, and the claim's density integrated by a hand-written Simpson rule. Road B uses F alone: at the midpoint of every cell of width 3^(−7) it takes the slope of F across a tiny step, adds the slopes up, and finds the largest rise across one cell, the jump. For the staircase those midpoints always fall in removed middle thirds (their base-3 digits end in 1s), so its flat count is certain by construction, not a sample. The gap is checked against the jump, and for the three-piece law against the jump plus the staircase's weight. The Takagi slopes are computed exactly and compared with the digit count.
+Two roads to the integral of the slope. Road A uses the decomposition: exact stage counts for the staircase, whose digit rule is checked against its self-similarity, and the claim's density integrated by a hand-written Simpson rule.
+
+Road B uses F alone: at the midpoint of every cell of width 3^(−7) it takes the slope of F across a tiny step, adds the slopes up, and finds the largest rise across one cell, the jump. For the staircase those midpoints always fall in removed middle thirds (their base-3 digits end in 1s), so its flat count is certain by construction, not a sample. The gap is checked against the jump, and for the three-piece law against the jump plus the staircase's weight. The Takagi slopes are computed exactly and compared with the digit count.
 
 ### Python
 
@@ -512,6 +528,169 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Lebesgue's theorem for every increasing F, on an interval and on the whole line, and the exact shortfall for right-continuous F.
+
+- Suppose F is increasing on [a, b], with a ≤ b. Then $F'$ exists almost everywhere on [a, b], and its integral there is finite and at most F(b) − F(a).
+- Suppose F is increasing on the whole line. Then $F'$ exists almost everywhere, and on every stretch [a, b] its integral is finite and at most F(b) − F(a).
+- Suppose F is increasing and right-continuous, and a ≤ b. Then $F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s\big((a, b]\big)$.
+- Take any stage n of the staircase. Then its 2^n rising cells, of width 3^(−n) and slope (3/2)^n, make the integral of stage slopes exactly 1.
+- The three-piece shortfall adds up: 0.3 + 0.2 = 0.5.
+
+The claim's numbers, the staircase's values and the Takagi slopes are left to the Python and Rust checks.
+
+```lean
+-- Lebesgue's theorem on monotone functions: an increasing real function has a derivative almost everywhere, the integral of that derivative over an interval is at most the function's rise, and for a right-continuous function the gap is the singular part of its measure.
+import Mathlib.Analysis.Calculus.Monotone
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Measure.Stieltjes
+import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
+import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory Set
+
+-- Helper lemmas.
+theorem stieltjes_setIntegral_rnDeriv (G : StieltjesFunction ℝ) {s : Set ℝ}
+    (hfin : G.measure s ≠ ⊤) :
+    IntegrableOn (fun x => (G.measure.rnDeriv volume x).toReal) s ∧
+      ∫ x in s, (G.measure.rnDeriv volume x).toReal
+        = (∫⁻ x in s, G.measure.rnDeriv volume x).toReal := by
+  have hm : AEMeasurable (G.measure.rnDeriv volume) (volume.restrict s) :=
+    (Measure.measurable_rnDeriv _ _).aemeasurable
+  have hlt : ∀ᵐ x ∂(volume.restrict s), G.measure.rnDeriv volume x < ⊤ :=
+    ae_restrict_of_ae (Measure.rnDeriv_lt_top _ _)
+  have hne : (∫⁻ x in s, G.measure.rnDeriv volume x) ≠ ⊤ :=
+    ne_top_of_le_ne_top hfin (Measure.setLIntegral_rnDeriv_le s)
+  exact ⟨integrable_toReal_of_lintegral_ne_top hm hne, integral_toReal hm hlt⟩
+
+#print axioms stieltjes_setIntegral_rnDeriv
+
+open Filter in
+theorem monotone_line_integral_deriv_aux
+    {F : ℝ → ℝ} (hF : Monotone F) :
+    (∀ᵐ x, DifferentiableAt ℝ F x) ∧
+      ∀ a b : ℝ, a ≤ b →
+        IntervalIntegrable (deriv F) volume a b ∧ ∫ x in a..b, deriv F x ≤ F b - F a := by
+  refine ⟨hF.ae_differentiableAt, fun a b hab => ?_⟩
+  set G := hF.stieltjesFunction with hG
+  have hae : ∀ᵐ x, deriv F x = (G.measure.rnDeriv volume x).toReal := by
+    filter_upwards [hF.ae_hasDerivAt] with x hx using hx.deriv
+  have hIoc := stieltjes_setIntegral_rnDeriv G (s := Ioc a b) (by simp [G.measure_Ioc])
+  have hIoo := stieltjes_setIntegral_rnDeriv G (s := Ioo a b) (by simp [G.measure_Ioo])
+  have hint : IntervalIntegrable (deriv F) volume a b := by
+    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le hab]
+    exact hIoc.1.congr_fun_ae (ae_restrict_of_ae (hae.mono fun x hx => hx.symm))
+  refine ⟨hint, ?_⟩
+  have h1 : ∫ x in a..b, deriv F x = ∫ x in Ioo a b, (G.measure.rnDeriv volume x).toReal := by
+    rw [intervalIntegral.integral_of_le hab, setIntegral_congr_set Ioo_ae_eq_Ioc.symm]
+    exact integral_congr_ae (ae_restrict_of_ae hae)
+  rw [h1, hIoo.2]
+  have h2 : (∫⁻ x in Ioo a b, G.measure.rnDeriv volume x).toReal ≤ (G.measure (Ioo a b)).toReal :=
+    ENNReal.toReal_mono (by simp [G.measure_Ioo]) (Measure.setLIntegral_rnDeriv_le _)
+  refine h2.trans ?_
+  rw [G.measure_Ioo, ENNReal.toReal_ofReal']
+  have hlb : Function.leftLim G b ≤ F b := by
+    apply le_of_tendsto (G.mono.tendsto_leftLim b)
+    filter_upwards [self_mem_nhdsWithin] with y hy
+    rw [hG, Monotone.stieltjesFunction_eq]
+    exact hF.rightLim_le hy
+  have hga : F a ≤ G a := by
+    rw [hG, Monotone.stieltjesFunction_eq]
+    exact hF.le_rightLim le_rfl
+  have : F a ≤ F b := hF hab
+  exact max_le (by linarith) (by linarith)
+
+#print axioms monotone_line_integral_deriv_aux
+
+/-- Lebesgue's theorem: if `F` is increasing and real-valued on the interval `[a, b]`, then
+`F` has a finite derivative at almost every point of `[a, b]`, the derivative is integrable
+on `[a, b]`, and its integral from `a` to `b` is at most the rise `F b - F a`. -/
+theorem monotone_differentiable_ae_and_integral_deriv_le_rise
+    {F : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b) (hF : MonotoneOn F (Icc a b)) :
+    (∀ᵐ x ∂(volume.restrict (Icc a b)), DifferentiableAt ℝ F x) ∧
+      IntervalIntegrable (deriv F) volume a b ∧
+      ∫ x in a..b, deriv F x ≤ F b - F a := by
+  set g : ℝ → ℝ := fun x => F (projIcc a b hab x) with hg
+  have hgm : Monotone g := fun x y hxy =>
+    hF (projIcc a b hab x).2 (projIcc a b hab y).2 (monotone_projIcc hab hxy)
+  have hgF : ∀ x ∈ Icc a b, g x = F x := fun x hx => by
+    simp only [hg, projIcc_of_mem hab hx]
+  have hev : ∀ x ∈ Ioo a b, g =ᶠ[nhds x] F := fun x hx => by
+    filter_upwards [Ioo_mem_nhds hx.1 hx.2] with y hy using hgF y (Ioo_subset_Icc_self hy)
+  obtain ⟨hd, hi⟩ := monotone_line_integral_deriv_aux hgm
+  obtain ⟨hint, hle⟩ := hi a b hab
+  have hderiv : EqOn (deriv g) (deriv F) (Ioo a b) := fun x hx => (hev x hx).deriv_eq
+  refine ⟨?_, ?_, ?_⟩
+  · rw [Measure.restrict_congr_set Ioo_ae_eq_Icc.symm, ae_restrict_iff' measurableSet_Ioo]
+    filter_upwards [hd] with x hx hxI
+    exact hx.congr_of_eventuallyEq (hev x hxI).symm
+  · exact hint.congr_uIoo (by rw [uIoo_of_le hab]; exact hderiv)
+  · rw [← intervalIntegral.integral_congr_Ioo_of_le hab hderiv]
+    have := hgF a (left_mem_Icc.2 hab)
+    have := hgF b (right_mem_Icc.2 hab)
+    linarith
+
+/-- The same theorem for an increasing function on the whole line: it is differentiable
+almost everywhere, and on every stretch `[a, b]` its derivative is integrable with integral
+at most `F b - F a`. -/
+theorem monotone_on_line_differentiable_ae_and_integral_deriv_le_rise
+    {F : ℝ → ℝ} (hF : Monotone F) :
+    (∀ᵐ x, DifferentiableAt ℝ F x) ∧
+      ∀ a b : ℝ, a ≤ b →
+        IntervalIntegrable (deriv F) volume a b ∧ ∫ x in a..b, deriv F x ≤ F b - F a := by
+  exact monotone_line_integral_deriv_aux hF
+
+/-- The exact shortfall: for an increasing right-continuous `F` (a Stieltjes function) with
+Lebesgue-Stieltjes measure `μ_F`, the rise minus the integral of the derivative over `(a, b]`
+is the mass that the singular part of `μ_F` (with respect to length) gives to `(a, b]`. -/
+theorem rise_sub_integral_deriv_eq_singularPart (F : StieltjesFunction ℝ) {a b : ℝ}
+    (hab : a ≤ b) :
+    F b - F a - ∫ x in a..b, deriv F x =
+      ((F.measure.singularPart volume) (Ioc a b)).toReal := by
+  have hae : ∀ᵐ x, deriv F x = (F.measure.rnDeriv volume x).toReal := by
+    filter_upwards [F.ae_hasDerivAt] with x hx using hx.deriv
+  have hIoc := stieltjes_setIntegral_rnDeriv F (s := Ioc a b) (by simp [F.measure_Ioc])
+  have h1 : ∫ x in a..b, deriv F x = (∫⁻ x in Ioc a b, F.measure.rnDeriv volume x).toReal := by
+    rw [intervalIntegral.integral_of_le hab, ← hIoc.2]
+    exact integral_congr_ae (ae_restrict_of_ae hae)
+  have hdec := congrArg (fun μ : Measure ℝ => μ (Ioc a b))
+    (Measure.haveLebesgueDecomposition_add F.measure volume)
+  rw [Measure.add_apply, withDensity_apply _ measurableSet_Ioc, F.measure_Ioc] at hdec
+  have hS : (F.measure.singularPart volume) (Ioc a b) ≠ ⊤ := by
+    intro h; rw [h, top_add] at hdec; exact ENNReal.ofReal_ne_top hdec
+  have hL : (∫⁻ x in Ioc a b, F.measure.rnDeriv volume x) ≠ ⊤ := by
+    intro h; rw [h, add_top] at hdec; exact ENNReal.ofReal_ne_top hdec
+  have h2 := congrArg ENNReal.toReal hdec
+  rw [ENNReal.toReal_ofReal (sub_nonneg.2 (F.mono hab)), ENNReal.toReal_add hS hL] at h2
+  rw [h1, h2]
+  ring
+
+-- The Cantor staircase stages: at stage n there are 2^n rising cells of width 3^(-n),
+-- each with slope (3/2)^n, so the stage slopes integrate to exactly 1.
+example : (2 : ℕ) ^ 10 = 1024 ∧ (3 : ℕ) ^ 10 = 59049 := by norm_num
+example : ((3 : ℚ) / 2) ^ 4 = 81 / 16 := by norm_num
+example (n : ℕ) : (2 : ℚ) ^ n * ((3 : ℚ) / 2) ^ n * (1 / 3 ^ n) = 1 := by
+  rw [div_pow, one_div]; field_simp
+-- The three-piece law on [-1, 1]: shortfall 0.5 is the jump 0.3 plus the staircase 0.2.
+example : (3 : ℚ) / 10 + 2 / 10 = 1 / 2 := by norm_num
+
+#print axioms monotone_differentiable_ae_and_integral_deriv_le_rise
+#print axioms monotone_on_line_differentiable_ae_and_integral_deriv_le_rise
+#print axioms rise_sub_integral_deriv_eq_singularPart
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stieltjes_setIntegral_rnDeriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monotone_line_integral_deriv_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monotone_differentiable_ae_and_integral_deriv_le_rise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'monotone_on_line_differentiable_ae_and_integral_deriv_le_rise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rise_sub_integral_deriv_eq_singularPart' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -524,7 +703,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Believing that a function which rises continuously is the integral of its slope.** Continuity rules out jumps, not staircases. The Cantor staircase is continuous and rises by 1, yet its slope is 0 almost everywhere and integrates to 0. Recovering a function from its slope needs absolute continuity, a stronger condition than continuity.
+> **Believing that a function which rises continuously is the integral of its slope.** Continuity rules out jumps, not staircases. The Cantor staircase is continuous and rises by 1, yet its slope is 0 almost everywhere and integrates to 0. Recovering a function from its slope needs absolute continuity, a stronger condition than continuity ([Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)).
 >
 > - **Reading "differentiable almost everywhere" as "differentiable except at a few points".** The staircase fails at uncountably many points of the Cantor set; they still have length 0.
 > - **Fitting one density to every claim.** A density describes only the 0.7 spread out; the 0.3 of claims of exactly 0 has no density and needs its own term.
@@ -553,6 +732,8 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the functions with no singular part, for which the integral of the slope recovers the rise exactly, and how to recognise them without computing a decomposition.
+
+The question this card leaves open: which rising functions lose nothing, so that the integral of the slope gives back the whole rise?
 
 ---
 

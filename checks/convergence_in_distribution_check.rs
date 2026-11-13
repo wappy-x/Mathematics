@@ -156,7 +156,6 @@ fn main() {
     let nosc: Vec<f64> = [10usize, 100, 1000].iter().map(|&n| cdf(&pr[&n], 3.5 * n as f64 + 10.0)).collect();
     println!("centred, unscaled S_n - 3.5 n: F(10) at n = 10, 100, 1000: {}",
         nosc.iter().map(|x| format!("{:.4}", x)).collect::<Vec<_>>().join(", "));
-
     assert!(a2 == b2 && a10 == b10 && float_err < 1e-15);
     assert!(ser.iter().zip(&simp).all(|(a, b)| (a - b).abs() < 1e-10)); // two roads to Phi
     assert!(unif_ok); // uniform: count and sum, two roads
@@ -167,4 +166,5 @@ fn main() {
     assert!(law(&under) == law(&faces) && near == 0); // same law, never close
     assert!(lump.iter().all(|&(n, _, m, c)| m == n && c == 1)); // law's mean against n * (1/n) = 1; capped mean against 1/n
     assert!(nosc[0] > nosc[1] && nosc[1] > nosc[2] && nosc[2] > 0.5);
+    println!("ALL CHECKS PASS");
 }

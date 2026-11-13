@@ -132,3 +132,4 @@ print(f"figure, scale {sc:.0f} per mm, O=(40,200) M=({40 + sc * float(between) *
       f"X=({40 + sc * float(between) ** 0.5:.2f},{200 - sc * float(within) ** 0.5:.2f}) "
       f"legs {float(between) ** 0.5:.2f} and {float(within) ** 0.5:.2f}, "
       f"hypotenuse {float(var_direct) ** 0.5:.2f}")
+print("ALL CHECKS PASS")

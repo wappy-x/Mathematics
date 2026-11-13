@@ -109,7 +109,9 @@ The code runs it on 114 windows, one per grid point where the remainder's maxima
 
 ### Step 3: the maximal inequality
 
-Let $E$ be the set where $Mf > \alpha$. Each point of $E$ has a **witness window**, an open window whose average of $\lvert f\rvert$ beats $\alpha$; a slightly wider window around any nearby point still does, so $E$ is open. Take a closed bounded piece $K$ of $E$. Its witness windows cover it, and by the Heine-Borel theorem (a closed bounded set covered by open intervals is covered by finitely many of them) finitely many suffice. Vitali picks disjoint windows $J_1, \dots, J_m$ among them whose triples cover $K$. Each has $\alpha\,\lambda(J_i) < \int_{J_i} \lvert f\rvert\,d\lambda$, and disjoint windows cannot use the same part of the total twice:
+Let $E$ be the set where $Mf > \alpha$. Each point of $E$ has a **witness window**, an open window whose average of $\lvert f\rvert$ beats $\alpha$; a slightly wider window around any nearby point still does, so $E$ is open. Take a closed bounded piece $K$ of $E$. Its witness windows cover it, and by the Heine-Borel theorem (a closed bounded set covered by open intervals is covered by finitely many of them) finitely many suffice.
+
+Vitali picks disjoint windows $J_1, \dots, J_m$ among them whose triples cover $K$. Each has $\alpha\,\lambda(J_i) < \int_{J_i} \lvert f\rvert\,d\lambda$, and disjoint windows cannot use the same part of the total twice:
 
 $$\lambda(K) \le 3\sum_i \lambda(J_i) < \frac{3}{\alpha}\sum_i \int_{J_i}\lvert f\rvert\,d\lambda \le \frac{3}{\alpha}\,\|f\|_1 .$$
 
@@ -123,7 +125,11 @@ Fix a level $\alpha > 0$ and a tolerance $\varepsilon > 0$. Pick $\varphi$ conti
 
 $$\lvert f(s) - f(x)\rvert \le \lvert \varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert .$$
 
-Average over the window and let $h$ shrink. The first term goes to 0 (Step 1). The second is at most $Mg(x)$. So $\Theta f(x) \le Mg(x) + \lvert g(x)\rvert$. If $\Theta f(x) > 2\alpha$, then $Mg(x) > \alpha$ or $\lvert g(x)\rvert > \alpha$. The maximal inequality bounds the first set by $3\varepsilon/\alpha$. Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) bounds the second by $\varepsilon/\alpha$. So the set where $\Theta f > 2\alpha$ fits inside a set of length at most $4\varepsilon/\alpha$, for every $\varepsilon$. Its length is zero. Letting $\alpha$ run through 1, 1/2, 1/3, … gives a countable union of null sets, still null. Off it, $\Theta f = 0$.
+Average over the window and let $h$ shrink. The first term goes to 0 (Step 1). The second is at most $Mg(x)$. So $\Theta f(x) \le Mg(x) + \lvert g(x)\rvert$.
+
+If $\Theta f(x) > 2\alpha$, then $Mg(x) > \alpha$ or $\lvert g(x)\rvert > \alpha$. The maximal inequality bounds the first set by $3\varepsilon/\alpha$. Markov's inequality (the length of the set where $\lvert g\rvert > \alpha$ is at most $\|g\|_1/\alpha$; [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) bounds the second by $\varepsilon/\alpha$. So the set where $\Theta f > 2\alpha$ fits inside a set of length at most $4\varepsilon/\alpha$, for every $\varepsilon$. Its length is zero.
+
+Letting $\alpha$ run through 1, 1/2, 1/3, … gives a countable union of null sets, still null. Off it, $\Theta f = 0$.
 
 On the meter, narrower ramps shrink the bound $4\|g\|_1/\alpha$: 30.000000 for ramps one minute wide, 7.500000 at a quarter-minute, 1.875000 at 1/16, 0.029297 at 1/1024. The set being bounded, where the spread beats 2α = 0.4, is the three instants t = 20, 30 and 45, whose spreads are 0.5, 95 and 1. Three points have length zero.
 
@@ -142,9 +148,9 @@ At a Lebesgue point the running total has slope $f(x)$: the slope over $[x, x+h]
 
 **Lemma 2 ($\{Mf > \alpha\}$ is open).** If $A_h\lvert f\rvert(x) > \alpha$ and $\lvert y - x\rvert < \eta$, the window around $y$ of half-width $h + \eta$ contains the one around $x$, so $A_{h+\eta}\lvert f\rvert(y) \ge \frac{h}{h+\eta}A_h\lvert f\rvert(x) > \alpha$ for small $\eta$.
 
-**Theorem 1 (Hardy-Littlewood maximal inequality).** For $f \in L^1$ and $\alpha > 0$, $\lambda\{Mf > \alpha\} \le \frac{3}{\alpha}\|f\|_1$. *Proof.* Let $E = \{Mf > \alpha\}$, open by Lemma 2, so Borel. Let $K \subseteq E$ be closed and bounded. Each $x \in K$ has an open window $W_x = (x - h_x, x + h_x)$ with $\int_{W_x}\lvert f\rvert\,d\lambda > \alpha\,\lambda(W_x)$. By Heine-Borel, finitely many $W_x$ cover $K$. Lemma 1 gives disjoint $J_1, \dots, J_m$ among them with $K \subseteq \bigcup 3J_j$. Then $\lambda(K) \le 3\sum_j\lambda(J_j) < \frac{3}{\alpha}\sum_j \int_{J_j}\lvert f\rvert\,d\lambda \le \frac3\alpha\|f\|_1$, the last step by disjointness and additivity of the integral over disjoint sets. By regularity (lebesgue-measure), for every $\eta > 0$ there is a closed $C \subseteq E$ with $\lambda(E \setminus C) < \eta$. The sets $K_N = C \cap [-N, N]$ are closed and bounded and rise to $C$, so continuity of measure from below gives $\lambda(C) = \lim_N \lambda(K_N) \le \frac3\alpha\|f\|_1$. Hence $\lambda(E) \le \frac3\alpha\|f\|_1 + \eta$ for every $\eta > 0$.
+**Theorem 1 (Hardy-Littlewood maximal inequality).** For $f \in L^1$ and $\alpha > 0$, $\lambda\{Mf > \alpha\} \le \frac{3}{\alpha}\|f\|_1$. *Proof.* Let $E = \{Mf > \alpha\}$, open by Lemma 2, so Borel. Let $K \subseteq E$ be closed and bounded. Each $x \in K$ has an open window $W_x = (x - h_x, x + h_x)$ with $\int_{W_x}\lvert f\rvert\,d\lambda > \alpha\,\lambda(W_x)$. By Heine-Borel, finitely many $W_x$ cover $K$. Lemma 1 gives disjoint $J_1, \dots, J_m$ among them with $K \subseteq \bigcup 3J_j$. Then $\lambda(K) \le 3\sum_j\lambda(J_j) < \frac{3}{\alpha}\sum_j \int_{J_j}\lvert f\rvert\,d\lambda \le \frac3\alpha\|f\|_1$, the last step by disjointness and additivity of the integral over disjoint sets. By regularity ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), for every $\eta > 0$ there is a closed $C \subseteq E$ with $\lambda(E \setminus C) < \eta$. The sets $K_N = C \cap [-N, N]$ are closed and bounded and rise to $C$, so continuity of measure from below gives $\lambda(C) = \lim_N \lambda(K_N) \le \frac3\alpha\|f\|_1$. Hence $\lambda(E) \le \frac3\alpha\|f\|_1 + \eta$ for every $\eta > 0$.
 
-**Theorem 2 (Lebesgue differentiation).** For $f \in L^1_{\mathrm{loc}}$, almost every $x$ satisfies $\lim_{h\to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds = 0$. *Proof.* First let $f \in L^1$. Put $\Theta f(x) = \limsup_{h \to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds$. Fix $\alpha > 0$ and $\varepsilon > 0$. By density of continuous functions in $L^1$ (completeness-of-lp, Theorem 3), choose $\varphi$ continuous and zero outside a bounded interval with $\|f - \varphi\|_1 < \varepsilon$; put $g = f - \varphi$. The triangle inequality gives $\lvert f(s) - f(x)\rvert \le \lvert\varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert$. Averaging over the window and taking limsup, $\Theta f(x) \le \Theta\varphi(x) + Mg(x) + \lvert g(x)\rvert$. Continuity of $\varphi$ at $x$ gives $\Theta\varphi(x) = 0$: for $\eta > 0$ some $h_0$ has $\lvert\varphi(s) - \varphi(x)\rvert < \eta$ whenever $\lvert s - x\rvert < h_0$, so the window average is below $\eta$ for $h < h_0$. Hence $\{\Theta f > 2\alpha\} \subseteq \{Mg > \alpha\} \cup \{\lvert g\rvert > \alpha\}$. By Theorem 1 the first has measure at most $3\varepsilon/\alpha$; by Markov's inequality the second, a measurable set, has measure at most $\|g\|_1/\alpha < \varepsilon/\alpha$. So the outer measure of $\{\Theta f > 2\alpha\}$ is at most $4\varepsilon/\alpha$ for every $\varepsilon > 0$, hence 0; the set is null, and measurable because Lebesgue measure is complete. The union over $\alpha = 1/k$, $k = 1, 2, \dots$, is $\{\Theta f > 0\}$, a countable union of null sets, so null. For $f \in L^1_{\mathrm{loc}}$, apply this to $f_N = f\,1_{(-N, N)} \in L^1$: for $x \in (-N+1, N-1)$ and $h < 1$ the windows lie inside $(-N, N)$, where $f_N = f$, so $\Theta f(x) = \Theta f_N(x)$. The union over $N$ of the exceptional sets is null.
+**Theorem 2 (Lebesgue differentiation).** For $f \in L^1_{\mathrm{loc}}$, almost every $x$ satisfies $\lim_{h\to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds = 0$. *Proof.* First let $f \in L^1$. Put $\Theta f(x) = \limsup_{h \to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds$. Fix $\alpha > 0$ and $\varepsilon > 0$. By density of continuous functions in $L^1$ ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md), Theorem 3), choose $\varphi$ continuous and zero outside a bounded interval with $\|f - \varphi\|_1 < \varepsilon$; put $g = f - \varphi$. The triangle inequality gives $\lvert f(s) - f(x)\rvert \le \lvert\varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert$. Averaging over the window and taking limsup, $\Theta f(x) \le \Theta\varphi(x) + Mg(x) + \lvert g(x)\rvert$. Continuity of $\varphi$ at $x$ gives $\Theta\varphi(x) = 0$: for $\eta > 0$ some $h_0$ has $\lvert\varphi(s) - \varphi(x)\rvert < \eta$ whenever $\lvert s - x\rvert < h_0$, so the window average is below $\eta$ for $h < h_0$. Hence $\{\Theta f > 2\alpha\} \subseteq \{Mg > \alpha\} \cup \{\lvert g\rvert > \alpha\}$. By Theorem 1 the first has measure at most $3\varepsilon/\alpha$; by Markov's inequality the second, a measurable set, has measure at most $\|g\|_1/\alpha < \varepsilon/\alpha$. So the outer measure of $\{\Theta f > 2\alpha\}$ is at most $4\varepsilon/\alpha$ for every $\varepsilon > 0$, hence 0; the set is null, and measurable because Lebesgue measure is complete. The union over $\alpha = 1/k$, $k = 1, 2, \dots$, is $\{\Theta f > 0\}$, a countable union of null sets, so null. For $f \in L^1_{\mathrm{loc}}$, apply this to $f_N = f\,1_{(-N, N)} \in L^1$: for $x \in (-N+1, N-1)$ and $h < 1$ the windows lie inside $(-N, N)$, where $f_N = f$, so $\Theta f(x) = \Theta f_N(x)$. The union over $N$ of the exceptional sets is null.
 
 **Corollary 1 (averages).** $\lvert A_h f(x) - f(x)\rvert = \bigl\lvert\frac{1}{2h}\int_{x-h}^{x+h}(f(s) - f(x))\,ds\bigr\rvert \le \frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds$, so $A_h f(x) \to f(x)$ at every Lebesgue point.
 
@@ -184,7 +190,9 @@ At the switch-on instant the meter's averages report half-way between before and
 
 ## Code, from first principles, and it actually runs
 
-Three roads lead to each window average: exact fractions from the running total $F$; a meter's sum of 2000 midpoint samples, which never uses $F$; and the closed forms worked by hand, such as $2.5 + h^2/600$ at t = 10. All three must agree. The code then runs the proof: the ramped stand-in $\varphi$, the remainder's total by formula and by sum, the maximal function on a grid of 1,201 points and 560 window sizes, the greedy Vitali choice with its tripling check, and the bound. Failures print beside the working case. Rust does the exact fractions with a hand-written type. The code checks windows down to 0.001 minutes on grids; convergence at almost every point of every integrable function is the proof's work.
+Three roads lead to each window average: exact fractions from the running total $F$; a meter's sum of 2000 midpoint samples, which never uses $F$; and the closed forms worked by hand, such as $2.5 + h^2/600$ at t = 10. All three must agree.
+
+The code then runs the proof: the ramped stand-in $\varphi$, the remainder's total by formula and by sum, the maximal function on a grid of 1,201 points and 560 window sizes, the greedy Vitali choice with its tripling check, and the bound. Failures print beside the working case. Rust does the exact fractions with a hand-written type. The code checks windows down to 0.001 minutes on grids; convergence at almost every point of every integrable function is the proof's work.
 
 ### Python
 
@@ -563,6 +571,196 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the theorem, the maximal inequality and the slope of the running total, each under the card's condition.
+
+- Take a locally integrable function $f$ on the line. Then almost every point is a Lebesgue point of $f$.
+- Take a locally integrable $f$. Then the window average $A_h f(x)$ tends to $f(x)$ as $h$ shrinks to 0, at almost every $x$.
+- Suppose $f$ has finite total $\|f\|_1$ and $\alpha > 0$. Then the set where $Mf > \alpha$ has length at most $3\|f\|_1/\alpha$.
+- Take a locally integrable $f$ and its running total $F$. Then $F$ has slope $f(x)$ at almost every $x$.
+- Exact fractions confirm the hand arithmetic: the averages at t = 10, the window from minute 19 to 21, and the left slope at 20.
+- They also confirm the bounds: Vitali's 21.9 within 22.5, the bad-set bounds 30 to 15/512, and the block's 9 within 30.
+
+The meter's sums, the grid searches, the decimals and the failures are left to the Python and Rust checks.
+
+```lean
+-- The Lebesgue differentiation theorem: for every locally integrable function on the line, almost every point is a Lebesgue point, so window averages shrinking to the point return the function's value there; with the Hardy-Littlewood maximal inequality and the slope of the running total.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.LebesgueDifferentiationThm
+import Mathlib.MeasureTheory.Covering.OneDim
+import Mathlib.MeasureTheory.Function.LocallyIntegrable
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory Filter Topology
+
+lemma ldt_avg_eq (g : ℝ → ℝ) (x h : ℝ) (hh : 0 < h) :
+    ⨍ y in Metric.closedBall x h, g y = (2 * h)⁻¹ * ∫ s in (x - h)..(x + h), g s := by
+  rw [setAverage_eq, Real.volume_real_closedBall hh.le, smul_eq_mul,
+    intervalIntegral.integral_of_le (by linarith), Real.closedBall_eq_Icc,
+    integral_Icc_eq_integral_Ioc]
+
+#print axioms ldt_avg_eq
+
+/-- The Lebesgue differentiation theorem. Let f be a locally integrable function on the real
+line (the integral of |f| over every bounded interval is finite). Then at almost every point x
+(every point outside a set of length zero), as the half-width h > 0 shrinks to 0:
+the average of |f(s) - f(x)| over the window from x - h to x + h tends to 0 (x is a Lebesgue
+point), and the window average of f itself tends to f(x). -/
+theorem lebesgue_differentiation_theorem (f : ℝ → ℝ) (hf : LocallyIntegrable f volume) :
+    ∀ᵐ x ∂volume,
+      Tendsto (fun h : ℝ => (2 * h)⁻¹ * ∫ s in (x - h)..(x + h), |f s - f x|)
+          (𝓝[>] 0) (𝓝 0) ∧
+      Tendsto (fun h : ℝ => (2 * h)⁻¹ * ∫ s in (x - h)..(x + h), f s)
+          (𝓝[>] 0) (𝓝 (f x)) := by
+  filter_upwards [IsUnifLocDoublingMeasure.ae_tendsto_average_norm_sub (μ := volume) hf 1,
+    IsUnifLocDoublingMeasure.ae_tendsto_average (μ := volume) hf 1] with x h1 h2
+  have xmem : ∀ᶠ j in 𝓝[>] (0:ℝ), x ∈ Metric.closedBall ((fun _ => x) j) (1 * id j) := by
+    filter_upwards [self_mem_nhdsWithin] with j hj
+    simpa using (le_of_lt (Set.mem_Ioi.1 hj))
+  have hpos : ∀ᶠ j in 𝓝[>] (0:ℝ), 0 < j := self_mem_nhdsWithin
+  constructor
+  · refine (h1 (fun _ => x) id tendsto_id xmem).congr' ?_
+    filter_upwards [hpos] with j hj
+    simp only [id, Real.norm_eq_abs]
+    exact ldt_avg_eq (fun y => |f y - f x|) x j hj
+  · refine (h2 (fun _ => x) id tendsto_id xmem).congr' ?_
+    filter_upwards [hpos] with j hj
+    exact ldt_avg_eq f x j hj
+
+/-- The Hardy-Littlewood maximal inequality. Let f be integrable on the real line and alpha > 0.
+The maximal function Mf(x) is the largest window average of |f| at x, taken over all
+half-widths h > 0 (a value in [0, infinity]). The length of the set where Mf beats alpha is at
+most 3 / alpha times the total of |f|. -/
+theorem hardy_littlewood_maximal_inequality (f : ℝ → ℝ) (hf : Integrable f volume)
+    (α : ℝ) (hα : 0 < α) :
+    volume {x : ℝ | ENNReal.ofReal α <
+        ⨆ (h : ℝ) (_ : 0 < h), ENNReal.ofReal ((2 * h)⁻¹ * ∫ s in (x - h)..(x + h), |f s|)}
+      ≤ ENNReal.ofReal (3 / α * ∫ s, |f s|) := by
+  set S := {x : ℝ | ENNReal.ofReal α <
+        ⨆ (h : ℝ) (_ : 0 < h), ENNReal.ofReal ((2 * h)⁻¹ * ∫ s in (x - h)..(x + h), |f s|)}
+    with hS
+  set I := ∫ s, |f s| with hI
+  have hfa : Integrable (fun s => |f s|) volume := hf.abs
+  have key : ∀ x ∈ S, ∃ h : ℝ, 0 < h ∧
+      ENNReal.ofReal (2 * h) ≤ ENNReal.ofReal α⁻¹ *
+        ∫⁻ s in Metric.closedBall x h, ENNReal.ofReal |f s| ∧ h ≤ I / α := by
+    intro x hx
+    simp only [S, Set.mem_ofPred_eq, lt_iSup_iff] at hx
+    obtain ⟨h, hh, hlt⟩ := hx
+    rw [ENNReal.ofReal_lt_ofReal_iff'] at hlt
+    obtain ⟨hlt, -⟩ := hlt
+    have hint : ∫ s in (x - h)..(x + h), |f s| = ∫ s in Metric.closedBall x h, |f s| := by
+      rw [intervalIntegral.integral_of_le (by linarith), Real.closedBall_eq_Icc,
+        integral_Icc_eq_integral_Ioc]
+    rw [hint] at hlt
+    set J := ∫ s in Metric.closedBall x h, |f s| with hJdef
+    have h2 : 0 < 2 * h := by linarith
+    have hJ : 2 * h * α < J := by
+      rw [lt_inv_mul_iff₀ h2] at hlt
+      linarith
+    have hJI : J ≤ I := setIntegral_le_integral hfa (Eventually.of_forall fun _ => abs_nonneg _)
+    refine ⟨h, hh, ?_, ?_⟩
+    · rw [← ofReal_integral_eq_lintegral_ofReal hfa.integrableOn
+        (Eventually.of_forall fun _ => abs_nonneg _), ← hJdef,
+        ← ENNReal.ofReal_mul (inv_nonneg.2 hα.le)]
+      apply ENNReal.ofReal_le_ofReal
+      rw [le_inv_mul_iff₀ hα]
+      linarith
+    · rw [le_div_iff₀ hα]
+      nlinarith
+  choose! r hr0 hr hrI using key
+  obtain ⟨u, huS, hdisj, hcov⟩ :=
+    Vitali.exists_disjoint_subfamily_covering_enlargement (fun x => Metric.closedBall x (r x))
+      S r 2 one_lt_two (fun a ha => (hr0 a ha).le) (I / α) hrI
+      (fun a ha => ⟨a, Metric.mem_closedBall_self (hr0 a ha).le⟩)
+  have hu : u.Countable := hdisj.countable_of_nonempty_interior fun a ha =>
+    ⟨a, Metric.ball_subset_interior_closedBall (Metric.mem_ball_self (hr0 a (huS ha)))⟩
+  have hcover : S ⊆ ⋃ b ∈ u, Metric.closedBall b (3 * r b) := by
+    intro x hx
+    obtain ⟨b, hbu, ⟨z, hz1, hz2⟩, hle⟩ := hcov x hx
+    simp only [Set.mem_iUnion]
+    refine ⟨b, hbu, ?_⟩
+    rw [Metric.mem_closedBall] at hz1 hz2 ⊢
+    have := dist_triangle x z b
+    rw [dist_comm] at hz1
+    linarith
+  have : Countable u := hu.to_subtype
+  calc volume S ≤ volume (⋃ b ∈ u, Metric.closedBall b (3 * r b)) := measure_mono hcover
+    _ ≤ ∑' b : u, volume (Metric.closedBall (b : ℝ) (3 * r b)) := measure_biUnion_le _ hu _
+    _ = ∑' b : u, 3 * ENNReal.ofReal (2 * r b) := by
+        congr 1; ext b
+        rw [Real.volume_closedBall, show 2 * (3 * r b) = 3 * (2 * r b) by ring,
+          ENNReal.ofReal_mul (by norm_num), ENNReal.ofReal_ofNat]
+    _ ≤ ∑' b : u, 3 * (ENNReal.ofReal α⁻¹ *
+          ∫⁻ s in Metric.closedBall (b : ℝ) (r b), ENNReal.ofReal |f s|) := by
+        gcongr with b
+        exact hr b (huS b.2)
+    _ = 3 * ENNReal.ofReal α⁻¹ *
+          ∫⁻ s in ⋃ b : u, Metric.closedBall (b : ℝ) (r b), ENNReal.ofReal |f s| := by
+        rw [lintegral_iUnion (fun b => measurableSet_closedBall) (hdisj.subtype _ _),
+          ENNReal.tsum_mul_left, ENNReal.tsum_mul_left, mul_assoc]
+    _ ≤ 3 * ENNReal.ofReal α⁻¹ * ∫⁻ s, ENNReal.ofReal |f s| := by
+        exact mul_le_mul_right (setLIntegral_le_lintegral _ _) _
+    _ = ENNReal.ofReal (3 / α * I) := by
+        rw [← ofReal_integral_eq_lintegral_ofReal hfa
+          (Eventually.of_forall fun _ => abs_nonneg _), ← hI,
+          ← ENNReal.ofReal_ofNat 3, ← ENNReal.ofReal_mul (by norm_num),
+          ← ENNReal.ofReal_mul (by positivity), div_eq_mul_inv]
+
+/-- Integrating and then differentiating returns f almost everywhere. Let f be locally
+integrable on the real line and F(x) the integral of f from 0 to x, the running total. Then at
+almost every point x, F has derivative f(x). -/
+theorem running_total_has_slope_ae (f : ℝ → ℝ) (hf : LocallyIntegrable f volume) :
+    ∀ᵐ x ∂volume, HasDerivAt (fun y : ℝ => ∫ s in (0 : ℝ)..y, f s) (f x) x := by
+  filter_upwards [LocallyIntegrable.ae_hasDerivAt_integral hf] with x hx using hx 0
+
+-- The demand curve: f(t) = 2 + t^2/200 before minute 20, with running total F(t) = 2t + t^3/600.
+-- Window averages at t = 10 are 5/2 + h^2/600: h = 4 (window 6 to 14), h = 2, h = 1.
+example : ((2 * 14 + (14 : ℚ) ^ 3 / 600) - (2 * 6 + 6 ^ 3 / 600)) / 8 = 5 / 2 + 4 ^ 2 / 600 := by
+  norm_num
+example : ((2 * 12 + (12 : ℚ) ^ 3 / 600) - (2 * 8 + 8 ^ 3 / 600)) / 4 = 5 / 2 + 2 ^ 2 / 600 := by
+  norm_num
+example : ((2 * 11 + (11 : ℚ) ^ 3 / 600) - (2 * 9 + 9 ^ 3 / 600)) / 2 = 5 / 2 + 1 / 600 := by
+  norm_num
+-- Worked numbers by hand: the window from minute 19 to 21 around the jump at t = 20.
+-- Energy 19 to 20 is 2 + (20^3 - 19^3)/600 = 2341/600; 20 to 21 is 5; the average is
+-- 5341/1200, which is the closed form 9/2 - h/20 + h^2/1200 at h = 1.
+example : (2 + ((20 : ℚ) ^ 3 - 19 ^ 3) / 600) = 2341 / 600 := by norm_num
+example : ((2341 / 600 : ℚ) + 5) / 2 = 5341 / 1200 ∧
+    (5341 / 1200 : ℚ) = 9 / 2 - 1 / 20 + 1 / 1200 := by norm_num
+-- Slope of F just left of t = 20 with q = 1/1000: 4 - q/10 + q^2/600.
+example : ((2 * 20 + (20 : ℚ) ^ 3 / 600) - (2 * (20 - 1 / 1000) + (20 - 1 / 1000) ^ 3 / 600))
+    / (1 / 1000) = 4 - (1 / 1000) / 10 + (1 / 1000) ^ 2 / 600 := by norm_num
+-- Vitali on the meter: chosen windows (20, 22.4) and (45, 49.9); three times their total
+-- length is 21.9, inside the bound 3 ||g||_1 / alpha = 3 (3/2) / (1/5) = 22.5.
+example : 3 * (((112 / 5 : ℚ) - 20) + ((499 / 10) - 45)) = 219 / 10 ∧
+    (219 / 10 : ℚ) ≤ 3 * (3 / 2) / (1 / 5) ∧ 3 * (3 / 2 : ℚ) / (1 / 5) = 45 / 2 := by norm_num
+-- Bad-set bound 4 ||g||_1 / alpha with ||g||_1 = 3 delta / 2 and alpha = 1/5:
+-- 30 at delta = 1, 15/2 at 1/4, 15/8 at 1/16, 15/512 at 1/1024.
+example : 4 * (3 / 2 : ℚ) / (1 / 5) = 30 ∧ 4 * (3 / 2 * (1 / 4) : ℚ) / (1 / 5) = 15 / 2 ∧
+    4 * (3 / 2 * (1 / 16) : ℚ) / (1 / 5) = 15 / 8 ∧
+    4 * (3 / 2 * (1 / 1024) : ℚ) / (1 / 5) = 15 / 512 := by norm_num
+-- Block of height 1 on [0, 1]: Mf = 1/(2x) beyond 1, so Mf > 1/10 on a set of length
+-- 1/(1/10) - 1 = 9, against the bound 3 / (1/10) = 30.
+example : (1 / (1 / 10) : ℚ) - 1 = 9 ∧ (9 : ℚ) ≤ 3 / (1 / 10) ∧ (3 / (1 / 10) : ℚ) = 30 := by
+  norm_num
+
+#print axioms lebesgue_differentiation_theorem
+#print axioms hardy_littlewood_maximal_inequality
+#print axioms running_total_has_slope_ae
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ldt_avg_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lebesgue_differentiation_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hardy_littlewood_maximal_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'running_total_has_slope_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -606,11 +804,13 @@ The two outputs match line for line.
 - [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md): every rising function has a slope almost everywhere, whether or not it is a running total.
 - The maximal function: the maximal function in higher dimensions, its bounds on $L^p$, and the averaging kernels it controls.
 
+This card integrates and then differentiates. The question it leaves open is the reverse: which functions are the running totals of their own slopes? [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md) answers it.
+
 ---
 
 ## Sources
 
-Verified 29 Sep 2026: every link below opens a page naming the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Stein, Elias M., and Rami Shakarchi. *Real Analysis: Measure Theory, Integration, and Hilbert Spaces*. Princeton University Press, 2005. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113869/real-analysis). Chapter 3, Section 1 proves the Vitali covering lemma, the maximal inequality with the constant 3, and the differentiation theorem in this order.
 - Folland, Gerald B. *Real Analysis: Modern Techniques and Their Applications*, 2nd ed. Wiley, 1999. [Publisher page](https://www.wiley.com/en-us/Real+Analysis%3A+Modern+Techniques+and+Their+Applications%2C+2nd+Edition-p-9780471317166). Section 3.4 proves the theorem in n dimensions, defines the Lebesgue set, and treats families that shrink nicely.

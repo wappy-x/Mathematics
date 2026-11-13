@@ -10,7 +10,13 @@ A rain gauge has logged the long-run rainfall for each month of the year: 30 mm 
 
 Now suppose only the season is known, not the month. Winter (December, January, February) averages 30 mm. Spring averages 60, summer 90, autumn 40. That list of four numbers is a forecast: a rule that turns what is known into a best guess. Know less, and the forecast gets coarser. Told only "wet season" (spring and summer) or "dry season" (autumn and winter), the forecast is 75 or 35.
 
-Averaging within a group works when every group has positive probability; [Conditioning on a partition](01-conditioning-on-a-partition.md) does exactly that, at another station with different months but the same four season averages. It breaks when the information is an exact reading. Read the date exactly, as a point in a continuous year, and each date has probability zero. Averaging over a group of probability zero means dividing zero by zero. This card replaces the division with two tests a forecast must pass. The forecast may use only what is known. And on every event that the known information can decide, the forecast and the true rainfall must add up to the same total. Radon-Nikodym supplies a forecast that passes both tests, and any two that pass agree except on a set of probability zero.
+Averaging within a group works when every group has positive probability; [Conditioning on a partition](01-conditioning-on-a-partition.md) does exactly that, at another station with different months but the same four season averages. It breaks when the information is an exact reading.
+
+Read the date exactly, as a point in a continuous year, and each date has probability zero. Averaging over a group of probability zero means dividing zero by zero.
+
+This card replaces the division with two tests a forecast must pass. The forecast may use only what is known. And on every event that the known information can decide, the forecast and the true rainfall must add up to the same total.
+
+The Radon-Nikodym theorem builds a function whose totals over events match totals given in advance. It supplies a forecast that passes both tests, and any two that pass agree except on a set of probability zero.
 
 **The conditional expectation of X given the information G is the forecast that uses only that information and matches X's total on every event the information can decide; it always exists when X has a finite average, and it is unique up to a set of probability zero.**
 
@@ -35,7 +41,11 @@ The bars are the rainfall month by month: the full information. The first line i
 
 ## The formula
 
-Notation first, in words. $\Omega$ (omega) is the set of outcomes: here the twelve months. $\mathcal{F}$ is the sigma-algebra of all events we allow ourselves to measure: here every set of months. $P$ is the probability measure on it: here 1/12 for each month. $X$ is the quantity to forecast, a function on $\Omega$ with a finite average: the rainfall. A **sub-sigma-algebra** $\mathcal{G}$ is a smaller sigma-algebra inside $\mathcal{F}$. Read it as "the events whose outcome the known information decides". The season sigma-algebra holds the 16 unions of whole seasons, from the empty set to the full year. "Is it winter or spring?" is one of them; "is it January?" is not. **$\mathcal{G}$-measurable** means that for every number c, the set "the function is at most c" belongs to $\mathcal{G}$. So a $\mathcal{G}$-measurable forecast can be computed from the known information alone.
+Notation first, in words. $\Omega$ (omega) is the set of outcomes: here the twelve months. A sigma-algebra is a family of events that holds the whole of $\Omega$ and is closed under complements and countable unions ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). $\mathcal{F}$ is the sigma-algebra of all events we allow ourselves to measure: here every set of months. $P$ is the probability measure on it: here 1/12 for each month. $X$ is the quantity to forecast, a function on $\Omega$ with a finite average: the rainfall.
+
+A **sub-sigma-algebra** $\mathcal{G}$ is a smaller sigma-algebra inside $\mathcal{F}$. Read it as "the events whose outcome the known information decides". The season sigma-algebra holds the 16 unions of whole seasons, from the empty set to the full year. "Is it winter or spring?" is one of them; "is it January?" is not.
+
+**$\mathcal{G}$-measurable** means that for every number c, the set "the function is at most c" belongs to $\mathcal{G}$. So a $\mathcal{G}$-measurable forecast can be computed from the known information alone.
 
 The new notation, in words first: $E[X \mid \mathcal{G}]$, read "the conditional expectation of X given G", names a function $M$ on $\Omega$, with a finite average like X, that has two properties.
 
@@ -43,7 +53,7 @@ $$M \text{ is } \mathcal{G}\text{-measurable}, \qquad \int_A M \, dP = \int_A X 
 
 **Read it aloud:** the forecast depends only on the known information, and over every event that information can decide, the forecast and the true value have the same total.
 
-The integral over an event, $\int_A X \, dP$, is the integral of X times the indicator of A: the total of X over A, each outcome weighted by its probability. For winter it is (36 + 30 + 24)/12 = 7.50 mm. Dividing by the event's probability gives an average; the definition never divides.
+The integral over an event, $\int_A X \, dP$, is the integral of X times the indicator of A (1 on A, 0 elsewhere): the total of X over A, each outcome weighted by its probability. For winter it is (36 + 30 + 24)/12 = 7.50 mm. Dividing by the event's probability gives an average; the definition never divides.
 
 The existence proof builds $M$ from two measures on $\mathcal{G}$, one for the positive part of X and one for the negative part:
 
@@ -74,7 +84,7 @@ $X^+$ and $X^-$ are both non-negative and $X = X^+ - X^-$. $P|_{\mathcal{G}}$ is
 
 - **X has a finite average of its size**, $\int |X| \, dP$ finite: X is in $L^1$. Drop it and $\nu_+$ and $\nu_-$ can both be infinite, so their difference means nothing; the code prints a quantity whose average swings −1, 0, −1, 0 forever.
 - **$\mathcal{G}$ is a sigma-algebra inside $\mathcal{F}$.** If it held an event outside $\mathcal{F}$, the right-hand integral would not exist. If it were not closed under countable unions, Radon-Nikodym could not be applied to it.
-- **$P$ is a finite measure**, here a probability. Radon-Nikodym needs sigma-finiteness on $\mathcal{G}$ itself; on an infinite measure a small $\mathcal{G}$ can fail it even when $\mathcal{F}$ does not.
+- **$P$ is a finite measure**, here a probability. Radon-Nikodym needs sigma-finiteness on $\mathcal{G}$ itself: $\Omega$ must split into countably many events of $\mathcal{G}$, each of finite measure. On an infinite measure a small $\mathcal{G}$ can fail it even when $\mathcal{F}$ does not.
 - **Uniqueness is only almost sure.** Two valid forecasts may differ on a $\mathcal{G}$-event of probability zero, so "the" conditional expectation means any one of these versions.
 
 ---
@@ -83,7 +93,7 @@ $X^+$ and $X^-$ are both non-negative and $X = X^+ - X^-$. $P|_{\mathcal{G}}$ is
 
 ### Step 0: test totals on known events, instead of dividing
 
-The partition rule divides a total by a probability. Division fails on an event of probability zero, but a total over such an event is fine: it is zero. So state what the average does, not how to compute it. A forecast from the season must agree with the rainfall's total on winter, on spring, on "winter or spring", and on every other event the season decides. Finding a $\mathcal{G}$-measurable function whose totals reproduce a given measure on $\mathcal{G}$ is what the [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) does.
+The partition rule divides a total by a probability. Division fails on an event of probability zero, but a total over such an event is fine: it is zero. So state what the average does, not how to compute it. A forecast from the season must agree with the rainfall's total on winter, on spring, on "winter or spring", and on every other event the season decides. Finding a $\mathcal{G}$-measurable function whose totals reproduce a given measure on $\mathcal{G}$ is what [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) does.
 
 ### Step 1: the season averages pass both tests, and the obvious impostors fail
 
@@ -138,7 +148,7 @@ A $\mathcal{G}$-measurable function is constant on each atom C, since "equal to 
 
 </details>
 
-What the code shows and what only the proof shows: the code checks both tests on all 16 events of the season sigma-algebra and on three date intervals of a continuous example. That the construction works for every sigma-algebra, and for every Borel set of dates, only the proof shows.
+What the code shows and what only the proof shows: the code checks both tests on all 16 events of the season sigma-algebra and on three date intervals of a continuous example. That the construction works for every sigma-algebra, and for every Borel set of dates, only the proof shows. A Borel set is any set built from intervals by complements and countable unions ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
 
 The same forecast has a second description, as the closest $\mathcal{G}$-measurable function to X in mean squared distance. [Conditional expectation as a projection](03-conditional-expectation-as-projection.md) proves existence that way, without Radon-Nikodym, when X has a finite variance.
 
@@ -549,6 +559,132 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves existence, uniqueness and the partition rule on an atom, for every finite measure and every sub-sigma-algebra.
+
+- Take X with a finite average, a sub-sigma-algebra $\mathcal{G}$ and a finite measure P. Then some $\mathcal{G}$-measurable forecast with a finite average matches X's total on every event of $\mathcal{G}$.
+- Any two such forecasts agree except on a set of probability zero.
+- Suppose C is an atom of $\mathcal{G}$ with positive probability. Then every valid forecast is constant on C, equal to the total of X over C divided by P(C).
+- The worked numbers hold exactly as fractions: winter 7.50 and 30, then spring, summer and autumn at 60, 90 and 40.
+- The wet and dry forecasts, 75 and 35, hold both directly and from the season forecast.
+- The constant 55 totals 13.75 on winter, against the true 7.50.
+- Spring's anomaly densities 8.33 and 3.33 differ by 5, and adding back 55 gives 60.
+- The counts hold: 16 season events, 4,096 sets of months and 194,481 season-constant forecasts.
+- Take X(n) = (−2)^n with probability 2^−n. Then the partial averages are −1 after five terms and 0 after six, while the average of its size reaches 6.
+
+The decimals, the brute search and the grid integrals for the exact date are left to the Python and Rust checks.
+
+```lean
+-- Conditional expectation on a sigma-algebra: for an integrable X and a sub-sigma-algebra G of a finite measure space, a G-measurable integrable forecast with the same integral as X on every event of G exists, and any two agree almost everywhere.
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory
+
+/-- The conditional expectation of `X` given the information `G` (here the sub-sigma-algebra
+`m ≤ m0`) is a forecast `M` that uses only that information (`M` is `G`-measurable), has a
+finite average, and matches `X`'s total on every event `A` in `G`. Such a forecast always
+exists when `X` has a finite average and `P` is a finite measure, and it is unique up to a
+set of probability zero: any other forecast `L` passing both tests equals `M` almost
+everywhere. -/
+theorem conditional_expectation_exists_unique
+    {Ω : Type*} {m m0 : MeasurableSpace Ω} (hm : m ≤ m0)
+    (P : Measure[m0] Ω) [IsFiniteMeasure P]
+    (X : Ω → ℝ) (hX : Integrable X P) :
+    ∃ M : Ω → ℝ, Measurable[m] M ∧ Integrable M P ∧
+      (∀ A, MeasurableSet[m] A → ∫ ω in A, M ω ∂P = ∫ ω in A, X ω ∂P) ∧
+      ∀ L : Ω → ℝ, Measurable[m] L → Integrable L P →
+        (∀ A, MeasurableSet[m] A → ∫ ω in A, L ω ∂P = ∫ ω in A, X ω ∂P) →
+        L =ᵐ[P] M := by
+  refine ⟨P[X | m], stronglyMeasurable_condExp.measurable, integrable_condExp,
+    fun A hA => setIntegral_condExp hm hX hA, ?_⟩
+  intro L hLm hLi hLX
+  exact ae_eq_condExp_of_forall_setIntegral_eq hm hX
+    (fun s _ _ => hLi.integrableOn) (fun s hs _ => hLX s hs)
+    hLm.stronglyMeasurable.aestronglyMeasurable
+
+/-- The partition rule comes back: if `C` is an atom of `G` (an event of `G` whose only
+`G`-subevents are the empty set and `C` itself) with positive probability, then every
+forecast `M` passing both tests is constant on `C`, equal to the total of `X` over `C`
+divided by the probability of `C`. -/
+theorem conditional_expectation_on_atom_eq_average
+    {Ω : Type*} {m m0 : MeasurableSpace Ω} (hm : m ≤ m0)
+    (P : Measure[m0] Ω) [IsFiniteMeasure P]
+    (X : Ω → ℝ) (hX : Integrable X P)
+    (M : Ω → ℝ) (hMm : Measurable[m] M) (hMi : Integrable M P)
+    (hMX : ∀ A, MeasurableSet[m] A → ∫ ω in A, M ω ∂P = ∫ ω in A, X ω ∂P)
+    (C : Set Ω) (hC : MeasurableSet[m] C)
+    (hatom : ∀ B, MeasurableSet[m] B → B ⊆ C → B = ∅ ∨ B = C)
+    (hpos : P C ≠ 0) :
+    ∀ ω ∈ C, M ω = (∫ x in C, X x ∂P) / P.real C := by
+  intro ω hω
+  have hB : MeasurableSet[m] (C ∩ M ⁻¹' {M ω}) :=
+    hC.inter (hMm (MeasurableSet.singleton (M ω)))
+  have hconst : ∀ x ∈ C, M x = M ω := by
+    rcases hatom _ hB Set.inter_subset_left with h | h
+    · exact absurd (h ▸ (⟨hω, rfl⟩ : ω ∈ C ∩ M ⁻¹' {M ω})) (Set.notMem_empty ω)
+    · intro x hx
+      rw [← h] at hx
+      exact hx.2
+  have hint : ∫ x in C, M x ∂P = P.real C * M ω := by
+    rw [setIntegral_congr_fun (hm C hC) hconst, setIntegral_const, smul_eq_mul]
+  have hreal : P.real C ≠ 0 := by
+    rw [measureReal_def, ENNReal.toReal_ne_zero]
+    exact ⟨hpos, measure_ne_top P C⟩
+  rw [← hMX C hC, hint]
+  field_simp
+
+-- Worked numbers from the card: twelve months, each with probability 1/12.
+-- Winter total as an integral: (36 + 30 + 24)/12 = 7.50.
+example : ((36 + 30 + 24 : ℚ) / 12) = 15 / 2 := by norm_num
+-- Winter probability 3/12 and winter forecast 7.50 ÷ 0.25 = 30.
+example : ((3 : ℚ) / 12) = 1 / 4 := by norm_num
+example : ((15 / 2 : ℚ) / (1 / 4)) = 30 := by norm_num
+-- Spring, summer, autumn forecasts: 180/3, 270/3, 120/3 = 60, 90, 40.
+example : ((180 : ℚ) / 3, (270 : ℚ) / 3, (120 : ℚ) / 3) = (60, 90, 40) := by norm_num
+-- Season totals from the monthly rainfall.
+example : (45 + 60 + 75 : ℕ) = 180 ∧ (100 + 95 + 75 : ℕ) = 270 ∧ (55 + 40 + 25 : ℕ) = 120 := by
+  decide
+-- The wet half: 3 × 60/12 + 3 × 90/12 = (180 + 270)/12 = 37.50.
+example : (3 * 60 / 12 + 3 * 90 / 12 : ℚ) = (180 + 270) / 12 := by norm_num
+example : ((180 + 270 : ℚ) / 12) = 75 / 2 := by norm_num
+-- Yearly mean 660/12 = 55.
+example : ((30 + 24 + 45 + 60 + 75 + 100 + 95 + 75 + 55 + 40 + 25 + 36 : ℚ) / 12) = 55 := by
+  norm_num
+-- Wet and dry season forecasts, directly and from the season forecast.
+example : ((180 + 270 : ℚ) / 6) = 75 := by norm_num
+example : ((120 + 90 : ℚ) / 6) = 35 := by norm_num
+example : ((60 + 90 : ℚ) / 2) = 75 := by norm_num
+example : ((30 + 40 : ℚ) / 2) = 35 := by norm_num
+-- The constant 55 totals 13.75 on winter, against the true 7.50.
+example : ((3 * 55 : ℚ) / 12) = 55 / 4 ∧ (55 / 4 : ℚ) ≠ 15 / 2 := by norm_num
+-- Spring anomaly densities: (25/12) ÷ (3/12) and (10/12) ÷ (3/12); difference 5, plus 55 is 60.
+example : ((25 / 12 : ℚ) / (3 / 12) - (10 / 12) / (3 / 12) + 55) = 60 := by norm_num
+-- Anomaly surplus over the year: 130/12 for both nu+ and nu-.
+example : (5 + 20 + 45 + 40 + 20 : ℕ) = 130 ∧ (25 + 31 + 10 + 15 + 30 + 19 : ℕ) = 130 := by
+  decide
+-- Counts: 16 season events, 4096 sets of months, 194,481 season-constant forecasts.
+example : 2 ^ 4 = 16 ∧ 2 ^ 12 = 4096 ∧ 21 ^ 4 = 194481 := by norm_num
+-- Without integrability: X(n) = (-2)^n with probability 2^-n. Partial averages after
+-- six terms are back to 0, while the partial E|X| has reached 6.
+example : (∑ n ∈ Finset.Icc 1 5, ((-2 : ℚ) ^ n / 2 ^ n)) = -1 := by
+  simp [Finset.sum_Icc_succ_top]; norm_num
+example : (∑ n ∈ Finset.Icc 1 6, ((-2 : ℚ) ^ n / 2 ^ n)) = 0 := by
+  simp [Finset.sum_Icc_succ_top]; norm_num
+example : (∑ n ∈ Finset.Icc 1 6, ((2 : ℚ) ^ n / 2 ^ n)) = 6 := by simp
+
+#print axioms conditional_expectation_exists_unique
+#print axioms conditional_expectation_on_atom_eq_average
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'conditional_expectation_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'conditional_expectation_on_atom_eq_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -145,4 +145,5 @@ fn main() {
     println!("cantor, eps 0.5, delta 0.01: first stage below delta {}, length {:.6}, rise {:.4}", n12, ln as f64 / D as f64, rise as f64 / H as f64);
     let fig: Vec<String> = pts.iter().map(|(x, y)| format!("{:.2},{:.2}", 60.0 + 200.0 * (*x as f64 / D as f64), 220.0 - 200.0 * (*y as f64 / H as f64))).collect();
     println!("figure, stage-3 staircase at 200 units per unit, origin (60, 220): {}", fig.join(" "));
+    println!("ALL CHECKS PASS");
 }

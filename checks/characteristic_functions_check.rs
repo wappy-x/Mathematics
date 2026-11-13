@@ -166,4 +166,5 @@ fn main() {
     println!("figure, t labels:                {}", f((0..25).map(|k| k as f64 * PI / 12.0).collect()));
     for n in [1u32, 4] { println!("figure, phi_W{}(t), t = 0..3: {}", n, f((0..13).map(|k| cf_w(n, k as f64 / 4.0)).collect())); }
     println!("figure, normal e^(-t^2/2): {}", f((0..13).map(|k| cf_normal_int(k as f64 / 4.0)).collect()));
+    println!("ALL CHECKS PASS");
 }

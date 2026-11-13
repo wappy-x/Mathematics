@@ -8,7 +8,11 @@
 
 A rain gauge logs one total per month. The winter months, December to February, average 25, 30 and 35 mm; spring 50, 60 and 70; summer 100, 90 and 80; autumn 50, 40 and 30. A dry year brings 3/5 of a month's average and a wet year 7/5, each with chance one half. So a winter December reads 15 mm or 35 mm, a summer June 60 or 140.
 
-Knowing the month, the forecast is the month's mean. Knowing only the season, it is the season's mean: 30, 60, 90 and 40 mm. Average the monthly forecasts within a season and the seasonal one comes back: (25 + 30 + 35) / 3 = 30. A shop sells 4 umbrellas per mm of rain in winter; once the season is known, that 4 is known and multiplies the forecast, 4 × 30 = 120 umbrellas. The gauge also errs by −3 or +1 mm, chance one half each, whatever the weather; the month says nothing about it, so its forecast is its plain average, −1 mm.
+Knowing the month, the forecast is the month's mean. Knowing only the season, it is the season's mean: 30, 60, 90 and 40 mm. Average the monthly forecasts within a season and the seasonal one comes back: (25 + 30 + 35) / 3 = 30.
+
+A shop sells 4 umbrellas per mm of rain in winter; once the season is known, that 4 is known and multiplies the forecast, 4 × 30 = 120 umbrellas.
+
+The gauge also errs by −3 or +1 mm, chance one half each, whatever the weather; the month says nothing about it, so its forecast is its plain average, −1 mm.
 
 Those three moves are the tower, taking out what is known, and dropping what is independent. The probability wing computes them in tables ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)). This card proves them, with linearity, conditional Jensen and the conditional limit theorems, for any integrable quantity and any sigma-algebra of information, from the one identity that defines conditional expectation.
 
@@ -34,7 +38,7 @@ Orange bars are the forecasts given the month. The green line is the forecast gi
 
 ## The formula
 
-Notation, as a reminder. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A sub-sigma-algebra $\mathcal{G} \subseteq \mathcal{F}$ is a smaller collection of events: the ones a given piece of information can settle. A quantity is $\mathcal{G}$-measurable when its value is settled by that information. For an integrable $X$, the **conditional expectation** $E[X \mid \mathcal{G}]$ is the $\mathcal{G}$-measurable, integrable quantity with
+Notation, as a reminder. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A sub-sigma-algebra $\mathcal{G} \subseteq \mathcal{F}$ is a smaller collection of events: the ones a given piece of information can settle. A quantity is $\mathcal{G}$-measurable when its value is settled by that information. For an integrable $X$, meaning $\int \lvert X \rvert \, dP$ is finite, the **conditional expectation** $E[X \mid \mathcal{G}]$ is the $\mathcal{G}$-measurable, integrable quantity with
 
 $$\int_A E[X \mid \mathcal{G}] \, dP \;=\; \int_A X \, dP \qquad \text{for every } A \in \mathcal{G},$$
 
@@ -108,7 +112,11 @@ If $X$ is independent of every event $A$ in $\mathcal{G}$, the integral of $X$ o
 
 ### Step 5: conditional Jensen, one line at a time
 
-A convex curve has a supporting line at every point, a straight line through the point that stays on or below the curve ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). Order and linearity push each line through the conditional expectation, outside a null set. The unconditional proof used one line, at the mean; here the forecast varies with the outcome, so each outcome needs its own line, and uncountably many null sets can add up to positive probability. So use only the lines at rational points: countably many null sets make a null set, and a continuous convex curve is the highest of those lines everywhere. On the gauge, a flood payout of $(X - 50)^+$: the spring forecast of the payout is 17, the payout at the spring forecast 10. For the square the gap is the spread within the season, 163.33 in winter.
+A convex curve has a supporting line at every point, a straight line through the point that stays on or below the curve ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). Order and linearity push each line through the conditional expectation, outside a null set.
+
+The unconditional proof used one line, at the mean; here the forecast varies with the outcome, so each outcome needs its own line, and uncountably many null sets can add up to positive probability. So use only the lines at rational points: countably many null sets make a null set, and a continuous convex curve is the highest of those lines everywhere.
+
+On the gauge, a flood payout of $(X - 50)^+$: the spring forecast of the payout is 17, the payout at the spring forecast 10. For the square the gap is the spread within the season, 163.33 in winter.
 
 ### Step 6: conditional monotone convergence
 

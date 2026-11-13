@@ -132,3 +132,4 @@ assert squeeze                                                              # St
 assert law(under) == law(faces) and near == 0                                # same law, never close
 assert all(m == 1 and c == Q(1, n) for n, _, m, c in lump)   # law's mean against n * (1/n) = 1; capped mean against 1/n
 assert nosc[10] > nosc[100] > nosc[1000] > 0.5
+print("ALL CHECKS PASS")

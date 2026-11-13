@@ -14,7 +14,7 @@ The fix is to average against the running total itself. A jump gives its point a
 
 **Integrating a function g against a running total F averages g with the weight F lays down: a jump contributes g at that point times the jump's height, a smooth climb contributes g times the slope of F, and when F is the distribution function of a random quantity X the result is the average of g(X).**
 
-**What kind of fact this is:** the integral against F is a definition; its reduction to jumps plus a density, its equality with E[g(X)], integration by parts with the jump term, and its agreement with Riemann-Stieltjes sums are theorems, proved on this card in Why it works.
+**What kind of fact this is:** the integral against F is a definition; its reduction to jumps plus a density, its equality with E[g(X)], integration by parts with the jump term, and its agreement with Riemann-Stieltjes sums (g at one point of each small piece times the rise of F across that piece, added up) are theorems, proved on this card in Why it works.
 
 ### The picture: the tail whose area is the expected payout
 
@@ -35,11 +35,11 @@ One line: the tail, the chance the claim is larger than x. It starts at 0.70, no
 
 Notation first, in words. F is a **right-continuous** function: approaching any point from the right lands on the value there. Its **left limit** $F(x-)$ is the value approached from the left, and the **jump** at x is $\Delta F(x) = F(x) - F(x-)$. When F is increasing, $\mu_F$ is its Lebesgue-Stieltjes measure, the measure giving each stretch (a, b] the mass F(b) − F(a) ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). The integral $\int g\,dF$ is read "the integral of g against F".
 
-**The definition.** For F increasing and right-continuous, and g a Borel function (measurable with respect to the Borel sets):
+**The definition.** For F increasing and right-continuous, and g a Borel function (measurable with respect to the Borel sets, the sets built from intervals):
 
 $$\int g\,dF \;=\; \int g\,d\mu_F.$$
 
-For F of **bounded variation** (finite total up-and-down movement on every bounded interval), write $F = F_1 - F_2$ with $F_1$ and $F_2$ increasing and right-continuous, the Jordan decomposition of [Bounded variation](01-functions-of-bounded-variation.md) (its climb and descent inherit right-continuity from F, because the running variation of a right-continuous function is right-continuous: Folland, Section 3.5), and set $\int g\,dF = \int g\,d\mu_{F_1} - \int g\,d\mu_{F_2}$.
+For F of **bounded variation** (finite total up-and-down movement on every bounded interval), write $F = F_1 - F_2$ with $F_1$ and $F_2$ increasing and right-continuous, and set $\int g\,dF = \int g\,d\mu_{F_1} - \int g\,d\mu_{F_2}$. This split is the Jordan decomposition of [Bounded variation](01-functions-of-bounded-variation.md). Its climb and descent inherit right-continuity from F, because the running variation of a right-continuous function is right-continuous (Folland, Section 3.5).
 
 **Read it aloud:** integrating against F is integrating against the measure F builds; a function that also falls is split into what it gains minus what it loses.
 
@@ -86,7 +86,7 @@ On the claim: E[X] = 0.3 × \$0 + ∫ x × 0.0007 dx over (0, 1,000] = \$350, an
 
 - **F of bounded variation and right-continuous.** Then F builds a measure, or a difference of two. The function x sin(1/x) near 0 has infinite total variation and builds none.
 - **g Borel and integrable.** A g that is never negative always has an integral, possibly infinite; a g of both signs needs the integral of |g| finite, or ∞ − ∞ appears.
-- **Jumps plus a density needs an absolutely continuous smooth part.** The Cantor function rises by 1 on a set of length 0: its stage-n pieces have total length (2/3)^n, 0.017342 at stage 10. Its slope is 0 almost everywhere, so the density term gives 0 while the integral of 1 against it over [0, 1] is 1.
+- **Jumps plus a density needs an absolutely continuous smooth part.** The Cantor function rises by 1 on a set of length 0: its stage-n pieces have total length (2/3)^n, 0.017342 at stage 10. Its slope is 0 almost everywhere (everywhere except on a set of length 0), so the density term gives 0 while the integral of 1 against it over [0, 1] is 1.
 - **Integration by parts needs the jump term when both functions jump at the same point.** On the claim, F against itself gives 0.545; the textbook rule without the term gives 0.5.
 - **Riemann-Stieltjes sums need g continuous where F jumps.** A g that steps up at \$0 leaves left-tag and right-tag sums 0.3 apart however fine the pieces.
 
@@ -96,7 +96,7 @@ On the claim: E[X] = 0.3 × \$0 + ∫ x × 0.0007 dx over (0, 1,000] = \$350, an
 
 ### Step 0: a new integrator, not a new integral
 
-The integral against a measure already exists ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Only the measure is new, so every claim here is proved one way. Check it on half-open intervals (a, b], where μ_F is F(b) − F(a). Two measures that agree there, finite on bounded sets, agree on every Borel set ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md), part 2). Then climb from indicators (1 on a set, 0 off it) to simple functions, monotone limits and differences.
+The integral against a measure already exists ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Only the measure is new, so every statement here is proved one way. Check it on half-open intervals (a, b], where μ_F is F(b) − F(a). Two measures that agree there, finite on bounded sets, agree on every Borel set ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md), part 2). Then climb from indicators (1 on a set, 0 off it) to simple functions, monotone limits and differences.
 
 ### Step 1: the definition does not depend on how F is split
 
@@ -104,7 +104,7 @@ Adding one increasing function to both parts gives another splitting. Suppose F_
 
 ### Step 2: a jump is a point mass, and a smooth climb is a density
 
-**Jumps.** μ_F puts mass ΔF(x) on the single point x ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). An increasing F has at most countably many jumps, since those inside (a, b] add to at most F(b) − F(a). Integrating g against one point mass returns g at that point, and monotone convergence allows the sum over countably many.
+**Jumps.** μ_F puts mass ΔF(x) on the single point x ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). An increasing F has at most countably many jumps, since those inside (a, b] add to at most F(b) − F(a). Integrating g against one point mass returns g at that point, and monotone convergence allows the sum over countably many. Monotone convergence says the integrals of a rising sequence of functions rise to the integral of their limit ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
 
 **The smooth part.** Let $F_c$ be absolutely continuous. The fundamental theorem for such functions ([Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)) says $F_c(b) - F_c(a) = \int_a^b F_c'\,dx$. The right side is the mass the measure "slope times length" gives to (a, b]. So the measure $F_c$ builds and that measure agree on intervals, and by Step 0 everywhere: $F_c'$ is its density against λ ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)).
 
@@ -115,13 +115,17 @@ On the claim, the jump is 0.3 at \$0 and the slope 0.0007 on (0, 1,000]. The pay
 <details>
 <summary>Detailed proof: from indicators to every integrable g</summary>
 
-Take F increasing first. Let ν(A) be the integral of $F_c'$ over A against λ. Step 2 showed that ν and the measure $F_c$ builds agree on every Borel A. That is the claim for g = 1_A.
+Take F increasing first. Let ν(A) be the integral of $F_c'$ over A against λ. Step 2 showed that ν and the measure $F_c$ builds agree on every Borel A. That is the statement for the indicator g = 1_A.
 
-Both sides are linear in g, so the claim holds for simple functions, finite sums of multiples of indicators. A Borel g that is never negative is the increasing limit of simple functions ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)), and monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) applies on both sides, since $F_c' \ge 0$. For integrable g, subtract the equalities for its positive and negative parts.
+Both sides are linear in g, so the statement holds for simple functions, finite sums of multiples of indicators. A Borel g that is never negative is the increasing limit of simple functions ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)), and monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) applies on both sides, since $F_c' \ge 0$. For integrable g, subtract the equalities for its positive and negative parts.
 
 For the jump part: $F_d$ builds the measure giving A the sum of the jumps at points of A, since both give (a, b] the sum of the jumps inside it. For g = 1_A the integral is that sum; linearity, monotone convergence over the list of jumps, and the positive-negative split carry it to every integrable g.
 
-For F of bounded variation, Step 1 lets the split be chosen, and an arbitrary one will not do: adding the Cantor function to both parts leaves F unchanged but gives each part a continuous part that is not absolutely continuous. So split the two parts of F separately. $F_d$ is its rising jumps minus its falling jumps, two increasing jump functions. $F_c = V - (V - F_c)$ with $V$ the running variation of $F_c$; both pieces rise and are absolutely continuous by Lemma 3 of [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md). Take $F_1$ = rising jumps + $V$ and $F_2$ = falling jumps + $(V - F_c)$. Each is increasing and right-continuous with an absolutely continuous continuous part, so the increasing case applies to each. Subtracting, the jumps give ΔF and the slopes give $F_c'$.
+For F of bounded variation, Step 1 lets the split be chosen, and an arbitrary one will not do: adding the Cantor function to both parts leaves F unchanged but gives each part a continuous part that is not absolutely continuous.
+
+So split the two parts of F separately. $F_d$ is its rising jumps minus its falling jumps, two increasing jump functions. $F_c = V - (V - F_c)$ with $V$ the running variation of $F_c$; both pieces rise and are absolutely continuous by Lemma 3 of [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md).
+
+Take $F_1$ = rising jumps + $V$ and $F_2$ = falling jumps + $(V - F_c)$. Each is increasing and right-continuous with an absolutely continuous continuous part, so the increasing case applies to each. Subtracting, the jumps give ΔF and the slopes give $F_c'$.
 
 </details>
 
@@ -141,7 +145,9 @@ The integrands differ only at the jump, by ΔF(0) = 0.3, which carries mass 0.3.
 
 <p align="center"><img src="../figures/lebesgue-stieltjes-integral.svg" alt="Two independent claims drawn as a unit square in probability units; the shaded region where the first claim is at most the second has area 0.545, including the dashed block of area 0.09 where both claims are zero dollars; the unshaded region where the first claim is larger has area 0.455" width="420"></p>
 
-To scale: 180 drawing units per unit of F, corner (0, 0) at (50, 200) and (1, 1) at (230, 20). Each axis is a claim's probability position, the uniform draw the code turns into a claim: above 0.3 it is F at the claim, and the \$0 claims, all with F(0) = 0.3, fill 0 to 0.3 on each axis. The dashed block, both claims \$0, has area 0.09 and lies on the diagonal s = t, so it is shaded. The strip above it has 0.21, the triangle above the diagonal 0.245: 0.545 in all. The general formula is the same cut with two functions, each half measured by Tonelli's theorem ([Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)).
+To scale: 180 drawing units per unit of F, corner (0, 0) at (50, 200) and (1, 1) at (230, 20). Each axis is a claim's probability position, the uniform draw the code turns into a claim: above 0.3 it is F at the claim, and the \$0 claims, all with F(0) = 0.3, fill 0 to 0.3 on each axis.
+
+The dashed block, both claims \$0, has area 0.09 and lies on the diagonal s = t, so it is shaded. The strip above it has 0.21, the triangle above the diagonal 0.245: 0.545 in all. The general formula is the same cut with two functions, each half measured by Tonelli's theorem, which integrates a non-negative function one variable at a time ([Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)).
 
 <details>
 <summary>Detailed proof: integration by parts with the jump term</summary>
@@ -166,13 +172,15 @@ Apply Step 4 with G(x) = x, which has no jumps, on (0, b]. It gives ∫ x dF ove
 
 $$\int_{(0,b]} x\,dF(x) \;=\; \int_0^b \big(1 - F(x)\big)\,dx \;-\; b\,\big(1 - F(b)\big).$$
 
-The last term is the **boundary term**. On the claim at b = \$500: \$87.500 on the left, tail area \$262.500, boundary term 500 × 0.35 = \$175.000. At b = \$1,000 the boundary term is 0 and both sides are \$350.000, which is E[X], since the atom at \$0 adds nothing.
+The last term is the **boundary term**. On the claim at b = \$500: \$87.500 on the left, tail area \$262.500, boundary term 500 × 0.35 = \$175.000. At b = \$1,000 the boundary term is 0 and both sides are \$350.000, which is E[X], since the atom at \$0 (the mass 0.3 sitting on that single point) adds nothing.
 
-For general X, never negative with finite average, let b grow. The left side rises to E[X] by monotone convergence. The boundary term b P(X > b) is at most the average of X over the event X > b, which shrinks to 0 by dominated convergence. [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md) reaches the same formula by Tonelli, infinite case included.
+For general X, never negative with finite average, let b grow. The left side rises to E[X] by monotone convergence. The boundary term b P(X > b) is at most the average of X over the event X > b, which shrinks to 0 by dominated convergence: a limit and an integral swap when one integrable function bounds the whole sequence ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md) reaches the same formula by Tonelli, infinite case included.
 
 ### Step 6: Riemann-Stieltjes sums converge to this integral when g is continuous
 
-A **Riemann-Stieltjes sum** cuts (a, b] into n pieces, picks a tag point $t_i$ in each, and adds g at the tag times the rise of F across the piece ([Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)). That sum is the integral against μ_F of a step function, g at the tag on each piece. A continuous g on [a, b] is uniformly continuous ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), so on narrow pieces the step function stays within any chosen distance of g, and the integrals differ by at most that distance times F(b) − F(a) (for increasing F; the total variation otherwise).
+A **Riemann-Stieltjes sum** cuts (a, b] into n pieces, picks a tag point $t_i$ in each, and adds g at the tag times the rise of F across the piece ([Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)). That sum is the integral against μ_F of a step function, g at the tag on each piece.
+
+A continuous g on [a, b] is uniformly continuous ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), so on narrow pieces the step function stays within any chosen distance of g, and the integrals differ by at most that distance times F(b) − F(a) (for increasing F; the total variation otherwise).
 
 On the claim, with g(x) = x on (−100, 1,000], so the jump at 0 is inside: left tags give 285, 343.5, 349.35 at 11, 110 and 1,100 pieces; right tags give 385, 353.5, 350.35. Both close in on 350; F's jump does no harm where g is continuous.
 
@@ -569,6 +577,596 @@ ALL CHECKS PASS
 
 The two outputs match line for line. The simulated mean, \$351.13, sits about one standard error above \$350; the simulated share of pairs, 0.5443, sits within one standard error of 0.545.
 
+### Lean
+
+Lean proves the three theorems for every F, G, g and X the card allows, under the conditions in When it holds.
+
+- Suppose X has distribution function F and g is Borel. Then $E[g(X)] = \int g\,dF$, for g never negative or integrable against F.
+- Take $F = F_1 - F_2$, both parts increasing and right-continuous, with $F_c$ absolutely continuous, and g Borel and integrable. Then $\int g\,dF$ is g times each jump, summed, plus the ordinary integral of g times $F_c'$.
+- Suppose F and G are right-continuous and of bounded variation on [a, b]. Then integration by parts holds on (a, b], jump term included.
+- Exact fractions confirm the worked numbers: \$350, \$400, the tail area, \$87.5 by parts, and 0.545 for F against F.
+- They also confirm the 11-piece Riemann-Stieltjes sums, 285 and 385, then 0.7 and 1, and the Cantor length $(2/3)^{10}$.
+
+The tail formula, the convergence of Riemann-Stieltjes sums, the finer grids and the simulations are left to the Python and Rust checks.
+
+```lean
+-- The Lebesgue-Stieltjes integral: integrating g against the distribution function F of a random quantity X gives the average of g(X), the integral against a bounded-variation F is g times its jumps plus g times the slope of its absolutely continuous part, and integration by parts on (a, b] needs one extra term for every point where both functions jump.
+import Mathlib.MeasureTheory.Measure.Stieltjes
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Function.AbsolutelyContinuous
+import Mathlib.Topology.Order.LeftRightLim
+import Mathlib.Topology.Algebra.InfiniteSum.Real
+import Mathlib.Tactic.NormNum
+import Mathlib.Probability.CDF
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
+import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
+import Mathlib.MeasureTheory.Measure.Prod
+import Mathlib.MeasureTheory.Function.LocallyIntegrable
+import Mathlib.Analysis.Calculus.FDeriv.Measurable
+import Mathlib.Algebra.Order.Group.MinMax
+
+open MeasureTheory Set Function
+open scoped ENNReal
+
+lemma ls_hasSum_integral_countable_type {X : Type*} [MeasurableSpace X] [Countable X]
+    [MeasurableSingletonClass X] {μ : Measure X} {f : X → ℝ} (hf : Integrable f μ) :
+    HasSum (fun x => μ.real {x} * f x) (∫ x, f x ∂μ) := by
+  have h1 : Integrable f (Measure.sum fun a => μ {a} • Measure.dirac a) := by
+    rwa [Measure.sum_smul_dirac]
+  have := hasSum_integral_measure h1
+  rw [Measure.sum_smul_dirac] at this
+  convert this using 1
+  ext a
+  rw [integral_smul_measure, integral_dirac, measureReal_def, smul_eq_mul]
+
+#print axioms ls_hasSum_integral_countable_type
+
+lemma ls_hasSum_setIntegral_countable {μ : Measure ℝ} (f : ℝ → ℝ) {s : Set ℝ}
+    (hs : s.Countable) (hf : IntegrableOn f s μ) :
+    HasSum (fun x => s.indicator (fun y => μ.real {y} * f y) x) (∫ x in s, f x ∂μ) := by
+  have hi : Countable s := hs.to_subtype
+  have hf' : Integrable (fun (x : s) ↦ f x) (Measure.comap Subtype.val μ) := by
+    rw [IntegrableOn, ← map_comap_subtype_coe, integrable_map_measure] at hf
+    · exact hf
+    · exact hf.aestronglyMeasurable
+    · exact measurable_subtype_coe.aemeasurable
+    · exact hs.measurableSet
+  rw [← integral_subtype_comap hs.measurableSet]
+  have key := ls_hasSum_integral_countable_type hf'
+  rw [← hasSum_subtype_iff_indicator]
+  convert key using 1
+  ext a
+  simp only [Function.comp, measureReal_def]
+  rw [Measure.comap_apply Subtype.val Subtype.coe_injective
+    (fun s' hs' ↦ MeasurableSet.subtype_image hs.measurableSet hs') _ (MeasurableSet.singleton a)]
+  simp
+
+#print axioms ls_hasSum_setIntegral_countable
+
+lemma ls_jump_nonneg (f : StieltjesFunction ℝ) (x : ℝ) : 0 ≤ f x - leftLim f x :=
+  sub_nonneg.2 (f.mono.leftLim_le le_rfl)
+
+#print axioms ls_jump_nonneg
+
+lemma ls_real_singleton (f : StieltjesFunction ℝ) (x : ℝ) :
+    f.measure.real {x} = f x - leftLim f x := by
+  rw [measureReal_def, f.measure_singleton, ENNReal.toReal_ofReal (ls_jump_nonneg f x)]
+
+#print axioms ls_real_singleton
+
+lemma ls_jump_eq_zero (f : StieltjesFunction ℝ) {x : ℝ} (hx : x ∉ {x | leftLim f x ≠ f x}) :
+    f x - leftLim f x = 0 := by
+  simp only [ne_eq, mem_ofPred_eq, not_not] at hx
+  rw [hx, sub_self]
+
+#print axioms ls_jump_eq_zero
+
+lemma ls_hasSum_atoms (f : StieltjesFunction ℝ) (h : ℝ → ℝ) {C : Set ℝ} (hC : C.Countable)
+    (hsupp : ∀ x ∉ C, (f x - leftLim f x) * h x = 0)
+    (hint : IntegrableOn h C f.measure) :
+    HasSum (fun x => (f x - leftLim f x) * h x) (∫ x in C, h x ∂f.measure) := by
+  have := ls_hasSum_setIntegral_countable h hC hint
+  convert this using 1
+  ext x
+  by_cases hx : x ∈ C
+  · simp [Set.indicator_of_mem hx, ls_real_singleton]
+  · simp [Set.indicator_of_notMem hx, hsupp x hx]
+
+#print axioms ls_hasSum_atoms
+
+lemma ls_leftLim_sub (F : ℝ → ℝ) (F₁ F₂ : StieltjesFunction ℝ) (a x : ℝ) (hax : a < x)
+    (hF : ∀ y ∈ Ioo a x, F y = F₁ y - F₂ y) :
+    leftLim F x = leftLim F₁ x - leftLim F₂ x := by
+  apply leftLim_eq_of_tendsto
+  have h := (F₁.mono.tendsto_leftLim x).sub (F₂.mono.tendsto_leftLim x)
+  refine h.congr' ?_
+  filter_upwards [Ioo_mem_nhdsLT hax] with y hy
+  exact (hF y hy).symm
+
+#print axioms ls_leftLim_sub
+
+lemma ls_integrableOn_Ioc (f : ℝ → ℝ) (hf : Monotone f) (g : StieltjesFunction ℝ) (a b : ℝ) :
+    IntegrableOn f (Ioc a b) g.measure :=
+  ((hf.monotoneOn _).integrableOn_isCompact isCompact_Icc).mono_set Ioc_subset_Icc_self
+
+#print axioms ls_integrableOn_Ioc
+
+lemma ls_ibp_core (f g : StieltjesFunction ℝ) (a b : ℝ) (hab : a ≤ b) :
+    (∫ x in Ioc a b, f x ∂g.measure) + (∫ x in Ioc a b, g x ∂f.measure) - (f b * g b - f a * g a)
+      = ∫ x in Ioc a b, (g x - leftLim g x) ∂f.measure := by
+  set I := Ioc a b with hI
+  have hIm : MeasurableSet I := measurableSet_Ioc
+  have hffin : f.measure I ≠ ∞ := by rw [hI, f.measure_Ioc]; exact ENNReal.ofReal_ne_top
+  have hgfin : g.measure I ≠ ∞ := by rw [hI, g.measure_Ioc]; exact ENNReal.ofReal_ne_top
+  set μ := f.measure.restrict I with hμ
+  set ν := g.measure.restrict I with hν
+  have : IsFiniteMeasure μ := isFiniteMeasure_restrict.2 (by rw [f.measure_Ioc]; exact ENNReal.ofReal_ne_top)
+  have : IsFiniteMeasure ν := isFiniteMeasure_restrict.2 (by rw [g.measure_Ioc]; exact ENNReal.ofReal_ne_top)
+  set S₁ : Set (ℝ × ℝ) := {p | p.1 ≤ p.2} with hS₁
+  set S₂ : Set (ℝ × ℝ) := {p | p.2 ≤ p.1} with hS₂
+  have mS₁ : MeasurableSet S₁ := measurableSet_le measurable_fst measurable_snd
+  have mS₂ : MeasurableSet S₂ := measurableSet_le measurable_snd measurable_fst
+  have h1 : μ.prod ν S₁ = ∫⁻ y, μ (Iic y) ∂ν := by
+    rw [Measure.prod_apply_symm mS₁]; rfl
+  have h2 : μ.prod ν S₂ = ∫⁻ x, ν (Iic x) ∂μ := by
+    rw [Measure.prod_apply mS₂]; rfl
+  have h3 : μ.prod ν (S₁ ∪ S₂) = μ univ * ν univ := by
+    have : S₁ ∪ S₂ = univ ×ˢ univ := by
+      ext p; simp only [hS₁, hS₂, mem_union, mem_ofPred_eq, mem_prod, mem_univ, and_self,
+        iff_true]; exact le_total _ _
+    rw [this, Measure.prod_prod]
+  have h4 : μ.prod ν (S₁ ∩ S₂) = ∫⁻ x, ν {x} ∂μ := by
+    rw [Measure.prod_apply (mS₁.inter mS₂)]
+    congr 1; ext x; congr 1; ext y
+    simp only [hS₁, hS₂, mem_preimage, mem_inter_iff, mem_ofPred_eq, mem_singleton_iff]
+    constructor
+    · rintro ⟨h1, h2⟩; exact le_antisymm h2 h1
+    · rintro rfl; exact ⟨le_rfl, le_rfl⟩
+  have h5 := measure_union_add_inter (μ := μ.prod ν) S₁ mS₂
+  -- integrability
+  have fI : IntegrableOn (fun x => f x) I g.measure := ls_integrableOn_Ioc f f.mono g a b
+  have gI : IntegrableOn (fun x => g x) I f.measure := ls_integrableOn_Ioc g g.mono f a b
+  have gLI : IntegrableOn (fun x => leftLim g x) I f.measure :=
+    ls_integrableOn_Ioc _ g.mono.leftLim f a b
+  have fI' : IntegrableOn (fun y => f y - f a) I g.measure := fI.sub (integrableOn_const hgfin)
+  have gI' : IntegrableOn (fun y => g y - g a) I f.measure := gI.sub (integrableOn_const hffin)
+  have gJ : IntegrableOn (fun y => g y - leftLim g y) I f.measure := gI.sub gLI
+  have hP0 : ∀ y ∈ I, 0 ≤ f y - f a := fun y hy => sub_nonneg.2 (f.mono hy.1.le)
+  have hQ0 : ∀ y ∈ I, 0 ≤ g y - g a := fun y hy => sub_nonneg.2 (g.mono hy.1.le)
+  have v1 : ∫⁻ y, μ (Iic y) ∂ν = ENNReal.ofReal (∫ y in I, (f y - f a) ∂g.measure) := by
+    rw [ofReal_integral_eq_lintegral_ofReal fI'
+      ((ae_restrict_iff' hIm).2 (Filter.Eventually.of_forall hP0))]
+    apply setLIntegral_congr_fun hIm
+    intro y hy
+    simp only
+    rw [hμ, Measure.restrict_apply measurableSet_Iic]
+    have : Iic y ∩ I = Ioc a y := by
+      ext z; simp only [hI, mem_inter_iff, mem_Iic, mem_Ioc]
+      constructor
+      · rintro ⟨h1, h2, _⟩; exact ⟨h2, h1⟩
+      · rintro ⟨h1, h2⟩; exact ⟨h2, h1, h2.trans hy.2⟩
+    rw [this, f.measure_Ioc]
+  have v2 : ∫⁻ x, ν (Iic x) ∂μ = ENNReal.ofReal (∫ y in I, (g y - g a) ∂f.measure) := by
+    rw [ofReal_integral_eq_lintegral_ofReal gI'
+      ((ae_restrict_iff' hIm).2 (Filter.Eventually.of_forall hQ0))]
+    apply setLIntegral_congr_fun hIm
+    intro y hy
+    simp only
+    rw [hν, Measure.restrict_apply measurableSet_Iic]
+    have : Iic y ∩ I = Ioc a y := by
+      ext z; simp only [hI, mem_inter_iff, mem_Iic, mem_Ioc]
+      constructor
+      · rintro ⟨h1, h2, _⟩; exact ⟨h2, h1⟩
+      · rintro ⟨h1, h2⟩; exact ⟨h2, h1, h2.trans hy.2⟩
+    rw [this, g.measure_Ioc]
+  have v3 : ∫⁻ x, ν {x} ∂μ = ENNReal.ofReal (∫ y in I, (g y - leftLim g y) ∂f.measure) := by
+    rw [ofReal_integral_eq_lintegral_ofReal gJ
+      ((ae_restrict_iff' hIm).2 (Filter.Eventually.of_forall fun y _ => ls_jump_nonneg g y))]
+    apply setLIntegral_congr_fun hIm
+    intro y hy
+    simp only
+    rw [hν, Measure.restrict_apply (measurableSet_singleton y),
+      singleton_inter_of_mem hy, g.measure_singleton]
+  have v4 : μ univ = ENNReal.ofReal (f b - f a) := by
+    rw [hμ, Measure.restrict_apply_univ, f.measure_Ioc]
+  have v5 : ν univ = ENNReal.ofReal (g b - g a) := by
+    rw [hν, Measure.restrict_apply_univ, g.measure_Ioc]
+  rw [h1, h2, h3, h4, v1, v2, v3, v4, v5] at h5
+  have n1 : 0 ≤ f b - f a := sub_nonneg.2 (f.mono hab)
+  have n2 : 0 ≤ g b - g a := sub_nonneg.2 (g.mono hab)
+  have n3 : 0 ≤ ∫ y in I, (g y - leftLim g y) ∂f.measure :=
+    setIntegral_nonneg hIm fun y _ => ls_jump_nonneg g y
+  have n4 : 0 ≤ ∫ y in I, (f y - f a) ∂g.measure := setIntegral_nonneg hIm hP0
+  have n5 : 0 ≤ ∫ y in I, (g y - g a) ∂f.measure := setIntegral_nonneg hIm hQ0
+  rw [← ENNReal.ofReal_mul n1, ← ENNReal.ofReal_add (mul_nonneg n1 n2) n3,
+    ← ENNReal.ofReal_add n4 n5,
+    ENNReal.ofReal_eq_ofReal_iff (add_nonneg (mul_nonneg n1 n2) n3) (add_nonneg n4 n5)] at h5
+  have r1 : ∫ y in I, (f y - f a) ∂g.measure = (∫ y in I, f y ∂g.measure) - (g b - g a) * f a := by
+    rw [integral_sub fI (integrableOn_const hgfin), setIntegral_const, measureReal_def, g.measure_Ioc,
+      ENNReal.toReal_ofReal n2, smul_eq_mul]
+  have r2 : ∫ y in I, (g y - g a) ∂f.measure = (∫ y in I, g y ∂f.measure) - (f b - f a) * g a := by
+    rw [integral_sub gI (integrableOn_const hffin), setIntegral_const, measureReal_def, f.measure_Ioc,
+      ENNReal.toReal_ofReal n1, smul_eq_mul]
+  rw [r1, r2] at h5
+  linear_combination -h5
+
+#print axioms ls_ibp_core
+
+/-- The average of g(X) is the integral of g against F: if `X` is a random quantity on a
+probability space and `F` is its distribution function, `F x = P(X ≤ x)`, then for every Borel
+`g ≥ 0` (integral possibly infinite) the average of `g(X)` equals the integral of `g` against the
+measure `F` builds, and the same holds for every Borel `g` of both signs whose integral against
+`F` is finite. -/
+theorem expectation_eq_integral_against_distribution_function
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (X : Ω → ℝ) (hX : Measurable X) (F : StieltjesFunction ℝ)
+    (hF : ∀ x, F x = (P {ω | X ω ≤ x}).toReal) :
+    (∀ g : ℝ → ℝ≥0∞, Measurable g → ∫⁻ ω, g (X ω) ∂P = ∫⁻ x, g x ∂F.measure) ∧
+      (∀ g : ℝ → ℝ, Measurable g → Integrable g F.measure →
+        ∫ ω, g (X ω) ∂P = ∫ x, g x ∂F.measure) := by
+  have : IsProbabilityMeasure (P.map X) := inferInstance
+  have hFeq : F = ProbabilityTheory.cdf (P.map X) := by
+    ext x
+    rw [hF, ProbabilityTheory.cdf_eq_real, measureReal_def, Measure.map_apply hX measurableSet_Iic]
+    rfl
+  have hμ : F.measure = P.map X := by rw [hFeq]; exact ProbabilityTheory.measure_cdf _
+  refine ⟨fun g hg => ?_, fun g hg _ => ?_⟩
+  · rw [hμ, lintegral_map hg hX]
+  · rw [hμ, integral_map hX.aemeasurable hg.aestronglyMeasurable]
+
+/-- Jumps plus a density: let `F = F₁ - F₂` be right-continuous of bounded variation, split into
+two increasing right-continuous functions, with `∫ g dF = ∫ g dμ_{F₁} - ∫ g dμ_{F₂}`. Suppose
+its continuous part `F_c` (the change of `F` minus the sum of its jumps, on every `(a, b]`) is
+absolutely continuous on every bounded interval. Then for every Borel `g` with finite integral,
+`∫ g dF` is the sum over all points `x` of `g(x)` times the jump `F(x) - F(x-)`, plus the ordinary
+integral of `g` times the slope `F_c'`. -/
+theorem integral_eq_sum_over_jumps_add_integral_against_slope
+    (F : ℝ → ℝ) (F₁ F₂ : StieltjesFunction ℝ) (hF : ∀ x, F x = F₁ x - F₂ x)
+    (Fc : ℝ → ℝ)
+    (hFc : ∀ a b : ℝ, a ≤ b →
+      (F b - F a) - (Fc b - Fc a) = ∑' x : Ioc a b, (F x - leftLim F x))
+    (hac : ∀ a b : ℝ, AbsolutelyContinuousOnInterval Fc a b)
+    (g : ℝ → ℝ) (hg : Measurable g)
+    (hg₁ : Integrable g F₁.measure) (hg₂ : Integrable g F₂.measure) :
+    ∫ x, g x ∂F₁.measure - ∫ x, g x ∂F₂.measure =
+      ∑' x : ℝ, g x * (F x - leftLim F x) + ∫ x, g x * deriv Fc x := by
+  set h := deriv Fc with hh
+  have hmeas : Measurable h := measurable_deriv Fc
+  set ν₁ := F₁.measure.restrict {x | leftLim F₁ x ≠ F₁ x} with hν₁
+  set ν₂ := F₂.measure.restrict {x | leftLim F₂ x ≠ F₂ x} with hν₂
+  set lp : Measure ℝ := volume.withDensity (fun x => ((h x).toNNReal : ℝ≥0∞)) with hlp
+  set lm : Measure ℝ := volume.withDensity (fun x => ((-h x).toNNReal : ℝ≥0∞)) with hlm
+  have hjump : ∀ x, F x - leftLim F x = (F₁ x - leftLim F₁ x) - (F₂ x - leftLim F₂ x) := by
+    intro x
+    rw [ls_leftLim_sub F F₁ F₂ (x - 1) x (by linarith) (fun y _ => hF y), hF x]
+    ring
+  have hint : ∀ a b : ℝ, a ≤ b → IntegrableOn h (Ioc a b) := fun a b hab =>
+    (intervalIntegrable_iff_integrableOn_Ioc_of_le hab).1 (hac a b).intervalIntegrable_deriv
+  have hftc : ∀ a b : ℝ, a ≤ b → ∫ x in Ioc a b, h x = Fc b - Fc a := by
+    intro a b hab
+    rw [← intervalIntegral.integral_of_le hab]
+    exact (hac a b).integral_deriv_eq_sub
+  have hlpI : ∀ a b, lp (Ioc a b) = ∫⁻ x in Ioc a b, ENNReal.ofReal (h x) := fun a b =>
+    withDensity_apply _ measurableSet_Ioc
+  have hlmI : ∀ a b, lm (Ioc a b) = ∫⁻ x in Ioc a b, ENNReal.ofReal (-h x) := fun a b =>
+    withDensity_apply _ measurableSet_Ioc
+  have hsplit : ∀ a b, a ≤ b →
+      ∫ x in Ioc a b, h x = (lp (Ioc a b)).toReal - (lm (Ioc a b)).toReal := by
+    intro a b hab
+    rw [hlpI, hlmI]
+    exact integral_eq_lintegral_pos_part_sub_lintegral_neg_part (hint a b hab)
+  have hlp_fin : ∀ a b, a ≤ b → lp (Ioc a b) ≠ ∞ := fun a b hab => by
+    rw [hlpI]; exact (hint a b hab).lintegral_lt_top.ne
+  have hlm_fin : ∀ a b, a ≤ b → lm (Ioc a b) ≠ ∞ := fun a b hab => by
+    rw [hlmI]; exact (hint a b hab).neg.lintegral_lt_top.ne
+  have hjs : ∀ (f : StieltjesFunction ℝ) (a b : ℝ),
+      HasSum (fun x => (Ioc a b).indicator (fun y => f y - leftLim f y) x)
+        ((f.measure.restrict {x | leftLim f x ≠ f x}) (Ioc a b)).toReal := by
+    intro f a b
+    have hfin : f.measure (Ioc a b) ≠ ∞ := by rw [f.measure_Ioc]; exact ENNReal.ofReal_ne_top
+    have := ls_hasSum_atoms f ((Ioc a b).indicator 1) f.countable_leftLim_ne
+      (fun x hx => by rw [ls_jump_eq_zero f hx, zero_mul])
+      ((integrable_indicator_iff measurableSet_Ioc).2 (integrableOn_const hfin)).integrableOn
+    convert this using 1
+    · ext x
+      by_cases hx : x ∈ Ioc a b <;> simp [hx]
+    · rw [integral_indicator_one measurableSet_Ioc, measureReal_def]
+  have hν_fin : ∀ (f : StieltjesFunction ℝ) (a b : ℝ),
+      (f.measure.restrict {x | leftLim f x ≠ f x}) (Ioc a b) ≠ ∞ := fun f a b =>
+    ne_top_of_le_ne_top (by rw [f.measure_Ioc]; exact ENNReal.ofReal_ne_top)
+      (Measure.restrict_apply_le _ _)
+  have hsumI : ∀ a b, ∑' x : Ioc a b, (F x - leftLim F x) =
+      (ν₁ (Ioc a b)).toReal - (ν₂ (Ioc a b)).toReal := by
+    intro a b
+    rw [tsum_subtype (Ioc a b) (fun x => F x - leftLim F x)]
+    rw [← ((hjs F₁ a b).sub (hjs F₂ a b)).tsum_eq]
+    congr 1
+    ext x
+    by_cases hx : x ∈ Ioc a b <;> simp [hx, hjump]
+  have hM : F₁.measure + ν₂ + lm = F₂.measure + ν₁ + lp := by
+    have m1 : ∀ a b, F₁.measure (Ioc a b) ≠ ∞ := fun a b => by
+      rw [F₁.measure_Ioc]; exact ENNReal.ofReal_ne_top
+    have m2 : ∀ a b, F₂.measure (Ioc a b) ≠ ∞ := fun a b => by
+      rw [F₂.measure_Ioc]; exact ENNReal.ofReal_ne_top
+    apply Measure.ext_of_Ioc'
+    · intro a b hab
+      simp only [Measure.coe_add, Pi.add_apply]
+      exact ENNReal.add_ne_top.2 ⟨ENNReal.add_ne_top.2 ⟨m1 a b, hν_fin F₂ a b⟩,
+        hlm_fin a b hab.le⟩
+    · intro a b hab
+      simp only [Measure.coe_add, Pi.add_apply]
+      rw [← ENNReal.toReal_eq_toReal_iff'
+        (ENNReal.add_ne_top.2 ⟨ENNReal.add_ne_top.2 ⟨m1 a b, hν_fin F₂ a b⟩, hlm_fin a b hab.le⟩)
+        (ENNReal.add_ne_top.2 ⟨ENNReal.add_ne_top.2 ⟨m2 a b, hν_fin F₁ a b⟩, hlp_fin a b hab.le⟩),
+        ENNReal.toReal_add (ENNReal.add_ne_top.2 ⟨m1 a b, hν_fin F₂ a b⟩) (hlm_fin a b hab.le),
+        ENNReal.toReal_add (ENNReal.add_ne_top.2 ⟨m2 a b, hν_fin F₁ a b⟩) (hlp_fin a b hab.le),
+        ENNReal.toReal_add (m1 a b) (hν_fin F₂ a b), ENNReal.toReal_add (m2 a b) (hν_fin F₁ a b),
+        F₁.measure_Ioc, F₂.measure_Ioc, ENNReal.toReal_ofReal (sub_nonneg.2 (F₁.mono hab.le)),
+        ENNReal.toReal_ofReal (sub_nonneg.2 (F₂.mono hab.le))]
+      have e1 := hFc a b hab.le
+      rw [hsumI, hF a, hF b] at e1
+      have e2 := hsplit a b hab.le
+      have e3 := hftc a b hab.le
+      linarith
+  have hP : MeasurableSet {x | 0 ≤ h x} := measurableSet_le measurable_const hmeas
+  have hN : MeasurableSet {x | h x ≤ 0} := measurableSet_le hmeas measurable_const
+  have lm_P : lm.restrict {x | 0 ≤ h x} = 0 := by
+    rw [Measure.restrict_eq_zero, hlm, withDensity_apply _ hP]
+    calc ∫⁻ x in {x | 0 ≤ h x}, ((-h x).toNNReal : ℝ≥0∞)
+        = ∫⁻ x in {x | 0 ≤ h x}, 0 := setLIntegral_congr_fun hP (fun x hx => by
+          simp only [ENNReal.coe_eq_zero, Real.toNNReal_eq_zero]
+          exact neg_nonpos.2 hx)
+      _ = 0 := lintegral_zero
+  have lp_Pc : lp.restrict {x | 0 ≤ h x}ᶜ = 0 := by
+    rw [Measure.restrict_eq_zero, hlp, withDensity_apply _ hP.compl]
+    calc ∫⁻ x in {x | 0 ≤ h x}ᶜ, ((h x).toNNReal : ℝ≥0∞)
+        = ∫⁻ x in {x | 0 ≤ h x}ᶜ, 0 := setLIntegral_congr_fun hP.compl (fun x hx => by
+          simp only [mem_compl_iff, mem_ofPred_eq, not_le] at hx
+          simp only [ENNReal.coe_eq_zero, Real.toNNReal_eq_zero]
+          exact hx.le)
+      _ = 0 := lintegral_zero
+  have lp_N : lp.restrict {x | h x ≤ 0} = 0 := by
+    rw [Measure.restrict_eq_zero, hlp, withDensity_apply _ hN]
+    calc ∫⁻ x in {x | h x ≤ 0}, ((h x).toNNReal : ℝ≥0∞)
+        = ∫⁻ x in {x | h x ≤ 0}, 0 := setLIntegral_congr_fun hN (fun x hx => by
+          simp only [ENNReal.coe_eq_zero, Real.toNNReal_eq_zero]
+          exact hx)
+      _ = 0 := lintegral_zero
+  have lm_Nc : lm.restrict {x | h x ≤ 0}ᶜ = 0 := by
+    rw [Measure.restrict_eq_zero, hlm, withDensity_apply _ hN.compl]
+    calc ∫⁻ x in {x | h x ≤ 0}ᶜ, ((-h x).toNNReal : ℝ≥0∞)
+        = ∫⁻ x in {x | h x ≤ 0}ᶜ, 0 := setLIntegral_congr_fun hN.compl (fun x hx => by
+          simp only [mem_compl_iff, mem_ofPred_eq, not_le] at hx
+          simp only [ENNReal.coe_eq_zero, Real.toNNReal_eq_zero]
+          linarith)
+      _ = 0 := lintegral_zero
+  have hlp_le : lp ≤ F₁.measure + ν₂ := by
+    have e := congrArg (fun m : Measure ℝ => m.restrict {x | 0 ≤ h x}) hM
+    simp only [Measure.restrict_add, lm_P, add_zero] at e
+    rw [Measure.le_iff']
+    intro s
+    calc lp s = lp.restrict {x | 0 ≤ h x} s + lp.restrict {x | 0 ≤ h x}ᶜ s := by
+          rw [← Measure.add_apply, Measure.restrict_add_restrict_compl hP]
+      _ = lp.restrict {x | 0 ≤ h x} s := by rw [lp_Pc, Measure.coe_zero, Pi.zero_apply, add_zero]
+      _ ≤ (F₂.measure.restrict {x | 0 ≤ h x} + ν₁.restrict {x | 0 ≤ h x} +
+            lp.restrict {x | 0 ≤ h x}) s := by
+          rw [Measure.add_apply]; exact le_add_self
+      _ = (F₁.measure.restrict {x | 0 ≤ h x} + ν₂.restrict {x | 0 ≤ h x}) s :=
+          (congrArg (fun m : Measure ℝ => m s) e).symm
+      _ ≤ (F₁.measure + ν₂) s := by
+          rw [Measure.add_apply, Measure.add_apply]
+          exact add_le_add (Measure.restrict_apply_le _ _) (Measure.restrict_apply_le _ _)
+  have hlm_le : lm ≤ F₂.measure + ν₁ := by
+    have e := congrArg (fun m : Measure ℝ => m.restrict {x | h x ≤ 0}) hM
+    simp only [Measure.restrict_add, lp_N, add_zero] at e
+    rw [Measure.le_iff']
+    intro s
+    calc lm s = lm.restrict {x | h x ≤ 0} s + lm.restrict {x | h x ≤ 0}ᶜ s := by
+          rw [← Measure.add_apply, Measure.restrict_add_restrict_compl hN]
+      _ = lm.restrict {x | h x ≤ 0} s := by rw [lm_Nc, Measure.coe_zero, Pi.zero_apply, add_zero]
+      _ ≤ (F₁.measure.restrict {x | h x ≤ 0} + ν₂.restrict {x | h x ≤ 0} +
+            lm.restrict {x | h x ≤ 0}) s := by
+          rw [Measure.add_apply]; exact le_add_self
+      _ = (F₂.measure.restrict {x | h x ≤ 0} + ν₁.restrict {x | h x ≤ 0}) s :=
+          congrArg (fun m : Measure ℝ => m s) e
+      _ ≤ (F₂.measure + ν₁) s := by
+          rw [Measure.add_apply, Measure.add_apply]
+          exact add_le_add (Measure.restrict_apply_le _ _) (Measure.restrict_apply_le _ _)
+  have in1 : Integrable g ν₁ := hg₁.mono_measure Measure.restrict_le_self
+  have in2 : Integrable g ν₂ := hg₂.mono_measure Measure.restrict_le_self
+  have ilp : Integrable g lp := (hg₁.add_measure in2).mono_measure hlp_le
+  have ilm : Integrable g lm := (hg₂.add_measure in1).mono_measure hlm_le
+  have e := congrArg (fun m : Measure ℝ => ∫ x, g x ∂m) hM
+  rw [integral_add_measure (hg₁.add_measure in2) ilm, integral_add_measure hg₁ in2,
+    integral_add_measure (hg₂.add_measure in1) ilp, integral_add_measure hg₂ in1] at e
+  have hs₁ : HasSum (fun x => g x * (F₁ x - leftLim F₁ x)) (∫ x, g x ∂ν₁) := by
+    have := ls_hasSum_atoms F₁ g F₁.countable_leftLim_ne
+      (fun x hx => by rw [ls_jump_eq_zero F₁ hx, zero_mul]) hg₁.integrableOn
+    convert this using 1
+    ext x
+    ring
+  have hs₂ : HasSum (fun x => g x * (F₂ x - leftLim F₂ x)) (∫ x, g x ∂ν₂) := by
+    have := ls_hasSum_atoms F₂ g F₂.countable_leftLim_ne
+      (fun x hx => by rw [ls_jump_eq_zero F₂ hx, zero_mul]) hg₂.integrableOn
+    convert this using 1
+    ext x
+    ring
+  have hsum : ∑' x, g x * (F x - leftLim F x) = ∫ x, g x ∂ν₁ - ∫ x, g x ∂ν₂ := by
+    rw [← (hs₁.sub hs₂).tsum_eq]
+    congr 1
+    ext x
+    rw [hjump]
+    ring
+  have hm1 : Measurable fun x => (h x).toNNReal := hmeas.real_toNNReal
+  have hm2 : Measurable fun x => (-h x).toNNReal := hmeas.neg.real_toNNReal
+  have ilp' : Integrable (fun x => (h x).toNNReal • g x) :=
+    (integrable_withDensity_iff_integrable_smul hm1).1 ilp
+  have ilm' : Integrable (fun x => (-h x).toNNReal • g x) :=
+    (integrable_withDensity_iff_integrable_smul hm2).1 ilm
+  have hdens : ∫ x, g x ∂lp - ∫ x, g x ∂lm = ∫ x, g x * h x := by
+    rw [hlp, hlm, integral_withDensity_eq_integral_smul hm1,
+      integral_withDensity_eq_integral_smul hm2, ← integral_sub ilp' ilm']
+    congr 1
+    ext x
+    rw [NNReal.smul_def, NNReal.smul_def, smul_eq_mul, smul_eq_mul, Real.coe_toNNReal',
+      Real.coe_toNNReal']
+    have := max_zero_sub_eq_self (h x)
+    linear_combination (g x) * this
+  rw [hsum, ← hdens]
+  linarith
+
+/-- Integration by parts with the jump term: let `F` and `G` be right-continuous and of bounded
+variation on `[a, b]`, written on `[a, b]` as `F = F₁ - F₂` and `G = G₁ - G₂` with increasing
+right-continuous parts, and integrate against them by `∫ h dF = ∫ h dμ_{F₁} - ∫ h dμ_{F₂}`. Then
+`∫_(a,b] F dG + ∫_(a,b] G dF = F(b) G(b) - F(a) G(a) + Σ_{a < x ≤ b} ΔF(x) ΔG(x)`, where
+`ΔF(x) = F(x) - F(x-)` is the jump of `F` at `x`. -/
+theorem integration_by_parts_with_jump_term
+    (a b : ℝ) (hab : a ≤ b) (F G : ℝ → ℝ) (F₁ F₂ G₁ G₂ : StieltjesFunction ℝ)
+    (hF : ∀ x ∈ Icc a b, F x = F₁ x - F₂ x) (hG : ∀ x ∈ Icc a b, G x = G₁ x - G₂ x) :
+    ((∫ x in Ioc a b, F x ∂G₁.measure) - ∫ x in Ioc a b, F x ∂G₂.measure) +
+        ((∫ x in Ioc a b, G x ∂F₁.measure) - ∫ x in Ioc a b, G x ∂F₂.measure) =
+      F b * G b - F a * G a +
+        ∑' x : Ioc a b, (F x - leftLim F x) * (G x - leftLim G x) := by
+  set I := Ioc a b with hI
+  have hIm : MeasurableSet I := measurableSet_Ioc
+  have hjF : ∀ x ∈ I, F x - leftLim F x = (F₁ x - leftLim F₁ x) - (F₂ x - leftLim F₂ x) := by
+    intro x hx
+    rw [ls_leftLim_sub F F₁ F₂ a x hx.1 (fun y hy => hF y ⟨hy.1.le, hy.2.le.trans hx.2⟩),
+      hF x (Ioc_subset_Icc_self hx)]
+    ring
+  have hjG : ∀ x ∈ I, G x - leftLim G x = (G₁ x - leftLim G₁ x) - (G₂ x - leftLim G₂ x) := by
+    intro x hx
+    rw [ls_leftLim_sub G G₁ G₂ a x hx.1 (fun y hy => hG y ⟨hy.1.le, hy.2.le.trans hx.2⟩),
+      hG x (Ioc_subset_Icc_self hx)]
+    ring
+  have hS : ∀ f g : StieltjesFunction ℝ,
+      HasSum (fun x => I.indicator (fun y => (f y - leftLim f y) * (g y - leftLim g y)) x)
+        (∫ x in I, (g x - leftLim g x) ∂f.measure) := by
+    intro f g
+    have gJ : IntegrableOn (fun y => g y - leftLim g y) I f.measure :=
+      (ls_integrableOn_Ioc _ g.mono f a b).sub (ls_integrableOn_Ioc _ g.mono.leftLim f a b)
+    have hz : ∀ x ∉ {x | leftLim g x ≠ g x},
+        I.indicator (fun y => g y - leftLim g y) x = 0 := by
+      intro x hx
+      by_cases hxI : x ∈ I
+      · rw [indicator_of_mem hxI, ls_jump_eq_zero g hx]
+      · rw [indicator_of_notMem hxI]
+    have := ls_hasSum_atoms f (I.indicator fun y => g y - leftLim g y) g.countable_leftLim_ne
+      (fun x hx => by rw [hz x hx, mul_zero])
+      ((integrable_indicator_iff hIm).2 gJ).integrableOn
+    rw [setIntegral_eq_integral_of_forall_compl_eq_zero hz, integral_indicator hIm] at this
+    convert this using 1
+    ext x
+    by_cases hx : x ∈ I <;> simp [hx]
+  have hIF : ∀ m : StieltjesFunction ℝ, ∫ x in I, F x ∂m.measure =
+      ∫ x in I, F₁ x ∂m.measure - ∫ x in I, F₂ x ∂m.measure := by
+    intro m
+    rw [← integral_sub (ls_integrableOn_Ioc _ F₁.mono m a b) (ls_integrableOn_Ioc _ F₂.mono m a b)]
+    exact setIntegral_congr_fun hIm (fun x hx => hF x (Ioc_subset_Icc_self hx))
+  have hIG : ∀ m : StieltjesFunction ℝ, ∫ x in I, G x ∂m.measure =
+      ∫ x in I, G₁ x ∂m.measure - ∫ x in I, G₂ x ∂m.measure := by
+    intro m
+    rw [← integral_sub (ls_integrableOn_Ioc _ G₁.mono m a b) (ls_integrableOn_Ioc _ G₂.mono m a b)]
+    exact setIntegral_congr_fun hIm (fun x hx => hG x (Ioc_subset_Icc_self hx))
+  have hsum : ∑' x : I, (F x - leftLim F x) * (G x - leftLim G x) =
+      (∫ x in I, (G₁ x - leftLim G₁ x) ∂F₁.measure) - (∫ x in I, (G₁ x - leftLim G₁ x) ∂F₂.measure)
+      - (∫ x in I, (G₂ x - leftLim G₂ x) ∂F₁.measure)
+      + (∫ x in I, (G₂ x - leftLim G₂ x) ∂F₂.measure) := by
+    rw [tsum_subtype I (fun x => (F x - leftLim F x) * (G x - leftLim G x))]
+    rw [← ((((hS F₁ G₁).sub (hS F₂ G₁)).sub (hS F₁ G₂)).add (hS F₂ G₂)).tsum_eq]
+    congr 1
+    ext x
+    by_cases hx : x ∈ I
+    · simp only [indicator_of_mem hx, hjF x hx, hjG x hx]
+      ring
+    · simp [hx]
+  have c11 := ls_ibp_core F₁ G₁ a b hab
+  have c12 := ls_ibp_core F₁ G₂ a b hab
+  have c21 := ls_ibp_core F₂ G₁ a b hab
+  have c22 := ls_ibp_core F₂ G₂ a b hab
+  rw [hsum, hIF, hIF, hIG, hIG, hF a ⟨le_rfl, hab⟩, hF b ⟨hab, le_rfl⟩, hG a ⟨le_rfl, hab⟩,
+    hG b ⟨hab, le_rfl⟩]
+  linear_combination c11 - c12 - c21 + c22
+
+/-! Worked numbers from the card, in exact fractions. The claim: $0 with chance 3/10, otherwise
+spread evenly over (0, 1000] with density 7/10000 per dollar. -/
+
+/-- The claim's distribution function, on rational dollar amounts. -/
+def claimF (x : ℚ) : ℚ := if x < 0 then 0 else if x < 1000 then 3 / 10 + 7 / 10000 * x else 1
+
+-- E[X]: jump part 3/10 × 0, spread part 7/10000 × 1000^2 / 2; together $350.
+example : (3 / 10 : ℚ) * 0 + 7 / 10000 * (1000 ^ 2 / 2) = 350 := by norm_num
+-- Fee case E[50 + X]: jump part 3/10 × 50 = 15, spread part 7/10000 × (50 × 1000 + 1000^2 / 2) = 385.
+example : (3 / 10 : ℚ) * 50 = 15 ∧ (7 / 10000 : ℚ) * (50 * 1000 + 1000 ^ 2 / 2) = 385 ∧
+    (15 : ℚ) + 385 = 400 := by norm_num
+-- Tail area: half of 7/10 × 1000 is $350.
+example : (1 / 2 : ℚ) * (7 / 10) * 1000 = 350 := by norm_num
+-- The tail 1 - F(x) at x = 0, 500, 1000 is 7/10, 35/100, 0.
+example : 1 - claimF 0 = 7 / 10 ∧ 1 - claimF 500 = 35 / 100 ∧ 1 - claimF 1000 = 0 := by
+  norm_num [claimF]
+-- By parts on (0, 500]: ∫ x dF = 7/10000 × 500^2 / 2 = 87.5; tail area 7/10 × 500 - 87.5 = 262.5;
+-- boundary term 500 × 35/100 = 175; and 262.5 - 175 = 87.5.
+example : (7 / 10000 : ℚ) * (500 ^ 2 / 2) = 175 / 2 ∧
+    (7 / 10 : ℚ) * 500 - 7 / 10000 * (500 ^ 2 / 2) = 525 / 2 ∧
+    (500 : ℚ) * (1 - claimF 500) = 175 ∧ (525 / 2 : ℚ) - 175 = 175 / 2 := by
+  norm_num [claimF]
+-- At b = 1000 the boundary term is 0.
+example : (1000 : ℚ) * (1 - claimF 1000) = 0 := by norm_num [claimF]
+-- F against F, directly: jump 3/10 × 3/10 + strip 3/10 × 7/10 + triangle (7/10000)^2 × 1000^2 / 2.
+example : (3 / 10 : ℚ) * (3 / 10) + 3 / 10 * (7 / 10000 * 1000) + (7 / 10000) ^ 2 * (1000 ^ 2 / 2)
+    = 545 / 1000 := by norm_num
+-- F against F, by parts with the jump term: (1 × 1 - 0 × 0 + 3/10 × 3/10) / 2 = 0.545, not 1/2.
+example : ((1 : ℚ) * 1 - 0 * 0 + 3 / 10 * (3 / 10)) / 2 = 545 / 1000 := by norm_num
+-- The square: the left-limit integral 0.455 and 0.545 add to 1.
+example : (0 : ℚ) * (3 / 10) + 3 / 10 * (7 / 10000 * 1000) + (7 / 10000) ^ 2 * (1000 ^ 2 / 2) +
+    545 / 1000 = 1 := by norm_num
+-- Mistakes: density 1/1000 with no 7/10 weight gives $500; F in place of 1 - F gives 1000 - 350.
+example : (1 / 1000 : ℚ) * (1000 ^ 2 / 2) = 500 ∧ (1000 : ℚ) - 350 = 650 := by norm_num
+
+/-- Left-tag and right-tag Riemann-Stieltjes sums for `g` on (-100, 1000] with `n` equal pieces. -/
+def rsLeft (g : ℚ → ℚ) (n : ℕ) : ℚ :=
+  ∑ i ∈ Finset.range n, g (-100 + i * (1100 / n)) *
+    (claimF (-100 + (i + 1) * (1100 / n)) - claimF (-100 + i * (1100 / n)))
+def rsRight (g : ℚ → ℚ) (n : ℕ) : ℚ :=
+  ∑ i ∈ Finset.range n, g (-100 + (i + 1) * (1100 / n)) *
+    (claimF (-100 + (i + 1) * (1100 / n)) - claimF (-100 + i * (1100 / n)))
+
+-- With g(x) = x and 11 pieces: left tags give 285, right tags 385.
+example : rsLeft (fun x => x) 11 = 285 ∧ rsRight (fun x => x) 11 = 385 := by
+  norm_num [rsLeft, rsRight, claimF, Finset.sum_range_succ]
+-- With g stepping from 0 to 1 at $0 and 11 pieces: left tags give 7/10, right tags 1.
+example : rsLeft (fun x => if 0 ≤ x then 1 else 0) 11 = 7 / 10 ∧
+    rsRight (fun x => if 0 ≤ x then 1 else 0) 11 = 1 := by
+  norm_num [rsLeft, rsRight, claimF, Finset.sum_range_succ]
+-- Cantor stages: total length (2/3)^10 = 1024/59049, just above 0.0173 and below 0.0174.
+example : (2 / 3 : ℚ) ^ 10 = 1024 / 59049 ∧ 173 / 10000 < (2 / 3 : ℚ) ^ 10 ∧
+    (2 / 3 : ℚ) ^ 10 < 174 / 10000 := by norm_num
+
+#print axioms expectation_eq_integral_against_distribution_function
+#print axioms integral_eq_sum_over_jumps_add_integral_against_slope
+#print axioms integration_by_parts_with_jump_term
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ls_hasSum_integral_countable_type' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_hasSum_setIntegral_countable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_jump_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_real_singleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_jump_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_hasSum_atoms' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_leftLim_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_integrableOn_Ioc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ls_ibp_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expectation_eq_integral_against_distribution_function' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_eq_sum_over_jumps_add_integral_against_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integration_by_parts_with_jump_term' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the claim's numbers, so some changes stop the program.
@@ -595,7 +1193,7 @@ The two outputs match line for line. The simulated mean, \$351.13, sits about on
 
 - **Insurance and reinsurance.** A stop-loss layer pays the part of a claim above a retention d. Its price is the tail area beyond d, by the integration by parts of Step 5, atoms or not.
 - **Mass on a rod.** A rod with a smooth density and a few bolted-on weights has a running mass total; its balance point is the integral of x against it.
-- **Option prices.** A call pays max(x − K, 0); its price is a discounted average against the pricing law of the stock, and by parts it is the discounted area under that law's tail beyond K ([Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+- **Option prices.** A call with strike price K pays max(x − K, 0) when the stock ends at x; its price is a discounted average against the pricing law of the stock, and by parts it is the discounted area under that law's tail beyond K ([Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 - **Paths with jumps.** For two right-continuous paths of bounded variation, the change in their product is F(s−) dG + G(s−) dF, plus ΔF ΔG at shared jumps. Stochastic calculus keeps this shape and adds a correction for paths too rough to have bounded variation.
 
 > **Say it back**
@@ -606,6 +1204,7 @@ The two outputs match line for line. The simulated mean, \$351.13, sits about on
 ## What this builds on
 
 - [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md): F(b) − F(a) is the integral of F′ for an absolutely continuous F, which turns the smooth part into a density.
+- [Bounded variation](01-functions-of-bounded-variation.md): the split of F into two increasing functions, which carries the integral from increasing F to every F of bounded variation.
 - [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): the measure μ_F, jumps as point masses, and uniqueness from half-open intervals.
 - [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md): the tail formula by Tonelli, the second road to Step 5.
 - [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the classical rule for smooth functions, the case with no jumps.

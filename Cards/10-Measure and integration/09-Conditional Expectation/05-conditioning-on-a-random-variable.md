@@ -105,7 +105,7 @@ A forecaster who sees only the temperature knows, for each set of temperatures B
 
 The Doob–Dynkin lemma ([Random variables as measurable maps](../03-Measurable%20Functions/04-random-variables-and-their-information.md)) says: a real random variable that is $\sigma(Y)$-measurable, meaning every question about its value is settled by Y, equals g(Y) for some Borel function g. $E[X\mid Y]$ is $\sigma(Y)$-measurable by definition. So $E[X\mid Y]=g(Y)$.
 
-Every event in $\sigma(Y)$ has the form "Y in B". The defining property of the conditional expectation, matching averages over every event in the sigma-algebra, becomes the matching over every Borel B in the formula.
+Every event in $\sigma(Y)$ has the form "Y in B". The defining property of the conditional expectation becomes the matching over every Borel B in the formula.
 
 g is unique only up to temperatures Y almost never takes. If $g(Y)=\tilde g(Y)$ almost surely, the set where g and $\tilde g$ differ has probability zero under the law of Y. For a continuous Y, a single temperature is such a set.
 
@@ -623,8 +623,6 @@ table Q(S=s): 3/22, 3/11, 9/22, 2/11; E_Q[X] = 730/11 directly, 730/11 by the to
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line.
-
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -671,7 +669,7 @@ The two outputs match line for line.
 - [Filtrations and martingales](06-filtrations-and-martingales.md): conditioning on a growing stream of information, month after month, and the fair games that result.
 - [Changing the unit of account](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md): the abstract Bayes formula at work when prices are measured in a different unit.
 
-Here the information is one reading, taken once; when readings arrive month after month and the forecast is updated with each, how that stream of forecasts behaves is answered on [Filtrations and martingales](06-filtrations-and-martingales.md).
+Here the information is one reading, taken once. When readings arrive month after month, each updating the forecast, how does that stream of forecasts behave?
 
 ---
 

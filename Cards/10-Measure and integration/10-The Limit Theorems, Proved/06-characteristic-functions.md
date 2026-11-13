@@ -6,9 +6,11 @@
 
 ## General Overview
 
-A fair die is rolled 100 times. What is the chance the total is exactly 350? The total's law is the die's law convolved with itself 99 times. Whether that law approaches a bell curve as the rolls pile up is harder again: it asks about a limit of laws, with no formula to take the limit of.
+A fair die is rolled 100 times. What is the chance the total is exactly 350? The total's law is the die's law convolved with itself 99 times: for each new total, add up the chances of every way to reach it ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Whether that law approaches a bell curve as the rolls pile up is harder again: it asks about a limit of laws, with no formula to take the limit of.
 
-There is a way to turn the problem into multiplication. Pick a rate, half a radian per pip. Place face k at the point on a circle of radius 1 turned by 0.5k radians, and average the six points. The average is one point inside the circle: −0.119777 across, 0.661214 up. Doing this at every rate gives a function of the rate: the die's **characteristic function**. The total of 100 independent rolls has one too, and it is the die's raised to the 100th power. From that power the code reads back the chance of a total of 350 exactly: 0.023322606.
+There is a way to turn the problem into multiplication. Pick a rate, half a radian per pip. Place face k at the point on a circle of radius 1 turned by 0.5k radians, and average the six points. The average is one point inside the circle: −0.119777 across, 0.661214 up.
+
+Doing this at every rate gives a function of the rate: the die's **characteristic function**. The total of 100 independent rolls has one too, and it is the die's raised to the 100th power. From that power the code reads back the chance of a total of 350 exactly: 0.023322606.
 
 Two theorems make this more than a trick. The **uniqueness theorem**: two laws with the same characteristic function are the same law. **Lévy's continuity theorem**: characteristic functions that converge at every rate, to a limit continuous at rate zero, belong to laws that converge. The probability wing defines the function and inverts it for densities ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)). This card does it for every law, as an integral against a measure, and spends its length on the proofs.
 
@@ -26,7 +28,9 @@ Face k sits at angle 0.5k radians on the circle of radius 1. The hollow dot is t
 
 ## The formula
 
-Notation first. Reminders: the law of X, written $\mu_X$, is the probability $P \circ X^{-1}$ that X carries onto the Borel sets of the line, and $\int f\,d\mu$ is read "the integral of f against μ". New here: $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ is the point at angle θ on the circle of radius 1 ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A complex-valued function is integrated one coordinate at a time: $\int (a + ib)\,d\mu = \int a\,d\mu + i\int b\,d\mu$, whenever both real integrals are finite. The characteristic function is written $\varphi_X$, read "phi of X".
+Notation first. Reminders: the law of X, written $\mu_X$, is the probability $P \circ X^{-1}$ that X carries onto the Borel sets of the line, and $\int f\,d\mu$ is read "the integral of f against μ".
+
+New here: $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ is the point at angle θ on the circle of radius 1 ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A complex-valued function is integrated one coordinate at a time: $\int (a + ib)\,d\mu = \int a\,d\mu + i\int b\,d\mu$, whenever both real integrals are finite. The characteristic function is written $\varphi_X$, read "phi of X".
 
 $$\varphi_X(t) = E\big[e^{itX}\big] = \int_{\mathbb R} e^{itx}\,d\mu_X(x) = \int \cos(tx)\,d\mu_X(x) + i\int \sin(tx)\,d\mu_X(x), \qquad t \in \mathbb R.$$
 
@@ -63,7 +67,7 @@ $$P(S_n = k) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-ikt}\,\varphi_{S_n}(t)\,dt.$$
 | $i$, $e^{itX}$ | the imaginary unit, square −1; the point at angle tX on the unit circle | angle 0.5k for face k | — |
 | $\varphi_X$ | the characteristic function: the turned point's average | −0.119777 + 0.661214i at t = 0.5 | — |
 | $\mu_X$, $P$, $E$, $\Omega$ | X's law; the probability; the average (integral against P); the outcomes | 1/6 on each face | — |
-| $S_n$, $n$ | the total of n independent rolls; the number of rolls | n = 100: mean 350, sd 17.08 | φ^n collapses away from t = 0 |
+| $S_n$, $n$ | the total of n independent rolls; the number of rolls | n = 100: mean 350, standard deviation 17.08 | φ^n collapses away from t = 0 |
 | $W_n$, $T_n$ | the scaled total (S_n − 3.5n)/√(35n/12); the centred, unscaled total S_n − 3.5n | chance W_100 ≤ 1 is 0.847031 | W_n settles; T_n spreads |
 | $U$, $Z$, $\lambda$ | uniform on [0, 1]; standard normal; Lebesgue measure, length on the line | φ_U(1) = 0.841471 + 0.459698i; φ_Z(1) = 0.606531 | — |
 | $\sigma$, $p_\sigma$, $h_\sigma$ | width of the blurring normal in the uniqueness proof; its density; the blurred X's density | — | — |
@@ -156,7 +160,9 @@ Simpson's rule, a numerical solution of φ′ = −tφ and the formula all give 
 
 ### Step 6: uniqueness
 
-**The die first, where it is a recipe.** For whole numbers j and k, the average of $e^{i(j-k)t}$ over one full turn of rates, −π to π, is 1 when j = k and 0 otherwise. The total's characteristic function is a finite sum, $\varphi_{S_n}(t) = \sum_j P(S_n = j)\,e^{ijt}$. Multiply by $e^{-ikt}$ and average over the turn: only j = k survives. That is lattice inversion, so two laws on the whole numbers with one characteristic function have the same chances. For two dice the coefficient of $e^{7it}$ in $\varphi^2$ is 6/36 = 0.166667. For 100 dice, exact counting and inversion with 1,024 rates both give 0.023322606 for a total of 350.
+**The die first, where it is a recipe.** For whole numbers j and k, the average of $e^{i(j-k)t}$ over one full turn of rates, −π to π, is 1 when j = k and 0 otherwise. The total's characteristic function is a finite sum, $\varphi_{S_n}(t) = \sum_j P(S_n = j)\,e^{ijt}$. Multiply by $e^{-ikt}$ and average over the turn: only j = k survives. That is lattice inversion, so two laws on the whole numbers with one characteristic function have the same chances.
+
+For two dice the coefficient of $e^{7it}$ in $\varphi^2$ is 6/36 = 0.166667. For 100 dice, exact counting and inversion with 1,024 rates both give 0.023322606 for a total of 350.
 
 **The general case: blur, then unblur.** A general law has no finite sum to invert. Instead add an independent narrow normal σZ to X. The blurred X + σZ has a density, and Step 5 with Fubini's theorem gives it in terms of $\varphi_X$ alone:
 
@@ -221,7 +227,7 @@ The same move proves the die's weak law. The running average $S_n/n$ has charact
 
 ### Another road
 
-Lévy's inversion formula recovers the chance of any interval from $\varphi_X$ by an integral over rates with a growing cut-off, giving uniqueness at once, at the price of a delicate limit. The probability wing states it ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)); Levy's inversion formula proves it. The blur-and-unblur route above uses only the normal's characteristic function, Fubini and dominated convergence.
+Lévy's inversion formula recovers the chance of any interval from $\varphi_X$ by an integral over rates with a growing cut-off, giving uniqueness at once, at the price of a delicate limit. The probability wing states it ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)); the planned harmonic-analysis card Levy's inversion formula proves it. The blur-and-unblur route above uses only the normal's characteristic function, Fubini and dominated convergence.
 
 ---
 
@@ -395,7 +401,6 @@ row("tail bound u=1: W_100 P(|W|>2) <= integral", f"{tail_w:.6f}", f"{bw:.6f}")
 row("tail bound u=1: T_400 P(|T|>2) <= integral", f"{tail_t:.6f}", f"{bt:.6f}")
 assert tail_w <= bw                                # the tail inequality, exact side <= integral
 assert tail_t <= bt
-
 # ---- the two charts ----
 print("figure, |phi(t)| at t = k pi/12:", " ".join(f"{abs(cf_die(k * pi / 12)):.2f}" for k in range(25)))
 print("figure, |phi(t)|^4:            ", " ".join(f"{abs(cf_die(k * pi / 12)) ** 4:.2f}" for k in range(25)))
@@ -403,9 +408,10 @@ print("figure, t labels:               ", " ".join(f"{k * pi / 12:.2f}" for k in
 for n in (1, 4):
     print(f"figure, phi_W{n}(t), t = 0..3:", " ".join(f"{cf_w(n, k / 4):.2f}" for k in range(13)))
 print("figure, normal e^(-t^2/2):", " ".join(f"{cf_normal_int(k / 4):.2f}" for k in range(13)))
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 die at t = 0.5, cos then sin of 0.5k: 0.8776 0.5403 0.0707 -0.4161 -0.8011 -0.9900 0.4794 0.8415 0.9975 0.9093 0.5985 0.1411
@@ -441,6 +447,7 @@ figure, t labels:                0.00 0.26 0.52 0.79 1.05 1.31 1.57 1.83 2.09 2.
 figure, phi_W1(t), t = 0..3: 1.00 0.97 0.88 0.74 0.57 0.38 0.19 0.02 -0.11 -0.20 -0.24 -0.23 -0.18
 figure, phi_W4(t), t = 0..3: 1.00 0.97 0.88 0.75 0.60 0.44 0.30 0.19 0.10 0.05 0.02 0.01 0.00
 figure, normal e^(-t^2/2): 1.00 0.97 0.88 0.75 0.61 0.46 0.32 0.22 0.14 0.08 0.04 0.02 0.01
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -614,10 +621,11 @@ fn main() {
     println!("figure, t labels:                {}", f((0..25).map(|k| k as f64 * PI / 12.0).collect()));
     for n in [1u32, 4] { println!("figure, phi_W{}(t), t = 0..3: {}", n, f((0..13).map(|k| cf_w(n, k as f64 / 4.0)).collect())); }
     println!("figure, normal e^(-t^2/2): {}", f((0..13).map(|k| cf_normal_int(k as f64 / 4.0)).collect()));
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 die at t = 0.5, cos then sin of 0.5k: 0.8776 0.5403 0.0707 -0.4161 -0.8011 -0.9900 0.4794 0.8415 0.9975 0.9093 0.5985 0.1411
@@ -653,9 +661,129 @@ figure, t labels:                0.00 0.26 0.52 0.79 1.05 1.31 1.57 1.83 2.09 2.
 figure, phi_W1(t), t = 0..3: 1.00 0.97 0.88 0.74 0.57 0.38 0.19 0.02 -0.11 -0.20 -0.24 -0.23 -0.18
 figure, phi_W4(t), t = 0..3: 1.00 0.97 0.88 0.75 0.60 0.44 0.30 0.19 0.10 0.05 0.02 0.01 0.00
 figure, normal e^(-t^2/2): 1.00 0.97 0.88 0.75 0.61 0.46 0.32 0.22 0.14 0.08 0.04 0.02 0.01
+ALL CHECKS PASS
 ```
 
 The two outputs are identical, line for line.
+
+### Lean
+
+Lean proves three of the six theorems, for random variables on any probability space: products, uniqueness and Lévy's continuity theorem.
+
+- Suppose X and Y are independent. Then $\varphi_{X+Y}(t) = \varphi_X(t)\,\varphi_Y(t)$ for every real t.
+- Suppose $\varphi_X(t) = \varphi_Y(t)$ for every real t. Then X and Y have the same law: $\mu_X = \mu_Y$.
+- Suppose $X_n \Rightarrow X$. Then $\varphi_{X_n}(t) \to \varphi_X(t)$ for every real t.
+- Suppose $\varphi_{X_n}(t) \to g(t)$ for every real t, and g is continuous at 0. Then g is the characteristic function of some random variable X, and $X_n \Rightarrow X$.
+- The die's hand arithmetic holds exactly as fractions: mean 7/2, E[X^2] 91/6, and variance 35/12.
+- Two dice total 7 in 6 of the 36 pairs. For 100 rolls, the mean is 350 and the variance 875/3.
+
+Theorems 1, 2 and 4 at chosen rates, the decimals, inversion and the breaks are left to the Python and Rust checks.
+
+```lean
+-- Characteristic functions: two random variables on the line with the same characteristic function have the same law, characteristic functions converge exactly as Lévy's continuity theorem says, and independent sums multiply them.
+import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+import Mathlib.MeasureTheory.Function.ConvergenceInDistribution
+import Mathlib.Probability.Independence.Basic
+import Mathlib.MeasureTheory.Measure.LevyConvergence
+import Mathlib.MeasureTheory.Measure.Prokhorov
+import Mathlib.Probability.Independence.CharacteristicFunction
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+/-- **Uniqueness.** The characteristic function pins down the law: if real random variables
+`X` and `Y` on a probability space have `φ_X(t) = φ_Y(t)` for every real rate `t`, where
+`φ_X(t) = ∫ e^(itx) dμ_X(x)` is Mathlib's `charFun` of the law `μ_X = P ∘ X⁻¹`, then the
+two laws are equal. -/
+theorem charFun_eq_everywhere_implies_law_eq
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (X Y : Ω → ℝ) (hX : Measurable X) (hY : Measurable Y)
+    (h : ∀ t : ℝ, charFun (P.map X) t = charFun (P.map Y) t) :
+    P.map X = P.map Y := by
+  exact Measure.ext_of_charFun (funext h)
+
+/-- **Lévy's continuity theorem.** (a) If `X n` converges in distribution to `Y`, then
+`φ_{X n}(t) → φ_Y(t)` for every real `t`. (b) If `φ_{X n}(t) → g(t)` for every real `t` and the
+limit `g` is continuous at `0`, then `g` is the characteristic function of some law `ν` on the
+line (the law of the random variable `x ↦ x` on `(ℝ, ν)`), and `X n` converges in distribution
+to it. -/
+theorem levy_continuity_theorem
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P] :
+    (∀ (X : ℕ → Ω → ℝ) (Y : Ω → ℝ),
+        TendstoInDistribution X atTop Y (fun _ => P) P →
+          ∀ t : ℝ, Tendsto (fun n => charFun (P.map (X n)) t) atTop
+            (𝓝 (charFun (P.map Y) t))) ∧
+    (∀ (X : ℕ → Ω → ℝ) (g : ℝ → ℂ), (∀ n, Measurable (X n)) →
+        (∀ t : ℝ, Tendsto (fun n => charFun (P.map (X n)) t) atTop (𝓝 (g t))) →
+        ContinuousAt g 0 →
+          ∃ ν : ProbabilityMeasure ℝ, (∀ t : ℝ, charFun (ν : Measure ℝ) t = g t) ∧
+            TendstoInDistribution X atTop id (fun _ => P) (ν : Measure ℝ)) := by
+  refine ⟨fun X Y hXY t => hXY.tendsto_charFun t, ?_⟩
+  intro X g hX hconv hg
+  let μ : ℕ → ProbabilityMeasure ℝ :=
+    fun n => ⟨P.map (X n), inferInstance⟩
+  have htight : IsTightMeasureSet (Set.range fun n => (μ n : Measure ℝ)) :=
+    isTightMeasureSet_of_tendsto_charFun hg hconv
+  have htight' : IsTightMeasureSet
+      {((ρ : ProbabilityMeasure ℝ) : Measure ℝ) | ρ ∈ Set.range μ} := by
+    convert htight using 1
+    ext m
+    simp
+  have hcomp : IsCompact (closure (Set.range μ)) :=
+    isCompact_closure_of_isTightMeasureSet htight'
+  let U : Ultrafilter ℕ := Ultrafilter.of atTop
+  have hU : (U : Filter ℕ) ≤ atTop := Ultrafilter.of_le atTop
+  obtain ⟨ν, -, hν⟩ := hcomp.ultrafilter_le_nhds (U.map μ)
+    (by
+      refine le_trans ?_ (monotone_principal subset_closure)
+      simp)
+  have hν' : Tendsto μ U (𝓝 ν) := hν
+  have hchar : ∀ t : ℝ, charFun (ν : Measure ℝ) t = g t := by
+    intro t
+    have h1 : Tendsto (fun n => charFun (μ n : Measure ℝ) t) U (𝓝 (charFun (ν : Measure ℝ) t)) := by
+      rw [ProbabilityMeasure.tendsto_iff_forall_integral_rclike_tendsto ℂ] at hν'
+      simp_rw [charFun_eq_integral_innerProbChar]
+      exact hν' (BoundedContinuousFunction.innerProbChar t)
+    exact tendsto_nhds_unique h1 ((hconv t).mono_left hU)
+  refine ⟨ν, hchar, ?_⟩
+  refine TendstoInDistribution.of_tendsto_charFun (fun n => (hX n).aemeasurable)
+    aemeasurable_id fun t => ?_
+  rw [Measure.map_id, hchar t]
+  exact hconv t
+
+/-- **Independent sums multiply.** If real random variables `X` and `Y` are independent, then
+`φ_{X+Y}(t) = φ_X(t) · φ_Y(t)` for every real `t`. -/
+theorem charFun_add_of_indep
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (X Y : Ω → ℝ) (hX : Measurable X) (hY : Measurable Y) (hXY : IndepFun X Y P) (t : ℝ) :
+    charFun (P.map (fun ω => X ω + Y ω)) t = charFun (P.map X) t * charFun (P.map Y) t := by
+  rw [hXY.charFun_map_fun_add_eq_mul hX.aemeasurable hY.aemeasurable, Pi.mul_apply]
+
+-- The die's mean from φ'(0) = 3.5i: (1 + 2 + ... + 6) / 6 = 21/6 = 7/2.
+example : ∑ k ∈ Finset.Icc 1 6, k = 21 := by decide
+example : ((∑ k ∈ Finset.Icc 1 6, k : ℕ) : ℚ) / 6 = 7 / 2 := by norm_num [Finset.sum_Icc_succ_top]
+-- E[X^2] from -φ''(0): (1 + 4 + ... + 36) / 6 = 91/6, and the variance 91/6 - (7/2)^2 = 35/12.
+example : ∑ k ∈ Finset.Icc 1 6, k ^ 2 = 91 := by decide
+example : (91 : ℚ) / 6 - (7 / 2) ^ 2 = 35 / 12 := by norm_num
+-- Two dice: total 7 arises in 6 of the 36 ordered pairs, the coefficient 6/36 of e^(7it) in φ^2.
+example : ((Finset.Icc 1 6 ×ˢ Finset.Icc 1 6).filter (fun p : ℕ × ℕ => p.1 + p.2 = 7)).card = 6 := by
+  decide
+example : (Finset.Icc 1 6 ×ˢ Finset.Icc 1 6).card = 36 := by decide
+-- 100 rolls, from φ^100: mean 100 · 7/2 = 350 and variance 100 · 35/12 = 875/3.
+example : (100 : ℚ) * (7 / 2) = 350 := by norm_num
+example : (100 : ℚ) * (35 / 12) = 875 / 3 := by norm_num
+
+#print axioms charFun_eq_everywhere_implies_law_eq
+#print axioms levy_continuity_theorem
+#print axioms charFun_add_of_indep
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'charFun_eq_everywhere_implies_law_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'levy_continuity_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charFun_add_of_indep' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

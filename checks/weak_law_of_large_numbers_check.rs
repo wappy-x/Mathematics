@@ -140,4 +140,5 @@ fn main() {
     println!("breaks: standard deviation for variance: n = {}, Chebyshev there {}", n_sd, f6(fl(div(c, q(n_sd, 1)))));
     println!("breaks: 1 - delta for delta: n = {}, Chebyshev there {}, exact P(miss) {}", n_1d, f6(fl(div(c, q(n_1d, 1)))), f6(ex[&295]));
     assert!(cop == q(1, 1) && !le(div(c, q(n_sd, 1)), delta) && n_1d == 295 && ex[&295] > fl(delta));
+    println!("ALL CHECKS PASS");
 }

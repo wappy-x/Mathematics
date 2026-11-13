@@ -147,4 +147,5 @@ fn main() {
     assert!((out_at[3] as f64 / runs as f64 - p1000).abs() < 4.0 * se); // simulation vs convolution
     assert!((first_avg - 3.5).abs() < 4.0 * (M2 / len as f64).sqrt()); // one run's average vs mean
     assert!(bracket_ok); // divergent sum vs integral test
+    println!("ALL CHECKS PASS");
 }

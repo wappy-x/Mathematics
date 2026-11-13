@@ -120,3 +120,4 @@ n12 = next(n for n in range(1, 40) if Fr(2, 3) ** n < Fr(1, 100))
 print(f"cantor, eps 0.5, delta 0.01: first stage below delta {n12}, length {float(ln):.6f}, rise {float(rise):.4f}")
 print("figure, stage-3 staircase at 200 units per unit, origin (60, 220):",
       " ".join(f"{60 + 200 * float(x):.2f},{220 - 200 * float(y):.2f}" for x, y in pts))
+print("ALL CHECKS PASS")

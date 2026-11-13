@@ -135,4 +135,5 @@ fn main() {
         assert!((got - 2.0 * n as f64).abs() < 1e-9, "each swing from +1 to -1 should add 2");
     }
     println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

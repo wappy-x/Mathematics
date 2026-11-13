@@ -101,3 +101,4 @@ for n in (10, 100):
     print(f"sin(1/x): {n} swings collect {got:.2f}")
     assert abs(got - 2 * n) < 1e-9, "each swing from +1 to -1 should add 2"
 print("All checks passed.")
+print("ALL CHECKS PASS")

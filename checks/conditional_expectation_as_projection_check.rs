@@ -167,4 +167,4 @@ fn main() {
     let (lb, lw, lv) = (between.f().sqrt(), within.f().sqrt(), var_direct.f().sqrt());
     println!("figure, scale {:.0} per mm, O=(40,200) M=({:.2},200) X=({:.2},{:.2}) legs {:.2} and {:.2}, hypotenuse {:.2}",
              sc, 40.0 + sc * lb, 40.0 + sc * lb, 200.0 - sc * lw, lb, lw, lv);
-}
+    println!("ALL CHECKS PASS"); }

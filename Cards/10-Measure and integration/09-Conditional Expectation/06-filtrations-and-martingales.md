@@ -26,7 +26,7 @@ Height is the bankroll in dollars, to scale; the dashed line is $100. Each point
 
 ## The formula
 
-Notation first, in words. $\Omega$ (omega) is the set of all ways the night can go: here the eight win-loss histories, WWW to LLL. $\mathcal F$ is the collection of sets of histories we allow ourselves to measure, and $P$ the probability on it, 0.125 per history. A number that depends on the history is a random quantity. $E[Y \mid \mathcal G]$, from [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md), is the best forecast of $Y$ using only the sets in a smaller collection $\mathcal G$. The subscript $n$ counts hands played, from 0 to 3.
+Notation first, in words. $\Omega$ (omega) is the set of all ways the night can go: here the eight win-loss histories, WWW to LLL. $\mathcal F$ is the collection of sets of histories we allow ourselves to measure, a sigma-algebra: it holds $\Omega$ and is closed under complements and countable unions. $P$ is the probability on it, 0.125 per history. A number that depends on the history is a random quantity. $E[Y \mid \mathcal G]$, from [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md), is the best forecast of $Y$ using only the sets in a smaller collection $\mathcal G$. The subscript $n$ counts hands played, from 0 to 3.
 
 **Filtration.** A sequence of collections of measurable sets, each inside the next:
 
@@ -38,9 +38,9 @@ On the poker night, $\mathcal F_n$ holds exactly the sets of histories that the 
 
 **Adapted process.** A sequence $X_0, X_1, X_2, \dots$ of random quantities is adapted when each $X_n$ is measurable with respect to $\mathcal F_n$: its value can be read off once the first $n$ steps are known. The bankroll after $n$ hands is adapted. The bankroll after hand $n + 1$, read at time $n$, is not.
 
-**Martingale.** An adapted process with $E\lvert X_n\rvert < \infty$ for every $n$ (each $X_n$ in $L^1$), and
+**Martingale.** An adapted process with $E\lvert X_n\rvert < \infty$ for every $n$ (each $X_n$ is integrable, written $X_n \in L^1$: its average size is finite), and
 
-$$E[X_{n+1} \mid \mathcal F_n] = X_n \quad \text{almost surely, for every } n .$$
+$$E[X_{n+1} \mid \mathcal F_n] = X_n \quad \text{almost surely (a.s.), for every } n .$$
 
 **Read it aloud:** given everything seen after step $n$, the best forecast of the next value is the present value, except on a set of probability zero.
 
@@ -104,21 +104,21 @@ $$E[M_{n+1} \mid \mathcal F_n] = E\big[E[Y \mid \mathcal F_{n+1}] \mid \mathcal 
 
 On the poker night, after a first win the four endings are 150, 130, 110 and 90, averaging 120. After a win and a loss, 110 and 90 average 100. And 140 and 100 average 120: the forecast after hand 2 averages back to the forecast after hand 1.
 
-Why does the forecast equal the bankroll on the table? The hands still to come are fair. Their expected gain, given anything already seen, is zero, whatever stake the rule sets; the stake is fixed by the past, so it comes out of the forecast as a known factor. Forecast = bankroll now + 0.
+Why does the forecast equal the bankroll on the table? The hands still to come are fair. Their expected gain, given anything already seen, is zero, whatever stake the rule sets. The stake is fixed by the past, so it comes out of the forecast as a known factor. Forecast = bankroll now + 0.
 
 The same theorem applies to any final result, not only money. Let $Y$ be 1 if the night ends above $100 and 0 otherwise. The forecast $A_n$ is the chance of finishing ahead: 0.625 at the start, 0.75 after a first win, 0.5 after a first loss. It too is a martingale: 0.75 and 0.5 average to 0.625.
 
 ### Step 3: the density process is a martingale
 
-Roll the loaded die three times; $P$ is a fair die, $Q$ the loaded one of [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md), rolls independent under each. $\mathcal F_n$ holds the sets decided by the first $n$ rolls. On $\mathcal F_n$, $Q$ has a density against $P$: on the cell of a given start of $n$ rolls, $Z_n$ is $Q(\text{cell})/P(\text{cell})$, and since rolls are independent that is the product of the per-roll rates. Three sixes give $Z$ values 1, 2.4, 5.76 and about 13.82.
+Roll the loaded die three times; $P$ is a fair die, $Q$ the loaded one of [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md), rolls independent under each. $\mathcal F_n$ holds the sets decided by the first $n$ rolls. On $\mathcal F_n$, $Q$ has a density against $P$: on the cell of a given start of $n$ rolls, $Z_n$ is $Q(\text{cell})/P(\text{cell})$. Since rolls are independent, that is the product of the per-roll rates. Three sixes give $Z$ values 1, 2.4, 5.76 and about 13.82.
 
 Why a martingale, in general? Take a set $B$ in $\mathcal F_n$. It is also in $\mathcal F_{n+1}$. So both $Z_n$ and $Z_{n+1}$ give it the same $Q$-weight:
 
 $$E_P[Z_{n+1} \mathbf 1_B] = Q(B) = E_P[Z_n \mathbf 1_B] .$$
 
-That is the defining property of $E_P[Z_{n+1} \mid \mathcal F_n]$, satisfied by $Z_n$. Uniqueness does the rest. With $B = \Omega$, $E_P[Z_n] = Q(\Omega) = 1$.
+That is the defining property of $E_P[Z_{n+1} \mid \mathcal F_n]$, satisfied by $Z_n$. Only one $\mathcal F_n$-measurable quantity has that property, up to sets of probability zero, so $E_P[Z_{n+1} \mid \mathcal F_n] = Z_n$. With $B = \Omega$, $E_P[Z_n] = Q(\Omega) = 1$.
 
-If there is a last step with density $Z$ on all of $\mathcal F$, the same argument shows $Z_n = E_P[Z \mid \mathcal F_n]$: the density process is the forecast of the final density, a special case of Step 2.
+If there is a last step with density $Z$ on all of $\mathcal F$, the same argument shows $Z_n = E_P[Z \mid \mathcal F_n]$. So the density process is the forecast of the final density, a special case of Step 2.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -156,7 +156,7 @@ The converse fails. Let $N_0 = 100$, $N_1$ the bankroll after hand 1, and $N_2 =
 
 </details>
 
-A second road to all of this on a finite space: every forecast is a cell average, and the martingale property says a cell's average is the average of its sub-cells' averages, weighted by their sizes. That is regrouping a finite sum. The proof above is what survives when the steps are infinitely many, or the cells have probability zero, and conditioning must be done through sigma-algebras.
+A second road to all of this on a finite space: every forecast is a cell average. The martingale property then says a cell's average is the average of its sub-cells' averages, weighted by their sizes. That is regrouping a finite sum. The proof above is what survives when the steps are infinitely many, or the cells have probability zero, and conditioning must be done through sigma-algebras.
 
 ---
 
@@ -576,6 +576,116 @@ ALL CHECKS PASS
 
 The two outputs match line for line, the simulated nights included.
 
+### Lean
+
+Lean proves the three theorems for every filtration on any probability space, and checks the card's poker and die arithmetic.
+
+- Take an integrable final result $Y$. Then the forecasts $E[Y \mid \mathcal F_n]$ are integrable and form a martingale.
+- Suppose $Q \ll P$ on each $\mathcal F_n$. Then the density process $Z_n$ is integrable, is a martingale under $P$, and has $E_P[Z_n] = 1$.
+- Take a martingale $X_n$, defined by the one-step rule above. Then $E[X_m \mid \mathcal F_n] = X_n$ almost surely for every $m \ge n$.
+- Take the same martingale. Then $E[X_n] = E[X_0]$ for every $n$.
+- The poker sums hold exactly: forecasts 100, 120, 80 and 100, and 140 and 100 averaging back to 120.
+- Five of the eight endings finish above $100, and 0.75 and 0.5 average to 0.625.
+- Two sixes give $Z_2 = 5.76$, and 5.76 times 1/36 is 0.16, the loaded chance of two sixes.
+- Under $Q$, $Z_1$ averages 1.44, not 1.
+- Exactly 172 of the 216 three-roll sequences end with $Z_3$ below 1.
+
+The set counts, the simulated nights, the house edge and the flip process are left to the Python and Rust checks.
+
+```lean
+-- Filtrations and martingales: forecasts of a fixed integrable result are martingales, the density process of one probability against another is a martingale with mean 1, and a martingale keeps its forecast and its mean at every later step.
+import Mathlib.Probability.Martingale.Basic
+import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+import Mathlib.MeasureTheory.Measure.Decomposition.IntegralRNDeriv
+
+open MeasureTheory
+
+/-- Forecasts are martingales: on a probability space with a filtration (information that only
+grows), for every integrable final result `Y` the forecasts `M n = E[Y | ℱ n]` are integrable and
+form a martingale. -/
+theorem condExp_forecast_is_martingale {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (P : Measure Ω) [IsProbabilityMeasure P] (ℱ : Filtration ℕ m0)
+    (Y : Ω → ℝ) (hY : Integrable Y P) :
+    Martingale (fun n => P[Y | ℱ n]) ℱ P ∧ ∀ n, Integrable (P[Y | ℱ n]) P := by
+  exact ⟨martingale_condExp Y ℱ P, fun _ => integrable_condExp⟩
+
+/-- The density process is a martingale: if `Q` and `P` are probabilities and `Q ≪ P` on each
+`ℱ n`, then `Z n = dQ|ℱ n / dP|ℱ n` is integrable, is a martingale under `P`, and has
+`E_P[Z n] = 1` for every `n`. -/
+theorem density_process_is_martingale {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (P Q : Measure Ω) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (ℱ : Filtration ℕ m0)
+    (hQP : ∀ n, Q.trim (ℱ.le n) ≪ P.trim (ℱ.le n)) :
+    Martingale (fun n ω => ((Q.trim (ℱ.le n)).rnDeriv (P.trim (ℱ.le n)) ω).toReal) ℱ P ∧
+      (∀ n, Integrable (fun ω => ((Q.trim (ℱ.le n)).rnDeriv (P.trim (ℱ.le n)) ω).toReal) P) ∧
+      ∀ n, ∫ ω, ((Q.trim (ℱ.le n)).rnDeriv (P.trim (ℱ.le n)) ω).toReal ∂P = 1 := by
+  have hmeas : ∀ n, StronglyMeasurable[ℱ n]
+      (fun ω => ((Q.trim (ℱ.le n)).rnDeriv (P.trim (ℱ.le n)) ω).toReal) := fun n =>
+    (@Measure.measurable_rnDeriv Ω (ℱ n) _ _).ennreal_toReal.stronglyMeasurable
+  have hint : ∀ n, Integrable (fun ω => ((Q.trim (ℱ.le n)).rnDeriv (P.trim (ℱ.le n)) ω).toReal) P :=
+    fun n => integrable_of_integrable_trim (ℱ.le n) Measure.integrable_toReal_rnDeriv
+  have hset : ∀ n (s : Set Ω), MeasurableSet[ℱ n] s →
+      ∫ ω in s, ((Q.trim (ℱ.le n)).rnDeriv (P.trim (ℱ.le n)) ω).toReal ∂P = Q.real s := by
+    intro n s hs
+    rw [setIntegral_trim (ℱ.le n) (hmeas n) hs, Measure.setIntegral_toReal_rnDeriv (hQP n) s,
+      measureReal_def, measureReal_def, trim_measurableSet_eq (ℱ.le n) hs]
+  refine ⟨martingale_of_setIntegral_eq_succ hmeas hint fun n s hs => ?_, hint, fun n => ?_⟩
+  · rw [hset n s hs, hset (n + 1) s (ℱ.mono n.le_succ s hs)]
+  · rw [← setIntegral_univ, hset n Set.univ MeasurableSet.univ, probReal_univ]
+
+/-- A martingale keeps its mean: if `X` is adapted, each `X n` is integrable, and
+`E[X (n+1) | ℱ n] = X n` almost surely for every `n`, then `E[X m | ℱ n] = X n` almost surely for
+every `m ≥ n`, and `E[X n] = E[X 0]` for every `n`. -/
+theorem martingale_keeps_its_mean {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (P : Measure Ω) [IsProbabilityMeasure P] (ℱ : Filtration ℕ m0) (X : ℕ → Ω → ℝ)
+    (hadapt : Adapted ℱ X) (hint : ∀ n, Integrable (X n) P)
+    (hstep : ∀ n, P[X (n + 1) | ℱ n] =ᵐ[P] X n) :
+    (∀ n m, n ≤ m → P[X m | ℱ n] =ᵐ[P] X n) ∧ ∀ n, ∫ ω, X n ω ∂P = ∫ ω, X 0 ω ∂P := by
+  have hM : Martingale X ℱ P :=
+    martingale_nat hadapt.stronglyAdapted hint fun n => (hstep n).symm
+  refine ⟨fun n m hnm => hM.condExp_ae_eq hnm, fun n => ?_⟩
+  have := hM.setIntegral_eq (Nat.zero_le n) MeasurableSet.univ
+  simpa only [setIntegral_univ] using this.symm
+
+-- The poker night: the eight endings average to the start, $100.
+example : ((150 + 130 + 110 + 90 + 130 + 110 + 50 + 30) / 8 : ℚ) = 100 := by norm_num
+-- After a first win the forecast is $120; after a first loss, $80.
+example : ((150 + 130 + 110 + 90) / 4 : ℚ) = 120 := by norm_num
+example : ((130 + 110 + 50 + 30) / 4 : ℚ) = 80 := by norm_num
+-- After W then L, the forecast is $100; the two step-2 forecasts after a win average back to $120.
+example : ((110 + 90) / 2 : ℚ) = 100 := by norm_num
+example : ((140 + 100) / 2 : ℚ) = 120 := by norm_num
+-- Finishing above $100: 5 of the 8 endings.
+example : (([150, 130, 110, 90, 130, 110, 50, 30] : List ℕ).filter (fun y => 100 < y)).length = 5 := by
+  decide
+-- The chance of finishing ahead is a martingale too: 3/4 and 1/2 average to 5/8.
+example : ((3 / 4 + 1 / 2) / 2 : ℚ) = 5 / 8 := by norm_num
+-- The loaded die: two sixes give Z_2 = (12/5)(12/5) = 144/25, and 144/25 times 1/36 is Q(two sixes) = (2/5)^2.
+example : ((12 / 5) * (12 / 5) : ℚ) = 144 / 25 := by norm_num
+example : ((144 / 25) * (1 / 36) : ℚ) = (2 / 5) * (2 / 5) := by norm_num
+-- Averaged under Q instead of P, Z_1 has mean 36/25, not 1.
+example : (4 * ((1 / 10) * (3 / 5)) + (1 / 5) * (6 / 5) + (2 / 5) * (12 / 5) : ℚ) = 36 / 25 := by
+  norm_num
+-- Of the 216 three-roll sequences, 172 end with Z_3 below 1. The rates are 3/5, 6/5, 12/5, so
+-- Z_3 < 1 exactly when the product of the numerators (3, 3, 3, 3, 6, 12 by face) is below 125.
+example :
+    ((Finset.univ : Finset (Fin 6 × Fin 6 × Fin 6)).filter (fun r =>
+      (![3, 3, 3, 3, 6, 12] : Fin 6 → ℕ) r.1 * (![3, 3, 3, 3, 6, 12] : Fin 6 → ℕ) r.2.1 *
+        (![3, 3, 3, 3, 6, 12] : Fin 6 → ℕ) r.2.2 < 125)).card = 172 := by
+  decide +kernel
+
+#print axioms condExp_forecast_is_martingale
+#print axioms density_process_is_martingale
+#print axioms martingale_keeps_its_mean
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'condExp_forecast_is_martingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'density_process_is_martingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'martingale_keeps_its_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -618,14 +728,16 @@ The two outputs match line for line, the simulated nights included.
 ## Where this goes next
 
 - [Filtrations](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md): filtrations generated by a random walk, as the setting for processes in time.
+- [Stopping times](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/03-stopping-times-and-optional-stopping.md): whether a martingale keeps its mean when stopped at a time chosen from the path.
+- [Martingale convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md): whether a martingale settles down as time runs on.
 
-Every theorem here holds at fixed steps; whether a martingale keeps its mean when stopped at a time chosen from the path, and whether it settles down as time runs on, is the business of wing 11, starting at [Filtrations](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md); the answers are on [Stopping times](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/03-stopping-times-and-optional-stopping.md) and [Martingale convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md).
+Every theorem here holds at fixed steps. The question this card leaves open: does a martingale keep its mean when it is stopped at a time chosen from the path, and does it settle down as time runs on?
 
 ---
 
 ## Sources
 
-Verified 2026-09-29: every link below opens a page naming the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Williams, David. *Probability with Martingales*. Cambridge University Press, 1991. [Publisher page](https://www.cambridge.org/core/books/probability-with-martingales/B4CFCE0D08930FB46C6E93E775503926). Filtrations, conditional expectation and martingales on a measure space, with the proofs in the order used here.
 - Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [Publisher page](https://doi.org/10.1017/9781108591034). Chapter 4 treats conditional expectation and discrete-time martingales.

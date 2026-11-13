@@ -115,3 +115,4 @@ se = sqrt(exact[1000] * (1 - exact[1000]) / RUNS)
 assert abs(out_at[1000] / RUNS - exact[1000]) < 4 * se          # simulation vs convolution
 assert abs(first_avg - 3.5) < 4 * sqrt(float(m2) / LEN)         # one run's average vs mean
 assert all(lo <= s <= hi for lo, s, hi in rows)                 # divergent sum vs integral test
+print("ALL CHECKS PASS")
