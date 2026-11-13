@@ -6,11 +6,21 @@
 
 ## General Overview
 
-A wooden fence runs 3 metres, with 100 rust spots marked on it, one every 3 centimetres, the last on the end post. Outer measure ([Outer measure](01-lebesgue-outer-measure.md)) gave every set of points on the fence a size: the cheapest total length of open intervals covering it. The spots came out at 0, the fence at 3, the fence without its spots at 3. Here 0 + 3 = 3: the sizes of two non-overlapping parts add up to the size of the whole.
+A wooden fence runs 3 metres, with 100 rust spots marked on it, one every 3 centimetres, the last on the end post.
 
-Outer measure does not promise that. It promises only that the parts' sizes add to *at least* the whole's size: covers are bought for each part separately, and two tangled parts can each need tape the other also needs. Such sets exist on the line: the Vitali set ([Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md)) fails the test below, so some set splits across it into two parts whose outer measures add to more than the whole's.
+Outer measure ([Outer measure](01-lebesgue-outer-measure.md)) gave every set of points on the fence a size: the cheapest total length of open intervals covering it. The spots came out at 0, the fence at 3, the fence without its spots at 3. Here 0 + 3 = 3: the sizes of two non-overlapping parts add up to the size of the whole.
 
-Which sets can be trusted? Constantin Carathéodory's answer, from 1914, is a test. Take the stretch E from 0.5 m to 1.2 m, and a test set T: the fence from 0.2 to 0.8 and from 1.0 to 2.0, of outer measure 0.6 + 1.0 = 1.6. Cut T with E. The part inside E measures 0.5; the part outside measures 1.1; and 0.5 + 1.1 = 1.6. Nothing was lost or double-charged. E passes if this happens for *every* test set. The rust spots pass too: they split the same T into 0 and 1.6.
+Outer measure does not promise that. It promises only that the parts' sizes add to *at least* the whole's size, a rule called subadditivity: covers are bought for each part separately, and two tangled parts can each need tape the other also needs.
+
+Such sets exist on the line. The Vitali set ([Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md)) picks one point from each group of numbers that differ by a fraction. It fails the test below, so some set splits across it into two parts whose outer measures add to more than the whole's.
+
+Which sets can be trusted? Constantin Carathéodory's answer, from 1914, is a test.
+
+Take the stretch E from 0.5 m to 1.2 m, and a test set T: the fence from 0.2 to 0.8 and from 1.0 to 2.0, of outer measure 0.6 + 1.0 = 1.6.
+
+Cut T with E. The part inside E measures 0.5; the part outside measures 1.1; and 0.5 + 1.1 = 1.6. Nothing was lost or double-charged.
+
+E passes if this happens for *every* test set. The rust spots pass too: they split the same T into 0 and 1.6.
 
 The sizes 1.6, 0.5 and 1.1 are pinned from both sides, not assumed. T and the gap (0.8, 1.0) make up [0.2, 2.0], of outer measure 1.8, so subadditivity puts T at no less than 1.8 − 0.2 = 1.6, and covering its two pieces puts it at no more. The same squeeze, with the gaps (0.8, 1.0) and E, gives 0.5 and 1.1.
 
@@ -30,7 +40,9 @@ Drawn to scale, 100 units per metre. The comb on the fence line is the 100 rust 
 
 ## The formula
 
-Notation first, in words. An **outer measure** $\mu^*$, read "mu star", is any rule giving every subset of a space $\Omega$ (omega, the set of all points in play) a size from 0 to infinity, such that the empty set gets 0, a bigger set never gets less, and a list of sets together never gets more than the sum of their sizes (**countable subadditivity**). Lebesgue outer measure $\lambda^*$ on the line is one such rule. For sets, $T \cap E$ is the part of $T$ inside $E$, $E^c$ is the **complement** of $E$ (every point of $\Omega$ not in $E$), and $T \cap E^c$, also written $T \setminus E$, is the part of $T$ outside $E$.
+Notation first, in words. An **outer measure** $\mu^*$, read "mu star", is any rule giving every subset of a space $\Omega$ (omega, the set of all points in play) a size from 0 to infinity, such that the empty set gets 0, a bigger set never gets less (**monotonicity**), and a list of sets together never gets more than the sum of their sizes (**countable subadditivity**).
+
+Lebesgue outer measure $\lambda^*$ on the line is one such rule. For sets, $T \cap E$ is the part of $T$ inside $E$, $E^c$ is the **complement** of $E$ (every point of $\Omega$ not in $E$), and $T \cap E^c$, also written $T \setminus E$, is the part of $T$ outside $E$.
 
 $$\mu^*(T) = \mu^*(T \cap E) + \mu^*(T \cap E^c) \qquad \text{for every } T \subseteq \Omega$$
 
@@ -87,7 +99,9 @@ Take E and F in $\mathcal{M}$. Cut T by E, then cut the outside part again by F:
 
 ### Step 3: countable unions pass, and sizes add
 
-For separate pieces $E_1, E_2, \dots$ in $\mathcal{M}$, cut T by the first piece, then the rest by the second, and so on. Each cut is exact, so the parts of T in the first few pieces, plus the part outside all of them, add to at most $\mu^*(T)$. Let the number of pieces grow: the sum becomes a series, and by subadditivity the series is at least the size of the part of T in the whole union. So the union passes. An overlapping list is first made separate, keeping from each set only what earlier ones missed. So $\mathcal{M}$ is a sigma-algebra. Taking the union itself as T gives countable additivity: $\mu^*$ is a measure on $\mathcal{M}$, in the sense of [Measures](../01-Sets%20You%20Can%20Measure/04-measures.md).
+For separate pieces $E_1, E_2, \dots$ in $\mathcal{M}$, cut T by the first piece, then the rest by the second, and so on. Each cut is exact, so the parts of T in the first few pieces, plus the part outside all of them, add to at most $\mu^*(T)$. Let the number of pieces grow: the sum becomes a series, and by subadditivity the series is at least the size of the part of T in the whole union. So the union passes.
+
+An overlapping list is first made separate, keeping from each set only what earlier ones missed. So $\mathcal{M}$ is a sigma-algebra. Taking the union itself as T gives countable additivity: $\mu^*$ is a measure on $\mathcal{M}$, in the sense of [Measures](../01-Sets%20You%20Can%20Measure/04-measures.md).
 
 ### Step 4: sets of size zero pass
 
@@ -95,9 +109,11 @@ For the rust spots R, the part of any T inside R measures 0, since it sits insid
 
 ### Step 5: every interval passes Lebesgue outer measure
 
-Start with a half-line: every point beyond a cut point. Cover T by open intervals $I_k$ whose lengths total at most $\lambda^*(T) + \varepsilon$. Cut each $I_k$ at the cut point: two intervals whose lengths add to exactly the length of $I_k$. The inside pieces cover the part of T in the half-line, the outside pieces cover the rest, so the two parts measure at most $\lambda^*(T) + \varepsilon$ together, for every slack $\varepsilon$. On the fence, a cover of T totalling 1.61 cuts at 0.5 and 1.2 into 0.505 inside E and 1.105 outside.
+Start with a half-line: every point beyond a cut point. Cover T by open intervals $I_k$ whose lengths total at most $\lambda^*(T) + \varepsilon$. Cut each $I_k$ at the cut point: two intervals whose lengths add to exactly the length of $I_k$. The inside pieces cover the part of T in the half-line, the outside pieces cover the rest, so the two parts measure at most $\lambda^*(T) + \varepsilon$ together, for every slack $\varepsilon$.
 
-Complements of half-lines pass by Step 1. E = [0.5, 1.2] is the overlap of "from 0.5 on" and "up to 1.2", so it passes by Step 2. Every interval is built the same way, open ones as countable unions, so every Borel set passes ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
+On the fence, a cover of T totalling 1.61 cuts at 0.5 and 1.2 into 0.505 inside E and 1.105 outside.
+
+Complements of half-lines pass by Step 1. E = [0.5, 1.2] is the overlap of "from 0.5 on" and "up to 1.2", so it passes by Step 2. Every interval is built the same way, open ones as countable unions, so every Borel set passes: every set built from intervals by repeated complements and countable unions ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
 
 <details>
 <summary>Detailed proof</summary>
@@ -147,7 +163,11 @@ On the fence, with E = [0.5, 1.2], the rust spots R and the test set T = [0.2, 0
 
 Neither cut wastes length for this T; the code repeats the interval bookkeeping on 1000 more test sets, and Steps 4 and 5 cover every test set.
 
-A toy fence shows a set that fails. Four panels a, b, c, d; three repair boards, one over a, one over b and c, one over c and d, each costing 1. The outer measure of a set of panels is the cheapest bill of boards covering it. It is an outer measure: the empty set costs 0, more panels never cost less, and the boards for two sets together cover their union. So bc costs 1 (one board), bd costs 2, abcd costs 3. A dash, -, names the empty set.
+A toy fence shows a set that fails. Four panels a, b, c, d; three repair boards, one over a, one over b and c, one over c and d, each costing 1.
+
+The outer measure of a set of panels is the cheapest bill of boards covering it. It is an outer measure: the empty set costs 0, more panels never cost less, and the boards for two sets together cover their union.
+
+So bc costs 1 (one board), bd costs 2, abcd costs 3. A dash, -, names the empty set.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -172,7 +192,14 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The code takes four roads to the fence's numbers. Road 1 cuts intervals and adds lengths exactly, fractions in Python and whole tenth-millimetres in Rust: each sum is an upper bound for the outer measure, and subtracting the gaps gives the matching lower bound, the squeeze from the overview. Road 2 uses no interval lengths: it counts the grid cells each set meets as the cells shrink. Road 3 cuts one cover of T at the ends of E, the move in Step 5. Road 4 repeats the interval bookkeeping of E's test and the rust spots' test on 1000 random two-piece test sets; it checks the cutting, while Steps 4 and 5 carry the criterion itself. The toy fence is enumerated in full, 16 sets against 16 test sets, and its passing sets are found a second way, by gluing panels that share a board. The code checks instances and a finite toy; only the proof covers every test set on the line.
+The code takes four roads to the fence's numbers.
+
+- **Road 1** cuts intervals and adds lengths exactly, fractions in Python and whole tenth-millimetres in Rust: each sum is an upper bound for the outer measure, and subtracting the gaps gives the matching lower bound, the squeeze from the overview.
+- **Road 2** uses no interval lengths: it counts the grid cells each set meets as the cells shrink.
+- **Road 3** cuts one cover of T at the ends of E, the move in Step 5.
+- **Road 4** repeats the interval bookkeeping of E's test and the rust spots' test on 1000 random two-piece test sets; it checks the cutting, while Steps 4 and 5 carry the criterion itself.
+
+The toy fence is enumerated in full, 16 sets against 16 test sets, and its passing sets are found a second way, by gluing panels that share a board. The code checks instances and a finite toy; only the proof covers every test set on the line.
 
 ### Python
 
@@ -548,6 +575,219 @@ xychart-beta
 ```
 
 Orange: the part of T inside E, falling to 0.5. Green: the part outside E, falling to 1.1. Dark: all 100 rust spots, falling to 0.
+
+### Lean
+
+Lean proves the theorem for every outer measure, and Steps 4 and 5 for every set on the line, then checks the worked numbers.
+
+- The splitting test is the card's formula. $\lambda^*$ is the cheapest total length of a list of open intervals covering a set.
+- Take any outer measure $\mu^*$. Then the empty set, complements of passing sets and countable unions of passing sets all pass.
+- Take passing sets $E_1, E_2, \dots$ with no point in two of them. Then $\mu^*$ of their union is the sum of their sizes.
+- Every interval passes for $\lambda^*$: open, closed, half-open, a half-line or the whole line.
+- Take a set $N$ with $\lambda^*(N) = 0$. Then $N$ passes for $\lambda^*$.
+- Every Borel set passes for $\lambda^*$.
+- On the fence, 0.6 + 1.0 and 1.8 − 0.2 both give 1.6, and E's test gives 0.5 + 1.1 = 1.6.
+- The parts agree too: 0.3 + 0.2 and 0.7 − 0.2 give 0.5; 0.3 + 0.8 and 1.8 − 0.7 give 1.1.
+- Of the 100 rust spots, 20 lie in [0.2, 0.8] and 33 in [1.0, 2.0], 53 in all.
+- The cover of T totalling 1.61, cut at 0.5 and 1.2, gives 0.505 inside E and 1.105 outside.
+- On the toy fence, Lean computes all 16 bills, and exactly -, a, bcd and abcd pass.
+- Sizes add on them: bill(a) + bill(bcd) = 3 = bill(abcd).
+- The set b passes the whole-fence test but fails T = bc: 1 + 1 against bill(bc) = 1.
+
+Interval cutting, grid covers, random test sets, the coarse cover and the figure are left to the Python and Rust checks.
+
+```lean
+-- Caratheodory's criterion: for any outer measure, the sets that split every test set with no loss form a sigma-algebra on which outer measure adds up countably, and for Lebesgue outer measure on the line every interval, every set of size zero and every Borel set passes.
+import Mathlib.MeasureTheory.OuterMeasure.Caratheodory
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+
+open Set MeasureTheory ENNReal Function
+
+/-- The card's splitting test: `E` passes for the outer measure `μ` when every test set `T`
+is cut by `E` into a part inside and a part outside whose sizes add up to exactly `μ T`. -/
+def CaratheodoryMeasurable {Ω : Type*} (μ : Set Ω → ℝ≥0∞) (E : Set Ω) : Prop :=
+  ∀ T : Set Ω, μ T = μ (T ∩ E) + μ (T ∩ Eᶜ)
+
+/-- Lebesgue outer measure, as on the Outer measure card: over every list `(c k, d k)` of open
+intervals whose union contains `A`, take the total length `∑ (d k - c k)`, and take the
+infimum of those totals. -/
+noncomputable def lambdaStar (A : Set ℝ) : ℝ≥0∞ :=
+  ⨅ (c : ℕ → ℝ) (d : ℕ → ℝ) (_ : A ⊆ ⋃ k, Ioo (c k) (d k)), ∑' k, ENNReal.ofReal (d k - c k)
+
+
+/-- Lebesgue measure of any set is at most `lambdaStar` of it. -/
+theorem volume_le_lambdaStar (A : Set ℝ) : volume A ≤ lambdaStar A := by
+  unfold lambdaStar
+  refine le_iInf fun c => le_iInf fun d => le_iInf fun hA => ?_
+  calc volume A ≤ volume (⋃ k, Ioo (c k) (d k)) := measure_mono hA
+    _ ≤ ∑' k, volume (Ioo (c k) (d k)) := measure_iUnion_le _
+    _ = ∑' k, ENNReal.ofReal (d k - c k) := by simp [Real.volume_Ioo]
+
+/-- `lambdaStar` of any set is at most its Lebesgue measure. -/
+theorem lambdaStar_le_volume (A : Set ℝ) : lambdaStar A ≤ volume A := by
+  have hv : volume A = StieltjesFunction.id.outer A := by
+    rw [Real.volume_eq_stieltjes_id, StieltjesFunction.measure]
+    rfl
+  rw [hv, StieltjesFunction.outer, OuterMeasure.ofFunction_apply]
+  refine le_iInf fun t => le_iInf fun ht => ?_
+  refine ENNReal.le_of_forall_pos_le_add fun ε ε0 hS => ?_
+  rcases ENNReal.exists_pos_sum_of_countable (ENNReal.coe_pos.2 ε0).ne' ℕ with ⟨ε', ε'0, hε⟩
+  have key : ∀ n, ∃ a b : ℝ, t n ⊆ Ioo a b ∧
+      ENNReal.ofReal (b - a) ≤ StieltjesFunction.id.length (t n) + (ε' n : ℝ≥0∞) := by
+    intro n
+    have hfin : StieltjesFunction.id.length (t n) ≠ ∞ :=
+      ((le_tsum _ n).trans_lt hS).ne
+    have hδ : (0 : ℝ) < (ε' n : ℝ) / 2 := by have := ε'0 n; positivity
+    have hl := ENNReal.lt_add_right hfin (ENNReal.ofReal_pos.2 hδ).ne'
+    conv at hl => lhs; rw [StieltjesFunction.length_eq]
+    simp only [iInf_lt_iff] at hl
+    rcases hl with ⟨a, b, h₁, h₂⟩
+    refine ⟨a, b + (ε' n : ℝ) / 2, ?_, ?_⟩
+    · intro x hx
+      have hx' := h₁ ⟨hx, fun h => not_isBot x h⟩
+      exact ⟨hx'.1, by linarith [hx'.2]⟩
+    · have e1 : b + (ε' n : ℝ) / 2 - a = (b - a) + (ε' n : ℝ) / 2 := by ring
+      rw [e1]
+      calc ENNReal.ofReal ((b - a) + (ε' n : ℝ) / 2)
+          ≤ ENNReal.ofReal (b - a) + ENNReal.ofReal ((ε' n : ℝ) / 2) := ENNReal.ofReal_add_le
+        _ ≤ (StieltjesFunction.id.length (t n) + ENNReal.ofReal ((ε' n : ℝ) / 2))
+              + ENNReal.ofReal ((ε' n : ℝ) / 2) := by
+            gcongr
+            simpa [StieltjesFunction.id_apply] using h₂.le
+        _ = StieltjesFunction.id.length (t n) + (ε' n : ℝ≥0∞) := by
+            rw [add_assoc, ← ENNReal.ofReal_add hδ.le hδ.le, add_halves,
+              ENNReal.ofReal_coe_nnreal]
+  choose a b hab hlen using key
+  unfold lambdaStar
+  refine iInf_le_of_le a (iInf_le_of_le b (iInf_le_of_le ?_ ?_))
+  · exact ht.trans (iUnion_mono hab)
+  · calc ∑' k, ENNReal.ofReal (b k - a k)
+        ≤ ∑' k, (StieltjesFunction.id.length (t k) + (ε' k : ℝ≥0∞)) := tsum_le_tsum hlen
+      _ = ∑' k, StieltjesFunction.id.length (t k) + ∑' k, (ε' k : ℝ≥0∞) := tsum_add
+      _ ≤ ∑' k, StieltjesFunction.id.length (t k) + ε := by gcongr
+
+/-- `lambdaStar` is Lebesgue measure. -/
+theorem lambdaStar_eq_volume (A : Set ℝ) : lambdaStar A = volume A :=
+  le_antisymm (lambdaStar_le_volume A) (volume_le_lambdaStar A)
+
+/-- Every measurable set passes the splitting test for `lambdaStar`. -/
+theorem caratheodoryMeasurable_lambdaStar_of_measurableSet {B : Set ℝ} (hB : MeasurableSet B) :
+    CaratheodoryMeasurable lambdaStar B := by
+  intro T
+  simp only [lambdaStar_eq_volume]
+  exact (measure_inter_add_sdiff T hB).symm
+
+/-- **Caratheodory's theorem.** For any outer measure `μ` on any space `Ω` (empty set 0,
+monotone, countably subadditive), the sets passing the splitting test form a sigma-algebra:
+the empty set passes, complements of passing sets pass, and the union of any list of passing
+sets passes. On them outer measure adds up countably: for passing sets `E 0, E 1, E 2, …`
+with no point in two of them, the size of the union is the sum of the sizes. -/
+theorem caratheodory_measurable_sigma_algebra_countably_additive {Ω : Type*}
+    (μ : OuterMeasure Ω) :
+    CaratheodoryMeasurable ⇑μ ∅ ∧
+    (∀ E : Set Ω, CaratheodoryMeasurable ⇑μ E → CaratheodoryMeasurable ⇑μ Eᶜ) ∧
+    (∀ E : ℕ → Set Ω, (∀ i, CaratheodoryMeasurable ⇑μ (E i)) →
+      CaratheodoryMeasurable ⇑μ (⋃ i, E i)) ∧
+    (∀ E : ℕ → Set Ω, (∀ i, CaratheodoryMeasurable ⇑μ (E i)) → Pairwise (Disjoint on E) →
+      μ (⋃ i, E i) = ∑' i, μ (E i)) := by
+  refine ⟨μ.isCaratheodory_empty, fun E hE => μ.isCaratheodory_compl hE,
+    fun E hE => μ.isCaratheodory_iUnion hE, fun E hE hd => μ.f_iUnion hE hd⟩
+
+/-- **For length on the line, every interval and every set of size zero passes.** An
+interval is a set of reals that contains every point between two of its points (open,
+closed, half-open, a half-line or the whole line); every such set passes the splitting test
+for Lebesgue outer measure, and so does every set whose Lebesgue outer measure is 0. -/
+theorem lebesgue_intervals_and_null_sets_pass :
+    (∀ s : Set ℝ, s.OrdConnected → CaratheodoryMeasurable lambdaStar s) ∧
+    (∀ N : Set ℝ, lambdaStar N = 0 → CaratheodoryMeasurable lambdaStar N) := by
+  refine ⟨fun s hs => caratheodoryMeasurable_lambdaStar_of_measurableSet hs.measurableSet, ?_⟩
+  intro N hN T
+  simp only [lambdaStar_eq_volume] at hN ⊢
+  have h1 : volume (T ∩ N) = 0 := measure_mono_null inter_subset_right hN
+  rw [h1, zero_add]
+  refine le_antisymm ?_ (measure_mono inter_subset_left)
+  calc volume T ≤ volume (T ∩ N) + volume (T \ N) := measure_le_inter_add_sdiff _ _ _
+    _ = volume (T ∩ Nᶜ) := by rw [h1, zero_add]; rfl
+
+/-- **Every Borel set passes.** Every set built from intervals by repeated complements and
+countable unions passes the splitting test for Lebesgue outer measure. -/
+theorem lebesgue_borel_sets_pass (B : Set ℝ) (hB : MeasurableSet B) :
+    CaratheodoryMeasurable lambdaStar B := by
+  exact caratheodoryMeasurable_lambdaStar_of_measurableSet hB
+
+/-! The card's worked numbers. Lengths on the fence are whole tenth-millimetres
+(1 m = 10000), as in the card's Rust code: E = [5000, 12000], T = [2000, 8000] and
+[10000, 20000], the gap (8000, 10000), the hull [2000, 20000]. -/
+
+-- Size of T: 6000 + 10000 = 16000 at most; 18000 - 2000 = 16000 at least.
+example : (8000 - 2000) + (20000 - 10000) = 16000 ∧ (20000 - 2000) - (10000 - 8000) = 16000 := by
+  decide
+-- T inside E: [5000, 8000] and [10000, 12000], 3000 + 2000 = 5000 at most; 7000 - 2000 at least.
+example : (8000 - 5000) + (12000 - 10000) = 5000 ∧ (12000 - 5000) - (10000 - 8000) = 5000 := by
+  decide
+-- T outside E: [2000, 5000) and (12000, 20000], 3000 + 8000 = 11000 at most; 18000 - 7000 at least.
+example : (5000 - 2000) + (20000 - 12000) = 11000 ∧ (20000 - 2000) - (12000 - 5000) = 11000 := by
+  decide
+-- E's test: 5000 + 11000 = 16000, the size of T.
+example : 5000 + 11000 = 16000 := by decide
+-- Rust spots at 3k/100 m, k = 1 … 100: 20 lie in [0.2, 0.8] and 33 in [1.0, 2.0], 53 in all.
+example : ((Finset.Icc 1 100).filter (fun k => 20 ≤ 3 * k ∧ 3 * k ≤ 80)).card = 20 ∧
+    ((Finset.Icc 1 100).filter (fun k => 100 ≤ 3 * k ∧ 3 * k ≤ 200)).card = 33 ∧
+    ((Finset.Icc 1 100).filter
+      (fun k => (20 ≤ 3 * k ∧ 3 * k ≤ 80) ∨ (100 ≤ 3 * k ∧ 3 * k ≤ 200))).card = 53 := by
+  decide
+-- A cover of T 0.01 m over its size, cut at 0.5 and 1.2 (whole 0.1 mm, so 25 per end):
+-- 5050 inside E plus 11050 outside gives 16100.
+example : (8025 - 5000) + (12000 - 9975) = 5050 ∧ (5000 - 1975) + (20025 - 12000) = 11050 ∧
+    5050 + 11050 = 16100 := by decide
+
+/-! The toy fence: panels a, b, c, d are bits 1, 2, 4, 8 of a number below 16; boards cover
+{a}, {b, c}, {c, d}, each costing 1. `toyBill A` is the cheapest number of boards covering A. -/
+
+/-- The panels under the boards chosen by the bits of `k`. -/
+def toyCovered (k : ℕ) : ℕ :=
+  (if k.testBit 0 then 1 else 0) ||| (if k.testBit 1 then 6 else 0) ||| (if k.testBit 2 then 12 else 0)
+
+/-- The cheapest bill: the fewest boards whose panels include every panel of `A`. -/
+def toyBill (A : ℕ) : ℕ :=
+  ((List.range 8).filter (fun k => A &&& toyCovered k == A)).foldl
+    (fun m k => min m ((k.testBit 0).toNat + (k.testBit 1).toNat + (k.testBit 2).toNat)) 3
+
+/-- The splitting test on the toy fence, against all 16 test sets. -/
+def toyPasses (A : ℕ) : Bool :=
+  (List.range 16).all (fun X => toyBill X == toyBill (X &&& A) + toyBill (X &&& (A ^^^ 15)))
+
+-- The bills: -:0 a:1 b:1 ab:2 c:1 ac:2 bc:1 abc:2 d:1 ad:2 bd:2 abd:3 cd:1 acd:2 bcd:2 abcd:3.
+example : (List.range 16).map toyBill = [0, 1, 1, 2, 1, 2, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3] := by
+  decide
+-- The sets passing all 16 tests are exactly -, a, bcd, abcd.
+example : (List.range 16).filter toyPasses = [0, 1, 14, 15] := by decide
+-- Adding up on them: bill(a) + bill(bcd) = 1 + 2 = 3 = bill(abcd).
+example : toyBill 1 + toyBill 14 = toyBill 15 := by decide
+-- b passes the whole-fence test, 1 + 2 = 3, but fails T = bc: 1 + 1 against 1.
+example : toyBill 2 + toyBill 13 = toyBill 15 ∧ toyBill 2 + toyBill 4 = 2 ∧ toyBill 6 = 1 := by
+  decide
+
+#print axioms volume_le_lambdaStar
+#print axioms lambdaStar_le_volume
+#print axioms lambdaStar_eq_volume
+#print axioms caratheodoryMeasurable_lambdaStar_of_measurableSet
+#print axioms caratheodory_measurable_sigma_algebra_countably_additive
+#print axioms lebesgue_intervals_and_null_sets_pass
+#print axioms lebesgue_borel_sets_pass
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'volume_le_lambdaStar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lambdaStar_le_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lambdaStar_eq_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+'caratheodoryMeasurable_lambdaStar_of_measurableSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'caratheodory_measurable_sigma_algebra_countably_additive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lebesgue_intervals_and_null_sets_pass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lebesgue_borel_sets_pass' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

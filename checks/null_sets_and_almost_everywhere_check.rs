@@ -156,4 +156,5 @@ fn main() {
     assert!(pi_lower < pi_series && pi_series < pi_upper); // two roads to the area
     assert!(worst < 4.0); // simulation within 4 SE
     assert!(road1 == road2 && pairs.len() == 8 && road1.len() == 8 && closed_up); // one value each
+    println!("ALL CHECKS PASS");
 }

@@ -10,7 +10,11 @@ A river stretch is 1 km long. At x km downstream its depth is 4x(1 − x) metres
 
 The integral of a non-negative function is defined as the supremum (the least number none of them exceeds) of the integrals of the simple functions under it (a simple function has finitely many values, each on a measurable set); no single one need reach it. No survey can try them all.
 
-A survey crew sounds the river with a rod marked every half metre and records each depth rounded down to the last mark. That record is a staircase with integral 0.3536. Marks every quarter metre give 0.5183, every eighth 0.5956, and marks 1/1024 m apart 0.6662. A second crew cuts the stretch into 2, 4, 8, … equal pieces and records the shallowest depth on each: 0, then 0.375, then 0.53125. Both lists rise. Do both reach 2/3, the integral the definition asks for? A second question has the same shape: why does 1/2 + 1/8 + 1/24 + 1/64 + …, the sum of 1/(m 2^m), come to ln 2 = 0.693147?
+A survey crew sounds the river with a rod marked every half metre and records each depth rounded down to the last mark. That record is a staircase with integral 0.3536. Marks every quarter metre give 0.5183, every eighth 0.5956, and marks 1/1024 m apart 0.6662.
+
+A second crew cuts the stretch into 2, 4, 8, … equal pieces and records the shallowest depth on each: 0, then 0.375, then 0.53125. Both lists rise. Do both reach 2/3, the integral the definition asks for?
+
+A second question has the same shape: why does 1/2 + 1/8 + 1/24 + 1/64 + …, the sum of 1/(m 2^m), come to ln 2 = 0.693147?
 
 The monotone convergence theorem answers both: functions that rise, point by point, to a limit have integrals that rise to the limit's integral.
 
@@ -28,7 +32,11 @@ Drawn to scale: 300 pixels to the km along the river, 160 pixels to the metre of
 
 ## The formula
 
-Notation first. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. For measurable f with values in $[0, \infty]$, the integral $\int_\Omega f\,d\mu$, read "the integral of f against μ", is the supremum of the integrals of simple s with $0 \le s \le f$. On the river, $\Omega$ is the stretch $[0, 1]$ in km and $\mu$ is Lebesgue measure $\lambda$, which is length. One new piece of notation: $f_n \uparrow f$, read "f_n rises to f", means $f_1(x) \le f_2(x) \le \cdots$ and $f_n(x) \to f(x)$ at every point x. Infinity is allowed as a value throughout.
+Notation first. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. A function f is measurable when every set $\{f > a\}$ is in $\mathcal{F}$.
+
+For measurable f with values in $[0, \infty]$, the integral $\int_\Omega f\,d\mu$, read "the integral of f against μ", is the supremum of the integrals of simple s with $0 \le s \le f$. On the river, $\Omega$ is the stretch $[0, 1]$ in km and $\mu$ is Lebesgue measure $\lambda$, which is length.
+
+One new piece of notation: $f_n \uparrow f$, read "f_n rises to f", means $f_1(x) \le f_2(x) \le \cdots$ and $f_n(x) \to f(x)$ at every point x. Infinity is allowed as a value throughout.
 
 $$0 \le f_1 \le f_2 \le \cdots, \quad f_n \uparrow f \quad\Longrightarrow\quad \int_\Omega f\,d\mu = \lim_{n\to\infty} \int_\Omega f_n\,d\mu$$
 
@@ -46,11 +54,13 @@ $$\int_\Omega \sum_{k=0}^{\infty} g_k \,d\mu = \sum_{k=0}^{\infty} \int_\Omega g
 
 **Read it aloud:** a series of non-negative functions may be integrated one term at a time, and the two sides agree even when both are infinite.
 
-On the river, $4x(1-x) \ge t$ exactly when x lies within $\sqrt{1-t}/2$ of the middle, so $\lambda(\{d \ge t\}) = \sqrt{1 - t}$ for a depth $t$ between 0 and 1. The staircase integral at stage n is therefore $2^{-n} \sum_{k=1}^{2^n} \sqrt{1 - k/2^n}$. The second crew's step function has integral $L_n$, and on this river $L_n = 2/3 - 2^{-n} - \tfrac{2}{3} 4^{-n}$. The shallowest point of each cell is its end nearer a bank, so by symmetry $L_n$ is twice $2^{-n}$ times the sum of the depths $d(j/2^n)$ for whole numbers j from 0 to $2^{n-1} - 1$; with $d(x) = 4x(1 - x)$, the formulas for the sums of j and of $j^2$ give the closed form.
+On the river, $4x(1-x) \ge t$ exactly when x lies within $\sqrt{1-t}/2$ of the middle, so $\lambda(\{d \ge t\}) = \sqrt{1 - t}$ for a depth $t$ between 0 and 1. The staircase integral at stage n is therefore $2^{-n} \sum_{k=1}^{2^n} \sqrt{1 - k/2^n}$.
+
+The second crew's step function has integral $L_n$, and on this river $L_n = 2/3 - 2^{-n} - \tfrac{2}{3} 4^{-n}$. The shallowest point of each cell is its end nearer a bank, so by symmetry $L_n$ is twice $2^{-n}$ times the sum of the depths $d(j/2^n)$ for whole numbers j from 0 to $2^{n-1} - 1$; with $d(x) = 4x(1 - x)$, the formulas for the sums of j and of $j^2$ give the closed form.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $\mu$, $\lambda$ | measure space: whole space, sets allowed a size, the measure; λ is length | the stretch [0, 1] km, its Borel sets, length | — |
+| $\Omega$, $\mathcal{F}$, $\mu$, $\lambda$ | measure space: whole space, sets allowed a size, the measure; λ is length | the stretch [0, 1] km, its Borel sets (the sets built from intervals), length | — |
 | $f$ | the limit: a non-negative measurable function | depth d(x) = 4x(1 − x) m | a deeper river, a larger integral |
 | $f_n$ | the n-th function of a rising sequence | the n-th staircase | later n, larger integral, never past the limit's |
 | $\varphi_n$, $\psi_n$ | the staircase: f (or r) rounded down to marks $2^{-n}$ apart, capped at n | integrals 0.3536, 0.5183, 0.5956 … | finer marks, closer to 2/3 |
@@ -77,7 +87,7 @@ On the river, $4x(1-x) \ge t$ exactly when x lies within $\sqrt{1-t}/2$ of the m
 
 ### Step 0: one inequality is free; the other comes from continuity of measure
 
-The functions sit under their limit, so their integrals sit under its integral. For the other half, shrink any simple function s under the limit to c times s, with c just below 1. The sets where the rising functions have overtaken c times s rise to the whole space, and continuity from below carries the integral of c times s along with them.
+The functions sit under their limit, so their integrals sit under its integral. For the other half, shrink any simple function s under the limit to c times s, with c just below 1. The sets where the rising functions have overtaken c times s rise to the whole space. Continuity from below (sets that rise have sizes that rise to the size of their union) carries the integral of c times s along with them.
 
 ### Step 1: the limit is measurable, and the integrals rise to at most its integral
 
@@ -99,7 +109,9 @@ Let $f_n$ be $(1 - 1/n)$ times the quarter-metre staircase; these rise to that s
 
 ### Step 4: the staircase formula
 
-The staircase at stage n is $2^{-n}$ times the number of marks the function reaches, so it is simple and its integral is the sum in the formula. Halving the gap between marks can only keep or raise the last mark below a depth, so the staircases rise. Where f is finite they come within $2^{-n}$ of it once n passes f; where f is infinite they equal n. Both facts are proved on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md). They rise to f, and the theorem gives the formula. On the river, stage 10 is within 1/1024 m of the depth everywhere and misses 0.000495 of the integral.
+The staircase at stage n is $2^{-n}$ times the number of marks the function reaches, so it is simple and its integral is the sum in the formula. Halving the gap between marks can only keep or raise the last mark below a depth, so the staircases rise. Where f is finite they come within $2^{-n}$ of it once n passes f; where f is infinite they equal n. Both facts are proved on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md).
+
+They rise to f, and the theorem gives the formula. On the river, stage 10 is within 1/1024 m of the depth everywhere and misses 0.000495 of the integral.
 
 The second crew's step functions rise too, since splitting a cell can only raise the shallowest depth on each half, and they approach the continuous depth at every point. The theorem says both sequences reach the same number: 2/3.
 
@@ -120,7 +132,7 @@ No uniform convergence is needed. On [0, 1) the leftover after N terms, $x^{N+1}
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. Each $f_n$ maps $\Omega$ to $[0, \infty]$, is measurable with respect to $\mathcal{F}$, and $f_n(x) \le f_{n+1}(x)$ at every x. Arithmetic in $[0, \infty]$ uses $a + \infty = \infty$ and $0 \cdot \infty = 0$. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a simple $s = \sum_j a_j 1_{A_j}$ with disjoint sets $A_j \in \mathcal{F}$ and levels $a_j \ge 0$ has $\int s\,d\mu = \sum_j a_j \mu(A_j)$; the integral of f is the supremum of $\int s\,d\mu$ over simple $0 \le s \le f$; and if $f \le g$ pointwise then $\int f\,d\mu \le \int g\,d\mu$, because every simple function under f is under g.
+**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. Each $f_n$ maps $\Omega$ to $[0, \infty]$, is measurable with respect to $\mathcal{F}$, and $f_n(x) \le f_{n+1}(x)$ at every x. Arithmetic in $[0, \infty]$ uses $a + \infty = \infty$ and $0 \cdot \infty = 0$. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a simple $s = \sum_j a_j 1_{A_j}$ with disjoint sets $A_j \in \mathcal{F}$ and levels $a_j \ge 0$ (the indicator $1_A$ is 1 on A and 0 off it) has $\int s\,d\mu = \sum_j a_j \mu(A_j)$; the integral of f is the supremum of $\int s\,d\mu$ over simple $0 \le s \le f$; and if $f \le g$ pointwise then $\int f\,d\mu \le \int g\,d\mu$, because every simple function under f is under g.
 
 **1. The limit is measurable.** Each list $f_n(x)$ never falls, so it converges in $[0, \infty]$ to its supremum f(x). For real a, $\{f > a\} = \bigcup_n \{f_n > a\}$, since f(x) > a exactly when a is not an upper bound of the list. A countable union of sets in $\mathcal{F}$ is in $\mathcal{F}$, so f is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
 
@@ -183,7 +195,9 @@ The upper line is the staircase, marks $2^{-n}$ m apart. The lower line is the s
 
 ## Code, from first principles, and it actually runs
 
-Three roads lead to the river's integral. The first sums the staircase through its level sets, $\lambda(\{d \ge t\}) = \sqrt{1 - t}$. The second samples the same staircase at 65536 midpoints; the two must agree within 2/65536, the most sampling can lose on a step function that climbs to at most 1 and back. The third is the shallowest depth per cell, summed exactly and matched against $2/3 - 2^{-n} - \tfrac{2}{3}4^{-n}$. The code then replays the proof's test sets, the c = 1 failure and the flood. The series sums are checked against ln 2 found by Simpson's rule on 1/(1 − x) and by the series for $2\,\mathrm{atanh}(1/3)$. Python uses exact fractions for the per-cell sums and the series; Rust uses whole numbers over $2^{3n}$ for the first and floating point for the second. The code checks finite stages; that every rising sequence reaches the limit's integral is the proof's work.
+Three roads lead to the river's integral. The first sums the staircase through its level sets, $\lambda(\{d \ge t\}) = \sqrt{1 - t}$. The second samples the same staircase at 65536 midpoints; the two must agree within 2/65536, the most sampling can lose on a step function that climbs to at most 1 and back. The third is the shallowest depth per cell, summed exactly and matched against $2/3 - 2^{-n} - \tfrac{2}{3}4^{-n}$. The code then replays the proof's test sets, the c = 1 failure and the flood.
+
+The series sums are checked against ln 2 found by Simpson's rule on 1/(1 − x) and by the series for $2\,\mathrm{atanh}(1/3)$, where atanh is the inverse hyperbolic tangent. Python uses exact fractions for the per-cell sums and the series; Rust uses whole numbers over $2^{3n}$ for the first and floating point for the second. The code checks finite stages; that every rising sequence reaches the limit's integral is the proof's work.
 
 ### Python
 
@@ -571,6 +585,81 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the theorem, additivity and term-by-term integration on every measure space, with infinite values and integrals allowed.
+
+- Suppose non-negative measurable functions $f_n$ rise at every point to a limit f. Then their integrals rise, and they converge to the integral of f.
+- Suppose f and r are non-negative and measurable. Then $\int (f + r)\,d\mu = \int f\,d\mu + \int r\,d\mu$.
+- Suppose each $g_k$ is non-negative and measurable. Then the series of the $g_k$ may be integrated one term at a time, even when both sides are infinite.
+- The hand arithmetic holds exactly, as fractions: the first five series terms add to 661/960, four cells give 3/8, and 2 − 4/3 = 2/3.
+
+The staircase formula, the decimals, the river and flood sequences, the series sums and the four breaks are left to the Python and Rust checks.
+
+```lean
+-- The monotone convergence theorem: if non-negative measurable functions rise at every point to a limit, their integrals rise to the limit's integral, integrals add, and non-negative series integrate term by term.
+import Mathlib.MeasureTheory.Integral.Lebesgue.Add
+import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+import Mathlib.Order.Interval.Finset.Nat
+
+open MeasureTheory Filter Topology
+open scoped ENNReal
+
+/-- The monotone convergence theorem. On any measure space, let `f 0, f 1, f 2, …` be
+measurable functions with values in `[0, ∞]` that rise at every point (`f n x ≤ f (n + 1) x`)
+and converge at every point to `F`. Then the integrals of the `f n` rise, and they converge
+to the integral of `F`. Infinite values and infinite integrals are allowed. -/
+theorem integrals_rise_to_integral_of_limit {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (f : ℕ → Ω → ℝ≥0∞) (F : Ω → ℝ≥0∞)
+    (hf : ∀ n, Measurable (f n))
+    (h_rise : ∀ x, Monotone (fun n => f n x))
+    (h_lim : ∀ x, Tendsto (fun n => f n x) atTop (𝓝 (F x))) :
+    Monotone (fun n => ∫⁻ x, f n x ∂μ) ∧
+      Tendsto (fun n => ∫⁻ x, f n x ∂μ) atTop (𝓝 (∫⁻ x, F x ∂μ)) := by
+  refine ⟨fun i j hij => lintegral_mono fun x => h_rise x hij, ?_⟩
+  exact lintegral_tendsto_of_tendsto_of_monotone (fun n => (hf n).aemeasurable)
+    (Filter.Eventually.of_forall h_rise) (Filter.Eventually.of_forall h_lim)
+
+/-- Additivity: for non-negative measurable functions `f` and `r`, the integral of `f + r`
+is the integral of `f` plus the integral of `r`. -/
+theorem integral_of_sum_eq_sum_of_integrals {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (f r : Ω → ℝ≥0∞) (hf : Measurable f) (hr : Measurable r) :
+    ∫⁻ x, (f x + r x) ∂μ = ∫⁻ x, f x ∂μ + ∫⁻ x, r x ∂μ := by
+  exact lintegral_add_left hf r
+
+/-- Term-by-term integration: a series of non-negative measurable functions may be integrated
+one term at a time, and the two sides agree even when both are infinite. -/
+theorem integral_of_series_eq_series_of_integrals {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (g : ℕ → Ω → ℝ≥0∞) (hg : ∀ k, Measurable (g k)) :
+    ∫⁻ x, (∑' k, g k x) ∂μ = ∑' k, ∫⁻ x, g k x ∂μ := by
+  exact lintegral_tsum fun k => (hg k).aemeasurable
+
+-- Worked numbers: the first five series terms 1/(m 2^m) add to 661/960.
+example : (∑ m ∈ Finset.Icc (1 : ℕ) 5, (1 : ℚ) / ((m : ℚ) * 2 ^ m)) = 661 / 960 := by
+  simp [Finset.sum_Icc_succ_top]
+  norm_num
+
+-- Worked numbers: the shallowest depth per cell on 4 cells, (0 + 3/4 + 3/4 + 0)/4 = 3/8.
+example : ((0 : ℚ) + 3 / 4 + 3 / 4 + 0) / 4 = 3 / 8 := by
+  norm_num
+
+-- Worked numbers: the river's integral, 2 - 4/3 = 2/3.
+example : (2 : ℚ) - 4 / 3 = 2 / 3 := by
+  norm_num
+
+#print axioms integrals_rise_to_integral_of_limit
+#print axioms integral_of_sum_eq_sum_of_integrals
+#print axioms integral_of_series_eq_series_of_integrals
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integrals_rise_to_integral_of_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_of_sum_eq_sum_of_integrals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_of_series_eq_series_of_integrals' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -588,14 +677,14 @@ The two outputs match line for line.
 > - **Applying it to falling functions.** The function 1 on [n, ∞) falls to 0 with infinite length at every n. Falling needs a finite first integral and the tools of [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md).
 > - **Treating the staircase as the definition.** The definition is the supremum over all simple functions below; the staircase formula is a theorem, and the shallowest-per-cell record, 0.375 at four cells, is another rising sequence with the same limit.
 > - **Asking for uniform convergence.** On [0, 1) the geometric series is not uniformly convergent, and the swap still holds, both sides infinite.
-> - **Confusing it with the theorem for numbers.** A rising list of numbers with a ceiling converges; that fact from wing 06 is used inside this proof.
+> - **Confusing it with the theorem for numbers.** A rising list of numbers with a ceiling converges; that fact, proved on [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), is used inside this proof.
 
 ---
 
 ## Where you meet it in real life
 
 - **Expected values.** The average of a quantity that is never negative, such as an insurance claim or a waiting time, is the limit of the averages of its staircases; [Expectation as an integral](06-expectation-as-an-integral.md) builds expectation this way.
-- **Tail sums.** A whole-number count is the number of k it reaches, a sum of indicators, so term-by-term integration gives its expected value as the sum of the chances that it is at least k. Queue and reliability models use this form.
+- **Tail sums.** A whole-number count is the number of k it reaches, a sum of indicators (functions that are 1 on a set and 0 off it), so term-by-term integration gives its expected value as the sum of the chances that it is at least k. Queue and reliability models use this form.
 - **Double sums in either order.** Rainfall totals over infinitely many months and infinitely many stations, summed by month then by station or the other way round, agree when every entry is non-negative; a finite table agrees in either order whatever the signs. This theorem is the engine of [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md).
 - **Closed forms for sums.** Integrating a non-negative series term by term, as with ln 2 here, turns many sums into integrals with known values.
 
@@ -624,7 +713,7 @@ Only non-negative functions have an integral so far, so the river's height above
 
 ## Sources
 
-Verified 29 Sep 2026: every link below opens a page naming the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Axler, Sheldon. *Measure, Integration & Real Analysis*. Springer Graduate Texts in Mathematics, 2020, open access. [Author's page with the free edition](https://measure.axler.net/). Chapter 3 proves the monotone convergence theorem and additivity of the integral from simple functions.
 - Folland, Gerald B. *Real Analysis: Modern Techniques and Their Applications*, 2nd ed. Wiley, 1999. [Publisher page](https://www.wiley.com/en-us/Real+Analysis%3A+Modern+Techniques+and+Their+Applications%2C+2nd+Edition-p-9780471317166). Section 2.2 gives the staircase approximation, the theorem and term-by-term integration of non-negative series.

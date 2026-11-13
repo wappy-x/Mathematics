@@ -306,9 +306,10 @@ assert tail_up(13 / 15) > (m - F(2, 3)) / F(1, 5) and tv / eps < tt
 x1, x2 = (1 - tail_up(0.9)) / 2, (1 + tail_up(0.9)) / 2
 print(f"figure, X = 36 + 300x, Y = 210 - 150d; set ends x = {x1:.4f}, {x2:.4f} km, X = {36 + 300 * x1:.2f}, {36 + 300 * x2:.2f};",
       f"Y(0.9) = {210 - 150 * 0.9:.2f}, Y(2/3) = {210 - 100:.2f}; rectangle area {0.9 * tail_up(0.9):.6f}")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-29 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 depth d(x) = 4x(1 - x) m, x km uniform on [0, 1]; exact, grid of 10^6 cells, 200000 moorings
@@ -335,6 +336,7 @@ breaks: Markov on signed d - 2/3 at 0.2 gives 0.000000 against the true 0.365148
 breaks: variance over eps, not eps^2, on the tight law: 0.177778 below its tail 0.355556
 breaks: Markov on d itself for P(d <= 1/6): 4.000000
 figure, X = 36 + 300x, Y = 210 - 150d; set ends x = 0.3419, 0.6581 km, X = 138.57, 233.43; Y(0.9) = 75.00, Y(2/3) = 110.00; rectangle area 0.284605
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -465,10 +467,11 @@ fn main() {
     let (x1, x2) = ((1.0 - tail_up(0.9)) / 2.0, (1.0 + tail_up(0.9)) / 2.0);
     println!("figure, X = 36 + 300x, Y = 210 - 150d; set ends x = {:.4}, {:.4} km, X = {:.2}, {:.2}; Y(0.9) = {:.2}, Y(2/3) = {:.2}; rectangle area {:.6}",
         x1, x2, 36.0 + 300.0 * x1, 36.0 + 300.0 * x2, 210.0 - 150.0 * 0.9, 210.0 - 100.0, 0.9 * tail_up(0.9));
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-29 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 depth d(x) = 4x(1 - x) m, x km uniform on [0, 1]; exact, grid of 10^6 cells, 200000 moorings
@@ -495,9 +498,119 @@ breaks: Markov on signed d - 2/3 at 0.2 gives 0.000000 against the true 0.365148
 breaks: variance over eps, not eps^2, on the tight law: 0.177778 below its tail 0.355556
 breaks: Markov on d itself for P(d <= 1/6): 4.000000
 figure, X = 36 + 300x, Y = 210 - 150d; set ends x = 0.3419, 0.6581 km, X = 138.57, 233.43; Y(0.9) = 75.00, Y(2/3) = 110.00; rectangle area 0.284605
+ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
+
+### Lean
+
+Lean proves Markov, Chebyshev and Chernoff for every case the card allows, and checks the worked numbers in exact fractions.
+
+- Take any measure space, a measurable $f$ with values in `[0, ∞]`, and a number $a > 0$. Then $\mu(\{f \ge a\}) \le \frac{1}{a} \int f \, d\mu$: Markov's inequality.
+- Take a probability measure $P$, a random variable $X$ with $\int X^2 \, dP$ finite, and $\varepsilon > 0$. Then $P(\lvert X - m \rvert \ge \varepsilon) \le \sigma^2 / \varepsilon^2$: Chebyshev's inequality.
+- Take a probability measure $P$, a random variable $X$, any level $a$, and $t \ge 0$ with $M(t)$ finite. Then $P(X \ge a) \le e^{-ta} M(t)$: the Chernoff bound.
+- The average depth is 2/3 m, the variance 4/45, the Markov ceiling 20/27 and the Chebyshev ceiling 16/45.
+- Markov on 1 − d caps the shallow side at (1/3) / (5/6), which is 2/5.
+- A channel 0.9 m deep on 20/27 km has integral 2/3, the river's average depth.
+- The channel with depths 1/6, 2/3 and 7/6 m on 8/45, 29/45 and 8/45 km has mean 2/3 and variance 4/45.
+- That channel lands 0.5 m or more from its mean on 16/45 km, exactly the Chebyshev ceiling.
+- Dividing the variance by ε instead of ε squared gives 8/45, below that channel's true tail of 16/45.
+
+The moment bounds, the river's tails, the grid, the random moorings, the best Chernoff t and the figure are left to the Python and Rust checks.
+
+```lean
+-- Markov and Chebyshev: a non-negative measurable function reaches level a on a set of measure at most its integral over a, and from this Chebyshev's and Chernoff's tail bounds follow.
+import Mathlib.MeasureTheory.Integral.Lebesgue.Markov
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Moments.Basic
+
+open MeasureTheory ENNReal
+
+/-- Markov's inequality. On any measure space, if `f` is a measurable function with values
+in `[0, ∞]` and `a > 0` is a number, then the set where `f` reaches at least `a` has
+measure at most the integral of `f` divided by `a`. -/
+theorem markov_inequality {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (f : Ω → ℝ≥0∞) (hf : Measurable f) (a : ℝ) (ha : 0 < a) :
+    μ {ω | ENNReal.ofReal a ≤ f ω} ≤ (ENNReal.ofReal a)⁻¹ * ∫⁻ ω, f ω ∂μ := by
+  have h0 : ENNReal.ofReal a ≠ 0 := by simpa using ha
+  rw [mul_comm, ← div_eq_mul_inv]
+  exact meas_ge_le_lintegral_div hf.aemeasurable h0 ENNReal.ofReal_ne_top
+
+/-- Chebyshev's inequality. For a probability measure `P`, a measurable real random variable
+`X` with `∫ X² dP` finite, its mean `m = ∫ X dP`, its variance `σ² = ∫ (X - m)² dP`, and a
+distance `ε > 0`, the probability that `X` lands at least `ε` from its mean is at most
+`σ² / ε²`. -/
+theorem chebyshev_inequality {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (hX : Measurable X)
+    (hX2 : ∫⁻ ω, ENNReal.ofReal (X ω ^ 2) ∂P < ∞) (ε : ℝ) (hε : 0 < ε) :
+    P {ω | ε ≤ |X ω - ∫ x, X x ∂P|}
+      ≤ ENNReal.ofReal ((∫ ω, (X ω - ∫ x, X x ∂P) ^ 2 ∂P) / ε ^ 2) := by
+  have hint : Integrable (fun ω => X ω ^ 2) P := by
+    refine ⟨(hX.pow_const 2).aestronglyMeasurable, ?_⟩
+    rw [hasFiniteIntegral_iff_ofReal (Filter.Eventually.of_forall fun ω => sq_nonneg (X ω))]
+    exact hX2
+  have hL2 : MemLp X 2 P := (memLp_two_iff_integrable_sq hX.aestronglyMeasurable).2 hint
+  have h := ProbabilityTheory.meas_ge_le_variance_div_sq hL2 hε
+  rwa [ProbabilityTheory.variance_eq_integral hX.aemeasurable] at h
+
+/-- The Chernoff bound. For a probability measure `P`, a measurable real random variable `X`,
+a level `a`, and any `t ≥ 0` for which `M(t) = ∫ e^{tX} dP` is finite, the probability that
+`X` reaches at least `a` is at most `e^{-ta} M(t)`. -/
+theorem chernoff_bound {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (hX : Measurable X) (a t : ℝ) (ht : 0 ≤ t)
+    (hM : ∫⁻ ω, ENNReal.ofReal (Real.exp (t * X ω)) ∂P < ∞) :
+    P {ω | a ≤ X ω}
+      ≤ ENNReal.ofReal (Real.exp (-t * a) * ∫ ω, Real.exp (t * X ω) ∂P) := by
+  have hint : Integrable (fun ω => Real.exp (t * X ω)) P := by
+    refine ⟨(Real.measurable_exp.comp (hX.const_mul t)).aestronglyMeasurable, ?_⟩
+    rw [hasFiniteIntegral_iff_ofReal
+      (Filter.Eventually.of_forall fun ω => (Real.exp_pos (t * X ω)).le)]
+    exact hM
+  have h := ProbabilityTheory.measure_ge_le_exp_mul_mgf (μ := P) (X := X) a ht hint
+  rw [← ENNReal.ofReal_toReal (measure_ne_top P {ω | a ≤ X ω})]
+  exact ENNReal.ofReal_le_ofReal h
+
+/-! Worked numbers from the card, in exact fractions. -/
+
+-- Average depth: 4/2 - 4/3 = 2/3.
+example : (4 : ℚ) / 2 - 4 / 3 = 2 / 3 := by norm_num
+-- Average squared depth: 16/3 - 8 + 16/5 = 8/15.
+example : (16 : ℚ) / 3 - 8 + 16 / 5 = 8 / 15 := by norm_num
+-- Variance: 8/15 - (2/3)^2 = 4/45.
+example : (8 : ℚ) / 15 - (2 / 3) ^ 2 = 4 / 45 := by norm_num
+-- Markov ceiling at 0.9 m: (2/3) / (9/10) = 20/27.
+example : ((2 : ℚ) / 3) / (9 / 10) = 20 / 27 := by norm_num
+-- Chebyshev ceiling at ε = 1/2: (4/45) / (1/2)^2 = 16/45.
+example : ((4 : ℚ) / 45) / (1 / 2) ^ 2 = 16 / 45 := by norm_num
+-- Markov on 1 - d for the shallow side: (1/3) / (5/6) = 2/5.
+example : ((1 : ℚ) / 3) / (5 / 6) = 2 / 5 := by norm_num
+-- Tight Markov channel: 9/10 m deep on 20/27 km has integral 2/3.
+example : (9 : ℚ) / 10 * (20 / 27) = 2 / 3 := by norm_num
+-- Tight Chebyshev channel: depths 1/6, 2/3, 7/6 on 8/45, 29/45, 8/45 km.
+example : (8 : ℚ) / 45 + 29 / 45 + 8 / 45 = 1 := by norm_num
+example : (8 : ℚ) / 45 * (1 / 6) + 29 / 45 * (2 / 3) + 8 / 45 * (7 / 6) = 2 / 3 := by norm_num
+example : (8 : ℚ) / 45 * (1 / 6 - 2 / 3) ^ 2 + 29 / 45 * (2 / 3 - 2 / 3) ^ 2
+    + 8 / 45 * (7 / 6 - 2 / 3) ^ 2 = 4 / 45 := by norm_num
+example : (8 : ℚ) / 45 + 8 / 45 = 16 / 45 := by norm_num
+-- Chebyshev with σ²/ε instead of σ²/ε² on the tight law: 8/45, below the true tail 16/45.
+example : ((4 : ℚ) / 45) / (1 / 2) = 8 / 45 ∧ (8 : ℚ) / 45 < 16 / 45 := by norm_num
+
+#print axioms markov_inequality
+#print axioms chebyshev_inequality
+#print axioms chernoff_bound
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'markov_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chebyshev_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chernoff_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -22,7 +22,9 @@ The valley station's four questions have a shape. If a question can be settled, 
 
 <p align="center"><img src="../figures/sigma-algebras.svg" alt="The eight three-day weather logs, grouped into blocks by three stations: the full log makes 8 blocks, the rain-day count 4 blocks, the weekly any-rain report 2 blocks" width="420"></p>
 
-The weeks are ordered by how many days it rained. Each box is a block: weeks the station cannot tell apart. The top row is the full log, each week alone. The middle row is a station that reports only how many days it rained: 0, 1, 2 or 3. The bottom row is the valley station, labelled "any rain this week" in the code. Every box is drawn to scale, 40 units per week; the block edges are printed by both checks on the lines starting "figure,". A question can be settled exactly when it never cuts through a box.
+The weeks are ordered by how many days it rained. Each box is a block: weeks the station cannot tell apart. The top row is the full log, each week alone. The middle row is a station that reports only how many days it rained: 0, 1, 2 or 3. The bottom row is the valley station, labelled "any rain this week" in the code.
+
+Every box is drawn to scale, 40 units per week; the block edges are printed by both checks on the lines starting "figure,". A question can be settled exactly when it never cuts through a box.
 
 ---
 
@@ -84,7 +86,9 @@ three uses of the rules. A difference, "in $A$ but not $B$", is $A \cap B^c$. So
 
 $\{\varnothing, \Omega\}$ passes: each is the other's complement, and any union of them is one of them. Read as a record, it is the station that sends nothing: it settles only "always yes" and "always no". The power set passes because every complement and every union of subsets is again a subset: that is the full log.
 
-Every sigma-algebra sits between the two: Step 1 put $\varnothing$ and $\Omega$ in every one, and every one is a family of subsets. The code's six stations run from 2 sets (no report) to 256 (the full log). They nest along two chains, which the code checks: no report, day 1 so far, days 1-2 so far, full log; and no report, any rain this week, rain-day count, full log. One station's family sits inside another's exactly when the lesser report can be worked out from the greater one. If it can, outcomes that share the greater message share the lesser one, so whatever the lesser settles, the greater settles too. If it cannot, two outcomes share the greater message but not the lesser, and the lesser's block holding one of them is a set the greater does not settle.
+Every sigma-algebra sits between the two: Step 1 put $\varnothing$ and $\Omega$ in every one, and every one is a family of subsets. The code's six stations run from 2 sets (no report) to 256 (the full log). They nest along two chains, which the code checks: no report, day 1 so far, days 1-2 so far, full log; and no report, any rain this week, rain-day count, full log. One station's family sits inside another's exactly when the lesser report can be worked out from the greater one.
+
+If it can, outcomes that share the greater message share the lesser one, so whatever the lesser settles, the greater settles too. If it cannot, two outcomes share the greater message but not the lesser, and the lesser's block holding one of them is a set the greater does not settle.
 
 Across the two chains nesting can fail both ways. The 4-set day-1 station settles "rain on day 1", which the 16-set rain-day count does not: DDR and RDD both report one rainy day, and they disagree about day 1. The count settles "no rain all week", which the day-1 station does not: DDD and DDR both report a dry day 1, and only DDD is dry all week. So a station that settles more sets need not settle everything a lesser one does.
 
@@ -98,11 +102,15 @@ For the valley station, "rain on day two" fails the test: DDR and DRD send the s
 
 ### Step 4: on a finite space, a sigma-algebra is a set of blocks
 
-In the picture, every settled set is a union of whole boxes. That is always so on a finite space. The idea: for each outcome, intersect all the sets of $\mathcal{F}$ that contain it. The result is in $\mathcal{F}$ (Step 1, a finite intersection) and is the smallest member holding that outcome: its **block**, also called an atom. Two blocks never partly overlap, so the blocks cut $\Omega$ into pieces. Each member of $\mathcal{F}$ is the union of the blocks of its own outcomes, and each union of blocks is in $\mathcal{F}$ by rule 3. So choosing a member of $\mathcal{F}$ is choosing, block by block, in or out: $2^k$ choices for $k$ blocks.
+In the picture, every settled set is a union of whole boxes. That is always so on a finite space. The idea: for each outcome, intersect all the sets of $\mathcal{F}$ that contain it. The result is in $\mathcal{F}$ (Step 1, a finite intersection) and is the smallest member holding that outcome: its **block**, also called an atom.
+
+Two blocks never partly overlap, so the blocks cut $\Omega$ into pieces. Each member of $\mathcal{F}$ is the union of the blocks of its own outcomes, and each union of blocks is in $\mathcal{F}$ by rule 3. So choosing a member of $\mathcal{F}$ is choosing, block by block, in or out: $2^k$ choices for $k$ blocks.
 
 The valley station has 2 blocks, so 4 sets. The rain-day count has 4 blocks, so 16. The full log has 8 blocks of one word each, so 256. A family on a finite space whose size is not a power of 2 is never a sigma-algebra.
 
-So on a finite space every sigma-algebra is what some record settles: report which block the outcome is in. On an infinite space that fails. By Step 3's definition, a record's settled sets are the unions of its blocks (the groups of outcomes sharing one message), any number of blocks, not only countably many. So a record that settles every single point settles every subset. The Borel sets of the line ([Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md)) hold every single point and are not every subset, so no record settles exactly them. There the record reading is a guide, not a theorem.
+So on a finite space every sigma-algebra is what some record settles: report which block the outcome is in.
+
+On an infinite space that fails. By Step 3's definition, a record's settled sets are the unions of its blocks (the groups of outcomes sharing one message), any number of blocks, not only countably many. So a record that settles every single point settles every subset. The Borel sets of the line, the smallest sigma-algebra holding every interval ([Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md)), hold every single point and are not every subset, so no record settles exactly them. There the record reading is a guide, not a theorem.
 
 <details>
 <summary>Detailed proof: finite sigma-algebras are exactly the ways to cut into blocks</summary>
@@ -123,7 +131,9 @@ The number of ways to cut $n$ points into blocks is the $n$-th Bell number. The 
 
 On a finite space, rule 3 asks for nothing beyond finite unions. A countable list of subsets of 8 words has at most 256 different members, and its union is the union of those. The word "countable" earns its place only when $\Omega$ is infinite.
 
-So take a season with no end. Let the outcome be the day number of the season's first rain: 1, 2, 3, and so on. Let the family hold every set of days that is finite, like "first rain on day 2", and every set whose complement is finite, like "first rain after day 10". Complements swap the two kinds. A union of two finite sets is finite; a union involving a set with finite complement has finite complement. So the family passes rule 1, rule 2 and rule 3 for finite lists. Such a family is called an **algebra of sets**.
+So take a season with no end. Let the outcome be the day number of the season's first rain: 1, 2, 3, and so on. Let the family hold every set of days that is finite, like "first rain on day 2", and every set whose complement is finite, like "first rain after day 10".
+
+Complements swap the two kinds. A union of two finite sets is finite; a union involving a set with finite complement has finite complement. So the family passes rule 1, rule 2 and rule 3 for finite lists. Such a family is called an **algebra of sets**.
 
 Now list the allowed questions "first rain on day 2", "on day 4", "on day 6", and on. Their union, "first rain on an even day", holds infinitely many days and leaves out infinitely many, so it is neither kind. The algebra cannot ask it. The code can only count within the first 10, 100 and 1000 days: 5, 50 and 500 in, the same numbers out, both growing without bound, which the argument turns into "infinitely many".
 
@@ -131,7 +141,9 @@ Measure needs such questions: a length is reached by covering a set with countab
 
 ### Step 6: why not always take every subset
 
-On a finite space the power set is the natural choice. On the line it is not available: no rule giving intervals their lengths, unchanged by sliding, and adding over countable disjoint lists can give a size to every subset of [0, 1]. The witness is the Vitali set, a set built by a choice rule and described in [Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md); [Caratheodory's criterion](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md) builds the sigma-algebra that length does fit. That is the reason a measure comes with a sigma-algebra at all: it names the sets the measure promises to size, and says nothing about the rest.
+On a finite space the power set is the natural choice. On the line it is not available: no rule giving intervals their lengths, unchanged by sliding, and adding over countable disjoint lists can give a size to every subset of [0, 1].
+
+The witness is the Vitali set, a set built by a choice rule and described in [Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md); [Caratheodory's criterion](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md) builds the sigma-algebra that length does fit. That is the reason a measure comes with a sigma-algebra at all: it names the sets the measure promises to size, and says nothing about the rest.
 
 A second road to the same families starts from a handful of questions and adds whatever the rules force, until nothing new appears. The code takes that road for every station and lands on the same sets; the general construction is [Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md).
 
@@ -167,7 +179,9 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each station's family is reached three ways that share no step: test all 256 sets against the report (Step 3's definition of settled); start from the station's natural yes/no questions and apply the rules until nothing new appears; and count the report's blocks and raise 2 to that power (Step 4). A separate brute force tests every family of subsets of a 1-, 2-, 3- and 4-point space against the rules, and compares the count with Bell numbers computed from their recurrence. The code shows these finite instances; the statements about every space, including infinite ones, rest on the proofs above.
+Nothing is imported. Each station's family is reached three ways that share no step: test all 256 sets against the report (Step 3's definition of settled); start from the station's natural yes/no questions and apply the rules until nothing new appears; and count the report's blocks and raise 2 to that power (Step 4).
+
+A separate brute force tests every family of subsets of a 1-, 2-, 3- and 4-point space against the rules, and compares the count with Bell numbers computed from their recurrence. The code shows these finite instances; the statements about every space, including infinite ones, rest on the proofs above.
 
 ### Python
 
@@ -543,6 +557,169 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves Step 3 for every space and Step 4 for every finite space, and checks the weather station's numbers.
+
+- Take any report on any space, finite or not. The sets it settles form a sigma-algebra.
+- On a finite space, every sigma-algebra is exactly the family of sets some report settles.
+- Take a sigma-algebra on a finite space that cuts it into $k$ blocks. Then it has exactly $2^k$ sets.
+- There are 8 weeks. The full log settles 256 sets, the rain-day count 16, and the valley station 4.
+- The valley station does not settle "rain on day two": DDR and DRD send the same line.
+- The Bell numbers for 1, 2, 3 and 4 points are 1, 2, 5 and 15, and for 8 points 4140.
+
+Testing every family on 1 to 4 points, the closing-up road, the nesting and the endless season are left to the Python and Rust checks.
+
+```lean
+-- Sigma-algebras: the sets any record settles always form a sigma-algebra, on a finite space every sigma-algebra is what some record settles, and a finite sigma-algebra with k blocks has exactly 2^k sets.
+import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+import Mathlib.Combinatorics.Enumerative.Bell
+import Mathlib.SetTheory.Cardinal.Finite
+
+open Set MeasureTheory
+
+universe u v
+
+/-- A set `A` of outcomes is settled by a report (a rule sending each outcome to a message) when
+two outcomes with the same message are either both in `A` or both out of it. -/
+def SettledBy {Ω : Type u} {M : Type v} (report : Ω → M) (A : Set Ω) : Prop :=
+  ∀ ω ω', report ω = report ω' → (ω ∈ A ↔ ω' ∈ A)
+
+/-- Helper: on a finite space, a set is measurable exactly when it is settled by the
+measurable-atom report. -/
+theorem measurableSet_iff_settledBy_measurableAtom {Ω : Type u} [Finite Ω] [MeasurableSpace Ω]
+    (A : Set Ω) : MeasurableSet A ↔ SettledBy (measurableAtom : Ω → Set Ω) A := by
+  constructor
+  · intro hA ω ω' h
+    constructor
+    · intro hω
+      have hsub := measurableAtom_subset hA hω
+      rw [h] at hsub
+      exact hsub (mem_measurableAtom_self ω')
+    · intro hω'
+      have hsub := measurableAtom_subset hA hω'
+      rw [← h] at hsub
+      exact hsub (mem_measurableAtom_self ω)
+  · intro hS
+    have hA : A = ⋃ ω ∈ A, measurableAtom ω := by
+      ext x
+      simp only [mem_iUnion]
+      constructor
+      · intro hx
+        exact ⟨x, hx, mem_measurableAtom_self x⟩
+      · rintro ⟨ω, hω, hx⟩
+        exact (hS x ω (measurableAtom_eq_of_mem hx)).2 hω
+    rw [hA]
+    exact MeasurableSet.biUnion (Set.to_countable A)
+      (fun ω _ => MeasurableSet.measurableAtom_of_countable ω)
+
+/-- The questions any record can settle always form a sigma-algebra, on any space, finite or not:
+for every report there is a sigma-algebra (Mathlib's `MeasurableSpace`: contains the whole space,
+the complement of each of its sets and the union of any countable list of its sets) whose
+measurable sets are exactly the sets the report settles. -/
+theorem settled_sets_form_sigma_algebra {Ω : Type u} {M : Type v} (report : Ω → M) :
+    ∃ m : MeasurableSpace Ω, ∀ A : Set Ω, MeasurableSet[m] A ↔ SettledBy report A := by
+  refine ⟨{ MeasurableSet' := SettledBy report
+            measurableSet_empty := fun ω ω' _ => by simp
+            measurableSet_compl := fun s hs ω ω' h => by
+              simp only [mem_compl_iff]
+              exact not_congr (hs ω ω' h)
+            measurableSet_iUnion := fun f hf ω ω' h => by
+              simp only [mem_iUnion]
+              exact exists_congr (fun i => hf i ω ω' h) }, fun A => Iff.rfl⟩
+
+/-- On a finite space, every sigma-algebra is what some record settles: there is a report whose
+settled sets are exactly the measurable sets. -/
+theorem finite_sigma_algebra_is_settled_by_a_record {Ω : Type u} [Finite Ω] [MeasurableSpace Ω] :
+    ∃ (M : Type u) (report : Ω → M), ∀ A : Set Ω, MeasurableSet A ↔ SettledBy report A := by
+  exact ⟨Set Ω, measurableAtom, measurableSet_iff_settledBy_measurableAtom⟩
+
+/-- On a finite space, a sigma-algebra that cuts the space into `k` blocks has exactly `2 ^ k`
+sets. The block of an outcome is the intersection of all measurable sets containing it
+(Mathlib's `measurableAtom`), and `k` is the number of different blocks. -/
+theorem finite_sigma_algebra_card_eq_two_pow_blocks {Ω : Type u} [Finite Ω] [MeasurableSpace Ω] :
+    Nat.card {A : Set Ω // MeasurableSet A} =
+      2 ^ Nat.card (Set.range (measurableAtom : Ω → Set Ω)) := by
+  classical
+  set f : Ω → Set.range (measurableAtom : Ω → Set Ω) := Set.rangeFactorization measurableAtom
+    with hf
+  have hfsurj : Function.Surjective f := Set.rangeFactorization_surjective
+  have hmeas : ∀ T : Set (Set.range (measurableAtom : Ω → Set Ω)), MeasurableSet (f ⁻¹' T) := by
+    intro T
+    rw [measurableSet_iff_settledBy_measurableAtom]
+    intro ω ω' h
+    have h' : f ω = f ω' := Subtype.ext h
+    simp only [mem_preimage, h']
+  let g : Set (Set.range (measurableAtom : Ω → Set Ω)) → {A : Set Ω // MeasurableSet A} :=
+    fun T => ⟨f ⁻¹' T, hmeas T⟩
+  have hg : Function.Bijective g := by
+    constructor
+    · intro T T' h
+      exact Set.preimage_injective.mpr hfsurj (congrArg Subtype.val h)
+    · rintro ⟨A, hA⟩
+      refine ⟨f '' A, Subtype.ext ?_⟩
+      show f ⁻¹' (f '' A) = A
+      apply Subset.antisymm
+      · rintro x ⟨a, ha, hax⟩
+        have hS := (measurableSet_iff_settledBy_measurableAtom A).1 hA
+        exact (hS a x (congrArg Subtype.val hax)).1 ha
+      · exact subset_preimage_image f A
+  rw [← Nat.card_congr (Equiv.ofBijective g hg)]
+  have : Fintype (Set.range (measurableAtom : Ω → Set Ω)) := Fintype.ofFinite _
+  rw [Nat.card_eq_fintype_card, Fintype.card_set, Nat.card_eq_fintype_card]
+
+/- The card's worked numbers. A week is three days, each rain (`true`) or dry (`false`). -/
+
+/-- The valley station: "any rain this week". -/
+def anyRain (w : Fin 3 → Bool) : Bool := decide (∃ i, w i = true)
+
+/-- The rain-day count: how many of the three days it rained. -/
+def rainDays (w : Fin 3 → Bool) : ℕ := (Finset.univ.filter (fun i => w i = true)).card
+
+-- 2 × 2 × 2 = 8 possible weeks.
+example : Fintype.card (Fin 3 → Bool) = 8 := by simp
+
+-- The full log (the report is the week itself) settles all 256 sets of weeks.
+example : (Finset.univ.filter (fun A : Finset (Fin 3 → Bool) =>
+    ∀ x y, id x = id y → (x ∈ A ↔ y ∈ A))).card = 256 := by
+  rw [Finset.filter_true_of_mem (fun A _ x y h => by rw [show x = y from h])]
+  simp
+
+-- The rain-day count has 4 blocks and settles 2 ^ 4 = 16 sets.
+example : (Finset.univ.filter (fun A : Finset (Fin 3 → Bool) =>
+    ∀ x y, rainDays x = rainDays y → (x ∈ A ↔ y ∈ A))).card = 16 := by decide
+
+-- The valley station has 2 blocks and settles 2 ^ 2 = 4 sets.
+example : (Finset.univ.filter (fun A : Finset (Fin 3 → Bool) =>
+    ∀ x y, anyRain x = anyRain y → (x ∈ A ↔ y ∈ A))).card = 4 := by decide
+
+-- "Rain on day two" is not settled by the valley station (DDR and DRD send the same line).
+example : ¬ SettledBy anyRain {w : Fin 3 → Bool | w 1 = true} := by
+  intro h
+  have := (h ![false, true, false] ![false, false, true] (by decide)).1 rfl
+  simp at this
+
+-- Sigma-algebras on 1, 2, 3, 4 points, counted as partitions (Bell numbers): 1, 2, 5, 15.
+example : Nat.bell 1 = 1 ∧ Nat.bell 2 = 2 ∧ Nat.bell 3 = 5 ∧ Nat.bell 4 = 15 := by decide +kernel
+
+-- Sigma-algebras on the station's 8 outcomes: the Bell number 4140.
+example : Nat.bell 8 = 4140 := by decide +kernel
+
+#print axioms measurableSet_iff_settledBy_measurableAtom
+#print axioms settled_sets_form_sigma_algebra
+#print axioms finite_sigma_algebra_is_settled_by_a_record
+#print axioms finite_sigma_algebra_card_eq_two_pow_blocks
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'measurableSet_iff_settledBy_measurableAtom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'settled_sets_form_sigma_algebra' depends on axioms: [propext]
+'finite_sigma_algebra_is_settled_by_a_record' depends on axioms: [propext, Classical.choice, Quot.sound]
+'finite_sigma_algebra_card_eq_two_pow_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

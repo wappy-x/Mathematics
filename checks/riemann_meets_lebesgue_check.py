@@ -137,4 +137,4 @@ for n in (10, 100, 1000):                 # 1/sqrt(x): continuous on (0, 1], unb
     assert low < 2 - 1 / sqrt(n) + 1e-12  # sum of k^(-1/2) <= 2 sqrt(n) - 1
     print(f"1/sqrt(x), {n} strips: lower sum {low:.4f}, upper sum infinite (first strip)")
 print("1/sqrt(x), Lebesgue by truncation min(f, m), m = 10 100 1000:", " ".join(f"{2 - 1 / m:.3f}" for m in (10, 100, 1000)))
-print("All checks passed.")
+print("ALL CHECKS PASS")

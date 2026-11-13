@@ -28,7 +28,7 @@ Drawn to scale, in metres. Open circles mark end points the intervals leave out.
 
 ## The formula
 
-Notation first, in words. An **open interval** $(c, d)$ is every point strictly between $c$ and $d$; its **length** $\ell\big((c, d)\big)$ is $d - c$. A **cover** of a set $A$ is a list $I_1, I_2, I_3, \dots$ of open intervals whose union (the points lying in at least one of them) contains every point of $A$. The symbol $\inf$ is the infimum: the greatest number lying at or below every member of a collection ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). A star on lambda, $\lambda^*$, read "lambda star", names outer measure.
+Notation first, in words. An **open interval** $(c, d)$ is every point strictly between $c$ and $d$; its **length** $\ell\big((c, d)\big)$ is $d - c$. A **cover** of a set $A$ is a list $I_1, I_2, I_3, \dots$ of open intervals whose union (the points lying in at least one of them) contains every point of $A$; $A \subseteq B$ means every point of $A$ lies in $B$. The symbol $\inf$ is the infimum: the greatest number lying at or below every member of a collection ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). A star on lambda, $\lambda^*$, read "lambda star", names outer measure.
 
 $$\lambda^*(A) \;=\; \inf\Big\{\, \sum_{k=1}^{\infty} \ell(I_k) \;:\; I_1, I_2, \dots \text{ open intervals with } A \subseteq \bigcup_{k=1}^{\infty} I_k \Big\}$$
 
@@ -82,7 +82,9 @@ A single rust spot at $x$ sits inside the interval from $x - \varepsilon/2$ to $
 
 All 100 spots: give each an interval of length $\varepsilon/100$. The total is $\varepsilon$, so again the outer measure is 0. With $\varepsilon$ = 0.01 m, each interval is 0.0001 m long.
 
-The rationals in [0, 1] can be listed: by denominator, 0, 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, … . Give the $k$-th rational $q_k$ an interval of length $\varepsilon/2^k$. The lengths are $\varepsilon/2 + \varepsilon/4 + \varepsilon/8 + \cdots$, a geometric series summing to $\varepsilon$ ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). With $\varepsilon$ = 0.01, every rational in [0, 1] lies inside intervals totalling 0.01, and the argument works for every $\varepsilon$, so $\lambda^*(\mathbb{Q} \cap [0, 1]) = 0$. A set of outer measure 0 is a null set ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); this card supplies the length that sentence was measured with.
+The rationals in [0, 1] can be listed: by denominator, 0, 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, … . Give the $k$-th rational $q_k$ an interval of length $\varepsilon/2^k$. The lengths are $\varepsilon/2 + \varepsilon/4 + \varepsilon/8 + \cdots$, a geometric series summing to $\varepsilon$ ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). With $\varepsilon$ = 0.01, every rational in [0, 1] lies inside intervals totalling 0.01, and the argument works for every $\varepsilon$, so $\lambda^*(\mathbb{Q} \cap [0, 1]) = 0$, where $\cap$ keeps the points in both sets.
+
+A set of outer measure 0 is a null set ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); this card supplies the length that sentence was measured with.
 
 ### Step 2: a bigger set is never smaller
 
@@ -551,6 +553,176 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the theorems of Steps 1 to 4 for every set and every bounded interval, and checks the worked numbers.
+
+- Outer measure is defined by the card's formula: the infimum of the totals of all covers by a list of open intervals.
+- Suppose $A \subseteq B$. Then $\lambda^*(A) \le \lambda^*(B)$.
+- Take any list of sets $A_1, A_2, \dots$. Then the outer measure of their union is at most the sum of their outer measures.
+- Take any numbers $a \le b$. Then $[a, b]$, $(a, b)$ and the two half-open intervals between them all have outer measure $b - a$.
+- A point, a finite set and every countable set, such as the rationals in [0, 1], each have outer measure 0.
+- The fence [0, 3] with its 100 rust spots taken out has outer measure exactly 3.
+- The cover (−0.001, 3.001) totals 3.002 m, and the gap cover totals 3.001 m.
+- The 100 spot intervals total 0.01 m, and 3 − 0.01 = 2.99 m.
+- Shrinking both allowances gives 3.000001 m above and 3 − 0.0002 = 2.9998 m below.
+- The first 10, 20 or 40 terms of 0.01/2 + 0.01/4 + … fall short of 0.01 by their last term.
+- The chain in the picture totals 4.4 m, and all five tapes total 4.8 m.
+- The intervals (0, 2) and (1, 3) give 2 + 2 = 4 m, but their union (0, 3) is 3 m.
+
+Random covers, missed points, the rational list, the figure, and the first and third mistakes are left to the Python and Rust checks.
+
+```lean
+-- Outer measure: the cheapest total length of a list of open intervals covering a set never shrinks when the set grows, is at most the sum over a list of pieces, gives every bounded interval its length, gives every countable set 0, and gives the 3 m fence without its 100 rust spots exactly 3.
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+
+open Set ENNReal
+
+/-- The card's outer measure: over every list `(c k, d k)` of open intervals whose union contains
+`A`, take the total length `∑ (d k - c k)`, and take the infimum of those totals. Totals may be
+infinite; an interval with `d k ≤ c k` is empty and has length 0, which pads finite lists. -/
+noncomputable def lambdaStar (A : Set ℝ) : ℝ≥0∞ :=
+  ⨅ (c : ℕ → ℝ) (d : ℕ → ℝ) (_ : A ⊆ ⋃ k, Ioo (c k) (d k)), ∑' k, ENNReal.ofReal (d k - c k)
+
+theorem lambdaStar_eq_volume (A : Set ℝ) : lambdaStar A = MeasureTheory.volume A := by
+  apply le_antisymm
+  · have hv : MeasureTheory.volume A = StieltjesFunction.id.outer A := by
+      rw [Real.volume_eq_stieltjes_id, StieltjesFunction.measure]
+      rfl
+    rw [hv, StieltjesFunction.outer, MeasureTheory.OuterMeasure.ofFunction_apply]
+    refine le_iInf₂ fun t ht => ?_
+    refine ENNReal.le_of_forall_pos_le_add fun ε hε hlt => ?_
+    have hε2 : ((ε : ℝ≥0∞) / 2) ≠ 0 := by
+      simp [hε.ne']
+    obtain ⟨ε', hε'pos, hε'sum⟩ := ENNReal.exists_pos_sum_of_countable hε2 ℕ
+    have key : ∀ n, ∃ a b : ℝ, t n ⊆ Ioc a b ∧
+        ENNReal.ofReal (b - a) < StieltjesFunction.id.length (t n) + ε' n := by
+      intro n
+      have hfin : StieltjesFunction.id.length (t n) ≠ ∞ :=
+        ne_top_of_tsum_ne_top hlt.ne n
+      have hlt' := ENNReal.lt_add_right hfin (ENNReal.coe_ne_zero.2 (hε'pos n).ne')
+      rw [StieltjesFunction.length_eq] at hlt'
+      obtain ⟨a, ha⟩ := iInf_lt_iff.1 hlt'
+      obtain ⟨b, hb⟩ := iInf_lt_iff.1 ha
+      obtain ⟨hs, hab⟩ := iInf_lt_iff.1 hb
+      refine ⟨a, b, ?_, ?_⟩
+      · intro x hx
+        exact hs ⟨hx, fun h => not_isBot x h⟩
+      · rw [StieltjesFunction.length_eq]
+        simpa using hab
+    choose a b hsub hlen using key
+    have hcover : A ⊆ ⋃ k, Ioo (a k) (b k + ε' k) := by
+      intro x hx
+      obtain ⟨n, hn⟩ := mem_iUnion.1 (ht hx)
+      have := hsub n hn
+      exact mem_iUnion.2 ⟨n, this.1, by linarith [this.2, (NNReal.coe_pos.2 (hε'pos n))]⟩
+    calc lambdaStar A ≤ ∑' k, ENNReal.ofReal ((b k + ε' k) - a k) :=
+          iInf_le_of_le a (iInf_le_of_le (fun k => b k + ε' k) (iInf_le_of_le hcover le_rfl))
+      _ ≤ ∑' k, (StieltjesFunction.id.length (t k) + ε' k + ε' k) := by
+          refine tsum_le_tsum fun k => ?_
+          calc ENNReal.ofReal ((b k + ε' k) - a k) = ENNReal.ofReal ((b k - a k) + ε' k) := by
+                congr 1; ring
+            _ ≤ ENNReal.ofReal (b k - a k) + ENNReal.ofReal (ε' k) := ENNReal.ofReal_add_le
+            _ ≤ StieltjesFunction.id.length (t k) + ε' k + ε' k := by
+                rw [ENNReal.ofReal_coe_nnreal]
+                gcongr
+                exact (hlen k).le
+      _ = ∑' k, StieltjesFunction.id.length (t k) + (∑' k, (ε' k : ℝ≥0∞) + ∑' k, (ε' k : ℝ≥0∞)) := by
+          rw [tsum_add, tsum_add, add_assoc]
+      _ ≤ ∑' k, StieltjesFunction.id.length (t k) + ε := by
+          gcongr
+          calc ∑' k, (ε' k : ℝ≥0∞) + ∑' k, (ε' k : ℝ≥0∞) ≤ (ε : ℝ≥0∞) / 2 + (ε : ℝ≥0∞) / 2 := by
+                exact add_le_add hε'sum.le hε'sum.le
+            _ = ε := ENNReal.add_halves _
+  · refine le_iInf fun c => le_iInf fun d => le_iInf fun h => ?_
+    calc MeasureTheory.volume A ≤ MeasureTheory.volume (⋃ k, Ioo (c k) (d k)) := MeasureTheory.measure_mono h
+      _ ≤ ∑' k, MeasureTheory.volume (Ioo (c k) (d k)) := MeasureTheory.measure_iUnion_le _
+      _ = ∑' k, ENNReal.ofReal (d k - c k) := by simp [Real.volume_Ioo]
+
+#print axioms lambdaStar_eq_volume
+
+/-- Every set of real numbers gets a size, the cheapest total length of a list of open intervals
+covering it. This size never shrinks when the set grows, never exceeds the sum of the sizes of a
+list of pieces, and gives an interval from `a` to `b` its length `b - a`, closed, open or
+half-open. -/
+theorem outer_measure_monotone_subadditive_interval_length :
+    (∀ A B : Set ℝ, A ⊆ B → lambdaStar A ≤ lambdaStar B) ∧
+    (∀ A : ℕ → Set ℝ, lambdaStar (⋃ n, A n) ≤ ∑' n, lambdaStar (A n)) ∧
+    (∀ a b : ℝ,
+      lambdaStar (Icc a b) = ENNReal.ofReal (b - a) ∧
+      lambdaStar (Ioo a b) = ENNReal.ofReal (b - a) ∧
+      lambdaStar (Ico a b) = ENNReal.ofReal (b - a) ∧
+      lambdaStar (Ioc a b) = ENNReal.ofReal (b - a)) := by
+  simp only [lambdaStar_eq_volume]
+  refine ⟨fun A B h => MeasureTheory.measure_mono h, fun A => MeasureTheory.measure_iUnion_le A, fun a b => ?_⟩
+  simp [Real.volume_Icc, Real.volume_Ioo, Real.volume_Ico, Real.volume_Ioc]
+
+/-- A point, a finite set and a countable set (such as the rationals in [0, 1]) each have outer
+measure 0. -/
+theorem countable_set_outer_measure_zero (A : Set ℝ) (hA : A.Countable) :
+    lambdaStar A = 0 := by
+  rw [lambdaStar_eq_volume]
+  exact hA.measure_zero _
+
+/-- The fence [0, 3] with its 100 rust spots at 0.03, 0.06, ..., 3 taken out still has outer
+measure 3: removing the spots costs nothing. -/
+theorem fence_minus_spots_outer_measure :
+    lambdaStar (Icc (0 : ℝ) 3 \ ((fun k : ℕ => (3 * k : ℝ) / 100) '' Icc 1 100)) = 3 := by
+  rw [lambdaStar_eq_volume, MeasureTheory.measure_sdiff_null (((Set.finite_Icc 1 100).image _).measure_zero _),
+    Real.volume_Icc]
+  norm_num
+
+/- The card's worked numbers, in whole micrometres (1 m = 1000000 um), as its code counts them. -/
+
+-- The cover (-0.001, 3.001) of the fence totals 3.002 m.
+example : (3001000 : ℤ) - (-1000) = 3002000 := by norm_num
+
+-- 100 spot intervals of 0.0001 m each total 0.01 m.
+example : 100 * ((50 : ℤ) - (-50)) = 10000 := by norm_num
+
+-- The gap cover: (-0.001, 0.03) plus the 99 gaps between spots totals 3.001 m.
+example : ((30000 : ℤ) - (-1000)) + ∑ k ∈ Finset.Icc (2 : ℕ) 100, ((30000 * k : ℤ) - 30000 * (k - 1))
+    = 3001000 := by norm_num [Finset.sum_Icc_succ_top]
+
+-- Subadditivity's lower bound for the fence minus the spots: 3 - 0.01 = 2.99 m.
+example : (3000000 : ℤ) - 10000 = 2990000 := by norm_num
+
+-- Shrunk allowances: gap cover 3.000001 m above, 3 - 0.0002 = 2.9998 m below.
+example : ((30000 : ℤ) - (-1)) + 99 * 30000 = 3000001 ∧ (3000000 : ℤ) - 100 * 2 = 2999800 := by
+  norm_num
+
+-- The rational cover: 0.01/2 + 0.01/4 + ... + 0.01/2^n = 0.01 - 0.01/2^n, for n = 10, 20, 40.
+example : ∑ k ∈ Finset.Icc 1 10, (1 : ℚ) / (100 * 2 ^ k) = 1 / 100 - 1 / (100 * 2 ^ 10) := by
+  norm_num [Finset.sum_Icc_succ_top]
+example : ∑ k ∈ Finset.Icc 1 20, (1 : ℚ) / (100 * 2 ^ k) = 1 / 100 - 1 / (100 * 2 ^ 20) := by
+  norm_num [Finset.sum_Icc_succ_top]
+example : ∑ k ∈ Finset.Icc 1 40, (1 : ℚ) / (100 * 2 ^ k) = 1 / 100 - 1 / (100 * 2 ^ 40) := by
+  norm_num [Finset.sum_Icc_succ_top]
+
+-- The picture: the chain (-0.2, 1.1), (0.8, 1.9), (1.5, 2.6), (2.4, 3.3) totals 4.4 m,
+-- and all five tapes, with (1, 1.4), total 4.8 m.
+example : ((1100000 : ℤ) - (-200000)) + (1900000 - 800000) + (2600000 - 1500000)
+    + (3300000 - 2400000) = 4400000 := by norm_num
+example : ((1100000 : ℤ) - (-200000)) + (1900000 - 800000) + (1400000 - 1000000)
+    + (2600000 - 1500000) + (3300000 - 2400000) = 4800000 := by norm_num
+
+-- Mistake 2: (0, 2) and (1, 3) added as if separate give 2 + 2 = 4 m for the 3 m union (0, 3).
+example : ((2 : ℤ) - 0) + (3 - 1) = 4 ∧ (3 : ℤ) - 0 = 3 := by norm_num
+
+#print axioms outer_measure_monotone_subadditive_interval_length
+#print axioms countable_set_outer_measure_zero
+#print axioms fence_minus_spots_outer_measure
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lambdaStar_eq_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+'outer_measure_monotone_subadditive_interval_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'countable_set_outer_measure_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fence_minus_spots_outer_measure' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -601,7 +773,7 @@ Outer measure does not add up on every pair of sets with no common point; which 
 
 ## Sources
 
-Verified 2026-09-29: each link opens a page naming the cited work (DOIs checked against Crossref).
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Axler, Sheldon. *Measure, Integration & Real Analysis*. Graduate Texts in Mathematics 282, Springer, 2020. [Publisher page](https://doi.org/10.1007/978-3-030-33143-6); [free edition from the author](https://measure.axler.net/). Chapter 2 defines outer measure with open intervals and proves an interval's outer measure is its length through Heine–Borel.
 - Folland, Gerald B. *Real Analysis: Modern Techniques and Their Applications*, 2nd ed. Wiley, 1999. [Publisher page](https://www.wiley.com/en-us/Real+Analysis%3A+Modern+Techniques+and+Their+Applications%2C+2nd+Edition-p-9780471317166). Chapter 1 builds outer measures in general and Lebesgue measure from them.

@@ -107,3 +107,4 @@ assert tail_up(13 / 15) > (m - F(2, 3)) / F(1, 5) and tv / eps < tt
 x1, x2 = (1 - tail_up(0.9)) / 2, (1 + tail_up(0.9)) / 2
 print(f"figure, X = 36 + 300x, Y = 210 - 150d; set ends x = {x1:.4f}, {x2:.4f} km, X = {36 + 300 * x1:.2f}, {36 + 300 * x2:.2f};",
       f"Y(0.9) = {210 - 150 * 0.9:.2f}, Y(2/3) = {210 - 100:.2f}; rectangle area {0.9 * tail_up(0.9):.6f}")
+print("ALL CHECKS PASS")

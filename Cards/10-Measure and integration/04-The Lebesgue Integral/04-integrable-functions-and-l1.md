@@ -26,7 +26,11 @@ To scale: 300 pixels per km along the river, 160 per metre of depth downward. Th
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the river $\Omega$ is the stretch from 0 to 1 km and the measure is length, $\lambda$. For a non-negative measurable function, $\int u\,d\mu$, read "the integral of u against mu", is the best lower staircase total, a number from 0 up to infinity ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). The **positive part** $f^+ = \max(f, 0)$ keeps f where it is above zero and is 0 elsewhere; the **negative part** $f^- = \max(-f, 0)$ is the depth of f below zero, itself never negative ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). At every point
+Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
+
+On the river $\Omega$ is the stretch from 0 to 1 km and the measure is length, $\lambda$. For a non-negative measurable function, $\int u\,d\mu$, read "the integral of u against mu", is the best lower staircase total, a number from 0 up to infinity ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
+
+The **positive part** $f^+ = \max(f, 0)$ keeps f where it is above zero and is 0 elsewhere; the **negative part** $f^- = \max(-f, 0)$ is the depth of f below zero, itself never negative ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). At every point
 
 $$f = f^+ - f^-, \qquad \lvert f\rvert = f^+ + f^-.$$
 
@@ -61,7 +65,7 @@ On the river, $h = d - 0.5$, so linearity alone gives $\int h\,d\lambda = 2/3 - 
 | $u$, $v$ | non-negative measurable functions, in the definition and the proof | d, h+, h− | larger u, larger integral |
 | $f^+$, $f^-$ | positive part and negative part, both ≥ 0 | channel 0.2357, shoals 0.0690 km·m | f up: f+ grows, f− shrinks |
 | $\lvert f\rvert$ | size of f, sign ignored | integral 0.3047 km·m: earth moved | — |
-| $\Omega$, $\mathcal F$, $\mu$, $\lambda$ | space, measurable sets, a measure; λ is length | 0 to 1 km, Borel sets, length | — |
+| $\Omega$, $\mathcal F$, $\mu$, $\lambda$ | space, measurable sets, a measure; λ is length | 0 to 1 km, Borel sets (the sets built from intervals), length | — |
 | $L^1(\mu)$ | the integrable functions | h, d, the spike s | — |
 | $a$, $b$ | real constants, either sign | 1 and −0.5: h = 1·d − 0.5·1 | integral moves by that multiple |
 | $p$, $q$ | any two non-negative integrable functions with f = p − q | p = d, q = 0.5 | — |
@@ -73,7 +77,7 @@ On the river, $h = d - 0.5$, so linearity alone gives $\int h\,d\lambda = 2/3 - 
 
 Integrability is a definition; the theorems need:
 
-- **Measurability.** Without it neither part has an integral: the Vitali set of shelf 02 has no length.
+- **Measurability.** Without it neither part has an integral: the Vitali set has no length ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)).
 - **Both functions integrable, for linearity.** If both parts are infinite, "infinity minus infinity" has no value, and adding the pieces in a different order gives a different total: Step 6.
 - **Integrability, for small sets.** The function 1/x on (0, 1] puts infinite integral on every interval next to 0, however short.
 - **Any measure, finite or not.** But on an infinite one a bounded function need not be integrable: the constant 0.5 on the whole line.
@@ -104,13 +108,15 @@ In general, if $f = p - q$ with $p$ and $q$ non-negative and integrable, then $f
 
 ### Step 3: linearity
 
-For a sum: $f + g = (f^+ + g^+) - (f^- + g^-)$ is one more split into two non-negative integrable pieces, so Step 2 gives $\int (f+g) = \int f + \int g$. The sum is integrable because $\lvert f + g\rvert \le \lvert f\rvert + \lvert g\rvert$ at every point. For a constant $a \ge 0$ the parts of $a f$ are $a f^+$ and $a f^-$. For $a < 0$ they swap: $(a f)^+ = \lvert a\rvert f^-$ and $(a f)^- = \lvert a\rvert f^+$. Either way the integral comes out as $a\int f$.
+For a sum: $f + g = (f^+ + g^+) - (f^- + g^-)$ is one more split into two non-negative integrable pieces, so Step 2 gives $\int (f+g) = \int f + \int g$. The sum is integrable because $\lvert f + g\rvert \le \lvert f\rvert + \lvert g\rvert$ at every point.
+
+For a constant $a \ge 0$ the parts of $a f$ are $a f^+$ and $a f^-$. For $a < 0$ they swap: $(a f)^+ = \lvert a\rvert f^-$ and $(a f)^- = \lvert a\rvert f^+$. Either way the integral comes out as $a\int f$.
 
 ### Step 4: order, and the triangle inequality
 
 If $f \le g$, then $g - f$ is non-negative and integrable, so its integral is at least 0. Linearity turns that into $\int g - \int f \ge 0$. On the river $h \le d$, and 1/6 ≤ 2/3.
 
-Apply monotonicity twice to $-\lvert f\rvert \le f \le \lvert f\rvert$: $\int f$ lies between $-\int \lvert f\rvert$ and $\int \lvert f\rvert$. That is the triangle inequality. On the river 1/6 ≤ 0.3047, and the gap is twice the shoal integral: cancellation hides the shoals. Equality needs one part to have integral zero, that is, $f \ge 0$ almost everywhere or $f \le 0$ almost everywhere.
+Apply monotonicity twice to $-\lvert f\rvert \le f \le \lvert f\rvert$: $\int f$ lies between $-\int \lvert f\rvert$ and $\int \lvert f\rvert$. That is the triangle inequality. On the river 1/6 ≤ 0.3047, and the gap is twice the shoal integral: cancellation hides the shoals. Equality needs one part to have integral zero, that is, $f \ge 0$ almost everywhere or $f \le 0$ almost everywhere, that is, everywhere except on a set of measure zero ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 
 ### Step 5: small sets carry small integrals
 
@@ -122,7 +128,7 @@ The proof spends half of $\varepsilon$ on each piece. For $\varepsilon = 1/10$: 
 
 ### Step 6: why infinity minus infinity is refused
 
-Extend the river downstream forever and give its bed alternating 1 km pieces: a pool 1 m below the marker, then a bar 1/2 m above it, then a pool 1/3 m below, and so on. Call this bed $w$. Its running total, piece by piece, settles on ln 2 = 0.693147. Yet its positive part totals 6.391644 after 100000 km and its negative part 5.698502, and both keep growing without bound, as the harmonic series does.
+Extend the river downstream forever and give its bed alternating 1 km pieces: a pool 1 m below the marker, then a bar 1/2 m above it, then a pool 1/3 m below, and so on. Call this bed $w$. Its running total, piece by piece, settles on ln 2 = 0.693147. Yet its positive part totals 6.391644 after 100000 km and its negative part 5.698502, and both keep growing without bound, as the harmonic series 1 + 1/2 + 1/3 + … does.
 
 Count the same pieces two pools, then one bar, and the running total settles on 1.5 ln 2 = 1.039721 instead. A measure sees sets, not an order of travel, so a total that depends on the order cannot be the integral. Integrability rules the case out.
 
@@ -202,7 +208,9 @@ The zigzag line counts the pieces in their order along the river and closes on l
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads reach the river's integrals. Road 1 is exact algebra on numbers p + q√2, p and q fractions, using the crossing points. Road 2 is Lebesgue's: lower staircases on the depth axis, built from the lengths of level sets, with each gap checked against step height times the length where the part is positive. Road 3 is Riemann's: midpoint sums on 2^16 cells of the x axis. The four-reach warm-up checks linearity exactly for 49 pairs of constants; the spike checks the proof's cap and δ; the endless bed and 1/x print the failures. Rust keeps its fractions by hand in 128-bit integers. The code checks these functions and finite stages; that the theorems hold for every integrable function is the proof's work.
+Three independent roads reach the river's integrals. Road 1 is exact algebra on numbers p + q√2, p and q fractions, using the crossing points. Road 2 is Lebesgue's: lower staircases on the depth axis, built from the lengths of level sets, with each gap checked against step height times the length where the part is positive. Road 3 is Riemann's: midpoint sums on 2^16 cells of the x axis.
+
+The four-reach warm-up checks linearity exactly for 49 pairs of constants; the spike checks the proof's cap and δ; the endless bed and 1/x print the failures. Rust keeps its fractions by hand in 128-bit integers. The code checks these functions and finite stages; that the theorems hold for every integrable function is the proof's work.
 
 ### Python
 
@@ -605,6 +613,140 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the definition and the four theorems on any measure space, and the 1/x failure for every δ up to 1.
+
+- A measurable function is integrable exactly when the integral of its size is finite. That holds exactly when both its parts have finite integral.
+- Suppose a measurable $f$ is integrable. Then $\int f\,d\mu = \int f^+\,d\mu - \int f^-\,d\mu$.
+- Take integrable $f$ and $g$, and real numbers $a$ and $b$. Then $a f + b g$ is integrable, with integral $a\int f\,d\mu + b\int g\,d\mu$.
+- Suppose $f$ and $g$ are integrable and $f \le g$ everywhere. Then $\int f\,d\mu \le \int g\,d\mu$.
+- For an integrable function, the size of the integral is at most the integral of the size.
+- Take an integrable $f$ and any $\varepsilon > 0$. Then some $\delta > 0$ gives every measurable set of measure under $\delta$ an integral of $\lvert f\rvert$ under $\varepsilon$.
+- Take $0 < \delta \le 1$. Then $1/x$ has infinite integral on the interval $(0, \delta]$.
+- The four-reach warm-up holds exactly: positive part 7/32, negative part 1/32, net 3/16, also 3/16 by linearity, and size 1/4.
+
+The river itself, the spike, the endless bed and the figure are left to the Python and Rust checks.
+
+```lean
+-- Integrable functions: a real function is integrable exactly when its positive and negative parts have finite integrals, and on integrable functions the integral is linear, monotone, obeys the triangle inequality and is small on small sets.
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Analysis.SpecialFunctions.NonIntegrable
+
+open MeasureTheory Set
+
+/-- The definition, Step 1: a measurable real function is integrable exactly when the integral
+of its size `|f|` is finite, exactly when its positive part `max f 0` and its negative part
+`max (-f) 0` both have finite integral; and then its integral is the integral of the positive
+part minus the integral of the negative part. -/
+theorem integrable_iff_parts_finite_and_integral_eq_pos_sub_neg
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) {f : Ω → ℝ} (hf : Measurable f) :
+    (Integrable f μ ↔ ∫⁻ x, ENNReal.ofReal |f x| ∂μ < ⊤) ∧
+    (Integrable f μ ↔
+      (∫⁻ x, ENNReal.ofReal (f x) ∂μ < ⊤ ∧ ∫⁻ x, ENNReal.ofReal (-f x) ∂μ < ⊤)) ∧
+    (Integrable f μ →
+      ∫ x, f x ∂μ =
+        (∫⁻ x, ENNReal.ofReal (f x) ∂μ).toReal - (∫⁻ x, ENNReal.ofReal (-f x) ∂μ).toReal) := by
+  have habs : (Integrable f μ ↔ ∫⁻ x, ENNReal.ofReal |f x| ∂μ < ⊤) := by
+    rw [Integrable, hasFiniteIntegral_iff_norm]
+    simp only [Real.norm_eq_abs]
+    exact ⟨fun h => h.2, fun h => ⟨hf.aestronglyMeasurable, h⟩⟩
+  have hsplit : ∫⁻ x, ENNReal.ofReal |f x| ∂μ =
+      ∫⁻ x, ENNReal.ofReal (f x) ∂μ + ∫⁻ x, ENNReal.ofReal (-f x) ∂μ := by
+    rw [← lintegral_add_left hf.ennreal_ofReal]
+    congr 1
+    funext x
+    rcases le_total 0 (f x) with h | h
+    · rw [abs_of_nonneg h, ENNReal.ofReal_of_nonpos (by linarith : -f x ≤ 0), add_zero]
+    · rw [abs_of_nonpos h, ENNReal.ofReal_of_nonpos h, zero_add]
+  refine ⟨habs, ?_, fun h => integral_eq_lintegral_pos_part_sub_lintegral_neg_part h⟩
+  rw [habs, hsplit, ENNReal.add_lt_top]
+
+/-- The four theorems: for integrable real functions `f`, `g` on any measure space and real
+numbers `a`, `b`, the combination `a f + b g` is integrable and its integral is
+`a ∫ f + b ∫ g` (linearity); if `f ≤ g` everywhere then `∫ f ≤ ∫ g` (monotonicity);
+`|∫ f| ≤ ∫ |f|` (triangle inequality); and for every `ε > 0` there is `δ > 0` such that every
+measurable set `A` of measure less than `δ` has `∫_A |f| < ε` (absolute continuity). -/
+theorem integral_linear_monotone_triangle_abs_continuous
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) {f g : Ω → ℝ}
+    (hf : Integrable f μ) (hg : Integrable g μ) (a b : ℝ) :
+    (Integrable (fun x => a * f x + b * g x) μ ∧
+      ∫ x, (a * f x + b * g x) ∂μ = a * ∫ x, f x ∂μ + b * ∫ x, g x ∂μ) ∧
+    ((∀ x, f x ≤ g x) → ∫ x, f x ∂μ ≤ ∫ x, g x ∂μ) ∧
+    |∫ x, f x ∂μ| ≤ ∫ x, |f x| ∂μ ∧
+    (∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧
+      ∀ A : Set Ω, MeasurableSet A → μ A < ENNReal.ofReal δ → ∫ x in A, |f x| ∂μ < ε) := by
+  refine ⟨⟨?_, ?_⟩, fun hle => integral_mono hf hg hle, ?_, ?_⟩
+  · exact (hf.const_mul a).add (hg.const_mul b)
+  · rw [integral_add (hf.const_mul a) (hg.const_mul b), integral_const_mul, integral_const_mul]
+  · simpa only [← Real.norm_eq_abs] using norm_integral_le_integral_norm (μ := μ) f
+  · intro ε hε
+    have hfin : ∫⁻ x, ENNReal.ofReal |f x| ∂μ ≠ ⊤ := by
+      have := hf.2
+      rw [hasFiniteIntegral_iff_norm] at this
+      simpa only [Real.norm_eq_abs] using this.ne
+    obtain ⟨δ₀, hδ₀, hδ⟩ := exists_pos_setLIntegral_lt_of_measure_lt hfin
+      (ENNReal.ofReal_pos.mpr hε).ne'
+    obtain ⟨r, hr0, hr1, hr2⟩ := ENNReal.lt_iff_exists_real_btwn.mp hδ₀
+    refine ⟨r, ENNReal.ofReal_pos.mp hr1, fun A _ hA => ?_⟩
+    have hl := hδ A (hA.trans hr2)
+    rw [integral_eq_lintegral_of_nonneg_ae
+      (Filter.Eventually.of_forall fun x => abs_nonneg (f x)) hf.abs.aestronglyMeasurable.restrict]
+    exact ENNReal.toReal_lt_of_lt_ofReal hl
+
+/-- Step 7, the hypothesis is needed: the function `1/x` on `(0, 1]` puts infinite integral
+on every interval `(0, δ]` next to 0, however short. -/
+theorem lintegral_inv_Ioc_zero_eq_top {δ : ℝ} (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
+    ∫⁻ x in Ioc (0 : ℝ) δ, ENNReal.ofReal (1 / x) = ⊤ := by
+  by_contra hne
+  have hint : IntegrableOn (fun x : ℝ => x⁻¹) (Ioc 0 δ) volume := by
+    refine ⟨measurable_inv.aestronglyMeasurable, ?_⟩
+    rw [hasFiniteIntegral_iff_ofReal]
+    · simpa only [one_div] using lt_top_iff_ne_top.mpr hne
+    · exact (ae_restrict_iff' measurableSet_Ioc).mpr
+        (Filter.Eventually.of_forall fun x hx => inv_nonneg.mpr hx.1.le)
+  have hii : IntervalIntegrable (fun x : ℝ => x⁻¹) volume 0 δ :=
+    (intervalIntegrable_iff_integrableOn_Ioc_of_le hδ.le).mpr hint
+  rw [intervalIntegrable_inv_iff] at hii
+  rcases hii with h | h
+  · exact hδ.ne h
+  · exact h (by simp [hδ.le])
+
+/-! The card's four-reach warm-up: midpoint depths `d = 7/16, 15/16, 15/16, 7/16` m on four
+reaches of 1/4 km, and `h = d - 1/2`. -/
+
+/-- The bed heights `h = d - 1/2` on the four reaches. -/
+example : (![7/16, 15/16, 15/16, 7/16] : Fin 4 → ℚ) - (fun _ => 1/2)
+    = ![-1/16, 7/16, 7/16, -1/16] := by
+  ext i; fin_cases i <;> norm_num
+
+-- positive part: (7/16 + 7/16) × 1/4 = 7/32
+example : ∑ i : Fin 4, max ((![-1/16, 7/16, 7/16, -1/16] : Fin 4 → ℚ) i) 0 * (1/4) = 7/32 := by
+  norm_num [Fin.sum_univ_four]
+
+-- negative part: (1/16 + 1/16) × 1/4 = 1/32
+example : ∑ i : Fin 4, max (-(![-1/16, 7/16, 7/16, -1/16] : Fin 4 → ℚ) i) 0 * (1/4) = 1/32 := by
+  norm_num [Fin.sum_univ_four]
+
+-- net 7/32 - 1/32 = 3/16, the same as by linearity 11/16 - 1/2; size 7/32 + 1/32 = 1/4
+example : (7/32 : ℚ) - 1/32 = 3/16 ∧ (7/16 + 15/16 + 15/16 + 7/16) * (1/4 : ℚ) - 1/2 = 3/16 ∧
+    (7/32 : ℚ) + 1/32 = 1/4 := by
+  norm_num
+
+#print axioms integrable_iff_parts_finite_and_integral_eq_pos_sub_neg
+#print axioms integral_linear_monotone_triangle_abs_continuous
+#print axioms lintegral_inv_Ioc_zero_eq_top
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integrable_iff_parts_finite_and_integral_eq_pos_sub_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_linear_monotone_triangle_abs_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lintegral_inv_Ioc_zero_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -659,7 +801,7 @@ A bump that slides away keeps its integral while vanishing at every point, so in
 
 ## Sources
 
-Verified 29 Sep 2026: every link below opens a publisher or author page naming the cited book.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Axler, Sheldon. *Measure, Integration & Real Analysis*. Springer Graduate Texts in Mathematics, 2020, open access. [Author's page with the free edition](https://measure.axler.net/). Chapter 3: the signed integral from two parts, additivity, the triangle inequality.
 - Folland, Gerald B. *Real Analysis: Modern Techniques and Their Applications*, 2nd ed. Wiley, 1999. [Publisher page](https://www.wiley.com/en-us/Real+Analysis%3A+Modern+Techniques+and+Their+Applications%2C+2nd+Edition-p-9780471317166). Chapter 2: L^1 from positive and negative parts, and linearity.

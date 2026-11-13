@@ -8,13 +8,19 @@
 
 A thermometer answers one kind of question: "is the temperature below t degrees?" It answers it for every threshold t, whole or not: below 20, below 20.3, below 1.414214. It never states a reading outright.
 
-Yet it settles far more. "Is it exactly 20 degrees?" Ask "below 20 + 1/n?" for n = 1, 2, 4, 10, and so on. A reading of 20.3 fails the question from n = 4 on; a reading of 20.0007 fails from n = 1429 on. Only a reading of 20 or less passes every time. Remove the readings below 20, one more question, and exactly 20 remains. "Between 18 and 20?" is "below 20?" with "at most 18?" removed. A region made of open bands, however many, is a countable pile of bands with fractional edges.
+Yet it settles far more. "Is it exactly 20 degrees?" Ask "below 20 + 1/n?" for n = 1, 2, 4, 10, and so on. A reading of 20.3 fails the question from n = 4 on; a reading of 20.0007 fails from n = 1429 on.
 
-A **sigma-algebra** is a family of sets that holds the whole space and is closed under complements and countable unions, so it holds the empty set too ([Sigma-algebras](02-sigma-algebras.md)); read it as the list of yes/no questions that can be settled. Start from any chosen sets. The smallest sigma-algebra that holds them all is the **generated sigma-algebra**: everything the rules force. Start from the thermometer's questions on the real line and what comes out is the family of **Borel sets**, named after Émile Borel. Every interval, every exact reading, every countable list of readings and every open set is in it.
+Only a reading of 20 or less passes every time. Remove the readings below 20, one more question, and exactly 20 remains.
+
+"Between 18 and 20?" is "below 20?" with "at most 18?" removed. A region made of open bands, however many, is a countable pile of bands with fractional edges.
+
+A **sigma-algebra** is a family of sets that holds the whole space and is closed under complements and countable unions, so it holds the empty set too ([Sigma-algebras](02-sigma-algebras.md)). Read it as the list of yes/no questions that can be settled. Start from any chosen sets. The smallest sigma-algebra that holds them all is the **generated sigma-algebra**: everything the rules force.
+
+Start from the thermometer's questions on the real line and what comes out is the family of **Borel sets**, named after Émile Borel. Every interval, every exact reading, every countable list of readings and every open set is in it.
 
 **The generated sigma-algebra is everything the rules force once the chosen sets are in; the Borel sets are what the rules force from "below t?" alone, and the same family comes from open intervals, closed intervals or open sets.**
 
-**What kind of fact this is:** two definitions (the generated sigma-algebra and the Borel sets) and a theorem proved on this card in Why it works: rays, open intervals, closed intervals and open sets all generate the same Borel sets, and singletons, countable sets and open sets are Borel.
+**What kind of fact this is:** two definitions (the generated sigma-algebra and the Borel sets) and a theorem, proved on this card in Why it works. The theorem: rays, open intervals, closed intervals and open sets all generate the same Borel sets, and singletons (one-point sets), countable sets and open sets are Borel.
 
 ### The picture: what the thermometer's questions reach
 
@@ -72,9 +78,9 @@ The first equality is the definition. The other three are the theorem.
 ### When it holds
 
 - **The generators are sets in one space.** $\sigma(\mathcal{C})$ exists for any family of subsets of $\Omega$, however strange; nothing else is assumed.
-- **Countable operations only.** The rules allow countable unions. Allow any union at all and every set becomes a union of single points, so the family collapses to all subsets. Taken as a record of all its answers at once, the thermometer tells any two readings apart, so in the sense of [Sigma-algebras](02-sigma-algebras.md) Step 4 it settles every subset; on this card, a question the thermometer settles means one the rules force from its answers, and those stop at the Borel sets.
-- **Every threshold, or at least a dense set of them.** Rays at every rational $t$ already generate the Borel sets. Rays at whole degrees only do not: they can never settle "below 20.5?".
-- **Rational points everywhere on the line.** The step from intervals to open sets uses that every open set is a countable union of intervals with rational ends. That holds on the line, in the plane and in higher dimensions; general spaces are wing 17's business.
+- **Countable operations only.** The rules allow countable unions. Allow any union at all and every set becomes a union of single points, so the family collapses to all subsets. Taken as a record of all its answers at once, the thermometer tells any two readings apart. So in the sense of [Sigma-algebras](02-sigma-algebras.md) Step 4, it settles every subset. On this card, a question the thermometer settles means one the rules force from its answers, and those stop at the Borel sets.
+- **Every threshold, or at least a dense set of them.** A dense set has a threshold between any two numbers. Rays at every rational $t$ already generate the Borel sets. Rays at whole degrees only do not: they can never settle "below 20.5?".
+- **Rational points everywhere on the line.** The step from intervals to open sets uses that every open set is a countable union of intervals with rational ends. That holds on the line, in the plane and in higher dimensions; general spaces belong to the planned Topology wing.
 
 ---
 
@@ -90,13 +96,21 @@ The family of all subsets of $\Omega$ holds the generators and obeys the rules, 
 
 One consequence does most of the work below. **To show $\sigma(\mathcal{C}) \subseteq \sigma(\mathcal{D})$, it is enough to show each generator in $\mathcal{C}$ lies in $\sigma(\mathcal{D})$**: then $\sigma(\mathcal{D})$ is one of the families in the list for $\mathcal{C}$.
 
-A small world shows it in full. Keep four whole-degree readings, 17, 18, 19 and 20: 16 subsets, and 15 sigma-algebras, one per way of cutting the readings into blocks (the Bell number, 15). The code builds each generated family three ways: repeat complements and unions until nothing changes; group the readings no generator can tell apart, called **atoms**, and take every union of atoms; intersect all the sigma-algebras that hold the generators. The three always agree.
+A small world shows it in full. Keep four whole-degree readings, 17, 18, 19 and 20: 16 subsets, and 15 sigma-algebras, one per way of cutting the readings into blocks (the Bell number, 15). The code builds each generated family three ways:
 
-The thermometer's rays give all 16 subsets. A cruder gauge that only asks "below 18?" and "below 20?" generates 8 sets. Its atoms are $\{17\}$, $\{18, 19\}$ and $\{20\}$: no answer to either question tells 18 from 19. The gauge settles "exactly 20?" but not "exactly 19?". The generators $\{17\}$ and $\{17, 18, 19\}$ are no sigma-algebra themselves, since the complement of $\{17\}$ is missing; the 8 sets they generate are one.
+- repeat complements and unions until nothing changes;
+- group the readings no generator can tell apart, called **atoms**, and take every union of atoms;
+- intersect all the sigma-algebras that hold the generators.
+
+The three always agree.
+
+The thermometer's rays give all 16 subsets. A cruder gauge that only asks "below 18?" and "below 20?" generates 8 sets. Its atoms are $\{17\}$, $\{18, 19\}$ and $\{20\}$: no answer to either question tells 18 from 19. The gauge settles "exactly 20?" but not "exactly 19?".
+
+The generators $\{17\}$ and $\{17, 18, 19\}$ are no sigma-algebra themselves, since the complement of $\{17\}$ is missing; the 8 sets they generate are one.
 
 ### Step 2: "at most t" from "below t"
 
-The ray $(-\infty, 20]$ is the countable intersection of the rays $(-\infty, 20 + 1/n)$, for $n = 1, 2, 3, \ldots$ A reading of 20 or less lies in every one. A reading above 20 sits some positive gap above it, and $1/n$ drops below any positive gap once $n$ is large: for the reading 20.3, from $n = 4$ on, since 20 + 1/3 = 20.3333 is above 20.3 and 20 + 1/4 = 20.25 is not.
+The ray $(-\infty, 20]$ is the countable intersection of the rays $(-\infty, 20 + 1/n)$, for $n = 1, 2, 3, \ldots$ A reading of 20 or less lies in every one. A reading above 20 sits some positive gap above it, and $1/n$ drops below any positive gap once $n$ is large. For the reading 20.3 that happens from $n = 4$ on, since 20 + 1/3 = 20.3333 is above 20.3 and 20 + 1/4 = 20.25 is not.
 
 The picture shows what each stage adds on top of $(-\infty, 20)$: the sliver from 20 up to $20 + 1/n$, its left end kept, its right end left out.
 
@@ -118,11 +132,15 @@ Half-open intervals such as $[18, 20)$ come the same way. The code tests all thr
 
 The rules allow only countable unions, and an open set is naturally a union of uncountably many intervals. The rationals fix this: they can be listed one after another ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), so the intervals with rational ends can be too. Each point of an open set $U$ has room around it, and a rational lies between any two numbers, so each point sits in a rational-end interval inside $U$. Those intervals, countably many, make up all of $U$.
 
-The band $U = (0, \sqrt 2)$ has an irrational right edge, the square root of 2, 1.414214 by bisection. Using fractions with denominator $q$, the intervals $(0, p/q)$ inside $U$ reach up to the largest $p$ with $(p/q)^2 < 2$. At $q = 100$ that is $p = 141$, since 141 × 141 = 19881 is below 20000 and 142 × 142 = 20164 is above. The part of $U$ still uncovered shrinks from 0.414214 at $q = 1$ to 0.014214, 0.004214 and 0.000214 at $q$ = 10, 100 and 1000. Every point of $U$ is covered at some stage, and there are countably many stages.
+The band $U = (0, \sqrt 2)$ has an irrational right edge, the square root of 2, 1.414214 by bisection: halving an interval that holds the root, again and again. Using fractions with denominator $q$, the intervals $(0, p/q)$ inside $U$ reach up to the largest $p$ with $(p/q)^2 < 2$. At $q = 100$ that is $p = 141$, since 141 × 141 = 19881 is below 20000 and 142 × 142 = 20164 is above.
+
+The part of $U$ still uncovered shrinks from 0.414214 at $q = 1$ to 0.014214, 0.004214 and 0.000214 at $q$ = 10, 100 and 1000. Every point of $U$ is covered at some stage, and there are countably many stages.
 
 ### Step 5: four generators, one family
 
-Apply Step 1's comparison rule both ways. Rays are open, so they generate nothing beyond the Borel sets; Steps 2 to 4 put every open set among what rays generate, so they generate at least the Borel sets. Open intervals go the same way. A closed interval is the complement of an open set, and $(a, b)$ is the union of the closed intervals $[a + 1/n, b - 1/n]$, so closed intervals do too. On the four-reading world, rays, open intervals and closed intervals each generate all 16 subsets.
+Apply Step 1's comparison rule both ways. Rays are open, so they generate nothing beyond the Borel sets; Steps 2 to 4 put every open set among what rays generate, so they generate at least the Borel sets. Open intervals go the same way.
+
+A closed interval is the complement of an open set, and $(a, b)$ is the union of the closed intervals $[a + 1/n, b - 1/n]$, so closed intervals do too. On the four-reading world, rays, open intervals and closed intervals each generate all 16 subsets.
 
 ### Step 6: what else is Borel
 
@@ -145,13 +163,16 @@ The rationals are neither open nor closed. Borel sets reach far beyond both.
 
 **Claim 5: every open $U$ is a countable union of open intervals with rational ends.** For $x$ in $U$ there is $r > 0$ with $(x - r, x + r) \subseteq U$, by openness. Rationals $u$ and $z$ with $x - r < u < x < z < x + r$ exist. Take a whole number $j$ with $10^{-j} < r/2$ (the whole numbers have no upper bound, as in Claim 3), and let $m$ be $10^j x$ rounded down to a whole number, negative if need be, so $m \le 10^j x < m + 1$. Put $u = (m - 1)/10^j$ and $z = (m + 1)/10^j$. Then $u \le x - 10^{-j} < x$ and $u > x - 2 \cdot 10^{-j} > x - r$; likewise $z > x$ and $z \le x + 10^{-j} < x + r$. So $x \in (u, z) \subseteq U$. Take all the rational-end intervals contained in $U$; their union contains every $x$ of $U$ and lies inside $U$, so it equals $U$. Each such interval is named by a pair of rationals, and the pairs drawn from a countable set are countable, so there are countably many intervals.
 
-**Claim 6: the four generators give one family.** Rays are open, so $\sigma(\text{rays}) \subseteq \mathcal{B}(\mathbb{R})$ by Claim 2. Every open set is in $\sigma(\text{rays})$ by Claims 4 and 5, so $\mathcal{B}(\mathbb{R}) \subseteq \sigma(\text{rays})$ by Claim 2. Open intervals are open, and by Claim 5 every open set is a countable union of them: same two inclusions. A closed interval $[a, b]$ is the complement of the open set $(-\infty, a) \cup (b, \infty)$, so it is Borel; and $(a, b) = \bigcup_{n} [a + 1/n, b - 1/n]$, the union over the $n$ with $2/n < b - a$, since a point $x$ with $a < x < b$ is at least $1/n$ from both ends once $n$ is large (Claim 3's argument). So both inclusions hold for closed intervals too.
+**Claim 6: the four generators give one family.** Rays are open, so $\sigma(\text{rays}) \subseteq \mathcal{B}(\mathbb{R})$ by Claim 2. Every open set is in $\sigma(\text{rays})$ by Claims 4 and 5, so $\mathcal{B}(\mathbb{R}) \subseteq \sigma(\text{rays})$ by Claim 2. Open intervals are open, and by Claim 5 every open set is a countable union of them: same two inclusions. A closed interval $[a, b]$ is the complement of the open set $(-\infty, a) \cup (b, \infty)$, so it is Borel. Also, $(a, b) = \bigcup_{n} [a + 1/n, b - 1/n]$, the union over the $n$ with $2/n < b - a$, since a point $x$ with $a < x < b$ is at least $1/n$ from both ends once $n$ is large (Claim 3's argument). So both inclusions hold for closed intervals too.
 
 **Claim 7: countable sets are Borel.** A countable set, listed as $x_1, x_2, \ldots$, is the countable union of the singletons $\{x_k\}$, each Borel by Claim 4.
 
 </details>
 
-Two variants, used by the pi-systems card: rays of the form $(-\infty, t]$ also generate the Borel sets, since each is Borel (the complement of the open set $(t, \infty)$) and $(-\infty, t) = \bigcup_n (-\infty, t - 1/n]$ by Claim 3's argument, so Step 1's comparison rule gives both inclusions; and so do rays at rational thresholds only, since $(-\infty, t)$ is the union of the rays at the rational thresholds below $t$ ([Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md)).
+Two variants, used by the pi-systems card ([Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md)):
+
+- Rays of the form $(-\infty, t]$ also generate the Borel sets. Each is Borel (the complement of the open set $(t, \infty)$), and $(-\infty, t) = \bigcup_n (-\infty, t - 1/n]$ by Claim 3's argument, so Step 1's comparison rule gives both inclusions.
+- So do rays at rational thresholds only, since $(-\infty, t)$ is the union of the rays at the rational thresholds below $t$.
 
 ---
 
@@ -184,7 +205,11 @@ The code prints the first three. The fourth is an argument about uncountably man
 
 ## Code, from first principles, and it actually runs
 
-Part one lists every sigma-algebra on the four readings and builds each generated family by three roads: closure under complements and unions, unions of atoms, and the intersection of all 15 sigma-algebras holding the generators. Part two checks the real-line steps at exact rational points: the first $n$ that leaves each reading out of the shrinking rays, found by search and by formula; the three identities of Step 3; and the rational reach into $(0, \sqrt 2)$, found by whole-number search and by a bisection root. The code checks instances and finite stages; that every open set is Borel, for every $t$, is what the proof shows.
+Part one lists every sigma-algebra on the four readings and builds each generated family by three roads: closure under complements and unions, unions of atoms, and the intersection of all 15 sigma-algebras holding the generators.
+
+Part two checks the real-line steps at exact rational points: the first $n$ that leaves each reading out of the shrinking rays, found by search and by formula; the three identities of Step 3; and the rational reach into $(0, \sqrt 2)$, found by whole-number search and by a bisection root.
+
+The code checks instances and finite stages; that every open set is Borel, for every $t$, is what the proof shows.
 
 ### Python
 
@@ -543,6 +568,124 @@ figure, x(19) = 40, x(20) = 160, x(21) = 280, sliver right ends n=1,2,4: 280, 22
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves that the generated sigma-algebra is the smallest, for any chosen sets, and the Borel facts on the whole real line.
+
+- Take any family $\mathcal{C}$ of sets in a space $\Omega$. Then $\sigma(\mathcal{C})$ is the common part of every sigma-algebra that holds $\mathcal{C}$. It holds $\mathcal{C}$ and lies inside each of them.
+- The rays $(-\infty, t)$ generate the Borel sets.
+- So do the open intervals $(a, b)$ with $a < b$. So do the closed intervals $[a, b]$ with $a \le b$.
+- Every singleton $\{t\}$, every countable set, every open set and every closed set is Borel.
+- The irrationals, the complement of the rationals, are Borel too.
+- The by-hand arithmetic holds exactly: the first $n$ for each reading, the reach $p$ at each $q$, and the Bell number 15.
+
+Building the four-reading families three ways, and the decimal lengths near $\sqrt 2$, are left to the Python and Rust checks.
+
+```lean
+-- Generated sigma-algebras and Borel sets: the generated sigma-algebra is the common part of every sigma-algebra holding the chosen sets, rays, open intervals and closed intervals all generate the Borel sets of the real line, and singletons, countable sets, open sets and closed sets are Borel.
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
+import Mathlib.NumberTheory.Real.Irrational
+import Mathlib.Combinatorics.Enumerative.Bell
+
+open Set MeasurableSpace MeasureTheory
+
+/-- The sigma-algebra generated by any family `C` of subsets of a space `Ω` is the
+intersection of every sigma-algebra on `Ω` that holds all of `C`. It holds every set of `C`,
+and it lies inside every sigma-algebra that holds all of `C`: it is the smallest one. -/
+theorem generated_sigma_algebra_is_smallest {Ω : Type*} (C : Set (Set Ω)) :
+    generateFrom C = sInf {G : MeasurableSpace Ω | ∀ s ∈ C, MeasurableSet[G] s} ∧
+      (∀ s ∈ C, MeasurableSet[generateFrom C] s) ∧
+      ∀ G : MeasurableSpace Ω, (∀ s ∈ C, MeasurableSet[G] s) → generateFrom C ≤ G := by
+  refine ⟨le_antisymm ?_ ?_, fun s hs => measurableSet_generateFrom hs,
+    fun G hG => generateFrom_le hG⟩
+  · exact le_sInf fun G hG => generateFrom_le hG
+  · exact sInf_le fun s hs => measurableSet_generateFrom hs
+
+/-- The Borel sets of the real line (the sigma-algebra generated by the open sets) are also
+generated by the rays `(-∞, t)` for every threshold `t`, by the open intervals `(a, b)` with
+`a < b`, and by the closed intervals `[a, b]` with `a ≤ b`. -/
+theorem borel_sets_generated_by_rays_and_intervals :
+    borel ℝ = generateFrom {S : Set ℝ | ∃ t : ℝ, S = Iio t} ∧
+      borel ℝ = generateFrom {S : Set ℝ | ∃ a b : ℝ, a < b ∧ S = Ioo a b} ∧
+      borel ℝ = generateFrom {S : Set ℝ | ∃ a b : ℝ, a ≤ b ∧ S = Icc a b} := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [borel_eq_generateFrom_Iio]
+    congr 1
+    ext S
+    simp [eq_comm]
+  · apply le_antisymm
+    · rw [Real.borel_eq_generateFrom_Ioo_rat]
+      apply generateFrom_mono
+      intro S hS
+      simp only [mem_iUnion, mem_singleton_iff] at hS
+      obtain ⟨a, b, hab, rfl⟩ := hS
+      exact ⟨a, b, by exact_mod_cast hab, rfl⟩
+    · apply generateFrom_le
+      rintro _ ⟨a, b, -, rfl⟩
+      exact isOpen_Ioo.measurableSet
+  · rw [borel_eq_generateFrom_Icc ℝ]
+    congr 1
+    ext S
+    constructor
+    · rintro ⟨a, b, h, rfl⟩; exact ⟨a, b, h, rfl⟩
+    · rintro ⟨a, b, h, rfl⟩; exact ⟨a, b, h, rfl⟩
+
+/-- On the real line every single point, every countable set, every open set and every
+closed set is a Borel set; so are the irrationals, the complement of the rationals. -/
+theorem singletons_countable_open_closed_sets_are_borel :
+    (∀ t : ℝ, MeasurableSet[borel ℝ] {t}) ∧
+      (∀ S : Set ℝ, S.Countable → MeasurableSet[borel ℝ] S) ∧
+      (∀ U : Set ℝ, IsOpen U → MeasurableSet[borel ℝ] U) ∧
+      (∀ F : Set ℝ, IsClosed F → MeasurableSet[borel ℝ] F) ∧
+      MeasurableSet[borel ℝ] {x : ℝ | Irrational x} := by
+  borelize ℝ
+  refine ⟨fun t => measurableSet_singleton t, fun S hS => hS.measurableSet,
+    fun U hU => hU.measurableSet, fun F hF => hF.measurableSet, ?_⟩
+  have : {x : ℝ | Irrational x} = (range ((↑) : ℚ → ℝ))ᶜ := by
+    ext x; simp [Irrational]
+  rw [this]
+  exact (countable_range _).measurableSet.compl
+
+-- The reading 20.3 = 203/10 lies below 20 + 1/3 but not below 20 + 1/4: it leaves the
+-- shrinking rays (-∞, 20 + 1/n) from n = 4 on.
+example : (203 / 10 : ℚ) < 20 + 1 / 3 ∧ ¬ ((203 / 10 : ℚ) < 20 + 1 / 4) := by norm_num
+
+-- First n with 20 + 1/n ≤ x, for the readings 20.5, 20.01 and 20.0007: n = 2, 100 and 1429.
+example : (41 / 2 : ℚ) < 20 + 1 / 1 ∧ ¬ ((41 / 2 : ℚ) < 20 + 1 / 2) := by norm_num
+example : (2001 / 100 : ℚ) < 20 + 1 / 99 ∧ ¬ ((2001 / 100 : ℚ) < 20 + 1 / 100) := by norm_num
+example : (200007 / 10000 : ℚ) < 20 + 1 / 1428 ∧ ¬ ((200007 / 10000 : ℚ) < 20 + 1 / 1429) := by
+  norm_num
+
+-- The band (0, √2) at denominator q = 100 reaches p = 141: 141 × 141 = 19881 is below
+-- 2 × 100 × 100 = 20000, and 142 × 142 = 20164 is above.
+example : 141 * 141 = 19881 ∧ 2 * 100 * 100 = 20000 ∧ 142 * 142 = 20164 := by decide
+example : 141 * 141 < 2 * 100 * 100 ∧ 2 * 100 * 100 < 142 * 142 := by decide
+
+-- The largest p with p × p < 2 × q × q at q = 1, 10 and 1000: p = 1, 14 and 1414.
+example : 1 * 1 < 2 * 1 * 1 ∧ 2 * 1 * 1 < 2 * 2 := by decide
+example : 14 * 14 < 2 * 10 * 10 ∧ 2 * 10 * 10 < 15 * 15 := by decide
+example : 1414 * 1414 < 2 * 1000 * 1000 ∧ 2 * 1000 * 1000 < 1415 * 1415 := by norm_num
+
+-- Four readings 17, 18, 19, 20 carry 15 sigma-algebras, the Bell number of 4.
+example : Nat.bell 4 = 15 := by
+  norm_num [Nat.bell_succ, ← Nat.range_succ_eq_Iic, Finset.sum_range_succ, Nat.choose]
+
+-- The gauge's 3 atoms {17}, {18, 19}, {20} give 2 ^ 3 = 8 sets; the rays' 4 atoms give 16.
+example : 2 ^ 3 = 8 ∧ 2 ^ 4 = 16 := by decide
+
+#print axioms generated_sigma_algebra_is_smallest
+#print axioms borel_sets_generated_by_rays_and_intervals
+#print axioms singletons_countable_open_closed_sets_are_borel
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'generated_sigma_algebra_is_smallest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'borel_sets_generated_by_rays_and_intervals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'singletons_countable_open_closed_sets_are_borel' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Add a third gauge question.** Guess first: with thresholds 18, 19 and 20, does the gauge settle "exactly 19?"? Change the gauge to `[mask(lambda r: r < 18), mask(lambda r: r < 19), mask(lambda r: r < 20)]`. Answer: yes; every reading becomes its own atom, the closure, atoms and intersection columns reach 16 like the rays', and the gauge assert, pinned to the two-question gauge's 8 sets, stops the run.
@@ -557,7 +700,7 @@ ALL CHECKS PASS
 > **Treating $\sigma(\mathcal{C})$ as the generators plus one round of complements and unions.** From the four-reading rays, one round gives 8 sets; the full 16 arrive only after rounds 5, 8, 11, 14, 16. On the line, even countably many rounds of countable operations miss some Borel sets (a theorem of descriptive set theory, not proved here). The definition by intersection never counts rounds.
 >
 > - **"Borel" read as "open or closed".** The rationals are Borel, yet neither open nor closed.
-> - **"Borel" read as "every subset".** The Vitali set is not Borel; it has no length at all.
+> - **"Borel" read as "every subset".** The Vitali set is not Borel; it has no length at all. It holds one number from each group of numbers that differ by a rational ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)).
 > - **Generators read as atoms.** The gauge's generators $\{17\}$ and $\{17, 18, 19\}$ overlap; its atoms are $\{17\}$, $\{18, 19\}$, $\{20\}$.
 > - **"Measurable" without naming the family.** $\{19\}$ is in the sigma-algebra the rays generate, and not in the one the gauge generates: the same set is settled by one instrument and not the other.
 

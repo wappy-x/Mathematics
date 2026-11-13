@@ -120,4 +120,5 @@ fn main() {
         let parts: Vec<String> = arcs.iter().map(|&(x, y)| format!(" r={} arc {}-{} from {} to {}", rad, x, y, pt(rad, x), pt(rad, y))).collect();
         println!("figure,{}", parts.join(","));
     }
+    println!("ALL CHECKS PASS");
 }

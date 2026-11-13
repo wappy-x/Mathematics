@@ -123,4 +123,5 @@ fn main() {
     let (x1, x2) = ((1.0 - tail_up(0.9)) / 2.0, (1.0 + tail_up(0.9)) / 2.0);
     println!("figure, X = 36 + 300x, Y = 210 - 150d; set ends x = {:.4}, {:.4} km, X = {:.2}, {:.2}; Y(0.9) = {:.2}, Y(2/3) = {:.2}; rectangle area {:.6}",
         x1, x2, 36.0 + 300.0 * x1, 36.0 + 300.0 * x2, 210.0 - 150.0 * 0.9, 210.0 - 100.0, 0.9 * tail_up(0.9));
+    println!("ALL CHECKS PASS");
 }

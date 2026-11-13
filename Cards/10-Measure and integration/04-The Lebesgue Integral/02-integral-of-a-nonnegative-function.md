@@ -10,7 +10,7 @@ A river runs along a straight 1 km stretch. At x km from the start its depth is 
 
 Round the depth down to the nearest half metre and the answer is easy: 0.5 m wherever the depth reaches 0.5 m, a stretch 0.707 km long, so 0.354 km m. Round down to quarter metres: 0.518. To eighths: 0.596. Rounding down only removes water, so each answer is too small, and finer rounding removes less. The numbers climb toward 2/3.
 
-A rounded-down depth takes finitely many values, each on a piece of known length: a **simple function**, whose integral, value times length of each piece added up, was built on [The integral of a simple function](01-integral-of-a-simple-function.md). The depth's own integral is defined as the best answer any simple function lying under it can give. For some functions that best answer is infinite, and the definition allows it.
+A rounded-down depth takes finitely many values, each on a piece of known length: a **simple function**. Its integral, value times length of each piece added up, was built on [The integral of a simple function](01-integral-of-a-simple-function.md). The depth's own integral is defined as the best answer any simple function lying under it can give. For some functions that best answer is infinite, and the definition allows it.
 
 Three facts follow at once. Changing the depth at one point, even to 1000 m, changes nothing. A function with integral zero is zero except on a set of length zero. And a river of average depth 2/3 m is 0.75 m deep or more along at most 0.889 km: Markov's inequality.
 
@@ -30,7 +30,9 @@ The steps sit where the depth crosses 0.25, 0.5 and 0.75 m. The code prints thei
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of its subsets we allow ourselves to measure, and a measure giving each a size; here, positions along the river, sets including every interval, and length, written $\lambda$. A function $f$ is **non-negative** when its values lie in $[0, \infty]$: zero or more, with $\infty$ allowed. It is **measurable** when every set $\{f \ge t\}$, the points where $f$ is at least $t$, is one of the sets we may measure ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
+Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of its subsets we allow ourselves to measure, and a measure giving each a size. Here they are positions along the river; the Borel sets, which are every interval and every set built from intervals by complements and countable unions ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)); and length, written $\lambda$.
+
+A function $f$ is **non-negative** when its values lie in $[0, \infty]$: zero or more, with $\infty$ allowed. It is **measurable** when every set $\{f \ge t\}$, the points where $f$ is at least $t$, is one of the sets we may measure ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
 
 A simple function $s$ takes finitely many values $a_i$ on measurable pieces $A_i$, and its integral is already defined:
 
@@ -71,10 +73,10 @@ $$\int f\,d\mu = 0 \iff f = 0 \text{ a.e.}, \qquad\quad f = g \text{ a.e.} \ \Ri
 
 ### When it holds
 
-- **Non-negative values.** A function +2 on the first half and −2 on the second has parts whose integrals cancel to 0, yet it is zero nowhere, and the length where it is at least 1 is 0.5, above Markov's bound of 0. Signed functions are handled on [Integrable functions](04-integrable-functions-and-l1.md).
+- **Non-negative values.** A function +2 on the first half and −2 on the second has parts whose integrals cancel to 0, yet it is zero nowhere. The length where it is at least 1 is 0.5, above Markov's bound of 0. Signed functions are handled on [Integrable functions](04-integrable-functions-and-l1.md).
 - **Measurable.** If $\{f \ge t\}$ is not in $\mathcal{F}$, it has no size, and Markov's inequality says nothing.
 - **Infinity allowed, never subtracted.** Values and integrals may be ∞, with 0 times ∞ read as 0; ∞ − ∞ never arises.
-- **Any measure.** Counting measure, length on the whole line and probabilities all fit. The a.e. rules use null sets of the same $\mu$.
+- **Any measure.** Counting measure (each point has size 1), length on the whole line and probabilities all fit. The a.e. rules use null sets of the same $\mu$.
 
 ---
 
@@ -94,7 +96,7 @@ Rounding up instead gives a staircase above the depth: one more slab of 1/k over
 
 Every simple $s$ under $d$ lies under the rounded-up staircase, so, by monotonicity of the simple integral, its integral is at most 0.768; the rounded-down staircase is under $d$. So the integral of $d$ lies between 0.518 and 0.768. The gap halves with the step: at 1/256 m the bounds are 0.664663 and 0.668570.
 
-The rounded-down staircases are sums of slab lengths, the square root of 1 − j/k times 1/k for j = 1 to k: a Riemann sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)) for the area under the square root of 1 − t, which is 2/3. So the integral of the depth is 2/3 km m, and the river's average depth over its 1 km is 2/3 m.
+The rounded-down staircases are sums of slab lengths: the square root of 1 − j/k times 1/k, for j = 1 to k. That is a Riemann sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)) for the area under the square root of 1 − t, which is 2/3. So the integral of the depth is 2/3 km m, and the river's average depth over its 1 km is 2/3 m.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -123,7 +125,7 @@ Fix the level 0.75 m. The function $0.75 \cdot \mathbf{1}_A$, with $A = \{d \ge 
 
 The truth is 0.5 km: Markov uses only the average, so it is often loose. It cannot be improved in general. A river 0.75 m deep on the middle half and dry elsewhere holds 0.375 km m, and the bound gives 0.375/0.75 = 0.5, exactly its length.
 
-For a boat moored at a uniformly random point of the stretch, lengths are chances: the chance its depth is at least 0.75 m is at most 0.889 and truly 0.5. The probability version, with Chebyshev's inequality beside it, is [Markov and Chebyshev](07-markov-and-chebyshev.md); the wing-09 statement without measure is on [Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md).
+For a boat moored at a uniformly random point of the stretch, lengths are chances: the chance its depth is at least 0.75 m is at most 0.889 and truly 0.5. The probability version, with Chebyshev's inequality beside it, is [Markov and Chebyshev](07-markov-and-chebyshev.md); the version for random variables, without measure theory, is on [Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md).
 
 ### Step 4: zero integral means zero almost everywhere
 
@@ -141,7 +143,7 @@ Sampling behaves differently: averaging the depth at the 1000 points 0, 0.001, �
 
 ### Step 6: infinity is a legitimate answer
 
-Take 1/x on (0, 1], with the value ∞ at 0, a null set. Its stage-n staircase rounds down to steps of 1/2^n and caps at n. The integrals are 1.0000, 1.6345, 2.3632, 3.0777 and 3.7726 at n = 1, 2, 4, 8, 16. They grow like 1 + ln n, without bound, so the integral of 1/x is ∞. Take 1/√x instead: the staircases give 1.0000, 1.4152, 1.7213, 1.8731, 1.9375, bounded by 2 − 1/n, and the integral is 2.
+Take 1/x on (0, 1], with the value ∞ at 0, a null set. Its stage-n staircase rounds down to steps of 1/2^n and caps at n. The integrals are 1.0000, 1.6345, 2.3632, 3.0777 and 3.7726 at n = 1, 2, 4, 8, 16. They grow like 1 + ln n (ln is the natural logarithm), without bound, so the integral of 1/x is ∞. Take 1/√x instead: the staircases give 1.0000, 1.4152, 1.7213, 1.8731, 1.9375, bounded by 2 − 1/n, and the integral is 2.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -180,7 +182,7 @@ Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, $f$ and $g$ are mea
 
 </details>
 
-A second route to the same number counts sizes instead of values: $\int f\,d\mu$ equals the integral over levels t of the size of $\{f > t\}$, the "layer cake" the slabs of Step 1 are a finite version of. It needs Tonelli's theorem and is proved on [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+A second route to the same number counts sizes instead of values: $\int f\,d\mu$ equals the integral over levels t of the size of $\{f > t\}$, the "layer cake" the slabs of Step 1 are a finite version of. It needs Tonelli's theorem, which integrates a non-negative function of two variables one variable at a time, in either order ([Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)). It is proved on [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 ---
 
@@ -523,6 +525,81 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the supremum formula, monotonicity, Markov's inequality and the two almost-everywhere rules for every measure, and checks the river's numbers exactly.
+
+- The integral of a non-negative measurable function is the supremum of the integrals of the simple functions under it.
+- Each such simple function takes finitely many finite values. Its integral is each value times the size of its piece, added up.
+- Take non-negative measurable functions f and g, with f at most g at every point. Then the integral of f is at most the integral of g.
+- Take a non-negative measurable function f and a level t above 0 and below ∞. Then the size of the set where f is at least t is at most the integral divided by t.
+- Take a non-negative measurable function f. Then its integral is zero exactly when f is zero almost everywhere.
+- Suppose f and g are non-negative, measurable and equal almost everywhere. Then their integrals are equal.
+- Take the depth 4x(1 − x) at x = 0.5. Then it is exactly 1 m.
+- Take the antiderivative 2x² − 4x³/3 at x = 1. Then it is 2/3, the river's integral.
+- Take Markov's inequality at 0.75 m. Then the bound is (2/3) ÷ 0.75 = 8/9 km, about 0.889 km.
+- Take the river 0.75 m deep on the middle half. Then it holds 3/8 = 0.375 km m, and its Markov bound is exactly its length, 0.5 km.
+
+The staircases, the raised point, the sampled average, the unbounded examples and the figure are left to the Python and Rust checks.
+
+```lean
+-- The integral of a non-negative function: the integral of a measurable function with values in [0, ∞] is the supremum of the integrals of the simple functions under it, it is monotone, it satisfies Markov's inequality, it is zero exactly when the function is zero almost everywhere, and it ignores changes on null sets.
+import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
+import Mathlib.MeasureTheory.Integral.Lebesgue.Markov
+
+open MeasureTheory
+open scoped ENNReal NNReal
+
+/-- The integral of a non-negative measurable function `f` (values in `[0, ∞]`, infinity
+allowed) is the supremum, over all simple functions `s` with finitely many finite values
+lying under `f`, of the simple integrals `∑ aᵢ μ(Aᵢ)` (with `0 × ∞ = 0`). -/
+theorem lintegral_eq_sup_of_simple_below {α : Type*} [MeasurableSpace α] (μ : Measure α)
+    (f : α → ℝ≥0∞) (hf : Measurable f) :
+    ∫⁻ x, f x ∂μ =
+      ⨆ (s : SimpleFunc α ℝ≥0) (_ : ∀ x, (s x : ℝ≥0∞) ≤ f x),
+        ∑ a ∈ s.range, (a : ℝ≥0∞) * μ (s ⁻¹' {a}) := by
+  rw [lintegral_eq_nnreal]
+  simp only [SimpleFunc.map_lintegral]
+
+/-- Markov's inequality: for a non-negative measurable `f` and any level `t` with
+`0 < t < ∞`, the set where `f` is at least `t` has size at most the integral divided by `t`. -/
+theorem markov_inequality_lintegral {α : Type*} [MeasurableSpace α] (μ : Measure α)
+    (f : α → ℝ≥0∞) (hf : Measurable f) (t : ℝ≥0∞) (ht0 : 0 < t) (ht : t ≠ ∞) :
+    μ {x | t ≤ f x} ≤ (∫⁻ x, f x ∂μ) / t := by
+  exact meas_ge_le_lintegral_div hf.aemeasurable ht0.ne' ht
+
+/-- For non-negative measurable `f` and `g`: a bigger function has a bigger integral;
+the integral is zero exactly when `f` is zero almost everywhere; and functions equal
+almost everywhere have equal integrals. -/
+theorem lintegral_monotone_and_ignores_null_sets {α : Type*} [MeasurableSpace α]
+    (μ : Measure α) (f g : α → ℝ≥0∞) (hf : Measurable f) (hg : Measurable g) :
+    (f ≤ g → ∫⁻ x, f x ∂μ ≤ ∫⁻ x, g x ∂μ) ∧
+    (∫⁻ x, f x ∂μ = 0 ↔ f =ᵐ[μ] 0) ∧
+    (f =ᵐ[μ] g → ∫⁻ x, f x ∂μ = ∫⁻ x, g x ∂μ) := by
+  exact ⟨fun h => lintegral_mono h, lintegral_eq_zero_iff hf, fun h => lintegral_congr_ae h⟩
+
+-- The river: depth 4x(1 − x) is 1 m at the middle, x = 1/2.
+example : (4 : ℚ) * (1 / 2) * (1 - 1 / 2) = 1 := by norm_num
+-- Its antiderivative 2x² − 4x³/3 at x = 1 gives the integral 2/3.
+example : (2 : ℚ) * 1 ^ 2 - 4 * 1 ^ 3 / 3 = 2 / 3 := by norm_num
+-- Markov at t = 3/4: the river is 3/4 m deep or more on at most (2/3)/(3/4) = 8/9 km.
+example : (2 / 3 : ℚ) / (3 / 4) = 8 / 9 := by norm_num
+-- Tight case: 3/4 m deep on the middle half holds 3/8, and (3/8)/(3/4) = 1/2, its true length.
+example : (3 / 4 : ℚ) * (1 / 2) = 3 / 8 ∧ (3 / 8 : ℚ) / (3 / 4) = 1 / 2 := by norm_num
+
+#print axioms lintegral_eq_sup_of_simple_below
+#print axioms markov_inequality_lintegral
+#print axioms lintegral_monotone_and_ignores_null_sets
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lintegral_eq_sup_of_simple_below' depends on axioms: [propext, Classical.choice, Quot.sound]
+'markov_inequality_lintegral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lintegral_monotone_and_ignores_null_sets' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Finer steps.** Guess first: what does the gap to 2/3 do each time k doubles? Change `range(1, 9)` to `range(1, 11)` and `1..9` to `1..11`. The gap keeps halving and the three roads keep agreeing.
@@ -546,7 +623,7 @@ The two outputs are identical line for line.
 
 - **Expected values.** An average of a non-negative quantity, such as a waiting time, a loss or a rainfall total, is this integral against a probability. The measure version of expectation is [Expectation as an integral](06-expectation-as-an-integral.md).
 - **Tail bounds.** Markov's inequality turns an average into a guarantee from the average alone; sharper versions square or exponentiate first ([Markov and Chebyshev](07-markov-and-chebyshev.md)).
-- **Densities and changing odds.** Integrating a non-negative $f$ over each set $A$ builds a new measure that, by Step 4, gives size zero to every null set of the old one; that is what lets a pricing model switch from real-world to risk-neutral odds ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)).
+- **Densities and changing odds.** Integrating a non-negative $f$ over each set $A$ builds a new measure that, by Step 4, gives size zero to every null set of the old one; that is what lets a pricing model switch from real-world to risk-neutral odds, the odds under which a price equals the discounted average payoff ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)).
 
 > **Say it back**
 > The integral of a non-negative function is the best total any simple function under it can give: the supremum of their integrals, which may be infinite. For the river, staircases of 2, 4 and 8 steps give 0.354, 0.518 and 0.596, climbing to 2/3. A bigger function has a bigger integral, because every staircase under the smaller one is under the bigger one. Putting one flat step of height t under the function gives Markov's inequality, and Markov at levels 1/m gives the zero rule: zero integral means zero except on a null set. Changing a function on a null set, even to 1000 m or to ∞, changes nothing.

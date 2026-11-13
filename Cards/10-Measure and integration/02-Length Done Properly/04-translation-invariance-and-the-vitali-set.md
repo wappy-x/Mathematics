@@ -46,7 +46,7 @@ That last sum is 0 when $\lambda(V) = 0$ and infinite when $\lambda(V) > 0$. It 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda$, $\mu$ | Lebesgue measure, length for measurable sets; $\mu$ a general measure in the tip | 0.6 for the painted set | — |
+| $\lambda$, $\mu$ | Lebesgue measure, length for measurable sets; $\mu$ a general measure in the fold "Why length is the only slide-proof candidate" | 0.6 for the painted set | — |
 | $\lambda^*$, $\ell$ | outer measure: cheapest cover by intervals, for any set; $\ell$ an interval's length | positive for $V$ (Step 6) | — |
 | $E$, $A$, $T$, $E_1$, $E_2$ | sets of points: $A$ painted, $T$ a test set, $E_1$ and $E_2$ the parts of $E$ before and after the cut at $1 - q$ | $A$ = 0.1 to 0.3 with 0.5 to 0.9 | more points, more length |
 | $t$ | slide amount | 0.25 | length unchanged |
@@ -127,7 +127,7 @@ A second road to $\lambda(V) = 0$, the one the code prints: the fractions in $[0
 <details>
 <summary>Why length is the only slide-proof candidate</summary>
 
-Suppose a measure $\mu$ on the Borel sets ignores slides and gives $[0,1)$ the value 1. The interval $[0,1)$ is $n$ slid copies of $[0, 1/n)$ laid end to end, so $\mu([0,1/n)) = 1/n$. Then $m$ copies give $\mu([0, m/n)) = m/n$, and any interval $[a, b)$ is squeezed between intervals with rational ends, so $\mu([a,b)) = b - a$. The line is countably many slid copies of $[0,1)$, each of size 1. On each copy, $\mu$ and $\lambda$ have the same finite total and agree on the half-open intervals inside it, a family closed under overlaps, so they agree on every Borel set in that copy ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)); adding over the copies, they agree on every Borel set. So the sliding rule does not merely hold for length; it pins length down.
+Suppose a measure $\mu$ on the Borel sets (the sets built from intervals by countable unions, intersections and complements) ignores slides and gives $[0,1)$ the value 1. The interval $[0,1)$ is $n$ slid copies of $[0, 1/n)$ laid end to end, so $\mu([0,1/n)) = 1/n$. Then $m$ copies give $\mu([0, m/n)) = m/n$, and any interval $[a, b)$ is squeezed between intervals with rational ends, so $\mu([a,b)) = b - a$. The line is countably many slid copies of $[0,1)$, each of size 1. On each copy, $\mu$ and $\lambda$ have the same finite total and agree on the half-open intervals inside it, a family closed under overlaps, so they agree on every Borel set in that copy ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)); adding over the copies, they agree on every Borel set. So the sliding rule does not merely hold for length; it pins length down.
 
 </details>
 
@@ -260,9 +260,10 @@ print(f"size 0: total after 1000000 copies {sum(F(0) for _ in range(10 ** 6))}")
 def pt(r, x): return f"({180 + r * sin(2 * pi * x):.1f},{120 - r * cos(2 * pi * x):.1f})"
 for r, arcs in ((60, [(0.1, 0.3), (0.5, 0.9)]), (90, [(0.35, 0.55), (0.75, 1.15)])):
     print("figure," + ",".join(f" r={r} arc {a:g}-{b:g} from {pt(r, a)} to {pt(r, b)}" for a, b in arcs))
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 set A [0.1,0.3) [0.5,0.9), length by merging 0.6, by grid 0.6
@@ -290,6 +291,7 @@ size 0.001: total passes 1 after 1001 copies, and grows without bound
 size 0: total after 1000000 copies 0
 figure, r=60 arc 0.1-0.3 from (215.3,71.5) to (237.1,138.5), r=60 arc 0.5-0.9 from (180.0,180.0) to (144.7,71.5)
 figure, r=90 arc 0.35-0.55 from (252.8,172.9) to (152.2,205.6), r=90 arc 0.75-1.15 from (90.0,120.0) to (252.8,67.1)
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -417,10 +419,11 @@ fn main() {
         let parts: Vec<String> = arcs.iter().map(|&(x, y)| format!(" r={} arc {}-{} from {} to {}", rad, x, y, pt(rad, x), pt(rad, y))).collect();
         println!("figure,{}", parts.join(","));
     }
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 set A [0.1,0.3) [0.5,0.9), length by merging 0.6, by grid 0.6
@@ -448,6 +451,7 @@ size 0.001: total passes 1 after 1001 copies, and grows without bound
 size 0: total after 1000000 copies 0
 figure, r=60 arc 0.1-0.3 from (215.3,71.5) to (237.1,138.5), r=60 arc 0.5-0.9 from (180.0,180.0) to (144.7,71.5)
 figure, r=90 arc 0.35-0.55 from (252.8,172.9) to (152.2,205.6), r=90 arc 0.75-1.15 from (90.0,120.0) to (252.8,67.1)
+ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
@@ -462,6 +466,214 @@ xychart-beta
 ```
 
 The one line is $K(n)$, the number of distinct fractions in [0, 1) with denominator at most $n$. A measurable $V$ would have length at most $1/K(n)$, so the climb of this line is the fall of that bound.
+
+### Lean
+
+Lean proves the slide and stretch rules for every set, and Vitali's theorem for every choice set on the wheel.
+
+- Take any set $E$ of reals, any slide $t$ and any nonzero stretch $c$. Then $\lambda^*(E + t) = \lambda^*(E)$ and $\lambda^*(cE) = |c|\,\lambda^*(E)$.
+- Suppose $E$ is measurable. Then $E + t$ and $cE$ are measurable, so the same rules hold for $\lambda$.
+- Take any set $V$ inside the wheel $[0, 1)$ with exactly one point from each group. Then $V$ is not measurable, and $\lambda^*(V) > 0$.
+- The axiom of choice gives such a set $V$.
+- The hand arithmetic holds exactly: the stretches in rows 5 and 6, Euler's totient in row 7, and the counts 32 and 3044.
+- Giving $V$ the size 0.001, 1000 copies reach only 1, and the 1001st copy passes it.
+- On the finite wheel of 360 positions, the smallest and the scrambled choice sets each cover every position exactly once.
+
+The painted set, the grid counts, the decimal bounds and the point mass are left to the Python and Rust checks.
+
+```lean
+-- Translation invariance and the Vitali set: sliding or stretching a set of reals keeps or scales its length, and a set holding one point from each group of reals that differ by a fraction has no length.
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Data.Nat.Totient
+
+open MeasureTheory
+
+theorem slide_aux (E : Set ℝ) (t : ℝ) :
+    volume ((fun x => x + t) '' E) = volume E ∧
+    (NullMeasurableSet E volume → NullMeasurableSet ((fun x => x + t) '' E) volume) := by
+  have h1 : (fun x => x + t) '' E = (fun x => x + -t) ⁻¹' E := by
+    ext y; constructor
+    · rintro ⟨x, hx, rfl⟩; simpa using hx
+    · intro hy; exact ⟨y + -t, hy, by ring⟩
+  rw [h1]
+  exact ⟨measure_preimage_add_right volume (-t) E,
+    fun hE => hE.preimage (measurePreserving_add_right volume (-t)).quasiMeasurePreserving⟩
+
+#print axioms slide_aux
+
+/-- The Vitali set has no length. Take any set `V` inside the wheel `[0, 1)` that holds exactly
+one point from each group, where two points share a group when their gap is a fraction. Then `V`
+is not Lebesgue measurable, and its outer measure is still positive. In Mathlib, `volume` on `ℝ`
+is Lebesgue outer measure on every set, and `NullMeasurableSet V volume` says `V` is Lebesgue
+measurable. -/
+theorem vitali_set_not_measurable (V : Set ℝ) (hV : V ⊆ Set.Ico 0 1)
+    (hone : ∀ x ∈ Set.Ico (0 : ℝ) 1, ∃! v, v ∈ V ∧ ∃ q : ℚ, x - v = q) :
+    ¬ NullMeasurableSet V volume ∧ 0 < volume V := by
+  set T : ℚ → Set ℝ := fun q => (fun x => x + (q : ℝ)) '' V with hT
+  have hcover : Set.Ico (0 : ℝ) 1 ⊆ ⋃ q : ℚ, T q := by
+    intro x hx
+    obtain ⟨v, ⟨hv, q, hq⟩, -⟩ := hone x hx
+    exact Set.mem_iUnion.2 ⟨q, v, hv, by simp only; linarith⟩
+  have hdisj : ∀ q₁ q₂ : ℚ, q₁ ≠ q₂ → Disjoint (T q₁) (T q₂) := by
+    intro q₁ q₂ hne
+    rw [Set.disjoint_left]
+    rintro y ⟨v₁, hv₁, rfl⟩ ⟨v₂, hv₂, h⟩
+    have hu := (hone v₁ (hV hv₁)).unique (y₁ := v₁) (y₂ := v₂)
+      ⟨hv₁, 0, by simp⟩ ⟨hv₂, q₂ - q₁, by push_cast; simp only at h; linarith⟩
+    subst hu
+    apply hne
+    exact_mod_cast (show (q₁ : ℝ) = q₂ by simp only at h; linarith)
+  have hpos : 0 < volume V := by
+    rw [pos_iff_ne_zero]
+    intro h0
+    have : volume (⋃ q : ℚ, T q) = 0 :=
+      measure_iUnion_null fun q => by rw [(slide_aux V q).1, h0]
+    have h1 := measure_mono_null hcover this
+    simp at h1
+  refine ⟨?_, hpos⟩
+  intro hmeas
+  set S : ℕ → Set ℝ := fun n => T ((1 : ℚ) / (n + 1)) with hS
+  have hSdisj : Pairwise (Function.onFun (AEDisjoint volume) S) := by
+    intro m n hmn
+    apply Disjoint.aedisjoint
+    apply hdisj
+    intro h
+    apply hmn
+    have : ((m : ℚ) + 1) = n + 1 := by
+      have hm : (0 : ℚ) < m + 1 := by positivity
+      have hn : (0 : ℚ) < n + 1 := by positivity
+      field_simp at h
+      linarith
+    exact_mod_cast (by linarith : (m : ℚ) = n)
+  have hSm : ∀ n, NullMeasurableSet (S n) volume := fun n => (slide_aux V _).2 hmeas
+  have hsum := measure_iUnion₀ hSdisj hSm
+  have hconst : ∀ n, volume (S n) = volume V := fun n => (slide_aux V _).1
+  simp only [hconst, ENNReal.tsum_const_eq_top_of_ne_zero hpos.ne'] at hsum
+  have hsub : (⋃ n, S n) ⊆ Set.Ioo (0 : ℝ) 2 := by
+    intro y hy
+    obtain ⟨n, v, hv, rfl⟩ := Set.mem_iUnion.1 hy
+    have hv' := hV hv
+    have h1 : (0 : ℝ) < ((1 : ℚ) / (n + 1) : ℚ) := by
+      have : (0 : ℚ) < 1 / (n + 1) := by positivity
+      exact_mod_cast this
+    have h2 : (((1 : ℚ) / (n + 1) : ℚ) : ℝ) ≤ 1 := by
+      have : (1 : ℚ) / (n + 1) ≤ 1 := by
+        rw [div_le_one (by positivity)]; linarith [(n.cast_nonneg : (0 : ℚ) ≤ n)]
+      exact_mod_cast this
+    simp only [Set.mem_Ico] at hv'
+    constructor <;> simp only <;> linarith [hv'.1, hv'.2]
+  have := measure_mono (μ := volume) hsub
+  rw [hsum] at this
+  simp at this
+
+/-- Vitali's theorem: the axiom of choice gives a set inside `[0, 1)` with exactly one point from
+each group of points that differ by a fraction, and that set is not Lebesgue measurable while its
+outer measure is positive. -/
+theorem exists_set_with_no_length :
+    ∃ V : Set ℝ, V ⊆ Set.Ico 0 1 ∧
+      (∀ x ∈ Set.Ico (0 : ℝ) 1, ∃! v, v ∈ V ∧ ∃ q : ℚ, x - v = q) ∧
+      ¬ NullMeasurableSet V volume ∧ 0 < volume V := by
+  let s : Setoid ℝ :=
+    { r := fun x y => ∃ q : ℚ, x - y = q
+      iseqv := ⟨fun x => ⟨0, by simp⟩,
+        fun ⟨q, hq⟩ => ⟨-q, by push_cast; linarith⟩,
+        fun ⟨q, hq⟩ ⟨p, hp⟩ => ⟨q + p, by push_cast; linarith⟩⟩ }
+  have hex : ∀ c : Quotient s, ∃ y ∈ Set.Ico (0 : ℝ) 1, Quotient.mk s y = c := by
+    intro c
+    induction c using Quotient.inductionOn with
+    | h x =>
+      refine ⟨Int.fract x, ⟨Int.fract_nonneg x, Int.fract_lt_one x⟩, ?_⟩
+      apply Quotient.sound
+      exact ⟨-(⌊x⌋ : ℚ), by rw [Int.fract]; push_cast; ring⟩
+  choose g hg hgc using hex
+  have hV : Set.range g ⊆ Set.Ico 0 1 := by
+    rintro _ ⟨c, rfl⟩; exact hg c
+  have hone : ∀ x ∈ Set.Ico (0 : ℝ) 1, ∃! v, v ∈ Set.range g ∧ ∃ q : ℚ, x - v = q := by
+    intro x _
+    refine ⟨g (Quotient.mk s x), ⟨⟨_, rfl⟩, ?_⟩, ?_⟩
+    · have : s.r x (g (Quotient.mk s x)) := Quotient.exact (hgc _).symm
+      exact this
+    · rintro w ⟨⟨c, rfl⟩, hq⟩
+      have h1 : Quotient.mk s x = Quotient.mk s (g c) := Quotient.sound hq
+      rw [h1, hgc]
+  exact ⟨Set.range g, hV, hone, vitali_set_not_measurable _ hV hone⟩
+
+/-- The slide and stretch rules. For every set `E` of reals, every slide `t` and every nonzero
+stretch `c`: sliding `E` by `t` leaves its outer measure unchanged, and stretching it by `c`
+multiplies its outer measure by `|c|`. If `E` is Lebesgue measurable, so are the slid and the
+stretched sets (so the same rules hold for Lebesgue measure). -/
+theorem length_ignores_slides_and_scales_with_stretches (E : Set ℝ) (t c : ℝ) (hc : c ≠ 0) :
+    volume ((fun x => x + t) '' E) = volume E ∧
+    volume ((fun x => c * x) '' E) = ENNReal.ofReal |c| * volume E ∧
+    (NullMeasurableSet E volume →
+      NullMeasurableSet ((fun x => x + t) '' E) volume ∧
+      NullMeasurableSet ((fun x => c * x) '' E) volume) := by
+  have h1 : (fun x => x + t) '' E = (fun x => x + -t) ⁻¹' E := by
+    ext y; constructor
+    · rintro ⟨x, hx, rfl⟩; simpa using hx
+    · intro hy; exact ⟨y + -t, hy, by ring⟩
+  have h2 : (fun x => c * x) '' E = (fun x => c⁻¹ * x) ⁻¹' E := by
+    ext y; constructor
+    · rintro ⟨x, hx, rfl⟩; simpa [hc] using hx
+    · intro hy; exact ⟨c⁻¹ * y, hy, by field_simp⟩
+  refine ⟨?_, ?_, ?_⟩
+  · rw [h1]; exact measure_preimage_add_right volume (-t) E
+  · rw [h2, Real.volume_preimage_mul_left (inv_ne_zero hc), inv_inv]
+  · intro hE
+    refine ⟨?_, ?_⟩
+    · rw [h1]
+      exact hE.preimage (measurePreserving_add_right volume (-t)).quasiMeasurePreserving
+    · rw [h2]
+      refine hE.preimage ⟨measurable_const_mul _, ?_⟩
+      rw [Real.map_volume_mul_left (inv_ne_zero hc)]
+      exact Measure.smul_absolutelyContinuous
+
+-- Worked numbers, row 5: stretching length 3/5 by 3 gives 9/5. Row 6: by -2 gives |-2| * 3/5 = 6/5.
+example : (3 : ℚ) * (3 / 5) = 9 / 5 ∧ |(-2 : ℚ)| * (3 / 5) = 6 / 5 := by norm_num
+
+-- Row 7: Euler's totient for denominators 1 to 10 is 1, 1, 2, 2, 4, 2, 6, 4, 6, 4, adding to 32.
+example : (List.range' 1 10).map Nat.totient = [1, 1, 2, 2, 4, 2, 6, 4, 6, 4] := by decide
+example : (Finset.Icc 1 10).sum Nat.totient = 32 := by decide
+
+-- K(10) = 32: there are 32 distinct fractions a/d in [0, 1) with denominator d at most 10.
+example : ((Finset.Icc 1 10).biUnion fun d =>
+    (Finset.range d).image fun a : ℕ => (a : ℚ) / d).card = 32 := by decide +kernel
+
+-- Row 9: K(100) = 3044, by counting numerators a < d that share no factor with d, d at most 100,
+-- and by summing the totient.
+example : ((Finset.Icc 1 100).sum fun d =>
+    ((Finset.range d).filter fun a => Nat.Coprime a d).card) = 3044 := by decide +kernel
+example : (Finset.Icc 1 100).sum Nat.totient = 3044 := by decide +kernel
+
+-- Giving V the size 1/1000: 1000 copies reach only 1, the 1001st copy passes 1.
+example : (1000 : ℚ) * (1 / 1000) ≤ 1 ∧ 1 < (1001 : ℚ) * (1 / 1000) := by norm_num
+
+-- The finite wheel of 360 positions: the choice set {0, ..., 29}, turned by 30 * j for
+-- j = 0, ..., 11, covers every position exactly once.
+example : ∀ x ∈ Finset.range 360,
+    ((Finset.range 30 ×ˢ Finset.range 12).filter
+      fun p => (p.1 + 30 * p.2) % 360 = x).card = 1 := by
+  decide +kernel
+
+-- The scrambled choice r + 30 * ((7 * r) mod 12) also tiles the finite wheel exactly once.
+example : ∀ x ∈ Finset.range 360,
+    ((Finset.range 30 ×ˢ Finset.range 12).filter
+      fun p => (p.1 + 30 * ((7 * p.1) % 12) + 30 * p.2) % 360 = x).card = 1 := by
+  decide +kernel
+
+#print axioms vitali_set_not_measurable
+#print axioms exists_set_with_no_length
+#print axioms length_ignores_slides_and_scales_with_stretches
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'slide_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vitali_set_not_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exists_set_with_no_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'length_ignores_slides_and_scales_with_stretches' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

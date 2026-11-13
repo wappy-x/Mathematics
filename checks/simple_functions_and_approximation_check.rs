@@ -115,4 +115,5 @@ fn main() {
     all_cross.sort_by(|a, b| a.partial_cmp(b).unwrap());
     let fx: Vec<String> = all_cross.iter().map(|t| format!("{:.2}", 36.0 + 13.0 * t)).collect();
     println!("figure, x = 36 + 13 t, y = 210 - 50 p; stage-1 corners at x = {}", fx.join(", "));
+    println!("ALL CHECKS PASS");
 }

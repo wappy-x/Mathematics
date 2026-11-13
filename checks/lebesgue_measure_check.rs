@@ -135,4 +135,5 @@ fn main() {
     println!("try, eps = {}: stage n=21 closed set {} km, floor {} km",
         dec(1, 100, 2), dec(inner_by_merging(100, n, true), D, 13), dec(99, 100, 2));
     println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

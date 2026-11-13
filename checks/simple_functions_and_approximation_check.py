@@ -92,3 +92,4 @@ assert pos - neg == net and 0 <= (sp - sn) - net < F(1, 2**4)
 print(f"12:00 with 1.5 kW solar: net {f6(net, 4)}, parts {f6(pos, 4)} and {f6(neg, 4)}, stage 4 {f6(sp - sn, 4)}")
 print("figure, x = 36 + 13 t, y = 210 - 50 p; stage-1 corners at x =",
       ", ".join(f"{36 + 13 * float(t):.2f}" for t in sorted(cross[500] + cross[1000])))
+print("ALL CHECKS PASS")

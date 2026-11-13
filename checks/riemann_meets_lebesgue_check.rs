@@ -159,5 +159,5 @@ fn main() {
     }
     let tr: Vec<String> = [10.0, 100.0, 1000.0].iter().map(|m: &f64| format!("{:.3}", 2.0 - 1.0 / m)).collect();
     println!("1/sqrt(x), Lebesgue by truncation min(f, m), m = 10 100 1000: {}", tr.join(" "));
-    println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

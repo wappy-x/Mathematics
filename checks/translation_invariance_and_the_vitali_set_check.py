@@ -85,3 +85,4 @@ print(f"size 0: total after 1000000 copies {sum(F(0) for _ in range(10 ** 6))}")
 def pt(r, x): return f"({180 + r * sin(2 * pi * x):.1f},{120 - r * cos(2 * pi * x):.1f})"
 for r, arcs in ((60, [(0.1, 0.3), (0.5, 0.9)]), (90, [(0.35, 0.55), (0.75, 1.15)])):
     print("figure," + ",".join(f" r={r} arc {a:g}-{b:g} from {pt(r, a)} to {pt(r, b)}" for a, b in arcs))
+print("ALL CHECKS PASS")

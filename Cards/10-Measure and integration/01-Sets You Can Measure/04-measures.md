@@ -10,7 +10,9 @@ A city has three districts. North has 40,000 residents, Centre 25,000, South 10,
 
 Ask "how big is North and South together?" and there are several honest answers. Two districts. 50,000 residents. Two thirds of the city's people. 20 square km. No town hall. Each answer is a different notion of size, and each obeys the same bookkeeping: cut a region into pieces that do not overlap, size each piece, add. North and South hold 40,000 + 10,000 residents because no resident lives in both.
 
-That bookkeeping is the whole idea of a **measure**: a rule that gives each allowed set a size of zero or more, possibly infinite, so that sizes of non-overlapping pieces add. "Allowed" means the set belongs to a sigma-algebra, the collection of sets the rule agrees to size ([Sigma-algebras](02-sigma-algebras.md)). The one demand beyond everyday arithmetic is that the adding must work for a countable list of pieces, not only for two or three. That demand lets length on the whole line, which is infinite, be built from unit stretches, and it is what lets limits pass through sizes later in the wing.
+That bookkeeping is the whole idea of a **measure**: a rule that gives each allowed set a size of zero or more, possibly infinite, so that sizes of non-overlapping pieces add. "Allowed" means the set belongs to a sigma-algebra, the collection of sets the rule agrees to size ([Sigma-algebras](02-sigma-algebras.md)).
+
+The one demand beyond everyday arithmetic is that the adding must work for a countable list of pieces, not only for two or three. That demand lets length on the whole line, which is infinite, be built from unit stretches, and it is what lets limits pass through sizes later in the wing.
 
 **A measure assigns each set in a sigma-algebra a size in [0, ∞], gives the empty set size 0, and adds sizes over any countable list of pieces that do not overlap.**
 
@@ -87,11 +89,11 @@ Two disjoint sets A and B form a countable list A, B, ∅, ∅, … with empty s
 
 The rule μ(∅) = 0 is nearly forced. Take the list ∅, ∅, ∅, …: its union is ∅, so μ(∅) equals an infinite sum of copies of μ(∅). A sum of infinitely many copies of a positive number is infinite, so μ(∅) is 0 or ∞. It can be ∞ only if every set has size ∞, because A = A ∪ ∅ ∪ ∅ ∪ … gives μ(A) = μ(A) + μ(∅) + …. So the empty-set rule only rules out the rule "everything is infinite".
 
-One more consequence: if A sits inside B, then B is A plus the part of B outside A, two disjoint pieces, so μ(B) = μ(A) + μ(B minus A), at least μ(A). Subadditivity and limits follow in [Continuity and subadditivity](05-continuity-of-measure.md).
+One more consequence: if A sits inside B, then B is A plus the part of B outside A, two disjoint pieces, so μ(B) = μ(A) + μ(B minus A), at least μ(A). Subadditivity (the size of a union is at most the sum of the sizes, even when the pieces overlap) and limits follow in [Continuity and subadditivity](05-continuity-of-measure.md).
 
 ### Step 2: every weighted count is a measure
 
-Theorem: on any space with the collection of all its subsets, and any weights w of zero or more, the rule μ(A) = sum of w(ω) over the points ω in A is a measure. When A is uncountable, the sum means the least upper bound of the sums over finite sets of its points. Counting measure, point masses, head count and area by district are all cases of it.
+Theorem: on any space with the collection of all its subsets, and any weights w of zero or more, the rule μ(A) = sum of w(ω) over the points ω in A is a measure. When A is uncountable, the sum means the least upper bound (the smallest number that none of them exceeds) of the sums over finite sets of its points. Counting measure, point masses, head count and area by district are all cases of it.
 
 The idea of the proof: in a disjoint union each point lies in exactly one piece. Adding weights point by point, or piece by piece and then adding the totals, adds the same non-negative numbers in a different order and grouping, and for non-negative terms order and grouping never change the sum.
 
@@ -120,7 +122,7 @@ Dividing every size by the same positive number keeps sizes at zero or more, kee
 
 By the same argument a sum of measures, or a measure times a number of zero or more, is a measure: head count is 40,000 times the point mass at N, plus 25,000 times the one at C, plus 10,000 times the one at S.
 
-Probability is the special case, not the model: the rules for chance used throughout wing 09 are these two rules with the total fixed at 1.
+Probability is the special case, not the model: the rules for chance used throughout wing 09 ([Probability and statistics](../../09-Probability%20and%20statistics/README.md)) are these two rules with the total fixed at 1.
 
 ### Step 4: countable adding is strictly stronger than finite adding
 
@@ -128,13 +130,21 @@ On the whole numbers 0, 1, 2, …, with every subset allowed, define the finite-
 
 It adds over any two disjoint sets. Two finite sets have a finite union: 0 + 0 = 0. If either is infinite, so is the union: ∞ = ∞. Padding again, it adds over any finite list.
 
-It fails for a countable list. The singletons {0}, {1}, {2}, … are disjoint, each of size 0, so their sizes sum to 0. Their union is all the whole numbers, of size ∞. A rule that adds only over finite lists is called **finitely additive**; this one is finitely additive and not a measure. The code stores some infinite sets exactly: the members below 12 listed, and from 12 on a pattern of remainders on division by 6. On 3,000 random disjoint pairs of such sets, finite and infinite, the rule adds every time. That run illustrates the rule and does not test it: in this encoding a union is infinite exactly when one of its parts is, so no pair could fail. The failure lives only in the infinite union, which the argument above settles.
+It fails for a countable list. The singletons {0}, {1}, {2}, … are disjoint, each of size 0, so their sizes sum to 0. Their union is all the whole numbers, of size ∞. A rule that adds only over finite lists is called **finitely additive**; this one is finitely additive and not a measure.
+
+The code stores some infinite sets exactly: the members below 12 listed, and from 12 on a pattern of remainders on division by 6. On 3,000 random disjoint pairs of such sets, finite and infinite, the rule adds every time.
+
+That run illustrates the rule and does not test it: in this encoding a union is infinite exactly when one of its parts is, so no pair could fail. The failure lives only in the infinite union, which the argument above settles.
 
 ### Step 5: finite, sigma-finite, and too big to cut up
 
 Head count, share and area are **finite**: their totals are 75,000, 1 and 25.
 
-Length on the real line is not finite. The interval [−k, k) is the union of the 2k unit intervals [n, n+1) from n = −k to k − 1, so its length is 2k. The whole line contains it, so by Step 1 the line's length is at least 2k for every k: it is ∞. Yet the unit intervals are countably many, each of length 1, and they cover the line. Length is **sigma-finite**: infinite, but cut into countably many finite pieces. That length extends from intervals to a measure on the Borel sets, the sets built from intervals by countable steps ([Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md)), is a theorem proved on shelf 02 ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)); this card uses only the lengths of intervals.
+Length on the real line is not finite. The interval [−k, k) is the union of the 2k unit intervals [n, n+1) from n = −k to k − 1, so its length is 2k. The whole line contains it, so by Step 1 the line's length is at least 2k for every k: it is ∞.
+
+Yet the unit intervals are countably many, each of length 1, and they cover the line. Length is **sigma-finite**: infinite, but cut into countably many finite pieces.
+
+That length extends from intervals to a measure on the Borel sets, the sets built from intervals by countable steps ([Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md)), is a theorem proved on shelf 02 ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)); this card uses only the lengths of intervals.
 
 Counting measure on the whole numbers is sigma-finite too: the singletons {0}, {1}, … have size 1 each and cover.
 
@@ -183,7 +193,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Road one computes each rule on all 8 sets of districts by adding the weights of the points. Road two measures each union directly, without adding pieces: area by counting 0.01 sq km cells of a 0.1 km grid laid on the strip, share by drawing 20,000 residents at random with a SplitMix64 generator (seed 20260929) written out in both languages, and the town hall by its position, 5.8 km. Road three checks additivity on all 27 ordered pairs of disjoint sets, for the six rules that pass and the three that fail. Then the finite-or-not rule, the unit intervals, and the picture coordinates.
+Road one computes each rule on all 8 sets of districts by adding the weights of the points. Road two measures each union directly, without adding pieces: area by counting 0.01 sq km cells of a 0.1 km grid laid on the strip, share by drawing 20,000 residents at random with a SplitMix64 generator (seed 20260929) written out in both languages, and the town hall by its position, 5.8 km.
+
+Road three checks additivity on all 27 ordered pairs of disjoint sets, for the six rules that pass and the three that fail. Then the finite-or-not rule, the unit intervals, and the picture coordinates.
 
 The code checks instances on finite sets and finite stages. It cannot check a countable list of infinitely many non-empty pieces, an uncountable line, or every weighting; Steps 2, 4 and 5 prove those.
 
@@ -556,6 +568,117 @@ figure, city strip: 30 units per km, edges x = 30, 174, 234, 330; town hall x = 
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the three theorems of Steps 2 to 4 for every case they cover, and checks the worked numbers.
+
+- Take any space with every subset allowed, and a weight of zero or more, possibly ∞, on each point. Then the total weight of the points in a set is a measure.
+- Take a measure μ whose total μ(Ω) is finite and not zero. Then P(A) = μ(A) / μ(Ω) is a probability measure.
+- On the whole numbers, the finite-or-not rule adds over any two disjoint sets.
+- It does not add over the singletons {0}, {1}, {2}, …: each has size 0, but their union has size ∞. So it is not a measure.
+- N,S has 2 districts, 50,000 residents, 20 sq km and no town hall.
+- N,S and its complement C add to the city's 75,000 residents and 25 sq km.
+- The share of N,S is 50,000 / 75,000, which is 2/3, and the city's share is 1.
+- Residents of N,C plus residents of C,S is 100,000, not the city's 75,000.
+- The interval [−3, 3) has length 6.
+
+The grid, random samples, failing rules, never-finite rule, unit-interval covers and figure are left to the Python and Rust checks.
+
+```lean
+-- Measures: every weighted count with weights of zero or more is a measure, dividing a measure by a finite non-zero total gives a probability measure, and the finite-or-not rule on the whole numbers adds over two disjoint sets but not over a countable list.
+import Mathlib.MeasureTheory.Measure.Dirac.Basic
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Data.Set.Finite.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory Set
+open scoped ENNReal
+
+/-- Every weighted count is a measure. On any space where every subset is allowed, give each
+point `ω` a weight `w ω` of zero or more (possibly infinite). Then the rule "the size of a set is
+the total weight of the points inside it" is a measure: there is a measure `μ` with
+`μ A = ∑_{ω ∈ A} w ω` for every set `A`. For an infinite set the sum is the least upper bound of
+the sums over its finite subsets, which is how Mathlib's `tsum` on `[0, ∞]` is defined. -/
+theorem weighted_count_is_measure {Ω : Type*} [MeasurableSpace Ω]
+    (hall : ∀ s : Set Ω, MeasurableSet s) (w : Ω → ℝ≥0∞) :
+    ∃ μ : Measure Ω, ∀ A : Set Ω, μ A = ∑' ω : A, w ω := by
+  classical
+  refine ⟨Measure.sum (fun ω => w ω • Measure.dirac ω), fun A => ?_⟩
+  rw [Measure.sum_apply _ (hall A), tsum_subtype A w]
+  congr 1
+  funext ω
+  rw [Measure.smul_apply, Measure.dirac_apply' _ (hall A), smul_eq_mul]
+  by_cases h : ω ∈ A <;> simp [h]
+
+/-- Dividing by a finite total gives a probability. If `μ` is a measure whose total `μ(Ω)` is
+finite and not zero, then the rule `P(A) = μ(A) / μ(Ω)` is a probability measure. -/
+theorem divide_by_total_is_probability {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (h0 : μ univ ≠ 0) (htop : μ univ ≠ ∞) :
+    ∃ P : Measure Ω, IsProbabilityMeasure P ∧ ∀ A : Set Ω, P A = μ A / μ univ := by
+  refine ⟨(μ univ)⁻¹ • μ, ⟨?_⟩, fun A => ?_⟩
+  · rw [Measure.smul_apply, smul_eq_mul, ENNReal.inv_mul_cancel h0 htop]
+  · rw [Measure.smul_apply, smul_eq_mul, div_eq_mul_inv, mul_comm]
+
+open scoped Classical in
+/-- Countable adding is strictly stronger than finite adding. On the whole numbers, the
+finite-or-not rule (size 0 for a finite set, `∞` for an infinite one) adds over any two disjoint
+sets, but it does not add over every countable list of disjoint sets: the singletons
+`{0}, {1}, {2}, …` each have size 0, while their union, all the whole numbers, has size `∞`. -/
+theorem finite_or_not_rule_finitely_but_not_countably_additive :
+    let ν : Set ℕ → ℝ≥0∞ := fun A => if A.Finite then 0 else ∞
+    (∀ A B : Set ℕ, Disjoint A B → ν (A ∪ B) = ν A + ν B) ∧
+      ¬ (∀ A : ℕ → Set ℕ, Pairwise (Function.onFun Disjoint A) → ν (⋃ i, A i) = ∑' i, ν (A i)) := by
+  intro ν
+  refine ⟨fun A B _ => ?_, fun h => ?_⟩
+  · simp only [ν, Set.finite_union]
+    by_cases hA : A.Finite <;> by_cases hB : B.Finite <;> simp [hA, hB]
+  · have hd : Pairwise (Function.onFun Disjoint (fun i : ℕ => ({i} : Set ℕ))) := by
+      intro i j hij
+      simp [Function.onFun, hij]
+    have := h (fun i => {i}) hd
+    have hu : (⋃ i : ℕ, ({i} : Set ℕ)) = univ := by
+      ext n; simp
+    simp only [ν, hu, Set.finite_singleton, ite_true, tsum_zero] at this
+    have hinf : ¬ (univ : Set ℕ).Finite := Set.infinite_univ
+    simp [hinf] at this
+
+/-! The card's worked numbers. Districts are `0 = N`, `1 = C`, `2 = S`. -/
+
+-- Head count of N,S: 40,000 + 10,000 = 50,000; districts: 1 + 1 = 2; area: 12 + 8 = 20 sq km;
+-- town hall (point mass at C): 0 + 0 = 0.
+example : ∑ i ∈ ({0, 2} : Finset (Fin 3)), ![40000, 25000, 10000] i = 50000 := by decide
+example : ∑ i ∈ ({0, 2} : Finset (Fin 3)), ![1, 1, 1] i = 2 := by decide
+example : ∑ i ∈ ({0, 2} : Finset (Fin 3)), ![12, 5, 8] i = 20 := by decide
+example : ∑ i ∈ ({0, 2} : Finset (Fin 3)), ![0, 1, 0] i = 0 := by decide
+
+-- N,S and its complement C add to the city: 50,000 + 25,000 = 75,000 residents, 20 + 5 = 25 sq km.
+example : ∑ i : Fin 3, ![40000, 25000, 10000] i = 50000 + 25000 ∧
+    ∑ i : Fin 3, ![12, 5, 8] i = 20 + 5 := by decide
+
+-- Share of residents of N,S: 50,000 / 75,000 = 2/3; the city's share is 1.
+example : (50000 : ℚ) / 75000 = 2 / 3 ∧ (75000 : ℚ) / 75000 = 1 := by norm_num
+
+-- Overlapping pieces do not add: residents of N,C plus residents of C,S is 100,000, not 75,000.
+example : (40000 + 25000) + (25000 + 10000) = 100000 ∧ 100000 ≠ 75000 := by decide
+
+-- Length of [-3, 3) is 6, the sum of 6 unit intervals.
+example : volume (Ico (-3 : ℝ) 3) = 6 := by
+  rw [Real.volume_Ico]; norm_num
+
+#print axioms weighted_count_is_measure
+#print axioms divide_by_total_is_probability
+#print axioms finite_or_not_rule_finitely_but_not_countably_additive
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'weighted_count_is_measure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'divide_by_total_is_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'finite_or_not_rule_finitely_but_not_countably_additive' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Guess first:** give Centre 30,000 residents. Which columns change? Answer: residents and share only. N,S keeps its 50,000 residents, but its share falls to 50,000 / 80,000, because the total grew; area and the town hall do not notice.
@@ -601,7 +724,7 @@ ALL CHECKS PASS
 - [Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md): when agreeing on a few sets forces two measures to agree on all of them.
 - [Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md): sets of size zero, and what may be ignored on them.
 - [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md): a function taking a few values, integrated by weighting each value by the measure of the set where it is taken.
-- Bounded and symmetric: a measure whose sizes are projections instead of numbers.
+- Bounded and symmetric, in the functional analysis wing: a measure whose sizes are projections (maps that keep one part of a vector and drop the rest) instead of numbers.
 
 The definition says what sizes of pieces must do, but not what happens to sizes along a rising or shrinking sequence of sets; [Continuity and subadditivity](05-continuity-of-measure.md) draws that out of countable additivity, and finds the one place it needs a finite size.
 

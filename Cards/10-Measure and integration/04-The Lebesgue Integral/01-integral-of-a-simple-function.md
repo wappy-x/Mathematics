@@ -8,9 +8,15 @@
 
 A river runs for 1 km. A survey boat drops a sounding line marked only in quarter metres, so every reading is the depth rounded down: 0, 0.25, 0.5 or 0.75 m, and 1 m at the single deepest point. The true bed is a smooth trough, deepest at the middle, where it reaches exactly 1 m. The survey wants one number: the area of the river's long section, the vertical slice down its centre line, in kilometres times metres (km·m).
 
-With rounded readings the job is bookkeeping. The reading is 0.75 m along a stretch 0.5 km long. It is 0.5 m along two stretches totalling 0.2071 km, 0.25 m along two totalling 0.1589 km, and 0 near the banks. Multiply each reading by the length where it holds, add: 0.3750 + 0.1036 + 0.0397 = **0.5183 km·m**. A second surveyor stacks the same answer in layers instead: the water is at least 0.25 m deep along 0.8660 km, at least 0.5 m along 0.7071 km, at least 0.75 m along 0.5 km. Each layer is 0.25 m thick, so the total is 0.25 × (0.8660 + 0.7071 + 0.5) = 0.5183 again.
+With rounded readings the job is bookkeeping. The reading is 0.75 m along a stretch 0.5 km long. It is 0.5 m along two stretches totalling 0.2071 km, 0.25 m along two totalling 0.1589 km, and 0 near the banks. Multiply each reading by the length where it holds, add: 0.3750 + 0.1036 + 0.0397 = **0.5183 km·m**.
 
-Henri Lebesgue described this as counting a pile of coins by denomination: sort by value, count each heap, multiply, add. Here the heaps are the stretches where the rounded depth takes one value; from here on they are called **level sets**, and the rounded depth is a **simple function**: a function with finitely many values, each on a measurable set. Nothing requires the level sets to be intervals. The function that is 1 on the rational points of [0, 1] and 0 elsewhere has no Riemann integral, yet its level sets have lengths 0 and 1, so the same bookkeeping gives 1 × 0 + 0 × 1 = 0 ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). The card's real work is proving that the pieces, the layers, or any other way of writing the same staircase always give the same total.
+A second surveyor stacks the same answer in layers instead: the water is at least 0.25 m deep along 0.8660 km, at least 0.5 m along 0.7071 km, at least 0.75 m along 0.5 km. Each layer is 0.25 m thick, so the total is 0.25 × (0.8660 + 0.7071 + 0.5) = 0.5183 again.
+
+Henri Lebesgue described this as counting a pile of coins by denomination: sort by value, count each heap, multiply, add. Here the heaps are the stretches where the rounded depth takes one value; from here on they are called **level sets**, and the rounded depth is a **simple function**: a function with finitely many values, each on a measurable set (a set that can be given a size, such as a stretch of river).
+
+Nothing requires the level sets to be intervals. The function that is 1 on the rational points of [0, 1] and 0 elsewhere has no Riemann integral (the school integral, built from strips over intervals), yet its level sets have lengths 0 and 1, so the same bookkeeping gives 1 × 0 + 0 × 1 = 0 ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
+
+The card's real work is proving that the pieces, the layers, or any other way of writing the same staircase always give the same total.
 
 **The integral of a non-negative simple function is the sum, over its finitely many values, of each value times the measure of the set where it is taken; any other way of writing the function as a sum of values on sets gives the same number, and the integral adds, scales and respects order.**
 
@@ -28,7 +34,11 @@ Caption: the curve is the depth, the shaded region is the rounded depth. The sha
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) that gives each such set a size of zero or more, possibly infinite ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the river, $\Omega$ is the stretch [0, 1] in km and the measure is length, written $\lambda$ (lambda). The indicator $\mathbf 1_A$, read "one on A, zero off it", is the function that is 1 at points of the set A and 0 elsewhere. A non-negative **simple function** is a finite sum of indicators with coefficients of zero or more ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). The new symbol $\int s\,d\mu$ is read "the integral of s against mu".
+Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) that gives each such set a size of zero or more, possibly infinite ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
+
+On the river, $\Omega$ is the stretch [0, 1] in km and the measure is length, written $\lambda$ (lambda). The indicator $\mathbf 1_A$, read "one on A, zero off it", is the function that is 1 at points of the set A and 0 elsewhere.
+
+A non-negative **simple function** is a finite sum of indicators with coefficients of zero or more ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). The new symbol $\int s\,d\mu$ is read "the integral of s against mu".
 
 Write the simple function $s$ in its **standard form**: list its distinct values $a_1, \dots, a_n$, and let $A_i$ be the set where $s$ equals $a_i$. The sets $A_i$ do not overlap and together cover $\Omega$.
 
@@ -56,7 +66,7 @@ The first fact with one set gives $\int \mathbf 1_A\,d\mu=\mu(A)$: the integral 
 | $A_i$ | the level set where s equals a_i | {s = 0.75} is 0.25 to 0.75 km, minus the point 0.5 | a longer piece carries more weight |
 | $C_e$, $C$, $e_j$ | a cell: the points with one yes/no pattern e, where e_j says in B_j or not | the stretch 0.25 to 0.75 km: in all three layers | — |
 | $\mathbf 1_A$ | indicator: one on A, zero off it | one on the stretch where depth ≥ 0.5 m | — |
-| $\Omega$, $\mathcal F$ | the space and its measurable sets | [0, 1] km and its Borel sets | — |
+| $\Omega$, $\mathcal F$ | the space and its measurable sets | [0, 1] km and its Borel sets (the sets built from intervals; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)) | — |
 | $\mu$, $P$ | a measure; P is one with total size 1 | length; the die's 1/6 per face | sizes up, integral up |
 | $\lambda$ | length on the line (Lebesgue measure) | λ{s = 0.5} = 0.2071 km | — |
 | $\int s\,d\mu$ | the integral of s against μ | 0.5183 km·m | — |
@@ -90,7 +100,11 @@ Ask two things of any integral. First, a block of height 1 over a set A has area
 
 The river staircase has two natural descriptions. As level sets: 0.25 on a piece of 0.1589 km, 0.5 on 0.2071 km, 0.75 on 0.5 km. As layers: $s=0.25\,\mathbf 1_{\{d\ge 0.25\}}+0.25\,\mathbf 1_{\{d\ge 0.5\}}+0.25\,\mathbf 1_{\{d\ge 0.75\}}+0.25\,\mathbf 1_{\{d\ge 1\}}$, where the sets are nested stretches of 0.8660, 0.7071 and 0.5 km, overlapping heavily, and the single point 0.5 km, length 0. A point at 0.4 km, depth 0.9600 m, lies in all three layers and gets 0.25 + 0.25 + 0.25 = 0.75, which is its level. The two sums agree, 0.5183 each.
 
-The proof in outline. Given any representation with m sets $B_1,\dots,B_m$, look at the pieces cut out by asking, for each $B_j$, "in it or not". There are at most $2^m$ such **cells**; they do not overlap, they are measurable, and each $B_j$ is exactly the union of the cells inside it. On one cell the function has one value, the sum of the $c_j$ for the sets that contain that cell. Split each $\mu(B_j)$ over its cells, collect by cell, and the representation's total becomes "value on the cell times size of the cell", summed over cells. The standard form gives the same cell sum. For the river, the four layers cut [0, 1] into the two bank stretches, a pair of stretches each for 0.25 and 0.5, the middle stretch for 0.75 minus its centre, and the centre point for 1.
+The proof in outline. Given any representation with m sets $B_1,\dots,B_m$, look at the pieces cut out by asking, for each $B_j$, "in it or not". There are at most $2^m$ such **cells**; they do not overlap, they are measurable, and each $B_j$ is exactly the union of the cells inside it.
+
+On one cell the function has one value, the sum of the $c_j$ for the sets that contain that cell. Split each $\mu(B_j)$ over its cells, collect by cell, and the representation's total becomes "value on the cell times size of the cell", summed over cells. The standard form gives the same cell sum.
+
+For the river, the four layers cut [0, 1] into the two bank stretches, a pair of stretches each for 0.25 and 0.5, the middle stretch for 0.75 minus its centre, and the centre point for 1.
 
 <details>
 <summary>Detailed proof</summary>
@@ -119,7 +133,11 @@ where the middle step swaps the order of a finite double sum of non-negative ter
 
 ### Step 3: linearity, on the river
 
-A second survey measures the silt on the bed, a simple function u: 0.2 m thick from 0.3 to 0.8 km, 0.1 m from 0.8 km to the far bank, none elsewhere. Its integral is 0.2 × 0.5 + 0.1 × 0.2 = 0.1200 km·m. The depth to hard bottom is s + u. Its level sets are new: cut the stretch at the staircase's steps and at 0.3 and 0.8, giving 10 cells, and add value times length cell by cell. That gives 0.6383 km·m, which is 0.5183 + 0.1200. The proof needs no cells at all: writing s's pieces and u's pieces in one list is already a representation of s + u, and Step 2 says any representation gives the integral.
+A second survey measures the silt on the bed, a simple function u: 0.2 m thick from 0.3 to 0.8 km, 0.1 m from 0.8 km to the far bank, none elsewhere. Its integral is 0.2 × 0.5 + 0.1 × 0.2 = 0.1200 km·m.
+
+The depth to hard bottom is s + u. Its level sets are new: cut the stretch at the staircase's steps and at 0.3 and 0.8, giving 10 cells, and add value times length cell by cell. That gives 0.6383 km·m, which is 0.5183 + 0.1200.
+
+The proof needs no cells at all: writing s's pieces and u's pieces in one list is already a representation of s + u, and Step 2 says any representation gives the integral.
 
 Scaling is the same move. Reading depth in centimetres multiplies every value by 100 and the integral by 100: 51.83 km·cm.
 
@@ -169,7 +187,9 @@ The same formula against a probability on six points: a die pays 0 on faces 1, 2
 
 ## Code, from first principles, and it actually runs
 
-The code finds the quarter-metre staircase's integral by four independent roads. Road one locates each level set's ends by bisection on the depth, with no square roots, and adds value times length over the standard form. Road two adds the overlapping layers with lengths from the square-root formula. Road three averages the staircase over a million evenly spaced points. Road four cuts every piece again at each 0.1 km mark, a finer partition, and adds cell by cell. Then it checks linearity with the silt layer and a change to centimetres, monotonicity against the half-metre staircase, the die in exact fractions, the finer staircases, and every row of What breaks.
+The code finds the quarter-metre staircase's integral by four independent roads. Road one locates each level set's ends by bisection on the depth, with no square roots, and adds value times length over the standard form. Road two adds the overlapping layers with lengths from the square-root formula. Road three averages the staircase over a million evenly spaced points. Road four cuts every piece again at each 0.1 km mark, a finer partition, and adds cell by cell.
+
+Then it checks linearity with the silt layer and a change to centimetres, monotonicity against the half-metre staircase, the die in exact fractions, the finer staircases, and every row of What breaks.
 
 The code checks one staircase, one die and a few refinements. That every representation of every simple function on every measure space gives the same total, and that the integral is linear and monotone, is what the Detailed proof shows.
 
@@ -536,6 +556,106 @@ breaks, overlapping layers weighted by their level: 0.9451, not 0.5183
 breaks, signed pieces +1 on [0, inf), -1 on (-inf, 0): cut at [-1000, 1000] gives 0, at [-1000, 2000] gives 1000
 figure, x = 40 + 300 x, y = 200 - 160 d; ends x = 60.1, 83.9, 115.0, 265.0, 296.1, 319.9; levels y = 160, 120, 80; apex (190, 40)
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean defines the integral in standard form and proves the three theorems for every non-negative simple function on every measure space.
+
+- Suppose $s=\sum_j c_j\mathbf 1_{B_j}$ at every point, with each $c_j\ge 0$ finite and each $B_j$ measurable. Then $\int s\,d\mu=\sum_j c_j\,\mu(B_j)$, even when the sets overlap.
+- Take non-negative simple functions s and t. Then $\int (s+t)\,d\mu=\int s\,d\mu+\int t\,d\mu$.
+- Take a number $c\ge 0$. Then $\int c\,s\,d\mu=c\int s\,d\mu$.
+- Suppose $s\le t$ at every point. Then $\int s\,d\mu\le\int t\,d\mu$.
+- The die gives 5/3 both ways, point by point and by level sets.
+
+The river's numbers, the finer staircases and What breaks are left to the Python and Rust checks.
+
+```lean
+-- The integral of a simple function: for a non-negative simple function on any measure space, the sum of value times measure over its level sets equals the sum of weight times measure for any way of writing it as weighted indicators of measurable sets, and this integral adds, scales and respects order.
+import Mathlib.MeasureTheory.Function.SimpleFunc
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Integral.Lebesgue.Add
+
+open MeasureTheory
+open scoped NNReal ENNReal
+
+
+variable {α : Type*} [MeasurableSpace α]
+
+/-- The card's definition, in standard form: for each of the finitely many values `a` that the
+simple function `s` takes, multiply `a` by the measure of the set where `s` equals `a`, and add.
+Values are finite and at least zero (`ℝ≥0`); measures may be infinite, with `0 * ∞ = 0`. -/
+noncomputable def standardFormIntegral (s : SimpleFunc α ℝ≥0) (μ : Measure α) : ℝ≥0∞ :=
+  ∑ a ∈ s.range, (a : ℝ≥0∞) * μ (s ⁻¹' {a})
+
+
+/-- Helper: the standard-form total is the Lebesgue integral of `s`, viewed in `ℝ≥0∞`. -/
+theorem standardFormIntegral_eq_lintegral (s : SimpleFunc α ℝ≥0) (μ : Measure α) :
+    standardFormIntegral s μ = ∫⁻ x, (s x : ℝ≥0∞) ∂μ := by
+  rw [standardFormIntegral, ← SimpleFunc.map_lintegral, ← SimpleFunc.lintegral_eq_lintegral]
+  rfl
+
+/-- Any way of writing a simple function gives the same total. If `s` equals
+`c₁ 1_{B₁} + ... + c_m 1_{B_m}` at every point, with finite weights `c_j ≥ 0` and measurable sets
+`B_j` that may overlap, then weight times measure added over the `B_j` equals value times measure
+added over the level sets of `s`. -/
+theorem integral_of_simple_function_any_representation (μ : Measure α) (s : SimpleFunc α ℝ≥0)
+    {m : ℕ} (c : Fin m → ℝ≥0) (B : Fin m → Set α) (hB : ∀ j, MeasurableSet (B j))
+    (hs : ∀ x, s x = ∑ j, (B j).indicator (fun _ => c j) x) :
+    standardFormIntegral s μ = ∑ j, (c j : ℝ≥0∞) * μ (B j) := by
+  rw [standardFormIntegral_eq_lintegral]
+  have h : (fun x => (s x : ℝ≥0∞)) = fun x => ∑ j, (B j).indicator (fun _ => (c j : ℝ≥0∞)) x := by
+    funext x
+    rw [hs x, ENNReal.ofNNReal_finsetSum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    by_cases hx : x ∈ B j <;> simp [Set.indicator, hx]
+  rw [h, lintegral_finsetSum _ fun j _ => measurable_const.indicator (hB j)]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [lintegral_indicator_const (hB j)]
+
+/-- The integral adds and scales: for non-negative simple functions `s`, `t` and a number
+`c ≥ 0`, the integral of `s + t` is the integral of `s` plus the integral of `t`, and the
+integral of `c s` is `c` times the integral of `s`. -/
+theorem integral_of_simple_function_add_and_scale (μ : Measure α) (s t : SimpleFunc α ℝ≥0)
+    (c : ℝ≥0) :
+    standardFormIntegral (s + t) μ = standardFormIntegral s μ + standardFormIntegral t μ ∧
+      standardFormIntegral (c • s) μ = (c : ℝ≥0∞) * standardFormIntegral s μ := by
+  refine ⟨?_, ?_⟩
+  · simp only [standardFormIntegral_eq_lintegral, FunLike.coe_add, Pi.add_apply,
+      ENNReal.coe_add]
+    exact lintegral_add_left (SimpleFunc.measurable s).coe_nnreal_ennreal _
+  · simp only [standardFormIntegral_eq_lintegral, FunLike.coe_smul, Pi.smul_apply,
+      smul_eq_mul, ENNReal.coe_mul]
+    exact lintegral_const_mul _ (SimpleFunc.measurable s).coe_nnreal_ennreal
+
+/-- A lower staircase never has the larger total: if `s ≤ t` at every point, the integral of
+`s` is at most the integral of `t`. -/
+theorem integral_of_simple_function_mono (μ : Measure α) (s t : SimpleFunc α ℝ≥0)
+    (hst : s ≤ t) :
+    standardFormIntegral s μ ≤ standardFormIntegral t μ := by
+  rw [standardFormIntegral_eq_lintegral, standardFormIntegral_eq_lintegral]
+  exact lintegral_mono fun x => ENNReal.coe_le_coe.2 (hst x)
+
+
+-- The card's die: faces pay 0, 0, 0, 2, 2, 6, each face with probability 1/6.
+-- Point by point: (0 + 0 + 0 + 2 + 2 + 6)/6 = 5/3.
+example : ((0 + 0 + 0 + 2 + 2 + 6 : ℚ) / 6) = 5 / 3 := by norm_num
+-- By level sets: 0 on faces 1-3, 2 on faces 4-5, 6 on face 6: 0 × 3/6 + 2 × 2/6 + 6 × 1/6 = 5/3.
+example : (0 : ℚ) * (3 / 6) + 2 * (2 / 6) + 6 * (1 / 6) = 5 / 3 := by norm_num
+
+#print axioms standardFormIntegral_eq_lintegral
+#print axioms integral_of_simple_function_any_representation
+#print axioms integral_of_simple_function_add_and_scale
+#print axioms integral_of_simple_function_mono
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'standardFormIntegral_eq_lintegral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_of_simple_function_any_representation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_of_simple_function_add_and_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_of_simple_function_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

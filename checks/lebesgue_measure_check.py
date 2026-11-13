@@ -113,3 +113,4 @@ print(f"completion, four points: {len(F)} old sets, {len(done)} completed, {reps
 t = Fr(1, 100)
 print(f"try, eps = {dec(t, 2)}: stage n=21 closed set {dec(inner_by_merging(t, N), 13)} km, floor {dec(1 - t, 2)} km")
 print("All checks passed.")
+print("ALL CHECKS PASS")

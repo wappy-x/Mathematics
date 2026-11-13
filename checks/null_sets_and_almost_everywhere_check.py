@@ -113,3 +113,4 @@ print("figure, board r=100px at (120,120); centre discs 50, 20, 10 px; rim band 
 assert pi_lower < pi_series < pi_upper                   # two roads to the area
 assert worst < 4.0                                       # simulation within 4 SE
 assert road1 == road2 and len(pairs) == len(road1) == 8 and closed_up  # one value each
+print("ALL CHECKS PASS")
