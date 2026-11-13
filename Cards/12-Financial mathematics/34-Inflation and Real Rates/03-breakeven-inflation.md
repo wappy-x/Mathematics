@@ -81,7 +81,11 @@ The breakeven is an inverse: it runs a payoff backwards to the rate that produce
 
 - **Does one exist?** Yes, whenever both yields are above −100 percent. The linker's year-$T$ dollars, $(1+r)^T(1+\pi)^T$, run from zero (as $\pi$ falls to −1) to as large as needed, passing every value on the way. So they hit the nominal bond's dollars somewhere.
 - **Is it unique?** Yes. Higher inflation always means more linker dollars, so the linker line in the picture only climbs. A climbing line crosses a flat one once.
-- **The boundary.** If $n = r$, the breakeven is zero. If $n < r$, it is negative: the bonds tie only under falling prices. Then a real feature intervenes: a US linker repays at least its original face at maturity (the **deflation floor**). At $n = r$ the floor makes every index ratio $J \le 1$ a tie, so the answer is no longer unique. With $n$ at 0.5 percent and $r$ at 1 percent, the formula gives −0.495 percent, an index ratio of 0.9516. But the floored linker pays at least $1,104.62, above the nominal bond's $1,051.14. No inflation rate makes them tie. In our example the tie sits at an index ratio of 1.2801, far above 1, so the floor stays out of the way.
+- **The boundary.** If $n = r$, the breakeven is zero. If $n < r$, it is negative: the bonds tie only under falling prices.
+
+  Then a real feature intervenes: a US linker repays at least its original face at maturity (the **deflation floor**). At $n = r$ the floor makes every index ratio $J \le 1$ a tie, so the answer is no longer unique.
+
+  With $n$ at 0.5 percent and $r$ at 1 percent, the formula gives −0.495 percent, an index ratio of 0.9516. But the floored linker pays at least $1,104.62, above the nominal bond's $1,051.14. No inflation rate makes them tie. In our example the tie sits at an index ratio of 1.2801, far above 1, so the floor stays out of the way.
 
 ### When it holds
 
@@ -89,7 +93,7 @@ The breakeven is an inverse: it runs a payoff backwards to the rate that produce
 - **Constant inflation.** The formula names one steady rate. Actual inflation wobbles. For zero-coupon bonds only the total rise $J$ matters, so the tie holds for any path with $J = 1.2801$. With coupons, the path shifts each coupon's dollars a little.
 - **Same compounding on both yields.** Mixing a semiannual quote with an annual one moves the answer by 3 basis points here; see What breaks.
 - **No credit, tax or liquidity differences.** Both bonds are from the same government. Linkers trade less, and buyers want paying for that; the gap lands inside the breakeven and makes it read low.
-- **The index is the one the linker uses.** A US linker follows a consumer price index read three months late; a breakeven measures inflation in that index, over that lagged window.
+- **The index is the one the linker uses.** A US linker follows a consumer price index (CPI) read three months late; a breakeven measures inflation in that index, over that lagged window.
 
 ---
 
@@ -119,7 +123,11 @@ Real linkers pay coupons. The 1 percent linker pays 1 percent of its face each y
 
 $$P = \sum_{t=1}^{T} \frac{c\,(1+\pi)^t}{(1+n)^t} + \frac{(1+\pi)^T}{(1+n)^T}$$
 
-The sign $\sum_{t=1}^{T}$ means: add up the term after it for $t = 1, 2, \ldots, T$. Now look at one term. It has $(1+\pi)^t$ on top and $(1+n)^t$ below, so it equals $c / \big((1+n)/(1+\pi)\big)^t$. That is the payment discounted at a single rate, $(1+n)/(1+\pi) - 1$. The linker's price, by definition of its real yield, is its real payments discounted at $r$ ([Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md)). So the equation holds exactly when $(1+n)/(1+\pi) = 1+r$: the same formula as Step 2.
+The sign $\sum_{t=1}^{T}$ means: add up the term after it for $t = 1, 2, \ldots, T$.
+
+Now look at one term. It has $(1+\pi)^t$ on top and $(1+n)^t$ below, so it equals $c / \big((1+n)/(1+\pi)\big)^t$. That is the payment discounted at a single rate, $(1+n)/(1+\pi) - 1$.
+
+The linker's price, by definition of its real yield, is its real payments discounted at $r$ ([Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md)). So the equation holds exactly when $(1+n)/(1+\pi) = 1+r$: the same formula as Step 2.
 
 The coupon never entered. The code checks it on two linkers, one with a 1 percent coupon priced at $1,000 and one with a 0.125 percent coupon priced at $917.13. Both give 2.5 percent.
 
@@ -140,11 +148,11 @@ The real yield $r$ is defined by $P = \sum c(1+r)^{-t} + (1+r)^{-T}$. So $g = 1+
 
 Multiply out the tie: $1 + n = (1+r)(1+b) = 1 + r + b + r\,b$. So $n - r = b + r\,b$. The shortcut $s$ carries an extra cross term $r\,b$: real growth earned on the inflation uplift. At our yields it is 2.5 basis points. It grows with both rates.
 
-Quoted with **continuous compounding**, rates add exactly: the breakeven is $\ln(1+n) - \ln(1+r)$, here 2.469 percent a year continuously compounded. Same fact, a different unit, as a temperature in Celsius and Fahrenheit.
+Quoted with **continuous compounding**, rates add exactly. A continuous rate is interest added at every instant; it is the natural logarithm, $\ln$, of a growth factor ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). So the breakeven is $\ln(1+n) - \ln(1+r)$, here 2.469 percent a year continuously compounded. Same fact, a different unit, as a temperature in Celsius and Fahrenheit.
 
 ### Step 5: read it against the inflation swap
 
-A zero-coupon inflation swap is a contract on the same question with no bonds at all: at year $T$, one side pays the index's total rise $J$ on a notional amount, the other pays a fixed growth $(1+k)^T$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Its fixed rate $k$ is a second, independent quote for the price of inflation.
+A zero-coupon inflation swap is a contract on the same question with no bonds at all: at year $T$, one side pays the index's total rise $J$ on a notional amount (the sum both payments are computed on, never itself paid), the other pays a fixed growth $(1+k)^T$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Its fixed rate $k$ is a second, independent quote for the price of inflation.
 
 The two quotes can be set side by side as trades.
 
@@ -549,6 +557,164 @@ chart, nominal $        1414.01  1414.01  1414.01  1414.01  1414.01  1414.01  14
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the formula, the coupon fact and the shortcut error for any yields above −100 percent, and checks the card's numbers.
+
+- Take $T \ge 1$ years, with $n$, $r$ and $b$ all above −100 percent. Then $(1+n)^T = (1+r)^T (1+b)^T$ exactly when $b = (1+n)/(1+r) - 1$.
+- Take the same $T$, $n$ and $r$, a linker with real coupon $c \ge 0$ priced at $P$, and inflation $\pi$ above −100 percent. Then its payments, scaled by the index and discounted at $n$, are worth $P$ exactly when $\pi = (1+n)/(1+r) - 1$.
+- Take any $n$, and $r$ above −100 percent. Then $s - b = r\,b$: the shortcut overstates by exactly the real yield times the breakeven.
+- Take the card's yields, 3.525 and 1 percent. Then the breakeven is exactly 2.5 percent, and the bonds tie at ten and thirty years.
+- The 2.5 bp shortcut error, the 10 bp swap gap, the wrong-way and boundary breakevens and the Try changing answers also check.
+
+The root finders, dollar amounts, continuous rate, deflation floor, swap trades and other mistakes are left to the Python and Rust checks.
+
+```lean
+-- Breakeven inflation: a linker and a nominal bond of the same maturity pay the same dollars exactly when inflation equals nominal growth over real growth minus one, coupons do not change this, and subtracting yields overstates it by the real yield times the breakeven.
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Algebra.Order.Field.Power
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+
+open Finset
+
+/-- Helper: the map `x ↦ ∑_{t=1}^T c x^t + x^T` is strictly increasing on `x ≥ 0` when `c ≥ 0`
+and `T ≥ 1`. -/
+theorem breakeven_helper_strict (T : ℕ) (hT : 0 < T) (c x y : ℝ) (hc : 0 ≤ c)
+    (hx : 0 ≤ x) (hxy : x < y) :
+    (∑ t ∈ Icc 1 T, c * x ^ t) + x ^ T < (∑ t ∈ Icc 1 T, c * y ^ t) + y ^ T := by
+  have h1 : (∑ t ∈ Icc 1 T, c * x ^ t) ≤ ∑ t ∈ Icc 1 T, c * y ^ t := by
+    apply Finset.sum_le_sum
+    intro t _
+    exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hx hxy.le t) hc
+  have h2 : x ^ T < y ^ T := pow_lt_pow_left₀ hxy hx (Nat.pos_iff_ne_zero.mp hT)
+  linarith
+
+#print axioms breakeven_helper_strict
+
+/-- Breakeven inflation, zero-coupon bonds: over `T ≥ 1` years, with nominal yield `n` and real
+yield `r` both above −100 percent, a constant inflation rate `b` above −100 percent makes the
+linker's dollars `(1+r)^T (1+b)^T` equal the nominal bond's dollars `(1+n)^T` exactly when
+`b = (1+n)/(1+r) − 1`. The number of years does not matter. -/
+theorem breakeven_closed_form (T : ℕ) (hT : 0 < T) (n r b : ℝ)
+    (hn : -1 < n) (hr : -1 < r) (hb : -1 < b) :
+    (1 + n) ^ T = (1 + r) ^ T * (1 + b) ^ T ↔ b = (1 + n) / (1 + r) - 1 := by
+  have h1 : 0 < 1 + n := by linarith
+  have h2 : 0 < 1 + r := by linarith
+  have h3 : 0 < 1 + b := by linarith
+  rw [← mul_pow, pow_left_inj₀ h1.le (mul_pos h2 h3).le (Nat.pos_iff_ne_zero.mp hT)]
+  constructor
+  · intro h
+    rw [h]
+    field_simp
+    ring
+  · intro h
+    rw [h]
+    field_simp
+    ring
+
+/-- Coupons do not move the breakeven: a linker with real coupon `c ≥ 0`, priced at
+`P = ∑_{t=1}^T c/(1+r)^t + 1/(1+r)^T` from its real yield `r`, has its index-scaled flows under a
+constant inflation `π > −1`, discounted at the nominal yield `n`, worth exactly `P` if and only if
+`π = (1+n)/(1+r) − 1`. -/
+theorem coupon_linker_breakeven_eq_closed_form (T : ℕ) (hT : 0 < T) (c n r π : ℝ)
+    (hc : 0 ≤ c) (hn : -1 < n) (hr : -1 < r) (hπ : -1 < π) :
+    (∑ t ∈ Icc 1 T, c * (1 + π) ^ t / (1 + n) ^ t) + (1 + π) ^ T / (1 + n) ^ T
+        = (∑ t ∈ Icc 1 T, c / (1 + r) ^ t) + 1 / (1 + r) ^ T
+      ↔ π = (1 + n) / (1 + r) - 1 := by
+  have h1 : 0 < 1 + n := by linarith
+  have h2 : 0 < 1 + r := by linarith
+  have h3 : 0 < 1 + π := by linarith
+  set x := (1 + π) / (1 + n) with hxdef
+  set y := 1 / (1 + r) with hydef
+  have hx : 0 < x := div_pos h3 h1
+  have hy : 0 < y := div_pos one_pos h2
+  have eL : (∑ t ∈ Icc 1 T, c * (1 + π) ^ t / (1 + n) ^ t) + (1 + π) ^ T / (1 + n) ^ T
+      = (∑ t ∈ Icc 1 T, c * x ^ t) + x ^ T := by
+    rw [hxdef, div_pow]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro t _
+    rw [div_pow, mul_div_assoc]
+  have eR : (∑ t ∈ Icc 1 T, c / (1 + r) ^ t) + 1 / (1 + r) ^ T
+      = (∑ t ∈ Icc 1 T, c * y ^ t) + y ^ T := by
+    rw [hydef, one_div_pow]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro t _
+    rw [one_div_pow, div_eq_mul_inv, one_div]
+  rw [eL, eR]
+  have key : (∑ t ∈ Icc 1 T, c * x ^ t) + x ^ T = (∑ t ∈ Icc 1 T, c * y ^ t) + y ^ T
+      ↔ x = y := by
+    constructor
+    · intro h
+      rcases lt_trichotomy x y with hlt | heq | hgt
+      · have := breakeven_helper_strict T hT c x y hc hx.le hlt
+        linarith
+      · exact heq
+      · have := breakeven_helper_strict T hT c y x hc hy.le hgt
+        linarith
+    · intro h
+      rw [h]
+  rw [key, hxdef, hydef]
+  constructor
+  · intro h
+    rw [div_eq_div_iff h1.ne' h2.ne'] at h
+    field_simp
+    linarith
+  · intro h
+    rw [h]
+    field_simp
+    ring
+
+/-- The shortcut overstates: the yield spread `n − r` minus the breakeven `b = (1+n)/(1+r) − 1`
+equals the real yield times the breakeven, `r b`. -/
+theorem yield_spread_sub_breakeven (n r : ℝ) (hr : -1 < r) :
+    (n - r) - ((1 + n) / (1 + r) - 1) = r * ((1 + n) / (1 + r) - 1) := by
+  have h2 : 0 < 1 + r := by linarith
+  field_simp
+  ring
+
+-- The card's example: n = 3.525% = 141/4000, r = 1% = 1/100 give b = 2.5% = 1/40.
+example : ((1 : ℚ) + 141 / 4000) / (1 + 1 / 100) - 1 = 1 / 40 := by norm_num
+-- The ten-year tie holds exactly at b = 1/40: 1.03525^10 = 1.01^10 * 1.025^10.
+example : ((1 : ℚ) + 141 / 4000) ^ 10 = (1 + 1 / 100) ^ 10 * (1 + 1 / 40) ^ 10 := by norm_num
+-- And at thirty years, with the same yields.
+example : ((1 : ℚ) + 141 / 4000) ^ 30 = (1 + 1 / 100) ^ 30 * (1 + 1 / 40) ^ 30 := by norm_num
+-- Shortcut s = n - r = 2.525% = 101/4000; its error is r * b = 2.5 bp = 1/4000.
+example : (141 : ℚ) / 4000 - 1 / 100 = 101 / 4000 := by norm_num
+example : (101 : ℚ) / 4000 - 1 / 40 = (1 / 100) * (1 / 40) := by norm_num
+-- Swap minus breakeven: 2.6% - 2.5% = 10 bp = 1/1000.
+example : (26 : ℚ) / 1000 - 1 / 40 = 1 / 1000 := by norm_num
+-- Swap quoted at 2.5%: the synthetic real yield is exactly the cash linker's 1%.
+example : ((1 : ℚ) + 141 / 4000) / (1 + 1 / 40) - 1 = 1 / 100 := by norm_num
+-- Wrong way round, real over nominal: -2.439% = -1/41.
+example : ((1 : ℚ) + 1 / 100) / (1 + 141 / 4000) - 1 = -1 / 41 := by norm_num
+-- Boundary: n = 0.5%, r = 1% gives b = -0.495% = -1/202.
+example : ((1 : ℚ) + 5 / 1000) / (1 + 1 / 100) - 1 = -1 / 202 := by norm_num
+-- Try: real yield 2% gives 61/4080 (1.4951%); nominal yield 5% gives 4/101 (3.9604%).
+example : ((1 : ℚ) + 141 / 4000) / (1 + 2 / 100) - 1 = 61 / 4080 := by norm_num
+example : ((1 : ℚ) + 5 / 100) / (1 + 1 / 100) - 1 = 4 / 101 := by norm_num
+
+#print axioms breakeven_closed_form
+#print axioms coupon_linker_breakeven_eq_closed_form
+#print axioms yield_spread_sub_breakeven
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'breakeven_helper_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'breakeven_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coupon_linker_breakeven_eq_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'yield_spread_sub_breakeven' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Raise the real yield to 2 percent**, nominal unchanged. Guess first: does the breakeven fall by one point? It falls to 1.4951 percent, a touch more than one point, because the cross term shrinks too.
@@ -561,7 +727,9 @@ ALL CHECKS PASS
 ## The usual mistake
 
 > [!warning]
-> **Breakeven inflation is not the market's forecast of inflation.** It is the rate at which two bonds tie, and that rate carries two other things. Buyers of nominal bonds bear inflation risk and want paying for it (an **inflation risk premium**), which pushes the breakeven above expected inflation. Linkers trade less easily, so their buyers want a higher real yield (a **liquidity premium**), which pushes the breakeven below. Which one wins changes over time; splitting them apart needs a model, and different models disagree. A 2.5 percent breakeven says "2.5 percent is the dividing line"; it does not say "2.5 percent is expected".
+> **Breakeven inflation is not the market's forecast of inflation.** It is the rate at which two bonds tie, and that rate carries two other things. Buyers of nominal bonds bear inflation risk and want paying for it (an **inflation risk premium**), which pushes the breakeven above expected inflation. Linkers trade less easily, so their buyers want a higher real yield (a **liquidity premium**), which pushes the breakeven below.
+>
+> Which one wins changes over time; splitting them apart needs a model, and different models disagree. A 2.5 percent breakeven says "2.5 percent is the dividing line"; it does not say "2.5 percent is expected".
 >
 > - **Subtracting yields.** Gives 2.525 percent, 2.5 basis points high here, more when rates are higher. Divide the growth factors instead.
 > - **Mixing compounding conventions.** A semiannual nominal quote over an annual real one gives 2.470 percent, 3 basis points low.

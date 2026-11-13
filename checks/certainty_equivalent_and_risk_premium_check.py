@@ -129,3 +129,4 @@ g_bis = bisect(lambda g: dep - ce_fund(g), 1.5, 8.0, 60)
 row("gamma where fund = deposit, closed", g_star); row("gamma where fund = deposit, bisection", g_bis)
 assert abs(g_star - g_bis) < 1e-6
 row("fund CE g = 2, in percent", 100 * (ce_fund(2) - 1)); row("fund CE g = 6, in percent", 100 * (ce_fund(6) - 1))
+print("ALL CHECKS PASS")

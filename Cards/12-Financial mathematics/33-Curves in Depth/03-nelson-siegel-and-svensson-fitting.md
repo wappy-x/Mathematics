@@ -8,7 +8,7 @@
 
 A morning screen shows twelve government bonds. They mature at 1, 2, 3, 4, 5, 7, 10, 12, 15, 20, 25 and 30 years. Each pays a fixed **coupon** once a year (2.00 dollars a year on the shortest, 4.50 on the longest) and 100 dollars at the end. Their prices run from 99.56 dollars for the one-year bond to 103.03 dollars for the thirty-year.
 
-The desk wants one curve that prices all twelve and that can be read at a glance. Bootstrapping, solving for one discount rate per quoted date, needs a bond for every payment date; these twelve bonds pay on thirty different dates. So the desk describes the whole curve with a handful of dials instead.
+The desk wants one curve that prices all twelve and that can be read at a glance. [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md), solving for one discount rate per quoted date, needs a bond for every payment date; these twelve bonds pay on thirty different dates. So the desk describes the whole curve with a handful of dials instead.
 
 **Nelson-Siegel** uses four dials: a long-run **level**, a **slope** that fades with maturity, a **hump** in the middle, and a time scale that says where the hump sits. **Svensson** adds a second hump with its own time scale: six dials. Neither can pass through twelve prices exactly. Each is **fitted**: the dials are turned until the curve's twelve prices miss the market's by as little as possible, counting each miss squared.
 
@@ -79,7 +79,7 @@ $$S = \sum_{i=1}^{12} \left(\hat P_i - P_i\right)^2$$
 | $P_i$, $\hat P_i$, $c_i$, $n_i$ | market price, model price, coupon and maturity of bond number i | 3-year bond: 97.67, 97.7638, 3.00, 3 | — |
 | $S$ | score: sum of squared price misses, in dollars squared | Nelson-Siegel 0.189162, Svensson 0.000036 | the fit is worse |
 
-Conventions verified 28 Sep 2026: the card's bonds pay one coupon a year, on anniversaries of the fit date, so there is no interest accrued between coupons and the quoted price is the whole price. US Treasury notes and bonds pay coupons twice a year and are quoted as **clean** prices, which leave out the interest accrued since the last coupon; a real fit adds that accrued interest back before comparing prices.
+Conventions verified 28 Sep 2026: the card's bonds pay one coupon a year, on anniversaries of the fit date. So there is no interest accrued between coupons, and the quoted price is the whole price. US Treasury notes and bonds pay coupons twice a year and are quoted as **clean** prices, which leave out the interest accrued since the last coupon. A real fit adds that accrued interest back before comparing prices.
 
 ### When it holds
 
@@ -150,7 +150,7 @@ Read off this morning's Nelson-Siegel fit:
 
 **Existence.** Keep each dial inside a closed range: the time scales between a small floor and a large ceiling, the sizes between fixed limits. The score is a continuous function of the dials, and a continuous function on a closed, bounded range reaches its lowest value somewhere. So a best fit exists within any such range.
 
-**Uniqueness is not promised.** With the time scales held fixed, the zero rate is a plain weighted sum of the beta dials, and the score is close to a bowl with one bottom, as long as the loadings are not copies of each other. The time scales enter inside exponentials, and the score can have more than one dip along them. That is why the checks start from a grid of time scales rather than a single guess.
+**Uniqueness is not promised.** With the time scales held fixed, the zero rate is a plain weighted sum of the beta dials. The score is then close to a bowl with one bottom, as long as the loadings are not copies of each other. The time scales enter inside exponentials, and the score can have more than one dip along them. That is why the checks start from a grid of time scales rather than a single guess.
 
 **Boundary cases.** Three settings make dials invisible:
 
@@ -160,12 +160,14 @@ Read off this morning's Nelson-Siegel fit:
 
 ### Step 4: turning the dials, two independent ways
 
-**Road 1, Gauss-Newton.** Near any setting of the dials, a small change in the dials changes each price by roughly a fixed multiple of each change. Those multiples form a table, the **Jacobian**: one row per bond, one column per dial. Replacing the prices by that straight-line approximation turns the problem into an ordinary least-squares problem, which is solved exactly by a small system of linear equations. Take that step, halve it if the score got worse, and repeat. The checks first sweep $\tau_1$ from 0.25 to 10 years with only the beta dials moving, then free all four dials from the best sweep point.
+**Road 1, Gauss-Newton.** Near any setting of the dials, a small change in the dials changes each price by roughly a fixed multiple of each change. Those multiples form a table, the **Jacobian**: one row per bond, one column per dial. Replacing the prices by that straight-line approximation turns the problem into an ordinary least-squares problem, which is solved exactly by a small system of linear equations.
+
+Take that step, halve it if the score got worse, and repeat. The checks first sweep $\tau_1$ from 0.25 to 10 years with only the beta dials moving, then free all four dials from the best sweep point.
 
 <details>
 <summary>The algebra behind the Gauss-Newton step</summary>
 
-Write *r* for the list of twelve misses $\hat P_i - P_i$, and *J* for the Jacobian, with the entry in row i and column j the change in $\hat P_i$ per unit change of dial j. For a beta dial that entry is minus the sum, over bond i's payment dates, of date × payment × discount factor × that dial's loading at the date. The checks estimate every column by nudging the dial up and down by a millionth.
+Write *r* for the list of twelve misses $\hat P_i - P_i$, and *J* for the Jacobian. The entry in row i and column j is the change in $\hat P_i$ per unit change of dial j. For a beta dial that entry is minus the sum, over bond i's payment dates, of date × payment × discount factor × that dial's loading at the date. The checks estimate every column by nudging the dial up and down by a millionth.
 
 After a step *δ* ("delta") in the dials the misses are about *r* + *Jδ*. Their sum of squares is smallest where its slope in every direction is zero:
 $$J^\top J\,\delta = -J^\top r$$
@@ -173,13 +175,15 @@ Here $J^\top$ is *J* turned on its side, rows swapped for columns. That is four 
 
 </details>
 
-**Road 2, Nelder-Mead.** This road uses no slopes. It keeps a **simplex**, one more trial setting than there are dials, and each round replaces the worst setting by reflecting it through the middle of the others, stretching or shrinking as the scores dictate. It starts from a plain guess: level 4%, start −2%, no hump, time scale one year.
+**Road 2, Nelder-Mead.** This road uses no slopes. It keeps a **simplex**, one more trial setting than there are dials. Each round replaces the worst setting by reflecting it through the middle of the others, stretching or shrinking as the scores dictate. It starts from a plain guess: level 4%, start −2%, no hump, time scale one year.
 
 Both roads land on the same four numbers: 3.8595%, −2.2528%, 5.1761% and 3.1347 years. For Svensson both land on 3.5045%, −2.4956%, 3.9919%, 2.4856%, 2.0074 years and 6.9781 years. The true curve behind the prices is 3.5000%, −2.5000%, 4.0000%, 2.5000%, 2.0000 and 7.0000. The gap is the rounding of prices to the cent.
 
 ### Step 5: six dials never fit worse than four
 
-Svensson with $\beta_3 = 0$ is Nelson-Siegel. So every Nelson-Siegel curve is also a Svensson curve, and Svensson's best score can only be equal or lower: 0.000036 against 0.189162 dollars squared. Extra dials never raise the score. The question is whether they lower it by more than noise. Here Svensson's typical miss, the root of the mean squared miss, is 0.173 cents, the size of rounding to the cent. Nelson-Siegel's is 12.555 cents, and its misses run in waves: negative, positive, negative, positive, negative along the maturities. A pattern in the misses is a missing shape.
+Svensson with $\beta_3 = 0$ is Nelson-Siegel. So every Nelson-Siegel curve is also a Svensson curve, and Svensson's best score can only be equal or lower: 0.000036 against 0.189162 dollars squared. Extra dials never raise the score. The question is whether they lower it by more than noise.
+
+Here Svensson's typical miss, the root of the mean squared miss, is 0.173 cents, the size of rounding to the cent. Nelson-Siegel's is 12.555 cents, and its misses run in waves: negative, positive, negative, positive, negative along the maturities. A pattern in the misses is a missing shape.
 
 A different road fits yields rather than prices. Price misses weigh long bonds more heavily in rate terms, because their prices move more per unit of rate; yield misses weigh every maturity alike, and give somewhat different dials. Svensson's 1994 paper discusses both choices. [Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md) fits Nelson-Siegel to zero rates directly, which is simpler when a bootstrapped curve already exists.
 
@@ -225,13 +229,13 @@ First line (orange): Nelson-Siegel, swinging between −18.05 and +20.58 cents i
 | Discount with the forward rate $f(t)$ in place of the zero rate $R(t)$ | the 30-year bond at 107.4188 instead of 102.8495 | a dollar at 30 years is discounted by the average forward over 30 years, not the forward at year 30 |
 | Hold $\tau_1$ at 1.3684 years, the value Diebold and Li fixed for monthly US data | score 4.897487 against 0.189162; start −5.9522%, hump 7.5400% | with the time scale wrong the other dials contort to compensate, and they stop meaning level, slope and hump |
 
-The **yield to maturity** in the first row is the one flat rate, continuously compounded here, that reprices a bond; the checks find it for each bond by bisection, halving an interval of rates 200 times.
+The **yield to maturity** in the first row is the one flat rate, continuously compounded here, that reprices a bond. The checks find it for each bond by bisection, halving an interval of rates 200 times.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the twelve prices from the known six-dial curve, rounded to the cent, and fits each form by two independent roads: Gauss-Newton after a grid of time scales, and Nelder-Mead from a plain guess. Its asserts check that the roads agree, that the zero-rate formula matches a brute-force average of the forward, that Svensson fits no worse than Nelson-Siegel, and that Svensson recovers the true curve. It prints every number on this card. Nothing imported knows an answer: the linear solver, both optimisers, the integral and the yield solver are written out.
+The code builds the twelve prices from the known six-dial curve, rounded to the cent. It fits each form by two independent roads: Gauss-Newton after a grid of time scales, and Nelder-Mead from a plain guess. Its asserts check that the roads agree, that the zero-rate formula matches a brute-force average of the forward, that Svensson fits no worse than Nelson-Siegel, and that Svensson recovers the true curve. It prints every number on this card. Nothing imported knows an answer: the linear solver, both optimisers, the integral and the yield solver are written out.
 
 ### Python
 
@@ -632,6 +636,293 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, each language taking both roads with its own code.
 
+### Lean
+
+Lean proves the averaging formula, the reading of the dials and the existence of a best fit, for any positive time scales.
+
+- Suppose both time scales and the maturity $t$ are positive. Then the average of $f$ from today to $t$ is exactly the formula for $R(t)$.
+- Suppose the same. Then $e^{-\int_0^t f(s)\,ds} = e^{-t R(t)}$, the discount factor $D(t)$.
+- Suppose both time scales are positive. Then $R(t)$ settles at the level $\beta_0$ as $t$ grows without end.
+- Suppose both time scales are positive. Then $R(t)$ starts at $\beta_0 + \beta_1$ as $t$ shrinks to zero.
+- Take any $x > 0$. Then the hump loading $H(x)$ is positive.
+- Suppose each dial is held in a closed range, with both time scales above a positive floor. Then some dials in that range give the smallest score $S$.
+- That best fit exists for any bonds and any market prices. Holding $\beta_3$ at 0 gives the Nelson-Siegel case.
+- The twelve bonds pay on thirty different dates.
+
+The fitted dials, prices and misses, and the hump's peak at $x$ = 1.7933, are left to the Python and Rust checks.
+
+```lean
+-- Fitting a curve with four or six parameters: the Svensson zero rate is the average of its forward rate, its dials read as level, start and hump, and a best least-squares fit to bond prices exists when the dials stay in a closed box.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Topology.Order.Compact
+import Mathlib.Order.Interval.Finset.Nat
+
+open Real Filter Topology
+
+/-- Slope loading `L(x) = (1 - e^{-x}) / x`. -/
+noncomputable def loadL (x : ℝ) : ℝ := (1 - Real.exp (-x)) / x
+
+/-- Hump loading `H(x) = L(x) - e^{-x}`. -/
+noncomputable def loadH (x : ℝ) : ℝ := loadL x - Real.exp (-x)
+
+/-- Svensson forward rate
+`f(t) = β₀ + β₁ e^{-t/τ₁} + β₂ (t/τ₁) e^{-t/τ₁} + β₃ (t/τ₂) e^{-t/τ₂}`.
+Nelson-Siegel is the case `β₃ = 0`. -/
+noncomputable def svFwd (β₀ β₁ β₂ β₃ τ₁ τ₂ t : ℝ) : ℝ :=
+  β₀ + β₁ * Real.exp (-t / τ₁) + β₂ * (t / τ₁) * Real.exp (-t / τ₁)
+    + β₃ * (t / τ₂) * Real.exp (-t / τ₂)
+
+/-- Svensson zero rate
+`R(t) = β₀ + β₁ L(t/τ₁) + β₂ H(t/τ₁) + β₃ H(t/τ₂)`. -/
+noncomputable def svZero (β₀ β₁ β₂ β₃ τ₁ τ₂ t : ℝ) : ℝ :=
+  β₀ + β₁ * loadL (t / τ₁) + β₂ * loadH (t / τ₁) + β₃ * loadH (t / τ₂)
+
+/-- Model price of a bond paying coupon `c` at years `1, …, n` and 100 at year `n`,
+discounted with the zero-rate curve `R`:
+`∑_{k=1}^{n} c e^{-k R(k)} + 100 e^{-n R(n)}`. -/
+noncomputable def bondPrice (R : ℝ → ℝ) (n : ℕ) (c : ℝ) : ℝ :=
+  (∑ k ∈ Finset.Icc 1 n, c * Real.exp (-(k : ℝ) * R k)) + 100 * Real.exp (-(n : ℝ) * R n)
+
+/-- The six dials as one point `p` of `ℝ⁶`: `p 0 … p 3` are `β₀ … β₃`,
+`p 4` is `τ₁` and `p 5` is `τ₂`. -/
+noncomputable def svZeroOf (p : Fin 6 → ℝ) (t : ℝ) : ℝ :=
+  svZero (p 0) (p 1) (p 2) (p 3) (p 4) (p 5) t
+
+/-- Least-squares score `S = ∑ᵢ (P̂ᵢ - Pᵢ)²` of the dials `p` against bonds with
+maturities `mat i`, coupons `cpn i` and market prices `mkt i`. -/
+noncomputable def fitScore {m : ℕ} (mat : Fin m → ℕ) (cpn mkt : Fin m → ℝ)
+    (p : Fin 6 → ℝ) : ℝ :=
+  ∑ i, (bondPrice (svZeroOf p) (mat i) (cpn i) - mkt i) ^ 2
+
+lemma hasDerivAt_exp_neg_div (τ s : ℝ) :
+    HasDerivAt (fun x : ℝ => Real.exp (-x / τ)) (Real.exp (-s / τ) * (-1 / τ)) s := by
+  have h := ((hasDerivAt_id s).neg.div_const τ).exp
+  simpa using h
+
+lemma hasDerivAt_hump_prim (τ s : ℝ) (hτ : τ ≠ 0) :
+    HasDerivAt (fun x : ℝ => -(x + τ) * Real.exp (-x / τ))
+      ((s / τ) * Real.exp (-s / τ)) s := by
+  have ha : HasDerivAt (fun x : ℝ => -(x + τ)) (-1) s := ((hasDerivAt_id' s).add_const τ).neg
+  have h : HasDerivAt (fun x : ℝ => -(x + τ) * Real.exp (-x / τ))
+      (-1 * Real.exp (-s / τ) + -(s + τ) * (Real.exp (-s / τ) * (-1 / τ))) s :=
+    ha.mul (hasDerivAt_exp_neg_div τ s)
+  convert h using 1
+  field_simp
+  ring
+
+lemma integral_svFwd (β₀ β₁ β₂ β₃ τ₁ τ₂ t : ℝ) (hτ₁ : τ₁ ≠ 0) (hτ₂ : τ₂ ≠ 0) :
+    ∫ s in (0 : ℝ)..t, svFwd β₀ β₁ β₂ β₃ τ₁ τ₂ s
+      = β₀ * t + β₁ * τ₁ * (1 - Real.exp (-t / τ₁))
+        + β₂ * (τ₁ - (t + τ₁) * Real.exp (-t / τ₁))
+        + β₃ * (τ₂ - (t + τ₂) * Real.exp (-t / τ₂)) := by
+  let F : ℝ → ℝ := fun x => β₀ * x + β₁ * (-τ₁ * Real.exp (-x / τ₁))
+      + β₂ * (-(x + τ₁) * Real.exp (-x / τ₁)) + β₃ * (-(x + τ₂) * Real.exp (-x / τ₂))
+  have hF : ∀ s, HasDerivAt F (svFwd β₀ β₁ β₂ β₃ τ₁ τ₂ s) s := by
+    intro s
+    have h1 := ((hasDerivAt_exp_neg_div τ₁ s).const_mul (-τ₁)).const_mul β₁
+    have h0 := (hasDerivAt_id' s).const_mul β₀
+    have h2 := (hasDerivAt_hump_prim τ₁ s hτ₁).const_mul β₂
+    have h3 := (hasDerivAt_hump_prim τ₂ s hτ₂).const_mul β₃
+    have h := ((h0.add h1).add h2).add h3
+    convert h using 1
+    simp only [svFwd]
+    field_simp
+  have hc : Continuous (svFwd β₀ β₁ β₂ β₃ τ₁ τ₂) := by
+    unfold svFwd; fun_prop
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun s _ => hF s)
+    (hc.intervalIntegrable _ _)]
+  simp only [F]
+  simp
+  ring
+
+lemma loadL_tendsto_atTop : Tendsto loadL atTop (𝓝 0) := by
+  have h : Tendsto (fun x : ℝ => 1 - Real.exp (-x)) atTop (𝓝 (1 - 0)) :=
+    tendsto_const_nhds.sub Real.tendsto_exp_neg_atTop_nhds_zero
+  exact h.div_atTop tendsto_id
+
+lemma loadH_tendsto_atTop : Tendsto loadH atTop (𝓝 0) := by
+  have h := loadL_tendsto_atTop.sub Real.tendsto_exp_neg_atTop_nhds_zero
+  rw [sub_zero] at h
+  exact h
+
+lemma loadL_tendsto_zero_right : Tendsto loadL (𝓝[>] 0) (𝓝 1) := by
+  have hd : HasDerivAt (fun x : ℝ => 1 - Real.exp (-x)) 1 0 := by
+    have h := ((hasDerivAt_id' (0 : ℝ)).neg.exp).const_sub 1
+    simpa using h
+  have h := hd.tendsto_slope_zero_right
+  refine h.congr' ?_
+  filter_upwards with t
+  simp [loadL, div_eq_inv_mul]
+
+lemma loadH_tendsto_zero_right : Tendsto loadH (𝓝[>] 0) (𝓝 0) := by
+  have he : Tendsto (fun x : ℝ => Real.exp (-x)) (𝓝[>] 0) (𝓝 1) := by
+    have : Tendsto (fun x : ℝ => Real.exp (-x)) (𝓝 0) (𝓝 (Real.exp (-0))) :=
+      (Real.continuous_exp.comp continuous_neg).tendsto 0
+    simpa using this.mono_left nhdsWithin_le_nhds
+  have h := loadL_tendsto_zero_right.sub he
+  rw [sub_self] at h
+  exact h
+
+lemma loadH_pos (x : ℝ) (hx : 0 < x) : 0 < loadH x := by
+  have h := Real.add_one_lt_exp (neg_ne_zero.mpr hx.ne')
+  unfold loadH loadL
+  rw [lt_sub_iff_add_lt, zero_add, lt_div_iff₀ hx]
+  have h2 : Real.exp (-x) * Real.exp x = 1 := by rw [← Real.exp_add]; simp
+  have h3 := Real.add_one_lt_exp hx.ne'
+  have h4 := Real.exp_pos (-x)
+  nlinarith
+
+lemma loadL_continuousOn_div (t : ℝ) (j : Fin 6) (S : Set (Fin 6 → ℝ))
+    (hS : ∀ p ∈ S, 0 < p j) : ContinuousOn (fun p : Fin 6 → ℝ => loadL (t / p j)) S := by
+  by_cases ht : t = 0
+  · subst ht
+    simp only [zero_div]
+    exact continuousOn_const
+  · unfold loadL
+    have hc : ContinuousOn (fun p : Fin 6 → ℝ => t / p j) S :=
+      continuousOn_const.div (continuous_apply j).continuousOn
+        (fun p hp => (hS p hp).ne')
+    refine ContinuousOn.div ?_ hc ?_
+    · exact continuousOn_const.sub (Real.continuous_exp.comp_continuousOn hc.neg)
+    · intro p hp
+      exact div_ne_zero ht (hS p hp).ne'
+
+lemma loadH_continuousOn_div (t : ℝ) (j : Fin 6) (S : Set (Fin 6 → ℝ))
+    (hS : ∀ p ∈ S, 0 < p j) : ContinuousOn (fun p : Fin 6 → ℝ => loadH (t / p j)) S := by
+  unfold loadH
+  refine (loadL_continuousOn_div t j S hS).sub ?_
+  exact Real.continuous_exp.comp_continuousOn
+    (continuousOn_const.div (continuous_apply j).continuousOn
+      (fun p hp => (hS p hp).ne')).neg
+
+lemma svZeroOf_continuousOn (t : ℝ) (S : Set (Fin 6 → ℝ))
+    (h4 : ∀ p ∈ S, 0 < p 4) (h5 : ∀ p ∈ S, 0 < p 5) :
+    ContinuousOn (fun p => svZeroOf p t) S := by
+  unfold svZeroOf svZero
+  have c : ∀ j : Fin 6, ContinuousOn (fun p : Fin 6 → ℝ => p j) S :=
+    fun j => (continuous_apply j).continuousOn
+  exact (((c 0).add ((c 1).mul (loadL_continuousOn_div t 4 S h4))).add
+    ((c 2).mul (loadH_continuousOn_div t 4 S h4))).add
+    ((c 3).mul (loadH_continuousOn_div t 5 S h5))
+
+/-- Averaging the forward rate gives the zero rate: for positive time scales and any
+maturity `t > 0`, `(1/t) ∫₀ᵗ f(s) ds = β₀ + β₁ L(t/τ₁) + β₂ H(t/τ₁) + β₃ H(t/τ₂)`.
+So `L` and `H` are the averages of the fading and hump shapes, and the discount
+factor `e^{-∫₀ᵗ f}` equals `e^{-t R(t)}`. -/
+theorem zero_rate_is_average_of_forward (β₀ β₁ β₂ β₃ τ₁ τ₂ t : ℝ)
+    (hτ₁ : 0 < τ₁) (hτ₂ : 0 < τ₂) (ht : 0 < t) :
+    (1 / t) * ∫ s in (0 : ℝ)..t, svFwd β₀ β₁ β₂ β₃ τ₁ τ₂ s
+        = svZero β₀ β₁ β₂ β₃ τ₁ τ₂ t ∧
+      Real.exp (-∫ s in (0 : ℝ)..t, svFwd β₀ β₁ β₂ β₃ τ₁ τ₂ s)
+        = Real.exp (-t * svZero β₀ β₁ β₂ β₃ τ₁ τ₂ t) := by
+  have h1 : (1 / t) * ∫ s in (0 : ℝ)..t, svFwd β₀ β₁ β₂ β₃ τ₁ τ₂ s
+        = svZero β₀ β₁ β₂ β₃ τ₁ τ₂ t := by
+    rw [integral_svFwd _ _ _ _ _ _ _ hτ₁.ne' hτ₂.ne']
+    simp only [svZero, loadH, loadL, neg_div]
+    field_simp
+    ring
+  refine ⟨h1, ?_⟩
+  congr 1
+  rw [← h1]
+  field_simp
+
+/-- Reading the dials: far out the zero rate settles at the level `β₀`; near today it
+starts at `β₀ + β₁` (so the long end minus the short end is `-β₁`); and the hump
+loading `H` is positive at every positive `x`. -/
+theorem reading_the_dials (β₀ β₁ β₂ β₃ τ₁ τ₂ : ℝ) (hτ₁ : 0 < τ₁) (hτ₂ : 0 < τ₂) :
+    Tendsto (svZero β₀ β₁ β₂ β₃ τ₁ τ₂) atTop (𝓝 β₀) ∧
+      Tendsto (svZero β₀ β₁ β₂ β₃ τ₁ τ₂) (𝓝[>] 0) (𝓝 (β₀ + β₁)) ∧
+      ∀ x : ℝ, 0 < x → 0 < loadH x := by
+  have top : ∀ τ : ℝ, 0 < τ → Tendsto (fun t : ℝ => t / τ) atTop atTop :=
+    fun τ hτ => tendsto_id.atTop_div_const hτ
+  have right : ∀ τ : ℝ, 0 < τ → Tendsto (fun t : ℝ => t / τ) (𝓝[>] 0) (𝓝[>] 0) := by
+    intro τ hτ
+    apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
+    · have : Tendsto (fun t : ℝ => t / τ) (𝓝 0) (𝓝 (0 / τ)) :=
+        (continuous_id.div_const τ).tendsto 0
+      simpa using this.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with t ht
+      exact div_pos ht hτ
+  refine ⟨?_, ?_, loadH_pos⟩
+  · have h := ((tendsto_const_nhds (x := β₀)).add
+      ((loadL_tendsto_atTop.comp (top τ₁ hτ₁)).const_mul β₁)).add
+      ((loadH_tendsto_atTop.comp (top τ₁ hτ₁)).const_mul β₂) |>.add
+      ((loadH_tendsto_atTop.comp (top τ₂ hτ₂)).const_mul β₃)
+    simp only [mul_zero, mul_one, add_zero, Function.comp_def] at h
+    exact h
+  · have h := ((tendsto_const_nhds (x := β₀)).add
+      ((loadL_tendsto_zero_right.comp (right τ₁ hτ₁)).const_mul β₁)).add
+      ((loadH_tendsto_zero_right.comp (right τ₁ hτ₁)).const_mul β₂) |>.add
+      ((loadH_tendsto_zero_right.comp (right τ₂ hτ₂)).const_mul β₃)
+    simp only [mul_zero, mul_one, add_zero, Function.comp_def] at h
+    exact h
+
+/-- A best fit exists: if every dial is kept in a closed range `[lo j, hi j]`, with the
+two time scales above a positive floor, then for any bonds and market prices some
+setting of the dials in that range has the smallest least-squares score.
+(Taking `lo 3 = hi 3 = 0` gives the Nelson-Siegel case.) -/
+theorem best_fit_exists {m : ℕ} (mat : Fin m → ℕ) (cpn mkt : Fin m → ℝ)
+    (lo hi : Fin 6 → ℝ) (hle : lo ≤ hi) (hτ₁ : 0 < lo 4) (hτ₂ : 0 < lo 5) :
+    ∃ p ∈ Set.Icc lo hi, ∀ q ∈ Set.Icc lo hi,
+      fitScore mat cpn mkt p ≤ fitScore mat cpn mkt q := by
+  have h4 : ∀ p ∈ Set.Icc lo hi, 0 < p 4 := fun p hp => lt_of_lt_of_le hτ₁ (hp.1 4)
+  have h5 : ∀ p ∈ Set.Icc lo hi, 0 < p 5 := fun p hp => lt_of_lt_of_le hτ₂ (hp.1 5)
+  have hcont : ContinuousOn (fitScore mat cpn mkt) (Set.Icc lo hi) := by
+    unfold fitScore bondPrice
+    refine continuousOn_finsetSum _ (fun i _ => ?_)
+    refine ((ContinuousOn.add ?_ ?_).sub continuousOn_const).pow 2
+    · refine continuousOn_finsetSum _ (fun k _ => ?_)
+      exact continuousOn_const.mul (Real.continuous_exp.comp_continuousOn
+        (continuousOn_const.mul (svZeroOf_continuousOn _ _ h4 h5)))
+    · exact continuousOn_const.mul (Real.continuous_exp.comp_continuousOn
+        (continuousOn_const.mul (svZeroOf_continuousOn _ _ h4 h5)))
+  obtain ⟨p, hp, hmin⟩ :=
+    isCompact_Icc.exists_isMinOn (Set.nonempty_Icc.mpr hle) hcont
+  exact ⟨p, hp, fun q hq => hmin hq⟩
+
+/-- The twelve bonds (maturities 1, 2, 3, 4, 5, 7, 10, 12, 15, 20, 25, 30, paying once
+a year) pay on thirty different dates. -/
+example :
+    (({1, 2, 3, 4, 5, 7, 10, 12, 15, 20, 25, 30} : Finset ℕ).biUnion
+      (fun n => Finset.Icc 1 n)).card = 30 := by
+  decide +kernel
+
+#print axioms zero_rate_is_average_of_forward
+#print axioms reading_the_dials
+#print axioms best_fit_exists
+#print axioms hasDerivAt_exp_neg_div
+#print axioms hasDerivAt_hump_prim
+#print axioms integral_svFwd
+#print axioms loadL_tendsto_atTop
+#print axioms loadH_tendsto_atTop
+#print axioms loadL_tendsto_zero_right
+#print axioms loadH_tendsto_zero_right
+#print axioms loadH_pos
+#print axioms loadL_continuousOn_div
+#print axioms loadH_continuousOn_div
+#print axioms svZeroOf_continuousOn
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'zero_rate_is_average_of_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reading_the_dials' depends on axioms: [propext, Classical.choice, Quot.sound]
+'best_fit_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_exp_neg_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_hump_prim' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_svFwd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loadL_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loadH_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loadL_tendsto_zero_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loadH_tendsto_zero_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loadH_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loadL_continuousOn_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loadH_continuousOn_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'svZeroOf_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -665,7 +956,7 @@ The two outputs agree line for line, each language taking both roads with its ow
 - **Rates below zero.** Nothing in the formula stops $\beta_0 + \beta_1$ from being negative. The European Central Bank's euro-area curve is a Svensson fit, and its short end sat below zero for years after 2014: [Negative rates](06-negative-rates-and-floors.md).
 
 > **Say it back**
-> Nelson-Siegel writes the forward curve as a level, a fading start and one hump: four dials. Svensson adds a second hump: six. Averaging the forward gives the zero rate, which gives each discount factor, which prices every bond. The dials are chosen to make the total squared price miss smallest. The level is where the curve settles, minus the start is the slope, and the hump is the middle; a four-dial curve that lacks a shape the market has will misread them.
+> Nelson-Siegel writes the forward curve as a level, a fading start and one hump: four dials. Svensson adds a second hump: six. Averaging the forward gives the zero rate, which gives each discount factor, which prices every bond. The dials are chosen to make the total squared price miss smallest. The level is where the curve settles, minus the start is the slope, and the hump is the middle. A four-dial curve that lacks a shape the market has will misread them.
 
 ---
 
@@ -678,7 +969,7 @@ The two outputs agree line for line, each language taking both roads with its ow
 
 - [What a curve says](04-term-premium-and-expectations.md): what a fitted forward curve says about where rates are expected to go, and how much of it is pay for bearing risk.
 
-A fitted curve is a clean description of today's prices; whether its upward slope is a forecast of higher rates or a reward for lending long is the question that card answers.
+A fitted curve is a clean description of today's prices. Whether its upward slope is a forecast of higher rates or a reward for lending long is the question that card answers.
 
 ---
 

@@ -135,4 +135,5 @@ fn main() {
     assert!(vnm_p(DEP, 1.0) < 0.5 && 0.5 < vnm_p(DEP, 5.0), "vNM chances either side of one half");
     assert!(ce_coin(3.9) > DEP && DEP > ce_coin(4.0) && (g_star - 3.9454).abs() < 5e-5, "crossing between 3.9 and 4");
     assert!((ap(&|x: f64| u(x, 5.0)).0 * w - 5.0).abs() < 1e-5, "power utility: w A(w) = gamma");
+    println!("ALL CHECKS PASS");
 }

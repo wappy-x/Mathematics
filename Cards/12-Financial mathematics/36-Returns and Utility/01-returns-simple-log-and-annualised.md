@@ -10,7 +10,11 @@ A share costs $100 on the first of the month. During the month it rises 10%, to 
 
 Up 10, down 10, and a dollar is gone. The two percentages look as if they cancel. They do not, because the fall is 10% of $110, a bigger base than the rise was taken on.
 
-That dollar is what this card is about. A **return** is the growth of an investment over one period, written as a fraction of where it started. There are two standard ways to write it. The **simple return** is the change divided by the starting price: +10%, then −10%. It is the number on a bank statement. The **log return** is the natural logarithm (the logarithm to base e, about 2.718) of the end price over the start price: +9.53%, then −10.54%. Log returns are the ones that add up over time. The two logs sum to −1.01%, which is exactly the two-month loss, written as a log.
+That dollar is what this card is about. A **return** is the growth of an investment over one period, written as a fraction of where it started. There are two standard ways to write it.
+
+The **simple return** is the change divided by the starting price: +10%, then −10%. It is the number on a bank statement.
+
+The **log return** is the natural logarithm (the logarithm to base e, about 2.718) of the end price over the start price: +9.53%, then −10.54%. Log returns are the ones that add up over time. The two logs sum to −1.01%, which is exactly the two-month loss, written as a log.
 
 The card does three jobs. It converts one kind of return into the other. It scales a month's figures up to a year's: the average grows with the number of months, the **spread** (the standard deviation: the typical size of a swing around the average) with its square root. And it names the missing dollar. It is the **volatility drag**: the growth that bouncing up and down costs, even when the average move is zero.
 
@@ -160,7 +164,7 @@ For the coin-flip share $\mu = 0$ and $\sigma = 0.10$, so the estimate is −0.5
 
 Up by $a$ and down by $a$ multiplies money by $(1 + a)(1 - a) = 1 - a^2$, in either order. Up 10, down 10 keeps 99%. Up 50, down 50 keeps 75%. The average move is zero and the loss is the square of the move.
 
-Compounded, the growth rate is $e^{g} - 1 = \sqrt{0.99} - 1 = -0.5013\%$ a month, the geometric mean return (the steady monthly rate that ends at the same place). Compounded over twelve months it gives $0.99^6 - 1 = -5.85\%$, the annualised return of the median year. The −0.5025% log figure and the −0.5013% compound figure differ for the same reason the +9.53% and +10% did in Step 1.
+Compounded, the growth rate is $e^{g} - 1 = \sqrt{0.99} - 1 = -0.5013\%$ a month, the geometric mean return (the steady monthly rate that ends at the same place). Compounded over twelve months it gives $0.99^6 - 1 = -5.85\%$, the annualised return of the median year (the middle year when all 4,096 are ranked). The −0.5025% log figure and the −0.5013% compound figure differ for the same reason the +9.53% and +10% did in Step 1.
 
 <details>
 <summary>The same drag in continuous time</summary>
@@ -186,7 +190,7 @@ The share: $100, up 10% then down 10%; then the coin-flip share for a year.
 | back to simple | e^(−0.01005) − 1 | −1.00% |
 | growth rate $g$ | −1.005% ÷ 2 | −0.5025% a month |
 | drag estimate | 0 − 0.10^2 ÷ 2 | −0.50% a month |
-| a year's log drift | 12 × −0.5025% | −6.03% |
+| a year's log drift (the average log return over the year) | 12 × −0.5025% | −6.03% |
 | median year-end (the middle of all 4,096 years) | 100 × 0.99^6 | $94.15 |
 | monthly log spread | (0.0953 + 0.1054) ÷ 2 | 10.03% |
 | **a year's log spread** | **10.03% × √12** | **34.76%** |
@@ -699,6 +703,127 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves how returns chain, the square root of time, and the exact drag, for any prices and moves, and checks the worked numbers.
+
+- Take positive prices, one at the start and one at each month's end. Then the growth factors multiply to the total growth factor.
+- Take the same prices. Then the monthly log returns add up to the total log return.
+- Take independent monthly log returns, each with average $g$ and spread $\sigma$. Then the $n$-month log return has average $n g$ and spread $\sigma\sqrt{n}$.
+- Take a move $a$ between −1 and 1, so prices stay positive. Then up by $a$ and down by $a$ multiplies money by $1 - a^2$.
+- Take the same move. Then the pair's average log return is $\tfrac12\ln(1 - a^2)$, below zero whenever $a$ is not zero.
+- Up 10% then down 10% takes $100 to $99, and the half-and-half portfolio keeps its $100.
+- Twelve up-or-down months give 4,096 possible years, and six up-down pairs take $100 to exactly $94.1480149401.
+- Up 20 then down 20 leaves $96; up 50 then down 50 leaves $75.
+- 2026 has 261 weekdays, which less 10 NYSE holidays gives 251 trading days.
+
+The drag estimate, the conversion table, the simulations and the decimals are left to the Python and Rust checks.
+
+```lean
+-- Returns: growth factors multiply and log returns add over time, independent months give a spread that grows with the square root of time, and up then down by the same fraction keeps one minus its square.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Moments.Variance
+
+open Real MeasureTheory ProbabilityTheory Finset
+
+/-- Chaining periods: for positive prices `P 0, P 1, ..., P n`, the total growth factor
+`1 + R_total = P n / P 0` is the product of the monthly growth factors `1 + R_i`, where
+`R_i = (P (i+1) - P i) / P i` is the simple return of month `i`, and the total log return
+`ln (P n / P 0)` is the sum of the monthly log returns `ln (P (i+1) / P i)`. -/
+theorem log_returns_add_over_time (P : ℕ → ℝ) (hP : ∀ i, 0 < P i) (n : ℕ) :
+    P n / P 0 = ∏ i ∈ range n, (1 + (P (i + 1) - P i) / P i) ∧
+    Real.log (P n / P 0) = ∑ i ∈ range n, Real.log (P (i + 1) / P i) := by
+  have key : ∀ m : ℕ, P m / P 0 = ∏ i ∈ range m, (1 + (P (i + 1) - P i) / P i) := by
+    intro m
+    induction m with
+    | zero => simp [(hP 0).ne']
+    | succ m ih =>
+      rw [prod_range_succ, ← ih]
+      have h0 := (hP 0).ne'
+      have hm := (hP m).ne'
+      field_simp
+      ring
+  have keylog : ∀ m : ℕ, Real.log (P m / P 0) = ∑ i ∈ range m, Real.log (P (i + 1) / P i) := by
+    intro m
+    induction m with
+    | zero => simp [(hP 0).ne']
+    | succ m ih =>
+      rw [sum_range_succ, ← ih, ← Real.log_mul (div_pos (hP m) (hP 0)).ne'
+        (div_pos (hP (m + 1)) (hP m)).ne']
+      congr 1
+      have h0 := (hP 0).ne'
+      have hm := (hP m).ne'
+      field_simp
+  exact ⟨key n, keylog n⟩
+
+/-- The square root of time: if the monthly log returns `r_1, ..., r_n` are independent,
+each with average `g` and spread `σ` (variance `σ²`), then the `n`-month log return
+`r_1 + ... + r_n` has average `n g` and spread `σ √n`. -/
+theorem log_return_spread_scales_with_sqrt_time {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (n : ℕ) (r : Fin n → Ω → ℝ) (g σ : ℝ)
+    (hσ : 0 ≤ σ) (hr : ∀ i, MemLp (r i) 2 μ) (hind : iIndepFun r μ)
+    (hmean : ∀ i, ∫ ω, r i ω ∂μ = g) (hvar : ∀ i, variance (r i) μ = σ ^ 2) :
+    ∫ ω, (∑ i, r i) ω ∂μ = n * g ∧
+    Real.sqrt (variance (∑ i, r i) μ) = σ * Real.sqrt n := by
+  have hint : ∀ i, Integrable (r i) μ := fun i => (hr i).integrable one_le_two
+  refine ⟨?_, ?_⟩
+  · rw [Finset.sum_fn, MeasureTheory.integral_finsetSum _ (fun i _ => hint i)]
+    simp [hmean]
+  · rw [IndepFun.variance_sum (fun i _ => hr i)
+      (fun i _ j _ hij => hind.indepFun hij)]
+    simp only [hvar, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+    rw [Real.sqrt_mul (Nat.cast_nonneg n), Real.sqrt_sq hσ, mul_comm]
+
+/-- The volatility drag, exactly: up by `a` then down by `a` (prices staying positive, so
+`-1 < a < 1`) multiplies money by `1 - a²`, and the average monthly log return of the pair
+is `½ ln (1 - a²)`, which is below zero whenever `a ≠ 0`. -/
+theorem up_then_down_loses_the_square (a : ℝ) (ha₁ : -1 < a) (ha₂ : a < 1) :
+    (1 + a) * (1 - a) = 1 - a ^ 2 ∧
+    (Real.log (1 + a) + Real.log (1 - a)) / 2 = Real.log (1 - a ^ 2) / 2 ∧
+    (a ≠ 0 → (Real.log (1 + a) + Real.log (1 - a)) / 2 < 0) := by
+  have h1 : 0 < 1 + a := by linarith
+  have h2 : 0 < 1 - a := by linarith
+  have hprod : (1 + a) * (1 - a) = 1 - a ^ 2 := by ring
+  have hlog : Real.log (1 + a) + Real.log (1 - a) = Real.log (1 - a ^ 2) := by
+    rw [← Real.log_mul h1.ne' h2.ne', hprod]
+  refine ⟨hprod, by rw [hlog], fun ha => ?_⟩
+  rw [hlog]
+  have hpos : 0 < 1 - a ^ 2 := by rw [← hprod]; positivity
+  have hlt : 1 - a ^ 2 < 1 := by have := pow_pos (abs_pos.mpr ha) 2; rw [sq_abs] at this; linarith
+  have := Real.log_neg hpos hlt
+  linarith
+
+-- $100, up 10% then down 10%, ends at $99.
+example : (100 : ℚ) * (11 / 10) * (9 / 10) = 99 := by norm_num
+-- Half in a share up 10%, half in one down 10%: the portfolio keeps its $100.
+example : (50 : ℚ) * (11 / 10) + 50 * (9 / 10) = 100 := by norm_num
+-- Twelve up-or-down months give 4,096 possible years.
+example : 2 ^ 12 = 4096 := by norm_num
+-- A year of six up-down pairs ends at $100 × 0.99^6 = $94.1480149401.
+example : (100 : ℚ) * (99 / 100) ^ 6 = 941480149401 / 10 ^ 10 := by norm_num
+-- Up 20% then down 20% leaves $96; up 50% then down 50% leaves $75.
+example : (100 : ℚ) * (6 / 5) * (4 / 5) = 96 := by norm_num
+example : (100 : ℚ) * (3 / 2) * (1 / 2) = 75 := by norm_num
+-- 2026 (1 January a Thursday) has 261 weekdays; less 10 NYSE holidays, 251 trading days.
+set_option maxRecDepth 100000 in
+example : ((range 365).filter (fun d => (3 + d) % 7 < 5)).card = 261 := by decide
+example : 261 - 10 = 251 := by norm_num
+
+#print axioms log_returns_add_over_time
+#print axioms log_return_spread_scales_with_sqrt_time
+#print axioms up_then_down_loses_the_square
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'log_returns_add_over_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+'log_return_spread_scales_with_sqrt_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+'up_then_down_loses_the_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -724,7 +849,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Fund reports.** A fund's annualised return over several years is the compound rate $(1 + R_{\text{total}})^{1/T} - 1$. It sits below the average of the yearly returns, and the gap is the drag.
-- **Risk reports.** Desks measure spread on daily returns and multiply by √252 to quote it per year. A house fund with a 15% annual spread moves about 4.33% in a typical month and 0.945% on a typical day. Conventions verified 28 Sep 2026: 252 is the usual count of trading days; NYSE's published 2026 calendar gives 261 weekdays less 10 holidays, 251 trading days.
+- **Risk reports.** Desks measure spread on daily returns and multiply by √252 to quote it per year. A house fund with a 15% annual spread moves about 4.33% in a typical month and 0.945% on a typical day. Conventions verified 28 Sep 2026: 252 is the usual count of trading days; the New York Stock Exchange's (NYSE) published 2026 calendar gives 261 weekdays less 10 holidays, 251 trading days.
 - **Choosing between a deposit and a fund.** A saver weighs a 4% deposit against a fund with an 8% average return and a 15% spread. The fund's growth rate is about 8% − ½ × 0.15^2 = 6.875% a year, not 8%. How to weigh that against the risk is the work of [Expected utility](02-expected-utility-and-risk-aversion.md) and [Risk premium](03-certainty-equivalent-and-risk-premium.md).
 - **Leveraged funds that reset daily.** A fund that doubles each day's move turns a 10% bounce into a 20% one, and the drag grows with the square of the move: in the try-changing run, up 20 then down 20 left $96.00.
 - **Option pricing.** The log of a share's price is what the Black–Scholes model treats as a bell curve, and its drift carries the $-\tfrac12\sigma^2$ of Step 4 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
@@ -746,7 +871,7 @@ The two outputs match line for line.
 - [Two assets](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): simple returns combined across holdings, and how two spreads combine.
 - [Performance measures](../38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): return per unit of spread, annualised with the square root of time.
 
-This card measures growth and spread but does not say which a person should prefer when they pull against each other, a 4% deposit or a fund growing at 6.875% with a 15% spread; [Expected utility](02-expected-utility-and-risk-aversion.md) answers that.
+This card measures growth and spread. It does not say which a person should prefer when the two pull against each other: a 4% deposit, or a fund growing at 6.875% with a 15% spread. [Expected utility](02-expected-utility-and-risk-aversion.md) answers that.
 
 ---
 

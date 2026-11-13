@@ -138,7 +138,7 @@ A straight score, $u(w) = w$, has no bend. Its saver ranks by average wealth alo
 
 Scores cannot be spent. Undo the score: find the sure wealth $c$ with $u(c) = E[u(W)]$. The score rises with wealth, so exactly one such $c$ exists between $9,300 and $12,300.
 
-For the log saver, $\ln c = \tfrac12 \ln 12{,}300 + \tfrac12 \ln 9{,}300$, so $c$ is the geometric mean, $\sqrt{12{,}300 \times 9{,}300}$ = $10,695.33. For $\gamma$ = 2, $u(w) = -1/w$ and $c$ is the harmonic mean, $10,591.67. Each is a different average of the same two outcomes, and a steeper bend picks a smaller one. The risk premium for the log saver is $10,800 − $10,695.33 = **$104.67**. It is below the fund's $400 edge, so the fund wins.
+For the log saver, $\ln c = \tfrac12 \ln 12{,}300 + \tfrac12 \ln 9{,}300$, so $c$ is the geometric mean, $\sqrt{12{,}300 \times 9{,}300}$ = $10,695.33. For $\gamma$ = 2, $u(w) = -1/w$ and $c$ is the harmonic mean (two divided by the sum of the reciprocals 1/12,300 and 1/9,300), $10,591.67. Each is a different average of the same two outcomes, and a steeper bend picks a smaller one. The risk premium for the log saver is $10,800 − $10,695.33 = **$104.67**. It is below the fund's $400 edge, so the fund wins.
 
 ### Step 4: measure the bend against the slope, and the scale drops out
 
@@ -148,7 +148,7 @@ Divide by the slope and the rescaling cancels, because both $u''$ and $u'$ carry
 
 $$A(w) = -\frac{u''(w)}{u'(w)}$$
 
-For ln w, $u' = 1/w$ and $u'' = -1/w^2$, so $A(w) = 1/w$. At $10,800 that is 0.000092593 per dollar. The check computes it by finite differences on both scores and gets 0.000092593 each time.
+For ln w, $u' = 1/w$ and $u'' = -1/w^2$, so $A(w) = 1/w$. At $10,800 that is 0.000092593 per dollar. The check computes it by finite differences (slopes taken between points one dollar apart) on both scores and gets 0.000092593 each time.
 
 ### Step 5: Pratt's rule says what the number means in dollars
 
@@ -192,7 +192,7 @@ Falling line: the fund's certainty equivalent. Flat line: the deposit, $10,400. 
 <details>
 <summary>The same fund with a bell-curve log return instead of a coin</summary>
 
-A smoother fund with the same 8 percent mean and 15 percent spread has a log return with variance ln(1 + (0.15/1.08)^2) = 0.0191 and mean ln 1.08 − 0.0191/2 = 0.0674. Power utility then has a closed form, $c = 10{,}000\, e^{\,0.0674 + (1-\gamma)\, 0.0191/2}$, which gives $10,697.32 for the log saver and a break-even $\gamma$ of 3.9505. The check reaches both numbers a second way, by integrating the score over the bell curve with Simpson's rule and bisecting. Coin or bell curve, the crossing sits near 3.95: with the same mean and spread, the shape of the fund barely moves the answer at this size of risk.
+A smoother fund with the same 8 percent mean and 15 percent spread has a log return with variance ln(1 + (0.15/1.08)^2) = 0.0191 and mean ln 1.08 − 0.0191/2 = 0.0674. Power utility then has a closed form, $c = 10{,}000\, e^{\,0.0674 + (1-\gamma)\, 0.0191/2}$, which gives $10,697.32 for the log saver and a break-even $\gamma$ of 3.9505. The check reaches both numbers a second way, by integrating the score over the bell curve with Simpson's rule (adding the curve's heights at evenly spaced points, with weights that approximate the area) and bisecting. Coin or bell curve, the crossing sits near 3.95: with the same mean and spread, the shape of the fund barely moves the answer at this size of risk.
 
 </details>
 
@@ -362,9 +362,10 @@ assert (vnm_p(DEP, 5) < 0.5) == (ce_coin(5) > DEP), "calibration and CE agree, g
 assert ce_coin(1) > DEP > ce_coin(5) and vnm_p(DEP, 1) < 0.5 < vnm_p(DEP, 5), "log: fund; gamma 5: deposit"
 assert ce_coin(3.9) > DEP > ce_coin(4.0) and abs(g_star - 3.9454) < 5e-5, "crossing between 3.9 and 4"
 assert abs(ap_numeric(lambda x: u(x, 5))[0] * w - 5) < 1e-5, "power utility: w A(w) = gamma"
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 deposit, sure wealth                          10400.00
@@ -411,6 +412,7 @@ chart, certainty equivalent for gamma 0 to 5, then 6 to 10
 chart, wealth     9300    9800   10300   10800   11300   11800   12300
   100 ln(w/1e4)   -7.26   -2.02    2.96    7.70   12.22   16.55   20.70
   chord          -7.26   -2.60    2.06    6.72   11.38   16.04   20.70
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -553,10 +555,11 @@ fn main() {
     assert!(vnm_p(DEP, 1.0) < 0.5 && 0.5 < vnm_p(DEP, 5.0), "vNM chances either side of one half");
     assert!(ce_coin(3.9) > DEP && DEP > ce_coin(4.0) && (g_star - 3.9454).abs() < 5e-5, "crossing between 3.9 and 4");
     assert!((ap(&|x: f64| u(x, 5.0)).0 * w - 5.0).abs() < 1e-5, "power utility: w A(w) = gamma");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 deposit, sure wealth                          10400.00
@@ -603,9 +606,125 @@ chart, certainty equivalent for gamma 0 to 5, then 6 to 10
 chart, wealth     9300    9800   10300   10800   11300   11800   12300
   100 ln(w/1e4)   -7.26   -2.02    2.96    7.70   12.22   16.55   20.70
   chord          -7.26   -2.60    2.06    6.72   11.38   16.04   20.70
+ALL CHECKS PASS
 ```
 
 The outputs agree line for line, the simulated rows included: both programs run the same generator from the same seed.
+
+### Lean
+
+Lean proves three general results for every positive wealth, and the card's exact arithmetic.
+
+- Take any score $u$ for wealth above zero. Then $u$ bends down exactly when every gamble on finitely many amounts has $E[u(W)] \le u(E[W])$.
+- Take a rescaled score $a\,u + b$ with $a > 0$. Then $A(w) = -u''(w)/u'(w)$ is the same for both scores, at every $w$.
+- Take power utility with any $\gamma$, counting ln w as $\gamma$ = 1. Then $\rho(w) = \gamma$ at every wealth $w > 0$.
+- Take the coin-toss fund. Then its average is $10,800 and its variance is 2,250,000 dollars squared.
+- Take the log saver. Then 12,300 × 9,300 > 10,400^2, so the certainty equivalent beats the deposit and the fund wins.
+- Take $\gamma$ = 2. Then the certainty equivalent, the harmonic mean, is exactly 31,775/3, which is 10,591.67.
+- Take $\gamma$ = 5. Then ½ × 12,300^−4 + ½ × 9,300^−4 > 10,400^−4, so the deposit wins.
+- Take the log saver. Then Pratt's rule gives a premium of exactly 625/6, which is $104.17.
+- Divide the fund's edge over the deposit by that premium. Then Pratt's break-even $\gamma$ is exactly 3.84.
+- Take $\gamma$ = 1 read as $A$ by mistake. Then Pratt's rule gives a premium of 1,125,000.
+
+Exact certainty equivalents, the simulation, the bell-curve fund and the break-even 3.9454 are left to the Python and Rust checks.
+
+```lean
+-- Expected utility: a score for positive wealth bends down exactly when every gamble's average score is at most the score of its average wealth, the Arrow-Pratt ratio -u''/u' ignores rescaling and shifting the score, and power utility has relative risk aversion gamma at every wealth.
+import Mathlib.Analysis.Convex.Jensen
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+open Finset
+
+/-- Risk aversion is a downward bend: a score `u` for positive wealth is concave exactly when,
+for every gamble on finitely many positive wealth levels `w i` with probabilities `p i`,
+the average score is at most the score of the average wealth, `E[u(W)] ≤ u(E[W])`. -/
+theorem concave_iff_risk_averse (u : ℝ → ℝ) :
+    ConcaveOn ℝ (Set.Ioi 0) u ↔
+      ∀ (n : ℕ) (p w : Fin n → ℝ), (∀ i, 0 ≤ p i) → ∑ i, p i = 1 → (∀ i, 0 < w i) →
+        ∑ i, p i * u (w i) ≤ u (∑ i, p i * w i) := by
+  constructor
+  · intro h n p w hp hs hw
+    have := h.le_map_sum (t := Finset.univ) (w := p) (p := w) (fun i _ => hp i) hs
+      (fun i _ => hw i)
+    simpa [smul_eq_mul] using this
+  · intro h
+    refine ⟨convex_Ioi 0, ?_⟩
+    intro x hx y hy a b ha hb hab
+    have := h 2 ![a, b] ![x, y] (fun i => by fin_cases i <;> simp [ha, hb])
+      (by simp [Fin.sum_univ_two, hab])
+      (fun i => by fin_cases i <;> simpa using (by assumption))
+    simpa [Fin.sum_univ_two, smul_eq_mul] using this
+
+/-- Measure the bend against the slope and the scale drops out: rescaling the score to
+`a * u + b` with `a > 0` leaves the Arrow-Pratt coefficient `A(w) = -u''(w) / u'(w)` unchanged. -/
+theorem arrow_pratt_invariant_under_rescaling (u : ℝ → ℝ) (a b w : ℝ) (ha : 0 < a) :
+    -deriv (deriv fun x => a * u x + b) w / deriv (fun x => a * u x + b) w =
+      -deriv (deriv u) w / deriv u w := by
+  have h1 : (deriv fun x => a * u x + b) = fun x => a * deriv u x := by
+    funext x
+    rw [deriv_add_const, deriv_const_mul_field']
+  have h2 : deriv (deriv fun x => a * u x + b) w = a * deriv (deriv u) w := by
+    rw [h1, deriv_const_mul_field']
+  rw [h2, h1]
+  have ha' : a ≠ 0 := ha.ne'
+  rw [neg_div, neg_div, mul_div_mul_left _ _ ha']
+
+/-- Power utility has constant relative risk aversion: for `u(w) = w^(1-γ)/(1-γ)` with `γ ≠ 1`,
+and for `u(w) = ln w` (the case `γ = 1`), `ρ(w) = w · (-u''(w)/u'(w))` equals `γ` at every
+positive wealth `w`. -/
+theorem power_utility_relative_risk_aversion (γ w : ℝ) (hw : 0 < w) :
+    (γ ≠ 1 →
+      w * (-deriv (deriv fun x : ℝ => x ^ (1 - γ) / (1 - γ)) w /
+        deriv (fun x : ℝ => x ^ (1 - γ) / (1 - γ)) w) = γ) ∧
+    w * (-deriv (deriv Real.log) w / deriv Real.log w) = 1 := by
+  constructor
+  · intro hγ
+    have hγ' : (1 - γ) ≠ 0 := sub_ne_zero.mpr (Ne.symm hγ)
+    have h1 : (deriv fun x : ℝ => x ^ (1 - γ) / (1 - γ)) = fun x => x ^ (-γ) := by
+      funext x
+      rw [deriv_div_const, Real.deriv_rpow_const]
+      rw [mul_div_cancel_left₀ _ hγ']
+      congr 1
+      ring
+    rw [h1, Real.deriv_rpow_const]
+    have : w ^ (-γ - 1) = w ^ (-γ) / w := Real.rpow_sub_one hw.ne' _
+    rw [this]
+    have hp : 0 < w ^ (-γ) := Real.rpow_pos_of_pos hw _
+    field_simp
+  · rw [Real.deriv_log', deriv_inv']
+    field_simp
+
+-- The fund's average wealth: ½ × 12,300 + ½ × 9,300 = 10,800.
+example : (1 / 2 : ℚ) * 12300 + 1 / 2 * 9300 = 10800 := by norm_num
+-- Its variance: ½ × 1,500² + ½ × 1,500² = 2,250,000 dollars squared.
+example : (1 / 2 : ℚ) * (12300 - 10800) ^ 2 + 1 / 2 * (9300 - 10800) ^ 2 = 2250000 := by norm_num
+-- The log saver takes the fund: √(12,300 × 9,300) > 10,400, that is 12,300 × 9,300 > 10,400².
+example : (10400 : ℕ) ^ 2 < 12300 * 9300 := by norm_num
+-- γ = 2: the certainty equivalent is the harmonic mean, 2 / (1/12,300 + 1/9,300) = 10,591.67 (= 31,775/3).
+example : (2 : ℚ) / (1 / 12300 + 1 / 9300) = 31775 / 3 := by norm_num
+-- γ = 5 takes the deposit: (½ × 12,300^−4 + ½ × 9,300^−4)^(−1/4) < 10,400,
+-- that is ½ × 12,300^−4 + ½ × 9,300^−4 > 10,400^−4.
+example : (1 : ℚ) / 10400 ^ 4 < 1 / 2 * (1 / 12300 ^ 4) + 1 / 2 * (1 / 9300 ^ 4) := by norm_num
+-- Pratt's rule for the log saver: ½ × (1/10,800) × 2,250,000 = 104.17 (= 625/6).
+example : (1 / 2 : ℚ) * (1 / 10800) * 2250000 = 625 / 6 := by norm_num
+-- Pratt's break-even γ: the $400 edge over 104.17 per unit of γ is 3.84.
+example : ((10800 - 10400 : ℚ)) / (625 / 6) = 384 / 100 := by norm_num
+-- The mistake of using γ = 1 as A: ½ × 1 × 2,250,000 = 1,125,000.
+example : (1 / 2 : ℚ) * 1 * 2250000 = 1125000 := by norm_num
+
+#print axioms concave_iff_risk_averse
+#print axioms arrow_pratt_invariant_under_rescaling
+#print axioms power_utility_relative_risk_aversion
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'concave_iff_risk_averse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arrow_pratt_invariant_under_rescaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'power_utility_relative_risk_aversion' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -632,7 +751,7 @@ The outputs agree line for line, the simulated rows included: both programs run 
 ## Where you meet it in real life
 
 - **Robo-adviser questionnaires.** The "how would you feel if the portfolio fell by a fifth" questions are estimating a relative risk aversion. The answer sets the split between a deposit-like asset and a fund.
-- **Portfolio choice.** With power utility, the best share of wealth in the risky asset is about the excess return divided by $\gamma$ times the return's variance.
+- **Portfolio choice.** With power utility, the best share of wealth in the risky asset is about the excess return (the risky asset's average return above the safe rate) divided by $\gamma$ times the return's variance.
 - **Insurance.** A household pays more than the expected loss to insure a house because its score bends: the premium above the expected loss is a risk premium, $\pi$. Why both sides can gain from the trade is the business of [Risk premium](03-certainty-equivalent-and-risk-premium.md).
 - **The equity premium puzzle.** Stocks have historically beaten safe bonds by several percent a year. Fitting that gap with power utility needs a $\gamma$ far above what most economists find believable: a famous misfit of this model.
 - **Growth-optimal betting.** Log utility is also the score that maximises long-run growth when a bet is repeated: [Kelly](05-kelly-criterion-and-growth.md).

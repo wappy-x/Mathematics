@@ -123,4 +123,5 @@ fn main() {
     println!("  80-20 mix                      {} {}", pct(0.8 * MA + 0.2 * MB), pct(formula_var(0.8, RHO).sqrt()));
     println!("  least-risk weight at rho=0.5   {:.6}", (vb - 0.5 * SA * SB) / (va + vb - SA * SB));
     println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

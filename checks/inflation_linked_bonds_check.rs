@@ -166,5 +166,5 @@ fn main() {
     println!("{}", pay.join(" "));
     println!("price curve: real clean per 100 at yield -1.0% to 3.0%, step 0.5%");
     let curve: Vec<String> = (0..9).map(|k| format!("{:.2}", price_closed(c, -0.01 + 0.005 * k as f64, n, r, s).0)).collect();
-    println!("{}", curve.join(" "));
+    println!("{}", curve.join(" ")); println!("ALL CHECKS PASS");
 }

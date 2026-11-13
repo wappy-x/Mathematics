@@ -136,4 +136,4 @@ assert abs(certain[2] - certain[1] - Q[0]) < 1e-12
 assert max(abs(still[i] - PI[i]) for i in range(3)) < 1e-12
 one = posterior(P[:1], Q[:1], [omega_for(P[0], 0.25)])[0]    # one view alone moves a quarter of the way
 assert abs(one[2] - one[1] - (PI[2] - PI[1] + 0.25 * (Q[0] - PI[2] + PI[1]))) < 1e-12
-print("all checks passed")
+print("ALL CHECKS PASS")

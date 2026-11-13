@@ -8,7 +8,9 @@
 
 A coin is tossed. Tails, the player pays $100. Heads, the player wins some amount. How big must the win be before a person takes the bet? A fair-minded accountant says anything over $100. Most people ask for far more. In their 1992 experiments, Amos Tversky and Daniel Kahneman found that losses weighed about 2.25 times as heavily as equal gains. Losses hurt roughly twice as much as gains please.
 
-That is one of three habits that expected utility, the model on the earlier cards of this shelf, leaves out. People judge **changes** against a starting point, not totals of wealth. They feel a loss more than an equal gain. And they treat chances unevenly: a sure thing counts for more than its odds suggest, and a long shot counts for more too.
+That is one of three habits that expected utility, the model on the earlier cards of this shelf, leaves out. Expected utility scores each outcome on a curve of total wealth, then averages those scores using the true chances.
+
+People judge **changes** against a starting point, not totals of wealth. They feel a loss more than an equal gain. And they treat chances unevenly: a sure thing counts for more than its odds suggest, and a long shot counts for more too.
 
 In 1979 Kahneman and Tversky turned those habits into a model and called it **prospect theory**. A **prospect** is their word for a gamble: a list of outcomes with their chances. The model gives each prospect a score, and the person picks the higher score. It reproduces choices that expected utility cannot, including two famous reversals on this card: the **certainty effect** and the **reflection effect**.
 
@@ -30,7 +32,9 @@ xychart-beta
     line [-1000, -750, -500, -250, 0, 250, 500, 750, 1000]
 ```
 
-The orange line is the value curve. The green straight line is the dollar change itself, for comparison. A $1,000 gain is worth 436.52; a $1,000 loss is worth −982.16, about 2.25 times as much in size. The curve bends at zero, the starting point. On the gain side it flattens: each extra dollar adds a little less. On the loss side it also flattens as losses grow: the tenth hundred dollars lost stings less than the first.
+The orange line is the value curve. The green straight line is the dollar change itself, for comparison. A $1,000 gain is worth 436.52; a $1,000 loss is worth −982.16, about 2.25 times as much in size.
+
+The curve bends at zero, the starting point. On the gain side it flattens: each extra dollar adds a little less. On the loss side it also flattens as losses grow: the tenth hundred dollars lost stings less than the first.
 
 ---
 
@@ -40,7 +44,7 @@ Two curves, then a rule for combining them.
 
 $$v(x)=\begin{cases} x^{\alpha} & x \ge 0 \\ -\lambda\,(-x)^{\alpha} & x < 0 \end{cases} \qquad\qquad w(p)=\frac{p^{\gamma}}{\left(p^{\gamma}+(1-p)^{\gamma}\right)^{1/\gamma}}$$
 
-**Read it aloud:** a gain of $x$ dollars is worth $x$ to a power a little below one; a loss is worth the same, turned negative and multiplied by the loss multiplier; a chance $p$ is replaced by a decision weight that bends it. Gains use $w^{+}$ with bend $\gamma$; losses use $w^{-}$, the same formula with $\delta$ in place of $\gamma$.
+**Read it aloud:** a gain of $x$ dollars is worth $x$ to a power a little below one. A loss is worth the same, turned negative and multiplied by the loss multiplier. A chance $p$ is replaced by a decision weight that bends it. Gains use $w^{+}$ with bend $\gamma$; losses use $w^{-}$, the same formula with $\delta$ in place of $\gamma$.
 
 For a prospect that pays $x$ with chance $p$ and nothing otherwise, the score is one product:
 
@@ -71,7 +75,7 @@ The four numbers 0.88, 2.25, 0.61 and 0.69 are the **median estimates** from Tve
 
 ### When it holds
 
-- **A clear reference point.** Gains and losses are measured from somewhere, usually the status quo. Move the reference and the same outcome can switch from gain to loss, and the choice can flip; the Try-changing box shows the saver's fund falling from a certainty equivalent of $69.57 to −$125.45 just by being judged against the deposit.
+- **A clear reference point.** Gains and losses are measured from somewhere, usually the status quo. Move the reference and the same outcome can switch from gain to loss, and the choice can flip. In the Try-changing box, the saver's fund falls from a sure-dollar equal (certainty equivalent) of $69.57 to −$125.45 just by being judged against the deposit.
 - **Stated chances.** The model was built for gambles with announced odds. When odds must be guessed, weights also absorb doubt about the odds, and the fitted curves differ.
 - **Median people.** The parameters describe a middle subject. Individuals vary widely, and one person's fitted loss multiplier can sit well away from 2.25.
 - **One decision, seen as framed.** The model scores the prospect as the person sees it. Present the same money as two separate bets or as one combined bet, and the scores can differ.
@@ -107,13 +111,17 @@ $$\left(\tfrac34\right)^{\alpha} < \frac{w^{+}(0.2)}{w^{+}(0.25)}.$$
 
 Both choices hold together when the value ratio sits between the two weight numbers. With the 1992 parameters: 0.6074 < 0.7763 < 0.8969. It does.
 
-Why does the weighting curve allow this? Under straight chances the two outer numbers are 0.8 and 0.2/0.25 = 0.8: the same, so nothing fits between them. The weighting curve pulls 0.8 down to 0.6074, because a near-certainty feels less certain than it is. It keeps the ratio of two small chances close to 1, 0.8969, because 20% and 25% feel much alike. The gap between them is what Kahneman and Tversky called the **certainty effect**: cutting a chance from 100% to 80% hurts far more than cutting it from 25% to 20%.
+Why does the weighting curve allow this? Under straight chances the two outer numbers are 0.8 and 0.2/0.25 = 0.8: the same, so nothing fits between them. The weighting curve pulls 0.8 down to 0.6074, because a near-certainty feels less certain than it is. It keeps the ratio of two small chances close to 1, 0.8969, because 20% and 25% feel much alike.
+
+The gap between them is what Kahneman and Tversky called the **certainty effect**: cutting a chance from 100% to 80% hurts far more than cutting it from 25% to 20%.
 
 ### Step 3: losses mirror gains, and the choices flip
 
 Put a minus sign on every amount. **Problem 3′**: an 80% chance of losing $4,000, or a sure loss of $3,000. **Problem 4′**: a 20% chance of losing $4,000, or a 25% chance of losing $3,000. In 1979, 92% took the gamble in 3′, and 58% took the 25% chance in 4′. Each majority is the mirror of its gain problem. This is the **reflection effect**: cautious with gains, gambling with losses.
 
-The value curve explains the mirror. For a loss of size $x > 0$, $v(-x) = -\lambda\,v(x)$: the gain curve flipped and stretched. Multiplying an inequality by a negative number reverses it, so every all-loss comparison runs the other way. The multiplier $\lambda$ scales both sides and cancels. The gamble in 3′ wins exactly when $w^{-}(0.8) < (3/4)^{\alpha}$: 0.6690 < 0.7763. The 25% chance in 4′ wins exactly when $(3/4)^{\alpha} < w^{-}(0.2)/w^{-}(0.25)$: 0.7763 < 0.8757. The model reproduces all four majorities.
+The value curve explains the mirror. For a loss of size $x > 0$, $v(-x) = -\lambda\,v(x)$: the gain curve flipped and stretched. Multiplying an inequality by a negative number reverses it, so every all-loss comparison runs the other way. The multiplier $\lambda$ scales both sides and cancels.
+
+The gamble in 3′ wins exactly when $w^{-}(0.8) < (3/4)^{\alpha}$: 0.6690 < 0.7763. The 25% chance in 4′ wins exactly when $(3/4)^{\alpha} < w^{-}(0.2)/w^{-}(0.25)$: 0.7763 < 0.8757. The model reproduces all four majorities.
 
 ### Step 4: the loss multiplier acts only when gains and losses meet
 
@@ -129,7 +137,9 @@ With the parameters, $w^{+}(0.5)$ = 0.4206 and $w^{-}(0.5)$ = 0.4540, so X = $27
 
 ### Step 5: many outcomes need ranked weights
 
-The 1979 version weighted each outcome's chance on its own. That breaks when an outcome is split in two. Take the 80% chance of $4,000 and write it as sixteen tickets, each a 5% chance of $4,000. Weighting each ticket separately gives sixteen times $w^{+}(0.05)$ = 0.13, a total weight of 2.11. The split gamble would then outscore a sure $4,000, though it can never pay more than $4,000. That is a violation of **first-order stochastic dominance**: preferring a prospect that is worse or equal in every outcome.
+The 1979 version weighted each outcome's chance on its own. That breaks when an outcome is split in two. Take the 80% chance of $4,000 and write it as sixteen tickets, each a 5% chance of $4,000.
+
+Weighting each ticket separately gives sixteen times $w^{+}(0.05)$ = 0.13, a total weight of 2.11. The split gamble would then outscore a sure $4,000, though it can never pay more than $4,000. That is a violation of **first-order stochastic dominance**: preferring a prospect that is worse or equal in every outcome.
 
 The 1992 fix weights **cumulative** chances. Rank the gains from best down. The best outcome gets the weight of its own chance. The next gets the weight of "this or better" minus the weight of "strictly better", and so on. The weights then telescope: they add up to the weight of the total chance of a gain. Splitting a ticket leaves every "this or better" chance unchanged, so it leaves the score unchanged.
 
@@ -194,7 +204,11 @@ The deposit scores $v(400)$ = 194.90. The fund's score needs the integral from S
 
 ## Code, from first principles, and it actually runs
 
-The code scores the four 1979 menus two ways: by the one-line formula $w(p)\,v(x)$, and by cutting each prospect into twenty equal tickets and running the ranked cumulative sum. It solves the coin toss by bisection and checks the answer against the closed form from Step 4. It values the saver's fund two independent ways: road 1 integrates the weighted tail chances with Simpson's rule; road 2 cuts the bell curve into 20,000 equally likely tickets, finds each ticket's return by inverting a hand-built normal CDF, and runs the ranked sum. It reprints every "what breaks" and "try changing" number and every chart point. The normal CDF is Marsaglia's series, the root finder is bisection, the integrator is Simpson's rule: all written out.
+The code scores the four 1979 menus two ways: by the one-line formula $w(p)\,v(x)$, and by cutting each prospect into twenty equal tickets and running the ranked cumulative sum. It solves the coin toss by bisection and checks the answer against the closed form from Step 4.
+
+It values the saver's fund two independent ways. Road 1 integrates the weighted tail chances with Simpson's rule. Road 2 cuts the bell curve into 20,000 equally likely tickets, finds each ticket's return by inverting a hand-built normal CDF (cumulative distribution function: the chance that a bell-curve draw falls below a given value), and runs the ranked sum.
+
+It reprints every "what breaks" and "try changing" number and every chart point. The normal CDF is Marsaglia's series, the root finder is bisection, the integrator is Simpson's rule: all written out.
 
 ### Python
 
@@ -578,6 +592,116 @@ ALL CHECKS PASS
 
 The two outputs agree byte for byte. The fund's two roads differ by 0.03 value units, 41.81 against 41.78: the weighting curve is steepest at the far tails, and 20,000 tickets still slightly under-count them. The Simpson road is converged to five decimals.
 
+### Lean
+
+Lean proves Steps 1 and 3 and the ranked-weight facts, for any curves and chances, and checks some worked arithmetic.
+
+- Suppose A pays $x$ with chance $p$, B pays $y$ surely, and C and D are them with every chance times $k > 0$. Then no utility curve $u$ lets expected utility prefer B to A and also C to D.
+- Take any curvature $\alpha$, a loss multiplier $\lambda > 0$, and losses of sizes $a, b > 0$. Then $v(-a) = -\lambda\,v(a)$, and comparing weight times value for two losses runs opposite to the mirror gains.
+- Take an increasing weighting curve $w$ and ranked outcomes with chances $p_i \ge 0$. Then each $\pi_i \ge 0$, and $\pi_1 + \dots + \pi_n = w(G_n) - w(G_0)$.
+- The arithmetic checks cover Problem 3's expected payout, the chances divided by four, the straight-line coin toss, the sixteen tickets and the saver's amounts.
+
+Every score with the 1992 parameters, the coin toss and the saver's fund are left to the Python and Rust checks.
+
+```lean
+-- Prospect theory in outline: no expected-utility curve can produce the certainty reversal, the loss side of the value curve mirrors the gain side so all-loss choices flip, and ranked decision weights are non-negative and add up by telescoping.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+open Finset
+
+/-- The prospect-theory value of a change of `x` dollars: `x ^ α` for a gain (or zero),
+`-lam * (-x) ^ α` for a loss, where `lam` is the loss multiplier. -/
+noncomputable def ptValue (α lam x : ℝ) : ℝ :=
+  if 0 ≤ x then x ^ α else -lam * (-x) ^ α
+
+/-- Expected utility cannot produce the certainty reversal. Take any utility curve `u`.
+Prospect A pays `x` with chance `p`, else nothing; B pays `y` for sure. Now multiply every
+chance by the same factor `k > 0` (Problem 4 is Problem 3 with every chance divided by four):
+C pays `x` with chance `k * p`, D pays `y` with chance `k`. Scoring each prospect by its
+average utility over the true chances, it is impossible to prefer B to A and also C to D. -/
+theorem expected_utility_cannot_produce_certainty_reversal
+    (u : ℝ → ℝ) (x y p k : ℝ) (hk : 0 < k) :
+    ¬ (u y > p * u x + (1 - p) * u 0 ∧
+        k * p * u x + (1 - k * p) * u 0 > k * u y + (1 - k) * u 0) := by
+  rintro ⟨h1, h2⟩
+  have h3 : k * (p * (u x - u 0)) > k * (u y - u 0) := by linarith
+  have h4 : p * (u x - u 0) > u y - u 0 := lt_of_mul_lt_mul_left h3 hk.le
+  linarith
+
+/-- The reflection effect. For a loss of size `a > 0`, the value is the gain curve flipped and
+stretched: `v(-a) = -lam * v(a)`. So with a positive loss multiplier, any comparison of two
+all-loss prospects (each a decision weight times the value of a loss) runs the opposite way
+to the same comparison of the mirror-image gains, and `lam` cancels. -/
+theorem losses_mirror_gains_and_choices_flip
+    (α lam a b p q : ℝ) (hlam : 0 < lam) (ha : 0 < a) (hb : 0 < b) :
+    ptValue α lam (-a) = -lam * ptValue α lam a ∧
+      (p * ptValue α lam (-a) < q * ptValue α lam (-b) ↔
+        q * ptValue α lam b < p * ptValue α lam a) := by
+  have hva : ptValue α lam (-a) = -lam * a ^ α := by
+    unfold ptValue; rw [if_neg (by linarith), neg_neg]
+  have hvb : ptValue α lam (-b) = -lam * b ^ α := by
+    unfold ptValue; rw [if_neg (by linarith), neg_neg]
+  have hpa : ptValue α lam a = a ^ α := by
+    unfold ptValue; rw [if_pos ha.le]
+  have hpb : ptValue α lam b = b ^ α := by
+    unfold ptValue; rw [if_pos hb.le]
+  rw [hva, hvb, hpa, hpb]
+  refine ⟨rfl, ?_⟩
+  constructor
+  · intro h
+    by_contra hc
+    push_neg at hc
+    have := mul_le_mul_of_nonneg_left hc hlam.le
+    nlinarith
+  · intro h
+    have := mul_lt_mul_of_pos_left h hlam
+    nlinarith
+
+/-- Ranked (cumulative) decision weights. Rank the outcomes, let `p i` be the chance of the
+`i`-th one and `G i = p 0 + ... + p (i-1)` the chance of doing at least that well. The weight of
+outcome `i` is `w (G (i+1)) - w (G i)`. If the weighting curve `w` increases, every such weight is
+non-negative, and the weights telescope: together they add up to `w` of the total chance,
+minus `w 0`. -/
+theorem ranked_weights_nonneg_and_telescope
+    (w : ℝ → ℝ) (hw : Monotone w) (p : ℕ → ℝ) (hp : ∀ i, 0 ≤ p i) (n : ℕ) :
+    (∀ i, 0 ≤ w (∑ j ∈ range (i + 1), p j) - w (∑ j ∈ range i, p j)) ∧
+      ∑ i ∈ range n, (w (∑ j ∈ range (i + 1), p j) - w (∑ j ∈ range i, p j)) =
+        w (∑ j ∈ range n, p j) - w 0 := by
+  refine ⟨fun i => ?_, ?_⟩
+  · rw [sub_nonneg]
+    apply hw
+    rw [sum_range_succ]
+    linarith [hp i]
+  · rw [sum_range_sub (fun i => w (∑ j ∈ range i, p j)) n]
+    simp
+
+-- Problem 3's gamble, 80% of $4,000, has expected payout $3,200.
+example : (4 / 5 : ℚ) * 4000 = 3200 := by norm_num
+-- Problem 4 is Problem 3 with every chance divided by four: 80% becomes 20%, 100% becomes 25%.
+example : (4 / 5 : ℚ) / 4 = 1 / 5 ∧ (1 : ℚ) / 4 = 1 / 4 := by norm_num
+-- Coin toss on straight lines with loss multiplier 9/4: heads must pay $225 to break even.
+example : (1 / 2 : ℚ) * 225 - (9 / 4) * ((1 / 2) * 100) = 0 := by norm_num
+example : (100 : ℚ) * (9 / 4) = 225 := by norm_num
+-- Sixteen tickets of 5% make the 80% chance.
+example : (16 : ℚ) * (1 / 20) = 4 / 5 := by norm_num
+-- The saver: $10,000 at 4% is $400, at a mean of 8% is $800, with a spread of 15% = $1,500.
+example : (10000 : ℚ) * (4 / 100) = 400 ∧ (10000 : ℚ) * (8 / 100) = 800 ∧
+    (10000 : ℚ) * (15 / 100) = 1500 := by norm_num
+
+#print axioms expected_utility_cannot_produce_certainty_reversal
+#print axioms losses_mirror_gains_and_choices_flip
+#print axioms ranked_weights_nonneg_and_telescope
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'expected_utility_cannot_produce_certainty_reversal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'losses_mirror_gains_and_choices_flip' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ranked_weights_nonneg_and_telescope' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ### The weighting curves
 
 The chart plots the weights the code prints, with the straight line of true chances for comparison.
@@ -633,6 +757,7 @@ Orange is the gain weight $w^{+}$, green the loss weight $w^{-}$, dark blue the 
 
 ## What this builds on
 
+- [Expected utility](02-expected-utility-and-risk-aversion.md): the utility curve and the rule of choosing by its average over the true chances. Step 1 shows why no such curve fits the certainty reversal.
 - [Risk premium](03-certainty-equivalent-and-risk-premium.md): the sure amount with the same score as a gamble. This card computes one for the saver's fund under prospect theory, $69.57, where that card computes it under expected utility.
 
 ## Where this goes next
@@ -640,7 +765,7 @@ Orange is the gain weight $w^{+}$, green the loss weight $w^{-}$, dark blue the 
 - [Stochastic dominance](04-stochastic-dominance.md): the comparison every sensible chooser agrees on; the detailed proof above shows cumulative prospect theory respects it and the 1979 version does not.
 - [Kelly](05-kelly-criterion-and-growth.md): the normative answer to the saver's question when the same bet repeats, set against the one-year view that makes the fund look bad here.
 
-The question this card leaves open is what to do about it: once a choice is known to be bent by loss aversion and weighting, the normative tools of this shelf say what an unbent chooser would pick instead.
+The question this card leaves open is what to do about it. Once a choice is known to be bent by loss aversion and weighting, the normative tools of this shelf say what an unbent chooser would pick instead.
 
 ---
 

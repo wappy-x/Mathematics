@@ -109,3 +109,4 @@ print(f"  50-50 mix                      {pct(0.5*MA + 0.5*MB)} {pct(sqrt(formul
 print(f"  80-20 mix                      {pct(0.8*MA + 0.2*MB)} {pct(sqrt(formula_var(0.8, RHO)))}")
 print(f"  least-risk weight at rho=0.5   {(SB*SB - 0.5*SA*SB) / (SA*SA + SB*SB - SA*SB):.6f}")
 print("All checks passed.")
+print("ALL CHECKS PASS")

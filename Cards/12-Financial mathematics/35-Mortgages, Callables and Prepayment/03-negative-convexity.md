@@ -10,7 +10,7 @@ The house pool is $100 of 30-year home loans. Every loan charges 6 percent a yea
 
 Now let rates fall one percentage point, to 5 percent. The same pool with its prepayment speed held fixed would be worth $106.43. The real pool reaches only $105.52, a gain of $5.52, because cheaper loans elsewhere tempt borrowers to refinance, and they hand back 6 percent money just when 6 percent has become a good return. Let rates rise one point instead, to 7 percent. Refinancing slows, the 6 percent loans stay outstanding longer at a rate that now looks poor, and the pool loses $6.71. The same one-point move costs more going up than it pays going down.
 
-That lopsidedness has a name. The price curve of an ordinary bond bends upward: **positive convexity**. The mortgage pool's curve bends downward: **negative convexity**. The textbook formula for convexity cannot see it, because that formula assumes the payments are fixed. The fix is a measurement, not a formula: move the yield up and down, rerun the borrowers' behaviour at each new yield, reprice, and read the slope and the bend off the three prices. Done that way, the pool's convexity at par comes out at −119 in years squared, or **−1.2** in the per-hundred units mortgage screens print.
+That lopsidedness has a name. The price curve of an ordinary bond bends upward: **positive convexity**. The mortgage pool's curve bends downward: **negative convexity**. The textbook formula for convexity cannot see it, because that formula assumes the payments are fixed. The fix is a measurement, not a formula: move the yield up and down, rerun the borrowers' behaviour at each new yield, reprice, and read the slope and the bend off the three prices. Done that way, the pool's convexity at par comes out at −119 in years squared, or **−1.2** in the per-hundred units that mortgage trading screens print.
 
 **A mortgage pool's payments shrink when rates fall and stretch when rates rise, so its price curve bends down, and the only honest way to measure that bend is to reprice the pool, prepayment model and all, at a bumped yield on each side.**
 
@@ -29,13 +29,13 @@ xychart-beta
     line [118.23, 115.19, 112.15, 109.12, 106.08, 103.04, 100.00, 96.96, 93.92, 90.88, 87.85]
 ```
 
-Orange: the real pool, whose borrowers prepay faster as rates fall. Green: the same pool with prepayment frozen at 8 percent a year whatever rates do, which is how a fixed-payment bond behaves. Dark blue: the straight line through par with the pool's slope there, which is what duration alone predicts. All three touch at 6 percent. The green curve sits above the straight line on both sides: positive convexity. The orange curve sits below it on both sides: negative convexity. On the left it flattens because refinancing caps the gain; on the right it steepens because the loans stretch out.
+Orange: the real pool, whose borrowers prepay faster as rates fall. Green: the same pool with prepayment frozen at 8 percent a year whatever rates do, which is how a fixed-payment bond behaves. Dark blue: the straight line through par with the pool's slope there, which is what duration alone predicts; **duration** is the fraction of price lost per unit of yield. All three touch at 6 percent. The green curve sits above the straight line on both sides: positive convexity. The orange curve sits below it on both sides: negative convexity. On the left it flattens because refinancing caps the gain; on the right it steepens because the loans stretch out.
 
 ---
 
 ## The formula
 
-Four pieces of notation first, in words. A **basis point** is a hundredth of a percentage point, so 100 basis points is one point. The **bump** $\delta$ (small delta) is how far the yield is moved each way; the house bump is 100 basis points, $\delta = 0.01$. $V_0$ is the pool's price at today's yield, and $V_-$ and $V_+$ are its prices after the yield is bumped down and up. Each of the three is a full repricing: rerun the borrowers, rebuild 360 months of payments, discount them.
+Four pieces of notation first, in words. A **basis point** (bp) is a hundredth of a percentage point, so 100 basis points is one point. The **bump** $\delta$ (small delta) is how far the yield is moved each way; the house bump is 100 basis points, $\delta = 0.01$. $V_0$ is the pool's price at today's yield, and $V_-$ and $V_+$ are its prices after the yield is bumped down and up. Each of the three is a full repricing: rerun the borrowers, rebuild 360 months of payments, discount them.
 
 $$D_{\text{eff}} \;=\; \frac{V_- - V_+}{2\,V_0\,\delta}, \qquad C_{\text{eff}} \;=\; \frac{V_- + V_+ - 2V_0}{V_0\,\delta^2}$$
 
@@ -548,6 +548,149 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line at the printed precision.
+
+### Lean
+
+Lean proves the par identity, the slope and bend at par, and the bump formulas, for any balances and any smooth prepayment model.
+
+- Take any path of opening balances $B_m$, with $B_1 = L$ and nothing left after the last month. Then the discounted receipts add up to $L + (i - j)F$.
+- Take any discounted balances $F$ that change smoothly with the yield. Then at par the price is $L$ and the exact duration is $F/(12L)$.
+- Suppose the same holds. Then the exact convexity at par is $-F'/(6L)$.
+- Take any three prices $V_0$, $V_-$, $V_+$ and any bump $\delta$. Then $D_{\text{eff}}$ is the average of the down-side and up-side durations.
+- Suppose the same prices and bump. Then $C_{\text{eff}}$ is the down-side duration minus the up-side duration, divided by $\delta$.
+- The house rule gives a CPR of 10.55 percent at 5 percent and 5.45 percent at 7. At 9 percent it sits on the 2 percent floor.
+- The hand table's price swing, $D_{\text{eff}}$ and miss are exact. So are the one-point moves of 5.522436 and −6.712472 percent.
+
+The three prices from the 360-month ledger, the two forces of Step 4 and the negative sign are left to the Python and Rust checks.
+
+```lean
+-- Negative convexity: a mortgage pool is worth its face plus the coupon's excess over the market rate on every discounted balance, for any prepayment path, and at par its exact slope and bend come from those discounted balances alone.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+
+open Finset
+
+/-- Telescoping form of the par identity before using the end condition. -/
+theorem pool_price_telescope_aux (i j : ℝ) (B : ℕ → ℝ) (hj : 1 + j ≠ 0) (N : ℕ) :
+    ∑ m ∈ Icc 1 N, ((1 + i) * B m - B (m + 1)) / (1 + j) ^ m
+      = B 1 + (i - j) * ∑ m ∈ Icc 1 N, B m / (1 + j) ^ m - B (N + 1) / (1 + j) ^ N := by
+  induction N with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), Finset.sum_Icc_succ_top (by omega), ih]
+    have hp : (1 + j) ^ n ≠ 0 := pow_ne_zero _ hj
+    rw [pow_succ]
+    field_simp
+    ring
+
+#print axioms pool_price_telescope_aux
+
+/-- The par identity (Step 2). Take a pool of `N` months whose opening balance in month `m` is
+`B m`, with face `B 1 = L` and nothing left after the last month (`B (N+1) = 0`). Each month's
+receipt is the opening balance grown by the monthly coupon `i`, minus the closing balance:
+`(1+i) B m - B (m+1)`. Discount every receipt at the monthly market rate `j` and add. The result is
+the face plus `(i - j)` times `F`, the sum of all discounted opening balances. No prepayment rule
+is assumed: the balances can follow any path. -/
+theorem pool_price_eq_face_add_coupon_excess_times_discounted_balances
+    (N : ℕ) (i j L : ℝ) (B : ℕ → ℝ) (hj : 1 + j ≠ 0)
+    (hL : B 1 = L) (hend : B (N + 1) = 0) :
+    ∑ m ∈ Icc 1 N, ((1 + i) * B m - B (m + 1)) / (1 + j) ^ m
+      = L + (i - j) * ∑ m ∈ Icc 1 N, B m / (1 + j) ^ m := by
+  rw [pool_price_telescope_aux i j B hj N, hL, hend]
+  simp
+
+/-- Slope and bend at par (Step 3). Write the pool's price as `V y = L + (r - y)/12 * F y`, where
+`r` is the yearly coupon rate (6 percent on the card), `y` the market yield and `F` the discounted
+balances, which may move with the yield in any smooth way. At `y = r` the price is the face `L`,
+the exact duration `-V'/V` is `F / (12 L)`, and the exact convexity `V''/V` is `-F' / (6 L)`. -/
+theorem duration_and_convexity_at_par
+    (r L : ℝ) (F : ℝ → ℝ) (hF : Differentiable ℝ F)
+    (hF' : DifferentiableAt ℝ (deriv F) r) :
+    let V : ℝ → ℝ := fun y => L + (r - y) / 12 * F y
+    V r = L ∧
+    -deriv V r / V r = F r / (12 * L) ∧
+    deriv (deriv V) r / V r = -deriv F r / (6 * L) := by
+  intro V
+  have hV : ∀ y, HasDerivAt V (-1 / 12 * F y + (r - y) / 12 * deriv F y) y := by
+    intro y
+    have h1 : HasDerivAt (fun y : ℝ => (r - y) / 12) (-1 / 12) y := by
+      have := ((hasDerivAt_id y).const_sub r).div_const 12
+      simpa using this
+    have h2 := h1.mul (hF y).hasDerivAt
+    have h3 := h2.const_add L
+    convert h3 using 1
+  have hdV : deriv V = fun y => -1 / 12 * F y + (r - y) / 12 * deriv F y := by
+    funext y; exact (hV y).deriv
+  have hVr : V r = L := by simp [V]
+  have hd2 : HasDerivAt (deriv V) (-1 / 12 * deriv F r + (-1 / 12 * deriv F r
+      + (r - r) / 12 * deriv (deriv F) r)) r := by
+    rw [hdV]
+    have h1 : HasDerivAt (fun y : ℝ => (r - y) / 12) (-1 / 12) r := by
+      have := ((hasDerivAt_id r).const_sub r).div_const 12
+      simpa using this
+    exact ((hF r).hasDerivAt.const_mul (-1 / 12)).add (h1.mul hF'.hasDerivAt)
+  refine ⟨hVr, ?_, ?_⟩
+  · rw [(hV r).deriv, hVr]
+    ring
+  · rw [hd2.deriv, hVr]
+    ring
+
+/-- The bump formulas (Step 5). With today's price `V₀`, prices `V₋` and `V₊` after a bump of `δ`
+down and up, the down-side duration `(V₋ - V₀)/(V₀ δ)` and the up-side duration
+`(V₀ - V₊)/(V₀ δ)`: effective duration is their average, and effective convexity is the up-side
+duration subtracted from the down-side one, divided by the bump. -/
+theorem effective_duration_and_convexity_from_one_sided_durations
+    (V₀ Vm Vp δ : ℝ) :
+    let Ddown := (Vm - V₀) / (V₀ * δ)
+    let Dup := (V₀ - Vp) / (V₀ * δ)
+    (Vm - Vp) / (2 * V₀ * δ) = (Ddown + Dup) / 2 ∧
+    (Vm + Vp - 2 * V₀) / (V₀ * δ ^ 2) = (Ddown - Dup) / δ := by
+  intro Ddown Dup
+  constructor <;> simp only [Ddown, Dup] <;> ring
+
+/-! Worked numbers from the card, as exact fractions. -/
+
+-- The house prepayment rule c(y) = max(2%, 8% + 2.55 (6% - y)).
+-- At 5 percent the speed is 10.55 percent.
+example : max ((2 : ℚ) / 100) (8 / 100 + 255 / 100 * (6 / 100 - 5 / 100)) = 1055 / 10000 := by
+  norm_num
+-- At 7 percent the speed is 5.45 percent.
+example : max ((2 : ℚ) / 100) (8 / 100 + 255 / 100 * (6 / 100 - 7 / 100)) = 545 / 10000 := by
+  norm_num
+-- A 3-point bump up, to 9 percent, puts the speed on the 2 percent floor.
+example : max ((2 : ℚ) / 100) (8 / 100 + 255 / 100 * (6 / 100 - 9 / 100)) = 2 / 100 := by
+  norm_num
+
+-- The hand table: price swing 105.522436 - 93.287528 = 12.234908.
+example : (105522436 : ℚ) / 10 ^ 6 - 93287528 / 10 ^ 6 = 12234908 / 10 ^ 6 := by norm_num
+-- Effective duration 12.234908 / (2 × 100 × 0.01) = 6.117454.
+example : ((12234908 : ℚ) / 10 ^ 6) / (2 * 100 * (1 / 100)) = 6117454 / 10 ^ 6 := by norm_num
+-- The miss 105.522436 + 93.287528 - 200 = -1.190036.
+example : (105522436 : ℚ) / 10 ^ 6 + 93287528 / 10 ^ 6 - 200 = -1190036 / 10 ^ 6 := by norm_num
+-- Half of -1.190036 is -0.595018.
+example : ((-1190036 : ℚ) / 10 ^ 6) / 2 = -595018 / 10 ^ 6 := by norm_num
+-- A one-point rise: -6.117454 - 0.595018 = -6.712472.
+example : (-6117454 : ℚ) / 10 ^ 6 - 595018 / 10 ^ 6 = -6712472 / 10 ^ 6 := by norm_num
+-- A one-point fall: 6.117454 - 0.595018 = 5.522436.
+example : (6117454 : ℚ) / 10 ^ 6 - 595018 / 10 ^ 6 = 5522436 / 10 ^ 6 := by norm_num
+
+#print axioms pool_price_eq_face_add_coupon_excess_times_discounted_balances
+#print axioms duration_and_convexity_at_par
+#print axioms effective_duration_and_convexity_from_one_sided_durations
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'pool_price_telescope_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pool_price_eq_face_add_coupon_excess_times_discounted_balances' depends on axioms: [propext, Classical.choice, Quot.sound]
+'duration_and_convexity_at_par' depends on axioms: [propext, Classical.choice, Quot.sound]
+'effective_duration_and_convexity_from_one_sided_durations' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

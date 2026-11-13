@@ -152,4 +152,5 @@ fn main() {
     assert!((g_star - g_bis).abs() < 1e-6);
     row("fund CE g = 2, in percent", 100.0 * (ce_fund(2.0) - 1.0), 4);
     row("fund CE g = 6, in percent", 100.0 * (ce_fund(6.0) - 1.0), 4);
+    println!("ALL CHECKS PASS");
 }

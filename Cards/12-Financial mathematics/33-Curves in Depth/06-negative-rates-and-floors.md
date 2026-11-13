@@ -10,9 +10,13 @@ A bank lends 10 million dollars for three years at a floating rate. Each year th
 
 Today the curve sits at **minus 0.50 percent** for every year ahead. Rates like that are not a thought experiment. The European Central Bank set its deposit rate below zero in June 2014, and euro rates stayed there for years. The numbers on this card are in dollars, as everywhere in this library; the story is the euro's.
 
-Without the floor, the lender would pay the borrower interest. That plain floating leg is worth **minus $151,512.59** to the lender today. With the floor, the lender never pays and sometimes receives, and the floored leg is worth **plus $14,341.05**. The difference, **$165,853.64**, is the value of the floor.
+Without the floor, the lender would pay the borrower interest. That plain floating leg, the stream of floating interest payments, is worth **minus $151,512.59** to the lender today. With the floor, the lender never pays and sometimes receives, and the floored leg is worth **plus $14,341.05**. The difference, **$165,853.64**, is the value of the floor.
 
-Pricing that floor raises three questions, and this card answers them in order. What breaks: Black's lognormal model, the standard tool for rate options, returns no price at all. What is floored: a floored coupon splits exactly into the plain coupon plus a put on the rate struck at zero. Which models survive: the normal model and the shifted lognormal model both price it, agree on most of it, and disagree on the rest.
+Pricing that floor raises three questions, and this card answers them in order.
+
+- **What breaks:** Black's lognormal model, the standard tool for rate options, returns no price at all. Lognormal means the rate moves by a percentage of itself, so it can never cross zero.
+- **What is floored:** a floored coupon splits exactly into the plain coupon plus a put on the rate struck at zero. That put is an option that pays whatever the rate falls short of zero. Its intrinsic value is what it pays if rates simply stay where they are; the rest is its time value.
+- **Which models survive:** the normal model and the shifted lognormal model both price it, agree on most of it, and disagree on the rest.
 
 **A coupon floored at zero is the plain coupon plus a put on the rate struck at zero; below zero that put is mostly intrinsic value, which needs no model, while the remainder depends on how the model lets the rate move, and a lognormal model cannot price it at all.**
 
@@ -20,7 +24,7 @@ Pricing that floor raises three questions, and this card answers them in order. 
 
 ### The picture: what one floorlet costs, by strike
 
-One year's floor is a **floorlet**: a put on one fixing. Take the second year's fixing, one year away, and price a floorlet at strikes from minus 1.50 to plus 0.50 percent. Prices are in **basis points** of the loan, hundredths of one percent. One basis point on 10 million dollars for a year is $1,000.
+One year's floor is a **floorlet**: a put on one fixing. Take the second year's fixing, one year away, and price a floorlet at strikes from minus 1.50 to plus 0.50 percent. Prices are in **basis points** (bp) of the loan, hundredths of one percent. One basis point on 10 million dollars for a year is $1,000.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -33,13 +37,26 @@ xychart-beta
     line [0.00, 0.00, 0.00, 5.27, 20.15, 39.49, 61.04, 83.82, 107.34]
 ```
 
-The line still above zero on the far left is the **normal model**: the rate moves by so many basis points a year wherever it sits. The middle line is the **shifted lognormal model** with a 2 percent shift: the rate plus 2 percent moves by a percentage of itself, so the rate never falls below minus 2 percent. The line that hits zero at minus 100 bp is the same model with its wall at minus 1 percent. All three cost 20.15 bp at the forward, minus 50 bp, by construction. At the zero strike they part: 54.71, 56.79 and 61.04 bp. Black's unshifted model cannot draw a single point of this chart.
+- The line still above zero on the far left is the **normal model**: the rate moves by so many basis points a year wherever it sits.
+- The middle line is the **shifted lognormal model** with a 2 percent shift: the rate plus 2 percent moves by a percentage of itself, so the rate never falls below minus 2 percent.
+- The line that hits zero at minus 100 bp is the same model with its wall at minus 1 percent.
+
+All three cost 20.15 bp at the forward, minus 50 bp, by construction. At the zero strike they part: 54.71, 56.79 and 61.04 bp. Black's unshifted model cannot draw a single point of this chart.
 
 ---
 
 ## The formula
 
-Notation first, in words. The loan has notional $M$, 10 million dollars, and three periods of length $\tau$, one year each. Period $i$ pays on date $t_i$ (years 1, 2, 3) and fixes its rate at $T_i$, one year earlier (years 0, 1, 2). $D$ is the **discount factor**: $D(t_i)$ is what a dollar due at $t_i$ costs today. $F_i$ is the **forward rate** for period $i$, the rate the curve fixes for it today, and $L_i$ is the rate that will actually be fixed, unknown today. $K$ is the floor's strike, here zero. $\sigma_N$ is the **normal volatility**, how many basis points the rate typically moves in a year, and $w_i = \sigma_N\sqrt{T_i}$ is one **wiggle unit** for period $i$: the typical move between today and its fixing, in proper terms the **standard deviation** of $L_i$. $N$ is the standard normal CDF, the bell-curve area to the left of a point, and $\varphi$ its density, the bell curve's height there ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)).
+Notation first, in words.
+
+- The loan has notional $M$, the amount interest is charged on, 10 million dollars, and three periods of length $\tau$, one year each.
+- Period $i$ pays on date $t_i$ (years 1, 2, 3) and fixes its rate at $T_i$, one year earlier (years 0, 1, 2).
+- $D$ is the **discount factor**: $D(t_i)$ is what a dollar due at $t_i$ costs today.
+- $F_i$ is the **forward rate** for period $i$, the rate the curve fixes for it today, and $L_i$ is the rate that will actually be fixed, unknown today.
+- $K$ is the floor's strike, here zero.
+- $\sigma_N$ is the **normal volatility**, how many basis points the rate typically moves in a year.
+- $w_i = \sigma_N\sqrt{T_i}$ is one **wiggle unit** for period $i$: the typical move between today and its fixing, in proper terms the **standard deviation** of $L_i$.
+- $N$ is the standard normal CDF (cumulative distribution function), the bell-curve area to the left of a point, and $\varphi$ its density, the bell curve's height there ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)).
 
 The coupon split, true at every outcome:
 
@@ -53,7 +70,7 @@ $$V \;=\; \sum_{i=1}^{3} M\,\tau\,D(t_i)\,\bigl[\,F_i + \mathrm{Fl}_i\,\bigr], \
 
 $d_i$ counts how many wiggle units the strike sits above the forward. For the year-2 fixing it is exactly 1. Year 1 is already fixed, so $w_1 = 0$ and $\mathrm{Fl}_1$ is simply $\max(K - F_1, 0)$.
 
-The shifted model replaces $\mathrm{Fl}_i$ with Black's put on the slid pair $F_i + a$ and $K + a$, at a volatility $\sigma_a$ that is a percentage of the slid rate ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)). To compare it with the normal model, $\sigma_a$ is chosen so both cost the same at the money. That choice exists, and is unique, exactly when
+The shifted model replaces $\mathrm{Fl}_i$ with Black's put on the slid pair $F_i + a$ and $K + a$, at a volatility $\sigma_a$ that is a percentage of the slid rate ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)). To compare it with the normal model, $\sigma_a$ is chosen so both cost the same at the money, that is with the strike at the forward. That choice exists, and is unique, exactly when
 
 $$a \;>\; -F_i \;+\; \sigma_N\sqrt{\frac{T_i}{2\pi}}$$
 
@@ -76,7 +93,7 @@ $$a \;>\; -F_i \;+\; \sigma_N\sqrt{\frac{T_i}{2\pi}}$$
 ### When it holds
 
 - **The rate moves by a fixed absolute size, with no wall.** If rates stick near a central bank's lower limit, the normal model overprices floors struck far below zero.
-- **One volatility per fixing, no smile.** Each model is tuned at the money, 50 bp below the zero strike. The market quotes a different volatility at each strike, and a desk would use the zero strike's own quote.
+- **One volatility per fixing, no smile.** Each model is tuned at the money, 50 bp below the zero strike. The market quotes a different volatility at each strike, and a trading desk would use the zero strike's own quote.
 - **One curve.** Forwards are read from the same curve that discounts. Real euro legs project the benchmark on one curve and discount on an overnight-rate curve, and then the plain leg no longer collapses to $M(D(0) - D(3))$.
 - **The shift is chosen, and chosen large enough.** Below the minimum shift no shifted volatility reproduces the at-the-money price.
 - **The floor applies to the benchmark alone.** A fixed margin added on top is a plain payment and changes nothing in the option.
@@ -114,7 +131,9 @@ Black's model says the fixing is today's forward times a random growth factor th
 - **A negative forward has no place in it.** A growth factor is positive, so the fixing keeps the sign of $F$. The formula makes that literal: it needs $\ln(F/K)$, and with $F = -0.50$ percent and $K = 0$ the code gets a division by zero; with $K$ nudged to plus 0.01 percent, the log of a negative number. No price.
 - **A positive forward gives the wrong price.** Nudge the forward to plus 0.01 percent, and the strike a hair above zero so the formula runs. Now $L$ is always positive, the chance of fixing below zero is exactly nothing, and the zero-strike floorlet is worth $0.00.
 
-That zero breaks a bound no model may cross. A floorlet minus a caplet at the same strike pays $K - L$ at every outcome, which is worth $D\,\tau\,(K - F)$ today, the plain coupon read backwards ([Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)). A caplet is never worth less than nothing. So a floorlet is worth at least $D\,\tau\,\max(K - F, 0)$, its **intrinsic value**. On a minus 0.50 percent forward that is 50 bp a year, $151,512.59 over the loan. A model that prices the floor at nothing prices it below a bound anyone could exploit.
+That zero breaks a bound no model may cross. A floorlet minus a caplet at the same strike pays $K - L$ at every outcome, which is worth $D\,\tau\,(K - F)$ today, the plain coupon read backwards ([Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)).
+
+A caplet is never worth less than nothing. So a floorlet is worth at least $D\,\tau\,\max(K - F, 0)$, its **intrinsic value**. On a minus 0.50 percent forward that is 50 bp a year, $151,512.59 over the loan. A model that prices the floor at nothing prices it below a bound anyone could exploit.
 
 ### Step 4: the normal model prices it
 
@@ -138,7 +157,11 @@ Subtract the intrinsic value $K - F_i$: the rest is $w_i\bigl[\varphi(d_i) - d_i
 
 The shifted model says $L_i + a$ is lognormal: the slid rate grows by a random percentage, so $L_i$ cannot fall below $-a$. With $a = 2$ percent the forward slides to plus 1.50 percent, Black's formula runs, and the zero strike slides to plus 2 percent.
 
-To compare models fairly, each shifted volatility is tuned so the at-the-money floorlet, struck at the forward, costs what the normal model says: $\sigma_N\sqrt{T_i/(2\pi)}$, 20.15 bp once discounted for year 2. The shifted at-the-money premium, before discounting, is $(F_i + a)\bigl[2N(w/2) - 1\bigr]$ with $w = \sigma_a\sqrt{T_i}$. As $\sigma_a$ runs from 0 upwards, $2N(w/2) - 1$ climbs strictly from 0 towards 1 and never arrives. So the shifted premium sweeps every value between nothing and $F_i + a$, each exactly once. A match exists, and is unique, exactly when the normal premium is below $F_i + a$: the bound in The formula. For year 3 that needs a shift above 0.7821 percent. At 0.75 percent the code finds a year-2 volatility of 255.11 percent and no year-3 volatility at all.
+To compare models fairly, each shifted volatility is tuned so the at-the-money floorlet, struck at the forward, costs what the normal model says: $\sigma_N\sqrt{T_i/(2\pi)}$, 20.15 bp once discounted for year 2. The shifted at-the-money premium, before discounting, is $(F_i + a)\bigl[2N(w/2) - 1\bigr]$ with $w = \sigma_a\sqrt{T_i}$.
+
+As $\sigma_a$ runs from 0 upwards, $2N(w/2) - 1$ climbs strictly from 0 towards 1 and never arrives. So the shifted premium sweeps every value between nothing and $F_i + a$, each exactly once. A match exists, and is unique, exactly when the normal premium is below $F_i + a$: the bound in The formula.
+
+For year 3 that needs a shift above 0.7821 percent. At 0.75 percent the code finds a year-2 volatility of 255.11 percent and no year-3 volatility at all.
 
 ### Step 6: why the survivors disagree
 
@@ -184,7 +207,14 @@ The floor costs $165,853.64, of which $151,512.59 is intrinsic: the three years'
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the curve from the flat rate, read the forwards back off it, and price the floor and the floored leg by **four independent roads** in the normal model: the formula; a brute-force average of the floorlet payoff over the bell curve by Simpson's rule, with no $N$ in it; the zero-strike cap priced separately by the same brute force, which must equal plain leg plus floor; and a Monte Carlo of the loan's cash flows, 200,000 paths of floored coupons, with its own random numbers. The shifted model is priced by Black's formula and again by brute force, after a bisection finds each matched volatility or reports that none exists. Every number on the card, including every chart point, is printed by both.
+The scripts build the curve from the flat rate, read the forwards back off it, and price the floor and the floored leg by **four independent roads** in the normal model:
+
+1. the formula;
+2. a brute-force average of the floorlet payoff over the bell curve by Simpson's rule, with no $N$ in it;
+3. the zero-strike cap priced separately by the same brute force, which must equal plain leg plus floor;
+4. a Monte Carlo simulation of the loan's cash flows: 200,000 random paths of floored coupons, with its own random numbers.
+
+The shifted model is priced by Black's formula and again by brute force, after a bisection finds each matched volatility or reports that none exists. Every number on the card, including every chart point, is printed by both.
 
 ### Python
 
@@ -574,6 +604,293 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line, Monte Carlo included: both use the same xorshift generator and the same Box-Muller step, while the bell-curve area comes from `erf` in one and from Simpson slices in the other.
 
+### Lean
+
+Lean proves the coupon split, the normal floorlet formula and the smallest-shift rule for every rate, and checks the worked numbers.
+
+- Take any fixing $L$ and strike $K$. Then $\max(L, K) = L + \max(K - L, 0)$: the plain coupon plus a floorlet.
+- Take the same fixing and strike. Then $\max(L, K) = K + \max(L - K, 0)$, so at a zero strike the floored leg is a zero-strike cap.
+- Take $L_i = F_i + w_i Z$, with $Z$ a standard bell-curve draw and wiggle unit $w_i > 0$. Then the average floorlet payoff is $(K - F_i) N(d_i) + w_i \varphi(d_i)$.
+- Take normal volatility $\sigma_N > 0$ and a fixing $T_i > 0$ years away. Then a shifted volatility $\sigma_a > 0$ with the normal model's at-the-money price exists, and is unique, exactly when $a > -F_i + \sigma_N\sqrt{T_i/(2\pi)}$.
+- A fixing of minus 30 bp floors to 0: the plain minus 30 plus a 30 bp put.
+- A fixing of plus 20 bp floors to 20, with a put worth nothing.
+- For year 2 the strike sits exactly 1 wiggle unit above the forward.
+- One basis point on 10 million dollars for one year is 1,000 dollars.
+- The plain leg plus the floor gives the floored leg, 14,341.05 dollars.
+- The floor minus its intrinsic value gives the same 14,341.05 dollars of time value.
+
+Discounting, Black's failure, the shifted prices and the decimals are left to the Python and Rust checks.
+
+```lean
+-- Negative rates: a floored coupon is the plain coupon plus a put struck at the floor, the normal model's floorlet has a closed form, and a shifted lognormal model can match the normal at-the-money price exactly when the shift clears a minimum.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+
+open MeasureTheory ProbabilityTheory Real
+
+section Helpers
+
+open Set Filter Topology
+
+lemma stdPDF_eq (z : ℝ) :
+    gaussianPDFReal 0 1 z = (√(2 * π))⁻¹ * rexp (-(1/2) * z ^ 2) := by
+  simp only [gaussianPDFReal, NNReal.coe_one, mul_one, sub_zero]
+  congr 2; ring
+
+lemma continuous_stdPDF : Continuous (gaussianPDFReal 0 1) := by
+  have : gaussianPDFReal 0 1 = fun z => (√(2 * π))⁻¹ * rexp (-(1/2) * z ^ 2) :=
+    funext stdPDF_eq
+  rw [this]; fun_prop
+
+lemma integrable_stdPDF : Integrable (gaussianPDFReal 0 1) :=
+  integrable_gaussianPDFReal 0 1
+
+lemma cdf_std_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal]
+  exact setIntegral_nonneg measurableSet_Iic (fun t _ => gaussianPDFReal_nonneg _ _ _)
+
+lemma hasDerivAt_cdf_std (x : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (gaussianPDFReal 0 1 x) x := by
+  have h : cdf (gaussianReal 0 1) =
+      fun y => cdf (gaussianReal 0 1) 0 + ∫ t in (0 : ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y
+    rw [cdf_std_eq_integral, cdf_std_eq_integral,
+      ← intervalIntegral.integral_Iic_sub_Iic integrable_stdPDF.integrableOn
+        integrable_stdPDF.integrableOn]
+    ring
+  rw [h]
+  exact (intervalIntegral.integral_hasDerivAt_right
+    (continuous_stdPDF.intervalIntegrable _ _)
+    (continuous_stdPDF.stronglyMeasurableAtFilter _ _)
+    continuous_stdPDF.continuousAt).const_add _
+
+lemma strictMono_cdf_std : StrictMono (cdf (gaussianReal 0 1)) :=
+  strictMono_of_deriv_pos fun x => by
+    rw [(hasDerivAt_cdf_std x).deriv]
+    exact gaussianPDFReal_pos _ _ _ one_ne_zero
+
+lemma continuous_cdf_std : Continuous (cdf (gaussianReal 0 1)) :=
+  continuous_iff_continuousAt.2 fun x => (hasDerivAt_cdf_std x).continuousAt
+
+lemma cdf_std_zero : cdf (gaussianReal 0 1) 0 = 1 / 2 := by
+  have hsym : ∀ z, gaussianPDFReal 0 1 (-z) = gaussianPDFReal 0 1 z := by
+    intro z; simp [stdPDF_eq]
+  have h1 : ∫ t in Iic (0:ℝ), gaussianPDFReal 0 1 t = ∫ t in Ioi (0:ℝ), gaussianPDFReal 0 1 t := by
+    have := integral_comp_neg_Iic (0:ℝ) (gaussianPDFReal 0 1)
+    simpa only [hsym, neg_zero] using this
+  have h2 := intervalIntegral.integral_Iic_add_Ioi (b := (0:ℝ))
+    integrable_stdPDF.integrableOn integrable_stdPDF.integrableOn
+  rw [integral_gaussianPDFReal_eq_one _ one_ne_zero] at h2
+  rw [cdf_std_eq_integral]
+  linarith
+
+lemma cdf_std_lt_one (x : ℝ) : cdf (gaussianReal 0 1) x < 1 :=
+  lt_of_lt_of_le (strictMono_cdf_std (lt_add_one x)) (cdf_le_one _ _)
+
+lemma hasDerivAt_neg_stdPDF (z : ℝ) :
+    HasDerivAt (fun z => -gaussianPDFReal 0 1 z) (z * gaussianPDFReal 0 1 z) z := by
+  have hf : (fun z => -gaussianPDFReal 0 1 z) =
+      fun z => -((√(2 * π))⁻¹ * rexp (-(1/2) * z ^ 2)) := funext fun z => by rw [stdPDF_eq]
+  rw [hf, stdPDF_eq]
+  have h1 : HasDerivAt (fun z : ℝ => -(1/2) * z ^ 2) (-(1/2) * (2 * z)) z := by
+    simpa using ((hasDerivAt_pow 2 z).const_mul (-(1/2) : ℝ))
+  have h2 := ((h1.exp).const_mul (√(2 * π))⁻¹).neg
+  convert h2 using 1
+  ring
+
+lemma tendsto_neg_stdPDF_atBot :
+    Tendsto (fun z => -gaussianPDFReal 0 1 z) atBot (𝓝 0) := by
+  have h1 : Tendsto (fun z : ℝ => -(1/2) * z ^ 2) atBot atBot := by
+    have : Tendsto (fun z : ℝ => z ^ 2) atBot atTop := by
+      have := (tendsto_pow_atTop (two_ne_zero : (2:ℕ) ≠ 0)).comp (tendsto_neg_atBot_atTop (G := ℝ))
+      simpa [Function.comp_def] using this
+    exact this.const_mul_atTop_of_neg (by norm_num)
+  have h2 := ((tendsto_exp_atBot.comp h1).const_mul (√(2 * π))⁻¹).neg
+  simp only [mul_zero, neg_zero] at h2
+  refine h2.congr fun z => ?_
+  simp [stdPDF_eq]
+
+lemma integral_Iic_mul_stdPDF (d : ℝ) :
+    ∫ z in Iic d, z * gaussianPDFReal 0 1 z = -gaussianPDFReal 0 1 d := by
+  have hint : Integrable (fun z => z * gaussianPDFReal 0 1 z) := by
+    have := (integrable_mul_exp_neg_mul_sq (b := 1/2) (by norm_num)).const_mul (√(2 * π))⁻¹
+    refine this.congr (ae_of_all _ fun z => ?_)
+    simp only [stdPDF_eq]; ring_nf
+  rw [integral_Iic_of_hasDerivAt_of_tendsto' (fun x _ => hasDerivAt_neg_stdPDF x)
+    hint.integrableOn tendsto_neg_stdPDF_atBot]
+  ring
+
+end Helpers
+
+#print axioms stdPDF_eq
+#print axioms continuous_stdPDF
+#print axioms integrable_stdPDF
+#print axioms cdf_std_eq_integral
+#print axioms hasDerivAt_cdf_std
+#print axioms strictMono_cdf_std
+#print axioms continuous_cdf_std
+#print axioms cdf_std_zero
+#print axioms cdf_std_lt_one
+#print axioms hasDerivAt_neg_stdPDF
+#print axioms tendsto_neg_stdPDF_atBot
+#print axioms integral_Iic_mul_stdPDF
+
+/-- The coupon split: at every fixing `L` and every strike `K`, the coupon floored at `K` equals
+the plain coupon plus a floorlet (a put on the rate struck at `K`), and it also equals the strike
+plus a caplet struck at `K` (with `K = 0`: the floored leg is a zero-strike cap). -/
+theorem floored_coupon_eq_coupon_add_put (L K : ℝ) :
+    max L K = L + max (K - L) 0 ∧ max L K = K + max (L - K) 0 := by
+  constructor
+  · rcases le_total L K with h | h
+    · rw [max_eq_right h, max_eq_left (by linarith)]; ring
+    · rw [max_eq_left h, max_eq_right (by linarith)]; ring
+  · rcases le_total L K with h | h
+    · rw [max_eq_right h, max_eq_right (by linarith)]; ring
+    · rw [max_eq_left h, max_eq_left (by linarith)]; ring
+
+/-- The normal model's floorlet: if the fixing is `F + w Z` with `Z` a standard bell-curve draw and
+one wiggle unit `w > 0`, the average floorlet payoff `max (K - F - w Z) 0` is
+`(K - F) N(d) + w φ(d)` with `d = (K - F) / w`. -/
+theorem normal_floorlet_eq (F K w : ℝ) (hw : 0 < w) :
+    ∫ z, max (K - F - w * z) 0 ∂(gaussianReal 0 1) =
+      (K - F) * cdf (gaussianReal 0 1) ((K - F) / w) + w * gaussianPDFReal 0 1 ((K - F) / w) := by
+  set d := (K - F) / w with hd
+  have hKF : K - F = w * d := by rw [hd]; field_simp
+  rw [integral_gaussianReal_eq_integral_smul one_ne_zero]
+  have hpt : (fun z => gaussianPDFReal 0 1 z • max (K - F - w * z) 0) =
+      (Set.Iic d).indicator (fun z => (K - F) * gaussianPDFReal 0 1 z -
+        w * (z * gaussianPDFReal 0 1 z)) := by
+    funext z
+    by_cases hz : z ≤ d
+    · rw [Set.indicator_of_mem (by exact hz), smul_eq_mul,
+        max_eq_left (by rw [hKF]; nlinarith)]
+      ring
+    · rw [Set.indicator_of_notMem (by exact hz), smul_eq_mul,
+        max_eq_right (by rw [hKF]; push Not at hz; nlinarith)]
+      ring
+  have hint : Integrable (fun z => z * gaussianPDFReal 0 1 z) := by
+    have := (integrable_mul_exp_neg_mul_sq (b := 1/2) (by norm_num)).const_mul (√(2 * π))⁻¹
+    refine this.congr (ae_of_all _ fun z => ?_)
+    simp only [stdPDF_eq]; ring_nf
+  rw [hpt, integral_indicator measurableSet_Iic,
+    integral_sub (integrable_stdPDF.const_mul _).integrableOn
+      (hint.const_mul _).integrableOn,
+    integral_const_mul, integral_const_mul, integral_Iic_mul_stdPDF, ← cdf_std_eq_integral]
+  ring
+
+/-- The smallest shift: with normal volatility `σN > 0` and time to fixing `T > 0`, a shifted
+lognormal volatility `σa > 0` whose at-the-money premium `(F + a) (2 N(σa √T / 2) - 1)` equals the
+normal at-the-money premium `σN √(T / (2π))` exists, and is unique, exactly when
+`a > -F + σN √(T / (2π))`. -/
+theorem shifted_atm_match_exists_unique_iff (F a σN T : ℝ) (hσN : 0 < σN) (hT : 0 < T) :
+    (∃! σa : ℝ, 0 < σa ∧
+        (F + a) * (2 * cdf (gaussianReal 0 1) (σa * √T / 2) - 1) = σN * √(T / (2 * π))) ↔
+      a > -F + σN * √(T / (2 * π)) := by
+  set c := σN * √(T / (2 * π)) with hc
+  have hcpos : 0 < c := mul_pos hσN (Real.sqrt_pos.2 (by positivity))
+  have hs : 0 < √T := Real.sqrt_pos.2 hT
+  set Φ := cdf (gaussianReal 0 1) with hΦ
+  have hmono : StrictMono Φ := strictMono_cdf_std
+  have hg_pos : ∀ σ, 0 < σ → 0 < 2 * Φ (σ * √T / 2) - 1 := by
+    intro σ hσ
+    have := hmono (show (0:ℝ) < σ * √T / 2 by positivity)
+    rw [hΦ, cdf_std_zero] at this
+    rw [hΦ]; linarith
+  have hg_lt : ∀ σ, 2 * Φ (σ * √T / 2) - 1 < 1 := by
+    intro σ; have := cdf_std_lt_one (σ * √T / 2); rw [hΦ]; linarith
+  constructor
+  · rintro ⟨σ, ⟨hσ, heq⟩, -⟩
+    have hgp := hg_pos σ hσ
+    have hgl := hg_lt σ
+    have hFa : 0 < F + a := by
+      by_contra h
+      push Not at h
+      have : (F + a) * (2 * Φ (σ * √T / 2) - 1) ≤ 0 :=
+        mul_nonpos_of_nonpos_of_nonneg h hgp.le
+      linarith
+    have : (F + a) * (2 * Φ (σ * √T / 2) - 1) < F + a := by
+      calc (F + a) * (2 * Φ (σ * √T / 2) - 1) < (F + a) * 1 :=
+            mul_lt_mul_of_pos_left hgl hFa
+        _ = F + a := mul_one _
+    linarith
+  · intro ha
+    have hFa : 0 < F + a := by linarith
+    set y := c / (F + a) with hy
+    have hy0 : 0 < y := div_pos hcpos hFa
+    have hy1 : y < 1 := (div_lt_one hFa).2 (by linarith)
+    set t := (1 + y) / 2 with ht
+    obtain ⟨M, hM⟩ : ∃ M, t < Φ M := by
+      have := (tendsto_cdf_atTop (μ := gaussianReal 0 1)).eventually (lt_mem_nhds
+        (show t < 1 by rw [ht]; linarith))
+      exact this.exists
+    have h0 : Φ 0 = 1 / 2 := cdf_std_zero
+    have hM0 : 0 ≤ M := by
+      by_contra h; push Not at h
+      have := hmono h; rw [h0] at this; rw [ht] at hM; linarith
+    obtain ⟨x, hx, hxt⟩ := intermediate_value_Icc hM0 continuous_cdf_std.continuousOn
+      (show t ∈ Set.Icc (Φ 0) (Φ M) by
+        rw [h0]; exact ⟨by rw [ht]; linarith, hM.le⟩)
+    have hx0 : 0 < x := by
+      rcases hx.1.eq_or_lt with h | h
+      · rw [← h, h0, ht] at hxt; linarith
+      · exact h
+    have hsol : ∀ σ, 0 < σ ∧ (F + a) * (2 * Φ (σ * √T / 2) - 1) = c ↔
+        0 < σ ∧ Φ (σ * √T / 2) = t := by
+      intro σ
+      constructor
+      · rintro ⟨h1, h2⟩
+        refine ⟨h1, ?_⟩
+        rw [ht, hy]; field_simp; linarith
+      · rintro ⟨h1, h2⟩
+        refine ⟨h1, ?_⟩
+        rw [h2, ht, hy]; field_simp; ring
+    refine ⟨2 * x / √T, (hsol _).2 ⟨by positivity, ?_⟩, fun τ hτ => ?_⟩
+    · rw [show 2 * x / √T * √T / 2 = x by field_simp]; exact hxt
+    · obtain ⟨_, hτ2⟩ := (hsol τ).1 hτ
+      have hinj := hmono.injective (hτ2.trans hxt.symm)
+      field_simp
+      linarith
+
+-- Step 0, in basis points: a fixing of -30 bp floors to 0 = -30 + 30.
+example : max (-30 : ℤ) 0 = -30 + max (0 - (-30)) 0 ∧ max (-30 : ℤ) 0 = 0 := by decide
+-- Step 0, in basis points: a fixing of +20 bp floors to 20 = 20 + 0.
+example : max (20 : ℤ) 0 = 20 + max (0 - 20) 0 ∧ max (20 : ℤ) 0 = 20 := by decide
+-- Year 2: the strike sits (0 - (-50)) / 50 = 1 wiggle unit above the forward.
+example : ((0 : ℚ) - (-50)) / 50 = 1 := by norm_num
+-- One basis point on 10,000,000 dollars for one year is 1,000 dollars.
+example : (10000000 : ℚ) / 10000 = 1000 := by norm_num
+-- Floored leg in cents: plain leg -15,151,259 plus floor 16,585,364 is 1,434,105.
+example : (-15151259 : ℤ) + 16585364 = 1434105 := by decide
+-- Time value in cents: floor 16,585,364 minus intrinsic 15,151,259 is 1,434,105.
+example : (16585364 : ℤ) - 15151259 = 1434105 := by decide
+
+#print axioms floored_coupon_eq_coupon_add_put
+#print axioms normal_floorlet_eq
+#print axioms shifted_atm_match_exists_unique_iff
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stdPDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integrable_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cdf_std_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_cdf_std' depends on axioms: [propext, Classical.choice, Quot.sound]
+'strictMono_cdf_std' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_cdf_std' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cdf_std_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cdf_std_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_neg_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tendsto_neg_stdPDF_atBot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'integral_Iic_mul_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'floored_coupon_eq_coupon_add_put' depends on axioms: [propext, Classical.choice, Quot.sound]
+'normal_floorlet_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shifted_atm_match_exists_unique_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -602,7 +919,7 @@ The two outputs are identical line for line, Monte Carlo included: both use the 
 - **Floating-rate loans.** Loan agreements commonly floor the benchmark at zero, so the lender never pays the borrower interest. The borrower has sold that floor, usually without a separate price on it; this card is the price.
 - **Deposits.** Retail deposits are floored at zero in practice, since banks were slow to charge savers. The bank has written a floor it never priced.
 - **Rate volatility quotes.** Once rates went below zero, brokers moved caps, floors and swaptions to normal and shifted quotes, each shifted quote with its shift ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
-- **Curve moves.** A floored leg does not move one for one with the curve. A level shift of the whole curve ([Level, slope and curvature](01-principal-components-of-the-curve.md)) changes the floor's intrinsic part at full speed and its time value at less, so key-rate hedges ([Key-rate durations](02-key-rate-durations-and-curve-hedging.md)) must be recomputed as the curve moves.
+- **Curve moves.** A floored leg does not move one for one with the curve. A level move of the whole curve ([Level, slope and curvature](01-principal-components-of-the-curve.md)) changes the floor's intrinsic part at full speed and its time value at less. Key-rate hedges, which offset the sensitivity to each point of the curve ([Key-rate durations](02-key-rate-durations-and-curve-hedging.md)), must therefore be recomputed as the curve moves.
 
 > **Say it back**
 > A coupon floored at zero is the plain coupon plus a put on the rate struck at zero. The plain leg needs no model; below zero it is worth less than nothing, and the floor's intrinsic value cancels it. Black's lognormal model cannot price the rest: it has no negative rates, so it prices the floor below its own intrinsic value or not at all. The normal model and a shifted lognormal model with a large enough shift both price it. They agree at the money and differ at the zero strike, and that difference is a bet on how rates move near zero.

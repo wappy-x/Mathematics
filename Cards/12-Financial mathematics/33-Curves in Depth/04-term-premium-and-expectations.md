@@ -136,7 +136,9 @@ So the premium is the extra a lender expects to earn, per year, for holding the 
 
 ### Step 4: even a lender with no premium does not quote the forecast
 
-Remove all appetite for a premium. The lender now prices the long bond at its expected value. The fair forward $F_0$ then solves $e^{-2F_0} = E[e^{-2R}]$. Because $e^{-2R}$ bends upward, its average is larger than $e^{-2E[R]}$, and $F_0$ comes out at 3.955 percent, not 4. The 0.045 pp gap is **convexity**: the price gain when rates fall beats the price loss when they rise by the same amount. It is small at two years and grows as the stretch lengthens and the scenarios spread. The full treatment of convexity in rate products lives on [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
+Remove all appetite for a premium. The lender now prices the long bond at its expected value. The fair forward $F_0$ then solves $e^{-2F_0} = E[e^{-2R}]$. Because $e^{-2R}$ bends upward, its average is larger than $e^{-2E[R]}$, and $F_0$ comes out at 3.955 percent, not 4.
+
+The 0.045 pp gap is **convexity**: the price gain when rates fall beats the price loss when they rise by the same amount. It is small at two years and grows as the stretch lengthens and the scenarios spread. The full treatment of convexity in rate products lives on [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
 
 The other door: a short-rate model such as [Vasicek](../30-Short-Rate%20Models/02-vasicek-model.md) writes down how the rate moves in the real world and how much risk is priced. The expected rate, the premium and the convexity then come out of one set of parameters instead of three separate inputs.
 
@@ -205,7 +207,9 @@ What does a 3 percent forward mean? It depends on the premium, and the curve doe
 
 In the first three rows the expected rate sits below today's 5 percent: the market expects the central bank to cut. Reading no cut into this curve takes a premium of −2 pp, which is rare. And central banks cut hard mostly when the economy weakens. That chain, inversion to expected cuts to expected weakness, is why an inversion worries people.
 
-The chain has weak links. Wright (2006) found that the curve's slope predicts recessions better when the level of the policy rate is added. Model estimates of the US term premium, such as those of Adrian, Crump and Moench (2013), fell below zero for stretches of the 2010s, and a negative premium flattens or inverts a curve with no change in expected rates. The inversion that began in 2022 lasted more than two years without an officially dated US recession during it. An inversion is a signal to look at expectations and premium separately, not a dated forecast.
+The chain has weak links. Wright (2006) found that the curve's slope predicts recessions better when the level of the policy rate is added. Model estimates of the US term premium, such as those of Adrian, Crump and Moench (2013), fell below zero for stretches of the 2010s, and a negative premium flattens or inverts a curve with no change in expected rates.
+
+The inversion that began in 2022 lasted more than two years without an officially dated US recession during it. An inversion is a signal to look at expectations and premium separately, not a dated forecast.
 
 ---
 
@@ -568,6 +572,129 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, including the simulated premium, because both programs step the same 64-bit generator from the same seed.
 
+### Lean
+
+Lean proves the three results in the Detailed proof, for any zero rates and any finite set of scenarios, and checks the worked numbers.
+
+- Take zero rates $y(T)$ with $D(T) = e^{-y(T) T}$, and dates $a < b$. Then exactly one forward makes the two routes cost the same. It is $F(a,b)$, and both forms in The formula agree.
+- Take any finite set of scenarios for $R$, with probabilities $p$ adding to 1. Then the probability-weighted average of the extra log return, long over roll, is $(b-a)(F - E[R])$.
+- Take dates $0 \le a < b$. Then $y(b) - y(a) = \tfrac{b-a}{b}(F - y(a))$, so the curve inverts exactly when $F < y(a)$.
+- The example checks exactly: a 6 percent forward, a 4 percent expected rate and a 2 pp premium.
+- The extra log returns of 10, 4 and −2 percent average to 2 percent a year.
+- The one-year forwards for years 3 and 4, 5.4 and 6.6 percent, average to 6 percent.
+- On the inverted curve, $F(1,2)$ = 3 percent, and $-1 = \tfrac12 (3 - 5)$.
+- Premiums of +1, 0, −1 and −2 pp read that forward as expected rates of 2, 3, 4 and 5 percent.
+- The three wrong answers in What breaks, and the 7 percent, 3 pp and 4 percent results in Try changing, also check.
+
+Lean works in exact fractions, so the discount-factor decimals, the no-premium forward, convexity and the simulations are left to the Python and Rust checks.
+
+```lean
+-- What a curve says: two zero rates fix one forward rate by arithmetic, the term premium is the expected extra log return of the long bond over rolling short, and a curve inverts exactly when the forward sits below today's short rate.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Tactic.NormNum
+
+open Finset
+
+/-- The forward rate. With continuously compounded zero rates `y`, so that the discount factor is
+`D(T) = e^(-y(T) T)`, and two dates `a < b`: a rate `F` makes "lend to `a`, then lock `F` from `a`
+to `b`" cost the same as "lend to `b`" (that is, `e^((b - a) F) = D(a) / D(b)`) exactly when
+`F = (ln D(a) - ln D(b)) / (b - a)`, so there is one and only one such forward; and that forward
+equals `(b y(b) - a y(a)) / (b - a)`. -/
+theorem forward_rate_from_zero_rates (y D : ℝ → ℝ) (hD : ∀ T, D T = Real.exp (-(y T * T)))
+    {a b : ℝ} (hab : a < b) :
+    (∀ F : ℝ, (Real.exp ((b - a) * F) = D a / D b ↔
+        F = (Real.log (D a) - Real.log (D b)) / (b - a))) ∧
+      (Real.log (D a) - Real.log (D b)) / (b - a) = (b * y b - a * y a) / (b - a) := by
+  simp only [hD, Real.log_exp, ← Real.exp_sub]
+  have hne : b - a ≠ 0 := by linarith
+  refine ⟨fun F => ?_, ?_⟩
+  · rw [Real.exp_eq_exp, eq_div_iff hne]
+    constructor <;> intro h <;> linear_combination h
+  · congr 1; ring
+
+/-- The premium is an expected extra return. One dollar in the `b`-year zero, sold at date `a`
+when the rate for the remaining stretch is `R`, is worth `e^(b y(b)) e^(-(b - a) R)`; one dollar
+rolled in the `a`-year zero is worth `e^(a y(a))`. For any finite set of scenarios for `R` with
+probabilities `p`, the probability-weighted average of the log of their ratio equals `b - a` times
+the term premium `F - E[R]`, where `F = (b y(b) - a y(a)) / (b - a)` is the forward. -/
+theorem term_premium_eq_expected_excess_log_return {ι : Type*} (s : Finset ι) (p R : ι → ℝ)
+    (hp : ∀ i ∈ s, 0 ≤ p i) (hsum : ∑ i ∈ s, p i = 1) (y : ℝ → ℝ) {a b : ℝ} (hab : a < b) :
+    ∑ i ∈ s, p i * Real.log (Real.exp (b * y b) * Real.exp (-((b - a) * R i)) / Real.exp (a * y a))
+      = (b - a) * ((b * y b - a * y a) / (b - a) - ∑ i ∈ s, p i * R i) := by
+  have hne : b - a ≠ 0 := by linarith
+  have key : ∀ i, p i * Real.log (Real.exp (b * y b) * Real.exp (-((b - a) * R i)) / Real.exp (a * y a))
+      = (b * y b - a * y a) * p i - (b - a) * (p i * R i) := by
+    intro i
+    rw [← Real.exp_add, ← Real.exp_sub, Real.log_exp]
+    ring
+  rw [Finset.sum_congr rfl (fun i _ => key i), Finset.sum_sub_distrib, ← Finset.mul_sum,
+    ← Finset.mul_sum, hsum]
+  field_simp
+
+/-- The inversion rule. For dates `0 ≤ a < b` and forward `F = (b y(b) - a y(a)) / (b - a)`:
+the slope of the curve is `y(b) - y(a) = ((b - a) / b) (F - y(a))`, so the longer rate is below
+the shorter one exactly when the forward is below the shorter rate. -/
+theorem inversion_iff_forward_below_short_rate (y : ℝ → ℝ) {a b : ℝ} (ha : 0 ≤ a) (hab : a < b) :
+    y b - y a = (b - a) / b * ((b * y b - a * y a) / (b - a) - y a) ∧
+      (y b < y a ↔ (b * y b - a * y a) / (b - a) < y a) := by
+  have hb : 0 < b := by linarith
+  have hne : b - a ≠ 0 := by linarith
+  have h1 : y b - y a = (b - a) / b * ((b * y b - a * y a) / (b - a) - y a) := by
+    field_simp
+    ring
+  refine ⟨h1, ?_⟩
+  have hpos : 0 < (b - a) / b := div_pos (by linarith) hb
+  rw [← sub_neg, h1, ← sub_neg (b := y a)]
+  constructor
+  · intro h
+    by_contra hc
+    replace hc := not_lt.mp hc
+    nlinarith [mul_nonneg hpos.le hc]
+  · intro h
+    nlinarith [mul_neg_of_pos_of_neg hpos h]
+
+/-! ### The card's worked numbers, in percent, as exact fractions -/
+
+-- Forward from year 2 to year 4: zero rates 3 and 4.5 (= 9/2) percent give 6 percent.
+example : ((4 : ℚ) * (9 / 2) - 2 * 3) / (4 - 2) = 6 := by norm_num
+-- Expected rate: 1, 4 or 7 percent with probabilities 1/4, 1/2, 1/4 averages to 4 percent.
+example : (1 / 4 : ℚ) * 1 + 1 / 2 * 4 + 1 / 4 * 7 = 4 := by norm_num
+-- Term premium: forward 6 minus expected 4 is 2 percentage points.
+example : (6 : ℚ) - 4 = 2 := by norm_num
+-- Extra log return over two years, 2 (F - R), in each scenario: 10, 4 and -2 percent.
+example : (2 : ℚ) * (6 - 1) = 10 ∧ (2 : ℚ) * (6 - 4) = 4 ∧ (2 : ℚ) * (6 - 7) = -2 := by norm_num
+-- Their average is 4 percent over two years, which is 2 percent a year: the premium again.
+example : ((1 / 4 : ℚ) * 10 + 1 / 2 * 4 + 1 / 4 * (-2)) / 2 = 2 := by norm_num
+-- One-year forwards on the rising curve 2.5, 3, 3.8, 4.5: years 3 and 4 give 5.4 and 6.6,
+-- which average to the 6 percent two-year forward.
+example : (3 : ℚ) * (19 / 5) - 2 * 3 = 27 / 5 ∧ (4 : ℚ) * (9 / 2) - 3 * (19 / 5) = 33 / 5 ∧
+    ((27 / 5 : ℚ) + 33 / 5) / 2 = 6 := by norm_num
+-- Inversion: 1-year zero at 5, 2-year zero at 4 give F(1,2) = 3, and -1 = (1/2)(3 - 5).
+example : ((2 : ℚ) * 4 - 1 * 5) / (2 - 1) = 3 ∧ (4 : ℚ) - 5 = 1 / 2 * (3 - 5) := by norm_num
+-- Premiums +1, 0, -1, -2 read the 3 percent forward as expected rates 2, 3, 4, 5.
+example : (3 : ℚ) - 1 = 2 ∧ (3 : ℚ) - 0 = 3 ∧ (3 : ℚ) - (-1) = 4 ∧ (3 : ℚ) - (-2) = 5 := by norm_num
+-- What breaks: averaging the zero rates gives 3.75, dividing by b gives 3, the slope is 1.5.
+example : ((3 : ℚ) + 9 / 2) / 2 = 15 / 4 ∧ ((4 : ℚ) * (9 / 2) - 2 * 3) / 4 = 3 ∧
+    (9 / 2 : ℚ) - 3 = 3 / 2 := by norm_num
+-- Try changing: a 5 percent 4-year rate gives a 7 percent forward and a 3 pp premium;
+-- a 4.5 percent 2-year rate in the inversion gives F(1,2) = 4.
+example : ((4 : ℚ) * 5 - 2 * 3) / 2 = 7 ∧ (7 : ℚ) - 4 = 3 ∧ (2 : ℚ) * (9 / 2) - 1 * 5 = 4 := by
+  norm_num
+
+#print axioms forward_rate_from_zero_rates
+#print axioms term_premium_eq_expected_excess_log_return
+#print axioms inversion_iff_forward_below_short_rate
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'forward_rate_from_zero_rates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'term_premium_eq_expected_excess_log_return' depends on axioms: [propext, Classical.choice, Quot.sound]
+'inversion_iff_forward_below_short_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -614,6 +741,8 @@ The two outputs agree line for line, including the simulated premium, because bo
 ## Where this goes next
 
 - [Carry and roll-down](05-carry-and-roll-down.md): the return from holding a bond while the curve stays put. Carry and roll-down are the premium's cousins, computed under a stated scenario instead of a forecast.
+
+This card needs an outside forecast to split a forward. The open question is how to estimate that split from data instead of assuming it, which a short-rate model such as [Vasicek](../30-Short-Rate%20Models/02-vasicek-model.md) takes on.
 
 ---
 

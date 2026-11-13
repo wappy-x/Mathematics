@@ -6,15 +6,25 @@
 
 ## General Overview
 
-A fund holds three things: shares, bonds and gold. Over a year, shares are expected to return 8 percent, bonds 4 percent, gold 5 percent. Their risk, measured as standard deviation (the typical size of a year's surprise above or below the expected return), is 20 percent for shares, 6 percent for bonds, 15 percent for gold. They move together a little: shares and bonds with correlation 0.2, shares and gold 0.1, bonds and gold not at all (correlation is a number from −1 to 1 saying how much two returns rise and fall together).
+A fund holds three things: shares, bonds and gold. Over a year, shares are expected to return 8 percent, bonds 4 percent, gold 5 percent.
 
-The fund wants 6 percent a year. Endless splits of the money deliver an expected 6 percent. Half shares and half bonds does it, with a standard deviation of 11.00 percent. A different split, 44.28 percent shares, 32.83 percent bonds and 22.89 percent gold, also expects 6 percent, but its standard deviation is only 10.35 percent. Variance is the standard deviation squared, so the split with the least standard deviation also has the least variance. Same expected return, less risk. No other split that expects 6 percent does better. That split is the **minimum-variance portfolio for a 6 percent target**.
+Their risk is measured as standard deviation: the typical size of a year's surprise above or below the expected return. It is 20 percent for shares, 6 percent for bonds, 15 percent for gold.
 
-Ask the same question for every target return and the answers trace a curve: the least risk available at each level of return. The part of that curve above the lowest-risk point's return is the **efficient frontier**. Its lowest-risk point is the **global minimum-variance portfolio**: 1.63 percent shares, 84.84 percent bonds, 13.53 percent gold, expecting 4.20 percent with a standard deviation of 5.56 percent. That is less risky than bonds alone, the calmest asset on offer. On $10,000 it means $162.81 in shares, $8,484.08 in bonds and $1,353.11 in gold.
+They move together a little: shares and bonds with correlation 0.2, shares and gold 0.1, bonds and gold not at all. Correlation is a number from −1 to 1 saying how much two returns rise and fall together.
+
+The fund wants 6 percent a year. Endless splits of the money deliver an expected 6 percent. Half shares and half bonds does it, with a standard deviation of 11.00 percent.
+
+A different split, 44.28 percent shares, 32.83 percent bonds and 22.89 percent gold, also expects 6 percent, but its standard deviation is only 10.35 percent. Variance is the standard deviation squared, so the split with the least standard deviation also has the least variance.
+
+Same expected return, less risk. No other split that expects 6 percent does better. That split is the **minimum-variance portfolio for a 6 percent target**.
+
+Ask the same question for every target return and the answers trace a curve: the least risk available at each level of return. The part of that curve above the lowest-risk point's return is the **efficient frontier**.
+
+Its lowest-risk point is the **global minimum-variance portfolio**: 1.63 percent shares, 84.84 percent bonds, 13.53 percent gold, expecting 4.20 percent with a standard deviation of 5.56 percent. That is less risky than bonds alone, the calmest asset on offer. On $10,000 it means $162.81 in shares, $8,484.08 in bonds and $1,353.11 in gold.
 
 **The least-risk portfolio for any target return solves one small system of linear equations, every such portfolio is a straight-line blend of two fixed portfolios, and the risk traces a curve whose lowest point is the global minimum-variance portfolio.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works, about a model: the expected returns and the covariances are taken as known inputs, which in practice they are not.
+**What kind of fact this is:** a theorem, proved on this card in Why it works, about a model. The expected returns and the covariances (how strongly each pair of returns moves together) are taken as known inputs, which in practice they are not.
 
 ### The picture: the least risk at each target return
 
@@ -28,13 +38,26 @@ xychart-beta
     line [8.14, 6.71, 6.00, 6.25, 7.37, 9.03, 11.00, 13.14, 15.37, 17.67, 20.00, 22.36, 24.74]
 ```
 
-Lower line (orange): the minimum-variance curve with all three assets. Upper line (green): the best that shares and bonds can do without gold. The chart lies on its side compared with the usual textbook drawing, which puts risk across and return up; the curve is the same. Both lines bottom out near 4.2 percent. Right of the bottom is the efficient frontier: more return costs more risk. Left of the bottom, risk rises while return falls, so nobody should stand there. Gold lowers the curve everywhere, even though gold on its own is riskier than bonds and earns less than shares.
+Lower line (orange): the minimum-variance curve with all three assets. Upper line (green): the best that shares and bonds can do without gold. The chart lies on its side compared with the usual textbook drawing, which puts risk across and return up; the curve is the same.
+
+Both lines bottom out near 4.2 percent. Right of the bottom is the efficient frontier: more return costs more risk. Left of the bottom, risk rises while return falls, so nobody should stand there.
+
+Gold lowers the curve everywhere, even though gold on its own is riskier than bonds and earns less than shares.
 
 ---
 
 ## The formula
 
-Notation first, in words. A list of numbers, one per asset, is written as a single letter and called a vector; here each vector has three entries, in the order shares, bonds, gold. A square table of numbers is a matrix. Three lists and one matrix carry the inputs: $w$ holds the weights, $\mu$ the expected returns, $\mathbf{1}$ three ones, and $\Sigma$ (the covariance matrix) every variance and pairwise covariance, detailed in the table below. The raised $\top$ turns a column into a row, so $w^\top \mu$ means "multiply the two lists entry by entry and add", which is the portfolio's expected return; likewise $w^\top\Sigma\,w$ is its variance. $\Sigma^{-1}$ is the inverse matrix of $\Sigma$, the matrix that undoes it ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
+Notation first, in words. A list of numbers, one per asset, is written as a single letter and called a vector; here each vector has three entries, in the order shares, bonds, gold. A square table of numbers is a matrix.
+
+Three lists and one matrix carry the inputs, detailed in the table below:
+
+- $w$ holds the weights;
+- $\mu$ the expected returns;
+- $\mathbf{1}$ three ones;
+- $\Sigma$ (the covariance matrix) every variance and pairwise covariance.
+
+The raised $\top$ turns a column into a row, so $w^\top \mu$ means "multiply the two lists entry by entry and add", which is the portfolio's expected return. Likewise $w^\top\Sigma\,w$ is its variance. $\Sigma^{-1}$ is the inverse matrix of $\Sigma$, the matrix that undoes it ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
 
 The problem, for a target return $m$:
 
@@ -65,15 +88,15 @@ $$V(m) = \frac{A m^2 - 2Bm + C}{\Delta} = \frac{1}{A} + \frac{A}{\Delta}\Big(m -
 | $w_g$, $m_g$, $V_g$ | the global minimum-variance weights, return and variance: $\Sigma^{-1}\mathbf{1}/A$, $B/A$, $1/A$ | 1.63%, 84.84%, 13.53%; 4.2004%; 30.9334 percent squared | |
 | $s$ | the shift: how the frontier weights change per extra percentage point of target | +23.70, −28.90, +5.20 points | |
 
-Two helper facts. The weights move in a straight line as the target moves: $w(m) = w_g + (m - m_g)\,s$, with $s = (A\,\Sigma^{-1}\mu - B\,\Sigma^{-1}\mathbf{1})/\Delta$. And the standard deviation $\sqrt{V(m)}$ against $m$ is a hyperbola (a curve with two straight-line asymptotes), which is the shape in the picture.
+Two helper facts. The weights move in a straight line as the target moves: $w(m) = w_g + (m - m_g)\,s$, with $s = (A\,\Sigma^{-1}\mu - B\,\Sigma^{-1}\mathbf{1})/\Delta$. And the standard deviation $\sqrt{V(m)}$ against $m$ is a hyperbola (a curve with two straight-line asymptotes: lines it comes ever closer to far from its center), which is the shape in the picture.
 
 ### When it holds
 
 - **The inputs are known.** The formula treats $\mu$ and $\Sigma$ as exact. They are estimated from history, and small errors in $\mu$ swing the weights hard, because the weights run through $\Sigma^{-1}$. [Estimation error](07-estimation-error-and-shrinkage.md) is the repair.
 - **$\Sigma$ is positive definite:** every non-zero mix has positive variance, so no asset is an exact copy or blend of the others. If one is, $\Sigma$ has no inverse and the formula fails: either some mix is riskless or many weight lists tie for the minimum.
 - **The expected returns are not all equal.** If they are, $\Delta = 0$, every portfolio expects the same return, and only the global minimum-variance portfolio has meaning.
-- **Short selling is free and unlimited.** The formula happily returns negative weights (bonds at −24.98% for an 8% target). If shorts are banned, the formula's answer is infeasible and the problem needs a quadratic program: Quadratic programs.
-- **One period, and variance is the risk that matters.** Variance punishes gains and losses alike and ignores fat tails; for skewed payoffs such as options, the "least-variance" portfolio can hide a crash.
+- **Short selling is free and unlimited.** The formula happily returns negative weights (bonds at −24.98% for an 8% target). If shorts are banned, the formula's answer is infeasible and the problem needs a quadratic program: [Quadratic programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md).
+- **One period, and variance is the risk that matters.** Variance punishes gains and losses alike and ignores fat tails (extreme returns that come more often than a bell curve predicts); for skewed payoffs (gains and losses of very different sizes) such as options, the "least-variance" portfolio can hide a crash.
 
 ---
 
@@ -81,7 +104,9 @@ Two helper facts. The weights move in a straight line as the target moves: $w(m)
 
 ### Step 0: a bowl cut by a flat slice
 
-Variance, as a function of the weights, is a bowl: it curves upward in every direction, because $\Sigma$ is positive definite. The two constraints, "invest everything" and "expect $m$", are flat. With three assets, they cut the space of weights down to a single straight line. A bowl sliced along a line is a parabola, and a parabola has exactly one lowest point. At that point the bowl's steepest-uphill direction is at right angles to the line: moving along the line does not change the variance to first order. That right-angle condition is what Lagrange multipliers write down ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)).
+Variance, as a function of the weights, is a bowl: it curves upward in every direction, because $\Sigma$ is positive definite. The two constraints, "invest everything" and "expect $m$", are flat. With three assets, they cut the space of weights down to a single straight line.
+
+A bowl sliced along a line is a parabola, and a parabola has exactly one lowest point. At that point the bowl's steepest-uphill direction is at right angles to the line: moving along the line does not change the variance to first order. That right-angle condition is what Lagrange multipliers write down ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)).
 
 ### Step 1: write the problem with multipliers
 
@@ -138,7 +163,9 @@ Rewrite the parabola:
 
 $$V(m) = \frac{1}{A} + \frac{A}{\Delta}\Big(m - \frac{B}{A}\Big)^2.$$
 
-The squared bracket is never negative and $A/\Delta$ is positive, so the smallest variance is $1/A$, reached at $m_g = B/A$. At that target $\eta = 0$ and $\lambda = 1/A$, so the weights are $w_g = \Sigma^{-1}\mathbf{1}/A$: the inverse matrix's row sums, rescaled to add to 1. The expected return plays no part in finding it. Every target above $m_g$ is efficient: no portfolio beats it on both return and risk. Every target below is beaten by $w_g$ itself, which expects more and risks less.
+The squared bracket is never negative and $A/\Delta$ is positive, so the smallest variance is $1/A$, reached at $m_g = B/A$. At that target $\eta = 0$ and $\lambda = 1/A$, so the weights are $w_g = \Sigma^{-1}\mathbf{1}/A$: the inverse matrix's row sums, rescaled to add to 1. The expected return plays no part in finding it.
+
+Every target above $m_g$ is efficient: no portfolio beats it on both return and risk. Every target below is beaten by $w_g$ itself, which expects more and risks less.
 
 <details>
 <summary>Detailed proof</summary>
@@ -153,7 +180,7 @@ The squared bracket is never negative and $A/\Delta$ is positive, so the smalles
 
 ### The other door: a quadratic program
 
-The same problem, with extra rules such as "no short sales" or "no more than 40% in one asset", has no closed form. A quadratic-programming solver walks the bowl numerically: Quadratic programs. Road 3 in the code below is a small version of that: it walks the line of feasible weights and finds the bottom with no calculus at all.
+The same problem, with extra rules such as "no short sales" or "no more than 40% in one asset", has no closed form (a formula that gives the answer directly). A quadratic-programming solver walks the bowl numerically: [Quadratic programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md). Road 3 in the code below is a small version of that: it walks the line of feasible weights and finds the bottom with no calculus at all.
 
 ---
 
@@ -166,7 +193,7 @@ Work in percent: returns in percent, variances in percent squared, so a 20% stan
 | diagonal of $\Sigma$ | $20^2$, $6^2$, $15^2$ | 400, 36, 225 |
 | off-diagonal of $\Sigma$ | $0.2 \times 20 \times 6$, $0.1 \times 20 \times 15$, $0 \times 6 \times 15$ | 24, 30, 0 |
 | determinant of $\Sigma$ | $400(36 \cdot 225) - 24(24 \cdot 225) + 30(0 - 36 \cdot 30)$ | 3,078,000 |
-| adjugate (determinant times $\Sigma^{-1}$) | the nine 2-by-2 cofactors | `[[8100, -5400, -1080], [-5400, 89100, 720], [-1080, 720, 13824]]` |
+| adjugate (determinant times $\Sigma^{-1}$) | the nine 2-by-2 cofactors (each the signed determinant of what is left after deleting one row and one column) | `[[8100, -5400, -1080], [-5400, 89100, 720], [-1080, 720, 13824]]` |
 | determinant times $\Sigma^{-1}\mathbf{1}$ | row sums of the adjugate | 1,620; 84,420; 13,464 |
 | determinant times $A$ | $1620 + 84420 + 13464$ | 99,504 |
 | $w_g$ | each row sum over 99,504 | 1.6281%, 84.8408%, 13.5311% |
@@ -200,7 +227,13 @@ Correct answers for comparison: the global minimum-variance portfolio has standa
 
 ## Code, from first principles, and it actually runs
 
-The code builds the covariance matrix from the standard deviations and correlations, then finds the global minimum-variance portfolio and the 6% frontier portfolio by **three independent roads**: road 1 is the closed form through $\Sigma^{-1}$ and $A$, $B$, $C$; road 2 solves the five Lagrange equations (three slope conditions and two constraints) directly, with no inverse and no $A$, $B$, $C$; road 3 uses no calculus and no matrix algebra, only the fact that for a fixed target the feasible weights lie on a line, and searches that line for the lowest variance. For the global minimum, road 3 searches twice: along the line for each target, then over targets. Python inverts $\Sigma$ by elimination and searches by golden section (repeatedly shrinking a bracket around the lowest point); Rust inverts by cofactors and finds the bottom by fitting a parabola through three points. Then every number in the frontier chart, the weights chart and the what-breaks table is printed.
+The code builds the covariance matrix from the standard deviations and correlations. Then it finds the global minimum-variance portfolio and the 6% frontier portfolio by **three independent roads**:
+
+- Road 1 is the closed form through $\Sigma^{-1}$ and $A$, $B$, $C$.
+- Road 2 solves the five Lagrange equations (three slope conditions and two constraints) directly, with no inverse and no $A$, $B$, $C$.
+- Road 3 uses no calculus and no matrix algebra, only the fact that for a fixed target the feasible weights lie on a line, and searches that line for the lowest variance. For the global minimum, road 3 searches twice: along the line for each target, then over targets.
+
+Python inverts $\Sigma$ by elimination and searches by golden section (repeatedly shrinking a bracket around the lowest point). Rust inverts by cofactors and finds the bottom by fitting a parabola through three points. Then every number in the frontier chart, the weights chart and the what-breaks table is printed.
 
 ### Python
 
@@ -596,6 +629,307 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line. They reach the inverse and the search minimum by different routes, so agreement is evidence, not an echo.
 
+### Lean
+
+Lean proves the minimum-variance formula, the global minimum-variance portfolio and the efficient branch, for any number of assets and any real weights.
+
+- Suppose $\Sigma$ is positive definite and the expected returns are not all equal. Then $\Delta > 0$.
+- Take those inputs and any target $m$. Then $w(m)$ invests all the money and expects exactly $m$. Its variance is $V(m) = (Am^2 - 2Bm + C)/\Delta$.
+- Take any other fully invested portfolio that expects $m$. Then its variance is strictly larger than $V(m)$.
+- Suppose $\Sigma$ is positive definite, with any expected returns. Then $w_g = \Sigma^{-1}\mathbf{1}/A$ invests all the money, with variance $1/A$ and expected return $B/A$.
+- Take any other fully invested portfolio. Then its variance is strictly larger than $1/A$.
+- Keep the means not all equal, and take a target $m > m_g$. Then any fully invested portfolio expecting at least $m$, with variance at most $V(m)$, is $w(m)$ itself.
+- Take a target $m < m_g$ instead. Then $w_g$ expects more than $m$ and has strictly less variance than $w(m)$.
+- Take the card's $\Sigma$ in percent squared. Then its determinant is 3,078,000, and its adjugate is the one in the hand table.
+- Take that adjugate. Then its row sums are 1,620, 84,420 and 13,464, which add to 99,504.
+- Take that adjugate and the means 8, 4, 5. Then the products are 37,800, 316,800 and 63,360. So determinant times $B$ is 417,960, and determinant times $C$ is 1,886,400.
+- Take half shares and half bonds. Then the expected return is 6 percent and the variance 121, a standard deviation of 11 percent.
+
+The decimal weights, the charts and the what-breaks table are left to the Python and Rust checks.
+
+```lean
+-- The efficient frontier: for a positive definite covariance matrix and expected returns that are not all equal, the least-variance fully invested portfolio for each target return is the unique two-fund blend given by the closed form, its variance is (A m² - 2 B m + C) / Δ, the global minimum-variance portfolio is Σ⁻¹1 / A with variance 1 / A and mean B / A, and only the targets above B / A are efficient.
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Matrix.Adjugate
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+
+open Matrix
+
+lemma ef_pd_pos {ι : Type*} [Fintype ι] {M : Matrix ι ι ℝ} (hM : M.PosDef) {x : ι → ℝ}
+    (hx : x ≠ 0) : 0 < x ⬝ᵥ (M *ᵥ x) := by
+  simpa using hM.dotProduct_mulVec_pos hx
+
+lemma ef_herm_dot {ι : Type*} [Fintype ι] {M : Matrix ι ι ℝ} (hM : M.IsHermitian)
+    (v w : ι → ℝ) : v ⬝ᵥ (M *ᵥ w) = w ⬝ᵥ (M *ᵥ v) := by
+  have hT : Mᵀ = M := by
+    have := hM.eq
+    rwa [conjTranspose_eq_transpose_of_trivial] at this
+  rw [dotProduct_mulVec, dotProduct_comm, ← mulVec_transpose, hT]
+
+lemma ef_inv_cancel {ι : Type*} [Fintype ι] [DecidableEq ι] {S : Matrix ι ι ℝ} (hS : S.PosDef)
+    (v : ι → ℝ) : S *ᵥ (S⁻¹ *ᵥ v) = v := by
+  rw [mulVec_mulVec, mul_nonsing_inv (h := (isUnit_iff_isUnit_det S).mp hS.isUnit), one_mulVec]
+
+lemma ef_strict_min {ι : Type*} [Fintype ι] {S : Matrix ι ι ℝ} (hS : S.PosDef)
+    (w u : ι → ℝ) (hne : u ≠ w) (h : (u - w) ⬝ᵥ (S *ᵥ w) = 0) :
+    w ⬝ᵥ (S *ᵥ w) < u ⬝ᵥ (S *ᵥ u) := by
+  have hd : u - w ≠ 0 := sub_ne_zero.mpr hne
+  have hpos := ef_pd_pos hS hd
+  have hsym := ef_herm_dot hS.isHermitian w (u - w)
+  have hu : u = w + (u - w) := by abel
+  generalize u - w = d at hpos hsym hu h
+  subst hu
+  simp only [mulVec_add, dotProduct_add, add_dotProduct]
+  linarith
+
+lemma ef_mv_core {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (S : Matrix ι ι ℝ) (hS : S.PosDef) (μ one : ι → ℝ) (hone : one = fun _ => 1)
+    (hμ : ∃ i j, μ i ≠ μ j) (A B C Δ m : ℝ) (hA : A = one ⬝ᵥ (S⁻¹ *ᵥ one))
+    (hB : B = one ⬝ᵥ (S⁻¹ *ᵥ μ)) (hC : C = μ ⬝ᵥ (S⁻¹ *ᵥ μ)) (hΔ : Δ = A * C - B ^ 2)
+    (w : ι → ℝ) (hw : w = ((C - B * m) / Δ) • (S⁻¹ *ᵥ one) + ((A * m - B) / Δ) • (S⁻¹ *ᵥ μ)) :
+    0 < A ∧ 0 < Δ ∧ one ⬝ᵥ w = 1 ∧ μ ⬝ᵥ w = m ∧
+      w ⬝ᵥ (S *ᵥ w) = (A * m ^ 2 - 2 * B * m + C) / Δ ∧
+      ∀ u : ι → ℝ, one ⬝ᵥ u = 1 → μ ⬝ᵥ u = m → u ≠ w →
+        w ⬝ᵥ (S *ᵥ w) < u ⬝ᵥ (S *ᵥ u) := by
+  have hSP : ∀ v, S *ᵥ (S⁻¹ *ᵥ v) = v := ef_inv_cancel hS
+  set P := S⁻¹ with hPdef
+  have hP : P.PosDef := hS.inv
+  have hsym : ∀ v w : ι → ℝ, v ⬝ᵥ (P *ᵥ w) = w ⬝ᵥ (P *ᵥ v) := ef_herm_dot hP.isHermitian
+  obtain ⟨i, j, hij⟩ := hμ
+  have hone_ne : one ≠ 0 := by
+    intro h
+    have := congrFun h i
+    simp [hone] at this
+  have hApos : 0 < A := hA ▸ ef_pd_pos hP hone_ne
+  have hBμ : μ ⬝ᵥ (P *ᵥ one) = B := by rw [hB, hsym]
+  have hx : A • μ - B • one ≠ 0 := by
+    intro h
+    have hi := congrFun h i
+    have hj := congrFun h j
+    simp [hone] at hi hj
+    apply hij
+    have : A * μ i = A * μ j := by linarith
+    exact mul_left_cancel₀ hApos.ne' this
+  have hq := ef_pd_pos hP hx
+  have hexp : (A • μ - B • one) ⬝ᵥ (P *ᵥ (A • μ - B • one)) = A * (A * C - B ^ 2) := by
+    simp only [mulVec_sub, mulVec_smul, dotProduct_sub, sub_dotProduct, dotProduct_smul,
+      smul_dotProduct, smul_eq_mul]
+    rw [hBμ, ← hA, ← hB, ← hC]
+    ring
+  have hΔpos : 0 < Δ := by
+    rw [hΔ]
+    rw [hexp] at hq
+    exact pos_of_mul_pos_right hq hApos.le
+  set a := (C - B * m) / Δ with ha
+  set b := (A * m - B) / Δ with hb
+  have hw1 : one ⬝ᵥ w = 1 := by
+    rw [hw]
+    simp only [dotProduct_add, dotProduct_smul, smul_eq_mul]
+    rw [← hA, ← hB, ha, hb, div_mul_eq_mul_div, div_mul_eq_mul_div, ← add_div,
+      div_eq_one_iff_eq hΔpos.ne', hΔ]
+    ring
+  have hwμ : μ ⬝ᵥ w = m := by
+    rw [hw]
+    simp only [dotProduct_add, dotProduct_smul, smul_eq_mul]
+    rw [hBμ, ← hC, ha, hb, div_mul_eq_mul_div, div_mul_eq_mul_div, ← add_div,
+      div_eq_iff hΔpos.ne', hΔ]
+    ring
+  have hSw : S *ᵥ w = a • one + b • μ := by
+    rw [hw, mulVec_add, mulVec_smul, mulVec_smul, hSP, hSP]
+  refine ⟨hApos, hΔpos, hw1, hwμ, ?_, ?_⟩
+  · rw [hSw, dotProduct_add, dotProduct_smul, dotProduct_smul, smul_eq_mul, smul_eq_mul,
+      dotProduct_comm w one, dotProduct_comm w μ, hw1, hwμ, ha, hb, mul_one,
+      div_mul_eq_mul_div, ← add_div]
+    congr 1
+    ring
+  · intro u hu1 hum hne
+    apply ef_strict_min hS w u hne
+    rw [hSw, dotProduct_add, dotProduct_smul, dotProduct_smul, smul_eq_mul, smul_eq_mul,
+      sub_dotProduct, sub_dotProduct, dotProduct_comm u one, dotProduct_comm w one,
+      dotProduct_comm u μ, dotProduct_comm w μ, hu1, hum, hw1, hwμ]
+    ring
+
+lemma ef_gmv_core {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
+    (S : Matrix ι ι ℝ) (hS : S.PosDef) (μ one : ι → ℝ) (hone : one = fun _ => 1)
+    (A B : ℝ) (hA : A = one ⬝ᵥ (S⁻¹ *ᵥ one)) (hB : B = one ⬝ᵥ (S⁻¹ *ᵥ μ))
+    (wg : ι → ℝ) (hwg : wg = A⁻¹ • (S⁻¹ *ᵥ one)) :
+    0 < A ∧ one ⬝ᵥ wg = 1 ∧ wg ⬝ᵥ (S *ᵥ wg) = 1 / A ∧ μ ⬝ᵥ wg = B / A ∧
+      ∀ u : ι → ℝ, one ⬝ᵥ u = 1 → u ≠ wg → wg ⬝ᵥ (S *ᵥ wg) < u ⬝ᵥ (S *ᵥ u) := by
+  have hSP : ∀ v, S *ᵥ (S⁻¹ *ᵥ v) = v := ef_inv_cancel hS
+  set P := S⁻¹ with hPdef
+  have hP : P.PosDef := hS.inv
+  have hsym : ∀ v w : ι → ℝ, v ⬝ᵥ (P *ᵥ w) = w ⬝ᵥ (P *ᵥ v) := ef_herm_dot hP.isHermitian
+  have hone_ne : one ≠ 0 := by
+    intro h
+    have := congrFun h (Classical.arbitrary ι)
+    simp [hone] at this
+  have hApos : 0 < A := hA ▸ ef_pd_pos hP hone_ne
+  have hBμ : μ ⬝ᵥ (P *ᵥ one) = B := by rw [hB, hsym]
+  have hw1 : one ⬝ᵥ wg = 1 := by
+    rw [hwg, dotProduct_smul, smul_eq_mul, ← hA, inv_mul_cancel₀ hApos.ne']
+  have hSw : S *ᵥ wg = A⁻¹ • one := by
+    rw [hwg, mulVec_smul, hSP]
+  refine ⟨hApos, hw1, ?_, ?_, ?_⟩
+  · rw [hSw, dotProduct_smul, smul_eq_mul, dotProduct_comm, hw1, mul_one, one_div]
+  · rw [hwg, dotProduct_smul, smul_eq_mul, hBμ, div_eq_inv_mul]
+  · intro u hu1 hne
+    apply ef_strict_min hS wg u hne
+    rw [hSw, dotProduct_smul, smul_eq_mul, sub_dotProduct, dotProduct_comm u one,
+      dotProduct_comm wg one, hu1, hw1]
+    ring
+
+/-- The minimum-variance portfolio for a target return `m`. Let `S` be the covariance matrix
+(positive definite) and `μ` the expected returns (not all equal), with
+`A = 1ᵀ S⁻¹ 1`, `B = 1ᵀ S⁻¹ μ`, `C = μᵀ S⁻¹ μ` and `Δ = A C - B²`. Then `Δ > 0`, and the blend
+`w = ((C - B m) / Δ) S⁻¹ 1 + ((A m - B) / Δ) S⁻¹ μ` of the two fixed portfolios `S⁻¹ 1` and
+`S⁻¹ μ` invests all the money, expects exactly `m`, has variance `(A m² - 2 B m + C) / Δ`, and
+every other fully invested portfolio that expects `m` has strictly larger variance. Weights may be
+any real numbers, so short selling is allowed. -/
+theorem minimum_variance_portfolio_for_target {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (S : Matrix ι ι ℝ) (hS : S.PosDef) (μ : ι → ℝ) (hμ : ∃ i j, μ i ≠ μ j) (m : ℝ) :
+    let one : ι → ℝ := fun _ => 1
+    let A := one ⬝ᵥ (S⁻¹ *ᵥ one)
+    let B := one ⬝ᵥ (S⁻¹ *ᵥ μ)
+    let C := μ ⬝ᵥ (S⁻¹ *ᵥ μ)
+    let Δ := A * C - B ^ 2
+    let w := ((C - B * m) / Δ) • (S⁻¹ *ᵥ one) + ((A * m - B) / Δ) • (S⁻¹ *ᵥ μ)
+    0 < Δ ∧ one ⬝ᵥ w = 1 ∧ μ ⬝ᵥ w = m ∧
+      w ⬝ᵥ (S *ᵥ w) = (A * m ^ 2 - 2 * B * m + C) / Δ ∧
+      ∀ u : ι → ℝ, one ⬝ᵥ u = 1 → μ ⬝ᵥ u = m → u ≠ w →
+        w ⬝ᵥ (S *ᵥ w) < u ⬝ᵥ (S *ᵥ u) := by
+  intro one A B C Δ w
+  exact (ef_mv_core S hS μ one rfl hμ A B C Δ m rfl rfl rfl rfl w rfl).2
+
+/-- The global minimum-variance portfolio. For a positive definite covariance matrix `S`, the
+portfolio `w_g = S⁻¹ 1 / A`, with `A = 1ᵀ S⁻¹ 1`, invests all the money, has variance `1 / A`
+and expected return `B / A` with `B = 1ᵀ S⁻¹ μ`, and every other fully invested portfolio has
+strictly larger variance. The expected returns play no part in finding it. -/
+theorem global_minimum_variance_portfolio {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
+    (S : Matrix ι ι ℝ) (hS : S.PosDef) (μ : ι → ℝ) :
+    let one : ι → ℝ := fun _ => 1
+    let A := one ⬝ᵥ (S⁻¹ *ᵥ one)
+    let B := one ⬝ᵥ (S⁻¹ *ᵥ μ)
+    let wg := A⁻¹ • (S⁻¹ *ᵥ one)
+    one ⬝ᵥ wg = 1 ∧ wg ⬝ᵥ (S *ᵥ wg) = 1 / A ∧ μ ⬝ᵥ wg = B / A ∧
+      ∀ u : ι → ℝ, one ⬝ᵥ u = 1 → u ≠ wg → wg ⬝ᵥ (S *ᵥ wg) < u ⬝ᵥ (S *ᵥ u) := by
+  intro one A B wg
+  exact (ef_gmv_core S hS μ one rfl A B rfl rfl wg rfl).2
+
+/-- The efficient frontier is the part above the global minimum-variance return `B / A`. For a
+target `m > B / A`, any fully invested portfolio that expects at least `m` with variance at most
+that of the frontier portfolio `w(m)` is `w(m)` itself, so nothing beats it on both return and
+risk. For a target `m < B / A`, the global minimum-variance portfolio expects more and has
+strictly less variance, so `w(m)` is not worth holding. -/
+theorem efficient_frontier_above_global_minimum {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (S : Matrix ι ι ℝ) (hS : S.PosDef) (μ : ι → ℝ) (hμ : ∃ i j, μ i ≠ μ j) (m : ℝ) :
+    let one : ι → ℝ := fun _ => 1
+    let A := one ⬝ᵥ (S⁻¹ *ᵥ one)
+    let B := one ⬝ᵥ (S⁻¹ *ᵥ μ)
+    let C := μ ⬝ᵥ (S⁻¹ *ᵥ μ)
+    let Δ := A * C - B ^ 2
+    let w := ((C - B * m) / Δ) • (S⁻¹ *ᵥ one) + ((A * m - B) / Δ) • (S⁻¹ *ᵥ μ)
+    let wg := A⁻¹ • (S⁻¹ *ᵥ one)
+    (B / A < m → ∀ u : ι → ℝ, one ⬝ᵥ u = 1 → m ≤ μ ⬝ᵥ u →
+        u ⬝ᵥ (S *ᵥ u) ≤ w ⬝ᵥ (S *ᵥ w) → u = w) ∧
+      (m < B / A → m < μ ⬝ᵥ wg ∧ wg ⬝ᵥ (S *ᵥ wg) < w ⬝ᵥ (S *ᵥ w)) := by
+  intro one A B C Δ w wg
+  obtain ⟨hApos, hΔ, hw1, hwμ, hV, hmin⟩ :=
+    ef_mv_core S hS μ one rfl hμ A B C Δ m rfl rfl rfl rfl w rfl
+  have hΔdef : Δ = A * C - B ^ 2 := rfl
+  constructor
+  · intro hm u hu1 hmu hle
+    have hBm : B < m * A := (div_lt_iff₀ hApos).mp hm
+    set m' := μ ⬝ᵥ u with hm'
+    set w' := ((C - B * m') / Δ) • (S⁻¹ *ᵥ one) + ((A * m' - B) / Δ) • (S⁻¹ *ᵥ μ) with hw'
+    obtain ⟨-, -, -, -, hV', hmin'⟩ :=
+      ef_mv_core S hS μ one rfl hμ A B C Δ m' rfl rfl rfl rfl w' rfl
+    have hge : w' ⬝ᵥ (S *ᵥ w') ≤ u ⬝ᵥ (S *ᵥ u) := by
+      rcases eq_or_ne u w' with h | h
+      · exact le_of_eq (by rw [h])
+      · exact (hmin' u hu1 hm'.symm h).le
+    have hnum : A * m' ^ 2 - 2 * B * m' + C ≤ A * m ^ 2 - 2 * B * m + C := by
+      rw [← div_le_div_iff_of_pos_right hΔ, ← hV', ← hV]
+      linarith
+    have heq : m' = m := by
+      by_contra hne
+      have hlt : m < m' := lt_of_le_of_ne hmu (Ne.symm hne)
+      have h1 : 0 < m' - m := sub_pos.mpr hlt
+      have h2 : 0 < A * (m' + m) - 2 * B := by nlinarith
+      have h3 := mul_pos h1 h2
+      nlinarith
+    by_contra hne
+    have := hmin u hu1 (hm'.symm.trans heq) hne
+    linarith
+  · intro hm
+    obtain ⟨i, -, -⟩ := hμ
+    have : Nonempty ι := ⟨i⟩
+    obtain ⟨-, -, hgV, hgμ, -⟩ := ef_gmv_core S hS μ one rfl A B rfl rfl wg rfl
+    refine ⟨by rw [hgμ]; exact hm, ?_⟩
+    have hmA : m * A < B := (lt_div_iff₀ hApos).mp hm
+    have hsq : 0 < (B - m * A) ^ 2 := pow_pos (sub_pos.mpr hmA) 2
+    rw [hgV, hV, div_lt_div_iff₀ hApos hΔ, hΔdef]
+    nlinarith [hsq]
+
+/-! The card's worked numbers, in percent units: means 8, 4, 5 and the covariance matrix
+`[[400, 24, 30], [24, 36, 0], [30, 0, 225]]` in percent squared. -/
+
+-- The determinant of the covariance matrix is 3,078,000.
+example : (!![400, 24, 30; 24, 36, 0; 30, 0, 225] : Matrix (Fin 3) (Fin 3) ℤ).det = 3078000 := by
+  norm_num [Matrix.det_fin_three]
+
+-- The adjugate (determinant times the inverse) is the card's table.
+example : (!![400, 24, 30; 24, 36, 0; 30, 0, 225] : Matrix (Fin 3) (Fin 3) ℤ).adjugate =
+    !![8100, -5400, -1080; -5400, 89100, 720; -1080, 720, 13824] := by
+  rw [Matrix.adjugate_fin_three]
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num
+
+-- Row sums of the adjugate: 1,620; 84,420; 13,464, adding to determinant times A = 99,504.
+example : (!![8100, -5400, -1080; -5400, 89100, 720; -1080, 720, 13824] : Matrix (Fin 3) (Fin 3) ℤ)
+    *ᵥ ![1, 1, 1] = ![1620, 84420, 13464] ∧ (1620 + 84420 + 13464 : ℤ) = 99504 := by
+  refine ⟨?_, by norm_num⟩
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_three]
+
+-- Adjugate times the means: 37,800; 316,800; 63,360, so determinant times B = 417,960
+-- and determinant times C = 8·37,800 + 4·316,800 + 5·63,360 = 1,886,400.
+example : (!![8100, -5400, -1080; -5400, 89100, 720; -1080, 720, 13824] : Matrix (Fin 3) (Fin 3) ℤ)
+    *ᵥ ![8, 4, 5] = ![37800, 316800, 63360] ∧ (37800 + 316800 + 63360 : ℤ) = 417960 ∧
+    (8 * 37800 + 4 * 316800 + 5 * 63360 : ℤ) = 1886400 := by
+  refine ⟨?_, by norm_num, by norm_num⟩
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_three]
+
+-- Half shares and half bonds expects 6 percent with variance 121, a standard deviation of 11 percent.
+example : ![(8 : ℚ), 4, 5] ⬝ᵥ ![1 / 2, 1 / 2, 0] = 6 ∧
+    ![(1 : ℚ) / 2, 1 / 2, 0] ⬝ᵥ ((!![400, 24, 30; 24, 36, 0; 30, 0, 225] : Matrix (Fin 3) (Fin 3) ℚ)
+      *ᵥ ![1 / 2, 1 / 2, 0]) = 121 := by
+  constructor <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_three] <;> norm_num
+
+#print axioms ef_pd_pos
+#print axioms ef_herm_dot
+#print axioms ef_inv_cancel
+#print axioms ef_strict_min
+#print axioms ef_mv_core
+#print axioms ef_gmv_core
+#print axioms minimum_variance_portfolio_for_target
+#print axioms global_minimum_variance_portfolio
+#print axioms efficient_frontier_above_global_minimum
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ef_pd_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ef_herm_dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ef_inv_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ef_strict_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ef_mv_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ef_gmv_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'minimum_variance_portfolio_for_target' depends on axioms: [propext, Classical.choice, Quot.sound]
+'global_minimum_variance_portfolio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'efficient_frontier_above_global_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -608,7 +942,7 @@ The two outputs are identical line for line. They reach the inverse and the sear
 ## The usual mistake
 
 > [!warning]
-> **Treating the frontier's weights as reliable.** The formula is exact for the inputs it is given, and the inputs are guesses. Because the weights run through $\Sigma^{-1}$, small changes in expected returns produce large changes in weights. An optimiser fed noisy estimates tends to load up on the assets whose returns were overestimated. The global minimum-variance portfolio suffers least, because it does not use $\mu$ at all; that is one reason minimum-volatility funds exist.
+> **Treating the frontier's weights as reliable.** The formula is exact for the inputs it is given, and the inputs are guesses. Because the weights run through $\Sigma^{-1}$, small changes in expected returns produce large changes in weights. An optimiser fed noisy estimates tends to load up on the assets whose returns were overestimated. The global minimum-variance portfolio suffers least, because it does not use $\mu$ at all; that is one reason minimum-volatility funds exist (volatility is the finance word for standard deviation).
 >
 > Smaller traps:
 > - **Dropping the correlations.** Standard deviations alone give weights 7.20%, 80.00%, 12.80% and a true risk of 5.6673% instead of 5.5618%. On other inputs the gap is much larger.
@@ -644,7 +978,7 @@ The two outputs are identical line for line. They reach the inverse and the sear
 - [Quadratic programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md): the same bowl with inequality constraints, solved numerically.
 - [Two goals at once](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/02-multi-objective-trade-offs-and-the-pareto-frontier.md): the frontier as one case of a general idea, the set of choices where one goal cannot improve without the other getting worse.
 
-The frontier offers a menu of portfolios but no way to choose among them; a riskless asset turns the menu into a single best risky portfolio, and that is the question the tangency card answers.
+The frontier offers a menu of portfolios but no way to choose among them. A riskless asset turns the menu into a single best risky portfolio, and that is the question [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md) answers.
 
 ---
 

@@ -37,7 +37,9 @@ Top line: no prepayment, the plain loan schedule. Middle line: 8 percent a year 
 
 ## The formula
 
-Notation first, in words. Months are counted $m$ = 1, 2, … up to the term $N$ = 360. The monthly rate $i$ is the yearly note rate divided by 12. The **annuity factor** $a_n(i)$ is today's value of one dollar paid at the end of each of $n$ months, as on [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md). The prepayment speed is quoted as a yearly percentage $c$, the **conditional prepayment rate** or **CPR**. It is used month by month as $s$, the **single monthly mortality** or **SMM**: the fraction of loans still in the pool that pay off early in a given month.
+Notation first, in words. Months are counted $m$ = 1, 2, … up to the term $N$ = 360. The monthly rate $i$ is the yearly note rate (the interest rate written in the loan contract) divided by 12. The **annuity factor** $a_n(i)$ is today's value of one dollar paid at the end of each of $n$ months, as on [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md).
+
+The prepayment speed is quoted as a yearly percentage $c$, the **conditional prepayment rate** or **CPR**. It is used month by month as $s$, the **single monthly mortality** or **SMM**: the fraction of loans still in the pool that pay off early in a given month.
 
 $$B_m \;=\; L\,(1-s)^m\,\frac{a_{N-m}(i)}{a_N(i)}, \qquad s \;=\; 1-(1-c)^{1/12}$$
 
@@ -68,7 +70,12 @@ The month is worked in a fixed order:
 
 $$I_m = i\,B_{m-1}, \quad P_m = \frac{B_{m-1}}{a_{N-m+1}(i)}, \quad Q_m = P_m - I_m, \quad U_m = s\,(B_{m-1} - Q_m), \quad B_m = B_{m-1} - Q_m - U_m$$
 
-In plain words: charge interest on the opening balance; the surviving loans make their scheduled payment, which spreads what they owe over the months they have left; the part that is not interest is scheduled principal; then a fraction $s$ of what remains is prepaid.
+In plain words:
+
+1. Charge interest on the opening balance.
+2. The surviving loans make their scheduled payment, which spreads what they owe over the months they have left.
+3. The part that is not interest is scheduled principal.
+4. Then a fraction $s$ of what remains is prepaid.
 
 The average life weights each dollar of principal by the year it arrives:
 
@@ -78,11 +85,15 @@ $$W \;=\; \frac{1}{L}\sum_{m=1}^{N} \frac{m}{12}\,(Q_m + U_m)$$
 
 - **Loans alike.** Same rate, same term, same age. A real pool mixes them; the ledger then runs group by group and adds up. Treating a mixed pool as one loan at its average rate and term is an approximation whose error grows with the spread of rates and ages inside it.
 - **Whole loans leave.** A prepaying loan pays off in full. A borrower who sends a little extra each month is booked the same way in that month, but then pays off before the term ends, so the survivors are no longer all on one schedule.
-- **Interest passes through untouched.** Real pools keep a servicing fee, so investors get a coupon below the note rate, and payments arrive with a delay of weeks. Ignore either and every value is slightly too high.
+- **Interest passes through untouched.** Real pools keep a servicing fee, so investors get a coupon (the interest rate paid to them) below the note rate, and payments arrive with a delay of weeks. Ignore either and every value is slightly too high.
 - **No defaults, or defaults counted as prepayments.** In a pool with a guarantee, a defaulted loan is bought out at its balance, which the ledger books as prepayment. Without a guarantee, losses need their own line.
 - **The speed is an input.** The formula is exact for whatever speed goes in. It says nothing about whether 8 percent is right. New loans prepay slowly and speed up over their first few years; the market's standard ramp for that is used in the code.
 
-**Conventions verified 28 Sep 2026:** SMM as a fraction of the balance left after scheduled principal, CPR as SMM compounded over twelve months, and the standard ramp (called 100% PSA) are as defined in the Standard Formulas chapter of the Uniform Practices, still published by SIFMA (Sources).
+**Conventions verified 28 Sep 2026:** these three are as defined in the Standard Formulas chapter of the Uniform Practices, still published by SIFMA, the Securities Industry and Financial Markets Association (Sources):
+
+- SMM as a fraction of the balance left after scheduled principal;
+- CPR as SMM compounded over twelve months;
+- the standard ramp, called 100% PSA after the Public Securities Association that set it.
 
 ---
 
@@ -92,7 +103,7 @@ $$W \;=\; \frac{1}{L}\sum_{m=1}^{N} \frac{m}{12}\,(Q_m + U_m)$$
 
 Picture the pool as a crowd of one-dollar loans. Each month, some leave: they pay off in full. The rest carry on exactly as their contract says, paying the same fixed amount as if nobody else existed. A loan that has not prepaid cannot tell it is in a pool.
 
-So the pool splits into two separate questions. How many loans are still in? That is a survival count, driven only by the prepayment speed. What does each surviving loan owe? That is the ordinary loan schedule, driven only by the note rate. Multiply the answers. This is the market's own convention: pool factor equals survival factor times amortised loan balance.
+So the pool splits into two separate questions. How many loans are still in? That is a survival count, driven only by the prepayment speed. What does each surviving loan owe? That is the ordinary loan schedule, driven only by the note rate. Multiply the answers. This is the market's own convention: pool factor (the fraction of the original balance still owed) equals survival factor times amortised loan balance.
 
 ### Step 1: turning the yearly speed into a monthly one
 
@@ -147,7 +158,7 @@ A sharper fact follows from $X_m = (1+i)B_{m-1} - B_m$. Discount month $m$'s cas
 
 $$\frac{X_m}{(1+i)^m} = \frac{B_{m-1}}{(1+i)^{m-1}} - \frac{B_m}{(1+i)^m}$$
 
-Adding over all months, each middle term appears once with a plus and once with a minus. Only $B_0 = L$ survives. So discounted at 6 percent, the pool is worth exactly $1,000,000.00 at any speed, even one that changes month to month. A prepaid dollar stops earning 6 percent at exactly the moment it stops being discounted at 6 percent. Prepayment matters for value only when the market's rate differs from the loans' rate. That difference is where the rest of this shelf lives.
+Adding over all months, each middle term appears once with a plus and once with a minus. Only $B_0 = L$ survives. So discounted at 6 percent, the pool is worth exactly $1,000,000.00 at any speed, even one that changes month to month. A value equal to the starting balance is called par. A prepaid dollar stops earning 6 percent at exactly the moment it stops being discounted at 6 percent. Prepayment matters for value only when the market's rate differs from the loans' rate. That difference is where the rest of this shelf lives.
 
 ### Step 6: a speed that depends on rates
 
@@ -157,7 +168,11 @@ $$c = \min\big(30\%,\ \max(2\%,\ 8\% + 4\,(6\% - M))\big)$$
 
 At $M$ = 6% it gives the house 8%. At 5% it gives 12%; at 7%, 4%. The floor stands for people who move house whatever rates do; the cap for borrowers who never refinance. The number 4 is a teaching choice, not an estimate.
 
-When $M$ changes over time, so does the speed: $c_m$ in month $m$, with SMM $s_m = 1-(1-c_m)^{1/12}$. The ledger runs unchanged. In the closed form, $(1-s)^m$ becomes the product $(1-s_1)(1-s_2)\cdots(1-s_m)$, since survival still multiplies month by month. Take a market rate of 7% for ten years, then 4%. The speed is 4% for months 1 to 120 and 16% from month 121. After 10 years the pool still owes $556,370.01, far more than the $363,521.13 at a steady 8%. Then the refinancing wave arrives: after 20 years it owes $62,795.39, less than the $101,901.16 at 8%. Average life is 10.24 years. The code checks the ledger against the product form in every month.
+When $M$ changes over time, so does the speed: $c_m$ in month $m$, with SMM $s_m = 1-(1-c_m)^{1/12}$. The ledger runs unchanged. In the closed form, $(1-s)^m$ becomes the product $(1-s_1)(1-s_2)\cdots(1-s_m)$, since survival still multiplies month by month.
+
+Take a market rate of 7% for ten years, then 4%. The speed is 4% for months 1 to 120 and 16% from month 121. After 10 years the pool still owes $556,370.01, far more than the $363,521.13 at a steady 8%.
+
+Then the refinancing wave arrives: after 20 years it owes $62,795.39, less than the $101,901.16 at 8%. Average life is 10.24 years. The code checks the ledger against the product form in every month.
 
 Another road to the same balances takes Step 0 literally: simulate thousands of individual loans, each prepaying whole or not, and count survivors. The code does this with 20,000 loans. Real prepayment models replace the rule above with borrower behaviour fitted to data or derived from optimal refinancing, and feed it with random rate paths; that is the method of [Option-adjusted spread](04-option-adjusted-spread.md).
 
@@ -242,7 +257,9 @@ Going from no prepayment to 4 percent removes six and a half years of average li
 
 ## Code, from first principles, and it actually runs
 
-The code builds the pool three independent ways. Road 1 is the month-by-month ledger, with the scheduled payment recomputed from an annuity factor added up term by term. Road 2 is the closed form, from the geometric-series version of the factor. Road 3 simulates 20,000 separate loans with a random-number generator written in the script (splitmix64), each loan following its own amortisation loop and leaving the pool whole when its draw says so. It also runs a speed that changes with a market-rate path. Then it checks that principal is conserved, that value at the coupon rate is par for every speed, and reproduces every figure and chart point on this card, including the wrong answers.
+The code builds the pool three independent ways. Road 1 is the month-by-month ledger, with the scheduled payment recomputed from an annuity factor added up term by term. Road 2 is the closed form, from the geometric-series version of the factor. Road 3 simulates 20,000 separate loans with a random-number generator written in the script (splitmix64), each loan following its own amortisation loop and leaving the pool whole when its draw says so.
+
+It also runs a speed that changes with a market-rate path. Then it checks that principal is conserved, that value at the coupon rate is par for every speed, and reproduces every figure and chart point on this card, including the wrong answers.
 
 ### Python
 
@@ -621,10 +638,285 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line. The simulation matches exactly because both languages run the same integer generator.
 
+### Lean
+
+Lean proves the ledger's closed form, full repayment and par at the note rate, for any monthly rate above −100% and any speeds.
+
+- Take a constant SMM $s$. Then $B_m = L(1-s)^m\,a_{N-m}(i)/a_N(i)$ for every month $m$ from 0 to $N$.
+- Take a constant SMM $s$. Then the pool's scheduled payment in month $m$ is $(1-s)^{m-1}A$.
+- Take a constant SMM $s$ and any month $m$. Then the cash flow is $X_m = i\,B_{m-1} + (B_{m-1} - B_m)$.
+- Take a constant SMM $s$. Then the pool is fully repaid at the end of the term: $B_N = 0$.
+- Suppose the SMM changes month by month: $s_m$ in month $m$. Then $B_m = L(1-s_1)(1-s_2)\cdots(1-s_m)\,a_{N-m}(i)/a_N(i)$.
+- Take any speeds, even ones that change month to month. Then scheduled plus prepaid principal over the whole life add up to exactly $L$.
+- Take any speeds, even ones that change month to month. Then the cash flows, discounted at the note rate, are worth exactly $L$: par.
+- Take the card's pool: $L$ = \$1,000,000, $N$ = 360, $i$ = 0.5%. Then $a_{360}$ = 166.791614, $A$ = \$5,995.51 and $Q_1$ = \$995.51, to the printed digit.
+- Take a speed of 8% CPR. Then the survivors after 10 years round to 0.434388, and the balance to \$363,521.13.
+- The rate rule gives 8%, 12%, 4% and 16% at market rates of 6%, 5%, 7% and 4%.
+
+The twelfth root linking SMM to CPR, average life, the rate tables and the loan simulation are left to the Python and Rust checks.
+
+```lean
+-- Mortgage pools: in the monthly pool ledger (interest, scheduled payment over the months left, prepayment of a fraction of what remains), the balance after month m is the original pool times the surviving fraction of loans times one loan's scheduled balance, the pool's payment shrinks with its survivors, it is fully repaid at the term, every dollar of principal comes back exactly once, and at the note rate the cash flows are worth exactly the starting balance at any speed.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Algebra.Order.Field.Power
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+
+open Finset
+
+/-! ## Setting
+
+`i` is the monthly note rate and `N` the term in months. The pool starts at balance `L`.
+The ledger runs month `m + 1` (for `m < N`) from the opening balance `B m`:
+
+* interest `I (m + 1) = i * B m`;
+* scheduled payment `P (m + 1) = B m / a_{N - m}(i)`, what is owed spread over the months left;
+* scheduled principal `Q (m + 1) = P (m + 1) - I (m + 1)`;
+* prepaid principal `U (m + 1) = s * (B m - Q (m + 1))`, the single monthly mortality `s`
+  applied after scheduled principal;
+* closing balance `B (m + 1) = B m - Q (m + 1) - U (m + 1)`.
+
+The cash flow to the investor in month `m + 1` is `I (m + 1) + Q (m + 1) + U (m + 1)`. -/
+
+/-- The annuity factor `a_n(i) = ∑_{k=1}^{n} (1 + i)^(-k)`: today's value of one dollar paid
+at the end of each of `n` months. -/
+noncomputable def annuityFactor (i : ℝ) (n : ℕ) : ℝ :=
+  ∑ k ∈ Icc 1 n, (1 + i) ^ (-(k : ℤ))
+
+/-- One month of the annuity factor: `(1 + i) a_{n+1}(i) = 1 + a_n(i)`. -/
+theorem annuityFactor_succ_mul (i : ℝ) (hi : -1 < i) (n : ℕ) :
+    (1 + i) * annuityFactor i (n + 1) = 1 + annuityFactor i n := by
+  have h1 : (1 + i) ≠ 0 := by linarith
+  induction n with
+  | zero =>
+    simp [annuityFactor]
+    field_simp
+  | succ n ih =>
+    unfold annuityFactor at *
+    rw [Finset.sum_Icc_succ_top (by omega), mul_add, ih, Finset.sum_Icc_succ_top (by omega)]
+    have : (1 + i) * (1 + i) ^ (-((n + 1 + 1 : ℕ) : ℤ)) = (1 + i) ^ (-((n + 1 : ℕ) : ℤ)) := by
+      rw [zpow_neg, zpow_neg, zpow_natCast, zpow_natCast, pow_succ (1 + i) (n + 1)]
+      field_simp
+    rw [this]; ring
+
+/-- The annuity factor is positive for a term of at least one month. -/
+theorem annuityFactor_pos (i : ℝ) (hi : -1 < i) (n : ℕ) (hn : 0 < n) :
+    0 < annuityFactor i n := by
+  unfold annuityFactor
+  apply Finset.sum_pos
+  · intro k _; exact zpow_pos (by linarith) _
+  · exact ⟨1, Finset.mem_Icc.mpr ⟨le_refl _, hn⟩⟩
+
+/-- The general closed form at varying speeds, with full repayment. -/
+theorem pool_balance_general (i L : ℝ) (N : ℕ) (s B I P Q U : ℕ → ℝ)
+    (hi : -1 < i) (hN : 0 < N)
+    (hB0 : B 0 = L)
+    (hI : ∀ m < N, I (m + 1) = i * B m)
+    (hP : ∀ m < N, P (m + 1) = B m / annuityFactor i (N - m))
+    (hQ : ∀ m < N, Q (m + 1) = P (m + 1) - I (m + 1))
+    (hU : ∀ m < N, U (m + 1) = s (m + 1) * (B m - Q (m + 1)))
+    (hB : ∀ m < N, B (m + 1) = B m - Q (m + 1) - U (m + 1)) :
+    ∀ m ≤ N, B m = L * (∏ k ∈ Icc 1 m, (1 - s k)) *
+      annuityFactor i (N - m) / annuityFactor i N := by
+  have haN := annuityFactor_pos i hi N hN
+  intro m hm
+  induction m with
+  | zero => simp [hB0]; field_simp
+  | succ m ih =>
+    have hmN : m < N := by omega
+    have ih := ih (by omega)
+    obtain ⟨n, hn⟩ : ∃ n, N - m = n + 1 := ⟨N - (m + 1), by omega⟩
+    have hn' : N - (m + 1) = n := by omega
+    have ha := annuityFactor_pos i hi (n + 1) (by omega)
+    have hrec := annuityFactor_succ_mul i hi n
+    rw [hn] at ih
+    rw [hB m hmN, hU m hmN, hQ m hmN, hP m hmN, hI m hmN, Finset.prod_Icc_succ_top (by omega),
+      hn', ih, hn]
+    have : annuityFactor i n = (1 + i) * annuityFactor i (n + 1) - 1 := by linarith
+    rw [this]
+    field_simp
+    ring
+
+#print axioms annuityFactor_succ_mul
+#print axioms annuityFactor_pos
+#print axioms pool_balance_general
+
+/-- **The pool's closed form.** Run the ledger at a constant single monthly mortality `s`,
+with a monthly rate above −100% and a term of at least one month. Then the balance after
+month `m` is the original pool, times the fraction of loans that survived `m` months,
+times the fraction a single loan still owes on schedule:
+`B_m = L (1 - s)^m a_{N-m}(i) / a_N(i)` for every `m` from `0` to `N`.
+The pool's scheduled payment in month `m + 1` is the level payment `A = L / a_N(i)` times
+the fraction of loans left, `(1 - s)^m A`. Each month's cash flow is the interest on last
+month's balance plus however much the balance fell, `X = i B_{m} + (B_{m} - B_{m+1})`.
+And the pool is fully repaid at the end of the term, whatever the speed: `B_N = 0`. -/
+theorem pool_balance_closed_form (i L s : ℝ) (N : ℕ) (B I P Q U : ℕ → ℝ)
+    (hi : -1 < i) (hN : 0 < N)
+    (hB0 : B 0 = L)
+    (hI : ∀ m < N, I (m + 1) = i * B m)
+    (hP : ∀ m < N, P (m + 1) = B m / annuityFactor i (N - m))
+    (hQ : ∀ m < N, Q (m + 1) = P (m + 1) - I (m + 1))
+    (hU : ∀ m < N, U (m + 1) = s * (B m - Q (m + 1)))
+    (hB : ∀ m < N, B (m + 1) = B m - Q (m + 1) - U (m + 1)) :
+    (∀ m ≤ N, B m = L * (1 - s) ^ m * annuityFactor i (N - m) / annuityFactor i N) ∧
+    (∀ m < N, P (m + 1) = (1 - s) ^ m * (L / annuityFactor i N)) ∧
+    (∀ m < N, I (m + 1) + Q (m + 1) + U (m + 1) = i * B m + (B m - B (m + 1))) ∧
+    B N = 0 := by
+  have hgen := pool_balance_general i L N (fun _ => s) B I P Q U hi hN hB0 hI hP hQ hU hB
+  have hprod : ∀ m, ∏ k ∈ Icc 1 m, (1 - (fun _ => s) k) = (1 - s) ^ m := by
+    intro m; simp [Finset.prod_const]
+  have haN := annuityFactor_pos i hi N hN
+  have hBm : ∀ m ≤ N, B m = L * (1 - s) ^ m * annuityFactor i (N - m) / annuityFactor i N := by
+    intro m hm; rw [hgen m hm, hprod]
+  refine ⟨hBm, ?_, ?_, ?_⟩
+  · intro m hm
+    have ha := annuityFactor_pos i hi (N - m) (by omega)
+    rw [hP m hm, hBm m hm.le]
+    field_simp
+  · intro m hm
+    rw [hB m hm, hI m hm]; ring
+  · rw [hBm N le_rfl, Nat.sub_self]
+    simp [annuityFactor]
+
+/-- **A speed that changes month by month.** Run the same ledger with the single monthly
+mortality `s (m + 1)` in month `m + 1`, any speeds at all. Survival still multiplies month by
+month, so the balance after month `m` is the original pool times the product of the monthly
+survival fractions times one loan's scheduled fraction:
+`B_m = L (1 - s_1)(1 - s_2)⋯(1 - s_m) a_{N-m}(i) / a_N(i)` for every `m` from `0` to `N`. -/
+theorem pool_balance_varying_speed (i L : ℝ) (N : ℕ) (s B I P Q U : ℕ → ℝ)
+    (hi : -1 < i) (hN : 0 < N)
+    (hB0 : B 0 = L)
+    (hI : ∀ m < N, I (m + 1) = i * B m)
+    (hP : ∀ m < N, P (m + 1) = B m / annuityFactor i (N - m))
+    (hQ : ∀ m < N, Q (m + 1) = P (m + 1) - I (m + 1))
+    (hU : ∀ m < N, U (m + 1) = s (m + 1) * (B m - Q (m + 1)))
+    (hB : ∀ m < N, B (m + 1) = B m - Q (m + 1) - U (m + 1)) :
+    ∀ m ≤ N, B m = L * (∏ k ∈ Icc 1 m, (1 - s k)) *
+      annuityFactor i (N - m) / annuityFactor i N := by
+  exact pool_balance_general i L N s B I P Q U hi hN hB0 hI hP hQ hU hB
+
+/-- **Every dollar comes back once, and at the note rate prepayment is worth nothing.**
+For the same ledger at any speeds, even ones that change month to month: scheduled plus
+prepaid principal over the whole life add up to exactly the starting balance `L`, and the
+monthly cash flows `X_m = I_m + Q_m + U_m`, discounted at the note rate by `(1 + i)^m`,
+are worth exactly `L` (par). -/
+theorem pool_principal_returned_and_par_at_note_rate (i L : ℝ) (N : ℕ) (s B I P Q U : ℕ → ℝ)
+    (hi : -1 < i) (hN : 0 < N)
+    (hB0 : B 0 = L)
+    (hI : ∀ m < N, I (m + 1) = i * B m)
+    (hP : ∀ m < N, P (m + 1) = B m / annuityFactor i (N - m))
+    (hQ : ∀ m < N, Q (m + 1) = P (m + 1) - I (m + 1))
+    (hU : ∀ m < N, U (m + 1) = s (m + 1) * (B m - Q (m + 1)))
+    (hB : ∀ m < N, B (m + 1) = B m - Q (m + 1) - U (m + 1)) :
+    ∑ m ∈ range N, (Q (m + 1) + U (m + 1)) = L ∧
+    ∑ m ∈ range N, (I (m + 1) + Q (m + 1) + U (m + 1)) * (1 + i) ^ (-((m + 1 : ℕ) : ℤ)) = L := by
+  have hgen := pool_balance_general i L N s B I P Q U hi hN hB0 hI hP hQ hU hB
+  have hBN : B N = 0 := by
+    rw [hgen N le_rfl, Nat.sub_self]; simp [annuityFactor]
+  have h1 : (1 + i) ≠ 0 := by linarith
+  constructor
+  · have : ∀ m ∈ range N, Q (m + 1) + U (m + 1) = B m - B (m + 1) := by
+      intro m hm
+      have hm := Finset.mem_range.mp hm
+      rw [hB m hm]; ring
+    rw [Finset.sum_congr rfl this, Finset.sum_range_sub', hB0, hBN, sub_zero]
+  · have : ∀ m ∈ range N,
+        (I (m + 1) + Q (m + 1) + U (m + 1)) * (1 + i) ^ (-((m + 1 : ℕ) : ℤ)) =
+          B m * (1 + i) ^ (-((m : ℕ) : ℤ)) - B (m + 1) * (1 + i) ^ (-((m + 1 : ℕ) : ℤ)) := by
+      intro m hm
+      have hm := Finset.mem_range.mp hm
+      rw [hB m hm, hI m hm, zpow_neg, zpow_neg, zpow_natCast, zpow_natCast, pow_succ]
+      field_simp
+      ring
+    rw [Finset.sum_congr rfl this,
+      Finset.sum_range_sub' (fun m => B m * (1 + i) ^ (-((m : ℕ) : ℤ))), hB0, hBN]
+    simp
+
+/-! ## The card's numbers, exactly
+
+The pool: `L = 1,000,000`, `N = 360`, `i = 6% / 12 = 1/200`, so the discount factor is
+`200/201` and `a_n(i) = (1 - (200/201)^n) / (1/200)`. Rounded figures are checked as lying
+within half a unit of the last printed digit. -/
+
+-- The monthly note rate: 6 percent a year over 12 months is 1/200.
+example : (6 / 100 : ℚ) / 12 = 1 / 200 := by norm_num
+
+-- The annuity factor a_360 rounds to 166.791614.
+example : (333583227 / 2000000 : ℚ) ≤ (1 - (200 / 201 : ℚ) ^ 360) / (1 / 200) ∧
+    (1 - (200 / 201 : ℚ) ^ 360) / (1 / 200) < 333583229 / 2000000 := by
+  rw [show (360 : ℕ) = 180 * 2 from rfl, pow_mul]; norm_num
+
+-- The level payment A = 1,000,000 / a_360 rounds to $5,995.51.
+example : (1199101 / 200 : ℚ) ≤ 1000000 / ((1 - (200 / 201 : ℚ) ^ 360) / (1 / 200)) ∧
+    1000000 / ((1 - (200 / 201 : ℚ) ^ 360) / (1 / 200)) < 1199103 / 200 := by
+  rw [show (360 : ℕ) = 180 * 2 from rfl, pow_mul]; norm_num
+
+-- Month 1 interest: 0.005 × 1,000,000 = $5,000.00.
+example : (1 / 200 : ℚ) * 1000000 = 5000 := by norm_num
+
+-- Month 1 scheduled principal A − 5,000 rounds to $995.51.
+example : (199101 / 200 : ℚ) ≤ 1000000 / ((1 - (200 / 201 : ℚ) ^ 360) / (1 / 200)) - 5000 ∧
+    1000000 / ((1 - (200 / 201 : ℚ) ^ 360) / (1 / 200)) - 5000 < 199103 / 200 := by
+  rw [show (360 : ℕ) = 180 * 2 from rfl, pow_mul]; norm_num
+
+-- With (1 − s)^12 = 0.92, the survivors after 10 years are (1 − s)^120 = 0.92^10.
+example (x : ℝ) (h : x ^ 12 = 23 / 25) : x ^ 120 = (23 / 25) ^ 10 := by
+  rw [show (120 : ℕ) = 12 * 10 from rfl, pow_mul, h]
+
+-- 0.92^10 rounds to 0.434388.
+example : (868775 / 2000000 : ℚ) ≤ (23 / 25) ^ 10 ∧ (23 / 25 : ℚ) ^ 10 < 868777 / 2000000 := by
+  norm_num
+
+-- The scheduled balance after 10 years, L a_240 / a_360, rounds to $836,857.25.
+example : (167371449 / 200 : ℚ) ≤ 1000000 * (1 - (200 / 201 : ℚ) ^ 240) / (1 - (200 / 201) ^ 360) ∧
+    1000000 * (1 - (200 / 201 : ℚ) ^ 240) / (1 - (200 / 201) ^ 360) < 167371451 / 200 := by
+  rw [show (360 : ℕ) = 180 * 2 from rfl, pow_mul]; norm_num
+
+-- The pool balance after 10 years at 8% CPR, L 0.92^10 a_240 / a_360, rounds to $363,521.13.
+example : (72704225 / 200 : ℚ) ≤
+      1000000 * (23 / 25) ^ 10 * (1 - (200 / 201 : ℚ) ^ 240) / (1 - (200 / 201) ^ 360) ∧
+    1000000 * (23 / 25) ^ 10 * (1 - (200 / 201 : ℚ) ^ 240) / (1 - (200 / 201) ^ 360) <
+      72704227 / 200 := by
+  rw [show (360 : ℕ) = 180 * 2 from rfl, pow_mul]; norm_num
+
+-- The wrong monthly speed CPR / 12: 8% / 12 = 1/150, about 0.666667%.
+example : (8 / 100 : ℚ) / 12 = 1 / 150 := by norm_num
+
+-- The rate rule c = min(30%, max(2%, 8% + 4 (6% − M))): 8% at M = 6%, 12% at 5%, 4% at 7%,
+-- and 16% at 4%.
+example : min (30 / 100 : ℚ) (max (2 / 100) (8 / 100 + 4 * (6 / 100 - 6 / 100))) = 8 / 100 := by
+  norm_num
+example : min (30 / 100 : ℚ) (max (2 / 100) (8 / 100 + 4 * (6 / 100 - 5 / 100))) = 12 / 100 := by
+  norm_num
+example : min (30 / 100 : ℚ) (max (2 / 100) (8 / 100 + 4 * (6 / 100 - 7 / 100))) = 4 / 100 := by
+  norm_num
+example : min (30 / 100 : ℚ) (max (2 / 100) (8 / 100 + 4 * (6 / 100 - 4 / 100))) = 16 / 100 := by
+  norm_num
+
+#print axioms pool_balance_closed_form
+#print axioms pool_balance_varying_speed
+#print axioms pool_principal_returned_and_par_at_note_rate
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'annuityFactor_succ_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuityFactor_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pool_balance_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pool_balance_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pool_balance_varying_speed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pool_principal_returned_and_par_at_note_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **New loans, not seasoned ones.** Replace the flat 8% with the standard ramp (`psa` in the script: 0.2% CPR in month one, rising 0.2% a month to 6% at month 30). Average life is **11.36 years**: longer than at 8%, because the ramp never passes 6% and starts far below it.
+> - **New loans, not seasoned ones (loans already a few years old).** Replace the flat 8% with the standard ramp (`psa` in the script: 0.2% CPR in month one, rising 0.2% a month to 6% at month 30). Average life is **11.36 years**: longer than at 8%, because the ramp never passes 6% and starts far below it.
 > - **A refinancing wave.** Set CPR to 20%. Average life falls to **4.20 years**, under a seventh of the 30-year term.
 > - **Speed at the coupon rate.** Value the 12% CPR pool at 6%. It is **$1,000,000.00**, as at 0% and 8%: Step 5's telescoping sum, seen in numbers.
 
@@ -663,6 +955,7 @@ The two outputs are identical line for line. The simulation matches exactly beca
 ## Where this goes next
 
 - [Negative convexity](03-negative-convexity.md): how the pool's price curves when rates move and the speed moves with them.
+- [Mortgage-backed securities in outline](05-mortgage-backed-securities-in-outline.md): cuts this card's monthly interest, scheduled principal and prepayment into tranches and interest-only strips.
 
 The rate table above shows the pool gaining less when rates fall than it loses when they rise; how to measure that bend, and what it costs a holder, is the question [Negative convexity](03-negative-convexity.md) answers.
 

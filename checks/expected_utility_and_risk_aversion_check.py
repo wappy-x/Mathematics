@@ -122,3 +122,4 @@ assert (vnm_p(DEP, 5) < 0.5) == (ce_coin(5) > DEP), "calibration and CE agree, g
 assert ce_coin(1) > DEP > ce_coin(5) and vnm_p(DEP, 1) < 0.5 < vnm_p(DEP, 5), "log: fund; gamma 5: deposit"
 assert ce_coin(3.9) > DEP > ce_coin(4.0) and abs(g_star - 3.9454) < 5e-5, "crossing between 3.9 and 4"
 assert abs(ap_numeric(lambda x: u(x, 5))[0] * w - 5) < 1e-5, "power utility: w A(w) = gamma"
+print("ALL CHECKS PASS")

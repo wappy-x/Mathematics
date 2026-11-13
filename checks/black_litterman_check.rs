@@ -166,5 +166,5 @@ fn main() {
     assert!((0..3).all(|i| (still[i] - pi[i]).abs() < 1e-12));
     let one = bl.posterior(&p[..1].to_vec(), &Q[..1], &[bl.omega_for(&p[0], 0.25)], TAU).0; // one view alone: a quarter of the way
     assert!((one[2] - one[1] - (pi[2] - pi[1] + 0.25 * (Q[0] - pi[2] + pi[1]))).abs() < 1e-12);
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

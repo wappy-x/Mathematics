@@ -10,11 +10,11 @@ A saver puts $1,000 into a one-year deposit that pays 4.5 percent. A year later 
 
 Now price a fixed basket of groceries. Today it costs $100.00, so the $1,000 buys 10 baskets. Over the year prices rise 2.5 percent, and the same basket costs $102.50. The $1,045.00 buys 1,045 ÷ 102.50 = 10.195 baskets. Counted in baskets, the saver is up 0.195 of a basket on 10: a gain of **1.95 percent**. That is the **real** rate: the growth in what the money buys.
 
-The quick rule says 4.5 minus 2.5 is 2 percent. It is close, and it is not the answer. The exact answer divides growth factors instead of subtracting rates, and the two part company as inflation grows. At 100 percent inflation the quick rule is out by a factor of two.
+The quick rule says 4.5 minus 2.5 is 2 percent. It is close, and it is not the answer. The exact answer divides growth factors instead of subtracting rates, and the gap between the two grows as inflation grows. At 100 percent inflation the quick rule is out by a factor of two.
 
-**The real rate is the growth of money measured in goods: divide one plus the nominal rate by one plus inflation and subtract one; subtracting the rates is the first-order shortcut.**
+**The real rate is the growth of money measured in goods: divide one plus the nominal rate by one plus inflation and subtract one; subtracting the rates is only a shortcut.**
 
-**What kind of fact this is:** a definition — the real rate is defined as growth in purchasing power — and the exact Fisher relation follows from it by one division, proved on this card in Why it works; the subtraction is an approximation, with its error stated there.
+**What kind of fact this is:** a definition: the real rate is defined as growth in purchasing power. The exact Fisher relation follows from it by one division, proved on this card in Why it works. The subtraction is an approximation, with its error stated there.
 
 ### The picture: ten years of the same deposit, in dollars and in baskets
 
@@ -40,7 +40,7 @@ The exact relation, named after Irving Fisher, who set it out in 1896:
 
 $$1 + i \;=\; (1 + r)(1 + \pi) \qquad\text{so}\qquad r \;=\; \frac{1 + i}{1 + \pi} - 1 \;=\; \frac{i - \pi}{1 + \pi}$$
 
-**Read it aloud:** one year's growth in dollars equals one year's growth in goods times one year's rise in prices; so the growth in goods is the dollar growth divided by the price rise.
+**Read it aloud:** one year's growth in dollars equals one year's growth in goods times one year's rise in prices. So the growth in goods is the dollar growth divided by the price rise.
 
 The approximation everyone uses:
 
@@ -107,7 +107,7 @@ Multiply out Fisher's form: $1 + i = 1 + r + \pi + r\pi$. So $i = r + \pi + r\pi
 
 $$r \;=\; i - \pi - r\pi.$$
 
-The shortcut $r \approx i - \pi$ drops the last term, $r\pi$: the real rate earned on the inflation itself. At 1.95 percent and 2.5 percent that product is about 0.05 percentage points (0.0488, to be exact). At 100 percent inflation and 102 percent nominal the real rate is 1 percent, so the dropped product is 1 point: as large as the answer itself, and the shortcut stops being a shortcut.
+The shortcut $r \approx i - \pi$ drops the last term, $r\pi$: the real rate earned on the inflation itself. At 1.95 percent and 2.5 percent that product is about 0.05 percentage points (0.0488, to be exact). At 100 percent inflation and 102 percent nominal the real rate is 1 percent, so the dropped product is 1 point. That is as large as the answer itself, and the shortcut stops being a shortcut.
 
 <details>
 <summary>Detailed proof: the exact error, the continuous form, and many years</summary>
@@ -124,9 +124,9 @@ With $i - \pi = 0.02$ and $\pi = 0.025$: $0.02 \times 0.025 / 1.025 = 0.00048780
 
 ### Step 4: two more roads to the same number
 
-The relation can be read as an equation to solve rather than a division to do: find the $r$ for which $(1 + r)(1 + \pi)$ lands on $1 + i$. With $1 + \pi$ above zero the left side rises steadily as $r$ rises, so there is exactly one such $r$, and halving an interval that brackets it (bisection) finds it without ever dividing. The code does that. It also takes the continuous road: subtract the two logarithms, then undo the logarithm. All roads land on 1.9512195 percent.
+The relation can be read as an equation to solve rather than a division to do: find the $r$ for which $(1 + r)(1 + \pi)$ lands on $1 + i$. With $1 + \pi$ above zero the left side rises steadily as $r$ rises, so there is exactly one such $r$. Halving an interval that brackets it (bisection) finds it without ever dividing. The code does that. It also takes the continuous road: subtract the two logarithms, then undo the logarithm. All roads land on 1.9512195 percent.
 
-The same relation run backwards turns a real rate into a nominal one. The shelf's house bond yields 1 percent real (its coupon, priced at par), and markets price 2.5 percent inflation against it; Fisher's form gives $1.01 \times 1.025 - 1 = 3.525$ percent as the nominal yield that matches it. How markets read that 2.5 percent out of prices is [Breakeven inflation](03-breakeven-inflation.md).
+The same relation run backwards turns a real rate into a nominal one. The shelf's house bond yields 1 percent real: its coupon, since it is priced at par, meaning at its face value. Markets price 2.5 percent inflation against it. Fisher's form gives $1.01 \times 1.025 - 1 = 3.525$ percent as the nominal yield that matches it. How markets read that 2.5 percent out of prices is [Breakeven inflation](03-breakeven-inflation.md).
 
 ---
 
@@ -551,6 +551,116 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Fisher's exact relation, the shortcut's error and the continuous form for any rates with prices above zero, and checks the worked numbers.
+
+- Suppose $1 + r$ is baskets at the end over baskets at the start, with $M$, $P_0$ and $1 + \pi$ above zero. Then $1 + i = (1 + r)(1 + \pi)$, so $r = (1 + i)/(1 + \pi) - 1 = (i - \pi)/(1 + \pi)$.
+- Suppose $1 + \pi > 0$ and $1 + r = (1 + i)/(1 + \pi)$. Then the shortcut's error $(i - \pi) - r$ equals both $(i - \pi)\pi/(1 + \pi)$ and $r\pi$.
+- Suppose also that inflation and the real rate are both above zero. Then the shortcut overstates: $r < i - \pi$.
+- Suppose $1 + i = (1 + r)(1 + \pi)$, with $1 + i$ and $1 + \pi$ above zero. Then $r_c = i_c - \pi_c$, that is $\ln(1 + r) = \ln(1 + i) - \ln(1 + \pi)$.
+- The deposit's numbers check exactly: 1,045 dollars, a 102.50 dollar basket, 418/41 baskets, and a real rate of 4/205, about 1.9512 percent.
+- The shortcut's error there is exactly 1/2050, about 0.000488, and it equals $r\pi$.
+- At 100 percent inflation, 110 percent nominal gives exactly 5 percent real, and 102 percent nominal gives exactly 1 percent.
+- The shelf bond's nominal yield is 3.525 percent. Multiplying instead of dividing gives 7.1125 percent. Inflation of 4.5 percent gives a real rate of exactly 0.
+
+The ten-year story, the bisection and log roads, the tax rows and every decimal printout are left to the Python and Rust checks.
+
+```lean
+-- Real rates: the real rate measured in baskets satisfies Fisher's exact relation 1 + i = (1 + r)(1 + π), the shortcut i - π overstates it by exactly (i - π)π/(1 + π) = rπ, and in continuous rates the subtraction is exact.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.NormNum
+
+/-! Notation, as on the card. `i` is the nominal rate, `π` is inflation and `r` is the real rate,
+all for the same one year. `M` is the dollars deposited and `P₀` is a basket's price at the start,
+so the basket costs `P₀ * (1 + π)` a year later and the account holds `M * (1 + i)` dollars.
+The real rate is defined by `1 + r` = baskets bought at the end / baskets bought at the start. -/
+
+/-- Fisher's exact relation. Define the real rate as the growth in baskets the money buys:
+`1 + r` is (`M(1 + i)` dollars over a basket price of `P₀(1 + π)`) divided by (`M / P₀` baskets
+at the start). If the deposit and prices are above zero (`1 + π > 0`), then dollar growth is
+goods growth times price growth, `1 + i = (1 + r)(1 + π)`, and `r = (1 + i)/(1 + π) - 1 = (i - π)/(1 + π)`. -/
+theorem real_rate_fisher_relation (M P₀ i π r : ℝ) (hM : 0 < M) (hP₀ : 0 < P₀) (hπ : 0 < 1 + π)
+    (hr : 1 + r = (M * (1 + i) / (P₀ * (1 + π))) / (M / P₀)) :
+    1 + i = (1 + r) * (1 + π) ∧ r = (1 + i) / (1 + π) - 1 ∧ r = (i - π) / (1 + π) := by
+  have hπ0 : (1 + π) ≠ 0 := ne_of_gt hπ
+  have h : 1 + r = (1 + i) / (1 + π) := by
+    rw [hr]; field_simp
+  have h1 : 1 + i = (1 + r) * (1 + π) := by
+    rw [h]; field_simp
+  refine ⟨h1, by linarith, ?_⟩
+  rw [eq_div_iff hπ0]
+  nlinarith
+
+/-- The shortcut `r ≈ i - π` is off by exactly `(i - π)π/(1 + π)`, which equals `rπ`,
+the real rate times inflation. With positive inflation and a positive real rate,
+the shortcut always overstates the real rate. -/
+theorem fisher_shortcut_error (i π r : ℝ) (hπ : 0 < 1 + π) (hr : 1 + r = (1 + i) / (1 + π)) :
+    (i - π) - r = (i - π) * π / (1 + π) ∧ (i - π) - r = r * π ∧
+      (0 < π → 0 < r → r < i - π) := by
+  have hπ0 : (1 + π) ≠ 0 := ne_of_gt hπ
+  have h1 : (1 + r) * (1 + π) = 1 + i := by
+    rw [hr]; field_simp
+  have h2 : (i - π) - r = r * π := by linarith
+  refine ⟨?_, h2, ?_⟩
+  · rw [eq_div_iff hπ0]
+    nlinarith
+  · intro hp hr0
+    have : 0 < r * π := mul_pos hr0 hp
+    linarith
+
+/-- In continuous rates the relation is a plain subtraction with no approximation:
+if `1 + i = (1 + r)(1 + π)` with `1 + π > 0` and `1 + i > 0` (money not wiped out),
+then `ln(1 + r) = ln(1 + i) - ln(1 + π)`, that is `r_c = i_c - π_c`. -/
+theorem continuous_real_rate_is_difference (i π r : ℝ) (hπ : 0 < 1 + π) (hi : 0 < 1 + i)
+    (hfisher : 1 + i = (1 + r) * (1 + π)) :
+    Real.log (1 + r) = Real.log (1 + i) - Real.log (1 + π) := by
+  have hr0 : 0 < 1 + r := by
+    by_contra hc
+    push_neg at hc
+    nlinarith
+  rw [hfisher, Real.log_mul (ne_of_gt hr0) (ne_of_gt hπ)]
+  ring
+
+/-! The card's worked numbers, as exact fractions: `i = 4.5%` is `9/200`, `π = 2.5%` is `1/40`. -/
+
+-- $1,000 grows to $1,045; the $100 basket costs $102.50 = 205/2; the money buys 1045/(205/2) = 418/41 baskets.
+example : (1000 : ℚ) * (1 + 9 / 200) = 1045 := by norm_num
+example : (100 : ℚ) * (1 + 1 / 40) = 205 / 2 := by norm_num
+example : (1045 : ℚ) / (205 / 2) = 418 / 41 := by norm_num
+-- The exact real rate: 1.045 / 1.025 - 1 = 2/102.5 = 4/205, about 1.9512 percent.
+example : (1 + 9 / 200 : ℚ) / (1 + 1 / 40) - 1 = 4 / 205 := by norm_num
+-- The shortcut's error: 0.02 × 0.025 / 1.025 = 1/2050 (0.000487805), equal to r × π.
+example : (9 / 200 - 1 / 40 : ℚ) - 4 / 205 = 1 / 2050 := by norm_num
+example : (4 / 205 : ℚ) * (1 / 40) = 1 / 2050 := by norm_num
+-- 110 percent nominal, 100 percent inflation: exact real rate 5 percent, half the shortcut's 10.
+example : (1 + 11 / 10 : ℚ) / (1 + 1) - 1 = 1 / 20 := by norm_num
+-- 102 percent nominal, 100 percent inflation: exactly 1 percent real.
+example : (1 + 102 / 100 : ℚ) / (1 + 1) - 1 = 1 / 100 := by norm_num
+-- Wrong: multiplying instead of dividing gives 7.1125 percent.
+example : (1 + 9 / 200 : ℚ) * (1 + 1 / 40) - 1 = 569 / 8000 := by norm_num
+-- The shelf bond: 1 percent real and 2.5 percent inflation give 3.525 percent nominal.
+example : (1 + 1 / 100 : ℚ) * (1 + 1 / 40) - 1 = 141 / 4000 := by norm_num
+-- Inflation of 4.5 percent against 4.5 percent nominal: real rate exactly zero.
+example : (1 + 9 / 200 : ℚ) / (1 + 9 / 200) - 1 = 0 := by norm_num
+
+#print axioms real_rate_fisher_relation
+#print axioms fisher_shortcut_error
+#print axioms continuous_real_rate_is_difference
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'real_rate_fisher_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fisher_shortcut_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_real_rate_is_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the deposit's numbers, so some changes stop the program; the `try:` rows show the answer without editing anything.
@@ -576,10 +686,10 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **A savings account or a pay rise.** A 3 percent raise in a 4 percent inflation year is a real pay cut, since 1.03 ÷ 1.04 is below 1. The same division as the deposit.
-- **Government inflation-linked bonds.** The United States Treasury sells TIPS, bonds whose principal is scaled by the consumer price index, so they pay a fixed real rate. Their yields are quoted as real rates (conventions verified 2026-09-28 on TreasuryDirect: terms of 5, 10 and 30 years, principal scaled by the consumer price index, auctions bid in real yield): [Inflation-linked bonds](02-inflation-linked-bonds.md).
+- **Government inflation-linked bonds.** The United States Treasury sells TIPS (Treasury Inflation-Protected Securities), bonds whose principal, the amount repaid at the end, is scaled by the consumer price index, so they pay a fixed real rate. Their yields are quoted as real rates (conventions verified 2026-09-28 on TreasuryDirect: terms of 5, 10 and 30 years, principal scaled by the consumer price index, auctions bid in real yield): [Inflation-linked bonds](02-inflation-linked-bonds.md).
 - **Reading inflation out of prices.** An ordinary bond and a real-rate bond of the same maturity, run through Fisher's form, give the inflation the market is pricing in. The shelf's house bond, 1 percent real with 2.5 percent inflation priced in, matches a 3.525 percent nominal yield: [Breakeven inflation](03-breakeven-inflation.md).
 - **Trading the inflation number itself.** A contract that swaps a fixed rate for realised inflation removes the saver's risk from the bar chart above: [Inflation swaps](04-zero-coupon-inflation-swaps.md). Options that pay when inflation passes a level come after: [Inflation caps and floors in outline](05-inflation-options-in-outline.md).
-- **Central banks.** A policy rate is set in nominal terms and judged in real terms: a 5 percent policy rate with 6 percent inflation is loose money, not tight.
+- **Central banks.** A policy rate is set in nominal terms and judged in real terms: a 5 percent policy rate with 6 percent inflation is loose money, not tight: the real rate is below zero, so borrowing is cheap.
 
 > **Say it back**
 > The nominal rate counts dollars; the real rate counts what those dollars buy. Counting baskets before and after gives one plus the real rate as one plus the nominal rate divided by one plus inflation. At 4.5 percent nominal and 2.5 percent inflation that is 1.95 percent, not the 2 the subtraction gives. The subtraction drops the real return earned on the inflation, a small term at low rates and a large one at high rates. On the continuous label the subtraction is exact.
@@ -589,12 +699,13 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): what a yield is, and that a quoted rate is growth per year on a stated compounding label. This card splits that yield into a real part and an inflation part.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): compounding labels, including the continuous rate $\ln(1 + i)$. This card uses the continuous label, where the Fisher relation is an exact subtraction.
 
 ## Where this goes next
 
 - [Inflation-linked bonds](02-inflation-linked-bonds.md): a bond that pays the real rate by scaling its dollars with a price index, so the lender no longer carries the risk in the bar chart.
 
-The saver above learns the real rate only after the year is over; the open question is how to lock a real rate in on the first day, and the inflation-linked bond is the answer.
+The saver above learns the real rate only after the year is over. The open question is how to lock a real rate in on the first day, and the inflation-linked bond is the answer.
 
 ---
 

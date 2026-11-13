@@ -16,7 +16,7 @@ The repair on this card is **shrinkage**: blend the measured table of risks with
 
 **An optimiser trusts every digit of its inputs, so it leans on the measurements that noise made look best; blending the measured risks toward a simple target, by an amount estimated from the data, gives up a little accuracy in exchange for much less noise.**
 
-**What kind of fact this is:** a method, a rule for estimating risk from a short history; it rests on a theorem proved on this card in Why it works (the optimiser's own risk figure is too low on average and its true risk too high). Ledoit and Wolf's claim that their amount is the best one is an asymptotic theorem proved in their paper, not here.
+**What kind of fact this is:** a method, a rule for estimating risk from a short history; it rests on a theorem proved on this card in Why it works (the optimiser's own risk figure is too low on average and its true risk too high). Ledoit and Wolf's claim that their amount is the best one is an asymptotic theorem (true in the limit as months and stocks grow without end) proved in their paper, not here.
 
 ### The picture: one market, three sets of weights
 
@@ -76,7 +76,7 @@ The laboratory market: each stock's monthly return is 0.8%, plus a shared market
 
 - **The months are independent draws from one unchanging market.** If the market shifts, old months describe a market that is gone, and shrinkage cannot fix that.
 - **Means are estimated.** The paper assumes returns with a known mean of zero. Here, as in common software, each stock is first centred on its own average; the paper's theorem does not cover that small change.
-- **Returns have finite fourth moments.** The noise estimate $\bar b^2$ squares squared returns; with very heavy tails it turns erratic, and the intensity with it.
+- **Returns have finite fourth moments.** The fourth moment is the average of a return's distance from its mean raised to the fourth power. The noise estimate $\bar b^2$ squares squared returns; with very heavy tails it turns erratic, and the intensity with it.
 - **The target is a sensible guess.** Equal variances and no co-movement is blunt for stocks, which share a market. Here it still lowers portfolio risk, but not the matrix's average entry-by-entry error (1054.18 shrunk against 1052.03 raw).
 - **The optimality is asymptotic.** Ledoit and Wolf prove the rule best among such blends as months and stocks grow together. From one 60-month history it is an estimate with its own noise: here it averages 0.101 against a laboratory best of 0.075.
 
@@ -603,6 +603,116 @@ try 15 months: smallest sample eigenvalue 0.0000  intensity 0.494  shrunk stock 
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the facts behind Steps 1 and 3, for any number of stocks and any length of history.
+
+- Suppose $S$ averages to $(n-1)/n$ times $\Sigma$, and each set of weights is the minimum-variance mix under its own matrix. Then the reported variance is at most the true minimum on average, and the delivered variance is at least it always.
+- Suppose $v$ is a direction of $S$ with eigenvalue $\lambda$. Then $v$ is still a direction of $S^{*}$, with eigenvalue $(1-a)\lambda + a\tau$.
+- Suppose $S$ is a covariance matrix, perhaps with no inverse, $\tau$ is positive, and $a$ is above 0 and at most 1. Then every eigenvalue of $S^{*}$ is above zero, so $S^{*}$ has an inverse.
+
+Step 2's spread, Step 4's parabola, the Ledoit-Wolf amount and every laboratory figure are left to the Python and Rust checks.
+
+```lean
+-- Estimation error: on average the minimum-variance optimiser reports no more risk than the true minimum and delivers at least it, and blending the measured covariance matrix with a multiple of the identity moves every eigenvalue toward that multiple and makes the matrix invertible.
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Algebra.Order.Star.Real
+
+open Matrix MeasureTheory
+
+/-- Reported ≤ possible ≤ delivered (Why it works, Step 1). Let `Sig` be the true covariance
+matrix of `p` stocks and let `S ω` be the covariance matrix measured from history `ω`, with `n`
+months, centred on the sample mean and divided by `n`, so that on average `S` equals
+`(n - 1) / n` times `Sig`. Let `w ω` be the minimum-variance weights (adding to 1) under the
+measured matrix and `w₀` the minimum-variance weights under the true matrix. Then on average
+the optimiser's reported variance `w ω ⬝ S ω ⬝ w ω` is at most the true minimum variance
+`w₀ ⬝ Sig ⬝ w₀`, and in every history the true variance of the chosen weights is at least
+that true minimum. -/
+theorem reported_le_possible_le_delivered
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    {p : ℕ} (n : ℕ) (hn : 0 < n)
+    (Sig : Matrix (Fin p) (Fin p) ℝ) (hSig : Sig.PosSemidef)
+    (S : Ω → Matrix (Fin p) (Fin p) ℝ)
+    (hS_int : ∀ i j, Integrable (fun ω => S ω i j) μ)
+    (hS_mean : ∀ i j, ∫ ω, S ω i j ∂μ = ((n - 1 : ℝ) / n) * Sig i j)
+    (w : Ω → Fin p → ℝ) (hw_sum : ∀ ω, ∑ i, w ω i = 1)
+    (hw_min : ∀ ω (v : Fin p → ℝ), ∑ i, v i = 1 →
+      w ω ⬝ᵥ (S ω *ᵥ w ω) ≤ v ⬝ᵥ (S ω *ᵥ v))
+    (w₀ : Fin p → ℝ) (hw₀_sum : ∑ i, w₀ i = 1)
+    (hw₀_min : ∀ v : Fin p → ℝ, ∑ i, v i = 1 → w₀ ⬝ᵥ (Sig *ᵥ w₀) ≤ v ⬝ᵥ (Sig *ᵥ v)) :
+    (∫ ω, w ω ⬝ᵥ (S ω *ᵥ w ω) ∂μ ≤ w₀ ⬝ᵥ (Sig *ᵥ w₀)) ∧
+      ∀ ω, w₀ ⬝ᵥ (Sig *ᵥ w₀) ≤ w ω ⬝ᵥ (Sig *ᵥ w ω) := by
+  have hq : 0 ≤ w₀ ⬝ᵥ (Sig *ᵥ w₀) := by
+    simpa using hSig.dotProduct_mulVec_nonneg w₀
+  refine ⟨?_, fun ω => hw₀_min (w ω) (hw_sum ω)⟩
+  have hexp : ∀ ω, w₀ ⬝ᵥ (S ω *ᵥ w₀) = ∑ i, ∑ j, w₀ i * w₀ j * S ω i j := by
+    intro ω
+    simp only [dotProduct, mulVec, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+    ring
+  have hg_int : Integrable (fun ω => w₀ ⬝ᵥ (S ω *ᵥ w₀)) μ := by
+    simp_rw [hexp]
+    refine integrable_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => ?_
+    exact (hS_int i j).const_mul _
+  have hg : ∫ ω, w₀ ⬝ᵥ (S ω *ᵥ w₀) ∂μ = ((n - 1 : ℝ) / n) * (w₀ ⬝ᵥ (Sig *ᵥ w₀)) := by
+    simp_rw [hexp]
+    rw [integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ =>
+      (hS_int i j).const_mul _]
+    simp_rw [integral_finsetSum _ fun j _ => (hS_int _ j).const_mul _]
+    simp_rw [integral_const_mul, hS_mean]
+    simp only [dotProduct, mulVec, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+    ring
+  have hc0 : 0 ≤ ((n - 1 : ℝ) / n) := by
+    have : (1 : ℝ) ≤ n := by exact_mod_cast hn
+    positivity
+  have hc1 : ((n - 1 : ℝ) / n) ≤ 1 := by
+    have : (0 : ℝ) < n := by exact_mod_cast hn
+    rw [div_le_one this]; linarith
+  by_cases hf : Integrable (fun ω => w ω ⬝ᵥ (S ω *ᵥ w ω)) μ
+  · calc ∫ ω, w ω ⬝ᵥ (S ω *ᵥ w ω) ∂μ ≤ ∫ ω, w₀ ⬝ᵥ (S ω *ᵥ w₀) ∂μ :=
+          integral_mono hf hg_int fun ω => hw_min ω w₀ hw₀_sum
+      _ = ((n - 1 : ℝ) / n) * (w₀ ⬝ᵥ (Sig *ᵥ w₀)) := hg
+      _ ≤ w₀ ⬝ᵥ (Sig *ᵥ w₀) := mul_le_of_le_one_left hq hc1
+  · rw [integral_undef hf]; exact hq
+
+/-- Blending moves every eigenvalue toward the average (Why it works, Step 3). If `v` is a
+direction (eigenvector) of the measured matrix `S` with eigenvalue `λ`, then `v` is still a
+direction of the shrunk matrix `S* = (1 - a) S + a τ I`, and its eigenvalue becomes
+`(1 - a) λ + a τ`. -/
+theorem shrunk_eigenvalue {p : ℕ} (S : Matrix (Fin p) (Fin p) ℝ) (a τ lam : ℝ)
+    (v : Fin p → ℝ) (hv : S *ᵥ v = lam • v) :
+    ((1 - a) • S + (a * τ) • (1 : Matrix (Fin p) (Fin p) ℝ)) *ᵥ v
+      = ((1 - a) * lam + a * τ) • v := by
+  rw [add_mulVec, smul_mulVec, smul_mulVec, one_mulVec, hv, smul_smul, add_smul]
+
+/-- Shrinkage can always be inverted (Why it works, Step 3). If the measured matrix `S` is a
+covariance matrix (positive semidefinite), even a singular one from fewer months than stocks,
+the average variance `τ` is positive, and the intensity `a` is positive and at most 1, then
+the shrunk matrix `(1 - a) S + a τ I` is positive definite, so its smallest eigenvalue is
+above zero and it has an inverse. -/
+theorem shrunk_posDef {p : ℕ} (S : Matrix (Fin p) (Fin p) ℝ) (hS : S.PosSemidef)
+    (a τ : ℝ) (ha0 : 0 < a) (ha1 : a ≤ 1) (hτ : 0 < τ) :
+    ((1 - a) • S + (a * τ) • (1 : Matrix (Fin p) (Fin p) ℝ)).PosDef ∧
+      IsUnit ((1 - a) • S + (a * τ) • (1 : Matrix (Fin p) (Fin p) ℝ)) := by
+  have hpd : ((1 - a) • S + (a * τ) • (1 : Matrix (Fin p) (Fin p) ℝ)).PosDef :=
+    PosDef.posSemidef_add (hS.smul (by linarith)) (PosDef.one.smul (by positivity))
+  exact ⟨hpd, hpd.isUnit⟩
+
+#print axioms reported_le_possible_le_delivered
+#print axioms shrunk_eigenvalue
+#print axioms shrunk_posDef
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'reported_le_possible_le_delivered' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shrunk_eigenvalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shrunk_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then read the answer.
@@ -650,7 +760,7 @@ Shrinkage calms the optimiser but keeps it; whether a portfolio can be built fro
 
 ## Sources
 
-Verified 2026-09-28: every DOI below resolves to the publisher's page, and Crossref's record for it names the paper.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Ledoit, Olivier, and Michael Wolf. "A well-conditioned estimator for large-dimensional covariance matrices." *Journal of Multivariate Analysis* 88 (2004), 365–411. [doi:10.1016/S0047-259X(03)00096-4](https://doi.org/10.1016/S0047-259X(03)00096-4). The scaled-identity target, the noise estimate, the capped intensity and the asymptotic optimality theorem.
 - Ledoit, Olivier, and Michael Wolf. "Honey, I shrunk the sample covariance matrix." *The Journal of Portfolio Management* 30, no. 4 (2004), 110–119. [doi:10.3905/jpm.2004.110](https://doi.org/10.3905/jpm.2004.110). The same idea for stock portfolios, with a constant-correlation target.
