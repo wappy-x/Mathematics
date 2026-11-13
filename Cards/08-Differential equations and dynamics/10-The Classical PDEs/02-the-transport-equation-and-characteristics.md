@@ -10,7 +10,7 @@ A tanker spills a pollutant into a river at noon. At the spill point the concent
 
 Then only the plume's position changes: 3 km downstream after 1.5 hours, 6 km after 3. A station 5 km downstream reads, at 3 pm, what the river held 1 km *upstream* of the spill at noon: 3.68 mg/L. Look back along the current and read the starting value there.
 
-The paths the parcels trace on a map of place against time are the **characteristics**. Along each one the concentration never changes, so there the partial differential equation (a rule linking rates in time and in place) collapses to an ordinary one. When the current speeds up downstream the paths fan out and the plume stretches.
+The paths the parcels trace on a map of place against time are the **characteristics**. Along each one the concentration never changes. So there the partial differential equation (PDE, a rule linking rates in time and in place) collapses to an ordinary differential equation (ODE, a rule in one variable). When the current speeds up downstream the paths fan out and the plume stretches.
 
 **A quantity carried by a current at speed c without mixing obeys u_t + c u_x = 0; its value is constant along each path the current traces, so the answer is the starting shape read back along those paths, which for a constant speed is the same shape shifted by ct.**
 
@@ -104,7 +104,7 @@ The gap between any two paths grows by the factor e^(t/2), and so does the plume
 <details>
 <summary>Detailed proof: the varying-speed case</summary>
 
-Assume c(x) has a continuous slope with |c′(x)| ≤ L for all x. Then X′ = c(X) has one solution through each start, defined for all time (Picard–Lindelöf with a global Lipschitz bound), and the flow maps starts to places one-to-one and onto. Write a(x, t) for the start of the path through (x, t); it has continuous partial derivatives, since the flow depends smoothly on its start.
+Assume c(x) has a continuous slope with |c′(x)| ≤ L for all x. Then X′ = c(X) has one solution through each start, defined for all time ([The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md) with a global Lipschitz bound), and the flow maps starts to places one-to-one and onto. Write a(x, t) for the start of the path through (x, t); it has continuous partial derivatives, since the flow depends smoothly on its start.
 
 Existence: set u(x, t) = f(a(x, t)). The label is constant along each path, so by the chain rule a_t + c(x) a_x = 0. Then u_t + c u_x = f′(a)(a_t + c a_x) = 0, and at t = 0, a = x, so u = f.
 
@@ -114,7 +114,7 @@ Where the proof stops: for u_t + u u_x = 0 the speed is the unknown. Paths still
 
 </details>
 
-A second road: chop the river into cells and each time step move a fraction of each cell's contents one cell downstream. That upwind grid is road 2 in the code, and the subject of Flow problems.
+A second road: chop the river into cells and each time step move a fraction of each cell's contents one cell downstream. That upwind grid is road 2 in the code, and the subject of [Flow problems](../../16-Numerical%20analysis/07-PDE%20Solvers/06-upwind-schemes-and-conservation-laws.md).
 
 ---
 
@@ -147,7 +147,7 @@ The checks print all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to each answer. For the constant speed, road 1 is the formula; road 2 is an upwind grid moving 0.8 of each cell's contents one cell downstream per step, whose error halves with the cell width (order 1). For the varying speed, road 2 steps the characteristic equation backwards by Runge-Kutta 4 (a step that averages four slopes, from [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and reads the spill at the label it finds. A search over neighbouring paths confirms the nonlinear crossing time.
+Two roads to each answer. For the constant speed, road 1 is the formula; road 2 is an upwind grid moving 0.8 of each cell's contents one cell downstream per step, whose error halves with the cell width (order 1). For the varying speed, road 2 steps the characteristic equation backwards by Runge-Kutta 4 (RK4, a step that averages four slopes, from [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and reads the spill at the label it finds. A search over neighbouring paths confirms the nonlinear crossing time.
 
 ### Python
 
@@ -338,6 +338,186 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the shifted shape is the only solution for any constant speed, and checks the 2 + x/2 case and the crossing time.
+
+- Take any constant speed c and a starting shape f with a continuous slope. Then f(x − ct) solves u_t + c u_x = 0 and starts at f.
+- Take any solution with continuous partial derivatives that starts at f. Then it equals f(x − ct) at every place x and every time t ≥ 0.
+- Take the speed 2 + x/2 and the same f. Then f((x + 4) e^(−t/2) − 4) solves u_t + (2 + x/2) u_x = 0 and starts at f.
+- Take the profile g(a) = 2 + e^(−a^2). Then its most negative slope is −√2 e^(−1/2), and −1 divided by that slope is √(e/2).
+- Take the station at 5 km at 3 pm. Then its water started at 5 − 2 × 3 = −1 km.
+- Take a river at 2 km/h. Then the plume moves 3 km in 1.5 hours and 6 km in 3 hours.
+- Take parcels starting at −2, −1, 0, 1 and 2 km, at 2 km/h. Then after 2 hours they are at 2, 3, 4, 5 and 6 km.
+- Take the wrong shift f(x + ct) at 6 km and 3 pm. Then it reads the spill at 12 km, not at 0 km.
+
+The decimals, the upwind grid, the RK4 paths, the plume's width and the crossing search are left to the Python and Rust checks.
+
+```lean
+-- The transport equation: for a constant speed c the only smooth solution of u_t + c u_x = 0 with starting shape f is f(x - c t), and for the speed 2 + x/2 the solution is f((x + 4) e^(-t/2) - 4).
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+/-- A quantity carried at constant speed `c` without mixing obeys `u_t + c u_x = 0`.
+Given a starting shape `f` with a continuous slope, the shifted shape `f (x - c t)`
+has continuous partial derivatives, solves the equation and starts at `f`
+(existence), and every solution with continuous partial derivatives that starts
+at `f` equals `f (x - c t)` at every place `x` and every time `t ≥ 0` since the
+start (uniqueness). Here `u (x, t)` is the value at place `x` and time `t`, and the
+partial derivatives are the derivatives of the slices `s ↦ u (x, s)` and
+`y ↦ u (y, t)`. -/
+theorem transport_solution_is_shifted_shape (c : ℝ) (f : ℝ → ℝ) (hf : ContDiff ℝ 1 f) :
+    (ContDiff ℝ 1 (fun p : ℝ × ℝ => f (p.1 - c * p.2)) ∧
+      (∀ x t : ℝ, deriv (fun s => f (x - c * s)) t + c * deriv (fun y => f (y - c * t)) x = 0) ∧
+      (∀ x : ℝ, f (x - c * 0) = f x)) ∧
+    (∀ u : ℝ × ℝ → ℝ, ContDiff ℝ 1 u →
+      (∀ x t : ℝ, 0 ≤ t →
+        deriv (fun s => u (x, s)) t + c * deriv (fun y => u (y, t)) x = 0) →
+      (∀ x : ℝ, u (x, 0) = f x) →
+      ∀ x t : ℝ, 0 ≤ t → u (x, t) = f (x - c * t)) := by
+  have hfd : Differentiable ℝ f := hf.differentiable (by norm_num)
+  refine ⟨⟨?_, ?_, ?_⟩, ?_⟩
+  · exact hf.comp (contDiff_fst.sub (contDiff_const.mul contDiff_snd))
+  · intro x t
+    have h1 : HasDerivAt (fun s => f (x - c * s)) (deriv f (x - c * t) * (0 - c * 1)) t :=
+      (hfd _).hasDerivAt.comp t ((hasDerivAt_const t x).sub ((hasDerivAt_id t).const_mul c))
+    have h2 : HasDerivAt (fun y => f (y - c * t)) (deriv f (x - c * t) * (1 - 0)) x :=
+      (hfd _).hasDerivAt.comp x ((hasDerivAt_id x).sub (hasDerivAt_const x (c * t)))
+    rw [h1.deriv, h2.deriv]; ring
+  · intro x; simp
+  · intro u hu hpde h0 x t ht
+    have hud : Differentiable ℝ u := hu.differentiable (by norm_num)
+    have hs : ∀ y s : ℝ, deriv (fun s => u (y, s)) s = fderiv ℝ u (y, s) (0, 1) := by
+      intro y s
+      have := (hud (y, s)).hasFDerivAt.comp_hasDerivAt s
+        ((hasDerivAt_const s y).prodMk (hasDerivAt_id s))
+      exact this.deriv
+    have hy : ∀ y s : ℝ, deriv (fun y => u (y, s)) y = fderiv ℝ u (y, s) (1, 0) := by
+      intro y s
+      have := (hud (y, s)).hasFDerivAt.comp_hasDerivAt y
+        ((hasDerivAt_id y).prodMk (hasDerivAt_const y s))
+      exact this.deriv
+    set g : ℝ → ℝ := fun s => u (x - c * t + c * s, s) with hg
+    have hgd : ∀ s, 0 ≤ s → HasDerivAt g 0 s := by
+      intro s hs0
+      have hp : HasDerivAt (fun s : ℝ => (x - c * t + c * s, s)) (c * 1, 1) s :=
+        (((hasDerivAt_id s).const_mul c).const_add (x - c * t)).prodMk (hasDerivAt_id s)
+      have := HasFDerivAt.comp_hasDerivAt (l := u) (f := fun s : ℝ => (x - c * t + c * s, s)) s
+        (hud (x - c * t + c * s, s)).hasFDerivAt hp
+      have hv : ((c * 1, 1) : ℝ × ℝ) = c • ((1, 0) : ℝ × ℝ) + ((0, 1) : ℝ × ℝ) := by
+        ext <;> simp
+      have hz : fderiv ℝ u (x - c * t + c * s, s) (c * 1, 1) = 0 := by
+        rw [hv, map_add, map_smul, ← hs, ← hy, smul_eq_mul]
+        have := hpde (x - c * t + c * s) s hs0
+        linarith
+      rw [hz] at this
+      exact this
+    have hcont : Continuous g :=
+      hud.continuous.comp (by fun_prop)
+    have key := constant_of_has_deriv_right_zero (a := 0) (b := t) hcont.continuousOn
+      (fun s hs => (hgd s hs.1).hasDerivWithinAt) t ⟨ht, le_rfl⟩
+    simp only [hg] at key
+    rw [← h0]
+    convert key using 2 <;> ext <;> simp
+
+/-- Varying speed `c(x) = 2 + x/2`: for a starting shape `f` with a continuous slope,
+`u (x, t) = f ((x + 4) e^(-t/2) - 4)` solves `u_t + (2 + x/2) u_x = 0` and starts at `f`.
+The value at `(x, t)` is the starting value at the label of the path through that point. -/
+theorem transport_varying_speed_solution (f : ℝ → ℝ) (hf : ContDiff ℝ 1 f) :
+    (∀ x t : ℝ,
+      deriv (fun s => f ((x + 4) * Real.exp (-s / 2) - 4)) t +
+        (2 + x / 2) * deriv (fun y => f ((y + 4) * Real.exp (-t / 2) - 4)) x = 0) ∧
+    (∀ x : ℝ, f ((x + 4) * Real.exp (-0 / 2) - 4) = f x) := by
+  have hfd : Differentiable ℝ f := hf.differentiable (by norm_num)
+  refine ⟨?_, ?_⟩
+  · intro x t
+    have h1 : HasDerivAt (fun s => f ((x + 4) * Real.exp (-s / 2) - 4))
+        (deriv f ((x + 4) * Real.exp (-t / 2) - 4) *
+          ((x + 4) * (Real.exp (-t / 2) * (-1 / 2)))) t := by
+      have he : HasDerivAt (fun s : ℝ => Real.exp (-s / 2)) (Real.exp (-t / 2) * (-1 / 2)) t := by
+        have := ((hasDerivAt_id t).neg.div_const 2).exp
+        convert this using 1 <;> simp
+      exact (hfd _).hasDerivAt.comp t ((he.const_mul (x + 4)).sub_const 4)
+    have h2 : HasDerivAt (fun y => f ((y + 4) * Real.exp (-t / 2) - 4))
+        (deriv f ((x + 4) * Real.exp (-t / 2) - 4) * ((1 + 0) * Real.exp (-t / 2))) x :=
+      (hfd _).hasDerivAt.comp x
+        ((((hasDerivAt_id x).add (hasDerivAt_const x 4)).mul_const (Real.exp (-t / 2))).sub_const 4)
+    rw [h1.deriv, h2.deriv]; ring
+  · intro x; simp
+
+/-- Where the smooth solution stops: for `u_t + u u_x = 0` starting from the profile
+`g(a) = 2 + e^(-a^2)`, the most negative slope of `g` is `-√2 e^(-1/2)`, so neighbouring
+paths first meet at time `-1 / (that slope) = √(e/2)`. -/
+theorem breaking_time_of_bump_profile :
+    IsLeast (Set.range (deriv (fun a : ℝ => 2 + Real.exp (-a ^ 2))))
+        (-(Real.sqrt 2 * Real.exp (-1 / 2))) ∧
+      -1 / (-(Real.sqrt 2 * Real.exp (-1 / 2))) = Real.sqrt (Real.exp 1 / 2) := by
+  have hd : ∀ a : ℝ, deriv (fun a : ℝ => 2 + Real.exp (-a ^ 2)) a
+      = -(2 * a * Real.exp (-a ^ 2)) := by
+    intro a
+    have : HasDerivAt (fun a : ℝ => 2 + Real.exp (-a ^ 2))
+        (Real.exp (-a ^ 2) * (-(2 * a))) a := by
+      have h := ((hasDerivAt_pow 2 a).neg).exp.const_add 2
+      convert h using 1
+      simp
+    rw [this.deriv]; ring
+  have hs2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hs2p : 0 < Real.sqrt 2 := by positivity
+  refine ⟨⟨⟨Real.sqrt 2 / 2, ?_⟩, ?_⟩, ?_⟩
+  · rw [hd]
+    have : -(Real.sqrt 2 / 2) ^ 2 = -1 / 2 := by
+      rw [div_pow, hs2]; ring
+    rw [this]; ring
+  · rintro _ ⟨a, rfl⟩
+    rw [hd]
+    have e1 : a ^ 2 - 1 / 2 + 1 ≤ Real.exp (a ^ 2 - 1 / 2) := Real.add_one_le_exp _
+    have e2 : Real.sqrt 2 * a ≤ a ^ 2 + 1 / 2 := by
+      nlinarith [sq_nonneg (a - Real.sqrt 2 / 2)]
+    have e3 : Real.exp (a ^ 2 - 1 / 2) * Real.exp (-a ^ 2) = Real.exp (-1 / 2) := by
+      rw [← Real.exp_add]; ring_nf
+    have hpos : 0 < Real.exp (-a ^ 2) := Real.exp_pos _
+    have : Real.sqrt 2 * a * Real.exp (-a ^ 2) ≤ Real.exp (-1 / 2) := by
+      rw [← e3]
+      exact mul_le_mul_of_nonneg_right (by linarith) hpos.le
+    have : 2 * a * Real.exp (-a ^ 2) ≤ Real.sqrt 2 * Real.exp (-1 / 2) := by
+      have h := mul_le_mul_of_nonneg_left this hs2p.le
+      calc 2 * a * Real.exp (-a ^ 2) = Real.sqrt 2 ^ 2 * a * Real.exp (-a ^ 2) := by rw [hs2]
+        _ = Real.sqrt 2 * (Real.sqrt 2 * a * Real.exp (-a ^ 2)) := by ring
+        _ ≤ _ := h
+    linarith
+  · rw [Real.sqrt_div (Real.exp_pos 1).le, ← Real.exp_half]
+    have h1 : Real.exp (-1 / 2) * Real.exp (1 / 2) = 1 := by
+      rw [← Real.exp_add]; norm_num
+    have hne : Real.exp (-1 / 2) ≠ 0 := (Real.exp_pos _).ne'
+    field_simp
+    linarith [h1]
+
+-- The station at 5 km, at 3 pm (t = 3 h), on a 2 km/h river reads the water from x - ct = -1 km.
+example : (5 : ℤ) - 2 * 3 = -1 := by norm_num
+-- The plume moves 3 km downstream after 1.5 hours and 6 km after 3 hours.
+example : (2 : ℚ) * (3 / 2) = 3 := by norm_num
+example : (2 : ℤ) * 3 = 6 := by norm_num
+-- Constant speed 2: parcels starting at a = -2, -1, 0, 1, 2 reach a + 2 * 2 after 2 hours.
+example : ([-2, -1, 0, 1, 2] : List ℤ).map (fun a => a + 2 * 2) = [2, 3, 4, 5, 6] := by decide
+-- The wrong shift f(x + ct): the station at 6 km at 3 pm reads the spill at 6 + 2 * 3 = 12 km, not 0.
+example : (6 : ℤ) + 2 * 3 = 12 ∧ (6 : ℤ) - 2 * 3 = 0 := by norm_num
+
+#print axioms transport_solution_is_shifted_shape
+#print axioms transport_varying_speed_solution
+#print axioms breaking_time_of_bump_profile
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'transport_solution_is_shifted_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+'transport_varying_speed_solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'breaking_time_of_bump_profile' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

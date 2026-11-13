@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A metal rod 1 m long has both ends in ice water at 0 C; its temperature starts as a smooth arch, 1 C above the ends at the middle. A guitar string 1 m long, pinned at both ends, is bent into the same arch, 1 cm high at the middle, and let go. A square metal plate 1 m on a side has three edges on ice and its top edge held warm. Each unknown depends on two things: place and time, or two coordinates of place.
+A metal rod 1 m long has both ends in ice water at 0 C; its temperature starts as a smooth arch, 1 C above the ends at the middle. A guitar string 1 m long, pinned at both ends, is bent into the same arch, 1 cm high at the middle, and let go.
+
+A square metal plate 1 m on a side has three edges on ice and its top edge held warm. Each unknown depends on two things: place and time, or two coordinates of place.
 
 An ordinary differential equation links an unknown to its rate in one direction, time. Here the unknown is a whole profile with rates in several directions at once. A rule linking those rates is a **partial differential equation**, a PDE from here on.
 
@@ -26,7 +28,9 @@ To scale: 90 units per metre across; up, 90 per scaled time unit or per metre. T
 
 ## The formula
 
-Notation first, in words. A subscript names a partial derivative, a rate in one direction with the other variables held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). So u_t is how fast the temperature at one fixed point changes in time, and u_x is the slope along the rod at one instant. A doubled letter takes the rate twice: u_xx is the **bend** of the profile (its second derivative in x), and u_tt the acceleration of one point of the string.
+Notation first, in words. A subscript names a partial derivative, a rate in one direction with the other variables held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). So u_t is how fast the temperature at one fixed point changes in time, and u_x is the slope along the rod at one instant.
+
+A doubled letter takes the rate twice: u_xx is the **bend** of the profile (its second derivative in x), and u_tt the acceleration of one point of the string.
 
 The three equations, with the rod's diffusivity κ and the string's wave speed c scaled to 1:
 
@@ -34,7 +38,7 @@ $$u_t = u_{xx}, \qquad u_{tt} = u_{xx}, \qquad u_{xx} + u_{yy} = 0$$
 
 **Read it aloud:** the rod warms where its profile bends upward; the string accelerates where its shape bends; the plate's bend across cancels its bend up, at every point.
 
-Every second-order linear equation in two variables x and y, with A, B, C not all zero, can be written, with the lower-order terms (u_x, u_y, u and a given source) gathered as "…",
+Every second-order linear equation in two variables x and y, with A, B, C not all zero, can be written as below. The "…" gathers the lower-order terms: u_x, u_y, u and a given source.
 
 $$A\,u_{xx} + B\,u_{xy} + C\,u_{yy} + \ldots = 0.$$
 
@@ -52,7 +56,7 @@ For the rod, time plays the part of y: u_xx − u_t = 0 has A = 1 and B = C = 0.
 | $u_{xx}$, $u_{yy}$, $u_{tt}$, $u_{xy}$ | second partial derivatives: bends, acceleration, twist | the string's bend | faster change |
 | $A$, $B$, $C$ | coefficients of u_xx, u_xy, u_yy | heat 1, 0, 0; wave 1, 0, −1 | large B: hyperbolic |
 | $B^2 - 4AC$ | the discriminant | 0, 4, −4 | past 0, hyperbolic |
-| $\kappa$, $c$ | diffusivity; wave speed | both 1 | faster change |
+| $\kappa$, $c$ | diffusivity, how fast heat spreads; wave speed | both 1 | faster change |
 
 ### When it holds
 
@@ -60,7 +64,7 @@ The names are a definition. The sort assumes:
 
 - **Second order.** The transport equation u_t + u_x = 0 sits outside the three ([The transport equation](02-the-transport-equation-and-characteristics.md)).
 - **One convention.** Books writing 2B u_xy test B^2 − AC.
-- **Two variables.** With more, the test reads the eigenvalue signs of the coefficient matrix, `[[A, B/2], [B/2, C]]` in two variables: all one sign, elliptic; one opposite, hyperbolic; one zero, parabolic.
+- **Two variables.** With more, the test reads the signs of the eigenvalues (the matrix's stretch factors, [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)) of the coefficient matrix, `[[A, B/2], [B/2, C]]` in two variables: all one sign, elliptic; one opposite, hyperbolic; one zero, parabolic.
 - **Point by point.** Varying coefficients can change the family: the Tricomi equation y u_xx + u_yy = 0, a model of airflow near the speed of sound, is elliptic for y > 0, hyperbolic for y < 0.
 - **Matching conditions.** Wrong data gives many answers or wildly sensitive ones; What breaks shows both.
 
@@ -86,7 +90,9 @@ u_tt = u_xx fixes the acceleration from the bend, not the speed. Plucked into si
 
 ### Step 3: the plate needs its edges and nothing else
 
-On a grid, u_xx + u_yy = 0 says each inside point is the mean of its four neighbours. There is no start: sweep the grid, replacing points by their neighbours' mean, until nothing moves. With the top edge at sin(πx) C and the others at 0 C, the answer is u = sin(πx) sinh(πy)/sinh(π), where sinh(z) = (e^z − e^(−z))/2. Its bend along, −π^2 u, cancels its bend up, +π^2 u. The centre reads 0.1993 C.
+On a grid, u_xx + u_yy = 0 says each inside point is the mean of its four neighbours. There is no start: sweep the grid, replacing points by their neighbours' mean, until nothing moves.
+
+With the top edge at sin(πx) C and the others at 0 C, the answer is u = sin(πx) sinh(πy)/sinh(π), where sinh(z) = (e^z − e^(−z))/2. Its bend along, −π^2 u, cancels its bend up, +π^2 u. The centre reads 0.1993 C.
 
 ### Step 4: why one sign sorts them
 
@@ -351,6 +357,195 @@ mistake 3, rod run backwards 0.01: noise 0.001 sin(10 pi x) grows to 19.33, the 
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves three facts for every real A, B and C, and checks the card's whole-number arithmetic.
+
+- Take new variables ξ and η with J ≠ 0. Then B'^2 − 4A'C' has the same sign as B^2 − 4AC, so the family never changes.
+- Suppose Q(p, q) ≠ 0 in every direction, p and q not both zero. Then B^2 − 4AC < 0, and the reverse holds too: elliptic means no characteristic direction.
+- Suppose Q(p, q) is positive in some direction and negative in another. Then B^2 − 4AC > 0, and the reverse holds too: hyperbolic means Q takes both signs.
+- The discriminants come out exactly: 0 for the rod, 4 for the string, −4 for the plate, 5 for the usual mistake.
+- Take ξ = x + t and η = x − t for the wave. Then J = −2, and u_xx − u_tt = 0 becomes 4u_ξη = 0.
+
+The grids, the closed-form solutions, the decimals and the direction scan are left to the Python and Rust checks.
+
+```lean
+-- A partial differential equation: the family of A u_xx + B u_xy + C u_yy, read from the sign of B^2 - 4AC, survives every change of variables with nonzero Jacobian, and that sign decides whether the direction form A p^2 + B p q + C q^2 takes both signs (hyperbolic) or never vanishes (elliptic).
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Linarith
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.FieldSimp
+
+/-- No change of variables changes the family.  New variables ξ(x, y), η(x, y) with
+partial derivatives ξ_x = p, ξ_y = q, η_x = r, η_y = s at a point, and Jacobian
+J = p s - q r ≠ 0, turn the top-order part A u_xx + B u_xy + C u_yy into
+A' u_ξξ + B' u_ξη + C' u_ηη by the chain rule.  Then B'^2 - 4A'C' has the same sign
+as B^2 - 4AC: positive stays hyperbolic, zero stays parabolic, negative stays elliptic. -/
+theorem pde_family_unchanged_by_change_of_variables (A B C p q r s : ℝ)
+    (hJ : p * s - q * r ≠ 0) :
+    let A' := A * p ^ 2 + B * p * q + C * q ^ 2
+    let B' := 2 * A * p * r + B * (p * s + q * r) + 2 * C * q * s
+    let C' := A * r ^ 2 + B * r * s + C * s ^ 2
+    (0 < B' ^ 2 - 4 * A' * C' ↔ 0 < B ^ 2 - 4 * A * C) ∧
+    (B' ^ 2 - 4 * A' * C' = 0 ↔ B ^ 2 - 4 * A * C = 0) ∧
+    (B' ^ 2 - 4 * A' * C' < 0 ↔ B ^ 2 - 4 * A * C < 0) := by
+  intro A' B' C'
+  have key : B' ^ 2 - 4 * A' * C' = (p * s - q * r) ^ 2 * (B ^ 2 - 4 * A * C) := by
+    simp only [A', B', C']; ring
+  have hJ2 : 0 < (p * s - q * r) ^ 2 := by positivity
+  rw [key]
+  refine ⟨?_, ?_, ?_⟩
+  · constructor
+    · intro h; exact pos_of_mul_pos_right h hJ2.le
+    · intro h; exact mul_pos hJ2 h
+  · constructor
+    · intro h
+      rcases mul_eq_zero.mp h with h' | h'
+      · exact absurd h' hJ2.ne'
+      · exact h'
+    · intro h; rw [h, mul_zero]
+  · constructor
+    · intro h
+      by_contra hc
+      rw [not_lt] at hc
+      have := mul_nonneg hJ2.le hc
+      linarith
+    · intro h; exact mul_neg_of_pos_of_neg hJ2 h
+
+/-- Elliptic means no characteristic direction: B^2 - 4AC < 0 exactly when the
+direction form Q(p, q) = A p^2 + B p q + C q^2 is nonzero in every direction (p, q) ≠ (0, 0). -/
+theorem elliptic_iff_no_characteristic_direction (A B C : ℝ) :
+    B ^ 2 - 4 * A * C < 0 ↔
+      ∀ p q : ℝ, (p, q) ≠ (0, 0) → A * p ^ 2 + B * p * q + C * q ^ 2 ≠ 0 := by
+  constructor
+  · intro hD p q hpq hQ
+    have hA : A ≠ 0 := by
+      intro hA; subst hA; nlinarith [sq_nonneg B]
+    have h4 : (2 * A * p + B * q) ^ 2 - (B ^ 2 - 4 * A * C) * q ^ 2 = 0 := by
+      linear_combination (4 * A) * hQ
+    have hq2 : q ^ 2 = 0 := by
+      nlinarith [sq_nonneg (2 * A * p + B * q), sq_nonneg q]
+    have hq : q = 0 := by simpa using hq2
+    subst hq
+    have hp : p = 0 := by
+      have : A * p ^ 2 = 0 := by simpa using hQ
+      rcases mul_eq_zero.mp this with h | h
+      · exact absurd h hA
+      · simpa using h
+    exact hpq (by simp [hp])
+  · intro h
+    by_contra hD
+    rw [not_lt] at hD
+    by_cases hA : A = 0
+    · exact h 1 0 (by simp) (by simp [hA])
+    · set D := B ^ 2 - 4 * A * C with hDdef
+      have hs : Real.sqrt D ^ 2 = D := Real.sq_sqrt hD
+      have hp : 2 * A * ((-B + Real.sqrt D) / (2 * A)) = -B + Real.sqrt D := by
+        field_simp
+      apply h ((-B + Real.sqrt D) / (2 * A)) 1 (by simp)
+      have h4 : 4 * A * (A * ((-B + Real.sqrt D) / (2 * A)) ^ 2
+          + B * ((-B + Real.sqrt D) / (2 * A)) * 1 + C * 1 ^ 2) = 0 := by
+        have e : 4 * A * (A * ((-B + Real.sqrt D) / (2 * A)) ^ 2
+            + B * ((-B + Real.sqrt D) / (2 * A)) * 1 + C * 1 ^ 2)
+            = (2 * A * ((-B + Real.sqrt D) / (2 * A)) + B) ^ 2 - D := by
+          rw [hDdef]; ring
+        rw [e, hp, hDdef] at *
+        nlinarith [hs]
+      rcases mul_eq_zero.mp h4 with h' | h'
+      · exact absurd (by linarith : A = 0) hA
+      · exact h'
+
+/-- Hyperbolic means the direction form takes both signs: B^2 - 4AC > 0 exactly when
+Q(p, q) = A p^2 + B p q + C q^2 is positive in some direction and negative in another. -/
+theorem hyperbolic_iff_form_takes_both_signs (A B C : ℝ) :
+    0 < B ^ 2 - 4 * A * C ↔
+      (∃ p q : ℝ, 0 < A * p ^ 2 + B * p * q + C * q ^ 2) ∧
+      (∃ p q : ℝ, A * p ^ 2 + B * p * q + C * q ^ 2 < 0) := by
+  constructor
+  · intro hD
+    rcases lt_trichotomy A 0 with hA | hA | hA
+    · refine ⟨⟨-B, 2 * A, ?_⟩, ⟨1, 0, ?_⟩⟩
+      · nlinarith [mul_pos (neg_pos.mpr hA) hD]
+      · simpa using hA
+    · subst hA
+      rcases lt_trichotomy C 0 with hC | hC | hC
+      · refine ⟨⟨2 * C, -B, ?_⟩, ⟨0, 1, ?_⟩⟩
+        · nlinarith [mul_pos (neg_pos.mpr hC) hD]
+        · simpa using hC
+      · subst hC
+        have hB : B ≠ 0 := by rintro rfl; norm_num at hD
+        rcases lt_or_gt_of_ne hB with hB | hB
+        · exact ⟨⟨1, -1, by nlinarith⟩, ⟨1, 1, by nlinarith⟩⟩
+        · exact ⟨⟨1, 1, by nlinarith⟩, ⟨1, -1, by nlinarith⟩⟩
+      · refine ⟨⟨0, 1, ?_⟩, ⟨2 * C, -B, ?_⟩⟩
+        · simpa using hC
+        · nlinarith [mul_pos hC hD]
+    · refine ⟨⟨1, 0, ?_⟩, ⟨-B, 2 * A, ?_⟩⟩
+      · simpa using hA
+      · nlinarith [mul_pos hA hD]
+  · rintro ⟨⟨p1, q1, h1⟩, ⟨p2, q2, h2⟩⟩
+    by_contra hD
+    rw [not_lt] at hD
+    have a1 : 0 ≤ A * (A * p1 ^ 2 + B * p1 * q1 + C * q1 ^ 2) := by
+      nlinarith [sq_nonneg (2 * A * p1 + B * q1), mul_nonneg (sub_nonneg.mpr hD) (sq_nonneg q1)]
+    have a2 : 0 ≤ A * (A * p2 ^ 2 + B * p2 * q2 + C * q2 ^ 2) := by
+      nlinarith [sq_nonneg (2 * A * p2 + B * q2), mul_nonneg (sub_nonneg.mpr hD) (sq_nonneg q2)]
+    have c1 : 0 ≤ C * (A * p1 ^ 2 + B * p1 * q1 + C * q1 ^ 2) := by
+      nlinarith [sq_nonneg (2 * C * q1 + B * p1), mul_nonneg (sub_nonneg.mpr hD) (sq_nonneg p1)]
+    have c2 : 0 ≤ C * (A * p2 ^ 2 + B * p2 * q2 + C * q2 ^ 2) := by
+      nlinarith [sq_nonneg (2 * C * q2 + B * p2), mul_nonneg (sub_nonneg.mpr hD) (sq_nonneg p2)]
+    have hA : A = 0 := by
+      have : 0 ≤ A := nonneg_of_mul_nonneg_left a1 h1
+      have : A ≤ 0 := by nlinarith
+      linarith
+    have hC : C = 0 := by
+      have : 0 ≤ C := nonneg_of_mul_nonneg_left c1 h1
+      have : C ≤ 0 := by nlinarith
+      linarith
+    subst hA; subst hC
+    have hB : B = 0 := by nlinarith [sq_nonneg B]
+    subst hB
+    simp at h1
+
+-- The card's worked discriminants, B^2 - 4AC, in whole numbers.
+-- Rod u_xx - u_t = 0: A = 1, B = 0, C = 0 gives 0, parabolic.
+example : (0 : ℤ) ^ 2 - 4 * 1 * 0 = 0 := by norm_num
+-- String u_xx - u_tt = 0: A = 1, B = 0, C = -1 gives 4, hyperbolic.
+example : (0 : ℤ) ^ 2 - 4 * 1 * (-1) = 4 := by norm_num
+-- Plate u_xx + u_yy = 0: A = 1, B = 0, C = 1 gives -4, elliptic.
+example : (0 : ℤ) ^ 2 - 4 * 1 * 1 = -4 := by norm_num
+-- Tricomi at y = -1: A = -1, B = 0, C = 1 gives 4, hyperbolic.
+example : (0 : ℤ) ^ 2 - 4 * (-1) * 1 = 4 := by norm_num
+-- The usual mistake, u_xx + 3u_xy + u_yy: 9 - 4 = 5, hyperbolic.
+example : (3 : ℤ) ^ 2 - 4 * 1 * 1 = 5 := by norm_num
+-- Tilted u_xx + 2u_xy + u_yy: 4 - 4 = 0, parabolic.
+example : (2 : ℤ) ^ 2 - 4 * 1 * 1 = 0 := by norm_num
+-- The wave with ξ = x + t, η = x - t: p = q = r = 1, s = -1, so J = -2,
+-- and A = 1, B = 0, C = -1 becomes A' = 0, B' = 4, C' = 0, that is 4 u_ξη = 0.
+example : (1 : ℤ) * (-1) - 1 * 1 = -2 := by norm_num
+example : (1 : ℤ) * 1 ^ 2 + 0 * 1 * 1 + (-1) * 1 ^ 2 = 0 := by norm_num
+example : 2 * (1 : ℤ) * 1 * 1 + 0 * (1 * (-1) + 1 * 1) + 2 * (-1) * 1 * (-1) = 4 := by norm_num
+example : (1 : ℤ) * 1 ^ 2 + 0 * 1 * (-1) + (-1) * (-1) ^ 2 = 0 := by norm_num
+-- And the discriminant scales by J^2 = 4: 4^2 - 4 * 0 * 0 = 4 * 4.
+example : (4 : ℤ) ^ 2 - 4 * 0 * 0 = (-2) ^ 2 * 4 := by norm_num
+
+#print axioms pde_family_unchanged_by_change_of_variables
+#print axioms elliptic_iff_no_characteristic_direction
+#print axioms hyperbolic_iff_form_takes_both_signs
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'pde_family_unchanged_by_change_of_variables' depends on axioms: [propext, Classical.choice, Quot.sound]
+'elliptic_iff_no_characteristic_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hyperbolic_iff_form_takes_both_signs' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Shrink the middle coefficient.** Guess first: trap B from 3 to 1. Both roads print elliptic.
@@ -377,7 +572,7 @@ ALL CHECKS PASS
 - **Option prices.** Black-Scholes is parabolic; its start is the payoff at expiry, and it runs backwards in calendar time ([Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md)).
 - **Sound and vibration.** Hyperbolic, with finite speed ([Standing waves](06-standing-waves-on-a-string.md)).
 - **Steady fields.** Voltage between conductors, a soap film on a wire loop: elliptic ([Laplace's equation](07-laplaces-equation-and-harmonic-functions.md)).
-- **Flight near the speed of sound.** The flow changes family across the sonic line, as in Tricomi's model (Navier-Stokes).
+- **Flight near the speed of sound.** The flow changes family across the sonic line, where it reaches the speed of sound, as in Tricomi's model ([Navier-Stokes](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md)).
 
 > **Say it back**
 > A PDE links a function's rates in several directions: u_t a rate in time, u_xx a bend in space. In two variables the sign of B^2 − 4AC names the family: zero heat, positive wave, negative Laplace. Heat needs a start and its ends, and runs forward only. Waves also need a starting speed. Laplace needs its whole edge and nothing else.
@@ -398,6 +593,8 @@ ALL CHECKS PASS
 - [Three families](../../16-Numerical%20analysis/07-PDE%20Solvers/01-pde-families-elliptic-parabolic-hyperbolic.md): a grid solver for each family.
 - Weak solutions: solutions with corners, where u_xx fails to exist.
 - A PDE problem: well-posedness in general.
+
+The question this card leaves open: when does a PDE problem have exactly one solution that moves little when its data move?
 
 ---
 

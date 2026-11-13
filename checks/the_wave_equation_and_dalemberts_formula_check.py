@@ -49,3 +49,4 @@ assert errs[2] < 1e-3                      # the grid, stepped blind, lands on d
 assert 3.5 < errs[0] / errs[1] < 4.5       # halving dx cuts the gap about fourfold: second order
 assert abs(rope(1, 2.2) - p(1 - c * 2.2)) < 1e-6   # the velocity integral turns two halves into one pulse
 assert 1 / c <= first <= 1 / c + 0.01      # nothing arrives before distance / speed
+print("ALL CHECKS PASS")

@@ -39,7 +39,6 @@ for k in (1, 2, 3):
 print("spectrum 2 sin(w)/w, w = k pi/4, k = 0..12:", ", ".join(f"{z(F(k * pi / 4)):.2f}" for k in range(13)))
 print("carrier cos t, F(0) = integral over (-L, L), L = 10, 20:",
       " ".join(f"{simpson(cos, -L, L, 4000):.6f}" for L in (10, 20)))
-
 # 4. Heat on an endless rod, kappa = 0.1 cm^2/s, 100 C above ambient on |x| < 1 cm.
 #    Road one: invert the transform, each frequency damped by exp(-kappa w^2 t).
 #    Road two: the heat-kernel answer 50 [erf((1 - x)/s) + erf((1 + x)/s)], s = 2 sqrt(kappa t).
@@ -58,3 +57,4 @@ print("rod centre, t = 2.5, 10, 40 s: transform", " ".join(f"{u_transform(0, t):
 for t in ts:
     print(f"profile t = {t} s, x = 0..4 cm by 0.5:", ", ".join(f"{u_transform(x, t):.2f}" for x in xs))
 print(f"breaks: c_1 without the 1/2 {-4 / pi:+.6f}i; centre at 10 s without 1/(2 pi) {2 * pi * u_kernel(0, 10):.2f} C")
+print("ALL CHECKS PASS")

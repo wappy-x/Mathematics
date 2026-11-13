@@ -6,9 +6,13 @@
 
 ## General Overview
 
-A car's body sits 1 cm above its resting height after a bump, momentarily still. The spring pulls it down; the shock absorber drags against the motion. Per unit of mass: acceleration equals minus 5 per s^2 times the height, minus 2 per s times the velocity. In symbols, y'' + 2y' + 5y = 0, with y the height in cm and t the time in seconds; y' is the velocity and y'' the acceleration.
+A car's body sits 1 cm above its resting height after a bump, momentarily still. The spring pulls it down; the shock absorber drags against the motion.
 
-The Laplace transform weighs a signal from time zero on by a fading exponential e^(−st) and adds it up ([The Laplace transform](01-the-laplace-transform.md)). The number s, per second, sets how fast the weight fades; Y names the height's transform. Apply it to every term of the rate law and one rule does the work: the transform of a rate is s times the transform, minus the starting value. The equation about rates becomes (s^2 + 2s + 5)Y = s + 2, with no derivative left in it. The s + 2 on the right is the release from 1 cm at rest, written in automatically.
+Per unit of mass: acceleration equals minus 5 per s^2 times the height, minus 2 per s times the velocity. In symbols, y'' + 2y' + 5y = 0, with y the height in cm and t the time in seconds; y' is the velocity and y'' the acceleration.
+
+The Laplace transform weighs a signal from time zero on by a fading exponential e^(−st) and adds it up ([The Laplace transform](01-the-laplace-transform.md)). The number s, per second, sets how fast the weight fades; Y names the height's transform.
+
+Apply it to every term of the rate law and one rule does the work: the transform of a rate is s times the transform, minus the starting value. The equation about rates becomes (s^2 + 2s + 5)Y = s + 2, with no derivative left in it. The s + 2 on the right is the release from 1 cm at rest, written in automatically.
 
 The characteristic-equation route ([The characteristic equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)) finds every solution, then fits the starting values. Here they are inside the equation from the first line: they fall out of an integration by parts.
 
@@ -339,6 +343,210 @@ ALL CHECKS PASS
 
 The outputs match line for line. At s = 0 the error does not shrink: there the totals are fixed combinations of height and velocity, which Runge-Kutta 4 carries exactly. What remains, about 2.7e-14, is the part of the total after the 30 s cutoff.
 
+### Lean
+
+Lean proves both derivative rules and the car's transformed equation, for every s with real part above a.
+
+- Suppose y has no jump and a continuous rate y', and both stay below M e^(at) in size. Then for every s with real part above a, the transform of y' is sY − y(0).
+- Suppose y' also has a continuous rate y'', and all three stay below M e^(at) in size. Then at the same s, the transform of y'' is s^2 Y − s y(0) − y'(0).
+- Suppose y meets the second rule's conditions and y'' + 2y' + 5y = 0. Then (s^2 + 2s + 5)Y = (s + 2)y(0) + y'(0), with no constants left to fit.
+- The hand arithmetic holds exactly as fractions, at s = 2 and at s = 0, with the first two mistakes.
+
+The decimals, the Runge-Kutta totals, the car's growth bound and the step at t = 1 s are left to the Python and Rust checks.
+
+```lean
+-- Transforming a derivative: for a signal with no jump whose rate is continuous and which, with its rate, grows no faster than M e^(at), the transform of the rate is s times the transform minus the starting value at every s with Re s > a; twice over it gives s^2 Y − s y(0) − y'(0), so the car's equation y'' + 2y' + 5y = 0 becomes (s^2 + 2s + 5) Y = (s + 2) y(0) + y'(0).
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+
+open MeasureTheory Set Complex
+
+/-- The card's Laplace transform: `Y(s) = ∫₀^∞ e^(−st) y(t) dt`, a signal `y` from time zero
+on, weighted by `e^(−st)` for a complex number `s`, and added up. -/
+noncomputable def laplace (y : ℝ → ℂ) (s : ℂ) : ℂ :=
+  ∫ t in Ioi (0 : ℝ), cexp (-(s * t)) * y t
+
+lemma laplace_kernel_norm (s : ℂ) (y : ℝ → ℂ) (M a t : ℝ)
+    (h : ‖y t‖ ≤ M * Real.exp (a * t)) :
+    ‖cexp (-(s * t)) * y t‖ ≤ M * Real.exp ((a - s.re) * t) := by
+  rw [norm_mul, Complex.norm_exp]
+  have e : (-(s * (t : ℂ))).re = -(s.re * t) := by simp
+  rw [e]
+  calc Real.exp (-(s.re * t)) * ‖y t‖ ≤ Real.exp (-(s.re * t)) * (M * Real.exp (a * t)) :=
+        mul_le_mul_of_nonneg_left h (Real.exp_pos _).le
+    _ = M * Real.exp ((a - s.re) * t) := by
+        rw [show (a - s.re) * t = a * t + -(s.re * t) by ring, Real.exp_add]; ring
+
+lemma laplace_integrableOn (y : ℝ → ℂ) (M a : ℝ) (s : ℂ)
+    (hy : ContinuousOn y (Ici 0))
+    (hgrowth : ∀ t : ℝ, 0 ≤ t → ‖y t‖ ≤ M * Real.exp (a * t))
+    (hs : a < s.re) :
+    IntegrableOn (fun t : ℝ => cexp (-(s * t)) * y t) (Ioi 0) := by
+  have hint : IntegrableOn (fun t : ℝ => M * Real.exp ((a - s.re) * t)) (Ioi 0) :=
+    (integrableOn_exp_mul_Ioi (by linarith) 0).const_mul M
+  refine hint.mono' ?_ ?_
+  · refine ContinuousOn.aestronglyMeasurable ?_ measurableSet_Ioi
+    refine ContinuousOn.mul ?_ (hy.mono Ioi_subset_Ici_self)
+    fun_prop
+  · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    exact laplace_kernel_norm s y M a t (hgrowth t (le_of_lt ht))
+
+lemma laplace_kernel_hasDerivAt (s : ℂ) (t : ℝ) :
+    HasDerivAt (fun t : ℝ => cexp (-(s * t))) (-s * cexp (-(s * t))) t := by
+  have h := (((hasDerivAt_id t).ofReal_comp).const_mul (-s)).cexp
+  convert h using 1
+  · funext x; simp
+  · simp; ring
+
+open Filter Topology in
+theorem laplace_deriv_aux (y y' : ℝ → ℂ) (M a : ℝ) (s : ℂ)
+    (hy : ContinuousOn y (Ici 0))
+    (hderiv : ∀ t ∈ Ioi (0 : ℝ), HasDerivAt y (y' t) t)
+    (hy' : ContinuousOn y' (Ici 0))
+    (hgrowth : ∀ t : ℝ, 0 ≤ t → ‖y t‖ ≤ M * Real.exp (a * t))
+    (hgrowth' : ∀ t : ℝ, 0 ≤ t → ‖y' t‖ ≤ M * Real.exp (a * t))
+    (hs : a < s.re) :
+    laplace y' s = s * laplace y s - y 0 := by
+  have hI := laplace_integrableOn y M a s hy hgrowth hs
+  have hI' := laplace_integrableOn y' M a s hy' hgrowth' hs
+  have hzero : Tendsto ((fun t : ℝ => cexp (-(s * t))) * y) (𝓝[>] 0) (𝓝 (y 0)) := by
+    have hc : ContinuousWithinAt ((fun t : ℝ => cexp (-(s * t))) * y) (Ioi 0) 0 := by
+      refine ContinuousWithinAt.mul ?_ ((hy 0 self_mem_Ici).mono Ioi_subset_Ici_self)
+      exact (by fun_prop : Continuous fun t : ℝ => cexp (-(s * t))).continuousWithinAt
+    simpa using hc.tendsto
+  have hinf : Tendsto ((fun t : ℝ => cexp (-(s * t))) * y) atTop (𝓝 0) := by
+    have hb : Tendsto (fun t : ℝ => M * Real.exp ((a - s.re) * t)) atTop (𝓝 0) := by
+      have : Tendsto (fun t : ℝ => (a - s.re) * t) atTop atBot :=
+        tendsto_id.const_mul_atTop_of_neg (by linarith)
+      simpa using (Real.tendsto_exp_atBot.comp this).const_mul M
+    refine squeeze_zero_norm' ?_ hb
+    filter_upwards [eventually_ge_atTop 0] with t ht
+    exact laplace_kernel_norm s y M a t (hgrowth t ht)
+  have hparts := integral_Ioi_mul_deriv_eq_deriv_mul
+    (u := fun t : ℝ => cexp (-(s * t))) (u' := fun t : ℝ => -s * cexp (-(s * t)))
+    (v := y) (v' := y')
+    (fun t _ => laplace_kernel_hasDerivAt s t) hderiv hI'
+    (by
+      refine IntegrableOn.congr_fun (hI.const_mul (-s)) (fun t _ => ?_) measurableSet_Ioi
+      simp only [Pi.mul_apply]; ring)
+    hzero hinf
+  unfold laplace
+  rw [hparts]
+  have : (∫ t in Ioi (0:ℝ), -s * cexp (-(s * t)) * y t)
+      = -s * ∫ t in Ioi (0:ℝ), cexp (-(s * t)) * y t := by
+    rw [← integral_const_mul]; congr 1; ext t; ring
+  rw [this]; ring
+
+#print axioms laplace_kernel_norm
+#print axioms laplace_integrableOn
+#print axioms laplace_kernel_hasDerivAt
+#print axioms laplace_deriv_aux
+
+/-- The derivative rule: if the signal `y` has no jump from time zero on, has rate `y'` after
+time zero with `y'` continuous from time zero on, and both `y` and `y'` stay below `M e^(at)` in
+size, then at every `s` with real part above `a` the transform of the rate is `s Y(s) − y(0)`. -/
+theorem laplace_deriv_eq_mul_sub_initial (y y' : ℝ → ℂ) (M a : ℝ) (s : ℂ)
+    (hy : ContinuousOn y (Ici 0))
+    (hderiv : ∀ t ∈ Ioi (0 : ℝ), HasDerivAt y (y' t) t)
+    (hy' : ContinuousOn y' (Ici 0))
+    (hgrowth : ∀ t : ℝ, 0 ≤ t → ‖y t‖ ≤ M * Real.exp (a * t))
+    (hgrowth' : ∀ t : ℝ, 0 ≤ t → ‖y' t‖ ≤ M * Real.exp (a * t))
+    (hs : a < s.re) :
+    laplace y' s = s * laplace y s - y 0 := by
+  exact laplace_deriv_aux y y' M a s hy hderiv hy' hgrowth hgrowth' hs
+
+/-- The second-derivative rule: if `y`, its rate `y'` and its acceleration `y''` are continuous
+from time zero on, `y'` is the rate of `y` and `y''` the rate of `y'` after time zero, and all
+three stay below `M e^(at)` in size, then at every `s` with real part above `a` the transform of
+the acceleration is `s² Y(s) − s y(0) − y'(0)`. -/
+theorem laplace_second_deriv (y y' y'' : ℝ → ℂ) (M a : ℝ) (s : ℂ)
+    (hy : ContinuousOn y (Ici 0))
+    (hderiv : ∀ t ∈ Ioi (0 : ℝ), HasDerivAt y (y' t) t)
+    (hy' : ContinuousOn y' (Ici 0))
+    (hderiv' : ∀ t ∈ Ioi (0 : ℝ), HasDerivAt y' (y'' t) t)
+    (hy'' : ContinuousOn y'' (Ici 0))
+    (hgrowth : ∀ t : ℝ, 0 ≤ t → ‖y t‖ ≤ M * Real.exp (a * t))
+    (hgrowth' : ∀ t : ℝ, 0 ≤ t → ‖y' t‖ ≤ M * Real.exp (a * t))
+    (hgrowth'' : ∀ t : ℝ, 0 ≤ t → ‖y'' t‖ ≤ M * Real.exp (a * t))
+    (hs : a < s.re) :
+    laplace y'' s = s ^ 2 * laplace y s - s * y 0 - y' 0 := by
+  rw [laplace_deriv_eq_mul_sub_initial y' y'' M a s hy' hderiv' hy'' hgrowth' hgrowth'' hs,
+    laplace_deriv_eq_mul_sub_initial y y' M a s hy hderiv hy' hgrowth hgrowth' hs]
+  ring
+
+/-- The car's transformed equation: if `y` solves `y'' + 2y' + 5y = 0` from time zero on, under
+the same hypotheses as the second-derivative rule, then at every `s` with real part above `a`
+the starting values land on the known side: `(s² + 2s + 5) Y(s) = (s + 2) y(0) + y'(0)`. -/
+theorem laplace_car_equation (y y' y'' : ℝ → ℂ) (M a : ℝ) (s : ℂ)
+    (hy : ContinuousOn y (Ici 0))
+    (hderiv : ∀ t ∈ Ioi (0 : ℝ), HasDerivAt y (y' t) t)
+    (hy' : ContinuousOn y' (Ici 0))
+    (hderiv' : ∀ t ∈ Ioi (0 : ℝ), HasDerivAt y' (y'' t) t)
+    (hy'' : ContinuousOn y'' (Ici 0))
+    (hgrowth : ∀ t : ℝ, 0 ≤ t → ‖y t‖ ≤ M * Real.exp (a * t))
+    (hgrowth' : ∀ t : ℝ, 0 ≤ t → ‖y' t‖ ≤ M * Real.exp (a * t))
+    (hgrowth'' : ∀ t : ℝ, 0 ≤ t → ‖y'' t‖ ≤ M * Real.exp (a * t))
+    (hode : ∀ t : ℝ, 0 ≤ t → y'' t + 2 * y' t + 5 * y t = 0)
+    (hs : a < s.re) :
+    (s ^ 2 + 2 * s + 5) * laplace y s = (s + 2) * y 0 + y' 0 := by
+  have h1 := laplace_deriv_eq_mul_sub_initial y y' M a s hy hderiv hy' hgrowth hgrowth' hs
+  have h2 := laplace_second_deriv y y' y'' M a s hy hderiv hy' hderiv' hy'' hgrowth hgrowth'
+    hgrowth'' hs
+  have hI := laplace_integrableOn y M a s hy hgrowth hs
+  have hI' := laplace_integrableOn y' M a s hy' hgrowth' hs
+  have hI'' := laplace_integrableOn y'' M a s hy'' hgrowth'' hs
+  have h0 : laplace y'' s + 2 * laplace y' s + 5 * laplace y s = 0 := by
+    unfold laplace
+    rw [← integral_const_mul, ← integral_const_mul, ← integral_add hI'' (hI'.const_mul 2),
+      ← integral_add ?_ (hI.const_mul 5)]
+    swap
+    · exact hI''.add (hI'.const_mul 2)
+    rw [setIntegral_congr_fun measurableSet_Ioi (g := fun _ => (0:ℂ)) ?_]
+    · simp
+    · intro t ht
+      simp only
+      have := hode t (le_of_lt ht)
+      linear_combination cexp (-(s * t)) * this
+  rw [h1, h2] at h0
+  linear_combination h0
+
+-- Worked numbers, exact.
+-- At s = 2 with y(0) = 1, y'(0) = 0: (s^2 + 2s + 5) Y = s + 2 reads 13 Y = 4, so Y = 4/13.
+example : ((2 : ℚ) ^ 2 + 2 * 2 + 5) = 13 ∧ (2 + 2 : ℚ) * 1 + 0 = 4 ∧ (13 : ℚ) * (4 / 13) = 4 := by
+  norm_num
+-- Transform of the velocity: sY − y(0) = 8/13 − 1 = −5/13 (−0.384615).
+example : (2 : ℚ) * (4 / 13) - 1 = -5 / 13 := by norm_num
+-- Transform of the acceleration: s^2 Y − s y(0) − y'(0) = 16/13 − 2 − 0 = −10/13 (−0.769231).
+example : (2 : ℚ) ^ 2 * (4 / 13) - 2 * 1 - 0 = -10 / 13 := by norm_num
+-- Back into the rate law: −10/13 + 2(−5/13) + 5(4/13) = 0.
+example : (-10 / 13 : ℚ) + 2 * (-5 / 13) + 5 * (4 / 13) = 0 := by norm_num
+-- At s = 0: Y = 2/5, sY − y(0) = −1, s^2 Y − s y(0) − y'(0) = 0.
+example : ((0 : ℚ) + 2) / (0 ^ 2 + 2 * 0 + 5) = 2 / 5 ∧ (0 : ℚ) * (2 / 5) - 1 = -1 ∧
+    (0 : ℚ) ^ 2 * (2 / 5) - 0 * 1 - 0 = 0 := by norm_num
+-- Mistake 1: taking the velocity's transform as sY gives 8/13 (0.615385), and the equation
+-- becomes 13 Y = 0, forcing Y = 0.
+example : (2 : ℚ) * (4 / 13) = 8 / 13 := by norm_num
+example (Y : ℚ) (h : (13 : ℚ) * Y = 0) : Y = 0 := by linarith
+-- Mistake 2: s^2 Y − y(0) − y'(0) puts y(0) + y'(0) + 2 y(0) = 3 on the right: Y = 3/13 (0.230769).
+example : ((1 : ℚ) + 0 + 2 * 1) / 13 = 3 / 13 := by norm_num
+
+#print axioms laplace_deriv_eq_mul_sub_initial
+#print axioms laplace_second_deriv
+#print axioms laplace_car_equation
+```
+
+**Checked 2026-11-12 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'laplace_kernel_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_integrableOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_kernel_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_deriv_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_deriv_eq_mul_sub_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_second_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_car_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -361,7 +569,7 @@ The outputs match line for line. At s = 0 the error does not shrink: there the t
 ## Where you meet it in real life
 
 - **Circuits.** A capacitor already charged when a switch closes enters the transformed equation as a known source.
-- **Control engineering.** With every starting value zero, the transformed equation is Y = F(s) divided by the characteristic polynomial, a ratio called the transfer function ([Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)).
+- **Control engineering.** With every starting value zero, the transformed equation is Y = the forcing's transform divided by the characteristic polynomial, a ratio called the transfer function ([Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)).
 - **Forced problems and switches.** [The round trip](04-solving-an-initial-value-problem-by-transform.md) runs the round trip with forcing; [Step functions](05-step-functions-and-delays.md) handles jumps.
 
 > **Say it back**
@@ -379,11 +587,13 @@ The outputs match line for line. At s = 0 the error does not shrink: there the t
 - [Inverting](03-inverting-by-partial-fractions.md): turning (s + 2)/(s^2 + 2s + 5) back into a height against time.
 - [Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): the same algebra with zero starting values, read as a property of the system.
 
+Left open: Y = (s + 2)/(s^2 + 2s + 5) gives one number for each s, so how does it turn back into the car's height at each moment?
+
 ---
 
 ## Sources
 
-Verified 2026-09-28: every link below opens a page naming the cited work.
+Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Lebl, Jiří. *Notes on Diffy Qs: Differential Equations for Engineers*. [Book site](https://www.jirka.org/diffyqs/). Proves the derivative rule by parts and applies it to second-order equations.
 - Trench, William F. *Elementary Differential Equations*. Trinity University, 2013. [Publisher page](https://digitalcommons.trinity.edu/mono/8/). States the rule with its growth hypotheses; treats piecewise signals.

@@ -63,7 +63,6 @@ fn main() {
     println!("spectrum 2 sin(w)/w, w = k pi/4, k = 0..12: {}", join(&sp, 2, ", "));
     let st: Vec<f64> = [10.0, 20.0].iter().map(|&l| simpson(&|t| t.cos(), -l, l, 4000)).collect();
     println!("carrier cos t, F(0) = integral over (-L, L), L = 10, 20: {}", join(&st, 6, " "));
-
     // 4. Heat on an endless rod, kappa = 0.1 cm^2/s, 100 C above ambient on |x| < 1 cm.
     let ts = [2.5, 10.0, 40.0];
     let xs: Vec<f64> = (0..9).map(|j| j as f64 / 2.0).collect();
@@ -77,4 +76,5 @@ fn main() {
         println!("profile t = {} s, x = 0..4 cm by 0.5: {}", t, join(&pr, 2, ", "));
     }
     println!("breaks: c_1 without the 1/2 {:+.6}i; centre at 10 s without 1/(2 pi) {:.2} C", -4.0 / PI, 2.0 * PI * u_kernel(0.0, 10.0));
+    println!("ALL CHECKS PASS");
 }

@@ -63,4 +63,5 @@ fn main() {
     assert!(3.5 < errs[0] / errs[1] && errs[0] / errs[1] < 4.5); // halving dx cuts the gap about fourfold
     assert!((rope(1.0, 2.2, c) - p(1.0 - c * 2.2)).abs() < 1e-6); // the velocity integral makes one pulse
     assert!(1.0 / c <= first && first <= 1.0 / c + 0.01); // nothing arrives before distance / speed
+    println!("ALL CHECKS PASS");
 }

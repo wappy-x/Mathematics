@@ -8,7 +8,9 @@
 
 A square metal plate, 1 m on a side, has its top edge clamped to a bar at 100 °C and the other three in iced water at 0 °C. Hours later its thermometers stop moving: the temperature has settled.
 
-The centre reads 25 °C, and no formula is needed. Turn the plate a quarter turn and the hot edge moves, but the centre stays put. Add the four turned patterns: every edge is now at 100 °C, and such a plate settles at 100 °C everywhere. Each turn gives the centre an equal share, so it reads 100 / 4 = 25 °C. And no point inside reaches 100 °C.
+The centre reads 25 °C, and no formula is needed. Turn the plate a quarter turn and the hot edge moves, but the centre stays put.
+
+Add the four turned patterns: every edge is now at 100 °C, and such a plate settles at 100 °C everywhere. Each turn gives the centre an equal share, so it reads 100 / 4 = 25 °C. And no point inside reaches 100 °C.
 
 Both facts come from one rule: with no heater inside, each point's settled temperature is the average of those round it. That rule is **Laplace's equation**; a pattern obeying it is **harmonic**. A heater inside turns it into **Poisson's equation**.
 
@@ -64,11 +66,11 @@ $$u(x_0, y_0) = \frac{1}{2\pi}\int_0^{2\pi} u(x_0 + r\cos\theta,\ y_0 + r\sin\th
 
 ### Step 0: settled heat is Laplace's equation
 
-On a plate the rod's heat law gains a second direction: $u_t = \kappa\,(u_{xx} + u_{yy})$. Settled means zero rate, so the bends cancel. A heater adds a rate, giving $u_{xx} + u_{yy} = -f$.
+On a plate the rod's heat law from [The heat equation](03-the-heat-equation.md) gains a second direction: $u_t = \kappa\,(u_{xx} + u_{yy})$. Settled means zero rate, so the bends cancel. A heater adds a rate, giving $u_{xx} + u_{yy} = -f$.
 
 ### Step 1: a grid turns the equation into averaging
 
-Step $h$ east and west. Adding the two Taylor expansions cancels odd powers of $h$: east + west = 2 × centre + $h^2 u_{xx}$, up to terms in $h^4$. North and south give $u_{yy}$. So the four neighbours sum to 4 × centre + $h^2 \Delta u$. With $\Delta u = -f$:
+Step $h$ east and west. Adding the two Taylor expansions (each value written as a polynomial in $h$: [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) cancels odd powers of $h$: east + west = 2 × centre + $h^2 u_{xx}$, up to terms in $h^4$. North and south give $u_{yy}$. So the four neighbours sum to 4 × centre + $h^2 \Delta u$. With $\Delta u = -f$:
 
 centre = (east + west + north + south) / 4 + $h^2 f / 4$.
 
@@ -76,11 +78,17 @@ With no source, each grid point is its neighbours' average. The coarsest grid ha
 
 ### Step 2: the average holds on every circle
 
-The grid rule is the discrete shadow of the circle average. As the radius grows, the ring average changes at the average outward slope of $u$ across the ring. By Green's theorem, that slope summed round the ring is the total of $\Delta u$ over the disc inside: zero. So the average ignores the radius; shrunk to nothing, it is the centre value. The full proof is on [Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md). With a source, the ring average falls short of the centre by exactly $f r^2 / 4$.
+The grid rule is the discrete shadow of the circle average. As the radius grows, the ring average changes at the average outward slope of $u$ across the ring.
+
+By [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md), that slope summed round the ring is the total of $\Delta u$ over the disc inside: zero. So the average ignores the radius; shrunk to nothing, it is the centre value.
+
+The full proof is on [Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md). With a source, the ring average falls short of the centre by exactly $f r^2 / 4$.
 
 ### Step 3: no hot spot inside
 
-Suppose an interior point were the hottest on the plate. Its value is the average round a small circle, and nothing on that circle is hotter. An average reaches its largest term only when every term equals it, so the whole circle shares that temperature. Repeating from each circle point spreads it everywhere. So either the plate is uniform, or its maximum sits on the edge only; likewise the minimum. This is the **maximum principle**. The warmest interior grid point, 2.5 cm below the bar, reads 94.96 °C.
+Suppose an interior point were the hottest on the plate. Its value is the average round a small circle, and nothing on that circle is hotter. An average reaches its largest term only when every term equals it, so the whole circle shares that temperature.
+
+Repeating from each circle point spreads it everywhere. So either the plate is uniform, or its maximum sits on the edge only; likewise the minimum. This is the **maximum principle**. The warmest interior grid point, 2.5 cm below the bar, reads 94.96 °C.
 
 <details>
 <summary>Detailed proof: the maximum principle without circles</summary>
@@ -95,11 +103,15 @@ Inside, $u \le v \le \max_{\text{edge}} v \le \max_{\text{edge}} u + \varepsilon
 
 ### Step 4: the edge fixes everything inside
 
-Suppose two settled patterns share their edge temperatures. Their gap $w$ is harmonic, because the equation is linear: its bends are differences of zeros. On the edge $w$ is 0, so by Step 3 it is 0 inside too. This is uniqueness for the boundary problem, called the **Dirichlet problem**. The code starts grids at 0 °C and at 100 °C; both settle to one pattern.
+Suppose two settled patterns share their edge temperatures. Their gap $w$ is harmonic, because the equation is linear: its bends are differences of zeros.
+
+On the edge $w$ is 0, so by Step 3 it is 0 inside too. This is uniqueness for the boundary problem, called the **Dirichlet problem**. The code starts grids at 0 °C and at 100 °C; both settle to one pattern.
 
 ### Step 5: the 25 °C, now proved
 
-Take the four patterns with the hot edge on top, left, bottom and right. By linearity their sum is settled, with every edge at 100 °C. Uniform 100 °C fits, and by Step 4 nothing else does (the two jump corners are single points and change nothing), so the four centre values add to 100. A quarter turn carries each pattern to the next and fixes the centre, so the values are equal: 25 °C each.
+Take the four patterns with the hot edge on top, left, bottom and right. By linearity their sum is settled, with every edge at 100 °C. Uniform 100 °C fits, and by Step 4 nothing else does (the two jump corners are single points and change nothing), so the four centre values add to 100.
+
+A quarter turn carries each pattern to the next and fixes the centre, so the values are equal: 25 °C each.
 
 ### Step 6: a source breaks the no-peak rule
 
@@ -338,6 +350,154 @@ ALL CHECKS PASS
 
 The outputs agree line for line.
 
+### Lean
+
+Lean proves the circle average on any plate, and the maximum principle and uniqueness on every bounded plate with every edge held.
+
+- Take a settled temperature with no sources inside a bounded plate, continuous up to its edge. Suppose every edge reading lies between two values. Then every plate reading does too.
+- Suppose two such patterns share their edge temperatures. Then they agree at every point of the plate: the Dirichlet problem has one answer.
+- Take a harmonic pattern and a circle centred on a point, with the circle's whole disc inside the plate. Then the circle's average equals the point's temperature.
+- The hand arithmetic holds exactly: the one-point grid's 25 °C, the four turns' 4 × centre = 100, the heated 6.25 °C and the half-plane's neighbour average.
+
+The series, the grid sweeps, the 7.37 °C heated centre and the ring averages are left to the Python and Rust checks.
+
+```lean
+-- Laplace's equation: a settled temperature with no sources inside a bounded plate stays between its lowest and highest edge temperatures, is fixed by its edge temperatures, and equals its average round every circle inside the plate.
+import Mathlib.Analysis.Complex.Harmonic.MeanValue
+import Mathlib.Analysis.Complex.AbsMax
+import Mathlib.Tactic.NormNum
+
+/-! The plate is a set `U` of points in the plane, written as complex numbers `x + y i`.
+A temperature `u : ℂ → ℝ` obeys Laplace's equation `u_xx + u_yy = 0` with no sources inside
+(`HarmonicOnNhd u U`: twice continuously differentiable round each point of `U`, Laplacian zero
+there). "Every edge held" means `u` is also continuous up to the edge (`closure U`); together these
+are Mathlib's `HarmonicContOnCl u U`. The edge is `frontier U`. -/
+
+open InnerProductSpace Metric
+
+theorem laplace_const_on_ball_of_max {u : ℂ → ℝ} {w : ℂ} {r : ℝ}
+    (hh : HarmonicOnNhd u (ball w r)) (hmax : ∀ z ∈ ball w r, u z ≤ u w) (hr : 0 < r) :
+    ∀ z ∈ ball w r, u z = u w := by
+  obtain ⟨F, hF, hFu⟩ := hh.exists_analyticOnNhd_ball_re_eq
+  have hw : w ∈ ball w r := mem_ball_self hr
+  have hn : ∀ z ∈ ball w r, ‖Complex.exp (F z)‖ = Real.exp (u z) := by
+    intro z hz
+    rw [Complex.norm_exp]; exact congrArg Real.exp (hFu hz)
+  have hd : DifferentiableOn ℂ (fun z => Complex.exp (F z)) (ball w r) :=
+    hF.differentiableOn.cexp
+  have hm : IsMaxOn (norm ∘ fun z => Complex.exp (F z)) (ball w r) w := by
+    intro z hz
+    simp only [Set.mem_ofPred_eq, Function.comp_apply]
+    rw [hn z hz, hn w hw]
+    exact Real.exp_le_exp.2 (hmax z hz)
+  intro z hz
+  have := Complex.norm_eqOn_of_isPreconnected_of_isMaxOn (convex_ball w r).isPreconnected
+    isOpen_ball hd hw hm hz
+  simp only [Function.comp_apply, Function.const_apply] at this
+  rw [hn z hz, hn w hw] at this
+  exact Real.exp_injective this
+
+#print axioms laplace_const_on_ball_of_max
+
+theorem laplace_upper_bound_of_edge {U : Set ℂ} (hU : Bornology.IsBounded U)
+    {u : ℂ → ℝ} (hu : HarmonicContOnCl u U) {M : ℝ}
+    (hedge : ∀ w ∈ frontier U, u w ≤ M) :
+    ∀ z ∈ closure U, u z ≤ M := by
+  intro z hz
+  obtain ⟨w, hwU, hwmax⟩ := hU.isCompact_closure.exists_isMaxOn ⟨z, hz⟩ hu.continuousOn
+  suffices h : ∃ p ∈ frontier U, u p = u w by
+    obtain ⟨p, hp, hpw⟩ := h
+    have h1 : u z ≤ u w := hwmax hz
+    have h2 := hedge p hp
+    linarith
+  by_cases hwf : w ∈ frontier U
+  · exact ⟨w, hwf, rfl⟩
+  have hwi : w ∈ interior U := by
+    rw [← closure_sdiff_frontier]
+    exact ⟨hwU, hwf⟩
+  have hne : (interior U)ᶜ.Nonempty := by
+    by_contra h
+    rw [Set.not_nonempty_iff_eq_empty, Set.compl_empty_iff] at h
+    have hUu : U = Set.univ := Set.eq_univ_of_univ_subset (h ▸ interior_subset)
+    rw [hUu] at hU
+    exact NormedSpace.unbounded_univ ℝ ℂ hU
+  have hcl : IsClosed (interior U)ᶜ := isOpen_interior.isClosed_compl
+  obtain ⟨p, hp, hpd⟩ := hcl.exists_infDist_eq_dist hne w
+  set r := infDist w (interior U)ᶜ with hrdef
+  have hr : 0 < r := (hcl.notMem_iff_infDist_pos hne).1 (by simpa using hwi)
+  have hball : ball w r ⊆ interior U := ball_infDist_compl_subset
+  have hballU : ball w r ⊆ U := hball.trans interior_subset
+  have hconst : Set.EqOn u (fun _ => u w) (ball w r) :=
+    laplace_const_on_ball_of_max (hu.1.mono hballU)
+      (fun y hy => hwmax (subset_closure (hballU hy))) hr
+  have hpcl : p ∈ closure (ball w r) := by
+    rw [closure_ball w hr.ne', mem_closedBall, dist_comm, hpd]
+  have hcont : ContinuousOn u (closure (ball w r)) := hu.2.mono (closure_mono hballU)
+  have hext := hconst.of_subset_closure hcont continuousOn_const subset_closure le_rfl
+  refine ⟨p, ⟨closure_mono hballU hpcl, hp⟩, hext hpcl⟩
+
+#print axioms laplace_upper_bound_of_edge
+
+/-- The maximum principle. A settled temperature with no sources inside a bounded plate, continuous
+up to its edge, has no hot or cold spot inside: if every edge point reads between `m` and `M`,
+then every point of the plate reads between `m` and `M` too. Its extremes sit on the edge. -/
+theorem laplace_extremes_sit_on_the_edge {U : Set ℂ} (hU : Bornology.IsBounded U)
+    {u : ℂ → ℝ} (hu : HarmonicContOnCl u U) {m M : ℝ}
+    (hedge : ∀ w ∈ frontier U, m ≤ u w ∧ u w ≤ M) :
+    ∀ z ∈ closure U, m ≤ u z ∧ u z ≤ M := by
+  intro z hz
+  refine ⟨?_, laplace_upper_bound_of_edge hU hu (fun w hw => (hedge w hw).2) z hz⟩
+  have h := laplace_upper_bound_of_edge (u := -u) (M := -m) hU hu.neg
+    (fun w hw => by simp only [Pi.neg_apply]; linarith [(hedge w hw).1]) z hz
+  simp only [Pi.neg_apply] at h
+  linarith
+
+/-- Uniqueness for the Dirichlet problem. Two settled temperatures with no sources inside the same
+bounded plate, both continuous up to its edge, that agree on the edge agree everywhere on the
+plate: the edge temperatures fix the pattern completely. -/
+theorem laplace_edge_fixes_everything {U : Set ℂ} (hU : Bornology.IsBounded U)
+    {u v : ℂ → ℝ} (hu : HarmonicContOnCl u U) (hv : HarmonicContOnCl v U)
+    (hedge : Set.EqOn u v (frontier U)) :
+    Set.EqOn u v (closure U) := by
+  intro z hz
+  have h := laplace_extremes_sit_on_the_edge (m := 0) (M := 0) hU (hu.sub hv)
+    (fun w hw => by simp only [Pi.sub_apply]; rw [hedge hw]; simp) z hz
+  simp only [Pi.sub_apply] at h
+  linarith [h.1, h.2]
+
+/-- The averaging rule. A settled temperature with no sources inside the plate equals, at each
+point `c`, its average round any circle centred at `c` that stays inside the plate (the closed disc
+of radius `|r|` lies in the plate). -/
+theorem laplace_point_is_its_circle_average {U : Set ℂ} {u : ℂ → ℝ}
+    (hu : HarmonicOnNhd u U) {c : ℂ} {r : ℝ} (hr : closedBall c |r| ⊆ U) :
+    Real.circleAverage u c r = u c := by
+  exact (hu.mono hr).circleAverage_eq
+
+-- One interior grid point, h = 1/2: the neighbour average (100 + 0 + 0 + 0) / 4 = 25.
+example : ((100 : ℚ) + 0 + 0 + 0) / 4 = 25 := by norm_num
+-- Four quarter turns: the four equal centre values add to 100, so each is 25.
+example : (4 : ℚ) * 25 = 100 := by norm_num
+example : ∀ c : ℚ, 4 * c = 100 → c = 25 := by intro c h; linarith
+-- Heated plate, one interior point: 0 + (1/4)(100) / 4 = 25/4 degrees.
+example : (0 : ℚ) + (1 / 4) * 100 / 4 = 25 / 4 := by norm_num
+-- Half-plane: u = y at (1/2, 2) with grid step 1/10 has neighbour average 2, equal to u there.
+example : ((2 : ℚ) + 2 + 21 / 10 + 19 / 10) / 4 = 2 := by norm_num
+
+#print axioms laplace_extremes_sit_on_the_edge
+#print axioms laplace_edge_fixes_everything
+#print axioms laplace_point_is_its_circle_average
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'laplace_const_on_ball_of_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_upper_bound_of_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_extremes_sit_on_the_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_edge_fixes_everything' depends on axioms: [propext, Classical.choice, Quot.sound]
+'laplace_point_is_its_circle_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Heat the bar to 200 °C** (100.0 → 200.0 in the grid calls, 400 → 800 in `plate`). Guess first. The centre reads 50 °C: the equation is linear. The asserts pinned to 25 then fail.
@@ -381,9 +541,9 @@ The outputs agree line for line.
 
 - [Laplace on a rectangle](08-laplace-on-a-rectangle.md): the sine series the code sums, by separation of variables.
 - Maximum principles: the principle for wider families of equations, heat included.
-- [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): harmonic functions in any dimension.
+- [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): each harmonic function's partner, whose level curves are the heat's flow lines.
 
-The formula for a rectangle: [Laplace on a rectangle](08-laplace-on-a-rectangle.md).
+Left open: the edge fixes the settled pattern, but where does the sine series that writes it down come from? [Laplace on a rectangle](08-laplace-on-a-rectangle.md) builds it.
 
 ---
 

@@ -16,7 +16,7 @@ Feeding a rule its own output is **iteration**; the list of values is the **orbi
 
 **Iteration applies one rule to its own output again and again; the cobweb draws each step as one move up or down to the rule's curve and one move across to the diagonal line, so the shape of the path shows where the orbit goes.**
 
-**What kind of fact this is:** a method (a way to compute and draw an orbit), with one theorem behind it, that a settling orbit of a continuous rule settles on a point the rule leaves unchanged, proved on this card in Why it works.
+**What kind of fact this is:** a method (a way to compute and draw an orbit), with one theorem behind it. The theorem, proved on this card in Why it works: a settling orbit of a continuous rule (one with no jumps) settles on a point the rule leaves unchanged.
 
 ### The picture: the square-root rule's staircase
 
@@ -44,7 +44,7 @@ The card's two rules:
 
 $$g(x) = \frac{1}{2}\left(x + \frac{2}{x}\right) \qquad\text{and}\qquad g(x) = r\,x\,(1 - x)$$
 
-The first is the square-root rule. The second is the **logistic map**: $x$ is the stock as a share of capacity, the factor $1 - x$ is the room left, and $r$ sets how hard the stock grows; here $r$ = 2.8.
+The first is the square-root rule. The second is the **logistic map**: $x$ is the stock as a share of capacity, the factor $1 - x$ is the room left, and $r$ sets how hard the stock grows. Here $r$ = 2.8.
 
 A value the rule leaves unchanged, $g(x^*) = x^*$, is a **fixed point**: a resting level.
 
@@ -64,7 +64,7 @@ A value the rule leaves unchanged, $g(x^*) = x^*$, is a **fixed point**: a resti
 - **The rule sees only the current value.** A rule that changes each step has no single curve to draw.
 - **The orbit stays where the rule is defined.** The square-root rule breaks at 0; the logistic map with $r$ above 4 throws the stock below zero.
 - **One number describes the state.** Two or more numbers need orbits drawn in space, as in [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md).
-- **A continuous rule, for the limit theorem.** A rule with a jump can have an orbit that settles on a value the rule moves.
+- **A continuous rule, for the limit theorem.** A rule with a jump can have an orbit that settles on a value the rule moves ([Continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/05-continuity.md)).
 
 ---
 
@@ -96,7 +96,7 @@ Scale: 180 units per unit of capacity on both axes. The path rises from 0.2 to 0
 - **A closed box**: a swing that never settles. At $r$ = 3.2 the stock alternates 0.513045 and 0.799455: boom year, bust year.
 - **A tangle**: wandering. At $r$ = 3.9 the stock in years 50 to 53 is 0.368628, 0.907692, 0.326771, 0.857968, with no repeat in sight; 1000 later years land on 911 different values to four decimals.
 
-Why the spiral alternates: near the crossing the curve is almost a straight line of slope s, so the distance from $x^*$ is multiplied by s each step, and a negative s flips the side. At the fish stock's resting level s = 2 − r = −0.8, and the check measures the distance multiplied by −0.800000 each year. Which slopes attract an orbit is [Fixed points of a map](02-fixed-points-of-a-map.md).
+Why the spiral alternates: near the crossing the curve is almost a straight line of slope s. So the distance from $x^*$ is multiplied by s each step, and a negative s flips the side. At the fish stock's resting level s = 2 − r = −0.8, and the check measures the distance multiplied by −0.800000 each year. Which slopes attract an orbit is [Fixed points of a map](02-fixed-points-of-a-map.md).
 
 On a phase line ([Slope fields and the phase line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md)) a solution never passes a resting level. A map jumps, so it can leap over one: hence the spiral, the box and the tangle.
 
@@ -119,7 +119,7 @@ Subtract $\sqrt2$ from the rule and put everything over $2x_n$:
 
 $$x_{n+1} - \sqrt2 = \frac{x_n^2 - 2\sqrt2\,x_n + 2}{2x_n} = \frac{(x_n - \sqrt2)^2}{2x_n}$$
 
-The new error is the old one squared, over twice the guess: 0.00245 after step 2 becomes 0.00000212 after step 3, as the check confirms. The curve is flat where it meets the diagonal, so the staircase collapses at once. This is Newton's method for $x^2 = 2$.
+The new error is the old one squared, over twice the guess: 0.00245 after step 2 becomes 0.00000212 after step 3, as the check confirms. The curve is flat where it meets the diagonal, so the staircase collapses at once. This is Newton's method for $x^2 = 2$: each step follows the tangent line of $x^2 - 2$ down to zero ([Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md)).
 
 A second road needs no decimals: a guess p/q goes to $(p^2 + 2q^2)/(2pq)$. From 1/1 that gives 3/2, 17/12, 577/408 and 665857/470832, which the check compares with the decimal orbit.
 
@@ -155,7 +155,13 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one feeds each rule its own output. Road two avoids that loop: the square root by exact fractions and by bisection (halving an interval that brackets the root), the resting level by Step 3's algebra, the spiral's shrink factor by the curve's slope. Four asserts compare the roads.
+Nothing is imported. Road one feeds each rule its own output. Road two avoids that loop:
+
+- the square root by exact fractions and by bisection (halving an interval that brackets the root);
+- the resting level by Step 3's algebra;
+- the spiral's shrink factor by the curve's slope.
+
+Four asserts compare the roads.
 
 ### Python
 
@@ -356,6 +362,112 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three facts for every rule, guess and growth factor they cover, and checks the card's numbers exactly.
+
+- Suppose a continuous rule's orbit settles on a number $x^*$. Then the rule leaves that number unchanged: $g(x^*) = x^*$.
+- Take any guess except 0. Then the square-root rule's new error is the old error squared, over twice the guess.
+- Take any growth factor $r$ except 0. Then the logistic map leaves $x$ unchanged exactly when $x = 0$ or $x = 1 - 1/r$.
+- The square-root rule from 1 gives exactly 3/2, 17/12, 577/408 and 665857/470832, by both roads.
+- At $r$ = 2.8 from 0.2, the fish stock gives 0.448, then 0.6924288. Its resting level, 9/14 or about 0.642857, stays put.
+- The first three rows of the mistakes table come out as the card says.
+
+Decimal orbits, the spiral's shrink factor and the runs at $r$ = 3.2 and 3.9 are left to the Python and Rust checks.
+
+```lean
+-- Iteration: a settling orbit of a continuous rule settles on a point the rule leaves unchanged, and the card's two rules have the fixed points and error law it computes.
+import Mathlib.Dynamics.FixedPoints.Topology
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+
+open Filter Topology
+
+/-! The rule is a map `g : ℝ → ℝ`. The orbit from `x₀` is `x₀, g x₀, g (g x₀), …`;
+its `n`-th value `xₙ = gⁿ(x₀)` is Mathlib's `g^[n] x₀` (apply `g` `n` times, not a power).
+"The orbit settles on `x⋆`" is `Tendsto (fun n => g^[n] x₀) atTop (𝓝 x⋆)`.
+A fixed point is a value with `g x⋆ = x⋆`.
+The square-root rule is `x ↦ (x + 2/x)/2`; the logistic map is `x ↦ r x (1 - x)`. -/
+
+/-- Step 3 of the card: if the orbit of a continuous rule settles on a number `x⋆`,
+then the rule leaves `x⋆` unchanged, `g x⋆ = x⋆`. -/
+theorem settling_orbit_settles_on_fixed_point (g : ℝ → ℝ) (hg : Continuous g)
+    (x₀ xstar : ℝ) (h : Tendsto (fun n : ℕ => g^[n] x₀) atTop (𝓝 xstar)) :
+    g xstar = xstar := by
+  exact isFixedPt_of_tendsto_iterate h hg.continuousAt
+
+/-- Step 4 of the card: for the square-root rule, the new error is the old error squared
+over twice the guess, `xₙ₊₁ - √2 = (xₙ - √2)² / (2 xₙ)`, for every nonzero guess. -/
+theorem sqrt_rule_error_squares (x : ℝ) (hx : x ≠ 0) :
+    (x + 2 / x) / 2 - Real.sqrt 2 = (x - Real.sqrt 2) ^ 2 / (2 * x) := by
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have h2x : (2 : ℝ) * x ≠ 0 := mul_ne_zero two_ne_zero hx
+  rw [eq_div_iff h2x]
+  field_simp
+  nlinarith [h2]
+
+/-- The logistic map's resting levels: `r x (1 - x) = x` exactly when the lake is empty,
+`x = 0`, or the stock sits at `x⋆ = 1 - 1/r`. -/
+theorem logistic_fixed_points (r x : ℝ) (hr : r ≠ 0) :
+    r * x * (1 - x) = x ↔ x = 0 ∨ x = 1 - 1 / r := by
+  constructor
+  · intro h
+    have h' : x * (r * (1 - x) - 1) = 0 := by linear_combination h
+    rcases mul_eq_zero.mp h' with h0 | h1
+    · exact Or.inl h0
+    · right
+      field_simp
+      linear_combination -h1
+  · rintro (h0 | h1)
+    · subst h0; ring
+    · subst h1
+      field_simp
+      ring
+
+-- The square-root rule from 1, as exact fractions: 3/2, 17/12, 577/408, 665857/470832.
+example : (fun x : ℚ => (x + 2 / x) / 2)^[1] 1 = 3 / 2 := by
+  norm_num
+example : (fun x : ℚ => (x + 2 / x) / 2)^[2] 1 = 17 / 12 := by
+  norm_num [Function.iterate_succ_apply']
+example : (fun x : ℚ => (x + 2 / x) / 2)^[3] 1 = 577 / 408 := by
+  norm_num [Function.iterate_succ_apply']
+example : (fun x : ℚ => (x + 2 / x) / 2)^[4] 1 = 665857 / 470832 := by
+  norm_num [Function.iterate_succ_apply']
+-- The whole-number road: p/q goes to (p² + 2q²)/(2pq); four steps from 1/1 give 665857/470832.
+example : (fun pq : ℕ × ℕ => (pq.1 * pq.1 + 2 * pq.2 * pq.2, 2 * pq.1 * pq.2))^[4] (1, 1)
+    = (665857, 470832) := by
+  decide
+-- The fish stock at r = 2.8 = 14/5 from 0.2 = 1/5: year 1 is 0.448 = 56/125.
+example : (14 / 5 : ℚ) * (1 / 5) * (1 - 1 / 5) = 56 / 125 := by norm_num
+-- Year 2 is exactly 54096/78125 = 0.6924288, printed as 0.692429.
+example : (14 / 5 : ℚ) * (56 / 125) * (1 - 56 / 125) = 54096 / 78125 := by norm_num
+-- The resting level 1 - 1/2.8 = 9/14 = 0.642857..., and the rule leaves it unchanged.
+example : (1 : ℚ) - 1 / (14 / 5) = 9 / 14 := by norm_num
+example : (14 / 5 : ℚ) * (9 / 14) * (1 - 9 / 14) = 9 / 14 := by norm_num
+-- Mistake 1: g(x) = 0 at 0 and 1, an empty lake and a full one, not the resting level.
+example : (14 / 5 : ℚ) * 0 * (1 - 0) = 0 ∧ (14 / 5 : ℚ) * 1 * (1 - 1) = 0 := by norm_num
+-- Mistake 2: the rule 2/x from 1 boxes 1, 2, 1, 2, 1.
+example : (fun x : ℚ => 2 / x)^[1] 1 = 2 ∧ (fun x : ℚ => 2 / x)^[4] 1 = 1 := by
+  norm_num [Function.iterate_succ_apply']
+-- Mistake 3: g(0.2) squared is 0.200704 = 3136/15625, not g(g(0.2)).
+example : ((14 / 5 : ℚ) * (1 / 5) * (1 - 1 / 5)) ^ 2 = 3136 / 15625 := by norm_num
+
+#print axioms settling_orbit_settles_on_fixed_point
+#print axioms sqrt_rule_error_squares
+#print axioms logistic_fixed_points
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'settling_orbit_settles_on_fixed_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sqrt_rule_error_squares' depends on axioms: [propext, Classical.choice, Quot.sound]
+'logistic_fixed_points' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -399,6 +511,8 @@ The two outputs match line for line.
 - [Fixed points of a map](02-fixed-points-of-a-map.md): the slope test that says which resting levels attract an orbit and which repel it.
 - [Dynamic programming](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): a value table iterated until it stops changing.
 - Collatz: a one-line whole-number rule whose orbits no one can yet predict.
+
+Left open: the fish stock settles at $r$ = 2.8 but wanders at $r$ = 3.9, so where between them does settling stop?
 
 ---
 
