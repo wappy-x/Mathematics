@@ -10,7 +10,11 @@ A trial gives a new drug to 100 patients and a dummy pill, a placebo, to 100 oth
 
 Is that gap the drug working, or the luck of which patients landed in which group? Even a useless pill rarely produces two equal counts: two groups of 100 drawn from the same population differ by a few patients just by chance. The question is whether 10 is a gap that luck produces often or rarely.
 
-A test answers it by arguing from the other side. Suppose the drug does nothing. Then both groups recover at one shared rate, and any gap is luck. Measure the gap in units of the wobble luck predicts, and work out how often luck alone would produce a gap at least that many wobbles out. That share is the **p-value**, the term used from here on. For this trial it is **0.15**: a useless drug would produce a gap this far out, in either direction, about 15 trials in 100. That is common. The data do not rule out luck.
+A test answers it by arguing from the other side. Suppose the drug does nothing. Then both groups recover at one shared rate, and any gap is luck.
+
+Measure the gap in units of the wobble luck predicts, and work out how often luck alone would produce a gap at least that many wobbles out. That share is the **p-value**, the term used from here on.
+
+For this trial it is **0.15**: a useless drug would produce a gap this far out, in either direction, about 15 trials in 100. That is common. The data do not rule out luck.
 
 The p-value is a statement about data under an assumption. It is not the chance that the drug is useless. That second number needs more than the trial can supply, and this card shows how far apart the two can be.
 
@@ -22,13 +26,17 @@ The p-value is a statement about data under an assumption. It is not the chance 
 
 <p align="center"><img src="../figures/hypothesis-tests-and-p-values.svg" alt="The standard bell curve for the gap measured in standard errors, if the drug does nothing, with both tails beyond 1.44 shaded; together they hold 0.149 of the area" width="420"></p>
 
-The curve is the chance law of the gap, measured in standard errors, in a world where the drug does nothing. The dashed line on the right is where this trial landed, 1.44 standard errors out. The shaded areas are the gaps at least as far out in either direction. Together they hold 0.149 of the area: the p-value. Drawn to scale, 40 units per standard error.
+The curve is the chance law of the gap, measured in standard errors, in a world where the drug does nothing. A standard error is the size of gap that luck alone typically produces. The dashed line on the right is where this trial landed, 1.44 standard errors out. The shaded areas are the gaps at least as far out in either direction. Together they hold 0.149 of the area: the p-value. Drawn to scale, 40 units per standard error.
 
 ---
 
 ## The formula
 
-Notation first, in words. The claim being tested, "the drug does nothing", is the **null hypothesis**, written $H_0$ and read "H nought". The rival claim, "the drug changes the recovery rate", is the **alternative**, $H_1$. The true recovery rates are $r_D$ on the drug and $r_P$ on placebo; a hat marks an estimate from the trial, so $\hat r_D$ = 45/100 = 0.45 and $\hat r_P$ = 0.35. Each group has $n$ = 100 patients. Under $H_0$ both groups share one rate, estimated by pooling them: $\bar r$ = 80/200 = 0.40. A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): $\Phi(x)$ is the standard bell's area to the left of x.
+Notation first, in words. The claim being tested, "the drug does nothing", is the **null hypothesis**, written $H_0$ and read "H nought". The rival claim, "the drug changes the recovery rate", is the **alternative**, $H_1$.
+
+The true recovery rates are $r_D$ on the drug and $r_P$ on placebo; a hat marks an estimate from the trial, so $\hat r_D$ = 45/100 = 0.45 and $\hat r_P$ = 0.35. Each group has $n$ = 100 patients. Under $H_0$ both groups share one rate, estimated by pooling them: $\bar r$ = 80/200 = 0.40.
+
+A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): $\Phi(x)$ is the standard bell's area to the left of x.
 
 The **test statistic** turns the trial into one number, the gap in units of its standard error:
 
@@ -94,7 +102,9 @@ The bell is an approximation, so two more roads check it. Enumerating all 10,201
 
 ### Step 4: why a p-value can be trusted, and what it promises
 
-The p-value has one property that makes it usable. If the dull explanation is true and the statistic has a continuous law, the p-value is spread evenly between 0 and 1. So a p-value below 0.05 turns up 5 times in 100, below 0.15 turns up 15 times in 100, and so on. That is the whole guarantee: a rule that rejects when $p \le 0.05$ raises a false alarm on a useless drug 5 times in 100. Counts are not continuous, so for this trial the promise is close, 0.0514, not exact.
+The p-value has one property that makes it usable. If the dull explanation is true and the statistic has a continuous law, the p-value is spread evenly between 0 and 1. So a p-value below 0.05 turns up 5 times in 100, below 0.15 turns up 15 times in 100, and so on.
+
+That is the whole guarantee: a rule that rejects when $p \le 0.05$ raises a false alarm on a useless drug 5 times in 100. Counts are not continuous, so for this trial the promise is close, 0.0514, not exact.
 
 <details>
 <summary>Detailed proof: under the null, the chance that p is at most u is u</summary>
@@ -131,9 +141,15 @@ A decision at level 0.05 can go wrong two ways. Rejecting a true $H_0$ is a **fa
 
 Here the miss is the bigger danger. Suppose the drug truly lifts recovery from 0.35 to 0.45, exactly what was observed. Enumerating every outcome, a trial of 100 per group reaches p ≤ 0.05 with chance 0.3078. Simulation agrees: 0.3080, give or take 0.0033. So at this size, a real 10-point benefit goes undetected in most trials. A p-value of 0.15 is weak evidence against $H_0$; it is not evidence for it.
 
-The same point shows in the confidence interval for the gap. It is the z recipe of [Confidence intervals](01-confidence-intervals.md), the estimate plus or minus 1.959964 standard errors, with each group's own rate in the standard error: the square root of 0.45 × 0.55 / 100 + 0.35 × 0.65 / 100 is 0.068920. The 95 percent interval is 0.10 ± 1.959964 × 0.068920 = 0.10 ± 0.1351, from −0.0351 to 0.2351. It contains 0, which is why the test at 0.05 does not reject, and it also contains a benefit as large as 0.2351. The two tools are one idea read two ways: a level-0.05 test rejects a proposed gap exactly when the 95 percent interval leaves it out. Here the interval uses each group's own spread rather than the pooled 0.40, so the match between the two is close rather than exact.
+The same point shows in the confidence interval for the gap. It is the z recipe of [Confidence intervals](01-confidence-intervals.md), the estimate plus or minus 1.959964 standard errors, with each group's own rate in the standard error: the square root of 0.45 × 0.55 / 100 + 0.35 × 0.65 / 100 is 0.068920. The 95 percent interval is 0.10 ± 1.959964 × 0.068920 = 0.10 ± 0.1351, from −0.0351 to 0.2351.
 
-A different road to a p-value keeps the 80 recoveries fixed and asks how often shuffling the 200 patients at random between the groups puts 45 or more, or 35 or fewer, in the drug group. That is the permutation test, also called Fisher's exact test, built on the law of [Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md). It gives 0.1938. It asks a slightly different question, so it gives a different number; which test to use is decided before the data arrive. The same gap squared is the statistic of [Chi-square tests](06-chi-square-tests.md), and [Likelihood ratio tests](07-likelihood-ratio-tests.md) shows where good statistics come from.
+It contains 0, which is why the test at 0.05 does not reject, and it also contains a benefit as large as 0.2351.
+
+The two tools are one idea read two ways: a level-0.05 test rejects a proposed gap exactly when the 95 percent interval leaves it out. Here the interval uses each group's own spread rather than the pooled 0.40, so the match between the two is close rather than exact.
+
+A different road to a p-value keeps the 80 recoveries fixed and asks how often shuffling the 200 patients at random between the groups puts 45 or more, or 35 or fewer, in the drug group. That is the permutation test, also called Fisher's exact test, built on the law of [Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md). It gives 0.1938. It asks a slightly different question, so it gives a different number; which test to use is decided before the data arrive.
+
+The same gap squared is the statistic of [Chi-square tests](06-chi-square-tests.md), and [Likelihood ratio tests](07-likelihood-ratio-tests.md) shows where good statistics come from.
 
 ---
 
@@ -167,7 +183,11 @@ If the drug did nothing, trials like this one would show a gap at least 1.44 sta
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the p-value by four roads. Road 1 computes the bell's tail from its own Taylor series. Road 2 integrates the bell's height by Simpson's rule, a weighted sum of heights at evenly spaced points, with no series. Road 3 enumerates all 10,201 possible pairs of counts under the null and adds their exact binomial chances, with no bell at all. Road 4 simulates 20,000 useless-drug trials with a SplitMix64 generator (a short, fixed recipe for random bits, seed 20260928) and counts how often the gap is at least as far out. The same simulated trials measure the false-alarm rate at level 0.05, the power, the cost of peeking, and the p-value histogram. The permutation p-value, the interval, the two size examples and the share of false alarms among rejections follow. Asserts compare the series with the integral, the bell with the exact enumeration, and each simulated share with its exact value within four standard errors; the last assert requires peeking to break the 5 percent promise.
+The code reaches the p-value by four roads. Road 1 computes the bell's tail from its own Taylor series. Road 2 integrates the bell's height by Simpson's rule, a weighted sum of heights at evenly spaced points, with no series. Road 3 enumerates all 10,201 possible pairs of counts under the null and adds their exact binomial chances, with no bell at all. Road 4 simulates 20,000 useless-drug trials with a SplitMix64 generator (a short, fixed recipe for random bits, seed 20260928) and counts how often the gap is at least as far out.
+
+The same simulated trials measure the false-alarm rate at level 0.05, the power, the cost of peeking, and the p-value histogram. The permutation p-value, the interval, the two size examples and the share of false alarms among rejections follow.
+
+Asserts compare the series with the integral, the bell with the exact enumeration, and each simulated share with its exact value within four standard errors; the last assert requires peeking to break the 5 percent promise.
 
 ### Python
 
@@ -537,6 +557,159 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulation included: both languages draw the same random bits from the same generator.
 
+### Lean
+
+Lean proves the p-value's guarantee under a true $H_0$, both for a continuous law and for an exact count law.
+
+- Take a statistic $T$ with a continuous law under $H_0$, and $G(t) = P(T \le t)$. Then $P(1 - G(T) \le u) = u$ for every $u$ from 0 to 1.
+- Take any statistic $T$, counts included, and its exact p-value: the chance of a value at least as large. Then $P(p \le u) \le u$ for every $u$ from 0 to 1.
+- The hand arithmetic holds exactly: gap 0.10, pooled rate 0.40, variance of the gap 0.004800, and $z^2 = 25/12$.
+- Also exact: four times the patients with the same gap doubles $z$, and the enumeration covers 10,201 pairs of counts.
+
+The decimals, the bell's tail, the exact enumeration, the simulation, the power and the permutation test are left to the Python and Rust checks.
+
+```lean
+-- Hypothesis tests: under a true null, a p-value from a statistic with a continuous law has chance exactly u of being at most u, and an exact p-value from any law has chance at most u.
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
+import Mathlib.MeasureTheory.Measure.Real
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Measure.Regular
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+
+open MeasureTheory
+
+/-- Helper: if a random number `S` lands in an upper set `U` of the line, and each tail
+event `t ≤ S` with `t ∈ U` has chance at most `u`, then `S ∈ U` has chance at most `u`. -/
+lemma upperSet_preimage_le {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ] (S : Ω → ℝ) (hS : Measurable S)
+    (U : Set ℝ) (hU : IsUpperSet U) (u : ℝ) (hu : 0 ≤ u)
+    (h : ∀ t ∈ U, μ.real {ω | t ≤ S ω} ≤ u) :
+    μ.real (S ⁻¹' U) ≤ u := by
+  have hUm : MeasurableSet U := hU.ordConnected.measurableSet
+  by_contra hlt
+  push Not at hlt
+  have hν : (μ.map S) U = μ (S ⁻¹' U) := Measure.map_apply hS hUm
+  have hr : ENNReal.ofReal u < (μ.map S) U := by
+    rw [hν, ← ofReal_measureReal]
+    exact (ENNReal.ofReal_lt_ofReal_iff_of_nonneg hu).2 hlt
+  obtain ⟨K, hKU, hK, hrK⟩ :=
+    hUm.exists_lt_isCompact_of_ne_top (measure_ne_top (μ.map S) U) hr
+  rcases K.eq_empty_or_nonempty with rfl | hne
+  · simp at hrK
+  · have hm := hK.sInf_mem hne
+    have hKsub : K ⊆ Set.Ici (sInf K) := fun x hx => csInf_le hK.bddBelow hx
+    have h1 : (μ.map S) K ≤ (μ.map S) (Set.Ici (sInf K)) := measure_mono hKsub
+    rw [Measure.map_apply hS measurableSet_Ici] at h1
+    have h2 := h (sInf K) (hKU hm)
+    have h3 : μ {ω | sInf K ≤ S ω} ≤ ENNReal.ofReal u := by
+      rw [← ofReal_measureReal]
+      exact ENNReal.ofReal_le_ofReal h2
+    exact absurd (hrK.trans_le (h1.trans h3)) (lt_irrefl _)
+
+#print axioms upperSet_preimage_le
+
+/-- Under the null hypothesis, let the statistic `T` (on the card, `T = |Z|`) have a
+continuous law, with `G t = P(T ≤ t)`. The p-value of a trial not yet run is the random
+number `1 - G T`. Then for every `u` between 0 and 1, the chance that the p-value is at
+most `u` is exactly `u`: the p-value is spread evenly between 0 and 1, so the rule
+"reject when `p ≤ α`" rejects a true null with chance exactly `α`. -/
+theorem p_value_uniform_under_null {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (T : Ω → ℝ) (hT : Measurable T)
+    (hG : Continuous fun t : ℝ => μ.real {ω | T ω ≤ t})
+    (u : ℝ) (hu0 : 0 ≤ u) (hu1 : u ≤ 1) :
+    μ.real {ω | 1 - μ.real {ω' | T ω' ≤ T ω} ≤ u} = u := by
+  have hGm : Monotone fun t : ℝ => μ.real {ω | T ω ≤ t} :=
+    fun a b hab => measureReal_mono (fun ω (hω : T ω ≤ a) => le_trans hω hab)
+  -- Upper bound: the chance is at most `u`.
+  have hup : μ.real {ω | 1 - μ.real {ω' | T ω' ≤ T ω} ≤ u} ≤ u := by
+    refine upperSet_preimage_le μ T hT {t | 1 - μ.real {ω' | T ω' ≤ t} ≤ u} ?_ u hu0 ?_
+    · intro a b hab ha
+      simp only [Set.mem_ofPred_eq] at ha ⊢
+      linarith [hGm hab]
+    · intro t ht
+      simp only [Set.mem_ofPred_eq] at ht
+      have hlt : μ.real {ω' | T ω' ≤ t} ≤ μ.real {ω' | T ω' < t} := by
+        have hlim : Filter.Tendsto (fun s : ℝ => μ.real {ω' | T ω' ≤ s})
+            (nhdsWithin t (Set.Iio t)) (nhds (μ.real {ω' | T ω' ≤ t})) :=
+          (hG.continuousAt.tendsto).mono_left nhdsWithin_le_nhds
+        refine le_of_tendsto hlim ?_
+        refine eventually_nhdsWithin_of_forall fun s hs => ?_
+        exact measureReal_mono (fun ω (hω : T ω ≤ s) => lt_of_le_of_lt hω hs)
+      have hc : {ω | t ≤ T ω} = {ω' | T ω' < t}ᶜ := by
+        ext ω; simp
+      rw [hc, probReal_compl_eq_one_sub (measurableSet_lt hT measurable_const)]
+      linarith
+  -- Lower bound: the chance is at least `u`.
+  have hlow : u ≤ μ.real {ω | 1 - μ.real {ω' | T ω' ≤ T ω} ≤ u} := by
+    have hmeas : MeasurableSet {ω | μ.real {ω' | T ω' ≤ T ω} < 1 - u} :=
+      measurableSet_lt (hGm.measurable.comp hT) measurable_const
+    have hc : {ω | 1 - μ.real {ω' | T ω' ≤ T ω} ≤ u} =
+        {ω | μ.real {ω' | T ω' ≤ T ω} < 1 - u}ᶜ := by
+      ext ω; simp only [Set.mem_ofPred_eq, Set.mem_compl_iff, not_lt]
+      constructor <;> intro h <;> linarith
+    have hpre : {ω | μ.real {ω' | T ω' ≤ T ω} < 1 - u} =
+        (fun ω => -T ω) ⁻¹' {s | μ.real {ω' | T ω' ≤ -s} < 1 - u} := by
+      ext ω; simp
+    have hkey : μ.real {ω | μ.real {ω' | T ω' ≤ T ω} < 1 - u} ≤ 1 - u := by
+      rw [hpre]
+      refine upperSet_preimage_le μ (fun ω => -T ω) hT.neg _ ?_ (1 - u) (by linarith) ?_
+      · intro a b hab ha
+        simp only [Set.mem_ofPred_eq] at ha ⊢
+        exact lt_of_le_of_lt (hGm (neg_le_neg hab)) ha
+      · intro s hs
+        simp only [Set.mem_ofPred_eq] at hs
+        have he : {ω | s ≤ -T ω} = {ω' | T ω' ≤ -s} := by
+          ext ω; simp [le_neg]
+        rw [he]
+        exact hs.le
+    rw [hc, probReal_compl_eq_one_sub hmeas]
+    linarith
+  exact le_antisymm hup hlow
+
+/-- When the law of the statistic `T` may jump, as it does for counts, the p-value computed
+exactly from that law is the chance of a value at least as large, `P(T ≥ t)` at `t = T`.
+Under the null it is slightly careful: for every `u` between 0 and 1, the chance that this
+p-value is at most `u` is at most `u`. -/
+theorem exact_p_value_le_under_null {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (T : Ω → ℝ) (hT : Measurable T)
+    (u : ℝ) (hu0 : 0 ≤ u) (hu1 : u ≤ 1) :
+    μ.real {ω | μ.real {ω' | T ω ≤ T ω'} ≤ u} ≤ u := by
+  refine upperSet_preimage_le μ T hT {t | μ.real {ω' | t ≤ T ω'} ≤ u} ?_ u hu0 ?_
+  · intro a b hab ha
+    simp only [Set.mem_ofPred_eq] at ha ⊢
+    exact le_trans (measureReal_mono (fun ω (hω : b ≤ T ω) => le_trans hab hω)) ha
+  · intro t ht
+    exact ht
+
+-- The card's worked numbers, as exact fractions.
+-- Observed gap: 45/100 - 35/100 = 1/10.
+example : (45 : ℚ) / 100 - 35 / 100 = 1 / 10 := by norm_num
+-- Pooled rate under the null: 80 of 200 recovered, 2/5 = 0.40.
+example : (45 + 35 : ℚ) / 200 = 2 / 5 := by norm_num
+-- Variance of the gap: 0.40 × 0.60 × 2 / 100 = 0.0048 = 3/625.
+example : (2 / 5 : ℚ) * (1 - 2 / 5) * (2 / 100) = 3 / 625 := by norm_num
+-- z squared: 0.10² / 0.0048 = 25/12, so z = 1.443376...
+example : ((1 / 10 : ℚ) ^ 2) / (3 / 625) = 25 / 12 := by norm_num
+-- Four times the patients, same gap (180/400 vs 140/400): z squared is 4 × 25/12, so z doubles.
+example : ((180 : ℚ) / 400 - 140 / 400) ^ 2 /
+    ((320 / 800) * (1 - 320 / 800) * (2 / 400)) = 4 * (25 / 12) := by norm_num
+-- Every pair of counts, 0 to 100 recoveries in each group: 101 × 101 = 10,201 pairs.
+example : (Finset.range 101 ×ˢ Finset.range 101).card = 10201 := by
+  norm_num [Finset.card_product]
+
+#print axioms p_value_uniform_under_null
+#print axioms exact_p_value_le_under_null
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'upperSet_preimage_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'p_value_uniform_under_null' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exact_p_value_le_under_null' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -574,7 +747,7 @@ The two outputs match line for line, simulation included: both languages draw th
 
 ## What this builds on
 
-- [Confidence intervals](01-confidence-intervals.md): the standard error, the pivot, and the idea that a guarantee belongs to the method; a test is the same pivot read at one proposed value.
+- [Confidence intervals](01-confidence-intervals.md): the standard error, the pivot (a quantity whose chance law does not involve the unknown), and the idea that a guarantee belongs to the method; a test is the same pivot read at one proposed value.
 - [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the count law behind each group and the exact enumeration.
 - [Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): why the bell's tail stands in for the exact count.
 

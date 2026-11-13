@@ -148,5 +148,5 @@ fn main() {
     assert!(pf(n_need) >= TARGET && TARGET > pf(n_need - 1));                 // closed form vs power
     assert!((n_ex as i64 - n_need as i64).abs() <= 5);                        // enumeration vs closed form
     for (est, se, ex) in sims { assert!((est - ex).abs() < 4.0 * se); }       // simulation vs enumeration
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

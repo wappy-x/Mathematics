@@ -8,9 +8,15 @@
 
 A kitchen scale weighs the same 500 g bag of flour again and again. The readings scatter. The error, reading minus 500 g, follows a normal law: mean 0 g, standard deviation 2 g. About 68 weighings in 100 land within 2 g of the truth (0.682689 of them, in the checks below).
 
-That bell in grams is one way to describe the error. There is a second way, and it turns hard questions about sums of errors into multiplication. Pick a rate, say half a radian per gram. Turn each error into a point on a circle, rotated by that rate times the error, and average the points over many weighings. At a rate of 0.5 per gram the average is 0.606531. Do it at every rate and the result is a function of the rate: the error's **characteristic function**. It is the Fourier transform of the error's distribution, read with the probe turning the other way.
+That bell in grams is one way to describe the error. There is a second way, and it turns hard questions about sums of errors into multiplication.
 
-The scale's characteristic function is a bell too. Its values fall from 1 at rate 0 to 0.135335 at rate 1, along a curve of the same shape as the error's density. A wide bell in grams becomes a narrow bell in rates. And nothing is lost: an inverse integral turns the characteristic function back into the density, point by point, and back into chances of intervals. So two laws with the same characteristic function are the same law.
+Pick a rate, say half a radian per gram. Turn each error into a point on a circle, rotated by that rate times the error, and average the points over many weighings. At a rate of 0.5 per gram the average is 0.606531.
+
+Do it at every rate and the result is a function of the rate: the error's **characteristic function**. It is the Fourier transform of the error's distribution, read with the turn running the other way. A Fourier transform breaks a curve into turning waves, one for each rate ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)).
+
+The scale's characteristic function is a bell too. Its values fall from 1 at rate 0 to 0.135335 at rate 1, along a curve of the same shape as the error's density. A wide bell in grams becomes a narrow bell in rates.
+
+And nothing is lost: an inverse integral turns the characteristic function back into the density, point by point, and back into chances of intervals. So two laws with the same characteristic function are the same law.
 
 **The characteristic function of a random quantity is the average of a point on the unit circle turned by t times the quantity; for a normal error it is again a bell, independent errors multiply it, and an inversion integral recovers the distribution from it, so it identifies the law completely.**
 
@@ -47,7 +53,12 @@ Orange: an error with standard deviation 1 g. Green: the kitchen scale, standard
 
 ## The formula
 
-Notation first, in words. The wing writes E[X] for the long-run average of X ([Expectation](../02-Random%20Variables/02-expectation.md)). The letter $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{itX}$ is the point at angle t times X on the circle of radius 1: its across-coordinate is cos(tX) and its up-coordinate is sin(tX) ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The characteristic function is written $\varphi_X(t)$, read "phi of X at t". The subscript keeps it apart from the bell's height, which the normal card also calls phi.
+Notation first, in words.
+
+- The wing writes E[X] for the long-run average of X ([Expectation](../02-Random%20Variables/02-expectation.md)).
+- The letter $i$ is the imaginary unit, the number whose square is −1.
+- By Euler's formula, $e^{itX}$ is the point at angle t times X on the circle of radius 1: its across-coordinate is cos(tX) and its up-coordinate is sin(tX) ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
+- The characteristic function is written $\varphi_X(t)$, read "phi of X at t". The subscript keeps it apart from the bell's height, which the normal card also calls phi.
 
 $$\varphi_X(t) = E\!\left[e^{itX}\right] = E[\cos(tX)] + i\,E[\sin(tX)]$$
 
@@ -93,11 +104,11 @@ $$P(a < X < b) = \lim_{T\to\infty}\frac{1}{2\pi}\int_{-T}^{T} \frac{e^{-ita} - e
 | $\varepsilon$ | the spread of the tiny normal blur in Step 3's proof | shrinks to 0 | the blurred density smears wider |
 | $k$, $j$ | whole numbers: faces of the die in Step 6; in Step 2, k numbers the terms of the series | face 3 | — |
 
-The characteristic function is the Fourier transform of the density with the probe reversed: the Fourier card writes the transform with e^(−iωt), ω being its frequency, and this card averages e^(+itX), so the characteristic function at t is the transform at −t ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)). The inversion formula above is that card's inversion with the same sign flip.
+The characteristic function is the Fourier transform of the density with the turn reversed. The Fourier card writes the transform with e^(−iωt), ω being its frequency, and this card averages e^(+itX). So the characteristic function at t is the transform at −t ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)). The inversion formula above is that card's inversion with the same sign flip.
 
 ### When it holds
 
-- **Existence: always.** Every point sits on a circle of radius 1, so the average exists for every law, even one with no mean. The moment generating function can fail: a Cauchy error ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has none, yet its characteristic function is e^(−|t|).
+- **Existence: always.** Every point sits on a circle of radius 1, so the average exists for every law, even one with no mean. The moment generating function, the average of e^(tX) ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)), can fail: a Cauchy error ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has none, yet its characteristic function is e^(−|t|).
 - **Density inversion: needs a characteristic function of finite total size.** A die has no density, its characteristic function never dies out, and the density formula at face 3 climbs with the cut-off: 0.5038, 1.1920, 2.1587 at cut-offs 10, 20, 40.
 - **Lévy's formula: ends that carry no probability.** At an end that carries probability, the integral counts half of it. For the scale, every single point has chance zero, so any ends work.
 - **Uniqueness: every t.** Agreement at a few rates proves nothing: a die and a die shifted up by 4 agree at t = 0, π/2, π, 3π/2 and 2π, and differ by 0.089218 at t = 1.
@@ -115,13 +126,13 @@ The second idea is Fourier's. For an error with a density, the average is an int
 
 ### Step 1: shifts turn it, scales stretch it, independent sums multiply it
 
-If the scale reads a fixed amount c too heavy, every turned point gains a fixed extra turn tc, so the average gains the factor e^(itc). If the error is multiplied by a fixed number s, the rate t acts as rate st: the characteristic function of sX + c is e^(itc) times the characteristic function of X at st.
+If the scale reads a fixed amount c too heavy, every turned point gains a fixed extra turn tc, so the average gains the factor e^(itc). If the error is multiplied by a fixed number s, the rate t acts as rate st. So the characteristic function of sX + c is e^(itc) times the characteristic function of X at st.
 
 For two independent errors X and Y, e^(it(X+Y)) is e^(itX) times e^(itY), and the average of a product of independent quantities is the product of their averages. So the characteristic function of X + Y is the product of the two. The density of a sum is a convolution integral ([Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md)); its characteristic function is one multiplication. This is why the tool exists.
 
 ### Step 2: the normal's characteristic function is a bell
 
-Start with the standard normal, written Z: mean 0, standard deviation 1. The sine part vanishes: the bell is symmetric, so sin(tX) is as often −s as +s. The cosine part is expanded in its Taylor series, cos u = 1 − u^2/2! + u^4/4! − …, and averaged term by term.
+Start with the standard normal, written Z: mean 0, standard deviation 1. The sine part vanishes: the bell is symmetric, so each negative value of sin(tX) is as likely as the matching positive one. The cosine part is expanded in its Taylor series, cos u = 1 − u^2/2! + u^4/4! − …, and averaged term by term.
 
 The averages needed are the even moments of the standard normal: 1, 1, 3, 15, 105 for powers 0, 2, 4, 6, 8. At t = 1 the terms are 1, −0.5, 0.125, −0.020833, 0.002604 and onward. Each term is the moment divided by the factorial, and that ratio is exactly (−t^2/2)^k divided by k!: the Taylor series of e^(−t^2/2). So
 
@@ -142,7 +153,11 @@ Averaging term by term is allowed because the absolute values add to a finite to
 
 ### Step 3: the density comes back, and the bell is what brings it
 
-Blur the scale's error by adding an independent normal error of tiny spread ε. The blurred error's density at x is an average of f near x, weighted by a narrow bell. By Step 1 its characteristic function is the original times e^(−ε^2 t^2/2), a bell that dies out fast. For that product the inversion integral converges without trouble, and swapping the two integrals turns it into the blurred density exactly: this is the only place the proof needs a transform pair, and the pair it needs is the normal's own, from Step 2. Now let ε shrink. The blurred density tends to f(x). The integral tends to the inversion integral of the original characteristic function, because its total size is finite.
+Blur the scale's error by adding an independent normal error of tiny spread ε. The blurred error's density at x is an average of f near x, weighted by a narrow bell. By Step 1 its characteristic function is the original times e^(−ε^2 t^2/2), a bell that dies out fast.
+
+For that product the inversion integral converges without trouble. Swapping the two integrals turns it into the blurred density exactly. This is the only place the proof needs a transform pair, and the pair it needs is the normal's own, from Step 2.
+
+Now let ε shrink. The blurred density tends to f(x). The integral tends to the inversion integral of the original characteristic function, because its total size is finite.
 
 <details>
 <summary>Detailed proof</summary>
@@ -161,11 +176,11 @@ Let ε shrink. Right side: where f is continuous at x, split the y-integral at a
 
 Integrate the density formula over x from a to b. The x-integral of e^(−itx) is (e^(−ita) − e^(−itb))/(it), which is the weight in Lévy's formula. For the scale and the interval −2 g to 2 g the weight is 2 sin(2t)/t, and the integral gives 0.682689: the chance of a reading within one standard deviation.
 
-Lévy's formula also holds with no density at all. That proof needs the measure-theoretic integral and is in Levy's inversion formula. Uniqueness for every law has a second proof, which blurs both laws with a narrow normal and then removes the blur, in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
+Lévy's formula also holds with no density at all. That proof needs the measure-theoretic integral, an average that works for any law, with or without a density ([Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). It is in Levy's inversion formula. Uniqueness for every law has a second proof, which blurs both laws with a narrow normal and then removes the blur, in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
 
 ### Step 5: uniqueness follows
 
-If two laws share a characteristic function, Lévy's formula gives them the same chance for every interval whose ends carry no probability. Such ends are all but countably many points, so, letting a run down to −∞, the two cumulative distributions agree everywhere ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and a cumulative distribution fixes the law.
+If two laws share a characteristic function, Lévy's formula gives them the same chance for every interval whose ends carry no probability. Such ends are all but countably many points: the points that carry probability can be numbered off in a list. So, letting a run down to −∞, the two cumulative distributions agree everywhere ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and a cumulative distribution fixes the law.
 
 ### Step 6: whole-number laws invert over one turn
 
@@ -210,7 +225,9 @@ The code prints every one.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer: the integrals are Simpson's rule written out, and the random weighings come from SplitMix64 (seed 2026) and the Box–Muller recipe, written out in both languages so both draw the same numbers. The characteristic function at t = 0.5 is reached by three independent roads: the bell formula, an integral against the density, and an average over 200,000 simulated weighings with its standard error. The density and the interval chance are then recovered by inversion and checked against the density formula, a direct integral and a simulated count. The die is inverted over one turn, the four mistakes are reproduced, and the 1,000-roll bridge to the central limit theorem is printed.
+Nothing imported knows the answer. The integrals are Simpson's rule written out: a weighted sum of the curve's heights at evenly spaced points. The random weighings come from SplitMix64 (a short random number generator, seed 2026) and the Box–Muller recipe (which turns two uniform numbers into a normal one). Both are written out in both languages, so both draw the same numbers.
+
+The characteristic function at t = 0.5 is reached by three independent roads: the bell formula, an integral against the density, and an average over 200,000 simulated weighings with its standard error. The density and the interval chance are then recovered by inversion and checked against the density formula, a direct integral and a simulated count. The die is inverted over one turn, the four mistakes are reproduced, and the 1,000-roll bridge to the central limit theorem is printed.
 
 ### Python
 
@@ -605,6 +622,134 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, including the simulated averages, because both languages run the same generator in the same order.
 
+### Lean
+
+Lean proves the normal's characteristic function, density inversion and uniqueness for every law that meets their conditions, and checks some worked numbers.
+
+- Suppose two random quantities have characteristic functions that agree at every real t. Then they have the same distribution.
+- Take a normal error with mean μ and standard deviation σ. Then its characteristic function is e^(iμt − σ^2 t^2/2) at every real t.
+- Suppose a law has a density f, and its characteristic function has finite total size. Then the inversion integral returns f(x) at every x where f is continuous.
+- The even moments of the standard normal, for powers 0, 2, 4, 6, 8, are 1, 1, 3, 15, 105.
+- Take k from 0 to 7. Then (2k)! equals 1 × 3 × … × (2k − 1), times 2^k, times k!.
+- For the scale, the exponent σ^2 t^2/2 is 0.5 at t = 0.5 and 2 at t = 1.
+- The scale's error is 2 times Z, and its exponent (2t)^2/2 equals 2t^2.
+
+Lévy's formula, the product rule for sums, the die, the decimals, the simulations and the mistake table are left to the Python and Rust checks.
+
+```lean
+-- Characteristic functions: two random quantities with the same characteristic function have the same law, a normal error's characteristic function is the bell e^(iμt − σ²t²/2), and the inversion integral returns a density at its points of continuity.
+import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.MeasureTheory.Measure.WithDensity
+import Mathlib.Analysis.Fourier.Inversion
+import Mathlib.Data.Nat.Factorial.DoubleFactorial
+
+open MeasureTheory ProbabilityTheory Complex
+open scoped Nat
+
+/-- Uniqueness theorem: two random quantities whose characteristic functions agree at every
+real rate `t` have the same distribution. -/
+theorem same_char_fun_same_law {Ω Ω' : Type*} [MeasurableSpace Ω] [MeasurableSpace Ω']
+    {P : Measure Ω} {Q : Measure Ω'} [IsProbabilityMeasure P] [IsProbabilityMeasure Q]
+    {X : Ω → ℝ} {Y : Ω' → ℝ} (hX : AEMeasurable X P) (hY : AEMeasurable Y Q)
+    (h : ∀ t : ℝ, charFun (P.map X) t = charFun (Q.map Y) t) :
+    P.map X = Q.map Y := by
+  exact Measure.ext_of_charFun (funext h)
+
+/-- A normal error with mean `μ` and standard deviation `σ` has characteristic function
+`e^(iμt − σ²t²/2)`: the mean turns the average, the spread shrinks it along a bell in `t`. -/
+theorem char_fun_normal (μ σ t : ℝ) :
+    charFun (gaussianReal μ (σ ^ 2).toNNReal) t =
+      cexp (I * μ * t - σ ^ 2 * t ^ 2 / 2) := by
+  rw [charFun_gaussianReal]
+  congr 1
+  rw [Real.coe_toNNReal _ (sq_nonneg σ)]
+  push_cast
+  ring
+
+/-- Density inversion: for a law with density `f` whose characteristic function has finite
+total size (is integrable), at every `x` where `f` is continuous,
+`f(x) = (1/(2π)) ∫ e^(−itx) φ(t) dt`. -/
+theorem density_inversion {f : ℝ → ℝ} (hf_nonneg : ∀ x, 0 ≤ f x) (hf_int : Integrable f)
+    (hf_one : ∫ x, f x = 1)
+    (hφ : Integrable (charFun (volume.withDensity (fun x => ENNReal.ofReal (f x)))))
+    {x : ℝ} (hx : ContinuousAt f x) :
+    (f x : ℂ) = (1 / (2 * Real.pi)) *
+      ∫ t : ℝ, cexp (-(t * x) * I) *
+        charFun (volume.withDensity (fun y => ENNReal.ofReal (f y))) t := by
+  set ψ := charFun (volume.withDensity (fun y => ENNReal.ofReal (f y))) with hψdef
+  set g : ℝ → ℂ := fun y => (f y : ℂ) with hg
+  have hpi : (2 * Real.pi) ≠ 0 := by positivity
+  have hchar : ∀ t, ψ t = FourierTransform.fourier g (-(2 * Real.pi)⁻¹ * t) := by
+    intro t
+    rw [hψdef, charFun_apply_real, Real.fourier_real_eq_integral_exp_smul,
+      integral_withDensity_eq_integral_toReal_smul₀ (f := fun y => ENNReal.ofReal (f y))
+        hf_int.aemeasurable.ennreal_ofReal
+        (Filter.Eventually.of_forall fun _ => ENNReal.ofReal_lt_top)]
+    congr 1
+    ext y
+    rw [ENNReal.toReal_ofReal (hf_nonneg y)]
+    simp only [hg, Complex.real_smul, smul_eq_mul]
+    rw [mul_comm]
+    congr 2
+    push_cast
+    field_simp
+  have hFg : FourierTransform.fourier g = fun w => ψ (-(2 * Real.pi) * w) := by
+    ext w
+    rw [hchar, ← mul_assoc, neg_mul_neg, inv_mul_cancel₀ hpi, one_mul]
+  have hgi : Integrable g := hf_int.ofReal
+  have hFgi : Integrable (FourierTransform.fourier g) := by
+    rw [hFg]
+    exact hφ.comp_mul_left' (neg_ne_zero.mpr hpi)
+  have hgc : ContinuousAt g x := Complex.continuous_ofReal.continuousAt.comp hx
+  have key := hgi.fourierInv_fourier_eq hFgi hgc
+  have e1 : (f x : ℂ) = g x := rfl
+  rw [e1, ← key, Real.fourierInv_eq']
+  have hcv := Measure.integral_comp_mul_left (fun t : ℝ => cexp (-(↑t * ↑x) * I) * ψ t) (-(2 * Real.pi))
+  have habs : |(-(2 * Real.pi))⁻¹| = (2 * Real.pi)⁻¹ := by
+    rw [inv_neg, abs_neg, abs_of_pos (by positivity)]
+  rw [habs] at hcv
+  have hrhs : (1 / (2 * (Real.pi : ℂ))) * ∫ t : ℝ, cexp (-(↑t * ↑x) * I) * ψ t =
+      ∫ w : ℝ, cexp (-(↑(-(2 * Real.pi) * w) * ↑x) * I) * ψ (-(2 * Real.pi) * w) := by
+    rw [hcv, Complex.real_smul]
+    push_cast
+    ring
+  rw [hrhs]
+  congr 1
+  ext w
+  rw [hFg]
+  simp only [smul_eq_mul]
+  congr 2
+  rw [Real.inner_apply]
+  push_cast
+  ring
+
+-- Step 2: the even moments of the standard normal, 1 × 3 × … × (2k − 1), are 1, 1, 3, 15, 105.
+example : (List.range 5).map (fun k => (2 * k - 1)‼) = [1, 1, 3, 15, 105] := by decide
+
+-- Step 2: (2k)! = (1 × 3 × … × (2k − 1)) × 2^k × k!, so moment / (2k)! = 1 / (2^k k!), k = 0..7.
+example : ∀ k < 8, (2 * k)! = (2 * k - 1)‼ * 2 ^ k * k ! := by decide
+
+-- Worked numbers: the scale's exponent σ²t²/2 with σ = 2 is 1/2 at t = 1/2 and 2 at t = 1.
+example : (2 : ℚ) ^ 2 * (1 / 2) ^ 2 / 2 = 1 / 2 := by norm_num
+example : (2 : ℚ) ^ 2 * 1 ^ 2 / 2 = 2 := by norm_num
+
+-- Step 1: the scale's error is 2Z, so the exponent (2t)²/2 equals 2t².
+example (t : ℚ) : (2 * t) ^ 2 / 2 = 2 * t ^ 2 := by ring
+
+#print axioms same_char_fun_same_law
+#print axioms char_fun_normal
+#print axioms density_inversion
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'same_char_fun_same_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'char_fun_normal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'density_inversion' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -629,7 +774,7 @@ The two outputs agree line for line, including the simulated averages, because b
 
 ## Where you meet it in real life
 
-- **Why averages become bells.** For 1,000 rolls of a fair die, standardised, the characteristic function at t = 1 is 0.606499, against the bell's 0.606531; the average's spread is 0.054006. The central limit theorem for every law with a finite spread is proved by multiplying characteristic functions in this way and then applying Lévy's continuity theorem (Levy's continuity theorem, The central limit theorem in four lines, once you have fingerprints); the theorem itself is stated on [Central limit theorem](02-central-limit-theorem.md).
+- **Why averages become bells.** For 1,000 rolls of a fair die, standardised, the characteristic function at t = 1 is 0.606499, against the bell's 0.606531; the average's spread is 0.054006. The central limit theorem for every law with a finite spread is proved by multiplying characteristic functions in this way and then applying Lévy's continuity theorem (planned cards: Levy's continuity theorem; The central limit theorem in four lines, once you have fingerprints). The theorem itself is stated on [Central limit theorem](02-central-limit-theorem.md).
 - **Measurement chains.** Independent errors from a scale, a thermometer and a timer add; their characteristic functions multiply, and inversion gives the combined error's density without computing a convolution.
 - **Heavy tails.** A Cauchy error has no mean and no moment generating function, but its characteristic function e^(−|t|) shows at once that averages of Cauchy errors never settle. By Step 1, the average of n independent ones has characteristic function (e^(−|t|/n))^n = e^(−|t|): the same law as a single error ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
 - **Option pricing.** Models such as Heston give a stock's characteristic function in closed form but no usable density; prices come from an inversion integral: [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md).

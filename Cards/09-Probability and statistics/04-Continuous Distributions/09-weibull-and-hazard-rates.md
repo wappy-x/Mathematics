@@ -10,7 +10,9 @@ A box of filament bulbs is rated for about 1,000 hours of burning. Two things ki
 
 The question that matters to anyone replacing bulbs: does a bulb that has already burned 800 hours become more or less likely to die in the next hour? For wear-out, more. For a flaw, less: a flawed bulb that has survived a long time probably never had the flaw. Neither answer is what the [Exponential](03-exponential-distribution.md) says. Its constant chance per hour makes an 800-hour bulb exactly as good as a new one.
 
-The tool for this is the **hazard rate**: the chance per hour of dying right now, counted only among bulbs still lit. Let the hazard be a power of age and one law follows, the **Weibull distribution**. Its **shape** number says at a glance whether the hazard falls, holds or rises. For worn-out bulbs with shape 3, a fresh bulb lasts 200 hours with chance 0.9920; an 800-hour bulb lasts 200 more with chance only 0.6139.
+The tool for this is the **hazard rate**: the chance per hour of dying right now, counted only among bulbs still lit. Let the hazard be a power of age and one law follows, the **Weibull distribution**. Its **shape** number says at a glance whether the hazard falls, holds or rises. Its **scale**, in hours, stretches every age in proportion.
+
+For worn-out bulbs with shape 3, a fresh bulb lasts 200 hours with chance 0.9920; an 800-hour bulb lasts 200 more with chance only 0.6139.
 
 **A hazard proportional to a power of age forces the survival chance e to the minus (age over scale) to the shape; the shape then reads off the ageing: below 1 the survivors grow stronger, at 1 nothing changes, above 1 they wear out.**
 
@@ -35,7 +37,9 @@ Orange: the flaw hazard, a Weibull with shape 0.5, falling. Green: the wear haza
 
 ## The formula
 
-Notation first, in words. A capital $T$ is a bulb's lifetime in burning hours, a random variable (a quantity settled by chance). A lower-case $t$ is one fixed age. $S(t)$ is the **survival function**, the chance the bulb is still lit at age $t$: $S(t) = P(T > t)$. The Greek letter $\eta$, read "eta", is the **scale**, in hours. The letter $k$ is the **shape**, a plain number. $h(t)$ is the hazard at age $t$, and $H(t)$ is its running total from age 0, the **cumulative hazard**.
+Notation first, in words. A capital $T$ is a bulb's lifetime in burning hours, a random variable (a quantity settled by chance). A lower-case $t$ is one fixed age. $S(t)$ is the **survival function**, the chance the bulb is still lit at age $t$: $S(t) = P(T > t)$.
+
+The Greek letter $\eta$, read "eta", is the **scale**, in hours. The letter $k$ is the **shape**, a plain number. $h(t)$ is the hazard at age $t$, and $H(t)$ is its running total from age 0, the **cumulative hazard**.
 
 $$h(t) = \frac{k}{\eta}\left(\frac{t}{\eta}\right)^{k-1}, \qquad H(t) = \left(\frac{t}{\eta}\right)^{k}, \qquad S(t) = e^{-(t/\eta)^k}$$
 
@@ -96,7 +100,9 @@ Suppose $T > 0$ has a density $f$ that is continuous on the positive ages, and $
 
 By the chain rule, $\frac{d}{dt}\ln S(t) = S'(t)/S(t) = -h(t)$. Integrate from a small $\varepsilon > 0$ to $t$ and let $\varepsilon \to 0$; since $S$ is continuous with $S(0) = 1$, $\ln S(\varepsilon) \to 0$, and $\ln S(t) = -\int_0^t h(u)\,du$. The integral near 0 is an improper one when the hazard blows up there, as it does for shape below 1 ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
 
-So the hazard determines $S$ completely: two laws with the same hazard at every age have the same survival curve. Now take $h(t) = c\,t^{k-1}$ with $c > 0$ and $k > 0$. Then $\int_0^t c\,u^{k-1}\,du = c\,t^k/k$, finite because $k > 0$. Name the scale by $c = k/\eta^k$; then $H(t) = (t/\eta)^k$ and $S(t) = e^{-(t/\eta)^k}$. As $t$ grows, $H$ grows without bound, so $S \to 0$: every bulb dies eventually, and the law is a genuine lifetime law. The only law with a power-law hazard is the Weibull.
+So the hazard determines $S$ completely: two laws with the same hazard at every age have the same survival curve.
+
+Now take $h(t) = c\,t^{k-1}$ with $c > 0$ and $k > 0$. Then $\int_0^t c\,u^{k-1}\,du = c\,t^k/k$, finite because $k > 0$. Name the scale by $c = k/\eta^k$; then $H(t) = (t/\eta)^k$ and $S(t) = e^{-(t/\eta)^k}$. As $t$ grows, $H$ grows without bound, so $S \to 0$: every bulb dies eventually, and the law is a genuine lifetime law. The only law with a power-law hazard is the Weibull.
 
 </details>
 
@@ -132,7 +138,9 @@ Shape below 1 does not mean a single bulb heals. It means the batch changes: wea
 <details>
 <summary>Why engineers met the Weibull first: the weakest link</summary>
 
-Wire 10 shape-3 bulbs in series, like an old string of festive lights: the string goes dark when the first bulb fails. The string survives to $t$ only if all ten do, so its survival is $S(t)^{10} = e^{-10(t/\eta)^k}$. That is again a Weibull, same shape, with scale $\eta \times 10^{-1/k}$: 464.16 hours instead of 1,000. A chain is as strong as its weakest link, and the minimum of many Weibull lives stays Weibull. Waloddi Weibull proposed the law in 1939 for the breaking strength of materials, where a rod breaks at its weakest flaw, and argued its wide use in 1951.
+Wire 10 shape-3 bulbs in series, like an old string of festive lights: the string goes dark when the first bulb fails. The string survives to $t$ only if all ten do, so its survival is $S(t)^{10} = e^{-10(t/\eta)^k}$. That is again a Weibull, same shape, with scale $\eta \times 10^{-1/k}$: 464.16 hours instead of 1,000.
+
+A chain is as strong as its weakest link, and the minimum of many Weibull lives stays Weibull. Waloddi Weibull proposed the law in 1939 for the breaking strength of materials, where a rod breaks at its weakest flaw, and argued its wide use in 1951.
 
 </details>
 
@@ -142,7 +150,11 @@ Take logarithms twice. Since $-\ln S(t) = (t/\eta)^k$,
 
 $$\ln\big(-\ln S(t)\big) = k \ln t - k \ln \eta.$$
 
-Plotted against $\ln t$, the left side is a straight line with slope $k$: the **Weibull plot**. Count the fraction of a batch still lit at two ages and the slope between them estimates the shape. At 500 and 1,000 hours the exact survivals are 0.8825 and 0.3679, whose $-\ln$ values are $1/8$ and 1; the ratio is 8, and $\ln 8/\ln 2 = 3$. The scale then follows from either age: $\eta = t/(-\ln S(t))^{1/k} = 500/(1/8)^{1/3} = 1{,}000$ hours. Two ages $t_1 < t_2$ give exactly one Weibull when $1 > S(t_1) > S(t_2) > 0$; if survival does not fall strictly between them, or either value is 0 or 1, no Weibull fits. The simulation below does this on 20 batches of 2,000 bulbs and reads a shape of 3.018 (standard error 0.021).
+Plotted against $\ln t$, the left side is a straight line with slope $k$: the **Weibull plot**. Count the fraction of a batch still lit at two ages and the slope between them estimates the shape.
+
+At 500 and 1,000 hours the exact survivals are 0.8825 and 0.3679, whose $-\ln$ values are $1/8$ and 1; the ratio is 8, and $\ln 8/\ln 2 = 3$. The scale then follows from either age: $\eta = t/(-\ln S(t))^{1/k} = 500/(1/8)^{1/3} = 1{,}000$ hours.
+
+Two ages $t_1 < t_2$ give exactly one Weibull when $1 > S(t_1) > S(t_2) > 0$; if survival does not fall strictly between them, or either value is 0 or 1, no Weibull fits. The simulation below does this on 20 batches of 2,000 bulbs and reads a shape of 3.018 (standard error 0.021).
 
 ### Step 5: two causes, hazards add
 
@@ -154,7 +166,9 @@ So cumulative hazards add, and so do hazards. That sum is the dark blue bathtub 
 
 ### The average life
 
-The average of a lifetime is the area under its survival curve, $E[T] = \int_0^\infty S(t)\,dt$, because each hour contributes the chance of still being lit through it. For the Weibull, substitute $y = (t/\eta)^k$ and the area becomes $\eta\,\Gamma(1 + 1/k)$. At shape 3 that is $1000 \times 0.892980 = 892.98$ hours. The code reaches it twice: by a Stirling series for $\Gamma(1 + 1/k)$, and by adding up the area under $S(t)$ with Simpson's rule.
+The average of a lifetime is the area under its survival curve, $E[T] = \int_0^\infty S(t)\,dt$, because each hour contributes the chance of still being lit through it. For the Weibull, substitute $y = (t/\eta)^k$ and the area becomes $\eta\,\Gamma(1 + 1/k)$. At shape 3 that is $1000 \times 0.892980 = 892.98$ hours.
+
+The code reaches it twice: by a Stirling series for $\Gamma(1 + 1/k)$, and by adding up the area under $S(t)$ with Simpson's rule. A Stirling series is a formula for the logarithm of the gamma function that grows more exact as its input grows. Simpson's rule cuts an area into thin strips and fits a parabola over each pair.
 
 <details>
 <summary>Detailed proof: the mean and the median</summary>
@@ -197,7 +211,15 @@ The last row drops the single-cause hypothesis: a shape near 1 says "age irrelev
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the answers by independent roads. The closed form $e^{-(t/\eta)^k}$. A product of survived slices, $1 - h\Delta$ in each, which never calls the exponential. The mean twice: a Stirling series for $\Gamma(1 + 1/k)$, and Simpson's rule for the area under $S(t)$. The bathtub's low point twice: a ternary search (shrinking a bracket around the minimum) and the algebra of Step 5. And a simulation of 40,000 bulbs from a SplitMix64 generator with seed 2026, each drawing a wear life and a flaw life. The draws invert $S$, so they do follow the formula; what the simulation tests independently is the hazard found by counting deaths among the living, the Weibull-plot slope, and the product rule for two causes. Simulated numbers carry a standard error (se), and the asserts allow four of them.
+The scripts reach the answers by independent roads:
+
+- the closed form $e^{-(t/\eta)^k}$;
+- a product of survived slices, $1 - h\Delta$ in each, which never calls the exponential;
+- the mean twice: a Stirling series for $\Gamma(1 + 1/k)$, and Simpson's rule for the area under $S(t)$;
+- the bathtub's low point twice: a ternary search (shrinking a bracket around the minimum) and the algebra of Step 5;
+- a simulation of 40,000 bulbs from a SplitMix64 random-number generator with seed 2026, each drawing a wear life and a flaw life.
+
+The draws invert $S$, so they do follow the formula; what the simulation tests independently is the hazard found by counting deaths among the living, the Weibull-plot slope, and the product rule for two causes. Simulated numbers carry a standard error (se), and the asserts allow four of them.
 
 ### Python
 
@@ -577,6 +599,212 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the three main facts for every shape $k > 0$ and scale $\eta > 0$, plus the hand-worked arithmetic.
+
+- Suppose a lifetime is positive, and at every positive age $S$ is above 0, has a slope, and has the formula's hazard $h(t)$. Then $S(t) = e^{-(t/\eta)^k}$ at every age from 0 on.
+- Take ages $s, t > 0$ and shape below 1. Then $S(s+t)/S(s)$ is above $S(t)$: the old bulb is safer than a new one.
+- Take ages $s, t > 0$ and shape 1. Then $S(s+t)/S(s) = S(t)$: age changes nothing.
+- Take ages $s, t > 0$ and shape above 1. Then $S(s+t)/S(s)$ is below $S(t)$: the old bulb is worse off.
+- Take the Weibull survival $S(t)$. Then the area under it, from age 0 on, is $\eta\,\Gamma(1 + 1/k)$.
+- The worked cumulative hazards are 0.512 at 800 hours, 1 at 1,000 hours, and 0.008 for a fresh bulb over 200 hours.
+- The hazard at 1,000 hours is 3 per 1,000 hours, and the 800-hour bulb faces 0.488 of cumulative hazard over the next 200.
+- In the Weibull plot, $-\ln S$ at 500 hours is $1/8$, and the scale comes back as 1,000 hours.
+
+That average life equals that area, the median, the decimals, the bathtub and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Weibull and hazards: a lifetime whose hazard is a power of age has survival chance e^(-(t/η)^k), the shape k says whether old survivors are safer, the same, or worse off than new ones, and the area under that survival curve is η Γ(1 + 1/k).
+import Mathlib.MeasureTheory.Integral.Gamma
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Probability.CDF
+
+open MeasureTheory Real
+
+/-- The survival function of a lifetime law `μ` on the real line: `S(t) = P(T > t)`. -/
+noncomputable def survival (μ : Measure ℝ) (t : ℝ) : ℝ := μ.real (Set.Ioi t)
+
+/-- The hazard at age `t`: the death rate among those still alive, `h(t) = -S'(t) / S(t)`
+(for a law with a density `f` this is `f(t) / S(t)`). -/
+noncomputable def hazard (μ : Measure ℝ) (t : ℝ) : ℝ := -deriv (survival μ) t / survival μ t
+
+/-- The Weibull survival curve with shape `k` and scale `η`: `S(t) = e^(-(t/η)^k)`. -/
+noncomputable def weibullSurvival (k η t : ℝ) : ℝ := Real.exp (-(t / η) ^ k)
+
+lemma survival_eq_one_sub_cdf (μ : Measure ℝ) [IsProbabilityMeasure μ] (t : ℝ) :
+    survival μ t = 1 - ProbabilityTheory.cdf μ t := by
+  rw [ProbabilityTheory.cdf_eq_real, survival, ← Set.compl_Iic, probReal_compl_eq_one_sub measurableSet_Iic]
+
+lemma sub_add_lt (k a b : ℝ) (hk : k < 1) (ha : 0 < a) (hb : 0 < b) :
+    (a + b) ^ k < a ^ k + b ^ k := by
+  have hab : 0 < a + b := by linarith
+  have h1 : a / (a + b) < (a / (a + b)) ^ k :=
+    self_lt_rpow_of_lt_one (by positivity) (by rw [div_lt_one hab]; linarith) hk
+  have h2 : b / (a + b) < (b / (a + b)) ^ k :=
+    self_lt_rpow_of_lt_one (by positivity) (by rw [div_lt_one hab]; linarith) hk
+  rw [div_rpow ha.le hab.le] at h1
+  rw [div_rpow hb.le hab.le] at h2
+  have hp : 0 < (a + b) ^ k := by positivity
+  have : a / (a + b) + b / (a + b) = 1 := by field_simp
+  have h3 : 1 < (a ^ k + b ^ k) / (a + b) ^ k := by rw [add_div]; linarith
+  rwa [one_lt_div hp] at h3
+
+lemma super_add_lt (k a b : ℝ) (hk : 1 < k) (ha : 0 < a) (hb : 0 < b) :
+    a ^ k + b ^ k < (a + b) ^ k := by
+  have hab : 0 < a + b := by linarith
+  have h1 : (a / (a + b)) ^ k < a / (a + b) :=
+    rpow_lt_self_of_lt_one (by positivity) (by rw [div_lt_one hab]; linarith) hk
+  have h2 : (b / (a + b)) ^ k < b / (a + b) :=
+    rpow_lt_self_of_lt_one (by positivity) (by rw [div_lt_one hab]; linarith) hk
+  rw [div_rpow ha.le hab.le] at h1
+  rw [div_rpow hb.le hab.le] at h2
+  have hp : 0 < (a + b) ^ k := by positivity
+  have : a / (a + b) + b / (a + b) = 1 := by field_simp
+  have h3 : (a ^ k + b ^ k) / (a + b) ^ k < 1 := by rw [add_div]; linarith
+  rwa [div_lt_one hp] at h3
+
+#print axioms survival_eq_one_sub_cdf
+#print axioms sub_add_lt
+#print axioms super_add_lt
+
+/-- A power-law hazard forces the Weibull law. Let `T` be a lifetime that is positive, whose
+survival curve `S(t) = P(T > t)` stays above 0 and is smooth (has a slope) at every positive age.
+If the hazard at every positive age is `h(t) = (k/η)(t/η)^(k-1)`, with shape `k > 0` and scale
+`η > 0`, then the chance of still being alive at every age `t ≥ 0` is `S(t) = e^(-(t/η)^k)`. -/
+theorem power_law_hazard_forces_weibull (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (k η : ℝ) (hk : 0 < k) (hη : 0 < η)
+    (hT : μ (Set.Iic 0) = 0)
+    (hpos : ∀ t, 0 < t → 0 < survival μ t)
+    (hdiff : ∀ t, 0 < t → DifferentiableAt ℝ (survival μ) t)
+    (hhaz : ∀ t, 0 < t → hazard μ t = k / η * (t / η) ^ (k - 1)) :
+    ∀ t, 0 ≤ t → survival μ t = weibullSurvival k η t := by
+  intro t ht
+  set S := survival μ with hSdef
+  have hS0 : S 0 = 1 := by
+    rw [hSdef, survival_eq_one_sub_cdf, ProbabilityTheory.cdf_eq_real, measureReal_def, hT]
+    simp
+  rcases ht.eq_or_lt with h0 | htpos
+  · subst h0
+    rw [hS0, weibullSurvival, zero_div, Real.zero_rpow hk.ne', neg_zero, Real.exp_zero]
+  set f : ℝ → ℝ := fun x => S x * Real.exp ((x / η) ^ k) with hf
+  have hderiv : ∀ x, 0 < x → HasDerivAt f 0 x := by
+    intro x hx
+    have hS := (hdiff x hx).hasDerivAt
+    have hpow : HasDerivAt (fun y : ℝ => (y / η) ^ k) (1 / η * k * (x / η) ^ (k - 1)) x :=
+      ((hasDerivAt_id x).div_const η).rpow_const (Or.inl (div_pos hx hη).ne')
+    have hE := hpow.exp
+    have hprod := hS.mul hE
+    have hh := hhaz x hx
+    have hSx := hpos x hx
+    unfold hazard at hh
+    rw [div_eq_iff hSx.ne'] at hh
+    convert hprod using 1
+    rw [← hSdef] at hh
+    have : deriv S x = -(k / η * (x / η) ^ (k - 1) * S x) := by linarith
+    rw [this]; ring
+  have hcont0 : ContinuousWithinAt S (Set.Ici 0) 0 := by
+    have h := ((ProbabilityTheory.cdf μ).right_continuous 0).const_sub 1
+    refine ContinuousWithinAt.congr h (fun y _ => ?_) ?_
+    · rw [hSdef, survival_eq_one_sub_cdf]
+    · rw [hSdef, survival_eq_one_sub_cdf]
+  have hcont : ContinuousOn f (Set.Icc 0 t) := by
+    intro x hx
+    apply ContinuousWithinAt.mul
+    · rcases hx.1.eq_or_lt with h0 | hxpos
+      · subst h0
+        exact hcont0.mono Set.Icc_subset_Ici_self
+      · exact (hdiff x hxpos).continuousAt.continuousWithinAt
+    · apply ContinuousAt.continuousWithinAt
+      apply Real.continuous_exp.continuousAt.comp
+      exact ((continuous_id.div_const η).continuousAt).rpow_const (Or.inr hk.le)
+  obtain ⟨c, hc, hc'⟩ := exists_hasDerivAt_eq_slope f (fun _ => (0 : ℝ)) htpos hcont
+    (fun x hx => hderiv x hx.1)
+  have hfeq : f t = f 0 := by
+    have hne : t - 0 ≠ 0 := by linarith
+    rw [eq_div_iff hne] at hc'
+    linarith
+  have hf0 : f 0 = 1 := by
+    simp only [hf, hS0, zero_div, Real.zero_rpow hk.ne', Real.exp_zero, mul_one]
+  rw [hf0] at hfeq
+  simp only [hf] at hfeq
+  rw [weibullSurvival, Real.exp_neg]
+  exact eq_inv_of_mul_eq_one_left hfeq
+
+/-- Reading the shape. For a Weibull lifetime, the chance that a unit already alive at age `s`
+lasts `t` more, `S(s + t) / S(s)`, compared with a new unit lasting `t`, `S(t)`, for any ages
+`s, t > 0`: below shape 1 the old unit is safer, at shape 1 the two are equal (no memory), above
+shape 1 the old unit is worse off (wear-out). -/
+theorem weibull_shape_reads_ageing (k η s t : ℝ) (hk : 0 < k) (hη : 0 < η)
+    (hs : 0 < s) (ht : 0 < t) :
+    (k < 1 → weibullSurvival k η t < weibullSurvival k η (s + t) / weibullSurvival k η s) ∧
+    (k = 1 → weibullSurvival k η (s + t) / weibullSurvival k η s = weibullSurvival k η t) ∧
+    (1 < k → weibullSurvival k η (s + t) / weibullSurvival k η s < weibullSurvival k η t) := by
+  have hq : ∀ x, weibullSurvival k η (s + x) / weibullSurvival k η s
+      = Real.exp (-((s / η + x / η) ^ k - (s / η) ^ k)) := by
+    intro x
+    unfold weibullSurvival
+    rw [← Real.exp_sub, add_div]; ring_nf
+  have ha : 0 < s / η := div_pos hs hη
+  have hb : 0 < t / η := div_pos ht hη
+  refine ⟨fun h1 => ?_, fun h1 => ?_, fun h1 => ?_⟩
+  · rw [hq]; unfold weibullSurvival
+    apply Real.exp_lt_exp.mpr
+    have := sub_add_lt k _ _ h1 ha hb
+    linarith
+  · rw [hq]; unfold weibullSurvival
+    subst h1
+    simp only [Real.rpow_one]; ring_nf
+  · rw [hq]; unfold weibullSurvival
+    apply Real.exp_lt_exp.mpr
+    have := super_add_lt k _ _ h1 ha hb
+    linarith
+
+/-- The average life is the area under the survival curve, and for a Weibull with shape `k > 0`
+and scale `η > 0` that area is `η Γ(1 + 1/k)`. -/
+theorem weibull_mean_life (k η : ℝ) (hk : 0 < k) (hη : 0 < η) :
+    ∫ t in Set.Ioi (0 : ℝ), weibullSurvival k η t = η * Real.Gamma (1 + 1 / k) := by
+  have h := integral_comp_mul_right_Ioi (fun x : ℝ => Real.exp (-x ^ k)) 0 (inv_pos.mpr hη)
+  simp only [zero_mul, smul_eq_mul, inv_inv] at h
+  unfold weibullSurvival
+  simp_rw [div_eq_mul_inv]
+  rw [h, integral_exp_neg_rpow hk, add_comm, one_mul, one_div]
+
+
+-- Worked numbers, by hand: shape 3, scale 1,000 hours, a bulb that has burned 800 hours.
+-- Cumulative hazard at 800 h: (800/1000)^3 = 64/125 (that is, 0.512).
+example : ((800 : ℚ) / 1000) ^ 3 = 64 / 125 := by norm_num
+-- Cumulative hazard at 1,000 h: (1000/1000)^3 = 1.
+example : ((1000 : ℚ) / 1000) ^ 3 = 1 := by norm_num
+-- Hazard at 1,000 h: 3 × 1000^2 / 1000^3 = 3 per 1,000 hours.
+example : (3 : ℚ) * 1000 ^ 2 / 1000 ^ 3 = 3 / 1000 := by norm_num
+-- A fresh bulb over 200 h: cumulative hazard (200/1000)^3 = 1/125 (0.008).
+example : ((200 : ℚ) / 1000) ^ 3 = 1 / 125 := by norm_num
+-- The 800-hour bulb over 200 more: hazard packed in is 1 - 64/125 = 61/125 (0.488).
+example : ((1000 : ℚ) / 1000) ^ 3 - (800 / 1000) ^ 3 = 61 / 125 := by norm_num
+-- Weibull plot: -ln S at 500 h and 1,000 h are 1/8 and 1, a ratio of 8 = 2^3.
+example : ((500 : ℚ) / 1000) ^ 3 = 1 / 8 ∧ (8 : ℕ) = 2 ^ 3 := by norm_num
+-- Scale back from 500 h: 500^3 × 8 = 1000^3, so 500 / (1/8)^(1/3) = 1,000 hours.
+example : (500 : ℕ) ^ 3 * 8 = 1000 ^ 3 := by norm_num
+
+#print axioms power_law_hazard_forces_weibull
+#print axioms weibull_shape_reads_ageing
+#print axioms weibull_mean_life
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'survival_eq_one_sub_cdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sub_add_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'super_add_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'power_law_hazard_forces_weibull' depends on axioms: [propext, Classical.choice, Quot.sound]
+'weibull_shape_reads_ageing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'weibull_mean_life' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

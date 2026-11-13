@@ -12,11 +12,13 @@ The obvious guess is the average error. The four readings are off by 3, −1, 5 
 
 Why pull a guess away from what the data say? Scales leave the factory calibrated, so offsets are usually small, and four noisy readings can easily suggest 4 grams when the truth is 1. Shrinking damps those swings. The price is a lean: when the truth is not zero, the shrunk rule aims a little short, every time.
 
-That is the whole card in miniature. A rule for guessing (an **estimator**, the word from [Samples and estimators](01-populations-samples-and-estimators.md)) can be wrong in two ways. It can aim off-centre: that is **bias**. It can scatter: that is **variance**. The standard score for a rule, its **mean squared error**, is the average of the squared miss over every test that could have been run. It splits exactly into the two: squared bias plus variance. When the true offset is 2 g, the shrunk rule's mean squared error is 2.72 square grams against the plain average's 4: about a third smaller, though the plain average has no bias at all.
+That is the whole card in miniature. A rule for guessing (an **estimator**, the word from [Samples and estimators](01-populations-samples-and-estimators.md)) can be wrong in two ways. It can aim off-centre: that is **bias**. It can scatter: that is **variance**.
+
+The standard score for a rule, its **mean squared error**, is the average of the squared miss over every test that could have been run. It splits exactly into the two: squared bias plus variance. When the true offset is 2 g, the shrunk rule's mean squared error is 2.72 square grams against the plain average's 4. That is about a third smaller, though the plain average has no bias at all.
 
 **Mean squared error equals variance plus squared bias, so a rule that accepts a small, known lean in exchange for much less scatter can miss by less on average than an unbiased one.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; the verdict on shrinking is a calculation that holds for some true offsets and fails for others, and the card shows where the line falls.
+**What kind of fact this is:** a theorem, proved on this card in Why it works. The verdict on shrinking is a calculation: it holds for some true offsets and fails for others, and the card shows where the line falls.
 
 ### The picture: when shrinking pays
 
@@ -75,7 +77,7 @@ With $\sigma = 4$, $n = 4$, $\mu = 2$ and $c = 0.8$: the average scores 16/4 = 4
 
 ### When it holds
 
-- **The split holds for any rule with a finite variance.** No bell curve, no independence, no particular sample size. A rule whose variance is infinite (an average of Cauchy draws, [Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has no finite mean squared error to split.
+- **The split holds for any rule with a finite variance.** No bell curve, no independence, no particular sample size. A rule whose variance is infinite (an average of Cauchy draws, a law with tails so heavy it has no average; [Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has no finite mean squared error to split.
 - **Independent readings with the same noise.** That is what gives the average its variance $\sigma^2/n$. Readings taken while the scale warms up, each drifting with the last, carry less information than four independent ones, and the formula understates both rules' errors.
 - **Squared error as the score.** A miss of 2 g costs four times a miss of 1 g. Scored by the plain size of the miss instead, the rules can rank differently and the split into two parts no longer holds.
 - **A fixed shrink factor.** The formula for $c\bar X$ treats $c$ as a constant. A factor chosen from the same data is a different rule with a different mean squared error: 3.14, not 2.72, at an offset of 2 g.
@@ -105,7 +107,7 @@ $$E[(T - \theta)^2] = E[(T - m)^2] + 2(m - \theta)\,E[T - m] + (m - \theta)^2.$$
 
 **Conclusion.** $\mathrm{MSE}(T) = \mathrm{Var}(T) + (E[T] - \theta)^2$. Nothing here used independence, the shape of the noise, or the sample size.
 
-**Why centring on the aim matters.** Centred on any other point, the averaged cross term is twice that point's distance from the truth times the rule's average distance from that point, and the second factor is no longer zero. The split belongs to the rule's own average.
+**Why centring on the aim matters.** Centred on any other point, the averaged cross term is twice that point's distance from the truth times the rule's average distance from that point. The second factor is no longer zero. The split belongs to the rule's own average.
 
 </details>
 
@@ -113,13 +115,15 @@ On the coin-flip version of the scale (each reading's noise is +4 g or −4 g wi
 
 ### Step 2: the plain average has no lean
 
-Each reading's error averages $\mu$, so the average of four averages $\mu$: the bias is zero whatever the offset. Four independent readings of variance 16 give an average of variance 16/4 = 4, standard error 2 g ([Standard error](02-sample-mean-and-standard-error.md)). Unbiased, its mean squared error is its variance: 4 square grams.
+Each reading's error averages $\mu$, so the average of four averages $\mu$: the bias is zero whatever the offset. Four independent readings of variance 16 give an average of variance 16/4 = 4, so its standard error, the standard deviation of the average, is 2 g ([Standard error](02-sample-mean-and-standard-error.md)). Unbiased, its mean squared error is its variance: 4 square grams.
 
 ### Step 3: shrinking trades scatter for lean
 
 Multiplying a random variable by $c$ multiplies its average by $c$ and its variance by $c^2$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). So $c\bar X$ aims at $c\mu$, a lean of $(c - 1)\mu$, and scatters with variance $c^2\sigma^2/n$. For $c = 0.8$ and $\mu = 2$: the lean is −0.4 g, the variance 2.56. Step 1 adds them: 2.56 + 0.16 = 2.72.
 
-Compare the two in the same units, square grams, as the score does. Pull the factor down from 1 by 0.2: the variance falls from 4 to 2.56, a saving of 1.44, while the squared lean is (0.2 × 2)^2 = 0.16. Halve the pull to 0.1: the variance falls only to 3.24, about half the saving, while the squared lean drops to 0.04, a quarter of the cost. The saving shrinks in step with the pull and the cost with its square, so at any given true offset a small enough pull gains more than it pays. That is why shrinking can win.
+Compare the two in the same units, square grams, as the score does. Pull the factor down from 1 by 0.2: the variance falls from 4 to 2.56, a saving of 1.44, while the squared lean is (0.2 × 2)^2 = 0.16.
+
+Halve the pull to 0.1: the variance falls only to 3.24, about half the saving, while the squared lean drops to 0.04, a quarter of the cost. The saving shrinks in step with the pull and the cost with its square, so at any given true offset a small enough pull gains more than it pays. That is why shrinking can win.
 
 ### Step 4: where the shrunk rule wins, and where it loses
 
@@ -152,12 +156,16 @@ xychart-beta
 
 Orange: variance, rising with the factor. Green: squared bias, falling. Dark blue: their sum, the mean squared error, lowest at 0.5. The plain average sits at the right end, the constant guess "zero" at the left, and both score 4.
 
-The catch: $c^*$ contains $\mu$, the number being guessed. It is not a rule anyone can run. Putting the data's own $\bar X$ in place of $\mu$ gives a rule that can be run, but its factor now moves with the data, so Step 3's formula no longer applies. At an offset of 2 g its mean squared error, integrated over the bell curve of $\bar X$ by the midpoint rule, is 3.136980; simulated, 3.1428 (standard error 0.0086). Either way it is about 3.14: better than 4, worse than the fixed 0.8.
+The catch: $c^*$ contains $\mu$, the number being guessed. It is not a rule anyone can run.
+
+Putting the data's own $\bar X$ in place of $\mu$ gives a rule that can be run. But its factor now moves with the data, so Step 3's formula no longer applies. At an offset of 2 g its mean squared error, integrated over the bell curve of $\bar X$ by the midpoint rule (cut the range into thin slices and add each slice's middle height times its width), is 3.136980; simulated, 3.1428 (standard error 0.0086). Either way it is about 3.14: better than 4, worse than the fixed 0.8.
 
 <details>
 <summary>Shrinking many averages at once</summary>
 
-For one offset, no fixed pull beats the plain average at every offset, as Step 4 showed. For three or more unrelated offsets with bell-shaped noise, scored by their total squared miss, Charles Stein (1956) and then Willard James with Stein (1961) showed that a data-chosen pull of all the averages toward a common point has smaller total mean squared error than the plain averages at every possible set of offsets. Efron and Morris's account in the Sources reads it through baseball batting averages. The proof needs tools beyond this card; [Regularisation](../09-Regression/06-ridge-and-lasso.md) uses the same pull.
+For one offset, no fixed pull beats the plain average at every offset, as Step 4 showed. Now take three or more unrelated offsets with bell-shaped noise, scored by their total squared miss. For that case, Charles Stein (1956) and then Willard James with Stein (1961) showed something different. A data-chosen pull of all the averages toward a common point has smaller total mean squared error than the plain averages, at every possible set of offsets.
+
+Efron and Morris's account in the Sources reads it through baseball batting averages. The proof needs tools beyond this card; [Regularisation](../09-Regression/06-ridge-and-lasso.md) uses the same pull.
 
 </details>
 
@@ -184,7 +192,7 @@ Set the slope in $a$ to zero. Multiplying through by $a^3/(2\sigma^4)$ gives $-(
 
 This ranking needs bell-shaped noise; the split and Steps 2 to 4 do not. With coin-flip noise the three scores are 42.67, 40.00 and 56.32: the divisor $n$ wins and $n + 1$ is worst. That noise has no extreme readings, so $S$ scatters $n$ times less (variance $2(n - 1)\sigma^4/n$), and the bias term dominates.
 
-The same split, with the average taken over training samples instead of scale tests, is the bias-variance trade-off of machine learning; Loss and empirical risk takes it there.
+The same split, with the average taken over training samples instead of scale tests, is the bias-variance trade-off of machine learning; [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md) takes it there.
 
 ---
 
@@ -222,7 +230,13 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach every score by three independent roads. Road 1 is the formula. Road 2 lists all 16 patterns of coin-flip noise, each reading's error +4 g or −4 g with equal chance, and averages the squared misses directly; a root finder and a minimum finder run on those enumerated scores rather than on the formula, and the coin-flip divisor scores match a closed form. Road 3 simulates 200,000 tests with bell-shaped noise, drawn by the Box–Muller recipe (two uniform draws turned into two normal ones with a logarithm, a square root, a sine and a cosine) from SplitMix64, a short generator written out in both languages so both draw the same numbers. Every simulated score is printed with its standard error. The plug-in rule has no simple formula, so its score is also integrated by the midpoint rule over the bell curve of the average, and the simulation is checked against that. Both charts and every table on this card come from these runs.
+The scripts reach every score by three independent roads:
+
+1. **The formula.**
+2. **Every coin-flip pattern.** The scripts list all 16 patterns of coin-flip noise, each reading's error +4 g or −4 g with equal chance, and average the squared misses directly. A root finder and a minimum finder run on those enumerated scores rather than on the formula. The coin-flip divisor scores match a closed form.
+3. **A simulation.** The scripts simulate 200,000 tests with bell-shaped noise, drawn by the Box–Muller recipe (two uniform draws turned into two normal ones with a logarithm, a square root, a sine and a cosine). The uniform draws come from SplitMix64, a short generator written out in both languages so both draw the same numbers. Every simulated score is printed with its standard error.
+
+The plug-in rule has no simple formula. So its score is also integrated by the midpoint rule over the bell curve of the average, and the simulation is checked against that. Both charts and every table on this card come from these runs.
 
 ### Python
 
@@ -664,6 +678,135 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the split for every rule with a finite variance, the shrunk rule's score for independent readings, and where shrinking pays.
+
+- Take any rule $T$ whose square has a finite average. Then its mean squared error equals its variance plus its squared bias.
+- Take $n$ independent readings, each with average $\mu$ and variance $\sigma^2$, and a fixed shrink factor $c$. Then $\mathrm{MSE}(c\bar X) = c^2\,\sigma^2/n + (1 - c)^2 \mu^2$.
+- Take $c = 1$. Then this is the plain average's score, $\sigma^2/n$.
+- Take a fixed shrink factor $c$ other than 1. Then the shrunk rule's score is below the plain average's exactly when $\mu^2 < (\sigma^2/n)(1 + c)/(1 - c)$.
+- The record's errors are 3, −1, 5 and 1 g. Their average is 2 g, and $S$ is 20.
+- Take $\mu = 2$ and $c = 0.8$. Then the shrunk rule scores 2.72 against the plain average's 4.
+- The break-even offset is 6 g. At an offset of 8 g the shrunk rule scores 5.12.
+- The formula for $c^*$ gives 0.5 at an offset of 2 g, and that factor scores 2.
+- The formula in Step 6 gives the divisor table's bell-noise scores: 512/3 (170.67), 112 and 512/5 (102.4).
+
+The simulations, the coin-flip patterns, the plug-in rule, the chi-square law behind Step 6 and the charts are left to the Python and Rust checks.
+
+```lean
+-- Bias and variance: the mean squared error of any guess with a finite variance equals its variance plus its squared bias, the shrunk average c·X̄ of independent readings scores c²σ²/n + (1 − c)²μ², and it beats the plain average exactly when μ² < (σ²/n)(1 + c)/(1 − c).
+import Mathlib.Probability.Moments.Variance
+
+open MeasureTheory ProbabilityTheory
+
+/-- **Mean squared error equals variance plus squared bias.** Let `T` be any rule for
+guessing a number `θ`, seen as a random variable on a probability space, with finite
+variance (its square has a finite average). Then its mean squared error, the average of
+`(T − θ)²`, equals its variance plus the square of its bias `E[T] − θ`. No independence,
+no bell curve and no particular sample size are needed. -/
+theorem mse_eq_variance_add_bias_sq {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (T : Ω → ℝ) (θ : ℝ) (hT : MemLp T 2 P) :
+    ∫ ω, (T ω - θ) ^ 2 ∂P = variance T P + (∫ ω, T ω ∂P - θ) ^ 2 := by
+  have hint : Integrable T P := hT.integrable one_le_two
+  have hsq : Integrable (fun ω => T ω ^ 2) P := hT.integrable_sq
+  rw [variance_eq_sub hT]
+  have hexp : (fun ω => (T ω - θ) ^ 2) = fun ω => (T ω ^ 2 - 2 * θ * T ω) + θ ^ 2 := by
+    ext ω; ring
+  have h2 : Integrable (fun ω => T ω ^ 2 - 2 * θ * T ω) P := hsq.sub (hint.const_mul _)
+  rw [hexp, integral_add h2 (integrable_const _),
+    integral_sub hsq (hint.const_mul _), integral_const_mul, integral_const]
+  simp only [Pi.pow_apply, probReal_univ, smul_eq_mul, one_mul]
+  ring
+
+/-- **The mean squared error of the shrunk average (Steps 2 and 3).** Let `X 0, …, X (n−1)`
+be `n ≥ 1` independent readings, each with average `μ` (the true offset) and variance `σ²`,
+and with finite variance. For any fixed shrink factor `c`, the rule `c · X̄`, where `X̄` is
+the readings' average, has mean squared error `c² σ²/n + (1 − c)² μ²` about `μ`. With
+`c = 1` this is the plain average's `σ²/n`. -/
+theorem mse_of_shrunk_average {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (n : ℕ) (hn : n ≠ 0) (X : Fin n → Ω → ℝ) (μ σ c : ℝ)
+    (hind : iIndepFun X P)
+    (hL2 : ∀ i, MemLp (X i) 2 P)
+    (hmean : ∀ i, ∫ ω, X i ω ∂P = μ)
+    (hvar : ∀ i, variance (X i) P = σ ^ 2) :
+    ∫ ω, (c * ((∑ i, X i ω) / n) - μ) ^ 2 ∂P = c ^ 2 * (σ ^ 2 / n) + (1 - c) ^ 2 * μ ^ 2 := by
+  have hS : MemLp (fun ω => ∑ i, X i ω) 2 P := memLp_finsetSum _ (fun i _ => hL2 i)
+  have hY : MemLp (fun ω => c * ((∑ i, X i ω) / n)) 2 P := by
+    have := hS.const_mul (c / n)
+    convert this using 1
+    ext ω; ring
+  have hnR : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn
+  rw [mse_eq_variance_add_bias_sq _ μ hY]
+  have hvarS : variance (∑ i, X i) P = n * σ ^ 2 := by
+    rw [IndepFun.variance_sum (fun i _ => hL2 i)
+      (fun i _ j _ hij => hind.indepFun hij)]
+    simp [hvar]
+  have hvarY : variance (fun ω => c * ((∑ i, X i ω) / n)) P = (c / n) ^ 2 * (n * σ ^ 2) := by
+    have : (fun ω => c * ((∑ i, X i ω) / n)) = fun ω => (c / n) * (∑ i, X i) ω := by
+      ext ω; simp [Finset.sum_apply]; ring
+    rw [this, variance_const_mul, hvarS]
+  have hEY : ∫ ω, c * ((∑ i, X i ω) / n) ∂P = c * μ := by
+    rw [integral_const_mul, integral_div, integral_finsetSum _ (fun i _ =>
+      (hL2 i).integrable one_le_two)]
+    simp [hmean]
+    field_simp
+    simp
+  rw [hvarY, hEY]
+  field_simp
+  ring
+
+/-- **Where shrinking pays (Step 4).** For a fixed shrink factor `c ≠ 1`, the shrunk rule's
+score `c² σ²/n + (1 − c)² μ²` is below the plain average's `σ²/n` exactly when
+`μ² < (σ²/n) · (1 + c)/(1 − c)`. -/
+theorem shrunk_beats_average_iff (μ σ c : ℝ) (n : ℕ) (hc : c ≠ 1) :
+    c ^ 2 * (σ ^ 2 / n) + (1 - c) ^ 2 * μ ^ 2 < σ ^ 2 / n ↔
+      μ ^ 2 < σ ^ 2 / n * ((1 + c) / (1 - c)) := by
+  have h1 : 1 - c ≠ 0 := sub_ne_zero.mpr (Ne.symm hc)
+  have hpos : 0 < (1 - c) ^ 2 := by positivity
+  set v := σ ^ 2 / n
+  have hr : v * ((1 + c) / (1 - c)) = v * (1 + c) * (1 - c) / (1 - c) ^ 2 := by
+    field_simp
+  rw [hr, lt_div_iff₀ hpos]
+  constructor <;> intro h <;> nlinarith
+
+-- The card's record: readings 503, 499, 505, 501 g on a 500 g weight.
+example : ((503 : ℤ) - 500, (499 : ℤ) - 500, (505 : ℤ) - 500, (501 : ℤ) - 500) = (3, -1, 5, 1) := by
+  decide
+-- Their average error is 2 g.
+example : ((3 : ℤ) + -1 + 5 + 1) / 4 = 2 := by decide
+-- Squared distances from that average add to S = 20.
+example : ((3 : ℤ) - 2) ^ 2 + (-1 - 2) ^ 2 + (5 - 2) ^ 2 + (1 - 2) ^ 2 = 20 := by decide
+-- Variance of the average: σ²/n = 16/4 = 4.
+example : (16 : ℚ) / 4 = 4 := by norm_num
+-- MSE of the shrunk rule at μ = 2, c = 4/5: 64/25 + 4/25 = 68/25 (that is, 2.72).
+example : ((4 : ℚ) / 5) ^ 2 * (16 / 4) + (1 - 4 / 5) ^ 2 * 2 ^ 2 = 68 / 25 := by norm_num
+-- Break-even offset: (σ²/n)(1 + c)/(1 − c) = 4 · 9 = 36 = 6².
+example : (16 : ℚ) / 4 * ((1 + 4 / 5) / (1 - 4 / 5)) = 6 ^ 2 := by norm_num
+-- At offset 6 the two rules tie; at offset 8 the shrunk rule scores 128/25 (5.12) > 4.
+example : ((4 : ℚ) / 5) ^ 2 * 4 + (1 - 4 / 5) ^ 2 * 6 ^ 2 = 4 := by norm_num
+example : ((4 : ℚ) / 5) ^ 2 * 4 + (1 - 4 / 5) ^ 2 * 8 ^ 2 = 128 / 25 := by norm_num
+-- Best factor at μ = 2: c* = 4/(4 + 4) = 1/2, scoring 2.
+example : (2 : ℚ) ^ 2 / (2 ^ 2 + 16 / 4) = 1 / 2 := by norm_num
+example : ((1 : ℚ) / 2) ^ 2 * 4 + (1 - 1 / 2) ^ 2 * 2 ^ 2 = 2 := by norm_num
+-- Divisor table, bell noise, n = 4, σ⁴ = 256: MSE(S/a) = 256 (2·3 + (3 − a)²)/a².
+example : (256 : ℚ) * (2 * 3 + (3 - 3) ^ 2) / 3 ^ 2 = 512 / 3 := by norm_num
+example : (256 : ℚ) * (2 * 3 + (3 - 4) ^ 2) / 4 ^ 2 = 112 := by norm_num
+example : (256 : ℚ) * (2 * 3 + (3 - 5) ^ 2) / 5 ^ 2 = 512 / 5 := by norm_num
+
+#print axioms mse_eq_variance_add_bias_sq
+#print axioms mse_of_shrunk_average
+#print axioms shrunk_beats_average_iff
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mse_eq_variance_add_bias_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mse_of_shrunk_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shrunk_beats_average_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -677,7 +820,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Treating unbiased as best.** Zero bias removes one of the two terms, not the total. At a true offset of 2 g the unbiased average scores 4 and the shrunk rule 2.72; for the scale's noise, the unbiased divisor 3 scores 170.67 against 102.4 for the biased divisor 5. An unbiased rule with large scatter is often the worse rule.
+> **Treating unbiased as best.** Zero bias removes one of the two terms, not the total. At a true offset of 2 g the unbiased average scores 4 and the shrunk rule 2.72. For the scale's noise, the unbiased divisor 3 scores 170.67 against 102.4 for the biased divisor 5. An unbiased rule with large scatter is often the worse rule.
 >
 > - **Believing a shrunk rule wins everywhere.** It wins only below the break-even offset, 6 g here; at 8 g it scores 5.12. The pull helps only when the truth really is near the point pulled toward.
 > - **Judging a rule by one record.** On this record the plain average is exactly right and the shrunk rule is 0.4 g off; the scores describe the rules over repeated tests.
@@ -702,6 +845,7 @@ The two outputs match line for line.
 
 ## What this builds on
 
+- [Samples and estimators](01-populations-samples-and-estimators.md): the words estimator, bias and unbiased that this card scores.
 - [Standard error](02-sample-mean-and-standard-error.md): the average's variance $\sigma^2/n$ and the $n - 1$ divisor that Step 6 re-judges.
 
 ## Where this goes next

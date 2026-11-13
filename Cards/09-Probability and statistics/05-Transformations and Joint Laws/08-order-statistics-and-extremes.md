@@ -8,7 +8,7 @@
 
 A fund holds $1,000,000 of shares. On a typical day it gains or loses a little, and the swing has a standard deviation of $10,000. Over a trading month of 20 days, the risk desk cares less about the typical day than about the worst one.
 
-The desk's one-day **value at risk** (VaR) at 99 percent is $23,263: the loss a single day exceeds only 1 time in 100. So how often does the worst of 20 days exceed it? Not 1 time in 100. The answer is 0.1821, a little under 1 month in 5. The worst of 20 days has its own law, and it sits well to the right of a single day's law: its median is $18,242 and its average $18,675.
+The desk's one-day **value at risk** (VaR) at 99 percent is $23,263: the loss a single day exceeds only 1 time in 100. So how often does the worst of 20 days exceed it? Not 1 time in 100. The answer is 0.1821, a little under 1 month in 5. The worst of 20 days has its own law (how its chance spreads over values), and it sits well to the right of a single day's law: its median is $18,242 and its average $18,675.
 
 Sorting a sample and asking about one place in the sorted list is what this card studies. The largest, the smallest, the second largest and the middle value are each a random quantity with a law of its own. Each law is found by the same move: turn a question about a rank into a count of how many days fall below a line. Every such count is binomial.
 
@@ -150,7 +150,7 @@ Integrating the density from far left to x recovers the binomial tail, which the
 
 The worst day's median is the x where F(x)^20 = 0.5, so F(x) = 0.5^(1/20) = 0.96594. The loss one day stays under with chance 0.96594 is $18,242, from the normal quantile ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)). Half of all months have a worst day below that.
 
-The average is the area under x times $g_{20}(x)$, which has no closed form for the bell. Simpson's rule gives \$18,675, a little above the median because the right tail is long. Over a year of 250 days the worst day averages \$28,192: the maximum of bell-shaped draws keeps growing with n, but slowly.
+The average is the area under x times $g_{20}(x)$, which has no closed form for the bell. Simpson's rule, an area sum over thin strips (described under the code), gives \$18,675, a little above the median because the right tail is long. Over a year of 250 days the worst day averages \$28,192: the maximum of bell-shaped draws keeps growing with n, but slowly.
 
 <details>
 <summary>Where the maximum settles as n grows: the Fisher–Tippett theorem</summary>
@@ -164,7 +164,9 @@ The three are one family with a single shape dial, the **generalised extreme val
 
 </details>
 
-A second road to every rank: feed each loss through its own cumulative chance. F(L) is uniform between 0 and 1 ([Transforming a variable](01-transforming-a-random-variable.md)), and F keeps the order, so the k-th smallest loss maps to the k-th smallest of 20 uniforms. Put F = u in the density formula and it becomes the beta law with parameters k and n − k + 1 ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). That is why the ranks' chances, such as 0.7358, never depend on the shape of the daily law. The beta law's average formula gives the k-th smallest of n uniforms an average of k/(n + 1): on average, n uniform draws cut the range into n + 1 equal pieces. The code checks it by Simpson's rule for k = 1, 10, 19 and 20. So for n draws spread evenly between 0 and an unknown top, the largest averages n/(n + 1) of the top, and (n + 1)/n times the largest draw is **unbiased** for the top: right on average.
+A second road to every rank: feed each loss through its own cumulative chance. F(L) is uniform between 0 and 1 ([Transforming a variable](01-transforming-a-random-variable.md)), and F keeps the order, so the k-th smallest loss maps to the k-th smallest of 20 uniforms. Put F = u in the density formula and it becomes the beta law with parameters k and n − k + 1 ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). That is why the ranks' chances, such as 0.7358, never depend on the shape of the daily law.
+
+The beta law's average formula gives the k-th smallest of n uniforms an average of k/(n + 1): on average, n uniform draws cut the range into n + 1 equal pieces. The code checks it by Simpson's rule for k = 1, 10, 19 and 20. So for n draws spread evenly between 0 and an unknown top, the largest averages n/(n + 1) of the top, and (n + 1)/n times the largest draw is **unbiased** for the top: right on average.
 
 ---
 
@@ -199,7 +201,14 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported contains the answer: no statistics module, no random module, no normal distribution. The normal area Φ is built from its power series, quantiles by bisection, and the random numbers by SplitMix64 (a short written-out recipe that scrambles a counter into random-looking bits), seed 20260928, shaped into bell draws by the Box-Muller recipe. Four roads meet. Road 1 is the closed forms, F^n and the binomial tail. Road 2 integrates the rank densities by Simpson's rule, a strip sum that fits a parabola across each pair of strips; it never touches the binomial tail, and it also checks the uniform road's averages k/(n + 1). Road 3 simulates 100,000 months of 20 days, sorts each month and counts, quoting standard errors. Road 4 counts exactly over every six-day sequence of a three-valued day (down, flat, up), where ties are common, and checks all 18 rank formulas exactly, with fractions in Python and whole-number counts in Rust. The asserts compare roads, never a number with itself; a simulated number may miss by up to four standard errors.
+Nothing imported contains the answer: no statistics module, no random module, no normal distribution. The normal area Φ is built from its power series, quantiles by bisection, and the random numbers by SplitMix64 (a short written-out recipe that scrambles a counter into random-looking bits), seed 20260928, shaped into bell draws by the Box-Muller recipe. Four roads meet:
+
+- Road 1 is the closed forms, F^n and the binomial tail.
+- Road 2 integrates the rank densities by Simpson's rule, a strip sum that fits a parabola across each pair of strips; it never touches the binomial tail, and it also checks the uniform road's averages k/(n + 1).
+- Road 3 simulates 100,000 months of 20 days, sorts each month and counts, quoting standard errors (se: the typical size of a simulation's random miss).
+- Road 4 counts exactly over every six-day sequence of a three-valued day (down, flat, up), where ties are common, and checks all 18 rank formulas exactly, with fractions in Python and whole-number counts in Rust.
+
+The asserts compare roads, never a number with itself; a simulated number may miss by up to four standard errors.
 
 ### Python
 
@@ -598,6 +607,259 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulated figures included, because both programs draw the same numbers.
 
+### Lean
+
+Lean proves the rank laws for any number of independent days that share one law, with ties allowed.
+
+- The k-th smallest is at most x exactly when at least k of the days are at most x.
+- Suppose the n days are independent, each with cumulative chance F. Then the worst day is at most x with chance $F(x)^n$.
+- Take the same days. Then the best day is at most x with chance $1 - (1 - F(x))^n$.
+- Take the same days and any rank k from 1 to n. Then the k-th smallest is at most x with the binomial tail's chance.
+- The hand counts hold exactly: 0.5^20 is 1 in 1,048,576, C(20, 19) = 20, and the density's count is 380.
+- The second worst's binomial tail at F = 0.95 is exactly 0.95^20 + 20 × 0.05 × 0.95^19.
+- Choosing 6 to 14 of 20 days below zero gives 1,005,176 ways out of 1,048,576. And 1 − 0.99^20 is below 20 × 0.01.
+
+The density formula, the decimals, the dollar figures, the simulation and the four mistakes' printed values are left to the Python and Rust checks.
+
+```lean
+-- Order statistics: for n independent draws from one law with cumulative chance F, the k-th smallest is at most x with chance equal to the binomial tail, so the largest has law F(x)^n and the smallest 1 - (1 - F(x))^n.
+import Mathlib.Data.Fin.Tuple.Sort
+import Mathlib.Probability.CDF
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+open MeasureTheory ProbabilityTheory
+
+/-- The k-th smallest of the n values `x 0, ..., x (n-1)`, for a rank `k` from 1 to n:
+sort the values from smallest to largest (Mathlib's `Tuple.sort`, ties allowed) and take
+place `k` of the sorted list. Rank 1 is the smallest and rank n the largest. -/
+noncomputable def kthSmallest {n : ℕ} (x : Fin n → ℝ) (k : ℕ) (hk1 : 1 ≤ k) (hkn : k ≤ n) : ℝ :=
+  x (Tuple.sort x ⟨k - 1, by omega⟩)
+
+/-- Helper: the counting form of a rank question (used by the main theorem). -/
+theorem os_helper_count {n : ℕ} (x : Fin n → ℝ) (k : ℕ) (hk1 : 1 ≤ k) (hkn : k ≤ n)
+    (t : ℝ) :
+    kthSmallest x k hk1 hkn ≤ t ↔ k ≤ (Finset.univ.filter (fun i => x i ≤ t)).card := by
+  classical
+  unfold kthSmallest
+  set σ := Tuple.sort x
+  have hmono : Monotone (x ∘ σ) := Tuple.monotone_sort x
+  have hcard : (Finset.univ.filter (fun i => x i ≤ t)).card
+      = (Finset.univ.filter (fun j => x (σ j) ≤ t)).card := by
+    refine Finset.card_bij' (fun i _ => σ.symm i) (fun j _ => σ j) ?_ ?_ ?_ ?_ <;> simp
+  rw [hcard]
+  set m : Fin n := ⟨k - 1, by omega⟩
+  constructor
+  · intro h
+    have hsub : Finset.Iic m ⊆ Finset.univ.filter (fun j => x (σ j) ≤ t) := by
+      intro j hj
+      simp only [Finset.mem_Iic] at hj
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+      exact le_trans (hmono hj) h
+    have := Finset.card_le_card hsub
+    rw [Fin.card_Iic] at this
+    simp only [m] at this
+    omega
+  · intro h
+    by_contra hlt
+    push Not at hlt
+    have hsub : Finset.univ.filter (fun j => x (σ j) ≤ t) ⊆ Finset.Iio m := by
+      intro j hj
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hj
+      simp only [Finset.mem_Iio]
+      by_contra hge
+      push Not at hge
+      have := hmono hge
+      simp only [Function.comp] at this
+      linarith
+    have := Finset.card_le_card hsub
+    rw [Fin.card_Iio] at this
+    simp only [m] at this
+    omega
+
+/-- Helper: the event "exactly the draws in S are at most x" as an intersection. -/
+theorem os_helper_set {Ω : Type*} {n : ℕ} (X : Fin n → Ω → ℝ) (x : ℝ) (S : Finset (Fin n)) :
+    {ω | Finset.univ.filter (fun i => X i ω ≤ x) = S} =
+      ⋂ i ∈ (Finset.univ : Finset (Fin n)),
+        X i ⁻¹' (if i ∈ S then Set.Iic x else Set.Ioi x) := by
+  classical
+  ext ω
+  simp only [Set.mem_ofPred_eq, Set.mem_iInter, Finset.mem_univ, Set.mem_preimage, forall_const]
+  rw [Finset.ext_iff]
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+  apply forall_congr'
+  intro i
+  split_ifs with h <;> simp [h]
+
+/-- Helper: that event is measurable. -/
+theorem os_helper_meas {Ω : Type*} [MeasurableSpace Ω] {n : ℕ} (X : Fin n → Ω → ℝ)
+    (hmeas : ∀ i, Measurable (X i)) (x : ℝ) (S : Finset (Fin n)) :
+    MeasurableSet {ω | Finset.univ.filter (fun i => X i ω ≤ x) = S} := by
+  rw [os_helper_set]
+  refine Finset.measurableSet_biInter _ (fun i _ => hmeas i ?_)
+  split_ifs
+  · exact measurableSet_Iic
+  · exact measurableSet_Ioi
+
+/-- Helper: the chance that exactly the draws in S are at most x. -/
+theorem os_helper_fiber {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n : ℕ} (X : Fin n → Ω → ℝ) (μ : Measure ℝ)
+    [IsProbabilityMeasure μ] (hmeas : ∀ i, Measurable (X i)) (hindep : iIndepFun X P)
+    (hlaw : ∀ i, P.map (X i) = μ) (x : ℝ) (S : Finset (Fin n)) :
+    P.real {ω | Finset.univ.filter (fun i => X i ω ≤ x) = S} =
+      cdf μ x ^ S.card * (1 - cdf μ x) ^ (n - S.card) := by
+  classical
+  have hms : ∀ i : Fin n, MeasurableSet (if i ∈ S then Set.Iic x else Set.Ioi x) := by
+    intro i
+    split_ifs
+    · exact measurableSet_Iic
+    · exact measurableSet_Ioi
+  have hprob : ∀ i, P.real (X i ⁻¹' (if i ∈ S then Set.Iic x else Set.Ioi x)) =
+      if i ∈ S then cdf μ x else 1 - cdf μ x := by
+    intro i
+    rw [← map_measureReal_apply (hmeas i) (hms i), hlaw i]
+    split_ifs
+    · rw [cdf_eq_real]
+    · rw [← Set.compl_Iic, probReal_compl_eq_one_sub measurableSet_Iic, cdf_eq_real]
+  rw [os_helper_set, measureReal_def,
+    hindep.measure_inter_preimage_eq_mul _ (fun i _ => hms i), ENNReal.toReal_prod]
+  simp_rw [← measureReal_def, hprob]
+  rw [Finset.prod_ite]
+  simp only [Finset.prod_const]
+  congr 2
+  · congr 1
+    ext i
+    simp
+  · rw [Finset.filter_not, Finset.card_sdiff]
+    simp
+
+#print axioms os_helper_count
+#print axioms os_helper_set
+#print axioms os_helper_meas
+#print axioms os_helper_fiber
+
+/-- The card's main claim. Take n independent draws `X 0, ..., X (n-1)` that all follow one
+law `μ` on the real line, with cumulative chance `F = cdf μ`. For any rank k from 1 to n and any
+threshold x, the chance that the k-th smallest draw is at most x is the binomial tail:
+the sum over j from k to n of C(n, j) F(x)^j (1 - F(x))^(n - j). -/
+theorem kth_smallest_cdf_eq_binomial_tail {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n : ℕ} (X : Fin n → Ω → ℝ) (μ : Measure ℝ)
+    [IsProbabilityMeasure μ] (hmeas : ∀ i, Measurable (X i)) (hindep : iIndepFun X P)
+    (hlaw : ∀ i, P.map (X i) = μ) (k : ℕ) (hk1 : 1 ≤ k) (hkn : k ≤ n) (x : ℝ) :
+    P.real {ω | kthSmallest (fun i => X i ω) k hk1 hkn ≤ x} =
+      ∑ j ∈ Finset.Icc k n, (n.choose j : ℝ) * cdf μ x ^ j * (1 - cdf μ x) ^ (n - j) := by
+  classical
+  have hevent : {ω | kthSmallest (fun i => X i ω) k hk1 hkn ≤ x} =
+      (fun ω => Finset.univ.filter (fun i => X i ω ≤ x)) ⁻¹'
+        ↑(Finset.univ.filter (fun S : Finset (Fin n) => k ≤ S.card)) := by
+    ext ω
+    simp [os_helper_count]
+  rw [hevent, ← sum_measureReal_preimage_singleton _
+    (fun S _ => os_helper_meas X hmeas x S)]
+  have hfib : ∀ S : Finset (Fin n),
+      P.real ((fun ω => Finset.univ.filter (fun i => X i ω ≤ x)) ⁻¹' {S}) =
+        cdf μ x ^ S.card * (1 - cdf μ x) ^ (n - S.card) := fun S =>
+    os_helper_fiber P X μ hmeas hindep hlaw x S
+  simp_rw [hfib]
+  rw [Finset.sum_filter, ← Finset.powerset_univ,
+    Finset.sum_powerset_apply_card
+      (fun m => if k ≤ m then cdf μ x ^ m * (1 - cdf μ x) ^ (n - m) else 0)]
+  simp only [Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_ite, mul_zero]
+  rw [← Finset.sum_filter]
+  have hIcc : (Finset.range (n + 1)).filter (fun m => k ≤ m) = Finset.Icc k n := by
+    ext m
+    simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Icc]
+    omega
+  rw [hIcc]
+  refine Finset.sum_congr rfl (fun j _ => by ring)
+
+/-- Step 0 of the card: a rank question is a counting question. For any n real values, ties
+allowed, the k-th smallest is at most t exactly when at least k of the values are at most t. -/
+theorem kth_smallest_le_iff_count {n : ℕ} (x : Fin n → ℝ) (k : ℕ) (hk1 : 1 ≤ k) (hkn : k ≤ n)
+    (t : ℝ) :
+    kthSmallest x k hk1 hkn ≤ t ↔ k ≤ (Finset.univ.filter (fun i => x i ≤ t)).card := by
+  exact os_helper_count x k hk1 hkn t
+
+/-- The maximum's and the minimum's laws. For n ≥ 1 independent draws from one law with
+cumulative chance `F = cdf μ`, the largest is at most x with chance F(x)^n, and the smallest is
+at most x with chance 1 - (1 - F(x))^n. -/
+theorem max_min_cdf {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n : ℕ} (hn : 0 < n) (X : Fin n → Ω → ℝ) (μ : Measure ℝ)
+    [IsProbabilityMeasure μ] (hmeas : ∀ i, Measurable (X i)) (hindep : iIndepFun X P)
+    (hlaw : ∀ i, P.map (X i) = μ) (x : ℝ) :
+    P.real {ω | Finset.univ.sup' ⟨⟨0, hn⟩, Finset.mem_univ _⟩ (fun i => X i ω) ≤ x} =
+        cdf μ x ^ n ∧
+      P.real {ω | Finset.univ.inf' ⟨⟨0, hn⟩, Finset.mem_univ _⟩ (fun i => X i ω) ≤ x} =
+        1 - (1 - cdf μ x) ^ n := by
+  classical
+  constructor
+  · have hset : {ω | Finset.univ.sup' ⟨⟨0, hn⟩, Finset.mem_univ _⟩ (fun i => X i ω) ≤ x} =
+        {ω | Finset.univ.filter (fun i => X i ω ≤ x) = Finset.univ} := by
+      ext ω
+      show (Finset.univ.sup' _ (fun i => X i ω) ≤ x) ↔
+        Finset.univ.filter (fun i => X i ω ≤ x) = Finset.univ
+      refine (Finset.sup'_le_iff _ _).trans ?_
+      rw [Finset.eq_univ_iff_forall]
+      simp
+    rw [hset, os_helper_fiber P X μ hmeas hindep hlaw x]
+    simp
+  · have hset : {ω | Finset.univ.inf' ⟨⟨0, hn⟩, Finset.mem_univ _⟩ (fun i => X i ω) ≤ x} =
+        {ω | Finset.univ.filter (fun i => X i ω ≤ x) = ∅}ᶜ := by
+      ext ω
+      show (Finset.univ.inf' _ (fun i => X i ω) ≤ x) ↔
+        ¬ (Finset.univ.filter (fun i => X i ω ≤ x) = ∅)
+      refine (Finset.inf'_le_iff _).trans ?_
+      rw [Finset.filter_eq_empty_iff]
+      simp
+    rw [hset, probReal_compl_eq_one_sub (os_helper_meas X hmeas x ∅),
+      os_helper_fiber P X μ hmeas hindep hlaw x]
+    simp
+
+/-! The card's whole-number worked examples, checked exactly. -/
+
+-- Every day of 20 a loss: chance 0.5^20, which is 1 in 1,048,576.
+example : (1 / 2 : ℚ) ^ 20 = 1 / 1048576 := by norm_num
+
+-- C(20, 19) = 20 ways to pick which 19 days stay under the line.
+example : Nat.choose 20 19 = 20 := by decide
+
+-- The count in front of the second worst's density: 20 × C(19, 18) = 380 = 20! / (18! 1!).
+example : 20 * Nat.choose 19 18 = 380 := by decide
+example : 20 * Nat.choose 19 18 = Nat.factorial 20 / (Nat.factorial 18 * Nat.factorial 1) := by
+  decide
+
+-- The second worst of 20 at most the true 95% VaR: the binomial tail from 19 to 20 at F = 0.95
+-- is 0.95^20 + 20 × 0.05 × 0.95^19.
+example : ∑ j ∈ Finset.Icc 19 20, (Nat.choose 20 j : ℚ) * (19 / 20) ^ j * (1 / 20) ^ (20 - j) =
+    (19 / 20) ^ 20 + 20 * (1 / 20) * (19 / 20) ^ 19 := by
+  rw [show Finset.Icc 19 20 = {19, 20} from by decide]
+  norm_num [Nat.choose]
+
+-- The 6th and 15th values bracket the median when 6 to 14 of 20 fair days are at or below it:
+-- 1,005,176 of the 1,048,576 equally likely patterns, about 0.9586.
+example : ∑ j ∈ Finset.Icc 6 14, Nat.choose 20 j = 1005176 := by decide
+
+-- Mistake 1: adding the daily chances, 20 × 0.01 = 0.2, overstates 1 - 0.99^20.
+example : 1 - (99 / 100 : ℚ) ^ 20 < 20 * (1 / 100) := by norm_num
+
+#print axioms kth_smallest_cdf_eq_binomial_tail
+#print axioms kth_smallest_le_iff_count
+#print axioms max_min_cdf
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'os_helper_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'os_helper_set' depends on axioms: [propext, Classical.choice, Quot.sound]
+'os_helper_meas' depends on axioms: [propext, Classical.choice, Quot.sound]
+'os_helper_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'kth_smallest_cdf_eq_binomial_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+'kth_smallest_le_iff_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'max_min_cdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Change both files the same way.
@@ -624,7 +886,7 @@ The two outputs match line for line, simulated figures included, because both pr
 
 - **Historical value at risk.** A desk sorts the last few hundred days of profit and loss and reads off one rank; that number is an order statistic, with all the scatter this card computes ([Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md)).
 - **Floods and wind loads.** Engineers design a dam for the largest flood in a century of years; the law of that maximum is F^n for n years, before any long-run limit is taken.
-- **Auctions.** In a sealed-bid auction where the highest bidder pays the second-highest bid, the price is the second-largest order statistic of the bids (Auctions).
+- **Auctions.** In a sealed-bid auction where the highest bidder pays the second-highest bid, the price is the second-largest order statistic of the bids ([Auctions](../../14-Applied%20and%20computational/05-Operations%20Research/10-auctions-and-mechanism-design.md)).
 - **The median and its interval.** The sample median is the middle order statistic. The pair of 6th and 15th values brackets the true median of any continuous law 0.9586 of the time for 20 draws, with no bell assumed.
 - **Weakest links.** A chain, a series circuit or a team deadline fails at its weakest member: the minimum, whose law is 1 − (1 − F)^n.
 

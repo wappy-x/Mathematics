@@ -161,4 +161,5 @@ fn main() {
     assert!((med_sim - median).abs() < 4.0 * se_med && worst < 4.0);
     assert!((clip0 - 0.5).abs() < 4.0 * (0.25 / nf).sqrt());
     assert!((pit - 0.3).abs() < 4.0 * (0.3 * 0.7 / nf).sqrt());
+    println!("ALL CHECKS PASS");
 }

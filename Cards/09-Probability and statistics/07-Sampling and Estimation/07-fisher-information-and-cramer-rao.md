@@ -10,7 +10,11 @@ A coin has been bent in a vise. It now lands heads with some unknown chance; in 
 
 The obvious rule is to count the heads and divide by 4. That rule is right on average, and its answers scatter: the standard deviation of the guess, over many repeats of the four flips, is 0.216506. A guess of 0.25 that routinely misses by 0.2 is weak. Could a cleverer rule, one that weighs the flips differently or uses their order, scatter less and still be right on average?
 
-No. Every rule that is right on average at every possible chance has a variance of at least 0.046875 here, which is the counting rule's own variance. The floor comes from one number, the **Fisher information**: how sharply the chance of the observed flips changes as the unknown chance changes. Sharp change means the data point firmly at one value; gentle change means many values explain the data about equally well. The floor is one over the information. Harald Cramér and C. R. Rao proved it independently in the mid-1940s; it is the **Cramér–Rao bound**, the name used from here on.
+No. Every rule that is right on average at every possible chance has a variance of at least 0.046875 here, which is the counting rule's own variance.
+
+The floor comes from one number, the **Fisher information**: how sharply the chance of the observed flips changes as the unknown chance changes. Sharp change means the data point firmly at one value; gentle change means many values explain the data about equally well. The floor is one over the information.
+
+Harald Cramér and C. R. Rao proved it independently in the mid-1940s; it is the **Cramér–Rao bound**, the name used from here on.
 
 **No estimator that is right on average for every value of the unknown can have variance below one over the Fisher information; for n flips of a coin with chance p that floor is p(1-p)/n, and the plain fraction of heads sits on it.**
 
@@ -28,13 +32,17 @@ xychart-beta
     line [-9.00, -3.69, -1.35, -0.30, 0.00, -0.25, -0.93, -1.99, -3.43, -5.23, -7.44, -10.10]
 ```
 
-First line (orange): one head in 4 flips. Second line (green): 10 heads in 40 flips. Both peak at 0.25, the observed fraction. The 4-flip curve is nearly flat: at p = 0.5 it has dropped by only 0.52, so a fair coin explains the data almost as well. The 40-flip curve has dropped by 5.23 there, ten times as far. Ten times the flips, ten times the curvature at the peak, ten times the information.
+First line (orange): one head in 4 flips. Second line (green): 10 heads in 40 flips. Both peak at 0.25, the observed fraction.
+
+The 4-flip curve is nearly flat: at p = 0.5 it has dropped by only 0.52, so a fair coin explains the data almost as well. The 40-flip curve has dropped by 5.23 there, ten times as far. Ten times the flips, ten times the curvature at the peak, ten times the information.
 
 ---
 
 ## The formula
 
-Notation first, in words. The **log-likelihood** ℓ(p), from [Maximum likelihood](04-maximum-likelihood.md), is the logarithm of the chance of the flips actually seen, read as a function of the candidate chance p. Its slope in p, with the flips held fixed, is the **score**, written S. The **Fisher information** I(p) is the average of the squared score over all the flip records the coin could produce. An **estimator** T is any rule that turns the flips into a guess; it is **unbiased** when its average guess equals p, for every p.
+Notation first, in words. The **log-likelihood** ℓ(p), from [Maximum likelihood](04-maximum-likelihood.md), is the logarithm of the chance of the flips actually seen, read as a function of the candidate chance p. Its slope in p, with the flips held fixed, is the **score**, written S.
+
+The **Fisher information** I(p) is the average of the squared score over all the flip records the coin could produce. An **estimator** T is any rule that turns the flips into a guess; it is **unbiased** when its average guess equals p, for every p.
 
 $$S = \frac{d}{dp}\,\ell(p), \qquad I(p) = E\!\left[S^2\right], \qquad \operatorname{Var}(T) \;\ge\; \frac{1}{I(p)}$$
 
@@ -67,7 +75,7 @@ The floor is a variance; its square root, 0.216506 here, is the smallest possibl
 
 ### When it holds
 
-- **Unbiased at every value of p, not just one.** The proof differentiates "the average guess equals p" in p, which needs it on a whole stretch of values. The stopped clock, which always answers 0.25, is unbiased at p = 0.25 only and has variance 0 there; at p = 0.6 its mean squared error is 0.1225, about twice the floor of 0.06.
+- **Unbiased at every value of p, not just one.** The proof differentiates "the average guess equals p" in p, which needs it on a whole stretch of values. The stopped clock, which always answers 0.25, is unbiased at p = 0.25 only and has variance 0 there; at p = 0.6 its mean squared error (the average squared miss from the true p) is 0.1225, about twice the floor of 0.06.
 - **The rule is unbiased; biased rules have a different floor.** A rule with bias $b(p)$ obeys $\operatorname{Var}(T) \ge (1 + b'(p))^2 / I(p)$. Laplace's rule (K+1)/(n+2) pulls towards 0.5; its floor is 0.020833 and it sits on that, well under 0.046875.
 - **The set of possible records does not move with the unknown.** Every head-tail string is possible for every p strictly between 0 and 1. For a quantity spread evenly between 0 and θ, the possible values stretch as θ grows; the score no longer averages zero and the floor fails (What breaks, below).
 - **The chance of each record has a slope in p.** The coin's does; at p = 0 or 1 the score divides by zero, and the theorem is stated for p strictly inside.
@@ -79,7 +87,9 @@ The floor is a variance; its square root, 0.216506 here, is the smallest possibl
 
 ### Step 0: an unbiased rule must track p, and only the score carries p
 
-If the true chance moves up a little, an unbiased rule's average guess must move up by the same amount. The only way the data can "know" p has moved is through the chances of the records, and the score is exactly how those chances respond. So the rule has to lean with the score. How far a quantity can lean with another is capped by their two spreads. That cap is the floor.
+If the true chance moves up a little, an unbiased rule's average guess must move up by the same amount. The only way the data can "know" p has moved is through the chances of the records, and the score is exactly how those chances respond.
+
+So the rule has to lean with the score. How far a quantity can lean with another is capped by their two spreads. That cap is the floor.
 
 ### Step 1: the score averages zero
 
@@ -138,7 +148,13 @@ The information is the average downward curvature of the log-likelihood: the sha
 
 ### The other door
 
-For the coin a direct count reaches the same conclusion without calculus. The average of any rule is $\sum_k p^k (1-p)^{n-k} \times$ (the rule's total over the records with k heads), a polynomial in p. For it to equal p at every p, each of those totals is forced: it must equal the plain fraction's total, since the plain fraction is unbiased too. Dividing both averages by $(1-p)^n$ turns each into a polynomial in the odds p/(1-p), with those totals as its coefficients; the odds take every positive value, and two polynomials that agree at every positive value have the same coefficients. So every unbiased rule is $\hat p$ plus a "noise" term that sums to zero inside each head-count group, and that noise is uncorrelated with $\hat p$. Its variance is Var($\hat p$) plus the noise's average square, never less. This is the coin's case of the Rao–Blackwell and Lehmann–Scheffé theorems. The code draws 2,000 such rules at random: the smallest variance found is 0.046875, the floor, and none is biased at p = 0.1, 0.25 or 0.7.
+For the coin a direct count reaches the same conclusion without calculus. The average of any rule is $\sum_k p^k (1-p)^{n-k} \times$ (the rule's total over the records with k heads), a polynomial in p. For it to equal p at every p, each of those totals is forced: it must equal the plain fraction's total, since the plain fraction is unbiased too.
+
+Dividing both averages by $(1-p)^n$ turns each into a polynomial in the odds p/(1-p), with those totals as its coefficients; the odds take every positive value, and two polynomials that agree at every positive value have the same coefficients.
+
+So every unbiased rule is $\hat p$ plus a "noise" term that sums to zero inside each head-count group, and that noise is uncorrelated with $\hat p$. Its variance is Var($\hat p$) plus the noise's average square, never less.
+
+This is the coin's case of the Rao–Blackwell and Lehmann–Scheffé theorems. The code draws 2,000 such rules at random: the smallest variance found is 0.046875, the floor, and none is biased at p = 0.1, 0.25 or 0.7.
 
 ---
 
@@ -160,7 +176,11 @@ The bent coin, p = 0.25, four flips.
 
 The four chances in the check are those of 0, 2, 3 and 4 heads; one head scores 0 and drops out. No rule that is right on average can pin a bent coin's chance from four flips more tightly than a standard deviation of about 0.22. Sixty-four flips bring that to 0.054127, and a hundred to 0.043301: the floor falls like one over the number of flips, its square root like one over the square root.
 
-The shelf's house poll gives the same floor at scale: 1,000 voters with 52 percent on one side. The floor is 0.52 × 0.48 / 1,000 = 0.0002496, a standard deviation of 0.015799, about 1.6 percentage points, and the exact binomial sum over all 1,001 possible counts gives the poll fraction the same variance, 0.0002496. No unbiased way of reading those 1,000 answers does better. The information is 1,000/(0.52 × 0.48) = 4,006.4, one over that floor, and it is the curvature of about 4,006 that [Maximum likelihood](04-maximum-likelihood.md) measured at the poll's peak. The match is exact: at the peak $K = n\hat p$, so the curvature $K/\hat p^2 + (n-K)/(1-\hat p)^2$ is $n/\hat p + n/(1-\hat p) = n/(\hat p(1-\hat p))$, the information at $\hat p$.
+The shelf's house poll gives the same floor at scale: 1,000 voters with 52 percent on one side. The floor is 0.52 × 0.48 / 1,000 = 0.0002496, a standard deviation of 0.015799, about 1.6 percentage points, and the exact binomial sum over all 1,001 possible counts gives the poll fraction the same variance, 0.0002496.
+
+No unbiased way of reading those 1,000 answers does better. The information is 1,000/(0.52 × 0.48) = 4,006.4, one over that floor, and it is the curvature of about 4,006 that [Maximum likelihood](04-maximum-likelihood.md) measured at the poll's peak.
+
+The match is exact: at the peak $K = n\hat p$, so the curvature $K/\hat p^2 + (n-K)/(1-\hat p)^2$ is $n/\hat p + n/(1-\hat p) = n/(\hat p(1-\hat p))$, the information at $\hat p$.
 
 ### What breaks if you drop a piece
 
@@ -170,7 +190,13 @@ The shelf's house poll gives the same floor at scale: 1,000 voters with 52 perce
 | Unbiased at one p only: always answer 0.25 | variance 0 at p = 0.25; mean squared error 0.1225 at p = 0.6 | Step 2 differentiates unbiasedness; a rule unbiased at a single point has nothing to differentiate |
 | Moving edge: 4 draws spread evenly on (0, 2), estimate the top 2 by 5/4 of the largest draw | variance 0.166667 exact, 0.166950 ± 0.000615 simulated, under the "floor" 0.25 | Each draw's score is −0.5, never averaging 0: the range itself moves with the unknown |
 
-The moving-edge "floor" of 0.25 comes from plugging the squared score into 1/I(θ): every draw scores −0.5 whatever it is, so four draws score −2, and one over (−2) squared is 0.25. The corrected largest draw is unbiased: the largest of n draws is at most x with chance (x/θ)^n, so its average, the integral of 1 − (x/θ)^n from 0 to θ, is nθ/(n+1), and (n+1)/n of it averages θ. With 2x in front, the same integral gives the average square, nθ^2/(n+2), and the corrected draw's variance works out to θ^2/(n(n+2)) = 4/24 = 0.166667, as the beta law of the top rank on [Order statistics](../05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md) also gives. It beats the "floor" by a third. Nothing is contradicted: Step 1 failed, because raising θ adds new possible values at the top that the slope of the density inside the range does not see.
+The moving-edge "floor" of 0.25 comes from plugging the squared score into 1/I(θ): every draw scores −0.5 whatever it is, so four draws score −2, and one over (−2) squared is 0.25.
+
+The corrected largest draw is unbiased: the largest of n draws is at most x with chance (x/θ)^n, so its average, the integral of 1 − (x/θ)^n from 0 to θ, is nθ/(n+1), and (n+1)/n of it averages θ.
+
+With 2x in front, the same integral gives the average square, nθ^2/(n+2), and the corrected draw's variance works out to θ^2/(n(n+2)) = 4/24 = 0.166667, as the beta law of the top rank (the law of the largest of n draws) on [Order statistics](../05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md) also gives. It beats the "floor" by a third.
+
+Nothing is contradicted: Step 1 failed, because raising θ adds new possible values at the top that the slope of the density inside the range does not see.
 
 ### The picture: a biased rule under the floor, then over it
 
@@ -190,7 +216,15 @@ First line (orange): the floor p(1-p)/4, which the plain fraction meets exactly.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the information and the floor by five roads. Road one is the formula n/(p(1-p)). Road two enumerates all 16 head-tail strings of four flips and takes each string's score as a numerical slope of its log-likelihood, never from the score's formula; the average squared score is the information, and the plain fraction's variance and covariance with the score come from the same list. Road three is the curvature: minus the average numerical second slope. Road four draws 2,000 random unbiased rules, each the plain fraction plus noise that sums to zero inside every head-count group, and keeps the smallest variance. Road five simulates 200,000 runs of four flips from a SplitMix64 generator with seed 20260928 and prints the simulated variance with its standard error. Then the scripts print the other rules, the moving edge, the house poll (an exact binomial sum over 1,001 counts, done in logarithms so that 0.48 to the 1,000th power does not vanish), and every chart point.
+The scripts reach the information and the floor by five roads.
+
+1. Road one is the formula n/(p(1-p)).
+2. Road two enumerates all 16 head-tail strings of four flips and takes each string's score as a numerical slope of its log-likelihood, never from the score's formula; the average squared score is the information, and the plain fraction's variance and covariance with the score come from the same list.
+3. Road three is the curvature: minus the average numerical second slope.
+4. Road four draws 2,000 random unbiased rules, each the plain fraction plus noise that sums to zero inside every head-count group, and keeps the smallest variance.
+5. Road five simulates 200,000 runs of four flips from a SplitMix64 generator (a small, standard random-number generator) with seed 20260928 and prints the simulated variance with its standard error.
+
+Then the scripts print the other rules, the moving edge, the house poll (an exact binomial sum over 1,001 counts, done in logarithms so that 0.48 to the 1,000th power does not vanish), and every chart point.
 
 ### Python
 
@@ -618,6 +652,311 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line. The simulated variance, 0.046844 with standard error 0.000142, sits within one standard error of the floor. The simulated moving-edge variance, 0.166950 with standard error 0.000615, sits within one standard error of the exact 0.166667 and far below the false floor of 0.25. The curvature road reads 21.333335 rather than 21.333333 because a numerical second slope carries a small step error.
 
+### Lean
+
+Lean proves the bound for any model with a fixed finite list of records, and the coin's results for every n and p.
+
+- Take a model whose records form a fixed finite list, with each record's chance having a slope at θ. Suppose its chances are positive and add to 1 on a stretch around θ, and the information at θ is positive. Then every estimator unbiased on that whole stretch has variance at least one over the information.
+- Take n flips and any estimator T that is unbiased at every p strictly between 0 and 1. Then at each such p, the variance of T is at least p(1-p)/n.
+- Take at least one flip and any p. Then the plain fraction K/n averages exactly p, and its variance is exactly p(1-p)/n.
+- The card's exact arithmetic also holds: the four-flip information and floor, the squared-score check, and the weighted rule's variance.
+- So do the Laplace, stopped-clock, moving-edge and poll numbers.
+
+The decimals, the curvature form, the biased-rule floor, the simulations and the moving-edge failure are left to the Python and Rust checks.
+
+```lean
+-- Fisher information: no estimator that is right on average for every value of the unknown has variance below one over the Fisher information, so for n coin flips no unbiased guess has variance below p(1-p)/n, and the plain fraction of heads meets that floor.
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Tactic
+
+open Finset
+
+/-- The chance of one head-tail record `r` of `n` flips (`true` = heads) when heads has chance `p`. -/
+noncomputable def coinChance (n : ℕ) (p : ℝ) (r : Fin n → Bool) : ℝ :=
+  ∏ i, if r i then p else 1 - p
+
+/-- The number of heads `K` in a record `r`. -/
+def heads {n : ℕ} (r : Fin n → Bool) : ℕ :=
+  (univ.filter (fun i => r i = true)).card
+
+lemma coinChance_cons (n : ℕ) (p : ℝ) (b : Bool) (r : Fin n → Bool) :
+    coinChance (n + 1) p (Fin.cons b r) = (if b then p else 1 - p) * coinChance n p r := by
+  simp [coinChance, Fin.prod_univ_succ]
+
+#print axioms coinChance_cons
+
+lemma heads_cons (n : ℕ) (b : Bool) (r : Fin n → Bool) :
+    heads (Fin.cons b r : Fin (n + 1) → Bool) = (if b then 1 else 0) + heads r := by
+  simp only [heads, card_filter, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ]
+
+#print axioms heads_cons
+
+lemma coin_sum_succ (n : ℕ) (p : ℝ) (g : ℕ → ℝ) :
+    ∑ r : Fin (n + 1) → Bool, coinChance (n + 1) p r * g (heads r)
+      = p * ∑ r : Fin n → Bool, coinChance n p r * g (heads r + 1)
+        + (1 - p) * ∑ r : Fin n → Bool, coinChance n p r * g (heads r) := by
+  rw [← (Fin.consEquiv (fun _ => Bool)).sum_comp, Fintype.sum_prod_type, Fintype.sum_bool]
+  simp only [Fin.consEquiv_apply, coinChance_cons, heads_cons, mul_sum]
+  simp [mul_assoc, add_comm]
+
+#print axioms coin_sum_succ
+
+lemma coin_moment0 (n : ℕ) (p : ℝ) : ∑ r : Fin n → Bool, coinChance n p r = 1 := by
+  induction n with
+  | zero => simp [coinChance]
+  | succ n ih =>
+    have h := coin_sum_succ n p (fun _ => 1)
+    simp only [mul_one] at h
+    rw [h, ih]; ring
+
+#print axioms coin_moment0
+
+lemma coin_moment1 (n : ℕ) (p : ℝ) :
+    ∑ r : Fin n → Bool, coinChance n p r * (heads r : ℝ) = n * p := by
+  induction n with
+  | zero => simp [coinChance, heads]
+  | succ n ih =>
+    have h := coin_sum_succ n p (fun k => (k : ℝ))
+    simp only [Nat.cast_add, Nat.cast_one, mul_add, mul_one, sum_add_distrib] at h
+    rw [h, ih, coin_moment0]; push_cast; ring
+
+#print axioms coin_moment1
+
+lemma coin_moment2 (n : ℕ) (p : ℝ) :
+    ∑ r : Fin n → Bool, coinChance n p r * (heads r : ℝ) ^ 2 = n * p * (1 - p) + (n * p) ^ 2 := by
+  induction n with
+  | zero => simp [coinChance, heads]
+  | succ n ih =>
+    have h := coin_sum_succ n p (fun k => (k : ℝ) ^ 2)
+    have e : ∀ r : Fin n → Bool, coinChance n p r * ((heads r + 1 : ℕ) : ℝ) ^ 2
+        = coinChance n p r * (heads r : ℝ) ^ 2 + 2 * (coinChance n p r * (heads r : ℝ))
+          + coinChance n p r := by
+      intro r; push_cast; ring
+    simp only [e, sum_add_distrib, ← mul_sum] at h
+    rw [h, ih, coin_moment1, coin_moment0]; push_cast; ring
+
+#print axioms coin_moment2
+
+lemma coinChance_form (n : ℕ) (r : Fin n → Bool) (t : ℝ) :
+    coinChance n t r = t ^ heads r * (1 - t) ^ (univ.filter (fun i => ¬ r i = true)).card := by
+  simp [coinChance, heads, prod_ite, prod_const]
+
+#print axioms coinChance_form
+
+lemma heads_add_tails (n : ℕ) (r : Fin n → Bool) :
+    ((univ.filter (fun i => ¬ r i = true)).card : ℝ) = n - heads r := by
+  have := card_filter_add_card_filter_not (s := (univ : Finset (Fin n))) (fun i => r i = true)
+  rw [card_univ, Fintype.card_fin] at this
+  have h := congrArg (Nat.cast (R := ℝ)) this
+  push_cast at h
+  unfold heads
+  linarith
+
+#print axioms heads_add_tails
+
+lemma coin_score (n : ℕ) (r : Fin n → Bool) (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
+    deriv (fun t => Real.log (coinChance n t r)) p = (heads r : ℝ) / p - ((n : ℝ) - heads r) / (1 - p) := by
+  set m := (univ.filter (fun i => ¬ r i = true)).card with hmdef
+  have heq : (fun t => Real.log (coinChance n t r))
+      =ᶠ[nhds p] (fun t => (heads r : ℝ) * Real.log t + (m : ℝ) * Real.log (1 - t)) := by
+    filter_upwards [Ioo_mem_nhds hp0 hp1] with t ht
+    have h1 : t ≠ 0 := ht.1.ne'
+    have h2 : 1 - t ≠ 0 := by linarith [ht.2]
+    rw [coinChance_form, Real.log_mul (pow_ne_zero _ h1) (pow_ne_zero _ h2), Real.log_pow,
+      Real.log_pow]
+  rw [heq.deriv_eq]
+  have h2 : (1 - p) ≠ 0 := by linarith
+  have hd : HasDerivAt (fun t => (heads r : ℝ) * Real.log t + (m : ℝ) * Real.log (1 - t))
+      ((heads r : ℝ) * p⁻¹ + (m : ℝ) * ((-1) / (1 - p))) p := by
+    have a := (Real.hasDerivAt_log hp0.ne').const_mul (heads r : ℝ)
+    have b := (((hasDerivAt_id' p).const_sub 1).log h2).const_mul (m : ℝ)
+    exact a.add b
+  rw [hd.deriv, hmdef, heads_add_tails]
+  field_simp
+  ring
+
+#print axioms coin_score
+
+lemma coin_info (n : ℕ) (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
+    ∑ r, coinChance n p r * (deriv (fun t => Real.log (coinChance n t r)) p) ^ 2
+      = n / (p * (1 - p)) := by
+  have h2 : (1 - p) ≠ 0 := by linarith
+  have hp : p ≠ 0 := hp0.ne'
+  have e : ∀ r : Fin n → Bool,
+      coinChance n p r * (deriv (fun t => Real.log (coinChance n t r)) p) ^ 2
+        = 1 / (p * (1 - p)) ^ 2 * (coinChance n p r * (heads r : ℝ) ^ 2)
+          + (-2 * n * p / (p * (1 - p)) ^ 2) * (coinChance n p r * (heads r : ℝ))
+          + ((n * p) ^ 2 / (p * (1 - p)) ^ 2) * coinChance n p r := by
+    intro r
+    rw [coin_score n r p hp0 hp1]
+    field_simp
+    ring
+  simp only [e, sum_add_distrib, ← mul_sum, coin_moment0, coin_moment1, coin_moment2]
+  field_simp
+  ring
+
+#print axioms coin_info
+
+/-- Cramér–Rao bound. A model gives each record `r` (from a finite list that does not move with
+the unknown) a chance `P θ r`, positive for every `θ` in an open range `U`, adding to 1, with a
+slope in `θ`. The score is the slope of `log P`, and the Fisher information is the average squared
+score. If an estimator `T` is unbiased at every value in `U` and the information at `θ` is positive,
+then its variance at `θ` is at least one over the information. -/
+theorem cramer_rao_bound {R : Type*} [Fintype R] (P : ℝ → R → ℝ) (T : R → ℝ)
+    (U : Set ℝ) (hU : IsOpen U) (θ : ℝ) (hθ : θ ∈ U)
+    (hpos : ∀ t ∈ U, ∀ r, 0 < P t r)
+    (hsum : ∀ t ∈ U, ∑ r, P t r = 1)
+    (hdiff : ∀ r, DifferentiableAt ℝ (fun t => P t r) θ)
+    (hunb : ∀ t ∈ U, ∑ r, P t r * T r = t)
+    (hinfo : 0 < ∑ r, P θ r * (deriv (fun t => Real.log (P t r)) θ) ^ 2) :
+    1 / (∑ r, P θ r * (deriv (fun t => Real.log (P t r)) θ) ^ 2)
+      ≤ ∑ r, P θ r * (T r - ∑ s, P θ s * T s) ^ 2 := by
+  set I := ∑ r, P θ r * (deriv (fun t => Real.log (P t r)) θ) ^ 2 with hI
+  set m := ∑ s, P θ s * T s with hm
+  set D : R → ℝ := fun r => deriv (fun t => P t r) θ with hD
+  set S : R → ℝ := fun r => deriv (fun t => Real.log (P t r)) θ with hS
+  have hnhds : U ∈ nhds θ := hU.mem_nhds hθ
+  have hSD : ∀ r, S r = D r / P θ r := fun r =>
+    deriv.log (hdiff r) (hpos θ hθ r).ne'
+  have hD0 : ∑ r, D r = 0 := by
+    have h1 : (fun t => ∑ r, P t r) =ᶠ[nhds θ] (fun _ => (1 : ℝ)) :=
+      Filter.eventually_of_mem hnhds (fun t ht => hsum t ht)
+    have h2 := h1.deriv_eq
+    rw [deriv_fun_sum (A := fun r t => P t r) (fun r _ => hdiff r)] at h2
+    simpa using h2
+  have hD1 : ∑ r, D r * T r = 1 := by
+    have h1 : (fun t => ∑ r, P t r * T r) =ᶠ[nhds θ] (fun t => t) :=
+      Filter.eventually_of_mem hnhds (fun t ht => hunb t ht)
+    have h2 := h1.deriv_eq
+    rw [deriv_fun_sum (A := fun r t => P t r * T r) (fun r _ => (hdiff r).mul_const (T r))] at h2
+    simp only [deriv_mul_const (hdiff _), deriv_id''] at h2
+    simpa [hD] using h2
+  have hX : ∑ r, P θ r * S r * (T r - m) = 1 := by
+    have : ∀ r, P θ r * S r * (T r - m) = D r * T r - m * D r := by
+      intro r
+      rw [hSD r]
+      have := (hpos θ hθ r).ne'
+      field_simp
+    simp only [this, sum_sub_distrib, ← mul_sum, hD0, hD1]
+    ring
+  have hI' : I = ∑ r, P θ r * S r ^ 2 := rfl
+  have key : ∑ r, P θ r * (T r - m - S r / I) ^ 2
+      = ∑ r, P θ r * (T r - m) ^ 2 - 2 / I * (∑ r, P θ r * S r * (T r - m))
+        + 1 / I ^ 2 * (∑ r, P θ r * S r ^ 2) := by
+    rw [mul_sum, mul_sum, ← sum_sub_distrib, ← sum_add_distrib]
+    refine sum_congr rfl (fun r _ => ?_)
+    field_simp
+    ring
+  have hnn : 0 ≤ ∑ r, P θ r * (T r - m - S r / I) ^ 2 :=
+    sum_nonneg (fun r _ => mul_nonneg (hpos θ hθ r).le (sq_nonneg _))
+  rw [key, hX, ← hI'] at hnn
+  have : 1 / I ^ 2 * I = 1 / I := by field_simp
+  rw [this] at hnn
+  have h2 : 2 / I * 1 = 2 * (1 / I) := by ring
+  rw [h2] at hnn
+  linarith
+
+/-- The coin's floor. For `n` flips of a coin with chance `p` strictly between 0 and 1, any rule
+`T` from records to guesses that is right on average for every chance strictly between 0 and 1
+has variance at least `p(1-p)/n`. -/
+theorem coin_cramer_rao_floor (n : ℕ) (T : (Fin n → Bool) → ℝ)
+    (hunb : ∀ q : ℝ, 0 < q → q < 1 → ∑ r, coinChance n q r * T r = q)
+    (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
+    p * (1 - p) / n ≤ ∑ r, coinChance n p r * (T r - ∑ s, coinChance n p s * T s) ^ 2 := by
+  rcases Nat.eq_zero_or_pos n with hn | hn
+  · subst hn
+    simp only [Nat.cast_zero, div_zero]
+    refine sum_nonneg (fun r _ => mul_nonneg ?_ (sq_nonneg _))
+    simp [coinChance]
+  have hpos : ∀ t ∈ Set.Ioo (0 : ℝ) 1, ∀ r, 0 < coinChance n t r := by
+    intro t ht r
+    refine prod_pos (fun i _ => ?_)
+    split_ifs
+    · exact ht.1
+    · linarith [ht.2]
+  have hdiff : ∀ r, DifferentiableAt ℝ (fun t => coinChance n t r) p := by
+    intro r
+    rw [show (fun t => coinChance n t r) = fun t => t ^ heads r *
+        (1 - t) ^ (univ.filter (fun i => ¬ r i = true)).card from funext (coinChance_form n r)]
+    fun_prop
+  have hinfo : 0 < ∑ r, coinChance n p r * (deriv (fun t => Real.log (coinChance n t r)) p) ^ 2 := by
+    rw [coin_info n p hp0 hp1]
+    have : (0 : ℝ) < n := by exact_mod_cast hn
+    have : 0 < 1 - p := by linarith
+    positivity
+  have h := cramer_rao_bound (coinChance n) T (Set.Ioo 0 1) isOpen_Ioo p ⟨hp0, hp1⟩ hpos
+    (fun t _ => coin_moment0 n t) hdiff (fun t ht => hunb t ht.1 ht.2) hinfo
+  rw [coin_info n p hp0 hp1, one_div_div] at h
+  exact h
+
+/-- The plain fraction of heads `K/n` is right on average, and its variance is exactly
+`p(1-p)/n`: it sits on the floor. -/
+theorem sample_proportion_meets_floor (n : ℕ) (hn : 0 < n) (p : ℝ) :
+    (∑ r, coinChance n p r * ((heads r : ℝ) / n) = p) ∧
+      ∑ r, coinChance n p r * ((heads r : ℝ) / n - p) ^ 2 = p * (1 - p) / n := by
+  have hn' : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  constructor
+  · have e : ∀ r : Fin n → Bool, coinChance n p r * ((heads r : ℝ) / n)
+        = 1 / n * (coinChance n p r * (heads r : ℝ)) := by
+      intro r; field_simp
+    simp only [e, ← mul_sum, coin_moment1]
+    field_simp
+  · have e : ∀ r : Fin n → Bool, coinChance n p r * ((heads r : ℝ) / n - p) ^ 2
+        = 1 / (n : ℝ) ^ 2 * (coinChance n p r * (heads r : ℝ) ^ 2)
+          + (-2 * p / n) * (coinChance n p r * (heads r : ℝ))
+          + p ^ 2 * coinChance n p r := by
+      intro r; field_simp; ring
+    simp only [e, sum_add_distrib, ← mul_sum, coin_moment0, coin_moment1, coin_moment2]
+    field_simp
+    ring
+
+-- The bent coin, p = 1/4, four flips: information 64/3, floor 3/64.
+example : (4 : ℚ) / ((1 / 4) * (1 - 1 / 4)) = 64 / 3 := by norm_num
+example : (1 / 4 : ℚ) * (1 - 1 / 4) / 4 = 3 / 64 := by norm_num
+-- Check by squared scores: chances of 0, 2, 3, 4 heads times squared scores (-16/3, 16/3, 32/3, 16).
+example : (81 / 256 : ℚ) * (16 / 3) ^ 2 + 54 / 256 * (16 / 3) ^ 2 + 12 / 256 * (32 / 3) ^ 2
+    + 1 / 256 * 16 ^ 2 = 64 / 3 := by norm_num
+-- Weights 4/10, 3/10, 2/10, 1/10: variance 9/160.
+example : (1 / 4 : ℚ) * (3 / 4) * ((4 / 10) ^ 2 + (3 / 10) ^ 2 + (2 / 10) ^ 2 + (1 / 10) ^ 2)
+    = 9 / 160 := by norm_num
+-- Laplace's rule (K+1)/6 with four flips: mean squared error 1/36 at every p.
+example (p : ℝ) : 4 * p * (1 - p) / 36 + ((4 * p + 1) / 6 - p) ^ 2 = 1 / 36 := by ring
+-- Stopped clock at p = 3/5: mean squared error 49/400; the floor there is 3/50.
+example : ((3 / 5 : ℚ) - 1 / 4) ^ 2 = 49 / 400 := by norm_num
+example : (3 / 5 : ℚ) * (1 - 3 / 5) / 4 = 3 / 50 := by norm_num
+-- Moving edge, theta = 2, four draws: corrected maximum 1/6, naive "floor" 1/4.
+example : (2 : ℚ) ^ 2 / (4 * (4 + 2)) = 1 / 6 := by norm_num
+example : (1 : ℚ) / (4 * (-1 / 2)) ^ 2 = 1 / 4 := by norm_num
+-- The poll: 1,000 voters, p = 52/100: floor 156/625000.
+example : (52 / 100 : ℚ) * (48 / 100) / 1000 = 156 / 625000 := by norm_num
+
+#print axioms cramer_rao_bound
+#print axioms coin_cramer_rao_floor
+#print axioms sample_proportion_meets_floor
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'coinChance_cons' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heads_cons' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_sum_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_moment0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_moment1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_moment2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coinChance_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heads_add_tails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_score' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_info' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cramer_rao_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_cramer_rao_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sample_proportion_meets_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -660,7 +999,7 @@ The two outputs are identical line for line. The simulated variance, 0.046844 wi
 
 ## Where this goes next
 
-- [Likelihood ratio tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): the score's zero average and its variance, the information, are the two facts behind Wilks' rule that twice the log of a likelihood ratio follows a chi-square law in large samples.
+- [Likelihood ratio tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): the score's zero average and its variance, the information, are the two facts behind Wilks' rule that twice the log of a likelihood ratio follows a chi-square law ([The reference distributions](03-chi-square-t-and-f-distributions.md)) in large samples.
 - Fisher metric: the information, followed from one value of p to the next, read as a ruler on the space of models, so that two coins are far apart when data tell them apart easily.
 
 This card fixed how precisely one sample can pin down one unknown; whether a model with an extra parameter fits better than chance allows, and how far apart two models are, are the questions those cards answer with the same information.

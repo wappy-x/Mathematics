@@ -166,5 +166,5 @@ fn main() {
     assert!((tot / (r * ns) as f64 - aa / lam).abs() < 4.0 * se_draw, "the generator must draw from the gamma law with mean 3");
     assert!((exp_rate - 1.0 / xbar).abs() < 1e-6 && (p_hat - 0.52).abs() < 1e-6, "one-dial laws: likelihood equals moments");
     assert!((tail(a_m, l_m) - tail_g).abs() < 1e-9, "Simpson's tail at the fit must match the closed form for whole shape 2");
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

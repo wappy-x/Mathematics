@@ -137,4 +137,4 @@ assert sum(power_formula(n_need)) >= TARGET > sum(power_formula(n_need - 1))  # 
 assert abs(n_ex - n_need) <= 5                                            # enumeration vs closed form
 for n, (est, se) in sims.items():
     assert abs(est - rows[n][1]) < 4 * se                                  # simulation vs enumeration
-print("all checks passed")
+print("ALL CHECKS PASS")

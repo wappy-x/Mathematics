@@ -8,11 +8,17 @@
 
 Flip a fair coin 100 times and count the heads. What is the chance of 60 or more?
 
-Counting answers it exactly. There are 2^100 head-tail strings, all equally likely, and 36,057,011,612,866,492,098,338,762,600 of them hold 60 heads or more. The ratio is 0.028444: about 28 runs of 100 flips in 1,000 reach 60 heads. The count is exact, but it needs 41 enormous whole numbers, and a poll of 2,000 voters or a factory batch of 50,000 parts needs far more.
+Counting answers it exactly. There are 2^100 head-tail strings, all equally likely, and 36,057,011,612,866,492,098,338,762,600 of them hold 60 heads or more. The ratio is 0.028444: about 28 runs of 100 flips in 1,000 reach 60 heads.
 
-A picture of all 101 chances looks like a bell curve: tall at 50 heads, falling off evenly on both sides. So read the answer off the bell instead. Its centre is the average count, 50; its width is the standard deviation, 5 heads. Sixty heads sits two widths above the centre, and a bell table gives the area beyond. That shortcut is the **normal approximation**, the name used from here on.
+The count is exact, but it needs 41 enormous whole numbers, and a poll of 2,000 voters or a factory batch of 50,000 parts needs far more.
 
-One detail makes it accurate. A count is a whole number, and the bell is smooth. Each count owns the stretch of the line from half a step below it to half a step above it, so "60 or more" starts at 59.5, not at 60. Moving the cut by that half step is the **continuity correction**. Here it takes the bell's answer from 0.022750 to 0.028717, against the exact 0.028444.
+A picture of all 101 chances looks like a bell curve: tall at 50 heads, falling off evenly on both sides. So read the answer off the bell instead.
+
+Its centre is the average count, 50; its width is the standard deviation, 5 heads. Sixty heads sits two widths above the centre, and a bell table gives the area beyond. That shortcut is the **normal approximation**, the name used from here on.
+
+One detail makes it accurate. A count is a whole number, and the bell is smooth.
+
+Each count owns the stretch of the line from half a step below it to half a step above it, so "60 or more" starts at 59.5, not at 60. Moving the cut by that half step is the **continuity correction**. Here it takes the bell's answer from 0.022750 to 0.028717, against the exact 0.028444.
 
 **A binomial count of n tries is read off the bell curve with the same average and spread, with every whole-number cut moved half a step outward; the answer is good when np(1-p) is at least about 10 and the cut is not deep in the tail.**
 
@@ -78,7 +84,9 @@ The quantity inside Φ is a **z-score**: how many spreads the cut sits from the 
 
 ### Step 0: the bars already have the shape of a bell
 
-A binomial chance is a bar of width one for each count. The claim is that the tops of the bars trace a bell curve, and the proof reads that off the ratio of one bar to the next. Once bar heights match bell heights, adding bars is adding thin slices of the bell, and a slice of width one centred on k runs from k − ½ to k + ½. The half step is not a fudge: it is where the bars' edges are.
+A binomial chance is a bar of width one for each count. The claim is that the tops of the bars trace a bell curve, and the proof reads that off the ratio of one bar to the next.
+
+Once bar heights match bell heights, adding bars is adding thin slices of the bell, and a slice of width one centred on k runs from k − ½ to k + ½. The half step is not a fudge: it is where the bars' edges are.
 
 ### Step 1: neighbouring bars shrink by a fixed factor
 
@@ -127,7 +135,7 @@ The error term is at most (s/(nq))^2 + ((s+1)/(np))^2, of size s^2/σ^4 times a 
 Sum from s = 0 to t − 1:
 $$\ln P(X = np + t) - \ln P(X = np) = -\frac{t(t-1)/2 + qt}{\sigma^2} + E_t = -\frac{t^2}{2\sigma^2} + \frac{(\tfrac12 - q)\,t}{\sigma^2} + E_t,$$
 where $|E_t|$ is at most a constant times $t^3/\sigma^4$. For t up to a few spreads (t of order σ), the middle term is of order 1/σ and $E_t$ is of order 1/σ: both vanish as n grows, which gives Step 3's shape. For a fair coin, ½ − q = 0 and the middle term is zero, which is why the fair coin's bell fits so well. The left side of the centre is the same argument with p and q swapped: count tails instead of heads.
-The peak height: the bars within a few spreads of the centre carry nearly all the chance (Chebyshev's inequality bounds the rest by 1/c^2 beyond c spreads), and their sum is a Riemann sum of $P(X=\mu)\,e^{-t^2/(2\sigma^2)}$ with step 1, which tends to $P(X=\mu)\,\sigma\sqrt{2\pi}$. Setting that equal to 1 gives $P(X=\mu) \approx 1/(\sigma\sqrt{2\pi})$. Stirling's formula ([Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)) gives the same peak directly from C(n, n/2), which is de Moivre's 1733 route.
+The peak height: the bars within a few spreads of the centre carry nearly all the chance (Chebyshev's inequality bounds the rest by 1/c^2 beyond c spreads), and their sum is a Riemann sum (heights times widths, added up, which approaches an area) of $P(X=\mu)\,e^{-t^2/(2\sigma^2)}$ with step 1, which tends to $P(X=\mu)\,\sigma\sqrt{2\pi}$. Setting that equal to 1 gives $P(X=\mu) \approx 1/(\sigma\sqrt{2\pi})$. Stirling's formula ([Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)) gives the same peak directly from C(n, n/2), which is de Moivre's 1733 route.
 Step 4 then follows: the sum of the bars from j upward is a Riemann sum of the bell's density over unit cells centred on the counts, and those cells start at j − ½.
 
 </details>
@@ -182,7 +190,13 @@ For the bent coin, the right tool is the Poisson law of [Poisson](../03-Discrete
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the answer by three independent roads. Road one counts: Pascal's triangle, built by additions only, gives every C(100, k) as an exact whole number, and a second exact route multiplies bar to bar by the ratio of Step 1. Road two is the bell, with the bell's area Φ built twice, from its Taylor series and by Simpson's rule (an integrator written out). Road three simulates 200,000 runs of 100 flips from a SplitMix64 generator with seed 20260928: each run takes 100 random bits, and a 1 bit is a head. The simulated chance comes with its standard error, and the asserts allow four of them. Then the scripts print every "what breaks" number, the growing-n table, the bent coin, and the chart and figure points.
+The scripts reach the answer by three independent roads.
+
+- Road one counts: Pascal's triangle, built by additions only, gives every C(100, k) as an exact whole number, and a second exact route multiplies bar to bar by the ratio of Step 1.
+- Road two is the bell, with the bell's area Φ built twice, from its Taylor series (an endless sum of powers of z) and by Simpson's rule (an integrator written out).
+- Road three simulates 200,000 runs of 100 flips from a SplitMix64 random-number generator with seed 20260928: each run takes 100 random bits, and a 1 bit is a head. The simulated chance comes with its standard error (the typical size of its random scatter), and the asserts allow four of them.
+
+Then the scripts print every "what breaks" number, the growing-n table, the bent coin, and the chart and figure points.
 
 ### Python
 
@@ -574,7 +588,7 @@ The two outputs are identical line for line. Rust counts in u128 whole numbers, 
 ## Where this goes next
 
 - [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the same bell turned round, to put an interval on an unknown chance p from an observed count.
-- [Cox-Ross-Rubinstein](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md): a binomial tree of stock prices converging to the lognormal bell.
+- [Cox-Ross-Rubinstein](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md): a binomial tree of stock prices converging to the lognormal bell (a bell for the logarithm of the price).
 - How big must n be: a guaranteed bound on the bell's error at a given n.
 
 This card measured the bell's error case by case; how large that error can be for any n and p, with a bound that holds in advance, is what How big must n be answers.

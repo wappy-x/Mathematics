@@ -33,7 +33,14 @@ Each arrow's number is how many percentage points of return one unit of that dra
 
 ## The formula
 
-Notation first, in words. A capital letter now stands for a whole list of numbers, stacked in a column and called a vector: $Z$ is the three draws, $X$ the three returns. A table of numbers with rows and columns is a matrix; $L$ is the table of mixing weights, one row per share and one column per draw, and $L\,Z$ runs each row along the draws and adds, as on [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md). A raised T means the transpose, the table flipped so rows become columns: $L^T$. Writing X ~ N(μ, Σ) means "X follows the multivariate normal law with average vector μ and covariance matrix Σ". X_i is the i-th reading, and Cov(X_i, X_j) the covariance of two readings, as on [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md).
+Notation first, in words.
+
+- A capital letter now stands for a whole list of numbers, stacked in a column and called a vector: $Z$ is the three draws, $X$ the three returns.
+- A table of numbers with rows and columns is a matrix; $L$ is the table of mixing weights, one row per share and one column per draw, and $L\,Z$ runs each row along the draws and adds, as on [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md).
+- A raised T means the transpose, the table flipped so rows become columns: $L^T$.
+- Writing X ~ N(μ, Σ) means "X follows the multivariate normal law with average vector μ and covariance matrix Σ".
+- X_i is the i-th reading, and Cov(X_i, X_j) the covariance of two readings, as on [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md).
+- E[…] is the average of what is inside the brackets, and Var(…) its variance.
 
 $$X = \mu + L\,Z, \qquad \Sigma = L\,L^T$$
 
@@ -132,9 +139,15 @@ That is the recipe again: independent standard normals through a fixed matrix, B
 
 Many tables have the same L L^T. Turn the draws first, with any rotation matrix (a turn that keeps lengths), and the covariance is unchanged. So a law named only by μ and Σ needs a proof that the choice of table does not matter.
 
-First make the table square. A table may have more draws than readings, as BL in Step 3 can. Turned draws are still independent standard normals: their joint density, a constant times e^{−|z|^2/2}, depends only on length, and a turn keeps lengths and volumes. When Σ has an inverse, the rows of L point in d independent directions; turn the draws so that the first d axes span those directions (by [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)), and every other column of the turned table is zero. So X is μ plus a square table times d independent standard normals, with the same Σ. From here on L is that square table; it has an inverse because Σ does.
+First make the table square. A table may have more draws than readings, as BL in Step 3 can. Turned draws are still independent standard normals: their joint density, a constant times e^{−|z|^2/2}, depends only on length, and a turn keeps lengths and volumes.
 
-Then the density proves it. Change variables from the draws to the returns, x = μ + L z. The draws' joint density is (2π)^{−d/2} e^{−|z|^2/2}, where |z|^2 is the sum of their squares. Two things change. The squared length |z|^2 becomes (x − μ)^T Σ^{−1} (x − μ), because z = L^{−1}(x − μ) and (L^{−1})^T L^{−1} = (L L^T)^{−1} = Σ^{−1}. Volume is stretched by |det L|, which is √det Σ, since det Σ = det L × det L^T. Divide by it ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)) and the density of the formula appears. It mentions only μ and Σ. Any table with the same Σ gives the same density, so the same law.
+When Σ has an inverse, the rows of L point in d independent directions; turn the draws so that the first d axes span those directions (by [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)), and every other column of the turned table is zero. So X is μ plus a square table times d independent standard normals, with the same Σ. From here on L is that square table; it has an inverse because Σ does.
+
+Then the density proves it. Change variables from the draws to the returns, x = μ + L z. The draws' joint density is (2π)^{−d/2} e^{−|z|^2/2}, where |z|^2 is the sum of their squares.
+
+Two things change. The squared length |z|^2 becomes (x − μ)^T Σ^{−1} (x − μ), because z = L^{−1}(x − μ) and (L^{−1})^T L^{−1} = (L L^T)^{−1} = Σ^{−1}. Volume is stretched by |det L|, which is √det Σ, since det Σ = det L × det L^T.
+
+Divide by it ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)) and the density of the formula appears. It mentions only μ and Σ. Any table with the same Σ gives the same density, so the same law.
 
 On the example day, draws 1.00, −0.50 and 0.25 give |z|^2 = 1 + 0.25 + 0.0625 = 1.3125. Solving Σ y = x − μ by elimination and taking the dot product with x − μ gives 1.3125 too, without ever using L.
 
@@ -151,7 +164,11 @@ Suppose only Σ is known, as happens when the covariances come from data. Look f
 
 The bank row first: its weight squared must be Σ_11 = 1, so it is 1.0. The insurer: its weight on the shared draw times 1.0 must be 0.9, so 0.9; then 0.9^2 plus its own weight squared must be 2.25, so its own weight is √1.44 = 1.2. The miner: shared weight 1.2 / 1.0 = 1.2; its insurance weight is (1.08 − 1.2 × 0.9) / 1.2 = 0; its own weight is √(4 − 1.44 − 0) = 1.6. The table from the picture comes back.
 
-Each pivot has a meaning. The earlier returns fix the earlier draws exactly, because the table is triangular: the bank's return gives Z1, then the insurer's gives Z2. So the part of the miner's return the other two cannot predict is its own-draw term, 1.6 Z3, of variance 2.56. The pivot is the variance left after conditioning on the earlier readings. The one-reading regression formula from [Bivariate normal](05-bivariate-normal-and-conditioning.md), the variance times one minus the squared correlation, gives 2.25 × (1 − 0.6^2) = 1.44 for the insurer given the bank. Given two readings it becomes Var(X_3 | X_1, X_2) = Σ_33 − Σ_3,12 Σ_12,12^{−1} Σ_12,3, where Σ_12,12 is the bank-and-insurer corner of Σ, `[[1, 0.9], [0.9, 2.25]]`, and Σ_3,12 = (1.2, 1.08) holds the miner's covariances with them (Σ_12,3 is the same, as a column). Elimination solves the corner against (1.2, 1.08), giving weights (1.2, 0), so the two readings explain 1.2 × 1.2 + 1.08 × 0 = 1.44 of the miner's variance, and 4 − 1.44 = 2.56 is left, without Cholesky.
+Each pivot has a meaning. The earlier returns fix the earlier draws exactly, because the table is triangular: the bank's return gives Z1, then the insurer's gives Z2. So the part of the miner's return the other two cannot predict is its own-draw term, 1.6 Z3, of variance 2.56. The pivot is the variance left after conditioning on the earlier readings.
+
+The one-reading regression formula from [Bivariate normal](05-bivariate-normal-and-conditioning.md), the variance times one minus the squared correlation, gives 2.25 × (1 − 0.6^2) = 1.44 for the insurer given the bank. Given two readings it becomes Var(X_3 | X_1, X_2) = Σ_33 − Σ_3,12 Σ_12,12^{−1} Σ_12,3. Here the bar means "given"; Σ_12,12 is the bank-and-insurer corner of Σ, `[[1, 0.9], [0.9, 2.25]]`, and Σ_3,12 = (1.2, 1.08) holds the miner's covariances with them (Σ_12,3 is the same, as a column).
+
+Elimination solves the corner against (1.2, 1.08), giving weights (1.2, 0), so the two readings explain 1.2 × 1.2 + 1.08 × 0 = 1.44 of the miner's variance, and 4 − 1.44 = 2.56 is left, without Cholesky.
 
 <details>
 <summary>Detailed proof: Cholesky succeeds exactly when Σ is positive definite</summary>
@@ -212,7 +229,22 @@ The coin-flipped copy passes every one-at-a-time test: it falls below −1 on 0.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer: the normal area Φ is a Taylor series, the random draws come from a SplitMix64 generator (a short, fully written-out source of random bits, seed 20260928) turned into normals by Marsaglia's polar method (two uniform draws, kept when they land inside a circle, become two independent normals), and the matrix work is written out. The roads are independent. Σ comes from L L^T; Cholesky, given Σ alone, returns L; the pivots match conditional variances from the regression formula, solved by elimination; the determinant by cofactors matches the squared diagonal of L; the density's squared distance by elimination matches |z|^2; |L^T w|^2 matches w^T Σ w; the covariances, the portfolio variance, each chart bin and the bad-day chance from 200,000 simulated days match the formulas within four standard errors. Then every "what breaks" number is reproduced.
+Nothing imported knows the answer:
+
+- the normal area Φ is a Taylor series;
+- the random draws come from a SplitMix64 generator (a short, fully written-out source of random bits, seed 20260928) turned into normals by Marsaglia's polar method (two uniform draws, kept when they land inside a circle, become two independent normals);
+- the matrix work is written out.
+
+The roads are independent:
+
+- Σ comes from L L^T; Cholesky, given Σ alone, returns L;
+- the pivots match conditional variances from the regression formula, solved by elimination;
+- the determinant by cofactors matches the squared diagonal of L;
+- the density's squared distance by elimination matches |z|^2;
+- |L^T w|^2 matches w^T Σ w;
+- the covariances, the portfolio variance, each chart bin and the bad-day chance from 200,000 simulated days match the formulas within four standard errors.
+
+Then every "what breaks" number is reproduced.
 
 ### Python
 
@@ -637,7 +669,7 @@ The two outputs match line for line, simulated numbers included: both languages 
 
 - **Risk desks.** The quick daily risk number for a book of shares treats returns as multivariate normal and reads the portfolio's spread as √(w^T Σ w): [Parametric VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md).
 - **Simulation of correlated prices.** Monte Carlo pricing multiplies independent draws by a Cholesky factor, as this card's code does, then steps prices forward: [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md).
-- **Tracking and navigation.** A Kalman filter carries a position's uncertainty as a covariance matrix and updates it with B Σ B^T at each step: The Kalman filter.
+- **Tracking and navigation.** A Kalman filter carries a position's uncertainty as a covariance matrix and updates it with B Σ B^T at each step: [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md).
 - **Measurement error.** Several instruments reading one quantity share part of their error; their joint error is modelled as a multivariate normal, and a reading that is a sum of others gives the singular case.
 
 > **Say it back**

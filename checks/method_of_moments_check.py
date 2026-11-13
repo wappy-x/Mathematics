@@ -137,4 +137,4 @@ assert est["MLEv"] < est["MoMv"], "MLE must be the tighter estimator at shape 2"
 assert abs(tot / (R * NS) - A / LAM) < 4 * se_draw, "the generator must draw from the gamma law with mean 3"
 assert abs(exp_rate - 1 / xbar) < 1e-6 and abs(p_hat - 0.52) < 1e-6, "one-dial laws: likelihood equals moments"
 assert abs(tail(a_m, l_m) - tail_g) < 1e-9, "Simpson's tail at the fit must match the closed form for whole shape 2"
-print("all checks passed")
+print("ALL CHECKS PASS")

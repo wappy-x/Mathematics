@@ -8,7 +8,7 @@
 
 A drug trial gives a new treatment to 100 patients, and 45 recover. The headline writes itself: 45 percent recovered, plus or minus 10. The 45 is the count divided by the number treated. The plus or minus 10 is the part that needs a reason.
 
-The reason is the one [Confidence intervals](01-confidence-intervals.md) gives. Run the same trial again on 100 new patients and the count would not be 45 again. A **confidence interval** is a recipe that turns any count into a range, built so that the recipe catches the true recovery rate in 95 of every 100 trials it is used on. The 95 describes the recipe, not this one range.
+The reason is the one [Confidence intervals](01-confidence-intervals.md) gives. Run the same trial again on 100 new patients and the count would not be 45 again. A **confidence interval** is a recipe that turns any count into a range. The recipe is built to catch the true recovery rate in 95 of every 100 trials it is used on. The 95 describes the recipe, not this one range.
 
 For a percentage there are three recipes in common use. The **Wald interval** is the textbook one: the observed rate plus or minus 1.96 of its estimated spreads. Here it gives 35.2% to 54.8%, which is where "plus or minus 10" comes from. The **Wilson interval** keeps the spread honest by using the spread each candidate rate would really have; here it gives 35.6% to 54.8%. The **exact interval**, also called Clopper–Pearson after its authors, uses no bell curve at all; here it gives 35.0% to 55.3%.
 
@@ -31,13 +31,17 @@ xychart-beta
     line [0.98, 0.98, 0.99, 0.96, 0.98, 0.97, 0.97, 0.98, 0.97, 0.96, 0.97, 0.96, 0.96, 0.97, 0.96]
 ```
 
-Each point is exact, not simulated, and plotted to two decimals: for a true rate p, the checks add up the binomial chance of every count from 0 to 100 whose interval contains p. Orange line: Wald. Teal: Wilson. Dark: exact. All three promise 0.95. At p = 0.01 the Wald interval contains the truth in only 0.6334 of trials; the exact interval never drops below 0.95; Wilson wobbles around 0.95 but dips well below it for very rare events. The picture for rates near 1 is the mirror image: at p = 0.98 the three read 0.8664, 0.9492 and 0.9845, the same as at 0.02.
+Each point is exact, not simulated, and plotted to two decimals: for a true rate p, the checks add up the binomial chance of every count from 0 to 100 whose interval contains p. Orange line: Wald. Teal: Wilson. Dark: exact.
+
+All three promise 0.95. At p = 0.01 the Wald interval contains the truth in only 0.6334 of trials; the exact interval never drops below 0.95; Wilson wobbles around 0.95 but dips well below it for very rare events. The picture for rates near 1 is the mirror image: at p = 0.98 the three read 0.8664, 0.9492 and 0.9845, the same as at 0.02.
 
 ---
 
 ## The formula
 
-Notation first, with one-line reminders. $K$ is the count of recoveries, a random variable, and $K \sim \text{Binomial}(n, p)$ is read "K follows the binomial law with n trials and chance p". A hat marks an estimate: $\hat p = k/n$ is the observed rate. $\Phi$ is the standard bell curve's area to the left of a point. The number $z$ is the point with $\Phi(z) = 0.975$, so that 95% of the bell lies within $z$ of the centre: $z = 1.959964$. The letter $\alpha$ (alpha) is the error allowed, 1 minus the confidence level: $\alpha = 0.05$ for a 95% interval.
+Notation first, with one-line reminders. $K$ is the count of recoveries, a random variable, and $K \sim \text{Binomial}(n, p)$ is read "K follows the binomial law with n trials and chance p". A hat marks an estimate: $\hat p = k/n$ is the observed rate. $\Phi$ is the standard bell curve's area to the left of a point. The number $z$ is the point with $\Phi(z) = 0.975$, so that 95% of the bell lies within $z$ of the centre: $z = 1.959964$.
+
+The letter $\alpha$ (alpha) is the error allowed, 1 minus the confidence level: $\alpha = 0.05$ for a 95% interval.
 
 The Wald interval:
 
@@ -159,7 +163,9 @@ Write $b_j(p) = C(n,j)p^j(1-p)^{n-j}$. Differentiating, and using $j\,C(n,j) = n
 $$b_j'(p) = n\big(C(n-1,j-1)p^{j-1}(1-p)^{n-j} - C(n-1,j)p^{j}(1-p)^{n-j-1}\big).$$
 Summed from $j = k$ to $n$, neighbouring terms cancel and one survives: $A_k'(p) = n\,C(n-1,k-1)\,p^{k-1}(1-p)^{n-k} > 0$ for $0 < p < 1$ and $k \ge 1$. So $A_k$ rises strictly from 0 to 1, and $B_k = 1 - A_{k+1}$ falls strictly from 1 to 0. Each crosses $\alpha/2$ once, which defines $L$ and $U$, and $p \ge L$ exactly when $A_k(p) \ge \alpha/2$, and $p \le U$ exactly when $B_k(p) \ge \alpha/2$.
 
-Now fix $p$. For a fixed rate, $A_k(p)$ falls as $k$ rises, so the counts with $A_k(p) < \alpha/2$ are all counts from some smallest one, r, upward. The chance of landing there is $A_r(p)$, which is below $\alpha/2$. Likewise the counts with $B_k(p) < \alpha/2$ are all counts up to some largest one, s, with total chance $B_s(p) < \alpha/2$. The interval misses $p$ only on one of these two sets of counts, so it misses with chance below $\alpha$. If a set is empty its chance is 0. At $p = 0$ the count is always 0 and $L(0) = 0$; at $p = 1$ it is always $n$ and $U(n) = 1$: coverage 1 at both ends.
+Now fix $p$. For a fixed rate, $A_k(p)$ falls as $k$ rises, so the counts with $A_k(p) < \alpha/2$ are all counts from some smallest one, r, upward. The chance of landing there is $A_r(p)$, which is below $\alpha/2$. Likewise the counts with $B_k(p) < \alpha/2$ are all counts up to some largest one, s, with total chance $B_s(p) < \alpha/2$. The interval misses $p$ only on one of these two sets of counts, so it misses with chance below $\alpha$.
+
+If a set is empty its chance is 0. At $p = 0$ the count is always 0 and $L(0) = 0$; at $p = 1$ it is always $n$ and $U(n) = 1$: coverage 1 at both ends.
 
 The same sum has a second form, used by the checks as an independent road: $A_k(p) = k\,C(n,k)\int_0^p t^{k-1}(1-t)^{n-k}\,dt$. Both sides are 0 at $p = 0$, and their derivatives agree by the display above.
 
@@ -167,7 +173,9 @@ The same sum has a second form, used by the checks as an independent road: $A_k(
 
 ### Step 5: why Wald fails near 0 and 1
 
-Suppose the true rash rate is 2%. A trial of 100 then often sees no rash at all, and every such trial returns Wald's zero-width interval at 0, which misses 0.02. A trial with one rash gives −0.009501 to 0.029501, which does contain 0.02, so nearly all of Wald's misses at this rate are the trials with no rash. The estimated spread is smallest exactly when the count happens to be low, so the low counts are the ones given too little room. Add up the chances and Wald catches 0.02 in 0.8664 of trials. Near 100% the same happens in reverse: at a true rate of 0.98, Wald again catches 0.8664. Wilson's allowance depends on the candidate, not on the count, so it does not shrink when the count is small.
+Suppose the true rash rate is 2%. A trial of 100 then often sees no rash at all, and every such trial returns Wald's zero-width interval at 0, which misses 0.02. A trial with one rash gives −0.009501 to 0.029501, which does contain 0.02, so nearly all of Wald's misses at this rate are the trials with no rash.
+
+The estimated spread is smallest exactly when the count happens to be low, so the low counts are the ones given too little room. Add up the chances and Wald catches 0.02 in 0.8664 of trials. Near 100% the same happens in reverse: at a true rate of 0.98, Wald again catches 0.8664. Wilson's allowance depends on the candidate, not on the count, so it does not shrink when the count is small.
 
 The coverage lines jump up and down because counts are whole numbers: as p moves, whole counts enter or leave the set that covers it. The Wilson interval is also what an inverted score test gives. A score test judges a candidate rate with the spread at that candidate: it rejects $p$ when $\lvert \hat p - p\rvert > z\sqrt{p(1-p)/n}$, which is Step 2's keep rule turned round. Step 0 is that link between tests and intervals in words; [Hypothesis tests](03-hypothesis-tests-and-p-values.md) builds tests and shows the same match for the trial's gap.
 
@@ -217,7 +225,15 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts build everything themselves: the bell's area by its Taylor series, $z$ by bisection (halving an interval that holds the answer until it is tiny), the binomial chances by the ratio rule from one count to the next. Each interval end is reached by two roads. Wilson: the quadratic formula, and bisection on the kept-or-not test itself. Exact: bisection on summed binomial tails, and bisection on the same tail written as an area and integrated by Simpson's rule, with the closed form $1 - 0.025^{1/100}$ as a third road at 0 rashes. Coverage is computed by enumeration over all 101 counts, and again by simulating 20,000 trials of 100 patients from a SplitMix64 generator with seed 20260928, printed with its standard error.
+The scripts build everything themselves:
+
+- the bell's area by its Taylor series, a sum of powers of z cut off once the terms are tiny;
+- $z$ by bisection (halving an interval that holds the answer until it is tiny);
+- the binomial chances by the ratio rule from one count to the next.
+
+Each interval end is reached by two roads. Wilson: the quadratic formula, and bisection on the kept-or-not test itself. Exact: bisection on summed binomial tails, and bisection on the same tail written as an area and integrated by Simpson's rule (adding up thin strips under the curve). At 0 rashes the closed form $1 - 0.025^{1/100}$ is a third road.
+
+Coverage is computed by enumeration over all 101 counts. It is computed again by simulating 20,000 trials of 100 patients from a SplitMix64 random-number generator with seed 20260928, its fixed starting value, so every run repeats. The simulated rate is printed with its standard error (se): the typical size of the simulation's own chance error.
 
 ### Python
 
@@ -423,7 +439,7 @@ chart, Wilson     0.000 0.014 0.020 0.024 0.027 0.031 0.033 0.036 0.038 0.041 0.
 ALL CHECKS PASS
 ```
 
-The line 'lowest coverage, Wilson, p < 0.01' searches a finer grid, p = 0.00001 to 0.00999; there Wilson's catch rate falls to 0.8385. The simulation at a true rate of 0.02 lands within 1.15 standard errors of the enumerated coverage for all three recipes, and it puts Wald's 0.8637 far more than a few standard errors below the promised 0.95.
+The line 'lowest coverage, Wilson, p < 0.01' searches a finer grid, p = 0.00001 to 0.00999; there Wilson's catch rate falls to 0.8385. The simulation at a true rate of 0.02 lands within 1.15 standard errors of the enumerated coverage for all three recipes. It also puts Wald's 0.8637 far more than a few standard errors below the promised 0.95.
 
 ### Rust
 
@@ -662,6 +678,337 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the exact interval's promise and the Wilson interval's shape, for every n, every count k, and every z above 0.
+
+- Take α between 0 and 1, and any true rate p from 0 to 1. Then the counts whose exact interval keeps p have total binomial chance at least $1 - \alpha$.
+- Here the exact interval keeps p unless $A_k(p)$ or $B_k(p)$ is below $\alpha/2$, as in Step 3.
+- Take k of n patients, with n at least 1, z above 0 and p from 0 to 1. Then p passes Step 2's keep rule exactly when $W_{-} \le p \le W_{+}$.
+- Take k of n patients, with n at least 1 and z above 0. Then $0 \le W_{-} \le \hat p \le W_{+} \le 1$.
+- The trial's numbers: 45/100 is 0.45, and 0.45 × 0.55 / 100 is 0.002475.
+- The placebo arm: 35/100 is 0.35, and 0.35 × 0.65 / 100 is 0.002275.
+- Wald on 0 rashes in 100 gives 0 to 0, whatever z is.
+- For 0 rashes in 100, $B_0(p) = (1-p)^{100}$.
+
+The bisected ends L and U, the decimals and every catch rate are left to the Python and Rust checks.
+
+```lean
+-- Intervals for a proportion: the exact (Clopper–Pearson) interval catches the true rate with chance at least 1 − α for every rate, and the Wilson keep rule picks out exactly the rates between the two Wilson ends, which lie in 0 to 1 on either side of the observed rate.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Algebra.BigOperators.Intervals
+
+open Finset
+
+/-- The binomial chance, at true rate `p`, of exactly `j` recoveries out of `n`:
+`C(n, j) p^j (1 - p)^(n - j)`. -/
+noncomputable def binomChance (n j : ℕ) (p : ℝ) : ℝ :=
+  (n.choose j : ℝ) * p ^ j * (1 - p) ^ (n - j)
+
+/-- `A_k(p)`: the chance, at rate `p`, of `k` or more recoveries out of `n`. -/
+noncomputable def upperTail (n k : ℕ) (p : ℝ) : ℝ :=
+  ∑ j ∈ Icc k n, binomChance n j p
+
+/-- `B_k(p)`: the chance, at rate `p`, of `k` or fewer recoveries out of `n`. -/
+noncomputable def lowerTail (n k : ℕ) (p : ℝ) : ℝ :=
+  ∑ j ∈ range (k + 1), binomChance n j p
+
+/-- The exact interval for a count `k` keeps the candidate rate `p` unless the count is too high
+for it (`A_k(p) < α/2`) or too low for it (`B_k(p) < α/2`). -/
+abbrev exactKeeps (n k : ℕ) (α p : ℝ) : Prop :=
+  α / 2 ≤ upperTail n k p ∧ α / 2 ≤ lowerTail n k p
+
+/-- The Wilson interval's lower end `W₋` for `k` successes out of `n`, with `p̂ = k / n`. -/
+noncomputable def wilsonLower (n k : ℕ) (z : ℝ) : ℝ :=
+  ((k / n : ℝ) + z ^ 2 / (2 * n)
+      - z * Real.sqrt ((k / n : ℝ) * (1 - k / n) / n + z ^ 2 / (4 * n ^ 2)))
+    / (1 + z ^ 2 / n)
+
+/-- The Wilson interval's upper end `W₊` for `k` successes out of `n`, with `p̂ = k / n`. -/
+noncomputable def wilsonUpper (n k : ℕ) (z : ℝ) : ℝ :=
+  ((k / n : ℝ) + z ^ 2 / (2 * n)
+      + z * Real.sqrt ((k / n : ℝ) * (1 - k / n) / n + z ^ 2 / (4 * n ^ 2)))
+    / (1 + z ^ 2 / n)
+
+lemma binomChance_nonneg (n j : ℕ) (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+    0 ≤ binomChance n j p := by
+  unfold binomChance
+  have : 0 ≤ 1 - p := by linarith
+  positivity
+
+lemma binomChance_sum_eq_one (n : ℕ) (p : ℝ) :
+    ∑ k ∈ range (n + 1), binomChance n k p = 1 := by
+  have h := add_pow p (1 - p) n
+  rw [show p + (1 - p) = 1 by ring, one_pow] at h
+  rw [h]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  unfold binomChance
+  ring
+
+lemma wilson_key_aux (q m z p S : ℝ) (hm : 0 < m)
+    (hS : S ^ 2 = q * (1 - q) / m + z ^ 2 / (4 * m ^ 2)) :
+    (q - p) ^ 2 - z ^ 2 * (p * (1 - p) / m) =
+      (1 + z ^ 2 / m) * (p - (q + z ^ 2 / (2 * m) - z * S) / (1 + z ^ 2 / m)) *
+        (p - (q + z ^ 2 / (2 * m) + z * S) / (1 + z ^ 2 / m)) := by
+  have ha : 0 < 1 + z ^ 2 / m := by positivity
+  have e : (1 + z ^ 2 / m) * (p - (q + z ^ 2 / (2 * m) - z * S) / (1 + z ^ 2 / m)) *
+        (p - (q + z ^ 2 / (2 * m) + z * S) / (1 + z ^ 2 / m)) =
+      (((1 + z ^ 2 / m) * p - (q + z ^ 2 / (2 * m))) ^ 2 - z ^ 2 * S ^ 2) / (1 + z ^ 2 / m) := by
+    field_simp
+    ring
+  rw [e, hS]
+  field_simp
+  ring
+
+lemma wilson_key (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) (z p : ℝ) :
+    ((k / n : ℝ) - p) ^ 2 - z ^ 2 * (p * (1 - p) / n) =
+      (1 + z ^ 2 / n) * (p - wilsonLower n k z) * (p - wilsonUpper n k z) := by
+  have hm : (0 : ℝ) < n := by exact_mod_cast hn
+  have hq0 : (0 : ℝ) ≤ (k / n : ℝ) := by positivity
+  have hq1 : (k / n : ℝ) ≤ 1 := by
+    rw [div_le_one hm]; exact_mod_cast hk
+  have hD : 0 ≤ (k / n : ℝ) * (1 - k / n) / n + z ^ 2 / (4 * n ^ 2) := by
+    have : 0 ≤ 1 - (k / n : ℝ) := by linarith
+    positivity
+  exact wilson_key_aux _ _ _ _ _ hm (Real.sq_sqrt hD)
+
+lemma wilsonUpper_pos (n k : ℕ) (hn : 0 < n) (z : ℝ) (hz : 0 < z) :
+    0 < wilsonUpper n k z := by
+  have hm : (0 : ℝ) < n := by exact_mod_cast hn
+  unfold wilsonUpper
+  have : 0 ≤ Real.sqrt ((k / n : ℝ) * (1 - k / n) / n + z ^ 2 / (4 * n ^ 2)) := Real.sqrt_nonneg _
+  have : (0 : ℝ) ≤ (k / n : ℝ) := by positivity
+  apply div_pos _ (by positivity)
+  have : 0 < z ^ 2 / (2 * n) := by positivity
+  nlinarith
+
+lemma wilsonLower_lt_one (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) (z : ℝ) (hz : 0 < z) :
+    wilsonLower n k z < 1 := by
+  have hm : (0 : ℝ) < n := by exact_mod_cast hn
+  have hq1 : (k / n : ℝ) ≤ 1 := by
+    rw [div_le_one hm]; exact_mod_cast hk
+  unfold wilsonLower
+  have : 0 ≤ Real.sqrt ((k / n : ℝ) * (1 - k / n) / n + z ^ 2 / (4 * n ^ 2)) := Real.sqrt_nonneg _
+  have ha : 0 < 1 + z ^ 2 / n := by positivity
+  rw [div_lt_one ha]
+  have : 0 < z ^ 2 / (2 * n) := by positivity
+  have : z ^ 2 / (2 * n) < z ^ 2 / n := by
+    rw [div_lt_div_iff₀ (by positivity) hm]; nlinarith [sq_pos_of_pos hz]
+  nlinarith
+
+lemma wilsonLower_le_upper (n k : ℕ) (hn : 0 < n) (z : ℝ) (hz : 0 < z) :
+    wilsonLower n k z ≤ wilsonUpper n k z := by
+  have hm : (0 : ℝ) < n := by exact_mod_cast hn
+  unfold wilsonLower wilsonUpper
+  have : 0 ≤ Real.sqrt ((k / n : ℝ) * (1 - k / n) / n + z ^ 2 / (4 * n ^ 2)) := Real.sqrt_nonneg _
+  have ha : 0 < 1 + z ^ 2 / n := by positivity
+  apply div_le_div_of_nonneg_right _ ha.le
+  nlinarith
+
+/-- The exact interval keeps its promise: with `n` patients fixed in advance, independent, each
+recovering with the same chance `p`, and error allowance `α` between 0 and 1, the counts `k`
+whose exact interval contains `p` have total binomial chance at least `1 − α`,
+whatever the true rate `p` in 0 to 1 is. -/
+theorem exact_interval_coverage_at_least_one_minus_alpha
+    (n : ℕ) (α p : ℝ) (hα : 0 < α) (hα1 : α < 1) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+    1 - α ≤ ∑ k ∈ (range (n + 1)).filter (fun k => exactKeeps n k α p), binomChance n k p := by
+  set f : ℕ → ℝ := fun k => binomChance n k p with hf
+  have hf0 : ∀ k, 0 ≤ f k := fun k => binomChance_nonneg n k p hp0 hp1
+  set s := range (n + 1) with hs
+  have htot : ∑ k ∈ s, f k = 1 := binomChance_sum_eq_one n p
+  have hsplit := Finset.sum_filter_add_sum_filter_not s (fun k => exactKeeps n k α p) f
+  set E := s.filter (fun k => ¬ exactKeeps n k α p) with hE
+  set U := s.filter (fun k => upperTail n k p < α / 2) with hU
+  set L := s.filter (fun k => lowerTail n k p < α / 2) with hL
+  have hEsub : E ⊆ U ∪ L := by
+    intro k hk
+    rw [hE, Finset.mem_filter] at hk
+    obtain ⟨hks, hkn⟩ := hk
+    rw [Finset.mem_union, hU, hL, Finset.mem_filter, Finset.mem_filter]
+    unfold exactKeeps at hkn
+    by_cases h1 : α / 2 ≤ upperTail n k p
+    · right
+      refine ⟨hks, ?_⟩
+      by_contra h2
+      exact hkn ⟨h1, not_lt.mp h2⟩
+    · left
+      exact ⟨hks, not_le.mp h1⟩
+  have hUb : ∑ k ∈ U, f k ≤ α / 2 := by
+    rcases U.eq_empty_or_nonempty with h | h
+    · rw [h, Finset.sum_empty]; linarith
+    · have hmin := U.min'_mem h
+      replace hmin := (Finset.mem_filter.mp hmin)
+      have hsub : U ⊆ Icc (U.min' h) n := by
+        intro k hk
+        have hk' := hk
+        rw [hU, Finset.mem_filter, hs, Finset.mem_range] at hk'
+        rw [Finset.mem_Icc]
+        exact ⟨U.min'_le k hk, by omega⟩
+      have := Finset.sum_le_sum_of_subset_of_nonneg hsub (fun k _ _ => hf0 k)
+      have h2 := hmin.2
+      unfold upperTail at h2
+      linarith
+  have hLb : ∑ k ∈ L, f k ≤ α / 2 := by
+    rcases L.eq_empty_or_nonempty with h | h
+    · rw [h, Finset.sum_empty]; linarith
+    · have hmax := L.max'_mem h
+      replace hmax := (Finset.mem_filter.mp hmax)
+      have hsub : L ⊆ range (L.max' h + 1) := by
+        intro k hk
+        rw [Finset.mem_range]
+        have := L.le_max' k hk
+        omega
+      have := Finset.sum_le_sum_of_subset_of_nonneg hsub (fun k _ _ => hf0 k)
+      have h2 := hmax.2
+      unfold lowerTail at h2
+      linarith
+  have hEb : ∑ k ∈ E, f k ≤ α := by
+    have h1 := Finset.sum_le_sum_of_subset_of_nonneg hEsub (fun k _ _ => hf0 k)
+    have h2 := Finset.sum_union_inter (s₁ := U) (s₂ := L) (f := f)
+    have h3 : 0 ≤ ∑ k ∈ U ∩ L, f k := Finset.sum_nonneg (fun k _ => hf0 k)
+    linarith
+  linarith
+
+/-- Wilson's keep rule solves to an interval: for `k` of `n` (with `n ≥ 1`), `p̂ = k / n` and
+`z > 0`, a candidate rate `p` has `|p̂ − p| ≤ z √(p(1 − p)/n)` exactly when `p` lies between
+the Wilson ends `W₋` and `W₊`. -/
+theorem wilson_keep_rule_iff_between_wilson_ends
+    (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) (z p : ℝ) (hz : 0 < z) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+    |(k / n : ℝ) - p| ≤ z * Real.sqrt (p * (1 - p) / n) ↔
+      wilsonLower n k z ≤ p ∧ p ≤ wilsonUpper n k z := by
+  have hm : (0 : ℝ) < n := by exact_mod_cast hn
+  have ha : 0 < 1 + z ^ 2 / n := by positivity
+  have key := wilson_key n k hn hk z p
+  have hle := wilsonLower_le_upper n k hn z hz
+  have hX : 0 ≤ p * (1 - p) / n := by
+    have : 0 ≤ 1 - p := by linarith
+    positivity
+  rw [show z * Real.sqrt (p * (1 - p) / n) = Real.sqrt (z ^ 2 * (p * (1 - p) / n)) by
+    rw [Real.sqrt_mul (sq_nonneg z), Real.sqrt_sq hz.le]]
+  rw [Real.le_sqrt (abs_nonneg _) (by positivity), sq_abs]
+  set L := wilsonLower n k z
+  set U := wilsonUpper n k z
+  constructor
+  · intro h
+    have h1 : (p - L) * (p - U) ≤ 0 := by
+      by_contra hc
+      push Not at hc
+      have := mul_pos ha hc
+      nlinarith
+    constructor
+    · by_contra hc
+      push Not at hc
+      nlinarith
+    · by_contra hc
+      push Not at hc
+      nlinarith
+  · rintro ⟨h1, h2⟩
+    have : (p - L) * (p - U) ≤ 0 := mul_nonpos_of_nonneg_of_nonpos (by linarith) (by linarith)
+    have := mul_nonpos_of_nonneg_of_nonpos ha.le this
+    nlinarith
+
+/-- The Wilson ends stay inside 0 to 1, one on each side of the observed rate:
+`0 ≤ W₋ ≤ p̂ ≤ W₊ ≤ 1`. -/
+theorem wilson_ends_in_unit_interval_around_observed_rate
+    (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) (z : ℝ) (hz : 0 < z) :
+    0 ≤ wilsonLower n k z ∧ wilsonLower n k z ≤ (k / n : ℝ) ∧
+      (k / n : ℝ) ≤ wilsonUpper n k z ∧ wilsonUpper n k z ≤ 1 := by
+  have hm : (0 : ℝ) < n := by exact_mod_cast hn
+  have ha : 0 < 1 + z ^ 2 / n := by positivity
+  have hq0 : (0 : ℝ) ≤ (k / n : ℝ) := by positivity
+  have hq1 : (k / n : ℝ) ≤ 1 := by
+    rw [div_le_one hm]; exact_mod_cast hk
+  have hle := wilsonLower_le_upper n k hn z hz
+  have hUpos := wilsonUpper_pos n k hn z hz
+  have hLlt := wilsonLower_lt_one n k hn hk z hz
+  have kq := wilson_key n k hn hk z (k / n : ℝ)
+  have k0 := wilson_key n k hn hk z 0
+  have k1 := wilson_key n k hn hk z 1
+  set q : ℝ := (k / n : ℝ)
+  set L := wilsonLower n k z
+  set U := wilsonUpper n k z
+  have hX : 0 ≤ z ^ 2 * (q * (1 - q) / n) := by
+    have : 0 ≤ 1 - q := by linarith
+    positivity
+  have hprod : (q - L) * (q - U) ≤ 0 := by
+    by_contra hc
+    push Not at hc
+    have := mul_pos ha hc
+    nlinarith
+  have hLq : L ≤ q := by
+    by_contra hc
+    push Not at hc
+    nlinarith
+  have hqU : q ≤ U := by
+    by_contra hc
+    push Not at hc
+    nlinarith
+  refine ⟨?_, hLq, hqU, ?_⟩
+  · by_contra hc
+    push Not at hc
+    have : (1 + z ^ 2 / n) * ((0 - L) * (0 - U)) < 0 := by
+      apply mul_neg_of_pos_of_neg ha
+      apply mul_neg_of_pos_of_neg <;> linarith
+    have : (1 + z ^ 2 / n) * (0 - L) * (0 - U) = q ^ 2 := by
+      rw [← k0]; ring
+    nlinarith [sq_nonneg q]
+  · by_contra hc
+    push Not at hc
+    have : (1 + z ^ 2 / n) * ((1 - L) * (1 - U)) < 0 := by
+      apply mul_neg_of_pos_of_neg ha
+      apply mul_neg_of_pos_of_neg <;> linarith
+    have : (1 + z ^ 2 / n) * (1 - L) * (1 - U) = (q - 1) ^ 2 := by
+      rw [← k1]; ring
+    nlinarith
+
+/-! The card's worked numbers: 45 recoveries in 100 patients, 35 on placebo, 0 rashes. -/
+
+-- The observed rate 45/100 is 9/20, and p̂(1 − p̂)/n = 0.45 × 0.55 / 100 = 0.002475 = 99/40000.
+example : (45 : ℚ) / 100 = 9 / 20 ∧ (45 / 100 : ℚ) * (1 - 45 / 100) / 100 = 99 / 40000 := by
+  norm_num
+
+-- The placebo arm: 35/100 = 7/20, and p̂(1 − p̂)/n = 0.35 × 0.65 / 100 = 91/40000.
+example : (35 : ℚ) / 100 = 7 / 20 ∧ (35 / 100 : ℚ) * (1 - 35 / 100) / 100 = 91 / 40000 := by
+  norm_num
+
+-- Wald on 0 rashes in 100: the estimated spread is 0, so the interval is 0 to 0, whatever z is.
+example (z : ℝ) :
+    (0 / 100 : ℝ) - z * Real.sqrt ((0 / 100) * (1 - 0 / 100) / 100) = 0 ∧
+      (0 / 100 : ℝ) + z * Real.sqrt ((0 / 100) * (1 - 0 / 100) / 100) = 0 := by
+  norm_num
+
+-- For 0 rashes in 100, the chance of 0 or fewer is B₀(p) = (1 − p)^100.
+example (p : ℝ) : lowerTail 100 0 p = (1 - p) ^ 100 := by
+  norm_num [lowerTail, binomChance]
+
+#print axioms binomChance_nonneg
+#print axioms binomChance_sum_eq_one
+#print axioms wilson_key_aux
+#print axioms wilson_key
+#print axioms wilsonUpper_pos
+#print axioms wilsonLower_lt_one
+#print axioms wilsonLower_le_upper
+#print axioms exact_interval_coverage_at_least_one_minus_alpha
+#print axioms wilson_keep_rule_iff_between_wilson_ends
+#print axioms wilson_ends_in_unit_interval_around_observed_rate
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'binomChance_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'binomChance_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wilson_key_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wilson_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wilsonUpper_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wilsonLower_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wilsonLower_le_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exact_interval_coverage_at_least_one_minus_alpha' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wilson_keep_rule_iff_between_wilson_ends' depends on axioms: [propext, Classical.choice, Quot.sound]
+'wilson_ends_in_unit_interval_around_observed_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

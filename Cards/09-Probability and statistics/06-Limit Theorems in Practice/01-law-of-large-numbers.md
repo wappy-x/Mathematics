@@ -14,7 +14,7 @@ That guarantee tightens toward certainty as the rolls pile up. The chance that t
 
 **The average of many independent draws from one law lands close to that law's mean with a probability that tends to 1; with a finite variance, Chebyshev's inequality proves it and says how fast: the chance of a miss falls at least as fast as one over the number of draws.**
 
-**What kind of fact this is:** a theorem, the weak law, proved on this card in Why it works under a finite variance; the strong law and the finite-mean-only version are stated and left to wing 10.
+**What kind of fact this is:** a theorem, the weak law, proved on this card in Why it works under a finite variance. The strong law and the finite-mean-only version are stated and left to wing 10.
 
 ### The picture: one run of 1,000 rolls
 
@@ -85,7 +85,9 @@ $$P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \to 0 \quad \text{as 
 
 ### Step 0: highs and lows cancel, and independence makes them cancel fast
 
-A 6 followed by a 1 averages 3.5. Over many rolls, faces above 3.5 are offset by faces below it. The question is how fast. Independence gives the answer. Square the total's error, and the cross terms between different rolls average to zero; only the $n$ squared errors of single rolls remain. So the total's spread grows only like the square root of $n$. Dividing by $n$ then crushes it. Chebyshev's inequality converts that small spread into a small chance of a miss.
+A 6 followed by a 1 averages 3.5. Over many rolls, faces above 3.5 are offset by faces below it. The question is how fast.
+
+Independence gives the answer. Square the total's error, and the cross terms between different rolls average to zero; only the $n$ squared errors of single rolls remain. So the total's spread grows only like the square root of $n$. Dividing by $n$ then crushes it. Chebyshev's inequality converts that small spread into a small chance of a miss.
 
 ### Step 1: the average aims at the right place
 
@@ -97,7 +99,7 @@ The mean square of a face is $(1 + 4 + 9 + 16 + 25 + 36)/6 = 15.1667$. Subtract 
 
 ### Step 3: the variance of the total grows like n
 
-The variance of a sum is the sum of the variances plus twice the covariance of every pair ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rolls have covariance zero, so every pair term vanishes and $\mathrm{Var}(S_n) = n\sigma^2$. The total's spread is $\sigma\sqrt{n}$: 54.01 for 1,000 rolls.
+The variance of a sum is the sum of the variances plus twice the covariance of every pair, the average product of the two draws' errors ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rolls have covariance zero, so every pair term vanishes and $\mathrm{Var}(S_n) = n\sigma^2$. The total's spread is $\sigma\sqrt{n}$: 54.01 for 1,000 rolls.
 
 ### Step 4: the variance of the average shrinks like 1/n
 
@@ -153,12 +155,16 @@ xychart-beta
 
 Orange, top: Chebyshev's ceiling $\sigma^2/(n\varepsilon^2)$, capped at 1; up to 291 rolls it says nothing. Green, bottom: the exact chance of a miss. The exact curve always sits under the ceiling and falls away from it.
 
-The gap costs rolls. To push the miss chance to 5% or less, Chebyshev asks for $n \ge 2.9167 / (0.05 \times 0.01)$, which rounds up to 5,834 rolls: the bound there is 0.049994, and at 5,833 it is 0.050003. The exact law gets under 5% at 1,117 rolls, with a miss chance of 0.0497. It wobbles back above 5% for a few sizes, because the sum can only take whole-number values and the band's edges fall between them differently at each $n$; from 1,131 rolls on it stays below, checked to 1,200. Chebyshev's figure is safe for every law with this variance, and far more cautious than this one needs. Sharper tools recover the gap: the shape of the error ([Central limit theorem](02-central-limit-theorem.md)) and tails that fall exponentially ([Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md)).
+The gap costs rolls. To push the miss chance to 5% or less, Chebyshev asks for $n \ge 2.9167 / (0.05 \times 0.01)$. That rounds up to 5,834 rolls: the bound there is 0.049994, and at 5,833 it is 0.050003.
+
+The exact law gets under 5% at 1,117 rolls, with a miss chance of 0.0497. It wobbles back above 5% for a few sizes. The sum can only take whole-number values, and the band's edges fall between them differently at each $n$. From 1,131 rolls on it stays below, checked to 1,200.
+
+Chebyshev's figure is safe for every law with this variance, and far more cautious than this one needs. Sharper tools recover the gap: the shape of the error ([Central limit theorem](02-central-limit-theorem.md)) and tails that fall exponentially ([Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md)).
 
 <details>
 <summary>The strong law, stated</summary>
 
-The weak law speaks about one $n$ at a time. The **strong law** speaks about a whole infinite run: with probability 1, the running average of independent draws from one law with a finite mean eventually settles on $\mu$ and stays within any tolerance from some roll on. It rules out a run that keeps wandering out of the band forever. Its proof needs probability built on measure, which is wing 10's subject; this card states it and does not use it. The simulated runs below are evidence for it, not proof.
+The weak law speaks about one $n$ at a time. The **strong law** speaks about a whole infinite run. With probability 1, the running average of independent draws from one law with a finite mean eventually settles on $\mu$ and stays within any tolerance from some roll on. It rules out a run that keeps wandering out of the band forever. Its proof needs probability built on measure, which is wing 10's subject; this card states it and does not use it. The simulated runs below are evidence for it, not proof.
 
 </details>
 
@@ -196,7 +202,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the chance of a hit by three independent roads. Road 1 is Chebyshev's bound from the variance alone. Road 2 is the exact law of the sum of 1,000 dice, built one die at a time: the chance of each total after one more roll is the average of six earlier chances. Road 3 rolls 4,000 runs of 1,000 dice from SplitMix64, a short, well-tested recipe for pseudo-random whole numbers written out in both languages, so both draw the same rolls. Whether an average misses is tested in whole numbers, $5 \lvert 2S_n - 7n \rvert \ge n$, so no rounding decides a boundary case. The rate chart, the sample sizes, the Cauchy draws and the broken cases come from the same runs.
+The scripts reach the chance of a hit by three independent roads. Road 1 is Chebyshev's bound from the variance alone. Road 2 is the exact law of the sum of 1,000 dice, built one die at a time. The chance of each total after one more roll is the average of six earlier chances. Road 3 rolls 4,000 runs of 1,000 dice from SplitMix64, a short, well-tested recipe for pseudo-random whole numbers written out in both languages, so both draw the same rolls. Whether an average misses is tested in whole numbers, $5 \lvert 2S_n - 7n \rvert \ge n$, so no rounding decides a boundary case. The rate chart, the sample sizes, the Cauchy draws and the broken cases come from the same runs.
 
 ### Python
 
@@ -616,6 +622,184 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's three rules for independent draws with a common mean and finite variance, and checks the worked arithmetic.
+
+- Suppose the draws $X_i$ are independent, each with mean $\mu$ and the same finite variance $\sigma^2$. Then $E[\bar{X}_n] = \mu$ and $\mathrm{Var}(\bar{X}_n) = \sigma^2 / n$, for every $n$ of at least 1.
+- Take the same draws, $n$ of at least 1, and a tolerance $\varepsilon$ above 0. Then $P(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon) \le \sigma^2 / (n \varepsilon^2)$.
+- Take the same draws and any tolerance $\varepsilon$ above 0. Then $P(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon) \to 0$ as $n$ grows: the weak law.
+- The fair die's numbers: variance 35/12, miss bound 7/24 at 1,000 rolls, and guaranteed hit 17/24.
+- The sample sizes: the bound certifies 5,834 rolls but not 5,833, and it stays above 1 up to 291 rolls.
+- The whole-number miss test at 1,000 rolls: totals 3,401 to 3,599 hit; 3,400 and 3,600 miss.
+
+The exact law of the sum, the simulation, the Cauchy draws and the rate chart are left to the Python and Rust checks.
+
+```lean
+-- Law of large numbers: the average of n independent draws with a common mean and a common finite variance has variance σ²/n, misses the mean by ε or more with chance at most σ²/(nε²), and so misses with a chance that tends to 0 for every ε > 0.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Independence.Basic
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+theorem lln_avg_mean_var {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (X : ℕ → Ω → ℝ) (μ σ2 : ℝ)
+    (hind : iIndepFun X P)
+    (hL2 : ∀ i, MemLp (X i) 2 P)
+    (hmean : ∀ i, ∫ ω, X i ω ∂P = μ)
+    (hvar : ∀ i, variance (X i) P = σ2)
+    (n : ℕ) (hn : 1 ≤ n) :
+    ∫ ω, (∑ i ∈ Finset.range n, X i ω) / n ∂P = μ ∧
+      variance (fun ω => (∑ i ∈ Finset.range n, X i ω) / n) P = σ2 / n := by
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
+  constructor
+  · rw [integral_div, integral_finsetSum _ (fun i _ => (hL2 i).integrable one_le_two)]
+    simp only [hmean, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    field_simp
+  · have hfun : (fun ω => (∑ i ∈ Finset.range n, X i ω) / n)
+        = fun ω => (1 / (n : ℝ)) * (∑ i ∈ Finset.range n, X i) ω := by
+      funext ω; simp [Finset.sum_apply]; ring
+    rw [hfun, variance_const_mul, IndepFun.variance_sum (fun i _ => hL2 i)
+      (fun i _ j _ hij => hind.indepFun hij)]
+    simp only [hvar, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    field_simp
+
+theorem lln_cheb {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (X : ℕ → Ω → ℝ) (μ σ2 : ℝ)
+    (hind : iIndepFun X P)
+    (hL2 : ∀ i, MemLp (X i) 2 P)
+    (hmean : ∀ i, ∫ ω, X i ω ∂P = μ)
+    (hvar : ∀ i, variance (X i) P = σ2)
+    (n : ℕ) (hn : 1 ≤ n) (ε : ℝ) (hε : 0 < ε) :
+    P {ω | ε ≤ |(∑ i ∈ Finset.range n, X i ω) / n - μ|} ≤
+      ENNReal.ofReal (σ2 / (n * ε ^ 2)) := by
+  obtain ⟨hm, hv⟩ := lln_avg_mean_var X μ σ2 hind hL2 hmean hvar n hn
+  have hL : MemLp (fun ω => (∑ i ∈ Finset.range n, X i ω) / n) 2 P := by
+    have : MemLp (∑ i ∈ Finset.range n, X i) 2 P := memLp_finsetSum' _ (fun i _ => hL2 i)
+    have h2 := this.const_mul (1 / (n : ℝ))
+    convert h2 using 1
+    funext ω; simp [Finset.sum_apply]; ring
+  have := meas_ge_le_variance_div_sq hL hε
+  rw [hm, hv] at this
+  convert this using 2
+  rw [div_div]
+
+#print axioms lln_avg_mean_var
+#print axioms lln_cheb
+
+/-- **The weak law of large numbers.** Let `X 0, X 1, X 2, …` be independent random draws,
+each with the same mean `μ` and the same finite variance `σ²`. Then, however small the
+tolerance `ε > 0`, the chance that the average of the first `n` draws misses `μ` by at least
+`ε` tends to 0 as `n` grows: the average converges in probability to `μ`. -/
+theorem weak_law_of_large_numbers {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (X : ℕ → Ω → ℝ) (μ σ2 : ℝ)
+    (hind : iIndepFun X P)
+    (hL2 : ∀ i, MemLp (X i) 2 P)
+    (hmean : ∀ i, ∫ ω, X i ω ∂P = μ)
+    (hvar : ∀ i, variance (X i) P = σ2) :
+    ∀ ε : ℝ, 0 < ε →
+      Tendsto (fun n : ℕ => P {ω | ε ≤ |(∑ i ∈ Finset.range n, X i ω) / n - μ|})
+        atTop (𝓝 0) := by
+  intro ε hε
+  have hlim : Tendsto (fun n : ℕ => ENNReal.ofReal (σ2 / (n * ε ^ 2))) atTop (𝓝 0) := by
+    rw [← ENNReal.ofReal_zero]
+    apply ENNReal.tendsto_ofReal
+    have h := tendsto_const_div_atTop_nhds_zero_nat (σ2 / ε ^ 2)
+    refine h.congr (fun n => ?_)
+    rw [div_div, mul_comm]
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hlim
+    (Eventually.of_forall fun n => zero_le) ?_
+  filter_upwards [eventually_ge_atTop 1] with n hn
+  exact lln_cheb X μ σ2 hind hL2 hmean hvar n hn ε hε
+
+/-- **The average has one n-th of the variance.** For independent draws, each with the same
+mean `μ` and the same finite variance `σ²`, the average of the first `n ≥ 1` draws has
+mean `μ` and variance `σ² / n`. -/
+theorem mean_and_variance_of_average {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (X : ℕ → Ω → ℝ) (μ σ2 : ℝ)
+    (hind : iIndepFun X P)
+    (hL2 : ∀ i, MemLp (X i) 2 P)
+    (hmean : ∀ i, ∫ ω, X i ω ∂P = μ)
+    (hvar : ∀ i, variance (X i) P = σ2)
+    (n : ℕ) (hn : 1 ≤ n) :
+    ∫ ω, (∑ i ∈ Finset.range n, X i ω) / n ∂P = μ ∧
+      variance (fun ω => (∑ i ∈ Finset.range n, X i ω) / n) P = σ2 / n := by
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
+  constructor
+  · rw [integral_div, integral_finsetSum _ (fun i _ => (hL2 i).integrable one_le_two)]
+    simp only [hmean, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    field_simp
+  · have hfun : (fun ω => (∑ i ∈ Finset.range n, X i ω) / n)
+        = fun ω => (1 / (n : ℝ)) * (∑ i ∈ Finset.range n, X i) ω := by
+      funext ω; simp [Finset.sum_apply]; ring
+    rw [hfun, variance_const_mul, IndepFun.variance_sum (fun i _ => hL2 i)
+      (fun i _ j _ hij => hind.indepFun hij)]
+    simp only [hvar, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    field_simp
+
+/-- **Chebyshev's bound for the average.** For independent draws, each with the same mean
+`μ` and the same finite variance `σ²`, any number of draws `n ≥ 1` and any tolerance
+`ε > 0`, the chance that the average of the first `n` draws misses `μ` by at least `ε` is
+at most `σ² / (n ε²)`. -/
+theorem chebyshev_bound_for_average {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (X : ℕ → Ω → ℝ) (μ σ2 : ℝ)
+    (hind : iIndepFun X P)
+    (hL2 : ∀ i, MemLp (X i) 2 P)
+    (hmean : ∀ i, ∫ ω, X i ω ∂P = μ)
+    (hvar : ∀ i, variance (X i) P = σ2)
+    (n : ℕ) (hn : 1 ≤ n) (ε : ℝ) (hε : 0 < ε) :
+    P {ω | ε ≤ |(∑ i ∈ Finset.range n, X i ω) / n - μ|} ≤
+      ENNReal.ofReal (σ2 / (n * ε ^ 2)) := by
+  obtain ⟨hm, hv⟩ := lln_avg_mean_var X μ σ2 hind hL2 hmean hvar n hn
+  have hL : MemLp (fun ω => (∑ i ∈ Finset.range n, X i ω) / n) 2 P := by
+    have : MemLp (∑ i ∈ Finset.range n, X i) 2 P := memLp_finsetSum' _ (fun i _ => hL2 i)
+    have h2 := this.const_mul (1 / (n : ℝ))
+    convert h2 using 1
+    funext ω; simp [Finset.sum_apply]; ring
+  have := meas_ge_le_variance_div_sq hL hε
+  rw [hm, hv] at this
+  convert this using 2
+  rw [div_div]
+
+-- One fair die: mean (1 + 2 + … + 6)/6 = 7/2, mean square (1 + 4 + … + 36)/6 = 91/6.
+example : ((1 + 2 + 3 + 4 + 5 + 6 : ℚ)) / 6 = 7 / 2 := by norm_num
+example : ((1 + 4 + 9 + 16 + 25 + 36 : ℚ)) / 6 = 91 / 6 := by norm_num
+-- Its variance: 91/6 - (7/2)² = 35/12, the same as the closed form (6 × 6 - 1)/12.
+example : (91 / 6 : ℚ) - (7 / 2) ^ 2 = 35 / 12 := by norm_num
+example : ((6 * 6 - 1 : ℚ)) / 12 = 35 / 12 := by norm_num
+-- The average of 1,000 rolls has variance (35/12)/1000 = 7/2400.
+example : (35 / 12 : ℚ) / 1000 = 7 / 2400 := by norm_num
+-- Chebyshev at n = 1000, ε = 1/10: the miss bound is 7/24, so a hit has chance at least 17/24.
+example : (35 / 12 : ℚ) / (1000 * (1 / 10) ^ 2) = 7 / 24 := by norm_num
+example : (1 : ℚ) - 7 / 24 = 17 / 24 := by norm_num
+-- Sample size for a miss chance of at most 1/20: the bound certifies 5,834 rolls but not 5,833.
+example : (35 / 12 : ℚ) / (5834 * (1 / 10) ^ 2) ≤ 1 / 20 := by norm_num
+example : ¬ ((35 / 12 : ℚ) / (5833 * (1 / 10) ^ 2) ≤ 1 / 20) := by norm_num
+-- At 100 and 200 rolls the bound is above 1, so it says nothing; it first drops to 1 or less at 292.
+example : (1 : ℚ) < (35 / 12) / (100 * (1 / 10) ^ 2) := by norm_num
+example : (1 : ℚ) < (35 / 12) / (291 * (1 / 10) ^ 2) := by norm_num
+example : (35 / 12 : ℚ) / (292 * (1 / 10) ^ 2) ≤ 1 := by norm_num
+-- The whole-number miss test 5|2S - 7n| ≥ n at n = 1000: totals 3,401 to 3,599 hit, 3,400 and 3,600 miss.
+example : 5 * |2 * (3401 : ℤ) - 7 * 1000| < 1000 ∧ 5 * |2 * (3599 : ℤ) - 7 * 1000| < 1000 := by
+  norm_num
+example : 1000 ≤ 5 * |2 * (3400 : ℤ) - 7 * 1000| ∧ 1000 ≤ 5 * |2 * (3600 : ℤ) - 7 * 1000| := by
+  norm_num
+
+#print axioms weak_law_of_large_numbers
+#print axioms mean_and_variance_of_average
+#print axioms chebyshev_bound_for_average
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lln_avg_mean_var' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lln_cheb' depends on axioms: [propext, Classical.choice, Quot.sound]
+'weak_law_of_large_numbers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mean_and_variance_of_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chebyshev_bound_for_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -644,7 +828,7 @@ The two outputs match line for line.
 - **Polls and samples.** A sample share of voters stands in for the population's share, and its error shrinks as the sample grows ([Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md)).
 - **Simulation.** Every Monte Carlo estimate, including prices in finance, is a sample average trusted because of this law, and quoted with its standard error because of its rate.
 - **Growth of wealth.** Repeated bets compound, so the average of the logarithms of the growth factors settles; that is the idea behind [Kelly](../../12-Financial%20mathematics/36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md).
-- **Machine learning.** Training on random batches works because a batch average of errors settles near the full average (Stochastic gradient).
+- **Machine learning.** Training on random batches works because a batch average of errors settles near the full average ([Stochastic gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md)).
 
 > **Say it back**
 > The average of many independent draws has the same mean as one draw and one $n$-th of its variance. Chebyshev's inequality turns that small variance into a small chance of missing the mean by any fixed tolerance, and that chance goes to zero as the draws pile up. For 1,000 rolls of a fair die, the average lands within 0.1 of 3.5 with chance at least 0.7083 by the bound, and 0.9346 exactly. The law fails when the draws are copies of each other or have no mean, as with the Cauchy law. It is about the average, never about the total evening out.
@@ -654,6 +838,7 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the inequality that turns the average's variance into the guarantee.
+- [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, and the rule that makes the variance of a sum of independent draws the sum of their variances.
 
 ## Where this goes next
 

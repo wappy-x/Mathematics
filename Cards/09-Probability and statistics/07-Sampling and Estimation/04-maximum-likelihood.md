@@ -12,6 +12,8 @@ Here is a rule that works far beyond polls. Try every candidate share in turn. F
 
 The chance of the observed data, read as a function of the candidate, is called the **likelihood**. The candidate that makes it largest is the **maximum likelihood estimate**. For the poll it is 0.52, the plain share. The rule rediscovers the obvious answer here, which is a reason to trust it where no obvious answer exists. Ronald Fisher set it out in 1922; most model fitting since, machine learning included, is this rule applied to bigger models.
 
+The sharpness of the peak gives the estimate's standard error: the typical distance between such an estimate and the true share ([Standard error](02-sample-mean-and-standard-error.md)).
+
 Two warnings. The likelihood is a chance of the data, never of the candidate: the method does not say 0.52 is probably true. And the peak need not sit where the curve is flat: with zero yeses the best candidate is the edge, zero, and the usual calculus finds nothing.
 
 **Hold the data fixed, let the unknown move, and pick the value under which the observed data had the highest chance; for 520 yeses in 1,000 calls that value is 0.52, with a standard error of 0.0158.**
@@ -36,7 +38,9 @@ First line (orange): the real poll, 520 yeses in 1,000 calls. Second line (green
 
 ## The formula
 
-Notation first, in words. The unknown number the model needs is written $\theta$ (theta); for the poll it is the share $p$. The data are $x_1, x_2, \ldots, x_n$: for the poll, $x_i$ is 1 if voter number i said yes and 0 if not. The model supplies $f(x;\theta)$, the chance of one observation $x$ when the unknown is $\theta$; for a measurement on a continuous scale it is the density height ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). A capital pi, ∏, means multiply the terms together, as a capital sigma, Σ, means add them. A hat marks a guess, as on [Samples and estimators](01-populations-samples-and-estimators.md): $\hat\theta$ is read "theta-hat".
+Notation first, in words. The unknown number the model needs is written $\theta$ (theta); for the poll it is the share $p$. The data are $x_1, x_2, \ldots, x_n$: for the poll, $x_i$ is 1 if voter number i said yes and 0 if not. The model supplies $f(x;\theta)$, the chance of one observation $x$ when the unknown is $\theta$; for a measurement on a continuous scale it is the density height ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)).
+
+A capital pi, ∏, means multiply the terms together, as a capital sigma, Σ, means add them. A hat marks a guess, as on [Samples and estimators](01-populations-samples-and-estimators.md): $\hat\theta$ is read "theta-hat".
 
 $$L(\theta) = \prod_{i=1}^{n} f(x_i;\theta), \qquad \ell(\theta) = \ln L(\theta) = \sum_{i=1}^{n} \ln f(x_i;\theta), \qquad \hat\theta = \text{the allowed } \theta \text{ with the largest } L(\theta)$$
 
@@ -113,7 +117,9 @@ The slope of ℓ in p is
 
 $$\frac{d\ell}{dp} = \frac{k}{p} - \frac{n-k}{1-p} = \frac{k - np}{p(1-p)}.$$
 
-The bottom, p(1 − p), is positive for every p strictly between 0 and 1. So the sign of the slope is the sign of k − np. Below p = k/n the slope is positive and ℓ climbs; above it the slope is negative and ℓ falls. A function that rises up to a point and falls after it has its highest value there ([Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). This sign argument proves a global maximum, which "slope equals zero" alone does not: a flat point can be a valley or a ledge. For the poll, $\hat p$ = 520/1000 = 0.52.
+The bottom, p(1 − p), is positive for every p strictly between 0 and 1. So the sign of the slope is the sign of k − np. Below p = k/n the slope is positive and ℓ climbs; above it the slope is negative and ℓ falls. A function that rises up to a point and falls after it has its highest value there ([Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)).
+
+This sign argument proves a global maximum, which "slope equals zero" alone does not: a flat point can be a valley or a ledge. For the poll, $\hat p$ = 520/1000 = 0.52.
 
 ### Step 4: when the peak sits at an edge
 
@@ -167,7 +173,9 @@ Density heights are not chances, so ℓ here can be positive. If all five polls 
 
 ### Step 6: the curvature of the peak gives the standard error
 
-A narrow peak means the data rule out nearby values firmly. The narrowness is the curvature: minus the second derivative of ℓ at the peak, the rate at which its slope falls. For the poll it is $k/\hat p^2 + (n-k)/(1-\hat p)^2$, about 4,006. One over its square root is 0.015799, the same standard error that $\sqrt{p(1-p)/n}$ gives on [Standard error](02-sample-mean-and-standard-error.md). That this match is no accident, and that no unbiased rule can do better, is proved on [Fisher information](07-fisher-information-and-cramer-rao.md). The same recipe gave the variance's standard error above, $\hat v\sqrt{2/n}$.
+A narrow peak means the data rule out nearby values firmly. The narrowness is the curvature: minus the second derivative of ℓ at the peak, the rate at which its slope falls. For the poll it is $k/\hat p^2 + (n-k)/(1-\hat p)^2$, about 4,006. One over its square root is 0.015799, the same standard error that $\sqrt{p(1-p)/n}$ gives on [Standard error](02-sample-mean-and-standard-error.md).
+
+That this match is no accident, and that no unbiased rule can do better, is proved on [Fisher information](07-fisher-information-and-cramer-rao.md). The same recipe gave the variance's standard error above, $\hat v\sqrt{2/n}$.
 
 ### The other door
 
@@ -624,6 +632,240 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The simulated average, 0.520532, sits within two of its standard errors (0.000359) of 0.52, and the simulated scatter, 0.016060, is close to the 0.015799 the curvature predicts. The bias simulation's 0.794286 is within two of its standard errors (0.004005) of the theoretical 4/5.
 
+### Lean
+
+Lean proves the poll's answer for every k and n, and both normal answers for any measurements.
+
+- Take k yeses out of n calls, with n at least 1. Then k/n lies between 0 and 1, and every other share from 0 to 1 gives a smaller likelihood.
+- This includes 0 yeses, where the top sits at the edge, p = 0.
+- Take n measurements with total squared gap Q > 0. Then the pair centre $\bar x$, variance Q/n beats every other pair with a variance above 0.
+- Take n ≥ 1 measurements that are all equal, so Q = 0. Then every pair with a variance above 0 is beaten by another: no maximum exists.
+- The hand arithmetic holds exactly, as fractions. That covers the share 0.52, the curvature between 4,006 and 4,007, and the five polls' 0.52, 0.0018, 0.00036 and 0.00045.
+
+The decimals, the standard errors, the searches, the simulations and the households of two are left to the Python and Rust checks.
+
+```lean
+-- Maximum likelihood: for a yes-or-no poll the share of yeses k/n is the unique top of the likelihood p^k (1-p)^(n-k) on [0, 1], for a normal model the average and Q/n are the unique top when Q > 0, and when Q = 0 the normal likelihood has no top.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Tactic.NormNum
+
+open ProbabilityTheory NNReal
+
+lemma log_prod_gaussianPDFReal (n : ℕ) (x : Fin n → ℝ) (μ : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :
+    Real.log (∏ i, gaussianPDFReal μ v (x i)) =
+      -((n : ℝ) / 2) * Real.log (2 * Real.pi * v) - (∑ i, (x i - μ) ^ 2) / (2 * v) := by
+  have hv' : (0 : ℝ) < v := by positivity
+  rw [Real.log_prod (fun i _ => (gaussianPDFReal_pos μ v (x i) hv).ne')]
+  have : ∀ i, Real.log (gaussianPDFReal μ v (x i)) =
+      -(1 / 2) * Real.log (2 * Real.pi * v) - (x i - μ) ^ 2 / (2 * v) := by
+    intro i
+    rw [gaussianPDFReal, Real.log_mul (by positivity) (Real.exp_pos _).ne', Real.log_inv,
+      Real.log_exp, Real.log_sqrt (by positivity)]
+    ring
+  simp_rw [this]
+  rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+    nsmul_eq_mul, Finset.sum_div]
+  ring
+
+#print axioms log_prod_gaussianPDFReal
+
+lemma sum_sq_sub_eq (n : ℕ) (hn : 0 < n) (x : Fin n → ℝ) (μ : ℝ) :
+    ∑ i, (x i - μ) ^ 2 =
+      ∑ i, (x i - (∑ j, x j) / n) ^ 2 + n * ((∑ j, x j) / n - μ) ^ 2 := by
+  have hn' : (n : ℝ) ≠ 0 := by positivity
+  set m := (∑ j, x j) / n with hm
+  have hs : ∑ j, x j = n * m := by rw [hm]; field_simp
+  have : ∀ i, (x i - μ) ^ 2 = (x i - m) ^ 2 + 2 * (m - μ) * x i + (μ ^ 2 - m ^ 2) := by
+    intro i; ring
+  simp_rw [this]
+  rw [Finset.sum_add_distrib, Finset.sum_add_distrib, ← Finset.mul_sum, hs, Finset.sum_const,
+    Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  ring
+
+#print axioms sum_sq_sub_eq
+
+/-- The poll. With k yeses out of n calls (n at least 1), the likelihood of a candidate share p
+is p^k (1 - p)^(n - k). The share of yeses, k/n, is an allowed share (between 0 and 1), and every
+other allowed share gives the record a strictly smaller likelihood: k/n is the one highest point.
+This includes the edge case k = 0, where the top is p = 0. -/
+theorem binomial_likelihood_max_at_share (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) :
+    (k / n : ℝ) ∈ Set.Icc (0 : ℝ) 1 ∧
+      ∀ p ∈ Set.Icc (0 : ℝ) 1, p ≠ (k / n : ℝ) →
+        p ^ k * (1 - p) ^ (n - k) < (k / n : ℝ) ^ k * (1 - (k / n : ℝ)) ^ (n - k) := by
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have hkn : (k : ℝ) ≤ n := by exact_mod_cast hk
+  refine ⟨⟨by positivity, (div_le_one hn').2 hkn⟩, ?_⟩
+  rintro p ⟨hp0, hp1⟩ hne
+  rcases Nat.eq_zero_or_pos k with rfl | hk0
+  · simp only [pow_zero, Nat.cast_zero, zero_div, sub_zero, Nat.sub_zero, one_mul, one_pow] at hne ⊢
+    have : 0 < p := lt_of_le_of_ne hp0 (Ne.symm hne)
+    exact pow_lt_one₀ (by linarith) (by linarith) hn.ne'
+  rcases eq_or_lt_of_le hk with rfl | hkn'
+  · simp only [Nat.sub_self, pow_zero, mul_one, div_self hn'.ne', one_pow] at hne ⊢
+    exact pow_lt_one₀ hp0 (lt_of_le_of_ne hp1 hne) hn.ne'
+  have hk0' : (0 : ℝ) < k := by exact_mod_cast hk0
+  have hkn'' : (k : ℝ) < n := by exact_mod_cast hkn'
+  have ha0 : 0 < (k / n : ℝ) := by positivity
+  have hb0 : 0 < 1 - (k / n : ℝ) := by
+    have : (k / n : ℝ) < 1 := (div_lt_one hn').2 hkn''
+    linarith
+  have hnk : n - k ≠ 0 := by omega
+  have hRHS : 0 < (k / n : ℝ) ^ k * (1 - (k / n : ℝ)) ^ (n - k) := by positivity
+  rcases eq_or_lt_of_le hp0 with rfl | hp0'
+  · simpa [zero_pow hk0.ne'] using hRHS
+  rcases eq_or_lt_of_le hp1 with rfl | hp1'
+  · simpa [zero_pow hnk] using hRHS
+  have hq0 : 0 < 1 - p := by linarith
+  rw [← Real.log_lt_log_iff (by positivity) hRHS, Real.log_mul (by positivity) (by positivity),
+    Real.log_mul (by positivity) (by positivity), Real.log_pow, Real.log_pow, Real.log_pow,
+    Real.log_pow, Nat.cast_sub hk]
+  set a : ℝ := k / n with ha
+  have h1 : Real.log (p / a) < p / a - 1 :=
+    Real.log_lt_sub_one_of_pos (by positivity) (by
+      intro h; apply hne; field_simp at h; linarith)
+  have h2 : Real.log ((1 - p) / (1 - a)) ≤ (1 - p) / (1 - a) - 1 :=
+    Real.log_le_sub_one_of_pos (by positivity)
+  rw [Real.log_div hp0'.ne' ha0.ne'] at h1
+  rw [Real.log_div hq0.ne' hb0.ne'] at h2
+  have hnk' : (0 : ℝ) < n - k := by linarith
+  have e : (k : ℝ) * (p / a - 1) + (n - k) * ((1 - p) / (1 - a) - 1) = 0 := by
+    rw [ha]
+    have : (1 : ℝ) - k / n = (n - k) / n := by field_simp
+    rw [this]
+    field_simp
+    ring
+  nlinarith [mul_lt_mul_of_pos_left h1 hk0', mul_le_mul_of_nonneg_left h2 hnk'.le]
+
+/-- The normal model. For n measurements x_i with average x̄ and total squared gap
+Q = Σ (x_i - x̄)^2 greater than 0, the likelihood of a centre μ and a variance v > 0 is the
+product of the normal density heights at the data. The pair (x̄, Q/n) gives the largest
+likelihood, and every other allowed pair gives a strictly smaller one. -/
+theorem normal_likelihood_max_at_mean_and_Q_over_n (n : ℕ) (x : Fin n → ℝ)
+    (hQ : 0 < ∑ i, (x i - (∑ j, x j) / n) ^ 2) :
+    Real.toNNReal ((∑ i, (x i - (∑ j, x j) / n) ^ 2) / n) ≠ 0 ∧
+      ∀ (μ : ℝ) (v : ℝ≥0), v ≠ 0 →
+        (μ ≠ (∑ j, x j) / n ∨ v ≠ Real.toNNReal ((∑ i, (x i - (∑ j, x j) / n) ^ 2) / n)) →
+          ∏ i, gaussianPDFReal μ v (x i) <
+            ∏ i, gaussianPDFReal ((∑ j, x j) / n)
+              (Real.toNNReal ((∑ i, (x i - (∑ j, x j) / n) ^ 2) / n)) (x i) := by
+  have hn : 0 < n := by
+    rcases Nat.eq_zero_or_pos n with rfl | h
+    · simp at hQ
+    · exact h
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  set m := (∑ j, x j) / n with hm
+  set Q := ∑ i, (x i - m) ^ 2 with hQdef
+  have hv0pos : 0 < Q / n := by positivity
+  have hv0ne : Real.toNNReal (Q / n) ≠ 0 := by
+    simpa [Real.toNNReal_eq_zero, not_le] using hv0pos
+  refine ⟨hv0ne, ?_⟩
+  intro μ v hv hne
+  have hvc : ((Real.toNNReal (Q / n) : ℝ≥0) : ℝ) = Q / n := Real.coe_toNNReal _ hv0pos.le
+  have hv' : (0 : ℝ) < v := by positivity
+  rw [← Real.log_lt_log_iff (Finset.prod_pos fun i _ => gaussianPDFReal_pos _ _ _ hv)
+    (Finset.prod_pos fun i _ => gaussianPDFReal_pos _ _ _ hv0ne),
+    log_prod_gaussianPDFReal n x μ v hv, log_prod_gaussianPDFReal n x m _ hv0ne, hvc,
+    sum_sq_sub_eq n hn x μ, ← hm, ← hQdef]
+  have h2pi : (0 : ℝ) < 2 * Real.pi := by positivity
+  rw [Real.log_mul h2pi.ne' hv'.ne', Real.log_mul h2pi.ne' hv0pos.ne']
+  -- reduce to log (Q/n / v) ≤ Q/n / v - 1
+  have key : Real.log (Q / n / v) ≤ Q / n / v - 1 := Real.log_le_sub_one_of_pos (by positivity)
+  rw [Real.log_div hv0pos.ne' hv'.ne'] at key
+  have hd : 0 ≤ (m - μ) ^ 2 := sq_nonneg _
+  have hQn : Q / (2 * (Q / n)) = n / 2 := by field_simp
+  rw [hQn]
+  have e1 : (Q + n * (m - μ) ^ 2) / (2 * v) = (n / 2) * (Q / n / v) + n * (m - μ) ^ 2 / (2 * v) := by
+    field_simp
+  rw [e1]
+  rcases hne with hμ | hvne
+  · have hd' : 0 < (m - μ) ^ 2 := by
+      have : m - μ ≠ 0 := sub_ne_zero.2 (Ne.symm hμ)
+      positivity
+    have : 0 < n * (m - μ) ^ 2 / (2 * v) := by positivity
+    nlinarith [mul_le_mul_of_nonneg_left key (by positivity : (0 : ℝ) ≤ n / 2)]
+  · have hvne' : (v : ℝ) ≠ Q / n := by
+      intro h; apply hvne; rw [← h, Real.toNNReal_coe]
+    have key' : Real.log (Q / n / v) < Q / n / v - 1 :=
+      Real.log_lt_sub_one_of_pos (by positivity) (by
+        intro h; apply hvne'; exact ((div_eq_one_iff_eq hv'.ne').1 h).symm)
+    rw [Real.log_div hv0pos.ne' hv'.ne'] at key'
+    have : 0 ≤ n * (m - μ) ^ 2 / (2 * v) := by positivity
+    nlinarith [mul_lt_mul_of_pos_left key' (by positivity : (0 : ℝ) < n / 2)]
+
+/-- When the likelihood is unbounded there is no estimate. If n ≥ 1 measurements have total
+squared gap Q = 0 (they are all equal), then every allowed pair (μ, v) with v > 0 is beaten by
+another allowed pair: the normal likelihood has no highest point. -/
+theorem normal_likelihood_no_max_when_Q_zero (n : ℕ) (hn : 0 < n) (x : Fin n → ℝ)
+    (hQ : ∑ i, (x i - (∑ j, x j) / n) ^ 2 = 0) :
+    ∀ (μ : ℝ) (v : ℝ≥0), v ≠ 0 →
+      ∃ (μ' : ℝ) (v' : ℝ≥0), v' ≠ 0 ∧
+        ∏ i, gaussianPDFReal μ v (x i) < ∏ i, gaussianPDFReal μ' v' (x i) := by
+  intro μ v hv
+  set m := (∑ j, x j) / n with hm
+  have hx : ∀ i, x i = m := by
+    intro i
+    have := (Finset.sum_eq_zero_iff_of_nonneg (fun i _ => sq_nonneg (x i - m))).1 hQ i
+      (Finset.mem_univ i)
+    have := pow_eq_zero_iff (n := 2) (by norm_num) |>.1 this
+    linarith
+  refine ⟨m, v / 2, by simpa using hv, ?_⟩
+  have hv' : (0 : ℝ) < v := by positivity
+  have : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  refine Finset.prod_lt_prod_of_nonempty₀ (fun i _ => gaussianPDFReal_pos _ _ _ hv) ?_
+    Finset.univ_nonempty
+  intro i _
+  rw [hx i, gaussianPDFReal, gaussianPDFReal]
+  simp only [sub_self, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, neg_zero,
+    zero_div, Real.exp_zero, mul_one, NNReal.coe_div, NNReal.coe_ofNat]
+  calc (√(2 * Real.pi * v))⁻¹ * Real.exp (-(m - μ) ^ 2 / (2 * v))
+      ≤ (√(2 * Real.pi * v))⁻¹ * 1 := by
+        gcongr
+        rw [Real.exp_le_one_iff]
+        apply div_nonpos_of_nonpos_of_nonneg
+        · nlinarith [sq_nonneg (m - μ)]
+        · positivity
+    _ < (√(2 * Real.pi * (v / 2)))⁻¹ := by
+        rw [mul_one]
+        apply inv_strictAnti₀ (by positivity)
+        apply Real.sqrt_lt_sqrt (by positivity)
+        nlinarith [Real.pi_pos]
+
+-- The poll: 520 yeses in 1,000 calls; the share is 0.52 = 13/25.
+example : ((520 : ℚ) / 1000) = 13 / 25 := by norm_num
+-- Setting the slope to zero: 520 (1 - p) = 480 p at p = 13/25, that is 1000 p = 520.
+example : (520 : ℚ) * (1 - 13 / 25) = 480 * (13 / 25) := by norm_num
+example : (1000 : ℚ) * (13 / 25) = 520 := by norm_num
+-- Curvature at the peak: 520/0.52^2 + 480/0.48^2 = 1000/(0.52 * 0.48), about 4,006.
+example : (520 : ℚ) / (13 / 25) ^ 2 + 480 / (12 / 25) ^ 2 = 1000 / ((13 / 25) * (12 / 25)) := by
+  norm_num
+example : (4006 : ℚ) < 1000 / ((13 / 25) * (12 / 25)) ∧
+    1000 / ((13 / 25) * (12 / 25)) < 4007 := by norm_num
+-- The edge poll: 0 yeses in 20 calls; the share is 0, and the likelihood there is (1 - 0)^20 = 1.
+example : ((0 : ℚ) / 20) = 0 := by norm_num
+example : ((1 : ℚ) - 0) ^ 20 = 1 := by norm_num
+-- Five earlier polls: 0.49, 0.51, 0.52, 0.54, 0.54. Average 0.52, Q = 0.0018, Q/n = 0.00036.
+example : ((49 : ℚ) / 100 + 51 / 100 + 52 / 100 + 54 / 100 + 54 / 100) / 5 = 13 / 25 := by norm_num
+example : ((49 : ℚ) / 100 - 52 / 100) ^ 2 + (51 / 100 - 52 / 100) ^ 2 + (52 / 100 - 52 / 100) ^ 2
+    + (54 / 100 - 52 / 100) ^ 2 + (54 / 100 - 52 / 100) ^ 2 = 18 / 10000 := by norm_num
+example : ((18 : ℚ) / 10000) / 5 = 36 / 100000 := by norm_num
+-- The unbiased variance divides by n - 1 instead: 0.0018 / 4 = 0.00045.
+example : ((18 : ℚ) / 10000) / 4 = 45 / 100000 := by norm_num
+
+#print axioms binomial_likelihood_max_at_share
+#print axioms normal_likelihood_max_at_mean_and_Q_over_n
+#print axioms normal_likelihood_no_max_when_Q_zero
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'log_prod_gaussianPDFReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_sq_sub_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'binomial_likelihood_max_at_share' depends on axioms: [propext, Classical.choice, Quot.sound]
+'normal_likelihood_max_at_mean_and_Q_over_n' depends on axioms: [propext, Classical.choice, Quot.sound]
+'normal_likelihood_no_max_when_Q_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -637,7 +879,7 @@ The two outputs agree line for line. The simulated average, 0.520532, sits withi
 ## The usual mistake
 
 > [!warning]
-> **Reading the likelihood as the chance that the parameter is true.** L(p) is the chance of the data if the share were p. It is not the chance that the share is p. Candidate shares have no chances in this method at all: across candidates the likelihood need not even add up to 1. Turning it into a chance for p needs a prior and Bayes' rule, which is where prior and posterior take over ([Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md)).
+> **Reading the likelihood as the chance that the parameter is true.** L(p) is the chance of the data if the share were p. It is not the chance that the share is p. Candidate shares have no chances in this method at all: across candidates the likelihood need not even add up to 1. Turning it into a chance for p needs a prior (a chance for each candidate before the data) and Bayes' rule, which is where prior and posterior (the chance after the data) take over ([Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md)).
 >
 > - **Trusting "slope equals zero".** A zero slope can be a valley or a ledge, and at an edge the peak has no zero slope at all: 0 yeses out of 20 gives slope −20 at the true maximum.
 > - **Calling a density height a chance.** The normal log-likelihood of the five polls is positive, and the collapsed one reaches 35.70. Density heights can exceed 1; only areas under a density are chances.
@@ -649,8 +891,8 @@ The two outputs agree line for line. The simulated average, 0.520532, sits withi
 ## Where you meet it in real life
 
 - **Polls and surveys.** The raw share is a maximum likelihood estimate under simple random sampling, and its textbook margin of error comes from the curvature of that likelihood, or from the model behind [Standard error](02-sample-mean-and-standard-error.md). Published polls then weight the sample to match the population, which adjusts the share and widens the margin.
-- **Medical and credit risk scores.** The chance of a yes that depends on a patient's or borrower's characteristics is fitted by maximum likelihood; there is no closed form, so the peak is found by Newton's method: [Logistic regression](../09-Regression/05-logistic-regression.md).
-- **Machine learning.** The standard training loss for a classifier, cross-entropy, is minus the average log-likelihood; minimising one maximises the other (KL divergence).
+- **Medical and credit risk scores.** The chance of a yes that depends on a patient's or borrower's characteristics is fitted by maximum likelihood; there is no closed form, so the peak is found by Newton's method, which steps toward the peak using the slope and how fast the slope changes: [Logistic regression](../09-Regression/05-logistic-regression.md).
+- **Machine learning.** The standard training loss for a classifier, cross-entropy, is minus the average log-likelihood; minimising one maximises the other ([KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md)).
 - **Market volatility.** Banks fit the day-to-day swings of prices with models whose dials are chosen by maximum likelihood ([GARCH](../12-Time%20Series/06-garch-and-volatility-clustering.md)).
 - **Least squares.** For normal errors, maximising the likelihood is minimising the sum of squared gaps, as Step 5 showed for the centre.
 - **Checking an estimate's precision without a formula.** When no curvature formula is at hand, resampling the data gives a standard error by brute force ([Bootstrap](08-bootstrap.md)).

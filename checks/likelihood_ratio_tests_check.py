@@ -134,3 +134,4 @@ for (a, na, b, nb) in ((90, 200, 70, 200), (45, 100, 25, 100), (45, 100, 42, 100
     w = W_formula(a, b, na, nb)
     print(f"try: {a}/{na} vs {b}/{nb}: W = {w:.4f}, p = {tail1(w):.4f}")
 print("all checks passed")
+print("ALL CHECKS PASS")

@@ -154,4 +154,5 @@ fn main() {
         println!("try: {}/{} vs {}/{}: W = {:.4}, p = {:.4}", a, na, b, nb, v, tail1(v));
     }
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

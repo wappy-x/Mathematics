@@ -10,7 +10,9 @@ A board-game club suspects one of its dice. Someone rolls it 60 times and tallie
 
 A drug trial asks the same kind of question of a different table. On the drug, 45 of 100 patients recovered; on a placebo (a dummy pill), 35 of 100. If recovery has nothing to do with which pill a patient got, both arms should recover at the overall rate, 80 of 200. Is a 10-point gap more than chance?
 
-Karl Pearson's answer, from 1900, is one number for the whole table. For each box, take the gap between the count seen and the count the model expects, square it, and divide by the expected count. Add over the boxes. For the die this gives 10.6; for the trial, 2.08. Each is then compared with what a fair die, or a useless drug, would produce. That comparison needs one more count, the **degrees of freedom**: how many gaps are free to vary. The die has 5, the trial 1. Get that count wrong and the verdict changes.
+Karl Pearson's answer, from 1900, is one number for the whole table. For each box, take the gap between the count seen and the count the model expects, square it, and divide by the expected count. Add over the boxes.
+
+For the die this gives 10.6; for the trial, 2.08. Each is then compared with what a fair die, or a useless drug, would produce. That comparison needs one more count, the **degrees of freedom**: how many gaps are free to vary. The die has 5, the trial 1. Get that count wrong and the verdict changes.
 
 **Square each gap between observed and expected counts, scale it by the expected count, and add: under the model, that sum behaves like a sum of squared bell-curve draws, one for each gap that is free to vary, and its tail beyond the observed value is the p-value.**
 
@@ -34,7 +36,7 @@ Orange bars: the counts seen. Teal line: the 10 per face a fair die expects. Fac
 
 ## The formula
 
-Notation first. The table has $k$ boxes, here the six faces, and $n$ observations spread among them. $O_j$ is the count observed in box j and $p_j$ is the chance the model gives that box. The **expected count** is $E_j = n p_j$: 60 × 1/6 = 10 for every face. The chi-square law with $\nu$ degrees of freedom, written $\chi^2_\nu$, is the law of a sum of $\nu$ squared independent standard normal draws ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)).
+Notation first. The table has $k$ boxes, here the six faces, and $n$ observations spread among them. $O_j$ is the count observed in box j and $p_j$ is the chance the model gives that box. The **expected count** is $E_j = n p_j$: 60 × 1/6 = 10 for every face. The chi-square law with $\nu$ degrees of freedom, written $\chi^2_\nu$, is the law of a sum of $\nu$ squared independent standard normal draws, that is, bell-curve draws with average 0 and standard deviation 1 ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)).
 
 $$Q = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}, \qquad \text{p-value} \approx P\big(\chi^2_{\nu} \ge Q\big), \qquad \nu = k - 1 - s$$
 
@@ -75,7 +77,9 @@ $$E_{ij} = \frac{R_i\, C_j}{n}, \qquad Q = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}
 
 ### Step 0: each gap, measured in its own spread, is roughly a bell-curve draw
 
-The count of sixes in 60 fair rolls follows the binomial law, with average 10 and variance 60 × 1/6 × 5/6 = 8.33. By the central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) the gap between count and average, divided by its standard deviation, is close to a standard normal draw. Squaring and adding such draws gives a chi-square law. Pearson's Q is almost that sum. Two details separate "almost" from "exactly": the divisor is $E_j$ rather than the variance, and the gaps are tied, since the counts must add to 60. The steps below show that these two details offset each other and leave one fewer degree of freedom than there are boxes.
+The count of sixes in 60 fair rolls follows the binomial law, with average 10 and variance 60 × 1/6 × 5/6 = 8.33. By the central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) the gap between count and average, divided by its standard deviation, is close to a standard normal draw. Squaring and adding such draws gives a chi-square law. Pearson's Q is almost that sum.
+
+Two details separate "almost" from "exactly": the divisor is $E_j$ rather than the variance, and the gaps are tied, since the counts must add to 60. The steps below show that these two details offset each other and leave one fewer degree of freedom than there are boxes.
 
 ### Step 1: dividing by the expected count puts every box on one scale
 
@@ -106,7 +110,9 @@ Write each scaled gap as $u_j = (O_j - E_j)/\sqrt{E_j}$, so Q is the squared len
 
 That matrix is a projection: it removes the part of any list pointing along the list of square roots and keeps the rest. Its eigenvalues are 1, repeated k − 1 times, and 0 once, along the list of square roots. The zero is the fixed total: $\sum_j \sqrt{p_j}\, u_j = (\sum_j O_j - n)/\sqrt{n} = 0$ on every outcome.
 
-The central limit theorem, applied to the list of counts as a whole, says that for large n the list of scaled gaps is close to a multivariate normal with this covariance ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)); that vector form is stated here, not proved. The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives a rotation into the projection's own axes. Rotation keeps lengths, so Q is unchanged. In the new axes the normal list has k − 1 independent standard normal coordinates and one coordinate that is always 0. Its squared length is a sum of k − 1 squared standard normals: a chi-square law with k − 1 degrees of freedom.
+The central limit theorem, applied to the list of counts as a whole, says that for large n the list of scaled gaps is close to a multivariate normal with this covariance ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)); that vector form is stated here, not proved.
+
+The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives a rotation into the projection's own axes. Rotation keeps lengths, so Q is unchanged. In the new axes the normal list has k − 1 independent standard normal coordinates and one coordinate that is always 0. Its squared length is a sum of k − 1 squared standard normals: a chi-square law with k − 1 degrees of freedom.
 
 </details>
 
@@ -136,7 +142,11 @@ The trial table, rows for arms and columns for outcomes:
 
 If recovery ignores the pill, both arms share one recovery rate. The best estimate is the pooled rate, 80 of 200 = 0.40. So each arm of 100 expects 40 recovered and 60 not: that is $R_i C_j / n$, row total times the column's share. The estimate is the maximum-likelihood choice, the one under which the observed table is most probable ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 
-Now count the free gaps. The table of gaps, observed minus expected, is `[[5, -5], [-5, 5]]`: every row and every column adds to zero, because the expected counts were built to match the totals. Choose the top-left gap and the other three follow. One free gap, one degree of freedom. In general: rc cells, less 1 for the grand total, less r − 1 for the estimated row shares, less c − 1 for the column shares, leaves (r − 1)(c − 1). When the row totals are fixed by design, as with 100 per arm here, no row shares are estimated: each arm has c − 1 free cells, r(c − 1) in all, less c − 1 for the pooled column shares, which again leaves (r − 1)(c − 1), here 1.
+Now count the free gaps. The table of gaps, observed minus expected, is `[[5, -5], [-5, 5]]`: every row and every column adds to zero, because the expected counts were built to match the totals. Choose the top-left gap and the other three follow. One free gap, one degree of freedom.
+
+In general: rc cells, less 1 for the grand total, less r − 1 for the estimated row shares, less c − 1 for the column shares, leaves (r − 1)(c − 1).
+
+When the row totals are fixed by design, as with 100 per arm here, no row shares are estimated. Each arm has c − 1 free cells, r(c − 1) in all. Take away c − 1 for the pooled column shares, and that again leaves (r − 1)(c − 1), here 1.
 
 The four squared gaps over expected counts are 25/40, 25/60, 25/40 and 25/60, so Q = 2.083333. With 1 degree of freedom the tail is 0.148915.
 
@@ -173,7 +183,9 @@ A second road to the same question avoids squared gaps altogether: the G statist
 | degrees of freedom | (2 − 1)(2 − 1) | 1 |
 | p-value | chi-square tail beyond 2.083333, 1 degree | **0.148915** |
 
-Read back at the club: a fair die rolled 60 times gives unevenness this large or larger in about 6 sessions in 100. That is unusual but not rare; at the conventional 5% cut, 11.0705, the die is not condemned. It is not evidence that the die is fair either, and 0.06 is not the chance the die is fair. Read back in the trial: if the drug did nothing, a 10-point gap or wider would appear in about 15 trials in 100. The trial has not shown an effect; it may simply be too small to see one ([Power](04-power-and-sample-size.md)).
+Read back at the club: a fair die rolled 60 times gives unevenness this large or larger in about 6 sessions in 100. That is unusual but not rare; at the conventional 5% cut, 11.0705, the die is not condemned. It is not evidence that the die is fair either, and 0.06 is not the chance the die is fair.
+
+Read back in the trial: if the drug did nothing, a 10-point gap or wider would appear in about 15 trials in 100. The trial has not shown an effect; it may simply be too small to see one ([Power](04-power-and-sample-size.md)).
 
 ### What breaks if you drop a piece
 
@@ -191,7 +203,9 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-The scripts build every tail themselves. The chi-square tail is reached twice: by the series for the incomplete gamma function (the chi-square law is a gamma law, [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)), and by Simpson's rule on the density. The die's exact p-value comes from a third road with no approximation: every tally of 60 rolls, weighted by its multinomial chance. A fourth road simulates 20,000 sessions of 60 rolls from a SplitMix64 generator with seed 20260928, printed with standard errors. The trial's Q is computed three ways (cells, the shortcut, z squared), its tail three ways, and its exact tail by summing over every pair of binomial counts when both arms recover at 0.40.
+The scripts build every tail themselves. The chi-square tail is reached twice: by the series for the incomplete gamma function (the chi-square law is a gamma law, [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)), and by Simpson's rule on the density (a rule that adds up the area under the curve in thin slices).
+
+The die's exact p-value comes from a third road with no approximation: every tally of 60 rolls, weighted by its multinomial chance. A fourth road simulates 20,000 sessions of 60 rolls from a SplitMix64 generator with seed 20260928, printed with standard errors. The trial's Q is computed three ways (cells, the shortcut, z squared), its tail three ways, and its exact tail by summing over every pair of binomial counts when both arms recover at 0.40.
 
 ### Python
 
@@ -568,6 +582,247 @@ ALL CHECKS PASS
 
 The two outputs match line for line. The simulated chances land within one standard error of the exact ones: 0.0607 against 0.060153, and 0.0491 against 0.0478. The exact tail for the trial, 0.151939, assumes both arms recover at exactly 0.40; the true common rate is unknown, which is why the chi-square figure, 0.148915, is the one reported.
 
+### Lean
+
+Lean proves Q's exact average for any model named in advance, and the 2 × 2 formulas whenever no row or column is empty.
+
+- Take $n \ge 1$ independent observations, each landing in one of k boxes, box j always with chance $p_j > 0$. Then the average of Q is exactly k − 1, for any n.
+- Take a 2 × 2 table with cells a, b over c, d, and no empty row or column. Then $Q = n(ad - bc)^2/(R_1 R_2 C_1 C_2)$.
+- Take the same table and the two-proportion z-score, built from the row rates and the pooled rate. Then z squared equals Q exactly.
+- The worked numbers hold exactly as fractions, including Q for the die and the trial, and the breaks' 21.2 and 0.176667.
+
+The chi-square approximation, the tails and p-values, the exact sums over tallies and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Chi-square tests: under a fully named model for n independent observations in k boxes, Pearson's statistic averages exactly k - 1, and for a 2 × 2 table it equals n(ad - bc)²/(R₁R₂C₁C₂), the square of the two-proportion z-score.
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Independence.Integration
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory
+
+/-- The count of box `j`: how many of the `n` observations landed in box `j`. -/
+def boxCount {Ω : Type*} {n k : ℕ} (X : Fin n → Ω → Fin k) (j : Fin k) (ω : Ω) : ℕ :=
+  (Finset.univ.filter (fun t => X t ω = j)).card
+
+/-- Helper: any real function of the whole vector of observations is integrable. -/
+lemma chi_integrable_of_vec {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] {n k : ℕ} (X : Fin n → Ω → Fin k) (hmeas : ∀ t, Measurable (X t))
+    (g : (Fin n → Fin k) → ℝ) : Integrable (fun ω => g (fun t => X t ω)) P := by
+  have hY : Measurable (fun ω => fun t => X t ω) := Measurable.of_eval hmeas
+  exact (Integrable.of_finite (μ := P.map (fun ω => fun t => X t ω)) (f := g)).comp_measurable hY
+
+#print axioms chi_integrable_of_vec
+
+/-- The exact average of Pearson's statistic. Take `n ≥ 1` independent observations
+`X 0, ..., X (n-1)`, each landing in exactly one of `k` boxes fixed in advance, each with the
+same chance `p j > 0` of landing in box `j` (the model, named before the data). With expected
+count `E_j = n p_j`, Pearson's statistic is `Q = Σ_j (O_j - E_j)² / E_j`. Its average is exactly
+`k - 1`, for any number of observations: the same average as a chi-square law with `k - 1`
+degrees of freedom. -/
+theorem pearson_statistic_mean_eq_boxes_sub_one {Ω : Type*} [MeasurableSpace Ω]
+    (P : Measure Ω) [IsProbabilityMeasure P] {n k : ℕ} (hn : 0 < n)
+    (X : Fin n → Ω → Fin k) (p : Fin k → ℝ)
+    (hmeas : ∀ t, Measurable (X t)) (hindep : iIndepFun X P)
+    (hsame : ∀ t j, P.real (X t ⁻¹' {j}) = p j) (hpos : ∀ j, 0 < p j) :
+    ∫ ω, (∑ j, ((boxCount X j ω : ℝ) - n * p j) ^ 2 / (n * p j)) ∂P = (k : ℝ) - 1 := by
+  classical
+  have hInt := chi_integrable_of_vec P X hmeas
+  set ind : Fin n → Fin k → Ω → ℝ := fun t j ω => if X t ω = j then 1 else 0 with hind
+  have hIndInt : ∀ t j, Integrable (ind t j) P := fun t j =>
+    hInt (fun v => if v t = j then 1 else 0)
+  have h1 : ∀ t j, ∫ ω, ind t j ω ∂P = p j := by
+    intro t j
+    have : (fun ω => ind t j ω) = (X t ⁻¹' {j}).indicator 1 := by
+      ext ω; simp [ind, Set.indicator_apply]
+    rw [this, integral_indicator_one ((hmeas t) (measurableSet_singleton j)), hsame]
+  have hsum : ∑ j, p j = 1 := by
+    let t : Fin n := ⟨0, hn⟩
+    simp_rw [← h1 t]
+    rw [← integral_finsetSum _ (fun j _ => hIndInt t j)]
+    have : (fun ω => ∑ j, ind t j ω) = fun _ => (1 : ℝ) := by
+      ext ω; simp [ind]
+    rw [this]; simp
+  have hcen : ∀ t j, ∫ ω, (ind t j ω - p j) ∂P = 0 := by
+    intro t j
+    rw [integral_sub (hIndInt t j) (integrable_const _), h1]; simp
+  have hcov : ∀ j t s, ∫ ω, (ind t j ω - p j) * (ind s j ω - p j) ∂P
+      = if t = s then p j - p j ^ 2 else 0 := by
+    intro j t s
+    by_cases hts : t = s
+    · subst hts
+      have : (fun ω => (ind t j ω - p j) * (ind t j ω - p j))
+          = fun ω => (1 - 2 * p j) * ind t j ω + p j ^ 2 := by
+        ext ω; simp only [ind]; split_ifs <;> ring
+      rw [this, integral_add ((hIndInt t j).const_mul _) (integrable_const _),
+        integral_const_mul, h1]
+      simp; ring
+    · simp only [hts, ↓reduceIte]
+      have hφ : Measurable (fun x : Fin k => (if x = j then (1 : ℝ) else 0) - p j) :=
+        measurable_of_finite _
+      have hI := (hindep.indepFun hts).comp hφ hφ
+      have := hI.integral_fun_mul_eq_mul_integral
+        ((hInt (fun v => (if v t = j then (1 : ℝ) else 0) - p j)).aestronglyMeasurable)
+        ((hInt (fun v => (if v s = j then (1 : ℝ) else 0) - p j)).aestronglyMeasurable)
+      simp only [Function.comp_apply] at this
+      rw [this]
+      have h0 := hcen t j
+      simp only [ind] at h0
+      simp [h0]
+  have hO : ∀ j ω, ((boxCount X j ω : ℝ) - n * p j) = ∑ t, (ind t j ω - p j) := by
+    intro j ω
+    simp [boxCount, ind, Finset.sum_sub_distrib, Finset.sum_boole]
+  have hj : ∀ j, Integrable (fun ω => ((boxCount X j ω : ℝ) - n * p j) ^ 2 / (n * p j)) P :=
+    fun j => hInt (fun v =>
+    (((Finset.univ.filter (fun t => v t = j)).card : ℝ) - n * p j) ^ 2 / (n * p j))
+  rw [integral_finsetSum (f := fun j ω => ((boxCount X j ω : ℝ) - n * p j) ^ 2 / (n * p j))
+    _ (fun j _ => hj j)]
+  have hterm : ∀ j, ∫ ω, ((boxCount X j ω : ℝ) - n * p j) ^ 2 / (n * p j) ∂P = 1 - p j := by
+    intro j
+    have hfun : (fun ω => ((boxCount X j ω : ℝ) - n * p j) ^ 2 / (n * p j))
+        = fun ω => (∑ t, ∑ s, (ind t j ω - p j) * (ind s j ω - p j)) / (n * p j) := by
+      ext ω; rw [hO, sq, Finset.sum_mul_sum]
+    have hprod : ∀ t s, Integrable (fun ω => (ind t j ω - p j) * (ind s j ω - p j)) P :=
+      fun t s => hInt (fun v => ((if v t = j then (1 : ℝ) else 0) - p j)
+        * ((if v s = j then (1 : ℝ) else 0) - p j))
+    rw [hfun, integral_div, integral_finsetSum _ (fun t _ => integrable_finsetSum _
+      (fun s _ => hprod t s))]
+    rw [Finset.sum_congr rfl (fun t _ => integral_finsetSum _ (fun s _ => hprod t s))]
+    simp_rw [hcov, Finset.sum_ite_eq, Finset.mem_univ, ite_true, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    have hp := hpos j
+    have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+    field_simp
+  rw [Finset.sum_congr rfl (fun j _ => hterm j), Finset.sum_sub_distrib, hsum]
+  simp
+
+/-- The 2 × 2 shortcut. For a table with cells `a, b` in the first row and `c, d` in the second,
+row totals `R₁ = a + b`, `R₂ = c + d`, column totals `C₁ = a + c`, `C₂ = b + d` and grand total
+`n`, all totals positive, Pearson's statistic with expected counts `E_ij = R_i C_j / n` equals
+`n (ad - bc)² / (R₁ R₂ C₁ C₂)`. -/
+theorem pearson_two_by_two_shortcut (a b c d : ℕ)
+    (hR₁ : 0 < a + b) (hR₂ : 0 < c + d) (hC₁ : 0 < a + c) (hC₂ : 0 < b + d) :
+    let n : ℝ := a + b + c + d
+    let R₁ : ℝ := a + b
+    let R₂ : ℝ := c + d
+    let C₁ : ℝ := a + c
+    let C₂ : ℝ := b + d
+    ((a : ℝ) - R₁ * C₁ / n) ^ 2 / (R₁ * C₁ / n) + ((b : ℝ) - R₁ * C₂ / n) ^ 2 / (R₁ * C₂ / n)
+      + ((c : ℝ) - R₂ * C₁ / n) ^ 2 / (R₂ * C₁ / n) + ((d : ℝ) - R₂ * C₂ / n) ^ 2 / (R₂ * C₂ / n)
+      = n * ((a : ℝ) * d - b * c) ^ 2 / (R₁ * R₂ * C₁ * C₂) := by
+  intro n R₁ R₂ C₁ C₂
+  have h1 : (0 : ℝ) < R₁ := by simp only [R₁]; exact_mod_cast hR₁
+  have h2 : (0 : ℝ) < R₂ := by simp only [R₂]; exact_mod_cast hR₂
+  have h3 : (0 : ℝ) < C₁ := by simp only [C₁]; exact_mod_cast hC₁
+  have h4 : (0 : ℝ) < C₂ := by simp only [C₂]; exact_mod_cast hC₂
+  have hn : (0 : ℝ) < n := by simp only [n]; positivity
+  simp only [n, R₁, R₂, C₁, C₂] at *
+  field_simp
+  ring
+
+/-- The 2 × 2 test is the two-proportion z-test, squared. In the same table, with all totals
+positive, the first row's rate `a / R₁`, the second row's rate `c / R₂` and the pooled rate
+`π = C₁ / n`, the z-score `z = (a/R₁ - c/R₂) / √(π (1 - π) (1/R₁ + 1/R₂))` satisfies
+`z² = Q`, Pearson's statistic for the table. -/
+theorem pearson_two_by_two_eq_z_sq (a b c d : ℕ)
+    (hR₁ : 0 < a + b) (hR₂ : 0 < c + d) (hC₁ : 0 < a + c) (hC₂ : 0 < b + d) :
+    let n : ℝ := a + b + c + d
+    let R₁ : ℝ := a + b
+    let R₂ : ℝ := c + d
+    let C₁ : ℝ := a + c
+    let C₂ : ℝ := b + d
+    let π : ℝ := C₁ / n
+    let z : ℝ := ((a : ℝ) / R₁ - c / R₂) / Real.sqrt (π * (1 - π) * (1 / R₁ + 1 / R₂))
+    z ^ 2 = ((a : ℝ) - R₁ * C₁ / n) ^ 2 / (R₁ * C₁ / n) + ((b : ℝ) - R₁ * C₂ / n) ^ 2 / (R₁ * C₂ / n)
+      + ((c : ℝ) - R₂ * C₁ / n) ^ 2 / (R₂ * C₁ / n) + ((d : ℝ) - R₂ * C₂ / n) ^ 2 / (R₂ * C₂ / n) := by
+  intro n R₁ R₂ C₁ C₂ π z
+  have h1 : (0 : ℝ) < R₁ := by simp only [R₁]; exact_mod_cast hR₁
+  have h2 : (0 : ℝ) < R₂ := by simp only [R₂]; exact_mod_cast hR₂
+  have h3 : (0 : ℝ) < C₁ := by simp only [C₁]; exact_mod_cast hC₁
+  have h4 : (0 : ℝ) < C₂ := by simp only [C₂]; exact_mod_cast hC₂
+  have hn : (0 : ℝ) < n := by simp only [n]; positivity
+  have hπ : 1 - π = C₂ / n := by
+    rw [eq_div_iff hn.ne', sub_mul, one_mul]
+    simp only [π]
+    rw [div_mul_cancel₀ _ hn.ne']
+    simp only [n, C₁, C₂]; ring
+  have hpos : 0 ≤ π * (1 - π) * (1 / R₁ + 1 / R₂) := by
+    rw [hπ]; simp only [π]; positivity
+  have hz : z ^ 2 = ((a : ℝ) / R₁ - c / R₂) ^ 2 / (π * (1 - π) * (1 / R₁ + 1 / R₂)) := by
+    simp only [z]; rw [div_pow, Real.sq_sqrt hpos]
+  rw [hz, hπ]
+  simp only [π, n, R₁, R₂, C₁, C₂] at *
+  field_simp
+  ring
+
+/-! The card's worked numbers, as exact fractions. -/
+
+-- Dice: 60 rolls, expected 60 × 1/6 = 10 per face.
+example : (60 : ℚ) * (1 / 6) = 10 := by norm_num
+-- Gaps 5 − 10, ..., 18 − 10 are −5, −3, −2, 0, 2, 8.
+example : ([5, 7, 8, 10, 12, 18] : List ℤ).map (· - 10) = [-5, -3, -2, 0, 2, 8] := by decide
+-- Squared gaps over 10: 2.5, 0.9, 0.4, 0, 0.4, 6.4.
+example : ([5, 7, 8, 10, 12, 18] : List ℚ).map (fun o => (o - 10) ^ 2 / 10)
+    = [5 / 2, 9 / 10, 2 / 5, 0, 2 / 5, 32 / 5] := by norm_num
+-- Q for the dice is 10.6 = 53/5; faces 1 and 6 give 2.5 + 6.4 of it.
+example : List.sum (([5, 7, 8, 10, 12, 18] : List ℚ).map (fun o => (o - 10) ^ 2 / 10)) = 53 / 5 := by
+  norm_num
+-- Degrees of freedom: 6 boxes less 1 for the total.
+example : 6 - 1 = 5 := by decide
+-- The exact average of Q for the die: Σ (1 − 1/6) over six faces = 5.
+example : (6 : ℚ) * (1 - 1 / 6) = 5 := by norm_num
+-- The variance the card reports, 2 × 5 × 59/60 = 59/6 (9.833333...).
+example : (2 : ℚ) * 5 * 59 / 60 = 59 / 6 := by norm_num
+-- One roll: expected 1/6 per face, and Q is 5 on every outcome.
+example : (1 - 1 / 6 : ℚ) ^ 2 / (1 / 6) + 5 * ((0 - 1 / 6) ^ 2 / (1 / 6)) = 5 := by norm_num
+-- Every roll written down twice: Q doubles to 21.2 = 106/5.
+example : List.sum (([10, 14, 16, 20, 24, 36] : List ℚ).map (fun o => (o - 20) ^ 2 / 20)) = 106 / 5 := by
+  norm_num
+-- Proportions fed in instead of counts: Q shrinks to 53/300 (0.176667).
+example : List.sum (([5, 7, 8, 10, 12, 18] : List ℚ).map (fun o => (o / 60 - 1 / 6) ^ 2 / (1 / 6)))
+    = 53 / 300 := by norm_num
+-- A worse die, 3, 7, 8, 10, 12, 20: Q rises to 16.6 = 83/5.
+example : List.sum (([3, 7, 8, 10, 12, 20] : List ℚ).map (fun o => (o - 10) ^ 2 / 10)) = 83 / 5 := by
+  norm_num
+
+-- Trial: pooled recovery rate 80/200 = 2/5; each arm of 100 expects 40 and 60.
+example : (80 : ℚ) / 200 = 2 / 5 := by norm_num
+example : (100 : ℚ) * 80 / 200 = 40 ∧ (100 : ℚ) * 120 / 200 = 60 := by norm_num
+-- Gaps, observed minus expected: [[5, −5], [−5, 5]].
+example : (45 - 40 : ℤ) = 5 ∧ (55 - 60 : ℤ) = -5 ∧ (35 - 40 : ℤ) = -5 ∧ (65 - 60 : ℤ) = 5 := by
+  decide
+-- Q for the trial: 25/40 + 25/60 + 25/40 + 25/60 = 25/12 (2.083333).
+example : (25 : ℚ) / 40 + 25 / 60 + 25 / 40 + 25 / 60 = 25 / 12 := by norm_num
+-- The shortcut: ad − bc = 45 × 65 − 55 × 35 = 1,000.
+example : (45 * 65 - 55 * 35 : ℤ) = 1000 := by decide
+-- 200 × 1,000,000 / (100 × 100 × 80 × 120) = 200,000,000 / 96,000,000 = 25/12.
+example : (100 * 100 * 80 * 120 : ℕ) = 96000000 := by decide
+example : (200 : ℚ) * 1000 ^ 2 / (100 * 100 * 80 * 120) = 25 / 12 := by norm_num
+-- Reciprocals of the expected counts: n (1/R₁ + 1/R₂)(1/C₁ + 1/C₂) = n³/(R₁ R₂ C₁ C₂).
+example : (200 : ℚ) * (1 / 100 + 1 / 100) * (1 / 80 + 1 / 120)
+    = 200 ^ 3 / (100 * 100 * 80 * 120) := by norm_num
+-- Two-proportion z squared: (0.45 − 0.35)² / (0.4 × 0.6 × (1/100 + 1/100)) = 25/12.
+example : ((45 : ℚ) / 100 - 35 / 100) ^ 2 / (2 / 5 * (1 - 2 / 5) * (1 / 100 + 1 / 100))
+    = 25 / 12 := by norm_num
+-- Degrees of freedom: (2 − 1)(2 − 1) = 1, and 4 cells − 1 − (2 − 1) − (2 − 1) = 1, not 3.
+example : (2 - 1) * (2 - 1) = 1 ∧ 4 - 1 - (2 - 1) - (2 - 1) = 1 := by decide
+
+#print axioms pearson_statistic_mean_eq_boxes_sub_one
+#print axioms pearson_two_by_two_shortcut
+#print axioms pearson_two_by_two_eq_z_sq
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'chi_integrable_of_vec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pearson_statistic_mean_eq_boxes_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pearson_two_by_two_shortcut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pearson_two_by_two_eq_z_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -593,7 +848,7 @@ The two outputs match line for line. The simulated chances land within one stand
 
 - **Dice, lotteries and slot machines.** Gaming regulators test the fairness of physical and electronic games by counting outcomes against their stated chances.
 - **Clinical trials and A/B tests.** A table of outcome by group, recovered or not, clicked or not, is tested for independence exactly as the trial here; the design side is on [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md).
-- **Genetics.** Mendel's ratios, and the Hardy–Weinberg check that gene frequencies match random mating, are goodness-of-fit tests; Hardy–Weinberg estimates an allele frequency and pays one degree of freedom for it.
+- **Genetics.** Mendel's ratios, and the Hardy–Weinberg check that gene frequencies match random mating, are goodness-of-fit tests; Hardy–Weinberg estimates an allele frequency (the share of one gene variant in the population) and pays one degree of freedom for it.
 - **Surveys.** Whether voting intention depends on age group is a test of independence in a table with several rows and columns.
 
 > **Say it back**

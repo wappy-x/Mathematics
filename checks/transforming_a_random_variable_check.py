@@ -132,3 +132,4 @@ assert abs(q4 - (1 - F_Y(4))) < 4 * se4 and abs(m_sim - SIGMA ** 2) < 4 * se_m
 assert abs(med_sim - median) < 4 * se_med and worst < 4
 assert abs(clip0 - 0.5) < 4 * sqrt(0.25 / N)
 assert abs(pit - 0.3) < 4 * sqrt(0.3 * 0.7 / N)
+print("ALL CHECKS PASS")

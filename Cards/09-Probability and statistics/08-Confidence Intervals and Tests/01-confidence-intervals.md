@@ -16,7 +16,7 @@ A recipe with such a promise is a **confidence interval**, the term used from he
 
 **Measure how far an average misses the truth in units of the average's own wobble; that miss has a known law whatever the truth is, so "the average is within 2.26 wobbles of the truth" flips into "the truth is within 2.26 wobbles of the average", and the flip keeps its 95 percent.**
 
-**What kind of fact this is:** a method. Its promise, that the recipe covers the true mean 95 times in 100 when the readings are independent and normal, is a theorem proved on this card in Why it works, using the t law from [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
+**What kind of fact this is:** a method. Its promise, that the recipe covers the true mean 95 times in 100 when the readings are independent and normal, is a theorem proved on this card in Why it works, using the t law, the law of the average's miss when the spread is estimated, from [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
 
 ### The picture: twenty wards, twenty intervals
 
@@ -30,7 +30,7 @@ Each row is one simulated ward's interval. The vertical line is the true mean, 1
 
 ## The formula
 
-Notation first, in words. Write $n$ for the number of patients and $x_i$ for the i-th recovery time. A bar means an average: $\bar x$ is the average of the ten. The true mean of every possible patient is $\mu$ (mu). The spread of single recovery times, their standard deviation, is $\sigma$ (sigma) when it is known, and $s$ when it is estimated from the sample. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): Φ is the standard bell's area to the left of a point, and $\Phi^{-1}$ undoes it.
+Notation first, in words. Write $n$ for the number of patients and $x_i$ for the i-th recovery time. A bar means an average: $\bar x$ is the average of the ten. The true mean of every possible patient is $\mu$ (mu). The spread of single recovery times, their standard deviation, is $\sigma$ (sigma) when it is known, and $s$ when it is estimated from the sample. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): Φ is the standard bell's area to the left of a point, where the standard bell is the normal law with mean 0 and spread 1, and $\Phi^{-1}$ undoes it.
 
 The estimated spread divides by $n - 1$, not $n$:
 
@@ -73,7 +73,7 @@ $$P\!\left(\bar X - t^*_{n-1}\frac{S}{\sqrt n} \;\le\; \mu \;\le\; \bar X + t^*_
 ### When it holds
 
 - **Independent patients.** Each recovery must carry its own information. Ten patients of one surgeon on one bad week are closer to one reading than to ten: the true wobble of the average is larger than $s/\sqrt n$ says, and the interval is too narrow.
-- **Normal recovery times, or many patients.** The exact 95 needs readings from a normal law. Recovery times skew long; if they follow an exponential law with mean 12 days, the t interval on ten patients covers about 90 percent of the time (simulated 0.9042 ± 0.0021), not 95. With many patients the central limit theorem pulls the coverage back toward 95.
+- **Normal recovery times, or many patients.** The exact 95 needs readings from a normal law. Recovery times skew long; if they follow an exponential law with mean 12 days, the t interval on ten patients covers about 90 percent of the time (simulated 0.9042 ± 0.0021), not 95. With many patients the central limit theorem pulls the coverage back toward 95: an average of many independent readings is close to normal, whatever their law ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)).
 - **The right cutoff for the spread in hand.** 1.96 belongs with a known $\sigma$; with an estimated $s$ at ten patients it covers 91.84 percent.
 - **Everything fixed in advance.** The number of patients and the level are chosen before looking. Adding patients until the interval looks good, or picking the level afterwards, voids the promise.
 - **The target is the mean.** The interval locates the average patient, not the next one. Only 6 of the 10 patients' own recovery times lie inside it.
@@ -123,7 +123,7 @@ Keeping 1.96 with the estimated $s$ gives 12.4 ± 1.8058: narrower, and wrong. I
 <details>
 <summary>Detailed proof: the t interval covers with chance exactly 0.95</summary>
 
-Take independent readings $X_1, \dots, X_n$ from one normal law with mean μ and spread σ > 0, with n at least 2. The chi-square-t-and-f card proves three facts: $\bar X$ is normal with mean μ and spread $\sigma/\sqrt n$; $(n-1)S^2/\sigma^2$ follows the chi-square law with n − 1 degrees of freedom; and the two are independent. From these it proves that $T = (\bar X - \mu)/(S/\sqrt n)$ follows the t law with n − 1 degrees of freedom, a law whose formula contains neither μ nor σ.
+Take independent readings $X_1, \dots, X_n$ from one normal law with mean μ and spread σ > 0, with n at least 2. [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md) proves three facts: $\bar X$ is normal with mean μ and spread $\sigma/\sqrt n$; $(n-1)S^2/\sigma^2$ follows the chi-square law with n − 1 degrees of freedom, the law of a sum of n − 1 squared standard bell readings; and the two are independent. From these it proves that $T = (\bar X - \mu)/(S/\sqrt n)$ follows the t law with n − 1 degrees of freedom, a law whose formula contains neither μ nor σ.
 
 $S$ is positive with chance 1, since n ≥ 2 readings from a continuous law are all equal with chance 0. On that event, and because $S/\sqrt n > 0$,
 
@@ -194,7 +194,7 @@ The line is the coverage of the recipe that keeps 1.96 but estimates the spread,
 
 ## Code, from first principles, and it actually runs
 
-The code computes the ten patients' interval and checks it by three roads. Road 1 finds the t cutoff by integrating the t density with Simpson's rule, a weighted sum of heights at evenly spaced points. Road 2 finds it from the closed form of the t area in terms of an angle, with no integration. Both use the same bisection root finder, which halves a bracket until it pins the point where the area reaches 0.975. Road 3 simulates 20,000 wards with a SplitMix64 generator (a short, fixed recipe for random bits, seed 20260928) and Box-Muller normals (two uniform draws turned into two bell-shaped ones), and counts how often each recipe traps the true mean. The bell's area Φ comes from its own Taylor series and is checked by Simpson's rule. Asserts compare the two t roads, the series against the integral, and the simulated coverages against the exact ones within four standard errors.
+The code computes the ten patients' interval and checks it by three roads. Road 1 finds the t cutoff by integrating the t density with Simpson's rule, a weighted sum of heights at evenly spaced points. Road 2 finds it from the closed form of the t area in terms of an angle, with no integration. Both use the same bisection root finder, which halves a bracket until it pins the point where the area reaches 0.975. Road 3 simulates 20,000 wards with a SplitMix64 generator (a short, fixed recipe for random bits, seed 20260928) and Box-Muller normals (two uniform draws turned into two bell-shaped ones), and counts how often each recipe traps the true mean. The bell's area Φ comes from its own Taylor series, a sum of ever-higher powers of z, and is checked by Simpson's rule. Asserts compare the two t roads, the series against the integral, and the simulated coverages against the exact ones within four standard errors.
 
 ### Python
 
@@ -580,6 +580,189 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulation included: both languages draw the same random bits from the same generator.
 
+### Lean
+
+Lean proves the z interval's 0.95 promise for any number of patients, plus the flip and the card's hand arithmetic.
+
+- Take independent patients whose recovery times follow one normal law, with known spread $\sigma$. Then the z interval contains the true mean with chance exactly 0.95, whatever $\mu$ and $\sigma$ are.
+- Suppose the estimated spread $s$ is positive. Then the pivot $T$ lands between $-t^*$ and $t^*$ exactly when the t interval contains $\mu$.
+- For any number of patients, the distances of their recovery times from their average add to zero.
+- The hand arithmetic holds exactly: the total 124 days, the squared distances 76.4 and the one-pass check 764. So do the 6 of 10 patients inside the t interval and the 35 patients for ±1 day.
+
+The t interval's 0.95 chance, the cutoffs 1.959964 and 2.262157, and the 20,000-ward simulation are left to the Python and Rust checks.
+
+```lean
+-- Confidence intervals: for independent normal readings with known spread, the z interval contains the true mean with chance exactly 0.95, the t interval's coverage event is the same event as its pivot landing within the cutoff, and the card's worked whole-number checks hold.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Independence.CharacteristicFunction
+import Mathlib.Probability.HasLaw
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open MeasureTheory ProbabilityTheory Set
+open scoped NNReal
+
+theorem sum_iid_gaussian_law
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (n : ℕ) (X : Fin n → Ω → ℝ) (μ : ℝ) (v : ℝ≥0)
+    (hind : iIndepFun X P) (hlaw : ∀ i, HasLaw (X i) (gaussianReal μ v) P) :
+    HasLaw (fun ω ↦ ∑ i, X i ω) (gaussianReal (n * μ) (n * v)) P := by
+  have hm : AEMeasurable (fun ω ↦ ∑ i, X i ω) P :=
+    Finset.aemeasurable_fun_sum _ (fun i _ ↦ (hlaw i).aemeasurable)
+  refine ⟨hm, ?_⟩
+  apply Measure.ext_of_charFun
+  ext t
+  rw [hind.charFun_map_fun_sum_eq_prod (fun i ↦ (hlaw i).aemeasurable)]
+  simp only [(hlaw _).map_eq, charFun_gaussianReal, Finset.prod_const, Finset.card_univ,
+    Fintype.card_fin, Pi.pow_apply]
+  rw [← Complex.exp_nat_mul]
+  congr 1
+  push_cast
+  ring
+
+#print axioms sum_iid_gaussian_law
+
+theorem std_gaussian_Icc (c : ℝ) (hc : (gaussianReal 0 1).real (Iic c) = 0.975) :
+    (gaussianReal 0 1).real (Icc (-c) c) = 0.95 := by
+  set γ := gaussianReal 0 1
+  have hsymm : γ.real (Iio (-c)) = 0.025 := by
+    have h1 : γ.map (fun x ↦ -x) = γ := by
+      simpa using (gaussianReal_map_neg (μ := (0:ℝ)) (v := 1))
+    have h2 : γ.real (Iio (-c)) = γ.real (Ioi c) := by
+      conv_lhs => rw [← h1]
+      rw [map_measureReal_apply (by fun_prop) measurableSet_Iio]
+      congr 1
+      ext x; simp
+    rw [h2, ← compl_Iic, measureReal_compl measurableSet_Iic, probReal_univ, hc]
+    norm_num
+  have hc0 : 0 ≤ c := by
+    by_contra h
+    push Not at h
+    have : γ.real (Iic c) ≤ γ.real (Iio (-c)) :=
+      measureReal_mono (fun x hx ↦ by simp at hx ⊢; linarith)
+    rw [hc, hsymm] at this
+    norm_num at this
+  have hIcc : Icc (-c) c = Iic c \ Iio (-c) := by
+    ext x; simp [and_comm]
+  rw [hIcc, measureReal_sdiff (fun x hx ↦ by simp at hx ⊢; linarith) measurableSet_Iio, hc,
+    hsymm]
+  norm_num
+
+#print axioms std_gaussian_Icc
+
+/-- The z interval's promise: take `n ≥ 1` independent readings, each normal with true mean `μ`
+and known spread `σ > 0`. Let `c` be the standard bell's 0.975 point, `Φ(c) = 0.975`.
+Then, before the readings arrive, the chance that the interval
+`average ± c · σ / √n` contains the true mean `μ` is exactly 0.95, whatever `μ` and `σ` are. -/
+theorem z_interval_covers_true_mean_95_percent
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (n : ℕ) (hn : 0 < n) (X : Fin n → Ω → ℝ) (μ : ℝ) (σ : ℝ≥0) (hσ : 0 < σ)
+    (hind : iIndepFun X P) (hlaw : ∀ i, HasLaw (X i) (gaussianReal μ (σ ^ 2)) P)
+    (c : ℝ) (hc : (gaussianReal 0 1).real (Iic c) = 0.975) :
+    P.real {ω | (∑ i, X i ω) / n - c * σ / Real.sqrt n ≤ μ ∧
+                μ ≤ (∑ i, X i ω) / n + c * σ / Real.sqrt n} = 0.95 := by
+  have hS := sum_iid_gaussian_law P n X μ (σ ^ 2) hind hlaw
+  set r := Real.sqrt n with hr
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
+  have hrpos : 0 < r := Real.sqrt_pos.mpr hnpos
+  have hrr : r ^ 2 = n := Real.sq_sqrt hnpos.le
+  have hσr : (0 : ℝ) < σ := by exact_mod_cast hσ
+  have hZ := gaussianReal_div_const (gaussianReal_sub_const hS (n * μ)) ((σ : ℝ) * r)
+  have hZ' : HasLaw (fun ω ↦ ((∑ i, X i ω) - n * μ) / (σ * r)) (gaussianReal 0 1) P := by
+    convert hZ using 2
+    · simp
+    · apply NNReal.eq
+      simp only [NNReal.coe_div, NNReal.coe_mul, NNReal.coe_natCast, NNReal.coe_pow,
+        NNReal.coe_mk, NNReal.coe_one]
+      rw [mul_pow, hrr]
+      field_simp
+  have hset : {ω | (∑ i, X i ω) / n - c * σ / r ≤ μ ∧ μ ≤ (∑ i, X i ω) / n + c * σ / r} =
+      {ω | (fun x ↦ -c ≤ x ∧ x ≤ c) (((∑ i, X i ω) - n * μ) / (σ * r))} := by
+    ext ω
+    simp only [mem_ofPred_eq]
+    set S := ∑ i, X i ω
+    set Z := (S - n * μ) / (σ * r)
+    have k_pos : 0 < (σ : ℝ) / r := div_pos hσr hrpos
+    have hid : S / n = μ + (σ / r) * Z := by
+      simp only [Z]
+      rw [← hrr]
+      field_simp
+      ring
+    have hcs : c * σ / r = (σ / r) * c := by ring
+    rw [hid, hcs]
+    constructor
+    · rintro ⟨h1, h2⟩
+      constructor <;> nlinarith
+    · rintro ⟨h1, h2⟩
+      constructor <;> nlinarith
+  rw [hset, hZ'.measureReal_eq (p := fun x ↦ -c ≤ x ∧ x ≤ c)
+    (measurableSet_le measurable_const measurable_id |>.inter
+      (measurableSet_le measurable_id measurable_const))]
+  exact std_gaussian_Icc c hc
+
+/-- The flip behind every interval on the card: when the estimated spread `s` is positive,
+"the average is within `t` standard errors `s / √n` of `μ`", written as the pivot
+`-t ≤ (x̄ - μ) / (s / √n) ≤ t`, is the same statement as
+"`μ` lies between `x̄ - t · s / √n` and `x̄ + t · s / √n`". -/
+theorem pivot_event_iff_interval_contains_mean
+    (n : ℕ) (hn : 0 < n) (xbar μ s t : ℝ) (hs : 0 < s) :
+    (-t ≤ (xbar - μ) / (s / Real.sqrt n) ∧ (xbar - μ) / (s / Real.sqrt n) ≤ t) ↔
+      (xbar - t * s / Real.sqrt n ≤ μ ∧ μ ≤ xbar + t * s / Real.sqrt n) := by
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
+  have hk : 0 < s / Real.sqrt n := div_pos hs (Real.sqrt_pos.mpr hnpos)
+  have he : t * s / Real.sqrt n = t * (s / Real.sqrt n) := by ring
+  rw [le_div_iff₀ hk, div_le_iff₀ hk, he]
+  constructor
+  · rintro ⟨h1, h2⟩; constructor <;> linarith
+  · rintro ⟨h1, h2⟩; constructor <;> linarith
+
+/-- The distances of the readings from their average always add to zero,
+so only `n - 1` of them are free: the degrees of freedom. -/
+theorem deviations_from_average_sum_to_zero
+    (n : ℕ) (hn : 0 < n) (x : Fin n → ℝ) :
+    ∑ i, (x i - (∑ j, x j) / n) = 0 := by
+  have hnpos : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  field_simp
+  ring
+
+/-! The card's worked numbers: ten recovery times 12, 9, 15, 7, 14, 13, 17, 11, 12, 14 days. -/
+
+-- The total of the ten is 124 days.
+example : ([12, 9, 15, 7, 14, 13, 17, 11, 12, 14] : List ℕ).sum = 124 := by decide
+
+-- The squared distances from the average 124/10 = 12.4 add up to 76.4 = 382/5.
+example : (([12, 9, 15, 7, 14, 13, 17, 11, 12, 14] : List ℚ).map
+    (fun x => (x - 124 / 10) ^ 2)).sum = 382 / 5 := by norm_num
+
+-- One-pass check: n · Σx² − (Σx)² = 10 · 1614 − 124² = 764.
+example : (10 : ℤ) * (([12, 9, 15, 7, 14, 13, 17, 11, 12, 14] : List ℤ).map (· ^ 2)).sum
+    - (([12, 9, 15, 7, 14, 13, 17, 11, 12, 14] : List ℤ).sum) ^ 2 = 764 := by decide
+
+-- Only 6 of the 10 patients' own times lie inside the t interval 10.3158 to 14.4842 days.
+-- (Bounds scaled by 10000 to stay in whole numbers.)
+example : (([12, 9, 15, 7, 14, 13, 17, 11, 12, 14] : List ℕ).filter
+    (fun x => decide (103158 ≤ 10000 * x ∧ 10000 * x ≤ 144842))).length = 6 := by decide
+
+-- Planning: ±1 day with σ = 3 needs n ≥ (1.959964 · 3 / 1)² = 34.57..., so 35 patients.
+example : 34 * 10 ^ 12 < (1959964 * 3 : ℕ) ^ 2 ∧ (1959964 * 3 : ℕ) ^ 2 ≤ 35 * 10 ^ 12 := by
+  norm_num
+
+#print axioms z_interval_covers_true_mean_95_percent
+#print axioms pivot_event_iff_interval_contains_mean
+#print axioms deviations_from_average_sum_to_zero
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sum_iid_gaussian_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'std_gaussian_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'z_interval_covers_true_mean_95_percent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pivot_event_iff_interval_contains_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'deviations_from_average_sum_to_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -627,6 +810,8 @@ The two outputs match line for line, simulation included: both languages draw th
 - [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the same pivot read as a test of one candidate mean.
 - [Regression error bars](../09-Regression/02-regression-inference.md): t intervals for the slope of a fitted line.
 - [Credible intervals and decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md): an interval that does carry a probability for the mean, bought with a prior.
+
+The question this card leaves open: how to build an interval that keeps its 95 on a few skewed readings, where the t recipe on ten exponential recovery times covers only about 90 percent.
 
 ---
 
