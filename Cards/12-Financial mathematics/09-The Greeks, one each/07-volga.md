@@ -8,9 +8,11 @@
 
 Acme shares trade at $100. A one-year call option on Acme with a $100 strike costs $9.23 when the market prices Acme's volatility (how widely its price swings in a year) at 20 percent. The option's vega is 37.90: each full unit of volatility, 1.00 or 100 percentage points, is worth $37.90 to the price, so one vol point is worth about 38 cents ([Vega](03-vega.md)).
 
-Vega is a slope, and slopes change. Push volatility from 20 to 21 percent and vega itself drifts, from 37.90 to 37.92. The rate at which vega changes as volatility changes is **volga**, short for "volatility gamma" and also called vomma. It is to vega what gamma is to delta ([Gamma](02-gamma.md)): the bend in the curve, where vega is the tilt.
+Vega is a slope, and slopes change. Push volatility from 20 to 21 percent and vega itself drifts, from 37.90 to 37.92. The rate at which vega changes as volatility changes is **volga**, short for "volatility gamma" and also called vomma. It is to vega what gamma is to delta, the option's slope in the share price ([Delta](01-delta.md), [Gamma](02-gamma.md)): the bend in the curve, where vega is the tilt.
 
-Volga matters because volatility does not sit still. When the market's volatility figure itself jumps around, an option with positive volga gains on the jumps up more than it loses on the jumps down. Acme's $130 call, far above today's price, has volga 149.08, more than sixty times the house option's 2.37. If Acme's volatility turns out to be 15 or 25 percent with even odds, that $130 call is worth 18.77 cents more than at a sure 20 percent. The call struck at Acme's forward price, $103.05, is worth 0.24 cents less.
+Volga matters because volatility does not sit still. When the market's volatility figure itself jumps around, an option with positive volga gains on the jumps up more than it loses on the jumps down.
+
+Acme's $130 call, far above today's price, has volga 149.08, more than sixty times the house option's 2.37. If Acme's volatility turns out to be 15 or 25 percent with even odds, that $130 call is worth 18.77 cents more than at a sure 20 percent. The call struck at Acme's forward price, $103.05, is worth 0.24 cents less.
 
 **Volga is vega times the product of the two Black-Scholes distances, divided by volatility; it is positive when the strike is far from the forward price, where the price bends upward in volatility, and slightly negative near the forward, where the price is almost a straight line in volatility.**
 
@@ -51,12 +53,12 @@ $$\text{Volga} \;=\; \frac{\partial^2 C}{\partial \sigma^2} \;=\; \frac{\partial
 | $\sigma$ | volatility: the yearly spread of Acme's log price | 20% | at a fixed strike, can flip the sign: 40% gives −3.24 |
 | $F$ | the forward price, $S\,e^{(r-q)T}$: the fair price today for delivery at $T$ | \$103.05 | (the centre of the zero band) |
 | $m$ | log distance from strike to forward, $\ln(F/K)$ | 0.03 | the further from 0, the larger volga |
-| $d_1$, $d_2$ | distances to the strike in units of $\sigma\sqrt{T}$, as on the pilot card | 0.25, 0.05 | their product sets the sign |
+| $d_1$, $d_2$ | distances to the strike in units of $\sigma\sqrt{T}$, as on the Black–Scholes call card | 0.25, 0.05 | their product sets the sign |
 | $\varphi$, $N$ | the bell curve's height, and its area to the left of a point | $\varphi(d_1) = 0.3867$ | |
 | $\mathcal{V}$ | vega, $\partial C / \partial \sigma$, per unit of volatility | 37.90 | scales volga up |
 | $\Delta\sigma$ | a move in volatility | 0.05 | the gain from it grows as its square |
 
-The helpers, unchanged from the pilot [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The helpers, unchanged from the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}.$$
 
@@ -70,8 +72,8 @@ $$d_1\,d_2 \;=\; \frac{m^2}{\sigma^2 T} \;-\; \frac{\sigma^2 T}{4}$$
 
 ### When it holds
 
-- **Black-Scholes prices.** The formula differentiates the Black-Scholes price. A model with a volatility smile (implied volatility that differs by strike) gives a different second derivative; the formula remains the market's standard way to quote the number.
-- **Volatility as an input, not a state.** Volga measures how the price would bend if the one volatility number were changed. Treating it as the payoff from random volatility needs that randomness to be independent of Acme's own shocks; with correlation, vanna enters as well ([Vanna](06-vanna.md)).
+- **Black-Scholes prices.** The formula differentiates the Black-Scholes price. A model with a volatility smile (implied volatility, the $\sigma$ that makes Black-Scholes match an option's market price, differs by strike) gives a different second derivative; the formula remains the market's standard way to quote the number.
+- **Volatility as an input, not a state.** Volga measures how the price would bend if the one volatility number were changed. Treating it as the payoff from random volatility needs that randomness to be independent of Acme's own shocks; with correlation, vanna, the rate at which delta changes as volatility moves, enters as well ([Vanna](06-vanna.md)).
 - **Small moves.** Half volga times $\Delta\sigma^2$ is a second-order estimate. For the \$130 call it is off by 0.14 cents on a 5-point move and by 0.48 cents on a 10-point move.
 - **Units stated.** The formula is per unit of volatility squared. Per vol point squared, divide by 10,000: the house figure is 0.000237.
 
@@ -81,7 +83,9 @@ $$d_1\,d_2 \;=\; \frac{m^2}{\sigma^2 T} \;-\; \frac{\sigma^2 T}{4}$$
 
 ### Step 0: volga is the slope of vega, and only one piece of vega moves
 
-Vega is already on its own card: $\mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}$. When volatility moves, the share price, the dividend discount and the time stay put. Only $d_1$ moves, and with it the bell curve's height $\varphi(d_1)$. So volga is vega's fixed part, $S\,e^{-qT}\sqrt{T}$, times how fast $\varphi(d_1)$ changes as $\sigma$ moves. That rate is a chain of two slopes: how the bell curve's height changes with its argument, and how the argument $d_1$ changes with $\sigma$.
+Vega is already on its own card: $\mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}$. When volatility moves, the share price, the dividend discount and the time stay put. Only $d_1$ moves, and with it the bell curve's height $\varphi(d_1)$.
+
+So volga is vega's fixed part, $S\,e^{-qT}\sqrt{T}$, times how fast $\varphi(d_1)$ changes as $\sigma$ moves. That rate is a chain of two slopes: how the bell curve's height changes with its argument, and how the argument $d_1$ changes with $\sigma$.
 
 ### Step 1: the bell curve's slope is minus the point times the height
 
@@ -136,7 +140,9 @@ $$\tfrac12\bigl[C(\sigma + \Delta\sigma) + C(\sigma - \Delta\sigma)\bigr] \;\app
 
 That is the whole reason volga has a price. An option with positive volga is a convex bet on volatility: uncertainty about volatility is worth money to its holder.
 
-Why is the far option convex and the forward option not? A far-out call pays only if Acme travels a long way, many spreads. Its price behaves like a tail of the bell curve, and a tail wakes up faster than proportionally as the spread widens: going from 15 to 20 percent adds less than going from 20 to 25. At the forward, the call is worth $S e^{-qT}\bigl[N(\sigma\sqrt{T}/2) - N(-\sigma\sqrt{T}/2)\bigr]$, the bell curve's area in a narrow window around zero. The curve is nearly flat there, so the area grows almost in proportion to $\sigma$: vega hardly changes, and the slight flattening of the bell's top makes the bend a touch negative.
+Why is the far option convex and the forward option not? A far-out call pays only if Acme travels a long way, many spreads. Its price behaves like a tail of the bell curve, and a tail wakes up faster than proportionally as the spread widens: going from 15 to 20 percent adds less than going from 20 to 25.
+
+At the forward, the call is worth $S e^{-qT}\bigl[N(\sigma\sqrt{T}/2) - N(-\sigma\sqrt{T}/2)\bigr]$, the bell curve's area in a narrow window around zero. The curve is nearly flat there, so the area grows almost in proportion to $\sigma$: vega hardly changes, and the slight flattening of the bell's top makes the bend a touch negative.
 
 <details>
 <summary>Volga and a volatility that wanders all year</summary>
@@ -212,7 +218,7 @@ strike     gain in cents from 15%-or-25% vol, one block = 1 cent
  $140      ████████████████████            20.07
 ```
 
-The two ends gain; the middle does not. The $130 call gains 18.77 cents on a $1.33 option. The at-the-money options gain a third of a cent or lose a quarter of one. The volga column predicts every row to within half a cent; the misses are the higher-order bends the expansion drops.
+The two ends gain; the middle does not. The $130 call gains 18.77 cents on a $1.33 option. The at-the-money options (struck near the share price, at $100 and $103.05) gain a third of a cent or lose a quarter of one. The volga column predicts every row to within half a cent; the misses are the higher-order bends the expansion drops.
 
 Read the $80 row as the put's story too: the $80 call's volga equals the $80 put's, and the $80 put is the far-out option there.
 
@@ -220,7 +226,9 @@ Read the $80 row as the put's story too: the $80 call's volga equals the $80 put
 
 ## Code, from first principles, and it actually runs
 
-The check takes three independent roads to the house volga. Road 1 is the closed form $\mathcal{V} d_1 d_2/\sigma$. Road 2 nudges volatility by 0.00001 either way and measures how vega changes. Road 3 uses no Black-Scholes formula: it prices the call and the put by averaging the payoff over the bell curve (Simpson's rule, with the payoff's switch-on point found by bisection), does that at five volatilities around 20 percent, and measures the bend, with Richardson's trick to cancel the step-size error. It then finds the two zero strikes by bisection on road 2 and compares them with $F e^{\pm\sigma^2 T/2}$, runs the uncertain-volatility table, and reproduces every "what breaks" number and every charted point.
+The check takes three independent roads to the house volga. Road 1 is the closed form $\mathcal{V} d_1 d_2/\sigma$. Road 2 nudges volatility by 0.00001 either way and measures how vega changes. Road 3 uses no Black-Scholes formula: it prices the call and the put by averaging the payoff over the bell curve (Simpson's rule, with the payoff's switch-on point found by bisection), does that at five volatilities around 20 percent, and measures the bend, with Richardson's trick to cancel the step-size error.
+
+It then finds the two zero strikes by bisection on road 2 and compares them with $F e^{\pm\sigma^2 T/2}$, runs the uncertain-volatility table, and reproduces every "what breaks" number and every charted point.
 
 ### Python
 
@@ -584,6 +592,343 @@ ALL CHECKS PASS
 
 The two outputs agree line for line at the printed precision.
 
+### Lean
+
+Lean proves the volga formula, its second form and its sign rule for every positive share price, strike, volatility and time.
+
+- Take $S$, $K$, $\sigma$ and $T$ all above zero. Then the call's volga, the second derivative of its price in volatility, is $\mathcal{V} d_1 d_2/\sigma$.
+- Under the same conditions, the put on the same share, strike and date has exactly the same volga.
+- Take the same conditions, with $m = \ln(F/K)$ and $F = S\,e^{(r-q)T}$. Then $d_1 d_2 = m^2/(\sigma^2 T) - \sigma^2 T/4$.
+- Take the same conditions. Then volga is positive exactly when $|m| > \tfrac12\sigma^2 T$, a strike far from the forward.
+- Take the same conditions. Then volga is negative exactly when $|m| < \tfrac12\sigma^2 T$, a strike near the forward.
+- For the house option, $d_1 = 0.25$ and $d_1 d_2 = 0.0125$ exactly.
+- For the house option, $m = 0.03$ exactly, and that beats half the variance, 0.02.
+- The second form gives the same house product, 0.0125.
+
+Decimal values such as volga 2.368822, the zero strikes and the uncertain-volatility gains are left to the Python and Rust checks.
+
+```lean
+-- Volga: in the Black–Scholes model the rate at which vega changes with volatility, for the call and for the put alike, is vega times d1 d2 over σ, where d1 d2 = m²/(σ²T) − σ²T/4 with m = ln(F/K), so volga is positive when |m| exceeds half the variance and negative when it falls short.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open MeasureTheory ProbabilityTheory Real
+
+lemma volga_cdf_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun t _ => gaussianPDFReal_nonneg _ _ t))]
+
+lemma volga_continuous_pdf : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma volga_cdf_hasDerivAt (z : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (gaussianPDFReal 0 1 z) z := by
+  have hI : ∀ a, IntegrableOn (gaussianPDFReal 0 1) (Set.Iic a) :=
+    fun a => (integrable_gaussianPDFReal 0 1).integrableOn
+  have hfun : (cdf (gaussianReal 0 1) : ℝ → ℝ) =
+      fun x => cdf (gaussianReal 0 1) 0 + ∫ t in (0:ℝ)..x, gaussianPDFReal 0 1 t := by
+    funext x
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI x), volga_cdf_eq_integral,
+      volga_cdf_eq_integral]
+    ring
+  rw [hfun]
+  exact (intervalIntegral.integral_hasDerivAt_right
+    (volga_continuous_pdf.intervalIntegrable _ _)
+    (volga_continuous_pdf.stronglyMeasurableAtFilter _ _)
+    volga_continuous_pdf.continuousAt).const_add _
+
+lemma volga_pdf_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal_def]
+
+lemma volga_pdf_hasDerivAt (x : ℝ) :
+    HasDerivAt (gaussianPDFReal 0 1) (-x * gaussianPDFReal 0 1 x) x := by
+  have h : (gaussianPDFReal 0 1 : ℝ → ℝ) = fun y => (√(2 * π))⁻¹ * exp (-y ^ 2 / 2) := by
+    funext y; simp [gaussianPDFReal_def]
+  rw [h]
+  have h2 : HasDerivAt (fun y : ℝ => -y ^ 2 / 2) (-x) x := by
+    have := ((hasDerivAt_pow 2 x).neg).div_const 2
+    convert this using 1; ring
+  have := (h2.exp).const_mul (√(2 * π))⁻¹
+  convert this using 1; ring
+
+lemma volga_share_cash
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    S * exp (-(q * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) =
+      K * exp (-(r * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) := by
+  set d := (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) with hd
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have key : d * (σ * √T) = log S - log K + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd, div_mul_cancel₀ _ (by positivity), Real.log_div hS.ne' hK.ne']
+  simp only [gaussianPDFReal_def, NNReal.coe_one, sub_zero, mul_one]
+  have h : log S + -(q * T) + -d ^ 2 / 2 = log K + -(r * T) + -(d - σ * √T) ^ 2 / 2 := by
+    linear_combination (-1 : ℝ) * key + (σ ^ 2 / 2) * hsq
+  have e1 : S * exp (-(q * T)) * ((√(2 * π))⁻¹ * exp (-d ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log S + -(q * T) + -d ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hS]; ring
+  have e2 : K * exp (-(r * T)) * ((√(2 * π))⁻¹ * exp (-(d - σ * √T) ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log K + -(r * T) + -(d - σ * √T) ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hK]; ring
+  rw [e1, e2, h]
+
+/-- The derivative of `d1` in volatility is `-d2 / σ`. -/
+lemma volga_d1_hasDerivAt
+    (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun s : ℝ => (log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))
+      (-((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ) σ := by
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have hN : HasDerivAt (fun s : ℝ => log (S / K) + (r - q + s ^ 2 / 2) * T) (σ * T) σ := by
+    have := (((hasDerivAt_pow 2 σ).div_const 2).const_add (r - q)).mul_const T |>.const_add
+      (log (S / K))
+    convert this using 1; push_cast; ring
+  have hL : HasDerivAt (fun s : ℝ => s * √T) √T σ := by
+    simpa using (hasDerivAt_id σ).mul_const √T
+  have := hN.div hL (by positivity)
+  convert this using 1
+  field_simp
+  rw [hsq]
+  ring
+
+/-- Vega: the slope in volatility of the call and of the put. -/
+lemma volga_vega
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt
+        (fun s : ℝ =>
+          S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+        (S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T)
+        σ ∧
+      HasDerivAt
+        (fun s : ℝ =>
+          K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                (-((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)) -
+            S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) (-((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))))
+        (S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T)
+        σ := by
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  set D : ℝ → ℝ := fun s => (log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) with hDdef
+  have hDd : DifferentiableAt ℝ D σ := by
+    rw [hDdef]
+    exact DifferentiableAt.div (by fun_prop) (by fun_prop) (by positivity)
+  have hD : HasDerivAt D (deriv D σ) σ := hDd.hasDerivAt
+  have hL : HasDerivAt (fun s => s * √T) √T σ := by
+    simpa using (hasDerivAt_id σ).mul_const √T
+  have hD2 : HasDerivAt (fun s => D s - s * √T) (deriv D σ - √T) σ := hD.sub hL
+  have hshare : S * exp (-(q * T)) * gaussianPDFReal 0 1 (D σ) =
+      K * exp (-(r * T)) * gaussianPDFReal 0 1 (D σ - σ * √T) :=
+    volga_share_cash S K r q σ T hS hK hσ hT
+  have hN1 := (volga_cdf_hasDerivAt (D σ)).comp σ hD
+  have hN2 := (volga_cdf_hasDerivAt (D σ - σ * √T)).comp σ hD2
+  have hN3 := (volga_cdf_hasDerivAt (-(D σ - σ * √T))).comp σ hD2.neg
+  have hN4 := (volga_cdf_hasDerivAt (-(D σ))).comp σ hD.neg
+  rw [volga_pdf_neg] at hN3 hN4
+  constructor
+  · have := (hN1.const_mul (S * exp (-(q * T)))).sub (hN2.const_mul (K * exp (-(r * T))))
+    convert this using 1
+    · rfl
+    · show _ = _ - K * exp (-(r * T)) * _
+      rw [← mul_assoc (K * exp (-(r * T))), ← hshare]; ring
+  · have := (hN3.const_mul (K * exp (-(r * T)))).sub (hN4.const_mul (S * exp (-(q * T))))
+    convert this using 1
+    · rfl
+    · show _ = K * exp (-(r * T)) * _ - _
+      rw [← mul_assoc (K * exp (-(r * T))), ← hshare]; ring
+
+/-- The slope in volatility of vega itself. -/
+lemma volga_vega_hasDerivAt
+    (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt
+        (fun s : ℝ => S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) * √T)
+        (S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T *
+          ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) *
+          ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ)
+        σ := by
+  have h := (volga_pdf_hasDerivAt
+    ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T))).comp σ
+      (volga_d1_hasDerivAt S K r q σ T hσ hT)
+  have := (h.const_mul (S * exp (-(q * T)))).mul_const √T
+  convert this using 1
+  simp only [Function.comp_def]
+  ring
+
+#print axioms volga_cdf_eq_integral
+#print axioms volga_continuous_pdf
+#print axioms volga_cdf_hasDerivAt
+#print axioms volga_pdf_neg
+#print axioms volga_pdf_hasDerivAt
+#print axioms volga_share_cash
+#print axioms volga_d1_hasDerivAt
+#print axioms volga_vega
+#print axioms volga_vega_hasDerivAt
+
+/-! The model: `N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`, the area under the standard
+bell curve to the left of `x`, and `φ(x)` is Mathlib's `gaussianPDFReal 0 1 x`, its height.
+Share price `S`, strike `K`, riskless rate `r`, dividend yield `q`, volatility `σ`, years `T`.
+`d1 = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)` and `d2 = d1 - σ √T`.
+Call `C = S e^(-qT) N(d1) - K e^(-rT) N(d2)`; put `P = K e^(-rT) N(-d2) - S e^(-qT) N(-d1)`.
+Vega `V = S e^(-qT) φ(d1) √T`. The forward is `F = S e^((r - q) T)` and `m = log (F / K)`.
+Volga is the slope in `σ` of the slope in `σ`, every other input held still. -/
+
+/-- Volga (the formula, Steps 0 to 3, and the put by parity): with a positive share price and
+strike, positive volatility and positive time, the slope in volatility of the call's vega,
+that is the call price's second derivative in volatility, is `V d1 d2 / σ` at `σ`; the put on
+the same share, strike and date has exactly the same volga. -/
+theorem call_and_put_volga_eq_vega_times_d1_d2_div_sigma
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt
+        (deriv fun s : ℝ =>
+          S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+        (S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T *
+          ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) *
+          ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ)
+        σ ∧
+      HasDerivAt
+        (deriv fun s : ℝ =>
+          K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                (-((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)) -
+            S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) (-((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))))
+        (S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T *
+          ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) *
+          ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ)
+        σ := by
+  have hV := volga_vega_hasDerivAt S K r q σ T hσ hT
+  constructor
+  · refine hV.congr_of_eventuallyEq ?_
+    filter_upwards [lt_mem_nhds hσ] with s hs
+    exact (volga_vega S K r q s T hS hK hs hT).1.deriv
+  · refine hV.congr_of_eventuallyEq ?_
+    filter_upwards [lt_mem_nhds hσ] with s hs
+    exact (volga_vega S K r q s T hS hK hs hT).2.deriv
+
+/-- The second form (Step 4): with a positive share price and strike, positive volatility and
+positive time, the product of the two distances is the squared distance from the forward in
+spread units minus a quarter of the variance, `d1 d2 = m² / (σ² T) - σ² T / 4`,
+with `m = log (F / K)` and `F = S e^((r - q) T)`. -/
+theorem d1_mul_d2_eq_sq_log_forward_div_variance_sub_quarter_variance
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) *
+        ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) =
+      log (S * exp ((r - q) * T) / K) ^ 2 / (σ ^ 2 * T) - σ ^ 2 * T / 4 := by
+  obtain ⟨t, ht, rfl⟩ : ∃ t, 0 < t ∧ T = t ^ 2 :=
+    ⟨√T, Real.sqrt_pos.2 hT, (Real.sq_sqrt hT.le).symm⟩
+  have hm : log (S * exp ((r - q) * t ^ 2) / K) = log (S / K) + (r - q) * t ^ 2 := by
+    rw [mul_div_right_comm, log_mul (by positivity) (exp_pos _).ne', log_exp]
+  rw [hm, Real.sqrt_sq ht.le]
+  field_simp
+  ring
+
+/-- The sign of volga (Step 4): with a positive share price and strike, positive volatility
+and positive time, the call's volga, the second derivative of its price in volatility, is
+positive exactly when the strike sits further than half the variance from the forward in log
+terms, `|log (F / K)| > σ² T / 2`, and negative exactly when it sits strictly closer. -/
+theorem volga_pos_iff_far_from_forward_and_neg_iff_near
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    (0 < deriv (deriv fun s : ℝ =>
+          S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)) σ ↔
+        σ ^ 2 * T / 2 < |log (S * exp ((r - q) * T) / K)|) ∧
+      (deriv (deriv fun s : ℝ =>
+          S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)) σ < 0 ↔
+        |log (S * exp ((r - q) * T) / K)| < σ ^ 2 * T / 2) := by
+  have h1 := (call_and_put_volga_eq_vega_times_d1_d2_div_sigma S K r q σ T hS hK hσ hT).1.deriv
+  have h2 := d1_mul_d2_eq_sq_log_forward_div_variance_sub_quarter_variance S K r q σ T hS hK hσ hT
+  rw [h1]
+  set m := log (S * exp ((r - q) * T) / K)
+  set d1 := (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hφ : 0 < gaussianPDFReal 0 1 d1 := gaussianPDFReal_pos 0 1 d1 one_ne_zero
+  have hc : 0 < S * exp (-(q * T)) * gaussianPDFReal 0 1 d1 * √T / σ := by positivity
+  have he : S * exp (-(q * T)) * gaussianPDFReal 0 1 d1 * √T * d1 * (d1 - σ * √T) / σ =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 d1 * √T / σ * (d1 * (d1 - σ * √T)) := by ring
+  rw [he, h2]
+  have hv : 0 < σ ^ 2 * T := by positivity
+  have hsplit : m ^ 2 / (σ ^ 2 * T) - σ ^ 2 * T / 4 = (m ^ 2 - (σ ^ 2 * T / 2) ^ 2) / (σ ^ 2 * T) := by
+    field_simp; ring
+  have habs : |σ ^ 2 * T / 2| = σ ^ 2 * T / 2 := abs_of_pos (by positivity)
+  rw [hsplit]
+  constructor
+  · rw [mul_pos_iff_of_pos_left hc, div_pos_iff_of_pos_right hv, sub_pos, sq_lt_sq, habs]
+  · rw [← neg_pos, ← mul_neg, mul_pos_iff_of_pos_left hc, neg_pos, ← neg_pos,
+      ← neg_div, div_pos_iff_of_pos_right hv, neg_pos, sub_neg, sq_lt_sq, habs]
+
+/-! The card's worked numbers that are exact fractions, for Acme's house option:
+S = 100, K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1. -/
+
+-- d1 = (ln(100/100) + 0.05) / (0.20 × √1) = 0.25.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) =
+      1 / 4 := by
+  norm_num
+
+-- d1 d2 = 0.25 × 0.05 = 0.0125.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) *
+        ((log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) -
+          1 / 5 * √1) = 1 / 80 := by
+  norm_num
+
+-- m = ln(F / K) = ln(100 e^0.03 / 100) = 0.03.
+example : log ((100 : ℝ) * exp ((5 / 100 - 2 / 100) * 1) / 100) = 3 / 100 := by
+  norm_num
+
+-- Sign check: m = 0.03 beats half the variance, (0.20² × 1) / 2 = 0.02, so volga is positive.
+example : (1 / 5 : ℚ) ^ 2 * 1 / 2 = 1 / 50 ∧ (1 / 50 : ℚ) < 3 / 100 := by norm_num
+
+-- The second form gives the same product: 0.03² / 0.04 - 0.04 / 4 = 0.0225 - 0.01 = 0.0125.
+example : (3 / 100 : ℚ) ^ 2 / ((1 / 5) ^ 2 * 1) - (1 / 5) ^ 2 * 1 / 4 = 1 / 80 := by norm_num
+
+#print axioms call_and_put_volga_eq_vega_times_d1_d2_div_sigma
+#print axioms d1_mul_d2_eq_sq_log_forward_div_variance_sub_quarter_variance
+#print axioms volga_pos_iff_far_from_forward_and_neg_iff_near
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'volga_cdf_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_continuous_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_cdf_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_pdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_pdf_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_share_cash' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_d1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_vega' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_vega_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_and_put_volga_eq_vega_times_d1_d2_div_sigma' depends on axioms: [propext, Classical.choice, Quot.sound]
+'d1_mul_d2_eq_sq_log_forward_div_variance_sub_quarter_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'volga_pos_iff_far_from_forward_and_neg_iff_near' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the sign first. Then run it.
@@ -597,7 +942,7 @@ The two outputs agree line for line at the printed precision.
 ## The usual mistake
 
 > [!warning]
-> **"At the money means no volga."** Not at the spot strike, and not exactly at the forward either. The zeros of volga sit half a variance either side of the forward, at $101.01 and $105.13 here. The $100 option has volga 2.37; the forward option has −1.95. What is true is that volga near the money is small next to the wings, 149.08 at $130, and that is the practical content of the phrase.
+> **"At the money means no volga."** Not at the spot strike, and not exactly at the forward either. The zeros of volga sit half a variance either side of the forward, at $101.01 and $105.13 here. The $100 option has volga 2.37; the forward option has −1.95. What is true is that volga near the money is small next to the wings (strikes far from the forward), 149.08 at $130, and that is the practical content of the phrase.
 >
 > Smaller traps:
 > - **Units.** Volga per unit of volatility squared is 2.368822; per vol point squared it is 0.000237. Mixing them predicts vega at 21 percent as 40.27 instead of 37.92.

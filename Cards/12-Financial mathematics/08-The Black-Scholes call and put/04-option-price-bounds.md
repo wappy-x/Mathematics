@@ -6,7 +6,7 @@
 
 ## General Overview
 
-Acme shares trade at 100 dollars today. Every amount on this card is in dollars. A screen quotes a one-year call on Acme — the right, not the duty, to buy one share for 100 on one fixed day next year — at 2.50. European, meaning the right can be used on that day and no earlier.
+Acme shares trade at 100 dollars today. Every amount on this card is in dollars. A screen quotes a one-year call on Acme — the right, not the duty, to buy one share for 100 on one fixed day next year — at 2.50. European, meaning the right can be used on that day and no earlier. The 100 is the strike, and that fixed day is expiry day.
 
 That quote cannot stand, and saying why takes no pricing model. Nobody needs to guess where Acme is heading, or how jumpy it is — its volatility. Three trades, all done this morning:
 
@@ -18,7 +18,7 @@ Those three take in **0.396925** today. On expiry day they cancel down to one pa
 
 So the call has a floor, **2.896925**, found by adding up cash flows rather than by modelling Acme. Three more edges turn up the same way: the call can cost no more than **98.019867**, the matching put — the right to sell one share for 100 on the same day — no more than **95.122942**, and neither can cost less than nothing. A floor and a ceiling around one price read as a fence; the real name for the four edges is **bounds**, and that is the word from here on.
 
-What lives inside the room is time value: the worth of being allowed to wait and see. Choosing one number in there is exactly what a model is for, and the shelf's model call at 20% volatility comes out at 9.227006, comfortably inside ([Black–Scholes call](01-black-scholes-call.md)).
+What lives inside the room between floor and ceiling is time value: the worth of being allowed to wait and see. Choosing one number in there is exactly what a model is for, and the shelf's model call at 20% volatility comes out at 9.227006, comfortably inside ([Black–Scholes call](01-black-scholes-call.md)).
 
 **A call costs no more than the share it may deliver and no less than a firm deal to buy that share at the strike; a put is the same with the share and the strike money swapped; each of the four edges is enforced by a trade that pays cash today and can never lose at expiry.**
 
@@ -79,10 +79,10 @@ A firm deal to buy one Acme share for $K$ on expiry day, with no right to walk a
 
 ### When it holds
 
-- **European exercise only.** Every cash-flow table below looks at expiry day and nowhere else. A holder who may exercise early has more, so an American put is worth at least the larger of this card's floor and the undiscounted $\max(K - S, 0)$, and its ceiling is $K$ rather than the cash side ([Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
+- **European exercise only.** Every cash-flow table below looks at expiry day and nowhere else. A holder who may exercise early — use the right before expiry day, as an American option allows — has more, so an American put is worth at least the larger of this card's floor and the undiscounted $\max(K - S, 0)$, and its ceiling is $K$ rather than the cash side ([Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
 - **One rate for lending and borrowing, and shares that can be sold short.** Every trade below lends or borrows at $r$ and buys or borrows shares. If borrowing costs more than lending pays, the bounds widen by that gap and quotes inside the wider band cannot be traded against.
 - **A known dividend yield.** Get $q$ wrong and the share side is wrong. Reading 3% where the truth is 2% moves the call floor from 2.896925 to 1.921611, so a quote between the two looks broken when it is sound.
-- **Costs small enough to leave something.** The four trades below pay 0.396925, 0.980133, 0.877058 and 0.639958 today. Commission, the fee for borrowing shares and the gap between bid and offer come out of exactly those amounts, which is why real quotes hug the bounds without touching them.
+- **Costs small enough to leave something.** The four trades below pay 0.396925, 0.980133, 0.877058 and 0.639958 today. Commission, the fee for borrowing shares and the gap between bid and offer (the prices dealers buy and sell at) come out of exactly those amounts, which is why real quotes hug the bounds without touching them.
 
 ---
 
@@ -90,13 +90,17 @@ A firm deal to buy one Acme share for $K$ on expiry day, with no right to walk a
 
 ### Step 0: one idea, used four times
 
-If one bundle of holdings pays at least as much as another in every outcome, it cannot cost less today. Suppose it did. Buy the cheap bundle, sell the dear one, keep the difference now; at expiry what is held pays at least what is owed, so nothing comes out of pocket. That is money for nothing, and prices move until it is gone ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)).
+If one bundle of holdings pays at least as much as another in every outcome, it cannot cost less today.
+
+Suppose it did. Buy the cheap bundle, sell the dear one, keep the difference now; at expiry what is held pays at least what is owed, so nothing comes out of pocket. That is money for nothing, and prices move until it is gone ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)).
 
 Nothing else is assumed below: no distribution for Acme, no volatility, no opinion.
 
 ### Step 1: two prices a model cannot argue with
 
-Both sides are known today, exactly. One share delivered at expiry costs $S e^{-qT}$ now, since $e^{-qT}$ of a share with its dividends reinvested grows into one whole share. Owing runs in reverse: short $e^{-qT}$ of a share, cover the dividends owed by shorting a little more, and the debt is exactly one share at expiry. $K$ dollars delivered at expiry costs $K e^{-rT}$ now, since that sum lent at $r$ grows into $K$. Every trade below is those two and the option itself.
+Both sides are known today, exactly. One share delivered at expiry costs $S e^{-qT}$ now, since $e^{-qT}$ of a share with its dividends reinvested grows into one whole share. Owing runs in reverse: short $e^{-qT}$ of a share, cover the dividends owed by shorting a little more, and the debt is exactly one share at expiry.
+
+$K$ dollars delivered at expiry costs $K e^{-rT}$ now, since that sum lent at $r$ grows into $K$. Every trade below is those two and the option itself.
 
 ### Step 2: the call's ceiling, the share side
 
@@ -135,7 +139,7 @@ A put's best outcome is Acme at zero, which pays the strike — on expiry day, n
 | Lend 95.122942 at 5% | −95.122942 | +100 | +100 |
 | **Total** | **+0.877058** | $S_T$, never below 0 | 100 |
 
-The put's floor is the cash side minus the share side. At the house strike that is negative, so the floor that binds is plain zero and no trade can break it. Raise the strike to 130 and the floor bites: the cash side is 123.659825, the share side is still 98.019867, and the floor is 25.639958. Suppose that put is quoted at 25.00: buy the put, buy $e^{-qT}$ shares, borrow the cash side.
+The put's floor is the cash side minus the share side. At the 100 strike that is negative, so the floor that binds is plain zero and no trade can break it. Raise the strike to 130 and the floor bites: the cash side is 123.659825, the share side is still 98.019867, and the floor is 25.639958. Suppose that put is quoted at 25.00: buy the put, buy $e^{-qT}$ shares, borrow the cash side.
 
 | Leg | Today | At expiry if $S_T \le 130$ | At expiry if $S_T > 130$ |
 | --- | --- | --- | --- |
@@ -157,7 +161,7 @@ xychart-beta
     line [36.35, 26.85, 18.24, 11.26, 6.33, 3.26, 1.56, 0.70, 0.30]
 ```
 
-Top line: the put's ceiling, the strike money delivered at expiry, flat because it never depends on Acme. Bottom line: the put's floor, zero from the point where the share side catches the cash side. Middle line: the model at 20% volatility again. With Acme at 60 the model sits at 36.35 against a floor of 36.31: deep in the money a put is nearly all floor, and a model has almost nothing left to add.
+Top line: the put's ceiling, the strike money delivered at expiry, flat because it never depends on Acme. Bottom line: the put's floor, zero from the point where the share side catches the cash side. Middle line: the model at 20% volatility again. With Acme at 60 the model sits at 36.35 against a floor of 36.31: deep in the money — Acme far below the strike — a put is nearly all floor, and a model has almost nothing left to add.
 
 <details>
 <summary>Detailed proof</summary>
@@ -179,11 +183,21 @@ Two conditions were used and are easy to miss. The option is European, so the ta
 
 ### Step 5: nothing tighter is possible
 
-The bounds look loose: with Acme at 100 the call's room is more than 95 wide. They cannot be narrowed without a model, because a model can be pushed as close to either edge as anyone likes. Run the shelf's formula at a volatility of 0.01% and the call comes out at 2.896925, the floor to six decimals, with the put at 0.000000, its floor. Run it at 5000% and the call is 98.019867 and the put 95.122942, both ceilings. Any tighter bound would rule out prices a legitimate model produces.
+The bounds look loose: with Acme at 100 the call's room is more than 95 wide. They cannot be narrowed without a model, because a model can be pushed as close to either edge as anyone likes.
 
-Two other roads reach the same edges. The short one runs through parity: $C - P$ equals the share side minus the cash side, always ([Put-call parity](03-put-call-parity.md)). Add "a put is worth at least nothing" and the call floor falls out; "a call is worth at least nothing" gives the put floor; "a put costs at most the cash side" gives the call ceiling. The four bounds are two facts in a coat: parity, and options never cost less than nothing. The checks price the call by formula and the put by numerical averaging, subtract, and land on 2.896925.
+Run the shelf's formula at a volatility of 0.01% and the call comes out at 2.896925, the floor to six decimals, with the put at 0.000000, its floor. Run it at 5000% and the call is 98.019867 and the put 95.122942, both ceilings. Any tighter bound would rule out prices a legitimate model produces.
 
-The other road drops models altogether. Any rule of the form "average the payoff, then discount" lands inside, provided the share averages to its forward, 103.045453. At every expiry price the call payoff sits between $S_T - K$ and $S_T$, and above zero; averaging keeps an ordering that holds outcome by outcome, and discounting turns the averages into the bounds. The checks try three spreads that look nothing like a bell curve — a coin toss, a lopsided three-point spread, and one that includes Acme going to zero — and all three land inside.
+Two other roads reach the same edges. The short one runs through parity: $C - P$ equals the share side minus the cash side, always ([Put-call parity](03-put-call-parity.md)).
+
+Add "a put is worth at least nothing" and the call floor falls out; "a call is worth at least nothing" gives the put floor; "a put costs at most the cash side" gives the call ceiling.
+
+The four bounds are really two facts: parity, and options never cost less than nothing. The checks price the call by formula and the put by numerical averaging, subtract, and land on 2.896925.
+
+The other road drops models altogether. Any rule of the form "average the payoff, then discount" lands inside, provided the share averages to its forward, 103.045453.
+
+At every expiry price the call payoff sits between $S_T - K$ and $S_T$, and above zero; averaging keeps an ordering that holds outcome by outcome, and discounting turns the averages into the bounds.
+
+The checks try three spreads that look nothing like a bell curve — a coin toss, a lopsided three-point spread, and one that includes Acme going to zero — and all three land inside.
 
 ---
 
@@ -660,9 +674,174 @@ ALL CHECKS PASS
 
 The two outputs match line for line, from different code taking different routes to the bell-curve area.
 
+### Lean
+
+Lean proves the four bounds for every market meeting the conditions below, and the trades' whole-number expiry sums exactly.
+
+- Suppose prices add across legs, Step 0 holds, Step 1 prices the two sides, and $K$ and $S_T$ are never negative. Then the call and the put each sit inside both of their bounds from The formula.
+- Suppose expiry prices follow any spread that is never negative and averages to the forward price $F$. Then the average call and put payoffs, discounted, land inside all four bounds.
+- Take any expiry price $S_T$ and strike $K$, neither negative. Then each trade's legs add up at expiry as the Detailed proof says, and never fall below zero.
+- The four trades' sums at expiry prices 80, 100, 120 and 160, as the checks print them, hold exactly. So does the intrinsic value of 30 at the 130 strike.
+
+The decimal amounts, the model prices pushed against each bound, and the wrong floors are left to the Python and Rust checks.
+
+```lean
+-- Option price bounds: under no arbitrage a European call costs between max(S e^{-qT} - K e^{-rT}, 0) and S e^{-qT}, and a European put between max(K e^{-rT} - S e^{-qT}, 0) and K e^{-rT}.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Algebra.Module.LinearMap.Defs
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.Tactic.NormNum
+
+open Real MeasureTheory
+
+/-! Setting. `Ω` is the set of possible states of the world on expiry day, and `ST ω` is the
+share price on expiry day in state `ω`; share prices are never negative. A payoff is a function
+`Ω → ℝ`, the cash it pays on expiry day. `price` gives each payoff its price today.
+
+No arbitrage (Step 0) is encoded as: `price` is linear (a bundle costs the sum of its legs) and
+monotone (a payoff that pays at least as much in every state cannot cost less today).
+Step 1's two known prices: one share delivered at expiry costs `S * exp (-(q * T))` today
+(the share side), and one dollar delivered at expiry costs `exp (-(r * T))` today, so `K`
+dollars cost `K * exp (-(r * T))` (the cash side). The European call pays `max (ST - K) 0`
+and the European put pays `max (K - ST) 0`, both on expiry day only. -/
+
+/-- The card's main claim. Under no arbitrage, with a share side `S e^{-qT}` and a cash side
+`K e^{-rT}`, a European call costs no more than the share side and no less than the larger of
+(share side minus cash side) and zero; a European put costs no more than the cash side and no
+less than the larger of (cash side minus share side) and zero. -/
+theorem option_price_bounds {Ω : Type*} (ST : Ω → ℝ) (hST : ∀ ω, 0 ≤ ST ω)
+    (price : (Ω → ℝ) →ₗ[ℝ] ℝ) (hmono : Monotone price)
+    (S K r q T : ℝ) (hK : 0 ≤ K)
+    (hshare : price ST = S * exp (-(q * T)))
+    (hcash : price (fun _ => 1) = exp (-(r * T))) :
+    (max (S * exp (-(q * T)) - K * exp (-(r * T))) 0 ≤ price (fun ω => max (ST ω - K) 0) ∧
+      price (fun ω => max (ST ω - K) 0) ≤ S * exp (-(q * T))) ∧
+    (max (K * exp (-(r * T)) - S * exp (-(q * T))) 0 ≤ price (fun ω => max (K - ST ω) 0) ∧
+      price (fun ω => max (K - ST ω) 0) ≤ K * exp (-(r * T))) := by
+  have hC0 : price 0 ≤ price (fun ω => max (ST ω - K) 0) :=
+    hmono (fun ω => by simp)
+  have hP0 : price 0 ≤ price (fun ω => max (K - ST ω) 0) :=
+    hmono (fun ω => by simp)
+  rw [map_zero] at hC0 hP0
+  have hC1 := hmono (show ST - K • (fun _ : Ω => (1:ℝ)) ≤ (fun ω => max (ST ω - K) 0) from
+    fun ω => by simp)
+  have hC2 := hmono (show (fun ω => max (ST ω - K) 0) ≤ ST from
+    fun ω => max_le (by linarith) (hST ω))
+  have hP1 := hmono (show K • (fun _ : Ω => (1:ℝ)) - ST ≤ (fun ω => max (K - ST ω) 0) from
+    fun ω => by simp)
+  have hP2 := hmono (show (fun ω => max (K - ST ω) 0) ≤ K • (fun _ : Ω => (1:ℝ)) from
+    fun ω => by simp only [Pi.smul_apply, smul_eq_mul, mul_one]; exact max_le (by linarith [hST ω]) hK)
+  rw [map_sub, map_smul, hcash, hshare, smul_eq_mul] at hC1 hP1
+  rw [hshare] at hC2
+  rw [map_smul, hcash, smul_eq_mul] at hP2
+  exact ⟨⟨max_le hC1 hC0, hC2⟩, ⟨max_le hP1 hP0, hP2⟩⟩
+
+/-- Step 5's model-free road: any rule of the form "average the payoff over a spread of expiry
+prices, then discount" lands inside all four bounds, provided the expiry price is never
+negative and averages to the forward price `S e^{(r-q)T}`. -/
+theorem discounted_average_lies_within_bounds (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (S K r q T : ℝ) (hK : 0 ≤ K)
+    (hnonneg : ∀ᵐ x ∂μ, 0 ≤ x) (hint : Integrable (fun x => x) μ)
+    (hmean : ∫ x, x ∂μ = S * exp ((r - q) * T)) :
+    (max (S * exp (-(q * T)) - K * exp (-(r * T))) 0 ≤ exp (-(r * T)) * ∫ x, max (x - K) 0 ∂μ ∧
+      exp (-(r * T)) * ∫ x, max (x - K) 0 ∂μ ≤ S * exp (-(q * T))) ∧
+    (max (K * exp (-(r * T)) - S * exp (-(q * T))) 0 ≤ exp (-(r * T)) * ∫ x, max (K - x) 0 ∂μ ∧
+      exp (-(r * T)) * ∫ x, max (K - x) 0 ∂μ ≤ K * exp (-(r * T))) := by
+  have he : exp (-(r * T)) * (S * exp ((r - q) * T)) = S * exp (-(q * T)) := by
+    rw [mul_left_comm, ← exp_add]; congr 2; ring
+  have hpos : 0 < exp (-(r * T)) := exp_pos _
+  have hcI : Integrable (fun x => max (x - K) 0) μ := (hint.sub (integrable_const K)).pos_part
+  have hpI : Integrable (fun x => max (K - x) 0) μ := ((integrable_const K).sub hint).pos_part
+  have hc0 : 0 ≤ ∫ x, max (x - K) 0 ∂μ := integral_nonneg (fun x => le_max_right _ _)
+  have hp0 : 0 ≤ ∫ x, max (K - x) 0 ∂μ := integral_nonneg (fun x => le_max_right _ _)
+  have hc1 : ∫ x, (x - K) ∂μ ≤ ∫ x, max (x - K) 0 ∂μ :=
+    integral_mono (hint.sub (integrable_const K)) hcI (fun x => le_max_left _ _)
+  have hc2 : ∫ x, max (x - K) 0 ∂μ ≤ ∫ x, x ∂μ :=
+    integral_mono_ae hcI hint (hnonneg.mono fun x hx => max_le (by linarith) hx)
+  have hp1 : ∫ x, (K - x) ∂μ ≤ ∫ x, max (K - x) 0 ∂μ :=
+    integral_mono ((integrable_const K).sub hint) hpI (fun x => le_max_left _ _)
+  have hp2 : ∫ x, max (K - x) 0 ∂μ ≤ ∫ _x, K ∂μ :=
+    integral_mono_ae hpI (integrable_const K) (hnonneg.mono fun x hx => max_le (by linarith) hK)
+  rw [integral_sub hint (integrable_const K), integral_const, hmean] at hc1
+  rw [integral_sub (integrable_const K) hint, integral_const, hmean] at hp1
+  rw [integral_const] at hp2
+  simp only [probReal_univ, smul_eq_mul, one_mul] at hc1 hp1 hp2
+  rw [hmean] at hc2
+  refine ⟨⟨max_le ?_ (mul_nonneg hpos.le hc0), ?_⟩, ⟨max_le ?_ (mul_nonneg hpos.le hp0), ?_⟩⟩
+  · have := mul_le_mul_of_nonneg_left hc1 hpos.le
+    rw [mul_sub, he] at this; linarith
+  · have := mul_le_mul_of_nonneg_left hc2 hpos.le
+    rw [he] at this; linarith
+  · have := mul_le_mul_of_nonneg_left hp1 hpos.le
+    rw [mul_sub, he] at this; linarith
+  · have := mul_le_mul_of_nonneg_left hp2 hpos.le
+    linarith
+
+/-- The detailed proof's four expiry-day identities: each arbitrage trade's legs add up to a
+payoff that never goes below zero, whatever the expiry price `x` (never negative) and strike
+`K` (never negative). Call floor, call ceiling, put ceiling, put floor, in that order. -/
+theorem arbitrage_legs_never_lose (x K : ℝ) (hx : 0 ≤ x) (hK : 0 ≤ K) :
+    (max (x - K) 0 - x + K = max (K - x) 0 ∧ 0 ≤ max (K - x) 0) ∧
+    (x - max (x - K) 0 = min x K ∧ 0 ≤ min x K) ∧
+    (K - max (K - x) 0 = min x K ∧ 0 ≤ min x K) ∧
+    (max (K - x) 0 + x - K = max (x - K) 0 ∧ 0 ≤ max (x - K) 0) := by
+  refine ⟨⟨?_, le_max_right _ _⟩, ⟨?_, le_min hx hK⟩, ⟨?_, le_min hx hK⟩, ⟨?_, le_max_right _ _⟩⟩
+  · rcases le_total x K with h | h
+    · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+    · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+  · rcases le_total x K with h | h
+    · rw [max_eq_right (by linarith), min_eq_left h]; ring
+    · rw [max_eq_left (by linarith), min_eq_right h]; ring
+  · rcases le_total x K with h | h
+    · rw [max_eq_left (by linarith), min_eq_left h]; ring
+    · rw [max_eq_right (by linarith), min_eq_right h]; ring
+  · rcases le_total x K with h | h
+    · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+    · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+
+/-! The card's whole-number worked examples: the four trades' legs added up on expiry day,
+at expiry prices 80, 100, 120 and 160 (strike 100, and strike 130 for the put floor). -/
+
+-- Call under its floor (strike 100): legs add to 20, 0, 0, 0.
+example : max ((80 : ℝ) - 100) 0 - 80 + 100 = 20 := by norm_num
+example : max ((100 : ℝ) - 100) 0 - 100 + 100 = 0 := by norm_num
+example : max ((120 : ℝ) - 100) 0 - 120 + 100 = 0 := by norm_num
+example : max ((160 : ℝ) - 100) 0 - 160 + 100 = 0 := by norm_num
+-- Call over its ceiling (strike 100): legs add to 80, 100, 100, 100.
+example : (80 : ℝ) - max (80 - 100) 0 = 80 := by norm_num
+example : (100 : ℝ) - max (100 - 100) 0 = 100 := by norm_num
+example : (120 : ℝ) - max (120 - 100) 0 = 100 := by norm_num
+example : (160 : ℝ) - max (160 - 100) 0 = 100 := by norm_num
+-- Put over its ceiling (strike 100): legs add to 80, 100, 100, 100.
+example : (100 : ℝ) - max (100 - 80) 0 = 80 := by norm_num
+example : (100 : ℝ) - max (100 - 100) 0 = 100 := by norm_num
+example : (100 : ℝ) - max (100 - 120) 0 = 100 := by norm_num
+example : (100 : ℝ) - max (100 - 160) 0 = 100 := by norm_num
+-- Put under its floor (strike 130): legs add to 0, 0, 0, 30.
+example : max ((130 : ℝ) - 80) 0 + 80 - 130 = 0 := by norm_num
+example : max ((130 : ℝ) - 100) 0 + 100 - 130 = 0 := by norm_num
+example : max ((130 : ℝ) - 120) 0 + 120 - 130 = 0 := by norm_num
+example : max ((130 : ℝ) - 160) 0 + 160 - 130 = 30 := by norm_num
+-- Intrinsic value at the 130 strike with Acme at 100: 30 (not the put floor).
+example : max ((130 : ℝ) - 100) 0 = 30 := by norm_num
+
+#print axioms option_price_bounds
+#print axioms discounted_average_lies_within_bounds
+#print axioms arbitrage_legs_never_lose
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'option_price_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'discounted_average_lies_within_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arbitrage_legs_never_lose' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
-> Guess the direction first, then run it. The asserts are pinned to the house market, so expect one to stop the program after a change.
+> Guess the direction first, then run it. The asserts are pinned to this card's example market, so expect one to stop the program after a change.
 > - **Set `r = 0.0`.** Does the call floor rise or fall? It falls to 0.000000, the number the "strike not discounted" row prints. With no interest, paying later is worth nothing, and the floor collapses onto what exercising today would pay.
 > - **Set `q = 0.03`.** The call floor drops to 1.921611, the last row of the what-breaks block. More dividends leaking out of the share leaves less in the share side.
 > - **Quote the call at its model price.** Change the first trade's quote from `2.50` to `9.227006`. Cash today becomes −6.330081, the put's price to the digit. The recipe pays only when a bound is broken; what it costs otherwise is exactly the walk-away right.
@@ -676,7 +855,7 @@ The two outputs match line for line, from different code taking different routes
 > **Reading intrinsic value as the floor.** Intrinsic value is what an option would pay if it could be cashed in this instant: $\max(S - K, 0)$ for a call, $\max(K - S, 0)$ for a put. It feels like a floor. For a European option it is the wrong floor, and wrong in both directions.
 >
 > - For a call it is too low whenever the rate beats the dividend yield. Here it says zero while the true floor is 2.896925, so a call quoted at 2.50 passes a test it should fail.
-> - For a put it is too high. At the 130 strike it says 30.000000 while the floor is 25.639958, and a fair model put there costs 26.970744. A European put under its intrinsic value is no arbitrage: the strike money cannot be collected until expiry day.
+> - For a put it is too high. At the 130 strike it says 30.000000 while the floor is 25.639958, and a fair model put there costs 26.970744. A European put under its intrinsic value is no arbitrage, no riskless profit, because the strike money cannot be collected until expiry day.
 >
 > Three smaller traps:
 > - **Using these bounds on American options.** Early exercise can only add value, so each floor rises to at least the larger of this card's floor and the undiscounted intrinsic value, and the put's ceiling becomes the undiscounted strike. The call's floor here stays 2.896925, since its intrinsic value is zero.
@@ -687,12 +866,12 @@ The two outputs match line for line, from different code taking different routes
 
 ## Where you meet it in real life
 
-- **The first test run on any quote.** A price outside the bounds has no implied volatility at all, since a model sweeps only the open room between them. A solver fed such a quote spins or lies, so the bound check runs first.
+- **The first test run on any quote.** A price outside the bounds has no implied volatility at all — no volatility that makes a model return it — since a model sweeps only the open room between them. A solver fed such a quote never settles or returns a wrong answer, so the bound check runs first.
 - **Data feeds and risk screens.** Quotes are filtered against these edges, and a crossed bound is usually a stale or mistyped number rather than an opportunity.
 - **American calls.** The call floor, with its discounted strike, is why exercising an American call early is a mistake on a share paying no dividends: selling fetches at least the floor, which beats the intrinsic value on offer ([Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
 - **Splitting a price in two.** The usual cut is intrinsic value plus time value — cashing in now against waiting — and it falls in a different place from this card's floor ([Intrinsic and time value](06-intrinsic-and-time-value.md)).
 - **Judging a model.** A model pricing outside these bounds would be selling free money — a harder objection than any usual complaint about its assumptions ([The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md)).
-- **Convertible bonds.** A convertible bond is a bond plus a call, so its floor is the bond's worth plus the call's floor. Desks quote the gap above that floor rather than the price.
+- **Convertible bonds.** A convertible bond is a bond plus a call, so its floor is the bond's worth plus the call's floor. Trading desks quote the gap above that floor rather than the price.
 
 > **Say it back**
 > A call may deliver one share, so it cannot cost more than one share delivered at expiry: 98.019867 here. It is a firm deal to buy that share at the strike plus the right to walk away, so it cannot cost less than that deal: 98.019867 minus 95.122942, or 2.896925. A put is the same with the share and the strike money swapped, and neither can cost less than nothing. Break any of the four and a trade exists that banks cash today and never loses at expiry — 0.396925 against a call quoted at 2.50. No volatility, no distribution and no model appears anywhere in the argument, which is why these bounds outlive every model.

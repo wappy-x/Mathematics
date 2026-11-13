@@ -10,7 +10,7 @@ Acme trades at $100. A one-year call on it, the right to buy one share for $100 
 
 Nudge Acme up by one cent and hold everything else still. The call gains 0.586851 of a cent. It moves like 0.59 of a share. That number is the call's **delta**: dollars of option value per dollar of share price. A put on the same terms, the right to sell at $100, has delta −0.393348: it moves like a short position (shares sold that are not owned) of 0.39 of a share.
 
-Delta does three jobs, and they are one number. It is the **slope** of the option's price plotted against the share price. It is the **hedge ratio**: a dealer who sold the call and bought 0.586851 shares is flat to a small move either way. And it is a **chance of exercise counted in shares**, shrunk by the dividends the share pays out before expiry. The card derives the formula, shows why those three readings coincide, and runs the hedge through one move.
+Delta does three jobs, and they are one number. It is the **slope** of the option's price plotted against the share price. It is the **hedge ratio**: a dealer who sold the call and bought 0.586851 shares neither gains nor loses on a small move either way. And it is a **chance of exercise counted in shares**, shrunk by the dividends the share pays out before expiry. The card derives the formula, shows why those three readings coincide, and runs the hedge through one move.
 
 **Delta is the slope of the option price in the share price; in the Black-Scholes model it equals the dividend drag times the share-counted exercise chance, and holding that many shares cancels a small move.**
 
@@ -46,7 +46,7 @@ $$\Delta_C = \frac{\partial C}{\partial S} = e^{-qT}\,N(d_1), \qquad \Delta_P = 
 | $T$ | years left to expiry | 1 | at the money, rises a little; far out of the money, rises; deep in, falls |
 | $r$ | the riskless rate, continuously compounded | 5% | rises: the forward price moves up |
 | $q$ | the dividend yield, the share's payout per year as a fraction of its price | 2% | falls: both the ceiling and the chance shrink |
-| $\sigma$ | volatility: how jumpy Acme is, per square-root year. Say "sigma". | 20% | here, falls slightly (vanna, −0.095 per unit of $\sigma$); far out, rises; deep in, falls |
+| $\sigma$ | volatility: how jumpy Acme is, per square-root year. Say "sigma". | 20% | here, falls slightly ([Vanna](06-vanna.md), −0.095 per unit of $\sigma$); far out, rises; deep in, falls |
 | $C$, $P$ | the call price and the put price today | $9.23 and $6.33 | — |
 | $N(x)$, $\varphi(x)$ | the bell curve's area to the left of $x$; its height at $x$ | $N(d_1)$ = 0.598706 | — |
 | $d_1$, $d_2$ | where the strike sits on the bell curve, counted in shares and in dollars | 0.25 and 0.05 | — |
@@ -54,6 +54,8 @@ $$\Delta_C = \frac{\partial C}{\partial S} = e^{-qT}\,N(d_1), \qquad \Delta_P = 
 | $\Delta$, $\Delta_C$, $\Delta_P$, $\partial$ | delta; of the call; of the put; $\partial$ marks a slope in one input | 0.586851 and −0.393348 | — |
 | $h$, $\Gamma$ | a nudge to the share price in dollars; gamma, delta's own slope | $h$ = 0.01; $\Gamma$ about 0.019 | — |
 | $S_T$, $z$, $z_0$ | Acme's price at expiry; a standard bell-curve draw that sets it; the draw at which $S_T = K$ | $z_0$ = −0.05 | — |
+
+At the money means the strike equals today's price, as for Acme now. Out of the money means the call would pay nothing if exercised today; in the money means it would pay. "Far out" and "deep in" mean far on either side of the strike.
 
 The helper $d_1$ is the one from the call card:
 
@@ -116,7 +118,7 @@ Put–call parity says $C - P = S e^{-qT} - K e^{-rT}$ at every share price: a c
 
 $$\Delta_C - \Delta_P = e^{-qT},$$
 
-and $\Delta_P = e^{-qT}(N(d_1) - 1) = -e^{-qT}N(-d_1)$, using $1 - N(x) = N(-x)$. For Acme, $0.980199 \times (0.598706 - 1) = -0.393348$. The difference $e^{-qT}$ holds whatever the volatility: it is the delta of the prepaid forward, not a property of the model.
+and $\Delta_P = e^{-qT}(N(d_1) - 1) = -e^{-qT}N(-d_1)$, using $1 - N(x) = N(-x)$. For Acme, $0.980199 \times (0.598706 - 1) = -0.393348$. The difference $e^{-qT}$ holds whatever the volatility: it is the delta of the prepaid forward (the share delivered at $T$ without its dividends), not a property of the model.
 
 ### Step 4: the three readings
 
@@ -124,7 +126,7 @@ and $\Delta_P = e^{-qT}(N(d_1) - 1) = -e^{-qT}N(-d_1)$, using $1 - N(x) = N(-x)$
 
 **Hedge ratio.** Short one call and long $\Delta$ shares has zero slope, so a small move $h$ leaves only the bend, about $-\tfrac12\Gamma h^2$ for the dealer who is short the curve. Worked numbers runs it.
 
-**Share-counted chance.** Differentiate the payoff path by path instead of the formula. On a path that finishes above the strike, the call pays $S_T - K$, and $S_T$ is proportional to today's $S$, so the payoff moves by $S_T/S$ per dollar of $S$. Below the strike it pays nothing and moves by nothing. Averaging over all paths in the pretend world of the call card, written $\mathbb{E}$ for expectation (the probability-weighted average), and discounting:
+**Share-counted chance.** Differentiate the payoff path by path instead of the formula. On a path that finishes above the strike, the call pays $S_T - K$, and $S_T$ is proportional to today's $S$, so the payoff moves by $S_T/S$ per dollar of $S$. Below the strike it pays nothing and moves by nothing. Averaging over all paths in the pretend world of the call card (where every asset grows at the riskless rate; finance calls it "risk-neutral"), written $\mathbb{E}$ for expectation (the probability-weighted average), and discounting:
 
 $$\Delta_C = e^{-rT}\,\mathbb{E}\!\left[\frac{S_T}{S}\ \text{on paths with } S_T > K\right].$$
 
@@ -205,7 +207,14 @@ Unhedged, a dollar move swings the book by about 59 cents either way. Hedged wit
 
 ## Code, from first principles, and it actually runs
 
-Four independent roads reach the call delta: the formula; a central difference on the price, nudging Acme a cent each way; the two nodes one step into a 2,000-step coin-flip tree; and the pathwise average of $S_T/S$ over the exercised paths, integrated by Simpson's rule from a crossing point found by bisection, which uses neither $d_1$ nor $d_2$. The put's delta comes from nudging the put formula on its own, and call minus put is checked against $e^{-qT}$. The density cancellation, the hedge table, the wrong answers and every chart point are printed.
+Four independent roads reach the call delta:
+
+1. the formula;
+2. a central difference on the price, nudging Acme a cent each way;
+3. the two nodes one step into a 2,000-step coin-flip tree;
+4. the pathwise average of $S_T/S$ over the exercised paths, integrated by Simpson's rule (adding thin slices under the curve) from a crossing point found by bisection (halving an interval until it closes on the point), which uses neither $d_1$ nor $d_2$.
+
+The put's delta comes from nudging the put formula on its own, and call minus put is checked against $e^{-qT}$. The density cancellation, the hedge table, the wrong answers and every chart point are printed.
 
 ### Python
 
@@ -548,6 +557,230 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. They reach the bell-curve area by different routes, a series in Python and Simpson slices in Rust.
 
+### Lean
+
+Lean proves the delta formulas and bounds for every positive share price, strike, volatility and time left, at any rate and dividend yield.
+
+- Take $S$, $K$, $\sigma$ and $T$ all above zero, and hold every other input still. Then the call's slope in the share price is $e^{-qT} N(d_1)$.
+- Take the same inputs. Then the two density terms of Step 2 cancel: $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$.
+- Take the same inputs. Then the put's slope in the share price is $-e^{-qT} N(-d_1)$.
+- Take the same inputs. Then the call's delta minus the put's delta is the dividend drag $e^{-qT}$.
+- Take the same inputs. Then $0 < \Delta_C < e^{-qT}$ and $-e^{-qT} < \Delta_P < 0$.
+- For Acme, $d_1$ is exactly 0.25 and $d_2$ is exactly 0.05.
+- The printed deltas 0.586851 and −0.393348 differ by exactly 0.980199.
+
+The six-place values, the hedge table, the tree and the pathwise average are left to the Python and Rust checks.
+
+```lean
+-- Delta: in the Black-Scholes model the slope of the call price in the share price is e^(-qT) N(d₁), the put's slope is -e^(-qT) N(-d₁), and these lie strictly between 0 and e^(-qT) and between -e^(-qT) and 0.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open Real MeasureTheory ProbabilityTheory
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- The share-side distance to the strike,
+`d₁ = (ln(S/K) + (r - q + σ²/2) T) / (σ√T)`; the cash-side one is `d₂ = d₁ - σ√T`. -/
+noncomputable def bsD1 (S K r q σ T : ℝ) : ℝ :=
+  (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- The Black-Scholes call: `C = S e^(-qT) N(d₁) - K e^(-rT) N(d₂)`. -/
+noncomputable def bsCall (S K r q σ T : ℝ) : ℝ :=
+  S * exp (-q * T) * stdNormalCDF (bsD1 S K r q σ T)
+    - K * exp (-r * T) * stdNormalCDF (bsD1 S K r q σ T - σ * √T)
+
+/-- The Black-Scholes put: `P = K e^(-rT) N(-d₂) - S e^(-qT) N(-d₁)`. -/
+noncomputable def bsPut (S K r q σ T : ℝ) : ℝ :=
+  K * exp (-r * T) * stdNormalCDF (-(bsD1 S K r q σ T - σ * √T))
+    - S * exp (-q * T) * stdNormalCDF (-bsD1 S K r q σ T)
+
+/-- The standard normal density, written out. -/
+lemma delta_phi_eq (x : ℝ) : gaussianPDFReal 0 1 x = (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := by
+  simp [gaussianPDFReal]
+
+lemma delta_phi_continuous : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma delta_phi_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal]
+
+lemma delta_N_eq_integral (x : ℝ) : stdNormalCDF x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  unfold stdNormalCDF
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal]
+  exact setIntegral_nonneg measurableSet_Iic (fun t _ => gaussianPDFReal_nonneg _ _ _)
+
+lemma delta_N_sub (a b : ℝ) :
+    stdNormalCDF b - stdNormalCDF a = ∫ t in a..b, gaussianPDFReal 0 1 t := by
+  rw [delta_N_eq_integral, delta_N_eq_integral]
+  exact intervalIntegral.integral_Iic_sub_Iic (integrable_gaussianPDFReal 0 1).integrableOn
+    (integrable_gaussianPDFReal 0 1).integrableOn
+
+lemma delta_N_hasDerivAt (x : ℝ) : HasDerivAt stdNormalCDF (gaussianPDFReal 0 1 x) x := by
+  have h : stdNormalCDF = fun y => stdNormalCDF 0 + ∫ t in (0:ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y; rw [← delta_N_sub]; ring
+  rw [h]
+  exact (intervalIntegral.integral_hasDerivAt_right (delta_phi_continuous.intervalIntegrable _ _)
+    (delta_phi_continuous.stronglyMeasurableAtFilter _ _)
+    delta_phi_continuous.continuousAt).const_add _
+
+lemma delta_N_pos (x : ℝ) : 0 < stdNormalCDF x := by
+  have h1 := delta_N_sub (x - 1) x
+  have h2 : 0 < ∫ t in (x - 1)..x, gaussianPDFReal 0 1 t :=
+    intervalIntegral.intervalIntegral_pos_of_pos_on (delta_phi_continuous.intervalIntegrable _ _)
+      (fun t _ => gaussianPDFReal_pos _ _ _ one_ne_zero) (by linarith)
+  have h3 : 0 ≤ stdNormalCDF (x - 1) := cdf_nonneg _ _
+  linarith
+
+lemma delta_N_lt_one (x : ℝ) : stdNormalCDF x < 1 := by
+  have h1 := delta_N_sub x (x + 1)
+  have h2 : 0 < ∫ t in x..(x + 1), gaussianPDFReal 0 1 t :=
+    intervalIntegral.intervalIntegral_pos_of_pos_on (delta_phi_continuous.intervalIntegrable _ _)
+      (fun t _ => gaussianPDFReal_pos _ _ _ one_ne_zero) (by linarith)
+  have h3 : stdNormalCDF (x + 1) ≤ 1 := cdf_le_one _ _
+  linarith
+
+lemma delta_N_add_N_neg (x : ℝ) : stdNormalCDF x + stdNormalCDF (-x) = 1 := by
+  rw [delta_N_eq_integral, delta_N_eq_integral, ← integral_comp_neg_Ioi]
+  simp_rw [delta_phi_neg]
+  rw [← Set.compl_Iic, integral_add_compl measurableSet_Iic (integrable_gaussianPDFReal 0 1),
+    integral_gaussianPDFReal_eq_one 0 one_ne_zero]
+
+/-- The cancellation behind delta: `K e^(-rT) φ(d₂) = S e^(-qT) φ(d₁)`. -/
+lemma delta_key (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    K * exp (-r * T) * gaussianPDFReal 0 1 (bsD1 S K r q σ T - σ * √T)
+      = S * exp (-q * T) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) := by
+  have hs : 0 < σ * √T := mul_pos hσ (Real.sqrt_pos.2 hT)
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  set d := bsD1 S K r q σ T with hd_def
+  have hd : d * (σ * √T) = log (S / K) + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd_def, bsD1]; field_simp
+  have hexp : -(d - σ * √T) ^ 2 / 2 + -r * T = -d ^ 2 / 2 + -q * T + log (S / K) := by
+    linear_combination hd - (σ ^ 2 / 2) * hsq
+  rw [delta_phi_eq, delta_phi_eq]
+  rw [show K * exp (-r * T) * ((√(2 * π))⁻¹ * exp (-(d - σ * √T) ^ 2 / 2))
+      = (√(2 * π))⁻¹ * K * exp (-(d - σ * √T) ^ 2 / 2 + -r * T) by rw [exp_add]; ring,
+    hexp, exp_add, exp_add, exp_log (div_pos hS hK)]
+  field_simp
+
+/-- **Call delta** (The formula; Why it works, Steps 1 and 2). In the Black-Scholes model with
+constant volatility `σ > 0`, constant rates `r` and a continuous dividend yield `q`, a plain call
+with strike `K > 0`, time left `T > 0` and share price `S > 0`, with every other input frozen:
+the call price's slope in the share price is the dividend drag times the share-counted
+exercise chance, `∂C/∂S = e^(-qT) N(d₁)`. -/
+theorem call_delta_eq_dividend_drag_mul_N_d1
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => bsCall x K r q σ T)
+      (exp (-q * T) * stdNormalCDF (bsD1 S K r q σ T)) S := by
+  have hs : 0 < σ * √T := mul_pos hσ (Real.sqrt_pos.2 hT)
+  have hd1 : HasDerivAt (fun x => bsD1 x K r q σ T)
+      ((1 / K) / (S / K) / (σ * √T)) S := by
+    have h := ((((hasDerivAt_id' S).div_const K).log (div_pos hS hK).ne').add_const
+      ((r - q + σ ^ 2 / 2) * T)).div_const (σ * √T)
+    simpa [bsD1] using h
+  have hC := (((hasDerivAt_id S).mul_const (exp (-q * T))).mul
+      ((delta_N_hasDerivAt _).comp S hd1)).sub
+    (((delta_N_hasDerivAt _).comp S (hd1.sub_const (σ * √T))).const_mul (K * exp (-r * T)))
+  have key := delta_key S K r q σ T hS hK hσ hT
+  convert hC using 1
+  all_goals first
+    | (funext x; simp [bsCall, Function.comp]; done)
+    | (simp only [id, Function.comp]
+       linear_combination ((1 / K) / (S / K) / (σ * √T)) * key)
+
+/-- **Put delta, and call minus put** (Why it works, Step 3). Under the same terms, the put
+price's slope in the share price is `∂P/∂S = e^(-qT)(N(d₁) - 1) = -e^(-qT) N(-d₁)`, so the call's
+delta minus the put's delta is the dividend drag `e^(-qT)`. -/
+theorem put_delta_eq_neg_dividend_drag_mul_N_neg_d1
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => bsPut x K r q σ T)
+      (-(exp (-q * T) * stdNormalCDF (-bsD1 S K r q σ T))) S ∧
+      exp (-q * T) * stdNormalCDF (bsD1 S K r q σ T)
+        - (-(exp (-q * T) * stdNormalCDF (-bsD1 S K r q σ T))) = exp (-q * T) := by
+  have hs : 0 < σ * √T := mul_pos hσ (Real.sqrt_pos.2 hT)
+  have hd1 : HasDerivAt (fun x => bsD1 x K r q σ T)
+      ((1 / K) / (S / K) / (σ * √T)) S := by
+    have h := ((((hasDerivAt_id' S).div_const K).log (div_pos hS hK).ne').add_const
+      ((r - q + σ ^ 2 / 2) * T)).div_const (σ * √T)
+    simpa [bsD1] using h
+  refine ⟨?_, ?_⟩
+  · have hP := (((delta_N_hasDerivAt _).comp S
+        (hd1.sub_const (σ * √T)).neg).const_mul (K * exp (-r * T))).sub
+      (((hasDerivAt_id S).mul_const (exp (-q * T))).mul
+        ((delta_N_hasDerivAt _).comp S hd1.neg))
+    have key := delta_key S K r q σ T hS hK hσ hT
+    convert hP using 1
+    all_goals first
+      | (funext x; simp [bsPut, Function.comp]; done)
+      | (simp only [id, Function.comp, Pi.neg_apply, delta_phi_neg]
+         linear_combination ((1 / K) / (S / K) / (σ * √T)) * key)
+  · linear_combination exp (-q * T) * delta_N_add_N_neg (bsD1 S K r q σ T)
+
+/-- **The bounds are 0 and `e^(-qT)`, not 0 and 1** (Why it works, Step 5). Under the same terms,
+the call delta lies strictly between `0` and `e^(-qT)`, and the put delta strictly between
+`-e^(-qT)` and `0`. -/
+theorem delta_bounds
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    (0 < exp (-q * T) * stdNormalCDF (bsD1 S K r q σ T) ∧
+        exp (-q * T) * stdNormalCDF (bsD1 S K r q σ T) < exp (-q * T)) ∧
+      (-exp (-q * T) < -(exp (-q * T) * stdNormalCDF (-bsD1 S K r q σ T)) ∧
+        -(exp (-q * T) * stdNormalCDF (-bsD1 S K r q σ T)) < 0) := by
+  have he : 0 < exp (-q * T) := exp_pos _
+  refine ⟨⟨mul_pos he (delta_N_pos _), mul_lt_of_lt_one_right he (delta_N_lt_one _)⟩,
+    neg_lt_neg (mul_lt_of_lt_one_right he (delta_N_lt_one _)),
+    neg_neg_of_pos (mul_pos he (delta_N_pos _))⟩
+
+-- Acme: S = K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1 year.
+-- d₁ = (ln 1 + (0.05 - 0.02 + 0.02) · 1) / 0.20 = 0.25.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 = 1 / 4 := by
+  simp [bsD1]; norm_num
+-- d₂ = d₁ - σ√T = 0.25 - 0.20 = 0.05.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 - 1 / 5 * √1 = 1 / 20 := by
+  simp [bsD1]; norm_num
+-- The drift allowance in d₁: 0.05 - 0.02 + 0.02 = 0.05, over σ = 0.20, gives 0.25.
+example : ((5 : ℚ) / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) / (1 / 5) = 1 / 4 := by norm_num
+-- Call minus put, as printed: 0.586851 + 0.393348 = 0.980199, the dividend drag.
+example : (586851 : ℕ) + 393348 = 980199 := by decide
+
+#print axioms delta_phi_eq
+#print axioms delta_phi_continuous
+#print axioms delta_phi_neg
+#print axioms delta_N_eq_integral
+#print axioms delta_N_sub
+#print axioms delta_N_hasDerivAt
+#print axioms delta_N_pos
+#print axioms delta_N_lt_one
+#print axioms delta_N_add_N_neg
+#print axioms delta_key
+#print axioms call_delta_eq_dividend_drag_mul_N_d1
+#print axioms put_delta_eq_neg_dividend_drag_mul_N_neg_d1
+#print axioms delta_bounds
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'delta_phi_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_phi_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_phi_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_N_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_N_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_N_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_N_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_N_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_N_add_N_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_delta_eq_dividend_drag_mul_N_d1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'put_delta_eq_neg_dividend_drag_mul_N_neg_d1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. The first assert is pinned to the house delta, so each change stops the run there, after the numbers print.
@@ -561,7 +794,7 @@ The two outputs agree line for line. They reach the bell-curve area by different
 ## The usual mistake
 
 > [!warning]
-> **Reading delta as the probability the option finishes in the money.** It is not. The ordinary chance of exercise in the pricing world is $N(d_2)$ = 0.519939. Delta is 0.586851: the exercise chance with each path weighted by what the share is worth there, times the dividend drag. Hedging with the wrong one leaves 6 to 8 cents of exposure per call on a $1 move instead of under one.
+> **Reading delta as the probability the option finishes in the money.** It is not. The ordinary chance of exercise in the pretend world is $N(d_2)$ = 0.519939. Delta is 0.586851: the exercise chance with each path weighted by what the share is worth there, times the dividend drag. Hedging with the wrong one leaves 6 to 8 cents of exposure per call on a $1 move instead of under one.
 >
 > - **Delta between 0 and 1.** For a call on a dividend-paying share the ceiling is $e^{-qT}$ = 0.980199. Deep in the money, a hedge of one full share per call is over-hedged.
 > - **Put delta as minus the call delta.** The two differ by $e^{-qT}$: −0.393348, not −0.586851.

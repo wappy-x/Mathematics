@@ -12,7 +12,7 @@ The market closes. Overnight Acme does not trade, volatility does not change, ra
 
 Is 5,868.51 still the right share count? No. Delta depends on the time left, so the hedge has aged. The correct count in the morning is 0.98 shares lower. Nothing happened to the stock. The clock did it.
 
-The rate at which delta changes as the calendar advances, with everything else frozen, is called **charm**. For the house call it is −0.035639 shares per call per year of clock. Divide by 365 and that is −0.000098 per call per night, which across 10,000 calls is the 0.98 shares.
+The rate at which delta changes as the calendar advances, with everything else frozen, is called **charm**. For the house call (the desk's call above, the example every card on this shelf shares) it is −0.035639 shares per call per year of clock. Divide by 365 and that is −0.000098 per call per night, which across 10,000 calls is the 0.98 shares.
 
 **Charm is delta's slope along the calendar: multiply it by the time that passes and it says how many shares a hedge gains or loses while the stock stands still.**
 
@@ -33,13 +33,19 @@ xychart-beta
     line [48.76, 42.20, 34.73, 20.68, 3.46, 0.00, 0.00]
 ```
 
-Top line (orange): Acme frozen at $105, $5 above the strike. Middle line (green): Acme frozen at $100, exactly at the strike. Bottom line (dark blue): Acme frozen at $95. As time runs out, the $105 call becomes a sure exercise and its delta climbs to a full share. The $95 call becomes a sure loss and its delta falls to nothing. The $100 call drifts down toward half a share and stays balanced on the edge, until the final instant, when it must fall to one side or the other. Charm is the slope of each line.
+Top line (orange): Acme frozen at $105, $5 above the strike. Middle line (green): Acme frozen at $100, exactly at the strike. Bottom line (dark blue): Acme frozen at $95.
+
+As time runs out, the $105 call becomes a sure exercise and its delta climbs to a full share. The $95 call becomes a sure loss and its delta falls to nothing. The $100 call drifts down toward half a share and stays balanced on the edge, until the final instant, when it must fall to one side or the other. Charm is the slope of each line.
 
 ---
 
 ## The formula
 
-Notation first, in words. $T$ is time left to expiry, in years. $t$ is the calendar, in years. When $t$ moves forward one day, $T$ moves back one day. A **partial derivative** (the rate of change in one input with all the others held still; see [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is written with a curly d, so $\partial\Delta/\partial t$ reads "how fast delta changes as the calendar advances, with Acme, volatility and rates held still". Charm is that rate, written $\chi$ (the Greek letter chi):
+Notation first, in words. $T$ is time left to expiry, in years. $t$ is the calendar, in years. When $t$ moves forward one day, $T$ moves back one day.
+
+A **partial derivative** (the rate of change in one input with all the others held still; see [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is written with a curly d. So $\partial\Delta/\partial t$ reads "how fast delta changes as the calendar advances, with Acme, volatility and rates held still".
+
+Charm is that rate, written $\chi$ (the Greek letter chi):
 
 $$\chi = \frac{\partial \Delta}{\partial t} = -\frac{\partial \Delta}{\partial T}$$
 
@@ -80,8 +86,8 @@ Units. Charm here is per year, like the theta card's figures. Per calendar day i
 
 ### When it holds
 
-- **Nothing else moves.** Charm is only the clock's share of delta's change. Acme moving adds gamma times the move, and that usually dwarfs charm (see The usual mistake).
-- **Volatility is constant as time passes.** On a real desk, a shorter option is often quoted at a different volatility. Then delta also changes by vanna (see [Vanna](06-vanna.md)) times that volatility change, which charm leaves out.
+- **Nothing else moves.** Charm is only the clock's share of delta's change. Acme moving adds gamma (delta's slope in Acme's price; see [Gamma](02-gamma.md)) times the move, and that usually dwarfs charm (see The usual mistake).
+- **Volatility is constant as time passes.** On a real desk, a shorter option is often quoted at a different volatility. Then delta also changes by vanna (delta's slope in volatility; see [Vanna](06-vanna.md)) times that volatility change, which charm leaves out.
 - **Dividends are a smooth yield.** A real dividend is paid on one date. Across that date delta jumps rather than drifts, and charm misses the jump.
 - **The time step is small next to the time left.** Charm is a slope. With a year left, one night is tiny and the slope is exact to a hundredth of a share. With two days left, one night is half the remaining life, and one dollar above the strike the slope misses by a third (How a hedge ages overnight).
 - **European exercise.** The formula differentiates the European delta. An option that can be exercised early has a different delta and a different charm.
@@ -139,13 +145,15 @@ For the put, differentiate put-call parity for deltas, $\Delta_C - \Delta_P = e^
 
 ### Step 4: the put follows from parity
 
-A call minus a put is a forward contract, and its delta is $e^{-qT}$ whatever Acme does. So the two deltas always differ by the dividend drag, and their charms differ by the drag's calendar slope, $q\,e^{-qT}$ = 0.019604. The put's charm is −0.035639 − 0.019604 = −0.055243. The put's delta, −0.393348, falls further from zero: it loses what the call's delta loses, and also the drag's gain.
+A call minus a put is a forward contract (a deal to buy Acme at the strike on the expiry date), and its delta is $e^{-qT}$ whatever Acme does. So the two deltas always differ by the dividend drag, and their charms differ by the drag's calendar slope, $q\,e^{-qT}$ = 0.019604. The put's charm is −0.035639 − 0.019604 = −0.055243. The put's delta, −0.393348, falls further from zero: it loses what the call's delta loses, and also the drag's gain.
 
 ### Step 5: why the at-the-money delta settles near a half, and then jumps
 
 Put Acme exactly at the strike. Then $\ln(S/K) = 0$, and $d_1 = (r - q + \tfrac12\sigma^2)\sqrt{T}/\sigma$ shrinks to 0 as $T$ runs out. $N(0)$ is one half and the drag goes to 1. So the delta drifts to one half: 58.69 shares per 100 calls with a year left, 52.79 with a month, 50.11 with an hour. The bell piece's slide there is $(r - q + \tfrac12\sigma^2)/(2\sigma\sqrt{T})$, which grows without limit as $T$ shrinks, but slowly enough that the total drift stays finite.
 
-Move Acme off the strike and the distance part of $d_1$ takes over, since it is divided by $\sqrt{T}$. With Acme at $105, $d_1$ runs off toward plus infinity and delta to one full share; at $95 toward minus infinity and delta to zero. A call sitting at the strike on the final day is balanced between those two fates. The smallest move at the close decides which, so its delta jumps from about a half to 0 or 1. Charm near the strike and near expiry is therefore huge, as the charm chart further down shows.
+Move Acme off the strike and the distance part of $d_1$ takes over, since it is divided by $\sqrt{T}$. With Acme at $105, $d_1$ runs off toward plus infinity and delta to one full share; at $95 toward minus infinity and delta to zero.
+
+A call sitting at the strike on the final day is balanced between those two fates. The smallest move at the close decides which, so its delta jumps from about a half to 0 or 1. Charm near the strike and near expiry is therefore huge, as the charm chart further down shows.
 
 ### Another door: charm is also theta's slope in the stock price
 
@@ -220,13 +228,23 @@ xychart-beta
     line [-0.71, -16.04, -97.49, -164.10, -16.15, 122.91, 87.41, 27.08, 6.00]
 ```
 
-Flattest line (orange): one year left. Middle (green): three months left. Sharpest (dark blue): one month left. Below the strike charm is negative, since those deltas are dying toward zero. Above it, charm is positive, since those deltas are climbing to one share. Near the strike the two sides pull apart harder as expiry nears: with one month left, charm is −164.10 at $95 and +122.91 at $105, in shares per 100 calls per year. Far from the strike the fate is already settled and charm fades again, as at $80 with a month left.
+Flattest line (orange): one year left. Middle (green): three months left. Sharpest (dark blue): one month left.
+
+Below the strike charm is negative, since those deltas are dying toward zero. Above it, charm is positive, since those deltas are climbing to one share. Near the strike the two sides pull apart harder as expiry nears: with one month left, charm is −164.10 at $95 and +122.91 at $105, in shares per 100 calls per year. Far from the strike the fate is already settled and charm fades again, as at $80 with a month left.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code computes the house call's charm by **five independent roads**: the formula; delta from its own formula, nudged in time; the price nudged in both Acme's price and time, with no delta formula at all; the theta card's formula nudged in Acme's price; and delta rebuilt as an average over the bell curve by Simpson's rule, with no $N$ and no $d_1$, then nudged in time. The put's charm is checked against its own delta nudged in time. Charm added up across a month is checked against the repriced month. Every number on the card is printed. The bell-curve area is a power series in Python and a sum of thin slices in Rust.
+The code computes the house call's charm by **five independent roads**:
+
+1. the formula;
+2. delta from its own formula, nudged in time;
+3. the price nudged in both Acme's price and time, with no delta formula at all;
+4. the theta card's formula nudged in Acme's price;
+5. delta rebuilt as an average over the bell curve by Simpson's rule (adding up thin slices under a curve), with no $N$ and no $d_1$, then nudged in time.
+
+The put's charm is checked against its own delta nudged in time. Charm added up across a month is checked against the repriced month. Every number on the card is printed. The bell-curve area is a power series in Python and a sum of thin slices in Rust.
 
 ### Python
 
@@ -578,6 +596,338 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line at the printed precision, from different routes to the bell-curve area.
+
+### Lean
+
+Lean proves the charm formulas, the slide, and charm as theta's slope, for every positive $S$, $K$, $\sigma$ and time left.
+
+- Take $S$, $K$ and $\sigma$ above zero, and a date before expiry. Then the call's delta has calendar slope $\chi_C$, exactly as in the formula above.
+- Take the same conditions. Then the put's delta has calendar slope $\chi_P = \chi_C - q\,e^{-qT}$.
+- Take $S$, $K$, $\sigma$ and $T$ above zero. Then $\partial d_1/\partial T$ equals the slide, exactly as written in Step 2.
+- Take the same conditions as for the call. Then theta's slope in $S$ is the call's charm, $\chi_C$.
+- Take the house call. Then $d_1 = 0.25$ and $d_2 = 0.05$ exactly, and the slide's arithmetic gives 0.125.
+
+The decimal values, the nudged roads, the month added up and the overnight hedge changes are left to the Python and Rust checks.
+
+```lean
+-- Charm: in the Black-Scholes model the slope of the call's delta against the calendar, share price frozen, is q e^(-qT) N(d₁) - e^(-qT) φ(d₁) (2(r-q)T - d₂σ√T)/(2Tσ√T), the put's charm is that minus q e^(-qT), and charm is also the slope of theta in the share price.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.Calculus.Deriv.Shift
+
+open MeasureTheory ProbabilityTheory Real
+
+/-! The model: `N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`, the area under the standard
+bell curve to the left of `x`, and `φ(x)` is Mathlib's `gaussianPDFReal 0 1 x`, its height.
+Share price `S`, strike `K`, riskless rate `r`, dividend yield `q`, volatility `σ`, time left
+`T` in years. `d₁ = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)` and `d₂ = d₁ - σ √T`.
+Charm is the slope of delta against today's date `t`, with expiry fixed at date `E`, so the
+time left is `T = E - t`; the share price, rates and volatility are held still. -/
+
+/-- `d₁ = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)`. -/
+noncomputable def bsD1 (S K r q σ T : ℝ) : ℝ :=
+  (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- `d₂ = d₁ - σ √T`. -/
+noncomputable def bsD2 (S K r q σ T : ℝ) : ℝ :=
+  bsD1 S K r q σ T - σ * √T
+
+/-- The call's delta, from the delta card: `Δ_C = e^(-qT) N(d₁)`. -/
+noncomputable def callDelta (S K r q σ T : ℝ) : ℝ :=
+  exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T)
+
+/-- The put's delta, from the delta card: `Δ_P = -e^(-qT) N(-d₁)`. -/
+noncomputable def putDelta (S K r q σ T : ℝ) : ℝ :=
+  -(exp (-(q * T)) * cdf (gaussianReal 0 1) (-bsD1 S K r q σ T))
+
+/-- The card's call charm formula:
+`χ_C = q e^(-qT) N(d₁) - e^(-qT) φ(d₁) (2(r - q)T - d₂ σ √T) / (2T σ √T)`. -/
+noncomputable def callCharm (S K r q σ T : ℝ) : ℝ :=
+  q * exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T) -
+    exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) *
+      ((2 * (r - q) * T - bsD2 S K r q σ T * (σ * √T)) / (2 * T * (σ * √T)))
+
+/-- The Black-Scholes call `C = S e^(-qT) N(d₁) - K e^(-rT) N(d₂)`. -/
+noncomputable def bsCall (S K r q σ T : ℝ) : ℝ :=
+  S * exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T) -
+    K * exp (-(r * T)) * cdf (gaussianReal 0 1) (bsD2 S K r q σ T)
+
+
+lemma charm_phi_eq (x : ℝ) : gaussianPDFReal 0 1 x = (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := by
+  simp [gaussianPDFReal]
+
+lemma charm_phi_continuous : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma charm_phi_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal]
+
+lemma charm_N_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal]
+  exact setIntegral_nonneg measurableSet_Iic (fun t _ => gaussianPDFReal_nonneg _ _ _)
+
+lemma charm_N_sub (a b : ℝ) :
+    cdf (gaussianReal 0 1) b - cdf (gaussianReal 0 1) a = ∫ t in a..b, gaussianPDFReal 0 1 t := by
+  rw [charm_N_eq_integral, charm_N_eq_integral]
+  exact intervalIntegral.integral_Iic_sub_Iic (integrable_gaussianPDFReal 0 1).integrableOn
+    (integrable_gaussianPDFReal 0 1).integrableOn
+
+lemma charm_N_hasDerivAt (x : ℝ) :
+    HasDerivAt (fun y => cdf (gaussianReal 0 1) y) (gaussianPDFReal 0 1 x) x := by
+  have h : (fun y => cdf (gaussianReal 0 1) y) =
+      fun y => cdf (gaussianReal 0 1) 0 + ∫ t in (0:ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y; rw [← charm_N_sub]; ring
+  rw [h]
+  exact (intervalIntegral.integral_hasDerivAt_right (charm_phi_continuous.intervalIntegrable _ _)
+    (charm_phi_continuous.stronglyMeasurableAtFilter _ _)
+    charm_phi_continuous.continuousAt).const_add _
+
+lemma charm_N_add_N_neg (x : ℝ) :
+    cdf (gaussianReal 0 1) x + cdf (gaussianReal 0 1) (-x) = 1 := by
+  rw [charm_N_eq_integral, charm_N_eq_integral, ← integral_comp_neg_Ioi]
+  simp_rw [charm_phi_neg]
+  rw [← Set.compl_Iic, integral_add_compl measurableSet_Iic (integrable_gaussianPDFReal 0 1),
+    integral_gaussianPDFReal_eq_one 0 one_ne_zero]
+
+lemma charm_phi_hasDerivAt (x : ℝ) :
+    HasDerivAt (fun y => gaussianPDFReal 0 1 y) (-x * gaussianPDFReal 0 1 x) x := by
+  have h : (fun y => gaussianPDFReal 0 1 y) = fun y => (√(2 * π))⁻¹ * exp (-y ^ 2 / 2) := by
+    funext y; exact charm_phi_eq y
+  rw [h, charm_phi_eq]
+  have := ((((hasDerivAt_pow 2 x).neg).div_const 2).exp).const_mul (√(2 * π))⁻¹
+  refine this.congr_deriv ?_
+  simp; ring
+
+/-- `K e^(-rT) φ(d₂) = S e^(-qT) φ(d₁)`. -/
+lemma charm_key (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    K * exp (-(r * T)) * gaussianPDFReal 0 1 (bsD2 S K r q σ T)
+      = S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) := by
+  have hs : 0 < σ * √T := mul_pos hσ (Real.sqrt_pos.2 hT)
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  unfold bsD2
+  set d := bsD1 S K r q σ T with hd_def
+  have hd : d * (σ * √T) = log (S / K) + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd_def, bsD1]; field_simp
+  have hexp : -(d - σ * √T) ^ 2 / 2 + -(r * T) = -d ^ 2 / 2 + -(q * T) + log (S / K) := by
+    linear_combination hd - (σ ^ 2 / 2) * hsq
+  rw [charm_phi_eq, charm_phi_eq]
+  rw [show K * exp (-(r * T)) * ((√(2 * π))⁻¹ * exp (-(d - σ * √T) ^ 2 / 2))
+      = (√(2 * π))⁻¹ * K * exp (-(d - σ * √T) ^ 2 / 2 + -(r * T)) by rw [exp_add]; ring,
+    hexp, exp_add, exp_add, exp_log (div_pos hS hK)]
+  field_simp
+
+/-- The slope of `d₁` in the time left. -/
+lemma charm_slide (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun τ : ℝ => bsD1 S K r q σ τ)
+      ((2 * (r - q) * T - bsD2 S K r q σ T * (σ * √T)) / (2 * T * (σ * √T))) T := by
+  have hw : 0 < √T := Real.sqrt_pos.2 hT
+  have hsqrt : HasDerivAt (fun τ => √τ) (1 / (2 * √T)) T := Real.hasDerivAt_sqrt hT.ne'
+  have hnum : HasDerivAt (fun τ => log (S / K) + (r - q + σ ^ 2 / 2) * τ)
+      (r - q + σ ^ 2 / 2) T := by
+    simpa using ((hasDerivAt_id T).const_mul (r - q + σ ^ 2 / 2)).const_add (log (S / K))
+  have hden : HasDerivAt (fun τ => σ * √τ) (σ * (1 / (2 * √T))) T := hsqrt.const_mul σ
+  have := hnum.div hden (by positivity)
+  show HasDerivAt (fun τ => (log (S / K) + (r - q + σ ^ 2 / 2) * τ) / (σ * √τ)) _ T
+  refine this.congr_deriv ?_
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  unfold bsD2 bsD1
+  clear this hden hnum hsqrt
+  generalize √T = w at hsq hw ⊢
+  subst hsq
+  field_simp
+  ring
+
+/-- The call price's slope in the time left. -/
+lemma charm_call_T (s K r q σ T : ℝ) (hs : 0 < s) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun τ : ℝ => bsCall s K r q σ τ)
+      (-(q * s * exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 s K r q σ T)) +
+        r * K * exp (-(r * T)) * cdf (gaussianReal 0 1) (bsD2 s K r q σ T) +
+        s * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 s K r q σ T) * (σ / (2 * √T))) T := by
+  have hd1 := charm_slide s K r q σ T hσ hT
+  have hd2 : HasDerivAt (fun τ => bsD2 s K r q σ τ)
+      ((2 * (r - q) * T - bsD2 s K r q σ T * (σ * √T)) / (2 * T * (σ * √T)) -
+        σ * (1 / (2 * √T))) T :=
+    hd1.sub ((Real.hasDerivAt_sqrt hT.ne').const_mul σ)
+  have hEq : HasDerivAt (fun τ => exp (-(q * τ))) (exp (-(q * T)) * -(q * 1)) T :=
+    (((hasDerivAt_id' T).const_mul q).neg).exp
+  have hEr : HasDerivAt (fun τ => exp (-(r * τ))) (exp (-(r * T)) * -(r * 1)) T :=
+    (((hasDerivAt_id' T).const_mul r).neg).exp
+  have hN1 := (charm_N_hasDerivAt (bsD1 s K r q σ T)).comp T hd1
+  have hN2 := (charm_N_hasDerivAt (bsD2 s K r q σ T)).comp T hd2
+  have := ((hEq.const_mul s).mul hN1).sub ((hEr.const_mul K).mul hN2)
+  refine this.congr_deriv ?_
+  simp only [Function.comp_apply]
+  have key := charm_key s K r q σ T hs hK hσ hT
+  have hφ2 : gaussianPDFReal 0 1 (bsD2 s K r q σ T) =
+      s * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 s K r q σ T) / (K * exp (-(r * T))) := by
+    rw [← key]; field_simp
+  rw [hφ2]
+  have hw : 0 < √T := Real.sqrt_pos.2 hT
+  field_simp
+  ring
+
+/-- Theta, written out: the call price's slope against the date. -/
+lemma charm_theta (s K r q σ E t : ℝ) (hs : 0 < s) (hK : 0 < K) (hσ : 0 < σ) (ht : t < E) :
+    deriv (fun u : ℝ => bsCall s K r q σ (E - u)) t =
+      q * exp (-(q * (E - t))) * (s * cdf (gaussianReal 0 1) (bsD1 s K r q σ (E - t))) -
+        r * K * exp (-(r * (E - t))) * cdf (gaussianReal 0 1) (bsD2 s K r q σ (E - t)) -
+        exp (-(q * (E - t))) * (σ / (2 * √(E - t))) *
+          (s * gaussianPDFReal 0 1 (bsD1 s K r q σ (E - t))) := by
+  have h := (charm_call_T s K r q σ (E - t) hs hK hσ (sub_pos.2 ht)).comp_const_sub E t
+  rw [h.deriv]; ring
+
+/-- The slope of theta's closed form in the share price. -/
+lemma charm_theta_slope (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun s : ℝ =>
+      q * exp (-(q * T)) * (s * cdf (gaussianReal 0 1) (bsD1 s K r q σ T)) -
+        r * K * exp (-(r * T)) * cdf (gaussianReal 0 1) (bsD2 s K r q σ T) -
+        exp (-(q * T)) * (σ / (2 * √T)) * (s * gaussianPDFReal 0 1 (bsD1 s K r q σ T)))
+      (callCharm S K r q σ T) S := by
+  have hl : HasDerivAt (fun s => log (s / K)) (1 / S) S := by
+    have := ((hasDerivAt_id' S).div_const K).log (div_pos hS hK).ne'
+    refine this.congr_deriv ?_
+    field_simp
+  have hd1 : HasDerivAt (fun s => bsD1 s K r q σ T) (1 / S / (σ * √T)) S :=
+    (hl.add_const ((r - q + σ ^ 2 / 2) * T)).div_const (σ * √T)
+  have hd2 : HasDerivAt (fun s => bsD2 s K r q σ T) (1 / S / (σ * √T)) S :=
+    hd1.sub_const (σ * √T)
+  have hN1 := (charm_N_hasDerivAt (bsD1 S K r q σ T)).comp S hd1
+  have hN2 := (charm_N_hasDerivAt (bsD2 S K r q σ T)).comp S hd2
+  have hP1 := (charm_phi_hasDerivAt (bsD1 S K r q σ T)).comp S hd1
+  have := ((((hasDerivAt_id' S).mul hN1).const_mul (q * exp (-(q * T)))).sub
+    (hN2.const_mul (r * K * exp (-(r * T))))).sub
+    (((hasDerivAt_id' S).mul hP1).const_mul (exp (-(q * T)) * (σ / (2 * √T))))
+  refine this.congr_deriv ?_
+  simp only [Function.comp_apply]
+  have key := charm_key S K r q σ T hS hK hσ hT
+  have hφ2 : gaussianPDFReal 0 1 (bsD2 S K r q σ T) =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) / (K * exp (-(r * T))) := by
+    rw [← key]; field_simp
+  rw [hφ2]
+  unfold callCharm bsD2
+  have hw : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  clear this hN1 hN2 hP1 hd1 hd2 hl key hφ2
+  generalize bsD1 S K r q σ T = d
+  generalize √T = w at hsq hw ⊢
+  subst hsq
+  field_simp
+  ring
+
+/-- **Charm, call and put** (The formula; Why it works, Steps 0 to 4). In the Black-Scholes
+model, with a positive share price and strike, positive volatility, and today's date `t` before
+the expiry date `E`, hold the share price, rates and volatility still and move only the
+calendar. Then the call's delta `e^(-qT) N(d₁)`, with `T = E - t`, has slope against the date
+`χ_C = q e^(-qT) N(d₁) - e^(-qT) φ(d₁) (2(r - q)T - d₂ σ √T) / (2T σ √T)`, and the put's delta
+`-e^(-qT) N(-d₁)` has slope `χ_P = χ_C - q e^(-qT)`. -/
+theorem charm_eq_dividend_piece_minus_bell_piece
+    (S K r q σ E t : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (ht : t < E) :
+    HasDerivAt (fun u : ℝ => callDelta S K r q σ (E - u)) (callCharm S K r q σ (E - t)) t ∧
+      HasDerivAt (fun u : ℝ => putDelta S K r q σ (E - u))
+        (callCharm S K r q σ (E - t) - q * exp (-(q * (E - t)))) t := by
+  have hT := sub_pos.2 ht
+  have hd1 := (charm_slide S K r q σ (E - t) hσ hT).comp_const_sub E t
+  have hE : HasDerivAt (fun u => exp (-(q * (E - u)))) (q * exp (-(q * (E - t)))) t := by
+    have := ((((hasDerivAt_id' t).const_sub E).const_mul q).neg).exp
+    refine this.congr_deriv ?_
+    simp only [Pi.neg_apply]; ring
+  have hN := (charm_N_hasDerivAt _).comp t hd1
+  have hC : HasDerivAt (fun u : ℝ => callDelta S K r q σ (E - u))
+      (callCharm S K r q σ (E - t)) t := by
+    have := hE.mul hN
+    refine this.congr_deriv ?_
+    simp only [Function.comp_apply]
+    unfold callCharm; ring
+  refine ⟨hC, ?_⟩
+  have hfun : (fun u : ℝ => putDelta S K r q σ (E - u)) =
+      fun u => callDelta S K r q σ (E - u) - exp (-(q * (E - u))) := by
+    funext u
+    unfold putDelta callDelta
+    have := charm_N_add_N_neg (bsD1 S K r q σ (E - u))
+    linear_combination (-exp (-(q * (E - u)))) * this
+  rw [hfun]
+  exact hC.sub hE
+
+/-- **The slide** (Step 2 and the detailed proof). With a positive share price and strike,
+positive volatility and positive time left, the slope of `d₁` in the time left is
+`∂d₁/∂T = (2(r - q)T - d₂ σ √T) / (2T σ √T)`. -/
+theorem d1_slide_in_time_left
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun τ : ℝ => bsD1 S K r q σ τ)
+      ((2 * (r - q) * T - bsD2 S K r q σ T * (σ * √T)) / (2 * T * (σ * √T))) T := by
+  exact charm_slide S K r q σ T hσ hT
+
+/-- **Another door: charm is theta's slope in the share price.** With a positive share price
+and strike, positive volatility, and today's date `t` before the expiry date `E`, write theta
+for the call price's slope against the date. Then theta's slope in the share price, at `S`, is
+the call's charm. -/
+theorem charm_eq_slope_of_theta_in_share_price
+    (S K r q σ E t : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (ht : t < E) :
+    HasDerivAt (fun s : ℝ => deriv (fun u : ℝ => bsCall s K r q σ (E - u)) t)
+      (callCharm S K r q σ (E - t)) S := by
+  refine (charm_theta_slope S K r q σ (E - t) hS hK hσ (sub_pos.2 ht)).congr_of_eventuallyEq ?_
+  filter_upwards [Ioi_mem_nhds hS] with s hs
+  exact charm_theta s K r q σ E t hs hK hσ ht
+
+/-! The card's worked numbers that are exact fractions, for the house call:
+S = 100, K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1. -/
+
+-- d₁ = (ln(100/100) + (0.05 - 0.02 + 0.02) × 1) / (0.20 × √1) = 0.25.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 = 1 / 4 := by
+  norm_num [bsD1]
+
+-- d₂ = d₁ - σ√T = 0.25 - 0.20 = 0.05.
+example : bsD2 100 100 (5 / 100) (2 / 100) (1 / 5) 1 = 1 / 20 := by
+  norm_num [bsD2, bsD1]
+
+-- The slide: (2 × 0.03 × 1 - 0.05 × 0.20) / (2 × 1 × 0.20) = 0.05 / 0.40 = 0.125.
+example : ((2 : ℚ) * (5 / 100 - 2 / 100) * 1 - 1 / 20 * (1 / 5)) / (2 * 1 * (1 / 5)) = 1 / 8 := by
+  norm_num
+
+#print axioms charm_eq_dividend_piece_minus_bell_piece
+#print axioms d1_slide_in_time_left
+#print axioms charm_eq_slope_of_theta_in_share_price
+#print axioms charm_phi_eq
+#print axioms charm_phi_continuous
+#print axioms charm_phi_neg
+#print axioms charm_N_eq_integral
+#print axioms charm_N_sub
+#print axioms charm_N_hasDerivAt
+#print axioms charm_N_add_N_neg
+#print axioms charm_phi_hasDerivAt
+#print axioms charm_key
+#print axioms charm_slide
+#print axioms charm_call_T
+#print axioms charm_theta
+#print axioms charm_theta_slope
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'charm_eq_dividend_piece_minus_bell_piece' depends on axioms: [propext, Classical.choice, Quot.sound]
+'d1_slide_in_time_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_eq_slope_of_theta_in_share_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_phi_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_phi_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_phi_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_N_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_N_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_N_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_N_add_N_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_phi_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_slide' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_call_T' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_theta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'charm_theta_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

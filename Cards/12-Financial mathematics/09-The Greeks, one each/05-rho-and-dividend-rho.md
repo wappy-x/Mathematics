@@ -6,13 +6,19 @@
 
 ## General Overview
 
-Acme shares trade at $100. A one-year call option on Acme, struck at $100, costs $9.23. That price came from six inputs: the share price, the strike, the time left, the volatility (how jumpy Acme is), and two rates. The bank pays 5 percent a year on cash. Acme pays out 2 percent of its price a year as dividends.
+Acme shares trade at $100. A one-year call option on Acme, struck at $100, costs $9.23. The call is the right to buy one Acme share a year from now for $100, the strike.
+
+That price came from six inputs: the share price, the strike, the time left, the volatility (how jumpy Acme is), and two rates. The bank pays 5 percent a year on cash. Acme pays out 2 percent of its price a year as dividends.
 
 Now the central bank moves, and cash earns 6 percent instead of 5. Acme's price, the strike and the year are unchanged. The call is now worth $9.73: fifty cents from a rate decision alone.
 
-**Rho** is the name for that sensitivity: dollars of option price per unit of interest rate, with every other input held still. **Dividend rho** is the same question asked about the dividend yield. For the Acme call, rho is 49.46 and dividend rho is −58.69. One unit of rate is 100 percentage points, so those raw numbers get scaled before anyone uses them. A move of one percentage point is worth about $0.49 on this call. A move of one basis point, a hundredth of a percentage point, is worth about half a cent: 0.0049.
+**Rho** is the name for that sensitivity: dollars of option price per unit of interest rate, with every other input held still. **Dividend rho** is the same question asked about the dividend yield. For the Acme call, rho is 49.46 and dividend rho is −58.69.
 
-The Black–Scholes price is a share half minus a cash half ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The interest rate reaches the price in two places: the discount on the cash half, and the chances of exercise inside both halves. The card proves that the second effect cancels to zero. Only the discount on the strike is left doing the moving. The dividend yield is the mirror case: only the dividend drag on the share half moves.
+One unit of rate is 100 percentage points, so those raw numbers get scaled before anyone uses them. A move of one percentage point is worth about $0.49 on this call. A move of one basis point, a hundredth of a percentage point, is worth about half a cent: 0.0049.
+
+The Black–Scholes price is a share half minus a cash half ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The share half, $58.69, is today's value of the share the holder may receive. The cash half, $49.46, is today's value of the strike the holder may pay.
+
+The interest rate reaches the price in two places: the discount on the cash half, and the chances of exercise inside both halves. The card proves that the second effect cancels to zero. Only the discount on the strike is left doing the moving. The dividend yield is the mirror case: only the dividend drag on the share half moves.
 
 **Rho is the time to expiry times the cash half of the price, and dividend rho is minus the time to expiry times the share half; every other effect of the rate cancels.**
 
@@ -56,12 +62,12 @@ The put holder receives the strike instead of paying it, so every sign flips, an
 | $\rho_q$ | dividend rho: dollars of call price per unit of dividend yield | −58.69 | is the answer |
 | $C$, $P$ | today's price of the call, and of the put | $9.23 and $6.33 | — |
 | $S$ | Acme's share price today | $100 | rho rises: exercise gets likelier, so the strike is likelier to be paid |
-| $K$ | the strike: the cash paid for the share on exercise | $100 | rho falls here: exercise gets less likely (12.80 at a $130 strike); only deep in the money does a higher strike raise it |
+| $K$ | the strike: the cash paid for the share on exercise | $100 | rho falls here: exercise gets less likely (12.80 at a $130 strike); only deep in the money (Acme far above the strike) does a higher strike raise it |
 | $r$ | the bank rate, continuously compounded, as a decimal | 0.05 | rho rises a little: the chance of exercise grows faster than the discount shrinks |
 | $q$ | the dividend yield, continuously compounded, as a decimal | 0.02 | rho falls: dividends drag the share down, exercise gets less likely |
 | $\sigma$ | volatility: the yearly spread of Acme's log-returns | 0.20 | rho falls here: a wider spread pushes $d_2$ down |
 | $T$ | years to expiry | 1 | rho rises hard: 12.59 at three months, 341.37 at ten years |
-| $N(x)$, $\varphi(x)$ | the bell-curve area to the left of $x$, and the bell curve's height at $x$ | $N(d_2) = 0.5199$ | — |
+| $N(x)$, $\varphi(x)$ | the bell-curve area to the left of $x$, and the bell curve's height at $x$ (its density) | $N(d_2) = 0.5199$ | — |
 | $d_1$, $d_2$ | how far Acme sits from the strike, in units of $\sigma\sqrt{T}$; $d_1 = d_2 + \sigma\sqrt{T}$ | 0.25 and 0.05 | — |
 | $e^{-rT}$, $e^{-qT}$ | the discount on a dollar due at expiry, and the dividend drag on a share | 0.9512 and 0.9802 | — |
 
@@ -135,7 +141,9 @@ After the cancellation one term survives:
 
 $$\rho = K\,T\,e^{-rT}N(d_2).$$
 
-It is the derivative of the discount factor on the cash half, and nothing else. Read it as: the strike you may pay at expiry is $K$ dollars, owed with chance $N(d_2)$, worth $K e^{-rT}N(d_2)$ today. Raise the rate by a small step and that obligation shrinks by $T$ times the step, as a fraction of itself, because a rate is a per-year number and the payment is $T$ years away. A call holder owes the strike, so a cheaper obligation makes the call dearer. Rho for a call is never negative. It runs from 0, far out of the money, up to $K T e^{-rT} = 95.12$, deep in the money, where the strike is certain to be paid.
+It is the derivative of the discount factor on the cash half, and nothing else. Read it as: the strike you may pay at expiry is $K$ dollars, owed with chance $N(d_2)$, worth $K e^{-rT}N(d_2)$ today. Raise the rate by a small step and that obligation shrinks by $T$ times the step, as a fraction of itself, because a rate is a per-year number and the payment is $T$ years away.
+
+A call holder owes the strike, so a cheaper obligation makes the call dearer. Rho for a call is never negative. It runs from 0, far out of the money (Acme far below the strike), up to $K T e^{-rT} = 95.12$, deep in the money, where the strike is certain to be paid.
 
 The same three steps run on the yield. The yield enters the price only through the dividend drag $e^{-qT}$ on the share half and through the drift inside $d_1$ and $d_2$. The drift part cancels by the same identity. What survives is the derivative of the drag: $\rho_q = -T\,S\,e^{-qT}N(d_1)$. A higher yield means more of Acme's value leaks out as dividends before expiry, and the call holder receives none of them. Dividend rho for a call is negative.
 
@@ -163,7 +171,11 @@ For Acme, $49.46 - 58.69 = -9.23$, which is minus the call's price. The reason: 
 
 ### The other door: differentiate inside the average
 
-The call price is a discounted average of the payoff over the pricing world's possible end prices. Road 4 in the code differentiates inside that average, one possible future at a time. Hold the random draw fixed and raise $r$. Each possible end price grows in proportion to $T$ per unit of rate, because the pricing-world drift is $r - q - \tfrac12\sigma^2$. That adds $T$ times the share half. Meanwhile the discount on the whole payoff tightens, which removes $T$ times the whole call price. Net: $T \times 58.69 - T \times 9.23 = T \times 49.46$, the cash half again. No boundary term appears, because the payoff is zero at the strike. Same answer by a different bookkeeping. The method is the subject of [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md).
+The call price is a discounted average of the payoff over the pricing world's possible end prices. Road 4 in the code differentiates inside that average, one possible future at a time.
+
+Hold the random draw fixed and raise $r$. Each possible end price grows in proportion to $T$ per unit of rate, because the pricing-world drift is $r - q - \tfrac12\sigma^2$. That adds $T$ times the share half. Meanwhile the discount on the whole payoff tightens, which removes $T$ times the whole call price. Net: $T \times 58.69 - T \times 9.23 = T \times 49.46$, the cash half again.
+
+No boundary term appears, because the payoff is zero at the strike. Same answer by a different bookkeeping. The method is the subject of [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md).
 
 ---
 
@@ -614,6 +626,299 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The bumped roads sit within a millionth of the formula: a one-basis-point bump measures a chord, not the exact slope.
 
+### Lean
+
+Lean proves the card's rate slopes for the call and the put, for every positive share price, strike, volatility and time to expiry.
+
+- Take a positive $S$, $K$, $\sigma$ and $T$. Then rho is the time to expiry times the cash half, $K\,T\,e^{-rT}N(d_2)$.
+- Take the same inputs. Then dividend rho is minus the time to expiry times the share half, $-T\,S\,e^{-qT}N(d_1)$.
+- Take the same inputs. Then the put's rho is $-K\,T\,e^{-rT}N(-d_2)$.
+- Take the same inputs. Then the put's dividend rho is $T\,S\,e^{-qT}N(-d_1)$.
+- Take the same inputs, and raise the bank rate and the dividend yield together. Then the call moves at minus $T$ times its own price.
+- Acme's two distances hold exactly in fractions: $d_1 = 0.25$ and $d_2 = 0.05$. So does Step 1's move of 5 per unit of rate.
+
+The bell-curve values, the rest of the worked numbers and the time-to-expiry table are left to the Python and Rust checks.
+
+```lean
+-- Rho and dividend rho: in the Black–Scholes model the slope of the call price in the bank rate is T K e^(-rT) N(d2) and its slope in the dividend yield is -T S e^(-qT) N(d1), with the put and the move-both-rates-together slopes following.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open MeasureTheory ProbabilityTheory Real
+
+lemma rho_cdf_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun t _ => gaussianPDFReal_nonneg _ _ t))]
+
+lemma rho_continuous_pdf : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma rho_cdf_hasDerivAt (z : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (gaussianPDFReal 0 1 z) z := by
+  have hI : ∀ a, IntegrableOn (gaussianPDFReal 0 1) (Set.Iic a) :=
+    fun a => (integrable_gaussianPDFReal 0 1).integrableOn
+  have hfun : (cdf (gaussianReal 0 1) : ℝ → ℝ) =
+      fun x => cdf (gaussianReal 0 1) 0 + ∫ t in (0:ℝ)..x, gaussianPDFReal 0 1 t := by
+    funext x
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI x), rho_cdf_eq_integral,
+      rho_cdf_eq_integral]
+    ring
+  rw [hfun]
+  exact (intervalIntegral.integral_hasDerivAt_right
+    (rho_continuous_pdf.intervalIntegrable _ _)
+    (rho_continuous_pdf.stronglyMeasurableAtFilter _ _)
+    rho_continuous_pdf.continuousAt).const_add _
+
+lemma rho_pdf_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal_def]
+
+lemma rho_share_cash
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    S * exp (-(q * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) =
+      K * exp (-(r * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) := by
+  set d := (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) with hd
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have key : d * (σ * √T) = log S - log K + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd, div_mul_cancel₀ _ (by positivity), Real.log_div hS.ne' hK.ne']
+  simp only [gaussianPDFReal_def, NNReal.coe_one, sub_zero, mul_one]
+  have h : log S + -(q * T) + -d ^ 2 / 2 = log K + -(r * T) + -(d - σ * √T) ^ 2 / 2 := by
+    linear_combination (-1 : ℝ) * key + (σ ^ 2 / 2) * hsq
+  have e1 : S * exp (-(q * T)) * ((√(2 * π))⁻¹ * exp (-d ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log S + -(q * T) + -d ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hS]; ring
+  have e2 : K * exp (-(r * T)) * ((√(2 * π))⁻¹ * exp (-(d - σ * √T) ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log K + -(r * T) + -(d - σ * √T) ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hK]; ring
+  rw [e1, e2, h]
+
+/-- The distance `d1`, seen as a function of the bank rate, has slope `T / (σ √T)`. -/
+lemma rho_d_hasDerivAt_r (S K q σ T r : ℝ) :
+    HasDerivAt (fun x : ℝ => (log (S / K) + (x - q + σ ^ 2 / 2) * T) / (σ * √T))
+      (T / (σ * √T)) r := by
+  have := ((((hasDerivAt_id r).sub_const q).add_const (σ ^ 2 / 2)).mul_const T).const_add
+    (log (S / K)) |>.div_const (σ * √T)
+  exact this.congr_deriv (by ring)
+
+/-- The distance `d1`, seen as a function of the dividend yield, has slope `-T / (σ √T)`. -/
+lemma rho_d_hasDerivAt_q (S K r σ T q : ℝ) :
+    HasDerivAt (fun y : ℝ => (log (S / K) + (r - y + σ ^ 2 / 2) * T) / (σ * √T))
+      (-T / (σ * √T)) q := by
+  have := ((((hasDerivAt_id q).const_sub r).add_const (σ ^ 2 / 2)).mul_const T).const_add
+    (log (S / K)) |>.div_const (σ * √T)
+  exact this.congr_deriv (by ring)
+
+/-- The discount factor `e^(-xT)` has slope `-T e^(-xT)`. -/
+lemma rho_exp_hasDerivAt (T x : ℝ) :
+    HasDerivAt (fun y : ℝ => exp (-(y * T))) (exp (-(x * T)) * -T) x := by
+  simpa using ((hasDerivAt_id x).mul_const T).neg.exp
+
+#print axioms rho_cdf_eq_integral
+#print axioms rho_continuous_pdf
+#print axioms rho_cdf_hasDerivAt
+#print axioms rho_pdf_neg
+#print axioms rho_share_cash
+#print axioms rho_d_hasDerivAt_r
+#print axioms rho_d_hasDerivAt_q
+#print axioms rho_exp_hasDerivAt
+
+/-! The model: `N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`, the area under the standard
+bell curve to the left of `x`. Share price `S`, strike `K`, bank rate `r`, dividend yield `q`,
+volatility `σ`, years `T`.
+`d1 = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)` and `d2 = d1 - σ √T`.
+Call `C = S e^(-qT) N(d1) - K e^(-rT) N(d2)`; put `P = K e^(-rT) N(-d2) - S e^(-qT) N(-d1)`.
+Rho is the slope in `r`, dividend rho the slope in `q`, every other input held still. -/
+
+/-- Rho and dividend rho (the card's main claim, Steps 0 to 4): with a positive share price
+and strike, positive volatility and positive time, the Black–Scholes call price, seen as a
+function of the bank rate alone, has slope `T K e^(-rT) N(d2)` (time times the cash half),
+and, seen as a function of the dividend yield alone, has slope `-T S e^(-qT) N(d1)`
+(minus time times the share half). -/
+theorem call_rho_eq_time_times_cash_half_and_dividend_rho_eq_neg_time_times_share_half
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt
+        (fun x : ℝ =>
+          S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (x - q + σ ^ 2 / 2) * T) / (σ * √T)) -
+            K * exp (-(x * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (x - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T))
+        (T * (K * exp (-(r * T)) *
+            cdf (gaussianReal 0 1)
+              ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T)))
+        r ∧
+      HasDerivAt
+        (fun y : ℝ =>
+          S * exp (-(y * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - y + σ ^ 2 / 2) * T) / (σ * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - y + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T))
+        (-(T * (S * exp (-(q * T)) *
+            cdf (gaussianReal 0 1) ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)))))
+        q := by
+  have hshare := rho_share_cash S K r q σ T hS hK hσ hT
+  constructor
+  · have hD := rho_d_hasDerivAt_r S K q σ T r
+    have hD2 := hD.sub_const (σ * √T)
+    have hN1 := (rho_cdf_hasDerivAt
+      ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T))).comp r hD
+    have hN2 := (rho_cdf_hasDerivAt
+      ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T)).comp r hD2
+    have := (hN1.const_mul (S * exp (-(q * T)))).sub
+      (((rho_exp_hasDerivAt T r).const_mul K).mul hN2)
+    refine this.congr_deriv ?_
+    simp only [Function.comp_apply]
+    linear_combination (T / (σ * √T)) * hshare
+  · have hD := rho_d_hasDerivAt_q S K r σ T q
+    have hD2 := hD.sub_const (σ * √T)
+    have hN1 := (rho_cdf_hasDerivAt
+      ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T))).comp q hD
+    have hN2 := (rho_cdf_hasDerivAt
+      ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T)).comp q hD2
+    have := (((rho_exp_hasDerivAt T q).const_mul S).mul hN1).sub
+      (hN2.const_mul (K * exp (-(r * T))))
+    refine this.congr_deriv ?_
+    simp only [Function.comp_apply]
+    linear_combination (-(T / (σ * √T))) * hshare
+
+/-- The put (the formula and Step 5): with a positive share price and strike, positive
+volatility and positive time, the Black–Scholes put price has slope `-T K e^(-rT) N(-d2)`
+in the bank rate and slope `T S e^(-qT) N(-d1)` in the dividend yield. -/
+theorem put_rho_and_put_dividend_rho
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt
+        (fun x : ℝ =>
+          K * exp (-(x * T)) *
+              cdf (gaussianReal 0 1)
+                (-((log (S / K) + (x - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T)) -
+            S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) (-((log (S / K) + (x - q + σ ^ 2 / 2) * T) / (σ * √T))))
+        (-(T * (K * exp (-(r * T)) *
+            cdf (gaussianReal 0 1)
+              (-((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T)))))
+        r ∧
+      HasDerivAt
+        (fun y : ℝ =>
+          K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                (-((log (S / K) + (r - y + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T)) -
+            S * exp (-(y * T)) *
+              cdf (gaussianReal 0 1) (-((log (S / K) + (r - y + σ ^ 2 / 2) * T) / (σ * √T))))
+        (T * (S * exp (-(q * T)) *
+            cdf (gaussianReal 0 1) (-((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)))))
+        q := by
+  have hshare := rho_share_cash S K r q σ T hS hK hσ hT
+  constructor
+  · have hD := rho_d_hasDerivAt_r S K q σ T r
+    have hD2 := hD.sub_const (σ * √T)
+    have hN3 := (rho_cdf_hasDerivAt
+      (-((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T))).comp r hD2.neg
+    have hN4 := (rho_cdf_hasDerivAt
+      (-((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)))).comp r hD.neg
+    rw [rho_pdf_neg] at hN3 hN4
+    have := (((rho_exp_hasDerivAt T r).const_mul K).mul hN3).sub
+      (hN4.const_mul (S * exp (-(q * T))))
+    refine this.congr_deriv ?_
+    simp only [Function.comp_apply]
+    linear_combination (T / (σ * √T)) * hshare
+  · have hD := rho_d_hasDerivAt_q S K r σ T q
+    have hD2 := hD.sub_const (σ * √T)
+    have hN3 := (rho_cdf_hasDerivAt
+      (-((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T))).comp q hD2.neg
+    have hN4 := (rho_cdf_hasDerivAt
+      (-((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)))).comp q hD.neg
+    rw [rho_pdf_neg] at hN3 hN4
+    have := (hN3.const_mul (K * exp (-(r * T)))).sub
+      (((rho_exp_hasDerivAt T q).const_mul S).mul hN4)
+    refine this.congr_deriv ?_
+    simp only [Function.comp_apply]
+    linear_combination (-(T / (σ * √T))) * hshare
+
+/-- Move both rates together (Step 6): with a positive share price and strike, positive
+volatility and positive time, raising the bank rate and the dividend yield by the same step
+`h` changes the call price at the slope `-T C`: minus the time to expiry times the call's
+own price. -/
+theorem call_slope_when_both_rates_move_together_eq_neg_time_times_price
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt
+        (fun h : ℝ =>
+          S * exp (-((q + h) * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + ((r + h) - (q + h) + σ ^ 2 / 2) * T) / (σ * √T)) -
+            K * exp (-((r + h) * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + ((r + h) - (q + h) + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T))
+        (-(T * (S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T))))
+        0 := by
+  have hc : ∀ h : ℝ, (log (S / K) + ((r + h) - (q + h) + σ ^ 2 / 2) * T) / (σ * √T) =
+      (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) := fun h => by ring
+  have hD : HasDerivAt
+      (fun h : ℝ => (log (S / K) + ((r + h) - (q + h) + σ ^ 2 / 2) * T) / (σ * √T)) 0 0 := by
+    simp only [hc]; exact hasDerivAt_const _ _
+  have hD2 := hD.sub_const (σ * √T)
+  have hEq : HasDerivAt (fun h : ℝ => exp (-((q + h) * T))) (exp (-(q * T)) * -T) 0 := by
+    simpa using (((hasDerivAt_id (0 : ℝ)).const_add q).mul_const T).neg.exp
+  have hEr : HasDerivAt (fun h : ℝ => exp (-((r + h) * T))) (exp (-(r * T)) * -T) 0 := by
+    simpa using (((hasDerivAt_id (0 : ℝ)).const_add r).mul_const T).neg.exp
+  have hN1 := (rho_cdf_hasDerivAt
+    ((log (S / K) + ((r + 0) - (q + 0) + σ ^ 2 / 2) * T) / (σ * √T))).comp (0 : ℝ) hD
+  have hN2 := (rho_cdf_hasDerivAt
+    ((log (S / K) + ((r + 0) - (q + 0) + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T)).comp (0 : ℝ)
+      hD2
+  have := ((hEq.const_mul S).mul hN1).sub ((hEr.const_mul K).mul hN2)
+  refine this.congr_deriv ?_
+  simp only [Function.comp_apply, add_zero, mul_zero]
+  ring
+
+/-! The card's worked numbers that are exact fractions, for Acme:
+S = 100, K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1. -/
+
+-- d1 = (ln(100/100) + (0.05 - 0.02 + 0.02) × 1) / (0.20 × √1) = 0.25.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) =
+      1 / 4 := by
+  norm_num
+
+-- d2 = d1 - σ √T = 0.25 - 0.20 = 0.05.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) -
+        1 / 5 * √1 = 1 / 20 := by
+  norm_num
+
+-- Step 1: both distances move by T / (σ √T) = √T / σ = 1 / 0.20 = 5 per unit of rate.
+example : (1 : ℝ) / (1 / 5 * √1) = 5 := by norm_num
+
+#print axioms call_rho_eq_time_times_cash_half_and_dividend_rho_eq_neg_time_times_share_half
+#print axioms put_rho_and_put_dividend_rho
+#print axioms call_slope_when_both_rates_move_together_eq_neg_time_times_price
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rho_cdf_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rho_continuous_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rho_cdf_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rho_pdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rho_share_cash' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rho_d_hasDerivAt_r' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rho_d_hasDerivAt_q' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rho_exp_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_rho_eq_time_times_cash_half_and_dividend_rho_eq_neg_time_times_share_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'put_rho_and_put_dividend_rho' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_slope_when_both_rates_move_together_eq_neg_time_times_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -632,7 +937,7 @@ The two outputs agree line for line. The bumped roads sit within a millionth of 
 > Smaller traps:
 > - **Units.** The formula gives dollars per unit of rate, where one unit is 100 percentage points. Per percentage point divide by 100 (0.49); per basis point divide by 10,000 (0.0049). A report that mixes them is off by a hundred or ten thousand times.
 > - **The wrong chance.** $N(d_1)$ in rho gives 56.95 instead of 49.46. Rho uses the dollar-counted chance $N(d_2)$; dividend rho uses the share-counted chance $N(d_1)$.
-> - **Same rho for call and put.** The two share gamma and vega, but not rho. Parity puts them $K T e^{-rT}$ apart: 49.46 and −45.66, not ±49.46.
+> - **Same rho for call and put.** The two share [Gamma](02-gamma.md) and [Vega](03-vega.md), but not rho. Parity puts them $K T e^{-rT}$ apart: 49.46 and −45.66, not ±49.46.
 > - **Forgetting the dividend rho.** For the Acme call it is larger than rho, −58.69 against 49.46. A desk that hedges rates but not the dividend forecast has hedged the smaller risk.
 
 ---

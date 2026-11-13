@@ -6,7 +6,7 @@
 
 ## General Overview
 
-Somebody holds a call option on Acme shares. Acme trades at $100 today. The option lets its holder buy one share for $100 in a year's time, and the going price for it is $9.23 ([Black–Scholes call](01-black-scholes-call.md)).
+Somebody holds a call option on Acme shares. Acme trades at $100 today. The option lets its holder buy one share for $100 (the strike price) in a year's time, and the going price for it is $9.23 ([Black–Scholes call](01-black-scholes-call.md)).
 
 Held on its own, the option is a bet on Acme. To stop it being one, the holder shorts 0.586851 shares — borrows that fraction of a share, sells it, and buys it back later. Pick that number right and, over the next moment, Acme moving up or down leaves the pair — option plus short share — worth the same. The share risk is gone.
 
@@ -43,7 +43,11 @@ The line below zero is the clock: it takes the most, $5.09 a year, when Acme sit
 
 ## The formula
 
-Two slopes and a slope of a slope, so the notation first, in words. Write $V$ for what the option is worth. It depends on two things: the share price $S$ and today's date $t$. Then $\partial V / \partial t$ means *hold the share price still, let the calendar run, and measure how fast the value changes* — a partial derivative, one variable moved at a time ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Next, $\partial V / \partial S$ is the same measurement against the share price, with the date held still. And $\partial^2 V / \partial S^2$ is the slope of that slope: how fast the first slope itself changes as the share price moves.
+Two slopes and a slope of a slope, so the notation first, in words. Write $V$ for what the option is worth. It depends on two things: the share price $S$ and today's date $t$.
+
+- $\partial V / \partial t$ means *hold the share price still, let the calendar run, and measure how fast the value changes* — a partial derivative, one variable moved at a time ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+- $\partial V / \partial S$ is the same measurement against the share price, with the date held still.
+- $\partial^2 V / \partial S^2$ is the slope of that slope: how fast the first slope itself changes as the share price moves.
 
 $$\frac{\partial V}{\partial t} \;+\; (r-q)\,S\,\frac{\partial V}{\partial S} \;+\; \tfrac12\,\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} \;=\; r\,V$$
 
@@ -88,7 +92,9 @@ Every term is dollars per year, which is a free check on any version written dow
 
 Pricing an option looks impossible. Its payoff depends on where Acme ends up, and nobody knows that. Worse, a bull and a bear disagree about how fast Acme will grow — call that growth rate mu — and mu looks like it must sit in the answer.
 
-It does not, and the reason is the whole card. Hold one option and short some shares. There is a number of shares for which, over the next instant, the two legs move by the same amount in opposite directions. Their sum does not care which way Acme went. A sum that does not care is riskless, and a riskless pile of money must grow at the bank rate. Mu vanishes at the same stroke that the risk does, because both ride on the same random kick.
+It does not, and the reason is the whole card. Hold one option and short some shares. There is a number of shares for which, over the next instant, the two legs move by the same amount in opposite directions. Their sum does not care which way Acme went.
+
+A sum that does not care is riskless, and a riskless pile of money must grow at the bank rate. Mu vanishes at the same stroke that the risk does, because both ride on the same random kick.
 
 ### Step 1: Itô's lemma adds a term ordinary calculus would drop
 
@@ -143,7 +149,9 @@ Collecting the two share-slope terms on the left gives the claim.
 
 ### The other door into the same room
 
-Any equation of this exact shape — one time slope, two share slopes, minus a multiple of the function itself — has a solution that can be written as an average: take the payoff, average it over where the share could end up in a pretend world where it grows at $r - q$, and discount that average back at $r$. The match between such equations and such averages is the Feynman-Kac formula, and it turns this card's equation into the formulas of [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md). It also explains why the pretend world's drift is the same $r-q$ standing in front of $\partial V/\partial S$ here. That world was never a philosophy; it is this equation, read as an average.
+Any equation of this exact shape — one time slope, two share slopes, minus a multiple of the function itself — has a solution that can be written as an average: take the payoff, average it over where the share could end up in a pretend world where it grows at $r - q$, and discount that average back at $r$. The match between such equations and such averages is the [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md) formula, and it turns this card's equation into the formulas of [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md).
+
+It also explains why the pretend world's drift is the same $r-q$ standing in front of $\partial V/\partial S$ here. That world was never a philosophy; it is this equation, read as an average.
 
 ---
 
@@ -165,7 +173,9 @@ The house market: Acme at $100, strike $100, the riskless rate 5%, the dividend 
 
 So the hedged book on this option earns 46 cents a year on an outlay of $9.23, and that is all it can earn. The leftover is zero to the last digit a computer carries: the code prints it at twelve decimals.
 
-Read the same line the way a desk does. Move the carry across: what the clock takes plus what the bend pays, $-5.089319 + 3.790116 = -1.299203$ a year, is the cost of carrying the mix that copies the option. That mix is 0.586851 shares, worth $58.69, paid for with the option's own $9.23 and a loan of $49.458109 — which is why the code prints the mix's cash as a negative number. The loan costs 5% a year; the shares hand 2% back, $1.173702. Net cost, $-1.299203$: the same number again.
+Read the same line the way a desk does. Move the carry across: what the clock takes plus what the bend pays, $-5.089319 + 3.790116 = -1.299203$ a year, is the cost of carrying the mix that copies the option. That mix is 0.586851 shares, worth $58.69, paid for with the option's own $9.23 and a loan of $49.458109 — which is why the code prints the mix's cash as a negative number.
+
+The loan costs 5% a year; the shares hand 2% back, $1.173702. Net cost, $-1.299203$: the same number again.
 
 ### What breaks if you drop a piece
 
@@ -227,13 +237,22 @@ xychart-beta
 
 The line sinking to −6.04 is the clock; the one climbing to 5.46 is the bend's pay-back; the nearly flat line, 0.70 down to 0.63, is the carry. Their sum is the bank rate on the option's value, which drops from 0.18 to 0.05 cents a day.
 
-Here is the gap in one day of real money. The hedged book is left alone for a trading day and then revalued. If Acme has not moved, the book loses 1.51 cents: the bend's daily pay-back of 1.50 cents, never earned, plus two thousandths of a cent of higher-order arithmetic. The bend only pays when the share actually moves. The move that just covers the day's cost is volatility times the price times the square root of the day, $0.20 \times 100 \times \sqrt{1/252} = \$1.26$; move Acme by exactly that and the revalued day comes out flat to three hundredths of a cent. Road four of the code does both.
+Here is the gap in one day of real money. The hedged book is left alone for a trading day and then revalued. If Acme has not moved, the book loses 1.51 cents: the bend's daily pay-back of 1.50 cents, never earned, plus two thousandths of a cent of higher-order arithmetic.
+
+The bend only pays when the share actually moves. The move that just covers the day's cost is volatility times the price times the square root of the day, $0.20 \times 100 \times \sqrt{1/252} = \$1.26$; move Acme by exactly that and the revalued day comes out flat to three hundredths of a cent. Road four of the code does both.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing here imports a function that already knows the answer: the bell curve's area is built by Simpson's rule on the bell curve's own height, in both languages. The equation is then checked by **four independent roads**. One: the three slopes from the call formula, added up. Two: the same three slopes measured by nudging the price a penny and the clock a millionth of a year, which never names a Greek, run on the call, the put, and a prepaid share less a loan. Three: the equation alone, marched back from the payoff wall on a grid with no pricing formula in it at all. Four: a hedged book revalued a day later against what the equation forecasts. Then four wrong versions of the equation, each with the size of its leftover.
+Nothing here imports a function that already knows the answer: the bell curve's area is built by Simpson's rule on the bell curve's own height, in both languages. The equation is then checked by **four independent roads**:
+
+1. The three slopes from the call formula, added up.
+2. The same three slopes measured by nudging the price a penny and the clock a millionth of a year, which never names a Greek, run on the call, the put, and a prepaid share less a loan.
+3. The equation alone, marched back from the payoff wall on a grid with no pricing formula in it at all.
+4. A hedged book revalued a day later against what the equation forecasts.
+
+Then four wrong versions of the equation, each with the size of its leftover.
 
 ### Python
 
@@ -437,7 +456,9 @@ months left       theta    gamma    carry      r V
 ALL CHECKS PASS
 ```
 
-The four roads meet. The closed formula's slopes satisfy the equation to the last bit a double carries. The nudged slopes, which never name a Greek, leave about a ten-millionth of a dollar a year — a nudge's own truncation error, after the bend's term has been multiplied by two hundred. The grid, which never sees the call formula, lands within eight thousandths of a cent on both prices. Halve its spacing and take four times as many steps — an explicit march needs both, as the experiments below show — and the gap falls by four: an error shrinking with the square of the spacing.
+The four roads meet. The closed formula's slopes satisfy the equation to the last bit a double carries. The nudged slopes, which never name a Greek, leave about a ten-millionth of a dollar a year — a nudge's own truncation error, after the bend's term has been multiplied by two hundred.
+
+The grid, which never sees the call formula, lands within eight thousandths of a cent on both prices. Halve its spacing and take four times as many steps — an explicit march needs both, as the experiments below show — and the gap falls by four: an error shrinking with the square of the spacing.
 
 ### Rust
 
@@ -675,6 +696,408 @@ ALL CHECKS PASS
 
 The two outputs agree line for line at twelve decimal places: the same arithmetic, in the same order, on the same doubles.
 
+### Lean
+
+Lean proves Steps 2 to 4 and the call, put and prepaid-share cases, for every market meeting the conditions below.
+
+- Take the hedged book's change over dt from Step 2, with $S > 0$ and $\sigma > 0$. Then the book is riskless and earns the bank rate exactly when $\Delta = \partial V/\partial S$ and $V$ obeys the equation.
+- That holds for every real growth mu, so mu drops out of the answer.
+- Take a strike $K > 0$, $\sigma > 0$, $S > 0$ and any date strictly before expiry. Then the call and the put both obey the equation.
+- A prepaid share less a loan obeys the equation at every share price and date, though it has no bend at all.
+- The worked numbers also hold exactly in fractions. That covers the carry, the left side, the desk's reading, the dividend handed back, the flipped clock and the cents-a-day rows.
+
+Itô's lemma, the slopes' decimal values, the grid march and the hedged day are left to the Python and Rust checks.
+
+```lean
+-- The Black-Scholes equation: an option hedged with Δ shares is riskless and earns the bank rate, whatever the share's real growth μ, exactly when Δ = V_S and V_t + (r - q) S V_S + ½ σ² S² V_SS = r V, and the call, the put and a prepaid share less a loan all obey that equation before expiry.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+
+open Real MeasureTheory ProbabilityTheory
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- The cash-side distance to the strike with `τ` years of life left:
+`d₂ = (ln(S/K) + (r - q - σ²/2) τ) / (σ√τ)`; the share-side distance is `d₁ = d₂ + σ√τ`. -/
+noncomputable def bsD2 (S K r q σ τ : ℝ) : ℝ :=
+  (log (S / K) + (r - q - σ ^ 2 / 2) * τ) / (σ * √τ)
+
+/-- The Black-Scholes call's worth at share price `S` and calendar date `t`, expiry `T`:
+`S e^(-q(T - t)) N(d₁) - K e^(-r(T - t)) N(d₂)`. -/
+noncomputable def bsCall (K r q σ T S t : ℝ) : ℝ :=
+  S * exp (-q * (T - t)) * stdNormalCDF (bsD2 S K r q σ (T - t) + σ * √(T - t))
+    - K * exp (-r * (T - t)) * stdNormalCDF (bsD2 S K r q σ (T - t))
+
+/-- The Black-Scholes put's worth at share price `S` and calendar date `t`, expiry `T`:
+`K e^(-r(T - t)) N(-d₂) - S e^(-q(T - t)) N(-d₁)`. -/
+noncomputable def bsPut (K r q σ T S t : ℝ) : ℝ :=
+  K * exp (-r * (T - t)) * stdNormalCDF (-bsD2 S K r q σ (T - t))
+    - S * exp (-q * (T - t)) * stdNormalCDF (-(bsD2 S K r q σ (T - t) + σ * √(T - t)))
+
+/-- The card's equation at share price `S` and date `t`, for a worth `V(S, t)`:
+`∂V/∂t + (r - q) S ∂V/∂S + ½ σ² S² ∂²V/∂S² = r V`, each slope taken with the other variable
+held still. -/
+def ObeysBlackScholes (V : ℝ → ℝ → ℝ) (r q σ S t : ℝ) : Prop :=
+  deriv (fun u => V S u) t
+      + (r - q) * S * deriv (fun x => V x t) S
+      + 1 / 2 * σ ^ 2 * S ^ 2 * deriv (fun x => deriv (fun y => V y t) x) S
+    = r * V S t
+
+noncomputable def bsPhi (x : ℝ) : ℝ := (√(2 * π))⁻¹ * exp (-x ^ 2 / 2)
+
+lemma gaussianPDFReal_zero_one_eq : gaussianPDFReal 0 1 = bsPhi := by
+  funext x
+  simp [gaussianPDFReal, bsPhi]
+
+lemma stdNormalCDF_eq_integral (x : ℝ) :
+    stdNormalCDF x = ∫ y in Set.Iic x, bsPhi y := by
+  rw [stdNormalCDF, cdf_eq_real, measureReal_def,
+    gaussianReal_apply_eq_integral _ one_ne_zero, ENNReal.toReal_ofReal,
+    gaussianPDFReal_zero_one_eq]
+  exact setIntegral_nonneg measurableSet_Iic (fun y _ => gaussianPDFReal_nonneg _ _ _)
+
+lemma continuous_bsPhi : Continuous bsPhi := by
+  unfold bsPhi; fun_prop
+
+lemma stdNormalCDF_eq_add (x : ℝ) :
+    stdNormalCDF x = stdNormalCDF 0 + ∫ y in (0:ℝ)..x, bsPhi y := by
+  have hi : Integrable bsPhi := by
+    rw [← gaussianPDFReal_zero_one_eq]; exact integrable_gaussianPDFReal _ _
+  rw [← intervalIntegral.integral_Iic_sub_Iic hi.integrableOn hi.integrableOn,
+    stdNormalCDF_eq_integral, stdNormalCDF_eq_integral]
+  ring
+
+lemma hasDerivAt_stdNormalCDF (x : ℝ) : HasDerivAt stdNormalCDF (bsPhi x) x := by
+  have h := (continuous_bsPhi.integral_hasStrictDerivAt 0 x).hasDerivAt.const_add
+    (stdNormalCDF 0)
+  have he : stdNormalCDF = fun x => stdNormalCDF 0 + ∫ y in (0:ℝ)..x, bsPhi y :=
+    funext stdNormalCDF_eq_add
+  rw [he]; exact h
+
+lemma bsPhi_neg (x : ℝ) : bsPhi (-x) = bsPhi x := by simp [bsPhi]
+
+lemma stdNormalCDF_neg (x : ℝ) : stdNormalCDF (-x) = 1 - stdNormalCDF x := by
+  set g : ℝ → ℝ := fun x => stdNormalCDF (-x) + stdNormalCDF x with hg
+  have hd : ∀ x, HasDerivAt g 0 x := by
+    intro x
+    have h1 := (hasDerivAt_stdNormalCDF (-x)).comp x (hasDerivAt_neg x)
+    have h2 : HasDerivAt g (bsPhi (-x) * -1 + bsPhi x) x := h1.add (hasDerivAt_stdNormalCDF x)
+    convert h2 using 1
+    rw [bsPhi_neg]; ring
+  have hconst : ∀ y, g y = g 0 := fun y =>
+    is_const_of_deriv_eq_zero (fun z => (hd z).differentiableAt) (fun z => (hd z).deriv) y 0
+  have hlim : Filter.Tendsto g Filter.atTop (nhds (0 + 1)) := by
+    have h1 : Filter.Tendsto (fun x => stdNormalCDF (-x)) Filter.atTop (nhds 0) :=
+      (tendsto_cdf_atBot (μ := gaussianReal 0 1)).comp Filter.tendsto_neg_atTop_atBot
+    exact h1.add (tendsto_cdf_atTop (μ := gaussianReal 0 1))
+  have hlim2 : Filter.Tendsto g Filter.atTop (nhds (g 0)) := by
+    have : g = fun _ => g 0 := funext hconst
+    rw [this]; exact tendsto_const_nhds
+  have := tendsto_nhds_unique hlim2 hlim
+  have h3 := hconst x
+  simp only [hg] at h3 this
+  linarith
+
+lemma bs_phi_identity (S K r q σ τ : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hτ : 0 < τ) :
+    S * exp (-q * τ) * bsPhi (bsD2 S K r q σ τ + σ * √τ)
+      = K * exp (-r * τ) * bsPhi (bsD2 S K r q σ τ) := by
+  have hs : 0 < √τ := Real.sqrt_pos.mpr hτ
+  have hs2 : √τ ^ 2 = τ := Real.sq_sqrt hτ.le
+  have hd : bsD2 S K r q σ τ * (σ * √τ) = log S - log K + (r - q - σ ^ 2 / 2) * τ := by
+    unfold bsD2
+    rw [Real.log_div hS.ne' hK.ne']
+    field_simp
+  set d := bsD2 S K r q σ τ
+  unfold bsPhi
+  have hexp : exp (log S) * exp (-q * τ) * exp (-(d + σ * √τ) ^ 2 / 2)
+      = exp (log K) * exp (-r * τ) * exp (-d ^ 2 / 2) := by
+    rw [← Real.exp_add, ← Real.exp_add, ← Real.exp_add, ← Real.exp_add]
+    congr 1
+    linear_combination (-1 : ℝ) * hd - σ ^ 2 / 2 * hs2
+  rw [Real.exp_log hS, Real.exp_log hK] at hexp
+  linear_combination (√(2 * π))⁻¹ * hexp
+
+lemma hasDerivAt_bsD2_S (K r q σ τ x : ℝ) (hx : x ≠ 0) (hK : K ≠ 0) :
+    HasDerivAt (fun x => bsD2 x K r q σ τ) ((1 / K) / (x / K) / (σ * √τ)) x := by
+  have h := ((((hasDerivAt_id x).div_const K).log (div_ne_zero hx hK)).add_const
+    ((r - q - σ ^ 2 / 2) * τ)).div_const (σ * √τ)
+  exact h
+
+lemma hasDerivAt_bsCall_S (K r q σ T t x : ℝ) (hK : 0 < K) (hσ : 0 < σ) (hx : 0 < x)
+    (ht : t < T) :
+    HasDerivAt (fun x => bsCall K r q σ T x t)
+      (exp (-q * (T - t)) * stdNormalCDF (bsD2 x K r q σ (T - t) + σ * √(T - t))) x := by
+  have hτ : 0 < T - t := by linarith
+  have hd2 := hasDerivAt_bsD2_S K r q σ (T - t) x hx.ne' hK.ne'
+  have hd1 := hd2.add_const (σ * √(T - t))
+  have hN1 := (hasDerivAt_stdNormalCDF _).comp x hd1
+  have hN2 := (hasDerivAt_stdNormalCDF _).comp x hd2
+  have h := (((hasDerivAt_id x).mul_const (exp (-q * (T - t)))).mul hN1).sub
+    (hN2.const_mul (K * exp (-r * (T - t))))
+  have hid := bs_phi_identity x K r q σ (T - t) hx hK hσ hτ
+  convert h using 1
+  · rfl
+  simp only [id, Function.comp_apply]
+  linear_combination (-((1 / K) / (x / K) / (σ * √(T - t)))) * hid
+
+lemma hasDerivAt_bsCall_SS (K r q σ T t S : ℝ) (hK : 0 < K) (hS : 0 < S) :
+    HasDerivAt (fun x => exp (-q * (T - t)) * stdNormalCDF (bsD2 x K r q σ (T - t) + σ * √(T - t)))
+      (exp (-q * (T - t)) * (bsPhi (bsD2 S K r q σ (T - t) + σ * √(T - t))
+        * ((1 / K) / (S / K) / (σ * √(T - t))))) S := by
+  have hS' : S ≠ 0 := hS.ne'
+  have hd1 := (hasDerivAt_bsD2_S K r q σ (T - t) S hS' hK.ne').add_const (σ * √(T - t))
+  exact ((hasDerivAt_stdNormalCDF _).comp S hd1).const_mul _
+
+lemma hasDerivAt_bsCall_t (K r q σ T t S : ℝ) (hK : 0 < K) (hσ : 0 < σ) (hS : 0 < S)
+    (ht : t < T) :
+    HasDerivAt (fun u => bsCall K r q σ T S u)
+      (q * S * exp (-q * (T - t)) * stdNormalCDF (bsD2 S K r q σ (T - t) + σ * √(T - t))
+        - r * K * exp (-r * (T - t)) * stdNormalCDF (bsD2 S K r q σ (T - t))
+        - S * exp (-q * (T - t)) * bsPhi (bsD2 S K r q σ (T - t) + σ * √(T - t))
+          * σ / (2 * √(T - t))) t := by
+  have hτ : 0 < T - t := by linarith
+  have hτ' : T - t ≠ 0 := hτ.ne'
+  have hs : 0 < √(T - t) := Real.sqrt_pos.mpr hτ
+  have hT : HasDerivAt (fun u : ℝ => T - u) (-1) t := (hasDerivAt_id t).const_sub T
+  have hsq : HasDerivAt (fun u : ℝ => √(T - u)) (-1 / (2 * √(T - t))) t := hT.sqrt hτ'
+  have hnum : HasDerivAt (fun u : ℝ => log (S / K) + (r - q - σ ^ 2 / 2) * (T - u))
+      ((r - q - σ ^ 2 / 2) * -1) t := (hT.const_mul _).const_add _
+  have hden : HasDerivAt (fun u : ℝ => σ * √(T - u)) (σ * (-1 / (2 * √(T - t)))) t :=
+    hsq.const_mul σ
+  obtain ⟨D2, hd2⟩ : ∃ D2, HasDerivAt (fun u => bsD2 S K r q σ (T - u)) D2 t :=
+    ⟨_, hnum.div hden (by positivity)⟩
+  have hd1 := hd2.add hden
+  have hN1 := (hasDerivAt_stdNormalCDF _).comp t hd1
+  have hN2 := (hasDerivAt_stdNormalCDF _).comp t hd2
+  have he1 : HasDerivAt (fun u : ℝ => exp (-q * (T - u))) (exp (-q * (T - t)) * (-q * -1)) t :=
+    (hT.const_mul (-q)).exp
+  have he2 : HasDerivAt (fun u : ℝ => exp (-r * (T - u))) (exp (-r * (T - t)) * (-r * -1)) t :=
+    (hT.const_mul (-r)).exp
+  have h := ((he1.const_mul S).mul hN1).sub ((he2.const_mul K).mul hN2)
+  have hid := bs_phi_identity S K r q σ (T - t) hS hK hσ hτ
+  convert h using 1
+  · rfl
+  simp only [Function.comp_apply, Pi.add_apply]
+  linear_combination (-D2) * hid
+
+lemma hasDerivAt_prepaid_t (K r q T t S : ℝ) :
+    HasDerivAt (fun u => S * exp (-q * (T - u)) - K * exp (-r * (T - u)))
+      (q * S * exp (-q * (T - t)) - r * K * exp (-r * (T - t))) t := by
+  have hT : HasDerivAt (fun u : ℝ => T - u) (-1) t := (hasDerivAt_id t).const_sub T
+  have h := (((hT.const_mul (-q)).exp).const_mul S).sub (((hT.const_mul (-r)).exp).const_mul K)
+  convert h using 1
+  ring
+
+lemma hasDerivAt_prepaid_S (K r q T t x : ℝ) :
+    HasDerivAt (fun x => x * exp (-q * (T - t)) - K * exp (-r * (T - t)))
+      (exp (-q * (T - t))) x := by
+  have h := ((hasDerivAt_id x).mul_const (exp (-q * (T - t)))).sub_const
+    (K * exp (-r * (T - t)))
+  convert h using 1 <;> simp
+
+lemma bsPut_eq (K r q σ T : ℝ) :
+    bsPut K r q σ T = fun x u => bsCall K r q σ T x u
+      - (x * exp (-q * (T - u)) - K * exp (-r * (T - u))) := by
+  funext x u
+  unfold bsPut bsCall
+  rw [stdNormalCDF_neg, stdNormalCDF_neg]
+  ring
+
+#print axioms gaussianPDFReal_zero_one_eq
+#print axioms stdNormalCDF_eq_integral
+#print axioms continuous_bsPhi
+#print axioms stdNormalCDF_eq_add
+#print axioms hasDerivAt_stdNormalCDF
+#print axioms bsPhi_neg
+#print axioms stdNormalCDF_neg
+#print axioms bs_phi_identity
+#print axioms hasDerivAt_bsD2_S
+#print axioms hasDerivAt_bsCall_S
+#print axioms hasDerivAt_bsCall_SS
+#print axioms hasDerivAt_bsCall_t
+#print axioms hasDerivAt_prepaid_t
+#print axioms hasDerivAt_prepaid_S
+#print axioms bsPut_eq
+
+/-- **The Black-Scholes equation** (The formula; Why it works, Steps 1 to 4). The share follows
+geometric Brownian motion `dS = μ S dt + σ S dW` with real growth `μ`, volatility `σ > 0`, and a
+steady dividend yield `q`; the bank rate `r` holds still. The claim's worth `V(S, t)` has smooth
+slopes near today's price `S > 0` and date `t`, strictly before expiry `T`. Hold one claim and
+short `Δ` shares, `Δ` held fixed across the instant. By Itô's lemma the book `V - Δ S` changes by
+`drift · dt + shock · dW`, with shock `σ S (∂V/∂S - Δ)` and drift
+`∂V/∂t + μ S ∂V/∂S + ½ σ² S² ∂²V/∂S² - μ S Δ - q S Δ` (the last term is the dividend owed on the
+borrowed shares). Then, for every `μ`: the book is riskless and earns exactly the bank rate on its
+own value precisely when `Δ = ∂V/∂S` and `V` obeys
+`∂V/∂t + (r - q) S ∂V/∂S + ½ σ² S² ∂²V/∂S² = r V`. The real growth `μ` is absent from the answer. -/
+theorem hedged_option_earns_bank_rate_iff_black_scholes_equation
+    (V : ℝ → ℝ → ℝ) (S t T r q σ μ Δ : ℝ) (hS : 0 < S) (hσ : 0 < σ) (ht : t < T)
+    (hV : ContDiffAt ℝ 2 (fun p : ℝ × ℝ => V p.1 p.2) (S, t)) :
+    let Vt := deriv (fun u => V S u) t
+    let VS := deriv (fun x => V x t) S
+    let VSS := deriv (fun x => deriv (fun y => V y t) x) S
+    let shock := σ * S * (VS - Δ)
+    let drift := Vt + μ * S * VS + 1 / 2 * σ ^ 2 * S ^ 2 * VSS - μ * S * Δ - q * S * Δ
+    (shock = 0 ∧ drift = r * (V S t - Δ * S)) ↔
+      (Δ = VS ∧ ObeysBlackScholes V r q σ S t) := by
+  intro Vt VS VSS shock drift
+  have hσS : σ * S ≠ 0 := by positivity
+  unfold ObeysBlackScholes
+  constructor
+  · rintro ⟨h1, h2⟩
+    have hΔ : Δ = VS := by
+      have h1' : σ * S * (VS - Δ) = 0 := h1
+      rcases mul_eq_zero.mp h1' with h | h
+      · exact absurd h hσS
+      · linarith
+    refine ⟨hΔ, ?_⟩
+    have h2' : Vt + μ * S * VS + 1 / 2 * σ ^ 2 * S ^ 2 * VSS - μ * S * Δ - q * S * Δ
+        = r * (V S t - Δ * S) := h2
+    rw [hΔ] at h2'
+    show Vt + (r - q) * S * VS + 1 / 2 * σ ^ 2 * S ^ 2 * VSS = r * V S t
+    linear_combination h2'
+  · rintro ⟨hΔ, h⟩
+    have h' : Vt + (r - q) * S * VS + 1 / 2 * σ ^ 2 * S ^ 2 * VSS = r * V S t := h
+    refine ⟨?_, ?_⟩
+    · show σ * S * (VS - Δ) = 0
+      rw [hΔ]; ring
+    · show Vt + μ * S * VS + 1 / 2 * σ ^ 2 * S ^ 2 * VSS - μ * S * Δ - q * S * Δ
+        = r * (V S t - Δ * S)
+      rw [hΔ]
+      linear_combination h'
+
+/-- **The call and the put both obey it** (Code, roads one and two). With strike `K > 0`,
+volatility `σ > 0`, any bank rate `r` and dividend yield `q`: at every share price `S > 0` and
+every date `t` strictly before expiry `T`, the Black-Scholes call
+`S e^(-q(T - t)) N(d₁) - K e^(-r(T - t)) N(d₂)` and put
+`K e^(-r(T - t)) N(-d₂) - S e^(-q(T - t)) N(-d₁)` each satisfy
+`∂V/∂t + (r - q) S ∂V/∂S + ½ σ² S² ∂²V/∂S² = r V`. -/
+theorem black_scholes_call_and_put_obey_equation
+    (K r q σ T S t : ℝ) (hK : 0 < K) (hσ : 0 < σ) (hS : 0 < S) (ht : t < T) :
+    ObeysBlackScholes (bsCall K r q σ T) r q σ S t ∧
+      ObeysBlackScholes (bsPut K r q σ T) r q σ S t := by
+  have hτ : 0 < T - t := by linarith
+  have hs : 0 < √(T - t) := Real.sqrt_pos.mpr hτ
+  have heq : (fun x => deriv (fun y => bsCall K r q σ T y t) x) =ᶠ[nhds S]
+      (fun x => exp (-q * (T - t)) * stdNormalCDF (bsD2 x K r q σ (T - t) + σ * √(T - t))) := by
+    filter_upwards [Ioi_mem_nhds hS] with x hx
+    exact (hasDerivAt_bsCall_S K r q σ T t x hK hσ hx ht).deriv
+  have hSS := hasDerivAt_bsCall_SS K r q σ T t S hK hS
+  have hSt := hasDerivAt_bsCall_t K r q σ T t S hK hσ hS ht
+  have hS1 := hasDerivAt_bsCall_S K r q σ T t S hK hσ hS ht
+  constructor
+  · unfold ObeysBlackScholes
+    rw [hSt.deriv, hS1.deriv, heq.deriv_eq, hSS.deriv]
+    unfold bsCall
+    generalize exp (-q * (T - t)) = e1
+    generalize exp (-r * (T - t)) = e2
+    generalize stdNormalCDF (bsD2 S K r q σ (T - t) + σ * √(T - t)) = N1
+    generalize stdNormalCDF (bsD2 S K r q σ (T - t)) = N2
+    generalize bsPhi (bsD2 S K r q σ (T - t) + σ * √(T - t)) = p1
+    generalize √(T - t) = s at hs
+    field_simp
+    ring
+  · rw [bsPut_eq]
+    unfold ObeysBlackScholes
+    beta_reduce
+    have heq' : (fun x => deriv (fun y => bsCall K r q σ T y t
+          - (y * exp (-q * (T - t)) - K * exp (-r * (T - t)))) x) =ᶠ[nhds S]
+        (fun x => exp (-q * (T - t)) * stdNormalCDF (bsD2 x K r q σ (T - t) + σ * √(T - t))
+          - exp (-q * (T - t))) := by
+      filter_upwards [Ioi_mem_nhds hS] with x hx
+      exact ((hasDerivAt_bsCall_S K r q σ T t x hK hσ hx ht).sub
+        (hasDerivAt_prepaid_S K r q T t x)).deriv
+    have hPt : HasDerivAt (fun u => bsCall K r q σ T S u
+        - (S * exp (-q * (T - u)) - K * exp (-r * (T - u)))) _ t :=
+      hSt.sub (hasDerivAt_prepaid_t K r q T t S)
+    have hPS : HasDerivAt (fun x => bsCall K r q σ T x t
+        - (x * exp (-q * (T - t)) - K * exp (-r * (T - t)))) _ S :=
+      hS1.sub (hasDerivAt_prepaid_S K r q T t S)
+    have hPSS : HasDerivAt (fun x => exp (-q * (T - t))
+        * stdNormalCDF (bsD2 x K r q σ (T - t) + σ * √(T - t)) - exp (-q * (T - t))) _ S :=
+      hSS.sub_const _
+    rw [hPt.deriv, hPS.deriv, heq'.deriv_eq, hPSS.deriv]
+    unfold bsCall
+    generalize exp (-q * (T - t)) = e1
+    generalize exp (-r * (T - t)) = e2
+    generalize stdNormalCDF (bsD2 S K r q σ (T - t) + σ * √(T - t)) = N1
+    generalize stdNormalCDF (bsD2 S K r q σ (T - t)) = N2
+    generalize bsPhi (bsD2 S K r q σ (T - t) + σ * √(T - t)) = p1
+    generalize √(T - t) = s at hs
+    field_simp
+    ring
+
+/-- **The equation does not know the payoff** (Step 4; Code, road two). A prepaid share less a
+loan, `V(S, t) = S e^(-q(T - t)) - K e^(-r(T - t))`, a claim with no bend at all, obeys
+`∂V/∂t + (r - q) S ∂V/∂S + ½ σ² S² ∂²V/∂S² = r V` at every share price `S` and every date `t`. -/
+theorem prepaid_share_less_loan_obeys_equation (K r q σ T S t : ℝ) :
+    ObeysBlackScholes (fun x u => x * exp (-q * (T - u)) - K * exp (-r * (T - u))) r q σ S t := by
+  unfold ObeysBlackScholes
+  beta_reduce
+  have h2 : (fun x => deriv (fun y => y * exp (-q * (T - t)) - K * exp (-r * (T - t))) x)
+      = fun _ => exp (-q * (T - t)) := funext fun x => (hasDerivAt_prepaid_S K r q T t x).deriv
+  rw [(hasDerivAt_prepaid_t K r q T t S).deriv, (hasDerivAt_prepaid_S K r q T t S).deriv, h2,
+    deriv_const]
+  ring
+
+-- House market: S = K = 100, r = 5/100, q = 2/100, σ = 1/5, one year to run.
+-- The carry's factor (r - q) S = 0.03 × 100 = 3.
+example : ((5 : ℚ) / 100 - 2 / 100) * 100 = 3 := by norm_num
+-- The bend's factor ½ σ² S² = 0.5 × 0.04 × 10000 = 200.
+example : (1 / 2 : ℚ) * (1 / 5) ^ 2 * 100 ^ 2 = 200 := by norm_num
+-- B, the carry: 0.03 × 100 × 0.586851 = 1.760553.
+example : ((5 : ℚ) / 100 - 2 / 100) * 100 * (586851 / 1000000) = 1760553 / 1000000 := by norm_num
+-- Left side A + B + C: -5.089319 + 1.760553 + 3.790116 = 0.461350.
+example : (-5089319 : ℚ) / 1000000 + 1760553 / 1000000 + 3790116 / 1000000
+    = 461350 / 1000000 := by norm_num
+-- The desk's reading: clock plus bend, -5.089319 + 3.790116 = -1.299203.
+example : (-5089319 : ℚ) / 1000000 + 3790116 / 1000000 = -1299203 / 1000000 := by norm_num
+-- The shares hand back q S Δ = 0.02 × 100 × 0.586851 = 1.173702.
+example : (2 : ℚ) / 100 * 100 * (586851 / 1000000) = 1173702 / 1000000 := by norm_num
+-- Clock taken the wrong way round leaves twice theta: 2 × 5.089319 = 10.178638.
+example : (2 : ℚ) * (5089319 / 1000000) = 10178638 / 1000000 := by norm_num
+-- Chart at $100: -5.09 + 3.79 + 1.76 = 0.46.
+example : (-509 : ℚ) / 100 + 379 / 100 + 176 / 100 = 46 / 100 := by norm_num
+-- Cents a trading day, 12 months left: -2.02 + 1.50 + 0.70 = 0.18.
+example : (-202 : ℚ) / 100 + 150 / 100 + 70 / 100 = 18 / 100 := by norm_num
+-- 3 months left: -3.69 + 3.13 + 0.65 = 0.09.
+example : (-369 : ℚ) / 100 + 313 / 100 + 65 / 100 = 9 / 100 := by norm_num
+-- 1 month left: -6.04 + 5.46 + 0.63 = 0.05.
+example : (-604 : ℚ) / 100 + 546 / 100 + 63 / 100 = 5 / 100 := by norm_num
+-- Step 4: the two share-slope terms collect, -q S V_S + r S V_S = (r - q) S V_S.
+example (r q S VS : ℚ) : -q * S * VS + r * S * VS = (r - q) * S * VS := by ring
+
+#print axioms hedged_option_earns_bank_rate_iff_black_scholes_equation
+#print axioms black_scholes_call_and_put_obey_equation
+#print axioms prepaid_share_less_loan_obeys_equation
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gaussianPDFReal_zero_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_bsPhi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_eq_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_stdNormalCDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsPhi_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bs_phi_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsD2_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsCall_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsCall_SS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsCall_t' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_prepaid_t' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_prepaid_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsPut_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hedged_option_earns_bank_rate_iff_black_scholes_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'black_scholes_call_and_put_obey_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prepaid_share_less_loan_obeys_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. The asserts are pinned to the house market, so expect one to stop the program.
@@ -702,10 +1125,10 @@ The two outputs agree line for line at twelve decimal places: the same arithmeti
 
 - **Every pricing system with a grid in it.** Road three of the code is a toy version of what banks run overnight: lay out share prices and dates, put the payoff along the expiry edge, step the equation backwards to today. It works on payoffs no formula can reach.
 - **Options that can be used early.** An American option's value can never sit below its payoff, so the equation becomes an inequality with a moving boundary between "hold" and "exercise": [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md).
-- **The heat equation.** Log of the share price, life left instead of the date, an exponential factor peeled off: three changes of variable turn this into the equation for heat spreading along a bar. Not a second theory of prices, the same one in different clothes (Black-Scholes is the heat equation after a change of variables).
+- **The heat equation.** Log of the share price, life left instead of the date, an exponential factor peeled off: three changes of variable turn this into the equation for heat spreading along a bar ([The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)). Not a second theory of prices, the same one in different clothes (Black-Scholes is the heat equation after a change of variables).
 - **Barriers and other exotics.** A knock-out option is this equation on a smaller region, with zero written along the barrier. The region changes; the equation does not.
 - **Knowing how it is wrong.** Volatility that moves, shares that jump, hedging that costs money: each breaks one assumption and adds or alters a term ([The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md)).
-- **Corporate finance, by analogy.** A company's shares are a call on its assets with the debt as the strike, so the same equation governs that equity.
+- **Corporate finance, by analogy.** A company's shares are a call on its assets with the debt as the strike, so the same equation governs that equity ([Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md)).
 
 > **Say it back**
 > Hold an option and short the right number of shares, and the next moment's share move does nothing to the pair. What remains is certain, so it can only earn the bank rate; the share's real growth rate cancels at the same instant the risk does. Written out, that gives one equation: the clock's term, plus the carry on the hedge, plus half the volatility squared times the price squared times the bend, equals the bank rate on the value. It is a constraint, not a price. The payoff at expiry picks which of its many solutions is in hand, and a grid marching the equation back from that payoff reproduces the call and put prices without the formula.

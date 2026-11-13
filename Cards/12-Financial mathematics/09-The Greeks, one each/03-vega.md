@@ -40,7 +40,7 @@ Notation first, in words. Vega is written with a script capital V, $\mathcal{V}$
 
 $$\mathcal{V} \;=\; \frac{\partial C}{\partial \sigma} \;=\; \frac{\partial P}{\partial \sigma} \;=\; S\,e^{-qT}\,\varphi(d_1)\,\sqrt{T}$$
 
-**Read it aloud: the share value at stake, times how much probability sits at the strike's distance, times how long the extra volatility has to work.**
+**Read it aloud:** the share value at stake, times how much probability sits at the strike's distance, times how long the extra volatility has to work.
 
 The same number has a cash-side form, from an identity proved in Step 1:
 
@@ -223,7 +223,17 @@ Every number in the table is printed by both checks.
 
 ## Code, from first principles, and it actually runs
 
-The checks build their own bell-curve area: Python sums its series, $N(x) = \tfrac12 + \varphi(x)(x + x^3/3 + x^5/15 + \dots)$, and Rust adds thin slices under the curve by Simpson's rule. Vega is then reached seven ways: the formula; its cash-side form; bumping the formula price up and down in $\sigma$; bumping a price built by Simpson's rule over the bell curve, which uses no $d_1$, $d_2$ or $N$; bumping a put built the same way; a pathwise Monte Carlo, which differentiates each simulated path, using $\partial S_T/\partial\sigma = S_T(\sqrt{T}Z - \sigma T)$ for the final price $S_T$ driven by a bell-curve draw $Z$, from home-made random numbers; and gamma from a second difference of the price, scaled by $\sigma T S^2$. Grid searches find the peaks, Newton and bisection find the implied volatility, and every number on the card is printed.
+The checks build their own bell-curve area: Python sums its series, $N(x) = \tfrac12 + \varphi(x)(x + x^3/3 + x^5/15 + \dots)$, and Rust adds thin slices under the curve by Simpson's rule. Vega is then reached seven ways:
+
+1. the formula;
+2. its cash-side form;
+3. bumping the formula price up and down in $\sigma$;
+4. bumping a price built by Simpson's rule over the bell curve, which uses no $d_1$, $d_2$ or $N$;
+5. bumping a put built the same way;
+6. a pathwise Monte Carlo, which differentiates each simulated path, using $\partial S_T/\partial\sigma = S_T(\sqrt{T}Z - \sigma T)$ for the final price $S_T$ driven by a bell-curve draw $Z$, from home-made random numbers;
+7. and gamma from a second difference of the price, scaled by $\sigma T S^2$.
+
+Grid searches find the peaks, Newton and bisection find the implied volatility, and every number on the card is printed.
 
 ### Python
 
@@ -631,6 +641,223 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line. Five of the seven roads land on 37.901158 at six decimals; the price bump reads 37.901157, a last-digit rounding of the same number; the Monte Carlo lands at 37.877491, well inside one standard error, 0.164207. Twelve asserts guard the roads. Each of these breaks trips at least one: the formula losing its $\sqrt{T}$, its dividend drag or its $d_1$; the cash-side form losing its own discount; the pathwise slope losing its $-\sigma T$.
+
+### Lean
+
+Lean proves the vega formula and its sign, for every positive share price, strike, volatility and time.
+
+- Take a positive share price, strike, volatility and time. Then the call and the put both have slope $S e^{-qT}\varphi(d_1)\sqrt{T}$ against volatility.
+- Take the same positive inputs. Then $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, as in Step 1.
+- With the same inputs, vega is always positive, and the call price strictly rises as volatility rises.
+- For Acme, $d_1 = 0.25$ and $d_2 = 0.05$ exactly.
+
+The dollar values, the peaks and the square-root-of-time rule are left to the Python and Rust checks.
+
+```lean
+-- Vega: in the Black–Scholes model the slope of the call price and of the put price against volatility is the same number, S e^(-qT) φ(d1) √T, which equals the cash-side form K e^(-rT) φ(d2) √T and is always positive, so the call price rises with volatility.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open MeasureTheory ProbabilityTheory Real
+
+lemma vega_cdf_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun t _ => gaussianPDFReal_nonneg _ _ t))]
+
+lemma vega_continuous_pdf : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma vega_cdf_hasDerivAt (z : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (gaussianPDFReal 0 1 z) z := by
+  have hI : ∀ a, IntegrableOn (gaussianPDFReal 0 1) (Set.Iic a) :=
+    fun a => (integrable_gaussianPDFReal 0 1).integrableOn
+  have hfun : (cdf (gaussianReal 0 1) : ℝ → ℝ) =
+      fun x => cdf (gaussianReal 0 1) 0 + ∫ t in (0:ℝ)..x, gaussianPDFReal 0 1 t := by
+    funext x
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI x), vega_cdf_eq_integral,
+      vega_cdf_eq_integral]
+    ring
+  rw [hfun]
+  exact (intervalIntegral.integral_hasDerivAt_right
+    (vega_continuous_pdf.intervalIntegrable _ _)
+    (vega_continuous_pdf.stronglyMeasurableAtFilter _ _)
+    vega_continuous_pdf.continuousAt).const_add _
+
+lemma vega_pdf_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal_def]
+
+lemma vega_share_cash
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    S * exp (-(q * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) =
+      K * exp (-(r * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) := by
+  set d := (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) with hd
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have key : d * (σ * √T) = log S - log K + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd, div_mul_cancel₀ _ (by positivity), Real.log_div hS.ne' hK.ne']
+  simp only [gaussianPDFReal_def, NNReal.coe_one, sub_zero, mul_one]
+  have h : log S + -(q * T) + -d ^ 2 / 2 = log K + -(r * T) + -(d - σ * √T) ^ 2 / 2 := by
+    linear_combination (-1 : ℝ) * key + (σ ^ 2 / 2) * hsq
+  have e1 : S * exp (-(q * T)) * ((√(2 * π))⁻¹ * exp (-d ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log S + -(q * T) + -d ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hS]; ring
+  have e2 : K * exp (-(r * T)) * ((√(2 * π))⁻¹ * exp (-(d - σ * √T) ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log K + -(r * T) + -(d - σ * √T) ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hK]; ring
+  rw [e1, e2, h]
+
+#print axioms vega_cdf_eq_integral
+#print axioms vega_continuous_pdf
+#print axioms vega_cdf_hasDerivAt
+#print axioms vega_pdf_neg
+#print axioms vega_share_cash
+
+/-! The model: `N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`, the area under the standard
+bell curve to the left of `x`, and `φ(x)` is Mathlib's `gaussianPDFReal 0 1 x`, its height.
+Share price `S`, strike `K`, riskless rate `r`, dividend yield `q`, volatility `σ`, years `T`.
+`d1 = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)` and `d2 = d1 - σ √T`.
+Call `C = S e^(-qT) N(d1) - K e^(-rT) N(d2)`; put `P = K e^(-rT) N(-d2) - S e^(-qT) N(-d1)`.
+Vega is the slope of each in `σ`, every other input held still. -/
+
+/-- Vega (the formula, Steps 0 to 4): with a positive share price and strike, positive
+volatility and positive time, the Black–Scholes call price, seen as a function of volatility
+alone, has slope `S e^(-qT) φ(d1) √T` at `σ`, and the put on the same share, strike and date
+has exactly the same slope. -/
+theorem call_and_put_vega_eq_share_value_times_bell_height_times_sqrt_time
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt
+        (fun s : ℝ =>
+          S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+        (S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T)
+        σ ∧
+      HasDerivAt
+        (fun s : ℝ =>
+          K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                (-((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)) -
+            S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) (-((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))))
+        (S * exp (-(q * T)) *
+            gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T)
+        σ := by
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  set D : ℝ → ℝ := fun s => (log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) with hDdef
+  have hDd : DifferentiableAt ℝ D σ := by
+    rw [hDdef]
+    exact DifferentiableAt.div (by fun_prop) (by fun_prop) (by positivity)
+  have hD : HasDerivAt D (deriv D σ) σ := hDd.hasDerivAt
+  have hL : HasDerivAt (fun s => s * √T) √T σ := by
+    simpa using (hasDerivAt_id σ).mul_const √T
+  have hD2 : HasDerivAt (fun s => D s - s * √T) (deriv D σ - √T) σ := hD.sub hL
+  have hshare : S * exp (-(q * T)) * gaussianPDFReal 0 1 (D σ) =
+      K * exp (-(r * T)) * gaussianPDFReal 0 1 (D σ - σ * √T) :=
+    vega_share_cash S K r q σ T hS hK hσ hT
+  have hN1 := (vega_cdf_hasDerivAt (D σ)).comp σ hD
+  have hN2 := (vega_cdf_hasDerivAt (D σ - σ * √T)).comp σ hD2
+  have hN3 := (vega_cdf_hasDerivAt (-(D σ - σ * √T))).comp σ hD2.neg
+  have hN4 := (vega_cdf_hasDerivAt (-(D σ))).comp σ hD.neg
+  rw [vega_pdf_neg] at hN3 hN4
+  constructor
+  · have := (hN1.const_mul (S * exp (-(q * T)))).sub (hN2.const_mul (K * exp (-(r * T))))
+    convert this using 1
+    · rfl
+    · show _ = _ - K * exp (-(r * T)) * _
+      rw [← mul_assoc (K * exp (-(r * T))), ← hshare]; ring
+  · have := (hN3.const_mul (K * exp (-(r * T)))).sub (hN4.const_mul (S * exp (-(q * T))))
+    convert this using 1
+    · rfl
+    · show _ = K * exp (-(r * T)) * _ - _
+      rw [← mul_assoc (K * exp (-(r * T))), ← hshare]; ring
+
+/-- The cash-side form (Step 1): with a positive share price and strike, positive volatility
+and positive time, the share side and the cash side carry equal weight at the strike,
+`S e^(-qT) φ(d1) = K e^(-rT) φ(d2)`, so vega is also `K e^(-rT) φ(d2) √T`. -/
+theorem share_side_eq_cash_side
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    S * exp (-(q * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) =
+      K * exp (-(r * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) := by
+  exact vega_share_cash S K r q σ T hS hK hσ hT
+
+/-- Vega is always positive (Step 5): with a positive share price and strike, positive
+volatility and positive time, vega is positive, so the call price strictly rises as
+volatility rises, and at most one volatility fits a quoted price. -/
+theorem vega_pos_and_call_strictly_rises_with_volatility
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    0 < S * exp (-(q * T)) *
+          gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T ∧
+      StrictMonoOn
+        (fun s : ℝ =>
+          S * exp (-(q * T)) *
+              cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+            K * exp (-(r * T)) *
+              cdf (gaussianReal 0 1)
+                ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+        (Set.Ioi 0) := by
+  have hpos : ∀ s : ℝ, 0 < S * exp (-(q * T)) *
+      gaussianPDFReal 0 1 ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) * √T := by
+    intro s
+    have := gaussianPDFReal_pos 0 1 ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))
+      one_ne_zero
+    have hsT : 0 < √T := Real.sqrt_pos.2 hT
+    positivity
+  refine ⟨hpos σ, ?_⟩
+  have hder := fun (s : ℝ) (hs : 0 < s) =>
+    (call_and_put_vega_eq_share_value_times_bell_height_times_sqrt_time S K r q s T hS hK hs hT).1
+  apply strictMonoOn_of_deriv_pos (convex_Ioi 0)
+  · intro x hx
+    exact (hder x hx).continuousAt.continuousWithinAt
+  · intro x hx
+    rw [interior_Ioi] at hx
+    rw [(hder x hx).deriv]
+    exact hpos x
+
+/-! The card's worked numbers that are exact fractions, for Acme:
+S = 100, K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1. -/
+
+-- The drift term (r - q + σ² / 2) T is 0.05.
+example : ((5 : ℚ) / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1 = 1 / 20 := by norm_num
+
+-- d1 = (ln(100/100) + 0.05) / (0.20 × √1) = 0.25.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) =
+      1 / 4 := by
+  norm_num
+
+-- d2 = d1 - σ √T = 0.25 - 0.20 = 0.05.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) -
+        1 / 5 * √1 = 1 / 20 := by
+  norm_num
+
+#print axioms call_and_put_vega_eq_share_value_times_bell_height_times_sqrt_time
+#print axioms share_side_eq_cash_side
+#print axioms vega_pos_and_call_strictly_rises_with_volatility
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'vega_cdf_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vega_continuous_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vega_cdf_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vega_pdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vega_share_cash' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_and_put_vega_eq_share_value_times_bell_height_times_sqrt_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+'share_side_eq_cash_side' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vega_pos_and_call_strictly_rises_with_volatility' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

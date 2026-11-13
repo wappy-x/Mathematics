@@ -10,7 +10,7 @@ Acme shares trade at \$100. A bank sells a one-year bet on them: it pays \$1 if 
 
 The bank does not want the bet's risk, so it hedges: it holds Acme shares whose gains offset the bet's changes in value. The number of shares is the bet's **delta**, the slope of its price against Acme's price. A year out, the bank holds 0.018951 shares per dollar of payout, \$1.90 of stock. Calm.
 
-Now let the year run down with Acme stuck near \$100. With one day left the same bet needs 0.381036 shares, \$38.10 of stock, to hedge a payout that can never exceed \$1. With one hour left it needs \$186.69. A move of fifty cents either way then swings the bet between likely and unlikely, and the hedge must be bought or dumped in bulk. Traders call this **pin risk**: the danger that the share finishes within a whisker of the strike, so the payout hangs on pennies while the hedge lurches.
+Now let the year run down with Acme stuck near \$100. With one day left the same bet needs 0.381036 shares, \$38.10 of stock, to hedge a payout that can never exceed \$1. With one hour left it needs \$186.69. A move of fifty cents either way then swings the bet between likely and unlikely, and the hedge must be bought or dumped in bulk. Traders call this **pin risk**: the danger that the share finishes very close to the strike, so the payout hangs on pennies while the hedge lurches.
 
 This card differentiates both digital prices for all five Greeks: sensitivity to share price (delta, and gamma, the change in delta), volatility (vega), time (theta) and the bank rate (rho). Two surprises fall out. The cash digital's vega is negative at the strike: more volatility makes it cheaper, by 0.473764 dollars per unit of volatility. And its gamma changes sign, below the strike rather than at it.
 
@@ -73,7 +73,7 @@ $$\Theta_a = q\,a - S\,e^{-qT}\varphi(d_1)\left(\frac{r-q}{\sigma\sqrt{T}} - \fr
 | $T$ | time left to expiry, in years | 1 | wider, lower hump |
 | $r$, $q$ | bank rate and dividend yield, continuously compounded | 5%, 2% | raise and lower the odds of finishing above $K$ |
 | $\sigma$ | volatility: the spread of a year's log return | 20% | cash digital cheaper at the strike |
-| $d_1$, $d_2$, $m$ | the strike's distance in spread units, counted in shares and in dollars; $m$ is the forward's log-distance above the strike | 0.25, 0.05, 0.03 | — |
+| $d_1$, $d_2$, $m$ | the strike's distance in spread units, counted in shares and in dollars; $m$ is the log-distance above the strike of the forward $S e^{(r-q)T}$, the price agreed today for a share delivered at $T$ | 0.25, 0.05, 0.03 | — |
 | $\varphi$, $N$ | the bell curve's height; $N(x)$ is its area left of $x$ | $\varphi(d_2) = 0.398444$ | — |
 | $e^{-rT}$, $e^{-qT}$ | today's value of \$1 due at $T$; the share fraction held today to own one share at $T$ | 0.951229, 0.980199 | — |
 | $\Delta$, $\Delta_c$, $\Delta_a$, $\Gamma$, $\Gamma_c$, $\Gamma_a$ | delta: price change per \$1 of Acme; gamma: delta's change per \$1 | 0.018951, −0.000237 (cash) | — |
@@ -124,7 +124,7 @@ The volatility row is the one that matters. Raising $\sigma$ divides $m$ by more
 
 Multiply the height by the first row: $\Delta_c = e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})$. For Acme that is 0.379012 / 20 = 0.018951.
 
-The ordinary call's gamma is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). The two numerators are tied by the **density identity** $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, so the call's gamma is $K/S$ times the cash delta. At $S = K$ they coincide: 0.018951 both. The call's delta climbs from 0 to about 1 as Acme rises through the strike, and the cash digital pays exactly when the call is in the money, so the slope of one tracks the steepness of the other.
+The ordinary call's gamma is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). The two numerators are tied by the **density identity** $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, so the call's gamma is $K/S$ times the cash delta. At $S = K$ they coincide: 0.018951 both. The call's delta climbs from 0 to about 1 as Acme rises through the strike, and the cash digital pays exactly when the call pays out, so the slope of one tracks the steepness of the other.
 
 <details>
 <summary>The algebra behind the density identity</summary>
@@ -153,11 +153,11 @@ xychart-beta
     line [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-Falling line: the cash digital's vega. Flat line: zero. Vega crosses zero at the \$95.12 crossover and stays negative above it. An ordinary option's vega never goes below zero ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)); a digital's does, because it is a bet on which side of a line the share ends, not on how far it travels.
+Falling line: the cash digital's vega. Flat line: zero. An ordinary option's vega never goes below zero ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)); a digital's does, because it is a bet on which side of a line the share ends, not on how far it travels.
 
 ### Step 4: theta and rho carry a discount term
 
-Time and the bank rate enter twice: through the distance and through the discount $e^{-rT}$. Theta is the change in price per year that passes with Acme held still, so it is minus the slope in $T$. The discount grows toward 1 as payment nears, adding $r\,c$; the distance adds the bell curve's height times the time row with its sign flipped. At the house market the two parts are 0.05 × 0.494581 and 0.379012 × (0.125 − 0.15), giving a theta of 0.015254 a year: the bet at the strike creeps up in value as the days pass. A digital need not lose value as time passes.
+Time and the bank rate enter twice: through the distance and through the discount $e^{-rT}$. Theta is the change in price per year that passes with Acme held still, so it is minus the slope in $T$. The discount grows toward 1 as payment nears, adding $r\,c$; the distance adds the bell curve's height times the time row with its sign flipped. At the house market the two parts are 0.05 × 0.494581 and 0.379012 × (0.125 − 0.15), giving a theta of 0.015254 a year: the bet at the strike creeps up in value as the days pass.
 
 Rho has the same two parts with opposite signs. A higher bank rate shrinks the discount, costing $T\,c$, and lifts the forward, raising the odds, worth $e^{-rT}\varphi(d_2)\sqrt{T}/\sigma$. Net: 1.400477 per unit of rate.
 
@@ -165,7 +165,7 @@ The checks test theta a second way. Every price in this model obeys the pricing 
 
 ### Step 5: the asset digital is a call plus cash digitals
 
-An asset digital pays the share when Acme ends above $K$. That payout is the call's payout plus $K$ dollars in the same event ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Slopes add, so every asset Greek is the call's Greek plus $K$ times the cash Greek. Delta: 0.586851 plus 100 × 0.018951 gives 2.481909. Gamma: 0.018951 plus 100 × (−0.000237) gives −0.004738. Vega: the call's plus 100 cash vegas lands on −9.475289.
+An asset digital's payout is the call's payout plus $K$ dollars in the same event ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Slopes add, so every asset Greek is the call's Greek plus $K$ times the cash Greek. Delta: 0.586851 plus 100 × 0.018951 gives 2.481909. Gamma: 0.018951 plus 100 × (−0.000237) gives −0.004738. Vega: the call's plus 100 cash vegas lands on −9.475289.
 
 Differentiating $S e^{-qT}N(d_1)$ directly gives the formulas in the table. Delta gains a second term by the product rule, because $S$ appears twice. Gamma and vega carry $-d_2$ where the cash versions carry $-d_1$. So the asset digital's crossover is $d_2 = 0$, at $S = K e^{-(r-q-\sigma^2/2)T}$, which is 99.004983: closer to the strike than the cash digital's, since counting in shares puts the odds one spread higher.
 
@@ -190,7 +190,7 @@ Differentiating $S e^{-qT}N(d_1)$ directly gives the formulas in the table. Delt
 
 The cash price is a smoothed step in Acme's price: near 0 well below the strike, near one discounted dollar well above. The step's width, in log-price, is the spread $\sigma\sqrt{T}$: 20 percent of the share price with a year left, and a small fraction of that with a day left. Delta is the step's slope, roughly its height over its width. At the strike the height stays near \$1 while the width shrinks with the square root of time, so delta grows like $\frac{1}{\sqrt{T}}$. Each quartering of the time left about doubles it: 0.018951 at a year, 0.039386 at three months.
 
-Away from the strike the bell-curve height $\varphi(d_2)$ collapses instead. With one day left, delta is 0.381036 at \$100 and 0.060701 at \$98. The turning point $K e^{-(r-q+\sigma^2/2)T}$ has closed in to 99.986302, so gamma flips sign almost exactly at the strike, where it is −0.004763. In the limit the price is a cliff, flat on both sides and vertical at $K$, and a hedge built from its slope holds no shares, then very many, then none. That is **pin risk**: when Acme is pinned near the strike into expiry, the correct hedge is too large and changes too fast to trade.
+Away from the strike the bell-curve height $\varphi(d_2)$ collapses instead. With one day left, delta is 0.381036 at \$100 and 0.060701 at \$98. The turning point $K e^{-(r-q+\sigma^2/2)T}$ has closed in to 99.986302, so gamma flips sign almost exactly at the strike, where it is −0.004763. In the limit the price is a cliff, flat on both sides and vertical at $K$, and a hedge built from its slope holds no shares, then very many, then none. That is **pin risk**: the correct hedge is too large and changes too fast to trade.
 
 Another route prices and hedges a digital without this cliff: approximate it by a spread of two ordinary calls struck either side of $K$, whose delta is capped. The next card builds it: [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md).
 
@@ -241,8 +241,6 @@ time left   stock held per $1 of payout, Acme at $100
   1 day     ████████████████████████████████████████   $38.10
 ```
 
-With one hour left the stake reaches \$186.69 against a payout of at most \$1.
-
 ### One day left, delta across the strike
 
 | Acme | Digital's value | Delta |
@@ -269,7 +267,7 @@ A bank sells the \$1 digital with five days left and delta-hedges once a day at 
 | 2 | \$100.30 | \$0.581460 | 0.262950 | 0.049936 |
 | 1 | \$99.90 | \$0.462906 | 0.379774 | 0.116824 |
 
-Acme has gone nowhere. The digital's value swung between \$0.392682 and \$0.614120, and the hedge has grown from 0.170309 to 0.379774 shares. Two last closes:
+Acme has gone nowhere. Two last closes:
 
 - **Acme ends at \$100.20.** The bet pays \$1. The shares gain little on the last day's move. Final result for the bank: −\$0.425847.
 - **Acme ends at \$99.80.** The bet pays nothing. The hedge's shares lose a little. Final result: +\$0.422244.
@@ -280,7 +278,7 @@ The bet worth \$0.462906 the evening before becomes \$1 or \$0, and the 0.379774
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads reach every Greek of both digitals. Road 1 is the formulas above. Road 2 prices both bets by brute force: bisection finds the bell-curve point where Acme finishes at the strike, Simpson's rule averages the payouts beyond it, and each Greek is the slope of that price under a small nudge to one input; no $d_1$, no $d_2$, no $N$. Road 3 takes the ordinary call's own Greeks and adds $K$ cash Greeks to reach the asset Greeks. Theta is also tested against the pricing equation. The bell-curve area is a series written out in both languages. Every number on the card is printed.
+Three independent roads reach every Greek of both digitals. Road 1 is the formulas above. Road 2 prices both bets by brute force: bisection finds the bell-curve point where Acme finishes at the strike, Simpson's rule averages the payouts beyond it, and each Greek is the slope of that price under a small nudge to one input; no $d_1$, no $d_2$, no $N$. Road 3 takes the ordinary call's own Greeks and adds $K$ cash Greeks to reach the asset Greeks. The bell-curve area is a series written out in both languages. Every number on the card is printed.
 
 ### Python
 
@@ -718,6 +716,383 @@ ALL CHECKS PASS
 
 The two outputs agree line for line at the printed precision. The bumped Greeks differ from the formulas only in the last printed digit, which is the size of the nudge's own error.
 
+### Lean
+
+Lean proves the cash digital's Greeks, where vega and gamma change sign, and pin risk, for all inputs meeting the conditions.
+
+- Take $S$, $K$, $\sigma$ and $T$ all above zero, and any $r$ and $q$. Then $\Delta_c$, $\Gamma_c$ and $\mathcal{V}_c$ are the slopes given in The formula.
+- Take the same inputs. Then $\Theta_c$ and $\rho_c$ are the slopes given there, each with its discount term.
+- Take the same inputs, and call $K e^{-(r - q + \sigma^2/2)T}$ the crossover. Then $\mathcal{V}_c$ and $\Gamma_c$ are negative exactly above the crossover, and positive exactly below it.
+- Take $S = K$, with $K$ and $\sigma$ above zero, and any $r$ and $q$. Then $\Delta_c$ grows without limit as $T$ shrinks toward zero.
+- With the house numbers, $d_2 = 0.05$ and $d_1 = 0.25$.
+- The by-hand factors hold: $S\sigma\sqrt{T} = 20$, $S^2\sigma^2T = 400$, and $d_1/\sigma = 5/4$.
+- Theta's bracket comes to 0.125 − 0.15 = −1/40, and rho's factor $\sqrt{T}/\sigma$ is 5.
+- The crossover exponents come to 0.05 for the cash digital and 0.01 for the asset digital.
+
+The asset digital's Greeks, the bell-curve values, the pricing equation and the hedge story are left to the Python and Rust checks.
+
+```lean
+-- Digital Greeks and pin risk: in the Black-Scholes model the cash digital's delta, gamma, vega, theta and rho are the discounted bell-curve height e^(-rT) φ(d₂) times the slope of d₂ (plus a discount term for theta and rho), its vega and gamma are negative exactly above S* = K e^(-(r - q + σ²/2)T) and positive below it, and its delta at the strike grows without limit as expiry nears.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open Real MeasureTheory ProbabilityTheory Filter Topology
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- `φ(x) = e^(-x²/2) / √(2π)`: the bell curve's height at `x`, the standard normal density. -/
+noncomputable def stdNormalPDF (x : ℝ) : ℝ := gaussianPDFReal 0 1 x
+
+/-- The cash-side distance to the strike, `d₂ = (ln(S/K) + (r - q - σ²/2) T) / (σ√T)`. -/
+noncomputable def bsD2 (S K r q σ T : ℝ) : ℝ :=
+  (log (S / K) + (r - q - σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- The share-side distance to the strike, `d₁ = d₂ + σ√T`. -/
+noncomputable def bsD1 (S K r q σ T : ℝ) : ℝ :=
+  bsD2 S K r q σ T + σ * √T
+
+/-- The price of the $1 cash digital: `c = e^(-rT) N(d₂)`. -/
+noncomputable def cashDigital (S K r q σ T : ℝ) : ℝ :=
+  exp (-r * T) * stdNormalCDF (bsD2 S K r q σ T)
+
+lemma stdNormalCDF_eq_integral (x : ℝ) :
+    stdNormalCDF x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  unfold stdNormalCDF
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral 0 one_ne_zero,
+    ENNReal.toReal_ofReal]
+  exact setIntegral_nonneg measurableSet_Iic (fun t _ => gaussianPDFReal_nonneg 0 1 t)
+
+#print axioms stdNormalCDF_eq_integral
+
+lemma continuous_stdNormalPDF : Continuous stdNormalPDF := by
+  unfold stdNormalPDF gaussianPDFReal; fun_prop
+
+#print axioms continuous_stdNormalPDF
+
+lemma hasDerivAt_stdNormalCDF (x : ℝ) : HasDerivAt stdNormalCDF (stdNormalPDF x) x := by
+  have hi := (integrable_gaussianPDFReal 0 1).integrableOn (s := Set.Iic (0:ℝ))
+  have h : stdNormalCDF = fun y => stdNormalCDF 0 + ∫ t in (0:ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y
+    rw [stdNormalCDF_eq_integral, stdNormalCDF_eq_integral,
+      ← intervalIntegral.integral_Iic_sub_Iic hi (integrable_gaussianPDFReal 0 1).integrableOn]
+    ring
+  have hc : Continuous (gaussianPDFReal 0 1) := continuous_stdNormalPDF
+  rw [h]
+  exact (intervalIntegral.integral_hasDerivAt_right (hc.intervalIntegrable 0 x)
+    (hc.stronglyMeasurableAtFilter _ _) hc.continuousAt).const_add _
+
+#print axioms hasDerivAt_stdNormalCDF
+
+lemma stdNormalPDF_eq (x : ℝ) : stdNormalPDF x = (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := by
+  simp [stdNormalPDF, gaussianPDFReal]
+
+#print axioms stdNormalPDF_eq
+
+lemma stdNormalPDF_pos (x : ℝ) : 0 < stdNormalPDF x :=
+  gaussianPDFReal_pos 0 1 x one_ne_zero
+
+#print axioms stdNormalPDF_pos
+
+lemma hasDerivAt_stdNormalPDF (x : ℝ) : HasDerivAt stdNormalPDF (-x * stdNormalPDF x) x := by
+  have : stdNormalPDF = fun x => (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := funext stdNormalPDF_eq
+  rw [this]
+  have h := ((((hasDerivAt_pow 2 x).neg).div_const 2).exp).const_mul (√(2 * π))⁻¹
+  convert h using 1
+  simp only [Pi.neg_apply]
+  ring
+
+#print axioms hasDerivAt_stdNormalPDF
+
+lemma hasDerivAt_bsD2_S (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => bsD2 x K r q σ T) (1 / (S * σ * √T)) S := by
+  unfold bsD2
+  have h := ((((hasDerivAt_id' S).div_const K).log (by positivity)).add_const
+    ((r - q - σ ^ 2 / 2) * T)).div_const (σ * √T)
+  convert h using 1
+  have : 0 < √T := Real.sqrt_pos.2 hT
+  field_simp
+
+#print axioms hasDerivAt_bsD2_S
+
+lemma hasDerivAt_bsD2_σ (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun s => bsD2 S K r q s T) (-bsD1 S K r q σ T / σ) σ := by
+  unfold bsD1 bsD2
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have h := ((((hasDerivAt_pow 2 σ).div_const 2).const_sub (r - q)).mul_const T
+    |>.const_add (log (S / K))).div ((hasDerivAt_id' σ).mul_const √T) (by positivity)
+  convert h using 1
+  have hT2 : √T ^ 2 = T := Real.sq_sqrt hT.le
+  generalize √T = s at hT2 hsT ⊢
+  subst hT2
+  field_simp
+  ring
+
+#print axioms hasDerivAt_bsD2_σ
+
+lemma hasDerivAt_bsD2_r (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun ρ => bsD2 S K ρ q σ T) (√T / σ) r := by
+  unfold bsD2
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have h := ((((hasDerivAt_id' r).sub_const (q + σ ^ 2 / 2)).mul_const T).const_add
+    (log (S / K))).div_const (σ * √T)
+  convert h using 1
+  · funext ρ; ring
+  · have hT2 : √T ^ 2 = T := Real.sq_sqrt hT.le
+    generalize √T = s at hT2 hsT ⊢
+    subst hT2
+    field_simp
+
+#print axioms hasDerivAt_bsD2_r
+
+lemma hasDerivAt_bsD2_T (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun t => bsD2 S K r q σ t)
+      (-(bsD1 S K r q σ T / (2 * T) - (r - q) / (σ * √T))) T := by
+  unfold bsD1 bsD2
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have h := (((hasDerivAt_id' T).const_mul (r - q - σ ^ 2 / 2)).const_add
+    (log (S / K))).div ((Real.hasDerivAt_sqrt hT.ne').const_mul σ) (by positivity)
+  convert h using 1
+  have hT2 : √T ^ 2 = T := Real.sq_sqrt hT.le
+  generalize √T = s at hT2 hsT ⊢
+  subst hT2
+  field_simp
+  ring
+
+#print axioms hasDerivAt_bsD2_T
+
+lemma hasDerivAt_cash_S (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => cashDigital x K r q σ T)
+      (exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) / (S * σ * √T)) S := by
+  have h := ((hasDerivAt_stdNormalCDF _).comp S (hasDerivAt_bsD2_S S K r q σ T hS hK hσ hT)).const_mul
+    (exp (-r * T))
+  refine h.congr_deriv ?_
+  ring
+
+#print axioms hasDerivAt_cash_S
+
+lemma hasDerivAt_cash_delta (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => exp (-r * T) * stdNormalPDF (bsD2 x K r q σ T) / (x * σ * √T))
+      (-(exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) * bsD1 S K r q σ T)
+          / (S ^ 2 * σ ^ 2 * T)) S := by
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have h := (((hasDerivAt_stdNormalPDF _).comp S (hasDerivAt_bsD2_S S K r q σ T hS hK hσ hT)).const_mul
+    (exp (-r * T))).div (((hasDerivAt_id' S).mul_const σ).mul_const √T) (by positivity)
+  refine h.congr_deriv ?_
+  simp only [Function.comp_apply]
+  rw [bsD1]
+  generalize bsD2 S K r q σ T = d
+  generalize stdNormalPDF d = p
+  generalize exp (-r * T) = e
+  have hT2 : √T ^ 2 = T := Real.sq_sqrt hT.le
+  generalize √T = s at hT2 hsT ⊢
+  subst hT2
+  field_simp
+  ring
+
+#print axioms hasDerivAt_cash_delta
+
+lemma bsD1_eq (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    bsD1 S K r q σ T = (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) := by
+  unfold bsD1 bsD2
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hT2 : √T ^ 2 = T := Real.sq_sqrt hT.le
+  generalize √T = s at hT2 hsT ⊢
+  subst hT2
+  field_simp
+  ring
+
+#print axioms bsD1_eq
+
+lemma bsD1_pos_iff (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    0 < bsD1 S K r q σ T ↔ K * exp (-(r - q + σ ^ 2 / 2) * T) < S := by
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  rw [bsD1_eq S K r q σ T hσ hT, lt_div_iff₀ (by positivity), zero_mul, ← lt_div_iff₀' hK,
+    ← Real.lt_log_iff_exp_lt (by positivity)]
+  constructor <;> intro h <;> linarith
+
+#print axioms bsD1_pos_iff
+
+lemma bsD1_neg_iff (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    bsD1 S K r q σ T < 0 ↔ S < K * exp (-(r - q + σ ^ 2 / 2) * T) := by
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  rw [bsD1_eq S K r q σ T hσ hT, div_lt_iff₀ (by positivity), zero_mul, ← div_lt_iff₀' hK,
+    ← Real.log_lt_iff_lt_exp (by positivity)]
+  constructor <;> intro h <;> linarith
+
+#print axioms bsD1_neg_iff
+
+/-- **The cash digital's five Greeks** (The formula; Why it works, Steps 0 to 4 and the detailed
+proof). In the Black-Scholes model with one fixed volatility `σ > 0`, constant bank rate `r` and
+dividend yield `q`, strike `K > 0`, time left `T > 0` and share price `S > 0`, the cash digital
+`c = e^(-rT) N(d₂)` has
+* delta `∂c/∂S = e^(-rT) φ(d₂) / (S σ √T)`,
+* gamma, the slope of delta in `S`, `-e^(-rT) φ(d₂) d₁ / (S² σ² T)`,
+* vega `∂c/∂σ = -e^(-rT) φ(d₂) d₁ / σ`,
+* theta `-∂c/∂T = r c + e^(-rT) φ(d₂) (d₁/(2T) - (r - q)/(σ√T))`,
+* rho `∂c/∂r = -T c + e^(-rT) φ(d₂) √T / σ`:
+each one the discounted bell-curve height times how fast `d₂` moves, plus a discount term
+for theta and rho. -/
+theorem cash_digital_greeks_are_bell_height_times_slope
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => cashDigital x K r q σ T)
+        (exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) / (S * σ * √T)) S ∧
+      HasDerivAt (deriv (fun x => cashDigital x K r q σ T))
+        (-(exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) * bsD1 S K r q σ T)
+          / (S ^ 2 * σ ^ 2 * T)) S ∧
+      HasDerivAt (fun s => cashDigital S K r q s T)
+        (-(exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) * bsD1 S K r q σ T) / σ) σ ∧
+      HasDerivAt (fun t => cashDigital S K r q σ t)
+        (-(r * cashDigital S K r q σ T + exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T)
+          * (bsD1 S K r q σ T / (2 * T) - (r - q) / (σ * √T)))) T ∧
+      HasDerivAt (fun ρ => cashDigital S K ρ q σ T)
+        (-T * cashDigital S K r q σ T
+          + exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) * √T / σ) r := by
+  refine ⟨hasDerivAt_cash_S S K r q σ T hS hK hσ hT, ?_, ?_, ?_, ?_⟩
+  · refine (hasDerivAt_cash_delta S K r q σ T hS hK hσ hT).congr_of_eventuallyEq ?_
+    filter_upwards [Ioi_mem_nhds hS] with x hx
+    exact (hasDerivAt_cash_S x K r q σ T hx hK hσ hT).deriv
+  · have h := ((hasDerivAt_stdNormalCDF _).comp σ (hasDerivAt_bsD2_σ S K r q σ T hσ hT)).const_mul
+      (exp (-r * T))
+    refine h.congr_deriv ?_
+    ring
+  · have h := ((hasDerivAt_id' T).const_mul (-r)).exp.mul
+      ((hasDerivAt_stdNormalCDF _).comp T (hasDerivAt_bsD2_T S K r q σ T hσ hT))
+    refine h.congr_deriv ?_
+    unfold cashDigital
+    simp only [Function.comp_apply]
+    ring
+  · have h := (((hasDerivAt_id' r).neg.mul_const T).exp).mul
+      ((hasDerivAt_stdNormalCDF _).comp r (hasDerivAt_bsD2_r S K r q σ T hσ hT))
+    refine h.congr_deriv ?_
+    unfold cashDigital
+    simp only [Function.comp_apply, Pi.neg_apply]
+    ring
+
+/-- **Vega and gamma turn negative below the strike** (Step 3). With `S > 0`, `K > 0`, `σ > 0`,
+`T > 0` and any rates `r`, `q`, let `S* = K e^(-(r - q + σ²/2) T)`, the price where `d₁ = 0`.
+The cash digital's vega and its gamma are both negative exactly when `S > S*`, and both
+positive exactly when `S < S*`: more volatility makes the bet cheaper above `S*`, and the delta
+hump peaks at `S*`, not at the strike. -/
+theorem cash_digital_vega_and_gamma_change_sign_at_S_star
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    (deriv (fun s => cashDigital S K r q s T) σ < 0 ↔
+        K * exp (-(r - q + σ ^ 2 / 2) * T) < S) ∧
+      (0 < deriv (fun s => cashDigital S K r q s T) σ ↔
+        S < K * exp (-(r - q + σ ^ 2 / 2) * T)) ∧
+      (deriv (deriv (fun x => cashDigital x K r q σ T)) S < 0 ↔
+        K * exp (-(r - q + σ ^ 2 / 2) * T) < S) ∧
+      (0 < deriv (deriv (fun x => cashDigital x K r q σ T)) S ↔
+        S < K * exp (-(r - q + σ ^ 2 / 2) * T)) := by
+  obtain ⟨-, hg, hv, -, -⟩ := cash_digital_greeks_are_bell_height_times_slope S K r q σ T hS hK hσ hT
+  rw [hg.deriv, hv.deriv, ← bsD1_pos_iff S K r q σ T hS hK hσ hT,
+    ← bsD1_neg_iff S K r q σ T hS hK hσ hT]
+  have hE : 0 < exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) :=
+    mul_pos (exp_pos _) (stdNormalPDF_pos _)
+  have hden : 0 < S ^ 2 * σ ^ 2 * T := by positivity
+  generalize exp (-r * T) * stdNormalPDF (bsD2 S K r q σ T) = E at hE
+  generalize bsD1 S K r q σ T = d
+  generalize S ^ 2 * σ ^ 2 * T = M at hden
+  rw [neg_div, neg_div, neg_lt_zero, neg_pos, neg_lt_zero, neg_pos, div_pos_iff_of_pos_right hσ,
+    div_lt_iff₀ hσ, zero_mul, div_pos_iff_of_pos_right hden, div_lt_iff₀ hden, zero_mul]
+  have hn : E * d < 0 ↔ d < 0 := by
+    constructor
+    · intro h
+      by_contra h'
+      nlinarith [mul_nonneg hE.le (not_lt.mp h')]
+    · exact mul_neg_of_pos_of_neg hE
+  exact ⟨mul_pos_iff_of_pos_left hE, hn, mul_pos_iff_of_pos_left hE, hn⟩
+
+/-- **Pin risk: the delta at the strike explodes near expiry** (Step 6). With the share at the
+strike, `S = K > 0`, volatility `σ > 0` and any rates `r`, `q`, the cash digital's delta grows
+without limit as the time left `T` shrinks to zero, although the payout never exceeds $1. -/
+theorem cash_digital_delta_at_strike_unbounded_near_expiry
+    (K r q σ : ℝ) (hK : 0 < K) (hσ : 0 < σ) :
+    Tendsto (fun T => deriv (fun x => cashDigital x K r q σ T) K) (𝓝[>] 0) atTop := by
+  set g : ℝ → ℝ := fun T => exp (-r * T) * stdNormalPDF ((r - q - σ ^ 2 / 2) * √T / σ) / (K * σ)
+    with hg_def
+  have hgc : Continuous g := by
+    rw [hg_def]
+    exact ((continuous_exp.comp (by fun_prop)).mul
+      (continuous_stdNormalPDF.comp (by fun_prop))).div_const _
+  have hg0 : 0 < g 0 := div_pos (mul_pos (exp_pos _) (stdNormalPDF_pos _)) (by positivity)
+  have h1 : Tendsto g (𝓝[>] 0) (𝓝 (g 0)) := (hgc.tendsto 0).mono_left nhdsWithin_le_nhds
+  have h2 : Tendsto (fun T : ℝ => √T) (𝓝[>] 0) (𝓝[>] 0) := by
+    refine tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within _ ?_ ?_
+    · have := (Real.continuous_sqrt.tendsto 0).mono_left (nhdsWithin_le_nhds (s := Set.Ioi 0))
+      simpa using this
+    · filter_upwards [self_mem_nhdsWithin] with T hT
+      exact Real.sqrt_pos.2 hT
+  have h3 := h1.pos_mul_atTop hg0 (tendsto_inv_nhdsGT_zero.comp h2)
+  refine h3.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with T hT
+  have hT : 0 < T := hT
+  rw [(hasDerivAt_cash_S K K r q σ T hK hK hσ hT).deriv]
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hd : bsD2 K K r q σ T = (r - q - σ ^ 2 / 2) * √T / σ := by
+    unfold bsD2
+    rw [div_self hK.ne', log_one, zero_add]
+    have hT2 : √T ^ 2 = T := Real.sq_sqrt hT.le
+    generalize √T = s at hT2 hsT ⊢
+    subst hT2
+    field_simp
+  simp only [hg_def, Function.comp, hd]
+  field_simp
+
+-- Acme: S = K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1 year.
+-- d₂ = (ln 1 + (0.05 - 0.02 - 0.02) · 1) / (0.20 · √1) = 0.05.
+example : bsD2 100 100 (5 / 100) (2 / 100) (1 / 5) 1 = 1 / 20 := by
+  norm_num [bsD2]
+-- d₁ = d₂ + σ√T = 0.05 + 0.20 = 0.25.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 = 1 / 4 := by
+  norm_num [bsD1, bsD2]
+-- Delta's denominator S σ √T = 100 × 0.20 × 1 = 20.
+example : (100 : ℝ) * (1 / 5) * √1 = 20 := by norm_num
+-- Gamma's denominator S² σ² T = 100 × 100 × 0.04 = 400.
+example : (100 : ℚ) ^ 2 * (1 / 5) ^ 2 * 1 = 400 := by norm_num
+-- Vega's factor d₁ / σ = 0.25 / 0.20 = 5/4.
+example : (1 / 4 : ℚ) / (1 / 5) = 5 / 4 := by norm_num
+-- Theta's bracket d₁/(2T) - (r - q)/(σ√T) = 0.125 - 0.15 = -1/40.
+example : (1 / 4 : ℝ) / (2 * 1) - (5 / 100 - 2 / 100) / (1 / 5 * √1) = -1 / 40 := by norm_num
+-- Rho's factor √T / σ = 1 / 0.20 = 5.
+example : √(1 : ℝ) / (1 / 5) = 5 := by norm_num
+-- Cash crossover exponent r - q + σ²/2 = 0.05, so S* = 100 e^(-1/20) (95.122942).
+example : (5 / 100 : ℚ) - 2 / 100 + (1 / 5) ^ 2 / 2 = 1 / 20 := by norm_num
+-- Asset crossover exponent r - q - σ²/2 = 0.01, so the asset digital's turn is 100 e^(-1/100).
+example : (5 / 100 : ℚ) - 2 / 100 - (1 / 5) ^ 2 / 2 = 1 / 100 := by norm_num
+
+#print axioms cash_digital_greeks_are_bell_height_times_slope
+#print axioms cash_digital_vega_and_gamma_change_sign_at_S_star
+#print axioms cash_digital_delta_at_strike_unbounded_near_expiry
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stdNormalCDF_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'continuous_stdNormalPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_stdNormalCDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalPDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalPDF_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_stdNormalPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsD2_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsD2_σ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsD2_r' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_bsD2_T' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_cash_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hasDerivAt_cash_delta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsD1_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsD1_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsD1_neg_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cash_digital_greeks_are_bell_height_times_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cash_digital_vega_and_gamma_change_sign_at_S_star' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cash_digital_delta_at_strike_unbounded_near_expiry' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -731,10 +1106,10 @@ The two outputs agree line for line at the printed precision. The bumped Greeks 
 ## The usual mistake
 
 > [!warning]
-> **Hedging a digital near expiry as if its delta were a sensible number of shares.** The delta is correct; the checks confirm it by brute force. It is still unusable. With a day left and Acme at the strike it says hold 0.381036 shares against a bet capped at \$1, and a two-dollar move in either direction says hold 0.060701 or 0.062115 instead. A gap through the strike cannot be hedged at all. Desks hedge a sold digital with a call spread instead, the next card's subject.
+> **Hedging a digital near expiry as if its delta were a sensible number of shares.** The delta is correct; the checks confirm it by brute force. It is still unusable. With a day left and Acme at the strike it says hold 0.381036 shares against a bet capped at \$1, and a two-dollar move in either direction says hold 0.060701 or 0.062115 instead. A gap through the strike cannot be hedged at all.
 >
 > Smaller traps:
-> - **Assuming every vega is positive.** The cash digital's vega at the strike is −0.473764. A seller of the digital is already long volatility; buying more to hedge adds to the risk instead of cancelling it.
+> - **Assuming every vega is positive.** The cash digital's vega at the strike is −0.473764. A seller of the digital already gains when volatility rises; buying volatility to hedge adds to the risk instead of cancelling it.
 > - **Putting the turning point at the strike.** The cash digital's vega, gamma and delta peak all turn at \$95.12 with a year left, not at \$100; at \$97 gamma is already negative. Only near expiry does the turn close in on the strike, to 99.986302 with a day left.
 > - **Units.** Vega here is per unit of volatility; per vol point, one percentage point of volatility, it is −0.004738. Theta is per year of time passing; divide by 365 for a day.
 
@@ -745,7 +1120,7 @@ The two outputs agree line for line at the printed precision. The bumped Greeks 
 - **Structured notes.** A coupon paid only if an index closes above a barrier on a set date is a digital. The issuing bank carries its vega and its pin risk on every observation date.
 - **Expiry-day pinning.** Closing prices of stocks with heavy option trading cluster at strikes on expiry dates. Dealers' hedge trades near a strike, like the churn traced above, are one proposed cause.
 - **Currency markets.** Digitals are standard currency-option products, priced and hedged with the Greeks on this card.
-- **Siblings on this shelf.** The prices differentiated here are built on [Cash-or-nothing digital](01-cash-or-nothing-digital.md) and [Asset-or-nothing digital](02-asset-or-nothing-digital.md). Differentiating the call twice in strike gives the market's density: [The butterfly and the implied density](05-butterfly-and-the-implied-density.md). A vega that changes sign means some digital prices match two volatilities: [Digital inverses](06-digital-inverses-vol-and-strike.md).
+- **Siblings on this shelf.** Differentiating the call twice in strike gives the market's density: [The butterfly and the implied density](05-butterfly-and-the-implied-density.md). A vega that changes sign means some digital prices match two volatilities: [Digital inverses](06-digital-inverses-vol-and-strike.md).
 
 > **Say it back**
 > A digital's price is a discounted bell-curve area, so each Greek is the bell curve's height times how fast the strike's distance moves with one input. The cash digital's delta equals the ordinary call's gamma at the strike. Its vega and gamma carry a factor of minus $d_1$, so they turn negative above a crossover just below the strike: more volatility makes the Acme bet cheaper. As expiry nears, the smoothed step becomes a cliff and the delta at the strike grows like one over the square root of time. A share hedge that tracks that slope is too large and too fast to run: that is pin risk.

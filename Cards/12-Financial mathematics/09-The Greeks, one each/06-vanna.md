@@ -6,7 +6,7 @@
 
 ## General Overview
 
-Acme trades at $100. A one-year call on it, the right to buy one share for $100 a year from now, costs $9.23 in the house market: rates 5 percent, dividends 2 percent a year, volatility (how jumpy the share is, as a yearly percentage) 20 percent. Its delta, the number of shares that hedge it, is 0.586851.
+Acme trades at $100; traders call the share's price today the spot. A one-year call on it, the right to buy one share for $100 a year from now, costs $9.23 in the house market: rates 5 percent, dividends 2 percent a year, volatility (how jumpy the share is, as a yearly percentage) 20 percent. Its delta, the number of shares that hedge it, is 0.586851.
 
 Now let the market's volatility rise by one point across 20 percent, from 19.5 to 20.5, while Acme stays at $100. The hedge changes: delta falls by about 0.00095 of a share. Run it the other way. The call's vega, the dollars it gains per 1.00 of volatility, is 37.901158. Let Acme rise by $1 across $100, from $99.50 to $100.50, with volatility held still, and vega falls by about $0.095.
 
@@ -28,13 +28,15 @@ xychart-beta
     line [0.17, 0.23, 0.30, 0.38, 0.45, 0.52, 0.59, 0.65, 0.70, 0.75, 0.79, 0.82, 0.85]
 ```
 
-Orange: delta at 20 percent volatility. Green: delta at 30 percent. Below about $100 the green line sits higher: more volatility gives a call that is far from paying off a better chance, so it needs more shares to hedge. Above, the green line sits lower: more volatility makes a likely payoff less certain, so fewer shares hedge it. The gap between the lines, per unit of volatility, is roughly vanna averaged over the move. Where the lines cross, the gap changes sign. Here they cross at $100 itself, because d1 is 0.25 at both volatilities; vanna at 20 percent changes sign just below, at $99.00.
+Orange: delta at 20 percent volatility. Green: delta at 30 percent. Below about $100 the green line sits higher: more volatility gives a call that is far from paying off a better chance, so it needs more shares to hedge. Above, the green line sits lower: more volatility makes a likely payoff less certain, so fewer shares hedge it.
+
+The gap between the lines, per unit of volatility, is roughly vanna averaged over the move. Where the lines cross, the gap changes sign. Here they cross at $100 itself, because d1 is 0.25 at both volatilities; vanna at 20 percent changes sign just below, at $99.00.
 
 ---
 
 ## The formula
 
-Notation first, in words. A partial derivative, written with a curly ∂, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A 2 raised on the top curly d means two slopes taken one after the other, one per input named underneath. Vega, the slope of the price in volatility, is written $\mathcal{V}$.
+Notation first, in words. A partial derivative, written with a curly ∂, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A 2 raised on the top curly d means two slopes taken one after the other, one per input named underneath. The call's price is written $C$. Vega, the slope of the price in volatility, is written $\mathcal{V}$.
 
 $$\text{vanna} \;=\; \frac{\partial \Delta}{\partial \sigma} \;=\; \frac{\partial \mathcal{V}}{\partial S} \;=\; \frac{\partial^2 C}{\partial S\,\partial \sigma} \;=\; -\,e^{-qT}\,\varphi(d_1)\,\frac{d_2}{\sigma}$$
 
@@ -75,7 +77,9 @@ In words: $d_2$ counts how many units of $\sigma\sqrt{T}$ the forward price, $F 
 
 ### Step 0: two questions, one number
 
-The call's price depends on Acme's price and on volatility at once. Ask how delta (the slope in price) changes as volatility moves. Ask how vega (the slope in volatility) changes as price moves. Both are a slope of a slope, taken in the two inputs in opposite orders. For any price surface smooth enough to have a continuous cross slope, the order does not matter: the two answers are one number. That symmetry of second derivatives is the whole reason vanna has two readings. The rest of this section computes the number both ways and gets the same formula.
+The call's price depends on Acme's price and on volatility at once. Ask how delta (the slope in price) changes as volatility moves. Ask how vega (the slope in volatility) changes as price moves. Both are a slope of a slope, taken in the two inputs in opposite orders. For any price surface smooth enough to have a continuous cross slope, the order does not matter: the two answers are one number.
+
+That symmetry of second derivatives is the whole reason vanna has two readings. The rest of this section computes the number both ways and gets the same formula.
 
 ### Step 1: three small facts about the ingredients
 
@@ -134,7 +138,7 @@ $$\text{crossover price} = K\,e^{-(r - q - \frac12\sigma^2)T} = 100\,e^{-0.01} =
 
 The crossover is not the strike. Carry, the $r - q$ drift, and the volatility drag in $d_2$ move it; here to $99.00.
 
-The put's vanna is the same number. Put-call parity, $C - P = S e^{-qT} - K e^{-rT}$ ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), has no $\sigma$ in its right side, so any slope taken in volatility is identical for the two. Bumping the put's delta in volatility gives −0.094753.
+The put's vanna is the same number. Put-call parity, $C - P = S e^{-qT} - K e^{-rT}$ with $P$ the put's price ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), has no $\sigma$ in its right side, so any slope taken in volatility is identical for the two. Bumping the put's delta in volatility gives −0.094753.
 
 <details>
 <summary>Detailed proof: why the order of the two slopes does not matter</summary>
@@ -200,11 +204,13 @@ xychart-beta
 
 Orange: one year to expiry. Green: three months. Dark: zero. Both curves are positive below the strike and negative above, and nearly zero at it. The three-month curve reaches similar heights, 1.33 and −1.09, but squeezed into a band half as wide. Near expiry, a few dollars of movement flips vanna's sign.
 
-The largest vanna sits well away from the strike, near $80 and $120 for the one-year call: roughly one spread-unit out on each side. At the money it is close to zero. That places vanna risk in the options off the money, the ones the skew prices.
+The largest vanna sits well away from the strike, near $80 and $120 for the one-year call: roughly one unit of $\sigma\sqrt{T}$ out on each side. At the money it is close to zero. That places vanna risk in the options off the money, the ones the skew prices.
 
 ### Two forces together: the skew ties volatility to price
 
-The **skew** is the pattern of implied volatility (the volatility that reproduces a quoted price) across strikes. In equity markets it slopes down: low strikes trade at higher volatility, because falls come with fear. A steep skew goes with volatility that moves strongly as the price moves. How strongly, for one fixed option, depends on the model of the smile; [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md) works that out. Here take a round, steep assumption: **each $1 rise in Acme lowers every option's volatility by 0.5 points**, a rate of −0.005 per dollar.
+The **skew** is the pattern of implied volatility (the volatility that reproduces a quoted price) across strikes. In equity markets it slopes down: low strikes trade at higher volatility, because falls come with fear.
+
+A steep skew goes with volatility that moves strongly as the price moves. How strongly, for one fixed option, depends on the model of the smile; [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md) works that out. Here take a round, steep assumption: **each $1 rise in Acme lowers every option's volatility by 0.5 points**, a rate of −0.005 per dollar.
 
 Once volatility is a function of the price, delta changes through two doors. Straight d's, as in $d\Delta/dS$, mark a total slope: everything that moves with the price is allowed to move. The chain rule adds the doors:
 
@@ -236,7 +242,9 @@ Gamma alone buys half again as many shares as the move needed. Adding vanna land
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The bell-curve area is a power series written out; the price for road 4 is a Simpson's-rule average over the bell curve that never calls that series. Vanna is reached **five ways**: the formula; delta bumped in volatility; vega bumped in price; the price alone, bumped in both inputs by the four-corner difference of the Detailed proof; and the put's delta bumped in volatility. The crossover $99.00 is found three ways: closed form, a bisection root finder on vanna, and a ternary search for the top of vega. The skew rows, the traced move, the mistakes and every chart point are printed too.
+Nothing imported knows the answer. The bell-curve area is a power series written out; the price for road 4 is a Simpson's-rule average over the bell curve that never calls that series. Vanna is reached **five ways**: the formula; delta bumped in volatility; vega bumped in price; the price alone, bumped in both inputs by the four-corner difference of the Detailed proof; and the put's delta bumped in volatility.
+
+The crossover $99.00 is found three ways: closed form, a bisection root finder on vanna, and a ternary search for the top of vega. The skew rows, the traced move, the mistakes and every chart point are printed too.
 
 ### Python
 
@@ -601,6 +609,403 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the vanna formula, the put's match and the sign rule for every positive share price, strike, volatility and time.
+
+- Take $S$, $K$, $\sigma$ and $T$ all above zero. Then the slope of the call's delta in volatility is vanna, $-e^{-qT}\varphi(d_1)\,d_2/\sigma$.
+- Under the same conditions, the slope of the call's vega in the share price is that same number.
+- Under the same conditions, the put on the same share, strike and date has the same two slopes, so the same vanna.
+- Take the same conditions. Then vanna is negative exactly when $S$ sits above the crossover price $K e^{-(r - q - \frac12\sigma^2)T}$.
+- Take the same conditions. Then vanna is positive exactly when $S$ sits below that crossover price.
+- Take Acme's house market. Then $d_2 = 0.05$, $d_1 = 0.25$ and $d_2/\sigma = 0.25$ exactly.
+- Take Acme's house market. Then $(r - q - \frac12\sigma^2)T = 0.01$ exactly, so the crossover price is $100\,e^{-0.01}$.
+
+Decimal values, such as vanna −0.094753 and the crossover $99.00, and the skew rows are left to the Python and Rust checks.
+
+```lean
+-- Vanna: in the Black–Scholes model the cross slope of the call price, taken in share price and volatility in either order, is -e^(-qT) φ(d1) d2 / σ, the put has the same cross slope, and its sign is opposite to d2, turning at the price K e^(-(r - q - σ²/2)T).
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open MeasureTheory ProbabilityTheory Real
+
+lemma vanna_cdf_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun t _ => gaussianPDFReal_nonneg _ _ t))]
+
+lemma vanna_continuous_pdf : Continuous (gaussianPDFReal 0 1) := by
+  rw [gaussianPDFReal_def]; fun_prop
+
+lemma vanna_cdf_hasDerivAt (z : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (gaussianPDFReal 0 1 z) z := by
+  have hI : ∀ a, IntegrableOn (gaussianPDFReal 0 1) (Set.Iic a) :=
+    fun a => (integrable_gaussianPDFReal 0 1).integrableOn
+  have hfun : (cdf (gaussianReal 0 1) : ℝ → ℝ) =
+      fun x => cdf (gaussianReal 0 1) 0 + ∫ t in (0:ℝ)..x, gaussianPDFReal 0 1 t := by
+    funext x
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI x), vanna_cdf_eq_integral,
+      vanna_cdf_eq_integral]
+    ring
+  rw [hfun]
+  exact (intervalIntegral.integral_hasDerivAt_right
+    (vanna_continuous_pdf.intervalIntegrable _ _)
+    (vanna_continuous_pdf.stronglyMeasurableAtFilter _ _)
+    vanna_continuous_pdf.continuousAt).const_add _
+
+lemma vanna_pdf_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal_def]
+
+lemma vanna_pdf_hasDerivAt (z : ℝ) :
+    HasDerivAt (gaussianPDFReal 0 1) (-z * gaussianPDFReal 0 1 z) z := by
+  have h : (gaussianPDFReal 0 1 : ℝ → ℝ) = fun x => (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := by
+    funext x; simp [gaussianPDFReal_def]
+  rw [h]
+  have := (((hasDerivAt_pow 2 z).neg.div_const 2).exp).const_mul (√(2 * π))⁻¹
+  convert this using 1
+  simp only [Pi.neg_apply]; push_cast; ring
+
+lemma vanna_cdf_neg (z : ℝ) : cdf (gaussianReal 0 1) (-z) = 1 - cdf (gaussianReal 0 1) z := by
+  set f : ℝ → ℝ := fun x => cdf (gaussianReal 0 1) x + cdf (gaussianReal 0 1) (-x) with hf
+  have hd : ∀ x, HasDerivAt f 0 x := by
+    intro x
+    have := (vanna_cdf_hasDerivAt x).add ((vanna_cdf_hasDerivAt (-x)).comp x (hasDerivAt_neg x))
+    rw [vanna_pdf_neg] at this
+    convert this using 1
+    · rfl
+    · ring
+  have hc : ∀ x, f x = f 0 := fun x =>
+    is_const_of_deriv_eq_zero (fun y => (hd y).differentiableAt) (fun y => (hd y).deriv) x 0
+  have hlim : Filter.Tendsto f Filter.atTop (nhds 1) := by
+    have h1 := tendsto_cdf_atTop (μ := gaussianReal 0 1)
+    have h2 := (tendsto_cdf_atBot (μ := gaussianReal 0 1)).comp Filter.tendsto_neg_atTop_atBot
+    simpa using h1.add h2
+  have hconst : Filter.Tendsto f Filter.atTop (nhds (f 0)) := by
+    rw [show f = fun _ => f 0 from funext hc]; exact tendsto_const_nhds
+  have h0 : f 0 = 1 := tendsto_nhds_unique hconst hlim
+  have := hc z
+  rw [h0] at this
+  simp only [hf] at this
+  linarith
+
+lemma vanna_share_cash
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    S * exp (-(q * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) =
+      K * exp (-(r * T)) *
+        gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) := by
+  set d := (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) with hd
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have key : d * (σ * √T) = log S - log K + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd, div_mul_cancel₀ _ (by positivity), Real.log_div hS.ne' hK.ne']
+  simp only [gaussianPDFReal_def, NNReal.coe_one, sub_zero, mul_one]
+  have h : log S + -(q * T) + -d ^ 2 / 2 = log K + -(r * T) + -(d - σ * √T) ^ 2 / 2 := by
+    linear_combination (-1 : ℝ) * key + (σ ^ 2 / 2) * hsq
+  have e1 : S * exp (-(q * T)) * ((√(2 * π))⁻¹ * exp (-d ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log S + -(q * T) + -d ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hS]; ring
+  have e2 : K * exp (-(r * T)) * ((√(2 * π))⁻¹ * exp (-(d - σ * √T) ^ 2 / 2)) =
+      (√(2 * π))⁻¹ * exp (log K + -(r * T) + -(d - σ * √T) ^ 2 / 2) := by
+    rw [exp_add, exp_add, exp_log hK]; ring
+  rw [e1, e2, h]
+
+/-- slope of d1 in volatility -/
+lemma vanna_d1_vol (x K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun s : ℝ => (log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))
+      (-(((log (x / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ)) σ := by
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  have h := ((((hasDerivAt_pow 2 σ).div_const 2).const_add (r - q)).mul_const T
+    |>.const_add (log (x / K))).div ((hasDerivAt_id' σ).mul_const √T) (by positivity)
+  convert h using 1
+  have hσ' := hσ.ne'
+  have hs' := hsT.ne'
+  field_simp
+  have h21 : (2 : ℕ) - 1 = 1 := rfl
+  simp only [h21, pow_one, Nat.cast_ofNat]
+  linear_combination (2 * σ ^ 2) * hsq
+
+/-- slope of d1 in the share price -/
+lemma vanna_d1_spot (x K r q σ T : ℝ) (hx : 0 < x) (hK : 0 < K) :
+    HasDerivAt (fun y : ℝ => (log (y / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T))
+      (1 / x / (σ * √T)) x := by
+  have h := ((((hasDerivAt_id' x).div_const K).log (by positivity)).add_const
+    ((r - q + σ ^ 2 / 2) * T)).div_const (σ * √T)
+  convert h using 1
+  field_simp
+
+/-- the call's delta in closed form -/
+lemma vanna_call_delta (x K r q s T : ℝ) (hx : 0 < x) (hK : 0 < K) (hs : 0 < s) (hT : 0 < T) :
+    HasDerivAt (fun y : ℝ =>
+      y * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (y / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+        K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1) ((log (y / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+      (exp (-(q * T)) *
+        cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))) x := by
+  have hD := vanna_d1_spot x K r q s T hx hK
+  have hN1 := (vanna_cdf_hasDerivAt _).comp x hD
+  have hN2 := (vanna_cdf_hasDerivAt _).comp x (hD.sub_const (s * √T))
+  have hshare := vanna_share_cash x K r q s T hx hK hs hT
+  have := (((hasDerivAt_id' x).mul_const (exp (-(q * T)))).mul hN1).sub
+    (hN2.const_mul (K * exp (-(r * T))))
+  refine this.congr_deriv ?_
+  simp only [Function.comp_apply]
+  linear_combination (1 / x / (s * √T)) * hshare
+
+/-- the call's vega in closed form -/
+lemma vanna_call_vega (x K r q s T : ℝ) (hx : 0 < x) (hK : 0 < K) (hs : 0 < s) (hT : 0 < T) :
+    HasDerivAt (fun t : ℝ =>
+      x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + t ^ 2 / 2) * T) / (t * √T)) -
+        K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + t ^ 2 / 2) * T) / (t * √T) - t * √T))
+      (x * exp (-(q * T)) *
+        gaussianPDFReal 0 1 ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) * √T) s := by
+  have hD := vanna_d1_vol x K r q s T hs hT
+  have hL : HasDerivAt (fun t : ℝ => t * √T) √T s := by
+    simpa using (hasDerivAt_id' s).mul_const √T
+  have hN1 := (vanna_cdf_hasDerivAt _).comp s hD
+  have hN2 := (vanna_cdf_hasDerivAt _).comp s (hD.sub hL)
+  have hshare := vanna_share_cash x K r q s T hx hK hs hT
+  have := (hN1.const_mul (x * exp (-(q * T)))).sub (hN2.const_mul (K * exp (-(r * T))))
+  refine this.congr_deriv ?_
+  simp only [Pi.sub_apply]
+  linear_combination
+    (-(√T + ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T) / s)) * hshare
+
+/-- put-call parity for the two pricing formulas -/
+lemma vanna_parity (x K r q s T : ℝ) :
+    K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1)
+            (-((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)) -
+        x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) (-((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))) =
+      (x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+        K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+        + (K * exp (-(r * T)) - x * exp (-(q * T))) := by
+  rw [vanna_cdf_neg, vanna_cdf_neg]; ring
+
+#print axioms vanna_cdf_eq_integral
+#print axioms vanna_continuous_pdf
+#print axioms vanna_cdf_hasDerivAt
+#print axioms vanna_pdf_neg
+#print axioms vanna_pdf_hasDerivAt
+#print axioms vanna_cdf_neg
+#print axioms vanna_share_cash
+#print axioms vanna_d1_vol
+#print axioms vanna_d1_spot
+#print axioms vanna_call_delta
+#print axioms vanna_call_vega
+#print axioms vanna_parity
+
+/-! The model: `N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`, the area under the standard
+bell curve to the left of `x`, and `φ(x)` is Mathlib's `gaussianPDFReal 0 1 x`, its height.
+Share price `S`, strike `K`, riskless rate `r`, dividend yield `q`, volatility `σ`, years `T`.
+`d1 = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)` and `d2 = d1 - σ √T`.
+Call `C(S, σ) = S e^(-qT) N(d1) - K e^(-rT) N(d2)`; put `P = K e^(-rT) N(-d2) - S e^(-qT) N(-d1)`.
+Delta is the slope of the price in `S`, vega its slope in `σ`, every other input held still.
+Vanna is the slope of delta in `σ`, and also the slope of vega in `S`. -/
+
+/-- Vanna (the formula, Steps 0 to 3): with a positive share price and strike, positive
+volatility and positive time, the Black–Scholes call's delta, seen as a function of volatility,
+has slope `-e^(-qT) φ(d1) d2 / σ` at `σ`; and its vega, seen as a function of the share price,
+has the very same slope at `S`. -/
+theorem call_vanna_eq_delta_slope_in_vol_eq_vega_slope_in_spot
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    let C : ℝ → ℝ → ℝ := fun x s =>
+      x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+        K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)
+    let vanna : ℝ :=
+      -(exp (-(q * T)) *
+          gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) *
+          (((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ))
+    HasDerivAt (fun s : ℝ => deriv (fun x : ℝ => C x s) S) vanna σ ∧
+      HasDerivAt (fun x : ℝ => deriv (fun s : ℝ => C x s) σ) vanna S := by
+  intro C vanna
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  constructor
+  · have hev : (fun s : ℝ => deriv (fun x : ℝ => C x s) S) =ᶠ[nhds σ] (fun s : ℝ =>
+        exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T))) := by
+      filter_upwards [Ioi_mem_nhds hσ] with s hs
+      exact (vanna_call_delta S K r q s T hS hK hs hT).deriv
+    have h := ((vanna_cdf_hasDerivAt _).comp σ (vanna_d1_vol S K r q σ T hσ hT)).const_mul
+      (exp (-(q * T)))
+    refine (h.congr_of_eventuallyEq hev).congr_deriv ?_
+    simp only [vanna]; ring
+  · have hev : (fun x : ℝ => deriv (fun s : ℝ => C x s) σ) =ᶠ[nhds S] (fun x : ℝ =>
+        x * exp (-(q * T)) *
+          gaussianPDFReal 0 1 ((log (x / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) * √T) := by
+      filter_upwards [Ioi_mem_nhds hS] with x hx
+      exact (vanna_call_vega x K r q σ T hx hK hσ hT).deriv
+    have hP := (vanna_pdf_hasDerivAt _).comp S (vanna_d1_spot S K r q σ T hS hK)
+    have h := (((hasDerivAt_id' S).mul_const (exp (-(q * T)))).mul hP).mul_const √T
+    refine (h.congr_of_eventuallyEq hev).congr_deriv ?_
+    simp only [vanna, Function.comp_apply]
+    field_simp
+    ring
+
+/-- The put's vanna (Step 4): with a positive share price and strike, positive volatility and
+positive time, the Black–Scholes put on the same share, strike and date has the same vanna as
+the call: its delta moves with volatility, and its vega moves with the share price, at the
+rate `-e^(-qT) φ(d1) d2 / σ`. -/
+theorem put_vanna_eq_call_vanna
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    let P : ℝ → ℝ → ℝ := fun x s =>
+      K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1)
+            (-((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T)) -
+        x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) (-((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)))
+    let vanna : ℝ :=
+      -(exp (-(q * T)) *
+          gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) *
+          (((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ))
+    HasDerivAt (fun s : ℝ => deriv (fun x : ℝ => P x s) S) vanna σ ∧
+      HasDerivAt (fun x : ℝ => deriv (fun s : ℝ => P x s) σ) vanna S := by
+  intro P vanna
+  have hc := call_vanna_eq_delta_slope_in_vol_eq_vega_slope_in_spot S K r q σ T hS hK hσ hT
+  obtain ⟨h1, h2⟩ := hc
+  have hPC : ∀ x s, P x s = (x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+        K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+        + (K * exp (-(r * T)) - x * exp (-(q * T))) := fun x s => vanna_parity x K r q s T
+  constructor
+  · have hev : (fun s : ℝ => deriv (fun x : ℝ => P x s) S) =ᶠ[nhds σ] (fun s : ℝ =>
+        deriv (fun x : ℝ => x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+        K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+          S - exp (-(q * T))) := by
+      filter_upwards [Ioi_mem_nhds hσ] with s hs
+      have hd := vanna_call_delta S K r q s T hS hK hs hT
+      have hl : HasDerivAt (fun x : ℝ => K * exp (-(r * T)) - x * exp (-(q * T)))
+          (-exp (-(q * T))) S := by
+        simpa using ((hasDerivAt_id' S).mul_const (exp (-(q * T)))).const_sub
+          (K * exp (-(r * T)))
+      have h3 : HasDerivAt (fun x : ℝ => P x s) (exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (S / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) +
+          -exp (-(q * T))) S := by
+        rw [show (fun x : ℝ => P x s) = _ from funext fun x => hPC x s]
+        exact hd.add hl
+      rw [h3.deriv, hd.deriv]
+      ring
+    exact (h1.sub_const (exp (-(q * T)))).congr_of_eventuallyEq hev
+  · have hfun : (fun x : ℝ => deriv (fun s : ℝ => P x s) σ) = (fun x : ℝ =>
+        deriv (fun s : ℝ => x * exp (-(q * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T)) -
+        K * exp (-(r * T)) *
+          cdf (gaussianReal 0 1) ((log (x / K) + (r - q + s ^ 2 / 2) * T) / (s * √T) - s * √T))
+          σ) := by
+      funext x
+      rw [show (fun s : ℝ => P x s) = _ from funext fun s => hPC x s, deriv_add_const]
+    rw [hfun]
+    exact h2
+
+/-- The sign of vanna (Step 4): with a positive share price and strike, positive volatility
+and positive time, vanna is negative exactly when the share price sits above the crossover
+price `K e^(-(r - q - σ²/2)T)`, and positive exactly when it sits below. -/
+theorem vanna_sign_flips_at_crossover_price
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    let vanna : ℝ :=
+      -(exp (-(q * T)) *
+          gaussianPDFReal 0 1 ((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) *
+          (((log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) - σ * √T) / σ))
+    (vanna < 0 ↔ K * exp (-((r - q - σ ^ 2 / 2) * T)) < S) ∧
+      (0 < vanna ↔ S < K * exp (-((r - q - σ ^ 2 / 2) * T))) := by
+  intro vanna
+  have hsT : 0 < √T := Real.sqrt_pos.2 hT
+  have hsq : √T ^ 2 = T := Real.sq_sqrt hT.le
+  set d := (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T) with hd
+  have hA : 0 < exp (-(q * T)) * gaussianPDFReal 0 1 d :=
+    mul_pos (exp_pos _) (gaussianPDFReal_pos 0 1 d one_ne_zero)
+  have hv : vanna = -(exp (-(q * T)) * gaussianPDFReal 0 1 d) * ((d - σ * √T) / σ) := by
+    simp only [vanna]; ring
+  -- d2 > 0 iff S above crossover
+  have hd2 : d - σ * √T = (log S - log (K * exp (-((r - q - σ ^ 2 / 2) * T)))) / (σ * √T) := by
+    rw [hd, Real.log_mul hK.ne' (exp_pos _).ne', Real.log_exp, Real.log_div hS.ne' hK.ne']
+    field_simp
+    linear_combination (-2 * σ ^ 2) * hsq
+  have hX : 0 < K * exp (-((r - q - σ ^ 2 / 2) * T)) := by positivity
+  have key1 : 0 < d - σ * √T ↔ K * exp (-((r - q - σ ^ 2 / 2) * T)) < S := by
+    rw [hd2, div_pos_iff_of_pos_right (by positivity), sub_pos, Real.log_lt_log_iff hX hS]
+  have key2 : d - σ * √T < 0 ↔ S < K * exp (-((r - q - σ ^ 2 / 2) * T)) := by
+    rw [hd2, div_neg_iff, sub_neg, Real.log_lt_log_iff hS hX]
+    constructor
+    · rintro (⟨_, h⟩ | ⟨h, _⟩)
+      · exact absurd h (not_lt.2 (by positivity))
+      · exact h
+    · intro h; exact Or.inr ⟨h, by positivity⟩
+  set A := exp (-(q * T)) * gaussianPDFReal 0 1 d with hAdef
+  rw [hv, neg_mul, neg_lt_zero, neg_pos, ← key1, ← key2]
+  constructor
+  · constructor
+    · intro h
+      exact (div_pos_iff_of_pos_right hσ).1 (pos_of_mul_pos_right h hA.le)
+    · intro h; exact mul_pos hA (div_pos h hσ)
+  · constructor
+    · intro h
+      by_contra hc
+      push Not at hc
+      linarith [mul_nonneg hA.le (div_nonneg hc hσ.le)]
+    · intro h; exact mul_neg_of_pos_of_neg hA (div_neg_of_neg_of_pos h hσ)
+
+/-! The card's worked numbers that are exact fractions, for Acme:
+S = 100, K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1. -/
+
+-- d2 = (ln(100/100) + (0.05 - 0.02 - 0.02) × 1) / 0.20 = 0.05.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) -
+        1 / 5 * √1 = 1 / 20 := by
+  norm_num
+
+-- d1 = d2 + σ √T = 0.05 + 0.20 = 0.25.
+example :
+    (log ((100 : ℝ) / 100) + (5 / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1) / (1 / 5 * √1) =
+      1 / 4 := by
+  norm_num
+
+-- d2 / σ = 0.05 / 0.20 = 0.25.
+example : ((1 : ℚ) / 20) / (1 / 5) = 1 / 4 := by norm_num
+
+-- The crossover exponent: (r - q - σ² / 2) T = 0.01, so the crossover is 100 e^(-0.01).
+example : ((5 : ℚ) / 100 - 2 / 100 - (1 / 5) ^ 2 / 2) * 1 = 1 / 100 := by norm_num
+
+#print axioms call_vanna_eq_delta_slope_in_vol_eq_vega_slope_in_spot
+#print axioms put_vanna_eq_call_vanna
+#print axioms vanna_sign_flips_at_crossover_price
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'vanna_cdf_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_continuous_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_cdf_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_pdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_pdf_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_cdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_share_cash' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_d1_vol' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_d1_spot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_call_delta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_call_vega' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_vanna_eq_delta_slope_in_vol_eq_vega_slope_in_spot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'put_vanna_eq_call_vanna' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vanna_sign_flips_at_crossover_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Every row prints before the asserts run, and the first assert is pinned to the house number, so a change to the market prints its answer and then stops.
@@ -614,7 +1019,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Hedging price and volatility as separate risks.** A book can be delta-hedged and vega-hedged and still lose when the two move together. In equity markets they usually do. The cross term is vanna times the price move times the volatility move, and it belongs to neither hedge. On the 120 call over a $5 rise, gamma alone predicted a delta change of 0.078544; the actual was 0.051932.
+> **Hedging price and volatility as separate risks.** A book, a desk's set of positions, can be delta-hedged and vega-hedged and still lose when the two move together. In equity markets they usually do. The cross term is vanna times the price move times the volatility move, and it belongs to neither hedge. On the 120 call over a $5 rise, gamma alone predicted a delta change of 0.078544; the actual was 0.051932.
 >
 > - **Assuming vanna is zero at the money.** It is zero where $d_2 = 0$: $99.00 here, not $100. At $100 it is −0.094753, and at 4 percent dividends +0.094753.
 > - **Units.** Vanna is per 1.00 of volatility. Per point it is −0.000948, a hundred times smaller.

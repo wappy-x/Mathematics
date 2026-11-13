@@ -98,7 +98,7 @@ $$\Gamma = e^{-qT}\,\varphi(d_1)\cdot\frac{1}{S\sigma\sqrt{T}}.$$
 
 ### Step 5: the put has the same gamma
 
-Put–call parity (the fixed relation between call and put prices) says $C - P = Se^{-qT} - Ke^{-rT}$. The right side is a straight line in $S$. A straight line has a constant slope, so its slope of slope is zero: the call and the put differ by nothing in gamma. The put's delta is the call's minus $e^{-qT}$; the constant disappears on the next differentiation.
+[Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) (the fixed relation between call and put prices) says $C - P = Se^{-qT} - Ke^{-rT}$. The right side is a straight line in $S$. A straight line has a constant slope, so its slope of slope is zero: the call and the put differ by nothing in gamma. The put's delta is the call's minus $e^{-qT}$; the constant disappears on the next differentiation.
 
 <details>
 <summary>Detailed proof: delta first, then gamma, then the density at the strike</summary>
@@ -129,7 +129,7 @@ $$S^{*} = K e^{-(r - q + \frac32\sigma^2)T}.$$
 
 For Acme, $S^{*}$ = \$91.39, and gamma there is 0.020970. "Gamma peaks at the money" is true only for short-dated options; with a year left the peak sits nearly \$9 below the strike.
 
-A second road to the same number: the Black-Scholes equation ties gamma to theta, delta and the price. Solve it for gamma, feed it a bumped theta, and gamma comes out without a bell-curve height in sight. That trade-off, gamma paid for by time decay, is [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
+A second road leads to the same number. [The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md) ties gamma to theta, delta and the price. Theta is how fast the option's price changes as time passes with Acme held still ([Theta](04-theta.md)). Solve the equation for gamma, feed it a bumped theta, and gamma comes out without a bell-curve height in sight. That trade-off, gamma paid for by time decay, is [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 ---
 
@@ -162,7 +162,7 @@ The desk is short 10,000 calls and long the hedge.
 | cash spent | 888.29 × 105 | **\$93,270.20** |
 | loss on the hedged book | 10,000 × 0.227231 | \$2,272.31 |
 
-The desk buys after a rise and sells after a fall. That is the rebalance gamma forces: buying high and selling low, 888 shares at a time, and the \$2,272.31 is what the bend cost before the rebuild. On a quiet day the move is smaller. A typical daily move is $S\sigma/\sqrt{252}$ = \$1.26, which shifts the hedge by 239 shares.
+The desk buys after a rise and sells after a fall. That is the rebalance gamma forces: buying high and selling low, 888 shares at a time, and the \$2,272.31 is what the bend cost before the rebuild. On a quiet day the move is smaller. A typical daily move, with 252 trading days in a year, is $S\sigma/\sqrt{252}$ = \$1.26, which shifts the hedge by 239 shares.
 
 ### What breaks if you drop a piece
 
@@ -226,7 +226,7 @@ The chart plots gamma times 100: the shares a book of 100 options must trade per
 
 ## Code, from first principles, and it actually runs
 
-The checks compute gamma seven ways at the house option: the formula; the call price bumped twice (a one-cent nudge each side); delta bumped once; the put bumped twice; the density of the finishing price at the strike, with no $d_1$ anywhere; a 2,000-step coin-flip tree, gamma read from its nodes; and the Black-Scholes equation solved for gamma with theta from a bumped expiry. Then they price the \$5 rebalance, find the hump's peak by scanning every cent from \$60 to \$140, and reproduce every wrong number above. Python builds the bell-curve area $N$ from its power series; Rust builds it by Simpson's rule under the bell curve. Two different roads to $N$, and the outputs agree byte for byte.
+The checks compute gamma seven ways at the house option: the formula; the call price bumped twice (a one-cent nudge each side); delta bumped once; the put bumped twice; the density of the finishing price at the strike, with no $d_1$ anywhere; a 2,000-step coin-flip tree, gamma read from its nodes; and the Black-Scholes equation solved for gamma with theta from a bumped expiry. Then they price the \$5 rebalance, find the hump's peak by scanning every cent from \$60 to \$140, and reproduce every wrong number above. Python builds the bell-curve area $N$ from its power series (an endless sum of powers of $x$, stopped once the terms are too small to matter); Rust builds it by Simpson's rule (adding up thin strips of area under the bell curve). Two different roads to $N$, and the outputs agree byte for byte.
 
 ### Python
 
@@ -583,6 +583,361 @@ ALL CHECKS PASS
 
 The two outputs are identical at every printed digit. The tree lands at 0.018958, seven millionths high: 2,000 coin flips approximate a smooth bell curve, and gamma, a second difference, feels the grain first.
 
+### Lean
+
+Lean proves the gamma formula, the hump's peak and the growth at expiry for every positive share price, strike, volatility and time left.
+
+- Take $S$, $K$, $\sigma$ and $T$ all above zero, at any rate and dividend yield. Then the call's delta changes per dollar at the rate $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$.
+- Take the same inputs. Then the call price's slope of the slope in the share price equals that same formula.
+- Take the same inputs. Then the put price's slope of the slope equals it too.
+- Take $K$, $\sigma$ and $T$ above zero, at any rates. Then gamma rises up to $S^{*} = Ke^{-(r-q+\frac32\sigma^2)T}$ and falls beyond it.
+- Take the share at the strike, $S = K$, with $K$ and $\sigma$ above zero. Then gamma grows without limit as the time left shrinks to zero.
+- For Acme, $d_1$ is exactly 0.25, $d_2$ is exactly 0.05, and the dollar wiggle $S\sigma\sqrt{T}$ is exactly 20.
+
+The six-place values, the tree, the density at the strike and the hedged gain on a move are left to the Python and Rust checks.
+
+```lean
+-- Gamma: in the Black-Scholes model the second derivative of the call price in the share price, and of the put price, is e^(-qT) φ(d₁) / (S σ √T), this gamma rises up to S* = K e^(-(r - q + 3σ²/2)T) and falls beyond it, and at the strike it grows without limit as expiry nears.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+
+open Real MeasureTheory ProbabilityTheory Filter Topology Set
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- `φ(x) = e^(-x²/2) / √(2π)`: the bell curve's height at `x`, the standard normal density. -/
+noncomputable def stdNormalPDF (x : ℝ) : ℝ := gaussianPDFReal 0 1 x
+
+/-- The share-side distance to the strike,
+`d₁ = (ln(S/K) + (r - q + σ²/2) T) / (σ√T)`; the cash-side one is `d₂ = d₁ - σ√T`. -/
+noncomputable def bsD1 (S K r q σ T : ℝ) : ℝ :=
+  (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- The Black-Scholes call: `C = S e^(-qT) N(d₁) - K e^(-rT) N(d₂)`. -/
+noncomputable def bsCall (S K r q σ T : ℝ) : ℝ :=
+  S * exp (-q * T) * stdNormalCDF (bsD1 S K r q σ T)
+    - K * exp (-r * T) * stdNormalCDF (bsD1 S K r q σ T - σ * √T)
+
+/-- The Black-Scholes put: `P = K e^(-rT) N(-d₂) - S e^(-qT) N(-d₁)`. -/
+noncomputable def bsPut (S K r q σ T : ℝ) : ℝ :=
+  K * exp (-r * T) * stdNormalCDF (σ * √T - bsD1 S K r q σ T)
+    - S * exp (-q * T) * stdNormalCDF (-bsD1 S K r q σ T)
+
+/-- The closed formula for gamma: `Γ = e^(-qT) φ(d₁) / (S σ √T)`. -/
+noncomputable def bsGamma (S K r q σ T : ℝ) : ℝ :=
+  exp (-q * T) * stdNormalPDF (bsD1 S K r q σ T) / (S * σ * √T)
+
+lemma stdPDF_eq (z : ℝ) :
+    stdNormalPDF z = (√(2 * π))⁻¹ * exp (-z ^ 2 / 2) := by
+  simp [stdNormalPDF, gaussianPDFReal]
+
+#print axioms stdPDF_eq
+
+lemma stdPDF_continuous : Continuous stdNormalPDF := by
+  have : stdNormalPDF = fun x : ℝ => (√(2 * π))⁻¹ * exp (-x ^ 2 / 2) := by
+    funext x; exact stdPDF_eq x
+  rw [this]; fun_prop
+
+#print axioms stdPDF_continuous
+
+lemma stdPDF_pos (z : ℝ) : 0 < stdNormalPDF z :=
+  gaussianPDFReal_pos 0 1 z one_ne_zero
+
+#print axioms stdPDF_pos
+
+lemma stdPDF_neg (z : ℝ) : stdNormalPDF (-z) = stdNormalPDF z := by
+  rw [stdPDF_eq, stdPDF_eq, neg_sq]
+
+#print axioms stdPDF_neg
+
+lemma stdCDF_eq (z : ℝ) : stdNormalCDF z = ∫ t in Set.Iic z, stdNormalPDF t := by
+  show cdf (gaussianReal 0 1) z = _
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (integral_nonneg fun t => gaussianPDFReal_nonneg _ _ _)]
+  rfl
+
+#print axioms stdCDF_eq
+
+lemma stdCDF_hasDerivAt (z : ℝ) : HasDerivAt stdNormalCDF (stdNormalPDF z) z := by
+  have hint : ∀ a : ℝ, IntegrableOn stdNormalPDF (Set.Iic a) := fun a =>
+    (integrable_gaussianPDFReal 0 1).integrableOn
+  have heq : stdNormalCDF = fun x => stdNormalCDF 0 + ∫ t in (0 : ℝ)..x, stdNormalPDF t := by
+    funext x
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hint 0) (hint x), stdCDF_eq, stdCDF_eq]
+    ring
+  rw [heq]
+  have hc := stdPDF_continuous
+  exact (intervalIntegral.integral_hasDerivAt_right (hc.intervalIntegrable _ _)
+    hc.aestronglyMeasurable.stronglyMeasurableAtFilter hc.continuousAt).const_add _
+
+#print axioms stdCDF_hasDerivAt
+
+lemma bsD1_eq (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) :
+    bsD1 S K r q σ T = (log S - log K + (r - q + σ ^ 2 / 2) * T) / (σ * √T) := by
+  rw [bsD1, log_div hS.ne' hK.ne']
+
+#print axioms bsD1_eq
+
+lemma bsD1_hasDerivAt (x K r q σ T : ℝ) (hx : 0 < x) (hK : 0 < K) :
+    HasDerivAt (fun y => bsD1 y K r q σ T) (1 / (x * σ * √T)) x := by
+  have h1 : HasDerivAt (fun y : ℝ => y / K) (1 / K) x := (hasDerivAt_id x).div_const K
+  have h2 := (h1.log (div_pos hx hK).ne').add_const ((r - q + σ ^ 2 / 2) * T)
+  have h3 := h2.div_const (σ * √T)
+  unfold bsD1
+  convert h3 using 1
+  field_simp
+
+#print axioms bsD1_hasDerivAt
+
+/-- The identity `S e^(-qT) φ(d₁) = K e^(-rT) φ(d₂)` that makes the `N'` terms cancel. -/
+lemma key_identity (x K r q σ T : ℝ) (hx : 0 < x) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    K * exp (-r * T) * stdNormalPDF (bsD1 x K r q σ T - σ * √T)
+      = x * exp (-q * T) * stdNormalPDF (bsD1 x K r q σ T) := by
+  set d := bsD1 x K r q σ T with hd
+  set s := σ * √T with hs
+  have hs0 : 0 < s := mul_pos hσ (sqrt_pos.mpr hT)
+  have hss : s * s = σ ^ 2 * T := by
+    rw [hs]; have := mul_self_sqrt hT.le; nlinarith [this]
+  have hds : d * s = log (x / K) + (r - q + σ ^ 2 / 2) * T := by
+    rw [hd, bsD1]; field_simp; rw [hs]; ring
+  have hexp : -(d - s) ^ 2 / 2 = -d ^ 2 / 2 + (log (x / K) + (r - q) * T) := by
+    linear_combination hds - hss / 2
+  rw [stdPDF_eq, stdPDF_eq, hexp, exp_add, exp_add, exp_log (div_pos hx hK)]
+  have he : exp (-r * T) * exp ((r - q) * T) = exp (-q * T) := by
+    rw [← exp_add]; ring_nf
+  rw [← he]
+  field_simp
+
+#print axioms key_identity
+
+lemma delta_hasDerivAt (x K r q σ T : ℝ) (hx : 0 < x) (hK : 0 < K) :
+    HasDerivAt (fun y => exp (-q * T) * stdNormalCDF (bsD1 y K r q σ T))
+      (bsGamma x K r q σ T) x := by
+  have h : HasDerivAt (fun y => exp (-q * T) * stdNormalCDF (bsD1 y K r q σ T))
+      (exp (-q * T) * (stdNormalPDF (bsD1 x K r q σ T) * (1 / (x * σ * √T)))) x :=
+    ((stdCDF_hasDerivAt (bsD1 x K r q σ T)).comp x
+      (bsD1_hasDerivAt x K r q σ T hx hK)).const_mul (exp (-q * T))
+  refine h.congr_deriv ?_
+  unfold bsGamma; ring
+
+#print axioms delta_hasDerivAt
+
+lemma call_hasDerivAt (x K r q σ T : ℝ) (hx : 0 < x) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun y => bsCall y K r q σ T)
+      (exp (-q * T) * stdNormalCDF (bsD1 x K r q σ T)) x := by
+  have hd := bsD1_hasDerivAt x K r q σ T hx hK
+  have h : HasDerivAt (fun y => bsCall y K r q σ T)
+      (exp (-q * T) * stdNormalCDF (bsD1 x K r q σ T)
+        + x * exp (-q * T) * (stdNormalPDF (bsD1 x K r q σ T) * (1 / (x * σ * √T)))
+        - K * exp (-r * T) * (stdNormalPDF (bsD1 x K r q σ T - σ * √T) * (1 / (x * σ * √T))))
+      x :=
+    ((hasDerivAt_mul_const (exp (-q * T))).mul
+      ((stdCDF_hasDerivAt (bsD1 x K r q σ T)).comp x hd)).sub
+    (((stdCDF_hasDerivAt (bsD1 x K r q σ T - σ * √T)).comp x
+      (hd.sub_const (σ * √T))).const_mul (K * exp (-r * T)))
+  refine h.congr_deriv ?_
+  have key := key_identity x K r q σ T hx hK hσ hT
+  linear_combination (-(1 / (x * σ * √T))) * key
+
+#print axioms call_hasDerivAt
+
+lemma put_hasDerivAt (x K r q σ T : ℝ) (hx : 0 < x) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun y => bsPut y K r q σ T)
+      (-(exp (-q * T) * stdNormalCDF (-bsD1 x K r q σ T))) x := by
+  have hd := bsD1_hasDerivAt x K r q σ T hx hK
+  have h : HasDerivAt (fun y => bsPut y K r q σ T)
+      (K * exp (-r * T) * (stdNormalPDF (σ * √T - bsD1 x K r q σ T) * (-(1 / (x * σ * √T))))
+        - (exp (-q * T) * stdNormalCDF (-bsD1 x K r q σ T)
+          + x * exp (-q * T) * (stdNormalPDF (-bsD1 x K r q σ T) * (-(1 / (x * σ * √T))))))
+      x :=
+    (((stdCDF_hasDerivAt (σ * √T - bsD1 x K r q σ T)).comp x
+      (hd.const_sub (σ * √T))).const_mul (K * exp (-r * T))).sub
+    ((hasDerivAt_mul_const (exp (-q * T))).mul
+      ((stdCDF_hasDerivAt (-bsD1 x K r q σ T)).comp x hd.neg))
+  refine h.congr_deriv ?_
+  have key := key_identity x K r q σ T hx hK hσ hT
+  have e1 : σ * √T - bsD1 x K r q σ T = -(bsD1 x K r q σ T - σ * √T) := by ring
+  rw [e1, stdPDF_neg, stdPDF_neg]
+  linear_combination (-(1 / (x * σ * √T))) * key
+
+#print axioms put_hasDerivAt
+
+lemma putDelta_hasDerivAt (x K r q σ T : ℝ) (hx : 0 < x) (hK : 0 < K) :
+    HasDerivAt (fun y => -(exp (-q * T) * stdNormalCDF (-bsD1 y K r q σ T)))
+      (bsGamma x K r q σ T) x := by
+  have h : HasDerivAt (fun y => -(exp (-q * T) * stdNormalCDF (-bsD1 y K r q σ T)))
+      (-(exp (-q * T) * (stdNormalPDF (-bsD1 x K r q σ T) * (-(1 / (x * σ * √T)))))) x :=
+    (((stdCDF_hasDerivAt (-bsD1 x K r q σ T)).comp x
+      (bsD1_hasDerivAt x K r q σ T hx hK).neg).const_mul (exp (-q * T))).neg
+  refine h.congr_deriv ?_
+  unfold bsGamma; rw [stdPDF_neg]; ring
+
+#print axioms putDelta_hasDerivAt
+
+lemma bsGamma_eq (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) :
+    bsGamma S K r q σ T = exp (-q * T) * (√(2 * π))⁻¹ / (σ * √T) *
+      exp (-((log S - log K + (r - q + σ ^ 2 / 2) * T) / (σ * √T)) ^ 2 / 2 - log S) := by
+  rw [bsGamma, stdPDF_eq, bsD1_eq S K r q σ T hS hK, exp_sub, exp_log hS]
+  ring
+
+#print axioms bsGamma_eq
+
+/-- **Gamma is the bend in the price, the same for a call and a put** (The formula; Why it
+works, Steps 1 to 5). In the Black-Scholes model with constant volatility `σ > 0`, constant
+rates `r` and `q`, a plain call or put with strike `K > 0`, time left `T > 0`, and share price
+`S > 0`: the rate at which the call's hedge ratio `e^(-qT) N(d₁)` changes per dollar of share
+price, the call price's second derivative in the share price, and the put price's second
+derivative in the share price are all equal to `e^(-qT) φ(d₁) / (S σ √T)`. -/
+theorem gamma_is_second_derivative_same_for_call_and_put
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    deriv (fun x => exp (-q * T) * stdNormalCDF (bsD1 x K r q σ T)) S = bsGamma S K r q σ T ∧
+      deriv (deriv (fun x => bsCall x K r q σ T)) S = bsGamma S K r q σ T ∧
+      deriv (deriv (fun x => bsPut x K r q σ T)) S = bsGamma S K r q σ T := by
+  refine ⟨(delta_hasDerivAt S K r q σ T hS hK).deriv, ?_, ?_⟩
+  · have hev : deriv (fun x => bsCall x K r q σ T) =ᶠ[𝓝 S]
+        fun x => exp (-q * T) * stdNormalCDF (bsD1 x K r q σ T) := by
+      filter_upwards [Ioi_mem_nhds hS] with x hx
+      exact (call_hasDerivAt x K r q σ T hx hK hσ hT).deriv
+    rw [hev.deriv_eq]
+    exact (delta_hasDerivAt S K r q σ T hS hK).deriv
+  · have hev : deriv (fun x => bsPut x K r q σ T) =ᶠ[𝓝 S]
+        fun x => -(exp (-q * T) * stdNormalCDF (-bsD1 x K r q σ T)) := by
+      filter_upwards [Ioi_mem_nhds hS] with x hx
+      exact (put_hasDerivAt x K r q σ T hx hK hσ hT).deriv
+    rw [hev.deriv_eq]
+    exact (putDelta_hasDerivAt S K r q σ T hS hK).deriv
+
+/-- **Where the hump peaks** (Step 7). With `K > 0`, `σ > 0`, `T > 0` and any rates `r`, `q`,
+gamma as a function of the share price rises strictly on `(0, S*]` and falls strictly on
+`[S*, ∞)`, where `S* = K e^(-(r - q + 3σ²/2) T)`: it is largest at `S*` and falls on either side. -/
+theorem gamma_peaks_at_S_star
+    (K r q σ T : ℝ) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    StrictMonoOn (fun S => bsGamma S K r q σ T)
+        (Ioc 0 (K * exp (-(r - q + 3 / 2 * σ ^ 2) * T))) ∧
+      StrictAntiOn (fun S => bsGamma S K r q σ T)
+        (Ici (K * exp (-(r - q + 3 / 2 * σ ^ 2) * T))) := by
+  set s := σ * √T with hs
+  set m := (r - q + σ ^ 2 / 2) * T with hm
+  have hs0 : 0 < s := mul_pos hσ (sqrt_pos.mpr hT)
+  have hss : s * s = σ ^ 2 * T := by
+    rw [hs]; have := mul_self_sqrt hT.le; nlinarith [this]
+  set A := exp (-q * T) * (√(2 * π))⁻¹ / (σ * √T) with hA
+  have hA0 : 0 < A := by positivity
+  have hstar : 0 < K * exp (-(r - q + 3 / 2 * σ ^ 2) * T) := by positivity
+  have hlstar : log (K * exp (-(r - q + 3 / 2 * σ ^ 2) * T)) = log K - m - s * s := by
+    rw [log_mul hK.ne' (exp_pos _).ne', log_exp, hss, hm]; ring
+  -- the exponent, as a function of `u = log S`
+  have key : ∀ a b : ℝ, 0 < a → 0 < b →
+      (bsGamma a K r q σ T < bsGamma b K r q σ T ↔
+        (log b - log a) * (log a + log b - 2 * log K + 2 * m + 2 * s * s) < 0) := by
+    intro a b ha hb
+    rw [bsGamma_eq a K r q σ T ha hK, bsGamma_eq b K r q σ T hb hK, ← hs, ← hm,
+      mul_lt_mul_iff_right₀ hA0, exp_lt_exp]
+    have e : ∀ u : ℝ, -((u - log K + m) / s) ^ 2 / 2 - u
+        = -((u - log K + m) ^ 2 + 2 * s * s * u) / (2 * (s * s)) := by
+      intro u; field_simp; ring
+    rw [e, e, div_lt_div_iff_of_pos_right (by positivity)]
+    constructor <;> intro h <;> nlinarith [h]
+  constructor
+  · intro a ha b hb hab
+    have ha0 : 0 < a := ha.1
+    have hb0 : 0 < b := hb.1
+    rw [key a b ha0 hb0]
+    have h1 : log a < log b := log_lt_log ha0 hab
+    have h2 : log b ≤ log K - m - s * s := by
+      rw [← hlstar]; exact log_le_log hb0 hb.2
+    have h3 : 0 < -(log a + log b - 2 * log K + 2 * m + 2 * s * s) := by linarith
+    nlinarith [mul_pos (sub_pos.mpr h1) h3]
+  · intro a ha b hb hab
+    have ha0 : 0 < a := lt_of_lt_of_le hstar ha
+    have hb0 : 0 < b := ha0.trans hab
+    rw [key b a hb0 ha0]
+    have h1 : log a < log b := log_lt_log ha0 hab
+    have h2 : log K - m - s * s ≤ log a := by
+      rw [← hlstar]; exact log_le_log hstar ha
+    have h3 : 0 < log b + log a - 2 * log K + 2 * m + 2 * s * s := by linarith
+    nlinarith [mul_pos (sub_pos.mpr h1) h3]
+
+/-- **Gamma at the strike explodes near expiry** (When it holds, "Time is left"). With the share
+at the strike, `S = K > 0`, volatility `σ > 0` and any rates `r`, `q`, gamma grows without limit
+as the time left `T` shrinks to zero. -/
+theorem gamma_at_strike_unbounded_near_expiry
+    (K r q σ : ℝ) (hK : 0 < K) (hσ : 0 < σ) :
+    Tendsto (fun T => bsGamma K K r q σ T) (𝓝[>] 0) atTop := by
+  let f : ℝ → ℝ := fun T => exp (-q * T) * stdNormalPDF ((r - q + σ ^ 2 / 2) * √T / σ) / (K * σ)
+  have hf : Continuous f := by
+    have := stdPDF_continuous
+    fun_prop (disch := exact (mul_pos hK hσ).ne')
+  have hf0 : 0 < f 0 := by
+    have := stdPDF_pos ((r - q + σ ^ 2 / 2) * √0 / σ)
+    simp only [f]; positivity
+  have hlim : Tendsto f (𝓝[>] 0) (𝓝 (f 0)) := (hf.tendsto 0).mono_left nhdsWithin_le_nhds
+  have hsq : Tendsto (fun T : ℝ => √T) (𝓝[>] 0) (𝓝[>] 0) := by
+    rw [tendsto_nhdsWithin_iff]
+    refine ⟨?_, ?_⟩
+    · have := (continuous_sqrt.tendsto 0).mono_left (nhdsWithin_le_nhds (s := Ioi (0:ℝ)))
+      simpa using this
+    · filter_upwards [self_mem_nhdsWithin] with T hT
+      exact sqrt_pos.mpr hT
+  have hinv := tendsto_inv_nhdsGT_zero.comp hsq
+  refine (hlim.pos_mul_atTop hf0 hinv).congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with T hT
+  have hT' : (0:ℝ) < T := hT
+  have hsT : 0 < √T := sqrt_pos.mpr hT'
+  have hTT : √T * √T = T := mul_self_sqrt hT'.le
+  have hd : bsD1 K K r q σ T = (r - q + σ ^ 2 / 2) * √T / σ := by
+    rw [bsD1, div_self hK.ne', log_one, zero_add, div_eq_div_iff (by positivity) hσ.ne']
+    linear_combination (-((r - q + σ ^ 2 / 2) * σ)) * hTT
+  simp only [Function.comp_def, f, bsGamma, hd]
+  field_simp
+
+-- Acme: S = K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1 year.
+-- d₁ = (ln 1 + (0.05 - 0.02 + 0.02) · 1) / 0.20 = 0.25.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 = 1 / 4 := by
+  rw [bsD1]; norm_num
+-- d₂ = d₁ - σ√T = 0.25 - 0.20 = 0.05.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 - 1 / 5 * √1 = 1 / 20 := by
+  rw [bsD1]; norm_num
+-- The dollar wiggle S σ √T = 100 × 0.20 × 1 = 20.
+example : (100 : ℝ) * (1 / 5) * √1 = 20 := by
+  norm_num
+-- The drift allowance in d₁: 0 + 0.15 + 0.10 = 0.25.
+example : (0 : ℚ) + 3 / 20 + 1 / 10 = 1 / 4 := by norm_num
+
+#print axioms gamma_is_second_derivative_same_for_call_and_put
+#print axioms gamma_peaks_at_S_star
+#print axioms gamma_at_strike_unbounded_near_expiry
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stdPDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdPDF_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdCDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdCDF_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsD1_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsD1_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'key_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'put_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'putDelta_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsGamma_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_is_second_derivative_same_for_call_and_put' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_peaks_at_S_star' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_at_strike_unbounded_near_expiry' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. The first assert pins the house number, so it fails on every change below; that is its job.
@@ -596,7 +951,7 @@ The two outputs are identical at every printed digit. The tree lands at 0.018958
 ## The usual mistake
 
 > [!warning]
-> **Treating the hedge as set and forget.** Delta is correct at one price. After a $5 move the desk's 5,869 shares are 888 short, and the book has already lost $2,272.31. Gamma is the rate at which the hedge goes wrong, so a large gamma means rebuilding often, at a cost in spreads and in buying high and selling low. The rebuilding cost is what theta pays for: [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
+> **Treating the hedge as set and forget.** Delta is correct at one price. After a $5 move the desk's 5,869 shares are 888 short, and the book has already lost $2,272.31. Gamma is the rate at which the hedge goes wrong, so a large gamma means rebuilding often, at a cost in spreads (the gap between the buying and the selling price) and in buying high and selling low. The rebuilding cost is what theta pays for: [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 >
 > Four smaller traps:
 > - **Area for height.** $N(d_1)$ in place of $\varphi(d_1)$ gives 0.029343, half as big again as the right answer. Delta is the area; gamma is the height.
@@ -611,7 +966,7 @@ The two outputs are identical at every printed digit. The tree lands at 0.018958
 - **Market-maker rebalancing.** A desk short options is short gamma: every move costs it, and it trades shares after each one. The table above says how many, 239 on a typical day with a year left, thousands near expiry.
 - **Pin risk at expiry.** When a large open position sits near its strike on the last day, gamma at the strike is 0.3810 and the hedge flips between none and all. The same effect, sharper still, is on [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md).
 - **Gamma scalping.** A trader long options and delta-hedged buys after falls and sells after rises, pocketing about $\tfrac12\Gamma m^2$ per move, and pays for it in time decay ([Theta](04-theta.md)).
-- **Risk reports.** Value at Risk for an options book adds the gamma term to the delta term, because a hedged book's loss is curved in the move: [Options in the book](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md).
+- **Risk reports.** Value at Risk (the loss a book should exceed only one day in a hundred) for an options book adds the gamma term to the delta term, because a hedged book's loss is curved in the move: [Options in the book](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md).
 - **Currency options.** The same formula with the foreign interest rate in place of $q$: [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md).
 - **The whole shelf.** Gamma's companions measure the price's response to volatility ([Vega](03-vega.md)) and the drift of delta with time ([Charm](08-charm.md)); [The Greeks together](09-greeks-together-taylor-pnl.md) adds them into one profit-and-loss line.
 

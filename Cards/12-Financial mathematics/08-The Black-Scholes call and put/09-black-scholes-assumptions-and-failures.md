@@ -6,9 +6,15 @@
 
 ## General Overview
 
-A dealer sells one Acme call and then does the work the price assumes. Acme trades at 100 dollars, the call may buy one share for 100 dollars in a year, and the model's premium is 9.23 dollars. The dealer takes the premium, buys 0.586851 of a share, borrows the shortfall, and adjusts that share count once a day for a year. On the last day the shares are sold and the call paid off. What is still in the account is the **leftover**: what the home-made copy made or lost against the contract it copied.
+A dealer sells one Acme call and then does the work the price assumes. Acme trades at 100 dollars, the call may buy one share for 100 dollars in a year, and the model's premium is 9.23 dollars.
 
-Run that ledger on 200 invented **records**, each a year of daily moves drawn from the model's own bell curve. With every idealisation met but one — the share count is reset daily, not continuously — the leftover averages two cents, and the typical distance from that average is 45 cents on a $9.23 contract. Now change one thing. Drop Acme 10% overnight in the middle of the year: the leftover averages −$1.06, worst −$2.84. Or leave the path unbroken and let Acme's jumpiness climb from 20% to 30% halfway through: −$2.11 on average, −$6.89 at worst.
+The dealer takes the premium, buys 0.586851 of a share, borrows the shortfall, and adjusts that share count once a day for a year. On the last day the shares are sold and the call paid off.
+
+What is still in the account is the **leftover**: what the home-made copy made or lost against the contract it copied.
+
+Run that ledger on 200 invented **records**, each a year of daily moves drawn from the model's own bell curve. With every idealisation met but one — the share count is reset daily, not continuously — the leftover averages two cents, and the typical distance from that average is 45 cents on a $9.23 contract.
+
+Now change one thing. Drop Acme 10% overnight in the middle of the year: the leftover averages −$1.06, worst −$2.84. Or leave the path unbroken and let Acme's jumpiness climb from 20% to 30% halfway through: −$2.11 on average, −$6.89 at worst.
 
 The premium was never the claim. The claim is that the copy tracks, and six idealisations make it track. Each holds up a term of the formula, and each, dropped, leaves a leftover counted in dollars. Those counts come in two kinds: **bills**, charged for in advance, and **tails**, which no price repairs.
 
@@ -43,7 +49,9 @@ $$C = S\,e^{-qT}N(d_1) \;-\; K\,e^{-rT}N(d_2), \qquad d_1 = \frac{\ln(S/K) + (r 
 
 That reading is literal: the copy opens by buying $\delta = e^{-qT}N(d_1) = 0.586851$ of a share and borrowing everything above the premium. Every idealisation here is a condition for that balance sheet to stay accurate to expiry.
 
-The second formula is the ledger that tests it. Notation first, in words. Write $v$ for the same call formula applied to today's date and today's price, with the time left in place of $T$: the contract's **mark**. Write $\delta$ for the share count the mark prescribes, $V$ for the hedging account's worth, $h$ for one trading day as a fraction of a year, and $R = e^{rh}$ for one day's growth of a bank balance. Hold the mark's share count, keep the rest in the bank, and one day later
+The second formula is the ledger that tests it. Notation first, in words. Write $v$ for the same call formula applied to today's date and today's price, with the time left in place of $T$: the contract's **mark**.
+
+Write $\delta$ for the share count the mark prescribes, $V$ for the hedging account's worth, $h$ for one trading day as a fraction of a year, and $R = e^{rh}$ for one day's growth of a bank balance. Hold the mark's share count, keep the rest in the bank, and one day later
 
 $$V_{i+1} = \delta_i S_{i+1} \;+\; (V_i - \delta_i S_i)\,R \;+\; \delta_i S_i\,(e^{qh} - 1), \qquad \text{leftover} = V_T - \max(S_T - K,\,0),$$
 
@@ -88,7 +96,7 @@ A price that is the cost of a recipe is right only if the kitchen behaves. So an
 ### Step 1: each idealisation enters at one line of the derivation
 
 1. The share drifts and takes random kicks in log space, with $\sigma$ fixed ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): lognormal moves and constant volatility, spent at once.
-2. Itô's lemma turns that into the option's move, keeping terms as far as the bend. Dropping the rest is legitimate only because the moves are small: no gaps.
+2. Itô's lemma, the chain rule for a randomly moving price, turns that into the option's move ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)), keeping terms as far as the bend. Dropping the rest is legitimate only because the moves are small: no gaps.
 3. Holding $\delta$ shares cancels the randomness — if shares can be traded at that instant for nothing.
 4. What is left must earn the bank rate, and there must be exactly one such rate.
 5. Dividends arrive smoothly at rate $q$, so the hedge's shares carry a known income.
@@ -609,6 +617,172 @@ ALL CHECKS PASS
 
 The two outputs match line for line: each language writes its own copy of the same series and the same generator, so the same 200 records come out of both.
 
+### Lean
+
+Lean proves the two exact facts in Why it works, for every price path, every mark and every share count.
+
+- The account's surplus over the mark earns one day's interest each day, plus that day's defect.
+- Suppose the account starts at the premium, and the last day's mark is the call's payoff. Then the leftover is exactly the daily defects, each carried forward with interest to expiry, added up.
+- A gap's defect is exactly the stale-slope term minus the bend's bill, for any share count carried in.
+- Suppose the jump is not zero, and the bend stays positive at every price the gap skips over. Then the bend's bill is strictly positive, whether the price jumped up or down.
+- It also checks four worked numbers: the 0.065 variance, the 2.084633 price gap, the traced leftover and the month-six drop.
+
+The premiums, the 200 invented records, the closed forms, the tree and every other decimal are left to the Python and Rust checks.
+
+```lean
+-- The Black-Scholes assumptions: the daily hedging ledger's leftover is exactly the sum of the daily tracking errors carried forward with interest, and an overnight gap always bills the hedger a positive amount for the bend of the option's curve.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Order.Interval.Set.UnorderedInterval
+import Mathlib.Tactic
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.Convex.Basic
+
+open Real
+
+namespace BlackScholesAssumptions
+
+/-! Notation, as on the card. Days are counted `0, 1, …, n`; `S i` is the share price on day `i`,
+`v i` the contract's mark, `δ i` the share count the mark prescribes, `V i` the hedging account's
+worth, `h` one trading day as a fraction of a year, `r` the bank rate and `q` the dividend yield,
+so `exp (r * h)` is one day's bank growth `R` and `exp (q * h) - 1` one day's dividend per dollar
+of shares. -/
+
+/-- One day's **defect** `D_i`: what the account earned (the shares' move, their dividend, the
+interest on the cash `v i - δ i * S i`) minus what the mark did. -/
+noncomputable def dayDefect (S v δ : ℕ → ℝ) (r q h : ℝ) (i : ℕ) : ℝ :=
+  δ i * (S (i + 1) - S i) + δ i * S i * (exp (q * h) - 1)
+    + (exp (r * h) - 1) * (v i - δ i * S i) - (v (i + 1) - v i)
+
+/-- **The leftover is the daily misses, carried forward with interest** (Why it works, Step 2).
+Let the account follow the card's ledger: hold the mark's share count `δ i` for a day, keep the
+rest in the bank, so `V (i+1) = δ i S (i+1) + (V i - δ i S i) R + δ i S i (e^{qh} - 1)`. Let the
+account start at the mark (`V 0 = v 0`, the premium) and let the mark on the last day `n` be the
+call's payoff `max (S n - K) 0`. Then, for every price path, every mark and every choice of share
+counts:
+1. the account's surplus over the mark obeys `E (i+1) = R E i + D i` each day, and
+2. the leftover `V n - max (S n - K) 0` is exactly `∑ e^{r(T - t_{i+1})} D i`, with
+   `T = n h` and `t_{i+1} = (i+1) h`.
+No limit and no model assumption is used: this is finite arithmetic on the prices that occurred. -/
+theorem leftover_eq_sum_of_carried_defects
+    (S v δ V : ℕ → ℝ) (r q h K : ℝ) (n : ℕ)
+    (hV : ∀ i, V (i + 1) =
+      δ i * S (i + 1) + (V i - δ i * S i) * exp (r * h) + δ i * S i * (exp (q * h) - 1))
+    (hV0 : V 0 = v 0)
+    (hvT : v n = max (S n - K) 0) :
+    (∀ i, V (i + 1) - v (i + 1) = exp (r * h) * (V i - v i) + dayDefect S v δ r q h i) ∧
+      V n - max (S n - K) 0 =
+        ∑ i ∈ Finset.range n,
+          exp (r * ((n : ℝ) * h - ((i : ℝ) + 1) * h)) * dayDefect S v δ r q h i := by
+  have step : ∀ i, V (i + 1) - v (i + 1) = exp (r * h) * (V i - v i) + dayDefect S v δ r q h i := by
+    intro i
+    rw [hV i]
+    unfold dayDefect
+    ring
+  refine ⟨step, ?_⟩
+  have key : ∀ m : ℕ, V m - v m =
+      ∑ i ∈ Finset.range m,
+        exp (r * ((m : ℝ) * h - ((i : ℝ) + 1) * h)) * dayDefect S v δ r q h i := by
+    intro m
+    induction m with
+    | zero => simp [hV0]
+    | succ m ih =>
+      rw [step m, ih, Finset.sum_range_succ, Finset.mul_sum]
+      congr 1
+      · apply Finset.sum_congr rfl
+        intro i _
+        rw [← mul_assoc, ← exp_add]
+        congr 2
+        push_cast
+        ring
+      · push_cast
+        have : r * (((m : ℝ) + 1) * h - ((m : ℝ) + 1) * h) = 0 := by ring
+        rw [this, exp_zero, one_mul]
+  rw [← hvT]
+  exact key n
+
+/-- **A gap splits into a stale slope and a bill for the bend, and the bill is always positive**
+(Why it works, Step 3). Fix a date and let `f` be the mark as a function of the price. Let `s` be
+the price just before an overnight gap and `J ≠ 0` the jump in dollars. Suppose that on the
+segment from `s` to `s + J` the mark is twice differentiable with strictly positive second
+derivative (the bend `Γ`). Then:
+1. for any share count `δ_old` carried in from yesterday, the gap's defect
+   `δ_old J - (f (s + J) - f s)` equals `(δ_old - δ_*) J - B`, where `δ_* = f' s` is the share
+   count the mark prescribes at `s` and `B = f (s + J) - f s - δ_* J` is the bend's bill; and
+2. the bill `B` is strictly positive, whichever way the price jumped. -/
+theorem gap_defect_splits_and_bend_bill_pos
+    (f : ℝ → ℝ) (s J : ℝ) (hJ : J ≠ 0)
+    (hdiff : ∀ x ∈ Set.uIcc s (s + J),
+      DifferentiableAt ℝ f x ∧ DifferentiableAt ℝ (deriv f) x)
+    (hbend : ∀ x ∈ Set.uIcc s (s + J), 0 < deriv (deriv f) x) :
+    (∀ δold : ℝ, δold * J - (f (s + J) - f s) =
+        (δold - deriv f s) * J - (f (s + J) - f s - deriv f s * J)) ∧
+      0 < f (s + J) - f s - deriv f s * J := by
+  refine ⟨fun δold => by ring, ?_⟩
+  have hmono : StrictMonoOn (deriv f) (Set.uIcc s (s + J)) := by
+    apply strictMonoOn_of_deriv_pos (convex_uIcc s (s + J))
+    · intro x hx
+      exact (hdiff x hx).2.continuousAt.continuousWithinAt
+    · intro x hx
+      exact hbend x (interior_subset hx)
+  have hcont : ContinuousOn f (Set.uIcc s (s + J)) := fun x hx =>
+    (hdiff x hx).1.continuousAt.continuousWithinAt
+  rcases lt_or_gt_of_ne hJ with hneg | hpos
+  · have hlt : s + J < s := by linarith
+    have hu : Set.uIcc s (s + J) = Set.Icc (s + J) s := Set.uIcc_of_ge hlt.le
+    obtain ⟨c, hc, hcd⟩ := exists_deriv_eq_slope f hlt (hu ▸ hcont)
+      (fun x hx => (hdiff x (hu ▸ Set.Ioo_subset_Icc_self hx)).1.differentiableWithinAt)
+    have hcs : deriv f c < deriv f s := by
+      apply hmono (hu ▸ Set.Ioo_subset_Icc_self hc)
+      · rw [hu]; exact ⟨hlt.le, le_rfl⟩
+      · exact hc.2
+    have hne : s - (s + J) ≠ 0 := by linarith
+    have heq : f (s + J) - f s = deriv f c * J := by
+      rw [hcd]; field_simp; ring
+    rw [heq]
+    nlinarith
+  · have hlt : s < s + J := by linarith
+    have hu : Set.uIcc s (s + J) = Set.Icc s (s + J) := Set.uIcc_of_le hlt.le
+    obtain ⟨c, hc, hcd⟩ := exists_deriv_eq_slope f hlt (hu ▸ hcont)
+      (fun x hx => (hdiff x (hu ▸ Set.Ioo_subset_Icc_self hx)).1.differentiableWithinAt)
+    have hcs : deriv f s < deriv f c := by
+      apply hmono
+      · rw [hu]; exact ⟨le_rfl, hlt.le⟩
+      · exact hu ▸ Set.Ioo_subset_Icc_self hc
+      · exact hc.1
+    have hne : s + J - s ≠ 0 := by linarith
+    have heq : f (s + J) - f s = deriv f c * J := by
+      rw [hcd]; field_simp; ring
+    rw [heq]
+    nlinarith
+
+/-! The card's worked numbers, in exact whole units. -/
+
+-- The switch world's variance: ½ · 0.20² + ½ · 0.30² = 0.065 = 13/200.
+example : (1 / 2 : ℚ) * (20 / 100) ^ 2 + (1 / 2) * (30 / 100) ^ 2 = 13 / 200 := by norm_num
+
+-- The gap between two prices, in millionths of a dollar: 11.311639 - 9.227006 = 2.084633.
+example : (11311639 : ℤ) - 9227006 = 2084633 := by norm_num
+
+-- The traced record, in cents: the account holds 176, the call pays 233, a leftover of -57.
+example : (176 : ℤ) - 233 = -57 := by norm_num
+
+-- At month six, in cents: the gap column (-232) sits 212 below the first column (-20).
+example : (-20 : ℤ) - (-232) = 212 := by norm_num
+
+#print axioms leftover_eq_sum_of_carried_defects
+#print axioms gap_defect_splits_and_bend_bill_pos
+
+end BlackScholesAssumptions
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'BlackScholesAssumptions.leftover_eq_sum_of_carried_defects' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BlackScholesAssumptions.gap_defect_splits_and_bend_bill_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -624,7 +798,7 @@ The two outputs match line for line: each language writes its own copy of the sa
 > [!warning]
 > **Reading the list as a disclaimer instead of a specification.** Almost everyone can recite that Black-Scholes assumes constant volatility and no jumps, then uses the price anyway and considers the duty discharged. The list is not a warning label on a number: it is the specification of the hedge the price is the cost of, and every idealisation that fails is a job the formula has quietly handed back.
 >
-> - **Treating a tail as a slide.** Trading costs move the answer by a knowable $0.53, and the fix is to charge it. A gap moves the average by $1.06 and the worst record by $2.84, and no charge fixes that. "Add a bit for gap risk" is how a book ends up short something it cannot get out of.
+> - **Treating a tail as a slide.** Trading costs move the answer by a knowable $0.53, and the fix is to charge it. A gap moves the average by $1.06 and the worst record by $2.84, and no charge fixes that. "Add a bit for gap risk" is how a book — a dealer's set of positions — ends up short, owing something it cannot get out of.
 > - **Believing the average.** An average leftover of −$1.06 reads like a cost of doing business. The distribution behind it reaches −$2.84 on this modest stress, and it grows with the square of the jump.
 > - **Hedging harder instead of differently.** Rebalancing more often shrinks the ordinary leftover's spread, $0.42 at daily, and shrinks the stale-slope part of a gap, already under a cent on average. It does nothing to the bend's bill, $1.02 on average at any rate.
 > - **Taking the price and skipping the hedge.** The output is not only $9.23; it is "hold 0.586851 shares and adjust". Without the hedge none of the reasoning above applies: the premium is not the cost of a copy but the stake in a bet, and Acme's direction — the one thing the model cancels — becomes everything.
@@ -635,7 +809,7 @@ The two outputs match line for line: each language writes its own copy of the sa
 
 - **Quoting in volatility.** Desks run the formula backwards, price in and $\sigma$ out, precisely because the assumptions fail in known ways: it survives as a common language, not a truth claim. See [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
 - **The smile.** One volatility cannot fit every strike, and that refusal is the first idealisation failing in public, every day: [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
-- **Overnight risk limits.** A desk's cap on how short it may be in one name near an earnings date exists because of the bend's bill, not the average.
+- **Overnight risk limits.** A desk's cap on how short it may be in one name near an earnings date exists because of the bend's bill, not the average. Short in one name means owing one company's shares; an earnings date is the day that company reports its profits.
 - **Model risk review.** A validation team asks what this card measures: which assumption is this book short, and what does it cost when it fails. See [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
 - **Funding spreads.** A dealer borrowing above the rate at which cash is lent quotes a bid and an offer, not a price; this card's band is the arithmetic behind that spread.
 

@@ -87,7 +87,7 @@ Theta comes out per year, because $T$ is in years. Dividing by 365 gives the cal
 - **The Black-Scholes world: constant volatility, rate and dividend yield.** If implied volatility (the $\sigma$ the market prices) drifts as expiry nears, the overnight change is theta plus vega times the volatility move ([Vega](03-vega.md)).
 - **The share price frozen.** Theta is one partial derivative. A real day also moves $S$, and the full change needs delta and gamma as well ([The Greeks together](09-greeks-together-taylor-pnl.md)).
 - **European exercise.** The positive theta of a deep put relies on the holder being unable to exercise early. Where early exercise is optimal, an American put is worth $K - S$ whatever the date, so its theta is zero.
-- **A continuous dividend yield.** A share paying lumpy cash dividends makes the dividend term jump around the ex-dividend dates instead of accruing smoothly.
+- **A continuous dividend yield.** A share paying lumpy cash dividends makes the dividend term jump around the ex-dividend dates (the days the share stops carrying its next dividend) instead of accruing smoothly.
 - **A small step.** Theta is a slope. Over one day the slope and the actual repricing differ by under a thousandth of a cent at the house market (−0.013943 against −0.013952); over a month near expiry they do not agree.
 
 ---
@@ -153,7 +153,11 @@ $$\Theta + (r-q)S\,\Delta + \tfrac12\sigma^2 S^2\,\Gamma = rV$$
 
 Rearranged, $\Theta = \big[\,rV - (r-q)S\Delta\,\big] - \tfrac12\sigma^2 S^2\Gamma$. The bracket is carry: the interest on the money tied up in the option, less the net carry on the hedge's shares. For the house call it is 0.461350 − 1.760553. What is left, $-\tfrac12\sigma^2S^2\Gamma$, is −3.790116 per year, exactly the volatility term of Step 3 found another way.
 
-Here is the rent reading. A holder who hedges away delta is left owning gamma. A move of *m* dollars in the share earns about $\tfrac12\Gamma m^2$, whichever way it goes. The rent for one day is 3.790116 / 365 = 0.010384. Setting that gain equal to that rent gives a breakeven daily move of $1.046848, which is $\sigma S\sqrt{1/365}$: one day's standard move at 20 percent volatility. A share that moves more than that pays the rent and more. A quiet share does not. Theta is not a fee lost for nothing; it is the market price of the gamma, set so that a share moving exactly at volatility $\sigma$ breaks even. The accounting over many days belongs to [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
+Here is the rent reading. A holder who hedges away delta is left owning gamma. A move of *m* dollars in the share earns about $\tfrac12\Gamma m^2$, whichever way it goes. The rent for one day is 3.790116 / 365 = 0.010384.
+
+Setting that gain equal to that rent gives a breakeven daily move of $1.046848, which is $\sigma S\sqrt{1/365}$: one day's standard move at 20 percent volatility. A share that moves more than that pays the rent and more. A quiet share does not.
+
+Theta is not a fee lost for nothing; it is the market price of the gamma, set so that a share moving exactly at volatility $\sigma$ breaks even. The accounting over many days belongs to [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 A second route to theta avoids the formula entirely: reprice the option at slightly longer and shorter lives and take the slope. The code does that, and also reads theta off a binomial tree (a lattice in which the share moves one notch up or down per step), where two steps forward at the middle node return the share to today's price.
 
@@ -227,7 +231,15 @@ Orange line: the call struck at $100, falling off a cliff in the last week. Gree
 
 ## Code, from first principles, and it actually runs
 
-Both programs build their own bell-curve area by Simpson's rule (adding thin slices under the curve), their own brute-force price, their own binomial tree and their own bisection root finder. Theta is reached by **five roads**: (1) the closed formula; (2) the slope of a brute-force price, found by averaging the payoff over the bell curve, against a small change in time left; (3) the Black-Scholes equation, with delta and gamma found by nudging that brute-force price; (4) a 2,000-step binomial tree; (5) put-call parity between the two brute-force slopes. The code then checks both sign flips by two roads, finds the put's zero-theta strike by bisection and checks it against the brute-force slope, and reproduces every "what breaks" number.
+Both programs build their own bell-curve area by Simpson's rule (adding thin slices under the curve), their own brute-force price, their own binomial tree and their own bisection root finder. Theta is reached by **five roads**:
+
+1. The closed formula.
+2. The slope of a brute-force price, found by averaging the payoff over the bell curve, against a small change in time left.
+3. The Black-Scholes equation, with delta and gamma found by nudging that brute-force price.
+4. A 2,000-step binomial tree.
+5. Put-call parity between the two brute-force slopes.
+
+The code then checks both sign flips by two roads, finds the put's zero-theta strike by bisection and checks it against the brute-force slope, and reproduces every "what breaks" number.
 
 ### Python
 
@@ -615,6 +627,326 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The tree lands about 0.15 cents a year off the formula for both options (−5.090949 against −5.089319 for the call), which is the usual error of a 2,000-step tree and shrinks as steps are added.
 
+### Lean
+
+Lean proves the theta formulas, the rent on gamma and the call's sign, for every positive share price, strike, volatility and time left.
+
+- Take a positive share price, strike and volatility, with today's date before expiry. Then the call and put prices have slopes $\Theta_C$ and $\Theta_P$ against the date, exactly as in the formulas above.
+- Take positive $S$, $K$, $\sigma$ and $T$. Then both options satisfy $\Theta + (r-q)S\Delta + \tfrac12\sigma^2 S^2\Gamma = rV$.
+- Take the same conditions. Then the rent $\tfrac12\sigma^2 S^2\Gamma$ is exactly the size of the volatility term for both options.
+- Suppose $q \le 0$ and $r \ge 0$, with $S$, $K$, $\sigma$ and $T$ positive. Then the call's theta is below zero.
+- Take the house market. Then $d_1 = 1/4$ and $d_2 = 1/20$ exactly, and $2\sqrt{T} = 2$.
+
+The decimals, the bumps, the tree, both sign flips and the zero at a strike of $120.04 are left to the Python and Rust checks.
+
+```lean
+-- Theta: in the Black–Scholes model the slope of the call and put prices against the calendar, share price frozen, is a volatility term plus two carry terms, net of carry it is exactly minus one half σ²S² times gamma, and with a dividend yield at most zero and a rate at least zero the call's theta is negative.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open MeasureTheory ProbabilityTheory Real
+
+/-! The model: `N(x)` is Mathlib's `cdf (gaussianReal 0 1) x`, the area under the standard
+bell curve to the left of `x`, and `φ(x)` is Mathlib's `gaussianPDFReal 0 1 x`, its height.
+Share price `S`, strike `K`, riskless rate `r`, dividend yield `q`, volatility `σ`, time left
+`T` in years. `d1 = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)` and `d2 = d1 - σ √T`.
+Theta is the slope of the price against today's date `t`, with expiry fixed at date `E`, so
+the time left is `T = E - t`; every other input is held still. -/
+
+/-- `d1 = (log (S / K) + (r - q + σ² / 2) T) / (σ √T)`. -/
+noncomputable def bsD1 (S K r q σ T : ℝ) : ℝ :=
+  (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- The Black–Scholes call `C = S e^(-qT) N(d1) - K e^(-rT) N(d2)`. -/
+noncomputable def bsCall (S K r q σ T : ℝ) : ℝ :=
+  S * exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T) -
+    K * exp (-(r * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T - σ * √T)
+
+/-- The Black–Scholes put `P = K e^(-rT) N(-d2) - S e^(-qT) N(-d1)`. -/
+noncomputable def bsPut (S K r q σ T : ℝ) : ℝ :=
+  K * exp (-(r * T)) * cdf (gaussianReal 0 1) (-(bsD1 S K r q σ T - σ * √T)) -
+    S * exp (-(q * T)) * cdf (gaussianReal 0 1) (-(bsD1 S K r q σ T))
+
+/-- The card's call theta formula:
+`-S e^(-qT) φ(d1) σ / (2 √T) + q S e^(-qT) N(d1) - r K e^(-rT) N(d2)`. -/
+noncomputable def callTheta (S K r q σ T : ℝ) : ℝ :=
+  -(S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * σ / (2 * √T)) +
+    q * S * exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T) -
+    r * K * exp (-(r * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T - σ * √T)
+
+/-- The card's put theta formula:
+`-S e^(-qT) φ(d1) σ / (2 √T) - q S e^(-qT) N(-d1) + r K e^(-rT) N(-d2)`. -/
+noncomputable def putTheta (S K r q σ T : ℝ) : ℝ :=
+  -(S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * σ / (2 * √T)) -
+    q * S * exp (-(q * T)) * cdf (gaussianReal 0 1) (-(bsD1 S K r q σ T)) +
+    r * K * exp (-(r * T)) * cdf (gaussianReal 0 1) (-(bsD1 S K r q σ T - σ * √T))
+
+lemma theta_Ncdf_eq_integral (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ y in Set.Iic x, gaussianPDFReal 0 1 y := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun y _ => gaussianPDFReal_nonneg _ _ _))]
+
+lemma theta_continuous_pdf : Continuous (gaussianPDFReal 0 1) := by
+  unfold gaussianPDFReal; fun_prop
+
+lemma theta_hasDerivAt_Ncdf (x : ℝ) :
+    HasDerivAt (fun y => cdf (gaussianReal 0 1) y) (gaussianPDFReal 0 1 x) x := by
+  have hI : ∀ a : ℝ, MeasureTheory.IntegrableOn (gaussianPDFReal 0 1) (Set.Iic a) :=
+    fun a => (integrable_gaussianPDFReal 0 1).integrableOn
+  have heq : (fun y => cdf (gaussianReal 0 1) y) =
+      fun y => (∫ z in Set.Iic 0, gaussianPDFReal 0 1 z) + ∫ z in (0:ℝ)..y, gaussianPDFReal 0 1 z := by
+    funext y
+    rw [theta_Ncdf_eq_integral, ← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI y)]
+    ring
+  rw [heq]
+  exact ((theta_continuous_pdf.integral_hasStrictDerivAt 0 x).hasDerivAt).const_add _
+
+lemma theta_pdf_neg (x : ℝ) : gaussianPDFReal 0 1 (-x) = gaussianPDFReal 0 1 x := by
+  simp [gaussianPDFReal]
+
+lemma theta_key (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    K * exp (-(r * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T - σ * √T) =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) := by
+  have ha : 0 < σ * √T := mul_pos hσ (sqrt_pos.2 hT)
+  have hdd : bsD1 S K r q σ T * (σ * √T) = log (S / K) + (r - q + σ ^ 2 / 2) * T := by
+    rw [bsD1]; field_simp
+  set d := bsD1 S K r q σ T
+  have hsq : (√T) ^ 2 = T := sq_sqrt hT.le
+  have hSK : 0 < S / K := div_pos hS hK
+  have hexp : -(r * T) + -(d - σ * √T) ^ 2 / 2 = log (S / K) + -(q * T) + -d ^ 2 / 2 := by
+    linear_combination hdd - σ ^ 2 / 2 * hsq
+  simp only [gaussianPDFReal, NNReal.coe_one, mul_one, sub_zero]
+  set c := (√(2 * π))⁻¹
+  calc K * exp (-(r * T)) * (c * exp (-(d - σ * √T) ^ 2 / 2))
+      = c * K * exp (-(r * T) + -(d - σ * √T) ^ 2 / 2) := by rw [exp_add]; ring
+    _ = c * K * exp (log (S / K) + -(q * T) + -d ^ 2 / 2) := by rw [hexp]
+    _ = S * exp (-(q * T)) * (c * exp (-d ^ 2 / 2)) := by
+      rw [exp_add, exp_add, exp_log hSK]; field_simp
+
+lemma theta_hasDerivAt_d1_T (S K r q σ T : ℝ) (hσ : 0 < σ) (hT : 0 < T) :
+    ∃ d', HasDerivAt (fun x => bsD1 S K r q σ x) d' T := by
+  have ha : σ * √T ≠ 0 := (mul_pos hσ (sqrt_pos.2 hT)).ne'
+  have hnum : HasDerivAt (fun x => log (S / K) + (r - q + σ ^ 2 / 2) * x)
+      ((r - q + σ ^ 2 / 2) * 1) T := ((hasDerivAt_id' T).const_mul _).const_add _
+  have hden : HasDerivAt (fun x => σ * √x) (σ * (1 / (2 * √T))) T :=
+    (hasDerivAt_sqrt hT.ne').const_mul σ
+  exact ⟨_, hnum.div hden ha⟩
+
+lemma theta_call_dT (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => bsCall S K r q σ x) (-callTheta S K r q σ T) T := by
+  obtain ⟨d', hd⟩ := theta_hasDerivAt_d1_T S K r q σ T hσ hT
+  have hden : HasDerivAt (fun x => σ * √x) (σ * (1 / (2 * √T))) T :=
+    (hasDerivAt_sqrt hT.ne').const_mul σ
+  have h1 := ((((hasDerivAt_id' T).const_mul q).neg.exp).const_mul S).mul
+    ((theta_hasDerivAt_Ncdf _).comp T hd)
+  have h2 := ((((hasDerivAt_id' T).const_mul r).neg.exp).const_mul K).mul
+    ((theta_hasDerivAt_Ncdf _).comp T (hd.sub hden))
+  have key := theta_key S K r q σ T hS hK hσ hT
+  have h : HasDerivAt (fun x => bsCall S K r q σ x) _ T := h1.sub h2
+  refine h.congr_deriv ?_
+  simp only [callTheta, Function.comp_apply, Pi.neg_apply, Pi.sub_apply]
+  linear_combination (-(d' - σ * (1 / (2 * √T)))) * key
+
+lemma theta_put_dT (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => bsPut S K r q σ x) (-putTheta S K r q σ T) T := by
+  obtain ⟨d', hd⟩ := theta_hasDerivAt_d1_T S K r q σ T hσ hT
+  have hden : HasDerivAt (fun x => σ * √x) (σ * (1 / (2 * √T))) T :=
+    (hasDerivAt_sqrt hT.ne').const_mul σ
+  have h1 := ((((hasDerivAt_id' T).const_mul r).neg.exp).const_mul K).mul
+    ((theta_hasDerivAt_Ncdf _).comp T (hd.sub hden).neg)
+  have h2 := ((((hasDerivAt_id' T).const_mul q).neg.exp).const_mul S).mul
+    ((theta_hasDerivAt_Ncdf _).comp T hd.neg)
+  have key := theta_key S K r q σ T hS hK hσ hT
+  have h : HasDerivAt (fun x => bsPut S K r q σ x) _ T := h1.sub h2
+  refine h.congr_deriv ?_
+  simp only [putTheta, Function.comp_apply, Pi.neg_apply, Pi.sub_apply]
+  simp only [theta_pdf_neg]
+  linear_combination (-(d' - σ * (1 / (2 * √T)))) * key
+
+lemma theta_hasDerivAt_d1_S (s K r q σ T : ℝ) (hs : 0 < s) (hK : 0 < K) (hσ : 0 < σ)
+    (hT : 0 < T) :
+    HasDerivAt (fun x => bsD1 x K r q σ T) (1 / (s * (σ * √T))) s := by
+  have ha : 0 < σ * √T := mul_pos hσ (sqrt_pos.2 hT)
+  have h := ((((hasDerivAt_id' s).div_const K).log (div_pos hs hK).ne').add_const
+    ((r - q + σ ^ 2 / 2) * T)).div_const (σ * √T)
+  refine h.congr_deriv ?_
+  field_simp
+
+lemma theta_call_dS (s K r q σ T : ℝ) (hs : 0 < s) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => bsCall x K r q σ T)
+      (exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 s K r q σ T)) s := by
+  have hd := theta_hasDerivAt_d1_S s K r q σ T hs hK hσ hT
+  have h1 := ((hasDerivAt_id' s).mul_const (exp (-(q * T)))).mul
+    ((theta_hasDerivAt_Ncdf _).comp s hd)
+  have h2 := ((theta_hasDerivAt_Ncdf _).comp s (hd.sub_const (σ * √T))).const_mul
+    (K * exp (-(r * T)))
+  have key := theta_key s K r q σ T hs hK hσ hT
+  have h : HasDerivAt (fun x => bsCall x K r q σ T) _ s := h1.sub h2
+  refine h.congr_deriv ?_
+  simp only [Function.comp_apply]
+  linear_combination (-(1 / (s * (σ * √T)))) * key
+
+lemma theta_put_dS (s K r q σ T : ℝ) (hs : 0 < s) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    HasDerivAt (fun x => bsPut x K r q σ T)
+      (-(exp (-(q * T)) * cdf (gaussianReal 0 1) (-bsD1 s K r q σ T))) s := by
+  have hd := theta_hasDerivAt_d1_S s K r q σ T hs hK hσ hT
+  have h1 := ((theta_hasDerivAt_Ncdf _).comp s (hd.sub_const (σ * √T)).neg).const_mul
+    (K * exp (-(r * T)))
+  have h2 := ((hasDerivAt_id' s).mul_const (exp (-(q * T)))).mul
+    ((theta_hasDerivAt_Ncdf _).comp s hd.neg)
+  have key := theta_key s K r q σ T hs hK hσ hT
+  have h : HasDerivAt (fun x => bsPut x K r q σ T) _ s := h1.sub h2
+  refine h.congr_deriv ?_
+  simp only [Function.comp_apply, Pi.neg_apply]
+  simp only [theta_pdf_neg]
+  linear_combination (-(1 / (s * (σ * √T)))) * key
+
+#print axioms theta_Ncdf_eq_integral
+#print axioms theta_continuous_pdf
+#print axioms theta_hasDerivAt_Ncdf
+#print axioms theta_pdf_neg
+#print axioms theta_key
+#print axioms theta_hasDerivAt_d1_T
+#print axioms theta_call_dT
+#print axioms theta_put_dT
+#print axioms theta_hasDerivAt_d1_S
+#print axioms theta_call_dS
+#print axioms theta_put_dS
+
+/-- Theta (the formula, Steps 0 to 4): in the Black–Scholes world, with a positive share price
+and strike, positive volatility, and today's date `t` before the expiry date `E`, hold the share
+price, rate, dividend yield and volatility still and move only the calendar. Then the call
+price has slope against the date equal to the volatility term plus the two carry terms,
+`-S e^(-qT) φ(d1) σ / (2 √T) + q S e^(-qT) N(d1) - r K e^(-rT) N(d2)` with `T = E - t`, and the
+European put has slope `-S e^(-qT) φ(d1) σ / (2 √T) - q S e^(-qT) N(-d1) + r K e^(-rT) N(-d2)`. -/
+theorem theta_eq_volatility_term_plus_carry_terms
+    (S K r q σ E t : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (ht : t < E) :
+    HasDerivAt (fun u : ℝ => bsCall S K r q σ (E - u)) (callTheta S K r q σ (E - t)) t ∧
+      HasDerivAt (fun u : ℝ => bsPut S K r q σ (E - u)) (putTheta S K r q σ (E - t)) t := by
+  have hT : 0 < E - t := sub_pos.2 ht
+  exact ⟨((theta_call_dT S K r q σ (E - t) hS hK hσ hT).comp_const_sub E t).congr_deriv (neg_neg _),
+    ((theta_put_dT S K r q σ (E - t) hS hK hσ hT).comp_const_sub E t).congr_deriv (neg_neg _)⟩
+
+/-- Theta is the rent on gamma (Step 5): with a positive share price and strike, positive
+volatility and positive time left, write delta `Δ` and gamma `Γ` for the first and second
+slopes of the price against the share price. Then for the call and for the put the
+Black–Scholes equation `Θ + (r - q) S Δ + ½ σ² S² Γ = r V` holds, so theta net of carry,
+`Θ - [r V - (r - q) S Δ]`, is `-½ σ² S² Γ`; and that rent, `½ σ² S² Γ`, is exactly the size
+of the volatility term, `S e^(-qT) φ(d1) σ / (2 √T)`. -/
+theorem theta_net_of_carry_is_rent_on_gamma
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    callTheta S K r q σ T + (r - q) * S * deriv (fun s : ℝ => bsCall s K r q σ T) S +
+        σ ^ 2 * S ^ 2 / 2 * deriv (deriv (fun s : ℝ => bsCall s K r q σ T)) S =
+      r * bsCall S K r q σ T ∧
+    putTheta S K r q σ T + (r - q) * S * deriv (fun s : ℝ => bsPut s K r q σ T) S +
+        σ ^ 2 * S ^ 2 / 2 * deriv (deriv (fun s : ℝ => bsPut s K r q σ T)) S =
+      r * bsPut S K r q σ T ∧
+    σ ^ 2 * S ^ 2 / 2 * deriv (deriv (fun s : ℝ => bsCall s K r q σ T)) S =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * σ / (2 * √T) ∧
+    σ ^ 2 * S ^ 2 / 2 * deriv (deriv (fun s : ℝ => bsPut s K r q σ T)) S =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * σ / (2 * √T) := by
+  have hsT : 0 < √T := sqrt_pos.2 hT
+  have hd := theta_hasDerivAt_d1_S S K r q σ T hS hK hσ hT
+  have hgc : deriv (deriv (fun s : ℝ => bsCall s K r q σ T)) S =
+      exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * (1 / (S * (σ * √T))) := by
+    have hev : deriv (fun s : ℝ => bsCall s K r q σ T) =ᶠ[nhds S]
+        fun s => exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 s K r q σ T) := by
+      filter_upwards [Ioi_mem_nhds hS] with s hs
+      exact (theta_call_dS s K r q σ T hs hK hσ hT).deriv
+    rw [hev.deriv_eq]
+    have h := ((theta_hasDerivAt_Ncdf _).comp S hd).const_mul (exp (-(q * T)))
+    have h' : HasDerivAt (fun s => exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 s K r q σ T)) _ S :=
+      h
+    rw [h'.deriv]
+    ring
+  have hgp : deriv (deriv (fun s : ℝ => bsPut s K r q σ T)) S =
+      exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * (1 / (S * (σ * √T))) := by
+    have hev : deriv (fun s : ℝ => bsPut s K r q σ T) =ᶠ[nhds S]
+        fun s => -(exp (-(q * T)) * cdf (gaussianReal 0 1) (-bsD1 s K r q σ T)) := by
+      filter_upwards [Ioi_mem_nhds hS] with s hs
+      exact (theta_put_dS s K r q σ T hs hK hσ hT).deriv
+    rw [hev.deriv_eq]
+    have h := (((theta_hasDerivAt_Ncdf _).comp S hd.neg).const_mul (exp (-(q * T)))).neg
+    have h' : HasDerivAt
+        (fun s => -(exp (-(q * T)) * cdf (gaussianReal 0 1) (-bsD1 s K r q σ T))) _ S := h
+    rw [h'.deriv]
+    simp only [Pi.neg_apply, theta_pdf_neg]
+    ring
+  have hvc : σ ^ 2 * S ^ 2 / 2 * deriv (deriv (fun s : ℝ => bsCall s K r q σ T)) S =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * σ / (2 * √T) := by
+    rw [hgc]
+    field_simp
+  have hvp : σ ^ 2 * S ^ 2 / 2 * deriv (deriv (fun s : ℝ => bsPut s K r q σ T)) S =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * σ / (2 * √T) := by
+    rw [hgp]
+    field_simp
+  refine ⟨?_, ?_, hvc, hvp⟩
+  · rw [hvc, (theta_call_dS S K r q σ T hS hK hσ hT).deriv]
+    simp only [callTheta, bsCall]
+    ring
+  · rw [hvp, (theta_put_dS S K r q σ T hS hK hσ hT).deriv]
+    simp only [putTheta, bsPut]
+    ring
+
+/-- The call's sign (Detailed proof, "The call's sign"): with a positive share price and
+strike, positive volatility and positive time left, if the dividend yield is at most zero and
+the rate is at least zero, the call's theta is strictly negative. A positive call theta needs
+a positive dividend yield. -/
+theorem call_theta_neg_of_no_dividend_yield
+    (S K r q σ T : ℝ) (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T)
+    (hq : q ≤ 0) (hr : 0 ≤ r) :
+    callTheta S K r q σ T < 0 := by
+  have hA : 0 < S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q σ T) * σ / (2 * √T) := by
+    have := gaussianPDFReal_pos 0 1 (bsD1 S K r q σ T) one_ne_zero
+    have := sqrt_pos.2 hT
+    positivity
+  have hB : 0 ≤ -q * S * exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T) :=
+    mul_nonneg (mul_nonneg (mul_nonneg (neg_nonneg.2 hq) hS.le) (exp_pos _).le) (cdf_nonneg _ _)
+  have hC : 0 ≤ r * K * exp (-(r * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q σ T - σ * √T) :=
+    mul_nonneg (mul_nonneg (mul_nonneg hr hK.le) (exp_pos _).le) (cdf_nonneg _ _)
+  unfold callTheta
+  linarith
+
+/-! The card's worked numbers that are exact fractions, for Acme:
+S = 100, K = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1. -/
+
+-- d1 = (ln(100/100) + 0.05) / (0.20 × √1) = 0.25.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 = 1 / 4 := by
+  norm_num [bsD1]
+
+-- d2 = d1 - σ √T = 0.25 - 0.20 = 0.05.
+example : bsD1 100 100 (5 / 100) (2 / 100) (1 / 5) 1 - 1 / 5 * √1 = 1 / 20 := by
+  norm_num [bsD1]
+
+-- At T = 1 the denominator 2 √T of the volatility term is 2: the √T hides, the 2 does not.
+example : 2 * √(1 : ℝ) = 2 := by norm_num
+
+#print axioms theta_eq_volatility_term_plus_carry_terms
+#print axioms theta_net_of_carry_is_rent_on_gamma
+#print axioms call_theta_neg_of_no_dividend_yield
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'theta_Ncdf_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_continuous_pdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_hasDerivAt_Ncdf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_pdf_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_hasDerivAt_d1_T' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_call_dT' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_put_dT' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_hasDerivAt_d1_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_call_dS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_put_dS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_eq_volatility_term_plus_carry_terms' depends on axioms: [propext, Classical.choice, Quot.sound]
+'theta_net_of_carry_is_rent_on_gamma' depends on axioms: [propext, Classical.choice, Quot.sound]
+'call_theta_neg_of_no_dividend_yield' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it.
@@ -640,7 +972,7 @@ The two outputs agree line for line. The tree lands about 0.15 cents a year off 
 
 ## Where you meet it in real life
 
-- **Option sellers' income.** Covered-call and put-writing funds describe their return as collected theta. The volatility term is what they are paid for bearing gamma risk; a large move takes it back.
+- **Option sellers' income.** Covered-call and put-writing funds (funds that sell calls on shares they own, or sell puts) describe their return as collected theta. The volatility term is what they are paid for bearing gamma risk; a large move takes it back.
 - **The last week before expiry.** Short-dated options at the strike lose value fastest: the house call's daily cost rises from 1.39 cents with a year left to 21.29 cents on its last day.
 - **Weekends and holidays.** Markets close but calendar days pass. Whether a desk spreads theta over 365 or 252 days changes the quote, not the option.
 - **Early exercise of American puts.** A deep European put with positive theta shows why its American cousin is exercised early: the holder would rather have the $130 now and earn interest on it.
