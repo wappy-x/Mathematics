@@ -30,7 +30,9 @@ Rain turns straight to sun with chance 0.2, sun straight to rain with chance 0.1
 
 ## The formula
 
-Notation first, in words. As on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), $X_n$ is the value at time $n$: here the weather on day $n$, with day 0 today. The states get letters: S, C, R. The chance of moving from state $i$ today to state $j$ tomorrow is written $p_{ij}$, read "p from i to j". Laid out with one row per today and one column per tomorrow, the $p_{ij}$ form a square table $P$, the transition matrix. $P$ alone is the matrix; $P$ followed by brackets is a probability, as in wing 09.
+Notation first, in words. As on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), $X_n$ is the value at time $n$: here the weather on day $n$, with day 0 today. The states get letters: S, C, R. The chance of moving from state $i$ today to state $j$ tomorrow is written $p_{ij}$, read "p from i to j".
+
+Laid out with one row per today and one column per tomorrow, the $p_{ij}$ form a square table $P$, the transition matrix. $P$ alone is the matrix; $P$ followed by brackets is a probability, as in wing 09.
 
 `P = [[0.6, 0.3, 0.1], [0.3, 0.4, 0.3], [0.2, 0.4, 0.4]]`, rows and columns in the order S, C, R.
 
@@ -130,7 +132,11 @@ Row times column, summed, is how [Matrix multiplication](../../03-Algebra/04-Mat
 
 ### Step 5: every matrix and start law has a chain
 
-Any stochastic matrix and start law have a chain, built from uniform draws. Cut the numbers from 0 to 1 into pieces as long as the entries of today's row, draw a uniform number $U$, and move to the state whose piece it hits. On a sunny day, draws below 0.6 give sunny, 0.6 to 0.9 cloudy, above 0.9 rainy. Each day takes a fresh, independent draw, so the Markov property holds by construction. The code uses a random digit 0 to 9 for $U$, since every entry is whole tenths. A chain that runs forever needs its endless draws on one probability space: Kolmogorov's extension theorem, stated on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md) and proved in Durrett's text. This card uses it and does not prove it.
+Any stochastic matrix and start law have a chain, built from uniform draws. Cut the numbers from 0 to 1 into pieces as long as the entries of today's row, draw a uniform number $U$, and move to the state whose piece it hits. On a sunny day, draws below 0.6 give sunny, 0.6 to 0.9 cloudy, above 0.9 rainy.
+
+Each day takes a fresh, independent draw, so the Markov property holds by construction. The code uses a random digit 0 to 9 for $U$, since every entry is whole tenths.
+
+A chain that runs forever needs its endless draws on one probability space: Kolmogorov's extension theorem, stated on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md) and proved in Durrett's text. This card uses it and does not prove it.
 
 A random walk on a graph, from wing 09 ([Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md)), is one such chain: each row spreads its chance evenly over a node's neighbours. Which states a chain can reach and return to is sorted out on [Classifying states](03-classifying-states.md).
 
@@ -179,7 +185,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Three roads to the two-day chances. Road one multiplies the matrix by itself. Road two lists all 81 four-day paths from the forecast start law 0.5, 0.3, 0.2, weights each by its product, and sums out the other days; the same list tests the factorisation on the chain and on the memory weather. Road three simulates with a SplitMix64 generator written out, seed 20260929: 100,000 two-day runs, then two 300,000-day paths, one for the chain and one for the memory weather, for the conditional frequencies. Each simulated number is printed with its standard error. Exact work is in whole tenths, so roads one and two carry no rounding.
+Three roads to the two-day chances. Road one multiplies the matrix by itself. Road two lists all 81 four-day paths from the forecast start law 0.5, 0.3, 0.2, weights each by its product, and sums out the other days; the same list tests the factorisation on the chain and on the memory weather.
+
+Road three simulates with a SplitMix64 generator written out, seed 20260929: 100,000 two-day runs, then two 300,000-day paths, one for the chain and one for the memory weather, for the conditional frequencies. Each simulated number is printed with its standard error. Exact work is in whole tenths, so roads one and two carry no rounding.
 
 ### Python
 
@@ -545,6 +553,260 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulated digits included, since both draw the same stream.
 
+### Lean
+
+Lean proves the card's three general facts for any finite set of states, start law and stochastic matrix, plus the hand-worked numbers.
+
+- Take any process, start law and stochastic matrix. Then the next-step rule, with day 0 following the start law, holds exactly when every path's chance follows the factorisation.
+- Take a start law and a stochastic matrix. Then the products over all paths of $n$ steps add to 1, for every $n$.
+- Suppose every path's chance follows the factorisation, and state $i$ has positive chance on day 0. Then $P(X_2 = j \mid X_0 = i) = \sum_k p_{ik}\, p_{kj} = (P^2)_{ij}$.
+- The weather matrix's rows each add to 1, and its columns add to 1.1, 1.1 and 0.8.
+- The rows of $P^2$ are 0.47, 0.34, 0.19; then 0.36, 0.37, 0.27; then 0.32, 0.38, 0.30.
+- Sunny to rainy in two days is 0.06 + 0.09 + 0.04 = 0.19.
+- The week S S C C R R S from a sunny Monday has chance 0.001728, about 1 in 579.
+- Taking the days as independent gives 0.6 × 0.47 = 0.282, not the true 0.36.
+- All 81 four-day paths from the forecast start law 0.5, 0.3, 0.2 have weights adding to 1.
+
+The simulations, the memory weather, the 27 three-day histories and the uniform-draw construction are left to the Python and Rust checks.
+
+```lean
+-- Markov chains: for a process on finitely many states, the next-step rule (tomorrow's chances given any history are today's row of the matrix) holds exactly when every path's chance is the start law times one matrix entry per step, those path chances add to 1, and the two-step chances are the entries of the matrix squared.
+import Mathlib.Probability.ConditionalProbability
+import Mathlib.LinearAlgebra.Matrix.Stochastic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Measure.Real
+
+open MeasureTheory ProbabilityTheory Matrix
+
+theorem path_sum_general {S : Type*} [Fintype S] [DecidableEq S] (P : Matrix S S ℝ)
+    (hP : P ∈ Matrix.rowStochastic ℝ S) (n : ℕ) : ∀ v : S → ℝ,
+    ∑ h : Fin (n + 1) → S, v (h 0) * ∏ m : Fin n, P (h m.castSucc) (h m.succ) = ∑ i, v i := by
+  induction n with
+  | zero =>
+    intro v
+    simp only [Finset.univ_eq_empty, Finset.prod_empty, mul_one]
+    exact Fintype.sum_equiv (Equiv.funUnique (Fin 1) S) _ _ (fun _ => rfl)
+  | succ n ih =>
+    intro v
+    rw [← (Fin.consEquiv fun _ : Fin (n + 2) => S).sum_comp, Fintype.sum_prod_type]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    have := ih (fun k => v i * P i k)
+    simp only [Fin.consEquiv_apply] at *
+    simp only [Fin.prod_univ_succ, Fin.cons_zero, Fin.castSucc_zero,
+      Fin.cons_succ, ← Fin.succ_castSucc] at *
+    calc _ = ∑ g : Fin (n + 1) → S, v i * P i (g 0) * ∏ m : Fin n, P (g m.castSucc) (g m.succ) :=
+          Finset.sum_congr rfl fun g _ => by ring
+      _ = _ := by rw [this, ← Finset.mul_sum, Matrix.sum_row_of_mem_rowStochastic hP, mul_one]
+
+#print axioms path_sum_general
+
+theorem markov_pathSet_measurable {Ω S : Type*} [MeasurableSpace Ω] [MeasurableSpace S]
+    [MeasurableSingletonClass S] (X : ℕ → Ω → S) (hX : ∀ n, Measurable (X n)) (n : ℕ)
+    (h : Fin (n + 1) → S) : MeasurableSet {ω | ∀ m : Fin (n + 1), X m ω = h m} := by
+  rw [Set.ofPred_forall]
+  exact MeasurableSet.iInter fun m => hX m (measurableSet_singleton (h m))
+
+#print axioms markov_pathSet_measurable
+
+theorem markov_pathSet_succ {Ω S : Type*} (X : ℕ → Ω → S) (n : ℕ) (h : Fin (n + 2) → S) :
+    {ω | ∀ m : Fin (n + 2), X m ω = h m} =
+      {ω | ∀ m : Fin (n + 1), X m ω = h m.castSucc} ∩ {ω | X (n + 1) ω = h (Fin.last (n + 1))} := by
+  ext ω
+  simp only [Set.mem_ofPred_eq, Set.mem_inter_iff, Fin.forall_fin_succ' (P := fun m => X m ω = h m),
+    Fin.val_castSucc, Fin.val_last]
+
+#print axioms markov_pathSet_succ
+
+theorem markov_pathSet_zero {Ω S : Type*} (X : ℕ → Ω → S) (i : S) :
+    {ω | ∀ m : Fin 1, X m ω = (fun _ => i) m} = {ω | X 0 ω = i} := by
+  ext ω
+  simp
+
+#print axioms markov_pathSet_zero
+
+theorem markov_pathProd_succ {S : Type*} (α : S → ℝ) (P : Matrix S S ℝ) (n : ℕ)
+    (h : Fin (n + 2) → S) :
+    α (h 0) * ∏ m : Fin (n + 1), P (h m.castSucc) (h m.succ) =
+      (α ((fun m : Fin (n + 1) => h m.castSucc) 0) *
+        ∏ m : Fin n, P ((fun m : Fin (n + 1) => h m.castSucc) m.castSucc)
+          ((fun m : Fin (n + 1) => h m.castSucc) m.succ)) *
+        P ((fun m : Fin (n + 1) => h m.castSucc) (Fin.last n)) (h (Fin.last (n + 1))) := by
+  rw [Fin.prod_univ_castSucc]
+  simp only [Fin.castSucc_zero, Fin.succ_last, Fin.succ_castSucc]
+  ring
+
+#print axioms markov_pathProd_succ
+
+/-- A Markov chain, two ways. Take a process `X 0, X 1, …` on a finite set of states `S`, a start
+law `α` (chances that add to 1) and a transition matrix `P` (no negative entry, each row adds
+to 1). Statement (A), the definition: day 0 follows `α`, and for every history `i₀, …, iₙ` with
+positive chance, the chance of state `j` tomorrow given that history is `p_{iₙ j}`, the entry in
+today's row. Statement (B), the factorisation: for every `n`, every path `i₀, …, iₙ` has chance
+`α_{i₀} p_{i₀ i₁} ⋯ p_{iₙ₋₁ iₙ}`. The card proves (A) and (B) say the same thing. -/
+theorem markov_property_iff_path_factorisation {Ω S : Type*} [MeasurableSpace Ω]
+    [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → S) (hX : ∀ n, Measurable (X n))
+    (α : S → ℝ) (hα0 : ∀ i, 0 ≤ α i) (hα1 : ∑ i, α i = 1) (P : Matrix S S ℝ)
+    (hP : P ∈ Matrix.rowStochastic ℝ S) :
+    ((∀ i, μ.real {ω | X 0 ω = i} = α i) ∧
+      ∀ (n : ℕ) (h : Fin (n + 1) → S) (j : S),
+        μ {ω | ∀ m : Fin (n + 1), X m ω = h m} ≠ 0 →
+          (μ[{ω | X (n + 1) ω = j} | {ω | ∀ m : Fin (n + 1), X m ω = h m}]).toReal =
+            P (h (Fin.last n)) j) ↔
+    ∀ (n : ℕ) (h : Fin (n + 1) → S),
+      μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} =
+        α (h 0) * ∏ m : Fin n, P (h m.castSucc) (h m.succ) := by
+  constructor
+  · rintro ⟨h0, hstep⟩ n
+    induction n with
+    | zero =>
+      intro h
+      have := markov_pathSet_zero X (h 0)
+      have hh : h = fun _ => h 0 := funext fun m => by rw [Subsingleton.elim (α := Fin 1) m 0]
+      rw [hh, this, h0]
+      simp
+    | succ n ih =>
+      intro h
+      set g : Fin (n + 1) → S := fun m => h m.castSucc with hg
+      rw [markov_pathSet_succ, markov_pathProd_succ, ← ih g]
+      by_cases hz : μ {ω | ∀ m : Fin (n + 1), X m ω = g m} = 0
+      · have h1 : μ.real {ω | ∀ m : Fin (n + 1), X m ω = g m} = 0 := by
+          simp [measureReal_def, hz]
+        have h2 : μ.real ({ω | ∀ m : Fin (n + 1), X m ω = g m} ∩
+            {ω | X (n + 1) ω = h (Fin.last (n + 1))}) = 0 := by
+          rw [measureReal_def, measure_mono_null Set.inter_subset_left hz]; simp
+        rw [h1, h2, zero_mul]
+      · have := hstep n g (h (Fin.last (n + 1))) hz
+        rw [cond_apply (markov_pathSet_measurable X hX n g), ENNReal.toReal_mul,
+          ENNReal.toReal_inv] at this
+        rw [← this, ← measureReal_def, ← measureReal_def]
+        have hne : μ.real {ω | ∀ m : Fin (n + 1), X m ω = g m} ≠ 0 := by
+          rw [measureReal_def]
+          exact ENNReal.toReal_ne_zero.mpr ⟨hz, measure_ne_top _ _⟩
+        field_simp
+        rfl
+  · intro hB
+    refine ⟨fun i => ?_, fun n h j hz => ?_⟩
+    · have := hB 0 (fun _ => i)
+      rw [markov_pathSet_zero] at this
+      simpa using this
+    · rw [cond_apply (markov_pathSet_measurable X hX n h), ENNReal.toReal_mul,
+        ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def]
+      have e1 := hB (n + 1) (Fin.snoc h j)
+      rw [markov_pathSet_succ, markov_pathProd_succ] at e1
+      simp only [Fin.snoc_castSucc, Fin.snoc_last] at e1
+      have e2 := hB n h
+      have hne : μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} ≠ 0 := by
+        rw [measureReal_def]
+        exact ENNReal.toReal_ne_zero.mpr ⟨hz, measure_ne_top _ _⟩
+      rw [e1, ← e2]
+      field_simp
+
+/-- The products are a probability table. For a start law `α` and a transition matrix `P`
+(no negative entry, rows adding to 1), the products `α_{i₀} p_{i₀ i₁} ⋯ p_{iₙ₋₁ iₙ}` over all
+paths of `n` steps add to 1, for every `n`. -/
+theorem path_products_sum_to_one {S : Type*} [Fintype S] [DecidableEq S]
+    (α : S → ℝ) (hα0 : ∀ i, 0 ≤ α i) (hα1 : ∑ i, α i = 1) (P : Matrix S S ℝ)
+    (hP : P ∈ Matrix.rowStochastic ℝ S) (n : ℕ) :
+    ∑ h : Fin (n + 1) → S, α (h 0) * ∏ m : Fin n, P (h m.castSucc) (h m.succ) = 1 := by
+  have := path_sum_general P hP n α
+  rw [this, hα1]
+
+/-- Two days is a sum over the middle day. If every path's chance is the start law times one
+matrix entry per step, then for any state `i` with positive chance on day 0, the chance of state
+`j` on day 2 given state `i` on day 0 is `∑ k, p_{ik} p_{kj}`, the `(i, j)` entry of `P²`. -/
+theorem two_step_chance_eq_matrix_sq {Ω S : Type*} [MeasurableSpace Ω]
+    [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → S) (hX : ∀ n, Measurable (X n))
+    (α : S → ℝ) (hα0 : ∀ i, 0 ≤ α i) (hα1 : ∑ i, α i = 1) (P : Matrix S S ℝ)
+    (hP : P ∈ Matrix.rowStochastic ℝ S)
+    (hpath : ∀ (n : ℕ) (h : Fin (n + 1) → S),
+      μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} =
+        α (h 0) * ∏ m : Fin n, P (h m.castSucc) (h m.succ))
+    (i j : S) (hi : μ {ω | X 0 ω = i} ≠ 0) :
+    (μ[{ω | X 2 ω = j} | {ω | X 0 ω = i}]).toReal = (P ^ 2) i j ∧
+      (P ^ 2) i j = ∑ k, P i k * P k j := by
+  have hsq : (P ^ 2) i j = ∑ k, P i k * P k j := by rw [sq, Matrix.mul_apply]
+  refine ⟨?_, hsq⟩
+  have h0 := hpath 0 (fun _ => i)
+  rw [markov_pathSet_zero] at h0
+  simp only [Finset.univ_eq_empty, Finset.prod_empty, mul_one] at h0
+  have hmeas0 : MeasurableSet {ω | X 0 ω = i} := hX 0 (measurableSet_singleton i)
+  have hset : {ω | X 0 ω = i} ∩ {ω | X 2 ω = j} =
+      ⋃ k ∈ (Finset.univ : Finset S), {ω | ∀ m : Fin 3, X m ω = ![i, k, j] m} := by
+    ext ω
+    simp [Fin.forall_fin_succ]
+  have hsum : μ.real ({ω | X 0 ω = i} ∩ {ω | X 2 ω = j}) = α i * ∑ k, P i k * P k j := by
+    rw [hset, measureReal_biUnion_finset]
+    · rw [Finset.mul_sum]
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [hpath 2]
+      simp [Fin.prod_univ_two]
+    · intro k _ k' _ hkk'
+      refine Set.disjoint_left.mpr fun ω h1 h2 => hkk' ?_
+      have a := h1 1
+      have b := h2 1
+      simp at a b
+      rw [← a, ← b]
+    · intro k _
+      exact markov_pathSet_measurable X hX 2 _
+  have hne : μ.real {ω | X 0 ω = i} ≠ 0 := by
+    rw [measureReal_def]
+    exact ENNReal.toReal_ne_zero.mpr ⟨hi, measure_ne_top _ _⟩
+  rw [cond_apply hmeas0, ENNReal.toReal_mul, ENNReal.toReal_inv, ← measureReal_def,
+    ← measureReal_def, hsum, hsq, h0]
+  rw [h0] at hne
+  field_simp
+
+/-! The card's worked numbers, in whole tenths (states 0 sunny, 1 cloudy, 2 rainy). -/
+
+-- The weather matrix in tenths: each row adds to 10; the columns add to 11, 11 and 8.
+example : (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) *ᵥ (fun _ => 1) =
+    (fun _ => 10) := by decide
+
+example : (fun _ => 1) ᵥ* (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) =
+    ![11, 11, 8] := by decide
+
+-- P² in hundredths: S 0.47, 0.34, 0.19; C 0.36, 0.37, 0.27; R 0.32, 0.38, 0.30.
+example : (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 2 =
+    !![47, 34, 19; 36, 37, 27; 32, 38, 30] := by decide
+
+-- Sunny to rainy in two days, three routes: 0.06 + 0.09 + 0.04 = 0.19.
+example : 6 * 1 + 3 * 3 + 1 * 4 = 19 := by decide
+
+-- The week S S C C R R S from a sunny Monday: 0.6 × 0.3 × 0.4 × 0.3 × 0.4 × 0.2 = 0.001728,
+-- about 1 in 579 (10⁶ / 1728 is nearer 579 than 578).
+example : 6 * 3 * 4 * 3 * 4 * 2 = 1728 ∧ 579 * 1728 - 1000000 < 1000000 - 578 * 1728 := by
+  decide
+
+-- Taking the days as independent gives 0.6 × 0.47 = 0.282, not 0.6 × 0.6 = 0.36.
+example : 6 * 47 = 282 ∧ 6 * 6 * 10 = 360 := by decide
+
+-- All 81 four-day paths from the forecast start law 0.5, 0.3, 0.2: the weights add to 1.
+example : ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3,
+    ![5, 3, 2] a * (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) a b *
+      (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) b c *
+      (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) c d = 10000 := by decide
+
+#print axioms markov_property_iff_path_factorisation
+#print axioms path_products_sum_to_one
+#print axioms two_step_chance_eq_matrix_sq
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'path_sum_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'markov_pathSet_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'markov_pathSet_succ' depends on axioms: [propext, Quot.sound]
+'markov_pathSet_zero' depends on axioms: [propext, Quot.sound]
+'markov_pathProd_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'markov_property_iff_path_factorisation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'path_products_sum_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_step_chance_eq_matrix_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -597,7 +859,7 @@ Two days was one matrix product, $P^2$; a week ahead is the seventh power, and [
 
 ## Sources
 
-Verified 30 Sep 2026: every DOI below resolves, and Crossref confirms its title and first author.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Markov, A. A. "An Example of Statistical Investigation of the Text *Eugene Onegin* Concerning the Connection of Samples in Chains." Translated in *Science in Context* 19, no. 4 (2006). [doi:10.1017/S0269889706001074](https://doi.org/10.1017/S0269889706001074). The 1913 letter count that first put a chain to data.
 - Norris, J. R. *Markov Chains*. Cambridge University Press, 1997. [doi:10.1017/CBO9780511810633](https://doi.org/10.1017/CBO9780511810633). Chapter 1 defines a chain by its start law and matrix and proves the product form, as this card does.

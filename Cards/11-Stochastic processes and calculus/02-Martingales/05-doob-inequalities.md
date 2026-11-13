@@ -34,7 +34,14 @@ The rising line is the exact chance, in percent, computed by both checks for eac
 
 ## The formula
 
-Notation first, in words. The fortune after round n is $X_n$, so $X_0$ is the starting $10. Reminder from [Martingales](01-martingales.md): $\mathcal F_n$ is what is known after round n, and a martingale is a fair game, $E[X_{n+1} \mid \mathcal F_n] = X_n$. A submartingale is a game tilted in the player's favour or fair: $E[X_{n+1} \mid \mathcal F_n] \ge X_n$. The running peak is the highest value seen so far, written with a star: $X^*_N = \max_{0 \le n \le N} X_n$. A semicolon inside an average means "counted only on this event": $E[X_N;\, X^*_N \ge \lambda]$ is the average of $X_N \mathbf 1\{X^*_N \ge \lambda\}$, where the indicator $\mathbf 1\{\cdot\}$ is 1 when the event happens and 0 when it does not.
+Notation first, in words.
+
+- The fortune after round n is $X_n$, so $X_0$ is the starting $10.
+- $P(\cdot)$ is a chance and $E[\cdot]$ is an average over all paths; $E[\,\cdot \mid \mathcal F_n]$ is the average given what is known after round n.
+- Reminder from [Martingales](01-martingales.md): $\mathcal F_n$ is what is known after round n, and a martingale is a fair game, $E[X_{n+1} \mid \mathcal F_n] = X_n$.
+- A submartingale is a game tilted in the player's favour or fair: $E[X_{n+1} \mid \mathcal F_n] \ge X_n$.
+- The running peak is the highest value seen so far, written with a star: $X^*_N = \max_{0 \le n \le N} X_n$.
+- A semicolon inside an average means "counted only on this event": $E[X_N;\, X^*_N \ge \lambda]$ is the average of $X_N \mathbf 1\{X^*_N \ge \lambda\}$, where the indicator $\mathbf 1\{\cdot\}$ is 1 when the event happens and 0 when it does not.
 
 Doob's maximal inequality. For a submartingale that is never negative, any level $\lambda > 0$ and any number of rounds $N$:
 
@@ -94,12 +101,18 @@ Our gambler shows both steps in numbers. The paths that touched $31 end with $1.
 
 ### Step 4: the L2 inequality from the maximal one
 
-Take the peak of the sizes $\lvert X_n\rvert$; the fortune is never negative, so here it is $X^*_N$. Three moves finish it. First, the average of a square can be counted in layers: for a whole-number peak, the squared peak averages to the sum over each level $k$ of $(2k - 1)$ times the chance the peak reaches $k$ (the layer-cake identity). The checks compute 339.382291 both ways. Second, bound each layer's chance by Step 3's middle term. Third, the layers add up to at most twice the average of final fortune times peak, and the Cauchy–Schwarz inequality splits that product into square roots: the root of the average squared peak is at most twice the root of the average squared final fortune. Squaring gives the 4. Here 339.38 against 4 × 185.01 = 740.05: the ratio is 1.83, well inside 4.
+Take the peak of the sizes $\lvert X_n\rvert$; the fortune is never negative, so here it is $X^*_N$. Three moves finish it.
+
+1. The average of a square can be counted in layers: for a whole-number peak, the squared peak averages to the sum over each level $k$ of $(2k - 1)$ times the chance the peak reaches $k$ (the layer-cake identity). The checks compute 339.382291 both ways.
+2. Bound each layer's chance by Step 3's middle term.
+3. The layers add up to at most twice the average of final fortune times peak, and the Cauchy–Schwarz inequality splits that product into square roots: the root of the average squared peak is at most twice the root of the average squared final fortune.
+
+Squaring gives the 4. Here 339.38 against 4 × 185.01 = 740.05: the ratio is 1.83, well inside 4.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(X_n)$ for n = 0 to N is adapted to the filtration $(\mathcal F_n)$, integrable, and a submartingale: $E[X_N \mid \mathcal F_k] \ge X_k$ for every k ≤ N, which follows from the one-step property by the tower rule for conditional expectation (wing 10).
+**Setting.** $(X_n)$ for n = 0 to N is adapted to the filtration $(\mathcal F_n)$, integrable, and a submartingale: $E[X_N \mid \mathcal F_k] \ge X_k$ for every k ≤ N, which follows from the one-step property by the tower rule for conditional expectation ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
 
 **Maximal inequality.** Assume $X_n \ge 0$. Let $\tau = \min\{n \le N : X_n \ge \lambda\}$, with $\tau = \infty$ if there is no such n. The event $\{\tau = k\}$ is in $\mathcal F_k$, and on it $X_k \ge \lambda$. The events for k = 0 to N are disjoint and their union is $\{X^*_N \ge \lambda\}$. For each k, by the defining property of conditional expectation and the submartingale property,
 $$E[X_N \mathbf 1\{\tau = k\}] = E\big[E[X_N \mid \mathcal F_k]\,\mathbf 1\{\tau = k\}\big] \ge E[X_k \mathbf 1\{\tau = k\}] \ge \lambda\, P(\tau = k).$$
@@ -117,10 +130,12 @@ the equality by Tonelli again and the last step by Cauchy–Schwarz. If $E[Y^2] 
 
 ### Step 5: sharper bounds from the same theorem
 
-The maximal inequality applies to any non-negative submartingale, and a convex function of a martingale is one (conditional Jensen, in the proof above). Choosing the function well tightens the bound for the same question.
+The maximal inequality applies to any non-negative submartingale, and a convex function of a martingale is one (conditional Jensen, in the proof above). A convex function is one whose graph bends upward, such as $x^2$ or $e^{\theta x}$. Choosing the function well tightens the bound for the same question.
 
 - **Squares.** Net winnings $M_n = X_n - 10$ form a martingale, so $M_n^2$ is a submartingale. The fortune reaches $31 only if $M_n^2$ reaches $21^2 = 441$. The bound is the average of $M_N^2$ over 441. That average equals the mean number of rounds actually played, 85.013575, because $M_n^2$ minus the rounds played is itself a martingale. The bound is 0.192775; without the stop at $0 the average would be all 100 rounds, giving 0.226757. For sums of independent steps this is Kolmogorov's inequality, a standard route to the strong law of large numbers.
-- **Exponentials.** Drop the stop at $0 for a moment and let the walk run into debt. Every path on which the stopped fortune reaches $31 is a path on which the free walk gains $21, since the two agree until ruin. For the free walk, $e^{\theta M_n}$ is a submartingale with average $\cosh(\theta)^{100}$ after 100 rounds: each ±1 step multiplies it by $e^{\theta}$ or $e^{-\theta}$, and the average of those two is the hyperbolic cosine $\cosh\theta$ ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). So the chance of gaining $21 is at most $\cosh(\theta)^{100} e^{-21\theta}$ for every tilt $\theta > 0$. Setting the slope in $\theta$ to zero gives $\tanh\theta = 21/100$, where the hyperbolic tangent tanh is half the difference of $e^{\theta}$ and $e^{-\theta}$ over their average; undoing it (atanh) gives $\theta = 0.213171$. The bound is 0.108446.
+- **Exponentials.** Drop the stop at $0 for a moment and let the walk run into debt. Every path on which the stopped fortune reaches $31 is a path on which the free walk gains $21, since the two agree until ruin. For the free walk, $e^{\theta M_n}$ is a submartingale with average $\cosh(\theta)^{100}$ after 100 rounds: each ±1 step multiplies it by $e^{\theta}$ or $e^{-\theta}$, and the average of those two is the hyperbolic cosine $\cosh\theta$ ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)).
+
+  So the chance of gaining $21 is at most $\cosh(\theta)^{100} e^{-21\theta}$ for every tilt $\theta > 0$. Setting the slope in $\theta$ to zero gives $\tanh\theta = 21/100$, where the hyperbolic tangent tanh is half the difference of $e^{\theta}$ and $e^{-\theta}$ over their average; undoing it (atanh) gives $\theta = 0.213171$. The bound is 0.108446.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -586,6 +601,228 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The Rust path count uses 128-bit whole numbers where Python uses exact fractions; they differ only far below the printed digits.
 
+### Lean
+
+Lean proves both inequalities for every game meeting the conditions above, at every level and number of rounds, plus three facts about the gambler.
+
+- Suppose $X$ is a submartingale that is never negative, $\lambda > 0$, and $N$ is any number of rounds. Then $\lambda \, P(X^*_N \ge \lambda) \le E[X_N;\ X^*_N \ge \lambda] \le E[X_N]$.
+- The size $\lvert M_n\rvert$ of any martingale is a submartingale.
+- Suppose $M$ is any martingale, even one that goes negative, and $\lambda > 0$. Then $\lambda \, P(\max_{0 \le n \le N} \lvert M_n\rvert \ge \lambda) \le E[\lvert M_N\rvert]$.
+- Suppose $X$ is a martingale and $E[X_N^2]$ is finite. Then the average squared peak of the sizes $\lvert X_n\rvert$ is finite, and at most $4\,E[X_N^2]$.
+- For the gambler, Doob's bound 10/31 lies between 1 in 4 and 1 in 3.
+- Reaching $31 from $10 takes a $21 gain, so round 21 at the earliest, and 21 squared is 441.
+- Take a whole-number peak $m$ up to 110. Then the layers $2k - 1$, for $k$ from 1 to $m$, add up to $m^2$.
+
+The exact chances, the simulation, the sharper bounds and the gambler's averages are left to the Python and Rust checks.
+
+```lean
+-- Doob's inequalities: for a never-negative submartingale, the level times the chance the running peak reaches it is at most the final value averaged over the paths that reached it, which is at most the average final value; the same bound holds for the size of any martingale; and the average squared peak size of a martingale with finite average square is at most four times its average squared final value.
+import Mathlib.Probability.Martingale.Basic
+import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Probability.Martingale.OptionalStopping
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
+import Mathlib.MeasureTheory.Function.L2Space
+import Mathlib.MeasureTheory.Function.LpOrder
+
+open MeasureTheory Finset
+
+theorem doob_sup'_range_succ (x : ℕ → ℝ) (n : ℕ) :
+    (range (n + 2)).sup' nonempty_range_add_one x =
+      max ((range (n + 1)).sup' nonempty_range_add_one x) (x (n + 1)) := by
+  apply le_antisymm
+  · refine sup'_le _ _ fun k hk => ?_
+    rw [mem_range] at hk
+    rcases Nat.lt_succ_iff_lt_or_eq.1 hk with h | h
+    · exact le_max_of_le_left (le_sup' x (mem_range.2 h))
+    · subst h; exact le_max_right _ _
+  · refine max_le (sup'_le _ _ fun k hk => le_sup' x ?_) (le_sup' x (mem_range.2 (by omega)))
+    rw [mem_range] at hk ⊢; omega
+
+theorem doob_pathwise_aux (x : ℕ → ℝ) (N : ℕ) :
+    ((range (N + 1)).sup' nonempty_range_add_one x) ^ 2 ≤
+      2 * (range (N + 1)).sup' nonempty_range_add_one x * x N -
+        2 * ∑ n ∈ range N, (range (n + 1)).sup' nonempty_range_add_one x * (x (n + 1) - x n) := by
+  induction N with
+  | zero => simp; nlinarith [sq_nonneg (x 0)]
+  | succ N ih =>
+    rw [doob_sup'_range_succ, sum_range_succ]
+    set b := (range (N + 1)).sup' nonempty_range_add_one x
+    rcases le_total b (x (N + 1)) with h | h
+    · rw [max_eq_right h]; nlinarith [sq_nonneg (x (N + 1) - b)]
+    · rw [max_eq_left h]; nlinarith
+
+theorem doob_pathwise (x : ℕ → ℝ) (N : ℕ) :
+    ((range (N + 1)).sup' nonempty_range_add_one x) ^ 2 ≤
+      4 * x N ^ 2 -
+        4 * ∑ n ∈ range N, (range (n + 1)).sup' nonempty_range_add_one x * (x (n + 1) - x n) := by
+  have := doob_pathwise_aux x N
+  nlinarith [sq_nonneg ((range (N + 1)).sup' nonempty_range_add_one x - 2 * x N)]
+
+theorem doob_abs_submartingale {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (P : Measure Ω) (ℱ : Filtration ℕ m0) (M : ℕ → Ω → ℝ)
+    (hmart : Martingale M ℱ P) : Submartingale (fun n ω => |M n ω|) ℱ P := by
+  refine ⟨fun n => (hmart.stronglyAdapted n).norm, fun i j hij => ?_, fun n => (hmart.integrable n).abs⟩
+  filter_upwards [hmart.condExp_ae_eq hij, abs_condExp_ae_le_condExp_abs (m := ℱ i) (μ := P) (M j)]
+    with ω h1 h2
+  rw [← h1]
+  exact h2
+
+#print axioms doob_sup'_range_succ
+#print axioms doob_pathwise_aux
+#print axioms doob_pathwise
+#print axioms doob_abs_submartingale
+
+/-- Doob's maximal inequality: on a probability space with a filtration, let `X` be a submartingale
+(a fair or favourable game) that is never negative. Then for every level `λ > 0` and every number of
+rounds `N`, writing `X*_N = max_{0 ≤ n ≤ N} X n` for the running peak,
+`λ · P(X*_N ≥ λ) ≤ E[X N ; X*_N ≥ λ] ≤ E[X N]`: the level times the chance of reaching it is at most
+the final value averaged over the paths that reached it, which is at most the average final value. -/
+theorem doob_maximal_inequality {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (P : Measure Ω) [IsProbabilityMeasure P] (ℱ : Filtration ℕ m0) (X : ℕ → Ω → ℝ)
+    (hsub : Submartingale X ℱ P) (hnonneg : ∀ n ω, 0 ≤ X n ω) (lam : ℝ) (hlam : 0 < lam)
+    (N : ℕ) :
+    lam * P.real {ω | lam ≤ (range (N + 1)).sup' nonempty_range_add_one (fun n => X n ω)} ≤
+        ∫ ω in {ω | lam ≤ (range (N + 1)).sup' nonempty_range_add_one (fun n => X n ω)},
+          X N ω ∂P ∧
+      ∫ ω in {ω | lam ≤ (range (N + 1)).sup' nonempty_range_add_one (fun n => X n ω)},
+          X N ω ∂P ≤ ∫ ω, X N ω ∂P := by
+  have hS : MeasurableSet
+      {ω | lam ≤ (range (N + 1)).sup' nonempty_range_add_one (fun n => X n ω)} :=
+    measurableSet_le measurable_const (measurable_range_sup'' fun n _ =>
+      (hsub.stronglyMeasurable n).measurable.le (ℱ.le n))
+  have h := maximal_ineq hsub (fun n ω => hnonneg n ω) (ε := lam.toNNReal) N
+  simp only [Real.coe_toNNReal _ hlam.le] at h
+  have hI : 0 ≤ ∫ ω in {ω | lam ≤ (range (N + 1)).sup' nonempty_range_add_one (fun n => X n ω)},
+      X N ω ∂P := setIntegral_nonneg hS (fun ω _ => hnonneg N ω)
+  constructor
+  · have h' := ENNReal.toReal_mono ENNReal.ofReal_ne_top h
+    rw [ENNReal.toReal_mul, ENNReal.toReal_ofReal hI, ENNReal.coe_toReal,
+      Real.coe_toNNReal _ hlam.le] at h'
+    exact h'
+  · exact setIntegral_le_integral (hsub.integrable N) (ae_of_all _ (hnonneg N))
+
+/-- The maximal inequality for a martingale that can go negative, applied to its size: for every
+martingale `M`, every level `λ > 0` and every `N`,
+`λ · P(max_{0 ≤ n ≤ N} |M n| ≥ λ) ≤ E[|M N|]`. -/
+theorem doob_maximal_inequality_for_size {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (P : Measure Ω) [IsProbabilityMeasure P] (ℱ : Filtration ℕ m0) (M : ℕ → Ω → ℝ)
+    (hmart : Martingale M ℱ P) (lam : ℝ) (hlam : 0 < lam) (N : ℕ) :
+    lam * P.real {ω | lam ≤ (range (N + 1)).sup' nonempty_range_add_one (fun n => |M n ω|)} ≤
+      ∫ ω, |M N ω| ∂P := by
+  have h := doob_maximal_inequality P ℱ _ (doob_abs_submartingale P ℱ M hmart)
+    (fun n ω => abs_nonneg _) lam hlam N
+  exact h.1.trans h.2
+
+/-- Doob's L2 inequality: for a martingale `X` whose final value has a finite average square,
+the squared peak size `(max_{0 ≤ n ≤ N} |X n|)^2` has a finite average, and that average is at most
+four times the average squared final value: `E[(max_{n ≤ N} |X n|)^2] ≤ 4 · E[(X N)^2]`. -/
+theorem doob_L2_inequality {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (P : Measure Ω) [IsProbabilityMeasure P] (ℱ : Filtration ℕ m0) (X : ℕ → Ω → ℝ)
+    (hmart : Martingale X ℱ P) (N : ℕ) (hL2 : MemLp (X N) 2 P) :
+    Integrable (fun ω => ((range (N + 1)).sup' nonempty_range_add_one (fun n => |X n ω|)) ^ 2) P ∧
+      ∫ ω, ((range (N + 1)).sup' nonempty_range_add_one (fun n => |X n ω|)) ^ 2 ∂P ≤
+        4 * ∫ ω, (X N ω) ^ 2 ∂P := by
+  set Y : ℕ → Ω → ℝ := fun n ω => |X n ω| with hY
+  have hsubY : Submartingale Y ℱ P := doob_abs_submartingale P ℱ X hmart
+  set mx : ℕ → Ω → ℝ := fun n ω => (range (n + 1)).sup' nonempty_range_add_one (fun k => |X k ω|)
+    with hmx
+  have hL2n : ∀ n ≤ N, MemLp (X n) 2 P := fun n hn =>
+    (hL2.condExp (m := ℱ n) (by norm_num)).ae_eq (hmart.condExp_ae_eq hn)
+  have hY2 : ∀ n ≤ N, MemLp (Y n) 2 P := fun n hn => (hL2n n hn).abs
+  have hmeas : ∀ n k, n ≤ k → StronglyMeasurable[ℱ k] (mx n) := fun n k hnk =>
+    (@Finset.measurable_range_sup'' ℝ _ Ω (ℱ k) _ _ (fun j ω => |X j ω|) n (fun j hj =>
+      (((hmart.stronglyAdapted j).mono (ℱ.mono (by omega))).norm).measurable)).stronglyMeasurable
+  have hmeas' : ∀ n, StronglyMeasurable (mx n) := fun n => (hmeas n n le_rfl).mono (ℱ.le n)
+  have hmx_nonneg : ∀ n ω, 0 ≤ mx n ω := fun n ω =>
+    (abs_nonneg _).trans (le_sup' (fun k => |X k ω|) (mem_range.2 (Nat.succ_pos n)))
+  have hbound : ∀ n ω, mx n ω ^ 2 ≤ ∑ k ∈ range (n + 1), X k ω ^ 2 := by
+    intro n ω
+    obtain ⟨k, hk, hkeq⟩ := exists_mem_eq_sup' nonempty_range_add_one (fun k => |X k ω|)
+    simp only [hmx]
+    rw [hkeq, sq_abs]
+    exact single_le_sum (f := fun k => X k ω ^ 2) (fun i _ => sq_nonneg _) hk
+  have hint : ∀ n ≤ N, Integrable (fun ω => mx n ω ^ 2) P := fun n hn =>
+    Integrable.mono' (integrable_finsetSum (range (n + 1)) (f := fun k ω => X k ω ^ 2)
+        fun k hk => (hL2n k (by rw [mem_range] at hk; omega)).integrable_sq)
+      ((hmeas' n).aestronglyMeasurable.pow 2)
+      (ae_of_all _ fun ω => by
+        rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]; exact hbound n ω)
+  have hmx2 : ∀ n ≤ N, MemLp (mx n) 2 P := fun n hn =>
+    (memLp_two_iff_integrable_sq (hmeas' n).aestronglyMeasurable).2 (hint n hn)
+  have hprod : ∀ n < N, Integrable (mx n * Y (n + 1)) P ∧ Integrable (mx n * Y n) P :=
+    fun n hn => ⟨(hmx2 n (by omega)).integrable_mul (hY2 (n + 1) (by omega)),
+      (hmx2 n (by omega)).integrable_mul (hY2 n (by omega))⟩
+  have hkey : ∀ n < N, 0 ≤ ∫ ω, mx n ω * (Y (n + 1) ω - Y n ω) ∂P := by
+    intro n hn
+    obtain ⟨hi1, hi0⟩ := hprod n hn
+    have hce := condExp_mul_of_stronglyMeasurable_left (hmeas n n le_rfl) hi1
+      (hsubY.integrable (n + 1))
+    have h1 : ∫ ω, mx n ω * Y (n + 1) ω ∂P = ∫ ω, (mx n * P[Y (n + 1) | ℱ n]) ω ∂P := by
+      rw [← integral_condExp (ℱ.le n)]; exact integral_congr_ae hce
+    have hi2 : Integrable (mx n * P[Y (n + 1) | ℱ n]) P := integrable_condExp.congr hce
+    have h2 : ∫ ω, mx n ω * Y n ω ∂P ≤ ∫ ω, (mx n * P[Y (n + 1) | ℱ n]) ω ∂P :=
+      integral_mono_ae hi0 hi2 (by
+        filter_upwards [hsubY.ae_le_condExp (Nat.le_succ n)] with ω hω
+        exact mul_le_mul_of_nonneg_left hω (hmx_nonneg n ω))
+    have h3 : (fun ω => mx n ω * (Y (n + 1) ω - Y n ω)) =
+        fun ω => mx n ω * Y (n + 1) ω - mx n ω * Y n ω := by ext; ring
+    have h4 : ∫ ω, mx n ω * Y (n + 1) ω - mx n ω * Y n ω ∂P =
+        ∫ ω, mx n ω * Y (n + 1) ω ∂P - ∫ ω, mx n ω * Y n ω ∂P := integral_sub hi1 hi0
+    rw [h3, h4]
+    linarith
+  have hpw : ∀ ω, mx N ω ^ 2 ≤
+      4 * X N ω ^ 2 - 4 * ∑ n ∈ range N, mx n ω * (Y (n + 1) ω - Y n ω) := fun ω => by
+    have := doob_pathwise (fun k => |X k ω|) N
+    simp only [sq_abs] at this
+    exact this
+  have hsumint : ∀ n ∈ range N, Integrable (fun ω => mx n ω * (Y (n + 1) ω - Y n ω)) P :=
+    fun n hn => by
+      obtain ⟨hi1, hi0⟩ := hprod n (mem_range.1 hn)
+      refine (hi1.sub hi0).congr (ae_of_all _ fun ω => ?_)
+      simp only [Pi.sub_apply, Pi.mul_apply]; ring
+  have hR : Integrable (fun ω =>
+      4 * X N ω ^ 2 - 4 * ∑ n ∈ range N, mx n ω * (Y (n + 1) ω - Y n ω)) P :=
+    (hL2.integrable_sq.const_mul 4).sub ((integrable_finsetSum _ hsumint).const_mul 4)
+  refine ⟨hint N le_rfl, ?_⟩
+  calc ∫ ω, mx N ω ^ 2 ∂P
+      ≤ ∫ ω, (4 * X N ω ^ 2 - 4 * ∑ n ∈ range N, mx n ω * (Y (n + 1) ω - Y n ω)) ∂P :=
+        integral_mono (hint N le_rfl) hR hpw
+    _ = 4 * ∫ ω, X N ω ^ 2 ∂P -
+          4 * ∑ n ∈ range N, ∫ ω, mx n ω * (Y (n + 1) ω - Y n ω) ∂P := by
+        rw [integral_sub (hL2.integrable_sq.const_mul 4)
+          ((integrable_finsetSum _ hsumint).const_mul 4), integral_const_mul, integral_const_mul,
+          integral_finsetSum _ hsumint]
+    _ ≤ 4 * ∫ ω, X N ω ^ 2 ∂P := by
+        have := sum_nonneg (fun n hn => hkey n (mem_range.1 hn))
+        linarith
+
+-- The gambler: start $10, level $31. Doob's bound E[X_N]/λ = 10/31 is just under 1 in 3.
+example : (10 : ℚ) / 31 < 1 / 3 ∧ 1 / 4 < (10 : ℚ) / 31 := by norm_num
+-- Reaching $31 from $10 takes a gain of $21, so round 21 at the earliest; squared, 21^2 = 441.
+example : (10 : ℕ) + 21 = 31 ∧ (21 : ℕ) ^ 2 = 441 := by norm_num
+-- Layer-cake for a whole-number peak m: the layers (2k - 1) for k = 1 to m add up to m^2.
+example : (∑ k ∈ Icc 1 31, (2 * k - 1) : ℕ) = 31 ^ 2 := by decide
+example : ∀ m ≤ 110, (∑ k ∈ Icc 1 m, (2 * k - 1) : ℕ) = m ^ 2 := by decide
+
+#print axioms doob_maximal_inequality
+#print axioms doob_maximal_inequality_for_size
+#print axioms doob_L2_inequality
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'doob_sup'_range_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doob_pathwise_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doob_pathwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doob_abs_submartingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doob_maximal_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doob_maximal_inequality_for_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doob_L2_inequality' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -609,7 +846,7 @@ The two outputs agree line for line. The Rust path count uses 128-bit whole numb
 
 ## Where you meet it in real life
 
-- **Risk limits.** A desk whose running profit is a martingale can bound the chance it ever breaches a loss limit during the day from the end-of-day spread alone, by applying the maximal inequality to its size or square.
+- **Risk limits.** A desk whose running profit is a martingale can bound the chance it ever breaches a loss limit during the day from the end-of-day spread alone (the average size or average square of its end-of-day profit), by applying the maximal inequality to its size or square.
 - **Tests that may stop at any time.** A trial that watches a non-negative martingale built from its data, and stops as soon as the martingale is large, keeps its false-alarm rate controlled by the maximal inequality; the version for an unlimited number of looks is Ville's inequality.
 - **The Ito integral.** The L2 inequality controls the whole path of a stochastic integral by its end, which is how the integral is built as a continuous path: [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md).
 - **Brownian peaks.** The same inequalities bound how far a pollen grain wanders within a time limit, alongside the exact answer from [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).

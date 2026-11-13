@@ -136,4 +136,4 @@ assert abs(gb - bh) < 1e-6; assert abs(ga - ah) < 1e-6; assert abs(gp - pB1) < 5
 assert imb < 1e-15; assert mstat < 1e-15; assert gstat < 1e-15
 assert abs(Eb[10] - bh * (1 - r2 ** 10)) < 1e-3; assert TV[40] < 0.01 < TV[10]
 assert abs(m10 - bh * (1 - r2 ** 10)) < 4 * se10; assert abs(ma - (SY - 0.5 * SX) / n) < 4 * sea
-print("all asserts passed")
+print("ALL CHECKS PASS")

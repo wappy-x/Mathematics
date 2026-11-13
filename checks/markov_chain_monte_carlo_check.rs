@@ -160,5 +160,5 @@ fn main() {
     assert!(imb < 1e-15); assert!(mstat < 1e-15); assert!(gs < 1e-15);
     assert!((eb[10] - bh * (1.0 - r2.powi(10))).abs() < 1e-3); assert!(tv[40] < 0.01 && tv[10] > 0.01);
     assert!((m10 - bh * (1.0 - r2.powi(10))).abs() < 4.0 * se10); assert!((ma - (sy - 0.5 * SX) / N_).abs() < 4.0 * sea);
-    println!("all asserts passed");
+    println!("ALL CHECKS PASS");
 }

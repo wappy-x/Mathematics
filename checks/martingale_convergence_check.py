@@ -137,3 +137,4 @@ assert e_x == 0                           # a fair game: average 0 at round n
 assert e_abs * 2 ** (n - 1) == 2 ** (2 * n) - 2 ** n   # formula E|X| = 2 - 2^(1-n)
 assert won == 2 ** n - 1                  # formula P(X = +1) = 1 - 2^(-n)
 print(f"doubling, n={n}: E[X] = {e_x}, E|X| = {fr(e_abs, 2 ** n)} = {e_abs / 2 ** n:.6f}, P(won, X = +1) = {fr(won, 2 ** n)} = {1 - 0.5 ** n:.6f}")
+print("ALL CHECKS PASS")

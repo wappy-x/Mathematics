@@ -166,5 +166,5 @@ fn main() {
     assert!(e_x == 0); // a fair game: average 0 at round n
     assert!(e_abs * (1i64 << (n - 1)) == (1i64 << (2 * n)) - (1i64 << n)); // formula E|X| = 2 - 2^(1-n)
     assert!(won == (1i64 << n) - 1); // formula P(X = +1) = 1 - 2^(-n)
-    println!("doubling, n={}: E[X] = {}, E|X| = {} = {:.6}, P(won, X = +1) = {} = {:.6}", n, e_x, fr(e_abs as u128, 1 << n), e_abs as f64 / 1024.0, fr(won as u128, 1 << n), 1.0 - 0.5f64.powi(n as i32));
+    println!("doubling, n={}: E[X] = {}, E|X| = {} = {:.6}, P(won, X = +1) = {} = {:.6}", n, e_x, fr(e_abs as u128, 1 << n), e_abs as f64 / 1024.0, fr(won as u128, 1 << n), 1.0 - 0.5f64.powi(n as i32)); println!("ALL CHECKS PASS");
 }

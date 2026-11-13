@@ -153,4 +153,5 @@ fn main() {
     assert!((pw - 15.0).abs() < 4.0 * pse, "Poisson wait is the full mean gap");
     assert!((rm - 60.0 / mu).abs() < 4.0 * rse, "simulated rate");
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

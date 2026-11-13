@@ -8,7 +8,9 @@
 
 A home-contents insurer runs a claims desk. Claims reach it at an average of 4 an hour, at unpredictable moments. Each claim has a size. Half are $100, a cracked phone screen. Three in ten are $500, a ruined sofa. Two in ten are $2,000, a burst pipe. The average claim is $600.
 
-The desk wants the total claimed in an hour, and in an 8-hour shift. The average is easy to guess: 4 claims at $600 is $2,400 an hour. The spread is not. Two things are random at once: how many claims arrive, and how large each one is. An hour can bring no claims at all, about 1 time in 55, or three burst pipes. The standard deviation of the hourly total turns out to be $1,876.17, larger than a guess from either source alone.
+The desk wants the total claimed in an hour, and in an 8-hour shift. The average is easy to guess: 4 claims at $600 is $2,400 an hour. The spread is not. Two things are random at once: how many claims arrive, and how large each one is.
+
+An hour can bring no claims at all, about 1 time in 55, or three burst pipes. The standard deviation of the hourly total turns out to be $1,876.17, larger than a guess from either source alone.
 
 A running total built this way, random arrivals each adding a random amount, is a **compound Poisson process**. This card derives its mean, its variance and its moment generating function, which holds every moment at once and bounds the chance of a very bad hour.
 
@@ -33,7 +35,9 @@ One line: the running total, a sample path (one run of the process drawn against
 
 ## The formula
 
-Notation first, in words. Time $t$ is measured in hours. The claims counted by hour $t$ are $N(t)$, a Poisson process at rate $\lambda$, here 4 an hour ([Poisson process](01-poisson-process.md)); so $N(t)$ follows the Poisson law with mean $\lambda t$ ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)). The sizes of the first, second, third claim are $Y_1, Y_2, Y_3, \dots$, drawn independently from one claim law and independently of the arrivals. A generic claim is written $Y$, and the average claim is $\mu = E[Y]$. The total claimed by hour $t$ is
+Notation first, in words. Time $t$ is measured in hours. The claims counted by hour $t$ are $N(t)$, a Poisson process at rate $\lambda$, here 4 an hour ([Poisson process](01-poisson-process.md)); so $N(t)$ follows the Poisson law with mean $\lambda t$ ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
+
+The sizes of the first, second, third claim are $Y_1, Y_2, Y_3, \dots$, drawn independently from one claim law and independently of the arrivals. A generic claim is written $Y$, and the average claim is $\mu = E[Y]$. The total claimed by hour $t$ is
 
 $$S(t) = Y_1 + Y_2 + \dots + Y_{N(t)}, \qquad S(t) = 0 \text{ when } N(t) = 0.$$
 
@@ -83,7 +87,7 @@ Orange bars: the exact law of $S(1)$, computed with no simulation. Green line: t
 
 - **Arrivals form a Poisson process at a constant rate.** If the rate itself is random, 2 an hour on calm days and 6 on stormy ones, the mean survives but the variance does not: exactly 4,960,000 against the formula's 3,520,000, because the count now varies more than its mean.
 - **Claim sizes independent, with one law, and independent of the arrivals.** A storm that raises both the number and the size of claims ties them together; conditioning on the count then no longer leaves independent sizes, and all three formulas fail.
-- **The needed moments exist.** The mean needs $\mu$ finite, the variance $E[Y^2]$ finite, and the generating function needs $M_Y(s)$ finite at the dial used. A heavy-tailed claim law, such as a Pareto law with a finite mean, has $M_Y(s)$ infinite for every $s > 0$: the first formula still holds, the third says nothing.
+- **The needed moments exist.** The mean needs $\mu$ finite, the variance $E[Y^2]$ finite, and the generating function needs $M_Y(s)$ finite at the dial used. A heavy-tailed claim law (the chance of a claim above a given size shrinks more slowly than any exponential as the size grows), such as a Pareto law with a finite mean, has $M_Y(s)$ infinite for every $s > 0$: the first formula still holds, the third says nothing.
 
 ---
 
@@ -131,7 +135,9 @@ Take logarithms: $\ln M_{S(t)}(s) = \lambda t\,(M_Y(s) - 1)$. The k-th derivativ
 
 $$\kappa_k = \lambda t\,E[Y^k].$$
 
-The first two cumulants are the mean and the variance, so Steps 1 and 2 drop out again. The third is the third central moment, $E[(S - E S)^3]$: 4 × 1,638,000,000 = 6.5520e9 for one hour. Divided by the standard deviation cubed, it gives the skewness, a measure of how lopsided the law is: 0.9921 for one hour, a long right side. Every cumulant grows like $t$, so the skewness, a third cumulant over a variance to the power 1.5, falls like $1/\sqrt{t}$: 0.3508 for an 8-hour shift. Over long horizons the total looks more and more bell-shaped.
+The first two cumulants are the mean and the variance, so Steps 1 and 2 drop out again. The third is the third central moment, $E[(S - E S)^3]$: 4 × 1,638,000,000 = 6.5520e9 for one hour.
+
+Divided by the standard deviation cubed, it gives the skewness, a measure of how lopsided the law is: 0.9921 for one hour, a long right side. Every cumulant grows like $t$, so the skewness, a third cumulant over a variance to the power 1.5, falls like $1/\sqrt{t}$: 0.3508 for an 8-hour shift. Over long horizons the total looks more and more bell-shaped.
 
 ### Step 5: the continuous clock, as a limit of slots
 
@@ -168,7 +174,9 @@ This is the Chernoff bound ([Concentration](../../09-Probability%20and%20statist
 
 </details>
 
-**Another road.** Split the claims by size. The $100 claims, the $500 claims and the $2,000 claims form three independent Poisson processes at rates 2, 1.2 and 0.8 an hour ([Splitting and merging](03-splitting-and-superposition.md)). The total is then $100 N_1 + 500 N_2 + 2000 N_3$, a fixed combination of three independent Poisson counts, and its variance is $100^2 \cdot 2 + 500^2 \cdot 1.2 + 2000^2 \cdot 0.8$ = 20,000 + 300,000 + 3,200,000 = 3,520,000. The same answer, with no conditioning at all, and it shows where the risk sits: the $2,000 claims are a fifth of all claims and 90.9 percent of the variance. Multiplying the three Poisson generating functions gives the third formula the same way.
+**Another road.** Split the claims by size. The $100 claims, the $500 claims and the $2,000 claims form three independent Poisson processes at rates 2, 1.2 and 0.8 an hour ([Splitting and merging](03-splitting-and-superposition.md)). The total is then $100 N_1 + 500 N_2 + 2000 N_3$, a fixed combination of three independent Poisson counts, and its variance is $100^2 \cdot 2 + 500^2 \cdot 1.2 + 2000^2 \cdot 0.8$ = 20,000 + 300,000 + 3,200,000 = 3,520,000.
+
+The same answer, with no conditioning at all, and it shows where the risk sits: the $2,000 claims are a fifth of all claims and 90.9 percent of the variance. Multiplying the three Poisson generating functions gives the third formula the same way.
 
 ---
 
@@ -201,13 +209,17 @@ The desk should expect $2,400 an hour, give or take $1,876.17, and about one hou
 | Rate 2 or 6 an hour at random, formula still used | exact variance 4,960,000; no-claim chance 0.068907 against 0.018316 | Poisson arrivals dropped: the count's variance is 8, not 4 |
 | Hour cut into 10 slots, one claim at most each | variance 2,944,000 | Two claims in one 6-minute slot were forbidden |
 
-The code prints every row. The third is the one insurers meet: weather makes counts over-dispersed, so a model with the right mean still understates the risk.
+The code prints every row. The third is the one insurers meet: weather makes counts over-dispersed (their variance exceeds their mean), so a model with the right mean still understates the risk.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Four roads lead to the mean, variance and generating function. The first is the formulas. The second builds the exact law of $S(t)$ on a $100 grid: the claim law added to itself n times, weighted by the Poisson chance of n claims, with every moment read straight off the law. The third cuts the hour into $m$ slots and prints the error shrinking. The fourth simulates 20000 hours from exponential gaps between claims, with a SplitMix64 generator written out (seed 20260930 for the hours, 20260929 for the pictured shift), and prints each estimate with its standard error. The asserts compare the formulas with the exact law, and with the simulation within 4 standard errors. The slot variance is checked against the curvature of the slot generating function's logarithm at 0, and the random-rate row against the two-source variance formula.
+Four roads lead to the mean, variance and generating function. The first is the formulas. The second builds the exact law of $S(t)$ on a $100 grid: the claim law added to itself n times, weighted by the Poisson chance of n claims, with every moment read straight off the law.
+
+The third cuts the hour into $m$ slots and prints the error shrinking. The fourth simulates 20000 hours from exponential gaps between claims, with a SplitMix64 generator written out (seed 20260930 for the hours, 20260929 for the pictured shift), and prints each estimate with its standard error.
+
+The asserts compare the formulas with the exact law, and with the simulation within 4 standard errors. The slot variance is checked against the curvature of the slot generating function's logarithm at 0, and the random-rate row against the two-source variance formula.
 
 ### Python
 
@@ -584,6 +596,326 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the three results for every rate, time and claim law, and checks the card's arithmetic.
+
+- Take the conditions in When it holds, with $\mu$ finite. Then $S(t)$ has a finite mean, and $E[S(t)] = \lambda t\,\mu$.
+- Take the same conditions, with $E[Y^2]$ finite. Then $S(t)$ has a finite variance, and $\operatorname{Var} S(t) = \lambda t\,E[Y^2]$.
+- Take the same conditions, with $M_Y(s)$ finite at the dial $s$. Then $M_{S(t)}(s)$ is finite and equals $\exp(\lambda t\,(M_Y(s) - 1))$.
+- The average claim is $600, the average squared claim 880,000, and the claim variance 520,000.
+- For one hour, the mean total is $2,400. The variance is 3,520,000: the claims' own spread 2,080,000 plus the count's spread 1,440,000.
+- For one 8-hour shift, the mean total is $19,200 and the variance 28,160,000.
+- The average cubed claim is 1,638,000,000. Four times it, the third cumulant for one hour, is 6,552,000,000.
+- Split by size, the three Poisson streams add 20,000, 300,000 and 3,200,000 to the variance, 3,520,000 in all.
+- For a rate of 2 or 6 an hour at random, 4 × 520,000 + 8 × 600^2 gives 4,960,000.
+- With 10 slots, the variance falls short by 4^2 × 600^2 / 10 = 576,000.
+- The chance of no claims in one hour is $e^{-4}$.
+
+The cumulant formula, exact law, decimal values, Chernoff bound, slots and simulations are left to the Python and Rust checks.
+
+```lean
+-- Compound Poisson: a Poisson number of independent, identically distributed claims has total with mean "rate × time × average claim", variance "rate × time × average squared claim", and moment generating function exp(rate × time × (claim MGF − 1)).
+import Mathlib.Probability.Distributions.Poisson.Basic
+import Mathlib.Probability.HasLaw
+import Mathlib.Probability.IdentDistrib
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Moments.Basic
+import Mathlib.Probability.Moments.Variance
+
+open MeasureTheory ProbabilityTheory Real
+open scoped NNReal
+
+
+variable {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+
+lemma cp_hasSum_pow (r : ℝ≥0) (x : ℝ) :
+    HasSum (fun n : ℕ => exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n) * x ^ n)
+      (exp ((r : ℝ) * (x - 1))) := by
+  convert (NormedSpace.expSeries_div_hasSum_exp ((r : ℝ) * x)).mul_left (exp (-(r : ℝ))) using 1
+  · funext n; rw [mul_pow]; ring
+  · rw [← exp_eq_exp_ℝ, ← exp_add]; ring_nf
+
+lemma cp_hasSum_one (r : ℝ≥0) :
+    HasSum (fun n : ℕ => exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n)) 1 := by
+  simpa using cp_hasSum_pow r 1
+
+lemma cp_succ (r : ℝ≥0) (n : ℕ) :
+    exp (-(r : ℝ)) * (r : ℝ) ^ (n + 1) / (Nat.factorial (n + 1)) * ((n + 1 : ℕ) : ℝ)
+      = (r : ℝ) * (exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n)) := by
+  rw [Nat.factorial_succ]; push_cast
+  have : ((Nat.factorial n) : ℝ) ≠ 0 := by positivity
+  field_simp; ring
+
+lemma cp_hasSum_mean (r : ℝ≥0) :
+    HasSum (fun n : ℕ => exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n) * (n : ℝ)) (r : ℝ) := by
+  rw [← hasSum_nat_add_iff' 1]
+  simp only [Finset.range_one, Finset.sum_singleton, Nat.cast_zero]
+  convert (cp_hasSum_one r).mul_left (r : ℝ) using 1
+  · funext n; exact cp_succ r n
+  · ring
+
+lemma cp_hasSum_sq (r : ℝ≥0) :
+    HasSum (fun n : ℕ => exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n) * (n : ℝ) ^ 2)
+      ((r : ℝ) + (r : ℝ) ^ 2) := by
+  rw [← hasSum_nat_add_iff' 1]
+  simp only [Finset.range_one, Finset.sum_singleton, Nat.cast_zero]
+  convert ((cp_hasSum_mean r).add (cp_hasSum_one r)).mul_left (r : ℝ) using 1
+  · funext n
+    have h := cp_succ r n
+    rw [pow_two, ← mul_assoc, h]; push_cast; ring
+  · simp; ring
+
+lemma cp_key (r : ℝ≥0) (N : Ω → ℕ) (Z : Ω → ℕ → ℝ) (hN_meas : Measurable N)
+    (hZ : Measurable Z) (hN : HasLaw N (poissonMeasure r) P) (hind : IndepFun N Z P)
+    (F : ℕ → (ℕ → ℝ) → ℝ) (hF : ∀ n, Measurable (F n))
+    (hFi : ∀ n, Integrable (fun ω => F n (Z ω)) P)
+    (hsum : Summable (fun n : ℕ => exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n) *
+      ∫ ω, ‖F n (Z ω)‖ ∂P)) :
+    Integrable (fun ω => F (N ω) (Z ω)) P ∧
+      ∫ ω, F (N ω) (Z ω) ∂P
+        = ∑' n : ℕ, exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n) * ∫ ω, F n (Z ω) ∂P := by
+  have hNZ : Measurable (fun ω => (N ω, Z ω)) := hN_meas.prodMk hZ
+  have hmap : P.map (fun ω => (N ω, Z ω)) = (poissonMeasure r).prod (P.map Z) := by
+    rw [(indepFun_iff_map_prod_eq_prod_map_map hN_meas.aemeasurable hZ.aemeasurable).1 hind,
+      hN.map_eq]
+  have hFm : Measurable (fun p : ℕ × (ℕ → ℝ) => F p.1 p.2) :=
+    measurable_from_prod_countable_right (fun n => hF n)
+  have hprod : Integrable (fun p : ℕ × (ℕ → ℝ) => F p.1 p.2)
+      ((poissonMeasure r).prod (P.map Z)) := by
+    refine (integrable_prod_iff hFm.aestronglyMeasurable).2 ⟨ae_of_all _ fun n => ?_, ?_⟩
+    · exact (integrable_map_measure (hF n).aestronglyMeasurable hZ.aemeasurable).2 (hFi n)
+    · rw [integrable_poissonMeasure_iff]
+      refine hsum.congr fun n => ?_
+      simp only
+      rw [integral_map hZ.aemeasurable (hF n).norm.aestronglyMeasurable,
+        Real.norm_of_nonneg (integral_nonneg fun _ => norm_nonneg _)]
+  refine ⟨?_, ?_⟩
+  · rw [← hmap] at hprod
+    exact (integrable_map_measure hFm.aestronglyMeasurable hNZ.aemeasurable).1 hprod
+  · calc ∫ ω, F (N ω) (Z ω) ∂P
+        = ∫ p, F p.1 p.2 ∂(P.map (fun ω => (N ω, Z ω))) :=
+          (integral_map hNZ.aemeasurable hFm.aestronglyMeasurable).symm
+      _ = ∫ p, F p.1 p.2 ∂((poissonMeasure r).prod (P.map Z)) := by rw [hmap]
+      _ = ∫ n, ∫ y, F n y ∂(P.map Z) ∂(poissonMeasure r) := integral_prod _ hprod
+      _ = ∑' n : ℕ, exp (-(r : ℝ)) * (r : ℝ) ^ n / (Nat.factorial n) * ∫ ω, F n (Z ω) ∂P := by
+          rw [integral_poissonMeasure]
+          congr with n
+          rw [smul_eq_mul, integral_map hZ.aemeasurable (hF n).aestronglyMeasurable]
+
+#print axioms cp_hasSum_pow
+#print axioms cp_hasSum_one
+#print axioms cp_succ
+#print axioms cp_hasSum_mean
+#print axioms cp_hasSum_sq
+#print axioms cp_key
+
+/-- Mean of a compound Poisson total. Let the claim count `N` by time `t` follow the Poisson law
+with mean `λ t`, and let the claim sizes `Y 0, Y 1, …` be independent, share one law, and be
+independent of the count. If the average claim is finite, then the total
+`S = Y 0 + … + Y (N - 1)` (zero when `N = 0`) has a finite mean, equal to `λ t` times the
+average claim. -/
+theorem compound_poisson_mean (lam t : ℝ≥0) (N : Ω → ℕ) (Y : ℕ → Ω → ℝ)
+    (hN_meas : Measurable N) (hY_meas : ∀ i, Measurable (Y i))
+    (hN : HasLaw N (poissonMeasure (lam * t)) P)
+    (hY_ident : ∀ i, IdentDistrib (Y i) (Y 0) P P)
+    (hY_indep : iIndepFun Y P)
+    (hNY_indep : IndepFun N (fun ω i => Y i ω) P)
+    (hY_int : Integrable (Y 0) P) :
+    Integrable (fun ω => ∑ i ∈ Finset.range (N ω), Y i ω) P ∧
+      ∫ ω, (∑ i ∈ Finset.range (N ω), Y i ω) ∂P = (lam * t : ℝ) * ∫ ω, Y 0 ω ∂P := by
+  have hZ : Measurable (fun ω i => Y i ω) := Measurable.of_eval hY_meas
+  have hYi : ∀ i, Integrable (Y i) P := fun i => (hY_ident i).integrable_iff.2 hY_int
+  have hnorm : ∀ i, ∫ ω, ‖Y i ω‖ ∂P = ∫ ω, ‖Y 0 ω‖ ∂P := fun i => (hY_ident i).norm.integral_eq
+  have hmean : ∀ i, ∫ ω, Y i ω ∂P = ∫ ω, Y 0 ω ∂P := fun i => (hY_ident i).integral_eq
+  have hbound : ∀ n : ℕ, ∫ ω, ‖∑ i ∈ Finset.range n, Y i ω‖ ∂P ≤ n * ∫ ω, ‖Y 0 ω‖ ∂P := by
+    intro n
+    calc ∫ ω, ‖∑ i ∈ Finset.range n, Y i ω‖ ∂P
+        ≤ ∫ ω, ∑ i ∈ Finset.range n, ‖Y i ω‖ ∂P :=
+          integral_mono (integrable_finsetSum _ fun i _ => hYi i).norm
+            (integrable_finsetSum _ fun i _ => (hYi i).norm) fun ω => norm_sum_le _ _
+      _ = n * ∫ ω, ‖Y 0 ω‖ ∂P := by
+          rw [integral_finsetSum _ fun i _ => (hYi i).norm, Finset.sum_congr rfl fun i _ => hnorm i]
+          simp
+  obtain ⟨h1, h2⟩ := cp_key (lam * t) N (fun ω i => Y i ω) hN_meas hZ hN hNY_indep
+    (fun n y => ∑ i ∈ Finset.range n, y i)
+    (fun n => Finset.measurable_sum _ fun i _ => measurable_pi_apply i)
+    (fun n => integrable_finsetSum _ fun i _ => hYi i)
+    (Summable.of_nonneg_of_le (fun n => mul_nonneg (by positivity)
+      (integral_nonneg fun _ => norm_nonneg _))
+      (fun n => by
+        rw [mul_assoc]
+        exact mul_le_mul_of_nonneg_left (hbound n) (by positivity))
+      ((cp_hasSum_mean (lam * t)).summable.mul_right (∫ ω, ‖Y 0 ω‖ ∂P)))
+  refine ⟨h1, ?_⟩
+  rw [h2]
+  have : ∀ n : ℕ, ∫ ω, ∑ i ∈ Finset.range n, Y i ω ∂P = n * ∫ ω, Y 0 ω ∂P := by
+    intro n; rw [integral_finsetSum _ fun i _ => hYi i]; simp [hmean]
+  simp_rw [this, ← mul_assoc]
+  rw [tsum_mul_right, (cp_hasSum_mean _).tsum_eq]
+  push_cast; ring
+
+/-- Variance of a compound Poisson total. Under the same setting, if the average squared claim
+`E[Y²]` is finite, then the total has a finite variance, equal to `λ t` times the average
+squared claim (not the claim's variance). -/
+theorem compound_poisson_variance (lam t : ℝ≥0) (N : Ω → ℕ) (Y : ℕ → Ω → ℝ)
+    (hN_meas : Measurable N) (hY_meas : ∀ i, Measurable (Y i))
+    (hN : HasLaw N (poissonMeasure (lam * t)) P)
+    (hY_ident : ∀ i, IdentDistrib (Y i) (Y 0) P P)
+    (hY_indep : iIndepFun Y P)
+    (hNY_indep : IndepFun N (fun ω i => Y i ω) P)
+    (hY_sq : MemLp (Y 0) 2 P) :
+    MemLp (fun ω => ∑ i ∈ Finset.range (N ω), Y i ω) 2 P ∧
+      variance (fun ω => ∑ i ∈ Finset.range (N ω), Y i ω) P
+        = (lam * t : ℝ) * ∫ ω, (Y 0 ω) ^ 2 ∂P := by
+  have hZ : Measurable (fun ω i => Y i ω) := Measurable.of_eval hY_meas
+  have hY2 : ∀ i, MemLp (Y i) 2 P := fun i => (hY_ident i).memLp_iff.2 hY_sq
+  have hYi : ∀ i, Integrable (Y i) P := fun i => (hY2 i).integrable one_le_two
+  have hmeanS := compound_poisson_mean lam t N Y hN_meas hY_meas hN hY_ident hY_indep hNY_indep
+    (hYi 0)
+  set m := ∫ ω, Y 0 ω ∂P with hm
+  set v := variance (Y 0) P with hv
+  have hmean : ∀ i, ∫ ω, Y i ω ∂P = m := fun i => (hY_ident i).integral_eq
+  have hvar : ∀ i, variance (Y i) P = v := fun i => (hY_ident i).variance_eq
+  have hsq : ∀ n : ℕ, ∫ ω, (∑ i ∈ Finset.range n, Y i ω) ^ 2 ∂P = n * v + (n * m) ^ 2 := by
+    intro n
+    have hmem : MemLp (∑ i ∈ Finset.range n, Y i) 2 P := memLp_finsetSum' _ fun i _ => hY2 i
+    have h := variance_eq_sub hmem
+    rw [IndepFun.variance_sum (fun i _ => hY2 i)
+      (fun i _ j _ hij => hY_indep.indepFun hij)] at h
+    simp only [hvar, Finset.sum_const, Finset.card_range, nsmul_eq_mul] at h
+    have e1 : ∫ ω, (∑ i ∈ Finset.range n, Y i) ω ∂P = n * m := by
+      simp only [Finset.sum_apply]
+      rw [integral_finsetSum _ fun i _ => hYi i]; simp [hmean]
+    have e2 : ∫ ω, ((∑ i ∈ Finset.range n, Y i) ^ 2) ω ∂P
+        = ∫ ω, (∑ i ∈ Finset.range n, Y i ω) ^ 2 ∂P := by
+      simp only [Pi.pow_apply, Finset.sum_apply]
+    rw [← e2]
+    rw [e1] at h
+    linarith
+  have hsum := (((cp_hasSum_mean (lam * t)).mul_right v).add
+      ((cp_hasSum_sq (lam * t)).mul_right (m ^ 2)))
+  obtain ⟨h1, h2⟩ := cp_key (lam * t) N (fun ω i => Y i ω) hN_meas hZ hN hNY_indep
+    (fun n y => (∑ i ∈ Finset.range n, y i) ^ 2)
+    (fun n => (Finset.measurable_sum _ fun i _ => measurable_pi_apply i).pow_const 2)
+    (fun n => (memLp_finsetSum _ fun i _ => hY2 i).integrable_sq)
+    (hsum.summable.congr fun n => by
+      simp only [Real.norm_of_nonneg (sq_nonneg _)]
+      rw [hsq]; ring)
+  have hS : MemLp (fun ω => ∑ i ∈ Finset.range (N ω), Y i ω) 2 P :=
+    (memLp_two_iff_integrable_sq hmeanS.1.aestronglyMeasurable).2 h1
+  refine ⟨hS, ?_⟩
+  rw [variance_eq_sub hS]
+  have e3 : P[(fun ω => ∑ i ∈ Finset.range (N ω), Y i ω) ^ 2]
+      = ∫ ω, (∑ i ∈ Finset.range (N ω), Y i ω) ^ 2 ∂P := rfl
+  have hY0 := variance_eq_sub hY_sq
+  have e4 : P[Y 0 ^ 2] = ∫ ω, (Y 0 ω) ^ 2 ∂P := rfl
+  rw [e3, h2, hmeanS.2]
+  simp_rw [hsq]
+  have hs : HasSum (fun n : ℕ => exp (-((lam * t : ℝ≥0) : ℝ)) * ((lam * t : ℝ≥0) : ℝ) ^ n / (Nat.factorial n)
+      * (n * v + (n * m) ^ 2)) (((lam * t : ℝ≥0) : ℝ) * v
+        + (((lam * t : ℝ≥0) : ℝ) + ((lam * t : ℝ≥0) : ℝ) ^ 2) * m ^ 2) := by
+    convert hsum using 1
+    funext n; ring
+  rw [hs.tsum_eq, ← e4]
+  rw [← hm, ← hv] at hY0
+  rw [show P[Y 0 ^ 2] = v + m ^ 2 by linarith]
+  push_cast; ring
+
+/-- Moment generating function of a compound Poisson total. Under the same setting, at any dial
+`s` where the claim's generating function `M_Y(s) = E[exp(s Y)]` is finite, the total's
+generating function is finite too and equals `exp(λ t (M_Y(s) - 1))`. -/
+theorem compound_poisson_mgf (lam t : ℝ≥0) (N : Ω → ℕ) (Y : ℕ → Ω → ℝ)
+    (hN_meas : Measurable N) (hY_meas : ∀ i, Measurable (Y i))
+    (hN : HasLaw N (poissonMeasure (lam * t)) P)
+    (hY_ident : ∀ i, IdentDistrib (Y i) (Y 0) P P)
+    (hY_indep : iIndepFun Y P)
+    (hNY_indep : IndepFun N (fun ω i => Y i ω) P)
+    (s : ℝ) (hY_exp : Integrable (fun ω => exp (s * Y 0 ω)) P) :
+    Integrable (fun ω => exp (s * ∑ i ∈ Finset.range (N ω), Y i ω)) P ∧
+      mgf (fun ω => ∑ i ∈ Finset.range (N ω), Y i ω) P s
+        = exp ((lam * t : ℝ) * (mgf (Y 0) P s - 1)) := by
+  have hZ : Measurable (fun ω i => Y i ω) := Measurable.of_eval hY_meas
+  set M := mgf (Y 0) P s with hM
+  have hexp : ∀ i, Integrable (fun ω => exp (s * Y i ω)) P := fun i =>
+    ((hY_ident i).comp (measurable_const_mul s).exp).integrable_iff.2 hY_exp
+  have hint : ∀ n : ℕ, Integrable (fun ω => exp (s * ∑ i ∈ Finset.range n, Y i ω)) P := by
+    intro n
+    have := hY_indep.integrable_exp_mul_sum hY_meas (t := s) (s := Finset.range n)
+      (fun i _ => hexp i)
+    simpa [Finset.sum_apply] using this
+  have hmgf : ∀ n : ℕ, ∫ ω, exp (s * ∑ i ∈ Finset.range n, Y i ω) ∂P = M ^ n := by
+    intro n
+    have h := hY_indep.mgf_sum hY_meas (Finset.range n) (t := s)
+    rw [Finset.prod_eq_pow_card (fun i _ => mgf_congr_of_identDistrib (Y i) (Y 0) (hY_ident i) s),
+      Finset.card_range] at h
+    rw [← h, mgf]
+    simp [Finset.sum_apply]
+  obtain ⟨h1, h2⟩ := cp_key (lam * t) N (fun ω i => Y i ω) hN_meas hZ hN hNY_indep
+    (fun n y => exp (s * ∑ i ∈ Finset.range n, y i))
+    (fun n => ((Finset.measurable_sum _ fun i _ => measurable_pi_apply i).const_mul s).exp)
+    hint (by
+      simp_rw [Real.norm_of_nonneg (exp_pos _).le, hmgf]
+      exact (cp_hasSum_pow _ M).summable)
+  refine ⟨h1, ?_⟩
+  rw [mgf, h2]
+  simp_rw [hmgf]
+  rw [(cp_hasSum_pow _ M).tsum_eq]
+  push_cast; rfl
+
+/-! The card's worked numbers: claims of $100, $500, $2,000 with chances 1/2, 3/10, 1/5,
+at 4 claims an hour. -/
+
+-- average claim: $600
+example : (1/2 : ℚ) * 100 + 3/10 * 500 + 1/5 * 2000 = 600 := by norm_num
+-- average squared claim: 880,000
+example : (1/2 : ℚ) * 100 ^ 2 + 3/10 * 500 ^ 2 + 1/5 * 2000 ^ 2 = 880000 := by norm_num
+-- claim variance: 880,000 − 600² = 520,000
+example : (880000 : ℤ) - 600 ^ 2 = 520000 := by norm_num
+-- average cubed claim: 1,638,000,000
+example : (1/2 : ℚ) * 100 ^ 3 + 3/10 * 500 ^ 3 + 1/5 * 2000 ^ 3 = 1638000000 := by norm_num
+-- one hour: mean 4 × 600 = 2,400; variance 4 × 880,000 = 3,520,000
+example : (4 : ℕ) * 600 = 2400 := by norm_num
+example : (4 : ℕ) * 880000 = 3520000 := by norm_num
+-- the two sources of variance: claims' own spread plus the count's spread
+example : (4 : ℕ) * 520000 + 4 * 600 ^ 2 = 3520000 := by norm_num
+-- third cumulant for one hour: 4 × 1,638,000,000 = 6,552,000,000
+example : (4 : ℕ) * 1638000000 = 6552000000 := by norm_num
+-- one 8-hour shift: mean 32 × 600 = 19,200; variance 32 × 880,000 = 28,160,000
+example : (32 : ℕ) * 600 = 19200 := by norm_num
+example : (32 : ℕ) * 880000 = 28160000 := by norm_num
+-- another road: split by size into Poisson streams at rates 2, 6/5 and 4/5 an hour
+example : (100 : ℚ) ^ 2 * 2 + 500 ^ 2 * (6/5) + 2000 ^ 2 * (4/5) = 3520000 := by norm_num
+example : (100 : ℚ) ^ 2 * 2 = 20000 ∧ (500 : ℚ) ^ 2 * (6/5) = 300000 ∧
+    (2000 : ℚ) ^ 2 * (4/5) = 3200000 := by norm_num
+-- random rate (2 or 6 an hour): E[N] Var(Y) + Var(N) μ² = 4 × 520,000 + 8 × 600² = 4,960,000
+example : (4 : ℕ) * 520000 + 8 * 600 ^ 2 = 4960000 := by norm_num
+-- slot model with m = 10: variance short by λ² μ² / m = 16 × 360,000 / 10 = 576,000
+example : (4 : ℕ) ^ 2 * 600 ^ 2 / 10 = 576000 := by norm_num
+-- chance of no claims in one hour is e^(-4)
+example : (poissonMeasure 4).real {0} = exp (-4) := by
+  norm_num [poissonMeasure_real_singleton]
+
+
+#print axioms compound_poisson_mean
+#print axioms compound_poisson_variance
+#print axioms compound_poisson_mgf
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cp_hasSum_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cp_hasSum_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cp_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cp_hasSum_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cp_hasSum_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cp_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'compound_poisson_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'compound_poisson_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'compound_poisson_mgf' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

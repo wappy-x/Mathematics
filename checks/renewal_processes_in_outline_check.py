@@ -129,3 +129,4 @@ assert abs(sum(0.5 * sum(u[i] for i in (j - 2, j - 1, j) if i >= 0) for j in ran
 assert abs(pw - 15.0) < 4 * pse, "Poisson wait is the full mean gap"
 assert abs(rm - 60 / mu) < 4 * rse, "simulated rate"
 print("all checks passed")
+print("ALL CHECKS PASS")

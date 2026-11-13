@@ -128,7 +128,6 @@ p = sunny / N
 se = sqrt(p * (1 - p) / N)
 print(f"month from rainy, {N} runs: sunny on day 30 {p:.4f} +- {se:.4f}, exact {Pn(30)[2][0]:.6f}")
 assert abs(p - 0.6) < 4 * se
-
 # ---- what breaks ----
 CYC = [[0, 10, 0], [0, 0, 10], [10, 0, 0]]   # sunny -> cloudy -> rainy -> sunny, period 3
 C = powers(CYC, 30)
@@ -138,3 +137,4 @@ RED = [[8, 2, 0], [5, 5, 0], [0, 0, 10]]     # rainy never leaves, the others ne
 R = powers(RED, 30)
 print(f"breaks, two climates: TV(start sunny, start rainy) day 30 {tv(R[30][0], R[30][2]) / 10 ** 30:.6f}")
 assert all(abs(tv(R[n][0], R[n][2]) / 10 ** n - 1) < 1e-12 for n in range(31))   # the starts never meet
+print("ALL CHECKS PASS")

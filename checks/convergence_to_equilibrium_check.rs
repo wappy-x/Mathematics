@@ -166,4 +166,5 @@ fn main() {
     let r = powers(&[[8, 2, 0], [5, 5, 0], [0, 0, 10]], 30); // rainy never leaves, the others never reach it
     println!("breaks, two climates: TV(start sunny, start rainy) day 30 {:.6}", tv(&pn(&r[30], 30)[0], &pn(&r[30], 30)[2]));
     for n in 0..31 { assert!((tv(&pn(&r[n], n)[0], &pn(&r[n], n)[2]) - 1.0).abs() < 1e-12); } // the starts never meet
+    println!("ALL CHECKS PASS");
 }

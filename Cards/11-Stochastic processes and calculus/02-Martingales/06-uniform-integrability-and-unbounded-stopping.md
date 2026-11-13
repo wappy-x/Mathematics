@@ -10,7 +10,9 @@ A gambler walks in with 10 dollars. Each round she stakes 1 dollar on a fair coi
 
 What is the chance she leaves with 30? There is a one-line answer. Her fortune is a fair game, so its average never moves from 10. At the end she holds 30 or 0. The only split of those two amounts that averages 10 is 30 with probability one third. So she reaches 30 about 1 time in 3 and is ruined about 2 times in 3.
 
-That line uses optional stopping: the average of a fair game, read at a time chosen by watching the game, equals its starting value. The theorem on [Stopping times](03-stopping-times-and-optional-stopping.md) proves it only when the stopping time has a fixed ceiling, such as "by round 500 at the latest". This gambler's game has none. And the same line applied to the doubling strategy, where each loss doubles the next stake, gives a wrong answer: the doubler always ends one dollar up, not zero. Something separates the two games. It is **uniform integrability**: the rare, extreme values of the stopped fortune must carry a vanishing share of its average, all at once, however long the game has run.
+That line uses optional stopping: the average of a fair game, read at a time chosen by watching the game, equals its starting value. The theorem on [Stopping times](03-stopping-times-and-optional-stopping.md) proves it only when the stopping time has a fixed ceiling, such as "by round 500 at the latest". This gambler's game has none.
+
+And the same line applied to the doubling strategy, where each loss doubles the next stake, gives a wrong answer: the doubler always ends one dollar up, not zero. Something separates the two games. It is **uniform integrability**: the rare, extreme values of the stopped fortune must carry a vanishing share of its average, all at once, however long the game has run.
 
 **Optional stopping holds for a stopping time with no ceiling, provided the game ends with certainty and its stopped values are uniformly integrable; bounded fortunes qualify, so the gambler's ruin odds follow in one line.**
 
@@ -28,19 +30,21 @@ xychart-beta
     line [0.00, 0.05, 0.15, 0.23, 0.27, 0.30, 0.31, 0.32, 0.33, 0.33, 0.33]
 ```
 
-Orange: the chance she is broke by round n. Green: the chance she has reached 30 by round n. Both come from the exact law of her fortune, pushed forward one round at a time, not from a simulation. They settle at 0.666667 and 0.333333. By round 1000 the chance she is still playing is 0.0045.
+Orange: the chance she is broke by round n. Green: the chance she has reached 30 by round n. Both come from the exact law of her fortune (the chance of each possible amount), pushed forward one round at a time, not from a simulation. They settle at 0.666667 and 0.333333. By round 1000 the chance she is still playing is 0.0045.
 
 ---
 
 ## The formula
 
-Notation from earlier cards, in one line each. $X_n$ is her fortune after round n, the process read "the value at time n". $\mathcal{F}_n$ is what is known after round n: the results of the first n tosses. A **martingale** is a process whose best forecast of the next value, given $\mathcal{F}_n$, is today's value ([Martingales](01-martingales.md)). A **stopping time** $\tau$ is a round you recognise when it arrives, without seeing the future. New notation: $\tau \wedge n$, read "tau capped at n", is the smaller of $\tau$ and n. The capped process $M_{\tau \wedge n}$ is the game frozen at $\tau$, and read at round n if $\tau$ has not arrived.
+Notation from earlier cards, in one line each. $X_n$ is her fortune after round n, the process read "the value at time n". $\mathcal{F}_n$ is what is known after round n: the results of the first n tosses. A **martingale** is a process whose best forecast of the next value, given $\mathcal{F}_n$, is today's value ([Martingales](01-martingales.md)). A **stopping time** $\tau$ is a round you recognise when it arrives, without seeing the future. New notation: $\tau \wedge n$, read "tau capped at n", is the smaller of $\tau$ and n.
+
+The capped process $M_{\tau \wedge n}$ is the game frozen at $\tau$, and read at round n if $\tau$ has not arrived.
 
 The theorem. Let $M_n$ be a martingale and $\tau$ a stopping time with $P(\tau < \infty) = 1$. If the family of capped values is uniformly integrable,
 
 $$\lim_{K \to \infty}\ \sup_{n \ge 0}\ E\big[\,|M_{\tau\wedge n}|\,\mathbf{1}_{\{|M_{\tau\wedge n}| > K\}}\big] = 0.$$
 
-Here $\mathbf{1}_{\{\ldots\}}$ is 1 on the runs where the event holds and 0 elsewhere, so the average counts only values above K.
+Here $E[\cdot]$ is the average over all runs, $\sup_{n \ge 0}$ is the largest value over every cap n, and $\mathbf{1}_{\{\ldots\}}$ is 1 on the runs where the event holds and 0 elsewhere, so the average counts only values above K.
 
 Then $M_\tau$ is integrable and
 
@@ -90,7 +94,9 @@ $$P(\text{reach } b) = \frac{(q/p)^a - 1}{(q/p)^b - 1}.$$
 
 ### Step 0: stopping at every cap is already safe; the question is the limit
 
-Cap the game at any round n. The capped fortune is the start plus the steps taken while the game is still on. Step k counts only if $\tau \ge k$, which the first k − 1 tosses decide, and a fair step multiplied by something known before it is taken still averages zero. So the capped fortune averages 10 dollars: the earlier card's theorem, and Lemma 1 below. The code prints that average at every hundredth round up to 1000: 10.000000 each time. Stopping is a betting rule that stakes 1 until $\tau$ and 0 after ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
+Cap the game at any round n. The capped fortune is the start plus the steps taken while the game is still on. Step k counts only if $\tau \ge k$, which the first k − 1 tosses decide, and a fair step multiplied by something known before it is taken still averages zero. So the capped fortune averages 10 dollars: the earlier card's theorem, and Lemma 1 below.
+
+The code prints that average at every hundredth round up to 1000: 10.000000 each time. Stopping is a betting rule that stakes 1 until $\tau$ and 0 after ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
 
 As n grows, the capped fortune becomes the final fortune, run by run. So the whole question is whether an average passes to the limit along with the values. That is exactly what uniform integrability controls ([Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
 
@@ -102,11 +108,11 @@ The same bound gives a finite average length. The average of a count is the sum 
 
 ### Step 2: uniform integrability passes the average to the limit
 
-Once n passes $\tau$, the capped value equals $M_\tau$, so $M_{\tau\wedge n} \to M_\tau$ on every run that ends: almost surely, hence in probability. Vitali's theorem says convergence in probability plus uniform integrability gives convergence in mean, $E|M_{\tau\wedge n} - M_\tau| \to 0$. Averages differ by at most that mean distance. So $E[M_\tau]$ is the limit of the capped averages, each of which is $E[M_0]$.
+Once n passes $\tau$, the capped value equals $M_\tau$, so $M_{\tau\wedge n} \to M_\tau$ on every run that ends: almost surely, hence in probability: the chance of a gap larger than any fixed size falls to zero. Vitali's theorem says convergence in probability plus uniform integrability gives convergence in mean, $E|M_{\tau\wedge n} - M_\tau| \to 0$. Averages differ by at most that mean distance. So $E[M_\tau]$ is the limit of the capped averages, each of which is $E[M_0]$.
 
 For the gambler the test is the bounded one. Her fortune never leaves 0 to 30, so above the cutoff K = 30 there is nothing, at every cap. The code prints that tail as 0.
 
-Two earlier cards meet the condition from other sides. A martingale bounded in a power above 1 has a running peak with a finite average, by Doob's inequality ([Doob's inequalities](05-doob-inequalities.md)), and that peak is one envelope for every cap. And uniform integrability is what [Martingale convergence](04-martingale-convergence.md) lacked for averages: a uniformly integrable martingale converges in mean as well as run by run, and each of its values is the best forecast of its limit, which is optional stopping at time infinity. This card states the second fact without proof; Williams proves it in chapter 14.
+Two earlier cards meet the condition from other sides. A martingale whose average of $|M_n|^p$ stays bounded, for some power p above 1, has a running peak with a finite average, by Doob's inequality ([Doob's inequalities](05-doob-inequalities.md)), and that peak is one envelope for every cap. And uniform integrability is what [Martingale convergence](04-martingale-convergence.md) lacked for averages: a uniformly integrable martingale converges in mean as well as run by run, and each of its values is the best forecast of its limit, which is optional stopping at time infinity. This card states the second fact without proof; Williams proves it in chapter 14.
 
 ### Step 3: the ruin odds in one line
 
@@ -136,7 +142,9 @@ That is a(b − a) = 10 × 20. On roulette, $X_n + (q - p)\,n$ is the fair versi
 
 ### Step 6: where the average leaks away
 
-**Doubling.** Stake 1 dollar, double after each loss, stop at the first win. After a win the gain is 1. If all n tosses are lost, the gain is $1 - 2^n$, with probability $2^{-n}$. Every cap averages 0. Yet the first win comes with certainty, after 2 tosses on average, and the final gain is 1. Above the cutoff K = 100, the capped gain's tail is $1 - 2^{-n}$ once $2^n - 1$ exceeds 100: 0.992188 at 7 tosses, 0.999023 at 10. The worst tail stays at 1 for every K. The average size $E|G_n|$ never exceeds 2, so a bounded average is not enough either. Not uniformly integrable, and optional stopping fails by exactly 1 dollar.
+**Doubling.** Stake 1 dollar, double after each loss, stop at the first win. After a win the gain is 1. If all n tosses are lost, the gain is $1 - 2^n$, with probability $2^{-n}$. Every cap averages 0. Yet the first win comes with certainty, after 2 tosses on average, and the final gain is 1.
+
+Above the cutoff K = 100, the capped gain's tail is $1 - 2^{-n}$ once $2^n - 1$ exceeds 100: 0.992188 at 7 tosses, 0.999023 at 10. The worst tail stays at 1 for every K. The average size $E|G_n|$ never exceeds 2, so a bounded average is not enough either. Not uniformly integrable, and optional stopping fails by exactly 1 dollar.
 
 **No goal.** Remove the 30-dollar exit: she plays until broke. Ruin is certain, because it is at least as likely as ruin before any goal b, which is 1 − a/b: 0.90 at b = 100, 0.990 at b = 1000. So $X_\tau = 0$ on every run, while every capped average is 10. The average has not vanished; it has moved to the rare survivors with large fortunes. The part of the capped average above 30 dollars climbs toward 10: 9.25 by round 2000.
 
@@ -627,6 +635,206 @@ ALL CHECKS PASS
 
 The two outputs match line for line, simulated digits included, because both languages draw the same SplitMix64 numbers.
 
+### Lean
+
+Lean proves the theorem and its bounded test for every martingale, the ruin odds for every fair game, and checks the worked numbers.
+
+- Suppose $M_n$ is a martingale, $\tau$ a stopping time with $P(\tau < \infty) = 1$, and the capped values uniformly integrable. Then $M_\tau$ is integrable and $E[M_\tau] = E[M_0]$.
+- Take the same martingale and stopping time, with $|M_{\tau\wedge n}| \le C$ for every n. Then $M_\tau$ is integrable and $E[M_\tau] = E[M_0]$.
+- Suppose a fair game starts at a, with $0 < a < b$, stays between 0 and b, and ends with certainty at 0 or b. Then $P(\text{reach } b) = a/b$.
+- The fair chance of reaching 30 from 10 is 10/30 = 1/3, and the chance of ruin is 2/3.
+- From fortune x, the next square averages $x^2 + 1$, so $X_n^2 - n$ is fair.
+- The average length is $900 \times \tfrac13 - 10^2 = 200$, which equals $10 \times 20$.
+- On roulette, $r = 20/18$ makes $p\,r + q/r = 1$, so $r^{X_n}$ is fair.
+- The roulette chance of reaching 30 lies between 0.082690 and 0.082692.
+- The doubler's capped gain averages 0 at 1, 4, 7 and 10 tosses.
+- Its tail above 100 is 127/128 at 7 tosses and 1023/1024 at 10 tosses.
+- With no goal, ruin before goal b has chance 9/10 at b = 100 and 99/100 at b = 1000.
+
+The general average length, the envelope test, the biased-coin formula, the two failures and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Stopping without a bound: a martingale stopped at a time that is finite with probability one keeps its starting average when its capped values are uniformly integrable, bounded capped values qualify, and so a fair fortune kept between 0 and b that ends at 0 or b reaches b with probability a/b.
+import Mathlib.Probability.Martingale.Basic
+import Mathlib.Probability.Martingale.OptionalStopping
+import Mathlib.Probability.Process.Stopping
+import Mathlib.MeasureTheory.Function.UniformIntegrable
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open MeasureTheory
+open Filter Topology
+
+/-- Each capped value of a martingale has the starting average. -/
+theorem integral_stoppedProcess_eq_integral_zero_aux
+    {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {ℱ : Filtration ℕ m0} {M : ℕ → Ω → ℝ} {τ : Ω → WithTop ℕ}
+    (hM : Martingale M ℱ μ) (hτ : IsStoppingTime ℱ τ) (n : ℕ) :
+    ∫ ω, stoppedProcess M τ n ω ∂μ = ∫ ω, M 0 ω ∂μ := by
+  have h0 : IsStoppingTime ℱ (fun _ : Ω => ((0 : ℕ) : WithTop ℕ)) := isStoppingTime_const ℱ 0
+  have hπ : IsStoppingTime ℱ (fun ω => min ((n : ℕ) : WithTop ℕ) (τ ω)) :=
+    (isStoppingTime_const ℱ n).min hτ
+  have hle : (fun _ : Ω => ((0 : ℕ) : WithTop ℕ)) ≤ fun ω => min ((n : ℕ) : WithTop ℕ) (τ ω) :=
+    fun ω => by simp
+  have hbdd : ∀ ω, min ((n : ℕ) : WithTop ℕ) (τ ω) ≤ n := fun ω => min_le_left _ _
+  have h1 := hM.submartingale.expected_stoppedValue_mono h0 hπ hle hbdd
+  have h2 := hM.neg.submartingale.expected_stoppedValue_mono h0 hπ hle hbdd
+  simp only [stoppedValue_neg, Pi.neg_apply, integral_neg] at h2
+  have e0 : ∀ x, stoppedValue M (fun _ : Ω => ((0 : ℕ) : WithTop ℕ)) x = M 0 x := fun x => rfl
+  have e1 : ∀ x, stoppedProcess M τ n x =
+      stoppedValue M (fun ω => min ((n : ℕ) : WithTop ℕ) (τ ω)) x := fun x => rfl
+  simp only [e0] at h1 h2
+  simp only [e1]
+  linarith
+
+/-- The capped values converge to the stopped value wherever the stopping time is finite. -/
+theorem tendsto_stoppedProcess_aux
+    {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω}
+    {M : ℕ → Ω → ℝ} {τ : Ω → WithTop ℕ} (hfin : ∀ᵐ ω ∂μ, τ ω ≠ ⊤) :
+    ∀ᵐ ω ∂μ, Tendsto (fun n => stoppedProcess M τ n ω) atTop (𝓝 (stoppedValue M τ ω)) := by
+  filter_upwards [hfin] with ω hω
+  obtain ⟨k, hk⟩ := WithTop.ne_top_iff_exists.mp hω
+  apply tendsto_atTop_of_eventually_const (i₀ := k)
+  intro n hn
+  rw [stoppedProcess_eq_of_ge (by rw [← hk]; exact_mod_cast hn)]
+  rfl
+
+
+/-- **Optional stopping without a ceiling.** Let `M` be a martingale for the filtration `ℱ`
+on a probability space, and `τ` a stopping time (values in `ℕ ∪ {∞}`) that is finite with
+probability one. If the capped values `M (τ ∧ n)`, `n = 0, 1, 2, ...`, are uniformly
+integrable (Mathlib's `UniformIntegrable` with exponent 1: on a probability space this is the
+card's condition that the part of `E|M (τ ∧ n)|` above a cutoff `K` tends to 0 as `K` grows,
+at every cap `n` at once), then the stopped value `M τ` is integrable and
+`E[M τ] = E[M 0]`. -/
+theorem optional_stopping_of_uniformIntegrable
+    {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {ℱ : Filtration ℕ m0} {M : ℕ → Ω → ℝ} {τ : Ω → WithTop ℕ}
+    (hM : Martingale M ℱ μ) (hτ : IsStoppingTime ℱ τ)
+    (hfin : ∀ᵐ ω ∂μ, τ ω ≠ ⊤)
+    (hUI : UniformIntegrable (stoppedProcess M τ) 1 μ) :
+    Integrable (stoppedValue M τ) μ ∧ ∫ ω, stoppedValue M τ ω ∂μ = ∫ ω, M 0 ω ∂μ := by
+  have hconv := tendsto_stoppedProcess_aux (M := M) hfin
+  have hint : Integrable (stoppedValue M τ) μ := hUI.integrable_of_ae_tendsto hconv
+  refine ⟨hint, ?_⟩
+  have hL1 := tendsto_Lp_finite_of_tendsto_ae le_rfl ENNReal.one_ne_top
+    (fun n => hUI.aestronglyMeasurable n) (memLp_one_iff_integrable.mpr hint) hUI.1 hconv
+  have hlim := tendsto_integral_of_L1' (stoppedValue M τ)
+    (Eventually.of_forall fun n => memLp_one_iff_integrable.mp (hUI.memLp n)) hL1
+  simp_rw [integral_stoppedProcess_eq_integral_zero_aux hM hτ] at hlim
+  exact (tendsto_nhds_unique tendsto_const_nhds hlim).symm
+
+/-- **The bounded test.** If the stopping time is finite with probability one and the capped
+values of the martingale never exceed a constant `C` in size, `|M (τ ∧ n)| ≤ C` for every
+`n`, then optional stopping holds: `M τ` is integrable and `E[M τ] = E[M 0]`. -/
+theorem optional_stopping_of_bounded
+    {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {ℱ : Filtration ℕ m0} {M : ℕ → Ω → ℝ} {τ : Ω → WithTop ℕ}
+    (hM : Martingale M ℱ μ) (hτ : IsStoppingTime ℱ τ)
+    (hfin : ∀ᵐ ω ∂μ, τ ω ≠ ⊤) (C : ℝ)
+    (hbdd : ∀ n, ∀ᵐ ω ∂μ, |stoppedProcess M τ n ω| ≤ C) :
+    Integrable (stoppedValue M τ) μ ∧ ∫ ω, stoppedValue M τ ω ∂μ = ∫ ω, M 0 ω ∂μ := by
+  have hUI : UniformIntegrable (stoppedProcess M τ) 1 μ := by
+    refine uniformIntegrable_of le_rfl ENNReal.one_ne_top (fun n => ?_) (fun ε hε => ?_)
+    · exact ((hM.submartingale.stoppedProcess hτ).integrable n).aestronglyMeasurable
+    · refine ⟨C.toNNReal + 1, fun n => ?_⟩
+      have hz : {x | (C.toNNReal + 1 : NNReal) ≤ ‖stoppedProcess M τ n x‖₊}.indicator
+          (stoppedProcess M τ n) =ᵐ[μ] 0 := by
+        filter_upwards [hbdd n] with ω hω
+        apply Set.indicator_of_notMem
+        simp only [Set.mem_ofPred_eq, not_le]
+        rw [← NNReal.coe_lt_coe, coe_nnnorm, Real.norm_eq_abs]
+        push_cast
+        have := Real.le_coe_toNNReal C
+        linarith
+      rw [eLpNorm_congr_ae hz, eLpNorm_zero]
+      exact bot_le
+  exact optional_stopping_of_uniformIntegrable hM hτ hfin hUI
+
+/-- **The ruin odds in one line.** A fair game (a martingale `X`) starts at the fortune
+`a` and stops at a time `τ` that is finite with probability one. Up to that time the fortune
+stays between `0` and the goal `b`, where `0 < a < b`, and when the game stops the fortune is
+`0` or `b`. Then the chance of reaching the goal is `a / b`. -/
+theorem prob_reach_goal_eq_start_div_goal
+    {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {ℱ : Filtration ℕ m0} {X : ℕ → Ω → ℝ} {τ : Ω → WithTop ℕ}
+    (hX : Martingale X ℱ μ) (hτ : IsStoppingTime ℱ τ)
+    (hfin : ∀ᵐ ω ∂μ, τ ω ≠ ⊤) {a b : ℝ} (ha : 0 < a) (hab : a < b)
+    (hX0 : ∀ ω, X 0 ω = a)
+    (hbdd : ∀ n ω, 0 ≤ stoppedProcess X τ n ω ∧ stoppedProcess X τ n ω ≤ b)
+    (hend : ∀ᵐ ω ∂μ, stoppedValue X τ ω = 0 ∨ stoppedValue X τ ω = b) :
+    μ.real {ω | stoppedValue X τ ω = b} = a / b := by
+  have hb : ∀ n, ∀ᵐ ω ∂μ, |stoppedProcess X τ n ω| ≤ b := fun n =>
+    Eventually.of_forall fun ω => by
+      rw [abs_le]; constructor <;> linarith [(hbdd n ω).1, (hbdd n ω).2]
+  obtain ⟨hint, heq⟩ := optional_stopping_of_bounded hX hτ hfin b hb
+  have h0 : ∫ ω, X 0 ω ∂μ = a := by simp [hX0]
+  have hS : NullMeasurableSet {ω | stoppedValue X τ ω = b} μ :=
+    hint.aestronglyMeasurable.aemeasurable.nullMeasurableSet_preimage (measurableSet_singleton b)
+  have hae : stoppedValue X τ =ᵐ[μ] {ω | stoppedValue X τ ω = b}.indicator (fun _ => b) := by
+    filter_upwards [hend] with ω hω
+    rcases hω with h | h
+    · have hn : ω ∉ {ω | stoppedValue X τ ω = b} := by
+        simp only [Set.mem_ofPred_eq, h]; intro h'; linarith
+      rw [Set.indicator_of_notMem hn, h]
+    · rw [Set.indicator_of_mem (by simpa using h), h]
+  rw [integral_congr_ae hae, integral_indicator₀ hS, setIntegral_const, h0, smul_eq_mul] at heq
+  have hb0 : b ≠ 0 := by linarith
+  rw [eq_div_iff hb0]
+  exact heq
+
+/-! ### The card's worked numbers, checked exactly -/
+
+-- Step 3, fair coin from 10 to 30: 30 w + 0 (1 - w) = 10 gives w = 10/30 = 1/3; ruin 2/3.
+example : (30 : ℚ) * (10 / 30) + 0 * (1 - 10 / 30) = 10 := by norm_num
+example : (10 : ℚ) / 30 = 1 / 3 ∧ 1 - (1 : ℚ) / 3 = 2 / 3 := by norm_num
+
+-- Step 5, the second martingale X^2 - n: from fortune x the next square averages x^2 + 1.
+example (x : ℚ) : (1 / 2) * (x + 1) ^ 2 + (1 / 2) * (x - 1) ^ 2 = x ^ 2 + 1 := by ring
+
+-- Step 5, average length: 900 * (1/3) - 10^2 = 200 = a (b - a) = 10 * 20.
+example : (30 : ℚ) ^ 2 * (1 / 3) - 10 ^ 2 = 200 ∧ (10 : ℚ) * (30 - 10) = 200 := by norm_num
+
+-- Step 4, roulette: p = 18/38, q = 20/38, r = q/p = 20/18; then p r + q / r = 1, so r^X is fair.
+example : (18 / 38 : ℚ) * (20 / 18) + (20 / 38) / (20 / 18) = 1 := by norm_num
+
+-- Step 4, roulette chance of 30, w = (r^10 - 1)/(r^30 - 1), lies between 0.082690 and 0.082692.
+example :
+    (82690 / 1000000 : ℚ) < ((20 / 18 : ℚ) ^ 10 - 1) / ((20 / 18 : ℚ) ^ 30 - 1) ∧
+      ((20 / 18 : ℚ) ^ 10 - 1) / ((20 / 18 : ℚ) ^ 30 - 1) < 82692 / 1000000 := by
+  norm_num
+
+-- Step 6, doubling: E[G_n] = (1 - 2^-n) + 2^-n (1 - 2^n) = 0, checked at n = 1, 4, 7, 10.
+example : (1 - 1 / (2 : ℚ) ^ 1) + 1 / (2 : ℚ) ^ 1 * (1 - 2 ^ 1) = 0 ∧
+    (1 - 1 / (2 : ℚ) ^ 4) + 1 / (2 : ℚ) ^ 4 * (1 - 2 ^ 4) = 0 ∧
+    (1 - 1 / (2 : ℚ) ^ 7) + 1 / (2 : ℚ) ^ 7 * (1 - 2 ^ 7) = 0 ∧
+    (1 - 1 / (2 : ℚ) ^ 10) + 1 / (2 : ℚ) ^ 10 * (1 - 2 ^ 10) = 0 := by norm_num
+
+-- Step 6, doubling tail above K = 100: 2^-n (2^n - 1) = 1 - 2^-n, which is 127/128 at n = 7
+-- (0.992188) and 1023/1024 at n = 10 (0.999023); and 2^n - 1 > 100 at both.
+example : (1 / (2 : ℚ) ^ 7) * (2 ^ 7 - 1) = 127 / 128 ∧ (2 : ℕ) ^ 7 - 1 > 100 := by norm_num
+example : (1 / (2 : ℚ) ^ 10) * (2 ^ 10 - 1) = 1023 / 1024 ∧ (2 : ℕ) ^ 10 - 1 > 100 := by norm_num
+
+-- Step 6, no goal: ruin before goal b has chance 1 - a/b: 9/10 at b = 100, 99/100 at b = 1000.
+example : 1 - (10 : ℚ) / 100 = 9 / 10 ∧ 1 - (10 : ℚ) / 1000 = 99 / 100 := by norm_num
+
+#print axioms integral_stoppedProcess_eq_integral_zero_aux
+#print axioms tendsto_stoppedProcess_aux
+#print axioms optional_stopping_of_uniformIntegrable
+#print axioms optional_stopping_of_bounded
+#print axioms prob_reach_goal_eq_start_div_goal
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_stoppedProcess_eq_integral_zero_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tendsto_stoppedProcess_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'optional_stopping_of_uniformIntegrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'optional_stopping_of_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'prob_reach_goal_eq_start_div_goal' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -669,7 +877,7 @@ The two outputs match line for line, simulated digits included, because both lan
 
 - [Representing a martingale](07-martingale-representation-in-discrete-time.md): every martingale on coin tosses is a betting strategy on those tosses.
 
-Stopping tells what a fair game is worth at the end; which betting strategy produces a given fair game, toss by toss, is the question that martingale-representation-in-discrete-time answers.
+Stopping tells what a fair game is worth at the end; which betting strategy produces a given fair game, toss by toss, is the question that [Representing a martingale](07-martingale-representation-in-discrete-time.md) answers.
 
 ---
 

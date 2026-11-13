@@ -114,3 +114,4 @@ print(f"doubling, {K} rounds: P(win 1) {1 - ruin / 2 ** K:.6f}, P(lose {2 ** K -
 print(f"figure, player {fig[0]} quits at round {fig[1]}")
 print("figure, fortune  " + " ".join(str(v) for v in fig[3]))
 print("figure, stopped  " + " ".join(str(v) for v in fig[2]))
+print("ALL CHECKS PASS")

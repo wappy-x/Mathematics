@@ -24,7 +24,7 @@ The family of all 21 chip counts, one random variable for each round, is a **sto
 
 ### The picture: five evenings
 
-Five evenings, drawn by a seeded simulation (the generator is SplitMix64, seed 20260929, written out in the code). Each line is one sample path: one outcome, followed through all 20 rounds. A path is a list of values at whole rounds; the straight segments between rounds are only for the eye.
+Five evenings, drawn by a seeded simulation (the generator is SplitMix64, seed 20260929, written out in the code). The seed is the generator's starting number, so every run draws the same five evenings. Each line is one sample path: one outcome, followed through all 20 rounds. A path is a list of values at whole rounds; the straight segments between rounds are only for the eye.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653, #e9c46a, #8a5a44"}}}}%%
@@ -126,7 +126,7 @@ This is the image of a probability under a map, as in [Random variables](../../0
 
 ### Step 3: the one-time tables do not fix the law
 
-The converse fails. Build a second process with exactly the same 21 one-time tables: each round, throw away the running count and redraw a chip count at random from that round's table, independently of every other round. Column by column, nothing has changed.
+The converse fails. Build a second process with exactly the same 21 one-time tables. Each round, throw away the running count and redraw a chip count at random from that round's table, independently of every other round. Column by column, nothing has changed.
 
 Row by row, everything has. For the gambler, $P(X_1 = 11 \text{ and } X_2 = 12)$ = 0.25: the first two rounds must be W W, one pattern in four. For the redrawn process the two rounds are independent, so the chance is the product 0.5 × 0.25 = 0.125. And the gambler's count never moves more than one chip in a round, with chance 1. The redrawn count manages that on all 20 rounds with chance about 1 in 8,000,415.
 
@@ -136,9 +136,9 @@ The one-time tables say where the process tends to be at each moment. They say n
 
 With 20 rounds, the law is the joint table of $(X_0, X_1, \dots, X_{20})$, and the tables for smaller lists of rounds are sums over it. These are the **finite-dimensional distributions**: the joint tables for every finite list of times.
 
-For an evening with no last round, there is no single finite table. Kolmogorov's extension theorem says that any family of finite-dimensional tables that agree with each other (summing the table for rounds 1, 2, 3 over round 3 gives the table for rounds 1, 2) comes from one law on endless paths. This card states it and does not prove it; [Infinitely many coin tosses](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md) states it precisely and outlines the proof, and Durrett's appendix gives it in full.
+For an evening with no last round, there is no single finite table. Kolmogorov's extension theorem says that any family of finite-dimensional tables that agree with each other comes from one law on endless paths. Agree means that summing the table for rounds 1, 2, 3 over round 3 gives the table for rounds 1, 2. This card states it and does not prove it; [Infinitely many coin tosses](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md) states it precisely and outlines the proof, and Durrett's appendix gives it in full.
 
-The same picture carries to continuous time, with a continuous time, in hours or years, in place of rounds, and to other state spaces (the set of values the process can take): weather types, queue lengths, share prices. A single path is always one sample, and the law is always a table or density over whole paths.
+The same picture carries to continuous time, in hours or years in place of rounds. It also carries to other state spaces (the set of values the process can take): weather types, queue lengths, share prices. A single path is always one sample, and the law is always a table or density over whole paths.
 
 ---
 
@@ -186,7 +186,17 @@ The code prints every one.
 
 ## Code, from first principles, and it actually runs
 
-The code finds the law of the chip count by three roads that share nothing but the house rule. Road one walks through all 1,048,576 outcomes one at a time and builds each path. Road two never looks at an outcome: it carries, round by round, how many evenings sit on each chip count. Road three simulates 100,000 evenings with a SplitMix64 generator written out, seed 20260929, and prints each simulated number with its standard error; the five sample paths are its first five evenings. A fourth count, the reflection count from [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md), cross-checks the ruin number. Without the stop, the evenings that touch 0 by round 20 are those that end at 0, plus twice those that end below 0: mirroring each path after its first visit to 0 pairs the ones that touch 0 and end above it with the ones that end below. In chances, 0.0148 + 2 × 0.0059 = 0.0266, and the stop turns every one of those evenings into a ruin. The redrawn process of Step 3 is built from road two's tables.
+The code finds the law of the chip count by three roads that share nothing but the house rule.
+
+- **Road one** walks through all 1,048,576 outcomes one at a time and builds each path.
+- **Road two** never looks at an outcome: it carries, round by round, how many evenings sit on each chip count.
+- **Road three** simulates 100,000 evenings with a SplitMix64 generator written out, seed 20260929. It prints each simulated number with its standard error (the typical distance between a simulated share and the true chance). The five sample paths are its first five evenings.
+
+A fourth count, the reflection count from [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md), cross-checks the ruin number. Without the stop, the evenings that touch 0 by round 20 are those that end at 0, plus twice those that end below 0.
+
+Mirroring each path after its first visit to 0 pairs the ones that touch 0 and end above it with the ones that end below. In chances, 0.0148 + 2 × 0.0059 = 0.0266, and the stop turns every one of those evenings into a ruin.
+
+The redrawn process of Step 3 is built from road two's tables.
 
 ### Python
 
@@ -527,7 +537,163 @@ mistake, five paths as the law: P(none of 5 evenings ruined) = 0.8739
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line. The simulated mean, 9.9908 with standard error 0.0141, sits within one standard error of the exact 10; the simulated ruin rate, 0.0261 ± 0.0005, sits about one standard error from the exact 0.0266.
+The two outputs match line for line. The simulated mean, 9.9908 with standard error 0.0141, sits within one standard error of the exact 10. The simulated ruin rate, 0.0261 ± 0.0005, sits about one standard error from the exact 0.0266.
+
+### Lean
+
+Lean proves the three facts of Why it works in general, and checks the gambler's hand-worked numbers.
+
+- Take any stochastic process, with any set of times. Then its law is a probability table on whole paths, with total 1.
+- Take any finite list of rounds, with a set of values for each. Then the chance that each $X_n$ lands in its set equals $P_X$ of the matching paths.
+- There are two processes with the same one-time table at every round but different laws.
+- Evening 1 gives the orange path at all 21 rounds, with 7 chips after round 7.
+- Take the 128 patterns of 7 results. Then 21 of them end on 7 chips, so $P(X_7 = 7)$ is 21/128.
+- The fraction 172,032 over 1,048,576 is also 21/128.
+- After 4 rounds, 1, 4, 6, 4 and 1 of the 16 patterns end on 6, 8, 10, 12 and 14 chips.
+- Take the 4 patterns of 2 results. Then only W W gives $X_1 = 11$ and $X_2 = 12$, while the one-time tables multiply to 1/8.
+- Ten losses, then ten wins, is ruined at round 10 and still holds 0 chips after round 20.
+- The 184,756 ways to place 10 wins among 20 rounds, less that one evening, leave 184,755.
+- The reflection count of ruined evenings comes to 27,896.
+
+The counts over all 1,048,576 records, the 1,030,558 paths, the redrawn process and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Stochastic processes: the law of a process (its chances over whole paths) is a probability that fixes every one-time and finite-list table, those one-time tables do not fix the law, and the card's gambler numbers check out.
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Measure.Dirac.Basic
+
+namespace ProcessesAndPaths
+
+open MeasureTheory
+
+/-- **The law fixes every one-time table, and every table for a finite list of times.**
+Take any family of random variables `X i`, one for each time `i`, on one shared set of outcomes
+`Ω` with chances `P`. Its law is the chance over whole paths: `P_X(A)` is the chance of the
+outcomes whose path `i ↦ X i ω` lands in the set of paths `A`. Then for every finite list of
+times `J` and every choice of value sets `s j`, the chance that `X j` lands in `s j` for every
+`j` in `J` equals the law of the set of paths whose entry at each `j` in `J` lies in `s j`.
+With `J` a single time `n` and `s n = {x}`, this is `P(X_n = x) = P_X(paths with entry x at n)`. -/
+theorem law_fixes_finite_dim_tables {ι Ω E : Type*} [MeasurableSpace Ω] [MeasurableSpace E]
+    (P : Measure Ω) [IsProbabilityMeasure P] (X : ι → Ω → E) (hX : ∀ i, Measurable (X i))
+    (J : Finset ι) (s : ι → Set E) (hs : ∀ j ∈ J, MeasurableSet (s j)) :
+    P {ω | ∀ j ∈ J, X j ω ∈ s j} =
+      (P.map (fun ω i => X i ω)) {f : ι → E | ∀ j ∈ J, f j ∈ s j} := by
+  have hm : Measurable (fun ω i => X i ω) := Measurable.of_eval hX
+  have hA : MeasurableSet {f : ι → E | ∀ j ∈ J, f j ∈ s j} :=
+    MeasurableSet.pi J.countable_toSet hs
+  rw [Measure.map_apply hm hA]
+  rfl
+
+/-- **The law is a genuine probability table on paths.** For any family of random variables on
+one shared set of outcomes, the law (chances over whole paths) has total 1. -/
+theorem law_is_probability {ι Ω E : Type*} [MeasurableSpace Ω] [MeasurableSpace E]
+    (P : Measure Ω) [IsProbabilityMeasure P] (X : ι → Ω → E) (hX : ∀ i, Measurable (X i)) :
+    IsProbabilityMeasure (P.map (fun ω i => X i ω)) := by
+  exact (Measure.isProbabilityMeasure_map_iff (Measurable.of_eval hX).aemeasurable).2
+    inferInstance
+
+/-- **The one-time tables do not fix the law.** There are two processes in whole-number states
+over the rounds `0, 1, 2, …`, on one shared set of outcomes with chances `P`, whose one-time
+tables agree at every round but whose laws over whole paths differ. -/
+theorem one_time_tables_do_not_fix_law :
+    ∃ (Ω : Type) (_ : MeasurableSpace Ω) (P : Measure Ω) (X Y : ℕ → Ω → ℤ),
+      IsProbabilityMeasure P ∧ (∀ n, Measurable (X n)) ∧ (∀ n, Measurable (Y n)) ∧
+      (∀ n, P.map (X n) = P.map (Y n)) ∧
+      P.map (fun ω n => X n ω) ≠ P.map (fun ω n => Y n ω) := by
+  let P : Measure Bool := (2⁻¹ : ENNReal) • (Measure.dirac true + Measure.dirac false)
+  let X : ℕ → Bool → ℤ := fun _ b => if b then 1 else 0
+  let Y : ℕ → Bool → ℤ := fun n b => if n = 0 then (if b then 1 else 0) else (if b then 0 else 1)
+  have hX : ∀ n, Measurable (X n) := fun n => measurable_of_countable _
+  have hY : ∀ n, Measurable (Y n) := fun n => measurable_of_countable _
+  refine ⟨Bool, inferInstance, P, X, Y, ?_, hX, hY, ?_, ?_⟩
+  · constructor
+    simp [P, ENNReal.inv_two_add_inv_two]
+  · intro n
+    rw [Measure.map_smul, Measure.map_smul, Measure.map_add _ _ (hX n),
+      Measure.map_add _ _ (hY n), Measure.map_dirac' (hX n), Measure.map_dirac' (hX n),
+      Measure.map_dirac' (hY n), Measure.map_dirac' (hY n)]
+    rcases Nat.eq_zero_or_pos n with h | h
+    · subst h; simp [X, Y]
+    · simp [X, Y, h.ne', add_comm]
+    all_goals first | exact (hX n).aemeasurable | exact (hY n).aemeasurable
+  · intro heq
+    have hmX : Measurable (fun ω n => X n ω) := Measurable.of_eval hX
+    have hmY : Measurable (fun ω n => Y n ω) := Measurable.of_eval hY
+    have hA : MeasurableSet {f : ℕ → ℤ | f 0 = f 1} :=
+      measurableSet_eq_fun (measurable_pi_apply 0) (measurable_pi_apply 1)
+    have := congrArg (fun μ => μ {f : ℕ → ℤ | f 0 = f 1}) heq
+    simp only [Measure.map_apply hmX hA, Measure.map_apply hmY hA] at this
+    simp [P, X, Y, Measure.smul_apply, Measure.add_apply, Set.preimage] at this
+
+/-! The card's gambler: 10 chips, one chip won or lost each round, play stops at 0 chips. -/
+
+/-- The house rule: add one chip on a win, take one away on a loss, stay at 0 once ruined. -/
+def step (x : ℕ) (won : Bool) : ℕ := if x = 0 then 0 else if won then x + 1 else x - 1
+
+/-- `chips ω n` is the chip count after round `n`; `ω k` is `true` when round `k + 1` is won. -/
+def chips (ω : ℕ → Bool) : ℕ → ℕ
+  | 0 => 10
+  | n + 1 => step (chips ω n) (ω n)
+
+/-- An outcome as a whole number, as in the card's code: bit `k` is 1 when round `k + 1` is won. -/
+def bits (ω : ℕ) : ℕ → Bool := fun k => ω.testBit k
+
+/-- Evening 1: W L L L W L L L L W W W W L W L L L W L. -/
+def evening1 : ℕ → Bool := fun k =>
+  [true, false, false, false, true, false, false, false, false, true,
+   true, true, true, false, true, false, false, false, true, false].getD k false
+
+-- 2^20 = 1,048,576 outcomes.
+example : 2 ^ 20 = 1048576 := by norm_num
+-- Evening 1's sample path: 10, 11, 10, 9, 8, 9, 8, 7, 6, 5, 6, 7, 8, 9, 8, 9, 8, 7, 6, 7, 6.
+example : (List.range 21).map (chips evening1) =
+    [10, 11, 10, 9, 8, 9, 8, 7, 6, 5, 6, 7, 8, 9, 8, 9, 8, 7, 6, 7, 6] := by decide
+-- X_7 on evening 1 is 7 = 10 + 2 - 5.
+example : chips evening1 7 = 10 + 2 - 5 := by decide
+-- Of the 2^7 = 128 patterns of 7 results, 21 = 7 * 6 / 2 end on 7 chips: P(X_7 = 7) = 21/128.
+example : ((Finset.range (2 ^ 7)).filter (fun ω => chips (bits ω) 7 = 7)).card = 21 := by decide
+example : Nat.choose 7 2 = 7 * 6 / 2 ∧ Nat.choose 7 2 = 21 := by decide
+-- Over all 2^20 records the same chance: 172,032 of 1,048,576 is 21/128.
+example : (172032 : ℚ) / 1048576 = 21 / 128 := by norm_num
+-- After 4 rounds: 1, 4, 6, 4, 1 of 16 patterns on 6, 8, 10, 12, 14 chips.
+example : ((Finset.range 16).filter (fun ω => chips (bits ω) 4 = 6)).card = 1 ∧
+    ((Finset.range 16).filter (fun ω => chips (bits ω) 4 = 8)).card = 4 ∧
+    ((Finset.range 16).filter (fun ω => chips (bits ω) 4 = 10)).card = 6 ∧
+    ((Finset.range 16).filter (fun ω => chips (bits ω) 4 = 12)).card = 4 ∧
+    ((Finset.range 16).filter (fun ω => chips (bits ω) 4 = 14)).card = 1 := by decide
+-- P(X_1 = 11 and X_2 = 12): only W W, one pattern of 4; the product of the one-time tables
+-- (1/2 and 1/4) gives 1/8 instead.
+example : ((Finset.range 4).filter
+    (fun ω => chips (bits ω) 1 = 11 ∧ chips (bits ω) 2 = 12)).card = 1 := by decide
+example : ((Finset.range 2).filter (fun ω => chips (bits ω) 1 = 11)).card = 1 ∧
+    ((Finset.range 4).filter (fun ω => chips (bits ω) 2 = 12)).card = 1 := by decide
+example : (1 : ℚ) / 2 * (1 / 4) = 1 / 8 ∧ (1 : ℚ) / 8 ≠ 1 / 4 := by norm_num
+-- P(X_20 = 10) = 184,755 of 1,048,576: the C(20,10) records with ten wins, less the one
+-- (ten losses, then ten wins) that is ruined at round 10 and stays at 0.
+example : Nat.choose 20 10 - Nat.choose 20 0 = 184755 := by decide
+example : chips (fun k => decide (10 ≤ k)) 10 = 0 ∧ chips (fun k => decide (10 ≤ k)) 20 = 0 := by
+  decide
+-- Ruin by round 20 by the reflection count: 27,896 = C(20,5) + 2 (C(20,0) + ... + C(20,4)).
+example : Nat.choose 20 5 + 2 * ∑ k ∈ Finset.range 5, Nat.choose 20 k = 27896 := by decide
+
+#print axioms law_fixes_finite_dim_tables
+#print axioms law_is_probability
+#print axioms one_time_tables_do_not_fix_law
+
+end ProcessesAndPaths
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ProcessesAndPaths.law_fixes_finite_dim_tables' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProcessesAndPaths.law_is_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProcessesAndPaths.one_time_tables_do_not_fix_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -574,7 +740,7 @@ The two outputs match line for line. The simulated mean, 9.9908 with standard er
 - [Markov chains](../03-Markov%20Chains/01-markov-chains.md): processes whose law is fixed by one-step moves from the current state, as the gambler's is.
 - [Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): a process in continuous time, counting calls to a switchboard.
 
-The law of the gambler's process is fixed, but so far every question about it is asked before the evening starts; what can be said halfway through, knowing the first 10 rounds and nothing after, is [Filtrations](03-filtrations-and-information.md).
+The law of the gambler's process is fixed, but so far every question about it is asked before the evening starts. What can be said halfway through, knowing the first 10 rounds and nothing after? That is [Filtrations](03-filtrations-and-information.md).
 
 ---
 

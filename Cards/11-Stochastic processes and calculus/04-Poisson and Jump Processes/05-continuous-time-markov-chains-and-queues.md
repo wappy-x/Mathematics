@@ -10,7 +10,7 @@ A help desk has one agent. Calls arrive at random, 4 an hour on average. The age
 
 Nothing here happens on a clock tick: a call can start or end at any instant. So a table of chances for "tomorrow given today" has no step to attach to. What the desk does have is **rates**: 4 arrivals an hour, 5 completions an hour. A chain that jumps between states at random times, driven by rates, is a **continuous-time Markov chain**, the term used from here on.
 
-The card writes the rates as one table, the rate matrix; turns it into chances at any time t through differential equations, the forward equations, solved exactly for a desk with no hold line; and finds the long-run law of the number on the line when callers can wait: the M/M/1 queue.
+The card writes the rates as one table, the rate matrix. It turns that table into chances at any time t through differential equations, the forward equations, solved exactly for a desk with no hold line. Then it finds the long-run law of the number on the line, the share of time spent at each count, when callers can wait: the M/M/1 queue.
 
 **A continuous-time Markov chain is described by a rate matrix, whose entries are the rates of jumping from each state to each other; the chances at time t solve a linear differential equation built from it, and the long-run shares solve "rate out equals rate in"; for one server with arrivals at rate 4 and services at rate 5 an hour, the chance of n people in the system is 0.2 × 0.8^n.**
 
@@ -34,7 +34,9 @@ Bars: the exact long-run share of time with n people in the system, per 100, fro
 
 ## The formula
 
-Notation first, in words. The number of people in the system at time t, counted in hours, is $X_t$, the value of the process at time t ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The **rate matrix** of a continuous-time chain, also called its generator (the Q-matrix in Norris), written $G$ in this wing (the letter Q is kept for a second probability measure), is a square table with one row and one column per state. Its entry $g_{ij}$, for two different states $i$ and $j$, is the rate of jumping from $i$ to $j$: in a short time $h$, the chance of that jump is about $g_{ij}\,h$, with an error that shrinks faster than $h$. Each diagonal entry is minus the total rate of leaving, so every row adds to 0:
+Notation first, in words. The number of people in the system at time t, counted in hours, is $X_t$, the value of the process at time t ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)).
+
+The **rate matrix** of a continuous-time chain, also called its generator (the Q-matrix in Norris), written $G$ in this wing (the letter Q is kept for a second probability measure), is a square table with one row and one column per state. Its entry $g_{ij}$, for two different states $i$ and $j$, is the rate of jumping from $i$ to $j$: in a short time $h$, the chance of that jump is about $g_{ij}\,h$, with an error that shrinks faster than $h$. Each diagonal entry is minus the total rate of leaving, so every row adds to 0:
 
 $$g_{ij} \ge 0 \ (i \ne j), \qquad g_{ii} = -q_i, \qquad q_i = \sum_{j \ne i} g_{ij}.$$
 
@@ -116,7 +118,9 @@ Its only solution from $p(0)$ is $p(0)\,e^{tG}$ ([The matrix exponential](../../
 
 The busy entry of the forward equations reads $p_1' = \lambda\,p_0 - \mu\,p_1$: chance flows in from idle at rate 4 and out of busy at rate 5. Since $p_0 = 1 - p_1$, this is $p_1' = \lambda - (\lambda + \mu)\,p_1$, a single linear equation. Its solution from $p_1(0) = 0$ is the formula above. The gap to 4/9 halves every 4.62 minutes.
 
-A second road needs no calculus. Run a clock that ticks at rate $C$ = 9 an hour. At each tick, redraw the state from `K = I + G/9 = [[5/9, 4/9], [5/9, 4/9]]`. An idle agent then picks up at 9 × 4/9 = 4 an hour and a busy one finishes at 9 × 5/9 = 5 an hour, the right rates. This is **uniformization**: a chain with bounded rates is a discrete chain run at the ticks of a Poisson clock. Both rows of $K$ are the same, so after the first tick the agent is busy with chance 4/9, whatever came before. At least one tick by time $t$ has chance $1 - e^{-9t}$. Multiply, and $p_1(t) = \tfrac49(1 - e^{-9t})$ again.
+A second road needs no calculus. Run a clock that ticks at rate $C$ = 9 an hour. At each tick, redraw the state from `K = I + G/9 = [[5/9, 4/9], [5/9, 4/9]]`. An idle agent then picks up at 9 × 4/9 = 4 an hour and a busy one finishes at 9 × 5/9 = 5 an hour, the right rates.
+
+This is **uniformization**: a chain with bounded rates is a discrete chain run at the ticks of a Poisson clock. Both rows of $K$ are the same, so after the first tick the agent is busy with chance 4/9, whatever came before. At least one tick by time $t$ has chance $1 - e^{-9t}$. Multiply, and $p_1(t) = \tfrac49(1 - e^{-9t})$ again.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -158,16 +162,18 @@ The jump chain visits states; the continuous-time chain spends time in them. A v
 
 $$\pi_i \propto \frac{\nu_i}{q_i}.$$
 
+The sign $\propto$ means "proportional to": equal after one common rescaling.
+
 For the desk with no hold line the jump chain alternates, so each state gets half the visits. Idle spells last longer than busy ones, since the agent leaves idle at rate 4 and busy at rate 5, and weighting by the mean stay turns (1/2, 1/2) into (5/9, 4/9). For M/M/1 the jump chain is idle in only 0.1 of its visits, because each idle spell is followed by a busy period made of many visits; weighted by stays, idle time is 0.2 of the day.
 
-On a chain with bounded rates whose states all reach each other and that has a stationary distribution, the share of time in $i$ up to time $t$ tends to $\pi_i$, on almost every path, from any start. This is the **ergodic theorem** for continuous-time chains. Its proof cuts the path at each return to $i$ and applies the strong law of large numbers, as on [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md); for an endless list of states it is stated here, from Norris, Section 3.8. It makes "busy 80 percent of the time" a fact about one long day, not only an average over many desks.
+On a chain with bounded rates whose states all reach each other and that has a stationary distribution, the share of time in $i$ up to time $t$ tends to $\pi_i$, on almost every path (every path except a set of chance zero), from any start. This is the **ergodic theorem** for continuous-time chains. Its proof cuts the path at each return to $i$ and applies the strong law of large numbers, as on [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md); for an endless list of states it is stated here, from Norris, Section 3.8. It makes "busy 80 percent of the time" a fact about one long day, not only an average over many desks.
 
 <details>
 <summary>Detailed proof</summary>
 
 **What is proved here, and what is cited.** Parts 1 to 4 are complete for a finite list of states. Part 5 is complete for the M/M/1 balance equations; that the chain's long-run time shares equal that solution on the endless list is the ergodic theorem, cited from Norris (Sections 2.6 to 2.8 for the construction and the forward equations with bounded rates, Sections 3.5 and 3.8 for invariant distributions and time averages).
 
-**1. Short-time chances.** From $i$, let $H$ be the holding time, exponential with rate $q_i$, and $H'$ the holding time after a jump to $j$, exponential with the leaving rate of $j$ and independent of $H$. Then $P_i(X_h = i) \ge P(H > h) = e^{-q_i h} = 1 - q_i h + O(h^2)$, where $O(h^2)$ is a term at most a fixed multiple of $h^2$, and, for $j \ne i$, $P_i(X_h = j) \ge P(H \le h)\,\frac{g_{ij}}{q_i}\,P(H' > h) = g_{ij} h + O(h^2)$. The lower bounds add up to $1 - O(h^2)$, and the chances add to 1, so each lower bound is exact up to $O(h^2)$: $P(h) = I + hG + O(h^2)$.
+**1. Short-time chances.** Write $P_i$ for chances when the chain starts at $i$. From $i$, let $H$ be the holding time, exponential with rate $q_i$, and $H'$ the holding time after a jump to $j$, exponential with the leaving rate of $j$ and independent of $H$. Then $P_i(X_h = i) \ge P(H > h) = e^{-q_i h} = 1 - q_i h + O(h^2)$, where $O(h^2)$ is a term at most a fixed multiple of $h^2$, and, for $j \ne i$, $P_i(X_h = j) \ge P(H \le h)\,\frac{g_{ij}}{q_i}\,P(H' > h) = g_{ij} h + O(h^2)$. The lower bounds add up to $1 - O(h^2)$, and the chances add to 1, so each lower bound is exact up to $O(h^2)$: $P(h) = I + hG + O(h^2)$.
 
 **2. Forward equations.** The Markov property gives $P(t + h) = P(t)\,P(h)$ (Chapman–Kolmogorov). So $\frac{P(t+h) - P(t)}{h} = P(t)\,\frac{P(h) - I}{h} \to P(t)\,G$. The equation $P' = PG$ with $P(0) = I$ is a linear system with constant coefficients; its unique solution is $e^{tG}$. Multiplying by a starting row gives $p(t) = p(0)\,e^{tG}$.
 
@@ -201,7 +207,7 @@ The desk with a hold line, arrivals 4 and services 5 an hour.
 
 The chance of 5 or more is a sum over every $n$ from 5 up, $(1 - \rho)(\rho^5 + \rho^6 + \dots)$, which the geometric series collapses to $\rho^5$.
 
-A caller spends an hour in the system on average, most of it on hold. The step from $L$ to $W$ is Little's law, $L = \lambda W$, which holds far beyond this queue (Queues).
+A caller spends an hour in the system on average, most of it on hold. The step from $L$ to $W$ is Little's law, $L = \lambda W$, which holds far beyond this queue ([Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md)).
 
 The load is the lever. At 4.5, 4.75 and 4.9 arrivals an hour, $\rho$ is 0.90, 0.95 and 0.98, and $L$ is 9.00, 19.00 and 49.00: the line depends on the load through $1/(1 - \rho)$.
 

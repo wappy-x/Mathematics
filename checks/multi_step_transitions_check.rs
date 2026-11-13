@@ -166,5 +166,5 @@ fn main() {
     let true2 = (0..4).filter(|&f| pat[f] == 'S' && pat[(f + 2) % 4] == 'S').count() as f64
         / pat.iter().filter(|&&c| c == 'S').count() as f64;
     assert!(fit2 != true2);
-    println!("break, spells of two days: fitted P^2 sunny->sunny {:.4}, true {:.4}", fit2, true2);
+    println!("break, spells of two days: fitted P^2 sunny->sunny {:.4}, true {:.4}", fit2, true2); println!("ALL CHECKS PASS");
 }

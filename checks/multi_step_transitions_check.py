@@ -137,4 +137,4 @@ fit = {a: sum(1 for p in pairs if p == (a, "S")) / sum(1 for p in pairs if p[0] 
 fit2 = fit["S"] * fit["S"] + (1 - fit["S"]) * fit["R"]
 true2 = sum(1 for f in range(4) if pat[f] == "S" and pat[(f + 2) % 4] == "S") / pat.count("S")
 assert fit2 != true2
-print(f"break, spells of two days: fitted P^2 sunny->sunny {fit2:.4f}, true {true2:.4f}")
+print(f"break, spells of two days: fitted P^2 sunny->sunny {fit2:.4f}, true {true2:.4f}"); print("ALL CHECKS PASS")

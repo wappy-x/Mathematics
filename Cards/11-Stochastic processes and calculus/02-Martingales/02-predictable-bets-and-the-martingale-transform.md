@@ -41,7 +41,7 @@ $$G_n = \sum_{k=1}^{n} H_k\,\Delta M_k = \sum_{k=1}^{n} H_k\,(M_k - M_{k-1}), \q
 
 **Read it aloud:** the gambler's net gain after $n$ rounds is each round's stake times that round's result, added up.
 
-The theorem is one line. If $M$ is a martingale and every $H_k$ is predictable and bounded, then $G$ is a martingale, and so
+The theorem is one line. If $M$ is a martingale and every $H_k$ is predictable and bounded, then $G$ is a martingale, and so its average, written $E[G_n]$, is zero:
 
 $$E[G_n] = 0 \quad \text{for every } n.$$
 
@@ -80,7 +80,7 @@ Before round $k$ the stake is already settled. Given what is known, it is a fixe
 
 ### Step 1: one round averages to zero
 
-Stand just before round $k$. The information $\mathcal F_{k-1}$ fixes the stake $H_k$, so the stake comes outside the conditional average, the "taking out what is known" rule from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md):
+Stand just before round $k$. The information $\mathcal F_{k-1}$ fixes the stake $H_k$, so the stake comes outside the conditional average $E[\,\cdot \mid \mathcal F_{k-1}]$ (the average given what is known by time $k - 1$), the "taking out what is known" rule from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md):
 
 $$E[H_k\,\Delta M_k \mid \mathcal F_{k-1}] = H_k\,E[\Delta M_k \mid \mathcal F_{k-1}] = H_k \times 0 = 0.$$
 
@@ -92,7 +92,7 @@ $G_k = G_{k-1} + H_k\,\Delta M_k$, and $G_{k-1}$ is already known before round $
 
 ### Step 3: why the stakes must be bounded
 
-Step 1 multiplies inside an average, and an average must exist before it can be zero. With $\lvert H_k \rvert \le c$, the round's gain is at most $c$ times the size of the move, so its average exists. Doubling capped at four rounds has stakes at most $8, bounded. The full argument, with integrability, adaptedness and a converse, is in the callout.
+Step 1 multiplies inside an average, and an average must exist before it can be zero. With $\lvert H_k \rvert \le c$, the round's gain is at most $c$ times the size of the move, so its average exists. Doubling capped at four rounds has stakes at most $8, bounded. The full argument, with integrability, adaptedness and a converse, is in the fold below.
 
 <details>
 <summary>Detailed proof</summary>
@@ -105,7 +105,7 @@ Step 1 multiplies inside an average, and an average must exist before it can be 
 
 **Fair.** $E[G_n \mid \mathcal F_{n-1}] = G_{n-1} + E[H_n\,\Delta M_n \mid \mathcal F_{n-1}]$, since $G_{n-1}$ is known. Taking out what is known (allowed because $H_n$ is bounded and $\Delta M_n$ integrable) gives $H_n\,E[\Delta M_n \mid \mathcal F_{n-1}] = H_n (E[M_n \mid \mathcal F_{n-1}] - M_{n-1}) = 0$. So $G$ is a martingale, and the tower rule gives $E[G_n] = E[G_0] = 0$.
 
-**No sure win.** If $G_n \ge 0$ on every outcome, then $G_n = 0$ almost surely: a gain that is never negative and positive with positive chance would have a positive average, not 0.
+**No sure win.** If $G_n \ge 0$ on every outcome, then $G_n = 0$ almost surely (with probability 1): a gain that is never negative and positive with positive chance would have a positive average, not 0.
 
 **Converse.** Suppose an adapted integrable $M$ has $E[G_n] = 0$ for every bounded predictable strategy. Fix $k$ and an event $B$ in $\mathcal F_{k-1}$, and stake $1 on round $k$ only when $B$ has happened, nothing otherwise. Then $0 = E[G_k] = E[\mathbf 1_B\,\Delta M_k]$ for every such $B$, which is the defining property of $E[\Delta M_k \mid \mathcal F_{k-1}] = 0$. So $M$ is a martingale. Being fair and being unbeatable by predictable bets are the same property.
 
@@ -183,7 +183,9 @@ Bars: the pocket $2^N - 1$, which is also the loss when every toss is tails. Ove
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The code reaches doubling's numbers by three roads: the formula; exact enumeration of every toss sequence in whole numbers, for pockets of 1 to 10 doublings and for red with weights 18 and 19 over 37; and a seeded simulation (SplitMix64, written out) of 200,000 sessions, each average printed with its standard error. It also checks 1,000 random predictable strategies exactly, lets the same stakes see the toss, draws the sample path, and samples uncapped doubling. For uncapped doubling the +/- column is printed only to show that it never settles: with an infinite mean there is no standard error.
+Nothing is imported. The code reaches doubling's numbers by three roads: the formula; exact enumeration of every toss sequence in whole numbers, for pockets of 1 to 10 doublings and for red with weights 18 and 19 over 37; and a seeded simulation (SplitMix64, written out) of 200,000 sessions, each average printed with its standard error. It also checks 1,000 random predictable strategies exactly, lets the same stakes see the toss, draws the sample path, and samples uncapped doubling.
+
+The standard error is the typical size of the chance error in a simulated average. For uncapped doubling the +/- column is printed only to show that it never settles: with an infinite mean there is no standard error.
 
 ### Python
 
@@ -547,6 +549,207 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the theorem and its converse for every game and strategy, and doubling's averages for every pocket size.
+
+- Suppose $M$ is a martingale and every stake $H_k$ is predictable and bounded, $\lvert H_k \rvert \le c_k$. Then the martingale transform $G$ is a martingale, and $E[G_n] = 0$ for every $n$.
+- Suppose each $M_n$ is known by round $n$, with a finite average, and every bounded predictable strategy has $E[G_n] = 0$. Then $M$ is a martingale.
+- Take doubling with a pocket of $2^N - 1$ dollars on a fair coin, for any $N$. Then the average gain is exactly 0, and the average deepest debt is $N/2$.
+- The $15 pocket pays for four bets: each first win leaves $1, and four losses cost $15.
+- The chance of finishing ahead is 15/16, the average gain $0, the average money staked $4 and the average deepest debt $2.
+- Ten doublings need a $1,023 pocket and finish ahead with chance 1023/1024.
+- A stake that peeks at the toss wins $4 on every one of the 16 sequences.
+
+The roulette numbers, the random strategies, the simulations, the sample path and uncapped doubling are left to the Python and Rust checks.
+
+```lean
+-- Betting on a martingale: a bounded predictable betting strategy on a martingale gives a martingale with average gain zero, only a martingale passes that test, and capped doubling has mean gain 0 and mean deepest debt N/2.
+import Mathlib.Probability.Martingale.Basic
+
+open MeasureTheory
+
+/-! Setting. `Ω` with probability measure `μ` and filtration `𝓕` (`𝓕 n` is what is known after
+round `n`). `M n` is what $1 a round would have won after `n` rounds. The stake on round `k + 1`
+is `H (k + 1)`; it is predictable when it is fixed by `𝓕 k`, that is, when the process
+`fun k => H (k + 1)` is adapted to `𝓕`. The martingale transform is
+`G n = ∑ k < n, H (k + 1) * (M (k + 1) - M k)`, so `G 0 = 0`. -/
+
+/-- The card's theorem: if `M` is a martingale and every stake `H k` is predictable (fixed by
+what is known before its round) and bounded by a constant `c_k`, then the gambler's running gain
+`G n = ∑_{k=1}^{n} H_k (M_k - M_{k-1})` is a martingale, and its average is zero at every round. -/
+theorem predictable_bounded_bets_on_martingale_are_martingale
+    {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {𝓕 : Filtration ℕ m0} {M H : ℕ → Ω → ℝ}
+    (hM : Martingale M 𝓕 μ)
+    (hpred : StronglyAdapted 𝓕 fun k => H (k + 1))
+    (hbdd : ∀ k, ∃ c : ℝ, ∀ ω, |H k ω| ≤ c) :
+    Martingale (fun n ω => ∑ k ∈ Finset.range n, H (k + 1) ω * (M (k + 1) ω - M k ω)) 𝓕 μ ∧
+      ∀ n, ∫ ω, (∑ k ∈ Finset.range n, H (k + 1) ω * (M (k + 1) ω - M k ω)) ∂μ = 0 := by
+  choose C hC using hbdd
+  have hD : ∀ k, Integrable (fun ω => M (k + 1) ω - M k ω) μ := fun k =>
+    (hM.integrable (k + 1)).sub (hM.integrable k)
+  have hterm : ∀ k, Integrable (fun ω => H (k + 1) ω * (M (k + 1) ω - M k ω)) μ := fun k =>
+    (hD k).bdd_mul (c := C (k + 1)) (hpred.stronglyMeasurable (i := k)).aestronglyMeasurable
+      (ae_of_all _ fun ω => by simpa [Real.norm_eq_abs] using hC (k + 1) ω)
+  have hint : ∀ n, Integrable
+      (fun ω => ∑ k ∈ Finset.range n, H (k + 1) ω * (M (k + 1) ω - M k ω)) μ := fun n =>
+    integrable_finsetSum _ fun k _ => hterm k
+  have hadp : StronglyAdapted 𝓕
+      (fun n ω => ∑ k ∈ Finset.range n, H (k + 1) ω * (M (k + 1) ω - M k ω)) := by
+    intro n
+    refine Finset.stronglyMeasurable_fun_sum _ fun k hk => ?_
+    rw [Finset.mem_range] at hk
+    exact (hpred.stronglyMeasurable_le hk.le).mul
+      ((hM.stronglyAdapted.stronglyMeasurable_le (Nat.succ_le_of_lt hk)).sub
+        (hM.stronglyAdapted.stronglyMeasurable_le hk.le))
+  have hmart : Martingale
+      (fun n ω => ∑ k ∈ Finset.range n, H (k + 1) ω * (M (k + 1) ω - M k ω)) 𝓕 μ := by
+    refine martingale_of_condExp_sub_eq_zero_nat hadp hint fun i => ?_
+    have heq : ((fun ω => ∑ k ∈ Finset.range (i + 1), H (k + 1) ω * (M (k + 1) ω - M k ω)) -
+        fun ω => ∑ k ∈ Finset.range i, H (k + 1) ω * (M (k + 1) ω - M k ω)) =
+        (fun ω => H (i + 1) ω) * (fun ω => M (i + 1) ω - M i ω) := by
+      funext ω
+      simp [Finset.sum_range_succ]
+    rw [heq]
+    have hDz : μ[fun ω => M (i + 1) ω - M i ω | 𝓕 i] =ᵐ[μ] 0 := by
+      have h1 := condExp_sub (m := 𝓕 i) (hM.integrable (i + 1)) (hM.integrable i)
+      have h2 := hM.condExp_ae_eq (Nat.le_succ i)
+      have h3 : μ[M i | 𝓕 i] = M i :=
+        condExp_of_stronglyMeasurable (𝓕.le i) (hM.stronglyAdapted i) (hM.integrable i)
+      have h4 : (fun ω => M (i + 1) ω - M i ω) = M (i + 1) - M i := rfl
+      rw [h4]
+      filter_upwards [h1, h2] with ω hω1 hω2
+      simp [hω1, hω2, h3]
+    filter_upwards [condExp_mul_of_stronglyMeasurable_left (m := 𝓕 i) (μ := μ) (hpred i)
+      (hterm i) (hD i), hDz] with ω hω1 hω2
+    simp [hω1, hω2]
+  refine ⟨hmart, fun n => ?_⟩
+  have h := hmart.condExp_ae_eq (Nat.zero_le n)
+  rw [← integral_condExp (𝓕.le 0), integral_congr_ae h]
+  simp
+
+/-- The converse: if an adapted, integrable game `M` gives average gain zero at every round to
+every bounded predictable strategy, then `M` is a martingale. Being fair and being unbeatable by
+predictable bets are the same property. -/
+theorem martingale_of_every_predictable_bet_fair
+    {Ω : Type*} {m0 : MeasurableSpace Ω} {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {𝓕 : Filtration ℕ m0} {M : ℕ → Ω → ℝ}
+    (hadapt : StronglyAdapted 𝓕 M) (hint : ∀ n, Integrable (M n) μ)
+    (hfair : ∀ H : ℕ → Ω → ℝ, StronglyAdapted 𝓕 (fun k => H (k + 1)) →
+      (∀ k, ∃ c : ℝ, ∀ ω, |H k ω| ≤ c) →
+      ∀ n, ∫ ω, (∑ k ∈ Finset.range n, H (k + 1) ω * (M (k + 1) ω - M k ω)) ∂μ = 0) :
+    Martingale M 𝓕 μ := by
+  refine martingale_of_setIntegral_eq_succ hadapt hint fun i s hs => ?_
+  classical
+  let H : ℕ → Ω → ℝ := fun k => if k = i + 1 then s.indicator (fun _ => (1 : ℝ)) else 0
+  have hH : StronglyAdapted 𝓕 (fun k => H (k + 1)) := by
+    intro k
+    by_cases hk : k = i
+    · subst hk
+      simp only [H, ite_true]
+      exact (stronglyMeasurable_const.indicator hs)
+    · have : k + 1 ≠ i + 1 := by omega
+      simp only [H, this, ite_false]
+      exact stronglyMeasurable_const
+  have hb : ∀ k, ∃ c : ℝ, ∀ ω, |H k ω| ≤ c := by
+    intro k
+    refine ⟨1, fun ω => ?_⟩
+    simp only [H]
+    split_ifs
+    · by_cases hω : ω ∈ s <;> simp [hω]
+    · simp
+  have h := hfair H hH hb (i + 1)
+  have hsum : ∀ ω, (∑ k ∈ Finset.range (i + 1), H (k + 1) ω * (M (k + 1) ω - M k ω)) =
+      s.indicator (fun ω => M (i + 1) ω - M i ω) ω := by
+    intro ω
+    rw [Finset.sum_range_succ, Finset.sum_eq_zero]
+    · by_cases hω : ω ∈ s <;> simp [H, hω]
+    · intro k hk
+      rw [Finset.mem_range] at hk
+      have : k ≠ i := by omega
+      simp [H, this]
+  simp_rw [hsum] at h
+  rw [integral_indicator (𝓕.le i s hs), integral_sub (hint (i + 1)).integrableOn
+    (hint i).integrableOn] at h
+  linarith
+
+/-- Doubling with a pocket of `2^N - 1` dollars on a fair coin: the first win comes at round `k`
+with chance `2^{-k}` and leaves the gambler $1 ahead after a deepest debt of `2^{k-1} - 1`; all
+`N` tosses lose with chance `2^{-N}`, a loss and deepest debt of `2^N - 1`. The average gain is
+exactly 0 and the average deepest debt is `N / 2`. -/
+theorem capped_doubling_mean_gain_zero_and_mean_debt_half_N (N : ℕ) :
+    (∑ k ∈ Finset.Icc 1 N, (1 / 2 : ℚ) ^ k * 1) + (1 / 2 : ℚ) ^ N * (-((2 : ℚ) ^ N - 1)) = 0 ∧
+    (∑ k ∈ Finset.Icc 1 N, (1 / 2 : ℚ) ^ k * ((2 : ℚ) ^ (k - 1) - 1))
+        + (1 / 2 : ℚ) ^ N * ((2 : ℚ) ^ N - 1) = N / 2 := by
+  have hgeo : ∀ n : ℕ, ∑ k ∈ Finset.Icc 1 n, (1 / 2 : ℚ) ^ k = 1 - (1 / 2 : ℚ) ^ n := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [Finset.sum_Icc_succ_top (by omega), ih, pow_succ]
+      ring
+  have hpow : ∀ n : ℕ, (1 / 2 : ℚ) ^ n * (2 : ℚ) ^ n = 1 := by
+    intro n
+    rw [← mul_pow]; norm_num
+  have hterm : ∀ k ∈ Finset.Icc 1 N,
+      (1 / 2 : ℚ) ^ k * ((2 : ℚ) ^ (k - 1) - 1) = 1 / 2 - (1 / 2 : ℚ) ^ k := by
+    intro k hk
+    obtain ⟨j, rfl⟩ : ∃ j, k = j + 1 := ⟨k - 1, by simp at hk; omega⟩
+    simp only [Nat.add_sub_cancel]
+    rw [pow_succ, mul_sub, mul_one]
+    have := hpow j
+    linear_combination (1 / 2 : ℚ) * this
+  constructor
+  · simp only [mul_one]
+    rw [hgeo]
+    linear_combination (-1 : ℚ) * hpow N
+  · rw [Finset.sum_congr rfl hterm, Finset.sum_sub_distrib, hgeo]
+    rw [Finset.sum_const, Nat.card_Icc, nsmul_eq_mul, Nat.add_sub_cancel]
+    linear_combination hpow N
+
+/-! The card's worked numbers: the $15 pocket, N = 4, sixteen equally likely toss sequences. -/
+
+-- The pocket pays for four bets: 1 + 2 + 4 + 8 = 15 = 2^4 - 1.
+example : 1 + 2 + 4 + 8 = 2 ^ 4 - 1 ∧ 2 ^ 4 - 1 = 15 := by norm_num
+
+-- Each first win repays the earlier losses and leaves $1.
+example : (1 : ℤ) = 1 ∧ -1 + 2 = (1 : ℤ) ∧ -1 - 2 + 4 = (1 : ℤ) ∧ -1 - 2 - 4 + 8 = (1 : ℤ) ∧
+    -1 - 2 - 4 - 8 = (-15 : ℤ) := by norm_num
+
+-- Chance of finishing ahead: 1/2 + 1/4 + 1/8 + 1/16 = 15/16 = 0.9375.
+example : (1 / 2 + 1 / 4 + 1 / 8 + 1 / 16 : ℚ) = 15 / 16 := by norm_num
+
+-- Average gain: 15/16 × 1 − 1/16 × 15 = 0.
+example : (15 / 16 * 1 - 1 / 16 * 15 : ℚ) = 0 := by norm_num
+
+-- Average money staked: 1 + 2 × 1/2 + 4 × 1/4 + 8 × 1/8 = 4.
+example : (1 + 2 * (1 / 2) + 4 * (1 / 4) + 8 * (1 / 8) : ℚ) = 4 := by norm_num
+
+-- Average deepest debt: 0 × 1/2 + 1 × 1/4 + 3 × 1/8 + 7 × 1/16 + 15 × 1/16 = 2 = N/2.
+example : (0 * (1 / 2) + 1 * (1 / 4) + 3 * (1 / 8) + 7 * (1 / 16) + 15 * (1 / 16) : ℚ) = 4 / 2 := by
+  norm_num
+
+-- Ten doublings: the pocket is $1,023, and the chance of a winning session is 1 − 1/1024 = 1023/1024.
+example : (2 : ℤ) ^ 10 - 1 = 1023 ∧ (1 - 1 / 2 ^ 10 : ℚ) = 1023 / 1024 := by norm_num
+
+-- Letting the stake peek (stake = the toss itself, ±1) wins $4 on every one of the 16 sequences.
+example : ∀ w : Fin 4 → Bool,
+    ∑ i, (if w i then (1 : ℤ) else -1) * (if w i then (1 : ℤ) else -1) = 4 := by decide
+
+#print axioms predictable_bounded_bets_on_martingale_are_martingale
+#print axioms martingale_of_every_predictable_bet_fair
+#print axioms capped_doubling_mean_gain_zero_and_mean_debt_half_N
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'predictable_bounded_bets_on_martingale_are_martingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'martingale_of_every_predictable_bet_fair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'capped_doubling_mean_gain_zero_and_mean_debt_half_N' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -582,6 +785,7 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Martingales](01-martingales.md): the fair game, $E[M_{n+1} \mid \mathcal F_n] = M_n$, and the filtration that says what is known when.
+- [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): taking out what is known and the tower rule, the two moves in Steps 1 and 2.
 
 ## Where this goes next
 
@@ -590,7 +794,7 @@ The two outputs match line for line.
 - [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): the same sum of stake times move, with rounds shrunk to nothing and the coin replaced by Brownian motion.
 - [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): the finance use, where the stake is a holding of shares and the gain is a self-financing portfolio's profit.
 
-No predictable strategy beats a fair game by a fixed round, a stop with a deadline included; what this card leaves open is a stop with no deadline, and when the average may pass to that limit, the question optional stopping raises and [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers.
+No predictable strategy beats a fair game by a fixed round, and a stop with a deadline is one such strategy. This card leaves open a stop with no deadline: when may the average pass to that limit? Optional stopping raises that question, and [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers it.
 
 ---
 

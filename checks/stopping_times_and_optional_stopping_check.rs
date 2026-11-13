@@ -161,4 +161,5 @@ fn main() {
     println!("figure, player {} quits at round {}", fj, ft);
     println!("figure, fortune  {}", row(ffree.iter().map(|v| v.to_string()).collect()));
     println!("figure, stopped  {}", row(fpath.iter().map(|v| v.to_string()).collect()));
+    println!("ALL CHECKS PASS");
 }

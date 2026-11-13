@@ -68,7 +68,7 @@ The third is the **Chapman-Kolmogorov equation**. In matrix form it reads $P^{m+
 
 - **Tomorrow depends only on today (the Markov property).** If the weather ran in fixed two-day spells, a matrix fitted to one-day changes would predict sun two days after sun half the time; the truth would be never. A power of a matrix is only as good as the Markov assumption behind the matrix.
 - **The same matrix every day (time-homogeneous).** If a wetter season takes over after day 3, the week-ahead table is the ordered product of the daily tables. Rain on day 7 is then 0.4478788, not 0.2454961, and 0.2538128 if the two seasons are taken in the wrong order: matrices do not in general commute.
-- **Fixed days, not random ones.** The split in Chapman-Kolmogorov is at a fixed day m. Splitting at a random time, such as "the first rainy day", needs the strong Markov property, which holds at stopping times and is a separate result.
+- **Fixed days, not random ones.** The split in Chapman-Kolmogorov is at a fixed day m. Splitting at a random time, such as "the first rainy day", needs the strong Markov property, which holds at stopping times (random days that can be recognized when they arrive, without looking ahead) and is a separate result.
 - **Finitely many states, each row adding to 1.** With infinitely many states the sums become series; the results still hold, but the matrix picture needs care.
 
 ---
@@ -325,10 +325,10 @@ fit = {a: sum(1 for p in pairs if p == (a, "S")) / sum(1 for p in pairs if p[0] 
 fit2 = fit["S"] * fit["S"] + (1 - fit["S"]) * fit["R"]
 true2 = sum(1 for f in range(4) if pat[f] == "S" and pat[(f + 2) % 4] == "S") / pat.count("S")
 assert fit2 != true2
-print(f"break, spells of two days: fitted P^2 sunny->sunny {fit2:.4f}, true {true2:.4f}")
+print(f"break, spells of two days: fitted P^2 sunny->sunny {fit2:.4f}, true {true2:.4f}"); print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 chain: sunny, cloudy, rainy; one step = one day; today sunny
@@ -360,6 +360,7 @@ break, P^7 times the start as a column: 0.3939966 0.3932013 0.3929102, sum 1.180
 break, wet table rows: 0.4 0.4 0.2 | 0.2 0.4 0.4 | 0.1 0.3 0.6
 break, 3 days of P then 4 of the wet table, rainy: 0.4478788; P^7 alone 0.2454961; wet days first 0.2538128
 break, spells of two days: fitted P^2 sunny->sunny 0.5000, true 0.0000
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -535,11 +536,11 @@ fn main() {
     let true2 = (0..4).filter(|&f| pat[f] == 'S' && pat[(f + 2) % 4] == 'S').count() as f64
         / pat.iter().filter(|&&c| c == 'S').count() as f64;
     assert!(fit2 != true2);
-    println!("break, spells of two days: fitted P^2 sunny->sunny {:.4}, true {:.4}", fit2, true2);
+    println!("break, spells of two days: fitted P^2 sunny->sunny {:.4}, true {:.4}", fit2, true2); println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 chain: sunny, cloudy, rainy; one step = one day; today sunny
@@ -571,9 +572,288 @@ break, P^7 times the start as a column: 0.3939966 0.3932013 0.3929102, sum 1.180
 break, wet table rows: 0.4 0.4 0.2 | 0.2 0.4 0.4 | 0.1 0.3 0.6
 break, 3 days of P then 4 of the wet table, rainy: 0.4478788; P^7 alone 0.2454961; wet days first 0.2538128
 break, spells of two days: fitted P^2 sunny->sunny 0.5000, true 0.0000
+ALL CHECKS PASS
 ```
 
 The simulation is one run: rain on day 7 at 0.2465 ± 0.0014, within one standard error of the exact 0.2454961.
+
+### Lean
+
+Lean proves the three results for every time-homogeneous Markov chain on finitely many states, and the weather chain's numbers exactly.
+
+- Suppose the chain starts in state i with positive chance. Then the chance of state j exactly n days later is the (i, j) entry of $P^n$.
+- Take any start law $\alpha$ and any day n. Then the law on day n is $\mu_n = \alpha P^n$.
+- Take any days m and n. Then $P^{m+n} = P^m P^n$, entry by entry: the Chapman-Kolmogorov equation.
+- From sunny, rain in two days is 0.19. The law on day 3 is (0.422, 0.353, 0.225), and on day 4 (0.4041, 0.3578, 0.2381).
+- The whole of $P^7$ matches the code. From sunny, rain a week out is 0.2454961, and each row adds to 1.
+- There are 2187 seven-day paths from a sunny start.
+- Splitting the week at day 3 gives 0.2454961, the same as seven one-day steps.
+- Take the uncertain start (0.5, 0.3, 0.2). Then rain on day 7 is 0.24582982 exactly, printed as 0.2458298.
+- The long-run mix $\pi$ = (24, 22, 15)/61 satisfies $\pi P = \pi$. The diagonal sum of $P$ is 1.4, and its determinant is 0.01.
+- Applying $P^7$ to (1, 0, 0) as a column gives the sunny column, adding to 1.1801081: not a law.
+- Three days of $P$ then four of the wet table give rain on day 7 at 0.4478788. The wrong order gives 0.2538128.
+
+The 2187-path sum, the eigenvalues 0.3732051 and 0.0267949, the simulation and the two-day spells are left to the Python and Rust checks.
+
+```lean
+-- n-step transitions: for a Markov chain on finitely many states, the chance of going from state i to state j in n steps is the (i, j) entry of the n-th power of the transition matrix, the law on day n is the start law times that power, and the powers obey Chapman-Kolmogorov, P^(m+n) = P^m P^n entry by entry.
+import Mathlib.Probability.ConditionalProbability
+import Mathlib.LinearAlgebra.Matrix.Stochastic
+import Mathlib.MeasureTheory.Measure.Real
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Tactic.NormNum
+
+open MeasureTheory ProbabilityTheory Matrix
+
+/-! Setting, as in the card's Detailed proof. `S` is a finite set of states, `X 0, X 1, …` is
+the process on a probability space `(Ω, μ)`, `α` is the start law (chances that add to 1) and
+`P` is the transition matrix (no negative entry, each row adds to 1). The process is a
+time-homogeneous Markov chain with start law `α` and matrix `P`: for every `n`, every path
+`i₀, …, iₙ` has chance `α_{i₀} p_{i₀ i₁} ⋯ p_{iₙ₋₁ iₙ}`, the same `P` on every day.
+`P ^ 0 = 1`, the identity matrix. -/
+
+theorem path_sum_eq_dotProduct_pow_mulVec {S : Type*} [Fintype S] [DecidableEq S]
+    (P : Matrix S S ℝ) : ∀ (n : ℕ) (u g : S → ℝ),
+    ∑ h : Fin (n + 1) → S, u (h 0) * (∏ m : Fin n, P (h m.castSucc) (h m.succ)) *
+      g (h (Fin.last n)) = u ⬝ᵥ ((P ^ n) *ᵥ g)
+  | 0, u, g => by
+    rw [← (Equiv.funUnique (Fin 1) S).symm.sum_comp]
+    simp [dotProduct]
+  | n + 1, u, g => by
+    rw [← (Fin.consEquiv fun _ => S).sum_comp, Fintype.sum_prod_type]
+    have key : ∀ a : S, ∑ t : Fin (n + 1) → S,
+        u ((Fin.consEquiv fun _ => S) (a, t) 0) *
+          (∏ m : Fin (n + 1), P ((Fin.consEquiv fun _ => S) (a, t) m.castSucc)
+            ((Fin.consEquiv fun _ => S) (a, t) m.succ)) *
+          g ((Fin.consEquiv fun _ => S) (a, t) (Fin.last (n + 1))) =
+        ∑ b, (u a * P a b) * ((P ^ n) *ᵥ g) b := by
+      intro a
+      have ih := path_sum_eq_dotProduct_pow_mulVec P n (fun b => u a * P a b) g
+      rw [dotProduct] at ih
+      rw [← ih]
+      refine Finset.sum_congr rfl fun t _ => ?_
+      rw [← Fin.succ_last]
+      simp only [Fin.consEquiv_apply, Fin.prod_univ_succ, Fin.cons_zero, Fin.castSucc_zero,
+        Fin.cons_succ, ← Fin.succ_castSucc]
+      ring
+    simp_rw [key]
+    rw [pow_succ', ← mulVec_mulVec]
+    simp only [dotProduct, mulVec, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
+    ring_nf
+
+#print axioms path_sum_eq_dotProduct_pow_mulVec
+
+theorem measureReal_path_event {Ω S : Type*} [MeasurableSpace Ω]
+    [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
+    (μ : Measure Ω) [IsFiniteMeasure μ] (X : ℕ → Ω → S) (hX : ∀ n, Measurable (X n))
+    (n : ℕ) (Φ : (Fin (n + 1) → S) → Prop) [DecidablePred Φ] :
+    μ.real {ω | Φ (fun m : Fin (n + 1) => X m ω)} =
+      ∑ h : Fin (n + 1) → S, if Φ h then μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} else 0 := by
+  rw [← Finset.sum_filter]
+  have hset : {ω | Φ (fun m : Fin (n + 1) => X m ω)} =
+      ⋃ h ∈ Finset.univ.filter Φ, {ω | ∀ m : Fin (n + 1), X m ω = h m} := by
+    ext ω
+    simp only [Set.mem_ofPred_eq, Set.mem_iUnion, Finset.mem_filter, Finset.mem_univ, true_and,
+      exists_prop]
+    constructor
+    · intro hω
+      exact ⟨_, hω, fun m => rfl⟩
+    · rintro ⟨h, hh, hω⟩
+      have : (fun m : Fin (n + 1) => X m ω) = h := funext hω
+      rw [this]
+      exact hh
+  rw [hset]
+  refine measureReal_biUnion_finset ?_ ?_ (fun _ _ => measure_ne_top _ _)
+  · intro h _ h' _ hne
+    refine Set.disjoint_left.mpr fun ω hω hω' => hne ?_
+    funext m
+    have e1 : X m ω = h m := hω m
+    have e2 : X m ω = h' m := hω' m
+    rw [← e1, e2]
+  · intro h _
+    simp only [Set.ofPred_forall]
+    exact MeasurableSet.iInter fun m => hX m (measurableSet_singleton _)
+
+#print axioms measureReal_path_event
+
+theorem joint_law {Ω S : Type*} [MeasurableSpace Ω]
+    [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
+    (μ : Measure Ω) (X : ℕ → Ω → S) (α : S → ℝ) (P : Matrix S S ℝ)
+    (hpath : ∀ (n : ℕ) (h : Fin (n + 1) → S),
+      μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} =
+        α (h 0) * ∏ m : Fin n, P (h m.castSucc) (h m.succ))
+    (n : ℕ) (u g : S → ℝ) :
+    ∑ h : Fin (n + 1) → S, μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} * u (h 0) *
+      g (h (Fin.last n)) = (fun k => α k * u k) ⬝ᵥ ((P ^ n) *ᵥ g) := by
+  rw [← path_sum_eq_dotProduct_pow_mulVec]
+  refine Finset.sum_congr rfl fun h _ => ?_
+  rw [hpath]
+  ring
+
+#print axioms joint_law
+
+/-- **n-step chances are matrix powers.** For a Markov chain on finitely many states with start
+law `α` and the same transition matrix `P` every day, and for every number of days `n` and
+states `i`, `j` with `i` having positive chance on day 0: the chance of state `j` on day `n`,
+given state `i` on day 0, is the `(i, j)` entry of `P ^ n`. -/
+theorem n_step_chance_eq_matrix_pow {Ω S : Type*} [MeasurableSpace Ω]
+    [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → S) (hX : ∀ n, Measurable (X n))
+    (α : S → ℝ) (hα0 : ∀ i, 0 ≤ α i) (hα1 : ∑ i, α i = 1) (P : Matrix S S ℝ)
+    (hP : P ∈ Matrix.rowStochastic ℝ S)
+    (hpath : ∀ (n : ℕ) (h : Fin (n + 1) → S),
+      μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} =
+        α (h 0) * ∏ m : Fin n, P (h m.castSucc) (h m.succ))
+    (n : ℕ) (i j : S) (hi : μ {ω | X 0 ω = i} ≠ 0) :
+    (μ[{ω | X n ω = j} | {ω | X 0 ω = i}]).toReal = (P ^ n) i j := by
+  have hmeas : MeasurableSet {ω | X 0 ω = i} := hX 0 (measurableSet_singleton i)
+  have h0 : μ.real {ω | X 0 ω = i} = α i := by
+    have := hpath 0 (fun _ => i)
+    simp only [Finset.univ_eq_empty, Finset.prod_empty, mul_one] at this
+    rw [← this]
+    congr 1
+    ext ω
+    simp
+  have hα : α i ≠ 0 := by
+    rw [← h0, measureReal_def]
+    exact ENNReal.toReal_ne_zero.mpr ⟨hi, measure_ne_top _ _⟩
+  have hjoint : μ.real ({ω | X 0 ω = i} ∩ {ω | X n ω = j}) = α i * (P ^ n) i j := by
+    have h1 := measureReal_path_event μ X hX n (fun h => h 0 = i ∧ h (Fin.last n) = j)
+    simp only [Fin.val_last, Fin.val_zero] at h1
+    have hs : {ω | X 0 ω = i} ∩ {ω | X n ω = j} = {ω | X 0 ω = i ∧ X n ω = j} := rfl
+    rw [hs, h1]
+    have h2 := joint_law μ X α P hpath n (Pi.single i 1) (Pi.single j 1)
+    have h3 : (fun k => α k * (Pi.single i (1 : ℝ) : S → ℝ) k) ⬝ᵥ ((P ^ n) *ᵥ Pi.single j 1) =
+        α i * (P ^ n) i j := by
+      have : (fun k => α k * (Pi.single i (1 : ℝ) : S → ℝ) k) = Pi.single i (α i) := by
+        funext k
+        by_cases hk : k = i
+        · subst hk; simp
+        · simp [hk]
+      rw [this, single_dotProduct, mulVec_single_one]
+      rfl
+    rw [← h3, ← h2]
+    refine Finset.sum_congr rfl fun h _ => ?_
+    by_cases ha : h 0 = i <;> by_cases hb : h (Fin.last n) = j <;> simp [ha, hb]
+  rw [cond_apply hmeas, ENNReal.toReal_mul, ENNReal.toReal_inv, ← measureReal_def,
+    ← measureReal_def, hjoint, h0]
+  field_simp
+
+/-- **The law on day n is the start law times `P ^ n`.** For the same chain, for every `n` and
+every state `j`, the chance of `j` on day `n` is entry `j` of the row `α P ⁿ`, that is
+`∑ i, α i * (P ^ n) i j`. -/
+theorem law_on_day_n_eq_start_law_mul_pow {Ω S : Type*} [MeasurableSpace Ω]
+    [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → S) (hX : ∀ n, Measurable (X n))
+    (α : S → ℝ) (hα0 : ∀ i, 0 ≤ α i) (hα1 : ∑ i, α i = 1) (P : Matrix S S ℝ)
+    (hP : P ∈ Matrix.rowStochastic ℝ S)
+    (hpath : ∀ (n : ℕ) (h : Fin (n + 1) → S),
+      μ.real {ω | ∀ m : Fin (n + 1), X m ω = h m} =
+        α (h 0) * ∏ m : Fin n, P (h m.castSucc) (h m.succ))
+    (n : ℕ) (j : S) :
+    μ.real {ω | X n ω = j} = (α ᵥ* (P ^ n)) j := by
+  have h1 := measureReal_path_event μ X hX n (fun h => h (Fin.last n) = j)
+  simp only [Fin.val_last] at h1
+  rw [h1]
+  have h2 := joint_law μ X α P hpath n (fun _ => 1) (Pi.single j 1)
+  simp only [mul_one, mulVec_single_one] at h2
+  have h3 : (fun k => α k) ⬝ᵥ (P ^ n).col j = (α ᵥ* (P ^ n)) j := by
+    simp [dotProduct, vecMul]
+  rw [← h3, ← h2]
+  refine Finset.sum_congr rfl fun h _ => ?_
+  by_cases hh : h (Fin.last n) = j
+  · simp [hh]
+  · simp [hh]
+
+/-- **Chapman-Kolmogorov.** For a matrix `P` on finitely many states and any numbers of days
+`m` and `n`, the `(i, j)` entry of `P ^ (m + n)` is the sum, over every state `k` on day `m`,
+of the first leg's entry `(P ^ m) i k` times the second leg's entry `(P ^ n) k j`. -/
+theorem chapman_kolmogorov {S : Type*} [Fintype S] [DecidableEq S] (P : Matrix S S ℝ)
+    (m n : ℕ) (i j : S) :
+    (P ^ (m + n)) i j = ∑ k, (P ^ m) i k * (P ^ n) k j := by
+  rw [pow_add, Matrix.mul_apply]
+
+/-! The card's worked numbers, in whole numbers: `P` in tenths, so `P ^ n` is in units of
+`10⁻ⁿ`. States: 0 sunny, 1 cloudy, 2 rainy. -/
+
+-- P² and the 0.19 of markov-chains: sunny to rainy in two days.
+example : (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 2 =
+    !![47, 34, 19; 36, 37, 27; 32, 38, 30] := by decide
+
+-- The law day by day from a sunny start, (1, 0, 0) times P ^ n, in units of 10⁻ⁿ:
+-- day 3 (0.422, 0.353, 0.225), day 4 (0.4041, 0.3578, 0.2381).
+example : ![1, 0, 0] ᵥ* (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 3 =
+    ![422, 353, 225] := by decide
+example : ![1, 0, 0] ᵥ* (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 4 =
+    ![4041, 3578, 2381] := by decide
+
+-- P ^ 7, the week-ahead table: from sunny, rain a week out is 0.2454961, and the whole law on
+-- day 7 is (0.3939966, 0.3605073, 0.2454961); the cloudy and rainy rows are the code's.
+example : (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 7 =
+    !![3939966, 3605073, 2454961; 3932013, 3607204, 2460783; 3929102, 3607984, 2462914] := by
+  decide
+
+-- Each row of P ^ 7 still adds to 1, that is to 10⁷ in these units.
+example : (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 7 *ᵥ (fun _ => 1) =
+    (fun _ => 10 ^ 7) := by decide
+
+-- 3⁷ = 2187 seven-day paths from a sunny start.
+example : Fintype.card (Fin 7 → Fin 3) = 2187 := by norm_num
+
+-- Split at day 3: P³'s sunny row (0.422, 0.353, 0.225) against P⁴'s rainy column
+-- (0.2381, 0.2493, 0.2534) gives 0.2454961, the same as seven one-day steps.
+example : (fun k => ((!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 4) k 2) =
+    ![2381, 2493, 2534] := by decide
+example : 422 * 2381 + 353 * 2493 + 225 * 2534 = 2454961 := by decide
+
+-- Uncertain start (0.5, 0.3, 0.2): rain on day 7 is
+-- 0.5 × 0.2454961 + 0.3 × 0.2460783 + 0.2 × 0.2462914 = 0.24582982, printed 0.2458298.
+example : ![5, 3, 2] ᵥ* (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 7 =
+    ![39354073, 36062945, 24582982] := by decide
+example : 5 * 2454961 + 3 * 2460783 + 2 * 2462914 = 24582982 := by decide
+
+-- The long-run mix π = (24, 22, 15)/61 satisfies π P = π.
+example : ![24, 22, 15] ᵥ* (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) =
+    ![240, 220, 150] := by decide
+
+-- The eigenvalues add to the diagonal sum 1.4 and multiply to the determinant 0.01
+-- (in tenths: trace 14, determinant 10 thousandths).
+example : Matrix.trace (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℤ) = 14 := by
+  decide
+example : Matrix.det (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℤ) = 10 := by
+  norm_num [Matrix.det_fin_three]
+
+-- What breaks: P ^ 7 times the start as a column gives the sunny column
+-- (0.3939966, 0.3932013, 0.3929102), adding to 1.1801081, not a law.
+example : (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 7 *ᵥ ![1, 0, 0] =
+    ![3939966, 3932013, 3929102] := by decide
+example : 3939966 + 3932013 + 3929102 = 11801081 := by decide
+
+-- What breaks: three days of P then four of the wet table gives rain on day 7 at 0.4478788;
+-- the seasons in the wrong order give 0.2538128. Matrices do not commute.
+example : ((!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 3 *
+    (!![4, 4, 2; 2, 4, 4; 1, 3, 6] : Matrix (Fin 3) (Fin 3) ℕ) ^ 4) 0 2 = 4478788 := by decide
+example : ((!![4, 4, 2; 2, 4, 4; 1, 3, 6] : Matrix (Fin 3) (Fin 3) ℕ) ^ 4 *
+    (!![6, 3, 1; 3, 4, 3; 2, 4, 4] : Matrix (Fin 3) (Fin 3) ℕ) ^ 3) 0 2 = 2538128 := by decide
+
+#print axioms n_step_chance_eq_matrix_pow
+#print axioms law_on_day_n_eq_start_law_mul_pow
+#print axioms chapman_kolmogorov
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'path_sum_eq_dotProduct_pow_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'measureReal_path_event' depends on axioms: [propext, Classical.choice, Quot.sound]
+'joint_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'n_step_chance_eq_matrix_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'law_on_day_n_eq_start_law_mul_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'chapman_kolmogorov' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -625,7 +905,7 @@ Here the powers settled, with a gap shrinking by 0.3732051 a day; whether they s
 
 ## Sources
 
-Verified 2026-09-30: every link below opens a page naming the cited work.
+Verified 2026-11-13: every link below resolves to the publisher's page or, for Grinstead and Snell and for Levin and Peres, to the authors' own page for the book.
 
 - Norris, J. R. *Markov Chains*. Cambridge University Press, 1997. [Publisher page](https://www.cambridge.org/core/books/markov-chains/A3F966B10633A32C8F06F37158031739). Section 1.1: n-step transition probabilities as matrix powers, and the law at time n as the start law times the power.
 - Grinstead, Charles M., and J. Laurie Snell. *Introduction to Probability*, 2nd revised ed. American Mathematical Society, 1997. [Full text](https://math.dartmouth.edu/~prob/prob/prob.pdf). Chapter 11 opens with a three-state weather chain and proves the matrix-power theorems at the level of this card.

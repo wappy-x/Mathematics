@@ -10,7 +10,7 @@ A seedling is measured once a week for five weeks: 2.1, 2.9, 4.2, 4.8 and 6.0 cm
 
 Neither a nor b is known. Start with no preference between pairs (a flat prior). The **posterior**, the probability law of the unknowns given the data, then puts its weight on a long, thin, tilted cloud of pairs. The tilt is the story: a seedling that started taller must have grown more slowly to reach the same heights, so a and b have correlation −0.9045. The best single guess is a start of 1.0900 cm and a growth of 0.9700 cm a week, and the chance that it grows more than 1 cm a week is 0.4248, a little under a half.
 
-This posterior has an exact formula, so every simulated number here can be graded. Most posteriors have none. For those, a random walk through the pairs that spends its time in proportion to the posterior gives averages instead; that walk on one unknown is in [MCMC in outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md). This card is about why it works. The earlier cards on this shelf start from a chain and ask where it settles. **Markov chain Monte Carlo** (MCMC) starts from the law it wants and designs a chain that settles there.
+This posterior has an exact formula, so every simulated number here can be graded. Most posteriors have none. For those, a random walk through the pairs that spends its time in proportion to the posterior gives averages instead; that walk on one unknown is in [MCMC in outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md). This card is about why it works. **Markov chain Monte Carlo** (MCMC) starts from the law it wants and designs a chain that settles there.
 
 **Choose the moves so that, in equilibrium, as much probability flows from any state to any other as flows back, and let the chain reach every state without a fixed rhythm; then the wanted law is the chain's equilibrium, the chain converges to it from any start, and averages along one long run estimate its averages, at a cost measured by how slowly the chain forgets.**
 
@@ -38,7 +38,7 @@ $$\pi(x)\,P(x,y) = \pi(y)\,P(y,x) \quad \text{for every pair of states } x \ne y
 
 $$\alpha(x,y) = \min\!\left(1,\; r\right), \qquad r = \frac{f(y)\,q(y,x)}{f(x)\,q(x,y)}$$
 
-and otherwise stay at $x$, recording $x$ again. $Z$ cancels in $r$, so it is never needed.
+and otherwise stay at $x$, recording $x$ again.
 
 **Gibbs sampling** needs no acceptance step. It redraws one coordinate at a time from its law given the others: a new a from $\pi(a \mid b)$, then a new b from $\pi(b \mid a)$. One of each is a **sweep**.
 
@@ -72,7 +72,7 @@ Here $\rho_k$ is the correlation between steps k apart. For g = b under the Gibb
 - **The proposal ratio is in the acceptance.** Propose b on a multiplied scale without its factor and the chain settles on a different law: mean growth 0.9426, not 0.9700.
 - **Every plausible state is reachable (irreducible).** A sampler that moves a only, with b stuck at 0.5, averages a = 2.5027 against the truth 1.0900.
 - **No cycling (aperiodic).** A rejection leaves the chain where it is, and a Gibbs sweep can return to its start in one step, so no fixed rhythm exists. A chain with a period never settles, as [Classifying states](03-classifying-states.md) shows.
-- **A run long compared with τ, after a burn-in.** From b = 0, the Gibbs chain still has 0.3535 of its probability misplaced after 10 sweeps.
+- **A run long compared with τ, after a burn-in** (opening steps thrown away). From b = 0, the Gibbs chain still has 0.3535 of its probability misplaced after 10 sweeps.
 - **The posterior has finite total area.** Otherwise there is no equilibrium to find, and the chain drifts off.
 
 ---
@@ -89,7 +89,7 @@ Suppose the chain starts in law $\pi$. The chance of being at $y$ after one step
 
 $$\sum_x \pi(x)\,P(x,y) \;=\; \sum_x \pi(y)\,P(y,x) \;=\; \pi(y)$$
 
-For a continuous state the sum is an integral. The check puts the seedling posterior on a grid of 141 by 121 pairs and runs a Metropolis chain on it with 24 neighbouring proposals. The largest gap between the two sides of detailed balance, over every pair, is below 1e-15. One step applied to the exact posterior changes no grid probability by more than 1e-15. Detailed balance is sufficient, not necessary: Step 3's full Gibbs sweep keeps $\pi$ without being balanced itself.
+For a continuous state the sum is an integral. The check puts the seedling posterior on a grid of 141 by 121 pairs and runs a Metropolis chain on it with 24 neighbouring proposals. The largest gap between the two sides of detailed balance, over every pair, is below 1e-15. One step applied to the exact posterior changes no grid probability by more than 1e-15.
 
 ### Step 2: deriving Metropolis–Hastings
 
@@ -99,7 +99,7 @@ $$\pi(x)\,q(x,y)\,\alpha(x,y) = \pi(y)\,q(y,x)\,\alpha(y,x), \qquad \text{that i
 
 Any pair of acceptance chances with that ratio works. Accepting as often as possible means setting the larger of the two to 1. If $r \le 1$, that is $\alpha(x, y) = r$ and $\alpha(y, x) = 1$; if $r > 1$, the reverse. Both cases are $\alpha = \min(1, r)$, the formula above. Since $r$ is a ratio of $\pi$ values, $Z$ cancels: the chain never needs the constant that makes the posterior a probability.
 
-When the proposal is symmetric, $q(x, y) = q(y, x)$, the $q$ factors cancel and $r = f(y)/f(x)$: the Metropolis rule of the outline card. The Metropolis run here proposes a normal step of spread 0.3 in a and 0.09 in b. It accepts 0.4962 of proposals (SE 0.0016) and, over 100,000 steps after a burn-in of 1,000, averages b = 0.9701 with a standard error of 0.0032, against the exact 0.9700.
+When the proposal is symmetric, $q(x, y) = q(y, x)$, the $q$ factors cancel and $r = f(y)/f(x)$: the Metropolis rule of the outline card. The Metropolis run here proposes a normal step of spread 0.3 in a and 0.09 in b. It accepts 0.4962 of proposals (standard error, SE, 0.0016) and, over 100,000 steps after a burn-in of 1,000, averages b = 0.9701 with a standard error of 0.0032, against the exact 0.9700.
 
 The $q$ factors matter once the proposal is lopsided. Propose the new growth as the old one times $e^{0.1 z}$, with $z$ a standard normal draw. The density of proposing $b'$ from $b$ is then proportional to $1/b'$, so $q(b', b)/q(b, b') = b'/b$, and that factor belongs in $r$. With it, the chain averages 0.9679 (SE 0.0038), within one standard error of 0.9700. Without it, the chain settles on the posterior divided by b, whose exact mean on the grid is 0.9426; the chain gives 0.9403 (SE 0.0038). Running longer never removes the error.
 
@@ -111,7 +111,7 @@ $$r = \frac{\pi(a', b)\;\pi(a \mid b)}{\pi(a, b)\;\pi(a' \mid b)} = \frac{\pi(b)
 
 Every proposal is accepted, and by Step 2 the half-step keeps $\pi$; so does redrawing b given a, and so a sweep keeps $\pi$. The sweep itself is not balanced, since a then b is not the reverse of b then a. On the grid, one exact Gibbs sweep changes no probability by more than 1e-15. That holds by construction; the sweep code is tested in Step 4, where it reproduces the formula's average.
 
-For the seedling the conditionals come straight from the likelihood. With b held, the heights minus b times the week are five noisy readings of a, so a given b is normal about their average, $(20.0 - 15b)/5 = 4 - 3b$, with spread $0.5/\sqrt{5} = 0.2236$. With a held, b given a is the slope through the origin of the heights minus a: normal about $(69.7 - 15a)/55$ with spread $0.5/\sqrt{55} = 0.0674$. These are the staircase's step sizes, against the cloud's spreads of 0.5244 in a and 0.1581 in b: the steps crawl.
+For the seedling the conditionals come straight from the likelihood, how probable the readings are for each a and b. With b held, the heights minus b times the week are five noisy readings of a, so a given b is normal about their average, $(20.0 - 15b)/5 = 4 - 3b$, with spread $0.5/\sqrt{5} = 0.2236$. With a held, b given a is the slope through the origin of the heights minus a: normal about $(69.7 - 15a)/55$ with spread $0.5/\sqrt{55} = 0.0674$. These are the staircase's step sizes, against the cloud's spreads of 0.5244 in a and 0.1581 in b: the steps crawl.
 
 ### Step 4: the chain forgets its start, and how fast
 
@@ -143,7 +143,7 @@ xychart-beta
     line [0.00, 0.32, 0.54, 0.68, 0.78, 0.84, 0.88, 0.91, 0.93, 0.94, 0.95, 0.96, 0.96, 0.96, 0.97, 0.97]
 ```
 
-First line (jagged): one seeded sample path, plotted every second sweep. Second line (smooth): the exact average over all paths. The path leaves its start in about ten sweeps, then wanders around 0.97 with the posterior's own spread. The **burn-in**, the steps thrown away at the start, drops the stretch that still remembers b = 0.
+First line (jagged): one seeded sample path, plotted every second sweep. Second line (smooth): the exact average over all paths. The path leaves its start in about ten sweeps, then wanders around 0.97 with the posterior's own spread. The burn-in drops the stretch that still remembers b = 0.
 
 <details>
 <summary>Detailed proof: the b-chain is a first-order autoregression with coefficient ρ^2</summary>
@@ -152,7 +152,7 @@ Write $S_w = \sum w_i$, $S_{ww} = \sum w_i^2$, $S_h = \sum h_i$ and $S_{wh} = \s
 $$b_t = \frac{S_{wh} - S_w S_h / n}{S_{ww}} + \phi\, b_{t-1} + e_t, \qquad \phi = \frac{S_w^2}{n\, S_{ww}}, \qquad e_t = \frac{\sigma}{\sqrt{S_{ww}}}\Bigl(z_2 - \frac{S_w}{\sqrt{n S_{ww}}}\,z_1\Bigr).$$
 The noise term is independent of the past with variance $s^2 = (\sigma^2/S_{ww})(1 + \phi)$. So $b_t$ is a first-order autoregression: tomorrow is a fixed fraction $\phi$ of today plus fresh noise.
 
-**Coefficient.** The posterior variances of a and b are $\sigma^2 S_{ww}/D$ and $\sigma^2 n/D$ and their covariance is $-\sigma^2 S_w/D$, with $D = n S_{ww} - S_w^2$, as in the worked numbers. So $\rho^2 = S_w^2 / (n S_{ww}) = \phi$. Here $\phi = 225/275 = 9/11$.
+**Coefficient.** The posterior variances of a and b are $\sigma^2 S_{ww}/D$ and $\sigma^2 n/D$ and their covariance is $-\sigma^2 S_w/D$, as in the worked numbers. So $\rho^2 = S_w^2 / (n S_{ww}) = \phi$. Here $\phi = 225/275 = 9/11$.
 
 **Mean.** The fixed point of the average is $m = (n S_{wh} - S_w S_h)/(n S_{ww} - S_w^2)$, the least-squares slope 0.97, and $E[b_t] - m = \phi\,(E[b_{t-1}] - m)$: after $t$ sweeps the gap is $\phi^t$ times the first.
 
@@ -177,7 +177,7 @@ When $\sum_k |\rho_k|$ is finite, the bracket tends to $\tau = 1 + 2\sum_{k \ge 
 
 </details>
 
-So 100,000 Gibbs sweeps are worth 10,000 independent draws of b. The run's lag-1 autocorrelation is 0.8173 (SE 0.0019), against the exact 0.8182. **Batch means** cuts the run into 100 batches of 1,000, treats their averages as nearly independent, and reads the standard error off their spread: 0.0014, an ESS of 12,001 and N / ESS = 8.3325 with standard error 1.1843, against the exact 10: an estimate read off 100 batch averages has a relative standard error of √(2/99). The naive spread over the square root of N gives 0.0005.
+So 100,000 Gibbs sweeps are worth 10,000 independent draws of b. **Batch means** cuts the run into 100 batches of 1,000, treats their averages as nearly independent, and reads the standard error off their spread: 0.0014, an ESS of 12,001 and N / ESS = 8.3325 with standard error 1.1843, against the exact 10: an estimate read off 100 batch averages has a relative standard error of √(2/99). The naive spread over the square root of N gives 0.0005.
 
 ### Step 6: diagnosing mixing
 
@@ -193,11 +193,11 @@ So 100,000 Gibbs sweeps are worth 10,000 independent draws of b. The run's lag-1
 Both land within a few standard errors of the exact 0.9700 and 0.4248, and their correlations, −0.9032 (SE 0.0011) and −0.9022 (SE 0.0025), match −0.9045 within two standard errors. Metropolis's ESS is 2416. Neither is fast: both move against the tilt. The usual checks:
 
 - **Trace plots**, like the chart above: a path that climbs, drifts or sticks has not settled.
-- **Acceptance rate**, for Metropolis (0.4962 here, SE 0.0016): near 1, steps too small; near 0, steps too big.
+- **Acceptance rate**, for Metropolis (0.4962 here): near 1, steps too small; near 0, steps too big.
 - **Autocorrelation and ESS**: what the run is worth. Quote the batch standard error.
 - **Several chains from spread-out starts**: disagreement proves trouble; agreement is only evidence.
 
-One a-only chain passes the checks on a: a settled trace, a small standard error. But its b trace is frozen, and chains started at different b disagree, each averaging a near its own 4 − 3b. What can pass all four is a sampler trapped in one of two separated peaks and started in that peak every time: no check on the output sees a region the chain never visits. The cure here is to remove the tilt: count weeks from week 3, so a is the height at week 3; the correlation becomes 0, τ becomes 1, and each sweep is an independent draw. Tools for many correlated unknowns are in MCMC as a tool.
+One a-only chain passes the checks on a: a settled trace, a small standard error. But its b trace is frozen, and chains started at different b disagree, each averaging a near its own 4 − 3b. What can pass all four is a sampler trapped in one of two separated peaks and started in that peak every time: no check on the output sees a region the chain never visits. The cure here is to remove the tilt: count weeks from week 3, so a is the height at week 3; the correlation becomes 0, τ becomes 1, and each sweep is an independent draw.
 
 ---
 
@@ -217,7 +217,7 @@ One a-only chain passes the checks on a: a settled trace, a small standard error
 | inflation τ | (1 + 9/11) / (1 − 9/11) | **10** |
 | first sweep from b = 0 | a averages 4; b averages (69.7 − 60) / 55 | 0.1764 |
 
-Φ is the standard normal cumulative probability. The seedling probably started near 1.09 cm and grows about 0.97 cm a week; the chance it grows more than 1 cm a week is about 42%. A Gibbs sampler needs ten sweeps per independent draw's worth of information, and about twenty to forget a bad start.
+The seedling probably started near 1.09 cm and grows about 0.97 cm a week; the chance it grows more than 1 cm a week is about 42%. A Gibbs sampler needs ten sweeps per independent draw's worth of information, and about twenty to forget a bad start.
 
 ### What breaks if you drop a piece
 
@@ -375,10 +375,10 @@ assert abs(gb - bh) < 1e-6; assert abs(ga - ah) < 1e-6; assert abs(gp - pB1) < 5
 assert imb < 1e-15; assert mstat < 1e-15; assert gstat < 1e-15
 assert abs(Eb[10] - bh * (1 - r2 ** 10)) < 1e-3; assert TV[40] < 0.01 < TV[10]
 assert abs(m10 - bh * (1 - r2 ** 10)) < 4 * se10; assert abs(ma - (SY - 0.5 * SX) / n) < 4 * sea
-print("all asserts passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 sums w, w^2, h, wh; D                  15.0000 55.0000 20.0000 69.7000 50.0000
@@ -434,7 +434,7 @@ figure, ticks: a=0,1,2 at x=80,180,280; b=0.6,1.0,1.4 at y=190,110,30
 figure, staircase from b=0.6: 299.8,190.0 299.8,174.7 266.0,174.7 266.0,159.5 251.9,159.5 251.9,161.7 237.5,161.7 237.5,133.4
 try: centred weeks, rho^2 and tau      0.0000 1.0000
 try: 7 weeks, rho^2 and tau            0.8000 9.0000
-all asserts passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -602,11 +602,11 @@ fn main() {
     assert!(imb < 1e-15); assert!(mstat < 1e-15); assert!(gs < 1e-15);
     assert!((eb[10] - bh * (1.0 - r2.powi(10))).abs() < 1e-3); assert!(tv[40] < 0.01 && tv[10] > 0.01);
     assert!((m10 - bh * (1.0 - r2.powi(10))).abs() < 4.0 * se10); assert!((ma - (sy - 0.5 * SX) / N_).abs() < 4.0 * sea);
-    println!("all asserts passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-13 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 sums w, w^2, h, wh; D                  15.0000 55.0000 20.0000 69.7000 50.0000
@@ -662,10 +662,193 @@ figure, ticks: a=0,1,2 at x=80,180,280; b=0.6,1.0,1.4 at y=190,110,30
 figure, staircase from b=0.6: 299.8,190.0 299.8,174.7 266.0,174.7 266.0,159.5 251.9,159.5 251.9,161.7 237.5,161.7 237.5,133.4
 try: centred weeks, rho^2 and tau      0.0000 1.0000
 try: 7 weeks, rho^2 and tau            0.8000 9.0000
-all asserts passed
+ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
+
+### Lean
+
+Lean proves Steps 1, 2 and 3 for every finite set of states, and checks the worked numbers exactly.
+
+- Suppose each row of $P$ sums to 1 and detailed balance holds. Then one step leaves $\pi$ unchanged, so $\pi$ is stationary.
+- Take any target $f \ge 0$, any proposal $q \ge 0$, and any $Z > 0$. Then Metropolis–Hastings with $\alpha = \min(1, r)$ is in detailed balance with $\pi = f/Z$.
+- Take any law $\pi \ge 0$ on a finite grid of pairs (a, b). Then redrawing a given b keeps $\pi$, so does redrawing b given a, and so does a whole sweep.
+- The sums of weeks, squared weeks, heights and week times height are 15, 55, 20.0 and 69.7. The spread of the weeks, D, is 50.
+- The posterior means are 1.09 cm for a and 0.97 cm a week for b.
+- The variances of a and b are 0.2750 and 0.0250, and their covariance is −0.0750.
+- The squared correlation equals the forgetting rate, 9/11, and the inflation factor τ is 10. So 100,000 sweeps are worth 10,000 independent draws of b.
+- Take a Gibbs chain started at b = 0. Then its first sweep averages 4 for a and 97/550, about 0.1764, for b.
+- The b-chain's average has fixed point 0.97, and its equilibrium variance equals the posterior variance 0.0250.
+
+The continuous posterior, P(b > 1), the distances from equilibrium and every simulated number are left to the Python and Rust checks.
+
+```lean
+-- MCMC: on a finite set of states, a transition rule in detailed balance with a law keeps that law at rest, the Metropolis-Hastings rule with any proposal is in detailed balance with the target whatever its unknown constant, and a Gibbs sweep keeps the joint law at rest.
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Tactic.NormNum
+
+namespace MarkovChainMonteCarlo
+
+open Finset Matrix
+
+/-! Setting. The states are a finite type `S` (the card's grid of candidate pairs `(a, b)`).
+`P x y` is the chance of moving from `x` to `y` in one step; from every state the chain must go
+somewhere, so each row of `P` adds to 1. A law on the states is `π : S → ℝ`; one step sends it
+to `y ↦ ∑ x, π x * P x y`. -/
+
+/-- Helper: for `a, b ≥ 0`, `b * min 1 (a / b) = min a b`. -/
+theorem mul_min_one_div_eq_min (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
+    b * min 1 (a / b) = min a b := by
+  rcases hb.eq_or_lt with h | h
+  · subst h; simp [ha]
+  · rw [mul_min_of_nonneg _ _ h.le, mul_one, mul_div_cancel₀ _ h.ne', min_comm]
+
+#print axioms mul_min_one_div_eq_min
+
+/-- Helper: if `0 ≤ p ≤ s` then `s * (p / s) = p` (also when `s = 0`). -/
+theorem mul_div_self_of_le (s p : ℝ) (hp : 0 ≤ p) (hps : p ≤ s) : s * (p / s) = p := by
+  rcases (hp.trans hps).eq_or_lt with h | h
+  · subst h; rw [le_antisymm hps hp]; simp
+  · exact mul_div_cancel₀ p h.ne'
+
+#print axioms mul_div_self_of_le
+
+/-- **Detailed balance forces the equilibrium.** Let `P` be a transition rule on a finite set of
+states whose rows add to 1. If, for every pair of states `x ≠ y`, the flow from `x` to `y` equals
+the flow back, `π x * P x y = π y * P y x`, then one step leaves `π` unchanged: for every state
+`y`, `∑ x, π x * P x y = π y`, so `π` is stationary. -/
+theorem detailed_balance_implies_stationary {S : Type*} [Fintype S] [DecidableEq S]
+    (π : S → ℝ) (P : S → S → ℝ) (hrow : ∀ x, ∑ y, P x y = 1)
+    (hbal : ∀ x y, x ≠ y → π x * P x y = π y * P y x) :
+    ∀ y, ∑ x, π x * P x y = π y := by
+  intro y
+  calc ∑ x, π x * P x y = ∑ x, π y * P y x := by
+        refine Finset.sum_congr rfl fun x _ => ?_
+        by_cases h : x = y
+        · subst h; rfl
+        · exact hbal x y h
+    _ = π y := by rw [← Finset.mul_sum, hrow, mul_one]
+
+/-- The Metropolis-Hastings acceptance chance: from `x`, a proposed `y` is accepted with chance
+`min 1 r`, where `r = f y * q y x / (f x * q x y)` is the Hastings ratio, `f` is the target up to
+an unknown constant and `q x y` is the chance of proposing `y` from `x`. -/
+noncomputable def mhAccept {S : Type*} (f : S → ℝ) (q : S → S → ℝ) (x y : S) : ℝ :=
+  min 1 (f y * q y x / (f x * q x y))
+
+/-- The Metropolis-Hastings transition rule: a move to `y ≠ x` needs a proposal and an
+acceptance, chance `q x y * α x y`; the chain stays at `x` with whatever chance is left. -/
+noncomputable def mhKernel {S : Type*} [Fintype S] [DecidableEq S]
+    (f : S → ℝ) (q : S → S → ℝ) (x y : S) : ℝ :=
+  if y = x then 1 - ∑ z ∈ univ.erase x, q x z * mhAccept f q x z
+  else q x y * mhAccept f q x y
+
+/-- **Metropolis-Hastings is in detailed balance with the target, from any proposal rule.** Let
+`f ≥ 0` be the target known only up to its constant, `π = f / Z` for any `Z > 0`, and `q ≥ 0` any
+proposal rule, symmetric or not. With acceptance `min 1 r`, `r = f y q(y, x) / (f x q(x, y))`, the
+flow from `x` to `y` equals the flow back for every pair `x ≠ y`. The constant `Z` is never used
+to run the chain. -/
+theorem metropolis_hastings_detailed_balance {S : Type*} [Fintype S] [DecidableEq S]
+    (f : S → ℝ) (hf : ∀ x, 0 ≤ f x) (q : S → S → ℝ) (hq : ∀ x y, 0 ≤ q x y)
+    (Z : ℝ) (hZ : 0 < Z) (x y : S) (hxy : x ≠ y) :
+    (f x / Z) * mhKernel f q x y = (f y / Z) * mhKernel f q y x := by
+  have h1 := mul_min_one_div_eq_min (f y * q y x) (f x * q x y)
+    (mul_nonneg (hf _) (hq _ _)) (mul_nonneg (hf _) (hq _ _))
+  have h2 := mul_min_one_div_eq_min (f x * q x y) (f y * q y x)
+    (mul_nonneg (hf _) (hq _ _)) (mul_nonneg (hf _) (hq _ _))
+  simp only [mhKernel, mhAccept, if_neg (Ne.symm hxy), if_neg hxy]
+  calc f x / Z * (q x y * min 1 (f y * q y x / (f x * q x y)))
+      = (f x * q x y * min 1 (f y * q y x / (f x * q x y))) / Z := by ring
+    _ = (f y * q y x * min 1 (f x * q x y / (f y * q y x))) / Z := by rw [h1, h2, min_comm]
+    _ = _ := by ring
+
+/-- Gibbs half-step "redraw a with b held": from `(a, b)` move to `(a', b)` with chance
+`π (a', b) / ∑ a'', π (a'', b)`, the law of `a` given `b`. -/
+noncomputable def redrawFirst {A B : Type*} [Fintype A] [DecidableEq B]
+    (π : A × B → ℝ) : Matrix (A × B) (A × B) ℝ :=
+  fun x y => if y.2 = x.2 then π y / ∑ a, π (a, x.2) else 0
+
+/-- Gibbs half-step "redraw b with a held": from `(a, b)` move to `(a, b')` with chance
+`π (a, b') / ∑ b'', π (a, b'')`, the law of `b` given `a`. -/
+noncomputable def redrawSecond {A B : Type*} [Fintype B] [DecidableEq A]
+    (π : A × B → ℝ) : Matrix (A × B) (A × B) ℝ :=
+  fun x y => if y.1 = x.1 then π y / ∑ b, π (x.1, b) else 0
+
+/-- **Gibbs sampling keeps the joint law.** For any law `π ≥ 0` on a finite grid of pairs
+`(a, b)`, redrawing `a` from its law given `b` leaves `π` unchanged, so does redrawing `b` from its
+law given `a`, and so does a whole sweep (one, then the other). -/
+theorem gibbs_sweep_keeps_law {A B : Type*} [Fintype A] [Fintype B]
+    [DecidableEq A] [DecidableEq B] (π : A × B → ℝ) (hπ : ∀ x, 0 ≤ π x) :
+    π ᵥ* redrawFirst π = π ∧ π ᵥ* redrawSecond π = π ∧
+      π ᵥ* (redrawFirst π * redrawSecond π) = π := by
+  have hF : π ᵥ* redrawFirst π = π := by
+    funext ⟨a0, b0⟩
+    simp only [vecMul, dotProduct, redrawFirst, Fintype.sum_prod_type, mul_ite, mul_zero,
+      Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    rw [← Finset.sum_mul]
+    exact mul_div_self_of_le _ _ (hπ _)
+      (Finset.single_le_sum (f := fun a => π (a, b0)) (fun a _ => hπ _) (Finset.mem_univ a0))
+  have hS : π ᵥ* redrawSecond π = π := by
+    funext ⟨a0, b0⟩
+    simp only [vecMul, dotProduct, redrawSecond, Fintype.sum_prod_type_right, mul_ite, mul_zero,
+      Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    rw [← Finset.sum_mul]
+    exact mul_div_self_of_le _ _ (hπ _)
+      (Finset.single_le_sum (f := fun b => π (a0, b)) (fun b _ => hπ _) (Finset.mem_univ b0))
+  refine ⟨hF, hS, ?_⟩
+  rw [← Matrix.vecMul_vecMul, hF, hS]
+
+/-! The card's worked numbers, as exact fractions. Weeks 1 to 5; heights 2.1, 2.9, 4.2, 4.8,
+6.0 cm (21/10, 29/10, 42/10, 48/10, 6); ruler spread σ = 1/2, so σ² = 1/4. -/
+
+-- Sums of weeks and squared weeks: 15 and 55; the spread of the weeks D = 5 × 55 − 15² = 50.
+example : (∑ w ∈ Icc (1 : ℕ) 5, w) = 15 ∧ (∑ w ∈ Icc 1 5, w ^ 2) = 55 ∧ 5 * 55 - 15 * 15 = 50 := by
+  decide
+-- Sum of heights 20.0 and of week times height 69.7.
+example : (21 : ℚ) / 10 + 29 / 10 + 42 / 10 + 48 / 10 + 6 = 20 ∧
+    (1 : ℚ) * (21 / 10) + 2 * (29 / 10) + 3 * (42 / 10) + 4 * (48 / 10) + 5 * 6 = 697 / 10 := by
+  norm_num
+-- Posterior means: growth b = (5 × 69.7 − 15 × 20.0) / 50 = 0.97, start a = (20.0 − 15 × 0.97)/5
+-- = 1.09.
+example : ((5 : ℚ) * (697 / 10) - 15 * 20) / 50 = 97 / 100 ∧
+    ((20 : ℚ) - 15 * (97 / 100)) / 5 = 109 / 100 := by norm_num
+-- Variances of a and b and their covariance: 0.2750, 0.0250, −0.0750.
+example : (1 : ℚ) / 4 * 55 / 50 = 11 / 40 ∧ (1 : ℚ) / 4 * 5 / 50 = 1 / 40 ∧
+    -((1 : ℚ) / 4 * 15 / 50) = -3 / 40 := by norm_num
+-- The squared correlation is 9/11, the same as the forgetting rate 15 × 15 / (5 × 55).
+example : (-(3 : ℚ) / 40) ^ 2 / (11 / 40 * (1 / 40)) = 9 / 11 ∧
+    (15 : ℚ) * 15 / (5 * 55) = 9 / 11 := by norm_num
+-- The inflation factor τ = (1 + 9/11) / (1 − 9/11) = 10, so 100,000 sweeps are worth 10,000
+-- independent draws of b.
+example : (1 + (9 : ℚ) / 11) / (1 - 9 / 11) = 10 ∧ (100000 : ℚ) / 10 = 10000 := by norm_num
+-- First sweep from b = 0: a averages (20 − 15 × 0)/5 = 4, then b averages (69.7 − 15 × 4)/55,
+-- which is 0.97 × (1 − 9/11).
+example : ((20 : ℚ) - 15 * 0) / 5 = 4 ∧ ((697 : ℚ) / 10 - 15 * 4) / 55 = 97 / 550 ∧
+    (97 : ℚ) / 100 * (1 - 9 / 11) = 97 / 550 := by norm_num
+-- 0.97 is the fixed point of the b-chain's average: (69.7 − 15 × 20.0/5)/55 + (9/11) × 0.97 = 0.97.
+example : ((697 : ℚ) / 10 - 15 * 20 / 5) / 55 + 9 / 11 * (97 / 100) = 97 / 100 := by norm_num
+-- The b-chain's equilibrium variance σ² / (S_ww (1 − φ)) equals the posterior variance 1/40.
+example : (1 : ℚ) / 4 / (55 * (1 - 9 / 11)) = 1 / 40 := by norm_num
+
+#print axioms detailed_balance_implies_stationary
+#print axioms metropolis_hastings_detailed_balance
+#print axioms gibbs_sweep_keeps_law
+
+end MarkovChainMonteCarlo
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'MarkovChainMonteCarlo.mul_min_one_div_eq_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MarkovChainMonteCarlo.mul_div_self_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MarkovChainMonteCarlo.detailed_balance_implies_stationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MarkovChainMonteCarlo.metropolis_hastings_detailed_balance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MarkovChainMonteCarlo.gibbs_sweep_keeps_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -715,7 +898,7 @@ This card graded its samplers against a posterior with an exact answer and a two
 
 ## Sources
 
-Verified 2026-10-07: every DOI below checked against Crossref for title and first author.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Metropolis, Nicholas, Arianna W. Rosenbluth, Marshall N. Rosenbluth, Augusta H. Teller and Edward Teller. "Equation of State Calculations by Fast Computing Machines." *The Journal of Chemical Physics* 21, no. 6 (1953): 1087–1092. [doi:10.1063/1.1699114](https://doi.org/10.1063/1.1699114). The symmetric-proposal rule, designed by detailed balance.
 - Hastings, W. K. "Monte Carlo Sampling Methods Using Markov Chains and Their Applications." *Biometrika* 57, no. 1 (1970): 97–109. [doi:10.1093/biomet/57.1.97](https://doi.org/10.1093/biomet/57.1.97). The proposal factor of Step 2.
