@@ -10,13 +10,17 @@ Acme shares trade at $100. The one-year forward on them is $103.05: the price ag
 
 Black-76 prices all three from one volatility ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Markets do not. Each strike gets its own implied volatility, the single volatility at which Black-76 returns that strike's price, and on shares the low strikes carry the higher numbers: the skew ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). One constant volatility cannot draw that curve. A volatility that moves can.
 
-SABR moves it. The forward takes random steps sized by a volatility, and the volatility takes random steps of its own, correlated with the forward's. Patrick Hagan, Deep Kumar, Andrew Lesniewski and Diana Woodward published it in 2002. They had shown that the local-volatility models then in use (volatility a fixed function of price and time) moved the smile the wrong way when the forward moved. The name, stochastic alpha beta rho, lists three of its four dials. Alpha is today's volatility level. Beta, the backbone exponent, sets how a step's size scales with the forward's level. Rho is the correlation between the two walks. Nu, the vol of vol, sets how hard the volatility is kicked.
+SABR moves it. The forward takes random steps sized by a volatility, and the volatility takes random steps of its own, correlated with the forward's. Patrick Hagan, Deep Kumar, Andrew Lesniewski and Diana Woodward published it in 2002. They had shown that the local-volatility models then in use (volatility a fixed function of price and time) moved the smile the wrong way when the forward moved.
 
-Set beta to 1, rho to −0.3 and nu to 0.4, and pick alpha so the at-the-money volatility (strike at the forward, 103.05) is 20 percent. Simulating the model gives 20.76% at the 92.15 strike, 20.17% at 100 and 19.39% at 119.93. Heston prices by one numerical integral ([Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md)); SABR has no general price formula. It has something a desk wants more: Hagan's formula, which writes each implied volatility down in one line: 20.81%, 20.19% and 19.38%. That is within 0.05 vol points of the model (a vol point is one percentage point of volatility). Toward low strikes the two drift apart, to 0.17 points at 60.
+The name, stochastic alpha beta rho, lists three of its four dials. Alpha is today's volatility level. Beta, the backbone exponent, sets how a step's size scales with the forward's level. Rho is the correlation between the two walks. Nu, the vol of vol, sets how hard the volatility is kicked.
+
+Set beta to 1, rho to −0.3 and nu to 0.4, and pick alpha so the at-the-money volatility (strike at the forward, 103.05) is 20 percent. Simulating the model gives 20.76% at the 92.15 strike, 20.17% at 100 and 19.39% at 119.93.
+
+Heston prices by one numerical integral ([Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md)); SABR has no general price formula. It has something a desk wants more: Hagan's formula, which writes each implied volatility down in one line: 20.81%, 20.19% and 19.38%. That is within 0.05 vol points of the model (a vol point is one percentage point of volatility).
 
 **SABR gives a forward's volatility its own correlated random walk, and Hagan's formula turns that model into one implied volatility per strike, accurate near the money for short expiries and drifting away far from the money and at long ones.**
 
-**What kind of fact this is:** an approximation, with its error stated. SABR itself is a model, an assumption about how a forward and its volatility move, not a law. Hagan's formula expands that model's implied volatility for short expiries. Its leading term is derived in Why it works, in full without correlation and confirmed by direct search with it; its error is measured against two simulations of the model: 0.04 vol points at the 25-delta put at one year, and 20.00% against 18.39% at the money at ten years.
+**What kind of fact this is:** an approximation, with its error stated. SABR itself is a model, an assumption about how a forward and its volatility move, not a law. Hagan's formula expands that model's implied volatility for short expiries. Its leading term is derived in Why it works, in full without correlation and confirmed by direct search with it. When it holds gives its error against two simulations of the model.
 
 ### The picture: one year, three answers
 
@@ -78,11 +82,11 @@ The two helpers:
 
 $$z = \frac{\nu}{\alpha}\,(FK)^{\frac{1-\beta}{2}}\ln\frac{F}{K}, \qquad \chi(z) = \ln\frac{\sqrt{1-2\rho z+z^2}+z-\rho}{1-\rho}.$$
 
-$z$ is the log-distance from forward to strike, scaled by the vol of vol over the volatility level. $\chi(z)$ is close to $z$ near the money, so the bend tends to 1 there. At the money, where the strike equals the forward, only the time factor is left:
+$\chi(z)$ is close to $z$ near the money, so the bend tends to 1 there. At the money, where the strike equals the forward, only the time factor is left:
 
 $$\sigma_B(F) = \alpha\,\Bigl[1 + \Bigl(\frac{\rho\nu\alpha}{4} + \frac{2-3\rho^2}{24}\,\nu^2\Bigr)T\Bigr] \qquad (\beta = 1).$$
 
-For other beta, divide the level by the forward to the power 1 − beta and put the forward squared in place of FK. Hagan's paper writes chi as x(z); the formula is its equation 2.17.
+For other beta, divide the level by the forward to the power 1 − beta and put the forward squared in place of FK. Hagan's paper writes chi as x(z).
 
 ### When it holds
 
@@ -113,7 +117,7 @@ SABR's state is two numbers, the log-forward and the volatility: a point on a ma
 
 With $\rho = 0$ this map is the hyperbolic plane, the geometry in which a triangle's angles add to less than 180 degrees. Its distances are known: the shortest route to the strike has length $\operatorname{arcsinh}(z)/\nu$, where arcsinh undoes the hyperbolic sine, $\sinh x = (e^x - e^{-x})/2$. Step 0 then gives $\alpha\,z/\operatorname{arcsinh}(z)$, and $\operatorname{arcsinh}(z) = \ln\bigl(\sqrt{1+z^2} + z\bigr)$ is $\chi(z)$ at $\rho = 0$.
 
-Since $\operatorname{arcsinh}(z)$ is smaller than $z$ in size for every nonzero $z$, the volatility exceeds its level on both sides of the forward: a smile, symmetric in log-strike. The checks give 20.17% at 92.15 and at its mirror strike 115.23. With $\nu = 0$ the route cannot bend, and the formula returns Black-76's flat answer.
+Since $\operatorname{arcsinh}(z)$ is smaller than $z$ in size for every nonzero $z$, the volatility exceeds its level on both sides of the forward: a smile, symmetric in log-strike. With $\nu = 0$ the route cannot bend, and the formula returns Black-76's flat answer.
 
 ### Step 2: correlation tilts the map
 
@@ -134,15 +138,17 @@ Put $u = (\nu x - \rho\alpha)/\sqrt{1-\rho^2}$. Then $ds^2 = (du^2 + d\alpha^2)/
 
 **With $\rho = 0$.** Today sits at height $\alpha$ above $u = 0$, and the strike is the vertical line $u = \nu\ln(K/F)$. The shortest route to it is an arc of the circle centred where that line meets the axis, ending at the circle's top. From angle θ to the top such an arc has length |ln tan(θ/2)|, which from today's point is $\operatorname{arcsinh}\lvert z\rvert$. Divide by $\nu$ and use Step 0:
 $$\sigma_B \;\to\; \frac{\lvert\ln(F/K)\rvert}{\operatorname{arcsinh}\lvert z\rvert/\nu} \;=\; \alpha\,\frac{z}{\operatorname{arcsinh} z}.$$
-**With $\rho \neq 0$.** The strike's line leans: $u = (\nu\ln(K/F) - \rho\alpha)/\sqrt{1-\rho^2}$. A leaning line stays a fixed hyperbolic distance from the vertical line through its foot, so its distance from a point still has a closed form, $\lvert\chi(z)\rvert/\nu$; the search confirms 0.216037 at 92.15.
+**With $\rho \neq 0$.** The strike's line leans: $u = (\nu\ln(K/F) - \rho\alpha)/\sqrt{1-\rho^2}$. A leaning line stays a fixed hyperbolic distance from the vertical line through its foot, so its distance from a point still has a closed form, $\lvert\chi(z)\rvert/\nu$.
 
 </details>
 
 ### Step 3: a year adds the time factor
 
-Step 0 is exact only as the expiry shrinks to nothing. The last bracket of the formula corrects for a real year, and at the money it is all there is.
+The last bracket of the formula corrects for a real year, and at the money it is all there is.
 
-With $\rho = 0$ the $\nu^2$ part is two effects pulling against each other. Given one volatility path the forward is lognormal with total variance $V$ (the other door, below), and the at-the-money price is close to the forward times $\sqrt{V/(2\pi)}$. The volatility's square averages $\alpha^2 e^{\nu^2 t}$ at time t, so $V/(\alpha^2T)$ averages $1 + \nu^2T/2$, which alone would lift the volatility by $\nu^2T/4$. But $V$ differs from path to path: to first order $V/(\alpha^2T)$ is 1 plus $2\nu$ times the time-average of $W_2$, whose variance is $T/3$, so it has variance $4\nu^2T/3$. A square root averages less than the root of the average (Jensen's inequality), here by an eighth of that variance, $\nu^2T/6$. The net lift is $\nu^2T/12$, the formula's $(2-3\rho^2)\nu^2T/24$ at $\rho = 0$.
+With $\rho = 0$ the $\nu^2$ part is two effects pulling against each other. Given one volatility path the forward is lognormal with total variance $V$ (the other door, below), and the at-the-money price is close to the forward times $\sqrt{V/(2\pi)}$. The volatility's square averages $\alpha^2 e^{\nu^2 t}$ at time t, so $V/(\alpha^2T)$ averages $1 + \nu^2T/2$, which alone would lift the volatility by $\nu^2T/4$.
+
+But $V$ differs from path to path: to first order $V/(\alpha^2T)$ is 1 plus $2\nu$ times the time-average of $W_2$, whose variance is $T/3$, so it has variance $4\nu^2T/3$. A square root averages less than the root of the average (Jensen's inequality), here by an eighth of that variance, $\nu^2T/6$. The net lift is $\nu^2T/12$, the formula's $(2-3\rho^2)\nu^2T/24$ at $\rho = 0$.
 
 Correlation adds $\rho\nu\alpha/4$ and removes $3\rho^2\nu^2/24$, from carrying Step 2's tilt one order further. Hagan and his co-authors got these from a singular-perturbation expansion (a systematic expansion in small volatility and small vol of vol) of the pricing equation; this card takes them from the paper and tests them by simulation. Here the bracket is 1 + (−0.005967 + 0.011533) = 1.005567: a year lifts the volatility by 0.56 percent of itself.
 
@@ -158,7 +164,9 @@ Markets quote the at-the-money volatility, not $\alpha$. At $\beta = 1$ the at-t
 
 $$\sigma_B(F) = \Bigl(1 + \frac{2-3\rho^2}{24}\,\nu^2 T\Bigr)\alpha + \frac{\rho\nu T}{4}\,\alpha^2.$$
 
-Existence and uniqueness first. With $\rho$ negative the right side is a hill: it rises from 0 at $\alpha = 0$ to a peak of 8.526664, an 853 percent volatility, then falls. Every quote below the peak meets the rising side exactly once; zero gives $\alpha = 0$; at the peak the two roots meet; a quote above it has no $\alpha$. The other root, 33.518885, lies on the falling side, where a higher alpha would lower the quote, and is discarded. With $\rho$ zero or positive the right side rises for ever, and every positive quote has one $\alpha$. The small root, in the form that stays accurate when the square term is tiny:
+Existence and uniqueness first. With $\rho$ negative the right side is a hill: it rises from 0 at $\alpha = 0$ to a peak of 8.526664, an 853 percent volatility, then falls. Every quote below the peak meets the rising side exactly once; zero gives $\alpha = 0$; at the peak the two roots meet; a quote above it has no $\alpha$.
+
+The other root, 33.518885, lies on the falling side, where a higher alpha would lower the quote, and is discarded. With $\rho$ zero or positive the right side rises for ever, and every positive quote has one $\alpha$. The small root, in the form that stays accurate when the square term is tiny:
 
 $$\alpha = \frac{2\,\sigma_B(F)}{\Bigl(1 + \frac{2-3\rho^2}{24}\nu^2T\Bigr) + \sqrt{\Bigl(1 + \frac{2-3\rho^2}{24}\nu^2T\Bigr)^2 + \rho\nu T\,\sigma_B(F)}}\,,$$
 
@@ -215,7 +223,7 @@ Hagan minus the simulated model, one year, in vol points; one block = 0.01 (█ 
 140.00  ░                 -0.009
 ```
 
-From the forward upward the two agree to about a hundredth of a vol point. Below it the formula runs high, and the excess grows steadily toward low strikes, the side where the negative correlation piles up the model's extra volatility.
+From the forward upward the two agree to about a hundredth of a vol point. Below it the formula runs high, and the excess grows steadily toward low strikes.
 
 ### What breaks if you drop a piece
 
@@ -238,13 +246,15 @@ xychart-beta
     line [22.48, 21.12, 20.02, 19.01, 18.53, 18.39, 18.13, 17.92, 17.88, 17.95]
 ```
 
-Orange: Hagan's formula, alpha reset to quote 20% at the money at ten years. Green: the model with that alpha, simulated. The formula sits above everywhere: 20.00% against 18.39% at the money, 25.63% against 22.48% at 60.
+Orange: Hagan's formula, alpha reset to quote 20% at the money at ten years. Green: the model with that alpha, simulated. The formula sits above everywhere, by most at 60: 25.63% against 22.48%.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three roads to the one-year smile, none borrowing from another. Road 1 is Hagan's formula. Road 2 simulates only the volatility, 200,000 pairs of mirror-image paths of 20 steps, and prices each path exactly with Black-76 (the other door). Road 3 simulates both equations, 40,000 pairs of 50 steps, with Euler steps on the log-forward and the volatility held fixed within each step, and averages the payoffs. Both simulations use the forward as a control variate, since its average is known, and report standard errors ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)). Implied volatilities come back by bisection ([Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Beside the roads, alpha is found two ways and chi three. The bell-curve area is Marsaglia's power series; the random numbers are splitmix64 integers (a standard 64-bit scrambler) turned into bell-curve draws by the Box-Muller transform.
+Three roads to the one-year smile, none borrowing from another. Road 1 is Hagan's formula. Road 2 simulates only the volatility, 200,000 pairs of mirror-image paths of 20 steps, and prices each path exactly with Black-76 (the other door). Road 3 simulates both equations, 40,000 pairs of 50 steps, with Euler steps on the log-forward and the volatility held fixed within each step, and averages the payoffs.
+
+Both simulations use the forward as a control variate, since its average is known, and report standard errors ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)). Implied volatilities come back by bisection ([Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Beside the roads, alpha is found two ways and chi three. The bell-curve area is Marsaglia's power series; the random numbers are splitmix64 integers (a standard 64-bit scrambler) turned into bell-curve draws by the Box-Muller transform.
 
 ### Python
 
@@ -686,7 +696,176 @@ chart, simulated 10y %   22.48  21.12  20.02  19.01  18.53  18.39  18.13  17.92 
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line: both generators produce the same integers, so both languages draw the same paths.
+Both generators produce the same integers, so both languages draw the same paths.
+
+### Lean
+
+Lean proves the exact pieces of Hagan's formula, for any correlation strictly between −1 and 1.
+
+- Take any such correlation $\rho$. Then $\chi(z)$ equals the integral $\int_0^z dy/\sqrt{1 - 2\rho y + y^2}$, for every $z$.
+- Take $\rho = 0$. Then $\chi(z) = \operatorname{arcsinh}(z)$.
+- Take $\rho = 0$ and any nonzero $z$. Then the bend $z/\chi(z)$ is above 1, and the same at $z$ and $-z$: a symmetric smile.
+- Take $\beta = 1$, a calm volatility with $\nu^2 T < 24$, and a quote from zero up to the hill's peak. Then exactly one $\alpha$ on the rising side gives that quote, and it is the small root, never negative.
+
+The decimals, the time factor, the route search and both simulations of the model are left to the Python and Rust checks.
+
+```lean
+-- SABR and Hagan's formula: the exact pieces of Hagan's formula, namely chi as an integral of one over the route's volatility, the zero-correlation smile, and the unique alpha behind an at-the-money quote.
+import Mathlib.Analysis.SpecialFunctions.Arsinh
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+open Real
+
+/-- Hagan's helper chi(z) = ln((sqrt(1 - 2 rho z + z^2) + z - rho) / (1 - rho)), written on the card. -/
+noncomputable def sabrChi (ρ z : ℝ) : ℝ :=
+  Real.log ((Real.sqrt (1 - 2 * ρ * z + z ^ 2) + z - ρ) / (1 - ρ))
+
+lemma sabr_q_pos (ρ y : ℝ) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1) : 0 < 1 - 2 * ρ * y + y ^ 2 := by
+  nlinarith [sq_nonneg (y - ρ)]
+
+#print axioms sabr_q_pos
+
+lemma sabr_arg_pos (ρ y : ℝ) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1) :
+    0 < Real.sqrt (1 - 2 * ρ * y + y ^ 2) + y - ρ := by
+  have : ρ - y < Real.sqrt (1 - 2 * ρ * y + y ^ 2) := by
+    apply Real.lt_sqrt_of_sq_lt
+    nlinarith
+  linarith
+
+#print axioms sabr_arg_pos
+
+lemma sabr_hasDerivAt (ρ y : ℝ) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1) :
+    HasDerivAt (fun y => Real.log (Real.sqrt (1 - 2 * ρ * y + y ^ 2) + y - ρ) - Real.log (1 - ρ))
+      (1 / Real.sqrt (1 - 2 * ρ * y + y ^ 2)) y := by
+  have hq := sabr_q_pos ρ y hρ₁ hρ₂
+  have ha := sabr_arg_pos ρ y hρ₁ hρ₂
+  have hs : 0 < Real.sqrt (1 - 2 * ρ * y + y ^ 2) := Real.sqrt_pos.mpr hq
+  have h1 : HasDerivAt (fun y : ℝ => 1 - 2 * ρ * y + y ^ 2) (-(2 * ρ) + 2 * y) y := by
+    have := ((hasDerivAt_id y).const_mul (2 * ρ)).const_sub 1 |>.add ((hasDerivAt_id y).pow 2)
+    convert this using 1
+    · ext t; simp
+    · simp
+  have h2 := ((h1.sqrt hq.ne').add (hasDerivAt_id y)).sub_const ρ
+  have h3 := (h2.log (by simpa using ha.ne')).sub_const (Real.log (1 - ρ))
+  convert h3 using 1
+  have hsq : Real.sqrt (1 - 2 * ρ * y + y ^ 2) ^ 2 = 1 - 2 * ρ * y + y ^ 2 := Real.sq_sqrt hq.le
+  show 1 / √(1 - 2 * ρ * y + y ^ 2) = ((-(2 * ρ) + 2 * y) / (2 * √(1 - 2 * ρ * y + y ^ 2)) + 1)
+    / (√(1 - 2 * ρ * y + y ^ 2) + y - ρ)
+  rw [eq_div_iff ha.ne']
+  · field_simp
+    ring
+  · rfl
+
+#print axioms sabr_hasDerivAt
+
+lemma sabr_arsinh_lt_self (z : ℝ) (hz : 0 < z) : Real.arsinh z < z := by
+  have h := Real.arsinh_lt_arsinh.mpr (Real.self_lt_sinh_iff.mpr hz)
+  rwa [Real.arsinh_sinh] at h
+
+#print axioms sabr_arsinh_lt_self
+
+/-- For any correlation rho strictly between -1 and 1 and any scaled log-distance z, Hagan's chi
+in closed form equals the integral from 0 to z of 1 / sqrt(1 - 2 rho y + y^2): the leading term is a
+harmonic average of the volatility alpha * sqrt(1 - 2 rho y + y^2) met along the cheapest route. -/
+theorem sabr_chi_eq_integral (ρ z : ℝ) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1) :
+    sabrChi ρ z = ∫ y in (0 : ℝ)..z, 1 / Real.sqrt (1 - 2 * ρ * y + y ^ 2) := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun y _ => sabr_hasDerivAt ρ y hρ₁ hρ₂)]
+  · have h1 : (1 : ℝ) - ρ ≠ 0 := by linarith
+    simp only [sabrChi]
+    rw [Real.log_div (sabr_arg_pos ρ z hρ₁ hρ₂).ne' h1]
+    simp
+  · apply Continuous.intervalIntegrable
+    apply Continuous.div continuous_const
+    · fun_prop
+    · intro y; exact (Real.sqrt_pos.mpr (sabr_q_pos ρ y hρ₁ hρ₂)).ne'
+
+/-- With zero correlation, chi(z) is arcsinh(z), and for every nonzero z the bend z / chi(z) is
+above 1 and the same at z and -z: the volatility exceeds its level on both sides of the forward,
+a smile symmetric in log-strike. -/
+theorem sabr_zero_correlation_smile (z : ℝ) (hz : z ≠ 0) :
+    sabrChi 0 z = Real.arsinh z ∧ 1 < z / sabrChi 0 z ∧
+      (-z) / sabrChi 0 (-z) = z / sabrChi 0 z := by
+  have hc : ∀ w : ℝ, sabrChi 0 w = Real.arsinh w := by
+    intro w
+    simp only [sabrChi, Real.arsinh]
+    congr 1
+    ring_nf
+  refine ⟨hc z, ?_, ?_⟩
+  · rw [hc z]
+    rcases lt_or_gt_of_ne hz with h | h
+    · have h1 := sabr_arsinh_lt_self (-z) (by linarith)
+      rw [Real.arsinh_neg] at h1
+      have h2 : Real.arsinh z < 0 := Real.arsinh_neg_iff.mpr h
+      rw [lt_div_iff_of_neg h2]; linarith
+    · have h1 := sabr_arsinh_lt_self z h
+      have h2 : 0 < Real.arsinh z := Real.arsinh_pos_iff.mpr h
+      rw [lt_div_iff₀ h2]; linarith
+  · rw [hc, hc, Real.arsinh_neg, neg_div_neg_eq]
+
+/-- At beta = 1 the at-the-money quote sigma is the quadratic A * alpha + B * alpha^2 in alpha, with
+A = 1 + (2 - 3 rho^2) nu^2 T / 24 and B = rho nu T / 4. For a calm volatility (nu^2 T < 24) and a
+quote sigma >= 0 not above the hill's peak (A^2 + rho nu T sigma >= 0), the alpha on the rising side
+(A + 2 B alpha >= 0) that gives the quote exists, is unique, is nonnegative, and equals the small root
+2 sigma / (A + sqrt(A^2 + rho nu T sigma)). -/
+theorem sabr_atm_alpha_small_root (ρ ν T σ : ℝ) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1) (hT : 0 ≤ T)
+    (hcalm : ν ^ 2 * T < 24) (hσ : 0 ≤ σ)
+    (hpeak : 0 ≤ (1 + (2 - 3 * ρ ^ 2) / 24 * ν ^ 2 * T) ^ 2 + ρ * ν * T * σ) :
+    let A := 1 + (2 - 3 * ρ ^ 2) / 24 * ν ^ 2 * T
+    let B := ρ * ν * T / 4
+    let α₀ := 2 * σ / (A + Real.sqrt (A ^ 2 + ρ * ν * T * σ))
+    0 ≤ α₀ ∧ ∀ α : ℝ, (0 ≤ A + 2 * B * α ∧ A * α + B * α ^ 2 = σ) ↔ α = α₀ := by
+  intro A B α₀
+  have hνT : 0 ≤ ν ^ 2 * T := mul_nonneg (sq_nonneg ν) hT
+  have hA : 0 < A := by
+    simp only [A]
+    have : 0 ≤ (1 - ρ ^ 2) * (ν ^ 2 * T) := mul_nonneg (by nlinarith) hνT
+    nlinarith
+  set s := Real.sqrt (A ^ 2 + ρ * ν * T * σ) with hs_def
+  have hs0 : 0 ≤ s := Real.sqrt_nonneg _
+  have hs2 : s ^ 2 = A ^ 2 + ρ * ν * T * σ := Real.sq_sqrt hpeak
+  have hden : 0 < A + s := by linarith
+  refine ⟨div_nonneg (by linarith) hden.le, fun α => ⟨?_, ?_⟩⟩
+  · rintro ⟨h1, h2⟩
+    have hsq : (A + 2 * B * α) ^ 2 = s ^ 2 := by
+      rw [hs2]; simp only [B] at h2 ⊢; rw [← h2]; ring
+    have he : A + 2 * B * α = s := by
+      have := (sq_eq_sq₀ h1 hs0).mp hsq
+      exact this
+    simp only [α₀]
+    rw [eq_div_iff hden.ne']
+    rw [← he, ← h2]; ring
+  · intro hα
+    have hα' : α * (A + s) = 2 * σ := by
+      rw [hα]; simp only [α₀]; rw [← hs_def]; field_simp
+    have he : A + 2 * B * α = s := by
+      have : (A + 2 * B * α) * (A + s) = s * (A + s) := by
+        have : (A + 2 * B * α) * (A + s) = A * (A + s) + B * 2 * (α * (A + s)) := by ring
+        rw [this, hα']; simp only [B]; nlinarith [hs2]
+      exact mul_right_cancel₀ hden.ne' this
+    refine ⟨by rw [he]; exact hs0, ?_⟩
+    have : A * α + B * α ^ 2 = α * (A + 2 * B * α + A) / 2 := by ring
+    rw [this, he]
+    linarith [hα']
+
+#print axioms sabr_chi_eq_integral
+#print axioms sabr_zero_correlation_smile
+#print axioms sabr_atm_alpha_small_root
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sabr_q_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sabr_arg_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sabr_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sabr_arsinh_lt_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sabr_chi_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sabr_zero_correlation_smile' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sabr_atm_alpha_small_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -700,7 +879,7 @@ The two outputs match line for line: both generators produce the same integers, 
 ## The usual mistake
 
 > [!warning]
-> **Taking Hagan's formula for the SABR model.** The formula approximates the model's implied volatilities: to 0.05 vol points at one year here, off by more than a point and a half at ten. Fitting it to quotes fits a curve with SABR's shape. Prices that must agree with the model itself, at long expiries, far strikes or for exotic payoffs, come from simulating or solving the model, as road 2 does.
+> **Taking Hagan's formula for the SABR model.** The formula approximates the model's implied volatilities. Fitting it to quotes fits a curve with SABR's shape. Prices that must agree with the model itself, at long expiries, far strikes or for exotic payoffs, come from simulating or solving the model, as road 2 does.
 >
 > - **At the money means the forward.** The at-the-money strike is 103.05, not today's 100. The formula's volatility at 100 is 20.19%, and the house call there costs $9.30 under SABR against $9.23 at a flat 20 percent.
 > - **Alpha is not the quote.** A 20% quote needs alpha 0.198893. Reading alpha as 0.20 gives 20.11% at the money.

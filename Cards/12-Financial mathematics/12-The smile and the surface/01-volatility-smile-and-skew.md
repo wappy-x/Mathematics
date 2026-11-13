@@ -10,13 +10,15 @@ Acme shares trade at $100. Nine one-year call options on Acme are listed, struck
 
 Black-Scholes turns one volatility (how widely the share price is expected to swing, quoted as a percentage per year) into one option price. Run it backwards on a market price and it returns the single volatility that reproduces that price: the **implied volatility**. If Black-Scholes described Acme exactly, all nine strikes would return the same number, say 20%.
 
-They do not. This card builds a market by hand in which a crash is possible: a 12% chance that Acme's year ends in a slump, an 88% chance of a calm year. It prices the nine calls in that market, runs each price backwards, and reads off nine volatilities. They fall from 26.12% at the $80 strike to 17.90% at the $120 strike. Nothing was mispriced. The market has one belief about where Acme will end up, and Black-Scholes has one dial to describe it with. The curve is the mismatch, made visible.
+They do not. This card builds a market by hand in which a crash is possible: a 12% chance that Acme's year ends in a slump, an 88% chance of a calm year. It prices the nine calls in that market, runs each price backwards, and reads off nine volatilities.
+
+They fall from 26.12% at the $80 strike to 17.90% at the $120 strike. Nothing was mispriced. The market has one belief about where Acme will end up, and Black-Scholes has one dial to describe it with. The curve is the mismatch, made visible.
 
 Plotted against strike, that curve of implied volatilities is called the **volatility smile**: a smile when both ends lift, a **skew** when it slopes from one side to the other, as here. The steepness of the slope, measured against the log of the strike over the forward price (the price agreed today for delivery in a year), is the number traders call skew.
 
 **Every strike's price is a separate fact, so every strike has its own implied volatility; the curve they trace is the market's belief about crashes and rallies, read through a model that can only say "one volatility".**
 
-**What kind of fact this is:** a definition (the smile is implied volatility read strike by strike, the skew is its slope in log-moneyness), plus a theorem proved in Why it works: the curve is flat only when the market's price distribution is exactly one lognormal.
+**What kind of fact this is:** a definition (the smile is implied volatility read strike by strike, the skew is its slope in log-moneyness), plus a theorem proved in Why it works: the curve is flat only when the market's price distribution is exactly one lognormal (a price whose log follows a bell curve).
 
 ### The picture: nine strikes, nine volatilities
 
@@ -66,7 +68,7 @@ $$C(K) = p\,C_{\text{BS}}(K;\,F_c,\,\sigma_c) + (1-p)\,C_{\text{BS}}(K;\,F_n,\,\
 | --- | --- | --- | --- |
 | $\sigma_{\text{imp}}(K)$ | implied volatility at strike $K$ | 26.12% at $80, 17.90% at $120 | is the answer |
 | $C_{\text{BS}}(K, \sigma)$ | the Black-Scholes call price at strike $K$ and volatility $\sigma$; written $C_{\text{BS}}(K;\,F_i,\,\sigma_i)$ when centred on a leg's forward | $9.23 at $100 and 20%, the crash market's own $100 call | rises with $\sigma$, one-for-one in rank: that is why the inverse exists |
-| $C(K)$, $P(K)$ | the market's call and put prices at strike $K$ | call $23.90, put $1.98 at $80 | raise the implied volatility at that strike and no other |
+| $C(K)$, $P(K)$ | the market's call and put prices at strike $K$ (a put is the right to sell at $K$) | call $23.90, put $1.98 at $80 | raise the implied volatility at that strike and no other |
 | $K$ | strike | $80 to $120 | slides along the curve: lower strikes, higher volatility here |
 | $S$, $F$ | spot price today; forward price for delivery at $T$ | $100; $103.05 | drag the whole curve sideways: its shape is pinned to $F$ |
 | $k$ | log-moneyness, $\ln(K/F)$ | −0.2531 at $80, +0.1523 at $120 | same as raising $K$ |
@@ -84,7 +86,7 @@ The smile and the skew are definitions, so they hold whenever the inversion has 
 - **European options on one expiry.** An option exercisable early carries an extra right; inverting it with the European formula mixes that right into the volatility.
 - **Prices free of arbitrage** (no riskless profit from combining them). A call priced outside its bounds, below $e^{-rT}\max(F-K, 0)$ or at or above $S e^{-qT}$, has no implied volatility at all; one priced exactly on the lower bound has implied volatility zero.
 - **The right forward.** The inversion uses $F$; with the wrong $r$ or $q$ it returns a curve that is partly the forward error (see What breaks).
-- **A put and a call at one strike share one volatility** only if put-call parity holds, which the crash market guarantees by making its legs average to $F$.
+- **A put and a call at one strike share one volatility** only if put-call parity ($C(K) - P(K) = e^{-rT}(F - K)$; see [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)) holds, which the crash market guarantees by making its legs average to $F$.
 
 ---
 
@@ -106,7 +108,9 @@ The legs are not free to sit anywhere. Put-call parity, a cash-flow identity, sa
 
 Before solving, the inverse must exist and be unique ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md) proves this in full). As volatility falls to zero, the Black-Scholes call falls to $e^{-rT}\max(F - K, 0)$. As volatility grows without limit, the call rises to $e^{-rT}F$. In between it climbs strictly.
 
-Each leg's price sits strictly inside its own bounds. Their weighted average therefore sits below $e^{-rT}F$, and above $e^{-rT}\max(F-K, 0)$, since averaging the two legs' "forward minus strike" never falls below the forward's own. So every crash-market price lies strictly inside the range, and exactly one volatility reaches it. Bisection (halving a bracket that holds the answer) finds it; so does Newton's method (following the slope to the root; here the slope is vega, the price's rate of change with volatility). The check runs both, on the call and the put separately, and they agree at every strike.
+Each leg's price sits strictly inside its own bounds. Their weighted average therefore sits below $e^{-rT}F$, and above $e^{-rT}\max(F-K, 0)$, since averaging the two legs' "forward minus strike" never falls below the forward's own. So every crash-market price lies strictly inside the range, and exactly one volatility reaches it.
+
+Bisection (halving a bracket that holds the answer) finds it; so does Newton's method (following the slope to the root; here the slope is vega, the price's rate of change with volatility). The check runs both, on the call and the put separately, and they agree at every strike.
 
 ### Step 3: the curve is flat only when the distribution is one lognormal
 
@@ -131,7 +135,9 @@ The orange curve is the crash market's density: a tall calm hump near $107 and a
 
 Raise the final price to a whole-number power n and average: that is the n-th moment. A lognormal centred on $F$ with volatility $\sigma$ has n-th moment $F^n e^{n(n-1)\sigma^2 T/2}$. A mixture's moments are the chance-weighted moments of its legs.
 
-Any lognormal that equals the crash market must match its mean, which every candidate does, and its second moment. The second moment fixes the volatility: $\sigma = \sqrt{\ln(\text{second moment}/F^2)/T}$, which is 20.79% here. That one lognormal then has a third moment of 1,245,667. The crash market's third moment is 1,234,558. The two distributions differ, so their call prices differ at some strike, so the implied volatility is not constant. More generally, a mixture of two different lognormals is never itself a lognormal: the log of a sum of two distinct bell curves is not a parabola.
+Any lognormal that equals the crash market must match its mean, which every candidate does, and its second moment. The second moment fixes the volatility: $\sigma = \sqrt{\ln(\text{second moment}/F^2)/T}$, which is 20.79% here. That one lognormal then has a third moment of 1,245,667. The crash market's third moment is 1,234,558.
+
+The two distributions differ, so their call prices differ at some strike, so the implied volatility is not constant. More generally, a mixture of two different lognormals is never itself a lognormal: the log of a sum of two distinct bell curves is not a parabola.
 
 </details>
 
@@ -152,7 +158,9 @@ crash leg's share of each put's price, %  (one █ = 5%)
  $120   ██████               31.1
 ```
 
-The $80 put is almost a pure crash contract. The calm leg, centred on $107.26 with 15% volatility, rarely reaches $80, so the crash leg's 40% volatility dominates the price. Diluted by the crash's 12% chance, it shows up as 26.12%. Walk up the strikes and the calm leg takes over, and the implied volatility sinks toward the calm 15%. Above $130 the crash market is thinner than the 20% lognormal, so high-strike calls are cheap, and cheap reads as low volatility.
+The $80 put is almost a pure crash contract. The calm leg, centred on $107.26 with 15% volatility, rarely reaches $80, so the crash leg's 40% volatility dominates the price. Diluted by the crash's 12% chance, it shows up as 26.12%.
+
+Walk up the strikes and the calm leg takes over, and the implied volatility sinks toward the calm 15%. Above $130 the crash market is thinner than the 20% lognormal, so high-strike calls are cheap, and cheap reads as low volatility.
 
 Different widths bend the curve. The tilt comes from different centres: with both legs centred on $F$, the curve becomes an even smile in log-moneyness, and the check asserts 19.3122% at both $k = -0.2$ and $k = +0.2$.
 
@@ -165,7 +173,9 @@ Write prices per unit of forward and let $f(x)$ be the density of $x = \ln(S_T/F
 
 ### Step 5: why the slope is measured in log-moneyness
 
-A strike alone is not a distance. $90 is close to the money on a $100 share and far from it on a $300 one. The ratio $K/F$ fixes that. The log fixes a second problem: a 20% fall and a 20% rise do not cancel in prices, but they sit at equal and opposite distances in logs. So skew per unit of $k$ means the same thing on any underlying, at any price level. For the Acme strip it is −0.1898 between $90 and $110, and −0.1572 in a narrow band around the forward, where the implied volatility is 19.49%.
+A strike alone is not a distance. $90 is close to the money on a $100 share and far from it on a $300 one. The ratio $K/F$ fixes that. The log fixes a second problem: a 20% fall and a 20% rise do not cancel in prices, but they sit at equal and opposite distances in logs. So skew per unit of $k$ means the same thing on any underlying, at any price level.
+
+For the Acme strip it is −0.1898 between $90 and $110, and −0.1572 in a narrow band around the forward, where the implied volatility is 19.49%.
 
 A market with infinitely many legs, one for each possible number of jumps, is Merton's jump model ([Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)); a market where volatility itself wanders, and rises when the price falls, produces the same skew without jumps ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)).
 
@@ -210,7 +220,9 @@ The market charges $1.98 for protection below $80 where a flat 20% world would c
 
 ## Code, from first principles, and it actually runs
 
-The code builds the crash market, prices the nine strikes three independent ways (the weighted Black-Scholes formula; Simpson's rule integrating payoff times density, with no Black-Scholes anywhere; a 200,000-path Monte Carlo simulation, drawing a leg and then a price, from a hand-written random number generator), and inverts each price two independent ways (bisection on the call, Newton's method on the put). A flat 20% market is inverted as a control. The normal CDF is written out from its series. Every number on the card, including every chart point, is printed.
+The code builds the crash market, prices the nine strikes three independent ways (the weighted Black-Scholes formula; Simpson's rule integrating payoff times density, with no Black-Scholes anywhere; a 200,000-path Monte Carlo simulation, drawing a leg and then a price, from a hand-written random number generator), and inverts each price two independent ways (bisection on the call, Newton's method on the put).
+
+A flat 20% market is inverted as a control. The normal CDF (cumulative distribution function: the $N(x)$ of the symbol table) is written out from its series. Every number on the card, including every chart point, is printed.
 
 ### Python
 
@@ -612,6 +624,606 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the card's three general facts for all markets and strikes, not just for Acme's numbers.
+
+- The curve is flat only for one lognormal. Suppose every call matches the Black-Scholes call at one volatility $\sigma$, at every positive strike. Then the market's distribution is exactly the lognormal centred on $F$ with volatility $\sigma$. That lognormal does give a flat curve.
+- Every strike has exactly one implied volatility. Take a call priced strictly above $e^{-rT}\max(F-K, 0)$ and strictly below $e^{-rT}F$. Then exactly one positive volatility makes the Black-Scholes call equal that price.
+- Put-call parity holds in the crash market exactly when its legs average to the forward. Take any crash chance $p$ from 0 to 1. Then parity holds at every positive strike exactly when $pF_c + (1-p)F_n = F$.
+- The Acme strip has nine strikes, from $80 to $120 in $5 steps.
+
+The Acme numbers themselves, the 26.12% to 17.90% curve, the skew and the moments, are left to the Python and Rust checks.
+
+```lean
+-- The volatility smile and skew: a market's implied volatility is the same at every strike exactly when its price distribution is one lognormal, every call priced strictly inside its no-arbitrage bounds has exactly one implied volatility, and a two-leg crash market obeys put-call parity exactly when its legs average to the forward.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib
+
+open MeasureTheory ProbabilityTheory
+
+/-- The lognormal law centred on the forward `F` with volatility `σ` over `T` years: the price
+`F · exp(σ √T Z − σ² T / 2)` with `Z` a standard bell curve. Its average is `F`. -/
+noncomputable def lognormalLaw (F σ T : ℝ) : Measure ℝ :=
+  (gaussianReal 0 1).map (fun z => F * Real.exp (σ * Real.sqrt T * z - σ ^ 2 * T / 2))
+
+/-- The call price at strike `K` in a market whose year-end price has law `μ`:
+the discounted average payoff `e^{−rT} · E[max(S_T − K, 0)]`. -/
+noncomputable def callPrice (r T K : ℝ) (μ : Measure ℝ) : ℝ :=
+  Real.exp (-r * T) * ∫ x, max (x - K) 0 ∂μ
+
+/-- The put price at strike `K`: the discounted average payoff `e^{−rT} · E[max(K − S_T, 0)]`. -/
+noncomputable def putPrice (r T K : ℝ) (μ : Measure ℝ) : ℝ :=
+  Real.exp (-r * T) * ∫ x, max (K - x) 0 ∂μ
+
+/-- The Black-Scholes call `C_BS(K, σ)` on the forward `F`: the call price when the year-end
+price is one lognormal centred on `F` with volatility `σ`. -/
+noncomputable def bsCall (r T F σ K : ℝ) : ℝ :=
+  callPrice r T K (lognormalLaw F σ T)
+
+/-- The crash market: with chance `p` the year ends in the crash leg (a lognormal centred on
+`Fc` with volatility `σc`), otherwise in the calm leg (centred on `Fn` with volatility `σn`). -/
+noncomputable def crashMarket (p Fc σc Fn σn T : ℝ) : Measure ℝ :=
+  ENNReal.ofReal p • lognormalLaw Fc σc T + ENNReal.ofReal (1 - p) • lognormalLaw Fn σn T
+
+section VolSmileHelpers
+
+open Filter Topology Set
+
+lemma vs_cdf_eq (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun t _ => gaussianPDFReal_nonneg _ _ _))]
+
+lemma vs_tail (x : ℝ) :
+    ∫ t in Ioi x, gaussianPDFReal 0 1 t = 1 - cdf (gaussianReal 0 1) x := by
+  have := integral_add_compl (measurableSet_Iic (a := x)) (integrable_gaussianPDFReal 0 1)
+  rw [compl_Iic, integral_gaussianPDFReal_eq_one 0 one_ne_zero] at this
+  rw [vs_cdf_eq]; linarith
+
+lemma vs_pdf_cont : Continuous (gaussianPDFReal 0 1) := by
+  unfold gaussianPDFReal; fun_prop
+
+lemma vs_cdf_deriv (x : ℝ) :
+    HasDerivAt (cdf (gaussianReal 0 1)) (gaussianPDFReal 0 1 x) x := by
+  have hI : ∀ y, IntegrableOn (gaussianPDFReal 0 1) (Iic y) :=
+    fun y => (integrable_gaussianPDFReal 0 1).integrableOn
+  have heq : cdf (gaussianReal 0 1) = fun y => cdf (gaussianReal 0 1) 0 +
+      ∫ t in (0:ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y
+    rw [← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI y), vs_cdf_eq, vs_cdf_eq]; ring
+  rw [heq]
+  exact ((vs_pdf_cont.integral_hasStrictDerivAt 0 x).hasDerivAt).const_add _
+
+lemma vs_pdf_shift (s z : ℝ) :
+    gaussianPDFReal 0 1 z * Real.exp (s * z - s ^ 2 / 2) = gaussianPDFReal 0 1 (z - s) := by
+  unfold gaussianPDFReal
+  rw [mul_assoc, ← Real.exp_add]
+  congr 2
+  push_cast; ring
+
+lemma vs_shift_integral (d s : ℝ) :
+    ∫ z in Ioi d, gaussianPDFReal 0 1 (z - s) = ∫ z in Ioi (d - s), gaussianPDFReal 0 1 z := by
+  rw [← integral_indicator measurableSet_Ioi, ← integral_indicator measurableSet_Ioi]
+  have : (Ioi d).indicator (fun z => gaussianPDFReal 0 1 (z - s)) =
+      fun z => (Ioi (d - s)).indicator (gaussianPDFReal 0 1) (z - s) := by
+    funext z
+    simp only [indicator, mem_Ioi]
+    split_ifs with h1 h2 h2 <;> first | rfl | (exfalso; linarith)
+  rw [this, integral_sub_right_eq_self (fun z => (Ioi (d - s)).indicator (gaussianPDFReal 0 1) z) s]
+
+lemma vs_closed_form (F K s : ℝ) (hF : 0 < F) (hK : 0 < K) (hs : 0 < s) :
+    ∫ z, max (F * Real.exp (s * z - s ^ 2 / 2) - K) 0 ∂(gaussianReal 0 1) =
+      F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s - s / 2)) -
+        K * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s + s / 2)) := by
+  set a := Real.log (K / F)
+  rw [integral_gaussianReal_eq_integral_smul one_ne_zero]
+  have key : ∀ z, a / s + s / 2 < z ↔ K < F * Real.exp (s * z - s ^ 2 / 2) := by
+    intro z
+    rw [show a / s + s / 2 = (a + s ^ 2 / 2) / s by field_simp, div_lt_iff₀ hs,
+      ← div_lt_iff₀' hF, ← Real.log_lt_iff_lt_exp (div_pos hK hF)]
+    constructor <;> intro h <;> linarith
+  have hpt : (fun z => gaussianPDFReal 0 1 z • max (F * Real.exp (s * z - s ^ 2 / 2) - K) 0) =
+      (Ioi (a / s + s / 2)).indicator
+        (fun z => F * gaussianPDFReal 0 1 (z - s) - K * gaussianPDFReal 0 1 z) := by
+    funext z
+    simp only [indicator, mem_Ioi, smul_eq_mul]
+    split_ifs with h
+    · rw [max_eq_left (by linarith [(key z).1 h]), ← vs_pdf_shift s z]; ring
+    · rw [max_eq_right (by linarith [show ¬ K < _ from fun h' => h ((key z).2 h')])]; ring
+  rw [hpt, integral_indicator measurableSet_Ioi, integral_sub, integral_const_mul,
+    integral_const_mul, vs_shift_integral, vs_tail, vs_tail]
+  · ring_nf
+  · exact (((integrable_gaussianPDFReal 0 1).comp_sub_right s).const_mul F).integrableOn
+  · exact ((integrable_gaussianPDFReal 0 1).const_mul K).integrableOn
+
+lemma vs_pdf_ratio (F K s : ℝ) (hF : 0 < F) (hK : 0 < K) (hs : 0 < s) :
+    F * gaussianPDFReal 0 1 (Real.log (K / F) / s - s / 2) =
+      K * gaussianPDFReal 0 1 (Real.log (K / F) / s + s / 2) := by
+  unfold gaussianPDFReal
+  have : -(Real.log (K / F) / s - s / 2 - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)) =
+      -(Real.log (K / F) / s + s / 2 - 0) ^ 2 / (2 * ((1 : NNReal) : ℝ)) + Real.log (K / F) := by
+    push_cast; field_simp; ring
+  rw [this, Real.exp_add, Real.exp_log (div_pos hK hF)]
+  field_simp
+
+lemma vs_H_deriv (F K s : ℝ) (hF : 0 < F) (hK : 0 < K) (hs : 0 < s) :
+    HasDerivAt (fun s => F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s - s / 2)) -
+        K * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s + s / 2)))
+      (K * gaussianPDFReal 0 1 (Real.log (K / F) / s + s / 2)) s := by
+  have hr := vs_pdf_ratio F K s hF hK hs
+  set a := Real.log (K / F)
+  have hu : HasDerivAt (fun s => a / s - s / 2) (-a / s ^ 2 - 1 / 2) s := by
+    have := ((hasDerivAt_inv hs.ne').const_mul a).sub ((hasDerivAt_id s).div_const 2)
+    convert this using 1
+    · funext x; simp [div_eq_mul_inv]
+    · field_simp
+  have hw : HasDerivAt (fun s => a / s + s / 2) (-a / s ^ 2 + 1 / 2) s := by
+    have := ((hasDerivAt_inv hs.ne').const_mul a).add ((hasDerivAt_id s).div_const 2)
+    convert this using 1
+    · funext x; simp [div_eq_mul_inv]
+    · field_simp
+  have h1 := (vs_cdf_deriv (a / s - s / 2)).comp s hu
+  have h2 := (vs_cdf_deriv (a / s + s / 2)).comp s hw
+  have := (((hasDerivAt_const s (1:ℝ)).sub h1).const_mul F).sub
+    (((hasDerivAt_const s (1:ℝ)).sub h2).const_mul K)
+  convert this using 1
+  · funext x; simp
+  · linear_combination (-a / s ^ 2 - 1 / 2) * hr
+
+lemma vs_H_strictMono (F K : ℝ) (hF : 0 < F) (hK : 0 < K) :
+    StrictMonoOn (fun s => F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s - s / 2)) -
+        K * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s + s / 2))) (Ioi 0) := by
+  apply strictMonoOn_of_deriv_pos (convex_Ioi 0)
+  · intro x hx
+    exact (vs_H_deriv F K x hF hK hx).continuousAt.continuousWithinAt
+  · intro x hx
+    rw [interior_Ioi] at hx
+    rw [(vs_H_deriv F K x hF hK hx).deriv]
+    exact mul_pos hK (gaussianPDFReal_pos _ _ _ one_ne_zero)
+
+lemma vs_H_tendsto_of {l : Filter ℝ} (F K A B : ℝ) (u w : ℝ → ℝ)
+    (hA : Tendsto (fun s => cdf (gaussianReal 0 1) (u s)) l (𝓝 A))
+    (hB : Tendsto (fun s => cdf (gaussianReal 0 1) (w s)) l (𝓝 B)) :
+    Tendsto (fun s => F * (1 - cdf (gaussianReal 0 1) (u s)) - K * (1 - cdf (gaussianReal 0 1) (w s)))
+      l (𝓝 (F * (1 - A) - K * (1 - B))) :=
+  ((tendsto_const_nhds.sub hA).const_mul F).sub ((tendsto_const_nhds.sub hB).const_mul K)
+
+lemma vs_half_zero : Tendsto (fun s : ℝ => s / 2) (𝓝[>] 0) (𝓝 0) := by
+  have : Tendsto (fun s : ℝ => s / 2) (𝓝 0) (𝓝 (0 / 2)) := (continuous_id.div_const 2).tendsto 0
+  rw [zero_div] at this
+  exact this.mono_left nhdsWithin_le_nhds
+
+lemma vs_H_lim_zero (F K : ℝ) (hF : 0 < F) (hK : 0 < K) :
+    Tendsto (fun s => F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s - s / 2)) -
+        K * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s + s / 2))) (𝓝[>] 0)
+      (𝓝 (max (F - K) 0)) := by
+  set a := Real.log (K / F) with ha_def
+  have hKF : K / F = Real.exp a := (Real.exp_log (div_pos hK hF)).symm
+  rcases lt_trichotomy a 0 with ha | ha | ha
+  · have h1 : Tendsto (fun s => a / s) (𝓝[>] 0) atBot :=
+      (tendsto_inv_nhdsGT_zero.const_mul_atTop_of_neg ha).congr (fun s => by ring)
+    have hu : Tendsto (fun s => a / s - s / 2) (𝓝[>] 0) atBot :=
+      (h1.atBot_add vs_half_zero.neg).congr (fun s => by ring)
+    have hw : Tendsto (fun s => a / s + s / 2) (𝓝[>] 0) atBot :=
+      (h1.atBot_add vs_half_zero).congr (fun s => by ring)
+    have := vs_H_tendsto_of F K 0 0 _ _ (Tendsto.comp (tendsto_cdf_atBot (μ := gaussianReal 0 1)) hu) (Tendsto.comp (tendsto_cdf_atBot (μ := gaussianReal 0 1)) hw)
+    have hlt : K < F := by
+      have : K / F < 1 := by rw [hKF]; exact Real.exp_lt_one_iff.mpr ha
+      rwa [div_lt_one hF] at this
+    convert this using 2
+    rw [max_eq_left (by linarith)]; ring
+  · have hKF' : K = F := by
+      rw [ha, Real.exp_zero, div_eq_one_iff_eq hF.ne'] at hKF; exact hKF
+    have hu : Tendsto (fun s => a / s - s / 2) (𝓝[>] 0) (𝓝 0) := by
+      have := vs_half_zero.neg; simp only [neg_zero] at this
+      exact this.congr (fun s => by rw [ha]; ring)
+    have hw : Tendsto (fun s => a / s + s / 2) (𝓝[>] 0) (𝓝 0) :=
+      vs_half_zero.congr (fun s => by rw [ha]; ring)
+    have hc := (vs_cdf_deriv 0).continuousAt
+    have := vs_H_tendsto_of F K _ _ _ _ (hc.tendsto.comp hu) (hc.tendsto.comp hw)
+    convert this using 2
+    rw [hKF', sub_self, max_self]; ring
+  · have h1 : Tendsto (fun s => a / s) (𝓝[>] 0) atTop :=
+      (tendsto_inv_nhdsGT_zero.const_mul_atTop ha).congr (fun s => by ring)
+    have hu : Tendsto (fun s => a / s - s / 2) (𝓝[>] 0) atTop :=
+      (h1.atTop_add vs_half_zero.neg).congr (fun s => by ring)
+    have hw : Tendsto (fun s => a / s + s / 2) (𝓝[>] 0) atTop :=
+      (h1.atTop_add vs_half_zero).congr (fun s => by ring)
+    have := vs_H_tendsto_of F K 1 1 _ _ (Tendsto.comp (tendsto_cdf_atTop (μ := gaussianReal 0 1)) hu) (Tendsto.comp (tendsto_cdf_atTop (μ := gaussianReal 0 1)) hw)
+    have hlt : F < K := by
+      have : 1 < K / F := by rw [hKF]; exact Real.one_lt_exp_iff.mpr ha
+      rwa [one_lt_div hF] at this
+    convert this using 2
+    rw [max_eq_right (by linarith)]; ring
+
+lemma vs_H_lim_top (F K : ℝ) :
+    Tendsto (fun s => F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s - s / 2)) -
+        K * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s + s / 2))) atTop (𝓝 F) := by
+  set a := Real.log (K / F)
+  have h1 : Tendsto (fun s : ℝ => a / s) atTop (𝓝 0) := by
+    have := tendsto_inv_atTop_zero.const_mul a
+    rw [mul_zero] at this
+    exact this.congr (fun s => by ring)
+  have h2 : Tendsto (fun s : ℝ => s / 2) atTop atTop := tendsto_id.atTop_div_const (by norm_num)
+  have hu : Tendsto (fun s => a / s - s / 2) atTop atBot :=
+    (h1.add_atBot (tendsto_neg_atTop_atBot.comp h2)).congr (fun s => by simp; ring)
+  have hw : Tendsto (fun s => a / s + s / 2) atTop atTop := h1.add_atTop h2
+  have := vs_H_tendsto_of F K 0 1 _ _ (Tendsto.comp (tendsto_cdf_atBot (μ := gaussianReal 0 1)) hu) (Tendsto.comp (tendsto_cdf_atTop (μ := gaussianReal 0 1)) hw)
+  convert this using 2; ring
+
+lemma vs_ramp_bound (x K h : ℝ) (hh : 0 < h) :
+    0 ≤ max (x - K) 0 - max (x - (K + h)) 0 ∧ max (x - K) 0 - max (x - (K + h)) 0 ≤ h := by
+  constructor
+  · have : max (x - (K + h)) 0 ≤ max (x - K) 0 := max_le_max (by linarith) le_rfl
+    linarith
+  · have : max (x - K) 0 ≤ max (x - (K + h)) 0 + h :=
+      max_le (by linarith [le_max_left (x - (K + h)) 0]) (by linarith [le_max_right (x - (K + h)) 0])
+    linarith
+
+lemma vs_tail_limit (m : Measure ℝ) [IsProbabilityMeasure m] (K : ℝ)
+    (hint : ∀ K', K ≤ K' → Integrable (fun x => max (x - K') 0) m) :
+    Tendsto (fun n : ℕ => ((∫ x, max (x - K) 0 ∂m) -
+        ∫ x, max (x - (K + 1 / ((n : ℝ) + 1))) 0 ∂m) * ((n : ℝ) + 1)) atTop
+      (𝓝 (m.real (Ioi K))) := by
+  have hpos : ∀ n : ℕ, (0 : ℝ) < 1 / ((n : ℝ) + 1) := fun n => by positivity
+  have hrw : ∀ n : ℕ, ((∫ x, max (x - K) 0 ∂m) -
+        ∫ x, max (x - (K + 1 / ((n : ℝ) + 1))) 0 ∂m) * ((n : ℝ) + 1) =
+      ∫ x, (max (x - K) 0 - max (x - (K + 1 / ((n : ℝ) + 1))) 0) * ((n : ℝ) + 1) ∂m := by
+    intro n
+    rw [integral_mul_const, integral_sub (hint K le_rfl) (hint _ (by linarith [hpos n]))]
+  simp_rw [hrw]
+  rw [← integral_indicator_one measurableSet_Ioi]
+  apply tendsto_integral_of_dominated_convergence (fun _ => 1)
+  · intro n; exact (by fun_prop : Continuous fun x : ℝ =>
+      (max (x - K) 0 - max (x - (K + 1 / ((n : ℝ) + 1))) 0) * ((n : ℝ) + 1)).aestronglyMeasurable
+  · exact integrable_const 1
+  · intro n
+    refine ae_of_all _ (fun x => ?_)
+    obtain ⟨h0, h1⟩ := vs_ramp_bound x K (1 / ((n : ℝ) + 1)) (hpos n)
+    have hn : (0 : ℝ) < (n : ℝ) + 1 := by positivity
+    rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg h0 hn.le)]
+    calc _ ≤ 1 / ((n : ℝ) + 1) * ((n : ℝ) + 1) := mul_le_mul_of_nonneg_right h1 hn.le
+      _ = 1 := by field_simp
+  · refine ae_of_all _ (fun x => ?_)
+    by_cases hx : K < x
+    · rw [indicator_of_mem (mem_Ioi.mpr hx)]
+      obtain ⟨N, hN⟩ := exists_nat_one_div_lt (sub_pos.mpr hx)
+      apply tendsto_const_nhds.congr'
+      filter_upwards [eventually_ge_atTop N] with n hn
+      have hle : 1 / ((n : ℝ) + 1) ≤ 1 / ((N : ℝ) + 1) := by
+        apply one_div_le_one_div_of_le (by positivity); exact_mod_cast Nat.add_le_add_right hn 1
+      rw [max_eq_left (by linarith), max_eq_left (by linarith)]
+      rw [Pi.one_apply]
+      field_simp
+      ring
+    · rw [indicator_of_notMem (by simpa using hx)]
+      apply tendsto_const_nhds.congr'
+      filter_upwards with n
+      rw [max_eq_right (by linarith), max_eq_right (by linarith [hpos n])]
+      simp
+
+lemma vs_H_pos (F K s : ℝ) (hF : 0 < F) (hK : 0 < K) (hs : 0 < s) :
+    max (F - K) 0 < F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s - s / 2)) -
+        K * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s + s / 2)) := by
+  have hmono := vs_H_strictMono F K hF hK
+  have hlt := hmono (show (0:ℝ) < s / 2 by positivity) hs (by linarith)
+  refine lt_of_le_of_lt ?_ hlt
+  apply le_of_tendsto (vs_H_lim_zero F K hF hK)
+  filter_upwards [Ioo_mem_nhdsGT (show (0:ℝ) < s / 2 by positivity)] with t ht
+  exact hmono.monotoneOn ht.1 (show (0:ℝ) < s / 2 by positivity) ht.2.le
+
+lemma vs_lognormal_meas (F σ T : ℝ) :
+    Measurable (fun z : ℝ => F * Real.exp (σ * Real.sqrt T * z - σ ^ 2 * T / 2)) := by
+  fun_prop
+
+lemma vs_lognormal_prob (F σ T : ℝ) : IsProbabilityMeasure (lognormalLaw F σ T) :=
+  (Measure.isProbabilityMeasure_map_iff (vs_lognormal_meas F σ T).aemeasurable).mpr inferInstance
+
+lemma vs_lognormal_integral (F σ T K : ℝ) (hT : 0 < T) (hF : 0 < F) (hσ : 0 < σ) (hK : 0 < K) :
+    ∫ x, max (x - K) 0 ∂(lognormalLaw F σ T) =
+      F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / (σ * Real.sqrt T) - σ * Real.sqrt T / 2)) -
+        K * (1 - cdf (gaussianReal 0 1)
+          (Real.log (K / F) / (σ * Real.sqrt T) + σ * Real.sqrt T / 2)) := by
+  unfold lognormalLaw
+  rw [integral_map (vs_lognormal_meas F σ T).aemeasurable
+    (by fun_prop : Continuous fun x : ℝ => max (x - K) 0).aestronglyMeasurable]
+  have hs2 : σ ^ 2 * T = (σ * Real.sqrt T) ^ 2 := by rw [mul_pow, Real.sq_sqrt hT.le]
+  simp_rw [hs2]
+  have hsT : 0 < σ * Real.sqrt T := mul_pos hσ (Real.sqrt_pos.mpr hT)
+  exact vs_closed_form F K (σ * Real.sqrt T) hF hK hsT
+
+lemma vs_lognormal_fun (F σ T : ℝ) :
+    (fun z : ℝ => F * Real.exp (σ * Real.sqrt T * z - σ ^ 2 * T / 2)) =
+      fun z => F * Real.exp (-(σ ^ 2 * T / 2)) * Real.exp (σ * Real.sqrt T * z) := by
+  funext z
+  rw [mul_assoc F (Real.exp _), ← Real.exp_add]; congr 2; ring
+
+lemma vs_lognormal_integrable (F σ T : ℝ) : Integrable (fun x : ℝ => x) (lognormalLaw F σ T) := by
+  unfold lognormalLaw
+  rw [integrable_map_measure (by fun_prop : Continuous fun x : ℝ => x).aestronglyMeasurable
+    (vs_lognormal_meas F σ T).aemeasurable]
+  show Integrable (fun z : ℝ => F * Real.exp (σ * Real.sqrt T * z - σ ^ 2 * T / 2)) _
+  rw [vs_lognormal_fun]
+  exact (integrable_exp_mul_gaussianReal _).const_mul _
+
+lemma vs_lognormal_mean (F σ T : ℝ) (hT : 0 ≤ T) : ∫ x, x ∂(lognormalLaw F σ T) = F := by
+  unfold lognormalLaw
+  rw [integral_map (vs_lognormal_meas F σ T).aemeasurable
+    (by fun_prop : Continuous fun x : ℝ => x).aestronglyMeasurable, vs_lognormal_fun,
+    integral_const_mul]
+  have hm := congrFun (mgf_id_gaussianReal (μ := 0) (v := 1)) (σ * Real.sqrt T)
+  simp only [mgf, id] at hm
+  rw [hm, mul_assoc, ← Real.exp_add, mul_pow, Real.sq_sqrt hT]
+  push_cast
+  ring_nf
+  simp
+
+lemma vs_parity_general (r T K : ℝ) (m : Measure ℝ) [IsProbabilityMeasure m]
+    (hm : Integrable (fun x : ℝ => x) m) :
+    callPrice r T K m - putPrice r T K m = Real.exp (-r * T) * ((∫ x, x ∂m) - K) := by
+  unfold callPrice putPrice
+  have h1 : Integrable (fun x : ℝ => max (x - K) 0) m := (hm.sub (integrable_const K)).pos_part
+  have h2 : Integrable (fun x : ℝ => max (K - x) 0) m := ((integrable_const K).sub hm).pos_part
+  rw [← mul_sub, ← integral_sub h1 h2]
+  have hpt : (fun x : ℝ => max (x - K) 0 - max (K - x) 0) = fun x => x - K := by
+    funext x
+    rcases le_total x K with h | h
+    · rw [max_eq_right (by linarith), max_eq_left (by linarith)]; ring
+    · rw [max_eq_left (by linarith), max_eq_right (by linarith)]; ring
+  rw [hpt, integral_sub hm (integrable_const K), integral_const]
+  simp
+
+lemma vs_thm1 (r T F σ : ℝ) (hT : 0 < T) (hF : 0 < F) (hσ : 0 < σ)
+    (μ : Measure ℝ) [IsProbabilityMeasure μ] :
+    (∀ K : ℝ, 0 < K → callPrice r T K μ = bsCall r T F σ K) ↔ μ = lognormalLaw F σ T := by
+  constructor
+  swap
+  · rintro rfl K _; rfl
+  intro h
+  have := vs_lognormal_prob F σ T
+  set ν := lognormalLaw F σ T with hν
+  have hE := Real.exp_pos (-r * T)
+  have hsT : 0 < σ * Real.sqrt T := mul_pos hσ (Real.sqrt_pos.mpr hT)
+  have heq : ∀ K, 0 < K → ∫ x, max (x - K) 0 ∂μ = ∫ x, max (x - K) 0 ∂ν := by
+    intro K hK
+    have := h K hK
+    unfold callPrice bsCall at this
+    exact mul_left_cancel₀ hE.ne' this
+  have hνint : ∀ K, Integrable (fun x : ℝ => max (x - K) 0) ν := fun K =>
+    ((vs_lognormal_integrable F σ T).sub (integrable_const K)).pos_part
+  have hμint : ∀ K, 0 < K → Integrable (fun x : ℝ => max (x - K) 0) μ := by
+    intro K hK
+    by_contra hn
+    have h0 := integral_undef hn
+    rw [heq K hK, hν, vs_lognormal_integral F σ T K hT hF hσ hK] at h0
+    have := vs_H_pos F K _ hF hK hsT
+    linarith [le_max_right (F - K) 0]
+  have htail : ∀ K, 0 < K → μ (Ioi K) = ν (Ioi K) := by
+    intro K hK
+    have h1 := vs_tail_limit μ K (fun K' hK' => hμint K' (by linarith))
+    have h2 := vs_tail_limit ν K (fun K' _ => hνint K')
+    have h3 : μ.real (Ioi K) = ν.real (Ioi K) := by
+      refine tendsto_nhds_unique h1 ?_
+      convert h2 using 2 with n
+      rw [heq K hK, heq _ (by positivity)]
+    rw [measureReal_def, measureReal_def] at h3
+    exact (ENNReal.toReal_eq_toReal_iff' (measure_ne_top _ _) (measure_ne_top _ _)).mp h3
+  have hν0 : ν (Ioi 0) = 1 := by
+    rw [hν, lognormalLaw, Measure.map_apply (vs_lognormal_meas F σ T) measurableSet_Ioi]
+    have : (fun z : ℝ => F * Real.exp (σ * Real.sqrt T * z - σ ^ 2 * T / 2)) ⁻¹' Ioi 0 = univ := by
+      ext z; simp only [mem_preimage, mem_Ioi, mem_univ, iff_true]; positivity
+    rw [this, measure_univ]
+  have hμ0 : μ (Ioi 0) = 1 := by
+    have hU : (⋃ n : ℕ, Ioi (1 / ((n : ℝ) + 1))) = Ioi 0 := by
+      ext x; simp only [mem_iUnion, mem_Ioi]
+      constructor
+      · rintro ⟨n, hn⟩; exact lt_trans (by positivity) hn
+      · intro hx; obtain ⟨n, hn⟩ := exists_nat_one_div_lt hx; exact ⟨n, hn⟩
+    have hmono : Monotone (fun n : ℕ => Ioi (1 / ((n : ℝ) + 1))) := by
+      intro a b hab; apply Ioi_subset_Ioi
+      apply one_div_le_one_div_of_le (by positivity); exact_mod_cast Nat.add_le_add_right hab 1
+    have h1 := tendsto_measure_iUnion_atTop (μ := μ) hmono
+    have h2 := tendsto_measure_iUnion_atTop (μ := ν) hmono
+    rw [hU] at h1 h2
+    rw [← hν0]
+    refine tendsto_nhds_unique h1 ?_
+    convert h2 using 1
+    funext n
+    exact htail _ (by positivity)
+  have hall : ∀ a, μ (Ioi a) = ν (Ioi a) := by
+    intro a
+    rcases lt_or_ge 0 a with ha | ha
+    · exact htail a ha
+    · have e1 : μ (Ioi a) = 1 := le_antisymm prob_le_one (hμ0 ▸ measure_mono (Ioi_subset_Ioi ha))
+      have e2 : ν (Ioi a) = 1 := le_antisymm prob_le_one (hν0 ▸ measure_mono (Ioi_subset_Ioi ha))
+      rw [e1, e2]
+  refine Measure.ext_of_Iic μ ν (fun a => ?_)
+  rw [← compl_Ioi, prob_compl_eq_one_sub measurableSet_Ioi,
+    prob_compl_eq_one_sub measurableSet_Ioi, hall a]
+
+lemma vs_thm2 (r T F K c : ℝ) (hT : 0 < T) (hF : 0 < F)
+    (hK : 0 < K) (hlo : Real.exp (-r * T) * max (F - K) 0 < c)
+    (hhi : c < Real.exp (-r * T) * F) :
+    ∃! σ : ℝ, 0 < σ ∧ bsCall r T F σ K = c := by
+  obtain ⟨H, hH⟩ : ∃ H : ℝ → ℝ, H = fun s =>
+      F * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s - s / 2)) -
+        K * (1 - cdf (gaussianReal 0 1) (Real.log (K / F) / s + s / 2)) := ⟨_, rfl⟩
+  have hmono : StrictMonoOn H (Ioi 0) := by rw [hH]; exact vs_H_strictMono F K hF hK
+  have hlim0 : Tendsto H (𝓝[>] 0) (𝓝 (max (F - K) 0)) := by rw [hH]; exact vs_H_lim_zero F K hF hK
+  have hlimT : Tendsto H atTop (𝓝 F) := by rw [hH]; exact vs_H_lim_top F K
+  have hcont : ContinuousOn H (Ioi 0) := by
+    intro x hx; rw [hH]; exact (vs_H_deriv F K x hF hK hx).continuousAt.continuousWithinAt
+  have hE := Real.exp_pos (-r * T)
+  have hsT : 0 < Real.sqrt T := Real.sqrt_pos.mpr hT
+  have hbs : ∀ σ, 0 < σ → bsCall r T F σ K = Real.exp (-r * T) * H (σ * Real.sqrt T) := by
+    intro σ hσ; unfold bsCall callPrice; rw [vs_lognormal_integral F σ T K hT hF hσ hK, hH]
+  set y := c / Real.exp (-r * T) with hy
+  have hlo' : max (F - K) 0 < y := by rw [hy, lt_div_iff₀ hE, mul_comm]; exact hlo
+  have hhi' : y < F := by rw [hy, div_lt_iff₀ hE, mul_comm]; exact hhi
+  obtain ⟨s0, hs0pos, hs0⟩ : ∃ s0, 0 < s0 ∧ H s0 < y := by
+    have h1 := hlim0.eventually (gt_mem_nhds hlo')
+    have h2 : ∀ᶠ t in 𝓝[>] (0:ℝ), 0 < t := self_mem_nhdsWithin
+    obtain ⟨t, ht1, ht2⟩ := (h1.and h2).exists
+    exact ⟨t, ht2, ht1⟩
+  obtain ⟨s1, hs01, hs1⟩ : ∃ s1, s0 ≤ s1 ∧ y < H s1 := by
+    obtain ⟨t, ht1, ht2⟩ :=
+      ((hlimT.eventually (lt_mem_nhds hhi')).and (eventually_ge_atTop s0)).exists
+    exact ⟨t, ht2, ht1⟩
+  have hcont' : ContinuousOn H (Icc s0 s1) :=
+    hcont.mono (fun x hx => lt_of_lt_of_le hs0pos hx.1)
+  obtain ⟨s, hs, hHs⟩ := intermediate_value_Icc hs01 hcont' ⟨hs0.le, hs1.le⟩
+  have hspos : 0 < s := lt_of_lt_of_le hs0pos hs.1
+  refine ⟨s / Real.sqrt T, ⟨div_pos hspos hsT, ?_⟩, ?_⟩
+  · rw [hbs _ (div_pos hspos hsT), div_mul_cancel₀ s hsT.ne', hHs, hy]
+    field_simp
+  · rintro σ ⟨hσ, hσc⟩
+    rw [hbs σ hσ] at hσc
+    have heqH : H (σ * Real.sqrt T) = H s := by
+      rw [hHs, hy, ← hσc]; field_simp
+    have := hmono.injOn (show σ * Real.sqrt T ∈ Ioi 0 from mul_pos hσ hsT) hspos heqH
+    rw [← this]; field_simp
+
+lemma vs_thm3 (r T F p Fc σc Fn σn : ℝ)
+    (hT : 0 < T) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+    (∀ K : ℝ, 0 < K →
+      callPrice r T K (crashMarket p Fc σc Fn σn T) - putPrice r T K (crashMarket p Fc σc Fn σn T)
+        = Real.exp (-r * T) * (F - K)) ↔
+      p * Fc + (1 - p) * Fn = F := by
+  have hp1' : 0 ≤ 1 - p := by linarith
+  have : IsProbabilityMeasure (crashMarket p Fc σc Fn σn T) := by
+    have := vs_lognormal_prob Fc σc T
+    have := vs_lognormal_prob Fn σn T
+    constructor
+    simp only [crashMarket, Measure.add_apply, Measure.smul_apply, measure_univ, smul_eq_mul,
+      mul_one]
+    rw [← ENNReal.ofReal_add hp0 hp1']; simp
+  have hc := (vs_lognormal_integrable Fc σc T).smul_measure (ENNReal.ofReal_ne_top (r := p))
+  have hn := (vs_lognormal_integrable Fn σn T).smul_measure (ENNReal.ofReal_ne_top (r := 1 - p))
+  have hint : Integrable (fun x : ℝ => x) (crashMarket p Fc σc Fn σn T) := hc.add_measure hn
+  have hmean : ∫ x, x ∂(crashMarket p Fc σc Fn σn T) = p * Fc + (1 - p) * Fn := by
+    unfold crashMarket
+    rw [integral_add_measure hc hn, integral_smul_measure, integral_smul_measure,
+      vs_lognormal_mean _ _ _ hT.le, vs_lognormal_mean _ _ _ hT.le, ENNReal.toReal_ofReal hp0,
+      ENNReal.toReal_ofReal hp1']
+    simp [smul_eq_mul]
+  have hE : 0 < Real.exp (-r * T) := Real.exp_pos _
+  constructor
+  · intro h
+    have h1 := h 1 one_pos
+    rw [vs_parity_general r T 1 _ hint, hmean] at h1
+    have := mul_left_cancel₀ hE.ne' h1
+    linarith
+  · intro h K _
+    rw [vs_parity_general r T K _ hint, hmean, h]
+
+end VolSmileHelpers
+
+/-- The smile is flat only for one lognormal. Take any market whose year-end price has the
+probability law `μ`. Its implied volatility equals the same number `σ` at every positive strike
+(every market call equals the Black-Scholes call at `σ`) exactly when the market's
+distribution is the one lognormal centred on the forward `F` with volatility `σ`.
+So any other distribution, such as the crash market, shows a smile or a skew. -/
+theorem flat_smile_iff_lognormal (r T F σ : ℝ) (hT : 0 < T) (hF : 0 < F) (hσ : 0 < σ)
+    (μ : Measure ℝ) [IsProbabilityMeasure μ] :
+    (∀ K : ℝ, 0 < K → callPrice r T K μ = bsCall r T F σ K) ↔ μ = lognormalLaw F σ T := by
+  exact vs_thm1 r T F σ hT hF hσ μ
+
+/-- Every strike has exactly one implied volatility. A call priced strictly above its lower
+bound `e^{−rT} max(F − K, 0)` and strictly below its upper bound `e^{−rT} F` is reproduced by
+the Black-Scholes call at exactly one positive volatility. -/
+theorem implied_volatility_exists_unique (r T F K c : ℝ) (hT : 0 < T) (hF : 0 < F)
+    (hK : 0 < K) (hlo : Real.exp (-r * T) * max (F - K) 0 < c)
+    (hhi : c < Real.exp (-r * T) * F) :
+    ∃! σ : ℝ, 0 < σ ∧ bsCall r T F σ K = c := by
+  exact vs_thm2 r T F K c hT hF hK hlo hhi
+
+/-- The crash market obeys put-call parity, `C(K) − P(K) = e^{−rT}(F − K)` at every positive
+strike, exactly when its two legs average to the forward: `p · Fc + (1 − p) · Fn = F`. -/
+theorem crash_market_parity_iff_legs_average_to_forward (r T F p Fc σc Fn σn : ℝ)
+    (hT : 0 < T) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+    (∀ K : ℝ, 0 < K →
+      callPrice r T K (crashMarket p Fc σc Fn σn T) - putPrice r T K (crashMarket p Fc σc Fn σn T)
+        = Real.exp (-r * T) * (F - K)) ↔
+      p * Fc + (1 - p) * Fn = F := by
+  exact vs_thm3 r T F p Fc σc Fn σn hT hp0 hp1
+
+/-- The card's strip: nine strikes, from $80 to $120 in $5 steps. -/
+example : (Finset.range 9).image (fun i => 80 + 5 * i) = {80, 85, 90, 95, 100, 105, 110, 115, 120} := by
+  decide
+
+example : ((Finset.range 9).image (fun i => 80 + 5 * i)).card = 9 := by
+  decide
+
+#print axioms flat_smile_iff_lognormal
+#print axioms implied_volatility_exists_unique
+#print axioms crash_market_parity_iff_legs_average_to_forward
+#print axioms vs_cdf_eq
+#print axioms vs_tail
+#print axioms vs_pdf_cont
+#print axioms vs_cdf_deriv
+#print axioms vs_pdf_shift
+#print axioms vs_shift_integral
+#print axioms vs_closed_form
+#print axioms vs_pdf_ratio
+#print axioms vs_H_deriv
+#print axioms vs_H_strictMono
+#print axioms vs_H_tendsto_of
+#print axioms vs_half_zero
+#print axioms vs_H_lim_zero
+#print axioms vs_H_lim_top
+#print axioms vs_ramp_bound
+#print axioms vs_tail_limit
+#print axioms vs_H_pos
+#print axioms vs_lognormal_meas
+#print axioms vs_lognormal_prob
+#print axioms vs_lognormal_integral
+#print axioms vs_lognormal_fun
+#print axioms vs_lognormal_integrable
+#print axioms vs_lognormal_mean
+#print axioms vs_parity_general
+#print axioms vs_thm1
+#print axioms vs_thm2
+#print axioms vs_thm3
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'flat_smile_iff_lognormal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'implied_volatility_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'crash_market_parity_iff_legs_average_to_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_cdf_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_pdf_cont' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_cdf_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_pdf_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_shift_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_pdf_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_H_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_H_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_H_tendsto_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_half_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_H_lim_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_H_lim_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_ramp_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_tail_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_H_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_lognormal_meas' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_lognormal_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_lognormal_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_lognormal_fun' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_lognormal_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_lognormal_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_parity_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_thm1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_thm2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vs_thm3' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -638,7 +1250,7 @@ The two outputs are identical line for line.
 - **Equity index options.** Index smiles slope down from low strikes to high, as the Acme strip does. Mark Rubinstein dated the modern index skew to the crash of October 1987; before it, implied volatility across strikes was close to flat. Two causes are usually cited: buyers pay extra for crash insurance, and a falling share raises a firm's leverage, so volatility tends to rise as prices fall.
 - **Currency options.** A currency pair can fall from either side, so its smile is closer to even. Desks quote its tilt and its curvature as the risk reversal and the butterfly: [Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md).
 - **Commodity options.** Where the fear is a supply shock, the high strikes are dear and the skew slopes up: [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md).
-- **Fitting the curve.** Nine quotes are nine points; pricing needs a smooth curve through them. The SVI formula is the standard fit: [The SVI smile](04-svi-smile-fit.md).
+- **Fitting the curve.** Nine quotes are nine points; pricing needs a smooth curve through them. The SVI (stochastic volatility inspired) formula is the standard fit: [The SVI smile](04-svi-smile-fit.md).
 - **Hedging on a skew.** When the share moves, the whole curve can move with it, which changes the hedge ratio: [Smile-adjusted delta](05-smile-adjusted-delta.md). Stacking the smiles of every expiry gives [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md).
 
 > **Say it back**
@@ -648,6 +1260,7 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the one-volatility price formula that this card runs backwards at every strike.
 - [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): running Black-Scholes backwards, with the existence and uniqueness this card relies on at every strike.
 - [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): call prices across strikes determine the market's density, the fact behind Step 3.
 - [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): what a density is and how a weighted mixture of two is still one.

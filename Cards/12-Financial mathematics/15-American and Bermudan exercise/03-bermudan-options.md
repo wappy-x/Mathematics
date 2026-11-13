@@ -6,11 +6,15 @@
 
 ## General Overview
 
-Acme trades at $100.00. A one-year put on Acme is the right, not the duty, to sell one share for $100.00, the **strike**. Three contracts share that payoff and differ only in the calendar. The European put may be used on the last day alone and is worth $6.33. The American put may be used on any day and is worth $6.66. A third contract lists four dates: the ends of the four quarters. On those four days the holder may sell at $100.00; on every other day the put can only be held. It is worth $6.57.
+Acme trades at $100.00. A one-year put on Acme is the right, not the duty, to sell one share for $100.00, the **strike**. Three contracts share that payoff and differ only in the calendar. The European put may be used on the last day alone and is worth $6.33. The American put may be used on any day and is worth $6.66.
+
+A third contract lists four dates: the ends of the four quarters. On those four days the holder may sell at $100.00; on every other day the put can only be held. It is worth $6.57.
 
 A contract that may be exercised only on a list of dates fixed in advance is a **Bermudan option**, the term used from here on. The name is a market joke: Bermuda lies between Europe and America, and so does the price.
 
-The pricing rule changes by one line. Walk backwards from expiry as for a European option. On a listed date, compare two numbers, what exercising pays now and what holding is worth, and keep the larger. On any other date, make no comparison. With the last day as the only date, the rule is the European rule, and the price is the European price. List more dates and the price climbs: $6.49 for two, $6.57 for four, $6.63 for twelve, $6.65 for fifty-two, and $6.66 when every step of the tree is listed.
+The pricing rule changes by one line. Walk backwards from expiry as for a European option. On a listed date, compare two numbers, what exercising pays now and what holding is worth, and keep the larger. On any other date, make no comparison.
+
+With the last day as the only date, the rule is the European rule, and the price is the European price. List more dates and the price climbs: $6.49 for two, $6.57 for four, $6.63 for twelve, $6.65 for fifty-two, and $6.66 when every step of the tree is listed. The tree here is a binomial tree: it cuts the year into small steps, and at each step Acme's price moves up or down by a fixed factor.
 
 **A Bermudan option is priced by backward induction with the exercise check switched on at the listed dates only; one date gives the European price, and every added date lifts the price toward the American.**
 
@@ -35,7 +39,13 @@ The climbing line is the Bermudan price, each on a binomial tree of about 2,000 
 
 ## The formula
 
-Notation first, in words. $K$ is the strike, $r$ the riskless rate and $S_{t_k}$ Acme's price on the $k$-th listed date. The listed dates are written $t_1 < t_2 < \dots < t_m$, the last one being expiry, and $\Delta_k = t_{k+1} - t_k$ is the gap after the $k$-th. The option's worth on the $k$-th listed date, when Acme stands at price $s$, is $V_k(s)$. The payoff of exercising at price $s$ is $g(s) = \max(K - s, 0)$ for a put. A **risk-neutral expectation** (the average over Acme's possible prices in the pricing world where everything drifts at the bank rate less the dividend) is written $\mathbb{E}$; the bar inside it, read "given", fixes the price on the current date.
+Notation first, in words:
+
+- $K$ is the strike, $r$ the riskless rate and $S_{t_k}$ Acme's price on the $k$-th listed date.
+- The listed dates are written $t_1 < t_2 < \dots < t_m$, the last one being expiry, and $\Delta_k = t_{k+1} - t_k$ is the gap after the $k$-th.
+- The option's worth on the $k$-th listed date, when Acme stands at price $s$, is $V_k(s)$.
+- The payoff of exercising at price $s$ is $g(s) = \max(K - s, 0)$ for a put.
+- A **risk-neutral expectation** (the average over Acme's possible prices in the pricing world where everything drifts at the bank rate less the dividend) is written $\mathbb{E}$; the bar inside it, read "given", fixes the price on the current date.
 
 $$V_m(s) = g(s), \qquad V_k(s) = \max\Big(\,g(s)\,,\;\; e^{-r\Delta_k}\,\mathbb{E}\big[\,V_{k+1}(S_{t_{k+1}}) \;\big|\; S_{t_k} = s\,\big]\Big)$$
 
@@ -61,6 +71,7 @@ $$P_E \;\le\; P_B(D) \;\le\; P_B(D') \;\le\; P_A$$
 | $D$, $m$ | the list of exercise dates; how many there are | quarter ends; 4 | more dates: the price climbs toward the American |
 | $t_k$, $t_1$, $k$, $\Delta_k$ | the $k$-th listed date in years, $t_1$ the first; the gap to the next one | 0.25, 0.5, 0.75, 1; gaps of 0.25 | — |
 | $g$ | what exercising pays: $\max(K - s, 0)$ for a put | $13.19 at the $86.81 node of the hand tree below | — |
+| $u$, $d$ | the tree's up and down factors: each step multiplies Acme's price by one of them | 1.151910 and 0.868123 on the hand tree | — |
 | $p$ | the tree's weight on an up step: a price weight, not a forecast | 0.517959 on the hand tree | — |
 | $V_k$ | the option's worth on the $k$-th listed date, as a function of price | $V_4 = g$ | — |
 | $\mathbb{E}$ | the risk-neutral average over Acme's possible prices | — | — |
@@ -94,13 +105,17 @@ On a day not on the list the holder can only hold. From one listed date to the n
 
 ### Step 3: on a listed date, keep the larger number
 
-On a listed date the holder faces two sums: $g(s)$ in hand, or the holding value from Step 2. A rational holder takes the larger. A seller holding the larger sum is covered either way; charging less would leave some rule the seller cannot pay. The general statement, that the price of a right to stop is the smallest process lying above the payoff whose discounted average never rises, is the Snell envelope ([Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md)); a Bermudan applies it to a list of dates.
+On a listed date the holder faces two sums: $g(s)$ in hand, or the holding value from Step 2. A rational holder takes the larger. A seller holding the larger sum is covered either way; charging less would leave some rule the seller cannot pay.
+
+The general statement is the Snell envelope ([Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md)). It says the price of a right to stop is the smallest process (a value that moves through time) lying above the payoff whose discounted average never rises. A Bermudan applies it to a list of dates.
 
 The comparison draws a line. On each listed date there is a highest price at which exercising wins; below it the holder sells, above it the holder waits. For the quarterly put that **exercise boundary** stands at $83.62 after three months, $85.89 after six and $89.82 after nine (the highest tree node where exercise wins; the true line lies less than one node, 0.9 percent, above), then at the strike, $100.00, on the last day. It rises as expiry nears, because less time is left for Acme to recover.
 
 ### Step 4: one date returns the European price exactly
 
-Put $m = 1$: the only listed date is expiry. There is no earlier $\max$, and the recursion reads $P_B = e^{-rT}\,\mathbb{E}[g(S_T)]$. That is the definition of the European put, term for term. On the tree the gate never opens, and the walk is the European walk: 6.329109. The closed form gives 6.330081, and the code's price grid, which adds up bell-curve weights and knows nothing of trees, gives 6.330017. The tree's shortfall of a tenth of a cent is its step error, the same in every row of the card ([Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
+Put $m = 1$: the only listed date is expiry. There is no earlier $\max$, and the recursion reads $P_B = e^{-rT}\,\mathbb{E}[g(S_T)]$. That is the definition of the European put, term for term.
+
+On the tree the gate never opens, and the walk is the European walk: 6.329109. The closed form gives 6.330081, and the code's price grid, which adds up bell-curve weights and knows nothing of trees, gives 6.330017. The tree's shortfall of a tenth of a cent is its step error, the same in every row of the card ([Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
 
 ### Step 5: more dates never cost less
 
@@ -141,7 +156,9 @@ share of the gap from European to American captured, percent
 
 As the list fills in, the Bermudan approaches the American: weekly dates give 6.652468 against 6.660226 with every step listed. Delaying any American exercise to the next listed date loses only what Acme can do in one gap, and that shrinks as the gaps do. This card shows the limit numerically; how the boundary behaves once exercise is continuous is the next card's subject.
 
-A tree needs one dimension of state; a contract on three assets, or one whose payoff remembers its path, will not fit. Then the tool is **least-squares Monte Carlo**: simulate many paths, and on each listed date estimate the holding value by fitting a curve to what paths from nearby prices went on to collect ([Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)). A Bermudan suits it exactly, since the fit is needed only on the listed dates. On the quarterly put, a rule fitted on 40,000 simulated paths and run on 100,000 fresh ones gives 6.540195, with a standard error (the typical size of the sampling miss) of 0.025652. A fitted rule can be no better than the best rule, so this estimate leans low.
+A tree needs one dimension of state; a contract on three assets, or one whose payoff remembers its path, will not fit. Then the tool is **least-squares Monte Carlo**: simulate many paths, and on each listed date estimate the holding value by fitting a curve to what paths from nearby prices went on to collect ([Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)). A Bermudan suits it exactly, since the fit is needed only on the listed dates.
+
+On the quarterly put, a rule fitted on 40,000 simulated paths and run on 100,000 fresh ones gives 6.540195, with a standard error (the typical size of the sampling miss) of 0.025652. A fitted rule can be no better than the best rule, so this estimate leans low.
 
 ---
 
@@ -174,7 +191,7 @@ Quarterly contract, right answer 6.566632:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Comparison at every step, not the listed dates | 6.660226 | That prices the American contract, a right the holder does not have |
-| Exercise whenever in the money on a listed date | 4.993185 | Compared the payoff with zero instead of with holding; worth less even than the European, 6.330081 |
+| Exercise whenever in the money (Acme below the strike) on a listed date | 4.993185 | Compared the payoff with zero instead of with holding; worth less even than the European, 6.330081 |
 | Simulated paths decide using their own future | 9.123802 | Foresight: each path exercises at its best date, which no holder can know in advance |
 | Two-date lists treated as equal | 6.398166 with three months, 6.481936 with nine | Where the date falls matters as well as how many there are |
 
@@ -184,7 +201,14 @@ Every number in the table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer: the normal curve's area, the random numbers, the root finder and the least-squares fit are all written out. The price is reached by four independent roads. A Cox-Ross-Rubinstein tree with the comparison switched on at the listed steps only. A grid in log-price, rolled back from one listed date to the previous by adding up the bell curve's weights, which never builds a tree. For one date the closed form, and for two dates the closed form plus the one-date integral of Step 6, with the critical price found by bisection. For the quarterly contract, least-squares Monte Carlo on its own simulated paths. The code also prices every wrong answer in the table above and the hand tree, and checks the hand arithmetic against the general tree.
+Nothing imported knows the answer: the normal curve's area, the random numbers, the root finder and the least-squares fit are all written out. The price is reached by four independent roads:
+
+1. A Cox-Ross-Rubinstein tree with the comparison switched on at the listed steps only.
+2. A grid in log-price, rolled back from one listed date to the previous by adding up the bell curve's weights, which never builds a tree.
+3. For one date the closed form, and for two dates the closed form plus the one-date integral of Step 6, with the critical price found by bisection.
+4. For the quarterly contract, least-squares Monte Carlo on its own simulated paths.
+
+The code also prices every wrong answer in the table above and the hand tree, and checks the hand arithmetic against the general tree.
 
 ### Python
 
@@ -584,6 +608,256 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, the simulation included, because both use the same generator from the same seed.
 
+### Lean
+
+Lean proves the card's theorem on a binomial tree, for any payoff and any lists of listed steps.
+
+- Suppose the tree's weight on an up step, $p$, lies between 0 and 1, and every date of $D$ is in $D'$. Then $P_E \le P_B(D) \le P_B(D') \le P_A$.
+- Take the last day as the only listed date. Then the Bermudan price equals the European price exactly.
+- Take every step of the tree as a listed date. Then the Bermudan price equals the American price exactly.
+
+The decimals, the closed form, the price grid and the least-squares Monte Carlo price are left to the Python and Rust checks.
+
+```lean
+-- Bermudan options: on a binomial tree, a Bermudan option priced by backward induction is worth at least the European and at most the American, adding exercise dates never lowers its price, one date gives the European price, and every date gives the American price.
+import Mathlib.Analysis.Complex.Exponential
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Order.Lattice
+
+open Finset
+
+/-- A recombining binomial tree: Acme starts at `S₀`, and each step multiplies its price
+by `u` (up, with price weight `p`) or by `d` (down, with weight `1 - p`).
+Each step lasts `dt` years and is discounted at the riskless rate `r`. -/
+structure BinomialTree where
+  S₀ : ℝ
+  u : ℝ
+  d : ℝ
+  p : ℝ
+  r : ℝ
+  dt : ℝ
+
+namespace BinomialTree
+
+/-- Acme's price at step `n` after `j` up moves. -/
+noncomputable def price (T : BinomialTree) (n j : ℕ) : ℝ :=
+  T.S₀ * T.u ^ j * T.d ^ (n - j)
+
+/-- Holding value for one step: the discounted risk-neutral average of the two values
+one step later (`a` after an up move, `b` after a down move). -/
+noncomputable def hold (T : BinomialTree) (a b : ℝ) : ℝ :=
+  Real.exp (-(T.r * T.dt)) * (T.p * a + (1 - T.p) * b)
+
+/-- Bermudan value by backward induction on a tree of `N` steps with listed steps `D`.
+`bermValue T g N D m j` is the worth with `m` steps left (so at step `N - m`) after `j`
+up moves. At expiry it is the payoff `g`; at a listed step it is the larger of exercising
+and holding; at any other step it is the holding value alone. -/
+noncomputable def bermValue (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) (D : Finset ℕ) :
+    ℕ → ℕ → ℝ
+  | 0, j => g (T.price N j)
+  | m + 1, j =>
+      if N - (m + 1) ∈ D then
+        max (g (T.price (N - (m + 1)) j))
+          (T.hold (bermValue T g N D m (j + 1)) (bermValue T g N D m j))
+      else
+        T.hold (bermValue T g N D m (j + 1)) (bermValue T g N D m j)
+
+/-- The Bermudan price today: the backward-induction value at step 0. -/
+noncomputable def bermPrice (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) (D : Finset ℕ) : ℝ :=
+  bermValue T g N D N 0
+
+/-- American value: the comparison of exercising and holding is made at every step. -/
+noncomputable def amerValue (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) : ℕ → ℕ → ℝ
+  | 0, j => g (T.price N j)
+  | m + 1, j =>
+      max (g (T.price (N - (m + 1)) j))
+        (T.hold (amerValue T g N m (j + 1)) (amerValue T g N m j))
+
+/-- The American price today. -/
+noncomputable def amerPrice (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) : ℝ :=
+  amerValue T g N N 0
+
+/-- The European price: the discounted risk-neutral average of the payoff at expiry,
+`e^{-r N dt} · Σ_j C(N, j) p^j (1-p)^(N-j) g(S₀ u^j d^(N-j))`. -/
+noncomputable def euroPrice (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) : ℝ :=
+  Real.exp (-(T.r * T.dt)) ^ N *
+    ∑ j ∈ range (N + 1), (N.choose j : ℝ) * T.p ^ j * (1 - T.p) ^ (N - j) * g (T.price N j)
+
+end BinomialTree
+
+open BinomialTree
+
+lemma bermudan_hold_mono (T : BinomialTree) (hp0 : 0 ≤ T.p) (hp1 : T.p ≤ 1)
+    {a b a' b' : ℝ} (ha : a ≤ a') (hb : b ≤ b') : T.hold a b ≤ T.hold a' b' := by
+  unfold BinomialTree.hold
+  apply mul_le_mul_of_nonneg_left _ (Real.exp_pos _).le
+  have h1 : T.p * a ≤ T.p * a' := mul_le_mul_of_nonneg_left ha hp0
+  have h2 : (1 - T.p) * b ≤ (1 - T.p) * b' := mul_le_mul_of_nonneg_left hb (by linarith)
+  linarith
+
+#print axioms bermudan_hold_mono
+
+lemma bermudan_value_mono (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) (D D' : Finset ℕ)
+    (hDD' : D ⊆ D') (hp0 : 0 ≤ T.p) (hp1 : T.p ≤ 1) :
+    ∀ m j, bermValue T g N D m j ≤ bermValue T g N D' m j := by
+  intro m
+  induction m with
+  | zero => intro j; simp [bermValue]
+  | succ m ih =>
+    intro j
+    have hh := bermudan_hold_mono T hp0 hp1 (ih (j + 1)) (ih j)
+    simp only [bermValue]
+    by_cases h : N - (m + 1) ∈ D
+    · simp only [h, hDD' h, ↓reduceIte]
+      exact max_le_max le_rfl hh
+    · simp only [h, ↓reduceIte]
+      split_ifs
+      · exact le_max_of_le_right hh
+      · exact hh
+
+#print axioms bermudan_value_mono
+
+lemma bermudan_value_le_amer (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) (D : Finset ℕ)
+    (hp0 : 0 ≤ T.p) (hp1 : T.p ≤ 1) :
+    ∀ m j, bermValue T g N D m j ≤ amerValue T g N m j := by
+  intro m
+  induction m with
+  | zero => intro j; simp [bermValue, amerValue]
+  | succ m ih =>
+    intro j
+    have hh := bermudan_hold_mono T hp0 hp1 (ih (j + 1)) (ih j)
+    simp only [bermValue, amerValue]
+    split_ifs
+    · exact max_le_max le_rfl hh
+    · exact le_max_of_le_right hh
+
+#print axioms bermudan_value_le_amer
+
+lemma bermudan_binom_step (p q : ℝ) (f : ℕ → ℝ) (m : ℕ) :
+    ∑ i ∈ range (m + 2), (((m + 1).choose i : ℕ) : ℝ) * p ^ i * q ^ (m + 1 - i) * f i =
+      p * ∑ i ∈ range (m + 1), ((m.choose i : ℕ) : ℝ) * p ^ i * q ^ (m - i) * f (i + 1) +
+      q * ∑ i ∈ range (m + 1), ((m.choose i : ℕ) : ℝ) * p ^ i * q ^ (m - i) * f i := by
+  rw [sum_range_succ']
+  simp only [Nat.choose_succ_succ', Nat.cast_add, add_mul, sum_add_distrib,
+    Nat.succ_sub_succ, Nat.choose_zero_right, Nat.sub_zero]
+  rw [mul_sum, mul_sum, add_assoc]
+  congr 1
+  · apply sum_congr rfl; intro i _; ring
+  · rw [sum_range_succ, sum_range_succ' (fun i => q * (((m.choose i : ℕ) : ℝ) * p ^ i * q ^ (m - i) * f i))]
+    simp only [Nat.choose_succ_self, Nat.cast_zero, zero_mul, add_zero, Nat.choose_zero_right,
+      Nat.sub_zero, pow_zero]
+    congr 1
+    · apply sum_congr rfl
+      intro i hi
+      rw [mem_range] at hi
+      have : m - i = (m - (i + 1)) + 1 := by omega
+      rw [this]; ring
+    · push_cast; ring
+
+#print axioms bermudan_binom_step
+
+lemma bermudan_empty_closed (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) :
+    ∀ m j, bermValue T g N ∅ m j = Real.exp (-(T.r * T.dt)) ^ m *
+      ∑ i ∈ range (m + 1), ((m.choose i : ℕ) : ℝ) * T.p ^ i * (1 - T.p) ^ (m - i) *
+        g (T.price N (j + i)) := by
+  intro m
+  induction m with
+  | zero => intro j; simp [bermValue]
+  | succ m ih =>
+    intro j
+    simp only [bermValue, Finset.notMem_empty, ↓reduceIte, BinomialTree.hold, ih]
+    rw [bermudan_binom_step T.p (1 - T.p) (fun i => g (T.price N (j + i))) m]
+    have e : ∀ i, j + 1 + i = j + (i + 1) := fun i => by omega
+    simp only [e]
+    ring
+
+#print axioms bermudan_empty_closed
+
+lemma bermudan_empty_eq_euro (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) :
+    bermPrice T g N ∅ = euroPrice T g N := by
+  unfold bermPrice euroPrice
+  rw [bermudan_empty_closed]
+  simp
+
+#print axioms bermudan_empty_eq_euro
+
+lemma bermudan_single_eq_empty (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) :
+    ∀ m, m ≤ N → ∀ j, bermValue T g N {N} m j = bermValue T g N ∅ m j := by
+  intro m
+  induction m with
+  | zero => intro _ j; simp [bermValue]
+  | succ m ih =>
+    intro hm j
+    have h : N - (m + 1) ∉ ({N} : Finset ℕ) := by simp; omega
+    simp only [bermValue, h, Finset.notMem_empty, ↓reduceIte]
+    rw [ih (by omega), ih (by omega)]
+
+#print axioms bermudan_single_eq_empty
+
+lemma bermudan_range_eq_amer (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) :
+    ∀ m, m ≤ N → ∀ j, bermValue T g N (range N) m j = amerValue T g N m j := by
+  intro m
+  induction m with
+  | zero => intro _ j; simp [bermValue, amerValue]
+  | succ m ih =>
+    intro hm j
+    have h : N - (m + 1) ∈ range N := by simp; omega
+    simp only [bermValue, amerValue, h, ↓reduceIte]
+    rw [ih (by omega), ih (by omega)]
+
+#print axioms bermudan_range_eq_amer
+
+/-- The card's theorem: for two lists of exercise dates `D ⊆ D'` on the same tree,
+`P_E ≤ P_B(D) ≤ P_B(D') ≤ P_A`. A Bermudan is worth at least the European and at most
+the American, and adding dates never lowers the price. The only model input is that the
+up weight `p` is a price weight between 0 and 1; the payoff `g` may be any function
+(for the put, `g s = max (K - s) 0`). -/
+theorem bermudan_between_european_and_american (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ)
+    (D D' : Finset ℕ) (hDD' : D ⊆ D') (hp0 : 0 ≤ T.p) (hp1 : T.p ≤ 1) :
+    euroPrice T g N ≤ bermPrice T g N D ∧
+      bermPrice T g N D ≤ bermPrice T g N D' ∧
+      bermPrice T g N D' ≤ amerPrice T g N := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [← bermudan_empty_eq_euro]
+    exact bermudan_value_mono T g N ∅ D (Finset.empty_subset _) hp0 hp1 N 0
+  · exact bermudan_value_mono T g N D D' hDD' hp0 hp1 N 0
+  · exact bermudan_value_le_amer T g N D' hp0 hp1 N 0
+
+/-- With the last day as the only listed date, the Bermudan recursion is the European
+rule, and the Bermudan price equals the European price exactly. -/
+theorem bermudan_one_date_eq_european (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) :
+    bermPrice T g N {N} = euroPrice T g N := by
+  unfold bermPrice
+  rw [bermudan_single_eq_empty T g N N le_rfl 0]
+  exact bermudan_empty_eq_euro T g N
+
+/-- With every step of the tree listed, the Bermudan price is the American price. -/
+theorem bermudan_every_step_eq_american (T : BinomialTree) (g : ℝ → ℝ) (N : ℕ) :
+    bermPrice T g N (range N) = amerPrice T g N := by
+  exact bermudan_range_eq_amer T g N N le_rfl 0
+
+#print axioms bermudan_between_european_and_american
+#print axioms bermudan_one_date_eq_european
+#print axioms bermudan_every_step_eq_american
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bermudan_hold_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_value_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_value_le_amer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_binom_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_empty_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_empty_eq_euro' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_single_eq_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_range_eq_amer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_between_european_and_american' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_one_date_eq_european' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bermudan_every_step_eq_american' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -609,8 +883,8 @@ The two outputs agree line for line, the simulation included, because both use t
 
 ## Where you meet it in real life
 
-- **Callable bonds.** An issuer who may repay a bond early on its coupon dates holds a Bermudan option against the bond's owner, and the bond's price is net of it.
-- **Bermudan swaptions.** The right to enter an interest-rate swap on any of a list of reset dates: the most traded Bermudan contract. It is priced with the same gated recursion on a model of rates rather than a share.
+- **Callable bonds.** An issuer who may repay a bond early on its coupon dates (the dates it pays interest) holds a Bermudan option against the bond's owner, and the bond's price is net of it.
+- **Bermudan swaptions.** The right to enter an interest-rate swap (a trade of fixed interest payments for floating ones) on any of a list of reset dates: the most traded Bermudan contract. It is priced with the same gated recursion on a model of rates rather than a share.
 - **Employee share options.** Many can be exercised only in windows after results are published, which makes them Bermudan, not American.
 - **Contracts too big for a tree.** A Bermudan on a basket of shares is priced by least-squares Monte Carlo, run on the listed dates only.
 - **The American limit and its shortcuts.** A dense list approaches the American put ([American options](01-american-options-and-early-exercise.md)); the formula-based estimate of that limit is [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md), and its sensitivities are on [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md). With no expiry at all the boundary stops moving: [The perpetual American put](05-perpetual-american-put.md).

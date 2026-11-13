@@ -8,9 +8,11 @@
 
 A dealer has sold a one-year call on Acme, struck at $100, with Acme at $100. To protect the position the dealer buys Acme shares: enough that a small rise in Acme gains on the shares what it loses on the call. That share count per option is the **hedge ratio**. Black-Scholes, with one volatility of 20%, sets it at its **delta**: 0.587 shares per call.
 
-The market does not quote one volatility. It quotes a **skew**: the implied volatility (the volatility that makes Black-Scholes match a market price) falls as the strike rises. On this card the skew falls 0.04 volatility points for each dollar of strike: 20.40% at the $90 strike, 20.00% at $100, 19.60% at $110.
+The market does not quote one volatility. It quotes a **skew**: the implied volatility (the volatility that makes Black-Scholes match a market price) falls as the strike rises. On this card the skew falls 0.04 volatility points for each dollar of strike: 20.40% at the $90 strike, 20.00% at $100, 19.60% at $110. The whole curve of implied volatility against strike is the smile ([The volatility smile and skew](01-volatility-smile-and-skew.md)); a skew is a smile that slopes one way.
 
-Now Acme rises a dollar. The call's price changes for two reasons. The share price moved, which Black-Scholes delta counts. And the volatility the call is marked at may have moved too, because the whole skew can slide with the share price. Which way it slides is not given by today's skew. It is a rule the desk assumes, or a pattern it measures. Under the three standard rules the $100 call needs 0.587, 0.602 or 0.572 shares. For a book of 10,000 calls, neighbouring rules differ by 151.60 shares.
+Now Acme rises a dollar. The call's price changes for two reasons. The share price moved, which Black-Scholes delta counts. And the volatility the call is marked at may have moved too, because the whole skew can slide with the share price.
+
+Which way it slides is not given by today's skew. It is a rule the desk assumes, or a pattern it measures. Under the three standard rules the $100 call needs 0.587, 0.602 or 0.572 shares. For a book of 10,000 calls, neighbouring rules differ by 151.60 shares.
 
 The same idea does a second job. When volatility tends to fall as Acme rises, the hedge that leaves the least day-to-day wobble is the **minimum-variance delta**, found by asking how the call's price and the share price move together. With this skew and that tendency it is 0.572 shares, not 0.587.
 
@@ -53,9 +55,9 @@ $$h^{*} \;=\; \frac{\operatorname{Cov}(\delta V,\ \delta S)}{\operatorname{Var}(
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $V$ | Acme's price today; the call's marked price | $100 | Black-Scholes delta rises toward 1 |
+| $S$, $V$ | Acme's price today, called the spot; the call's marked price | $100 | Black-Scholes delta rises toward 1 |
 | $K$ | the strike | $100 | Black-Scholes delta falls |
-| $\sigma$ | the call's implied volatility | 20% | here delta falls slightly (vanna is −0.094753) |
+| $\sigma$ | the call's implied volatility | 20% | here delta falls slightly (vanna, delta's change per 1.00 of volatility, is −0.094753) |
 | $\beta$ | how fast the skew falls per dollar of strike, as a decimal | 0.0004 (0.04 points) | the correction grows in proportion |
 | $\Delta_{BS}$, $\Gamma$ | Black-Scholes delta, $e^{-qT}N(d_1)$; gamma, its change per dollar of Acme | 0.586851; 0.018951 | — |
 | $\mathcal{V}$, $\partial$ | vega, $\partial V/\partial\sigma$, dollars per 1.00 of volatility; $\partial$ marks a slope taken with the other input frozen | 37.901158 | the correction grows in proportion |
@@ -66,7 +68,7 @@ $$h^{*} \;=\; \frac{\operatorname{Cov}(\delta V,\ \delta S)}{\operatorname{Var}(
 | $N$, $\varphi$ | bell-curve area to the left, and bell-curve height | $N(0.25) = 0.598706$, $\varphi(0.25) = 0.386668$ | — |
 | $d_1$, $r$, $q$, $T$ | distance to strike in standard deviations; bank rate; dividend yield; time to expiry in years | 0.25, 5%, 2%, 1 | — |
 
-Helper formulas, from the Black-Scholes cards: $d_1 = [\ln(S/K) + (r - q + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})$ with the bank rate $r$ = 5%, and $\mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}$. Both describe the call at a single volatility; the smile enters only through $d\sigma/dS$.
+Helper formulas, from the Black-Scholes cards ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)): $d_1 = [\ln(S/K) + (r - q + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})$ with the bank rate $r$ = 5%, and $\mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}$. Both describe the call at a single volatility; the smile enters only through $d\sigma/dS$.
 
 The three rules for how the smile moves, each written as the volatility the $100 strike carries when Acme sits at $S$:
 
@@ -108,7 +110,7 @@ This is the chain rule for a function of two inputs ([Partial derivatives](../..
 Today's smile is a curve in strike, with slope $\partial\sigma/\partial K = -\beta$. The hedge needs a slope in the share price. The two are different questions, and each rule links them differently.
 
 - **Sticky strike.** The volatility at $K = 100$ does not depend on $S$ at all, so $d\sigma/dS = 0$ and the hedge is the Black-Scholes delta, 0.586851.
-- **Sticky moneyness.** Volatility is a fixed function $g$ of $x = K/S$ alone. Raising $S$ lowers $x$, and the chain rule gives $d\sigma/dS = g'(x)\cdot(-K/S^2) = -(K/S)\,\partial\sigma/\partial K$. At the money that is $+\beta$. A falling skew makes the call's volatility **rise** as Acme rises, because the $100 strike becomes a relatively lower strike. The hedge grows to 0.602012.
+- **Sticky moneyness.** Volatility is a fixed function $g$ of $x = K/S$ alone. Raising $S$ lowers $x$, and the chain rule gives $d\sigma/dS = g'(x)\cdot(-K/S^2) = -(K/S)\,\partial\sigma/\partial K$. At the money ($K = S$) that is $+\beta$. A falling skew makes the call's volatility **rise** as Acme rises, because the $100 strike becomes a relatively lower strike. The hedge grows to 0.602012.
 - **Local-volatility rule.** A local-volatility model gives the share its own volatility at each price level. Derman's rule of thumb: an option's implied volatility is roughly the average local volatility between today's price and the strike. A skew falling at $\beta$ per dollar of strike needs local volatility falling at $2\beta$ per dollar of share price, since averaging over the stretch from $S$ to $K$ halves the slope. Averaging $0.20 - 2\beta(x - 100)$ from $x = S$ to $x = K$ gives $0.20 - \beta(K + S - 200)$, so $d\sigma/dS = -\beta$. The hedge shrinks to 0.571691.
 
 Same skew, three signs. The skew cannot pick between them; only the market's behaviour can.
@@ -124,7 +126,11 @@ with $\Gamma$ = 0.018951 the call's gamma, vanna = −0.094753 ([Vanna](../09-Th
 <details>
 <summary>Detailed proof: the implicit slope</summary>
 
-Write $H(S, \sigma) = \sigma - G(\Delta_{BS}(S, \sigma))$. The marked volatility makes $H = 0$. Along the curve where $H$ stays zero, $H_S + H_\sigma\,(d\sigma/dS) = 0$. Here $H_S = -G'\,\partial\Delta_{BS}/\partial S = -G'\Gamma$ and $H_\sigma = 1 - G'\,\partial\Delta_{BS}/\partial\sigma = 1 - G'\,\text{vanna}$. Solving gives the displayed slope. It needs $1 - G'\,\text{vanna} \neq 0$; if that fails, the implicit-function step fails and the rule need not define a single hedge. Here $\lvert G'\,\text{vanna}\rvert \approx 0.002 < 1$, so repeated substitution shrinks each error about 500-fold: a solution near today's volatility exists and is unique. The slope $G'$ comes from today's skew: $\partial\Delta_{BS}/\partial K = -e^{-qT}\varphi(d_1)/(K\sigma\sqrt{T})$, so $G' = -\beta\,/\,(\partial\Delta_{BS}/\partial K)$ = 0.021108. The check solves the equation by repeated substitution at $S \pm 0.01$ and reprices; the bumped slope matches the formula to six decimals.
+Write $H(S, \sigma) = \sigma - G(\Delta_{BS}(S, \sigma))$. The marked volatility makes $H = 0$. Along the curve where $H$ stays zero, $H_S + H_\sigma\,(d\sigma/dS) = 0$. Here $H_S = -G'\,\partial\Delta_{BS}/\partial S = -G'\Gamma$ and $H_\sigma = 1 - G'\,\partial\Delta_{BS}/\partial\sigma = 1 - G'\,\text{vanna}$. Solving gives the displayed slope.
+
+It needs $1 - G'\,\text{vanna} \neq 0$; if that fails, the implicit-function step fails and the rule need not define a single hedge. Here $\lvert G'\,\text{vanna}\rvert \approx 0.002 < 1$, so repeated substitution shrinks each error about 500-fold: a solution near today's volatility exists and is unique.
+
+The slope $G'$ comes from today's skew: $\partial\Delta_{BS}/\partial K = -e^{-qT}\varphi(d_1)/(K\sigma\sqrt{T})$, so $G' = -\beta\,/\,(\partial\Delta_{BS}/\partial K)$ = 0.021108. The check solves the equation by repeated substitution at $S \pm 0.01$ and reprices; the bumped slope matches the formula to six decimals.
 
 </details>
 
@@ -141,7 +147,9 @@ So the minimum-variance delta is the smile-adjusted delta with $d\sigma/dS$ repl
 <details>
 <summary>Detailed proof: the minimum and what it leaves behind</summary>
 
-Complete the square: $\operatorname{Var}(\delta V - h\,\delta S) = \operatorname{Var}(\delta V) - c^2/v + v\,(h - c/v)^2$, where $c = \operatorname{Cov}(\delta V, \delta S)$ and $v = \operatorname{Var}(\delta S) > 0$. The last term is zero only at $h = c/v$, so the minimum is unique. The saving over any other hedge $h$ is $v\,(h - h^{*})^2$. At the Black-Scholes hedge that saving is $v\,(\mathcal{V}b)^2$, a spread of $\mathcal{V}\,\lvert b\rvert\,\sqrt{v}$. In the simulation: vega 37.901158 × 0.0004 × a daily spot spread of $1.258324 is $190.77 per 10,000 calls, against $191.97 measured by full repricing. If $v = 0$ the share never moves, and every $h$ leaves the same variance.
+Complete the square: $\operatorname{Var}(\delta V - h\,\delta S) = \operatorname{Var}(\delta V) - c^2/v + v\,(h - c/v)^2$, where $c = \operatorname{Cov}(\delta V, \delta S)$ and $v = \operatorname{Var}(\delta S) > 0$. The last term is zero only at $h = c/v$, so the minimum is unique.
+
+The saving over any other hedge $h$ is $v\,(h - h^{*})^2$. At the Black-Scholes hedge that saving is $v\,(\mathcal{V}b)^2$, a spread of $\mathcal{V}\,\lvert b\rvert\,\sqrt{v}$. In the simulation: vega 37.901158 × 0.0004 × a daily spot spread of $1.258324 is $190.77 per 10,000 calls, against $191.97 measured by full repricing. If $v = 0$ the share never moves, and every $h$ leaves the same variance.
 
 </details>
 
@@ -373,6 +381,8 @@ house smile, local-vol rule           0.437550
 ALL CHECKS PASS
 ```
 
+In the labels, BS is Black-Scholes, sd is standard deviation (the spread), P&L is profit and loss, and MV is minimum variance.
+
 The formula and the reprice agree to six decimals for every rule. The simulated minimum-variance delta, 0.571595, sits just below the formula's 0.571691; the gap is sampling noise and the small gamma and vanna terms the formula drops.
 
 ### Rust
@@ -579,6 +589,130 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the chain-rule formula, the three rules' slopes and the minimum-variance hedge, for any inputs that meet the conditions below.
+
+- Suppose the mark $V(S, \sigma)$ has a slope in both inputs together, and the call's volatility has a slope $d\sigma/dS$. Then $\Delta_{\text{smile}} = \Delta_{BS} + \mathcal{V}\,d\sigma/dS$.
+- Take any share price $S \neq 0$, the strike at the money, $K = S$, and any skew $\beta$. Then $d\sigma/dS$ is $0$ under sticky strike, $+\beta$ under sticky moneyness and $-\beta$ under the local-volatility rule.
+- Take a day's moves $\delta V$ and $\delta S$ with finite variances, and $\operatorname{Var}(\delta S) > 0$. Then each hedge $h$ leaves $\operatorname{Var}(\delta S)\,(h - h^{*})^2$ more variance than $h^{*}$ does.
+- Under the same conditions, $h^{*}$ is the only hedge that leaves the least variance.
+
+The Black-Scholes formulas, Step 3's implicit slope, Step 4's link to $b$ and every number are left to the Python and Rust checks.
+
+```lean
+-- Smile-adjusted delta: the hedge ratio is the Black-Scholes delta plus vega times the option's volatility slope, the three smile rules give that slope as 0, +β and -β, and the minimum-variance hedge is Cov/Var.
+import Mathlib.Analysis.Calculus.FDeriv.Prod
+import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Probability.Moments.Variance
+
+open ProbabilityTheory MeasureTheory
+
+/-- Variance of `X - c Y` expanded in `c`. -/
+lemma variance_sub_const_mul_expand {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] (X Y : Ω → ℝ) (hX : MemLp X 2 μ) (hY : MemLp Y 2 μ) (c : ℝ) :
+    Var[fun ω => X ω - c * Y ω; μ] =
+      Var[X; μ] - 2 * c * cov[X, Y; μ] + c ^ 2 * Var[Y; μ] := by
+  rw [variance_fun_sub hX (hY.const_mul c), covariance_const_mul_right]
+  rw [show (fun ω => c * Y ω) = c • Y from rfl, variance_smul]
+  ring
+
+#print axioms variance_sub_const_mul_expand
+
+/-- The smile-adjusted delta. The call is marked at `V (S, σ S)`: the share price enters once
+directly and once through the volatility the smile assigns. If `V` is differentiable at
+`(S, σ S)` with derivative `L` (so the Black-Scholes delta is `L (1, 0) = ∂V/∂S` and vega is
+`L (0, 1) = ∂V/∂σ`) and the option's own volatility has slope `σ'` in the share price, then the
+hedge ratio `dV/dS` is the Black-Scholes delta plus vega times `σ'`. -/
+theorem smile_adjusted_delta_eq_bs_delta_add_vega_mul_vol_slope
+    (V : ℝ × ℝ → ℝ) (L : ℝ × ℝ →L[ℝ] ℝ) (σ : ℝ → ℝ) (S σ' : ℝ)
+    (hV : HasFDerivAt V L (S, σ S)) (hσ : HasDerivAt σ σ' S) :
+    HasDerivAt (fun s => V (s, σ s)) (L (1, 0) + L (0, 1) * σ') S := by
+  have h := hV.comp_hasDerivAt (f := fun s => (s, σ s)) S ((hasDerivAt_id S).prodMk hσ)
+  have hL : L (1, σ') = L (1, 0) + L (0, 1) * σ' := by
+    have : ((1 : ℝ), σ') = (1, 0) + σ' • ((0 : ℝ), (1 : ℝ)) := by
+      ext <;> simp
+    rw [this, map_add, map_smul, smul_eq_mul, mul_comm]
+  rw [← hL]
+  exact h
+
+/-- Today's skew gives the size, the rule gives the sign. Today the share sits at `S₀ ≠ 0`,
+the at-the-money volatility is `σ₀`, and the skew falls `β` per dollar of strike. For the
+at-the-money strike `K = S₀`, the option's volatility as a function of the share price `S` is
+`σ₀ - β (K - S₀)` under sticky strike, `σ₀ - β S₀ (K / S - 1)` under sticky moneyness, and
+`σ₀ - β (K + S - 2 S₀)` under the local-volatility rule. Their slopes at `S₀` are `0`, `+β`
+and `-β`. -/
+theorem smile_rule_vol_slopes (σ₀ β S₀ : ℝ) (hS₀ : S₀ ≠ 0) :
+    HasDerivAt (fun _ : ℝ => σ₀ - β * (S₀ - S₀)) 0 S₀ ∧
+    HasDerivAt (fun S : ℝ => σ₀ - β * S₀ * (S₀ / S - 1)) β S₀ ∧
+    HasDerivAt (fun S : ℝ => σ₀ - β * (S₀ + S - 2 * S₀)) (-β) S₀ := by
+  refine ⟨hasDerivAt_const _ _, ?_, ?_⟩
+  · have h1 : HasDerivAt (fun S : ℝ => S₀ * S⁻¹ - 1) (S₀ * -(S₀ ^ 2)⁻¹) S₀ :=
+      ((hasDerivAt_inv hS₀).const_mul S₀).sub_const 1
+    have h2 := (h1.const_mul (β * S₀)).const_sub σ₀
+    have hf : (fun S : ℝ => σ₀ - β * S₀ * (S₀ / S - 1)) =
+        (fun S : ℝ => σ₀ - β * S₀ * (S₀ * S⁻¹ - 1)) := by
+      funext S; rw [div_eq_mul_inv]
+    rw [hf]
+    refine h2.congr_deriv ?_
+    field_simp
+  · have h1 : HasDerivAt (fun S : ℝ => S₀ + S - 2 * S₀) 1 S₀ :=
+      ((hasDerivAt_id S₀).const_add S₀).sub_const _
+    exact ((h1.const_mul β).const_sub σ₀).congr_deriv (by ring)
+
+/-- The minimum-variance delta. A day's option move `δV` and share move `δS` are random
+variables with finite variance, and `Var(δS) > 0`. Write `h* = Cov(δV, δS) / Var(δS)`.
+For every hedge ratio `h`, the variance of `δV - h δS` equals the variance at `h*` plus
+`Var(δS) (h - h*)²`; so `h*` gives the least variance, and it is the only hedge that does. -/
+theorem min_variance_delta_eq_cov_div_var {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] (δV δS : Ω → ℝ) (hV : MemLp δV 2 μ) (hS : MemLp δS 2 μ)
+    (hv : 0 < Var[δS; μ]) (h : ℝ) :
+    Var[fun ω => δV ω - h * δS ω; μ] =
+        Var[fun ω => δV ω - (cov[δV, δS; μ] / Var[δS; μ]) * δS ω; μ]
+          + Var[δS; μ] * (h - cov[δV, δS; μ] / Var[δS; μ]) ^ 2 ∧
+      (Var[fun ω => δV ω - h * δS ω; μ] =
+          Var[fun ω => δV ω - (cov[δV, δS; μ] / Var[δS; μ]) * δS ω; μ] ↔
+        h = cov[δV, δS; μ] / Var[δS; μ]) := by
+  set v := Var[δS; μ]
+  set c := cov[δV, δS; μ]
+  have hv0 : v ≠ 0 := hv.ne'
+  rw [variance_sub_const_mul_expand δV δS hV hS h,
+    variance_sub_const_mul_expand δV δS hV hS (c / v)]
+  have key : Var[δV; μ] - 2 * h * c + h ^ 2 * v =
+      Var[δV; μ] - 2 * (c / v) * c + (c / v) ^ 2 * v + v * (h - c / v) ^ 2 := by
+    field_simp
+    ring
+  refine ⟨key, ?_⟩
+  rw [key]
+  constructor
+  · intro heq
+    have h0 : v * (h - c / v) ^ 2 = 0 := by linarith
+    rcases mul_eq_zero.mp h0 with h0 | h0
+    · exact absurd h0 hv0
+    · have := pow_eq_zero_iff (n := 2) (by norm_num) |>.mp h0
+      linarith
+  · intro heq
+    rw [heq]
+    ring
+
+#print axioms smile_adjusted_delta_eq_bs_delta_add_vega_mul_vol_slope
+#print axioms smile_rule_vol_slopes
+#print axioms min_variance_delta_eq_cov_div_var
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'variance_sub_const_mul_expand' depends on axioms: [propext, Classical.choice, Quot.sound]
+'smile_adjusted_delta_eq_bs_delta_add_vega_mul_vol_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'smile_rule_vol_slopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'min_variance_delta_eq_cov_div_var' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 ### How the leftover risk depends on the hedge
 

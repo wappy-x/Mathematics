@@ -6,11 +6,15 @@
 
 ## General Overview
 
-Acme trades at $100. A put on Acme gives the right to sell one share for $100, the **strike**, at any moment in the next year. Cash earns 5 percent a year, Acme pays a 2 percent dividend yield, and its volatility (the yearly spread of its log-returns) is 20 percent. Because the holder may exercise on any day, this is an **American** put, and it is worth $6.66 against $6.33 for the European twin that may only be used on the last day ([American options](01-american-options-and-early-exercise.md)).
+Acme trades at $100. A put on Acme gives the right to sell one share for $100, the **strike**, at any moment in the next year. Cash earns 5 percent a year, Acme pays a 2 percent dividend yield, and its volatility (the yearly spread of its log-returns) is 20 percent.
+
+Because the holder may exercise on any day, this is an **American** put, and it is worth $6.66 against $6.33 for the European twin that may only be used on the last day ([American options](01-american-options-and-early-exercise.md)).
 
 Every morning the holder faces one question: take the $100 now, or wait? The answer is a price line. Today it sits at $77.85. If Acme is at or below it, exercise; above it, wait. With nine months left the line is at $79.42; with three months left, $85.05; on the last day it reaches the strike, $100. That moving line is the **exercise boundary**.
 
-Nobody writes the boundary into the contract; it comes out of the pricing with the price. A problem whose edge is part of the unknown is a **free-boundary problem**. Two conditions pin the edge: on the line the option is worth what exercising pays (same height), and it changes with Acme's price at the payoff's rate (same slope). The second is **smooth pasting**. The put's **delta**, its change in value per dollar of Acme, is −1 below the line and leaves −1 without a corner above it.
+Nobody writes the boundary into the contract; it comes out of the pricing with the price. A problem whose edge is part of the unknown is a **free-boundary problem**.
+
+Two conditions pin the edge: on the line the option is worth what exercising pays (same height), and it changes with Acme's price at the payoff's rate (same slope). The second is **smooth pasting**. The put's **delta**, its change in value per dollar of Acme, is −1 below the line and leaves −1 without a corner above it.
 
 **The exercise boundary is the price line where waiting stops paying, and it is fixed by two conditions: on the line the option is worth exactly its payoff, and its slope there equals the payoff's slope.**
 
@@ -76,15 +80,19 @@ The first line is the Black–Scholes equation written in years left, so $\parti
 
 ### Step 0: the price is the best stopping rule, and stopping rules are regions
 
-An American put is worth the best the holder can do by choosing when to stop, averaged in the pricing world. A stopping rule is, at each date, a set of prices at which to exercise. Where the holder waits, the hedge argument runs unchanged and the Black–Scholes equation holds. Where the holder stops, the value is the payoff. The problem is where one region ends.
+An American put is worth the best the holder can do by choosing when to stop, averaged in the pricing world (where Acme drifts at the riskless rate less the dividend). A stopping rule is, at each date, a set of prices at which to exercise. Where the holder waits, the hedge argument runs unchanged and the Black–Scholes equation holds. Where the holder stops, the value is the payoff. The problem is where one region ends.
 
 ### Step 1: the exercise region is everything below one price
 
-Start Acme a dollar higher and follow the same rule. At exercise the share is dearer by one dollar times Acme's growth since today, and that growth, discounted in the pricing world, averages at most one. So the put loses at most a dollar per dollar Acme rises, and $V - (K - S)$, the value above the payoff, never falls as Acme rises. It is zero where the holder exercises and positive where the holder waits, so the exercise region is one stretch at the bottom, ending at the boundary. The tree finds it with one test per node: exercise when the payoff beats the discounted average of the next step.
+Start Acme a dollar higher and follow the same rule. At exercise the share is more expensive by one dollar times Acme's growth since today, and that growth, discounted in the pricing world, averages at most one. So the put loses at most a dollar per dollar Acme rises, and $V - (K - S)$, the value above the payoff, never falls as Acme rises.
+
+The value above the payoff is zero where the holder exercises and positive where the holder waits, so the exercise region is one stretch at the bottom, ending at the boundary. The tree finds it with one test per node: exercise when the payoff beats the discounted average of the next step.
 
 ### Step 2: the line rises to the strike as expiry nears
 
-Exercising early buys a flow of interest on the $100 received, rK per year, minus the dividend on the share handed over, qS per year. Waiting keeps the chance that Acme falls further, the **time value**. As expiry nears, the time value shrinks to nothing while the carry stays. With a year left the carry wins only deep in the money, at $77.85. With about five weeks left it wins at $89.39. In the last instant, any in-the-money price qualifies, because rK − qS is positive whenever S is below K and r exceeds q. So the line climbs to $100.
+Exercising early buys a flow of interest on the $100 received, rK per year, minus the dividend on the share handed over, qS per year. Waiting keeps the chance that Acme falls further, the **time value**. As expiry nears, the time value shrinks to nothing while the carry stays.
+
+With a year left the carry wins only deep in the money (Acme far below the strike), at $77.85. With about five weeks left it wins at $89.39. In the last instant, any in-the-money price qualifies, because rK − qS is positive whenever S is below K and r exceeds q. So the line climbs to $100.
 
 ### Step 3: value matching is continuity
 
@@ -95,7 +103,7 @@ On the line the value equals the payoff: $V(B,\tau) = K - B$. Step 1 showed the 
 Look at the slope just above the line, measured from the line out a small step $h$.
 
 - **Steeper than −1 is impossible.** The value would dip below the payoff just above the line. But the holder can always exercise, so the put is never worth less than its payoff. Slope from the line outward is therefore at least −1.
-- **Shallower than −1 is impossible too.** A holder starting on the line may copy the best rule for a start just above it. The copy hands over a slightly cheaper share at exercise and is otherwise identical, so the value gap per dollar of step is the discounted average growth of Acme until exercise. Started a hair above the line, the path crosses it almost at once, so that average tends to 1. The slope is therefore at most −1.
+- **Shallower than −1 is impossible too.** A holder starting on the line may copy the best rule for a start just above it. The copy hands over a slightly cheaper share at exercise and is otherwise identical, so the value gap per dollar of step is the discounted average growth of Acme until exercise. Started just above the line, the path crosses it almost at once, so that average tends to 1. The slope is therefore at most −1.
 
 Both bounds meet: $\Delta = -1$ on the line. The code measures it without imposing it. The integral equation (road 2) enforces only value matching, yet its slope from the line outward is −0.9716 over two dollars, −0.9857 over one and −0.9926 over fifty cents. The gap to −1 halves each time the step halves: the contact is a tangent, not a corner.
 
@@ -114,7 +122,7 @@ The two bounds squeeze it to −1. Below the line $V = K - S$, so the slope from
 
 ### Step 5: what the tangent buys, measured at the line
 
-Put the three facts about the line, $V = K - B$, $\Delta = -1$, and $\partial V/\partial \tau = 0$, into the Black–Scholes equation. The third follows from the first two: as $\tau$ changes, the value on the line changes by $\Delta$ times the line's move plus $\partial V/\partial \tau$, while the payoff changes by minus the line's move; with $\Delta = -1$ the two agree only if $\partial V/\partial \tau = 0$. Everything cancels except
+Put the three facts about the line, $V = K - B$, $\Delta = -1$, and $\partial V/\partial \tau = 0$, into the Black–Scholes equation. The third follows from the first two. As $\tau$ changes, the value on the line changes by $\Delta$ times the line's move plus $\partial V/\partial \tau$. The payoff changes by minus the line's move. With $\Delta = -1$ the two agree only if $\partial V/\partial \tau = 0$. Everything cancels except
 
 $$\tfrac12\sigma^2 B^2\,\Gamma = rK - qB.$$
 
@@ -126,7 +134,11 @@ Write $L$ for the pricing operator: $\partial V/\partial \tau$ minus the right-h
 
 $$LV \ge 0, \qquad V - (K - S) \ge 0, \qquad LV \times \big(V - (K - S)\big) = 0.$$
 
-This is the **linear complementarity problem**: two inequalities, at each point at least one an equality. On a grid, $L$ becomes the tridiagonal matrix of the implicit finite-difference scheme ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), and each date asks for a vector meeting the three conditions node by node. Projected successive over-relaxation, PSOR, solves it: [American options on a grid](../06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md) teaches the solver. The boundary is read off afterwards as the highest node where the value sits on the payoff: $77.88 on this grid, within one node spacing of $77.85. The grid never hears of smooth pasting, and its delta table below shows the tangent anyway.
+This is the **linear complementarity problem**: two inequalities, at each point at least one an equality. On a grid, $L$ becomes the tridiagonal matrix (each row links a node only to its two neighbors) of the implicit finite-difference scheme ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), and each date asks for a vector meeting the three conditions node by node.
+
+Projected successive over-relaxation, PSOR, solves it: [American options on a grid](../06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md) teaches the solver.
+
+The boundary is read off afterwards as the highest node where the value sits on the payoff: $77.88 on this grid, within one node spacing of $77.85. The grid never hears of smooth pasting, and its delta table below shows the tangent anyway.
 
 ### The other door: an equation for the line alone
 
@@ -176,7 +188,13 @@ Each wrong rule is priced on the same 2,000-step tree, against the true $6.66.
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads to the boundary and the price. Road 1: a 2,000-step coin-flip tree (Cox–Ross–Rubinstein), started 400 steps early so today's slice reaches below the line, recording the highest price it exercises at. Road 2: the integral equation, solved by bisection on 200 dates, with a normal-distribution function built from a power series. Road 3: an implicit grid in log-price, solved each date as a complementarity problem by PSOR. Then the delta table, the slope from the line at three steps, the Step 5 balance on two roads, and every wrong rule priced on the tree.
+Three independent roads to the boundary and the price.
+
+- Road 1: a 2,000-step coin-flip tree (Cox–Ross–Rubinstein), started 400 steps early so today's slice reaches below the line, recording the highest price it exercises at.
+- Road 2: the integral equation, solved by bisection on 200 dates, with a normal-distribution function built from a power series.
+- Road 3: an implicit grid in log-price, solved each date as a complementarity problem by PSOR.
+
+Then the delta table, the slope from the line at three steps, the Step 5 balance on two roads, and every wrong rule priced on the tree.
 
 ### Python
 
@@ -543,10 +561,173 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves Steps 4 to 6 of Why it works for any market, taking Step 4's hitting-time step as given.
+
+- Take a value never below the payoff, equal to it at or below the line, with the copy's average growth tending to 1. Then $\Delta = -1$ on the line, from both sides: no corner.
+- Suppose $V$ and $B$ change smoothly, $V = K - B$ along the line, $\Delta = -1$ there, and the Black–Scholes equation holds there. Then $\partial V/\partial \tau = 0$ on the line, and $\tfrac12\sigma^2 B^2\,\Gamma = rK - qB$.
+- Take a price $S$ with $0 < S < K$, and $0 \le q < r$. Then $L$ applied to the payoff gives $rK - qS$, and this carry is positive.
+
+The boundary numbers, the prices and the measured slopes are left to the Python and Rust checks.
+
+```lean
+-- The exercise boundary and smooth pasting: an American put's value meets its payoff on the exercise line with slope exactly -1, which forces half sigma squared B squared times gamma to equal rK - qB there, and the pricing operator applied to the payoff is the positive carry rK - qS.
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.FDeriv.Prod
+import Mathlib.Order.Filter.Basic
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Topology.Order.LeftRight
+
+open Filter Topology Set
+
+/-- Smooth pasting, the squeeze at the heart of the card's detailed proof.
+Fix the years left and let `V x` be the put's value at share price `x`, with strike `K`
+and exercise boundary `B`.
+* The holder may exercise at every instant, so the value is never below the payoff:
+  `K - x ≤ V x` for every `x`.
+* On and below the line the holder exercises: `V x = K - x` for `x ≤ B`.
+* Copying, from `B`, the best rule for a start at `B + h` gives
+  `V (B + h) - V B ≤ -h * m h`, where `m h` is the discounted average growth of the share
+  until exercise; because the share moves without jumps the path hits the line almost at once,
+  so `m h → 1` as `h → 0` from above.
+Then the value has slope exactly `-1` on the line: it meets the payoff at the same height and
+the same slope, with no corner. -/
+theorem smooth_pasting {V m : ℝ → ℝ} {K B : ℝ}
+    (hfloor : ∀ x, K - x ≤ V x)
+    (hexercise : ∀ x ≤ B, V x = K - x)
+    (hcopy : ∀ h > 0, V (B + h) - V B ≤ -h * m h)
+    (hm : Tendsto m (𝓝[>] 0) (𝓝 1)) :
+    HasDerivAt V (-1) B := by
+  have hVB : V B = K - B := hexercise B le_rfl
+  rw [hasDerivAt_iff_tendsto_slope, ← nhdsLT_sup_nhdsGT, tendsto_sup]
+  constructor
+  · apply tendsto_const_nhds.congr'
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx' : x - B ≠ 0 := sub_ne_zero.mpr (ne_of_lt (mem_Iio.mp hx))
+    rw [slope_def_field, hexercise x (le_of_lt (mem_Iio.mp hx)), hVB]
+    field_simp
+    ring
+  · have hm' : Tendsto (fun x => -m (x - B)) (𝓝[>] B) (𝓝 (-1)) := by
+      have h1 : Tendsto (fun x => x - B) (𝓝[>] B) (𝓝[>] 0) := by
+        apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
+        · have : Tendsto (fun x => x - B) (𝓝 B) (𝓝 (B - B)) :=
+            (continuous_id.sub continuous_const).tendsto B
+          rw [sub_self] at this
+          exact this.mono_left nhdsWithin_le_nhds
+        · filter_upwards [self_mem_nhdsWithin] with x hx
+          exact sub_pos.mpr (mem_Ioi.mp hx)
+      exact (hm.comp h1).neg
+    apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hm'
+    · filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx' : 0 < x - B := sub_pos.mpr (mem_Ioi.mp hx)
+      rw [slope_def_field, hVB, le_div_iff₀ hx']
+      linarith [hfloor x]
+    · filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx' : 0 < x - B := sub_pos.mpr (mem_Ioi.mp hx)
+      have := hcopy (x - B) hx'
+      rw [add_sub_cancel] at this
+      rw [slope_def_field, div_le_iff₀ hx']
+      linarith
+
+/-- The balance on the line (Step 5). Let `V S τ` be the put's value at share price `S` with
+`τ` years left, and `B τ` the exercise boundary. Suppose the value is differentiable at the
+point on the line, the line moves differentiably, the value matches the payoff along the line
+(`V (B t) t = K - B t` for times near `τ`), smooth pasting holds (`∂V/∂S = -1` on the line),
+and the Black–Scholes equation holds on the line with `Γ` the gamma just above it.
+Then `∂V/∂τ = 0` on the line, and everything cancels except
+`½ σ² B² Γ = r K - q B`: the value of the wobble exactly pays the carry of exercising. -/
+theorem gamma_balance_on_boundary {V : ℝ → ℝ → ℝ} {B : ℝ → ℝ} {σ r q K τ : ℝ}
+    (hV : DifferentiableAt ℝ (Function.uncurry V) (B τ, τ))
+    (hB : DifferentiableAt ℝ B τ)
+    (hvalue : ∀ᶠ t in 𝓝 τ, V (B t) t = K - B t)
+    (hslope : deriv (fun x => V x τ) (B τ) = -1)
+    (hpde : deriv (fun t => V (B τ) t) τ =
+      1 / 2 * σ ^ 2 * B τ ^ 2 *
+          derivWithin (fun x => deriv (fun y => V y τ) x) (Ici (B τ)) (B τ) +
+        (r - q) * B τ * deriv (fun x => V x τ) (B τ) - r * V (B τ) τ) :
+    deriv (fun t => V (B τ) t) τ = 0 ∧
+      1 / 2 * σ ^ 2 * B τ ^ 2 *
+          derivWithin (fun x => deriv (fun y => V y τ) x) (Ici (B τ)) (B τ) =
+        r * K - q * B τ := by
+  set L := fderiv ℝ (Function.uncurry V) (B τ, τ) with hL
+  have hVd : HasFDerivAt (Function.uncurry V) L (B τ, τ) := hV.hasFDerivAt
+  -- partial derivative in S
+  have hS : HasDerivAt (fun x => V x τ) (L (1, 0)) (B τ) := by
+    have hp : HasDerivAt (fun x : ℝ => (x, τ)) ((1 : ℝ), (0 : ℝ)) (B τ) :=
+      (hasDerivAt_id _).prodMk (hasDerivAt_const _ _)
+    exact hVd.comp_hasDerivAt (B τ) hp
+  -- partial derivative in τ
+  have hT : HasDerivAt (fun t => V (B τ) t) (L (0, 1)) τ := by
+    have hp : HasDerivAt (fun t : ℝ => (B τ, t)) ((0 : ℝ), (1 : ℝ)) τ :=
+      (hasDerivAt_const _ _).prodMk (hasDerivAt_id _)
+    exact hVd.comp_hasDerivAt τ hp
+  have hS1 : L (1, 0) = -1 := by rw [← hS.deriv]; exact hslope
+  -- along the boundary
+  have hC : HasDerivAt (fun t => V (B t) t) (L (deriv B τ, 1)) τ := by
+    have hp : HasDerivAt (fun t : ℝ => (B t, t)) (deriv B τ, (1 : ℝ)) τ :=
+      hB.hasDerivAt.prodMk (hasDerivAt_id _)
+    exact HasFDerivAt.comp_hasDerivAt (f := fun t : ℝ => (B t, t)) τ hVd hp
+  have hC' : HasDerivAt (fun t => V (B t) t) (-deriv B τ) τ := by
+    have hK : HasDerivAt (fun t => K - B t) (-deriv B τ) τ := by
+      exact hB.hasDerivAt.const_sub K
+    exact hK.congr_of_eventuallyEq hvalue
+  have hEq : L (deriv B τ, 1) = -deriv B τ := hC.unique hC'
+  have hsplit : L (deriv B τ, 1) = deriv B τ * L (1, 0) + L (0, 1) := by
+    have : ((deriv B τ, (1 : ℝ)) : ℝ × ℝ) = deriv B τ • ((1 : ℝ), (0 : ℝ)) + ((0 : ℝ), (1 : ℝ)) := by
+      ext <;> simp
+    rw [this, map_add, map_smul, smul_eq_mul]
+  have hT0 : deriv (fun t => V (B τ) t) τ = 0 := by
+    rw [hT.deriv]
+    rw [hsplit, hS1] at hEq
+    linarith
+  refine ⟨hT0, ?_⟩
+  have hVB : V (B τ) τ = K - B τ := hvalue.self_of_nhds
+  rw [hT0, hslope, hVB] at hpde
+  linarith
+
+/-- The complementarity form (Step 6). Apply the pricing operator
+`L V = ∂V/∂τ - (½ σ² S² ∂²V/∂S² + (r - q) S ∂V/∂S - r V)` to the payoff `K - S`:
+the result is the net carry of exercising, `r K - q S`. Below the strike, with the rate above
+the (nonnegative) dividend yield and a positive share price, this carry is positive, so on the
+exercise region `L V ≥ 0` holds strictly. -/
+theorem pricing_operator_on_payoff {σ r q K S τ : ℝ}
+    (hS : 0 < S) (hSK : S < K) (hrq : q < r) (hq : 0 ≤ q) :
+    (deriv (fun _t : ℝ => K - S) τ -
+        (1 / 2 * σ ^ 2 * S ^ 2 * deriv (deriv (fun x : ℝ => K - x)) S +
+          (r - q) * S * deriv (fun x : ℝ => K - x) S - r * (K - S)) = r * K - q * S) ∧
+      0 < r * K - q * S := by
+  have h1 : deriv (fun x : ℝ => K - x) = fun _ => -1 := by
+    funext x
+    simp
+  refine ⟨?_, ?_⟩
+  · rw [h1]
+    simp only [deriv_const]
+    ring
+  · have hr : 0 < r := lt_of_le_of_lt hq hrq
+    nlinarith
+
+#print axioms smooth_pasting
+#print axioms gamma_balance_on_boundary
+#print axioms pricing_operator_on_payoff
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'smooth_pasting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gamma_balance_on_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pricing_operator_on_payoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Take the floor out of the grid.** Guess first: what does the grid price if its value may fall below the payoff? In the PSOR line, replace `max(g[k], …)` by the bracket alone. Answer: the European put, near $6.33; the "three roads, one price" assert stops the run.
-> - **Shrink the slope steps toward zero.** Guess first: does the gap to −1 keep halving if the steps in `side` become 0.01? Answer: no. The integral road's quadrature error, divided by a tiny step, swamps the true gap.
+> - **Shrink the slope steps toward zero.** Guess first: does the gap to −1 keep halving if the steps in `side` become 0.01? Answer: no. The integral road's quadrature (numerical integration) error, divided by a tiny step, swamps the true gap.
 > - **Raise the dividend yield above the rate.** Guess first: where does the line end at expiry if `q = 0.06`? Answer: below the strike, at rK/q, where the last instant's carry turns negative. The asserts pinned to the house market then fail, as they should.
 
 ---

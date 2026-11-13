@@ -62,7 +62,7 @@ The volatility to quote at strike $K$ comes back out as $\sigma_{\text{imp}} = \
 | $\rho$ | tilt, between −1 and 1; negative loads the low strikes | −0.912282 | smile tilts toward high strikes |
 | $m$ | where the V is centred, in $k$ | −0.118207 | smile slides right |
 | $s$ | how rounded the bottom is; 0 gives a sharp corner | 0.248954 | bottom flattens and rises |
-| $g$, $d_2$ | Gatheral's butterfly function, built from $w$, its slope $w'$ and its bend $w''$; the density is $g$ times a positive factor that contains $d_2 = -k/\sqrt{w} - \sqrt{w}/2$, the pilot card's $d_2$ in these coordinates | smallest $g$ 0.182823 | density thicker |
+| $g$, $d_2$ | Gatheral's butterfly function, built from $w$, its slope $w'$ and its bend $w''$; the density is $g$ times a positive factor that contains $d_2 = -k/\sqrt{w} - \sqrt{w}/2$, the $d_2$ of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) in these coordinates | smallest $g$ 0.182823 | density thicker |
 
 Two helper formulas read the shape straight off the parameters. The wings are straight lines with slopes
 
@@ -91,7 +91,13 @@ One expiry only. Matching several expiries against each other (calendar arbitrag
 
 ### Step 0: pick coordinates where the rules are straight lines
 
-In strike and volatility, the no-arbitrage rules are awkward. In log-moneyness and total variance they become simple. The far wings of any arbitrage-free smile grow at most linearly in $k$ (Lee's theorem, Step 5). Two expiries cannot cross (total variance rises with time). And Black-Scholes prices depend on strike and volatility only through $k$ and $w$. So the natural model for one expiry is a curve in $(k, w)$ that is a straight line in each wing and smooth in the middle. The simplest such curve is a hyperbola, and SVI is exactly a hyperbola, tilted and shifted.
+In strike and volatility, the no-arbitrage rules are awkward. In log-moneyness and total variance they become simple:
+
+- The far wings of any arbitrage-free smile grow at most linearly in $k$ (Lee's theorem, Step 5).
+- Two expiries cannot cross (total variance rises with time).
+- Black-Scholes prices depend on strike and volatility only through $k$ and $w$.
+
+So the natural model for one expiry is a curve in $(k, w)$ that is a straight line in each wing and smooth in the middle. The simplest such curve is a hyperbola, and SVI is exactly a hyperbola, tilted and shifted.
 
 The name records a second reason. In the Heston model, where volatility itself moves at random, the smile tends to exactly this formula as the expiry grows (Gatheral and Jacquier, 2011).
 
@@ -133,7 +139,18 @@ $$\text{minimise } \sum_{i=1}^{7} \big(w(k_i) - w_i\big)^2$$
 
 where $k_i$ is the log-moneyness of quote number i and $w_i$ its market total variance.
 
-**Existence, uniqueness and the boundary cases, before solving.** A minimum exists on a bounded box: $b$ from 0 to 2 (Lee's bound, Step 5), $\rho$ from −1 to 1, $m$ and $s$ in fixed ranges with $s \ge 0$. The sum of squares is continuous, and a continuous function on a closed, bounded set reaches its minimum. Without bounds it need not: pushing $b$ and $s$ up together, with $a$ falling, turns the curve into a parabola, and pushing $m$ far away turns it into a straight line, so the best fit can sit at such a limit and never be reached. The check's grid stays inside a box. Uniqueness is not guaranteed. The sum of squares can have several dips, so a single optimiser can stop in the wrong one; two different methods from different starts agreeing is evidence, not proof. Boundary cases: with fewer than five quotes infinitely many curves pass through every point; with exactly five, SVI usually interpolates them with zero miss and tells nothing about fit quality; a strip that is pure skew pushes $\rho$ toward ±1, as here; a strip with a sharp kink pushes $s$ toward 0.
+**Existence, uniqueness and the boundary cases, before solving.** A minimum exists on a bounded box: $b$ from 0 to 2 (Lee's bound, Step 5), $\rho$ from −1 to 1, $m$ and $s$ in fixed ranges with $s \ge 0$. The sum of squares is continuous, and a continuous function on a closed, bounded set reaches its minimum.
+
+Without bounds it need not. Pushing $b$ and $s$ up together, with $a$ falling, turns the curve into a parabola. Pushing $m$ far away turns it into a straight line. So the best fit can sit at such a limit and never be reached. The check's grid stays inside a box.
+
+Uniqueness is not guaranteed. The sum of squares can have several dips, so a single optimiser can stop in the wrong one. Two different methods from different starts agreeing is evidence, not proof.
+
+Boundary cases:
+
+- With fewer than five quotes, infinitely many curves pass through every point.
+- With exactly five, SVI usually interpolates them with zero miss and tells nothing about fit quality.
+- A strip that is pure skew pushes $\rho$ toward ±1, as here.
+- A strip with a sharp kink pushes $s$ toward 0.
 
 **The trick (the "quasi-explicit" method published by Zeliade Systems).** Hold $m$ and $s$ fixed. Then
 
@@ -141,7 +158,9 @@ $$w(k) = a + (b\rho)\,(k - m) + b\,\sqrt{(k-m)^2 + s^2}$$
 
 is a straight-line combination of three known columns: 1, $k - m$ and the square root. Finding $a$, $b\rho$ and $b$ is ordinary linear least squares, solved exactly by the normal equations. That leaves a search over two numbers, $m$ and $s$, instead of five. The check searches a shrinking grid over $(m, s)$ and solves the linear problem at each grid point.
 
-**The second road** fits all five at once by Levenberg-Marquardt, the standard method of [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): linearise the misses around the current guess, take the step that minimises the linearised sum of squares, and damp the step when it overshoots. It starts from a flat guess, knows nothing of the linear trick, and writes $b$ and $s$ as exponentials and $\rho$ as a hyperbolic tangent so that no step can leave the legal range. Both roads land on the same five numbers, apart by at most one unit in the sixth decimal, with a sum of squared misses of 7.168e-11.
+**The second road** fits all five at once by Levenberg-Marquardt, the standard method of [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md). Each step does three things: linearise the misses around the current guess, take the step that minimises the linearised sum of squares, and damp the step when it overshoots.
+
+It starts from a flat guess and knows nothing of the linear trick. It writes $b$ and $s$ as exponentials and $\rho$ as a hyperbolic tangent, so that no step can leave the legal range. Both roads land on the same five numbers, apart by at most one unit in the sixth decimal, with a sum of squared misses of 7.168e-11.
 
 ### Step 4: the butterfly test, and why $g$ is the density in disguise
 
@@ -153,7 +172,7 @@ $$g(k) = \left(1 - \frac{k\, w'}{2w}\right)^2 - \frac{(w')^2}{4}\left(\frac{1}{w
 
 $$\text{density of } \ln(S_T/F) \text{ at } k \;=\; \frac{g(k)}{\sqrt{2\pi\, w}}\, \exp\!\left(-\tfrac12 d_2^2\right), \qquad d_2 = -\frac{k}{\sqrt{w}} - \frac{\sqrt{w}}{2}$$
 
-In words: $S_T$ is the share price at expiry; $w'$ is the slope of the curve and $w''$ its bend; $d_2$ is the pilot card's $d_2$ written in $k$ and $w$. Since everything outside $g$ is positive, **the density is non-negative exactly where $g$ is non-negative.** One function of the fitted curve answers the butterfly question at every strike at once.
+In words: $S_T$ is the share price at expiry; $w'$ is the slope of the curve and $w''$ its bend; $d_2$ is the Black–Scholes $d_2$ written in $k$ and $w$. Since everything outside $g$ is positive, **the density is non-negative exactly where $g$ is non-negative.** One function of the fitted curve answers the butterfly question at every strike at once.
 
 <details>
 <summary>Detailed proof: the density is $g$ times a positive factor</summary>
@@ -163,7 +182,7 @@ Work per unit of forward and undiscounted: the call price is $c(k) = N(d_1) - e^
 Now $c(k)$ depends on $k$ twice: directly, and through $w(k)$. Four Black-Scholes facts do the work, each checked by differentiating $N(d_1) - e^k N(d_2)$ and using $N'(d_1) = e^{k} N'(d_2)$:
 - $\partial c/\partial k = -e^{k} N(d_2)$;
 - $\partial^2 c/\partial k^2 - \partial c/\partial k = e^{k} N'(d_2)/\sqrt{w}$, the flat-volatility density;
-- $\partial c/\partial w = e^{k} N'(d_2)/(2\sqrt{w})$, which is vega written for total variance;
+- $\partial c/\partial w = e^{k} N'(d_2)/(2\sqrt{w})$, which is vega (the price's sensitivity to volatility) written for total variance;
 - $\partial^2 c/\partial k\,\partial w = \partial c/\partial w \cdot (\tfrac12 - k/w)$ and $\partial^2 c/\partial w^2 = \partial c/\partial w \cdot \left(\tfrac{k^2}{2w^2} - \tfrac{1}{2w} - \tfrac18\right)$.
 
 By the chain rule, $c_k = \partial_k c + w' \partial_w c$ and $c_{kk} = \partial_{kk} c + 2 w' \partial_{kw} c + (w')^2 \partial_{ww} c + w'' \partial_w c$. Subtract, substitute the four facts, and factor out $e^{k} N'(d_2)/\sqrt{w}$:
@@ -234,7 +253,7 @@ The shape numbers, by the helper formulas:
 | lowest total variance $w_{\min}$ | $0.016719 + 0.126769 \times 0.248954 \times 0.409564$ | 0.029645 |
 | volatility at the forward, $k = 0$ | $\sqrt{w(0)} = \sqrt{0.037986}$ | **19.4899%** |
 
-Both slopes sit far below Lee's ceiling of 2, and $w_{\min}$ is positive. The volatility at the forward, 19.49%, matches the value card 1 reads off the same market.
+Both slopes sit far below Lee's ceiling of 2, and $w_{\min}$ is positive. The volatility at the forward, 19.49%, matches the value read off the same market on [The volatility smile and skew](01-volatility-smile-and-skew.md).
 
 ### What breaks if you drop a piece
 
@@ -250,7 +269,7 @@ The Vogt row is checked two ways: from $g$, −0.4691 per million per $1; from a
 
 ## Code, from first principles, and it actually runs
 
-The script rebuilds card 1's crash market (a 12% chance of a year centred at 0.70 of the forward with 40% volatility, an 88% chance of a calm year at 15%), prices the seven calls, and inverts each to a volatility by bisection. It fits SVI by two independent roads: the linear trick on a grid over $(m, s)$, and five-parameter Levenberg-Marquardt. It checks the density two ways ($g$ against second differences of call prices), confirms by Simpson's rule that it sums to 1 and averages to the forward, measures the wing slopes far out, and cross-checks the market's own prices by integrating payoffs against its density. The normal distribution, the solver, both optimisers and the integrator are written from scratch.
+The script rebuilds the crash market of [The volatility smile and skew](01-volatility-smile-and-skew.md): a 12% chance of a year centred at 0.70 of the forward with 40% volatility, and an 88% chance of a calm year at 15%. It prices the seven calls and inverts each to a volatility by bisection. It fits SVI by two independent roads: the linear trick on a grid over $(m, s)$, and five-parameter Levenberg-Marquardt. It checks the density two ways ($g$ against second differences of call prices). It confirms by Simpson's rule (a numerical integration rule) that the density sums to 1 and averages to the forward. It measures the wing slopes far out, and cross-checks the market's own prices by integrating payoffs against its density. The normal distribution, the solver, both optimisers and the integrator are written from scratch.
 
 ### Python
 
@@ -680,6 +699,270 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves Step 4's density formula for any smooth positive $w$, and Steps 1 and 5 for every SVI curve allowed by When it holds.
+
+- Suppose $w$ is positive at every $k$ and has a continuous bend $w''$. Then the density of $\ln(S_T/F)$ at $k$ equals $g(k)/\sqrt{2\pi w} \exp(-\tfrac12 d_2^2)$.
+- Take the same $w$. Then the density is non-negative exactly where $g(k) \ge 0$.
+- Take $b \ge 0$, $\rho$ strictly between −1 and 1, and $s > 0$. Then $w(k) \ge a + b s\sqrt{1-\rho^2}$ at every $k$.
+- Take the same SVI curve. Then it reaches $w_{\min}$ at $k^* = m - \rho s/\sqrt{1-\rho^2}$.
+- Take the same SVI curve. Then far right it hugs a line of slope $b(1+\rho)$, and far left one of slope $b(1-\rho)$.
+- Take the same SVI curve. Then both wing slopes are at most 2 exactly when $b(1 + \lvert\rho\rvert) \le 2$.
+
+The fit, the worked numbers, Vogt's curve and the parabola are left to the Python and Rust checks.
+
+```lean
+-- The SVI smile: for any smooth positive total-variance curve the implied density is Gatheral's g times a positive factor (so it is non-negative exactly where g is), and a legal SVI curve bottoms out at a + b s √(1 - ρ²) at k* = m - ρ s / √(1 - ρ²), has straight-line wings of slopes b(1 - ρ) and b(1 + ρ), and meets Lee's bound exactly when b(1 + |ρ|) ≤ 2.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Order.Filter.AtTopBot.Basic
+
+open Real MeasureTheory ProbabilityTheory Filter Topology
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- The SVI total variance at log-moneyness `k`:
+`w(k) = a + b (ρ (k - m) + √((k - m)² + s²))`. -/
+noncomputable def svi (a b ρ m s k : ℝ) : ℝ :=
+  a + b * (ρ * (k - m) + √((k - m) ^ 2 + s ^ 2))
+
+/-- The Black-Scholes `d₂` in log-moneyness and total variance: `d₂ = -k/√w - √w/2`. -/
+noncomputable def bsD2 (k w : ℝ) : ℝ := -k / √w - √w / 2
+
+/-- The call price per unit of forward, undiscounted, on a smile `w`:
+`c(k) = N(d₁) - e^k N(d₂)` with `d₁ = d₂ + √w`, both read at `w = w(k)`. -/
+noncomputable def forwardCall (w : ℝ → ℝ) (k : ℝ) : ℝ :=
+  stdNormalCDF (bsD2 k (w k) + √(w k)) - exp k * stdNormalCDF (bsD2 k (w k))
+
+/-- Gatheral's butterfly function, built from `w`, its slope `w'` and its bend `w''`:
+`g(k) = (1 - k w'/(2w))² - (w')²/4 (1/w + 1/4) + w''/2`. -/
+noncomputable def gatheralG (w : ℝ → ℝ) (k : ℝ) : ℝ :=
+  (1 - k * deriv w k / (2 * w k)) ^ 2
+    - (deriv w k) ^ 2 / 4 * (1 / w k + 1 / 4) + deriv (deriv w) k / 2
+
+theorem stdNormalCDF_eq_integral (x : ℝ) :
+    stdNormalCDF x = ∫ t in Set.Iic x, gaussianPDFReal 0 1 t := by
+  unfold stdNormalCDF
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (setIntegral_nonneg measurableSet_Iic
+      (fun t _ => gaussianPDFReal_nonneg 0 1 t))]
+
+#print axioms stdNormalCDF_eq_integral
+
+theorem stdNormalCDF_hasDerivAt (x : ℝ) :
+    HasDerivAt stdNormalCDF ((√(2 * π))⁻¹ * exp (-x ^ 2 / 2)) x := by
+  have hc : Continuous (gaussianPDFReal 0 1) := by
+    rw [gaussianPDFReal_def]; fun_prop
+  have hI : ∀ y, IntegrableOn (gaussianPDFReal 0 1) (Set.Iic y) :=
+    fun y => (integrable_gaussianPDFReal 0 1).integrableOn
+  have heq : stdNormalCDF = fun y => (∫ t in Set.Iic 0, gaussianPDFReal 0 1 t)
+      + ∫ t in (0:ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y
+    rw [stdNormalCDF_eq_integral, ← intervalIntegral.integral_Iic_sub_Iic (hI 0) (hI y)]
+    ring
+  have h := intervalIntegral.integral_hasDerivAt_right (hc.intervalIntegrable 0 x)
+    hc.aestronglyMeasurable.stronglyMeasurableAtFilter hc.continuousAt
+  rw [heq]
+  convert h.const_add _ using 1
+  simp [gaussianPDFReal]
+
+#print axioms stdNormalCDF_hasDerivAt
+
+theorem bsD2_hasDerivAt (w : ℝ → ℝ) (hpos : ∀ k, 0 < w k) (k w' : ℝ)
+    (hw : HasDerivAt w w' k) :
+    HasDerivAt (fun k => bsD2 k (w k))
+      (-1 / √(w k) + k * (w' / (2 * √(w k))) / w k - w' / (2 * √(w k)) / 2) k := by
+  have hu := hw.sqrt (hpos k).ne'
+  have hne : √(w k) ≠ 0 := (Real.sqrt_pos.mpr (hpos k)).ne'
+  have h := ((hasDerivAt_id k).neg.div hu hne).sub (hu.div_const 2)
+  convert h using 1
+  · funext x; simp [bsD2]
+  · have hq := Real.sq_sqrt (hpos k).le
+    have hwne : w k ≠ 0 := (hpos k).ne'
+    simp only [Pi.neg_apply, id]
+    rw [hq]
+    field_simp
+    rw [hq]
+    ring
+
+#print axioms bsD2_hasDerivAt
+
+theorem forwardCall_hasDerivAt (w : ℝ → ℝ) (hpos : ∀ k, 0 < w k) (k w' : ℝ)
+    (hw : HasDerivAt w w' k) :
+    HasDerivAt (forwardCall w)
+      (exp k * ((√(2 * π))⁻¹ * exp (-(bsD2 k (w k)) ^ 2 / 2)) * (w' / (2 * √(w k)))
+        - exp k * stdNormalCDF (bsD2 k (w k))) k := by
+  have hu := hw.sqrt (hpos k).ne'
+  have hd := bsD2_hasDerivAt w hpos k w' hw
+  have h1 := (stdNormalCDF_hasDerivAt (bsD2 k (w k) + √(w k))).comp k (hd.add hu)
+  have h2 := (Real.hasDerivAt_exp k).mul ((stdNormalCDF_hasDerivAt (bsD2 k (w k))).comp k hd)
+  have h := h1.sub h2
+  convert h using 1
+  · funext x; simp [forwardCall]
+  have hne : √(w k) ≠ 0 := (Real.sqrt_pos.mpr (hpos k)).ne'
+  have hE : exp (-(bsD2 k (w k) + √(w k)) ^ 2 / 2) = exp k * exp (-(bsD2 k (w k)) ^ 2 / 2) := by
+    rw [← Real.exp_add]; congr 1; unfold bsD2; field_simp; ring
+  simp only [Function.comp]
+  rw [hE]
+  ring
+
+#print axioms forwardCall_hasDerivAt
+
+theorem sqrt_sub_tendsto (s : ℝ) :
+    Tendsto (fun y : ℝ => √(y ^ 2 + s ^ 2) - y) atTop (𝓝 0) := by
+  have hlim : Tendsto (fun y : ℝ => s ^ 2 / y) atTop (𝓝 0) :=
+    tendsto_const_nhds.div_atTop tendsto_id
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hlim ?_ ?_
+  · filter_upwards with y
+    have : y ≤ √(y ^ 2 + s ^ 2) :=
+      (le_abs_self _).trans (Real.abs_le_sqrt (by nlinarith [sq_nonneg s]))
+    linarith
+  · filter_upwards [eventually_gt_atTop 0] with y hy
+    have hq := Real.sq_sqrt (show 0 ≤ y ^ 2 + s ^ 2 by positivity)
+    have hge : y ≤ √(y ^ 2 + s ^ 2) :=
+      (le_abs_self _).trans (Real.abs_le_sqrt (by nlinarith [sq_nonneg s]))
+    rw [le_div_iff₀ hy]
+    nlinarith
+
+#print axioms sqrt_sub_tendsto
+
+/-- **The butterfly test** (Why it works, Step 4 and its detailed proof). Take any total-variance
+curve `w` of log-moneyness that is twice continuously differentiable and positive everywhere,
+and price calls on it by Black-Scholes, per unit of forward and undiscounted:
+`c(k) = N(d₁) - e^k N(d₂)`. Then the density of `ln(S_T/F)` that the prices imply,
+`e^(-k) (c'' - c')`, equals `g(k) / √(2π w) · exp(-d₂²/2)` at every `k`; since the factor
+beside `g` is positive, that density is non-negative exactly where `g(k)` is non-negative. -/
+theorem implied_density_eq_gatheral_g_times_positive_factor
+    (w : ℝ → ℝ) (hw : ContDiff ℝ 2 w) (hpos : ∀ k, 0 < w k) (k : ℝ) :
+    exp (-k) * (deriv (deriv (forwardCall w)) k - deriv (forwardCall w) k)
+        = gatheralG w k / √(2 * π * w k) * exp (-(bsD2 k (w k)) ^ 2 / 2) ∧
+      (0 ≤ exp (-k) * (deriv (deriv (forwardCall w)) k - deriv (forwardCall w) k)
+        ↔ 0 ≤ gatheralG w k) := by
+  have hd1 : Differentiable ℝ w := hw.differentiable (by norm_num)
+  have hd2 : Differentiable ℝ (deriv w) :=
+    ((contDiff_succ_iff_deriv (n := 1)).mp hw).2.2.differentiable (by norm_num)
+  have hC1 : deriv (forwardCall w) = fun k =>
+      exp k * ((√(2 * π))⁻¹ * exp (-(bsD2 k (w k)) ^ 2 / 2)) * (deriv w k / (2 * √(w k)))
+        - exp k * stdNormalCDF (bsD2 k (w k)) := by
+    funext x
+    exact (forwardCall_hasDerivAt w hpos x _ (hd1 x).hasDerivAt).deriv
+  have hne : √(w k) ≠ 0 := (Real.sqrt_pos.mpr (hpos k)).ne'
+  have hdd := bsD2_hasDerivAt w hpos k _ (hd1 k).hasDerivAt
+  have hu := (hd1 k).hasDerivAt.sqrt (hpos k).ne'
+  have hD := (((Real.hasDerivAt_exp k).mul
+      ((((hdd.pow 2).neg.div_const 2).exp).const_mul (√(2 * π))⁻¹)).mul
+      ((hd2 k).hasDerivAt.div (hu.const_mul 2) (mul_ne_zero two_ne_zero hne))).sub
+      ((Real.hasDerivAt_exp k).mul ((stdNormalCDF_hasDerivAt _).comp k hdd))
+  have e := HasDerivAt.deriv (f := fun k =>
+      exp k * ((√(2 * π))⁻¹ * exp (-(bsD2 k (w k)) ^ 2 / 2)) * (deriv w k / (2 * √(w k)))
+        - exp k * stdNormalCDF (bsD2 k (w k))) hD
+  have hL : exp (-k) * (deriv (deriv (forwardCall w)) k - deriv (forwardCall w) k)
+      = gatheralG w k / √(2 * π * w k) * exp (-(bsD2 k (w k)) ^ 2 / 2) := by
+    rw [hC1, e]
+    have hsq : √(2 * π * w k) = √(2 * π) * √(w k) := Real.sqrt_mul (by positivity) _
+    have hwk := Real.sq_sqrt (hpos k).le
+    have hpi : √(2 * π) ≠ 0 := by positivity
+    rw [hsq, Real.exp_neg]
+    simp only [Pi.mul_apply, Pi.div_apply, Pi.neg_apply, Pi.pow_apply, Function.comp_apply,
+      Nat.cast_ofNat, Nat.reduceSub, pow_one]
+    generalize exp (-(bsD2 k (w k)) ^ 2 / 2) = E
+    unfold gatheralG bsD2
+    generalize deriv w k = a1
+    generalize deriv (deriv w) k = a2
+    obtain ⟨u, hu_def⟩ : ∃ u, u = √(w k) := ⟨_, rfl⟩
+    rw [← hu_def] at hwk hne ⊢
+    rw [← hwk]
+    have hek := Real.exp_pos k
+    field_simp
+    ring
+  refine ⟨hL, ?_⟩
+  rw [hL]
+  have hfac : 0 < exp (-(bsD2 k (w k)) ^ 2 / 2) / √(2 * π * w k) := by
+    have := hpos k
+    positivity
+  rw [show gatheralG w k / √(2 * π * w k) * exp (-(bsD2 k (w k)) ^ 2 / 2)
+      = gatheralG w k * (exp (-(bsD2 k (w k)) ^ 2 / 2) / √(2 * π * w k)) by ring]
+  exact mul_nonneg_iff_of_pos_right hfac
+
+/-- **The bottom of the smile** (The formula, and Why it works, Step 1). For an SVI curve with
+`b ≥ 0`, `ρ` strictly between -1 and 1 and `s > 0`, total variance is never below
+`w_min = a + b s √(1 - ρ²)`, and it reaches that value at `k* = m - ρ s / √(1 - ρ²)`. -/
+theorem svi_minimum_at_bottom
+    (a b ρ m s : ℝ) (hb : 0 ≤ b) (hρl : -1 < ρ) (hρr : ρ < 1) (hs : 0 < s) :
+    (∀ k, a + b * s * √(1 - ρ ^ 2) ≤ svi a b ρ m s k) ∧
+      svi a b ρ m s (m - ρ * s / √(1 - ρ ^ 2)) = a + b * s * √(1 - ρ ^ 2) := by
+  have h1 : 0 < 1 - ρ ^ 2 := by nlinarith
+  have hr : 0 < √(1 - ρ ^ 2) := Real.sqrt_pos.mpr h1
+  have hr2 : √(1 - ρ ^ 2) ^ 2 = 1 - ρ ^ 2 := Real.sq_sqrt h1.le
+  set r := √(1 - ρ ^ 2) with hr_def
+  constructor
+  · intro k
+    unfold svi
+    set x := k - m
+    have key : s * r - ρ * x ≤ √(x ^ 2 + s ^ 2) :=
+      (le_abs_self _).trans (Real.abs_le_sqrt (by nlinarith [sq_nonneg (r * x + ρ * s)]))
+    nlinarith [mul_le_mul_of_nonneg_left key hb]
+  · unfold svi
+    have hx : (m - ρ * s / r - m) ^ 2 + s ^ 2 = (s / r) ^ 2 := by
+      field_simp
+      nlinarith [hr2]
+    rw [hx, Real.sqrt_sq (by positivity)]
+    have : ρ * (m - ρ * s / r - m) + s / r = s * r := by
+      field_simp
+      nlinarith [hr2]
+    rw [this]; ring
+
+/-- **Straight wings and Lee's bound** (The formula, Steps 1 and 5). For an SVI curve with
+`b ≥ 0`, `ρ` strictly between -1 and 1 and `s > 0`, the curve hugs a straight line of slope
+`b(1 + ρ)` far to the right and climbs leftward along a straight line of slope `b(1 - ρ)` far to
+the left (the gap to each line tends to 0); and both wing slopes are at most Lee's ceiling of 2
+exactly when `b(1 + |ρ|) ≤ 2`. -/
+theorem svi_wings_straight_and_lee_bound
+    (a b ρ m s : ℝ) (hb : 0 ≤ b) (hρl : -1 < ρ) (hρr : ρ < 1) (hs : 0 < s) :
+    Tendsto (fun k => svi a b ρ m s k - (a + b * (1 + ρ) * (k - m))) atTop (𝓝 0) ∧
+      Tendsto (fun k => svi a b ρ m s k - (a - b * (1 - ρ) * (k - m))) atBot (𝓝 0) ∧
+      (b * (1 - ρ) ≤ 2 ∧ b * (1 + ρ) ≤ 2 ↔ b * (1 + |ρ|) ≤ 2) := by
+  refine ⟨?_, ?_, ?_⟩
+  · have hm : Tendsto (fun k : ℝ => k - m) atTop atTop := tendsto_atTop_add_const_right _ (-m) tendsto_id
+    have := ((sqrt_sub_tendsto s).comp hm).const_mul b
+    rw [mul_zero] at this
+    refine this.congr (fun k => ?_)
+    simp only [Function.comp, svi]; ring
+  · have hm : Tendsto (fun k : ℝ => -(k - m)) atBot atTop :=
+      tendsto_neg_atBot_atTop.comp (tendsto_atBot_add_const_right _ (-m) tendsto_id)
+    have := ((sqrt_sub_tendsto s).comp hm).const_mul b
+    rw [mul_zero] at this
+    refine this.congr (fun k => ?_)
+    simp only [Function.comp, svi, neg_sq]; ring
+  · rcases abs_cases ρ with ⟨h, _⟩ | ⟨h, _⟩ <;> rw [h] <;> constructor
+    · intro h; exact h.2
+    · intro h; constructor <;> nlinarith
+    · intro h; exact h.1
+    · intro h; constructor <;> nlinarith
+
+#print axioms implied_density_eq_gatheral_g_times_positive_factor
+#print axioms svi_minimum_at_bottom
+#print axioms svi_wings_straight_and_lee_bound
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stdNormalCDF_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stdNormalCDF_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsD2_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forwardCall_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sqrt_sub_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'implied_density_eq_gatheral_g_times_positive_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'svi_minimum_at_bottom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'svi_wings_straight_and_lee_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Set $\rho$ to 0.** Guess first: does the skew survive? No: the wings climb equally and the skew becomes a smile, 22.94%, 22.41% and 25.16% at $80, $100 and $120.
@@ -706,7 +989,7 @@ The two outputs agree line for line.
 - **Equity index option desks.** SVI or one of its variants is the standard way to turn a day's listed option quotes into a smile per expiry. The fitted curve prices every unlisted strike.
 - **Risk systems.** A fitted smile's five numbers are stored daily; a jump in $\rho$ or $b$ flags a change in how the market prices crashes, before any single quote looks odd.
 - **Hedging with the smile.** The fitted curve's slope in strike feeds the delta correction on [Smile-adjusted delta](05-smile-adjusted-delta.md).
-- **Local volatility.** Dupire's formula needs the first and second derivatives of total variance in strike. SVI gives them in closed form, with no noise from differencing quotes.
+- **Local volatility.** Dupire's formula, on [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md), needs the first and second derivatives of total variance in strike. SVI gives them in closed form, with no noise from differencing quotes.
 - **Surfaces.** SSVI, or SVI slices checked for crossing, turn many expiries into one arbitrage-free surface, the object of [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md).
 
 > **Say it back**

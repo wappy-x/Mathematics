@@ -31,7 +31,7 @@ xychart-beta
     line [0, 0, 0, 10, 20, 30]
 ```
 
-Top line: the live call, priced by the ordinary formula. Middle line: its floor, the share price minus the strike discounted back one year, and never below zero. Bottom line: what exercising today pays. The live call never touches the floor, and from $100 rightward the floor sits $4.88 above the exercise line. At $120 the call is worth $26.17 alive and $20.00 exercised.
+Top line: the live call, priced by the ordinary [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) formula. Middle line: its floor, the share price minus the strike discounted back one year, and never below zero. Bottom line: what exercising today pays. The live call never touches the floor, and from $100 rightward the floor sits $4.88 above the exercise line. At $120 the call is worth $26.17 alive and $20.00 exercised.
 
 ---
 
@@ -108,11 +108,15 @@ When $r \ge 0$, the discounted strike $K e^{-r\tau}$ is at most $K$. So the floo
 
 $$C_{\text{Eu}} \;\ge\; \max(S - K e^{-r\tau},\, 0) \;\ge\; \max(S - K,\, 0).$$
 
-When $r > 0$ and time is left, the floor sits strictly above the exercise value, by $K(1 - e^{-r\tau})$, the interest on the strike, $4.88 on a one-year $100 strike. On top of the floor sits the put that parity adds: $C_{\text{Eu}} = (S - K e^{-r\tau}) + P_{\text{Eu}}$. At $S = 100$ that is $4.88 of floor plus $5.57 of put, $10.45 in all. The interest is what early exercise throws away for certain; the put is the right to walk away, thrown away too.
+When $r > 0$ and time is left, the floor sits strictly above the exercise value, by $K(1 - e^{-r\tau})$, the interest on the strike, $4.88 on a one-year $100 strike.
+
+[Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) says a European call minus a European put on the same share, strike and expiry equals $S - K e^{-r\tau}$. On top of the floor sits the put that parity adds: $C_{\text{Eu}} = (S - K e^{-r\tau}) + P_{\text{Eu}}$. At $S = 100$ that is $4.88 of floor plus $5.57 of put, $10.45 in all. The interest is what early exercise throws away for certain; the put is the right to walk away, thrown away too.
 
 ### Step 3: the American call is worth no more than the European one
 
-Step 2 says the European call is worth at least its exercise value at every moment and every share price. The American call can always copy the European one by never exercising, so $C_{\text{Am}} \ge C_{\text{Eu}}$. The other direction comes from working back from expiry. At the last moment both calls pay the same. One step earlier, the American holder chooses the larger of exercising now and waiting. Waiting is worth exactly what the European is worth, and Step 2 says that is at least the exercise value. So the American holder waits, and the two prices stay equal. Repeat back to today.
+Step 2 says the European call is worth at least its exercise value at every moment and every share price. The American call can always copy the European one by never exercising, so $C_{\text{Am}} \ge C_{\text{Eu}}$.
+
+The other direction comes from working back from expiry. At the last moment both calls pay the same. One step earlier, the American holder chooses the larger of exercising now and waiting. Waiting is worth exactly what the European is worth, and Step 2 says that is at least the exercise value. So the American holder waits, and the two prices stay equal. Repeat back to today.
 
 The check runs exactly this on a 2,000-step tree. It tests the choice at every node: 2,001,000 of them. Exercise wins at none. The American and European tree prices are both $10.449584, and the formula gives $10.450584, a tenth of a cent away.
 
@@ -149,7 +153,7 @@ xychart-beta
     line [2.35, 4.25, 6.89, 10.20, 14.08, 18.37, 22.95]
 ```
 
-The first line is what exercise pays, the share price less $100. The second is what holding is worth: a six-month European call on the share after it drops $5.00. Holding wins at $110, $10.20 against $10.00. Exercise wins at $115, $15.00 against $14.08. A bisection on the two curves puts the crossing at $110.75. The tree's lowest exercised node sits at $110.90, within one tree step of it.
+The first line is what exercise pays, the share price less $100. The second is what holding is worth: a six-month European call on the share after it drops $5.00. Holding wins at $110, $10.20 against $10.00. Exercise wins at $115, $15.00 against $14.08. A bisection, a search that halves the gap between a low and a high guess each round, puts the crossing at $110.75. The tree's lowest exercised node sits at $110.90, within one tree step of it.
 
 **This also gives a second road to the price.** Since the only decision is at $t_1$, the American call is the discounted average, over where Acme's escrowed share lands at $t_1$, of the larger of those two lines. A single integral, split at the $110.75 boundary, gives $7.925118. The tree gives $7.925722. Two methods that share nothing but the model agree to within a tenth of a cent.
 
@@ -158,7 +162,7 @@ The first line is what exercise pays, the share price less $100. The second is w
 Fischer Black's 1975 shortcut follows from Step 4. Only two exercise dates matter: the instant before $t_1$, and expiry. Price each as if it were fixed in advance.
 
 - **Plan 1, hold to expiry.** A European call on the escrowed share: $C_{\text{Eu}}(S^{*}, K, T)$.
-- **Plan 2, exercise just before the ex-date if the call is in the money.** That pays the share still carrying the dividend, $S^{*}_{t_1} + D$, less $K$. That is a call on the escrowed share with strike $K - D$ expiring at $t_1$: $C_{\text{Eu}}(S^{*}, K - D, t_1)$.
+- **Plan 2, exercise just before the ex-date if the call is in the money**, that is, if the share is above the strike. That pays the share still carrying the dividend, $S^{*}_{t_1} + D$, less $K$. That is a call on the escrowed share with strike $K - D$ expiring at $t_1$: $C_{\text{Eu}}(S^{*}, K - D, t_1)$.
 
 Take the larger. The American holder can follow either plan, so each is a lower bound on the true price, and so is their maximum. It falls short because the real holder does not commit today. At $t_1$ the holder sees the share price and picks the better line of the chart above.
 
@@ -178,9 +182,11 @@ Textbooks often write plan 2 as $C_{\text{Eu}}(S, K, t_1)$, a call on today's fu
 
 Mirror Step 1 for a put. Parcel A is a put plus one share; parcel B is $K e^{-r\tau}$ in the bank. The same reasoning gives $P_{\text{Eu}} \ge K e^{-r\tau} - S$. But that floor sits *below* the put's exercise value $K - S$, by the interest on the strike. The chain that protected the call runs the wrong way.
 
-The reason is plain. A put holder who exercises receives $K$. Cash received now earns interest; cash received at expiry does not. Deep in the money, where the chance of a recovery is small, the lost interest outweighs the right to wait. At $S = 80$ the European put's floor is $15.122942$, below the $20.00 exercise value, and the American put tree exercises at once: it is worth exactly $20.000000. At $S = 100$ the American put is worth $6.089990 against $5.573526 for the European, and the tree exercises at 964,807 nodes. The put's exercise boundary belongs to [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md).
+The reason is plain. A put holder who exercises receives $K$. Cash received now earns interest; cash received at expiry does not. Deep in the money, where the chance of a recovery is small, the lost interest outweighs the right to wait.
 
-The exact price for one known dividend, by compound options, is the Roll-Geske-Whaley formula; the integral in Step 4 is its numerical twin. A continuous yield $q > 0$ can also make early exercise pay at any date, not only one; that is the house market's American call, though at $q = 2\%$ its premium is under a millionth of a dollar, and [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md) prices it.
+At $S = 80$ the European put's floor is $15.122942$, below the $20.00 exercise value, and the American put tree exercises at once: it is worth exactly $20.000000. At $S = 100$ the American put is worth $6.089990 against $5.573526 for the European, and the tree exercises at 964,807 nodes. The put's exercise boundary belongs to [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md).
+
+The exact price for one known dividend, by compound options (options on options), is the Roll-Geske-Whaley formula; the integral in Step 4 is its numerical twin. A continuous yield $q > 0$ can also make early exercise pay at any date, not only one; that is the house market's American call, though at $q = 2\%$ its premium is under a millionth of a dollar, and [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md) prices it.
 
 ---
 
@@ -223,7 +229,7 @@ Every number in this table is printed by the checks below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows the answer: the bell-curve area and every average are Simpson's rule written out, the trees are loops, the boundary comes from bisection. The no-dividend call is reached three ways: the formula, a direct average of the payoff, and a 2,000-step tree that tests exercise at every node. The dividend call is reached two ways: a tree on the escrowed share that tests exercise at every node, and a single integral that decides once, at the ex-date. Black's approximation is computed on its own and asserted to sit below the integral. The put is priced by average and by tree.
+Nothing is imported that already knows the answer: the bell-curve area and every average are Simpson's rule (adding up thin slices under the curve) written out, the trees are loops, the boundary comes from bisection. The no-dividend call is reached three ways: the formula, a direct average of the payoff, and a 2,000-step tree that tests exercise at every node. The dividend call is reached two ways: a tree on the escrowed share that tests exercise at every node, and a single integral that decides once, at the ex-date. Black's approximation is computed on its own and asserted to sit below the integral. The put is priced by average and by tree.
 
 ### Python
 
@@ -621,6 +627,268 @@ chart cum         95    100    105    110    115    120    125
 chart exer D5   0.00   0.00   5.00  10.00  15.00  20.00  25.00
 chart hold D5   2.35   4.25   6.89  10.20  14.08  18.37  22.95
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the no-dividend claims on the tree from the detailed proof, for any strike and any number of steps.
+
+- Take that tree with $r \ge 0$, $1/u < e^{r\Delta t} < u$ and a strike $K \ge 0$. Then $C_{\text{Am}} = C_{\text{Eu}}$ at every share price.
+- Take the same tree, with $\tau$ the time left. Then $\max(S - K, 0) \le \max(S - K e^{-r\tau}, 0) \le C_{\text{Eu}}$.
+- Take the same tree with $r > 0$, $K > 0$ and at least one step left. Then at some share price, $P_{\text{Am}}$ is above $P_{\text{Eu}}$.
+- A 2,000-step tree has 2,001,000 decision points before expiry.
+- Exercising a call with strike 100 at a share price of 120 pays 20.
+- Step 1,000 of 2,000 is exactly half the year, the six-month ex-date.
+
+The dollar prices, the dividend cases, Black's approximation and the continuous-time version are left to the Python and Rust checks.
+
+```lean
+-- Merton's theorem: in a recombining price tree with a riskless rate not below zero and a share that pays nothing, the American call is worth exactly the European call, the call never falls below the floor S - K e^(-r tau), and an American put can be worth more than its European twin.
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+open Real
+
+namespace MertonNoEarlyExercise
+
+/-- The pricing weight of the card's tree, p = (e^(r dt) - 1/u) / (u - 1/u). -/
+noncomputable def weight (r dt u : ℝ) : ℝ :=
+  (exp (r * dt) - u⁻¹) / (u - u⁻¹)
+
+/-- European value with `m` steps left and share price `s`: the payoff at expiry, and one step
+earlier the discounted weighted average of the up value (share times `u`) and the down value
+(share divided by `u`). The share pays nothing along the way. -/
+noncomputable def euroValue (r dt u : ℝ) (payoff : ℝ → ℝ) : ℕ → ℝ → ℝ
+  | 0, s => payoff s
+  | m + 1, s =>
+      (weight r dt u * euroValue r dt u payoff m (s * u)
+        + (1 - weight r dt u) * euroValue r dt u payoff m (s / u)) / exp (r * dt)
+
+/-- American value with `m` steps left and share price `s`: at every node before expiry the holder
+takes the larger of exercising now and waiting one more step. -/
+noncomputable def amerValue (r dt u : ℝ) (payoff : ℝ → ℝ) : ℕ → ℝ → ℝ
+  | 0, s => payoff s
+  | m + 1, s =>
+      max (payoff s)
+        ((weight r dt u * amerValue r dt u payoff m (s * u)
+          + (1 - weight r dt u) * amerValue r dt u payoff m (s / u)) / exp (r * dt))
+
+/-- A call with strike `K` pays max(S - K, 0). -/
+noncomputable def callPayoff (K : ℝ) : ℝ → ℝ := fun s => max (s - K) 0
+
+/-- A put with strike `K` pays max(K - S, 0). -/
+noncomputable def putPayoff (K : ℝ) : ℝ → ℝ := fun s => max (K - s) 0
+
+/-- Helper: the tree's step factor is above one. -/
+lemma one_lt_u (r dt u : ℝ) (hu : 0 < u) (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) :
+    1 < u := by
+  have h1 : u⁻¹ < u := hlow.trans hhigh
+  have h2 : u * u⁻¹ = 1 := mul_inv_cancel₀ hu.ne'
+  nlinarith
+
+/-- Helper: the pricing weight is strictly positive. -/
+lemma weight_pos (r dt u : ℝ) (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) :
+    0 < weight r dt u :=
+  div_pos (sub_pos.2 hlow) (sub_pos.2 (hlow.trans hhigh))
+
+/-- Helper: the pricing weight is strictly below one. -/
+lemma weight_lt_one (r dt u : ℝ) (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) :
+    weight r dt u < 1 :=
+  (div_lt_one (sub_pos.2 (hlow.trans hhigh))).2 (by linarith)
+
+/-- Helper: the weighted average of the up and down factors is the growth factor e^(r dt). -/
+lemma weight_identity (r dt u : ℝ) (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) :
+    weight r dt u * u + (1 - weight r dt u) * u⁻¹ = exp (r * dt) := by
+  have hne : u - u⁻¹ ≠ 0 := (sub_pos.2 (hlow.trans hhigh)).ne'
+  have h : weight r dt u * (u - u⁻¹) = exp (r * dt) - u⁻¹ := div_mul_cancel₀ _ hne
+  linear_combination h
+
+/-- Helper: discounting over one more step. -/
+lemma exp_step (r dt : ℝ) (m : ℕ) :
+    exp (-(r * (((m + 1 : ℕ) : ℝ) * dt))) = exp (-(r * ((m : ℝ) * dt))) / exp (r * dt) := by
+  push_cast
+  rw [show -(r * (((m : ℝ) + 1) * dt)) = -(r * ((m : ℝ) * dt)) - r * dt by ring, exp_sub]
+
+/-- Helper: the European call is never negative. -/
+lemma euro_call_nonneg (r dt u K : ℝ) (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) :
+    ∀ (m : ℕ) (s : ℝ), 0 ≤ euroValue r dt u (callPayoff K) m s := by
+  intro m
+  induction m with
+  | zero => intro s; exact le_max_right _ _
+  | succ m ih =>
+    intro s
+    have hp := weight_pos r dt u hlow hhigh
+    have h1p : 0 < 1 - weight r dt u := sub_pos.2 (weight_lt_one r dt u hlow hhigh)
+    simp only [euroValue]
+    exact div_nonneg (add_nonneg (mul_nonneg hp.le (ih _)) (mul_nonneg h1p.le (ih _)))
+      (exp_pos _).le
+
+/-- Helper: the European call is at least S - K e^(-r tau). -/
+lemma euro_call_ge (r dt u K : ℝ) (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) :
+    ∀ (m : ℕ) (s : ℝ),
+      s - K * exp (-(r * ((m : ℝ) * dt))) ≤ euroValue r dt u (callPayoff K) m s := by
+  intro m
+  induction m with
+  | zero => intro s; simp [euroValue, callPayoff]
+  | succ m ih =>
+    intro s
+    have hp := weight_pos r dt u hlow hhigh
+    have h1p : 0 < 1 - weight r dt u := sub_pos.2 (weight_lt_one r dt u hlow hhigh)
+    have hid := weight_identity r dt u hlow hhigh
+    have he := exp_pos (r * dt)
+    simp only [euroValue]
+    rw [exp_step, le_div_iff₀ he]
+    have h1 := mul_le_mul_of_nonneg_left (ih (s * u)) hp.le
+    have h2 := mul_le_mul_of_nonneg_left (ih (s / u)) h1p.le
+    have h3 : (s - K * (exp (-(r * ((m : ℝ) * dt))) / exp (r * dt))) * exp (r * dt)
+        = s * exp (r * dt) - K * exp (-(r * ((m : ℝ) * dt))) := by
+      field_simp
+    have hs : s * (weight r dt u * u + (1 - weight r dt u) * u⁻¹) = s * exp (r * dt) := by
+      rw [hid]
+    rw [h3]
+    have hsu : s / u = s * u⁻¹ := div_eq_mul_inv s u
+    nlinarith [h1, h2, hs]
+
+/-- Helper: K e^(-r tau) is at most K. -/
+lemma disc_le (r dt K : ℝ) (hr : 0 ≤ r) (hdt : 0 < dt) (hK : 0 ≤ K) (m : ℕ) :
+    K * exp (-(r * ((m : ℝ) * dt))) ≤ K := by
+  apply mul_le_of_le_one_right hK
+  rw [exp_le_one_iff]
+  exact neg_nonpos.2 (mul_nonneg hr (mul_nonneg (Nat.cast_nonneg m) hdt.le))
+
+/-- Helper: deep in the money, the European put is K e^(-r tau) - S. -/
+lemma euro_put_deep (r dt u K : ℝ) (hu : 0 < u) (hlow : u⁻¹ < exp (r * dt))
+    (hhigh : exp (r * dt) < u) :
+    ∀ (m : ℕ) (s : ℝ), 0 ≤ s → s * u ^ m ≤ K →
+      euroValue r dt u (putPayoff K) m s = K * exp (-(r * ((m : ℝ) * dt))) - s := by
+  intro m
+  induction m with
+  | zero =>
+    intro s _ hsK
+    simp only [euroValue, putPayoff, pow_zero, mul_one] at hsK ⊢
+    simp only [Nat.cast_zero, zero_mul, mul_zero, neg_zero, exp_zero, mul_one]
+    exact max_eq_left (by linarith)
+  | succ m ih =>
+    intro s hs hsK
+    have hid := weight_identity r dt u hlow hhigh
+    have he := exp_pos (r * dt)
+    have hinv : u⁻¹ ≤ u := (hlow.trans hhigh).le
+    have hsum : 0 ≤ s * u ^ m := mul_nonneg hs (pow_nonneg hu.le m)
+    have e1 : euroValue r dt u (putPayoff K) m (s * u) = K * exp (-(r * ((m : ℝ) * dt))) - s * u :=
+      ih (s * u) (mul_nonneg hs hu.le) (by rw [mul_assoc, ← pow_succ']; exact hsK)
+    have e2 : euroValue r dt u (putPayoff K) m (s / u) = K * exp (-(r * ((m : ℝ) * dt))) - s / u := by
+      apply ih (s / u) (div_nonneg hs hu.le)
+      have a : s / u * u ^ m = (s * u ^ m) * u⁻¹ := by ring
+      have b : s * u ^ (m + 1) = (s * u ^ m) * u := by ring
+      have c := mul_le_mul_of_nonneg_left hinv hsum
+      linarith
+    simp only [euroValue]
+    rw [e1, e2, exp_step, div_eq_iff he.ne']
+    have h4 : K * (exp (-(r * ((m : ℝ) * dt))) / exp (r * dt)) * exp (r * dt)
+        = K * exp (-(r * ((m : ℝ) * dt))) := by
+      field_simp
+    linear_combination (-s) * hid - h4
+
+#print axioms one_lt_u
+#print axioms weight_pos
+#print axioms weight_lt_one
+#print axioms weight_identity
+#print axioms exp_step
+#print axioms euro_call_nonneg
+#print axioms euro_call_ge
+#print axioms disc_le
+#print axioms euro_put_deep
+
+/-- Merton's theorem. On a share that pays nothing before expiry, with the riskless rate not below
+zero and no riskless profit in the tree (1/u < e^(r dt) < u), the American call has the same price
+as the European call, at every share price and with any number of steps left: early exercise
+is never worth anything. -/
+theorem american_call_eq_european_call (r dt u K : ℝ) (hr : 0 ≤ r) (hdt : 0 < dt) (hu : 0 < u)
+    (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) (hK : 0 ≤ K) (m : ℕ) (s : ℝ) :
+    amerValue r dt u (callPayoff K) m s = euroValue r dt u (callPayoff K) m s := by
+  induction m generalizing s with
+  | zero => rfl
+  | succ m ih =>
+    have h : amerValue r dt u (callPayoff K) (m + 1) s
+        = max (callPayoff K s) (euroValue r dt u (callPayoff K) (m + 1) s) := by
+      simp only [amerValue, euroValue, ih]
+    rw [h, max_eq_right]
+    apply max_le
+    · have := euro_call_ge r dt u K hlow hhigh (m + 1) s
+      have := disc_le r dt K hr hdt hK (m + 1)
+      linarith
+    · exact euro_call_nonneg r dt u K hlow hhigh (m + 1) s
+
+/-- The card's chain: what exercising pays today, max(S - K, 0), is at most the floor
+max(S - K e^(-r tau), 0) with tau = m dt the time left, and the floor is at most the European call. -/
+theorem exercise_le_floor_le_european_call (r dt u K : ℝ) (hr : 0 ≤ r) (hdt : 0 < dt) (hu : 0 < u)
+    (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) (hK : 0 ≤ K) (m : ℕ) (s : ℝ) :
+    max (s - K) 0 ≤ max (s - K * exp (-(r * (m * dt)))) 0 ∧
+      max (s - K * exp (-(r * (m * dt)))) 0 ≤ euroValue r dt u (callPayoff K) m s := by
+  constructor
+  · have := disc_le r dt K hr hdt hK m
+    exact max_le_max (by linarith) le_rfl
+  · exact max_le (euro_call_ge r dt u K hlow hhigh m s) (euro_call_nonneg r dt u K hlow hhigh m s)
+
+/-- Why puts are different: with a positive rate, whenever time is left there is a share price at
+which the American put is worth strictly more than the European put, so early exercise of a put
+can pay even with no dividend. -/
+theorem american_put_can_beat_european_put (r dt u K : ℝ) (hr : 0 < r) (hdt : 0 < dt) (hu : 0 < u)
+    (hlow : u⁻¹ < exp (r * dt)) (hhigh : exp (r * dt) < u) (hK : 0 < K) (m : ℕ) (hm : 1 ≤ m) :
+    ∃ s : ℝ, 0 < s ∧ euroValue r dt u (putPayoff K) m s < amerValue r dt u (putPayoff K) m s := by
+  obtain ⟨n, rfl⟩ : ∃ n, m = n + 1 := ⟨m - 1, by omega⟩
+  have hun : 0 < u ^ (n + 1) := pow_pos hu _
+  refine ⟨K / u ^ (n + 1) / 2, by positivity, ?_⟩
+  have hs0 : 0 ≤ K / u ^ (n + 1) / 2 := by positivity
+  have hsK : K / u ^ (n + 1) / 2 * u ^ (n + 1) ≤ K := by
+    have : K / u ^ (n + 1) / 2 * u ^ (n + 1) = K / 2 := by field_simp
+    rw [this]; linarith
+  rw [euro_put_deep r dt u K hu hlow hhigh (n + 1) _ hs0 hsK]
+  have hE : exp (-(r * (((n + 1 : ℕ) : ℝ) * dt))) < 1 := by
+    rw [Real.exp_lt_one_iff]
+    have : (0 : ℝ) < ((n + 1 : ℕ) : ℝ) := Nat.cast_pos.2 (Nat.succ_pos n)
+    exact neg_neg_of_pos (mul_pos hr (mul_pos this hdt))
+  have hKE := mul_lt_of_lt_one_right hK hE
+  have hA : putPayoff K (K / u ^ (n + 1) / 2)
+      ≤ amerValue r dt u (putPayoff K) (n + 1) (K / u ^ (n + 1) / 2) := by
+    simp only [amerValue]
+    exact le_max_left _ _
+  have hP : K - K / u ^ (n + 1) / 2 ≤ putPayoff K (K / u ^ (n + 1) / 2) := le_max_left _ _
+  linarith
+
+/-- The 2,000-step tree checks a decision at every node before expiry: 1 + 2 + ... + 2000 of them. -/
+example : (Finset.range 2000).sum (fun k => k + 1) = 2001000 := by
+  rw [Finset.sum_add_distrib, Finset.sum_range_id, Finset.sum_const, Finset.card_range, smul_eq_mul,
+    mul_one]
+
+/-- Exercising the call at a share price of 120 with strike 100 pays 20. -/
+example : callPayoff 100 120 = 20 := by
+  norm_num [callPayoff]
+
+/-- The 5.00-dividend tree exercises only at step 1,000 of 2,000: the ex-date six months into a year. -/
+example : (1000 : ℚ) / 2000 = 1 / 2 := by norm_num
+
+#print axioms american_call_eq_european_call
+#print axioms exercise_le_floor_le_european_call
+#print axioms american_put_can_beat_european_put
+
+end MertonNoEarlyExercise
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'MertonNoEarlyExercise.one_lt_u' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.weight_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.weight_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.weight_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.exp_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.euro_call_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.euro_call_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.disc_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.euro_put_deep' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.american_call_eq_european_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.exercise_le_floor_le_european_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MertonNoEarlyExercise.american_put_can_beat_european_put' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

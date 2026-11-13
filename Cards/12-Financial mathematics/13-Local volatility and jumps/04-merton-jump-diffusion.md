@@ -30,7 +30,9 @@ xychart-beta
     line [0.00, 0.01, 0.11, 0.53, 1.26, 1.88, 1.99, 1.66, 1.15, 0.69, 0.38, 0.19, 0.09]
 ```
 
-The orange curve is the chance of Acme ending the year in each $1 band, with jumps. The green curve is the Black-Scholes lognormal (a bell curve in the log of the price) at 20%, with the same forward. Both are pricing-world odds, not forecasts. The jumps take weight from the middle, $80 to $120, and push it into both tails, the left one most: a 6.86% chance of ending below $70, against 3.34%. The wider spread is what the extra $1.19 on the call pays for; the lopsided left tail is what Step 5 reads as a skew.
+The orange curve is the chance of Acme ending the year in each $1 band, with jumps. The green curve is the Black-Scholes lognormal (a bell curve in the log of the price) at 20%, with the same forward. The forward, $103.05, is today's price grown at the riskless rate less the dividend yield. Both are pricing-world odds, not forecasts: odds under which Acme's average price in a year is the forward.
+
+The jumps take weight from the middle, $80 to $120, and push it into both tails, the left one most: a 6.86% chance of ending below $70, against 3.34%. The wider spread is what the extra $1.19 on the call pays for; the lopsided left tail is what Step 5 reads as a skew: implied volatility higher at low strikes than at high ones.
 
 ---
 
@@ -55,7 +57,7 @@ $$C = \sum_{n=0}^{\infty} w_n\; C_{\text{BS}}\big(S,\,K,\,r,\,q_n,\,\sigma_n,\,T
 | $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5%; 2% | as in Black-Scholes |
 | $\sigma$, $T$ | volatility of the wiggle alone; years to expiry | 20%; 1 | dearer |
 | $\lambda$ | jump rate: average jumps a year | 0.5 | dearer: $11.50 at one a year |
-| $\mu_J$, $\delta$ | mean and spread of one jump's log size, per jump | −0.10; 0.15 | bigger jumps either way, or more spread: dearer. The sign of $\mu_J$ picks which side of the strip lifts |
+| $\mu_J$, $\delta$ | mean and spread of one jump's log size, per jump | −0.10; 0.15 | bigger jumps either way, or more spread: dearer. The sign of $\mu_J$ picks which side of the strip (implied volatility strike by strike, Step 5) lifts |
 | $Y$, $Y_i$, $k$ | a jump's multiplier; that of jump number $i$; the average multiplier minus one | typical 0.9048; —; −0.0849 | — |
 | $Z$, $N_T$, $n$, $i$ | a standard bell-curve draw; the random jump count by expiry; one particular count; a jump's number | —; —; 0, 1, 2, …; — | — |
 | $w_n$ | Poisson weight: the chance of exactly $n$ jumps | 0.6065, 0.3033, 0.0758 | — |
@@ -140,7 +142,11 @@ Write $\ln(S_T/S) = m + \sigma\sqrt{T}Z + (\ln Y_1 + \cdots + \ln Y_{N_T})$ with
 
 Run each strike's Merton price backwards through Black-Scholes to find the one volatility that reproduces it, the implied volatility ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)).
 
-The inverse exists and is unique. A Black-Scholes call rises strictly with volatility, from $e^{-rT}\max(F - K, 0)$ at zero towards $S e^{-qT}$ as volatility grows without limit. Each branch price sits strictly inside its own range. The branch upper ends average to $S e^{-qT}$, by Step 1's identity. The branch lower ends average to at least $e^{-rT}\max(F - K, 0)$, since the branch forwards average to $F$ and the positive part of an average never beats the average of the positive parts. So every Merton price sits strictly inside the Black-Scholes range. It never lands on a boundary: at the lower end the answer would be zero volatility, at the upper end there would be none. Bisection (halving a bracket that holds the answer) finds exactly one volatility.
+The inverse exists and is unique. A Black-Scholes call rises strictly with volatility, from $e^{-rT}\max(F - K, 0)$ at zero towards $S e^{-qT}$ as volatility grows without limit.
+
+Each branch price sits strictly inside its own range. The branch upper ends average to $S e^{-qT}$, by Step 1's identity. The branch lower ends average to at least $e^{-rT}\max(F - K, 0)$, since the branch forwards average to $F$ and the positive part of an average never beats the average of the positive parts.
+
+So every Merton price sits strictly inside the Black-Scholes range. It never lands on a boundary: at the lower end the answer would be zero volatility, at the upper end there would be none. Bisection (halving a bracket that holds the answer) finds exactly one volatility.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -155,9 +161,15 @@ xychart-beta
 
 The orange curve is the one-year strip, the green curve the three-month strip under the same jumps, and the dark line the wiggle's own 20%, which Black-Scholes would return at every strike without jumps.
 
-The whole strip sits above 20%, 23.14% at the money, because jumps add variance. At one year it is a skew, steep on the low side: 25.17% at $70, but only down to 22.44% at $130. Downward jumps load the left tail, where low strikes pay. At three months it is far steeper: 32.10% at $70 against 22.48% at the money, turning up to 22.63% at $130. In three months the wiggle almost never carries Acme 30% lower, so a $70 put is nearly a pure bet on a jump. Over a year the wiggle can go that far alone. And the longer the life, the more independent pieces the log price sums, and such sums drift towards one bell curve, so the strip flattens as expiry lengthens.
+The whole strip sits above 20%, 23.14% at the money, because jumps add variance. At one year it is a skew, steep on the low side: 25.17% at $70, but only down to 22.44% at $130. Downward jumps load the left tail, where low strikes pay.
 
-Two other routes reach the same number. Merton's 1976 paper moves the factor $e^{-\lambda kT}(1+k)^n$ from each branch into its weight, which makes Poisson weights at the tilted rate $\lambda' = \lambda(1 + k)$ and prices each branch at its own rate $r_n = r - \lambda k + n\ln(1+k)/T$: road 2 in the code. And the log price is a Lévy process (its changes over equal, separate stretches of time are independent and alike) with a closed-form characteristic function (the average of $e^{iu\ln S_T}$ for each real $u$), which a Fourier transform turns into prices at every strike: [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
+At three months it is far steeper: 32.10% at $70 against 22.48% at the money, turning up to 22.63% at $130. In three months the wiggle almost never carries Acme 30% lower, so a $70 put is nearly a pure bet on a jump. Over a year the wiggle can go that far alone.
+
+And the longer the life, the more independent pieces the log price sums, and such sums drift towards one bell curve, so the strip flattens as expiry lengthens.
+
+Two other routes reach the same number. Merton's 1976 paper moves the factor $e^{-\lambda kT}(1+k)^n$ from each branch into its weight, which makes Poisson weights at the tilted rate $\lambda' = \lambda(1 + k)$ and prices each branch at its own rate $r_n = r - \lambda k + n\ln(1+k)/T$: road 2 in the code.
+
+And the log price is a Lévy process (its changes over equal, separate stretches of time are independent and alike) with a closed-form characteristic function (the average of $e^{iu\ln S_T}$ for each real $u$), which a Fourier transform turns into prices at every strike: [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
 
 ---
 
@@ -639,6 +651,101 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the algebra behind Steps 1 and 3, the compensator and the branch centres, for any inputs with $T > 0$.
+
+- Take any jump rate $\lambda$, years to expiry $T$ and average jump $k$. Then the Poisson weights $w_n$ times $(1+k)^n$, summed over all $n$, give exactly $e^{\lambda k T}$.
+- Take $k = e^{\mu_J + \frac12\delta^2} - 1$. Then $e^{n(\mu_J + \frac12\delta^2)} = (1+k)^n$, so Step 3's two forms of the branch average agree.
+- Take that $k$, any $T > 0$, any count $n$ and the branch yield $q_n$. Then $S e^{(r-q-\lambda k)T}(1+k)^n$ equals $S e^{(r-q_n)T}$.
+- Take the same $k$ and $T > 0$. Then the branch forwards $S e^{(r-q_n)T}$, weighted by $w_n$, add up to exactly $F$.
+
+The total expectation split, the branch prices and every dollar figure are left to the Python and Rust checks.
+
+```lean
+-- Merton jump-diffusion: the compensator identity, the branch yield that matches each jump count's average price, and the fact that the branch forwards average back to the forward.
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open Real Nat
+
+/-- The compensator identity (Step 1): averaging the jump factor `(1 + k)^n` over a
+Poisson count with mean `λ T`, using the weights `w_n = e^(-λT) (λT)^n / n!`, gives
+`e^(λ k T)`. The series converges and its sum is exactly `e^(λ k T)`. -/
+theorem merton_compensator_identity (lam T k : ℝ) :
+    HasSum (fun n : ℕ => Real.exp (-(lam * T)) * (lam * T) ^ n / (n ! : ℝ) * (1 + k) ^ n)
+      (Real.exp (lam * k * T)) := by
+  have h := NormedSpace.expSeries_div_hasSum_exp (𝔸 := ℝ) (lam * T * (1 + k))
+  rw [← Real.exp_eq_exp_ℝ] at h
+  have h2 := h.mul_left (Real.exp (-(lam * T)))
+  have he : Real.exp (-(lam * T)) * Real.exp (lam * T * (1 + k)) = Real.exp (lam * k * T) := by
+    rw [← Real.exp_add]; congr 1; ring
+  rw [he] at h2
+  convert h2 using 1
+  funext n
+  simp only [mul_pow]; ring
+
+/-- The branch centre (Step 3): with `k = e^(μ_J + δ²/2) - 1` and `n` jumps, the average
+ending price `S e^((r - q - λk)T) e^(n(μ_J + δ²/2))` equals `S e^((r - q - λk)T) (1 + k)^n`,
+and that is the forward of a stock with yield `q_n = q + λk - n ln(1 + k) / T`. -/
+theorem merton_branch_yield (S r q lam muJ delta T : ℝ) (hT : 0 < T) (n : ℕ) :
+    let k := Real.exp (muJ + delta ^ 2 / 2) - 1
+    let qn := q + lam * k - (n : ℝ) * Real.log (1 + k) / T
+    S * Real.exp ((r - q - lam * k) * T) * Real.exp ((n : ℝ) * (muJ + delta ^ 2 / 2))
+        = S * Real.exp ((r - q - lam * k) * T) * (1 + k) ^ n ∧
+      S * Real.exp ((r - q - lam * k) * T) * (1 + k) ^ n = S * Real.exp ((r - qn) * T) := by
+  intro k qn
+  have hk : 1 + k = Real.exp (muJ + delta ^ 2 / 2) := by simp [k]
+  refine ⟨?_, ?_⟩
+  · rw [hk, Real.exp_nat_mul]
+  · rw [hk, ← Real.exp_nat_mul, mul_assoc, ← Real.exp_add]
+    congr 2
+    simp only [qn, hk, Real.log_exp]
+    field_simp
+    ring
+
+/-- The branch forwards average to the forward (Steps 1 and 5): weighting each branch's
+forward `S e^((r - q_n)T)` by the Poisson chance `w_n` of exactly `n` jumps gives the
+forward `F = S e^((r - q)T)`, so the compensator puts the average ending price on `F`. -/
+theorem merton_branch_forwards_average (S r q lam muJ delta T : ℝ) (hT : 0 < T) :
+    let k := Real.exp (muJ + delta ^ 2 / 2) - 1
+    HasSum (fun n : ℕ => Real.exp (-(lam * T)) * (lam * T) ^ n / (n ! : ℝ) *
+        (S * Real.exp ((r - (q + lam * k - (n : ℝ) * Real.log (1 + k) / T)) * T)))
+      (S * Real.exp ((r - q) * T)) := by
+  intro k
+  have h1 := (merton_compensator_identity lam T k).mul_left (S * Real.exp ((r - q - lam * k) * T))
+  have he : S * Real.exp ((r - q - lam * k) * T) * Real.exp (lam * k * T) = S * Real.exp ((r - q) * T) := by
+    rw [mul_assoc, ← Real.exp_add]; congr 2; ring
+  rw [he] at h1
+  convert h1 using 1
+  funext n
+  have h2 := (merton_branch_yield S r q lam muJ delta T hT n).2
+  rw [← h2]
+  ring
+
+/-- One-jump branch width (Step 0): `0.2² + 0.15² = 0.25²`, so `σ_1 = 25%`. -/
+example : (1 / 5 : ℚ) ^ 2 + (3 / 20 : ℚ) ^ 2 = (1 / 4 : ℚ) ^ 2 := by norm_num
+
+/-- Two-jump branch variance: `0.04 + 2 × 0.0225 = 0.085`. -/
+example : (1 / 5 : ℚ) ^ 2 + 2 * (3 / 20 : ℚ) ^ 2 = 17 / 200 := by norm_num
+
+/-- Each jump's log-average `μ_J + δ²/2 = -0.10 + 0.15²/2 = -0.08875`. -/
+example : (-1 / 10 : ℚ) + (3 / 20 : ℚ) ^ 2 / 2 = -71 / 800 := by norm_num
+
+#print axioms merton_compensator_identity
+#print axioms merton_branch_yield
+#print axioms merton_branch_forwards_average
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'merton_compensator_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'merton_branch_yield' depends on axioms: [propext, Classical.choice, Quot.sound]
+'merton_branch_forwards_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

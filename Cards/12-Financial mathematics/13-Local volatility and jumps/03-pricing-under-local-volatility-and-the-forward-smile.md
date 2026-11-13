@@ -6,11 +6,15 @@
 
 ## General Overview
 
-Acme shares trade at $100. Its one-year options are quoted at nine strikes, $80 to $120, each at its own implied volatility: the volatility that makes the Black-Scholes formula return that option's price. The quotes slope down, from 23.82% at $80 through 20.00% at $100 to 16.95% at $120. Six-month quotes slope more steeply, from 25.31% to 15.91%. The grid of quotes across strikes and expiries is the **volatility surface** ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
+Acme shares trade at $100. Its one-year options are quoted at nine strikes, $80 to $120, each at its own implied volatility: the volatility that makes the Black-Scholes formula return that option's price. The quotes slope down, from 23.82% at $80 through 20.00% at $100 to 16.95% at $120.
 
-A desk selling anything but a plain call or put needs a model of Acme that agrees with every quote. The simplest gives Acme one volatility per price level and date: a table, read off the surface by Dupire's formula ([Dupire local volatility](01-dupire-local-volatility.md)). From here on the table is called **local volatility**.
+Six-month quotes slope more steeply, from 25.31% to 15.91%. One expiry's curve of quotes against strike is its smile; its downward slope is the skew. The grid of quotes across strikes and expiries is the **volatility surface** ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
 
-Pricing with the table, by simulated paths and on a grid, brings the nine quotes back, the $100 call at $9.23 included. Then comes a **forward start**: a call whose strike is set in six months at whatever Acme trades at then, paid at one year. A market whose smile keeps its shape against Acme's price charges $6.24. Local volatility charges $6.08: the smile it predicts for six months ahead is flatter than today's and sits lower at the money.
+A desk selling an exotic, which is anything but a plain call or put (a vanilla), needs a model of Acme that agrees with every quote. The simplest gives Acme one volatility per price level and date: a table, read off the surface by Dupire's formula ([Dupire local volatility](01-dupire-local-volatility.md)). From here on the table is called **local volatility**.
+
+Pricing with the table, by simulated paths and on a grid, brings the nine quotes back, the $100 call at $9.23 included. Then comes a **forward start**: a call whose strike is set in six months at whatever Acme trades at then, paid at one year.
+
+A market whose smile keeps its shape against Acme's price charges $6.24. Local volatility charges $6.08: the smile it predicts for six months ahead is flatter than today's and sits lower at the money, where the strike equals Acme's price.
 
 **Local volatility reproduces every price that depends on one date; how two dates hang together is left to its one fixed rule, and when the skew is steepest at short expiries, as in equity markets, that rule makes the future smile too flat.**
 
@@ -34,7 +38,9 @@ Orange: today's six-month smile, read off the surface. Green: local volatility's
 
 ## The formula
 
-Notation first, in words. $S_t$ is Acme's price $t$ years from today; $r$ = 5% and $q$ = 2% are the riskless rate and dividend yield; $T$ is an expiry in years and $V_0$ a contract's price today. The local volatility $\sigma_{\text{loc}}(S, t)$ is one number for each price $S$ and date $t$. $dW_t$ is the random shock over a short step $dt$, a bell-curve draw with spread $\sqrt{dt}$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+Notation first, in words. $S_t$ is Acme's price $t$ years from today; $r$ = 5% and $q$ = 2% are the riskless rate and dividend yield; $T$ is an expiry in years and $V_0$ a contract's price today. The local volatility $\sigma_{\text{loc}}(S, t)$ is one number for each price $S$ and date $t$.
+
+$dW_t$ is the random shock over a short step $dt$, a bell-curve draw with spread $\sqrt{dt}$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
 
 $$dS_t = (r - q)\,S_t\,dt + \sigma_{\text{loc}}(S_t, t)\,S_t\,dW_t, \qquad V_0 = e^{-rT}\,\mathbb{E}\big[\text{payoff at } T\big]$$
 
@@ -66,7 +72,7 @@ $$\text{payoff} = \max\!\big(S_T - \kappa\,S_{t_1},\; 0\big), \qquad \text{at on
 | $w$, $x$ | total implied variance, implied volatility squared times $T$, at log-strike $x = \ln(K/100)$ | 0.04 at $x = 0$, one year | option prices rise |
 | $\theta$, $\varphi$, $\rho$, $\eta$ | the surface's dials: total variance at $100, tilt scale, lean, tilt size | $0.04T$; $\eta/\sqrt{\theta}$; −0.7; 0.5 | $\eta$ up, or $\rho$ more negative: steeper skew |
 
-The surface has the shape Gatheral and Jacquier call SSVI, centred on today's price so that the $100 strike sits at 20% at every expiry:
+The surface has the shape Gatheral and Jacquier call SSVI (surface stochastic-volatility-inspired), centred on today's price so that the $100 strike sits at 20% at every expiry:
 
 $$w(x, T) = \frac{\theta}{2}\Big(1 + \rho\,\varphi\,x + \sqrt{(\varphi x + \rho)^2 + 1 - \rho^2}\Big), \qquad \theta = 0.04\,T, \quad \varphi = \frac{\eta}{\sqrt{\theta}}$$
 
@@ -74,7 +80,7 @@ In words: a rounded V in log-strike, leaning toward low strikes, whose tilt shri
 
 ### When it holds
 
-- **A surface with no static arbitrage.** Local variance is a time slope of total variance over a density factor (`g` in the code); both must stay positive, or the table has negative or infinite entries. Across the whole grid the check finds the least density factor 0.254182 and the least time slope 0.017986 ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
+- **A surface with no static arbitrage**, so no fixed mix of its options locks in a riskless profit. Local variance is a time slope of total variance over a density factor (`g` in the code); both must stay positive, or the table has negative or infinite entries. Across the whole grid the check finds the least density factor 0.254182 and the least time slope 0.017986 ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
 - **A surface defined everywhere.** Dupire's formula needs slopes; between and beyond the quotes the surface is an interpolation choice, and the table inherits it.
 - **No jumps, for Gyöngy's average.** Gyöngy's proof needs a continuous price path with volatility kept away from zero and infinity. A jump model still gets a twin through Dupire's formula applied to its prices ([Merton jump-diffusion](04-merton-jump-diffusion.md)), but the table moves smoothly where the model gaps.
 - **One date at a time.** A contract paying on two dates depends on how the dates join, which no plain option tests.
@@ -86,7 +92,9 @@ In words: a rounded V in log-strike, leaning toward low strikes, whose tilt shri
 
 ### Step 0: plain options see one date at a time
 
-A call struck at $K$ pays according to where Acme ends on one date, so its price is the discounted average of that payoff over Acme's distribution on that date. Two models that give Acme the same distribution on every date give the same price to every plain option, however differently they join the dates. Local volatility is fitted to those one-date distributions, all of them, and joins the dates by the simplest rule available: volatility depends on price and date, nothing else.
+A call struck at $K$ pays according to where Acme ends on one date, so its price is the discounted average of that payoff over Acme's distribution on that date. Two models that give Acme the same distribution on every date give the same price to every plain option, however differently they join the dates.
+
+Local volatility is fitted to those one-date distributions, all of them, and joins the dates by the simplest rule available: volatility depends on price and date, nothing else.
 
 ### Step 1: price by simulating paths
 
@@ -96,7 +104,11 @@ $$\ln S_{t+dt} = \ln S_t + \big(r - q - \tfrac12\,\sigma_{\text{loc}}^2\big)\,dt
 
 This is the Euler–Maruyama scheme ([Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)) on the log; the $-\tfrac12\sigma_{\text{loc}}^2$ keeps the average price on the forward. The table is read between its 601 log-strikes by a straight line.
 
-The run takes 20,000 paths, 10,000 sets of draws and their mirror images, from the recurrence of [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md). A path and its mirror are not independent, so every standard error here comes from the 10,000 pair averages. Each set of draws also drives a path at flat 20%, whose call is known to be worth 9.227006; the simulation averages the difference of the two payoffs and adds 9.227006 back. That is a control variate ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)): at $100 it cuts the standard error from 0.0477 to 0.0262. The plain estimate is 9.2522. The flat paths alone price the forward start at 6.2112, standard error 0.0497, against their formula's 6.244873: the control is honest.
+The run takes 20,000 paths, 10,000 sets of draws and their mirror images, from the recurrence of [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md). A path and its mirror are not independent, so every standard error here comes from the 10,000 pair averages.
+
+Each set of draws also drives a path at flat 20%, whose call is known to be worth 9.227006; the simulation averages the difference of the two payoffs and adds 9.227006 back. That is a control variate ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)): at $100 it cuts the standard error from 0.0477 to 0.0262. The plain estimate is 9.2522.
+
+The flat paths alone price the forward start at 6.2112, standard error 0.0497, against their formula's 6.244873: the control is honest.
 
 ### Step 2: price on a grid, every strike at once
 
@@ -110,11 +122,15 @@ The grid, 601 log-strikes by 100 time steps, is marched by Crank–Nicolson ([Pr
 
 ### Step 3: why every plain option comes back
 
-The table was made by solving this equation for $\sigma_{\text{loc}}$ with the surface's prices put in for C. So the surface's prices satisfy it. The equation and its starting row fix one answer, so marching it returns the surface. The grid does: its largest gap is 0.001666 at six months, and its one-year $100 call is 9.227526 against the surface's 9.227006. Simulated paths obey the same equation, for the reason in Step 4, and return 9.2472 at $100, inside one standard error of 0.0262, and within four cents at every strike.
+The table was made by solving this equation for $\sigma_{\text{loc}}$ with the surface's prices put in for C. So the surface's prices satisfy it. The equation and its starting row fix one answer, so marching it returns the surface.
+
+The grid does: its largest gap is 0.001666 at six months, and its one-year $100 call is 9.227526 against the surface's 9.227006. Simulated paths obey the same equation, for the reason in Step 4, and return 9.2472 at $100, inside one standard error of 0.0262, and within four cents at every strike.
 
 ### Step 4: Gyöngy: every model without jumps has a local-volatility twin
 
-Take a model with no table: on the first day a coin fixes Acme's volatility for the year, 40% with chance 12%, otherwise 15%. Its calls are the chance-weighted Black-Scholes prices. Its twin can be found two ways sharing no arithmetic: Dupire's formula applied to those prices, or Gyöngy's average over the paths that end at each price. Both give 29.43% at $70, 17.08% at $100 and 23.33% at $140. Among paths ending at $70 the 40% world supplies a share of 0.4663; at $100, only 0.0486. A path ending near the middle almost always came from the calm world.
+Take a model with no table: on the first day a coin fixes Acme's volatility for the year, 40% with chance 12%, otherwise 15%. Its calls are the chance-weighted Black-Scholes prices. Its twin can be found two ways sharing no arithmetic: Dupire's formula applied to those prices, or Gyöngy's average over the paths that end at each price.
+
+Both give 29.43% at $70, 17.08% at $100 and 23.33% at $140. Among paths ending at $70 the 40% world supplies a share of 0.4663; at $100, only 0.0486. A path ending near the middle almost always came from the calm world.
 
 The twin prices every plain option as the coin-flip model does, yet it is a different model: a coin-flip path calm for six months stays calm, while the twin reads the table afresh at every step.
 
@@ -137,7 +153,7 @@ $$\partial_T C = \tfrac12\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,K^2\,\partial_{K
 The at-the-money forward start pays $\max(S_1 - S_{0.5}, 0)$ at one year. Its price depends on how Acme's prices at six months and at a year hang together, which Step 0 says no plain option fixes. Two roads under local volatility:
 
 - **Simulation.** The same paths, reading Acme at the halfway step: 6.0894, standard error 0.0179.
-- **Split at the reset.** Where Acme can stand at six months is read off the density the surface implies ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)); from each of 35 reset levels a grid march prices the second half-year's call; Simpson's rule sums the products: 6.083342.
+- **Split at the reset.** Where Acme can stand at six months is read off the density the surface implies ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)); from each of 35 reset levels a grid march prices the second half-year's call; Simpson's rule, a weighted sum over evenly spaced levels, totals the products: 6.083342.
 
 The roads agree within half a standard error. A market whose smile keeps its shape against Acme's price uses today's six-month smile for the second half-year, 20.00% at the money, whatever happened first: 6.244873, the price at a flat forward volatility of 20% ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md)).
 
@@ -156,7 +172,9 @@ xychart-beta
 
 Orange: the table 0.095 year out. Green: 0.495 year. Dark blue: 0.995 year. The early one is by far the steepest.
 
-The surface's skew is steepest at short expiries, so the table stores most of it in its early dates: at 0.095 year it falls from 29.33% at $90 to 13.66% at $110, at 0.995 year only from 22.97% to 17.40%. A six-month option bought today lives through the steep early rows. The same option starting in six months lives only through the shallow late ones. Its smile, the **forward smile**, is flatter: 21.10% at 90% and 18.31% at 110%, against today's 22.58% and 17.69%. Where skew comes from jumps or random volatility, it renews itself; local volatility spends it early.
+The surface's skew is steepest at short expiries, so the table stores most of it in its early dates: at 0.095 year it falls from 29.33% at $90 to 13.66% at $110, at 0.995 year only from 22.97% to 17.40%. A six-month option bought today lives through the steep early rows. The same option starting in six months lives only through the shallow late ones.
+
+Its smile, the **forward smile**, is flatter: 21.10% at 90% and 18.31% at 110%, against today's 22.58% and 17.69%. Where skew comes from jumps or random volatility, it renews itself; local volatility spends it early.
 
 ### Step 7: why the at-the-money forward start comes out cheap
 
@@ -201,7 +219,7 @@ A desk marking this contract in local volatility books it about 16 cents below o
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Implied volatility used as the table | $80 call 23.1694 (22.41%), $120 call 2.0924 (17.96%); right: 23.433377 (23.82%), 1.799746 (16.95%) | Implied volatility is roughly an average of local volatility between today's price and the strike, so the table must tilt harder than the quotes |
-| A table that knows only the date: the $100 column at every price | $80 call 22.7620 (19.99%), $120 call 2.7076 (19.99%) | With no price dimension the model is Black-Scholes with a term structure; the smile vanishes |
+| A table that knows only the date: the $100 column at every price | $80 call 22.7620 (19.99%), $120 call 2.7076 (19.99%) | With no price dimension the model is Black-Scholes with a term structure, a volatility that changes with the date only; the smile vanishes |
 | The one-month table held all year | $80 call 24.2418 (27.66%), $120 call 1.5204 (15.92%) | The early rows are the steepest; held for a year they overstate the skew |
 
 The code prints all three.
@@ -210,7 +228,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The code builds the table from the surface, then prices with it by **two roads that share nothing but the table**: 20,000 simulated paths with a flat-20% control, and Dupire's forward equation marched on a grid. The coin-flip twin also comes two ways, by Dupire's formula and by Gyöngy's average. Nothing imported knows an answer: the bell-curve area is its power series, the random numbers the Monte Carlo card's recurrence and Box–Muller, implied volatilities a bisection.
+The code builds the table from the surface, then prices with it by **two roads that share nothing but the table**: 20,000 simulated paths with a flat-20% control, and Dupire's forward equation marched on a grid. The coin-flip twin also comes two ways, by Dupire's formula and by Gyöngy's average. Nothing imported knows an answer: the bell-curve area is its power series, the random numbers the Monte Carlo card's recurrence and Box–Muller (which turns two random fractions into two bell-curve draws), implied volatilities a bisection.
 
 ### Python
 
@@ -631,6 +649,337 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line: both programs do the same arithmetic in the same order, down to the random numbers.
+
+### Lean
+
+Lean proves why plain prices cannot fix the forward start, and its price at one flat volatility, for every strike, expiry and reset date.
+
+- Suppose two models give Acme the same distribution on every date. Then they give the same price to every plain call, put and one-date payoff.
+- Take any strike fraction $\kappa > 0$. Then two ways of joining Acme's prices on the reset date and at expiry agree on each date, yet price the forward start differently.
+- Suppose $\sigma > 0$ is one flat volatility, with $0 < t_1 < T$, $S_0 > 0$ and $\kappa > 0$. Then the forward start is worth $S_0 e^{-q t_1} C_{\text{BS}}(1, \kappa, T - t_1, \sigma)$.
+- Take log-strike $x = 0$, the $100 strike. Then the surface's total implied variance is $0.04T$ at every expiry, so its volatility is 20%.
+
+The local-volatility table, both pricing roads, Gyöngy's twin, the flatter forward smile and every number are left to the Python and Rust checks.
+
+```lean
+-- Pricing with local volatility: two models that give the price the same law on every date give the same price to every plain call, put and one-date payoff, yet can price a forward start differently, and at one flat volatility the forward start is worth S₀ e^(-q t₁) C_BS(1, κ, T - t₁, σ).
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Probability.HasLaw
+import Mathlib.Probability.Independence.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open Real MeasureTheory ProbabilityTheory
+
+namespace LocalVolForwardSmile
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- The card's `C_BS(price, strike, years, volatility)`: the Black-Scholes call
+`s e^(-qτ) N(d₁) - k e^(-rτ) N(d₂)` with `d₁ = (ln(s/k) + (r - q + σ²/2) τ) / (σ√τ)` and
+`d₂ = d₁ - σ√τ`, at riskless rate `r` and dividend yield `q`. -/
+noncomputable def bsCall (r q s k τ σ : ℝ) : ℝ :=
+  let d₁ := (log (s / k) + (r - q + σ ^ 2 / 2) * τ) / (σ * √τ)
+  s * exp (-q * τ) * stdNormalCDF d₁ - k * exp (-r * τ) * stdNormalCDF (d₁ - σ * √τ)
+
+open Set in
+lemma gauss_Ioi_eq (c : ℝ) : (gaussianReal 0 1).real (Ioi c) = stdNormalCDF (-c) := by
+  have := nullSingletonClass_gaussianReal (μ := 0) (v := 1) one_ne_zero
+  rw [stdNormalCDF, cdf_eq_real]
+  have hm : (gaussianReal 0 1).map (fun x => -x) = gaussianReal 0 1 := by
+    rw [gaussianReal_map_neg]; simp
+  conv_rhs => rw [← hm]
+  rw [map_measureReal_apply (by fun_prop) measurableSet_Iic]
+  have : (fun x : ℝ => -x) ⁻¹' Iic (-c) = Ici c := by
+    ext x; simp
+  rw [this]
+  simp only [Measure.real]
+  rw [measure_congr Ioi_ae_eq_Ici]
+
+#print axioms gauss_Ioi_eq
+
+open Set in
+lemma pdf_tilt (b x : ℝ) :
+    gaussianPDFReal 0 1 x * exp (b * x) = exp (b ^ 2 / 2) * gaussianPDFReal b 1 x := by
+  simp only [gaussianPDFReal, NNReal.coe_one, mul_one]
+  rw [mul_assoc, ← exp_add, mul_left_comm, ← exp_add]
+  congr 2
+  ring
+
+#print axioms pdf_tilt
+
+open Set in
+lemma gauss_tilt (b c : ℝ) :
+    ∫ z in Ioi c, exp (b * z) ∂(gaussianReal 0 1) = exp (b ^ 2 / 2) * stdNormalCDF (b - c) := by
+  rw [← integral_indicator measurableSet_Ioi,
+    integral_gaussianReal_eq_integral_smul one_ne_zero]
+  have h1 : (fun x => gaussianPDFReal 0 1 x • (Ioi c).indicator (fun z => exp (b * z)) x)
+      = (Ioi c).indicator (fun x => exp (b ^ 2 / 2) * gaussianPDFReal b 1 x) := by
+    ext x
+    by_cases hx : x ∈ Ioi c
+    · simp [hx, pdf_tilt]
+    · simp [hx]
+  rw [h1, integral_indicator measurableSet_Ioi, integral_const_mul]
+  congr 1
+  have h2 := gaussianReal_apply_eq_integral b (v := 1) one_ne_zero (Ioi c)
+  have h3 : ∫ x in Ioi c, gaussianPDFReal b 1 x = (gaussianReal b 1).real (Ioi c) := by
+    rw [Measure.real, h2, ENNReal.toReal_ofReal]
+    exact setIntegral_nonneg measurableSet_Ioi (fun x _ => gaussianPDFReal_nonneg _ _ _)
+  rw [h3]
+  have hm : (gaussianReal 0 1).map (· + b) = gaussianReal b 1 := by
+    rw [gaussianReal_map_add_const]; simp
+  rw [← hm, map_measureReal_apply (by fun_prop) measurableSet_Ioi]
+  have : (· + b) ⁻¹' Ioi c = Ioi (c - b) := by
+    ext x; simp [sub_lt_iff_lt_add]
+  rw [this, gauss_Ioi_eq]
+  ring_nf
+
+#print axioms gauss_tilt
+
+open Set in
+lemma gauss_call (a b κ : ℝ) (hb : 0 < b) (hκ : 0 < κ) :
+    ∫ z, max (exp (a + b * z) - κ) 0 ∂(gaussianReal 0 1) =
+      exp (a + b ^ 2 / 2) * stdNormalCDF ((a - log κ) / b + b) -
+        κ * stdNormalCDF ((a - log κ) / b) := by
+  set c := (log κ - a) / b with hc
+  have hpt : (fun z => max (exp (a + b * z) - κ) 0)
+      = (Ioi c).indicator (fun z => exp a * exp (b * z) - κ) := by
+    ext z
+    by_cases hz : z ∈ Ioi c
+    · rw [indicator_of_mem hz, ← exp_add]
+      have : c * b < z * b := mul_lt_mul_of_pos_right hz hb
+      have hcb : c * b = log κ - a := by rw [hc]; field_simp
+      have : log κ < a + b * z := by linarith
+      have : κ < exp (a + b * z) := by
+        rw [← exp_log hκ]; exact exp_lt_exp.mpr this
+      rw [max_eq_left (by linarith)]
+    · rw [indicator_of_notMem hz]
+      simp only [mem_Ioi, not_lt] at hz
+      have : z * b ≤ c * b := mul_le_mul_of_nonneg_right hz hb.le
+      have hcb : c * b = log κ - a := by rw [hc]; field_simp
+      have : a + b * z ≤ log κ := by linarith
+      have : exp (a + b * z) ≤ κ := by
+        rw [← exp_log hκ]; exact exp_le_exp.mpr this
+      rw [max_eq_right (by linarith)]
+  rw [hpt, integral_indicator measurableSet_Ioi, integral_sub, integral_const_mul,
+    setIntegral_const, gauss_tilt, gauss_Ioi_eq]
+  · have e1 : b - c = (a - log κ) / b + b := by rw [hc]; field_simp; ring
+    have e2 : -c = (a - log κ) / b := by rw [hc]; ring
+    rw [e1, e2, exp_add, smul_eq_mul]
+    ring
+  · exact ((integrable_exp_mul_gaussianReal b).const_mul _).integrableOn
+  · exact integrableOn_const (by simp)
+
+#print axioms gauss_call
+
+/-- **Plain options see one date at a time** (Why it works, Step 0; the card's bold claim that
+local volatility reproduces every price that depends on one date). Take two pricing-world
+models of Acme, on possibly different probability spaces: `S t` and `S' t` are Acme's price on
+date `t` in each. If the two give Acme the same distribution on every date, then, however
+differently they join the dates, they give the same price `V₀ = e^(-rT) 𝔼[payoff at T]` to
+every plain call `max(S_T - K, 0)` and every plain put `max(K - S_T, 0)`, at every strike and
+expiry, and to every contract whose payoff depends on Acme's price on one date only. This is
+why a local-volatility table fitted to every one-date distribution (Gyöngy's twin) cannot miss
+a single vanilla. -/
+theorem same_one_date_laws_give_same_vanilla_prices
+    {Ω Ω' : Type*} [MeasurableSpace Ω] [MeasurableSpace Ω']
+    (μ : Measure Ω) (ν : Measure Ω') [IsProbabilityMeasure μ] [IsProbabilityMeasure ν]
+    (S : ℝ → Ω → ℝ) (S' : ℝ → Ω' → ℝ) (r : ℝ)
+    (hS : ∀ t, AEMeasurable (S t) μ) (hS' : ∀ t, AEMeasurable (S' t) ν)
+    (hlaw : ∀ t, μ.map (S t) = ν.map (S' t)) :
+    (∀ T K : ℝ,
+      exp (-r * T) * ∫ ω, max (S T ω - K) 0 ∂μ = exp (-r * T) * ∫ ω, max (S' T ω - K) 0 ∂ν ∧
+      exp (-r * T) * ∫ ω, max (K - S T ω) 0 ∂μ = exp (-r * T) * ∫ ω, max (K - S' T ω) 0 ∂ν) ∧
+    (∀ (T : ℝ) (f : ℝ → ℝ), Measurable f →
+      exp (-r * T) * ∫ ω, f (S T ω) ∂μ = exp (-r * T) * ∫ ω, f (S' T ω) ∂ν) := by
+  have key : ∀ (T : ℝ) (f : ℝ → ℝ), Measurable f →
+      ∫ ω, f (S T ω) ∂μ = ∫ ω, f (S' T ω) ∂ν := by
+    intro T f hf
+    rw [← integral_map (hS T) hf.aestronglyMeasurable, hlaw T,
+      integral_map (hS' T) hf.aestronglyMeasurable]
+  refine ⟨fun T K => ⟨?_, ?_⟩, fun T f hf => by rw [key T f hf]⟩
+  · rw [key T (fun x => max (x - K) 0) (by fun_prop)]
+  · rw [key T (fun x => max (K - x) 0) (by fun_prop)]
+
+/-- **How two dates hang together is left open** (Why it works, Steps 0 and 5; The usual
+mistake). Plain prices fix where Acme may stand on each date, one date at a time, and nothing
+about how the dates join. For every strike fraction `κ > 0`, there are two joint laws of
+Acme's prices `(S_{t₁}, S_T)` on the reset date and at expiry, both with positive prices, that
+give Acme the same distribution on the reset date and the same distribution at expiry (so the
+same price to every plain option on either date), yet different prices
+`e^(-rT) 𝔼[max(S_T - κ S_{t₁}, 0)]` to the forward start. -/
+theorem same_marginals_different_forward_start_price (r T κ : ℝ) (hκ : 0 < κ) :
+    ∃ μ ν : Measure (ℝ × ℝ), IsProbabilityMeasure μ ∧ IsProbabilityMeasure ν ∧
+      (∀ᵐ p ∂μ, 0 < p.1 ∧ 0 < p.2) ∧ (∀ᵐ p ∂ν, 0 < p.1 ∧ 0 < p.2) ∧
+      μ.map Prod.fst = ν.map Prod.fst ∧ μ.map Prod.snd = ν.map Prod.snd ∧
+      exp (-r * T) * ∫ p, max (p.2 - κ * p.1) 0 ∂μ ≠
+        exp (-r * T) * ∫ p, max (p.2 - κ * p.1) 0 ∂ν := by
+  let pμ : Measure (ℝ × ℝ) :=
+    (2⁻¹ : ENNReal) • (Measure.dirac ((1 : ℝ), κ) + Measure.dirac ((2 : ℝ), 3 * κ))
+  let pν : Measure (ℝ × ℝ) :=
+    (2⁻¹ : ENNReal) • (Measure.dirac ((1 : ℝ), 3 * κ) + Measure.dirac ((2 : ℝ), κ))
+  have hprob : ∀ x y : ℝ × ℝ,
+      IsProbabilityMeasure ((2⁻¹ : ENNReal) • (Measure.dirac x + Measure.dirac y)) := by
+    intro x y
+    constructor
+    simp only [Measure.smul_apply, Measure.add_apply, measure_univ, smul_eq_mul]
+    rw [one_add_one_eq_two, ENNReal.inv_mul_cancel (by norm_num) (by norm_num)]
+  have hpos : ∀ x y : ℝ × ℝ, 0 < x.1 → 0 < x.2 → 0 < y.1 → 0 < y.2 →
+      ∀ᵐ p ∂((2⁻¹ : ENNReal) • (Measure.dirac x + Measure.dirac y)), 0 < p.1 ∧ 0 < p.2 := by
+    intro x y hx1 hx2 hy1 hy2
+    refine Measure.ae_smul_measure ?_ _
+    rw [ae_add_measure_iff]
+    exact ⟨by rw [ae_dirac_eq]; exact ⟨hx1, hx2⟩, by rw [ae_dirac_eq]; exact ⟨hy1, hy2⟩⟩
+  have hint : ∀ x y : ℝ × ℝ,
+      ∫ p, max (p.2 - κ * p.1) 0 ∂((2⁻¹ : ENNReal) • (Measure.dirac x + Measure.dirac y)) =
+        2⁻¹ * (max (x.2 - κ * x.1) 0 + max (y.2 - κ * y.1) 0) := by
+    intro x y
+    rw [integral_smul_measure, integral_add_measure, integral_dirac, integral_dirac]
+    · simp
+    · exact integrable_dirac (by simp)
+    · exact integrable_dirac (by simp)
+  refine ⟨pμ, pν, hprob _ _, hprob _ _, hpos _ _ (by norm_num) hκ (by norm_num) (by linarith),
+    hpos _ _ (by norm_num) (by linarith) (by norm_num) hκ, ?_, ?_, ?_⟩
+  · simp only [pμ, pν]
+    rw [Measure.map_smul, Measure.map_smul, Measure.map_add _ _ measurable_fst,
+      Measure.map_add _ _ measurable_fst, Measure.map_dirac' measurable_fst,
+      Measure.map_dirac' measurable_fst, Measure.map_dirac' measurable_fst,
+      Measure.map_dirac' measurable_fst]
+    all_goals exact measurable_fst.aemeasurable
+  · simp only [pμ, pν]
+    rw [Measure.map_smul, Measure.map_smul, Measure.map_add _ _ measurable_snd,
+      Measure.map_add _ _ measurable_snd, Measure.map_dirac' measurable_snd,
+      Measure.map_dirac' measurable_snd, Measure.map_dirac' measurable_snd,
+      Measure.map_dirac' measurable_snd, add_comm (Measure.dirac κ)]
+    all_goals exact measurable_snd.aemeasurable
+  · simp only [pμ, pν]
+    rw [hint, hint]
+    have e1 : max (κ - κ * 1) 0 = 0 := by simp
+    have e2 : max (3 * κ - κ * 2) 0 = κ := by rw [max_eq_left] <;> linarith
+    have e3 : max (3 * κ - κ * 1) 0 = 2 * κ := by rw [max_eq_left] <;> linarith
+    have e4 : max (κ - κ * 2) 0 = 0 := by rw [max_eq_right]; linarith
+    simp only [e1, e2, e3, e4]
+    intro h
+    have := mul_left_cancel₀ (exp_pos (-r * T)).ne' h
+    linarith
+
+/-- **The forward start at one flat volatility** (The formula). In the Black-Scholes world with
+one flat volatility `σ > 0`, Acme starts at `S₀ > 0`, stands at
+`S_{t₁} = S₀ e^((r - q - σ²/2) t₁ + σ√t₁ Z₁)` on the reset date `t₁ > 0`, and at
+`S_T = S_{t₁} e^((r - q - σ²/2)(T - t₁) + σ√(T - t₁) Z₂)` at expiry `T > t₁`, with `Z₁`, `Z₂`
+independent standard bell-curve draws. The forward start pays `max(S_T - κ S_{t₁}, 0)` at `T`,
+its strike fixed on the reset date as the fraction `κ > 0` of Acme's price then. Its price
+`e^(-rT) 𝔼[payoff]` is `S₀ e^(-q t₁) C_BS(1, κ, T - t₁, σ)`: today's value of receiving
+`S_{t₁}` copies of a call on one dollar's worth of Acme struck at `κ` dollars. -/
+theorem forward_start_price_flat_vol
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (Z₁ Z₂ : Ω → ℝ) (S₀ r q σ t₁ T κ : ℝ)
+    (hS₀ : 0 < S₀) (hσ : 0 < σ) (ht₁ : 0 < t₁) (hT : t₁ < T) (hκ : 0 < κ)
+    (hZ₁ : HasLaw Z₁ (gaussianReal 0 1) P) (hZ₂ : HasLaw Z₂ (gaussianReal 0 1) P)
+    (hind : IndepFun Z₁ Z₂ P) :
+    let St₁ : Ω → ℝ := fun ω => S₀ * exp ((r - q - σ ^ 2 / 2) * t₁ + σ * √t₁ * Z₁ ω)
+    let ST : Ω → ℝ := fun ω =>
+      St₁ ω * exp ((r - q - σ ^ 2 / 2) * (T - t₁) + σ * √(T - t₁) * Z₂ ω)
+    exp (-r * T) * ∫ ω, max (ST ω - κ * St₁ ω) 0 ∂P =
+      S₀ * exp (-q * t₁) * bsCall r q 1 κ (T - t₁) σ := by
+  intro St₁ ST
+  have hZ₁m := hZ₁.aemeasurable
+  have hZ₂m := hZ₂.aemeasurable
+  set τ := T - t₁ with hτ
+  have hτpos : 0 < τ := by rw [hτ]; linarith
+  set a := (r - q - σ ^ 2 / 2) * τ with ha
+  set b := σ * √τ with hb
+  have hbpos : 0 < b := mul_pos hσ (Real.sqrt_pos.mpr hτpos)
+  set g : ℝ → ℝ := fun z => max (exp (a + b * z) - κ) 0 with hg
+  set f : ℝ → ℝ := fun z => S₀ * exp ((r - q - σ ^ 2 / 2) * t₁ + σ * √t₁ * z) with hf
+  have hSt : ∀ ω, St₁ ω = f (Z₁ ω) := fun ω => rfl
+  have hpt : ∀ ω, max (ST ω - κ * St₁ ω) 0 = f (Z₁ ω) * g (Z₂ ω) := by
+    intro ω
+    have hposS : 0 ≤ St₁ ω := by positivity
+    show max (St₁ ω * exp (a + b * Z₂ ω) - κ * St₁ ω) 0 = St₁ ω * max (exp (a + b * Z₂ ω) - κ) 0
+    rw [mul_max_of_nonneg _ _ hposS, mul_zero, mul_sub, mul_comm κ]
+  simp_rw [hpt]
+  have hfm : Measurable f := by rw [hf]; fun_prop
+  have hgm : Measurable g := by rw [hg]; fun_prop
+  have hmul : ∫ ω, f (Z₁ ω) * g (Z₂ ω) ∂P = P[f ∘ Z₁] * P[g ∘ Z₂] :=
+    IndepFun.integral_fun_mul_eq_mul_integral (hind.comp hfm hgm)
+      (hfm.comp_aemeasurable hZ₁m).aestronglyMeasurable
+      (hgm.comp_aemeasurable hZ₂m).aestronglyMeasurable
+  rw [hmul]
+  have hE2 : P[g ∘ Z₂] = ∫ z, g z ∂(gaussianReal 0 1) :=
+    hZ₂.integral_comp hgm.aestronglyMeasurable
+  have hE1 : P[f ∘ Z₁] = S₀ * exp ((r - q - σ ^ 2 / 2) * t₁) * exp ((σ * √t₁) ^ 2 / 2) := by
+    have hm := mgf_gaussianReal hZ₁ (σ * √t₁)
+    simp only [mgf, NNReal.coe_one, zero_mul, zero_add, one_mul] at hm
+    rw [← hm, ← integral_const_mul]
+    congr 1
+    ext ω
+    simp only [Function.comp, hf]
+    rw [exp_add]; ring
+  rw [hE1, hE2, hg, gauss_call a b κ hbpos hκ]
+  have hd : (a - log κ) / b = (log (1 / κ) + (r - q + σ ^ 2 / 2) * τ) / (σ * √τ) - σ * √τ := by
+    rw [one_div, log_inv, ha, hb]
+    have : √τ ≠ 0 := (Real.sqrt_pos.mpr hτpos).ne'
+    field_simp
+    rw [Real.sq_sqrt hτpos.le]
+    ring
+  have hd1 : (a - log κ) / b + b = (log (1 / κ) + (r - q + σ ^ 2 / 2) * τ) / (σ * √τ) := by
+    rw [hd, hb]; ring
+  simp only [bsCall]
+  rw [hd1, hd]
+  have hsq1 : (σ * √t₁) ^ 2 = σ ^ 2 * t₁ := by rw [mul_pow, Real.sq_sqrt ht₁.le]
+  have hsq2 : b ^ 2 = σ ^ 2 * τ := by rw [hb, mul_pow, Real.sq_sqrt hτpos.le]
+  have h1 : exp (-r * T) * exp ((r - q - σ ^ 2 / 2) * t₁) * exp ((σ * √t₁) ^ 2 / 2) =
+      exp (-q * t₁) * exp (-r * τ) := by
+    rw [← exp_add, ← exp_add, ← exp_add, hsq1, hτ]; congr 1; ring
+  have h2 : exp (-r * τ) * exp (a + b ^ 2 / 2) = exp (-q * τ) := by
+    rw [← exp_add, hsq2, ha]; congr 1; ring
+  linear_combination
+    (S₀ * (exp (a + b ^ 2 / 2) * stdNormalCDF ((log (1 / κ) + (r - q + σ ^ 2 / 2) * τ) / (σ * √τ)) -
+      κ * stdNormalCDF ((log (1 / κ) + (r - q + σ ^ 2 / 2) * τ) / (σ * √τ) - σ * √τ))) * h1 +
+    S₀ * exp (-q * t₁) * stdNormalCDF ((log (1 / κ) + (r - q + σ ^ 2 / 2) * τ) / (σ * √τ)) * h2
+
+/-! The card's surface, exactly. The SSVI total variance
+`w(x, T) = θ/2 (1 + ρ φ x + √((φ x + ρ)² + 1 - ρ²))` with `θ = 0.04 T`, `φ = η/√θ`, `ρ = -0.7`
+and `η = 0.5` is centred on today's price: at log-strike `x = 0` (the $100 strike) it is
+`0.04 T` at every expiry, so the $100 strike sits at 20% volatility at every expiry. -/
+
+/-- The card's SSVI total implied variance at log-strike `x` and expiry `T`. -/
+noncomputable def ssvi (ρ η x T : ℝ) : ℝ :=
+  let θ := (1 / 25 : ℝ) * T
+  let φ := η / √θ
+  θ / 2 * (1 + ρ * φ * x + √((φ * x + ρ) ^ 2 + 1 - ρ ^ 2))
+
+-- at the $100 strike the total variance is 0.04 T, whatever the expiry
+example (T : ℝ) : ssvi (-7 / 10) (1 / 2) 0 T = (1 / 25) * T := by
+  simp [ssvi]
+  ring
+
+-- one year: total variance 0.04, the square of 20%
+example : ssvi (-7 / 10) (1 / 2) 0 1 = (1 / 5) ^ 2 := by
+  simp [ssvi]
+  norm_num
+
+#print axioms same_one_date_laws_give_same_vanilla_prices
+#print axioms same_marginals_different_forward_start_price
+#print axioms forward_start_price_flat_vol
+
+end LocalVolForwardSmile
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LocalVolForwardSmile.gauss_Ioi_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalVolForwardSmile.pdf_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalVolForwardSmile.gauss_tilt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalVolForwardSmile.gauss_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalVolForwardSmile.same_one_date_laws_give_same_vanilla_prices' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalVolForwardSmile.same_marginals_different_forward_start_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalVolForwardSmile.forward_start_price_flat_vol' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

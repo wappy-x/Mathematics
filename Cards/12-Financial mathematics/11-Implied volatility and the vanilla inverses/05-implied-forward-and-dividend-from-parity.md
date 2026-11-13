@@ -27,7 +27,9 @@ xychart-beta
     line [21.92, 17.17, 12.41, 7.65, 2.90, -1.86, -6.62, -11.37, -16.13]
 ```
 
-The one line is the call's price minus the put's price at nine strikes from $80.00 to $120.00. It is straight. It falls by a little less than a dollar for each dollar of strike, because a dollar more of strike is a dollar more to pay in a year, worth a little less than a dollar today. It crosses zero between $100.00 and $105.00, at the strike where call and put cost the same. That crossing point is the forward, $103.05. Its drop per dollar of strike is the discount factor, the value today of a dollar paid in a year. One straight line, two numbers read off it: the forward and the rate.
+The one line is the call's price minus the put's price at nine strikes from $80.00 to $120.00. It is straight. It falls by a little less than a dollar for each dollar of strike, because a dollar more of strike is a dollar more to pay in a year, worth a little less than a dollar today.
+
+It crosses zero between $100.00 and $105.00, at the strike where call and put cost the same. That crossing point is the forward, $103.05. Its drop per dollar of strike is the discount factor, the value today of a dollar paid in a year. One straight line, two numbers read off it: the forward and the rate.
 
 ---
 
@@ -124,7 +126,11 @@ At two strikes, parity gives two equations:
 
 $$g_1 = D\,F - D\,K_1, \qquad g_2 = D\,F - D\,K_2$$
 
-Subtract the second from the first. The forward cancels and leaves $g_1 - g_2 = D\,(K_2 - K_1)$. The package behind that subtraction is the box: long a call and short a put at $K_1$, short a call and long a put at $K_2$. On expiry day it pays Acme's price less $K_1$, minus Acme's price less $K_2$: that is $K_2 - K_1$, and Acme's price drops out. On the house market the box pays 20.00 dollars for certain in a year and costs 12.409219 + 6.615369 dollars today, so the discount factor is 0.951229 and the rate, $-\ln D / T$, is 5.00%. Put $D$ back into the first equation and the forward comes out as before, $103.045453$.
+Subtract the second from the first. The forward cancels and leaves $g_1 - g_2 = D\,(K_2 - K_1)$.
+
+The package behind that subtraction is the box: long a call and short a put at $K_1$, short a call and long a put at $K_2$. Long means bought and held; short means sold. On expiry day it pays Acme's price less $K_1$, minus Acme's price less $K_2$: that is $K_2 - K_1$, and Acme's price drops out.
+
+On the house market the box pays 20.00 dollars for certain in a year and costs 12.409219 + 6.615369 dollars today, so the discount factor is 0.951229 and the rate, $-\ln D / T$, is 5.00%. Put $D$ back into the first equation and the forward comes out as before, $103.045453$.
 
 ### Step 5: how a price error travels to the yield
 
@@ -180,7 +186,9 @@ Right answers: forward $103.045453, yield 2.00%.
 
 ### Bid, ask and crossed quotes
 
-Real screens show two prices per option: the **bid**, what a buyer will pay, and the **ask**, what a seller wants. Say the call is $9.18 bid, $9.28 ask, and the put $6.28 bid, $6.38 ask. Selling a forward built from options means selling the call at its bid and buying the put at its ask; buying one means the call's ask and the put's bid. The forward then sits somewhere from $102.943559 to $103.153813, and the yield from 1.8949% to 2.0989%. A dime of spread on each leg costs about a tenth of a point of yield at either end.
+Real screens show two prices per option: the **bid**, what a buyer will pay, and the **ask**, what a seller wants. Say the call is $9.18 bid, $9.28 ask, and the put $6.28 bid, $6.38 ask. Selling a forward built from options means selling the call at its bid and buying the put at its ask; buying one means the call's ask and the put's bid.
+
+The forward then sits somewhere from $102.943559 to $103.153813, and the yield from 1.8949% to 2.0989%. A dime of spread on each leg costs about a tenth of a point of yield at either end.
 
 A **crossed** quote has its bid above its ask, which cannot be a live market: someone could buy at the ask and sell at the bid at once. Put the put at $6.45 bid and $6.25 ask and the band turns inside out: the low end, $103.080224, sits above the high end, $102.975097. A band whose ends swap is the signal to throw the quote away rather than average it.
 
@@ -198,7 +206,11 @@ xychart-beta
     line [2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00]
 ```
 
-The jagged line is the yield each strike implies on its own, with the rate given. The flat line is the true 2.00%. The worst single strike is off by 0.0523 percentage point; the average of the nine is 1.9904%, much closer. Fitting a straight line through all nine gaps, with the rate not given, returns a forward of $103.057010 and a carry of 3.0112%, both close. The rate and yield it returns separately, 5.0553% and 2.0441%, are each further off than the carry. The forward is pinned tightly by the quotes; splitting it into rate and dividend is the fragile step. Fit only two strikes $10.00 apart, $95.00 and $105.00, and the rate comes out at 6.0273%.
+The jagged line is the yield each strike implies on its own, with the rate given. The flat line is the true 2.00%. The worst single strike is off by 0.0523 percentage point; the average of the nine is 1.9904%, much closer.
+
+Fitting a straight line through all nine gaps, with the rate not given, returns a forward of $103.057010 and a carry of 3.0112%, both close. The rate and yield it returns separately, 5.0553% and 2.0441%, are each further off than the carry. The forward is pinned tightly by the quotes; splitting it into rate and dividend is the fragile step.
+
+Fit only two strikes $10.00 apart, $95.00 and $105.00, and the rate comes out at 6.0273%.
 
 ---
 
@@ -597,6 +609,118 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line.
+
+### Lean
+
+Lean proves that parity, run backwards, gives the forward, the yield and the rate, for any prices that obey it.
+
+- **One strike, rate given.** Suppose $C - P = D\,(F - K)$ and $F = S\,e^{(r-q)T}$, with $S$ and $T$ positive. Then $F = K + (C - P)\,e^{rT}$ and $q = r - \ln(F/S)/T$.
+- **One answer.** Take $S$ and $T$ positive, and $C - P$ above $-K\,D$. Then exactly one forward $F$ and one yield $q$ make parity and cash and carry both hold.
+- **The box.** Take $T$ positive and strikes $K_1 < K_2$, with both gaps $g_1$ and $g_2$ obeying parity for one forward $F$. Then $D = (g_1 - g_2)/(K_2 - K_1)$, $r = -\ln D/T$ and $F = K_1 + g_1/D$.
+
+The worked numbers, how price errors travel to the yield, and the noisy many-strike fits are left to the Python and Rust checks.
+
+```lean
+-- Implied forward and dividend from parity: put-call parity solved backwards gives the forward from one call-put pair, the dividend yield from the forward, a unique answer whenever the put is cheaper than the call plus the discounted strike, and the rate from two strikes.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+open Real
+
+/-- One strike, rate given. If the call and put at strike `K` obey put-call parity
+`C - P = e^(-rT) (F - K)` and the forward obeys cash and carry `F = S e^((r-q)T)`,
+with a positive share price and a positive time to expiry, then the forward is
+`F = K + (C - P) e^(rT)` and the dividend yield is `q = r - ln(F/S)/T`. -/
+theorem implied_forward_and_yield_from_parity
+    (S K C P r q T F : ℝ) (hS : 0 < S) (hT : 0 < T)
+    (hparity : C - P = exp (-r * T) * (F - K))
+    (hcarry : F = S * exp ((r - q) * T)) :
+    F = K + (C - P) * exp (r * T) ∧ q = r - log (F / S) / T := by
+  have hE : exp (-r * T) * exp (r * T) = 1 := by
+    rw [← Real.exp_add]; simp
+  refine ⟨?_, ?_⟩
+  · rw [hparity]
+    have : exp (-r * T) * (F - K) * exp (r * T) = (F - K) * (exp (-r * T) * exp (r * T)) := by ring
+    rw [this, hE]; ring
+  · have hFS : F / S = exp ((r - q) * T) := by
+      rw [hcarry]; field_simp
+    rw [hFS, Real.log_exp]
+    field_simp
+    ring
+
+/-- An answer exists and it is the only one. When the put costs less than the call
+plus the strike's value today, `C - P > -K e^(-rT)`, there is exactly one forward `F`
+and one dividend yield `q` that make put-call parity and cash and carry both hold. -/
+theorem implied_forward_and_yield_exists_unique
+    (S K C P r T : ℝ) (hS : 0 < S) (hT : 0 < T)
+    (hnoarb : -K * exp (-r * T) < C - P) :
+    ∃! Fq : ℝ × ℝ, C - P = exp (-r * T) * (Fq.1 - K) ∧
+      Fq.1 = S * exp ((r - Fq.2) * T) := by
+  have hE : exp (-r * T) * exp (r * T) = 1 := by
+    rw [← Real.exp_add]; simp
+  have hEpos : 0 < exp (r * T) := Real.exp_pos _
+  set F0 := K + (C - P) * exp (r * T) with hF0
+  have hF0pos : 0 < F0 := by
+    have h1 : -K * exp (-r * T) * exp (r * T) < (C - P) * exp (r * T) :=
+      mul_lt_mul_of_pos_right hnoarb hEpos
+    have h2 : -K * exp (-r * T) * exp (r * T) = -K := by
+      rw [mul_assoc, hE]; ring
+    rw [h2] at h1
+    rw [hF0]; linarith
+  refine ⟨(F0, r - log (F0 / S) / T), ⟨?_, ?_⟩, ?_⟩
+  · simp only
+    rw [hF0]
+    have : exp (-r * T) * (K + (C - P) * exp (r * T) - K)
+        = (C - P) * (exp (-r * T) * exp (r * T)) := by ring
+    rw [this, hE]; ring
+  · simp only
+    have : (r - (r - log (F0 / S) / T)) * T = log (F0 / S) := by
+      field_simp; ring
+    rw [this, Real.exp_log (div_pos hF0pos hS)]
+    field_simp
+  · rintro ⟨F, q⟩ ⟨hpar, hcar⟩
+    simp only at hpar hcar
+    obtain ⟨h1, h2⟩ := implied_forward_and_yield_from_parity S K C P r q T F hS hT hpar hcar
+    have hF : F = F0 := by rw [h1]
+    subst hF
+    rw [Prod.mk.injEq]
+    exact ⟨rfl, h2⟩
+
+/-- Two strikes, no rate given: the box. If the call-minus-put gaps at strikes
+`K₁ < K₂` both obey parity, `g₁ = e^(-rT)(F - K₁)` and `g₂ = e^(-rT)(F - K₂)`, then the
+discount factor is `D = (g₁ - g₂)/(K₂ - K₁)`, the rate is `r = -ln D / T`, and the
+forward is `F = K₁ + g₁ / D`. -/
+theorem implied_rate_and_forward_from_box
+    (K₁ K₂ g₁ g₂ r T F : ℝ) (hT : 0 < T) (hK : K₁ < K₂)
+    (h₁ : g₁ = exp (-r * T) * (F - K₁))
+    (h₂ : g₂ = exp (-r * T) * (F - K₂)) :
+    exp (-r * T) = (g₁ - g₂) / (K₂ - K₁) ∧
+      r = -log ((g₁ - g₂) / (K₂ - K₁)) / T ∧
+      F = K₁ + g₁ / ((g₁ - g₂) / (K₂ - K₁)) := by
+  have hEpos : 0 < exp (-r * T) := Real.exp_pos _
+  have hKpos : 0 < K₂ - K₁ := sub_pos.mpr hK
+  have hD : exp (-r * T) = (g₁ - g₂) / (K₂ - K₁) := by
+    rw [h₁, h₂]
+    field_simp
+    ring
+  refine ⟨hD, ?_, ?_⟩
+  · rw [← hD, Real.log_exp]
+    field_simp
+  · rw [← hD, h₁]
+    field_simp
+    ring
+
+#print axioms implied_forward_and_yield_from_parity
+#print axioms implied_forward_and_yield_exists_unique
+#print axioms implied_rate_and_forward_from_box
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'implied_forward_and_yield_from_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'implied_forward_and_yield_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'implied_rate_and_forward_from_box' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

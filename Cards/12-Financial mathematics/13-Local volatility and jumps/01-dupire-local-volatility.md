@@ -55,7 +55,7 @@ The density: undo one expiry's worth of discounting on the bend and the chance p
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $S$, $S_t$, $x$ | Acme's price today; its price at a later date $t$; $x$ is any price Acme might have on a later date | $100 | — |
-| $K$, $m$ | strike, and the price level where local volatility is read; $m$ is the strike with the forward's growth taken out, $K e^{-(r-q)T}$ | $100 and $110 | reads the surface further right |
+| $K$, $m$ | strike, and the price level where local volatility is read; $m$ is the strike with the forward price's growth taken out, $K e^{-(r-q)T}$; the forward price, $S e^{(r-q)T}$, is the price agreed today to buy Acme at expiry ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)) | $100 and $110 | reads the surface further right |
 | $T$, $t$ | expiry in years, and the date being read; a date along the way | 1 and 0.5 | — |
 | $C$ | today's price of the call at strike $K$ and expiry $T$ | 9.227006 at (100, 1); 2.585913 at (110, 0.5) | — |
 | $C_T$ | calendar slope: extra price per extra year of expiry | 5.089319 at (100, 1) | local volatility rises |
@@ -113,7 +113,11 @@ Differentiating in strike, as on the butterfly card: $C_K = -e^{-rT}\int_K^\inft
 
 ### Step 3: differentiate in expiry, and only the strike survives
 
-A later expiry changes the price three ways: more discounting, the density spreading, the density drifting. Discounting gives $-rC$. For the spreading term, integrate by parts twice against the payoff. Above the strike the payoff is a straight line with no bend, so everything cancels except the contribution at the strike itself: $\tfrac12\,\sigma_{\text{loc}}^2(K, T)\,K^2\,p(K, T)$, discounted. That is Step 0 as algebra. The drift term, integrated by parts once, gives $(r - q)(C - K\,C_K)$. Add the three, replace the density by $e^{rT}C_{KK}$, and Dupire's forward equation appears; its $-q\,C$ is the $-rC$ of discounting plus $+(r - q)C$ from the drift.
+A later expiry changes the price three ways: more discounting, the density spreading, the density drifting. Discounting gives $-rC$.
+
+For the spreading term, integrate by parts twice against the payoff. Above the strike the payoff is a straight line with no bend, so everything cancels except the contribution at the strike itself: $\tfrac12\,\sigma_{\text{loc}}^2(K, T)\,K^2\,p(K, T)$, discounted. That is Step 0 as algebra.
+
+The drift term, integrated by parts once, gives $(r - q)(C - K\,C_K)$. Add the three, replace the density by $e^{rT}C_{KK}$, and Dupire's forward equation appears; its $-q\,C$ is the $-rC$ of discounting plus $+(r - q)C$ from the drift.
 
 <details>
 <summary>Detailed proof: from the density's equation to Dupire's</summary>
@@ -175,7 +179,7 @@ If the true volatility is itself random, Gyöngy proved in 1986 that a diffusion
 
 </details>
 
-A second road to the forward equation applies Itô's lemma directly to the kinked payoff (Tanaka's formula) and meets the same strike term. The forward equation as a partial differential equation, solved properly, is Dupire's equation.
+A second road to the forward equation applies [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md), the chain rule for random paths, directly to the kinked payoff (Tanaka's formula) and meets the same strike term. The forward equation as a partial differential equation, solved properly, is Dupire's equation.
 
 ---
 
@@ -228,7 +232,11 @@ Correct answer at (100, 1): 0.2000, read with the closed-form slopes.
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads to the local volatility at (100, 1) and (110, 0.5). Road 1 reads the slopes off a grid of house prices by differences. Road 2 uses the house formula's closed-form slopes. Road 3 uses no bell curve: it marches Dupire's forward equation from the payoff, with 20% at every price and date, across 1,201 log-spaced strikes and 400 steps a year, then reads the local volatility back off the marched prices. Its prices, 9.226833 and 2.585736, miss the formula's 9.227006 and 2.585913 by the marching grid's error. That gap is the real test: the read-back uses the march's own grid, so it agrees to six places by design. A second case reads the sloping volatility of the displaced diffusion and compares it with the known answer. The bell-curve area is Marsaglia's series and the tridiagonal solve is the Thomas algorithm, both written out.
+Three independent roads to the local volatility at (100, 1) and (110, 0.5). Road 1 reads the slopes off a grid of house prices by differences. Road 2 uses the house formula's closed-form slopes. Road 3 uses no bell curve: it marches Dupire's forward equation from the payoff, with 20% at every price and date, across 1,201 log-spaced strikes and 400 steps a year, then reads the local volatility back off the marched prices.
+
+Its prices, 9.226833 and 2.585736, miss the formula's 9.227006 and 2.585913 by the marching grid's error. That gap is the real test: the read-back uses the march's own grid, so it agrees to six places by design.
+
+A second case reads the sloping volatility of the displaced diffusion and compares it with the known answer. The bell-curve area is Marsaglia's series and the tridiagonal solve is the Thomas algorithm, both written out.
 
 ### Python
 
@@ -649,6 +657,137 @@ ALL CHECKS PASS
 
 The two outputs match line for line, including the rounding noise at the edge.
 
+### Lean
+
+Lean proves the algebra of Steps 4, 5 and 6, at any one strike and expiry, for any rate and dividend yield.
+
+- Suppose the call prices obey Dupire's forward equation at a positive strike, and the bend there is positive. Then the local variance is the formula at the top of the card.
+- Suppose the bend is positive and the numerator is not negative, so the butterfly and calendar tests pass. Then exactly one local volatility of zero or more fits the forward equation.
+- Take the house formula at any volatility $\sigma$, with a positive price, strike and expiry. Then Step 6's closed-form slopes, put into the formula, give exactly $\sigma^2$.
+
+The grid readings, the marched forward equation, the sloping second case and every number are left to the Python and Rust checks.
+
+```lean
+-- Dupire local volatility: Dupire's forward equation fixes the local variance as calendar slope plus carry terms over half the strike squared times the bend, a surface with positive bend and non-negative numerator has exactly one local volatility, and the flat Black-Scholes surface hands back its own volatility.
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+
+open Real ProbabilityTheory
+
+/-- Shifting the argument of the standard normal density multiplies it by an exponential. -/
+lemma gaussianPDFReal_std_shift (x y : ℝ) :
+    gaussianPDFReal 0 1 y = gaussianPDFReal 0 1 x * Real.exp ((x ^ 2 - y ^ 2) / 2) := by
+  simp only [gaussianPDFReal, mul_assoc, ← Real.exp_add]
+  congr 2
+  push_cast
+  ring
+
+#print axioms gaussianPDFReal_std_shift
+
+/-- Dupire's formula. Write `C K T` for the call price at strike `K` and expiry `T`,
+`C_T` for its slope in expiry, `C_K` for its slope in strike and `C_KK` for its bend in strike.
+If the call prices obey Dupire's forward equation
+`C_T = ½ σ_loc² K² C_KK − (r − q) K C_K − q C` at a positive strike where the bend is
+positive, then the local variance there is read straight off the prices:
+`σ_loc² = (C_T + (r − q) K C_K + q C) / (½ K² C_KK)`. -/
+theorem dupire_local_variance_formula (C σloc : ℝ → ℝ → ℝ) (r q K T : ℝ) (hK : 0 < K)
+    (hbend : 0 < deriv (deriv fun k => C k T) K)
+    (hforward : deriv (fun t => C K t) T =
+      (1 / 2) * σloc K T ^ 2 * K ^ 2 * deriv (deriv fun k => C k T) K
+        - (r - q) * K * deriv (fun k => C k T) K - q * C K T) :
+    σloc K T ^ 2 =
+      (deriv (fun t => C K t) T + (r - q) * K * deriv (fun k => C k T) K + q * C K T) /
+        ((1 / 2) * K ^ 2 * deriv (deriv fun k => C k T) K) := by
+  rw [eq_div_iff (by positivity), hforward]
+  ring
+
+/-- Exists and unique: where the butterfly test passes strictly (positive bend) and the
+calendar test passes (the numerator `C_T + (r − q) K C_K + q C` is not negative), there is
+exactly one non-negative local volatility that makes the call prices obey Dupire's forward
+equation at that strike and expiry. -/
+theorem dupire_local_vol_exists_unique (C : ℝ → ℝ → ℝ) (r q K T : ℝ) (hK : 0 < K)
+    (hbutterfly : 0 < deriv (deriv fun k => C k T) K)
+    (hcalendar : 0 ≤ deriv (fun t => C K t) T + (r - q) * K * deriv (fun k => C k T) K
+      + q * C K T) :
+    ∃! s : ℝ, 0 ≤ s ∧ deriv (fun t => C K t) T =
+      (1 / 2) * s ^ 2 * K ^ 2 * deriv (deriv fun k => C k T) K
+        - (r - q) * K * deriv (fun k => C k T) K - q * C K T := by
+  set D := deriv (deriv fun k => C k T) K with hD
+  set A := deriv (fun t => C K t) T + (r - q) * K * deriv (fun k => C k T) K + q * C K T
+    with hA
+  have hden : 0 < (1 / 2) * K ^ 2 * D := by positivity
+  refine ⟨Real.sqrt (A / ((1 / 2) * K ^ 2 * D)), ⟨Real.sqrt_nonneg _, ?_⟩, ?_⟩
+  · have hsq : Real.sqrt (A / ((1 / 2) * K ^ 2 * D)) ^ 2 = A / ((1 / 2) * K ^ 2 * D) :=
+      Real.sq_sqrt (div_nonneg hcalendar hden.le)
+    have h1 : (1 / 2) * Real.sqrt (A / ((1 / 2) * K ^ 2 * D)) ^ 2 * K ^ 2 * D
+        = Real.sqrt (A / ((1 / 2) * K ^ 2 * D)) ^ 2 * ((1 / 2) * K ^ 2 * D) := by ring
+    rw [h1, hsq, div_mul_cancel₀ _ hden.ne', hA]
+    ring
+  · rintro s ⟨hs, heq⟩
+    have hs2 : s ^ 2 = A / ((1 / 2) * K ^ 2 * D) := by
+      rw [eq_div_iff hden.ne', hA, heq]
+      ring
+    rw [← hs2, Real.sqrt_sq hs]
+
+/-- A flat surface hands back its own volatility. For the Black-Scholes call at volatility
+`σ` (spot `S`, rate `r`, dividend yield `q`, strike `K`, expiry `T`), plug the house
+formula's closed-form slopes `C_T`, `C_K`, `C_KK` into Dupire's formula: the carry terms
+cancel and the ratio is exactly `σ²`. Here `N` is the standard normal distribution function
+and `φ` the standard normal density. -/
+theorem dupire_flat_surface_returns_sigma (S K r q σ T : ℝ)
+    (hS : 0 < S) (hK : 0 < K) (hσ : 0 < σ) (hT : 0 < T) :
+    let N : ℝ → ℝ := fun x => cdf (gaussianReal 0 1) x
+    let φ : ℝ → ℝ := gaussianPDFReal 0 1
+    let d₁ := (Real.log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * Real.sqrt T)
+    let d₂ := d₁ - σ * Real.sqrt T
+    let C := S * Real.exp (-q * T) * N d₁ - K * Real.exp (-r * T) * N d₂
+    let C_T := S * Real.exp (-q * T) * φ d₁ * σ / (2 * Real.sqrt T)
+      - q * S * Real.exp (-q * T) * N d₁ + r * K * Real.exp (-r * T) * N d₂
+    let C_K := -Real.exp (-r * T) * N d₂
+    let C_KK := Real.exp (-r * T) * φ d₂ / (K * σ * Real.sqrt T)
+    (C_T + (r - q) * K * C_K + q * C) / ((1 / 2) * K ^ 2 * C_KK) = σ ^ 2 := by
+  intro N φ d₁ d₂ C C_T C_K C_KK
+  have hsT : 0 < Real.sqrt T := Real.sqrt_pos.mpr hT
+  have hσsT : σ * Real.sqrt T ≠ 0 := (mul_pos hσ hsT).ne'
+  have hsq : Real.sqrt T ^ 2 = T := Real.sq_sqrt hT.le
+  have hd : d₁ * (σ * Real.sqrt T) = Real.log (S / K) + (r - q + σ ^ 2 / 2) * T :=
+    div_mul_cancel₀ _ hσsT
+  have hdiff : (d₁ ^ 2 - d₂ ^ 2) / 2 = Real.log (S / K) + (r - q) * T := by
+    have : d₁ ^ 2 - d₂ ^ 2 = 2 * (d₁ * (σ * Real.sqrt T)) - σ ^ 2 * Real.sqrt T ^ 2 := by
+      simp only [d₂]; ring
+    rw [this, hd, hsq]; ring
+  have key : φ d₂ = φ d₁ * (S / K * Real.exp ((r - q) * T)) := by
+    simp only [φ]
+    rw [gaussianPDFReal_std_shift d₁ d₂, hdiff, Real.exp_add, Real.exp_log (div_pos hS hK)]
+  have hφ : 0 < φ d₁ := gaussianPDFReal_pos 0 1 d₁ one_ne_zero
+  have hnum : C_T + (r - q) * K * C_K + q * C
+      = S * Real.exp (-q * T) * φ d₁ * σ / (2 * Real.sqrt T) := by
+    simp only [C_T, C_K, C]; ring
+  have hq : Real.exp (-q * T) = Real.exp (-r * T) * Real.exp ((r - q) * T) := by
+    rw [← Real.exp_add]; ring_nf
+  rw [hnum]
+  simp only [C_KK]
+  rw [key, hq]
+  have he1 : 0 < Real.exp (-r * T) := Real.exp_pos _
+  have he2 : 0 < Real.exp ((r - q) * T) := Real.exp_pos _
+  field_simp
+
+#print axioms dupire_local_variance_formula
+#print axioms dupire_local_vol_exists_unique
+#print axioms dupire_flat_surface_returns_sigma
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gaussianPDFReal_std_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dupire_local_variance_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dupire_local_vol_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dupire_flat_surface_returns_sigma' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -673,7 +812,7 @@ The two outputs match line for line, including the rounding noise at the edge.
 
 ## Where you meet it in real life
 
-- **Equity exotics desks.** Barriers, cliquets and autocallables on indices are often priced in a local-volatility model, or one with a local-volatility part, fitted to the vanilla surface, so it reprices every vanilla in the hedge: [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md).
+- **Equity exotics desks.** Barriers, cliquets and autocallables on indices, contracts whose payoff depends on the path of the index and not only its final level, are often priced in a local-volatility model, or one with a local-volatility part, fitted to the vanilla surface, so it reprices every vanilla in the hedge: [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md).
 - **Currency barrier desks.** Touches and knock-outs carry a local-volatility component for the same reason: [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
 - **Calibration engines.** One forward solve prices every strike and expiry together; the backward equation, solved from each payoff back to today, needs one solve per option: Dupire's equation.
 - **Jump risk.** A surface steepened by crash fear, read through Dupire, fits the vanillas but prices the crash as a slide: [Merton jump-diffusion](04-merton-jump-diffusion.md) and [Greeks under jumps](05-merton-greeks-hedge-error-and-calibration.md).
@@ -702,7 +841,7 @@ This card reads a volatility off call prices; desks quote implied volatilities i
 
 ## Sources
 
-Verified 2026-09-24: every DOI below matches its title and first author at Crossref, and each publisher page names its paper or book.
+Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Dupire, Bruno. "Pricing with a Smile." *Risk* 7, no. 1 (January 1994): 18–20. [Publisher page](https://www.risk.net/derivatives/equity-derivatives/1500211/pricing-with-a-smile). The formula and the forward equation in strike and expiry.
 - Gyöngy, I. "Mimicking the One-Dimensional Marginal Distributions of Processes Having an Itô Differential." *Probability Theory and Related Fields* 71, no. 4 (1986): 501–516. [doi:10.1007/BF00699039](https://doi.org/10.1007/BF00699039). Local variance as the conditional average of a random variance.

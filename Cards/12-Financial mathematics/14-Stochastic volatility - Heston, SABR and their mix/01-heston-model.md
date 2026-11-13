@@ -10,7 +10,9 @@ Acme shares trade at $100. A one-year call struck at $100, the right to buy one 
 
 Suppose instead the year's variance is unknown. Three kinds of year are equally likely, with average variance 0.02, 0.04 and 0.06. Price the call in each with Black-Scholes: $7.01, $9.23 and $10.93, which average to $9.06. The variance still averages 0.04, yet the price fell: the stormy year adds less than the calm year takes away.
 
-Steven Heston's 1993 model makes this continuous. Picture the variance as a dog on an elastic lead tied to a post: it wanders at random, and the further it strays, the harder the lead pulls it back. From here on the post is the **long-run variance**, the pull is **mean reversion**, and the size of the wandering is the **volatility of volatility** (vol of vol). With variance 0.04 today and in the long run, pull speed 2, vol of vol 0.3, and the share's moves independent of the variance's, 100,000 simulated years price the call at $9.05.
+Steven Heston's 1993 model makes this continuous. Picture the variance as a dog on an elastic lead tied to a post: it wanders at random, and the further it strays, the harder the lead pulls it back. From here on the post is the **long-run variance**, the pull is **mean reversion**, and the size of the wandering is the **volatility of volatility** (vol of vol).
+
+With variance 0.04 today and in the long run, pull speed 2, vol of vol 0.3, and the share's moves independent of the variance's, 100,000 simulated years price the call at $9.05.
 
 Now let the variance tend to rise when Acme falls, with correlation −0.7. Read each strike's price back as the Black-Scholes volatility that reproduces it (its implied volatility). The curve these volatilities trace across strikes, the **smile**, tilts: 24.49% at a $70 strike, 15.99% at $130.
 
@@ -37,7 +39,9 @@ The orange curve is correlation 0: a shallow smile, both ends above the middle. 
 
 ## The formula
 
-Notation first. Over a short step of length dt, a d in front of a quantity is its change over the step. $W^1_t$ and $W^2_t$ are Brownian motions: each step adds an independent normal shove with mean zero and variance dt. Two shoves have correlation ρ when their product averages ρ dt. The first line is the geometric Brownian motion of Black-Scholes ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)) with its fixed variance replaced by a moving one. Both lines describe the pricing world, where Acme grows on average at the riskless rate less its dividend yield.
+Notation first. Over a short step of length dt, a d in front of a quantity is its change over the step. $W^1_t$ and $W^2_t$ are Brownian motions: each step adds an independent normal shove with mean zero and variance dt. Two shoves have correlation ρ when their product averages ρ dt.
+
+The first line is the geometric Brownian motion of Black-Scholes ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)) with its fixed variance replaced by a moving one. Both lines describe the pricing world, where Acme grows on average at the riskless rate less its dividend yield.
 
 $$dS_t = (r - q)\,S_t\,dt + \sqrt{v_t}\,S_t\,dW^1_t$$
 
@@ -72,12 +76,13 @@ $$2\kappa\theta \;\ge\; \xi^2$$
 | $\rho$ | correlation of the two shakes | 0, then −0.7 | tilts: negative lifts low strikes |
 | $W^1_t$, $W^2_t$, $W^\perp_t$ | the Brownian motions driving Acme and its variance; a third, independent of the variance (Step 5) | — | — |
 | $\bar v$, $I$, $J$ | average variance over the life; total $I = \bar v\,T$; the variance's summed shake (Step 5) | $\bar v$: mean 0.040000, spread 0.018512 | a wider spread deepens the smile |
+| $\mathrm{Var}(I)$ | the variance of I across paths: the square of its spread | 0.00034268 | a deeper smile |
 | $C$, $w$, $C_{\text{BS}}(w)$, $\mathbb{E}$ | the option's price; a total variance; the Black-Scholes call at it; the average over paths in the pricing world | 9.2270 at w = 0.04 | — |
 | $d_1$, $d_2$, $\phi$ | Black-Scholes' two distances, as on the call card; the bell curve's height | 0.2500, 0.0500; φ(0.25) = 0.3867 | — |
 
 ### When it holds
 
-- **Price and variance move continuously, with no jumps.** One-week equity options carry a steeper tilt than Heston's continuous paths can produce, which is why jump models ([Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)) and rough volatility exist.
+- **Price and variance move continuously, with no jumps.** One-week equity options carry a steeper tilt than Heston's continuous paths can produce, which is why jump models ([Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)) and rough volatility (a variance whose path is far more jagged than Heston's) exist.
 - **Five constant numbers.** Refitted daily, κ, θ, ξ and ρ drift, and a hedge built on today's fit carries tomorrow's refit unhedged ([Heston Greeks and calibration](03-heston-greeks-and-calibration.md)).
 - **The Feller condition, for a variance that never touches zero.** When it fails the variance touches zero and bounces off, and a simulation needs its clamp far more often: 5.4012% of steps at vol of vol 0.5, against 0.1707% here.
 - **The plain mixing formula needs ρ = 0.** At ρ = −0.7 it returns the ρ = 0 smile (see What breaks); Step 5's shifted spot repairs it.
@@ -89,7 +94,9 @@ $$2\kappa\theta \;\ge\; \xi^2$$
 
 ### Step 0: a known variance path makes the share Black-Scholes
 
-Black-Scholes needs one number: the total variance the share experiences over the option's life. In Heston that total is random. Suppose the variance's whole path were revealed in advance, and the share's shakes were independent of it. The shakes would have known sizes, a sum of independent normal shakes is normal, and the share would be lognormal (its log on a bell curve), exactly as in Black-Scholes. So price with Black-Scholes path by path, then average over the paths the variance might take. Every result on this card is a version of that idea.
+Black-Scholes needs one number: the total variance the share experiences over the option's life. In Heston that total is random. Suppose the variance's whole path were revealed in advance, and the share's shakes were independent of it. The shakes would have known sizes, a sum of independent normal shakes is normal, and the share would be lognormal (its log on a bell curve), exactly as in Black-Scholes.
+
+So price with Black-Scholes path by path, then average over the paths the variance might take. Every result on this card is a version of that idea.
 
 ### Step 1: the pull sets the level and the term structure
 
@@ -112,7 +119,9 @@ xychart-beta
     line [12.80, 14.50, 16.44, 18.07, 18.71, 19.24]
 ```
 
-Orange: start at variance 0.09, pull speed 2. Green: the same start, pull speed 0.5. Dark: start at 0.01, pull speed 2. All head for the long-run level; θ sets where, κ how fast. Stepping the averaged equation forward in 100,000 small steps, instead of solving it, lands within 0.00000009 of the formula at every point. At-the-money implied volatility sits a little below these curves, because the vol of vol shaves the smile's middle (Step 4): with $v_0 = \theta$ the curve is flat at 20%, and the simulated $100 strike reads 19.52%.
+Orange: start at variance 0.09, pull speed 2. Green: the same start, pull speed 0.5. Dark: start at 0.01, pull speed 2. All head for the long-run level; θ sets where, κ how fast. Stepping the averaged equation forward in 100,000 small steps, instead of solving it, lands within 0.00000009 of the formula at every point.
+
+At-the-money implied volatility sits a little below these curves, because the vol of vol shaves the smile's middle (Step 4): with $v_0 = \theta$ the curve is flat at 20%, and the simulated $100 strike reads 19.52%.
 
 ### Step 2: the square root keeps variance off zero
 
@@ -137,7 +146,9 @@ By Itô's lemma, the chain rule for random paths, the log of Acme's price moves 
 
 $$\ln S_T = \ln S + (r - q)\,T - \tfrac12 I + \int_0^T \sqrt{v_t}\;dW^1_t$$
 
-Fix the variance path. With ρ = 0 the shoves d$W^1_t$ are independent of it, so the last term is a sum of independent normal pieces with variances $v_t$ dt: normal, with mean zero and variance I. Given the path, the log price is normal with total variance I, which is Black-Scholes, so the price given the path is $C_{\text{BS}}(I)$. Averaging first given the path and then over paths gives the same answer as averaging at once. That is the mixing formula, published by Hull and White in 1987.
+Fix the variance path. With ρ = 0 the shoves d$W^1_t$ are independent of it, so the last term is a sum of independent normal pieces with variances $v_t$ dt: normal, with mean zero and variance I. Given the path, the log price is normal with total variance I, which is Black-Scholes, so the price given the path is $C_{\text{BS}}(I)$.
+
+Averaging first given the path and then over paths gives the same answer as averaging at once. That is the mixing formula, published by Hull and White in 1987.
 
 What the simulation averages over: the year's average volatility, the square root of $\bar v$, across 100,000 simulated years.
 
@@ -168,7 +179,7 @@ A Taylor expansion (the price replaced by its value, slope and bend at the mean)
 
 $$C \approx C_{\text{BS}}\big(\mathbb{E}[I]\big) + \tfrac12\,\frac{\partial^2 C_{\text{BS}}}{\partial w^2}\,\mathrm{Var}(I), \qquad \mathrm{Var}(I) = \frac{\theta\xi^2}{\kappa^2}\Big[T - \frac{1 - e^{-2\kappa T}}{2\kappa} - \frac{1 - e^{-\kappa T}}{\kappa} + \frac{e^{-\kappa T}(1 - e^{-\kappa T})}{\kappa}\Big]$$
 
-The variance formula holds when $v_0 = \theta$, the house case. Across the strip the expansion tracks the mixing road: 20.31% against 20.30% at $80, 19.47% against 19.52% at $100, 20.18% against 20.19% at $130. The terms it drops grow quickly with the spread (see Try changing).
+The variance formula holds when $v_0 = \theta$, the house case. Across the strip of strikes the expansion tracks the mixing road: 20.31% against 20.30% at $80, 19.47% against 19.52% at $100, 20.18% against 20.19% at $130. The terms it drops grow quickly with the spread (see Try changing).
 
 <details>
 <summary>The algebra behind the Hull-White road</summary>
@@ -671,6 +682,367 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line: both programs draw the same random numbers from the same generator.
+
+### Lean
+
+Lean proves the formulas behind Steps 1, 2 and 4 of Why it works, under the conditions below, and checks the worked numbers.
+
+- Take $\kappa > 0$ and an average variance $m(t)$ that starts at $v_0$ and changes at rate $\kappa(\theta - m)$. Then $m(t) = \theta + (v_0 - \theta)e^{-\kappa t}$ for every $t \ge 0$.
+- Take the same $m(t)$. Then its gap to $\theta$ halves every $\ln 2/\kappa$ years.
+- Take the same $m(t)$ and an expiry $T > 0$. Then its average over the life is $\theta + (v_0 - \theta)(1 - e^{-\kappa T})/(\kappa T)$.
+- Take $S > 0$, $K > 0$ and total variance $w > 0$. Then the Black-Scholes call's slope in $w$ is $S e^{-qT}\phi(d_1)/(2\sqrt{w})$.
+- Take the same $S$, $K$ and $w$. Then the bend in $w$ is that slope times $(d_1 d_2 - 1)/(2w)$.
+- Take the same $S$, $K$ and $w$. Then the bend is negative exactly when $d_1 d_2 < 1$, and positive exactly when $d_1 d_2 > 1$.
+- Take positive $\kappa$, $\theta$ and $\xi$, and Step 2's slope $s'(v) = v^{-a}e^{2\kappa v/\xi^2}$. Then at every $v > 0$ the drift $s'\kappa(\theta - v) + \tfrac12 s''\xi^2 v$ is zero.
+- Take the same $s'$ and any level $b > 0$. Then its integral from $\varepsilon$ to $b$ grows without limit as $\varepsilon$ shrinks exactly when $2\kappa\theta \ge \xi^2$.
+- Take $\kappa = 2$, $\theta = 0.04$ and $\xi = 0.3$. Then $2\kappa\theta = 0.16$ is at least $\xi^2 = 0.09$, $a = 16/9$, and $\theta\xi^2/\kappa^2 = 0.0009$.
+- Take $v_0 = \theta = 0.04$, $\kappa = 2$ and $T = 1$. Then the expected average variance is 0.04.
+- Take the house call at 20% for one year. Then $d_1 = 0.25$, and $0.25 \times 0.05 - 1 = -79/80$.
+
+Random paths are beyond Lean here, so the mixing formula, the shifted spot and every simulated price are left to the Python and Rust checks.
+
+```lean
+-- The Heston model: the expected variance is pulled home to its long-run level at the rate set by the pull speed (which fixes the term structure), the Black-Scholes price bends in total variance by the factor (d1 d2 - 1)/(2w) that makes the vol of vol carve a smile, and the Feller condition is exactly when the scale function's slope cannot be integrated down to zero.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
+import Mathlib.Analysis.Calculus.MeanValue
+
+open MeasureTheory ProbabilityTheory Real Set
+
+namespace HestonModel
+
+/-! The model's numbers, as on the card: pull speed `κ`, long-run variance `θ`, today's variance
+`v₀`, vol of vol `ξ`. The Black-Scholes call is written in total variance `w = σ² T`, with share
+price `S`, strike `K`, cash rate `r`, dividend yield `q`, years to expiry `T`. `N(x)` is Mathlib's
+`cdf (gaussianReal 0 1) x` and the bell height `φ(x)` is Mathlib's `gaussianPDFReal 0 1 x`. -/
+
+/-- `d1 = (ln(S/K) + (r - q) T + w/2) / √w`; then `d2 = d1 - √w`. -/
+noncomputable def bsD1 (S K r q T w : ℝ) : ℝ :=
+  (log (S / K) + (r - q) * T + w / 2) / √w
+
+/-- The Black-Scholes call at total variance `w`: `C_BS(w) = S e^(-qT) N(d1) - K e^(-rT) N(d2)`. -/
+noncomputable def bsCall (S K r q T w : ℝ) : ℝ :=
+  S * exp (-(q * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q T w) -
+    K * exp (-(r * T)) * cdf (gaussianReal 0 1) (bsD1 S K r q T w - √w)
+
+/-- The card's slope of the call in total variance: `S e^(-qT) φ(d1) / (2 √w)`. -/
+noncomputable def bsSlope (S K r q T w : ℝ) : ℝ :=
+  S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q T w) / (2 * √w)
+
+/-- The slope of the scale function `s` in the Feller proof:
+`s'(v) = v^(-a) e^(2κv/ξ²)` with `a = 2κθ/ξ²`. -/
+noncomputable def scaleSlope (κ θ ξ v : ℝ) : ℝ :=
+  v ^ (-(2 * κ * θ / ξ ^ 2)) * exp (2 * κ * v / ξ ^ 2)
+
+/-! Helper lemmas used in the proofs below. -/
+
+lemma stdPDF_eq (y : ℝ) :
+    gaussianPDFReal 0 1 y = (√(2 * π))⁻¹ * exp (-y ^ 2 / 2) := by
+  simp [gaussianPDFReal]
+
+lemma continuous_stdPDF : Continuous (gaussianPDFReal 0 1) := by
+  have : gaussianPDFReal 0 1 = fun y => (√(2 * π))⁻¹ * exp (-y ^ 2 / 2) := funext stdPDF_eq
+  rw [this]; fun_prop
+
+lemma hasDerivAt_stdPDF (y : ℝ) :
+    HasDerivAt (gaussianPDFReal 0 1) (-y * gaussianPDFReal 0 1 y) y := by
+  have : gaussianPDFReal 0 1 = fun y => (√(2 * π))⁻¹ * exp (-y ^ 2 / 2) := funext stdPDF_eq
+  rw [this]
+  have h := ((((hasDerivAt_pow 2 y).neg).div_const 2).exp).const_mul (√(2 * π))⁻¹
+  convert h using 1
+  simp only [Pi.neg_apply]; push_cast; ring
+
+lemma cdf_std_eq (x : ℝ) :
+    cdf (gaussianReal 0 1) x = ∫ t in Iic x, gaussianPDFReal 0 1 t := by
+  rw [cdf_eq_real, measureReal_def, gaussianReal_apply_eq_integral _ one_ne_zero,
+    ENNReal.toReal_ofReal (integral_nonneg (gaussianPDFReal_nonneg 0 1))]
+
+lemma hasDerivAt_stdCDF (x : ℝ) :
+    HasDerivAt (fun y => cdf (gaussianReal 0 1) y) (gaussianPDFReal 0 1 x) x := by
+  have hfun : (fun y => cdf (gaussianReal 0 1) y) =
+      fun y => (∫ t in Iic 0, gaussianPDFReal 0 1 t) + ∫ t in (0 : ℝ)..y, gaussianPDFReal 0 1 t := by
+    funext y
+    rw [cdf_std_eq, ← intervalIntegral.integral_Iic_sub_Iic (integrable_gaussianPDFReal 0 1).integrableOn
+      (integrable_gaussianPDFReal 0 1).integrableOn]
+    ring
+  rw [hfun]
+  exact ((continuous_stdPDF.integral_hasStrictDerivAt 0 x).hasDerivAt).const_add _
+
+lemma hasDerivAt_bsD1 (S K r q T w : ℝ) (hw : 0 < w) :
+    HasDerivAt (fun x => bsD1 S K r q T x)
+      (1 / (2 * √w) - bsD1 S K r q T w / (2 * w)) w := by
+  have hs : 0 < √w := sqrt_pos.mpr hw
+  have hsq : √w ^ 2 = w := sq_sqrt hw.le
+  have h := (((hasDerivAt_id' w).div_const 2).const_add (log (S / K) + (r - q) * T)).div
+    (hasDerivAt_sqrt hw.ne') hs.ne'
+  refine h.congr_deriv ?_
+  unfold bsD1
+  generalize log (S / K) + (r - q) * T = L
+  generalize √w = s at hs hsq ⊢
+  subst hsq
+  field_simp
+
+lemma bs_pdf_balance (S K r q T w : ℝ) (hS : 0 < S) (hK : 0 < K) (hw : 0 < w) :
+    K * exp (-(r * T)) * gaussianPDFReal 0 1 (bsD1 S K r q T w - √w) =
+      S * exp (-(q * T)) * gaussianPDFReal 0 1 (bsD1 S K r q T w) := by
+  have hs : 0 < √w := sqrt_pos.mpr hw
+  have hsq : √w ^ 2 = w := sq_sqrt hw.le
+  have hL : bsD1 S K r q T w * √w - √w ^ 2 / 2 = log (S / K) + (r - q) * T := by
+    unfold bsD1
+    rw [hsq]
+    field_simp
+    ring
+  rw [stdPDF_eq, stdPDF_eq]
+  have he : exp (-(bsD1 S K r q T w - √w) ^ 2 / 2) =
+      exp (-(bsD1 S K r q T w) ^ 2 / 2) * exp (bsD1 S K r q T w * √w - √w ^ 2 / 2) := by
+    rw [← exp_add]; ring_nf
+  rw [he, hL, exp_add, exp_log (div_pos hS hK)]
+  have hr : exp (-(r * T)) * exp ((r - q) * T) = exp (-(q * T)) := by
+    rw [← exp_add]; ring_nf
+  rw [← hr]
+  field_simp
+
+#print axioms stdPDF_eq
+#print axioms continuous_stdPDF
+#print axioms hasDerivAt_stdPDF
+#print axioms cdf_std_eq
+#print axioms hasDerivAt_stdCDF
+#print axioms hasDerivAt_bsD1
+#print axioms bs_pdf_balance
+
+/-- **The pull sets the level and the term structure** (Step 1). Let the expected variance `m(t)`
+start at today's variance `v₀` and change at the rate `κ (θ - m)` with pull speed `κ > 0`. Then
+`m(t) = θ + (v₀ - θ) e^(-κt)`: the gap to the long-run variance shrinks by the factor `e^(-κt)`
+and halves every `ln 2 / κ` years. Averaged over a life of `T > 0` years, the expected variance is
+`θ + (v₀ - θ)(1 - e^(-κT)) / (κT)`, which travels from `v₀` toward `θ` as the expiry grows. -/
+theorem expected_variance_pulled_to_long_run
+    (κ θ v₀ : ℝ) (hκ : 0 < κ) (m : ℝ → ℝ) (h0 : m 0 = v₀)
+    (hm : ∀ t ∈ Ici (0 : ℝ), HasDerivWithinAt m (κ * (θ - m t)) (Ici 0) t) :
+    (∀ t, 0 ≤ t → m t = θ + (v₀ - θ) * exp (-(κ * t))) ∧
+      (∀ t, 0 ≤ t → m (t + log 2 / κ) - θ = (m t - θ) / 2) ∧
+      (∀ T, 0 < T →
+        (1 / T) * ∫ t in (0 : ℝ)..T, m t = θ + (v₀ - θ) * (1 - exp (-(κ * T))) / (κ * T)) := by
+  set g : ℝ → ℝ := fun t => (m t - θ) * exp (κ * t) with hg_def
+  have hg : ∀ x ∈ Ici (0 : ℝ), HasDerivWithinAt g 0 (Ici 0) x := by
+    intro x hx
+    have he : HasDerivAt (fun t => exp (κ * t)) (exp (κ * x) * (κ * 1)) x :=
+      ((hasDerivAt_id' x).const_mul κ).exp
+    have h := ((hm x hx).sub_const θ).mul he.hasDerivWithinAt
+    convert h using 1
+    ring
+  have hsol : ∀ t, 0 ≤ t → m t = θ + (v₀ - θ) * exp (-(κ * t)) := by
+    intro t ht
+    have hcont : ContinuousOn g (Icc 0 t) := fun x hx =>
+      ((hg x hx.1).continuousWithinAt).mono Icc_subset_Ici_self
+    have hder : ∀ x ∈ Ico (0 : ℝ) t, HasDerivWithinAt g 0 (Ici x) x := fun x hx =>
+      (hg x hx.1).mono (Ici_subset_Ici.mpr hx.1)
+    have hc := constant_of_has_deriv_right_zero hcont hder t ⟨ht, le_refl t⟩
+    simp only [hg_def, mul_zero, exp_zero, mul_one, h0] at hc
+    rw [exp_neg]
+    have hpos := exp_pos (κ * t)
+    field_simp
+    linarith
+  refine ⟨hsol, ?_, ?_⟩
+  · intro t ht
+    have hl : 0 ≤ log 2 / κ := div_nonneg (log_nonneg (by norm_num)) hκ.le
+    rw [hsol t ht, hsol (t + log 2 / κ) (by linarith)]
+    rw [show -(κ * (t + log 2 / κ)) = -(κ * t) + -log 2 by field_simp; ring, exp_add, exp_neg (log 2),
+      exp_log two_pos]
+    ring
+  · intro T hT
+    have hcongr : ∫ t in (0 : ℝ)..T, m t = ∫ t in (0 : ℝ)..T, (θ + (v₀ - θ) * exp (-(κ * t))) := by
+      apply intervalIntegral.integral_congr
+      intro t ht
+      rw [uIcc_of_le hT.le] at ht
+      exact hsol t ht.1
+    have hderiv : ∀ x ∈ uIcc 0 T, HasDerivAt (fun t => θ * t - (v₀ - θ) * exp (-(κ * t)) / κ)
+        (θ + (v₀ - θ) * exp (-(κ * x))) x := by
+      intro x _
+      have h := ((hasDerivAt_id' x).const_mul θ).sub
+        (((((hasDerivAt_id' x).const_mul κ).neg).exp.const_mul (v₀ - θ)).div_const κ)
+      convert h using 1
+      simp only [Pi.neg_apply]
+      field_simp
+      ring
+    have hint : IntervalIntegrable (fun t => θ + (v₀ - θ) * exp (-(κ * t))) volume 0 T :=
+      (by fun_prop : Continuous fun t => θ + (v₀ - θ) * exp (-(κ * t))).intervalIntegrable _ _
+    rw [hcongr, intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint]
+    simp only [mul_zero, neg_zero, exp_zero]
+    field_simp
+    ring
+
+/-- **The vol of vol bends the smile** (Step 4). For `S > 0`, `K > 0` and total variance `w > 0`,
+the Black-Scholes call's slope in `w` is `S e^(-qT) φ(d1) / (2√w)`, and its bend is that slope
+times `(d1 d2 - 1) / (2w)`. So the bend is negative exactly when `d1 d2 < 1` (near the money,
+where averaging over a spread of variances gives less than the price at the average) and
+positive when `d1 d2 > 1` (far out in the wings, where it gives more). -/
+theorem black_scholes_bend_in_total_variance
+    (S K r q T w : ℝ) (hS : 0 < S) (hK : 0 < K) (hw : 0 < w) :
+    HasDerivAt (fun x : ℝ => bsCall S K r q T x) (bsSlope S K r q T w) w ∧
+      HasDerivAt (fun x : ℝ => bsSlope S K r q T x)
+        (bsSlope S K r q T w * (bsD1 S K r q T w * (bsD1 S K r q T w - √w) - 1) / (2 * w)) w ∧
+      (bsSlope S K r q T w * (bsD1 S K r q T w * (bsD1 S K r q T w - √w) - 1) / (2 * w) < 0 ↔
+        bsD1 S K r q T w * (bsD1 S K r q T w - √w) < 1) ∧
+      (0 < bsSlope S K r q T w * (bsD1 S K r q T w * (bsD1 S K r q T w - √w) - 1) / (2 * w) ↔
+        1 < bsD1 S K r q T w * (bsD1 S K r q T w - √w)) := by
+  have hs : 0 < √w := sqrt_pos.mpr hw
+  have hsq : √w ^ 2 = w := sq_sqrt hw.le
+  have hd1 := hasDerivAt_bsD1 S K r q T w hw
+  have hsqrt := hasDerivAt_sqrt hw.ne'
+  have hbal := bs_pdf_balance S K r q T w hS hK hw
+  have hslope_pos : 0 < bsSlope S K r q T w := by
+    unfold bsSlope
+    have := gaussianPDFReal_pos 0 1 (bsD1 S K r q T w) one_ne_zero
+    positivity
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · have h1 := ((hasDerivAt_stdCDF (bsD1 S K r q T w)).comp w hd1).const_mul (S * exp (-(q * T)))
+    have h2 := ((hasDerivAt_stdCDF (bsD1 S K r q T w - √w)).comp w (hd1.sub hsqrt)).const_mul
+      (K * exp (-(r * T)))
+    have h := h1.sub h2
+    unfold bsCall
+    refine h.congr_deriv ?_
+    unfold bsSlope
+    rw [← mul_assoc (K * exp (-(r * T))), hbal]
+    field_simp
+    ring
+  · have h1 := (((hasDerivAt_stdPDF (bsD1 S K r q T w)).comp w hd1).const_mul
+      (S * exp (-(q * T)))).div (hsqrt.const_mul 2) (by positivity)
+    unfold bsSlope
+    refine h1.congr_deriv ?_
+    simp only [Function.comp_apply]
+    generalize bsD1 S K r q T w = d
+    generalize gaussianPDFReal 0 1 d = p
+    generalize √w = s at hs hsq ⊢
+    subst hsq
+    field_simp
+    ring
+  · constructor
+    · intro h
+      by_contra hc
+      push Not at hc
+      have : 0 ≤ bsSlope S K r q T w * (bsD1 S K r q T w * (bsD1 S K r q T w - √w) - 1) / (2 * w) := by
+        apply div_nonneg (mul_nonneg hslope_pos.le (by linarith)) (by linarith)
+      linarith
+    · intro h
+      apply div_neg_of_neg_of_pos (mul_neg_of_pos_of_neg hslope_pos (by linarith)) (by linarith)
+  · constructor
+    · intro h
+      by_contra hc
+      push Not at hc
+      have : bsSlope S K r q T w * (bsD1 S K r q T w * (bsD1 S K r q T w - √w) - 1) / (2 * w) ≤ 0 := by
+        apply div_nonpos_of_nonpos_of_nonneg (mul_nonpos_of_nonneg_of_nonpos hslope_pos.le (by linarith))
+          (by linarith)
+      linarith
+    · intro h
+      apply div_pos (mul_pos hslope_pos (by linarith)) (by linarith)
+
+/-- **The Feller condition, analytic core** (Step 2, folded proof). Take pull speed `κ > 0`,
+long-run variance `θ > 0` and vol of vol `ξ > 0`. The slope `s'(v) = v^(-a) e^(2κv/ξ²)`, with
+`a = 2κθ/ξ²`, makes the scale function driftless: at every variance `v > 0`,
+`s'(v) κ (θ - v) + ½ s''(v) ξ² v = 0`. And for any level `b > 0`, `s'` fails to be integrable
+on `(0, b]` (so `s(ε)` runs off to minus infinity as `ε` shrinks, and zero is out of reach)
+exactly when the Feller condition `2κθ ≥ ξ²` holds. -/
+theorem feller_condition_iff_scale_diverges_at_zero
+    (κ θ ξ b : ℝ) (hκ : 0 < κ) (hθ : 0 < θ) (hξ : 0 < ξ) (hb : 0 < b) :
+    (∀ v : ℝ, 0 < v → ∃ D : ℝ, HasDerivAt (fun x : ℝ => scaleSlope κ θ ξ x) D v ∧
+        scaleSlope κ θ ξ v * (κ * (θ - v)) + 1 / 2 * D * ξ ^ 2 * v = 0) ∧
+      (¬ IntegrableOn (fun v : ℝ => scaleSlope κ θ ξ v) (Ioc 0 b) ↔ ξ ^ 2 ≤ 2 * κ * θ) := by
+  have hξ2 : 0 < ξ ^ 2 := pow_pos hξ 2
+  refine ⟨?_, ?_⟩
+  · intro v hv
+    have hp := hasDerivAt_rpow_const (x := v) (p := -(2 * κ * θ / ξ ^ 2)) (Or.inl hv.ne')
+    have he : HasDerivAt (fun x => exp (2 * κ * x / ξ ^ 2)) (exp (2 * κ * v / ξ ^ 2) * (2 * κ * 1 / ξ ^ 2)) v :=
+      (((hasDerivAt_id' v).const_mul (2 * κ)).div_const (ξ ^ 2)).exp
+    refine ⟨_, hp.mul he, ?_⟩
+    simp only [scaleSlope]
+    rw [rpow_sub_one hv.ne']
+    field_simp
+    ring
+  · set a := 2 * κ * θ / ξ ^ 2 with ha
+    have hmeasR : AEStronglyMeasurable (fun v : ℝ => v ^ (-a)) (volume.restrict (Ioc 0 b)) :=
+      (by fun_prop : Measurable fun v : ℝ => v ^ (-a)).aestronglyMeasurable
+    have hmeasS : AEStronglyMeasurable (fun v : ℝ => scaleSlope κ θ ξ v) (volume.restrict (Ioc 0 b)) :=
+      (by unfold scaleSlope; fun_prop : Measurable fun v : ℝ => scaleSlope κ θ ξ v).aestronglyMeasurable
+    have hiff : IntegrableOn (fun v : ℝ => scaleSlope κ θ ξ v) (Ioc 0 b) ↔
+        IntegrableOn (fun v : ℝ => v ^ (-a)) (Ioc 0 b) := by
+      constructor
+      · intro h
+        refine Integrable.mono h hmeasR ((ae_restrict_iff' measurableSet_Ioc).mpr (ae_of_all _ ?_))
+        intro v hv
+        have h1 : 0 ≤ v ^ (-a) := rpow_nonneg hv.1.le _
+        have h2 : 1 ≤ exp (2 * κ * v / ξ ^ 2) := one_le_exp (by have := hv.1; positivity)
+        simp only [scaleSlope, ← ha, Real.norm_eq_abs, abs_of_nonneg h1,
+          abs_of_nonneg (mul_nonneg h1 (exp_pos _).le)]
+        nlinarith
+      · intro h
+        refine Integrable.mono (h.const_mul (exp (2 * κ * b / ξ ^ 2))) hmeasS
+          ((ae_restrict_iff' measurableSet_Ioc).mpr (ae_of_all _ ?_))
+        intro v hv
+        have h1 : 0 ≤ v ^ (-a) := rpow_nonneg hv.1.le _
+        have h2 : exp (2 * κ * v / ξ ^ 2) ≤ exp (2 * κ * b / ξ ^ 2) := by
+          apply exp_le_exp.mpr
+          apply div_le_div_of_nonneg_right _ hξ2.le
+          nlinarith [hv.2]
+        simp only [scaleSlope, ← ha, Real.norm_eq_abs,
+          abs_of_nonneg (mul_nonneg h1 (exp_pos _).le), abs_of_nonneg (mul_nonneg (exp_pos _).le h1)]
+        nlinarith
+    rw [hiff, integrableOn_Ioc_iff_integrableOn_Ioo, intervalIntegral.integrableOn_Ioo_rpow_iff hb, not_lt,
+      neg_le_neg_iff, ha, le_div_iff₀ hξ2, one_mul]
+
+/-! The card's exact numbers: `κ = 2`, `θ = v₀ = 4/100`, `ξ = 3/10`; the house call has
+`S = K = 100`, `r = 5/100`, `q = 2/100`, `T = 1`, total variance `w = 4/100`. -/
+
+-- Feller: 2κθ = 0.1600 against ξ² = 0.0900, so it holds, and a = 16/9 is above 1.
+example : (2 : ℚ) * 2 * (4 / 100) = 16 / 100 ∧ ((3 : ℚ) / 10) ^ 2 = 9 / 100 ∧
+    ((3 : ℚ) / 10) ^ 2 ≤ 2 * 2 * (4 / 100) ∧ 2 * 2 * (4 / 100) / ((3 : ℚ) / 10) ^ 2 = 16 / 9 := by
+  norm_num
+
+-- With v₀ = θ the expected average variance is θ = 0.04 for any expiry.
+example : (4 / 100 : ℝ) + (4 / 100 - 4 / 100) * (1 - exp (-(2 * 1))) / (2 * 1) = 4 / 100 := by
+  norm_num
+
+-- The house call at 20% for one year: d1 = 0.25 (so d2 = 0.05).
+example : bsD1 100 100 (5 / 100) (2 / 100) 1 (4 / 100) = 1 / 4 := by
+  have h : √(4 / 100 : ℝ) = 1 / 5 := by
+    rw [show (4 / 100 : ℝ) = (1 / 5) ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  unfold bsD1
+  rw [h]
+  norm_num
+
+-- The bend's factor: d1 d2 - 1 = 0.25 × 0.05 - 1 = -79/80, below zero at the money.
+example : (1 / 4 : ℚ) * (1 / 20) - 1 = -79 / 80 := by norm_num
+
+-- Var(I)'s prefactor θ ξ² / κ² = 0.04 × 0.09 / 4 = 0.0009.
+example : (4 / 100 : ℚ) * (3 / 10) ^ 2 / 2 ^ 2 = 9 / 10000 := by norm_num
+
+#print axioms expected_variance_pulled_to_long_run
+#print axioms black_scholes_bend_in_total_variance
+#print axioms feller_condition_iff_scale_diverges_at_zero
+
+end HestonModel
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'HestonModel.stdPDF_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.continuous_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.hasDerivAt_stdPDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.cdf_std_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.hasDerivAt_stdCDF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.hasDerivAt_bsD1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.bs_pdf_balance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.expected_variance_pulled_to_long_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.black_scholes_bend_in_total_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HestonModel.feller_condition_iff_scale_diverges_at_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -31,13 +31,17 @@ xychart-beta
     line [0.7531, 0.7429, 0.7330, 0.7334, 0.7406, 0.7658, 0.7958]
 ```
 
-From 0.5 to 2 the best miss barely moves, 0.7429 to 0.7330 and back to 0.7406; at 4 it reaches 0.7958. A fit walking that floor stops wherever its steps stop paying.
+From 0.5 to 2 the best miss barely moves, 0.7429 to 0.7330 and back to 0.7406; at 4 it reaches 0.7958.
 
 ---
 
 ## The formula
 
-Notation first, in words. Acme's price is $S$ today and $S_T$ at expiry, $T$ years away; $K$ is the strike, $r$ the bank rate and $q$ the dividend yield, both continuously compounded. The five dials, at the anchor values of [The Heston model](01-heston-model.md): today's variance $v_0$ (0.04), the pull speed $\kappa$ ("kappa", 2 a year), the long-run variance $\theta$ ("theta", 0.04), the vol of vol $\xi$ ("xi", 0.3), which sets how hard variance wanders, and the correlation $\rho$ ("rho", −0.7) between the share's random kicks and variance's. The forward $F = S e^{(r-q)T}$ is the price agreed today for Acme at expiry, and $k = \ln(K/F)$ is the strike's log distance from it. $i$ is the imaginary unit, $i^2 = -1$, and Re takes a complex number's real part.
+Notation first, in words. Acme's price is $S$ today and $S_T$ at expiry, $T$ years away; $K$ is the strike, $r$ the bank rate and $q$ the dividend yield, both continuously compounded.
+
+The five dials, at the anchor values of [The Heston model](01-heston-model.md): today's variance $v_0$ (0.04), the pull speed $\kappa$ ("kappa", 2 a year), the long-run variance $\theta$ ("theta", 0.04), the vol of vol $\xi$ ("xi", 0.3), which sets how hard variance wanders, and the correlation $\rho$ ("rho", −0.7) between the share's random kicks and variance's.
+
+The forward $F = S e^{(r-q)T}$ is the price agreed today for Acme at expiry, and $k = \ln(K/F)$ is the strike's log distance from it. $i$ is the imaginary unit, $i^2 = -1$, and Re takes a complex number's real part.
 
 The model's fingerprint, its **characteristic function** at a frequency $z$, has a log that is a straight line in $v_0$ and in $\theta$:
 
@@ -75,7 +79,7 @@ The root-mean-square miss is $\sqrt{\sum e_j^2/21}$, over the quotes only. Fits 
 | $\xi$ | vol of vol: how hard variance wanders | 0.3 anchor; 0.6707 fit B | at-the-money price falls, −1.2411 per unit |
 | $\rho$ | correlation of the share's kicks with variance's | −0.7 anchor; −0.7277 fit B | smile tilts; price moves 0.0269 per unit |
 | $C$, $C_{\mathrm{BS}}$, $\sigma$ | the call's price; Black-Scholes's price; implied volatility | $9.06 and 19.558% | — |
-| $N$, $d_1$ | the normal CDF and Black-Scholes's $d_1$, as on the pilot | $e^{-qT}N(d_1) = 0.5873$ | — |
+| $N$, $d_1$ | the normal cumulative distribution function and Black-Scholes's $d_1$, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $e^{-qT}N(d_1) = 0.5873$ | — |
 | $\Delta$, $\Gamma$, $P_1$, $P_2$, $p$, $a$ | delta, gamma; chance of finishing in the money counted in shares, in cash; density of $S_T$; a scaling factor (Step 1) | 0.6427; 0.01843; $e^{-qT}P_1 = 0.6427$ | — |
 | $e_j$, $j$, $C_j^{\mathrm{mkt}}$, $V_j$, $L$, $\lambda$ | miss on quote $j$ in vol points; the quote's number; its market price; its vega; the loss; the prior's weight | 21 misses; $\lambda$ = 0 or 1 | $\lambda$: starts agree more, quotes fit a little worse |
 
@@ -89,7 +93,7 @@ The root-mean-square miss is $\sqrt{\sum e_j^2/21}$, over the quotes only. Fits 
 ### Before solving: existence, uniqueness and the edges
 
 - **Existence.** No run finds an exact fit; the smallest root-mean-square miss reached is 0.7321. A best fit does exist: the dials live in a closed box ($v_0$ and $\theta$ from 0.0001 to 1, $\kappa$ from 0.05 to 20, $\xi$ from 0.05 to 5, $\rho$ from −0.999 to 0.999), the loss is continuous there, and a continuous function on a closed, bounded box reaches its lowest value.
-- **Uniqueness.** Barely. The profile shows one lowest point near $\kappa = 1.22$: fit B stops at 1.2247 and fit A, run to a far finer tolerance, at 1.2187, with the other four dials within 0.001 of each other. But from $\kappa = 1$ to 1.5 the best miss moves only in the fourth decimal, 0.7330 to 0.7334.
+- **Uniqueness.** Barely. The profile shows one lowest point near $\kappa = 1.22$: fit B stops at 1.2247 and fit A, run to a far finer tolerance, at 1.2187, with the other four dials within 0.001 of each other. But the valley near it is nearly flat (Step 6).
 - **The edges.** As $\xi \to 0$ variance stops wandering, $\rho$ drops out of every price, and Heston becomes Black-Scholes at the average variance: with $\xi = 0.0001$, $v_0 = 0.02$ and $\theta = 0.06$, 9.479339 against 9.479325. As $\kappa \to 0$ variance is never pulled home and $\theta$ drops out. As $\kappa$ grows without bound variance sits at $\theta$ at once and $v_0$ drops out. Near each edge one dial is invisible to the quotes.
 
 Conventions verified 24 Sep 2026 against [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): quotes are Black-Scholes implied volatilities of European calls in percent, rates continuously compounded; each vega is taken at its quote's own volatility.
@@ -100,13 +104,13 @@ Conventions verified 24 Sep 2026 against [The volatility surface](../12-The%20sm
 
 ### Step 0: every Greek is another integral of the same kind
 
-The price is a weighted sum, over frequencies, of the fingerprint times a wave. Inside the sum, Acme's price enters only through $\sqrt{F}$ and the wave $e^{-iuk}$, since $F$ is a fixed multiple of $S$. Today's variance and the long-run level enter only as multipliers in the fingerprint's exponent. So each Greek is one more integral on the same grid, from the same fingerprint values, since every integrand still dies off exponentially.
+The price is a weighted sum, over frequencies, of the fingerprint times a wave. Inside the sum, Acme's price enters only through $\sqrt{F}$ and the wave $e^{-iuk}$, since $F$ is a fixed multiple of $S$. Today's variance and the long-run level enter only as multipliers in the fingerprint's exponent. So each Greek is one more integral on the same grid, from the same fingerprint values.
 
 ### Step 1: delta and gamma come from the share-price factor
 
 Gather what depends on Acme's price: $\sqrt{F}\,e^{-iuk} = K^{-iu}F^{\frac12 + iu}$. Differentiating in $S$ brings down $(\tfrac12 + iu)/S$: the delta formula. Twice brings down $(\tfrac12 + iu)(-\tfrac12 + iu)/S^2 = -(u^2 + \tfrac14)/S^2$, which cancels the denominator, so gamma's integrand is the fingerprint and its wave alone. For the one-year $100 call: delta 0.642668, gamma 0.018429.
 
-Two more roads confirm both. Heston's own form is $C = S e^{-qT}P_1 - K e^{-rT}P_2$, where $P_1$ and $P_2$ are the chances of finishing above the strike counted in shares and in cash, found by Gil-Pelaez's inversion on the real line. Doubling Acme and the strike together doubles a Heston price. That makes delta $e^{-qT}P_1$, 0.642668, and gamma, with Acme at the strike, the discounted density of Acme's price there, 0.018429. Nudging Acme a cent each way and repricing gives both a third time.
+Two more roads confirm both. Heston's own form is $C = S e^{-qT}P_1 - K e^{-rT}P_2$, where $P_1$ and $P_2$ are the chances of finishing above the strike counted in shares and in cash, found by Gil-Pelaez's inversion on the real line. Doubling Acme and the strike together doubles a Heston price. That makes delta $e^{-qT}P_1$, and gamma, with Acme at the strike, the discounted density of Acme's price there. Nudging Acme a cent each way and repricing gives both a third time.
 
 <details>
 <summary>Detailed proof: the doubling rule gives delta and gamma</summary>
@@ -168,7 +172,9 @@ A smile is curved by how far variance can have wandered by its expiry. The vol o
 | 3 | 0.7658 | 0.8737 | 0.0630 |
 | 4 | 0.7958 | 0.9931 | 0.0588 |
 
-As the pull speed rises, the vol of vol rises to keep the spread and the long-run level falls to keep the term structure. Jacques Hadamard asked three things of a well-posed problem: a solution exists, it is unique, and it moves little when the inputs move a little. The first holds, the second narrowly. The third fails in practice. Moving $\kappa$ from 1 to 1.5 changes the best miss by 0.0004 vol points, a tenth of the rounding in quotes written to two decimals, so the quotes place the lowest point only loosely. A tolerance of a thousandth of a vol point leaves the answer wherever the walk had reached: $\kappa = 0.3701$ from the anchor, 1.2247 from the anchor with $\kappa$ and $\xi$ tripled.
+As the pull speed rises, the vol of vol rises to keep the spread and the long-run level falls to keep the term structure.
+
+Jacques Hadamard asked three things of a well-posed problem: a solution exists, it is unique, and it moves little when the inputs move a little. The first holds, the second narrowly. The third fails in practice. Moving $\kappa$ from 1 to 1.5 changes the best miss by 0.0004 vol points, a tenth of the rounding in quotes written to two decimals, so the quotes place the lowest point only loosely. A tolerance of a thousandth of a vol point leaves the answer wherever the walk had reached.
 
 ### Step 7: a prior gives the valley a floor
 
@@ -208,7 +214,7 @@ The fit to the 21 quotes:
 | with the prior, both starts | $\lambda = 1$, $\kappa_0 = 2$ | $\kappa$ 1.7640 and 1.7787 |
 | **3-year call, with the prior** | | **$19.01 and $19.00** |
 
-The two unregularised fits answer the quotes almost equally well. Asked about a three-year option, which no quote prices, they differ by $0.92. The re-measured misses sit a little higher because a price miss over vega is only the first-order volatility miss.
+Asked about a three-year option, which no quote prices, the two unregularised fits differ by $0.92. The re-measured misses sit a little higher because a price miss over vega is only the first-order volatility miss.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -662,6 +668,241 @@ ALL CHECKS PASS
 
 The outputs agree line for line. The fits are the fragile part: with slope-table bumps of 0.000001, rounding differences between the languages move fit B's $\kappa$ in the fourth decimal.
 
+### Lean
+
+Lean proves the doubling rule's formulas for delta and gamma, for any price obeying that rule, and Step 1's gamma factor.
+
+- Suppose the doubling rule holds, the price is smooth with Heston's form, and its strike derivative is $-e^{-rT}P_2$. Then $\Delta = e^{-qT}P_1$.
+- Suppose the doubling rule holds and the price can be differentiated twice in $S$ and $K$. Then $S^2\Gamma = K^2\,\partial^2 C/\partial K^2$.
+- Take the factor $F^{\frac12 + iu}$, with $F$ a fixed positive multiple of $S$. Then two derivatives in $S$ multiply it by $-(u^2 + \tfrac14)/S^2$.
+- Take 3 expiries and 7 strikes. Then there are 21 quotes.
+
+Breeden and Litzenberger's density step, every price and Greek in numbers, and the fits are left to the Python and Rust checks.
+
+```lean
+-- Heston Greeks and calibration: the doubling rule makes delta equal to e^(-qT) P1 and ties gamma to the strike curvature, and two share-price derivatives of the integrand's factor bring down -(u^2 + 1/4)/S^2.
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
+import Mathlib.Analysis.Complex.RealDeriv
+
+open Complex
+
+/-- Helper: derivative of `s ↦ (c s)^w` for positive `c` and `s`. -/
+lemma heston_cpow_scaled_hasDerivAt (c s : ℝ) (w : ℂ) (hc : 0 < c) (hs : 0 < s) :
+    HasDerivAt (fun t : ℝ => (((c * t : ℝ)) : ℂ) ^ w)
+      (w * (((c * s : ℝ)) : ℂ) ^ (w - 1) * c) s := by
+  have h : HasDerivAt (fun z : ℂ => (c : ℂ) * z) (c : ℂ) (s : ℂ) := by
+    simpa using (hasDerivAt_id (s : ℂ)).const_mul (c : ℂ)
+  have hmem : (fun z : ℂ => (c : ℂ) * z) (s : ℂ) ∈ slitPlane := by
+    have : (fun z : ℂ => (c : ℂ) * z) (s : ℂ) = ((c * s : ℝ) : ℂ) := by push_cast; rfl
+    rw [this]
+    exact ofReal_mem_slitPlane.2 (mul_pos hc hs)
+  have h2 := (h.cpow_const (c := w) hmem).comp_ofReal
+  convert h2 using 1
+  · funext t; push_cast; rfl
+  · push_cast; rfl
+
+#print axioms heston_cpow_scaled_hasDerivAt
+
+/-- The doubling rule gives delta. Let `C S K` be a call's price as a function of the share
+price `S` and the strike `K`. Suppose multiplying share price and strike by one positive
+factor `a` multiplies the price by `a` (Heston's variance ignores the share price), the price
+is differentiable in `(S, K)`, the price has Heston's form `S e^{-qT} P1 - K e^{-rT} P2`,
+and the strike derivative is minus the discounted cash probability, `-e^{-rT} P2`.
+Then delta, the derivative in the share price, is `e^{-qT} P1`. -/
+theorem heston_delta_eq_discounted_P1
+    (C : ℝ → ℝ → ℝ) (S K T r q P1 P2 : ℝ) (hS : 0 < S) (hK : 0 < K)
+    (hhom : ∀ a s k : ℝ, 0 < a → 0 < s → 0 < k → C (a * s) (a * k) = a * C s k)
+    (hdiff : DifferentiableAt ℝ (fun p : ℝ × ℝ => C p.1 p.2) (S, K))
+    (hform : C S K = S * Real.exp (-q * T) * P1 - K * Real.exp (-r * T) * P2)
+    (hstrike : HasDerivAt (fun k => C S k) (-(Real.exp (-r * T) * P2)) K) :
+    HasDerivAt (fun s => C s K) (Real.exp (-q * T) * P1) S := by
+  set L := fderiv ℝ (fun p : ℝ × ℝ => C p.1 p.2) (S, K) with hL
+  have hF : HasFDerivAt (fun p : ℝ × ℝ => C p.1 p.2) L (S, K) := hdiff.hasFDerivAt
+  -- partial derivative in the share price
+  have hs : HasDerivAt (fun s => C s K) (L (1, 0)) S := by
+    have h0 : HasDerivAt (fun s : ℝ => (s, K)) ((1 : ℝ), (0 : ℝ)) S :=
+      (hasDerivAt_id S).prodMk (hasDerivAt_const S K)
+    exact hF.comp_hasDerivAt S h0
+  -- partial derivative in the strike
+  have hk : HasDerivAt (fun k => C S k) (L (0, 1)) K := by
+    have h0 : HasDerivAt (fun k : ℝ => (S, k)) ((0 : ℝ), (1 : ℝ)) K :=
+      (hasDerivAt_const K S).prodMk (hasDerivAt_id K)
+    exact hF.comp_hasDerivAt K h0
+  have hk' : L (0, 1) = -(Real.exp (-r * T) * P2) := hk.unique hstrike
+  -- Euler's relation from the doubling rule
+  have hscale : HasDerivAt (fun a : ℝ => C (a * S) (a * K)) (L (S, K)) 1 := by
+    have h0 : HasDerivAt (fun a : ℝ => (a * S, a * K)) (S, K) 1 := by
+      have h1 := ((hasDerivAt_id (1:ℝ)).mul_const S).prodMk ((hasDerivAt_id (1:ℝ)).mul_const K)
+      simpa using h1
+    have hF1 : HasFDerivAt (fun p : ℝ × ℝ => C p.1 p.2) L ((1:ℝ) * S, (1:ℝ) * K) := by
+      simpa using hF
+    have := hF1.comp_hasDerivAt (1:ℝ) h0
+    simpa [Function.comp_def] using this
+  have hscale' : HasDerivAt (fun a : ℝ => C (a * S) (a * K)) (C S K) 1 := by
+    have h1 : HasDerivAt (fun a : ℝ => a * C S K) (C S K) 1 := by
+      simpa using (hasDerivAt_id (1:ℝ)).mul_const (C S K)
+    apply h1.congr_of_eventuallyEq
+    filter_upwards [Ioi_mem_nhds (show (0:ℝ) < 1 by norm_num)] with a ha
+    exact hhom a S K ha hS hK
+  have heuler : L (S, K) = C S K := hscale.unique hscale'
+  have hsplit : ((S, K) : ℝ × ℝ) = S • ((1 : ℝ), (0 : ℝ)) + K • ((0 : ℝ), (1 : ℝ)) := by
+    ext <;> simp
+  rw [hsplit, map_add, map_smul, map_smul, hk', hform] at heuler
+  simp only [smul_eq_mul] at heuler
+  have : L (1, 0) = Real.exp (-q * T) * P1 := by
+    have h2 : S * (L (1, 0) - Real.exp (-q * T) * P1) = 0 := by linarith
+    rcases mul_eq_zero.1 h2 with h | h
+    · exact absurd h hS.ne'
+    · linarith
+  rw [← this]
+  exact hs
+
+/-- The doubling rule gives gamma. If the call price `C S K` is twice continuously
+differentiable for positive share price and strike, and scaling both by `a > 0` scales the
+price by `a`, then `S^2 Γ = K^2 ∂²C/∂K²`: the share-price curvature (gamma) times `S^2`
+equals the strike curvature times `K^2`. -/
+theorem heston_gamma_eq_strike_curvature
+    (C : ℝ → ℝ → ℝ)
+    (hhom : ∀ a s k : ℝ, 0 < a → 0 < s → 0 < k → C (a * s) (a * k) = a * C s k)
+    (hsmooth : ContDiffOn ℝ 2 (fun p : ℝ × ℝ => C p.1 p.2) {p | 0 < p.1 ∧ 0 < p.2})
+    (S K : ℝ) (hS : 0 < S) (hK : 0 < K) :
+    S ^ 2 * deriv (fun s => deriv (fun s' => C s' K) s) S
+      = K ^ 2 * deriv (fun k => deriv (fun k' => C S k') k) K := by
+  set g : ℝ → ℝ := fun x => C 1 x with hgdef
+  have hg : ContDiffOn ℝ 2 g (Set.Ioi 0) := by
+    have hpair : ContDiffOn ℝ 2 (fun x : ℝ => ((1 : ℝ), x)) (Set.Ioi 0) :=
+      (contDiff_const.prodMk contDiff_id).contDiffOn
+    have := hsmooth.comp hpair (fun x hx => ⟨one_pos, hx⟩)
+    simpa [Function.comp_def] using this
+  have hg1 : ∀ x : ℝ, 0 < x → HasDerivAt g (deriv g x) x := by
+    intro x hx
+    have := (hg.differentiableOn (by norm_num)) x hx
+    exact (this.differentiableAt (Ioi_mem_nhds hx)).hasDerivAt
+  have hg' : ContDiffOn ℝ 1 (deriv g) (Set.Ioi 0) :=
+    hg.deriv_of_isOpen isOpen_Ioi (by norm_num)
+  have hg2 : ∀ x : ℝ, 0 < x → HasDerivAt (deriv g) (deriv (deriv g) x) x := by
+    intro x hx
+    have := (hg'.differentiableOn (by norm_num)) x hx
+    exact (this.differentiableAt (Ioi_mem_nhds hx)).hasDerivAt
+  have hrep : ∀ s k : ℝ, 0 < s → 0 < k → C s k = s * g (k / s) := by
+    intro s k hs hk
+    have := hhom s 1 (k / s) hs one_pos (div_pos hk hs)
+    rwa [mul_one, mul_div_cancel₀ _ hs.ne'] at this
+  -- share-price side
+  have hdiv : ∀ s : ℝ, 0 < s → HasDerivAt (fun s' : ℝ => K / s') (-K / s ^ 2) s := by
+    intro s hs
+    have := (hasDerivAt_inv hs.ne').const_mul K
+    convert this using 1
+    · funext t; ring
+    · ring
+  have hD1 : ∀ s : ℝ, 0 < s →
+      HasDerivAt (fun s' => C s' K) (g (K / s) - K / s * deriv g (K / s)) s := by
+    intro s hs
+    have h : HasDerivAt (fun s' => s' * g (K / s'))
+        (1 * g (K / s) + s * (deriv g (K / s) * (-K / s ^ 2))) s :=
+      (hasDerivAt_id s).mul ((hg1 (K / s) (div_pos hK hs)).comp s (hdiv s hs))
+    have h' : HasDerivAt (fun s' => C s' K)
+        (1 * g (K / s) + s * (deriv g (K / s) * (-K / s ^ 2))) s := by
+      apply h.congr_of_eventuallyEq
+      filter_upwards [Ioi_mem_nhds hs] with t ht
+      exact hrep t K ht hK
+    convert h' using 1
+    field_simp
+    ring
+  have hSS : deriv (fun s => deriv (fun s' => C s' K) s) S
+      = K ^ 2 / S ^ 3 * deriv (deriv g) (K / S) := by
+    have hev : (fun s => deriv (fun s' => C s' K) s)
+        =ᶠ[nhds S] fun s => g (K / s) - K / s * deriv g (K / s) := by
+      filter_upwards [Ioi_mem_nhds hS] with s hs
+      exact (hD1 s hs).deriv
+    rw [hev.deriv_eq]
+    have hA := (hg1 (K / S) (div_pos hK hS)).comp S (hdiv S hS)
+    have hB := (hdiv S hS).mul ((hg2 (K / S) (div_pos hK hS)).comp S (hdiv S hS))
+    have h : HasDerivAt (fun s => g (K / s) - K / s * deriv g (K / s))
+        (deriv g (K / S) * (-K / S ^ 2) -
+          (-K / S ^ 2 * deriv g (K / S) + K / S * (deriv (deriv g) (K / S) * (-K / S ^ 2)))) S :=
+      hA.sub hB
+    rw [h.deriv]
+    field_simp
+    ring
+  -- strike side
+  have hdivk : ∀ k : ℝ, HasDerivAt (fun k' : ℝ => k' / S) (1 / S) k := by
+    intro k
+    simpa using (hasDerivAt_id k).div_const S
+  have hD2 : ∀ k : ℝ, 0 < k → HasDerivAt (fun k' => C S k') (deriv g (k / S)) k := by
+    intro k hk
+    have h := ((hg1 (k / S) (div_pos hk hS)).comp k (hdivk k)).const_mul S
+    have h' : HasDerivAt (fun k' => C S k') (S * (deriv g (k / S) * (1 / S))) k := by
+      apply h.congr_of_eventuallyEq
+      filter_upwards [Ioi_mem_nhds hk] with t ht
+      simp only [Function.comp_apply]
+      exact hrep S t hS ht
+    convert h' using 1
+    field_simp
+  have hKK : deriv (fun k => deriv (fun k' => C S k') k) K
+      = deriv (deriv g) (K / S) / S := by
+    have hev : (fun k => deriv (fun k' => C S k') k)
+        =ᶠ[nhds K] fun k => deriv g (k / S) := by
+      filter_upwards [Ioi_mem_nhds hK] with k hk
+      exact (hD2 k hk).deriv
+    rw [hev.deriv_eq]
+    have h := (hg2 (K / S) (div_pos hK hS)).comp K (hdivk K)
+    rw [show (fun k => deriv g (k / S)) = (deriv g ∘ fun k' => k' / S) from rfl, h.deriv]
+    field_simp
+  rw [hSS, hKK]
+  field_simp
+
+/-- Gamma's integrand is the fingerprint and its wave alone. The share price enters the
+Lewis integrand through the factor `F^(1/2 + iu)` with `F = c S` a fixed positive multiple
+of `S`. Differentiating that factor twice in `S` multiplies it by
+`(1/2 + iu)(-1/2 + iu)/S^2 = -(u^2 + 1/4)/S^2`, which cancels the integral's denominator. -/
+theorem heston_gamma_factor_second_deriv (c S u : ℝ) (hc : 0 < c) (hS : 0 < S) :
+    deriv (deriv (fun s : ℝ => (((c * s : ℝ)) : ℂ) ^ ((1 / 2 : ℂ) + u * I))) S
+      = -(((u : ℂ) ^ 2 + 1 / 4) / (S : ℂ) ^ 2)
+          * (((c * S : ℝ)) : ℂ) ^ ((1 / 2 : ℂ) + u * I) := by
+  set w : ℂ := (1 / 2 : ℂ) + u * I with hw
+  have hev : deriv (fun s : ℝ => (((c * s : ℝ)) : ℂ) ^ w)
+      =ᶠ[nhds S] fun s => w * (((c * s : ℝ)) : ℂ) ^ (w - 1) * c := by
+    filter_upwards [Ioi_mem_nhds hS] with s hs
+    exact (heston_cpow_scaled_hasDerivAt c s w hc hs).deriv
+  rw [hev.deriv_eq]
+  have h1 := ((heston_cpow_scaled_hasDerivAt c S (w - 1) hc hS).const_mul w).mul_const (c : ℂ)
+  rw [h1.deriv]
+  have hne : (((c * S : ℝ)) : ℂ) ≠ 0 := by
+    exact_mod_cast (mul_pos hc hS).ne'
+  have hS0 : (S : ℂ) ≠ 0 := by exact_mod_cast hS.ne'
+  have hc0 : (c : ℂ) ≠ 0 := by exact_mod_cast hc.ne'
+  have hsub : (((c * S : ℝ)) : ℂ) ^ (w - 1 - 1) = (((c * S : ℝ)) : ℂ) ^ w / (((c * S : ℝ)) : ℂ) ^ (2:ℕ) := by
+    rw [show w - 1 - 1 = w - (2:ℕ) by push_cast; ring, cpow_sub _ _ hne, cpow_natCast]
+  rw [hsub]
+  have hww : w * (w - 1) = -((u : ℂ) ^ 2 + 1 / 4) := by
+    rw [hw]; ring_nf; rw [I_sq]; ring
+  set X : ℂ := (((c * S : ℝ)) : ℂ) ^ w
+  have hX2 : (((c * S : ℝ)) : ℂ) ^ (2:ℕ) = (c:ℂ)^2 * (S:ℂ)^2 := by push_cast; ring
+  rw [hX2, show w * ((w - 1) * (X / ((c:ℂ)^2 * (S:ℂ)^2)) * (c:ℂ)) * (c:ℂ)
+      = (w * (w - 1)) * (X * (c:ℂ)^2 / ((c:ℂ)^2 * (S:ℂ)^2)) by ring, hww]
+  field_simp
+
+-- The card's whole-number count: 3 expiries times 7 strikes is 21 quotes.
+example : 3 * 7 = 21 := by norm_num
+
+#print axioms heston_delta_eq_discounted_P1
+#print axioms heston_gamma_eq_strike_curvature
+#print axioms heston_gamma_factor_second_deriv
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'heston_cpow_scaled_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heston_delta_eq_discounted_P1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heston_gamma_eq_strike_curvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heston_gamma_factor_second_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then read the row.
@@ -685,7 +926,7 @@ The outputs agree line for line. The fits are the fragile part: with slope-table
 ## Where you meet it in real life
 
 - **Equity index desks.** Heston, or Heston with jumps, is refitted to the listed surface daily, often with a penalty toward yesterday's dials so hedges do not jump as the fit slides along its valley ([Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md)).
-- **Short-dated skew.** Heston's 3-month miss, 27.00% against 28.61% at $80, is the kind of gap Bates closed by adding jumps in the share price to Heston's variance.
+- **Short-dated skew.** Heston's 3-month miss at $80 is the kind of gap Bates closed by adding jumps in the share price to Heston's variance.
 - **Pricing past the quotes.** The $0.92 gap on the three-year call is model risk, the kind a reserve is sized from.
 - **Rates and currencies.** The same fit, with a closed-form approximation instead of an integral: [SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md) and [SABR from three quotes](05-sabr-calibration-from-three-quotes.md).
 

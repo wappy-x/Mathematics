@@ -8,13 +8,15 @@
 
 Acme shares trade at $100. A client asks a dealer for "the one-year 25-delta call on Acme". No strike was named. Yet a call cannot be priced, booked or settled without one: the strike is the price the holder may pay for the share at expiry.
 
-The request names the option by how it behaves instead. Delta is how much the option's value moves per dollar of a small move in Acme: an option with delta 0.25 gains about 25 cents when Acme gains a dollar. A 25-delta call is the call whose strike sits far enough above today's price that its delta is exactly 0.25. Dealers in currencies quote options this way as a matter of routine, and many risk systems store their volatility smiles (implied volatility plotted against strike) at 10, 25 and 50 delta rather than at fixed strikes.
+The request names the option by how it behaves instead. Delta is how much the option's value moves per dollar of a small move in Acme: an option with delta 0.25 gains about 25 cents when Acme gains a dollar. A 25-delta call is the call whose strike sits far enough above today's price that its delta is exactly 0.25.
+
+Dealers in currencies quote options this way as a matter of routine. Many risk systems also store their volatility smiles at 10, 25 and 50 delta rather than at fixed strikes. A smile is implied volatility (the volatility that makes the model's price equal the market's price) plotted against strike.
 
 So the job runs backwards. The Black-Scholes delta formula takes a strike and returns a delta. This card takes the delta and returns the strike. In the house market (Acme at $100, riskless rate 5 percent, dividend yield 2 percent, volatility 20 percent, one year) the 25-delta call has strike **$119.93** and the 25-delta put has strike **$92.15**. A request for a 0.99-delta call cannot be filled at any strike. The reason is a ceiling built into the formula, and the card finds it before it solves anything.
 
 **Delta falls steadily as the strike rises, from a ceiling set by the dividend down to zero, so every delta under the ceiling names exactly one strike, and the bell-curve inverse finds it in one line.**
 
-**What kind of fact this is:** a method, resting on a theorem proved on this card in Why it works: delta is strictly decreasing in the strike, so the strike exists and is unique exactly when the delta lies inside its range.
+**What kind of fact this is:** a method, resting on a theorem proved on this card in Why it works. The theorem: delta is strictly decreasing in the strike, so the strike exists and is unique exactly when the delta lies inside its range.
 
 ### The picture: delta against strike
 
@@ -35,7 +37,9 @@ Orange: the call's delta, falling as the strike rises. Green: the put's delta wi
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today, $K$ the strike, $T$ the years to expiry, $r$ the riskless rate, $q$ the dividend yield and $\sigma$ (sigma) the volatility, as on the pilot. $\Delta$ (capital Greek delta) is the option's delta. $N(x)$ is the area under the standard bell curve to the left of $x$, a probability between 0 and 1. $N^{-1}(p)$ runs that backwards: the point whose left-hand area is a given probability, called the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+Notation first, in words. $S$ is Acme's price today, called the spot price or spot. $K$ is the strike, $T$ the years to expiry, $r$ the riskless rate, $q$ the dividend yield and $\sigma$ (sigma) the volatility, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). $\Delta$ (capital Greek delta) is the option's delta.
+
+$N(x)$ is the area under the standard bell curve to the left of $x$, a probability between 0 and 1. $N^{-1}(p)$ runs that backwards: the point whose left-hand area is a given probability, called the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 For a call with delta $\Delta$ strictly between 0 and $e^{-qT}$:
 
@@ -56,7 +60,7 @@ Outside those ranges there is no strike at all.
 | $T$ | time to expiry, in years | 1 | call strike moves further out |
 | $r$ | riskless rate, continuously compounded | 5% | rises, both sides |
 | $q$ | dividend yield, continuously compounded | 2% | falls, and the call's delta ceiling drops |
-| $\sigma$ | volatility: how jumpy Acme is, per year. Say "sigma". | 20% | call strike rises, put strike falls: the wings spread |
+| $\sigma$ | volatility: how jumpy Acme is, per year. Say "sigma". | 20% | call strike rises, put strike falls: the wings (the far-out strikes) spread |
 | $\Delta$ | delta: shares that move one-for-one with the option | 0.25 call, −0.25 put | call strike falls toward spot |
 | $N(x)$ | bell-curve area to the left of $x$ | $N(d_1) = 0.2551$ | |
 | $N^{-1}(p)$ | the normal quantile: the point with a given area to its left | $N^{-1}(0.2551) = -0.6587$ | |
@@ -64,7 +68,7 @@ Outside those ranges there is no strike at all.
 | $d_2$ | $d_1$ minus one wiggle unit; belongs to the cash half of the price, not to delta | | |
 | $e^{-qT}$ | dividend drag: the fraction of a share bought today that grows to one share by expiry, dividends reinvested | 0.9802 | |
 
-The helper, as on the pilot card:
+The helper, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}$$
 
@@ -74,7 +78,7 @@ The deltas themselves come from [Delta](../09-The%20Greeks%2C%20one%20each/01-de
 
 ### When it holds
 
-- **One volatility for every strike.** The formula feeds in a single $\sigma$. Real markets show a smile (a different implied volatility at each strike, see [Implied volatility](01-implied-volatility.md)). Then $\sigma$ depends on the $K$ being solved for, the one-line answer becomes a starting guess, and the strike is found by repeating the formula with the smile's volatility at the last guess until it settles.
+- **One volatility for every strike.** The formula feeds in a single $\sigma$. Real markets show a smile (a different implied volatility at each strike, see [Implied volatility](01-implied-volatility.md)). Then $\sigma$ depends on the $K$ being solved for. The one-line answer becomes a starting guess, and the strike is found by repeating the formula with the smile's volatility at the last guess until it settles.
 - **Spot delta, premium not included.** This card's delta is the change in option value per dollar of Acme, paid for in cash. Currency markets also quote forward deltas and premium-included deltas. Those are different functions of the strike with different inverses; feeding one into this formula gives the wrong strike.
 - **Black-Scholes dynamics.** Delta here is the model's delta. If Acme's price can jump, the hedge ratio a desk actually uses differs, but the quoting convention still uses this formula to turn the label into a strike.
 - **The delta is inside the range.** A call delta at or above $e^{-qT}$, or at or below 0, has no strike. The formula signals this: $N^{-1}$ is asked for the point with area 1 or more, or 0 or less, and there is none.
@@ -167,7 +171,7 @@ delta-neutral    █████████████████████
 10-delta call    ███████████████████████████  $135.53
 ```
 
-The quotes are centred on the delta-neutral strike, not on spot, and they are even in logs, not dollars: each 25-delta strike sits 0.1317 in log from $105.13. A log step up covers more dollars than the same step down, so the call side stretches $14.80 and the put side $12.98.
+The quotes are centred on the delta-neutral strike, not on spot. They are even in logs, not dollars: each 25-delta strike sits 0.1317 in log from $105.13. A log step up covers more dollars than the same step down, so the call side stretches $14.80 and the put side $12.98.
 
 ### What breaks if you drop a piece
 
@@ -184,7 +188,13 @@ Right answers: 25-delta call $119.93, 25-delta put $92.15.
 
 ## Code, from first principles, and it actually runs
 
-The code builds its own bell-curve area and its own quantile, then reaches each strike by three independent roads. Road 1 is the closed form: Newton's method on the bell-curve area gives the quantile, and the formula does the rest. Road 2 never inverts the bell curve: it bisects on the strike until the forward delta formula hits the target. Road 3 checks the meaning of the answer: it prices the option at the found strike by Simpson's rule (adding up thin slices under the payoff times the bell curve, with no $N$ and no $d_1$), nudges Acme by one cent each way, and reads the delta off the change in price. That delta must come back as 0.25. The same integral reprices the house call at $9.23 as a fourth anchor. Python's bell-curve area is the Taylor series of the error function (erf, a rescaled bell-curve area) written out; Rust's is Simpson's rule under the bell curve. The two languages share no bell-curve code.
+The code builds its own bell-curve area and its own quantile, then reaches each strike by three independent roads.
+
+1. **Road 1 is the closed form.** Newton's method (improve a guess by following the slope of the curve, again and again) on the bell-curve area gives the quantile, and the formula does the rest.
+2. **Road 2 never inverts the bell curve.** It bisects on the strike until the strike-to-delta formula hits the target.
+3. **Road 3 checks the meaning of the answer.** It prices the option at the found strike by Simpson's rule (adding up thin slices under the payoff times the bell curve, with no $N$ and no $d_1$). Then it nudges Acme by one cent each way and reads the delta off the change in price. That delta must come back as 0.25.
+
+The same integral reprices the house call at $9.23 as a fourth anchor. Python's bell-curve area is the Taylor series (an endless sum of powers of $x$) of the error function (erf, a rescaled bell-curve area), written out. Rust's is Simpson's rule under the bell curve. The two languages share no bell-curve code.
 
 ### Python
 
@@ -518,6 +528,302 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, although one language sums a series and the other adds slices under the curve.
 
+### Lean
+
+Lean proves the method sound for every positive spot, volatility and time, and for any rates.
+
+- Delta falls as the strike rises. Both the call's delta and the put's delta are strictly decreasing over all positive strikes.
+- A call delta names exactly one positive strike if and only if it lies strictly between 0 and $e^{-qT}$.
+- A put delta names exactly one positive strike if and only if it lies strictly between $-e^{-qT}$ and 0.
+- Take a call delta $\Delta$ inside its range, and a point $z$ with $N(z) = \Delta e^{qT}$. Then the card's call formula gives a strike whose delta is exactly $\Delta$.
+- Take a put delta $\Delta$ inside its range, and a point $z$ with $N(z) = \lvert\Delta\rvert e^{qT}$. Then the card's put formula gives a strike whose delta is exactly $\Delta$.
+- On the house market, no strike has a call delta of 0.99.
+- On the house market, $d_1 = 0$ at the delta-neutral strike $S e^{0.05}$.
+
+The decimal strikes, such as $119.93 and $92.15, and the delta read off the Simpson premium are left to the Python and Rust checks.
+
+```lean
+-- Strike from delta: in the Black-Scholes model the call and put deltas fall strictly as the strike rises, so a delta names exactly one positive strike precisely when it lies strictly inside its range, and the normal-quantile formula gives that strike.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Order.Monotone.Basic
+
+open Real MeasureTheory ProbabilityTheory Set
+
+/-- `N(x)`: the bell-curve area to the left of `x`, the standard normal's cumulative chance. -/
+noncomputable def stdNormalCDF (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- The helper `d₁ = (ln(S/K) + (r - q + σ²/2) T) / (σ√T)`. -/
+noncomputable def bsD1 (S K r q σ T : ℝ) : ℝ :=
+  (log (S / K) + (r - q + σ ^ 2 / 2) * T) / (σ * √T)
+
+/-- The call's spot delta as a function of the strike: `e^(-qT) N(d₁)`. -/
+noncomputable def callDelta (S r q σ T K : ℝ) : ℝ :=
+  exp (-q * T) * stdNormalCDF (bsD1 S K r q σ T)
+
+/-- The put's spot delta as a function of the strike: `-e^(-qT) N(-d₁)`. -/
+noncomputable def putDelta (S r q σ T K : ℝ) : ℝ :=
+  -(exp (-q * T) * stdNormalCDF (-bsD1 S K r q σ T))
+
+
+lemma sfd_cdf_strictMono : StrictMono stdNormalCDF := by
+  intro x y hxy
+  have h1 : (cdf (gaussianReal 0 1)).measure (Ioc x y)
+      = ENNReal.ofReal (stdNormalCDF y - stdNormalCDF x) :=
+    StieltjesFunction.measure_Ioc _ x y
+  rw [measure_cdf] at h1
+  have h2 : gaussianReal 0 1 (Ioc x y) ≠ 0 := by
+    intro h
+    have h3 := gaussianReal_absolutelyContinuous' 0 (v := 1) one_ne_zero h
+    rw [Real.volume_Ioc, ENNReal.ofReal_eq_zero] at h3
+    linarith
+  rw [h1] at h2
+  have h4 : ¬ (stdNormalCDF y - stdNormalCDF x ≤ 0) := fun h => h2 (ENNReal.ofReal_eq_zero.mpr h)
+  linarith [not_le.mp h4]
+
+lemma sfd_cdf_continuous : Continuous stdNormalCDF := by
+  have hfun : stdNormalCDF = fun x => cdf (gaussianReal 0 1) x := rfl
+  have hmono : Monotone (cdf (gaussianReal 0 1)) := monotone_cdf _
+  rw [hfun, continuous_iff_continuousAt]
+  intro a
+  have h1 : (cdf (gaussianReal 0 1)).measure {a}
+      = ENNReal.ofReal (cdf (gaussianReal 0 1) a - Function.leftLim (cdf (gaussianReal 0 1)) a) :=
+    StieltjesFunction.measure_singleton _ a
+  rw [measure_cdf] at h1
+  have h0 : gaussianReal 0 1 {a} = 0 :=
+    gaussianReal_absolutelyContinuous 0 one_ne_zero (Real.volume_singleton)
+  rw [h0, eq_comm, ENNReal.ofReal_eq_zero] at h1
+  have h2 := hmono.leftLim_le (le_refl a)
+  have h5 : ContinuousAt (cdf (gaussianReal 0 1)) a := by
+    rw [hmono.continuousAt_iff_leftLim_eq_rightLim, StieltjesFunction.rightLim_eq]
+    linarith
+  exact h5
+
+lemma sfd_cdf_pos (x : ℝ) : 0 < stdNormalCDF x :=
+  lt_of_le_of_lt (cdf_nonneg _ (x - 1)) (sfd_cdf_strictMono (by linarith : x - 1 < x))
+
+lemma sfd_cdf_lt_one (x : ℝ) : stdNormalCDF x < 1 :=
+  lt_of_lt_of_le (sfd_cdf_strictMono (by linarith : x < x + 1)) (cdf_le_one _ (x + 1))
+
+lemma sfd_cdf_surj (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) : ∃ z, stdNormalCDF z = p := by
+  have hbot : Filter.Tendsto stdNormalCDF Filter.atBot (nhds 0) := tendsto_cdf_atBot _
+  have htop : Filter.Tendsto stdNormalCDF Filter.atTop (nhds 1) := tendsto_cdf_atTop _
+  have ha : ∃ a, stdNormalCDF a ≤ p := by
+    obtain ⟨a, ha⟩ := ((tendsto_order.1 hbot).2 p hp0).exists
+    exact ⟨a, ha.le⟩
+  have hb : ∃ b, p ≤ stdNormalCDF b := by
+    obtain ⟨b, hb⟩ := ((tendsto_order.1 htop).1 p hp1).exists
+    exact ⟨b, hb.le⟩
+  exact mem_range_of_exists_le_of_exists_ge sfd_cdf_continuous ha hb
+
+lemma sfd_d1_strictAntiOn (S r q σ T : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    StrictAntiOn (fun K => bsD1 S K r q σ T) (Ioi 0) := by
+  intro K1 hK1 K2 hK2 hlt
+  have hK1' : 0 < K1 := hK1
+  have hK2' : 0 < K2 := hK2
+  simp only [bsD1]
+  have hpos : 0 < σ * √T := mul_pos hσ (Real.sqrt_pos.mpr hT)
+  apply div_lt_div_of_pos_right _ hpos
+  rw [log_div hS.ne' hK1'.ne', log_div hS.ne' hK2'.ne']
+  have := Real.log_lt_log hK1' hlt
+  linarith
+
+lemma sfd_d1_closed (S r q σ T z : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) (sgn : ℝ) :
+    bsD1 S (S * exp (sgn * (σ * √T) * z + (r - q + σ ^ 2 / 2) * T)) r q σ T = -sgn * z := by
+  have hpos : 0 < σ * √T := mul_pos hσ (Real.sqrt_pos.mpr hT)
+  have hlog : log (S / (S * exp (sgn * (σ * √T) * z + (r - q + σ ^ 2 / 2) * T)))
+      = -(sgn * (σ * √T) * z + (r - q + σ ^ 2 / 2) * T) := by
+    rw [div_mul_eq_div_div S S, div_self hS.ne', one_div, log_inv, log_exp]
+  simp only [bsD1]
+  rw [hlog, div_eq_iff hpos.ne']
+  ring
+
+lemma sfd_exp_cancel (q T : ℝ) : exp (-q * T) * exp (q * T) = 1 := by
+  rw [← exp_add, show -q * T + q * T = 0 by ring, exp_zero]
+
+lemma sfd_call_bounds (S r q σ T K : ℝ) :
+    0 < callDelta S r q σ T K ∧ callDelta S r q σ T K < exp (-q * T) := by
+  have he := exp_pos (-q * T)
+  have h0 := sfd_cdf_pos (bsD1 S K r q σ T)
+  have h1 := sfd_cdf_lt_one (bsD1 S K r q σ T)
+  simp only [callDelta]
+  constructor
+  · positivity
+  · nlinarith
+
+lemma sfd_put_bounds (S r q σ T K : ℝ) :
+    -exp (-q * T) < putDelta S r q σ T K ∧ putDelta S r q σ T K < 0 := by
+  have he := exp_pos (-q * T)
+  have h0 := sfd_cdf_pos (-bsD1 S K r q σ T)
+  have h1 := sfd_cdf_lt_one (-bsD1 S K r q σ T)
+  simp only [putDelta]
+  constructor
+  · nlinarith
+  · nlinarith
+
+lemma sfd_anti (S r q σ T : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    StrictAntiOn (callDelta S r q σ T) (Ioi 0) ∧
+      StrictAntiOn (putDelta S r q σ T) (Ioi 0) := by
+  have hd := sfd_d1_strictAntiOn S r q σ T hS hσ hT
+  have he := exp_pos (-q * T)
+  constructor
+  · intro K1 hK1 K2 hK2 hlt
+    have := sfd_cdf_strictMono (hd hK1 hK2 hlt)
+    simp only [callDelta]
+    exact mul_lt_mul_of_pos_left this he
+  · intro K1 hK1 K2 hK2 hlt
+    have h := hd hK1 hK2 hlt
+    have := sfd_cdf_strictMono (neg_lt_neg h)
+    simp only [putDelta]
+    have := mul_lt_mul_of_pos_left this he
+    linarith
+
+lemma sfd_closed (S r q σ T : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    (∀ Δ z : ℝ, 0 < Δ → Δ < exp (-q * T) → stdNormalCDF z = Δ * exp (q * T) →
+      callDelta S r q σ T (S * exp (-(σ * √T) * z + (r - q + σ ^ 2 / 2) * T)) = Δ) ∧
+    (∀ Δ z : ℝ, -exp (-q * T) < Δ → Δ < 0 → stdNormalCDF z = |Δ| * exp (q * T) →
+      putDelta S r q σ T (S * exp ((σ * √T) * z + (r - q + σ ^ 2 / 2) * T)) = Δ) := by
+  constructor
+  · intro Δ z _ _ hz
+    have h := sfd_d1_closed S r q σ T z hS hσ hT (-1)
+    rw [show -1 * (σ * √T) * z = -(σ * √T) * z by ring, show -(-1 : ℝ) * z = z by ring] at h
+    simp only [callDelta]
+    rw [h, hz, ← mul_assoc, mul_comm (exp (-q * T)) Δ, mul_assoc, sfd_exp_cancel, mul_one]
+  · intro Δ z _ hΔ hz
+    have h := sfd_d1_closed S r q σ T z hS hσ hT 1
+    rw [show 1 * (σ * √T) * z = (σ * √T) * z by ring, show -(1 : ℝ) * z = -z by ring] at h
+    simp only [putDelta]
+    rw [h, neg_neg, hz, abs_of_neg hΔ]
+    have := sfd_exp_cancel q T
+    linear_combination Δ * this
+
+lemma sfd_exists_unique (S r q σ T Δ : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    ((∃! K : ℝ, 0 < K ∧ callDelta S r q σ T K = Δ) ↔ (0 < Δ ∧ Δ < exp (-q * T))) ∧
+      ((∃! K : ℝ, 0 < K ∧ putDelta S r q σ T K = Δ) ↔ (-exp (-q * T) < Δ ∧ Δ < 0)) := by
+  have hanti := sfd_anti S r q σ T hS hσ hT
+  have hcl := sfd_closed S r q σ T hS hσ hT
+  have hE := exp_pos (q * T)
+  have hc := sfd_exp_cancel q T
+  constructor
+  · constructor
+    · rintro ⟨K, ⟨_, hK⟩, _⟩
+      rw [← hK]
+      exact sfd_call_bounds S r q σ T K
+    · rintro ⟨h0, h1⟩
+      obtain ⟨z, hz⟩ := sfd_cdf_surj (Δ * exp (q * T)) (by positivity) (by nlinarith)
+      refine ⟨S * exp (-(σ * √T) * z + (r - q + σ ^ 2 / 2) * T),
+        ⟨by positivity, hcl.1 Δ z h0 h1 hz⟩, ?_⟩
+      rintro K' ⟨hK', hK'e⟩
+      exact hanti.1.injOn hK' (show (0:ℝ) < _ by positivity)
+        (hK'e.trans (hcl.1 Δ z h0 h1 hz).symm)
+  · constructor
+    · rintro ⟨K, ⟨_, hK⟩, _⟩
+      rw [← hK]
+      exact sfd_put_bounds S r q σ T K
+    · rintro ⟨h0, h1⟩
+      have habs : |Δ| = -Δ := abs_of_neg h1
+      obtain ⟨z, hz⟩ := sfd_cdf_surj (|Δ| * exp (q * T)) (by rw [habs]; nlinarith)
+        (by rw [habs]; nlinarith)
+      refine ⟨S * exp ((σ * √T) * z + (r - q + σ ^ 2 / 2) * T),
+        ⟨by positivity, hcl.2 Δ z h0 h1 hz⟩, ?_⟩
+      rintro K' ⟨hK', hK'e⟩
+      exact hanti.2.injOn hK' (show (0:ℝ) < _ by positivity)
+        (hK'e.trans (hcl.2 Δ z h0 h1 hz).symm)
+
+/-- **A delta names exactly one strike, exactly inside its range** (Why it works, Steps 1 and 2).
+Fix a spot `S > 0`, volatility `σ > 0`, time `T > 0`, and any rates `r`, `q`. A call delta `Δ`
+is the delta of exactly one positive strike if and only if `0 < Δ < e^(-qT)`; outside that range
+no strike has it. A put delta `Δ` is the delta of exactly one positive strike if and only if
+`-e^(-qT) < Δ < 0`. -/
+theorem strike_from_delta_exists_unique_iff
+    (S r q σ T Δ : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    ((∃! K : ℝ, 0 < K ∧ callDelta S r q σ T K = Δ) ↔ (0 < Δ ∧ Δ < exp (-q * T))) ∧
+      ((∃! K : ℝ, 0 < K ∧ putDelta S r q σ T K = Δ) ↔ (-exp (-q * T) < Δ ∧ Δ < 0)) := by
+  exact sfd_exists_unique S r q σ T Δ hS hσ hT
+
+/-- **Delta falls as the strike rises** (Why it works, Step 1). Under the same terms, the call
+delta and the put delta are both strictly decreasing in the strike over all positive strikes. -/
+theorem delta_strictly_decreasing_in_strike
+    (S r q σ T : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    StrictAntiOn (callDelta S r q σ T) (Ioi 0) ∧
+      StrictAntiOn (putDelta S r q σ T) (Ioi 0) := by
+  exact sfd_anti S r q σ T hS hσ hT
+
+/-- **The one-line formula** (The formula; Why it works, Step 3). Under the same terms, for a call
+delta `0 < Δ < e^(-qT)`, if `z` is the normal quantile of `Δ e^(qT)` (that is, `N(z) = Δ e^(qT)`),
+then the strike `K = S exp(-σ√T z + (r - q + σ²/2) T)` has call delta `Δ`. For a put delta
+`-e^(-qT) < Δ < 0`, if `N(z) = |Δ| e^(qT)`, then `K = S exp(+σ√T z + (r - q + σ²/2) T)` has put
+delta `Δ`. -/
+theorem strike_from_delta_closed_form
+    (S r q σ T : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    (∀ Δ z : ℝ, 0 < Δ → Δ < exp (-q * T) → stdNormalCDF z = Δ * exp (q * T) →
+      callDelta S r q σ T (S * exp (-(σ * √T) * z + (r - q + σ ^ 2 / 2) * T)) = Δ) ∧
+    (∀ Δ z : ℝ, -exp (-q * T) < Δ → Δ < 0 → stdNormalCDF z = |Δ| * exp (q * T) →
+      putDelta S r q σ T (S * exp ((σ * √T) * z + (r - q + σ ^ 2 / 2) * T)) = Δ) := by
+  exact sfd_closed S r q σ T hS hσ hT
+
+-- Acme: S = 100, r = 5/100, q = 2/100, σ = 1/5, T = 1 year.
+-- The drift inside d₁: (0.05 - 0.02 + 0.20²/2) · 1 = 0.05.
+example : ((5 : ℚ) / 100 - 2 / 100 + (1 / 5) ^ 2 / 2) * 1 = 1 / 20 := by norm_num
+-- No strike has call delta 0.99: it sits above the ceiling e^(-0.02) = 0.9802.
+example : ¬ ∃ K : ℝ, 0 < K ∧ callDelta 100 (5 / 100) (2 / 100) (1 / 5) 1 K = 99 / 100 := by
+  rintro ⟨K, _, hK⟩
+  have hb := (sfd_call_bounds 100 (5 / 100) (2 / 100) (1 / 5) 1 K).2
+  rw [hK] at hb
+  have h1 := Real.add_one_le_exp (2 / 100 : ℝ)
+  have h2 := sfd_exp_cancel (2 / 100 : ℝ) 1
+  have h3 := exp_pos (-(2 / 100 : ℝ) * 1)
+  rw [mul_one] at h2
+  nlinarith
+-- The delta-neutral strike K = S e^(0.05) = 105.13 has d₁ = 0.
+example : bsD1 100 (100 * exp (1 / 20)) (5 / 100) (2 / 100) (1 / 5) 1 = 0 := by
+  have h := sfd_d1_closed 100 (5 / 100) (2 / 100) (1 / 5) 1 0 (by norm_num) (by norm_num) (by norm_num) 0
+  norm_num at h ⊢
+  convert h using 3
+-- The 25-delta put is the 73.02-delta call, not the 75: 0.730199 + 0.25 = 0.980199.
+example : (730199 : ℕ) + 250000 = 980199 := by norm_num
+
+#print axioms sfd_cdf_strictMono
+#print axioms sfd_cdf_continuous
+#print axioms sfd_cdf_pos
+#print axioms sfd_cdf_lt_one
+#print axioms sfd_cdf_surj
+#print axioms sfd_d1_strictAntiOn
+#print axioms sfd_d1_closed
+#print axioms sfd_exp_cancel
+#print axioms sfd_call_bounds
+#print axioms sfd_put_bounds
+#print axioms sfd_anti
+#print axioms sfd_closed
+#print axioms sfd_exists_unique
+#print axioms strike_from_delta_exists_unique_iff
+#print axioms delta_strictly_decreasing_in_strike
+#print axioms strike_from_delta_closed_form
+```
+
+**Checked 2026-11-13 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sfd_cdf_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_cdf_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_cdf_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_cdf_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_cdf_surj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_d1_strictAntiOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_d1_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_exp_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_call_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_put_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_anti' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sfd_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'strike_from_delta_exists_unique_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_strictly_decreasing_in_strike' depends on axioms: [propext, Classical.choice, Quot.sound]
+'strike_from_delta_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -531,7 +837,7 @@ The two outputs agree line for line, although one language sums a series and the
 ## The usual mistake
 
 > [!warning]
-> **Treating the delta label as if it were a probability of finishing in the money.** It is not. The 25-delta call is not "the call with a 25 percent chance of paying". The risk-neutral chance of exercise is $N(d_2)$, which sits one wiggle unit below $N(d_1)$, and delta also carries the dividend drag. Solving $e^{-qT}N(d_2) = 0.25$ instead puts the 25-delta call at $115.23, not $119.93.
+> **Treating the delta label as if it were a probability of finishing in the money.** It is not. The 25-delta call is not "the call with a 25 percent chance of paying". The risk-neutral chance of exercise (the chance the pricing model assigns) is $N(d_2)$, which sits one wiggle unit below $N(d_1)$, and delta also carries the dividend drag. Solving $e^{-qT}N(d_2) = 0.25$ instead puts the 25-delta call at $115.23, not $119.93.
 >
 > - **Forgetting the dividend drag.** Solving $N(d_1) = 0.25$ gives $120.31. The error grows with the dividend yield and the maturity.
 > - **Mirroring the put through 1 instead of $e^{-qT}$.** A 25-delta put is the 73.02-delta call, not the 75-delta call. Using 75 gives $90.97 instead of $92.15.
@@ -542,7 +848,7 @@ The two outputs agree line for line, although one language sums a series and the
 
 ## Where you meet it in real life
 
-- **Currency option quotes.** Dealers quote the smile as at-the-money, 25-delta risk reversals and 25-delta butterflies, with 10-delta versions for the wings. Every one of those has to be turned into a strike before an option can be priced or booked (Reiswich and Wystup; Clark).
+- **Currency option quotes.** Dealers quote the smile as three numbers. At-the-money is the volatility at a strike near spot. The 25-delta risk reversal is the 25-delta call's volatility minus the 25-delta put's. The 25-delta butterfly is the average of those two minus the at-the-money volatility. There are 10-delta versions for the wings. Every one of those has to be turned into a strike before an option can be priced or booked (Reiswich and Wystup; Clark).
 - **Volatility surfaces stored by delta.** A surface kept at fixed deltas stays roughly in place when the share moves, while a surface at fixed strikes has to be shifted. Looking up the volatility for a given strike then needs this conversion, run with the smile's volatility at each guess.
 - **Hedging orders.** "Buy the 25-delta put" is a common way to ask for downside protection of a set size. The order ticket still needs a strike, here $92.15.
 - **Premium targets.** The sibling problem fixes the price instead of the delta and asks for the strike: [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md). Reading the forward and dividend back from market prices is [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md).
@@ -562,7 +868,7 @@ The two outputs agree line for line, although one language sums a series and the
 
 - [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md): the same backward question asked of the price instead of the delta, where no closed form exists and the range has different ends.
 
-A delta pins a strike in one line because delta has a single bell-curve area in it; a premium has two, and whether a price still names exactly one strike is the question the next card answers.
+A delta pins a strike in one line because delta has a single bell-curve area in it. A premium has two, and whether a price still names exactly one strike is the question the next card answers.
 
 ---
 
