@@ -6,13 +6,20 @@
 
 ## General Overview
 
-A fund buys five years of protection on Northwind, a borrowing company, for $10 million of Northwind's debt. The contract is a credit default swap ([The credit default swap](01-credit-default-swap-contract.md)): the fund pays a premium every quarter while Northwind survives, and if Northwind defaults, the seller pays the fund the lost part of the $10 million. The fund bought at par, the premium rate that makes the trade worth nothing on day one: 121.06 basis points a year. A basis point, "bp", is a hundredth of a percent, so the premium is 1.2106% of $10 million a year, about $30,264 a quarter.
+A fund buys five years of protection on Northwind, a borrowing company, for $10 million of Northwind's debt, the notional. The contract is a credit default swap, CDS for short ([The credit default swap](01-credit-default-swap-contract.md)). The fund pays a premium every quarter while Northwind survives. If Northwind defaults, the seller pays the fund the lost part of the $10 million.
+
+The yearly premium rate is called the spread. The fund bought at par, the premium rate that makes the trade worth nothing on day one: 121.06 basis points a year. A basis point, "bp", is a hundredth of a percent, so the premium is 1.2106% of $10 million a year, about $30,264 a quarter.
 
 The trade is worth zero today. It will not stay there: Northwind's credit can worsen, it can default, the recovery assumption can be revised, rates can move, and the calendar moves every day. A risk desk wants one dollar figure for each, before the market moves rather than after.
 
-The five figures are: **CS01**, dollars gained per basis point rise in Northwind's quoted spread, here $4,180; **jump-to-default**, dollars gained if Northwind defaults this instant, here $6 million; **recovery sensitivity** and **IR01** (interest-rate sensitivity), per percentage point of recovery and per basis point of rates, both zero on day one and tens or hundreds of dollars later; and the **carry and roll-down** of a quarter, the premium paid and the value drift as the contract shortens.
+The five figures are:
 
-Every one of them is computed twice on this card: by moving the market and repricing (bump and revalue), and by differentiating the two leg formulas.
+- **CS01**: dollars gained per basis point rise in Northwind's quoted spread, here $4,180.
+- **Jump-to-default**: dollars gained if Northwind defaults this instant, here $6 million.
+- **Recovery sensitivity** and **IR01** (interest-rate sensitivity): per percentage point of recovery and per basis point of rates, both zero on day one and tens or hundreds of dollars later.
+- **Carry and roll-down** of a quarter: the premium paid and the value drift as the contract shortens.
+
+Every one of them is computed twice on this card: by moving the market and repricing (bump and revalue), and by differentiating the two leg formulas. Both roads rest on the risky annuity: the value of $1 a year of premium, paid quarterly while Northwind survives.
 
 **A protection position is worth its notional times the risky annuity times the gap between today's spread and the contract's; each risk number is a way of moving the spread, the annuity or the default date, and at par the gap is zero, which is why CS01 is the notional times the annuity and the recovery and rate numbers vanish.**
 
@@ -69,7 +76,7 @@ The five risk numbers are defined by moving one input and repricing, with the ma
 | $\lambda$ | hazard ("lambda"): chance of default per year among survivors | 2%; 3.30% at 200 bp | $A$ falls |
 | $R$ | recovery: fraction of notional recovered on default | 40% | jump-to-default falls $100,000 per point |
 | $r$ | riskless rate, continuously compounded | 5% | $A$ falls a little |
-| $T$, $\delta$, $t_j$ | years left; the quarter each premium covers; the premium dates | 5; 0.25; 0.25 to 5, twenty dates | — |
+| $T$, $\delta$, $t_j$, $n$ | years left; the quarter each premium covers; the premium dates, numbered $j = 1$ to $n$ | 5; 0.25; 0.25 to 5, twenty dates | — |
 | $D(t)$, $Q(t)$ | discount factor $e^{-rt}$; survival chance $e^{-\lambda t}$ | — | — |
 | $k$, $G$ | the combined shrink rate $r + \lambda$; $G = (1 - e^{-kT})/k$, the leg formulas' shared factor | 0.07 | — |
 
@@ -81,7 +88,7 @@ The five risk numbers are defined by moving one input and repricing, with the ma
 - **No accrued premium at default.** On day one nothing has accrued. Mid-quarter, jump-to-default also owes the seller the premium accrued since the last date.
 - **Small moves.** CS01 is a slope. For a widening to 200 bp the straight line in the chart says $330,138.06 against a true $319,729.45.
 
-Conventions verified 28 Sep 2026: single-name contracts now trade with a fixed coupon and an upfront payment, and the ISDA CDS Standard Model converts between upfront and spread quotes ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)). This card bumps the quoted spread and reprices through its own flat-hazard pricer, the same idea on a smaller model.
+Conventions verified 28 Sep 2026: single-name contracts now trade with a fixed coupon and an upfront payment, and the ISDA CDS Standard Model converts between upfront and spread quotes ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)). ISDA is the International Swaps and Derivatives Association, the industry body that writes the standard contract. This card bumps the quoted spread and reprices through its own flat-hazard pricer, the same idea on a smaller model.
 
 ---
 
@@ -113,7 +120,7 @@ Both pieces come from differentiating the leg formulas; the folded proof below w
 
 ### Step 2: jump-to-default is the payout minus what is lost
 
-If Northwind defaults this instant, the premiums stop and the seller pays $(1-R)N$ = **$6,000,000**. The position that was worth $V$ disappears. So
+If Northwind defaults this instant, the premiums stop and the seller pays $(1-R)N$ = **$6,000,000**. The position that was worth $V$ disappears. So jump-to-default, JTD for short, is
 
 $$\text{JTD} = (1 - R)\,N - V \;(+\text{ premium accrued, owed to the seller}).$$
 
@@ -661,6 +668,212 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The only visible gap between roads is Rec01 at 200 bp, $429.55 by bump against $429.44 by derivative: the bump spans a full recovery point each side, so it carries a little curvature.
 
+### Lean
+
+Lean proves the card's three flat-hazard theorems for any notional, rate, recovery and quarter length, with at least one premium.
+
+- Suppose the hazard is re-implied from each quote and moves continuously with it. Then CS01 at par, the slope of $V$ in $s$, is exactly $N \times A$.
+- Suppose the quote is held at the contract spread and the hazard is re-implied after each bump. Then Rec01 and IR01 at par are exactly zero.
+- Take one flat hazard. Then the par spread is the same for every whole number of quarters, so roll-down is exactly zero.
+- The Northwind counts are exact: twenty premium dates, 4.75 years left after a quarter, and a combined shrink rate of 0.07.
+- Jump-to-default on day one is exactly $6,000,000, and each point of recovery takes $100,000 off it.
+- An auction at 30% makes jump-to-default $1,000,000 bigger, and the quick estimate is $5,000.
+
+Every priced number, every bump, the off-par sensitivities and the rising-curve roll-down are left to the Python and Rust checks.
+
+```lean
+-- CDS risk numbers: in the flat-hazard CDS model, with the hazard re-implied from the quote at every bump, CS01 at par equals the notional times the risky annuity, the recovery and rate sensitivities at par are zero, and on a flat curve the par spread is the same for every whole number of quarters, so roll-down is zero.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum
+
+open Finset Filter
+
+
+/-- Helper: the flat-hazard risky annuity is positive. -/
+theorem cds_annuity_pos (c δ : ℝ) (n : ℕ) (hn : 1 ≤ n) (hδ : 0 < δ) :
+    0 < ∑ j ∈ Icc 1 n, δ * Real.exp (-c * (j * δ)) := by
+  apply Finset.sum_pos
+  · intro j _
+    positivity
+  · exact ⟨1, Finset.mem_Icc.mpr ⟨le_refl 1, hn⟩⟩
+
+/-- Helper: geometric sum over `1, …, k`. -/
+theorem cds_geom_Icc (q : ℝ) (k : ℕ) :
+    (∑ j ∈ Icc 1 k, q ^ j) * (q - 1) = q ^ (k + 1) - q := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), add_mul, ih]
+    ring
+
+/-- Helper: the annuity as a geometric sum in `q = e^{-c δ}`. -/
+theorem cds_annuity_geom (c δ : ℝ) (k : ℕ) :
+    ∑ j ∈ Icc 1 k, δ * Real.exp (-c * (j * δ)) =
+      δ * ∑ j ∈ Icc 1 k, Real.exp (-c * δ) ^ j := by
+  rw [Finset.mul_sum]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [← Real.exp_nat_mul]
+  congr 2
+  ring
+
+/-- CS01 at par is the notional times the risky annuity.
+Flat-hazard model: premiums every `δ > 0` years at `t_j = j δ` for `j = 1, …, n` (`n ≥ 1`),
+maturity `T = n δ`, riskless rate `r`, recovery `R`, flat hazard `λ`, combined rate `k = r + λ`.
+The risky annuity is `A(λ) = ∑ δ e^{-k t_j}` and the protection leg is
+`P(λ) = (1 - R) λ (1 - e^{-k T}) / k`; the par spread is `P / A`.
+The desk turns each quoted spread `s` into a hazard `h s` with `P(h s) / A(h s) = s`
+(for every quote near `s₀`), and the re-implied hazard moves continuously with the quote.
+A position of notional `N` bought at the contract spread `s₀` is worth
+`V(s) = N (P(h s) - s₀ A(h s))` when the market quotes `s`.
+Then at par (market quote `= s₀`) the slope `dV/ds` is exactly `N × A(h s₀)`. -/
+theorem cs01_at_par_eq_notional_mul_annuity
+    (N r R δ s₀ : ℝ) (n : ℕ) (hn : 1 ≤ n) (hδ : 0 < δ)
+    (A : ℝ → ℝ) (P : ℝ → ℝ)
+    (hA : ∀ lam, A lam = ∑ j ∈ Icc 1 n, δ * Real.exp (-(r + lam) * (j * δ)))
+    (hP : ∀ lam, P lam = (1 - R) * lam * (1 - Real.exp (-(r + lam) * (n * δ))) / (r + lam))
+    (h : ℝ → ℝ) (hpar : ∀ᶠ s in nhds s₀, P (h s) / A (h s) = s)
+    (hcont : ContinuousAt h s₀) :
+    HasDerivAt (fun s => N * (P (h s) - s₀ * A (h s))) (N * A (h s₀)) s₀ := by
+  have hApos : ∀ lam, 0 < A lam := fun lam => by
+    rw [hA lam]; exact cds_annuity_pos (r + lam) δ n hn hδ
+  have hAc : Continuous A := by
+    have : A = fun lam => ∑ j ∈ Icc 1 n, δ * Real.exp (-(r + lam) * (j * δ)) := funext hA
+    rw [this]; fun_prop
+  have hAh : ContinuousAt (fun s => A (h s)) s₀ := hAc.continuousAt.comp hcont
+  have heq : (fun s => N * (P (h s) - s₀ * A (h s))) =ᶠ[nhds s₀]
+      fun s => N * ((s - s₀) * A (h s)) := by
+    filter_upwards [hpar] with s hs
+    have hne := (hApos (h s)).ne'
+    rw [div_eq_iff hne] at hs
+    rw [hs]; ring
+  have hd : HasDerivAt (fun s => (s - s₀) * A (h s)) (A (h s₀)) s₀ := by
+    rw [hasDerivAt_iff_tendsto_slope]
+    have : Tendsto (fun s => A (h s)) (nhdsWithin s₀ {s₀}ᶜ) (nhds (A (h s₀))) :=
+      hAh.tendsto.mono_left nhdsWithin_le_nhds
+    refine this.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with s hs
+    have hs' : s - s₀ ≠ 0 := sub_ne_zero.mpr hs
+    rw [slope_def_field]
+    field_simp
+    ring
+  exact (hd.const_mul N).congr_of_eventuallyEq heq
+
+/-- Recovery sensitivity (Rec01) and rate sensitivity (IR01) are zero at par.
+Same flat-hazard model, now with the annuity `A(r, λ) = ∑ δ e^{-(r+λ) t_j}` and the protection
+leg `P(r, λ, R) = (1 - R) λ (1 - e^{-(r+λ) T}) / (r + λ)` written as functions of the rate and
+recovery too. The market's quote is held at the contract spread `s₀` (the trade is at par).
+When recovery moves to `x` near `R₀`, the hazard is re-implied as `g x` so the quote still fits;
+when the rate moves to `y` near `r₀`, it is re-implied as `f y`. Then the position's value
+`N (P - s₀ A)` has derivative exactly zero in recovery at `R₀` and in the rate at `r₀`. -/
+theorem rec01_and_ir01_vanish_at_par
+    (N δ s₀ r₀ R₀ : ℝ) (n : ℕ) (hn : 1 ≤ n) (hδ : 0 < δ)
+    (A : ℝ → ℝ → ℝ) (P : ℝ → ℝ → ℝ → ℝ)
+    (hA : ∀ r lam, A r lam = ∑ j ∈ Icc 1 n, δ * Real.exp (-(r + lam) * (j * δ)))
+    (hP : ∀ r lam R,
+      P r lam R = (1 - R) * lam * (1 - Real.exp (-(r + lam) * (n * δ))) / (r + lam))
+    (g : ℝ → ℝ) (hg : ∀ᶠ x in nhds R₀, P r₀ (g x) x / A r₀ (g x) = s₀)
+    (f : ℝ → ℝ) (hf : ∀ᶠ y in nhds r₀, P y (f y) R₀ / A y (f y) = s₀) :
+    HasDerivAt (fun x => N * (P r₀ (g x) x - s₀ * A r₀ (g x))) 0 R₀ ∧
+    HasDerivAt (fun y => N * (P y (f y) R₀ - s₀ * A y (f y))) 0 r₀ := by
+  have hApos : ∀ r lam, 0 < A r lam := fun r lam => by
+    rw [hA r lam]; exact cds_annuity_pos (r + lam) δ n hn hδ
+  constructor
+  · have heq : (fun x => N * (P r₀ (g x) x - s₀ * A r₀ (g x))) =ᶠ[nhds R₀] fun _ => 0 := by
+      filter_upwards [hg] with x hx
+      rw [div_eq_iff (hApos r₀ (g x)).ne'] at hx
+      rw [hx]; ring
+    exact (hasDerivAt_const R₀ (0 : ℝ)).congr_of_eventuallyEq heq
+  · have heq : (fun y => N * (P y (f y) R₀ - s₀ * A y (f y))) =ᶠ[nhds r₀] fun _ => 0 := by
+      filter_upwards [hf] with y hy
+      rw [div_eq_iff (hApos y (f y)).ne'] at hy
+      rw [hy]; ring
+    exact (hasDerivAt_const r₀ (0 : ℝ)).congr_of_eventuallyEq heq
+
+/-- On a flat curve there is no roll-down. With one flat hazard `λ`, rate `r` and recovery `R`,
+a contract with `n ≥ 1` quarterly premiums (`δ > 0`, maturity `n δ`) and one with `m ≥ 1`
+premiums have the same par spread `P / A`, because the maturity enters both legs only through
+the shared factor `1 - e^{-(r+λ) T}`. So a contract bought at par for `n` quarters, once it has
+`m` quarters left on the unchanged curve, is still worth exactly zero to the buyer. -/
+theorem flat_curve_par_spread_same_for_every_maturity
+    (N r lam R δ : ℝ) (n m : ℕ) (hn : 1 ≤ n) (hm : 1 ≤ m) (hδ : 0 < δ) :
+    let A : ℕ → ℝ := fun k => ∑ j ∈ Icc 1 k, δ * Real.exp (-(r + lam) * (j * δ))
+    let P : ℕ → ℝ := fun k =>
+      (1 - R) * lam * (1 - Real.exp (-(r + lam) * (k * δ))) / (r + lam)
+    P m / A m = P n / A n ∧ N * (P m - (P n / A n) * A m) = 0 := by
+  intro A P
+  have hApos : ∀ k, 1 ≤ k → 0 < A k := fun k hk => cds_annuity_pos (r + lam) δ k hk hδ
+  set c := r + lam with hc
+  set q := Real.exp (-c * δ) with hq
+  have key : ∀ k, 1 ≤ k → P k / A k = (1 - R) * lam * (1 - q) / (c * δ * q) := by
+    intro k hk
+    by_cases hc0 : c = 0
+    · simp [P, hc0, ← hc]
+    · have hqpos : 0 < q := Real.exp_pos _
+      have hq1 : q ≠ 1 := by
+        intro h1
+        rw [hq, Real.exp_eq_one_iff] at h1
+        rcases mul_eq_zero.mp h1 with h | h
+        · exact hc0 (neg_eq_zero.mp h)
+        · exact hδ.ne' h
+      have hAk : A k = δ * ∑ j ∈ Icc 1 k, q ^ j := cds_annuity_geom c δ k
+      have hgeo := cds_geom_Icc q k
+      have hPk : P k = (1 - R) * lam * (1 - q ^ k) / c := by
+        simp only [P, ← hc]
+        congr 3
+        rw [← Real.exp_nat_mul]
+        congr 1
+        ring
+      have hAne := (hApos k hk).ne'
+      rw [div_eq_iff hAne, hPk, hAk]
+      have hq1' : q - 1 ≠ 0 := sub_ne_zero.mpr hq1
+      have hS : ∑ j ∈ Icc 1 k, q ^ j = (q ^ (k + 1) - q) / (q - 1) := by
+        rw [eq_div_iff hq1', hgeo]
+      rw [hS]
+      field_simp
+      ring
+  have h1 : P m / A m = P n / A n := by rw [key m hm, key n hn]
+  refine ⟨h1, ?_⟩
+  rw [← h1, div_mul_cancel₀ _ (hApos m hm).ne']
+  ring
+
+-- Northwind: $10,000,000 notional, recovery 40%, five years of quarterly premiums.
+-- Five years of quarters is n = 20 premium dates; a quarter later 19 are left, 4.75 years.
+example : (5 : ℚ) / (1 / 4) = 20 ∧ (19 : ℚ) * (1 / 4) = 475 / 100 := by norm_num
+-- Combined shrink rate k = r + λ = 0.05 + 0.02 = 0.07.
+example : (5 : ℚ) / 100 + 2 / 100 = 7 / 100 := by norm_num
+-- Jump-to-default on day one: (1 - R) N - V with V = 0 is $6,000,000.
+example : (1 - (40 : ℚ) / 100) * 10000000 - 0 = 6000000 := by norm_num
+-- Each point of recovery takes $100,000 off jump-to-default.
+example : (10000000 : ℚ) * (1 / 100) = 100000 := by norm_num
+-- An auction at 30% instead of 40%: jump-to-default is $1,000,000 bigger, $100,000 per point.
+example : (1 - (30 : ℚ) / 100) * 10000000 - (1 - 40 / 100) * 10000000 = 10 * 100000 := by
+  norm_num
+-- The quick estimate: notional times years left times 1 bp is $5,000.
+example : (10000000 : ℚ) * 5 * (1 / 10000) = 5000 := by norm_num
+
+#print axioms cds_annuity_pos
+#print axioms cds_geom_Icc
+#print axioms cds_annuity_geom
+#print axioms cs01_at_par_eq_notional_mul_annuity
+#print axioms rec01_and_ir01_vanish_at_par
+#print axioms flat_curve_par_spread_same_for_every_maturity
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cds_annuity_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cds_geom_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cds_annuity_geom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cs01_at_par_eq_notional_mul_annuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rec01_and_ir01_vanish_at_par' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flat_curve_par_spread_same_for_every_maturity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -706,6 +919,8 @@ The two outputs agree line for line. The only visible gap between roads is Rec01
 - [Credit indices (CDX and iTraxx in outline)](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md): the same CS01 and jump-to-default summed over a basket of names traded as one contract.
 - [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): the credit risk of the protection seller itself, hedged with the CS01 of this card.
 - [Two default probabilities](09-market-implied-versus-historical-default-probability.md): why the 2% hazard behind every number here is not the rate at which companies like Northwind actually default.
+
+This card treats Northwind alone; the open question is what happens to CS01 and jump-to-default when many names can default together.
 
 ---
 

@@ -8,9 +8,13 @@
 
 A fund owns \$10 million of Northwind bonds. To protect them it buys five years of default protection, a credit default swap (CDS: a contract in which the buyer pays a yearly fee and the seller covers the loss if the borrower defaults). The fee is fixed at 120 basis points a year (one basis point, bp, is 0.01 percent), paid in four quarterly instalments.
 
-A few days later Northwind reports bad news. New protection on the same name for the same five years now costs 200 bp. The fund's contract still charges 120. It has become a good contract to own: it buys, for 120, protection that everyone else pays 200 for. The question is how much that is worth in dollars today. The answer here is **\$324,006.96** on a notional (the amount the contract covers) of \$10 million.
+A few days later Northwind reports bad news. New protection on the same name (the same borrower) for the same five years now costs 200 bp. The fund's contract still charges 120. It has become a good contract to own: it buys, for 120, protection that everyone else pays 200 for.
 
-The same arithmetic runs the market's quoting system. Almost every single-name CDS now pays one of a few fixed fees, called coupons, and the gap between the market's price and the coupon is settled in cash on the first day. That cash is the **upfront**. Take a name whose par spreads are 120, 200 and 250 bp at one, three and five years. A new five-year contract with a 100 bp coupon costs the buyer **6.04 percent** of notional upfront: \$604,085.32 on \$10 million. The market's quick conversion of the single 250 bp quote, through one flat hazard, gives 5.95 percent.
+The question is how much that is worth in dollars today. That dollar value is the contract's mark, and finding it is called marking to market. The answer here is **\$324,006.96** on a notional (the amount the contract covers) of \$10 million.
+
+The same arithmetic runs the market's quoting system. Almost every single-name CDS now pays one of a few fixed fees, called coupons, and the gap between the market's price and the coupon is settled in cash on the first day. That cash is the **upfront**.
+
+Take a name whose par spreads (the fees for new contracts today) are 120, 200 and 250 bp at one, three and five years. A new five-year contract with a 100 bp coupon costs the buyer **6.04 percent** of notional upfront: \$604,085.32 on \$10 million. The market's quick conversion of the single 250 bp quote, through one flat hazard (a default rate held constant over all five years), gives 5.95 percent.
 
 **An old CDS is worth the gap between today's fee and its own fee, paid until default or maturity, so its value is the spread gap times the risky annuity; the upfront on a fixed-coupon contract is the same product with the coupon in place of the old fee.**
 
@@ -71,7 +75,7 @@ and the par spread is the fee that balances the two legs: $s = P / A$.
 
 - **Same name, same dates, same notional.** The formula compares two contracts that share their protection leg and their fee dates. Change the maturity or the definition of default and the protection legs no longer cancel, so the gap is no longer the whole story.
 - **Today's annuity, not the trade date's.** $A$ is computed on today's hazard. Using the annuity from the day of the trade gives \$334,554.82 instead of \$324,006.96.
-- **A flat hazard for quote conversion.** Turning a quoted spread into an upfront needs a hazard, and the market's convention is one flat hazard that reprices the quote. A mark on a real book uses the whole curve built in [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); with a sloped curve the two differ: 6.0409 percent on the curve against 5.9545 flat.
+- **A flat hazard for quote conversion.** Turning a quoted spread into an upfront needs a hazard, and the market's convention is one flat hazard that reprices the quote. A mark on a real book (a firm's portfolio of trades) uses the whole curve built in [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); with a sloped curve the two differ: 6.0409 percent on the curve against 5.9545 flat.
 - **Recovery fixed at 40 percent.** The upfront depends on the recovery assumed, through the hazard. At 25 percent the 250 bp name's upfront is 6.0751 percent, not 5.9545.
 - **The seller pays.** Nothing here allows for the protection seller defaulting too; that risk is priced separately.
 
@@ -109,7 +113,7 @@ Take two contracts on Northwind, identical except for their spreads $c_1$ and $c
 
 $$V(c_1) - V(c_2) = (P - c_1 A) - (P - c_2 A) = (c_2 - c_1)\,A.$$
 
-The protection legs cancel exactly. On Northwind today, a contract struck at 100 bp is worth \$405,008.70 and the fund's 120 bp contract \$324,006.96. The difference, \$81,001.74, is 20 bp times 4.0501 times \$10 million, to the cent.
+The protection legs cancel exactly. On Northwind today, a contract struck at 100 bp (written with a fixed fee of 100 bp) is worth \$405,008.70 and the fund's 120 bp contract \$324,006.96. The difference, \$81,001.74, is 20 bp times 4.0501 times \$10 million, to the cent.
 
 So any contract can be restated as a standard one plus a known cash amount. That is what makes Step 4 possible.
 
@@ -129,7 +133,7 @@ The formula is linear in $A$, but $A$ itself depends on the hazard, and a single
 
 For the 250 bp name the flat hazard is 4.1194 percent and the annuity 3.9697. The upfront is $0.0150 \times 3.9697 = 5.9545$ percent on a 100 bp coupon, and $-0.0250 \times 3.9697 = -9.9242$ percent on a 500 bp coupon: there the seller pays the buyer, because 500 overcharges a 250 bp name.
 
-On a real curve the answer moves. Bootstrap quotes of 120, 200 and 250 bp at one, three and five years give hazards of 1.98, 4.04 and 5.68 percent on the three pieces. The five-year annuity on that curve is 4.0272, larger than the flat 3.9697, because default risk is low in the early years, when most of the fee value sits. The same formula gives $0.0150 \times 4.0272 = 6.0409$ percent. The flat convention settles the quote; the curve values the position.
+On a real curve the answer moves. Bootstrapping fits one flat hazard piece per quote, shortest maturity first. Bootstrap quotes of 120, 200 and 250 bp at one, three and five years give hazards of 1.98, 4.04 and 5.68 percent on the three pieces. The five-year annuity on that curve is 4.0272, larger than the flat 3.9697, because default risk is low in the early years, when most of the fee value sits. The same formula gives $0.0150 \times 4.0272 = 6.0409$ percent. The flat convention settles the quote; the curve values the position.
 
 The upfront is not a straight line in the quote. As the quote rises the hazard rises, the annuity falls, and each extra basis point is worth a little less. The chart in Worked numbers shows the bend.
 
@@ -141,7 +145,9 @@ Desks quote distressed names in upfront, not spread, so the conversion must run 
 - **At zero hazard** there is no payout and the fees are riskless: $U = -c\,A_0$. With $A_0 = 4.3964$ that floor is $-4.3964$ percent for a 100 bp coupon and $-21.9820$ percent for 500.
 - **As the hazard grows without bound** default comes almost at once: the payout tends to $1 - R$, the fee stream to nothing, so $U$ tends to 60 percent.
 
-A continuous, strictly rising function that runs from the floor to 60 percent takes every value in between exactly once. So every upfront strictly inside that range comes from exactly one hazard, and hence exactly one spread; the floor itself is hazard zero and spread zero; an upfront outside the range has no spread at all. Below the floor, the buyer would be paid more than the riskless fee stream is worth. Above 60 percent, the buyer would pay more than the most the contract can return. The par spread is a rising function of the hazard too, since its top rises and its bottom falls, so the spread found is also unique.
+A continuous, strictly rising function that runs from the floor to 60 percent takes every value in between exactly once. So every upfront strictly inside that range comes from exactly one hazard, and hence exactly one spread; the floor itself is hazard zero and spread zero; an upfront outside the range has no spread at all.
+
+Below the floor, the buyer would be paid more than the riskless fee stream is worth. Above 60 percent, the buyer would pay more than the most the contract can return. The par spread is a rising function of the hazard too, since its top rises and its bottom falls, so the spread found is also unique.
 
 <details>
 <summary>Detailed proof: the upfront is strictly increasing in the hazard</summary>
@@ -227,13 +233,23 @@ xychart-beta
     line [324.01, 269.49, 210.26, 145.90, 75.98, 0.00]
 ```
 
-The one line is the mark, $P - cA$ over the years that remain. The yearly drops grow as maturity nears. With a constant hazard, a contract with y years left is priced like a new y-year contract, so each year that passes removes the last year of gap. Going from 5 years to 4 removes the most distant year, the most discounted and the least likely to be reached; going from 1 to 0 removes the nearest year, which is worth the most. Two forces move a mark, and the formula keeps them apart: a change in $s$ moves the gap, and the passage of time or a change in hazard moves $A$. How much each one moves the value is the subject of [CDS risk numbers](08-cds-risk-numbers.md).
+The one line is the mark, $P - cA$ over the years that remain. The yearly drops grow as maturity nears. With a constant hazard, a contract with y years left is priced like a new y-year contract, so each year that passes removes the last year of gap.
+
+Going from 5 years to 4 removes the most distant year, the most discounted and the least likely to be reached; going from 1 to 0 removes the nearest year, which is worth the most.
+
+Two forces move a mark, and the formula keeps them apart: a change in $s$ moves the gap, and the passage of time or a change in hazard moves $A$. How much each one moves the value is the subject of [CDS risk numbers](08-cds-risk-numbers.md).
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script reprices the house example first (121.06 bp, annuity 4.1819), then marks the old trade by three independent roads: the formula $(s - c)A$ with the annuity added term by term; the two legs priced separately, the protection leg by Simpson's rule (a numerical integral built from weighted sample points) and the annuity as a geometric series; and a simulation of two million default times from a hand-written random number generator, paying both legs path by path. It then converts the 250 bp quote to an upfront, checks that against a second simulation, runs the conversion backwards with two unrelated root finders, and prices the same quote on the bootstrapped 120/200/250 curve, whose annuity must match the bootstrap card's 4.027235. The chart points, the boundary values and the wrong answers are printed too.
+The script reprices the house example first: the Northwind contract shared by the cards on this shelf, at a 2 percent hazard (121.06 bp, annuity 4.1819). Then it marks the old trade by three independent roads:
+
+1. the formula $(s - c)A$ with the annuity added term by term;
+2. the two legs priced separately, the protection leg by Simpson's rule (a numerical integral built from weighted sample points) and the annuity as a geometric series;
+3. a simulation of two million default times from a hand-written random number generator, paying both legs path by path.
+
+It then converts the 250 bp quote to an upfront, checks that against a second simulation, runs the conversion backwards with two unrelated root finders, and prices the same quote on the bootstrapped 120/200/250 curve, whose annuity must match the bootstrap card's 4.027235. The chart points, the boundary values and the wrong answers are printed too.
 
 ### Python
 
@@ -675,6 +691,131 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The simulated value, 0.032151 with a standard error of 0.000143, and the simulated upfront, 5.9456 percent with a standard error of 0.0154, both sit inside the four-standard-error band the asserts allow around the formula's 0.032401 and 5.9545.
 
+### Lean
+
+Lean proves the mark formula for any hazard curve, and that the upfront rises strictly with one flat hazard.
+
+- Take any hazard curve, any discounting and any protection leg $P$. Then $P - cA = (s - c)\,A$, where $A$ is the risky annuity and $s = P/A$.
+- Take two contracts on the same name, at spreads $c_1$ and $c_2$. Then $V(c_1) - V(c_2) = (c_2 - c_1)\,A$, whatever the hazard curve.
+- Take one flat hazard, recovery below 100 percent, and a riskless rate and coupon of at least 0. Then, for any number of fee dates, the upfront $P - cA$ rises strictly as the hazard rises from 0.
+- Take the old trade. Then the spread gap is 80 bp, and 80 bp for five years on \$10 million is \$400,000.
+- Take a 250 bp quote. Then the gap is 150 bp on coupon 100 and −250 bp on coupon 500, and the two coupons differ by 400 bp.
+
+The dollar values, the root searches, the upfront's limits and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Valuing an existing CDS: the mark of a contract at spread c is (par spread minus c) times the risky annuity for any survival curve, two contracts on one name differ by the spread gap times the annuity, and under a flat hazard the upfront rises strictly with the hazard.
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Order.Monotone.Basic
+
+open Finset
+
+/-- The mark of an existing CDS is the spread gap times the risky annuity.
+Take any hazard curve: fee dates `i`, each paying a period of length `Δ`, with a
+positive discount factor `d i` and a positive survival chance `q i`, and any
+protection leg value `P`. The risky annuity is `A = ∑ Δ dᵢ qᵢ` and the par spread is
+`s = P / A`. Then the contract at spread `c`, worth protection leg minus fee leg
+`P - ∑ c Δ dᵢ qᵢ` to the buyer, is worth exactly `(s - c) A`. -/
+theorem mark_eq_spread_gap_mul_risky_annuity {n : ℕ} (hn : 0 < n)
+    (Δ P c : ℝ) (d q : Fin n → ℝ)
+    (hΔ : 0 < Δ) (hd : ∀ i, 0 < d i) (hq : ∀ i, 0 < q i) :
+    P - ∑ i, c * Δ * d i * q i
+      = (P / (∑ i, Δ * d i * q i) - c) * (∑ i, Δ * d i * q i) := by
+  have hA : 0 < ∑ i, Δ * d i * q i := by
+    have : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+    exact Finset.sum_pos (fun i _ => by have := hd i; have := hq i; positivity) Finset.univ_nonempty
+  have hs : ∑ i, c * Δ * d i * q i = c * ∑ i, Δ * d i * q i := by
+    rw [Finset.mul_sum]; refine Finset.sum_congr rfl (fun i _ => by ring)
+  rw [hs, sub_mul, div_mul_cancel₀ _ hA.ne']
+
+/-- Two contracts on the same name, same dates, same protection leg `P`, differing
+only in their spreads `c₁` and `c₂`, differ in value by `(c₂ - c₁)` times the
+risky annuity: the protection legs cancel exactly. -/
+theorem mark_difference_eq_coupon_gap_mul_annuity {n : ℕ}
+    (Δ P c₁ c₂ : ℝ) (d q : Fin n → ℝ) :
+    (P - ∑ i, c₁ * Δ * d i * q i) - (P - ∑ i, c₂ * Δ * d i * q i)
+      = (c₂ - c₁) * ∑ i, Δ * d i * q i := by
+  rw [Finset.mul_sum]
+  have : ∑ i, (c₂ - c₁) * (Δ * d i * q i) = ∑ i, c₂ * Δ * d i * q i - ∑ i, c₁ * Δ * d i * q i := by
+    rw [← Finset.sum_sub_distrib]
+    exact Finset.sum_congr rfl (fun i _ => by ring)
+  rw [this]; ring
+
+/-- Under one flat hazard `h`, with recovery `R < 1`, riskless rate `r ≥ 0`,
+maturity `T > 0`, and fee dates `Δ, 2Δ, …, nΔ`, the upfront on a contract with
+coupon `c ≥ 0`,
+`U(h) = (1 - R) · h/(r + h) · (1 - e^{-(r+h)T}) - c · ∑ Δ e^{-(r+h) Δ i}`,
+is strictly increasing in the hazard `h ≥ 0`. This is why every upfront in range
+converts back to exactly one hazard, and hence one spread. -/
+theorem upfront_strictMonoOn_hazard (R r T Δ c : ℝ) (n : ℕ)
+    (hR : R < 1) (hr : 0 ≤ r) (hT : 0 < T) (hΔ : 0 < Δ) (hc : 0 ≤ c) :
+    StrictMonoOn
+      (fun h : ℝ => (1 - R) * (h / (r + h)) * (1 - Real.exp (-(r + h) * T))
+        - c * ∑ i ∈ Icc 1 n, Δ * Real.exp (-(r + h) * (Δ * i)))
+      (Set.Ici 0) := by
+  intro x hx y hy hxy
+  simp only [Set.mem_Ici] at hx hy
+  have hy0 : 0 < y := lt_of_le_of_lt hx hxy
+  -- fee sum is antitone
+  have hsum : ∑ i ∈ Icc 1 n, Δ * Real.exp (-(r + y) * (Δ * i))
+      ≤ ∑ i ∈ Icc 1 n, Δ * Real.exp (-(r + x) * (Δ * i)) := by
+    refine Finset.sum_le_sum (fun i _ => ?_)
+    have hi : (0:ℝ) ≤ i := Nat.cast_nonneg i
+    have : 0 ≤ Δ * (i:ℝ) := by positivity
+    apply mul_le_mul_of_nonneg_left _ hΔ.le
+    apply Real.exp_le_exp.mpr
+    nlinarith
+  have hfee := mul_le_mul_of_nonneg_left hsum hc
+  -- protection part
+  have ha1 : 0 ≤ x / (r + x) := by positivity
+  have ha2 : 0 < y / (r + y) := by positivity
+  have ha : x / (r + x) ≤ y / (r + y) := by
+    rcases hx.eq_or_lt with h0 | h0
+    · subst h0; simp; positivity
+    · rw [div_le_div_iff₀ (by linarith) (by linarith)]
+      nlinarith
+  have hb1 : 0 ≤ 1 - Real.exp (-(r + x) * T) := by
+    have : Real.exp (-(r + x) * T) ≤ 1 := Real.exp_le_one_iff.mpr (by nlinarith)
+    linarith
+  have hb : 1 - Real.exp (-(r + x) * T) < 1 - Real.exp (-(r + y) * T) := by
+    have : Real.exp (-(r + y) * T) < Real.exp (-(r + x) * T) := Real.exp_lt_exp.mpr (by nlinarith)
+    linarith
+  have hprod : x / (r + x) * (1 - Real.exp (-(r + x) * T))
+      < y / (r + y) * (1 - Real.exp (-(r + y) * T)) :=
+    calc x / (r + x) * (1 - Real.exp (-(r + x) * T))
+        ≤ y / (r + y) * (1 - Real.exp (-(r + x) * T)) := mul_le_mul_of_nonneg_right ha hb1
+      _ < y / (r + y) * (1 - Real.exp (-(r + y) * T)) := mul_lt_mul_of_pos_left hb ha2
+  have hR' : 0 < 1 - R := by linarith
+  have := mul_lt_mul_of_pos_left hprod hR'
+  simp only
+  rw [mul_assoc, mul_assoc]
+  linarith
+
+-- The card's whole-number figures.
+-- Spread gap on the old trade: 200 bp today against 120 bp on the contract.
+example : (200 : ℤ) - 120 = 80 := by norm_num
+-- The usual mistake: 80 bp a year for 5 years on $10,000,000, with no discounting
+-- and no survival, is $400,000.
+example : (80 : ℕ) * 5 * 10000000 / 10000 = 400000 := by norm_num
+-- Coupon gap between the two standard coupons: 500 bp minus 100 bp.
+example : (500 : ℤ) - 100 = 400 := by norm_num
+-- Upfront signs at 250 bp: positive gap on coupon 100, negative on coupon 500.
+example : (250 : ℤ) - 100 = 150 ∧ (250 : ℤ) - 500 = -250 := by norm_num
+
+#print axioms mark_eq_spread_gap_mul_risky_annuity
+#print axioms mark_difference_eq_coupon_gap_mul_annuity
+#print axioms upfront_strictMonoOn_hazard
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mark_eq_spread_gap_mul_risky_annuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mark_difference_eq_coupon_gap_mul_annuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'upfront_strictMonoOn_hazard' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Recovery 25 percent instead of 40, same 250 bp quote, coupon 100.** Guess first: does a lower recovery raise or lower the upfront? It raises it, to 6.0751 percent. A lower recovery means a larger loss per default, so a smaller hazard reprices 250 bp, the annuity is longer, and the 150 bp gap is worth more.
@@ -699,12 +840,12 @@ The two outputs agree line for line. The simulated value, 0.032151 with a standa
 ## Where you meet it in real life
 
 - **Unwinding a trade.** Closing a CDS early means one side pays the other its mark, $(s - c)A$, and the contract is torn up.
-- **Daily margin.** Cleared contracts are marked every day, and the change in the mark moves as cash between the two sides' margin accounts.
+- **Daily margin.** Cleared contracts (those settled through a central clearing house) are marked every day, and the change in the mark moves as cash between the two sides' margin accounts.
 - **Points upfront.** Screens quote stressed names in upfront percent and price rather than in spread, because a 1,000 bp spread hides how much cash changes hands on day one. The conversion runs both ways through the market's standard calculator.
 - **Index contracts.** Credit indices, baskets of a hundred or more names traded as one contract, trade at a fixed coupon with an upfront in the same way.
 - **The fund's accounts.** A protection contract appears in the books at its mark, and the change in the mark is a profit or loss even though no default has happened. See [The credit default swap](01-credit-default-swap-contract.md) for what the contract itself obliges.
 - **Recovery disputes.** Because the upfront depends on the recovery assumed, desks agree on one recovery for the conversion; the effect of changing it is on [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md).
-- **Conventions verified 28 Sep 2026** against the ISDA CDS Standard Model page: single-name contracts trade with a fixed coupon and an upfront payment, and the published model converts upfront quotes to spread quotes and back in a standardised way. That calculator also pays accrued fees on default and counts days actual/360, which this card leaves out, so a desk's figures differ slightly from these. Markets can change these rules; the identity $V = (s - c)A$ does not change with them.
+- **Conventions verified 28 Sep 2026** against the ISDA (International Swaps and Derivatives Association) CDS Standard Model page: single-name contracts trade with a fixed coupon and an upfront payment, and the published model converts upfront quotes to spread quotes and back in a standardised way. That calculator also pays accrued fees on default and counts days actual/360 (actual days elapsed divided by 360), which this card leaves out, so a desk's figures differ slightly from these. Markets can change these rules; the identity $V = (s - c)A$ does not change with them.
 
 > **Say it back**
 > An old CDS can be neutralised by selling protection at today's par spread, which costs nothing. What remains is the spread gap, paid quarterly until default or maturity. Its value is the gap times the risky annuity, computed on today's hazard. Two contracts on the same name differ by the difference of their spreads times the same annuity, so the market trades fixed coupons and settles the gap in cash on day one. One flat hazard turns a quoted spread into that upfront, and because the upfront rises strictly with the hazard, every valid upfront turns back into exactly one spread.
@@ -713,6 +854,7 @@ The two outputs agree line for line. The simulated value, 0.032151 with a standa
 
 ## What this builds on
 
+- [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md): the protection leg, the risky annuity and the par spread $s = P/A$, the three pieces this card's formula is built from.
 - [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the hazard curve built from market quotes, which supplies today's annuity for a real mark, and the root search that turns one quote into one hazard.
 
 ## Where this goes next

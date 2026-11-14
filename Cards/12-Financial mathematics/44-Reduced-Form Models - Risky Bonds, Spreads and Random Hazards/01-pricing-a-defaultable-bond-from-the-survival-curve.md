@@ -10,7 +10,7 @@ Northwind Lines, the shipping company of the credit shelves, sells a five-year b
 
 Northwind may default: stop paying part-way through. The market prices it as failing at a steady 2% a year for as long as it survives, a **hazard rate** ([The piecewise-flat hazard curve](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/03-piecewise-flat-hazard-curve.md)). If it fails, bondholders are expected to get 40 cents per dollar of face back, paid when the default happens. That fraction is the **recovery**.
 
-On those numbers the bond is worth **\$98.28**; the \$5.49 gap is the price of the chance of default. At \$98.28 the bond **yields** 6.22% a year (the one rate that discounts its promises back to its price), against 5% for the government. The difference, **122 basis points** (hundredths of a percent), is Northwind's **credit spread**.
+On those numbers the bond is worth **\$98.28**; the \$5.49 gap is the price of the chance of default. At \$98.28 the bond **yields** 6.22% a year (the one rate that discounts its promises back to its price), against 5% for the government. The difference, **122 basis points** (bp, hundredths of a percent), is Northwind's **credit spread**.
 
 The method weights each promised payment by the chance Northwind is alive to make it, discounts it, and adds what is recovered if it is not. 100,000 simulated default dates land within a cent of the formula.
 
@@ -81,7 +81,7 @@ Survival is $S(t)$ on the hazard-rate cards and $Q(t)$ here, because $s$ is the 
 - **Default and interest rates are unrelated.** The formula multiplies $D(t)$ by $Q(t)$. If companies fail more often when rates fall, the average of the product is not the product of the averages, and every term shifts.
 - **Recovery is a fixed fraction of face, paid at default.** A random recovery unrelated to everything else can be replaced by its average; one that falls in bad years, when defaults cluster, cannot. Paid months later, it is worth less.
 - **The hazard is the market's, not history's.** A hazard read from prices includes the premium investors demand for bearing default risk; historical default rates are usually lower, and pricing with them overprices the bond ([Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md)).
-- **Only default is priced.** A real spread also pays for how hard the bond is to sell, which is one reason bond and default-swap spreads on one company disagree: [Implied hazard from a bond price, and why the CDS disagrees](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
+- **Only default is priced.** A real spread also pays for how hard the bond is to sell, which is one reason bond and default-swap spreads on one company disagree. A default swap (CDS, credit default swap) pays the loss if the company defaults, in return for a yearly premium; these two payment streams are its legs. See [Implied hazard from a bond price, and why the CDS disagrees](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
 
 ---
 
@@ -190,7 +190,7 @@ Conventions verified 2026-09-28: US corporate bonds quote yields compounded twic
 
 Steps 1 and 2 never needed flat curves. The second road takes any hazard curve: survival from the area under it, the promises as a dated sum, the recovery integral by Simpson's rule (an area from parabolas through equally spaced points). On the flat curve it matches the closed form to every printed decimal.
 
-The same code prices the bond off the curve bootstrapped from Northwind's default-swap quotes of 120, 200 and 250 bp ([Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)): hazards of 1.98% in year one, 4.04% in years two and three, 5.68% in years four and five. The price falls to \$92.91 and the spread rises to 247.79 bp, close to the five-year quote of 250 bp.
+The same code prices the bond off the curve bootstrapped from Northwind's default-swap quotes of 120, 200 and 250 bp ([Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)). Bootstrapping fits one hazard piece per quote, shortest maturity first, so that each quote is matched in turn. The pieces are 1.98% in year one, 4.04% in years two and three, 5.68% in years four and five. The price falls to \$92.91 and the spread rises to 247.79 bp, close to the five-year quote of 250 bp.
 
 The fourth road never writes an integral. It draws 100,000 default dates by the method of [Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md) and counts each bond's cash: coupons paid before default, the face if no default by year five, \$40 at the default date otherwise, all discounted at 5%. The average is \$98.29, with a standard error (the typical size of the random miss) of \$0.05: the formula sits within one. 9.50% of the simulated bonds default by year five, against the formula's 9.52%. On the bootstrapped curve the simulation gives \$92.98 against \$92.91, standard error \$0.07: just over one away, well inside three.
 
@@ -249,7 +249,7 @@ Every number in that table is printed by the checks.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer: the scripts write their own integrator (Simpson's rule), root finder (bisection) and random numbers (splitmix64, the same bits in both languages). The price is reached by **four roads**: the closed form, the dated sum with quadrature, riskless price minus expected loss, and 100,000 simulated default dates. Recovery of market value is priced by its adjusted rate and by simulation; the bootstrapped curve by the second and fourth roads. Every chart point and "what breaks" number is printed.
+Nothing imported knows the answer: the scripts write their own integrator (Simpson's rule), root finder (bisection) and random numbers (splitmix64, the same bits in both languages). The price is reached by **four roads**: the closed form, the dated sum with quadrature (numerical integration), riskless price minus expected loss, and 100,000 simulated default dates. Recovery of market value is priced by its adjusted rate and by simulation; the bootstrapped curve by the second and fourth roads. Every chart point and "what breaks" number is printed.
 
 ### Python
 
@@ -683,6 +683,155 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The random draws are the same bits in both languages, so even the simulated prices match to six decimals.
 
+### Lean
+
+For any coupon, face and dates, Lean proves the flat-curve closed form, the one yield, and the exact spread under recovery of market value.
+
+- Take flat curves, $D(t) = e^{-rt}$ and $Q(t) = e^{-\lambda t}$, with $k = r + \lambda$ not zero. Then the formula's price equals the closed form above.
+- Suppose every payment is positive and after today, and $0 < P < nc + F$, the cash added up. Then exactly one positive yield $y$ reprices the bond at $P$.
+- Suppose every payment is positive and after today, and $y$ reprices the bond discounted at $r + \lambda(1-R)$. Then the spread $y - r$ is exactly the loss rate $\lambda(1-R)$.
+- Take Northwind's bond at yield zero. Then its price is the cash added up, exactly \$130.
+- Take a 2% hazard and 40% recovery of market value. Then the spread is exactly 120 bp, and the discount rate exactly 6.2%.
+
+Curves that are not flat, and every dollar price, simulation and sensitivity, are left to the Python and Rust checks.
+
+```lean
+-- A risky bond from the hazard curve: with a flat riskless rate and a flat hazard the survival-weighted bond price equals its closed form with merged rate k = r + lambda, a price between zero and the cash added up has exactly one positive yield, and under recovery of market value the spread is exactly lambda (1 - R).
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+open Real
+
+/-- Helper: the bond price as a function of a flat yield is strictly decreasing. -/
+lemma bond_price_strictAnti (n : ℕ) (t : Fin n → ℝ) (c F T : ℝ)
+    (hc : 0 ≤ c) (hF : 0 < F) (ht : ∀ i, 0 ≤ t i) (hT : 0 < T) :
+    StrictAnti (fun y : ℝ => (∑ i, c * exp (-y * t i)) + F * exp (-y * T)) := by
+  intro a b hab
+  simp only
+  apply add_lt_add_of_le_of_lt
+  · exact Finset.sum_le_sum fun i _ =>
+      mul_le_mul_of_nonneg_left (exp_le_exp.mpr (by nlinarith [ht i])) hc
+  · exact mul_lt_mul_of_pos_left (exp_lt_exp.mpr (by nlinarith)) hF
+
+#print axioms bond_price_strictAnti
+
+/-- With flat curves, discount factor `D(t) = e^{-r t}`, survival `Q(t) = e^{-λ t}` and the
+constant hazard `λ`, the risky-bond price (each coupon `c` at its date `tᵢ` and the face `F`
+at maturity `T`, discounted and weighted by survival, plus the recovery
+`R F ∫₀ᵀ D(t) λ Q(t) dt`) equals the closed form with the merged rate `k = r + λ`:
+`Σ c e^{-k tᵢ} + F e^{-k T} + R F λ (1 - e^{-k T}) / k`. -/
+theorem risky_bond_price_flat_closed_form (n : ℕ) (t : Fin n → ℝ) (c F R r lam T : ℝ)
+    (D Q : ℝ → ℝ) (hD : ∀ s, D s = exp (-r * s)) (hQ : ∀ s, Q s = exp (-lam * s))
+    (hk : r + lam ≠ 0) :
+    (∑ i, c * D (t i) * Q (t i)) + F * D T * Q T
+        + R * F * ∫ s in (0 : ℝ)..T, D s * lam * Q s
+      = (∑ i, c * exp (-(r + lam) * t i)) + F * exp (-(r + lam) * T)
+        + R * F * lam * (1 - exp (-(r + lam) * T)) / (r + lam) := by
+  simp only [hD, hQ]
+  have e : ∀ s, exp (-r * s) * exp (-lam * s) = exp (-(r + lam) * s) := by
+    intro s; rw [← exp_add]; ring_nf
+  have hint : ∫ s in (0 : ℝ)..T, exp (-r * s) * lam * exp (-lam * s)
+      = lam * (1 - exp (-(r + lam) * T)) / (r + lam) := by
+    have h1 : ∀ s, exp (-r * s) * lam * exp (-lam * s) = lam * exp (-(r + lam) * s) := by
+      intro s; rw [← e]; ring
+    simp_rw [h1]
+    rw [intervalIntegral.integral_const_mul]
+    have hderiv : ∀ x ∈ Set.uIcc (0 : ℝ) T,
+        HasDerivAt (fun s => exp (-(r + lam) * s) / (-(r + lam))) (exp (-(r + lam) * x)) x := by
+      intro x _
+      have := (((hasDerivAt_id x).const_mul (-(r + lam))).exp).div_const (-(r + lam))
+      convert this using 1
+      · simp only [id]
+      · simp only [id]; field_simp
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv
+      ((by fun_prop : Continuous fun s => exp (-(r + lam) * s)).intervalIntegrable _ _)]
+    field_simp
+    simp only [mul_zero, neg_zero, exp_zero]
+    ring
+  rw [hint]
+  have hs : (∑ i, c * exp (-r * t i) * exp (-lam * t i)) = ∑ i, c * exp (-(r + lam) * t i) :=
+    Finset.sum_congr rfl fun i _ => by rw [mul_assoc, e]
+  rw [hs, mul_assoc F, e]
+  ring
+
+/-- The yield exists and is unique: when every payment is positive and every payment date is
+in the future, each price `P` strictly between zero and the cash added up, `n c + F`, is
+reached by exactly one positive flat continuously compounded rate `y`, meaning
+`Σ c e^{-y tᵢ} + F e^{-y T} = P`. -/
+theorem bond_yield_exists_unique (n : ℕ) (t : Fin n → ℝ) (c F T P : ℝ)
+    (hc : 0 < c) (hF : 0 < F) (ht : ∀ i, 0 < t i) (hT : 0 < T)
+    (hP0 : 0 < P) (hP : P < n * c + F) :
+    ∃! y : ℝ, 0 < y ∧ (∑ i, c * exp (-y * t i)) + F * exp (-y * T) = P := by
+  have hS : 0 < (n : ℝ) * c + F := by positivity
+  set f : ℝ → ℝ := fun y => (∑ i, c * exp (-y * t i)) + F * exp (-y * T) with hf
+  have hanti := bond_price_strictAnti n t c F T hc.le hF (fun i => (ht i).le) hT
+  have hf0 : f 0 = n * c + F := by simp [hf]
+  have hcont : Continuous f := by rw [hf]; fun_prop
+  have htend : Filter.Tendsto f Filter.atTop (nhds 0) := by
+    have h : Filter.Tendsto f Filter.atTop
+        (nhds ((∑ _i : Fin n, c * 0) + F * 0)) := by
+      apply Filter.Tendsto.add
+      · apply tendsto_finsetSum
+        intro i _
+        apply Filter.Tendsto.const_mul
+        apply Real.tendsto_exp_atBot.comp
+        have : Filter.Tendsto (fun y : ℝ => y * t i) Filter.atTop Filter.atTop :=
+          Filter.tendsto_id.atTop_mul_const (ht i)
+        exact (Filter.tendsto_neg_atTop_atBot.comp this).congr fun y => by simp [neg_mul]
+      · apply Filter.Tendsto.const_mul
+        apply Real.tendsto_exp_atBot.comp
+        have : Filter.Tendsto (fun y : ℝ => y * T) Filter.atTop Filter.atTop :=
+          Filter.tendsto_id.atTop_mul_const hT
+        exact (Filter.tendsto_neg_atTop_atBot.comp this).congr fun y => by simp [neg_mul]
+    simpa using h
+  obtain ⟨Y, hYP, hY0⟩ : ∃ Y, f Y < P ∧ 0 ≤ Y :=
+    ((htend.eventually (gt_mem_nhds hP0)).and (Filter.eventually_ge_atTop (0 : ℝ))).exists
+  have hsub := intermediate_value_Icc' hY0 hcont.continuousOn
+  obtain ⟨y, hyI, hyP⟩ := hsub ⟨hYP.le, by rw [hf0]; exact hP.le⟩
+  refine ⟨y, ⟨?_, hyP⟩, ?_⟩
+  · rcases hyI.1.eq_or_lt with h | h
+    · rw [← h, hf0] at hyP; linarith
+    · exact h
+  · rintro z ⟨_, hz⟩
+    exact hanti.injective (hz.trans hyP.symm)
+
+/-- Recovery of market value: the bond priced by discounting every payment at
+`r + λ (1 - R)` has that rate as its one and only yield, so its credit spread `y - r` is
+exactly the loss rate `λ (1 - R)`. -/
+theorem rmv_spread_eq_loss_rate (n : ℕ) (t : Fin n → ℝ) (c F T r lam R y : ℝ)
+    (hc : 0 < c) (hF : 0 < F) (ht : ∀ i, 0 < t i) (hT : 0 < T)
+    (hy : (∑ i, c * exp (-y * t i)) + F * exp (-y * T)
+        = (∑ i, c * exp (-(r + lam * (1 - R)) * t i)) + F * exp (-(r + lam * (1 - R)) * T)) :
+    y - r = lam * (1 - R) := by
+  have hanti := bond_price_strictAnti n t c F T hc.le hF (fun i => (ht i).le) hT
+  have := hanti.injective hy
+  linarith
+
+/-- Northwind's bond at yield zero is the cash added up: five coupons of 6 and a face of 100
+make 130. -/
+example : (∑ i : Fin 5, (6 : ℝ) * exp (-0 * ((i : ℝ) + 1))) + 100 * exp (-0 * 5) = 130 := by
+  norm_num [Fin.sum_univ_five]
+
+/-- Northwind under recovery of market value: hazard 2% times the 60% lost is a spread of
+exactly 120 basis points, and the discount rate is 5% + 1.2% = 6.2%. -/
+example : (2 / 100 : ℚ) * (1 - 40 / 100) * 10000 = 120 ∧
+    (5 / 100 : ℚ) + 2 / 100 * (1 - 40 / 100) = 62 / 1000 := by
+  norm_num
+
+#print axioms risky_bond_price_flat_closed_form
+#print axioms bond_yield_exists_unique
+#print axioms rmv_spread_eq_loss_rate
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bond_price_strictAnti' depends on axioms: [propext, Classical.choice, Quot.sound]
+'risky_bond_price_flat_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bond_yield_exists_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rmv_spread_eq_loss_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -710,7 +859,7 @@ The two outputs agree line for line. The random draws are the same bits in both 
 
 - **Corporate bond desks.** A trader prices every bond a company has issued off its hazard curve, read from its default swaps, and compares with the screen. The gap is the subject of [Implied hazard from a bond price, and why the CDS disagrees](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
 - **Default swaps.** The survival-weighted coupons are a default swap's premium leg; the recovery integral is its protection leg turned round: [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md).
-- **Bankruptcy claims.** Bondholders claim the face of their bonds plus interest owed, whatever the bonds traded at. So recovery of face is the usual rule for bonds, and bonds of one company and one seniority recover about the same per dollar of face, whatever their coupons.
+- **Bankruptcy claims.** Bondholders claim the face of their bonds plus interest owed, whatever the bonds traded at. So recovery of face is the usual rule for bonds, and bonds of one company and one seniority (rank in the queue for repayment) recover about the same per dollar of face, whatever their coupons.
 - **Random hazards.** When credit quality moves, so does the hazard. Recovery of market value keeps pricing a discounting problem even then: [A random hazard](03-stochastic-hazard-cox-process.md).
 - **Credit options.** Forward default swaps and options on them start from the same bootstrapped curve: [The forward CDS](04-forward-cds-and-the-forward-spread.md) and [Options on a CDS](05-cds-option-and-implied-spread-volatility.md).
 

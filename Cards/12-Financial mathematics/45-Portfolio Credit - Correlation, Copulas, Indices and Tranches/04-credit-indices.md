@@ -6,15 +6,21 @@
 
 ## General Overview
 
-A pension fund holds bonds of 125 large companies and wants five years of default protection on all of them. It could buy 125 separate credit default swaps (CDS: contracts in which the buyer pays a yearly fee and the seller covers the loss if one named borrower defaults). That means 125 trades, 125 prices, 125 counterparties. Instead it buys one contract that covers the whole list at once. That contract is a **credit index**: in North America the CDX investment-grade index, in Europe the iTraxx Europe index, each on 125 names.
+A pension fund holds bonds of 125 large companies and wants five years of default protection on all of them. It could buy 125 separate credit default swaps (CDS: contracts in which the buyer pays a yearly fee and the seller covers the loss if one named borrower defaults). That means 125 trades, 125 prices, 125 counterparties.
 
-The fund buys \$10 million of protection. Each name carries one 125th of it, \$80,000. The fee is a fixed **coupon** of 100 basis points a year (a basis point, bp, is 0.01 percent), paid quarterly, whatever the names cost individually. On the day of the trade the single-name market quotes 100 of the names at 80 bp and the other 25 at 300 bp.
+Instead it buys one contract that covers the whole list at once. That contract is a **credit index**: in North America the CDX investment-grade index (investment grade: companies rated as safe borrowers), in Europe the iTraxx Europe index, each on 125 names.
 
-Three questions follow. What single spread is the whole basket worth? The plain average of the 125 quotes is 124 bp. The right answer, called the **intrinsic spread**, is **120.96 bp**, a little under 121.0: riskier names count for less than their headcount. What happens when one name defaults? At 40 percent recovery (the share of the defaulted debt still repaid) the fund receives 0.48 percent of its notional (the amount of protection bought), \$48,000, and the contract carries on over 124 names on \$9,920,000. And what if the index itself trades on screen at a spread different from 120.96? That gap is the **index skew**; at a screen quote of 117 bp it is −3.96 bp.
+The fund buys \$10 million of protection. Each name carries one 125th of it, \$80,000. The fee is a fixed **coupon** of 100 basis points a year (a basis point, bp, is 0.01 percent), paid quarterly, whatever the names cost individually. On the day of the trade the single-name market quotes 100 of the names at a spread (the yearly fee a fair single-name contract charges) of 80 bp and the other 25 at 300 bp.
+
+Three questions follow.
+
+- What single spread is the whole basket worth? The plain average of the 125 quotes is 124 bp. The right answer, called the **intrinsic spread**, is **120.96 bp**, a little under 121.0: riskier names count for less than their headcount.
+- What happens when one name defaults? At 40 percent recovery (the share of the defaulted debt still repaid) the fund receives 0.48 percent of its notional (the amount of protection bought), \$48,000, and the contract carries on over 124 names on \$9,920,000.
+- And what if the index itself trades on screen at a spread different from 120.96? That gap is the **index skew**; at a screen quote of 117 bp it is −3.96 bp.
 
 **A credit index is 125 equal single-name contracts sharing one coupon and one set of dates, so its value is the sum of their values, its par spread is total protection over total annuity, a default pays that name's loss and shrinks the notional, and the skew is the gap between the index's traded spread and the spread its own names imply.**
 
-**What kind of fact this is:** the sum rule and the intrinsic spread are a theorem, proved on this card in Why it works, and they hold under any hazard curves and any correlation between names; the 125 names, the fixed coupon, the upfront and the notional that shrinks at each default are a convention, set by the index rules.
+**What kind of fact this is:** the sum rule and the intrinsic spread are a theorem, proved on this card in Why it works, and they hold under any hazard curves (each name's default rate over time) and any correlation between names; the 125 names, the fixed coupon, the upfront (cash paid on day one) and the notional that shrinks at each default are a convention, set by the index rules.
 
 ### The picture: the intrinsic spread against the plain average
 
@@ -83,7 +89,9 @@ where $m$ counts the twenty quarterly fee dates, and each quote satisfies $s_i =
 
 ### Step 0: the index is a bundle of 125 small single-name contracts
 
-Buy \$10 million of index protection. On each fee date pay 100 bp a year on the surviving notional. When a name defaults, receive its loss on \$80,000. Now write down 125 single-name contracts, each on \$80,000, each at a 100 bp coupon, each on the index's dates. Every cash flow of the index appears in exactly one of the 125 small contracts, on the same day, of the same size. Two positions with identical cash flows must have the same value, or a trader could buy the cheap one, sell the dear one, and collect the difference with no risk. So the index is worth exactly the sum of 125 small contracts.
+Buy \$10 million of index protection. On each fee date pay 100 bp a year on the surviving notional. When a name defaults, receive its loss on \$80,000.
+
+Now write down 125 single-name contracts, each on \$80,000, each at a 100 bp coupon, each on the index's dates. Every cash flow of the index appears in exactly one of the 125 small contracts, on the same day, of the same size. Two positions with identical cash flows must have the same value, or a trader could buy the cheap one, sell the dear one, and collect the difference with no risk. So the index is worth exactly the sum of 125 small contracts.
 
 ### Step 1: the legs add
 
@@ -136,7 +144,9 @@ $$U = \frac1n\sum_i (P_i - cA_i) = \bar P - c\bar A = (s_I - c)\,\bar A.$$
 
 So the index behaves like one name at spread $s_I$ with annuity $\bar A$. For the example, $(0.012096 - 0.0100) \times 4.180671 = 0.8761$ percent, \$87,614.00 on \$10 million. The check computes it both ways, name by name and in one step, and they agree to twelve decimals.
 
-The market does not quote the index this way. It treats the index as one name with one flat hazard, and converts a quoted spread to an upfront with the single-name calculator. Fed 120.96 bp, that calculator gives 0.8764 percent, not 0.8761. The difference is the gap between $\bar A$ and the annuity of one flat name at 120.96 bp: an average of annuities is not the annuity of one name at the average spread. It is tiny here and grows with dispersion.
+The market does not quote the index this way. It treats the index as one name with one flat hazard, and converts a quoted spread to an upfront with the single-name calculator. Fed 120.96 bp, that calculator gives 0.8764 percent, not 0.8761.
+
+The difference is the gap between $\bar A$ and the annuity of one flat name at 120.96 bp: an average of annuities is not the annuity of one name at the average spread. It is tiny here and grows with dispersion.
 
 ### Step 5: a default pays one name's loss and shrinks the contract
 
@@ -146,15 +156,21 @@ The buyer does not gain the full \$48,000 in value. Before the default, that nam
 
 ### Step 6: correlation cannot move the index price
 
-The legs are expected values: $P_i$ is the average discounted payout over all the ways name i can default, and the same for $A_i$. The expected value of a sum is the sum of expected values, whether or not the parts move together. So the index legs depend only on each name's own survival curve.
+The legs are expected values: $P_i$ is the average discounted payout over all the ways name i can default, and the same for $A_i$. The expected value of a sum is the sum of expected values, whether or not the parts move together. So the index legs depend only on each name's own survival curve (its chance of having survived to each date).
 
-The check tests this. It draws default times for all 125 names on 100,000 paths, first with names independent, then with names tied through one common market factor at 20 percent correlation, the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). It values the index at a 120.96 bp coupon on each path. Both averages are zero within their noise: the simulated spreads are 121.01 and 121.13 bp. Correlation makes the losses lumpier, which widens the noise (standard error 0.0001469 against 0.0000455), but it does not move the average. Joint defaults change who gets hurt in a crisis; [Default correlation](01-default-correlation-and-joint-default.md) measures them.
+The check tests this. It draws default times for all 125 names on 100,000 paths, first with names independent. Then it ties the names through one common market factor at 20 percent correlation, the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). It values the index at a 120.96 bp coupon on each path.
+
+Both averages are zero within their noise: the simulated spreads are 121.01 and 121.13 bp. Correlation makes the losses lumpier, which widens the noise (standard error 0.0001469 against 0.0000455), but it does not move the average. Joint defaults change who gets hurt in a crisis; [Default correlation](01-default-correlation-and-joint-default.md) measures them.
 
 ### Step 7: the skew is the market's price against the names' price
 
-On the screen, the index trades as a contract in its own right, with its own quote $s_Q$. Nothing forces $s_Q$ to equal $s_I$. Hedgers crowd into the index because it is cheaper to trade than 125 names, and push its price around. The difference $k = s_Q - s_I$ is the **skew** (some desks say basis). Quoted as a price, 100 minus the upfront, it flips sign. At a quote of 117 bp, the skew is $117 - 120.96 = -3.96$ bp: index protection costs less than the same protection bought name by name.
+On the screen, the index trades as a contract in its own right, with its own quote $s_Q$. Nothing forces $s_Q$ to equal $s_I$. Hedgers crowd into the index because it is cheaper to trade than 125 names, and push its price around. The difference $k = s_Q - s_I$ is the **skew** (some desks say basis). Quoted as a price, 100 minus the upfront, it flips sign.
 
-In cash: at 117 bp the flat calculator gives an upfront of 0.7121 percent, \$71,210.89. Buying the 125 names separately costs the intrinsic 0.8761 percent, \$87,614.00. The gap, −\$16,403.11 on \$10 million, is the skew in money. A trader could buy index protection and sell protection on all 125 names to lock in that gap. Doing so means 126 trades, each with its own bid and offer, so the skew can persist inside the cost of the trade but not far beyond it. That is why desks watch it: a skew wider than the cost of crossing 125 bid-offers is a signal that one side is mispriced.
+At a quote of 117 bp, the skew is $117 - 120.96 = -3.96$ bp: index protection costs less than the same protection bought name by name.
+
+In cash: at 117 bp the flat calculator gives an upfront of 0.7121 percent, \$71,210.89. Buying the 125 names separately costs the intrinsic 0.8761 percent, \$87,614.00. The gap, −\$16,403.11 on \$10 million, is the skew in money.
+
+A trader could buy index protection and sell protection on all 125 names to lock in that gap. Doing so means 126 trades, each with its own bid and offer (the dealer's buying and selling prices), so the skew can persist inside the cost of the trade but not far beyond it. That is why desks watch it: a skew wider than the cost of crossing 125 bid-offers is a signal that one side is mispriced.
 
 ---
 
@@ -214,7 +230,7 @@ The intrinsic spread falls because the index lost one of its riskiest members. A
 
 ## Code, from first principles, and it actually runs
 
-The script prices the index by three independent roads. Road 1 finds each name's flat hazard by bisection and adds the closed-form legs. Road 2 prices the protection legs by Simpson's rule (a numerical integral built from weighted sample points) and the annuities as geometric series, then divides; it must agree with the annuity-weighted average of the quotes. Road 3 simulates default times for all 125 names on 100,000 paths, with a hand-written random number generator and normal distribution, once with independent names and once at 20 percent correlation; the index at the intrinsic spread must be worth zero on average. It then computes the upfronts, the skew, the default, the wrong answers, the experiments and the chart points. It also reprices the credit-default-swap shelf's house name, 121.06 bp at a 2 percent hazard, as a cross-check of the single-name machinery.
+The script prices the index by three independent roads. Road 1 finds each name's flat hazard by bisection (halving a range until it traps the answer) and adds the closed-form legs. Road 2 prices the protection legs by Simpson's rule (a numerical integral built from weighted sample points) and the annuities as geometric series, then divides; it must agree with the annuity-weighted average of the quotes. Road 3 simulates default times for all 125 names on 100,000 paths, with a hand-written random number generator and normal distribution, once with independent names and once at 20 percent correlation; the index at the intrinsic spread must be worth zero on average. It then computes the upfronts, the skew, the default, the wrong answers, the experiments and the chart points. It also reprices the credit-default-swap shelf's house name, 121.06 bp at a 2 percent hazard, as a cross-check of the single-name machinery.
 
 ### Python
 
@@ -634,6 +650,201 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, the simulations included, because both programs draw the same random stream. The simulated values, 0.0000202 and 0.0000737, sit well inside four standard errors of zero.
 
+### Lean
+
+Lean proves the card's three main facts for any number of names, and checks the card's simple dollar arithmetic.
+
+- Suppose every annuity $A_i$ is above zero and each quote is $s_i = P_i / A_i$. Then the coupon that makes the index worth zero is exactly $s_I$, total protection over total annuity.
+- Take the same names. Then $s_I = \sum_i w_i s_i$, the average of the quotes weighted by annuity.
+- Take the same names and any fixed coupon $c$. Then the upfront is $U = (s_I - c)\,\bar A$.
+- Suppose all names share one recovery, so the annuity $A(s)$ is positive and strictly decreasing in the spread $s > 0$. Then $s_I \le \bar s$, with equality exactly when every quote is the same.
+- Take two models of how names default together, such as independent and correlated, that give each name the same survival curve. Then each index leg is the same in both.
+- The dollar figures check out: the \$80,000 slice, the \$48,000 payout, the \$9,920,000 notional, the quarterly coupons and the 124 bp plain average.
+
+The hazards, the legs, the 120.96 bp intrinsic spread, the skew and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Credit indices (CDX and iTraxx in outline): the index par spread is total protection over total annuity, equal to the annuity-weighted average of the quotes, it sits at or below the plain average when the annuity falls as the spread rises, and the index legs depend only on each name's own default law, not on correlation.
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+import Mathlib.Order.Monotone.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+open Finset MeasureTheory
+
+/-- The sum rule. An index on `n` names, name `i` with protection leg `P i`, risky annuity
+`A i > 0` and quote `s i = P i / A i`, all per $1 and with equal weights `1/n`. The index is
+worth `(1/n) * ∑ (P i - x * A i)` to the buyer at coupon `x`. Then:
+the coupon that makes the index worth zero (its intrinsic spread) is exactly total protection
+over total annuity; that number is the average of the quotes weighted by annuity,
+`w i = A i / ∑ A`; and at any fixed coupon `c` the upfront is
+`(1/n) ∑ (P i - c A i) = (s_I - c) * Ā`, with `Ā` the average annuity. -/
+theorem index_par_spread_eq_total_protection_over_total_annuity
+    {n : ℕ} (hn : 0 < n) (P A s : Fin n → ℝ)
+    (hA : ∀ i, 0 < A i) (hquote : ∀ i, s i = P i / A i) (c : ℝ) :
+    (∀ x : ℝ, (1 / (n : ℝ)) * ∑ i, (P i - x * A i) = 0 ↔
+        x = (∑ i, P i) / (∑ i, A i)) ∧
+    (∑ i, P i) / (∑ i, A i) = ∑ i, (A i / ∑ l, A l) * s i ∧
+    (1 / (n : ℝ)) * ∑ i, (P i - c * A i) =
+      ((∑ i, P i) / (∑ i, A i) - c) * ((1 / (n : ℝ)) * ∑ i, A i) := by
+  have hne : (Finset.univ : Finset (Fin n)).Nonempty := ⟨⟨0, hn⟩, by simp⟩
+  have hSA : 0 < ∑ i, A i := Finset.sum_pos (fun i _ => hA i) hne
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have key : ∀ x : ℝ, ∑ i, (P i - x * A i) = ∑ i, P i - x * ∑ i, A i := by
+    intro x; rw [Finset.sum_sub_distrib, Finset.mul_sum]
+  refine ⟨?_, ?_, ?_⟩
+  · intro x
+    rw [key]
+    constructor
+    · intro h
+      have h2 : ∑ i, P i - x * ∑ i, A i = 0 := by
+        rcases mul_eq_zero.mp h with h | h
+        · exact absurd h (by positivity)
+        · exact h
+      rw [eq_div_iff hSA.ne']
+      linarith
+    · intro h
+      rw [h, div_mul_cancel₀ _ hSA.ne']
+      ring
+  · rw [Finset.sum_div]
+    refine Finset.sum_congr rfl (fun i _ => ?_)
+    rw [hquote i]
+    have := (hA i).ne'
+    field_simp
+  · rw [key]
+    field_simp
+
+/-- The intrinsic spread never exceeds the plain average of the quotes, and equals it exactly
+when every quote is the same. All names share one recovery, so a name's annuity is one function
+`Aof` of its (positive) spread, positive and strictly decreasing; each name's protection leg is
+its quote times its annuity. Then `∑ P / ∑ A ≤ (∑ s) / n`, with equality if and only if all
+quotes are equal. -/
+theorem intrinsic_spread_le_plain_average
+    {n : ℕ} (Aof : ℝ → ℝ) (hanti : StrictAntiOn Aof (Set.Ioi 0))
+    (hApos : ∀ x, 0 < x → 0 < Aof x)
+    (s P : Fin n → ℝ) (hs : ∀ i, 0 < s i) (hquote : ∀ i, s i = P i / Aof (s i)) :
+    (∑ i, P i) / (∑ i, Aof (s i)) ≤ (∑ i, s i) / n ∧
+    ((∑ i, P i) / (∑ i, Aof (s i)) = (∑ i, s i) / n ↔ ∀ i j, s i = s j) := by
+  rcases Nat.eq_zero_or_pos n with hn | hn
+  · subst hn
+    simp
+  have hne : (Finset.univ : Finset (Fin n)).Nonempty := ⟨⟨0, hn⟩, by simp⟩
+  have hSA : 0 < ∑ i, Aof (s i) := Finset.sum_pos (fun i _ => hApos _ (hs i)) hne
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have hP : ∀ i, P i = s i * Aof (s i) := by
+    intro i
+    have h := hquote i
+    rw [eq_div_iff (hApos _ (hs i)).ne'] at h
+    linarith
+  have hsumP : ∑ i, P i = ∑ i, s i * Aof (s i) := Finset.sum_congr rfl (fun i _ => hP i)
+  have hpair : ∀ i j, (s i - s j) * (Aof (s i) - Aof (s j)) ≤ 0 := by
+    intro i j
+    rcases lt_trichotomy (s i) (s j) with h | h | h
+    · have := hanti (hs i) (hs j) h
+      nlinarith
+    · rw [h]; simp
+    · have := hanti (hs j) (hs i) h
+      nlinarith
+  have hpair_strict : ∀ i j, s i ≠ s j → (s i - s j) * (Aof (s i) - Aof (s j)) < 0 := by
+    intro i j hij
+    rcases lt_or_gt_of_ne hij with h | h
+    · have := hanti (hs i) (hs j) h
+      nlinarith
+    · have := hanti (hs j) (hs i) h
+      nlinarith
+  set D := ∑ i, ∑ j, (s i - s j) * (Aof (s i) - Aof (s j)) with hD
+  have hiden : D = 2 * ((n : ℝ) * ∑ i, s i * Aof (s i) - (∑ i, s i) * ∑ i, Aof (s i)) := by
+    rw [hD]
+    simp only [mul_sub, sub_mul, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
+      Fintype.card_fin, nsmul_eq_mul, ← Finset.mul_sum, ← Finset.sum_mul]
+    ring
+  have hDle : D ≤ 0 := Finset.sum_nonpos (fun i _ => Finset.sum_nonpos (fun j _ => hpair i j))
+  rw [hsumP]
+  constructor
+  · rw [div_le_div_iff₀ hSA hn']
+    nlinarith
+  · rw [div_eq_div_iff hSA.ne' hn'.ne']
+    constructor
+    · intro heq i j
+      by_contra hij
+      have hD0 : D = 0 := by rw [hiden]; linarith
+      have hinner : ∀ k ∈ (Finset.univ : Finset (Fin n)),
+          ∑ l, (s k - s l) * (Aof (s k) - Aof (s l)) = 0 :=
+        (Finset.sum_eq_zero_iff_of_nonpos
+          (fun k _ => Finset.sum_nonpos (fun l _ => hpair k l))).mp hD0
+      have hterm := (Finset.sum_eq_zero_iff_of_nonpos (fun l _ => hpair i l)).mp
+        (hinner i (Finset.mem_univ i)) j (Finset.mem_univ j)
+      have := hpair_strict i j hij
+      linarith
+    · intro hall
+      have hD0 : D = 0 := by
+        rw [hD]
+        refine Finset.sum_eq_zero (fun i _ => Finset.sum_eq_zero (fun j _ => ?_))
+        rw [hall i j]; ring
+      rw [hiden] at hD0
+      linarith
+
+/-- Correlation does not enter the index price. Each name's leg is a random payoff `X i`
+(its discounted payout, or its discounted fee stream). Take any two joint laws `μ` and `ν`
+for the names (independent, correlated, anything) under which every single name has the same
+law. Then the index leg, the expected value of the equal-weight average of the names' legs,
+is the same under both. -/
+theorem index_leg_depends_only_on_each_names_law
+    {Ω : Type*} [MeasurableSpace Ω] {n : ℕ} (X : Fin n → Ω → ℝ)
+    (hX : ∀ i, Measurable (X i)) (μ ν : Measure Ω)
+    (hint : ∀ i, Integrable (X i) μ)
+    (hsame : ∀ i, μ.map (X i) = ν.map (X i)) :
+    ∫ ω, (1 / (n : ℝ)) * ∑ i, X i ω ∂μ = ∫ ω, (1 / (n : ℝ)) * ∑ i, X i ω ∂ν := by
+  have hint' : ∀ i, Integrable (X i) ν := by
+    intro i
+    have h1 : Integrable id (μ.map (X i)) :=
+      (integrable_map_measure aestronglyMeasurable_id (hX i).aemeasurable).mpr (hint i)
+    rw [hsame i] at h1
+    exact (integrable_map_measure aestronglyMeasurable_id (hX i).aemeasurable).mp h1
+  have heach : ∀ i, ∫ ω, X i ω ∂μ = ∫ ω, X i ω ∂ν := by
+    intro i
+    have h1 := integral_map (μ := μ) (hX i).aemeasurable (f := id) aestronglyMeasurable_id
+    have h2 := integral_map (μ := ν) (hX i).aemeasurable (f := id) aestronglyMeasurable_id
+    simp only [id] at h1 h2
+    rw [← h1, ← h2, hsame i]
+  rw [integral_const_mul, integral_const_mul, integral_finsetSum _ (fun i _ => hint i),
+    integral_finsetSum _ (fun i _ => hint' i)]
+  simp only [heach]
+
+-- $10 million over 125 names: $80,000 a name.
+example : (10000000 : ℚ) / 125 = 80000 := by norm_num
+-- One default at 40% recovery pays (1 - R)/125 = 0.48% of notional, $48,000 on $10 million.
+example : (1 - (2 : ℚ) / 5) / 125 = 48 / 10000 := by norm_num
+example : (1 - (2 : ℚ) / 5) / 125 * 10000000 = 48000 := by norm_num
+-- Wrong payout with no recovery: 1/125 = 0.80%.
+example : (1 : ℚ) / 125 = 80 / 10000 := by norm_num
+-- Notional after one default: $9,920,000.
+example : (10000000 : ℚ) * 124 / 125 = 9920000 := by norm_num
+-- Quarterly coupon at 100 bp: $25,000 before the default, $24,800 after.
+example : (1 : ℚ) / 100 * (1 / 4) * 10000000 = 25000 := by norm_num
+example : (1 : ℚ) / 100 * (1 / 4) * 10000000 * 124 / 125 = 24800 := by norm_num
+-- Plain average of the quotes: (100 × 80 + 25 × 300)/125 = 124 bp.
+example : ((100 * 80 + 25 * 300 : ℚ)) / 125 = 124 := by norm_num
+-- Wrong skew against the plain average: 117 - 124 = -7 bp.
+example : (117 : ℚ) - 124 = -7 := by norm_num
+-- Chart's plain-average line: (8000 + 25 w)/125 for w = 100, ..., 800.
+example : ((8000 + 25 * 100 : ℚ)) / 125 = 84 ∧ ((8000 + 25 * 800 : ℚ)) / 125 = 224 := by norm_num
+
+#print axioms index_par_spread_eq_total_protection_over_total_annuity
+#print axioms intrinsic_spread_le_plain_average
+#print axioms index_leg_depends_only_on_each_names_law
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'index_par_spread_eq_total_protection_over_total_annuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'intrinsic_spread_le_plain_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+'index_leg_depends_only_on_each_names_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Recovery 25 percent instead of 40, same quotes.** Guess first: up or down? The intrinsic spread rises to 121.54 bp. A lower recovery means smaller hazards reprice the same quotes; the wide names' annuities lengthen, they weigh more, and they pull the weighted average up.
@@ -662,7 +873,7 @@ The two outputs agree line for line, the simulations included, because both prog
 - **Skew trades.** Desks compare the index with the sum of its names every day. When the skew exceeds the cost of trading 125 names, they buy the cheap side and sell the dear one.
 - **Risk numbers per name.** The index's sensitivity to one name's spread is that name's weight times the single-name sensitivity from [CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md), on one 125th of the notional.
 - **Tranches.** The same 125 names, cut into slices that each absorb losses in a fixed range, are the tranche market: [Tranches](05-cdo-tranches-in-outline.md) and [Implied correlation](06-implied-and-base-correlation.md).
-- **Conventions verified 28 Sep 2026** against the ICE product pages for Markit CDX.NA.IG and Markit iTraxx Europe Main: each index holds 125 of the most liquid investment-grade entities of its region, new series roll on 20 March and 20 September, and index spreads are quoted in basis points. The fixed-coupon-plus-upfront settlement is the one the ISDA CDS Standard Model page describes for single names. The index calculators also pay accrued fees on default and count days actual/360, which this card leaves out. Markets can change these rules; the sum rule does not change with them.
+- **Conventions verified 28 Sep 2026** against the ICE (Intercontinental Exchange) product pages for Markit CDX.NA.IG and Markit iTraxx Europe Main: each index holds 125 of the most liquid investment-grade entities of its region, new series roll on 20 March and 20 September, and index spreads are quoted in basis points. The fixed-coupon-plus-upfront settlement is the one the ISDA (International Swaps and Derivatives Association) CDS Standard Model page describes for single names. The index calculators also pay accrued fees on default and count days actual/360 (actual days elapsed over a 360-day year), which this card leaves out. Markets can change these rules; the sum rule does not change with them.
 
 > **Say it back**
 > A credit index is 125 equal single-name contracts traded as one, with one coupon and one set of dates. Its value is the sum of their values, so its par spread is total protection over total annuity: an average of the names' spreads weighted by their annuities, which sits below the plain average because risky names have short fee streams. A default pays that name's loss, one 125th of the notional times one minus recovery, and the contract carries on over the rest on a smaller notional. Correlation between names does not enter the price. The skew is the gap between the index's own quote and the spread its names imply.

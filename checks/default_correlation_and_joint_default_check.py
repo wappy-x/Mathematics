@@ -130,3 +130,4 @@ for k in range(8):
     a, b = k, k + 8
     print(f"dist {a:>2} {100 * indep[a]:>6.2f} {100 * town[a]:>6.2f} {100 * gauss[a]:>6.2f}"
           f"  | {b:>2} {100 * indep[b]:>6.2f} {100 * town[b]:>6.2f} {100 * gauss[b]:>6.2f}")
+print("ALL CHECKS PASS")

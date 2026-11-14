@@ -12,7 +12,14 @@ The fund can insure against that. It finds a bank willing to promise: if Northwi
 
 Suppose Northwind collapses. The bonds are then worth 40 cents on the dollar. The bank pays the missing 60 cents on each of the 10 million dollars: $6 million. The quarterly fees stop.
 
-The insurance has a market name, and from here on it carries it: a **credit default swap**, or CDS. The fund is the **protection buyer**. The bank is the **protection seller**. Northwind is the **reference entity**: the borrower whose failure triggers the payment. The $10 million is the **notional**, the amount insured. The yearly fee, as a fraction of the notional, is the **spread**, quoted in **basis points** (bp): hundredths of one percent. The fee here is 120 bp. The failure that triggers payment is a **credit event**, and the 40 cents is the **recovery rate**.
+The insurance has a market name, and from here on it carries it: a **credit default swap**, or CDS.
+
+- The fund is the **protection buyer**.
+- The bank is the **protection seller**.
+- Northwind is the **reference entity**: the borrower whose failure triggers the payment.
+- The $10 million is the **notional**, the amount insured.
+- The yearly fee, as a fraction of the notional, is the **spread**, quoted in **basis points** (bp): hundredths of one percent. The fee here is 120 bp.
+- The failure that triggers payment is a **credit event**, and the 40 cents is the **recovery rate**.
 
 Unlike household insurance, the buyer need not own the bonds. The contract is a bet on one borrower's survival, traded on its own. Buyer and seller agree only on the name, the notional, the length and the spread. The rest is standard wording, set by the industry body that writes derivatives contracts (ISDA, the International Swaps and Derivatives Association).
 
@@ -78,9 +85,16 @@ A definition holds by agreement. The sums above describe the real contract when 
 - **Recovery means the auction price.** The payout uses the price set at the auction a few weeks after the event, not what creditors finally collect years later in bankruptcy. The two can differ by a lot.
 - **The seller can pay.** The payout is a promise. If the seller fails in the same crisis, the buyer holds a claim, not cash; that risk has its own card, [Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md).
 - **The day count is ACT/360.** Quarters are counted in actual days over 360. Taking each quarter as exactly a quarter of a year is a close but inexact shortcut. The standard contract also counts the maturity date in the final quarter, one extra day, which this card leaves out.
-- **The upfront formula is approximate.** The market converts spread to upfront with a published standard model; $(s - c)AN$ is the first-order version of it.
+- **The upfront formula is approximate.** The market converts spread to upfront with a published standard model; $(s - c)AN$ is the first-order version of it: its simplest approximation.
 
-Conventions verified 2026-09-28, as standardised in 2009: quarterly payments on the 20th of March, June, September and December; ACT/360; fixed coupons of 100 or 500 bp for North American companies with the rest paid upfront; auction settlement written into the standard contract. The ISDA CDS Standard Model site confirms the fixed-coupon-plus-upfront trading. Market practice can change these terms.
+Conventions verified 2026-09-28, as standardised in 2009:
+
+- quarterly payments on the 20th of March, June, September and December;
+- ACT/360;
+- fixed coupons of 100 or 500 bp for North American companies, with the rest paid upfront;
+- auction settlement written into the standard contract.
+
+The ISDA CDS Standard Model site confirms the fixed-coupon-plus-upfront trading. Market practice can change these terms.
 
 ---
 
@@ -105,7 +119,13 @@ Hold $N$ of face value of a Northwind bond that pays a yearly coupon $y$, and bu
 
 In both cases the holder collects $(y - s)N$ a year until the money comes back, and gets $N$ back. The default time changes only when that happens, not how much comes back. So the pair is close to a riskless bond paying $y - s$. If riskless borrowing pays $r$, then $y - s \approx r$, and $s \approx y - r$: the CDS spread is about the bond's extra yield over riskless debt.
 
-The approximation, not equality, comes from three places: the riskless rate varies over time, so "close to a riskless floating-rate bond" is the exact statement; money returned early at default is reinvested at whatever rates then are; and the delivered bond may be the cheapest of several eligible bonds. The market's name for the gap $s - (y - r)$ is the CDS–bond basis. This is Duffie's 1999 replication argument.
+The approximation, not equality, comes from three places:
+
+- the riskless rate varies over time, so "close to a riskless floating-rate bond" (a bond whose coupon resets with market rates) is the exact statement;
+- money returned early at default is reinvested at whatever rates then are;
+- the delivered bond may be the cheapest of several eligible bonds.
+
+The market's name for the gap $s - (y - r)$ is the CDS–bond basis. This is Duffie's 1999 replication argument.
 
 </details>
 
@@ -132,7 +152,7 @@ That broke down as the market grew. Protection written on a company can exceed i
 The auction has two stages. In a toy version with Northwind's numbers:
 
 1. **Dealers quote.** Five dealers each give a price at which they would buy and sell the bonds: 40/42, 40.5/42.5, 41/43, 39.5/41.5, 40/42, in cents per dollar. The average of their midpoints, 41.2, is the **initial midpoint**. Dealers also report how many bonds their clients want to buy or sell at the final price; here the net is $150 million of bonds to sell.
-2. **Bids fill the imbalance.** Buyers submit limit bids: $40 million at 41.5, $50 million at 41, $80 million at 40, $100 million at 39. Filling from the top, the first two bids fall short of $150 million and the third takes the total past it. The price of the last bid needed, 40, is the **final price**.
+2. **Bids fill the imbalance.** Buyers submit limit bids, each an amount to buy at a stated price or less: $40 million at 41.5, $50 million at 41, $80 million at 40, $100 million at 39. Filling from the top, the first two bids fall short of $150 million and the third takes the total past it. The price of the last bid needed, 40, is the **final price**.
 
 So $R = 40\%$ and every contract on Northwind pays $10{,}000{,}000 \times 0.60 = \$6{,}000{,}000$ per $10 million. The real auctions add rules on dealers' quote widths and a cap on how far the final price may stray from the midpoint. The shape is the one above.
 
@@ -140,11 +160,11 @@ When more bonds are for sale than wanted, as here, the final price tends to land
 
 ### Step 4: fixed coupons, with the difference paid upfront
 
-Before 2009 each contract carried its own spread, set on the day it was traded. Two contracts on the same name could not be netted against each other or passed through a clearing house. The 2009 reforms fixed the running coupon at a few standard levels. North American companies trade at 100 or 500 bp.
+Before 2009 each contract carried its own spread, set on the day it was traded. Two contracts on the same name could not be netted (offset against each other) or passed through a clearing house (a central firm that stands between buyer and seller). The 2009 reforms fixed the running coupon at a few standard levels. North American companies trade at 100 or 500 bp.
 
 The quote is still a spread. A trade at 120 bp settles as a contract paying 100 bp, plus cash on day one that makes up the missing 20 bp a year. That cash is the **upfront**. Its size is 20 bp a year, valued over the years Northwind is expected to keep paying.
 
-That value is the **risky annuity** $A$: today's value of 1 a year, paid quarterly and only while Northwind survives. With a 2% yearly default rate and 5% interest, $A = 4.1819$: five years of payments shrink to about 4.18 once survival and discounting are counted. The pricing card derives it. So:
+That value is the **risky annuity** $A$: today's value of 1 a year, paid quarterly and only while Northwind survives. With a 2% yearly default rate and 5% interest, $A = 4.1819$: five years of payments shrink to about 4.18 once survival and discounting are counted. [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md) derives it. So:
 
 $$U \approx (0.012 - 0.010) \times 4.1819 \times 10{,}000{,}000 = \$83{,}638.71.$$
 
@@ -154,7 +174,9 @@ The market does not use this line directly. It uses a published calculator, the 
 
 ### Another way in
 
-The contract can also be seen as two streams: one fed by premiums while the borrower lives, one fed by the payout if it dies. Valuing each stream, weighted by the chance of survival, is how the spread gets priced. At Northwind's 2% hazard, 40% recovery and 5% rates, the premium stream is worth $A$ per unit of spread and the payout stream 0.050625 per dollar insured; the spread that equates them is 121.06 bp with quarterly payments. That work belongs to [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md); this card uses the two numbers only as a cross-check.
+The contract can also be seen as two streams: one fed by premiums while the borrower lives, one fed by the payout if it dies. Valuing each stream, weighted by the chance of survival, is how the spread gets priced.
+
+At Northwind's 2% hazard, 40% recovery and 5% rates, the premium stream is worth $A$ per unit of spread and the payout stream 0.050625 per dollar insured. The spread that equates them is 121.06 bp with quarterly payments. That work belongs to [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md); this card uses the two numbers only as a cross-check.
 
 ---
 
@@ -215,7 +237,7 @@ The second row is the risky annuity times $10 million times one basis point. The
 
 ## Code, from first principles, and it actually runs
 
-Both programs follow one contract from 20 Dec 2026. They reach the premiums two ways: from day counts and ACT/360, and from a ledger that walks the calendar one day at a time. They run the toy auction and settle the payout both physically and in cash. They cross-check the house risky annuity and protection leg against 200,000 default times drawn with a random-number generator written in the script. Python counts days with the standard `datetime` calendar; Rust has none, so it counts days with its own civil-date formula. Every row on the card, the wrong answers and the chart points are printed by both.
+Both programs follow one contract from 20 Dec 2026. They reach the premiums two ways: from day counts and ACT/360, and from a ledger that walks the calendar one day at a time. They run the toy auction and settle the payout both physically and in cash. They cross-check Northwind's risky annuity and protection leg (today's value of the payout stream) against 200,000 default times drawn with a random-number generator written in the script. Python counts days with the standard `datetime` calendar; Rust has none, so it counts days with its own civil-date formula. Every row on the card, the wrong answers and the chart points are printed by both.
 
 ### Python
 
@@ -376,7 +398,7 @@ chart, payout $m        10     9     8     7     6     5     4     3     2     1
 ALL CHECKS PASS
 ```
 
-The ledger and the day-count formula agree to the cent. The simulated risky annuity sits 1.3 standard errors from the closed form, the simulated protection leg 1.3 standard errors from its closed form.
+The ledger and the day-count formula agree to the cent. A standard error is the typical size of a simulation's random miss, and the closed form is the exact formula. The simulated risky annuity sits 1.3 standard errors from the closed form, the simulated protection leg 1.3 standard errors from its closed form.
 
 ### Rust
 
@@ -561,6 +583,137 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. They share the random-number recipe, so the simulated rows match too; the calendars were built independently.
 
+### Lean
+
+Lean proves three facts behind the contract for every notional, recovery rate, spread and day count, and checks the worked numbers exactly.
+
+- Bond plus protection is worth par at default exactly when the payout is the loss. Take a bond with face value $N$, worth $R \times N$ after a credit event. Then bond plus payout equals $N$ exactly when the payout is $N \times (1 - R)$.
+- The day-by-day ledger and the ACT/360 premiums give the same total. Take any number of quarters, with any number of days $d_i$ in each. Then charging $s \times N / 360$ for every day gives the sum of the quarterly premiums.
+- The buyer pays the upfront exactly when the quoted spread is above the standard coupon. Suppose the notional $N$ and the risky annuity $A$ are positive. Then $(s - c) \times A \times N$ is positive exactly when $s > c$, and negative exactly when $s < c$.
+- The worked numbers hold exactly, as fractions: every premium, the accrued premium, the auction's final price and both payouts.
+
+The calendar day counts, the risky annuity, the protection leg and the simulated default times are left to the Python and Rust checks.
+
+```lean
+-- The credit default swap: bond plus protection is worth par at default exactly when the payout is the notional times one minus the recovery, premiums counted day by day equal the ACT/360 quarterly premiums, and the upfront is paid by the buyer exactly when the quoted spread is above the coupon.
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+
+open Finset
+
+/-! Notation, as on the card. `N` is the notional, `R` the recovery rate (the auction's
+final price per dollar of face value), `s` the yearly spread as a fraction of `N`,
+`c` the standard coupon, `A` the risky annuity, and `d i` the actual days in quarter `i`.
+At a credit event the bond is worth `R * N`; the seller pays `p`.
+ACT/360: quarter `i` costs `s * N * (d i / 360)`. -/
+
+/-- Bond plus protection is worth its face value at default, and that fixes the payout:
+a holder of `N` of face value whose bond is now worth `R * N` ends with exactly `N`
+(par) if and only if the protection seller pays `N * (1 - R)`, the loss, not the recovery. -/
+theorem bond_plus_protection_worth_par_iff_payout_is_loss (N R p : ℝ) :
+    R * N + p = N ↔ p = N * (1 - R) := by
+  constructor <;> intro h <;> linarith
+
+/-- The day-by-day ledger agrees with the quarterly premiums: adding one day's fee
+`s * N / 360` for every day of quarters `0, …, k - 1` gives the same total as the
+ACT/360 premiums `s * N * (d i / 360)` of those quarters, whatever the day counts. -/
+theorem daily_ledger_eq_act360_premiums (s N : ℝ) (d : ℕ → ℕ) (k : ℕ) :
+    ∑ i ∈ range k, ∑ _j ∈ range (d i), s * N / 360 = ∑ i ∈ range k, s * N * ((d i : ℝ) / 360) := by
+  refine sum_congr rfl (fun i _ => ?_)
+  rw [sum_const, card_range, nsmul_eq_mul]
+  ring
+
+/-- Who pays the upfront `U = (s - c) * A * N`: with a positive notional and a positive
+risky annuity, the buyer pays (`U > 0`) exactly when the quoted spread is above the
+standard coupon; when the quote is below the coupon the seller pays (`U < 0`). -/
+theorem upfront_paid_by_buyer_iff_spread_above_coupon (s c A N : ℝ) (hA : 0 < A) (hN : 0 < N) :
+    (0 < (s - c) * A * N ↔ c < s) ∧ ((s - c) * A * N < 0 ↔ s < c) := by
+  have hAN : 0 < A * N := mul_pos hA hN
+  have e : (s - c) * A * N = (s - c) * (A * N) := by ring
+  rw [e]
+  constructor
+  · constructor
+    · intro h
+      by_contra hc
+      have hc' : s - c ≤ 0 := by linarith [not_lt.mp hc]
+      nlinarith
+    · intro h
+      have : 0 < s - c := by linarith
+      positivity
+  · constructor
+    · intro h
+      by_contra hc
+      have hc' : 0 ≤ s - c := by linarith [not_lt.mp hc]
+      nlinarith
+    · intro h
+      have : s - c < 0 := by linarith
+      nlinarith
+
+/-! The card's worked numbers, exactly, in ℚ. 1 bp = 1/10000, so 120 bp = 120/10000. -/
+
+-- Yearly fee: 120 bp on $10 million is $120,000; the idealised quarter is $30,000.
+example : (120 / 10000 : ℚ) * 10000000 = 120000 := by norm_num
+example : (120000 : ℚ) / 4 = 30000 := by norm_num
+-- Quarter 20 Dec 2026 to 20 Mar 2027, 90 days, ACT/360: exactly $30,000.
+example : (120 / 10000 : ℚ) * 10000000 * (90 / 360) = 30000 := by norm_num
+-- A 92-day quarter: $30,666.67, exactly 92000/3. A 91-day quarter: 91000/3.
+example : (120000 : ℚ) * 92 / 360 = 92000 / 3 := by norm_num
+example : (120000 : ℚ) * 91 / 360 = 91000 / 3 := by norm_num
+-- The first year has 90 + 92 + 92 + 91 = 365 days and costs $121,666.67 = 365000/3.
+example : 90 + 92 + 92 + 91 = 365 := by decide
+example : (120000 : ℚ) * 365 / 360 = 365000 / 3 := by norm_num
+-- Five years from 20 Dec 2026 have 1826 days (2028 is a leap year): $608,666.67 = 1826000/3.
+example : [90, 92, 92, 91, 91, 92, 92, 91, 90, 92, 92, 91, 90, 92, 92, 91, 90, 92, 92, 91].sum
+    = 1826 := by decide
+example : (120000 : ℚ) * 1826 / 360 = 1826000 / 3 := by norm_num
+-- Nine quarters paid before the event on 19 May 2029: 821 days, $273,666.67 = 821000/3.
+example : [90, 92, 92, 91, 91, 92, 92, 91, 90].sum = 821 := by decide
+example : (120000 : ℚ) * 821 / 360 = 821000 / 3 := by norm_num
+-- Accrued premium, 60 days from 20 Mar to 19 May 2029: $20,000.
+example : (120000 : ℚ) * 60 / 360 = 20000 := by norm_num
+-- Payout at 40% recovery: $6,000,000. Paying the recovery instead would give $4,000,000.
+example : (10000000 : ℚ) * (1 - 40 / 100) = 6000000 := by norm_num
+example : (10000000 : ℚ) * (40 / 100) = 4000000 := by norm_num
+-- Physical delivery gives the same: par minus the cost of $10m of bonds at 40 cents.
+example : (10000000 : ℚ) - 10000000 * 40 / 100 = 6000000 := by norm_num
+-- Seller's premium income with accrued, $293,666.67, and the buyer's net gain, $5,706,333.33.
+example : (821000 / 3 : ℚ) + 20000 = 881000 / 3 := by norm_num
+example : (6000000 : ℚ) - 881000 / 3 = 17119000 / 3 := by norm_num
+-- Toy auction: the five dealer midpoints average to 41.2 = 206/5 cents.
+example : (((40 + 42) / 2 + (81 / 2 + 85 / 2) / 2 + (41 + 43) / 2 + (79 / 2 + 83 / 2) / 2
+    + (40 + 42) / 2) / 5 : ℚ) = 206 / 5 := by norm_num
+-- Bids from the top: 40 + 50 = 90 falls short of 150 ($ millions); adding 80 reaches 170,
+-- so the bid at 40 is the last one needed and the final price is 40.
+example : 40 + 50 < 150 ∧ 150 ≤ 40 + 50 + 80 := by decide
+-- Lehman 2008: final price 8.625 cents, payout $9,137,500 per $10 million.
+example : (10000000 : ℚ) * (1 - 8625 / 100000) = 9137500 := by norm_num
+-- Mistakes: the spread charged each quarter is $120,000; 120 bp read as 12% is $300,000.
+example : (120 / 10000 : ℚ) * 10000000 = 120000 := by norm_num
+example : (12 / 100 : ℚ) * 10000000 / 4 = 300000 := by norm_num
+-- Sensitivities: 1 bp moves the idealised quarterly premium by $250;
+-- one point of recovery moves the payout by $100,000.
+example : (1 / 10000 : ℚ) * 10000000 / 4 = 250 := by norm_num
+example : (10000000 : ℚ) * (1 - 41 / 100) - 10000000 * (1 - 40 / 100) = -100000 := by norm_num
+-- Payoff chart: at final prices 0, 10, …, 100 the payout in $ millions is 10, 9, …, 0.
+example : (List.range 11).map (fun k => 10 - k) = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0] := by decide
+
+#print axioms bond_plus_protection_worth_par_iff_payout_is_loss
+#print axioms daily_ledger_eq_act360_premiums
+#print axioms upfront_paid_by_buyer_iff_spread_above_coupon
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bond_plus_protection_worth_par_iff_payout_is_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'daily_ledger_eq_act360_premiums' depends on axioms: [propext, Classical.choice, Quot.sound]
+'upfront_paid_by_buyer_iff_spread_above_coupon' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -608,7 +761,7 @@ The two outputs agree line for line. They share the random-number recipe, so the
 - [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md): the premium stream and the payout stream valued with survival chances, the risky annuity derived, and the spread that makes them equal.
 - [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md): the upfront done exactly, and what an old contract is worth when spreads move.
 
-This card fixes what 120 bp buys and who pays what when; it leaves open whether 120 bp is a fair price for Northwind's risk, which the pricing card settles by valuing both legs.
+This card fixes what 120 bp buys and who pays what when. It leaves open whether 120 bp is a fair price for Northwind's risk, which the pricing card settles by valuing both legs.
 
 ---
 

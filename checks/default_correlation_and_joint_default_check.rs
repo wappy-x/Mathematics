@@ -163,4 +163,5 @@ fn main() {
         println!("dist {:>2} {:>6.2} {:>6.2} {:>6.2}  | {:>2} {:>6.2} {:>6.2} {:>6.2}",
                  a, 100.0 * indep[a], 100.0 * town[a], 100.0 * gauss[a], b, 100.0 * indep[b], 100.0 * town[b], 100.0 * gauss[b]);
     }
+    println!("ALL CHECKS PASS");
 }

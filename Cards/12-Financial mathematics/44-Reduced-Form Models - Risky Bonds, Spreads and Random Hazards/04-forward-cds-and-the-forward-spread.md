@@ -8,11 +8,11 @@
 
 A lender to Northwind Lines, the shipping company this shelf follows, will take on $10 million of Northwind risk in one year's time and hold it for four years. It wants default insurance for exactly that window: from year 1 to year 5. It wants the price fixed today.
 
-The insurance is a credit default swap, CDS for short: the buyer pays a yearly premium, in quarterly instalments, while Northwind survives, and the seller pays the lost 60% of face value if Northwind defaults, 40% being assumed recovered ([The credit default swap](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md)). A CDS whose protection starts at a later date is a **forward CDS**. The screen quotes Northwind at 120 basis points a year for one year of protection, 200 for three years and 250 for five (a basis point, bp, is a hundredth of a percent). Nobody quotes the window from year 1 to year 5.
+The insurance is a credit default swap, CDS for short. The buyer pays a yearly premium, in quarterly instalments, while Northwind survives. The seller pays the lost 60% of face value if Northwind defaults, 40% being assumed recovered ([The credit default swap](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md)). A CDS whose protection starts at a later date is a **forward CDS**. The screen quotes Northwind at 120 basis points a year for one year of protection, 200 for three years and 250 for five (a basis point, bp, is a hundredth of a percent). Nobody quotes the window from year 1 to year 5.
 
 There is a way to build it. Buy five years of protection and sell one year of protection, both at the same premium. For the first year the two cancel: premiums in equal and opposite, payouts equal and opposite if Northwind defaults. After year 1 only the five-year contract is left. If Northwind defaults before year 1, both contracts pay and cancel, and the whole package is dead. That last feature is the **knock-out**: an early default cancels the forward contract with no payment either way.
 
-The premium that makes the package worth nothing today is the **forward par spread**. For Northwind it is 290.55 bp, well above the five-year quote of 250. The reason is the curve's slope. The five-year quote averages a cheap first year at 120 bp with the four years after it. Remove the cheap year and the rest must cost more. On a flat curve there is nothing to remove, and the forward spread equals the **spot** spread, the quote for protection starting today: a flat 2% hazard gives 121.06 bp for five years and 121.06 bp for the forward.
+The premium that makes the package worth nothing today is the **forward par spread**. For Northwind it is 290.55 bp, well above the five-year quote of 250. The reason is the curve's slope. The five-year quote averages a cheap first year at 120 bp with the four years after it. Remove the cheap year and the rest must cost more. On a flat curve there is nothing to remove, and the forward spread equals the **spot** spread, the quote for protection starting today. A flat 2% hazard (a default rate of 2% a year among survivors) gives 121.06 bp for five years and 121.06 bp for the forward.
 
 **A forward CDS from one date to a later one is long protection to the later date and short protection to the earlier date at one premium; its fair premium is the forward protection divided by the forward annuity, which sits above the long spot spread when the curve rises, equals it when the curve is flat, and sits below it when the curve falls.**
 
@@ -31,13 +31,13 @@ xychart-beta
     line [121.06, 121.06, 121.06, 121.06, 121.06]
 ```
 
-Orange: the forward par spread on the bootstrapped Northwind curve, for protection starting at the year shown and ending at year 5. Start 0 is the spot five-year contract, 250 bp. Green: the spot five-year quote, for comparison. Dark blue: the same forward spreads on a flat 2% hazard, all 121.06 bp. The orange line climbs because each later start drops more of the cheap early years. It is level from start 3 to start 4 because the curve's last piece is flat from year 3 on.
+Orange: the forward par spread on the bootstrapped Northwind curve (the hazard curve fitted to the three quotes), for protection starting at the year shown and ending at year 5. Start 0 is the spot five-year contract, 250 bp. Green: the spot five-year quote, for comparison. Dark blue: the same forward spreads on a flat 2% hazard, all 121.06 bp. The orange line climbs because each later start drops more of the cheap early years. It is level from start 3 to start 4 because the curve's last piece is flat from year 3 on.
 
 ---
 
 ## The formula
 
-Notation first, in words. The forward window runs from $T_1$ to $T_2$, here year 1 to year 5. The spot par spreads to those dates are $s_1$ and $s_2$, decimals a year. For any tenor $T$, the risky annuity $A(T)$ is the value today of one dollar a year paid quarterly while Northwind survives, and the protection leg $P(T)$ is the value today of the payout per dollar covered ([Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). A spot contract at its par spread has matching legs: $P(T) = s\,A(T)$.
+Notation first, in words. The forward window runs from $T_1$ to $T_2$, here year 1 to year 5. The spot par spreads to those dates are $s_1$ and $s_2$, decimals a year. For any tenor $T$ (contract length in years), the risky annuity $A(T)$ is the value today of one dollar a year paid quarterly while Northwind survives. The protection leg $P(T)$ is the value today of the payout per dollar covered ([Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). A spot contract at its par spread has matching legs: $P(T) = s\,A(T)$.
 
 The forward legs are the differences:
 
@@ -87,7 +87,7 @@ so the forward spread equals it too.
 - **The knock-out.** A default before $T_1$ cancels the contract. A forward that pays for early defaults too carries front-end protection, worth $P(T_1)\,N$ = $114,897.56 more for Northwind: a different product.
 - **A price, not a forecast.** $F$ is the premium that is fair today. Northwind's four-year spread a year from now can land anywhere; what that uncertainty is worth is priced in [Options on a CDS](05-cds-option-and-implied-spread-volatility.md).
 
-**Conventions verified 2026-09-28:** standard CDS contracts trade with a fixed running coupon plus an upfront payment, and the ISDA CDS Standard Model (cdsmodel.com) converts between upfront and spread quotes. This card works in par spreads, with quarterly premiums paid at the end of each quarter survived and no premium accrued between the last payment and default, the conventions of the bootstrapping card. Accrual shifts the numbers slightly, not the method.
+**Conventions verified 2026-09-28:** standard CDS contracts trade with a fixed running coupon plus an upfront payment, and the ISDA (International Swaps and Derivatives Association) CDS Standard Model (cdsmodel.com) converts between upfront and spread quotes. This card works in par spreads, with quarterly premiums paid at the end of each quarter survived and no premium accrued between the last payment and default, the conventions of the bootstrapping card. Accrual shifts the numbers slightly, not the method.
 
 ---
 
@@ -131,7 +131,7 @@ A rough reading: the credit triangle (spread ≈ loss × hazard, [The credit tri
 
 With a flat hazard $\lambda$ and a flat rate $r$, the product $D(t)\,S(t)$ is $e^{-kt}$ with $k = r + \lambda$. Over any window that starts on a quarter date, both legs carry the same factor for where the window starts and the same factor for how long it runs (the Detailed proof writes both out). Both factors cancel in the ratio. What is left, the formula for $s$ above, involves neither the start nor the length. So $s_1 = s_2$, and Step 2 gives $F = s_2$. For a 2% hazard: 121.06 bp spot, 121.06 bp forward, 121.06 bp from the tenor-free formula.
 
-The underlying fact is that a flat hazard has no memory. A name alive at year 1 faces the same future as a new name today: the window from year 1 to year 5 is a four-year spot contract, scaled down by the chance of reaching year 1 and the discount to it.
+The underlying fact is that a flat hazard has no memory. A name alive at year 1 faces the same future as a new name today. The window from year 1 to year 5 is then a four-year spot contract, scaled down by the chance of reaching year 1 and the discount to it.
 
 <details>
 <summary>Detailed proof</summary>
@@ -152,7 +152,7 @@ Seen from year 1, a forward that has not knocked out is a plain four-year contra
 
 The chance of a knock-out is $1 - S(1)$ = 0.0196.
 
-A second route skips the formulas. A **Monte Carlo** run draws random default dates from the curve ([Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)), pay out and collect premiums path by path inside the window, cancel the paths that default early, and average. It lands on 290.46 bp with a standard error of 1.10 bp; 0.0195 of its paths knock out.
+A second route skips the formulas. A **Monte Carlo** run draws random default dates from the curve ([Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)), pays out and collects premiums path by path inside the window, cancels the paths that default early, and averages. It lands on 290.46 bp with a standard error (the typical size of its random error) of 1.10 bp; 0.0195 of its paths knock out.
 
 ---
 
@@ -174,7 +174,7 @@ The curve comes from the bootstrapping card: hazards 1.98% for year 1, 4.04% for
 
 In the world: protection on Northwind from year 1 to year 5, arranged today, costs 290.55 bp a year. A forward bought at the five-year quote of 250 bp is a bargain worth $124,472.36 on $10 million.
 
-That value has a second reading. At $K = s_2$ the five-year leg of the package is at par and worth nothing, so the forward is worth only the one-year leg: one year of protection sold at 250 bp in a 120 bp market, $(0.0250 - 0.0120) \times 0.957480 \times 10{,}000{,}000$ = $124,472.36.
+That value has a second reading. At $K = s_2$ the five-year leg of the package is at par and worth nothing. So the forward is worth only the one-year leg: one year of protection sold at 250 bp in a 120 bp market, $(0.0250 - 0.0120) \times 0.957480 \times 10{,}000{,}000$ = $124,472.36.
 
 ### What breaks if you drop a piece
 
@@ -583,6 +583,137 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the card's algebra for all inputs that meet its conditions: the forward spread, the curve cases, the identity and the flat-hazard result.
+
+- Take any notional $N \ne 0$. Then the forward is worth zero, $V = 0$, exactly when the premium $K$ equals $F$.
+- Suppose both spot contracts are at par and $0 < A(T_1) < A(T_2)$. Then a rising curve puts $F$ above $s_2$, a flat curve on it, and a falling curve below it.
+- Suppose both spot contracts are at par and $A(T_1) < A(T_2)$. Then $s_2 A(T_2) = s_1 A(T_1) + F A_f$, the annuity-weighted identity.
+- Take the same two par contracts. Then $F = s_2 + (s_2 - s_1) A(T_1) / A_f$.
+- Take a flat hazard $\lambda \ge 0$, a flat rate $r \ge 0$, not both zero, and a window between two quarter dates. Then its par spread is the flat-hazard formula for $s$, whatever the window's start and length.
+- Take the quotes 120 and 250 bp. Then the slope is 130 bp, and the time-weights mistake $(5 \times 250 - 120)/4$ gives exactly 282.50 bp.
+
+The Northwind numbers, the bootstrapped curve, the Monte Carlo run and the risk table are left to the Python and Rust checks.
+
+```lean
+-- The forward CDS: the forward par spread, forward protection over forward annuity, is the only premium that makes the long-minus-short package worth zero, it lies above, on or below the long spot spread as the curve rises, is flat or falls, and on a flat hazard every window has the same spread.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Algebra.BigOperators.Intervals
+
+open Real
+
+theorem geom_tel (q : ℝ) (m n : ℕ) :
+    (∑ j ∈ Finset.Ioc m (m + n), q ^ j) * (1 - q) = q ^ (m + 1) - q ^ (m + n + 1) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [show m + (n + 1) = (m + n) + 1 by omega, Finset.sum_Ioc_succ_top (by omega), add_mul, ih]
+    ring
+
+theorem int_exp_neg (k a b : ℝ) (hk : k ≠ 0) :
+    (∫ t in a..b, exp (-k * t)) * k = exp (-k * a) - exp (-k * b) := by
+  have hk' : -k ≠ 0 := neg_ne_zero.mpr hk
+  rw [intervalIntegral.integral_comp_mul_left (fun x => exp x) hk', integral_exp, smul_eq_mul]
+  field_simp
+  ring
+
+#print axioms geom_tel
+#print axioms int_exp_neg
+
+/-- A forward CDS from `T₁` to `T₂` is protection to `T₂` bought and protection to `T₁` sold at one
+premium `K`, so on notional `N ≠ 0` it is worth `N[(P(T₂) - K A(T₂)) - (P(T₁) - K A(T₁))]`.
+The premium that makes this zero is exactly the forward par spread
+`F = (P(T₂) - P(T₁)) / (A(T₂) - A(T₁))`. When both spot contracts are at par
+(`P(T₁) = s₁ A(T₁)`, `P(T₂) = s₂ A(T₂)`) and the annuities satisfy `0 < A(T₁) < A(T₂)`,
+`F` sits above the long spot spread `s₂` when the curve rises (`s₁ < s₂`), equals it when the
+curve is flat, and sits below it when the curve falls. -/
+theorem forward_par_spread_against_long_spot_spread
+    (A₁ A₂ P₁ P₂ s₁ s₂ N : ℝ) (hA₁ : 0 < A₁) (hA : A₁ < A₂)
+    (hP₁ : P₁ = s₁ * A₁) (hP₂ : P₂ = s₂ * A₂) (hN : N ≠ 0) :
+    (∀ K : ℝ, N * ((P₂ - K * A₂) - (P₁ - K * A₁)) = 0 ↔ K = (P₂ - P₁) / (A₂ - A₁)) ∧
+    (s₁ < s₂ → s₂ < (P₂ - P₁) / (A₂ - A₁)) ∧
+    (s₁ = s₂ → (P₂ - P₁) / (A₂ - A₁) = s₂) ∧
+    (s₂ < s₁ → (P₂ - P₁) / (A₂ - A₁) < s₂) := by
+  have hd : 0 < A₂ - A₁ := sub_pos.mpr hA
+  refine ⟨fun K => ?_, fun h => ?_, fun h => ?_, fun h => ?_⟩
+  · rw [mul_eq_zero, or_iff_right hN, eq_div_iff hd.ne']
+    constructor <;> intro h <;> linarith
+  · rw [lt_div_iff₀ hd, hP₁, hP₂]; nlinarith
+  · rw [div_eq_iff hd.ne', hP₁, hP₂, h]; ring
+  · rw [div_lt_iff₀ hd, hP₁, hP₂]; nlinarith
+
+/-- The annuity-weighted identity: with both spot contracts at par and `A(T₁) < A(T₂)`, the long
+spot spread times its annuity is the short spot spread times its annuity plus the forward spread
+times the forward annuity, and so `F = s₂ + (s₂ - s₁) A(T₁) / (A(T₂) - A(T₁))`. -/
+theorem annuity_weighted_identity
+    (A₁ A₂ P₁ P₂ s₁ s₂ : ℝ) (hA : A₁ < A₂)
+    (hP₁ : P₁ = s₁ * A₁) (hP₂ : P₂ = s₂ * A₂) :
+    s₂ * A₂ = s₁ * A₁ + (P₂ - P₁) / (A₂ - A₁) * (A₂ - A₁) ∧
+    (P₂ - P₁) / (A₂ - A₁) = s₂ + (s₂ - s₁) * A₁ / (A₂ - A₁) := by
+  have hd : A₂ - A₁ ≠ 0 := (sub_pos.mpr hA).ne'
+  constructor
+  · rw [div_mul_cancel₀ _ hd, hP₁, hP₂]; ring
+  · rw [eq_comm, ← sub_eq_zero]
+    field_simp
+    rw [hP₁, hP₂]; ring
+
+/-- On a flat hazard `haz ≥ 0` and a flat rate `r ≥ 0`, not both zero, with `k = r + haz`, the
+window from `m/4` to `(m+n)/4` (`n ≥ 1`) has forward annuity `∑ 0.25 e^{-k j/4}` over the premium
+dates `j/4` inside it and forward protection `L haz ∫ e^{-k t} dt` over it. Their ratio is
+`(L haz / k) (1 - e^{-k/4}) / (0.25 e^{-k/4})` whatever the window's start and length, so every
+spot and every forward par spread is this one number. -/
+theorem flat_hazard_forward_spread_is_tenor_free
+    (L haz r : ℝ) (hhaz : 0 ≤ haz) (hr : 0 ≤ r) (hk : r + haz ≠ 0) (m n : ℕ) (hn : 1 ≤ n) :
+    (L * haz * ∫ t in ((m : ℝ) / 4)..(((m + n : ℕ) : ℝ) / 4), exp (-(r + haz) * t)) /
+      (∑ j ∈ Finset.Ioc m (m + n), (1 / 4 : ℝ) * exp (-(r + haz) * ((j : ℝ) / 4))) =
+    L * haz / (r + haz) * (1 - exp (-(r + haz) / 4)) / ((1 / 4) * exp (-(r + haz) / 4)) := by
+  set k := r + haz with hkdef
+  have kpos : 0 < k := lt_of_le_of_ne (by positivity) (Ne.symm hk)
+  set q := exp (-k / 4) with hq
+  have qpos : 0 < q := exp_pos _
+  have hpow : ∀ x : ℕ, exp (-k * ((x : ℝ) / 4)) = q ^ x := by
+    intro x; rw [hq, ← exp_nat_mul]; ring_nf
+  have hI := int_exp_neg k ((m : ℝ) / 4) (((m + n : ℕ) : ℝ) / 4) hk
+  rw [hpow, hpow] at hI
+  have hS : ∑ j ∈ Finset.Ioc m (m + n), (1 / 4 : ℝ) * exp (-k * ((j : ℝ) / 4))
+      = (1/4) * ∑ j ∈ Finset.Ioc m (m + n), q ^ j := by
+    rw [Finset.mul_sum]; simp_rw [hpow]
+  have hG := geom_tel q m n
+  have Spos : 0 < ∑ j ∈ Finset.Ioc m (m + n), q ^ j := by
+    apply Finset.sum_pos (fun j _ => pow_pos qpos j)
+    exact ⟨m + 1, by simp; omega⟩
+  rw [hS]
+  set I := ∫ t in ((m : ℝ) / 4)..(((m + n : ℕ) : ℝ) / 4), exp (-k * t)
+  set S := ∑ j ∈ Finset.Ioc m (m + n), q ^ j
+  rw [div_eq_div_iff (by positivity) (by positivity)]
+  have e1 : q ^ (m + 1) - q ^ (m + n + 1) = q * (q ^ m - q ^ (m + n)) := by ring
+  rw [e1, ← hI] at hG
+  clear_value k I S q
+  field_simp
+  linear_combination (-(L * haz)) * hG
+
+-- The card's "time weights instead of annuity weights" mistake: (5 × 250 − 1 × 120) / 4 = 282.50 bp.
+example : ((5 * 250 - 1 * 120 : ℚ) / 4) = 565 / 2 := by norm_num
+
+-- The curve's slope on the card's quotes: 250 bp − 120 bp = 130 bp.
+example : (250 : ℤ) - 120 = 130 := by norm_num
+
+#print axioms forward_par_spread_against_long_spot_spread
+#print axioms annuity_weighted_identity
+#print axioms flat_hazard_forward_spread_is_tenor_free
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'geom_tel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'int_exp_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'forward_par_spread_against_long_spot_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+'annuity_weighted_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'flat_hazard_forward_spread_is_tenor_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ### The payoff: what the forward is worth at year 1
 
 At year 1 a live forward becomes a plain four-year contract, worth whatever Northwind's four-year spread that day makes it. The chart takes the forward bought at the par forward spread, 290.55 bp, on $10 million, and values it at year 1 against a flat curve fitted to each possible four-year spread.
@@ -651,6 +782,8 @@ For the forward bought at 250 bp on $10 million, each quote is bumped by 1 bp an
 ## Where this goes next
 
 - [Options on a CDS](05-cds-option-and-implied-spread-volatility.md): takes the forward spread and the forward annuity from this card, lets the spread at year 1 be uncertain, and prices the right, not the obligation, to enter the forward.
+
+This card fixes the forward spread from today's curve; it leaves open what the choice to enter the forward is worth when Northwind's spread at year 1 is uncertain.
 
 ---
 

@@ -12,7 +12,9 @@ On average, 2 loans in 100 go bad. The average loss is 2% of $60: **$1.20 per lo
 
 The danger is not the average year. Companies share an economy. In a recession they fail together, and a year that should see 2% of loans go bad can see several times that. The question a bank and its regulator both ask is: in the worst year out of a thousand, what fraction of the loans go bad, and how much money must be set aside today to survive it?
 
-Oldřich Vasicek answered it for a pool so large that each loan is a speck. His answer needs three numbers: the default chance, 2%; how strongly the companies share the economy's fortunes, a correlation of 20%; and the loss per default, 60%. For this book the one-in-a-thousand year sees **22.6%** of loans default, against 2% expected. The money to set aside beyond the average is **$12.38 per $100 loan**. The Basel rules for banks run the same formula with a correlation they fix themselves, 16.4% here, and ask for **$10.22**.
+Oldřich Vasicek answered it for a pool so large that each loan is a speck. His answer needs three numbers: the default chance, 2%; how strongly the companies share the economy's fortunes, a correlation of 20%; and the loss per default, 60%.
+
+For this book the one-in-a-thousand year sees **22.6%** of loans default, against 2% expected. The money to set aside beyond the average is **$12.38 per $100 loan**. The Basel rules for banks run the same formula with a correlation they fix themselves, 16.4% here, and ask for **$10.22**. These are the international rules, agreed by bank supervisors at the Basel Committee, on how much of its own money a bank must hold against its loans.
 
 **When a large pool of loans shares one economy, the fraction that defaults is a fixed function of how bad the economy is, so the pool's whole loss distribution is the bell curve of the economy, reshaped by one formula; its 99.9% point, minus the expected loss, is the capital the bank must hold.**
 
@@ -38,7 +40,9 @@ Rising line: the default rate the bad year reaches. Flat line: the 2% average. T
 
 ## The formula
 
-Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance that a standard normal draw (a draw from the bell curve with average 0 and spread 1) comes out below $x$. $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)). $L$ is the fraction of the pool that defaults in the year, a number between 0 and 1. $p$ is one loan's default chance (the PD, 2% here), $\rho$ the asset correlation (20%, defined in the table below) and $\alpha$ the confidence level (99.9%).
+Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance that a standard normal draw (a draw from the bell curve with average 0 and spread 1) comes out below $x$. $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+
+$L$ is the fraction of the pool that defaults in the year, a number between 0 and 1. $p$ is one loan's default chance (the PD, 2% here), $\rho$ the asset correlation (20%, defined in the table below) and $\alpha$ the confidence level (99.9%).
 
 The chance that the default fraction stays at or below a level $x$:
 
@@ -63,6 +67,8 @@ $$\rho_{\text{Basel}}(p) = 0.12\,w + 0.24\,(1 - w), \qquad w = \frac{1 - e^{-50p
 The **expected shortfall** (the average default fraction over the worst 0.1% of years, [Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)) averages the same curve over the tail:
 
 $$\mathrm{ES}_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 x_u \, du$$
+
+Here $x_u$ is the quantile formula above at level $u$, and the integral averages it over every level $u$ from $\alpha$ up to 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the 99.9% default rate… |
 | --- | --- | --- | --- |
@@ -93,11 +99,15 @@ $$\mathrm{ES}_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 x_u \, du$$
 
 ### Step 0: one shared number decides the year
 
-Each company's fate mixes the shared economy with private luck. Fix the economy, and the private lucks are independent coin flips. In a huge pool, independent coin flips average out: if each lands with the same chance, that share of them lands. So once the economy is known, the default fraction is known. The only uncertainty left in the pool is the economy itself, a single bell-curve number. The whole distribution of pool losses is that one bell curve, passed through one formula.
+Each company's fate mixes the shared economy with private luck. Fix the economy, and the private lucks are independent coin flips. In a huge pool, independent coin flips average out: if each lands with the same chance, that share of them lands.
+
+So once the economy is known, the default fraction is known. The only uncertainty left in the pool is the economy itself, a single bell-curve number. The whole distribution of pool losses is that one bell curve, passed through one formula.
 
 ### Step 1: default is health falling below a line
 
-This is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). Company $i$ has a health score $A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i$, where the economy $M$ and the private luck $Z_i$ are independent bell-curve draws. The weights are square roots so that the two variances, $\rho$ and $1-\rho$, add to 1, keeping $A_i$ itself a standard bell-curve draw. The company defaults when $A_i$ falls below the threshold $c$. Setting $c = N^{-1}(p)$ makes the chance of that exactly $p$: here $c = N^{-1}(0.02) = -2.0537$.
+This is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). Company $i$ has a health score $A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i$, where the economy $M$ and the private luck $Z_i$ are independent bell-curve draws. The weights are square roots so that the two variances, $\rho$ and $1-\rho$, add to 1, keeping $A_i$ itself a standard bell-curve draw.
+
+The company defaults when $A_i$ falls below the threshold $c$. Setting $c = N^{-1}(p)$ makes the chance of that exactly $p$: here $c = N^{-1}(0.02) = -2.0537$.
 
 ### Step 2: the default chance in a given economy
 
@@ -129,7 +139,9 @@ The average default fraction over the worst 0.1% of years is the average of $p(m
 
 ### Step 7: capital covers the unexpected part
 
-The bank prices the average loss, $p \times \mathrm{LGD}$ per dollar, into its interest rates and provisions. Capital is for the rest: the gap between the bad year and the average year, $\mathrm{LGD} \times (x_{0.999} - p)$. Michael Gordy showed in 2003 that in a one-factor model with a very large pool, this charge for each loan depends only on that loan's own PD, LGD and correlation, not on what else is in the book. That property, called portfolio invariance, is why a regulator can set capital loan by loan and add it up. The model under it is the **asymptotic single risk factor** (ASRF) model: asymptotic because the pool is taken as infinitely large.
+The bank prices the average loss, $p \times \mathrm{LGD}$ per dollar, into its interest rates and provisions (money set aside in its accounts for the losses it expects). Capital is for the rest: the gap between the bad year and the average year, $\mathrm{LGD} \times (x_{0.999} - p)$.
+
+Michael Gordy showed in 2003 that in a one-factor model with a very large pool, this charge for each loan depends only on that loan's own PD, LGD and correlation, not on what else is in the book. That property, called portfolio invariance, is why a regulator can set capital loan by loan and add it up. The model under it is the **asymptotic single risk factor** (ASRF) model: asymptotic because the pool is taken as infinitely large.
 
 <details>
 <summary>Detailed proof: the large-pool limit, and the two expected-shortfall routes agreeing</summary>
@@ -644,6 +656,362 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line, including the simulation: both use the same integer random-number recipe, while the bell-curve areas come from different code.
+
+### Lean
+
+Lean proves the loss curve, the bad-year default rate and the large-pool limit, inside the one-factor model of Step 1.
+
+- Suppose $M$ is a bell-curve draw, $0 < \rho < 1$, $c = N^{-1}(p)$ and $0 < x < 1$. Then the chance that $p(M)$ is at most $x$ is exactly $F(x)$.
+- Take the same model and $0 < \alpha < 1$. Then $p(M)$ stays at or below $x_\alpha$ with chance exactly $\alpha$. Every lower level has chance below $\alpha$.
+- Take $M$ and every private luck $Z_i$ as independent bell-curve draws, with $0 \le \rho < 1$. Then for every $\varepsilon > 0$, the chance that $|L_n - p(M)| > \varepsilon$ tends to 0 as $n$ grows.
+- Take the example loan. Then $100 \times 0.60 \times 0.02$ is exactly 1.20, the expected loss in dollars.
+- Take Basel's factor 12.5. Then $12.5 \times 8\%$ is exactly 1, so risk-weighted assets times 8% give back the capital.
+
+The example's decimals, expected shortfall, Basel's correlation and the finite pools are left to the Python and Rust checks.
+
+```lean
+-- Vasicek's large-pool loss curve: when the default fraction is the conditional default chance of a standard normal economy, its distribution and its α-quantile are Vasicek's closed forms, and the default fraction of a pool of n one-factor loans converges to that conditional chance as n grows.
+import Mathlib.Probability.CDF
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.Independence.Basic
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+lemma vasicek_gauss_singleton (a : ℝ) : gaussianReal 0 1 {a} = 0 :=
+  (nullSingletonClass_gaussianReal (μ := 0) one_ne_zero).measure_singleton a
+
+lemma vasicek_cdf_strictMono : StrictMono (cdf (gaussianReal 0 1)) := by
+  intro a b hab
+  have h1 := (cdf (gaussianReal 0 1)).measure_Ioc a b
+  rw [measure_cdf] at h1
+  have h2 : gaussianReal 0 1 (Set.Ioc a b) ≠ 0 := by
+    intro h
+    have := gaussianReal_absolutelyContinuous' 0 one_ne_zero h
+    rw [Real.volume_Ioc] at this
+    simp at this
+    linarith
+  rw [h1] at h2
+  have := mt ENNReal.ofReal_eq_zero.mpr h2
+  linarith [not_le.mp this]
+
+lemma vasicek_cdf_leftLim (a : ℝ) :
+    Function.leftLim (cdf (gaussianReal 0 1)) a = cdf (gaussianReal 0 1) a := by
+  have h1 := (cdf (gaussianReal 0 1)).measure_singleton a
+  rw [measure_cdf, vasicek_gauss_singleton] at h1
+  have h2 : Function.leftLim (cdf (gaussianReal 0 1)) a ≤ cdf (gaussianReal 0 1) a :=
+    Monotone.leftLim_le (monotone_cdf _) le_rfl
+  have h3 := ENNReal.ofReal_eq_zero.mp h1.symm
+  linarith
+
+lemma vasicek_cdf_contWithin (a : ℝ) :
+    ContinuousWithinAt (cdf (gaussianReal 0 1)) (Set.Iio a) a :=
+  (monotone_cdf _).continuousWithinAt_Iio_iff_leftLim_eq.2 (vasicek_cdf_leftLim a)
+
+lemma vasicek_gauss_Ici (t : ℝ) :
+    (gaussianReal 0 1).real (Set.Ici t) = cdf (gaussianReal 0 1) (-t) := by
+  rw [cdf_eq_real]
+  have h : (gaussianReal 0 1).map (fun x => -x) = gaussianReal 0 1 := by
+    simpa using gaussianReal_map_neg (μ := 0) (v := 1)
+  conv_lhs => rw [← h]
+  rw [map_measureReal_apply measurable_neg measurableSet_Ici]
+  congr 1
+  ext x
+  simp
+
+lemma vasicek_prob_le {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (M : Ω → ℝ) (hM : HasLaw M (gaussianReal 0 1) P)
+    {ρ c : ℝ} (hρ0 : 0 < ρ) (hρ1 : ρ < 1) (y : ℝ) :
+    P.real {ω | (c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ) ≤ y} =
+      cdf (gaussianReal 0 1) ((Real.sqrt (1 - ρ) * y - c) / Real.sqrt ρ) := by
+  have hs : 0 < Real.sqrt ρ := Real.sqrt_pos.2 hρ0
+  have hr : 0 < Real.sqrt (1 - ρ) := Real.sqrt_pos.2 (by linarith)
+  have hset : {ω | (c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ) ≤ y} =
+      {ω | (c - Real.sqrt (1 - ρ) * y) / Real.sqrt ρ ≤ M ω} := by
+    ext ω
+    simp only [Set.mem_ofPred_eq]
+    rw [div_le_iff₀ hr, div_le_iff₀ hs]
+    constructor <;> intro h <;> linarith
+  rw [hset, hM.measureReal_eq (p := fun m => (c - Real.sqrt (1 - ρ) * y) / Real.sqrt ρ ≤ m)
+    measurableSet_Ici]
+  rw [show {x : ℝ | (c - Real.sqrt (1 - ρ) * y) / Real.sqrt ρ ≤ x} =
+    Set.Ici ((c - Real.sqrt (1 - ρ) * y) / Real.sqrt ρ) from rfl, vasicek_gauss_Ici]
+  congr 1
+  ring
+
+#print axioms vasicek_gauss_singleton
+#print axioms vasicek_cdf_strictMono
+#print axioms vasicek_cdf_leftLim
+#print axioms vasicek_cdf_contWithin
+#print axioms vasicek_gauss_Ici
+#print axioms vasicek_prob_le
+
+/-- The loss curve. Let the economy `M` be a standard normal draw, the asset correlation `ρ`
+lie strictly between 0 and 1, and the default threshold `c` satisfy `N c = p` (so `c = N⁻¹(p)`),
+where `N` is the standard normal distribution function. In a very large pool the default
+fraction is `L = N((c - √ρ M) / √(1 - ρ))`. Then for every level `x` strictly between 0 and 1,
+with `y = N⁻¹(x)` (that is, `N y = x`), the chance that `L` is at most `x` is
+`N((√(1 - ρ) N⁻¹(x) - N⁻¹(p)) / √ρ)`. -/
+theorem vasicek_loss_distribution
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (M : Ω → ℝ) (hM : HasLaw M (gaussianReal 0 1) P)
+    {ρ p c : ℝ} (hρ0 : 0 < ρ) (hρ1 : ρ < 1) (hc : cdf (gaussianReal 0 1) c = p)
+    {x y : ℝ} (hx0 : 0 < x) (hx1 : x < 1) (hy : cdf (gaussianReal 0 1) y = x) :
+    P.real {ω | cdf (gaussianReal 0 1) ((c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ)) ≤ x} =
+      cdf (gaussianReal 0 1) ((Real.sqrt (1 - ρ) * y - c) / Real.sqrt ρ) := by
+  have hset : {ω | cdf (gaussianReal 0 1) ((c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ)) ≤ x} =
+      {ω | (c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ) ≤ y} := by
+    ext ω
+    simp only [Set.mem_ofPred_eq]
+    rw [← hy, vasicek_cdf_strictMono.le_iff_le]
+  rw [hset, vasicek_prob_le M hM hρ0 hρ1 y]
+
+/-- The bad-year default rate. Under the same model, for a confidence level `α` strictly between
+0 and 1 with `z = N⁻¹(α)`, the level `x_α = N((N⁻¹(p) + √ρ N⁻¹(α)) / √(1 - ρ))` is exactly the
+`α`-quantile of the large-pool default fraction: the fraction stays at or below `x_α` with chance
+`α`, and stays at or below any lower level with chance less than `α`. -/
+theorem vasicek_quantile
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (M : Ω → ℝ) (hM : HasLaw M (gaussianReal 0 1) P)
+    {ρ p c : ℝ} (hρ0 : 0 < ρ) (hρ1 : ρ < 1) (hc : cdf (gaussianReal 0 1) c = p)
+    {α z : ℝ} (hα0 : 0 < α) (hα1 : α < 1) (hz : cdf (gaussianReal 0 1) z = α) :
+    let L : Ω → ℝ := fun ω => cdf (gaussianReal 0 1) ((c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ))
+    let xα : ℝ := cdf (gaussianReal 0 1) ((c + Real.sqrt ρ * z) / Real.sqrt (1 - ρ))
+    P.real {ω | L ω ≤ xα} = α ∧ ∀ x < xα, P.real {ω | L ω ≤ x} < α := by
+  intro L xα
+  have hs : 0 < Real.sqrt ρ := Real.sqrt_pos.2 hρ0
+  have hr : 0 < Real.sqrt (1 - ρ) := Real.sqrt_pos.2 (by linarith)
+  set u : ℝ := (c + Real.sqrt ρ * z) / Real.sqrt (1 - ρ) with hu
+  have hkey : (Real.sqrt (1 - ρ) * u - c) / Real.sqrt ρ = z := by
+    rw [hu]; field_simp; ring
+  have hLset : ∀ y : ℝ, {ω | L ω ≤ cdf (gaussianReal 0 1) y} =
+      {ω | (c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ) ≤ y} := by
+    intro y
+    ext ω
+    simp only [Set.mem_ofPred_eq, L]
+    rw [vasicek_cdf_strictMono.le_iff_le]
+  refine ⟨?_, ?_⟩
+  · show P.real {ω | L ω ≤ cdf (gaussianReal 0 1) u} = α
+    rw [hLset, vasicek_prob_le M hM hρ0 hρ1 u, hkey, hz]
+  · intro x hx
+    have hev : ∀ᶠ v in 𝓝[<] u, x < cdf (gaussianReal 0 1) v ∧ v < u :=
+      ((vasicek_cdf_contWithin u).eventually (lt_mem_nhds hx)).and self_mem_nhdsWithin
+    obtain ⟨y', hy'x, hy'u⟩ := hev.exists
+    have hsub : {ω | L ω ≤ x} ⊆ {ω | (c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ) ≤ y'} := by
+      intro ω hω
+      simp only [Set.mem_ofPred_eq, L] at hω ⊢
+      by_contra hcon
+      push Not at hcon
+      have := monotone_cdf (gaussianReal 0 1) hcon.le
+      linarith
+    calc P.real {ω | L ω ≤ x}
+        ≤ P.real {ω | (c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ) ≤ y'} := measureReal_mono hsub
+      _ = cdf (gaussianReal 0 1) ((Real.sqrt (1 - ρ) * y' - c) / Real.sqrt ρ) :=
+          vasicek_prob_le M hM hρ0 hρ1 y'
+      _ < cdf (gaussianReal 0 1) ((Real.sqrt (1 - ρ) * u - c) / Real.sqrt ρ) := by
+          apply vasicek_cdf_strictMono
+          apply div_lt_div_of_pos_right _ hs
+          have := mul_lt_mul_of_pos_left hy'u hr
+          linarith
+      _ = α := by rw [hkey, hz]
+
+/-- The large-pool limit. Company `i` has health `√ρ M + √(1 - ρ) Z_i`, where the economy `M`
+and the private lucks `Z_0, Z_1, …` are independent standard normal draws, and defaults when its
+health falls below the threshold `c`. Then the default fraction of the first `n` companies comes
+within any `ε > 0` of the conditional default chance `N((c - √ρ M) / √(1 - ρ))` with chance
+tending to 1 as `n` grows: in a very large pool the private luck averages out. -/
+theorem large_pool_default_fraction_tendsto
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (M : Ω → ℝ) (Z : ℕ → Ω → ℝ)
+    (hM : HasLaw M (gaussianReal 0 1) P) (hZ : ∀ i, HasLaw (Z i) (gaussianReal 0 1) P)
+    (hind : iIndepFun (fun i : Option ℕ => i.elim M Z) P)
+    {ρ c : ℝ} (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1) {ε : ℝ} (hε : 0 < ε) :
+    Tendsto (fun n : ℕ => P {ω | ε <
+      |((Finset.range n).filter
+          (fun i => Real.sqrt ρ * M ω + Real.sqrt (1 - ρ) * Z i ω < c)).card / (n : ℝ) -
+        cdf (gaussianReal 0 1) ((c - Real.sqrt ρ * M ω) / Real.sqrt (1 - ρ))|})
+      atTop (𝓝 0) := by
+  have hr : 0 < Real.sqrt (1 - ρ) := Real.sqrt_pos.2 (by linarith)
+  set s := Real.sqrt ρ with hs_def
+  set r := Real.sqrt (1 - ρ) with hr_def
+  set N : ℝ → ℝ := fun t => cdf (gaussianReal 0 1) t with hN_def
+  set f : ℝ → ℝ := fun m => (c - s * m) / r with hf_def
+  let h : ℝ → ℝ → ℝ := fun m z => (if s * m + r * z < c then 1 else 0) - N (f m)
+  have hN_meas : Measurable N := (monotone_cdf (gaussianReal 0 1)).measurable
+  have hf_meas : Measurable f := by
+    simp only [hf_def]; fun_prop
+  have hh_meas : Measurable (fun p : ℝ × ℝ => h p.1 p.2) := by
+    refine Measurable.sub (Measurable.ite ?_ measurable_const measurable_const)
+      (hN_meas.comp (hf_meas.comp measurable_fst))
+    exact measurableSet_lt (by fun_prop) measurable_const
+  have hh_bound : ∀ m z, |h m z| ≤ 1 := by
+    intro m z
+    have h0 := cdf_nonneg (gaussianReal 0 1) (f m)
+    have h1 := cdf_le_one (gaussianReal 0 1) (f m)
+    simp only [h, hN_def]
+    rw [abs_le]
+    split_ifs <;> constructor <;> linarith
+  have hh_int0 : ∀ m, ∫ z, h m z ∂(gaussianReal 0 1) = 0 := by
+    intro m
+    have hfun : (fun z => (if s * m + r * z < c then (1 : ℝ) else 0)) =
+        (Set.Iio (f m)).indicator 1 := by
+      funext z
+      simp only [Set.indicator_apply, Set.mem_Iio, Pi.one_apply, hf_def]
+      congr 1
+      apply propext
+      rw [lt_div_iff₀ hr]
+      constructor <;> intro hh <;> linarith
+    simp only [h]
+    rw [integral_sub, hfun, integral_indicator_one measurableSet_Iio, integral_const]
+    · rw [measureReal_congr (Iio_ae_eq_Iic' (vasicek_gauss_singleton (f m))), ← cdf_eq_real]
+      simp [hN_def]
+    · rw [hfun]
+      exact (integrable_const 1).indicator measurableSet_Iio
+    · exact integrable_const _
+  -- the centred indicators
+  let X : ℕ → Ω → ℝ := fun i ω => h (M ω) (Z i ω)
+  have hmeasF : ∀ k : Option ℕ, AEMeasurable (k.elim M Z) P := by
+    intro k
+    cases k with
+    | none => exact hM.aemeasurable
+    | some i => exact (hZ i).aemeasurable
+  have hX_aesm : ∀ i, AEStronglyMeasurable (X i) P := fun i =>
+    (hh_meas.comp_aemeasurable (hM.aemeasurable.prodMk (hZ i).aemeasurable)).aestronglyMeasurable
+  have hX_bound : ∀ i ω, |X i ω| ≤ 1 := fun i ω => hh_bound _ _
+  have hXX_int : ∀ i j, Integrable (fun ω => X i ω * X j ω) P := by
+    intro i j
+    refine Integrable.of_bound ((hX_aesm i).mul (hX_aesm j)) 1 (ae_of_all _ fun ω => ?_)
+    rw [norm_mul, Real.norm_eq_abs, Real.norm_eq_abs]
+    nlinarith [hX_bound i ω, hX_bound j ω, abs_nonneg (X i ω), abs_nonneg (X j ω)]
+  have hcross : ∀ i j, i ≠ j → ∫ ω, X i ω * X j ω ∂P = 0 := by
+    intro i j hij
+    have hind1 : IndepFun (fun ω => (Z i ω, Z j ω)) M P :=
+      hind.indepFun_prodMk₀ hmeasF (some i) (some j) none (by simp) (by simp)
+    have hind2 : IndepFun (Z i) (Z j) P :=
+      hind.indepFun (i := some i) (j := some j) (by simpa using hij)
+    have hlaw2 : HasLaw (fun ω => (Z i ω, Z j ω))
+        ((gaussianReal 0 1).prod (gaussianReal 0 1)) P := hind2.hasLaw_prod (hZ i) (hZ j)
+    have hlaw3 : HasLaw (fun ω => (M ω, (Z i ω, Z j ω)))
+        ((gaussianReal 0 1).prod ((gaussianReal 0 1).prod (gaussianReal 0 1))) P :=
+      hind1.symm.hasLaw_prod hM hlaw2
+    let G : ℝ × ℝ × ℝ → ℝ := fun q => h q.1 q.2.1 * h q.1 q.2.2
+    have hG_meas : Measurable G :=
+      (hh_meas.comp (measurable_fst.prodMk (measurable_fst.comp measurable_snd))).mul
+        (hh_meas.comp (measurable_fst.prodMk (measurable_snd.comp measurable_snd)))
+    have hG_int : Integrable G
+        ((gaussianReal 0 1).prod ((gaussianReal 0 1).prod (gaussianReal 0 1))) := by
+      refine Integrable.of_bound hG_meas.aestronglyMeasurable 1 (ae_of_all _ fun q => ?_)
+      rw [Real.norm_eq_abs, abs_mul]
+      nlinarith [hh_bound q.1 q.2.1, hh_bound q.1 q.2.2, abs_nonneg (h q.1 q.2.1),
+        abs_nonneg (h q.1 q.2.2)]
+    have h1 : ∫ ω, X i ω * X j ω ∂P = ∫ q, G q
+        ∂((gaussianReal 0 1).prod ((gaussianReal 0 1).prod (gaussianReal 0 1))) :=
+      hlaw3.integral_comp hG_meas.aestronglyMeasurable
+    rw [h1, integral_prod G hG_int]
+    have h2 : ∀ m, ∫ q, G (m, q) ∂((gaussianReal 0 1).prod (gaussianReal 0 1)) = 0 := by
+      intro m
+      have := integral_prod_mul (μ := gaussianReal 0 1) (ν := gaussianReal 0 1)
+        (fun a => h m a) (fun b => h m b)
+      simp only [G]
+      rw [this, hh_int0, zero_mul]
+    simp [h2]
+  have hdiag : ∀ i, ∫ ω, X i ω * X i ω ∂P ≤ 1 := by
+    intro i
+    have : ∫ ω, X i ω * X i ω ∂P ≤ ∫ _ω, (1 : ℝ) ∂P := by
+      refine integral_mono (hXX_int i i) (integrable_const 1) (fun ω => ?_)
+      have := hX_bound i ω
+      have : X i ω * X i ω = |X i ω| * |X i ω| := (abs_mul_abs_self _).symm
+      nlinarith [abs_nonneg (X i ω)]
+    simpa [Function.comp_def] using this
+  have hsq_eq : ∀ n : ℕ, (fun ω => (∑ i ∈ Finset.range n, X i ω) ^ 2) =
+      fun ω => ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, X i ω * X j ω := by
+    intro n; funext ω; rw [sq, Finset.sum_mul_sum]
+  have hsq_int : ∀ n : ℕ, Integrable (fun ω => (∑ i ∈ Finset.range n, X i ω) ^ 2) P := by
+    intro n
+    rw [hsq_eq]
+    exact integrable_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hXX_int i j
+  have hmom : ∀ n : ℕ, ∫ ω, (∑ i ∈ Finset.range n, X i ω) ^ 2 ∂P ≤ n := by
+    intro n
+    rw [hsq_eq, integral_finsetSum _ fun i _ =>
+      integrable_finsetSum _ fun j _ => hXX_int i j]
+    calc ∑ i ∈ Finset.range n, ∫ ω, ∑ j ∈ Finset.range n, X i ω * X j ω ∂P
+        ≤ ∑ i ∈ Finset.range n, (1 : ℝ) := by
+          refine Finset.sum_le_sum fun i hi => ?_
+          rw [integral_finsetSum _ fun j _ => hXX_int i j]
+          rw [Finset.sum_eq_single i (fun j _ hji => hcross i j (Ne.symm hji))
+            (fun hi' => absurd hi hi')]
+          exact hdiag i
+      _ = n := by simp
+  -- the bound for each n ≥ 1
+  have hbound : ∀ n : ℕ, 1 ≤ n → P {ω | ε <
+      |((Finset.range n).filter
+          (fun i => s * M ω + r * Z i ω < c)).card / (n : ℝ) - N (f (M ω))|}
+      ≤ ENNReal.ofReal (1 / ε ^ 2 / n) := by
+    intro n hn
+    have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+    have hid : ∀ ω, ((Finset.range n).filter
+          (fun i => s * M ω + r * Z i ω < c)).card / (n : ℝ) - N (f (M ω)) =
+        (∑ i ∈ Finset.range n, X i ω) / n := by
+      intro ω
+      simp only [X, h, Finset.sum_sub_distrib, Finset.card_filter, Finset.sum_const,
+        Finset.card_range, nsmul_eq_mul]
+      push_cast
+      field_simp
+    have hsub : {ω | ε < |((Finset.range n).filter
+          (fun i => s * M ω + r * Z i ω < c)).card / (n : ℝ) - N (f (M ω))|} ⊆
+        {ω | ε ^ 2 * (n : ℝ) ^ 2 ≤ (∑ i ∈ Finset.range n, X i ω) ^ 2} := by
+      intro ω hω
+      simp only [Set.mem_ofPred_eq] at hω ⊢
+      rw [hid, abs_div, abs_of_pos hn', lt_div_iff₀ hn'] at hω
+      have h2 : (ε * n) ^ 2 ≤ |∑ i ∈ Finset.range n, X i ω| ^ 2 :=
+        pow_le_pow_left₀ (by positivity) hω.le 2
+      rw [sq_abs] at h2
+      linarith [mul_pow ε (n : ℝ) 2]
+    have hmarkov := mul_meas_ge_le_integral_of_nonneg
+      (ae_of_all P fun ω => sq_nonneg (∑ i ∈ Finset.range n, X i ω)) (hsq_int n)
+      (ε ^ 2 * (n : ℝ) ^ 2)
+    have hreal : P.real {ω | ε ^ 2 * (n : ℝ) ^ 2 ≤ (∑ i ∈ Finset.range n, X i ω) ^ 2}
+        ≤ 1 / ε ^ 2 / n := by
+      have hpos : 0 < ε ^ 2 * (n : ℝ) ^ 2 := by positivity
+      rw [show (1 : ℝ) / ε ^ 2 / n = n / (ε ^ 2 * (n : ℝ) ^ 2) by field_simp]
+      rw [le_div_iff₀ hpos]
+      linarith [hmom n]
+    calc _ ≤ P {ω | ε ^ 2 * (n : ℝ) ^ 2 ≤ (∑ i ∈ Finset.range n, X i ω) ^ 2} := measure_mono hsub
+      _ = ENNReal.ofReal (P.real {ω | ε ^ 2 * (n : ℝ) ^ 2 ≤ (∑ i ∈ Finset.range n, X i ω) ^ 2}) :=
+          (ofReal_measureReal (measure_ne_top _ _)).symm
+      _ ≤ _ := ENNReal.ofReal_le_ofReal hreal
+  have hlim : Tendsto (fun n : ℕ => ENNReal.ofReal (1 / ε ^ 2 / n)) atTop (𝓝 0) := by
+    have := (ENNReal.continuous_ofReal.tendsto 0).comp
+      (tendsto_const_div_atTop_nhds_zero_nat (1 / ε ^ 2))
+    simpa [Function.comp_def] using this
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hlim
+    (Eventually.of_forall fun _ => bot_le) ?_
+  filter_upwards [eventually_ge_atTop 1] with n hn
+  exact hbound n hn
+
+/-- Expected loss per $100 loan: $100 × LGD 60% × PD 2% = $1.20. -/
+example : (100 : ℚ) * (60 / 100) * (2 / 100) = 6 / 5 := by norm_num
+
+/-- Basel's factor 12.5 is 1 divided by 8%: risk-weighted assets times 8% give back the capital. -/
+example : (25 / 2 : ℚ) * (8 / 100) = 1 := by norm_num
+
+#print axioms vasicek_loss_distribution
+#print axioms vasicek_quantile
+#print axioms large_pool_default_fraction_tendsto
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'vasicek_gauss_singleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vasicek_cdf_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vasicek_cdf_leftLim' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vasicek_cdf_contWithin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vasicek_gauss_Ici' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vasicek_prob_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vasicek_loss_distribution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vasicek_quantile' depends on axioms: [propext, Classical.choice, Quot.sound]
+'large_pool_default_fraction_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

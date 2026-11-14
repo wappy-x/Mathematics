@@ -161,5 +161,5 @@ fn main() {
     assert!(up.0 / up.2 < cal_up);                               // a rising curve pulls the spread down
     assert!(dn.0 / dn.2 > cal_dn);                               // a falling curve pushes it up
     assert!(seeds.iter().all(|(s0, s1)| s0 > s1));               // triangle seed always above the root
-    println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

@@ -135,4 +135,4 @@ assert 0 < closed(lam) - tri * (1 + x / 2) < tri * x * x * exp(x) / 6
 assert up[0] / up[2] < cal_up                                 # a rising curve pulls the spread down
 assert dn[0] / dn[2] > cal_dn                                 # a falling curve pushes it up
 assert all(s0 > s1 for s0, s1 in seeds)                       # triangle seed always above the root
-print("All checks passed.")
+print("ALL CHECKS PASS")

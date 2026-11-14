@@ -6,7 +6,9 @@
 
 ## General Overview
 
-Northwind Lines runs ferries and borrows by selling bonds. Protection against its default trades as a credit default swap (CDS): a contract that pays the lost part of $10 million of bonds if Northwind fails, in return for a yearly fee. Today the fee is 120 basis points (hundredths of a percent) a year for one year of protection, 200 for three years and 250 for five. Turn those three prices into a curve of default chances, as the bootstrapping card does, and the curve says Northwind has a **19.30%** chance of defaulting within five years.
+Northwind Lines runs ferries and borrows by selling bonds. Protection against its default trades as a credit default swap (CDS): a contract that pays the lost part of $10 million of bonds if Northwind fails, in return for a yearly fee.
+
+Today the fee is 120 basis points (hundredths of a percent) a year for one year of protection, 200 for three years and 250 for five. Turn those three prices into a curve of default chances, as [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md) does, and the curve says Northwind has a **19.30%** chance of defaulting within five years.
 
 A rating agency grades Northwind in its Solid grade. Its records say that borrowers starting in that grade default within five years **10.81%** of the time.
 
@@ -14,11 +16,13 @@ Same borrower, same five years, two numbers almost a factor of two apart. Neithe
 
 A car insurer makes a useful first picture. The premium a driver pays is more than the claims that driver is expected to cause. Someone reading the premium backwards, as if it were pure claims cost, would conclude that drivers crash more often than they do. The extra is not a forecast of more crashes. It is the price of carrying the risk. From here on that extra is called by its finance name: the **risk premium**.
 
-The CDS fee works the same way. Read backwards through a pricing model, it gives a default chance that includes the risk premium. That number is the **market-implied**, or **risk-neutral**, default probability. The rating table's number counts what actually happened to similar borrowers: the **historical**, or **real-world**, default probability. The standard way to compare them is by hazard (the default rate per year among survivors): Northwind's market hazard averages 4.29% a year, its historical one 2.29%, a **hazard ratio** of 1.87.
+The CDS fee works the same way. Read backwards through a pricing model, it gives a default chance that includes the risk premium. That number is the **market-implied**, or **risk-neutral**, default probability. The rating table's number counts what actually happened to similar borrowers: the **historical**, or **real-world**, default probability.
+
+The standard way to compare them is by hazard (the default rate per year among survivors): Northwind's market hazard averages 4.29% a year, its historical one 2.29%, a **hazard ratio** of 1.87.
 
 **The market's default probability is the historical one reweighted toward the states where losses hurt most, so it comes out higher; use the market number to price and hedge, the historical number to forecast and hold capital, and read the gap between them as the price of bearing default risk.**
 
-**What kind of fact this is:** a model comparison. Each number is the output of a model (a bootstrap with an assumed recovery, a rating table with an assumed Markov structure), so the size of the gap is a measurement, not a law. One theorem sits inside: a pricing probability is a real-world probability reweighted by state prices, proved on this card in Why it works.
+**What kind of fact this is:** a model comparison. Each number is the output of a model (a bootstrap with an assumed recovery, a rating table with an assumed Markov structure, meaning next year's grade depends only on this year's), so the size of the gap is a measurement, not a law. One theorem sits inside: a pricing probability is a real-world probability reweighted by state prices, proved on this card in Why it works.
 
 ### The picture: two curves of default by year
 
@@ -56,7 +60,7 @@ The same gap in the CDS market's own units is a spread:
 
 $$\text{risk premium} = s - s_{\mathbb{P}}$$
 
-**Read it aloud:** the premium is the quoted spread minus the spread that would just pay for historical losses. Here $s_{\mathbb{P}}$ is the **actuarial spread**: the par spread of the same contract priced with the historical survival curve in place of the market one.
+**Read it aloud:** the premium is the quoted spread minus the spread that would just pay for historical losses. Here $s_{\mathbb{P}}$ is the **actuarial spread**: the par spread (the fee that makes the contract worth zero on the day it is signed) of the same contract priced with the historical survival curve in place of the market one.
 
 Behind all three sits one identity. Take any event $A$ at the horizon, such as "Northwind has defaulted". Write $\mathbf{1}_A$ for its indicator (1 if $A$ happens, 0 if not), $\mathbb{E}_{\mathbb{P}}$ for an average under the real-world law, and $M$ for the **pricing weight**: what a dollar paid in a given future state costs today, per unit of that state's real-world chance.
 
@@ -94,11 +98,13 @@ Conventions, as on the bootstrapping card, verified 2026-09-28: premiums paid qu
 
 ### Step 0: a price is an average, weighted by what money is worth where it lands
 
-A forecast weights each future by how likely it is. A price weights each future by how likely it is *and* by how much a dollar is worth there. A dollar that arrives in a recession, when firms are failing and cash is scarce, is worth more to its holder than a dollar in a boom. Default protection pays out mostly in bad states. So its price is higher than its expected payout, and any probability read backwards from that price is tilted toward default. Two questions, two sets of weights: that is the whole card. The rest makes it exact and measures it.
+A forecast weights each future by how likely it is. A price weights each future by how likely it is *and* by how much a dollar is worth there. A dollar that arrives in a recession, when firms are failing and cash is scarce, is worth more to its holder than a dollar in a boom.
+
+Default protection pays out mostly in bad states. So its price is higher than its expected payout, and any probability read backwards from that price is tilted toward default. Two questions, two sets of weights: that is the whole card. The rest makes it exact and measures it.
 
 ### Step 1: the market number comes from prices
 
-The bootstrap finds, one tenor at a time, the flat hazard that makes the premium leg (the fees, paid while Northwind survives) equal the protection leg (60% of the $10m notional, the face amount protected, paid at default). The three quotes give $\lambda_1 = 1.98\%$ on year one, $\lambda_2 = 4.04\%$ on years one to three and $\lambda_3 = 5.68\%$ on years three to five. The cumulative hazard is the sum of rate times length:
+The bootstrap finds, one tenor (contract length) at a time, the flat hazard that makes the premium leg (the fees, paid while Northwind survives) equal the protection leg (60% of the $10m notional, the face amount protected, paid at default). The three quotes give $\lambda_1 = 1.98\%$ on year one, $\lambda_2 = 4.04\%$ on years one to three and $\lambda_3 = 5.68\%$ on years three to five. The cumulative hazard is the sum of rate times length:
 
 $$H_{\mathbb{Q}}(5) = \lambda_1 \times 1 + \lambda_2 \times 2 + \lambda_3 \times 2 = 0.214381, \qquad S_{\mathbb{Q}}(5) = e^{-0.214381} = 0.807041.$$
 
@@ -153,13 +159,21 @@ Why is $M$ high in default states? Three reasons, in order of what the evidence 
 
 ### Step 5: the gap in spread units
 
-Price the same five-year contract with the historical survival curve in place of the market one: year-by-year historical hazards of 1.01%, 1.83%, 2.45%, 2.90% and 3.25%. The par spread comes out at 133.56 bp. That is the **actuarial spread**: the fee that would exactly pay for expected losses if history were the truth. The market charges 250 bp. The difference, 116.44 bp a year, is the risk premium in the CDS market's own units. Almost half of the fee is payment for bearing the risk, not for expected losses.
+Price the same five-year contract with the historical survival curve in place of the market one: year-by-year historical hazards of 1.01%, 1.83%, 2.45%, 2.90% and 3.25%. The par spread comes out at 133.56 bp. That is the **actuarial spread**: the fee that would exactly pay for expected losses if history were the truth.
+
+The market charges 250 bp. The difference, 116.44 bp a year, is the risk premium in the CDS market's own units. Almost half of the fee is payment for bearing the risk, not for expected losses.
 
 The quick version uses the credit triangle (spread ≈ hazard × loss fraction, from [The credit triangle](03-the-credit-triangle.md)): $(1 - R)(\bar h_{\mathbb{Q}} - \bar h_{\mathbb{P}}) = 0.6 \times (4.29\% - 2.29\%)$, which gives 120.04 bp. The triangle ignores discounting and the shape of the curve, so it lands a few basis points off the full repricing.
 
 ### The other door: the credit spread puzzle
 
-Structural models of default ask the same question from the balance sheet: treat a firm's equity as a call option on its assets, calibrate to how often firms really default, and predict the spread. For investment-grade bonds the predicted spreads come out far below the observed ones. This shortfall is the **credit spread puzzle**. Huang and Huang (2012, in Sources) found that credit risk calibrated to historical defaults explains only a small part of investment-grade spreads and more of high-yield ones. Chen, Collin-Dufresne and Goldstein (2009) close much of the gap by making defaults and bad times arrive together, which is Step 4's covariance at work. Elton, Gruber, Agrawal and Mann (2001) attribute a large part of bond spreads to taxes and systematic risk rather than expected default. The puzzle is about bond spreads, not directly about this card's two numbers, but it is the same gap seen from another angle: prices charge for default risk more than default frequencies alone would.
+Structural models of default ask the same question from the balance sheet: treat a firm's equity as a call option on its assets (the owners keep whatever the assets are worth above the debt, or walk away with nothing), calibrate to how often firms really default, and predict the spread. For investment-grade bonds (those in the safer, upper rating grades) the predicted spreads come out far below the observed ones. This shortfall is the **credit spread puzzle**.
+
+- Huang and Huang (2012, in Sources) found that credit risk calibrated to historical defaults explains only a small part of investment-grade spreads and more of high-yield ones (the riskier grades below).
+- Chen, Collin-Dufresne and Goldstein (2009) close much of the gap by making defaults and bad times arrive together, which is Step 4's covariance at work.
+- Elton, Gruber, Agrawal and Mann (2001) attribute a large part of bond spreads to taxes and systematic risk rather than expected default.
+
+The puzzle is about bond spreads, not directly about this card's two numbers, but it is the same gap seen from another angle: prices charge for default risk more than default frequencies alone would.
 
 ---
 
@@ -211,7 +225,11 @@ The market curve is flat on each quoted piece and jumps at years one and three. 
 
 ## Code, from first principles, and it actually runs
 
-The code builds the market curve two independent ways: exact leg formulas with bisection (halving an interval that must contain the root), and legs integrated by Simpson's rule with a secant root finder (following straight lines between two guesses). A third road simulates 200,000 default times from that curve with a hand-written random number generator and prices the five-year legs path by path, landing on 250 bp and 19.30% within sampling error. The historical side is computed by matrix power and again by first-step recursion. The average hazards are found by logs and again by bisection. Then it prices the actuarial spread, the odds ratio, the what-breaks numbers, the Try-changing answers and the year-by-year table.
+The code builds the market curve two independent ways: exact leg formulas with bisection (halving an interval that must contain the root), and legs integrated by Simpson's rule (adding up the area under a curve in small parabola-shaped strips) with a secant root finder (following straight lines between two guesses).
+
+A third road simulates 200,000 default times from that curve with a hand-written random number generator and prices the five-year legs path by path, landing on 250 bp and 19.30% within sampling error.
+
+The historical side is computed by matrix power and again by first-step recursion (each grade's default chance written in terms of where its first year leads). The average hazards are found by logs and again by bisection. Then it prices the actuarial spread, the odds ratio, the what-breaks numbers, the Try-changing answers and the year-by-year table.
 
 ### Python
 
@@ -624,6 +642,183 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line. The random numbers match because both programs run the same integer generator with the same seed.
+
+### Lean
+
+Lean proves the reweighting identity and its covariance and odds forms on finitely many states, and the rating table's exact default chances.
+
+- Take finitely many states, each with a positive real-world chance $p$ and a positive state price $\pi$, the chances adding to 1. Then the normalised state prices are positive and add to 1, so $\mathbb{Q}$ is a probability law.
+- Take the same states, with pricing weight $M = \pi / p$. Then $\mathbb{E}_{\mathbb{P}}[M]$ is the sum of the state prices, the discount factor $D$.
+- Take any event $A$. Then $\mathbb{Q}(A) = \mathbb{E}_{\mathbb{P}}[M\,\mathbf{1}_A] / \mathbb{E}_{\mathbb{P}}[M]$.
+- Take any event $A$. Then $\mathbb{Q}(A) - \mathbb{P}(A) = \operatorname{Cov}_{\mathbb{P}}(M, \mathbf{1}_A) / \mathbb{E}_{\mathbb{P}}[M]$.
+- Take any event $A$. Then its pricing chance exceeds its real-world chance exactly when that covariance is positive.
+- Take two states, default and survival, with real-world chances above 0 and positive state prices. Then the pricing odds of default are $m_A / m_{\text{not }A}$ times the real-world odds.
+- Take the rating table. Then the five-year default chance is exactly 0.10805311 from Solid and 0.3504457 from Shaky.
+- Take the Solid row. Then the default chances by years two, three and four are exactly 0.028, 0.05149 and 0.078625.
+
+The bootstrap, the hazards, the spreads and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Two default probabilities: on finitely many states, normalised state prices form a pricing law that is the real-world law reweighted by the pricing weight, it exceeds the real-world chance of an event exactly when that weight covaries positively with the event, and the rating table's five-year default chances are exact.
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Algebra.Group.Indicator
+import Mathlib.Data.Real.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+
+open Finset
+
+/-- The reweighting identity. Take finitely many future states, each with a real-world chance
+`p ω > 0` (the chances add to 1) and a state price `π ω > 0`. Let the pricing weight be
+`M ω = π ω / p ω` and the pricing law be the normalised state prices `Q ω = π ω / ∑ π`.
+Then `Q` is a probability law, `E_P[M]` is the sum of the state prices (the discount factor),
+and for every event `A`, `Q(A) = E_P[M 1_A] / E_P[M]`. -/
+theorem pricing_probability_is_reweighted_real_world_probability
+    {Ω : Type*} [Fintype Ω] (p π : Ω → ℝ)
+    (hp : ∀ ω, 0 < p ω) (hp1 : ∑ ω, p ω = 1) (hπ : ∀ ω, 0 < π ω) :
+    (∀ ω, 0 < π ω / ∑ ω', π ω') ∧
+    (∑ ω, π ω / ∑ ω', π ω' = 1) ∧
+    (∑ ω, p ω * (π ω / p ω) = ∑ ω, π ω) ∧
+    ∀ A : Finset Ω,
+      ∑ ω ∈ A, π ω / ∑ ω', π ω' =
+        (∑ ω, p ω * ((π ω / p ω) * (A : Set Ω).indicator (fun _ => (1 : ℝ)) ω)) /
+          ∑ ω, p ω * (π ω / p ω) := by
+  classical
+  have hS : 0 < ∑ ω', π ω' := by
+    by_cases hΩ : Nonempty Ω
+    · obtain ⟨ω0⟩ := hΩ
+      exact Finset.sum_pos (fun ω _ => hπ ω) ⟨ω0, Finset.mem_univ _⟩
+    · exfalso
+      have : (∑ ω, p ω) = 0 := by
+        rw [Finset.univ_eq_empty_iff.mpr (not_nonempty_iff.mp hΩ)]; simp
+      linarith
+  have hpm : ∀ ω, p ω * (π ω / p ω) = π ω := fun ω => mul_div_cancel₀ _ (hp ω).ne'
+  have hE : ∑ ω, p ω * (π ω / p ω) = ∑ ω, π ω := Finset.sum_congr rfl (fun ω _ => hpm ω)
+  refine ⟨fun ω => div_pos (hπ ω) hS, ?_, hE, ?_⟩
+  · rw [← Finset.sum_div, div_self hS.ne']
+  · intro A
+    rw [hE, ← Finset.sum_div]
+    congr 1
+    have : ∀ ω, p ω * ((π ω / p ω) * (A : Set Ω).indicator (fun _ => (1 : ℝ)) ω)
+        = if ω ∈ A then π ω else 0 := by
+      intro ω
+      rw [← mul_assoc, hpm ω, Set.indicator_apply]
+      simp
+    rw [Finset.sum_congr rfl (fun ω _ => this ω), Finset.sum_ite_mem, Finset.univ_inter]
+
+/-- The covariance form. In the same setting, the pricing chance of an event minus its
+real-world chance equals the covariance of the pricing weight with the event's indicator,
+`Cov_P(M, 1_A) = E_P[M 1_A] - E_P[M] E_P[1_A]`, divided by `E_P[M]`. So the pricing chance
+exceeds the real-world chance precisely when that covariance is positive. -/
+theorem pricing_minus_real_world_probability_eq_covariance
+    {Ω : Type*} [Fintype Ω] (p π : Ω → ℝ)
+    (hp : ∀ ω, 0 < p ω) (hp1 : ∑ ω, p ω = 1) (hπ : ∀ ω, 0 < π ω) (A : Finset Ω) :
+    let M : Ω → ℝ := fun ω => π ω / p ω
+    let one_A : Ω → ℝ := (A : Set Ω).indicator (fun _ => (1 : ℝ))
+    let cov : ℝ := ∑ ω, p ω * (M ω * one_A ω) - (∑ ω, p ω * M ω) * (∑ ω, p ω * one_A ω)
+    (∑ ω ∈ A, π ω / ∑ ω', π ω') - ∑ ω ∈ A, p ω = cov / ∑ ω, p ω * M ω ∧
+      ((∑ ω ∈ A, p ω) < ∑ ω ∈ A, π ω / ∑ ω', π ω' ↔ 0 < cov) := by
+  intro M one_A cov
+  classical
+  have hS : 0 < ∑ ω', π ω' := by
+    by_cases hΩ : Nonempty Ω
+    · obtain ⟨ω0⟩ := hΩ
+      exact Finset.sum_pos (fun ω _ => hπ ω) ⟨ω0, Finset.mem_univ _⟩
+    · exfalso
+      have : (∑ ω, p ω) = 0 := by
+        rw [Finset.univ_eq_empty_iff.mpr (not_nonempty_iff.mp hΩ)]; simp
+      linarith
+  have hpm : ∀ ω, p ω * M ω = π ω := fun ω => mul_div_cancel₀ _ (hp ω).ne'
+  have hE : ∑ ω, p ω * M ω = ∑ ω, π ω := Finset.sum_congr rfl (fun ω _ => hpm ω)
+  have h1 : ∑ ω, p ω * (M ω * one_A ω) = ∑ ω ∈ A, π ω := by
+    have : ∀ ω, p ω * (M ω * one_A ω) = if ω ∈ A then π ω else 0 := by
+      intro ω
+      rw [← mul_assoc, hpm ω]
+      simp only [one_A, Set.indicator_apply, Finset.mem_coe]
+      split_ifs <;> simp
+    rw [Finset.sum_congr rfl (fun ω _ => this ω), Finset.sum_ite_mem, Finset.univ_inter]
+  have h2 : ∑ ω, p ω * one_A ω = ∑ ω ∈ A, p ω := by
+    have : ∀ ω, p ω * one_A ω = if ω ∈ A then p ω else 0 := by
+      intro ω
+      simp only [one_A, Set.indicator_apply, Finset.mem_coe]
+      split_ifs <;> simp
+    rw [Finset.sum_congr rfl (fun ω _ => this ω), Finset.sum_ite_mem, Finset.univ_inter]
+  have hcov : cov = ∑ ω ∈ A, π ω - (∑ ω, π ω) * ∑ ω ∈ A, p ω := by
+    show ∑ ω, p ω * (M ω * one_A ω) - (∑ ω, p ω * M ω) * (∑ ω, p ω * one_A ω) = _
+    rw [h1, h2, hE]
+  have key : (∑ ω ∈ A, π ω / ∑ ω', π ω') - ∑ ω ∈ A, p ω = cov / ∑ ω, p ω * M ω := by
+    rw [hE, hcov, ← Finset.sum_div]
+    field_simp
+  refine ⟨key, ?_⟩
+  rw [← sub_pos, key, hE]
+  exact div_pos_iff_of_pos_right hS
+
+/-- The odds form. With two states at the horizon, default (`A`, real-world chance `pA`,
+state price `πA`) and survival (chance `1 - pA`, state price `πN`), the pricing odds of default
+equal the ratio of the pricing weights `m_A / m_notA` times the real-world odds of default. -/
+theorem pricing_odds_eq_weight_ratio_mul_real_world_odds
+    (pA πA πN : ℝ) (hpA0 : 0 < pA) (hpA1 : pA < 1) (hπA : 0 < πA) (hπN : 0 < πN) :
+    let mA := πA / pA
+    let mN := πN / (1 - pA)
+    let qA := πA / (πA + πN)
+    qA / (1 - qA) = (mA / mN) * (pA / (1 - pA)) := by
+  intro mA mN qA
+  have h0 : pA ≠ 0 := hpA0.ne'
+  have h3 : πN ≠ 0 := hπN.ne'
+  have h4 : πA ≠ 0 := hπA.ne'
+  have h1 : (1 - pA) ≠ 0 := by linarith
+  have h2 : πA + πN ≠ 0 := by linarith
+  have hq : 1 - qA = πN / (πA + πN) := by
+    simp only [qA]; field_simp; ring
+  rw [hq]
+  simp only [mA, mN, qA]
+  rw [div_div_div_cancel_right₀ h2, div_div_div_eq, div_mul_div_comm]
+  rw [div_eq_div_iff (by positivity) (mul_ne_zero (mul_ne_zero h0 h3) h1)]
+  ring
+
+-- The rating table (Solid, Shaky, Default) and its fifth power: the historical five-year
+-- default chance from Solid is exactly 0.10805311, and from Shaky exactly 0.3504457.
+example :
+    ((!![(9 : ℚ) / 10, 9 / 100, 1 / 100; 1 / 10, 8 / 10, 1 / 10; 0, 0, 1] :
+        Matrix (Fin 3) (Fin 3) ℚ) ^ 5) 0 2 = 10805311 / 100000000 := by
+  norm_num [pow_succ, Matrix.mul_apply, Fin.sum_univ_three]
+
+example :
+    ((!![(9 : ℚ) / 10, 9 / 100, 1 / 100; 1 / 10, 8 / 10, 1 / 10; 0, 0, 1] :
+        Matrix (Fin 3) (Fin 3) ℚ) ^ 5) 1 2 = 3504457 / 10000000 := by
+  norm_num [pow_succ, Matrix.mul_apply, Fin.sum_univ_three]
+
+-- Year-by-year historical default chances from Solid (1.00%, 2.80%, 5.15%, 7.86%), exactly.
+example :
+    ((!![(9 : ℚ) / 10, 9 / 100, 1 / 100; 1 / 10, 8 / 10, 1 / 10; 0, 0, 1] :
+        Matrix (Fin 3) (Fin 3) ℚ) ^ 2) 0 2 = 7 / 250 := by
+  norm_num [pow_succ, Matrix.mul_apply, Fin.sum_univ_three]
+
+example :
+    ((!![(9 : ℚ) / 10, 9 / 100, 1 / 100; 1 / 10, 8 / 10, 1 / 10; 0, 0, 1] :
+        Matrix (Fin 3) (Fin 3) ℚ) ^ 3) 0 2 = 5149 / 100000 := by
+  norm_num [pow_succ, Matrix.mul_apply, Fin.sum_univ_three]
+
+example :
+    ((!![(9 : ℚ) / 10, 9 / 100, 1 / 100; 1 / 10, 8 / 10, 1 / 10; 0, 0, 1] :
+        Matrix (Fin 3) (Fin 3) ℚ) ^ 4) 0 2 = 629 / 8000 := by
+  norm_num [pow_succ, Matrix.mul_apply, Fin.sum_univ_three]
+
+#print axioms pricing_probability_is_reweighted_real_world_probability
+#print axioms pricing_minus_real_world_probability_eq_covariance
+#print axioms pricing_odds_eq_weight_ratio_mul_real_world_odds
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'pricing_probability_is_reweighted_real_world_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pricing_minus_real_world_probability_eq_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pricing_odds_eq_weight_ratio_mul_real_world_odds' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
