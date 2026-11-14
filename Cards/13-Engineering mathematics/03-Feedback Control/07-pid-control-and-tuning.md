@@ -8,7 +8,9 @@
 
 A small room is heated by one radiator, fed with hot water through a long, slow pipe. A steady 1.5 kW holds the room at 20 °C. The engineer wants a thermostat that reaches a new temperature quickly, overshoots little, and holds it when someone opens the door. First the engineer needs to know how the room answers the radiator.
 
-So the engineer runs a **bump test**: raise the radiator from 1.5 kW to 2.5 kW at a stroke and log the thermometer every 0.1 min, from 2 minutes before the bump to 20 minutes after. For a minute nothing happens: the hot water is still in the pipe. Then the room warms, fast at first, and settles near 22 °C. Three numbers describe the record. The room gained 2 °C for 1 kW: a **gain** of two. Once it started, it took about three minutes to cover 63% of the rise: a **lag** of three minutes. It waited one minute before starting: a **delay** of one. Time on this card is in minutes, the room's natural scale.
+So the engineer runs a **bump test**: raise the radiator from 1.5 kW to 2.5 kW at a stroke and log the thermometer every 0.1 min, from 2 minutes before the bump to 20 minutes after. For a minute nothing happens: the hot water is still in the pipe. Then the room warms, fast at first, and settles near 22 °C.
+
+Three numbers describe the record. The room gained 2 °C for 1 kW: a **gain** of two. Once it started, it took about three minutes to cover 63% of the rise: a **lag** of three minutes. It waited one minute before starting: a **delay** of one. Time on this card is in minutes, the room's natural scale.
 
 The thermostat answers the **error**, the setpoint minus the measured temperature, three ways: in proportion to the error now, to its history, and to its trend. That rule is a **PID controller**: proportional, integral, derivative. A tuning rule turns the bump-test numbers into the three strengths, and a door opening tests the result.
 
@@ -50,7 +52,7 @@ $$G(s) = \frac{K\,e^{-\theta s}}{\tau s + 1}, \qquad y(t) = K\,\Delta u\,\Big(1 
 
 Two tuning rules turn $(K, \tau, \theta)$ into gains:
 
-$$\text{Ziegler–Nichols PID: } K_p = \frac{1.2\,\tau}{K\theta},\ T_i = 2\theta,\ T_d = \frac{\theta}{2}; \qquad \text{lambda PI: } K_p = \frac{\tau}{K(\lambda + \theta)},\ T_i = \tau,\ T_d = 0.$$
+$$\text{Ziegler–Nichols (ZN) PID: } K_p = \frac{1.2\,\tau}{K\theta},\ T_i = 2\theta,\ T_d = \frac{\theta}{2}; \qquad \text{lambda PI: } K_p = \frac{\tau}{K(\lambda + \theta)},\ T_i = \tau,\ T_d = 0.$$
 
 The lambda rule asks the engineer to choose one number, $\lambda$, the time constant wanted for the closed loop. This card takes $\lambda$ = 1 min, equal to the delay, which Skogestad's version of the rule (SIMC, Simple Internal Model Control) recommends as a robust default.
 
@@ -104,7 +106,7 @@ A warmer room needs more heat, and a proportional controller gives more heat onl
 
 ### Step 2: the integral term drives the error to zero, and pays a known debt
 
-Suppose the loop settles. Then $e$ and $u$ are constant and the derivative term is zero, so the integral term, $u$ minus the proportional term, is constant too. Its rate of change is $K_i e$, so $e = 0$. Any settled state of a PI or PID loop has zero error, whatever the door or the walls do. That is the integrator's pole at $s = 0$ making the loop type 1.
+Suppose the loop settles. Then $e$ and $u$ are constant and the derivative term is zero, so the integral term, $u$ minus the proportional term, is constant too. Its rate of change is $K_i e$, so $e = 0$. Any settled state of a PI or PID loop has zero error, whatever the door or the walls do. That is the integrator's pole at $s = 0$, where its $1/s$ becomes infinite, making the loop type 1.
 
 The same argument prices a disturbance. The door removes 0.5 kW. Once the room has recovered, $e$ and its rate are back at zero, so the proportional and derivative terms are back at their old values. The extra 0.5 kW must all come from the integral term: $K_i \int e\,dt = 0.5$. So the error added up over the whole recovery is
 
@@ -151,7 +153,7 @@ The margins follow in closed form. With this $C$, the lag cancels and $L(s) = e^
 
 </details>
 
-In words: the integral time equals the lag, so the controller's zero cancels the room's pole. What is left is an integrator behind the delay, its speed set by one number. A larger $\lambda$ gives a slower, safer loop, and the margins are known in advance.
+In words: the integral time equals the lag, so the controller's zero cancels the room's pole: the factor $\tau s + 1$ on the controller's top line cancels the same factor on the room's bottom line. What is left is an integrator behind the delay, its speed set by one number. A larger $\lambda$ gives a slower, safer loop, and the margins are known in advance.
 
 ### Step 6: Ziegler–Nichols is a recipe aimed at fast recovery
 
@@ -205,7 +207,9 @@ Orange: Ziegler–Nichols PID. Green: lambda PI. Points are one minute apart, so
 | Ziegler–Nichols PID | 0.469 °C | 7.72 min | 0.288 °C | 0.598 °C·min | 1.452 | 47.87° |
 | lambda PI | 0.042 °C | 6.06 min | 0.415 °C | 1.996 °C·min | 3.142 | 61.35° |
 
-Read back in the room: Ziegler–Nichols overshoots by nearly half a degree and takes 7.72 min to settle, but holds the door's dip to 0.288 °C. Lambda tuning reaches 21 °C with 0.042 °C of overshoot and settles sooner, but the door pulls the room 0.415 °C down, and it is still at 20.98 °C at 32 min. Both end with no error: 0.0000 °C and 0.0012 °C at 40 min, the second still closing. The error column adds up the size of the error from 20 to 40 min; Step 2's signed totals are 0.5556 and 2.0000 °C·min.
+Read back in the room: Ziegler–Nichols overshoots by nearly half a degree and takes 7.72 min to settle, but holds the door's dip to 0.288 °C. Lambda tuning reaches 21 °C with 0.042 °C of overshoot and settles sooner, but the door pulls the room 0.415 °C down, and it is still at 20.98 °C at 32 min.
+
+Both end with no error: 0.0000 °C and 0.0012 °C at 40 min, the second still closing. The error column adds up the size of the error from 20 to 40 min; Step 2's signed totals are 0.5556 and 2.0000 °C·min.
 
 ### What breaks if you drop a piece
 
@@ -222,7 +226,9 @@ The time-domain figures on this card come from the simulation's 0.01 min step, w
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads. Road 1 makes the bump record from the true room plus SplitMix64 noise (seed 2026) and fits it twice: two-point, and least squares over a grid of delays and lags. Road 2 is the frequency domain: the ultimate gain, and each tuning's margins by bisection on $\lvert L(j\omega)\rvert = 1$ and on a phase of −180°. Road 3 simulates the loop: an exact step for the lag, a buffer of past heater settings for the pipe, and the PID law with its derivative taken on the measurement, so a setpoint step does not jolt the radiator. The asserts tie the roads together: simulated and frequency-domain ultimate gains within 1%; gains at 0.98 times the gain margin decay and at 1.02 times grow; every loop with GM below 1 grows in simulation; the integrated door error equals $\lvert d \rvert/K_i$; the two-minute delay is unstable in both roads or neither. Road 3 is run once more at a 0.001 min step, to show which figures depend on the step.
+Three independent roads. Road 1 makes the bump record from the true room plus SplitMix64 noise (seed 2026) and fits it twice: two-point, and least squares over a grid of delays and lags. Road 2 is the frequency domain: the ultimate gain, and each tuning's margins by bisection on $\lvert L(j\omega)\rvert = 1$ and on a phase of −180°. Road 3 simulates the loop: an exact step for the lag, a buffer of past heater settings for the pipe, and the PID law with its derivative taken on the measurement, so a setpoint step does not jolt the radiator.
+
+The asserts tie the roads together: simulated and frequency-domain ultimate gains within 1%; gains at 0.98 times the gain margin decay and at 1.02 times grow; every loop with GM below 1 grows in simulation; the integrated door error equals $\lvert d \rvert/K_i$; the two-minute delay is unstable in both roads or neither. Road 3 is run once more at a 0.001 min step, to show which figures depend on the step.
 
 ### Python
 
@@ -626,6 +632,204 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves Step 1, Step 2 and the lambda loop's margins for every room of this shape, and checks the worked numbers.
+
+- Take lambda PI gains on a room with positive $K$, $\tau$, $\theta$ and $\lambda$. Then $L(j\omega) = e^{-j\theta\omega}/((\lambda + \theta)j\omega)$ for every $\omega > 0$, of size $1/((\lambda + \theta)\omega)$.
+- Take $\omega_c = 1/(\lambda + \theta)$. Then the loop gain has size 1 and phase $-\pi/2 - \theta/(\lambda + \theta)$, so the phase margin is $\pi/2 - \theta/(\lambda + \theta)$.
+- Take $\omega_{180} = \pi/(2\theta)$. Then the loop gain equals $-2\theta/(\pi(\lambda + \theta))$, a phase of $-\pi$, so the gain margin is $\pi(\lambda + \theta)/(2\theta)$.
+- Suppose $K, K_p \ge 0$, the room rests at $y = K u$, $u = K_p e$ and $e = r - y$. Then $e = r/(1 + K K_p)$.
+- Suppose $u$ follows the PID law with $K_i \ne 0$ and a continuous error $e$. Suppose also that $e$ and $u$ stay constant from some time on. Then that constant error is 0.
+- The worked gains are exact: $K_p$ = 0.750 and $K_i$ = 0.250 for lambda PI, and 1.800, 0.900 and 0.900 for Ziegler–Nichols.
+- So are the P only offset of 5/23 °C, the door debts of 5/9 and 2 °C·min, and the radiator's 23 °C ceiling.
+
+The fits, the ultimate gain, the Ziegler–Nichols margins, the door debt in general and every simulation are left to the Python and Rust checks.
+
+```lean
+-- PID control: lambda-tuned PI on a lag-plus-delay room gives the loop gain e^(-θs)/((λ+θ)s) with known crossover, phase margin and gain margin, proportional control alone leaves the offset r/(1 + K Kp), and a settled PID loop has zero error.
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Tactic.NormNum
+
+open Complex
+
+/-! The room is `G(s) = K e^(-θ s) / (τ s + 1)`: gain `K`, lag `τ`, delay `θ`, all positive.
+Lambda tuning with chosen closed-loop time constant `lam > 0` gives the PI controller
+`C(s) = Kp (1 + 1/(Ti s))` with `Kp = τ / (K (lam + θ))` and `Ti = τ`.
+The loop gain is `L = C G`, read at `s = j ω` (here `j` is Mathlib's `Complex.I`). -/
+
+/-- Lambda tuning, Step 5 and its detailed proof: with `Kp = τ/(K(λ + θ))` and `Ti = τ`,
+the controller's zero cancels the room's lag, so for every frequency `ω > 0` the loop gain is
+`L(jω) = e^(-jθω) / ((λ + θ) jω)`, of size `1/((λ + θ) ω)`. At the crossover
+`ω_c = 1/(λ + θ)` its phase is `-π/2 - θ/(λ + θ)`, so the phase margin is
+`π/2 - θ/(λ + θ)`; at `ω_180 = π/(2θ)` it equals the negative real number
+`-2θ/(π(λ + θ))`, so the gain margin is `π(λ + θ)/(2θ)`. -/
+theorem lambda_pi_loop_gain_and_margins (K τ θ lam : ℝ) (hK : 0 < K) (hτ : 0 < τ)
+    (hθ : 0 < θ) (hlam : 0 < lam) :
+    let Kp : ℝ := τ / (K * (lam + θ))
+    let C : ℂ → ℂ := fun s => Kp * (1 + 1 / (τ * s))
+    let G : ℂ → ℂ := fun s => K * Complex.exp (-(θ * s)) / (τ * s + 1)
+    let L : ℂ → ℂ := fun s => C s * G s
+    (∀ ω : ℝ, 0 < ω → L (ω * I) = Complex.exp (-(θ * ω * I)) / ((lam + θ) * ω * I)) ∧
+    (∀ ω : ℝ, 0 < ω → ‖L (ω * I)‖ = 1 / ((lam + θ) * ω)) ∧
+    ‖L ((1 / (lam + θ) : ℝ) * I)‖ = 1 ∧
+    Complex.arg (L ((1 / (lam + θ) : ℝ) * I)) = -(Real.pi / 2) - θ / (lam + θ) ∧
+    L ((Real.pi / (2 * θ) : ℝ) * I) = -(((2 * θ) / (Real.pi * (lam + θ)) : ℝ) : ℂ) := by
+  intro Kp C G L
+  have hlt : 0 < lam + θ := by linarith
+  have hL : ∀ ω : ℝ, 0 < ω → L (ω * I) = Complex.exp (-(θ * ω * I)) / ((lam + θ) * ω * I) := by
+    intro ω hω
+    have hω0 : (ω : ℂ) ≠ 0 := by exact_mod_cast hω.ne'
+    have hτ0 : (τ : ℂ) ≠ 0 := by exact_mod_cast hτ.ne'
+    have hK0 : (K : ℂ) ≠ 0 := by exact_mod_cast hK.ne'
+    have hs0 : (lam : ℂ) + θ ≠ 0 := by exact_mod_cast hlt.ne'
+    have hden : (τ : ℂ) * (ω * I) + 1 ≠ 0 := by
+      intro h
+      have := congrArg Complex.re h
+      simp at this
+    simp only [L, C, G, Kp]
+    push_cast
+    have hden' : 1 + (τ : ℂ) * ω * I ≠ 0 := by
+      intro h
+      have := congrArg Complex.re h
+      simp at this
+    field_simp
+    ring_nf
+    rw [← add_one_mul, add_comm, mul_inv_cancel₀ hden']
+  have hN : ∀ ω : ℝ, 0 < ω → ‖L (ω * I)‖ = 1 / ((lam + θ) * ω) := by
+    intro ω hω
+    rw [hL ω hω, norm_div]
+    have h1 : ‖Complex.exp (-(θ * ω * I))‖ = 1 := by
+      have : -((θ : ℂ) * ω * I) = ((-(θ * ω) : ℝ) : ℂ) * I := by push_cast; ring
+      rw [this, norm_exp_ofReal_mul_I]
+    have h2 : ‖((lam : ℂ) + θ) * ω * I‖ = (lam + θ) * ω := by
+      have : ((lam : ℂ) + θ) * ω * I = (((lam + θ) * ω : ℝ) : ℂ) * I := by push_cast; ring
+      rw [this, norm_mul, Complex.norm_I, mul_one, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_pos (by positivity)]
+    rw [h1, h2]
+  have hc : (0 : ℝ) < 1 / (lam + θ) := by positivity
+  refine ⟨hL, hN, ?_, ?_, ?_⟩
+  · rw [hN _ hc]
+    field_simp
+  · rw [hL _ hc]
+    have hq : 0 < θ / (lam + θ) := by positivity
+    have hq1 : θ / (lam + θ) < 1 := by rw [div_lt_one hlt]; linarith
+    have hs0 : (lam : ℂ) + θ ≠ 0 := by exact_mod_cast hlt.ne'
+    have : Complex.exp (-(θ * ((1 / (lam + θ) : ℝ) : ℂ) * I)) / ((lam + θ) * ((1 / (lam + θ) : ℝ) : ℂ) * I)
+        = Complex.exp (((-(Real.pi / 2) - θ / (lam + θ) : ℝ) : ℂ) * I) := by
+      have e1 : (((-(Real.pi / 2) - θ / (lam + θ) : ℝ) : ℂ) * I)
+          = (-(θ * ((1 / (lam + θ) : ℝ) : ℂ) * I)) + (-(Real.pi / 2 * I)) := by
+        push_cast; ring
+      rw [e1, Complex.exp_add, Complex.exp_neg (Real.pi / 2 * I), exp_pi_div_two_mul_I]
+      push_cast
+      field_simp
+    rw [this, arg_exp_mul_I, toIocMod_eq_self]
+    have := Real.two_le_pi
+    constructor <;> linarith
+  · rw [hL _ (by positivity)]
+    have hpi : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
+    have hθ0 : (θ : ℂ) ≠ 0 := by exact_mod_cast hθ.ne'
+    have hs0 : (lam : ℂ) + θ ≠ 0 := by exact_mod_cast hlt.ne'
+    have e1 : -((θ : ℂ) * ((Real.pi / (2 * θ) : ℝ) : ℂ) * I) = -(Real.pi / 2 * I) := by
+      push_cast; field_simp
+    rw [e1, Complex.exp_neg, exp_pi_div_two_mul_I]
+    push_cast
+    field_simp
+    simp
+
+/-- Step 1: proportional action alone leaves an offset. If the room at rest sits at
+`y = K u`, the controller sets `u = Kp e`, and the error is `e = r - y`, then the error at
+rest is `e = r / (1 + K Kp)`, whatever the gains (room gain and proportional gain
+nonnegative). -/
+theorem p_only_rest_error (K Kp r y u e : ℝ) (hK : 0 ≤ K) (hKp : 0 ≤ Kp)
+    (hy : y = K * u) (hu : u = Kp * e) (he : e = r - y) :
+    e = r / (1 + K * Kp) := by
+  have hpos : 0 < 1 + K * Kp := by positivity
+  rw [eq_div_iff hpos.ne']
+  subst hy hu
+  linarith
+
+/-- Step 2: any settled state of a PI or PID loop has zero error. The heater setting is
+`u(t) = Kp e(t) + Ki ∫₀ᵗ e + Kd e'(t)` with `Ki ≠ 0` and a continuous error `e`.
+If from some time `t₀` on the error stays at a constant `c` and the heater setting stays
+constant, then `c = 0`. -/
+theorem pid_settled_error_is_zero (Kp Ki Kd t₀ c : ℝ) (e u : ℝ → ℝ) (hKi : Ki ≠ 0)
+    (he : Continuous e)
+    (hu : ∀ t, u t = Kp * e t + Ki * (∫ x in (0 : ℝ)..t, e x) + Kd * deriv e t)
+    (hsettle_e : ∀ t, t₀ ≤ t → e t = c) (hsettle_u : ∀ t, t₀ ≤ t → u t = u t₀) :
+    c = 0 := by
+  have hd : ∀ t, t₀ < t → deriv e t = 0 := by
+    intro t ht
+    have hev : e =ᶠ[nhds t] fun _ => c := by
+      filter_upwards [lt_mem_nhds ht] with x hx
+      exact hsettle_e x hx.le
+    rw [hev.deriv_eq]
+    simp
+  have h1 := hu (t₀ + 1)
+  have h2 := hu (t₀ + 2)
+  rw [hsettle_u _ (by linarith), hsettle_e _ (by linarith), hd _ (by linarith)] at h1
+  rw [hsettle_u _ (by linarith), hsettle_e _ (by linarith), hd _ (by linarith)] at h2
+  have hint : (∫ x in (0 : ℝ)..(t₀ + 2), e x) - (∫ x in (0 : ℝ)..(t₀ + 1), e x)
+      = ∫ x in (t₀ + 1)..(t₀ + 2), e x :=
+    intervalIntegral.integral_interval_sub_left (he.intervalIntegrable _ _)
+      (he.intervalIntegrable _ _)
+  have hc : ∫ x in (t₀ + 1)..(t₀ + 2), e x = c := by
+    rw [intervalIntegral.integral_congr (g := fun _ => c)]
+    · simp; ring
+    · intro x hx
+      rw [Set.uIcc_of_le (by linarith)] at hx
+      exact hsettle_e x (by linarith [hx.1])
+  have : Ki * c = 0 := by
+    rw [← hc, ← hint, mul_sub]
+    linarith
+  rcases mul_eq_zero.mp this with h | h
+  · exact absurd h hKi
+  · exact h
+
+/-! The card's worked numbers, exactly (decimals written as fractions). -/
+
+-- Model used: K = 2 °C/kW, τ = 3 min, θ = 1 min, λ = 1 min.
+-- Lambda PI: Kp = 3 / (2 × (1 + 1)) = 0.750 kW/°C, Ti = τ = 3, Ki = Kp / Ti = 0.250.
+example : (3 : ℚ) / (2 * (1 + 1)) = 3 / 4 := by norm_num
+example : ((3 : ℚ) / 4) / 3 = 1 / 4 := by norm_num
+-- Ziegler–Nichols PID: Kp = 1.2 × 3 / (2 × 1) = 1.8, Ti = 2 × 1 = 2, Td = 1/2,
+-- Ki = Kp / Ti = 0.9, Kd = Kp Td = 0.9.
+example : (6 / 5 : ℚ) * 3 / (2 * 1) = 9 / 5 := by norm_num
+example : ((9 : ℚ) / 5) / 2 = 9 / 10 ∧ ((9 : ℚ) / 5) * (1 / 2) = 9 / 10 := by norm_num
+-- P only, Kp = 1.8: a 1 °C step leaves 1/(1 + 2 × 1.8) = 5/23 ≈ 0.2174 °C of error.
+example : (1 : ℚ) / (1 + 2 * (9 / 5)) = 5 / 23 := by norm_num
+-- Door debt |d| / Ki with |d| = 0.5 kW: 0.5/0.9 = 5/9 ≈ 0.5556 (ZN), 0.5/0.25 = 2 (lambda).
+example : ((1 : ℚ) / 2) / (9 / 10) = 5 / 9 ∧ ((1 : ℚ) / 2) / (1 / 4) = 2 := by norm_num
+-- Lambda loop: crossover ω_c = 1/(λ + θ) = 1/2, and θ ω_c = 1/2 rad off the 90°.
+example : (1 : ℚ) / (1 + 1) = 1 / 2 ∧ (1 : ℚ) * (1 / 2) = 1 / 2 := by norm_num
+-- Lambda loop with λ = θ = 1: gain margin π(λ + θ)/(2θ) = π, and the delay may grow to
+-- (λ + θ) π/2 = π min before the loop oscillates.
+example : Real.pi * (1 + 1) / (2 * 1) = Real.pi := by norm_num
+example : ((1 : ℝ) + 1) * (Real.pi / 2) = Real.pi := by ring
+-- Doubled delay θ = 2 with the same lambda gains (λ + θ = 2 still): GM = π · 2 / (2 · 2) = π/2.
+example : Real.pi * 2 / (2 * 2) = Real.pi / 2 := by ring
+-- Radiator limit: 1.5 kW more at K = 2 °C/kW tops out at 20 + 3 = 23 °C;
+-- a 4 °C setpoint asks for 4 / 2 = 2 kW extra.
+example : (20 : ℚ) + 2 * (3 / 2) = 23 ∧ (4 : ℚ) / 2 = 2 := by norm_num
+-- Two-point fit: τ = 1.5 (t63 - t28) inverts t28 = θ + τ/3, t63 = θ + τ.
+example (θ τ : ℚ) : (3 / 2) * ((θ + τ) - (θ + τ / 3)) = τ := by ring
+
+#print axioms lambda_pi_loop_gain_and_margins
+#print axioms p_only_rest_error
+#print axioms pid_settled_error_is_zero
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lambda_pi_loop_gain_and_margins' depends on axioms: [propext, Classical.choice, Quot.sound]
+'p_only_rest_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pid_settled_error_is_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -671,7 +875,7 @@ The two outputs agree line for line.
 - [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping $L(j\omega)$ directly when three terms are not enough.
 - [Adapting as you go](../10-Robustness%20and%20Adaptation/04-gain-scheduling-and-adaptive-control.md): changing the gains as the room's gain and delay change, instead of tuning once for the worst case.
 
-This card tunes a loop for a radiator that can deliver anything asked of it, read by a quiet thermometer; what changes with a valve that has limits, a noisy thermometer and disturbances that can be measured is the question pid-on-real-hardware answers.
+This card tunes a loop for a radiator that can deliver anything asked of it, read by a quiet thermometer; what changes with a valve that has limits, a noisy thermometer and disturbances that can be measured is the question [PID in practice](08-pid-on-real-hardware.md) answers.
 
 ---
 

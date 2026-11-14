@@ -10,7 +10,9 @@ A racing cyclist sits on a bike bolted to a balance in a full-size wind tunnel. 
 
 The team wants one number out of this: the drag coefficient, how slippery this rider's shape is, with no unit. It comes out at 0.692. A new skinsuit is worth buying only if it lowers that by a few hundredths. So the real question is how far 0.692 can be trusted.
 
-Every reading is a little off. The balance is good to about 1 %, the speed to 1.5 %, the area to 2 %, the density to 0.5 %. Each of those bits of slop passes through the formula and lands in the answer, some magnified, some shrunk. **Error propagation** is the bookkeeping that follows them through. It gives the answer's own uncertainty, 0.026, and says which reading to improve first. Here that is the speed, although its 1.5 % is not the largest input error: the formula squares the speed, and squaring doubles its slop.
+Every reading is a little off. The balance is good to about 1 %, the speed to 1.5 %, the area to 2 %, the density to 0.5 %. Each of those bits of slop passes through the formula and lands in the answer, some magnified, some shrunk.
+
+**Error propagation** is the bookkeeping that follows them through. It gives the answer's own uncertainty, 0.026, and says which reading to improve first. Here that is the speed, although its 1.5 % is not the largest input error: the formula squares the speed, and squaring doubles its slop.
 
 **Each input's error moves the answer by that error times the answer's slope with respect to that input; independent moves add like the sides of a right-angled triangle, so the answer's uncertainty is the square root of the sum of their squares, and the biggest square is the input to fix.**
 
@@ -33,7 +35,14 @@ One bar per reading. The speed's bar is 63.17 % of the total; the area's is 28.0
 
 ## The formula
 
-Notation first, in words. A measured input is $x_i$, with $i$ counting the inputs; here there are four. Its **standard uncertainty**, $u(x_i)$, is its likely error written as one standard deviation, in the input's own unit. The answer is $y = f(x_1, \dots, x_4)$. The slope of $f$ along one input with the others held still is the partial derivative $\partial f/\partial x_i$; engineers call it the **sensitivity coefficient**, $c_i$. The **law of propagation of uncertainty**, for independent inputs, is
+Notation first, in words.
+
+- A measured input is $x_i$, with $i$ counting the inputs; here there are four.
+- Its **standard uncertainty**, $u(x_i)$, is its likely error written as one standard deviation, in the input's own unit.
+- The answer is $y = f(x_1, \dots, x_4)$.
+- The slope of $f$ along one input with the others held still is the partial derivative $\partial f/\partial x_i$; engineers call it the **sensitivity coefficient**, $c_i$.
+
+The **law of propagation of uncertainty**, for independent inputs, is
 
 $$u(y)^2 = \sum_i c_i^2\, u(x_i)^2, \qquad c_i = \frac{\partial f}{\partial x_i}$$
 
@@ -76,10 +85,10 @@ For $C_d$ the powers are $+1$ on $F$, $-2$ on $v$, $-1$ on $A$ and $-1$ on $\rho
 ### When it holds
 
 - **Small errors.** The law keeps only the tangent-plane part of the formula. At 1.5 % on the speed the simulated spread is 0.026185 against the law's 0.026126; at 15 % the law says 30.09 % and the simulation gives 37.40 %, chart below.
-- **Independent inputs.** If two readings share a cause, their errors move together and a cross term $2c_ic_j$ times their covariance belongs in the sum. Dropping it can err either way.
+- **Independent inputs.** If two readings, $x_i$ and $x_j$, share a cause, their errors move together and a cross term $2c_ic_j$ times their covariance (the average product of their two errors) belongs in the sum. Dropping it can err either way.
 - **A slope that is not zero.** At a minimum or a kink of $f$ the slope is zero or undefined, and the first-order law reports no uncertainty when there is some.
 - **Like with like.** Every $u(x_i)$ must be one standard deviation. A maker's "±2 %" tolerance is often a limit, not a standard deviation. If every value inside ±a is equally likely, the standard deviation is a/√3.
-- **The formula itself is right.** The law spreads measurement error only. A tunnel's blockage correction left out shifts every result the same way, and no budget of reading errors sees it.
+- **The formula itself is right.** The law spreads measurement error only. A tunnel's blockage correction (the adjustment for the rider crowding the tunnel and speeding up the air around them) left out shifts every result the same way, and no budget of reading errors sees it.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -115,18 +124,18 @@ Each $\delta_i$ is random, with standard deviation $u(x_i)$. The variance of a c
 
 $$\mathrm{Var}(\delta y) = \sum_i c_i^2\, u(x_i)^2$$
 
-Taking the square root gives the law. The terms add like perpendicular sides: the four terms 1.00 %, 3.00 %, 2.00 % and 0.498 % give 3.775 %, not 6.498 %, because independent errors rarely all go the same way at full size.
+Taking the square root gives the law. Engineers call this adding in quadrature. The terms add like perpendicular sides: the four terms 1.00 %, 3.00 %, 2.00 % and 0.498 % give 3.775 %, not 6.498 %, because independent errors rarely all go the same way at full size.
 
 <details>
 <summary>Detailed proof, with the error of the approximation</summary>
 
-Let the input errors $\delta_i$ be independent with mean 0 and variances $u(x_i)^2$. Taylor's theorem in several variables gives
+Let the input errors $\delta_i$ be independent with mean 0 and variances $u(x_i)^2$. Taylor's theorem in several variables, the many-input form of [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), gives
 $$f(x + \delta) = f(x) + \sum_i c_i \delta_i + \tfrac12 \sum_{i,j} H_{ij}\, \delta_i \delta_j + R,$$
 where $H_{ij}$ are the second partial derivatives at $x$ and $R$ is of third order in the δ's.
 
 **Spread.** The linear part has variance $\sum_i c_i^2 u(x_i)^2$: expand $E[(\sum_i c_i\delta_i)^2]$, and every cross term $E[\delta_i\delta_j]$ with $i \ne j$ is $E[\delta_i]E[\delta_j] = 0$ by independence. For symmetric errors such as normal ones, the quadratic part adds only terms of fourth order in the u's, which is why the law is first-order.
 
-**Centre.** The linear part has mean 0, but the quadratic part does not: its mean is $\tfrac12 \sum_i H_{ii} u(x_i)^2$. The answer's average sits above or below $f(x)$ by about that much. For $C_d$, $H_{vv} = 6C_d/v^2$, $H_{AA} = 2C_d/A^2$, $H_{\rho\rho} = 2C_d/\rho^2$ and $H_{FF} = 0$. The second-order mean is 0.692899; the simulation's mean is 0.692955, with standard error 0.000059. Both sit above 0.692137.
+**Centre.** The linear part has mean 0, but the quadratic part does not: its mean is $\tfrac12 \sum_i H_{ii} u(x_i)^2$. The answer's average sits above or below $f(x)$ by about that much. For $C_d$, $H_{vv} = 6C_d/v^2$, $H_{AA} = 2C_d/A^2$, $H_{\rho\rho} = 2C_d/\rho^2$ and $H_{FF} = 0$. The second-order mean is 0.692899; the simulation's mean is 0.692955, with standard error 0.000059. A standard error is the likely error of a simulated average: the results' spread divided by the square root of their count. Both sit above 0.692137.
 
 **When the expansion stops working.** The remainder $R$ is small only when every $\delta_i$ is small next to the distance over which the second derivatives change. For one over the speed squared that distance is the speed itself, so errors of a few percent are fine and 15 % is not.
 
@@ -140,7 +149,7 @@ Take $y = k\,x_1^{n_1}x_2^{n_2}\cdots$. Then $\partial y/\partial x_i = n_i\, y 
 
 Each term squared, over the total, is the fraction of the answer's variance that input causes. Halving the input with the biggest share does the most good. Halving one with a tiny share does almost nothing: the sum of squares lets the big term rule.
 
-The probability wing proves the same linearisation as a limit theorem for a function of an average ([Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)); this card is the engineer's budget built on it. Where a partial derivative is awkward to find by hand, a central difference finds it from the formula alone ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)), and the code does both.
+The probability wing proves the same linearisation as a limit theorem for a function of an average ([Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)); this card is the engineer's budget built on it. Where a partial derivative is awkward to find by hand, a central difference finds it from the formula alone: the change in $f$ across a small step either side of the input, divided by the step's width ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)), and the code does both.
 
 ---
 
@@ -175,7 +184,7 @@ The rider's drag coefficient is 0.692 with a standard uncertainty of 0.026. Doub
 
 ## Code, from first principles, and it actually runs
 
-The code computes $C_d$ and its uncertainty by four roads. Road 1 uses the partial derivatives worked by hand. Road 2 finds them again by central differences from the formula alone. Road 3 uses the exponent rule in percentages. Road 4 builds 200,000 simulated rigs, each with fresh normal errors on all four readings, from a SplitMix64 generator (a small random-number generator) and the Box–Muller transform (a rule turning two uniform random numbers into a normal one), both written out, and measures the spread and mean of the results. It then prints the what-breaks numbers, the upgrade options and the chart points. The two languages print the same bytes.
+The code computes $C_d$ and its uncertainty by four roads. Road 1 uses the partial derivatives worked by hand. Road 2 finds them again by central differences from the formula alone. Road 3 uses the exponent rule in percentages. Road 4, a Monte Carlo simulation, builds 200,000 simulated rigs, each with fresh normal errors on all four readings, from a SplitMix64 generator (a small random-number generator) and the Box–Muller transform (a rule turning two uniform random numbers into a normal one), both written out, and measures the spread and mean of the results. It then prints the what-breaks numbers, the upgrade options and the chart points. The two languages print the same bytes.
 
 ### Python
 
@@ -513,14 +522,139 @@ chart, shares %       7.02  63.17  28.07   1.74
 ALL CHECKS PASS
 ```
 
-The first three roads agree to six decimals on $u(C_d)$ = 0.026126, and the fourth, the simulated spread, 0.026185, sits slightly above it: the small upward bend of one over speed squared. The simulated mean, 0.692955, matches the second-order mean, 0.692899, to within its standard error, 0.000059.
+The first three roads agree to six decimals on $u(C_d)$ = 0.026126, and the fourth, the simulated spread, 0.026185, sits slightly above it: the small upward bend of one over speed squared. The simulated mean, 0.692955, matches the second-order mean, 0.692899, to within its standard error, 0.000059, the simulation's own likely error.
+
+### Lean
+
+Lean proves the law for a straight-line formula, the percentage shortcut, and the quadrature bound, and checks the worked numbers.
+
+- Suppose $f$ is a straight line in its inputs, with slopes $c_i$, and the errors $\delta_i$ are independent with finite variances. Then $u(y)^2 = \sum_i c_i^2\, u(x_i)^2$ exactly.
+- Take $y = k\,x_1^{n_1} x_2^{n_2}\cdots$ with whole-number powers, and $k$ and every reading nonzero. Then $(u(y)/y)^2 = \sum_i n_i^2\,(u(x_i)/x_i)^2$.
+- Take any terms $a_i$. Then $\sqrt{\sum_i a_i^2} \le \sum_i |a_i|$: adding in quadrature never gives more than adding straight.
+- The worked numbers hold: the bottom is 69.3504, and the terms are 1 %, 3 %, 2 % and 150/301 %, about 0.498 %.
+- The squares add to between 14.2483 and 14.2484, and the speed's 9 is the biggest.
+- Straight addition gives about 6.498 %, and quadrature rounds to 3.775 %.
+
+How far a curved formula strays from its tangent, the second-order mean and the simulation are left to the Python and Rust checks.
+
+```lean
+-- Error propagation: for a formula that is a straight line in independent inputs, the answer's variance is the sum of each slope squared times that input's variance, with the percentage rule for a product of powers and the fact that adding in squares never exceeds straight addition.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Analysis.Calculus.Deriv.ZPow
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open MeasureTheory ProbabilityTheory
+
+/-- The law of propagation of uncertainty, exact for a straight-line formula. Let the answer
+`f` be a straight line in its inputs near the true values `x`, with slope (sensitivity
+coefficient) `c i` along input `i`, so an input error `d` moves the answer by `∑ c i * d i`.
+If the input errors `δ i` are independent and each has a finite variance `u(xᵢ)²`, then the
+answer's squared uncertainty is the sum over the inputs of the slope squared times that
+input's squared uncertainty: `u(y)² = ∑ cᵢ² u(xᵢ)²`. -/
+theorem uncertainty_sq_eq_sum_sensitivity_sq_mul_uncertainty_sq
+    {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ] {n : ℕ}
+    (f : (Fin n → ℝ) → ℝ) (x c : Fin n → ℝ)
+    (hf : ∀ d : Fin n → ℝ, f (x + d) = f x + ∑ i, c i * d i)
+    (δ : Fin n → Ω → ℝ) (hδ : ∀ i, MemLp (δ i) 2 μ) (hind : iIndepFun δ μ) :
+    variance (fun ω => f (x + fun i => δ i ω)) μ = ∑ i, c i ^ 2 * variance (δ i) μ := by
+  have hL : ∀ i ∈ (Finset.univ : Finset (Fin n)), MemLp (fun ω => c i * δ i ω) 2 μ :=
+    fun i _ => (hδ i).const_mul (c i)
+  have h1 : (fun ω => f (x + fun i => δ i ω))
+      = fun ω => f x + (∑ i, (fun ω => c i * δ i ω)) ω := by
+    funext ω; rw [hf]; simp [Finset.sum_apply]
+  rw [h1, variance_const_add (memLp_finsetSum' _ hL).aestronglyMeasurable, IndepFun.variance_sum hL]
+  · simp [variance_const_mul]
+  · intro i _ j _ hij
+    exact (hind.indepFun hij).comp (measurable_const_mul (c i)) (measurable_const_mul (c j))
+
+/-- The shortcut for a product of powers. If `y = k * x₁^n₁ * x₂^n₂ * ⋯` with a fixed nonzero
+number `k` and nonzero readings, then the slope along input `i` (the partial derivative, other
+inputs held still) is `cᵢ`, and the answer's relative squared uncertainty is the sum of each
+power squared times that input's relative squared uncertainty:
+`(u(y)/y)² = ∑ nᵢ² (u(xᵢ)/xᵢ)²`, where `u(y)² = ∑ cᵢ² u(xᵢ)²`. -/
+theorem relative_uncertainty_sq_of_product_of_powers {m : ℕ} (k : ℝ) (hk : k ≠ 0)
+    (x : Fin m → ℝ) (hx : ∀ j, x j ≠ 0) (p : Fin m → ℤ) (u : Fin m → ℝ) :
+    (∑ i, (deriv (fun t => k * ∏ j, Function.update x i t j ^ p j) (x i)) ^ 2 * u i ^ 2)
+        / (k * ∏ j, x j ^ p j) ^ 2
+      = ∑ i, (p i : ℝ) ^ 2 * (u i / x i) ^ 2 := by
+  have hP : k * ∏ j, x j ^ p j ≠ 0 :=
+    mul_ne_zero hk (Finset.prod_ne_zero_iff.2 fun j _ => zpow_ne_zero _ (hx j))
+  have hd : ∀ i, deriv (fun t => k * ∏ j, Function.update x i t j ^ p j) (x i)
+      = (p i : ℝ) * (k * ∏ j, x j ^ p j) / x i := by
+    intro i
+    set C := ∏ j ∈ Finset.univ \ {i}, x j ^ p j with hC
+    have hfun : (fun t => k * ∏ j, Function.update x i t j ^ p j) = fun t => k * (t ^ p i * C) := by
+      funext t
+      rw [Finset.prod_eq_mul_prod_sdiff_singleton_of_mem (Finset.mem_univ i)]
+      simp only [Function.update_self]
+      congr 2
+      refine Finset.prod_congr rfl fun j hj => ?_
+      have : j ≠ i := by simpa using hj
+      simp [Function.update_of_ne this]
+    have hprod : ∏ j, x j ^ p j = x i ^ p i * C :=
+      Finset.prod_eq_mul_prod_sdiff_singleton_of_mem (Finset.mem_univ i) _
+    rw [hfun, hprod]
+    have := ((hasDerivAt_zpow (p i) (x i) (Or.inl (hx i))).mul_const C).const_mul k
+    rw [this.deriv, zpow_sub_one₀ (hx i)]
+    field_simp
+  simp_rw [hd, Finset.sum_div]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  have := hx i
+  have hQ : ∏ j, x j ^ p j ≠ 0 := Finset.prod_ne_zero_iff.2 fun j _ => zpow_ne_zero _ (hx j)
+  field_simp
+
+/-- Adding in quadrature never gives more than adding straight: the square root of the sum of
+the squared terms is at most the sum of the terms' sizes (the worst case, every error at full
+size in the same direction). -/
+theorem quadrature_sum_le_straight_sum {m : ℕ} (a : Fin m → ℝ) :
+    Real.sqrt (∑ i, a i ^ 2) ≤ ∑ i, |a i| := by
+  rw [Real.sqrt_le_iff]
+  refine ⟨Finset.sum_nonneg fun i _ => abs_nonneg _, ?_⟩
+  calc ∑ i, a i ^ 2 = ∑ i, |a i| ^ 2 := by simp
+    _ ≤ (∑ i, |a i|) ^ 2 := Finset.sum_sq_le_sq_sum_of_nonneg fun i _ => abs_nonneg _
+
+-- The card's worked numbers, exactly, as fractions.
+-- Bottom of the formula: 1.204 × 12.00² × 0.400 = 69.3504.
+example : (1204 / 1000 : ℚ) * 12 ^ 2 * (400 / 1000) = 693504 / 10000 := by norm_num
+-- Percentage terms, power times percentage error: force 1 %, speed 3 %, area 2 %,
+-- density 150/301 % (about 0.498 %).
+example : (1 : ℚ) * ((24 / 100) / 24) * 100 = 1 := by norm_num
+example : (2 : ℚ) * ((18 / 100) / 12) * 100 = 3 := by norm_num
+example : (1 : ℚ) * ((8 / 1000) / (400 / 1000)) * 100 = 2 := by norm_num
+example : (1 : ℚ) * ((6 / 1000) / (1204 / 1000)) * 100 = 150 / 301 := by norm_num
+-- Squares added: 1 + 9 + 4 + 0.2483 = 14.2483 (to four places).
+example : (142483 / 10000 : ℚ) < 1 ^ 2 + 3 ^ 2 + 2 ^ 2 + (150 / 301) ^ 2 ∧
+    1 ^ 2 + 3 ^ 2 + 2 ^ 2 + (150 / 301) ^ 2 < (142484 / 10000 : ℚ) := by norm_num
+-- The speed's square, 9, is the biggest, so the speed is the input to fix.
+example : (1 : ℚ) ^ 2 < 3 ^ 2 ∧ (2 : ℚ) ^ 2 < 3 ^ 2 ∧ (150 / 301 : ℚ) ^ 2 < 3 ^ 2 := by norm_num
+-- Straight addition: 1 + 3 + 2 + 0.498 = 6.498 %, against 3.775 % in quadrature
+-- (3.7745² < 14.2483 < 3.7755², so the root rounds to 3.775).
+example : (6498 / 1000 : ℚ) < 1 + 3 + 2 + 150 / 301 ∧ 1 + 3 + 2 + 150 / 301 < (6499 / 1000 : ℚ) := by
+  norm_num
+example : (37745 / 10000 : ℚ) ^ 2 < 1 ^ 2 + 3 ^ 2 + 2 ^ 2 + (150 / 301) ^ 2 ∧
+    1 ^ 2 + 3 ^ 2 + 2 ^ 2 + (150 / 301) ^ 2 < (37755 / 10000 : ℚ) ^ 2 := by norm_num
+
+#print axioms uncertainty_sq_eq_sum_sensitivity_sq_mul_uncertainty_sq
+#print axioms relative_uncertainty_sq_of_product_of_powers
+#print axioms quadrature_sum_le_straight_sum
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'uncertainty_sq_eq_sum_sensitivity_sq_mul_uncertainty_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'relative_uncertainty_sq_of_product_of_powers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quadrature_sum_le_straight_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
-> - **Buy a better balance.** Guess first: does a 0.1 % load cell help much? Set the force uncertainty to 0.1 %. The total falls from 3.775 % to only **3.641 %**, because force had 7.02 % of the variance.
+> - **Buy a better balance.** Guess first: does a 0.1 % load cell (the balance's force sensor) help much? Set the force uncertainty to 0.1 %. The total falls from 3.775 % to only **3.641 %**, because force had 7.02 % of the variance.
 > - **Buy a better speed probe.** Guess first. Set the speed uncertainty to 0.5 %. The total falls to **2.500 %**: the dominant term shrinks from 3 % to 1 %.
 > - **Measure the area better.** Guess first. Set the area uncertainty to 1.0 %. The total is **3.354 %**: better than the balance, worse than the speed probe.
-> - **Use a hand-held anemometer.** Guess first. Set the speed uncertainty to 15 %. First order says **30.087 %**; the simulation says **37.405 %**, and the average result drifts to **0.745178**.
+> - **Use a hand-held anemometer (a wind-speed meter).** Guess first. Set the speed uncertainty to 15 %. First order says **30.087 %**; the simulation says **37.405 %**, and the average result drifts to **0.745178**.
 
 ---
 
@@ -540,7 +674,7 @@ The first three roads agree to six decimals on $u(C_d)$ = 0.026126, and the four
 
 - **Wind-tunnel and test-rig reports.** Every quoted coefficient comes with an uncertainty budget like the one here, laid out the way the international guide below sets out.
 - **Choosing instruments.** The budget says where money buys accuracy. Here a speed probe good to 0.5 % cuts the total from 3.775 % to 2.500 %, while a balance good to 0.1 % only reaches 3.641 %.
-- **Scale-model testing.** A model run at a different speed and size, matched by Reynolds number, carries its own budget, and the scaling laws multiply its errors by their powers ([Similarity](04-similarity-and-model-testing.md)).
+- **Scale-model testing.** A model run at a different speed and size, matched by Reynolds number (the ratio of the air's momentum to its stickiness), carries its own budget, and the scaling laws multiply its errors by their powers ([Similarity](04-similarity-and-model-testing.md)).
 - **Calibration certificates.** A certificate's stated uncertainty is the output of this law applied to the calibration's own chain of readings.
 - **Small corrections.** A second-order term that shifts the average is a perturbation in the small relative errors, the subject of [Regular perturbation](05-regular-perturbation.md).
 

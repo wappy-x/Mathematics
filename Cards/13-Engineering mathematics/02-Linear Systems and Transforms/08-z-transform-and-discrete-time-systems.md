@@ -10,7 +10,9 @@ A soldering station holds its iron's tip at a set temperature with a digital the
 
 The dial is turned up by 5 °C. The firmware engineer wants three numbers. How far does the tip overshoot? How soon is it within 2 % of the new value? And how much harder can the loop be pushed, by a higher gain or a smaller tip, before the swings grow instead of dying?
 
-The firmware is a loop of a few lines. A rule that gives the next value from earlier values is a difference equation. Running it answers the questions for one setting; the z-transform answers them for every setting at once. It turns the difference equation into a fraction in a new variable z, and the fraction's poles, the values of z where its denominator is zero, decide everything. Here they sit at 0.49900 ± 0.50100j, a distance 0.70711 from the origin; j is the square root of −1, as engineers write it, where the rest of the library writes i. They lie inside the circle of radius 1, so the tip settles: it overshoots by 25.2 % and is within 2 % after 1.0 s. The loop goes unstable when the gain doubles.
+The firmware is a loop of a few lines. A rule that gives the next value from earlier values is a difference equation. Running it answers the questions for one setting; the z-transform answers them for every setting at once. It turns the difference equation into a fraction in a new variable z, and the fraction's poles, the values of z where its denominator is zero, decide everything.
+
+Here they sit at 0.49900 ± 0.50100j, a distance 0.70711 from the origin. Here j is the square root of −1, as engineers write it, where the rest of the library writes i. They lie inside the circle of radius 1, so the tip settles: it overshoots by 25.2 % and is within 2 % after 1.0 s. The loop goes unstable when the gain doubles.
 
 **The z-transform turns "one tick later" into "multiply by z", so a difference equation becomes a ratio of polynomials in z; its poles are the growth factors per tick of the system's natural motions, and the system settles exactly when every pole lies inside the unit circle.**
 
@@ -81,7 +83,7 @@ $$y[\infty] = H(1)\,r = \frac{bK}{1 - a + bK}\, r = 4.98008\ ^\circ\text{C}.$$
 - **Time-invariant.** The same a, b and K every tick. A tip swapped mid-job for one with half the heat capacity doubles b and puts the poles on the unit circle.
 - **Causal and starting at rest.** The one-sided sum starts at n = 0, and the transfer function assumes every earlier value is zero. A non-zero start adds terms, worked out in Step 2.
 - **A lumped tip.** One temperature for the whole tip. A real lag between heater and point adds a pole and lowers the stable gain.
-- **The update rule is a model of the physics.** a = 0.998000 and b = 0.040000 are the one-step Euler values; a heater held constant over each tick gives exactly 0.998002 and 0.039960 ([Discretising a design](09-zero-order-hold-and-tustin-discretisation.md)). With those, |p| = 0.70675, the peak 6.23004 °C, overshoot 25.1 % and the gain limit 25.025 W/°C, against 0.70711, 6.23501 °C, 25.2 % and 25 W/°C; the settling value is unchanged.
+- **The update rule is a model of the physics.** a = 0.998000 and b = 0.040000 are the one-step Euler values, which take the tip's rate of change at the start of a tick as fixed for the whole tick; a heater held constant over each tick gives exactly 0.998002 and 0.039960 ([Discretising a design](09-zero-order-hold-and-tustin-discretisation.md)). With those, |p| = 0.70675, the peak 6.23004 °C, overshoot 25.1 % and the gain limit 25.025 W/°C, against 0.70711, 6.23501 °C, 25.2 % and 25 W/°C; the settling value is unchanged.
 
 ---
 
@@ -97,7 +99,11 @@ The building block is the sequence p^n: each sample p times the last, the discre
 
 $$\sum_{n=0}^{\infty} p^n z^{-n} = \frac{1}{1 - p/z} = \frac{z}{z - p}, \qquad \text{valid for } |z| > |p|.$$
 
-The sum converges only outside the circle of radius |p|. That set is the region of convergence. It matters because the same fraction z/(z − p) is also the transform of a different sequence, one that is −p^n for negative n and zero after. Its sum, −Σ p^n z^(−n) over n = −1, −2, …, converges only inside the circle, |z| < |p|. For p = 0.998 at z = 0.5 it gives −1.004016, the value of z/(z − p) there. A fraction alone does not fix a sequence; the fraction plus its region does. For a sequence that starts at n = 0 the region is always the outside of the largest pole's circle.
+The sum converges only outside the circle of radius |p|. That set is the region of convergence.
+
+It matters because the same fraction z/(z − p) is also the transform of a different sequence, one that is −p^n for negative n and zero after. Its sum, −Σ p^n z^(−n) over n = −1, −2, …, converges only inside the circle, |z| < |p|. For p = 0.998 at z = 0.5 it gives −1.004016, the value of z/(z − p) there.
+
+A fraction alone does not fix a sequence; the fraction plus its region does. For a sequence that starts at n = 0 the region is always the outside of the largest pole's circle.
 
 In the terms of [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md), Y(z) is a Laurent series with only non-positive powers of z.
 
@@ -125,7 +131,9 @@ and c_2 likewise, with p_1 and p_2 swapped.
 
 The first term is the pole at z = 1, the step itself, and gives the settling value. Each other term is a pole's geometric sequence. A pole p = |p| e^(jθ) contributes |p|^n times a rotation by θ each tick. The distance |p| is the factor by which that motion shrinks or grows per tick; the angle θ is how fast it rings.
 
-For K = 12.5 W/°C the quadratic is z^2 − 0.998 z + 0.5. Its discriminant (the part under the square root) is negative, so the poles are a complex pair, 0.49900 ± 0.50100j. Their product is the constant term, so |p|^2 = bK = 0.5 and |p| = 0.70711. The ringing turns 45.11° per tick, one full turn in 7.980 ticks, 0.7980 s. Each tick the swing shrinks to 0.70711 of itself, so the envelope falls below 2 % after ln(0.02)/ln(0.70711) = 11.29 ticks; the loop is inside the band from tick 10.
+For K = 12.5 W/°C the quadratic is z^2 − 0.998 z + 0.5. Its discriminant (the part under the square root) is negative, so the poles are a complex pair, 0.49900 ± 0.50100j. Their product is the constant term, so |p|^2 = bK = 0.5 and |p| = 0.70711.
+
+The ringing turns 45.11° per tick, one full turn in 7.980 ticks, 0.7980 s. Each tick the swing shrinks to 0.70711 of itself, so the envelope falls below 2 % after ln(0.02)/ln(0.70711) = 11.29 ticks; the loop is inside the band from tick 10.
 
 ### Step 4: the inverse transform is a contour integral
 
@@ -133,7 +141,7 @@ Step 3 needed the roots. A second route needs only the fraction. Y(z) is a Laure
 
 $$y[n] = \frac{1}{2\pi j}\oint_{|z| = \rho} Y(z)\, z^{n-1}\, dz.$$
 
-The residue theorem turns this integral back into the sum over poles of Step 3. Evaluated numerically, with 256 points on the circle of radius 1.2, it is an independent road: the code takes it and agrees with the firmware loop to better than 1e-9 °C at every tick from 0 to 40.
+[The residue theorem](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md) works out a loop integral from the poles inside the loop alone. It turns this integral back into the sum over poles of Step 3. Evaluated numerically, with 256 points on the circle of radius 1.2, it is an independent road: the code takes it and agrees with the firmware loop to better than 1e-9 °C at every tick from 0 to 40.
 
 ### Step 5: why the unit circle is the boundary
 
@@ -164,11 +172,17 @@ Drawn to scale, 90 px per unit. The crosses are the closed-loop pole pairs: insi
 
 Sampling e^(st) every T seconds gives the sequence (e^(sT))^n, so a continuous pole at s becomes a discrete pole at z = e^(sT). The left half of the s-plane, Re s < 0, lands inside the unit circle, because |e^(sT)| = e^(T Re s) < 1. The tip alone has a = 0.998, which maps back to s = ln(a)/T = −0.020020 1/s, close to −1/(R_th C_th) = −0.020000 1/s. The closed-loop pair maps back to s = −3.4657 ± 7.8740j rad/s.
 
-The unit circle itself is the imaginary axis of the s-plane: z = e^(jθ) with θ = 2πfT, the angle the wobble turns through per tick. Evaluating H on the circle gives the frequency response, the discrete-time Fourier transform. A setpoint wobbling ±1 °C at 1 Hz makes the tip swing ±1.3719 °C; the code gets that number both from |H| and from running the loop. The response peaks at 1.4114 at 1.154 Hz, near the ringing frequency. The sampling rate is f_s = 1/T = 10 Hz. The point z = −1 is half of it, f_s/2 = 5.0 Hz, the fastest wobble a 0.1 s tick can represent (Sampling).
+The unit circle itself is the imaginary axis of the s-plane: z = e^(jθ) with θ = 2πfT, the angle the wobble turns through per tick. Evaluating H on the circle gives the frequency response, the discrete-time Fourier transform.
+
+A setpoint wobbling ±1 °C at 1 Hz makes the tip swing ±1.3719 °C; the code gets that number both from |H| and from running the loop. The response peaks at 1.4114 at 1.154 Hz, near the ringing frequency.
+
+The sampling rate is f_s = 1/T = 10 Hz. The point z = −1 is half of it, f_s/2 = 5.0 Hz, the fastest wobble a 0.1 s tick can represent ([Sampling](../05-Signals/01-sampling-and-the-nyquist-theorem.md)).
 
 ### Step 7: the settling value is H at z = 1
 
-A step's transform carries the pole z = 1. In Step 3 that pole's term is H(1) r, while every other term dies when the poles are inside. So y[∞] = H(1) r = 0.5 / 0.502 × 5 = 4.98008 °C. It is the discrete final value theorem ([Final value and bandwidth](05-final-value-theorem-and-steady-gain.md)), with z → 1 in place of s → 0. A proportional thermostat leaves a droop of 0.01992 °C; a joint that draws 20 W from the tip leaves it 1.5936 °C low, where the bare tip with the thermostat off would sag R_th d = 400 °C, more than it has above room temperature.
+A step's transform carries the pole z = 1. In Step 3 that pole's term is H(1) r, while every other term dies when the poles are inside. So y[∞] = H(1) r = 0.5 / 0.502 × 5 = 4.98008 °C. It is the discrete final value theorem ([Final value and bandwidth](05-final-value-theorem-and-steady-gain.md)), with z → 1 in place of s → 0.
+
+A proportional thermostat leaves a droop, a steady shortfall below the setpoint, of 0.01992 °C; a joint that draws 20 W from the tip leaves it 1.5936 °C low, where the bare tip with the thermostat off would sag R_th d = 400 °C, more than it has above room temperature.
 
 ---
 
@@ -635,6 +649,295 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the stability theorem, Jury's test and the transform of $p^n$ for every case, and checks the worked numbers.
+
+- Take a linear difference equation with the same complex coefficients every tick. Then it settles from any start exactly when every pole satisfies $|p| < 1$.
+- Take a quadratic $z^2 + c_1 z + c_0$ with real coefficients. Then both roots satisfy $|z| < 1$ exactly when $|c_0| < 1$, $1 + c_1 + c_0 > 0$ and $1 - c_1 + c_0 > 0$.
+- Take complex numbers $p$ and $z$ with $|z| > |p|$. Then the sum of $p^n z^{-n}$ over $n \ge 0$ is $z/(z - p)$.
+- The thermostat's factors check out: a = 0.998, b = 0.04 and bK = 0.5.
+- The first three ticks give 2.5, 4.995 and 6.23501 °C, and tick 4 is lower.
+- The settling value is 4.98008 °C, the stability limit is 25 W/°C, and the gain margin is 2.
+- Jury's three inequalities hold at the design gain. The transform of the response at z = 2 is 1250/313, about 3.993610224.
+
+The bounded in, bounded out proof, the contour integral, the frequency response and every simulation are left to the Python and Rust checks.
+
+```lean
+-- The z-transform: a linear constant-coefficient difference equation settles exactly when every root of its characteristic polynomial (every pole) lies inside the unit circle, with Jury's test for quadratics and the transform of a geometric sequence.
+import Mathlib.Algebra.LinearRecurrence
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.Analysis.Normed.Algebra.GelfandFormula
+import Mathlib.Analysis.Normed.Operator.Banach
+import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+
+open Filter Topology Polynomial
+
+lemma LinearRecurrence.tupleSucc_shift (E : LinearRecurrence ℂ) {u : ℕ → ℂ}
+    (hu : E.IsSolution u) (n : ℕ) :
+    E.tupleSucc (fun i : Fin E.order => u (n + i)) = fun i : Fin E.order => u (n + 1 + i) := by
+  funext i
+  simp only [LinearRecurrence.tupleSucc, LinearMap.coe_mk, AddHom.coe_mk]
+  split_ifs with h
+  · congr 1
+    omega
+  · have hi : (i : ℕ) + 1 = E.order := by omega
+    rw [← hu n]
+    congr 1
+    omega
+
+lemma LinearRecurrence.tendsto_zero_of_roots (E : LinearRecurrence ℂ)
+    (hE : ∀ p : ℂ, E.charPoly.IsRoot p → ‖p‖ < 1) (u : ℕ → ℂ) (hu : E.IsSolution u) :
+    Tendsto u atTop (𝓝 0) := by
+  rcases Nat.eq_zero_or_pos E.order with hd | hd
+  · have hz : u = 0 := by
+      funext n
+      have : IsEmpty (Fin E.order) := by rw [hd]; infer_instance
+      have h := hu n
+      simp only [Finset.univ_eq_empty, Finset.sum_empty] at h
+      rw [hd, Nat.add_zero] at h
+      simpa using h
+    rw [hz]
+    exact tendsto_const_nhds
+  have : Nonempty (Fin E.order) := ⟨⟨0, hd⟩⟩
+  let T : (Fin E.order → ℂ) →L[ℂ] (Fin E.order → ℂ) :=
+    LinearMap.toContinuousLinearMap E.tupleSucc
+  have hT : ∀ x, T x = E.tupleSucc x := fun x => rfl
+  have hspec : ∀ μ ∈ spectrum ℂ T, ‖μ‖₊ < 1 := by
+    intro μ hμ
+    rw [ContinuousLinearMap.spectrum_eq] at hμ
+    have hev : Module.End.HasEigenvalue (E.tupleSucc : Module.End ℂ (Fin E.order → ℂ)) μ :=
+      Module.End.hasEigenvalue_iff_mem_spectrum.mpr hμ
+    obtain ⟨v, hv⟩ := hev.exists_hasEigenvector
+    have hv0 : v ≠ 0 := hv.2
+    have hTv : E.tupleSucc v = μ • v := hv.apply_eq_smul
+    set w := E.mkSol v with hwdef
+    have hw : E.IsSolution w := E.is_sol_mkSol v
+    have hstate : ∀ n, (fun i : Fin E.order => w (n + i)) = μ ^ n • v := by
+      intro n
+      induction n with
+      | zero =>
+        funext i
+        simp [w, E.mkSol_eq_init]
+      | succ n ih =>
+        rw [← E.tupleSucc_shift hw n, ih, map_smul, hTv, smul_smul, pow_succ]
+    have hwn : ∀ n, w n = μ ^ n * v ⟨0, hd⟩ := by
+      intro n
+      have := congrFun (hstate n) ⟨0, hd⟩
+      simpa using this
+    have hv00 : v ⟨0, hd⟩ ≠ 0 := by
+      intro h0
+      apply hv0
+      funext i
+      rw [← E.mkSol_eq_init v i]
+      show w i = 0
+      rw [hwn, h0, mul_zero]
+    have hgeom : E.IsSolution fun n => μ ^ n := by
+      have hm := E.solSpace.smul_mem (v ⟨0, hd⟩)⁻¹ hw
+      have heq : (v ⟨0, hd⟩)⁻¹ • w = fun n => μ ^ n := by
+        funext n
+        simp only [Pi.smul_apply, smul_eq_mul, hwn]
+        field_simp
+      rw [heq] at hm
+      exact hm
+    have := hE μ ((E.geom_sol_iff_root_charPoly μ).mp hgeom)
+    rwa [← NNReal.coe_lt_coe, coe_nnnorm, NNReal.coe_one]
+  have hrad : spectralRadius ℂ T < 1 := by
+    have := spectrum.spectralRadius_lt_of_forall_lt T hspec
+    simpa using this
+  have hg : gelfandRadius T < 1 := by
+    rw [spectrum.spectralRadius_eq_gelfandRadius, ENNReal.ofReal_lt_one] at hrad
+    exact hrad
+  have hg0 := gelfandRadius_nonneg T
+  obtain ⟨C, hC, hCb⟩ :=
+    norm_pow_le_mul_pow_of_gelfandRadius_lt T (r := (gelfandRadius T + 1) / 2) (by linarith)
+  set s0 : Fin E.order → ℂ := fun i => u (0 + i)
+  have hpow : ∀ n, (T ^ n) s0 = fun i : Fin E.order => u (n + i) := by
+    intro n
+    induction n with
+    | zero => rfl
+    | succ n ih =>
+      rw [pow_succ']
+      show T ((T ^ n) s0) = _
+      rw [ih, hT]
+      exact E.tupleSucc_shift hu n
+  have hbound : ∀ n, ‖u n‖ ≤ C * ((gelfandRadius T + 1) / 2) ^ n * ‖s0‖ := by
+    intro n
+    have h1 : u n = ((T ^ n) s0) ⟨0, hd⟩ := by rw [hpow]; simp
+    rw [h1]
+    calc ‖((T ^ n) s0) ⟨0, hd⟩‖ ≤ ‖(T ^ n) s0‖ := norm_le_pi_norm _ _
+      _ ≤ ‖T ^ n‖ * ‖s0‖ := (T ^ n).le_opNorm s0
+      _ ≤ C * ((gelfandRadius T + 1) / 2) ^ n * ‖s0‖ :=
+        mul_le_mul_of_nonneg_right (hCb n) (norm_nonneg _)
+  refine squeeze_zero_norm hbound ?_
+  have h0 : Tendsto (fun n : ℕ => ((gelfandRadius T + 1) / 2) ^ n) atTop (𝓝 0) :=
+    tendsto_pow_atTop_nhds_zero_of_lt_one (by linarith) (by linarith)
+  simpa using (h0.const_mul C).mul_const ‖s0‖
+
+#print axioms LinearRecurrence.tupleSucc_shift
+#print axioms LinearRecurrence.tendsto_zero_of_roots
+
+/-- The card's stability theorem: a linear, time-invariant difference equation
+`u (n + d) = ∑ i, c i * u (n + i)` settles (every one of its natural motions, every
+solution, dies away to 0) exactly when every pole, that is every root `p` of its
+characteristic polynomial `z ^ d - ∑ i, c i * z ^ i`, lies strictly inside the unit
+circle, `‖p‖ < 1`. -/
+theorem settles_iff_poles_inside_unit_circle (E : LinearRecurrence ℂ) :
+    (∀ u : ℕ → ℂ, E.IsSolution u → Tendsto u atTop (𝓝 0)) ↔
+      ∀ p : ℂ, E.charPoly.IsRoot p → ‖p‖ < 1 := by
+  constructor
+  · intro h p hp
+    have := h _ ((E.geom_sol_iff_root_charPoly p).mpr hp)
+    exact tendsto_pow_atTop_nhds_zero_iff_norm_lt_one.mp this
+  · exact E.tendsto_zero_of_roots
+
+/-- Jury's test, second-order case: both roots of `z ^ 2 + c₁ z + c₀` with real
+coefficients lie inside the unit circle exactly when `|c₀| < 1`, `1 + c₁ + c₀ > 0`
+and `1 - c₁ + c₀ > 0`. -/
+theorem jury_test_quadratic (c₁ c₀ : ℝ) :
+    (∀ z : ℂ, z ^ 2 + (c₁ : ℂ) * z + (c₀ : ℂ) = 0 → ‖z‖ < 1) ↔
+      |c₀| < 1 ∧ 1 + c₁ + c₀ > 0 ∧ 1 - c₁ + c₀ > 0 := by
+  constructor
+  · intro h
+    rcases le_or_gt 0 (c₁ ^ 2 - 4 * c₀) with hD | hD
+    · set s := Real.sqrt (c₁ ^ 2 - 4 * c₀) with hsdef
+      have hs : s ^ 2 = c₁ ^ 2 - 4 * c₀ := Real.sq_sqrt hD
+      have hs0 : 0 ≤ s := Real.sqrt_nonneg _
+      have hroot : ∀ r : ℝ, r ^ 2 + c₁ * r + c₀ = 0 → |r| < 1 := by
+        intro r hr
+        have := h (r : ℂ) (by exact_mod_cast hr)
+        simpa [Complex.norm_real] using this
+      have h1 := hroot ((-c₁ + s) / 2) (by linear_combination (1 / 4 : ℝ) * hs)
+      have h2 := hroot ((-c₁ - s) / 2) (by linear_combination (1 / 4 : ℝ) * hs)
+      rw [abs_lt] at h1 h2
+      obtain ⟨a1, b1⟩ := h1
+      obtain ⟨a2, b2⟩ := h2
+      have hc0 : c₀ = ((-c₁ + s) / 2) * ((-c₁ - s) / 2) := by linear_combination (1 / 4 : ℝ) * hs
+      refine ⟨abs_lt.mpr ⟨?_, ?_⟩, ?_, ?_⟩
+      · rw [hc0]
+        nlinarith [mul_pos (by linarith : (0:ℝ) < 1 + (-c₁ + s) / 2) (by linarith : (0:ℝ) < 1 + (-c₁ - s) / 2),
+          mul_pos (by linarith : (0:ℝ) < 1 - (-c₁ + s) / 2) (by linarith : (0:ℝ) < 1 - (-c₁ - s) / 2)]
+      · rw [hc0]
+        nlinarith [mul_pos (by linarith : (0:ℝ) < 1 + (-c₁ + s) / 2) (by linarith : (0:ℝ) < 1 - (-c₁ - s) / 2),
+          mul_pos (by linarith : (0:ℝ) < 1 - (-c₁ + s) / 2) (by linarith : (0:ℝ) < 1 + (-c₁ - s) / 2)]
+      · rw [hc0]
+        nlinarith [mul_pos (by linarith : (0:ℝ) < 1 - (-c₁ + s) / 2) (by linarith : (0:ℝ) < 1 - (-c₁ - s) / 2)]
+      · rw [hc0]
+        nlinarith [mul_pos (by linarith : (0:ℝ) < 1 + (-c₁ + s) / 2) (by linarith : (0:ℝ) < 1 + (-c₁ - s) / 2)]
+    · set s := Real.sqrt (4 * c₀ - c₁ ^ 2) with hsdef
+      have hs : s ^ 2 = 4 * c₀ - c₁ ^ 2 := Real.sq_sqrt (by linarith)
+      have hz := h ⟨-c₁ / 2, s / 2⟩ (by
+        apply Complex.ext <;> simp [pow_two] <;>
+          first
+          | linear_combination (1 / 4 : ℝ) * hs
+          | linear_combination (-1 / 4 : ℝ) * hs
+          | ring)
+      have hn : Complex.normSq ⟨-c₁ / 2, s / 2⟩ < 1 := by
+        rw [Complex.normSq_eq_norm_sq]
+        nlinarith [norm_nonneg (⟨-c₁ / 2, s / 2⟩ : ℂ)]
+      rw [Complex.normSq_mk] at hn
+      have hc0 : c₀ < 1 := by nlinarith
+      have hc0' : 0 < c₀ := by nlinarith [sq_nonneg c₁]
+      refine ⟨abs_lt.mpr ⟨by linarith, hc0⟩, ?_, ?_⟩
+      · nlinarith [sq_nonneg (1 - c₀), sq_nonneg (c₁ + 1 + c₀)]
+      · nlinarith [sq_nonneg (1 - c₀), sq_nonneg (c₁ - 1 - c₀)]
+  · rintro ⟨h0, h1, h2⟩ z hz
+    rw [abs_lt] at h0
+    obtain ⟨h0a, h0b⟩ := h0
+    by_contra hn
+    have hn' : 1 ≤ ‖z‖ := not_lt.mp hn
+    have hre := congrArg Complex.re hz
+    have him := congrArg Complex.im hz
+    simp [pow_two] at hre him
+    have hnorm : 1 ≤ z.re * z.re + z.im * z.im := by
+      have := Complex.normSq_eq_norm_sq z
+      rw [Complex.normSq_apply] at this
+      nlinarith
+    by_cases hy : z.im = 0
+    · rw [hy] at hre hnorm
+      set x := z.re
+      rcases le_or_gt 1 x with hx | hx
+      · nlinarith
+      · have hx' : x ≤ -1 := by nlinarith
+        nlinarith
+    · have hc : c₁ = -2 * z.re := by
+        have : z.im * (2 * z.re + c₁) = 0 := by linear_combination him
+        rcases mul_eq_zero.mp this with h | h
+        · exact absurd h hy
+        · linarith
+      rw [hc] at hre
+      nlinarith
+
+/-- The transform of the geometric sequence `p ^ n`: the sum `∑ p ^ n z ^ (-n)`
+converges to `z / (z - p)` whenever `|z| > |p|` (outside the circle of radius `|p|`). -/
+theorem z_transform_geometric (p z : ℂ) (h : ‖p‖ < ‖z‖) :
+    HasSum (fun n : ℕ => p ^ n * z ^ (-(n : ℤ))) (z / (z - p)) := by
+  have hz : z ≠ 0 := by
+    intro h0
+    rw [h0, norm_zero] at h
+    exact absurd h (not_lt.mpr (norm_nonneg p))
+  have hzp : z - p ≠ 0 := by
+    intro h0
+    rw [sub_eq_zero] at h0
+    rw [h0] at h
+    exact lt_irrefl _ h
+  have hq : ‖p / z‖ < 1 := by
+    rw [norm_div, div_lt_one (norm_pos_iff.mpr hz)]
+    exact h
+  have hs := hasSum_geometric_of_norm_lt_one hq
+  have hf : (fun n : ℕ => p ^ n * z ^ (-(n : ℤ))) = fun n : ℕ => (p / z) ^ n := by
+    funext n
+    rw [zpow_neg, zpow_natCast, div_pow, div_eq_mul_inv]
+  have hv : z / (z - p) = (1 - p / z)⁻¹ := by
+    field_simp
+  rw [hf, hv]
+  exact hs
+
+/-! The card's worked numbers, by hand (T = 1/10 s, C = 5/2 J/°C, R = 20 °C/W,
+K = 25/2 W/°C, r = 5 °C). -/
+
+-- tip memory a = 1 - T / (R C) = 0.998
+example : (1 : ℝ) - (1 / 10) / (20 * (5 / 2)) = 499 / 500 := by norm_num
+-- tip warming b = T / C = 0.04
+example : ((1 : ℝ) / 10) / (5 / 2) = 1 / 25 := by norm_num
+-- loop constant b K = 0.5
+example : (1 / 25 : ℝ) * (25 / 2) = 1 / 2 := by norm_num
+-- first tick y[1] = b K r = 2.5
+example : (1 / 25 : ℝ) * (25 / 2) * 5 = 5 / 2 := by norm_num
+-- second tick y[2] = 0.998 × 2.5 + 0.5 × (5 - 0) = 4.995
+example : (499 / 500 : ℝ) * (5 / 2) + 1 / 2 * (5 - 0) = 999 / 200 := by norm_num
+-- third tick y[3] = 0.998 × 4.995 + 0.5 × (5 - 2.5) = 6.23501, the peak
+example : (499 / 500 : ℝ) * (999 / 200) + 1 / 2 * (5 - 5 / 2) = 623501 / 100000 := by norm_num
+-- fourth tick y[4] = 0.998 × 6.23501 + 0.5 × (5 - 4.995) ≈ 6.22504, below the peak
+example : (499 / 500 : ℝ) * (623501 / 100000) + 1 / 2 * (5 - 999 / 200) = 311251999 / 50000000 ∧
+    (311251999 / 50000000 : ℝ) < 623501 / 100000 := by norm_num
+-- final value H(1) r = 0.5 / (1 - 0.998 + 0.5) × 5 = 1250/251 ≈ 4.98008
+example : (1 / 2 : ℝ) / (1 - 499 / 500 + 1 / 2) * 5 = 1250 / 251 := by norm_num
+-- stability limit: b K = 1, so K = 1 / 0.04 = 25 W/°C; gain margin 25 / 12.5 = 2
+example : (1 : ℝ) / (1 / 25) = 25 ∧ (25 : ℝ) / (25 / 2) = 2 := by norm_num
+-- Jury's three inequalities hold at the design gain: z ^ 2 - 0.998 z + 0.5
+example : |(1 / 2 : ℝ)| < 1 ∧ 1 + (-(499 / 500 : ℝ)) + 1 / 2 > 0 ∧
+    1 - (-(499 / 500 : ℝ)) + 1 / 2 > 0 := by norm_num [abs_of_pos]
+-- transform of the step response at z = 2: 2.5 × 4 / ((2 - 1)(4 - 1.996 + 0.5)) = 1250/313
+example : (5 / 2 : ℝ) * 4 / ((2 - 1) * (4 - 499 / 500 * 2 + 1 / 2)) = 1250 / 313 := by norm_num
+
+#print axioms settles_iff_poles_inside_unit_circle
+#print axioms jury_test_quadratic
+#print axioms z_transform_geometric
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LinearRecurrence.tupleSucc_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LinearRecurrence.tendsto_zero_of_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'settles_iff_poles_inside_unit_circle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'jury_test_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'z_transform_geometric' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -660,7 +963,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Digital temperature control.** Soldering stations, 3D-printer hot ends and laboratory baths run loops like this one. The z-plane says how much gain the firmware can carry and what a sensor delay costs.
-- **Digital filters.** A filter is a difference equation run on samples: audio equalisers, the smoothing on a thermocouple reading, the anti-hum notch on a medical monitor. Its poles and zeros are placed in the z-plane by design, in Digital filters.
+- **Digital filters.** A filter is a difference equation run on samples: audio equalisers, the smoothing on a thermocouple reading, the anti-hum notch on a medical monitor. Its poles and zeros are placed in the z-plane by design, in [Digital filters](../05-Signals/04-digital-filters-fir-and-iir.md).
 - **Turning an analogue design into code.** A controller drawn in the s-plane is moved to the z-plane, and the choice of map decides what survives, in [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md).
 - **Steady errors of digital loops.** The droop under a 20 W load is H at z = 1; the cure, an integrator with its pole at z = 1, is the subject of [Steady-state error](../03-Feedback%20Control/03-steady-state-error-and-system-type.md).
 
@@ -683,7 +986,7 @@ The two outputs match line for line.
 - [Sampling](../05-Signals/01-sampling-and-the-nyquist-theorem.md): why the point z = −1, half the sampling rate, is the fastest wobble a sampled system can see, and what happens to faster ones.
 - [Digital filters](../05-Signals/04-digital-filters-fir-and-iir.md): difference equations designed on purpose, with poles and zeros placed to pass some frequencies and stop others.
 
-This card took the update rule a = 0.998, b = 0.04 as given; where those numbers come from when a continuous tip is sampled every 0.1 s, and how much the choice of sampling map changes the poles, is what zero-order-hold-and-tustin-discretisation answers.
+This card took the update rule a = 0.998, b = 0.04 as given. Where do those numbers come from when a continuous tip is sampled every 0.1 s, and how much does the choice of sampling map change the poles? [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md) answers that.
 
 ---
 

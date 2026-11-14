@@ -6,9 +6,15 @@
 
 ## General Overview
 
-A 1000 kg car cruises at 25 m/s on a level road. It is lighter than the 1,500 kg car of [Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md), and only the air holds it back. The engine pushes with 312.5 N, exactly what the air drag takes away, so the speed holds. A cruise controller will soon adjust that push. Before anyone designs it, the engineer wants one thing: a compact description of how the car's speed answers any change in force. Push 100 N harder, how fast does the speed rise, and to what? Give it a sharp shove, how long does the gain last?
+A 1000 kg car cruises at 25 m/s on a level road. It is lighter than the 1,500 kg car of [Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md), and only the air holds it back. The engine pushes with 312.5 N, exactly what the air drag takes away, so the speed holds.
 
-The car's law of motion answers each question, but only by solving a differential equation each time. A transfer function solves it once. Feed the car a force that grows or decays exponentially, and the speed comes back as the same exponential, scaled. That scale factor, one number for each rate, is the whole description: a ratio of two polynomials, here one over (mass times the rate plus drag). Every other response follows by algebra, and the response to an ideal shove, the **impulse response**, is the same object seen in time.
+A cruise controller will soon adjust that push. Before anyone designs it, the engineer wants one thing: a compact description of how the car's speed answers any change in force. Push 100 N harder, how fast does the speed rise, and to what? Give it a sharp shove, how long does the gain last?
+
+The car's law of motion answers each question, but only by solving a differential equation each time. A transfer function solves it once.
+
+Feed the car a force that grows or decays exponentially, and the speed comes back as the same exponential, scaled. That scale factor, one number for each rate, is the whole description: a ratio of two polynomials, here one over (mass times the rate plus drag).
+
+Every other response follows by algebra, and the response to an ideal shove, the **impulse response**, is the same object seen in time.
 
 The answers, worked below: a 100 N extra push buys 4 m/s, reached slowly, with a time constant of 40 s; a shove of 500 N·s adds 0.5 m/s at once, and that gain decays on the same 40 s clock.
 
@@ -70,7 +76,11 @@ The time constant $\tau$ is the time for the impulse response to fall by the fac
 
 ### Step 0: an exponential goes through a linear, time-invariant system unchanged in shape
 
-Delay an exponential e^(st), running for all time, by any amount and it is the same curve times a constant. A system that is linear (scaling the input scales the output) and time-invariant (delaying the input delays the output) must therefore answer e^(st) with the same exponential times a constant ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)). Here is why. Call the output y. The input delayed by σ is e^(s(t − σ)) = e^(−sσ) e^(st), the same input times the constant e^(−sσ). Time-invariance says its output is y(t − σ); linearity says it is e^(−sσ) y(t). So y(t − σ) = e^(−sσ) y(t) for every t and σ. Put t = σ: y(σ) = y(0) e^(sσ), the input's own exponential times the constant y(0). That constant depends on $s$ and on the system only. It is $G(s)$.
+Delay an exponential e^(st), running for all time, by any amount and it is the same curve times a constant. A system that is linear (scaling the input scales the output) and time-invariant (delaying the input delays the output) must therefore answer e^(st) with the same exponential times a constant ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)).
+
+Here is why. Call the output y. The input delayed by σ is e^(s(t − σ)) = e^(−sσ) e^(st), the same input times the constant e^(−sσ). Time-invariance says its output is y(t − σ); linearity says it is e^(−sσ) y(t).
+
+So y(t − σ) = e^(−sσ) y(t) for every t and σ. Put t = σ: y(σ) = y(0) e^(sσ), the input's own exponential times the constant y(0). That constant depends on $s$ and on the system only. It is $G(s)$.
 
 ### Step 1: find the constant for the car
 
@@ -96,7 +106,7 @@ The physics agrees. A shove of $J$ N·s changes the car's momentum by $J$, so th
 
 ### Step 4: invert the ratio by its residue
 
-The inverse transform of $G$ is the sum of the residues of $G(s) e^{st}$ at its poles ([Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)). The car's $G$ has one pole, at $s = -b/m$. Near it, $G(s) e^{st} = (1/m) e^{st}/(s + b/m)$, so the residue is $(1/m) e^{-bt/m}$:
+The inverse transform of $G$ is the sum of the residues of $G(s) e^{st}$ at its poles ([Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)). At a pole $p$ where the denominator vanishes once, the residue is the number that multiplies $1/(s - p)$ when the function is written near $p$. The car's $G$ has one pole, at $s = -b/m$. Near it, $G(s) e^{st} = (1/m) e^{st}/(s + b/m)$, so the residue is $(1/m) e^{-bt/m}$:
 
 h(t) = (1/1000) e^(−t/40) per N·s, so h(0+) = 0.001 (m/s) per N·s.
 
@@ -104,7 +114,7 @@ The code runs this backwards: it integrates $h(t) e^{-st}$ numerically from 0 to
 
 ### Step 5: any input, by multiplication
 
-Since $V = G U$, and a product of transforms is the transform of a convolution, the speed is $h$ convolved with the force ([Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)). For a 100 N step, $U(s) = 100/s$ and
+Since $V = G U$, and a product of transforms is the transform of a convolution, the speed is $h$ convolved with the force: every earlier piece of force, weighted by $h$ at its age, added up ([Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)). For a 100 N step, $U(s) = 100/s$ and
 
 V(s) = 100 / (s (1000 s + 25)) = 4/s − 4/(s + 0.025),
 
@@ -133,7 +143,7 @@ The jump is gone: force has to build through the engine first, so a shove on the
 
 </details>
 
-Another road to the same $G$ runs through the state-space form, $G(s) = C (sI - A)^{-1} B + D$, worked in State space. There A, B, C and D are the matrices that card introduces to describe a system, and I is the identity matrix, the matrix version of 1. For the car each is a single number, unrelated to this card's drag b and c: A = −b/m, B = 1/m, C = 1, D = 0 gives the same ratio.
+Another road to the same $G$ runs through the state-space form, $G(s) = C (sI - A)^{-1} B + D$, worked in [State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md). There A, B, C and D are the matrices that card introduces to describe a system, and I is the identity matrix, the matrix version of 1. For the car each is a single number, unrelated to this card's drag b and c: A = −b/m, B = 1/m, C = 1, D = 0 gives the same ratio.
 
 ---
 
@@ -532,6 +542,158 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the car's three formulas for every positive mass and drag, and checks the worked numbers.
+
+- Take $m > 0$ and a rate $s$ whose real part lies above the pole, $-b/m$. Then the Laplace transform of $h(t) = (1/m) e^{-bt/m}$ is $G(s) = 1/(m s + b)$.
+- Suppose $m s + b \ne 0$. Then $v = q e^{st}$ solves $m v' + b v = e^{st}$ exactly when $q = 1/(m s + b)$.
+- Take $m > 0$, $b > 0$ and a constant extra force $r$. Then the speed $v(t) = (r/b)(1 - e^{-bt/m})$ starts at 0 and solves $m v' + b v = r$. It settles at the steady gain times the force, $r/b$.
+- The car's numbers hold: cruise push 312.5 N, $b$ = 25 N·s/m, $\tau$ = 40 s, and the pole at −1/40 1/s.
+- $G(0)$ is 1/25 and $G(0.05)$ is 1/75 (m/s)/N. A 500 N·s shove adds 1/2 m/s, and a 100 N step buys 4 m/s.
+- The partial fractions of Step 5 hold away from the poles. Dropping the mass gives a steady gain of 40 (m/s)/N.
+- With the 0.5 s engine lag, G_total(0.05) is 8/615 (m/s)/N. The coefficient in $h_2(t)$ is 2/1975, so the speed starts rising at 1/500 m/s^2 per N·s.
+
+Lean runs no simulation, so the RK4 runs, the Simpson transforms and the drag-squared car are left to the Python and Rust checks.
+
+```lean
+-- Transfer functions: for a car of mass m with linear drag b, the Laplace transform of the impulse response (1/m) e^(-b t/m) is the transfer function 1/(m s + b), an exponential force e^(s t) is answered by the same exponential times 1/(m s + b), and a constant extra force r from rest raises the speed as (r/b)(1 - e^(-b t/m)) toward r/b.
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+open Filter Topology MeasureTheory Set
+
+/-- The transfer function is the Laplace transform of the impulse response. A car of mass `m > 0`
+with constant drag `b` per unit speed obeys `m v' + b v = u`. Its impulse response is
+`h(t) = (1/m) e^(-b t/m)`, and for every rate `s` (complex in general) to the right of the pole,
+`Re s > -b/m`, the transform `∫₀^∞ h(t) e^(-s t) dt` equals `G(s) = 1/(m s + b)`. -/
+theorem transfer_function_eq_laplace_transform_of_impulse_response (m b : ℝ) (hm : 0 < m)
+    (s : ℂ) (hs : -(b / m) < s.re) :
+    ∫ t in Ioi (0 : ℝ), ((Real.exp (-(b * t / m)) / m : ℝ) : ℂ) * Complex.exp (-(s * t))
+      = 1 / ((m : ℂ) * s + b) := by
+  set a : ℂ := -(s + ((b / m : ℝ) : ℂ)) with ha_def
+  have ha : a.re < 0 := by
+    rw [ha_def, Complex.neg_re, Complex.add_re, Complex.ofReal_re]; linarith
+  have hm' : (m : ℂ) ≠ 0 := by exact_mod_cast hm.ne'
+  have key : ∀ t : ℝ, ((Real.exp (-(b * t / m)) / m : ℝ) : ℂ) * Complex.exp (-(s * t))
+      = (1 / (m : ℂ)) * Complex.exp (a * t) := by
+    intro t
+    rw [show a * t = -((b : ℂ) * t / m) + -(s * t) by rw [ha_def]; push_cast; field_simp; ring,
+      Complex.exp_add]
+    push_cast
+    ring
+  simp_rw [key]
+  rw [integral_const_mul, integral_exp_mul_complex_Ioi ha 0]
+  have hne : (m : ℂ) * s + b ≠ 0 := by
+    intro h
+    have := congrArg Complex.re h
+    simp at this
+    have h2 : -b < s.re * m := by
+      rw [← neg_div] at hs
+      exact (div_lt_iff₀ hm).mp hs
+    linarith
+  have ha0 : a ≠ 0 := by intro h; rw [h] at ha; simp at ha
+  rw [ha_def] at ha0 ⊢
+  push_cast
+  simp only [mul_zero, Complex.exp_zero]
+  field_simp
+
+/-- An exponential goes through the car scaled by one number. For a rate `s` with `m s + b ≠ 0`,
+the speed `v(t) = q e^(s t)` solves `m v' + b v = e^(s t)` for all time exactly when
+`q = 1/(m s + b)`. -/
+theorem exponential_force_gives_scaled_exponential_speed (m b : ℝ) (s q : ℂ)
+    (hs : (m : ℂ) * s + b ≠ 0) :
+    (∀ t : ℝ, (m : ℂ) * deriv (fun τ : ℝ => q * Complex.exp (s * τ)) t
+        + b * (q * Complex.exp (s * t)) = Complex.exp (s * t))
+      ↔ q = 1 / ((m : ℂ) * s + b) := by
+  have hd : ∀ t : ℝ, deriv (fun τ : ℝ => q * Complex.exp (s * τ)) t = q * (Complex.exp (s * t) * s) := by
+    intro t
+    have h1 : HasDerivAt (fun τ : ℝ => s * (τ : ℂ)) (s * 1) t := by
+      simpa using ((hasDerivAt_id (t : ℝ)).ofReal_comp).const_mul s
+    have h2 := (h1.cexp).const_mul q
+    rw [h2.deriv]; ring
+  simp_rw [hd]
+  rw [eq_div_iff hs]
+  constructor
+  · intro h
+    have := h 0
+    simp at this
+    linear_combination this
+  · intro h t
+    linear_combination Complex.exp (s * t) * h
+
+/-- The step response. A car of mass `m > 0` and drag `b > 0`, at rest in the deviation sense,
+pushed by a constant extra force `r`, has speed `v(t) = (r/b)(1 - e^(-b t/m))`: it starts at `0`,
+solves `m v' + b v = r`, and settles at the steady gain times the force, `G(0) r = r/b`. -/
+theorem step_response_rises_to_steady_gain (m b r : ℝ) (hm : 0 < m) (hb : 0 < b) :
+    let v : ℝ → ℝ := fun t => r / b * (1 - Real.exp (-(b * t / m)))
+    v 0 = 0 ∧ (∀ t, HasDerivAt v (r / m * Real.exp (-(b * t / m))) t ∧
+      m * (r / m * Real.exp (-(b * t / m))) + b * v t = r) ∧
+      Tendsto v atTop (𝓝 (r / b)) := by
+  intro v
+  refine ⟨by simp [v], fun t => ⟨?_, ?_⟩, ?_⟩
+  · have h1 : HasDerivAt (fun t : ℝ => -(b * t / m)) (-(b * 1 / m)) t :=
+      (((hasDerivAt_id t).const_mul b).div_const m).neg
+    have h2 := ((h1.exp).const_sub 1).const_mul (r / b)
+    convert h2 using 1
+    field_simp
+  · simp only [v]
+    field_simp
+    ring
+  · have hneg : Tendsto (fun t : ℝ => -(b * t / m)) atTop atBot := by
+      have : Tendsto (fun t : ℝ => (b / m) * t) atTop atTop :=
+        tendsto_id.const_mul_atTop (div_pos hb hm)
+      refine (tendsto_neg_atTop_atBot.comp this).congr fun t => ?_
+      simp; ring
+    have he := Real.tendsto_exp_atBot.comp hneg
+    have : Tendsto v atTop (𝓝 (r / b * (1 - 0))) :=
+      (tendsto_const_nhds.sub he).const_mul (r / b)
+    simpa using this
+
+-- The car: m = 1000 kg, c = 1/2 N s^2/m^2, cruise v0 = 25 m/s.
+-- Cruise push c v0^2 = 312.5 N.
+example : (1 / 2 : ℚ) * 25 * 25 = 625 / 2 := by norm_num
+-- Drag per extra m/s, b = 2 c v0 = 25 N s/m.
+example : 2 * (1 / 2 : ℚ) * 25 = 25 := by norm_num
+-- Time constant τ = m / b = 40 s, and the pole -b/m = -1/40 1/s.
+example : (1000 : ℚ) / 25 = 40 := by norm_num
+example : -((25 : ℚ) / 1000) = -(1 / 40) := by norm_num
+-- Steady gain G(0) = 1/25 (m/s)/N, and G(1/20) = 1/75 (m/s)/N.
+example : (1 : ℚ) / (1000 * 0 + 25) = 1 / 25 := by norm_num
+example : (1 : ℚ) / (1000 * (1 / 20) + 25) = 1 / 75 := by norm_num
+-- A 500 N s shove: h(0+) = 1/1000, so the speed jumps by 500 × 1/1000 = 1/2 m/s.
+example : (500 : ℚ) * (1 / 1000) = 1 / 2 := by norm_num
+-- A 100 N step, for good: 100 × G(0) = 4 m/s.
+example : (100 : ℚ) * (1 / 25) = 4 := by norm_num
+-- Partial fractions: 100 / (s (1000 s + 25)) = 4/s - 4/(s + 1/40).
+example (s : ℚ) (h0 : s ≠ 0) (h1 : 1000 * s + 25 ≠ 0) :
+    100 / (s * (1000 * s + 25)) = 4 / s - 4 / (s + 1 / 40) := by
+  have h2 : s + 1 / 40 ≠ 0 := by
+    intro h; apply h1; linear_combination 1000 * h
+  rw [div_sub_div _ _ h0 h2, div_eq_div_iff (mul_ne_zero h0 h1) (mul_ne_zero h0 h2)]
+  ring
+-- Engine lag 1/2 s in series: G_total(1/20) = 1 / ((1/2 × 1/20 + 1)(1000 × 1/20 + 25)) = 8/615.
+example : (1 : ℚ) / ((1 / 2 * (1 / 20) + 1) * (1000 * (1 / 20) + 25)) = 8 / 615 := by norm_num
+-- Its residue coefficient (1/500) / (2 - 1/40) = 2/1975, and h2'(0+) = 1/500 m/s^2 per N s.
+example : (1 / 500 : ℚ) / (2 - 1 / 40) = 2 / 1975 := by norm_num
+example : (2 / 1975 : ℚ) * (2 - 1 / 40) = 1 / 500 := by norm_num
+-- Mistake 3, mass dropped: G(0) = 1 / (0 + 1/40) = 40 (m/s)/N, not 1/25.
+example : (1 : ℚ) / (0 + 1 / 40) = 40 := by norm_num
+
+#print axioms transfer_function_eq_laplace_transform_of_impulse_response
+#print axioms exponential_force_gives_scaled_exponential_speed
+#print axioms step_response_rises_to_steady_gain
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'transfer_function_eq_laplace_transform_of_impulse_response' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exponential_force_gives_scaled_exponential_speed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'step_response_rises_to_steady_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -588,7 +750,7 @@ The car's ratio has one pole, at −0.025 1/s, and its speed settles; why the si
 
 ## Sources
 
-Verified 6 Oct 2026: every link below opens a page that names the cited work.
+Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Åström, Karl Johan, and Richard M. Murray. *Feedback Systems: An Introduction for Scientists and Engineers*, 2nd ed. Princeton University Press, 2021. [Authors' site, with the full text by the publisher's leave](https://fbswiki.org/wiki/index.php/Feedback_Systems:_An_Introduction_for_Scientists_and_Engineers). Uses cruise control as its running example; the transfer-function chapter derives G from exponential inputs and from the impulse response.
 - Oppenheim, Alan V., Alan S. Willsky, and S. Hamid Nawab. *Signals and Systems*, 2nd ed. Prentice Hall, 1997. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/Oppenheim-Signals-and-Systems-2nd-Edition/P200000003155/9780138147570). Exponentials as the signals an LTI system only scales; the system function as the transform of the impulse response.

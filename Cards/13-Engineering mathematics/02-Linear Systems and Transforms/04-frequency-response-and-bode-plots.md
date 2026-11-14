@@ -8,9 +8,11 @@
 
 A car holds a steady cruise on a level road. Its cruise controller works the throttle, measured in percent of full travel. Hold the throttle 1% further open and, once the car has settled, it runs 1 m/s faster. The settling takes time: the car's speed follows a held throttle change with a time constant of 10 s, and the engine itself takes about 0.5 s to deliver a new throttle setting as thrust.
 
-The controller never holds the throttle still. It nudges it up and down all the time. So the engineer's question is about wobbles: if the throttle swings up and down by 1% at a steady rate, how far does the speed swing, and how late? A slow swing, one cycle every 628 s, comes through almost whole: the speed swings by 0.9950 m/s. A swing once every 62.83 s comes through at 0.7062 m/s and arrives 8.35 s late. A swing every 6.28 s moves the speed by only 0.0890 m/s, 1.93 s late. Above about 0.1 radians per second the car stops following: it rolls off.
+The controller never holds the throttle still. It nudges it up and down all the time. So the engineer's question is about wobbles: if the throttle swings up and down by 1% at a steady rate, how far does the speed swing, and how late?
 
-Two numbers per rate, a size ratio and a delay, describe the whole response. The size ratio is the **gain**. The delay, measured as a fraction of a cycle, is the **phase**. A **Bode plot** draws both against the rate of the wobble, with the rate on a log scale and the gain in decibels, so that the curves become nearly straight lines that can be sketched by hand, a decade (a tenfold step in frequency) at a time.
+A slow swing, one cycle every 628 s, comes through almost whole: the speed swings by 0.9950 m/s. A swing once every 62.83 s comes through at 0.7062 m/s and arrives 8.35 s late. A swing every 6.28 s moves the speed by only 0.0890 m/s, 1.93 s late. Above about 0.1 radians per second the car stops following: it rolls off.
+
+Two numbers per rate, a size ratio and a delay, describe the whole response. The size ratio is the **gain**. The delay, measured as a fraction of a cycle, is the **phase**. A **Bode plot** draws both against the rate of the wobble, with the rate on a log scale and the gain in decibels. On those scales the curves become nearly straight lines that can be sketched by hand, a decade (a tenfold step in frequency) at a time.
 
 ### The picture: a throttle wobble and the speed it produces
 
@@ -36,9 +38,15 @@ Orange: the throttle, in percent. Green: the simulated speed change, in m/s. Aft
 
 ## The formula
 
-Three pieces of notation first, in words. Engineers write $j$ for the square root of −1; the rest of the library writes i. The **transfer function** $G(s)$ says what the system does to each exponential $e^{st}$: feed it in, and $G(s)\,e^{st}$ comes out ([Transfer functions](02-impulse-response-and-transfer-functions.md)). A **decibel** (dB) measures a gain on a log scale: the gain $g$ is $20\log_{10} g$ decibels, so a gain of 10 is +20 dB, a gain of 1 is 0 dB and a gain of 0.1 is −20 dB.
+Three pieces of notation first, in words.
 
-For the car, with throttle $u$ in percent and speed change $y$ in m/s, two first-order equations make the model. The engine delivers thrust $F$, counted in the throttle percent it settles to, with a 0.5 s time constant: $\tau_2 F' = -F + u$. The car's speed follows the thrust against its drag: $\tau_1 y' = -y + K F$. Started from rest, the Laplace transform turns each derivative into a factor $s$, so the thrust is $1/(\tau_2 s + 1)$ times the throttle and the speed is $K/(\tau_1 s + 1)$ times the thrust. Their product is the transfer function:
+- Engineers write $j$ for the square root of −1; the rest of the library writes i.
+- The **transfer function** $G(s)$ says what the system does to each exponential $e^{st}$: feed it in, and $G(s)\,e^{st}$ comes out ([Transfer functions](02-impulse-response-and-transfer-functions.md)).
+- A **decibel** (dB) measures a gain on a log scale: the gain $g$ is $20\log_{10} g$ decibels, so a gain of 10 is +20 dB, a gain of 1 is 0 dB and a gain of 0.1 is −20 dB.
+
+For the car, with throttle $u$ in percent and speed change $y$ in m/s, two first-order equations make the model. The engine delivers thrust $F$, counted in the throttle percent it settles to, with a 0.5 s time constant: $\tau_2 F' = -F + u$. The car's speed follows the thrust against its drag: $\tau_1 y' = -y + K F$.
+
+Started from rest, the Laplace transform (which trades a signal in time for a function of $s$) turns each derivative into a factor $s$, so the thrust is $1/(\tau_2 s + 1)$ times the throttle and the speed is $K/(\tau_1 s + 1)$ times the thrust. Their product is the transfer function:
 
 $$G(s) = \frac{K}{(\tau_1 s + 1)(\tau_2 s + 1)}$$
 
@@ -65,7 +73,7 @@ $$M(\omega) = 20\log_{10}K - 10\log_{10}\!\big(1 + \omega^2\tau_1^2\big) - 10\lo
 | $j$ | the square root of −1, as engineers write it | — | — |
 | $\omega$, $f$ | angular frequency of the wobble in rad/s; $f = \omega/2\pi$ in hertz | 0.1 rad/s is 0.0159 Hz, one cycle per 62.83 s | gain falls, lag grows |
 | $K$ | the steady gain: settled speed change per held throttle change | 1 (m/s) per % | every dB value rises; +6.02 dB for doubling |
-| $\tau_1$, $\tau_2$ | time constants: the car's 10 s, the engine's 0.5 s | 10 s and 0.5 s | corners move to lower frequency |
+| $\tau_1$, $\tau_2$ | time constants: the time scale on which the car and the engine each settle | 10 s and 0.5 s | corners move to lower frequency |
 | $\omega_c$ | a corner frequency, one over a time constant | 0.1 rad/s and 2 rad/s | the roll-off starts later |
 | $g$, $\lvert G(j\omega)\rvert$ | the gain: output swing per input swing | 0.7062 (m/s)/% at 0.1 rad/s | bigger speed swing |
 | $M$ | the gain in decibels, $20\log_{10}$ of it | −3.02 dB at 0.1 rad/s | — |
@@ -80,7 +88,7 @@ A phase in degrees turns into a time lag by dividing the phase in radians by $\o
 
 - **Linear.** The model describes small changes about a steady cruise. Outside that range it is wrong: a 50% throttle swing at 0.01 rad/s is predicted to swing the speed by 49.8 m/s, more than a car on a level road can gain or lose by throttle, since the engine runs out of power and the throttle hits its stops.
 - **Time-invariant.** The same car on the same road. A hill, a trailer or a headwind changes $K$ and $\tau_1$, and the plot with them.
-- **Stable.** Every pole must sit in the left half of the complex plane, or the start-up motion never dies away. An unstable car has a $G(j\omega)$ that can still be computed, size 0.7062 at an angle of −137.86° at 0.1 rad/s, but the simulated speed reaches 231.0 million m/s by 200 s: there is no settled sine to measure.
+- **Stable.** Every pole, a value of $s$ where $G(s)$ becomes infinite ([Poles and zeros](03-poles-zeros-and-stability.md)), must sit in the left half of the complex plane, or the start-up motion never dies away. An unstable car has a $G(j\omega)$ that can still be computed, size 0.7062 at an angle of −137.86° at 0.1 rad/s, but the simulated speed reaches 231.0 million m/s by 200 s: there is no settled sine to measure.
 - **Settled.** The formula describes the output after several times the longest time constant. In the chart above that is after about 50 s.
 - **Every lag in the model.** A pure delay leaves the gain alone and adds lag that the straight-line sketch cannot show; it must be added by hand.
 
@@ -129,11 +137,15 @@ Take one factor $1/(1 + j\omega\tau)$ with corner $\omega_c = 1/\tau$. Its size 
 
 The phase is $-\arctan(\omega\tau)$: 0° far below the corner, −45° at it, −90° far above. The straight-line phase sketch holds 0° up to a decade below the corner, falls 45° per decade for two decades, and holds −90° from a decade above. Its worst error is 5.71°, a decade either side of the corner, where the true phase is $\arctan 0.1$ away from the line; the sweep finds 5.711°.
 
-Two more pieces appear in most plots. A **zero**, a factor $1 + j\omega\tau$ on top, is a pole turned upside down: its dB and degrees are the pole's with the sign flipped, so it climbs at +20 dB per decade above its corner and its phase rises to +90°. At 1 rad/s the zero $1 + 10s$ gives +20.04 dB and +84.289°. An **integrator** $1/s$ is a system that adds up its input, as position adds up speed. Its size is $1/\omega$ and its angle −90° at every frequency: a straight line of −20 dB per decade through 0 dB at 1 rad/s, with no corner.
+Two more pieces appear in most plots. A **zero**, a factor $1 + j\omega\tau$ on top, is a pole turned upside down: its dB and degrees are the pole's with the sign flipped, so it climbs at +20 dB per decade above its corner and its phase rises to +90°. At 1 rad/s the zero $1 + 10s$ gives +20.04 dB and +84.289°.
+
+An **integrator** $1/s$ is a system that adds up its input, as position adds up speed. Its size is $1/\omega$ and its angle −90° at every frequency: a straight line of −20 dB per decade through 0 dB at 1 rad/s, with no corner.
 
 ### Step 5: add the pieces, decade by decade
 
-For the car the corners sit at 0.1 rad/s and 2 rad/s. Below 0.1 rad/s both factors are flat: 0 dB, because $K$ = 1 is 0 dB. From 0.1 to 2 rad/s the car's factor falls at −20 dB per decade, reaching −26.02 dB at 2 rad/s. Above 2 rad/s the engine's factor adds its own −20, for −40 dB per decade: −66.02 dB by 20 rad/s. The code measures the true slope far out, between 100 and 1,000 rad/s, at −39.998 dB per decade. The phase sketch adds the two factors' ramps and ends at −180°, which the exact phase approaches but never reaches.
+For the car the corners sit at 0.1 rad/s and 2 rad/s. Below 0.1 rad/s both factors are flat: 0 dB, because $K$ = 1 is 0 dB. From 0.1 to 2 rad/s the car's factor falls at −20 dB per decade, reaching −26.02 dB at 2 rad/s. Above 2 rad/s the engine's factor adds its own −20, for −40 dB per decade: −66.02 dB by 20 rad/s.
+
+The code measures the true slope far out, between 100 and 1,000 rad/s, at −39.998 dB per decade. The phase sketch adds the two factors' ramps and ends at −180°, which the exact phase approaches but never reaches.
 
 A second road to the same complex number draws it as one curve in the plane, size and angle together, as $\omega$ runs from 0 upwards. That is the Nyquist plot, which counts encirclements to judge a feedback loop: [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
 
@@ -200,7 +212,13 @@ Orange: the exact phase. Green: the straight-line sketch, the two factors' 45°-
 
 ## Code, from first principles, and it actually runs
 
-The code builds the car's gain and phase three independent ways at six frequencies from 0.01 to 10 rad/s. Road 1 is the closed form, one factor at a time. Road 2 expands the denominator into a polynomial and evaluates it at $s = j\omega$ with complex arithmetic. Road 3 ignores the transfer function: it simulates the two equations behind it with a fourth-order Runge-Kutta step (RK4), wobbles the throttle, waits at least 150 s for the start-up motion to die, and measures the settled speed swing over one whole cycle by multiplying it by a sine and by a cosine and averaging. The straight-line sketch is printed beside them and checked against the exact curve at its worst points and far from the corners. Then the code reproduces every number in What breaks, including a simulated delay and a simulated unstable car, and prints every charted point.
+The code builds the car's gain and phase three independent ways at six frequencies from 0.01 to 10 rad/s.
+
+- Road 1 is the closed form, one factor at a time.
+- Road 2 expands the denominator into a polynomial and evaluates it at $s = j\omega$ with complex arithmetic.
+- Road 3 ignores the transfer function. It simulates the two equations behind it with a fourth-order Runge-Kutta step (RK4), a standard way to step differential equations forward in small time steps. It wobbles the throttle and waits at least 150 s for the start-up motion to die. Then it measures the settled speed swing over one whole cycle by multiplying it by a sine and by a cosine and averaging.
+
+The straight-line sketch is printed beside them and checked against the exact curve at its worst points and far from the corners. Then the code reproduces every number in What breaks, including a simulated delay and a simulated unstable car, and prints every charted point.
 
 ### Python
 
@@ -586,6 +604,297 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line at the printed precision.
+
+### Lean
+
+Lean proves the sine-in, sine-out theorem, the car's Bode formulas and the sketch's worst error in general, not just for the car's numbers.
+
+- Suppose a system starts from rest, and its impulse response $h$ has $\int_0^\infty \lvert h(r)\rvert\,dr$ finite. Then its output to $A\sin(\omega t)$ settles to $A\,\lvert G(j\omega)\rvert\sin(\omega t + \varphi(\omega))$.
+- Take the car with any $K > 0$ and any $\tau_1$, $\tau_2$ and $\omega$. Then $M(\omega)$ and $\varphi(\omega)$ are exactly the one-factor-at-a-time formulas above.
+- Take one factor $1/(1 + j\omega\tau)$ with $\tau > 0$. Then the magnitude sketch is never more than $10\log_{10}2$ dB off, and exactly that far at the corner.
+- The decibel examples hold: gains of 10, 1 and 0.1 are +20, 0 and −20 dB.
+- At a corner the factor has size $1/\sqrt 2$ and angle −45°.
+- The integrator $1/s$ has size 1 at 1 rad/s and 0.1 at 10 rad/s, with angle −90°.
+- The zero $1 + 10s$ at 1 rad/s has the reciprocal of the car factor's size.
+
+Decimal values, the phase sketch's 5.71° error, the delay and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Bode plots: a stable linear time-invariant system fed a sine settles to a sine of the same frequency, scaled by the size of its transfer function at jω and shifted by its angle; the car's Bode curves are the sum of its two factors' curves; and a single factor's straight-line magnitude sketch is never more than 10 log10 2 dB off, with that worst error exactly at the corner.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+
+/-! Setting, in the card's notation.
+* The engineers' `j` is Mathlib's `Complex.I`.
+* A linear time-invariant system is given by its impulse response `h`, a real function of the
+  past time `r ≥ 0`. Started from rest, input `u` (zero before time 0) gives the output
+  `y(t) = ∫₀ᵗ h(r) u(t − r) dr` (the card's convolution, Step 1).
+* "Stable" is the card's condition in the detailed proof: `∫₀^∞ |h(r)| dr` is finite,
+  `IntegrableOn h (Ioi 0)`.
+* The transfer function on the imaginary axis is `G(jω) = ∫₀^∞ h(r) e^(−jωr) dr`.
+* "Settled" is the limit as `t → ∞`.
+* A gain `g` in decibels is `20 log₁₀ g`, Mathlib's `20 * Real.logb 10 g`. -/
+
+open MeasureTheory Set Filter Topology Complex
+
+namespace BodePlots
+
+/-- The output at time `t` of the system with impulse response `h`, started from rest and fed
+the input `u` from time 0 on: `y(t) = ∫₀ᵗ h(r) u(t − r) dr`. -/
+noncomputable def response (h u : ℝ → ℝ) (t : ℝ) : ℝ :=
+  ∫ r in (0 : ℝ)..t, h r * u (t - r)
+
+/-- The transfer function on the imaginary axis, `G(jω) = ∫₀^∞ h(r) e^(−jωr) dr`. -/
+noncomputable def freqResponse (h : ℝ → ℝ) (ω : ℝ) : ℂ :=
+  ∫ r in Ioi (0 : ℝ), (h r : ℂ) * cexp (-((ω * r : ℝ) : ℂ) * I)
+
+
+/-- Helper: the size of `1 + x j` is `√(1 + x²)`. -/
+theorem norm_one_add_mul_I (x : ℝ) : ‖(1 : ℂ) + (x : ℂ) * I‖ = Real.sqrt (1 + x ^ 2) := by
+  have := Complex.norm_add_mul_I 1 x
+  simpa using this
+
+/-- Helper: the angle of `1 + x j` is `arctan x`. -/
+theorem arg_one_add_mul_I (x : ℝ) : arg ((1 : ℂ) + (x : ℂ) * I) = Real.arctan x := by
+  rw [Complex.arg_of_re_nonneg (by simp), norm_one_add_mul_I, Real.arctan_eq_arcsin]
+  simp
+
+/-- Helper: `logb` of a square root is half the `logb`. -/
+theorem logb_sqrt' (y : ℝ) (hy : 0 ≤ y) :
+    Real.logb 10 (Real.sqrt y) = Real.logb 10 y / 2 := by
+  unfold Real.logb
+  rw [Real.log_sqrt hy]
+  ring
+
+/-- **Sine in, same-frequency sine out.** Take a linear time-invariant system with a real
+impulse response `h` that is stable (`∫₀^∞ |h(r)| dr` finite). Feed it, from rest, the sine
+`u(t) = A sin(ωt)` of any size `A` and any angular frequency `ω`. Once it settles, the output is
+the sine `A |G(jω)| sin(ωt + φ(ω))` with `φ(ω) = arg G(jω)`: the difference between the true
+output and that sine tends to 0 as `t → ∞`. -/
+theorem stable_system_settles_to_scaled_shifted_sine
+    (h : ℝ → ℝ) (hstable : IntegrableOn h (Ioi 0)) (A ω : ℝ) :
+    Tendsto (fun t => response h (fun s => A * Real.sin (ω * s)) t
+        - A * ‖freqResponse h ω‖ * Real.sin (ω * t + arg (freqResponse h ω)))
+      atTop (𝓝 0) := by
+  set F : ℝ → ℂ := fun r => (h r : ℂ) * cexp (-((ω * r : ℝ) : ℂ) * I) with hF
+  set G := freqResponse h ω with hG
+  have hFi : IntegrableOn F (Ioi 0) := by
+    have hm : AEStronglyMeasurable F (volume.restrict (Ioi 0)) :=
+      (Complex.continuous_ofReal.comp_aestronglyMeasurable hstable.aestronglyMeasurable).mul
+        (Continuous.aestronglyMeasurable (by fun_prop))
+    refine hstable.norm.mono' hm (Eventually.of_forall (fun r => ?_))
+    simp only [F, norm_mul, Complex.norm_real, Real.norm_eq_abs]
+    rw [show -((ω * r : ℝ) : ℂ) * I = ((-(ω * r) : ℝ) : ℂ) * I by push_cast; ring,
+      Complex.norm_exp_ofReal_mul_I, mul_one]
+  have hGt : Tendsto (fun t => ∫ r in (0 : ℝ)..t, F r) atTop (𝓝 G) :=
+    intervalIntegral_tendsto_integral_Ioi 0 hFi tendsto_id
+  have key : ∀ t, 0 ≤ t → response h (fun s => A * Real.sin (ω * s)) t
+      = A * (cexp ((ω * t : ℝ) * I) * ∫ r in (0 : ℝ)..t, F r).im := by
+    intro t ht
+    have hint : IntervalIntegrable (fun r => cexp ((ω * t : ℝ) * I) * F r) volume 0 t := by
+      rw [intervalIntegrable_iff_integrableOn_Ioc_of_le ht]
+      exact (hFi.mono_set Ioc_subset_Ioi_self).const_mul _
+    have hpt : (fun r => h r * (A * Real.sin (ω * (t - r))))
+        = fun r => A * Complex.imCLM (cexp ((ω * t : ℝ) * I) * F r) := by
+      funext r
+      simp only [Complex.imCLM_apply, F]
+      rw [show cexp ((ω * t : ℝ) * I) * ((h r : ℂ) * cexp (-((ω * r : ℝ) : ℂ) * I))
+          = (h r : ℂ) * cexp (((ω * t - ω * r : ℝ) : ℂ) * I) by
+            rw [mul_left_comm, ← Complex.exp_add]; push_cast; ring_nf,
+        Complex.im_ofReal_mul, Complex.exp_ofReal_mul_I_im, mul_sub]
+      ring
+    unfold response
+    rw [hpt, intervalIntegral.integral_const_mul,
+      ContinuousLinearMap.intervalIntegral_comp_comm _ hint, Complex.imCLM_apply,
+      intervalIntegral.integral_const_mul]
+  have phase : ∀ θ : ℝ, (cexp (θ * I) * G).im = ‖G‖ * Real.sin (θ + arg G) := by
+    intro θ
+    rw [Complex.mul_im, Complex.exp_ofReal_mul_I_re, Complex.exp_ofReal_mul_I_im, Real.sin_add]
+    have h1 := Complex.norm_mul_cos_arg G
+    have h2 := Complex.norm_mul_sin_arg G
+    linear_combination (-Real.sin θ) * h1 + (-Real.cos θ) * h2
+  have hev : ∀ᶠ t in atTop, response h (fun s => A * Real.sin (ω * s)) t
+        - A * ‖G‖ * Real.sin (ω * t + arg G)
+      = A * (cexp ((ω * t : ℝ) * I) * ((∫ r in (0 : ℝ)..t, F r) - G)).im := by
+    filter_upwards [eventually_ge_atTop 0] with t ht
+    rw [key t ht, mul_assoc A ‖G‖, ← phase, mul_sub, Complex.sub_im]
+    ring
+  rw [tendsto_congr' hev]
+  have hlim : Tendsto (fun t => |A| * ‖(∫ r in (0 : ℝ)..t, F r) - G‖) atTop (𝓝 0) := by
+    have := (tendsto_iff_norm_sub_tendsto_zero.mp hGt).const_mul |A|
+    simpa using this
+  refine squeeze_zero_norm' (Eventually.of_forall (fun t => ?_)) hlim
+  rw [norm_mul, Real.norm_eq_abs]
+  refine mul_le_mul_of_nonneg_left ?_ (abs_nonneg A)
+  refine (Complex.abs_im_le_norm _).trans ?_
+  rw [norm_mul, Complex.norm_exp_ofReal_mul_I, one_mul]
+
+/-- **The car's Bode curves, one factor at a time.** For the car
+`G(s) = K / ((τ₁ s + 1)(τ₂ s + 1))` with steady gain `K > 0`, at every angular frequency `ω`:
+in decibels each factor's contribution is subtracted,
+`M(ω) = 20 log₁₀ K − 10 log₁₀(1 + ω²τ₁²) − 10 log₁₀(1 + ω²τ₂²)`,
+and in angle each factor's lag is added, `φ(ω) = −arctan(ωτ₁) − arctan(ωτ₂)`. -/
+theorem car_bode_magnitude_and_phase (K τ₁ τ₂ ω : ℝ) (hK : 0 < K) :
+    20 * Real.logb 10 ‖(K : ℂ) / ((τ₁ * (ω * I) + 1) * (τ₂ * (ω * I) + 1))‖
+        = 20 * Real.logb 10 K - 10 * Real.logb 10 (1 + ω ^ 2 * τ₁ ^ 2)
+          - 10 * Real.logb 10 (1 + ω ^ 2 * τ₂ ^ 2) ∧
+      arg ((K : ℂ) / ((τ₁ * (ω * I) + 1) * (τ₂ * (ω * I) + 1)))
+        = -Real.arctan (ω * τ₁) - Real.arctan (ω * τ₂) := by
+  have e1 : (τ₁ : ℂ) * (ω * I) + 1 = 1 + ((ω * τ₁ : ℝ) : ℂ) * I := by push_cast; ring
+  have e2 : (τ₂ : ℂ) * (ω * I) + 1 = 1 + ((ω * τ₂ : ℝ) : ℂ) * I := by push_cast; ring
+  rw [e1, e2]
+  have n1 : (1 : ℂ) + ((ω * τ₁ : ℝ) : ℂ) * I ≠ 0 := by
+    intro h0; have := congrArg Complex.re h0; simp at this
+  have n2 : (1 : ℂ) + ((ω * τ₂ : ℝ) : ℂ) * I ≠ 0 := by
+    intro h0; have := congrArg Complex.re h0; simp at this
+  constructor
+  · rw [norm_div, norm_mul, norm_one_add_mul_I, norm_one_add_mul_I, Complex.norm_real,
+      Real.norm_eq_abs, abs_of_pos hK]
+    have p1 : 0 < Real.sqrt (1 + (ω * τ₁) ^ 2) := Real.sqrt_pos.mpr (by positivity)
+    have p2 : 0 < Real.sqrt (1 + (ω * τ₂) ^ 2) := Real.sqrt_pos.mpr (by positivity)
+    rw [Real.logb_div hK.ne' (mul_pos p1 p2).ne', Real.logb_mul p1.ne' p2.ne',
+      logb_sqrt' _ (by positivity), logb_sqrt' _ (by positivity), mul_pow, mul_pow]
+    ring
+  · rw [div_eq_mul_inv, Complex.arg_real_mul _ hK]
+    have hsum : arg ((1 + ((ω * τ₁ : ℝ) : ℂ) * I) * (1 + ((ω * τ₂ : ℝ) : ℂ) * I))
+        = Real.arctan (ω * τ₁) + Real.arctan (ω * τ₂) := by
+      rw [Complex.arg_mul n1 n2, arg_one_add_mul_I, arg_one_add_mul_I]
+      rw [arg_one_add_mul_I, arg_one_add_mul_I]
+      have a1 := Real.arctan_lt_pi_div_two (ω * τ₁)
+      have a2 := Real.arctan_lt_pi_div_two (ω * τ₂)
+      have b1 := Real.neg_pi_div_two_lt_arctan (ω * τ₁)
+      have b2 := Real.neg_pi_div_two_lt_arctan (ω * τ₂)
+      constructor <;> linarith
+    rw [Complex.arg_inv, hsum]
+    have a1 := Real.arctan_lt_pi_div_two (ω * τ₁)
+    have a2 := Real.arctan_lt_pi_div_two (ω * τ₂)
+    rw [if_neg (by linarith)]
+    ring
+
+/-- The exact magnitude in dB of one factor `1 / (1 + jωτ)`. -/
+noncomputable def poleDb (τ ω : ℝ) : ℝ :=
+  20 * Real.logb 10 ‖(1 : ℂ) / (1 + τ * (ω * I))‖
+
+/-- The straight-line sketch of that factor with corner `ω_c = 1/τ`: flat at 0 dB up to the
+corner, then falling 20 dB per decade, `−20 log₁₀(ω/ω_c)`. -/
+noncomputable def poleSketchDb (τ ω : ℝ) : ℝ :=
+  if ω ≤ 1 / τ then 0 else -20 * Real.logb 10 (ω * τ)
+
+/-- Helper: the exact dB of one factor, `−10 log₁₀(1 + (ωτ)²)`. -/
+theorem poleDb_eq (τ ω : ℝ) : poleDb τ ω = -10 * Real.logb 10 (1 + (ω * τ) ^ 2) := by
+  unfold poleDb
+  have e : (1 : ℂ) + τ * (ω * I) = 1 + ((ω * τ : ℝ) : ℂ) * I := by push_cast; ring
+  rw [e, norm_div, norm_one, norm_one_add_mul_I, one_div, Real.logb_inv,
+    logb_sqrt' _ (by positivity)]
+  ring
+
+/-- **The sketch's worst error is 3.01 dB, at the corner.** For one factor `1 / (1 + jωτ)` with
+time constant `τ > 0`, the gap between the exact magnitude and the straight-line sketch, over all
+frequencies `ω > 0`, is largest at the corner `ω = 1/τ`, where it is exactly `10 log₁₀ 2` dB
+(the true size there is `1/√2`). -/
+theorem pole_sketch_worst_error_at_corner (τ : ℝ) (hτ : 0 < τ) :
+    IsGreatest {e | ∃ ω : ℝ, 0 < ω ∧ e = |poleDb τ ω - poleSketchDb τ ω|}
+      (10 * Real.logb 10 2) ∧
+    |poleDb τ (1 / τ) - poleSketchDb τ (1 / τ)| = 10 * Real.logb 10 2 := by
+  have l2 : 0 ≤ Real.logb 10 2 := Real.logb_nonneg (by norm_num) (by norm_num)
+  have corner : |poleDb τ (1 / τ) - poleSketchDb τ (1 / τ)| = 10 * Real.logb 10 2 := by
+    rw [poleDb_eq, poleSketchDb, if_pos le_rfl, one_div_mul_cancel hτ.ne']
+    norm_num
+    exact l2
+  refine ⟨⟨⟨1 / τ, by positivity, corner.symm⟩, ?_⟩, corner⟩
+  rintro e ⟨ω, hω, rfl⟩
+  have hx : 0 < ω * τ := mul_pos hω hτ
+  rw [poleDb_eq, poleSketchDb]
+  split_ifs with hc
+  · have hx1 : ω * τ ≤ 1 := by
+      rw [le_div_iff₀ hτ] at hc; exact hc
+    have h0 : 0 ≤ Real.logb 10 (1 + (ω * τ) ^ 2) :=
+      Real.logb_nonneg (by norm_num) (by nlinarith)
+    have h1 : Real.logb 10 (1 + (ω * τ) ^ 2) ≤ Real.logb 10 2 :=
+      Real.logb_le_logb_of_le (by norm_num) (by positivity) (by nlinarith)
+    rw [sub_zero, abs_le]
+    constructor <;> linarith
+  · have hx1 : 1 < ω * τ := by
+      have hc' := not_le.mp hc; rw [div_lt_iff₀ hτ] at hc'; exact hc'
+    have hsq : Real.logb 10 ((ω * τ) ^ 2) = 2 * Real.logb 10 (ω * τ) := by
+      rw [Real.logb_pow]; push_cast; ring
+    have h0 : Real.logb 10 ((ω * τ) ^ 2) ≤ Real.logb 10 (1 + (ω * τ) ^ 2) :=
+      Real.logb_le_logb_of_le (by norm_num) (by positivity) (by nlinarith)
+    have h1 : Real.logb 10 (1 + (ω * τ) ^ 2) ≤ Real.logb 10 (2 * (ω * τ) ^ 2) :=
+      Real.logb_le_logb_of_le (by norm_num) (by positivity) (by nlinarith)
+    rw [Real.logb_mul (by norm_num) (by positivity)] at h1
+    rw [abs_le]
+    constructor <;> linarith
+
+end BodePlots
+
+/-! The card's worked numbers, exact. -/
+
+-- Decibels: a gain of 10 is +20 dB, a gain of 1 is 0 dB, a gain of 0.1 = 1/10 is −20 dB.
+example : 20 * Real.logb 10 10 = 20 := by
+  rw [Real.logb_self_eq_one (by norm_num)]; norm_num
+example : 20 * Real.logb 10 1 = 0 := by
+  rw [Real.logb_one]; norm_num
+example : 20 * Real.logb 10 (1 / 10) = -20 := by
+  rw [one_div, Real.logb_inv, Real.logb_self_eq_one (by norm_num)]; norm_num
+-- Corners at 1/τ₁ = 1/10 rad/s and 1/τ₂ = 1/(1/2) = 2 rad/s.
+example : (1 : ℚ) / 10 = 1 / 10 ∧ (1 : ℚ) / (1 / 2) = 2 := by norm_num
+-- Worked numbers at ω = 1 rad/s: ωτ₁ = 1 × 10 = 10 and ωτ₂ = 1 × 1/2 = 1/2,
+-- so 1 + (ωτ₁)² = 101 and 1 + (ωτ₂)² = 5/4.
+example : (1 : ℚ) * 10 = 10 ∧ (1 : ℚ) * (1 / 2) = 1 / 2 := by norm_num
+example : (1 : ℚ) + 10 ^ 2 = 101 ∧ (1 : ℚ) + (1 / 2) ^ 2 = 5 / 4 := by norm_num
+-- At a corner, ωτ = 1: the factor 1/(1 + j) has size 1/√2 and angle −45° = −π/4.
+example : ‖(1 : ℂ) / (1 + Complex.I)‖ = 1 / Real.sqrt 2 := by
+  have := BodePlots.norm_one_add_mul_I 1
+  rw [norm_div, norm_one]
+  simp only [Complex.ofReal_one, one_mul] at this
+  rw [this]; norm_num
+example : Complex.arg ((1 : ℂ) / (1 + Complex.I)) = -(Real.pi / 4) := by
+  have := BodePlots.arg_one_add_mul_I 1
+  simp only [Complex.ofReal_one, one_mul, Real.arctan_one] at this
+  rw [one_div, Complex.arg_inv, this, if_neg (by linarith [Real.pi_pos])]
+-- The integrator 1/s at ω = 1 and ω = 10: size 1 and 1/10 (0 dB and −20 dB), angle −90°.
+example : ‖(1 : ℂ) / (1 * Complex.I)‖ = 1 ∧ ‖(1 : ℂ) / (10 * Complex.I)‖ = 1 / 10 := by
+  constructor <;> simp
+example : Complex.arg ((1 : ℂ) / (10 * Complex.I)) = -(Real.pi / 2) := by
+  have e : (1 : ℂ) / (10 * Complex.I) = ((1 / 10 : ℝ) : ℂ) * (-Complex.I) := by
+    field_simp; push_cast; ring_nf; simp
+  rw [e, Complex.arg_real_mul _ (by norm_num), Complex.arg_neg_I]
+-- The zero 1 + 10s at 1 rad/s is the car's factor 1/(1 + 10s) turned upside down:
+-- its size is the reciprocal.
+example : ‖(1 : ℂ) + 10 * Complex.I‖ = 1 / ‖(1 : ℂ) / (1 + 10 * Complex.I)‖ := by
+  rw [norm_div, norm_one, one_div_one_div]
+-- The sweep: four decades at 1,000 steps per decade, ends included, is 4,001 frequencies.
+example : 4 * 1000 + 1 = 4001 := by decide
+
+open BodePlots
+
+#print axioms stable_system_settles_to_scaled_shifted_sine
+#print axioms car_bode_magnitude_and_phase
+#print axioms pole_sketch_worst_error_at_corner
+#print axioms norm_one_add_mul_I
+#print axioms arg_one_add_mul_I
+#print axioms logb_sqrt'
+#print axioms poleDb_eq
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'BodePlots.stable_system_settles_to_scaled_shifted_sine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BodePlots.car_bode_magnitude_and_phase' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BodePlots.pole_sketch_worst_error_at_corner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BodePlots.norm_one_add_mul_I' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BodePlots.arg_one_add_mul_I' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BodePlots.logb_sqrt'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BodePlots.poleDb_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

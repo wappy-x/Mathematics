@@ -10,7 +10,15 @@ A room is heated by one radiator. Hot water reaches it through a long pipe: a ch
 
 A thermostat works the valve. For every 1 °C the room sits below the setpoint, it opens the valve a further 16%. Held open, each extra 1% of valve eventually warms the room by 0.4 °C. So once round the loop, a 1 °C error comes back as a 0.4 × 16 = 6.4 °C correction. That is a strong push, and the pipe makes it late.
 
-The engineer has two questions. Will the room settle, or hunt up and down for ever? And if it settles, how much could go wrong before it starts to hunt: how much stronger could the thermostat be, and how much longer the pipe? The answers on this card: it settles; the thermostat gain could almost double, a factor of 1.99 or 5.99 dB, before the room oscillates with a 13.52 min period; and the loop has 39.81° of phase to spare, which buys 2.52 min more of pipe. Six decibels and forty degrees, to the nearest whole number: margins of the size control texts recommend for a loop that is safe without being sluggish.
+The engineer has two questions. Will the room settle, or hunt up and down for ever? And if it settles, how much could go wrong before it starts to hunt: how much stronger could the thermostat be, and how much longer the pipe?
+
+The answers on this card:
+
+- It settles.
+- The thermostat gain could almost double, a factor of 1.99 or 5.99 dB, before the room oscillates with a 13.52 min period.
+- The loop has 39.81° of phase to spare, which buys 2.52 min more of pipe.
+
+Six decibels and forty degrees, to the nearest whole number: margins of the size control texts recommend for a loop that is safe without being sluggish.
 
 Harry Nyquist found the test in 1932, for telephone amplifiers. Plot the open loop's answer to sine waves of every frequency as a curve in the complex plane, and count how often it goes round −1. No closed-loop pole has to be found, measured data will do, and a delay costs nothing extra.
 
@@ -24,13 +32,20 @@ Each point is the loop's answer to a temperature wobble at one angular frequency
 
 <p align="center"><img src="../figures/nyquist-criterion-and-stability-margins-1.svg" alt="Nyquist curve of the thermostat loop for positive frequencies, to scale, with the unit circle and the point minus one" width="420"></p>
 
-The curve starts at 6.4 on the right: a very slow wobble comes back 6.4 times as large and not delayed. As the wobble speeds up, the room's lag swings the answer clockwise, below the axis, and shrinks it. The pipe's delay then keeps turning it, so it crosses the negative real axis at −0.5016, inside −1, and spirals into the origin. The mirror image, for negative frequencies, is the curve flipped about the real axis, and it closes the curve into a loop. Neither half goes round −1: zero encirclements, a stable room.
+The curve starts at 6.4 on the right: a very slow wobble comes back 6.4 times as large and not delayed. As the wobble speeds up, the room's lag swings the answer clockwise, below the axis, and shrinks it. The pipe's delay then keeps turning it, so it crosses the negative real axis at −0.5016, inside −1, and spirals into the origin.
+
+The mirror image, for negative frequencies, is the curve flipped about the real axis, and it closes the curve into a loop. Neither half goes round −1: zero encirclements, a stable room.
 
 ---
 
 ## The formula
 
-Some notation, reminded or introduced. The **loop gain** $L(s)$ is what one trip round the loop does to each exponential $e^{st}$ ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)): thermostat, pipe, radiator and room in series. Engineers write $j$ for the square root of −1; the rest of the library writes i. A **decibel** is $20\log_{10}$ of a gain, so a factor of 2 is 6.02 dB ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). To **encircle** a point is to go once round it; clockwise turns count +1 here and anticlockwise turns −1.
+Some notation, reminded or introduced.
+
+- The **loop gain** $L(s)$ is what one trip round the loop does to each exponential $e^{st}$ ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)): thermostat, pipe, radiator and room in series.
+- Engineers write $j$ for the square root of −1; the rest of the library writes i.
+- A **decibel** is $20\log_{10}$ of a gain, so a factor of 2 is 6.02 dB ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)).
+- To **encircle** a point is to go once round it; clockwise turns count +1 here and anticlockwise turns −1.
 
 For the room,
 
@@ -109,7 +124,7 @@ So, once $P$ is known, the test needs no model: shake the valve sinusoidally, re
 <details>
 <summary>Detailed proof</summary>
 
-Let $F(s) = 1 + L(s) = \big[(T_1 s + 1)(T_2 s + 1) + K e^{-\theta s}\big] / \big[(T_1 s + 1)(T_2 s + 1)\big]$. The numerator is entire, so $F$ is meromorphic with poles only at $-1/T_1$ and $-1/T_2$; in general its poles are those of $L$. Assume no zero or pole of $F$ lies on the imaginary axis.
+Let $F(s) = 1 + L(s) = \big[(T_1 s + 1)(T_2 s + 1) + K e^{-\theta s}\big] / \big[(T_1 s + 1)(T_2 s + 1)\big]$. The numerator is entire (analytic in the whole plane), so $F$ is meromorphic (analytic except at isolated poles) with poles only at $-1/T_1$ and $-1/T_2$; in general its poles are those of $L$. Assume no zero or pole of $F$ lies on the imaginary axis.
 
 In the closed right half-plane, $\lvert L(s)\rvert \le K / (\lvert T_1 s + 1\rvert\,\lvert T_2 s + 1\rvert)$, which tends to 0 as $\lvert s\rvert \to \infty$. Choose $R_0$ with $\lvert L\rvert < 1/2$ for $\lvert s\rvert > R_0$ there. Then $F \ne 0$ outside radius $R_0$, so the right-half-plane zeros lie in a bounded set; zeros of a function analytic and not identically zero are isolated, so there are finitely many, $Z$ counted with multiplicity. Likewise $P$ is finite.
 
@@ -123,7 +138,9 @@ A pole of $L$ on the axis is skipped by a small half-circle detour into the righ
 
 ### Step 4: the gain margin is a stretch
 
-Multiply the loop gain by a number $c$, and every point of the curve moves $c$ times further from the origin along its own ray. The crossing of the negative axis, at −0.5016, reaches −1 when $c$ = 1/0.5016 = 1.9935. At that moment $1 + L(j\omega_{pc}) = 0$: a closed-loop pole sits on the imaginary axis at $j\omega_{pc}$, and the room oscillates for ever with period $2\pi/\omega_{pc}$ = 13.52 min. Stretch further and the crossing passes −1. The mirror half passes it too, so $N$ jumps from 0 to 2: a pair of complex poles crosses into the right half-plane together.
+Multiply the loop gain by a number $c$, and every point of the curve moves $c$ times further from the origin along its own ray. The crossing of the negative axis, at −0.5016, reaches −1 when $c$ = 1/0.5016 = 1.9935.
+
+At that moment $1 + L(j\omega_{pc}) = 0$: a closed-loop pole sits on the imaginary axis at $j\omega_{pc}$, and the room oscillates for ever with period $2\pi/\omega_{pc}$ = 13.52 min. Stretch further and the crossing passes −1. The mirror half passes it too, so $N$ jumps from 0 to 2: a pair of complex poles crosses into the right half-plane together.
 
 ### Step 5: the phase margin is a rotation, and a rotation is a delay
 
@@ -180,7 +197,7 @@ Orange: the room as built, gain 6.4 and 2 min of pipe; it rings down, each swing
 | Spend part of both margins: gain × 1.5, pipe +1 min | $N$ = 2, pole +0.0087 ± 0.3678j, swing × 1.1611 per cycle | Each margin assumes the other is untouched; extra gain moves the gain crossover to a higher frequency, where the longer pipe lags more |
 | Forget $P$: reactor with $L = 2/(s - 1)$ | "one turn, so unstable"; truth: $N$ = −1, $P$ = 1, $Z$ = 0, pole at −1 | An open loop that runs away on its own needs an anticlockwise turn to be stabilised |
 
-The reactor is an exothermic vessel whose temperature error, left alone, grows like $e^{t}$, time in minutes; its curve is a circle of radius 1 round −1, walked anticlockwise.
+The reactor is an exothermic vessel (its reaction gives off heat) whose temperature error, left alone, grows like $e^{t}$, time in minutes; its curve is a circle of radius 1 round −1, walked anticlockwise.
 
 ---
 
@@ -585,6 +602,157 @@ ALL CHECKS PASS
 
 The two outputs agree line for line at the printed precision.
 
+### Lean
+
+Lean proves the margin steps for any loop gain $L$, and the half-circle step for the room's form of $L$.
+
+- Suppose $L(j\omega)$ has phase −180°, and $c$ is a real factor. Then $1 + cL(j\omega) = 0$ exactly when $c = 1/\lvert L(j\omega)\rvert$, the gain margin.
+- An extra delay $\Delta$ multiplies $L(j\omega)$ by $e^{-j\omega\Delta}$, which has size 1 for every $\Delta$.
+- Take $\omega \ne 0$ where $L(j\omega)$ has size 1, the gain crossover. Then the extra delay PM$/\omega$, with PM in radians, puts a closed-loop pole at $j\omega$.
+- Take the room's form of $L(s)$, with $T_1, T_2 > 0$, $\theta \ge 0$ and any $K$. Then beyond some radius $R_0$, $\lvert L(s)\rvert < 1/2$ everywhere in the closed right half-plane.
+- Take the reactor, $L(s) = 2/(s - 1)$, with $s \ne 1$. Then $1 + L(s) = 0$ exactly when $s = -1$.
+- The reactor's curve $L(j\omega)$ is a circle of radius 1 round −1.
+- The worked numbers hold: 0.4 × 16 = 6.4, and a 10 °C setpoint step asks for 160% open.
+
+Lean does not prove $Z = N + P$; the turn counts, crossovers, margins and simulations are left to the Python and Rust checks.
+
+```lean
+-- Nyquist and margins: scaling the loop by the gain margin, or delaying it by the delay margin, puts a closed-loop pole on the imaginary axis, and the delayed loop gain fades on the far half-circle.
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Complex.Log
+
+open Complex Real
+
+/-- Gain margin. At the phase crossover the loop's answer `L(jω)` lies on the negative real axis
+(phase −180°). Multiplying the loop by a real factor `c` makes `1 + c·L(jω) = 0`, a closed-loop pole
+at `jω`, exactly when `c = 1 / |L(jω)|`, the gain margin. -/
+theorem gain_margin_puts_crossing_on_minus_one (L : ℂ → ℂ) (ω : ℝ)
+    (hpc : (L (ω * I)).arg = π) (c : ℝ) :
+    1 + (c : ℂ) * L (ω * I) = 0 ↔ c = 1 / ‖L (ω * I)‖ := by
+  obtain ⟨hre, him⟩ := arg_eq_pi_iff.mp hpc
+  have hz' : L (ω * I) = ((L (ω * I)).re : ℂ) := by
+    apply Complex.ext <;> simp [him]
+  generalize (L (ω * I)).re = r at hz' hre
+  rw [hz', Complex.norm_real, Real.norm_eq_abs, abs_of_neg hre]
+  have hne : r ≠ 0 := hre.ne
+  constructor
+  · intro h
+    have h2 : (1 + c * r : ℝ) = 0 := by exact_mod_cast h
+    field_simp
+    linarith
+  · intro h
+    rw [h]
+    have hne' : (r : ℂ) ≠ 0 := by exact_mod_cast hne
+    push_cast
+    field_simp
+    ring
+
+/-- Phase and delay margin. An extra delay `Δ` multiplies `L(jω)` by `e^{-jωΔ}`, which has size 1,
+so it only turns the point. At the gain crossover, where `L(jω) = e^{jφ}` has size 1 and unwrapped
+phase `φ`, the phase margin is `PM = π + φ`, and the delay `Δ = PM / ω` puts a closed-loop pole at
+`jω`: `1 + e^{-jωΔ} L(jω) = 0`. -/
+theorem delay_margin_puts_pole_on_axis (L : ℂ → ℂ) (ω φ : ℝ) (hω : ω ≠ 0)
+    (hgc : L (ω * I) = exp (φ * I)) :
+    (∀ Δ : ℝ, ‖exp (-((Δ : ℂ) * (ω * I)))‖ = 1) ∧
+      1 + exp (-((((π + φ) / ω : ℝ) : ℂ) * (ω * I))) * L (ω * I) = 0 := by
+  refine ⟨fun Δ => ?_, ?_⟩
+  · rw [Complex.norm_exp]; simp
+  · rw [hgc, ← Complex.exp_add]
+    have hω' : (ω : ℂ) ≠ 0 := by exact_mod_cast hω
+    have : -((((π + φ) / ω : ℝ) : ℂ) * (ω * I)) + φ * I = -(π * I) := by
+      push_cast
+      field_simp
+      ring
+    rw [this, Complex.exp_neg_pi_mul_I]; ring
+
+/-- The half-circle adds nothing. For `L(s) = K e^{-θ s} / ((T₁ s + 1)(T₂ s + 1))` with two lags
+`T₁, T₂ > 0` and a delay `θ ≥ 0`, there is a radius `R₀` beyond which `|L(s)| < 1/2` everywhere in
+the closed right half-plane; so `1 + L` has no zeros there and does not turn round 0 on the arc. -/
+theorem loop_gain_small_on_far_right_half_plane (K T₁ T₂ θ : ℝ) (hT₁ : 0 < T₁) (hT₂ : 0 < T₂)
+    (hθ : 0 ≤ θ) :
+    ∃ R₀ : ℝ, ∀ s : ℂ, 0 ≤ s.re → R₀ < ‖s‖ →
+      ‖(K : ℂ) * exp (-((θ : ℂ) * s)) / (((T₁ : ℂ) * s + 1) * ((T₂ : ℂ) * s + 1))‖ < 1 / 2 := by
+  refine ⟨(2 + 2 * |K|) / T₁ + 2 / T₂, fun s hs hR => ?_⟩
+  have hK : 0 ≤ |K| := abs_nonneg K
+  have h1 : (2 + 2 * |K|) / T₁ < ‖s‖ := by
+    have : 0 < 2 / T₂ := by positivity
+    linarith
+  have h2 : 2 / T₂ < ‖s‖ := by
+    have : 0 < (2 + 2 * |K|) / T₁ := by positivity
+    linarith
+  have a1 : 2 + 2 * |K| < T₁ * ‖s‖ := by rw [div_lt_iff₀ hT₁] at h1; linarith
+  have a2 : 2 < T₂ * ‖s‖ := by rw [div_lt_iff₀ hT₂] at h2; linarith
+  have b1 : T₁ * ‖s‖ - 1 ≤ ‖(T₁ : ℂ) * s + 1‖ := by
+    have hn : ‖(T₁ : ℂ) * s‖ = T₁ * ‖s‖ := by
+      rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hT₁]
+    have := norm_sub_norm_le ((T₁ : ℂ) * s) (-1)
+    simp only [sub_neg_eq_add, norm_neg, norm_one, hn] at this
+    linarith
+  have b2 : T₂ * ‖s‖ - 1 ≤ ‖(T₂ : ℂ) * s + 1‖ := by
+    have hn : ‖(T₂ : ℂ) * s‖ = T₂ * ‖s‖ := by
+      rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hT₂]
+    have := norm_sub_norm_le ((T₂ : ℂ) * s) (-1)
+    simp only [sub_neg_eq_add, norm_neg, norm_one, hn] at this
+    linarith
+  have he : ‖exp (-((θ : ℂ) * s))‖ ≤ 1 := by
+    rw [Complex.norm_exp]
+    apply Real.exp_le_one_iff.mpr
+    simp only [neg_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero]
+    nlinarith
+  have hd : 2 * |K| < ‖(T₁ : ℂ) * s + 1‖ * ‖(T₂ : ℂ) * s + 1‖ := by
+    have p1 : 1 + 2 * |K| < ‖(T₁ : ℂ) * s + 1‖ := by linarith
+    have p2 : 1 < ‖(T₂ : ℂ) * s + 1‖ := by linarith
+    nlinarith
+  have hdpos : 0 < ‖(T₁ : ℂ) * s + 1‖ * ‖(T₂ : ℂ) * s + 1‖ := by linarith
+  rw [norm_div, norm_mul, norm_mul, Complex.norm_real, Real.norm_eq_abs, div_lt_iff₀ (by
+    rw [← norm_mul]; rw [norm_mul]; exact hdpos)]
+  have : |K| * ‖exp (-((θ : ℂ) * s))‖ ≤ |K| := by
+    calc |K| * ‖exp (-((θ : ℂ) * s))‖ ≤ |K| * 1 := by gcongr
+      _ = |K| := mul_one _
+  nlinarith
+
+-- The loop's steady gain: 0.4 °C per % times 16 % per °C is 6.4, written in tenths.
+example : (4 : ℚ) / 10 * 16 = 64 / 10 := by norm_num
+
+-- A 10 °C setpoint step asks this thermostat for 160 % open.
+example : (16 : ℕ) * 10 = 160 := by norm_num
+
+-- The reactor `L(s) = 2/(s - 1)`: its only closed-loop pole is at `s = -1`.
+example (s : ℂ) (hs : s ≠ 1) : 1 + 2 / (s - 1) = 0 ↔ s = -1 := by
+  have h : s - 1 ≠ 0 := sub_ne_zero.mpr hs
+  rw [show (1 : ℂ) + 2 / (s - 1) = (s + 1) / (s - 1) by field_simp; ring, div_eq_zero_iff]
+  constructor
+  · rintro (h1 | h1)
+    · linear_combination h1
+    · exact absurd h1 h
+  · intro h1; left; rw [h1]; ring
+
+-- The reactor's curve `L(jω)` is a circle of radius 1 round −1.
+example (ω : ℝ) : ‖2 / ((ω : ℂ) * I - 1) - (-1)‖ = 1 := by
+  have h : (ω : ℂ) * I - 1 ≠ 0 := by
+    intro h0
+    have := congrArg Complex.re h0
+    simp at this
+  rw [show 2 / ((ω : ℂ) * I - 1) - (-1) = ((ω : ℂ) * I + 1) / ((ω : ℂ) * I - 1) by
+    field_simp; ring, norm_div]
+  rw [div_eq_one_iff_eq (norm_ne_zero_iff.mpr h)]
+  rw [Complex.norm_def, Complex.norm_def]
+  congr 1
+  simp [Complex.normSq_apply]
+
+#print axioms gain_margin_puts_crossing_on_minus_one
+#print axioms delay_margin_puts_pole_on_axis
+#print axioms loop_gain_small_on_far_right_half_plane
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gain_margin_puts_crossing_on_minus_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delay_margin_puts_pole_on_axis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loop_gain_small_on_far_right_half_plane' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -599,7 +767,7 @@ The two outputs agree line for line at the printed precision.
 > [!warning]
 > **Counting turns round the origin instead of round −1, or forgetting $P$.** Closed-loop poles are where $L = -1$, so −1 is the only point that matters; the origin is where the open loop is silent. And the count is a difference: $N$ turns only say "stable" once the open loop's own unstable poles, $P$, are added. The reactor's curve turns once round −1, anticlockwise, and its loop is stable.
 >
-> - **Two good margins, one bad loop.** GM and PM are read at two points of the curve. The curve's closest approach to −1, here 0.4106, can be smaller than either suggests; it is the reciprocal of the peak sensitivity ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)).
+> - **Two good margins, one bad loop.** GM and PM are read at two points of the curve. The curve's closest approach to −1, here 0.4106, can be smaller than either suggests; it is the reciprocal of the peak sensitivity, the largest size of $1/(1 + L)$ over all frequencies ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)).
 > - **Folding the phase.** The PM formula needs the lag accumulated from $\omega$ = 0. A phase folded back into (−180°, 180°] hides the turns a delay adds.
 > - **Reading the margins at the wrong frequencies.** The gain margin is read where the phase is −180°, the phase margin where the size is 1. Swapped, each comes out as zero by construction.
 > - **Calling 6 dB "six times".** It is twice: 20 log10 2 = 6.02 dB.
@@ -610,10 +778,10 @@ The two outputs agree line for line at the printed precision.
 ## Where you meet it in real life
 
 - **Heating, ventilation and process plants.** Long pipes, ducts and conveyors put delays in loops. The delay margin, 2.52 min here, says how much more transport lag a loop can carry; [Time delays](10-smith-predictor-and-time-delays.md) shows how to control round a delay instead.
-- **Tuning by the ultimate gain.** Raising a P-only gain until the loop just oscillates finds the gain margin's critical gain, 12.7585 here, and its 13.52 min period. Classical tuning rules start from those two numbers ([PID control](07-pid-control-and-tuning.md)).
+- **Tuning by the ultimate gain.** Raising a P-only (proportional-only) gain until the loop just oscillates finds the gain margin's critical gain, the ultimate gain, 12.7585 here, and its 13.52 min period. Classical tuning rules start from those two numbers ([PID control](07-pid-control-and-tuning.md)).
 - **Specifications.** Controller specifications set minimum gain and phase margins, checked against a Bode or Nyquist plot measured on the plant itself.
 - **Feedback amplifiers.** Nyquist's own setting: too much loop gain where the phase reaches −180°, and the amplifier sings.
-- **Multivariable loops.** With several valves and several rooms, $L$ becomes a matrix; the generalised criterion counts turns of a determinant, and its sizes become singular values (Writing down model error).
+- **Multivariable loops.** With several valves and several rooms, $L$ becomes a matrix; the generalised criterion counts turns of a determinant, and its sizes become singular values, the largest and smallest stretch the matrix gives any input ([Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md)).
 
 > **Say it back**
 > The closed loop has a pole wherever the loop gain equals −1. The argument principle counts those poles in the right half-plane by how often the open-loop frequency-response curve turns round −1, corrected by the open loop's own unstable poles: Z = N + P. The heated room's curve does not encircle −1, so it settles. Its negative-axis crossing at −0.5016 gives a gain margin of 1.99, or 5.99 dB, and its unit-circle crossing gives 39.81° of phase margin, worth 2.52 min of extra pipe. The margins hold one at a time; spending part of both made the room hunt.

@@ -134,4 +134,4 @@ assert abs(hi2 * DT - edge(-1)) < 0.01      # ... and the lower edge
 assert abs(180 + math.degrees(cmath.phase(loop(wc, KD))) - 60.0) < 1e-6        # margin: complex vs formula
 assert abs(full[0] - TH) < 0.01 and abs(full[-1] - 2 * TH) < 0.01                # flush felt theta to 2*theta
 assert sw[6.0] < 1 < sw[5.0] and sw09 > 1   # 5.33 s inside the edge, 6.40 s and Pade-1's Kp = 0.9 outside
-print("all checks passed")
+print("ALL CHECKS PASS")

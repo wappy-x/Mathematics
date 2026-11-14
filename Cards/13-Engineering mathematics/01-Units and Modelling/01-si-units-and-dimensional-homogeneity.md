@@ -33,7 +33,9 @@ The pure number 32 adds nothing to the powers. The rejected formula has swapped 
 
 ## The formula
 
-Notation first, in words. Square brackets around a quantity, $[X]$, mean "the dimension of X": its recipe in base quantities, with no number and no unit attached. Seven base dimensions exist, written $\mathsf{M}$ mass, $\mathsf{L}$ length, $\mathsf{T}$ time, $\mathsf{I}$ electric current, $\Theta$ temperature, $\mathsf{N}$ amount of substance, $\mathsf{J}$ luminous intensity. Later cards also write a base dimension in brackets, [M] for mass, [L] for length; the rest of this wing uses this notation freely. Written that way, the pressure drop's recipe is [Δp] = [M][L]^-1[T]^-2, also written [M L^-1 T^-2]: the same recipe as M L^-1 T^-2.
+Notation first, in words. Square brackets around a quantity, $[X]$, mean "the dimension of X": its recipe in base quantities, with no number and no unit attached. Seven base dimensions exist, written $\mathsf{M}$ mass, $\mathsf{L}$ length, $\mathsf{T}$ time, $\mathsf{I}$ electric current, $\Theta$ temperature, $\mathsf{N}$ amount of substance, $\mathsf{J}$ luminous intensity.
+
+Later cards also write a base dimension in brackets, [M] for mass, [L] for length; the rest of this wing uses this notation freely. Written that way, the pressure drop's recipe is [Δp] = [M][L]^-1[T]^-2, also written [M L^-1 T^-2]: the same recipe as M L^-1 T^-2.
 
 Every quantity's dimension is one product of powers of the seven:
 
@@ -144,7 +146,9 @@ The greenhouse tube: water at 20 °C, viscosity 1.0016 mPa s and density 998.21 
 | pressure drop | 62.6 Pa × 128/π, and 128/π = 40.743665 | **2,550.55 Pa** |
 | tank height, friction only | 2,550.55 / (998.21 × 9.80665) m | 26.06 cm |
 
-A header tank whose water surface stands 26.06 cm above the tube's outlet overcomes the friction of 1 mL/s flowing through each tube. That is the friction of fully developed flow in a long tube. The water also leaves the outlet carrying its motion: a head of 2 v^2/(2 g_n) = 1.03 cm for the curved profile below, twice the flat-profile value. The first 7.61 cm of tube (0.06 Re D), where that profile is still forming, adds a little more, so a real tank stands about 1 cm higher. The quoted formula's 0.008013 would have put the tank at a fraction of a millimetre, and no water would have reached the far end at the right rate.
+A header tank whose water surface stands 26.06 cm above the tube's outlet overcomes the friction of 1 mL/s flowing through each tube. That is the friction of fully developed flow in a long tube.
+
+The water also leaves the outlet carrying its motion: a head (an extra height of water in the tank) of 2 v^2/(2 g_n) = 1.03 cm for the curved profile below, twice the flat-profile value. The first 7.61 cm of tube (0.06 Re D), where that profile is still forming, adds a little more, so a real tank stands about 1 cm higher. The quoted formula's 0.008013 would have put the tank at a fraction of a millimetre, and no water would have reached the far end at the right rate.
 
 ### The picture: how the water moves across the bore
 
@@ -174,7 +178,11 @@ The first two fail the check. The last two pass it and are still wrong, which is
 
 ## Code, from first principles, and it actually runs
 
-The code builds each exponent list from its parts (force from mass and acceleration, pressure from force and area) and takes three roads. Road 1 adds exponent lists and compares each formula with a pressure. Road 2 never looks at exponents: it re-expresses the inputs in centimetres, grams and seconds, and in feet, pounds and minutes, with each input's unit written out by hand (the poise is 0.1 Pa s, a cubic centimetre per second is 10^-6 m^3/s, a pound per foot per minute is built from the pound, the foot and the minute), evaluates each formula, converts the answer back to pascals, and asks whether it moved. A right formula comes back unchanged; a wrong one drifts by exactly the factor road 1 forecasts. Road 3 rebuilds the pressure drop from a force balance: the push on a cylinder of water of radius r balances the drag on its skin, so the shear stress (sliding force per unit area) is (Δp/ℓ) × r/2. The code steps the speed in from the wall, adds up the flow ring by ring, and scales the pressure until the flow is 1 mL/s. It never uses 128/π.
+The code builds each exponent list from its parts (force from mass and acceleration, pressure from force and area) and takes three roads.
+
+1. Road 1 adds exponent lists and compares each formula with a pressure.
+2. Road 2 never looks at exponents: it re-expresses the inputs in centimetres, grams and seconds, and in feet, pounds and minutes, with each input's unit written out by hand (the poise is 0.1 Pa s, a cubic centimetre per second is 10^-6 m^3/s, a pound per foot per minute is built from the pound, the foot and the minute), evaluates each formula, converts the answer back to pascals, and asks whether it moved. A right formula comes back unchanged; a wrong one drifts by exactly the factor road 1 forecasts.
+3. Road 3 rebuilds the pressure drop from a force balance: the push on a cylinder of water of radius r balances the drag on its skin, so the shear stress (sliding force per unit area) is (Δp/ℓ) × r/2. The code steps the speed in from the wall, adds up the flow ring by ring, and scales the pressure until the flow is 1 mL/s. It never uses 128/π.
 
 ### Python
 
@@ -557,11 +565,209 @@ ALL CHECKS PASS
 
 The two outputs are identical, line for line.
 
+### Lean
+
+Lean proves Steps 2 and 3 for any powers and any number of terms, and checks the arithmetic of Steps 4 and 5.
+
+- Suppose a law's terms, grouped by their exponent lists, sum to zero under every choice of the seven base units. Then each group sums to zero on its own.
+- Suppose $c_1\lambda^{-b_1} + \dots + c_k\lambda^{-b_k} = 0$ for every $\lambda > 0$, with distinct powers. Then every $c$ is zero.
+- Take a unit of length $\lambda > 0$ and two length powers $b_1$ and $b_2$. Then $\lambda^{-b_1}\lambda^{-b_2} = \lambda^{-(b_1+b_2)}$.
+- The quoted formula 32 μ ℓ Q / D^2 has the list (1, 1, -2), not the pressure list (1, -1, -2).
+- The right formula, with D^4, has the list (1, -1, -2). Viscosity's list is (1, -1, -2) + (0, 0, 1) = (1, -1, -1).
+- In centimetres, λ = 0.0100, and λ^-2 = 10,000.
+
+The pipe numbers, the unit-change runs and the force balance are left to the Python and Rust checks.
+
+```lean
+-- Units and dimensions: a sum of terms that stays zero under every rescaling of the seven base units must vanish group by group, one group per exponent list.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+import Mathlib.Algebra.Polynomial.Roots
+
+open Finset
+
+open Filter Topology in
+/-- Helper: the one-variable statement over any finite set of indices, by peeling off
+the largest power with a limit at zero. -/
+theorem helper_finset {ι : Type*} (b : ι → ℝ) (hb : Function.Injective b) (c : ι → ℝ)
+    (S : Finset ι) (h : ∀ s : ℝ, 0 < s → ∑ i ∈ S, c i * s ^ (-(b i)) = 0) :
+    ∀ i ∈ S, c i = 0 := by
+  classical
+  induction S using Finset.strongInduction with
+  | H S ih =>
+    rcases S.eq_empty_or_nonempty with hS | hS
+    · simp [hS]
+    obtain ⟨m, hm, hmax⟩ := Finset.exists_max_image S b hS
+    set g : ℝ → ℝ := fun s => ∑ i ∈ S, c i * s ^ (b m - b i) with hg
+    have hpos : ∀ s : ℝ, 0 < s → g s = 0 := by
+      intro s hs
+      have : g s = s ^ (b m) * ∑ i ∈ S, c i * s ^ (-(b i)) := by
+        rw [hg, Finset.mul_sum]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        rw [sub_eq_add_neg, Real.rpow_add hs]
+        ring
+      rw [this, h s hs, mul_zero]
+    have hcont : ContinuousAt g 0 := by
+      have : Tendsto g (𝓝 0) (𝓝 (∑ i ∈ S, c i * (0:ℝ) ^ (b m - b i))) := by
+        apply tendsto_finsetSum
+        intro i hi
+        exact (Real.continuousAt_rpow_const 0 _ (Or.inr (sub_nonneg.2 (hmax i hi)))).tendsto.const_mul _
+      exact this
+    have hg0 : g 0 = 0 := by
+      have h1 : Tendsto g (𝓝[>] 0) (𝓝 (g 0)) := hcont.tendsto.mono_left nhdsWithin_le_nhds
+      have h2 : Tendsto g (𝓝[>] 0) (𝓝 0) := by
+        refine tendsto_const_nhds.congr' ?_
+        filter_upwards [self_mem_nhdsWithin] with s hs
+        exact (hpos s hs).symm
+      exact tendsto_nhds_unique h1 h2
+    have hcm : c m = 0 := by
+      have : g 0 = c m := by
+        rw [hg]
+        dsimp only
+        rw [Finset.sum_eq_single m]
+        · simp
+        · intro i hi him
+          have hlt : b i < b m := lt_of_le_of_ne (hmax i hi) (fun e => him (hb e))
+          rw [Real.zero_rpow (by linarith), mul_zero]
+        · intro h'; exact absurd hm h'
+      rw [← this, hg0]
+    have hrest := ih (S.erase m) (Finset.erase_ssubset hm) (by
+      intro s hs
+      rw [Finset.sum_erase _ (by rw [hcm, zero_mul])]
+      exact h s hs)
+    intro i hi
+    by_cases him : i = m
+    · rw [him, hcm]
+    · exact hrest i (Finset.mem_erase.2 ⟨him, hi⟩)
+
+#print axioms helper_finset
+
+/-- Helper: a weight vector that separates finitely many distinct exponent lists. -/
+theorem helper_weights {k n : ℕ} (d : Fin k → Fin n → ℝ) (hd : Function.Injective d) :
+    ∃ w : Fin n → ℝ, Function.Injective (fun i => ∑ j, w j * d i j) := by
+  classical
+  open Polynomial in
+  let P : Fin k × Fin k → ℝ[X] := fun p => ∑ j : Fin n, C (d p.1 j - d p.2 j) * X ^ (j : ℕ)
+  have hcoeff : ∀ p (j : Fin n), (P p).coeff (j : ℕ) = d p.1 j - d p.2 j := by
+    intro p j
+    simp only [P]
+    rw [Polynomial.finsetSum_coeff]
+    simp only [Polynomial.coeff_C_mul_X_pow, Fin.val_inj]
+    simp
+  have hP : ∀ p ∈ (univ ×ˢ univ : Finset (Fin k × Fin k)).filter (fun p => p.1 ≠ p.2),
+      P p ≠ 0 := by
+    intro p hp hP0
+    simp only [Finset.mem_filter] at hp
+    apply hp.2
+    apply hd
+    funext j
+    have := hcoeff p j
+    rw [hP0, Polynomial.coeff_zero] at this
+    linarith
+  set Q := ∏ p ∈ (univ ×ˢ univ : Finset (Fin k × Fin k)).filter (fun p => p.1 ≠ p.2), P p
+  have hQ : Q ≠ 0 := Finset.prod_ne_zero_iff.2 hP
+  obtain ⟨t, ht⟩ : ∃ t : ℝ, Q.eval t ≠ 0 := by
+    by_contra hcon
+    push Not at hcon
+    exact hQ (Polynomial.funext (by simpa using hcon))
+  refine ⟨fun j => t ^ (j : ℕ), ?_⟩
+  intro i i' hii'
+  by_contra hne
+  apply ht
+  rw [Polynomial.eval_prod]
+  apply Finset.prod_eq_zero (i := (i, i'))
+  · simp [hne]
+  · simp only [P]
+    rw [Polynomial.eval_finsetSum]
+    simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
+    simp only at hii'
+    rw [← sub_eq_zero] at hii'
+    rw [← hii', ← Finset.sum_sub_distrib]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    ring
+
+#print axioms helper_weights
+
+/-- Dimensional homogeneity. Group the terms of a law by their exponent lists over the
+seven base quantities, with distinct lists `d i` and group sums `c i` in the old units.
+Changing the base units by factors `s j > 0` multiplies a term with exponent list `d i`
+by `∏ j, (s j) ^ (-(d i j))`. If the law stays true for every choice of the seven new
+units, then every group sums to zero on its own: the law balances group by group.
+Powers may be whole numbers or fractions, so they are real numbers here. -/
+theorem dimensional_homogeneity {k : ℕ} (d : Fin k → Fin 7 → ℝ)
+    (hd : Function.Injective d) (c : Fin k → ℝ)
+    (h : ∀ s : Fin 7 → ℝ, (∀ j, 0 < s j) →
+      ∑ i, c i * ∏ j, (s j) ^ (-(d i j)) = 0) :
+    ∀ i, c i = 0 := by
+  obtain ⟨w, hw⟩ := helper_weights d hd
+  intro i
+  refine helper_finset (fun i => ∑ j, w j * d i j) hw c univ ?_ i (mem_univ i)
+  intro s hs
+  have := h (fun j => s ^ (w j)) (fun j => Real.rpow_pos_of_pos hs _)
+  rw [← this]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  congr 1
+  simp only [← Real.rpow_mul hs.le]
+  rw [← Real.rpow_sum_of_pos hs]
+  congr 1
+  simp [mul_neg, Finset.sum_neg_distrib]
+
+/-- One base at a time (the card's detailed proof). If numbers `c 1, …, c k` satisfy
+`c 1 λ^(-b 1) + … + c k λ^(-b k) = 0` for every `λ > 0`, with distinct powers `b i`,
+then every `c i` is zero. -/
+theorem coeffs_zero_of_sum_rpow_eq_zero {k : ℕ} (b : Fin k → ℝ)
+    (hb : Function.Injective b) (c : Fin k → ℝ)
+    (h : ∀ s : ℝ, 0 < s → ∑ i, c i * s ^ (-(b i)) = 0) :
+    ∀ i, c i = 0 := by
+  intro i
+  exact helper_finset b hb c univ h i (mem_univ i)
+
+/-- In a product, the powers add: if two quantities with length powers `b₁` and `b₂`
+have their numbers rescaled by `λ^(-b₁)` and `λ^(-b₂)`, their product is rescaled by
+`λ^(-(b₁ + b₂))`, for every unit size `λ > 0`. -/
+theorem rescale_mul_adds_powers (s b₁ b₂ : ℝ) (hs : 0 < s) :
+    s ^ (-b₁) * s ^ (-b₂) = s ^ (-(b₁ + b₂)) := by
+  rw [neg_add, Real.rpow_add hs]
+
+-- Step 4: exponent lists (M, L, T). Viscosity (1,-1,-1), length (0,1,0), flow (0,3,-1).
+-- The quoted formula 32 μ ℓ Q / D^2 comes out as (1, 1, -2), a force.
+example : (![1, -1, -1] + ![0, 1, 0] + ![0, 3, -1] - 2 • ![0, 1, 0] : Fin 3 → ℤ)
+    = ![1, 1, -2] := by decide
+
+-- ... which is not the pressure list (1, -1, -2): rejected.
+example : (![1, 1, -2] : Fin 3 → ℤ) ≠ ![1, -1, -2] := by decide
+
+-- The right formula 128 μ ℓ Q / (π D^4) comes out as (1, -1, -2), a pressure.
+example : (![1, -1, -1] + ![0, 1, 0] + ![0, 3, -1] - 4 • ![0, 1, 0] : Fin 3 → ℤ)
+    = ![1, -1, -2] := by decide
+
+-- Viscosity is a pressure times a time: (1, -1, -2) + (0, 0, 1) = (1, -1, -1).
+example : (![1, -1, -2] + ![0, 0, 1] : Fin 3 → ℤ) = ![1, -1, -1] := by decide
+
+-- Step 5: in centimetres (λ = 1/100) the wrong formula's answer moves by λ^(-2) = 10,000.
+example : ((1 : ℚ) / 100) ^ (-2 : ℤ) = 10000 := by norm_num
+
+#print axioms dimensional_homogeneity
+#print axioms coeffs_zero_of_sum_rpow_eq_zero
+#print axioms rescale_mul_adds_powers
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'helper_finset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'helper_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+'dimensional_homogeneity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coeffs_zero_of_sum_rpow_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rescale_mul_adds_powers' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Swap the flow rate for the mean speed** in the second formula. Guess first: does it pass? It does: 32 μ ℓ v / D^2 has the dimension M L^-1 T^-2 and gives 2550.553456 Pa, on the printed line "32 mu l v / D^2 Pa".
 > - **Invent a third unit system**, such as the mile, the tonne and the hour, in both SYSTEMS and HAND. Guess first: the right formula's ratio stays at 1.000000, and each wrong formula's ratio equals its forecast, whatever the units.
-> - **Set the flow to 10 mL/s.** Guess first: which assert fails? The laminar one: Re becomes 6344.6508, and the slow-flow answer of 25505.5346 Pa no longer describes the tube.
+> - **Set the flow to 10 mL/s.** Guess first: which assert fails? The laminar one (laminar: slow, smooth flow, below Re 2300): Re becomes 6344.6508, and the slow-flow answer of 25505.5346 Pa no longer describes the tube.
 > - **Change 128 to 64 in the right formula.** Guess first: the exponent check still passes, because 64 is a pure number. Road 3 fails it: the force balance does not know the formula and still returns 2550.553456 Pa.
 
 ---
@@ -598,7 +804,7 @@ The two outputs are identical, line for line.
 
 ## Where this goes next
 
-- [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md): the exponent lists become a matrix, and its null space counts the pure-number groups such as the Reynolds number.
+- [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md): the exponent lists become a matrix, and its null space (the sets of powers that make every exponent cancel) counts the pure-number groups such as the Reynolds number.
 - [Error propagation](07-error-propagation-and-sensitivity.md): the powers that balance here also say how an error in the bore grows in the answer.
 
 The check says which formulas could be right but not what form a law must take; which combinations of viscosity, flow, length and bore a law is allowed to depend on is the question the Buckingham Pi card answers.

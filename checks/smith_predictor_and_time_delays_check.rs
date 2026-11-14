@@ -165,5 +165,5 @@ fn main() {
     assert!((pm - 60.0).abs() < 1e-6); // margin: complex vs formula
     assert!((full[0] - TH).abs() < 0.01 && (full[full.len() - 1] - 2.0 * TH).abs() < 0.01); // flush felt theta to 2*theta
     assert!(sw[0] < 1.0 && 1.0 < sw[1]); assert!(sw09 > 1.0); // 5.33 s inside the edge; 6.40 s and Pade-1's Kp = 0.9 outside
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

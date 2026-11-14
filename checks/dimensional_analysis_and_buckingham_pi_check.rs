@@ -166,5 +166,5 @@ fn main() {
     assert!(spread_ok, "raw law at nine setups vs the master curve");
     assert!((h_f - f).abs() < 1e-9 * f, "half-scale run of the law equals full size");
     assert!((r0 - 1.225).abs() < 1e-3 && (m0 - 1.7894e-5).abs() < 1e-8 && (atmos(4000.0).0 - 0.8194).abs() < 1e-3, "the standard's table, 0 m and 4000 m");
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

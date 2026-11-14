@@ -10,7 +10,9 @@ A 1,500 kg car holds 25 m/s (90.0 km/h) on cruise control. The driver taps "+" t
 
 The engineer wants four answers before the car leaves the factory. Does the speed settle at 27 m/s? How far past it does the car go? How long does it swing about? Could a wrong setting make it run away? For this car the answers are: yes; to 27.2684 m/s, 18.16 s after the tap; one slow swing every 62.83 s, inside an envelope that halves every 6.93 s; and yes, if the controller's gain is wired with the wrong sign.
 
-All four answers come from a handful of numbers called **poles**. A linear system's response to a kick or a step is a sum of exponentials, and each pole is the rate inside one of them. A pole works like a tuning fork the system carries: strike the system and each fork sounds in its own way. From here on each fork's sound is called a **mode**. The real part of a pole says whether its mode fades or grows. The imaginary part says how fast it rings. **Zeros**, the other half of the title, set how loudly each mode sounds. With the poles fixed they never decide whether it fades, though a zero inside a feedback loop can move the poles themselves (Step 6).
+All four answers come from a handful of numbers called **poles**. A linear system's response to a kick or a step is a sum of exponentials, and each pole is the rate inside one of them. A pole works like a tuning fork the system carries: strike the system and each fork sounds in its own way. From here on each fork's sound is called a **mode**.
+
+The real part of a pole says whether its mode fades or grows. The imaginary part says how fast it rings. **Zeros**, the other half of the title, set how loudly each mode sounds. With the poles fixed they never decide whether it fades, though a zero inside a feedback loop can move the poles themselves (Step 6).
 
 **Factor the transfer function: each pole is one mode of the response, decaying if its real part is negative, ringing if it has an imaginary part, running away if its real part is positive; the system turns every bounded input into a bounded output exactly when all its poles have negative real part.**
 
@@ -70,7 +72,7 @@ $$\text{every input with } |\text{input}(t)| \le M \text{ gives a bounded output
 ### When it holds
 
 - **Linear and time-invariant.** Real drag grows with the square of speed; the card uses its slope near 25 m/s. For a 10 m/s change the straight line gives 600 N of extra drag where a 1.2 v^2 law gives 720 N, so poles drawn at 25 m/s do not describe a jump to 35 m/s.
-- **A rational G with common factors cancelled.** A zero that lands on a pole erases it from $G(s)$, but the mode is still inside the machine: an erased runaway pole still runs away, unseen at the output (State space tracks it).
+- **A rational G with common factors cancelled.** A zero that lands on a pole erases it from $G(s)$, but the mode is still inside the machine: an erased runaway pole still runs away, unseen at the output ([State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md) tracks it).
 - **Distinct poles, or care with repeats.** A pole repeated twice gives a mode t e^(pt). The test is unchanged in the open left half-plane, but a repeated pole on the axis grows like t.
 - **Numerator degree below the denominator's, for the sum as written.** At equal degree G also has a constant term: that share of the input passes straight through, so g gains an instant spike of that size, and the area of |g| gains the size too. Above it, a pure differentiator, G(s) = s, has no pole yet fails the test: a bounded input that wiggles ever faster has an unbounded slope.
 - **Starting from rest.** BIBO is about the input-to-output map with zero initial stored energy; a start from a disturbed state adds the same modes with other amounts.
@@ -135,7 +137,9 @@ $$\text{speed change}(t) = 1 - e^{-0.1t}\,(\cos 0.1t - 0.6 \sin 0.1t).$$
 
 The output is the input smeared by g, a convolution ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)): at time T it is the integral of g(τ) times the input at T − τ, over τ from 0 to T. If the input never exceeds M, each slice is at most M |g(τ)|, so the output never exceeds M times the area of |g|.
 
-The converse needs one cruel input. Choose the input at time T − τ to be +M wherever g(τ) is positive and −M wherever it is negative. Every slice then adds, and the output at T equals M times the area of |g| up to T. If that area grows without limit, inputs within ±M drive the output past any bound, so no bound of the form M times a constant covers them all. For a rational G a single input does it, as the poles of Step 5 show: a pole at 0 or in the right half makes a held step's output grow without limit, and a pair at ±jω does the same to a sine at ω.
+The converse needs one cruel input. Choose the input at time T − τ to be +M wherever g(τ) is positive and −M wherever it is negative. Every slice then adds, and the output at T equals M times the area of |g| up to T. If that area grows without limit, inputs within ±M drive the output past any bound, so no bound of the form M times a constant covers them all.
+
+For a rational G a single input does it, as the poles of Step 5 show: a pole at 0 or in the right half makes a held step's output grow without limit, and a pair at ±jω does the same to a sine at ω.
 
 For the car the area of |g| is 1.280471. Wiggle the set speed in any pattern within ±1 m/s and the road speed moves at most 1.28 m/s from 25 m/s. The worst pattern, simulated, reaches 1.280471. The signed area of g is 1.000000, which is G(0), where a held input ends up. Even the step's peak, 1.1342, falls short of the cruel input's 1.280471.
 
@@ -162,7 +166,7 @@ That holds for G with its poles fixed. This car's zero is the controller's own, 
 
 A system whose zeros all sit in the left half-plane is called **minimum-phase**. A right-half-plane zero can be split off as an **all-pass** factor, (a − s)/(a + s), which keeps every frequency's size and adds only delay to its phase ([Bode plots](04-frequency-response-and-bode-plots.md)). That delay is why a right-half-plane zero limits how fast any controller can make the system respond.
 
-**Another route.** The poles are also the eigenvalues of the car-and-controller state matrix, and State space reads stability from there. When only the sign of the real parts matters, [Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md) decides it from the denominator's coefficients without finding a single root.
+**Another route.** The poles are also the eigenvalues of the car-and-controller state matrix, and [State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md) reads stability from there. When only the sign of the real parts matters, [Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md) decides it from the denominator's coefficients without finding a single root.
 
 ---
 
@@ -194,7 +198,9 @@ The car overshoots its new set speed by 13.42% of the requested change, peaks 18
 
 ## Code, from first principles, and it actually runs
 
-Both programs take three roads to the same speed curve. Road 1 is the formula: quadratic formula for the poles, residues by partial fractions, the speed as a sum of modes. Road 2 simulates the car's force balance and the controller's running total with a fourth-order Runge-Kutta step of 0.01 s, with no transfer function anywhere, and must match road 1 to 1e-12. Road 3 reads the poles back from the simulated curve alone: the gap between crossings of 27 m/s gives ω, the ratio of the first two swings gives σ. The BIBO area is computed by Simpson's rule and then reached by simulating the cruel ±1 command. The flipped-gain run measures its growth rate and compares it with the right-half-plane pole.
+Both programs take three roads to the same speed curve. Road 1 is the formula: quadratic formula for the poles, residues by partial fractions, the speed as a sum of modes. Road 2 simulates the car's force balance and the controller's running total with a fourth-order Runge-Kutta step of 0.01 s (a standard method that advances a differential equation one small time step at a time), with no transfer function anywhere, and must match road 1 to 1e-12.
+
+Road 3 reads the poles back from the simulated curve alone: the gap between crossings of 27 m/s gives ω, the ratio of the first two swings gives σ. The BIBO area is computed by Simpson's rule (the area under a curve added up in thin strips, each topped by a parabola) and then reached by simulating the cruel ±1 command. The flipped-gain run measures its growth rate and compares it with the right-half-plane pole.
 
 ### Python
 
@@ -562,6 +568,386 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the bounded-input bounded-output test for every sum of modes with distinct poles, and checks the worked numbers.
+
+- Take a kick response $g(t) = \sum r_i e^{p_i t}$ with distinct poles and no residue zero. Then, starting from rest, every bounded input gives a bounded output exactly when each pole has negative real part.
+- Take a continuous kick response $g$ with finite area of $\lvert g\rvert$, and an input whose size never exceeds $M$. Then the output never exceeds $M$ times that area.
+- Suppose some constant $C$ makes every input of size at most $M$ give an output of size at most $M C$. Then the area of $\lvert g\rvert$ is finite.
+- Take the same sum of modes, with distinct poles and no residue zero. Then the area of $\lvert g\rvert$ is finite exactly when each pole has negative real part.
+- The car's coefficients 0.16, 0.2 and 0.02 hold, with G(0) = 1 and discriminant −0.04.
+- The pole −0.1 + 0.1j is a root, with residue 0.08 − 0.02j and step residue −0.5 − 0.3j.
+- The integrator's 3000 N and 30000 N hold, and so do the drag figures, 600 N against 720 N.
+
+Lean runs no simulation, so the speed curve, the overshoot and the area 1.280471 are left to the Python and Rust checks.
+
+```lean
+-- Poles and zeros: a sum of modes r e^(p t) with distinct poles and nonzero residues turns every bounded input into a bounded output exactly when every pole has negative real part.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Integral.IntegrableOn
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+
+open MeasureTheory Set
+
+lemma pz_intervalIntegral_norm_le {g : ℝ → ℂ} (hgi : IntegrableOn g (Ioi 0)) {T : ℝ}
+    (hT : 0 ≤ T) : ∫ t in (0 : ℝ)..T, ‖g t‖ ≤ ∫ t in Ioi 0, ‖g t‖ := by
+  rw [intervalIntegral.integral_of_le hT]
+  exact setIntegral_mono_set hgi.norm (ae_of_all _ fun _ => norm_nonneg _)
+    (Ioc_subset_Ioi_self).eventuallyLE
+
+lemma pz_core {n : ℕ} (p r : Fin n → ℂ) (hp : Function.Injective p) (k : Fin n)
+    (hk : ∀ i, (p i).re ≤ (p k).re) (T : ℝ) (hT : 0 ≤ T) :
+    T * ‖r k‖ ≤ ‖∫ t in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * t)) * Complex.exp (-(p k) * t)‖
+      + ∑ i ∈ Finset.univ.erase k, 2 * ‖r i‖ / ‖p i - p k‖ := by
+  have hint : ∫ t in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * t)) * Complex.exp (-(p k) * t)
+      = ∑ i, r i * ∫ t in (0 : ℝ)..T, Complex.exp ((p i - p k) * t) := by
+    have e : ∀ t : ℝ, (∑ i, r i * Complex.exp (p i * t)) * Complex.exp (-(p k) * t)
+        = ∑ i, r i * Complex.exp ((p i - p k) * t) := by
+      intro t
+      rw [Finset.sum_mul]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [mul_assoc, ← Complex.exp_add]
+      ring_nf
+    simp_rw [e]
+    rw [intervalIntegral.integral_finsetSum
+      (fun i _ => (Continuous.intervalIntegrable (by fun_prop) _ _))]
+    simp_rw [intervalIntegral.integral_const_mul]
+  have hJk : ∫ t in (0 : ℝ)..T, Complex.exp ((p k - p k) * t) = T := by simp
+  have hJ : ∀ i ∈ Finset.univ.erase k,
+      ‖r i * ∫ t in (0 : ℝ)..T, Complex.exp ((p i - p k) * t)‖ ≤ 2 * ‖r i‖ / ‖p i - p k‖ := by
+    intro i hi
+    have hne : p i - p k ≠ 0 := sub_ne_zero.mpr (fun h => (Finset.ne_of_mem_erase hi) (hp h))
+    rw [integral_exp_mul_complex hne, norm_mul, norm_div]
+    have h2 : ‖Complex.exp ((p i - p k) * T) - Complex.exp ((p i - p k) * ((0 : ℝ) : ℂ))‖ ≤ 2 := by
+      calc _ ≤ ‖Complex.exp ((p i - p k) * T)‖ + ‖Complex.exp ((p i - p k) * ((0 : ℝ) : ℂ))‖ :=
+            norm_sub_le _ _
+        _ ≤ 1 + 1 := by
+          gcongr
+          · rw [Complex.norm_exp, Real.exp_le_one_iff]
+            simp only [Complex.mul_re, Complex.sub_re, Complex.ofReal_re, Complex.sub_im,
+              Complex.ofReal_im, mul_zero, sub_zero]
+            nlinarith [hk i]
+          · simp
+        _ = 2 := by norm_num
+    have hq : 0 < ‖p i - p k‖ := norm_pos_iff.mpr hne
+    rw [mul_div_assoc', div_le_div_iff_of_pos_right hq]
+    nlinarith [norm_nonneg (r i)]
+  rw [hint, ← Finset.add_sum_erase _ _ (Finset.mem_univ k), hJk]
+  set S := ∑ i ∈ Finset.univ.erase k, r i * ∫ t in (0 : ℝ)..T, Complex.exp ((p i - p k) * t)
+  have h1 : ‖r k * (T : ℂ)‖ = T * ‖r k‖ := by
+    rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg hT, mul_comm]
+  have h2 : ‖S‖ ≤ ∑ i ∈ Finset.univ.erase k, 2 * ‖r i‖ / ‖p i - p k‖ :=
+    (norm_sum_le _ _).trans (Finset.sum_le_sum hJ)
+  have h3 : ‖r k * (T : ℂ)‖ ≤ ‖r k * (T : ℂ) + S‖ + ‖S‖ := by
+    calc ‖r k * (T : ℂ)‖ = ‖(r k * (T : ℂ) + S) - S‖ := by rw [add_sub_cancel_right]
+      _ ≤ _ := norm_sub_le _ _
+  linarith
+
+lemma pz_unbounded {c B : ℝ} (hc : 0 < c) (h : ∀ T : ℝ, 0 ≤ T → T * c ≤ B) : False := by
+  have := h ((|B| + 1) / c) (by positivity)
+  rw [div_mul_cancel₀ _ hc.ne'] at this
+  linarith [le_abs_self B]
+
+lemma pz_exists_max {n : ℕ} (p : Fin n → ℂ) (h : ¬ ∀ i, (p i).re < 0) :
+    ∃ k, 0 ≤ (p k).re ∧ ∀ i, (p i).re ≤ (p k).re := by
+  push Not at h
+  obtain ⟨j, hj⟩ := h
+  have : Nonempty (Fin n) := ⟨j⟩
+  obtain ⟨k, hk⟩ := Finite.exists_max (fun i => (p i).re)
+  exact ⟨k, le_trans hj (hk j), hk⟩
+
+lemma pz_bibo_bound (g : ℝ → ℂ) (hg : Continuous g) :
+    IntegrableOn g (Ioi 0) →
+      ∀ (M : ℝ) (u : ℝ → ℂ) (T : ℝ), Measurable u → (∀ t, ‖u t‖ ≤ M) → 0 ≤ T →
+        ‖∫ τ in (0 : ℝ)..T, g τ * u (T - τ)‖ ≤ M * ∫ t in Ioi 0, ‖g t‖ := by
+  intro hI M u T _ hM hT
+  have hM0 : 0 ≤ M := (norm_nonneg _).trans (hM 0)
+  calc ‖∫ τ in (0 : ℝ)..T, g τ * u (T - τ)‖ ≤ ∫ τ in (0 : ℝ)..T, ‖g τ‖ * M := by
+        apply intervalIntegral.norm_integral_le_of_norm_le hT
+        · refine Filter.Eventually.of_forall fun τ _ => ?_
+          rw [norm_mul]
+          gcongr
+          exact hM _
+        · exact (hg.norm.mul continuous_const).intervalIntegrable _ _
+    _ = (∫ τ in (0 : ℝ)..T, ‖g τ‖) * M := intervalIntegral.integral_mul_const _ _
+    _ ≤ (∫ t in Ioi 0, ‖g t‖) * M := by
+        gcongr
+        exact pz_intervalIntegral_norm_le hI hT
+    _ = M * ∫ t in Ioi 0, ‖g t‖ := mul_comm _ _
+
+lemma pz_integrable_of_re_neg {n : ℕ} (p r : Fin n → ℂ) (hneg : ∀ i, (p i).re < 0) :
+    IntegrableOn (fun t : ℝ => ∑ i, r i * Complex.exp (p i * t)) (Ioi 0) :=
+  integrable_finsetSum _ fun i _ =>
+    (integrableOn_exp_mul_complex_Ioi (hneg i) 0).const_mul (r i)
+
+#print axioms pz_intervalIntegral_norm_le
+#print axioms pz_core
+#print axioms pz_unbounded
+#print axioms pz_exists_max
+#print axioms pz_bibo_bound
+#print axioms pz_integrable_of_re_neg
+
+/-- The bounded-input bounded-output test. Take a system whose kick response is one exponential
+per pole, `g t = ∑ i, r i * e^(p i * t)`, with distinct poles (`p` injective) and no pole
+cancelled by a zero (every residue `r i` nonzero), started from rest, so its output at time `T`
+is the convolution `∫ τ in 0..T, g τ * u (T - τ)`. Then every bounded input gives a bounded
+output exactly when every pole has negative real part. -/
+theorem bibo_stable_iff_poles_in_left_half_plane {n : ℕ} (p r : Fin n → ℂ)
+    (hp : Function.Injective p) (hr : ∀ i, r i ≠ 0) :
+    (∀ u : ℝ → ℂ, Measurable u → (∃ M, ∀ t, ‖u t‖ ≤ M) →
+      ∃ C, ∀ T : ℝ, 0 ≤ T →
+        ‖∫ τ in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * τ)) * u (T - τ)‖ ≤ C) ↔
+    ∀ i, (p i).re < 0 := by
+  have hgc : Continuous (fun t : ℝ => ∑ i, r i * Complex.exp (p i * t)) := by fun_prop
+  constructor
+  · intro hB
+    by_contra hneg
+    obtain ⟨k, hk0, hk⟩ := pz_exists_max p hneg
+    obtain ⟨C, hC⟩ := hB (fun s => Complex.exp ((p k).im * s * Complex.I))
+      (by fun_prop : Continuous fun s : ℝ => Complex.exp ((p k).im * s * Complex.I)).measurable
+      ⟨1, fun t => by rw [Complex.norm_exp]; simp⟩
+    have hΦ : Continuous (fun t : ℝ => (∑ i, r i * Complex.exp (p i * t))
+        * Complex.exp (-((p k).im * t * Complex.I))) := by fun_prop
+    have hG : ∀ T : ℝ, 0 ≤ T → ‖∫ τ in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * τ))
+        * Complex.exp (-((p k).im * τ * Complex.I))‖ ≤ C := by
+      intro T hT
+      have h : ‖∫ τ in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * τ))
+          * Complex.exp ((p k).im * ((T - τ : ℝ) : ℂ) * Complex.I)‖ ≤ C := hC T hT
+      have e : ∫ τ in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * τ))
+            * Complex.exp ((p k).im * ((T - τ : ℝ) : ℂ) * Complex.I)
+          = Complex.exp ((p k).im * T * Complex.I) * ∫ τ in (0 : ℝ)..T,
+            (∑ i, r i * Complex.exp (p i * τ)) * Complex.exp (-((p k).im * τ * Complex.I)) := by
+        rw [← intervalIntegral.integral_const_mul]
+        refine intervalIntegral.integral_congr fun τ _ => ?_
+        rw [mul_left_comm, ← Complex.exp_add]
+        congr 2
+        push_cast
+        ring
+      rw [e, norm_mul, Complex.norm_exp] at h
+      simpa using h
+    have hC0 : 0 ≤ C := (norm_nonneg _).trans (hG 0 le_rfl)
+    have hF : ∀ T : ℝ, 0 ≤ T → ‖∫ t in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * t))
+        * Complex.exp (-(p k) * t)‖ ≤ 2 * C := by
+      intro T hT
+      let G : ℝ → ℂ := fun x => ∫ τ in (0 : ℝ)..x, (∑ i, r i * Complex.exp (p i * τ))
+        * Complex.exp (-((p k).im * τ * Complex.I))
+      have hGd : ∀ x : ℝ, HasDerivAt G ((∑ i, r i * Complex.exp (p i * x))
+          * Complex.exp (-((p k).im * x * Complex.I))) x :=
+        fun x => (hΦ.integral_hasStrictDerivAt 0 x).hasDerivAt
+      have hvd : ∀ x : ℝ, HasDerivAt (fun y : ℝ => Complex.exp (-((p k).re : ℂ) * y))
+          (-((p k).re : ℂ) * Complex.exp (-((p k).re : ℂ) * x)) x := by
+        intro x
+        have := (((hasDerivAt_id' x).ofReal_comp).const_mul (-((p k).re : ℂ))).cexp
+        convert this using 1
+        push_cast
+        ring
+      have ibp := intervalIntegral.integral_mul_deriv_eq_deriv_mul (a := 0) (b := T)
+        (fun x _ => hGd x) (fun x _ => hvd x) (hΦ.intervalIntegrable _ _)
+        ((by fun_prop : Continuous fun x : ℝ =>
+          -((p k).re : ℂ) * Complex.exp (-((p k).re : ℂ) * x)).intervalIntegrable _ _)
+      have hG0 : G 0 = 0 := intervalIntegral.integral_same
+      rw [hG0] at ibp
+      have hrw : ∫ t in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * t)) * Complex.exp (-(p k) * t)
+          = ∫ x in (0 : ℝ)..T, ((∑ i, r i * Complex.exp (p i * x))
+            * Complex.exp (-((p k).im * x * Complex.I))) * Complex.exp (-((p k).re : ℂ) * x) := by
+        refine intervalIntegral.integral_congr fun x _ => ?_
+        rw [mul_assoc, ← Complex.exp_add]
+        congr 2
+        conv_lhs => rw [← Complex.re_add_im (p k)]
+        ring
+      have hsplit : ∫ x in (0 : ℝ)..T, ((∑ i, r i * Complex.exp (p i * x))
+            * Complex.exp (-((p k).im * x * Complex.I))) * Complex.exp (-((p k).re : ℂ) * x)
+          = G T * Complex.exp (-((p k).re : ℂ) * T)
+            - ∫ x in (0 : ℝ)..T, G x * (-((p k).re : ℂ) * Complex.exp (-((p k).re : ℂ) * x)) := by
+        linear_combination ibp
+      have hv : ∀ x : ℝ, 0 ≤ x → ‖Complex.exp (-((p k).re : ℂ) * x)‖ = Real.exp (-(p k).re * x) := by
+        intro x _
+        rw [Complex.norm_exp]
+        congr 1
+        simp
+      have hb1 : ‖G T * Complex.exp (-((p k).re : ℂ) * T)‖ ≤ C := by
+        rw [norm_mul, hv T hT]
+        calc ‖G T‖ * Real.exp (-(p k).re * T) ≤ C * 1 := by
+              gcongr
+              · exact hG T hT
+              · rw [Real.exp_le_one_iff]; nlinarith
+          _ = C := mul_one C
+      have hreal : ∫ x in (0 : ℝ)..T, (p k).re * Real.exp (-(p k).re * x)
+          = 1 - Real.exp (-(p k).re * T) := by
+        rw [intervalIntegral.integral_eq_sub_of_hasDerivAt
+          (f := fun x => -Real.exp (-(p k).re * x))]
+        · simp
+          ring
+        · intro x _
+          have := (((hasDerivAt_id' x).const_mul (-(p k).re)).exp).neg
+          convert this using 1
+          ring
+        · exact (by fun_prop : Continuous fun x : ℝ =>
+            (p k).re * Real.exp (-(p k).re * x)).intervalIntegrable _ _
+      have hb2 : ‖∫ x in (0 : ℝ)..T, G x * (-((p k).re : ℂ) * Complex.exp (-((p k).re : ℂ) * x))‖
+          ≤ C := by
+        calc _ ≤ ∫ x in (0 : ℝ)..T, C * ((p k).re * Real.exp (-(p k).re * x)) := by
+              apply intervalIntegral.norm_integral_le_of_norm_le hT
+              · refine Filter.Eventually.of_forall fun x hx => ?_
+                rw [norm_mul, norm_mul, hv x hx.1.le, norm_neg, Complex.norm_real,
+                  Real.norm_of_nonneg hk0]
+                gcongr
+                exact hG x hx.1.le
+              · exact (by fun_prop : Continuous fun x : ℝ =>
+                  C * ((p k).re * Real.exp (-(p k).re * x))).intervalIntegrable _ _
+          _ = C * (1 - Real.exp (-(p k).re * T)) := by
+              rw [intervalIntegral.integral_const_mul, hreal]
+          _ ≤ C := by
+              have := Real.exp_pos (-(p k).re * T)
+              nlinarith
+      rw [hrw, hsplit]
+      calc _ ≤ ‖G T * Complex.exp (-((p k).re : ℂ) * T)‖ + ‖∫ x in (0 : ℝ)..T,
+            G x * (-((p k).re : ℂ) * Complex.exp (-((p k).re : ℂ) * x))‖ := norm_sub_le _ _
+        _ ≤ C + C := add_le_add hb1 hb2
+        _ = 2 * C := by ring
+    refine pz_unbounded (c := ‖r k‖)
+      (B := 2 * C + ∑ i ∈ Finset.univ.erase k, 2 * ‖r i‖ / ‖p i - p k‖)
+      (norm_pos_iff.mpr (hr k)) ?_
+    intro T hT
+    have h1 := pz_core p r hp k hk T hT
+    have h2 := hF T hT
+    linarith
+  · rintro hneg u hu ⟨M, hM⟩
+    have hI := pz_integrable_of_re_neg p r hneg
+    exact ⟨M * ∫ t : ℝ in Ioi 0, ‖∑ i, r i * Complex.exp (p i * t)‖,
+      fun T hT => pz_bibo_bound _ hgc hI M u T hu hM hT⟩
+
+/-- Step 4: for a continuous kick response `g`, if the area under `‖g‖` is finite then an input
+never larger than `M` gives an output never larger than `M` times that area; and if some constant
+`C` makes every input never larger than `M` give an output never larger than `M * C`, the area
+under `‖g‖` is finite. -/
+theorem bibo_iff_finite_area (g : ℝ → ℂ) (hg : Continuous g) :
+    (IntegrableOn g (Ioi 0) →
+      ∀ (M : ℝ) (u : ℝ → ℂ) (T : ℝ), Measurable u → (∀ t, ‖u t‖ ≤ M) → 0 ≤ T →
+        ‖∫ τ in (0 : ℝ)..T, g τ * u (T - τ)‖ ≤ M * ∫ t in Ioi 0, ‖g t‖) ∧
+    ((∃ C : ℝ, ∀ (M : ℝ) (u : ℝ → ℂ) (T : ℝ), Measurable u → (∀ t, ‖u t‖ ≤ M) → 0 ≤ T →
+        ‖∫ τ in (0 : ℝ)..T, g τ * u (T - τ)‖ ≤ M * C) →
+      IntegrableOn g (Ioi 0)) := by
+  constructor
+  · exact pz_bibo_bound g hg
+  · rintro ⟨C, hC⟩
+    refine integrableOn_Ioi_of_intervalIntegral_norm_bounded (l := Filter.atTop) (b := id) C 0
+      (fun i => (hg.intervalIntegrable 0 (id i)).1) Filter.tendsto_id ?_
+    filter_upwards [Filter.eventually_ge_atTop 0] with T hT
+    let u : ℝ → ℂ := fun s => star (g (T - s)) / (‖g (T - s)‖ : ℂ)
+    have hu : Measurable u := by
+      have : Continuous fun s => g (T - s) := by fun_prop
+      exact (continuous_star.comp this).measurable.div
+        (Complex.continuous_ofReal.comp this.norm).measurable
+    have hu1 : ∀ t, ‖u t‖ ≤ 1 := by
+      intro t
+      simp only [u, norm_div, norm_star, Complex.norm_real, norm_norm]
+      exact div_self_le_one _
+    have key : ∫ τ in (0 : ℝ)..T, g τ * u (T - τ) = ((∫ τ in (0 : ℝ)..T, ‖g τ‖ : ℝ) : ℂ) := by
+      rw [← intervalIntegral.integral_ofReal]
+      refine intervalIntegral.integral_congr fun τ _ => ?_
+      simp only [u, sub_sub_cancel]
+      by_cases h : g τ = 0
+      · simp [h]
+      · have hn : (‖g τ‖ : ℂ) ≠ 0 := by
+          exact_mod_cast (norm_pos_iff.mpr h).ne'
+        rw [mul_div_assoc', show star (g τ) = (starRingEnd ℂ) (g τ) from rfl, Complex.mul_conj',
+          div_eq_iff hn]
+        ring
+    have := hC 1 u T hu hu1 hT
+    rw [key, Complex.norm_real, Real.norm_of_nonneg
+      (intervalIntegral.integral_nonneg hT (fun _ _ => norm_nonneg _)), one_mul] at this
+    exact this
+
+/-- Step 5: a sum of modes `∑ i, r i * e^(p i * t)` with distinct poles and nonzero residues has
+finite area under its size on `t > 0` exactly when every pole has negative real part. -/
+theorem finite_area_iff_poles_in_left_half_plane {n : ℕ} (p r : Fin n → ℂ)
+    (hp : Function.Injective p) (hr : ∀ i, r i ≠ 0) :
+    IntegrableOn (fun t : ℝ => ∑ i, r i * Complex.exp (p i * t)) (Ioi 0) ↔
+    ∀ i, (p i).re < 0 := by
+  constructor
+  · intro hI
+    by_contra hneg
+    obtain ⟨k, hk0, hk⟩ := pz_exists_max p hneg
+    have hf : Continuous (fun t : ℝ => ∑ i, r i * Complex.exp (p i * t)) := by fun_prop
+    refine pz_unbounded (c := ‖r k‖)
+      (B := (∫ t : ℝ in Ioi 0, ‖∑ i, r i * Complex.exp (p i * t)‖)
+        + ∑ i ∈ Finset.univ.erase k, 2 * ‖r i‖ / ‖p i - p k‖) (norm_pos_iff.mpr (hr k)) ?_
+    intro T hT
+    have hc := pz_core p r hp k hk T hT
+    have hb : ‖∫ t in (0 : ℝ)..T, (∑ i, r i * Complex.exp (p i * t)) * Complex.exp (-(p k) * t)‖
+        ≤ ∫ t in (0 : ℝ)..T, ‖∑ i, r i * Complex.exp (p i * t)‖ := by
+      apply intervalIntegral.norm_integral_le_of_norm_le hT
+      · refine Filter.Eventually.of_forall fun t ht => ?_
+        rw [norm_mul, Complex.norm_exp]
+        have h0 : (-(p k) * (t : ℂ)).re ≤ 0 := by
+          simp only [Complex.mul_re, Complex.neg_re, Complex.ofReal_re, Complex.neg_im,
+            Complex.ofReal_im, mul_zero, sub_zero]
+          nlinarith [ht.1, hk0]
+        calc _ ≤ ‖∑ i, r i * Complex.exp (p i * t)‖ * 1 := by
+              gcongr
+              exact Real.exp_le_one_iff.mpr h0
+          _ = _ := mul_one _
+      · exact hf.norm.intervalIntegrable _ _
+    have := pz_intervalIntegral_norm_le hI hT
+    linarith
+  · exact pz_integrable_of_re_neg p r
+
+-- Step 1: the closed-loop coefficients k/m, (b + k)/m and k a/m for m = 1500, b = 60, k = 240,
+-- a = 1/8 are 4/25, 1/5 and 1/50; G(0) = (1/50)/(1/50) = 1.
+example : (240 : ℚ) / 1500 = 4 / 25 := by norm_num
+example : ((60 : ℚ) + 240) / 1500 = 1 / 5 := by norm_num
+example : (240 : ℚ) * (1 / 8) / 1500 = 1 / 50 := by norm_num
+example : ((1 : ℚ) / 50) / (1 / 50) = 1 := by norm_num
+
+-- Worked numbers: the discriminant 0.2^2 - 4 * 0.02 is -0.04.
+example : ((1 : ℚ) / 5) ^ 2 - 4 * (1 / 50) = -1 / 25 := by norm_num
+
+-- Step 2: p1 = -1/10 + (1/10) j is a root of s^2 + (1/5) s + 1/50.
+example : ((-1 / 10 : ℂ) + (1 / 10) * Complex.I) ^ 2
+    + (1 / 5) * ((-1 / 10 : ℂ) + (1 / 10) * Complex.I) + 1 / 50 = 0 := by
+  apply Complex.ext <;> simp [sq] <;> norm_num
+
+-- Step 3: the residue at p1 is r1 = 2/25 - (1/50) j, since r1 (p1 - p2) = (4/25) p1 + 1/50,
+-- and the step residue is r1 / p1 = -1/2 - (3/10) j.
+example : ((2 / 25 : ℂ) - (1 / 50) * Complex.I) * ((1 / 5) * Complex.I)
+    = (4 / 25) * ((-1 / 10 : ℂ) + (1 / 10) * Complex.I) + 1 / 50 := by
+  apply Complex.ext <;> simp <;> norm_num
+example : ((-1 / 2 : ℂ) - (3 / 10) * Complex.I) * ((-1 / 10 : ℂ) + (1 / 10) * Complex.I)
+    = (2 / 25 : ℂ) - (1 / 50) * Complex.I := by
+  apply Complex.ext <;> simp <;> norm_num
+
+-- What breaks: the integrator alone builds 240 * (1/8) * 100 = 3000 N in 100 s and 30000 N in
+-- 1000 s; drag over a 10 m/s change is 60 * 10 = 600 N linear against (6/5)(35^2 - 25^2) = 720 N.
+example : (240 : ℚ) * (1 / 8) * 100 = 3000 := by norm_num
+example : (240 : ℚ) * (1 / 8) * 1000 = 30000 := by norm_num
+example : (60 : ℕ) * 10 = 600 := by norm_num
+example : (6 / 5 : ℚ) * (35 ^ 2 - 25 ^ 2) = 720 := by norm_num
+
+#print axioms bibo_stable_iff_poles_in_left_half_plane
+#print axioms bibo_iff_finite_area
+#print axioms finite_area_iff_poles_in_left_half_plane
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'pz_intervalIntegral_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pz_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pz_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pz_exists_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pz_bibo_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pz_integrable_of_re_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bibo_stable_iff_poles_in_left_half_plane' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bibo_iff_finite_area' depends on axioms: [propext, Classical.choice, Quot.sound]
+'finite_area_iff_poles_in_left_half_plane' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Gain k from 240 to 60.** Guess first: faster or slower ring? The poles move to −0.04 ± 0.0583j: slower decay and slower ring, a lazier car.
@@ -586,7 +972,7 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Cruise control and adaptive cruise control.** The closed-loop poles set how far the car overshoots a new set speed and how long it takes to settle; this card's car overshoots by 0.2684 m/s.
-- **Aircraft handling.** The short-period and phugoid modes of an aircraft's pitch are pole pairs; handling-quality specifications set the minimum damping of each.
+- **Aircraft handling.** The short-period mode (a quick nose bob) and the phugoid mode (a slow climb-and-dive swing) of an aircraft's pitch are pole pairs; handling-quality specifications set the minimum damping of each.
 - **Audio and anti-alias filters.** A filter's poles set its ring; a filter with poles near the axis rings audibly after a click ([Bode plots](04-frequency-response-and-bode-plots.md)).
 - **Digital controllers.** In sampled time the same test reads "every pole inside the unit circle" ([The z-transform](08-z-transform-and-discrete-time-systems.md)).
 - **Footbridges and tall buildings.** A lightly damped structural mode is a pole pair close to the imaginary axis; dampers are fitted to push it left.

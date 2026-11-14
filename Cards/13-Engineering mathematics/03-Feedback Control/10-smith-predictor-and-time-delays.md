@@ -59,7 +59,7 @@ $$L(s) = \frac{K_p\,e^{-\theta s}}{\tau s}, \qquad \omega_c = \frac{K_p}{\tau}, 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $\theta$ | delay: pipe volume divided by flow | 4.0 s at 8 L/min; 5.33 s at 6 L/min | phase margin falls, ultimate gain falls |
-| $\theta_m$, $\Delta$ | the delay the predictor's model assumes (on nyquist-criterion-and-stability-margins θ_m is the delay margin, a different thing); true delay minus model delay | 4 s; 0 s when the flow is 8 L/min | the predictor rings, then goes unstable past a true delay of 5.49 s |
+| $\theta_m$, $\Delta$ | the delay the predictor's model assumes (on [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md) θ_m is the delay margin, a different thing); true delay minus model delay | 4 s; 0 s when the flow is 8 L/min | the predictor rings, then goes unstable past a true delay of 5.49 s |
 | $\tau$, $G_0$, $G_m$ | mixer lag; delay-free mixer 1/(τs + 1); the predictor's copy of it | 2 s | a slower mixer allows a larger gain before the delay bites |
 | $s$, $\omega$, $j$ | Laplace variable; angular frequency; the square root of −1 | ω in rad/s | the delay's phase lag grows in proportion to ω |
 | $C$, $K_p$, $T_i$ | the controller; its proportional gain; its integral time | Kp = 2 (fast) or 0.262 (detuned); Ti = 2 s | higher Kp: faster, until the delay makes it unstable |
@@ -111,7 +111,7 @@ The shift theorem says a signal delayed by θ has its Laplace transform multipli
 
 ### Step 2: the delay leaves the crossover frequency where it was and takes its phase
 
-Multiplying L by something of size 1 leaves |L| unchanged, so the crossover frequency ω_c does not move. The phase there drops by ω_c θ, and so does the phase margin. On a Bode plot the magnitude is untouched and the phase falls without limit; a lag's phase stops at −90°, a delay's never stops.
+Multiplying L by something of size 1 leaves |L| unchanged, so the crossover frequency ω_c does not move. The phase there drops by ω_c θ, and so does the phase margin. On a Bode plot (the loop's size and phase drawn against frequency; see [Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)) the magnitude is untouched and the phase falls without limit; a lag's phase stops at −90°, a delay's never stops.
 
 ### Step 3: for the shower, every number has a closed form
 
@@ -360,10 +360,10 @@ assert abs(hi2 * DT - edge(-1)) < 0.01      # ... and the lower edge
 assert abs(180 + math.degrees(cmath.phase(loop(wc, KD))) - 60.0) < 1e-6        # margin: complex vs formula
 assert abs(full[0] - TH) < 0.01 and abs(full[-1] - 2 * TH) < 0.01                # flush felt theta to 2*theta
 assert sw[6.0] < 1 < sw[5.0] and sw09 > 1   # 5.33 s inside the edge, 6.40 s and Pade-1's Kp = 0.9 outside
-print("all checks passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-10-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-14 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 pipe volume, 8 L/min for 4 s                          0.533333 L
@@ -420,7 +420,7 @@ sim      Smith at 6 L/min, swing ratio per 32 s       0.654433
 sim      Smith at 5 L/min, swing ratio per 32 s       2.935963 
 formula  detuned PI tolerates delay up to            12.000000 s
 sim      Kp = 0.9 no predictor, swing ratio per 32 s    2.121260 
-all checks passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -593,11 +593,11 @@ fn main() {
     assert!((pm - 60.0).abs() < 1e-6); // margin: complex vs formula
     assert!((full[0] - TH).abs() < 0.01 && (full[full.len() - 1] - 2.0 * TH).abs() < 0.01); // flush felt theta to 2*theta
     assert!(sw[0] < 1.0 && 1.0 < sw[1]); assert!(sw09 > 1.0); // 5.33 s inside the edge; 6.40 s and Pade-1's Kp = 0.9 outside
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-10-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 pipe volume, 8 L/min for 4 s                          0.533333 L
@@ -654,10 +654,128 @@ sim      Smith at 6 L/min, swing ratio per 32 s       0.654433
 sim      Smith at 5 L/min, swing ratio per 32 s       2.935963 
 formula  detuned PI tolerates delay up to            12.000000 s
 sim      Kp = 0.9 no predictor, swing ratio per 32 s    2.121260 
-all checks passed
+ALL CHECKS PASS
 ```
 
 The two outputs are identical to the printed precision.
+
+### Lean
+
+Lean proves the delay's phase rule, the exact Smith predictor's algebra and the shower's ultimate gain, for any values.
+
+- Take any complex loop value $z$, any frequency $\omega$ and any delay $\theta$. Then $z e^{-j\omega\theta}$ has the same size as $z$, and its angle is $\arg z - \omega\theta$.
+- Suppose the predictor's model is exact: $G_m = G_0$ and $\theta_m = \theta$. Then $(1 + C G_0) y = C G_0 e^{-\theta s} r$. The delay has left the characteristic equation.
+- Take $\tau > 0$, $\theta > 0$ and $\omega_{180} = \pi/(2\theta)$. Then $L(j\omega_{180}) = -1$ exactly when $K_p = \pi\tau/(2\theta)$, the ultimate gain.
+- Take the same $\omega_{180}$. Then the swing period $2\pi/\omega_{180}$ is $4\theta$.
+- The worked numbers check: fast crossover 1 rad/s, swing period 16 s, first-order Padé edge 1.000.
+
+The Padé stand-ins, the model-error range, the flush and every simulation are left to the Python and Rust checks.
+
+```lean
+-- Time delays: a delay multiplies a loop by a factor of size one that turns its phase back by frequency times delay, an exact Smith predictor takes the delay out of the loop's characteristic factor, and the shower loop's ultimate gain is pi tau / (2 theta).
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+
+open Complex
+
+/-- A delay of `θ` seconds, seen at angular frequency `ω`, is the factor `e^(-jωθ)`.
+Multiplying any loop value `z = L(jω)` by it leaves the size unchanged and turns the
+phase back by exactly `ωθ`: the result is `|z| e^(j(arg z - ωθ))`. -/
+theorem delay_keeps_gain_and_subtracts_phase (z : ℂ) (ω θ : ℝ) :
+    ‖z * exp (-(ω * θ : ℝ) * I)‖ = ‖z‖ ∧
+      z * exp (-(ω * θ : ℝ) * I) = (‖z‖ : ℂ) * exp (((arg z - ω * θ : ℝ) : ℂ) * I) := by
+  have hn : ‖exp (-(ω * θ : ℝ) * I)‖ = 1 := by
+    have : -((ω * θ : ℝ) : ℂ) * I = ((-(ω * θ) : ℝ) : ℂ) * I := by push_cast; ring
+    rw [this]
+    exact norm_exp_ofReal_mul_I _
+  refine ⟨by rw [norm_mul, hn, mul_one], ?_⟩
+  conv_lhs => rw [← norm_mul_exp_arg_mul_I z]
+  rw [mul_assoc, ← Complex.exp_add]
+  congr 2
+  push_cast
+  ring
+
+/-- The Smith predictor with an exact model. The plant is `y = G0 e u` (mixer `G0`, delay
+factor `e`); the controller `C` acts on the target `r` minus the fed-back signal
+`y + Gm (1 - em) u`. If the model is right (`Gm = G0`, `em = e`), then
+`(1 + C G0) y = C G0 e r`: the closed loop is `C G0 / (1 + C G0)` followed by the delay,
+and the characteristic factor `1 + C G0` contains no delay. -/
+theorem smith_predictor_moves_delay_outside_loop
+    (C G0 Gm e em r u y : ℂ)
+    (hplant : y = G0 * e * u)
+    (hctrl : u = C * (r - (y + Gm * (1 - em) * u)))
+    (hGm : Gm = G0) (hem : em = e) :
+    (1 + C * G0) * y = C * G0 * e * r := by
+  rw [hGm, hem] at hctrl
+  linear_combination (1 + C * G0 - G0 * e * C) * hplant + G0 * e * hctrl
+
+/-- The shower loop `L(jω) = Kp e^(-jωθ) / (jωτ)`, with mixer lag `τ > 0` and delay `θ > 0`.
+At `ω180 = π / (2θ)` its phase is `-180°`, and the loop sits on the edge of oscillation
+(`L(jω180) = -1`) exactly when `Kp = π τ / (2θ)`, the ultimate gain; the swing period
+`2π / ω180` is `4θ`. -/
+theorem shower_ultimate_gain (Kp τ θ : ℝ) (hτ : 0 < τ) (hθ : 0 < θ) :
+    let ω := Real.pi / (2 * θ)
+    ((Kp : ℂ) * exp (-(ω * θ : ℝ) * I) / (I * (ω : ℂ) * (τ : ℂ)) = -1 ↔
+        Kp = Real.pi * τ / (2 * θ)) ∧
+      2 * Real.pi / ω = 4 * θ := by
+  intro ω
+  have hθ' : (θ : ℝ) ≠ 0 := hθ.ne'
+  have hωθ : ω * θ = Real.pi / 2 := by
+    simp only [ω]; field_simp
+  have hω : 0 < ω := by positivity
+  have hE : exp (-(ω * θ : ℝ) * I) = -I := by
+    rw [hωθ]
+    have : -((Real.pi / 2 : ℝ) : ℂ) * I = ((-(Real.pi / 2) : ℝ) : ℂ) * I := by push_cast; ring
+    rw [this, Complex.exp_mul_I]
+    rw [← Complex.ofReal_cos, ← Complex.ofReal_sin, Real.cos_neg, Real.sin_neg, Real.cos_pi_div_two,
+      Real.sin_pi_div_two]
+    push_cast; ring
+  have hωτ : (ω : ℂ) * (τ : ℂ) ≠ 0 := by
+    have : ω * τ ≠ 0 := by positivity
+    exact_mod_cast this
+  have key : (Kp : ℂ) * exp (-(ω * θ : ℝ) * I) / (I * (ω : ℂ) * (τ : ℂ))
+      = ((-(Kp / (ω * τ)) : ℝ) : ℂ) := by
+    rw [hE]
+    have hτ' : (τ : ℂ) ≠ 0 := by exact_mod_cast hτ.ne'
+    have hω' : (ω : ℂ) ≠ 0 := by exact_mod_cast hω.ne'
+    push_cast
+    field_simp
+  constructor
+  · rw [key]
+    constructor
+    · intro h
+      have h2 : -(Kp / (ω * τ)) = -1 := by exact_mod_cast h
+      have h3 : Kp = ω * τ := by
+        have : ω * τ ≠ 0 := by positivity
+        field_simp at h2
+        linarith
+      rw [h3]; simp only [ω]; field_simp
+    · intro h
+      have : -(Kp / (ω * τ)) = -1 := by
+        rw [h]; simp only [ω]; field_simp
+      rw [this]; push_cast; ring
+  · simp only [ω]; field_simp; ring
+
+-- Worked numbers from the card (τ = 2 s, θ = 4 s, fast gain Kp = 2).
+-- Fast crossover Kp / τ = 2 / 2 = 1 rad/s.
+example : (2 : ℚ) / 2 = 1 := by norm_num
+-- Swing period at the ultimate gain: 4θ = 4 × 4 = 16 s.
+example : (4 : ℕ) * 4 = 16 := by decide
+-- First-order Padé edge 2τ / θ = 2 × 2 / 4 = 1.
+example : (2 : ℚ) * 2 / 4 = 1 := by norm_num
+
+#print axioms delay_keeps_gain_and_subtracts_phase
+#print axioms smith_predictor_moves_delay_outside_loop
+#print axioms shower_ultimate_gain
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'delay_keeps_gain_and_subtracts_phase' depends on axioms: [propext, Classical.choice, Quot.sound]
+'smith_predictor_moves_delay_outside_loop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shower_ultimate_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -704,13 +822,13 @@ The two outputs are identical to the printed precision.
 
 - [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md): Padé approximants of any order for any function, how their coefficients come from a series, and how their error behaves.
 
-On the shower the second-order stand-in put the edge at 0.791288 against the true 0.785398, where the first-order one said 1.000; why a ratio of polynomials beats a plain series of the same length, and how far up in frequency each order can be trusted, is what pade-and-rational-approximation answers.
+On the shower the second-order stand-in put the edge at 0.791288 against the true 0.785398, where the first-order one said 1.000; why a ratio of polynomials beats a plain series of the same length, and how far up in frequency each order can be trusted, is what [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md) answers.
 
 ---
 
 ## Sources
 
-Verified 2026-10-06: every link below opens a page that names the cited work.
+Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Karl J. Åström and Richard M. Murray, *Feedback Systems: An Introduction for Scientists and Engineers*, Princeton University Press, 2nd ed., [book site with the free edition](https://fbswiki.org/wiki/index.php/Feedback_Systems:_An_Introduction_for_Scientists_and_Engineers). Time delay in the frequency domain, its phase lag, and the limit it puts on loop speed.
 - Dale E. Seborg, Thomas F. Edgar, Duncan A. Mellichamp and Francis J. Doyle III, *Process Dynamics and Control*, 4th ed., Wiley, [publisher's page](https://www.wiley.com/en-us/Process+Dynamics+and+Control%2C+4th+Edition-p-9781119285915). Padé approximation of dead time and time-delay compensation by the Smith predictor, in process-plant terms.

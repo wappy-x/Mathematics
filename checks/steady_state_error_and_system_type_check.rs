@@ -136,4 +136,5 @@ fn main() {
     assert!(plo[2] > plo[0] && phi[2] < phi[0]); // Routh edge: just below it grows, just above it dies
     assert!(((20.0 - xs[0]) - (20.0 - (-15.0 + QMAX / U))).abs() < 1e-2); // saturated: heat balance vs simulation
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

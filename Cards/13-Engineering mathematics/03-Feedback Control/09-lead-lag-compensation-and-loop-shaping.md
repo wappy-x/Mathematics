@@ -37,7 +37,12 @@ Orange: gain only, flat at −180°, no margin anywhere. Green: with the lead, a
 
 ## The formula
 
-Four pieces of notation from earlier cards, in one line each. $G(s)$ is the transfer function, what the system does to each exponential $e^{st}$; $s = j\omega$ reads off the response to a sine of angular frequency $\omega$, with $j$ the square root of −1 as engineers write it (the rest of the library writes i). The loop gain $L(s)$ is controller times plant, the round trip a signal makes ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). The sensitivity $S = 1/(1+L)$ is the factor by which feedback shrinks a disturbance's effect at each frequency ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)). The phase margin is 180° plus the loop's phase at the crossover frequency $\omega_c$, where $|L| = 1$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
+Four pieces of notation from earlier cards, in one line each.
+
+- $G(s)$ is the transfer function, what the system does to each exponential $e^{st}$; $s = j\omega$ reads off the response to a sine of angular frequency $\omega$, with $j$ the square root of −1 as engineers write it (the rest of the library writes i).
+- The loop gain $L(s)$ is controller times plant, the round trip a signal makes ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)).
+- The sensitivity $S = 1/(1+L)$ is the factor by which feedback shrinks a disturbance's effect at each frequency ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)).
+- The phase margin is 180° plus the loop's phase at the crossover frequency $\omega_c$, where $|L| = 1$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 
 The gimbal, the two sections and the loop:
 
@@ -66,7 +71,7 @@ $$\int_0^\infty \ln\lvert S(j\omega)\rvert\,d\omega = \pi \sum_k \operatorname{R
 | $\varphi_m$ | the lead's peak phase | 45° | needs smaller $\alpha$ |
 | $\omega_c$ | crossover: where $\lvert L\rvert = 1$, roughly the bandwidth | 10.0379 rad/s with both sections | faster loop, less margin from the plant |
 | $C_2$, $\beta$, $T_l$ | the lag section; its low-frequency gain boost; its time constant | $\beta$ = 10, $T_l$ = 1 s | bigger $\beta$: smaller error, more phase lost |
-| $L$, $S$ | loop gain; sensitivity $1/(1+L)$ | $\lvert S\rvert$ peaks at 3.81 dB | — |
+| $L$, $S$ | loop gain; sensitivity $1/(1+L)$ | $\lvert S\rvert$ peaks at 3.81 dB (decibels: 20 times the base-10 log of a gain) | — |
 | $p_k$ | an unstable pole of $L$, real part in rad/s | none; +3 rad/s for a top-heavy camera | the area under $\ln\lvert S\rvert$ grows by $\pi p_k$ |
 | $\tau_d$, $e$ | steady imbalance torque; pointing error | 0.02 N m; 0.2766° | error grows in proportion |
 
@@ -142,7 +147,11 @@ Poles of $L$ on the imaginary axis, such as the gimbal's double pole at 0, are z
 
 ### Step 5: what the waterbed forbids
 
-Three things follow. First, no controller makes $\lvert S\rvert < 1$ at every frequency: the area must balance. Second, an unstable plant pays extra. A top-heavy camera, its centre of mass above the axis, has gravity torque 0.09 N m/rad pushing it over, an unstable pole at +3 rad/s. The same lead still stabilises it (the Routh test, [Routh-Hurwitz](04-routh-hurwitz-criterion.md), gives 0.000828 > 0), but the integral is now 9.4248 rad/s, π times 3: net amplification is compulsory. Third, the balance can only be spread thin over frequencies where the loop gain is small, and those are limited by noise, by the motor and by delays. A delay caps how high crossover can go; that limit is the subject of [Time delays](10-smith-predictor-and-time-delays.md). A right-half-plane zero (a zero with positive real part) caps it too, holding crossover well below the zero's frequency (Freudenberg and Looze, in Sources).
+Three things follow.
+
+1. No controller makes $\lvert S\rvert < 1$ at every frequency: the area must balance.
+2. An unstable plant pays extra. A top-heavy camera, its centre of mass above the axis, has gravity torque 0.09 N m/rad pushing it over, an unstable pole at +3 rad/s. The same lead still stabilises it (the Routh test, [Routh-Hurwitz](04-routh-hurwitz-criterion.md), gives 0.000828 > 0), but the integral is now 9.4248 rad/s, π times 3: net amplification is compulsory.
+3. The balance can only be spread thin over frequencies where the loop gain is small, and those are limited by noise, by the motor and by delays. A delay caps how high crossover can go; that limit is the subject of [Time delays](10-smith-predictor-and-time-delays.md). A right-half-plane zero (a zero with positive real part) caps it too, holding crossover well below the zero's frequency (Freudenberg and Looze, in Sources).
 
 The same design can be reached in the complex plane by placing closed-loop poles with the lead's zero and pole ([Root locus](05-root-locus.md)); a lead is also a filtered derivative term, the D of [PID control](07-pid-control-and-tuning.md) with the filter of [PID in practice](08-pid-on-real-hardware.md) (its Step 5), and a lag a softened integral.
 
@@ -597,6 +606,143 @@ chart, error l-lag deg  0.00  1.82  2.22  1.67  1.34  1.12  0.94  0.80  0.68  0.
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the lead's peak formulas for every lead with $K_c > 0$, $T > 0$ and $0 < \alpha < 1$.
+
+- Take such a lead. Then over $\omega > 0$, its phase at $s = j\omega$ is largest at $\omega_m = 1/(T\sqrt{\alpha})$, and nowhere else.
+- That $\omega_m$ is the geometric mean of the zero $1/T$ and the pole $1/(\alpha T)$.
+- Take the same lead. Then its peak phase $\varphi_m$ has $\sin\varphi_m = (1-\alpha)/(1+\alpha)$.
+- Take the same lead. Then $\alpha = (1 - \sin\varphi_m)/(1 + \sin\varphi_m)$, the design formula.
+- Take the same lead. Then its gain at the peak is $\lvert C_1(j\omega_m)\rvert = K_c/\sqrt{\alpha}$.
+- Take $\varphi_m$ = 45°. Then $\alpha = (1 - \sin 45°)/(1 + \sin 45°) = 3 - 2\sqrt 2$.
+
+The decimals, the crossover and margins, the lag, the simulations and the waterbed are left to the Python and Rust checks.
+
+```lean
+-- Loop shaping: a lead compensator's phase peaks at the geometric mean of its zero and pole, with sine (1 - α)/(1 + α) and gain Kc/√α there.
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open Complex
+
+/-- The lead section C₁(s) = Kc (T s + 1)/(α T s + 1). -/
+noncomputable def lead (Kc T α : ℝ) (s : ℂ) : ℂ :=
+  (Kc : ℂ) * ((T : ℂ) * s + 1) / ((α : ℂ) * (T : ℂ) * s + 1)
+
+lemma arg_eq_arctan_of_re_pos {z : ℂ} (h : 0 < z.re) : arg z = Real.arctan (z.im / z.re) := by
+  have hab : |arg z| < Real.pi / 2 := abs_arg_lt_pi_div_two_iff.2 (Or.inl h)
+  obtain ⟨h1, h2⟩ := abs_lt.1 hab
+  rw [← tan_arg, Real.arctan_tan h1 h2]
+
+lemma lead_eq (Kc T α ω : ℝ) :
+    lead Kc T α (ω * I) = ⟨Kc * (1 + α * (T * ω) ^ 2) / (1 + (α * T * ω) ^ 2),
+      Kc * (1 - α) * (T * ω) / (1 + (α * T * ω) ^ 2)⟩ := by
+  unfold lead
+  have hd : ((α : ℂ) * T * (ω * I) + 1) ≠ 0 := by
+    intro h; have := congrArg Complex.re h; simp at this
+  rw [div_eq_iff hd]
+  have hp : (0:ℝ) < 1 + (α * T * ω) ^ 2 := by positivity
+  apply Complex.ext <;> simp <;> field_simp <;> ring
+
+lemma arg_lead (Kc T α ω : ℝ) (hKc : 0 < Kc) (hα0 : 0 < α) :
+    arg (lead Kc T α (ω * I)) = Real.arctan ((1 - α) * (T * ω) / (1 + α * (T * ω) ^ 2)) := by
+  have hp : (0:ℝ) < 1 + (α * T * ω) ^ 2 := by positivity
+  have hq : (0:ℝ) < 1 + α * (T * ω) ^ 2 := by positivity
+  rw [lead_eq, arg_eq_arctan_of_re_pos (by simp only; positivity)]
+  congr 1
+  simp only
+  field_simp
+
+lemma key (s x : ℝ) (hs : 0 < s) (hx : 0 < x) (hne : x ≠ 1 / s) (h1 : s ^ 2 < 1) :
+    (1 - s ^ 2) * x / (1 + s ^ 2 * x ^ 2) < (1 - s ^ 2) * (1 / s) / (1 + s ^ 2 * (1 / s) ^ 2) := by
+  have hsx : s * x - 1 ≠ 0 := by
+    intro h; apply hne; field_simp; linarith
+  have e : (1 - s ^ 2) * (1 / s) / (1 + s ^ 2 * (1 / s) ^ 2) = (1 - s ^ 2) / (2 * s) := by
+    field_simp; ring
+  rw [e, div_lt_div_iff₀ (by positivity) (by positivity)]
+  nlinarith [mul_pos (sub_pos.2 h1) (lt_of_le_of_ne (sq_nonneg (s * x - 1)) (Ne.symm (pow_ne_zero 2 hsx)))]
+
+#print axioms arg_eq_arctan_of_re_pos
+#print axioms lead_eq
+#print axioms arg_lead
+#print axioms key
+
+/-- A lead section with gain Kc > 0, time constant T > 0 and pole-to-zero ratio 0 < α < 1 has
+its phase (the argument of C₁(jω)) at its single maximum over ω > 0 at the geometric mean
+ω_m = 1/(T √α) of its zero 1/T and its pole 1/(α T); the peak phase φ_m satisfies
+sin φ_m = (1 - α)/(1 + α), equivalently α = (1 - sin φ_m)/(1 + sin φ_m). -/
+theorem lead_phase_peaks_at_geometric_mean (Kc T α : ℝ) (hKc : 0 < Kc) (hT : 0 < T)
+    (hα0 : 0 < α) (hα1 : α < 1) :
+    (∀ ω : ℝ, 0 < ω → ω ≠ 1 / (T * Real.sqrt α) →
+      arg (lead Kc T α (ω * I)) < arg (lead Kc T α ((1 / (T * Real.sqrt α) : ℝ) * I))) ∧
+    Real.sin (arg (lead Kc T α ((1 / (T * Real.sqrt α) : ℝ) * I))) = (1 - α) / (1 + α) ∧
+    α = (1 - Real.sin (arg (lead Kc T α ((1 / (T * Real.sqrt α) : ℝ) * I)))) /
+      (1 + Real.sin (arg (lead Kc T α ((1 / (T * Real.sqrt α) : ℝ) * I)))) := by
+  have hsin : Real.sin (arg (lead Kc T α ((1 / (T * Real.sqrt α) : ℝ) * I))) = (1 - α) / (1 + α) := by
+    rw [arg_lead _ _ _ _ hKc hα0, Real.sin_arctan]
+    obtain ⟨s, hs0, rfl⟩ : ∃ s, 0 < s ∧ α = s ^ 2 :=
+      ⟨Real.sqrt α, Real.sqrt_pos.2 hα0, (Real.sq_sqrt hα0.le).symm⟩
+    rw [Real.sqrt_sq hs0.le]
+    have hm : T * (1 / (T * s)) = 1 / s := by field_simp
+    rw [hm]
+    have e : 1 + ((1 - s ^ 2) * (1 / s) / (1 + s ^ 2 * (1 / s) ^ 2)) ^ 2 = ((1 + s ^ 2) / (2 * s)) ^ 2 := by
+      field_simp; ring
+    rw [e, Real.sqrt_sq (by positivity)]
+    field_simp; ring
+  refine ⟨?_, hsin, ?_⟩
+  · intro ω hω hne
+    rw [arg_lead _ _ _ _ hKc hα0, arg_lead _ _ _ _ hKc hα0, Real.arctan_lt_arctan_iff]
+    obtain ⟨s, hs0, rfl⟩ : ∃ s, 0 < s ∧ α = s ^ 2 :=
+      ⟨Real.sqrt α, Real.sqrt_pos.2 hα0, (Real.sq_sqrt hα0.le).symm⟩
+    rw [Real.sqrt_sq hs0.le] at hne ⊢
+    have hm : T * (1 / (T * s)) = 1 / s := by field_simp
+    rw [hm]
+    apply key s (T * ω) hs0 (by positivity) _ hα1
+    intro h; apply hne; rw [← hm] at h; exact mul_left_cancel₀ hT.ne' h
+  · rw [hsin]
+    field_simp; ring
+
+/-- At its phase peak ω_m = 1/(T √α), the lead's gain is Kc/√α: one over root alpha times its
+low-frequency gain Kc. -/
+theorem lead_gain_at_peak (Kc T α : ℝ) (hKc : 0 < Kc) (hT : 0 < T)
+    (hα0 : 0 < α) (hα1 : α < 1) :
+    ‖lead Kc T α ((1 / (T * Real.sqrt α) : ℝ) * I)‖ = Kc / Real.sqrt α := by
+  rw [← pow_left_inj₀ (norm_nonneg _) (by positivity) two_ne_zero, Complex.sq_norm, lead_eq,
+    normSq_mk]
+  obtain ⟨s, hs0, rfl⟩ : ∃ s, 0 < s ∧ α = s ^ 2 :=
+    ⟨Real.sqrt α, Real.sqrt_pos.2 hα0, (Real.sq_sqrt hα0.le).symm⟩
+  rw [Real.sqrt_sq hs0.le]
+  field_simp
+  ring
+
+/-- A 45° lead needs α = (1 - sin 45°)/(1 + sin 45°) = 3 - 2√2. -/
+theorem lead_alpha_for_45_degrees :
+    (1 - Real.sin (Real.pi / 4)) / (1 + Real.sin (Real.pi / 4)) = 3 - 2 * Real.sqrt 2 := by
+  rw [Real.sin_pi_div_four]
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hp : 0 < Real.sqrt 2 := by positivity
+  rw [div_eq_iff (by positivity)]
+  nlinarith
+
+#print axioms lead_phase_peaks_at_geometric_mean
+#print axioms lead_gain_at_peak
+#print axioms lead_alpha_for_45_degrees
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'arg_eq_arctan_of_re_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lead_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'arg_lead' depends on axioms: [propext, Classical.choice, Quot.sound]
+'key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lead_phase_peaks_at_geometric_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lead_gain_at_peak' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lead_alpha_for_45_degrees' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **A bigger lag, $\beta$ = 30.** Guess first: does the margin fall by three times 5°? It does not: the error drops to 0.0922° and the margin only to 39.50°, because the lag's phase at crossover depends mostly on how far below crossover its zero sits, not on $\beta$.
@@ -647,9 +793,9 @@ Hand shaping hits a margin and an error target but leaves the time delay as a fi
 
 ## Sources
 
-Verified 2026-10-06: each DOI's title and first author checked at Crossref; the book link is the authors' site.
+Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Bode, Hendrik W. "Relations Between Attenuation and Phase in Feedback Amplifier Design." *Bell System Technical Journal* 19, no. 3 (1940): 421–454. [doi:10.1002/j.1538-7305.1940.tb00839.x](https://doi.org/10.1002/j.1538-7305.1940.tb00839.x). The gain-phase relations and frequency-domain design that loop shaping grew from.
 - Freudenberg, J. S., and D. P. Looze. "Right Half Plane Poles and Zeros and Design Tradeoffs in Feedback Systems." *IEEE Transactions on Automatic Control* 30, no. 6 (1985): 555–565. [doi:10.1109/TAC.1985.1104004](https://doi.org/10.1109/TAC.1985.1104004). The sensitivity integral with unstable poles, and the limits imposed by right-half-plane zeros.
 - Stein, Gunter. "Respect the Unstable." *IEEE Control Systems Magazine* 23, no. 4 (2003): 12–25. [doi:10.1109/MCS.2003.1213600](https://doi.org/10.1109/MCS.2003.1213600). The waterbed effect read as a conservation law, and the cost of unstable poles in practice.
-- Åström, Karl J., and Richard M. Murray. *Feedback Systems: An Introduction for Scientists and Engineers*, 2nd ed. Princeton University Press. [Authors' book site](https://fbswiki.org/wiki/index.php/Main_Page). The loop-shaping chapter: lead and lag compensation, and the fundamental limits on sensitivity.
+- Åström, Karl J., and Richard M. Murray. *Feedback Systems: An Introduction for Scientists and Engineers*, 2nd ed. Princeton University Press, 2021. [Publisher's page](https://press.princeton.edu/books/hardcover/9780691193984/feedback-systems). The loop-shaping chapter: lead and lag compensation, and the fundamental limits on sensitivity.

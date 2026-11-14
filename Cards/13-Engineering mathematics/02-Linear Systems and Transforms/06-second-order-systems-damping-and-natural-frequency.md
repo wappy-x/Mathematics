@@ -6,11 +6,15 @@
 
 ## General Overview
 
-One corner of a car carries 400 kg of body on a steel spring and a shock absorber. The shock absorber is a damper: an oil-filled cylinder whose resisting force grows with the speed at which it is squeezed. Someone drops an 80 kg load into the boot above that corner. The body sinks, goes a little too far, comes back, and stops.
+One corner of a car carries 400 kg of body on a steel spring and a shock absorber. The shock absorber is a damper: an oil-filled cylinder whose resisting force grows with the speed at which it is squeezed. Someone drops an 80 kg load into the boot (the trunk) above that corner. The body sinks, goes a little too far, comes back, and stops.
 
-The suspension engineer wants three numbers before anything else. How far does the body sink in the end? How far past that does it go on the way? How long until it is still? For this car the answers are 49.68 mm, a further 2.28 mm, and 0.9516 s to stay within 2% of the final drop. A worn shock absorber with less than half its damping left would let the same corner swing 37.23% past its final drop and take 1.7873 s to stop.
+The suspension engineer wants three numbers before anything else. How far does the body sink in the end? How far past that does it go on the way? How long until it is still?
 
-All of those numbers come from just two quantities. The first is how fast the corner wants to bounce: here one cycle per second, 1 Hz. The second is how much damping it has, as a fraction of the least damping that would stop it bouncing at all: here 0.7. The engineer calls them the **natural frequency** and the **damping ratio**. The rest of the card writes them ω_n (omega-n) and ζ (zeta).
+For this car the answers are 49.68 mm, a further 2.28 mm, and 0.9516 s to stay within 2% of the final drop. A worn shock absorber with less than half its damping left would let the same corner swing 37.23% past its final drop and take 1.7873 s to stop.
+
+All of those numbers come from just two quantities. The first is how fast the corner wants to bounce: here one cycle per second, 1 Hz. The second is how much damping it has, as a fraction of the least damping that would stop it bouncing at all: here 0.7.
+
+The engineer calls them the **natural frequency** and the **damping ratio**. The rest of the card writes them ω_n (omega-n) and ζ (zeta).
 
 **A spring, a mass and a damper, or any system whose equation has the same shape, is fixed by two numbers: the natural frequency ω_n sets the clock, the damping ratio ζ sets the shape, and the overshoot after a step depends on ζ alone, as e^(−πζ/√(1 − ζ^2)).**
 
@@ -29,7 +33,9 @@ xychart-beta
     line [49.68, 49.68, 49.68, 49.68, 49.68, 49.68, 49.68, 49.68, 49.68, 49.68, 49.68]
 ```
 
-The first line (orange) is the healthy damper, ζ = 0.7: one small bump to 51.97 mm at 0.7001 s, then still. The second line (green) is the worn damper, ζ = 0.3, on the same spring: it overshoots by 37.23% at 0.5241 s, is back up at 43.13 mm at 1.0 s, and is still ringing at 2 s. The flat line (dark) is the final drop, 49.68 mm. Both curves are simulated; both settle to the same place, because damping changes the path, never the destination.
+The first line (orange) is the healthy damper, ζ = 0.7: one small bump to 51.97 mm at 0.7001 s, then still. The second line (green) is the worn damper, ζ = 0.3, on the same spring. It overshoots by 37.23% at 0.5241 s, is back up at 43.13 mm at 1.0 s, and is still ringing at 2 s.
+
+The flat line (dark) is the final drop, 49.68 mm. Both curves are simulated; both settle to the same place, because damping changes the path, never the destination.
 
 ---
 
@@ -47,7 +53,7 @@ $$\ddot x + 2\zeta\omega_n\,\dot x + \omega_n^2\,x = \omega_n^2\,\frac{F}{k}, \q
 
 The number $\omega_n$ is in radians per second, dimension [T]^−1; in hertz it is $f_n$ = ω_n/(2π). The number $\zeta$ has no units: it is c divided by the critical damping 2√(km), the value of c at which bouncing just stops.
 
-The poles of the corner are the roots of m s^2 + c s + k = 0, written with $s$, the Laplace variable, and $j$, the square root of −1 as engineers write it (the rest of the library writes i). For ζ below 1 they are a complex pair $p$:
+The poles of the corner are the roots of m s^2 + c s + k = 0. Here $s$ is the Laplace variable: the complex frequency that the Laplace transform uses in place of time. The letter $j$ is the square root of −1 as engineers write it (the rest of the library writes i). For ζ below 1 they are a complex pair $p$:
 
 $$p = -\sigma \pm j\,\omega_d, \qquad \sigma = \zeta\,\omega_n, \qquad \omega_d = \omega_n\sqrt{1-\zeta^2} .$$
 
@@ -59,7 +65,7 @@ $$\omega_n = \lvert p \rvert, \qquad \zeta = \frac{-\operatorname{Re} p}{\lvert 
 
 Here $\theta$ is the angle between the pole and the negative real axis.
 
-The step-response numbers follow. After a sudden constant push, with no zero in the transfer function (see When it holds), the overshoot $M_p$ as a fraction of the final value, the time of the first peak $t_p$ and the 2% settling time $t_s$ are
+The step-response numbers follow. They need a transfer function, the ratio of output to input written in s, with no zero: no value of s makes its top line zero (see When it holds). After a sudden constant push, the overshoot $M_p$ as a fraction of the final value, the time of the first peak $t_p$ and the 2% settling time $t_s$ are
 
 $$M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}}, \qquad t_p = \frac{\pi}{\omega_d}, \qquad t_s \approx \frac{4}{\zeta\,\omega_n} .$$
 
@@ -88,7 +94,7 @@ $$G(j\omega) = \frac{k}{k - m\,\omega^2 + j\,c\,\omega}, \qquad G(j\omega_n) = \
 
 ### When it holds
 
-- **A linear spring and a linear damper.** Real shock absorbers resist rebound harder than bump, and springs stiffen at the bump stop. Then ζ is a slope at one operating point, and a large kerb sees a different ζ on the way up and the way down.
+- **A linear spring and a linear damper.** Real shock absorbers resist rebound (extension) harder than bump (compression). Springs stiffen at the bump stop, the rubber block that ends the spring's travel. Then ζ is a slope at one operating point, and a large kerb sees a different ζ on the way up and the way down.
 - **No zero in the transfer function.** The overshoot formula is for an input that enters only as a force. A kerb under the wheel enters through the damper too, which adds a zero at s = −k/c = −4.4880 rad/s. The body then overshoots by 21.03%, not 4.60%.
 - **ζ below 1 for the overshoot and ringing formulas.** At ζ = 1 or above the poles are real, there is no ringing frequency ω_d, and there is no overshoot. The estimate 4/(ζω_n) also fails there: at ζ = 1.5 it says 0.4244 s; the body takes 1.6957 s.
 - **One mode only.** The real corner has a second mass, the wheel, on the tyre's own spring, bouncing several times faster. Treating the body alone is fair when the two frequencies are well apart.
@@ -97,7 +103,9 @@ The picture of the poles, drawn to scale at 15 pixels per rad/s:
 
 <p align="center"><img src="../figures/second-order-systems-damping-and-natural-frequency.svg" alt="Pole map of the car corner: poles for damping 0.7 and 0.3 on a circle of radius 6.2832 rad/s, to scale" width="420"></p>
 
-The dashed half-circle has radius ω_n = 6.2832 rad/s: every pole on it has the same natural frequency. The crosses at −4.3982 ± 4.4871j are the healthy damper, at θ = 45.57° from the negative real axis. The crosses near the imaginary axis are the worn damper, ζ = 0.3: same circle, steeper angle, slower decay. The ring at −6.2832 marks critical damping, ζ = 1, where the pair meets on the axis.
+The dashed half-circle has radius ω_n = 6.2832 rad/s: every pole on it has the same natural frequency. The crosses at −4.3982 ± 4.4871j are the healthy damper, at θ = 45.57° from the negative real axis.
+
+The crosses near the imaginary axis are the worn damper, ζ = 0.3: same circle, steeper angle, slower decay. The ring at −6.2832 marks critical damping, ζ = 1, where the pair meets on the axis.
 
 ---
 
@@ -105,7 +113,9 @@ The dashed half-circle has radius ω_n = 6.2832 rad/s: every pole on it has the 
 
 ### Step 0: dividing by the mass leaves two numbers, a clock and a shape
 
-The equation m x'' + c x' + k x = F has three physical constants. Dividing by m leaves two coefficients, c/m and k/m. One of them can be absorbed by choosing the unit of time: measure time in units of 1/ω_n and the spring term becomes 1. What is left is one number, ζ, and it alone decides the shape of the response. That is why two numbers suffice, and why overshoot, a shape, depends on ζ alone while every time scales with 1/ω_n.
+The equation m x'' + c x' + k x = F has three physical constants. Dividing by m leaves two coefficients, c/m and k/m. One of them can be absorbed by choosing the unit of time: measure time in units of 1/ω_n and the spring term becomes 1.
+
+What is left is one number, ζ, and it alone decides the shape of the response. That is why two numbers suffice, and why overshoot, a shape, depends on ζ alone while every time scales with 1/ω_n.
 
 ### Step 1: the poles are the characteristic roots
 
@@ -117,7 +127,9 @@ The square root changes character at ζ = 1. Below it, the root is imaginary and
 
 ### Step 2: polar form, radius ω_n and angle arccos ζ
 
-The size of either pole is √(σ^2 + ω_d^2) = ω_n √(ζ^2 + 1 − ζ^2) = ω_n. So every pole pair with the same natural frequency sits on a circle of radius ω_n. The cosine of its angle from the negative real axis is σ/ω_n = ζ. For the corner: |p| = 6.2832 rad/s, which is 1.0000 Hz, and ζ = 4.3982/6.2832 = 0.7000, an angle of 45.57°. Reading a pole map is reading these two coordinates.
+The size of either pole is √(σ^2 + ω_d^2) = ω_n √(ζ^2 + 1 − ζ^2) = ω_n. So every pole pair with the same natural frequency sits on a circle of radius ω_n. The cosine of its angle from the negative real axis is σ/ω_n = ζ.
+
+For the corner: |p| = 6.2832 rad/s, which is 1.0000 Hz, and ζ = 4.3982/6.2832 = 0.7000, an angle of 45.57°. Reading a pole map is reading these two coordinates.
 
 ### Step 3: the step response, from the poles
 
@@ -136,7 +148,9 @@ using (s + σ)^2 + ω_d^2 = s^2 + 2σs + ω_n^2. The three pieces invert to 1, e
 
 Differentiate. The cosine terms cancel and what is left is
 $$\dot x(t) = \frac{F}{k}\,\frac{\omega_n^2}{\omega_d}\,e^{-\sigma t}\sin\omega_d t .$$
-The speed is zero exactly when sin ω_d t = 0, at t = π/ω_d, 2π/ω_d, …. The first of these is the first peak, t_p = π/ω_d. There cos ω_d t = −1 and sin ω_d t = 0, so x(t_p) = (F/k)(1 + e^(−σπ/ω_d)). The overshoot is the second term: M_p = e^(−σπ/ω_d), and σ/ω_d = ζ/√(1 − ζ^2). Each later extremum is smaller than the one before by the same factor M_p, alternating sides.
+The speed is zero exactly when sin ω_d t = 0, at t = π/ω_d, 2π/ω_d, …. The first of these is the first peak, t_p = π/ω_d.
+
+There cos ω_d t = −1 and sin ω_d t = 0, so x(t_p) = (F/k)(1 + e^(−σπ/ω_d)). The overshoot is the second term: M_p = e^(−σπ/ω_d), and σ/ω_d = ζ/√(1 − ζ^2). Each later extremum is smaller than the one before by the same factor M_p, alternating sides.
 
 </details>
 
@@ -146,7 +160,9 @@ From the folded proof, the first peak comes at t_p = π/ω_d, half a ringing per
 
 $$M_p = e^{-\sigma\pi/\omega_d} = e^{-\pi\zeta/\sqrt{1-\zeta^2}} .$$
 
-This is the overshoot [The RLC circuit](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md) found from the roots as e^(π × real part / imaginary part); with real part −ζω_n and imaginary part ω_n√(1 − ζ^2) it becomes the formula above. The natural frequency cancelled. A stiff racing suspension and a soft limousine with the same ζ overshoot by the same percentage; the racing car just does it sooner. The curve below is that formula, with the simulation of x'' + 2ζx' + x = 1 printed beside it in the code; they agree to the printed 0.01%.
+This is the overshoot [The RLC circuit](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md) found from the roots as e^(π × real part / imaginary part); with real part −ζω_n and imaginary part ω_n√(1 − ζ^2) it becomes the formula above. The natural frequency cancelled.
+
+A stiff racing suspension and a soft limousine with the same ζ overshoot by the same percentage; the racing car just does it sooner. The curve below is that formula, with the simulation of x'' + 2ζx' + x = 1 printed beside it in the code; they agree to the printed 0.01%.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -161,7 +177,9 @@ The single line is the overshoot. It falls fast at first: going from ζ = 0.3 to
 
 ### Step 5: settling is set by the decay rate
 
-The ring inside the bracket is never bigger than e^(−σt)/√(1 − ζ^2). It drops below 2% of the sag when σt passes the natural log of 50, just under 4, plus a small term from the square root. So t_s ≈ 4/σ = 4/(ζω_n): 0.9095 s for the corner. The simulation finds 0.9516 s. The difference is real: at ζ = 0.7 the one overshoot is 4.60%, outside the 2% band, and the body has to come back from it. The rule is an estimate for light damping, not a formula; for an overdamped system it is badly wrong, as When it holds shows.
+The ring inside the bracket is never bigger than e^(−σt)/√(1 − ζ^2). It drops below 2% of the sag when σt passes the natural log of 50, just under 4, plus a small term from the square root. So t_s ≈ 4/σ = 4/(ζω_n): 0.9095 s for the corner.
+
+The simulation finds 0.9516 s. The difference is real: at ζ = 0.7 the one overshoot is 4.60%, outside the 2% band, and the body has to come back from it. The rule is an estimate for light damping, not a formula; for an overdamped system it is badly wrong, as When it holds shows.
 
 One more surprise from the same simulation: critical damping, ζ = 1, settles in 0.9285 s, a little faster than ζ = 0.7 into a 2% band. Settling time alone does not choose ζ = 0.7. What does is the combination: a small overshoot, a fast rise, and the frequency response below.
 
@@ -169,7 +187,9 @@ One more surprise from the same simulation: critical damping, ζ = 1, settles in
 
 Put s = jω in the transfer function: G(jω) = k / (k − mω^2 + jcω). At ω = ω_n the first two terms of the denominator cancel, since k = m ω_n^2. What is left is jcω_n, and c ω_n / k = 2ζ. So G(jω_n) = 1/(2ζ j): a lag of exactly 90°, and a gain of 1/(2ζ) = 0.7143.
 
-That gives a test-rig method. Shake the corner with a sine force, sweep the frequency until the body lags by a quarter cycle: that frequency is ω_n. The gain there gives ζ. The code finds the quarter-cycle point by bisection on the phase of G(jω), at 6.2832 rad/s, where the gain 0.7143 gives ζ = 0.7000; a simulated shaker driven at that frequency measures the same gain, 0.7143, and so the same ζ = 0.7000.
+That gives a test-rig method. Shake the corner with a sine force, sweep the frequency until the body lags by a quarter cycle: that frequency is ω_n. The gain there gives ζ.
+
+The code finds the quarter-cycle point by bisection (halving the search interval again and again) on the phase of G(jω). It lands at 6.2832 rad/s, where the gain 0.7143 gives ζ = 0.7000. A simulated shaker driven at that frequency measures the same gain, 0.7143, and so the same ζ = 0.7000.
 
 The gain has a resonant peak only when ζ is below 1/√2. At ζ = 0.7, just under, the peak is only 1.0002, at 0.8886 rad/s: the gain stays almost exactly 1 until it rolls off. The flattest possible curve comes at ζ = 1/√2 ≈ 0.7071. This is the second reason suspension, instrument and servo designers like ζ near 0.7.
 
@@ -211,7 +231,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The script builds the corner from mass, frequency and damping ratio, then reaches the two numbers and their consequences by four roads. Road 1 is the formulas. Road 2 solves m s^2 + c s + k = 0 by the quadratic formula and reads ω_n and ζ back off the poles. Road 3 is an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) of the load drop: it measures the peak and its time, then inverts the overshoot formula to recover ζ and ω_n from the measured curve, as a test engineer would from a drop test. Road 4 is the frequency domain: bisection on the phase of G(jω), and a simulated sine shaker at ω_n. It also sweeps ζ from 0.1 to 1.0 against simulation, and prints every row of the what-breaks table and the pole-map coordinates.
+The script builds the corner from mass, frequency and damping ratio, then reaches the two numbers and their consequences by four roads. Road 1 is the formulas. Road 2 solves m s^2 + c s + k = 0 by the quadratic formula and reads ω_n and ζ back off the poles. Road 3 is an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) of the load drop. It measures the peak and its time. Then it inverts the overshoot formula to recover ζ and ω_n from the measured curve, as a test engineer would from a drop test. Road 4 is the frequency domain: bisection on the phase of G(jω), and a simulated sine shaker at ω_n. It also sweeps ζ from 0.1 to 1.0 against simulation, and prints every row of the what-breaks table and the pole-map coordinates.
 
 ### Python
 
@@ -613,6 +633,426 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the step overshoot, the peak time and the pole circle for ζ below 1, and the gain at ω_n.
+
+- Suppose the body starts at rest under a constant push F, with ζ below 1. Then it moves the way F pushes until t_p = π/ω_d, where it stops.
+- Take the same push and start. Then no later moment takes the body further than it is at t_p.
+- Take the same push and start. Then the peak overshoots F/k by the fraction M_p = e^(−πζ/√(1 − ζ^2)).
+- Take ζ below 1. Then c/m = 2ζω_n and k/m = ω_n^2, the two coefficients left after dividing by m.
+- Take ζ below 1. Then the roots of m s^2 + c s + k = 0 are exactly the pair p = −ζω_n ± jω_d.
+- Take the same pair. Then the pole p sits a distance |p| = ω_n from the origin, and −Re p/|p| = ζ.
+- Take any damper with c above 0. Then G(jω_n) = 1/(2ζ j): a quarter-cycle lag and a gain of 1/(2ζ).
+- Take the corner: m = 400 kg, ω_n = 2π rad/s, ζ = 0.7. Then k = 1600π^2 N/m and c = 1120π N s/m.
+- Take the same corner. Then 1 − ζ^2 = 51/100, the gain 1/(2ζ) is 5/7, and G(jω_n) = −(5/7) j.
+- Take the same corner. Then ζ^2 = 49/100, just under the 1/2 that a resonant peak needs.
+- Take the same corner. Then the kerb's zero sits at −k/c = −10π/7 rad/s.
+- Reading 1 Hz as 1 rad/s gives k = 400 N/m; dropping the 2 gives ζ = 0.35.
+
+The settling time 4/(ζω_n), the simulations, the kerb's 21.03% and the decimals are left to the Python and Rust checks.
+
+```lean
+-- Damping ratio and natural frequency: for m x'' + c x' + k x = F started at rest with damping ratio ζ = c/(2√(km)) below 1, the body's first peak comes at π/ω_d and overshoots the final value F/k by exactly e^(−πζ/√(1 − ζ²)), the most it ever reaches; the poles sit at radius ω_n = √(k/m) with −Re p/|p| = ζ; and the frequency response at ω_n is 1/(2ζ j).
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+
+open Real
+
+namespace SecondOrder
+
+/-- The natural frequency ω_n = √(k/m), in radians per second. -/
+noncomputable def naturalFreq (m k : ℝ) : ℝ := Real.sqrt (k / m)
+
+/-- The damping ratio ζ = c/(2√(km)): the damper coefficient over critical damping. -/
+noncomputable def dampingRatio (m c k : ℝ) : ℝ := c / (2 * Real.sqrt (k * m))
+
+/-- The damped (ringing) frequency ω_d = ω_n √(1 − ζ²). -/
+noncomputable def dampedFreq (m c k : ℝ) : ℝ :=
+  naturalFreq m k * Real.sqrt (1 - dampingRatio m c k ^ 2)
+
+theorem naturalFreq_pos (m k : ℝ) (hm : 0 < m) (hk : 0 < k) : 0 < naturalFreq m k :=
+  Real.sqrt_pos.2 (div_pos hk hm)
+
+theorem naturalFreq_sq (m k : ℝ) (hm : 0 < m) (hk : 0 < k) : naturalFreq m k ^ 2 = k / m :=
+  Real.sq_sqrt (div_pos hk hm).le
+
+theorem damping_mul_naturalFreq (m c k : ℝ) (hm : 0 < m) (hk : 0 < k) :
+    dampingRatio m c k * naturalFreq m k = c / (2 * m) := by
+  unfold dampingRatio naturalFreq
+  rw [Real.sqrt_mul hk.le, Real.sqrt_div hk.le]
+  have h1 : 0 < Real.sqrt k := Real.sqrt_pos.2 hk
+  have h2 : 0 < Real.sqrt m := Real.sqrt_pos.2 hm
+  have h3 : Real.sqrt m ^ 2 = m := Real.sq_sqrt hm.le
+  field_simp
+  rw [h3]
+
+theorem dampingRatio_nonneg (m c k : ℝ) (hc : 0 ≤ c) : 0 ≤ dampingRatio m c k := by
+  unfold dampingRatio
+  positivity
+
+theorem one_sub_damping_sq_pos (m c k : ℝ) (hc : 0 ≤ c) (hζ : dampingRatio m c k < 1) :
+    0 < 1 - dampingRatio m c k ^ 2 := by
+  have := dampingRatio_nonneg m c k hc
+  nlinarith
+
+theorem dampedFreq_pos (m c k : ℝ) (hm : 0 < m) (hk : 0 < k) (hc : 0 ≤ c)
+    (hζ : dampingRatio m c k < 1) : 0 < dampedFreq m c k :=
+  mul_pos (naturalFreq_pos m k hm hk) (Real.sqrt_pos.2 (one_sub_damping_sq_pos m c k hc hζ))
+
+theorem dampedFreq_sq (m c k : ℝ) (hc : 0 ≤ c)
+    (hζ : dampingRatio m c k < 1) :
+    dampedFreq m c k ^ 2 = naturalFreq m k ^ 2 * (1 - dampingRatio m c k ^ 2) := by
+  unfold dampedFreq
+  rw [mul_pow, Real.sq_sqrt (one_sub_damping_sq_pos m c k hc hζ).le]
+
+theorem le_of_sq_le_sq_of_nonneg (a b : ℝ) (h : a ^ 2 ≤ b ^ 2) (hb : 0 ≤ b) : a ≤ b := by
+  nlinarith [sq_nonneg (a - b), sq_nonneg (a + b)]
+
+theorem energy_antitone (m c k : ℝ) (hc : 0 ≤ c) (y y' y'' : ℝ → ℝ)
+    (hy : ∀ t, HasDerivAt y (y' t) t) (hy' : ∀ t, HasDerivAt y' (y'' t) t)
+    (h : ∀ t, m * y'' t + c * y' t + k * y t = 0) :
+    Antitone (fun t => m * y' t ^ 2 + k * y t ^ 2) := by
+  have hE : ∀ t, HasDerivAt (fun t => m * y' t ^ 2 + k * y t ^ 2)
+      (m * (2 * y' t * y'' t) + k * (2 * y t * y' t)) t := by
+    intro t
+    have h1 := ((hy' t).pow 2).const_mul m
+    have h2 := ((hy t).pow 2).const_mul k
+    convert h1.add h2 using 1
+    simp
+  apply antitone_of_deriv_nonpos (fun t => (hE t).differentiableAt)
+  intro t
+  rw [(hE t).deriv]
+  have e : m * (2 * y' t * y'' t) + k * (2 * y t * y' t) = -(2 * c * y' t ^ 2) := by
+    linear_combination (2 * y' t) * h t
+  rw [e]
+  have := mul_nonneg hc (sq_nonneg (y' t))
+  linarith
+
+theorem explicit_solution (m c k F σ ω : ℝ) (hm : 0 < m) (hω : 0 < ω)
+    (hc : c = 2 * m * σ) (hk : k = m * (σ ^ 2 + ω ^ 2)) :
+    (∀ t, HasDerivAt
+        (fun t => F / k * (1 - Real.exp (-σ * t) * (Real.cos (ω * t) + σ / ω * Real.sin (ω * t))))
+        (F / k * ((σ ^ 2 + ω ^ 2) / ω) * Real.exp (-σ * t) * Real.sin (ω * t)) t) ∧
+    (∀ t, HasDerivAt
+        (fun t => F / k * ((σ ^ 2 + ω ^ 2) / ω) * Real.exp (-σ * t) * Real.sin (ω * t))
+        (F / k * ((σ ^ 2 + ω ^ 2) / ω) * Real.exp (-σ * t) *
+          (ω * Real.cos (ω * t) - σ * Real.sin (ω * t))) t) ∧
+    (∀ t, m * (F / k * ((σ ^ 2 + ω ^ 2) / ω) * Real.exp (-σ * t) *
+          (ω * Real.cos (ω * t) - σ * Real.sin (ω * t)))
+        + c * (F / k * ((σ ^ 2 + ω ^ 2) / ω) * Real.exp (-σ * t) * Real.sin (ω * t))
+        + k * (F / k * (1 - Real.exp (-σ * t) * (Real.cos (ω * t) + σ / ω * Real.sin (ω * t))))
+        = F) := by
+  have hk0 : k ≠ 0 := by rw [hk]; positivity
+  have hω0 : ω ≠ 0 := hω.ne'
+  have he : ∀ t, HasDerivAt (fun t => Real.exp (-σ * t)) (Real.exp (-σ * t) * (-σ * 1)) t :=
+    fun t => ((hasDerivAt_id' t).const_mul (-σ)).exp
+  have hcs : ∀ t, HasDerivAt (fun t => Real.cos (ω * t)) (-Real.sin (ω * t) * (ω * 1)) t :=
+    fun t => ((hasDerivAt_id' t).const_mul ω).cos
+  have hsn : ∀ t, HasDerivAt (fun t => Real.sin (ω * t)) (Real.cos (ω * t) * (ω * 1)) t :=
+    fun t => ((hasDerivAt_id' t).const_mul ω).sin
+  refine ⟨fun t => ?_, fun t => ?_, fun t => ?_⟩
+  · convert (((hasDerivAt_const t (1 : ℝ)).sub
+      ((he t).mul ((hcs t).add ((hsn t).const_mul (σ / ω))))).const_mul (F / k)) using 1
+    simp only [Pi.add_apply]
+    field_simp
+    ring
+  · convert (((he t).const_mul (F / k * ((σ ^ 2 + ω ^ 2) / ω))).mul (hsn t)) using 1
+    ring
+  · subst hc hk
+    have : σ ^ 2 + ω ^ 2 ≠ 0 := by positivity
+    field_simp
+    ring
+
+#print axioms naturalFreq_pos
+#print axioms naturalFreq_sq
+#print axioms damping_mul_naturalFreq
+#print axioms dampingRatio_nonneg
+#print axioms one_sub_damping_sq_pos
+#print axioms dampedFreq_pos
+#print axioms dampedFreq_sq
+#print axioms le_of_sq_le_sq_of_nonneg
+#print axioms energy_antitone
+#print axioms explicit_solution
+
+/-- The overshoot depends on ζ alone. A mass m > 0 on a linear spring k > 0 and a linear damper
+c ≥ 0, with damping ratio ζ = c/(2√(km)) below 1, is pushed by a constant force F ≠ 0 entering
+only as a force (no zero), starting at rest: m x'' + c x' + k x = F, x(0) = 0, x'(0) = 0.
+Then the body keeps moving the way F pushes until its first peak at t_p = π/ω_d, where it stops;
+that peak is the furthest it ever goes in that direction; and the peak overshoots the final value
+F/k by the fraction M_p = e^(−πζ/√(1 − ζ²)), in which ω_n does not appear. -/
+theorem step_overshoot_eq_exp_of_damping_ratio (m c k F : ℝ) (x : ℝ → ℝ)
+    (hm : 0 < m) (hk : 0 < k) (hc : 0 ≤ c) (hζ : dampingRatio m c k < 1) (hF : F ≠ 0)
+    (hx : ContDiff ℝ 2 x)
+    (hode : ∀ t, m * deriv (deriv x) t + c * deriv x t + k * x t = F)
+    (h0 : x 0 = 0) (h0' : deriv x 0 = 0) :
+    let ζ := dampingRatio m c k
+    let tp := π / dampedFreq m c k
+    (∀ t ∈ Set.Ioo 0 tp, 0 < F * deriv x t) ∧ deriv x tp = 0 ∧
+    (∀ t, 0 ≤ t → F * x t ≤ F * x tp) ∧
+    (x tp - F / k) / (F / k) = Real.exp (-π * ζ / Real.sqrt (1 - ζ ^ 2)) := by
+  intro ζ tp
+  have hσ : ζ * naturalFreq m k = c / (2 * m) := damping_mul_naturalFreq m c k hm hk
+  have hωn : naturalFreq m k ^ 2 = k / m := naturalFreq_sq m k hm hk
+  have hωnpos : 0 < naturalFreq m k := naturalFreq_pos m k hm hk
+  have hωsq : dampedFreq m c k ^ 2 = naturalFreq m k ^ 2 * (1 - ζ ^ 2) :=
+    dampedFreq_sq m c k hc hζ
+  have hωpos : 0 < dampedFreq m c k := dampedFreq_pos m c k hm hk hc hζ
+  have hspos : 0 < Real.sqrt (1 - ζ ^ 2) := Real.sqrt_pos.2 (one_sub_damping_sq_pos m c k hc hζ)
+  have hωdef : dampedFreq m c k = naturalFreq m k * Real.sqrt (1 - ζ ^ 2) := rfl
+  have hζ0 : 0 ≤ ζ := dampingRatio_nonneg m c k hc
+  -- Plain names for the decay rate σ = ζ ω_n and the ringing frequency ω = ω_d.
+  obtain ⟨σ, hσdef⟩ : ∃ σ, σ = ζ * naturalFreq m k := ⟨_, rfl⟩
+  obtain ⟨ω, hωd⟩ : ∃ ω, ω = dampedFreq m c k := ⟨_, rfl⟩
+  have hω : 0 < ω := hωd ▸ hωpos
+  have hσ0 : 0 ≤ σ := by rw [hσdef]; positivity
+  have hm0 : m ≠ 0 := hm.ne'
+  have hk0 : k ≠ 0 := hk.ne'
+  have hc' : c = 2 * m * σ := by rw [hσdef, hσ]; field_simp
+  have hk' : k = m * (σ ^ 2 + ω ^ 2) := by
+    rw [hσdef, hωd, hωsq]
+    have : m * ((ζ * naturalFreq m k) ^ 2 + naturalFreq m k ^ 2 * (1 - ζ ^ 2))
+        = m * naturalFreq m k ^ 2 := by ring
+    rw [this, hωn]; field_simp
+  have htp : tp = π / ω := by rw [hωd]
+  have hωtp : ω * tp = π := by rw [htp]; field_simp
+  obtain ⟨hX, hV, hODE⟩ := explicit_solution m c k F σ ω hm hω hc' hk'
+  set X := fun t => F / k * (1 - Real.exp (-σ * t) * (Real.cos (ω * t) + σ / ω * Real.sin (ω * t)))
+    with hXdef
+  set V := fun t => F / k * ((σ ^ 2 + ω ^ 2) / ω) * Real.exp (-σ * t) * Real.sin (ω * t)
+    with hVdef
+  have hxd : Differentiable ℝ x := hx.differentiable (by norm_num)
+  have hx'd : Differentiable ℝ (deriv x) := hx.differentiable_deriv_two
+  -- Uniqueness on t ≥ 0: the energy of x − X starts at 0 and cannot grow.
+  have hE := energy_antitone m c k hc (fun t => x t - X t) (fun t => deriv x t - V t)
+    (fun t => deriv (deriv x) t - (F / k * ((σ ^ 2 + ω ^ 2) / ω) * Real.exp (-σ * t) *
+          (ω * Real.cos (ω * t) - σ * Real.sin (ω * t))))
+    (fun t => (hxd t).hasDerivAt.sub (hX t)) (fun t => (hx'd t).hasDerivAt.sub (hV t))
+    (fun t => by have h1 := hode t; have h2 := hODE t; simp only [X, V]; linarith)
+  have hagree : ∀ t, 0 ≤ t → x t = X t ∧ deriv x t = V t := by
+    intro t ht
+    have h1 := hE ht
+    have hX0 : X 0 = 0 := by simp [X]
+    have hV0 : V 0 = 0 := by simp [V]
+    simp only [h0, h0', hX0, hV0] at h1
+    have a1 := mul_nonneg hm.le (sq_nonneg (deriv x t - V t))
+    have a2 := mul_nonneg hk.le (sq_nonneg (x t - X t))
+    have b1 : m * (deriv x t - V t) ^ 2 = 0 := by linarith
+    have b2 : k * (x t - X t) ^ 2 = 0 := by linarith
+    rcases mul_eq_zero.1 b1 with h | h
+    · exact absurd h hm0
+    rcases mul_eq_zero.1 b2 with h' | h'
+    · exact absurd h' hk0
+    exact ⟨by linarith [pow_eq_zero_iff (n := 2) (by norm_num) |>.1 h'],
+      by linarith [pow_eq_zero_iff (n := 2) (by norm_num) |>.1 h]⟩
+  have htp0 : 0 ≤ tp := by rw [htp]; positivity
+  have hFF : 0 < F * F := mul_self_pos.2 hF
+  have hA : 0 < F * (F / k * ((σ ^ 2 + ω ^ 2) / ω)) := by
+    have e : F * (F / k * ((σ ^ 2 + ω ^ 2) / ω)) = F * F / k * ((σ ^ 2 + ω ^ 2) / ω) := by ring
+    have h1 : 0 < (σ ^ 2 + ω ^ 2) / ω := by positivity
+    rw [e]
+    exact mul_pos (div_pos hFF hk) h1
+  have hVpos : ∀ t ∈ Set.Ioo 0 tp, 0 < F * V t := by
+    rintro t ⟨ht0, ht1⟩
+    have hs : 0 < Real.sin (ω * t) := by
+      apply Real.sin_pos_of_pos_of_lt_pi (by positivity)
+      rw [← hωtp]; exact mul_lt_mul_of_pos_left ht1 hω
+    have : F * V t = F * (F / k * ((σ ^ 2 + ω ^ 2) / ω)) * (Real.exp (-σ * t) * Real.sin (ω * t)) := by
+      simp only [V]; ring
+    rw [this]
+    exact mul_pos hA (mul_pos (Real.exp_pos _) hs)
+  have hXtp : X tp - F / k = F / k * Real.exp (-σ * tp) := by
+    simp only [X]; rw [hωtp, Real.cos_pi, Real.sin_pi]; ring
+  have hxtp := hagree tp htp0
+  have hpeak : 0 ≤ F * (x tp - F / k) := by
+    rw [hxtp.1, hXtp]
+    have e : F * (F / k * Real.exp (-σ * tp)) = F * F / k * Real.exp (-σ * tp) := by ring
+    rw [e]
+    exact (mul_pos (div_pos hFF hk) (Real.exp_pos _)).le
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro t ht
+    rw [(hagree t ht.1.le).2]
+    exact hVpos t ht
+  · rw [hxtp.2]
+    simp only [V]
+    rw [hωtp, Real.sin_pi, mul_zero]
+  · intro t ht
+    rcases le_total t tp with h | h
+    · -- Before the peak, F x rises.
+      have hmono : MonotoneOn (fun t => F * X t) (Set.Icc 0 tp) := by
+        have hd : ∀ t, HasDerivAt (fun t => F * X t) (F * V t) t := fun t => (hX t).const_mul F
+        apply monotoneOn_of_deriv_nonneg (convex_Icc 0 tp)
+        · exact (fun t _ => (hd t).continuousAt.continuousWithinAt)
+        · exact (fun t _ => (hd t).differentiableAt.differentiableWithinAt)
+        · intro t ht
+          rw [interior_Icc] at ht
+          rw [(hd t).deriv]
+          exact (hVpos t ht).le
+      have := hmono ⟨ht, h⟩ ⟨htp0, le_refl tp⟩ h
+      simp only at this
+      rw [(hagree t ht).1, hxtp.1]
+      exact this
+    · -- After the peak, the energy about F/k only falls, so |x − F/k| cannot pass its peak value.
+      have hE2 := energy_antitone m c k hc (fun t => x t - F / k) (deriv x) (deriv (deriv x))
+        (fun t => (hxd t).hasDerivAt.sub_const (F / k)) (fun t => (hx'd t).hasDerivAt)
+        (fun t => by
+          have := hode t
+          have e : k * (F / k) = F := by field_simp
+          linear_combination this - e)
+      have h2 := hE2 h
+      simp only at h2
+      have hv0 : deriv x tp = 0 := by
+        rw [hxtp.2]; simp only [V]; rw [hωtp, Real.sin_pi, mul_zero]
+      rw [hv0] at h2
+      have a1 := mul_nonneg hm.le (sq_nonneg (deriv x t))
+      have h3 : (x t - F / k) ^ 2 ≤ (x tp - F / k) ^ 2 := by
+        have : k * (x t - F / k) ^ 2 ≤ k * (x tp - F / k) ^ 2 := by
+          linarith [h2, a1, show m * (0 : ℝ) ^ 2 = 0 by ring]
+        exact le_of_mul_le_mul_left this hk
+      have h4 : (F * (x t - F / k)) ^ 2 ≤ (F * (x tp - F / k)) ^ 2 := by
+        rw [mul_pow, mul_pow]
+        exact mul_le_mul_of_nonneg_left h3 (sq_nonneg F)
+      have h5 : F * (x t - F / k) ≤ F * (x tp - F / k) := by
+        exact le_of_sq_le_sq_of_nonneg _ _ h4 hpeak
+      linarith
+  · rw [hxtp.1, hXtp]
+    have hFk : F / k ≠ 0 := div_ne_zero hF hk0
+    rw [mul_div_cancel_left₀ _ hFk]
+    congr 1
+    rw [htp, hσdef, hωd, hωdef]
+    field_simp
+
+/-- Two numbers fix the equation and its poles. For m > 0, k > 0 and a damper c ≥ 0 with ζ below 1:
+dividing by m leaves c/m = 2ζω_n and k/m = ω_n², so the equation reads
+x'' + 2ζω_n x' + ω_n² x = ω_n² F/k; the roots of m s² + c s + k = 0 are exactly the pair
+p = −ζω_n ± jω_d; and in polar form |p| = ω_n and −Re p/|p| = ζ. -/
+theorem poles_have_radius_natural_freq_and_cosine_damping_ratio (m c k : ℝ)
+    (hm : 0 < m) (hk : 0 < k) (hc : 0 ≤ c) (hζ : dampingRatio m c k < 1) :
+    let ζ := dampingRatio m c k
+    let ωn := naturalFreq m k
+    let p : ℂ := ⟨-(ζ * ωn), dampedFreq m c k⟩
+    c / m = 2 * ζ * ωn ∧ k / m = ωn ^ 2 ∧
+    (∀ s : ℂ, (m : ℂ) * s ^ 2 + c * s + k = 0 ↔ s = p ∨ s = (starRingEnd ℂ) p) ∧
+    ‖p‖ = ωn ∧ -p.re / ‖p‖ = ζ := by
+  intro ζ ωn p
+  have hσ : ζ * ωn = c / (2 * m) := damping_mul_naturalFreq m c k hm hk
+  have hωn : ωn ^ 2 = k / m := naturalFreq_sq m k hm hk
+  have hωnpos : 0 < ωn := naturalFreq_pos m k hm hk
+  have hω : dampedFreq m c k ^ 2 = ωn ^ 2 * (1 - ζ ^ 2) := dampedFreq_sq m c k hc hζ
+  have hm0 : m ≠ 0 := hm.ne'
+  have hc' : c = 2 * m * (ζ * ωn) := by rw [hσ]; field_simp
+  have hk' : k = m * ((ζ * ωn) ^ 2 + dampedFreq m c k ^ 2) := by
+    rw [hω]; have : k = m * ωn ^ 2 := by rw [hωn]; field_simp
+    rw [this]; ring
+  have hnorm : ‖p‖ = ωn := by
+    rw [Complex.norm_def, Complex.normSq_mk]
+    rw [show -(ζ * ωn) * -(ζ * ωn) + dampedFreq m c k * dampedFreq m c k = ωn ^ 2 by
+      linear_combination hω]
+    exact Real.sqrt_sq hωnpos.le
+  refine ⟨?_, hωn.symm, ?_, hnorm, ?_⟩
+  · rw [hc']; field_simp
+  · intro s
+    have hp : p = ((-(ζ * ωn) : ℝ) : ℂ) + (dampedFreq m c k : ℂ) * Complex.I := by
+      apply Complex.ext <;> simp [p]
+    have hp' : (starRingEnd ℂ) p = ((-(ζ * ωn) : ℝ) : ℂ) - (dampedFreq m c k : ℂ) * Complex.I := by
+      apply Complex.ext <;> simp [p]
+    have hfac : (m : ℂ) * s ^ 2 + c * s + k = m * ((s - p) * (s - (starRingEnd ℂ) p)) := by
+      have hcC : (c : ℂ) = 2 * m * (ζ * ωn) := by exact_mod_cast hc'
+      have hkC : (k : ℂ) = m * ((ζ * ωn) ^ 2 + dampedFreq m c k ^ 2) := by exact_mod_cast hk'
+      rw [hp', hp, hcC, hkC]
+      push_cast
+      linear_combination ((m : ℂ) * (dampedFreq m c k : ℂ) ^ 2) * Complex.I_sq
+    rw [hfac, mul_eq_zero, mul_eq_zero, sub_eq_zero, sub_eq_zero]
+    simp [hm0]
+  · rw [hnorm]
+    show -(-(ζ * ωn)) / ωn = ζ
+    field_simp
+
+/-- At the natural frequency the response is 1/(2ζ j). For m > 0 and k > 0, the transfer function
+G(jω) = k/(k − mω² + jcω) at ω = ω_n equals 1/(2ζ j): a lag of a quarter cycle and a gain of
+1/(2ζ). -/
+theorem freq_response_at_natural_freq (m c k : ℝ) (hm : 0 < m) (hk : 0 < k) :
+    let ωn := naturalFreq m k
+    (k : ℂ) / (k - m * ωn ^ 2 + Complex.I * (c * ωn)) = 1 / (2 * dampingRatio m c k * Complex.I) := by
+  intro ωn
+  have hσ : dampingRatio m c k * ωn = c / (2 * m) := damping_mul_naturalFreq m c k hm hk
+  have hωn : ωn ^ 2 = k / m := naturalFreq_sq m k hm hk
+  have hωnpos : 0 < ωn := naturalFreq_pos m k hm hk
+  have hm0 : m ≠ 0 := hm.ne'
+  have hc' : c = 2 * m * (dampingRatio m c k * ωn) := by rw [hσ]; field_simp
+  have hk' : k = m * ωn ^ 2 := by rw [hωn]; field_simp
+  set ζ := dampingRatio m c k
+  have hm0' : (m : ℂ) ≠ 0 := by exact_mod_cast hm0
+  have hω0' : (ωn : ℂ) ≠ 0 := by exact_mod_cast hωnpos.ne'
+  have hcC : (c : ℂ) = 2 * m * (ζ * ωn) := by exact_mod_cast hc'
+  rw [hk']
+  push_cast
+  rw [hcC]
+  rw [show (m : ℂ) * ωn ^ 2 - m * ωn ^ 2 + Complex.I * (2 * m * (ζ * ωn) * ωn)
+      = (m * ωn ^ 2) * (2 * ζ * Complex.I) by ring]
+  rw [div_mul_eq_div_div, div_self (mul_ne_zero hm0' (pow_ne_zero 2 hω0'))]
+
+/-! The card's corner: m = 400 kg, f_n = 1 Hz so ω_n = 2π rad/s, ζ = 0.7 = 7/10. -/
+
+-- Stiffness k = m ω_n² = 400 × (2π)² = 1600 π².
+example : (400 : ℝ) * (2 * π) ^ 2 = 1600 * π ^ 2 := by ring
+-- Damper c = 2ζ√(km) = 2ζ m ω_n, since √(km) = √(m² ω_n²) = m ω_n: c = 1120 π.
+example : 2 * (7 / 10 : ℝ) * 400 * (2 * π) = 1120 * π := by ring
+-- 1 − ζ² = 1 − 49/100 = 51/100, the square of ω_d/ω_n.
+example : (1 : ℚ) - (7 / 10) ^ 2 = 51 / 100 := by norm_num
+-- Gain at ω_n: 1/(2ζ) = 1/(2 × 7/10) = 5/7 ≈ 0.7143.
+example : (1 : ℚ) / (2 * (7 / 10)) = 5 / 7 := by norm_num
+-- At ω_n, G = 1/(2ζ j) = −(5/7) j: a quarter-cycle lag.
+example : (1 : ℂ) / (2 * (7 / 10) * Complex.I) = -(5 / 7) * Complex.I := by
+  field_simp
+  ring_nf
+  rw [Complex.I_sq]
+  ring
+-- A resonant peak needs ζ below 1/√2, that is ζ² < 1/2; at ζ = 7/10, ζ² = 49/100 < 1/2, just under.
+example : (7 / 10 : ℚ) ^ 2 < 1 / 2 := by norm_num
+-- The kerb's zero at −k/c = −ω_n/(2ζ) = −2π/(7/5) = −10π/7 ≈ −4.4880 rad/s.
+example : (1600 * π ^ 2) / (1120 * π) = 10 * π / 7 := by
+  have hπ : π ≠ 0 := Real.pi_ne_zero
+  field_simp
+  ring
+-- 1 Hz read as 1 rad/s: k = 400 × 1² = 400 N/m.
+example : (400 : ℚ) * 1 ^ 2 = 400 := by norm_num
+-- The 2 dropped from c = 2ζ√(km): the real damping ratio is ζ/2 = 7/20 = 0.35.
+example : (7 / 10 : ℚ) / 2 = 7 / 20 := by norm_num
+
+#print axioms step_overshoot_eq_exp_of_damping_ratio
+#print axioms poles_have_radius_natural_freq_and_cosine_damping_ratio
+#print axioms freq_response_at_natural_freq
+
+end SecondOrder
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'SecondOrder.naturalFreq_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.naturalFreq_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.damping_mul_naturalFreq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.dampingRatio_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.one_sub_damping_sq_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.dampedFreq_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.dampedFreq_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.le_of_sq_le_sq_of_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.energy_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.explicit_solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.step_overshoot_eq_exp_of_damping_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.poles_have_radius_natural_freq_and_cosine_damping_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SecondOrder.freq_response_at_natural_freq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -640,8 +1080,8 @@ The two outputs match line for line.
 - **Car suspension.** Engineers quote a ride frequency and a damping ratio for each axle; the shock absorber's valving is chosen to set ζ. A worn damper is a falling ζ, and a corner that bounces twice after the load lands is the 37.23% curve.
 - **Moving-needle instruments and servo drives.** An analogue meter needle, a hard-disk head or a camera gimbal is tuned near ζ = 0.7 so it reaches a new reading fast with only a few percent overshoot.
 - **Feedback loops.** A controller places the closed-loop poles; designers aim for a damping ratio, and the pole angle θ = arccos ζ becomes a line on the pole map. Moving the poles with a gain is [Root locus](../03-Feedback%20Control/05-root-locus.md).
-- **Circuits.** A resistor, inductor and capacitor in series obey the same equation, with ω_n = 1/√(LC); the circuit version is RLC resonance.
-- **Structures.** Each vibration mode of a footbridge or a building has its own ω_n and a small ζ, which is why they can resonate; see Vibration modes.
+- **Circuits.** A resistor, inductor and capacitor in series obey the same equation, with ω_n = 1/√(LC); the circuit version is [RLC resonance](../06-Circuits%20and%20Electromagnetism/03-rlc-circuits-and-resonance.md).
+- **Structures.** Each vibration mode of a footbridge or a building has its own ω_n and a small ζ, which is why they can resonate; see [Vibration modes](../07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md).
 
 > **Say it back**
 > A mass on a spring with a damper has two numbers that fix its whole response. The natural frequency ω_n = √(k/m) sets the clock; the damping ratio ζ = c/(2√(km)) sets the shape. The poles sit on a circle of radius ω_n at an angle whose cosine is ζ. The overshoot after a step is e^(−πζ/√(1 − ζ^2)) and depends on ζ alone: 4.60% at ζ = 0.7, 37.23% at ζ = 0.3. The formula holds for a pure second-order system with no zero; a kerb pushing through the damper overshoots by 21.03%.
@@ -661,7 +1101,7 @@ The two outputs match line for line.
 - [RLC resonance](../06-Circuits%20and%20Electromagnetism/03-rlc-circuits-and-resonance.md): the same two numbers in a circuit, with the quality factor Q = 1/(2ζ).
 - [Vibration modes](../07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md): a structure with many masses has one ω_n and ζ per mode.
 
-The corner meets its 4.60% only if nothing but a force pushes it; when a specification also limits rise time and settling, the question becomes which numbers to write in the requirement, which step-response-specifications answers.
+The corner meets its 4.60% only if nothing but a force pushes it. When a specification also limits rise time and settling, the question becomes which numbers to write in the requirement; [Step response specs](07-step-response-specifications.md) answers it.
 
 ---
 

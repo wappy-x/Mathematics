@@ -8,9 +8,18 @@
 
 A living room sits at 15 °C overnight. Outside it is −5 °C. At 06:00 the thermostat asks for 21 °C. One radiator heats the room through a slow pipe: open its valve and the heat arrives over about 4 minutes. Wide open, the radiator gives 6 kW. Holding 15 °C took 4 kW, a valve two-thirds open. Holding 21 °C will take 5.2 kW.
 
-The thermostat runs a PI controller (proportional plus integral, from [PID control](07-pid-control-and-tuning.md)). At 06:00 it asks for a valve 1.4167 times wide open. The valve stops at wide open. So the room heats at full power, and the controller's running total of past error, its integral term, keeps growing as if its requests were being met. The total reaches 1.4406, a request for 1.4406 times wide open, by the time the room passes 21 °C at 31.778 min. The valve then stays pinned wide open until 52.475 min while that total drains. The room peaks at 23.21 °C and takes 85.2 minutes to settle within 0.2 °C. This is **integral windup**: the integral term winding up like a spring while the actuator (the part that acts, here the valve) is stuck at its limit.
+The thermostat runs a PI controller (proportional plus integral, from [PID control](07-pid-control-and-tuning.md)). At 06:00 it asks for a valve 1.4167 times wide open. The valve stops at wide open. So the room heats at full power, and the controller's running total of past error, its integral term, keeps growing as if its requests were being met.
 
-Four repairs, each with a number. **Anti-windup** stops the integral growing while the valve is pinned: the same morning then peaks at 21.00 °C and settles in 36.6 minutes. **A filtered derivative** lets a derivative term act without the valve chattering on thermometer noise. **Cascade control** nests a fast loop on the radiator's heat output inside the slow room loop, to catch a cooling of the boiler's water. **Feedforward** acts on a cold front the moment an outdoor sensor sees it.
+The total reaches 1.4406, a request for 1.4406 times wide open, by the time the room passes 21 °C at 31.778 min. The valve then stays pinned wide open until 52.475 min while that total drains. The room peaks at 23.21 °C and takes 85.2 minutes to settle within 0.2 °C.
+
+This is **integral windup**: the integral term winding up like a spring while the actuator (the part that acts, here the valve) is stuck at its limit.
+
+Four repairs, each with a number:
+
+- **Anti-windup** stops the integral growing while the valve is pinned: the same morning then peaks at 21.00 °C and settles in 36.6 minutes.
+- **A filtered derivative** lets a derivative term act without the valve chattering on thermometer noise.
+- **Cascade control** nests a fast loop on the radiator's heat output inside the slow room loop, to catch a cooling of the boiler's water.
+- **Feedforward** acts on a cold front the moment an outdoor sensor sees it.
 
 **A textbook PID becomes a working one when the integral stops when the actuator stops, the derivative is filtered before it reaches the valve, every fast disturbance gets its own inner loop, and every measured disturbance is acted on before the room feels it.**
 
@@ -72,17 +81,17 @@ Feedforward, from a measured outdoor temperature: $u_{\text{ff}} = UA\,(r - \the
 | $K_p$, $K_i$ | proportional gain, per °C; integral gain, per °C per min | 0.125; 0.008333 | K_i up: smaller fixed area, faster windup |
 | $x_I$ | integral term, in valve units | 0.6667, peaks at 1.4406 | above 1: a request no valve can meet |
 | $K_d$, $T_f$ | derivative gain, valve per (°C/min); derivative filter time, min | 0.25; 0.2 | T_f up: less jitter, more lag |
-| $h$, $\sigma$, $\sigma_D$ | sample period, min; sensor noise rms, °C; valve jitter rms | 0.1 min; 0.05 °C; 0.0456 | h down: raw jitter grows as 1/h |
+| $h$, $\sigma$, $\sigma_D$ | sample period, min; sensor noise, as a root-mean-square (rms) size, °C; valve jitter, rms | 0.1 min; 0.05 °C; 0.0456 | h down: raw jitter grows as 1/h |
 | $D_k$ | the filtered derivative term at sample k, in valve units | jitters by σ_D | K_d up: larger |
 | $a$, $b$ | filter memory; filter scale, valve per °C | 0.6667; 0.8333 | a toward 1: smoother, slower |
-| $K_{\text{in}}$, $s$ | inner-loop gain, valve per kW; Laplace variable, 1/min | 8/6 per kW, so K_in Q_max = 8 | K_in up: faster inner loop |
+| $K_{\text{in}}$, $s$ | inner-loop gain, valve per kW; Laplace variable, 1/min, in which a lag of time τ reads 1/(τ s + 1) | 8/6 per kW, so K_in Q_max = 8 | K_in up: faster inner loop |
 
 ### When it holds
 
 - **One room temperature.** Air, walls and furniture share one θ. Real rooms stratify by a degree or two; the model's θ is the thermometer's.
 - **Radiator output set by the valve alone.** Real output grows roughly as (water temperature − room temperature)^1.3, so it falls as the room warms. With 60 °C water, output at a 25 °C room is 0.7213 of output at 15 °C. The fixed 6 kW is a stand-in: the pinned-valve times shift with it; the identity and the need for a clamp do not.
-- **A hard, linear valve.** Real valves have curved characteristics and a dead band, which add their own small windup.
-- **White sensor noise.** Each reading's noise is independent of the last; correlated noise or 0.1 °C quantisation changes σ_D, not the shape of the argument.
+- **A hard, linear valve.** Real valves have curved characteristics and a dead band (a small range of signal that does not move the valve), which add their own small windup.
+- **White sensor noise.** Each reading's noise is independent of the last; correlated noise or 0.1 °C quantisation (readings rounded to 0.1 °C steps) changes σ_D, not the shape of the argument.
 - **A trustworthy feedforward model.** u_ff uses UA; if UA is 30% low, feedforward alone leaves the room at 19.2001 °C and only feedback brings it back.
 
 ---
@@ -91,7 +100,11 @@ Feedforward, from a measured outdoor temperature: $u_{\text{ff}} = UA\,(r - \the
 
 ### Step 0: an integrator remembers; a valve does not
 
-The integral term is a memory of past error. In normal running, feedback checks it: too much integral means too much heat, the room overshoots, the error turns negative and drains the memory. When the valve is pinned, that check is cut. The room no longer answers the controller, the loop is open, and the memory grows with nothing pushing back. Two repairs on this card deal with that: anti-windup restores the check, and the derivative filter stops a signal reaching the valve that the valve cannot use. The other two, cascade and feedforward, act on disturbances before the room feels them.
+The integral term is a memory of past error. In normal running, feedback checks it: too much integral means too much heat, the room overshoots, the error turns negative and drains the memory.
+
+When the valve is pinned, that check is cut. The room no longer answers the controller, the loop is open, and the memory grows with nothing pushing back.
+
+Two repairs on this card deal with that: anti-windup restores the check, and the derivative filter stops a signal reaching the valve that the valve cannot use. The other two, cascade and feedforward, act on disturbances before the room feels them.
 
 ### Step 1: the room while the valve is pinned, solved exactly
 
@@ -120,7 +133,9 @@ By the time the pinned valve lets go (Step 3), 69.9 °C·min is banked, so 45.9 
 
 ### Step 3: when the wound-up valve lets go
 
-The valve leaves wide open when the request falls back to 1: K_p e + x_I = 1, with both pieces given by Step 1's exact solution and x_I = 0.6667 + K_i × (running area). A bisection (halving a bracket until it is tight) finds 52.475 min. At the crossing of 21 °C, 31.778 min, the integral term stood at 1.4406. From then on the error is negative, but it drains the integral at only K_i per degree per minute, and the radiator stays at 6 kW until 52.475 min. The room peaks at 23.21 °C at 58.0 min.
+The valve leaves wide open when the request falls back to 1: K_p e + x_I = 1, with both pieces given by Step 1's exact solution and x_I = 0.6667 + K_i × (running area). A bisection (halving a bracket until it is tight) finds 52.475 min.
+
+At the crossing of 21 °C, 31.778 min, the integral term stood at 1.4406. From then on the error is negative, but it drains the integral at only K_i per degree per minute, and the radiator stays at 6 kW until 52.475 min. The room peaks at 23.21 °C at 58.0 min.
 
 ### Step 4: clamping, and what it costs
 
@@ -143,7 +158,11 @@ Write the filter as D_k = a D_(k−1) + b(n_k − n_(k−1)) on noise readings n
 
 </details>
 
-With K_d = 0.25 valve per (°C/min) (a derivative time of 2 min), σ = 0.05 °C and a reading every 0.1 min (6 s), the raw derivative jitters the valve by 0.1768 of its full travel, all the time. A filter with T_f = 0.2 min (a tenth of the derivative time) gives a = 0.6667, b = 0.8333 and a jitter of 0.0456. Sample ten times faster, every 0.6 s, and the raw jitter becomes 1.7678: the valve would be slammed end to end. The filtered one moves only to 0.0602. A common rule samples 10 to 20 times per closed-loop rise time; 6 s is already well inside it, so faster sampling buys only noise. What the derivative buys is margin ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)): with the valve unlimited, PI has 50.50° of phase margin at 0.1231 rad/min, and K_d = 0.25 lifts it to 62.20°. The filter's cost is a 0.2 min lag inside a 4 min pipe lag: the margin becomes 62.30°, almost unchanged.
+Take K_d = 0.25 valve per (°C/min) (a derivative time K_d/K_p of 2 min), σ = 0.05 °C and a reading every 0.1 min (6 s). Then the raw derivative jitters the valve by 0.1768 of its full travel, all the time. A filter with T_f = 0.2 min (a tenth of the derivative time) gives a = 0.6667, b = 0.8333 and a jitter of 0.0456.
+
+Sample ten times faster, every 0.6 s, and the raw jitter becomes 1.7678: the valve would be slammed end to end. The filtered one moves only to 0.0602. A common rule samples 10 to 20 times per closed-loop rise time; 6 s is already well inside it, so faster sampling buys only noise.
+
+What the derivative buys is margin ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)). The phase margin is how much extra lag, in degrees, the loop can take at its crossover (the frequency where its gain is 1) before it oscillates. With the valve unlimited, PI has 50.50° of phase margin at 0.1231 rad/min, and K_d = 0.25 lifts it to 62.20°. The filter's cost is a 0.2 min lag inside a 4 min pipe lag: the margin becomes 62.30°, almost unchanged.
 
 ### Step 6: feedforward, and why it cannot be perfect
 
@@ -172,13 +191,15 @@ Orange: feedback only. Teal: feedforward only, recovering with the room's own 30
 
 The boiler's water cools when another zone opens, and at the same valve the radiator now gives 1.2 kW less. A single room loop learns this only when the room cools, minutes later: the radiator sinks to 3.4357 kW and the room bottoms at 19.9348 °C at 15.43 min.
 
-A cascade adds a heat meter on the radiator pipe (flow rate times the drop in water temperature) and a second PI controller. The room controller no longer moves the valve; it asks for a heat output in kW. The inner controller moves the valve to deliver that heat. Its integral time equals the pipe lag, 4 min, which cancels the pipe's pole, so the inner loop behaves like a single lag of τ_q/(K_in Q_max) = 0.50 min.
+A cascade adds a heat meter on the radiator pipe (flow rate times the drop in water temperature) and a second PI controller. The room controller no longer moves the valve; it asks for a heat output in kW. The inner controller moves the valve to deliver that heat. Its integral time (its proportional gain divided by its integral gain) equals the pipe lag, 4 min, which cancels the pipe's pole (the slow response that the 4 min lag adds), so the inner loop behaves like a single lag of τ_q/(K_in Q_max) = 0.50 min.
 
 With the room loop held still, the inner loop's answer to the 1.2 kW loss is
 
 $$Q(t) - Q_0 = -\frac{1.2}{7}\left(e^{-t/4} - e^{-8t/4}\right) \text{ kW},$$
 
-because the inner loop's sensitivity (its leftover share of a disturbance, from [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)) is τ_q s/(τ_q s + 8), and the loss enters through the pipe's 1/(τ_q s + 1). The dip is deepest at (4 ln 8)/7 = 1.188 min, at −0.1114 kW, and is gone within a few minutes. The room hardly notices: it bottoms at 20.9547 °C. The cascade works because the inner loop is much faster than the outer one, here 0.50 min against the room's 30 min; with the two similar in speed the loops fight.
+because the inner loop's sensitivity (its leftover share of a disturbance, from [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)) is τ_q s/(τ_q s + 8), and the loss enters through the pipe's 1/(τ_q s + 1). The dip is deepest at (4 ln 8)/7 = 1.188 min, at −0.1114 kW, and is gone within a few minutes.
+
+The room hardly notices: it bottoms at 20.9547 °C. The cascade works because the inner loop is much faster than the outer one, here 0.50 min against the room's 30 min; with the two similar in speed the loops fight.
 
 ### The picture: the finished controller, schematic
 
@@ -221,7 +242,9 @@ Without anti-windup the room overshoots to 23.21 °C and is not within 0.2 °C u
 
 ## Code, from first principles, and it actually runs
 
-Both programs simulate the room, the radiator and the controller with a fourth-order Runge-Kutta step of 0.01 min, with saturation and clamping written in; they call the room temperature T and UA is G. Against those simulations they take independent roads: the pinned-valve phase solved exactly, with bisection for the moment the valve lets go; the integral-area identity; the two-lag formula for feedforward; and the inner loop's closed-form dip. The derivative jitter is reached three ways: the variance formula, Parseval's frequency integral by Simpson's rule, and a Monte Carlo run of 100,000 readings from a SplitMix64 generator with seed 2026 and a Box-Muller step, so both languages draw the same noise. The Monte Carlo check allows 3%, a few standard errors for correlated samples. Last, the frequency response gives the phase margins of PI, raw-derivative PID and filtered PID.
+Both programs simulate the room, the radiator and the controller with a fourth-order Runge-Kutta step of 0.01 min, with saturation and clamping written in; they call the room temperature T and UA is G. Against those simulations they take independent roads: the pinned-valve phase solved exactly, with bisection for the moment the valve lets go; the integral-area identity; the two-lag formula for feedforward; and the inner loop's closed-form dip.
+
+The derivative jitter is reached three ways: the variance formula, Parseval's frequency integral by Simpson's rule, and a Monte Carlo run of 100,000 readings from a SplitMix64 generator with seed 2026 and a Box-Muller step, so both languages draw the same noise. The Monte Carlo check allows 3%, a few standard errors for correlated samples. Last, the frequency response gives the phase margins of PI, raw-derivative PID and filtered PID.
 
 ### Python
 
@@ -624,6 +647,147 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical.
+
+### Lean
+
+Lean proves the integral-area identity and the derivative-noise sum for all gains, plus the fast-sampling limit, and checks the worked numbers.
+
+- Suppose $K_i \ne 0$, $x_I$ grows at rate $K_i e$ and is never stopped, and the loop starts steady and settles. Then the error's total area is $(u_\infty - u_0)/K_i$.
+- Take $0 \le a < 1$. Then the squared filter outputs from one noisy reading sum to $2b^2/(1 + a)$. So $\sigma^2$ times this sum is $\sigma_D^2$, with $\sigma_D = b\,\sigma\sqrt{2/(1 + a)}$.
+- Take $T_f > 0$ fixed. Then as $h$ shrinks to 0, $\sigma_D$ tends to $K_d \sigma / T_f$, a bounded value.
+- The worked numbers check exactly: 4 and 5.2 kW, the first request 1.4167, 25 °C, the area 24, and 18.333 °C.
+- So do the filter's $a$ and $b$, the squared jitters behind 0.1768 and 0.0456, and the inner loop's 0.50 min.
+
+Lean has no white noise or room model, so random-noise tests and all the room simulations are left to the Python and Rust checks.
+
+```lean
+-- PID in practice: the integral-area identity for an unstopped PI integral, the noise-gain sum of the filtered derivative, and its bounded limit under fast sampling.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open Filter Topology
+
+/-- The integral-area identity. A PI controller asks for the valve `Kp * e t + x t`, where
+`e` is the error and the integral term `x` grows at rate `Ki * e` and is never stopped.
+The loop starts steady (error 0, valve `u_0`) and settles (error tends to 0, valve tends to
+`u_inf`). Then the error's total area `∫₀^∞ e dt` is `(u_inf - u_0) / Ki`, whatever happened on
+the way. -/
+theorem integral_area_identity (Kp Ki u_0 u_inf : ℝ) (e x : ℝ → ℝ) (hKi : Ki ≠ 0)
+    (he : ContinuousOn e (Set.Ici 0)) (hx : ContinuousOn x (Set.Ici 0))
+    (hderiv : ∀ t > 0, HasDerivAt x (Ki * e t) t)
+    (he0 : e 0 = 0) (hu0 : Kp * e 0 + x 0 = u_0)
+    (he_lim : Tendsto e atTop (𝓝 0))
+    (hu_lim : Tendsto (fun t => Kp * e t + x t) atTop (𝓝 u_inf)) :
+    Tendsto (fun T => ∫ t in (0 : ℝ)..T, e t) atTop (𝓝 ((u_inf - u_0) / Ki)) := by
+  have hInt : ∀ T ≥ (0:ℝ), ∫ t in (0 : ℝ)..T, e t = (x T - x 0) / Ki := by
+    intro T hT
+    have hc : ContinuousOn e (Set.uIcc 0 T) := he.mono (by
+      rw [Set.uIcc_of_le hT]; exact Set.Icc_subset_Ici_self)
+    have h1 : ∫ t in (0 : ℝ)..T, Ki * e t = x T - x 0 := by
+      apply intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hT
+      · exact hx.mono Set.Icc_subset_Ici_self
+      · intro t ht; exact hderiv t ht.1
+      · exact (continuousOn_const.mul hc).intervalIntegrable
+    rw [intervalIntegral.integral_const_mul] at h1
+    rw [eq_div_iff hKi, mul_comm]
+    exact h1
+  have hxlim : Tendsto x atTop (𝓝 u_inf) := by
+    have h := hu_lim.sub (he_lim.const_mul Kp)
+    rw [mul_zero, sub_zero] at h
+    exact h.congr (fun t => by ring)
+  have hx0 : x 0 = u_0 := by rw [he0, mul_zero, zero_add] at hu0; exact hu0
+  have hlim : Tendsto (fun T => (x T - x 0) / Ki) atTop (𝓝 ((u_inf - u_0) / Ki)) := by
+    rw [← hx0]
+    exact (hxlim.sub_const (x 0)).div_const Ki
+  refine hlim.congr' ?_
+  filter_upwards [eventually_ge_atTop 0] with T hT
+  exact (hInt T hT).symm
+
+/-- The derivative-noise formula. The filtered derivative `D_k = a D_{k-1} + b (n_k - n_{k-1})`
+answers a single unit reading at step 0 with the weights `g`. For `0 ≤ a < 1`, white noise of
+size `σ` gives the output variance `σ² Σ g_k²`, and this sum converges to `σ_D²` with
+`σ_D = b σ √(2 / (1 + a))`. -/
+theorem filtered_derivative_noise (a b σ : ℝ) (g : ℕ → ℝ) (ha0 : 0 ≤ a) (ha1 : a < 1)
+    (hg0 : g 0 = b * (1 - 0))
+    (hg : ∀ k : ℕ, g (k + 1) = a * g k +
+      b * ((if k + 1 = 0 then 1 else 0) - (if k = 0 then 1 else 0))) :
+    HasSum (fun k => (σ * g k) ^ 2) ((b * σ * Real.sqrt (2 / (1 + a))) ^ 2) := by
+  have hg1 : g 1 = (a - 1) * b := by
+    rw [hg 0, hg0]; simp; ring
+  have hgk : ∀ k : ℕ, g (k + 1) = a ^ k * ((a - 1) * b) := by
+    intro k
+    induction k with
+    | zero => simpa using hg1
+    | succ n ih => rw [hg (n + 1), ih]; simp; ring
+  have ha2 : a ^ 2 < 1 := by nlinarith
+  have hgeo := (hasSum_geometric_of_lt_one (sq_nonneg a) ha2).mul_left ((σ * ((a - 1) * b)) ^ 2)
+  have hne1 : (1 : ℝ) - a ^ 2 ≠ 0 := by linarith
+  have hne2 : (1 : ℝ) + a ≠ 0 := by linarith
+  rw [← hasSum_nat_add_iff' 1]
+  simp only [Finset.sum_range_one, hg0]
+  convert hgeo using 1
+  · funext n; rw [hgk n]; ring
+  · rw [mul_pow, mul_pow, Real.sq_sqrt (by positivity)]
+    field_simp
+    ring
+
+/-- Fast sampling cannot blow up a filtered derivative. With filter time `Tf > 0` held fixed,
+`a = Tf / (Tf + h)` and `b = Kd / (Tf + h)`; as the sample period `h` shrinks to 0, the jitter
+`σ_D = b σ √(2 / (1 + a))` tends to `Kd σ / Tf`, a bounded value. -/
+theorem filtered_jitter_tendsto (Kd Tf σ : ℝ) (hTf : 0 < Tf) :
+    Tendsto (fun h : ℝ => Kd / (Tf + h) * σ * Real.sqrt (2 / (1 + Tf / (Tf + h))))
+      (𝓝[>] 0) (𝓝 (Kd * σ / Tf)) := by
+  have h1 : Tf + 0 ≠ 0 := by linarith
+  have h2 : 1 + Tf / (Tf + 0) ≠ 0 := by rw [add_zero, div_self hTf.ne']; norm_num
+  have hc : ContinuousAt
+      (fun h : ℝ => Kd / (Tf + h) * σ * Real.sqrt (2 / (1 + Tf / (Tf + h)))) 0 := by
+    apply ContinuousAt.mul
+    · exact (continuousAt_const.div (continuousAt_const.add continuousAt_id) h1).mul
+        continuousAt_const
+    · apply Real.continuous_sqrt.continuousAt.comp
+      exact continuousAt_const.div (continuousAt_const.add
+        (continuousAt_const.div (continuousAt_const.add continuousAt_id) h1)) h2
+  convert hc.tendsto.mono_left nhdsWithin_le_nhds using 2
+  rw [add_zero, div_self hTf.ne']
+  norm_num
+  ring
+
+-- The card's worked numbers, as exact fractions.
+-- Heat and valve before: 0.2 × (15 − (−5)) = 4 kW; 4/6 = 2/3.
+example : (1 / 5 : ℚ) * (15 - (-5)) = 4 ∧ (4 : ℚ) / 6 = 2 / 3 := by norm_num
+-- Heat and valve after: 0.2 × (21 − (−5)) = 5.2 kW; 5.2/6 = 13/15.
+example : (1 / 5 : ℚ) * (21 - (-5)) = 26 / 5 ∧ (26 / 5 : ℚ) / 6 = 13 / 15 := by norm_num
+-- First request 0.125 × 6 + 2/3 = 17/12 (1.4167), past the wide-open valve.
+example : (1 / 8 : ℚ) * 6 + 2 / 3 = 17 / 12 ∧ (1 : ℚ) < 17 / 12 := by norm_num
+-- Where wide open leads: −5 + 6/0.2 = 25 °C.
+example : (-5 : ℚ) + 6 / (1 / 5) = 25 := by norm_num
+-- Fixed error area: (13/15 − 2/3) / (0.125/15) = 24 °C·min.
+example : ((13 / 15 : ℚ) - 2 / 3) / ((1 / 8) / 15) = 24 := by norm_num
+-- Clamped valve frees at 21 − (1 − 2/3)/0.125 = 55/3 °C (18.333).
+example : (21 : ℚ) - (1 - 2 / 3) / (1 / 8) = 55 / 3 := by norm_num
+-- Filter with Tf = 0.2, h = 0.1, Kd = 0.25: a = 2/3, b = 5/6.
+example : (1 / 5 : ℚ) / (1 / 5 + 1 / 10) = 2 / 3 ∧ (1 / 4 : ℚ) / (1 / 5 + 1 / 10) = 5 / 6 := by
+  norm_num
+-- Jitter squared, σ = 0.05: raw (a = 0, b = 5/2) gives 1/32 (σ_D = 0.1768);
+-- filtered (a = 2/3, b = 5/6) gives 1/480 (σ_D = 0.0456).
+example : (5 / 2 : ℚ) ^ 2 * (1 / 20) ^ 2 * (2 / (1 + 0)) = 1 / 32 := by norm_num
+example : (5 / 6 : ℚ) ^ 2 * (1 / 20) ^ 2 * (2 / (1 + 2 / 3)) = 1 / 480 := by norm_num
+-- Inner loop time: τ_q / (K_in Q_max) = 4 / ((8/6) × 6) = 1/2 min.
+example : (4 : ℚ) / ((8 / 6) * 6) = 1 / 2 := by norm_num
+
+#print axioms integral_area_identity
+#print axioms filtered_derivative_noise
+#print axioms filtered_jitter_tendsto
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'integral_area_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'filtered_derivative_noise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'filtered_jitter_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

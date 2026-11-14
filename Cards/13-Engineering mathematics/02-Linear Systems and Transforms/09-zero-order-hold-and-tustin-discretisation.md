@@ -8,9 +8,11 @@
 
 A lab thermostat keeps a small aluminium sample cup a few kelvin above room temperature. A 10 W heater warms the cup. A thermistor, a temperature-sensing resistor, sits in a pocket of the cup and lags behind it. A microcontroller reads the thermistor ten times a second and sets the heater power ten times a second. Between two updates the heater driver holds the last power it was given.
 
-The physics runs in continuous time; the code runs in steps of 0.1 s. Before anyone writes a controller, the engineer needs a model the code can step forward: "given the temperatures now and the power I set now, what will the sensor read one tick from now?" There are two standard ways to get it. The **zero-order hold** method assumes, correctly here, that the power stays flat for the whole tick, and solves the physics exactly over that tick. The **Tustin** method, also called the bilinear transform, swaps every derivative for a trapezoid-rule average; it keeps the frequency response's shape but squeezes the frequency axis.
+The physics runs in continuous time; the code runs in steps of 0.1 s. Before anyone writes a controller, the engineer needs a model the code can step forward: "given the temperatures now and the power I set now, what will the sensor read one tick from now?"
 
-For a 10 W step, the zero-order-hold model lands on the true sensor reading at every tick, to below 1e-12 K. The Tustin model is up to 152.075 mK off, mostly because it runs half a tick early. In the frequency domain the roles flip. Tustin reproduces the continuous gain and phase exactly, at a bent frequency. The zero-order hold adds a half-tick delay that costs 18.00° of phase at 1 Hz.
+There are two standard ways to get it. The **zero-order hold** method assumes, correctly here, that the power stays flat for the whole tick, and solves the physics exactly over that tick. The **Tustin** method, also called the bilinear transform, swaps every derivative for a trapezoid-rule average; it keeps the frequency response's shape but squeezes the frequency axis.
+
+For a 10 W step, the zero-order-hold model lands on the true sensor reading at every tick, to below 1e-12 K. The Tustin model is up to 152.075 mK (millikelvin, thousandths of a kelvin) off, mostly because it runs half a tick early. In the frequency domain the roles flip. Tustin reproduces the continuous gain and phase exactly, at a bent frequency. Gain and phase say how much the system magnifies and delays a sine wave. The zero-order hold adds a half-tick delay that costs 18.00° of phase at 1 Hz.
 
 **Zero-order hold turns a continuous model into an exact sampled one for any input that is held flat between samples, using the matrix exponential; Tustin replaces s by (2/T)(z − 1)/(z + 1), which keeps every stable design stable but compresses the whole frequency axis into the band below half the sampling rate.**
 
@@ -102,7 +104,7 @@ $$e^{At} = \begin{pmatrix} e^{-t} & 0 \\ \tfrac{4}{3}\left(e^{-t} - e^{-4t}\righ
 
 At t = 0.1 s this is `[[0.904837418, 0], [0.312689829, 0.670320046]]`, and integrating it against B gives B_d = `[0.047581291, 0.008495062]` K/W.
 
-For the soldering tip of [The z-transform](08-z-transform-and-discrete-time-systems.md), one lump with a 50 s time constant, the same method gives a = e^(−0.002) = 0.998002 and b = 0.039960 °C per W per tick: the exact factors behind that card's Euler update.
+For the soldering tip of [The z-transform](08-z-transform-and-discrete-time-systems.md), one lump with a 50 s time constant, the same method gives a = e^(−0.002) = 0.998002 on the old temperature and b = 0.039960 °C per W per tick on the power: the exact factors behind that card's Euler update.
 
 <details>
 <summary>One exponential gives both matrices (Van Loan's trick)</summary>
@@ -121,7 +123,9 @@ A step is held flat on every tick, so the ZOH model reproduces the step response
 
 The same fact gives a second formula for the sampled transfer function: G_d(z) = (1 − z^(−1)) times the z-transform of the sampled step response. The code computes G_d both ways and they agree to below 1e-12.
 
-A sine wave is not held flat by nature. Holding it turns it into a staircase, and a staircase lags the smooth curve by half a tick on average. So the ZOH model's phase at frequency ω is close to the continuous phase minus ωT/2. At 1 Hz that is 0.05 s of delay, 18.00°: the continuous cup lags by 138.48°, the ZOH model by 156.44°, against 156.48° predicted. That is not an error in the model. It is the true cost of the hold, and any loop closed through the heater driver will pay it.
+A sine wave is not held flat by nature. Holding it turns it into a staircase, and a staircase lags the smooth curve by half a tick on average.
+
+So the ZOH model's phase at frequency ω is close to the continuous phase minus ωT/2. At 1 Hz that is 0.05 s of delay, 18.00°: the continuous cup lags by 138.48°, the ZOH model by 156.44°, against 156.48° predicted. That is not an error in the model. It is the true cost of the hold, and any loop closed through the heater driver will pay it.
 
 ### Step 4: Tustin is the trapezoid rule
 
@@ -139,18 +143,24 @@ Put z = e^(jωT) on the unit circle. Then
 
 $$\frac{z - 1}{z + 1} = \frac{e^{j\omega T/2} - e^{-j\omega T/2}}{e^{j\omega T/2} + e^{-j\omega T/2}} = j\tan\frac{\omega T}{2},$$
 
-so Tustin's s becomes j (2/T) tan(ωT/2) = j ω_a. Tustin's model at frequency ω is the continuous G at the frequency ω_a, exactly. At low frequency tan is close to its argument and ω_a ≈ ω: 1.0 Hz is read as 1.03 Hz. Near the Nyquist frequency, half the sampling rate, here 5 Hz, the tangent explodes: 4.0 Hz is read as 9.80 Hz and 4.5 Hz as 20.10 Hz. The whole continuous axis from zero to infinity is squeezed into 0 to 5 Hz, without overlap, which is why Tustin never aliases (aliasing: a fast frequency masquerading as a slow one).
+so Tustin's s becomes j (2/T) tan(ωT/2) = j ω_a. Tustin's model at frequency ω is the continuous G at the frequency ω_a, exactly.
+
+At low frequency tan is close to its argument and ω_a ≈ ω: 1.0 Hz is read as 1.03 Hz. Near the Nyquist frequency, half the sampling rate, here 5 Hz, the tangent explodes: 4.0 Hz is read as 9.80 Hz and 4.5 Hz as 20.10 Hz. The whole continuous axis from zero to infinity is squeezed into 0 to 5 Hz, without overlap, which is why Tustin never aliases (aliasing: a fast frequency masquerading as a slow one).
 
 The same map sends the left half of the s-plane exactly onto the inside of the unit circle, so a stable controller stays stable after Tustin, at any sampling rate. Tustin's poles here are 0.904762 and 0.666667, against the exact 0.904837 and 0.670320.
 
-**Prewarping.** If one frequency matters most, a corner of a filter or a notch, replace 2/T by ω₀ / tan(ω₀T/2). The bent axis then passes through ω₀ exactly. At 2 Hz plain Tustin gives −40.809 dB; prewarped at 2 Hz it gives −38.394 dB, the continuous value.
+**Prewarping.** If one frequency matters most, a corner of a filter or a notch, replace 2/T by ω₀ / tan(ω₀T/2). The bent axis then passes through ω₀ exactly. At 2 Hz plain Tustin gives −40.809 dB (decibels: a gain g in K/W is 20 log10 g dB); prewarped at 2 Hz it gives −38.394 dB, the continuous value.
 
 <details>
 <summary>Detailed proof: Tustin maps the stable half-plane onto the unit disc</summary>
 
-Solve s = (2/T)(z − 1)/(z + 1) for z: z = (1 + sT/2)/(1 − sT/2). Write sT/2 = a + jb. Then |z|^2 = ((1 + a)^2 + b^2)/((1 − a)^2 + b^2). The numerator minus the denominator is 4a. So |z| < 1 exactly when a < 0, that is, when s is in the left half-plane; |z| = 1 exactly when s is on the imaginary axis; and |z| > 1 on the right. The map is one-to-one, with inverse given by the substitution itself, so every point of the open disc comes from exactly one point of the left half-plane. A continuous transfer function whose poles all have negative real part therefore becomes a discrete one whose poles all lie inside the unit circle. The pole s = −4 goes to (1 − 0.2)/(1 + 0.2) = 0.666667.
+Solve s = (2/T)(z − 1)/(z + 1) for z: z = (1 + sT/2)/(1 − sT/2). Write sT/2 = a + jb. Then |z|^2 = ((1 + a)^2 + b^2)/((1 − a)^2 + b^2). The numerator minus the denominator is 4a. So |z| < 1 exactly when a < 0, that is, when s is in the left half-plane; |z| = 1 exactly when s is on the imaginary axis; and |z| > 1 on the right.
 
-For the ZOH frequency claim: a hold of one tick has the transfer function (1 − e^(−sT))/s. On s = jω this equals T e^(−jωT/2) · sin(ωT/2)/(ωT/2): a pure half-tick delay times a positive real gain, for ω below the sampling frequency. The ZOH model's response at ω is this times G(jω), divided by T, plus copies of the same product shifted by multiples of 2π/T, which the cup's low-pass shape makes small. So its phase is the continuous phase minus ωT/2 plus a small correction from those copies: −156.44° at 1 Hz, against −156.48° without them.
+The map is one-to-one, with inverse given by the substitution itself, so every point of the open disc comes from exactly one point of the left half-plane. A continuous transfer function whose poles all have negative real part therefore becomes a discrete one whose poles all lie inside the unit circle. The pole s = −4 goes to (1 − 0.2)/(1 + 0.2) = 0.666667.
+
+For the ZOH frequency claim: a hold of one tick has the transfer function (1 − e^(−sT))/s. On s = jω this equals T e^(−jωT/2) · sin(ωT/2)/(ωT/2): a pure half-tick delay times a positive real gain, for ω below the sampling frequency.
+
+The ZOH model's response at ω is this times G(jω), divided by T, plus copies of the same product shifted by multiples of 2π/T, which the cup's low-pass shape makes small. So its phase is the continuous phase minus ωT/2 plus a small correction from those copies: −156.44° at 1 Hz, against −156.48° without them.
 
 </details>
 
@@ -206,7 +216,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The script builds the cup's continuous model and samples it at 10 Hz. It reaches the ZOH matrices by three independent roads: Van Loan's matrix exponential by Taylor series with scaling and squaring; the closed-form exponential for this triangular A; and an RK4 integration ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) over one tick in 2000 sub-steps with the power held. It checks ZOH's step samples against the exact step response, and its transfer function against the step-response z-transform. It reaches Tustin by two roads: the difference equation from substituting for s, and the trapezoid rule run on the ODE. It checks Tustin on the unit circle against G at the bent frequency, and checks prewarping at 2 Hz. It also samples card 08's one-lump tip by Van Loan. Then it prints the four failures. Complex numbers are a small struct in Rust.
+The script builds the cup's continuous model and samples it at 10 Hz. It reaches the ZOH matrices by three independent roads: Van Loan's matrix exponential by Taylor series with scaling and squaring; the closed-form exponential for this triangular A; and an RK4 integration ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) over one tick in 2000 sub-steps with the power held. It checks ZOH's step samples against the exact step response, and its transfer function against the step-response z-transform.
+
+It reaches Tustin by two roads: the difference equation from substituting for s, and the trapezoid rule run on the ODE. It checks Tustin on the unit circle against G at the bent frequency, and checks prewarping at 2 Hz. It also samples card 08's one-lump tip by Van Loan. Then it prints the four failures. Complex numbers are a small struct in Rust.
 
 ### Python
 
@@ -621,6 +633,191 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the zero-order hold exact, Tustin's stability and Tustin's frequency bend, for any linear model and tick, and checks the worked numbers.
+
+- Suppose the state obeys $dx/dt = Ax + Bu$ over a tick $T$, with $u$ held flat. Then $x(T) = e^{AT}x(0) + \int_0^T e^{A\sigma}B\,u\,d\sigma$. So the sampled model $x[k+1] = A_d\,x[k] + B_d\,u[k]$ is exact at the samples.
+- Take a tick $T > 0$, any $s$ with $sT/2 \ne 1$, and $z = (1 + sT/2)/(1 - sT/2)$. Then $|z| < 1$ exactly when $s$ is in the left half-plane.
+- Every point inside the unit circle is such a $z$ for some $s$ in the left half-plane.
+- Take any tick $T$, any frequency $\omega$, and $z = e^{j\omega T}$ on the unit circle. Then $(2/T)(z - 1)/(z + 1) = j\,\omega_a$, with $\omega_a = (2/T)\tan(\omega T/2)$.
+- Take $R$ = 0.5 K/W, $\tau_1$ = 1.0 s and $\tau_2$ = 0.25 s. Then $G(s) = 2/(s^2 + 5s + 4)$.
+- Take Tustin at $T$ = 0.1 s. Then its denominator is 504, −792, 304, and its poles are 19/21 and 2/3.
+- Take Tustin's model and a 10 W step. Then it reads 5/126 K (0.0396825 K) at 0 s and 80/441 K (0.1814059 K) at 0.1 s.
+- Take forward Euler at $T$ = 0.6 s. Then the sensor's pole 1 − 4 × 0.6 = −1.40 lies outside the unit circle, past the 0.50 s limit.
+- Take $R$ = 0.5 K/W. Then holding the cup 2.0 K below room needs $u$ = −4.0 W, and a 10 W step settles at 5.0 K.
+
+The numbers in $A_d$ and $B_d$, every simulation, and the half-tick delay are left to the Python and Rust checks.
+
+```lean
+-- Discretising a design: the zero-order-hold model is exact at the samples, Tustin's map sends the stable half-plane onto the unit disc, and on the unit circle Tustin's s is j times the bent frequency (2/T) tan(ωT/2).
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.Calculus.Deriv.Mul
+
+open scoped Matrix
+
+set_option backward.isDefEq.respectTransparency false in
+open scoped Matrix.Norms.Operator in
+theorem zoh_helper {n : Type*} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℝ) (B : n → ℝ) (u T : ℝ) (hT : 0 ≤ T) (x : ℝ → n → ℝ)
+    (hx : ∀ t ∈ Set.Icc 0 T, HasDerivWithinAt x (A *ᵥ x t + u • B) (Set.Icc 0 T) t) :
+    x T = NormedSpace.exp (T • A) *ᵥ x 0
+      + ∫ σ in (0 : ℝ)..T, NormedSpace.exp (σ • A) *ᵥ (u • B) := by
+  let L : Matrix n n ℝ →L[ℝ] (n → ℝ) →L[ℝ] (n → ℝ) :=
+    LinearMap.toContinuousLinearMap
+      ((LinearMap.toContinuousLinearMap : ((n → ℝ) →ₗ[ℝ] (n → ℝ)) ≃ₗ[ℝ] _).toLinearMap ∘ₗ
+        (Matrix.toLin' : Matrix n n ℝ ≃ₗ[ℝ] _).toLinearMap)
+  have hL : ∀ M v, L M v = M *ᵥ v := fun M v => by simp [L]
+  set E : ℝ → Matrix n n ℝ := fun t => NormedSpace.exp ((T - t) • A) with hE
+  have hEd : ∀ t, HasDerivAt E ((-1 : ℝ) • (NormedSpace.exp ((T - t) • A) * A)) t := fun t =>
+    (hasDerivAt_exp_smul_const A (T - t)).scomp t ((hasDerivAt_id t).const_sub T)
+  set g : ℝ → n → ℝ := fun t => L (E t) (x t) with hg
+  have hgd : ∀ t ∈ Set.Icc 0 T,
+      HasDerivWithinAt g (E t *ᵥ (u • B)) (Set.Icc 0 T) t := by
+    intro t ht
+    have := L.hasDerivWithinAt_of_bilinear (hEd t).hasDerivWithinAt (hx t ht)
+    convert this using 1
+    rw [hL, hL]
+    simp only [E, Matrix.mulVec_add, Matrix.mulVec_mulVec, neg_smul, one_smul, Matrix.neg_mulVec]
+    abel
+  have hcontE : Continuous fun t => E t *ᵥ (u • B) := by
+    have : Continuous E := continuous_iff_continuousAt.2 fun t => (hEd t).continuousAt
+    exact this.matrix_mulVec continuous_const
+  have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hT
+    (fun t ht => (hgd t ht).continuousWithinAt)
+    (fun t ht => (hgd t (Set.Ioo_subset_Icc_self ht)).hasDerivAt (Icc_mem_nhds ht.1 ht.2))
+    (hcontE.intervalIntegrable _ _)
+  have hsub : (∫ t in (0:ℝ)..T, E t *ᵥ (u • B))
+      = ∫ σ in (0 : ℝ)..T, NormedSpace.exp (σ • A) *ᵥ (u • B) := by
+    simp only [E]
+    rw [intervalIntegral.integral_comp_sub_left (fun σ => NormedSpace.exp (σ • A) *ᵥ (u • B)) T]
+    simp
+  rw [← hsub, hftc]
+  simp [g, hL, E]
+
+#print axioms zoh_helper
+
+/-- Zero-order hold is exact at the samples: if the state obeys dx/dt = A x + B u over one tick
+of length T, with the input u held flat for the whole tick, then the state one tick later is
+e^(AT) x(0) plus the integral over the tick of e^(Aσ) B u, i.e. x[k+1] = A_d x[k] + B_d u[k]. -/
+theorem zoh_exact_at_samples {n : Type*} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℝ) (B : n → ℝ) (u T : ℝ) (hT : 0 ≤ T) (x : ℝ → n → ℝ)
+    (hx : ∀ t ∈ Set.Icc 0 T, HasDerivWithinAt x (A *ᵥ x t + u • B) (Set.Icc 0 T) t) :
+    x T = NormedSpace.exp (T • A) *ᵥ x 0
+      + ∫ σ in (0 : ℝ)..T, NormedSpace.exp (σ • A) *ᵥ (u • B) := by
+  exact zoh_helper A B u T hT x hx
+
+/-- Tustin keeps stable designs stable: with sampling interval T > 0, the point
+z = (1 + sT/2)/(1 − sT/2) that Tustin assigns to s lies strictly inside the unit circle exactly
+when s lies in the open left half-plane, and every point inside the unit circle comes from such
+an s. -/
+theorem tustin_left_half_plane_onto_unit_disc (T : ℝ) (hT : 0 < T) :
+    (∀ s : ℂ, 1 - s * T / 2 ≠ 0 →
+      (‖(1 + s * T / 2) / (1 - s * T / 2)‖ < 1 ↔ s.re < 0)) ∧
+    (∀ z : ℂ, ‖z‖ < 1 →
+      ∃ s : ℂ, s.re < 0 ∧ 1 - s * T / 2 ≠ 0 ∧ (1 + s * T / 2) / (1 - s * T / 2) = z) := by
+  have key : ∀ s : ℂ, 1 - s * T / 2 ≠ 0 →
+      (‖(1 + s * T / 2) / (1 - s * T / 2)‖ < 1 ↔ s.re < 0) := by
+    intro s hs
+    have hpos : 0 < ‖1 - s * T / 2‖ := norm_pos_iff.2 hs
+    rw [norm_div, div_lt_one hpos]
+    rw [← sq_lt_sq₀ (norm_nonneg _) (norm_nonneg _), Complex.sq_norm, Complex.sq_norm,
+      Complex.normSq_apply, Complex.normSq_apply]
+    simp only [Complex.add_re, Complex.sub_re, Complex.one_re, Complex.div_re, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.add_im, Complex.sub_im, Complex.one_im,
+      Complex.div_im, Complex.mul_im]
+    norm_num
+    constructor
+    · intro h; nlinarith
+    · intro h; nlinarith
+  refine ⟨key, fun z hz => ?_⟩
+  have hz1 : z + 1 ≠ 0 := by
+    intro h
+    have : z = -1 := by linear_combination h
+    rw [this] at hz; simp at hz
+  have hTc : (T : ℂ) ≠ 0 := by exact_mod_cast hT.ne'
+  set s : ℂ := 2 / T * ((z - 1) / (z + 1)) with hsdef
+  have h1 : 1 - s * T / 2 = 2 / (z + 1) := by
+    rw [hsdef]; field_simp; ring
+  have h2 : 1 + s * T / 2 = 2 * z / (z + 1) := by
+    rw [hsdef]; field_simp; ring
+  have hne : 1 - s * T / 2 ≠ 0 := by rw [h1]; exact div_ne_zero two_ne_zero hz1
+  have heq : (1 + s * T / 2) / (1 - s * T / 2) = z := by
+    rw [h1, h2]; field_simp
+  refine ⟨s, ?_, hne, heq⟩
+  rw [← key s hne, heq]; exact hz
+
+/-- Tustin bends the frequency axis: on the unit circle z = e^(jωT), Tustin's substitute for s,
+(2/T)(z − 1)/(z + 1), equals j ω_a with ω_a = (2/T) tan(ωT/2). -/
+theorem tustin_frequency_warping (T ω : ℝ) :
+    (2 / T : ℂ) * ((Complex.exp (ω * T * Complex.I) - 1) / (Complex.exp (ω * T * Complex.I) + 1))
+      = Complex.I * ((2 / T * Real.tan (ω * T / 2) : ℝ) : ℂ) := by
+  set φ : ℂ := (ω : ℂ) * T / 2 with hφ
+  have hx : (ω : ℂ) * T * Complex.I = 2 * φ * Complex.I := by rw [hφ]; ring
+  have htan : Complex.tan ((ω : ℂ) * T / 2) = Complex.sin φ / Complex.cos φ := by
+    rw [Complex.tan, hφ]
+  push_cast
+  rw [htan, hx, Complex.exp_mul_I, Complex.cos_two_mul, Complex.sin_two_mul]
+  have hsc : Complex.sin φ ^ 2 + Complex.cos φ ^ 2 = 1 := Complex.sin_sq_add_cos_sq φ
+  by_cases hc : Complex.cos φ = 0
+  · rw [hc]; simp
+  · have hu : Complex.cos φ + Complex.sin φ * Complex.I ≠ 0 := by
+      rw [← Complex.exp_mul_I]; exact Complex.exp_ne_zero _
+    have hd : 2 * Complex.cos φ ^ 2 - 1 + 2 * Complex.sin φ * Complex.cos φ * Complex.I + 1
+        = 2 * Complex.cos φ * (Complex.cos φ + Complex.sin φ * Complex.I) := by ring
+    have hn : 2 * Complex.cos φ ^ 2 - 1 + 2 * Complex.sin φ * Complex.cos φ * Complex.I - 1
+        = 2 * Complex.sin φ * Complex.I * (Complex.cos φ + Complex.sin φ * Complex.I) := by
+      linear_combination 2 * hsc - 2 * Complex.sin φ ^ 2 * Complex.I_sq
+    rw [hd, hn]
+    field_simp
+
+-- The cup's transfer function: R/((τ₁ s + 1)(τ₂ s + 1)) with R = 1/2, τ₁ = 1, τ₂ = 1/4 is 2/(s² + 5s + 4).
+example (s : ℚ) : (1 / 2) / ((1 * s + 1) * ((1 / 4) * s + 1)) = 2 / (s ^ 2 + 5 * s + 4) := by
+  rw [show (1 * s + 1) * ((1 / 4) * s + 1) = (s ^ 2 + 5 * s + 4) / 4 by ring, div_div_eq_mul_div]
+  ring
+
+-- Tustin with c = 2/T = 20: the denominator coefficients 504, −792, 304 and the numerator 2, 4, 2.
+example : (20 : ℤ) ^ 2 + 5 * 20 + 4 = 504 ∧ 2 * 4 - 2 * 20 ^ 2 = -792 ∧ (20 : ℤ) ^ 2 - 5 * 20 + 4 = 304 := by
+  norm_num
+example (z : ℚ) :
+    (20 * (z - 1)) ^ 2 + 5 * (20 * (z - 1)) * (z + 1) + 4 * (z + 1) ^ 2 = 504 * z ^ 2 - 792 * z + 304 := by
+  ring
+
+-- Tustin's step response to 10 W: 20/504 = 5/126 K at 0 s, then (792 · 5/126 + 60)/504 = 80/441 K at 0.1 s.
+example : (2 * 10 : ℚ) / 504 = 5 / 126 := by norm_num
+example : ((792 * (5 / 126) + 2 * 10 + 4 * 10) / 504 : ℚ) = 80 / 441 := by norm_num
+
+-- Tustin's poles at T = 1/10: s = −1 goes to 19/21 and s = −4 goes to 2/3.
+example : ((1 + (-1) * (1 / 10) / 2) / (1 - (-1) * (1 / 10) / 2) : ℚ) = 19 / 21 := by norm_num
+example : ((1 + (-4) * (1 / 10) / 2) / (1 - (-4) * (1 / 10) / 2) : ℚ) = 2 / 3 := by norm_num
+
+-- Forward Euler at T = 3/5: the sensor pole 1 − 4T = −7/5 lies outside the unit circle; Euler needs T < 2τ₂ = 1/2.
+example : (1 - 4 * (3 / 5) : ℚ) = -7 / 5 ∧ 1 < |(-7 / 5 : ℚ)| ∧ (2 * (1 / 4) : ℚ) < 3 / 5 := by
+  norm_num [abs_of_neg]
+
+-- Holding the cup 2 K below room needs u = −2/R = −4 W; a 10 W step settles at 10 · R = 5 K.
+example : (-2 : ℚ) / (1 / 2) = -4 ∧ (10 : ℚ) * (1 / 2) = 5 := by norm_num
+
+#print axioms zoh_exact_at_samples
+#print axioms tustin_left_half_plane_onto_unit_disc
+#print axioms tustin_frequency_warping
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'zoh_helper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'zoh_exact_at_samples' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tustin_left_half_plane_onto_unit_disc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tustin_frequency_warping' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -633,7 +830,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Using Tustin to model a plant that a digital output drives.** The heater driver holds each power for a full tick, so the ZOH model is the exact one; Tustin is off by up to 152.075 mK on a 10 W step and reads 0.0396825 K at the instant of the step, when the true reading is 0. Tustin belongs on the other side of the converter: turning a continuous controller or filter, designed in s, into code, where keeping it stable and keeping its frequency shape are what matter.
+> **Using Tustin to model a plant that a digital output drives.** The plant is the physical system being controlled, here the cup. The heater driver holds each power for a full tick, so the ZOH model is the exact one; Tustin is off by up to 152.075 mK on a 10 W step and reads 0.0396825 K at the instant of the step, when the true reading is 0. Tustin belongs on the other side of the converter: turning a continuous controller or filter, designed in s, into code, where keeping it stable and keeping its frequency shape are what matter.
 >
 > - **Forgetting the warp.** A notch designed at 4 Hz and converted by plain Tustin lands at 2.86 Hz; at 4 Hz the converted filter does what the continuous design does at 9.80 Hz. Prewarp at the frequency that matters.
 > - **Hertz into the tangent.** The bend is tan(ωT/2) with ω in rad/s. Feeding it a frequency in hertz understates the relative bend about 40-fold, a factor of (2π)^2, and hides the problem.
@@ -644,9 +841,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Every embedded control loop.** A microcontroller writing a heater, motor or valve command through a latch is a zero-order hold, and the plant model inside its controller or observer is the ZOH model. Model predictive control steps exactly this model forward to plan (Predictive control).
-- **Converting a controller designed on paper.** A controller designed with Bode plots ([Bode plots](04-frequency-response-and-bode-plots.md)) is usually turned into a difference equation by Tustin, prewarped at the crossover frequency.
-- **Digital audio filters.** Equalisers and crossover filters are designed as analogue prototypes and converted by the bilinear transform with prewarping, so the corner frequency lands where the designer put it.
+- **Every embedded control loop.** A microcontroller writing a heater, motor or valve command through a latch is a zero-order hold, and the plant model inside its controller or observer (the code that estimates the states it cannot measure) is the ZOH model. Model predictive control steps exactly this model forward to plan ([Predictive control](../04-State%20Space%20and%20Optimal%20Control/10-model-predictive-control.md)).
+- **Converting a controller designed on paper.** A controller designed with Bode plots ([Bode plots](04-frequency-response-and-bode-plots.md)) is usually turned into a difference equation by Tustin, prewarped at the crossover frequency, where the loop gain falls to 1.
+- **Digital audio filters.** Equalisers and crossover filters, which split sound between loudspeakers, are designed as analogue prototypes and converted by the bilinear transform with prewarping, so the corner frequency lands where the designer put it.
 - **Control software.** Tools that convert continuous models to discrete ones offer both methods by name, typically "zoh" and "tustin"; choosing between them is the decision this card describes.
 
 > **Say it back**
@@ -663,7 +860,7 @@ The two outputs match line for line.
 
 - [Predictive control](../04-State%20Space%20and%20Optimal%20Control/10-model-predictive-control.md): steps the ZOH model forward over a horizon and chooses the next few heater powers by solving a small optimisation each tick.
 
-The thermostat now has an exact model of what one tick of heater power does; what it lacks is a rule for choosing that power when the heater can only heat and the sensor must not overshoot, which model-predictive-control supplies.
+The thermostat now has an exact model of what one tick of heater power does; what it lacks is a rule for choosing that power when the heater can only heat and the sensor must not overshoot, which model predictive control supplies.
 
 ---
 

@@ -104,3 +104,4 @@ assert pU[2] > 10 * pU[0] and pS[2] < pS[0] / 10           # simulated: Ti = 5 m
 assert pLo[2] > pLo[0] and pHi[2] < pHi[0]                 # Routh edge: just below it grows, just above it dies
 assert abs((20 - xS[0]) - (20 - (-15.0 + QMAX / U))) < 1e-2   # saturated: heat balance vs simulation
 print("all checks passed")
+print("ALL CHECKS PASS")

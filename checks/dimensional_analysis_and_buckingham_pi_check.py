@@ -133,4 +133,4 @@ assert abs(bad_new / bad_si - 1) > 0.1                         # a non-group doe
 assert spread_ok                                               # raw law at nine setups vs the master curve
 assert abs(h_f - F) < 1e-9 * F                                 # half-scale run of the law equals full size
 assert abs(r0 - 1.225) < 1e-3 and abs(m0 - 1.7894e-5) < 1e-8 and abs(atmos(4000.0)[0] - 0.8194) < 1e-3  # the standard's table, 0 m and 4000 m
-print("all checks passed")
+print("ALL CHECKS PASS")

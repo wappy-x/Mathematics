@@ -8,7 +8,17 @@
 
 A room is heated by a radiator fed through a slow pipe. A thermostat compares the air with the setpoint and opens the boiler in proportion to the shortfall. The room loses 100 W per degree above the outside air, so 1 kW of steady heat holds it 10.0 °C warmer. The pipe, the radiator's metal and the air each lag behind what feeds them, by about 2, 4 and 10 minutes.
 
-The engineer has one dial: the thermostat's gain, in kilowatts per degree of shortfall. Turn it up and the room answers faster. Turn it too far and the room swings, each swing bigger than the last. Three questions decide the setting. Where do the swings stop dying out? Which gain gives a chosen damping? What does that gain cost in accuracy? For this room: a loop gain of 12.6, or 1.26 kW per °C, puts the room on a steady 14.05-minute swing. A loop gain of 1.7226 gives a damping ratio of 0.5, and with it the room settles at 20.63 °C when the setpoint goes from 20 to 21 °C.
+The engineer has one dial: the thermostat's gain, in kilowatts per degree of shortfall. Turn it up and the room answers faster. Turn it too far and the room swings, each swing bigger than the last.
+
+Three questions decide the setting:
+
+- Where do the swings stop dying out?
+- Which gain gives a chosen damping?
+- What does that gain cost in accuracy?
+
+The answers use the loop gain K: the thermostat's gain times the room's 10.0 °C per kW, a plain number. For this room: a loop gain of 12.6, or 1.26 kW per °C, puts the room on a steady 14.05-minute swing.
+
+A loop gain of 1.7226 gives a damping ratio ζ (zeta) of 0.5. The damping ratio says how fast swings die out: 0 means never, and 1 or more means no swing at all. At that gain the room settles at 20.63 °C when the setpoint goes from 20 to 21 °C.
 
 All three answers come from the closed-loop **poles**, the rates inside the exponentials that make up the response. As the dial turns, the poles move through the complex plane. The curves they trace are the **root locus**. Walter Evans showed in 1948 that these curves can be sketched from the open loop alone, by a handful of rules, without solving for a root.
 
@@ -18,11 +28,11 @@ All three answers come from the closed-loop **poles**, the rates inside the expo
 
 ### The picture: the locus of the room's poles, to scale
 
-Real part of s across, imaginary part up, 200 px per 1/min, origin at the right. Crosses are the open-loop poles; heavy lines are the locus for loop gains 0 to 20; the shaded strip is the right half-plane, where swings grow.
+Real part of s across, imaginary part up, 200 px per 1/min, origin at the right. Crosses are the open-loop poles, where the poles sit at zero gain, one per lag; heavy lines are the locus for loop gains 0 to 20; the shaded strip is the right half-plane, where swings grow.
 
 <p align="center"><img src="../figures/root-locus.svg" alt="Root locus of the heated room, to scale: open-loop poles at -0.5, -0.25 and -0.1 per minute; two branches meet at -0.1667 and curve up and down, crossing the imaginary axis at plus and minus 0.4472j when the loop gain is 12.6; the third branch runs left from -0.5; dashed asymptotes from -0.2833 and the dotted damping ray for zeta 0.5; right half-plane shaded" width="420"></p>
 
-The poles at −0.25 and −0.1 1/min run together along the axis, meet at −0.1667 at gain 0.148148, and split into a pair. The pair crosses the dotted damping ray ζ = 0.5 at gain 1.72 and the imaginary axis at gain 12.6. The third pole runs left from −0.5 to −0.9360 at gain 20. The dashed lines are the asymptotes from the centroid, −0.2833.
+The poles at −0.25 and −0.1 1/min run together along the axis, meet at −0.1667 at gain 0.148148, and split into a pair. The pair crosses the dotted damping ray ζ = 0.5 at gain 1.72 and the imaginary axis at gain 12.6. The third pole runs left from −0.5 to −0.9360 at gain 20. The dashed lines are the asymptotes, the straight lines the branches approach far out. They start from the centroid, −0.2833, the average of the open-loop poles.
 
 ---
 
@@ -227,7 +237,14 @@ At the ζ = 0.5 setting a request for 21 °C brings the room to a peak of 20.727
 
 ## Code, from first principles, and it actually runs
 
-Both programs take four roads. Road 1 is the rules in closed form. Road 2 is a Durand–Kerner root finder (it refines all three roots together), written out, swept over the gain with bisection, plus a golden-section search for the peak of the axis gain. Road 3 simulates pipe, radiator and room with a fourth-order Runge–Kutta step of 0.01 min and no transfer function; it reads ring period and swing ratio back from the simulated peaks and checks the step response against the residue sum to 1e-9 °C. Road 4 tests Evans's angle and size conditions at the points found. The delay case is solved by its phase condition, then simulated 0.3 below and above the gain it predicts.
+Both programs take four roads:
+
+- Road 1 is the rules in closed form.
+- Road 2 is a Durand–Kerner root finder (it refines all three roots together), written out, swept over the gain with bisection (halving a bracket until it hits a target). A golden-section search (it shrinks a bracket around a peak by a fixed ratio each step) finds the peak of the axis gain.
+- Road 3 simulates pipe, radiator and room with a fourth-order Runge–Kutta step of 0.01 min (a standard rule for stepping the room's equations forward in time) and no transfer function. It reads ring period and swing ratio back from the simulated peaks. It checks the step response against the residue sum, the final value plus one exponential per closed-loop pole, to 1e-9 °C.
+- Road 4 tests Evans's angle and size conditions at the points found.
+
+The delay case is solved by its phase condition, then simulated 0.3 below and above the gain it predicts.
 
 ### Python
 
@@ -633,6 +650,206 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the angle and size conditions and the breakaway rule for any loop, and the room's crossing gain and worked numbers.
+
+- Take a positive gain $K$, $a/b > 0$, and a point $s$ that is not a zero. Then $D(s) + K\,N(s) = 0$ exactly when both the angle condition and the size condition hold.
+- Suppose $D + K N$ has a double root $s_0$, for any gain $K$. Then $D'(s_0) N(s_0) - D(s_0) N'(s_0) = 0$, the numerator of $dK/ds$.
+- Take a positive loop gain $K$. Then $80 s^3 + 68 s^2 + 16 s + 1 + K$ has a root $j\omega$, with $\omega$ real, exactly when $K = 12.6$.
+- The worked numbers hold as exact fractions. The centroid is −17/60, the breakaway −1/6 at gain 4/27, and the ζ = 0.5 gain 8463/4913.
+- The other root of $D'$, −2/5, needs gain −9/25, so it is off the locus.
+
+The real-axis and asymptote rules, the simulations and the delay are left to the Python and Rust checks.
+
+```lean
+-- Root locus: a point is a closed-loop pole at positive gain K exactly when the angle condition holds and K equals the distance ratio, a breakaway point makes D'N - DN' vanish, and the heated room's poles reach the imaginary axis only at gain 63/5 = 12.6.
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
+import Mathlib.Algebra.Polynomial.Derivative
+import Mathlib.Algebra.BigOperators.Fin
+
+open Complex Polynomial
+
+lemma root_locus_prod_polar {ι : Type*} (t : Finset ι) (f : ι → ℂ) :
+    ∏ i ∈ t, f i = ((∏ i ∈ t, ‖f i‖ : ℝ) : ℂ) * exp ((∑ i ∈ t, arg (f i) : ℝ) * I) := by
+  conv_lhs => rw [← Finset.prod_congr rfl (fun i _ => norm_mul_exp_arg_mul_I (f i))]
+  rw [Finset.prod_mul_distrib]
+  push_cast
+  rw [Finset.sum_mul, Complex.exp_sum]
+#print axioms root_locus_prod_polar
+
+/-- Evans's angle and size conditions. Write the loop gain as `K · N(s)/D(s)` with
+`N(s) = b ∏ (s - z_k)` (the `m` open-loop zeros) and `D(s) = a ∏ (s - p_i)` (the `n` open-loop poles),
+where the leading coefficients have `a / b > 0`. For a positive gain `K` and a point `s` that is not
+a zero, `s` is a closed-loop pole, `D(s) + K N(s) = 0`, exactly when the angles from the zeros minus
+the angles from the poles make an odd number of half turns, and `K = (a/b) ∏ |s - p_i| / ∏ |s - z_k|`. -/
+theorem closed_loop_pole_iff_angle_and_size {m n : ℕ} (a b : ℝ) (hab : 0 < a / b)
+    (z : Fin m → ℂ) (p : Fin n → ℂ) (s : ℂ) (hs : ∀ k, s ≠ z k) (K : ℝ) (hK : 0 < K) :
+    (a : ℂ) * ∏ i, (s - p i) + (K : ℂ) * ((b : ℂ) * ∏ k, (s - z k)) = 0 ↔
+      (∃ q : ℤ, ∑ k, arg (s - z k) - ∑ i, arg (s - p i) = (2 * q + 1) * Real.pi) ∧
+        K = a / b * (∏ i, ‖s - p i‖) / ∏ k, ‖s - z k‖ := by
+  have hb : b ≠ 0 := by rintro rfl; simp at hab
+  have ha : a ≠ 0 := by rintro rfl; simp at hab
+  set rP := ∏ i, ‖s - p i‖ with hrP
+  set rZ := ∏ k, ‖s - z k‖ with hrZ
+  set α := ∑ i, arg (s - p i) with hα
+  set β := ∑ k, arg (s - z k) with hβ
+  have hrP0 : 0 ≤ rP := Finset.prod_nonneg (fun i _ => norm_nonneg _)
+  have hrZ0 : 0 < rZ := Finset.prod_pos (fun k _ => norm_pos_iff.mpr (sub_ne_zero.mpr (hs k)))
+  have hP : ∏ i, (s - p i) = (rP : ℂ) * exp (α * I) := root_locus_prod_polar _ _
+  have hZ : ∏ k, (s - z k) = (rZ : ℂ) * exp (β * I) := root_locus_prod_polar _ _
+  set θ := β - α with hθ
+  have hβ' : (β : ℂ) * I = α * I + θ * I := by rw [hθ]; push_cast; ring
+  have key : (a : ℂ) * ∏ i, (s - p i) + (K : ℂ) * ((b : ℂ) * ∏ k, (s - z k)) =
+      exp (α * I) * (((a * rP + K * b * rZ * Real.cos θ : ℝ) : ℂ) +
+        ((K * b * rZ * Real.sin θ : ℝ) : ℂ) * I) := by
+    rw [hP, hZ, hβ', Complex.exp_add]
+    rw [Complex.exp_mul_I (θ : ℂ)]
+    push_cast
+    ring
+  rw [key, mul_eq_zero, or_iff_right (Complex.exp_ne_zero _)]
+  rw [Complex.ext_iff]
+  simp only [add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im, mul_one, sub_self,
+    add_zero, zero_re, add_im, mul_im, zero_add, zero_im]
+  have hKb : K * b ≠ 0 := mul_ne_zero hK.ne' hb
+  constructor
+  · rintro ⟨h1, h2⟩
+    have hs0 : Real.sin θ = 0 := by
+      rcases mul_eq_zero.mp h2 with h | h
+      · exact absurd h (mul_ne_zero hKb hrZ0.ne')
+      · exact h
+    have hc : Real.cos θ = 1 ∨ Real.cos θ = -1 := by
+      have := Real.sin_sq_add_cos_sq θ
+      rw [hs0] at this
+      exact sq_eq_one_iff.mp (by linarith)
+    rcases hc with hc | hc
+    · exfalso
+      rw [hc] at h1
+      have : a / b * rP + K * rZ = 0 := by
+        field_simp
+        linarith
+      have : 0 ≤ a / b * rP := mul_nonneg hab.le hrP0
+      have : 0 < K * rZ := mul_pos hK hrZ0
+      linarith
+    · refine ⟨?_, ?_⟩
+      · obtain ⟨k, hk⟩ := Real.cos_eq_neg_one_iff.mp hc
+        exact ⟨k, by rw [← hk]; ring⟩
+      · rw [hc] at h1
+        field_simp
+        linarith
+  · rintro ⟨⟨q, hq⟩, hKv⟩
+    have hc : Real.cos θ = -1 := Real.cos_eq_neg_one_iff.mpr ⟨q, by rw [hq]; ring⟩
+    have hs0 : Real.sin θ = 0 := by
+      have := Real.sin_sq_add_cos_sq θ
+      rw [hc] at this
+      nlinarith [sq_nonneg (Real.sin θ)]
+    refine ⟨?_, by rw [hs0]; ring⟩
+    rw [hc, hKv]
+    field_simp
+    ring
+
+/-- Breakaway rule. If at gain `K` the closed-loop polynomial `D + K N` has a double root `s₀`,
+then `D'(s₀) N(s₀) - D(s₀) N'(s₀) = 0`: the numerator of `d(-D/N)/ds` vanishes there, so the
+breakaway is a stationary point of the gain read along the axis. -/
+theorem breakaway_double_root_stationary (D N : ℂ[X]) (K : ℝ) (s₀ : ℂ)
+    (hdouble : (X - C s₀) ^ 2 ∣ D + C (K : ℂ) * N) :
+    (derivative D).eval s₀ * N.eval s₀ - D.eval s₀ * (derivative N).eval s₀ = 0 := by
+  obtain ⟨G, hG⟩ := hdouble
+  have h0 := congrArg (eval s₀) hG
+  have h1 := congrArg (fun F => eval s₀ (derivative F)) hG
+  simp only [eval_add, eval_mul, eval_C, eval_pow, eval_sub, eval_X, sub_self] at h0
+  simp only [derivative_add, derivative_mul, derivative_C, zero_mul, zero_add, derivative_pow,
+    derivative_sub, derivative_X, sub_zero, eval_add, eval_mul, eval_C, eval_pow, eval_sub,
+    eval_X, sub_self, eval_one] at h1
+  have hD : D.eval s₀ = -(K : ℂ) * N.eval s₀ := by
+    linear_combination h0
+  have hD' : (derivative D).eval s₀ = -(K : ℂ) * (derivative N).eval s₀ := by
+    linear_combination h1
+  rw [hD, hD']
+  ring
+
+/-- The heated room's crossing. For a positive loop gain `K`, the closed-loop polynomial
+`80 s³ + 68 s² + 16 s + (1 + K)` has a root `s = jω` on the imaginary axis exactly when `K = 12.6`. -/
+theorem room_crossing_gain (K : ℝ) (hK : 0 < K) :
+    (∃ ω : ℝ, 80 * ((ω : ℂ) * I) ^ 3 + 68 * ((ω : ℂ) * I) ^ 2 + 16 * ((ω : ℂ) * I) + (1 + K) = 0) ↔
+      K = 63 / 5 := by
+  have expand : ∀ ω : ℝ, 80 * ((ω : ℂ) * I) ^ 3 + 68 * ((ω : ℂ) * I) ^ 2 + 16 * ((ω : ℂ) * I)
+      + (1 + K) = ((1 + K - 68 * ω ^ 2 : ℝ) : ℂ) + ((16 * ω - 80 * ω ^ 3 : ℝ) : ℂ) * I := by
+    intro ω
+    push_cast
+    ring_nf
+    rw [I_sq, show I ^ 3 = I ^ 2 * I by ring, I_sq]
+    ring
+  constructor
+  · rintro ⟨ω, hω⟩
+    rw [expand, Complex.ext_iff] at hω
+    simp only [add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im, mul_one, sub_self,
+      add_zero, zero_re, add_im, mul_im, zero_add, zero_im] at hω
+    obtain ⟨h1, h2⟩ := hω
+    have hw : ω ≠ 0 := by
+      rintro rfl
+      linarith
+    have : ω ^ 2 = 1 / 5 := by
+      have : ω * (16 - 80 * ω ^ 2) = 0 := by linarith
+      rcases mul_eq_zero.mp this with h | h
+      · exact absurd h hw
+      · linarith
+    linarith
+  · rintro rfl
+    refine ⟨Real.sqrt (1 / 5), ?_⟩
+    have hs : Real.sqrt (1 / 5) ^ 2 = 1 / 5 := Real.sq_sqrt (by norm_num)
+    rw [expand]
+    have e1 : (1 + 63 / 5 - 68 * Real.sqrt (1 / 5) ^ 2 : ℝ) = 0 := by rw [hs]; norm_num
+    have e2 : (16 * Real.sqrt (1 / 5) - 80 * Real.sqrt (1 / 5) ^ 3 : ℝ) = 0 := by
+      rw [show Real.sqrt (1 / 5) ^ 3 = Real.sqrt (1 / 5) ^ 2 * Real.sqrt (1 / 5) by ring, hs]
+      ring
+    rw [e1, e2]
+    simp
+
+-- The room's open-loop polynomial: (2s + 1)(4s + 1)(10s + 1) = 80 s³ + 68 s² + 16 s + 1.
+example (s : ℚ) : (2 * s + 1) * (4 * s + 1) * (10 * s + 1) = 80 * s ^ 3 + 68 * s ^ 2 + 16 * s + 1 := by
+  ring
+
+-- The centroid of the open-loop poles −1/2, −1/4, −1/10 is −17/60 ≈ −0.2833.
+example : ((-1 / 2 : ℚ) + (-1 / 4) + (-1 / 10)) / 3 = -17 / 60 := by norm_num
+
+-- D'(s) = 240 s² + 136 s + 16 vanishes at −1/6 and at −2/5.
+example : 240 * (-1 / 6 : ℚ) ^ 2 + 136 * (-1 / 6) + 16 = 0 ∧
+    240 * (-2 / 5 : ℚ) ^ 2 + 136 * (-2 / 5) + 16 = 0 := by norm_num
+
+-- The gain −D(s) is 4/27 ≈ 0.148148 at the breakaway −1/6, and −9/25 = −0.36 at −2/5 (off the locus).
+example : -(80 * (-1 / 6 : ℚ) ^ 3 + 68 * (-1 / 6) ^ 2 + 16 * (-1 / 6) + 1) = 4 / 27 ∧
+    -(80 * (-2 / 5 : ℚ) ^ 3 + 68 * (-2 / 5) ^ 2 + 16 * (-2 / 5) + 1) = -9 / 25 := by norm_num
+
+-- At gain 4/27 the pair meets at −1/6 and the third pole sits at −31/60 ≈ −0.5167.
+example (s : ℚ) :
+    80 * s ^ 3 + 68 * s ^ 2 + 16 * s + (1 + 4 / 27) = 80 * (s + 1 / 6) ^ 2 * (s + 31 / 60) := by
+  ring
+
+-- Crossing: with ω² = 16/80 = 1/5 both parts of (1 + K − 68ω²) + j(16ω − 80ω³) vanish at K = 63/5 = 12.6.
+example : (1 + 63 / 5 - 68 * (1 / 5) : ℚ) = 0 ∧ (16 - 80 * (1 / 5) : ℚ) = 0 := by norm_num
+
+-- ζ = 0.5: σ = 2/17, pair −σ ± jσ√3, third pole −209/340 ≈ −0.6147, gain K = 8463/4913 ≈ 1.7226.
+example (s : ℚ) :
+    80 * (s ^ 2 + 2 * (2 / 17) * s + 4 * (2 / 17) ^ 2) * (s + 209 / 340) =
+      80 * s ^ 3 + 68 * s ^ 2 + 16 * s + (1 + 8463 / 4913) := by
+  ring
+
+#print axioms closed_loop_pole_iff_angle_and_size
+#print axioms breakaway_double_root_stationary
+#print axioms room_crossing_gain
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'root_locus_prod_polar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'closed_loop_pole_iff_angle_and_size' depends on axioms: [propext, Classical.choice, Quot.sound]
+'breakaway_double_root_stationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'room_crossing_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **The loop gain from 4 to 20.** Guess first: faster ring or slower? Faster: the simulated period falls from 21.666 min to 11.904 min while the swing ratio climbs from 0.1796 to 1.6680.
@@ -656,7 +873,7 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Heating and process loops.** The crossing gain and its period, 12.6 and 14.05 min here, are what the Ziegler–Nichols tuning recipe calls the ultimate gain and ultimate period, and it sets PID gains as fractions of them ([PID control](07-pid-control-and-tuning.md)).
+- **Heating and process loops.** The crossing gain and its period, 12.6 and 14.05 min here, are what the Ziegler–Nichols tuning recipe calls the ultimate gain and ultimate period. It sets PID (proportional–integral–derivative) gains as fractions of them ([PID control](07-pid-control-and-tuning.md)).
 - **Compensator design.** A lead compensator adds a zero that pulls branches left, away from the crossing ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
 - **Flight control.** Evans built the method for aircraft guidance loops; engineers still read a pitch loop's damping off the locus as one gain is scheduled with airspeed.
 - **Servo drives.** A position loop with an integrator and two lags has the room's three-pole shape and crosses the same way.
