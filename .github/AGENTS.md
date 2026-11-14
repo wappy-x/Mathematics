@@ -94,11 +94,28 @@ A card starts straight away with its title; there is no frontmatter block. Under
 - **What this builds on** and **Where this goes next.** The `needs_first` and `next` cards as bullets, with one line each on what the other card contributes or adds. "Where this goes next" ends with one sentence on the question this card leaves open.
 - **Sources.** Open with "Verified <date>: every link below resolves to the publisher's page.", then one line per source on what it contributes.
 
+### Maths that GitHub shows as written
+
+GitHub runs Markdown over `$…$` and `$$…$$` before it draws the maths. That strips the backslash from `\,`, `\;`, `\{` and `\}`, and turns pairs of `*` or `_` into italics. Use GitHub's literal forms, which it leaves alone:
+
+- Inline maths: `` $`x^* = \{0.19\}`$ ``.
+- Display maths: a `math` block. It also works inside quote boxes and lists.
+- Display maths inside a `<details>` fold: GitHub shows a `math` block there as code. Give the formula its own paragraph instead, with a blank line before and after: `` $`\displaystyle f(x) = 8.2 + 5x`$ ``.
+- Never `\operatorname`: GitHub refuses it. Write `\mathrm{Var}(X)`, with `\,` before a following letter: `\mathrm{argmin}\, f`.
+
+A display formula:
+
+````
+```math
+f(x) = 8.2 + 5x
+```
+````
+
 ### Boxes and folds
 
 These forms all render on GitHub.
 
-A fold, for proofs and optional deep-dives. Keep the blank lines, so the maths inside renders:
+A fold, for proofs and optional deep-dives. Keep the blank lines, so the maths inside renders, and write its display formulas as `` $`\displaystyle …`$ `` paragraphs:
 
 ```
 <details>
