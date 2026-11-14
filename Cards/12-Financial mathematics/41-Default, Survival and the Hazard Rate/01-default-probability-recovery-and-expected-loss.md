@@ -12,7 +12,9 @@ If the cafe does fail, the money is not all gone. The bank sells the espresso ma
 
 Three numbers settle what this loan costs the bank on average. How likely a failure is. How much of the money is lost when one happens. How much money is at stake. Multiply them: 5% of 60% of $10,000 is **$300**. That is the loan's expected loss: what the bank loses per loan, averaged over many loans like it.
 
-From here on the three numbers carry their market names. A failure to pay is a **default**. Its chance is the **probability of default**, PD. The share of the money lost in a default is the **loss given default**, LGD; the share got back is the **recovery rate**, R, so LGD = 1 − R. The money at stake at the moment of default is the **exposure at default**, EAD.
+From here on the three numbers carry their market names. A failure to pay is a **default**. Its chance is the **probability of default**, PD.
+
+The share of the money lost in a default is the **loss given default**, LGD; the share got back is the **recovery rate**, R, so LGD = 1 − R. The money at stake at the moment of default is the **exposure at default**, EAD.
 
 The $300 does two more jobs. It says how much extra interest the loan must charge: about 3% of the loan, because $300 is 3% of $10,000. And it runs backwards. A lender that knows the average loss and two of the three numbers can recover the third: a 9% expected-loss rate at 40% recovery means a 15% chance of default.
 
@@ -169,7 +171,7 @@ The cafe: $\text{EAD} = \$10{,}000$, $\text{PD} = 5\%$, $R = 40\%$, riskless rat
 | back-solve: LGD from EL $\$300$ | $300 / (0.05 \times 10{,}000)$ | $60\%$ |
 | back-solve: EAD from EL $\$300$ | $300 / (0.05 \times 0.60)$ | $\$10{,}000$ |
 
-A bank with many loans like this one expects to write off $300 per loan per year on average, and it covers that by charging each cafe 3.25 percentage points above the riskless rate.
+A bank with many loans like this one expects to write off $300 per loan per year on average. It covers that by charging each cafe 3.25 percentage points above the riskless rate.
 
 ### What breaks if you drop a piece
 
@@ -180,13 +182,21 @@ A bank with many loans like this one expects to write off $300 per loan per year
 | Recovery averaged over years, not over defaults | $250 (right: $300) | Bad years bring more defaults and worse recoveries together. Averaging over years gives recovery 50%; over defaults, 40%. |
 | Spread set to $\ell$: charge 5% + 3% = 8% | $22.86 short per loan, in today's money | The spread must also cover the interest lost in default. The exact answer is 8.25%. |
 
-The third row uses two kinds of year. Good years come 80% of the time, with a 2.5% default chance and 55% recovery. Bad years come 20% of the time, with a 15% default chance and 30% recovery. Overall PD is still 5%. Recovery averaged over years is 50%. Recovery averaged over the defaults themselves is 40%, because most defaults happen in bad years. The true expected loss is $300, and only the default-weighted recovery reproduces it.
+The third row uses two kinds of year. Good years come 80% of the time, with a 2.5% default chance and 55% recovery. Bad years come 20% of the time, with a 15% default chance and 30% recovery.
+
+Overall PD is still 5%. Recovery averaged over years is 50%. Recovery averaged over the defaults themselves is 40%, because most defaults happen in bad years. The true expected loss is $300, and only the default-weighted recovery reproduces it.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach the $300 three independent ways: the product formula; a list of every outcome with its chance and loss; and 400,000 simulated cafe loans drawn with a random-number generator written in the script, where each defaulted cafe recovers a random fraction between 10% and 70%. The fair rate and each back-solve are found twice, by the closed form and by a bisection root finder (halve an interval until it traps the answer) written in the script. The two-kind-of-year example, the what-breaks rows and every chart point are printed too.
+Both programs reach the $300 three independent ways:
+
+- the product formula;
+- a list of every outcome with its chance and loss;
+- 400,000 simulated cafe loans drawn with a random-number generator written in the script, where each defaulted cafe recovers a random fraction between 10% and 70%.
+
+The fair rate and each back-solve are found twice, by the closed form and by a bisection root finder (halve an interval until it traps the answer) written in the script. The two-kind-of-year example, the what-breaks rows and every chart point are printed too.
 
 ### Python
 
@@ -344,7 +354,7 @@ chart, EL at PD 15%     1500.00  1200.00   900.00   600.00   300.00     0.00
 ALL CHECKS PASS
 ```
 
-The product and the list of outcomes agree exactly. The simulation lands on $302.15, within one standard error ($2.16) of the formula, even though each failed cafe's recovery was random: only the average recovery over defaults enters the expected loss.
+The product and the list of outcomes agree exactly. The simulation lands on $302.15, within one standard error of the formula. The **standard error**, here $2.16, is the typical size of the simulation's random error. Each failed cafe's recovery was random, yet only the average recovery over defaults enters the expected loss.
 
 ### Rust
 
@@ -519,6 +529,135 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, including the simulated loss, because both programs use the same generator and the same seed.
 
+### Lean
+
+Lean proves the card's three facts in general, and checks every cafe figure exactly.
+
+- Take finitely many year-end states $k$ with chances $w_k$ summing to 1, a switch $I_k$ of 0 or 1, and any $G_k$. Then EL = PD × LGD × EAD exactly, with LGD the average of $G$ over the default states.
+- Suppose the lender asks only to break even on average, and the expected-loss rate $\ell$ is below 1. Then the credit spread is exactly $s = (1 + r)\ell / (1 - \ell)$.
+- Suppose LGD and EAD are not zero. Then PD × LGD × EAD = EL holds exactly when PD = EL / (LGD × EAD).
+- Take the cafe loan. Then EL is $300, the fair loan rate is 8/97 and the spread 63/1940, about 8.25% and 3.25%.
+- Take the two kinds of year. Then PD is 5%, the default-weighted recovery is 40%, and the year-averaged recovery gives $250, not $300.
+- Take a 9% loss rate at 95% recovery. Then the back-solved PD is 1.8, a 180% chance of default.
+- The other back-solves, the what-breaks rows, the Try changing answers and every chart point also come out exactly as printed.
+
+The 400,000-loan simulation, the root finders and the Northwind figures are left to the Python and Rust checks.
+
+```lean
+-- Default probability, recovery and expected loss: over finitely many year-end states, expected loss equals PD times the default-weighted LGD times EAD, the break-even spread is (1 + r) ℓ / (1 - ℓ), and any one factor back-solves uniquely from the loss and the other two.
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Algebra.BigOperators.Ring.Finset
+
+open Finset
+
+/-- Expected loss is the chance of default times the loss given default times the exposure,
+exactly. The year ends in one of finitely many states `k` with chances `w k` (nonnegative,
+summing to 1). In state `k` the default switch `I k` is 1 or 0, and `G k` is the fraction lost.
+With `PD = ∑ w k I k` and `LGD = (∑ w k I k G k) / PD`, the average over the default states,
+the expected loss `∑ w k (I k G k EAD)` equals `PD × LGD × EAD`. No independence is needed. -/
+theorem expected_loss_eq_pd_mul_lgd_mul_ead {ι : Type*} [Fintype ι]
+    (w I G : ι → ℝ) (EAD : ℝ)
+    (hw : ∀ k, 0 ≤ w k) (hw1 : ∑ k, w k = 1)
+    (hI : ∀ k, I k = 0 ∨ I k = 1) :
+    ∑ k, w k * (I k * G k * EAD) =
+      (∑ k, w k * I k) * ((∑ k, w k * I k * G k) / (∑ k, w k * I k)) * EAD := by
+  have h1 : ∑ k, w k * (I k * G k * EAD) = (∑ k, w k * I k * G k) * EAD := by
+    rw [Finset.sum_mul]
+    refine Finset.sum_congr rfl ?_
+    intro k _
+    ring
+  rw [h1]
+  by_cases hP : ∑ k, w k * I k = 0
+  · have hnn : ∀ k ∈ (univ : Finset ι), 0 ≤ w k * I k := fun k _ =>
+      mul_nonneg (hw k) (by rcases hI k with h | h <;> simp [h])
+    have hz := (Finset.sum_eq_zero_iff_of_nonneg hnn).1 hP
+    have h0 : ∑ k, w k * I k * G k = 0 :=
+      Finset.sum_eq_zero (fun k hk => by rw [hz k hk]; ring)
+    rw [h0, hP]
+    simp
+  · field_simp
+
+/-- The break-even loan rate. A one-year loan at rate `y` is repaid in full with chance
+`1 - PD` and recovers the fraction `R` of everything owed with chance `PD`. If the average
+receipt matches a riskless loan at rate `r`, and the expected-loss rate `ℓ = PD × (1 - R)`
+is below 1, then the credit spread is `y - r = (1 + r) ℓ / (1 - ℓ)`. -/
+theorem fair_credit_spread (PD R r y : ℝ)
+    (hℓ : PD * (1 - R) < 1)
+    (hfair : (1 + y) * ((1 - PD) + PD * R) = 1 + r) :
+    y - r = (1 + r) * (PD * (1 - R)) / (1 - PD * (1 - R)) := by
+  have hpos : 0 < 1 - PD * (1 - R) := by linarith
+  rw [eq_div_iff hpos.ne']
+  linear_combination hfair
+
+/-- Running it backwards: when the other two factors are nonzero, the probability of default
+is fixed by the expected loss, `PD × LGD × EAD = EL` exactly when `PD = EL / (LGD × EAD)`.
+One division, one answer. -/
+theorem pd_back_solve_unique (PD LGD EAD EL : ℝ) (hL : LGD ≠ 0) (hE : EAD ≠ 0) :
+    PD * LGD * EAD = EL ↔ PD = EL / (LGD * EAD) := by
+  rw [eq_div_iff (mul_ne_zero hL hE), mul_assoc]
+
+-- The cafe: EAD $10,000, PD 5%, recovery 40%, riskless rate 5%.
+example : (1 : ℝ) - 40 / 100 = 60 / 100 := by norm_num
+example : (60 / 100 : ℝ) * 10000 = 6000 := by norm_num
+example : (40 / 100 : ℝ) * 10000 = 4000 := by norm_num
+example : (5 / 100 : ℝ) * (60 / 100) = 3 / 100 := by norm_num
+example : (5 / 100 : ℝ) * (60 / 100) * 10000 = 300 := by norm_num
+-- Listing the outcomes: 95% chance of losing 0, 5% chance of losing $6,000.
+example : (95 / 100 : ℝ) * 0 + 5 / 100 * 6000 = 300 := by norm_num
+-- Fair loan rate 1.05 / 0.97 - 1 = 8/97 (about 8.25%), spread 63/1940 (about 3.25%).
+example : (1 + 5 / 100 : ℝ) / (1 - 3 / 100) - 1 = 8 / 97 := by norm_num
+example : (8 / 97 : ℝ) - 5 / 100 = 63 / 1940 := by norm_num
+example : (1 + 5 / 100 : ℝ) * (3 / 100) / (1 - 3 / 100) = 63 / 1940 := by norm_num
+-- Spread with a riskless rate of 0: 1 / 0.97 - 1 = 3/97 (about 3.09%).
+example : (1 : ℝ) / (1 - 3 / 100) - 1 = 3 / 97 := by norm_num
+-- Back-solves.
+example : (9 / 100 : ℝ) / (1 - 40 / 100) = 15 / 100 := by norm_num
+example : (300 : ℝ) / (5 / 100 * 10000) = 60 / 100 := by norm_num
+example : (300 : ℝ) / (5 / 100 * (60 / 100)) = 10000 := by norm_num
+-- A 9% loss rate at 95% recovery asks for a 180% chance of default: impossible.
+example : (9 / 100 : ℝ) / (1 - 95 / 100) = 18 / 10 ∧ (1 : ℝ) < 18 / 10 := by norm_num
+-- Two kinds of year: good (80%, PD 2.5%, recovery 55%), bad (20%, PD 15%, recovery 30%).
+example : (80 / 100 : ℝ) * (25 / 1000) + 20 / 100 * (15 / 100) = 5 / 100 := by norm_num
+example : (80 / 100 : ℝ) * (55 / 100) + 20 / 100 * (30 / 100) = 50 / 100 := by norm_num
+example : ((80 / 100 : ℝ) * (25 / 1000) * (55 / 100) + 20 / 100 * (15 / 100) * (30 / 100))
+    / (5 / 100) = 40 / 100 := by norm_num
+example : (80 / 100 : ℝ) * (25 / 1000) * (10000 * (1 - 55 / 100))
+    + 20 / 100 * (15 / 100) * (10000 * (1 - 30 / 100)) = 300 := by norm_num
+example : (5 / 100 : ℝ) * (1 - 50 / 100) * 10000 = 250 := by norm_num
+-- What breaks: recovery used as the loss, and default treated as certain.
+example : (5 / 100 : ℝ) * (40 / 100) * 10000 = 200 := by norm_num
+example : (1 : ℝ) * (60 / 100) * 10000 = 6000 := by norm_num
+-- Charging 5% + 3% = 8% leaves the lender 160/7 dollars (about $22.86) short in today's money.
+example : (10000 : ℝ) * (108 / 100) * (1 - 3 / 100) / (1 + 5 / 100) - 10000 = -(160 / 7) := by
+  norm_num
+-- Try changing: PD 10%, recovery 0, and the fair rate at PD 20% (17/88, about 19.32%).
+example : (10 / 100 : ℝ) * (60 / 100) * 10000 = 600 := by norm_num
+example : (5 / 100 : ℝ) * 1 * 10000 = 500 := by norm_num
+example : (1 + 5 / 100 : ℝ) / (1 - 20 / 100 * (60 / 100)) - 1 = 17 / 88 := by norm_num
+-- The chart: EL on the $10,000 loan at recoveries 0%, 20%, ..., 100%, for PD 15%.
+example : [0, 20, 40, 60, 80, 100].map (fun x : ℚ => 15 / 100 * (1 - x / 100) * 10000)
+    = [1500, 1200, 900, 600, 300, 0] := by norm_num
+
+#print axioms expected_loss_eq_pd_mul_lgd_mul_ead
+#print axioms fair_credit_spread
+#print axioms pd_back_solve_unique
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'expected_loss_eq_pd_mul_lgd_mul_ead' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fair_credit_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pd_back_solve_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -545,7 +684,7 @@ The two outputs agree line for line, including the simulated loss, because both 
 ## Where you meet it in real life
 
 - **Loan pricing.** Banks price business loans, mortgages and card balances by first estimating PD, LGD and EAD, then adding the expected-loss rate, costs and a charge for risk to their funding rate.
-- **Loss provisions.** Accounting rules for expected credit losses (IFRS 9 and the US CECL standard) ask lenders to set money aside in advance for losses computed from PD, LGD and EAD.
+- **Loss provisions.** Accounting rules for expected credit losses (IFRS 9, the international standard, and CECL, the US "current expected credit loss" standard) ask lenders to set money aside in advance for losses computed from PD, LGD and EAD.
 - **Bank capital.** The Basel rules let large banks supply their own PD, LGD and EAD estimates. Expected loss is covered by provisions and pricing; capital covers the swings above it, as [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md) explains.
 - **Bond spreads and default insurance.** A corporate bond yields more than a government bond partly because of its expected loss. A credit default swap, a contract that pays the lost fraction of a bond if its issuer defaults, is priced on exactly PD times LGD, spread over time: [The credit default swap](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md).
 - **The shelf's shipping company.** Northwind Lines has $100m of bonds, a five-year default chance of 9.52% and 40% recovery. Its five-year expected loss, before discounting, is $0.0952 \times 0.60 \times \$100\text{m} = \$5.71\text{m}$. Where the 9.52% comes from is the hazard-rate card's job.
@@ -571,7 +710,7 @@ The two outputs agree line for line, including the simulated loss, because both 
 - [Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md): EAD as a path through time rather than one number.
 - [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md): the swings around the $300, and the capital that absorbs them.
 
-This card takes the one-year default chance as given; the open question is where that chance comes from and how it stretches over five years or thirty, which the hazard rate answers.
+This card takes the one-year default chance as given. The open question is where that chance comes from and how it stretches over five years or thirty, which the hazard rate answers.
 
 ---
 

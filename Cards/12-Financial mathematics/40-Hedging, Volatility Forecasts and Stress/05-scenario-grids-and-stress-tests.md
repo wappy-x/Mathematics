@@ -12,7 +12,12 @@ The risk report looks calm. The book's delta, its dollar change per $1 move in A
 
 Now let Acme fall 20 percent, to $80, and let volatility jump 15 points, from 20 percent to 35 percent. Reprice every position at those two new numbers. The book loses **$2.13 million**. The sensitivities above would have predicted $1.23 million. The gap is the reason stress tests exist.
 
-A stress test does not extrapolate from slopes; it prices the whole book again at a chosen bad state. A **scenario grid** sweeps spot moves against volatility moves. A **historical replay** feeds in the moves of a dated crisis, here autumn 2008 and March 2020. A **hypothetical shock** is designed by hand, like the headline one. A **reverse stress test** runs backwards: fix the unacceptable loss, and find the least far-fetched state that causes it.
+A stress test does not extrapolate from slopes; it prices the whole book again at a chosen bad state. It comes in four kinds:
+
+- A **scenario grid** sweeps spot moves (changes in Acme's price) against volatility moves.
+- A **historical replay** feeds in the moves of a dated crisis, here autumn 2008 and March 2020.
+- A **hypothetical shock** is designed by hand, like the headline one.
+- A **reverse stress test** runs backwards: fix the unacceptable loss, and find the least far-fetched state that causes it.
 
 **A stress test sets the market inputs to a chosen bad state, reprices every position in full, and reports the change in the book's value; a reverse stress test fixes the loss and searches for the least far-fetched state that produces it.**
 
@@ -111,13 +116,21 @@ Repeat Step 1 over a table of spot moves and volatility moves. Each cell is the 
 
 Read down the "vol +0" column: spot alone barely hurts until the fall passes 10 percent. Read along the "+0%" row: volatility alone costs $1.40 million at +15 points. Add the two single-factor losses for the headline, $0.49 million plus $1.40 million, and the total is $1.89 million. The joint cell is $2.13 million. The extra $0.24 million is the **interaction**: what the two shocks do together that neither does alone.
 
-Its source is visible in the book's vega after the fall. At Acme $100 the book loses $82,324 per vol point. At Acme $80, volatility still 20 percent, it loses $109,824 per point. The three-month $100 puts, which carried the book's long vega, have gone deep into the money. A deep in-the-money option behaves almost like a short share, with little left of the "maybe" that volatility prices, so their vega nearly vanishes. The short one-year $90 puts keep theirs. The hedge's vega disappears at the very moment volatility rises. The rate at which vega changes as spot moves has its own name, vanna: [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
+Its source is visible in the book's vega after the fall. At Acme $100 the book loses $82,324 per vol point. At Acme $80, volatility still 20 percent, it loses $109,824 per point.
 
-Volatility alone costs $1.40 million, more than $82,324 times 15, which is $1.23 million, because vega itself grows as volatility rises for the out-of-the-money $90 puts: [Volga](../09-The%20Greeks%2C%20one%20each/07-volga.md).
+The three-month $100 puts, which carried the book's long vega, have gone deep into the money. A put is in the money when Acme sits below its strike, so exercising it now would pay. A deep in-the-money option behaves almost like a short share, with little left of the "maybe" that volatility prices, so their vega nearly vanishes.
+
+The short one-year $90 puts keep theirs. The hedge's vega disappears at the very moment volatility rises. The rate at which vega changes as spot moves has its own name, vanna: [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
+
+Volatility alone costs $1.40 million, more than $82,324 times 15, which is $1.23 million, because vega itself grows as volatility rises for the out-of-the-money $90 puts (Acme sits above their strike): [Volga](../09-The%20Greeks%2C%20one%20each/07-volga.md).
 
 ### Step 3: historical replay turns dated closes into a scenario
 
-A replay picks a crisis window, reads the start and end closes of a spot index and a volatility index, and converts them into $(s, v)$. Spot moves are relative: $s$ is 100 times the ratio of end close to start close, minus 100. Volatility moves are differences in points: $v$ is the volatility index's end close minus its start close, since that index is already quoted in points. The card uses the Nasdaq Composite for spot and the Cboe VIX for volatility, both from FRED. VIX measures S&P 500 option volatility, not Acme's. Borrowing it is a mapping assumption, stated as such. Conventions verified 28 Sep 2026: Cboe quotes VIX as the 30-day implied volatility of the S&P 500, annualised, in percentage points.
+A replay picks a crisis window, reads the start and end closes of a spot index and a volatility index, and converts them into $(s, v)$. Spot moves are relative: $s$ is 100 times the ratio of end close to start close, minus 100. Volatility moves are differences in points: $v$ is the volatility index's end close minus its start close, since that index is already quoted in points.
+
+The card uses the Nasdaq Composite for spot and the Cboe VIX for volatility, both from FRED, the public data service of the Federal Reserve Bank of St. Louis. VIX measures S&P 500 option volatility, not Acme's. Borrowing it is a mapping assumption, stated as such.
+
+Conventions verified 28 Sep 2026: Cboe quotes VIX as the 30-day implied volatility of the S&P 500, annualised, in percentage points. Implied volatility is the volatility that makes the pricing model match market option prices.
 
 | Window, close to close | Nasdaq | VIX | Scenario fed to the book | Loss, full repricing | Loss, Greeks |
 | --- | --- | --- | --- | --- | --- |
@@ -173,7 +186,9 @@ Every scenario with $L(s,v) \le -\$3$ million has $d \ge d_*$ by the definition 
 
 </details>
 
-The same yardstick scores the replays. The 2008 window sits at distance 11.875 and the 2020 window at 12.549. Their chance bounds are 10 to the power −30.62 and −34.20: the bell-curve yardstick calls both impossible. Both happened within twelve years. So $d$ is useful for **ranking** scenarios, and for finding the cheapest route to a given loss, but its chance bound is not the chance. Real monthly moves have far fatter tails than a bell curve; the tail cards treat this properly ([Extreme value theory](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md)).
+The same yardstick scores the replays. The 2008 window sits at distance 11.875 and the 2020 window at 12.549. Their chance bounds are 10 to the power −30.62 and −34.20: the bell-curve yardstick calls both impossible. Both happened within twelve years.
+
+So $d$ is useful for **ranking** scenarios, and for finding the cheapest route to a given loss, but its chance bound is not the chance. Real monthly moves have far fatter tails than a bell curve; the tail cards treat this properly ([Extreme value theory](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md)).
 
 ### The other door
 
@@ -211,7 +226,15 @@ The multiplications in the table use rounded prices; the check multiplies at ful
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the book, fill the grid, and price every scenario by two independent roads: the Black-Scholes formula with a home-made bell-curve area (Marsaglia's series), and Simpson's rule over the payoff, which never uses that area. The reverse test takes two more roads, rays with bisection and a brute-force grid. Asserts check the house put, the two pricing roads against each other and the 2.1 million headline, the Greeks against full repricing for a tiny move and against finite-difference slopes of the repricing, the two reverse searches against each other, and that the reverse scenario sits on the loss boundary. Every number on this card is printed below.
+The scripts build the book, fill the grid, and price every scenario by two independent roads: the Black-Scholes formula with a home-made bell-curve area (Marsaglia's series), and Simpson's rule over the payoff, which never uses that area. The reverse test takes two more roads, rays with bisection and a brute-force grid. Every number on this card is printed below.
+
+The asserts check:
+
+- the house put (a reference one-year $100 put at Acme $100 and 20 percent volatility, whose price is known);
+- the two pricing roads against each other and the 2.1 million headline;
+- the Greeks against full repricing for a tiny move, and against finite-difference slopes of the repricing (slopes measured by nudging each input a little each way);
+- the two reverse searches against each other;
+- that the reverse scenario sits on the loss boundary.
 
 ### Python
 
@@ -621,6 +644,294 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the reverse test's chance bound and the two steps of its detailed proof, for any correlation strictly between −1 and 1.
+
+- Suppose the monthly moves are jointly normal, with mean zero and the stated sizes and correlation. Then for any book and limit, the chance of a month at or below the limit is at most $e^{-d_*^2/2}$.
+- Take $z_s = x$ and $z_v = \rho x + \sqrt{1-\rho^2}\,y$. Then $d^2 = x^2 + y^2$, so in these coordinates $d$ is plain distance.
+- Take two independent standard bell-curve draws $x$ and $y$, and any $a > 0$. Then the chance that $\sqrt{x^2 + y^2}$ exceeds $a$ is exactly $e^{-a^2/2}$.
+- The worked numbers match. Acme at \$100 falling 20 percent ends at \$80, and 20 percent plus 15 vol points is 35 percent.
+- Reading "+15 vol" as 15 percent of 20 gives 23 percent instead.
+- The 18,715 sold shares gain \$374,300, and 720 rays half a degree apart cover the full circle.
+
+The option prices, the grid, the replays, both searches and the value of $d_*$ are left to the Python and Rust checks.
+
+```lean
+-- Stress tests: if a month's spot and volatility moves are jointly normal with mean zero, typical sizes m_s and m_v and correlation ρ, then the chance that the book loses at least a given limit is at most e^(-d*²/2), where d* is the smallest distance d among the scenarios that reach the limit; along the way, d is plain distance in independent standard coordinates and two independent standard draws land beyond radius a with chance exactly e^(-a²/2).
+import Mathlib.Probability.Distributions.Gaussian.HasGaussianLaw.Independence
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.HasLaw
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.PolarCoord
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+
+open Real MeasureTheory ProbabilityTheory
+
+/-- The reverse test's distance `d(s, v)`, counted in typical months (The formula): scale the
+spot move `s` by its typical monthly size `m_s` and the volatility move `v` by `m_v`, then
+`d² = (z_s² - 2ρ z_s z_v + z_v²) / (1 - ρ²)` with `z_s = s / m_s` and `z_v = v / m_v`. -/
+noncomputable def scenarioDist (ms mv ρ s v : ℝ) : ℝ :=
+  √(((s / ms) ^ 2 - 2 * ρ * (s / ms) * (v / mv) + (v / mv) ^ 2) / (1 - ρ ^ 2))
+
+/-- `d_*`: the smallest distance `d(s, v)` among the scenarios whose change in the book's value
+`L(s, v)` is at or below the loss limit `ℓ` (for the card, `ℓ = -$3 million`). -/
+noncomputable def reverseStressDist (ms mv ρ : ℝ) (L : ℝ → ℝ → ℝ) (ℓ : ℝ) : ℝ :=
+  sInf ((fun p : ℝ × ℝ => scenarioDist ms mv ρ p.1 p.2) '' {p | L p.1 p.2 ≤ ℓ})
+
+/-- Helper: same statement as `scenario_dist_sq_eq_plain_dist_sq`, placed early for reuse. -/
+lemma scenarioDist_sq_aux
+    (ms mv ρ x y : ℝ) (hms : 0 < ms) (hmv : 0 < mv) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1) :
+    scenarioDist ms mv ρ (ms * x) (mv * (ρ * x + √(1 - ρ ^ 2) * y)) ^ 2 = x ^ 2 + y ^ 2 := by
+  have h1 : 0 < 1 - ρ ^ 2 := by nlinarith
+  have hc : √(1 - ρ ^ 2) ^ 2 = 1 - ρ ^ 2 := Real.sq_sqrt h1.le
+  have key : ((ms * x / ms) ^ 2 - 2 * ρ * (ms * x / ms) * (mv * (ρ * x + √(1 - ρ ^ 2) * y) / mv)
+      + (mv * (ρ * x + √(1 - ρ ^ 2) * y) / mv) ^ 2) / (1 - ρ ^ 2) = x ^ 2 + y ^ 2 := by
+    rw [mul_div_cancel_left₀ _ hms.ne', mul_div_cancel_left₀ _ hmv.ne', div_eq_iff h1.ne']
+    linear_combination (y ^ 2) * hc
+  unfold scenarioDist
+  rw [key, Real.sq_sqrt (by positivity)]
+
+#print axioms scenarioDist_sq_aux
+
+/-- Helper: `∫_a^∞ r e^(-r²/2) dr = e^(-a²/2)`, as a lower integral. -/
+lemma radial_tail (a : ℝ) (ha : 0 ≤ a) :
+    ∫⁻ r in Set.Ioi a, ENNReal.ofReal (r * exp (-r ^ 2 / 2)) = ENNReal.ofReal (exp (-a ^ 2 / 2)) := by
+  have hderiv : ∀ x ∈ Set.Ici a,
+      HasDerivAt (fun r => -exp (-r ^ 2 / 2)) (x * exp (-x ^ 2 / 2)) x := by
+    intro x _
+    have := (((hasDerivAt_pow 2 x).neg).div_const 2).exp.neg
+    convert this using 1
+    simp; ring
+  have hnn : ∀ x ∈ Set.Ioi a, 0 ≤ x * exp (-x ^ 2 / 2) :=
+    fun x hx => mul_nonneg (ha.trans (le_of_lt hx)) (exp_pos _).le
+  have hlim : Filter.Tendsto (fun r : ℝ => -exp (-r ^ 2 / 2)) Filter.atTop (nhds 0) := by
+    have h1 : Filter.Tendsto (fun r : ℝ => -r ^ 2 / 2) Filter.atTop Filter.atBot := by
+      have := (Filter.tendsto_pow_atTop (two_ne_zero)).atTop_div_const (by norm_num : (0:ℝ) < 2)
+      refine (Filter.tendsto_neg_atTop_atBot.comp this).congr fun r => ?_
+      simp [Function.comp, neg_div]
+    simpa using (tendsto_exp_atBot.comp h1).neg
+  have hint := integrableOn_Ioi_deriv_of_nonneg' hderiv hnn hlim
+  have hval := integral_Ioi_of_hasDerivAt_of_nonneg' hderiv hnn hlim
+  rw [← ofReal_integral_eq_lintegral_ofReal hint
+    ((ae_restrict_iff' measurableSet_Ioi).2 (Filter.Eventually.of_forall hnn)), hval]
+  simp
+
+#print axioms radial_tail
+
+/-- Helper: same statement as `standard_gaussian_radius_tail`, placed early for reuse. -/
+lemma gaussian_radius_tail_aux
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} {X Y : Ω → ℝ}
+    (hX : HasLaw X (gaussianReal 0 1) P) (hY : HasLaw Y (gaussianReal 0 1) P)
+    (hXY : IndepFun X Y P) (a : ℝ) (ha : 0 < a) :
+    P {ω | a < √(X ω ^ 2 + Y ω ^ 2)} = ENNReal.ofReal (exp (-a ^ 2 / 2)) := by
+  have hP : IsProbabilityMeasure P := hX.hasGaussianLaw.isProbabilityMeasure
+  have hmap : P.map (fun ω => (X ω, Y ω)) = (gaussianReal 0 1).prod (gaussianReal 0 1) := by
+    rw [(indepFun_iff_map_prod_eq_prod_map_map hX.aemeasurable hY.aemeasurable).1 hXY,
+      hX.map_eq, hY.map_eq]
+  set S : Set (ℝ × ℝ) := {p | a < √(p.1 ^ 2 + p.2 ^ 2)} with hSdef
+  have hS : MeasurableSet S := measurableSet_lt measurable_const (by fun_prop)
+  have h1 : P {ω | a < √(X ω ^ 2 + Y ω ^ 2)} = P.map (fun ω => (X ω, Y ω)) S := by
+    rw [Measure.map_apply_of_aemeasurable (hX.aemeasurable.prodMk hY.aemeasurable) hS]; rfl
+  rw [h1, hmap, gaussianReal_of_var_ne_zero _ one_ne_zero,
+    prod_withDensity (measurable_gaussianPDF _ _) (measurable_gaussianPDF _ _),
+    ← Measure.volume_eq_prod, withDensity_apply _ hS, ← lintegral_indicator hS,
+    ← lintegral_comp_polarCoord_symm]
+  have hpt : ∀ p ∈ polarCoord.target, ENNReal.ofReal p.1 •
+      S.indicator (fun z : ℝ × ℝ => gaussianPDF 0 1 z.1 * gaussianPDF 0 1 z.2) (polarCoord.symm p)
+      = ENNReal.ofReal (2 * π)⁻¹ *
+        (Set.Ioi a).indicator (fun r => ENNReal.ofReal (r * exp (-r ^ 2 / 2))) p.1 := by
+    rintro ⟨r, θ⟩ ⟨hr, -⟩
+    simp only [Set.mem_Ioi] at hr
+    have hsq : (r * cos θ) ^ 2 + (r * sin θ) ^ 2 = r ^ 2 := by
+      linear_combination r ^ 2 * sin_sq_add_cos_sq θ
+    simp only [polarCoord_symm_apply, Set.indicator, S, Set.mem_ofPred_eq, Set.mem_Ioi, hsq,
+      Real.sqrt_sq hr.le]
+    split_ifs with h
+    · simp only [smul_eq_mul, gaussianPDF, gaussianPDFReal, NNReal.coe_one, mul_one, sub_zero]
+      rw [← ENNReal.ofReal_mul (by positivity), ← ENNReal.ofReal_mul hr.le,
+        ← ENNReal.ofReal_mul (by positivity)]
+      congr 1
+      have e : exp (-(r * cos θ) ^ 2 / 2) * exp (-(r * sin θ) ^ 2 / 2) = exp (-r ^ 2 / 2) := by
+        rw [← exp_add]; congr 1; linear_combination (-1/2 : ℝ) * hsq
+      have s2 : (√(2 * π))⁻¹ * (√(2 * π))⁻¹ = (2 * π)⁻¹ := by
+        rw [← mul_inv, mul_self_sqrt (by positivity)]
+      linear_combination r * exp (-(r * cos θ) ^ 2 / 2) * exp (-(r * sin θ) ^ 2 / 2) * s2
+        + r * (2 * π)⁻¹ * e
+    · simp
+  rw [setLIntegral_congr_fun polarCoord.open_target.measurableSet hpt]
+  rw [polarCoord_target, Measure.volume_eq_prod, ← Measure.prod_restrict,
+    lintegral_prod _ (by fun_prop (disch := exact measurableSet_Ioi))]
+  simp only [lintegral_const, Measure.restrict_apply MeasurableSet.univ, Set.univ_inter,
+    Real.volume_Ioo]
+  rw [lintegral_mul_const _ (by fun_prop (disch := exact measurableSet_Ioi)), lintegral_const_mul _ (by fun_prop (disch := exact measurableSet_Ioi)),
+    lintegral_indicator measurableSet_Ioi, Measure.restrict_restrict measurableSet_Ioi,
+    Set.Ioi_inter_Ioi, max_eq_left ha.le, radial_tail a ha.le,
+    ← ENNReal.ofReal_mul (by positivity), ← ENNReal.ofReal_mul (by positivity)]
+  congr 1
+  field_simp
+  ring
+
+#print axioms gaussian_radius_tail_aux
+
+/-- **The reverse test's chance bound** (The formula; Why it works, Step 6 and the detailed proof).
+Let a month's spot move `s` and volatility move `v` be jointly normal (bell-shaped) with mean
+zero, typical sizes `m_s > 0` and `m_v > 0` (their standard deviations) and correlation `ρ`
+strictly between `-1` and `1`. Let `L(s, v)` be the change in the book's value in scenario
+`(s, v)`, any rule at all, and `ℓ` the loss limit. If `d_*` is the smallest distance `d` among the
+scenarios with `L(s, v) ≤ ℓ`, then the chance of a month with `L(s, v) ≤ ℓ` is at most
+`e^(-d_*²/2)`. -/
+theorem reverse_stress_chance_bound
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} {s v : Ω → ℝ}
+    (ms mv ρ : ℝ) (hms : 0 < ms) (hmv : 0 < mv) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1)
+    (hjoint : HasGaussianLaw (fun ω => (s ω, v ω)) P)
+    (hs_mean : ∫ ω, s ω ∂P = 0) (hv_mean : ∫ ω, v ω ∂P = 0)
+    (hs_var : variance s P = ms ^ 2) (hv_var : variance v P = mv ^ 2)
+    (hcov : covariance s v P = ρ * ms * mv)
+    (L : ℝ → ℝ → ℝ) (ℓ : ℝ) :
+    P {ω | L (s ω) (v ω) ≤ ℓ} ≤
+      ENNReal.ofReal (exp (-(reverseStressDist ms mv ρ L ℓ) ^ 2 / 2)) := by
+  have hP : IsProbabilityMeasure P := hjoint.isProbabilityMeasure
+  have hsL : MemLp s 2 P := hjoint.fst.memLp_two
+  have hvL : MemLp v 2 P := hjoint.snd.memLp_two
+  have h1ρ : 0 < 1 - ρ ^ 2 := by nlinarith
+  set c := √(1 - ρ ^ 2) with hc_def
+  have hc : 0 < c := Real.sqrt_pos.2 h1ρ
+  have hc2 : c ^ 2 = 1 - ρ ^ 2 := Real.sq_sqrt h1ρ.le
+  set D := reverseStressDist ms mv ρ L ℓ with hD_def
+  have hbdd : BddBelow ((fun p : ℝ × ℝ => scenarioDist ms mv ρ p.1 p.2) '' {p | L p.1 p.2 ≤ ℓ}) :=
+    ⟨0, by rintro _ ⟨p, -, rfl⟩; exact Real.sqrt_nonneg _⟩
+  have hD0 : 0 ≤ D := Real.sInf_nonneg (by rintro _ ⟨p, -, rfl⟩; exact Real.sqrt_nonneg _)
+  rcases hD0.eq_or_lt with hD | hD
+  · rw [← hD]; simpa using prob_le_one
+  let X : Ω → ℝ := fun ω => ms⁻¹ * s ω
+  let Y : Ω → ℝ := fun ω => (mv * c)⁻¹ * v ω - (ρ / (ms * c)) * s ω
+  have hXYg : HasGaussianLaw (fun ω => (X ω, Y ω)) P := by
+    let T : ℝ × ℝ →L[ℝ] ℝ × ℝ :=
+      (ms⁻¹ • ContinuousLinearMap.fst ℝ ℝ ℝ).prod
+        ((mv * c)⁻¹ • ContinuousLinearMap.snd ℝ ℝ ℝ - (ρ / (ms * c)) • ContinuousLinearMap.fst ℝ ℝ ℝ)
+    have hT : (fun ω => (X ω, Y ω)) = fun ω => T (s ω, v ω) := by
+      funext ω; simp [T, X, Y]
+    rw [hT]; exact hjoint.map_fun T
+  have hXL : MemLp X 2 P := hsL.const_mul _
+  have hYL : MemLp Y 2 P := (hvL.const_mul _).sub (hsL.const_mul _)
+  have hXmean : ∫ ω, X ω ∂P = 0 := by simp [X, integral_const_mul, hs_mean]
+  have hYmean : ∫ ω, Y ω ∂P = 0 := by
+    simp only [Y]
+    rw [integral_sub ((hvL.const_mul _).integrable one_le_two)
+      ((hsL.const_mul _).integrable one_le_two), integral_const_mul, integral_const_mul,
+      hs_mean, hv_mean]
+    simp
+  have hXvar : variance X P = 1 := by
+    rw [← covariance_self hXL.aemeasurable]
+    simp only [X]
+    rw [covariance_const_mul_left, covariance_const_mul_right,
+      covariance_self hsL.aemeasurable, hs_var]
+    field_simp
+  have hcovXY : covariance X Y P = 0 := by
+    simp only [X, Y]
+    rw [covariance_const_mul_left, covariance_fun_sub_right hsL (hvL.const_mul _) (hsL.const_mul _),
+      covariance_const_mul_right, covariance_const_mul_right, hcov,
+      covariance_self hsL.aemeasurable, hs_var]
+    field_simp
+    ring
+  have hYvar : variance Y P = 1 := by
+    rw [← covariance_self hYL.aemeasurable]
+    simp only [Y]
+    rw [covariance_fun_sub_left (hvL.const_mul _) (hsL.const_mul _) hYL]
+    simp only [Y]
+    rw [covariance_fun_sub_right (hvL.const_mul _) (hvL.const_mul _) (hsL.const_mul _),
+      covariance_fun_sub_right (hsL.const_mul _) (hvL.const_mul _) (hsL.const_mul _),
+      covariance_const_mul_left, covariance_const_mul_left, covariance_const_mul_left,
+      covariance_const_mul_left, covariance_const_mul_right, covariance_const_mul_right,
+      covariance_const_mul_right, covariance_const_mul_right,
+      covariance_self hsL.aemeasurable, covariance_self hvL.aemeasurable, covariance_comm v s,
+      hcov, hs_var, hv_var]
+    field_simp
+    linear_combination (-1 : ℝ) * hc2
+  have hXlaw : HasLaw X (gaussianReal 0 1) P :=
+    ⟨hXYg.fst.aemeasurable, by rw [hXYg.fst.map_eq_gaussianReal, hXmean, hXvar]; simp⟩
+  have hYlaw : HasLaw Y (gaussianReal 0 1) P :=
+    ⟨hXYg.snd.aemeasurable, by rw [hXYg.snd.map_eq_gaussianReal, hYmean, hYvar]; simp⟩
+  have hind : IndepFun X Y P := hXYg.indepFun_of_covariance_eq_zero hcovXY
+  have hdist : ∀ ω, scenarioDist ms mv ρ (s ω) (v ω) = √(X ω ^ 2 + Y ω ^ 2) := by
+    intro ω
+    have h := scenarioDist_sq_aux ms mv ρ (X ω) (Y ω) hms hmv hρ₁ hρ₂
+    have e1 : ms * X ω = s ω := by simp only [X]; field_simp
+    have e2 : mv * (ρ * X ω + √(1 - ρ ^ 2) * Y ω) = v ω := by
+      simp only [X, Y, ← hc_def]; field_simp; ring
+    rw [e1, e2] at h
+    rw [← h]; exact (Real.sqrt_sq (Real.sqrt_nonneg _)).symm
+  have hbound : ∀ a, 0 < a → a < D → P {ω | L (s ω) (v ω) ≤ ℓ} ≤ ENNReal.ofReal (exp (-a ^ 2 / 2)) := by
+    intro a ha haD
+    calc P {ω | L (s ω) (v ω) ≤ ℓ} ≤ P {ω | a < √(X ω ^ 2 + Y ω ^ 2)} := by
+          refine measure_mono fun ω hω => ?_
+          have : D ≤ scenarioDist ms mv ρ (s ω) (v ω) := csInf_le hbdd ⟨(s ω, v ω), hω, rfl⟩
+          show a < √(X ω ^ 2 + Y ω ^ 2)
+          rw [← hdist]; linarith
+      _ = ENNReal.ofReal (exp (-a ^ 2 / 2)) := gaussian_radius_tail_aux hXlaw hYlaw hind a ha
+  have hcont : Filter.Tendsto (fun a : ℝ => ENNReal.ofReal (exp (-a ^ 2 / 2)))
+      (nhdsWithin D (Set.Ioo 0 D)) (nhds (ENNReal.ofReal (exp (-D ^ 2 / 2)))) :=
+    ((ENNReal.continuous_ofReal.comp (by fun_prop : Continuous fun a : ℝ => exp (-a ^ 2 / 2))).tendsto
+      D).mono_left nhdsWithin_le_nhds
+  have : (nhdsWithin D (Set.Ioo 0 D)).NeBot :=
+    mem_closure_iff_nhdsWithin_neBot.1 (by rw [closure_Ioo hD.ne]; exact ⟨hD.le, le_rfl⟩)
+  exact ge_of_tendsto hcont (eventually_nhdsWithin_of_forall fun a ha => hbound a ha.1 ha.2)
+
+/-- **In the right coordinates, `d` is plain distance** (Why it works, detailed proof). Write the
+standardised moves as `z_s = x` and `z_v = ρ x + √(1 - ρ²) y`, so the spot move is `m_s x` and the
+volatility move is `m_v (ρ x + √(1 - ρ²) y)`. For typical sizes `m_s > 0`, `m_v > 0` and a
+correlation strictly between `-1` and `1`, the distance of that scenario satisfies
+`d² = x² + y²`. -/
+theorem scenario_dist_sq_eq_plain_dist_sq
+    (ms mv ρ x y : ℝ) (hms : 0 < ms) (hmv : 0 < mv) (hρ₁ : -1 < ρ) (hρ₂ : ρ < 1) :
+    scenarioDist ms mv ρ (ms * x) (mv * (ρ * x + √(1 - ρ ^ 2) * y)) ^ 2 = x ^ 2 + y ^ 2 := by
+  exact scenarioDist_sq_aux ms mv ρ x y hms hmv hρ₁ hρ₂
+
+/-- **The bell-curve radius tail** (Why it works, detailed proof). For two independent standard
+bell-curve draws `x` and `y`, the chance that the radius `√(x² + y²)` exceeds any `a > 0` is
+exactly `e^(-a²/2)`. -/
+theorem standard_gaussian_radius_tail
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} {X Y : Ω → ℝ}
+    (hX : HasLaw X (gaussianReal 0 1) P) (hY : HasLaw Y (gaussianReal 0 1) P)
+    (hXY : IndepFun X Y P) (a : ℝ) (ha : 0 < a) :
+    P {ω | a < √(X ω ^ 2 + Y ω ^ 2)} = ENNReal.ofReal (exp (-a ^ 2 / 2)) := by
+  exact gaussian_radius_tail_aux hX hY hXY a ha
+
+-- Worked numbers, by hand: the stressed Acme price, $100 × (1 - 0.20) = $80.
+example : (100 : ℚ) * (1 + (-20) / 100) = 80 := by norm_num
+
+-- Stressed volatility: vol points are added, 20 percent plus 15 points is 35 percent.
+example : (20 : ℚ) / 100 + 15 / 100 = 35 / 100 := by norm_num
+
+-- The mistake: reading "+15 vol" as 15 percent of 20 gives 23 percent, not 35.
+example : (20 : ℚ) * (1 + 15 / 100) = 23 := by norm_num
+
+-- Short shares: -18,715 × (80 - 100) = +$374,300.
+example : (-18715 : ℤ) * (80 - 100) = 374300 := by norm_num
+
+-- The ray search: 720 directions spaced half a degree apart cover the full circle.
+example : (720 : ℚ) * (1 / 2) = 360 := by norm_num
+
+#print axioms reverse_stress_chance_bound
+#print axioms scenario_dist_sq_eq_plain_dist_sq
+#print axioms standard_gaussian_radius_tail
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'scenarioDist_sq_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'radial_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gaussian_radius_tail_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reverse_stress_chance_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'scenario_dist_sq_eq_plain_dist_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'standard_gaussian_radius_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -662,7 +973,7 @@ The two outputs agree line for line.
 
 ## Where this goes next
 
-- [Limits](06-risk-limits-and-risk-appetite.md): turns stress losses, sensitivities and VaR into limits a desk must stay inside, and ties them to the capital the firm is willing to lose.
+- [Limits](06-risk-limits-and-risk-appetite.md): turns stress losses, sensitivities and Value at Risk into limits a desk must stay inside, and ties them to the capital the firm is willing to lose.
 
 The grid, the replays and the reverse test each produce a number: $2.13 million, $5.88 million, a distance of 5.10. What they do not say is how large a loss is acceptable, and who decides; the limits card answers that.
 

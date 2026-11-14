@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A trading desk holds a book: $10 million of shares, $5 million of bonds, and 1,000 Acme calls priced at the house market. Tomorrow the book will be worth more or less than today. The change is the day's **profit and loss**, written P&L: positive on a good day, negative on a bad one.
+A trading desk holds a book: $10 million of shares, $5 million of bonds, and 1,000 Acme call options (rights to buy Acme shares at a fixed price), priced at the house market (the wing's shared example market for Acme). Tomorrow the book will be worth more or less than today. The change is the day's **profit and loss**, written P&L: positive on a good day, negative on a bad one.
 
 Nobody knows tomorrow's P&L. The desk's risk model does say how it is spread: centred on zero, with a typical swing, the **standard deviation**, of $180,000. That spread of possible outcomes, each with its chance, is the **P&L distribution**.
 
@@ -16,7 +16,7 @@ VaR does not say the desk cannot lose more. On about two or three trading days a
 
 **Value at risk at 99% over one day is the loss level that tomorrow's loss stays at or below with 99% chance: a quantile of the loss distribution, and nothing more.**
 
-**What kind of fact this is:** a definition; for a book whose P&L is normal, the formula $-\mu + z\sigma$ is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a definition; for a book whose P&L is normal, the formula $-\mu + z\sigma$ (minus the average P&L plus $z$ standard deviations, defined under The formula) is a theorem, proved on this card in Why it works.
 
 ### The picture: where the line sits
 
@@ -86,7 +86,9 @@ The words "profit and loss distribution" and "loss distribution" name the same r
 
 ### Step 0: a line on the loss axis, with 1% of the chance beyond it
 
-Every question about tomorrow's loss is a question about its distribution. "The loss exceeded one day in a hundred" is a statement about one point on the loss axis: the point with 99% of the chance at or below it and 1% above. A point like that is a **quantile** (the value below which a given share of the chance lies). So VaR is not a new kind of object. It is the 99% quantile of the loss, and every fact about quantiles is a fact about VaR.
+Every question about tomorrow's loss is a question about its distribution. "The loss exceeded one day in a hundred" is a statement about one point on the loss axis: the point with 99% of the chance at or below it and 1% above.
+
+A point like that is a **quantile** (the value below which a given share of the chance lies). So VaR is not a new kind of object. It is the 99% quantile of the loss, and every fact about quantiles is a fact about VaR.
 
 ### Step 1: the definition always gives exactly one answer
 
@@ -101,7 +103,7 @@ The house convention for any inverse is to settle existence, uniqueness and the 
 
 ### Step 2: for a normal book, turn the loss into a standard bell curve
 
-The P&L $X$ is normal with average $\mu$ and standard deviation $\sigma$. Standardise it: $(X - \mu)/\sigma$ is a standard bell curve draw, with average 0 and standard deviation 1. The loss stays at or below $\ell$ exactly when the P&L stays at or above $-\ell$:
+The P&L $X$ is normal with average $\mu$ and standard deviation $\sigma$. Standardise it: $(X - \mu)/\sigma$ is a standard bell curve draw, with average 0 and standard deviation 1. Write $P(\dots)$ for the chance of the event in brackets. The loss stays at or below $\ell$ exactly when the P&L stays at or above $-\ell$:
 
 $$F_L(\ell) = P(X \ge -\ell) = P\!\left(\frac{X - \mu}{\sigma} \ge \frac{-\ell - \mu}{\sigma}\right) = N\!\left(\frac{\ell + \mu}{\sigma}\right).$$
 
@@ -124,13 +126,23 @@ The square root is the heart of the matter. Ten independent days partly cancel e
 <details>
 <summary>Detailed proof: variances add, and normal plus normal is normal</summary>
 
-Write the ten days as $X_1, \dots, X_{10}$, independent, each with average $\mu$ and variance $\sigma^2$. The average of a sum is the sum of the averages: $E[\sum X_i] = 10\mu$. For the variance, expand the square of the centred sum: $\text{Var}(\sum X_i) = \sum_i \text{Var}(X_i) + \sum_{i \ne j} \text{Cov}(X_i, X_j)$. Independence makes every covariance (the average product of two centred days) zero, leaving $10\sigma^2$. For normality, use the moment generating function $E[e^{tX}] = e^{\mu t + \sigma^2 t^2/2}$ of a normal draw. For independent draws the function of the sum is the product of the functions, $e^{10\mu t + 10\sigma^2 t^2/2}$, which is the function of a normal with average $10\mu$ and variance $10\sigma^2$. A distribution is fixed by this function where it exists, so the sum is that normal. Step 3 applied to it gives $\text{VaR}_\alpha(h) = -h\mu + z_\alpha \sigma\sqrt{h}$.
+Write the ten days as $X_1, \dots, X_{10}$, independent, each with average $\mu$ and variance $\sigma^2$. The average of a sum is the sum of the averages: $E[\sum X_i] = 10\mu$.
+
+For the variance, expand the square of the centred sum: $\text{Var}(\sum X_i) = \sum_i \text{Var}(X_i) + \sum_{i \ne j} \text{Cov}(X_i, X_j)$. Independence makes every covariance (the average product of two centred days) zero, leaving $10\sigma^2$.
+
+For normality, use the moment generating function $E[e^{tX}] = e^{\mu t + \sigma^2 t^2/2}$ of a normal draw. For independent draws the function of the sum is the product of the functions, $e^{10\mu t + 10\sigma^2 t^2/2}$, which is the function of a normal with average $10\mu$ and variance $10\sigma^2$. A distribution is fixed by this function where it exists, so the sum is that normal. Step 3 applied to it gives $\text{VaR}_\alpha(h) = -h\mu + z_\alpha \sigma\sqrt{h}$.
 
 </details>
 
 ### Step 5: choose the confidence level
 
-$z_\alpha$ climbs slowly through the middle of the bell curve and fast in the tail. Going from 95% to 99% multiplies VaR by 1.41; going from 99% to 99.9% multiplies it by another 1.33, even though it trims the tail by only 0.9 percentage points against the first step's 4. The choice is a policy, not a law: 95% suits a daily report that should be broken a dozen times a year so that people keep watching it; 99% over ten days was the 1996 bank capital standard; 99.9% over a year is the credit capital standard of [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
+$z_\alpha$ climbs slowly through the middle of the bell curve and fast in the tail. Going from 95% to 99% multiplies VaR by 1.41. Going from 99% to 99.9% multiplies it by another 1.33, even though it trims the tail by only 0.9 percentage points against the first step's 4.
+
+The choice is a policy, not a law:
+
+- 95% suits a daily report that should be broken a dozen times a year so that people keep watching it.
+- 99% over ten days was the 1996 bank capital standard.
+- 99.9% over a year is the credit capital standard of [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
 
 ```
 VaR by confidence level, one day, each █ = $20,000
@@ -187,7 +199,13 @@ Twenty days is twenty times as many days, and only 4.47 times the VaR: the squar
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach the 99% one-day VaR three independent ways. Road 1 is the formula, with $z$ found by a bisection root finder (halve an interval until it traps the answer) on a normal cumulative chance built from its power series. Road 2 is the definition itself: bisection on the loss level until the tail area beyond it, integrated from the bell curve by Simpson's rule (a weighted sum over thin slices), equals 1%. Road 3 simulates 1,000,000 days with a random-number generator written in the script, sorts the losses, and takes the smallest one with 99% of the days at or below it. They also add up ten simulated days to test the square-root rule, check the lumpy position's jump, and print every table, bar and chart point on the card.
+Both programs reach the 99% one-day VaR three independent ways.
+
+- Road 1 is the formula, with $z$ found by a bisection root finder (halve an interval until it traps the answer) on a normal cumulative chance built from its power series.
+- Road 2 is the definition itself: bisection on the loss level until the tail area beyond it, integrated from the bell curve by Simpson's rule (a weighted sum over thin slices), equals 1%.
+- Road 3 simulates 1,000,000 days with a random-number generator written in the script, sorts the losses, and takes the smallest one with 99% of the days at or below it.
+
+They also add up ten simulated days to test the square-root rule, check the lumpy position's jump, and print every table, bar and chart point on the card.
 
 ### Python
 
@@ -535,6 +553,197 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line, the simulations included, because both programs draw the same random numbers.
+
+### Lean
+
+Lean proves, for every confidence level strictly between 0 and 1, that VaR always exists and the normal formulas for one and $h$ days.
+
+- Take any loss distribution and any $\alpha$ strictly between 0 and 1. Then some smallest level $\ell$ has $F_L(\ell) \ge \alpha$, so the minimum is attained.
+- Take a normal P&L with average $\mu$ and standard deviation $\sigma \ge 0$, and $z$ with $N(z) = \alpha$. Then $\text{VaR}_\alpha = -\mu + z\sigma$, even when $\sigma = 0$.
+- Take $h$ independent days, each P&L normal with average $\mu$ and standard deviation $\sigma$, and the same $z$. Then $\text{VaR}_\alpha(h) = -h\mu + z\sigma\sqrt{h}$.
+- In a 250-day year, a 99% VaR is broken on $250 \times 0.01 = 2.5$ days.
+
+The decimals, such as $z_{0.99} = 2.326348$, the simulations and the lumpy position are left to the Python and Rust checks.
+
+```lean
+-- Value at risk: the smallest loss level reached with chance at least α always exists, and for a normal P&L it equals minus the mean plus z standard deviations, scaling with the square root of the horizon over independent normal days.
+import Mathlib.Probability.CDF
+import Mathlib.Probability.HasLaw
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.Independence.Basic
+
+open MeasureTheory ProbabilityTheory
+
+/-- The standard normal cumulative distribution function is strictly increasing. -/
+lemma var_helper_cdf_std_strictMono : StrictMono (cdf (gaussianReal 0 1)) := by
+  intro a b hab
+  have hpos : 0 < gaussianReal 0 1 (Set.Ioc a b) := by
+    rw [pos_iff_ne_zero]
+    intro h0
+    have := gaussianReal_absolutelyContinuous' (0 : ℝ) (v := 1) one_ne_zero h0
+    rw [Real.volume_Ioc, ENNReal.ofReal_eq_zero] at this
+    linarith
+  have hdiff : gaussianReal 0 1 (Set.Iic b \ Set.Iic a)
+      = gaussianReal 0 1 (Set.Iic b) - gaussianReal 0 1 (Set.Iic a) :=
+    measure_sdiff (Set.Iic_subset_Iic.mpr hab.le) measurableSet_Iic.nullMeasurableSet
+      (measure_ne_top _ _)
+  have hset : Set.Iic b \ Set.Iic a = Set.Ioc a b := by
+    ext x; simp [and_comm]
+  rw [← hset, hdiff, tsub_pos_iff_lt, ← ofReal_cdf, ← ofReal_cdf] at hpos
+  exact (ENNReal.ofReal_lt_ofReal_iff'.mp hpos).1
+
+/-- For a normal P&L with positive standard deviation, the chance that the loss is at most `ℓ`
+is the standard normal cumulative distribution at `(ℓ + μ) / σ`. -/
+lemma var_helper_normal_loss_prob {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (μ σ : ℝ) (hσ : 0 < σ)
+    (hX : HasLaw X (gaussianReal μ (σ ^ 2).toNNReal) P) (ℓ : ℝ) :
+    P.real {ω | -X ω ≤ ℓ} = cdf (gaussianReal 0 1) ((ℓ + μ) / σ) := by
+  have hY : HasLaw (fun ω ↦ (μ - X ω) / σ) (gaussianReal 0 1) P := by
+    have h1 := gaussianReal_div_const (gaussianReal_const_sub hX μ) σ
+    convert h1 using 2
+    · simp
+    · ext
+      simp [Real.coe_toNNReal _ (sq_nonneg σ), hσ.ne']
+  have hset : {ω | -X ω ≤ ℓ} = {ω | (fun ω ↦ (μ - X ω) / σ) ω ≤ (ℓ + μ) / σ} := by
+    ext ω
+    simp only [Set.mem_ofPred_eq]
+    rw [div_le_div_iff_of_pos_right hσ]
+    constructor <;> intro h <;> linarith
+  rw [hset, hY.measureReal_eq (p := fun y ↦ y ≤ (ℓ + μ) / σ) measurableSet_Iic, cdf_eq_real]
+  rfl
+
+/-- A sum of independent normal P&Ls over a finite set of days is normal, with mean and variance
+multiplied by the number of days. -/
+lemma var_helper_sum_hasLaw {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (h : ℕ) (X : Fin h → Ω → ℝ) (μ : ℝ) (v : NNReal)
+    (hind : iIndepFun X P) (hX : ∀ i, HasLaw (X i) (gaussianReal μ v) P) (s : Finset (Fin h)) :
+    HasLaw (∑ i ∈ s, X i) (gaussianReal (s.card * μ) (s.card * v)) P := by
+  induction s using Finset.induction_on with
+  | empty =>
+    simp only [Finset.sum_empty, Finset.card_empty, Nat.cast_zero, zero_mul, gaussianReal_zero_var]
+    refine ⟨aemeasurable_const, ?_⟩
+    rw [show (0 : Ω → ℝ) = fun _ ↦ (0 : ℝ) from rfl, Measure.map_const]
+    simp
+  | insert a s ha ih =>
+    have hind' : IndepFun (∑ j ∈ s, X j) (X a) P :=
+      hind.indepFun_finsetSum_of_notMem₀ (fun i ↦ (hX i).aemeasurable) ha
+    rw [Finset.sum_insert ha, add_comm, Finset.card_insert_of_notMem ha]
+    refine ⟨by fun_prop, ?_⟩
+    rw [gaussianReal_add_gaussianReal_of_indepFun hind' ih (hX a)]
+    congr 1
+    · push_cast; ring
+    · push_cast; ring
+
+/-- The definition of value at risk always gives an answer: for any loss distribution and any
+confidence level `α` strictly between 0 and 1, there is a smallest loss level `ℓ` whose cumulative
+chance `F_L(ℓ)` is at least `α`. -/
+theorem var_definition_attained (ν : Measure ℝ) [IsProbabilityMeasure ν] (α : ℝ)
+    (hα0 : 0 < α) (hα1 : α < 1) :
+    ∃ ℓ : ℝ, IsLeast {ℓ : ℝ | α ≤ cdf ν ℓ} ℓ := by
+  set S := {ℓ : ℝ | α ≤ cdf ν ℓ} with hS
+  have hne : S.Nonempty := by
+    obtain ⟨x, hx⟩ := ((tendsto_cdf_atTop ν).eventually (eventually_ge_nhds hα1)).exists
+    exact ⟨x, hx⟩
+  have hbdd : BddBelow S := by
+    have := (tendsto_cdf_atBot ν).eventually (eventually_lt_nhds hα0)
+    rw [Filter.eventually_atBot] at this
+    obtain ⟨b, hb⟩ := this
+    refine ⟨b, fun ℓ hℓ ↦ ?_⟩
+    by_contra hlt
+    rw [not_le] at hlt
+    have h1 := hb ℓ hlt.le
+    have h2 : α ≤ cdf ν ℓ := hℓ
+    linarith
+  refine ⟨sInf S, ?_, fun ℓ hℓ ↦ csInf_le hbdd hℓ⟩
+  have hT : Filter.Tendsto (cdf ν) (nhdsWithin (sInf S) (Set.Ioi (sInf S)))
+      (nhds (cdf ν (sInf S))) :=
+    ((cdf ν).right_continuous _).mono Set.Ioi_subset_Ici_self
+  show α ≤ cdf ν (sInf S)
+  refine ge_of_tendsto hT ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  obtain ⟨s, hs, hsx⟩ := exists_lt_of_csInf_lt hne hx
+  exact le_trans hs (monotone_cdf ν hsx.le)
+
+/-- For a book whose one-day P&L `X` is normal with average `μ` and standard deviation `σ`, the
+value at risk at confidence `α` (the smallest loss level that the loss `L = -X` stays at or below
+with chance at least `α`) is `-μ + z σ`, where `z` is the standard normal quantile: `N(z) = α`. -/
+theorem var_normal_eq_neg_mean_add_z_mul_sd {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (X : Ω → ℝ) (μ σ : ℝ) (hσ : 0 ≤ σ)
+    (hX : HasLaw X (gaussianReal μ (σ ^ 2).toNNReal) P)
+    (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) (z : ℝ) (hz : cdf (gaussianReal 0 1) z = α) :
+    IsLeast {ℓ : ℝ | α ≤ P.real {ω | -X ω ≤ ℓ}} (-μ + z * σ) := by
+  rcases hσ.eq_or_lt with h0 | hpos
+  · subst h0
+    have hX' : HasLaw X (Measure.dirac μ) P := by
+      simpa [gaussianReal_zero_var] using hX
+    have key : ∀ ℓ, P.real {ω | -X ω ≤ ℓ} = (Measure.dirac μ).real {x : ℝ | -x ≤ ℓ} := fun ℓ ↦
+      hX'.measureReal_eq (p := fun x ↦ -x ≤ ℓ) (measurableSet_le (by fun_prop) measurable_const)
+    refine ⟨?_, fun ℓ hℓ ↦ ?_⟩
+    · show α ≤ P.real {ω | -X ω ≤ -μ + z * 0}
+      rw [key, Measure.dirac_real_apply_of_mem (by simp)]
+      exact hα1.le
+    · have hℓ' : α ≤ P.real {ω | -X ω ≤ ℓ} := hℓ
+      by_contra hlt
+      rw [not_le] at hlt
+      rw [key, Measure.dirac_real_apply, Set.indicator_of_notMem (by simp; linarith)] at hℓ'
+      linarith
+  · refine ⟨?_, fun ℓ hℓ ↦ ?_⟩
+    · show α ≤ P.real {ω | -X ω ≤ -μ + z * σ}
+      rw [var_helper_normal_loss_prob P X μ σ hpos hX]
+      rw [show (-μ + z * σ + μ) / σ = z by field_simp; ring, hz]
+    · have hℓ' : α ≤ P.real {ω | -X ω ≤ ℓ} := hℓ
+      rw [var_helper_normal_loss_prob P X μ σ hpos hX] at hℓ'
+      by_contra hlt
+      rw [not_le] at hlt
+      have hlt' : (ℓ + μ) / σ < z := by
+        rw [div_lt_iff₀ hpos]; linarith
+      have := var_helper_cdf_std_strictMono hlt'
+      linarith
+
+/-- Square-root-of-time rule: if the P&Ls of `h` days are independent and each normal with average
+`μ` and standard deviation `σ`, the value at risk at confidence `α` of their sum is
+`-h μ + z σ √h`, where `N(z) = α`. -/
+theorem var_horizon_sqrt_rule {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω)
+    [IsProbabilityMeasure P] (h : ℕ) (X : Fin h → Ω → ℝ) (μ σ : ℝ) (hσ : 0 ≤ σ)
+    (hind : iIndepFun X P) (hX : ∀ i, HasLaw (X i) (gaussianReal μ (σ ^ 2).toNNReal) P)
+    (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) (z : ℝ) (hz : cdf (gaussianReal 0 1) z = α) :
+    IsLeast {ℓ : ℝ | α ≤ P.real {ω | -(∑ i, X i ω) ≤ ℓ}} (-(h * μ) + z * σ * Real.sqrt h) := by
+  have hsum := var_helper_sum_hasLaw P h X μ _ hind hX Finset.univ
+  simp only [Finset.card_univ, Fintype.card_fin] at hsum
+  have hfun : (∑ i, X i) = fun ω ↦ ∑ i, X i ω := by
+    ext ω; simp [Finset.sum_apply]
+  rw [hfun] at hsum
+  have hvar : ((h : NNReal) * (σ ^ 2).toNNReal) = ((σ * Real.sqrt h) ^ 2).toNNReal := by
+    ext
+    rw [NNReal.coe_mul, Real.coe_toNNReal _ (sq_nonneg _), Real.coe_toNNReal _ (sq_nonneg _),
+      mul_pow, Real.sq_sqrt (Nat.cast_nonneg _)]
+    push_cast; ring
+  rw [hvar] at hsum
+  have := var_normal_eq_neg_mean_add_z_mul_sd P (fun ω ↦ ∑ i, X i ω) (h * μ) (σ * Real.sqrt h)
+    (mul_nonneg hσ (Real.sqrt_nonneg _)) hsum α hα0 hα1 z hz
+  simpa [mul_assoc] using this
+
+-- A 99% VaR is broken on 1% of days: 2.5 days in a 250-day year.
+example : (250 : ℚ) * (1 - 99 / 100) = 5 / 2 := by norm_num
+
+#print axioms var_helper_cdf_std_strictMono
+#print axioms var_helper_normal_loss_prob
+#print axioms var_helper_sum_hasLaw
+#print axioms var_definition_attained
+#print axioms var_normal_eq_neg_mean_add_z_mul_sd
+#print axioms var_horizon_sqrt_rule
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'var_helper_cdf_std_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'var_helper_normal_loss_prob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'var_helper_sum_hasLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+'var_definition_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'var_normal_eq_neg_mean_add_z_mul_sd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'var_horizon_sqrt_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

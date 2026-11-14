@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A trading book holds three things: $10 million of shares, $5 million of bonds, and 1,000 Acme call contracts, each on 100 Acme shares. Its one-day 99 percent value at risk, the loss it should exceed on only one day in a hundred, is **$421.74k** (k means thousands of dollars throughout). That number was built from the whole book at once ([Parametric VaR](02-parametric-var-and-delta-normal.md)).
+A trading book holds three things: $10 million of shares, $5 million of bonds, and 1,000 Acme call contracts, each on 100 Acme shares. Its one-day 99 percent value at risk (VaR), the loss it should exceed on only one day in a hundred, is **$421.74k** (k means thousands of dollars throughout). That number was built from the whole book at once ([Parametric VaR](02-parametric-var-and-delta-normal.md)).
 
-The head of the desk now asks a different question: **whose risk is it?** Which line should be cut, and which is quietly helping? The obvious answer is to measure each line alone and compare. Alone, the shares have a VaR of $314.06k, the bonds $34.90k, the calls $172.00k. Those add to $520.95k, which is more than the book's $421.74k. Standalone numbers ignore the fact that the lines partly cancel each other, so they cannot be pieces of the total.
+The head of the desk now asks a different question: **whose risk is it?** Which line should be cut, and which is quietly helping? The obvious answer is to measure each line alone and compare.
 
-The fix is to split the total by **slopes**. Ask how fast the book's VaR rises when one line grows by a dollar, then multiply by the dollars already in that line. The results are called **component VaRs**, and they add up to the total exactly. For this book the shares carry $292.71k, which is **69.40 percent**, about 70 percent. The calls carry 31.48 percent. The bonds carry **minus** 0.89 percent: they are a hedge, and the arithmetic says so.
+Alone, the shares have a VaR of $314.06k, the bonds $34.90k, the calls $172.00k. Those add to $520.95k, which is more than the book's $421.74k. Standalone numbers ignore the fact that the lines partly cancel each other, so they cannot be pieces of the total.
+
+The fix is to split the total by **slopes**. Ask how fast the book's VaR rises when one line grows by a dollar, then multiply by the dollars already in that line. The results are called **component VaRs**, and they add up to the total exactly.
+
+For this book the shares carry $292.71k, which is **69.40 percent**, about 70 percent. The calls carry 31.48 percent. The bonds carry **minus** 0.89 percent: they are a hedge, and the arithmetic says so.
 
 Two neighbours of the component answer other questions. **Marginal VaR** is the slope itself: the extra VaR per extra dollar in one line. **Incremental VaR** is the change in VaR after a real trade, recomputed on the whole book.
 
@@ -44,10 +48,10 @@ The notation, in words first. The book has lines numbered 1, 2, 3 (shares, bonds
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$ | dollars exposed to line i; for the calls, delta times shares times price | $10,000k, $5,000k, $5,868.51k | book VaR moves by the line's marginal VaR per extra dollar |
+| $x_i$ | dollars exposed to line i; for the calls, delta (the change in a call's value per $1 rise in Acme's price) times shares times price | $10,000k, $5,000k, $5,868.51k | book VaR moves by the line's marginal VaR per extra dollar |
 | $\sigma_i$ | one-day volatility of line i: the typical size of one day's move, as a fraction | 1.35%, 0.30%, 20% ÷ √252 | the line's standalone VaR grows in proportion |
 | $\rho_{ij}$, $\Sigma$ | correlation of lines i and j, from −1 (opposite) to +1 (together); the covariance table, whose entry i, j is correlation times the two volatilities | shares–Acme 0.5, shares–bonds −0.2, bonds–Acme −0.1 | for two long lines, book VaR grows |
-| $(\Sigma x)_i$ | how line i's move goes with the whole book's P&L, in dollars | $2,281.07, −$58.18, $1,763.03 | the line's marginal VaR grows |
+| $(\Sigma x)_i$ | how line i's move goes with the whole book's P&L (profit and loss), in dollars | $2,281.07, −$58.18, $1,763.03 | the line's marginal VaR grows |
 | $\sigma_p$ | the book's one-day standard deviation of P&L, in dollars | $181.29k | VaR grows in proportion |
 | $z$ | the 99 percent point of the standard bell curve | 2.326348 | VaR and every component grow in proportion |
 | $V$ | the book's value at risk | $421.74k | — |
@@ -76,7 +80,9 @@ The first is the book's spread from the covariance table, the second turns sprea
 
 ### Step 0: VaR scales with the book
 
-Take every position and double it. Every day's P&L doubles, so the loss exceeded one day in a hundred doubles too. The same holds for any positive factor $\lambda$: VaR of the scaled book is $\lambda$ times VaR of the book. The check confirms it: VaR of the doubled book divided by VaR of the book is 2.000000. This single property, called **positive homogeneity of degree one**, is the whole reason the pieces add up.
+Take every position and double it. Every day's P&L doubles, so the loss exceeded one day in a hundred doubles too. The same holds for any positive factor $\lambda$: VaR of the scaled book is $\lambda$ times VaR of the book.
+
+The check confirms it: VaR of the doubled book divided by VaR of the book is 2.000000. This single property, called **positive homogeneity of degree one**, is the whole reason the pieces add up.
 
 ### Step 1: the slope of the book's spread
 
@@ -101,7 +107,7 @@ That is Euler's rule. It needs nothing about the bell curve: any measure that sc
 <details>
 <summary>Detailed proof: Euler's rule for a function that scales with its inputs</summary>
 
-Let $V$ be any rule that takes a list of positions to a number, with $V(\lambda x) = \lambda V(x)$ for every $\lambda > 0$, and let it be differentiable at the book: near $x$ its change is its gradient dotted with the move, up to an error smaller than the move.
+Let $V$ be any rule that takes a list of positions to a number, with $V(\lambda x) = \lambda V(x)$ for every $\lambda > 0$, and let it be differentiable at the book: near $x$ its change is its gradient $\nabla V(x)$, the list of its slopes $\partial V/\partial x_i$, dotted with the move, up to an error smaller than the move.
 
 Follow the straight path $\lambda \mapsto V(\lambda x)$. By scaling it equals $\lambda V(x)$, a straight line in $\lambda$ whose slope at $\lambda = 1$ is $V(x)$.
 
@@ -137,7 +143,9 @@ xychart-beta
 
 The orange curve is the book's VaR recomputed at each size: incremental VaR is the gap between two points on it. The green straight line is the tangent at today's 1,000 contracts; its slope is the calls' marginal VaR. The two touch at $421.74k and the curve lies above the tangent everywhere else.
 
-That last fact is general. $\sigma_p$ is a length, and a length bends upward along any straight path, so VaR is **convex** in each position. Follow the tangent from 1,000 contracts down to zero and it lands at $V - C_i$, since the drop along the tangent is the slope times the whole position. The curve lies above it, so **selling a line entirely saves at most its component**. Selling all the calls saves $112.77k, not $132.77k. Selling all the bonds saves nothing: VaR rises by $5.15k, more than the $3.73k the component predicts, because a hedge removed is worth more than its tangent says.
+That last fact is general. $\sigma_p$ is a length, and a length bends upward along any straight path, so VaR is **convex** in each position. Follow the tangent from 1,000 contracts down to zero and it lands at $V - C_i$, since the drop along the tangent is the slope times the whole position. The curve lies above it, so **selling a line entirely saves at most its component**.
+
+Selling all the calls saves $112.77k, not $132.77k. Selling all the bonds saves nothing: VaR rises by $5.15k, more than the $3.73k the component predicts, because a hedge removed is worth more than its tangent says.
 
 For small trades the tangent is excellent. Buying $100k more shares raises VaR by $2,928.63; marginal VaR times $100k predicts $2,927.11.
 
@@ -147,7 +155,11 @@ The same split for expected shortfall is Tasche's Euler principle, and its tail-
 
 ## Worked numbers, by hand
 
-The book is the one on [Parametric VaR](02-parametric-var-and-delta-normal.md). Shares: $10,000k with daily volatility 1.35 percent. Bonds: $5,000k. Their price moves 5 percent for each percentage point the five-year yield moves, and the yield's daily volatility is 6 basis points (hundredths of a percent), so the bonds' daily volatility is 5 × 0.06 = 0.30 percent. A bond's price falls when its yield rises, so the yield's correlations there (0.2 with shares, 0.1 with Acme) become −0.2 and −0.1 here. Calls: on Acme, whose daily volatility is the house 20 percent divided by √252 trading days.
+The book is the one on [Parametric VaR](02-parametric-var-and-delta-normal.md).
+
+- Shares: $10,000k with daily volatility 1.35 percent.
+- Bonds: $5,000k. Their price moves 5 percent for each percentage point the five-year yield moves, and the yield's daily volatility is 6 basis points (hundredths of a percent), so the bonds' daily volatility is 5 × 0.06 = 0.30 percent. A bond's price falls when its yield rises, so the yield's correlations there (0.2 with shares, 0.1 with Acme) become −0.2 and −0.1 here.
+- Calls: on Acme, whose daily volatility is the house 20 percent divided by √252 trading days.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -178,7 +190,13 @@ The shares' share is the shares' row of the variance divided by the whole varian
 
 ## Code, from first principles, and it actually runs
 
-The code builds its own bell-curve area (Simpson's rule), its own 99 percent point (bisection) and its own random numbers (a 64-bit generator with a Box–Muller step). It reaches the components by three independent roads: the gradient formula; nudging each position by one part in ten thousand and watching VaR move, with no gradient formula used; and simulating 400,000 days, checked first for the model's correlations, then averaging each line's loss over the days near the VaR and over the worst 1 percent. It then recomputes whole-book trades for incremental VaR, reproduces every "what breaks" number, and prints the chart.
+The code builds its own bell-curve area (Simpson's rule), its own 99 percent point (bisection) and its own random numbers (a 64-bit generator with a Box–Muller step, which turns two uniform random numbers into two bell-curve draws). It reaches the components by three independent roads:
+
+1. the gradient formula;
+2. nudging each position by one part in ten thousand and watching VaR move, with no gradient formula used;
+3. simulating 400,000 days, checked first for the model's correlations, then averaging each line's loss over the days near the VaR and over the worst 1 percent.
+
+It then recomputes whole-book trades for incremental VaR, reproduces every "what breaks" number, and prints the chart. In the output, ES means expected shortfall and sd means standard deviation.
 
 ### Python
 
@@ -522,6 +540,199 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line, simulated rows included, because both run the same written-out generator from the same seed. The nudged components equal the formula's to the printed digit. The simulated VaR is $422.54k against $421.74k, and the simulated pieces sit close to the formula's, off by the noise of averaging 800 or 4,000 random days.
+
+### Lean
+
+Lean proves Euler's rule for every measure that scales with the book, and the normal-formula facts for any number of lines.
+
+- Take any measure $V$ that scales with the book for every $\lambda > 0$ and has slopes at the book. Then the components $x_i\,\partial V/\partial x_i$ add up to $V$ exactly.
+- Take a symmetric covariance table $\Sigma$, any $z$, and a book with $\sigma_p > 0$. Then the marginal VaR is $M_i = z\,(\Sigma x)_i/\sigma_p$.
+- Take the same table, $z$ and book. Then the components $x_i M_i$ add up to $V = z\sigma_p$.
+- Take a covariance table, so no book has negative variance, with $z \ge 0$ and $\sigma_p > 0$. Then selling line i entirely lowers $V$ by at most $C_i$.
+
+The day-by-day reading of Step 3, the simulations and every dollar figure are left to the Python and Rust checks.
+
+```lean
+-- Whose risk is it: for any risk measure that scales with the book, position times slope summed over the lines gives back the whole risk, and for delta-normal VaR the component VaRs add up exactly and selling a line saves at most its component.
+import Mathlib.Analysis.Calculus.FDeriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.Deriv.Add
+
+open Matrix
+
+theorem quadForm_symm_aux {n : ℕ} (S : Matrix (Fin n) (Fin n) ℝ) (hS : S.IsSymm)
+    (v w : Fin n → ℝ) : v ⬝ᵥ S *ᵥ w = w ⬝ᵥ S *ᵥ v := by
+  rw [dotProduct_mulVec, ← mulVec_transpose, hS, dotProduct_comm]
+
+theorem quadForm_line_aux {n : ℕ} (S : Matrix (Fin n) (Fin n) ℝ) (a b : Fin n → ℝ)
+    (α β : ℝ) :
+    (α • a + β • b) ⬝ᵥ S *ᵥ (α • a + β • b)
+      = α ^ 2 * (a ⬝ᵥ S *ᵥ a) + α * β * (a ⬝ᵥ S *ᵥ b + b ⬝ᵥ S *ᵥ a)
+        + β ^ 2 * (b ⬝ᵥ S *ᵥ b) := by
+  simp only [mulVec_add, mulVec_smul, add_dotProduct, dotProduct_add, smul_dotProduct,
+    dotProduct_smul, smul_eq_mul]
+  ring
+
+#print axioms quadForm_symm_aux
+#print axioms quadForm_line_aux
+
+/-- Euler's rule: if a risk measure `V` on books of `n` positions scales with the book
+(`V (c • y) = c * V y` for every book `y` and every factor `c > 0`) and has slopes at the
+book `x`, then each position times the slope of `V` in its direction (the component), added
+over all lines, is exactly `V x`. -/
+theorem euler_rule_components_sum_to_var {n : ℕ} (V : (Fin n → ℝ) → ℝ)
+    (hV : ∀ (y : Fin n → ℝ) (c : ℝ), 0 < c → V (c • y) = c * V y)
+    (x : Fin n → ℝ) (hx : DifferentiableAt ℝ V x) :
+    ∑ i, x i * fderiv ℝ V x (Pi.single i 1) = V x := by
+  have hline : HasDerivAt (fun c : ℝ => c • x) x 1 := by
+    simpa using (hasDerivAt_id (1:ℝ)).smul_const x
+  have hf : HasFDerivAt V (fderiv ℝ V x) ((1:ℝ) • x) := by
+    rw [one_smul]; exact hx.hasFDerivAt
+  have h1 : HasDerivAt (fun c : ℝ => V (c • x)) (fderiv ℝ V x x) 1 :=
+    hf.comp_hasDerivAt (x := (1:ℝ)) hline
+  have h2' : HasDerivAt (fun c : ℝ => c * V x) (V x) 1 := by
+    simpa using (hasDerivAt_id (1:ℝ)).mul_const (V x)
+  have h2 : HasDerivAt (fun c : ℝ => V (c • x)) (V x) 1 := by
+    apply h2'.congr_of_eventuallyEq
+    filter_upwards [Ioi_mem_nhds (one_pos : (0:ℝ) < 1)] with c hc
+    exact hV x c hc
+  have hxsum : ∑ i, x i • (Pi.single i 1 : Fin n → ℝ) = x := by
+    funext j; simp [Finset.sum_apply, Pi.single_apply]
+  calc ∑ i, x i * fderiv ℝ V x (Pi.single i 1)
+      = fderiv ℝ V x (∑ i, x i • (Pi.single i 1 : Fin n → ℝ)) := by
+        rw [map_sum]; simp [map_smul]
+    _ = V x := by rw [hxsum]; exact h1.unique h2
+
+/-- Delta-normal VaR `V y = z * √(yᵀ Σ y)` with a symmetric covariance table `Σ`: at a book
+with spread `σ_p = √(xᵀ Σ x) > 0`, the marginal VaR of line `i` (the slope of `V` in that
+line's direction) is `z * (Σ x)_i / σ_p`, and the components `x_i * M_i` add up to `V x`. -/
+theorem delta_normal_marginal_var_and_components_sum {n : ℕ}
+    (S : Matrix (Fin n) (Fin n) ℝ) (hS : S.IsSymm) (z : ℝ) (x : Fin n → ℝ)
+    (hσ : 0 < x ⬝ᵥ S *ᵥ x) :
+    (∀ i, fderiv ℝ (fun y : Fin n → ℝ => z * Real.sqrt (y ⬝ᵥ S *ᵥ y)) x (Pi.single i 1)
+        = z * (S *ᵥ x) i / Real.sqrt (x ⬝ᵥ S *ᵥ x)) ∧
+    ∑ i, x i * (z * (S *ᵥ x) i / Real.sqrt (x ⬝ᵥ S *ᵥ x))
+        = z * Real.sqrt (x ⬝ᵥ S *ᵥ x) := by
+  have hsq : 0 < Real.sqrt (x ⬝ᵥ S *ᵥ x) := Real.sqrt_pos.mpr hσ
+  have hQ : (fun y : Fin n → ℝ => y ⬝ᵥ S *ᵥ y) = fun y => ∑ i, y i * ∑ j, S i j * y j := by
+    funext y; simp [dotProduct, mulVec]
+  have hdiff : DifferentiableAt ℝ (fun y : Fin n → ℝ => z * Real.sqrt (y ⬝ᵥ S *ᵥ y)) x := by
+    have hq' : Differentiable ℝ (fun y : Fin n → ℝ => y ⬝ᵥ S *ᵥ y) := by rw [hQ]; fun_prop
+    exact ((hq' x).sqrt hσ.ne').const_mul z
+  refine ⟨fun i => ?_, ?_⟩
+  · set e : Fin n → ℝ := Pi.single i 1 with he
+    have hline : HasDerivAt (fun t : ℝ => x + t • e) e 0 := by
+      have h := (hasDerivAt_id (0:ℝ)).smul_const e
+      rw [one_smul] at h
+      exact h.const_add x
+    have hf : HasFDerivAt (fun y : Fin n → ℝ => z * Real.sqrt (y ⬝ᵥ S *ᵥ y))
+        (fderiv ℝ (fun y : Fin n → ℝ => z * Real.sqrt (y ⬝ᵥ S *ᵥ y)) x) (x + (0:ℝ) • e) := by
+      rw [zero_smul, add_zero]; exact hdiff.hasFDerivAt
+    have h1 := hf.comp_hasDerivAt (x := (0:ℝ)) hline
+    have hex : e ⬝ᵥ S *ᵥ x = (S *ᵥ x) i := by simp [he, single_dotProduct]
+    have hpoly : ∀ t : ℝ, (x + t • e) ⬝ᵥ S *ᵥ (x + t • e)
+        = x ⬝ᵥ S *ᵥ x + t * (2 * (S *ᵥ x) i) + t ^ 2 * (e ⬝ᵥ S *ᵥ e) := by
+      intro t
+      have h := quadForm_line_aux S x e 1 t
+      simp only [one_smul, one_pow, one_mul] at h
+      rw [h, quadForm_symm_aux S hS x e, hex]; ring
+    have hp : HasDerivAt (fun t : ℝ => x ⬝ᵥ S *ᵥ x + t * (2 * (S *ᵥ x) i)
+        + t ^ 2 * (e ⬝ᵥ S *ᵥ e)) (2 * (S *ᵥ x) i) 0 := by
+      have h1a : HasDerivAt (fun t : ℝ => x ⬝ᵥ S *ᵥ x + t * (2 * (S *ᵥ x) i))
+          (1 * (2 * (S *ᵥ x) i)) 0 :=
+        HasDerivAt.const_add _ (HasDerivAt.mul_const (hasDerivAt_id (0:ℝ)) _)
+      have h1b := HasDerivAt.mul_const (hasDerivAt_pow 2 (0:ℝ)) (e ⬝ᵥ S *ᵥ e)
+      exact HasDerivAt.congr_deriv (HasDerivAt.add h1a h1b) (by simp)
+    have h2 := (hp.sqrt (by simpa using hσ.ne')).const_mul z
+    have h1' : HasDerivAt (fun t : ℝ => z * Real.sqrt (x ⬝ᵥ S *ᵥ x + t * (2 * (S *ᵥ x) i)
+        + t ^ 2 * (e ⬝ᵥ S *ᵥ e)))
+        (fderiv ℝ (fun y : Fin n → ℝ => z * Real.sqrt (y ⬝ᵥ S *ᵥ y)) x e) 0 := by
+      have heq : (fun t : ℝ => z * Real.sqrt (x ⬝ᵥ S *ᵥ x + t * (2 * (S *ᵥ x) i)
+          + t ^ 2 * (e ⬝ᵥ S *ᵥ e)))
+          = (fun y : Fin n → ℝ => z * Real.sqrt (y ⬝ᵥ S *ᵥ y)) ∘ (fun t : ℝ => x + t • e) := by
+        funext t; simp only [Function.comp, hpoly]
+      rw [heq]; exact h1
+    rw [h1'.unique h2]
+    simp only [zero_mul, add_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true,
+      zero_pow]
+    field_simp
+  · have hs2 : Real.sqrt (x ⬝ᵥ S *ᵥ x) ^ 2 = x ⬝ᵥ S *ᵥ x := Real.sq_sqrt hσ.le
+    have hsum : ∑ i, x i * (z * (S *ᵥ x) i / Real.sqrt (x ⬝ᵥ S *ᵥ x))
+        = z / Real.sqrt (x ⬝ᵥ S *ᵥ x) * ∑ i, x i * (S *ᵥ x) i := by
+      rw [Finset.mul_sum]; exact Finset.sum_congr rfl (fun i _ => by ring)
+    have hdot : ∑ i, x i * (S *ᵥ x) i = x ⬝ᵥ S *ᵥ x := rfl
+    rw [hsum, hdot, div_mul_eq_mul_div, div_eq_iff hsq.ne', mul_assoc,
+      Real.mul_self_sqrt hσ.le]
+
+/-- Selling a line entirely saves at most its component: for delta-normal VaR with a
+covariance table `Σ` (positive semidefinite), a nonnegative `z` and a book with
+`σ_p > 0`, the drop in VaR from setting line `i` to zero is at most
+`x_i * z * (Σ x)_i / σ_p`, because VaR is convex and lies above its tangent. -/
+theorem selling_a_line_saves_at_most_its_component {n : ℕ}
+    (S : Matrix (Fin n) (Fin n) ℝ) (hS : S.PosSemidef) (z : ℝ) (hz : 0 ≤ z)
+    (x : Fin n → ℝ) (hσ : 0 < x ⬝ᵥ S *ᵥ x) (i : Fin n) :
+    z * Real.sqrt (x ⬝ᵥ S *ᵥ x)
+        - z * Real.sqrt (Function.update x i 0 ⬝ᵥ S *ᵥ Function.update x i 0)
+      ≤ x i * (z * (S *ᵥ x) i / Real.sqrt (x ⬝ᵥ S *ᵥ x)) := by
+  have hsym : S.IsSymm := by
+    have h := hS.1
+    unfold IsHermitian at h
+    rw [conjTranspose_eq_transpose_of_trivial] at h
+    exact h
+  have hpsd : ∀ v : Fin n → ℝ, 0 ≤ v ⬝ᵥ S *ᵥ v := fun v => by
+    simpa using hS.dotProduct_mulVec_nonneg v
+  have hu' : Function.update x i 0 = x - x i • Pi.single i 1 := by
+    funext j; by_cases h : j = i
+    · subst h; simp
+    · simp [h]
+  have hss : Real.sqrt (x ⬝ᵥ S *ᵥ x) ^ 2 = x ⬝ᵥ S *ᵥ x := Real.sq_sqrt hσ.le
+  have hss' : Real.sqrt (Function.update x i 0 ⬝ᵥ S *ᵥ Function.update x i 0) ^ 2
+      = Function.update x i 0 ⬝ᵥ S *ᵥ Function.update x i 0 := Real.sq_sqrt (hpsd _)
+  have hxu : x ⬝ᵥ S *ᵥ Function.update x i 0 = Function.update x i 0 ⬝ᵥ S *ᵥ x :=
+    quadForm_symm_aux S hsym _ _
+  have hB : x i * (S *ᵥ x) i = x ⬝ᵥ S *ᵥ x - Function.update x i 0 ⬝ᵥ S *ᵥ x := by
+    rw [hu', sub_dotProduct, smul_dotProduct, single_dotProduct, smul_eq_mul]; ring
+  set u := Function.update x i 0 with hu
+  set B := u ⬝ᵥ S *ᵥ x with hBdef
+  set s := Real.sqrt (x ⬝ᵥ S *ᵥ x) with hsdef
+  set s' := Real.sqrt (u ⬝ᵥ S *ᵥ u) with hs'def
+  have hs : 0 < s := Real.sqrt_pos.mpr hσ
+  have hs' : 0 ≤ s' := Real.sqrt_nonneg _
+  have key : B ≤ s * s' := by
+    rcases hs'.lt_or_eq with h | h
+    · have h3 := hpsd (s' • x + (-s) • u)
+      rw [quadForm_line_aux, hxu, ← hss, ← hss'] at h3
+      nlinarith [mul_pos hs h]
+    · have h0 : u ⬝ᵥ S *ᵥ u = 0 := by rw [← hss', ← h]; ring
+      by_contra hcon
+      rw [not_le] at hcon
+      rw [← h, mul_zero] at hcon
+      have h3 := hpsd ((1:ℝ) • x + (-(s ^ 2 / B)) • u)
+      rw [quadForm_line_aux, hxu, ← hss, h0] at h3
+      have h4 : (1:ℝ) ^ 2 * s ^ 2 + 1 * -(s ^ 2 / B) * (B + B) + (-(s ^ 2 / B)) ^ 2 * 0
+          = -s ^ 2 := by field_simp; ring
+      nlinarith [pow_pos hs 2]
+  rw [show x i * (z * (S *ᵥ x) i / s) = z * (s ^ 2 - B) / s by rw [hss, ← hB]; ring]
+  rw [le_div_iff₀ hs]
+  nlinarith [mul_le_mul_of_nonneg_left key hz]
+
+#print axioms euler_rule_components_sum_to_var
+#print axioms delta_normal_marginal_var_and_components_sum
+#print axioms selling_a_line_saves_at_most_its_component
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'quadForm_symm_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'quadForm_line_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'euler_rule_components_sum_to_var' depends on axioms: [propext, Classical.choice, Quot.sound]
+'delta_normal_marginal_var_and_components_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'selling_a_line_saves_at_most_its_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

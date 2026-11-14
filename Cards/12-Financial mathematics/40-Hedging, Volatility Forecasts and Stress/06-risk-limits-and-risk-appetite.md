@@ -6,9 +6,17 @@
 
 ## General Overview
 
-A trading desk has $50 million of the firm's capital set against it. Its book holds 75,000 units. One unit is one Acme share, bought at $100, plus one one-year call on Acme, sold at the house market for $9.23 (strike $100, riskless rate 5 percent, dividend yield 2 percent, volatility 20 percent). The sold calls pay the desk a premium and give away the upside above $100. The shares carry the downside in full.
+A trading desk has $50 million of the firm's capital set against it. Its book, the set of positions it holds, is 75,000 units. One unit is one Acme share, bought at $100, plus one one-year call on Acme, sold at the house market for $9.23 (strike $100, riskless rate 5 percent, dividend yield 2 percent, volatility 20 percent). The sold calls pay the desk a premium and give away the upside above $100. The shares carry the downside in full.
 
-The firm writes one rule first. If the book ever falls 3 percent of capital below its best point so far, $1,500,000, the desk stops adding risk and cuts. That rule is a **stop-loss**, and the fall from the best point is the **drawdown**. A stop-loss acts after the money is gone. So the firm also watches five gauges that predict loss before it happens, and gives each a cap, called a **limit**: the book's gross size in dollars, its sensitivity to Acme's price, its sensitivity to volatility, its loss in a named disaster, and its loss on a bad ordinary day.
+The firm writes one rule first. If the book ever falls 3 percent of capital below its best point so far, $1,500,000, the desk stops adding risk and cuts. That rule is a **stop-loss**, and the fall from the best point is the **drawdown**. A stop-loss acts after the money is gone. So the firm also watches five gauges that predict loss before it happens, and gives each a cap, called a **limit**. The five gauges are:
+
+- notional: the book's gross size in dollars;
+- delta: its sensitivity to Acme's price;
+- vega: its sensitivity to volatility;
+- stress: its loss in a named disaster;
+- VaR (value at risk): its loss on a bad ordinary day.
+
+Delta and vega are two of the option sensitivities called the Greeks ([Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)).
 
 The document that says why those caps exist is the **risk appetite statement**. It sits in a ladder of three layers. **Risk capacity** is the most the firm could lose and survive. **Risk appetite** is the part of that it chooses to risk. **Limits** turn the appetite into numbers a trader sees before each trade. This card builds all five limits from the one 3 percent stop, then shows which one stops the book first, and what happens to every gauge on a day Acme falls 20 percent.
 
@@ -45,7 +53,16 @@ $$u_j = \frac{x_j}{b_j}, \qquad h_j = b_j - x_j, \qquad q^* = \min_j \frac{b_j}{
 
 To add units to a book already holding some, the same rule runs on headroom: the most that can be added is the smallest $h_j / a_j$.
 
-The stop becomes a cap on daily risk through a second formula. Write $D$ for the drawdown, $\sigma_d$ for the standard deviation of one day's profit and loss (its typical size), and $\tau_L$ for the number of days until the drawdown first reaches the stop $L$. The symbol $\mathbb{E}$ means the average over all the ways the future could go. Write $m$ for the firm's patience, the fewest days the stop should take to reach by chance, and $z$ = 2.3263 for the 99 percent point of the bell curve in standard deviations. For a book with no edge (an average daily profit of zero),
+The stop becomes a cap on daily risk through a second formula. It uses these symbols:
+
+- $D$ is the drawdown.
+- $\sigma_d$ is the standard deviation of one day's profit and loss (its typical size).
+- $\tau_L$ is the number of days until the drawdown first reaches the stop $L$.
+- $\mathbb{E}$ means the average over all the ways the future could go.
+- $m$ is the firm's patience, the fewest days the stop should take to reach by chance.
+- $z$ = 2.3263 is the 99 percent point of the bell curve, in standard deviations.
+
+For a book with no edge (an average daily profit of zero),
 
 $$\mathbb{E}[\tau_L] = \left(\frac{L}{\sigma_d}\right)^2 \quad\text{days}, \qquad\text{so}\qquad b_{\text{VaR}} = z\,\frac{L}{\sqrt{m}}$$
 
@@ -124,7 +141,7 @@ xychart-beta
     line [4, 16, 36, 64, 100, 144]
 ```
 
-Orange: the coin-toss book, $n(n+1)$ days. Teal: the Brownian limit, $n^2$ days.
+Orange: the coin-toss book, $n(n+1)$ days. Teal: the Brownian limit (the same coin game with ever smaller, ever more frequent tosses), $n^2$ days.
 
 ### Step 4: from the stop to a VaR cap
 
@@ -226,7 +243,15 @@ The stress limit had warned of this day. Before the shock it read 81.19 percent 
 
 ## Code, from first principles, and it actually runs
 
-The code prices the house call with its own normal distribution function, builds the five caps from the stop, and measures each gauge per unit. It then reaches each answer by independent roads: delta and vega by formula and by nudging the price; the stress loss by the pricing formula and by integrating the call's payoff; one-day VaR by the exact 1 percent quantile and by 40,000 simulated days drawn from its own random numbers; the largest book by the min rule and by growing the book one unit at a time; and days to the stop by the exact count $n(n+1)$, by 20,000 simulated coin-toss books, and by the Brownian limit $n^2$. It ends with the shock day and the wrong answers from the table above.
+The code prices the house call with its own normal distribution function, builds the five caps from the stop, and measures each gauge per unit. It then reaches each answer by independent roads:
+
+- delta and vega by formula and by nudging the price;
+- the stress loss by the pricing formula and by integrating the call's payoff;
+- one-day VaR by the exact 1 percent quantile and by 40,000 simulated days drawn from its own random numbers;
+- the largest book by the min rule and by growing the book one unit at a time;
+- days to the stop by the exact count $n(n+1)$, by 20,000 simulated coin-toss books, and by the Brownian limit $n^2$.
+
+It ends with the shock day and the wrong answers from the table above.
 
 ### Python
 
@@ -662,6 +687,139 @@ ALL CHECKS PASS
 
 The two outputs agree line for line: both programs use the same random-number rule and seeds, so the simulations draw the same numbers.
 
+### Lean
+
+Lean proves Step 2, the coin-toss count of Step 3 and Step 4 for any inputs, and checks the whole-number examples.
+
+- Suppose each unit adds a positive reading $a_j$ to gauge $j$, whose cap is $b_j$. Then the largest book inside every cap is $q^* = \min_j b_j/a_j$.
+- Take the coin-toss book, with the stop $n \ge 1$ steps below the high. Then the equations for $E_k$ in the folded proof hold exactly when $E_k = n(n+1) - k^2 - k$ for every $k \le n$.
+- So the coin-toss book needs $E_0 = n(n+1)$ days on average to reach the stop from a new high.
+- Take a stop $L$, daily standard deviation $\sigma_d$, patience $m$ and $z$, all positive. Then $(L/\sigma_d)^2 \ge m$ exactly when VaR $z \sigma_d$ is at most $z L/\sqrt{m}$.
+- Lean also checks the whole-number examples: the $1,500,000 stop, the $37,500 delta cap, the $50,000 vega cap and the $20,000,000 notional cap.
+- It also checks the $1,700,000 drawdown from the high, and both lines of the days-to-the-stop chart.
+
+Prices, Greeks, VaR, stress losses, the simulations and the Brownian limit of Step 3 are left to the Python and Rust checks.
+
+```lean
+-- Limits: the largest book inside every cap is the smallest cap-over-usage ratio, a no-edge coin-toss book needs n(n+1) days on average to reach a stop n steps below its high, and a patience of m days caps daily VaR at z L / √m.
+import Mathlib.Data.Finset.Lattice.Fold
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Tactic.NormNum
+
+/-- First-to-bind rule. Gauge `j` reads `q * a j` for a book of `q` identical units
+(every gauge scales with size) and has cap `b j`; each unit adds a positive reading
+`a j`. Then the largest book inside every cap is the smallest ratio `b j / a j`. -/
+theorem largest_book_is_min_cap_over_usage {ι : Type*} [Fintype ι] [Nonempty ι]
+    (a b : ι → ℝ) (ha : ∀ j, 0 < a j) :
+    IsGreatest {q : ℝ | ∀ j, q * a j ≤ b j}
+      (Finset.univ.inf' Finset.univ_nonempty (fun j => b j / a j)) := by
+  refine ⟨fun j => ?_, fun q hq => ?_⟩
+  · have h := Finset.inf'_le (fun j => b j / a j) (Finset.mem_univ j)
+    exact (le_div_iff₀ (ha j)).1 h
+  · exact Finset.le_inf' _ _ (fun j _ => (le_div_iff₀ (ha j)).2 (hq j))
+
+/-- Coin-toss drawdown. Each day the book wins or loses one step with even odds, and the
+stop is `n ≥ 1` steps below the high. Let `E k` be the average number of days to reach the
+stop from drawdown `k`. The first-step equations (`E n = 0`; from 0 a win stays at 0 and a
+loss goes to 1; from `k` between 1 and `n - 1` the drawdown moves one step down or up) hold
+exactly when `E k = n(n+1) - k² - k` for every `k ≤ n`; in particular `E 0 = n(n+1)`. -/
+theorem coin_drawdown_days_to_stop (n : ℕ) (hn : 1 ≤ n) (E : ℕ → ℝ) :
+    (E n = 0 ∧ E 0 = 1 + E 0 / 2 + E 1 / 2 ∧
+      ∀ k, 1 ≤ k → k + 1 ≤ n → E k = 1 + E (k - 1) / 2 + E (k + 1) / 2) ↔
+    ∀ k ≤ n, E k = (n : ℝ) * (n + 1) - (k : ℝ) ^ 2 - k := by
+  constructor
+  · rintro ⟨hEn, hE0, hrec⟩
+    have pair : ∀ k, k + 1 ≤ n →
+        E k = E 0 - (k : ℝ) ^ 2 - k ∧ E (k + 1) = E 0 - ((k + 1 : ℕ) : ℝ) ^ 2 - ((k + 1 : ℕ) : ℝ) := by
+      intro k
+      induction k with
+      | zero =>
+        intro _
+        refine ⟨by simp, ?_⟩
+        push_cast
+        linarith
+      | succ j ih =>
+        intro hj
+        obtain ⟨h1, h2⟩ := ih (by omega)
+        refine ⟨h2, ?_⟩
+        have h3 := hrec (j + 1) (by omega) (by omega)
+        simp only [Nat.add_sub_cancel] at h3
+        push_cast at h1 h2 h3 ⊢
+        linarith
+    have hgen : ∀ k ≤ n, E k = E 0 - (k : ℝ) ^ 2 - k := by
+      intro k hk
+      rcases Nat.lt_or_ge k n with h | h
+      · exact (pair k (by omega)).1
+      · have hkn : k = n := by omega
+        subst hkn
+        obtain ⟨j, rfl⟩ : ∃ j, k = j + 1 := ⟨k - 1, by omega⟩
+        exact (pair j (by omega)).2
+    have h0 : E 0 = (n : ℝ) * (n + 1) := by
+      have := hgen n le_rfl
+      rw [hEn] at this
+      linarith
+    intro k hk
+    rw [hgen k hk, h0]
+  · intro h
+    refine ⟨?_, ?_, ?_⟩
+    · rw [h n le_rfl]; ring
+    · rw [h 0 (Nat.zero_le _), h 1 hn]; push_cast; ring
+    · intro k hk1 hk2
+      obtain ⟨j, rfl⟩ : ∃ j, k = j + 1 := ⟨k - 1, by omega⟩
+      rw [h (j + 1) (by omega), Nat.add_sub_cancel, h j (by omega), h (j + 1 + 1) hk2]
+      push_cast
+      ring
+
+/-- From the square law to a VaR cap. With stop `L`, daily standard deviation `σ`,
+patience `m` days and bell-curve point `z` (all positive), the stop is at least `m` days
+away on average, `(L / σ)² ≥ m`, exactly when one-day VaR `z σ` is at most `z L / √m`. -/
+theorem var_cap_from_patience (L σ m z : ℝ) (hL : 0 < L) (hσ : 0 < σ) (hm : 0 < m)
+    (hz : 0 < z) :
+    m ≤ (L / σ) ^ 2 ↔ z * σ ≤ z * L / Real.sqrt m := by
+  have hs : 0 < Real.sqrt m := Real.sqrt_pos.2 hm
+  rw [mul_div_assoc, mul_le_mul_iff_of_pos_left hz, le_div_iff₀ hs, ← le_div_iff₀' hσ,
+    Real.sqrt_le_iff]
+  constructor
+  · intro h; exact ⟨div_nonneg hL.le hσ.le, h⟩
+  · intro h; exact h.2
+
+-- The card's whole-number worked examples.
+-- The stop: 3% of $50,000,000.
+example : 3 * 50000000 / 100 = 1500000 := by norm_num
+-- Delta cap: half the stop over a 20% fall; vega cap: half the stop over 15 vol points.
+example : 1500000 / 2 / 20 = 37500 := by norm_num
+example : 1500000 / 2 / 15 = 50000 := by norm_num
+-- Notional cap: 40% of capital.
+example : 40 * 50000000 / 100 = 20000000 := by norm_num
+-- Stop left after a $300,000 drawdown, and that drawdown as a share of the stop (20%).
+example : 1500000 - 300000 = 1200000 := by norm_num
+example : 300000 * 100 / 1500000 = 20 := by norm_num
+-- Drawdown from the high, not the start: up $600,000, then down $1,700,000.
+example : (0 + 600000 - 1700000 : ℤ) = -1100000 := by norm_num
+example : (max (max 0 600000) (0 + 600000 - 1700000) - (0 + 600000 - 1700000) : ℤ) = 1700000 := by
+  norm_num
+-- Days to the stop at n = 10: 110 for the coin book, 100 in the Brownian limit.
+example : 10 * (10 + 1) = 110 := by norm_num
+example : (10 : ℕ) ^ 2 = 100 := by norm_num
+-- The chart: coin-toss days n(n+1) and Brownian days n² for n = 2, 4, ..., 12.
+example : [2, 4, 6, 8, 10, 12].map (fun n : ℕ => n * (n + 1)) = [6, 20, 42, 72, 110, 156] := by
+  decide
+example : [2, 4, 6, 8, 10, 12].map (fun n : ℕ => n ^ 2) = [4, 16, 36, 64, 100, 144] := by
+  decide
+
+#print axioms largest_book_is_min_cap_over_usage
+#print axioms coin_drawdown_days_to_stop
+#print axioms var_cap_from_patience
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'largest_book_is_min_cap_over_usage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coin_drawdown_days_to_stop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'var_cap_from_patience' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Tighten the stop.** Guess first: with `STOP_FRAC = 0.02`, which limit binds? Every cap except notional shrinks by a third, so their binding sizes shrink by about a third (VaR's only roughly, because of rounding); delta still binds first, at two-thirds of 90,766.3 units.
@@ -707,6 +865,8 @@ The two outputs agree line for line: both programs use the same random-number ru
 - [Performance measures](../38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): drawdown measured on a real track record, with error bars.
 - [Kelly](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md): sizing a book to grow fastest, and why half that size is safer: sizing from the reward side rather than the loss side.
 - [Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md): the regulator's version of the VaR limit, and why it moved to the average loss beyond VaR.
+
+This card sets the limits of one desk from one stop; the question it leaves open is how to share one firm-wide cap among several desks whose losses move together, which the component-VaR card answers.
 
 ---
 

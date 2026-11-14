@@ -73,11 +73,12 @@ A central moment is the average of a power of the distance from the mean. The fo
 | $z$, $N$, $\varphi$ | $z$ solves $N(z)$ = 0.99; $N$ is the bell curve's area to the left, $\varphi$ its height | $z$ = 2.326348 | rises with the confidence level |
 | $w$ | the Cornish-Fisher 99% point, in units of $\sigma_L$ | 2.322226 | rises one for one, times $\sigma_L$ |
 | VaR | value at risk: the loss exceeded with 1% chance | $475,520.53 | is the answer |
+
 ### When it holds
 
 - **Small moves, so the parabola fits.** The first term the parabola drops is the cube of the move, weighted by how fast gamma itself changes. Over one day that is worth tens of dollars on this book. A $10 move, rare in a day but ordinary over a month, is where the parabola drifts: $681.60 thousand against $673.43 thousand on a rise, −$492.10 thousand against −$486.71 thousand on a fall.
 - **Acme's move is normal and unrelated to the rest of the book.** Here the basket and Acme move independently, which keeps one variable in the bend. A correlated basket folds into Acme's delta by regression and the method survives. A move with fatter tails than the bell curve breaks it: then the tail itself must be modelled ([Extreme value theory](07-extreme-value-theory-and-tails.md)).
-- **Only Acme's price moves the calls.** Volatility and time are held still. If implied volatility jumps with the fall, the loss grows by roughly vega times the jump, which this model cannot see. One day of time decay (theta) costs these calls $2,021.34 for certain, which moves every estimate up by that fixed amount.
+- **Only Acme's price moves the calls.** Volatility and time are held still. If implied volatility jumps with the fall, the loss grows by roughly vega (the calls' gain per point of volatility, [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)) times the jump, which this model cannot see. One day of time decay (theta) costs these calls $2,021.34 for certain, which moves every estimate up by that fixed amount.
 - **Skew and kurtosis are small.** Cornish-Fisher is a series in them. With a strongly lopsided loss, such as a book of short out-of-the-money options, the corrected point can stop rising with the confidence level, and the exact integral or a simulation must replace it. Here the skew is −0.005694, far inside the safe zone.
 
 ---
@@ -191,7 +192,7 @@ full reprice, simulated     █████████████████�
 
 Gamma's mean and spread recover most of what delta-normal overstates; the skew term recovers the rest.
 
-### What breaks when a piece is dropped
+### What breaks if you drop a piece
 
 Right answer $475,520.53, from Cornish-Fisher and the exact integral alike.
 
@@ -705,6 +706,8 @@ The two outputs agree line for line at the printed precision.
 - [Whose risk is it](06-var-decomposition-euler-and-component-var.md): how much of the $475,520.53 each position carries.
 - [Extreme value theory](07-extreme-value-theory-and-tails.md): what to do when the moves themselves are not bell-shaped, which no parabola can fix.
 - [Backtesting VaR](08-backtesting-var.md): counting the days the loss beat the VaR, to learn whether any of these numbers was right.
+
+The question this card leaves open: the parabola holds volatility still, so how much VaR does the book carry when implied volatility jumps as Acme falls?
 
 ---
 

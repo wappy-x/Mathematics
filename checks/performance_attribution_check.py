@@ -131,3 +131,4 @@ assert abs(sum(linked) - compound) < 1e-12                          # linking vs
 assert worst < 1e-12                                                # 1,000 ledgers nobody chose
 assert caught == 3                                                  # every broken formula fails to reconcile
 print("all checks passed")
+print("ALL CHECKS PASS")

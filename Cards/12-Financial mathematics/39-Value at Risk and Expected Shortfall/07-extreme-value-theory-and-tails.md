@@ -8,7 +8,11 @@
 
 A desk holds $10 million of Acme shares. Acme moves about 20 percent a year, which is about $125,988.16 of profit or loss on a typical day. The risk team keeps ten years of daily results: 2,520 trading days. The risk committee asks one question. How much could the desk lose on its worst day in a thousand?
 
-That number is the 99.9 percent **value at risk** (VaR): the one-day loss that is exceeded on only one day in a thousand ([Value at risk](01-profit-and-loss-distribution-and-var.md)). Ten years should see it passed about 2.52 times. So the answer sits among the three worst days on record, and the three worst days are mostly luck. Read off the third-worst day and the typical miss, from one decade to the next, is $112,769.79. Assume a bell curve instead and the answer is $382,390.74 against a true $639,037.86.
+That number is the 99.9 percent **value at risk** (VaR): the one-day loss that is exceeded on only one day in a thousand ([Value at risk](01-profit-and-loss-distribution-and-var.md)).
+
+Ten years should see it passed about 2.52 times. So the answer sits among the three worst days on record, and the three worst days are mostly luck.
+
+Read off the third-worst day and the typical miss, from one decade to the next, is $112,769.79. Assume a bell curve instead and the answer is $382,390.74 against a true $639,037.86.
 
 Extreme value theory, EVT for short, is the way out. It sets a high line, here the 127th-worst day, and keeps the 126 days that crossed it. A deep result says those crossings, measured past the line, follow one family of laws whatever the market's everyday behaviour: the **generalised Pareto distribution**. Fit that family to the 126 crossings, and the one-in-a-thousand loss follows from a formula, not from the three luckiest data points.
 
@@ -101,7 +105,11 @@ The constant cancels. Write $\xi = 1/\alpha$ and $\beta = \xi u$. Then $y/u = \x
 
 ### Step 2: a tail that is a power law only roughly gives it in the limit
 
-Real tails are not pure power laws. The Student t law with $\nu$ = 4 degrees of freedom has a tail that falls like one over loss to the fourth only for large losses. Write such a tail as $x^{-\alpha}$ times a correction factor that varies slowly: a factor whose value at twice, or at any fixed multiple of, a large loss is almost its value at that loss. Divide as in Step 1. The power part gives the same generalised Pareto. The correction factor appears as a ratio of its values at two nearby large losses, and that ratio tends to 1 as the threshold rises. So the excess law tends to the generalised Pareto, with shape $1/\alpha$. For the data here that is $1/\nu$ = 0.25.
+Real tails are not pure power laws. The Student t law with $\nu$ = 4 degrees of freedom has a tail that falls like one over loss to the fourth only for large losses.
+
+Write such a tail as $x^{-\alpha}$ times a correction factor that varies slowly: a factor whose value at twice, or at any fixed multiple of, a large loss is almost its value at that loss. Divide as in Step 1. The power part gives the same generalised Pareto. The correction factor appears as a ratio of its values at two nearby large losses, and that ratio tends to 1 as the threshold rises.
+
+So the excess law tends to the generalised Pareto, with shape $1/\alpha$. For the data here that is $1/\nu$ = 0.25.
 
 <details>
 <summary>Detailed proof: slowly varying corrections vanish</summary>
@@ -110,7 +118,7 @@ Suppose $P(L > x) = x^{-\alpha} \ell(x)$ where the factor $\ell(x)$ is **slowly 
 
 $$P(L - u > s u \mid L > u) = \frac{(u(1+s))^{-\alpha}\, \ell(u(1+s))}{u^{-\alpha}\, \ell(u)} = (1+s)^{-\alpha} \cdot \frac{\ell((1+s)u)}{\ell(u)}$$
 
-The last fraction tends to 1 as $u \to \infty$, by the definition with $t = 1 + s$. So for every $s \ge 0$ the scaled excess $(L-u)/u$ has survival chance tending to $(1+s)^{-\alpha}$. That limit is continuous, so the laws converge. With $\xi = 1/\alpha$ and $\beta = \xi u$ the limit is the generalised Pareto of Step 1. Every Student t, every Pareto, and the tails usually measured in daily stock returns are of this kind.
+The last fraction tends to 1 as $u \to \infty$, by the definition with $t = 1 + s$. So for every $s \ge 0$ the scaled excess $(L-u)/u$ has survival chance (the chance of passing $s$) tending to $(1+s)^{-\alpha}$. That limit is continuous, so the laws converge. With $\xi = 1/\alpha$ and $\beta = \xi u$ the limit is the generalised Pareto of Step 1. Every Student t, every Pareto, and the tails usually measured in daily stock returns are of this kind.
 
 </details>
 
@@ -142,7 +150,7 @@ Set the right side of Step 4 equal to $1 - p$ and solve for $x$.
 
 ### Step 6: expected shortfall from the mean of the excess
 
-A generalised Pareto has a property called **threshold stability**: the excess over any higher level $v > u$ is again a generalised Pareto, with the same shape and a scale that grows to $\beta + \xi (v - u)$. Check it by dividing the survival chance at $v + w$ by the one at $v > u$; the ratio has the same form.
+A generalised Pareto has a property called **threshold stability**: the excess over any higher level $v > u$ is again a generalised Pareto, with the same shape and a scale that grows to $\beta + \xi (v - u)$. Check it by dividing the survival chance (the chance of passing a level) at $v + w$ by the one at $v > u$; the ratio has the same form.
 
 The mean of a generalised Pareto with scale $b > 0$ is $b/(1 - \xi)$ when $\xi$ is below 1. So the average loss past VaR is VaR plus the mean excess past VaR:
 
@@ -642,6 +650,166 @@ ALL CHECKS PASS
 The two outputs agree line for line. Both generators produce the same stream, and both languages call the same system maths library.
 
 Four deliberate breaks were tried: flipping the sign of the power in the VaR formula, inflating the fitted $\beta$, flipping a sign in the ES formula, and nudging the closed-form t quantile. Each made an assert fail.
+
+### Lean
+
+Lean proves Steps 1, 2 and 5 of Why it works, and the card's whole-number arithmetic.
+
+- **Step 1.** Take $C > 0$, $\alpha > 0$, and a loss whose chance of passing $x$ is $C x^{-\alpha}$ above a floor. Then for any threshold $u > 0$ above the floor, the excess is generalised Pareto, shape $1/\alpha$, scale $u/\alpha$.
+- **Step 2.** Take $\alpha > 0$, $\ell$ slowly varying, and a loss whose chance of passing $x$ is $x^{-\alpha} \ell(x)$ above a floor. Then for every $s \ge 0$, the share of crossings past $u + s u$ tends to $(1+s)^{-\alpha}$ as $u$ rises.
+- **Step 5.** Take a fitted scale $\beta > 0$, a shape $\xi$ other than 0, and $1-p$ between 0 and $k/n$. Then the VaR formula lands past $u$, and it is the only loss past $u$ where Step 4's tail equals $1-p$.
+- The card's exact arithmetic checks out: crossing rate 0.05, rarity ratio 0.02, 2.52 expected days past VaR, true shape 0.25.
+- So do the ranks: the 99.9 percent historical VaR is the third-worst day, and the threshold is the 127th-worst.
+
+The fits, the expected shortfall and every dollar figure use rounded decimals, so they are left to the Python and Rust checks.
+
+```lean
+-- Extreme value theory: past a rising threshold, the excess of a regularly varying (power-law) loss tends to a generalised Pareto law, and the generalised Pareto VaR formula is the unique solution of the stitched tail equation.
+import Mathlib.Probability.ConditionalProbability
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
+
+open MeasureTheory ProbabilityTheory Filter Topology
+
+/-- Heavy-tailed case of the Balkema–de Haan–Pickands theorem (card, Step 2).
+If the chance that the loss `L` passes `x` is `x ^ (-α) * ℓ x` for every `x` above some floor,
+with `α > 0` and `ℓ` slowly varying (`ℓ (t x) / ℓ x → 1` for every fixed `t > 0`), then for every
+`s ≥ 0` the chance that the loss passes the threshold `u` by more than `s * u`, given that it passes
+`u`, tends to `(1 + s) ^ (-α)` as the threshold rises: the generalised Pareto law with shape
+`1/α` and scale `u/α`. -/
+theorem excess_over_threshold_tends_to_generalised_pareto
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (L : Ω → ℝ) (hL : Measurable L)
+    (α : ℝ) (hα : 0 < α)
+    (ℓ : ℝ → ℝ) (hℓ : ∀ t : ℝ, 0 < t → Tendsto (fun x => ℓ (t * x) / ℓ x) atTop (𝓝 1))
+    (x₀ : ℝ) (htail : ∀ x : ℝ, x₀ ≤ x → (P {ω | x < L ω}).toReal = x ^ (-α) * ℓ x)
+    (s : ℝ) (hs : 0 ≤ s) :
+    Tendsto (fun u : ℝ => (P[{ω | s * u < L ω - u} | {ω | u < L ω}]).toReal) atTop
+      (𝓝 ((1 + s) ^ (-α))) := by
+  have key : ∀ u : ℝ, max x₀ 1 ≤ u →
+      (P[{ω | s * u < L ω - u} | {ω | u < L ω}]).toReal
+        = (1 + s) ^ (-α) * (ℓ ((1 + s) * u) / ℓ u) := by
+    intro u hu
+    have hu1 : 1 ≤ u := le_trans (le_max_right _ _) hu
+    have hux : x₀ ≤ u := le_trans (le_max_left _ _) hu
+    have hu0 : 0 < u := by linarith
+    have hsu : 0 ≤ s * u := mul_nonneg hs hu0.le
+    have hmeas : MeasurableSet {ω | u < L ω} := measurableSet_lt measurable_const hL
+    have hset : {ω | u < L ω} ∩ {ω | s * u < L ω - u} = {ω | (1 + s) * u < L ω} := by
+      ext ω
+      simp only [Set.mem_inter_iff, Set.mem_ofPred_eq]
+      constructor
+      · rintro ⟨_, h⟩; linarith
+      · intro h; constructor <;> linarith
+    rw [cond_apply hmeas, hset, ENNReal.toReal_mul, ENNReal.toReal_inv,
+      htail u hux, htail ((1 + s) * u) (by linarith),
+      Real.mul_rpow (by linarith) hu0.le]
+    have hpos : (0:ℝ) < u ^ (-α) := Real.rpow_pos_of_pos hu0 _
+    by_cases hℓ0 : ℓ u = 0
+    · simp [hℓ0]
+    · field_simp
+  have hlim := (hℓ (1 + s) (by linarith)).const_mul ((1 + s) ^ (-α))
+  rw [mul_one] at hlim
+  refine hlim.congr' ?_
+  filter_upwards [eventually_ge_atTop (max x₀ 1)] with u hu
+  exact (key u hu).symm
+
+/-- An exact power law gives a generalised Pareto exactly (card, Step 1).
+If the chance that the loss passes `x` is `C * x ^ (-α)` for every `x` above a floor `x₀`,
+with `C > 0` and `α > 0`, then for every threshold `u > 0` above the floor and every excess
+`y ≥ 0`, the chance that the loss passes `u` by more than `y`, given that it passes `u`, is
+`(1 + ξ y / β) ^ (-1/ξ)` with shape `ξ = 1/α` and scale `β = u/α`. -/
+theorem power_tail_excess_is_generalised_pareto
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+    (L : Ω → ℝ) (hL : Measurable L)
+    (α C x₀ : ℝ) (hα : 0 < α) (hC : 0 < C)
+    (htail : ∀ x : ℝ, x₀ ≤ x → (P {ω | x < L ω}).toReal = C * x ^ (-α))
+    (u : ℝ) (hu0 : 0 < u) (hux : x₀ ≤ u) (y : ℝ) (hy : 0 ≤ y) :
+    (P[{ω | y < L ω - u} | {ω | u < L ω}]).toReal
+      = (1 + (1 / α) * y / (u / α)) ^ (-1 / (1 / α)) := by
+  have hmeas : MeasurableSet {ω | u < L ω} := measurableSet_lt measurable_const hL
+  have hset : {ω | u < L ω} ∩ {ω | y < L ω - u} = {ω | u + y < L ω} := by
+    ext ω
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq]
+    constructor
+    · rintro ⟨_, h⟩; linarith
+    · intro h; constructor <;> linarith
+  rw [cond_apply hmeas, hset, ENNReal.toReal_mul, ENNReal.toReal_inv,
+    htail u hux, htail (u + y) (by linarith)]
+  have hα0 : α ≠ 0 := hα.ne'
+  have e1 : (1 / α) * y / (u / α) = y / u := by field_simp
+  have e2 : -1 / (1 / α) = -α := by rw [one_div, div_inv_eq_mul]; ring
+  have e3 : 1 + y / u = (u + y) / u := by field_simp
+  rw [e1, e2, e3, Real.div_rpow (by linarith) hu0.le]
+  have hpos : 0 < u ^ (-α) := Real.rpow_pos_of_pos hu0 _
+  field_simp
+
+/-- The VaR formula (card, Step 5). For a fitted generalised Pareto tail with scale `β > 0` and
+shape `ξ ≠ 0`, stitched to the crossing rate `f = k/n`, and a target chance `q = 1 - p` with
+`0 < q < f`, the loss `u + β/ξ * ((q/f) ^ (-ξ) - 1)` lies past the threshold, inside the support,
+solves `f * (1 + ξ (x - u)/β) ^ (-1/ξ) = q`, and is the only such solution. -/
+theorem gpd_var_formula_unique_solution
+    (u β ξ f q : ℝ) (hβ : 0 < β) (hξ : ξ ≠ 0) (hq : 0 < q) (hqf : q < f) :
+    let v := u + β / ξ * ((q / f) ^ (-ξ) - 1)
+    u ≤ v ∧ 0 < 1 + ξ * (v - u) / β ∧ f * (1 + ξ * (v - u) / β) ^ (-1 / ξ) = q ∧
+      ∀ x : ℝ, u ≤ x → 0 < 1 + ξ * (x - u) / β →
+        f * (1 + ξ * (x - u) / β) ^ (-1 / ξ) = q → x = v := by
+  dsimp only
+  have hf : 0 < f := lt_trans hq hqf
+  set r := q / f with hr
+  have hr0 : 0 < r := div_pos hq hf
+  have hr1 : r < 1 := (div_lt_one hf).2 hqf
+  have hw : 1 + ξ * (u + β / ξ * (r ^ (-ξ) - 1) - u) / β = r ^ (-ξ) := by
+    field_simp; ring
+  have hR : 0 < r ^ (-ξ) := Real.rpow_pos_of_pos hr0 _
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · have : 0 ≤ β / ξ * (r ^ (-ξ) - 1) := by
+      rcases lt_or_gt_of_ne hξ with h | h
+      · have h1 : r ^ (-ξ) < 1 := Real.rpow_lt_one hr0.le hr1 (by linarith)
+        exact mul_nonneg_of_nonpos_of_nonpos (div_neg_of_pos_of_neg hβ h).le (by linarith)
+      · have h1 : 1 < r ^ (-ξ) :=
+          Real.one_lt_rpow_of_pos_of_lt_one_of_neg hr0 hr1 (by linarith)
+        exact mul_nonneg (div_pos hβ h).le (by linarith)
+    linarith
+  · rw [hw]; exact hR
+  · rw [hw, ← Real.rpow_mul hr0.le, show -ξ * (-1 / ξ) = 1 by field_simp, Real.rpow_one, hr]
+    field_simp
+  · intro x _ hwx hx'
+    have h1 : (1 + ξ * (x - u) / β) ^ (-1 / ξ) = r := by
+      rw [hr, eq_div_iff hf.ne']; linarith
+    have h2 : 1 + ξ * (x - u) / β = r ^ (-ξ) := by
+      rw [← h1, ← Real.rpow_mul hwx.le, show -1 / ξ * -ξ = 1 by field_simp, Real.rpow_one]
+    rw [← h2]
+    field_simp
+    ring
+
+-- The card's whole-number arithmetic, checked exactly.
+-- Crossing rate k/n: 126 of 2,520 days is one in twenty (0.05).
+example : (126 : ℚ) / 2520 = 1 / 20 := by norm_num
+-- Rarity ratio: (1 - p)/(k/n) = 0.001 / 0.05 = 0.02, one in fifty.
+example : ((1 : ℚ) / 1000) / ((126 : ℚ) / 2520) = 1 / 50 := by norm_num
+-- Expected days past the 99.9% VaR in 2,520 days: 2.52.
+example : (2520 : ℚ) * (1 / 1000) = 252 / 100 := by norm_num
+-- True shape for the Student t law with 4 degrees of freedom: ξ = 1/α = 1/4 (0.25).
+example : (1 : ℚ) / 4 = 25 / 100 := by norm_num
+-- The 99.9% historical VaR is the third-worst day: 0-based rank ⌈2520 · 999/1000⌉ - 1 = 2517 of 2520.
+example : (2520 * 999 + 999) / 1000 - 1 = 2517 ∧ 2520 - 2517 = 3 := by decide
+-- The threshold with k = 126 exceedances is the 127th-worst day: 0-based rank n - k - 1.
+example : 2520 - 126 - 1 = 2393 ∧ 2520 - 2393 = 127 := by decide
+
+#print axioms excess_over_threshold_tends_to_generalised_pareto
+#print axioms power_tail_excess_is_generalised_pareto
+#print axioms gpd_var_formula_unique_solution
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'excess_over_threshold_tends_to_generalised_pareto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'power_tail_excess_is_generalised_pareto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gpd_var_formula_unique_solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

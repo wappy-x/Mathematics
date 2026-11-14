@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A trading desk holds three things tonight: 100,000 Acme shares at $100 each, $5 million of a bond, and 1,000 Acme call options, each on 100 shares. The risk manager must report one number by morning: the loss the book should exceed on only one day in a hundred. That number is the book's **value at risk**, or VaR ([Value at risk](01-profit-and-loss-distribution-and-var.md)).
+A trading desk holds three things tonight, together called its book: 100,000 Acme shares at $100 each, $5 million of a bond, and 1,000 Acme call options, each on 100 shares. The risk manager must report one number by morning: the loss the book should exceed on only one day in a hundred. That number is the book's **value at risk**, or VaR ([Value at risk](01-profit-and-loss-distribution-and-var.md)).
 
 A bell curve fitted to this card's record of the book gives **$421,043.57**, by the method of [Parametric VaR](02-parametric-var-and-delta-normal.md). This card drops the bell curve and asks for the answer two other ways.
 
@@ -18,7 +18,7 @@ Three methods, three numbers, one book. The spread is the lesson. Each method is
 
 **Both methods estimate VaR by revaluing today's book under many possible tomorrows, sorting the losses, and reading off the one at the 99% rank; historical simulation takes those tomorrows from the past, Monte Carlo takes them from a stated law.**
 
-**What kind of fact this is:** a method, two recipes for estimating a quantile of tomorrow's loss; the error bars on those estimates are theorems about sample quantiles, derived in Why it works.
+**What kind of fact this is:** a method, two recipes for estimating a quantile of tomorrow's loss (the loss that a given share of days stays at or below); the error bars on those estimates are theorems about sample quantiles, derived in Why it works.
 
 ### The picture: the record's tail against the bell curve's
 
@@ -58,14 +58,14 @@ The hat on $\widehat{\mathrm{VaR}}$ marks an **estimate**: a number computed fro
 | $k$, $L_{(k)}$ | a rank, and the $k$-th smallest loss, with $k = \lceil \alpha n \rceil$ | $k$ = 495 of 500, or 9,900 of 10,000 | a higher rank reads a bigger loss |
 | $x_i$, $S$ | Acme's log-move in scenario $i$; Acme's price | day 488: Acme down 2.536119%; $S_0 = 100$ dollars today | a fall raises the loss on shares and calls |
 | $y_i$, $y$, $y_0$ | the change in the bond's yield in scenario $i$; the yield; today's yield | day 488: up 20.800638 basis points (a basis point is 0.01%) | a rise lowers the bond's price and raises the loss |
-| $V$ | value of today's holdings at given market prices: calls priced by Black–Scholes, the bond by its duration | calls worth $9.227006 per share today | — |
+| $V$ | value of today's holdings at given market prices: calls priced by the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) formula, the bond by its duration (defined under Worked numbers) | calls worth $9.227006 per share today | — |
 | $f$, $v$ | the true VaR $v$, and the height $f$ of the loss's probability curve there: how crowded losses are near it | $f$ estimated from the 10,000 draws | a crowded tail pins the rank down: smaller error |
 | $\nu$ | tail weight of the Monte Carlo law, said "nu"; smaller means fatter tails | 10 | thinner tails, smaller VaR |
 | $\kappa$ | **excess kurtosis**: how much fatter than a bell curve the loss's tails are; 0 for a bell curve | 0.941376 in the record | picks a smaller $\nu$ |
 | $z$, $N$ | the bell curve's 99% point, $N^{-1}(0.99)$, where $N$ is the bell curve's area function | 2.326348 | — |
 | $F$, $t$, $\delta$ | in the proofs: $F$ gives the chance of a loss at or below a threshold $t$; $\delta$ is a small error in that chance | — | — |
 
-Two helper formulas travel with the main one. The first is the sampling error of a Monte Carlo quantile:
+Two helper formulas travel with the main one. The first is the sampling error of a Monte Carlo quantile, written SE for standard error:
 
 $$\mathrm{SE} \approx \frac{1}{f}\sqrt{\frac{\alpha(1-\alpha)}{n}}$$
 
@@ -80,7 +80,7 @@ A **Student-t law** is a bell curve whose width is itself random: divide a bell-
 - **Historical: the window speaks for tomorrow.** The replay can only return losses the window contains. A calm window before a crisis understates VaR, and no loss larger than the window's worst day can ever appear.
 - **Both: scenarios are independent draws from one law.** The error bars below assume this. Real volatility comes in clusters: calm weeks then wild weeks. Clustering makes the true error bar wider than the formula says.
 - **Monte Carlo: the law is right.** Draws measure a law; they do not check it. Under a bell-curve law this book's Monte Carlo VaR is $404,789.24; under the record's own law it is $451,631.46. No number of draws closes that gap.
-- **Both: full revaluation of today's book.** The calls must be repriced, not approximated by their delta. Skipping it on the replay moves the answer from $469,042.43 to $480,437.83.
+- **Both: full revaluation of today's book.** The calls must be repriced, not approximated by their delta (the straight-line rate at which a call's value changes with Acme's price). Skipping it on the replay moves the answer from $469,042.43 to $480,437.83.
 - **Both: moves travel together.** Each scenario moves Acme and the yield *jointly*, as one day did. Pairing every Acme day with every yield day instead moves the answer to $487,276.39.
 
 ---
@@ -122,7 +122,7 @@ For this record the band runs from **$386,641.66 to $558,693.91**. That is the h
 
 Draw $n$ scenarios from a law whose true VaR is $v$. The share of draws landing at or below $v$ averages 0.99 and wobbles with standard deviation $\sqrt{0.99 \times 0.01 / n}$, the usual spread of a proportion. The estimate is where the sorted draws cross 0.99. When the share is off by a small amount $\delta$, the crossing point moves by about $\delta / f$ dollars, because $f$ is the share of draws per dollar near $v$. That gives the SE formula above.
 
-For 10,000 draws from this card's law, the formula gives **$8,122.35**, with $f$ estimated from the share of draws within $20,000 of the answer. Rerunning the whole simulation 20 times with fresh seeds gives a spread of **$10,649.37**. Two roads, the same order of wobble. The reruns ranged from $414,118.06 to $450,472.79.
+For 10,000 draws from this card's law, the formula gives **$8,122.35**, with $f$ estimated from the share of draws within $20,000 of the answer. Rerunning the whole simulation 20 times with fresh seeds (the starting numbers of the random-number generator) gives a spread of **$10,649.37**. Two roads, the same order of wobble. The reruns ranged from $414,118.06 to $450,472.79.
 
 The square root is the expensive part. Cutting the error in half takes four times the draws. With 1,000 scenarios instead of 10,000 the reruns spread by $26,848.00.
 
@@ -135,7 +135,7 @@ Let $F$ be the loss law's cumulative probability and $\hat F_n$ the share of dra
 
 ### Step 4: the law decides, the draws only measure it
 
-Hold the draws fixed and change the law, and the answer moves by more than any error bar:
+Hold the draws fixed and change the law, and the answer moves by more than any error bar. P&L means profit and loss; a delta P&L is the straight-line estimate built from the book's deltas.
 
 ```
 99% one-day VaR, one block = $5,000, bars start at $380,000
@@ -211,7 +211,18 @@ Take day 488 of the record. Acme fell 2.536119% and the yield rose 20.800638 bas
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the record, the book and every estimate from scratch: their own random numbers (a 64-bit generator called splitmix64, identical in both languages), their own bell-curve area (its power series), their own 99% point (bisection), their own Black–Scholes. The record is 500 days drawn from a Student-t law with 6 degrees of freedom, daily Acme spread 1.18%, yield spread 6 basis points, correlation 0.3; the scripts then forget that law and treat the 500 days as history. Roads to the answers: sorting and counting for the historical VaR; the band's chance by recursion and by the binomial formula; covariance formula and the P&L series for the parametric spread; analytic delta and a bumped delta; the Monte Carlo error bar by formula and by 20 reruns; the bell-curve area by series and by Simpson's rule; the house call price; and the record's own law, run with 200,000 draws, against the replay's band.
+The scripts build the record, the book and every estimate from scratch: their own random numbers (a 64-bit generator called splitmix64, identical in both languages), their own bell-curve area (its power series), their own 99% point (bisection), their own Black–Scholes. The record is 500 days drawn from a Student-t law with 6 degrees of freedom, daily Acme spread 1.18%, yield spread 6 basis points, correlation 0.3; the scripts then forget that law and treat the 500 days as history.
+
+Roads to the answers:
+
+- sorting and counting for the historical VaR;
+- the band's chance by recursion and by the binomial formula;
+- covariance formula and the P&L series for the parametric spread;
+- analytic delta and a bumped delta;
+- the Monte Carlo error bar by formula and by 20 reruns;
+- the bell-curve area by series and by Simpson's rule;
+- the house call price;
+- and the record's own law, run with 200,000 draws, against the replay's band.
 
 ### Python
 
@@ -625,6 +636,198 @@ ALL CHECKS PASS
 
 The outputs are identical line for line.
 
+### Lean
+
+Lean proves the card's sorting facts for every list of losses, with no assumption about where the losses came from.
+
+- Take $n \ge 1$ losses, $0 < \alpha \le 1$ and $k = \lceil \alpha n \rceil$. Then $L_{(k)}$ is the smallest threshold where the share of losses at or below it reaches $\alpha$, ties included.
+- Take the same $n$, $\alpha$ and $k$. Then at most a share $1 - \alpha$ of the losses lie strictly above $L_{(k)}$.
+- Take any threshold $t$ and any rank from 1 to $n$. Then the loss at that rank is at or below $t$ exactly when at least that many losses are.
+- At 99%, the rank is 495 for 500 days and 9,900 for 10,000 draws.
+
+The band's chance of 0.955037, the error-bar formula, the simulations and every dollar figure are left to the Python and Rust checks.
+
+```lean
+-- Historical and Monte Carlo VaR: for any n losses and any confidence level α in (0, 1], the ⌈α n⌉-th smallest loss is exactly the α-quantile of the law that weights each loss 1/n, ties included, at most a share 1 - α of losses lie strictly above it, and the j-th smallest loss is at or below a threshold exactly when at least j losses are.
+import Mathlib.Algebra.Order.Floor.Semiring
+import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Real.Archimedean
+import Mathlib.Order.Bounds.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Data.Fintype.Fin
+
+/-- The `n` scenario losses `L 0, …, L (n-1)` sorted from smallest to largest:
+position `j - 1` of this list holds `L_(j)`, the `j`-th smallest loss. -/
+noncomputable def sortedLosses {n : ℕ} (L : Fin n → ℝ) : List ℝ :=
+  (List.ofFn L).mergeSort (fun a b => decide (a ≤ b))
+
+/-- The replay law's chance of a loss at or below `t`: the count of the `n` losses at or below
+`t`, divided by `n` (each loss carries weight `1/n`). -/
+noncomputable def shareAtOrBelow {n : ℕ} (L : Fin n → ℝ) (t : ℝ) : ℝ :=
+  ((Finset.univ.filter fun i => L i ≤ t).card : ℝ) / n
+
+theorem sortedLosses_pairwise {n : ℕ} (L : Fin n → ℝ) :
+    (sortedLosses L).Pairwise (fun a b => a ≤ b) := by
+  have := List.pairwise_mergeSort (le := fun a b : ℝ => decide (a ≤ b))
+    (fun a b c h1 h2 => by simp at *; linarith)
+    (fun a b => by simpa using le_total a b) (List.ofFn L)
+  simpa [sortedLosses] using this
+
+theorem sortedLosses_length {n : ℕ} (L : Fin n → ℝ) : (sortedLosses L).length = n := by
+  simp [sortedLosses]
+
+theorem sortedLosses_countP {n : ℕ} (L : Fin n → ℝ) (v : ℝ) :
+    (sortedLosses L).countP (fun x => decide (x ≤ v))
+      = (Finset.univ.filter fun i => L i ≤ v).card := by
+  unfold sortedLosses
+  rw [(List.mergeSort_perm _ _).countP_eq]
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [List.ofFn_succ, List.countP_cons, Fin.card_filter_univ_succ, ih (fun i => L i.succ)]
+    by_cases h : L 0 ≤ v <;> simp [h]
+
+theorem sorted_getElem_le_iff_countP (s : List ℝ) (hs : s.Pairwise (fun a b => a ≤ b))
+    (v : ℝ) (m : ℕ) (hm : m < s.length) :
+    s[m] ≤ v ↔ m + 1 ≤ s.countP (fun x => decide (x ≤ v)) := by
+  rw [List.pairwise_iff_getElem] at hs
+  constructor
+  · intro h
+    have h1 : (s.take (m+1)).countP (fun x => decide (x ≤ v)) = m + 1 := by
+      rw [List.countP_eq_length.mpr]
+      · simp; omega
+      · intro x hx
+        obtain ⟨i, hi, rfl⟩ := List.getElem_of_mem hx
+        simp only [List.getElem_take, decide_eq_true_eq]
+        simp at hi
+        rcases Nat.lt_or_ge i m with h' | h'
+        · exact (hs i m (by omega) hm h').trans h
+        · have : i = m := by omega
+          subst this; exact h
+    have h2 := List.countP_append (p := fun x => decide (x ≤ v)) (l₁ := s.take (m+1)) (l₂ := s.drop (m+1))
+    rw [List.take_append_drop] at h2
+    omega
+  · intro h
+    by_contra hc
+    push Not at hc
+    have h1 : (s.drop m).countP (fun x => decide (x ≤ v)) = 0 := by
+      rw [List.countP_eq_zero]
+      intro x hx
+      obtain ⟨i, hi, rfl⟩ := List.getElem_of_mem hx
+      simp only [List.getElem_drop, decide_eq_true_eq, not_le]
+      simp at hi
+      rcases Nat.eq_zero_or_pos i with h' | h'
+      · subst h'; simpa using hc
+      · exact lt_of_lt_of_le hc (hs m (m + i) hm (by omega) (by omega))
+    have h2 := List.countP_append (p := fun x => decide (x ≤ v)) (l₁ := s.take m) (l₂ := s.drop m)
+    rw [List.take_append_drop] at h2
+    have h3 := List.countP_le_length (p := fun x => decide (x ≤ v)) (l := s.take m)
+    simp at h3
+    omega
+
+theorem sorted_rank_le_iff_count_aux (n : ℕ) (L : Fin n → ℝ) (v : ℝ) (j : ℕ) (hj1 : 1 ≤ j)
+    (h : j - 1 < (sortedLosses L).length) :
+    (sortedLosses L)[j - 1] ≤ v ↔ j ≤ (Finset.univ.filter fun i => L i ≤ v).card := by
+  rw [sorted_getElem_le_iff_countP _ (sortedLosses_pairwise L) v (j - 1) h,
+    sortedLosses_countP]
+  omega
+
+/-- Sorting reads the replay law's quantile exactly. Put weight `1/n` on each of `n` losses
+(`n ≥ 1`) and take a confidence level `α` with `0 < α ≤ 1`. With `k = ⌈α n⌉`, the `k`-th smallest
+loss `L_(k)` is the smallest threshold `t` at which the share of losses at or below `t` reaches
+`α`, even when several losses tie with it. -/
+theorem sorted_rank_is_replay_quantile (n : ℕ) (hn : 0 < n) (L : Fin n → ℝ) (α : ℝ)
+    (hα0 : 0 < α) (hα1 : α ≤ 1) :
+    ∃ h : ⌈α * n⌉₊ - 1 < (sortedLosses L).length,
+      IsLeast {t : ℝ | α ≤ shareAtOrBelow L t} ((sortedLosses L)[⌈α * n⌉₊ - 1]) := by
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  have hk1 : 1 ≤ ⌈α * n⌉₊ := Nat.one_le_iff_ne_zero.mpr (Nat.ceil_pos.mpr (by positivity)).ne'
+  have hkn : ⌈α * n⌉₊ ≤ n := Nat.ceil_le.mpr (by nlinarith)
+  have hle := Nat.le_ceil (α * n)
+  have hlen : ⌈α * n⌉₊ - 1 < (sortedLosses L).length := by
+    rw [sortedLosses_length]; omega
+  refine ⟨hlen, ?_, ?_⟩
+  · have hc := (sorted_rank_le_iff_count_aux n L _ _ hk1 hlen).mp le_rfl
+    have hc' : (⌈α * n⌉₊ : ℝ) ≤
+        ((Finset.univ.filter fun i => L i ≤ (sortedLosses L)[⌈α * n⌉₊ - 1]).card : ℝ) := by
+      exact_mod_cast hc
+    show α ≤ shareAtOrBelow L _
+    unfold shareAtOrBelow
+    rw [le_div_iff₀ hnR]
+    linarith
+  · intro t ht
+    have ht' : α ≤ shareAtOrBelow L t := ht
+    unfold shareAtOrBelow at ht'
+    rw [le_div_iff₀ hnR] at ht'
+    exact (sorted_rank_le_iff_count_aux n L t _ hk1 hlen).mpr (Nat.ceil_le.mpr ht')
+
+/-- At most a share `1 - α` of the losses lie strictly above the estimate: for `n ≥ 1` losses
+and `0 < α ≤ 1`, the count of losses strictly greater than `L_(k)`, `k = ⌈α n⌉`, divided by `n`,
+is at most `1 - α`. -/
+theorem share_above_sorted_rank_le (n : ℕ) (hn : 0 < n) (L : Fin n → ℝ) (α : ℝ)
+    (hα0 : 0 < α) (hα1 : α ≤ 1) (h : ⌈α * n⌉₊ - 1 < (sortedLosses L).length) :
+    ((Finset.univ.filter fun i => (sortedLosses L)[⌈α * n⌉₊ - 1] < L i).card : ℝ) / n
+      ≤ 1 - α := by
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  have hk1 : 1 ≤ ⌈α * n⌉₊ := Nat.one_le_iff_ne_zero.mpr (Nat.ceil_pos.mpr (by positivity)).ne'
+  have hkn : ⌈α * n⌉₊ ≤ n := Nat.ceil_le.mpr (by nlinarith)
+  have hle := Nat.le_ceil (α * n)
+  have hc := (sorted_rank_le_iff_count_aux n L _ _ hk1 h).mp le_rfl
+  have hsum := Finset.card_filter_add_card_filter_not
+    (s := (Finset.univ : Finset (Fin n))) (fun i => (sortedLosses L)[⌈α * n⌉₊ - 1] < L i)
+  simp only [not_lt, Finset.card_univ, Fintype.card_fin] at hsum
+  have hc' : (⌈α * n⌉₊ : ℝ) ≤ ((Finset.univ.filter fun i => L i ≤ (sortedLosses L)[⌈α * n⌉₊ - 1]).card : ℝ) := by exact_mod_cast hc
+  have hsum' : ((Finset.univ.filter fun i => (sortedLosses L)[⌈α * n⌉₊ - 1] < L i).card : ℝ)
+      + ((Finset.univ.filter fun i => L i ≤ (sortedLosses L)[⌈α * n⌉₊ - 1]).card : ℝ) = n := by
+    exact_mod_cast hsum
+  rw [div_le_iff₀ hnR]
+  nlinarith
+
+/-- The counting fact behind the replay's error band: for any threshold `v` and any rank `j`
+with `1 ≤ j ≤ n`, the `j`-th smallest loss sits at or below `v` exactly when at least `j` of the
+losses are at or below `v`. (So the 489th smallest is at or below the true VaR exactly when at
+least 489 days are, and the 499th is above it exactly when at most 498 days are.) -/
+theorem sorted_rank_le_iff_count (n : ℕ) (L : Fin n → ℝ) (v : ℝ) (j : ℕ) (hj1 : 1 ≤ j)
+    (hjn : j ≤ n) (h : j - 1 < (sortedLosses L).length) :
+    (sortedLosses L)[j - 1] ≤ v ↔ j ≤ (Finset.univ.filter fun i => L i ≤ v).card := by
+  exact sorted_rank_le_iff_count_aux n L v j hj1 h
+
+-- The card's ranks: ⌈0.99 × 500⌉ = 495 and ⌈0.99 × 10,000⌉ = 9,900.
+example : ⌈(99 / 100 : ℝ) * 500⌉₊ = 495 := by
+  rw [Nat.ceil_eq_iff (by norm_num)]; norm_num
+example : ⌈(99 / 100 : ℝ) * 10000⌉₊ = 9900 := by
+  rw [Nat.ceil_eq_iff (by norm_num)]; norm_num
+-- The scripts' integer form of the same rank, (99 n + 99) / 100 rounded down.
+example : (99 * 500 + 99) / 100 = 495 := by decide
+example : (99 * 10000 + 99) / 100 = 9900 := by decide
+-- With 500 days, rank 495 leaves exactly five days worse; the band runs over ranks 489 to 499.
+example : 500 - 495 = 5 := by decide
+-- The 5th-worst day is rank 496, not 495.
+example : 500 - 5 + 1 = 496 := by decide
+
+#print axioms sorted_rank_is_replay_quantile
+#print axioms share_above_sorted_rank_le
+#print axioms sorted_rank_le_iff_count
+#print axioms sortedLosses_pairwise
+#print axioms sortedLosses_length
+#print axioms sortedLosses_countP
+#print axioms sorted_getElem_le_iff_countP
+#print axioms sorted_rank_le_iff_count_aux
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sorted_rank_is_replay_quantile' depends on axioms: [propext, Classical.choice, Quot.sound]
+'share_above_sorted_rank_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sorted_rank_le_iff_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sortedLosses_pairwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sortedLosses_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sortedLosses_countP' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sorted_getElem_le_iff_countP' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sorted_rank_le_iff_count_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -651,7 +854,7 @@ The outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Bank trading desks.** Historical simulation over one to two years of days is widely used by banks for daily VaR. It needs no covariance matrix and no bell curve, and every scenario is a day someone lived through.
-- **Regulators.** The Basel rules let banks compute market-risk capital from their own models, historical or Monte Carlo, provided the results survive a count of exceptions: [Backtesting VaR](08-backtesting-var.md). Basel's 2016 market-risk standard (conventions verified 2026-09-28) replaces VaR with expected shortfall, computed from the same kind of scenarios: [Expected shortfall](05-expected-shortfall-and-coherence.md).
+- **Regulators.** The Basel rules let banks compute market-risk capital from their own models, historical or Monte Carlo, provided the results survive a count of exceptions (days the book lost more than its VaR): [Backtesting VaR](08-backtesting-var.md). Basel's 2016 market-risk standard (conventions verified 2026-09-28) replaces VaR with expected shortfall, computed from the same kind of scenarios: [Expected shortfall](05-expected-shortfall-and-coherence.md).
 - **Option books.** Books full of options use full revaluation in every scenario, because delta misses curvature. When repricing is too slow, desks use the quadratic shortcut: [Options in the book](04-delta-gamma-var-and-cornish-fisher.md).
 - **Insurers and pension funds.** Long-horizon risk has too few independent historical periods to replay, so Monte Carlo from an economic scenario generator is a common tool.
 - **Tails beyond the record.** When the question is a one-in-a-thousand-day loss, 500 days hold no answer at all. A fitted tail law extends them: [Extreme value theory](07-extreme-value-theory-and-tails.md).

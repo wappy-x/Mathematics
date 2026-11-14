@@ -8,7 +8,9 @@
 
 A fund of $100,000 is meant to hold 60% in shares and 40% in bonds: the 60-40 mix. Shares have had a good run. The fund now holds $65,000 of shares and $35,000 of bonds, so the mix reads 65-35. Nobody traded. The market moved the weights.
 
-Putting the mix back is **rebalancing**. Selling $5,003.00 of shares restores 60-40 exactly; the extra $3.00 covers the fee. Every dollar traded costs something: commissions, the gap between buying and selling prices, prices moving against a large order. At 0.1% of each dollar traded, that sale costs $5.00. Leaving the fund at 65-35 costs something too, less visibly: more risk than the plan chose, every day it stays there.
+Putting the mix back is **rebalancing**. Selling $5,003.00 of shares restores 60-40 exactly; the extra $3.00 covers the fee.
+
+Every dollar traded costs something: commissions, the gap between buying and selling prices, prices moving against a large order. At 0.1% of each dollar traded, that sale costs $5.00. Leaving the fund at 65-35 costs something too, less visibly: more risk than the plan chose, every day it stays there.
 
 A **calendar rule** trades back to 60-40 on fixed dates. A **threshold rule** trades back to 60-40 whenever the share weight strays more than, say, 5 percentage points. This card derives a third rule, a **no-trade band**: inside a range of weights around the target, do nothing; outside it, trade only as far as the nearest edge.
 
@@ -31,13 +33,17 @@ xychart-beta
     line [50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70]
 ```
 
-Orange: the no-trade band. Flat at 56.74% on the left, along the diagonal in the middle, flat at 63.26% on the right. Green: the 5-point threshold rule, which does nothing near the target and then jumps all the way back to 60%. Dark: doing nothing, the diagonal. The band follows the diagonal where trading is not worth its cost and clips it where trading is.
+Orange: the no-trade band. Flat at 56.74% on the left, along the diagonal in the middle, flat at 63.26% on the right. Green: the 5-point threshold rule, which does nothing near the target and then jumps all the way back to 60%. Dark: doing nothing, the diagonal.
+
+The band follows the diagonal where trading is not worth its cost and clips it where trading is.
 
 ---
 
 ## The formula
 
-Notation first, in words. The share weight is the fraction of the fund held in shares: $x$ before a trade, $z$ after it. The target is $\pi^*$, read "pi star": Merton's fraction, the weight that would be held at every instant if trading were free ([Merton's problem](03-mertons-portfolio-problem.md)). Each dollar of shares bought or sold costs a fraction $c$ of that dollar. Risk aversion $\gamma$, read "gamma", measures how much the investor dislikes variance, as on Merton's card.
+Notation first, in words. The share weight is the fraction of the fund held in shares: $x$ before a trade, $z$ after it. The target is $\pi^*$, read "pi star": Merton's fraction, the weight that would be held at every instant if trading were free ([Merton's problem](03-mertons-portfolio-problem.md)).
+
+Each dollar of shares bought or sold costs a fraction $c$ of that dollar. Risk aversion $\gamma$, read "gamma", measures how much the investor dislikes variance, as on Merton's card.
 
 The band's half-width is
 
@@ -47,7 +53,7 @@ and the rule is
 
 $$z = \min\big(\pi^* + h,\ \max(\pi^* - h,\ x)\big).$$
 
-**Read it aloud:** the half-width is the cube root of three halves of the cost over the risk aversion, times the squared sensitivity of the weight to share moves; inside the band keep the weight, outside it move to the nearest edge.
+**Read it aloud:** the half-width is the cube root of a product: three halves of the cost over the risk aversion, times the squared sensitivity of the weight to share moves. Inside the band keep the weight; outside it, move to the nearest edge.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -59,7 +65,7 @@ $$z = \min\big(\pi^* + h,\ \max(\pi^* - h,\ x)\big).$$
 | $L(h)$ | yearly loss of a band: drift loss plus trading cost, a fraction of the fund | $5.31 per $100,000 | — |
 | $\kappa$ | one-shot penalty, $\gamma\sigma^2$ times the years a gap would last | 0.1 | one-shot band narrows |
 | $\gamma$ | risk aversion: how much a unit of variance hurts | 2.5 | band narrows |
-| $\sigma$ | spread of share returns, per root-year | 0.20 | cancels out of $h$ at a fixed target |
+| $\sigma$ | spread of share returns, per root-year (spreads grow with the square root of time) | 0.20 | cancels out of $h$ at a fixed target |
 | $\mu$, $r$ | expected share return and bond rate, per year | 9% and 3% | they set the target |
 | $s$ | how fast the weight wanders: $\pi^*(1-\pi^*)\sigma$ | 0.048 | band widens |
 | $W$, $q$ | fund value; dollars of shares sold | $100,000; $1,743.80 | — |
@@ -92,7 +98,11 @@ The sale that lands exactly on $z$ once the fee leaves the fund. A purchase up t
 
 ### Step 0: two losses pull opposite ways
 
-Trading costs money now. Being off target costs a little every day, as risk the plan did not choose. A dollar of trading is worth making only while it saves more drift loss than the $c$ it costs. Near the target the saving is tiny; far away it is large. So there is an edge where the two are equal. Inside it, no trade pays. Outside it, trading pays until the weight reaches the edge, and not a dollar further. That is the whole shape; the rest of this section finds the width.
+Trading costs money now. Being off target costs a little every day, as risk the plan did not choose. A dollar of trading is worth making only while it saves more drift loss than the $c$ it costs.
+
+Near the target the saving is tiny; far away it is large. So there is an edge where the two are equal.
+
+Inside it, no trade pays. Outside it, trading pays until the weight reaches the edge, and not a dollar further. That is the whole shape; the rest of this section finds the width.
 
 ### Step 1: the price of being off target
 
@@ -117,7 +127,9 @@ Write $\lambda = \gamma\sigma^2$ and use $\mu - r = \lambda\pi^*$. Then $r + z\l
 
 Suppose the fund may trade once now and then must hold for a year. A gap $z - \pi^*$ left now costs $\tfrac{\kappa}{2}(z - \pi^*)^2$ with $\kappa = \gamma\sigma^2 \times 1 \text{ year} = 0.1$. Moving from $x$ to $z$ costs $c\,|z - x|$. The best $z$ minimises the sum.
 
-Selling from 65% lowers the drift loss at the rate $\kappa(z - \pi^*)$ per unit of weight and raises the bill at the rate $c$. Selling pays while $\kappa(z - \pi^*) > c$, so the fund sells down to $\pi^* + c/\kappa$ and stops. From below, it buys up to $\pi^* - c/\kappa$. Between the two, both directions lose. That is the band, with half-width $c/\kappa = 0.01$ here: 59% to 61%.
+Selling from 65% lowers the drift loss at the rate $\kappa(z - \pi^*)$ per unit of weight and raises the bill at the rate $c$. Selling pays while $\kappa(z - \pi^*) > c$, so the fund sells down to $\pi^* + c/\kappa$ and stops.
+
+From below, it buys up to $\pi^* - c/\kappa$. Between the two, both directions lose. That is the band, with half-width $c/\kappa = 0.01$ here: 59% to 61%.
 
 At 65%: waiting costs $12.50, selling to 60% costs $5.00, selling to 61% costs $4.50. The edge beats the target.
 
@@ -130,7 +142,9 @@ The objective $f(z) = \tfrac{\kappa}{2}(z - \pi^*)^2 + c\,|z - x|$ is a strictly
 
 ### Step 3: why the lifelong band is wider
 
-The one-shot band charges a gap for a full year, as if it could never be fixed. But the fund can trade tomorrow, and a gap left today may shrink on its own: shares that rose may fall back. The right to wait has value, so each trade is worth less than the one-shot count says, and the band should be wider. How much wider needs the loss counted over the fund's whole life, which needs two facts about how the weight wanders.
+The one-shot band charges a gap for a full year, as if it could never be fixed. But the fund can trade tomorrow, and a gap left today may shrink on its own: shares that rose may fall back. The right to wait has value, so each trade is worth less than the one-shot count says, and the band should be wider.
+
+How much wider needs the loss counted over the fund's whole life, which needs two facts about how the weight wanders.
 
 ### Step 4: how fast the weight wanders
 
@@ -173,7 +187,11 @@ The volatility cancels, because both the loss rate and the wandering scale with 
 
 The cube root is the surprise. Cut costs tenfold and the band shrinks only by a factor of 2.154. The loss, meanwhile, is of order $c^{2/3}$, much smaller than the width's order $c^{1/3}$: costs change what an investor holds a lot and what the investor gains a little.
 
-The other road is the exact one: Magill and Constantinides posed the problem in 1976, Davis and Norman solved it in 1990 as a free-boundary problem, one where the band's edges are unknowns found along with the value of the fund, and Janeček and Shreve proved in 2004 that the exact boundaries sit at $\pi^* \pm h$ to leading order.
+The other road is the exact one:
+
+- Magill and Constantinides posed the problem in 1976.
+- Davis and Norman solved it in 1990 as a free-boundary problem: one where the band's edges are unknowns, found along with the value of the fund.
+- Janeček and Shreve proved in 2004 that the exact boundaries sit at $\pi^* \pm h$ to leading order.
 
 ---
 
@@ -215,7 +233,9 @@ The code prints all four.
 
 ## How the weight moves, and what each rule pays
 
-Nothing was traded, and the mix went from 60-40 to 65-35. The market does the drifting; a rule only decides when to pay for undoing it. The checks simulate 500 ten-year histories of daily prices: shares expected to return 9% a year with a 20% spread, bonds a steady 3%. Every rule sees the same histories and pays, each day, its drift loss $\tfrac12\gamma\sigma^2(x - \pi^*)^2$ for that day plus any fee.
+Nothing was traded, and the mix went from 60-40 to 65-35. The market does the drifting; a rule only decides when to pay for undoing it.
+
+The checks simulate 500 ten-year histories of daily prices: shares expected to return 9% a year with a 20% spread, bonds a steady 3%. Every rule sees the same histories and pays, each day, its drift loss $\tfrac12\gamma\sigma^2(x - \pi^*)^2$ for that day plus any fee.
 
 | Rule | Turnover a year | Trading cost | Drift loss | Total |
 | --- | --- | --- | --- | --- |
@@ -236,7 +256,9 @@ threshold 5, target    ███                           $6.63
 band, to edge          ███                           $5.33
 ```
 
-Never trading loses most: over ten years the weight drifts far from 60%. The monthly rule has almost no drift loss and the biggest bill. The yearly rule lets gaps grow between dates. The threshold rule beats every calendar, because it trades only when the gap matters. The band beats the threshold rule by stopping at the edge instead of crossing to the target.
+Never trading loses most: over ten years the weight drifts far from 60%. The monthly rule has almost no drift loss and the biggest bill. The yearly rule lets gaps grow between dates.
+
+The threshold rule beats every calendar, because it trades only when the gap matters. The band beats the threshold rule by stopping at the edge instead of crossing to the target.
 
 The band's simulated turnover, 3.36% a year, is 0.951 of the formula's 3.54%, and its mean squared gap is 1.112 times $h^2/3$. The formula leaves out two things the simulation has: the weight's upward drift, and checks once a day rather than continuously.
 
@@ -255,7 +277,9 @@ xychart-beta
     line [10.02, 6.08, 5.31, 5.68, 6.71, 8.23, 12.44]
 ```
 
-Orange, falling: the trading cost, halving as the band doubles. Green, rising: the drift loss, growing as the square of the width. Dark: their total, lowest at 3 points ($5.31) and nearly flat from 3 to 4; the formula's 3.26 points scores $5.33, inside the noise of 500 histories. The flat bottom is the practical lesson: a roughly right width captures almost all the saving.
+Orange, falling: the trading cost, halving as the band doubles. Green, rising: the drift loss, growing as the square of the width. Dark: their total, lowest at 3 points ($5.31) and nearly flat from 3 to 4; the formula's 3.26 points scores $5.33, inside the noise of 500 histories.
+
+The flat bottom is the practical lesson: a roughly right width captures almost all the saving.
 
 ---
 
@@ -683,6 +707,156 @@ ALL CHECKS PASS
 
 The two outputs match line for line. The random generator is the same integer recipe in both languages, so both simulate the same 500 histories.
 
+### Lean
+
+Lean proves the three exact steps behind the band, for every allowed input, and the card's worked numbers as exact fractions.
+
+- Suppose $c$, $\gamma$ and $\sigma$ are positive and $\pi^*$ lies strictly between 0 and 1. Then the cube-root half-width $h$ is positive, and every other positive half-width has a strictly larger yearly loss $L$.
+- Take Step 2's one-shot cost, with $\kappa$ and $c$ positive. Then one weight beats every other strictly: $x$ itself inside the band $\pi^* \pm c/\kappa$, else the band's nearest edge.
+- Take $\gamma$ and $\sigma$ positive, and $\pi^* = (\mu - r)/(\gamma\sigma^2)$. Then holding $z$ falls short of the peak certainty-equivalent return by exactly $\tfrac12\gamma\sigma^2(z - \pi^*)^2$.
+- Merton's fraction is exactly 0.60, and the loss rate at 65% is exactly $12.50 a year per $100,000.
+- The one-shot band sends 65% to 61%. Waiting, selling to 60% and selling to 61% cost $12.50, $5.00 and $4.50.
+- The spread $s$ is 0.048, $\pi^{*2}(1-\pi^*)^2$ is 0.0576, and $h^3$ is 0.00003456.
+
+Turnover, the even spread inside the band, the simulation, the exact sales and every rounded decimal are left to the Python and Rust checks.
+
+```lean
+-- Rebalancing: the cube-root half-width is the unique minimiser of the band's yearly loss, the one-shot band is the clamp to the target plus or minus c over kappa, and the shortfall from Merton's peak is a square.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-- The no-trade band's half-width. A band of half-width `h` loses
+`L(h) = (γσ²/2)(h²/3) + c s²/(2h)` of the fund a year (drift loss plus trading bill),
+where `s = π*(1-π*)σ` is how fast the weight wanders. For a cost `c > 0`, risk
+aversion `γ > 0`, share spread `σ > 0` and a target weight `π*` strictly between
+0 and 1, the half-width `h = ((3c/(2γ)) π*² (1-π*)²)^(1/3)` is positive and every
+other positive half-width has a strictly larger yearly loss. -/
+theorem no_trade_band_cube_root_half_width_minimises_loss
+    (c γ σ πs : ℝ) (hc : 0 < c) (hγ : 0 < γ) (hσ : 0 < σ)
+    (hπ0 : 0 < πs) (hπ1 : πs < 1) :
+    let s := πs * (1 - πs) * σ
+    let L : ℝ → ℝ := fun h => γ * σ ^ 2 / 2 * (h ^ 2 / 3) + c * s ^ 2 / (2 * h)
+    let hstar := (3 * c / (2 * γ) * πs ^ 2 * (1 - πs) ^ 2) ^ ((1 : ℝ) / 3)
+    0 < hstar ∧ ∀ h : ℝ, 0 < h → h ≠ hstar → L hstar < L h := by
+  intro s L hstar
+  have hA : 0 < 3 * c / (2 * γ) * πs ^ 2 * (1 - πs) ^ 2 := by
+    have : 0 < 1 - πs := by linarith
+    positivity
+  have ht : 0 < hstar := Real.rpow_pos_of_pos hA _
+  have ht3 : hstar ^ 3 = 3 * c / (2 * γ) * πs ^ 2 * (1 - πs) ^ 2 := by
+    show ((3 * c / (2 * γ) * πs ^ 2 * (1 - πs) ^ 2) ^ ((1 : ℝ) / 3)) ^ 3 = _
+    rw [← Real.rpow_natCast, ← Real.rpow_mul hA.le]
+    norm_num
+  refine ⟨ht, fun h hh hne => ?_⟩
+  have hb : c * s ^ 2 = 2 * γ * σ ^ 2 / 3 * hstar ^ 3 := by
+    rw [ht3]; simp only [s]; field_simp
+  have key : L h - L hstar = γ * σ ^ 2 / 6 * ((h - hstar) ^ 2 * (h + 2 * hstar)) / h := by
+    simp only [L]
+    rw [hb]
+    field_simp
+    ring
+  have hpos : 0 < γ * σ ^ 2 / 6 * ((h - hstar) ^ 2 * (h + 2 * hstar)) / h := by
+    have : 0 < (h - hstar) ^ 2 := by
+      have : h - hstar ≠ 0 := sub_ne_zero.mpr hne
+      positivity
+    have : 0 < h + 2 * hstar := by linarith
+    positivity
+  linarith
+
+/-- The one-shot band. If a gap left now costs `(κ/2)(z - π*)²` and moving the weight
+from `x` to `z` costs `c|z - x|`, with `κ > 0` and `c > 0`, then the unique best
+weight after trading is the clamp `min(π* + c/κ, max(π* - c/κ, x))`: keep `x`
+inside the band, otherwise move to its nearest edge. -/
+theorem one_shot_band_is_clamp
+    (κ c πs x : ℝ) (hκ : 0 < κ) (hc : 0 < c) :
+    let f : ℝ → ℝ := fun z => κ / 2 * (z - πs) ^ 2 + c * |z - x|
+    let zstar := min (πs + c / κ) (max (πs - c / κ) x)
+    ∀ z : ℝ, z ≠ zstar → f zstar < f z := by
+  intro f zstar z hz
+  obtain ⟨d, hd, rfl⟩ : ∃ d, 0 < d ∧ c = κ * d := ⟨c / κ, div_pos hc hκ, by field_simp⟩
+  have hdd : κ * d / κ = d := by field_simp
+  have hsq : 0 < (z - zstar) ^ 2 := by
+    have : z - zstar ≠ 0 := sub_ne_zero.mpr hz
+    positivity
+  have h1 : 0 < κ * (z - zstar) ^ 2 := mul_pos hκ hsq
+  have hzs : zstar = min (πs + d) (max (πs - d) x) := by simp only [zstar, hdd]
+  clear_value zstar
+  subst hzs
+  simp only [f]
+  have hab := abs_nonneg (z - x)
+  have hle := le_abs_self (z - x)
+  have hle' := neg_abs_le (z - x)
+  rcases le_total x (πs - d) with hx | hx
+  · rw [max_eq_left hx, min_eq_right (by linarith)] at *
+    rw [abs_of_nonneg (by linarith : (0:ℝ) ≤ πs - d - x)]
+    nlinarith [mul_le_mul_of_nonneg_left (show x - z ≤ |z - x| by linarith) (le_of_lt (mul_pos hκ hd))]
+  · rw [max_eq_right hx] at *
+    rcases le_total x (πs + d) with hx2 | hx2
+    · rw [min_eq_right hx2] at *
+      rw [sub_self, abs_zero]
+      nlinarith [mul_le_mul_of_nonneg_left (show x - z ≤ |z - x| by linarith) (le_of_lt (mul_pos hκ hd)),
+        mul_le_mul_of_nonneg_left (show z - x ≤ |z - x| by linarith) (le_of_lt (mul_pos hκ hd)),
+        mul_nonneg hκ.le (sub_nonneg.mpr hx), mul_nonneg hκ.le (sub_nonneg.mpr hx2)]
+    · rw [min_eq_left hx2] at *
+      rw [abs_of_nonpos (by linarith : πs + d - x ≤ 0)]
+      nlinarith [mul_le_mul_of_nonneg_left (show z - x ≤ |z - x| by linarith) (le_of_lt (mul_pos hκ hd))]
+
+/-- The price of being off target. With `γ > 0`, `σ > 0` and Merton's fraction
+`π* = (μ - r)/(γσ²)`, the certainty-equivalent return `r + z(μ - r) - ½γσ²z²`
+falls short of its value at `π*` by exactly `½γσ²(z - π*)²`. -/
+theorem certainty_equivalent_shortfall_eq_square
+    (r μ γ σ z : ℝ) (hγ : 0 < γ) (hσ : 0 < σ) :
+    let πs := (μ - r) / (γ * σ ^ 2)
+    let CE : ℝ → ℝ := fun w => r + w * (μ - r) - 1 / 2 * γ * σ ^ 2 * w ^ 2
+    CE πs - CE z = 1 / 2 * γ * σ ^ 2 * (z - πs) ^ 2 := by
+  intro πs CE
+  simp only [πs, CE]
+  field_simp
+  ring
+
+-- The card's worked numbers, as exact fractions:
+-- μ - r = 6/100, γ = 5/2, σ = 1/5, c = 1/1000, π* = 3/5, x = 13/20, W = 100000.
+
+-- Merton's fraction: (μ - r)/(γσ²) = 0.06/0.1 = 0.60.
+example : ((6 : ℚ) / 100) / (5 / 2 * (1 / 5) ^ 2) = 3 / 5 := by norm_num
+
+-- Loss rate at 65%: (γσ²/2)(0.05)² × 100,000 = $12.50 a year.
+example : (5 / 2 * (1 / 5 : ℚ) ^ 2) / 2 * (13 / 20 - 3 / 5) ^ 2 * 100000 = 25 / 2 := by norm_num
+
+-- One-shot band at 65%: c/κ = 0.01, so the clamp lands on 61%.
+example : min ((3 : ℚ) / 5 + 1 / 100) (max (3 / 5 - 1 / 100) (13 / 20)) = 61 / 100 := by
+  norm_num
+
+-- One-shot losses per $100,000: wait $12.50, sell to 60% $5.00, sell to 61% $4.50.
+example : ((1 : ℚ) / 10 / 2 * (13 / 20 - 3 / 5) ^ 2 + 1 / 1000 * |13 / 20 - 13 / 20|) * 100000
+    = 25 / 2 := by norm_num
+example : ((1 : ℚ) / 10 / 2 * (3 / 5 - 3 / 5) ^ 2 + 1 / 1000 * |3 / 5 - 13 / 20|) * 100000
+    = 5 := by norm_num
+example : ((1 : ℚ) / 10 / 2 * (61 / 100 - 3 / 5) ^ 2 + 1 / 1000 * |61 / 100 - 13 / 20|) * 100000
+    = 9 / 2 := by norm_num
+
+-- The weight's spread: s = 0.6 × 0.4 × 0.20 = 0.048, and π*²(1-π*)² = 0.0576.
+example : (3 / 5 : ℚ) * (2 / 5) * (1 / 5) = 48 / 1000 := by norm_num
+example : (3 / 5 : ℚ) ^ 2 * (2 / 5) ^ 2 = 576 / 10000 := by norm_num
+
+-- h³ = 1.5 × 0.001 × 0.0576 / 2.5 = 0.00003456.
+example : (3 : ℚ) * (1 / 1000) / (2 * (5 / 2)) * (3 / 5) ^ 2 * (2 / 5) ^ 2 = 3456 / 100000000 := by
+  norm_num
+
+#print axioms no_trade_band_cube_root_half_width_minimises_loss
+#print axioms one_shot_band_is_clamp
+#print axioms certainty_equivalent_shortfall_eq_square
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'no_trade_band_cube_root_half_width_minimises_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_shot_band_is_clamp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'certainty_equivalent_shortfall_eq_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then edit the line `c, w, gam, sig, r = ...` and run it.
@@ -707,13 +881,13 @@ The two outputs match line for line. The random generator is the same integer re
 
 ## Where you meet it in real life
 
-- **Target-date funds.** Vanguard argues for threshold over calendar rebalancing of its target-date funds and illustrates a 200 basis point trigger with a 175 basis point destination: trade when the gap passes 2 points, and stop short of the target.
+- **Target-date funds.** Vanguard argues for threshold over calendar rebalancing of its target-date funds. It illustrates a 200 basis point trigger with a 175 basis point destination: trade when the gap passes 2 points, and stop short of the target. A basis point is a hundredth of a percentage point.
 - **Pension and endowment policies.** Policy statements commonly give each asset class a target and a permitted range: a no-trade band, usually set by judgement.
 - **Option hedging.** A trader hedging an option faces the same trade-off between hedge error and fees. Janeček and Shreve point out that Whalley and Wilmott's hedging band has the same cube-root law.
 - **Performance reports.** Trading costs show up as a drag on measured return, the subject of [Performance measures](01-sharpe-information-and-drawdown.md), and a drifted mix shows up as an allocation effect in [Attribution](02-performance-attribution.md).
 
 > **Say it back**
-> A fund's mix drifts because shares and bonds grow at different rates. Trading it back costs a fee; leaving it costs a little every day in extra risk, growing as the square of the gap. The best rule is a band: do nothing inside it, trade to its nearest edge outside it. The band is wider than a one-shot calculation suggests, because a gap left today may close by itself. Balancing the drift loss against the trading bill makes the half-width the cube root of three halves of the cost over the risk aversion, times the square of $\pi^*(1-\pi^*)$: ±3.26 points for a 60-40 fund paying 0.1%.
+> A fund's mix drifts because shares and bonds grow at different rates. Trading it back costs a fee; leaving it costs a little every day in extra risk, growing as the square of the gap. The best rule is a band: do nothing inside it, trade to its nearest edge outside it. The band is wider than a one-shot calculation suggests, because a gap left today may close by itself. Balancing the drift loss against the trading bill makes the half-width the cube root of a product: three halves of the cost over the risk aversion, times the square of $\pi^*(1-\pi^*)$: ±3.26 points for a 60-40 fund paying 0.1%.
 
 ---
 
@@ -725,7 +899,7 @@ The two outputs match line for line. The random generator is the same integer re
 
 - [Investing over a lifetime](05-life-cycle-and-glide-paths.md): the target itself moves, year by year, as an investor ages and wages turn into savings.
 
-This card holds the target fixed at 60% for ever; when the target slides along a glide path, the band has to slide with it, and what the plan should aim for at each age is the question the life-cycle card answers.
+This card holds the target fixed at 60% for ever. When the target slides along a glide path, a planned schedule of target weights by age, the band has to slide with it. What the plan should aim for at each age is the question the life-cycle card answers.
 
 ---
 

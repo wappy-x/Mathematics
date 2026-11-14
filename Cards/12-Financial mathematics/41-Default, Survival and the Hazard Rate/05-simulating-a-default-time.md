@@ -8,7 +8,9 @@
 
 A board game has 100,000 pieces. Each piece in play is knocked out at a steady rate of 2% a round, and a knock can land at any moment inside a round. The survival formula from [The hazard rate](02-hazard-rate-and-survival-probability.md) says the share still in play after five rounds is e to the minus 0.1, which is 0.9048. So 9.516% of the pieces are gone by round five.
 
-A computer can play the game instead of solving it. It gives each piece a date on which it will be knocked out. The dates must be random, and random in exactly the right pattern: across many pieces they must rebuild the survival curve. The recipe is short. Draw a number spread evenly between 0 and 1; call it the piece's ticket. Find the moment the survival curve falls to the ticket's height. That moment is the piece's knock-out date. The 2% curve falls to 0.85 at round 8.13, so a piece with that ticket lasts eight rounds and a bit.
+A computer can play the game instead of solving it. It gives each piece a date on which it will be knocked out. The dates must be random, and random in exactly the right pattern: across many pieces they must rebuild the survival curve.
+
+The recipe is short. Draw a number spread evenly between 0 and 1; call it the piece's ticket. Find the moment the survival curve falls to the ticket's height. That moment is the piece's knock-out date. The 2% curve falls to 0.85 at round 8.13, so a piece with that ticket lasts eight rounds and a bit.
 
 Play it with 100,000 tickets and 9.521% of the pieces are gone by round five, against the formula's 9.516%. The same routine handles any curve. A used delivery van breaks down at 2% a year in year one, 4% in years two and three, and 6% in years four and five. Its tickets read off that stepped curve leave 19.731% of vans broken by year five, against the formula's 19.748%.
 
@@ -84,7 +86,7 @@ Before solving $S(\tau) = U$, check it has one answer.
 
 ### When it holds
 
-- **The draws are uniform and independent.** A generator that favours some heights biases every date. The recurrence used here repeats only after more draws than any run on this card uses.
+- **The draws are uniform and independent.** A generator that favours some heights biases every date. The recurrence used here, a rule that makes each random number from the one before, repeats only after more draws than any run on this card uses.
 - **The curve is the one wanted.** The method reproduces whatever curve it is given. A curve read from bond prices gives market-implied dates; a curve from default history gives real-world dates. The two differ, and the simulation cannot tell which one it was handed.
 - **The tail is stated.** Dates beyond the last node depend on how the curve is carried on. Here 80.25% of van tickets land past year five, and the 6% tail sets every one of their dates. Change the tail and those dates move; the year-five count does not.
 - **The count is an estimate.** A simulated share is off from the truth by about one standard error, and the error shrinks like one over the square root of the number of pieces.
@@ -147,7 +149,9 @@ The general inverse-transform recipe ([Inverse transform](../../09-Probability%2
 
 ### The other road: play the game tick by tick
 
-The definition of the hazard gives a second way to simulate that never inverts anything. Cut each round into ten ticks. At each tick, a piece still in play is knocked out with chance rate times tick, 0.02 × 0.1 = 0.002. Play fifty ticks. This is the hazard's definition acted out, and it needs a fresh random number every tick instead of one per piece. With fresh numbers, 9.423% of 100,000 pieces are gone by round five, about one standard error from the formula. Ticks cost time and add a small error from their size; the inversion costs one draw and one division and has no such error. The general machinery of averaging simulated outcomes is on [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
+The definition of the hazard gives a second way to simulate that never inverts anything. Cut each round into ten ticks. At each tick, a piece still in play is knocked out with chance rate times tick, 0.02 × 0.1 = 0.002. Play fifty ticks. This is the hazard's definition acted out, and it needs a fresh random number every tick instead of one per piece.
+
+With fresh numbers, 9.423% of 100,000 pieces are gone by round five, about one standard error from the formula. Ticks cost time and add a small error from their size; the inversion costs one draw and one division and has no such error. The general machinery of averaging simulated outcomes is on [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
 
 ---
 
@@ -210,7 +214,11 @@ Orange: the running share gone by round five after the first n tickets. Green: t
 
 ### The same draws, as a pricing engine
 
-The game at 2% a round is the shelf's house company at 2% a year: Northwind Lines, flat hazard 2%, riskless rate $r$ = 5%, 40% recovery. The dates already drawn price Northwind promises. A $100 payment due in five years, paid only if Northwind is still alive, is worth $100 × e^{-0.25}$ × (share alive at five). The formula gives $70.47; the draws give $70.47 (70.4688 against 70.4651). Now add $40 paid on the default date itself if Northwind fails first. The draws discount each $40 from its own date and average: $73.85, with a standard error of 4 cents. The formula, derived on [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), gives $73.84. The draws needed no formula at all; that is why they serve as the second road to every price on the later credit shelves.
+The game at 2% a round is the shelf's house company at 2% a year: Northwind Lines, flat hazard 2%, riskless rate $r$ = 5%, 40% recovery.
+
+The dates already drawn price Northwind promises. A \$100 payment due in five years, paid only if Northwind is still alive, is worth \$100 × $e^{-0.25}$ × (share alive at five). The formula gives \$70.47; the draws give \$70.47 (70.4688 against 70.4651).
+
+Now add \$40 paid on the default date itself if Northwind fails first. The draws discount each \$40 from its own date and average: \$73.85, with a standard error of 4 cents. The formula, derived on [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), gives \$73.84. The draws needed no formula at all; that is why they serve as the second road to every price on the later credit shelves.
 
 ### What breaks if you drop a piece
 
@@ -621,6 +629,131 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line.
+
+### Lean
+
+Lean proves the fact behind the method for every survival curve that starts at 1, never rises, and is right-continuous.
+
+- The default time comes at or before a date $t$ exactly when the curve's height at $t$ is at or below the draw.
+- Take a uniform draw between 0 and 1, and read its default time off the curve. Then, at every date $t$, the chance of default by $t$ is exactly $1 - S(t)$.
+- Suppose $x$ is 0 or more. Then the budget $E = -\ln U$ exceeds $x$ with chance $e^{-x}$.
+- The arithmetic for the van's area under the hazard: 0.10 by year 3 and 0.22 by year 5.
+- The arithmetic 1 / 0.02 = 50 behind the game's average lifetime.
+
+The step-by-step inversion, the simulated counts, their standard errors and the Northwind prices are left to the Python and Rust checks.
+
+```lean
+-- Simulating a default time: reading a uniform draw off any survival curve gives a default date that falls by date t with chance exactly 1 - S(t), and the hazard budget -ln U is an exponential draw with average 1.
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Topology.Instances.ENNReal.Lemmas
+
+open MeasureTheory Set
+open scoped NNReal ENNReal
+
+/-- The default time read off the survival curve `S` at the draw `u`: the earliest date
+`t ≥ 0` at which the curve is at or below `u`, and `∞` ("never") if there is none. -/
+noncomputable def defaultTime (S : ℝ≥0 → ℝ) (u : ℝ) : ℝ≥0∞ :=
+  ⨅ t ∈ {t : ℝ≥0 | S t ≤ u}, (t : ℝ≥0∞)
+
+/-- An earlier default is a higher ticket: for a survival curve that never rises and is
+right-continuous, the default time read off at the draw `u` comes at or before the date `t`
+exactly when the curve at `t` has already fallen to `u` or below. -/
+theorem defaultTime_le_iff (S : ℝ≥0 → ℝ) (hanti : Antitone S)
+    (hright : ∀ t : ℝ≥0, ContinuousWithinAt S (Ici t) t) (u : ℝ) (t : ℝ≥0) :
+    defaultTime S u ≤ (t : ℝ≥0∞) ↔ S t ≤ u := by
+  constructor
+  · intro h
+    by_contra hlt
+    push Not at hlt
+    have hev : ∀ᶠ s in nhdsWithin t (Ici t), u < S s :=
+      (hright t) (isOpen_Ioi.mem_nhds hlt)
+    obtain ⟨v, hv, hsub⟩ := mem_nhdsGE_iff_exists_Ico_subset.mp hev
+    have hge : (v : ℝ≥0∞) ≤ defaultTime S u := by
+      unfold defaultTime
+      refine le_iInf₂ fun s hs => ?_
+      simp only [mem_ofPred_eq] at hs
+      rw [ENNReal.coe_le_coe]
+      by_contra hsv
+      push Not at hsv
+      rcases le_or_gt t s with hts | hst
+      · have := hsub ⟨hts, hsv⟩
+        simp only [mem_ofPred_eq] at this
+        linarith
+      · have := hanti hst.le
+        linarith
+    have : (v : ℝ≥0∞) ≤ t := hge.trans h
+    rw [ENNReal.coe_le_coe] at this
+    exact absurd hv (not_lt.mpr this)
+  · intro h
+    unfold defaultTime
+    exact iInf₂_le t (by simpa using h)
+
+/-- Simulating a default time: let `S` be any survival curve (it starts at 1, stays at or
+above 0, never rises, and is right-continuous). Draw `U` uniformly from `[0, 1]` and take the
+default time to be the earliest date at which `S` is at or below `U`. Then for every date `t`
+the chance that this default time comes at or before `t` is exactly `1 - S(t)`, the default
+chance by `t`. -/
+theorem simulated_default_time_has_survival_curve (S : ℝ≥0 → ℝ) (hzero : S 0 = 1)
+    (hnonneg : ∀ t, 0 ≤ S t) (hanti : Antitone S)
+    (hright : ∀ t : ℝ≥0, ContinuousWithinAt S (Ici t) t) (t : ℝ≥0) :
+    volume {u ∈ Icc (0 : ℝ) 1 | defaultTime S u ≤ (t : ℝ≥0∞)} = ENNReal.ofReal (1 - S t) := by
+  have hset : {u ∈ Icc (0 : ℝ) 1 | defaultTime S u ≤ (t : ℝ≥0∞)} = Icc (S t) 1 := by
+    ext u
+    simp only [mem_ofPred_eq, mem_Icc, defaultTime_le_iff S hanti hright]
+    have := hnonneg t
+    constructor
+    · rintro ⟨⟨_, h1⟩, h2⟩
+      exact ⟨h2, h1⟩
+    · rintro ⟨h2, h1⟩
+      exact ⟨⟨by linarith, h1⟩, h2⟩
+  rw [hset, Real.volume_Icc]
+
+/-- The log turns the curve into a budget: for a uniform draw `U` on `[0, 1]`, the hazard
+budget `E = -ln U` exceeds any `x ≥ 0` with chance `e^{-x}`, so `E` is an exponential draw
+with average 1. -/
+theorem hazard_budget_is_exponential (x : ℝ) (hx : 0 ≤ x) :
+    volume {u ∈ Icc (0 : ℝ) 1 | x < -Real.log u} = ENNReal.ofReal (Real.exp (-x)) := by
+  have hexp : Real.exp (-x) ≤ 1 := Real.exp_le_one_iff.mpr (by linarith)
+  have hset : {u ∈ Icc (0 : ℝ) 1 | x < -Real.log u} = Ioo 0 (Real.exp (-x)) := by
+    ext u
+    simp only [mem_ofPred_eq, mem_Icc, mem_Ioo]
+    constructor
+    · rintro ⟨⟨h0, h1⟩, h2⟩
+      rcases h0.lt_or_eq with hpos | hzero
+      · refine ⟨hpos, ?_⟩
+        rw [← Real.log_lt_iff_lt_exp hpos]
+        linarith
+      · subst hzero
+        simp at h2
+        linarith
+    · rintro ⟨hpos, hlt⟩
+      refine ⟨⟨hpos.le, by linarith⟩, ?_⟩
+      rw [← Real.log_lt_iff_lt_exp hpos] at hlt
+      linarith
+  rw [hset, Real.volume_Ioo, sub_zero]
+
+-- The van's cumulative hazard by year 5: 2% for one year, 4% for two, 6% for two, total 0.22.
+example : (2 / 100 : ℚ) * 1 + (4 / 100) * 2 + (6 / 100) * 2 = 22 / 100 := by norm_num
+
+-- The van's cumulative hazard by year 3 is 0.10, the budget spent before the 6% step.
+example : (2 / 100 : ℚ) * 1 + (4 / 100) * 2 = 1 / 10 := by norm_num
+
+-- The flat 2% game: the average lifetime is 1 / 0.02 = 50 rounds.
+example : (1 : ℚ) / (2 / 100) = 50 := by norm_num
+
+#print axioms defaultTime_le_iff
+#print axioms simulated_default_time_has_survival_curve
+#print axioms hazard_budget_is_exponential
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'defaultTime_le_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'simulated_default_time_has_survival_curve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hazard_budget_is_exponential' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

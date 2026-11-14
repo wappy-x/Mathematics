@@ -10,11 +10,13 @@ A dealer has sold 10,000 one-year call options on Acme to clients. Each option i
 
 Three things can hurt. Acme can move. Acme can move a lot, so that the damage grows faster than the move. And the market can decide Acme is jumpier than it thought, which makes every option the dealer owes more expensive. Buying 5,868.51 shares cancels the first. It does nothing about the other two: a $10 drop still costs $10,013.64, and a five-point rise in volatility costs $18,967.56.
 
-The fix is to buy other options. Two listed ones are on the exchange: a three-month put struck at $100 (option A) and a two-year call struck at $110 (option B). The question is how many of each, and how many shares on top. That is three unknowns and three conditions, one per risk. It is a small system of linear equations, and this card sets it up and solves it. The answer: buy 2,749.41 of A, 5,993.94 of B and 4,182.74 shares.
+The fix is to buy other options. Two listed ones are on the exchange: a three-month put struck at $100 (option A) and a two-year call struck at $110 (option B).
+
+The question is how many of each, and how many shares on top. That is three unknowns and three conditions, one per risk. It is a small system of linear equations, and this card sets it up and solves it. The answer: buy 2,749.41 of A, 5,993.94 of B and 4,182.74 shares.
 
 **Each risk is a sum over positions, so flattening three risks with three instruments is a three-by-three linear system; shares carry only the first risk, which lets the two options be solved first and the shares last.**
 
-**What kind of fact this is:** a method. Its arithmetic is exact; its promise, that the book stops caring about small moves, rests on the Black-Scholes model that supplies the Greeks.
+**What kind of fact this is:** a method. Its arithmetic is exact; its promise, that the book stops caring about small moves, rests on the Black-Scholes model that supplies the Greeks ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 ### The picture: what each hedge leaves behind when Acme moves
 
@@ -34,7 +36,13 @@ Orange: the book hedged with shares alone. It loses in both directions, and the 
 
 ## The formula
 
-Notation first. The **Greeks** are the sensitivities of a price, each named after a Greek letter ([Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)). **Delta**, $\Delta$, is dollars gained per $1 rise in Acme. **Gamma**, $\Gamma$, is how much delta itself changes per $1 rise. **Vega**, $\mathcal{V}$, is dollars gained per one percentage point rise in volatility. A subscript names whose Greek it is: P for the dealer's book (portfolio) as it stands, A and B for one of each listed option. The unknowns are $n_A$ and $n_B$, how many of each option to buy, and $n_S$, how many shares.
+Notation first. The **Greeks** are the sensitivities of a price, each named after a Greek letter ([Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)).
+
+- **Delta**, $\Delta$, is dollars gained per $1 rise in Acme.
+- **Gamma**, $\Gamma$, is how much delta itself changes per $1 rise.
+- **Vega**, $\mathcal{V}$, is dollars gained per one percentage point rise in volatility.
+
+A subscript names whose Greek it is: P for the dealer's book (portfolio) as it stands, A and B for one of each listed option. The unknowns are $n_A$ and $n_B$, how many of each option to buy, and $n_S$, how many shares.
 
 A book's Greek is the sum of each position's Greek times its size. Set each total to zero:
 
@@ -199,7 +207,13 @@ Shares have no vega, so the shares-only hedge loses exactly what the naked book 
 
 ## Code, from first principles, and it actually runs
 
-The script prices the three options by Black-Scholes with a hand-built bell-curve area, then solves for the hedge two ways and confirms it a third. Road 1: Greeks from their formulas and Cramer's rule on the two-by-two. Road 2: Greeks from nudging the price and re-pricing, then Gaussian elimination on the full three-by-three. Road 3: re-price the whole hedged book under nudges and shocks, with no Greek formulas, and find its Greeks zero. It then reproduces the scenario table, the stale-hedge table and every "what breaks" row. Python sums the bell curve's power series; Rust adds up thin slices under the curve (Simpson's rule).
+The script prices the three options by Black-Scholes with a hand-built bell-curve area, then solves for the hedge two ways and confirms it a third.
+
+- Road 1: Greeks from their formulas and Cramer's rule on the two-by-two.
+- Road 2: Greeks from nudging the price and re-pricing, then Gaussian elimination on the full three-by-three.
+- Road 3: re-price the whole hedged book under nudges and shocks, with no Greek formulas, and find its Greeks zero.
+
+It then reproduces the scenario table, the stale-hedge table and every "what breaks" row. Python sums the bell curve's power series; Rust adds up thin slices under the curve (Simpson's rule).
 
 ### Python
 
@@ -601,6 +615,148 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line. Road 2 and road 3 use nudged prices, which carry rounding noise near the sixth decimal; they are printed to the precision the noise allows.
+
+### Lean
+
+Lean proves Cramer's rule, when there is one answer, and the same-expiry fact, for any inputs. It also checks the worked ratios.
+
+- Take any Greeks for the book, A and B, with $D$ not zero. Then the three equations hold exactly when the positions are given by Cramer's rule, shares solved last.
+- Take any Greeks for the book, A and B. Then the three equations have exactly one answer if and only if $D$ is not zero.
+- Take gamma and vega per point from the formulas in Step 3, with $S$, $\sigma$ and $T$ above zero. Then vega over gamma is $S^2\sigma T/100$, whatever the strike.
+- Take two such options with the same expiry. Then $D = 0$.
+- At $S$ = 100 and $\sigma$ = 0.20, the ratio is 5 for A, 20 for the book and 40 for B.
+- The gamma shares are $w_A = 4/7$ and $w_B = 3/7$. They add to 1, and $5\,w_A + 40\,w_B = 20$.
+
+The Greeks' values, the hedge sizes and every profit or loss figure are left to the Python and Rust checks.
+
+```lean
+-- Hedging three Greeks at once: when the gamma-vega determinant D is not zero, the hedge equations have exactly one solution, given by Cramer's rule with the shares solved last; D is zero for two Black-Scholes options with the same expiry.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Tactic
+
+open Real
+
+/-- Cramer's rule for the three-Greek hedge. The book has Greeks `ΔP, ΓP, VP`; one option A
+has `ΔA, ΓA, VA`; one option B has `ΔB, ΓB, VB`; a share has delta 1, gamma 0, vega 0.
+If `D = ΓA·VB − ΓB·VA` is not zero, then buying `nS` shares, `nA` of A and `nB` of B makes
+the book's delta, gamma and vega all zero exactly when
+`nA = (ΓB·VP − ΓP·VB)/D`, `nB = (ΓP·VA − ΓA·VP)/D` and `nS = −(ΔP + nA·ΔA + nB·ΔB)`. -/
+theorem delta_gamma_vega_hedge_cramer
+    (ΔP ΓP VP ΔA ΓA VA ΔB ΓB VB nS nA nB : ℝ)
+    (hD : ΓA * VB - ΓB * VA ≠ 0) :
+    (nS * 1 + nA * ΔA + nB * ΔB = -ΔP ∧
+      nS * 0 + nA * ΓA + nB * ΓB = -ΓP ∧
+      nS * 0 + nA * VA + nB * VB = -VP) ↔
+    (nA = (ΓB * VP - ΓP * VB) / (ΓA * VB - ΓB * VA) ∧
+      nB = (ΓP * VA - ΓA * VP) / (ΓA * VB - ΓB * VA) ∧
+      nS = -(ΔP + nA * ΔA + nB * ΔB)) := by
+  constructor
+  · rintro ⟨h1, h2, h3⟩
+    refine ⟨?_, ?_, ?_⟩
+    · rw [eq_div_iff hD]
+      linear_combination VB * h2 - ΓB * h3
+    · rw [eq_div_iff hD]
+      linear_combination ΓA * h3 - VA * h2
+    · linarith
+  · rintro ⟨h1, h2, h3⟩
+    refine ⟨?_, ?_, ?_⟩
+    · rw [h3]; ring
+    · rw [h1, h2, mul_zero, zero_add, div_mul_eq_mul_div, div_mul_eq_mul_div,
+        ← add_div, div_eq_iff hD]
+      ring
+    · rw [h1, h2, mul_zero, zero_add, div_mul_eq_mul_div, div_mul_eq_mul_div,
+        ← add_div, div_eq_iff hD]
+      ring
+
+/-- Existence and uniqueness: the three hedge equations have exactly one solution
+`(nS, nA, nB)` if and only if the determinant `D = ΓA·VB − ΓB·VA` is not zero.
+When `D = 0` there is either no answer or a whole line of them. -/
+theorem hedge_unique_iff_det_ne_zero
+    (ΔP ΓP VP ΔA ΓA VA ΔB ΓB VB : ℝ) :
+    (∃! n : ℝ × ℝ × ℝ,
+      n.1 * 1 + n.2.1 * ΔA + n.2.2 * ΔB = -ΔP ∧
+      n.1 * 0 + n.2.1 * ΓA + n.2.2 * ΓB = -ΓP ∧
+      n.1 * 0 + n.2.1 * VA + n.2.2 * VB = -VP) ↔
+    ΓA * VB - ΓB * VA ≠ 0 := by
+  constructor
+  · rintro ⟨n, hn, huniq⟩ hD
+    have key : ∀ ka kb : ℝ, ka * ΓA + kb * ΓB = 0 → ka * VA + kb * VB = 0 →
+        ka = 0 ∧ kb = 0 := by
+      intro ka kb hk1 hk2
+      have e := huniq (n.1 - ka * ΔA - kb * ΔB, n.2.1 + ka, n.2.2 + kb)
+        ⟨by simp only; linarith [hn.1], by simp only; linarith [hn.2.1],
+          by simp only; linarith [hn.2.2]⟩
+      have e2 := congrArg (fun m : ℝ × ℝ × ℝ => m.2.1) e
+      have e3 := congrArg (fun m : ℝ × ℝ × ℝ => m.2.2) e
+      simp only at e2 e3
+      constructor <;> linarith
+    obtain ⟨hg1, hg2⟩ := key ΓB (-ΓA) (by ring) (by linarith)
+    obtain ⟨hv1, hv2⟩ := key VB (-VA) (by linarith) (by ring)
+    have := key 1 0 (by rw [neg_eq_zero.mp hg2]; ring) (by rw [neg_eq_zero.mp hv2]; ring)
+    norm_num at this
+  · intro hD
+    refine ⟨(-(ΔP + (ΓB * VP - ΓP * VB) / (ΓA * VB - ΓB * VA) * ΔA
+        + (ΓP * VA - ΓA * VP) / (ΓA * VB - ΓB * VA) * ΔB),
+        (ΓB * VP - ΓP * VB) / (ΓA * VB - ΓB * VA),
+        (ΓP * VA - ΓA * VP) / (ΓA * VB - ΓB * VA)), ?_, ?_⟩
+    · exact (delta_gamma_vega_hedge_cramer ΔP ΓP VP ΔA ΓA VA ΔB ΓB VB _ _ _ hD).mpr
+        ⟨rfl, rfl, rfl⟩
+    · rintro ⟨s, a, b⟩ h
+      obtain ⟨h1, h2, h3⟩ :=
+        (delta_gamma_vega_hedge_cramer ΔP ΓP VP ΔA ΓA VA ΔB ΓB VB s a b hD).mp h
+      subst h1 h2
+      rw [h3]
+
+/-- Under Black-Scholes, with share price `S > 0`, volatility `σ > 0`, expiry `T > 0` and
+dividend yield `q`, an option whose first distance is `d` has gamma
+`e^(−qT) φ(d) / (S σ √T)` and vega per point `S e^(−qT) φ(d) √T / 100`, where `φ` is the
+bell-curve height. Then vega over gamma is `S² σ T / 100` whatever the strike (whatever `d`),
+so two options with the same expiry have determinant `D = 0`. -/
+theorem same_expiry_vega_gamma_ratio_and_det_zero
+    (S σ T q dA dB : ℝ) (hS : 0 < S) (hσ : 0 < σ) (hT : 0 < T) :
+    let φ : ℝ → ℝ := fun x => Real.exp (-(x ^ 2) / 2) / Real.sqrt (2 * π)
+    let Γ : ℝ → ℝ := fun d => Real.exp (-q * T) * φ d / (S * σ * Real.sqrt T)
+    let V : ℝ → ℝ := fun d => S * Real.exp (-q * T) * φ d * Real.sqrt T / 100
+    (V dA / Γ dA = S ^ 2 * σ * T / 100) ∧ (Γ dA * V dB - Γ dB * V dA = 0) := by
+  intro φ Γ V
+  have hsT : 0 < Real.sqrt T := Real.sqrt_pos.mpr hT
+  have hsq : Real.sqrt T ^ 2 = T := Real.sq_sqrt hT.le
+  have hφ : ∀ x, 0 < φ x := fun x => by
+    simp only [φ]; positivity
+  have he : 0 < Real.exp (-q * T) := Real.exp_pos _
+  have hφA := hφ dA
+  have hφB := hφ dB
+  constructor
+  · simp only [V, Γ]
+    field_simp
+    exact hsq
+  · simp only [V, Γ]
+    field_simp
+    ring
+
+-- Vega-to-gamma ratio 20·T at S = 100, σ = 0.20: option A (T = 1/4), the book (T = 1), option B (T = 2).
+example : (100 : ℚ) ^ 2 * (1 / 5) * (1 / 4) / 100 = 5 := by norm_num
+example : (100 : ℚ) ^ 2 * (1 / 5) * 1 / 100 = 20 := by norm_num
+example : (100 : ℚ) ^ 2 * (1 / 5) * 2 / 100 = 40 := by norm_num
+
+-- The hedge as a blend: gamma shares wA = (40 − 20)/(40 − 5) = 4/7 and wB = 3/7
+-- satisfy wA + wB = 1 and 5·wA + 40·wB = 20.
+example : ((40 : ℚ) - 20) / (40 - 5) = 4 / 7 ∧ ((20 : ℚ) - 5) / (40 - 5) = 3 / 7 := by norm_num
+example : (4 / 7 : ℚ) + 3 / 7 = 1 ∧ 5 * (4 / 7 : ℚ) + 40 * (3 / 7) = 20 := by norm_num
+
+#print axioms delta_gamma_vega_hedge_cramer
+#print axioms hedge_unique_iff_det_ne_zero
+#print axioms same_expiry_vega_gamma_ratio_and_det_zero
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'delta_gamma_vega_hedge_cramer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hedge_unique_iff_det_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'same_expiry_vega_gamma_ratio_and_det_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
